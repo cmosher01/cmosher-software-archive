@@ -12,6 +12,7 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class FixAppleDisasm
@@ -234,6 +235,18 @@ public class FixAppleDisasm
 				}
 			}
 		}
+		for (Iterator i = lines.entrySet().iterator(); i.hasNext();)
+        {
+            Line ln = (Line)i.next();
+            System.out.print(Integer.toHexString(ln.addr));
+            System.out.print(":   ");
+            System.out.print(ln.instr);
+			System.out.print("   ");
+			System.out.print(ln.oper);
+			System.out.print("          ");
+			System.out.print(ln.comment);
+			System.out.println();
+        }
     }
 
     private static void Dump2Bin(Reader in, OutputStream outbin)
