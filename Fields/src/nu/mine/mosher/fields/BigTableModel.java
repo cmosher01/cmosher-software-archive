@@ -43,30 +43,15 @@ public class BigTableModel implements TableModel
         return Integer.toHexString(rowIndex+columnIndex);
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.table.TableModel#setValueAt(java.lang.Object, int, int)
-     */
     public void setValueAt(Object aValue, int rowIndex, int columnIndex)
     {
-        // TODO Auto-generated method stub
-        
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.table.TableModel#addTableModelListener(javax.swing.event.TableModelListener)
-     */
     public void addTableModelListener(TableModelListener l)
     {
-        // TODO Auto-generated method stub
-        
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.table.TableModel#removeTableModelListener(javax.swing.event.TableModelListener)
-     */
     public void removeTableModelListener(TableModelListener l)
     {
-        // TODO Auto-generated method stub
-        
     }
 }
