@@ -34,6 +34,11 @@ public class VelocityWrapper
         }
     }
 
+    public void evaluate(Reader reader, String nameTemplate, Context context, Writer writer) throws VelocityException
+    {
+        evaluate(context,writer,nameTemplate,reader);
+    }
+
     public void evaluate(Context context, Writer writer, String nameTemplate, Reader reader) throws VelocityException
     {
         boolean ok = false;
