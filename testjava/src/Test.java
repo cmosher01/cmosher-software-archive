@@ -38,6 +38,10 @@ public class Test
     private static class Mute implements Cloneable
     {
         public int x = 0;
+        public Mute(int a)
+        {
+            x = a;
+        }
         public Object clone()
         {
             Mute clon = null;
@@ -58,21 +62,12 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
-
-        Mute x = (new Mute()).x = 5;
-        System.out.println(x);
-
-        ImmutableReference im = new ImmutableReference(x);
-        System.out.println(im);
-
-        x.x = 7;
-        System.out.println(x);
+        ImmutableReference im = new ImmutableReference(new Mute(5));
         System.out.println(im);
 
         Mute y = (Mute)im.object();
         y.x = 8;
 
-        System.out.println(x);
         System.out.println(im);
         System.out.println(y);
 
