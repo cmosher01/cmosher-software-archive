@@ -3,7 +3,7 @@ package nu.mine.mosher.grodb;
 import java.io.Serializable;
 import java.util.TimeZone;
 
-import nu.mine.mosher.core.Immutable;
+import nu.mine.mosher.util.Immutable;
 
 public class DateRange implements Immutable, Serializable, Comparable
 {
