@@ -1,5 +1,5 @@
 /*
- * Created on Apr 13, 2004
+ * Created on April 13, 2004
  */
 package nu.mine.mosher.util.text;
 
@@ -101,7 +101,7 @@ public class ExcelCSVParser
     /**
      * Returns the StringBuffer that was passed
      * in to the constructor.
-     * @return
+     * @return the <code>StringBuffer</code> passed in to the constructor
      */
     public StringBuffer getBuffer()
     {
