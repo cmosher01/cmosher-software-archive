@@ -77,8 +77,9 @@ public class RollingChecksum
     public void increment(byte xk, byte xlplus1)
     {
         int a = checksum & 0xFFFF;
-        a -= xk;
-        a += xlplus1;
+        a = a-xk+xlplus1;
+//        a -= xk;
+//        a += xlplus1;
         while (a < 0)
         {
             a += M;
@@ -86,8 +87,9 @@ public class RollingChecksum
         a %= M;
 
         int b = (checksum >> 16) & 0xFFFF;
-        b -= len*xk;
-        b += a;
+        b = b-len*xk+a;
+//        b -= len*xk;
+//        b += a;
         while (b < 0)
         {
             b += M;
