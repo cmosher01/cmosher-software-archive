@@ -73,7 +73,7 @@ public class SimpleAccessLog extends AccessLog
 		sb.append(",");
 		sb.append(referer.startsWith("http://mosher.mine.nu")?"":referer);
 		sb.append(",");
-		sb.append(status!=HttpServletResponse.SC_OK?Integer.toString(status):"");
+		sb.append(!good?Integer.toString(status):"");
 
 		System.err.println(sb.toString());
     }
