@@ -211,7 +211,8 @@ public class GROapplet extends JApplet
 
     protected void createIndi(IndiSet indis, Map mapIdToIndi, String id, int x, int y, String name, String birth, String death)
     {
-        Indi n = new Indi(x, y, name, birth, death);
+    	int nid = Integer.parseInt(id.substring(1));
+        Indi n = new Indi(x, y, nid, name, birth, death);
         indis.add(n);
         mapIdToIndi.put(id, n);
     }
