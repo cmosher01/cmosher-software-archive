@@ -69,17 +69,19 @@ public class Volume
             }
         }
 
-        // TODO check for DOS exists
-        dos = new VolumeDOS();
-        dos.readFromMedia(disk);
-
         List rKnownSectors = new ArrayList();
         getUsedCatalog(rKnownSectors);
         getUsedNondeletedFiles(rKnownSectors);
         getUsedDeletedFiles(rKnownSectors);
         getUsedRecoveredFiles(rKnownSectors);
         getUsedBoot(rKnownSectors);
-        getUsedDOS(rKnownSectors);
+
+        if (!VolumeDOS.isDOSKnown(rKnownSectors))
+        {
+            dos = new VolumeDOS();
+            dos.readFromMedia(disk);
+            getUsedDOS(rKnownSectors);
+        }
 
         List rAllSectorsWithData = new ArrayList();
         disk.getDataTS(rAllSectorsWithData);
