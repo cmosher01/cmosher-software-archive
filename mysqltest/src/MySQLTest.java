@@ -97,6 +97,15 @@ public class MySQLTest
 		Iterator i = new StringFields(s).iterator();
 
 		int year = Integer.parseInt((String)i.next());
+		switch (year)
+        {
+            case 1790:
+                parse1790(i);
+            break;
+
+            default:
+            break;
+        }
     }
 
     protected void calc() throws SQLException
