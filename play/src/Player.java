@@ -72,7 +72,7 @@ public class Player implements Immutable
 		byte[] rb = new byte[0x100];
 		for (int i = 0; i < rb.length; i++)
         {
-            rb[i] = i;
+            rb[i] = (byte)i;
         }
 		ByteArrayInputStream bais = new ByteArrayInputStream(rb);
 		InputStreamReader isr = new InputStreamReader(bais,"US-ASCII");
