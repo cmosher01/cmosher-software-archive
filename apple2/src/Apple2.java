@@ -49,23 +49,25 @@ public class Apple2
 
     /**
      * @param disk
+     * @throws InvalidPosException
      */
-    public static void doOneDisk(Disk disk)
+    public static void doOneDisk(Disk disk) throws InvalidPosException
     {
-        List r = new ArrayList();
-        disk.findDos33CatalogSector(r);
+        List rPosCat = new ArrayList();
+        disk.findDos33CatalogSector(rPosCat);
 
-        if (r.size() > 0)
+        if (rPosCat.size() > 0)
         {
-            for (Iterator i = r.iterator(); i.hasNext();)
+            List rCatEntry = new ArrayList();
+            for (Iterator i = rPosCat.iterator(); i.hasNext();)
             {
                 DiskPos p = (DiskPos)i.next();
-                System.out.print(p.toStringTS()+"; ");
+                disk.getDos33CatalogEntries(p, rCatEntry);
             }
         }
         else
         {
-            System.out.print("[none] ");
+            System.out.print("[no files found] ");
         }
 //        List rCat = new ArrayList();
 //        disk.findDos33CatalogSector(rCat);
