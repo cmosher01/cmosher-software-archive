@@ -105,7 +105,9 @@ public class Disk
      */
     public DiskPos readTS(DiskPos pos) throws InvalidPosException
     {
-        int track = read(pos);
+        DiskPos p = (DiskPos)pos.clone();
+        int track = read(p);
+        p.advance(1);
         int sector = read(pos);
         DiskPos pret = new DiskPos();
         pret.setTS(track,sector);
