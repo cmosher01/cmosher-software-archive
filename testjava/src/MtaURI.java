@@ -77,7 +77,7 @@ public class MtaURI
         }
         catch (NumberFormatException e)
         {
-            URISyntaxException ex = new URISyntaxException(sRate,"Invalid "+param+" specified in MTA "+sMTA);
+            URISyntaxException ex = new URISyntaxException(s,"Invalid "+param+" specified in MTA "+sMTA);
             ex.initCause(e);
             throw ex;
         }
