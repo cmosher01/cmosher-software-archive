@@ -18,7 +18,7 @@ public class TestBeans
             System.out.println(pkg.getName());
         }
         System.out.println("--------------------------");
-        new Test().test();
+        new com.surveysampling.beans.editors.Test().test();
 
         SomeBean some = new SomeBean();
         String prop = "objInteger";
