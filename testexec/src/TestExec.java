@@ -3,7 +3,7 @@ import java.io.InputStreamReader;
 
 public class TestExec
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws Throwable
     {
         System.out.println("parent process");
         execDumpOutput();
