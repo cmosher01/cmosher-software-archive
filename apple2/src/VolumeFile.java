@@ -10,6 +10,6 @@
  */
 public class VolumeFile
 {
-    private VolumeTSMap ts;
-    private VolumeFileData data;
+//    private VolumeTSMap ts;
+//    private VolumeFileData data;
 }
