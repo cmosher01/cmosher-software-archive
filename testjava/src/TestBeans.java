@@ -1,3 +1,5 @@
+import java.beans.BeanInfo;
+import java.beans.Introspector;
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorManager;
 
@@ -13,6 +15,8 @@ public class TestBeans
         ed.setAsText("34");
         Integer i = (Integer)ed.getValue();
         showInt(i.intValue());
+
+        BeanInfo bi = Introspector.getBeanInfo(SomeBean.class);
     }
 
     public static void showInt(int i)
