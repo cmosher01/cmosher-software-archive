@@ -28,8 +28,8 @@ public class TestExec
         System.out.println("starting subprocess...");
         p = Runtime.getRuntime().exec("java -cp . Small");
 
-        LineDumper procout = new LineDumper(new InputStreamReader(p.getInputStream()));
-        LineDumper procerr = new LineDumper(new InputStreamReader(p.getErrorStream()));
+        procout = new LineDumper(new InputStreamReader(p.getInputStream()));
+        procerr = new LineDumper(new InputStreamReader(p.getErrorStream()));
     }
 
     public static void waitFor()
