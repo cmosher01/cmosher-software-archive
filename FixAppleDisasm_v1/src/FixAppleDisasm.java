@@ -354,9 +354,17 @@ public class FixAppleDisasm
 		printout.println(";**********************************************************");
 		for (Iterator i = externs.keySet().iterator(); i.hasNext();)
         {
-            Integer ext = (Integer)i.next();
+            Integer extInt = (Integer)i.next();
+            int ext = extInt.intValue();
             printout.print(" ; EQU $");
-			printout.print(hexWord(ext.intValue()));
+            if (ext < 0x100)
+            {
+				printout.print(hexByte(ext));
+            }
+            else
+            {
+				printout.print(hexWord(ext));
+            }
             printout.println();
         }
 
