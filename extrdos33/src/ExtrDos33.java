@@ -103,6 +103,9 @@ public class ExtrDos33
 				rbc[i] = 0;
 			}
 
+			// HELLO program type???
+			rb[0xD42] = 0;
+
 			// (in most DOS 3.3's, but not Prontodos or ESdos) ??? :
 			// some bytes before HELLO program name
 			for (int i = 0x1959; i < 0x1975; ++i)
