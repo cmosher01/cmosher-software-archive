@@ -20,18 +20,6 @@ import javax.naming.NamingException;
  */
 public class Perm
 {
-//	private static final Properties props = new Properties();
-//	static
-//	{
-//		props.setProperty("javax.jdo.PersistenceManagerFactoryClass","org.jpox.PersistenceManagerFactoryImpl");
-//		props.setProperty("javax.jdo.option.ConnectionDriverName","org.jpox.driver.JPOXDriver");
-//		props.setProperty("javax.jdo.option.ConnectionURL","jpox:java:comp/env/jdbc/jdotest");
-//		props.setProperty("javax.jdo.option.NontransactionalRead","true");
-//		props.setProperty("org.jpox.autoCreateTables","true");
-//		props.setProperty("org.jpox.validateTables","false");
-//		props.setProperty("org.jpox.validateConstraints","false");
-//	}
-
 	private final PersistenceManager pm;
 
 	public Perm() throws NamingException, FileNotFoundException, IOException
