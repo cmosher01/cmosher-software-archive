@@ -177,22 +177,29 @@ public class HexBuilder
      */
     private char filterAsc(int b)
     {
-        if (b < 0 || 256 <= b)
+        if (b < 0 || 128 <= b)
         {
             b &= 0x7F;
         }
         char x;
-        if (0 <= b && b < 32)
+        if (b == 0)
         {
-            b += '@';
-        }
-        if (32 <= b && b <= 126)
-        {
-            x = (char)b;
+            x = ' ';
         }
         else
         {
-            x = '.';
+            if (1 <= b && b < 32)
+            {
+                b += '@';
+            }
+            if (32 <= b && b <= 126)
+            {
+                x = (char)b;
+            }
+            else
+            {
+                x = '.';
+            }
         }
         return x;
     }
