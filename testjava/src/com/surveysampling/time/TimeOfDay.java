@@ -95,6 +95,12 @@ public class TimeOfDay
         return valid;
     }
 
+    /**
+     * Sets the HOUR_OF_DAY, MINUTE, SECOND, and MILLISECOND
+     * components of the given Calendar to the corresponding
+     * values from this object.
+     * @param cal the Calendar, with date set, to have time overridden
+     */
     public void getTimeOnDay(Calendar cal)
     {
         cal.set(Calendar.HOUR_OF_DAY, hours);
