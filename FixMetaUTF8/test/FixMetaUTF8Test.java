@@ -130,6 +130,25 @@ public class FixMetaUTF8Test extends TestCase
         shouldBe(sbExpect,sb);
     }
 
+    public void testNoQuotes()
+    {
+        StringBuffer sb = new StringBuffer();
+        sb.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">\n" + 
+                "<!-- saved from url=(0062)http://ntjp:8080/epanCustomerOrder/customerOrder.jsp?id=jackie -->\n" + 
+                "<HTML><HEAD><TITLE>Customer Order Form</TITLE>\n" + 
+                "<META http-equiv=Content-Type content=\"text/html; charset=iso-8859-1\">\n" + 
+                "<META content=\"MSHTML 6.00.2800.1400\" name=GENERATOR></HEAD>\n" + 
+                "<BODY>");
+        StringBuffer sbExpect = new StringBuffer();
+        sbExpect.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">\n" + 
+                "<!-- saved from url=(0062)http://ntjp:8080/epanCustomerOrder/customerOrder.jsp?id=jackie -->\n" + 
+                "<HTML><HEAD>\n<META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><TITLE>Customer Order Form</TITLE>\n" + 
+                "\n" + 
+                "<META content=\"MSHTML 6.00.2800.1400\" name=GENERATOR></HEAD>\n" + 
+                "<BODY>");
+
+        shouldBe(sbExpect,sb);
+    }
     private void shouldBe(StringBuffer sbExpect, StringBuffer in)
     {
         System.out.println(in);
