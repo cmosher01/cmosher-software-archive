@@ -9,6 +9,12 @@ public class A2DiskImage
 	private final int BYTES_PER_SECTOR = 0x100;
 	private final int SECTORS_PER_TRACK = 0x10;
 
+	private static final int UNKNOWN = 0;
+	private static final int DOS33 = 1;
+	private static final int PRODOS = 2;
+
+	private int osType = UNKNOWN;
+
 	public A2DiskImage(byte[] image)
 	{
 		img = image;
@@ -41,7 +47,7 @@ public class A2DiskImage
 			getByte(0,0xB,3)==0 &&
 			getByte(0,0xB,4)>>4==0xF)
 		{
-			m_osType = osProdos;
+			osType = osProdos;
 			// Prodos disk in track-sector order
 			// switch to block order
 			switchTSBlock();
@@ -53,7 +59,7 @@ public class A2DiskImage
 			getByte(2,3)==0 &&
 			getByte(2,4)>>4==0xF)
 		{
-			m_osType = osProdos;
+			osType = osProdos;
 			// Prodos disk in block order
 			// OK
 		}
@@ -61,7 +67,7 @@ public class A2DiskImage
 			getByte(0x11,0xE,1)==0x11 &&
 			getByte(0x11,0xE,2)==0x0D)
 		{
-			m_osType = osDos33;
+			osType = osDos33;
 			// DOS 3.3 disk in track-sector order
 			// OK
 		}
@@ -69,15 +75,14 @@ public class A2DiskImage
 			getByte(0x88,0x101)==0x11 &&
 			getByte(0x88,0x102)==0x0D)
 		{
-			m_osType = osDos33;
+			osType = osDos33;
 			// DOS 3.3 disk in block order
 			// switch to track-sector order
 			switchTSBlock();
 		}
 		else
 		{
-			AfxMessageBox("Cannot determine type of disk.");
-			AfxThrowUserException();
+			osType = UNKNOWN;
 		}
 	}
 
