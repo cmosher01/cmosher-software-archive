@@ -81,15 +81,15 @@ public class Util
         }
         return r;
     }
-//  public static ArrayList<T> list(Iterable<T> i)
-//  {
-//      ArrayList<T> r = new ArrayList<T>();
-//      for (T x : i)
-//      {
-//          r.add(x);
-//      }
-//      return r;
-//  }
+//    public static ArrayList<T> list(Iterable<T> i)
+//    {
+//        ArrayList<T> r = new ArrayList<T>();
+//        for (T x : i)
+//        {
+//            r.add(x);
+//        }
+//        return r;
+//    }
 
     public static HashSet set(Iterator i)
     {
