@@ -15,8 +15,6 @@ import junit.framework.TestCase;
 public class DiskCatalogTest extends TestCase
 {
     private static byte[] zeroes = new byte[0x100];
-    private TSMap ts = new TSMap();
-    private List ent = new ArrayList();
 
     /**
      * negative test all zeroes
@@ -30,6 +28,8 @@ public class DiskCatalogTest extends TestCase
      */
     public void testCatalog_Dos33_System_Master_19800825_110F()
     {
+        TSMap ts = new TSMap();
+        List ent = new ArrayList();
         assertEquals(7,Disk.isDos33CatalogSector(Hex2Bin.hex2Bin(
         "00 11 0E 00 00 00 00 00 00 00 00 13 0F 82 C8 C5 "+
         "CC CC CF A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 "+
@@ -48,5 +48,6 @@ public class DiskCatalogTest extends TestCase
         "C2 CF CF D4 B1 B3 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 "+
         "A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 0A 00 "),
         false,ts,ent));
+        assertEquals(7,ent.size());
     }
 }
