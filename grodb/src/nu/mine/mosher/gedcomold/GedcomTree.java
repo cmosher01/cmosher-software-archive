@@ -1,6 +1,7 @@
 package nu.mine.mosher.gedcom;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import nu.mine.mosher.util.TreeNode;
@@ -47,5 +48,20 @@ public class GedcomTree
 	public TreeNode getNode(String id)
 	{
 		return (TreeNode)mapIDtoNode.get(id);
+	}
+
+	public String toString()
+	{
+		StringBuffer sb = new StringBuffer(1024);
+		root.appendString(sb);
+
+		sb.append("--------map-of-IDs-to-Nodes--------\n");
+		for (Iterator i = mapIDtoNode.entrySet().iterator(); i.hasNext();)
+        {
+            Map.Entry entry = (Map.Entry)i.next();
+            sb.append(entry.getKey().toString());
+            sb.append(" --> ");
+            sb.append(entry.getValue().toString());
+        }
 	}
 }
