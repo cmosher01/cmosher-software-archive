@@ -25,9 +25,6 @@ public class Perm
 	public Perm() throws NamingException, FileNotFoundException, IOException
 	{
 		URL urlProps = Perm.class.getClassLoader().getResource("nu/mine/mosher/jdotest/jdo.properties");
-		System.err.println("------------------------------------");
-		System.err.println(urlProps.getFile());
-		System.err.println("------------------------------------");
 		Properties props = new Properties();
 		props.load(new FileInputStream(new File(urlProps.getFile())));
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(props);
