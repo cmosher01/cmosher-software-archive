@@ -10,8 +10,8 @@ public class TestCrypt
 {
     public static void main(String[] rArg) throws Throwable
     {
-        showProviders();
-//        SecureRandom rand = new SecureRandom();
+        SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+        random.nextInt();
     }
 
     public static void showProviders()
