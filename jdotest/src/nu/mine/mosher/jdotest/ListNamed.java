@@ -37,7 +37,7 @@ public class ListNamed
 			sb.append(id);
 			sb.append("\">");
 			sb.append(item.getName());
-			sb.append("</a></td></tr>");
+			sb.append("</a></td></tr>\n");
 		}
 
 		sb.append("<tr><td>&lt;<a href=\"add.jsp\">add</a>&gt;</td></tr>");
