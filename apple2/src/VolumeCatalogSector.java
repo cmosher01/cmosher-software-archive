@@ -32,12 +32,19 @@ public class VolumeCatalogSector extends VolumeEntity
      */
     public void dump(StringBuffer s)
     {
-        for (Iterator i = this.rSector.iterator(); i.hasNext();)
+        VolumeSector sect = (VolumeSector)rSector.get(0);
+        s.append(sect.toString());
+        s.append(": ");
+        for (Iterator i = this.rEntry.iterator(); i.hasNext();)
         {
-            VolumeSector sect = (VolumeSector)i.next();
-            
+            Dos33CatalogEntry entry = (Dos33CatalogEntry)i.next();
+            s.append(entry.getName());
+            if (i.hasNext())
+            {
+                s.append(",");
+            }
         }
-        s.append("")
+        s.append("\n");
     }
 
 }
