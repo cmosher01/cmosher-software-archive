@@ -114,8 +114,6 @@ public class Delta
                 if (match && !sourceOutofBytes)
                 {
                     // The length of the match is determined by comparing bytes.
-                    //long start = System.currentTimeMillis();
-
                     boolean ok = true;
                     byte[] sourceBuff = new byte[buff_size];
                     byte[] targetBuff = new byte[buff_size];
