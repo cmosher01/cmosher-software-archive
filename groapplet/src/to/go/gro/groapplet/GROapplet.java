@@ -77,8 +77,8 @@ public class GROapplet extends JApplet
             JTextArea errorPane = new JTextArea();
             errorPane.read(new StringReader(sb.toString()), null);
             JScrollPane areaScrollPane = new JScrollPane(errorPane);
-            areaScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-            areaScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            areaScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+            areaScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
             getContentPane().removeAll();
             getContentPane().add(areaScrollPane);
         }
