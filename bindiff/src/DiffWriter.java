@@ -38,7 +38,25 @@ public class DiffWriter
 		}
 	}
 
-	public void flush()
+    private void outAscii()
+    {
+    	for (int i = 0; i < line.length; i++)
+        {
+            int b = line[i];
+            b &= 0x7f;
+            if (b == 0 || b == 127)
+            {
+            	b = 32;
+            }
+            else if (b < 32)
+            {
+            	b += 64;
+            }
+            System.out.print((char)b);
+        }
+    }
+
+    public void flush()
 	{
 		if (s.length() == 0)
 		{
