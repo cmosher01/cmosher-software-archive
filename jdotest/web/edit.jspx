@@ -6,9 +6,8 @@
 <%@ page import="nu.mine.mosher.jdotest.Perm" %>
 <%@ page import="nu.mine.mosher.jdotest.Thing" %>
 <%
-//    String id = request.getParameter("id");
 	PersistenceManager pm = Perm.pm();
-    Item item = (Item)pm.getObjectById(pm.newObjectIdInstance(Item.class,${id}),true);
+    Item item = (Item)pm.getObjectById(pm.newObjectIdInstance(Item.class,request.getParameter("id")),true);
     pageContext.setAttribute("item",item);
 %>
 <head>
