@@ -13,9 +13,11 @@ public class CatEntry implements TreeNode
 	private DefaultMutableTreeNode node = null;
 	private String sName;
 	private static final Icon mIcon = new ImageIcon("d:\\temp\\a2file.gif");
+	private byte[] raw;
 
 	public CatEntry(byte[] rb)
 	{
+		System.arraycopy(rb,0,raw,0,rb.length);
 		byte[] rname = new byte[0x1e];
 		System.arraycopy(rb,3,rname,0,0x1e);
 		sName = A2DiskContents.dosName(rname);
