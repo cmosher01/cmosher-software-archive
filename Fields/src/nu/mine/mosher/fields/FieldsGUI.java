@@ -22,7 +22,7 @@ import javax.swing.table.TableColumnModel;
 /**
  * @author Chris Mosher
  */
-public class GUI
+public class SwingGUI
 {
     private JFrame mFrame;
 
