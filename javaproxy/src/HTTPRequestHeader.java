@@ -5,7 +5,8 @@
  * OWN RISK. Author : Steve Yeong-Ching Hsueh
  */
 
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 
@@ -25,7 +26,7 @@ class HTTPRequestHeader
 
     public String primeheader = "";
 
-    public Hashtable headerfields = new Hashtable();
+    public HashMap headerfields = new HashMap();
 
     private boolean MalFormedHeader = false;
 
@@ -101,7 +102,7 @@ class HTTPRequestHeader
     /**
      * get all headers in a Hashtable
      */
-    public Hashtable getHeaderFields()
+    public HashMap getHeaderFields()
     {
         return headerfields;
     }
