@@ -11,52 +11,24 @@ package nu.mine.mosher.cmdline;
  */
 public class Argument
 {
-    private String mName;
-    private String mAbbrev;
+    private ArgumentDefinition mDef;
     private Object mValue;
     private boolean mIsSpecified;
-    private String mDesc;
 
-    public Argument(String name, String abbrev, String desc, Object value, boolean isSpecified)
+    public Argument(ArgumentDefinition def, Object value, boolean isSpecified)
     {
-        mName = name;
-        mAbbrev = abbrev;
-        mDesc = desc;
+        mDef = def;
         mValue = value;
         mIsSpecified = isSpecified;
     }
 
-    boolean isOption()
-    {
-        return mName.length() > 0 || mAbbrev.length() > 0;
-    }
     boolean isSpecified()
     {
         return mIsSpecified;
     }
-    String getName()
-    {
-        if (mName.length() > 0)
-        {
-            return mName;
-        }
-        return mAbbrev;
-    }
-    String getLongName()
-    {
-        return mName;
-    }
-    String getShortName()
-    {
-        return mAbbrev;
-    }
     Object getValue()
     {
         return mValue;
-    }
-    String getDescription()
-    {
-        return mDesc;
     }
 
     public boolean equals(Object obj)
@@ -67,26 +39,20 @@ public class Argument
         }
         Argument that = (Argument)obj;
         return
-            this.mName.equals(that.mName) &&
-            this.mAbbrev.equals(that.mAbbrev) &&
+            this.mDef.equals(that.mDef) &&
             this.mValue.equals(that.mValue) &&
-            this.mIsSpecified==that.mIsSpecified &&
-            this.mDesc.equals(that.mDesc);
+            this.mIsSpecified==that.mIsSpecified;
     }
 
     public int hashCode()
     {
         int hash = 17;
         hash *= 37;
-        hash += mName.hashCode();
-        hash *= 37;
-        hash += mAbbrev.hashCode();
+        hash += mDef.hashCode();
         hash *= 37;
         hash += mValue.hashCode();
         hash *= 37;
         hash += (mIsSpecified ? 0 : 1);
-        hash *= 37;
-        hash += mDesc.hashCode();
         return hash;
     }
 }
