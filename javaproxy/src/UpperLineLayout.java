@@ -8,8 +8,13 @@
  * Author : Steve Yeong-Ching Hsueh
  */
 
-import java.awt.*;
-import java.io.*;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Insets;
+import java.awt.LayoutManager;
+import java.awt.Rectangle;
+import java.io.Serializable;
 
 /**
  * UpperLineLayout is the LayoutManager for the buttons on the upper part
