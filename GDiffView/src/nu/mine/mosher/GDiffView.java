@@ -144,9 +144,16 @@ public class GDiffVeiew extends JFrame
             sb.append('\n');
             appendAddr(sb,addr);
             sb.append(": ");
-            for (int i = 0; i < c; ++i)
+            for (int i = 0; i < cCol; ++i)
             {
-                appendHex(sb,rb[i]);
+                if (i < c)
+                {
+                    appendHex(sb,rb[i]);
+                }
+                else
+                {
+                    ab.append("  ");
+                }
                 sb.append(' ');
             }
             c = in.read(rb);
