@@ -92,9 +92,6 @@ public class GDiffView extends JFrame
         JScrollPane scrTrg = new JScrollPane(paneTrg);
         scrTrg.setPreferredSize(new Dimension(500,460));
 
-        String[] debugData = {"magic D1FFD1FF", "version 04", "COPY 0, 2",
-                "DATA [2 bytes]", "COPY 2, 2", "COPY 1, 4", "EOF"};
-
         List rcmd = new ArrayList();
         rcmd.add(new GDiffCopy(new Range(0,1)));
         rcmd.add(new GDiffData(new byte[]{65,67}));
