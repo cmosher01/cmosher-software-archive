@@ -86,7 +86,7 @@ public class Apple2
         vol.dump(s);
         System.out.println(s);
 
-        Map mapDiskMap = new HashMap();
+//        Map mapDiskMap = new HashMap();
 
 //        List rUsedCat = new ArrayList();
 //        vol.getUsedCatalog(rUsedCat);
