@@ -6,6 +6,8 @@ package nu.mine.mosher.mp3;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * @author Chris Mosher
@@ -30,145 +32,150 @@ public class MP3Calc
 			System.exit(1);
     	}
 
-		File fin = new File(rArg[0]);
-		if (!fin.canRead())
-		{
-			System.err.println("Cannot access file "+fin.getCanonicalPath());
-			System.exit(1);
-		}
+        calc(rArg);
+    }
 
-		long flen = fin.length();
-		System.out.print(flen);
-		System.out.print(",");
-
-		DataInputStream in = new DataInputStream(new FileInputStream(fin));
-
-		final int h = in.readInt();
-		System.out.print(Integer.toHexString(h));
-		System.out.print(",");
-
-		// synch word
-		int synch = getbits(h,31,21);
-		System.out.print(Integer.toHexString(synch));
-		System.out.print(",");
-
-		// MPEG1 or MPEG2 or MPEG 2.5
-		int mpeg = 0;
-		switch (getbits(h,20,19))
+    private static void calc(String[] file) throws IOException, FileNotFoundException
+    {
+        File fin = new File(file[0]);
+        if (!fin.canRead())
         {
-			case 0:
-				mpeg = 25;
-				System.out.print("mpeg2.5,");
-			break;
-			case 2:
-				mpeg = 2;
-				System.out.print("mpeg2,");
-			break;
-			case 3:
-				mpeg = 1;
-				System.out.print("mpeg1,");
-			break;
+        	System.err.println("Cannot access file "+fin.getCanonicalPath());
+        	System.exit(1);
         }
-
-		// layer 1, 2, or 3 (4 means undefined)
-		int layer = 4-(getbits(h,18,17));
-		System.out.print("layer");
-		System.out.print(layer);
-		System.out.print(",");
-
-		// protection
-		boolean crc = (getbits(h,16,16) > 0);
-		if (!crc)
-		{
-			System.out.print("no");
-		}
-		System.out.print("crc");
-		System.out.print(",");
-
-		// bitrate
-		int bps = calcBitRate(getbits(h,15,12),mpeg,layer);
-		System.out.print(bps);
-		System.out.print(",");
-
-		int freq = 0;
-		int key = getbits(h,11,10);
-		if (mpeg == 1)
-		{
-			freq = M1f[key];
-		}
-		else if (mpeg == 2)
-		{
-			freq = M2f[key];
-		}
-		else if (mpeg == 25)
-		{
-			freq = M25f[key];
-		}
-		System.out.print(freq);
-		System.out.print(",");
-
-		// padding
-		boolean padding = (getbits(h,9,9) > 0);
-		if (!padding)
-		{
-			System.out.print("no");
-		}
-		System.out.print("padding");
-		System.out.print(",");
-
-		// private bit
-		int priv = getbits(h,8,8);
-		System.out.print(priv);
-		System.out.print(",");
-
-		// channel mode
-		int mode = getbits(h,7,6);
-		switch (mode)
+        
+        long flen = fin.length();
+        System.out.print(flen);
+        System.out.print(",");
+        
+        DataInputStream in = new DataInputStream(new FileInputStream(fin));
+        
+        final int h = in.readInt();
+        System.out.print(Integer.toHexString(h));
+        System.out.print(",");
+        
+        // synch word
+        int synch = getbits(h,31,21);
+        System.out.print(Integer.toHexString(synch));
+        System.out.print(",");
+        
+        // MPEG1 or MPEG2 or MPEG 2.5
+        int mpeg = 0;
+        switch (getbits(h,20,19))
         {
-			case 0:
-				System.out.print("stereo,");
-			break;
-			case 1:
-				System.out.print("jstereo,");
-			break;
-			case 2:
-				System.out.print("2mono,");
-			break;
-			case 3:
-				System.out.print("mono,");
-			break;
+        	case 0:
+        		mpeg = 25;
+        		System.out.print("mpeg2.5,");
+        	break;
+        	case 2:
+        		mpeg = 2;
+        		System.out.print("mpeg2,");
+        	break;
+        	case 3:
+        		mpeg = 1;
+        		System.out.print("mpeg1,");
+        	break;
         }
-
-		int jointstereo = getbits(h,5,4);
-		System.out.print(jointstereo);
-		System.out.print(",");
-
-		boolean copyright = (getbits(h,3,3) > 0);
-		if (!copyright)
-		{
-			System.out.print("no");
-		}
-		System.out.print("copyright");
-		System.out.print(",");
-
-		boolean original = (getbits(h,2,2) > 0);
-		System.out.print(original ? "original," : "copy,");
-
-		int emphasis = getbits(h,1,0);
-		switch (emphasis)
+        
+        // layer 1, 2, or 3 (4 means undefined)
+        int layer = 4-(getbits(h,18,17));
+        System.out.print("layer");
+        System.out.print(layer);
+        System.out.print(",");
+        
+        // protection
+        boolean crc = (getbits(h,16,16) > 0);
+        if (!crc)
         {
-			case 0:
-				System.out.print("noemphasis");
-			break;
-			case 1:
-				System.out.print("50/15 ms");
-			break;
-			case 2:
-				System.out.print("[invalid]");
-			break;
-			case 3:
-				System.out.print("CCITT J.17");
-			break;
+        	System.out.print("no");
+        }
+        System.out.print("crc");
+        System.out.print(",");
+        
+        // bitrate
+        int bps = calcBitRate(getbits(h,15,12),mpeg,layer);
+        System.out.print(bps);
+        System.out.print(",");
+        
+        int freq = 0;
+        int key = getbits(h,11,10);
+        if (mpeg == 1)
+        {
+        	freq = M1f[key];
+        }
+        else if (mpeg == 2)
+        {
+        	freq = M2f[key];
+        }
+        else if (mpeg == 25)
+        {
+        	freq = M25f[key];
+        }
+        System.out.print(freq);
+        System.out.print(",");
+        
+        // padding
+        boolean padding = (getbits(h,9,9) > 0);
+        if (!padding)
+        {
+        	System.out.print("no");
+        }
+        System.out.print("padding");
+        System.out.print(",");
+        
+        // private bit
+        int priv = getbits(h,8,8);
+        System.out.print(priv);
+        System.out.print(",");
+        
+        // channel mode
+        int mode = getbits(h,7,6);
+        switch (mode)
+        {
+        	case 0:
+        		System.out.print("stereo,");
+        	break;
+        	case 1:
+        		System.out.print("jstereo,");
+        	break;
+        	case 2:
+        		System.out.print("2mono,");
+        	break;
+        	case 3:
+        		System.out.print("mono,");
+        	break;
+        }
+        
+        int jointstereo = getbits(h,5,4);
+        System.out.print(jointstereo);
+        System.out.print(",");
+        
+        boolean copyright = (getbits(h,3,3) > 0);
+        if (!copyright)
+        {
+        	System.out.print("no");
+        }
+        System.out.print("copyright");
+        System.out.print(",");
+        
+        boolean original = (getbits(h,2,2) > 0);
+        System.out.print(original ? "original," : "copy,");
+        
+        int emphasis = getbits(h,1,0);
+        switch (emphasis)
+        {
+        	case 0:
+        		System.out.print("noemphasis");
+        	break;
+        	case 1:
+        		System.out.print("50/15 ms");
+        	break;
+        	case 2:
+        		System.out.print("[invalid]");
+        	break;
+        	case 3:
+        		System.out.print("CCITT J.17");
+        	break;
         }
         System.out.println();
     }
