@@ -5,7 +5,7 @@ public class TestBeans
 {
     public static void main(String[] rArgs) throws Throwable
     {
-        PropertyEditor ed = PropertyEditorManager.findEditor(Integer.class);
+        PropertyEditor ed = PropertyEditorManager.findEditor(Integer.TYPE);
         if (ed == null)
         {
             throw new Exception("can't get property editor for integer");
