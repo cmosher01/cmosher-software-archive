@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ListIterator;
 
+import com.surveysampling.util.Cloner;
 import com.surveysampling.util.UniversalCloser;
 
 public class Test
@@ -49,6 +50,10 @@ public class Test
             }
             return clon;
         }
+        public String toString()
+        {
+            return ""+x;
+        }
     }
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
@@ -56,8 +61,11 @@ public class Test
 
         Mute x = new Mute();
         x.x = 5;
-        Object y = mosher.Cloner.cloneObject(x);
+        System.out.println(x);
+        Object y = Cloner.cloneObject(x);
         x.x = 7;
+        System.out.println(x);
+        System.out.println(y);
 
 
 //        Object x = new Object();
