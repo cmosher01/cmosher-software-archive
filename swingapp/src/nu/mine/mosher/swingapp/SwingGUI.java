@@ -24,6 +24,7 @@ public class GUI
         setLookAndFeel();
 
         // Use look and feel's (not OS's) decorations.
+        // Must be done before creating the JFrame.
         JFrame.setDefaultLookAndFeelDecorated(true);
 
         // Create the window.
