@@ -27,7 +27,7 @@
 					String id = pm.getObjectId(item).toString();
 					</jsp:scriptlet>
 					<tr><td>
-					<c:url var="edit" value="/edit.jsp">
+					<c:url var="edit" value="edit.jsp">
 						<c:param name="id" value="${id}" />
 					</c:url>
 					<a href="${edit}">${item.name}</a></td></tr>
@@ -35,8 +35,20 @@
 				}
 				</c:forEach>
 			</tags:allItems>
-			<c:url var="add" value="/add.jsp" />
+			<c:url var="add" value="add.jsp" />
 			<tr><td>&lt;<a href="${add}">add</a>&gt;</td></tr>
 		</table>
 	</body>
 </html>
+
+		<tags:getAllItems var="items" />
+		<table>
+			<c:forEach var="i" items="${items}">
+				<c:url var="edit" value="edit.jsp">
+					<c:param name="id" value="${i.id}" />
+				</c:url>
+				<tr><td><a href="${edit}">${i.name}</a></td></tr>
+			</c:forEach>
+			<c:url var="add" value="add.jsp" />
+			<tr><td>{<a href="${add}">add</a>}</td></tr>
+		</table>
