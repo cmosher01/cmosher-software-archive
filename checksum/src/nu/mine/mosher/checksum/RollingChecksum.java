@@ -42,17 +42,7 @@ public class RollingChecksum
             a += x;
             b += (len-i)*x;
         }
-        while (a < 0)
-        {
-            a += M;
-        }
-        a %= M;
-        while (b < 0)
-        {
-            b += M;
-        }
-        b %= M;
-        checksum = (b << 16) + a;
+        buildChecksum(a,b);
     }
 
     /**
@@ -82,6 +72,15 @@ public class RollingChecksum
         int b = (checksum >> 16) & 0xFFFF;
         b += a-len*xk;
 
+        buildChecksum(a,b);
+    }
+
+    /**
+     * @param a
+     * @param b
+     */
+    private void buildChecksum(int a, int b)
+    {
         while (a < 0)
         {
             a += M;
