@@ -46,7 +46,7 @@ public class TreeFrame extends Frame implements WindowListener
 
     public synchronized void setVisible(boolean show)
     {
-        setLocation(50, 50);
+        //setLocation(50, 50);
         super.setVisible(show);
     }
 
