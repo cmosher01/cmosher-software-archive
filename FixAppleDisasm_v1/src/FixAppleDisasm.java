@@ -183,13 +183,6 @@ public class FixAppleDisasm
 								{
 									ln.refaddr = -1;
 								}
-								if (ln.refaddr >= 0)
-								{
-								}
-								else
-								{
-									System.err.println(s);
-								}
 							}
 						}
 					}
