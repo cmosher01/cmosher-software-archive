@@ -333,22 +333,22 @@ public class GDiffView extends JFrame
             begin = beginSrc;
             end = endSrc;
         }
-        if (getRow(beginSrc) == getRow(endSrc))
+        if (getRow(begin) == getRow(end))
         {
-            highlight(getHexStart(beginSrc),getHexEnd(endSrc),highlight,target);
-            highlight(getAscStart(beginSrc),getAscEnd(endSrc),highlight,target);
+            highlight(getHexStart(begin),getHexEnd(end),highlight,target);
+            highlight(getAscStart(begin),getAscEnd(end),highlight,target);
         }
         else
         {
-            highlight(getHexStart(beginSrc),getHexRowEnd(getRow(beginSrc)),highlight,target);
-            highlight(getAscStart(beginSrc),getAscRowEnd(getRow(beginSrc)),highlight,target);
-            for (long i = getRow(beginSrc) + 1; i <= getRow(endSrc) - 1; ++i)
+            highlight(getHexStart(begin),getHexRowEnd(getRow(begin)),highlight,target);
+            highlight(getAscStart(begin),getAscRowEnd(getRow(begin)),highlight,target);
+            for (long i = getRow(begin) + 1; i <= getRow(end) - 1; ++i)
             {
                 highlight(getHexRowStart(i),getHexRowEnd(i),highlight,target);
                 highlight(getAscRowStart(i),getAscRowEnd(i),highlight,target);
             }
-            highlight(getHexRowStart(getRow(endSrc)),getHexEnd(endSrc),highlight,target);
-            highlight(getAscRowStart(getRow(endSrc)),getAscEnd(endSrc),highlight,target);
+            highlight(getHexRowStart(getRow(end)),getHexEnd(end),highlight,target);
+            highlight(getAscRowStart(getRow(end)),getAscEnd(end),highlight,target);
         }
     }
 
