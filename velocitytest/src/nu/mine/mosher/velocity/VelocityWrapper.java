@@ -64,7 +64,7 @@ public class VelocityWrapper
     {
         try
         {
-            if (!velocity.mergeTemplate(templateName,context,writer)
+            if (!velocity.mergeTemplate(templateName,context,writer))
             {
                 throw new VelocityException("error calling VelocityEngine.mergeTemplate");
             }
