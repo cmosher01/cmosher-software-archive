@@ -15,14 +15,14 @@ public class HierarchyBrowserUpdater implements TreeExpansionListener
 {
     FileTreeNode mRoot;
     JTree mTree;
-    DefaultTreeModel treemodel;
+    DefaultTreeModel mModel;
     Frame frame;
 
     public HierarchyBrowserUpdater(JTree tree, FileTreeNode node, DefaultTreeModel tmodel, Frame theFrame)
     {
         mRoot = node;
         mTree = tree;
-        treemodel = tmodel;
+        mModel = tmodel;
         frame = theFrame;
     }
 
@@ -52,7 +52,7 @@ public class HierarchyBrowserUpdater implements TreeExpansionListener
                 childrenIdx[i] = node.getIndex((TreeNode)obj);
                 i++;
             }
-            treemodel.nodesWereInserted(node, childrenIdx);
+            mModel.nodesWereInserted(node, childrenIdx);
         }
         frame.setEnabled(true);
         frame.setCursor(Cursor.getDefaultCursor());
