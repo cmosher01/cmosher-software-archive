@@ -149,7 +149,7 @@ class NormalizerBuilder
             int start = 0;
             int end = line.indexOf(';'); // code
             value = Integer.parseInt(line.substring(start, end), 16);
-            if (true && value == '\u00c0')
+            if (DEBUG && value == '\u00c0')
             {
                 System.out.println("debug: " + line);
             }
