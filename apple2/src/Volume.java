@@ -70,6 +70,7 @@ public class Volume
         getUsedNondeletedFiles(rKnownSectors);
         getUsedDeletedFiles(rKnownSectors);
         getUsedRecoveredFiles(rKnownSectors);
+
         // TODO getUsedBoot getUsedDOS
         rKnownSectors.add(new DiskPos(0,0));
         rKnownSectors.add(new DiskPos(0,1));
@@ -196,7 +197,7 @@ public class Volume
     {
         for (Iterator i = this.rFileRecovered.iterator(); i.hasNext();)
         {
-            VolumeFile f = (VolumeFile)i.next();
+            VolumeFileRecovered f = (VolumeFileRecovered)i.next();
             f.getUsed(rPos);
         }
     }
