@@ -17,9 +17,9 @@ public class ArgumentDefinition
 
     public class SimpleArg extends ArgumentDefinition
     {
-        public SimpleArg(String desc)
+        public SimpleArg(String name, String desc)
         {
-            super("","",desc,true);
+            super(name,null,desc,true);
         }
     }
 
