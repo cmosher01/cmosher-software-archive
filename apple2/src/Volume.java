@@ -77,55 +77,7 @@ public class Volume
         getUsedDeletedFiles(rKnownSectors);
         getUsedRecoveredFiles(rKnownSectors);
         getUsedBoot(rKnownSectors);
-
-        // TODO getUsedDOS
-        rKnownSectors.add(new DiskPos(0,1));
-        rKnownSectors.add(new DiskPos(0,2));
-        rKnownSectors.add(new DiskPos(0,3));
-        rKnownSectors.add(new DiskPos(0,4));
-        rKnownSectors.add(new DiskPos(0,5));
-        rKnownSectors.add(new DiskPos(0,6));
-        rKnownSectors.add(new DiskPos(0,7));
-        rKnownSectors.add(new DiskPos(0,8));
-        rKnownSectors.add(new DiskPos(0,9));
-        rKnownSectors.add(new DiskPos(0,10));
-        rKnownSectors.add(new DiskPos(0,11));
-        rKnownSectors.add(new DiskPos(0,12));
-        rKnownSectors.add(new DiskPos(0,13));
-        rKnownSectors.add(new DiskPos(0,14));
-        rKnownSectors.add(new DiskPos(0,15));
-        rKnownSectors.add(new DiskPos(1,0));
-        rKnownSectors.add(new DiskPos(1,1));
-        rKnownSectors.add(new DiskPos(1,2));
-        rKnownSectors.add(new DiskPos(1,3));
-        rKnownSectors.add(new DiskPos(1,4));
-        rKnownSectors.add(new DiskPos(1,5));
-        rKnownSectors.add(new DiskPos(1,6));
-        rKnownSectors.add(new DiskPos(1,7));
-        rKnownSectors.add(new DiskPos(1,8));
-        rKnownSectors.add(new DiskPos(1,9));
-        rKnownSectors.add(new DiskPos(1,10));
-        rKnownSectors.add(new DiskPos(1,11));
-        rKnownSectors.add(new DiskPos(1,12));
-        rKnownSectors.add(new DiskPos(1,13));
-        rKnownSectors.add(new DiskPos(1,14));
-        rKnownSectors.add(new DiskPos(1,15));
-        rKnownSectors.add(new DiskPos(2,0));
-        rKnownSectors.add(new DiskPos(2,1));
-        rKnownSectors.add(new DiskPos(2,2));
-        rKnownSectors.add(new DiskPos(2,3));
-        rKnownSectors.add(new DiskPos(2,4));
-        rKnownSectors.add(new DiskPos(2,5));
-        rKnownSectors.add(new DiskPos(2,6));
-        rKnownSectors.add(new DiskPos(2,7));
-        rKnownSectors.add(new DiskPos(2,8));
-        rKnownSectors.add(new DiskPos(2,9));
-        rKnownSectors.add(new DiskPos(2,10));
-        rKnownSectors.add(new DiskPos(2,11));
-        rKnownSectors.add(new DiskPos(2,12));
-        rKnownSectors.add(new DiskPos(2,13));
-        rKnownSectors.add(new DiskPos(2,14));
-        rKnownSectors.add(new DiskPos(2,15));
+        getUsedDOS(rKnownSectors);
 
         List rAllSectorsWithData = new ArrayList();
         disk.getDataTS(rAllSectorsWithData);
@@ -216,4 +168,11 @@ public class Volume
         boot.getUsed(rPos);
     }
 
+    /**
+     * @param rPos
+     */
+    public void getUsedDOS(List rPos)
+    {
+        dos.getUsed(rPos);
+    }
 }
