@@ -15,6 +15,10 @@ public class GedcomTree
 			throw new InvalidLevel(line);
 		}
 
-		
+		TreeNode parent = prevNode;
+		for (int i = 0; i < cPops; ++i)
+        {
+            parent = parent.parent();
+        }
 	}
 }
