@@ -22,10 +22,17 @@ public class Disk
      * @param disk
      * @throws InvalidPosException
      */
-    public Disk(byte[] disk) throws InvalidPosException
+    public Disk(byte[] disk)
     {
         this.disk = disk;
-        this.pos = new DiskPos(0,0,0);
+        try
+        {
+            this.pos = new DiskPos(0,0,0);
+        }
+        catch (InvalidPosException e)
+        {
+            throw new RuntimeException("shouldn't happen",e);
+        }
     }
 
     /**
