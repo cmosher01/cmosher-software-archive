@@ -19,7 +19,7 @@
  * output conditional
  */
 
-package com.nothome.delta;
+package nu.mine.mosher;
 
 import java.io.BufferedInputStream;
 import java.io.File;
