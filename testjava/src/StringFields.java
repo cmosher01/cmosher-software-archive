@@ -11,5 +11,6 @@ public class SF
 
     public Iterator iterator()
     {
+        return new Iter();
     }
 }
