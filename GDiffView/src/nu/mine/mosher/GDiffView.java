@@ -467,6 +467,10 @@ public class GDiffView extends JFrame
         srcEOF = hex.getAddr();
     }
 
+    /**
+     * @param highlight
+     * @param target
+     */
     public void highlight(String highlight, boolean target)
     {
         long begin, end;
