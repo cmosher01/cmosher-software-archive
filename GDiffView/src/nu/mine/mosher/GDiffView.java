@@ -84,7 +84,9 @@ public class GDiffVeiew extends JFrame
         scrTrg.setPreferredSize(new Dimension(620,460));
 
         JPanel contentPane = new JPanel(new BorderLayout());
-        contentPane.add(scrSrc,BorderLayout.CENTER);
+        contentPane.add(scrSrc,BorderLayout.WEST);
+        contentPane.add(scrTrg,BorderLayout.EAST);
+
         setContentPane(contentPane);
  
         addWindowListener(new WindowAdapter()
