@@ -182,7 +182,7 @@ public class Disk
         return null;
     }
 
-    private static class SectorIter implements Iterator
+    private class SectorIter implements Iterator
     {
         private DiskPos d = new DiskPos();
 
