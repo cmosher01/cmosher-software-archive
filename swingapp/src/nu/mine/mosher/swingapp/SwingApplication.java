@@ -13,7 +13,7 @@ import javax.swing.SwingUtilities;
 public class Application
 {
 //    private Ja2GUI mGUI;
-    private static Application me;
+    private static SwingApplication me;
     private ExceptionHandler mExceptionHandler;
     private CommandLineArgHandler mCommandLineArgHandler;
     private GUI mGUI;
@@ -75,7 +75,7 @@ public class Application
                 }
                 catch (Throwable th)
                 {
-                    Application.thrown(th);
+                    SwingApplication.thrown(th);
                 }
             }
         });
