@@ -39,6 +39,9 @@ public class ByteAnalyzer
 
     public void execute(File f) throws IOException
     {
+        f = f.getCanonicalFile();
+        f = f.getAbsoluteFile();
+        System.out.println("processing file: "+f);
         BufferedInputStream in = new BufferedInputStream(new FileInputStream(f));
         int x = in.read();
         while (x != -1)
