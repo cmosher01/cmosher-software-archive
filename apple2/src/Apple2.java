@@ -88,7 +88,11 @@ public class Apple2
 
         Map mapDiskMap = new HashMap();
 
-//        mapDiskMap.put(p, new VolumeTableOfContents(p));
+//        List rUsedCat = new ArrayList();
+//        vol.getUsedCatalog(rUsedCat);
+
+
+        //        mapDiskMap.put(p, new VolumeTableOfContents(p));
 
 
 //        List rPosCat = new ArrayList();
