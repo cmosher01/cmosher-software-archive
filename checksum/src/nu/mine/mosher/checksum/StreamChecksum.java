@@ -33,7 +33,7 @@ public class ChecksumStream
         byte[] rs = new byte[cWindow];
         RollingChecksum rollCheck = new RollingChecksum();
 
-        int w = 0;
+        long w = 0;
         while (is.available() > 0)
         {
             if (is.available() < cWindow)
