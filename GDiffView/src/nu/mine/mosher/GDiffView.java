@@ -170,6 +170,9 @@ public class GDiffView extends JFrame
                         beginSrc = copy.getRange().getBegin();
                         endSrc = copy.getRange().getEnd();
                         highlight(true,false);
+                        beginTrg = copy.getTargetRange().getBegin();
+                        endTrg = copy.getTargetRange().getEnd();
+                        highlight(true,true);
                     }
                     else if (newCmd instanceof GDiffData)
                     {
