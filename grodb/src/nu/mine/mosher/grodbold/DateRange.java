@@ -154,18 +154,7 @@ public class DateRange implements Immutable, Serializable, Comparable
 		{
 			return false;
 		}
-
-		boolean tzeq = true;
-		if (this.hour >= 0 || this.minute >= 0)
-		{
-			if (this.timeZone != null && that.timeZone != null)
-			{
-				tzeq = this.timeZone.equals(that.timeZone);
-			}
-		}
-
-        return
-        	this.earliest.equals(that.earliest) &&
+		// TODO finish date equality
     }
 
     public int hashCode()
