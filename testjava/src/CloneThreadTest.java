@@ -1,6 +1,6 @@
 public class CloneThreadTest
 {
-    private static class X
+    private static class X implements Cloneable
     {
         public int a;
         public int b;
