@@ -105,6 +105,10 @@ public class ExtrDos33
 		{
 			return (rb[0] == 0x00000001 && rb[1] == 0xFFFFFFA5 && rb[2] == 0x00000027 && rb[3] == 0xFFFFFFC9);
 		}
+		public boolean hasProtodosSignature()
+		{
+			return (rb[0x1602] == 0x54 && rb[0x1603] == 0x59 && rb[0x1604] == 0x50 && rb[0x1605] == 0xFFFFFFC5);
+		}
         public boolean equals(Object obj)
         {
         	if (!(obj instanceof DosImage))
