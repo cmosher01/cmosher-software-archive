@@ -63,7 +63,7 @@ public class DateRange implements Immutable, Serializable, Comparable
         this.julian = julian;
         this.hour = hour;
         this.minute = minute;
-        this.timeZone = timeZone;
+        this.timeZone = timeZone.clone();
 		this.circa = circa;
 
 		this.hash = getHash();
