@@ -101,46 +101,46 @@ public class BinDiff
 		StringBuffer s = new StringBuffer(256);
         if (newstate != state)
         {
-            switch (state) //old state
+            if (state == COPY)
             {
-                case COPY:
-                    //sprintf(s, "c%d", ccopy);
-                    //fputs(s, fdif);
-                    ccopy = 0;
-                    break;
-                case SKIP:
-                case INSERT:
+            	s.append(">>>COPY ");
+            	s.append(ccopy);
+            	s.append(" BYTES\n");
+
+				ccopy = 0;
+            }
+            else if (state == SKIP || state == INSERT)
+            {
+                if (newstate == COPY || newstate == END)
+                {
+                    if (cskip > 0)
                     {
-                        if (newstate == COPY || newstate == END)
-                        {
-                            if (cskip > 0)
-                            {
-                                //sprintf(s, "s%d", cskip);
-                                //fputs(s, fdif);
-                                cskip = 0;
-                            }
-                            if (cinsert > 0)
-                            {
-								StringBuffer s2 = new StringBuffer(256);
-                                //sprintf(s, "i%d{", cinsert);
-                                //fputs(s, fdif);
+						s.append(">>>DELETE ");
+						s.append(cskip);
+						s.append(" BYTES\n");
 
-                                long orig = fileinsert.tell();
-
-                                fileinsert.seek(posinsert);
-                                for (int i = 0; i < cinsert; ++i)
-                                {
-									//fputc(fgetc(fileinsert), fdif);
-                                }
-
-                                fileinsert.seek(orig);
-
-                                //fputc('}', fdif);
-                                cinsert = 0;
-                                posinsert = -1;
-                            }
-                        }
+                        cskip = 0;
                     }
+                    if (cinsert > 0)
+                    {
+						s.append(">>>INSERT ");
+						s.append(cinsert);
+						s.append(" BYTES\n");
+
+                        long orig = fileinsert.tell();
+
+                        fileinsert.seek(posinsert);
+                        for (int i = 0; i < cinsert; ++i)
+                        {
+							//fputc(fgetc(fileinsert), fdif);
+                        }
+
+                        fileinsert.seek(orig);
+
+                        cinsert = 0;
+                        posinsert = -1;
+                    }
+                }
             }
             state = newstate;
         }
@@ -149,14 +149,14 @@ public class BinDiff
         {
             case COPY:
                 ccopy += c;
-                break;
+            break;
             case SKIP:
                 cskip += c;
                 for (int i = 0; i < c; ++i)
                 {
                 	f.read();
                 }
-                break;
+            break;
             case INSERT:
                 if (posinsert < 0)
                 {
@@ -168,7 +168,7 @@ public class BinDiff
 				{
 					f.read();
 				}
-                break;
+            break;
         }
     }
 
