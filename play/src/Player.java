@@ -45,7 +45,7 @@ public class Player implements Immutable
 
 
 		String s = "\u00e2";
-		byte[] rb = s.getBytes("windows-1252");
+		byte[] rb = s.getBytes("UTF-8");
 		rbDump(rb);
 
 
