@@ -11,4 +11,5 @@ public interface Cache
     boolean containsKey(Object key);
     Object get(Object key) throws KeyNotFoundException;
     void put(Object key, Object item);
+    void remove(Object key) throws KeyNotFoundException;
 }
