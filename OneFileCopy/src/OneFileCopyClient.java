@@ -26,5 +26,6 @@ public class OneFileCopyClient
 		out.flush();
 		out.close();
 		in.close();
+		s.close();
 	}
 }
