@@ -46,5 +46,7 @@ public class VelocityWrapper
 
         // This just prevents a warning message about no macro library
         props.setProperty(VelocityEngine.VM_LIBRARY,"");
+
+        return props;
     }
 }
