@@ -12,8 +12,8 @@ import javax.swing.JMenuBar;
 public class GUI
 {
     private ContentPane mPaneContent;
-    private JFrame mFrame;
     private JMenuBar mJMenuBar;
+    private JFrame mFrame;
 
     public GUI(ContentPane paneContent, JMenuBar jMenuBar)
     {
@@ -31,19 +31,23 @@ public class GUI
     public void create()
     {
         // Use look and feel for current OS.
-        SwingUtil.useOSLookAndFeel();
+        //SwingUtil.useOSLookAndFeel();
 
         // Use look and feel's (not OS's) decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
 
         // Create the window.
-        mFrame = new JFrame("Metadata Viewer");
+        mFrame = new JFrame();
 
         // Closing the window exits the program.
         mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Create and set up the content pane.
-        mFrame.setContentPane(new MetadataViewerContentPane());
+        mPaneContent.create();
+        mFrame.setContentPane(mPaneContent);
+
+        // Create and set up the menu bar.
+        mJMenuBar.create();
 
         // Set the window's size and position.
         mFrame.pack();
