@@ -57,7 +57,7 @@ public class Test
 	{
 
         SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd,HH:mm:ss.SSS");
-        System.out.println(f.format(new Date(234)));
+        System.out.println(f.format(new Date(234-68400)));
 
 //        int x;
 //        System.out.println(x);
