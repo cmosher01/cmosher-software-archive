@@ -677,7 +677,7 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
     public void showAbout()
     {
         about = new AboutDialog(this);
-        about.move(150,150);
+        about.setLocation(150,150);
         about.setVisible(true);
     }
 
