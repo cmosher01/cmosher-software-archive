@@ -83,7 +83,7 @@ public class MainFrame extends JFrame
         nDisk.add(nDos);
         top.add(nDisk);
 
-        invalidate();
+        repaint();
     }
 
     /**
