@@ -13,7 +13,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import org.eclipse.core.internal.localstore.FileSystemResourceManager;
-import org.eclipse.core.internal.localstore.HistoryStore2;
+import org.eclipse.core.internal.localstore.IHistoryStore;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -36,7 +36,7 @@ public class ImportHistory implements IObjectActionDelegate
     private static final SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSS");
     private ISelection currentSelection;
     private IWorkspace workspace;
-    private HistoryStore2 historyStore;
+    private IHistoryStore historyStore;
 
 
 
@@ -46,7 +46,7 @@ public class ImportHistory implements IObjectActionDelegate
         {
             workspace = ResourcesPlugin.getWorkspace();
             FileSystemResourceManager fileSystemManager = ((org.eclipse.core.internal.resources.Workspace)workspace).getFileSystemManager();
-            historyStore = (HistoryStore2)fileSystemManager.getHistoryStore();
+            historyStore = (IHistoryStore)fileSystemManager.getHistoryStore();
 
             Object o = ((IStructuredSelection) currentSelection).getFirstElement();
             IProject pr = (IProject)o;
