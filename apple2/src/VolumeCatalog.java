@@ -38,8 +38,9 @@ public class VolumeCatalog
         {
             VolumeCatalogSector c = new VolumeCatalogSector();
             c.readFromMedia(p,disk);
-            p = vtoc.getCatalogPointer();
+            p = disk.getDos33Next(p);
         }
+
         // then scan whole disk for other catalog sectors, if any
     }
 }
