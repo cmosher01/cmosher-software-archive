@@ -103,7 +103,8 @@ public class TimeOfDay implements Comparable
      * this object's time on the given Date's date.
      * This method uses its Calendar to compute the time
      * (from this object) and the date (from the given Date),
-     * and returns a new Date object.
+     * and returns a new Date object. The time components
+     * of the given date are ignored.
      * @param d the Date on which to get our time
      */
     public long getTimeOnDay(Date d)
