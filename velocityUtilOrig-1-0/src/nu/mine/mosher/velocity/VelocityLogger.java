@@ -5,6 +5,8 @@
  */
 package nu.mine.mosher.velocity;
 
+import java.util.logging.Logger;
+
 import org.apache.velocity.runtime.RuntimeServices;
 import org.apache.velocity.runtime.log.LogSystem;
 
@@ -13,32 +15,13 @@ import org.apache.velocity.runtime.log.LogSystem;
  */
 public class VelocityLogger implements LogSystem
 {
+    Logger log;
 
-    /**
-     * 
-     */
-    public VelocityLogger()
+    public void init(RuntimeServices rs)
     {
-        super();
-        // TODO Auto-generated constructor stub
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.velocity.runtime.log.LogSystem#init(org.apache.velocity.runtime.RuntimeServices)
-     */
-    public void init(RuntimeServices arg0) throws Exception
+    public void logVelocityMessage(int level, String message)
     {
-        // TODO Auto-generated method stub
-
     }
-
-    /* (non-Javadoc)
-     * @see org.apache.velocity.runtime.log.LogSystem#logVelocityMessage(int, java.lang.String)
-     */
-    public void logVelocityMessage(int arg0, String arg1)
-    {
-        // TODO Auto-generated method stub
-
-    }
-
 }
