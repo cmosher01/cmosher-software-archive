@@ -11,16 +11,18 @@ import java.util.logging.LogRecord;
 /**
  * TODO
  */
-public class MessageFormatter extends Formatter
+public final class MessageFormatter extends Formatter
 {
+    private static MessageFormatter LOCAL = new MessageFormatter();
 
-    /**
-     * 
-     */
-    public MessageFormatter()
+    private MessageFormatter()
     {
-        super();
-        // TODO Auto-generated constructor stub
+        throw new UnsupportedOperationException();
+    }
+
+    public static String formatMessage(LogRecord record)
+    {
+        return LOCAL.super.formatMessage(record);
     }
 
     /* (non-Javadoc)
