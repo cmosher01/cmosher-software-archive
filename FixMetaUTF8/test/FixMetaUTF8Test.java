@@ -22,6 +22,7 @@ public class FixMetaUTF8Test extends TestCase
         sb.append("<META http-equiv=\"Content-Type\" \ncontent=\"text/html; charset=windows-1252\">\n");
         sb.append("</head>\n");
         sb.append("</html>\n");
+        System.out.println(sb);
         String s = FixMetaUTF8.fixMeta(sb);
         System.out.println(s);
     }
