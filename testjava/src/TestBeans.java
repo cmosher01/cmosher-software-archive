@@ -41,12 +41,18 @@ public class TestBeans
         PropertyDescriptor pd = getPropertyDescriptor(bean.getClass(), property);
         Object v = getConvertedValue(value, pd.getPropertyType());
 
+        setProperty(bean, pd, v);
+    }
+
+    public static void setProperty(Object bean, PropertyDescriptor pd, Object v)
+        throws IllegalAccessException, IllegalArgumentException, InvocationTargetException
+    {
         Method wr = pd.getWriteMethod();
         if (wr == null)
         {
-            throw new IllegalAccessException("Cannot write property " + property);
+            throw new IllegalAccessException("Cannot write property " + pd.getName());
         }
-
+        
         wr.invoke(bean, new Object[] { v });
     }
 
