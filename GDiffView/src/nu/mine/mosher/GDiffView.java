@@ -147,6 +147,10 @@ public class GDiffVeiew extends JFrame
     private void appendHex(StringBuffer sb, int i)
     {
         char lo = nib(i & 0xF);
+        i >>= 4;
+        char hi = nib(i);
+        sb.append(hi);
+        sb.append(lo);
     }
 
     /**
