@@ -24,7 +24,7 @@ import nu.mine.mosher.fields.BigTableModel;
 /**
  * @author Chris Mosher
  */
-public class SwingGUI
+public class FieldsGUI
 {
     private JFrame mFrame;
 
