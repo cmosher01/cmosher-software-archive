@@ -335,7 +335,7 @@ public class Disk
 //    }
 
     /**
-     * @param sector
+     * @param pos
      * @return
      */
     public int isDos33CatalogSector(DiskPos pos)
