@@ -25,11 +25,13 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.SplitPaneUI;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
@@ -171,10 +173,14 @@ public class GDiffView extends JFrame
         scrGDiff.setPreferredSize(new Dimension(300,460));
         scrGDiff.setMaximumSize(new Dimension(300,460));
 
+        JSplitPane spl1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,scrSrc,scrGDiff);
+        JSplitPane spl2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,spl1,scrTrg);
+
         JPanel contentPane = new JPanel(new BorderLayout());
-        contentPane.add(scrSrc,BorderLayout.WEST);
-        contentPane.add(scrGDiff,BorderLayout.CENTER);
-        contentPane.add(scrTrg,BorderLayout.EAST);
+        contentPane.add(spl1,BorderLayout.CENTER);
+//        contentPane.add(scrSrc,BorderLayout.WEST);
+//        contentPane.add(scrGDiff,BorderLayout.CENTER);
+//        contentPane.add(scrTrg,BorderLayout.EAST);
 
         setContentPane(contentPane);
 
