@@ -558,7 +558,16 @@ public class VolumeDOS extends VolumeEntity
                     }
                     else
                     {
-                        s.append(" (DOS 3.3 1980 altered)");
+                        if (dif == 0)
+                        {
+                            s.append(" (DOS 3.3 1980 master: unknown alteration)");
+                        }
+                        else
+                        {
+                            s.append(" (DOS 3.3 1980 slave (A$");
+                            s.append(Integer.toHexString(0x1D00+dif*256));
+                            s.append("): unknown alteration)");
+                        }
 //                        if (dif != 0)
 //                        {
 //                            System.err.println("compared to good cleared slave:------------------------------------------------------------");
