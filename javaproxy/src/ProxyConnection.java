@@ -219,7 +219,8 @@ public class ProxyConnection extends Thread
         String doc = "/";
         int server_port = 80;
         int loc = 0;
-        if (c_header.URI == null || !c_header.URI.startsWith("http://"))
+        String URI = c_header.getURI();
+        if (URI == null || !URI.startsWith("http://"))
         {
             closeSock(sock_c);
             return;
@@ -228,14 +229,14 @@ public class ProxyConnection extends Thread
         ((ServerInterface)console).logAccess(_LOG_LEVEL_NORMAL,tracer.getSource(),c_header.getPrimeHeader());
         ((ServerInterface)console).logAccess(_LOG_LEVEL_MINIMAL,tracer.getSource(),sb.toString());
 
-        if ((loc = c_header.URI.indexOf("/",8)) <= 0)
+        if ((loc = URI.indexOf("/",8)) <= 0)
         {
-            server_adpt = c_header.URI.substring(7);
+            server_adpt = URI.substring(7);
         }
         else
         {
-            server_adpt = c_header.URI.substring(7,loc);
-            doc = c_header.URI.substring(loc);
+            server_adpt = URI.substring(7,loc);
+            doc = URI.substring(loc);
         }
 
         if ((loc = server_adpt.indexOf(":")) <= 0)
