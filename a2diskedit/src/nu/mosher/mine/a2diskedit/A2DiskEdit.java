@@ -121,7 +121,7 @@ public class A2DiskEdit
 			return;
 
 		DefaultMutableTreeNode n = new DefaultMutableTreeNode();
-		TreeNode d = new Disk(fc.getSelectedFile(),n);
+		TreeNode d = new Disk(n,fc.getSelectedFile());
 		n.setUserObject(d);
 		addNode(n,top);
 		tree.setSelectionRow(0);
@@ -135,7 +135,10 @@ public class A2DiskEdit
 
 	public void fileNew()
 	{
-		addNode(new DefaultMutableTreeNode(new Disk()),top);
+		DefaultMutableTreeNode n = new DefaultMutableTreeNode();
+		TreeNode d = new Disk(n);
+		n.setUserObject(d);
+		addNode(n,top);
 		tree.setSelectionRow(0);
 	}
 
