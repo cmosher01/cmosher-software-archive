@@ -440,7 +440,15 @@ public class Disk
 
             int cSector = word(sector,p+0x21);
 
-            DiskPos posTS = new DiskPos(trk,sector[p+1]);
+            DiskPos posTS;
+            try
+            {
+                posTS = new DiskPos(trk,sector[p + 1]);
+            }
+            catch (InvalidPosException e)
+            {
+                posTS = new DiskPos();
+            }
 
             entries.add(new Dos33CatalogEntry(deleted,posTS,lck,fil,cSector,name));
 
