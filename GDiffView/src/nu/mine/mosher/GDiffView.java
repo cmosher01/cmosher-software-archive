@@ -970,6 +970,7 @@ public class GDiffView extends JFrame
                                 System.out.print("candidate src: "+Long.toHexString(match));
                                 System.out.print(" prev cand src: "+Long.toHexString(matchCurrent));
                                 System.out.print(" target       : "+Long.toHexString(here));
+                                if (here-match < here-matchCurrent)
 //                                long corresp = there+start;
 //                                long thatdif = match;
 //                                if (thatdif < 0)
@@ -984,12 +985,12 @@ public class GDiffView extends JFrame
 //                                System.out.print("that: "+Long.toHexString(thatdif));
 //                                System.out.print(" this: "+Long.toHexString(thisdif));
 //                                if (thatdif < thisdif)
-//                                {
-//                                    System.out.print("          using: "+Long.toHexString(match));
-//                                    matchCurrent = match;
-//                                    cMatchCurrent = cMatch;
-//                                    progress = true;
-//                                }
+                                {
+                                    System.out.print("          using: "+Long.toHexString(match));
+                                    matchCurrent = match;
+                                    cMatchCurrent = cMatch;
+                                    progress = true;
+                                }
                                 System.out.println();
                             }
                             else if (cMatch > cMatchCurrent)
