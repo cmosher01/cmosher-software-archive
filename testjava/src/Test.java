@@ -94,6 +94,7 @@ public class Test
             System.out.println(sjp);
             sjp = urijp.getPath();
             System.out.println(sjp);
+            f = new File(uri.getPath());
         }
         else
         {
