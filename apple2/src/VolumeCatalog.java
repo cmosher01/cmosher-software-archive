@@ -23,8 +23,11 @@ public class VolumeCatalog
 
     /**
      * @param disk
+     * @throws InvalidPosException
+     * @throws MultipleVTOCException
+     * @throws VTOCNotFoundException
      */
-    public void readFromMedia(Disk disk)
+    public void readFromMedia(Disk disk) throws VTOCNotFoundException, MultipleVTOCException, InvalidPosException
     {
         vtoc = new VolumeTableOfContents();
         vtoc.readFromMedia(disk);
