@@ -19,7 +19,9 @@ public class OneFileCopyServer
 		{
 			throw new IllegalArgumentException("Bad input file: "+f.getAbsolutePath());
 		}
-
+		System.out.println(f.length());
+if(false)
+{
 		int cBuf = cBufMax;
 		if (f.length() < cBuf)
 		{
@@ -60,4 +62,4 @@ public class OneFileCopyServer
 		srv.close();
 		System.out.println("done.");
 	}
-}
+	}}
