@@ -3,6 +3,7 @@
  */
 package com.surveysampling.time;
 
+import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -32,6 +33,12 @@ public class TimeOfDay implements Comparable
     private final int minutes;
     private final int seconds;
     private final int milliseconds;
+
+    private static final NumberFormat fmt = NumberFormat.getIntegerInstance();
+    static
+    {
+        fmt.setMinimumIntegerDigits(2);
+    }
 
     /**
      * Initializes the object with the given time components,
@@ -192,6 +199,21 @@ public class TimeOfDay implements Comparable
         else
         {
             return 0;
+        }
+    }
+
+    /**
+     * Formats this time. The resulting String is of
+     * the form: "HH:mm", or "HH:mm:ss" if seconds are
+     * greater than zero, or "HH:mm:ss.SSS" if milliseconds
+     * are greater than zero.
+     * @param showAll
+     * @return
+     */
+    public String format(boolean showAll)
+    {
+        if (seconds == 0 && milliseconds == 0)
+        {
         }
     }
 }
