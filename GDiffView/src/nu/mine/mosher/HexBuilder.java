@@ -182,6 +182,10 @@ public class HexBuilder
             b &= 0x7F;
         }
         char x;
+        if (0 <= b && b < 32)
+        {
+            b += '@';
+        }
         if (32 <= b && b <= 126)
         {
             x = (char)b;
