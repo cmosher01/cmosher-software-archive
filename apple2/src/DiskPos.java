@@ -167,8 +167,6 @@ public class DiskPos
 
     public DiskPos advance(int len) throws InvalidPosException
     {
-        DiskPos n = new DiskPos(0,0,0,false);
-        n.iDisk = iDisk+len;
-        return n;
+        return new DiskPos(iDisk+len);
     }
 }
