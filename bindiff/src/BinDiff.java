@@ -39,7 +39,7 @@ public class BinDiff
 	private int ccopy;
 	private int cskip;
 	private int cinsert;
-	private int posinsert = -1;
+	private long posinsert = -1;
 	private PushbackRandomFile fileinsert;
 	private long lastmark;
 
@@ -127,15 +127,15 @@ public class BinDiff
                                 //sprintf(s, "i%d{", cinsert);
                                 //fputs(s, fdif);
 
-                                fileinsert.mark();
+                                long orig = fileinsert.tell();
 
-                                fseek(fileinsert, posinsert, SEEK_SET);
+                                fileinsert.seek(posinsert);
                                 for (int i = 0; i < cinsert; ++i)
                                 {
 									//fputc(fgetc(fileinsert), fdif);
                                 }
 
-                                fileinsert.reset();
+                                fileinsert.seek(orig);
 
                                 //fputc('}', fdif);
                                 cinsert = 0;
@@ -162,7 +162,7 @@ public class BinDiff
             case INSERT:
                 if (posinsert < 0)
                 {
-                    posinsert = ftell(f);
+                    posinsert = f.tell();
                     fileinsert = f;
                 }
                 cinsert += c;
