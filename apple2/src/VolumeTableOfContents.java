@@ -8,13 +8,13 @@
  * 
  * @author Chris
  */
-public class VolumeTableOfContents extends VolumeSector
+public class VolumeTableOfContents extends VolumeEntity
 {
     /**
      * @param pos
      */
     public VolumeTableOfContents(final DiskPos pos)
     {
-        super(pos);
+        
     }
 }
