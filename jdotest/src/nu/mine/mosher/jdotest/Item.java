@@ -22,11 +22,11 @@ public class Item
 
     public String getName()
     {
-        return name;
+        return this.name;
     }
 
-    public void setName(String string)
+    public void setName(String name)
     {
-        name = string;
+        this.name = name;
     }
 }
