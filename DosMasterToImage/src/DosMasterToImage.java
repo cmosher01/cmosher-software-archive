@@ -231,55 +231,113 @@ public class DosMasterToImage
      * @param args
      * @throws IOException
      */
+//    public static void main(String[] args) throws IOException
+//    {
+//        if (args.length != 2)
+//        {
+//            throw new IllegalArgumentException("Usage: java DosMasterToImage master-image disk-image");
+//        }
+//
+//        BufferedInputStream in = new BufferedInputStream(new FileInputStream(new File(args[0])));
+//        BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File(args[1])));
+//
+//        if (in.available() != 0x23000)
+//        {
+//            throw new IllegalArgumentException("Input file length must be "+(0x23000)+" bytes.");
+//        }
+//
+//        int[] r = new int[0x4000-0x1B00];
+//
+//        int x = 0;
+//        for (int i = 0; i < 0x4000-0x1B00; ++i)
+//        {
+//            r[x++] = in.read();
+//        }
+//
+//        int test = r[0x84] & 0xFF;
+//        if (test == 0x46)
+//        {
+//            clearIgnored(r,rIgnore1980);
+//        }
+//        else if (test == 0x84)
+//        {
+//            clearIgnored(r,rIgnore1983);
+//        }
+//        else if (test == 0xB3)
+//        {
+//            clearIgnored(r,rIgnore1986);
+//        }
+//
+//        for (int i = 0; i < r.length; ++i)
+//        {
+//            out.write(r[i]);
+//        }
+//        int c = in.read();
+//        while (c >= 0)
+//        {
+//            out.write(c);
+//            c = in.read();
+//        }
+//        out.flush();
+//        out.close();
+//        in.close();
+//    }
+
+
+    /**
+     * Compares two DOS images, one master and one slave. Writes differences
+     * to standard out (as offsets in hex).
+     */
     public static void main(String[] args) throws IOException
     {
         if (args.length != 2)
         {
-            throw new IllegalArgumentException("Usage: java DosMasterToImage master-image disk-image");
+            throw new IllegalArgumentException("Usage: java DosMasterToImage master-image slave-image");
         }
 
         BufferedInputStream in = new BufferedInputStream(new FileInputStream(new File(args[0])));
-        BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File(args[1])));
-
-        if (in.available() != 0x23000)
-        {
-            throw new IllegalArgumentException("Input file length must be "+(0x23000)+" bytes.");
-        }
-
-        int[] r = new int[0x4000-0x1B00];
-
-        int x = 0;
-        for (int i = 0; i < 0x4000-0x1B00; ++i)
-        {
-            r[x++] = in.read();
-        }
-
-        int test = r[0x84] & 0xFF;
-        if (test == 0x46)
-        {
-            clearIgnored(r,rIgnore1980);
-        }
-        else if (test == 0x84)
-        {
-            clearIgnored(r,rIgnore1983);
-        }
-        else if (test == 0xB3)
-        {
-            clearIgnored(r,rIgnore1986);
-        }
-
-        for (int i = 0; i < r.length; ++i)
-        {
-            out.write(r[i]);
-        }
-        int c = in.read();
-        while (c >= 0)
-        {
-            out.write(c);
-            c = in.read();
-        }
-        out.flush();
-        out.close();
-        in.close();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
