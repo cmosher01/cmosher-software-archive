@@ -3,6 +3,7 @@ package com.surveysampling.mosher.tree;
 import java.awt.BorderLayout;
 import java.io.File;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
@@ -11,6 +12,8 @@ import javax.swing.tree.TreeNode;
 
 public class TreeFrame extends JFrame
 {
+    private static JFrame frame;
+
     public TreeFrame(String dir)
     {
         setLayout(new BorderLayout());
@@ -57,7 +60,6 @@ public class TreeFrame extends JFrame
         JFrame.setDefaultLookAndFeelDecorated(true);
 
         //Create and set up the window.
-        TreeFrame frame = new TreeFrame(dir);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create and set up the content pane.
