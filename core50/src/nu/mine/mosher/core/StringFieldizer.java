@@ -20,7 +20,7 @@ public class StringFieldizer implements Iterable<String>
 		private final String s;
 		private int pos;
 
-		private Iter(String s)
+		private Iter(String s) throws UnsupportedOperationException
 		{
 			if (this.s != null)
 			{
@@ -34,7 +34,7 @@ public class StringFieldizer implements Iterable<String>
 			return pos <= s.length();
 		}
 
-		public Object next() throws NoSuchElementException
+		public String next() throws NoSuchElementException
 		{
 			if (!hasNext())
 			{
