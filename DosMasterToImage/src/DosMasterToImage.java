@@ -44,7 +44,7 @@ public class DosMasterToImage
 
         in.mark(in.available());
 
-        in.skip(0x3600-0x1B00);
+        in.skip(0x1B00);
         for (int i = 0x3600; i < 0x4000; ++i)
         {
             out.write(in.read());
