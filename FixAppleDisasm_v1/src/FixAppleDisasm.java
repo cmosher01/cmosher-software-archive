@@ -75,9 +75,9 @@ public class FixAppleDisasm
 	private static class Line
 	{
 		public int addr = -1;
-		public String label;
-		public String instr;
-		public String oper;
+		public String label = "";
+		public String instr = "";
+		public String oper = "";
 		public String comment = ";";
 		public int refaddr = -1;
 	}
@@ -253,7 +253,10 @@ public class FixAppleDisasm
 			{
 				System.out.print(Integer.toHexString(ln.addr));
 				System.out.print(":   ");
-				System.out.print(ln.instr);
+				if (ln.instr.length() > 0)
+				{
+					System.out.print(ln.instr);
+				}
 				if (ln.oper.length() > 0)
 				{
 					System.out.print("   ");
