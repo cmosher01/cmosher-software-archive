@@ -8,7 +8,6 @@
  * Author : Steve Yeong-Ching Hsueh
  */
 
-import java.lang.*;
 
 
 /**
