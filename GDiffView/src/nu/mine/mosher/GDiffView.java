@@ -156,7 +156,40 @@ public class GDiffVeiew extends JFrame
                 }
                 sb.append(' ');
             }
+            sb.append("  ");
+            for (int i = 0; i < cCol; ++i)
+            {
+                if (i < c)
+                {
+                    appendAsc(sb,rb[i]);
+                }
+                else
+                {
+                    sb.append(" ");
+                }
+                sb.append(' ');
+            }
             c = in.read(rb);
+        }
+    }
+
+    /**
+     * @param sb2
+     * @param b
+     */
+    private static void appendAsc(StringBuffer sb, byte b)
+    {
+        if (b < 0)
+        {
+            b &= 0x7F;
+        }
+        if (32 <= b && b <= 126)
+        {
+            sb.append(b);
+        }
+        else
+        {
+            sb.append()
         }
     }
 
