@@ -119,8 +119,6 @@ public class Delta
                     byte[] targetBuff = new byte[buff_size];
                     int source_idx = 0;
                     int target_idx = 0;
-                    //int tCount = 0;
-
                     do
                     {
                         source_idx = source.read(sourceBuff,0,buff_size);
