@@ -201,7 +201,6 @@ public class Disk
                     if (live && DiskPos.isValidSector(sector[ce+1]) &&
                         isValidFileType(sector[ce+2]))
                     {
-                        int csect = word(sector,ce+33);
                         boolean deleted = (sector[ce] == -1);
                         int trk;
                         if (deleted)
@@ -214,6 +213,7 @@ public class Disk
                         }
                         StringBuffer sb = new StringBuffer(64);
                         sb.append(convertASCII(sector,ce+3,30));
+                        int csect = word(sector,ce+33);
                         sb.append(" ["+csect+" sector");
                         if (csect > 1)
                         {
