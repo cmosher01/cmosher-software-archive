@@ -280,7 +280,7 @@ public class Disk
                         {
                             return 0;
                         }
-                        tsmapMaps.mark(tsm.getSectorInDisk());
+                        tsmapMaps.mark(tsm);
                     }
                     sb.append(" @ T$"+Integer.toHexString(trk)+", S$"+Integer.toHexString(sector[ce+1])+"]");
                     if (deleted)
@@ -415,7 +415,7 @@ public class Disk
             byte[] sector = read(DiskPos.cSector);
             if (hasData(sector))
             {
-                m.mark(cur.getSectorInDisk());
+                m.mark(cur);
             }
         }
     }
@@ -546,7 +546,7 @@ public class Disk
                 {
                     System.out.print(" (next @ T$"+Integer.toHexString(sector[1])+", S$"+Integer.toHexString(sector[2])+")");
                 }
-                if (tsmapMapsInCatalog.isMarked(cur.getSectorInDisk()))
+                if (tsmapMapsInCatalog.isMarked(cur))
                 {
                     System.out.print(" (cataloged)");
                 }
