@@ -982,15 +982,15 @@ public class ExtendedProperties extends Hashtable {
     /**
      * Display the configuration for debugging purposes to System.out.
      */
-    public void display() {
-        Iterator i = getKeys();
-
-        while (i.hasNext()) {
-            String key = (String) i.next();
-            Object value = get(key);
-            System.out.println(key + " => " + value);
-        }
-    }
+//    public void display() {
+//        Iterator i = getKeys();
+//
+//        while (i.hasNext()) {
+//            String key = (String) i.next();
+//            Object value = get(key);
+//            System.out.println(key + " => " + value);
+//        }
+//    }
 
     /**
      * Get a string associated with the given configuration key.
