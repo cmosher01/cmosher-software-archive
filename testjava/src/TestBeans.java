@@ -42,7 +42,7 @@ public class TestBeans
         }
         if (ipd == -1)
         {
-            throw new Exception("can't get AInt property descriptors for bean");
+            throw new Exception("can't get property descriptors for bean");
         }
         PropertyDescriptor pd = rpd[ipd];
 
