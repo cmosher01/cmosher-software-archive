@@ -43,7 +43,7 @@ public class TestBeans
         Map mapPDs = getPropertyDescriptors(bi);
         if (!mapPDs.containsKey(property))
         {
-            throw new IntrospectionException("Cannot find property descriptor for "+property);
+            throw new IntrospectionException("Cannot find property descriptor for " + property);
         }
 
         PropertyDescriptor pd = (PropertyDescriptor)mapPDs.get(property);
