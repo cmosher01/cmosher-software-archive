@@ -10,7 +10,7 @@ public class TestCrypt
 {
     public static void main(String[] rArg) throws Throwable
     {
-        SecureRandom random = SecureRandom.getInstance("SHA1PRNG",sun.security.provider.SecureRandom.class);
+        SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
         random.setSeed(random.generateSeed(128));
     }
 
