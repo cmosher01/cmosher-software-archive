@@ -65,9 +65,9 @@ public class PersonPersist
 	{
 		Person person;
 		// get a new persistence manager
-		pm = pmf.getPersistenceManager();
+		PersistenceManager pm = this.pmf.getPersistenceManager();
 		// retrieve objects from datastore and display
-		for (int i = 0; i < max; i++)
+		for (int i = 0; i < SIZE; i++)
 		{
 			person = (Person)pm.getObjectById(id.elementAt(i),false);
 			System.out.println("Name      : " + person.getName());
