@@ -176,7 +176,7 @@ public class BinDiff
 
 	protected boolean  difFindMatch() throws IOException
     {
-        f2.mark();
+        long orig = f2.tell();
 
         boolean endoffile = false;
         int cs = cMaxSearch;
@@ -189,7 +189,7 @@ public class BinDiff
 
         lastmark = f2.tell();
 
-        f2.reset();
+        f2.seek(orig);
 
         return found;
     }
