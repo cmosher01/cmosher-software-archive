@@ -120,16 +120,30 @@ public class GDiffView extends JFrame
                 throw new IOException("error reading target file");
             }
             roll.init(rs);
-            int chk = roll.getChecksum();
-            long srcPos = src.lookupUnique(chk);
-            if (srcPos >= 0)
-            {
-                Range rngSrc = new Range(srcPos,srcPos+w-1);
-                Range rngTrg = new Range(trgPos,trgPos+w-1);
-                GDiffCopy cpy = new GDiffCopy(rngSrc);
-                cpy.setTargetRange(rngTrg);
-                matches.add(cpy);
-            }
+            int chk;
+            long srcPos;
+            lookupUniqueMatch(src,roll,trgPos,matches,w);
+        }
+    }
+
+    /**
+     * @param src
+     * @param roll
+     * @param trgPos
+     * @param matches
+     * @param w
+     */
+    private static void lookupUniqueMatch(SourceFile src, RollingChecksum roll, int trgPos, List matches, int w)
+    {
+        int chk = roll.getChecksum();
+        long srcPos = src.lookupUnique(chk);
+        if (srcPos >= 0)
+        {
+            Range rngSrc = new Range(srcPos,srcPos+w-1);
+            Range rngTrg = new Range(trgPos,trgPos+w-1);
+            GDiffCopy cpy = new GDiffCopy(rngSrc);
+            cpy.setTargetRange(rngTrg);
+            matches.add(cpy);
         }
     }
 
