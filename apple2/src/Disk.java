@@ -328,17 +328,12 @@ public class Disk
 
             int fil = (sector[p+2] & 0x7F);
 
-            byte[] name;
-            if (deleted)
-            {
-                name = new byte[29];
-            }
-            else
-            {
-                name = new byte[30];
-            }
+            int nameLen = deleted ? 29 : 30;
+            byte[] name = new byte[nameLen];
+            System.arraycopy(sector, p+3, name, 0, nameLen);
 
-            int cSector;
+            int cSector = word(sector,p+0x21);
+
             entries.add(new Dos33CatalogEntry(deleted,new DiskPos(trk,sector[p+1],0,false),lck,fil,cSector,name));
 
             p += 0x23;
