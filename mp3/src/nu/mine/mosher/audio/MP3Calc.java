@@ -165,7 +165,7 @@ public class MP3Calc
 		h >>= 1;
 
 		boolean original = ((h & 1) > 0);
-		System.out.print(original ? "original" : "copy");
+		System.out.print(original ? "original," : "copy,");
 		h >>= 1;
 
 		int emphasis = (h & 3);
