@@ -142,7 +142,7 @@ public class Disk
         {
             DiskPos cat = new DiskPos();
             cat.setTS(sector[1],sector[2]);
-            valid = isDos33CatalogSector(cat);
+            valid = isDos33CatalogSector(cat) > 0;
         }
         return valid;
 //        return
