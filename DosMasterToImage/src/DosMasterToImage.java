@@ -53,6 +53,11 @@ public class DosMasterToImage
             out.write(in.read());
         }
 
+        for (int i = 0x2500; i < 0x11000; ++i)
+        {
+            out.write(0);
+        }
+
         out.flush();
         out.close();
         in.close();
