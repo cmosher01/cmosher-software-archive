@@ -15,11 +15,31 @@ public class GedcomConcatenator
 
 	public void concatenate()
 	{
-		TreeNode node = tree.getRoot();
-		for (Iterator i = node.children(); i.hasNext();)
+		concatenateHelper(tree.getRoot());
+	}
+
+	private void concatenateHelper(TreeNode parent)
+	{
+		GedcomLine parentLine = (GedcomLine)parent.getObject();
+		for (Iterator i = parent.children(); i.hasNext();)
         {
             TreeNode child = (TreeNode)i.next();
-            
+            GedcomLine line = (GedcomLine)child.getObject();
+            String tag = line.getTag();
+            boolean cont = tag.equalsIgnoreCase("cont");
+			boolean conc = tag.equalsIgnoreCase("conc");
+            if (cont)
+            {
+            	parentLine.contValue(line.getValue());
+            }
+            else if (conc)
+            {
+				parentLine.contValue(line.getValue());
+            }
+            else
+            {
+				concatenateHelper(child);
+            }
         }
 	}
 }
