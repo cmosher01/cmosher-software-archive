@@ -2,6 +2,8 @@ import java.io.BufferedWriter;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -33,7 +35,11 @@ public class VelocityTest
 
 
         Context context = new VelocityContext();
-        context.put("test", new Test());
+        List deps = new ArrayList();
+        deps.add(new Dependency("jaxp","1-2-0",false));
+        deps.add(new Dependency("SurveySampling","2-3",true));
+        context.put("deps",deps);
+        context.put("main","com.surveysampling.example.Example");
 
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out)));
 
