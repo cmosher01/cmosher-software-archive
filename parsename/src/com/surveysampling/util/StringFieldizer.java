@@ -38,6 +38,11 @@ public class StringFieldizer
         return delim;
     }
 
+    public String getRemainder()
+    {
+        return s.substring(pos);
+    }
+
     protected int nextPos()
     {
         int i = s.indexOf(delim,pos);
