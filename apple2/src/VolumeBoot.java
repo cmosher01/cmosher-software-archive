@@ -116,7 +116,7 @@ public class VolumeBoot extends VolumeEntity
                 byte[] slave = patch(rDos80master,data[0xFE]-0x36);
                 if (same(data,slave))
                 {
-                    ident = "DOS 3.3 (1980) Slave (A$";
+                    ident = "DOS 3.3 (1980) Slave (A$"+Hex2Bin.hexbyte(data[0xFE])+"00)";
                 }
             }
         }
