@@ -109,6 +109,12 @@ public class DosMasterToImage
                 out.write(0x00);
             }
         }
+
+        for (int i = 0x12000; i < 0x23000; ++i)
+        {
+            out.write(0);
+        }
+
         out.flush();
         out.close();
         in.close();
