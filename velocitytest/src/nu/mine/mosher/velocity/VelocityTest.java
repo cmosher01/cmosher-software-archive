@@ -1,16 +1,9 @@
-/*
- * TODO
- *
- * Created on Apr 5, 2004
- */
+import org.apache.velocity.app.VelocityEngine;
 
-/**
- * TODO
- */
 public class VelocityTest
 {
-
     public static void main(String[] args)
     {
+        VelocityEngine velocity = new VelocityEngine();
     }
 }
