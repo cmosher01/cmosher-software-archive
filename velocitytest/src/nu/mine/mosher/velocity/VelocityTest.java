@@ -1,4 +1,5 @@
 package nu.mine.mosher.velocity;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileDescriptor;
@@ -6,9 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -46,7 +45,7 @@ public class VelocityTest
 //                }
 //            }
 //        });
-        velocity.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM,"VelocityTest.ErrLogger");
+        velocity.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM,"nu.mine.mosher.velocity.VelocityTest.ErrLogger");
         velocity.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH,"C:\\Documents and Settings\\chrism\\My Documents");
         velocity.setProperty(VelocityEngine.VM_LIBRARY,"");
 
