@@ -40,6 +40,8 @@ public class DateRange implements Immutable, Serializable, Comparable
 
     public DateRange(YMD earliest, YMD latest, boolean julian, int hour, int minute, TimeZone timeZone, boolean circa)
     {
+    	assert Immutable.class.isAssignableFrom(YMD.class);
+
     	if (earliest == null)
     	{
     		throw new NullPointerException("earliest date cannot be null");
