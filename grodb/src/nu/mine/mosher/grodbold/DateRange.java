@@ -119,7 +119,7 @@ public class DateRange implements Immutable, Serializable, Comparable
      */
     public TimeZone getTimeZone()
     {
-        return timeZone;
+        return (TimeZone)timeZone.clone();
     }
 
     /**
