@@ -13,11 +13,12 @@ public class CatEntry implements TreeNode
 	private DefaultMutableTreeNode node = null;
 	private String sName;
 	private static final Icon mIcon = new ImageIcon("d:\\temp\\a2file.gif");
-	private byte[] raw = new byte[0];
+	private byte[] raw;
 	private String hexRaw;
 
 	public CatEntry(byte[] rb)
 	{
+		raw = new byte[rb.length];
 		System.arraycopy(rb,0,raw,0,rb.length);
 
 		byte[] rname = new byte[0x1e];
