@@ -19,7 +19,7 @@ public final class Ja2
         throw new UnsupportedOperationException();
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws Throwable
     {
         Starter.start(args);
     }
