@@ -31,11 +31,13 @@ public class FixMetaUTF8Test extends TestCase
         sb.append("</head>\n");
         sb.append("</html>\n");
 
+        shouldBe(sbExpect,sb);
+    }
 
-        System.out.println(sb);
-        sb = FixMetaUTF8.removeContentTypeMeta(sb);
-        System.out.println(sb);
-        String s = FixMetaUTF8.addContentTypeMeta(sb);
-        System.out.println(s);
+    private void shouldBe(StringBuffer sbExpect, StringBuffer in)
+    {
+        in = FixMetaUTF8.removeContentTypeMeta(in);
+        String s = FixMetaUTF8.addContentTypeMeta(in);
+        assertTrue(s.compareToIgnoreCase(sbExpect.toString())==0);
     }
 }
