@@ -8,7 +8,7 @@ import java.util.List;
 public class RelationTypeSource implements Serializable
 {
 	private final int id;
-	private final String name;
+	private transient final String name;
 
 	protected RelationTypeSource(String name)
 	{
