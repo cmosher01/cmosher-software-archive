@@ -24,6 +24,7 @@ public class DiskTSMapTest extends TestCase
     {
         List r = new ArrayList();
         r.add(new DiskPos(0x0A,0xF));
+        r.add(new DiskPos(0x0B,0xF));
         assertManyPos("DOS33_SystemMaster_19800825.dsk",r);
     }
 
