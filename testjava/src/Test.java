@@ -56,8 +56,8 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
-        Date d = sdf.parse("2004/04/04 02:30:00.000");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
+        Date d = sdf.parse("02:30:00.000");
 
         DateFormat fmt = DateFormat.getTimeInstance(DateFormat.SHORT);
         System.out.println(fmt.format(d));
