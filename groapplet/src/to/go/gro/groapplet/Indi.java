@@ -8,6 +8,7 @@ import java.awt.font.LineBreakMeasurer;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
+import java.net.URL;
 import java.text.AttributedString;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,6 +23,7 @@ class Indi
 
     private final int x;
     private final int y;
+	private final int mID;
     private final String mName;
     private final String mBirth;
     private final String mDeath;
@@ -47,10 +49,11 @@ class Indi
         }
     }
 
-    public Indi(int x, int y, String name, String birth, String death)
+    public Indi(int x, int y, int id, String name, String birth, String death)
     {
         this.x = x;
         this.y = y;
+        mID = id;
         mName = name;
         mBirth = birth;
         mDeath = death;
@@ -160,4 +163,9 @@ class Indi
 	{
 		return pushed;
 	}
+
+    public URL getURL()
+    {
+        return new URL()
+    }
 }
