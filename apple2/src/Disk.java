@@ -25,6 +25,7 @@ public class Disk
     }
 
     /**
+     * @param pos
      * @param len
      * @return
      */
@@ -63,6 +64,7 @@ public class Disk
     }
 
     /**
+     * @param pos
      * @param len
      * @return
      */
@@ -78,6 +80,7 @@ public class Disk
     }
 
     /**
+     * @param pos
      * @param len
      * @param sb
      * @param attrib array of attributes (0=inverse, 1=flash, 2=normal)
