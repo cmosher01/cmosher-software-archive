@@ -17,23 +17,9 @@ public class VolumeDOS extends VolumeEntity
 {
     private byte[] rb;
 
-    00 B 4D  00 B 58
-    00 B 78  00 B 79
-    00 B 7B         
-    00 B 7D  00 B FF
-    00 D 42         
-    01 9 4F  01 9 B7
-                    
-    02 2 97  02 4 FF
-    00 0 B3  00 0 FF
-    00 1 8D  00 1 92
-    00 1 DF  00 1 FF
-    00 3 FD  00 3 FF
-    00 4 69  00 4 95
-    00 5 00  00 6 55
-    00 6 DF  00 6 FF
-    00 9 A8  00 9 B7
-    00 9 D9  00 9 DB
+    private static final int[] rIgnore1980 = {  0x00B4D, 0x00B58, 0x00B78, 0x00B79, 0x00B7B, 0x00B7B, 0x00B7D, 0x00BFF, 0x00D42,
+            0x00D42, 0x0194F, 0x019B7, 0x02297, 0x024FF, 0x000B3, 0x000FF, 0x0018D, 0x00192, 0x001DF, 0x001FF, 0x003FD, 0x003FF,
+            0x00469, 0x00495, 0x00500, 0x00655, 0x006DF, 0x006FF, 0x009A8, 0x009B7, 0x009D9, 0x009DB};
 
     private static List rPosDOS = new ArrayList();
     static
