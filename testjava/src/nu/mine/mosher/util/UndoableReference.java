@@ -1,6 +1,6 @@
 package com.surveysampling.util;
 
-public class UndoableReference
+public final class UndoableReference
 {
     private Cloneable state;
     private Undoer undoer;
