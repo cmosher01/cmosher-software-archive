@@ -50,8 +50,7 @@ public class TreeNode<T>
 
 		for (Iterator<TreeNode<T>> i = children(); i.hasNext();)
         {
-            TreeNode<T> childN = i.next();
-            if (childN==child)
+            if (i.next()==child)
             {
             	i.remove();
 				child.parent = null;
