@@ -38,12 +38,19 @@ public class MP3Calc
 		}
 
 		long flen = fin.length();
+		System.out.print(flen);
+		System.out.print(",");
 
 		DataInputStream in = new DataInputStream(new FileInputStream(fin));
 
 		int h = in.readInt();
+		System.out.print(Integer.toHexString(h));
+		System.out.print(",");
 
-		// ignore synch word
+		// synch word
+		int synch = h & 0x7ff;
+		System.out.print(Integer.toHexString(synch));
+		System.out.print(",");
 		h >>= 11;
 
 		// MPEG1 or MPEG2 or MPEG 2.5
@@ -52,21 +59,34 @@ public class MP3Calc
         {
 			case 0:
 				mpeg = 25;
+				System.out.print("mpeg2.5,");
 			break;
 			case 2:
 				mpeg = 2;
+				System.out.print("mpeg2,");
 			break;
 			case 3:
 				mpeg = 1;
+				System.out.print("mpeg1,");
 			break;
         }
 		h >>= 2;
 
 		// layer 1, 2, or 3 (4 means undefined)
 		int layer = 4-(h&3);
+		System.out.print("layer");
+		System.out.print(layer);
+		System.out.print(",");
 		h >>= 2;
 
-		// ignore protection
+		// protection
+		boolean crc = ((h & 1) > 0);
+		if (!crc)
+		{
+			System.out.println("no");
+		}
+		System.out.println("crc");
+		System.out.println(",");
 		h >>= 1;
 
 		// bitrate
@@ -89,8 +109,27 @@ public class MP3Calc
 		}
 		h >>= 2;
 
+		// padding
 		int padding = (h & 1);
+		h >>= 1;
 
+		// ignore private bit
+		h >>= 1;
+
+		// channel mode
+		int mode = h & 3;
+		h >>= 2;
+
+		int jointstereo = h & 3;
+		h >>= 2;
+
+		boolean copyright = ((h & 1) > 0);
+		h >>= 1;
+
+		boolean original = ((h & 1) > 0);
+		h >>= 1;
+
+		int emphasis = (h & 2);
     }
 
     private static int calcBitRate(int key, int mpeg, int layer)
