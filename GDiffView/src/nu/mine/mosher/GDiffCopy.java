@@ -22,4 +22,16 @@ public class GDiffCopy extends GDiffCmd
 	{
 		return len;
 	}
+    public long getLimit()
+    {
+        return pos+len;
+    }
+    public long getEnd()
+    {
+        return pos+len-1;
+    }
+    public boolean overlaps(GDiffCopy that)
+    {
+        return this.getPosition() <= that.getEnd() && that.getPosition() <= this.getEnd();
+    }
 }
