@@ -1,6 +1,7 @@
 //package java.lang; // needs special class loader at runtime
 package mosher;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -15,11 +16,11 @@ public class Cloner
         throw new UnsupportedOperationException();
     }
 
-    public static Cloneable cloneObject(Cloneable cloneableObject) throws CloneNotSupportedException
+    public static Cloneable cloneObject(Cloneable cloneableObject) throws CloneNotSupportedException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, SecurityException, NoSuchMethodException
     {
         Method objClone = cloneableObject.getClass().getMethod("clone", null);
         objClone.setAccessible(true);
-        objClone.invoke(cloneableObject,null);
+        return (Cloneable)objClone.invoke(cloneableObject,null);
 //        return (Cloneable)cloneableObject.clone();
     }
 }
