@@ -12,7 +12,7 @@ import javax.swing.JMenuBar;
 public class GUI
 {
     private ContentPane mPaneContent;
-    private JMenuBar mJMenuBar;
+    private ContentMenu mJMenuBar;
     private JFrame mFrame;
 
     public GUI(ContentPane paneContent, JMenuBar jMenuBar)
@@ -25,6 +25,7 @@ public class GUI
             throw new IllegalStateException("GUI requires a ContentPane.");
         }
     }
+
     /**
      * 
      */
@@ -48,6 +49,7 @@ public class GUI
 
         // Create and set up the menu bar.
         mJMenuBar.create();
+        mFrame.setJMenuBar(mJMenuBar);
 
         // Set the window's size and position.
         mFrame.pack();
