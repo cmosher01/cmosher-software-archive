@@ -16,7 +16,7 @@ import java.util.NoSuchElementException;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class Item implements Named
+public class Item extends NamedDefault implements Named
 {
 	private String name;
 	private List rmmThing;
