@@ -27,7 +27,7 @@ public class MtaURI
      * where port, rate, and timeout are optional. For
      * example "smtp://mail.surveysampling.com?rate=25000"
      * or "smtp://mail.surveysampling.com:2525?rate=30000&timeout=10000".
-     * Port defaults to 25 (regardless of the scheme), and
+     * Port defaults to 25 (smtp) (regardless of the scheme), and
      * timeout defaults to 120000 ms (2 mins.).
      * @param sMTA
      * @throws URISyntaxException
