@@ -1,12 +1,14 @@
 package com.surveysampling.mosher.tree;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.io.File;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
@@ -15,8 +17,6 @@ import com.surveysampling.mosher.Flag;
 
 public class TreeFrame extends JPanel
 {
-    private static Flag begun = new Flag();
-
     public TreeFrame(String dir)
     {
         setLayout(new BorderLayout());
@@ -51,23 +51,19 @@ public class TreeFrame extends JPanel
     protected static void createAndShowGUI(String dir) throws InterruptedException
     {
         useOSLookAndFeel();
-        //Make sure we have nice window decorations.
-        //JFrame.setDefaultLookAndFeelDecorated(true);
 
         //Create and set up the window.
         JFrame frame = new JFrame("Java Directory Browser");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create and set up the content pane.
-        JPanel newContentPane = new TreeFrame(dir);
-        frame.setContentPane(newContentPane);
+        Container contentPane = new TreeFrame(dir);
+        frame.setContentPane(contentPane);
 
         //Display the window.
         frame.pack();
         frame.setLocation(50,50);
         frame.setVisible(true);
-
-        begun.waitToSetTrue();
     }
 
     protected static void useOSLookAndFeel()
@@ -89,14 +85,16 @@ public class TreeFrame extends JPanel
             dir = argv[0];
         }
         final String dirArg = dir;
+        final Flag begun = new Flag();
 
-        javax.swing.SwingUtilities.invokeLater(new Runnable()
+        SwingUtilities.invokeLater(new Runnable()
         {
             public void run()
             {
                 try
                 {
                     createAndShowGUI(dirArg);
+                    begun.waitToSetTrue();
                 }
                 catch (Throwable th)
                 {
