@@ -76,7 +76,6 @@ public class TimeOfDayParser
     private int getd(String s, int i, int j)
     {
         assert (j < 10000); // sanity
-        assert (i+j < s.length());
 
         int r = 0;
         while (j-- > 0)
