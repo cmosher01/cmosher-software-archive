@@ -72,8 +72,7 @@ public class TestBeans
             throw new IntrospectionException("Cannot find property descriptor for " + property);
         }
         
-        PropertyDescriptor pd = (PropertyDescriptor)mapPDs.get(property);
-        return pd;
+        return (PropertyDescriptor)mapPDs.get(property);
     }
 
     public static Object[] convertArray(String[] value, PropertyEditor ed, Class classProp)
