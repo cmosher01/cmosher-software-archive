@@ -12,6 +12,7 @@ import java.net.URLClassLoader;
 import java.security.AccessController;
 import java.security.Permission;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.SortedSet;
@@ -73,6 +74,11 @@ public class Test
         s.add("ac");
         s.add("a\u2060b");
         s.add("aa");
+        for (Iterator i = s.iterator(); i.hasNext();)
+        {
+            String str = (String)i.next();
+            System.out.println(str);
+        }
 
 
 
