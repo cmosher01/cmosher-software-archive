@@ -209,7 +209,7 @@ public class Disk
                             }
                             else
                             {
-                                entries.add(convertASCII(sector,ce+3,30));
+                                entries.add(convertASCII(sector,ce+3,30)+" [T/S map @ T$"+Integer.toHexString(sector[ce])+", S$"+Integer.toHexString(sector[ce+1])+"]");
                             }
                             if (sector[ce+31] == (byte)0xA0)
                             {
