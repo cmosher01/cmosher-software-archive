@@ -77,7 +77,6 @@ public class GDiffView extends JFrame
 
     private int rowLen = nibs + 2 + 4 * cCol + 1;
 
-    private StringBuffer sbSrc;
     private StringBuffer sbTrg;
     private long srcEOF;
 
@@ -328,7 +327,6 @@ public class GDiffView extends JFrame
     public void initText() throws IOException, BadLocationException
     {
         readSrc();
-        docSrc.insertString(0,sbSrc.toString(),(AttributeSet)styles.get("body"));
 
 //        readGDiff();
         tempReadTarget();
@@ -449,11 +447,12 @@ public class GDiffView extends JFrame
 
     /**
      * @throws IOException
+     * @throws BadLocationException
      */
-    private void readSrc() throws IOException
+    private void readSrc() throws IOException, BadLocationException
     {
         BufferedInputStream in = new BufferedInputStream(new FileInputStream(fileSrc));
-        sbSrc = new StringBuffer(in.available() * 6);
+        StringBuffer sbSrc = new StringBuffer(in.available() * 6);
         HexBuilder hex = new HexBuilder(sbSrc);
         hex.appendHeader();
         int x = in.read();
@@ -465,6 +464,7 @@ public class GDiffView extends JFrame
         hex.appendNewLine();
         in.close();
         srcEOF = hex.getAddr();
+        docSrc.insertString(0,sbSrc.toString(),(AttributeSet)styles.get("body"));
     }
 
     /**
