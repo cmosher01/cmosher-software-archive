@@ -251,7 +251,7 @@ public class GDiffView extends JFrame
 
         contentPane.add(scrSrc,cnsSrc);
         contentPane.add(scrGDiff);
-        contentPane.add(scrTrg);
+        contentPane.add(scrTrg,cnsTrg);
 
         addWindowListener(new WindowAdapter()
         {
