@@ -1,3 +1,5 @@
+import java.awt.HeadlessException;
+
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -24,5 +26,13 @@ public class MainFrame extends JFrame
     {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         MainFrame frame = new MainFrame();
+    }
+
+    /**
+     * @throws java.awt.HeadlessException
+     */
+    public MainFrame() throws HeadlessException
+    {
+        super("Apple ][ DOS 3.3 Diskette Image Analyzer");
     }
 }
