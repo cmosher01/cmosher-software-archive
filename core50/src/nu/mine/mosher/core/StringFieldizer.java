@@ -12,7 +12,7 @@ public class StringFieldizer implements Iterable, Immutable
 
 	public SimpleIterator iterator()
 	{
-		return new SimpleIterator<String>(s)
+		return new SimpleIterator(s)
 		{
 			private final String s;
 			private int pos;
