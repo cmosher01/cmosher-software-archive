@@ -356,7 +356,7 @@ public class MySQLTest
 		"    nameMiddle varchar(8), "+
 		"    nameSuffix varchar(8) "+
 		")");
-//		dbUpdate("drop table CountEntry");
+		dbUpdate("drop table CountEntry");
 		dbUpdate("create table "+
 		"CountEntry "+
 		"( "+
