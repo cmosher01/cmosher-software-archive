@@ -1077,6 +1077,7 @@ public class GDiffView extends JFrame
             throw new IllegalStateException();
         }
         GDiffCopy cmd = new GDiffCopy(new Range(offset,offset+length-1));
+        cmd.setTargetRange(null);
         this.rCopy.add(cmd);
     }
 }
