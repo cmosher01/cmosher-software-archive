@@ -872,31 +872,31 @@ public class ExtendedProperties extends Hashtable {
      *
      * @param props  the properties to combine
      */
-    public void combine(ExtendedProperties props) {
-        for (Iterator it = props.getKeys(); it.hasNext();) {
-            String key = (String) it.next();
-            setProperty(key, props.get(key));
-        }
-    }
+//    public void combine(ExtendedProperties props) {
+//        for (Iterator it = props.getKeys(); it.hasNext();) {
+//            String key = (String) it.next();
+//            setProperty(key, props.get(key));
+//        }
+//    }
     
     /**
      * Clear a property in the configuration.
      *
      * @param key  the property key to remove along with corresponding value
      */
-//    public void clearProperty(String key) {
-//        if (containsKey(key)) {
-//            // we also need to rebuild the keysAsListed or else
-//            // things get *very* confusing
-//            for (int i = 0; i < keysAsListed.size(); i++) {
-//                if (( keysAsListed.get(i)).equals(key)) {
-//                    keysAsListed.remove(i);
-//                    break;
-//                }
-//            }
-//            remove(key);
-//        }
-//    }
+    public void clearProperty(String key) {
+        if (containsKey(key)) {
+            // we also need to rebuild the keysAsListed or else
+            // things get *very* confusing
+            for (int i = 0; i < keysAsListed.size(); i++) {
+                if (( keysAsListed.get(i)).equals(key)) {
+                    keysAsListed.remove(i);
+                    break;
+                }
+            }
+            remove(key);
+        }
+    }
 
     /**
      * Get the list of the keys contained in the configuration
