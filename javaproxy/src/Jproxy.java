@@ -401,8 +401,7 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
         error_log_name = httpconfig.getProperty("log.error");
         log_level = Integer.parseInt(httpconfig.getProperty("log.loglevel"));
 
-        logAccess(_LOG_LEVEL_MAXIMAL,tracer.getSource(),
-                "Console Re-Initialized");
+        logAccess(_LOG_LEVEL_MAXIMAL,tracer.getSource(),"Console Re-Initialized");
 
         return true;
 
