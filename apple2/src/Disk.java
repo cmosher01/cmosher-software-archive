@@ -32,7 +32,7 @@ public class Disk
     {
         byte[] rb = new byte[len];
         System.arraycopy(disk,pos.getIndex(),rb,0,len);
-        pos = pos.advance(len);
+        pos.advance(len);
         return rb;
     }
 
