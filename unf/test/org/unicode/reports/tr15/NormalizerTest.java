@@ -53,11 +53,11 @@ public class NormalizerTest extends TestCase
 					rCol[iCol++] = hexToString(tok);
 				}
 				System.out.println();
-				assertNormalize(rCol[1],rCol[0]);
+				assertNormalize(rCol[0],rCol[1]);
 				assertNormalize(rCol[1],rCol[1]);
-				assertNormalize(rCol[1],rCol[2]);
+				assertNormalize(rCol[2],rCol[2]);
 				assertNormalize(rCol[3],rCol[3]);
-				assertNormalize(rCol[3],rCol[4]);
+				assertNormalize(rCol[4],rCol[3]);
 				cDone++;
 			}
 		}
