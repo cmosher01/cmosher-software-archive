@@ -33,17 +33,17 @@ public class TestBeans
     }
 
     public static void setProperty(Object bean, String property, String value)
-        throws IntrospectionException, Exception, IllegalArgumentException, IllegalAccessException, InvocationTargetException
+        throws IntrospectionException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
     {
         BeanInfo bi = Introspector.getBeanInfo(bean.getClass());
         if (bi == null)
         {
-            throw new Exception("can't get info for bean");
+            throw new IntrospectionException("can't get info for bean");
         }
         PropertyDescriptor[] rpd = bi.getPropertyDescriptors();
         if (rpd == null)
         {
-            throw new Exception("can't get property descriptors for bean");
+            throw new IntrospectionException("can't get property descriptors for bean");
         }
         int ipd = -1;
         for (int j = 0; j < rpd.length; ++j)
@@ -56,7 +56,7 @@ public class TestBeans
         }
         if (ipd == -1)
         {
-            throw new Exception("can't get property descriptor");
+            throw new IntrospectionException("can't get property descriptor");
         }
         PropertyDescriptor pd = rpd[ipd];
         
@@ -65,7 +65,7 @@ public class TestBeans
         PropertyEditor ed = PropertyEditorManager.findEditor(pd.getPropertyType());
         if (ed == null)
         {
-            throw new Exception("can't get property editor");
+            throw new IntrospectionException("can't get property editor");
         }
         ed.setAsText(value);
         Integer i = (Integer)ed.getValue();
