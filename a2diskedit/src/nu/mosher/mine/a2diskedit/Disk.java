@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -30,13 +32,13 @@ public class Disk implements TreeNode
 
 		if (mFile != null)
 		{
+			byte[] image;
 			FileInputStream fin = null;
 			try
 			{
 				fin = new FileInputStream(mFile);
-				byte[] image = new byte[fin.available()];
+				image = new byte[fin.available()];
 				fin.read(image);
-				img = new A2DiskImage(image);
 			}
 			catch (IOException e)
 			{
@@ -54,6 +56,9 @@ public class Disk implements TreeNode
 					}
 				}
 			}
+			img = new A2DiskImage(image);
+			List r = new ArrayList(30);
+			img.getContents().getCatList(r);
 		}
 
         viewRight.setEditable(false);
