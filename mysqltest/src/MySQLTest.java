@@ -13,17 +13,19 @@ public class MySQLTest
         try
         {
         	st = db.createStatement();
-        	ResultSet rs = st.executeQuery("select version() v;");
-        	while (rs.next())
-        	{
-        		System.out.println(rs.getString("v"));
-        	}
+        	st.execute(
+			"create table if not exists family "+
+        	"( "+
+        	"    id integer unsigned not null auto_increment primary key, "+
+        	"    name varchar(64)"+
+        	")");
         }
         finally
         {
             closeStatement(st);
         }
     }
+
     private static void closeStatement(Statement st)
     {
         if (st != null)
