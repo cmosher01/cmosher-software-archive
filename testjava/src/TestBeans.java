@@ -11,6 +11,6 @@ public class TestBeans
             throw new Exception("can't get property editor for integer");
         }
         ed.setAsText("34");
-        System.out.println(ed.getValue());
+        System.out.println(ed.getValue().getClass().getName());
     }
 }
