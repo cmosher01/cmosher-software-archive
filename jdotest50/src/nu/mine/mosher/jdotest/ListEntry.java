@@ -41,7 +41,7 @@ public class ListEntry
 			String s = e.toString();
 			if (s.isEmpty())
 			{
-				sb.append("&nbsp;);
+				sb.append("&nbsp;");
 			}
 			else
 			{
