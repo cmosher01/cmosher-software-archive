@@ -18,10 +18,30 @@ public class Gedcom
 	{
 		int b0 = in.read();
 		int b1 = in.read();
+		int b2 = in.read();
+		int b3 = in.read();
 
 		int w0 = b1;
 		w0 <<= 8;
 		w0 |= b0;
+
+		int i0 = b3;
+		i0 <<= 8;
+		i0 |= b2;
+		i0 <<= 8;
+		i0 |= b1;
+		i0 <<= 8;
+		i0 |= b0;
+
+		if (i0==0x0000feff)
+		{
+			return "UTF-32LE";
+		}
+
+		if (i0==0xfffe0000)
+		{
+			return "UTF-32BE";
+		}
 
 		if (w0==0xfeff || w0==0x0030)
 		{
@@ -33,21 +53,21 @@ public class Gedcom
 			return "UTF-16BE";
 		}
 
-		SortedMap mc = Charset.availableCharsets();
-		for (Iterator i = mc.entrySet().iterator(); i.hasNext();)
-        {
-            Map.Entry entry = (Map.Entry)i.next();
-            String csn = (String)entry.getKey();
-			System.out.println(csn);
-            Charset cs = Charset.forName(csn);
-            Set als = cs.aliases();
-            for (Iterator j = als.iterator(); j.hasNext();)
-            {
-                String al = (String)j.next();
-                System.out.println("    "+al);
-            }
-        }
-		return "test";
+//		SortedMap mc = Charset.availableCharsets();
+//		for (Iterator i = mc.entrySet().iterator(); i.hasNext();)
+//        {
+//            Map.Entry entry = (Map.Entry)i.next();
+//            String csn = (String)entry.getKey();
+//			System.out.println(csn);
+//            Charset cs = Charset.forName(csn);
+//            Set als = cs.aliases();
+//            for (Iterator j = als.iterator(); j.hasNext();)
+//            {
+//                String al = (String)j.next();
+//                System.out.println("    "+al);
+//            }
+//        }
+
 		/*
 		 * windows-1252   IBM WINDOWS, ANSI
 		 * Cp850          IBM DOS, IMBPC
