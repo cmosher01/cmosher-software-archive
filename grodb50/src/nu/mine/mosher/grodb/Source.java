@@ -24,6 +24,6 @@ public class Source
 
 	public void addRel(Source that, String descriptionThisToThat)
 	{
-		rRel.add(new Relation<Source,Source>(this,that,descriptionThisToThat));
+		rRel.add(new Relation<Source,Source,SourceRelType>(this,that,descriptionThisToThat));
 	}
 }
