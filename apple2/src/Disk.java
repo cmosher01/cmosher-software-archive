@@ -117,6 +117,9 @@ public class Disk
         return new DiskPos(track,sector,0,false);
     }
 
+    /**
+     * @return
+     */
     public boolean EOF()
     {
         return this.pos.getIndex() >= this.disk.length;
