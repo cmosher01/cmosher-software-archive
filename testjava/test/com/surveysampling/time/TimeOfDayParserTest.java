@@ -42,6 +42,11 @@ public class TimeOfDayParserTest extends TestCase
         makeAndCheck("99:98:97.996",99,98,97,996);
     }
 
+    public void testZero() throws ParseException
+    {
+        makeAndCheck("00:00:00.000",0,0,0,0);
+    }
+
     /**
      * @param string
      * @param i
