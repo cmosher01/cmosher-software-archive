@@ -78,7 +78,7 @@ public class Dos33CatalogEntry
      */
     public DiskPos getStart()
     {
-        return dataPos;
+        return (DiskPos)dataPos.clone();
     }
     /**
      * $00=Text, $01=Integer, $02=Applesoft, $04=Binary, $08=Special, $10=Relocatable, $20=A, $40=B
