@@ -1,8 +1,10 @@
 import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorManager;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import com.surveysampling.beans.editors.Editors;
@@ -23,6 +25,16 @@ public class TestBeans
 
 
 
+        setProperty(some, prop, val);
+
+
+
+        showInt(some.getObjInteger().intValue());
+    }
+
+    public static void setProperty(SomeBean bean, String property, String value)
+        throws IntrospectionException, Exception, IllegalArgumentException, IllegalAccessException, InvocationTargetException
+    {
         BeanInfo bi = Introspector.getBeanInfo(SomeBean.class);
         if (bi == null)
         {
@@ -37,7 +49,7 @@ public class TestBeans
         for (int j = 0; j < rpd.length; ++j)
         {
             PropertyDescriptor descriptor = rpd[j];
-            if (descriptor.getName().equals(prop))
+            if (descriptor.getName().equals(property))
             {
                 ipd = j;
             }
@@ -47,26 +59,22 @@ public class TestBeans
             throw new Exception("can't get property descriptor");
         }
         PropertyDescriptor pd = rpd[ipd];
-
-
-
+        
+        
+        
         PropertyEditor ed = PropertyEditorManager.findEditor(pd.getPropertyType());
         if (ed == null)
         {
             throw new Exception("can't get property editor");
         }
-        ed.setAsText(val);
+        ed.setAsText(value);
         Integer i = (Integer)ed.getValue();
-
-
-
-
+        
+        
+        
+        
         Method wr = pd.getWriteMethod();
-        wr.invoke(some, new Object[] {i});
-
-
-
-        showInt(some.getObjInteger().intValue());
+        wr.invoke(bean, new Object[] {i});
     }
 
     public static void showInt(int i)
