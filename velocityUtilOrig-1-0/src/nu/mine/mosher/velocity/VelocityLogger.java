@@ -14,11 +14,18 @@ import org.apache.velocity.runtime.log.LogSystem;
  * Takes log messages from Velocity and writes them
  * to a standard Java Logger.
  * 
+ * By default this class will use the global logger.
+ * You can specify an alternate logger by setting
+ * the Velocity property VelocityEngine.RUNTIME_LOG_LOGSYSTEM
+ * to an instance of the Logger object to use.
+ * 
  * @author Chris Mosher
  */
 public class VelocityLogger implements LogSystem
 {
     private Logger log = Logger.global;
+
+
 
     public void init(RuntimeServices rs)
     {
