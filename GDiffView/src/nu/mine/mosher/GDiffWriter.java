@@ -148,7 +148,7 @@ public class GDiffWriter implements DiffWriter
                 if (buf[ix] == '\n')
                     System.err.print("\\n");
                 else
-                    System.err.print(String.valueOf((char)((char)buf[ix])));
+                    System.err.print(String.valueOf(((char)buf[ix])));
             }
             System.err.println("");
         }
