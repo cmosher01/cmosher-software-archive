@@ -45,6 +45,7 @@ public class Test
 
 
         System.out.println(Test.class.getClassLoader().getClass().getName());
+        System.out.println(System.getProperty("java.class.path"));
 
 
 
