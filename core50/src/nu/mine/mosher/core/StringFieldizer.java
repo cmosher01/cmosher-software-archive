@@ -31,11 +31,19 @@ public class StringFieldizer implements Iterable<String>
 			this.s = s;
 		}
 
+		/**
+		 * Checks to see if <code>next</code> can be called at least one more time.
+		 * @return true if any fields exist, false otherwise
+		 */
 		public boolean hasNext()
 		{
 			return pos <= s.length();
 		}
 
+		/**
+		 * Returns the next field of the string.
+		 * @return the field, or an empty string if the field is empty
+		 */
 		public String next() throws NoSuchElementException
 		{
 			if (!hasNext())
@@ -56,11 +64,45 @@ public class StringFieldizer implements Iterable<String>
 		{
 			throw new UnsupportedOperationException();
 		}
-	}
 
-//	public String getResidue(Iterator<String> i)
-//	{
-//		int pos = ((Iter)i).pos;
-//		return "";
-//	}
+		/**
+		 * Returns the current position.
+		 * @return the current position, that is, the position in
+		 * the string of the start of the field that would be returned
+		 * by the next call to nextToken.
+		 */
+		public int getPosition()
+		{
+			return pos;
+		}
+
+		/**
+		 * A convenience method that returns the rest of the string.
+		 * For a StringFieldizer f, f.getResidue() is equivalent to
+		 * f.getString().substring(f.getPosition()).
+		 * @return a String, the rest of the given string
+		 */
+		public String getResidue()
+		{
+			return s.substring(pos);
+		}
+
+		/**
+		 * Returns the original string (passed into the constructor).
+		 * @return the String
+		 */
+		public String getString()
+		{
+			return s;
+		}
+
+		/**
+		 * Returns the delimiter (passed into the constructor).
+		 * @return the delimiter character
+		 */
+		public char getDelimiter()
+		{
+			return delim;
+		}
+	}
 }
