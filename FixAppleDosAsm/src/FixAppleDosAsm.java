@@ -58,7 +58,7 @@ public class FixAppleDosAsm
             // tr: [comment]
 
             out.tab(TAB_COMMENT);
-            out.print(";");
+            out.print("; ");
             out.print(tr);
         }
         else if (s.startsWith(" "))
