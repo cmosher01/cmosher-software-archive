@@ -460,7 +460,7 @@ public class Disk
      * @param rDiskPosSectorsWithData
      * @throws InvalidPosException
      */
-    public void getDataTS(Collection rDiskPosSectorsWithData) throws InvalidPosException
+    public void getDataTS(Collection rDiskPosSectorsWithData)
     {
         rewind();
         while (!EOF())
