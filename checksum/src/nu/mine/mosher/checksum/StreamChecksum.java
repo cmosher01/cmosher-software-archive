@@ -65,10 +65,10 @@ public class StreamChecksum
             
             int chk = rollCheck.getChecksum();
 
-            Collection rWind;
+            Collection<Long> rWind;
             if (!mapChecksumToWindow.containsKey(chk))
             {
-                rWind = new ArrayList();
+                rWind = new ArrayList<Long>();
                 mapChecksumToWindow.put(chk,rWind);
             }
             else
