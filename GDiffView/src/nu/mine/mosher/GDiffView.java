@@ -270,17 +270,25 @@ public class GDiffView extends JFrame
 
         readSrc();
         docSrc.insertString(0,sb.toString(),(AttributeSet)styles.get("body"));
+
         readGDiff();
         docTrg.insertString(0,trg.toString(),(AttributeSet)styles.get("body"));
 
-        for (Iterator i = rData.iterator(); i.hasNext();)
-        {
-            GDiffData g = (GDiffData)i.next();
-            beginTrg = g.getTargetRange().getBegin();
-            endTrg = g.getTargetRange().getEnd();
-            highlight("insert",true);
-        }
+        highlightInserts();
+        highlightDeletes();
 
+        listGDiff.setSelectionModel(selectionModel);
+        listGDiff.setSelectedIndex(0);
+        listGDiff.requestFocus();
+
+        setVisible(true);
+    }
+
+    /**
+     * 
+     */
+    protected void highlightDeletes()
+    {
         SortedSet setSrcUsed = new TreeSet();
         for (Iterator i = rCopy.iterator(); i.hasNext();)
         {
@@ -317,12 +325,20 @@ public class GDiffView extends JFrame
             endSrc = r.getEnd();
             highlight("delete",false);
         }
+    }
 
-        listGDiff.setSelectionModel(selectionModel);
-        listGDiff.setSelectedIndex(0);
-        listGDiff.requestFocus();
-
-        setVisible(true);
+    /**
+     * 
+     */
+    protected void highlightInserts()
+    {
+        for (Iterator i = rData.iterator(); i.hasNext();)
+        {
+            GDiffData g = (GDiffData)i.next();
+            beginTrg = g.getTargetRange().getBegin();
+            endTrg = g.getTargetRange().getEnd();
+            highlight("insert",true);
+        }
     }
 
     /**
