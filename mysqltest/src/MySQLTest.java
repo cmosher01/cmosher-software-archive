@@ -13,12 +13,37 @@ public class MySQLTest
     	app.run(rArg);
     }
 
+	private MySQLTest()
+	{
+		if (app != null)
+		{
+			throw new UnsupportedOperationException();
+		}
+	}
+
     protected void run(String[] rArg) throws Throwable
     {
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
-		Connection db = DriverManager.getConnection("jdbc:mysql:///test","root","");
-		createSchema(db);
-		db.close();
+		Connection db = null;
+		try
+		{
+			db = DriverManager.getConnection("jdbc:mysql:///test","root","");
+			createSchema(db);
+		}
+		finally
+		{
+			if (db != null)
+			{
+				try
+				{
+					db.close();
+				}
+				catch (Throwable e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
     }
 
     protected void createSchema(Connection db) throws SQLException
