@@ -16,8 +16,9 @@ public class Disk
     /**
      * @throws InvalidPosException
      */
-    public Disk() throws InvalidPosException
+    public Disk(byte[] disk) throws InvalidPosException
     {
+        this.disk = disk;
         this.pos = new DiskPos(0,0,0,false);
     }
 
