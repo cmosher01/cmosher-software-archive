@@ -7,7 +7,47 @@ public class StringFields /* TODO implements Iterable */
     
     public StringFields(String s)
     {
-        i = new Iter(s);
+//        i = new Iter(s);
+        i = new Iterator(s)
+        {
+            private final String s;
+            private int pos;
+
+            private Iterator(String s)
+            {
+                if (this.s != null)
+                {
+                    throw new UnsupportedOperationException();
+                }
+                this.s = s;
+            }
+
+            public boolean hasNext()
+            {
+                return pos <= s.length();
+            }
+
+            public Object next() throws NoSuchElementException
+            {
+                if (!hasNext())
+                {
+                    throw new NoSuchElementException();
+                }
+                int i = s.indexOf(',',pos);
+                if (i < 0)
+                {
+                    i = s.length();
+                }
+                String tok = s.substring(pos,i);
+                pos = i+1;
+                return tok;
+            }
+
+            public void remove() /* TODO for SimpleIterator, don't provide this method */
+            {
+                throw new UnsupportedOperationException();
+            }
+        };
     }
 
     public Iterator iterator() /* TODO SimpleIterator */
