@@ -17,7 +17,7 @@ public class SyntaxDefinition
         
     }
 
-    public OptionDefinition getArgumentDefinition(String arg)
+    public OptionDefinition getOptionDefinition(String option)
     {
         return null;
     }
