@@ -7,8 +7,6 @@ import java.util.ArrayList;
 public class GraphNode<T>
 {
 	private T object;
-	private List<GraphNode<T>> parents = new ArrayList<GraphNode<T>>();
-	private List<GraphNode<T>> children = new ArrayList<GraphNode<T>>();
 
 	public GraphNode(T object)
 	{
@@ -24,6 +22,10 @@ public class GraphNode<T>
 		return object;
 	}
 
+
+
+	private Set<GraphNode<T>> children = new HashSet<GraphNode<T>>();
+
 	public void addChild(GraphNode<T> child)
 	{
 		this.children.add(child);
@@ -33,17 +35,6 @@ public class GraphNode<T>
 	public boolean hasChild(GraphNode<T> child)
 	{
 		return this.children.contains(child);
-	}
-
-	public void addParent(GraphNode<T> parent)
-	{
-		this.parents.add(parent);
-		parent.addChild(this);
-	}
-
-	public boolean hasParent(GraphNode<T> parent)
-	{
-		return this.parents.contains(parent);
 	}
 
 	public void removeChild(GraphNode<T> child)
@@ -56,6 +47,31 @@ public class GraphNode<T>
 		this.children.remove(child);
 	}
 
+	public Iterator<GraphNode<T>> children()
+	{
+		return children.iterator();
+	}
+
+	public int getChildCount()
+	{
+		return children.size();
+	}
+
+
+
+	private List<GraphNode<T>> parents = new ArrayList<GraphNode<T>>();
+
+	public void addParent(GraphNode<T> parent)
+	{
+		this.parents.add(parent);
+		parent.addChild(this);
+	}
+
+	public boolean hasParent(GraphNode<T> parent)
+	{
+		return this.parents.contains(parent);
+	}
+
 	public void removeParent(GraphNode<T> parent)
 	{
 		if (!parent.hasChild(this))
@@ -66,19 +82,9 @@ public class GraphNode<T>
 		this.parents.remove(parent);
 	}
 
-	public Iterator<GraphNode<T>> children()
-	{
-		return children.iterator();
-	}
-
 	public Iterator<GraphNode<T>> parents()
 	{
 		return parents.iterator();
-	}
-
-	public int getChildCount()
-	{
-		return children.size();
 	}
 
 	public int getParentCount()
