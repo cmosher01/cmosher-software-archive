@@ -412,13 +412,13 @@ public class VolumeDOS extends VolumeEntity
                             else
                             {
                                 s.append(" (DOS 3.3 1980 master: unknown alteration)");
-                                for (int i = 0; i < rbCmp.length; ++i)
-                                {
-                                    if (rbCmp[i] != rbClear1980[i])
-                                    {
-                                        System.err.println("@$"+Integer.toHexString(i)+": "+Integer.toHexString(rbClear1980[i]&0xFF)+" --> "+Integer.toHexString(rbCmp[i]&0xFF));
-                                    }
-                                }
+//                                for (int i = 0; i < rbCmp.length; ++i)
+//                                {
+//                                    if (rbCmp[i] != rbClear1980[i])
+//                                    {
+//                                        System.err.println("@$"+Integer.toHexString(i)+": "+Integer.toHexString(rbClear1980[i]&0xFF)+" --> "+Integer.toHexString(rbCmp[i]&0xFF));
+//                                    }
+//                                }
                             }
                         }
                         else
