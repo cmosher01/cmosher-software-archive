@@ -51,4 +51,12 @@ public class GDiffCopy extends GDiffCmd
 //        GDiffCopy[0] = new GDiffCopy()
         return rnorm;
     }
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString()
+    {
+        return "copy "+pos+","+len;
+    }
 }
