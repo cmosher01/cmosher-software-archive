@@ -1,3 +1,5 @@
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,102 @@ import junit.framework.TestCase;
  */
 public class DiskCatalogTest extends TestCase
 {
+    public void testDOS33_Master_1980() throws IOException, InvalidPosException
+    {
+        List r = new ArrayList();
+        r.add(new DiskPos(0x11,0xC));
+        r.add(new DiskPos(0x11,0xD));
+        r.add(new DiskPos(0x11,0xE));
+        r.add(new DiskPos(0x11,0xF));
+        assertManyPos("DOS33_SystemMaster_19800825.dsk",r);
+    }
+
+//    /**
+//     * test VTOC for DOS 3.3 System Master (Jan. 1, 1983), T$11 S$00
+//     * @throws IOException
+//     * @throws InvalidPosException
+//     */
+//    public void testDOS33_Master_1983() throws IOException, InvalidPosException
+//    {
+//        assertOnePos("DOS33_SystemMaster_19830101.dsk",new DiskPos(0x11,0));
+//    }
+//
+//    /**
+//     * test VTOC for DOS 3.3 System Master (1986), T$11 S$00
+//     * @throws IOException
+//     * @throws InvalidPosException
+//     */
+//    public void testDOS33_Master_1986() throws IOException, InvalidPosException
+//    {
+//        assertOnePos("DOS33_SystemMaster_1986.dsk",new DiskPos(0x11,0));
+//    }
+//
+//    public void testDOS33_Others() throws IOException, InvalidPosException
+//    {
+//        assertOnePos("david_dos.dsk",new DiskPos(0x11,0));
+//        assertOnePos("daviddos_2.dsk",new DiskPos(0x11,0));
+//        assertOnePos("DiversiDOS_41_C_1983.dsk",new DiskPos(0x11,0));
+//        assertOnePos("DiversiDOS_2_C_1982.dsk",new DiskPos(0x11,0));
+//        assertOnePos("ESDOS.dsk",new DiskPos(0x11,0));
+//        assertOnePos("Franklin_19820921.dsk",new DiskPos(0x11,0));
+//        assertOnePos("Franklin_19830215.dsk",new DiskPos(0x11,0));
+//        assertOnePos("HYPERDOS_restored.dsk",new DiskPos(0x11,0));
+//        assertOnePos("prontodos.dsk",new DiskPos(0x11,0));
+//        assertOnePos("apa.dsk",new DiskPos(0x11,0));
+//    }
+
+    /**
+     * @param f
+     * @param posExpected
+     * @throws IOException
+     */
+    public void assertOnePos(String f, DiskPos posExpected) throws IOException
+    {
+        Disk disk = readDiskResource(f);
+        List rPos = new ArrayList();
+        disk.findDos33CatalogSector(rPos);
+
+        assertEquals(1, rPos.size());
+
+        DiskPos posActual = (DiskPos)rPos.get(0);
+
+        assertEquals(posExpected,posActual);
+    }
+
+    /**
+     * @param f
+     * @param rPosExpected
+     * @throws IOException
+     */
+    public void assertManyPos(String f, List rPosExpected) throws IOException
+    {
+        Disk disk = readDiskResource(f);
+        List rPosActual = new ArrayList();
+        disk.findDos33CatalogSector(rPosActual);
+
+        assertEquals(rPosExpected.size(),rPosActual.size());
+
+        for (int i = 0; i < rPosExpected.size(); i++)
+        {
+            DiskPos posExpected = (DiskPos)rPosExpected.get(i);
+            DiskPos posActual = (DiskPos)rPosActual.get(i);
+            assertEquals(posExpected,posActual);
+        }
+    }
+
+    /**
+     * @param f
+     * @return
+     * @throws IOException
+     */
+    private Disk readDiskResource(String f) throws IOException
+    {
+        InputStream disk = this.getClass().getClassLoader().getResourceAsStream(f);
+        byte[] rbDisk = new byte[disk.available()];
+        disk.read(rbDisk);
+        disk.close();
+        return new Disk(rbDisk);
+    }
 //    private static byte[] zeroes = new byte[0x100];
 //
 //    /**
