@@ -12,9 +12,15 @@ import junit.framework.TestCase;
  */
 public class RollingChecksumTest extends TestCase
 {
-
-    public void testGetChecksum()
+    public void testRollingChecksum()
     {
-    }
+        String s = "q3o84yvq4ntvwjqnt798ntqmv8tm47otno7";
+        char[] rc = s.toCharArray();
+        byte[] rb = new byte[rc.length];
+        for (int i = 0; i < rc.length; i++)
+        {
+            rb[i] = (byte)rc[i];
+        }
 
+    }
 }
