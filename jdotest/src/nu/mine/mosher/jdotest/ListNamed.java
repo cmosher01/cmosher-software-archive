@@ -34,6 +34,7 @@ public class ListNamed
 			Item item = (Item)i.next();
 			String id = pm.getObjectId(item).toString();
 			sb.append("<tr><td><a href=\"edit.jsp?id=");
+			sb.append(id);
 			sb.append("\">");
 			sb.append(item.getName());
 			sb.append("</a></td></tr>");
