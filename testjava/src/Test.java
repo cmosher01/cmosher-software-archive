@@ -58,8 +58,15 @@ public class Test
         System.out.println(field);
         field = (String)i.next();
         System.out.println(field);
-        field = (String)i.next();
-        System.out.println(field);
+        try
+        {
+            field = (String)i.next();
+            System.out.println(field);
+        }
+        catch (Throwable nse)
+        {
+            nse.printStackTrace();
+        }
         field = (String)i.next();
         System.out.println(field);
 //        for (String field : new StringFields(x))
