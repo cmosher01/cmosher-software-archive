@@ -107,9 +107,9 @@ public class MainFrame extends JFrame
         }
 
         DefaultMutableTreeNode nOrphaned = new DefaultMutableTreeNode("Orphaned Data");
-        List rOrphan = new ArrayList();
-        vol.getOrphaned().getUsed(rOrphan);
-        for (Iterator i = rOrphan.iterator(); i.hasNext();)
+        List rOrphaned = new ArrayList();
+        vol.getOrphaned().getUsed(rOrphaned);
+        for (Iterator i = rOrphaned.iterator(); i.hasNext();)
         {
             DiskPos p = (DiskPos)i.next();
             nOrphaned.add(new DefaultMutableTreeNode(p.toStringTS()));
@@ -130,7 +130,7 @@ public class MainFrame extends JFrame
         {
             nDisk.add(nFilesRecovered);
         }
-        if (!rOrphan.isEmpty())
+        if (!rOrphaned.isEmpty())
         {
             nDisk.add(nOrphaned);
         }
