@@ -111,7 +111,7 @@ public class FixAppleDisasm
 		Map lines = new TreeMap();
 		Map addrs = new TreeMap();
 		int lineNumber = 0;
-		int prevaddr = -1;
+		int nextaddr;
 		for (String s = inbuf.readLine(); s != null; s = inbuf.readLine())
 		{
 			s = s.trim();
@@ -192,6 +192,7 @@ public class FixAppleDisasm
 			else
 			{
 				ln.addr = addr;
+				nextaddr = addr;
 				addrs.put(new Integer(ln.addr),ln);
 				String nextChar = s.substring(4,5);
 				if (nextChar.equalsIgnoreCase("-"))
@@ -224,6 +225,10 @@ public class FixAppleDisasm
 									ln.refaddr = -1;
 								}
 							}
+						}
+						if (!s.substring(8,10).equalsIgnoreCase("  "))
+						{
+							++nextaddr;
 						}
 					}
 					else
