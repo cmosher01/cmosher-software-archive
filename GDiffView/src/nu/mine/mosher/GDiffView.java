@@ -172,8 +172,7 @@ public class GDiffVeiew extends JFrame
         }
         else
         {
-            i -= 10;
-            c = (char)(i+'A');
+            c = (char)(i-10+'A');
         }
         return c;
     }
