@@ -88,7 +88,7 @@ public class Disk implements TreeNode
 		if (con != null)
 		{
 			sb.append(" <br></br>Name: ");
-			sb.append(.getVolumeName());
+			sb.append(con.getVolumeName());
 		}
 		sb.append("</html>");
 		viewRight.setText(sb.toString());
