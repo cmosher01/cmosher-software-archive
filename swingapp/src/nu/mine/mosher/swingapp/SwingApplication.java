@@ -13,9 +13,9 @@ import javax.swing.SwingUtilities;
 public class Ja2
 {
 //    private Ja2GUI mGUI;
+    private static Ja2 me;
     private ExceptionHandler mExceptionHandler;
     private CommandLineArgHandler mCommandLineArgHandler;
-    private static Ja2 me;
 
     /**
      * @param eh
@@ -23,9 +23,9 @@ public class Ja2
      */
     public Ja2(ExceptionHandler eh, CommandLineArgHandler ch)
     {
+        me = this;
         this.mExceptionHandler = eh;
         this.mCommandLineArgHandler = ch;
-        me = this;
     }
 
     /**
