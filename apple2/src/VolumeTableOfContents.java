@@ -44,7 +44,7 @@ public class VolumeTableOfContents extends VolumeEntity
         }
         DiskPos p = (DiskPos)rPosVTOC.get(0);
 
-        rSector.add(new VolumeSector(p,0));
+        rSector.add(new VolumeSector(p,0,this));
 
         pCat = disk.getDos33Next(p);
 
