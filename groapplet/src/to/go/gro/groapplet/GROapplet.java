@@ -257,22 +257,4 @@ public class GROapplet extends JApplet
     //            setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     //        super.processMouseMotionEvent(e);
     //    }
-    /* (non-Javadoc)
-     * @see java.awt.Component#processMouseEvent(java.awt.event.MouseEvent)
-     */
-    protected void processMouseEvent(MouseEvent arg0)
-    {
-        // TODO Auto-generated method stub
-        super.processMouseEvent(arg0);
-    }
-
-    /* (non-Javadoc)
-     * @see java.awt.Component#processMouseMotionEvent(java.awt.event.MouseEvent)
-     */
-    protected void processMouseMotionEvent(MouseEvent arg0)
-    {
-        // TODO Auto-generated method stub
-        super.processMouseMotionEvent(arg0);
-    }
-
 }
