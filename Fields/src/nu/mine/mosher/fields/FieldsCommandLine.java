@@ -10,11 +10,11 @@ import nu.mine.mosher.swingapp.InvalidCommandLine;
  * 
  * @author Chris Mosher
  */
-public class CommandLineArgHandler
+public class FieldsCommandLine
 {
     private final String[] mrArg;
 
-    public CommandLineArgHandler(String[] rArg)
+    public FieldsCommandLine(String[] rArg)
     {
         mrArg = rArg;
     }
