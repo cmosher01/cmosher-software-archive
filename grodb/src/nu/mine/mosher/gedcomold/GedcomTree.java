@@ -5,7 +5,7 @@ import nu.mine.mosher.util.TreeNode;
 public class GedcomTree
 {
 	private int prevLevel = -1;
-	private TreeNode currNode = new TreeNode(null);
+	private TreeNode currNode = new TreeNode();
 
 	public void appendLine(GedcomLine line) throws InvalidLevel
 	{
