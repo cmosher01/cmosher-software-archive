@@ -31,20 +31,6 @@ public class VelocityTest implements LogSystem
     {
         VelocityEngine velocity = new VelocityEngine();
 
-//        velocity.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM,new LogSystem()
-//        {
-//            public void init(RuntimeServices rs) throws Exception
-//            {
-//            }
-//
-//            public void logVelocityMessage(int level, String message)
-//            {
-//                if (level >= LogSystem.INFO_ID)
-//                {
-//                    System.err.println(message);
-//                }
-//            }
-//        });
         velocity.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,"nu.mine.mosher.velocity.VelocityLogger");
         velocity.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH,"C:\\Documents and Settings\\chrism\\My Documents");
         velocity.setProperty(VelocityEngine.VM_LIBRARY,"");
