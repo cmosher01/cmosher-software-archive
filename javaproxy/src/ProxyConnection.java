@@ -50,8 +50,6 @@ public class ProxyConnection extends Thread
 
     private DebugTracer tracer = new DebugTracer();
 
-    private Hashtable MIMETypes = null;
-
     private HTTPRequestHeader c_header = null;
 
     private HTTPResponseHeader s_header = null;
