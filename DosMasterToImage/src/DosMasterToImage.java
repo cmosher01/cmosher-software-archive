@@ -185,8 +185,37 @@ public class DosMasterToImage
             r[x++] = in.read();
         }
 
+        int x = rb[0x84] & 0xFF;
+        if (x == 0x46)
+        {
+            tempdostype = 1980;
+            clearIgnored(rIgnore1980);
+        }
+        else if (x == 0x84)
+        {
+            tempdostype = 1983;
+            clearIgnored(rIgnore1983);
+        }
+        else if (x == 0xB3)
+        {
+            tempdostype = 1986;
+            clearIgnored(rIgnore1986);
+        }
         out.flush();
         out.close();
         in.close();
+    }
+    /**
+     * @param rIgn
+     */
+    private void clearIgnored(int[] rIgn)
+    {
+        for (int i = 0; i < rIgn.length/2; ++i)
+        {
+            for (int b = rIgn[i*2]; b <= rIgn[i*2+1]; ++b)
+            {
+                rbCmp[b] = 0;
+            }
+        }
     }
 }
