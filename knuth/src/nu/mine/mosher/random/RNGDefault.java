@@ -10,12 +10,14 @@ package nu.mine.mosher.random;
  */
 public abstract class RNGDefault implements RandomNumberGenerator
 {
-	private final int seed;
+	private final long seed;
 
 	/**
+	 * Initializes the <code>RandomNumberGenerator</code> with
+	 * the given seed number.
 	 * @param seed
 	 */
-	public RNGDefault(final int seed)
+	public RNGDefault(final long seed)
 	{
 		this.seed = seed;
 	}
