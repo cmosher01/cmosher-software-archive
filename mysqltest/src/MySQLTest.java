@@ -151,9 +151,24 @@ public class MySQLTest
 		finally
 		{
 			closeStatement(st);
+			st = null;
 		}
 		if (idImage == 0)
 		{
+			st = db.prepareStatement(
+			"insert into ImageIdent (year,state,county,township,district,image) values (?,?,?,?,?,?)");
+			st.setInt(1,1790);
+			st.setString(2,state);
+			st.setString(3,county);
+			st.setString(4,township);
+			st.setInt(5,district);
+			st.setInt(6,image);
+			st.execute();
+			ResultSet rs = st.getGeneratedKeys();
+			while (rs.next())
+			{
+				idImage = rs.getInt(1);
+			}
 		}
     }
 
