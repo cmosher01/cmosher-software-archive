@@ -20,7 +20,7 @@ public class TestBeans
         Editors.register();
 
         SomeBean some = new SomeBean();
-        String prop = "objInteger";
+        String prop = "robjInteger";
         String val = "34";
 
         setProperty(some, prop, val);
