@@ -82,6 +82,11 @@ public class TSMap
         return sb.toString();
     }
 
+    /**
+     * @param a
+     * @param b
+     * @return
+     */
     public static TSMap intersection(TSMap a, TSMap b)
     {
         TSMap m = new TSMap();
