@@ -8,8 +8,11 @@
  * Modifier : Steve Yeong-Ching Hsueh
  */
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Canvas;
+import java.awt.Dimension;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.util.StringTokenizer;
 
 /**
  * MultiLineLabel is partly copied from the example program in
