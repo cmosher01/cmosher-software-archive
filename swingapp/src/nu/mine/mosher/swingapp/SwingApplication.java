@@ -5,8 +5,6 @@ package nu.mine.mosher.ja2;
 
 import javax.swing.SwingUtilities;
 
-import nu.mine.mosher.thread.CubbyHole;
-
 /**
  * TODO
  * 
@@ -15,7 +13,6 @@ import nu.mine.mosher.thread.CubbyHole;
 public class Ja2
 {
     private final String[] rArg;
-    private final CubbyHole mException = new CubbyHole();
     private Ja2GUI mGUI;
 
     public Ja2(String[] rArg)
@@ -50,7 +47,7 @@ public class Ja2
                 }
                 catch (Throwable th)
                 {
-                    Ja2.sendException(th);
+                    ExceptionHandler.send(th);
                 }
             }
         });
@@ -62,27 +59,11 @@ public class Ja2
          * caused the program to exit immediately without doing
          * anything) (a race condition).
          */
-        waitForException();
+        ExceptionHandler.waitFor();
     }
 
     protected void createGUI()
     {
         mGUI = new Ja2GUI();
-    }
-
-    protected void waitForException() throws Throwable
-    {
-        throw (Throwable)mException.get();
-    }
-
-    /**
-     * Sends an exception to the program's main thread
-     * for handling.
-     * 
-     * @param exception
-     */
-    public static void sendException(Throwable exception)
-    {
-        Ja2.mException.put(exception);
     }
 }
