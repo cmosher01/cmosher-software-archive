@@ -77,6 +77,11 @@ public class TestBeans
         }
         else
         {
+            PropertyEditor ed = PropertyEditorManager.findEditor(classProp);
+            if (ed == null)
+            {
+                throw new IntrospectionException("can't get property editor");
+            }
             ed.setAsText(value[0]);
             v = ed.getValue();
         }
