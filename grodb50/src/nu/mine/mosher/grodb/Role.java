@@ -13,6 +13,8 @@ public class Role
 	private Persona persona;
 	private ItemType<RoleType> type;
 
+	private Hypothesis hypothesis;
+
 	public Role()
 	{
 	}
