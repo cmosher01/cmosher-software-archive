@@ -1,8 +1,11 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,8 +31,10 @@ public class FixMetaUTF8
         }
         File f = new File(args[0]);
         StringBuffer sb = readFile(f);
-        StringBuffer sb2 = removeContentTypeMeta(sb);
-        String s = addContentTypeMeta(sb2);
+        sb = removeContentTypeMeta(sb);
+        String s = addContentTypeMeta(sb);
+        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f),"UTF-8"));
+        out.write(s);
     }
 
     public static StringBuffer readFile(File f) throws IOException
