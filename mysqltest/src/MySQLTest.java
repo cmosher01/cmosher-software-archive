@@ -29,7 +29,7 @@ public class MySQLTest
 		{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			db = DriverManager.getConnection("jdbc:mysql:///test","root","");
-			createSchema(db);
+			createSchema();
 		}
 		finally
 		{
