@@ -11,7 +11,7 @@ public final class Undoer<T>
 
 	public void save(T state) throws CloneNotSupportedException
 	{
-		mrUndo.addLast(cloneObject<T>(state));
+		mrUndo.addLast(cloneObject(state));
 		mrRedo.clear();
 	}
 
