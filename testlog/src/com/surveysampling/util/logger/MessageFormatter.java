@@ -22,7 +22,7 @@ public final class MessageFormatter extends Formatter
 
     public static String formatMessage(LogRecord record)
     {
-        return MessageFormatter.LOCAL.super.formatMessage(record);
+        return LOCAL.formatMessage(record);
     }
 
     /* (non-Javadoc)
