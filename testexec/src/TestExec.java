@@ -15,7 +15,6 @@ public class TestExec
             {
                 System.out.println("parent shutdown handler");
                 p.destroy();
-                waitFor();
             }
         });
         System.out.println("parent process");
