@@ -10,7 +10,7 @@ public class TestBeans
     public static void main(String[] rArgs) throws Throwable
     {
         SomeBean some = new SomeBean();
-        String prop = "AInt";
+        String prop = "objInteger";
         String val = "34";
 
 
