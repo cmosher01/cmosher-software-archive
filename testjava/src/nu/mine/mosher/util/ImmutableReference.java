@@ -84,6 +84,6 @@ public class ImmutableReference
 
     public int hashCode()
     {
-        this.ref.hashCode();
+        return this.ref.hashCode();
     }
 }
