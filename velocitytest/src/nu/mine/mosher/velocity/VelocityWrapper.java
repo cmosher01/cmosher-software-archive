@@ -107,6 +107,8 @@ public class VelocityWrapper
 
     public static void merge(File inputTemplate, Context context, Writer out) throws VelocityException
     {
+        inputTemplate = inputTemplate.getAbsoluteFile().getCanonicalFile();
+
         Properties props = VelocityWrapper.getDefaultProperties();
         props.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH,inputTemplate.getParentFile().getAbsolutePath());
 
