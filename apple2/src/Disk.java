@@ -39,6 +39,20 @@ public class Disk
     {
         byte[] rb = new byte[len];
         System.arraycopy(disk,pos.getIndex(),rb,0,len);
+        pos = pos.advance(len);
         return rb;
+    }
+
+    public int read()
+    {
+        int r = disk[pos.getIndex()];
+        pos = pos.advance(1);
+        return r;
+    }
+
+    public DiskPos readTS()
+    {
+        int track = 
+        DiskPos r = new DiskPos(disk)
     }
 }
