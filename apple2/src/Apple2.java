@@ -36,7 +36,7 @@ public class Apple2
         disk.findDos33VTOC(rVTOC);
         List rCat = new ArrayList();
         disk.findDos33CatalogSector(rCat);
-        List rTSMap = new ArrayList()
+        List rTSMap = new ArrayList();
         disk.findDos33TSMapSector(tTSMap);
     }
 }
