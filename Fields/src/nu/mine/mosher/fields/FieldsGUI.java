@@ -3,6 +3,8 @@
  */
 package nu.mine.mosher.ja2;
 
+import java.awt.Container;
+
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 
@@ -11,20 +13,7 @@ import javax.swing.JMenuBar;
  */
 public class GUI
 {
-    private ContentPane mPaneContent;
-    private ContentMenu mJMenuBar;
     private JFrame mFrame;
-
-    public GUI(ContentPane paneContent, ContentMenu jMenuBar)
-    {
-        this.mPaneContent = paneContent;
-        this.mJMenuBar = jMenuBar;
-
-        if (this.mPaneContent == null)
-        {
-            throw new IllegalStateException("GUI requires a ContentPane.");
-        }
-    }
 
     /**
      * 
@@ -44,12 +33,10 @@ public class GUI
         mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Create and set up the content pane.
-        mPaneContent.create();
-        mFrame.setContentPane(mPaneContent);
+        mFrame.setContentPane(createContentPane());
 
         // Create and set up the menu bar.
-        mJMenuBar.create();
-        mFrame.setJMenuBar(mJMenuBar);
+        mFrame.setJMenuBar(createMenuBar());
 
         // Set the window's size and position.
         mFrame.pack();
@@ -57,5 +44,14 @@ public class GUI
 
         // Display the window.
         mFrame.setVisible(true);
+    }
+
+    /**
+     * @return
+     */
+    private Container createContentPane()
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
