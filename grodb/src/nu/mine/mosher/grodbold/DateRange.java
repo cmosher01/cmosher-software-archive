@@ -1,6 +1,7 @@
 package nu.mine.mosher.grodb;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
 public class DateRange
 {
@@ -11,7 +12,7 @@ public class DateRange
 	int hourOffGMT;
 	int minuteOffGMT;
 	boolean circa;
-	Calendar cal;
+	TimeZone tz;
 
 	void DateRange()
 	{
