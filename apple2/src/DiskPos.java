@@ -181,6 +181,9 @@ public class DiskPos
         return sb.toString();
     }
 
+    /**
+     * 
+     */
     public void rewind()
     {
         this.iDisk = 0;
