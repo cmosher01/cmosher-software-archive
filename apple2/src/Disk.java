@@ -410,7 +410,6 @@ public class Disk
     /**
      * @param pos
      * @param entries
-     * @throws InvalidPosException
      */
     public void getDos33CatalogEntries(DiskPos pos, Collection entries)
     {
