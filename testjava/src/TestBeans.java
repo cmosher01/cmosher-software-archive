@@ -16,7 +16,9 @@ public class TestBeans
         }
         ed.setAsText("34");
         Integer i = (Integer)ed.getValue();
-        showInt(i.intValue());
+
+
+
 
         BeanInfo bi = Introspector.getBeanInfo(SomeBean.class);
         if (bi == null)
@@ -41,7 +43,11 @@ public class TestBeans
         {
             throw new Exception("can't get AInt property descriptors for SomeBean");
         }
-        Method wr = rpd[ipd].getWriteMethod();
+        PropertyDescriptor pd = rpd[ipd];
+
+
+
+        Method wr = pd.getWriteMethod();
         SomeBean some = new SomeBean();
         wr.invoke(some, new Object[] {i});
         showInt(some.getAInt());
