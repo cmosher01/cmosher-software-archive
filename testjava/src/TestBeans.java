@@ -63,7 +63,7 @@ public class TestBeans
         {
             throw new IllegalArgumentException("Cannot set a scalar property to an array of values.");
         }
-        return convertArray(value, classProp);
+        return convertArray(value,classProp);
     }
 
     public static void setProperty(Object bean, PropertyDescriptor pd, Object value)
