@@ -82,8 +82,8 @@ public class MainFrame extends JFrame
         nDisk.add(nBoot);
         nDisk.add(nDos);
         top.add(nDisk);
-        // TODO Auto-generated method stub
-        
+
+        invalidate();
     }
 
     /**
