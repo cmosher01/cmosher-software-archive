@@ -90,7 +90,7 @@ public class A2DiskEdit
         //Create the scroll pane and add the tree to it. 
         JScrollPane treeView = new JScrollPane(tree);
 
-		rightView = new JScrollPane()
+		rightView = new JScrollPane();
         //Create the right-hand pane.
 		//htmlPane = new JEditorPane();
         //htmlPane.setEditable(false);
