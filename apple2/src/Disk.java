@@ -161,12 +161,31 @@ public class Disk
                 for (int cat = 0; cat < 7; ++cat)
                 {
                     if (DiskPos.isValidSector(sector[ce+1]) &&
-                        isValidFileType(sector[ce+2]) )
+                        isValidFileType(sector[ce+2]) &&
+                        isValidFileName(sector,ce+3))
                     ce += 35;
                 }
                 System.out.println("Catalog Sector @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
             }
         }
+    }
+
+    /**
+     * @param sector
+     * @param i
+     * @return
+     */
+    private boolean isValidFileName(byte[] sector, int i)
+    {
+        // only check 29 chars of filename (last char could be overwritten by file deletion)
+        for (int x = 0; x < 29; ++x)
+        {
+            if ((sector[i+x] && 0x80) != 0)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
