@@ -269,7 +269,7 @@ public class Delta
     // sample program to compute the difference between two input files.
     public static void main(String argv[])
     {
-        Delta delta = new Delta();
+        //Delta delta = new Delta();
 
         if (argv.length != 3)
         {
