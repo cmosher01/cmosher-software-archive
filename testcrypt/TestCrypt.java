@@ -14,7 +14,7 @@ public class TestCrypt
 //        SecureRandom rand = new SecureRandom();
     }
 
-    public void showProviders()
+    public static void showProviders()
     {
         Provider[] providers = Security.getProviders();
         for (int i = 0; i < providers.length; i++)
