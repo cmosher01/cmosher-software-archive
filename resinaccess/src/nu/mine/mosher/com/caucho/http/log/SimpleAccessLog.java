@@ -80,10 +80,11 @@ public class SimpleAccessLog extends AccessLog
 //		sb.append(!good?Integer.toString(status):"");
 		sb.append(status);
 
+		SimpleDateFormat form = new SimpleDateFormat("yyyyMMdd");
 		BufferedWriter accesslog = null;
 		try
 		{
-			accesslog = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File("c:\\temp\\access.txt"),true)));
+			accesslog = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File("c:\\temp\\access"+form.format(ts)),true)));
 			accesslog.write(sb.toString());
 			accesslog.newLine();
 		}
