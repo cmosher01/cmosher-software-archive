@@ -110,7 +110,7 @@ public class GDiffVeiew extends JFrame
 
         readSrc();
         doc.insertString(0,sb.toString(),(AttributeSet)styles.get("body"));
-
+        highlightSrc(3,5);
         pack();
         setVisible(true);
     }
@@ -238,7 +238,7 @@ public class GDiffVeiew extends JFrame
         return c;
     }
 
-    public void hilightSRc(int begin, int end)
+    public void highlightSrc(int begin, int end)
     {
         if (srcBegin >= 0 && srcEnd >= 0)
         {
