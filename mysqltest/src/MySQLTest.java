@@ -75,10 +75,6 @@ public class MySQLTest
 
 	protected void calcOneCount(int year, String sGender, int ageMin, int ageMax) throws SQLException
     {
-    	if (ageMax < 0)
-    	{
-    		ageMax = 150;
-    	}
     	Statement st = null;
     	try
     	{
@@ -91,7 +87,7 @@ public class MySQLTest
     			{
     				log.info(
     					sGender+","+
-    					(ageMax<0 ? "" : ""+(1790-ageMax))+","+
+    					(ageMax<0 ? ""+(1790-150) : ""+(1790-ageMax))+","+
     					(1790-ageMin));
     			}
     		}
