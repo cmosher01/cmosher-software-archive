@@ -1,5 +1,5 @@
 // Primes.java
-package cmp.Primes;
+package nu.mine.mosher;
 
 /**
  * Copyright 1998 Roedy Green Canadian Mind Products #208 - 525 Ninth Street New
