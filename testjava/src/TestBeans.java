@@ -79,7 +79,7 @@ public class TestBeans
         wr.invoke(bean, new Object[] { v });
     }
 
-    private static PropertyEditor getPropertyEditor(Class forClass) throws IntrospectionException
+    public static PropertyEditor getPropertyEditor(Class forClass) throws IntrospectionException
     {
         PropertyEditor ed = PropertyEditorManager.findEditor(forClass);
         if (ed == null)
