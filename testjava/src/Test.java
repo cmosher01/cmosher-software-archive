@@ -51,11 +51,26 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
-        Date d = sdf.parse("17:30:01.002");
 
-        SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
-        System.out.println(sdf2.format(d));
+
+        StringBuffer sb = new StringBuffer();
+        sb.append("");
+        String s1 = sb.toString();
+        String s2 = "";
+        System.out.println(s1==s2);
+
+
+
+
+
+
+
+
+//        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
+//        Date d = sdf.parse("17:30:01.002");
+//
+//        SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
+//        System.out.println(sdf2.format(d));
 
 
 
