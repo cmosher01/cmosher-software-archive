@@ -88,7 +88,7 @@ public class TestThreadIO
         {
             System.err.println("numberOfEntries != 2");
         }
-        else if (lines.size() != 2)
+        if (lines.size() != 2)
         {
             System.err.println("lines.size() != 2");
         }
