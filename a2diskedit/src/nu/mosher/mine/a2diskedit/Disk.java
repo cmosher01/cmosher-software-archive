@@ -32,7 +32,7 @@ public class Disk implements TreeNode
 
 		if (mFile != null)
 		{
-			byte[] image;
+			byte[] image = null;
 			FileInputStream fin = null;
 			try
 			{
