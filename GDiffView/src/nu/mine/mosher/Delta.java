@@ -256,12 +256,9 @@ public class Delta
             System.err.println("aborting..");
             return;
         }
-        GDiffWriter output = null;
-        File sourceFile = null;
-        File targetFile = null;
-        sourceFile = new File(argv[0]);
-        targetFile = new File(argv[1]);
-        output = new GDiffWriter(new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(argv[2])))));
+        File sourceFile = new File(argv[0]);
+        File targetFile = new File(argv[1]);
+        GDiffWriter output = new GDiffWriter(new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(argv[2])))));
 
         if (sourceFile.length() > Integer.MAX_VALUE || targetFile.length() > Integer.MAX_VALUE)
         {
