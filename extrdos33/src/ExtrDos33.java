@@ -82,7 +82,7 @@ public class ExtrDos33
 		}
 		public boolean hasSignature()
 		{
-			return (rb[0] == 0x01 && rb[1] == 0xA5 && rb[2] == 0x27 && rb[3] == 0xC9);
+			return (rb[0] == 0x00000001 && rb[1] == 0xFFFFFFA5 && rb[2] == 0x00000027 && rb[3] == 0xFFFFFFC9);
 		}
         public boolean equals(Object obj)
         {
