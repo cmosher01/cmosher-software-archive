@@ -61,7 +61,7 @@ public class Test
 
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
         long ms = fmt.parse("2004/04/01 00:00:00.000").getTime();
-        for (int i = 0; i < 200; ++i)
+        for (int i = 0; i < 4*24; ++i)
         {
             System.out.println(fmt.format(new Date(ms)));
             ms += 15*60*1000;
