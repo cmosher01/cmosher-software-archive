@@ -231,16 +231,26 @@ public class Disk
      */
     public void findDos33CatalogSector(/*boolean allowLarge, TSMap tsmapMaps*/Collection rPosCat)
     {
-        rewind();
-        while (!EOF())
+        Iterator i = this.getSectorIterator();
+        while (i.hasNext())
         {
-            DiskPos cur = this.pos;
-            byte[] sector = read(DiskPos.cSector);
-//            List entries = new ArrayList();
-            int goodEntries = isDos33CatalogSector(sector/*,allowLarge,tsmapMaps,entries*/);
-            if (goodEntries > 0)
+            DiskPos pos = (DiskPos)i.next();
+            if (isDos33CatalogSector(pos) > 0)
             {
-                rPosCat.add(cur);
+                rPosCat.add(pos);
+            }
+        }
+
+//        rewind();
+//        while (!EOF())
+//        {
+//            DiskPos cur = this.pos;
+//            byte[] sector = read(DiskPos.cSector);
+//            List entries = new ArrayList();
+//            int goodEntries = isDos33CatalogSector(sector/*,allowLarge,tsmapMaps,entries*/);
+//            if (goodEntries > 0)
+//            {
+//                rPosCat.add(cur);
 //                System.out.println("Catalog Sector @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+
 //                        Integer.toHexString(cur.getSectorInTrack())+" ("+goodEntries+" entries)");
 //                for (Iterator i = entries.iterator(); i.hasNext();)
@@ -250,8 +260,8 @@ public class Disk
 //                    System.out.print(f.trim());
 //                    System.out.println("\"");
 //                }
-            }
-        }
+//            }
+//        }
     }
 
 //    /**
