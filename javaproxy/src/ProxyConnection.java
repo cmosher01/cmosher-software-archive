@@ -96,14 +96,14 @@ public class ProxyConnection extends Thread
             proxy_addr = proxy_addr.trim();
         try
         {
-            proxy_port = Integer.parseInt((String)httpconfig.getProperty("network.proxy.port"));
+            proxy_port = Integer.parseInt(httpconfig.getProperty("network.proxy.port"));
         }
         catch (NumberFormatException ne)
         {
             proxy_port = 0;
         }
 
-        String showcontent_str = (String)httpconfig.getProperty("network.showcontent");
+        String showcontent_str = httpconfig.getProperty("network.showcontent");
         if (showcontent_str != null)
             show_content = showcontent_str.equals("true") ? true : false;
 
