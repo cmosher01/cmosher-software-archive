@@ -36,8 +36,6 @@ public class Checksum
 
     public static final int S = (1 << 4); // 16
 
-    public static boolean debug = false;
-
     protected int hashtable[];
 
     protected long checksums[];
@@ -111,15 +109,10 @@ public class Checksum
 
         InputStream is = new BufferedInputStream(new FileInputStream(sourceFile));
         int checksumcount = (int)sourceFile.length() / S;
-        if (debug) //gls031504
-            System.out.println("generating checksum array of size " + checksumcount);
 
         checksums = new long[checksumcount];
         hashtable = new int[checksumcount];
         prime = findClosestPrime(checksumcount);
-
-        if (debug) //gls031504
-            System.out.println("using prime " + prime);
 
         // generate cheksums at each interval
         for (int i = 0; i < checksumcount; i++)
@@ -140,14 +133,7 @@ public class Checksum
         for (int i = 0; i < checksumcount; i++)
         {
             int hash = generateHash(checksums[i]) % prime;
-            if (debug)
-                System.out.println("checking with hash: " + hash);
-            if (hashtable[hash] != -1)
-            {
-                if (debug)
-                    System.out.println("hash table collision for index " + i);
-            }
-            else
+            if (hashtable[hash] == -1)
             {
                 hashtable[hash] = i;
             }
