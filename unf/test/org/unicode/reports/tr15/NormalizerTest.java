@@ -44,7 +44,7 @@ public class NormalizerTest extends TestCase
 			if (isHexDigit(start))
 			{
 				int iCol = 0;
-				for (StringTokenizer st = new StringTokenizer(lin,";"); i < 5; )
+				for (StringTokenizer st = new StringTokenizer(lin,";"); iCol < 5; )
 				{
 					String tok = st.nextToken();
 					rCol[iCol++] = tok;
