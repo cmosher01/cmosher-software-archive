@@ -73,7 +73,11 @@ public class Test
 	{
 
         URL x = Test.class.getClassLoader().getResource("");
-        URI uri = URI.create(x.toExternalForm());
+        String sx = x.toExternalForm();
+        System.out.println(sx);
+        URI uri = URI.create(sx);
+        String su = uri.toASCIIString();
+        System.out.println(su);
         File f = new File(uri.getPath());
         System.out.println(f.getCanonicalPath());
         if (f.isDirectory())
