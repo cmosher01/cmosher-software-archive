@@ -57,4 +57,9 @@ public class StringFieldizer implements Iterable<String>
 			throw new UnsupportedOperationException();
 		}
 	}
+
+	public String getResidue(Iterator<String> i)
+	{
+		int pos = ((Iter)i).pos;
+	}
 }
