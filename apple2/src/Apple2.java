@@ -29,7 +29,7 @@ public class Apple2
 //        doOneDisk(readDisk(new File("test/SARG2.DSK")));
 //        doOneDisk(readDisk(new File("test/DOS33_SystemMaster_19800825.dsk")));
 //        doOneDisk(readDisk(new File("test/montezuma.dsk")));
-        doOneDisk(readDisk(new File("test/DiversiDOS_2_C_1982.dsk\")));
+        doOneDisk(readDisk(new File("test/DiversiDOS_2_C_1982.dsk")));
     }
 
     /**
