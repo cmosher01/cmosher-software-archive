@@ -71,7 +71,7 @@ public class Util
         }
     }
 
-    public static ArrayList toList(Iterator i)
+    public static ArrayList list(Iterator i)
     {
         ArrayList r = new ArrayList();
         while (i.hasNext())
