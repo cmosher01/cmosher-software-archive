@@ -20,6 +20,7 @@ public class TreeFrame extends JPanel
 
     public TreeFrame(String dir)
     {
+        setDoubleBuffered(true);
         setLayout(new BorderLayout());
         addNotify();
         setSize(getInsets().left + getInsets().right + 485, getInsets().top + getInsets().bottom + 367);
