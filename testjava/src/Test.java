@@ -55,7 +55,6 @@ public class Test
         File ctemp = new File("c:\\temp");
         File f1 = new File(ctemp,"a\\b\\c.txt");
         f1.createNewFile();
-        f1.close();
 
 
 
