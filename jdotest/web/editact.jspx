@@ -11,7 +11,7 @@
     if (changed)
     {
     	PersistenceManager p = pm.begin();
-		Item item = (Item)pm.getObjectById(pm.newObjectIdInstance(Item.class,id),true);
+		Item item = (Item)p.getObjectById(p.newObjectIdInstance(Item.class,id),true);
 	    item.setName(sNew);
 	    pm.commit(p);
     }
