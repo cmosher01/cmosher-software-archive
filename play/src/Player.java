@@ -40,31 +40,42 @@ public class Player implements Immutable
     {
         LoggingInitializer.init();
 
-        GedcomAnselCharsetProvider p = new GedcomAnselCharsetProvider();
-        Charset cs = p.charsetForName("x-gedcom-ansel");
-        System.out.println(cs.displayName());
+		byte[] rb = new byte[5];
+		rb[0] = 65;
+		rb[1] = 66;
+		rb[2] = 67;
+		rb[3] = 68;
+		rb[4] = 69;
 
-        InputStream stream;
-        if (args.length > 0)
-        {
-            stream = new FileInputStream(args[0]);
-        }
-        else
-        {
-            stream = System.in;
-        }
+		String s = new String(rb,"x-gedcom-ansel");
 
-		InputStreamReader reader = new InputStreamReader(stream,cs);
-		BufferedReader bufrd = new BufferedReader(reader);
+		System.out.println(s);
 
-        String s = bufrd.readLine();
-        while (s != null)
-        {
-            System.out.println(s);
-            s = bufrd.readLine();
-        }
-		System.out.flush();
-		bufrd.close();
+//        GedcomAnselCharsetProvider p = new GedcomAnselCharsetProvider();
+//        Charset cs = p.charsetForName("x-gedcom-ansel");
+//        System.out.println(cs.displayName());
+//
+//        InputStream stream;
+//        if (args.length > 0)
+//        {
+//            stream = new FileInputStream(args[0]);
+//        }
+//        else
+//        {
+//            stream = System.in;
+//        }
+//
+//		InputStreamReader reader = new InputStreamReader(stream,cs);
+//		BufferedReader bufrd = new BufferedReader(reader);
+//
+//        String s = bufrd.readLine();
+//        while (s != null)
+//        {
+//            System.out.println(s);
+//            s = bufrd.readLine();
+//        }
+//		System.out.flush();
+//		bufrd.close();
     }
 
     /**
