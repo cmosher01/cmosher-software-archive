@@ -65,7 +65,7 @@ public class VelocityTest
         writer.close();
     }
 
-    private static class ErrLogger implements LogSystem
+    public static class ErrLogger implements LogSystem
     {
         public void init(RuntimeServices rs) throws Exception
         {
