@@ -106,6 +106,9 @@ public class MySQLTest
 		int year = readInt(i.next());
 		switch (year)
         {
+        	case 0:
+        		parseKnown(i);
+        	break;
             case 1790:
                 parse1790(i);
             break;
@@ -279,12 +282,39 @@ public class MySQLTest
 			st.setInt(4,150);
 			st.setInt(5,f45to150);
 			st.execute();
-
 		}
 		finally
 		{
 			closeStatement(st);
 			st = null;
+		}
+	}
+
+	protected void parseKnown(Iterator i) throws SQLException
+	{
+		String nameLast = (String)i.next();
+		String nameFirst = (String)i.next();
+		String nameMiddle = (String)i.next();
+		String nameSuffix = (String)i.next();
+		String gender = (String)i.next();
+		int birth = readInt(i.next());
+		int death = readInt(i.next());
+		PreparedStatement st = null;
+		try
+		{
+			st = db.prepareStatement(
+			"insert into KnownPerson (household,gender,minAge,maxAge,cnt) values (?,?,?,?,?)");
+
+			st.setInt(1,hh);
+			st.setString(2,"m");
+			st.setInt(3,0);
+			st.setInt(4,9);
+			st.setInt(5,m0to9);
+			st.execute();
+		}
+		finally
+		{
+			closeStatement(st);
 		}
 	}
 
@@ -523,6 +553,18 @@ public class MySQLTest
 		"    entry integer unsigned not null references CountEntry(id), "+
 		"    birthEarliest date, "+
 		"    birthLatest date "+
+		")");
+		dbUpdate("drop table if exists KnownPerson");
+		dbUpdate("create table "+
+		"KnownPerson "+
+		"( "+
+		"    id integer unsigned not null auto_increment primary key, "+
+		"    nameLast varchar(64), "+
+		"    nameFirst varchar(64), "+
+		"    nameMiddle varchar(8), "+
+		"    nameSuffix varchar(8), "+
+		"    birth date, "+
+		"    death date "+
 		")");
 	}
 
