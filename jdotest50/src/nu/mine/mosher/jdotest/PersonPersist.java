@@ -79,7 +79,8 @@ public class PersonPersist
 		for (Iterator i = result.iterator(); i.hasNext(); )
 		{
 			Person person = (Person)i.next();
-			System.out.println("person: "+person.getName());
+			Object oid = pm.getObjectId(person);
+			System.out.println("person ID "+oid+": "+person.getName());
 		}
 
 		// retrieve objects from datastore and display
