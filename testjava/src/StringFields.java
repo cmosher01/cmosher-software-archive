@@ -2,16 +2,16 @@ import java.util.Iterator;
 
 public class SF
 {
-    private final String s;
+    private final Iterator i;
     
     public SF(String s)
     {
-        this.s = s;
+        i = new Iter(s);
     }
 
     public Iterator iterator()
     {
-        return new Iter(s);
+        return i;
     }
 
     private static class Iter implements Iterator
