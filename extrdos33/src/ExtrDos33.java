@@ -130,14 +130,16 @@ public class ExtrDos33
 
 		if (doss.containsKey(dos))
 		{
-//			doss
+			File saveDos = (File)doss.get(dos);
+			System.out.println("image already found: "+saveDos.getAbsolutePath());
 		}
 		else
 		{
+			File saveDos = new File(dirNew,nextDosFileName());
+			System.out.println("New DOS 3.3 image. Saving Tracks $00-$03 to file: "+saveDos.getAbsolutePath());
+			doss.put(dos,saveDos);
 		}
 
-		File saveDos = new File(dirNew,nextDosFileName());
-		System.out.println("Saving Tracks $00-$03 to file: "+saveDos.getAbsolutePath());
 
     }
 
