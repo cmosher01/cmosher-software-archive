@@ -157,16 +157,17 @@ public class FixAppleDisasm
 				s = hexWord(addr)+"-   "+s.trim();
 			}
 
-			ln.addr = addr;
 			if (nextaddr < 0)
 			{
 				nextaddr = addr;
 			}
-			if (nextaddr > 0 && nextaddr != addr)
+
+			if (nextaddr != addr)
 			{
 				System.err.print("address error @ $");
 				System.err.println(hexWord(nextaddr));
 			}
+			ln.addr = addr;
 			addrs.put(new Integer(ln.addr),ln);
 			String nextChar = s.substring(4,5);
 			if (nextChar.equalsIgnoreCase("-"))
