@@ -12,12 +12,12 @@ public class StringFieldizer implements Iterable<String>
 		this.s = s;
 	}
 
-	public Iterator<String> iterator()
+	public Iter iterator()
 	{
 		return new Iter(s);
 	}
 
-	private static class Iter implements Iterator<String>
+	public static class Iter implements Iterator<String>
 	{
 		private final String s;
 		private int pos;
