@@ -86,7 +86,20 @@ public class FixAppleDosAsm
         }
         else
         {
-            // label sp [sp [...]] [directive] [; comment]
+            /*
+             * Line: label [sp [...] [directive]] [; [sp [...]] [comment] [sp [...]]]
+             * tr: label [sp [...] [directive]] [; [sp [...]] [comment]
+             */
+            int sp = tr.indexOf(" ");
+            if (sp < 0)
+            {
+                out.print(tr);
+            }
+            else
+            {
+                String lb = tr.substring(0,sp);
+                out.print(lb);
+            }
         }
     }
 }
