@@ -57,16 +57,16 @@ public class TestBeans
 
         Class classProp = pd.getPropertyType();
 
-        PropertyEditor ed = PropertyEditorManager.findEditor(classProp);
-        if (ed == null)
-        {
-            throw new IntrospectionException("can't get property editor");
-        }
-
         Object v;
         if (classProp.isArray())
         {
-            Object[] rval = (Object[])Array.newInstance(classProp.getComponentType(),value.length);
+            classProp = classProp.getComponentType();
+            PropertyEditor ed = PropertyEditorManager.findEditor(classProp);
+            if (ed == null)
+            {
+                throw new IntrospectionException("can't get property editor");
+            }
+            Object[] rval = (Object[])Array.newInstance(classProp,value.length);
             for (int i = 0; i < value.length; ++i)
             {
                 String s = value[i];
