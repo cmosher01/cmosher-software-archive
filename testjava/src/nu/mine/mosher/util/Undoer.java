@@ -13,13 +13,13 @@ public class Undoer
         mrRedo.clear();
     }
 
-    public Cloneable undo(Cloneable state) throws CloneNotSupportedException
+    public Cloneable undo(Cloneable state)
     {
         mrRedo.addFirst(state);
         return (Cloneable)mrUndo.removeLast();
     }
 
-    public Cloneable redo(Cloneable state) throws CloneNotSupportedException
+    public Cloneable redo(Cloneable state)
     {
         mrUndo.addLast(state);
         return (Cloneable)mrRedo.removeFirst();
