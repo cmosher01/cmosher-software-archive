@@ -69,6 +69,7 @@ public class GDiffVeiew extends JFrame
 
         doc = new DefaultStyledDocument();
         pane = new JTextPane(doc);
+        pane.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(pane);
         scrollPane.setPreferredSize(new Dimension(620,460));
         JPanel contentPane = new JPanel(new BorderLayout());
