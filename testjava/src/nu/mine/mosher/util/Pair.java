@@ -15,12 +15,12 @@ public class Pair implements Cloneable, Comparable, Serializable
 
     public Cloneable a() throws CloneNotSupportedException
     {
-        return Cloner.cloneObject(this.a);
+        return this.a.object();
     }
 
     public Cloneable b() throws CloneNotSupportedException
     {
-        return Cloner.cloneObject(this.b);
+        return this.b.object();
     }
 
     public String toString()
