@@ -1,3 +1,5 @@
+import com.surveysampling.util.Cloner;
+
 public class Pair implements Cloneable, Comparable
 {
     private Cloneable a;
