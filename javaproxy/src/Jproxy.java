@@ -761,7 +761,7 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
     {
         Jproxy sc = new Jproxy(450,300);
         sc.pack();
-        sc.move(150,150);
+        sc.setLocation(150,150);
         sc.validate();
         sc.setVisible(true);
     } // end of main(String argv[])
