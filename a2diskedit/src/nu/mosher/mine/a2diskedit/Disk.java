@@ -28,9 +28,10 @@ public class Disk implements TreeNode
 
 		if (mFile != null)
 		{
+			FileInputStream fin = null;
 			try
 			{
-				FileInputStream fin = new FileInputStream(mFile);
+				fin = new FileInputStream(mFile);
 				image = new byte[fin.available()];
 				fin.read(image);
 			}
