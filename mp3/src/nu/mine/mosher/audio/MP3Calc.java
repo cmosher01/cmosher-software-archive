@@ -126,16 +126,16 @@ public class MP3Calc
 		switch (mode)
         {
 			case 0:
-				System.out.print("stereo");
+				System.out.print("stereo,");
 			break;
 			case 1:
-				System.out.print("jstereo");
+				System.out.print("jstereo,");
 			break;
 			case 2:
-				System.out.print("2mono");
+				System.out.print("2mono,");
 			break;
 			case 3:
-				System.out.print("mono");
+				System.out.print("mono,");
 			break;
         }
 
@@ -186,7 +186,7 @@ public class MP3Calc
     	for (int i = 0; i < c; ++i)
         {
         	m <<= 1;
-        	m &= 1;
+        	m |= 1;
         }
     	return src & m;
     }
