@@ -172,9 +172,6 @@ public class GDiffView extends JFrame
                 ++b;
             }
         }
-        for (Iterator i = this.rCopy.iterator(); i.hasNext();)
-        {
-        }
     }
 
     /**
