@@ -29,7 +29,6 @@ public final class CollectionTests
         }
 
 
-        //converting from an Iterator to a List
         Iterator t = new Iterator()
         {
             int c = 3;
@@ -53,5 +52,16 @@ public final class CollectionTests
                 throw new UnsupportedOperationException();
             }
         };
+
+
+
+
+        //converting from an Iterator to a List
+        List tl = Util.list(t);
+        for (Iterator i = tl.iterator(); i.hasNext();)
+        {
+            String string = (String)i.next();
+            System.out.println(string);
+        }
     }
 }
