@@ -25,10 +25,13 @@ public class TestCrypt
         {
             // Get services provided by each provider
             Set ent = providers[i].entrySet();
-            for (Iterator i = ent.iterator(); i.hasNext();)
+            for (Iterator e = ent.iterator(); e.hasNext();)
             {
-                Map.Entry entry = (Map.Entry)i.next();
-                
+                Map.Entry entry = (Map.Entry)e.next();
+                String key = (String)entry.getKey();
+                System.out.print(key);
+                System.out.print(": value type: ");
+                System.out.println(entry.getValue().getClass().getName());
             }
         }
     }
