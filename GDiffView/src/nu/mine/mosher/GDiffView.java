@@ -110,7 +110,7 @@ public class GDiffVeiew extends JFrame
 
         readSrc();
         doc.insertString(0,sb.toString(),(AttributeSet)styles.get("body"));
-        highlightSrc(3,0xe);
+        highlightSrc(1,0xe);
         pack();
         setVisible(true);
     }
