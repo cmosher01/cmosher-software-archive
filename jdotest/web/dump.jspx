@@ -39,7 +39,7 @@ Attributes
 	for (Enumeration i = request.getAttributeNames(); i.hasMoreElements(); )
 	{
 		String attribName = (String)i.nextElement();
-		String attribValue = getAttribute(attribName).toString();
+		String attribValue = request.getAttribute(attribName).toString();
 		%><tr><td><%=attribName%></td><td><%=attribValue%></td></tr><%
 	}
 %>
