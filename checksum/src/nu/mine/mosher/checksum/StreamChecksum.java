@@ -65,6 +65,10 @@ public class StreamChecksum
             {
                 rWind = new ArrayList();
             }
+            else
+            {
+                rWind = (List)mapChecksumToWindow.get(toString());
+            }
             mapChecksumToWindow.put(new Integer(rollCheck.getChecksum()),new Long(w++));
         }
     }
