@@ -94,7 +94,7 @@ public class FixAppleDisasm
 			if (com >= 0)
 			{
 				ln.comment = s.substring(com);
-				s = s.substring(0,com);
+				s = s.substring(0,com).trim();
 			}
 
 			String saddr = s.substring(0,4);
@@ -119,6 +119,9 @@ public class FixAppleDisasm
 				{
 				}
 				else if (nextChar.equalsIgnoreCase("."))
+				{
+				}
+				else
 				{
 				}
 			}
