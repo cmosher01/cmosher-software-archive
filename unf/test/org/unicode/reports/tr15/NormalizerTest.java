@@ -47,12 +47,29 @@ public class NormalizerTest extends TestCase
 				for (StringTokenizer st = new StringTokenizer(lin,";"); iCol < 5; )
 				{
 					String tok = st.nextToken();
-					rCol[iCol++] = tok;
+					rCol[iCol++] = hexToString(tok);
 				}
 			}
 		}
 		in.close();
 	}
+
+    /**
+     * @param tok
+     * @return
+     */
+    private static String hexToString(String source)
+    {
+		StringBuffer sb = new StringBuffer();
+
+		for (StringTokenizer st = new StringTokenizer(source); st.hasMoreTokens(); )
+		{
+			String tok = st.nextToken();
+			sb.append((char)Integer.parseInt(tok,16));
+		}
+
+		return sb.toString();
+    }
 
     private boolean isHexDigit(char start)
     {
