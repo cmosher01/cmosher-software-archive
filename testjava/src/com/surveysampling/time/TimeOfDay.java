@@ -141,51 +141,20 @@ public class TimeOfDay implements Comparable
      * @param cal the Calendar, with date set, to have time overridden
      * @throws IllegalStateException if the constructor was called with invalid arguments
      */
-    public void getTimeOnDay(Calendar cal) throws IllegalStateException
+    public Date getTimeOnDay(Date d) throws IllegalStateException
     {
-        verifyValidity();
-        cal.set(Calendar.HOUR_OF_DAY, hours);
-        cal.set(Calendar.MINUTE, minutes);
-        cal.set(Calendar.SECOND, seconds);
-        cal.set(Calendar.MILLISECOND, milliseconds);
-    }
-
-    /**
-     * Convenience method that calls <code>getTimeOnDay(Calendar)</code>.
-     * setting the Calendar's date to the
-     * given Date first, and sets the given Date
-     * to the resulting time.
-     * @param d
-     * @param cal
-     * @throws IllegalStateException if the constructor was called with invalid arguments
-     */
-    public void getTimeOnDay(Date d, Calendar cal) throws IllegalStateException
-    {
-        cal.setTimeInMillis(d.getTime());
-        getTimeOnDay(cal);
-        d.setTime(cal.getTimeInMillis());
-    }
-
-    /**
-     * Convenience method that calls getTimeOnDay
-     * with <code>Calendar.getInstance()</code>
-     * @param d
-     * @throws IllegalStateException if the constructor was called with invalid arguments
-     */
-    public void getTimeOnDay(Date d) throws IllegalStateException
-    {
-        getTimeOnDay(d,Calendar.getInstance());
-    }
-
-
-
-    protected void verifyValidity() throws IllegalStateException
-    {
-        if (!isValid())
+        synchronized (calendar)
         {
-            throw new IllegalStateException("TimeOfDay has not been initialized correctly.");
+            calendar.setTimeInMillis(d.getTime());
+            calendar.set(Calendar.HOUR_OF_DAY, hours);
+            calendar.set(Calendar.MINUTE, minutes);
+            calendar.set(Calendar.SECOND, seconds);
+            calendar.set(Calendar.MILLISECOND, milliseconds);
+            return new Date(calendar.getTimeInMillis());
         }
     }
+
+
 
     public boolean equals(Object obj)
     {
@@ -194,10 +163,6 @@ public class TimeOfDay implements Comparable
             return false;
         }
         TimeOfDay that = (TimeOfDay)obj;
-        if (!this.isValid() || !that.isValid())
-        {
-            return false;
-        }
         return
             that.hours == this.hours &&
             that.minutes == this.minutes &&
@@ -207,7 +172,6 @@ public class TimeOfDay implements Comparable
 
     public int hashCode()
     {
-        verifyValidity();
         int hash = 17;
         hash *= 37;
         hash += hours;
