@@ -1,9 +1,3 @@
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.URI;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ListIterator;
@@ -39,13 +33,13 @@ public class Test
         }
     }
 
-    private static class Bad
-    {
-        public Bad() throws Exception
-        {
+//    private static class Bad
+//    {
+//        public Bad() throws Exception
+//        {
 //            throw new Exception();
-        }
-    }
+//        }
+//    }
     public static Object throwSomething() throws Exception
     {
         Object j = new Object();
