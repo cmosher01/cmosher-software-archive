@@ -73,7 +73,7 @@ public class Test
 //        System.out.println(f.getPath());
 
 
-        URI uri = new URI("smtp://leopard.surveyspot.com/30000");
+        URI uri = new URI("smtp://leopard.surveyspot.com?30000");
         System.out.println(uri.toASCIIString());
         System.out.println(uri.getScheme());
         System.out.println(uri.getHost());
