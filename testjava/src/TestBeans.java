@@ -21,14 +21,15 @@ public class TestBeans
 
         SomeBean some = new SomeBean();
         String prop = "robjInteger";
-        String val = "34";
+        String[] val = { "34", "55" };
 
         setProperty(some, prop, val);
 
-        showInt(some.getObjInteger().intValue());
+        showInt(some.getRobjInteger()[0].intValue());
+        showInt(some.getRobjInteger()[1].intValue());
     }
 
-    public static void setProperty(Object bean, String property, String value)
+    public static void setProperty(Object bean, String property, String[] value)
         throws IntrospectionException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
     {
         BeanInfo bi = Introspector.getBeanInfo(bean.getClass());
@@ -63,8 +64,8 @@ public class TestBeans
             throw new IntrospectionException("can't get property editor");
         }
 
-        ed.setAsText(value);
-        Object val = ed.getValue();
+//        ed.setAsText(value);
+//        Object val = ed.getValue();
 
         Method wr = pd.getWriteMethod();
         wr.invoke(bean, new Object[] { val });
