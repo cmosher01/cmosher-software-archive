@@ -8,7 +8,9 @@
  * Author : Steve Yeong-Ching Hsueh
  */
 
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * ChartWatcher class updates the graph every 10 minutes.
@@ -64,8 +66,8 @@ public class ChartWatcher extends Thread
                 calendar.setTime(new Date());
                 if(calendar.get(Calendar.MINUTE)%10 == 0) {
                     updateTMVector();     // update every 10 minutes
-                    ((ServerInterface) parent).updateChart1();
-                    ((ServerInterface) parent).updateChart2();
+//                    ((ServerInterface) parent).updateChart1();
+//                    ((ServerInterface) parent).updateChart2();
                     sleep(delay+onesec);  // sleep a while
                 }
                 sleep(delay);
