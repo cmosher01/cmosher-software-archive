@@ -250,9 +250,17 @@ public class Disk
                     {
                         int ts = 0x0E;
                         boolean valid = true;
-                        while (sector[ts] != 0 && sector[ts+1] != 0 && valid)
+                        while (ts+1 < sector.length && sector[ts] != 0 && sector[ts+1] != 0 && valid)
                         {
                             if (!(DiskPos.isValidTrack(sector[ts]) && DiskPos.isValidSector(sector[ts+1])))
+                            {
+                                valid = false;
+                            }
+                            ts += 2;
+                        }
+                        while (ts < sector.length && valid)
+                        {
+                            if (sector[ts] != 0)
                             {
                                 valid = false;
                             }
