@@ -168,6 +168,22 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
 
 
     /**
+     * main
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    public static void main(String argv[]) throws IOException, InterruptedException
+    {
+        Jproxy sc = new Jproxy(450,300);
+        sc.pack();
+        sc.setLocation(150,150);
+        sc.validate();
+        sc.setVisible(true);
+    }
+
+
+
+    /**
      * @throws IOException
      * @throws InterruptedException
      */
@@ -740,21 +756,6 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
                 showAbout();
         }
     }
-
-
-    /**
-     * main
-     * @throws IOException
-     */
-    public static void main(String argv[]) throws IOException
-    {
-        Jproxy sc = new Jproxy(450,300);
-        sc.pack();
-        sc.setLocation(150,150);
-        sc.validate();
-        sc.setVisible(true);
-    }
-
 
     /**
      * event handler
