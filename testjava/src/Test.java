@@ -31,7 +31,7 @@ public class Test
         return "bad";
     }
 
-    private static class X
+    public static class X
     {
         public void close()
         {
