@@ -75,6 +75,7 @@ public class TreeFrame extends JPanel
         {
             dir = argv[0];
         }
+        final String dirArg = dir;
 
         javax.swing.SwingUtilities.invokeLater(new Runnable()
         {
@@ -82,7 +83,7 @@ public class TreeFrame extends JPanel
             {
                 try
                 {
-                    createAndShowGUI(dir);
+                    createAndShowGUI(dirArg);
                 }
                 catch (Throwable th)
                 {
