@@ -1,5 +1,6 @@
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /*
  * Created on Sep 16, 2004
@@ -33,7 +34,7 @@ public class Disk
     {
         byte[] rb = new byte[len];
         System.arraycopy(disk,pos.getIndex(),rb,0,len);
-        pos.advance(len);
+//        pos.advance(len);
         return rb;
     }
 
@@ -120,7 +121,7 @@ public class Disk
     {
         int r = disk[pos.getIndex()];
         r &= 0x000000FF;
-        pos.advance(1);
+//        pos.advance(1);
         return r;
     }
 
@@ -140,6 +141,16 @@ public class Disk
      */
     public void findDos33VTOC(Collection rPosVtoc)
     {
+        Iterator i = this.getSectorIterator();
+        while (i.hasNext())
+        {
+            DiskPos pos = (DiskPos)i.next();
+            byte[] rb = readSector(pos);
+            if (isDos33VTOC(rb))
+            {
+                rPosVtoc.add(pos);
+            }
+        }
         DiskPos p = new DiskPos();
 
         while (!EOF())
@@ -151,6 +162,49 @@ public class Disk
                 rPosVtoc.add(cur);
 //                System.out.println("VTOC @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
             }
+        }
+    }
+
+    /**
+     * @return
+     */
+    private Iterator getSectorIterator()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    private class SectorIter implements Iterator
+    {
+        private DiskPos d = new DiskPos(0);
+
+        /**
+         * @see java.util.Iterator#hasNext()
+         */
+        public boolean hasNext()
+        {
+            return d.getSectorInDisk() < d.cSectorsPerTrack*d.cTracksPerDisk;
+        }
+
+        /**
+         * @see java.util.Iterator#next()
+         */
+        public Object next() throws NoSuchElementException
+        {
+            if (!hasNext())
+            {
+                throw new NoSuchElementException();
+            }
+            // TODO Auto-generated method stub
+            return Disk.this.;
+        }
+
+        /**
+         * @see java.util.Iterator#remove()
+         */
+        public void remove() throws UnsupportedOperationException
+        {
+            throw new UnsupportedOperationException();
         }
     }
 
