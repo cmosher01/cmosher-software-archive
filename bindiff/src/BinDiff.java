@@ -21,7 +21,6 @@ public class BinDiff
     {
     }
 
-    private int lastmark;
     private static final int START = 0;
     private static final int COPY = 1;
     private static final int SKIP = 2;
@@ -35,6 +34,8 @@ public class BinDiff
     private final int cMinMatch;
     private final int cMaxSearch;
 
+	private int lastmark;
+
     public BinDiff(InputStream f1, InputStream f2, int cMinMatch, int cMaxSearch)
     {
         this.f1 = new TellStream(f1);
@@ -45,54 +46,44 @@ public class BinDiff
 
     public void diff()
     {
-        try
+        statechange(START, 0);
+        int c1 = f1.read();
+        int c2 = f2.read();
+        while ((c1 != EOF) || (c2 != EOF))
         {
-            statechange(START, 0);
-            int c1 = f1.read();
-            int c2 = f2.read();
-            while ((c1 != EOF) || (c2 != EOF))
+            if (c1 == c2)
             {
-                if (c1 == c2)
+                statechange(COPY, 1);
+            }
+            else
+            {
+                f1.unread(c1);
+                f2.unread(c2);
+
+                if (difFindMatch())
                 {
-                    statechange(COPY, 1);
+                    statechange(INSERT, lastmark - f2.tell(), f2);
+                }
+                else if (difFindMatch())
+                {
+                    statechange(SKIP, lastmark - f1.tell(), f1);
                 }
                 else
                 {
-                    f1.unread(c1);
-                    f2.unread(c2);
-
-                    int fmark;
-                    if (difFindMatch(f1, f2, fmark, cMaxSearch, cMinMatch))
-                    {
-                        statechange(INSERT, fmark - f2.tell(), f2);
-                    }
-                    else if (difFindMatch(f2, f1, fmark, cMaxSearch, cMinMatch))
-                    {
-                        statechange(SKIP, fmark - f1.tell(), f1);
-                    }
-                    else
-                    {
-                        statechange(SKIP, 1, f1);
-                        statechange(INSERT, 1, f2);
-                    }
+                    statechange(SKIP, 1, f1);
+                    statechange(INSERT, 1, f2);
                 }
-                c1 = f1.read();
-                c2 = f2.read();
             }
-            statechange(END, 0);
+            c1 = f1.read();
+            c2 = f2.read();
         }
-        finally
-        {
-            if (in1 != null)
-            {
-                in1.close();
-            }
-            if (in2 != null)
-            {
-                in2.close();
-            }
-        }
+        statechange(END, 0);
     }
+
+	protected void statechange(int newstate, long c)
+	{
+		statechange(newstate,c,null);
+	}
 
     protected void statechange(int newstate, long c, InputStream instr)
     {
