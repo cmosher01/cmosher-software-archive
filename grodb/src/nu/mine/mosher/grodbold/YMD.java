@@ -3,6 +3,7 @@ package nu.mine.mosher.grodb;
 import java.io.Serializable;
 
 import nu.mine.mosher.util.Immutable;
+import nu.mine.mosher.util.Util;
 
 public class YMD implements Immutable, Serializable, Comparable
 {
@@ -86,15 +87,15 @@ public class YMD implements Immutable, Serializable, Comparable
 
 		if (d==0)
 		{
-	    	d = this.year-that.year;
+	    	d = Util.compare(this.year,that.year);
 		}
     	if (d==0)
     	{
-    		d = this.month-that.month;
+    		d = Util.compare(this.month,that.month);
     	}
 		if (d==0)
 		{
-			d = this.day-that.day;
+			d = Util.compare(this.day,that.day);
 		}
 
 		return d;
