@@ -49,7 +49,6 @@ public class Apple2
 
     /**
      * @param disk
-     * @throws IOException
      */
     public static void doOneDisk(Disk disk)
     {
