@@ -29,7 +29,6 @@ public class DiskPos
      * @param track
      * @param sector
      * @param byt
-     * @param allowLarge
      * @throws InvalidPosException
      */
     public DiskPos(int track, int sector, int byt) throws InvalidPosException
