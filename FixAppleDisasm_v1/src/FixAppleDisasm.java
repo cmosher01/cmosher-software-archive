@@ -267,17 +267,17 @@ public class FixAppleDisasm
 				printout.print(":   ");
 				if (ln.instr.length() > 0)
 				{
-					out.print(ln.instr);
+					printout.print(ln.instr);
 				}
 				if (ln.oper.length() > 0)
 				{
-					System.out.print("   ");
-					System.out.print(ln.oper);
+					printout.print("   ");
+					printout.print(ln.oper);
 				}
 			}
-			System.out.print("          ");
-			System.out.print(ln.comment);
-			System.out.println();
+			printout.print("          ");
+			printout.print(ln.comment);
+			printout.println();
         }
     }
 
