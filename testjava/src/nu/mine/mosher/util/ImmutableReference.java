@@ -22,18 +22,8 @@ public class ImmutableReference implements Comparable, Serializable
 
     public Object clone() throws CloneNotSupportedException
     {
-        ImmutableReference clon = null;
-        try
-        {
-            clon = (ImmutableReference)super.clone();
-            clon.ref = object();
-        }
-        catch (Throwable ex)
-        {
-            CloneNotSupportedException ex2 = new CloneNotSupportedException();
-            ex2.initCause(ex);
-            throw ex2;
-        }
+        ImmutableReference clon = (ImmutableReference)super.clone();
+        clon.ref = object();
         return clon;
     }
 
