@@ -91,10 +91,11 @@ public class FixMetaUTF8Test extends TestCase
 
     private void shouldBe(StringBuffer sbExpect, StringBuffer in)
     {
-        System.out.print(in);
+        System.out.println(in);
         in = FixMetaUTF8.removeContentTypeMeta(in);
         String s = FixMetaUTF8.addContentTypeMeta(in);
-        System.out.print(s);
+        System.out.println(s);
         assertEquals(sbExpect.toString(), s);
+        System.out.println("-----------------------------------------------------------------------------");
     }
 }
