@@ -26,6 +26,9 @@ public class VolumeEntity
         return null;
     }
 
+    /**
+     * @param rPos
+     */
     public void getPos(Collection rPos)
     {
         for (Iterator i = this.rSector.iterator(); i.hasNext();)
