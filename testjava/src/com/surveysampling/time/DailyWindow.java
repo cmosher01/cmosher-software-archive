@@ -143,21 +143,19 @@ public class DailyWindow
 
 
     /**
-     * Gets the start time of the window, in the
-     * format HH:MM (24-hour time).
-     * @return HH:MM start time
+     * Gets the start time of the window.
+     * @return start time
      */
-    public String getStart()
+    public TimeOfDay getStart()
     {
         return mStart;
     }
 
     /**
-     * Gets the end time of the window, in the
-     * format HH:MM (24-hour time).
-     * @return HH:MM end time
+     * Gets the end time of the window.
+     * @return end time
      */
-    public String getEnd()
+    public TimeOfDay getEnd()
     {
         return mEnd;
     }
