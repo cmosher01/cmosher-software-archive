@@ -170,6 +170,7 @@ public class GROapplet extends JApplet
             String slineIndi = br.readLine();
             StringFieldizer sf = new StringFieldizer(slineIndi);
             String id = sf.nextToken();
+			int nid = Integer.parseInt(id.substring(1));
             String name = sf.nextToken();
             String birth = sf.nextToken();
             String death = sf.nextToken();
@@ -179,7 +180,7 @@ public class GROapplet extends JApplet
             String sy = sf.nextToken();
             double dy = Double.parseDouble(sy);
             int y = (int)Math.round(dy);
-            Indi indi = new Indi(x, y, name, birth, death);
+            Indi indi = new Indi(x, y, nid, name, birth, death);
             indis.add(indi);
             mapIdToIndi.put(id, indi);
         }
@@ -207,14 +208,6 @@ public class GROapplet extends JApplet
         }
 
         fc = new FamilyChart(this,indis,famis);
-    }
-
-    protected void createIndi(IndiSet indis, Map mapIdToIndi, String id, int x, int y, String name, String birth, String death)
-    {
-    	int nid = Integer.parseInt(id.substring(1));
-        Indi n = new Indi(x, y, nid, name, birth, death);
-        indis.add(n);
-        mapIdToIndi.put(id, n);
     }
 
     public static void main(String[] args)
