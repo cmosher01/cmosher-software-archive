@@ -218,8 +218,9 @@ public class Disk
      * @param tsmapMaps
      * @param entries
      * @return
+     * @throws InvalidPosException
      */
-    protected int isDos33CatalogSector(byte[] sector, boolean allowLarge, TSMap tsmapMaps, List entries)
+    protected int isDos33CatalogSector(byte[] sector, boolean allowLarge, TSMap tsmapMaps, List entries) throws InvalidPosException
     {
         if (sector[0] == 0 &&
                 DiskPos.isValidTrack(sector[1],allowLarge) &&
