@@ -228,9 +228,9 @@ public class MySQLTest
 
 			st.setInt(1,hh);
 			st.setString(2,"m");
-			st.setInt(3,16);
-			st.setInt(4,150);
-			st.setInt(5,m16to150);
+			st.setInt(3,0);
+			st.setInt(4,9);
+			st.setInt(5,m0to9);
 			st.execute();
 
 			st.setInt(3,0);
