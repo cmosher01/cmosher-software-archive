@@ -17,33 +17,32 @@ public class FileFinder
             System.exit(1);
         }
 
-        System.err.println("dir: "+rArg[0]);
-        System.err.println("file-reg-exp: "+rArg[1]);
+        String sDir = rArg[0];
+        System.err.println("dir: " + sDir);
+
+        String regexpFile = rArg[1];
+        System.err.println("file-reg-exp: " + regexpFile);
+
+        String regexpDir = "";
         if (rArg.length > 2)
         {
-            System.err.println("subdir-reg-exp: "+rArg[2]);
+            regexpDir = rArg[2];
+            System.err.println("subdir-reg-exp: " + regexpDir);
         }
 
-
-        listRegFiles(rArg);
+        File[] rf = listRegFiles(sDir, regexpFile, regexpDir);
     }
-    public static void listRegFiles(String[] rArg) throws IOException
+
+    public File[] listRegFiles(String sDir, String regexpFile, String regexpDir) throws IOException
     {
-        final Pattern patFile = Pattern.compile(rArg[1]);
-        
-        String sub = "";
-        if (rArg.length > 2)
-        {
-            sub = rArg[2];
-            System.err.println("subdir-reg-exp: "+sub);
-        }
-        final Pattern patSubdir = Pattern.compile(sub);
-        
+        final Pattern patFile = Pattern.compile(regexpFile);
+        final Pattern patSubdir = Pattern.compile(regexpDir);
+
         final List dirs = new ArrayList();
-        dirs.add(new File(rArg[0]));
-        
+        dirs.add(new File(sDir));
+
         List results = new ArrayList();
-        
+
         while (dirs.size() > 0)
         {
             File d = (File)dirs.remove(0);
@@ -66,11 +65,6 @@ public class FileFinder
                 results.add(file);
             }
         }
-        
-        for (Iterator i = results.iterator(); i.hasNext();)
-        {
-            File file = (File)i.next();
-            System.out.println(file.getCanonicalFile().getAbsolutePath());
-        }
+        return (File[])results.toArray(new File[results.size()]);
     }
 }
