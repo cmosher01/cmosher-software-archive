@@ -141,7 +141,7 @@ public class GDiffVeiew extends JFrame
         sb.append('\n');
         while (c > 0)
         {
-            sb.append(c);
+            sb.append(rb,0,c);
             c = in.read(rb);
         }
     }
