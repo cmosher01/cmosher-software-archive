@@ -29,7 +29,7 @@ public class FixAppleDosAsm
         {
             s = processLine(s);
             out.print(s);
-            out.newLine();
+            out.newline();
         }
         out.flush();
         out.close();
