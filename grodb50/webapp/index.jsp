@@ -1,6 +1,7 @@
 <%@ include file="htmlhead.jsp" %>
 <head>
 <title>Genealogy Research Organizer--Database Edition</title>
+<link rel="stylesheet" href="gro.css" type="text/css" media="all" />
 </head>
 <body>
 <table>
