@@ -12,9 +12,23 @@ import java.io.FileInputStream;
  */
 public class MP3Calc
 {
-    private static int[] mpeg2bps = {0,32,48,56,64,80,96,112,128,160,192,224,256,320,384,0};
+    private static int[] m1l1 = {0,32
+,		64
+,		96
+,		128
+,		160
+,		192
+,		224
+,		256
+,		288
+,		320
+,		352
+,		384
+,		416
+,		448
+    };
 	private static int[] layer3mpeg1bps = {0,32,40,48,56,64,80,96,112,128,160,192,224,256,320,0};
-	private static int[] layer23mpeg2bps = {0,8,16,24,32,64,80,56,64,128,160,112,128,256,320,0};
+	private static int[] mpeg2bps = {0,8,16,24,32,64,80,56,64,128,160,112,128,256,320,0};
 
     public static void main(String[] rArg) throws Throwable
     {
