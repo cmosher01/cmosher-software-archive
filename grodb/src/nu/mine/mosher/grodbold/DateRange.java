@@ -153,7 +153,15 @@ public class DateRange implements Immutable, Serializable, Comparable
 		}
 		if (d == 0)
 		{
-			d = this.latest.compareTo(that.latest);
+			d = this.hour-that.hour;
+		}
+		if (d == 0)
+		{
+			d = this.minute-that.minute;
+		}
+		if (d == 0)
+		{
+			d = (this.circa?1:0)-(that.circa?1:0);
 		}
 
         return d;
