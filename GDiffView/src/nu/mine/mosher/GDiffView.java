@@ -154,6 +154,7 @@ public class GDiffView extends JFrame
         paneSrc = new JTextPaneNoWrap(docSrc);
         paneSrc.setEditable(false);
         JScrollPane scrSrc = new JScrollPane(paneSrc);
+        Dimension d = scrSrc.getPreferredSize();
 //        scrSrc.setMinimumSize(new Dimension(100,100));
 //        scrSrc.setPreferredSize(new Dimension(400,430));
 //        scrSrc.setMaximumSize(new Dimension(Integer.MAX_VALUE,Integer.MAX_VALUE));
