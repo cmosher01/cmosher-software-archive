@@ -95,6 +95,14 @@ public final class Util
 
 
 
+    /**
+     * Creates a <code>List</code> containing all 
+     * items (of type <code>T</code>) from the given <code>Iterable</code>
+     * object.
+     * @param <T>
+     * @param i
+     * @return a new <code>ArrayList</code>
+     */
     public static<T> ArrayList<T> list(Iterable<T> i)
     {
         ArrayList<T> r = new ArrayList<T>();
