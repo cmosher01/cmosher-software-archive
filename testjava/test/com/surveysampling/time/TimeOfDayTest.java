@@ -199,5 +199,14 @@ public class TimeOfDayTest extends TestCase
     public void testToString()
     {
         assertEquals("17:34:12.367",tod.toString());
+        shouldFormatAs(9,30,0,0,"09:30");
+        shouldFormatAs(21,30,0,0,"21:30");
+        shouldFormatAs(2,0,0,0,"02:00");
+        shouldFormatAs(2,0,0,1,"02:00:00.001");
+    }
+
+    private void shouldFormatAs(int hour, int minute, int second, int millisecond, String should)
+    {
+        assertEquals(should,new TimeOfDay(Calendar.getInstance(),hour,minute,second,millisecond).toString());
     }
 }
