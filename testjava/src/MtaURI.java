@@ -35,7 +35,6 @@ public class MtaURI
 	public MtaURI(String sMTA) throws URISyntaxException
 	{
         URI uri = new URI(sMTA);
-
         if (uri.getPort() < 0)
         {
             // default to port 25 (smtp)
