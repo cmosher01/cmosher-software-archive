@@ -17,7 +17,7 @@ public class YMD implements Immutable, Serializable
 		this.month = month;
 		this.day = day;
 
-		hash = getHash();
+		this.hash = getHash();
 	}
 
     public int getDay()
