@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -51,6 +52,38 @@ public class Apple2
      */
     public static void doOneFile(File f) throws IOException
     {
+        Disk disk = readDisk(f);
+
+        List rVTOC = new ArrayList();
+        disk.findDos33VTOC(rVTOC);
+
+        if (rVTOC.size() > 0)
+        {
+            for (Iterator i = rVTOC.iterator(); i.hasNext();)
+            {
+                DiskPos p = (DiskPos)i.next();
+                System.out.println("VTOC @ "+p.toStringTS()+" "+f.getAbsolutePath());
+            }
+        }
+        else
+        {
+            System.out.println("[no VTOC]       "+f.getAbsolutePath());
+        }
+//        List rCat = new ArrayList();
+//        disk.findDos33CatalogSector(rCat);
+//
+//        List rTSMap = new ArrayList();
+//        disk.findDos33TSMapSector(rTSMap);
+    }
+
+    /**
+     * @param f
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public static Disk readDisk(File f) throws FileNotFoundException, IOException
+    {
         byte[] rbDisk;
         InputStream fileDisk = null;
         try
@@ -75,27 +108,7 @@ public class Apple2
         }
 
         Disk disk = new Disk(rbDisk);
-
-        List rVTOC = new ArrayList();
-        disk.findDos33VTOC(rVTOC);
-
-        if (rVTOC.size() > 0)
-        {
-            for (Iterator i = rVTOC.iterator(); i.hasNext();)
-            {
-                DiskPos p = (DiskPos)i.next();
-                System.out.println("VTOC @ "+p.toStringTS()+" "+f.getAbsolutePath());
-            }
-        }
-        else
-        {
-            System.out.println("[no VTOC]       "+f.getAbsolutePath());
-        }
-//        List rCat = new ArrayList();
-//        disk.findDos33CatalogSector(rCat);
-//
-//        List rTSMap = new ArrayList();
-//        disk.findDos33TSMapSector(rTSMap);
+        return disk;
     }
 
     /**
