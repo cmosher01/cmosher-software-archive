@@ -36,7 +36,7 @@ public class Search
 		this.completed = completed;
 	}
 
-	public boolean getCompleted()
+	public boolean isCompleted()
 	{
 		return this.completed;
 	}
