@@ -96,7 +96,9 @@ public class VolumeDOS extends VolumeEntity
      */
     public void dump(StringBuffer s)
     {
-        s.append("DOS 3.3: ");
+        s.append("DOS");
+        appendSig(s);
+        s.append(": ");
         for (Iterator i = this.rSector.iterator(); i.hasNext();)
         {
             VolumeSector sect = (VolumeSector)i.next();
@@ -107,9 +109,6 @@ public class VolumeDOS extends VolumeEntity
             }
         }
         s.append("\n");
-        s.append("(");
-        appendSig(s);
-        s.append(")\n");
     }
 
     /**
