@@ -1,10 +1,12 @@
 package com.surveysampling.util;
 
 import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorManager;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Iterator;
 
@@ -33,7 +35,7 @@ public final class BeanUtil
         }
     }
     
-    private static void tryParseParameters(ServletRequest request, Object bean) throws ParameterParseException
+    private static void tryParseParameters(ServletRequest request, Object bean) throws IntrospectionException, IllegalArgumentException, InvocationTargetException, ParameterParseException, InstantiationException, IllegalAccessException
     {
         for (Iterator params = new EnumIter(request.getParameterNames()); params.hasNext();)
         {
@@ -111,7 +113,7 @@ public final class BeanUtil
         Method method,
         String[] values,
         Class t,
-        Class propertyEditorClass)
+        Class propertyEditorClass) throws InstantiationException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
     {
         if (propertyEditorClass != null)
         {
