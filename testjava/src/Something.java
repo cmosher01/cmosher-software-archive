@@ -14,6 +14,7 @@ public class SomeBean
     private File aFile;
     private Object aObject;
     private Integer objInteger;
+    private Integer[] robjInteger;
 
     public SomeBean()
     {
@@ -212,6 +213,22 @@ public class SomeBean
     public void setObjInteger(Integer integer)
     {
         objInteger = integer;
+    }
+
+    /**
+     * @return
+     */
+    public Integer[] getRobjInteger()
+    {
+        return robjInteger;
+    }
+
+    /**
+     * @param integers
+     */
+    public void setRobjInteger(Integer[] integers)
+    {
+        robjInteger = integers;
     }
 
 }
