@@ -107,40 +107,13 @@ public class VelocityWrapper
 
     public static void merge(File inputTemplate, Context context, Writer out) throws VelocityException
     {
-        try
-        {
-            inputTemplate = inputTemplate.getAbsoluteFile().getCanonicalFile();
+        inputTemplate = inputTemplate.getAbsoluteFile().getCanonicalFile();
 
-            Properties props = VelocityWrapper.getDefaultProperties();
-            props.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH,inputTemplate.getParentFile().getAbsolutePath());
+        Properties props = VelocityWrapper.getDefaultProperties();
+        props.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH,inputTemplate.getParentFile().getAbsolutePath());
 
-            VelocityWrapper velocity = new VelocityWrapper(props);
+        VelocityWrapper velocity = new VelocityWrapper(props);
 
-            /*
-             * Wrap the caller's Writer in a BufferedWriter,
-             * if it's not already a BufferedWriter.
-             */
-            boolean localBuffer = !(out instanceof BufferedWriter);
-            BufferedWriter writer;
-            if (localBuffer)
-            {
-                writer = new BufferedWriter(out);
-            }
-            else
-            {
-                writer = (BufferedWriter)out;
-            }
-
-            velocity.mergeTemplate(inputTemplate.getName(),context,writer);
-
-            if (localBuffer)
-            {
-                writer.flush();
-            }
-        }
-        catch (Throwable e)
-        {
-            throw wrapInVelocityException(e);
-        }
+        velocity.mergeTemplate(inputTemplate.getName(),context,writer);
     }
 }
