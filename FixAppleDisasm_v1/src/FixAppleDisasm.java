@@ -151,21 +151,23 @@ public class FixAppleDisasm
 				addr = -1;
 			}
 
+			if (nextaddr < 0)
+			{
+				nextaddr = addr;
+			}
+
 			if (addr < 0)
 			{
 				addr = nextaddr;
 				s = hexWord(addr)+"-   "+s.trim();
 			}
 
-			if (nextaddr < 0)
-			{
-				nextaddr = addr;
-			}
-
 			if (nextaddr != addr)
 			{
 				System.err.print("address error @ $");
 				System.err.println(hexWord(nextaddr));
+				// resynch
+				nextaddr = addr;
 			}
 			ln.addr = addr;
 			addrs.put(new Integer(ln.addr),ln);
