@@ -6,11 +6,7 @@ public class Test
 {
 	public static void main(String[] args)
 	{
-		String test = "this,is,a,,test";
-
-		for (String s : new StringFieldizer(test))
-		{
-			System.out.println(s);
-		}
+		ItemType x = new ItemType("madeup");
+		ItemType y = new ItemType(ItemTypeEnum.a);
 	}
 }
