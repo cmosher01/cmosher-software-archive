@@ -37,14 +37,16 @@ public class VolumeCatalog
 
         // first walk sector trail from VTOC
         Set found = new HashSet();
-        DiskPos p = vtoc.getCatalogPointer();
-        while (!p.isZero())
         {
-            found.add(p);
-            VolumeCatalogSector c = new VolumeCatalogSector();
-            c.readFromMedia(p,disk);
-            rCatSect.add(c);
-            p = disk.getDos33Next(p);
+            DiskPos p = vtoc.getCatalogPointer();
+            while (!p.isZero())
+            {
+                found.add(p);
+                VolumeCatalogSector c = new VolumeCatalogSector();
+                c.readFromMedia(p,disk);
+                rCatSect.add(c);
+                p = disk.getDos33Next(p);
+            }
         }
 
         // then scan whole disk for other catalog sectors, if any
