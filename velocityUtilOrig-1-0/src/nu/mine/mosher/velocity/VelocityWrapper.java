@@ -132,8 +132,9 @@ public class VelocityWrapper
 
     /**
      * Wraps an exception in a VelocityException.
-     * @param e
-     * @return
+     * @param e the exception to be wrapped
+     * @return VelocityException with its cause initialized
+     * to the given exception e.
      */
     public static VelocityException wrapInVelocityException(Throwable e)
     {
@@ -142,6 +143,14 @@ public class VelocityWrapper
         return ve;
     }
 
+    /**
+     * Gets a properties object initialized with some
+     * useful defaults for Velocity.
+     * The properties will use the global logger
+     * for logging, set input and output encodings
+     * to UTF-8, and clear the VelociMacro library name.
+     * @return
+     */
     public static Properties getDefaultProperties()
     {
         Properties props = new Properties();
