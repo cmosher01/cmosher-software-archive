@@ -14,7 +14,7 @@ public class SwingApplication
 {
     private ExceptionHandler mExceptionHandler;
     private CommandLineArgHandler mCommandLineArgHandler;
-    private GUI mGUI;
+    private SwingGUI mGUI;
 
 
 
@@ -22,7 +22,7 @@ public class SwingApplication
      * @param eh
      * @param ch
      */
-    public SwingApplication(ExceptionHandler eh, CommandLineArgHandler ch, GUI gui)
+    public SwingApplication(ExceptionHandler eh, CommandLineArgHandler ch, SwingGUI gui)
     {
         this.mExceptionHandler = eh;
         this.mCommandLineArgHandler = ch;
@@ -50,7 +50,7 @@ public class SwingApplication
             getCommandLineArgHandler().parse();
 
             /*
-             * Start the GUI, making sure all Swing calls
+             * Start the SwingGUI, making sure all Swing calls
              * are done on the event-dispatching thread.
              * Catch any exceptions and pass them back to
              * the main thread.
@@ -86,7 +86,7 @@ public class SwingApplication
         getExceptionHandler().waitFor();
     }
 
-    public GUI getGUI()
+    public SwingGUI getGUI()
     {
         return this.mGUI;
     }
