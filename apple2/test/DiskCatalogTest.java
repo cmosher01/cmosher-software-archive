@@ -180,7 +180,7 @@ public class DiskCatalogTest extends TestCase
     {
         List r = new ArrayList();
         r.add(new DiskPos(0x11,0xF));
-        assertManyPos("AMDOS.dsk",r);
+        assertManyPos("amdos35_19861025.dsk.dsk",r);
     }
     
     /**
