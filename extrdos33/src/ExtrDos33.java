@@ -68,10 +68,15 @@ public class ExtrDos33
             extrDos(file,dirNew);
         }
         System.out.println("=============================================================================");
-        for (Iterator i = doss.entrySet().iterator(); i.hasNext();)
+        for (Iterator i = doss.keySet().iterator(); i.hasNext();)
         {
-            type element = (type)i.next();
-            
+        	DosImage dos = (DosImage)i.next();
+        	System.out.println(dos.dosFile.getAbsolutePath()+":");
+        	for (Iterator j = dos.files.iterator(); j.hasNext();)
+            {
+                File file = (File)j.next();
+                System.out.println("    "+file.getAbsolutePath());
+            }
         }
     }
 
