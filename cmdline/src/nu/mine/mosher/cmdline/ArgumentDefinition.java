@@ -8,7 +8,7 @@ package nu.mine.mosher.cmdline;
  * 
  * @author chrism
  */
-public class ArgumentDefinition
+public class ArgumentDefinition implements Comparable
 {
     private final String name;
     private final String desc;
@@ -37,5 +37,32 @@ public class ArgumentDefinition
     public String getName()
     {
         return name;
+    }
+    public boolean equals(Object obj)
+    {
+        if (!(obj instanceof ArgumentDefinition))
+        {
+            return false;
+        }
+        ArgumentDefinition that = (ArgumentDefinition)obj;
+        return this.name.equalsIgnoreCase(that.name);
+    }
+    public int hashCode()
+    {
+        // TODO Auto-generated method stub
+        return super.hashCode();
+    }
+    public String toString()
+    {
+        // TODO Auto-generated method stub
+        return super.toString();
+    }
+    /* (non-Javadoc)
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    public int compareTo(Object o)
+    {
+        // TODO Auto-generated method stub
+        return 0;
     }
 }
