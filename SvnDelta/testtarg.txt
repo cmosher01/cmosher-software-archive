@@ -9,4 +9,5 @@ addsome
 binary input
 files, a source
 file and a
+addsome
 target file.
