@@ -23,5 +23,10 @@ public class MP3Calc
     	{
     		in = new FileInputStream(new File(rArg[0]));
     	}
+    	else
+    	{
+    		System.err.println("Must specify input mp3 file.");
+    		System.exit(1);
+    	}
     }
 }
