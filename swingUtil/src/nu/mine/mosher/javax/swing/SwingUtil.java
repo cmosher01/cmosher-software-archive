@@ -15,5 +15,18 @@ public final class SwingUtil
         throw new UnsupportedOperationException();
     }
 
-    
+    /**
+     * Sets Swing's current look and feel to the native
+     * operating system's look and feel.
+     */
+    public static void useOSLookAndFeel()
+    {
+        try
+        {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (Throwable ignoreAnyExceptions)
+        {
+        }
+    }
 }
