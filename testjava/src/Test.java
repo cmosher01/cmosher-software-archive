@@ -39,16 +39,18 @@ public class Test
 	{
 
 
+        Cloneable y = Cloner.cloneObject(null);
 
-        Object x = new Object();
-        if (x.getClass().isInstance(null))
-        {
-            System.out.println("yes");
-        }
-        else
-        {
-            System.out.println("no");
-        }
+
+//        Object x = new Object();
+//        if (x.getClass().isInstance(null))
+//        {
+//            System.out.println("yes");
+//        }
+//        else
+//        {
+//            System.out.println("no");
+//        }
 
 
 
