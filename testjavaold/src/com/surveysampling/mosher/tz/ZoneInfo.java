@@ -124,7 +124,7 @@ class TZType {
     Copyright (C) 1998 Business Management Systems, Inc.
  */
 public class ZoneInfo extends TimeZone {
-  private int[] transTimes;	// transition times
+  public int[] transTimes;	// transition times
   private byte[] transTypes;	// timezone description for each transition
   private TZType[] tz;		// timezone descriptions
   public int[] leapSecs;	// leapseconds
