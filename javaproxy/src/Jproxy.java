@@ -306,9 +306,11 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
 
         enableEvents(AWTEvent.WINDOW_EVENT_MASK);
 
+        tbcpt = new ToolBarCaption(this," ");
+
         setExtendedState(Frame.ICONIFIED);
 
-        tbcpt = new ToolBarCaption(this," ");
+        startProxyServer();
     }
 
 
