@@ -119,7 +119,7 @@ public class Delta
                 //				possible match, need to check byte for byte
                 if (sourceOutofBytes == false && source.read(sourcebyte,0,S) != -1)
                 {
-                    for (int ix = 0; ix < S; ix++)
+                    for (int ix = 0; ix < S /*CAM ??? && match*/; ix++)
                     {
                         if (sourcebyte[ix] != buf[ix])
                         {
