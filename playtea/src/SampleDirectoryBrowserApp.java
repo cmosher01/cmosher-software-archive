@@ -50,10 +50,13 @@
  * For more information about Tea, please see http://opensource.go.com/.
  */
 
-
-import com.go.teaservlet.*;
-import com.go.trove.log.*;
 import javax.servlet.ServletException;
+
+import com.go.teaservlet.Application;
+import com.go.teaservlet.ApplicationConfig;
+import com.go.teaservlet.ApplicationRequest;
+import com.go.teaservlet.ApplicationResponse;
+import com.go.trove.log.Log;
 
 /******************************************************************************
  * The SampleDirectoryBrowserApp is a simple example of a working TeaServlet 
@@ -65,16 +68,17 @@ import javax.servlet.ServletException;
  * @version
  * <!--$$Revision:--> 6 <!-- $-->, <!--$$JustDate:-->  1/18/01 <!-- $-->
  */
-public class SampleDirectoryBrowserApp implements Application {
+public class SampleDirectoryBrowserApp implements Application
+{
 
     private Log mLog;
     private ApplicationConfig mConfig;
 
-    public void init (ApplicationConfig config) throws ServletException {
+    public void init(ApplicationConfig config) throws ServletException
+    {
 
         // The ApplicationConfig is used by the Application to configure itself.
         mConfig = config;
-
 
         // A log for keeping track of events specific to this application
         mLog = config.getLog();
@@ -82,23 +86,23 @@ public class SampleDirectoryBrowserApp implements Application {
     }
 
     // Creating a context provides functions accesible from the templates.
-    public Object createContext(ApplicationRequest request,
-                                ApplicationResponse response) {
+    public Object createContext(ApplicationRequest request, ApplicationResponse response)
+    {
         return new SampleDirectoryBrowserContext(request, response, this);
     }
 
     // Specifies the class of the Object returned by createContext.
-    public Class getContextType() {
+    public Class getContextType()
+    {
         return SampleDirectoryBrowserContext.class;
     }
 
     // Lets functions in the context get at the initialization parameters.
-    public String getInitParameter(String param) {
+    public String getInitParameter(String param)
+    {
         return mConfig.getInitParameter(param);
     }
-    public void destroy() {
+    public void destroy()
+    {
     }
 }
-
-
-
