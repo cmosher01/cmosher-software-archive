@@ -98,7 +98,7 @@ public class Test
             int bang = jarpart.indexOf('!');
             if (bang >= 0)
             {
-                jarpart = jarpart.substring(0,bang-1);
+                jarpart = jarpart.substring(0,bang);
             }
 
             f = new File(jarpart);
