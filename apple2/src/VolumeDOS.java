@@ -279,6 +279,7 @@ public class VolumeDOS extends VolumeEntity
                 }
                 else
                 {
+                    // TODO check for slave DOS
                     s.append(" (DOS 3.3 1980 altered)");
                 }
             }
