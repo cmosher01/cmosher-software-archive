@@ -98,15 +98,15 @@ public class VolumeBoot extends VolumeEntity
 
         data = disk.readSector(p);
 
-        if (same(data,rDos80master))
+        if (Arrays.equals(data,rDos80master))
         {
             ident = "DOS 3.3 (1980) Master (A$3600)";
         }
-        else if (same(data,rDos83master))
+        else if (Arrays.equals(data,rDos83master))
         {
             ident = "DOS 3.3 (1983) Master (A$3600)";
         }
-        else if (same(data,rDos86master))
+        else if (Arrays.equals(data,rDos86master))
         {
             ident = "DOS 3.3 (1986) Master (A$3600)";
         }
