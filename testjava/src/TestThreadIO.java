@@ -3,10 +3,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class TestThreadIO
 {
+    private static final int THREADS = 20;
+
     private static class ReadFormRunner implements Runnable
     {
         public void run()
@@ -23,9 +26,22 @@ public class TestThreadIO
     }
     public static void main(String[] args) throws Throwable
     {
-        Thread t = new Thread(new ReadFormRunner());
-        t.start();
-        t.join();
+        List rt = new ArrayList();
+        for (int i = 0; i < THREADS; ++i)
+        {
+            Thread t = new Thread(new ReadFormRunner());
+            rt.add(t);
+        }
+        for (Iterator i = rt.iterator(); i.hasNext();)
+        {
+            Thread t = (Thread)i.next();
+            t.start();
+        }
+        for (Iterator i = rt.iterator(); i.hasNext();)
+        {
+            Thread t = (Thread)i.next();
+            t.join();
+        }
     }
 
     public static void ReadFormFile() throws IOException
