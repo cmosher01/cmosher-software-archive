@@ -20,7 +20,7 @@ public class Perm
 	{
 		props.setProperty("javax.jdo.PersistenceManagerFactoryClass","org.jpox.PersistenceManagerFactoryImpl");
 		props.setProperty("javax.jdo.option.ConnectionDriverName","org.jpox.driver.JPOXDriver");
-		props.setProperty("javax.jdo.option.ConnectionURL","jpox:comp/env/jdbc/TestDB");
+		props.setProperty("javax.jdo.option.ConnectionURL","jpox:jdbc/TestDB");
 		props.setProperty("javax.jdo.option.ConnectionUserName","tomcat");
 		props.setProperty("javax.jdo.option.ConnectionPassword","tomcat");
 		props.setProperty("org.jpox.autoCreateTables","true");
