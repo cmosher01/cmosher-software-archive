@@ -513,7 +513,7 @@ public class Disk
      * @param i
      * @return
      */
-    private int word(byte[] sector, int i)
+    private static int word(byte[] sector, int i)
     {
         int lo = sector[i++];
         int hi = sector[i];
