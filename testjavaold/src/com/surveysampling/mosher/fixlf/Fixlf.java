@@ -2,23 +2,10 @@ package com.surveysampling.mosher.fixlf;
 
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
-import java.io.IOException;
 
 public class Fixlf
 {
-    public static void main(String[] rArg)
-    {
-        try
-        {
-            Fixlf m = new Fixlf();
-        }
-        catch (Throwable e)
-        {
-            System.err.println("Severe error: "+e.getMessage());
-        }
-    }
-
-    Fixlf() throws IOException
+    public static void main(String[] rArg) throws Throwable
     {
         InputStreamReader isr = null;
         BufferedReader br = null;
@@ -36,22 +23,7 @@ public class Fixlf
         }
         finally
         {
-            try
-            {
-                if (br != null)
-                    br.close();
-            }
-            catch (Throwable t)
-            {
-            }
-            try
-            {
-                if (isr != null)
-                    isr.close();
-            }
-            catch (Throwable t)
-            {
-            }
+            UniversalCloser.close(br);
         }
     }
-};
+}
