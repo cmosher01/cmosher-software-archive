@@ -9,6 +9,7 @@ package nu.mine.mosher.jdotest;
 import java.io.InputStream;
 import java.util.Properties;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -24,15 +25,16 @@ public class AppInit implements ServletContextListener
 
     public void contextInitialized(ServletContextEvent sce)
     {
+    	ServletContext ctx = sce.getServletContext();
 		try
 		{
 			props = new Properties();
-			InputStream inProps = sce.getServletContext().getResourceAsStream("WEB-INF/jdo.properties");
+			InputStream inProps = ctx.getResourceAsStream("WEB-INF/jdo.properties");
 			props.load(inProps);
 		}
 		catch (Throwable e)
 		{
-			e.printStackTrace();
+			ctx.log("Could not initialize JDO properties.",e);
 		}
     }
 
