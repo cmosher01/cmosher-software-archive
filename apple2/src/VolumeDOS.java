@@ -463,7 +463,8 @@ public class VolumeDOS extends VolumeEntity
         rbSlave[0x0C57] = (byte)0xA4;
 //      0x0C58, // master: E5 slave: FC
         rbSlave[0x0C58] = (byte)0xFC;
-//      0x0C59 (same)
+//      0x0C59 (???)
+        rbSlave[0x0C59] = (byte)0xA4;
 //      0x0C5A, // master: E3 slave: 65
         rbSlave[0x0C5A] = (byte)0x65;
 //      0x0C5B, // master: E3 slave: D8
