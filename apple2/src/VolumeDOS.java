@@ -42,7 +42,7 @@ public class VolumeDOS extends VolumeEntity
         try
         {
             p = new DiskPos(0,0);
-            pLim = new DiskPos(3,0);
+            pLim = new DiskPos(2,6);
         }
         catch (InvalidPosException e)
         {
@@ -271,6 +271,7 @@ public class VolumeDOS extends VolumeEntity
             {
                 tempdostype = 1980;
                 clearIgnored(rIgnore1980);
+                cmpDOS(rbClear1980);
             }
             else if (x == 0x84)
             {
@@ -282,6 +283,17 @@ public class VolumeDOS extends VolumeEntity
                 tempdostype = 1986;
                 clearIgnored(rIgnore1986);
             }
+        }
+    }
+
+    /**
+     * @param rbClear
+     */
+    private void cmpDOS(int[] rbClear)
+    {
+        if (rbCmp.length != rbClear.length)
+        {
+            throw new RuntimeException("DOS array lengths don't match");
         }
     }
 
