@@ -4,11 +4,14 @@
 package nu.mine.mosher.thread;
 
 /**
- * TODO
+ * Contains static methods related to threads.
  * 
- * @author chrism
+ * @author Chris Mosher
  */
-public class ThreadUtil
+public final class ThreadUtil
 {
-
+    private ThreadUtil() throws UnsupportedOperationException
+    {
+        throw new UnsupportedOperationException();
+    }
 }
