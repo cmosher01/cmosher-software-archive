@@ -272,6 +272,11 @@ public class DosMasterToImage
         {
             out.write(r[i]);
         }
+        int c = in.read();
+        while (c >= 0)
+        {
+            out.write(c);
+        }
         out.flush();
         out.close();
         in.close();
