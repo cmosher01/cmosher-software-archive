@@ -15,7 +15,7 @@ import junit.framework.TestCase;
 public class RollingChecksumTest extends TestCase
 {
     private static final int TEST_BUFFER_SIZE = 500000;
-    private static final int WINDOW_SIZE = 13;
+    private static final int WINDOW_SIZE = 16;
 
     public void testRollingChecksum()
     {
