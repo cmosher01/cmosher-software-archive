@@ -77,7 +77,7 @@ public class MySQLTest
 		}
     }
 
-    private void processLine(String s)
+	protected void processLine(String s)
     {
 		int comment = s.indexOf('#');
 		if (comment >= 0)
@@ -106,6 +106,10 @@ public class MySQLTest
             default:
             break;
         }
+    }
+
+	protected void parse1790(Iterator i)
+    {
     }
 
     protected void calc() throws SQLException
