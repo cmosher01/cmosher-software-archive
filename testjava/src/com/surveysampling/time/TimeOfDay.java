@@ -62,10 +62,34 @@ public class TimeOfDay
         this(calendar,hours,0,0,0);
     }
 
+
+
+    public int getHours()
+    {
+        return hours;
+    }
+
+    public int getMinutes()
+    {
+        return minutes;
+    }
+
+    public int getSeconds()
+    {
+        return seconds;
+    }
+
+    public int getMilliseconds()
+    {
+        return milliseconds;
+    }
+
     public boolean isValid()
     {
         return calendar != null;
     }
+
+
 
     protected void verifyValidity()
     {
