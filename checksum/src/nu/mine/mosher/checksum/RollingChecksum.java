@@ -21,7 +21,7 @@ public class RollingChecksum
     {
     }
 
-    void init(byte[] rx, int k)
+    void init(byte[] rx)
     {
         len = rx.length;
         int a = 0;
@@ -30,7 +30,7 @@ public class RollingChecksum
         {
             byte x = rx[i];
             a += x;
-            b += (k+len-i)*x;
+            b += (len-i)*x;
         }
         a += M;
         a %= M;
