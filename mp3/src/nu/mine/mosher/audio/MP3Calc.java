@@ -3,6 +3,7 @@
  */
 package nu.mine.mosher.mp3;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
