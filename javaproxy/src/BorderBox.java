@@ -8,10 +8,8 @@
  * Author : Steve Yeong-Ching Hsueh
  */
 
-import java.awt.*;
-import java.awt.event.*;
-import java.lang.*;
-import java.util.*;
+import java.awt.Component;
+import java.awt.Rectangle;
 
 /**
  * BorderBox is an object that sets the border properties
