@@ -73,6 +73,7 @@ public class GDiff2HTML
         {
             b += '0';
         }
+        return new String(new byte[]{b});
     }
 
     /**
