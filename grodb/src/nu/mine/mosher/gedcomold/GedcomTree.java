@@ -1,5 +1,8 @@
 package nu.mine.mosher.gedcom;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import nu.mine.mosher.util.TreeNode;
 
 public class GedcomTree
