@@ -1,6 +1,10 @@
 package nu.mine.mosher.com.caucho.http.log;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.text.SimpleDateFormat;
@@ -57,7 +61,7 @@ public class SimpleAccessLog extends AccessLog
 		}
 
 		StringBuffer sb = new StringBuffer(256);
-    	sb.append("--------------------> ");
+//    	sb.append("--------------------> ");
 
 		sb.append(format.format(ts));
 		sb.append(",");
@@ -76,6 +80,16 @@ public class SimpleAccessLog extends AccessLog
 //		sb.append(!good?Integer.toString(status):"");
 		sb.append(status);
 
-		System.err.println(sb.toString());
+		BufferedWriter accesslog = null;
+		try
+		{
+			accesslog = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File("c:\\temp\\access.txt"),true)));
+			accesslog.write(sb.toString());
+			accesslog.newLine();
+		}
+		finally
+		{
+			accesslog.close();
+		}
     }
 }
