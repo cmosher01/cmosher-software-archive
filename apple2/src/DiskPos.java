@@ -114,14 +114,23 @@ public class DiskPos implements Comparable, Cloneable
     }
 
     /**
-     * @param sesctor
+     * @param sector
      * @return
      */
-    public static boolean isValidSector(int sesctor)
+    public static boolean isValidSector(int sector)
     {
-        return 0 <= sesctor && sesctor < cSectorsPerTrack;
+        return 0 <= sector && sector < cSectorsPerTrack;
     }
 
+    /**
+     * @param track
+     * @param sector
+     * @return
+     */
+    public static boolean isValidTrackSectorPointer(int track, int sector)
+    {
+        return isValidTrack(track) && isValidSector(sector) && (track > 0 || sector > 0);
+    }
     /**
      * @return
      */
