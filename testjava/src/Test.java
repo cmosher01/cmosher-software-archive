@@ -34,12 +34,30 @@ public class Test
         return "bad";
     }
 
+    private static class Mute implements Cloneable
+    {
+        public int x = 0;
+        public Object clone()
+        {
+            Mute clon = null;
+            try
+            {
+                clon = (Mute)super.clone();
+            }
+            catch (CloneNotSupportedException cantHappen)
+            {
+            }
+            return clon;
+        }
+    }
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
 
-
-        Cloneable y = Cloner.cloneObject(null);
+        Mute x = new Mute();
+        x.x = 5;
+        Object y = Cloner.cloneObject(x);
+        x.x = 7;
 
 
 //        Object x = new Object();
