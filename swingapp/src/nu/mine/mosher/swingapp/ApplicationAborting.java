@@ -10,14 +10,12 @@ package nu.mine.mosher.ja2;
  */
 public class ApplicationAborting extends Exception
 {
-
     /**
      * 
      */
     public ApplicationAborting()
     {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     /**
@@ -26,7 +24,6 @@ public class ApplicationAborting extends Exception
     public ApplicationAborting(String message)
     {
         super(message);
-        // TODO Auto-generated constructor stub
     }
 
     /**
@@ -36,7 +33,6 @@ public class ApplicationAborting extends Exception
     public ApplicationAborting(String message, Throwable cause)
     {
         super(message,cause);
-        // TODO Auto-generated constructor stub
     }
 
     /**
@@ -45,7 +41,5 @@ public class ApplicationAborting extends Exception
     public ApplicationAborting(Throwable cause)
     {
         super(cause);
-        // TODO Auto-generated constructor stub
     }
-
 }
