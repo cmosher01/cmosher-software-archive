@@ -1,6 +1,6 @@
 package java.lang;
 
-public class LangTest implements Cloneable
+public class CloneableReference implements Cloneable
 {
     public Object clone()
     {
