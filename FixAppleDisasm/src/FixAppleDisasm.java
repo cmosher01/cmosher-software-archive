@@ -16,8 +16,8 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 
-import nu.mine.mosher.core.Characters;
-import nu.mine.mosher.core.Util;
+//import nu.mine.mosher.core.Characters;
+//import nu.mine.mosher.core.Util;
 
 public class FixAppleDisasm
 {
