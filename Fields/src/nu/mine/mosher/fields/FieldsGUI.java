@@ -23,13 +23,13 @@ import nu.mine.mosher.swingapp.SwingGUI;
  */
 public class FieldsGUI extends SwingGUI
 {
-    /**
-     * @return image to use as the main frame's icon
-     */
-    protected Image getFrameIcon()
-    {
-        return new ImageIcon(this.getClass().getResource("appicon.gif")).getImage();
-    }
+//    /**
+//     * @return image to use as the main frame's icon
+//     */
+//    protected Image getFrameIcon()
+//    {
+//        return new ImageIcon(this.getClass().getResource("appicon.gif")).getImage();
+//    }
 
     /**
      * @return menu bar for the application
