@@ -44,6 +44,13 @@ public class VelocityLogger implements LogSystem
 
 
 
+    public Logger logger()
+    {
+        return log;
+    }
+
+
+
     /**
      * Translates a Velocity log level into a
      * standard Java Logger Level.
@@ -64,10 +71,4 @@ public class VelocityLogger implements LogSystem
                 return Level.WARNING;
         }
     }
-
-    public Logger logger()
-    {
-        return log;
-    }
-
 }
