@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import com.surveysampling.util.ExceptionUtil;
 import com.surveysampling.util.UniversalCloser;
 import com.surveysampling.util.UniversalCloser2;
 
@@ -41,8 +42,8 @@ public class Test
     //throws MyException, IOException // other exceptions here...
 	{
 
-
-
+        Exception e = new Exception("test");
+        ExceptionUtil.newGeneric(e);
 
         System.out.println(Test.class.getClassLoader().getClass().getName());
         System.out.println(System.getProperty("java.class.path"));
