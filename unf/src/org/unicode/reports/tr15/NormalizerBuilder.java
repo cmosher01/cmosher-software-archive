@@ -261,8 +261,11 @@ class NormalizerBuilder
     /**
      * Hangul composition constants
      */
-        static final int SBase = 0xAC00, LBase = 0x1100, VBase = 0x1161, TBase = 0x11A7, LCount = 19, VCount = 21, TCount = 28, NCount = VCount * TCount, // 588
-    SCount = LCount * NCount; // 11172
+    static final int
+    	SBase = 0xAC00, LBase = 0x1100, VBase = 0x1161, TBase = 0x11A7,
+    	LCount = 19, VCount = 21, TCount = 28, NCount = VCount * TCount, // 588
+	    SCount = LCount * NCount; // 11172
+
     /**
      * For use in an applet: just load a minimal set of data.
      */
@@ -421,10 +424,10 @@ class NormalizerBuilder
             0x0360, 234,
             0x0361, 234
         };
-    
+
         // build the same tables we would otherwise get from the
         // Unicode Character Database, just with limited data
-         
+
         for (int i = 0; i < decomposeData.length; i += 3)
         {
             char value = decomposeData[i].charAt(0);
@@ -452,7 +455,7 @@ class NormalizerBuilder
             canonicalClass.put(classData[i++], classData[i++]);
         }
     }
-    
+
     /**
      * Utility: Parses a sequence of hex Unicode characters separated by spaces
      */
@@ -484,7 +487,7 @@ class NormalizerBuilder
         }
         return result.toString();
     }
-    
+
     /**
      * Utility: Supplies a zero-padded hex representation of an integer (without 0x)
      */
