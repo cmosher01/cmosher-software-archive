@@ -7,13 +7,14 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
+import javax.swing.ListModel;
 
 /**
  * TODO
  * 
  * @author Chris Mosher
  */
-public class GDiffCmdListModel extends AbstractListModel
+public class GDiffCmdListModel extends AbstractListModel implements ListModel
 {
     private List rGDiffCmd;
 
