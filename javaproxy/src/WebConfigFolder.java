@@ -8,10 +8,20 @@
  * Author : Steve Yeong-Ching Hsueh
  */
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import java.io.*;
+import java.awt.Button;
+import java.awt.Checkbox;
+import java.awt.CheckboxGroup;
+import java.awt.FileDialog;
+import java.awt.Frame;
+import java.awt.Label;
+import java.awt.Rectangle;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  * WebConfigFolder, folder for configuration
@@ -28,7 +38,7 @@ class WebConfigFolder implements ActionListener, ConfigInterface {
     CheckboxGroup logginglevel = new CheckboxGroup();
     Checkbox[] levels  = new Checkbox[3];
     Checkbox ckbox_spc = null;
-    List mime, authdir, authuser, alias;
+//    List mime, authdir, authuser, alias;
     Button addauthdir, delauthdir, addauthuser, delauthuser;
     Button addmime, delmime, addalias, delalias;
     String inifile = "Jproxy.properties";
