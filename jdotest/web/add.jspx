@@ -16,11 +16,11 @@
 		<title>Add</title>
 	</head>
 	<body>
-		<form method="post" action="addact.jsp">
+		<form method="post" action="addact.jspx">
 		    <p>Enter item to add: <input name="item" type="text" /></p>
 		    <p><input type="submit" value="save" /></p>
 		</form>
-		<form method="post" action="cancel.jsp">
+		<form method="post" action="cancel.jspx">
 		    <p><input type="submit" value="cancel" /></p>
 		</form>
 	</body>
