@@ -32,7 +32,9 @@ public class RollingChecksum
             a += x;
             b += (len-i-2)*x;
         }
+        a += M;
         a %= M;
+        b += M;
         b %= M;
         checksum = (b << 16) + a;
     }
@@ -47,11 +49,13 @@ public class RollingChecksum
         int a = checksum & 0xFFFF;
         a -= xk;
         a += xlplus1;
+        a += M;
         a %= M;
 
         int b = (checksum >> 16) & 0xFFFF;
         b -= len*xk;
         b += a;
+        b += M;
         b %= M;
 
         checksum = (b << 16) + a;
