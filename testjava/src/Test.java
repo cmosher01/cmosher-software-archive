@@ -1,6 +1,10 @@
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.Writer;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -65,12 +69,29 @@ public class Test
 
 
 
+        Reader rdr = new InputStreamReader(new FileInputStream(new File("\\temp\\test.txt")));
+        BufferedReader br = new BufferedReader(rdr);
+        String s = br.readLine();
+        while (s != null)
+        {
+            System.out.println(s);
+            s = br.readLine();
+        }
 
-        File f = new File("");
-        Writer r = new FileWriter(f);
-        r.write("test");
-        r.flush();
-        r.close();
+
+
+
+
+
+
+
+
+
+//        File f = new File("");
+//        Writer r = new FileWriter(f);
+//        r.write("test");
+//        r.flush();
+//        r.close();
 
 
 
