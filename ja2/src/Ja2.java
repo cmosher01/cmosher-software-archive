@@ -26,7 +26,7 @@ public final class Ja2
     public static void main(String[] args) throws Throwable
     {
         ExceptionHandler eh = new ExceptionHandler();
-        CommandLineArgHandler ch = new CommandLineArgHandler(rargs);
+        CommandLineArgHandler ch = new CommandLineArgHandler(args);
         GUI gui = new GUI();
 
         Application app = new Application(eh,ch,gui);
