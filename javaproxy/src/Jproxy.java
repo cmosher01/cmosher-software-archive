@@ -166,6 +166,8 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
 
     ProxyCachePool cache_pool = null;
 
+    HostsFile hosts = new HostsFile(); // CAM
+
 
 
     /**
@@ -364,6 +366,8 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
 
         logAccess(_LOG_LEVEL_MAXIMAL,tracer.getSource(),"Console Initialized");
         logError(tracer.getSource(),"Console Initialized");
+
+        hosts.loadFromFile();
 
         return true;
     }
