@@ -74,6 +74,7 @@ public class Test
         System.out.println(uri.getScheme());
         System.out.println(uri.getHost());
         System.out.println(uri.getPort());
+        System.out.println(uri.getQuery());
 
 
 
