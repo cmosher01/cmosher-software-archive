@@ -40,7 +40,7 @@ public class BinDiff
 	private int cskip;
 	private int cinsert;
 	private int posinsert = -1;
-	private TellStream fileinsert;
+	private PushbackRandomFile fileinsert;
 	private long lastmark;
 
     public BinDiff(RandomAccessFile f1, RandomAccessFile f2, int cMinMatch, int cMaxSearch)
