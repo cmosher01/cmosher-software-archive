@@ -18,7 +18,8 @@ public interface RandomNumberGenerator
 
     /**
      * Gets the next number in this generator's sequence of
-     * random numbers.
+     * random numbers. The number will (or should) be randomized
+     * across all 32 bits of the returned <code>int</code>.
      * @return random number
      */
     int nextInt();
