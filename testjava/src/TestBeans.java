@@ -91,7 +91,13 @@ public class TestBeans
             rpd = new PropertyDescriptor[0];
         }
 
-        return buildPropertyDescriptorMap(rpd);
+        HashMap map = new HashMap();
+        for (Iterator i = Arrays.asList(rpd).iterator(); i.hasNext();)
+        {
+            PropertyDescriptor pd = (PropertyDescriptor)i.next();
+            map.put(pd.getName(),pd);
+        }
+        return map;
     }
 
     public static BeanInfo getBeanInfo(Object bean) throws IntrospectionException
@@ -103,17 +109,6 @@ public class TestBeans
         }
 
         return bi;
-    }
-
-    public static HashMap buildPropertyDescriptorMap(PropertyDescriptor[] rpd)
-    {
-        HashMap map = new HashMap();
-        for (Iterator i = Arrays.asList(rpd).iterator(); i.hasNext();)
-        {
-            PropertyDescriptor pd = (PropertyDescriptor)i.next();
-            map.put(pd.getName(),pd);
-        }
-        return map;
     }
 
     public static void showInt(int i)
