@@ -14,6 +14,7 @@ public class Disk
     private DiskPos pos;
 
     /**
+     * @param disk
      * @throws InvalidPosException
      */
     public Disk(byte[] disk) throws InvalidPosException
@@ -22,6 +23,9 @@ public class Disk
         this.pos = new DiskPos(0,0,0,false);
     }
 
+    /**
+     * @param pos
+     */
     public void seek(DiskPos pos)
     {
         this.pos = pos;
