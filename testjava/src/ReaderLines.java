@@ -23,7 +23,7 @@ public class ReaderLines /* TODO implements Iterable */
         private final BufferedReader r;
         private String nextLine;
 
-        private Iter(Reader r) throws IOException
+        private Iter(Reader r) throws NoSuchElementException
         {
             if (this.r != null)
             {
@@ -40,9 +40,18 @@ public class ReaderLines /* TODO implements Iterable */
             nextLine();
         }
 
-        private void nextLine() throws IOException
+        private void nextLine() throws NoSuchElementException
         {
-            this.nextLine = this.r.readLine();
+            try
+            {
+                this.nextLine = this.r.readLine();
+            }
+            catch (IOException cause)
+            {
+                NoSuchElementException e = new NoSuchElementException();
+                e.initCause(cause);
+                throw e;
+            }
         }
 
         public boolean hasNext()
@@ -57,16 +66,7 @@ public class ReaderLines /* TODO implements Iterable */
                 throw new NoSuchElementException();
             }
             String thisLine = this.nextLine;
-            try
-            {
-                nextLine();
-            }
-            catch (IOException cause)
-            {
-                NoSuchElementException e = new NoSuchElementException();
-                e.initCause(cause);
-                throw e;
-            }
+            nextLine();
             return thisLine;
         }
 
