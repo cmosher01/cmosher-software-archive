@@ -155,7 +155,10 @@ public class GDiffView extends JFrame
                     }
                     else if (oldCmd instanceof GDiffData)
                     {
-                        
+                        GDiffData data = (GDiffData)oldCmd;
+                        beginTrg = data.getTargetRange().getBegin();
+                        endTrg = data.getTargetRange().getEnd();
+                        highlight(false,true);
                     }
                 }
                 if (newIndex >= 0 && newIndex < rcmd.size())
@@ -167,6 +170,13 @@ public class GDiffView extends JFrame
                         beginSrc = copy.getRange().getBegin();
                         endSrc = copy.getRange().getEnd();
                         highlight(true,false);
+                    }
+                    else if (newCmd instanceof GDiffData)
+                    {
+                        GDiffData data = (GDiffData)newCmd;
+                        beginTrg = data.getTargetRange().getBegin();
+                        endTrg = data.getTargetRange().getEnd();
+                        highlight(true,true);
                     }
                 }
             }
