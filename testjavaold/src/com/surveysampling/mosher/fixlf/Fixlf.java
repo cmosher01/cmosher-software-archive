@@ -3,7 +3,7 @@ package com.surveysampling.mosher.fixlf;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 
-import UniversalCloser;
+import com.surveysampling.util.UniversalCloser;
 
 public class Fixlf
 {
