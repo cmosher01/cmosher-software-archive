@@ -31,8 +31,8 @@ public class GDiff2HTML
         for (int i = 0; i < magic.length; ++i)
         {
             byte b = magic[i];
-            out(lonib(b));
-            out(lonib((byte)(b>>4)));
+            out(lonib((byte)(b>>4))));
+            out(lonib(b);
         }
 		int vers = gdiff.read();
 
