@@ -187,7 +187,7 @@ public class ProxyConnection extends Thread {
         }
 
         // TODO: lookup server_addr in hosts file
-        String hostIP = ((JProxy)(((ProxyServer)(this.parent)).console)).hosts.lookup(server_addr);
+        String hostIP = ((Jproxy)(((ProxyServer)(this.parent)).console)).hosts.lookup(server_addr);
         if (hostIP.length() > 0)
         {
             server_addr = hostIP;
