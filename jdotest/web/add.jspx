@@ -1,17 +1,29 @@
-<%@ include file="htmlhead.jsp" %>
-<%@ page session="false" %>
-<head>
-<title>Add</title>
-</head>
-<body>
-<p>
-<form method="post" action="addact.jsp">
-    <p>Enter item to add: <input name="item" type="text" /></p>
-    <p><input type="submit" value="save" /></p>
-</form>
-<form method="post" action="cancel.jsp">
-    <p><input type="submit" value="cancel" /></p>
-</form>
-</p>
-</body>
-<%@ include file="htmlfoot.jsp" %>
+<?xml version="1.0" encoding="UTF-8"?>
+<html
+	xml:lang="en"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:tags="urn:jsptagdir:/WEB-INF/tags/"
+>
+	<jsp:output omit-xml-declaration="true" doctype-root-element="html" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd" />
+	<jsp:directive.page session="false" contentType="text/html" pageEncoding="UTF-8" />
+
+	<jsp:directive.page import="javax.jdo.PersistenceManager" />
+	<jsp:directive.page import="nu.mine.mosher.jdotest.Item" />
+
+	<head>
+		<title>Add</title>
+	</head>
+	<body>
+		<p>
+		<form method="post" action="addact.jsp">
+		    <p>Enter item to add: <input name="item" type="text" /></p>
+		    <p><input type="submit" value="save" /></p>
+		</form>
+		<form method="post" action="cancel.jsp">
+		    <p><input type="submit" value="cancel" /></p>
+		</form>
+		</p>
+	</body>
+</html>
