@@ -12,6 +12,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.PipedOutputStream;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -418,6 +419,7 @@ public class GDiffView extends JFrame
         gdiff.read(); // ignore version
 
         RandomAccessFile in = new RandomAccessFile(src,"r");
+        OutputStream pipeOut = new PipedOutputStream();
         GDiffCmd g = getGDiff(gdiff);
         trg = new StringBuffer(sb.length());
         while (!(g instanceof GDiffEnd))
@@ -432,6 +434,7 @@ public class GDiffView extends JFrame
                 in.seek(gc.getRange().getBegin());
                 byte[] rb = new byte[(int)gc.getRange().getLength()];
                 in.readFully(rb);
+                pipeOut
             }
             g = getGDiff(gdiff);
         }
