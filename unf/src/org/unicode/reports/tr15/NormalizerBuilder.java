@@ -193,7 +193,7 @@ class NormalizerBuilder
 
                 if (decomp.length() < 1 || decomp.length() > 2 && !compat)
                 {
-                    System.err.println("Bad decomp at: " + line);
+                    System.err.println("Bad decomp ("+decomp+") at: " + line);
                 }
                 decompose.put(value, decomp);
 
