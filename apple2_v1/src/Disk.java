@@ -802,7 +802,7 @@ public class Disk
                 throw new NoSuchElementException();
             }
             // TODO Auto-generated method stub
-            return Disk.this.;
+//            return Disk.this.;
         }
 
         /**
