@@ -21,16 +21,20 @@ public class MySQLTest
         }
         finally
         {
-        	if (st != null)
+            closeStatement(st);
+        }
+    }
+    private static void closeStatement(Statement st)
+    {
+        if (st != null)
+        {
+        	try
         	{
-        		try
-        		{
-        			st.close();
-        		}
-        		catch (Throwable e)
-        		{
-        			e.printStackTrace();
-        		}
+        		st.close();
+        	}
+        	catch (Throwable e)
+        	{
+        		e.printStackTrace();
         	}
         }
     }
