@@ -2,7 +2,7 @@ package nu.mine.mosher.grodb;
 
 import java.io.Serializable;
 
-public class Relation<T,U,K> implements Serializable
+public class Relation<T,U,K extends Enum<K>> implements Serializable
 {
 	private final T a;
 	private final U b;
