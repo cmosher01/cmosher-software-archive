@@ -11,6 +11,11 @@ public class YMD implements Immutable, Serializable, Comparable
 	private final int day;
 	private final int hash;
 
+	public YMD(int year)
+	{
+		this(year,-1,-1);
+	}
+
 	public YMD(int year, int month, int day)
 	{
 		this.year = year;
