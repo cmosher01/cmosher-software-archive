@@ -224,7 +224,6 @@ public class Disk
      * @param tsmapMaps
      * @param entries
      * @return
-     * @throws InvalidPosException
      */
     static int isDos33CatalogSector(byte[] sector, boolean allowLarge, TSMap tsmapMaps, List entries)
     {
