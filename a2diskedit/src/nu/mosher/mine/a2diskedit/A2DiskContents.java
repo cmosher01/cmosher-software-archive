@@ -14,6 +14,9 @@ public class A2DiskContents
 	private int dos33volume = 0;
 	private String sVolumeName = "";
 
+	private int catTrack;
+	private int catSector;
+
 	public A2DiskContents(A2DiskImage img)
 	{
 		image = img;
@@ -38,6 +41,40 @@ public class A2DiskContents
 		else
 			dos33volume = svol;
 		sVolumeName = "Disk volume "+Integer.toString(dos33volume);
+
+		catTrack = track;
+		catSector = sector;
+		calcNextCat();
+
+		while (catTrack > 0 && catSector > 0)
+		{
+			parseCatalog();
+			calcNextCat();
+		}
+	}
+
+	private void calcNextCat()
+	{
+		int t = image.getByte(catTrack,catSector,1);
+		int s = image.getByte(catTrack,catSector,2);
+		catTrack = t;
+		catSector = s;
+	}
+
+	private void parseCatalog()
+	{
+		int cFile = 7;
+		int b = 0xB;
+		for (int i = 0; i < cFile; ++i)
+		{
+			CDosFile* pf = new CDosFile(this);
+			pf->Parse(rTSB,m_tsCatalog.track,m_tsCatalog.sector,b);
+			if (!pf->m_bDeleted)
+				m_rpFile.Add(pf);
+			else
+				delete pf;
+			b += 0x23;
+		}
 	}
 
 	public String getVolumeName()
