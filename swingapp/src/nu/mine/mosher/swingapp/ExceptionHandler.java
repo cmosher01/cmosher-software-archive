@@ -29,7 +29,7 @@ public class ExceptionHandler
      * Waits for another thread to send this thread
      * an exception, then throws it.
      * 
-     * @throws Throwable
+     * @throws ApplicationAborting
      */
     public void waitFor() throws ApplicationAborting
     {
