@@ -37,6 +37,6 @@ public class Dependency
         return
             this.name.equalsIgnoreCase(that.name) &&
             this.version.equalsIgnoreCase(that.version) &&
-            this.source == that.source;
+            (this.source == that.source);
     }
 }
