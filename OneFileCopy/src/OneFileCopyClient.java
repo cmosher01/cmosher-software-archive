@@ -8,6 +8,7 @@ import java.net.Socket;
 
 public class OneFileCopyClient
 {
+	private static final int rpt = 256*1024;
 	public static void main(String[] args) throws IOException
 	{
 		Socket s = new Socket(InetAddress.getByName("192.168.1.102"),60013);
@@ -24,6 +25,8 @@ public class OneFileCopyClient
 		{
 			e.printStackTrace();
 		}
+
+		int i = 0;
 		byte[] rb = new byte[1024];
 		while (in.available() != 0)
 		{
@@ -31,6 +34,10 @@ public class OneFileCopyClient
 			if (cb > 0)
 			{
 				out.write(rb,0,cb);
+				if (++i % rpt == 0)
+				{
+					System.out.println("wrote @ "+(i*1024)+" bytes.");
+				}
 			}
 		}
 
