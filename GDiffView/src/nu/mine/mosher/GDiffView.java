@@ -340,7 +340,7 @@ public class GDiffView extends JFrame
      * @param row
      * @return
      */
-    private int getAscRowStart(int row)
+    private long getAscRowStart(long row)
     {
         return (row + 1) * rowLen - 1 - cCol;
     }
@@ -349,22 +349,22 @@ public class GDiffView extends JFrame
      * @param row
      * @return
      */
-    private int getAscRowEnd(int row)
+    private long getAscRowEnd(long row)
     {
         return (row + 1) * rowLen - 1;
     }
 
-    public int getRow(long beginSrc2)
+    public long getRow(long pos)
     {
         return pos / cCol + 1;
     }
 
-    public int getHexRowStart(int row)
+    public long getHexRowStart(long row)
     {
         return row * rowLen + nibs + 2;
     }
 
-    public int getHexRowEnd(int row)
+    public long getHexRowEnd(long row)
     {
         return (row + 1) * rowLen - 1 - cCol - 1;
     }
@@ -385,7 +385,7 @@ public class GDiffView extends JFrame
                 + (pos % cCol);
     }
 
-    public int getAscEnd(long pos)
+    public long getAscEnd(long pos)
     {
         return getAscStart(pos) + 1;
     }
