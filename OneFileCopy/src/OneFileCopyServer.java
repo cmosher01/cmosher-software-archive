@@ -28,11 +28,10 @@ public class OneFileCopyServer
 		ServerSocket srv = new ServerSocket(60013);
 		Socket s = srv.accept();
 
-		byte[] rb = new byte[1024];
-
 		BufferedInputStream in = new BufferedInputStream(new FileInputStream(f));
 		BufferedOutputStream out = new BufferedOutputStream(s.getOutputStream(),cBuf);
 
+		byte[] rb = new byte[1024];
 		int cb = in.read(rb);
 		while (cb > 0)
 		{
