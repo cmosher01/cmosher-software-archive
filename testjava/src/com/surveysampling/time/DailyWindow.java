@@ -86,9 +86,8 @@ public class DailyWindow
 
     /**
      * Creates a new DailyWindow object representing the
-     * given start and end times. The times are in the
-     * format HH:MM (24-hour time). If both times are
-     * the empty string, then the returned DailyWindow
+     * given start and end times. If the start and end
+     * times are the same, then the returned DailyWindow
      * object is the same as createDailyWindowAlwaysOpen
      * returns.
      * @param start window start time in HH:MM format; cannot be null
