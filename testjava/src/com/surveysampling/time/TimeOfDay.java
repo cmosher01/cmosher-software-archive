@@ -44,8 +44,8 @@ public class TimeOfDay implements Comparable
          * instance. There is no way to create such a Calendar
          * (or given subclass) without cloning. Using clone
          * opens up the possibility that the caller could create
-         * a subclass that would hold a reference to our clone and
-         * allow him to mutate a TimeOfDay instance.
+         * a subclass of Calendar that would hold a reference to
+         * our clone and allow him to mutate a TimeOfDay instance.
          */
         this.calendar = (Calendar)calendar.clone();
         this.hours = hours;
