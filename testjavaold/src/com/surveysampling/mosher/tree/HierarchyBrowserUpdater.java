@@ -2,13 +2,11 @@ package com.surveysampling.mosher.tree;
 
 import java.awt.Cursor;
 import java.awt.Frame;
-import java.util.Enumeration;
 
 import javax.swing.JTree;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
 
 public class HierarchyBrowserUpdater implements TreeExpansionListener
 {
