@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.UIManager;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 
@@ -49,6 +50,7 @@ public class TreeFrame extends JPanel
      */
     protected static void createAndShowGUI(String dir) throws InterruptedException
     {
+        useOSLookAndFeel();
         //Make sure we have nice window decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
 
@@ -66,6 +68,17 @@ public class TreeFrame extends JPanel
         frame.setVisible(true);
 
         begun.waitToSetTrue();
+    }
+
+    protected static void useOSLookAndFeel()
+    {
+        try
+        {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (Throwable ignoreAnyExceptions)
+        {
+        }
     }
 
     public static void main(String argv[]) throws Throwable
