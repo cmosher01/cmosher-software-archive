@@ -15,6 +15,6 @@ public class ListEntry
 
 	public String toString()
 	{
-		retuun this.s;
+		return this.s;
 	}
 }
