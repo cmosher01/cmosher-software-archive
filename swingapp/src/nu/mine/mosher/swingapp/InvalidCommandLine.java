@@ -1,7 +1,7 @@
 /*
  * Created on July 15, 2004
  */
-package nu.mine.mosher.ja2;
+package nu.mine.mosher.swingapp;
 
 /**
  * Indicates that an invalid command line
