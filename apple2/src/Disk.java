@@ -437,7 +437,10 @@ public class Disk
 
             int cSector = word(sector,p+0x21);
 
-            entries.add(new Dos33CatalogEntry(deleted,new DiskPos(trk,sector[p+1],0),lck,fil,cSector,name));
+            DiskPos posTS = new DiskPos();
+            posTS.setTS(trk,sector[p+1]);
+
+            entries.add(new Dos33CatalogEntry(deleted,posTS,lck,fil,cSector,name));
 
             p += 0x23;
         }
