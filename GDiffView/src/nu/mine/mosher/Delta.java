@@ -198,18 +198,18 @@ public class Delta
 
                 alternativehashf = Checksum.incrementChecksum(alternativehashf,rTrg[0],b[0]);
 
-                for (int j = 0; j < S-1; j++)
+                for (int i = 0; i < S-1; ++i)
                 {
-                    rTrg[j] = rTrg[j + 1];
+                    rTrg[i] = rTrg[i + 1];
                 }
                 rTrg[15] = b[0];
                 hashf = Checksum.queryChecksum(rTrg,S);
             }
             else
             {
-                for (int ix = 0; ix < S; ix++)
+                for (int i = 0; i < S; ++i)
                 {
-                    output.addData(rTrg[ix]);
+                    output.addData(rTrg[i]);
                 }
                 done = true;
             }
