@@ -30,13 +30,24 @@ public class Volume
      * @throws MultipleVTOCException
      * @throws VTOCNotFoundException
      */
-    public void readFromMedia(Disk disk) throws VTOCNotFoundException, MultipleVTOCException, InvalidPosException
+    public void readFromMedia(Disk disk) throws InvalidPosException
     {
         boot = new VolumeBoot();
         boot.readFromMedia(disk);
 
         cat = new VolumeCatalog();
-        cat.readFromMedia(disk);
+        try
+        {
+            cat.readFromMedia(disk);
+        }
+        catch (VTOCNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (MultipleVTOCException e)
+        {
+            e.printStackTrace();
+        }
 
         List rEntry = new ArrayList();
         cat.getEntries(rEntry);
