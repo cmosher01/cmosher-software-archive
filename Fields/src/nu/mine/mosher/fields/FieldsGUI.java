@@ -19,6 +19,8 @@ import javax.swing.UIManager;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import nu.mine.mosher.fields.BigTableModel;
+
 /**
  * @author Chris Mosher
  */
