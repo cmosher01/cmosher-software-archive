@@ -39,7 +39,7 @@ public class VelocityTest
 
             public void logVelocityMessage(int level, String message)
             {
-                if (level >= LogSystem.WARN_ID)
+                if (level >= LogSystem.INFO_ID)
                 {
                     System.err.println(message);
                 }
