@@ -965,7 +965,8 @@ public class GDiffView extends JFrame
                         }
                         if (cMatch == cMatchCurrent)
                         {
-                            System.out.println("more than one match are of the same length @"+Long.toHexString(there));
+                            long corresp = there+start;
+                            System.out.println("more than one match are of the same length @"+Long.toHexString(there)+" to "+Long.toHexString(corresp));
                         }
                         if (cMatch >= cWindow && cMatch > cMatchCurrent)
                         {
