@@ -12,8 +12,12 @@ import nu.mine.mosher.ja2.Main;
  * 
  * @author Chris Mosher
  */
-public class Ja2
+public final class Ja2
 {
+    private Ja2() throws UnsupportedOperationException
+    {
+        throw new UnsupportedOperationException();
+    }
     public static void main(String[] args)
     {
         Main.main(args);
