@@ -84,7 +84,7 @@ public class MySQLTest
 		"Census1790 "+
 		"( "+
 		"    id integer unsigned not null auto_increment primary key, "+
-		"    family integer unsigned not null foreign key references Family.id on delete cascade, "+
+		"    family integer unsigned not null references Family(id), "+
 		"    nameLast varchar(64), "+
 		"    nameFirst varchar(64), "+
 		"    nameMiddle varchar(8), "+
