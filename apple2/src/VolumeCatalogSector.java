@@ -70,7 +70,7 @@ public class VolumeCatalogSector extends VolumeEntity
     }
 
     /**
-     * @param entry
+     * @param r
      */
     public void getEntries(List r)
     {
