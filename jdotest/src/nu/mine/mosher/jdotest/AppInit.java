@@ -24,7 +24,7 @@ public class AppInit implements ServletContextListener
 {
 	private static final Properties props = new Properties();
 
-    public void contextInitialized(ServletContextEvent arg0)
+    public void contextInitialized(ServletContextEvent sce)
     {
 		try
 		{
@@ -37,7 +37,7 @@ public class AppInit implements ServletContextListener
 		}
     }
 
-    public void contextDestroyed(ServletContextEvent arg0)
+    public void contextDestroyed(ServletContextEvent sce)
     {
     }
 }
