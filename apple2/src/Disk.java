@@ -405,7 +405,22 @@ public class Disk
             }
         }
     }
-/**
+
+    public void getDataTS(TSMap m) throws InvalidPosException
+    {
+        rewind();
+        while (!EOF())
+        {
+            DiskPos cur = this.pos;
+            byte[] sector = read(DiskPos.cSector);
+            if (hasData(sector))
+            {
+                m.mark(cur.getSectorInDisk());
+            }
+        }
+    }
+
+    /**
      * @param sector
      * @return
      */
