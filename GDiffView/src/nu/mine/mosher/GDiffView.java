@@ -145,6 +145,14 @@ public class GDiffView extends JFrame
 
 
 
+        JFrame.setDefaultLookAndFeelDecorated(true);
+
+        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        this.setSize(400,470);
+        this.setLocation(10, 10);
+        this.setMaximizedBounds(env.getMaximumWindowBounds());
+        this.setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
+
         docSrc = new DefaultStyledDocument();
         paneSrc = new JTextPaneNoWrap(docSrc);
         paneSrc.setEditable(false);
@@ -237,8 +245,8 @@ public class GDiffView extends JFrame
         SpringLayout.Constraints cnsDif = new SpringLayout.Constraints();
         cnsDif.setConstraint(SpringLayout.NORTH,layout.getConstraint(SpringLayout.NORTH,contentPane));
         cnsDif.setConstraint(SpringLayout.SOUTH,layout.getConstraint(SpringLayout.SOUTH,contentPane));
-        cnsDif.setConstraint(SpringLayout.WEST,new SpringMid(layout.getConstraint(SpringLayout.EAST,contentPane),.5,listGDiff.getFixedCellWidth(),false));
-        cnsDif.setConstraint(SpringLayout.EAST,new SpringMid(layout.getConstraint(SpringLayout.EAST,contentPane),.5,listGDiff.getFixedCellWidth(),true));
+        cnsDif.setConstraint(SpringLayout.WEST,new SpringMid(layout.getConstraint(SpringLayout.EAST,contentPane),.5,listGDiff.getFixedCellWidth()+scrGDiff.getVerticalScrollBar().getWidth(),false));
+        cnsDif.setConstraint(SpringLayout.EAST,new SpringMid(layout.getConstraint(SpringLayout.EAST,contentPane),.5,listGDiff.getFixedCellWidth()+scrGDiff.getVerticalScrollBar().getWidth(),true));
 
         SpringLayout.Constraints cnsSrc = new SpringLayout.Constraints();
         cnsSrc.setConstraint(SpringLayout.NORTH,layout.getConstraint(SpringLayout.NORTH,contentPane));
@@ -323,14 +331,6 @@ public class GDiffView extends JFrame
         listGDiff.setSelectionModel(selectionModel);
         listGDiff.setSelectedIndex(0);
         listGDiff.requestFocus();
-
-        JFrame.setDefaultLookAndFeelDecorated(true);
-
-        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        this.setSize(400,470);
-        this.setLocation(10, 10);
-        this.setMaximizedBounds(env.getMaximumWindowBounds());
-        this.setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
 
 //        pack();
 
