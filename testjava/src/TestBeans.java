@@ -70,9 +70,9 @@ public class TestBeans
         return v;
     }
 
-    public static PropertyDescriptor getPropertyDescriptor(Class classBean, String property) throws IntrospectionException
+    public static PropertyDescriptor getPropertyDescriptor(Class forClass, String property) throws IntrospectionException
     {
-        Map mapPDs = getPropertyDescriptors(getBeanInfo(classBean));
+        Map mapPDs = getPropertyDescriptors(getBeanInfo(forClass));
         if (!mapPDs.containsKey(property))
         {
             throw new IntrospectionException("Cannot find property descriptor for " + property);
@@ -125,12 +125,12 @@ public class TestBeans
         return map;
     }
 
-    public static BeanInfo getBeanInfo(Class classBean) throws IntrospectionException
+    public static BeanInfo getBeanInfo(Class forClass) throws IntrospectionException
     {
-        BeanInfo bi = Introspector.getBeanInfo(classBean);
+        BeanInfo bi = Introspector.getBeanInfo(forClass);
         if (bi == null)
         {
-            throw new IntrospectionException("Cannot get BeanInfo for bean class " + classBean.getName());
+            throw new IntrospectionException("Cannot get BeanInfo for bean class " + forClass.getName());
         }
 
         return bi;
