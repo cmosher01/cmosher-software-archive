@@ -18,11 +18,18 @@ import nu.mine.mosher.ja2.SwingGUI;
  */
 public final class Ja2
 {
+    /**
+     * @throws UnsupportedOperationException
+     */
     private Ja2() throws UnsupportedOperationException
     {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * @param args
+     * @throws ApplicationAborting
+     */
     public static void main(String[] args) throws ApplicationAborting
     {
         ExceptionHandler eh = new ExceptionHandler();
