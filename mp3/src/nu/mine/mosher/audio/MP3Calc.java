@@ -3,11 +3,14 @@
  */
 package nu.mine.mosher.mp3;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * @author Chris Mosher
@@ -29,6 +32,15 @@ public class MP3Calc
     	if (rArg.length > 0)
     	{
 			calc(rArg[0]);
+    	}
+
+    	if (System.in.available() > 0)
+    	{
+    		BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(FileDescriptor.in)));
+    		for (String s = in.readLine(); s != null; s = in.readLine())
+    		{
+    			calc(s);
+    		}
     	}
     }
 
