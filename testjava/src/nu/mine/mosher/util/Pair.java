@@ -23,14 +23,14 @@ public final class Pair implements Cloneable, Comparable, Serializable
         return this.b.object();
     }
 
-    public String toString()
-    {
-        return "("+a+","+b+")";
-    }
-
     public Object clone() throws CloneNotSupportedException
     {
         return super.clone();
+    }
+
+    public String toString()
+    {
+        return "("+a+","+b+")";
     }
 
     public boolean equals(Object o)
@@ -42,6 +42,19 @@ public final class Pair implements Cloneable, Comparable, Serializable
         Pair that = (Pair)o;
 
         return this.a.equals(that.a) && this.b.equals(that.b);
+    }
+
+    public int hashCode()
+    {
+        int h = 17;
+
+        h *= 37;
+        h += a.hashCode();
+
+        h *= 37;
+        h += b.hashCode();
+
+        return h;
     }
 
     public int compareTo(Object o)
@@ -56,18 +69,5 @@ public final class Pair implements Cloneable, Comparable, Serializable
         }
 
         return c;
-    }
-
-    public int hashCode()
-    {
-        int h = 17;
-
-        h *= 37;
-        h += a.hashCode();
-
-        h *= 37;
-        h += b.hashCode();
-
-        return h;
     }
 }
