@@ -1,5 +1,6 @@
 import java.io.BufferedInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -32,9 +33,9 @@ public class VolumeDOS extends VolumeEntity
             0x003FD, 0x003FF, 0x00484, 0x00495, 0x00500, 0x00655, 0x006DF, 0x006FF, 0x009A8, 0x009B7};
 
     private static List rPosDOS = new ArrayList();
-    private static int[] rbClear1980 = new int[0x4000-0x1B00];
-    private static int[] rbClear1983 = new int[0x4000-0x1B00];
-    private static int[] rbClear1986 = new int[0x4000-0x1B00];
+    private static byte[] rbClear1980 = new byte[0x4000-0x1B00];
+    private static byte[] rbClear1983 = new byte[0x4000-0x1B00];
+    private static byte[] rbClear1986 = new byte[0x4000-0x1B00];
     static
     {
         DiskPos p, pLim;
@@ -60,7 +61,7 @@ public class VolumeDOS extends VolumeEntity
             int b = in.read();
             while (b != -1)
             {
-                rbClear1980[x++] = b;
+                rbClear1980[x++] = (byte)b;
                 b = in.read();
             }
             in.close();
@@ -76,7 +77,7 @@ public class VolumeDOS extends VolumeEntity
             int b = in.read();
             while (b != -1)
             {
-                rbClear1983[x++] = b;
+                rbClear1983[x++] = (byte)b;
                 b = in.read();
             }
             in.close();
@@ -92,7 +93,7 @@ public class VolumeDOS extends VolumeEntity
             int b = in.read();
             while (b != -1)
             {
-                rbClear1986[x++] = b;
+                rbClear1986[x++] = (byte)b;
                 b = in.read();
             }
             in.close();
@@ -272,7 +273,7 @@ public class VolumeDOS extends VolumeEntity
             {
                 tempdostype = 1980;
                 clearIgnored(rIgnore1980);
-                if (cmpDOS(rbClear1980))
+                if (Arrays.equals(rbCmp,rbClear1980))
                 {
                     s.append(" (DOS 3.3 1980 exact match)");
                 }
@@ -285,7 +286,7 @@ public class VolumeDOS extends VolumeEntity
             {
                 tempdostype = 1983;
                 clearIgnored(rIgnore1983);
-                if (cmpDOS(rbClear1983))
+                if (Arrays.equals(rbCmp,rbClear1983))
                 {
                     s.append(" (DOS 3.3 1983 exact match)");
                 }
@@ -298,7 +299,7 @@ public class VolumeDOS extends VolumeEntity
             {
                 tempdostype = 1986;
                 clearIgnored(rIgnore1986);
-                if (cmpDOS(rbClear1986))
+                if (Arrays.equals(rbCmp,rbClear1986))
                 {
                     s.append(" (DOS 3.3 1986 exact match)");
                 }
@@ -308,25 +309,6 @@ public class VolumeDOS extends VolumeEntity
                 }
             }
         }
-    }
-
-    /**
-     * @param rbClear
-     */
-    private boolean cmpDOS(int[] rbClear)
-    {
-        if (rbCmp.length != rbClear.length)
-        {
-            throw new RuntimeException("DOS array lengths don't match");
-        }
-        for (int i = 0; i < rbClear.length; ++i)
-        {
-            if ((rbCmp[i] & 0xFF) != rbClear[i])
-            {
-                return false;
-            }
-        }
-        return true;
     }
 
     /**
