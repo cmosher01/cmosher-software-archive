@@ -47,7 +47,7 @@ public class A2DiskImage
 			getByte(0,0xB,3)==0 &&
 			getByte(0,0xB,4)>>4==0xF)
 		{
-			osType = osProdos;
+			osType = PRODOS;
 			// Prodos disk in track-sector order
 			// switch to block order
 			switchTSBlock();
@@ -59,7 +59,7 @@ public class A2DiskImage
 			getByte(2,3)==0 &&
 			getByte(2,4)>>4==0xF)
 		{
-			osType = osProdos;
+			osType = PRODOS;
 			// Prodos disk in block order
 			// OK
 		}
@@ -67,7 +67,7 @@ public class A2DiskImage
 			getByte(0x11,0xE,1)==0x11 &&
 			getByte(0x11,0xE,2)==0x0D)
 		{
-			osType = osDos33;
+			osType = DOS33;
 			// DOS 3.3 disk in track-sector order
 			// OK
 		}
@@ -75,7 +75,7 @@ public class A2DiskImage
 			getByte(0x88,0x101)==0x11 &&
 			getByte(0x88,0x102)==0x0D)
 		{
-			osType = osDos33;
+			osType = DOS33;
 			// DOS 3.3 disk in block order
 			// switch to track-sector order
 			switchTSBlock();
