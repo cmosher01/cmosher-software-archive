@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.BitSet;
+import java.util.StringTokenizer;
 
 /**
  * Builds the normalization tables. This is a separate class so that it
@@ -461,31 +462,43 @@ class NormalizerBuilder
      */
     static public String fromHex(String source)
     {
-        StringBuffer result = new StringBuffer();
-        for (int i = 0; i < source.length(); ++i)
-        {
-            char c = source.charAt(i);
-            switch (c)
-            {
-				case ' ': break; // ignore
-				case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': 
-				case '8': case '9': case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': 
-				case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
-					result.append((char)Integer.parseInt(source.substring(i, i + 4),16));
-					i+= 3; // skip rest of number
-					break;
-	            case '<' :
-	                int j = source.indexOf('>', i); // skip <...>
-	                if (j > 0)
-	                {
-	                    i = j;
-	                    break;
-	                } // else fall through--error
-				default:
-	                throw new IllegalArgumentException("Bad hex value in " + source);
-            }
-        }
-        return result.toString();
+//        StringBuffer result = new StringBuffer();
+//        for (int i = 0; i < source.length(); ++i)
+//        {
+//            char c = source.charAt(i);
+//            switch (c)
+//            {
+//				case ' ': break; // ignore
+//				case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': 
+//				case '8': case '9': case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': 
+//				case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
+//					result.append((char)Integer.parseInt(source.substring(i, i + 4),16));
+//					i+= 3; // skip rest of number
+//					break;
+//	            case '<' :
+//	                int j = source.indexOf('>', i); // skip <...>
+//	                if (j > 0)
+//	                {
+//	                    i = j;
+//	                    break;
+//	                } // else fall through--error
+//				default:
+//	                throw new IllegalArgumentException("Bad hex value in " + source);
+//            }
+//        }
+//        return result.toString();
+
+		StringBuffer sb = new StringBuffer();
+
+		for (StringTokenizer st = new StringTokenizer(source); st.hasMoreTokens(); )
+		{
+			String tok = st.nextToken();
+			if (tok.startsWith("<",0))
+			{
+			}
+		}
+
+		return sb.toString();
     }
 
     /**
