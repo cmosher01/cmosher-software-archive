@@ -6,9 +6,14 @@ package nu.mine.mosher.ja2;
 /**
  * TODO
  * 
- * @author chrism
+ * @author Chris Mosher
  */
 public class Ja2
 {
+    private final String[] rArg;
 
+    public Ja2(String[] rArg)
+    {
+        this.rArg = rArg;
+    }
 }
