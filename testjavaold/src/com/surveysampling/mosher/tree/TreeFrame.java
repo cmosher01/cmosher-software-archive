@@ -26,10 +26,9 @@ public class TreeFrame extends JPanel
 
         FileTreeNode root = buildTree(dir);
         DefaultTreeModel treemodel = new DefaultTreeModel(root);
-        JTree tree = new JTree(treemodel);
 
-        HierarchyBrowserUpdater upd = new HierarchyBrowserUpdater(treemodel,this);
-        tree.addTreeExpansionListener(upd);
+        JTree tree = new JTree(treemodel);
+        tree.addTreeExpansionListener(new HierarchyBrowserUpdater(treemodel,this));
 
         JScrollPane scrollpane = new JScrollPane();
         scrollpane.getViewport().add(tree);
