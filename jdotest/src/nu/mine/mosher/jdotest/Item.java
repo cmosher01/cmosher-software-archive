@@ -53,7 +53,7 @@ public class Item
         	return this.iter.hasNext();
         }
 
-        public Object next()
+        public Object next() throws NoSuchElementException
         {
         	return ((Rel)this.iter.next()).getThing();
         }
