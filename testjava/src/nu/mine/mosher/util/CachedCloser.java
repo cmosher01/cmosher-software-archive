@@ -3,11 +3,11 @@ package com.surveysampling.util;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-public class UniversalCloser3
+public class CachedCloser
 {
     private final Map cache;
 
-    public UniversalCloser3(Map cache)
+    public CachedCloser(Map cache)
     {
         if (cache == null)
         {
