@@ -1,5 +1,6 @@
 package to.go.gro.groapplet;
 
+import java.applet.Applet;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -9,12 +10,14 @@ import javax.swing.JPanel;
 
 public class FamilyChart extends JPanel
 {
+	private final Applet mApplet
     private final IndiSet mIndis;
     private final FamiSet mFamis;
     private boolean mInitialized;
 
-    public FamilyChart(IndiSet indis, FamiSet famis)
+    public FamilyChart(Applet applet, IndiSet indis, FamiSet famis)
     {
+    	mApplet = applet;
         mIndis = indis;
         mFamis = famis;
 		GROMouseListener ml = new GROMouseListener(this);
