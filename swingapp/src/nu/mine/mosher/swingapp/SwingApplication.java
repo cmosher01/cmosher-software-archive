@@ -20,7 +20,7 @@ public class SwingApplication
 
 
 
-    public static void thrown(Throwable e)
+    public /*static*/ void thrown(Throwable e)
     {
         if (me == null)
         {
@@ -75,7 +75,7 @@ public class SwingApplication
                 }
                 catch (Throwable th)
                 {
-                    SwingApplication.thrown(th);
+                    thrown(th);
                 }
             }
         });
