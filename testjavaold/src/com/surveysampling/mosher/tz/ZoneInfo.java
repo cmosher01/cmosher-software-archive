@@ -597,7 +597,7 @@ public class ZoneInfo extends TimeZone {
       }
     }
     /** Dump leapseconds. */
-    private void dumpleap() {
+    public void dumpleap() {
       for (int i = 0; i < tz.leapSecs.length; i += 2) {
         int t = tz.leapSecs[i];
 	dump(t-1);
