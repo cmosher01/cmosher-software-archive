@@ -66,6 +66,10 @@ public class Apple2
         Volume vol = new Volume();
         vol.readFromMedia(disk);
 
+        StringBuffer s = new StringBuffer(256);
+        vol.dump(s);
+        System.out.println(s);
+
         Map mapDiskMap = new HashMap();
 
 //        mapDiskMap.put(p, new VolumeTableOfContents(p));
