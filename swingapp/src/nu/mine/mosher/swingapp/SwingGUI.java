@@ -111,7 +111,7 @@ public class GUI
             column.setMinWidth(64);
             column.setPreferredWidth(64);
         }
-        table.setPreferredScrollableViewportSize(new Dimension(640,480));
+//        table.setPreferredScrollableViewportSize(new Dimension(640,480));
 
         JScrollPane scrollpane = new JScrollPane(table);
         scrollpane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
