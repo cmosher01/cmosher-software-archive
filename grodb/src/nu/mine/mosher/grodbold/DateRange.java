@@ -196,6 +196,12 @@ public class DateRange implements Immutable, Serializable, Comparable
 		return true;
     }
 
+	// YYYYMMDD (never display this to the user)
+	public int getApproxDay()
+	{
+		return (earliest.getApproxDay()+latest.getApproxDay())/2;
+	}
+
     public int hashCode()
     {
     	return hash;
