@@ -1,7 +1,7 @@
 /*
  * Created on Feb 8, 2005
  */
-package nu.mine.mosher.ja2;
+package nu.mine.mosher.swingapp;
 
 /**
  * TODO
