@@ -57,7 +57,11 @@ public class Gedcom
 		{
 			return "UTF-16BE";
 		}
-
+//EF BB BF
+		if (b0==0xef && b1==0xbb && b2==0xbf)
+		{
+			return "UTF-8";
+		}
 //		SortedMap mc = Charset.availableCharsets();
 //		for (Iterator i = mc.entrySet().iterator(); i.hasNext();)
 //        {
