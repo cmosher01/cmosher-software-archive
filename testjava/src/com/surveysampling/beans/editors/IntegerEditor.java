@@ -1,3 +1,4 @@
+package java.lang;
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorSupport;
 
