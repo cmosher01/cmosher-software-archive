@@ -60,5 +60,6 @@ public class TSMap
                 sb.append(Integer.toHexString(i));
             }
         }
+        return sb.toString();
     }
 }
