@@ -17,19 +17,19 @@ import java.util.StringTokenizer;
 class HTTPRequestHeader
 {
 
-    private String Method = null;
+    private String mMethod = null;
 
-    private String URI = null;
+    private String mURI = null;
 
-    private String Version = null;
+    private String mVersion = null;
 
-    private String primeheader = "";
+    private String mPrimeHeader = "";
 
-    private HashMap headerfields = new HashMap();
+    private HashMap mHeaderFields = new HashMap();
 
-    private boolean MalFormedHeader = false;
+    private boolean mMalFormedHeader = false;
 
-    private int content_length = 0;
+    private int mContentLength = 0;
 
 
 
@@ -47,7 +47,7 @@ class HTTPRequestHeader
     HTTPRequestHeader(String in)
     {
         if (!parseHeader(in))
-            MalFormedHeader = true;
+            mMalFormedHeader = true;
     }
 
     /**
@@ -55,7 +55,7 @@ class HTTPRequestHeader
      */
     public String getPrimeHeader()
     {
-        return primeheader;
+        return mPrimeHeader;
     }
 
     /**
@@ -63,7 +63,7 @@ class HTTPRequestHeader
      */
     public String getHeader(String name)
     {
-        return (String)headerfields.get(name);
+        return (String)mHeaderFields.get(name);
     }
 
     /**
@@ -71,7 +71,7 @@ class HTTPRequestHeader
      */
     public String getMethod()
     {
-        return Method;
+        return mMethod;
     }
 
     /**
@@ -79,7 +79,7 @@ class HTTPRequestHeader
      */
     public String getURI()
     {
-        return URI;
+        return mURI;
     }
 
     /**
@@ -87,7 +87,7 @@ class HTTPRequestHeader
      */
     public String getVersion()
     {
-        return Version;
+        return mVersion;
     }
 
     /**
@@ -95,15 +95,7 @@ class HTTPRequestHeader
      */
     public int getContentLength()
     {
-        return content_length;
-    }
-
-    /**
-     * get all headers in a Hashtable
-     */
-    public HashMap getHeaderFields()
-    {
-        return headerfields;
+        return mContentLength;
     }
 
     /**
@@ -118,11 +110,11 @@ class HTTPRequestHeader
 
         if (input == null || input.equals(""))
         {
-            return MalFormedHeader = true;
+            return mMalFormedHeader = true;
         }
 
 
-        MalFormedHeader = false;
+        mMalFormedHeader = false;
 
         if (input.endsWith("\r\n"))
             delimiter = "\r\n";
@@ -132,35 +124,35 @@ class HTTPRequestHeader
         // read the first line to get method, URI, and version
         if ((pos = input.indexOf(delimiter)) < 0)
         {
-            MalFormedHeader = true;
+            mMalFormedHeader = true;
             return false;
         }
 
-        primeheader = input.substring(0,pos);
+        mPrimeHeader = input.substring(0,pos);
         // System.out.println(primeheader);
-        st = new StringTokenizer(primeheader," ");
+        st = new StringTokenizer(mPrimeHeader," ");
         for (int i = 0; st.hasMoreTokens(); i++)
         {
             switch (i)
             {
                 case 0:
-                    Method = st.nextToken();
+                    mMethod = st.nextToken();
                 break;
                 case 1:
-                    URI = st.nextToken();
+                    mURI = st.nextToken();
                 break;
                 case 2:
-                    Version = st.nextToken();
+                    mVersion = st.nextToken();
                 break;
                 default:
-                    MalFormedHeader = true;
+                    mMalFormedHeader = true;
                     return false;
             }
         }
 
-        if (Method == null || URI == null || Version == null)
+        if (mMethod == null || mURI == null || mVersion == null)
         {
-            MalFormedHeader = true;
+            mMalFormedHeader = true;
             return false;
         }
 
@@ -172,7 +164,7 @@ class HTTPRequestHeader
             token = st.nextToken();
             if ((pos = token.indexOf(": ")) < 0)
             {
-                MalFormedHeader = true;
+                mMalFormedHeader = true;
                 return false;
             }
             name = token.substring(0,pos);
@@ -180,9 +172,9 @@ class HTTPRequestHeader
             // System.out.println(name + "<=>" + value);
             if (name.equalsIgnoreCase("Content-Length"))
             {
-                content_length = Integer.parseInt(value);
+                mContentLength = Integer.parseInt(value);
             }
-            headerfields.put(name,value);
+            mHeaderFields.put(name,value);
         }
 
         return true;
@@ -193,7 +185,7 @@ class HTTPRequestHeader
      */
     public boolean isMalFormedHeader()
     {
-        return MalFormedHeader;
+        return mMalFormedHeader;
     }
 }
 
