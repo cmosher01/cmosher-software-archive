@@ -2,7 +2,7 @@
 <%
     String id = request.getParameter("id");
     Perm pm = new Perm();
-    Item item = (Item)pm.get(id);
+    Item item = (Item)pm.get(Item.class,id);
     String s = item.getName();
 %>
 <head>
