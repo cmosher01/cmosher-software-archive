@@ -95,8 +95,9 @@ public class GDiffView extends JFrame
 
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, BadLocationException, IOException, InvalidMagicBytes
     {
-//        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//        GDiffView frame = new GDiffView(new File(args[0]),new File(args[1]));
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        GDiffView frame = new GDiffView(new File(args[0]),new File(args[1]));
+
         SourceFile src = new SourceFile();
         int cWindow = 3;
         src.calculateWindowChecksums(new File(args[0]),cWindow);
@@ -176,7 +177,7 @@ public class GDiffView extends JFrame
     {
         super("GDiffVeiew");
 
-        ByteArrayOutputStream rbs = Delta.delta(fileSrc, fileTrg);
+//        ByteArrayOutputStream rbs = Delta.delta(fileSrc, fileTrg);
         dif = new ByteArrayInputStream(rbs.toByteArray());
         src = fileSrc;
 
@@ -185,7 +186,9 @@ public class GDiffView extends JFrame
 
 
         JFrame.setDefaultLookAndFeelDecorated(true);
-
+    }
+    public void init()
+    {
         GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
         this.setSize(400,470);
         this.setLocation(10, 10);
