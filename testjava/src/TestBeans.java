@@ -2,7 +2,6 @@ import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.beans.PropertyEditor;
-import java.beans.PropertyEditorManager;
 import java.lang.reflect.Method;
 
 public class TestBeans
@@ -20,12 +19,12 @@ public class TestBeans
         BeanInfo bi = Introspector.getBeanInfo(SomeBean.class);
         if (bi == null)
         {
-            throw new Exception("can't get info for SomeBean");
+            throw new Exception("can't get info for bean");
         }
         PropertyDescriptor[] rpd = bi.getPropertyDescriptors();
         if (rpd == null)
         {
-            throw new Exception("can't get property descriptors for SomeBean");
+            throw new Exception("can't get property descriptors for bean");
         }
         int ipd = -1;
         for (int j = 0; j < rpd.length; ++j)
@@ -38,7 +37,7 @@ public class TestBeans
         }
         if (ipd == -1)
         {
-            throw new Exception("can't get AInt property descriptors for SomeBean");
+            throw new Exception("can't get AInt property descriptors for bean");
         }
         PropertyDescriptor pd = rpd[ipd];
 
@@ -47,7 +46,7 @@ public class TestBeans
         PropertyEditor ed = (PropertyEditor)pd.getPropertyEditorClass().newInstance();
         if (ed == null)
         {
-            throw new Exception("can't get property editor for integer");
+            throw new Exception("can't get property editor");
         }
         ed.setAsText("34");
         Integer i = (Integer)ed.getValue();
