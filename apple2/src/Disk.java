@@ -202,19 +202,19 @@ public class Disk
         {
             DiskPos cur = this.pos;
             byte[] sector = read(DiskPos.cSector);
-            List entries = new ArrayList();
-            int goodEntries = isDos33CatalogSector(sector,allowLarge,tsmapMaps,entries);
+//            List entries = new ArrayList();
+            int goodEntries = isDos33CatalogSector(sector,allowLarge/*,tsmapMaps,entries*/);
             if (goodEntries > 0)
             {
                 System.out.println("Catalog Sector @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+
                         Integer.toHexString(cur.getSectorInTrack())+" ("+goodEntries+" entries)");
-                for (Iterator i = entries.iterator(); i.hasNext();)
-                {
-                    String f = (String)i.next();
-                    System.out.print("    \"");
-                    System.out.print(f.trim());
-                    System.out.println("\"");
-                }
+//                for (Iterator i = entries.iterator(); i.hasNext();)
+//                {
+//                    String f = (String)i.next();
+//                    System.out.print("    \"");
+//                    System.out.print(f.trim());
+//                    System.out.println("\"");
+//                }
             }
         }
     }
