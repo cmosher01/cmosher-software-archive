@@ -467,7 +467,7 @@ public class Disk
     }
 
     /**
-     * @param sector
+     * @param pos
      * @return
      * @throws InvalidPosException
      */
@@ -475,11 +475,7 @@ public class Disk
     {
         DiskPos p = (DiskPos)pos.clone();
         p.advance(1);
-        int track = read(p);
-        p.advance(1);
-        int sector = read(p);
-        p.setTS(track,sector);
-        return p;
+        return readTS(p);
     }
 
     /**
