@@ -7,7 +7,7 @@ public class IntegerEditor extends PropertyEditorSupport implements PropertyEdit
 {
     public String getJavaInitializationString()
     {
-        return "0";
+        return "33";
     }
 
     public void setAsText(String text) throws IllegalArgumentException
