@@ -16,15 +16,20 @@ public class Gedcom
 
 	public static String guessCharset(InputStream in) throws IOException
 	{
+		// read first four bytes of input stream
 		int b0 = in.read();
 		int b1 = in.read();
 		int b2 = in.read();
 		int b3 = in.read();
 
+		// build a word from the first two bytes,
+		// assuming little-endian byte order
 		int w0 = b1;
 		w0 <<= 8;
 		w0 |= b0;
 
+		// build a longword from the first four bytes,
+		// assuming little-endian byte order
 		int i0 = b3;
 		i0 <<= 8;
 		i0 |= b2;
