@@ -1,5 +1,7 @@
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 /*
  * Created on Oct 13, 2004
@@ -13,6 +15,7 @@ import java.util.Iterator;
  */
 public class VolumeDOS extends VolumeEntity
 {
+    private byte[] rb;
 
     /**
      * @param disk
@@ -77,7 +80,7 @@ public class VolumeDOS extends VolumeEntity
 
         List rPos = new ArrayList();
         getUsed(rPos);
-        disk.getDos33File(rPos);
+        rb = disk.getDos33File(rPos);
     }
 
     /**
@@ -109,7 +112,6 @@ public class VolumeDOS extends VolumeEntity
         s.append(")\n");
     }
 
-    private byte[] rb;
     public boolean hasProtodosSignature()
     {
         return (rb[0x1602-0x100] == 0x54 && rb[0x1603-0x100] == 0x59 && rb[0x1604-0x100] == 0x50 && rb[0x1605-0x100] == 0xFFFFFFC5);
