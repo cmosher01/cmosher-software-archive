@@ -13,7 +13,7 @@ public class TestCrypt
         System.setProperty("java.security.egd","");
         Security.setProperty("securerandom.source","");
         SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
-        random.setSeed(random.generateSeed(128));
+        random.setSeed(random.generateSeed(20));
         System.out.println(random.nextInt());
     }
 
