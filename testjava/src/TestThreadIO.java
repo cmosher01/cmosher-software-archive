@@ -16,11 +16,12 @@ import java.util.List;
  */
 public class TestThreadIO
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws Throwable
     {
+        ReadFormFile();
     }
 
-    private void ReadFormFile() throws IOException
+    private static void ReadFormFile() throws IOException
     {
         int numberOfEntries = 0;
         List lines = new ArrayList();
