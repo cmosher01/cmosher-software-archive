@@ -61,46 +61,32 @@ public class Apple2
         vol.readFromMedia(disk);
         Map mapDiskMap = new HashMap();
 
-        List rPosVTOC = new ArrayList();
-        disk.findDos33VTOC(rPosVTOC);
-
-        if (rPosVTOC.size() == 0)
-        {
-            rPosVTOC.add(new DiskPos(0x11,0x0));
-        }
-        else if (rPosVTOC.size() == 1)
-        {
-        }
-        else if (rPosVTOC.size() > 1)
-        {
-            // TODO multiple VTOC handling
-        }
-        DiskPos p = (DiskPos)rPosVTOC.get(0);
-        mapDiskMap.put(p, new VolumeTableOfContents(p));
+//        mapDiskMap.put(p, new VolumeTableOfContents(p));
+        Volume vol = new Volume();
+        vol.readFromMedia(disk);
 
 
-
-        List rPosCat = new ArrayList();
-        disk.findDos33CatalogSector(rPosCat);
-
-        if (rPosCat.size() == 0)
-        {
-            System.out.println("    [no files found]");
-            return;
-        }
-
-        List rCatEntry = new ArrayList();
-        for (Iterator i = rPosCat.iterator(); i.hasNext();)
-        {
-            DiskPos p = (DiskPos)i.next();
-            mapDiskMap.put(p, new VolumeCatalog(p));
-            disk.getDos33CatalogEntries(p, rCatEntry);
-        }
-        for (Iterator ent = rCatEntry.iterator(); ent.hasNext();)
-        {
-            Dos33CatalogEntry entry = (Dos33CatalogEntry)ent.next();
-            System.out.println("    "+entry.getName());
-        }
+//        List rPosCat = new ArrayList();
+//        disk.findDos33CatalogSector(rPosCat);
+//
+//        if (rPosCat.size() == 0)
+//        {
+//            System.out.println("    [no files found]");
+//            return;
+//        }
+//
+//        List rCatEntry = new ArrayList();
+//        for (Iterator i = rPosCat.iterator(); i.hasNext();)
+//        {
+//            DiskPos p = (DiskPos)i.next();
+//            mapDiskMap.put(p, new VolumeCatalog(p));
+//            disk.getDos33CatalogEntries(p, rCatEntry);
+//        }
+//        for (Iterator ent = rCatEntry.iterator(); ent.hasNext();)
+//        {
+//            Dos33CatalogEntry entry = (Dos33CatalogEntry)ent.next();
+//            System.out.println("    "+entry.getName());
+//        }
 //        List rCat = new ArrayList();
 //        disk.findDos33CatalogSector(rCat);
 //
