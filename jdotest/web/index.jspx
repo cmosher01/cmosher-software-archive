@@ -18,30 +18,11 @@
 		<title>List</title>
 	</head>
 	<body>
-		<table>
-			<tags:allItems var="items">
-				<c:forEach var="i" items="${items}">
-				for (Iterator i = pm.getExtent(Item.class,true).iterator(); i.hasNext(); )
-				{
-					Named item = (Named)i.next();
-					String id = pm.getObjectId(item).toString();
-					</jsp:scriptlet>
-					<tr><td>
-					<c:url var="edit" value="edit.jsp">
-						<c:param name="id" value="${id}" />
-					</c:url>
-					<a href="${edit}">${item.name}</a></td></tr>
-					<jsp:scriptlet>
-				}
-				</c:forEach>
-			</tags:allItems>
-			<c:url var="add" value="add.jsp" />
-			<tr><td>&lt;<a href="${add}">add</a>&gt;</td></tr>
-		</table>
-	</body>
-</html>
-
-		<tags:getAllItems var="items" />
+		<!-- tags:getAllItems var="items" / -->
+		<jsp:scriptlet>
+			PersistenceManager pm = (PersistenceManager)request.getAttribute("pm");
+			request.setAttribute("items",pm.getExtent(Item.class,true).iterator());
+		</jsp:scriptlet>
 		<table>
 			<c:forEach var="i" items="${items}">
 				<c:url var="edit" value="edit.jsp">
@@ -52,3 +33,5 @@
 			<c:url var="add" value="add.jsp" />
 			<tr><td>{<a href="${add}">add</a>}</td></tr>
 		</table>
+	</body>
+</html>
