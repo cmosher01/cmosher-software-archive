@@ -57,6 +57,10 @@ public class FixAppleDosAsm
             // tr: [sp [...]] [comment]
             tr = tr.trim();
             // tr: [comment]
+            if (tr.endsWith("*"))
+            {
+                tr = tr.substring(0,tr.length()-1).trim();
+            }
 
             out.tab(TAB_COMMENT);
             out.print("; ");
@@ -79,6 +83,10 @@ public class FixAppleDosAsm
                 String dr = tr.substring(0,semi).trim();
                 out.print(dr);
                 String cm = tr.substring(semi+1).trim();
+                if (cm.endsWith("*"))
+                {
+                    cm = cm.substring(0,cm.length()-1).trim();
+                }
                 out.tab(TAB_COMMENT);
                 out.print("; ");
                 out.print(cm);
@@ -111,6 +119,10 @@ public class FixAppleDosAsm
                     String dr = tr.substring(0,semi).trim();
                     out.print(dr);
                     String cm = tr.substring(semi+1).trim();
+                    if (cm.endsWith("*"))
+                    {
+                        cm = cm.substring(0,cm.length()-1).trim();
+                    }
                     out.tab(TAB_COMMENT);
                     out.print("; ");
                     out.print(cm);
