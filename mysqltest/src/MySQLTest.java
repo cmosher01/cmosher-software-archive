@@ -404,6 +404,15 @@ public class MySQLTest
 		"    maxAge integer unsigned, "+
 		"    count  integer unsigned "+
 		")");
+		dbUpdate("drop table if exists CalcPerson");
+		dbUpdate("create table "+
+		"CalcPerson "+
+		"( "+
+		"    id integer unsigned not null auto_increment primary key, "+
+		"    entry integer unsigned not null references CountEntry(id), "+
+		"    birthEarliest date, "+
+		"    birthLatest date "+
+		")");
 	}
 
     protected void dbUpdate(String sql) throws SQLException
