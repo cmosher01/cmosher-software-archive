@@ -73,10 +73,10 @@ public class Pair implements Cloneable, Comparable
         Comparable cb = (Comparable)b;
 
         int c;
-        c = ca.compareTo(that.a);
+        c = ca.cmp(that.a);
         if (c == 0)
         {
-            c = cb.compareTo(that.b);
+            c = cb.cmp(that.b);
         }
 
         return c;
