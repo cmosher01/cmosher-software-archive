@@ -8,7 +8,7 @@
  * 
  * @author Chris
  */
-public class DiskPos implements Comparable
+public class DiskPos implements Comparable, Cloneable
 {
     public static final int cSector = 0x100;
     public static final int cSectorsPerTrack = 0x10;
@@ -37,6 +37,18 @@ public class DiskPos implements Comparable
         this.iDisk = iDisk;
     }
 
+    public Object clone()
+    {
+        try
+        {
+            super.clone();
+        }
+        catch (CloneNotSupportedException e)
+        {
+            throw new RuntimeException(e);
+        }
+        return this;
+    }
     /**
      * @param block
      * @param allowLarge
