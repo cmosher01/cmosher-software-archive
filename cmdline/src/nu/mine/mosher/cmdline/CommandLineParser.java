@@ -13,8 +13,11 @@ import java.util.NoSuchElementException;
  */
 public class CommandLineParser
 {
-    public CommandLineParser()
+    private final SyntaxDefinition mDef;
+
+    public CommandLineParser(SyntaxDefinition def)
     {
+        this.mDef = def;
     }
 
     private static class Iter implements Iterator
