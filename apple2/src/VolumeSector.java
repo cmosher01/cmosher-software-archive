@@ -11,4 +11,12 @@
 public class VolumeSector
 {
     private final DiskPos pos;
+
+    /**
+     * @param pos
+     */
+    public VolumeSector(DiskPos pos)
+    {
+        this.pos = pos;
+    }
 }
