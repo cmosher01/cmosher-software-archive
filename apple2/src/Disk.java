@@ -195,7 +195,8 @@ public class Disk
     {
         return
             (sector[3]==3 || sector[3]==2 || sector[3]==1) &&
-            match(sector,0x04,new byte[]{0x00,0x00}) &&
+            sector[4]==0 &&
+            (sector[5]==0 || sector[5]==4) &&
             (match(sector,0x34,new byte[]{0x23,0x10,0x00,0x01}) || match(sector,0x34,new byte[]{0x23,0x10,0x01,0x00})) &&
             match(sector,0x3a,new byte[]{0x00,0x00});
     }
