@@ -378,15 +378,15 @@ public class FixAppleDisasm
 			printout.print(ln.label);
 			if (ln.instr.length() > 0)
 			{
-				printout.print("   ");
+				printout.tab(16);
 				printout.print(ln.instr);
 			}
 			if (ln.oper.length() > 0)
 			{
-				printout.print("   ");
+				printout.tab(22);
 				printout.print(ln.oper);
 			}
-			printout.print("          ");
+			printout.tab(40);
 			printout.print(ln.comment);
 			printout.newline();
         }
