@@ -2,6 +2,7 @@ package to.go.gro.groapplet;
 import java.awt.AWTEvent;
 import java.awt.Frame;
 import java.awt.HeadlessException;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
@@ -239,4 +240,22 @@ public class GROapplet extends JApplet
     //            setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     //        super.processMouseMotionEvent(e);
     //    }
+    /* (non-Javadoc)
+     * @see java.awt.Component#processMouseEvent(java.awt.event.MouseEvent)
+     */
+    protected void processMouseEvent(MouseEvent arg0)
+    {
+        // TODO Auto-generated method stub
+        super.processMouseEvent(arg0);
+    }
+
+    /* (non-Javadoc)
+     * @see java.awt.Component#processMouseMotionEvent(java.awt.event.MouseEvent)
+     */
+    protected void processMouseMotionEvent(MouseEvent arg0)
+    {
+        // TODO Auto-generated method stub
+        super.processMouseMotionEvent(arg0);
+    }
+
 }
