@@ -10,7 +10,9 @@
     boolean changed = !sOrig.equals(sNew);
     if (changed)
     {
+    	pm.begin();
 	    item.setName(sNew);
+	    pm.commit();
     }
 %>
 <head>
