@@ -30,7 +30,7 @@ public class FixMetaUTF8
         fix(f);
     }
 
-    public static String fix(File f)
+    public static String fix(File f) throws IOException
     {
         f = f.getAbsoluteFile();
         f = f.getCanonicalFile();
