@@ -24,12 +24,25 @@ public class SF
 
         public Object next()
         {
-            return null;
+            int i = nextPos();
+            String tok = s.substring(pos,i);
+            pos = i+1;
+            return tok;
         }
 
         public void remove()
         {
             throw new UnsupportedOperationException();
+        }
+
+        protected int nextPos()
+        {
+            int i = s.indexOf(',',pos);
+            if (i == -1)
+            {
+                i = s.length();
+            }
+            return i;
         }
     }
 }
