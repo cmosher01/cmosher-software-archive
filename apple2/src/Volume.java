@@ -39,8 +39,12 @@ public class Volume
             Dos33CatalogEntry ent = (Dos33CatalogEntry)i.next();
             VolumeFile f = new VolumeFile();
             f.readFromMedia(ent,disk);
+            // TODO account for deleted files during original search?
             rFile.add(f);
         }
+
+        List rAllTSMaps = new ArrayList();
+        disk.findDos33TSMapSector(rAllTSMaps);
     }
 
     /**
