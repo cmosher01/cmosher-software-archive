@@ -6,8 +6,7 @@ public class UniversalCloser
     {
         try
         {
-            Method methodClose = obj.getClass().getMethod("close",null);
-            methodClose.invoke(obj,null);
+            obj.getClass().getMethod("close",null).invoke(obj,null);
         }
         catch (Throwable ignore)
         {
