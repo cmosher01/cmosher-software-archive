@@ -61,13 +61,13 @@ public class Bin2HexJava
         }
     }
 
-    private static void appendHex(int i, StringBuffer sb)
+    private static void appendHex(int i)
     {
         char n0 = nib(i & 0xF);
         i >>= 4;
         char n1 = nib(i & 0xF);
-        sb.append(n1);
-        sb.append(n0);
+        System.out.print(n1);
+        System.out.print(n0);
     }
 
     /**
@@ -75,7 +75,7 @@ public class Bin2HexJava
      * @param i
      * @return
      */
-    public static char nib(int i)
+    private static char nib(int i)
     {
         char c;
         if (i < 0)
