@@ -17,6 +17,8 @@ public class A2DiskContents
 	private int catTrack;
 	private int catSector;
 
+	private static final int ENTRY_SIZE = 0x23;
+
 	public A2DiskContents(A2DiskImage img)
 	{
 		image = img;
@@ -60,20 +62,20 @@ public class A2DiskContents
 		catTrack = t;
 		catSector = s;
 	}
-
 	private void parseCatalog()
 	{
 		int cFile = 7;
 		int b = 0xB;
 		for (int i = 0; i < cFile; ++i)
 		{
-			CDosFile* pf = new CDosFile(this);
-			pf->Parse(rTSB,m_tsCatalog.track,m_tsCatalog.sector,b);
-			if (!pf->m_bDeleted)
-				m_rpFile.Add(pf);
-			else
-				delete pf;
-			b += 0x23;
+			byte[] catEntry = image.getBytes(catTrack,catSector,b,ENTRY_SIZE);
+//			CDosFile* pf = new CDosFile(this);
+//			pf->Parse(rTSB,m_tsCatalog.track,m_tsCatalog.sector,b);
+//			if (!pf->m_bDeleted)
+//				m_rpFile.Add(pf);
+//			else
+//				delete pf;
+			b += ENTRY_SIZE;
 		}
 	}
 
