@@ -61,7 +61,6 @@ public class ExtrDos33
 
     public static void extrDos(File file, File dirNew) throws IOException
     {
-    	file = file.getCanonicalFile();
 		System.out.println("-----------------------------------------------------------------------------------");
     	System.out.println("Processing file: "+file.getAbsolutePath());
 
