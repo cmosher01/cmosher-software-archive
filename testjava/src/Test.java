@@ -60,12 +60,12 @@ public class Test
 //            System.out.println(s);
 //        }
 
-//convert to a List:
+//or build a List of all lines:
         List listLine = Util.list(new ReaderLines(r).iterator());
 //or under 1.5:
 //        List listLine = Util.list(new ReaderLines(r));
-//convert the list to a Set:
-        Set setLine = new HashSet(listLine);
+//or build a Set of all lines
+        Set setLine = Util.set(new ReaderLines(r).iterator());
 
 
 
