@@ -26,8 +26,7 @@ public final class Cloner
             Method methodClone = (Method)mClasses.get(cl);
             if (methodClone == null)
             {
-                methodClone = cl.getMethod("clone",null);
-                methodClone.setAccessible(true);
+                methodClone = getCloneMethod(cl);
                 mClasses.put(cl,methodClone);
             }
             return (Cloneable)methodClone.invoke(cloneableObject,null);
@@ -43,5 +42,13 @@ public final class Cloner
             ex.initCause(cause);
             throw ex;
         }
+    }
+
+    public static Method getCloneMethod(Class cl) throws NoSuchMethodException, SecurityException
+    {
+        Method methodClone;
+        methodClone = cl.getMethod("clone",null);
+        methodClone.setAccessible(true);
+        return methodClone;
     }
 }
