@@ -30,6 +30,8 @@ public class Pair implements Cloneable, Comparable
         try
         {
             clon = (Pair)super.clone();
+            clon.a = a();
+            clon.b = b();
         }
         catch (CloneNotSupportedException cantHappen)
         {
