@@ -142,11 +142,12 @@ public class GDiffView extends JFrame
      */
     private static byte roll(byte[] rs, byte x)
     {
-        for (int i = 0; i < rs.length-1; i++)
+        int e = rs.length-1;
+        for (int i = 0; i < e; i++)
         {
             rs[i] = rs[i+1];
         }
-        rs[rs.length-1] = x;
+        rs[e] = x;
         return rs[0];
     }
 
