@@ -169,7 +169,7 @@ public class Disk
     /**
      * @throws InvalidPosException
      */
-    public void findDos33CatalogSector() throws InvalidPosException
+    public void findDos33CatalogSector(TSMap tsmapMaps) throws InvalidPosException
     {
         rewind();
         while (!EOF())
@@ -218,6 +218,8 @@ public class Disk
                         if (csect > 1)
                         {
                             sb.append("s, T/S map");
+                            DiskPos tsm = new DiskPos(trk,sector[ce+1],0,false);
+                            tsmapMaps.mark(tsm.getSectorInDisk());
                         }
                         sb.append(" @ T$"+Integer.toHexString(trk)+", S$"+Integer.toHexString(sector[ce+1])+"]");
                         if (deleted)
