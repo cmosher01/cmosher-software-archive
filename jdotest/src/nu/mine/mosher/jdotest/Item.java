@@ -6,6 +6,7 @@
  */
 package nu.mine.mosher.jdotest;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -32,4 +33,40 @@ public class Item
     {
         this.name = name;
     }
+
+	public Iterator rThings()
+	{
+		return new Iter(rmmThing);
+	}
+
+	private static class Iter implements Iterator
+	{
+		private final Iterator iter;
+
+		public Iter(List rmmThing)
+		{
+			this.iter = rmmThing.iterator();
+		}
+
+		public void remove() throws UnsupportedOperationException
+		{
+			throw new UnsupportedOperationException();
+		}
+
+        /* (non-Javadoc)
+         * @see java.util.Iterator#hasNext()
+         */
+        public boolean hasNext()
+        {
+        	return this.iter.hasNext();
+        }
+
+        /* (non-Javadoc)
+         * @see java.util.Iterator#next()
+         */
+        public Object next()
+        {
+        	return ((Rel)this.iter.next()).getThing();
+        }
+	}
 }
