@@ -12,20 +12,22 @@ import java.util.Iterator;
  */
 public class VolumeFile
 {
+    private Dos33CatalogEntry catEntry;
     private VolumeTSMap ts;
 //    private VolumeFileData data;
 
     /**
-     * @param start
+     * @param ent
      * @param disk
      * @throws InvalidPosException
      */
-    public void readFromMedia(DiskPos start, Disk disk) throws InvalidPosException
+    public void readFromMedia(Dos33CatalogEntry ent, Disk disk) throws InvalidPosException
     {
-        if (disk.isDos33TSMapSector(start))
+        catEntry = ent;
+        if (disk.isDos33TSMapSector(catEntry.getStart()))
         {
             ts = new VolumeTSMap();
-            ts.readFromMedia(start,disk);
+            ts.readFromMedia(catEntry.getStart(),disk);
         }
         else
         {
