@@ -5,7 +5,10 @@
  */
 package com.surveysampling.time;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import junit.framework.TestCase;
@@ -76,8 +79,13 @@ public class TimeOfDayTest extends TestCase
         }
     }
 
-    public void testGetTimeOnDay()
+    public void testGetTimeOnDay() throws ParseException
     {
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
+        Date d = fmt.parse("2004/04/03 00:00:00.000");
+        Date dcomp = new Date(tod.getTimeOnDay(d));
+        Date dexpt = fmt.parse("2004/04/03 17:34:12.367");
+        assertEquals(dexpt,dcomp);
     }
 
     /*
