@@ -53,19 +53,19 @@ public class WaveCalc
 
         DataInputStream in = new DataInputStream(new FileInputStream(fin));
         int riff = in.readInt();
-        if (riff != 0x46464952)
+        if (riff != 0x52494646)
         {
         	throw new Exception("File does not start with RIFF.");
         }
 
 		int totallen = in.readInt()+8;
 
-		if (in.readInt() != 0x45564157)
+		if (in.readInt() != 0x57415645)
 		{
 			throw new Exception("RIFF chunk is not followed by WAVE chunk.");
 		}
 
-		if (in.readInt() != 0x20746d66)
+		if (in.readInt() != 0x666d7420)
 		{
 			throw new Exception("WAVE does not start with fmt chunk.");
 		}
@@ -94,7 +94,7 @@ public class WaveCalc
 		in.readByte(); in.readByte(); // skip bytes per sample
 		in.readByte(); in.readByte(); // skip bits per sample
 
-		if (in.readInt() != 0x61746164)
+		if (in.readInt() != 0x61417461)
 		{
 			throw new Exception("data chunk does not follow fmt chunk.");
 		}
