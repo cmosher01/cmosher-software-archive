@@ -1,6 +1,7 @@
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.RandomAccessFile;
 
 /*
  * Created on Nov 24, 2003
@@ -29,8 +30,8 @@ public class BinDiff
 
     private static final int EOF = -1;
 
-    private final TellStream f1;
-    private final TellStream f2;
+    private final PushbackRandomFile f1;
+    private final PushbackRandomFile f2;
     private final int cMinMatch;
     private final int cMaxSearch;
 
@@ -42,10 +43,10 @@ public class BinDiff
 	private TellStream fileinsert;
 	private int lastmark;
 
-    public BinDiff(InputStream f1, InputStream f2, int cMinMatch, int cMaxSearch)
+    public BinDiff(RandomAccessFile f1, RandomAccessFile f2, int cMinMatch, int cMaxSearch)
     {
-        this.f1 = new TellStream(f1);
-        this.f2 = new TellStream(f2);
+        this.f1 = new PushbackRandomFile(f1);
+        this.f2 = new PushbackRandomFile(f2);
         this.cMinMatch = cMinMatch;
         this.cMaxSearch = cMaxSearch;
     }
