@@ -1,0 +1,259 @@
+0/19/2005 9:50:8 	Jproxy.initialization(Jproxy.java:373)	Console Initialized
+0/19/2005 9:50:8 	Jproxy.startProxyServer(Jproxy.java:542)	starting server on 127.0.0.1 port: 60080
+0/19/2005 9:50:8 	Jproxy.startProxyServer(Jproxy.java:561)	Server started successfully.
+0/19/2005 9:50:24 	ProxyConnection.run(ProxyConnection.java:226)	GET http://www.google.com/ HTTP/1.0
+0/19/2005 9:50:24 	ProxyConnection.run(ProxyConnection.java:227)	GET http://www.google.com/ HTTP/1.0
+Host: www.google.com
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0
+Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Cookie: PREF=ID=09d005431fc74b3b:TM=1066053312:LM=1066053312:S=9t-dNM3GMsbZ1D73
+Connection: Keep-Alive
+
+
+0/19/2005 9:50:24 	ProxyConnection.run(ProxyConnection.java:410)	HTTP/1.0 200 OK
+0/19/2005 9:50:24 	ProxyConnection.run(ProxyConnection.java:411)	HTTP/1.0 200 OK
+Cache-Control: private
+Content-Type: text/html
+Server: GWS/2.1
+Date: Wed, 19 Jan 2005 14:50:24 GMT
+X-Cache: MISS from www-cache.surveysampling.com
+Proxy-Connection: close
+
+
+0/19/2005 9:51:5 	ProxyConnection.run(ProxyConnection.java:226)	GET http://testepanel/ssi HTTP/1.0
+0/19/2005 9:51:5 	ProxyConnection.run(ProxyConnection.java:227)	GET http://testepanel/ssi HTTP/1.0
+Host: testepanel
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0
+Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Cookie: JSESSIONID=sagesse-d%253A41ed4a4a%253A8dbf95d66fd62c2
+Connection: Keep-Alive
+
+
+0/19/2005 9:51:5 	ProxyConnection.run(ProxyConnection.java:410)	HTTP/1.1 302 Moved Temporarily
+0/19/2005 9:51:5 	ProxyConnection.run(ProxyConnection.java:411)	HTTP/1.1 302 Moved Temporarily
+Server: Netscape-Enterprise/6.0
+Date: Wed, 19 Jan 2005 14:51:05 GMT
+Content-length: 0
+Content-type: text/html
+Location: http://testepanel/ssi/
+Connection: keep-alive
+
+
+0/19/2005 9:51:15 	ProxyConnection.run(ProxyConnection.java:226)	GET http://testepanel/favicon.ico HTTP/1.0
+0/19/2005 9:51:15 	ProxyConnection.run(ProxyConnection.java:227)	GET http://testepanel/favicon.ico HTTP/1.0
+Host: testepanel
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0
+Accept: image/png,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Cookie: JSESSIONID=sagesse-d%253A41ed4a4a%253A8dbf95d66fd62c2
+Connection: Keep-Alive
+
+
+0/19/2005 9:51:15 	ProxyConnection.run(ProxyConnection.java:410)	HTTP/1.1 200 OK
+0/19/2005 9:51:15 	ProxyConnection.run(ProxyConnection.java:411)	HTTP/1.1 200 OK
+Server: Netscape-Enterprise/6.0
+Date: Wed, 19 Jan 2005 14:51:15 GMT
+Content-length: 318
+Content-type: image/x-icon
+Connection: keep-alive
+
+
+0/19/2005 9:51:17 	ProxyConnection.run(ProxyConnection.java:226)	GET http://testepanel/ssi HTTP/1.0
+0/19/2005 9:51:17 	ProxyConnection.run(ProxyConnection.java:227)	GET http://testepanel/ssi HTTP/1.0
+Host: testepanel
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0
+Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Cookie: JSESSIONID=sagesse-d%253A41ed4a4a%253A8dbf95d66fd62c2
+Connection: Keep-Alive
+
+
+0/19/2005 9:51:17 	ProxyConnection.run(ProxyConnection.java:410)	HTTP/1.1 302 Moved Temporarily
+0/19/2005 9:51:17 	ProxyConnection.run(ProxyConnection.java:411)	HTTP/1.1 302 Moved Temporarily
+Server: Netscape-Enterprise/6.0
+Date: Wed, 19 Jan 2005 14:51:17 GMT
+Content-length: 0
+Content-type: text/html
+Location: http://testepanel/ssi/
+Connection: keep-alive
+
+
+0/19/2005 9:51:34 	ProxyConnection.run(ProxyConnection.java:226)	GET http://testepanel/ssi HTTP/1.0
+0/19/2005 9:51:34 	ProxyConnection.run(ProxyConnection.java:227)	GET http://testepanel/ssi HTTP/1.0
+Host: testepanel
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0
+Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Cookie: JSESSIONID=sagesse-d%253A41ed4a4a%253A8dbf95d66fd62c2
+Connection: Keep-Alive
+
+
+0/19/2005 9:51:34 	ProxyConnection.run(ProxyConnection.java:410)	HTTP/1.1 302 Moved Temporarily
+0/19/2005 9:51:34 	ProxyConnection.run(ProxyConnection.java:411)	HTTP/1.1 302 Moved Temporarily
+Server: Netscape-Enterprise/6.0
+Date: Wed, 19 Jan 2005 14:51:33 GMT
+Content-length: 0
+Content-type: text/html
+Location: http://testepanel/ssi/
+Connection: keep-alive
+
+
+0/19/2005 9:51:34 	ProxyConnection.run(ProxyConnection.java:226)	POST http://www.naviscope.com:80/cgibin/vcheck.cgi HTTP/1.0
+0/19/2005 9:51:34 	ProxyConnection.run(ProxyConnection.java:227)	POST http://www.naviscope.com:80/cgibin/vcheck.cgi HTTP/1.0
+Accept: */*
+Content-type: application/x-www-form-urlencoded
+Content-length: 80
+
+
+0/19/2005 9:51:34 	ProxyConnection.run(ProxyConnection.java:410)	HTTP/1.0 403 Forbidden
+0/19/2005 9:51:34 	ProxyConnection.run(ProxyConnection.java:411)	HTTP/1.0 403 Forbidden
+Content-Length: 1958
+Content-Type: text/html
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+Date: Wed, 19 Jan 2005 14:43:44 GMT
+X-Cache: MISS from www-cache.surveysampling.com
+Proxy-Connection: close
+
+
+0/19/2005 9:51:34 	ProxyConnection.run(ProxyConnection.java:226)	GET http://www.naviscope.com/afd HTTP/1.0
+0/19/2005 9:51:34 	ProxyConnection.run(ProxyConnection.java:227)	GET http://www.naviscope.com/afd HTTP/1.0
+Pragma: no-cache
+
+
+0/19/2005 9:51:34 	ProxyConnection.run(ProxyConnection.java:410)	HTTP/1.0 404 Not Found
+0/19/2005 9:51:34 	ProxyConnection.run(ProxyConnection.java:411)	HTTP/1.0 404 Not Found
+Content-Length: 2255
+Content-Type: text/html
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+Date: Wed, 19 Jan 2005 14:43:44 GMT
+X-Cache: MISS from www-cache.surveysampling.com
+Proxy-Connection: close
+
+
+0/19/2005 9:51:43 	source unknown	Web server stopped. 
+0/19/2005 9:51:44 	source unknown	starting server on 127.0.0.1 port: 60080
+0/19/2005 9:51:44 	source unknown	Server started successfully.
+0/19/2005 9:51:52 	ProxyConnection.run(ProxyConnection.java:226)	GET http://testepanel/ssi HTTP/1.0
+0/19/2005 9:51:52 	ProxyConnection.run(ProxyConnection.java:227)	GET http://testepanel/ssi HTTP/1.0
+Host: testepanel
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0
+Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Cookie: JSESSIONID=sagesse-d%253A41ed4a4a%253A8dbf95d66fd62c2
+Connection: Keep-Alive
+
+
+0/19/2005 9:51:52 	ProxyConnection.run(ProxyConnection.java:410)	HTTP/1.1 302 Moved Temporarily
+0/19/2005 9:51:52 	ProxyConnection.run(ProxyConnection.java:411)	HTTP/1.1 302 Moved Temporarily
+Server: Netscape-Enterprise/6.0
+Date: Wed, 19 Jan 2005 14:51:52 GMT
+Content-length: 0
+Content-type: text/html
+Location: http://testepanel/ssi/
+Connection: keep-alive
+
+
+0/19/2005 9:51:52 	ProxyConnection.run(ProxyConnection.java:226)	POST http://www.naviscope.com:80/cgibin/vcheck.cgi HTTP/1.0
+0/19/2005 9:51:52 	ProxyConnection.run(ProxyConnection.java:227)	POST http://www.naviscope.com:80/cgibin/vcheck.cgi HTTP/1.0
+Accept: */*
+Content-type: application/x-www-form-urlencoded
+Content-length: 80
+
+
+0/19/2005 9:51:52 	ProxyConnection.run(ProxyConnection.java:410)	HTTP/1.0 403 Forbidden
+0/19/2005 9:51:52 	ProxyConnection.run(ProxyConnection.java:411)	HTTP/1.0 403 Forbidden
+Content-Length: 1958
+Content-Type: text/html
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+Date: Wed, 19 Jan 2005 14:44:02 GMT
+X-Cache: MISS from www-cache.surveysampling.com
+Proxy-Connection: close
+
+
+0/19/2005 9:51:52 	ProxyConnection.run(ProxyConnection.java:226)	GET http://www.naviscope.com/afd HTTP/1.0
+0/19/2005 9:51:52 	ProxyConnection.run(ProxyConnection.java:227)	GET http://www.naviscope.com/afd HTTP/1.0
+Pragma: no-cache
+
+
+0/19/2005 9:51:59 	ProxyConnection.run(ProxyConnection.java:226)	GET http://epanel/ssi HTTP/1.0
+0/19/2005 9:51:59 	ProxyConnection.run(ProxyConnection.java:227)	GET http://epanel/ssi HTTP/1.0
+Host: epanel
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0
+Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Cookie: JSESSIONID=sparky-df%253A41ed4970%253A794d1b2560a46f2b
+Connection: Keep-Alive
+
+
+0/19/2005 9:51:59 	ProxyConnection.run(ProxyConnection.java:410)	HTTP/1.1 302 Moved Temporarily
+0/19/2005 9:51:59 	ProxyConnection.run(ProxyConnection.java:411)	HTTP/1.1 302 Moved Temporarily
+Server: Netscape-Enterprise/6.0
+Date: Wed, 19 Jan 2005 14:51:59 GMT
+Content-length: 0
+Content-type: text/html
+Location: http://epanel/ssi/
+Connection: keep-alive
+
+
+0/19/2005 9:52:6 	ProxyConnection.run(ProxyConnection.java:226)	GET http://epanel/favicon.ico HTTP/1.0
+0/19/2005 9:52:6 	ProxyConnection.run(ProxyConnection.java:227)	GET http://epanel/favicon.ico HTTP/1.0
+Host: epanel
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0
+Accept: image/png,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Cookie: JSESSIONID=sparky-df%253A41ed4970%253A794d1b2560a46f2b
+Connection: Keep-Alive
+
+
+0/19/2005 9:52:6 	ProxyConnection.run(ProxyConnection.java:410)	HTTP/1.1 200 OK
+0/19/2005 9:52:6 	ProxyConnection.run(ProxyConnection.java:411)	HTTP/1.1 200 OK
+Server: Netscape-Enterprise/6.0
+Date: Wed, 19 Jan 2005 14:52:05 GMT
+Content-length: 318
+Content-type: image/x-icon
+Connection: keep-alive
+
+
+0/19/2005 9:53:33 	ProxyConnection.run(ProxyConnection.java:226)	GET http://epanel/ssi HTTP/1.0
+0/19/2005 9:53:33 	ProxyConnection.run(ProxyConnection.java:227)	GET http://epanel/ssi HTTP/1.0
+Host: epanel
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0
+Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+Accept-Language: en-us,en;q=0.5
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Cookie: JSESSIONID=sparky-df%253A41ed4970%253A794d1b2560a46f2b
+Connection: Keep-Alive
+
+
+0/19/2005 9:53:33 	ProxyConnection.run(ProxyConnection.java:410)	HTTP/1.1 302 Moved Temporarily
+0/19/2005 9:53:33 	ProxyConnection.run(ProxyConnection.java:411)	HTTP/1.1 302 Moved Temporarily
+Server: Netscape-Enterprise/6.0
+Date: Wed, 19 Jan 2005 14:53:33 GMT
+Content-length: 0
+Content-type: text/html
+Location: http://epanel/ssi/
+Connection: keep-alive
+
+
