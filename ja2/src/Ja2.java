@@ -2,7 +2,7 @@ import nu.mine.mosher.ja2.ApplicationAborting;
 import nu.mine.mosher.ja2.SwingApplication;
 import nu.mine.mosher.ja2.CommandLineArgHandler;
 import nu.mine.mosher.ja2.ExceptionHandler;
-import nu.mine.mosher.ja2.GUI;
+import nu.mine.mosher.ja2.SwingGUI;
 
 /*
  * Created on Aug 31, 2004
@@ -27,7 +27,7 @@ public final class Ja2
     {
         ExceptionHandler eh = new ExceptionHandler();
         CommandLineArgHandler ch = new CommandLineArgHandler(args);
-        GUI gui = new GUI();
+        SwingGUI gui = new SwingGUI();
 
         SwingApplication app = new SwingApplication(eh,ch,gui);
 
