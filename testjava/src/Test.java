@@ -55,20 +55,50 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
-        System.out.println("hello");
 
-        class Junk
+
+
+
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
+        long ms = fmt.parse("2004/04/01 00:00:00.000").getTime();
+        for (int i = 0; i < 200; ++i)
         {
-            public void test()
-            {
-                System.out.println("junk");
-            }
+            System.out.println(fmt.format(new Date(ms)));
+            ms += 15*60:1000;
         }
 
-        Junk j = new Junk();
-        j.test();
 
-        System.out.println("hello");
+
+
+
+
+
+
+
+
+
+
+//        System.out.println("hello");
+//
+//        class Junk
+//        {
+//            public void test()
+//            {
+//                System.out.println("junk");
+//            }
+//        }
+//
+//        Junk j = new Junk();
+//        j.test();
+//
+//        System.out.println("hello");
+
+
+
+
+
+
+
 
 //        Date d = new Date(Long.MAX_VALUE);
 //        SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
