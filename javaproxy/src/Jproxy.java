@@ -341,7 +341,7 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
         {
             nfe.printStackTrace();
             System.out
-                    .println("Error: Bad Number Format for cache!. Cache Dieabled.");
+                    .println("Error: Bad Number Format for cache!. Cache Disabled.");
             cache_max = 0;
             cache_expire = 0;
         }
