@@ -47,11 +47,17 @@ public class Perm
 		return pm.getObjectId(obj).toString();
 	}
 
-	public void add(Object obj)
+	public void put(Object obj)
 	{
 		PersistenceManager pm = this.pmf.getPersistenceManager();
 		pm.currentTransaction().begin();
 		pm.makePersistent(obj);
 		pm.currentTransaction().commit();
+	}
+
+	public Object get(Class permClass, String id)
+	{
+		PersistenceManager pm = this.pmf.getPersistenceManager();
+		return pm.getObjectById(pm.newObjectIdInstance(permClass,id),true);
 	}
 }
