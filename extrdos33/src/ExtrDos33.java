@@ -1,5 +1,8 @@
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,8 +59,14 @@ public class ExtrDos33
         }
     }
 
-    public static void extrDos(File file, File dirNew)
+    public static void extrDos(File file, File dirNew) throws IOException
     {
+		BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
+		byte[] rb = new byte[0x3000];
+		if (in.read(rb) != rb.length)
+		{
+			
+		}
     }
 
     public static File[] listRegFiles(String sDir, String regexpFile, String regexpDir) throws IOException
