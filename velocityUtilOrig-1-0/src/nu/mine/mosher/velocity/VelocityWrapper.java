@@ -20,10 +20,13 @@ public class VelocityWrapper
         {
             velocity.init(props);
         }
-        catch (Exception e)
+        catch (VelocityException e)
         {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw e;
+        }
+        catch (Throwable e)
+        {
+            throw wrapInVelocityException(e);
         }
     }
 }
