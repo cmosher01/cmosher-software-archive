@@ -19,6 +19,8 @@ import nu.mine.mosher.checksum.StreamChecksum;
  */
 public class TargetFile
 {
+    private final SortedMap map = new TreeMap();
+
     /**
      * @param target target file
      * @param cWindow window size, in bytes
@@ -27,7 +29,6 @@ public class TargetFile
     public void calculateWindowChecksums(File target, int cWindow) throws IOException
     {
         InputStream in = new FileInputStream(target);
-        SortedMap map = new TreeMap();
         StreamChecksum inCheck = new StreamChecksum(map);
         inCheck.init(in,cWindow);
     }
