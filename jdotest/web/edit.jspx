@@ -1,5 +1,4 @@
 <%@ include file="htmlhead.jsp" %>
-<%@ page isELIgnored="false" %>
 <%@ page session="false" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="javax.jdo.PersistenceManager" %>
@@ -21,7 +20,7 @@
     <input name="id" type="hidden" value="<%=id%>" />
     <p>
         Edit item: <input name="itemNew" type="text" value="${item.name}" />
-        (originally: <%=s%>)<input name="itemOrig" type="hidden" value="<%=s%>" />
+        (originally: ${item.name})<input name="itemOrig" type="hidden" value="<%=s%>" />
     </p>
 	<table>
 	<%
