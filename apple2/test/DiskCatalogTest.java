@@ -21,7 +21,7 @@ public class DiskCatalogTest extends TestCase
      */
     public void testCatalog_Zeroes()
     {
-        assertEquals(0,Disk.isDos33CatalogSector(zeroes,false));
+        assertEquals(0,Disk.isDos33CatalogSector(zeroes));
     }
 
     /**
@@ -44,8 +44,7 @@ public class DiskCatalogTest extends TestCase
         "D2 C8 D9 D4 C8 CD A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 "+
         "A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 11 00 19 0F 84 "+
         "C2 CF CF D4 B1 B3 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 "+
-        "A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 0A 00 "),
-        false));
+        "A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 0A 00 ")));
     }
 
     /**
@@ -69,8 +68,7 @@ public class DiskCatalogTest extends TestCase
         "A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 "+
         "A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 14 00 FF 08 00 "+
         "C3 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 "+
-        "A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 0C 02 00 "),
-        false));
+        "A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 0C 02 00 ")));
     }
 
     /**
@@ -94,8 +92,7 @@ public class DiskCatalogTest extends TestCase
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
-        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "),
-        false));
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ")));
     }
 
     /**
@@ -119,8 +116,7 @@ public class DiskCatalogTest extends TestCase
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
-        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "),
-        false));
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ")));
     }
 
     /**
@@ -144,8 +140,7 @@ public class DiskCatalogTest extends TestCase
         "A0 A0 A0 A0 A0 A0 A0 A0 A8 C3 A9 A0 B1 B9 B8 B5 "+
         "A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 20 02 00 19 0F 82 "+
         "20 A0 A0 A0 A0 A0 A0 C2 C5 C1 C7 CC C5 A0 C2 D2 "+
-        "CF D3 A0 C9 CE C3 A0 A0 A0 A0 A0 A0 A0 20 02 00 "),
-        false));
+        "CF D3 A0 C9 CE C3 A0 A0 A0 A0 A0 A0 A0 20 02 00 ")));
     }
 
 }
