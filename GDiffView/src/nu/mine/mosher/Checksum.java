@@ -29,10 +29,13 @@
 
 package com.nothome.delta;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
-import cmp.Primes.*; // Please note that this package has a slightly different copyright style.
+import cmp.Primes.Primes;
 
 public class Checksum {
 
