@@ -295,7 +295,23 @@ public class DosMasterToImage
             throw new IllegalArgumentException("Usage: java DosMasterToImage master-image slave-image");
         }
 
-        BufferedInputStream in = new BufferedInputStream(new FileInputStream(new File(args[0])));
+        BufferedInputStream inMaster = new BufferedInputStream(new FileInputStream(new File(args[0])));
+        BufferedInputStream inSlave = new BufferedInputStream(new FileInputStream(new File(args[1])));
+
+        for (int i = 0; i < 0x2297; ++i)
+        {
+            int bM = inMaster.read();
+            int bS = inSlave.read();
+            if (bM != bS)
+            {
+                outHexShort(i);
+                if (bS-bM == 0x8000)
+                {
+                    System.out.print(" // $8000 offset");
+                }
+                System.out.println();
+            }
+        }
     }
 
 
@@ -318,7 +334,7 @@ public class DosMasterToImage
         System.out.print("0x");
         outHexByte(b1);
         outHexByte(b0);
-        System.out.println(",");
+        System.out.print(",");
     }
 
 
