@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /*
@@ -61,11 +62,10 @@ public class TestThreadIO
             }
             i++;
         }
-
-        for (int j = 0; j < lines.length; ++j)
-        {
-            String s = lines[j];
-            System.out.println(s);
-        }
+        for (Iterator j = lines.iterator(); j.hasNext();)
+            {
+                String s = (String)j.next();
+                System.out.println(s);
+            }
     }
 }
