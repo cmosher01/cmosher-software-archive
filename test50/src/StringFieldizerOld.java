@@ -49,10 +49,5 @@ public class StringFieldizer implements Iterable<String>
 			pos = i+1;
 			return tok;
 		}
-
-		public void remove() /* TODO for SimpleIterator, don't provide this method */
-		{
-			throw new UnsupportedOperationException();
-		}
 	}
 }
