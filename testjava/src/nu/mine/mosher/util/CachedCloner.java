@@ -25,6 +25,7 @@ public class CachedCloner
             if (methodClose == null)
             {
                 methodClose = cl.getMethod("clone",null);
+                methodClose.setAccessible(true);
                 cache.put(cl,methodClose);
             }
             methodClose.invoke(obj,null);
