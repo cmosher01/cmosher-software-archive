@@ -35,9 +35,7 @@ public class VelocityTest
 
 
         Context context = new VelocityContext();
-        List deps = new ArrayList();
-        deps.add(new Dependency("jaxp","1-2-0",false));
-        deps.add(new Dependency("SurveySampling","2-3",true));
+        List deps = getDependencies();
         context.put("deps",deps);
         context.put("main","com.surveysampling.example.Example");
 
@@ -47,5 +45,12 @@ public class VelocityTest
 
         writer.flush();
         writer.close();
+    }
+    public static List getDependencies()
+    {
+        List deps = new ArrayList();
+        deps.add(new Dependency("jaxp","1-2-0",false));
+        deps.add(new Dependency("SurveySampling","2-3",true));
+        return deps;
     }
 }
