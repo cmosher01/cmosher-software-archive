@@ -126,6 +126,7 @@ public class Disk
             if (isDos33VTOC(pos))
             {
                 rPosVtoc.add(pos);
+                System.out.println(pos.toStringTS());
             }
         }
     }
