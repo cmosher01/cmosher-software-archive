@@ -1,5 +1,6 @@
 package nu.mosher.mine.a2diskedit;
 
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,15 +10,12 @@ import java.io.IOException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 public class Disk implements TreeNode
 {
 	final private File mFile;
 	private static Icon mIcon = new ImageIcon("d:\\temp\\floppy.gif");
 	byte[] image = null;
-	JScrollPane mPane = null;
-	JHexEdit
 
 	public Disk()
 	{
@@ -55,7 +53,7 @@ public class Disk implements TreeNode
 		return s;
 	}
 
-	public JScrollPane getRightPane()
+	public Component getRightPane()
 	{
 		if (mPane == null)
 		{
