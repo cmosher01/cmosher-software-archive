@@ -43,4 +43,46 @@ public class Dos33CatalogEntry
         this.name = sb.toString().trim();
     }
 
+    /**
+     * @return Returns the cSector.
+     */
+    public int getSectorCount()
+    {
+        return cSector;
+    }
+    /**
+     * @return Returns the dataPos.
+     */
+    public DiskPos getPos()
+    {
+        return dataPos;
+    }
+    /**
+     * @return Returns the fileTypeID.
+     */
+    public int getFileTypeID()
+    {
+        return fileTypeID;
+    }
+    /**
+     * @return Returns the locked.
+     */
+    public boolean isLocked()
+    {
+        return locked;
+    }
+    /**
+     * @return Returns the name.
+     */
+    public String getName()
+    {
+        return name;
+    }
+    /**
+     * @return Returns the nameOrig.
+     */
+    public byte[] getNameOrig()
+    {
+        return nameOrig;
+    }
 }
