@@ -1,3 +1,4 @@
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ListIterator;
@@ -51,13 +52,17 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
+        File temp = File.createTempFile("test",".tmp");
 
 
-        StringBuffer sb = new StringBuffer();
-        sb.append("");
-        String s1 = sb.toString().intern();
-        String s2 = "";
-        System.out.println(s1==s2);
+
+
+
+//        StringBuffer sb = new StringBuffer();
+//        sb.append("");
+//        String s1 = sb.toString().intern();
+//        String s2 = "";
+//        System.out.println(s1==s2);
 
 
 
