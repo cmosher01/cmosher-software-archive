@@ -239,19 +239,10 @@ public class Delta
         output.close();
     }
 
-    // sample program to compute the difference between two input files.
-    public static void main(String argv[]) throws IOException
+    public void delta(File sourceFile, File targetFile) throws IOException
     {
-        if (argv.length != 3)
-        {
-            System.err.println("usage Delta [-d] source target [output]");
-            System.err.println("either -d or an output filename must be specified.");
-            System.err.println("aborting..");
-            return;
-        }
-        File sourceFile = new File(argv[0]);
-        File targetFile = new File(argv[1]);
-        GDiffWriter output = new GDiffWriter(new DataOutputStream(new BufferedOutputStream(new ByteArrayOutputStream())));
+        ByteArrayOutputStream gdiff = new ByteArrayOutputStream();
+        GDiffWriter output = new GDiffWriter(new DataOutputStream(new BufferedOutputStream(gdiff)));
 
         if (sourceFile.length() > Integer.MAX_VALUE || targetFile.length() > Integer.MAX_VALUE)
         {
@@ -261,8 +252,5 @@ public class Delta
         }
 
         Delta.computeDelta(sourceFile,targetFile,output);
-
-        output.flush();
-        output.close();
     }
 }
