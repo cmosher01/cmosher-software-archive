@@ -163,6 +163,13 @@ public class GDiffView extends JFrame
             {
                 GDiffCopy cpyComb = new GDiffCopy(rngCombSrc);
                 cpyComb.setTargetRange(rngCombTrg);
+                rCopy.remove(b);
+                rCopy.set(a,cpyComb);
+            }
+            else
+            {
+                ++a;
+                ++b;
             }
         }
         for (Iterator i = this.rCopy.iterator(); i.hasNext();)
