@@ -50,8 +50,7 @@ public final class Pair<T extends Cloneable, U extends Cloneable> implements Clo
 
 	public int compareTo(Pair<T,U> that)
 	{
-		int c;
-		c = this.a.compareTo(that.a);
+		int c = this.a.compareTo(that.a);
 		if (c == 0)
 		{
 			c = this.b.compareTo(that.b);
