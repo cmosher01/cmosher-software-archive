@@ -399,8 +399,29 @@ public class Disk
         {
             DiskPos cur = this.pos;
             byte[] sector = read(DiskPos.cSector);
+            if (hasData(sector))
+            {
+                rDiskPosSectorsWithData.add(cur);
+            }
         }
     }
+/**
+     * @param sector
+     * @return
+     */
+    private static boolean hasData(byte[] sector)
+    {
+        for (int i = 0; i < sector.length; i++)
+        {
+            byte b = sector[i];
+            if (b != 0)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 //    /**
 //     * @param allowLarge
 //     * @param tsmapMaps
