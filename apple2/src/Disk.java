@@ -29,7 +29,6 @@ public class Disk
     }
 
     /**
-     * @throws InvalidPosException
      */
     public void rewind()
     {
