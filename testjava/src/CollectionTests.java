@@ -10,7 +10,19 @@ public final class CollectionTests
         throw new UnsupportedOperationException();
     }
 
-    public static void main(String rArg[]) throws Throwable
+    public static void main(String rArg[])
+    {
+        try
+        {
+            test();
+        }
+        catch (Throwable e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private static void test() throws Throwable
     {
         List somelist = new ArrayList();
         somelist.add("test one");
