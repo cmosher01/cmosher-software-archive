@@ -341,6 +341,19 @@ public class MySQLTest
 		"    day integer unsigned, "+
 		"    censusDay date "+
 		")");
+		Statement st = null;
+		try
+		{
+			st = db.createStatement();
+			st.execute("insert into Census(year,month,day,censusDay) values "+
+			"(1790,8,2,17900802)");
+		}
+		finally
+		{
+			closeStatement(st);
+		}
+
+
 		dbUpdate("drop table if exists ImageIdent");
 		dbUpdate("create table "+
 		"ImageIdent "+
