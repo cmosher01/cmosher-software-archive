@@ -34,6 +34,12 @@ public class BinDiff
     private final int cMinMatch;
     private final int cMaxSearch;
 
+	private int state;
+	private int ccopy;
+	private int cskip;
+	private int cinsert;
+	private int posinsert = -1;
+	private TellStream fileinsert;
 	private int lastmark;
 
     public BinDiff(InputStream f1, InputStream f2, int cMinMatch, int cMaxSearch)
@@ -87,21 +93,13 @@ public class BinDiff
 
     protected void statechange(int newstate, int c, TellStream instr)
     {
-        static state_t state;
-        static int ccopy(0);
-        static int cskip(0);
-        static int cinsert(0);
-        static long posinsert(-1);
-        static FILE * fileinsert;
-
         if (newstate == start)
         {
             state = start;
             return;
         }
 
-        int i;
-        char s[256];
+		StringBuffer s = new StringBuffer(256);
         if (newstate != state)
         {
             switch (state) //old state
@@ -124,7 +122,7 @@ public class BinDiff
                             }
                             if (cinsert)
                             {
-                                char s[256];
+								StringBuffer s = new StringBuffer(256);
                                 sprintf(s, "i%d{", cinsert);
                                 fputs(s, fdif);
 
