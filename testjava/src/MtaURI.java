@@ -20,12 +20,10 @@ import com.surveysampling.bulkemailer.util.HttpUtil;
 public class MtaURI
 {
 	private final URI mURI;
+
 	private final int mRate;
 	private final int mTimeout;
 
-	/**
-	 * Constructs an MtaURI given a URI.
-	 */
 	public MtaURI(String sMTA) throws URISyntaxException
 	{
         URI uri = new URI(sMTA);
