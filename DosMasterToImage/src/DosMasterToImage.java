@@ -305,9 +305,9 @@ public class DosMasterToImage
             if (bM != bS)
             {
                 outHexShort(i);
-                if (bS-bM == 0x80)
+                if (bS-bM != 0x80)
                 {
-                    System.out.print(" // $80 offset");
+                    System.out.print(" // not $80 offset");
                 }
                 System.out.println();
             }
