@@ -14,7 +14,6 @@ import java.util.Date;
  * since midnight. Instances of this class are immutable.
  * Instances of this class hold a reference to
  * the given Calendar.
- * The constructors fail atomically.
  */
 public class TimeOfDay implements Comparable
 {
@@ -34,13 +33,18 @@ public class TimeOfDay implements Comparable
      * @param milliseconds
      * @throws IllegalArgumentException
      */
-    public TimeOfDay(Calendar calendar, int hours, int minutes, int seconds, int milliseconds) throws IllegalArgumentException
+    public TimeOfDay(Calendar cal, int hours, int minutes, int seconds, int milliseconds) throws IllegalArgumentException
     {
-        // for safety, *clone* the caller's calendar first
-        // (there's no guarantee that getMinimun and getMaximum are thread safe).
-        // We don't hold a reference to calendar, so clone is OK here
-        // There's no other way to create our own calendar
-        this.calendar = (Calendar)calendar.clone();
+        /*
+         * To help ensure immutability, we need to make our own
+         * Calendar instance instead of hanging on to the caller's
+         * instance. There is no way to create such a Calendar
+         * (or given subclass) without cloning. Using clone
+         * opens up the possibility that the caller could create
+         * a subclass that would hold on to a reference and
+         * allow him to mute a TimeOfDay instance.
+         */
+        this.calendar = (Calendar)cal.clone();
 
         if (hours < calendar.getMinimum(Calendar.HOUR_OF_DAY) || calendar.getMaximum(Calendar.HOUR_OF_DAY) < hours)
         {
@@ -62,7 +66,6 @@ public class TimeOfDay implements Comparable
         this.minutes = minutes;
         this.seconds = seconds;
         this.milliseconds = milliseconds;
-        this.valid = true;
     }
 
     /**
