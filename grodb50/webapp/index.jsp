@@ -11,8 +11,8 @@
 <tfoot>
 </tfoot>
 <tbody>
-<tr><td>US Census, 1860, NC, Craven, New Bern</td><td>US Census Bureau</td></tr>
-<tr><td>US Census, 1880, NY, Brooklyn, ED 35</td><td>US Census Bureau</td></tr>
+<tr><td class="title">US Census, 1860, NC, Craven, New Bern</td><td class="author">US Census Bureau</td></tr>
+<tr><td class="title">US Census, 1880, NY, Brooklyn, ED 35</td><td class="author">US Census Bureau</td></tr>
 </tbody>
 </table>
 </body>
