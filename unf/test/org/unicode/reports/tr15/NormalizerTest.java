@@ -71,7 +71,7 @@ public class NormalizerTest extends TestCase
 		return sb.toString();
     }
 
-    private boolean isHexDigit(char start)
+    private static boolean isHexDigit(char start)
     {
 		return
 			('0' <= start && start <= '9') ||
