@@ -24,6 +24,7 @@ public class JavaRNG extends RNGDefault implements RandomNumberGenerator
 
     /**
      * Calls <code>Random.nextInt</code>.
+     * @return random number
      */
     public int nextInt()
     {
