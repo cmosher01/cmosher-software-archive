@@ -20,16 +20,20 @@ public abstract class RNGDefault implements RandomNumberGenerator
 		this.seed = seed;
 	}
 
-	/**
-	 * @return
-	 */
+    /**
+     * Gets the seed (as passed in to the constructor).
+     * @return the original seed
+     */
 	public long getSeed()
 	{
 		return this.seed;
 	}
 
-	/**
-	 * @return
-	 */
+    /**
+     * Gets the next number in this generator's sequence of
+     * random numbers. The number will typically be randomized
+     * across all 32 bits of the returned <code>int</code>.
+     * @return random number
+     */
 	abstract public int nextInt();
 }
