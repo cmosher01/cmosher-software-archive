@@ -151,8 +151,8 @@ public class MySQLTest
 
     protected int readInt(Object stringField)
     {
-    	int i;
 		String s = (String)stringField;
+    	int i;
 		if (s.length() > 0)
 		{
 			i = Integer.parseInt(s);
