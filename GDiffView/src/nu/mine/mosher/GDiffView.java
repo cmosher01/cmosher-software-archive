@@ -187,7 +187,7 @@ public class GDiffView extends JFrame
 
         JFrame.setDefaultLookAndFeelDecorated(true);
     }
-    public void init()
+    public void init() throws IOException
     {
         GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
         this.setSize(400,470);
