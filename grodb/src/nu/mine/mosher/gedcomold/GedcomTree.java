@@ -6,7 +6,8 @@ public class GedcomTree
 
 	public void appendLine(GedcomLine line) throws InvalidLevel
 	{
-		if (prevLevel+1 < line.getLevel())
+		int cPops = prevLevel+1-line.getLevel();
+		if (cPops < 0)
 		{
 			throw new InvalidLevel(line);
 		}
