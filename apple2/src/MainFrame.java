@@ -70,7 +70,7 @@ public class MainFrame extends JFrame
         }
         catch (MultipleVTOCException e)
         {
-            System.out.println("[no VTOC]");
+            System.out.println(f.getAbsolutePath()+" [multiple VTOCs]");
             return;
         }
 
