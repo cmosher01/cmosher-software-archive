@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PipedReader;
 import java.io.PipedWriter;
 import java.io.Reader;
@@ -19,25 +20,45 @@ public class FixAppleDisasm
             System.err.println("arguments ignored.");
         }
 
-        Reader in = null;
-        OutputStream out = null;
-        try
-        {
-            in = new InputStreamReader(new FileInputStream(FileDescriptor.in));
-            out = new FileOutputStream(FileDescriptor.out);
+//        Reader in = null;
+//        OutputStream out = null;
+//        try
+//        {
+//            in = new InputStreamReader(new FileInputStream(FileDescriptor.in));
+//            out = new FileOutputStream(FileDescriptor.out);
+//
+//            PipedReader pr = new PipedReader();
+//            PipedWriter pw = new PipedWriter();
+//            pr.connect(pw);
+//
+//            Dis2Dump(in,pw);
+//            Dump2Bin(pr,out);
+//        }
+//        finally
+//        {
+//            close(out);
+//            close(in);
+//        }
+		Reader in = null;
+		Writer out = null;
+		try
+		{
+			in = new InputStreamReader(new FileInputStream(FileDescriptor.in));
+			out = new OutputStreamWriter(new FileOutputStream(FileDescriptor.out));
 
-            PipedReader pr = new PipedReader();
-            PipedWriter pw = new PipedWriter();
-            pr.connect(pw);
+			FixDis(in,out);
+		}
+		finally
+		{
+			close(out);
+			close(in);
+		}
+    }
 
-            Dis2Dump(in,pw);
-            Dump2Bin(pr,out);
-        }
-        finally
-        {
-            close(out);
-            close(in);
-        }
+    private static void FixDis(Reader in, Writer out)
+    {
+        // TODO Auto-generated method stub
+        
     }
 
     private static void Dump2Bin(Reader in, OutputStream outbin)
