@@ -40,8 +40,6 @@ public class Delta
 
     public final static int S = Checksum.S;
 
-    public final static boolean debug = false;
-
     public final static int buff_size = 64 * S;
 
 
@@ -56,13 +54,6 @@ public class Delta
         int targetLength = (int)targetFile.length();
         int sourceLength = (int)sourceFile.length();
         int targetidx = 0;
-
-        if (debug)
-        {
-            System.out.println("source len: " + sourceLength);
-            System.out.println("target len: " + targetLength);
-            System.out.println("using match length S = " + S);
-        }
 
         Checksum checksum = new Checksum();
         checksum.generateChecksums(sourceFile);
@@ -96,9 +87,6 @@ public class Delta
         // that the
         // update method really is correct. I will remove it shortly.
         long alternativehashf = hashf;
-
-        if (debug)
-            System.out.println("my hashf: " + hashf + ", adler32: " + alternativehashf);
 
         /* This flag indicates that we've run out of source bytes */
         boolean sourceOutofBytes = false;
@@ -209,8 +197,6 @@ public class Delta
                     if (targetLength - targetidx <= S - 1)
                     {
                         // eof reached, special case for last bytes
-                        if (debug)
-                            System.out.println("last part of file");
                         buf[0] = b[0]; // don't loose this byte
                         int remaining = targetLength - targetidx;
                         /*int readStatus =*/ target.read(buf,1,remaining);
@@ -246,11 +232,6 @@ public class Delta
                     buf[j] = buf[j + 1];
                 buf[15] = b[0];
                 hashf = Checksum.queryChecksum(buf,S);
-
-                if (debug)
-                    System.out.println("raw: " + Integer.toHexString((int)hashf) + ", incremental: "
-                            + Integer.toHexString((int)alternativehashf));
-
             }
             else
             {
@@ -282,18 +263,9 @@ public class Delta
             GDiffWriter output = null;
             File sourceFile = null;
             File targetFile = null;
-//            if (argv[0].equals("-d"))
-//            {
-//                sourceFile = new File(argv[1]);
-//                targetFile = new File(argv[2]);
-//                output = new DebugDiffWriter();
-//            }
-//            else
-            {
-                sourceFile = new File(argv[0]);
-                targetFile = new File(argv[1]);
-                output = new GDiffWriter(new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(argv[2])))));
-            }
+            sourceFile = new File(argv[0]);
+            targetFile = new File(argv[1]);
+            output = new GDiffWriter(new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(argv[2])))));
 
             if (sourceFile.length() > Integer.MAX_VALUE || targetFile.length() > Integer.MAX_VALUE)
             {
@@ -308,8 +280,6 @@ public class Delta
 
             output.flush();
             output.close();
-            if (debug) //gls031504a
-                System.out.println("finished generating delta");
         }
         //gls031504a start
         catch (Exception e)
