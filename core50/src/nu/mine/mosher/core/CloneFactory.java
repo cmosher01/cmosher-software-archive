@@ -32,22 +32,18 @@ public final class Cloner
 			}
 			/*
 			 * Unchecked cast is OK here, because we know that the
-			 * clone of a Cloneable object will be Cloneable:
+			 * clone of a T will be a T:
 			 */
 			return (T)methodClone.invoke(cloneableObject,null);
 		}
+		catch (CloneNotSupportedException e)
+		{
+		    throw e;
+		}
 		catch (Throwable cause)
 		{
-			CloneNotSupportedException ex;
-			if (cause instanceof CloneNotSupportedException)
-			{
-				ex = (CloneNotSupportedException)cause;
-			}
-			else
-			{
-				ex = new CloneNotSupportedException();
-				ex.initCause(cause);
-			}
+			CloneNotSupportedException ex = new CloneNotSupportedException();
+			ex.initCause(cause);
 			throw ex;
 		}
 	}
