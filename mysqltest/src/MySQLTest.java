@@ -272,11 +272,11 @@ public class MySQLTest
 				int entry = rs.getInt("entry");
 				String earliest = rs.getString("earliest");
 				String latest = rs.getString("latest");
+				ins.setInt(1,entry);
+				ins.setString(2,earliest);
+				ins.setString(3,latest);
     			for (int i = 0; i < c; ++i)
     			{
-    				ins.setInt(1,entry);
-    				ins.setString(2,earliest);
-					ins.setString(3,latest);
 					ins.executeUpdate();
     			}
     		}
