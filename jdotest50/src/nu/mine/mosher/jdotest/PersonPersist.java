@@ -78,7 +78,8 @@ public class PersonPersist
 		Collection result = (Collection)q.execute();
 		for (Iterator i = result.iterator(); i.hasNext(); )
 		{
-			System.out.println(i.next().getClass().getName());
+			Person person = (Person)i.next();
+			System.out.println("person: "+person.getName());
 		}
 
 		// retrieve objects from datastore and display
