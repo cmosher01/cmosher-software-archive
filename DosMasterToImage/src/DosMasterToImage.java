@@ -305,7 +305,7 @@ public class DosMasterToImage
             if (bM != bS)
             {
                 outHexShort(i);
-                if (bS-bM != 0x80 && bS != 0 && bM != 0)
+                if (bS-bM != 0x80)
                 {
                     System.out.print(" // master: ");
                     outHexByte(bM);
