@@ -56,14 +56,6 @@ public class DateRange
     /**
      * @return
      */
-    public int getMinuteOffGMT()
-    {
-        return minuteOffGMT;
-    }
-
-    /**
-     * @return
-     */
     public TimeZone getTimeZone()
     {
         return timezone;
