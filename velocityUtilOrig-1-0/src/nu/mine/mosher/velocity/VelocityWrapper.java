@@ -201,7 +201,7 @@ public class VelocityWrapper
     /**
      * Convenience method that parses a template (given
      * as a File specification), with a given context,
-     * and writes the result to a writer. It uses the
+     * and writes the result to a File. It uses the
      * default properties to initialize Velocity.
      * @param inputTemplate
      * @param context
