@@ -99,6 +99,18 @@ public class BinDiff
         statechange(END,0);
     }
 
+	protected void outBytes(PushbackRandomFile f, int pos, int len)
+	{
+		long orig = fileinsert.tell();
+		fileinsert.seek(posinsert);
+		for (int i = 0; i < cinsert; ++i)
+		{
+			s.append(Integer.toHexString(fileinsert.read()));
+			s.append(" ");
+		}
+		s.append("\n");
+		fileinsert.seek(orig);
+	}
 	protected void statechange(int newstate, long c) throws IOException
 	{
 		statechange(newstate,c,null);
@@ -140,7 +152,7 @@ public class BinDiff
 						s.append(">>>INSERT ");
 						s.append(cinsert);
 						s.append(" BYTES\n");
-
+						outBytes(fileinsert,posinsert,cinsert);
                         long orig = fileinsert.tell();
                         fileinsert.seek(posinsert);
                         for (int i = 0; i < cinsert; ++i)
