@@ -169,6 +169,16 @@ public class VelocityWrapper
 
 
 
+    /**
+     * Convenience method that parses a template (given
+     * as a File specification), with a given context,
+     * and writes the result to a writer. It uses the
+     * default properties to initialize Velocity.
+     * @param inputTemplate
+     * @param context
+     * @param out
+     * @throws VelocityException
+     */
     public static void merge(File inputTemplate, Context context, Writer out) throws VelocityException
     {
         try
