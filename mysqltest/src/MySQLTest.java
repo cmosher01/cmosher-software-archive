@@ -1,6 +1,7 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class MySQLTest
@@ -9,12 +10,18 @@ public class MySQLTest
     {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection db = DriverManager.getConnection("jdbc:mysql:///test","root","");
+        createSchema(db);
+        db.close();
+    }
+
+    private static void createSchema(Connection db) throws SQLException
+    {
         Statement st = null;
         try
         {
         	st = db.createStatement();
         	st.execute(
-			"create table if not exists family "+
+        	"create table if not exists family "+
         	"( "+
         	"    id integer unsigned not null auto_increment primary key, "+
         	"    name varchar(64)"+
@@ -24,7 +31,6 @@ public class MySQLTest
         {
             closeStatement(st);
         }
-        db.close();
     }
 
     private static void closeStatement(Statement st)
