@@ -67,9 +67,10 @@ public class Disk implements TreeNode
 				img.getContents().getCatList(r);
 				for (Iterator i = r.iterator(); i.hasNext();)
 				{
+					DefaultMutableTreeNode ne = new DefaultMutableTreeNode();
 					CatEntry e = (CatEntry) i.next();
-					DefaultMutableTreeNode n = new DefaultMutableTreeNode(e);
-					e.setNode(n);
+					e.setNode(ne);
+					ne.setUserObject(e);
 					A2DiskEdit.getApp().addNode(n,node);
 				}
 			}
