@@ -1,3 +1,4 @@
+package com.surveysampling.util;
 import java.io.Serializable;
 
 import com.surveysampling.util.Cloner;
