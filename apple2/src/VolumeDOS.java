@@ -149,35 +149,35 @@ public class VolumeDOS extends VolumeEntity
     {
         if (hasDaviddosSignature())
         {
-            s.append("David DOS");
+            s.append(" (David DOS)");
         }
         if (hasDaviddos2Signature())
         {
-            s.append("David DOS II");
+            s.append(" (David DOS II)");
         }
         if (hasDiversidos2cSignature())
         {
-            s.append("Diversi-DOS 2-C");
+            s.append(" (Diversi-DOS 2-C)");
         }
         if (hasDiversidos41cSignature())
         {
-            s.append("Diversi-DOS 4.1-C");
+            s.append(" (Diversi-DOS 4.1-C)");
         }
         if (hasEsdosSignature())
         {
-            s.append("ES DOS");
+            s.append(" (ES DOS)");
         }
         if (hasHyperdosSignature())
         {
-            s.append("Hyper-DOS");
+            s.append(" (Hyper-DOS)");
         }
         if (this.hasProtodosSignature())
         {
-            s.append("Pronto-DOS (Beagle Bros.)");
+            s.append(" (Pronto-DOS [Beagle Bros.])");
         }
         if (this.hasRdosSignature())
         {
-            s.append("RDOS (SSI)");
+            s.append(" (RDOS [SSI])");
         }
     }
 }
