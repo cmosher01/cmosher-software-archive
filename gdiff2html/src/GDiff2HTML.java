@@ -32,7 +32,7 @@ public class GDiff2HTML
         {
             byte b = magic[i];
             out(lonib(b));
-            out(lonib(b>>4));
+            out(lonib((byte)(b>>4)));
         }
 		int vers = gdiff.read();
 
