@@ -198,23 +198,22 @@ public class TimeOfDay implements Comparable
     public int compareTo(Object obj)
     {
         TimeOfDay that = (TimeOfDay)obj;
-        int cmp = 0;
-        if (cmp == 0)
-        {
-            cmp = that.hours-this.hours;
-        }
-        if (cmp == 0)
-        {
-            cmp = that.minutes-this.minutes;
-        }
-        if (cmp == 0)
-        {
-            cmp = that.seconds-this.seconds;
-        }
-        if (cmp == 0)
-        {
-            cmp = that.milliseconds-this.milliseconds;
-        }
-        return cmp;
+        if (this.hours < that.hours)
+            return -1;
+        if (this.hours > that.hours)
+            return +1;
+        if (this.minutes < that.minutes)
+            return -1;
+        if (this.minutes > that.minutes)
+            return +1;
+        if (this.seconds < that.seconds)
+            return -1;
+        if (this.seconds > that.seconds)
+            return +1;
+        if (this.milliseconds < that.milliseconds)
+            return -1;
+        if (this.milliseconds > that.milliseconds)
+            return +1;
+        return 0;
     }
 }
