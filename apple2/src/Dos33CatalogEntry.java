@@ -22,6 +22,7 @@ public class Dos33CatalogEntry
 
 
     /**
+     * @param deleted
      * @param dataPos
      * @param locked
      * @param fileTypeID
