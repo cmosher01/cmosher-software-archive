@@ -48,6 +48,7 @@ public class PersonPersist
 		// persist the array of people
 		PersistenceManager pm = this.pmf.getPersistenceManager();
 		Transaction transaction = pm.currentTransaction();
+		transaction.begin();
 		pm.makePersistentAll(people);
 		transaction.commit();
 		// retrieve the object ids for the persisted objects
