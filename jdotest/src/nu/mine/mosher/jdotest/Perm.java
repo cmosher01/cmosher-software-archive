@@ -35,7 +35,7 @@ public class Perm
         }
 	}
 
-	public static PersistenceManager getPM()
+	public static PersistenceManager pm()
 	{
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(props);
 		return pmf.getPersistenceManager();
