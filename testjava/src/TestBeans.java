@@ -21,8 +21,8 @@ public class TestBeans
         Editors.register();
 
         Something some = new Something();
-        String prop = "AString";
-        String val = "xyz";
+        String prop = "AInt";
+        String val = "23";
 
         setProperty(some, prop, val);
 
