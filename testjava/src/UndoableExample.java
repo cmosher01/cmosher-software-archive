@@ -5,6 +5,8 @@ public class UndoableExample implements Cloneable
     private int x;
     private UndoableReference u;
 
+
+
     public UndoableExample(int a)
     {
         x = a;
@@ -16,6 +18,7 @@ public class UndoableExample implements Cloneable
         {
         }
     }
+
     public Object clone()
     {
         UndoableExample clon = null;
@@ -28,13 +31,15 @@ public class UndoableExample implements Cloneable
         }
         return clon;
     }
+
     private UndoableExample ref()
     {
         return (UndoableExample)u.state();
     }
+
     public String toString()
     {
-        return ""+ref().x;
+        return "" + ref().x;
     }
 
     public void set(int x)
@@ -49,10 +54,12 @@ public class UndoableExample implements Cloneable
         }
         this.x = x;
     }
+
     public void undo()
     {
         u.undo();
     }
+
     public void redo()
     {
         u.redo();
