@@ -18,8 +18,8 @@ public class Volume
     private VolumeCatalog cat;
     private List rFile = new ArrayList(); // VolumeFile
     private List rFileRecovered = new ArrayList(); // VolumeFileRecovered
-//    private VolumeDOS dos;
     private VolumeBoot boot;
+    private VolumeDOS dos;
 //    private VolumeUnusedBlank blank;
 //    private VolumeUnusedData data;
     /**
@@ -56,6 +56,9 @@ public class Volume
 
         boot = new VolumeBoot();
         boot.readFromMedia(disk);
+
+        dos = new VolumeDOS();
+        dos.readFromMedia(disk);
 
         for (Iterator i = rAllTSMaps.iterator(); i.hasNext();)
         {
