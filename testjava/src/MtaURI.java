@@ -53,6 +53,24 @@ public class MtaURI
             HttpUtil.parseQueryStringSimple(uri.getQuery(),mapParamToValue);
         }
 
+        int nRate = getParamInt(sMTA, mapParamToValue);
+        mRate = nRate;
+
+        int nTimeout = 120000;
+        try
+        {
+            nTimeout = Integer.parseInt((String)mapParamToValue.get("timeout"));
+        }
+        catch (Throwable e)
+        {
+            e.printStackTrace();
+            nTimeout = 120000;
+        }
+        mTimeout = nTimeout;
+	}
+
+    private int getParamInt(String sMTA, Map mapParamToValue) throws URISyntaxException
+    {
         int nRate = 0;
         String sRate = (String)mapParamToValue.get("rate");
         if (sRate.length() > 0)
@@ -68,20 +86,8 @@ public class MtaURI
                 throw ex;
             }
         }
-        mRate = nRate;
-
-        int nTimeout = 120000;
-        try
-        {
-            nTimeout = Integer.parseInt((String)mapParamToValue.get("timeout"));
-        }
-        catch (Throwable e)
-        {
-            e.printStackTrace();
-            nTimeout = 120000;
-        }
-        mTimeout = nTimeout;
-	}
+        return nRate;
+    }
 
     public URI getURI()
     {
