@@ -89,7 +89,7 @@ public class ExcelCSVFieldizer
         {
             try
             {
-                return this.parser.getOneValue();
+                return (String)this.parser.getOneValue();
             }
             catch (Throwable cause)
             {
