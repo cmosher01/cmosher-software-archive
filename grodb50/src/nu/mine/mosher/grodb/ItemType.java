@@ -17,7 +17,8 @@ public class ItemType<T extends Enum<T>>
 	{
 		try
 		{
-			Class<T> c = Class<T>.getClass();
+			Class<T> c;
+			c = Class<T>.getClass();
 			T x = Enum.valueOf(c,other);
 			this.known = x;
 		}
