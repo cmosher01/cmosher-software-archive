@@ -1,7 +1,6 @@
 package to.go.gro.groapplet;
 
 import java.awt.event.MouseEvent;
-import java.net.MalformedURLException;
 
 import javax.swing.event.MouseInputAdapter;
 
