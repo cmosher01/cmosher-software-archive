@@ -1,7 +1,6 @@
 package com.surveysampling.util;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.Map;
 
 public class UniversalCloser3
@@ -45,28 +44,31 @@ public class UniversalCloser3
      */
     public void close(Object obj)
     {
-        try
+        if (cache == null)
         {
-            Class cl = obj.getClass();
-            Method methodClose = null;
-            if (cache != null)
-            {
-                methodClose = (Method)cache.get(cl);
-            }
-            if (methodClose == null)
-            {
-                methodClose = cl.getMethod("close",null);
-                mClasses.put(cl,methodClose);
-            }
-            methodClose.invoke(obj,null);
+            closeNoCache(obj);
         }
-        catch (Throwable ignore)
+        else
         {
-            ignore.printStackTrace();
+            try
+            {
+                Class cl = obj.getClass();
+                Method methodClose = (Method)cache.get(cl);
+                if (methodClose == null)
+                {
+                    methodClose = cl.getMethod("close",null);
+                    cache.put(cl,methodClose);
+                }
+                methodClose.invoke(obj,null);
+            }
+            catch (Throwable ignore)
+            {
+                ignore.printStackTrace();
+            }
         }
     }
 
-    private static void closeNoCache(Object obj)
+    public static void closeNoCache(Object obj)
     {
         try
         {
