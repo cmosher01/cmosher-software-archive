@@ -256,7 +256,7 @@ public class Disk
     /**
      * @throws InvalidPosException
      */
-    public void findDos33TSMapSector() throws InvalidPosException
+    public void findDos33TSMapSector(TSMap tsmapMapsInCatalog) throws InvalidPosException
     {
         rewind();
         while (!EOF())
@@ -293,12 +293,13 @@ public class Disk
                             System.out.print("T/S map @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
                             if (sector[1] != 0 || sector[2] != 0)
                             {
-                                System.out.println(" (next @ T$"+Integer.toHexString(sector[1])+", S$"+Integer.toHexString(sector[2])+")");
+                                System.out.print(" (next @ T$"+Integer.toHexString(sector[1])+", S$"+Integer.toHexString(sector[2])+")");
                             }
-                            else
+                            if (tsmapMapsInCatalog.isMarked(cur.getSectorInDisk()))
                             {
-                                System.out.println();
+                                System.out.print
                             }
+                            System.out.println();
                         }
                     }
         }
