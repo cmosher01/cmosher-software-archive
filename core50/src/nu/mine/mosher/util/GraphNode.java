@@ -7,8 +7,8 @@ import java.util.ArrayList;
 public class GraphNode<T>
 {
 	private T object;
-	private List<TreeNode<T>> parents = new ArrayList<TreeNode<T>>();
-	private List<TreeNode<T>> children = new ArrayList<TreeNode<T>>();
+	private List<GraphNode<T>> parents = new ArrayList<GraphNode<T>>();
+	private List<GraphNode<T>> children = new ArrayList<GraphNode<T>>();
 
 	public GraphNode(T object)
 	{
@@ -24,26 +24,31 @@ public class GraphNode<T>
 		return object;
 	}
 
-	public void setObject(T object)
+	public void addChild(GraphNode<T> child)
 	{
-		this.object = object;
+		this.children.add(child);
+		child.addParent(this);
 	}
 
-	public void addChild(TreeNode<T> child)
+	public boolean hasChild(GraphNode<T> child)
 	{
-		child.removeFromParent();
-		children.add(child);
-		child.parent = this;
+		return this.children.contains(child);
 	}
 
-	public void removeChild(TreeNode<T> child)
+	public void addParent(GraphNode<T> parent)
+	{
+		this.parents.add(parent);
+		parent.addChild(this);
+	}
+
+	public void removeChild(GraphNode<T> child)
 	{
 		if (child.parent != this)
 		{
-			throw new IllegalArgumentException("given TreeNode is not a child of this TreeNode");
+			throw new IllegalArgumentException("given GraphNode is not a child of this GraphNode");
 		}
 
-		for (Iterator<TreeNode<T>> i = children(); i.hasNext();)
+		for (Iterator<GraphNode<T>> i = children(); i.hasNext();)
 		{
 			if (i.next()==child)
 			{
@@ -63,12 +68,12 @@ public class GraphNode<T>
 		parent.removeChild(this);
 	}
 
-	public Iterator<TreeNode<T>> children()
+	public Iterator<GraphNode<T>> children()
 	{
 		return children.iterator();
 	}
 
-	public TreeNode<T> parent()
+	public GraphNode<T> parent()
 	{
 		return parent;
 	}
@@ -89,7 +94,7 @@ public class GraphNode<T>
 		sb.append("\n");
 
 		++level;
-		for (TreeNode<T> child : this.children)
+		for (GraphNode<T> child : this.children)
 		{
 			child.appendStringDeep(sb,level);
 		}
