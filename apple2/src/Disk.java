@@ -338,8 +338,10 @@ public class Disk
      * @param sector
      * @return
      */
-    static int isDos33CatalogSector(byte[] sector)
+    public int isDos33CatalogSector(DiskPos pos)
     {
+        byte[] sector = readSector(pos);
+
         if (sector[0] == 0 &&
             DiskPos.isValidTrack(sector[1]) &&
             DiskPos.isValidSector(sector[2]) &&
