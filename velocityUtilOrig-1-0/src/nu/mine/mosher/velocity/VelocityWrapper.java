@@ -42,6 +42,7 @@ public class VelocityWrapper
     {
         Properties props = new Properties();
 
+        // use our own LogSystem (VelocityLogger)
         props.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,VelocityLogger.class.getClass().getName());
 
         // This just prevents a warning message about no macro library
