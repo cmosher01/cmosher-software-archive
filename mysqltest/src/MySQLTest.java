@@ -120,14 +120,14 @@ public class MySQLTest
 		String county = (String)i.next();
 		String township = (String)i.next();
 		int district = readInt(i.next());
-		int image = Integer.parseInt((String)i.next());
+		int image = readInt(i.next());
 		String nameLast = (String)i.next();
 		String nameFirst = (String)i.next();
 		String nameMiddle = (String)i.next();
 		String nameSuffix = (String)i.next();
-		int m16to150 = Integer.parseInt((String)i.next());
-		int m0to15 = Integer.parseInt((String)i.next());
-		int f0to150 = Integer.parseInt((String)i.next());
+		int m16to150 = readInt(i.next());
+		int m0to15 = readInt(i.next());
+		int f0to150 = readInt(i.next());
 
 		PreparedStatement st = null;
 		try
@@ -149,10 +149,6 @@ public class MySQLTest
 		}
     }
 
-    /**
-     * @param object
-     * @return
-     */
     protected int readInt(Object stringField)
     {
     	return Integer.parseInt((String)stringField);
