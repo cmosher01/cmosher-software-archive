@@ -345,6 +345,11 @@ public class Disk
         }
     }
 
+    /**
+     * @param sector
+     * @param entries
+     * @throws InvalidPosException
+     */
     public static void getDos33TSMapEntries(byte[] sector, Collection entries) throws InvalidPosException
     {
         int p = 0x0C;
