@@ -372,13 +372,15 @@ public class FixAppleDisasm
 
 		Line prevline = null;
 
+		int ct = 0;
 		for (Iterator i = lines.entrySet().iterator(); i.hasNext();)
 		{
 			Map.Entry ent = (Map.Entry)i.next();
 			Line ln = (Line)ent.getValue();
 
-			if (ln.instr.equalsIgnoreCase("DB") && prevline.instr.equalsIgnoreCase("DB"))
+			if (ln.instr.equalsIgnoreCase("DB") && prevline.instr.equalsIgnoreCase("DB") && ct < 16)
 			{
+				++ct;
 				prevline.oper += ","+ln.oper;
 				if (ln.comment.length() > 0)
 				{
@@ -393,6 +395,7 @@ public class FixAppleDisasm
 			else
 			{
 				prevline = ln;
+				ct = 0;
 			}
 		}
 
