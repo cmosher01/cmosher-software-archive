@@ -251,7 +251,7 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
 
         // menu
         menubar = new MenuBar();
-        this.setMenuBar(menubar);
+        setMenuBar(menubar);
 
         // add admin_menu to menubar
         admin_menu = new Menu(_ADMIN,false);
