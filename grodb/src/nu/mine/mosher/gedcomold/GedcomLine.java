@@ -5,7 +5,7 @@ public class GedcomLine
 	private final int level;
 	private final String id;
 	private final String tag;
-	private final String value;
+	private String value;
 	private final String pointer;
 
 	public GedcomLine(int level, String id, String tag, String value)
@@ -124,4 +124,21 @@ public class GedcomLine
         return value;
     }
 
+    /**
+     * @param string
+     */
+    public void contValue(String string)
+    {
+    	value += "\n";
+    	value += string;
+    }
+
+    /**
+     * @param string
+     */
+    public void concValue(String string)
+    {
+        // TODO Auto-generated method stub
+        
+    }
 }
