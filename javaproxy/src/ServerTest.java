@@ -69,7 +69,7 @@ public class ServerTest
         if (argv.length >= 1 && argv[0] != null)
             txn = Integer.parseInt(argv[0]);
 
-        ServerTest st = new ServerTest(txn);
+        new ServerTest(txn);
     }
 
 }
