@@ -63,20 +63,21 @@ public class MainFrame extends JFrame
         Disk disk = Apple2.readDisk(f);
         Volume vol = new Volume();
         boolean bootonly = false;
-        try
-        {
-            vol.readFromMedia(disk);
-        }
-        catch (VTOCNotFoundException e)
-        {
-            System.out.println(f.getAbsolutePath()+" [no VTOC]");
-            bootonly = true;
-        }
-        catch (MultipleVTOCException e)
-        {
-            System.out.println(f.getAbsolutePath()+" [multiple VTOCs]");
-            return;
-        }
+        vol.readFromMedia(disk);
+//        try
+//        {
+//            vol.readFromMedia(disk);
+//        }
+//        catch (VTOCNotFoundException e)
+//        {
+//            System.out.println(f.getAbsolutePath()+" [no VTOC]");
+//            bootonly = true;
+//        }
+//        catch (MultipleVTOCException e)
+//        {
+//            System.out.println(f.getAbsolutePath()+" [multiple VTOCs]");
+//            return;
+//        }
 
         StringBuffer s = new StringBuffer();
 
