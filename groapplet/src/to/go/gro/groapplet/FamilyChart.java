@@ -55,7 +55,7 @@ public class FamilyChart extends JPanel
         return mIndis.isOnIndi(point);
     }
 
-    public void gotoIndi(Indi mLastIndi) throws MalformedURLException
+    public void gotoIndi(Indi mLastIndi)
     {
     	mApplet.getAppletContext().showDocument(mLastIndi.getURL());
     }
