@@ -429,16 +429,6 @@ public class MySQLTest
     	}
     }
 
-	protected String columnName(String sGender, int minAge, int maxAge)
-	{
-		String s = "";
-		s += sGender;
-		s += minAge;
-		s += "to";
-		s += maxAge;
-		return s;
-	}
-
     protected void createSchema() throws SQLException
 	{
 		dbUpdate("drop table if exists Family");
