@@ -30,20 +30,12 @@ public class VelocityTest implements LogSystem
 {
     public static void main(String[] args) throws Throwable
     {
-//        Properties props = VelocityWrapper.getDefaultProperties();
-//        props.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH,"C:\\Documents and Settings\\chrism\\My Documents");
-//
-//        VelocityWrapper velocity = new VelocityWrapper(props);
-
         Context context = new VelocityContext();
         List deps = getDependencies();
         context.put("deps",deps);
 
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out)));
         VelocityWrapper.merge(new File("C:\\Documents and Settings\\chrism\\My Documents\\build_template.vm"), context, writer);
-//        velocity.mergeTemplate("build_template.vm", context, writer);
-//
-//        writer.flush();
         writer.close();
     }
 
