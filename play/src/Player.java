@@ -42,7 +42,6 @@ public class Player implements Immutable
 
         GedcomAnselCharsetProvider p = new GedcomAnselCharsetProvider();
         Charset cs = p.charsetForName("x-gedcom-ansel");
-
         System.out.println(cs.displayName());
 
         InputStream stream;
