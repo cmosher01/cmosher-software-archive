@@ -84,7 +84,7 @@ public class Disk implements TreeNode
 		{
 			sb.append("[no file]");
 		}
-		sb.append(" ");
+		sb.append(" Name: ");
 		sb.append(img.getContents().getVolumeName());
 		sb.append("</html>");
 		viewRight.setText(sb.toString());
