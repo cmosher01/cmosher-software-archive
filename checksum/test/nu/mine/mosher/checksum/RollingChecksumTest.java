@@ -29,14 +29,14 @@ public class RollingChecksumTest extends TestCase
 
         RollingChecksum rollCheck = new RollingChecksum();
         rollCheck.init(rs);
-        int check = rollCheck.getChecksum();
+        rollCheck.getChecksum();
 
-        for (int k = 0; k <= s.length()-n; ++k)
+        for (int k = 0; k < s.length()-n; ++k)
         {
-            rollCheck.increment(rb[k], rb[(k+n-1)+1]);
-            check = rollCheck.getChecksum();
+            rollCheck.increment(rb[k], rb[k+n]);
+            int check = rollCheck.getChecksum();
 
-            System.arraycopy(rb, k, rs, 0, n);
+            System.arraycopy(rb, k+1, rs, 0, n);
             RollingChecksum rollCheck2 = new RollingChecksum();
             rollCheck2.init(rs);
             int check2 = rollCheck2.getChecksum();
