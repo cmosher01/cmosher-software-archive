@@ -9,7 +9,7 @@ import javax.swing.table.TableColumnModel;
 /**
  * TODO
  * 
- * @author chrism
+ * @author Chris Mosher
  */
 public class EasyColumnModel extends DefaultTableColumnModel implements TableColumnModel
 {
