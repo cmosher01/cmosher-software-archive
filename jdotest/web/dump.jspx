@@ -50,7 +50,7 @@ Entire Request
 <table>
 <tbody>
 <%
-	BufferedReader in = request.getReaer();
+	BufferedReader in = request.getReader();
 	for (String s = in.readLine(); s != null; s = in.readLine())
 	{
 		%><tr><td><%=s%></td></tr><%
