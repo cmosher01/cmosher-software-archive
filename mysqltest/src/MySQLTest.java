@@ -207,7 +207,7 @@ public class MySQLTest
 		try
 		{
 			st = db.prepareStatement(
-			"insert into CountEntry (household,gender,minAge,maxAge,count) values (?,?,?,?,?)");
+			"insert into CountEntry (household,gender,minAge,maxAge,cnt) values (?,?,?,?,?)");
 
 			st.setInt(1,hh);
 			st.setString(2,"m");
