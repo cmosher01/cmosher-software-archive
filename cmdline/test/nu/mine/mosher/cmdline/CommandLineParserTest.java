@@ -3,6 +3,7 @@
  */
 package nu.mine.mosher.cmdline;
 
+import java.io.StringReader;
 import java.util.Iterator;
 
 import junit.framework.TestCase;
@@ -19,7 +20,7 @@ public class CommandLineParserTest extends TestCase
 
     public void testCommandLineParser()
     {
-        CommandLineParser p = new CommandLineParser();
+        CommandLineParser p = new CommandLineParser(new StringReader(""));
         p.parse(new String[] { "-a", "test.dat"});
         Iterator i = p.getArguments();
 
