@@ -42,6 +42,7 @@ public class TestBeans
             throw new Exception("can't get AInt property descriptors for bean");
         }
         PropertyDescriptor pd = rpd[ipd];
+        System.out.println(pd.getDisplayName());
 
 
 
