@@ -105,6 +105,8 @@ public class GUI
         panel.addNotify();
 
         JScrollPane scrollpane = new JScrollPane();
+        scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollpane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         panel.add(scrollpane,BorderLayout.CENTER);
 
