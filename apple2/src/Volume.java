@@ -52,6 +52,15 @@ public class Volume
             VolumeFile f = (VolumeFile)i.next();
             f.getTSMap().getPos(rKnownTSMaps);
         }
+
+        for (Iterator i = rAllTSMaps.iterator(); i.hasNext();)
+        {
+            DiskPos pos = (DiskPos)i.next();
+            if (!rKnownTSMaps.contains(pos))
+            {
+                System.out.println("Unaccounted for TS Map at "+pos);
+            }
+        }
     }
 
     /**
