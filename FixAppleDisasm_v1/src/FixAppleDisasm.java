@@ -382,14 +382,6 @@ public class FixAppleDisasm
 			{
 				++ct;
 				prevline.oper += ","+ln.oper;
-				if (ln.comment.length() > 0)
-				{
-					if (prevline.comment.length() == 0)
-					{
-						prevline.comment = ";";
-					}
-					prevline.comment += " "+ln.comment;
-				}
 				i.remove();
 			}
 			else
