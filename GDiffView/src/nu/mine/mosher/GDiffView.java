@@ -968,7 +968,26 @@ public class GDiffView extends JFrame
                             if (cMatch == cMatchCurrent)
                             {
                                 long corresp = there+start;
-                                System.out.println("more than one match are of the same length @"+Long.toHexString(there)+" to "+Long.toHexString(corresp));
+                                long thatdif = match-corresp;
+                                if (thatdif < 0)
+                                {
+                                    thatdif = -thatdif;
+                                }
+                                long thisdif = matchCurrent-corresp;
+                                if (thisdif < 0)
+                                {
+                                    thisdif = -thisdif;
+                                }
+                                System.out.print("that: "+Long.toHexString(thatdif));
+                                System.out.print(" this: "+Long.toHexString(thisdif));
+                                if (thatdif < thisdif)
+                                {
+                                    System.out.print("using: "+Long.toHexString(match));
+                                    matchCurrent = match;
+                                    cMatchCurrent = cMatch;
+                                    progress = true;
+                                }
+                                System.out.println();
                             }
                             else if (cMatch > cMatchCurrent)
                             {
