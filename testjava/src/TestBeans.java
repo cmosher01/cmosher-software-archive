@@ -6,7 +6,9 @@ import java.beans.PropertyEditor;
 import java.beans.PropertyEditorManager;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import com.surveysampling.beans.editors.Editors;
 
@@ -81,10 +83,10 @@ public class TestBeans
     public HashMap buildPropertyDescriptorMap(PropertyDescriptor[] rpd)
     {
         HashMap map = new HashMap();
-        for (int i = 0; rpd != null && i < rpd.length; ++i)
+        for (Iterator i = Arrays.asList(rpd).iterator(); i.hasNext();)
         {
-            PropertyDescriptor descriptor = rpd[i];
-            map.put(descriptor.getName(), descriptor);
+            PropertyDescriptor pd = (PropertyDescriptor)i.next();
+            map.put(pd.getName(),pd);
         }
         return map;
     }
