@@ -8,7 +8,7 @@
  * 
  * @author Chris
  */
-public class VolumeFileData
+public class VolumeFileData extends VolumeEntity
 {
-
+    
 }
