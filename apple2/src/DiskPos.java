@@ -165,7 +165,11 @@ public class DiskPos
         return iDisk == 0;
     }
 
-    public DiskPos advance(int len) throws InvalidPosException
+    /**
+     * @param len
+     * @return
+     */
+    public DiskPos advance(int len)
     {
         return new DiskPos(iDisk+len);
     }
