@@ -205,13 +205,13 @@ public class DosMasterToImage
     /**
      * @param rIgn
      */
-    private static void clearIgnored(int[] rIgn)
+    private static void clearIgnored(int[] r, int[] rIgn)
     {
         for (int i = 0; i < rIgn.length/2; ++i)
         {
             for (int b = rIgn[i*2]; b <= rIgn[i*2+1]; ++b)
             {
-                rbCmp[b] = 0;
+                r[b] = 0;
             }
         }
     }
