@@ -4,10 +4,13 @@ import java.io.ObjectStreamException;
 
 public class RelationTypeSource
 {
+	private final int id;
+
 	private final String name;
 
 	protected RelationTypeSource(String name)
 	{
+		this.id = PRIVATE_VALUES.length;
 		this.name = name;
 	}
 
