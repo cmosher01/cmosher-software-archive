@@ -19,8 +19,7 @@ public class NamedDefault implements Named
 
     public String getId()
     {
-    	PersistenceManager pm = null;
-        return pm.getObjectId(this).toString();
+        return this.pm.getObjectId(this).toString();
     }
 
 	public void setPerm(PersistenceManager pm)
