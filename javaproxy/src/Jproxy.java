@@ -175,8 +175,7 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
         super("Java HTTP Proxy Server");
 
         // read background image
-        bkgroundimg = Toolkit.getDefaultToolkit().getImage(
-                "./svr_imgs/bkground.jpg");
+        bkgroundimg = Toolkit.getDefaultToolkit().getImage("./svr_imgs/bkground.jpg");
         img1 = Toolkit.getDefaultToolkit().getImage("./svr_imgs/start.gif");
         img2 = Toolkit.getDefaultToolkit().getImage("./svr_imgs/stop.gif");
         img3 = Toolkit.getDefaultToolkit().getImage("./svr_imgs/close.gif");
