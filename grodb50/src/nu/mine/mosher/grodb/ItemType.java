@@ -30,4 +30,8 @@ public class ItemType
 		}
 		return s;
 	}
+	public boolean isa(ItemTypeEnum x)
+	{
+		return (known != null && known.equals(x));
+	}
 }
