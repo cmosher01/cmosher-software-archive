@@ -13,8 +13,8 @@ import javax.swing.SwingUtilities;
 public class Ja2
 {
 //    private Ja2GUI mGUI;
-    protected ExceptionHandler mExceptionHandler;
-    protected CommandLineArgHandler mCommandLineArgHandler;
+    private ExceptionHandler mExceptionHandler;
+    private CommandLineArgHandler mCommandLineArgHandler;
 
     /**
      * @param eh
