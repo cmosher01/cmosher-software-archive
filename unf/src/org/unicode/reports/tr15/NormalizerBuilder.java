@@ -498,7 +498,12 @@ if (value==775)
 		{
 			String tok = st.nextToken();
 			if (!tok.startsWith("<"))
+			{
+				int cint = Integer.parseInt(tok,16);
+if (cint > 0xffff)
+	System.err.println("oops, we are not converting to UTF-16 correctly");
 				sb.append((char)Integer.parseInt(tok,16));
+			}
 		}
 
 		return sb.toString();
