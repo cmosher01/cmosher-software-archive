@@ -38,7 +38,7 @@ public class OptionDefinition
     }
     public String getDesc()
     {
-        new OptionDefiniton(null,null,null,true);
+        new OptionDefinition(null,null,null,true);
         return desc;
     }
     public boolean hasValue()
