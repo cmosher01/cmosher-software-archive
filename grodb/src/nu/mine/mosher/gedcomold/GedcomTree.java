@@ -5,6 +5,7 @@ import nu.mine.mosher.util.TreeNode;
 public class GedcomTree
 {
 	private TreeNode root;
+	private Map/*<String,TreeNode>*/ mapIDtoNode = new HashMap();
 
 	private int prevLevel;
 	private TreeNode prevNode;
