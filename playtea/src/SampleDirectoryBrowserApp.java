@@ -75,13 +75,10 @@ public class SampleDirectoryBrowserApp implements Application
 
     public void init(ApplicationConfig config) throws ServletException
     {
-
         // The ApplicationConfig is used by the Application to configure itself.
         mConfig = config;
-
         // A log for keeping track of events specific to this application
         mLog = config.getLog();
-
     }
 
     // Creating a context provides functions accesible from the templates.
