@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.nio.charset.Charset;
+import java.nio.charset.spi.CharsetProvider;
 import java.util.logging.Logger;
 
 import nu.mine.mosher.core.Immutable;
@@ -36,6 +38,9 @@ public class Player implements Immutable
     {
     	LoggingInitializer.init();
         BufferedReader in;
+
+		Charset cs = Charset.forName("x-gedcom-ansel");
+		System.out.println(cs.displayName());
 
         if (args.length > 0)
         {
