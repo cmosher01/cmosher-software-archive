@@ -13,9 +13,9 @@ import javax.swing.JPanel;
 
 public class Disk implements TreeNode
 {
-	final private File mFile;
+	private final File mFile;
 	private static Icon mIcon = new ImageIcon("d:\\temp\\floppy.gif");
-	byte[] image = null;
+	private byte[] image = null;
 
 	public Disk()
 	{
