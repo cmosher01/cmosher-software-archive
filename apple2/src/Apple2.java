@@ -27,10 +27,13 @@ public class Apple2
         {
             throw new IllegalArgumentException("Usage: java Apple2 dos_3.3_order_disk_image");
         }
+
         InputStream fileDisk = new FileInputStream(new File(args[0]));
         byte[] rbDisk = new byte[fileDisk.available()];
         fileDisk.read(rbDisk);
+
         Disk disk = new Disk(rbDisk);
+
         List rVTOC = new ArrayList();
         disk.findDos33VTOC(rVTOC);
         List rCat = new ArrayList();
