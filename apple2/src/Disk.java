@@ -231,7 +231,6 @@ public class Disk
             int penultimateSpace = 0;
             int goodEntries = 0;
             boolean live = true;
-            List entries = new ArrayList();
             boolean valid = true;
             for (int cat = 0; cat < 7 && live && valid; ++cat)
             {
