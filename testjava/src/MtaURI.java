@@ -3,7 +3,7 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.surveysampling.bulkemailer.util.HttpUtil;
+//import com.surveysampling.bulkemailer.util.HttpUtil;
 
 /**
  * A URI for a Mail Transport Authority.
@@ -52,7 +52,7 @@ public class MtaURI
         Map mapParamToValue = new HashMap();
         if (uri.getQuery() != null)
         {
-            HttpUtil.parseQueryStringSimple(uri.getQuery(),mapParamToValue);
+//            HttpUtil.parseQueryStringSimple(uri.getQuery(),mapParamToValue);
         }
 
         int nRate = getParamInt(mapParamToValue,"rate",sMTA);
