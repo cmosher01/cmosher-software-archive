@@ -30,10 +30,7 @@ public class Pair implements Cloneable, Comparable, Serializable
 
     public Object clone() throws CloneNotSupportedException
     {
-        Pair clon = (Pair)super.clone();
-        clon.a = a();
-        clon.b = b();
-        return clon;
+        return super.clone();
     }
 
     public boolean equals(Object o)
