@@ -32,17 +32,18 @@ public class VolumeFile
         catEntry = ent;
 
         List rPosFile = new ArrayList();
-        if (disk.isDos33TSMapSector(catEntry.getStart()))
+        DiskPos start = catEntry.getStart();
+        if (disk.isDos33TSMapSector(start))
         {
             ts = new VolumeTSMap();
-            ts.readFromMedia(catEntry.getStart(),disk);
+            ts.readFromMedia(start,disk);
             ts.getTS(rPosFile);
         }
         else
         {
             // assume a single-sector file
             ts = new VolumeTSMap(); // a bogus one
-            rPosFile.add(catEntry.getStart());
+            rPosFile.add(start);
         }
         data = new VolumeFileData();
         data.readFromMedia(rPosFile,disk);
