@@ -9,6 +9,7 @@ import com.surveysampling.bulkemailer.util.HttpUtil;
 
 /**
  * A URI for a Mail Transport Authority.
+ * Objects of this class are immutable.
  * 
  * @author Chris Mosher
  */
