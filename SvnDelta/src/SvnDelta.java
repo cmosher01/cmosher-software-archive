@@ -128,7 +128,10 @@ public class SvnDelta
 
             if (cMatchCurrent < cWindow)
             {
-                addMapping(data,here);
+                if (!output)
+                {
+                    addMapping(data,here);
+                }
                 if (insertFrom < 0)
                 {
                     insertFrom = here;
@@ -149,7 +152,7 @@ public class SvnDelta
                 doCopy(matchCurrent,cMatchCurrent,(start < matchCurrent));
             }
             here += cMatchCurrent;
-            if (end-here >= cWindow)
+            if (end-here >= cWindow && !output)
             {
                 for (long last = here-cWindow+1; last < here; ++last)
                 {
