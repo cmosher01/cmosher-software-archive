@@ -55,8 +55,8 @@ public class GDiff2HTML
 			{
 				GDiffCopy gc = (GDiffCopy)g;
 				rCopied.add(gc);
-				in.seek(gc.getPosition());
-				byte[] rb = new byte[gc.getLength()];
+				in.seek(gc.getRange().getBegin());
+				byte[] rb = new byte[(int)gc.getRange().getLength()];
 				in.readFully(rb);
 				outSame(rb);
 			}
