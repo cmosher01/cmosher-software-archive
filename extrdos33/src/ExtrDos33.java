@@ -72,6 +72,7 @@ public class ExtrDos33
         {
         	DosImage dos = (DosImage)i.next();
         	System.out.println(dos.dosFile.getAbsolutePath()+":");
+        	dos.showSigs();
         	for (Iterator j = dos.files.iterator(); j.hasNext();)
             {
                 File file = (File)j.next();
