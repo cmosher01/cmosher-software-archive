@@ -50,7 +50,7 @@ public class FileFinder
                     return matFile.matches();
                 }
             });
-            for (int i = 0; i < rm.length; ++i)
+            for (int i = 0; rm != null && i < rm.length; ++i)
             {
                 File file = rm[i];
                 results.add(file);
