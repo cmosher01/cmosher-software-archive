@@ -125,7 +125,7 @@ Object[][] data = {
 "Pool", new Integer(10), new Boolean(false)}
 };
 
-        JTable table = new JTable()
+        JTable table = new JTable();
 
         panel.add(scrollpane,BorderLayout.CENTER);
 
