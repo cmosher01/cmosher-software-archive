@@ -419,7 +419,7 @@ public class Disk
      * @param sector
      * @return
      */
-    protected boolean isfindDos33TSMapSector(byte[] sector)
+    protected static boolean isfindDos33TSMapSector(byte[] sector)
     {
         boolean valid = false;
         if (sector[0]==0 &&
