@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -60,8 +60,8 @@ public class VolumeTSMap extends VolumeEntity
         }
     }
 
-    public List getTS()
+    public void getTS(Collection r)
     {
-        return Collections.unmodifiableList(rTS);
+        List r = new ArrayList
     }
 }
