@@ -74,5 +74,9 @@ public class MainFrame extends JFrame
 
         JSplitPane split = new JSplitPane();
         split.setLeftComponent(scrollTree);
+
+        setContentPane(split);
+
+        setVisible(true);
     }
 }
