@@ -26,15 +26,17 @@ public class RollingChecksumTest extends TestCase
         byte[] rs = new byte[WINDOW_SIZE];
 
         System.arraycopy(rb, 0, rs, 0, WINDOW_SIZE);
-        RollingChecksum rollCheck = new RollingChecksum(rs);
+        RollingChecksum rollCheck = new RollingChecksum();
+        rollCheck.init(rs);
 
+        RollingChecksum rollCheck2 = new RollingChecksum();
         for (int k = 0; k < rb.length-WINDOW_SIZE; ++k)
         {
             rollCheck.increment(rb[k], rb[k+WINDOW_SIZE]);
             int check = rollCheck.getChecksum();
 
             System.arraycopy(rb, k+1, rs, 0, WINDOW_SIZE);
-            RollingChecksum rollCheck2 = new RollingChecksum(rs);
+            rollCheck2.init(rs);
             int check2 = rollCheck2.getChecksum();
 
             assertEquals(check2,check);
