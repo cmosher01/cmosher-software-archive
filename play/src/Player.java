@@ -192,7 +192,7 @@ public class Player implements Immutable
             if (b < 0)
             {
             	x = b;
-            	x += 256;
+            	x += 0x100;
             }
             else
             {
