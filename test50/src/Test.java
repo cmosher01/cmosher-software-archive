@@ -4,10 +4,9 @@ public class Test
 {
 	public static void main(String[] args)
 	{
-		String test = "this,is,a,test";
-		StringFieldizer sf = new StringFieldizer(test);
+		String test = "this,is,a,,test";
 
-		for (String s : sf)
+		for (String s : new StringFieldizer(test))
 		{
 			System.out.println(s);
 		}
