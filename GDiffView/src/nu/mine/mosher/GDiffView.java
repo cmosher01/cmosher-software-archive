@@ -172,8 +172,7 @@ public class GDiffView extends JFrame
 
             public void windowActivated(WindowEvent e)
             {
-                // focus magic
-                paneSrc.requestFocus();
+                listGDiff.requestFocus();
             }
         });
 
