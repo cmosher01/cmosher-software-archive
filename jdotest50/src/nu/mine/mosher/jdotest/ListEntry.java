@@ -18,14 +18,26 @@ public class ListEntry
 		return this.s;
 	}
 
-	public String formatListEntry(List<ListEntry> r)
+	public static String formatListEntry(List<ListEntry> r)
+	{
+		return tr(r,"td");
+	}
+
+	public static String formatListHeader(List<ListEntry> r)
+	{
+		return tr(r,"th");
+	}
+
+	private static String tr(List<ListEntry> r, String td)
 	{
 		StringBuffer sb = new StringBuffer(256);
 
 		sb.append("<tr>");
 		for (ListEntry e : r)
 		{
-			sb.append("<td>");
+			sb.append("<");
+			sb.append(td);
+			sb.append(">");
 			String s = e.toString();
 			if (s.isEmpty())
 			{
@@ -35,7 +47,9 @@ public class ListEntry
 			{
 				sb.append(fixHTML(s));
 			}
-			sb.append("</td>");
+			sb.append("</");
+			sb.append(td);
+			sb.append(">");
 		}
 		sb.append("</tr>");
 
