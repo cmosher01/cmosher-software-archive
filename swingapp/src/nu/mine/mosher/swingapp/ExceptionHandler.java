@@ -22,7 +22,7 @@ public class ExceptionHandler
      */
     public void send(Throwable exception)
     {
-        mException.put(new ApplicationAborting(exception).fillInStackTrace());
+        mException.put(new ApplicationAborting(exception));
     }
 
     /**
