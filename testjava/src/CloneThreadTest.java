@@ -32,10 +32,18 @@ public class CloneThreadTest
         {
             public void run()
             {
-                while (true)
+                try
                 {
-                    x.a++;
-                    x.b++;
+                    while (true)
+                    {
+                        x.a++;
+                        x.b++;
+                        Thread.sleep(10);
+                    }
+                }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
                 }
             }
         });
