@@ -395,7 +395,7 @@ public class Disk
         {
             DiskPos cur = this.pos;
             byte[] sector = read(DiskPos.cSector);
-            if (isfindDos33TSMapSector(sector,tsmapMapsInCatalog))
+            if (isfindDos33TSMapSector(sector))
             {
                 System.out.print("T/S map @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
                 if (sector[1] != 0 || sector[2] != 0)
@@ -420,7 +420,7 @@ public class Disk
      * @param tsmapMapsInCatalog
      * @return
      */
-    protected boolean isfindDos33TSMapSector(byte[] sector, TSMap tsmapMapsInCatalog)
+    protected boolean isfindDos33TSMapSector(byte[] sector)
     {
         boolean valid = true;
         if (sector[0]==0 &&
