@@ -97,8 +97,11 @@ public class ExtrDos33
 
 			// clear areas for comparison:
 
-			// some unknown byte that varies
-			rbc[0x1F5] = 0;
+			// some unknown bytes that vary
+			for (int i = 0x1EA; i < 0x1F9; ++i)
+			{
+				rbc[i] = 0;
+			}
 
 			// (in most DOS 3.3's, but not Prontodos or ESdos) ??? :
 			// some bytes before HELLO program name
