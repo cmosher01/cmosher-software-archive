@@ -39,26 +39,4 @@ public class Perm
 	{
 		return this.pm;
 	}
-
-//	public Iterator getList()
-//	{
-//		return pm.getExtent(Item.class,true).iterator();
-//	}
-//
-//	public String getIDof(Object obj)
-//	{
-//		return pm.getObjectId(obj).toString();
-//	}
-//
-//	public void put(Object obj)
-//	{
-//		pm.currentTransaction().begin();
-//		pm.makePersistent(obj);
-//		pm.currentTransaction().commit();
-//	}
-//
-//	public Object get(Class permClass, String id)
-//	{
-//		return pm.getObjectById(pm.newObjectIdInstance(permClass,id),true);
-//	}
 }
