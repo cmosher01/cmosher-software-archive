@@ -257,7 +257,6 @@ public class FixAppleDisasm
 							System.err.println(hexWord(ln.addr));
 						}
 					}
-					throw new Exception("test");
 				}
 			}
 			else if (nextChar.equalsIgnoreCase("."))
