@@ -23,23 +23,25 @@ public class RollingChecksumTest extends TestCase
         }
 
         int S = 3;
-        int k = 0;
         byte[] rs = new byte[S];
-        System.arraycopy(rb, k, rs, 0, S);
+        for (int k = 0; k <= s.length()-S; ++k)
+        {
+            System.arraycopy(rb, k, rs, 0, S);
 
-        RollingChecksum rollCheck = new RollingChecksum();
-        rollCheck.init(rs);
-        int check = rollCheck.getChecksum();
+            RollingChecksum rollCheck = new RollingChecksum();
+            rollCheck.init(rs);
+            int check = rollCheck.getChecksum();
 
-        rollCheck.increment(rb[k], rb[(k+S-1)+1]);
-        check = rollCheck.getChecksum();
+            rollCheck.increment(rb[k], rb[(k+S-1)+1]);
+            check = rollCheck.getChecksum();
 
-        ++k;
-        System.arraycopy(rb, k, rs, 0, S);
-        RollingChecksum rollCheck2 = new RollingChecksum();
-        rollCheck2.init(rs);
-        int check2 = rollCheck2.getChecksum();
+            ++k;
+            System.arraycopy(rb, k, rs, 0, S);
+            RollingChecksum rollCheck2 = new RollingChecksum();
+            rollCheck2.init(rs);
+            int check2 = rollCheck2.getChecksum();
 
-        assertEquals(check2,check);
+            assertEquals(check2,check);
+        }
     }
 }
