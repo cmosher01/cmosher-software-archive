@@ -48,8 +48,11 @@ public class NormalizerTest extends TestCase
 				for (StringTokenizer st = new StringTokenizer(lin,";"); iCol < 5; )
 				{
 					String tok = st.nextToken();
+					System.out.print(tok);
+					System.out.print(";");
 					rCol[iCol++] = hexToString(tok);
 				}
+				System.out.println();
 				assertNormalize(rCol[1],rCol[0]);
 				assertNormalize(rCol[1],rCol[1]);
 				assertNormalize(rCol[1],rCol[2]);
