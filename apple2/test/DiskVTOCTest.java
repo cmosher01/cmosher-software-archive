@@ -13,6 +13,11 @@ public class DiskTest extends TestCase
 {
     private static byte[] zeroes = new byte[0x100];
 
+    public void testVTOC_Zeroes()
+    {
+        assertFalse(Disk.isDos33VTOC(zeroes);
+    }
+
     /**
      * test VTOC for DOS 3.3 System Master (Aug. 25, 1980), T$11 S$00
      */
