@@ -13,6 +13,6 @@ public class GDiffEnd extends GDiffCmd
      */
     public String toString()
     {
-        return "end";
+        return "EOF";
     }
 }
