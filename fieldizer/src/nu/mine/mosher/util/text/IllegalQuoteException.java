@@ -1,5 +1,5 @@
 /*
- * Created on Apr 13, 2004
+ * Created on April 13, 2004
  */
 package nu.mine.mosher.util.text;
 
