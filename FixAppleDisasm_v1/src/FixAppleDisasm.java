@@ -166,10 +166,18 @@ public class FixAppleDisasm
 
 			if (nextaddr != addr)
 			{
-				System.err.print("address error: expected $");
-				System.err.print(hexWord(nextaddr));
-				System.err.print(", was $");
-				System.err.println(hexWord(addr));
+				if (nextaddr < 0)
+				{
+					System.err.print("first address encountered: $");
+					System.err.println(hexWord(addr));
+				}
+				else
+				{
+					System.err.print("address error: expected $");
+					System.err.print(hexWord(nextaddr));
+					System.err.print(", was $");
+					System.err.println(hexWord(addr));
+				}
 				// resynch
 				nextaddr = addr;
 			}
