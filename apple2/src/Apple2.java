@@ -42,18 +42,16 @@ public class Apple2
         File[] rf = list140KFiles(args[0]);
         for (int i = 0; i < rf.length; i++)
         {
-            doOneFile(rf[i]);
+            doOneDisk(readDisk(rf[i]));
         }
     }
 
     /**
-     * @param f
+     * @param disk
      * @throws IOException
      */
-    public static void doOneFile(File f) throws IOException
+    public static void doOneDisk(Disk disk) throws IOException
     {
-        Disk disk = readDisk(f);
-
         List rVTOC = new ArrayList();
         disk.findDos33VTOC(rVTOC);
 
