@@ -133,7 +133,7 @@ public class Normalizer {
             char ch = target.charAt(decompPos);
             int chClass = data.getCanonicalClass(ch);
             char composite = data.getPairwiseComposition(starterCh, ch);
-            if (composite != data.NOT_COMPOSITE
+            if (composite != NormalizerData.NOT_COMPOSITE
             && (lastClass < chClass || lastClass == 0)) {
                 target.setCharAt(starterPos, composite);
                 starterCh = composite;
