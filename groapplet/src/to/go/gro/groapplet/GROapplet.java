@@ -224,7 +224,7 @@ public class GROapplet extends JApplet
         {
             public void windowClosing(WindowEvent e)
             {
-                e = e;
+                unused(e);
                 System.exit(0);
             }
         });
