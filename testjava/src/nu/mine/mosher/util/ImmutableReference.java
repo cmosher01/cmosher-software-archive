@@ -19,10 +19,10 @@ public class ImmutableReference
 
     public Object clone()
     {
-        Pair clon = null;
+        ImmutableReference clon = null;
         try
         {
-            clon = (Pair)super.clone();
+            clon = (ImmutableReference)super.clone();
             clon.ref = object();
         }
         catch (CloneNotSupportedException cantHappen)
@@ -33,13 +33,13 @@ public class ImmutableReference
 
     public boolean equals(Object o)
     {
-        if (!(o instanceof Pair))
+        if (!(o instanceof ImmutableReference))
         {
             return false;
         }
-        Pair that = (Pair)o;
+        ImmutableReference that = (ImmutableReference)o;
 
-        return eq(this.ref,that.a) && eq(this.b,that.b);
+        return eq(this.ref,that.ref);
     }
 
     private boolean eq(Object x, Object y)
