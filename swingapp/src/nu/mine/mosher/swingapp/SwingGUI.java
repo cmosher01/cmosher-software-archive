@@ -14,7 +14,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTree;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.table.TableColumn;
@@ -111,7 +110,7 @@ public class GUI
             column.setMinWidth(64);
             column.setPreferredWidth(64);
         }
-//        table.setPreferredScrollableViewportSize(new Dimension(640,480));
+        table.setPreferredScrollableViewportSize(new Dimension(640,480));
 
         JScrollPane scrollpane = new JScrollPane(table);
         scrollpane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
