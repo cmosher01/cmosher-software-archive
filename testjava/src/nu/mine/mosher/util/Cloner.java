@@ -12,7 +12,8 @@ import java.util.Map;
  */
 public final class Cloner
 {
-    private static final Map /*<Class,Method>*/ mClasses = new HashMap();
+    private static final Map /*<Class,Method>*/
+    mClasses = new HashMap();
 
     private Cloner()
     {
@@ -28,7 +29,7 @@ public final class Cloner
             if (methodClone == null)
             {
                 methodClone = getCloneMethod(cl);
-                mClasses.put(cl,methodClone);
+                mClasses.put(cl, methodClone);
             }
             return clone(cloneableObject, methodClone);
         }
@@ -48,13 +49,13 @@ public final class Cloner
     private static Cloneable clone(Cloneable cloneableObject, Method methodClone)
         throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, CloneNotSupportedException
     {
-        return (Cloneable)methodClone.invoke(cloneableObject,null);
+        return (Cloneable)methodClone.invoke(cloneableObject, null);
     }
 
     public static Method getCloneMethod(Class cl) throws NoSuchMethodException, SecurityException
     {
         Method methodClone;
-        methodClone = cl.getMethod("clone",null);
+        methodClone = cl.getMethod("clone", null);
         methodClone.setAccessible(true);
         return methodClone;
     }
