@@ -3,6 +3,7 @@
 <%@ page import="javax.jdo.PersistenceManager" %>
 <%@ page import="nu.mine.mosher.jdotest.Item" %>
 <%@ page import="nu.mine.mosher.jdotest.Perm" %>
+<%@ page import="nu.mine.mosher.jdotest.Thing" %>
 <%
     String id = request.getParameter("id");
 	PersistenceManager pm = Perm.pm();
