@@ -93,9 +93,9 @@ public class MainFrame extends JFrame
                 s.append(" [unknown type]");
             }
             DefaultMutableTreeNode nDos = new DefaultMutableTreeNode(s);
-    
+
             DefaultMutableTreeNode nCat = new DefaultMutableTreeNode("Catalog");
-    
+
             DefaultMutableTreeNode nFiles = new DefaultMutableTreeNode("Files");
             List rFiles = new ArrayList();
             vol.getFiles(rFiles);
@@ -104,7 +104,7 @@ public class MainFrame extends JFrame
                 VolumeFile file = (VolumeFile)i.next();
                 nFiles.add(new DefaultMutableTreeNode(file.getCatalogEntry().getName()));
             }
-    
+
             DefaultMutableTreeNode nFilesRecovered = new DefaultMutableTreeNode("Recovered Files");
             List rFilesRecovered = new ArrayList();
             vol.getFilesRecovered(rFilesRecovered);
@@ -116,7 +116,7 @@ public class MainFrame extends JFrame
                 DiskPos vs = (DiskPos)rPos.get(0);
                 nFilesRecovered.add(new DefaultMutableTreeNode("recovered @ "+vs.toStringTS()));
             }
-    
+
             DefaultMutableTreeNode nOrphaned = new DefaultMutableTreeNode("Orphaned Data");
             List rOrphaned = new ArrayList();
             vol.getOrphaned().getUsed(rOrphaned);
@@ -125,11 +125,11 @@ public class MainFrame extends JFrame
                 DiskPos p = (DiskPos)i.next();
                 nOrphaned.add(new DefaultMutableTreeNode(p.toStringTS()));
             }
-    
+
             DefaultMutableTreeNode nBlank = new DefaultMutableTreeNode("Blank Sectors");
-    
+
             DefaultMutableTreeNode nMap = new DefaultMutableTreeNode("Track/Sector Map");
-    
+
             nDisk.add(nDos);
             nDisk.add(nCat);
             if (!rFiles.isEmpty())
@@ -149,6 +149,11 @@ public class MainFrame extends JFrame
         }
 
         top.add(nDisk);
+        int c = tree.getRowCount();
+        for ( int i = c; i > 0; --i)
+        {
+            tree.expandRow(i-1);
+        }
     }
 
     /**
