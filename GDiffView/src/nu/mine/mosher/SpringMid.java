@@ -13,18 +13,23 @@ public class SpringMid extends Spring
 {
     private final Spring right;
     private final double fraction;
-    private final int width;
-    private final boolean isRight;
+    private final double offset;
 
     /**
      * 
      */
-    public SpringMid(Spring right, double fraction, int width, int isRight)
+    public SpringMid(Spring right, double fraction, int width, boolean isRight)
     {
         this.right = right;
         this.fraction = fraction;
-        this.width = width;
-        this.isRight = isRight;
+        if (isRight)
+        {
+            this.offset = -width/2;
+        }
+        else
+        {
+            this.offset = +width/2;
+        }
     }
 
     /* (non-Javadoc)
