@@ -72,7 +72,7 @@ public class StringFieldizer
      * A convenience method that returns the rest of the string.
      * For a StringFieldizer f, f.getResidue() is equivalent to
      * f.getString().substring(f.getPosition()).
-     * @return 
+     * @return a String, the rest of the given string
      */
     public String getResidue()
     {
