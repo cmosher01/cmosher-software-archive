@@ -12,7 +12,7 @@ public class GDiffCopy extends GDiffCmd
 	{
 		this.range = range;
 	}
-	public long getRange()
+	public Range getRange()
 	{
 		return range;
 	}
