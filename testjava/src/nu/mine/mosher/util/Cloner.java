@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
  */
 public final class Cloner
 {
-    private Cloner()
+    private Cloner() throws UnsupportedOperationException
     {
         throw new UnsupportedOperationException();
     }
