@@ -244,6 +244,8 @@ public class GDiffView extends JFrame
         contentPane.add(scrGDiff);
         contentPane.add(scrTrg);
 
+        layout.putConstraint(SpringLayout.EAST, scrTrg, 0, SpringLayout.EAST, contentPane);
+
         setContentPane(contentPane);
 
         addWindowListener(new WindowAdapter()
