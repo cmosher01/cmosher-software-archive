@@ -23,7 +23,7 @@ public class CatEntry implements TreeNode
         viewRight.setContentType("text/html");
 	}
 
-	public String getName()
+	public String toString()
 	{
 		return sName;
 	}
