@@ -64,11 +64,13 @@ public class FileTreeNode extends DefaultMutableTreeNode
     {
         int rc[] = new int[getChildCount()];
         int i = 0;
+
         for (Enumeration e = children(); e.hasMoreElements();)
         {
             TreeNode child = (TreeNode)e.nextElement();
             rc[i++] = getIndex(child);
         }
+
         return rc;
     }
 }
