@@ -55,7 +55,7 @@ public class Test
 
         StringBuffer sb = new StringBuffer();
         sb.append("");
-        String s1 = sb.toString();
+        String s1 = sb.toString().intern();
         String s2 = "";
         System.out.println(s1==s2);
 
