@@ -53,7 +53,7 @@ public class GUI
     }
 
     /**
-     * @return
+     * @return image to use as the main frame's icon
      */
     protected Image getFrameIcon()
     {
