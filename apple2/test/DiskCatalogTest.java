@@ -135,7 +135,7 @@ public class DiskCatalogTest extends TestCase
         r.add(new DiskPos(0x11,0xF));
         assertManyPos("DiversiDOS_41_C_1983.dsk",r);
     }
-    
+
     /**
      * @throws IOException
      * @throws InvalidPosException
@@ -147,6 +147,20 @@ public class DiskCatalogTest extends TestCase
         assertManyPos("HyperDOS_restored.dsk",r);
     }
     
+    /**
+     * @throws IOException
+     * @throws InvalidPosException
+     */
+    public void testProntoDOS() throws IOException, InvalidPosException
+    {
+        List r = new ArrayList();
+        r.add(new DiskPos(0x11,0xC));
+        r.add(new DiskPos(0x11,0xD));
+        r.add(new DiskPos(0x11,0xE));
+        r.add(new DiskPos(0x11,0xF));
+        assertManyPos("ProntoDOS.dsk",r);
+    }
+
     //    public void testDOS33_Others() throws IOException, InvalidPosException
 //    {
 //        assertOnePos("daviddos_2.dsk",new DiskPos(0x11,0));
