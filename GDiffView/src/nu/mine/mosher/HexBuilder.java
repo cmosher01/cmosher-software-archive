@@ -192,5 +192,13 @@ public class HexBuilder
         }
         return x;
     }
+
+    /**
+     * @return
+     */
+    public long getAddr()
+    {
+        return this.addr;
+    }
 }
 
