@@ -42,25 +42,27 @@ public class Pair
         if (!(obj instanceof Pair))
             return false;
         Pair that = (Pair)obj;
-        if (this.a == null)
+
+        return eq(this.a,that.a) && eq(this.b,that.b);
+    }
+
+    private boolean eq(Object x, Object y)
+    {
+        if (x == null && y == null)
         {
-            return that.a == null;
+            return true;
         }
-        else if (!this.a.equals(that.a))
+        else if (x == null)
         {
             return false;
         }
-        else if (this.b == null)
-        {
-            return that.b == null;
-        }
-        else if (!this.b.equals(that.b))
+        else if (y == null)
         {
             return false;
         }
         else
         {
-            return true;
+            return x.equals(y);
         }
     }
 }
