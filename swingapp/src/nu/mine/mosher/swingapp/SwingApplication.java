@@ -26,6 +26,11 @@ public class Application
         me = this;
         this.mExceptionHandler = eh;
         this.mCommandLineArgHandler = ch;
+        if (this.mExceptionHandler == null ||
+            this.mCommandLineArgHandler == null)
+        {
+            throw new IllegalStateException("Arguments cannot be null.");
+        }
     }
 
     /**
