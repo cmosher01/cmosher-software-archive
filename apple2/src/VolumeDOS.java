@@ -566,6 +566,47 @@ public class VolumeDOS extends VolumeEntity
         return rbSlave;
     }
 
+    private byte[] patchSlave(byte[] rbClear)
+    {
+        // copy entire master image
+        byte[] rbSlave = new byte[rbClear.length];
+        System.arraycopy(rbClear, 0, rbSlave, 0, rbClear.length);
+
+        // change slave patches
+//      0x0148, // master: 03 slave: 84
+        rbSlave[0x0148] = (byte)0x84;
+//      0x0149, // master: 1B slave: 9D
+        rbSlave[0x0149] = (byte)0x1D; //* needs fixup
+
+//      0x0C0D, // master: 1B slave: 9D
+        rbSlave[0x0C0D] = (byte)0x1D; //* needs fixup
+
+//      0x0C56, // master: 36 slave: FC
+        rbSlave[0x0C56] = (byte)0xFC;
+//      0x0C57, // master: E8 slave: A4
+        rbSlave[0x0C57] = (byte)0x24; //* needs fixup
+//      0x0C58, // master: E5 slave: FC
+        rbSlave[0x0C58] = (byte)0xFC;
+//      0x0C59 (???)
+        rbSlave[0x0C59] = (byte)0x24; //* needs fixup
+//      0x0C5A, // master: E3 slave: 65
+        rbSlave[0x0C5A] = (byte)0x65;
+//      0x0C5B, // master: E3 slave: D8
+        rbSlave[0x0C5B] = (byte)0xD8;
+//      0x0C5E, // master: 03 slave: 3C
+        rbSlave[0x0C5E] = (byte)0x3C;
+//      0x0C5F, // master: E0 slave: D4
+        rbSlave[0x0C5F] = (byte)0xD4;
+
+        // clear reloc routine:
+        for (int i = 0x0A00; i < 0x0C00; ++i)
+        {
+            rbSlave[i] = 0;
+        }
+
+        return rbSlave;
+    }
+
     /**
      * @param rIgn
      */
