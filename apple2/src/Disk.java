@@ -39,32 +39,6 @@ public class Disk
     }
 
     /**
-     * @param rb
-     * @return
-     */
-    public static String convertASCII(byte[] rb)
-    {
-        return convertASCII(rb,0,rb.length);
-    }
-
-    /**
-     * @param rb
-     * @param pos
-     * @param len
-     * @return
-     */
-    public static String convertASCII(byte[] rb, int pos, int len)
-    {
-        StringBuffer sb = new StringBuffer(len);
-        for (int i = 0; i < len; ++i)
-        {
-            int c = rb[pos+i];
-            sb.append((char)(byte)(c & 0x0000007F));
-        }
-        return sb.toString();
-    }
-
-    /**
      * @param pos
      * @param len
      * @return
@@ -129,11 +103,13 @@ public class Disk
      * @return
      * @throws InvalidPosException
      */
-    public void readTS(DiskPos pos) throws InvalidPosException
+    public DiskPos readTS(DiskPos pos) throws InvalidPosException
     {
         int track = read(pos);
         int sector = read(pos);
-        pos.setTS(track,sector);
+        DiskPos pret = new DiskPos();
+        pret.setTS(track,sector);
+        return pret;
     }
 
     /**
@@ -743,6 +719,32 @@ public class Disk
 //                    }
 //        }
 //    }
+
+    /**
+     * @param rb
+     * @return
+     */
+    public static String convertASCII(byte[] rb)
+    {
+        return convertASCII(rb,0,rb.length);
+    }
+
+    /**
+     * @param rb
+     * @param pos
+     * @param len
+     * @return
+     */
+    public static String convertASCII(byte[] rb, int pos, int len)
+    {
+        StringBuffer sb = new StringBuffer(len);
+        for (int i = 0; i < len; ++i)
+        {
+            int c = rb[pos+i];
+            sb.append((char)(byte)(c & 0x0000007F));
+        }
+        return sb.toString();
+    }
 
     /**
      * @param sector
