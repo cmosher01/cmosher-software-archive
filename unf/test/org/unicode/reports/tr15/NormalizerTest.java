@@ -80,8 +80,8 @@ public class NormalizerTest extends TestCase
 				for (StringTokenizer st = new StringTokenizer(lin,";"); iCol < 5; )
 				{
 					String tok = st.nextToken();
-					System.out.print(tok);
-					System.out.print(";");
+//					System.out.print(tok);
+//					System.out.print(";");
 					rCol[iCol++] = hexToString(tok);
 				}
 //				dumphex(rCol[0]);
@@ -90,9 +90,14 @@ public class NormalizerTest extends TestCase
 //				dumphex(rCol[1]);
 				if (!rCol[1].equals(norm))
 				{
+					System.out.println("ERROR: ");
+					dumphex(rCol[0]);
 					String bad = n.normalize(rCol[0]);
+					dumphex(bad);
+					dumphex(rCol[1]);
+					System.out.println();
 				}
-				System.out.println();
+//				System.out.println();
 				cDone++;
 //if (cDone>100)
 //throw new Exception("stop");
