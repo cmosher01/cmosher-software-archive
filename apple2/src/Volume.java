@@ -21,7 +21,8 @@ public class Volume
     private VolumeBoot boot;
     private VolumeDOS dos;
 //    private VolumeUnusedBlank blank;
-//    private VolumeUnusedData data;
+    private VolumeUnusedData orphaned;
+
     /**
      * @param disk
      * @throws InvalidPosException
@@ -82,14 +83,18 @@ public class Volume
         List rAllSectorsWithData = new ArrayList();
         disk.getDataTS(rAllSectorsWithData);
 
+        List rOrphaned = new ArrayList();
         for (Iterator i = rAllSectorsWithData.iterator(); i.hasNext();)
         {
             DiskPos p = (DiskPos)i.next();
             if (!rKnownSectors.contains(p))
             {
-                System.out.println("Found orphaned data sector "+p.toStringTS());
+                rOrphaned.add(p);
             }
         }
+
+        orphaned = new VolumeUnusedData();
+        orphaned.readFromMedia(rOrphaned,disk);
     }
 
     /**
