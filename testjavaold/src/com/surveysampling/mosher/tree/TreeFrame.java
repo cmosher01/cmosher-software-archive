@@ -65,7 +65,6 @@ public class TreeFrame extends JFrame
 
         //Create and set up the content pane.
         TreeFrame newContentPane = new TreeFrame(dir);
-        newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
 
         //Display the window.
