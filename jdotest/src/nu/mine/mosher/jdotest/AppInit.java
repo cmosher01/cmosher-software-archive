@@ -38,7 +38,7 @@ public class AppInit implements ServletContextListener
 		}
     }
 
-	public Properties getJDOProperties()
+	public static Properties getJDOProperties()
 	{
 		return props;
 	}
