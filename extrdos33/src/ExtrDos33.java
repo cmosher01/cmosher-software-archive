@@ -111,7 +111,7 @@ public class ExtrDos33
 		{
 			s = "0"+s;
 		}
-		return s;
+		return s+".dos";
 	}
 
     public static File[] listRegFiles(String sDir, String regexpFile, String regexpDir) throws IOException
