@@ -1,5 +1,3 @@
-import com.surveysampling.util.UndoableReference;
-
 public class UndoableExample implements Cloneable
 {
     private int x;
