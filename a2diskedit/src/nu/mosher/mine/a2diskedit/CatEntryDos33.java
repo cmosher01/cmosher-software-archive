@@ -8,6 +8,7 @@ package nu.mosher.mine.a2diskedit;
  * To enable and disable the creation of type comments go to
  * Window>Preferences>Java>Code Generation.
  */
-public class CatEntryDos33 extends CatEntry{
+public class CatEntryDos33 extends CatEntry
+{
 
 }
