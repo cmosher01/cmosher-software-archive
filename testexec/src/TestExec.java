@@ -4,6 +4,8 @@ import java.io.InputStreamReader;
 public class TestExec
 {
     public static Process p;
+    public static LineDumper procout;
+    public static LineDumper procerr;
 
     public static void main(String[] args) throws Throwable
     {
@@ -13,10 +15,12 @@ public class TestExec
             {
                 System.out.println("parent shutdown handler");
                 p.destroy();
+                waitFor();
             }
         });
         System.out.println("parent process");
         execDumpOutput();
+        waitFor();
     }
 
     protected static void execDumpOutput() throws InterruptedException, IOException
@@ -26,7 +30,10 @@ public class TestExec
 
         LineDumper procout = new LineDumper(new InputStreamReader(p.getInputStream()));
         LineDumper procerr = new LineDumper(new InputStreamReader(p.getErrorStream()));
+    }
 
+    public static void waitFor()
+    {
         p.waitFor();
         System.out.println("subprocess done");
 
