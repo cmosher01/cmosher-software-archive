@@ -48,7 +48,7 @@ public class Test
             String field = (String)i.next();
             System.out.println(field);
         }
-//        for (String field : new SF(x))
+//        for (String field : new StringFields(x))
 //        {
 //            System.out.println(field);
 //        }
