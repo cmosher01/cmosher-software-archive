@@ -386,7 +386,9 @@ public class Disk
                     DiskPos.isValidSector(sector[ce+1]) &&
                     isValidFileType(sector[ce+2]))
                 {
-                    if (sector[ce+31] == (byte)0xA0)
+                    if (sector[ce+31] == (byte)0xA0 || 
+                        sector[ce+32] == (byte)0xA0 ||
+                        (sector[ce+31]&0x80 > 0 && sector[ce+30]&0x80 > 0 && sector[ce+29]&0x80 > 0))
                     {
                         ++penultimateSpace;
                     }
