@@ -36,7 +36,6 @@ public class Application
 
     /**
      * @throws Throwable
-     * 
      */
     public void run() throws Throwable
     {
@@ -87,5 +86,10 @@ public class Application
     protected void createGUI()
     {
 //        mGUI = new Ja2GUI();
+    }
+
+    public CommandLineArgHandler getCommandLineArgHandler()
+    {
+        return mCommandLineArgHandler;
     }
 }
