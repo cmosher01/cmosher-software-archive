@@ -39,7 +39,7 @@ public class Test
         }
     }
 
-    public Object throwSomething()
+    public Object throwSomething() throws Exception
     {
         Object j = new Object();
         throw new Exception();
