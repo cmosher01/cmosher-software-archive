@@ -71,10 +71,12 @@ public class Apple2
         catch (VTOCNotFoundException e)
         {
             System.out.println("[no VTOC]");
+            return;
         }
         catch (MultipleVTOCException e)
         {
             System.out.println("[no VTOC]");
+            return;
         }
 
         StringBuffer s = new StringBuffer(256);
