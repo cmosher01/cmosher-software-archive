@@ -150,17 +150,20 @@ public class FixAppleDisasm
 					{
 						// normal instr line
 						ln.instr = s.substring(20,23);
-						ln.oper = s.substring(26);
-						if (ln.oper.startsWith("$"))
+						if (s.length() > 26)
 						{
-							ln.refaddr = -1;
-							try
-							{
-								ln.refaddr = Integer.parseInt(ln.oper.substring(0,4),16);
-							}
-							catch (Throwable e)
+							ln.oper = s.substring(26);
+							if (ln.oper.startsWith("$"))
 							{
 								ln.refaddr = -1;
+								try
+								{
+									ln.refaddr = Integer.parseInt(ln.oper.substring(0,4),16);
+								}
+								catch (Throwable e)
+								{
+									ln.refaddr = -1;
+								}
 							}
 						}
 					}
