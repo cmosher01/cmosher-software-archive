@@ -26,15 +26,15 @@ public class Perm
 
 	public Perm() throws NamingException
 	{
-		DirContext dctx = new InitialDirContext();
-		SearchControls ctls = new SearchControls();
-		ctls.setReturningObjFlag(true);
-		String filter = "(objectclass=*)";
-		NamingEnumeration answer = dctx.search("",filter,ctls);
-		while (answer.hasMore())
-		{
-			System.err.println(answer.next().toString());
-		}
+//		DirContext dctx = new InitialDirContext();
+//		SearchControls ctls = new SearchControls();
+//		ctls.setReturningObjFlag(true);
+//		String filter = "(objectclass=*)";
+//		NamingEnumeration answer = dctx.search("",filter,ctls);
+//		while (answer.hasMore())
+//		{
+//			System.err.println(answer.next().toString());
+//		}
 
 		Properties props = new Properties();
 		props.setProperty("javax.jdo.PersistenceManagerFactoryClass","org.jpox.PersistenceManagerFactoryImpl");
