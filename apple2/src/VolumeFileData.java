@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /*
@@ -13,6 +15,7 @@ import java.util.List;
 public class VolumeFileData extends VolumeEntity
 {
     private byte[] data;
+    private List rPos = new ArrayList();
 
     /**
      * @param rPos
@@ -20,5 +23,10 @@ public class VolumeFileData extends VolumeEntity
      */
     public void readFromMedia(List rPos, Disk disk)
     {
+        for (Iterator i = rPos.iterator(); i.hasNext();)
+        {
+            DiskPos pos = (DiskPos)i.next();
+            this.rPos.add(pos.clone());
+        }
     }
 }
