@@ -68,8 +68,9 @@ public class GUI
      */
     private JMenuBar createMenuBar()
     {
-        JMenuBar mb = new JMenuBar();
-        return mb;
+//        JMenuBar mb = new JMenuBar();
+//        return mb;
+        return null;
     }
 
     /**
