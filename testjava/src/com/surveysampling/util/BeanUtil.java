@@ -15,7 +15,7 @@ public final class BeanUtil
         throw new IllegalStateException();
     }
 
-    public void parseParameters(ServletRequest request, Object bean) throws ParameterParseException
+    public static void parseParameters(ServletRequest request, Object bean) throws ParameterParseException
     {
         for (Iterator params = new EnumIter(request.getParameterNames()); params.hasNext();)
         {
@@ -26,20 +26,19 @@ public final class BeanUtil
             Class propertyEditorClass = null;
 
             BeanInfo info = Introspector.getBeanInfo(bean.getClass());
-            if (info != null)
+
+            PropertyDescriptor pd[] = info.getPropertyDescriptors();
+            for (int i = 0; i < pd.length; i++)
             {
-                PropertyDescriptor pd[] = info.getPropertyDescriptors();
-                for (int i = 0; i < pd.length; i++)
+                if (pd[i].getName().equals(param))
                 {
-                    if (pd[i].getName().equals(param))
-                    {
-                        method = pd[i].getWriteMethod();
-                        type = pd[i].getPropertyType();
-                        propertyEditorClass = pd[i].getPropertyEditorClass();
-                        break;
-                    }
+                    method = pd[i].getWriteMethod();
+                    type = pd[i].getPropertyType();
+                    propertyEditorClass = pd[i].getPropertyEditorClass();
+                    break;
                 }
             }
+
             if (method != null)
             {
                 if (type.isArray())
@@ -73,6 +72,18 @@ public final class BeanUtil
                     if (oval != null)
                         method.invoke(bean, new Object[] { oval });
                 }
+            }
+        }
+    }
+
+    private static PropertyDescriptor getPropDesc(BeanInfo info)
+    {
+        PropertyDescriptor pd[] = info.getPropertyDescriptors();
+        for (int i = 0; i < pd.length; i++)
+        {
+            if (pd[i].getName().equals(param))
+            {
+                return pd[i];
             }
         }
     }
