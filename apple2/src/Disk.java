@@ -406,12 +406,13 @@ public class Disk
     }
 
     /**
-     * @param sector
+     * @param pos
      * @param entries
      * @throws InvalidPosException
      */
-    public static void getDos33CatalogEntries(byte[] sector, Collection entries) throws InvalidPosException
+    public void getDos33CatalogEntries(DiskPos pos, Collection entries) throws InvalidPosException
     {
+        byte[] sector = readSector(pos);
         int p = 0x0B;
         while (p < 0x100 && sector[p] != 0)
         {
@@ -447,12 +448,13 @@ public class Disk
     }
 
     /**
-     * @param sector
+     * @param pos
      * @param entries
      * @throws InvalidPosException
      */
-    public static void getDos33TSMapEntries(byte[] sector, Collection entries) throws InvalidPosException
+    public void getDos33TSMapEntries(DiskPos pos, Collection entries) throws InvalidPosException
     {
+        byte[] sector = readSector(pos);
         int p = 0x0C;
         while (p < 0x100 && (sector[p] != 0 || sector[p+1] != 0))
         {
