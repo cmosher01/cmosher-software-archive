@@ -7,7 +7,7 @@ import java.lang.reflect.Method;
  * This class needs to be in the java.lang package in order to be
  * able to access the protected clone method of Object.
  */
-public class Cloner
+public final class Cloner
 {
     private Cloner()
     {
