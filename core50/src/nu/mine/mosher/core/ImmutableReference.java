@@ -2,7 +2,7 @@ package nu.mine.mosher.core;
 
 import java.io.Serializable;
 
-public final class ImmutableReference implements Cloneable, Comparable, Serializable, Immutable
+public final class ImmutableReference<T> implements Cloneable, Comparable<T>, Serializable, Immutable
 {
     private final Cloneable ref;
     private transient String str;
@@ -38,7 +38,7 @@ public final class ImmutableReference implements Cloneable, Comparable, Serializ
         return Cloner.cloneObject(this.ref);
     }
 
-    public Object clone() throws CloneNotSupportedException
+    public T clone() throws CloneNotSupportedException
     {
         return super.clone();
     }
@@ -49,7 +49,7 @@ public final class ImmutableReference implements Cloneable, Comparable, Serializ
         return this.str;
     }
 
-    public boolean equals(Object o)
+    public boolean equals(T o)
     {
         return this.ref.equals(o);
     }
@@ -60,7 +60,7 @@ public final class ImmutableReference implements Cloneable, Comparable, Serializ
         return this.hash;
     }
 
-    public int compareTo(Object o)
+    public int compareTo(T o)
     {
         return ((Comparable)this.ref).compareTo(o);
     }
