@@ -3,6 +3,8 @@
  */
 package com.surveysampling.time;
 
+import java.util.Calendar;
+
 /**
  * Represents a time of day, for example, "3:00 AM".
  * It contains hours, minutes, seconds, and milliseconds
@@ -10,12 +12,13 @@ package com.surveysampling.time;
  */
 public class TimeOfDay
 {
+    private final Calendar calendar;
     private final int hours;
     private final int minutes;
     private final int seconds;
     private final int milliseconds;
 
-    public TimeOfDay(int hours, int minutes, int seconds, int milliseconds)
+    public TimeOfDay(Calendar calendar, int hours, int minutes, int seconds, int milliseconds)
     {
         this.hours = hours;
         this.minutes = minutes;
@@ -23,18 +26,18 @@ public class TimeOfDay
         this.milliseconds = milliseconds;
     }
 
-    public TimeOfDay(int hours, int minutes, int seconds)
+    public TimeOfDay(Calendar calendar, int hours, int minutes, int seconds)
     {
-        this(hours,minutes,seconds,0);
+        this(calendar,hours,minutes,seconds,0);
     }
 
-    public TimeOfDay(int hours, int minutes)
+    public TimeOfDay(Calendar calendar, int hours, int minutes)
     {
-        this(hours,minutes,0,0);
+        this(calendar,hours,minutes,0,0);
     }
 
-    public TimeOfDay(int hours)
+    public TimeOfDay(Calendar calendar, int hours)
     {
-        this(hours,0,0,0);
+        this(calendar,hours,0,0,0);
     }
 }
