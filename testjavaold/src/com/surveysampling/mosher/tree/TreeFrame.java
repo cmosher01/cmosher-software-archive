@@ -1,8 +1,6 @@
 package com.surveysampling.mosher.tree;
 
 import java.awt.BorderLayout;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.File;
 
 import javax.swing.JFrame;
@@ -14,7 +12,6 @@ import javax.swing.tree.TreeNode;
 
 public class TreeFrame extends JPanel
 {
-
     public TreeFrame(String dir)
     {
         setLayout(new BorderLayout());
@@ -61,7 +58,7 @@ public class TreeFrame extends JPanel
         JFrame.setDefaultLookAndFeelDecorated(true);
 
         //Create and set up the window.
-        frame = new JFrame("FocusConceptsDemo");
+        TreeFrame frame = new TreeFrame(dir);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create and set up the content pane.
@@ -78,13 +75,6 @@ public class TreeFrame extends JPanel
     {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                createAndShowGUI();
-            }
-        });
     }
 
     public static void main(String argv[])
@@ -95,7 +85,14 @@ public class TreeFrame extends JPanel
             dir = argv[0];
         }
 
-        TreeFrame myframe = new TreeFrame(dir);
+        javax.swing.SwingUtilities.invokeLater(new Runnable()
+        {
+            public void run()
+            {
+                createAndShowGUI();
+            }
+        });
+
         myframe.setVisible(true);
     }
 }
