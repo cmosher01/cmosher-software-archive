@@ -39,7 +39,7 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
     }
 
     /**
-     * @return
+     * @return random number
      */
     public synchronized int nextInt()
     {
