@@ -45,5 +45,7 @@ public class VolumeTableOfContents extends VolumeEntity
             throw new MultipleVTOCException();
         }
         DiskPos p = (DiskPos)rPosVTOC.get(0);
+
+        rSector.add(new VolumeSector(p,0));
     }
 }
