@@ -151,7 +151,7 @@ public class ProxyServer implements Runnable
             {
                 try
                 {
-                    myThread.sleep(500);
+                    Thread.sleep(500);
                 }
                 catch (InterruptedException e)
                 {
