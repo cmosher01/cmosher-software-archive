@@ -59,7 +59,7 @@ public class Test
         }
         long end = System.currentTimeMillis();
         double ms = (end-start);
-        double sec = ms*1000;
+        double sec = ms/1000;
         double nanosec = sec*1000000000;
         System.out.println("elapsed time: "+nanosec+" nanosec");
 
