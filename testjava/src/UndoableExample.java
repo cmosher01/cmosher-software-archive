@@ -10,13 +10,7 @@ public class UndoableExample implements Cloneable
     public UndoableExample(int a)
     {
         x = a;
-        try
-        {
-            u = new UndoableReference(this);
-        }
-        catch (CloneNotSupportedException cantHappen)
-        {
-        }
+        u = new UndoableReference(this);
     }
 
     public Object clone()
