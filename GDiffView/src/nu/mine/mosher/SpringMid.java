@@ -37,7 +37,7 @@ public class SpringMid extends Spring
      */
     public int getMaximumValue()
     {
-        return (int)Math.round(fraction*right.getMaximumValue() - width/2);
+        return (int)Math.round(fraction*right.getMaximumValue() + offset);
     }
 
     /* (non-Javadoc)
@@ -45,7 +45,7 @@ public class SpringMid extends Spring
      */
     public int getMinimumValue()
     {
-        return (int)Math.round(fraction*right.getMinimumValue() - width/2);
+        return (int)Math.round(fraction*right.getMinimumValue() + offset);
     }
 
     /* (non-Javadoc)
@@ -53,7 +53,7 @@ public class SpringMid extends Spring
      */
     public int getPreferredValue()
     {
-        return (int)Math.round(fraction*right.getPreferredValue() - width/2);
+        return (int)Math.round(fraction*right.getPreferredValue() + offset);
     }
 
     /* (non-Javadoc)
@@ -61,7 +61,7 @@ public class SpringMid extends Spring
      */
     public int getValue()
     {
-        return (int)Math.round(fraction*right.getValue() - width/2);
+        return (int)Math.round(fraction*right.getValue() + offset);
     }
 
     /**
