@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
@@ -79,6 +80,12 @@ public class GDiffView extends JFrame
 
 
 
+    public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, InterruptedException, BadLocationException, IOException
+    {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        GDiffView frame = new GDiffView(args[0],args[1]);
+    }
+
     public GDiffView(String fileSrc, String fileGDiff) throws BadLocationException, IOException
     {
         super("GDiffVeiew");
@@ -105,16 +112,16 @@ public class GDiffView extends JFrame
         styles.put("highlight",style);
 
         docSrc = new DefaultStyledDocument();
-        paneSrc = new JTextPane(docSrc);
+        paneSrc = new JTextPaneNoWrap(docSrc);
         paneSrc.setEditable(false);
         JScrollPane scrSrc = new JScrollPane(paneSrc);
-        scrSrc.setPreferredSize(new Dimension(500,460));
+        scrSrc.setPreferredSize(new Dimension(400,430));
 
         docTrg = new DefaultStyledDocument();
-        paneTrg = new JTextPane(docTrg);
+        paneTrg = new JTextPaneNoWrap(docTrg);
         paneTrg.setEditable(false);
         JScrollPane scrTrg = new JScrollPane(paneTrg);
-        scrTrg.setPreferredSize(new Dimension(500,460));
+        scrTrg.setPreferredSize(new Dimension(400,430));
 
         rcmd.add(new GDiffCopy(new Range(0,1)));
         rcmd.add(new GDiffData(new byte[] {65, 67}));
@@ -156,7 +163,7 @@ public class GDiffView extends JFrame
             }
         };
         JScrollPane scrGDiff = new JScrollPane(listGDiff);
-        scrGDiff.setPreferredSize(new Dimension(100,460));
+//        scrGDiff.setPreferredSize(new Dimension(300,460));
 
         JPanel contentPane = new JPanel(new BorderLayout());
         contentPane.add(scrSrc,BorderLayout.WEST);
@@ -186,6 +193,7 @@ public class GDiffView extends JFrame
         listGDiff.requestFocus();
 
         pack();
+
         setVisible(true);
     }
 
@@ -194,58 +202,68 @@ public class GDiffView extends JFrame
      */
     private void readSrc() throws IOException
     {
+//        
+//        for (int i = 0; i < nibs + 2; ++i)
+//        {
+//            sb.append(' ');
+//        }
+//        for (int i = 0; i < cCol; ++i)
+//        {
+//            appendHex(sb,i);
+//            sb.append(' ');
+//        }
+//        for (int i = 0; i < cCol; ++i)
+//        {
+//            sb.append(' ');
+//        }
+//        long addr = 0;
+//        byte[] rb = new byte[cCol];
+//        int c = in.read(rb);
+//        while (c > 0)
+//        {
+//            sb.append('\n');
+//            appendAddr(sb,addr);
+//            sb.append(": ");
+//            for (int i = 0; i < cCol; ++i)
+//            {
+//                if (i < c)
+//                {
+//                    appendHex(sb,rb[i]);
+//                }
+//                else
+//                {
+//                    sb.append("  ");
+//                }
+//                sb.append(' ');
+//            }
+//            for (int i = 0; i < cCol; ++i)
+//            {
+//                if (i < c)
+//                {
+//                    appendAsc(sb,rb[i]);
+//                }
+//                else
+//                {
+//                    sb.append(" ");
+//                }
+//            }
+//            addr += c;
+//            c = in.read(rb);
+//        }
+//        sb.append('\n');
+//        appendAddr(sb,addr);
+//        sb.append(": ");
         BufferedInputStream in = new BufferedInputStream(new FileInputStream(src));
-        byte[] rb = new byte[cCol];
-        int c = in.read(rb);
         sb = new StringBuffer(in.available() * 6);
-        for (int i = 0; i < nibs + 2; ++i)
+        HexBuilder hex = new HexBuilder(sb);
+        hex.appendHeader();
+        int x = in.read();
+        while (x >= 0)
         {
-            sb.append(' ');
+            hex.appendByte(x);
+            x = in.read();
         }
-        for (int i = 0; i < cCol; ++i)
-        {
-            appendHex(sb,i);
-            sb.append(' ');
-        }
-        for (int i = 0; i < cCol; ++i)
-        {
-            sb.append(' ');
-        }
-        long addr = 0;
-        while (c > 0)
-        {
-            sb.append('\n');
-            appendAddr(sb,addr);
-            sb.append(": ");
-            for (int i = 0; i < cCol; ++i)
-            {
-                if (i < c)
-                {
-                    appendHex(sb,rb[i]);
-                }
-                else
-                {
-                    sb.append("  ");
-                }
-                sb.append(' ');
-            }
-            for (int i = 0; i < cCol; ++i)
-            {
-                if (i < c)
-                {
-                    appendAsc(sb,rb[i]);
-                }
-                else
-                {
-                    sb.append(" ");
-                }
-            }
-            addr += c;
-            c = in.read(rb);
-        }
-        sb.append('\n');
-        appendAddr(sb,addr);
-        sb.append(": ");
+        hex.appendNewLine();
         in.close();
     }
 
@@ -403,12 +421,6 @@ public class GDiffView extends JFrame
         docSrc.setCharacterAttributes((int)beginPoint,(int)(endPoint - beginPoint),attr,true);
     }
 
-    public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, InterruptedException, BadLocationException, IOException
-    {
-        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        GDiffView frame = new GDiffView(args[0],args[1]);
-    }
-
     public void readGDiff() throws IOException, InvalidMagicBytes
     {
         BufferedInputStream gdiff = new BufferedInputStream(new FileInputStream(dif));
@@ -420,7 +432,20 @@ public class GDiffView extends JFrame
         gdiff.read(); // ignore version
 
         RandomAccessFile in = new RandomAccessFile(src,"r");
-        OutputStream pipeOut = new PipedOutputStream();
+
+        PipedInputStream pipeIn = new PipedInputStream();
+        Thread thTarg = new Thread(new Runnable()
+        {
+            public void run()
+            {
+                // TODO Auto-generated method stub
+                
+            }
+    
+        });
+        thTarg.start();
+        OutputStream pipeOut = new PipedOutputStream(pipeIn);
+
         GDiffCmd g = getGDiff(gdiff);
         trg = new StringBuffer(sb.length());
         while (!(g instanceof GDiffEnd))
