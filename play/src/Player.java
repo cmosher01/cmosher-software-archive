@@ -39,7 +39,7 @@ public class Player implements Immutable
 
     public static void main(String[] args) throws Throwable
     {
-
+	{
 		byte a = 1;
 		byte b = 0x7f;
 		byte c = (byte)0x80;
@@ -51,6 +51,7 @@ public class Player implements Immutable
 		byte i = -128;
 		System.out.println();
 
+	}
 
 
 		Map map = new HashMap();
