@@ -32,7 +32,7 @@ public class AppInit implements ServletContextListener
 			FileInputStream inProps = null;
 			try
 			{
-				ipProps = new FileInputStream(new File(urlProps.getFile()));
+				inProps = new FileInputStream(new File(urlProps.getFile()));
 				props.load(inProps);
 			}
 			finally
