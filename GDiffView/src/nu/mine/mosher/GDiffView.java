@@ -267,7 +267,7 @@ public class GDiffVeiew extends JFrame
         }
     }
     /**
-     * @param i
+     * @param row
      * @return
      */
     private int getAscRowStart(int row)
