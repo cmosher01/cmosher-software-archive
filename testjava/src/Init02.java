@@ -1,6 +1,4 @@
-
 /*
-
 File Init02.java
 Copyright 2003 R.G.Baldwin
 
