@@ -38,10 +38,10 @@ public class Perm
 	{
 		URL urlProps = Perm.class.getClassLoader().getResource("nu/mine/mosher/jdotest/jdo.properties");
 		System.err.println("------------------------------------");
-		System.err.println(urlProps.toString());
+		System.err.println(urlProps.getFile());
 		System.err.println("------------------------------------");
 		Properties props = new Properties();
-		props.load(new FileInputStream(new File(urlProps.toString())));
+		props.load(new FileInputStream(new File(urlProps.getFile())));
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(props);
 		this.pm = pmf.getPersistenceManager();
 	}
