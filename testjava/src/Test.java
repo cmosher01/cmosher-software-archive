@@ -61,6 +61,10 @@ public class Test
         return j;
     }
 
+    private static void test()
+    {
+    }
+
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
@@ -68,6 +72,7 @@ public class Test
 
         System.setSecurityManager(new SecurityManager());
 
+        test();
 
         Reader rdr = new InputStreamReader(new FileInputStream(new File("\\temp\\test.txt")));
         BufferedReader br = new BufferedReader(rdr);
