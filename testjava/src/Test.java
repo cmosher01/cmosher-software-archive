@@ -37,21 +37,41 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
-        System.out.println(new Test().getClass().getPackage());
 
-        Object o = new Object();
-        o.getClass().getName();
 
-        OutputStream os = null;
-        try
+
+        Object x = new String("asdf");
+        if (x instanceof String)
         {
-            os = new FileOutputStream(new File("test.txt"));
-            os.write(65);
+            System.out.println("yes");
         }
-        finally
+        else
         {
-            UniversalCloser.close(os);
+            System.out.println("no");
         }
+
+
+
+
+
+//        System.out.println(new Test().getClass().getPackage());
+//
+//        Object o = new Object();
+//        o.getClass().getName();
+//
+//        OutputStream os = null;
+//        try
+//        {
+//            os = new FileOutputStream(new File("test.txt"));
+//            os.write(65);
+//        }
+//        finally
+//        {
+//            UniversalCloser.close(os);
+//        }
+
+
+
 //        Integer[] ri = new Integer[5];
 //        ri[0] = new Integer(10);
 //        ri[1] = new Integer(11);
