@@ -85,7 +85,7 @@ public class VelocityWrapper
         Properties props = new Properties();
 
         // use our own LogSystem (VelocityLogger)
-        props.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS, VelocityLogger.class.getClass().getName());
+        props.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS, VelocityLogger.class.getName());
 
         props.setProperty(VelocityEngine.INPUT_ENCODING,"UTF-8");
         props.setProperty(VelocityEngine.OUTPUT_ENCODING,"UTF-8");
