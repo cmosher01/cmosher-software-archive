@@ -5,7 +5,7 @@ public class StringFieldizer /* TODO implements Iterable */
 {
 	private final Iterator i;
 	
-	public StringFields(String s)
+	public StringFieldizer(String s)
 	{
 		i = new Iter(s);
 	}
