@@ -138,8 +138,6 @@ public class Checksum
                 hashtable[hash] = i;
             }
         }
-        //System.out.println("checksums : " + printLongArray(checksums));
-        //System.out.println("hashtable : " + printIntArray(hashtable));
     }
 
     public int findChecksumIndex(long checksum)
@@ -154,34 +152,4 @@ public class Checksum
         Primes primes = new Primes(size);
         return primes.below(size);
     }
-
-//    private String printIntArray(int[] a)
-//    {
-//        String result = "";
-//        result += "[";
-//        for (int i = 0; i < a.length; i++)
-//        {
-//            result += a[i];
-//            if (i != (a.length - 1))
-//                result += ",";
-//            else
-//                result += "]";
-//        }
-//        return result;
-//    }
-//
-//    private String printLongArray(long[] a)
-//    {
-//        String result = "";
-//        result += "[";
-//        for (int i = 0; i < a.length; i++)
-//        {
-//            result += a[i];
-//            if (i != (a.length - 1))
-//                result += ",";
-//            else
-//                result += "]";
-//        }
-//        return result;
-//    }
 }
