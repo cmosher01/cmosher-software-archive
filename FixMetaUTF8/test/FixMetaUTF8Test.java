@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 
 import junit.framework.TestCase;
@@ -15,6 +16,6 @@ public class FixMetaUTF8Test extends TestCase
 {
     public void testSimple() throws IOException
     {
-        FixMetaUTF8.main(new String[]{"simple.html"});
+        String s = FixMetaUTF8.fix(new File("simple.html"));
     }
 }
