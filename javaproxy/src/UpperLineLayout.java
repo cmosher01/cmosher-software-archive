@@ -103,7 +103,7 @@ public class UpperLineLayout implements LayoutManager, Serializable
         setSizes(parent);
 
         Rectangle rec = parent.getBounds();
-        Insets insets = parent.insets();
+        Insets insets = parent.getInsets();
         if (rec.width <= 0 || rec.height <= 0)
         {
             dim.width = preferredWidth + insets.left + insets.right;
