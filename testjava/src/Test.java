@@ -62,10 +62,13 @@ public class Test
         Mute x = new Mute();
         x.x = 5;
         System.out.println(x);
-        Object y = Cloner.cloneObject(x);
+
+        ImmutableReference im = new ImmutableReference(x);
+        System.out.println(im);
+
         x.x = 7;
         System.out.println(x);
-        System.out.println(y);
+        System.out.println(im);
 
 
 //        Object x = new Object();
