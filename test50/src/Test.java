@@ -6,11 +6,17 @@ public class Test
 	{
 		String test = "this,is,a,test";
 		StringFieldizer sf = new StringFieldizer(test);
-		java.util.Iterator<String> i = sf.iterator();
-		while (i.hasNext())
+
+		for (String s : sf)
 		{
-			String s = i.next();
 			System.out.println(s);
 		}
+
+//		Iterator<String> i = sf.iterator();
+//		while (i.hasNext())
+//		{
+//			String s = i.next();
+//			System.out.println(s);
+//		}
 	}
 }
