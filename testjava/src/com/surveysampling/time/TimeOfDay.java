@@ -73,19 +73,19 @@ public class TimeOfDay implements Comparable
         this.milliseconds = milliseconds;
     }
 
-    /**
-     * Convenience constructor that initializes the object with
-     * the given time components, and <code>Calendar.getInstance()</code>.
-     * @param hours
-     * @param minutes
-     * @param seconds
-     * @param milliseconds
-     * @throws IllegalArgumentException
-     */
-    public TimeOfDay(int hours, int minutes, int seconds, int milliseconds) throws IllegalArgumentException
-    {
-        this(Calendar.getInstance(),hours,minutes,seconds,milliseconds);
-    }
+//    /**
+//     * Convenience constructor that initializes the object with
+//     * the given time components, and <code>Calendar.getInstance()</code>.
+//     * @param hours
+//     * @param minutes
+//     * @param seconds
+//     * @param milliseconds
+//     * @throws IllegalArgumentException
+//     */
+//    public TimeOfDay(int hours, int minutes, int seconds, int milliseconds) throws IllegalArgumentException
+//    {
+//        this(Calendar.getInstance(),hours,minutes,seconds,milliseconds);
+//    }
 //    public TimeOfDay(Calendar calendar, int hours, int minutes, int seconds)
 //    {
 //        this(calendar,hours,minutes,seconds,0);
