@@ -1,0 +1,79 @@
+<?xml version="1.0"	encoding="UTF-8" standalone="no"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
+
+	<description>Test Velocity</description>
+
+
+
+	<servlet>
+		<servlet-name>list</servlet-name>
+		<servlet-class>nu.mine.mosher.playvel.ListServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>list</servlet-name>
+		<url-pattern>/list/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>edit</servlet-name>
+		<servlet-class>nu.mine.mosher.playvel.EditServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>edit</servlet-name>
+		<url-pattern>/edit/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>editact</servlet-name>
+		<servlet-class>nu.mine.mosher.playvel.EditActServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>editact</servlet-name>
+		<url-pattern>/editact/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>delconf</servlet-name>
+		<servlet-class>nu.mine.mosher.playvel.DelConfServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>delconf</servlet-name>
+		<url-pattern>/delconf/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>delete</servlet-name>
+		<servlet-class>nu.mine.mosher.playvel.DeleteServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>delete</servlet-name>
+		<url-pattern>/delete/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>cancel</servlet-name>
+		<servlet-class>nu.mine.mosher.playvel.CancelServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>cancel</servlet-name>
+		<url-pattern>/cancel/*</url-pattern>
+	</servlet-mapping>
+
+
+
+	<context-param>
+		<param-name>properties</param-name>
+		<param-value>/WEB-INF/velocity.properties</param-value>
+		<description>Path to Velocity configuration file</description>
+	</context-param>
+
+	<resource-ref>
+		<description>DB	Connection</description>
+		<res-ref-name>jdbc/jdotest</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+</web-app>
