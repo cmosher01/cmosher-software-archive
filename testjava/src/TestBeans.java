@@ -83,16 +83,15 @@ public class TestBeans
         wr.invoke(bean, new Object[] { v });
     }
 
-    public static Map getPropertyDescriptors(BeanInfo bi) throws IntrospectionException
+    public static HashMap getPropertyDescriptors(BeanInfo bi) throws IntrospectionException
     {
         PropertyDescriptor[] rpd = bi.getPropertyDescriptors();
         if (rpd == null)
         {
-            throw new IntrospectionException("can't get property descriptors for bean");
+            throw new IntrospectionException("Cannot get PropertyDescriptors for bean class "+bi.getBeanDescriptor().getBeanClass().getName());
         }
-        
-        Map mapPDs = buildPropertyDescriptorMap(rpd);
-        return mapPDs;
+
+        return buildPropertyDescriptorMap(rpd);
     }
 
     public static BeanInfo getBeanInfo(Object bean) throws IntrospectionException
