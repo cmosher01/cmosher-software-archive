@@ -132,7 +132,13 @@ public class DateRange implements Immutable, Serializable, Comparable
 
     public int compareTo(Object o)
     {
-        // TODO compareTo
+    	DateRange that = (DateRange)o;
+        int d = 0;
+
+        if (d == 0)
+        {
+        	d = this.earliest.compareTo(that.earliest);
+        }
         return 0;
     }
 
