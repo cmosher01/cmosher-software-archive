@@ -199,6 +199,7 @@ public class DiskPos
     /**
      * @param track
      * @param sector
+     * @param byt
      * @throws InvalidPosException
      */
     public void setTS(int track, int sector, int byt) throws InvalidPosException
