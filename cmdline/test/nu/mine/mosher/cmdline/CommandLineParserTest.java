@@ -19,11 +19,15 @@ public class CommandLineParserTest extends TestCase
 
     public void testCommandLineParser()
     {
-        CommandLineParser p = new CommandLineParser(new String[] { "-a", "test.dat"});
+        CommandLineParser p = new CommandLineParser();
+        p.parse(new String[] { "-a", "test.dat"});
         Iterator i = p.getArguments();
 
         assertTrue(i.hasNext());
         Argument a = (Argument)i.next();
+        assertEquals("a",a.getName());
+        assertTrue(a.isOption());
+        assertTrue(a.isSpecified());
 
         assertTrue(i.hasNext());
         a = (Argument)i.next();
