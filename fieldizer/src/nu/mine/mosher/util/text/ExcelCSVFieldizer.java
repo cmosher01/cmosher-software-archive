@@ -81,23 +81,23 @@ public class ExcelCSVFieldizer
             return this.parser.getNextPos() >= 0;
         }
 
-        /**
-         * @return the next field
-         * @throws NoSuchElementException
-         */
-        public String next() throws NoSuchElementException
-        {
-            try
-            {
-                return this.parser.getOneValue();
-            }
-            catch (Throwable cause)
-            {
-                NoSuchElementException e = new NoSuchElementException();
-                e.initCause(cause);
-                throw e;
-            }
-        }
+//        /**
+//         * @return the next field
+//         * @throws NoSuchElementException
+//         */
+//        public String next() throws NoSuchElementException
+//        {
+//            try
+//            {
+//                return this.parser.getOneValue();
+//            }
+//            catch (Throwable cause)
+//            {
+//                NoSuchElementException e = new NoSuchElementException();
+//                e.initCause(cause);
+//                throw e;
+//            }
+//        }
 
         /**
          * @throws UnsupportedOperationException
