@@ -982,7 +982,7 @@ public class GDiffView extends JFrame
                                 System.out.print(" this: "+Long.toHexString(thisdif));
                                 if (thatdif < thisdif)
                                 {
-                                    System.out.print("       using: "+Long.toHexString(match));
+                                    System.out.print("          using: "+Long.toHexString(match));
                                     matchCurrent = match;
                                     cMatchCurrent = cMatch;
                                     progress = true;
