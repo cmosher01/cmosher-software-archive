@@ -66,7 +66,8 @@ public class GDiffView extends JFrame
 
     private Map styles = new HashMap();
 
-    private File src;
+    private File fileSrc;
+    private File fileTrg;
 
     private InputStream dif;
 
@@ -76,8 +77,8 @@ public class GDiffView extends JFrame
 
     private int rowLen = nibs + 2 + 4 * cCol + 1;
 
-    private StringBuffer sb;
-    private StringBuffer trg;
+    private StringBuffer sbSrc;
+    private StringBuffer sbTrg;
     private long srcEOF;
 
     private long beginSrc;
@@ -179,7 +180,8 @@ public class GDiffView extends JFrame
 
 //        ByteArrayOutputStream rbs = Delta.delta(fileSrc, fileTrg);
 //        dif = new ByteArrayInputStream(rbs.toByteArray());
-        src = fileSrc;
+        this.fileSrc = fileSrc;
+        this.fileTrg = fileTrg
 
         initStyles();
 
@@ -310,11 +312,11 @@ public class GDiffView extends JFrame
         });
 
         readSrc();
-        docSrc.insertString(0,sb.toString(),(AttributeSet)styles.get("body"));
+        docSrc.insertString(0,sbSrc.toString(),(AttributeSet)styles.get("body"));
 
 //        readGDiff();
         tempReadTarget();
-        docTrg.insertString(0,trg.toString(),(AttributeSet)styles.get("body"));
+        docTrg.insertString(0,sbTrg.toString(),(AttributeSet)styles.get("body"));
 
         highlightInserts();
         highlightDeletes();
@@ -430,9 +432,9 @@ public class GDiffView extends JFrame
      */
     private void readSrc() throws IOException
     {
-        BufferedInputStream in = new BufferedInputStream(new FileInputStream(src));
-        sb = new StringBuffer(in.available() * 6);
-        HexBuilder hex = new HexBuilder(sb);
+        BufferedInputStream in = new BufferedInputStream(new FileInputStream(fileSrc));
+        sbSrc = new StringBuffer(in.available() * 6);
+        HexBuilder hex = new HexBuilder(sbSrc);
         hex.appendHeader();
         int x = in.read();
         while (x >= 0)
@@ -574,10 +576,10 @@ public class GDiffView extends JFrame
 
         gdiff.read(); // ignore version
 
-        RandomAccessFile in = new RandomAccessFile(src,"r");
-        trg = new StringBuffer((int)in.length()); // TODO long doesn't work
+        RandomAccessFile in = new RandomAccessFile(fileSrc,"r");
+        sbTrg = new StringBuffer((int)in.length()); // TODO long doesn't work
 
-        HexBuilder hex = new HexBuilder(trg);
+        HexBuilder hex = new HexBuilder(sbTrg);
         hex.appendHeader();
 
         GDiffCmd g = getGDiff(gdiff);
