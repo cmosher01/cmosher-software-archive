@@ -20,6 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 
+import nu.mine.mosher.core.*;
 import nu.mine.mosher.core.Util;
 
 public class GROapplet extends JApplet
