@@ -83,7 +83,7 @@ public class MySQLTest
 		}
     }
 
-	protected void processLine(String s)
+	protected void processLine(String s) throws SQLException
     {
 		int comment = s.indexOf('#');
 		if (comment >= 0)
@@ -102,7 +102,7 @@ public class MySQLTest
 
 		Iterator i = new StringFields(s).iterator();
 
-		int year = Integer.parseInt((String)i.next());
+		int year = readInt(i.next());
 		switch (year)
         {
             case 1790:
@@ -151,7 +151,16 @@ public class MySQLTest
 
     protected int readInt(Object stringField)
     {
-    	return Integer.parseInt((String)stringField);
+		String s = (String)stringField;
+		if (s.length() > 0)
+		{
+			i = Integer.parseInt(s);
+		}
+		else
+		{
+			i = 0;
+		}
+    	return i;
     }
 
     protected void calc() throws SQLException
