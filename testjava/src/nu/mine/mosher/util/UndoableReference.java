@@ -3,7 +3,7 @@ package com.surveysampling.util;
 public final class UndoableReference
 {
     private Cloneable state;
-    private Undoer undoer;
+    private Undoer undoer = new Undoer();
 
     public UndoableReference(Cloneable state) throws CloneNotSupportedException
     {
