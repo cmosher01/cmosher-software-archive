@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -45,13 +49,12 @@ public class MySQLTest
 			log.info("Done creating schema.");
 
 			log.info("Reading data...");
-			BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream()));
+			BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(new File("F:\\Genealogy\\by family\\Flandreau\\census\\flandreau_census.csv"))));
 			for (String s = in.readLine(); s != null; s = in.readLine())
 			{
 				processLine(s);
 			}
-			insertData();
-			log.info("Done inserting data.");
+			log.info("Done reading data.");
 
 			log.info("Calculating...");
 			calc();
@@ -72,7 +75,16 @@ public class MySQLTest
 		}
     }
 
-	protected void calc() throws SQLException
+	/**
+     * @param s
+     */
+    private void processLine(String s)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    protected void calc() throws SQLException
     {
     	calcOneCount(1790,"male",16,150);
 		calcOneCount(1790,"male",0,15);
