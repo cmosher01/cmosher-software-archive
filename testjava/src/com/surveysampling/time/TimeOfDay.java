@@ -227,10 +227,13 @@ public class TimeOfDay implements Comparable
         {
             return -1;
         }
-        if (i0 > i1)
+        else if (i0 > i1)
         {
             return +1;
         }
-        return 0;
+        else
+        {
+            return 0;
+        }
     }
 }
