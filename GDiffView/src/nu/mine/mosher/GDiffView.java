@@ -107,8 +107,8 @@ public class GDiffVeiew extends JFrame
 //            "00000008: D1 FF D1 FF 04 01 20 30  ilililil\n",
         (AttributeSet)styles.get("body"));
  
-        doc.setCharacterAttributes(57,5,(AttributeSet)styles.get("highlight"),true);                                                                 
-        doc.setCharacterAttributes(80,2,(AttributeSet)styles.get("highlight"),true);                                                                 
+//        doc.setCharacterAttributes(57,5,(AttributeSet)styles.get("highlight"),true);                                                                 
+//        doc.setCharacterAttributes(80,2,(AttributeSet)styles.get("highlight"),true);                                                                 
  
         pack();
         setVisible(true);
