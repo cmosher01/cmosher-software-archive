@@ -50,7 +50,7 @@ public class Delta
     {
     }
 
-    public void computeDelta(File sourceFile, File targetFile, DiffWriter output) throws IOException, Exception //gls031504a
+    public static void computeDelta(File sourceFile, File targetFile, DiffWriter output) throws IOException, Exception //gls031504a
     {
 
         int targetLength = (int)targetFile.length();
