@@ -708,7 +708,7 @@ public class Disk
         boolean valid = false;
         if (sector[0]==0 &&
             DiskPos.isValidTrack(sector[1]) && DiskPos.isValidSector(sector[2]) &&
-            sector[3]==0 && sector[4]==0 &&
+            DiskPos.isValidTrack(sector[3]) && DiskPos.isValidSector(sector[4]) &&
             word(sector,5)%0x7A == 0 &&
             match(sector,7,new byte[]{0,0,0,0,0}) &&
             (sector[0x0C] > 0 || sector[0x0D] > 0) &&
