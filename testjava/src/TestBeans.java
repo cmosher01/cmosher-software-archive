@@ -1,7 +1,15 @@
+import java.beans.PropertyEditor;
+import java.beans.PropertyEditorManager;
+
 public class TestBeans
 {
     public static void main(String[] rArgs) throws Throwable
     {
-        System.out.println("test");
+        PropertyEditor ed = PropertyEditorManager.findEditor(Integer.TYPE);
+        if (ed == null)
+        {
+            throw new Exception("can't get property editor for integer");
+        }
+        ed.setAsText("34");
     }
 }
