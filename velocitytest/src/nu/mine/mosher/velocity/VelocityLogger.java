@@ -64,4 +64,10 @@ public class VelocityLogger implements LogSystem
                 return Level.WARNING;
         }
     }
+
+    public Logger logger()
+    {
+        return log;
+    }
+
 }
