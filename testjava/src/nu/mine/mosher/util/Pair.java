@@ -1,22 +1,22 @@
 public class Pair implements Cloneable, Comparable
 {
-    private Object a;
-    private Object b;
+    private Cloneable a;
+    private Cloneable b;
 
-    public Pair(Object a, Object b)
+    public Pair(Cloneable a, Cloneable b) throws CloneNotSupportedException
     {
-        this.a = new CloneableReference(a).clone();
-        this.b = new CloneableReference(b).clone();
+        this.a = Cloner.cloneObject(a);
+        this.b = Cloner.cloneObject(b);
     }
 
-    public Object a()
+    public Cloneable a() throws CloneNotSupportedException
     {
-        return new CloneableReference(a).clone();
+        return Cloner.cloneObject(this.a);
     }
 
-    public Object b()
+    public Cloneable b() throws CloneNotSupportedException
     {
-        return new CloneableReference(b).clone();
+        return Cloner.cloneObject(this.b);
     }
 
     public String toString()
