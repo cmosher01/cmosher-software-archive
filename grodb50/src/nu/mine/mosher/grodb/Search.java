@@ -31,7 +31,7 @@ public class Search
 		return this.description;
 	}
 
-	public void setCompleted(String completed)
+	public void setCompleted(boolean completed)
 	{
 		this.completed = completed;
 	}
