@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileFilter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,13 +24,20 @@ public class FileFinder
         }
         final Pattern patSubdir = Pattern.compile(sub);
 
-        File[] rm = dir.listFiles(new FileFilter()
+        List dirs = new ArrayList();
+        dirs.add(dir);
+
+        while (dirs.size() > 0)
         {
-            public boolean accept(File pathname)
+            String d = dirs.remove(0);
+            File[] rm = d.listFiles(new FileFilter()
             {
-                Matcher mat = pat.matcher(pathname.getName());
-                return mat.matches();
-            }
-        });
+                public boolean accept(File pathname)
+                {
+                    Matcher mat = patFile.matcher(pathname.getName());
+                    return mat.matches();
+                }
+            });
+        }
     }
 }
