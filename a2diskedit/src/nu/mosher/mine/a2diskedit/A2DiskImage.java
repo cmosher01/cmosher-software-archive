@@ -35,6 +35,13 @@ public class A2DiskImage
 		return img[i];
 	}
 
+	public byte[] getBytes(int track, int sector, int offset, int c)
+	{
+		byte[] rb = new byte[c];
+		System.arraycopy(img,(track*SECTORS_PER_TRACK+sector)*BYTES_PER_SECTOR+offset,rb,0,c);
+		return rb;
+	}
+
 	private void parseImage()
 	{
 		fixOrder();
