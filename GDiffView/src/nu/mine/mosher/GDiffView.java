@@ -968,7 +968,7 @@ public class GDiffView extends JFrame
                             if (cMatch == cMatchCurrent)
                             {
                                 long corresp = there+start;
-                                long thatdif = match-corresp;
+                                long thatdif = match;
                                 if (thatdif < 0)
                                 {
                                     thatdif = -thatdif;
