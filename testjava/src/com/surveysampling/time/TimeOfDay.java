@@ -118,13 +118,12 @@ public class TimeOfDay
      * this object's time on the given Date.
      * @param d
      * @param cal
-     * @return
      */
-    public Date getTimeOnDay(Date d, Calendar cal)
+    public void getTimeOnDay(Date d, Calendar cal)
     {
         cal.setTimeInMillis(d.getTime());
         getTimeOnDay(cal);
-        return new Date(cal.getTimeInMillis());
+        d.setTime(cal.getTimeInMillis());
     }
 
     /**
@@ -133,9 +132,9 @@ public class TimeOfDay
      * @param d
      * @return
      */
-    public Date getTimeOnDay(Date d)
+    public void getTimeOnDay(Date d)
     {
-        return getTimeOnDay(d,Calendar.getInstance());
+        getTimeOnDay(d,Calendar.getInstance());
     }
 
 
