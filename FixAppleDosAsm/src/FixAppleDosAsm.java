@@ -28,7 +28,7 @@ public class FixAppleDosAsm
         for (String s = in.readLine(); s != null; s = in.readLine())
         {
             s = processLine(s);
-            out.write(s);
+            out.print(s);
             out.newLine();
         }
         out.flush();
