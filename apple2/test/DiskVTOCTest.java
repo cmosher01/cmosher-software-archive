@@ -25,7 +25,7 @@ public class DiskVTOCTest extends TestCase
         Disk disk = readDiskResource("DOS33_SystemMaster_19800825.dsk");
         List rPos = new ArrayList();
         disk.findDos33VTOC(rPos);
-        this.assertEquals(1, rPos.size());
+        assertEquals(1, rPos.size());
     }
 //    private static byte[] zeroes = new byte[0x100];
 //
