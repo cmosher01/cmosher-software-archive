@@ -123,7 +123,7 @@ public class BinDiff
                             }
                             if (cinsert > 0)
                             {
-								StringBuffer s = new StringBuffer(256);
+								StringBuffer s2 = new StringBuffer(256);
                                 //sprintf(s, "i%d{", cinsert);
                                 //fputs(s, fdif);
 
