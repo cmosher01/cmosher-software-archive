@@ -38,9 +38,6 @@ public class GDiffWriter
 
     int buflen = 0;
 
-    protected boolean debug = false;
-
-    //Vector writeQueue = new Vector();
     DataOutputStream output = null;
 
 
@@ -56,25 +53,15 @@ public class GDiffWriter
         output.writeByte(0x04);
     }
 
-    public void setDebug(boolean flag)
-    {
-        debug = flag;
-    }
-
     public void addCopy(int offset, int length) throws IOException
     {
         if (buflen > 0)
             writeBuf();
 
-        //output debug data
-        if (debug)
-            System.err.println("COPY off: " + offset + ", len: " + length);
-
         // output real data
-        //byte command;
         if (offset > Integer.MAX_VALUE)
         {
-            // use long, int format
+            // ??? use long, int format
             output.writeByte(255);
             // Actually, we don't support longer files than int.MAX_VALUE at the
             // moment..
@@ -139,20 +126,6 @@ public class GDiffWriter
 
     private void writeBuf() throws IOException
     {
-        // output debug data
-        if (debug)
-        {
-            System.err.print("DATA:");
-            for (int ix = 0; ix < buflen; ix++)
-            {
-                if (buf[ix] == '\n')
-                    System.err.print("\\n");
-                else
-                    System.err.print(String.valueOf(((char)buf[ix])));
-            }
-            System.err.println("");
-        }
-
         if (buflen > 0)
         {
             // output real data
