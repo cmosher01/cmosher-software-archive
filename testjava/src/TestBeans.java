@@ -118,7 +118,7 @@ public class TestBeans
         return ed;
     }
 
-    public static HashMap getPropertyDescriptors(BeanInfo bi) throws IntrospectionException
+    public static HashMap getPropertyDescriptors(BeanInfo bi)
     {
         PropertyDescriptor[] rpd = bi.getPropertyDescriptors();
         if (rpd == null)
