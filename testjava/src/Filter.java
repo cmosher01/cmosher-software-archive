@@ -1,9 +1,10 @@
 import java.util.Collection;
 import java.util.Iterator;
 
-public abstract class Filter
+public class Filter
 {
     private final Collection input;
+
     public Filter(Collection input)
     {
         this.input = input;
