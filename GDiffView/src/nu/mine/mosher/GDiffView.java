@@ -51,6 +51,8 @@ public class GDiffVeiew extends JFrame
 
     private int nibs = 8;
 
+    private int rowLen = nibs+2+4*cCol+1;
+
     private StringBuffer sb;
 
     private int srcBegin = -1;
@@ -240,11 +242,27 @@ public class GDiffVeiew extends JFrame
     {
         if (srcBegin >= 0 && srcEnd >= 0)
         {
+            unhighlight(getHexStart(srcBegin),getHexRowEnd(srcBegin));
+            for (int i = getRow(srcBegin)+1; i < getRow(srcEnd)-1; ++i)
+            {
+                unhighlight(getHexRowStart(i),getHexRowEnd(srcEnd))
+            }
         }
+    }
+    public int getRow(int pos)
+    {
+        return pos/cCol+1;
+    }
+    public int getHexRowStart(int row)
+    {
+        return row*rowLen;
+    }
+    public int getHexRowEnd(int pos)
+    {
+        return (row+1)*rowLen-1;
     }
     public int getHexStart(int pos)
     {
-        int rowLen = nibs+2+4*cCol+1;
         return rowLen+(pos/cCol)*rowLen+nibs+2+(pos%cCol)*3;
     }
     public int getHexEnd(int pos)
@@ -253,7 +271,6 @@ public class GDiffVeiew extends JFrame
     }
     public int getAscStart(int pos)
     {
-        int rowLen = nibs+2+4*cCol+1;
         return rowLen+(pos/cCol)*rowLen+nibs+2+cCol*3+(pos%cCol);
     }
     public int getAscEnd(int pos)
