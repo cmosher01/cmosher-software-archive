@@ -36,6 +36,11 @@ public final class CollectionTests
         }
 
 
+
+
+
+
+
         Iterator t = new Iterator()
         {
             int c = 3;
@@ -65,6 +70,7 @@ public final class CollectionTests
 
         //converting from an Iterator to a List
         List tl = Util.list(t);
+
         for (Iterator i = tl.iterator(); i.hasNext();)
         {
             String string = (String)i.next();
