@@ -67,43 +67,27 @@ public class MtaURI
         mTimeout = nTimeout;
 	}
 
-	/**
-	 * Gets the protocol portion of the URI.
-	 */
-	public String getProtocol()
+    public URI getURI()
+    {
+        return mURI;
+    }
+
+	public int getRate()
 	{
-		return mProtocol;
+		return mRate;
+	}
+
+	public int getTimeout()
+	{
+		return mTimeout;
 	}
 
 	/**
-	 * Gets the host portion of the URI.
-	 */
-	public String getHost()
-	{
-		return mHost;
-	}
-
-	/**
-	 * Gets the port portion of the URI.
-	 */
-	public int getPort()
-	{
-		return mPort;
-	}
-
-	/**
-	 * Returns the URI as a string of the form
-	 * "protocol://host:port"
+	 * Returns the URI as a string
 	 */
 	public String toString()
 	{
-		StringBuffer s = new StringBuffer(64);
-		s.append(mProtocol);
-		s.append("://");
-		s.append(mHost);
-		s.append(":");
-		s.append(mPort);
-		return s.toString();
+        return mURI.toASCIIString();
 	}
 
 	/**
@@ -116,10 +100,7 @@ public class MtaURI
 		if (!(obj instanceof MtaURI))
 			return false;
 
-		MtaURI o = (MtaURI)obj;
-		return
-			mProtocol.equalsIgnoreCase(o.mProtocol) &&
-			mHost.equalsIgnoreCase(o.mHost) &&
-			mPort==o.mPort;
+		MtaURI that = (MtaURI)obj;
+		return this.mURI.equals(that.mURI);
 	}
 }
