@@ -21,4 +21,9 @@ public class VolumeSector
         this.pos = pos;
         this.i = index;
     }
+
+    public String toString()
+    {
+        return pos.toStringTS();
+    }
 }
