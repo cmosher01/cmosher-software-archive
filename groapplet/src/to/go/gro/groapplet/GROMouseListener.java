@@ -30,6 +30,9 @@ public class GROMouseListener extends MouseInputAdapter
     	if (mLastIndi != null)
     	{
     		if (mLastIndi.isHit())
+    		{
+    			
+    		}
 			mLastIndi = null;
     	}
         super.mouseReleased(evt);
@@ -37,7 +40,10 @@ public class GROMouseListener extends MouseInputAdapter
 
     public void mouseDragged(MouseEvent evt)
     {
-        // TODO Auto-generated method stub
+		Indi indi = fc.hitIndi(evt.getPoint());
+		if (!indi.isHit() && mLastIndi.isHit())
+		{
+		}
         super.mouseDragged(evt);
     }
 }
