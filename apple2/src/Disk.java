@@ -293,6 +293,10 @@ public class Disk
         return 0;
     }
 
+/**
+ * @param tsmapMapsInCatalog
+ * @throws InvalidPosException
+ */
 //    /**
 //     * @param allowLarge
 //     * @param tsmapMaps
@@ -384,11 +388,74 @@ public class Disk
 //        }
 //    }
 
+    public void findDos33TSMapSector(TSMap tsmapMapsInCatalog) throws InvalidPosException
+    {
+        rewind();
+        while (!EOF())
+        {
+            DiskPos cur = this.pos;
+            byte[] sector = read(DiskPos.cSector);
+            if (isfindDos33TSMapSector(sector,tsmapMapsInCatalog))
+            {
+                System.out.print("T/S map @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
+                if (sector[1] != 0 || sector[2] != 0)
+                {
+                    System.out.print(" (next @ T$"+Integer.toHexString(sector[1])+", S$"+Integer.toHexString(sector[2])+")");
+                }
+                if (tsmapMapsInCatalog.isMarked(cur.getSectorInDisk()))
+                {
+                    System.out.print(" (cataloged)");
+                }
+                else
+                {
+                    System.out.print(" (orphaned)");
+                }
+                System.out.println();
+            }
+        }
+    }
+
+    /**
+     * @param sector
+     * @param tsmapMapsInCatalog
+     * @return
+     */
+    protected boolean isfindDos33TSMapSector(byte[] sector, TSMap tsmapMapsInCatalog)
+    {
+        boolean valid = true;
+        if (sector[0]==0 &&
+            DiskPos.isValidTrack(sector[1]) && DiskPos.isValidSector(sector[2]) &&
+            sector[3]==0 && sector[4]==0 &&
+            word(sector,5)%0x7A == 0 &&
+            match(sector,7,new byte[]{0,0,0,0,0}) &&
+            (sector[0x0C] > 0 || sector[0x0D] > 0) &&
+            DiskPos.isValidTrack(sector[0x0C]) && DiskPos.isValidSector(sector[0x0D]))
+        {
+            int ts = 0x0E;
+            while (ts+1 < sector.length && (sector[ts] != 0 || sector[ts+1] != 0) && valid)
+            {
+                if (!(DiskPos.isValidTrack(sector[ts]) && DiskPos.isValidSector(sector[ts+1])))
+                {
+                    valid = false;
+                }
+                ts += 2;
+            }
+            while (ts < sector.length && valid)
+            {
+                if (sector[ts++] != 0)
+                {
+                    valid = false;
+                }
+            }
+        }
+        return valid;
+    }
+
     /**
      * @param tsmapMapsInCatalog
      * @throws InvalidPosException
      */
-    public void findDos33TSMapSector(TSMap tsmapMapsInCatalog) throws InvalidPosException
+    public void findDos33TSMapSectorX(TSMap tsmapMapsInCatalog) throws InvalidPosException
     {
         rewind();
         while (!EOF())
