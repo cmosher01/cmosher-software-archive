@@ -156,7 +156,7 @@ public class NormalizerTest extends TestCase
 		String norm = n.normalize(pre);
 		dumphex(norm);
 		dumphex(comp);
-		assertEquals(norm,comp);
+		assertEquals(comp,norm);
 	}
 
     private static void dumphex(String s)
