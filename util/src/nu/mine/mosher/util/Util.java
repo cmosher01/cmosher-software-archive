@@ -95,13 +95,13 @@ public final class Util
 
 
 //  TODO Fix these for Java 1.5:
-    public static ArrayList<T> list(Iterable<T> i)
+    public static<T> ArrayList<T> list(Iterable<T> i)
     {
         ArrayList<T> r = new ArrayList<T>();
         addAll(i,r);
         return r;
     }
-    public static void addAll(Iterator<?> i, Collection<?> collection)
+    public static<T> void addAll(Iterator<T> i, Collection<T> collection)
     {
         while (i.hasNext())
         {
