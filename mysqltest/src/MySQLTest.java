@@ -152,6 +152,9 @@ public class MySQLTest
 		{
 			closeStatement(st);
 		}
+		if (idImage == 0)
+		{
+		}
     }
 
     protected int readInt(Object stringField)
