@@ -36,5 +36,7 @@ public class TestLog
             {
             }
         });
+
+        Logger.global.severe("bad bad bad");
     }
 }
