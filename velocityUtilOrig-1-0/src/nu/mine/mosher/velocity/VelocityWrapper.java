@@ -123,4 +123,27 @@ public class VelocityWrapper
 
         velocity.mergeTemplate(inputTemplate.getName(),context,out);
     }
+
+    public static void merge(File inputTemplate, Context context, File outputFile) throws VelocityException
+    {
+        BufferedWriter out = null;
+        try
+        {
+            merge(inputTemplate,context,out);
+        }
+        finally
+        {
+            if (out != null)
+            {
+                try
+                {
+                    out.close();
+                }
+                catch (Throwable e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }
