@@ -64,7 +64,8 @@ public class Delta
             System.out.println("using match length S = " + S);
         }
 
-        new Checksum().generateChecksums(sourceFile);
+        Checksum checksum = new Checksum();
+        checksum.generateChecksums(sourceFile);
 
         PushbackInputStream target = new PushbackInputStream(new BufferedInputStream(new FileInputStream(targetFile)),buff_size);
         RandomAccessFile source = new RandomAccessFile(sourceFile,"r");
