@@ -35,7 +35,7 @@ public class DiskPos
      * @param allowLarge
      * @throws InvalidPosException
      */
-    private void verifyBlock(int block, boolean allowLarge) throws InvalidPosException
+    private static void verifyBlock(int block, boolean allowLarge) throws InvalidPosException
     {
         if (block < 0 || (!allowLarge && cBlocksPerDisk <= block))
         {
@@ -48,7 +48,7 @@ public class DiskPos
      * @param siz
      * @throws InvalidPosException
      */
-    private void verifyByte(int byt, int siz) throws InvalidPosException
+    private static void verifyByte(int byt, int siz) throws InvalidPosException
     {
         if (byt < 0 || siz <= byt)
         {
@@ -60,7 +60,7 @@ public class DiskPos
      * @param sector
      * @throws InvalidPosException
      */
-    private void verifySector(int sector) throws InvalidPosException
+    private static void verifySector(int sector) throws InvalidPosException
     {
         if (sector < 0 || cSectorsPerTrack <= sector)
         {
@@ -72,7 +72,7 @@ public class DiskPos
      * @param track
      * @throws InvalidPosException
      */
-    private void verifyTrack(int track) throws InvalidPosException
+    private static void verifyTrack(int track) throws InvalidPosException
     {
         if (track < 0 || cTracksPerDisk <= track)
         {
