@@ -271,7 +271,7 @@ public class GDiffVeiew extends JFrame
      */
     private int getAscRowStart(int row)
     {
-        return (row+1)*rowLen-1-cCol-1-cCol;
+        return (row+1)*rowLen-1-cCol;
     }
 
     /**
@@ -280,7 +280,7 @@ public class GDiffVeiew extends JFrame
      */
     private int getAscRowEnd(int row)
     {
-        return (row+1)*rowLen-1-cCol-1;
+        return (row+1)*rowLen-1;
     }
 
     public int getRow(int pos)
