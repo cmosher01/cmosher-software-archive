@@ -38,6 +38,5 @@ public class DiffWriter
 		System.out.print(s.toString());
 		System.out.flush();
 		s = new StringBuffer(1024);
-		pos = 0;
 	}
 }
