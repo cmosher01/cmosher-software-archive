@@ -47,6 +47,7 @@ public class VolumeCatalog
         }
 
         // then scan whole disk for other catalog sectors, if any
-        disk.findDos33CatalogSector(rCat)
+        List rCatSearch = new ArrayList();
+        disk.findDos33CatalogSector(rCatSearch);
     }
 }
