@@ -2,6 +2,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
  * Created on Sep 17, 2004
@@ -32,7 +34,9 @@ public class Apple2
         Disk disk = new Disk(rbDisk);
         List rVTOC = new ArrayList();
         disk.findDos33VTOC(rVTOC);
-        disk.findDos33CatalogSector();
-        disk.findDos33TSMapSector();
+        List rCat = new ArrayList();
+        disk.findDos33CatalogSector(rCat);
+        List rTSMap = new ArrayList()
+        disk.findDos33TSMapSector(tTSMap);
     }
 }
