@@ -117,11 +117,11 @@ public class VolumeBoot extends VolumeEntity
                 {
                     ident = "DOS 3.3 (1980) Slave (A$"+Hex2Bin.hexbyte(data[0xFE])+"00)";
                 }
-                else if (same(data,patch(rDos83master,data[0xFE]-0x36)))
+                else if (same(data,patch(rDos83master,(data[0xFE]&0xff)-0x36)))
                 {
                     ident = "DOS 3.3 (1983) Slave (A$"+Hex2Bin.hexbyte(data[0xFE])+"00)";
                 }
-                else if (same(data,patch(rDos86master,data[0xFE]-0x36)))
+                else if (same(data,patch(rDos86master,(data[0xFE]&0xff)-0x36)))
                 {
                     ident = "DOS 3.3 (1986) Slave (A$"+Hex2Bin.hexbyte(data[0xFE])+"00)";
                 }
