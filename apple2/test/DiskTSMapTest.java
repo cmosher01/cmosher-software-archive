@@ -13,6 +13,9 @@ public class DiskTSMapTest extends TestCase
 {
     private static byte[] zeroes = new byte[0x100];
 
+    /**
+     * 
+     */
     public void testTSMap_Zeroes()
     {
         assertFalse(Disk.isDos33VTOC(zeroes));
