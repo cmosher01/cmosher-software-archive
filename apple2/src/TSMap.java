@@ -1,4 +1,5 @@
 import java.util.Collection;
+import java.util.Iterator;
 
 /*
  * Created on Sep 18, 2004
@@ -13,6 +14,20 @@ import java.util.Collection;
 public class TSMap
 {
     private final boolean[] r = new boolean[DiskPos.cSectorsPerTrack*DiskPos.cTracksPerDisk];
+
+
+
+    /**
+     * @param rDiskPos
+     */
+    public void setAll(Collection rDiskPos, boolean mark)
+    {
+        for (Iterator i = rDiskPos.iterator(); i.hasNext();)
+        {
+            DiskPos p = (DiskPos)i.next();
+            set(p,mark);
+        }
+    }
 
     /**
      * @param p
