@@ -53,7 +53,6 @@
 
 import com.go.teaservlet.*;
 import java.io.*;
-import java.util.Vector;
 
 /******************************************************************************
  *
