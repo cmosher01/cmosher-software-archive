@@ -59,11 +59,11 @@ public class Test
             UniversalCloser2.close(x);
         }
         long end = System.currentTimeMillis();
-        double /*milliseconds*/ x = (end-start)/10.0;
+        double /*milliseconds*/ y = (end-start)/10.0;
 //        double microseconds = milliseconds*1000;
 //        double nanoseconds = microseconds*1000;
 //        double per = nanoseconds/LOOP;
-        System.out.println("elapsed time: "+x+" nanoseconds");
+        System.out.println("elapsed time: "+y+" nanoseconds");
 
 
 
