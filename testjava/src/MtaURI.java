@@ -66,14 +66,14 @@ public class MtaURI
 
     private int getParamInt(Map mapParamToValue, String param, String sMTA) throws URISyntaxException
     {
-        String sRate = (String)mapParamToValue.get(param);
-        if (sRate.length() == 0)
+        String s = (String)mapParamToValue.get(param);
+        if (s.length() == 0)
         {
             return -1;
         }
         try
         {
-            return Integer.parseInt(sRate);
+            return Integer.parseInt(s);
         }
         catch (NumberFormatException e)
         {
