@@ -51,8 +51,6 @@
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
  */
-package org.apache.commons.collections;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
