@@ -93,7 +93,7 @@ public class Pair implements Cloneable, Comparable
         {
             return +1;
         }
-        return ((Compareable)a)
+        return ((Comparable)x).compareTo(y);
     }
 
     public int hashCode()
