@@ -88,8 +88,7 @@ public class TestBeans
         PropertyDescriptor[] rpd = bi.getPropertyDescriptors();
         if (rpd == null)
         {
-            throw new IntrospectionException(
-                "Cannot get PropertyDescriptors for bean class " + bi.getBeanDescriptor().getBeanClass().getName());
+            rpd = new PropertyDescriptor[0];
         }
 
         return buildPropertyDescriptorMap(rpd);
