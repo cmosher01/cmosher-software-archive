@@ -21,17 +21,16 @@ public class RollingChecksum
     {
     }
 
-    void init(byte[] rx, int k)
+    void init(byte[] rx)
     {
         len = rx.length;
         int a = 0;
         int b = 0;
-        int l = len+k-1;
         for (int i = 0; i < len; i++)
         {
             byte x = rx[i];
             a += x;
-            b += (l-(i+k)-1)*x;
+            b += (len-i-2)*x;
         }
         a %= M;
         b %= M;
