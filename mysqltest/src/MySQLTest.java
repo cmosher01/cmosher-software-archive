@@ -179,6 +179,7 @@ public class MySQLTest
 			}
 		}
 
+		int hh = 0;
 		try
 		{
 			st = db.prepareStatement(
@@ -193,7 +194,7 @@ public class MySQLTest
 			ResultSet rs = st.getGeneratedKeys();
 			while (rs.next())
 			{
-				idImage = rs.getInt(1);
+				hh = rs.getInt(1);
 			}
 		}
 		finally
