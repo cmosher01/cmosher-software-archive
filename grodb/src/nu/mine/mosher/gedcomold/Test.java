@@ -19,7 +19,7 @@ public class Test
 
 		for (GedcomLine gl = gp.nextLine(); gl != null; gl = gp.nextLine())
 		{
-			gl = gp.nextLine();
+			gt.appendLine(gl);
 		}
 
 		GedcomConcatenator gc = new GedcomConcatenator(gt);
