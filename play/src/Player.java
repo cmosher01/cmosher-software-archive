@@ -49,7 +49,7 @@ public class Player implements Immutable
 		set.add("a");
 		set.add("c");
 
-		map.entrySet().retainAll(set);
+		map.keySet().retainAll(set);
 
 		for (Iterator i = map.entrySet().iterator(); i.hasNext();)
         {
