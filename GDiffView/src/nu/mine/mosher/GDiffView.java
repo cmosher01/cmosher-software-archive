@@ -466,9 +466,6 @@ public class GDiffView extends JFrame
             {
                 GDiffData gd = (GDiffData)g;
                 rb = gd.getData();
-                beginTrg = gd.getTargetRange().getBegin();
-                endTrg = gd.getTargetRange().getEnd();
-                highlight("insert",true);
             }
             else
             {
@@ -486,6 +483,16 @@ public class GDiffView extends JFrame
             }
             long t1 = t-1;
             g.setTargetRange(new Range(t0,t1));
+
+            if (g instanceof GDiffData)
+            {
+            }
+            else
+            {
+                beginTrg = g.getTargetRange().getBegin();
+                endTrg = g.getTargetRange().getEnd();
+                highlight("insert",true);
+            }
 
             g = getGDiff(gdiff);
         }
