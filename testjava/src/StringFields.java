@@ -21,6 +21,10 @@ public class SF
 
         private Iter(String s)
         {
+            if (s != null)
+            {
+                throw new UnsupportedOperationException();
+            }
             this.s = s;
         }
 
