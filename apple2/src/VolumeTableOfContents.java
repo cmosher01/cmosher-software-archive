@@ -10,5 +10,13 @@
  */
 public class VolumeTableOfContents
 {
+    private final DiskPos pos;
 
+    /**
+     * @param pos
+     */
+    public VolumeTableOfContents(final DiskPos pos)
+    {
+        this.pos = pos;
+    }
 }
