@@ -138,7 +138,7 @@ public class GDiffView extends JFrame
         {
             public void updateSingleSelection(int oldIndex, int newIndex)
             {
-                if (oldIndex >= 0)
+                if (oldIndex >= 0 && oldIndex < rcmd.size())
                 {
                     GDiffCmd oldCmd = (GDiffCmd)rcmd.get(oldIndex);
                     if (oldCmd instanceof GDiffCopy)
@@ -149,7 +149,7 @@ public class GDiffView extends JFrame
                         highlight(false);
                     }
                 }
-                if (newIndex >= 0)
+                if (newIndex >= 0 && newIndex < rcmd.size())
                 {
                     GDiffCmd newCmd = (GDiffCmd)rcmd.get(newIndex);
                     if (newCmd instanceof GDiffCopy)
