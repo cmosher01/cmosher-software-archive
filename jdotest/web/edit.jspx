@@ -1,4 +1,6 @@
 <%@ include file="htmlhead.jsp" %>
+<%@ page import="nu.mine.mosher.jdotest.Item" %>
+<%@ page import="nu.mine.mosher.jdotest.Perm" %>
 <%
     String id = request.getParameter("id");
     Perm pm = new Perm();
