@@ -66,7 +66,7 @@ public class Test
             System.out.println(fmt.format(new Date(ms)));
             ms += 15*60*1000;
         }
-        ms = fmt.parse("2004/10/31 01:00:00.000").getTime();
+        ms = fmt.parse("2004/10/31 00:59:00.000").getTime();
         for (int i = 0; i < 4*24; ++i)
         {
             System.out.println(fmt.format(new Date(ms)));
