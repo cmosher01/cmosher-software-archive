@@ -7,7 +7,8 @@
         useSourceFolders="false" buildIfNeeded="true"/>
     <manifest manifestVersion="1.0" usesManifest="true"
         reuseManifest="false" saveManifest="true"
-        generateManifest="true" manifestLocation="/testjava/MANIFEST.MF" mainClassHandleIdentifier="=testjava/src&lt;{Test.java[Test">
+        generateManifest="false"
+        manifestLocation="/testjava/MANIFEST.MF" mainClassHandleIdentifier="=testjava/src&lt;{Test.java[Test">
         <sealing sealJar="false">
             <packagesToSeal/>
             <packagesToUnSeal/>
