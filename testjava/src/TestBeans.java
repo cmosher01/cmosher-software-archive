@@ -51,7 +51,7 @@ public class TestBeans
     {
         if (classProp.isArray())
         {
-            throw new IllegalArgumentException("Cannot set an array property to an scalar value.");
+            throw new IllegalArgumentException("Cannot set an array property to a scalar value.");
         }
         return convertScalar(value,classProp);
     }
