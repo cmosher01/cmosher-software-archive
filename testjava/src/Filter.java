@@ -11,10 +11,9 @@ public abstract class Filter
 
     public void filter(Collection output)
     {
-        for (Iterator i = collection.iterator(); i.hasNext();)
+        for (Iterator i = output.iterator(); i.hasNext();)
         {
             Object element = i.next();
-            
         }
     }
 }
