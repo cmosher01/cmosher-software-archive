@@ -124,6 +124,7 @@ public class Disk
     {
         return this.pos.getIndex() >= this.disk.length;
     }
+
     /**
      * @throws InvalidPosException
      * 
@@ -142,6 +143,41 @@ public class Disk
                 System.out.println("VTOC @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
             }
         }
+    }
+
+    public void findDos33CatalogSector() throws InvalidPosException
+    {
+        rewind();
+        while (!EOF())
+        {
+            DiskPos cur = this.pos;
+            byte[] sector = read(DiskPos.cSector);
+            if (sector[0] == 0 &&
+                DiskPos.isValidSector(sector[2]) &&
+                sector[3] == 0)
+            {
+                // check catalog entries
+                int ce = 0x0B;
+                for (int cat = 0; cat < 7; ++cat)
+                {
+                    if (DiskPos.isValidSector(sector[ce+1]) &&
+                        isValidFileType(sector[ce+2]) )
+                    ce += 35;
+                }
+                System.out.println("Catalog Sector @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
+            }
+        }
+    }
+
+    /**
+     * @param b
+     * @return
+     */
+    private boolean isValidFileType(byte b)
+    {
+        b &= 0x7F;
+        return b==0 || b==0x01 || b==0x02 || b==0x04 || b==0x08 ||
+            b==0x10 || b==0x20 || b==0x40;
     }
 
     /**
