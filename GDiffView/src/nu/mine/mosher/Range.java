@@ -238,4 +238,15 @@ public class Range implements Comparable
             }
         }
     }
+
+
+
+    /**
+     * @param rngSrcb
+     * @return
+     */
+    public boolean isContiguousWith(Range rng)
+    {
+        return this.getLimit() == rng.getBegin();
+    }
 }
