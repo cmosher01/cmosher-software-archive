@@ -1,13 +1,6 @@
-/*
- * TODO
- *
- * Created on Apr 6, 2004
- */
-
-/**
- * TODO
- */
 public class Dependency
 {
-
+    private final String name;
+    private final String version;
+    private final boolean source;
 }
