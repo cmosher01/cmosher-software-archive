@@ -61,12 +61,12 @@ public class Apple2
             for (Iterator i = rVTOC.iterator(); i.hasNext();)
             {
                 DiskPos p = (DiskPos)i.next();
-                System.out.println("VTOC @ "+p.toStringTS()+" ");
+                System.out.print("VTOC @ "+p.toStringTS()+" ");
             }
         }
         else
         {
-            System.out.println("[no VTOC]       ");
+            System.out.print("[no VTOC]       ");
         }
 //        List rCat = new ArrayList();
 //        disk.findDos33CatalogSector(rCat);
