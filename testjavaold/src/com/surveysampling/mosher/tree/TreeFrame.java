@@ -35,7 +35,7 @@ public class TreeFrame extends JFrame
         scrollpane.getViewport().add(tree);
         scrollpane.setDoubleBuffered(true);
 
-        add("Center", scrollpane);
+        getContentPane().add("Center", scrollpane);
     }
 
     public TreeNode buildTree(String dir)
