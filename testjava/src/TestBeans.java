@@ -32,7 +32,10 @@ public class TestBeans
     public static void setProperty(Object bean, String property, String value)
         throws IntrospectionException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
     {
-        setProperty(bean, property, new String[] { value });
+        PropertyDescriptor pd = getPropertyDescriptor(bean.getClass(), property);
+        Object v = getConvertedValue(value, pd.getPropertyType());
+        setProperty(bean, pd, v);
+//        setProperty(bean, property, new String[] { value });
     }
 
     public static void setProperty(Object bean, String property, String[] value)
@@ -43,16 +46,14 @@ public class TestBeans
         setProperty(bean, pd, v);
     }
 
-    public static void setProperty(Object bean, PropertyDescriptor pd, Object value)
-        throws IllegalAccessException, IllegalArgumentException, InvocationTargetException
+    public static Object getConvertedValue(String value, Class classProp)
+        throws NegativeArraySizeException, IllegalArgumentException, IntrospectionException
     {
-        Method wr = pd.getWriteMethod();
-        if (wr == null)
+        if (classProp.isArray())
         {
-            throw new IllegalAccessException("Cannot write property " + pd.getName());
+            throw new IllegalArgumentException("Cannot set an array property to an scalar value.");
         }
-        
-        wr.invoke(bean, new Object[] { value });
+        return convertScalar(value,classProp);
     }
 
     public static Object getConvertedValue(String[] value, Class classProp)
@@ -65,14 +66,16 @@ public class TestBeans
         return convertArray(value, classProp);
     }
 
-    public static Object getConvertedValue(String value, Class classProp)
-        throws NegativeArraySizeException, IllegalArgumentException, IntrospectionException
+    public static void setProperty(Object bean, PropertyDescriptor pd, Object value)
+        throws IllegalAccessException, IllegalArgumentException, InvocationTargetException
     {
-        if (classProp.isArray())
+        Method wr = pd.getWriteMethod();
+        if (wr == null)
         {
-            throw new IllegalArgumentException("Cannot set an array property to an scalar value.");
+            throw new IllegalAccessException("Cannot write property " + pd.getName());
         }
-        return convertScalar(value,classProp);
+        
+        wr.invoke(bean, new Object[] { value });
     }
 
     public static PropertyDescriptor getPropertyDescriptor(Class forClass, String property) throws IntrospectionException
