@@ -6,7 +6,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 public class FileTreeNode extends DefaultMutableTreeNode
 {
-    boolean hasbeenread;
+    boolean mRead;
 
     public FileTreeNode(File file)
     {
@@ -20,7 +20,7 @@ public class FileTreeNode extends DefaultMutableTreeNode
 
     public boolean readTree(boolean b)
     {
-        if (hasbeenread)
+        if (mRead)
             return false;
 
         String list[] = getFileObject().list();
@@ -34,7 +34,7 @@ public class FileTreeNode extends DefaultMutableTreeNode
                     subnode.readTree(b);
             }
         }
-        hasbeenread = true;
+        mRead = true;
         return true;
     }
 
