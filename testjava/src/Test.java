@@ -8,6 +8,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.security.Permission;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -61,23 +62,12 @@ public class Test
         return j;
     }
 
-    private static void test()
-    {
-        SecurityManager security = System.getSecurityManager();
-        if (security != null)
-        {
-            security.checkAccess(Thread.currentThread());
-        }
-    }
-
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
 
 
         System.setSecurityManager(new SecurityManager());
-
-        test();
 
         Reader rdr = new InputStreamReader(new FileInputStream(new File("\\temp\\test.txt")));
         BufferedReader br = new BufferedReader(rdr);
