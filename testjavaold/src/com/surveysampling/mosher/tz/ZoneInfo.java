@@ -127,7 +127,7 @@ public class ZoneInfo extends TimeZone {
   private int[] transTimes;	// transition times
   private byte[] transTypes;	// timezone description for each transition
   private TZType[] tz;		// timezone descriptions
-  private int[] leapSecs;	// leapseconds
+  public int[] leapSecs;	// leapseconds
   private int rawoff = 0;
   private TZType normaltz; 
 
