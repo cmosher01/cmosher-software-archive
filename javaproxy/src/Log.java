@@ -116,4 +116,9 @@ public class Log
 
         return true;
     }
+
+    public void close() throws IOException
+    {
+        fos.close();
+    }
 }
