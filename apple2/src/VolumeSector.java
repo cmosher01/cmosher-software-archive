@@ -10,5 +10,5 @@
  */
 public class VolumeSector
 {
-
+    private final DiskPos pos;
 }
