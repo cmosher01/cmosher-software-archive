@@ -16,7 +16,9 @@ import java.util.List;
 class Indi
 {
     private static final Color bg = Color.WHITE;
-    private static final Color fg = Color.BLACK;
+	private static final Color fg = Color.BLACK;
+	private static final Color bgpush = Color.LIGHT_GRAY;
+	private static final Color fgpush = Color.BLACK;
     private static final int LEFT_MARGIN = 3;
     private static final int RIGHT_MARGIN = 4;
 
@@ -104,12 +106,12 @@ class Indi
     protected void drawBounds(Graphics g)
     {
     	if (pushed)
-			g.setColor(fg);
+			g.setColor(bgpush);
 		else
 	        g.setColor(bg);
         g.fillRect(x,y,w,h);
 		if (pushed)
-			g.setColor(bg);
+			g.setColor(fgpush);
 		else
 			g.setColor(fg);
         g.drawRect(x,y,w-1,h-1);
