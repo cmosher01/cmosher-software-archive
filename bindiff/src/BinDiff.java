@@ -109,7 +109,7 @@ public class BinDiff
 
 	protected void outBytes(int method, PushbackRandomFile f, long pos, int len) throws IOException
 	{
-		String s;
+		String s = "";
 		switch (method)
 		{
 			case 0:
