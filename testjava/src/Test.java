@@ -70,15 +70,7 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
-        SortedSet s = new TreeSet();
-        s.add("ac");
-        s.add("a\u2401b");
-        s.add("aa");
-        for (Iterator i = s.iterator(); i.hasNext();)
-        {
-            String str = (String)i.next();
-            System.out.println(str);
-        }
+        System.out.println("\u2401");
 
 
 
