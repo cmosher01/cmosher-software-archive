@@ -1,4 +1,4 @@
-import nu.mine.mosher.ja2.Main;
+import nu.mine.mosher.ja2.Starter;
 
 /*
  * Created on Aug 31, 2004
@@ -21,6 +21,6 @@ public final class Ja2
 
     public static void main(String[] args)
     {
-        Main.start(args);
+        Starter.start(args);
     }
 }
