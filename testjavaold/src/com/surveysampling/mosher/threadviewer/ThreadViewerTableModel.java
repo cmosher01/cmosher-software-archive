@@ -150,7 +150,7 @@ public class ThreadViewerTableModel extends AbstractTableModel
         }
     }
 
-    private void transferPendingCellData()
+    public void transferPendingCellData()
     {
         // this method is called by the event thread
         synchronized (dataLock)
