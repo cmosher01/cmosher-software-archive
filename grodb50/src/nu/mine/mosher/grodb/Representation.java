@@ -15,7 +15,7 @@ public class Representation
 	private String mimeType;
 	private Object other;
 
-	private List<Relation<Source,Representation>> rSource = new ArrayList<Relation<Source,Representation>>();
+	private List<Relation<Source,Representation,SourceRepRelType>> rSource = new ArrayList<Relation<Source,Representation,SourceRepRelType>>();
 
 	public Representation()
 	{
