@@ -11,4 +11,20 @@
 public class VolumeBoot extends VolumeEntity
 {
 
+    /**
+     * @param disk
+     */
+    public void readFromMedia(Disk disk)
+    {
+        DiskPos p;
+        try
+        {
+            p = new DiskPos(0,0);
+        }
+        catch (InvalidPosException e)
+        {
+            throw new RuntimeException("can't happen.");
+        }
+        rSector.add(new VolumeSector(p,0));
+    }
 }
