@@ -223,6 +223,12 @@ public class Volume
     public void getFiles(Collection r)
     {
         r.addAll(this.rFile);
+    }
+    /**
+     * @param r
+     */
+    public void getFilesRecovered(Collection r)
+    {
         r.addAll(this.rFileRecovered);
     }
 }
