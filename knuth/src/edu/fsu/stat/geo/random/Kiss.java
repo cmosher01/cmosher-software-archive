@@ -28,7 +28,7 @@ public class Kiss extends RNGDefault implements RandomNumberGenerator
     /**
      * @param seed
      */
-    public Kiss(long seed)
+    public Kiss(final long seed)
     {
         super(seed);
         this.x = (int)getSeed();
