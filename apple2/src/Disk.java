@@ -835,7 +835,7 @@ public class Disk
     {
         b &= 0x7F;
         return b==0 || b==0x01 || b==0x02 || b==0x04 || b==0x08 ||
-            b==0x10 || b==0x20 || b==0x40;
+            b==0x10 || b==0x20 || b==0x40 || b==0x16/*for APA.B on the APA disk*/;
     }
 
     /**
