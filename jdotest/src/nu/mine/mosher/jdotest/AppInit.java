@@ -22,7 +22,7 @@ import javax.servlet.ServletContextListener;
  */
 public class AppInit implements ServletContextListener
 {
-	private static final Properties props;
+	private static Properties props;
 
     public void contextInitialized(ServletContextEvent sce)
     {
