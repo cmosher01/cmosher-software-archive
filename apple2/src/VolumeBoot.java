@@ -99,7 +99,19 @@ public class VolumeBoot extends VolumeEntity
 
         if (same(data,rDos80master))
         {
-            ident = "DOS 3.3 Master (A$3600)";
+            ident = "DOS 3.3 (1980) Master (A$3600)";
+        }
+        else if (same(data,rDos80master))
+        {
+            ident = "DOS 3.3 (1983) Master (A$3600)";
+        }
+        else if (same(data,rDos80master))
+        {
+            ident = "DOS 3.3 (1986) Master (A$3600)";
+        }
+        else
+        {
+            if (data[0] == 1 && && data[2] == (byte)0xA5 && data[0xFF] == 9)
         }
     }
 
