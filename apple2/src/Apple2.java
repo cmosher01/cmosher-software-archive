@@ -53,20 +53,20 @@ public class Apple2
      */
     public static void doOneDisk(Disk disk)
     {
-        List rVTOC = new ArrayList();
-        disk.findDos33VTOC(rVTOC);
+        List r = new ArrayList();
+        disk.findDos33CatalogSector(r);
 
-        if (rVTOC.size() > 0)
+        if (r.size() > 0)
         {
-            for (Iterator i = rVTOC.iterator(); i.hasNext();)
+            for (Iterator i = r.iterator(); i.hasNext();)
             {
                 DiskPos p = (DiskPos)i.next();
-                System.out.print("VTOC @ "+p.toStringTS()+" ");
+                System.out.print(p.toStringTS()+"; ");
             }
         }
         else
         {
-            System.out.print("[no VTOC]       ");
+            System.out.print("[none] ");
         }
 //        List rCat = new ArrayList();
 //        disk.findDos33CatalogSector(rCat);
