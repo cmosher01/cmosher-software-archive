@@ -11,15 +11,6 @@ public class TestBeans
     {
         PropertyEditorManager.setEditorSearchPath(new String[] {"com.surveysampling.beans.editors"});
 
-        Package[] rpkg = Package.getPackages();
-        for (int i = 0; i < rpkg.length; ++i)
-        {
-            Package pkg = rpkg[i];
-            System.out.println(pkg.getName());
-        }
-        System.out.println("--------------------------");
-        new com.surveysampling.beans.editors.Test().test();
-
         SomeBean some = new SomeBean();
         String prop = "objInteger";
         String val = "34";
