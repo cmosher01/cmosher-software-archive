@@ -92,9 +92,11 @@ public class MainFrame extends JFrame
     }
 
     /**
+     * @throws IOException
+     * @throws InvalidPosException
      * 
      */
-    private void init()
+    private void init() throws InvalidPosException, IOException
     {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
