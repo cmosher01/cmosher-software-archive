@@ -185,7 +185,7 @@ public class FixAppleDisasm
 						int val = -1;
 						try
 						{
-							val = Integer.parseInt(s.substring(10),16);
+							val = Integer.parseInt(s.substring(10).trim(),16);
 							if (val < 0 || 0x100 <= val)
 							{
 								val = -1;
