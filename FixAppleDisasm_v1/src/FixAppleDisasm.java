@@ -206,6 +206,7 @@ public class FixAppleDisasm
 								Line lnm = new Line();
 								lines.put(new Integer(++lineNumber),lnm);
 								lnm.addr = i;
+								ln.instr = "DB";
 								lnm.oper = sval;
 							}
 						}
