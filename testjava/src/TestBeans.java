@@ -38,11 +38,7 @@ public class TestBeans
     public static void setProperty(Object bean, String property, String[] value)
         throws IntrospectionException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
     {
-        BeanInfo bi = Introspector.getBeanInfo(bean.getClass());
-        if (bi == null)
-        {
-            throw new IntrospectionException("can't get info for bean");
-        }
+        BeanInfo bi = getBeanInfo(bean);
 
         PropertyDescriptor[] rpd = bi.getPropertyDescriptors();
         if (rpd == null)
@@ -91,6 +87,16 @@ public class TestBeans
 
         Method wr = pd.getWriteMethod();
         wr.invoke(bean, new Object[] { v });
+    }
+
+    public static BeanInfo getBeanInfo(Object bean) throws IntrospectionException
+    {
+        BeanInfo bi = Introspector.getBeanInfo(bean.getClass());
+        if (bi == null)
+        {
+            throw new IntrospectionException("can't get info for bean");
+        }
+        return bi;
     }
 
     public static HashMap buildPropertyDescriptorMap(PropertyDescriptor[] rpd)
