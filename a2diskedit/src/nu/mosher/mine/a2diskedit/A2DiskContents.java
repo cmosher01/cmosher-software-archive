@@ -11,6 +11,9 @@ package nu.mosher.mine.a2diskedit;
 public class A2DiskContents
 {
 	private final A2DiskImage image;
+	private int dos33volume = 0;
+	private String sVolumeName = "";
+
 	public A2DiskContents(A2DiskImage img)
 	{
 		image = img;
@@ -29,6 +32,8 @@ public class A2DiskContents
 
 	private void parseDir(int track, int sector)
 	{
+		dos33volume = image.getByte(track,sector,6);
+		sVolumeName = "Disk volume "+Integer.toString(dos33volume);
 	}
 }
 /*
