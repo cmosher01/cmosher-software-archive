@@ -29,8 +29,9 @@ public class Disk implements TreeNode
 		this(null);
 	}
 
-	public Disk(File file)
+	public Disk(File file, DefaultMutableTreeNode n)
 	{
+		node = n;
 		mFile = file;
 
 		if (mFile != null)
@@ -118,13 +119,5 @@ public class Disk implements TreeNode
 	public Icon getIcon()
 	{
 		return mIcon;
-	}
-
-	/**
-	 * @see nu.mosher.mine.a2diskedit.TreeNode#setNode(DefaultMutableTreeNode)
-	 */
-	public void setNode(DefaultMutableTreeNode n)
-	{
-		node = n;
 	}
 }
