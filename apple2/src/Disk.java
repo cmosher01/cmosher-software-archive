@@ -165,6 +165,9 @@ public class Disk
         }
     }
 
+    /**
+     * @throws InvalidPosException
+     */
     public void findDos33CatalogSector() throws InvalidPosException
     {
         rewind();
