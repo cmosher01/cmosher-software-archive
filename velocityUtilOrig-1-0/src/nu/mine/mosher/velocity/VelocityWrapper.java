@@ -3,6 +3,8 @@
  */
 package nu.mine.mosher.velocity;
 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.Properties;
@@ -98,5 +100,27 @@ public class VelocityWrapper
         props.setProperty(VelocityEngine.VM_LIBRARY,"");
 
         return props;
+    }
+
+    public static void merge(File inputTemplate, Context context, Writer out) throws VelocityException
+    {
+        Properties props = VelocityWrapper.getDefaultProperties();
+        props.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH,inputTemplate.getParentFile().getAbsolutePath());
+
+        VelocityWrapper velocity = new VelocityWrapper(props);
+
+        BufferedWriter writer;
+        if (out instanceof BufferedWriter)
+        {
+            writer = (BufferedWriter)out;
+        }
+        else
+        {
+            writer = new BufferedWriter(out);
+        }
+
+        velocity.mergeTemplate(inputTemplate.getName(),context,writer);
+
+        writer.flush();
     }
 }
