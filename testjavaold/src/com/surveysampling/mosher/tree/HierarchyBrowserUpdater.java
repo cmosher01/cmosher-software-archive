@@ -35,14 +35,14 @@ public class HierarchyBrowserUpdater implements TreeExpansionListener
 
         if (filetreenode.readTree())
         {
-            int childrenIdx[] = new int[filetreenode.getChildCount()];
+            int rc[] = new int[filetreenode.getChildCount()];
             int i = 0;
             for (Enumeration e = filetreenode.children(); e.hasMoreElements();)
             {
                 TreeNode node = (TreeNode)e.nextElement();
-                childrenIdx[i++] = node.getIndex(node);
+                rc[i++] = node.getIndex(node);
             }
-            mModel.nodesWereInserted(filetreenode, childrenIdx);
+            mModel.nodesWereInserted(filetreenode,rc);
         }
 
         endWait();
