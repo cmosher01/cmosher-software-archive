@@ -50,7 +50,7 @@ public class Disk
         return r;
     }
 
-    public DiskPos readTS()
+    public DiskPos readTS() throws InvalidPosException
     {
         int track = read();
         int sector = read();
