@@ -106,7 +106,7 @@ public class GDiffView extends JFrame
     private void initDiff() throws IOException
     {
         SourceFile src = new SourceFile();
-        int cWindow = 7;
+        int cWindow = 33;
         src.calculateWindowChecksums(fileSrc,cWindow);
         InputStream streamTrg = new BufferedInputStream(new FileInputStream(fileTrg));
         if (streamTrg.available() == 0)
