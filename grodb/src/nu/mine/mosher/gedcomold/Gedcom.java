@@ -1,5 +1,6 @@
 package nu.mine.mosher.gedcom;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -18,9 +19,17 @@ public class Gedcom
 	{
 		// read first four bytes of input stream
 		int b0 = in.read();
+		if (b0==-1)
+			return "";
 		int b1 = in.read();
+		if (b1==-1)
+			return "";
 		int b2 = in.read();
+		if (b2==-1)
+			return "";
 		int b3 = in.read();
+		if (b3==-1)
+			return "";
 
 		// build a word from the first two bytes,
 		// assuming little-endian byte order
@@ -62,6 +71,7 @@ public class Gedcom
 		{
 			return "UTF-8";
 		}
+
 //		SortedMap mc = Charset.availableCharsets();
 //		for (Iterator i = mc.entrySet().iterator(); i.hasNext();)
 //        {
