@@ -18,7 +18,17 @@ public abstract class RNGDefault implements RandomNumberGenerator
 	 */
 	public RNGDefault()
 	{
-        this(System.currentTimeMillis());
+        this(getDefaultSeed());
+	}
+
+	/**
+	 * Returns the default seed value (for passing in to the
+	 * constructor) when no seed is provided by the caller.
+	 * @return default seed value
+	 */
+	protected static long getDefaultSeed()
+	{
+		return System.currentTimeMillis();
 	}
 
 	/**
