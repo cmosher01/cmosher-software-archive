@@ -37,7 +37,7 @@ public class NormalizerTest extends TestCase
 	public static void main(String[] rArg) throws Throwable
 	{
 		Normalizer n = new Normalizer();
-		String s = "\u0041\u030a";
+		String s = "\u212bChris";
 		dumphex(s);
 		String sn = n.normalize(s);
 		dumphex(sn);
