@@ -87,11 +87,11 @@ public class A2DiskContents
 
 	public static String dosName(byte[] r)
 	{
-		CString s;
-	
 		// strip high bit
-		for (int i(0); i<m_strName.GetLength(); i++)
+		for (int i = 0; i<r.length; ++i)
+		{
 			s += m_strName[i] & 0x7F;
+		}
 	
 		// trim
 		s.TrimRight();
