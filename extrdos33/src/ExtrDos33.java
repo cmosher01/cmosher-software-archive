@@ -95,12 +95,27 @@ public class ExtrDos33
 			rbc = new byte[x.length];
 			System.arraycopy(x,0,rbc,0,x.length);
 
-			// clear HELLO program name for comparison
+			// clear areas for comparison:
+
+			// some unknown byte that varies
+			rbc[0x1F5] = 0;
+
+			// (in most DOS 3.3's, but not Prontodos or ESdos) ??? :
+			// some bytes before HELLO program name
+			for (int i = 0x1959; i < 0x1975; ++i)
+			{
+				rbc[i] = 0;
+			}
+			// HELLO program name
 			for (int i = 0x1975; i < 0x19B1; ++i)
 			{
 				rbc[i] = 0;
 			}
-
+			// clear other area (T$11 S$0 copy plus other stuff)
+			for (int i = 0x2297; i < 0x2500; ++i)
+			{
+				rbc[i] = 0;
+			}
 		}
 		public boolean hasSignature()
 		{
