@@ -50,9 +50,7 @@ public class Delta
 
     public static void computeDelta(File sourceFile, File targetFile, GDiffWriter output) throws IOException
     {
-
         int targetLength = (int)targetFile.length();
-        int sourceLength = (int)sourceFile.length();
         int targetidx = 0;
 
         Checksum checksum = new Checksum();
