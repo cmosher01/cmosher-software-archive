@@ -63,9 +63,6 @@ public class VelocityTest
     {
         ArrayList deps = new ArrayList();
 
-        deps.add(new Dependency("jaxp","1-2-0",false));
-        deps.add(new Dependency("SurveySampling","2-3",true));
-
         File f = new File("C:\\Documents and Settings\\chrism\\workspace\\metadataImport-1-0\\.classpath");
 
         DocumentBuilderFactory fact = DocumentBuilderFactory.newInstance();
@@ -102,6 +99,11 @@ public class VelocityTest
                 Node nodeKind = mapAttrib.getNamedItem("kind");
                 String kind = nodeKind.getNodeValue();
                 boolean source = kind.equalsIgnoreCase("src");
+                Dependency dep = new Dependency(name,version,source);
+                if (!deps.contains(dep))
+                {
+                    deps.add(dep);
+                }
             }
         }
         return deps;
