@@ -65,6 +65,37 @@ public class NormalizerTest extends TestCase
 		System.out.println("processed NormalizationText.txt lines: "+cDone);
 	}
 
+	private static void normTestTxt() throws IOException
+	{
+		Normalizer n = new Normalizer();
+		BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(new File("NormalizationTest.txt"))));
+		String[] rCol = new String[5];
+		int cDone = 0;
+		for (String lin = in.readLine(); lin != null; lin = in.readLine())
+		{
+			char start = lin.charAt(0);
+			if (isHexDigit(start))
+			{
+				int iCol = 0;
+				for (StringTokenizer st = new StringTokenizer(lin,";"); iCol < 5; )
+				{
+					String tok = st.nextToken();
+					System.out.print(tok);
+					System.out.print(";");
+					rCol[iCol++] = hexToString(tok);
+				}
+				dumphex(rCol[0]);
+				String norm = n.normalize(rCol[0]);
+				dumphex(norm);
+				dumphex(rCol[1]);
+				System.out.println();
+				cDone++;
+			}
+		}
+		in.close();
+		System.out.println("processed NormalizationText.txt lines: "+cDone);
+	}
+
     /**
      * @param tok
      * @return
@@ -123,4 +154,9 @@ public class NormalizerTest extends TestCase
 		n = null;
         super.tearDown();
     }
+
+	public static void main(String[] rArg) throws Throwable
+	{
+		normTestTxt();
+	}
 }
