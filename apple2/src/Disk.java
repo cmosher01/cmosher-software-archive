@@ -163,7 +163,7 @@ public class Disk
      * @throws InvalidPosException
      * 
      */
-    public void findDos33VTOC() throws InvalidPosException
+    public void findDos33VTOC(Collection rPosVtoc) throws InvalidPosException
     {
         rewind();
         while (!EOF())
@@ -172,7 +172,8 @@ public class Disk
             byte[] sector = read(DiskPos.cSector);
             if (isDos33VTOC(sector))
             {
-                System.out.println("VTOC @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
+                rPosVtoc.add(cur);
+//                System.out.println("VTOC @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
             }
         }
     }
