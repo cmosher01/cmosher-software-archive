@@ -217,7 +217,7 @@ public class FixAppleDisasm
 									addrs.put(new Integer(ln.addr),ln);
 								}
 								ln.instr = "DB";
-								ln.oper = "$"+Integer.toHexString(x);
+								ln.oper = "$"+hexByte(x);
 							}
 							else
 							{
@@ -261,7 +261,7 @@ public class FixAppleDisasm
 
 						if (val >= 0)
 						{
-							String sval = "$"+Integer.toHexString(val);
+							String sval = "$"+hexByte(val);
 							ln.instr = "DB";
 							ln.oper = sval;
 							for (int i = addr+1; i <= addr2; ++i)
@@ -314,13 +314,13 @@ public class FixAppleDisasm
 					Line fn = (Line)addrs.get(refint);
 					if (fn.label.length() == 0)
 					{
-						fn.label = "L"+Integer.toHexString(fn.addr);
+						fn.label = "L"+hexWord(fn.addr);
 					}
 					ln.oper = fn.label;
 				}
 				else
 				{
-					System.err.println(Integer.toHexString(ln.refaddr));
+					System.err.println(hexWord(ln.refaddr));
 				}
 			}
 		}
