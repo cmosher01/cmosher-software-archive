@@ -93,7 +93,7 @@ public class FixAppleDisasm
 			inbuf = new BufferedReader(in);
 		}
 
-		Map lines = new HashMap();
+		Map lines = new TreeMap();
 		int lineNumber = 0;
 		for (String s = inbuf.readLine(); s != null; s = inbuf.readLine())
 		{
