@@ -42,7 +42,7 @@ public class TimeOfDay implements Comparable
          * (or given subclass) without cloning. Using clone
          * opens up the possibility that the caller could create
          * a subclass that would hold a reference to our clone and
-         * allow him to mute a TimeOfDay instance.
+         * allow him to mutate a TimeOfDay instance.
          */
         Calendar cal = (Calendar)calendar.clone();
 
