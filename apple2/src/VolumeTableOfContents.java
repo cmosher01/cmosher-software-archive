@@ -62,5 +62,6 @@ public class VolumeTableOfContents extends VolumeEntity
         s.append("VTOC: ");
         VolumeSector sect = (VolumeSector)rSector.get(0);
         s.append(sect.toString());
+        s.append("\n";)
     }
 }
