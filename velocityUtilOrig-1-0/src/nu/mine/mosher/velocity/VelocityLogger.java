@@ -27,6 +27,8 @@ public class VelocityLogger implements LogSystem
         log.log(translateVelocityLogLevel(level),message);
     }
 
+
+
     public static Level translateVelocityLogLevel(int level)
     {
         switch (level)
