@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.logging.Logger;
 
@@ -79,6 +80,16 @@ public class Util
             r.add(i.next());
         }
         return r;
+    }
+
+    public static HashSet set(Iterator i)
+    {
+        HashSet s = new HashSet();
+        while (i.hasNext())
+        {
+            s.add(i.next());
+        }
+        return s;
     }
 
 //        public static ArrayList list(Iterable i)
