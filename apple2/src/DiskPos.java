@@ -273,6 +273,8 @@ public class DiskPos implements Comparable, Cloneable
     }
 
     /**
+     * @param obj
+     * @return
      */
     public boolean equals(Object obj)
     {
