@@ -258,15 +258,15 @@ public class ZoneInfo extends TimeZone {
   private static final int DAYSPERWEEK	= 7;
   private static final int SECSPERHOUR	= SECSPERMIN * MINSPERHOUR;
   private static final int SECSPERDAY	= SECSPERHOUR * HOURSPERDAY;
-  private static final int TM_SUNDAY	= 0;
-  private static final int TM_MONDAY	= 1;
-  private static final int TM_TUESDAY	= 2;
-  private static final int TM_WEDNESDAY	= 3;
+//  private static final int TM_SUNDAY	= 0;
+//  private static final int TM_MONDAY	= 1;
+//  private static final int TM_TUESDAY	= 2;
+//  private static final int TM_WEDNESDAY	= 3;
   private static final int TM_THURSDAY	= 4;
-  private static final int TM_FRIDAY	= 5;
-  private static final int TM_SATURDAY	= 6;
+//  private static final int TM_FRIDAY	= 5;
+//  private static final int TM_SATURDAY	= 6;
   private static final int EPOCH_WDAY	= TM_THURSDAY;
-  private static final int EPOCH_YEAR	= 1970;
+//  private static final int EPOCH_YEAR	= 1970;
 
   private static final int DAYSADJ = 25203;	// days between 1900 & 1970
   private static final int CENT_WDAY 	= EPOCH_WDAY - DAYSADJ % 7;
