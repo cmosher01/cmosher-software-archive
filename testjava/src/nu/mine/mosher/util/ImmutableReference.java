@@ -37,34 +37,7 @@ public class ImmutableReference
 
     public boolean equals(Object o)
     {
-        if (!this.ref.getClass().isInstance(o))
-        {
-            return false;
-        }
         return this.ref.equals(o);
-    }
-
-    public int compareTo(Object o)
-    {
-        ImmutableReference that = (ImmutableReference)o;
-        return cmp(this.ref,that.ref);
-    }
-
-    private int cmp(Object x, Object y)
-    {
-        if (x == null && y == null)
-        {
-            return 0;
-        }
-        if (x == null)
-        {
-            return -1;
-        }
-        if (y == null)
-        {
-            return +1;
-        }
-        return ((Comparable)x).compareTo(y);
     }
 
     public int hashCode()
