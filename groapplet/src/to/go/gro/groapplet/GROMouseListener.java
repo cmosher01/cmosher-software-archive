@@ -23,5 +23,4 @@ public class GROMouseListener extends MouseInputAdapter
         // TODO Auto-generated method stub
         super.mouseDragged(arg0);
     }
-
 }
