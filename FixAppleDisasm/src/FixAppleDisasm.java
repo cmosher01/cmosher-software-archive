@@ -465,7 +465,7 @@ public class FixAppleDisasm
         return
             ('0' <= c && c <= '9') ||
             ('A' <= c && c <= 'F') ||
-            ('A\a' <= c && c <= 'f')
+            ('a' <= c && c <= 'f')
     }
 
     private static String hexByte(int i)
