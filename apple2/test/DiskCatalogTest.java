@@ -323,6 +323,17 @@ public class DiskCatalogTest extends TestCase
         assertManyPos("UTY4-1.dsk",r);
     }
 
+    /**
+     * @throws IOException
+     * @throws InvalidPosException
+     */
+    public void testPRSHP() throws IOException, InvalidPosException
+    {
+        List r = new ArrayList();
+        r.add(new DiskPos(0x11,0x1));
+        assertManyPos("PRSHP.dsk",r);
+    }
+
     //    public void testDOS33_Others() throws IOException, InvalidPosException
 //    {
 //        assertOnePos("daviddos_2.dsk",new DiskPos(0x11,0));
