@@ -1,7 +1,5 @@
 /*
- * TODO
- *
- * Created on Apr 9, 2004
+ * Created on April 9, 2004
  */
 package nu.mine.mosher.util.text;
 
