@@ -88,7 +88,7 @@ public class DailyWindow
         int cmp = mStart.compareTo(mEnd);
         if (cmp == 0)
         {
-            throw new IllegalArgumentException("Start window time and end window time cannot be the same");
+            throw new IllegalArgumentException("Start window time and end window time are the same");
         }
 
         mIsStartFirst =  cmp < 0;
