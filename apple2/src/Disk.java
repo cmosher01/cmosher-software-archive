@@ -388,6 +388,19 @@ public class Disk
         return r;
     }
 
+    /**
+     * @param rDiskPosSectorsWithData
+     * @throws InvalidPosException
+     */
+    public void getDataTS(Collection rDiskPosSectorsWithData) throws InvalidPosException
+    {
+        rewind();
+        while (!EOF())
+        {
+            DiskPos cur = this.pos;
+            byte[] sector = read(DiskPos.cSector);
+        }
+    }
 //    /**
 //     * @param allowLarge
 //     * @param tsmapMaps
