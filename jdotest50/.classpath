@@ -2,12 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/jpox-1.0.0-beta-1.jar"/>
-	<classpathentry kind="lib" path="lib/jdo.jar"/>
-	<classpathentry kind="lib" path="lib/jdori.jar"/>
-	<classpathentry kind="lib" path="lib/jdori-enhancer.jar"/>
-	<classpathentry kind="lib" path="lib/mysql-connector-java-3.0.10-stable-bin.jar"/>
-	<classpathentry kind="lib" path="lib/log4j-1.2.8.jar"/>
-	<classpathentry kind="lib" path="lib/btree.jar"/>
+	<classpathentry kind="src" path="/jpox"/>
 	<classpathentry kind="output" path="webapp/WEB-INF/classes"/>
 </classpath>
