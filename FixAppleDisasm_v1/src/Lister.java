@@ -23,6 +23,7 @@ public class Lister
 	public void newline()
 	{
 		pw.println();
+		pw.flush();
 		col = 0;
 	}
 
