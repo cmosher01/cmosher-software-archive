@@ -149,7 +149,7 @@ public class HexBuilder
      * @param i
      * @return
      */
-    private static char nib(int i)
+    public static char nib(int i)
     {
         char c;
         if (i < 0)
