@@ -19,7 +19,7 @@
 		Testing a JSP Document (as opposed to a JSP Page)!
 		IE doesn't understand application/xhtml+xml
 		Here is a tag being called:
-		<tg:testTag classname="Item" var="x">
+		<tg:testTag classname="java.lang.String" var="x">
 			"${x}"
 		</tg:testTag>
 		</jsp:text>
