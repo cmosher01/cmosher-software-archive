@@ -51,7 +51,7 @@ public final class Cloner
         return (Cloneable)methodClone.invoke(cloneableObject,null);
     }
 
-    public static Method getCloneMethod(Class cl) throws NoSuchMethodException, SecurityException
+    public static Method getCloneMethod(Class cl) throws NoSuchMethodException, SecurityException, CloneNotSupportedException
     {
         Method methodClone;
         methodClone = cl.getMethod("clone",null);
