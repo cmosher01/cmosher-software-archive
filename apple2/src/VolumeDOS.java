@@ -99,5 +99,6 @@ public class VolumeDOS extends VolumeEntity
                 s.append("; ");
             }
         }
+        s.append("\n");
     }
 }
