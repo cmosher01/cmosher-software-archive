@@ -387,22 +387,9 @@ public class GDiffView extends JFrame
         gdiff.read(); // ignore version
 
         RandomAccessFile in = new RandomAccessFile(src,"r");
-
-        PipedInputStream pipeIn = new PipedInputStream();
-        Thread thTarg = new Thread(new Runnable()
-        {
-            public void run()
-            {
-                // TODO Auto-generated method stub
-                
-            }
-    
-        });
-        thTarg.start();
-        OutputStream pipeOut = new PipedOutputStream(pipeIn);
+        trg = new StringBuffer((int)in.length()); // TODO long doesn't work
 
         GDiffCmd g = getGDiff(gdiff);
-        trg = new StringBuffer(sb.length());
         while (!(g instanceof GDiffEnd))
         {
             rcmd.add(g);
@@ -420,59 +407,18 @@ public class GDiffView extends JFrame
             }
             g = getGDiff(gdiff);
         }
-        listGDiff.setModel(new GDiffCmdListModel(rcmd));
+        HexBuilder hex = new HexBuilder(sb);
+        hex.appendHeader();
+        int x = in.read();
+        while (x >= 0)
+        {
+            hex.appendByte(x);
+            x = in.read();
+        }
+        hex.appendNewLine();
+        in.close();
 
-        byte[] rb = new byte[cCol];
-        int c = in.read(rb);
-        sb = new StringBuffer(sb.length() * 6);
-        for (int i = 0; i < nibs + 2; ++i)
-        {
-            sb.append(' ');
-        }
-        for (int i = 0; i < cCol; ++i)
-        {
-            appendHex(sb,i);
-            sb.append(' ');
-        }
-        for (int i = 0; i < cCol; ++i)
-        {
-            sb.append(' ');
-        }
-        long addr = 0;
-        while (c > 0)
-        {
-            sb.append('\n');
-            appendAddr(sb,addr);
-            sb.append(": ");
-            for (int i = 0; i < cCol; ++i)
-            {
-                if (i < c)
-                {
-                    appendHex(sb,rb[i]);
-                }
-                else
-                {
-                    sb.append("  ");
-                }
-                sb.append(' ');
-            }
-            for (int i = 0; i < cCol; ++i)
-            {
-                if (i < c)
-                {
-                    appendAsc(sb,rb[i]);
-                }
-                else
-                {
-                    sb.append(" ");
-                }
-            }
-            addr += c;
-            c = in.read(rb);
-        }
-        sb.append('\n');
-        appendAddr(sb,addr);
-        sb.append(": ");
+        listGDiff.setModel(new GDiffCmdListModel(rcmd));
     }
 
     /**
