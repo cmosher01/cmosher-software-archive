@@ -41,12 +41,19 @@ public class GraphNode<T>
 		parent.addChild(this);
 	}
 
+	public boolean hasParent(GraphNode<T> parent)
+	{
+		return this.parents.contains(parent);
+	}
+
 	public void removeChild(GraphNode<T> child)
 	{
-		if (child.parent != this)
+		if (!child.hasParent(this))
 		{
 			throw new IllegalArgumentException("given GraphNode is not a child of this GraphNode");
 		}
+		child.removeParent(this);
+		children.remove(child);
 
 		for (Iterator<GraphNode<T>> i = children(); i.hasNext();)
 		{
