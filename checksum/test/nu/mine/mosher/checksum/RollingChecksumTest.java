@@ -20,6 +20,10 @@ public class RollingChecksumTest extends TestCase
         for (int i = 0; i < rc.length; i++)
         {
             rb[i] = (byte)rc[i];
+            if (Math.random() < .3)
+            {
+                rb[i] |= 0x80;
+            }
         }
 
         int n = 3;
