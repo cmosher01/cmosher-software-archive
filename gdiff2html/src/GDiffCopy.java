@@ -14,6 +14,11 @@ public class GDiffCopy extends GDiffCmd
 		this.pos = pos;
 		this.len = len;
 	}
+    public GDiffCopy(long pos, long end)
+    {
+        this.pos = pos;
+        this.len = end-pos;
+    }
 	public long getPosition()
 	{
 		return pos;
@@ -36,6 +41,12 @@ public class GDiffCopy extends GDiffCmd
     }
     public GDiffCopy[] normalize(GDiffCopy that)
     {
+        GDiffCopy dif1 = this;
+        GDiffCopy dif2 = that;
+        if (that.getPosition() < this.getPosition())
+        {
+            dif1 = that;
+        }
         GDiffCopy[] rnorm = new GDiffCopy[3];
         GDiffCopy[0] = new GDiffCopy()
         return rnorm;
