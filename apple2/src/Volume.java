@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -52,6 +53,44 @@ public class Volume
         {
             VolumeFile f = (VolumeFile)i.next();
             f.dump(s);
+        }
+    }
+
+    /**
+     * @param rPos
+     */
+    public void getUsedCatalog(Collection rPos)
+    {
+        cat.getUsed(rPos);
+    }
+
+    /**
+     * @param rPos
+     */
+    public void getUsedNondeletedFiles(Collection rPos)
+    {
+        for (Iterator i = this.rFile.iterator(); i.hasNext();)
+        {
+            VolumeFile f = (VolumeFile)i.next();
+            if (!f.getCatalogEntry().isDeleted())
+            {
+                f.getUsed(rPos);
+            }
+        }
+    }
+
+    /**
+     * @param rPos
+     */
+    public void getUsedDeletedFiles(Collection rPos)
+    {
+        for (Iterator i = this.rFile.iterator(); i.hasNext();)
+        {
+            VolumeFile f = (VolumeFile)i.next();
+            if (f.getCatalogEntry().isDeleted())
+            {
+                f.getUsed(rPos);
+            }
         }
     }
 }
