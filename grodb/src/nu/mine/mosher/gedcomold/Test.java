@@ -15,7 +15,9 @@ public class Test
 		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File("tgc55c.ged"))));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File("parsed.txt"))));
 		GedcomParser gp = new GedcomParser(br);
-		GedcomLine gl =null;
+		GedcomLine gl = null;
+		GedcomTree gt = new GedcomTree();
+
 //		try
 //		{
 			gl = gp.nextLine();
@@ -26,10 +28,12 @@ public class Test
 //		}
 		while (gl != null)
 		{
-			bw.write(gl.toString());
-			bw.newLine();
+			gt.appendLine(gl);
 			gl = gp.nextLine();
 		}
+
+		bw.write(gt.toString());
+
 		bw.close();
 		br.close();
 	}
