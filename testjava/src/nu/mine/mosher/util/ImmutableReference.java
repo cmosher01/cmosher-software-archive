@@ -1,5 +1,3 @@
-import java.lang.reflect.InvocationTargetException;
-
 import mosher.Cloner;
 
 public class ImmutableReference
