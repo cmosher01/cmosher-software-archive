@@ -1,7 +1,7 @@
 /*
  * Created on Feb 4, 2005
  */
-package nu.mine.mosher.ja2;
+package nu.mine.mosher.fields;
 
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
