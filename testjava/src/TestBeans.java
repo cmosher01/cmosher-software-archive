@@ -20,7 +20,7 @@ public class TestBeans
     {
         Editors.register();
 
-        SomeBean some = new SomeBean();
+        Something some = new Something();
         String prop = "ABoolean";
         String val = "true";
 
