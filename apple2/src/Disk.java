@@ -168,7 +168,7 @@ public class Disk
          */
         public boolean hasNext()
         {
-            return d.getIndex() < Disk.this.disk.length;//d.getSectorInDisk() < d.cSectorsPerTrack*d.cTracksPerDisk;
+            return d.getIndex() < Disk.this.disk.length;
         }
 
         /**
