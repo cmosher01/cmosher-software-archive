@@ -23,6 +23,10 @@ public class Disk
         this.pos = new DiskPos(0,0,0,false);
     }
 
+    public void rewind() throws InvalidPosException
+    {
+        this.pos = new DiskPos(0,0,0,false);
+    }
     /**
      * @param newPos
      */
@@ -125,6 +129,8 @@ public class Disk
         int track = 0;
         int sector = 0;
         seek(new DiskPos(track,sector,0,true));
-        
+        while (!EOF())
+        {
+        }
     }
 }
