@@ -202,7 +202,7 @@ public class Disk
                     {
                         if (sector[ce] == -1)
                         {
-                            entries.add(convertASCII(sector,ce+3,29)+" [deleted]");
+                            entries.add(convertASCII(sector,ce+3,29).trim()+" [deleted]");
                         }
                         else
                         {
