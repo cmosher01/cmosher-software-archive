@@ -35,7 +35,6 @@ public class PersonPersist
 		props.setProperty("org.jpox.validateConstraints","false");
 
 		this.pmf = JDOHelper.getPersistenceManagerFactory(props);
-		this.pm = this.pmf.getPersistenceManager();
 	}
 
 	public void persistPeople()
