@@ -56,7 +56,7 @@ public class Apple2
         InputStream fileDisk = null;
         try
         {
-            fileDisk = new FileInputStream(new File(args[0]));
+            fileDisk = new FileInputStream(f);
             rbDisk = new byte[fileDisk.available()];
             fileDisk.read(rbDisk);
         }
