@@ -1,4 +1,3 @@
-// Primes.java
 package nu.mine.mosher;
 
 /**
@@ -23,23 +22,23 @@ import java.util.BitSet;
  */
 public class Primes
 {
+    private int sieveCapacity;
+
+    // biggest number we have computed in our sieve.
+    // our BitSet array is indexed 0..N (odd only)
+
+    private BitSet b; /* true for each odd number if is composite */
 
 
-//    private static final String EmbeddedCopyright = "Copyright 1997-2000 Roedy Green, Canadian Mind Products, http://mindprod.com";
 
-
-
-    /**
-     * constructors
-     */
     public Primes()
     {
-        ensureCapacity(1000);
+        this(1000);
     }
 
     /**
      * @param capacity - largest number you will be asking if prime. If give too
-     * small a number, it will automatically grow by recomputing the sieve
+     * small a number, it will automatically grow by re-computing the sieve
      * array.
      */
     public Primes(int capacity)
@@ -173,56 +172,4 @@ public class Primes
         }
         // otherwise existing sieve is fine
     } // end ensureCapacity
-
-
-
-    private int sieveCapacity;
-
-    // biggest number we have computed in our sieve.
-    // our BitSet array is indexed 0..N (odd only)
-
-    private BitSet b; /* true for each odd number if is composite */
-
-
-
-    /**
-     * Demonstrate and test the methods
-     */
-    public static void main(String[] args)
-    {
-        // print primes 1..101
-        Primes calc = new Primes(106);
-        int[] primes = calc.getPrimes(101);
-        for (int i = 0; i < primes.length; i++)
-        {
-            System.out.println(primes[i]);
-        }
-
-        // demonstrate isPrime, above, below
-        System.out.println(calc.isPrime(149));
-        System.out.println(calc.below(149));
-        System.out.println(calc.above(149));
-
-        // print all the primes just greater than powers of 2
-        calc = new Primes(10000000);
-        for (int pow = 8; pow < 10000000; pow *= 2)
-            System.out.println(calc.above(pow));
-
-        // Validate that isPrime works by comparing it with brute force
-        for (int i = 3; i <= 151; i++)
-        {
-            boolean prime = true;
-            for (int j = 2; j < i; j++)
-            {
-                if (i % j == 0)
-                {
-                    prime = false;
-                    break;
-                }
-            } // end for j
-            if (calc.isPrime(i) != prime)
-                System.out.println(i + " oops");
-        } // end for i
-
-    } // end main
-} // end Primes
+}
