@@ -14,6 +14,7 @@ public class VolumeBoot extends VolumeEntity
 {
     private byte[] data;
 
+    private static byte[] rDos80master;
     private static final String dos80master =
         "01 A5 27 C9 09 D0 18 A5 2B 4A 4A 4A 4A 09 C0 85 "+
         "3F A9 5C 85 3E 18 AD FE 08 6D FF 08 8D FE 08 AE "+
@@ -31,6 +32,7 @@ public class VolumeBoot extends VolumeEntity
         "20 58 FC A9 C2 20 ED FD A9 01 20 DA FD A9 AD 20 "+
         "ED FD A9 00 20 DA FD 60 00 00 00 00 00 00 00 00 "+
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 36 09 ";
+    private static byte[] rDos83master;
     private static final String dos83master =
         "01 A5 27 C9 09 D0 18 A5 2B 4A 4A 4A 4A 09 C0 85 "+
         "3F A9 5C 85 3E 18 AD FE 08 6D FF 08 8D FE 08 AE "+
@@ -48,6 +50,7 @@ public class VolumeBoot extends VolumeEntity
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 36 09 ";
+    private static byte[] rDos86master;
     private static final String dos86master =
         "01 A5 27 C9 09 D0 18 A5 2B 4A 4A 4A 4A 09 C0 85 "+
         "3F A9 5C 85 3E 18 AD FE 08 6D FF 08 8D FE 08 AE "+
@@ -67,6 +70,12 @@ public class VolumeBoot extends VolumeEntity
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 36 09 ";
 
 
+    static
+    {
+        rDos80master = Hex2Bin.hex2Bin(dos80master);
+        rDos83master = Hex2Bin.hex2Bin(dos83master);
+        rDos86master = Hex2Bin.hex2Bin(dos86master);
+    }
 
     /**
      * @param disk
