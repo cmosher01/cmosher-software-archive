@@ -115,6 +115,13 @@ public class MySQLTest
 		String township = (String)i.next();
 		String other = (String)i.next();
 		int image = Integer.parseInt((String)i.next());
+		String nameLast = (String)i.next();
+		String nameFirst = (String)i.next();
+		String nameMiddle = (String)i.next();
+		String nameSuffix = (String)i.next();
+		int m16to150 = Integer.parseInt((String)i.next());
+		int m0to15 = Integer.parseInt((String)i.next());
+		int f0to150 = Integer.parseInt((String)i.next());
     }
 
     protected void calc() throws SQLException
