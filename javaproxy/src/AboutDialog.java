@@ -23,7 +23,7 @@ import java.util.Properties;
 
 /**
  * This class shows the About dialog box The dialog box display information
- * about the system as well as the java vm.
+ * about the system as well as the Java VM.
  */
 class AboutDialog extends Dialog implements ActionListener
 {
