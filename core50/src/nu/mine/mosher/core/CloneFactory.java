@@ -9,7 +9,7 @@ import java.util.Map;
  * This class reflection in order to be
  * able to access the protected clone method of Object.
  */
-public final class Cloner
+public final class Cloner<T>
 {
 	private static final Map<Class,Method> mClasses = new HashMap<Class,Method>();
 
@@ -18,7 +18,7 @@ public final class Cloner
 		throw new UnsupportedOperationException();
 	}
 
-	public static Cloneable cloneObject(Cloneable cloneableObject) throws CloneNotSupportedException
+	public static T cloneObject(T cloneableObject) throws CloneNotSupportedException
 	{
 		try
 		{
@@ -30,7 +30,7 @@ public final class Cloner
 				methodClone.setAccessible(true);
 				mClasses.put(cl,methodClone);
 			}
-			return (Cloneable)methodClone.invoke(cloneableObject,null);
+			return (T)methodClone.invoke(cloneableObject,null);
 		}
 		catch (Throwable cause)
 		{
