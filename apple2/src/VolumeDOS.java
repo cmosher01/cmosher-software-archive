@@ -1,4 +1,5 @@
 import java.util.Collection;
+import java.util.Iterator;
 
 /*
  * Created on Oct 13, 2004
@@ -81,5 +82,22 @@ public class VolumeDOS extends VolumeEntity
     public void getUsed(Collection rPos)
     {
         getPos(rPos);
+    }
+
+    /**
+     * @param s
+     */
+    public void dump(StringBuffer s)
+    {
+        s.append("DOS 3.3: ");
+        for (Iterator i = this.rSector.iterator(); i.hasNext();)
+        {
+            VolumeSector sect = (VolumeSector)i.next();
+            s.append(sect.toString());
+            if (i.hasNext())
+            {
+                s.append("; ");
+            }
+        }
     }
 }
