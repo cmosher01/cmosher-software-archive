@@ -1,3 +1,4 @@
+package nu.mine.mosher;
 /*
  * Created on Aug 14, 2004
  */
