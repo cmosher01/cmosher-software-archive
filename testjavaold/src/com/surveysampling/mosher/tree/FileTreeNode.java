@@ -28,7 +28,7 @@ public class FileTreeNode extends DefaultMutableTreeNode
         String list[] = getFileObject().list();
         if (list != null)
         {
-            for (int i = 0; i < list.length; i++)
+            for (int i = 0; i < list.length; ++i)
             {
                 FileTreeNode subnode = new FileTreeNode(new File(getFileObject(), list[i]));
                 add(subnode);
