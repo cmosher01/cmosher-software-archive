@@ -96,6 +96,7 @@ public class TestBeans
         {
             throw new IntrospectionException("Cannot get BeanInfo for bean class "+bean.getClass().getName());
         }
+
         return bi;
     }
 
