@@ -1,6 +1,8 @@
 package com.surveysampling.util;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Provides a static method that will clone any Cloneable Object.
@@ -9,6 +11,8 @@ import java.lang.reflect.Method;
  */
 public final class Cloner
 {
+    private static final Map /*<Class,Method>*/ mClasses = new HashMap();
+
     private Cloner()
     {
         throw new UnsupportedOperationException();
