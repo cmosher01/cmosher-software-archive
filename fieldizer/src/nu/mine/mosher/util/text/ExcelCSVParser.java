@@ -257,13 +257,11 @@ public class ExcelCSVParser
         {
             posStart = 0;
         }
-        if (posStart <= posEnd)
-        {
-            return sb.substring(posStart, posEnd);
-        }
-        else
+        if (posStart > posEnd)
         {
             return "";
         }
+
+        return sb.substring(posStart, posEnd);
     }
 }
