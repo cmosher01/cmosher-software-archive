@@ -18,7 +18,7 @@ import javax.jdo.PersistenceManager;
  */
 public class ListNamed
 {
-	public String getList(Class named)
+	public static String getList(Class named)
 	{
 		if (!(named.isAssignableFrom(Named.class)))
 		{
