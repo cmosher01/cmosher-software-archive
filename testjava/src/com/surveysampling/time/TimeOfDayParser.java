@@ -5,14 +5,21 @@
  */
 package com.surveysampling.time;
 
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * TODO
  */
 public class TimeOfDayParser
 {
+    private final int hour;
+    private final int minute;
+    private final int second;
+    private final int millisecond;
+
     /**
      * Allowable formats:
      * 
@@ -21,32 +28,46 @@ public class TimeOfDayParser
      * HH:mm:ss
      * HH:mm:ss.SSS
      * 
+     * Numbers are assumed to be decimal.
+     * 
+     * @param cal
      * @param s
      * @return
+     * @throws ParseException
      */
-    public static TimeOfDay parse(String s) throws ParseException
+    public TimeOfDayParser(String s) throws ParseException
     {
         if (s.length() == 4)
         {
             s = "0"+s;
         }
 
-        SimpleDateFormat fmt = null;
         if (s.length() == 5)
         {
-            fmt = new SimpleDateFormat("HH:mm:ss.SSS");
+            ensure(s,2,':');
         }
         else if (s.length() == 8)
         {
-            fmt = new SimpleDateFormat("HH:mm:ss.SSS");
         }
         else if (s.length() == 12)
         {
-            fmt = new SimpleDateFormat("HH:mm:ss.SSS");
         }
         else
         {
             throw new ParseException("Invalid time-of-day string",0);
+        }
+    }
+
+    /**
+     * @param s
+     * @param i
+     * @param c
+     */
+    private void ensure(String s, int i, char c)
+    {
+        if (s.charAt(i) != c)
+        {
+            throw new ParseException("Invalid time-of-day string",i);
         }
     }
 }
