@@ -1,0 +1,41 @@
+<template>
+<ROWSET>
+<ROW>
+<EMAIL>gcmxzv@dbiriqosvpnszwopma.com</EMAIL>
+<FOOMAIL>gcmxzv@dbiriqosvpnszwopma.com</FOOMAIL>
+</ROW>
+<ROW>
+<EMAIL>qkry@omzghwbqxehtwer.com</EMAIL>
+<FOOMAIL>gcmxzv@dbiriqosvpnszwopma.com</FOOMAIL>
+</ROW>
+<ROW>
+<EMAIL>wlkmhopjyfqfskojuwk@utdqgvgtxyacl.com</EMAIL>
+<FOOMAIL>gcmxzv@dbiriqosvpnszwopma.com</FOOMAIL>
+</ROW>
+</ROWSET>
+<default-tag-values>
+<LINK>http://www.google.com</LINK>
+<FOOBAR>gcmxzv@dbiriqosvpnszwopma.com</FOOBAR>
+</default-tag-values>
+<header>
+<to><![CDATA[<field>EMAIL</field>]]></to>
+<subject><![CDATA[This is your Google link.]]></subject>
+<from><![CDATA[MemberServices@SurveySpot.com]]></from>
+<reply><![CDATA[MemberServices@SurveySpot.com]]></reply>
+</header>
+<message>
+<![CDATA[Hello,
+Here is a link to Google <field>LINK</field> .
+Thank you.]]>
+</message>
+<control>
+<name>Test acwujz</name> 
+<submitter>Chris Mosher</submitter> 
+<notify-email>chris_mosher@surveysampling.com</notify-email>
+<ship-rate>10000</ship-rate>
+<send-window>
+<start>9:00</start>
+<end>17:00</end>
+</send-window>
+</control>
+</template>
