@@ -65,9 +65,9 @@ public class GDiffView extends JFrame
 
     private StringBuffer sb;
 
-    private int beginSrc = -1;
+    private long beginSrc;
 
-    private int endSrc = -1;
+    private long endSrc;
 
     private JList listGDiff;
 
@@ -113,6 +113,12 @@ public class GDiffView extends JFrame
                 {
                     GDiffCmd oldCmd = (GDiffCmd)rcmd.get(oldIndex);
                     System.out.println("unhighlight " + oldCmd);
+                    if (oldCmd instanceof GDiffCopy)
+                    {
+                        GDiffCopy copy = (GDiffCopy)oldCmd;
+                        beginSrc = copy.getRange().getBegin();
+                        highlight(false);
+                    }
                 }
                 if (newIndex >= 0)
                 {
@@ -294,16 +300,16 @@ public class GDiffView extends JFrame
         return c;
     }
 
-    public void highlightSrc(int begin, int end)
-    {
-        if (beginSrc >= 0 && endSrc >= 0)
-        {
-            highlight(false);
-        }
-        beginSrc = begin;
-        endSrc = end;
-        highlight(true);
-    }
+//    public void highlightSrc(int begin, int end)
+//    {
+//        if (beginSrc >= 0 && endSrc >= 0)
+//        {
+//            highlight(false);
+//        }
+//        beginSrc = begin;
+//        endSrc = end;
+//        highlight(true);
+//    }
 
     public void highlight(boolean highlight)
     {
@@ -363,23 +369,23 @@ public class GDiffView extends JFrame
         return (row + 1) * rowLen - 1 - cCol - 1;
     }
 
-    public int getHexStart(int pos)
+    public long getHexStart(long pos)
     {
         return rowLen + (pos / cCol) * rowLen + nibs + 2 + (pos % cCol) * 3;
     }
 
-    public int getHexEnd(int pos)
+    public int getHexEnd(long pos)
     {
         return getHexStart(pos) + 2;
     }
 
-    public int getAscStart(int pos)
+    public int getAscStart(long pos)
     {
         return rowLen + (pos / cCol) * rowLen + nibs + 2 + cCol * 3
                 + (pos % cCol);
     }
 
-    public int getAscEnd(int pos)
+    public int getAscEnd(long pos)
     {
         return getAscStart(pos) + 1;
     }
