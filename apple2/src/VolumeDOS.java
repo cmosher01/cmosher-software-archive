@@ -423,7 +423,7 @@ public class VolumeDOS extends VolumeEntity
                         }
                         else
                         {
-                            rbClearSlave = getClearSlave(rbClear1980);
+                            rbClearSlave = getClearSlave(rbClearFranklin);
                             fixupSlave(rbClearSlave,rSlaveCommon,dif);
                             fixupSlave(rbClearSlave,rSlave1980,dif);
                             fixupSlave(rbClearSlave,rSlaveFranklin,dif);
