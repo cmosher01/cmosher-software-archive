@@ -25,7 +25,8 @@ public class TimeOfDay implements Comparable
     private final int milliseconds;
 
     /**
-     * 
+     * Initialized the object with the given time components,
+     * using min/max validity checks of the given Calendar.
      * @param calendar
      * @param hours
      * @param minutes
@@ -38,6 +39,7 @@ public class TimeOfDay implements Comparable
         // for safety, *clone* the caller's calendar first
         // (there's no guarantee that getMinimun and getMaximum are thread safe).
         // We don't hold a reference to calendar, so clone is OK here
+        // There's no other way to create our own calendar
         calendar = (Calendar)calendar.clone();
 
         if (hours < calendar.getMinimum(Calendar.HOUR_OF_DAY) || calendar.getMaximum(Calendar.HOUR_OF_DAY) < hours)
