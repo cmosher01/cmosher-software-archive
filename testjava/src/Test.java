@@ -59,7 +59,7 @@ public class Test
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
         Date d = sdf.parse("02:30:01.000");
 
-        DateFormat fmt = DateFormat.getTimeInstance(DateFormat.SHORT);
+        DateFormat fmt = DateFormat.getTimeInstance();
         System.out.println(fmt.format(d));
 
 
