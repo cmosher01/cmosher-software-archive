@@ -270,7 +270,7 @@ public class FixAppleDisasm
 
 			if (ln.addr >= 0)
 			{
-				out.print(Integer.toHexString(ln.addr));
+				outbuf.print(Integer.toHexString(ln.addr));
 				out.print(":   ");
 				if (ln.instr.length() > 0)
 				{
