@@ -1,7 +1,5 @@
 package nu.mine.mosher.grodb;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 import nu.mine.mosher.util.Immutable;
