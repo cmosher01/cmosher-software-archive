@@ -31,7 +31,6 @@ public class Dos33CatalogEntry
         this.fileTypeID = fileTypeID;
         cSector = sector;
         this.nameOrig = nameOrig;
-        this.name = name;
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < nameOrig.length; ++i)
         {
