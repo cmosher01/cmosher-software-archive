@@ -96,7 +96,7 @@ public class A2DiskContents
 		}
 
 		// trim
-		return s.toString()
+		return s.toString();
 	}
 }
 /*
