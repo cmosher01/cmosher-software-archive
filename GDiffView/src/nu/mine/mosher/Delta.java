@@ -202,7 +202,7 @@ public class Delta
                 {
                     rTrg[i] = rTrg[i + 1];
                 }
-                rTrg[15] = b[0];
+                rTrg[S-1] = b[0];
                 hashf = Checksum.queryChecksum(rTrg,S);
             }
             else
