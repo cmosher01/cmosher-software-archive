@@ -1,7 +1,7 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class Test /* TODO implements Iterable */
+public class StringFieldizer /* TODO implements Iterable */
 {
 	private final Iterator i;
 	
