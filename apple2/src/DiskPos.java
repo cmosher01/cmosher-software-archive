@@ -53,6 +53,11 @@ public class DiskPos
         this.iDisk = block*cBlock+byt;
     }
 
+    protected DiskPos(int iDisk)
+    {
+        this.iDisk = iDisk;
+    }
+
     /**
      * @param block
      * @param allowLarge
