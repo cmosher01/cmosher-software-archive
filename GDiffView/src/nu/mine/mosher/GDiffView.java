@@ -521,9 +521,13 @@ public class GDiffView extends JFrame
         for (Iterator i = rData.iterator(); i.hasNext();)
         {
             GDiffData g = (GDiffData)i.next();
-            beginTrg = g.getTargetRange().getBegin();
-            endTrg = g.getTargetRange().getEnd();
-            highlight("insert",true);
+            Range target = g.getTargetRange();
+            if (target != null)
+            {
+                beginTrg = target.getBegin();
+                endTrg = target().getEnd();
+                highlight("insert",true);
+            }
         }
     }
 
