@@ -47,6 +47,8 @@ public class MtaURI
         }
         mURI = uri;
 
+
+
         // pre-parse the uri to pull out the rate and timeout
         // values from the query string
         Map mapParamToValue = new HashMap();
