@@ -17,12 +17,12 @@ public class RollingChecksum
 
 
 
+    private final int len;
     private int checksum;
-    private int len;
 
 
 
-    void init(byte[] rx)
+    public RollingChecksum(byte[] rx)
     {
         len = rx.length;
         int a = 0;
