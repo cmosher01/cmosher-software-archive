@@ -15,7 +15,7 @@ public class RequestInit implements ServletRequestListener
     public void requestInitialized(ServletRequestEvent rre)
     {
         rre.getServletRequest().setAttribute(
-			"nu.mine.mosher.jdotest.Perm",
+			"pm",
         	JDOHelper.getPersistenceManagerFactory(AppInit.getJDOProperties()).getPersistenceManager());
     }
 
