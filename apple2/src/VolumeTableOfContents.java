@@ -47,6 +47,8 @@ public class VolumeTableOfContents extends VolumeEntity
         rSector.add(new VolumeSector(p,0));
 
         pCat = disk.getDos33Next(p);
+
+        // TODO interpret VTOC's free sector map
     }
 
     /**
