@@ -1,6 +1,12 @@
-package com.surveysampling.util;
-public class Closer
+package nu.mine.mosher.util;
+
+public final class Closer
 {
+    private Closer() throws UnsupportedOperationException
+    {
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * Calls the given object's "close()" method, if it has one.
      * Any exceptions are ignored.
