@@ -43,6 +43,11 @@ public class StringFieldizer
         return s.substring(pos);
     }
 
+    public String getString()
+    {
+        return s;
+    }
+
     protected int nextPos()
     {
         int i = s.indexOf(delim,pos);
