@@ -32,7 +32,7 @@ public class TestBeans
         showInt(some.getObjInteger().intValue());
     }
 
-    public static void setProperty(SomeBean bean, String property, String value)
+    public static void setProperty(Object bean, String property, String value)
         throws IntrospectionException, Exception, IllegalArgumentException, IllegalAccessException, InvocationTargetException
     {
         BeanInfo bi = Introspector.getBeanInfo(SomeBean.class);
