@@ -55,11 +55,15 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
+        Date d = new Date(0);
+        SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");;
+        System.out.println(f.format(d))
+        
 
-        SimpleDateFormat f = new SimpleDateFormat("HH:mm:ss.SSS");
-        long x = 86400000L*300000-1;
-        System.out.print(x/86400000L+" ");
-        System.out.println(f.format(new Date(x%86400000L+18000000L)));
+//        SimpleDateFormat f = new SimpleDateFormat("HH:mm:ss.SSS");
+//        long x = 86400000L*300000-1;
+//        System.out.print(x/86400000L+" ");
+//        System.out.println(f.format(new Date(x%86400000L+18000000L)));
 
 //        int x;
 //        System.out.println(x);
