@@ -20,7 +20,7 @@ public class RollingChecksum
 
 
 
-    private final int len;
+    private int len;
     private int checksum;
 
 
@@ -31,7 +31,7 @@ public class RollingChecksum
      * of the given array of bytes establishes the window size.
      * @param rx array of initial bytes to be checksummed
      */
-    public RollingChecksum(byte[] rx)
+    public void init(byte[] rx)
     {
         len = rx.length;
         int a = 0;
