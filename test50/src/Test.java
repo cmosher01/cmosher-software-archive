@@ -9,7 +9,7 @@ public class Test
 		Iterator i = sf.iterator();
 		while (i.hasNext())
 		{
-			String s = i.next()l
+			String s = i.next();
 			System.out.println(s);
 		}
 	}
