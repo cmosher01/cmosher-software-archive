@@ -122,8 +122,6 @@ public class Disk
         while (i.hasNext())
         {
             DiskPos pos = (DiskPos)i.next();
-            byte[] sector = readSector(pos);
-
             if (isDos33VTOC(pos))
             {
                 rPosVtoc.add(pos);
