@@ -146,20 +146,12 @@ public class TimeOfDay implements Comparable
         synchronized (calendar)
         {
             calendar.setTimeInMillis(d.getTime());
-            updateCalendarFields();
+            calendar.set(Calendar.HOUR_OF_DAY, hours);
+            calendar.set(Calendar.MINUTE, minutes);
+            calendar.set(Calendar.SECOND, seconds);
+            calendar.set(Calendar.MILLISECOND, milliseconds);
             return new Date(calendar.getTimeInMillis());
         }
-    }
-
-
-
-
-    protected void updateCalendarFields()
-    {
-        calendar.set(Calendar.HOUR_OF_DAY, hours);
-        calendar.set(Calendar.MINUTE, minutes);
-        calendar.set(Calendar.SECOND, seconds);
-        calendar.set(Calendar.MILLISECOND, milliseconds);
     }
 
 
