@@ -8,8 +8,6 @@ import java.awt.font.LineBreakMeasurer;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.AttributedString;
 import java.util.ArrayList;
 import java.util.Iterator;
