@@ -265,6 +265,10 @@ public class Disk
                                 valid = false;
                             }
                         }
+                        if (valid)
+                        {
+                            System.out.println("T/S map @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
+                        }
                     }
         }
     }
