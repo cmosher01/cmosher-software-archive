@@ -50,10 +50,24 @@ public class MySQLTest
 	protected void createSchema() throws SQLException
 	{
 		dbUpdate("create table if not exists "+
-		"family "+
+		"Family "+
 		"( "+
 		"    id integer unsigned not null auto_increment primary key, "+
 		"    name varchar(64)"+
+		")");
+		dbUpdate("create table if not exists "+
+		"Census1790 "+
+		"( "+
+		"    id integer unsigned not null auto_increment primary key, "+
+		"    nameLast varchar(64), "+
+		"    nameFirst varchar(64), "+
+		"    nameMiddle varchar(8), "+
+		"    nameSuffix varchar(8), "+
+		"    maleAge16plus integer, "+
+		"    maleAge0to15 integer, "+
+		"    female integer, "+
+		"    other integer, "+
+		"    slave integer "+
 		")");
 	}
 
