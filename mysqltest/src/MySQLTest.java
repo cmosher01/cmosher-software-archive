@@ -70,6 +70,7 @@ public class MySQLTest
     {
     	calcOneCount(1790,"male",16,-1);
 		calcOneCount(1790,"male",0,15);
+		calcOneCount(1790,"female",0,-1);
     }
 
 	protected void calcOneCount(int year, String sGender, int ageMin, int ageMax) throws SQLException
