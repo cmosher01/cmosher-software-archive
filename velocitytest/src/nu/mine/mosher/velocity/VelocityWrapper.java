@@ -112,6 +112,10 @@ public class VelocityWrapper
 
         VelocityWrapper velocity = new VelocityWrapper(props);
 
+        /*
+         * Wrap the caller's Writer in a BufferedWriter,
+         * if it's not already a BufferedWriter.
+         */
         BufferedWriter writer;
         if (out instanceof BufferedWriter)
         {
