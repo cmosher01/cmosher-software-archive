@@ -1,6 +1,8 @@
 package edu.stanford.cs.knuth.sa.random;
 
 import java.io.IOException;
+import nu.mine.mosher.random.RNGDefault;
+import nu.mine.mosher.random.RandomNumberGenerator;
 
 /**
  * Generates a series of random integers.
@@ -9,7 +11,7 @@ import java.io.IOException;
  * 
  * @author Chris Mosher
  */
-public class RanArray30bit
+public class RanArray30bit extends RNGDefault implements RandomNumberGenerator
 {
     private static final int KK = 100;
     private static final int LL = 37;
@@ -88,7 +90,10 @@ public class RanArray30bit
             generate(KK+KK-1);
     }
 
-    public int next()
+    /**
+     * @return random number
+     */
+    public int nextInt()
     {
         if (nextat >= KK)
         {
