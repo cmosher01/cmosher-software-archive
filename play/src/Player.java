@@ -47,8 +47,8 @@ public class Player implements Immutable
 		byte e = (byte)0xff;
 		byte f = (byte)0x100;
 		byte g = -1;
-		byte g = -127;
-		byte h = -128;
+		byte h = -127;
+		byte i = -128;
 		System.out.println();
 
 
