@@ -10,13 +10,11 @@ import javax.swing.tree.DefaultTreeModel;
 
 public class HierarchyBrowserUpdater implements TreeExpansionListener
 {
-    JTree mTree;
     DefaultTreeModel mModel;
     JPanel mFrame;
 
-    public HierarchyBrowserUpdater(JTree tree, DefaultTreeModel tmodel, JPanel theFrame)
+    public HierarchyBrowserUpdater(DefaultTreeModel tmodel, JPanel theFrame)
     {
-        mTree = tree;
         mModel = tmodel;
         mFrame = theFrame;
     }
