@@ -41,6 +41,7 @@ public class ExtrDos33
         File[] rf = listRegFiles(sDir, regexpFile, regexpDir);
 
 		File dirNew = new File(sDir,"extrdos33");
+		dirNew = dirNew.getCanonicalFile();
 		if (dirNew.exists())
 		{
 			throw new Exception(dirNew.getCanonicalFile().getAbsolutePath()+" directory already exists");
