@@ -4,7 +4,7 @@
 <%@ page import="nu.mine.mosher.jdotest.Perm" %>
 <%
     String id = request.getParameter("id");
-    PersistenceManager pm = new Perm(),pm();
+    PersistenceManager pm = new Perm().pm();
     String sOrig = request.getParameter("itemOrig");
     String sNew = request.getParameter("itemNew");
     boolean changed = !sOrig.equals(sNew);
