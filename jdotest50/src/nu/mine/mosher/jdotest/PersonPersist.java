@@ -7,6 +7,7 @@ import java.util.Properties;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
+import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 /**
@@ -68,13 +69,20 @@ public class PersonPersist
 		PersistenceManager pm = this.pmf.getPersistenceManager();
 		Transaction transaction = pm.currentTransaction();
 		transaction.begin();
+
+		Query q = pm.newQuery(Person.class,"");
+		Object result = q.execute();
+		System.out.println(result.getClass().getName());
+
+
 		// retrieve objects from datastore and display
-		for (int i = 0; i < SIZE; i++)
-		{
-			Object oid = this.rid.get(i);
-			Person person = (Person)pm.getObjectById(oid,false);
-			System.out.println("person ID "+oid+": "+person.getName());
-		}
+//		for (int i = 0; i < SIZE; i++)
+//		{
+//			Object oid = this.rid.get(i);
+//			Person person = (Person)pm.getObjectById(oid,false);
+//			System.out.println("person ID "+oid+": "+person.getName());
+//		}
+
 		transaction.commit();
 		pm.close();
 	}
