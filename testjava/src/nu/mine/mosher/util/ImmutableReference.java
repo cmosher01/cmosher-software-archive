@@ -61,16 +61,8 @@ public class ImmutableReference
 
     public int compareTo(Object o)
     {
-        Pair that = (Pair)o;
-
-        int c;
-        c = cmp(this.ref,that.a);
-        if (c == 0)
-        {
-            c = cmp(this.b,that.b);
-        }
-
-        return c;
+        ImmutableReference that = (ImmutableReference)o;
+        return cmp(this.ref,that.ref);
     }
 
     private int cmp(Object x, Object y)
