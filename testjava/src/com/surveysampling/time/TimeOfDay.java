@@ -221,7 +221,7 @@ public class TimeOfDay implements Comparable
 
     private static int cmp(int i0, int i1)
     {
-        // don't subtract, so it works with negative
+        // don't use i0-i1, it won't work with negative
         // ints, or ints at Integer.MAX_VALUE and Integer.MIN_VALUE
         if (i0 < i1)
         {
