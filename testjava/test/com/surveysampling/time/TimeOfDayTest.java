@@ -119,4 +119,16 @@ public class TimeOfDayTest extends TestCase
         assertTrue(tod.compareTo(tod4)==0);
     }
 
+    public void testIllegalArguments()
+    {
+        Calendar cal = Calendar.getInstance();
+        try
+        {
+            new TimeOfDay(cal,-1,0,0,0);
+            fail("should throw IllegalArgumentException");
+        }
+        catch (IllegalArgumentException shouldBeThrown)
+        {
+        }
+    }
 }
