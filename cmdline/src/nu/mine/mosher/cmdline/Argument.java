@@ -18,7 +18,6 @@ public class Argument
     {
         mDef = def;
         mValue = value;
-        mIsSpecified = isSpecified;
     }
 
     String getValue()
