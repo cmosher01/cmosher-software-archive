@@ -1,0 +1,218 @@
+@charset "utf-8"; 
+/* unicode-example.css */
+/* Newspaper and ClearlyU are Linux fonts that support Arabic, they come with Redhat 7.3, per Roozbeh Pournader */
+
+body {
+font-family  : "Arial Unicode MS", CODE2000,  CODE2001, Newspaper, ClearlyU, serif;
+font-size    : medium;
+margin-left  : 3em;
+margin-right : 3em;
+color        : black;
+background-color : #FFFFFF;
+}
+
+a {
+font-size    : 90%;
+}
+
+table.ctr {
+text-align   : center;
+margin-left  : auto;
+margin-right : auto;
+border-collapse : collapse;
+border       : 2px solid black;
+width        : 90%;
+color        : black;
+background-color : #F4F4F4;
+}
+caption {
+font-size    : 1.2em;
+font-weight  : bold;
+text-align   : center;
+padding      : 1em;
+}
+td {
+border-collapse : collapse;
+border       : 2px solid black;
+width        : 24%;
+padding      : 2px 8px;
+}
+td.english {
+font-size    : 0.8em ;
+width        : 16%;
+padding      : 2px 4px;
+color        : black;
+background-color: #F8F8F8 ;
+}
+
+td.native {
+/* font-size    : 1em;*/
+text-align   : left ;
+direction    : ltr ;
+unicode-bidi : embed;
+color        : black;
+background-color : #FFFF90 ;
+}
+td.rtlnative { 
+font-family  : "Times New Roman",  Newspaper, ClearlyU, CODE2000, times, "Arial Unicode MS", serif;
+font-size    : 1.3em;
+text-align   : right ;
+direction    : rtl ;
+unicode-bidi : embed;
+color        : black;
+background-color : #FFFF90 ;
+}
+td.bignative { 
+font-family  : CODE2000, "Arial Unicode MS", serif;
+font-size    : 1.3em;
+text-align   : left ;
+direction    : ltr;
+unicode-bidi : embed;
+color        : black;
+background-color : #FFFF90 ;
+}
+
+td.bigAT { 
+font-family  : "Arial Unicode MS", "Times New Roman", times, serif;
+font-size    : 1.3em;
+text-align   : left ;
+direction    : ltr;
+unicode-bidi : embed;
+color        : black;
+background-color : #FFFF90 ;
+}
+
+td.nunavut {
+font-size    : 1.3em;
+text-align   : left ;
+font-family  : Pigiarniq, "Arial Unicode MS", serif;
+color        : black;
+background-color : #FFFF90 ;
+}
+
+td.egypt {
+font-size    : 1.3em;
+font-family  : "Times New Roman",  Newspaper, ClearlyU, CODE2000, times, "Arial Unicode MS", serif;
+text-align   : right ;
+direction    : rtl ;
+unicode-bidi : embed;
+color        : black;
+background-color : #FFFF90 ;
+}
+
+td.braille {
+font-family  : CODE2000, "Arial Unicode MS", serif;
+font-size    : 20.0pt;
+text-align   : left ;
+direction    : ltr;
+unicode-bidi : embed;
+color        : black;
+background-color : #FFFF90 ;
+}
+p.contributors {
+text-align   : left;
+margin       : 1em auto;
+}
+table.contributors {
+font-family  : "Times New Roman",  Newspaper, ClearlyU, times, CODE2000, "Arial Unicode MS", serif;
+font-size    : 0.8em;
+text-align   : left;
+margin-left  : auto;
+margin-right : auto;
+width        : 93%;
+border-collapse : collapse;
+border          : none 0px black;
+}
+td.contributors {
+border          : none 0px black;
+border-collapse : collapse;
+width        : 20%;
+}
+p {
+margin      : 1em auto;
+}
+p.head {
+font-size   : 14.0pt;
+font-weight : bold;
+text-align  : center;
+margin      : 1em auto;
+}
+p.subhead {
+font-size   : 0.8em;
+font-weight : normal;
+text-align  : center;
+margin      : 1em auto;
+}
+p.big {
+font-family : "Times New Roman", times, serif;
+font-size   : 1.4em;
+font-weight : 600;
+text-align  : center;
+margin      : 2em auto 0.5em;
+}
+span.small {
+font-size   : 0.8em;
+}
+hr {
+width       : 85%;
+}
+a:hover {
+background-color : yellow;
+color            : black;
+}
+
+/* used in unicode-example-plane1.html */
+
+td.plane1    { 
+font-family  : CODE2001, "Arial Unicode MS", sans-serif; 
+font-size    : 120%;
+text-align   : left ;
+direction    : ltr;
+unicode-bidi : embed;
+color        : black;
+background-color : #FFFF90 ;
+}
+td.rtlplane1 { 
+font-family  : CODE2001, "Arial Unicode MS", sans-serif; 
+font-size    : 120%;
+text-align   : right ;
+direction    : rtl;
+unicode-bidi : embed;
+color        : black;
+background-color : #FFFF90 ;
+}
+td.osmanya {
+font-family : ANDAGII, CODE2001, "Arial Unicode MS", serif;
+font-size    : 120%;
+text-align   : left ;
+direction    : ltr;
+unicode-bidi : embed;
+color        : black;
+background-color : #FFFF90 ;
+}
+td.linearb {
+font-family : PENUTURESU, CODE2001, "Arial Unicode MS", serif;
+font-size    : 120%;
+text-align   : left ;
+direction    : ltr;
+unicode-bidi : normal;
+color        : black;
+background-color : #FFFF90 ;
+}
+
+div.center, div.ctr {
+text-align : center;
+padding    : 0.5em;
+}
+h1 {
+text-align : center; 
+margin     : 0.3em auto;
+}
+li {
+margin      : 0.7em auto; 
+width       : 80%; 
+font-family : "Times New Roman", times, serif;
+vertical-align : top;
+}
+
+/* unicode-example.css */
