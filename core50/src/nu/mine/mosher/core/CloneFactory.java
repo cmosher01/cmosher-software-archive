@@ -9,7 +9,7 @@ import java.util.Map;
  * This class reflection in order to be
  * able to access the protected clone method of Object.
  */
-public final class Cloner<T>
+public static final class Cloner<T>
 {
 	private static final Map<Class,Method> mClasses = new HashMap<Class,Method>();
 
