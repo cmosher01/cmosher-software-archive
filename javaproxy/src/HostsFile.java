@@ -35,6 +35,7 @@ public class HostsFile
                 map.put(host, ip);
             }
         }
+        in.close();
     }
 
     public String lookupHost(String host)
