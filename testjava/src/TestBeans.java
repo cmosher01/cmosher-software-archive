@@ -42,6 +42,20 @@ public class TestBeans
 
         Class classProp = pd.getPropertyType();
 
+        Object v = getConvertedValue(value, classProp);
+
+        Method wr = pd.getWriteMethod();
+        if (wr == null)
+        {
+            throw new IllegalAccessException("Cannot write property " + property);
+        }
+
+        wr.invoke(bean, new Object[] { v });
+    }
+
+    public static Object getConvertedValue(String[] value, Class classProp)
+        throws NegativeArraySizeException, IllegalArgumentException, IntrospectionException
+    {
         Object v;
         if (classProp.isArray())
         {
@@ -52,14 +66,7 @@ public class TestBeans
         {
             v = convert(value[0], getPropertyEditor(classProp));
         }
-
-        Method wr = pd.getWriteMethod();
-        if (wr == null)
-        {
-            throw new IllegalAccessException("Cannot write property " + property);
-        }
-
-        wr.invoke(bean, new Object[] { v });
+        return v;
     }
 
     public static PropertyDescriptor getPropertyDescriptor(Object bean, String property) throws IntrospectionException
