@@ -14,6 +14,7 @@ public class Hex2BinTest extends TestCase
 
     public void testHexbyte()
     {
+        assertEquals("00",Hex2Bin.hexbyte(0));
     }
 
 }
