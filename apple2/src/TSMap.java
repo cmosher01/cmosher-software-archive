@@ -17,12 +17,7 @@ public class TSMap
      */
     public void mark(DiskPos p)
     {
-        int sector = p.getSectorInDisk();
-        if (sector < 0 || r.length <= sector)
-        {
-            throw new IllegalArgumentException();
-        }
-        r[sector] = true;
+        set(p,true);
     }
 
     /**
@@ -30,12 +25,17 @@ public class TSMap
      */
     public void clear(DiskPos p)
     {
+        set(p,false);
+    }
+
+    public void set(DiskPos p, boolean mark)
+    {
         int sector = p.getSectorInDisk();
         if (sector < 0 || r.length <= sector)
         {
             throw new IllegalArgumentException();
         }
-        r[sector] = false;
+        r[sector] = mark;
     }
 
     /**
