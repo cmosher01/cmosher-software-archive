@@ -7,8 +7,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Iterator;
 import java.util.logging.Logger;
 
+import nu.mine.mosher.core.StringFields;
 import nu.mine.mosher.logging.LoggingInitializer;
 
 public class MySQLTest
@@ -92,6 +94,10 @@ public class MySQLTest
 			return;
 		}
 
+		for (Iterator i = new StringFields(s).iterator(); i.hasNext();)
+		{
+			String field = (String)i.next();
+	    }
     }
 
     protected void calc() throws SQLException
