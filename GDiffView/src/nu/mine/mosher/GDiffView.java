@@ -73,8 +73,10 @@ public class GDiffView extends JFrame
     private StringBuffer trg;
 
     private long beginSrc;
-
     private long endSrc;
+
+    private long beginTrg;
+    private long endTrg;
 
     private JList listGDiff;
 
@@ -298,24 +300,35 @@ public class GDiffView extends JFrame
     //        highlight(true);
     //    }
 
-    public void highlight(boolean highlight)
+    public void highlight(boolean highlight, boolean target)
     {
-        if (getRow(beginSrc) == getRow(endSrc))
+        long begin, end;
+        if (target)
         {
-            highlight(getHexStart(beginSrc),getHexEnd(endSrc),highlight);
-            highlight(getAscStart(beginSrc),getAscEnd(endSrc),highlight);
+            begin = beginSrc;
+            end = endSrc;
         }
         else
         {
-            highlight(getHexStart(beginSrc),getHexRowEnd(getRow(beginSrc)),highlight);
-            highlight(getAscStart(beginSrc),getAscRowEnd(getRow(beginSrc)),highlight);
+            begin = beginTrg;
+            end = endTrg;
+        }
+        if (getRow(beginSrc) == getRow(endSrc))
+        {
+            highlight(getHexStart(beginSrc),getHexEnd(endSrc),highlight,target);
+            highlight(getAscStart(beginSrc),getAscEnd(endSrc),highlight,target);
+        }
+        else
+        {
+            highlight(getHexStart(beginSrc),getHexRowEnd(getRow(beginSrc)),highlight,target);
+            highlight(getAscStart(beginSrc),getAscRowEnd(getRow(beginSrc)),highlight,target);
             for (long i = getRow(beginSrc) + 1; i <= getRow(endSrc) - 1; ++i)
             {
-                highlight(getHexRowStart(i),getHexRowEnd(i),highlight);
-                highlight(getAscRowStart(i),getAscRowEnd(i),highlight);
+                highlight(getHexRowStart(i),getHexRowEnd(i),highlight,target);
+                highlight(getAscRowStart(i),getAscRowEnd(i),highlight,target);
             }
-            highlight(getHexRowStart(getRow(endSrc)),getHexEnd(endSrc),highlight);
-            highlight(getAscRowStart(getRow(endSrc)),getAscEnd(endSrc),highlight);
+            highlight(getHexRowStart(getRow(endSrc)),getHexEnd(endSrc),highlight,target);
+            highlight(getAscRowStart(getRow(endSrc)),getAscEnd(endSrc),highlight,target);
         }
     }
 
@@ -372,10 +385,17 @@ public class GDiffView extends JFrame
         return getAscStart(pos) + 1;
     }
 
-    public void highlight(long beginPoint, long endPoint, boolean highlight)
+    public void highlight(long beginPoint, long endPoint, boolean highlight, boolean target)
     {
         AttributeSet attr = (AttributeSet)styles.get(highlight ? "highlight" : "body");
-        docSrc.setCharacterAttributes((int)beginPoint,(int)(endPoint - beginPoint),attr,true);
+        if (target)
+        {
+            docTrg.setCharacterAttributes((int)beginPoint,(int)(endPoint - beginPoint),attr,true);
+        }
+        else
+        {
+            docSrc.setCharacterAttributes((int)beginPoint,(int)(endPoint - beginPoint),attr,true);
+        }
     }
 
     public void readGDiff() throws IOException, InvalidMagicBytes
