@@ -11,7 +11,7 @@
 			Testing a JSP Document (as opposed to a JSP Page)!
 			IE doesn't understand application/xhtml+xml
 			Here is a tag being called:
-			<tg:testTag />
+			<tg:testTag class="Item" />
 			</jsp:text>
 		</body>
 	</html>
