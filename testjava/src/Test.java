@@ -50,9 +50,10 @@ public class Test
 
 
 
+        final int LOOP = 10000000;
         X x = new X();
         long start = System.currentTimeMillis();
-        for (int i = 0; i < 10000000; ++i)
+        for (int i = 0; i < LOOP; ++i)
         {
             x.close();
 //            UniversalCloser2.close(x);
@@ -60,6 +61,7 @@ public class Test
         long end = System.currentTimeMillis();
         double milliseconds = (end-start);
         double microseconds = milliseconds*1000;
+        double per = microsoeconds/LOOP;
         System.out.println("elapsed time: "+microseconds+" microseconds");
 
 
