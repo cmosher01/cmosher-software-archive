@@ -60,4 +60,16 @@ public class Perm
 		PersistenceManager pm = this.pmf.getPersistenceManager();
 		return pm.getObjectById(pm.newObjectIdInstance(permClass,id),true);
 	}
+
+	public void begin()
+	{
+		PersistenceManager pm = this.pmf.getPersistenceManager();
+		pm.currentTransaction().begin();
+	}
+
+	public void commit()
+	{
+		PersistenceManager pm = this.pmf.getPersistenceManager();
+		pm.currentTransaction().commit();
+	}
 }
