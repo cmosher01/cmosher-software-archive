@@ -34,16 +34,14 @@ public class TestBeans
         throws IntrospectionException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
     {
         PropertyDescriptor pd = getPropertyDescriptor(bean.getClass(), property);
-        Object v = convertScalarSafe(value, pd.getPropertyType());
-        setProperty(bean, pd, v);
+        setProperty(bean, pd, convertScalarSafe(value, pd.getPropertyType()));
     }
 
     public static void setProperty(Object bean, String property, String[] value)
         throws IntrospectionException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
     {
         PropertyDescriptor pd = getPropertyDescriptor(bean.getClass(), property);
-        Object v = convertArraySafe(value, pd.getPropertyType());
-        setProperty(bean, pd, v);
+        setProperty(bean, pd, convertArraySafe(value, pd.getPropertyType()));
     }
 
     public static PropertyDescriptor getPropertyDescriptor(Class forClass, String property) throws IntrospectionException
