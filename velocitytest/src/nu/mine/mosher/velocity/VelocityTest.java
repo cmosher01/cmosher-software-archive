@@ -80,7 +80,8 @@ public class VelocityTest
             String path = nodePath.getNodeValue();
             if (path.startsWith("/"))
             {
-                int slash = path.indexOf("/",1);
+                path = path.substring(1);
+                int slash = path.indexOf("/");
                 if (slash >= 0)
                 {
                     path = path.substring(0,slash);
