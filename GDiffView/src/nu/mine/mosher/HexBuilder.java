@@ -116,8 +116,8 @@ public class HexBuilder
         b >>= 4;
         char n1 = nib(b & 0xF);
         col = sb.length()-BYTES_PER_ROW-3*(BYTES_PER_ROW-col);
-        sb.setCharAt(col++,n0);
-        sb.setCharAt(col,n1);
+        sb.setCharAt(col++,n1);
+        sb.setCharAt(col,n0);
     }
 
     /**
