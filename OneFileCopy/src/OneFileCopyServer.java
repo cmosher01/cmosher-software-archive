@@ -47,6 +47,7 @@ public class OneFileCopyServer
 			xLen >>= 8;
 		}
 		out.write(rbLen);
+		xLen = f.length();
 		System.out.println("sent length: "+xLen+" bytes");
 
 		System.out.println("Will send "+((xLen+rb.length-1)/rb.length)+" chunks.");
