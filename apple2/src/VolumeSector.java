@@ -39,6 +39,9 @@ public class VolumeSector
         return (DiskPos)pos.clone();
     }
 
+    /**
+     * @return
+     */
     public int getIndex()
     {
         return i;
