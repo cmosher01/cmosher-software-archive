@@ -217,6 +217,10 @@ public class ExtrDos33
 			{
 				sig("Pronto-DOS (Beagle Bros.)");
 			}
+			if (this.hasRdosSignature())
+			{
+				sig("RDOS (SSI)");
+			}
         }
         private void sig(String s)
         {
