@@ -1,9 +1,11 @@
-public final class UndoableReference
-{
-	private Cloneable state;
-	private Undoer undoer = new Undoer();
+package nu.mine.mosher.core;
 
-	public UndoableReference(Cloneable state)
+public final class UndoableReference<T extends Cloneable>
+{
+	private T state;
+	private Undoer<T> undoer = new Undoer<T>();
+
+	public UndoableReference(T state)
 	{
 		if (state == null)
 		{
@@ -12,7 +14,7 @@ public final class UndoableReference
 		this.state = state;
 	}
 
-	public Cloneable state()
+	public T state()
 	{
 		return state;
 	}
