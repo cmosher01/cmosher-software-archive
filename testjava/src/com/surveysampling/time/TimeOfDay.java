@@ -16,7 +16,7 @@ import java.util.Date;
  * the given Calendar object passed into the constructor
  * (they clone it instead).
  * This class is thread-safe, but only to the extent that
- * given Calendar object is used in a thread-safe manner.
+ * given Calendar object's clone method is thread-safe.
  */
 public class TimeOfDay implements Comparable
 {
