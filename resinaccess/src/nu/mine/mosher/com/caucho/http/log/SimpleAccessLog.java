@@ -39,7 +39,7 @@ public class SimpleAccessLog extends AccessLog
     	{
     		status = ((AbstractHttpResponse)response).getStatusCode();
     	}
-    	boolean good = (status==HttpServletResponse.SC_OK || status==HttpServletResponse.SC_NOT_MODIFIED);
+//    	boolean good = (status==HttpServletResponse.SC_OK || status==HttpServletResponse.SC_NOT_MODIFIED);
 
 		Inet4Address ip = (Inet4Address)InetAddress.getByName(request.getRemoteAddr());
 		String method = request.getMethod();
