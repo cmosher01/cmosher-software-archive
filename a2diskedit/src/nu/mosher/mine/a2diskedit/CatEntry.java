@@ -55,4 +55,9 @@ public class CatEntry implements TreeNode
 	{
 		node = n;
 	}
+
+	public boolean isDisplayable()
+	{
+		return sName.length() > 0;
+	}
 }
