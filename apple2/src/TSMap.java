@@ -89,5 +89,6 @@ public class TSMap
         {
             m.r[i] = a.r[i] && b.r[i];
         }
+        return m;
     }
 }
