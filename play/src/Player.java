@@ -64,8 +64,8 @@ public class Player implements Immutable
 		InputStreamReader reader = new InputStreamReader(stream,"x-gedcom-ansel");
 		BufferedReader bufrd = new BufferedReader(reader);
 
-		FileOutputStream fil = new FileOutputStream(new File("test.utf16"));
-		OutputStreamWriter ow = new OutputStreamWriter(fil,"utf-16");
+		FileOutputStream fil = new FileOutputStream(new File("test.utf8"));
+		OutputStreamWriter ow = new OutputStreamWriter(fil,"utf-8");
 		PrintWriter pw = new PrintWriter(ow);
 
         String s = bufrd.readLine();
