@@ -421,7 +421,7 @@ public class Disk
      */
     protected boolean isfindDos33TSMapSector(byte[] sector)
     {
-        boolean valid = true;
+        boolean valid = false;
         if (sector[0]==0 &&
             DiskPos.isValidTrack(sector[1]) && DiskPos.isValidSector(sector[2]) &&
             sector[3]==0 && sector[4]==0 &&
@@ -430,6 +430,7 @@ public class Disk
             (sector[0x0C] > 0 || sector[0x0D] > 0) &&
             DiskPos.isValidTrack(sector[0x0C]) && DiskPos.isValidSector(sector[0x0D]))
         {
+            valid = true;
             int ts = 0x0E;
             while (ts+1 < sector.length && (sector[ts] != 0 || sector[ts+1] != 0) && valid)
             {
