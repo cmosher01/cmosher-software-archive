@@ -2,25 +2,19 @@ public class ImmutableReference
 {
     private Cloneable ref;
 
-    public ImmutableReference(Cloneable a, Cloneable b) throws CloneNotSupportedException
+    public ImmutableReference(Cloneable ref) throws CloneNotSupportedException
     {
-        this.ref = Cloner.cloneObject(a);
-        this.b = Cloner.cloneObject(b);
+        this.ref = Cloner.cloneObject(ref);
     }
 
-    public Cloneable a() throws CloneNotSupportedException
+    public Cloneable object() throws CloneNotSupportedException
     {
         return Cloner.cloneObject(this.ref);
     }
 
-    public Cloneable b() throws CloneNotSupportedException
-    {
-        return Cloner.cloneObject(this.b);
-    }
-
     public String toString()
     {
-        return "("+ref+","+b+")";
+        return ref.toString();
     }
 
     public Object clone()
@@ -29,8 +23,7 @@ public class ImmutableReference
         try
         {
             clon = (Pair)super.clone();
-            clon.a = a();
-            clon.b = b();
+            clon.ref = object();
         }
         catch (CloneNotSupportedException cantHappen)
         {
