@@ -46,6 +46,6 @@ public class StringFieldizer implements Iterable, Immutable
 				pos = i+1;
 				return tok;
 			}
-		}
+		};
 	}
 }
