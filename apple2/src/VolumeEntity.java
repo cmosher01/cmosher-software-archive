@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 /*
@@ -22,5 +24,14 @@ public class VolumeEntity
     {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    public void getPos(Collection rPos)
+    {
+        for (Iterator i = this.rSector.iterator(); i.hasNext();)
+        {
+            VolumeSector sect = (VolumeSector)i.next();
+            rPos.add(sect.getPos());
+        }
     }
 }
