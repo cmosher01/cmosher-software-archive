@@ -187,7 +187,7 @@ public class GDiffVeiew extends JFrame
         }
         if (32 <= b && b <= 126)
         {
-            sb.append(b);
+            sb.append((char)b);
         }
         else
         {
