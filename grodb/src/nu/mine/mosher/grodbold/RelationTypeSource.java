@@ -10,7 +10,7 @@ public class RelationTypeSource implements Serializable
 	private final int id;
 	private transient final String name;
 
-	protected RelationTypeSource(String name)
+	private RelationTypeSource(String name)
 	{
 		this.id = enumFactory.size();
 		this.name = name;
