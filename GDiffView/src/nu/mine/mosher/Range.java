@@ -264,6 +264,10 @@ public class Range implements Comparable
         {
             m = new Range(r.getBegin(), s.getEnd());
         }
+        else if (s.precedes(r))
+        {
+            m = new Range(s.getBegin(), r.getEnd());
+        }
         return m;
     }
 }
