@@ -283,6 +283,7 @@ public class MySQLTest
     	}
     	finally
     	{
+			closeStatement(ins);
     		closeStatement(st);
     	}
     }
