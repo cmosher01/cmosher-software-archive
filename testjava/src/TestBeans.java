@@ -17,6 +17,8 @@ public class TestBeans
             Package pkg = rpkg[i];
             System.out.println(pkg.getName());
         }
+        System.out.println("--------------------------");
+        new Test().test();
 
         SomeBean some = new SomeBean();
         String prop = "objInteger";
