@@ -7,7 +7,7 @@ package nu.mine.mosher.util.text;
  * Parses a comma-separated value (CSV) line.
  * The CSV line is of the format of a record in an
  * Excel-style CSV file. Typically, each record in
- * the file will be passed to the contructor.
+ * the file will be passed to the constructor.
  * Then, while <code>getNextPos</code> returns a
  * non-negative value, call <code>getOneValue</code>
  * to get each field.
