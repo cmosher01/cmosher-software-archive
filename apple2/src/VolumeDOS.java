@@ -618,8 +618,8 @@ public class VolumeDOS extends VolumeEntity
                         else
                         {
                             s.append(" (DOS 3.3 1983 slave (A$");
-                            s.append(Integer.toHexString(0x1D00+dif*256));
-                            s.append("): unknown alteration)");
+                            s.append(Hex2Bin.hexbyte((byte)(0x1D+dif)));
+                            s.append("00): unknown alteration)");
                         }
                     }
                 }
@@ -649,8 +649,8 @@ public class VolumeDOS extends VolumeEntity
                         else
                         {
                             s.append(" (DOS 3.3 1986 slave (A$");
-                            s.append(Integer.toHexString(0x1D00+dif*256));
-                            s.append("): unknown alteration)");
+                            s.append(Hex2Bin.hexbyte((byte)(0x1D+dif)));
+                            s.append("00): unknown alteration)");
                         }
                     }
                 }
