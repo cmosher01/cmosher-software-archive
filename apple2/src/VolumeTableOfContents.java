@@ -49,6 +49,9 @@ public class VolumeTableOfContents extends VolumeEntity
         pCat = disk.getDos33Next(p);
     }
 
+    /**
+     * @return
+     */
     public DiskPos getCatalogPointer()
     {
         return pCat;
