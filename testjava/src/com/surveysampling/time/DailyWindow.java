@@ -90,10 +90,8 @@ public class DailyWindow
      * times are the same, then the returned DailyWindow
      * object is the same as createDailyWindowAlwaysOpen
      * returns.
-     * @param start window start time in HH:MM format; cannot be null
-     * @param end window end time in HH:MM format; cannot be null
-     * @throws ParseException if start or end are in
-     * an invalid format, or if the start and end times are the same.
+     * @param start window start time; cannot be null
+     * @param end window end time; cannot be null
      */
     public static DailyWindow createDailyWindow(TimeOfDay start, TimeOfDay end)
     {
