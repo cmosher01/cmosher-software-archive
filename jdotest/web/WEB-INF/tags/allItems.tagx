@@ -7,7 +7,7 @@
 	<jsp:directive.attribute name="classname" type="java.lang.String" required="true" />
 	<jsp:directive.attribute name="var" type="java.lang.String" rtexprvalue="false" required="true" />
 	<jsp:directive.variable alias="obj" name-from-attribute="var" variable-class="java.lang.String" />
-	<c:set var="obj" value="chris">
+	<c:set var="x" value="chris">
 		<jsp:doBody />
 	</c:set>
 </jsp:root>
