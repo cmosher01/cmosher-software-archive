@@ -161,12 +161,15 @@ public class Disk
                 int ce = 0x0B;
                 int penultimateSpace = 0;
                 int goodEntries = 0;
+                boolean good = true;
                 for (int cat = 0; cat < 7; ++cat)
                 {
-                    boolean good = false;
-                    if (sector[ce] != 0)
+                    if (sector[ce] == 0)
                     {
-                        good = true;
+                        good = false;
+                    }
+                    else
+                    {
                         ++goodEntries;
                     }
                     if (good && DiskPos.isValidSector(sector[ce+1]) &&
