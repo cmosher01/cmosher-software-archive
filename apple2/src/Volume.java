@@ -106,7 +106,10 @@ public class Volume
     public void dump(StringBuffer s)
     {
         boot.dump(s);
-        dos.dump(s);
+        if (dos != null)
+        {
+            dos.dump(s);
+        }
         cat.dump(s);
         for (Iterator i = this.rFile.iterator(); i.hasNext();)
         {
