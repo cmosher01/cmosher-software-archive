@@ -1,8 +1,3 @@
-/*
- * TODO
- *
- * Created on Dec 30, 2003
- */
 package com.surveysampling.mosher.tree;
 
 import java.awt.Cursor;
@@ -16,9 +11,6 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-/**
- * TODO
- */
 public class HierarchyBrowserUpdater implements TreeExpansionListener
 {
     FileTreeNode root;
