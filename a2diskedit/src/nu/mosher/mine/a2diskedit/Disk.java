@@ -74,12 +74,7 @@ public class Disk implements TreeNode
 
 	public Component getRightPane()
 	{
-		if (mPane == null)
-		{
-			mPane = new JScrollPane(he);
-		}
-
-		return mPane;
+		return viewRight;
 	}
 
 	/**
