@@ -65,14 +65,9 @@ public class Apple2
         disk.findDos33VTOC(rVTOC);
     }
 
-    public static void mainOne(String[] args) throws IOException
+    public static void doOneFile(File f) throws IOException
     {
-        if (args.length != 1)
-        {
-            throw new IllegalArgumentException("Usage: java Apple2 dos_3.3_order_disk_image");
-        }
-
-        InputStream fileDisk = new FileInputStream(new File(args[0]));
+        InputStream fileDisk = new FileInputStream(f);
         byte[] rbDisk = new byte[fileDisk.available()];
         fileDisk.read(rbDisk);
 
@@ -81,11 +76,11 @@ public class Apple2
         List rVTOC = new ArrayList();
         disk.findDos33VTOC(rVTOC);
 
-        List rCat = new ArrayList();
-        disk.findDos33CatalogSector(rCat);
-
-        List rTSMap = new ArrayList();
-        disk.findDos33TSMapSector(rTSMap);
+//        List rCat = new ArrayList();
+//        disk.findDos33CatalogSector(rCat);
+//
+//        List rTSMap = new ArrayList();
+//        disk.findDos33TSMapSector(rTSMap);
     }
 
     public static File[] list140KFiles(String sDir) throws IOException
