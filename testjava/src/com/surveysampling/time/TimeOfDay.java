@@ -126,6 +126,12 @@ public class TimeOfDay
         return new Date(cal.getTimeInMillis());
     }
 
+    /**
+     * Convenience method that calls getTimeOnDay
+     * with <code>Calendar.getInstance()</code>
+     * @param d
+     * @return
+     */
     public Date getTimeOnDay(Date d)
     {
         return getTimeOnDay(d,Calendar.getInstance());
