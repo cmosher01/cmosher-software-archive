@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -39,7 +40,7 @@ public class DiskVTOCTest extends TestCase
         assertEquals(posExpected,posActual);
     }
 
-    public void assertManyPos(String f, List rPosExpected)
+    public void assertManyPos(String f, List rPosExpected) throws IOException
     {
         Disk disk = readDiskResource(f);
         List rPosActual = new ArrayList();
@@ -47,8 +48,12 @@ public class DiskVTOCTest extends TestCase
 
         assertEquals(rPosExpected.size(),rPosActual.size());
 
-        DiskPos posActual = (DiskPos)rPos.get(0);
-        assertEquals(pos,posActual);
+        for (int i = 0; i < rPosExpected.size(); i++)
+        {
+            DiskPos posExpected = (DiskPos)rPosExpected.get(i);
+            DiskPos posActual = (DiskPos)rPosActual.get(i);
+            assertEquals(posExpected,posActual);
+        }
     }
 
 
