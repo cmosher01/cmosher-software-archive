@@ -32,13 +32,13 @@ public class Undoer
 
     public Cloneable undo(Cloneable state) throws CloneNotSupportedException
     {
-        mrRedo.addFirst(Cloner.cloneObject(state));
+        mrRedo.addFirst(state);
         return (Cloneable)mrUndo.removeLast();
     }
 
     public Cloneable redo(Cloneable state) throws CloneNotSupportedException
     {
-        mrUndo.addLast(Cloner.cloneObject(state));
+        mrUndo.addLast(state);
         return (Cloneable)mrRedo.removeFirst();
     }
 }
