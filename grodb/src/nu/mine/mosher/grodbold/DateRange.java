@@ -80,4 +80,12 @@ public class DateRange
     {
         return timeZone;
     }
+
+    /**
+     * @return
+     */
+    public boolean isCirca()
+    {
+        return circa;
+    }
 }
