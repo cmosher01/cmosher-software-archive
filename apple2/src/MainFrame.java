@@ -100,7 +100,8 @@ public class MainFrame extends JFrame
      */
     private void init()
     {
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
         this.setSize(400,470);
         this.setLocation(10, 10);
