@@ -35,7 +35,7 @@ public class PersonPersist
 			props.setProperty("org.jpox.autoCreateTables","true");
 			props.setProperty("org.jpox.validateTables","false");
 			props.setProperty("org.jpox.validateConstraints","false");
-			pmf = JDOHelper.getPersistenceManagerFactory(props);
+			this.pmf = JDOHelper.getPersistenceManagerFactory(props);
 		}
 		catch (Exception ex)
 		{
