@@ -239,10 +239,14 @@ public class GDiffView extends JFrame
         setContentPane(contentPane);
 
         SpringLayout.Constraints cnsSrc = new SpringLayout.Constraints();
-        cnsSrc.setConstraint(SpringLayout.NORTH,layout.getConstraint(SpringLayout.NORTH, contentPane));
-        cnsSrc.setConstraint(SpringLayout.SOUTH,layout.getConstraint(SpringLayout.SOUTH, contentPane));
-        cnsSrc.setConstraint(SpringLayout.WEST,layout.getConstraint(SpringLayout.WEST, contentPane));
+        cnsSrc.setConstraint(SpringLayout.NORTH,layout.getConstraint(SpringLayout.NORTH,contentPane));
+        cnsSrc.setConstraint(SpringLayout.SOUTH,layout.getConstraint(SpringLayout.SOUTH,contentPane));
+        cnsSrc.setConstraint(SpringLayout.WEST,layout.getConstraint(SpringLayout.WEST,contentPane));
 
+        SpringLayout.Constraints cnsTrg = new SpringLayout.Constraints();
+        cnsTrg.setConstraint(SpringLayout.NORTH,layout.getConstraint(SpringLayout.NORTH,contentPane));
+        cnsTrg.setConstraint(SpringLayout.SOUTH,layout.getConstraint(SpringLayout.SOUTH,contentPane));
+        cnsTrg.setConstraint(SpringLayout.EAST,layout.getConstraint(SpringLayout.EAST,contentPane));
 //        contentPane.add(spl2,BorderLayout.CENTER);
 
         contentPane.add(scrSrc,cnsSrc);
