@@ -55,12 +55,7 @@ public class TestBeans
         {
             classProp = classProp.getComponentType();
             PropertyEditor ed = getPropertyEditor(classProp);
-            Object[] rval = (Object[])Array.newInstance(classProp,value.length);
-            for (int i = 0; i < value.length; ++i)
-            {
-                String s = value[i];
-                rval[i] = convert(s,ed);
-            }
+            Object[] rval = convertArray(value, classProp, ed);
             v = rval;
         }
         else
@@ -71,6 +66,18 @@ public class TestBeans
 
         Method wr = pd.getWriteMethod();
         wr.invoke(bean, new Object[] { v });
+    }
+
+    public static Object[] convertArray(String[] value, Class classProp, PropertyEditor ed)
+        throws NegativeArraySizeException, IllegalArgumentException
+    {
+        Object[] rval = (Object[])Array.newInstance(classProp,value.length);
+        for (int i = 0; i < value.length; ++i)
+        {
+            String s = value[i];
+            rval[i] = convert(s,ed);
+        }
+        return rval;
     }
 
     public static Object convert(String value, PropertyEditor ed) throws IllegalArgumentException
