@@ -30,4 +30,12 @@ public class ArgumentDefinition
         this.name = name;
         this.desc = desc;
     }
+    public String getDesc()
+    {
+        return desc;
+    }
+    public String getName()
+    {
+        return name;
+    }
 }
