@@ -105,7 +105,7 @@ class NormalizerBuilder
 
             int value = (char)Integer.parseInt(line.substring(0, 4), 16);
             isExcluded.set(value);
-            System.out.println("Excluding " + hex(value));
+            System.out.println("Excluding " + hex(value) + " for line: "+line);
         }
         in.close();
         if (DEBUG)
