@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class StringFields /* ??? implements Iterable */
 {
@@ -35,6 +36,10 @@ public class StringFields /* ??? implements Iterable */
 
         public Object next()
         {
+            if (!hasNext())
+            {
+                throw new NoSuchElementException();
+            }
             int i = s.indexOf(',',pos);
             if (i < 0)
             {
