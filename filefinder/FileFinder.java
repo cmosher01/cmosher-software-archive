@@ -16,12 +16,16 @@ public class FileFinder
             System.exit(1);
         }
 
+        System.err.println("dir: "+rArg[0]);
+        System.err.println("file-reg-exp: "+rArg[1]);
+
         final Pattern patFile = Pattern.compile(rArg[1]);
 
         String sub = "";
         if (rArg.length > 2)
         {
             sub = rArg[2];
+            System.err.println("subdir-reg-exp: "+sub);
         }
         final Pattern patSubdir = Pattern.compile(sub);
 
