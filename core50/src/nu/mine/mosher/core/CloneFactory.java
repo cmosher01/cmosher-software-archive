@@ -35,7 +35,7 @@ public final class Cloner
 			{
 				throw new CastClassException();
 			}
-			return (T);
+			return (T)newclone;
 		}
 		catch (Throwable cause)
 		{
