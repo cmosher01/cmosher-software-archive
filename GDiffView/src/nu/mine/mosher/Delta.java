@@ -112,7 +112,7 @@ public class Delta
                 if (match && !sourceOutofBytes)
                 {
                     // The length of the match is determined by comparing bytes.
-                    boolean ok = true;
+                    boolean ok;
                     byte[] sourceBuff = new byte[buff_size];
                     byte[] targetBuff = new byte[buff_size];
                     int source_idx = 0;
