@@ -13,6 +13,9 @@ public class DiskVTOCTest extends TestCase
 {
     private static byte[] zeroes = new byte[0x100];
 
+    /**
+     * negative test all zeroes
+     */
     public void testVTOC_Zeroes()
     {
         assertFalse(Disk.isDos33VTOC(zeroes));
