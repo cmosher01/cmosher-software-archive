@@ -13,7 +13,7 @@ public class Dos33CatalogEntry
     private final boolean deleted;
     private final DiskPos dataPos;
     private final boolean locked;
-    private final int fileTypeID;
+    private final int fileTypeID; //$00=Text, $01=Integer, $02=Applesoft, $04=Binary, $08=Special, $10=Relocatable, $20=A, $40=B
     private final int cSector;
     private final byte[] nameOrig;
 
