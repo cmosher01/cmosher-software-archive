@@ -116,8 +116,8 @@ public class GDiffView extends JFrame
         }
         byte[] rs = new byte[cWindow];
         RollingChecksum roll = new RollingChecksum();
+
         int trgPos = 0;
-        List matches = new ArrayList();
         int w = cWindow;
 
         if (streamTrg.available() < cWindow)
@@ -131,13 +131,13 @@ public class GDiffView extends JFrame
             throw new IOException("error reading target file");
         }
         roll.init(rs);
-        lookupUniqueMatch(src,roll.getChecksum(),trgPos++,matches,w);
+        lookupUniqueMatch(src,roll.getChecksum(),trgPos++,w);
         while (streamTrg.available() > 0)
         {
             byte x = (byte)streamTrg.read();
             byte xprev = roll(rs,x);
             roll.increment(xprev, x);
-            lookupUniqueMatch(src,roll.getChecksum(),trgPos++,matches,w);
+            lookupUniqueMatch(src,roll.getChecksum(),trgPos++,w);
         }
         consolidateCopies();
     }
@@ -195,10 +195,9 @@ public class GDiffView extends JFrame
      * @param src
      * @param chk
      * @param trgPos
-     * @param matches
      * @param w
      */
-    private void lookupUniqueMatch(SourceFile src, int chk, int trgPos, List matches, int w)
+    private void lookupUniqueMatch(SourceFile src, int chk, int trgPos, int w)
     {
         long srcPos = src.lookupUnique(chk);
         if (srcPos >= 0)
