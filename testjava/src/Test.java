@@ -72,7 +72,8 @@ public class Test
 
 
 
-
+        SubTest sb = new SubTest();
+        Test b = new Test();
 
 
 
