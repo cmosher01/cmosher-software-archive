@@ -269,7 +269,6 @@ class WebConfigFolder implements ActionListener, ConfigInterface
 
         FileOutputStream os = null;
         Checkbox cb = null;
-        int i, icount;
 
         // Network
         httpconfig.put("network.ip",tf_ip.getText());
