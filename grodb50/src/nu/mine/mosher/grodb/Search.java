@@ -21,6 +21,26 @@ public class Search
 	{
 	}
 
+	public void setDescription(String description)
+	{
+		this.description = description;
+	}
+
+	public String getDescription()
+	{
+		return this.description;
+	}
+
+	public void setCompleted(String completed)
+	{
+		this.completed = completed;
+	}
+
+	public boolean getCompleted()
+	{
+		return this.completed;
+	}
+
 	public static String getListHeader()
 	{
 		List<ListEntry> rCol = new ArrayList<ListEntry>();
