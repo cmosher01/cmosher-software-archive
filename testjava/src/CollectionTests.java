@@ -44,7 +44,7 @@ public final class CollectionTests
                 {
                     throw new NoSuchElementException();
                 }
-                return Integer.toString(i);
+                return Integer.toString(++i);
             }
 
             public void remove() throws UnsupportedOperationException
