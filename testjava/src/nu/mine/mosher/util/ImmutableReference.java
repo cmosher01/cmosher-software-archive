@@ -5,6 +5,7 @@ import java.io.Serializable;
 public final class ImmutableReference implements Cloneable, Comparable, Serializable
 {
     private Cloneable ref;
+    private int hash;
 
     public ImmutableReference(Cloneable ref) throws CloneNotSupportedException
     {
@@ -13,6 +14,7 @@ public final class ImmutableReference implements Cloneable, Comparable, Serializ
             throw new IllegalArgumentException();
         }
         this.ref = Cloner.cloneObject(ref);
+        buildHashCode();
     }
 
     public Cloneable object() throws CloneNotSupportedException
@@ -35,9 +37,14 @@ public final class ImmutableReference implements Cloneable, Comparable, Serializ
         return this.ref.equals(o);
     }
 
+    private void buildHashCode()
+    {
+        this.hash = this.ref.hashCode();
+    }
+
     public int hashCode()
     {
-        return this.ref.hashCode();
+        return this.hash;
     }
 
     public int compareTo(Object o)
