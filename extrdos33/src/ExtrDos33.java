@@ -80,6 +80,7 @@ public class ExtrDos33
 		}
 
 		File saveDos = new File(dirNew,nextDosFileName());
+		System.out.println("Saving Tracks $00-$03 to file: "+saveDos.getAbsolutePath());
 
 		byte[] rbc = new byte[rb.length];
 		System.arraycopy(rb,0,rbc,0,rb.length);
