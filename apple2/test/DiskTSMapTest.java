@@ -29,6 +29,27 @@ public class DiskTSMapTest extends TestCase
         r.add(new DiskPos(0x0D,0xF));
         r.add(new DiskPos(0x0E,0xF));
         r.add(new DiskPos(0x0F,0xF));
+        r.add(new DiskPos(0x10,0xF));
+        r.add(new DiskPos(0x12,0x4));
+        r.add(new DiskPos(0x13,0x4));
+        r.add(new DiskPos(0x13,0xF));
+        r.add(new DiskPos(0x14,0xF));
+        r.add(new DiskPos(0x15,0x4));
+        r.add(new DiskPos(0x15,0xF));
+        r.add(new DiskPos(0x16,0xF));
+        r.add(new DiskPos(0x18,0xF));
+        r.add(new DiskPos(0x19,0xF));
+        r.add(new DiskPos(0x1A,0xF));
+        r.add(new DiskPos(0x1B,0x4));
+        r.add(new DiskPos(0x1B,0xF));
+        r.add(new DiskPos(0x1C,0x6));
+        r.add(new DiskPos(0x1C,0xF));
+        r.add(new DiskPos(0x1D,0xF));
+        r.add(new DiskPos(0x1E,0xF));
+        r.add(new DiskPos(0x1F,0xF));
+        r.add(new DiskPos(0x20,0xF));
+        r.add(new DiskPos(0x21,0xF));
+        r.add(new DiskPos(0x22,0xF));
         assertManyPos("DOS33_SystemMaster_19800825.dsk",r);
     }
 
