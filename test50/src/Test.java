@@ -8,5 +8,8 @@ public class Test
 	{
 		ItemType x = new ItemType("madeup");
 		ItemType y = new ItemType(ItemTypeEnum.a);
+
+		System.out.println(x);
+		System.out.println(y);
 	}
 }
