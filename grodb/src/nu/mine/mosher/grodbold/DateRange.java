@@ -173,13 +173,13 @@ public class DateRange implements Immutable, Serializable, Comparable
 		DateRange that = (DateRange)o;
 
 		return
-		this.earliest == that.earliest &&
-		this.latest == that.latest &&
-		this.julian == that.julian &&
-		this.hour == that.hour &&
-		this.minute == that.minute &&
-		this.timeZone.equals(that.timeZone) &&
-		this.circa == that.circa;
+			this.earliest == that.earliest &&
+			this.latest == that.latest &&
+			this.julian == that.julian &&
+			this.hour == that.hour &&
+			this.minute == that.minute &&
+			this.timeZone.equals(that.timeZone) &&
+			this.circa == that.circa;
     }
 
 	// YYYYMMDD (never display this to the user)
