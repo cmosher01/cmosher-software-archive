@@ -165,17 +165,8 @@ class Indi
 		return pushed;
 	}
 
-    public URL getURL()
+    public String getRelativeURL()
     {
-    	URL url = null;
-        try
-        {
-            url = new URL("?indi="+mID);
-        }
-        catch (MalformedURLException e)
-        {
-            e.printStackTrace();
-        }
-        return url;
+    	return "?indi="+mID;
     }
 }
