@@ -211,6 +211,16 @@ public class DiskPos
 
     /**
      * @param block
+     * @param allowLarge
+     * @throws InvalidPosException
+     */
+    public void setBlock(int block, boolean allowLarge) throws InvalidPosException
+    {
+        setBlock(block,0,allowLarge);
+    }
+
+    /**
+     * @param block
      * @param byt
      * @param allowLarge
      * @throws InvalidPosException
