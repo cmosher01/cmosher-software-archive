@@ -1,3 +1,5 @@
+import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -47,6 +49,21 @@ public class VolumeDOS extends VolumeEntity
         {
             rPosDOS.add(p.clone());
             p.advance(DiskPos.cSector);
+        }
+
+        try
+        {
+            BufferedInputStream in = new BufferedInputStream(VolumeDOS.class.getClassLoader().getResourceAsStream("dos33_1980_clear.bin"));
+            int b = in.read();
+            while (b != -1)
+            {
+                    b = in.read();
+            }
+            in.close();
+        }
+        catch (Throwable e)
+        {
+            e.printStackTrace();
         }
     }
 
