@@ -28,7 +28,8 @@ public class FixMetaUTF8
         }
         File f = new File(args[0]);
         StringBuffer sb = readFile(f);
-        String s = fixMeta(sb);
+        StringBuffer sb2 = removeContentTypeMeta(sb);
+        String s = addContentTypeMeta(sb2);
     }
 
     public static StringBuffer readFile(File f) throws IOException
@@ -55,11 +56,11 @@ public class FixMetaUTF8
         return sb;
     }
 
-    public static String removeContentTypeMeta(StringBuffer sb)
+    public static StringBuffer removeContentTypeMeta(StringBuffer sb)
     {
         Pattern pat = Pattern.compile("<meta.*?charset.*?>",Pattern.CASE_INSENSITIVE|Pattern.MULTILINE|Pattern.DOTALL);
         Matcher matcher = pat.matcher(sb);
-        return matcher.replaceFirst("");
+        return new StringBuffer(matcher.replaceFirst(""));
     }
 
     public static String addContentTypeMeta(StringBuffer sb)
