@@ -50,6 +50,7 @@ public class DiskTest extends TestCase
             (byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00
         };
         assertTrue(Disk.isDos33VTOC(rb));
+        rb = Hex2Bin.hex2Bin("01 30 05");
     }
 
     public void testFindDos33CatalogSector()
