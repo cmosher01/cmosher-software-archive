@@ -8,7 +8,7 @@ public class Place
 	private String nameDisplay;
 	private String nameFull;
 
-	private List<Relation<Place,Place,PlaceRelType>> rPlace = new ArrayList<Relation<Place,Place>>();
+	private List<Relation<Place,Place,PlaceRelType>> rPlace = new ArrayList<Relation<Place,Place,PlaceRelType>>();
 
 	public Place()
 	{
