@@ -53,8 +53,19 @@ public class CloneThreadTest
         {
             public void run()
             {
-                X y = (X)x.clone();
-                System.out.println(y);
+                try
+                {
+                    while (true)
+                    {
+                        X y = (X)x.clone();
+                        System.out.println(y);
+                        Thread.sleep(9);
+                    }
+                }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
             }
         });
         tClone.setDaemon(true);
