@@ -104,31 +104,49 @@ public class DiskPos
         }
     }
 
+    /**
+     * @return
+     */
     public int getTrackInDisk()
     {
         return iDisk/cTrack;
     }
 
+    /**
+     * @return
+     */
     public int getSectorInTrack()
     {
         return (iDisk-iDisk/cTrack*cTrack)/cSector;
     }
 
+    /**
+     * @return
+     */
     public int getByteInSector()
     {
         return iDisk-iDisk/cSector*cSector;
     }
 
+    /**
+     * @return
+     */
     public int getBlockInDisk()
     {
         return iDisk/cBlock;
     }
 
+    /**
+     * @return
+     */
     public int getByteInBlock()
     {
         return iDisk-iDisk/cBlock*cBlock;
     }
 
+    /**
+     * @return
+     */
     public boolean isZero()
     {
         return iDisk == 0;
