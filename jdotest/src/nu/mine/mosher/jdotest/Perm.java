@@ -67,9 +67,8 @@ public class Perm
 		pm.currentTransaction().begin();
 	}
 
-	public void commit()
+	public void commit(PersistenceManager pm)
 	{
-		PersistenceManager pm = this.pmf.getPersistenceManager();
 		pm.currentTransaction().commit();
 	}
 }
