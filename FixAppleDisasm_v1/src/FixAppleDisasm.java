@@ -173,7 +173,11 @@ public class FixAppleDisasm
 			}
 			else
 			{
-				System.err.println(s);
+				s = s.trim();
+				if (s.length() > 0)
+				{
+					System.err.println(s);
+				}
 			}
 		}
     }
