@@ -15,9 +15,12 @@ import java.util.List;
  */
 public class VolumeFile
 {
-    private Dos33CatalogEntry catEntry;
     private VolumeTSMap ts;
     private VolumeFileData data;
+
+    private Dos33CatalogEntry catEntry;
+
+
 
     /**
      * @param ent
