@@ -1,1 +1,1 @@
-java -cp lib\jdo.jar;lib\jdori.jar;lib\jpox-1.0.0-beta-1.jar;lib\log4j-1.2.8.jar;bin org.jpox.enhance.SunReferenceEnhancer -v -s bin;lib\jdo.jar bin\package.jdo -d bin
+"C:\Program Files\Java\j2sdk1.4.2\bin\java" -cp ..\web\WEB-INF\lib\jdo.jar;..\web\WEB-INF\lib\jdori.jar;..\web\WEB-INF\lib\jpox-1.0.0-beta-2.jar;..\web\WEB-INF\lib\log4j-1.2.8.jar;..\web\WEB-INF\classes org.jpox.enhance.SunReferenceEnhancer -v -s ..\web\WEB-INF\classes;..\web\WEB-INF\lib\jdo.jar ..\web\WEB-INF\classes\package.jdo -d ..\web\WEB-INF\classes
