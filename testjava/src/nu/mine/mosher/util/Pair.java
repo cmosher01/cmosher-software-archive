@@ -7,6 +7,10 @@ public class Pair implements Cloneable, Comparable
 
     public Pair(Cloneable a, Cloneable b) throws CloneNotSupportedException
     {
+        if (a == null || b == null)
+        {
+            throw new IllegalArgumentException();
+        }
         this.a = Cloner.cloneObject(a);
         this.b = Cloner.cloneObject(b);
     }
