@@ -10,8 +10,14 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>org.jpox.ide.eclipse.jdo.IncrementalProjectBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.jpox.ide.eclipse.jdo.Enhancer1_1Nature</nature>
 	</natures>
 </projectDescription>
