@@ -16,4 +16,13 @@ public class Ja2
     {
         this.rArg = rArg;
     }
+
+    /**
+     * 
+     */
+    public void run()
+    {
+        // TODO Auto-generated method stub
+        
+    }
 }
