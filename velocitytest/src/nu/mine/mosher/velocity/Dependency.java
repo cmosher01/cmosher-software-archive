@@ -11,25 +11,16 @@ public class Dependency
         this.source = source;
     }
 
-    /**
-     * @return
-     */
     public String getName()
     {
         return name;
     }
 
-    /**
-     * @return
-     */
     public boolean isSource()
     {
         return source;
     }
 
-    /**
-     * @return
-     */
     public String getVersion()
     {
         return version;
