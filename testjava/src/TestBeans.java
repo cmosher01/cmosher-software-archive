@@ -6,6 +6,7 @@ import java.beans.PropertyEditorManager;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class TestBeans
@@ -13,8 +14,8 @@ public class TestBeans
     public static void main(String[] rArgs) throws Throwable
     {
         String[] rp = PropertyEditorManager.getEditorSearchPath();
-        List listp = new ArrayList(Arrays.asList(rp));
-        listp.add("com.surveysampling.beans.editors");
+        LinkedList listp = new LinkedList(Arrays.asList(rp));
+        listp.addFirst("com.surveysampling.beans.editors");
         PropertyEditorManager.setEditorSearchPath((String[])listp.toArray(new String[listp.size()]));
 
         SomeBean some = new SomeBean();
