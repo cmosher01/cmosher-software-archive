@@ -14,6 +14,11 @@ public final class CollectionTests
         somelist.add("test two");
         somelist.add("test three");
 
-        somelist.toArray(new String[somelist.size()]);
+        String[] rs = (String[])somelist.toArray(new String[somelist.size()]);
+        for (int i = 0; i < rs.length; ++i)
+        {
+            String string = rs[i];
+            System.out.println(string);
+        }
     }
 }
