@@ -4,4 +4,8 @@ public class Test
     {
         return 79;
     }
+    public String dodo(String x)
+    {
+        return "\'"+x+"\'"
+    }
 }
