@@ -1,7 +1,7 @@
 import java.util.Collection;
 import java.util.Iterator;
 
-public class Filter
+public abstract class Filter
 {
     private final Collection input;
 
