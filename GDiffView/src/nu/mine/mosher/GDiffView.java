@@ -94,7 +94,14 @@ public class GDiffView extends JFrame
         listGDiff = new JList(debugData);
         listGDiff.setSelectionForeground(Color.BLACK);
         listGDiff.setSelectionBackground(new Color(173,194,245));
-        listGDiff.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        ListSelectionModel selectionModel = new SingleSelectionModel()
+        {
+            public void updateSingleSelection(int oldIndex, int newIndex)
+            {
+                System.out.println("Index was " + oldIndex + " is " + newIndex);
+            }
+        };
+        listGDiff.setSelectionModel(selectionModel);
         listGDiff.setSelectedIndex(0);
         JScrollPane scrGDiff = new JScrollPane(listGDiff);
         scrGDiff.setPreferredSize(new Dimension(100,460));
