@@ -21,12 +21,18 @@ public final class ImmutableReference implements Cloneable, Comparable, Serializ
 
     private void buildString()
     {
-        this.str = this.ref.toString();
+        if (this.str == null)
+        {
+            this.str = this.ref.toString();
+        }
     }
 
     private void buildHashCode()
     {
-        this.hash = this.ref.hashCode();
+        if (this.hash == 0)
+        {
+            this.hash = this.ref.hashCode();
+        }
     }
 
     public Cloneable object() throws CloneNotSupportedException
