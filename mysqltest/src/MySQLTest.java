@@ -75,13 +75,23 @@ public class MySQLTest
 		}
     }
 
-	/**
-     * @param s
-     */
     private void processLine(String s)
     {
-        // TODO Auto-generated method stub
-        
+		int comment = s.indexOf('#');
+		if (comment >= 0)
+		{
+			s = s.substring(0,comment);
+		}
+
+		// Trim leading and trailing spaces
+		s = s.trim();
+
+		// If the line is blank, then just ignore it
+		if (s.length() == 0)
+		{
+			return;
+		}
+
     }
 
     protected void calc() throws SQLException
