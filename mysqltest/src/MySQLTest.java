@@ -41,6 +41,7 @@ public class MySQLTest
 			db = DriverManager.getConnection("jdbc:mysql:///test","root","");
 			log.info("Creating schema...");
 			createSchema();
+			insertData();
 			log.info("Done creating schema.");
 		}
 		finally
@@ -59,7 +60,13 @@ public class MySQLTest
 		}
     }
 
-	protected void createSchema() throws SQLException
+	protected void insertData() throws SQLException
+    {
+    	dbUpdate("delete from family");
+    	dbUpdate("insert into family(name) values(\"Flandreau\")");
+    }
+
+    protected void createSchema() throws SQLException
 	{
 		dbUpdate("create table if not exists "+
 		"Family "+
