@@ -13,6 +13,7 @@ import java.util.Collection;
 public class VolumeBoot extends VolumeEntity
 {
     private byte[] data;
+    private String ident;
 
     private static byte[] rDos80master;
     private static final String dos80master =
@@ -95,6 +96,33 @@ public class VolumeBoot extends VolumeEntity
         rSector.add(new VolumeSector(p,0,this));
 
         data = disk.readSector(p);
+
+        if (same(data,rDos80master))
+        {
+            ident = "DOS 3.3 Master (A$3600)";
+        }
+    }
+
+    /**
+     * @param data2
+     * @param dos80master2
+     * @return
+     */
+    private boolean same(byte[] r1, byte[] r2)
+    {
+        if (r1.length != r2.length)
+        {
+            return false;
+        }
+        for (int i = 0; i < r1.length; i++)
+        {
+            if (r1[i] != r2[i])
+            {
+                return false;
+            }
+            
+        }
+        return true;
     }
 
     /**
