@@ -43,6 +43,7 @@ public class GDiff2HTML
         outln();
 
 		GDiffCmd g = getGDiff(gdiff);
+        asmOut(g);
 		while (!(g instanceof GDiffEnd))
 		{
 			if (g instanceof GDiffData)
@@ -60,10 +61,19 @@ public class GDiff2HTML
 				outSame(rb);
 			}
 			g = getGDiff(gdiff);
+            asmOut(g);
 		}
 	}
 
 	/**
+     * @param g
+     */
+    private static void asmOut(GDiffCmd g)
+    {
+        System.out.println(g);
+    }
+
+    /**
      * @param b
      * @return
      */
@@ -101,7 +111,7 @@ public class GDiff2HTML
 	private static void outSame(byte[] rb)
 	{
 //        System.out.print("copy: ");
-		System.out.print(new String(rb));
+//        System.out.print(new String(rb));
 	}
 
 	/**
@@ -110,7 +120,7 @@ public class GDiff2HTML
 	private static void outInsert(byte[] data)
 	{
 //        System.out.print("insert: ");
-        System.out.print(new String(data));
+//        System.out.print(new String(data));
 	}
 
 	/**
