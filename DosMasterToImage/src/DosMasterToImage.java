@@ -188,15 +188,15 @@ public class DosMasterToImage
         int test = r[0x84] & 0xFF;
         if (test == 0x46)
         {
-            clearIgnored(rIgnore1980);
+            clearIgnored(r,rIgnore1980);
         }
         else if (test == 0x84)
         {
-            clearIgnored(rIgnore1983);
+            clearIgnored(r,rIgnore1983);
         }
         else if (test == 0xB3)
         {
-            clearIgnored(rIgnore1986);
+            clearIgnored(r,rIgnore1986);
         }
         out.flush();
         out.close();
