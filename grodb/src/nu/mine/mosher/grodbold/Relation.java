@@ -1,18 +1,17 @@
-/*
- * Created on Jul 26, 2003
- *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
 package nu.mine.mosher.grodb;
 
-/**
- * @author Chris
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
 public class Relation
 {
+	private final Object a;
+	private final Object b;
+	private final String description;
+	private final RelationType type;
 
+	public Relation(Object a, Object b, String description, RelationType type)
+	{
+		this.a = a;
+		this.b = b;
+		this.description = description;
+		this.type = type;
+	}
 }
