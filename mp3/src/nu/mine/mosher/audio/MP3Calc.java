@@ -47,6 +47,8 @@ public class MP3Calc
 		System.out.print(Integer.toHexString(h));
 		System.out.print(",");
 
+		h = flipBits(h);
+
 		// synch word
 		int synch = h & 0x7ff;
 		System.out.print(Integer.toHexString(synch));
@@ -183,6 +185,17 @@ public class MP3Calc
 			break;
         }
         h >>= 2;
+    }
+
+    private static int flipBits(int h)
+    {
+    	int n = 0;
+    	for (int i = 0; i < 32; ++i)
+        {
+        	n |= h&0x8000000;
+        	n <<= 1;
+        }
+    	return n;
     }
 
     private static int calcBitRate(int key, int mpeg, int layer)
