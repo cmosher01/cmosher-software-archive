@@ -61,16 +61,13 @@ public class StreamChecksum
             }
             rollCheck.init(rs);
             Integer chk = new Integer(rollCheck.getChecksum());
-            List rWind;
             if (!mapChecksumToWindow.containsKey(chk))
             {
-                rWind = new ArrayList();
+                List rWind = new ArrayList();
+                mapChecksumToWindow.put(new Integer(rollCheck.getChecksum()),rWind);
             }
-            else
-            {
-                rWind = (List)mapChecksumToWindow.get(toString());
-            }
-            mapChecksumToWindow.put(new Integer(rollCheck.getChecksum()),new Long(w++));
+            List rWind = (List)mapChecksumToWindow.get(toString());
+            rWind.add(new Long(w++));
         }
     }
 }
