@@ -327,10 +327,8 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
         host_port = Integer.parseInt(httpconfig
                 .getProperty("network.port"));
 
-        String cacheMaxString = httpconfig
-                .getProperty("network.cache.max");
-        String cacheExpString = httpconfig
-                .getProperty("network.cache.expire");
+        String cacheMaxString = httpconfig.getProperty("network.cache.max");
+        String cacheExpString = httpconfig.getProperty("network.cache.expire");
         if (cacheMaxString == null || cacheMaxString.equals(""))
             cacheMaxString = "0";
         if (cacheExpString == null || cacheExpString.equals(""))
