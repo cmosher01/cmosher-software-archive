@@ -32,11 +32,7 @@ public class TreeNode<T>
 
 	public void addChild(TreeNode<T> child)
 	{
-		if (child.parent != null)
-		{
-			child.removeFromParent();
-		}
-
+		child.removeFromParent();
 		children.add(child);
 		child.parent = this;
 	}
