@@ -30,7 +30,7 @@ public class Disk implements TreeNode
 		{
 			try
 			{
-				fin = new FileInputStream(mFile);
+				FileInputStream fin = new FileInputStream(mFile);
 				mDiskBytes = new byte[fin.available()];
 				fin.read(mDiskBytes);
 			}
