@@ -52,7 +52,7 @@ public class ExtrDos33
         for (int i = 0; i < rf.length; ++i)
         {
             File file = rf[i];
-            extrDos(file,newDir);
+            extrDos(file,dirNew);
         }
     }
 
