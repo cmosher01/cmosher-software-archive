@@ -50,5 +50,4 @@ public class Rel
     {
         this.thing = thing;
     }
-
 }
