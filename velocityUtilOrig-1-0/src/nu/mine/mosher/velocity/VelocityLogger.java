@@ -22,7 +22,11 @@ public class VelocityLogger implements LogSystem
 
     public void init(RuntimeServices rs)
     {
-        Object o = rs.getProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM);
+        Object logUser = rs.getProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM);
+        if (logUser != null && logUser instanceof Logger)
+        {
+            log = logUser;
+        }
     }
 
     public void logVelocityMessage(int level, String message)
