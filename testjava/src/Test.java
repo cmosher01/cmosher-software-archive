@@ -1,23 +1,7 @@
-//import java.io.File;
-//import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.LinkedList;
-//import java.util.List;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Set;
-
-import com.surveysampling.util.Cloner;
-import com.surveysampling.util.ImmutableReference;
-import com.surveysampling.util.UndoableReference;
-import com.surveysampling.util.UniversalCloser;
 
 public class Test
 {
