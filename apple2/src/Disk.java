@@ -388,7 +388,7 @@ public class Disk
                 {
                     if (sector[ce+31] == (byte)0xA0 || 
                         sector[ce+32] == (byte)0xA0 ||
-                        (sector[ce+31]&0x80 > 0 && sector[ce+30]&0x80 > 0 && sector[ce+29]&0x80 > 0))
+                        ((sector[ce+31]&0x80) > 0 && (sector[ce+30]&0x80) > 0 && (sector[ce+29]&0x80) > 0))
                     {
                         ++penultimateSpace;
                     }
