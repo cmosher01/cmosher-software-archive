@@ -34,7 +34,7 @@ public final class Cloner
 			 * Unchecked cast is OK here, because we know that the
 			 * clone of a T will be a T:
 			 */
-			return (T)methodClone.invoke(cloneableObject,null);
+			return (T)methodClone.invoke(cloneableObject,(Object[])null);
 		}
 		catch (CloneNotSupportedException e)
 		{
