@@ -1,16 +1,9 @@
-/*
- * TODO
- *
- * Created on Feb 19, 2004
- */
+import java.security.SecureRandom;
 
-/**
- * TODO
- */
 public class TestCrypt
 {
-
-    public static void main(String[] args)
+    public static void main(String[] rArg) throws Throwable
     {
+        SecureRandom rand = new SecureRandom();
     }
 }
