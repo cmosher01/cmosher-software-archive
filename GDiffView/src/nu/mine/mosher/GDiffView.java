@@ -145,14 +145,6 @@ public class GDiffView extends JFrame
 
 
 
-        JFrame.setDefaultLookAndFeelDecorated(true);
-
-        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        this.setSize(400,470);
-        this.setLocation(10, 10);
-        this.setMaximizedBounds(env.getMaximumWindowBounds());
-        this.setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
-
         docSrc = new DefaultStyledDocument();
         paneSrc = new JTextPaneNoWrap(docSrc);
         paneSrc.setEditable(false);
@@ -331,6 +323,14 @@ public class GDiffView extends JFrame
         listGDiff.setSelectionModel(selectionModel);
         listGDiff.setSelectedIndex(0);
         listGDiff.requestFocus();
+
+        JFrame.setDefaultLookAndFeelDecorated(true);
+
+        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        this.setSize(400,470);
+        this.setLocation(10, 10);
+        this.setMaximizedBounds(env.getMaximumWindowBounds());
+        this.setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
 
 //        pack();
 
