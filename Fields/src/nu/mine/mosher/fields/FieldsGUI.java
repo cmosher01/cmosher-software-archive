@@ -15,7 +15,7 @@ public class GUI
     private ContentMenu mJMenuBar;
     private JFrame mFrame;
 
-    public GUI(ContentPane paneContent, JMenuBar jMenuBar)
+    public GUI(ContentPane paneContent, ContentMenu jMenuBar)
     {
         this.mPaneContent = paneContent;
         this.mJMenuBar = jMenuBar;
