@@ -49,17 +49,5 @@ public class ChecksumStream
             rollCheck.init(rs);
             mapCheckOffset.put(new Integer(rollCheck.getChecksum()),new Long(w++));
         }
-
-        for (int k = 0; k < rb.length-cWindow; ++k)
-        {
-            rollCheck.increment(rb[k], rb[k+cWindow]);
-            int check = rollCheck.getChecksum();
-
-            System.arraycopy(rb, k+1, rs, 0, cWindow);
-            rollCheck2.init(rs);
-            int check2 = rollCheck2.getChecksum();
-
-            assertEquals(check2,check);
-        }
     }
 }
