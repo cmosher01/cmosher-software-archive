@@ -2,8 +2,6 @@ package nu.mine.mosher.core;
 
 import java.util.LinkedList;
 
-import static nu.mine.mosher.core.Cloner.cloneObject;
-
 public final class Undoer<T extends Cloneable>
 {
 	private final LinkedList<T> mrUndo = new LinkedList<T>();
@@ -11,7 +9,7 @@ public final class Undoer<T extends Cloneable>
 
 	public void save(T state) throws CloneNotSupportedException
 	{
-		mrUndo.addLast(cloneObject(state));
+		mrUndo.addLast(Cloner.cloneObject(state));
 		mrRedo.clear();
 	}
 
