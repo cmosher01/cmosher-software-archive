@@ -44,11 +44,11 @@ public class ReaderLines /* TODO implements Iterable */
         {
             try
             {
-                this.nextLine = this.r.readLine();
+                nextLine = r.readLine();
             }
             catch (IOException cause)
             {
-                this.nextLine = null;
+                nextLine = null;
                 NoSuchElementException e = new NoSuchElementException();
                 e.initCause(cause);
                 throw e;
@@ -66,7 +66,7 @@ public class ReaderLines /* TODO implements Iterable */
             {
                 throw new NoSuchElementException();
             }
-            String thisLine = this.nextLine;
+            String thisLine = nextLine;
             nextLine();
             return thisLine;
         }
