@@ -54,7 +54,8 @@ public class Test
         long start = System.currentTimeMillis();
         for (int i = 0; i < 10000000; ++i)
         {
-            UniversalCloser2.close(x);
+            x.close();
+//            UniversalCloser2.close(x);
         }
         long end = System.currentTimeMillis();
         System.out.println("elapsed time: "+(end-start)+" ms");
