@@ -63,18 +63,18 @@ public class YMD implements Immutable, Serializable, Comparable
 
 	private void updateApprox()
 	{
-		if (month > 0 && day > 0)
+		int m = month;
+		int d = day;
+		if (m == 0 && d == 0)
 		{
-			approx = year*10000+month*100+day;
+			m = 7;
+			d = 3;
 		}
-		else if (month > 0)
+		else if (day == 0)
 		{
-			approx = year*10000+month*100+15;
+			d = 15;
 		}
-		else
-		{
-			approx = year*10000+7*100+3;
-		}
+		approx = year*10000+m*100+d;
 	}
 
 	public boolean equals(Object o)
