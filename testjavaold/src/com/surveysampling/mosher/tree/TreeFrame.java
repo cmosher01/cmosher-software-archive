@@ -16,8 +16,10 @@ import com.surveysampling.mosher.Flag;
 
 public class TreeFrame extends JPanel
 {
-    public TreeFrame(String dir)
+    public TreeFrame()
     {
+        String dir = System.getProperty("user.dir");
+
         setLayout(new BorderLayout());
         setOpaque(true);
         addNotify();
@@ -47,7 +49,7 @@ public class TreeFrame extends JPanel
      * this method should be invoked from the
      * event-dispatching thread.
      */
-    protected static void createAppFrame(Container contentPane)
+    protected static void createAppFrame()
     {
         useOSLookAndFeel();
 
@@ -56,12 +58,17 @@ public class TreeFrame extends JPanel
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create and set up the content pane.
-        frame.setContentPane(contentPane);
+        frame.setContentPane(createContentPane());
 
         //Display the window.
         frame.pack();
         frame.setLocation(50,50);
         frame.setVisible(true);
+    }
+
+    protected static Container createContentPane()
+    {
+        return new TreeFrame();
     }
 
     protected static void useOSLookAndFeel()
@@ -77,13 +84,6 @@ public class TreeFrame extends JPanel
 
     public static void main(String argv[]) throws Throwable
     {
-        String dir = System.getProperty("user.dir");
-        if (argv != null && argv.length >= 1)
-        {
-            dir = argv[0];
-        }
-        final String dirArg = dir;
-
         final Flag begun = new Flag();
 
         SwingUtilities.invokeLater(new Runnable()
@@ -92,7 +92,7 @@ public class TreeFrame extends JPanel
             {
                 try
                 {
-                    createAppFrame(new TreeFrame(dirArg));
+                    createAppFrame();
                     begun.waitToSetTrue();
                 }
                 catch (Throwable th)
