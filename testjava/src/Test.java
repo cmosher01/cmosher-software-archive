@@ -44,22 +44,22 @@ public class Test
 
 
 
+        System.out.println(Test.class.getClassLoader().getClass().getName());
 
 
 
 
 
-
-        X x = new X();
-        long start = System.currentTimeMillis();
-        for (int i = 0; i < 10000000; ++i)
-        {
-//            x.close();
-            UniversalCloser2.close(x);
-        }
-        long end = System.currentTimeMillis();
-        double ns = (end-start)/10.0;
-        System.out.println("elapsed time: "+ns+" nanoseconds");
+//        X x = new X();
+//        long start = System.currentTimeMillis();
+//        for (int i = 0; i < 10000000; ++i)
+//        {
+////            x.close();
+//            UniversalCloser2.close(x);
+//        }
+//        long end = System.currentTimeMillis();
+//        double ns = (end-start)/10.0;
+//        System.out.println("elapsed time: "+ns+" nanoseconds");
 
 
 
