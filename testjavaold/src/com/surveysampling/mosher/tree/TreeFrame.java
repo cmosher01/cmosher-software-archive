@@ -1,6 +1,7 @@
 package com.surveysampling.mosher.tree;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.io.File;
 
 import javax.swing.JFrame;
@@ -45,7 +46,7 @@ public class TreeFrame extends JPanel
      * this method should be invoked from the
      * event-dispatching thread.
      */
-    protected static void createAndShowGUI(String dir)
+    protected static void createAndShowGUI(Container contentPane)
     {
         useOSLookAndFeel();
 
@@ -54,7 +55,7 @@ public class TreeFrame extends JPanel
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create and set up the content pane.
-        frame.setContentPane(new TreeFrame(dir));
+        frame.setContentPane(contentPane);
 
         //Display the window.
         frame.pack();
@@ -90,7 +91,7 @@ public class TreeFrame extends JPanel
             {
                 try
                 {
-                    createAndShowGUI(dirArg);
+                    createAndShowGUI(new TreeFrame(dirArg));
                     begun.waitToSetTrue();
                 }
                 catch (Throwable th)
