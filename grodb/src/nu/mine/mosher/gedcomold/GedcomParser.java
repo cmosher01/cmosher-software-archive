@@ -34,7 +34,7 @@ public class GedcomParser
 		{
 			// should never happen, because lines with only whitespace
 			// are skipped in the read loop above.
-			throw new InvalidLevel(s,new GedcomLine(-1,"","",""));
+			throw new IllegalLevel(s,new GedcomLine(-1,"","",""));
 		}
 		String sLevel = st.nextToken();
 		int level = -1;
@@ -90,7 +90,7 @@ public class GedcomParser
 		}
 		if (level < 0 || 99 < level)
 		{
-			throw new InvalidLevel(s,new GedcomLine(level,sID,sTag,sValue));
+			throw new IllegalLevel(s,new GedcomLine(level,sID,sTag,sValue));
 		}
 		if (level > 0 && sID.length() > 0)
 		{
