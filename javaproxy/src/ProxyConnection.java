@@ -186,6 +186,8 @@ public class ProxyConnection extends Thread {
             server_port = Integer.parseInt(server_adpt.substring(loc+1));
         }
 
+        // TODO: lookup server_addr in hosts file
+
         System.out.println(server_adpt);
         System.out.println(server_addr + " ,, " + server_port);
         System.out.println(doc);
