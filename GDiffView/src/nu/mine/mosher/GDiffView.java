@@ -271,7 +271,7 @@ public class GDiffView extends JFrame
                 setSrcUnused.add(new Range(prev,next-1));
             }
             long lim = r.getLimit();
-            if (lim < prev)
+            if (prev < lim)
             {
                 prev = lim;
             }
