@@ -111,7 +111,7 @@ public class FixAppleDisasm
 		Map lines = new TreeMap();
 		Map addrs = new TreeMap();
 		int lineNumber = 0;
-		int nextaddr = 0;
+		int nextaddr = -1;
 		for (String s = inbuf.readLine(); s != null; s = inbuf.readLine())
 		{
 			s = s.trim();
@@ -151,7 +151,7 @@ public class FixAppleDisasm
 				addr = -1;
 			}
 
-			if (addr < 0)
+			if (addr < 0 && nextaddr >= 0)
 			{
 				addr = nextaddr;
 				s = hexWord(addr)+"-   "+s.trim();
