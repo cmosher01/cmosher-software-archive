@@ -15,6 +15,14 @@ public class ArgumentDefinition
     private final String desc;
     private final boolean hasValue;
 
+    public class SimpleArg extends ArgumentDefinition
+    {
+        public SimpleArg(String desc)
+        {
+            super("","",desc,true);
+        }
+    }
+
     /**
      * @param name
      * @param abbrev
