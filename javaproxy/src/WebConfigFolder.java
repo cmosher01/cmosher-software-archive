@@ -28,7 +28,7 @@ class WebConfigFolder implements ActionListener, ConfigInterface {
     CheckboxGroup logginglevel = new CheckboxGroup();
     Checkbox[] levels  = new Checkbox[3];
     Checkbox ckbox_spc = null;
-//    List mime, authdir, authuser, alias;
+    List mime, authdir, authuser, alias;
     Button addauthdir, delauthdir, addauthuser, delauthuser;
     Button addmime, delmime, addalias, delalias;
     String inifile = "Jproxy.properties";
