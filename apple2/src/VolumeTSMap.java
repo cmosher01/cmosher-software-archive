@@ -60,8 +60,15 @@ public class VolumeTSMap extends VolumeEntity
         }
     }
 
+    /**
+     * @param r
+     */
     public void getTS(Collection r)
     {
-        List r = new ArrayList
+        for (Iterator i = this.rTS.iterator(); i.hasNext();)
+        {
+            DiskPos pos = (DiskPos)i.next();
+            r.add(pos.clone());
+        }
     }
 }
