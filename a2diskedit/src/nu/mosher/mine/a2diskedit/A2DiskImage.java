@@ -44,7 +44,7 @@ public class A2DiskImage
 			m_osType = osProdos;
 			// Prodos disk in track-sector order
 			// switch to block order
-			SwitchTSBlock();
+			switchTSBlock();
 		}
 		else if (
 			getByte(2,0)==0 &&
@@ -72,12 +72,16 @@ public class A2DiskImage
 			m_osType = osDos33;
 			// DOS 3.3 disk in block order
 			// switch to track-sector order
-			SwitchTSBlock();
+			switchTSBlock();
 		}
 		else
 		{
 			AfxMessageBox("Cannot determine type of disk.");
 			AfxThrowUserException();
 		}
+	}
+
+	private void switchTSBlock()
+	{
 	}
 }
