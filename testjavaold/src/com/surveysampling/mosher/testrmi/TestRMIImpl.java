@@ -9,8 +9,8 @@ public class TestRMIImpl extends Activatable implements TestRMI
 {
     public TestRMIImpl(ActivationID id, MarshalledObject data) throws RemoteException
     {
-        MarshalledObject unused = data; data = unused;
         super(id,0);
+        MarshalledObject unused = data; data = unused;
     }
 
     public String getMyString() throws RemoteException
