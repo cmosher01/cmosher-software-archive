@@ -196,6 +196,9 @@ public class DiskPos
         return new DiskPos(iDisk+len);
     }
 
+    /**
+     * @return
+     */
     public String toStringTS()
     {
         StringBuffer sb = new StringBuffer();
