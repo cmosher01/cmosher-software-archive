@@ -62,11 +62,22 @@ public class TestThreadIO
             }
             i++;
         }
-        System.out.println(numberOfEntries);
-        for (Iterator j = lines.iterator(); j.hasNext();)
+        if (numberOfEntries != 2)
         {
-            String s = (String)j.next();
-            System.out.println(s);
+            System.err.println("numberOfEntries != 2");
+        }
+        else if (lines.size() != 2)
+        {
+            System.err.println("lines.size() != 2");
+        }
+        else
+        {
+            Iterator j = lines.iterator();
+            for (; j.hasNext();)
+            {
+                String s = (String)j.next();
+                System.out.println(s);
+            }
         }
     }
 }
