@@ -25,21 +25,42 @@ public class IllegalQuoteException extends Exception
 {
     private static final String MSG = "Illegal quotation mark";
 
+    /**
+     * Initializes an <code>IllegalQuoteException</code> with a
+     * generic, English error message.
+     */
     public IllegalQuoteException()
     {
         super(MSG);
     }
 
+    /**
+     * Initializes an <code>IllegalQuoteException</code> with a
+     * generic, English error message and a given chained <code>Exception</code>.
+     * @param cause the chained <code>Throwable</code>
+     */
     public IllegalQuoteException(Throwable cause)
     {
         super(MSG,cause);
     }
 
+    /**
+     * Initializes an <code>IllegalQuoteException</code> with a
+     * generic, English error message incorporating the given
+     * piece of source string.
+     * @param near some context from the source buffer, intended to
+     * provide additional information to the end user about where the
+     * error occurred
+     */
     public IllegalQuoteException(String near)
     {
         super(MSG+" near: "+near);
     }
 
+    /**
+     * @param near
+     * @param cause
+     */
     public IllegalQuoteException(String near, Throwable cause)
     {
         super(MSG+" near: "+near,cause);
