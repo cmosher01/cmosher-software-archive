@@ -17,7 +17,7 @@ public class HitWeb
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			for (String s = in.readLine(); s != null; s = in.readLine())
 			{
-				System.oiut.println(s);
+				System.out.println(s);
 			}
 			con.disconnect();
     	}
