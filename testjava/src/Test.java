@@ -53,7 +53,7 @@ public class Test
             x.close();
         }
         long end = System.currentTimeMillis();
-        System.out.println("elapsed time: "+end-start+" ms");
+        System.out.println("elapsed time: "+(end-start)+" ms");
 
 
 
