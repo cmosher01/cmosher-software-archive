@@ -39,25 +39,58 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
-        CubbyHole cub = new CubbyHole();
-        System.out.println(cub.getClass().getClassLoader().getClass().getName());
-        URLClassLoader cl = (URLClassLoader)cub.getClass().getClassLoader();
-        cl = (URLClassLoader)Launcher.getLauncher().getClassLoader();
-        do
-        {
-            URL[] rurl = cl.getURLs();
-            for (int i = 0; i < rurl.length; ++i)
-            {
-                URL url = rurl[i];
-                System.out.println(url.toString());
-            }
-            System.out.println("------");
-            cl = (URLClassLoader)cl.getParent();
-        }
-        while (cl != null);
+        protected String getJobCode()
+         {
+             StringBuffer code = new StringBuffer(20);
 
-        System.out.println(Test.class.getClassLoader().getClass().getName());
-        System.out.println(System.getProperty("java.class.path"));
+             String base = "thisisabigfilenametest.dat";
+             if (base.length() > 11)
+             {
+                 base = base.substring(0,11);
+             }
+
+             code.append(base);
+             code.append("_");
+             for (int i = 0; i < mrStepNames.length; ++i)
+             {
+                 Integer inti = new Integer(i);
+                 if (mStepInts.contains(inti))
+                 {
+                     code.append(new Integer(i+1));
+                 }
+             }
+
+             System.out.println(code.toString());
+
+
+
+
+
+
+
+
+
+
+
+//        CubbyHole cub = new CubbyHole();
+//        System.out.println(cub.getClass().getClassLoader().getClass().getName());
+//        URLClassLoader cl = (URLClassLoader)cub.getClass().getClassLoader();
+//        cl = (URLClassLoader)Launcher.getLauncher().getClassLoader();
+//        do
+//        {
+//            URL[] rurl = cl.getURLs();
+//            for (int i = 0; i < rurl.length; ++i)
+//            {
+//                URL url = rurl[i];
+//                System.out.println(url.toString());
+//            }
+//            System.out.println("------");
+//            cl = (URLClassLoader)cl.getParent();
+//        }
+//        while (cl != null);
+//
+//        System.out.println(Test.class.getClassLoader().getClass().getName());
+//        System.out.println(System.getProperty("java.class.path"));
 
 
 
