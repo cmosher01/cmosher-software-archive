@@ -637,7 +637,7 @@ public class Disk
         while (i.hasNext())
         {
             DiskPos pos = (DiskPos)i.next();
-            if (isDos33TSMapSector(pos) > 0)
+            if (isDos33TSMapSector(pos))
             {
                 rPosTSMaps.add(pos);
             }
