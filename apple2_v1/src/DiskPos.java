@@ -260,11 +260,11 @@ public class DiskPos implements Comparable, Iterator
     /**
      * @see java.util.Iterator#next()
      */
-    public Object next()
+    public Object next() throws NoSuchElementException
     {
         if (!hasNext())
         {
-            throw new ill
+            throw new NoSuchElementException();
         }
         // TODO Auto-generated method stub
         return null;
