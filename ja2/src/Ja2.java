@@ -20,11 +20,10 @@ public final class Ja2
 {
     /**
      * This class is never instantiated.
-     * @throws UnsupportedOperationException
      */
-    private Ja2() throws UnsupportedOperationException
+    private Ja2()
     {
-        throw new UnsupportedOperationException();
+        assert false : "Cannot instantiate Ja2 class.";
     }
 
     /**
