@@ -24,7 +24,7 @@ public class FileFinder
         }
         final Pattern patSubdir = Pattern.compile(sub);
 
-        List dirs = new ArrayList();
+        final List dirs = new ArrayList();
         dirs.add(new File(rArg[0]));
 
         while (dirs.size() > 0)
@@ -34,8 +34,13 @@ public class FileFinder
             {
                 public boolean accept(File pathname)
                 {
-                    Matcher mat = patFile.matcher(pathname.getName());
-                    return mat.matches();
+                    Matcher matDir = patSubdir.matcher(pathname.getName());
+                    if (matDir.matches())
+                    {
+                        dirs.add(pathname);
+                    }
+                    Matcher matFile = patFile.matcher(pathname.getName());
+                    return matFile.matches();
                 }
             });
         }
