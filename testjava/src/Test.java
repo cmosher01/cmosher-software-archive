@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Writer;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.security.AccessController;
@@ -67,19 +68,26 @@ public class Test
     //throws MyException, IOException // other exceptions here...
 	{
 
-        System.setProperty("java.security.debug","all");
-        System.setSecurityManager(new SecurityManager());
 
-//        AccessController.checkPermission(perm);
-        Reader rdr = new InputStreamReader(new FileInputStream(new File("\\temp\\test.txt")));
-        BufferedReader br = new BufferedReader(rdr);
+        URI uri = new URI("smtp://sparky:25");
 
-        String s = br.readLine();
-        while (s != null)
-        {
-            System.out.println(s);
-            s = br.readLine();
-        }
+
+
+
+
+//        System.setProperty("java.security.debug","all");
+//        System.setSecurityManager(new SecurityManager());
+//
+////        AccessController.checkPermission(perm);
+//        Reader rdr = new InputStreamReader(new FileInputStream(new File("\\temp\\test.txt")));
+//        BufferedReader br = new BufferedReader(rdr);
+//
+//        String s = br.readLine();
+//        while (s != null)
+//        {
+//            System.out.println(s);
+//            s = br.readLine();
+//        }
 
 
 
