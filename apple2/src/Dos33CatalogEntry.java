@@ -55,14 +55,14 @@ public class Dos33CatalogEntry
         return deleted;
     }
     /**
-     * @return Returns the cSector.
+     * @return Returns the count of sectors
      */
     public int getSectorCount()
     {
         return cSector;
     }
     /**
-     * @return Returns the dataPos.
+     * @return Returns the track/sector position (of T/S map or single file sector)
      */
     public DiskPos getStart()
     {
