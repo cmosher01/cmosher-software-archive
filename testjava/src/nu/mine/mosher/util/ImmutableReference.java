@@ -33,13 +33,7 @@ public class ImmutableReference
 
     public boolean equals(Object o)
     {
-        if (!(o instanceof ImmutableReference))
-        {
-            return false;
-        }
-        ImmutableReference that = (ImmutableReference)o;
-
-        return eq(this.ref,that.ref);
+        return eq(this.ref,o);
     }
 
     private boolean eq(Object x, Object y)
