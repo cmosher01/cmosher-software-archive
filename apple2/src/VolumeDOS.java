@@ -420,14 +420,14 @@ public class VolumeDOS extends VolumeEntity
      */
     private byte[] makeSlave(byte[] rbClear, int[] rbSlaveOffset, int dif)
     {
-        byte[] rb = new byte[rbClear.length];
-        System.arraycopy(rbClear, 0, rb, 0, rbClear.length);
+        byte[] rbSlave = new byte[rbClear.length];
+        System.arraycopy(rbClear, 0, rbSlave, 0, rbClear.length);
         for (int i = 0; i < rbSlaveOffset.length; i++)
         {
             int bOff = rbSlaveOffset[i];
-            rb[bOff] -= dif;
+            rbSlave[bOff] -= dif;
         }
-        return rb;
+        return rbSlave;
     }
 
     /**
