@@ -15,7 +15,7 @@ public class TreeFrame extends JFrame
 {
     private static JFrame frame;
     private static String dir;
-    private static Flag begun;
+    private static Flag begun = new Flag();
 
     public TreeFrame(String dir)
     {
