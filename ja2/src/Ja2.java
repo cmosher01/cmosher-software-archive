@@ -18,6 +18,7 @@ public final class Ja2
     {
         throw new UnsupportedOperationException();
     }
+
     public static void main(String[] args)
     {
         Main.main(args);
