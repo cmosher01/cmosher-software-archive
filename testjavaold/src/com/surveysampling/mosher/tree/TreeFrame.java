@@ -21,7 +21,7 @@ public class TreeFrame extends JPanel
     {
         setLayout(new BorderLayout());
         addNotify();
-        setSize(getInsets().left + getInsets().right + 640, getInsets().top + getInsets().bottom + 480);
+//        setSize(getInsets().left + getInsets().right + 640, getInsets().top + getInsets().bottom + 480);
 
         FileTreeNode root = (FileTreeNode)buildTree(dir);
         DefaultTreeModel treemodel = new DefaultTreeModel(root);
