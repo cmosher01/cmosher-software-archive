@@ -1,0 +1,61 @@
+0 HEAD
+1 SOUR IGI
+2 VERS 5.0
+2 NAME International Genealogical Index (R)
+2 CORP The Church of Jesus Christ of Latter-day Saints
+3 ADDR 50 East North Temple Street
+4 CONT Salt Lake City, Utah 84150
+2 DATA International Genealogical Index
+3 DATE 7 June 2003
+3 COPR Copyright (c) 1980, 2002
+1 DEST PAF
+1 DATE 7 June 2003
+2 TIME 10:33:01
+1 FILE PAZMI‰NO-1906
+1 GEDC
+2 VERS 5.5
+2 FORM LINEAGE-LINKED
+1 CHAR ANSEL
+1 SUBM @SUB01@
+1 SUBN @N01@
+0 @SUB01@ SUBM
+1 NAME Created by FamilySearch (TM) Internet Genealogy Service
+1 ADDR 50 East North Temple Street
+2 CONT Salt Lake City, Utah 84150
+0 @N01@ SUBN
+1 DESC 1
+1 ORDI N
+0 @I100005108667@ INDI
+1 NAME Rosa /PAZMI‰NO/
+1 SEX F
+1 FAMS @F16500599@
+1 SOUR @S01@
+0 @I100005108666@ INDI
+1 NAME Abigail Mercedes /AVILA PAZMI‰NO/
+1 SEX F
+1 BIRT
+2 DATE 25 JUN 1906
+2 PLAC Sangolqui, Pichincha, Ecuador
+1 DEAT
+2 DATE 14 MAY 1989
+1 FAMC @F16500599@
+1 SOUR @S01@
+0 @I100005108668@ INDI
+1 NAME Segundo /AVILA/
+1 SEX M
+1 FAMS @F16500599@
+1 SOUR @S01@
+0 @F16500599@ FAM
+1 HUSB @I100005108668@
+1 WIFE @I100005108667@
+1 CHIL @I100005108666@
+0 @S01@ SOUR
+1 AUTH The Church of Jesus Christ of Latter-day Saints
+1 TITL International Genealogical Index (R)
+1 PUBL Copyright (c) 1980, 2002, data as of June 7, 2003
+1 REPO @R01@
+0 @R01@ REPO
+1 NAME Family History Library
+1 ADDR 35 N West Temple Street
+2 CONT Salt Lake City, Utah 84150  USA
+0 TRLR
