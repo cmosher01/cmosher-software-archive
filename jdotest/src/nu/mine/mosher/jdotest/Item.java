@@ -29,9 +29,4 @@ public class Item
     {
         this.name = name;
     }
-
-	public String getID()
-	{
-		return "";
-	}
 }
