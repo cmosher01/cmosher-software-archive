@@ -15,21 +15,17 @@ import javax.jdo.PersistenceManagerFactory;
  */
 public class Perm
 {
-	private static final Properties props = new Properties();
-	static
+	private PersistenceManagerFactory pmf;
+
+	public Perm()
 	{
+		Properties props = new Properties();
 		props.setProperty("javax.jdo.PersistenceManagerFactoryClass","org.jpox.PersistenceManagerFactoryImpl");
 		props.setProperty("javax.jdo.option.ConnectionDriverName","org.jpox.driver.JPOXDriver");
 		props.setProperty("javax.jdo.option.ConnectionURL","jpox:java/comp/env/mysql/jdotest");
 		props.setProperty("org.jpox.autoCreateTables","true");
 		props.setProperty("org.jpox.validateTables","false");
 		props.setProperty("org.jpox.validateConstraints","false");
-	}
-
-	private PersistenceManagerFactory pmf;
-
-	public Perm()
-	{
 		this.pmf = JDOHelper.getPersistenceManagerFactory(props);
 	}
 
