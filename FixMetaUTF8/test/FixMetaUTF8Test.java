@@ -38,6 +38,6 @@ public class FixMetaUTF8Test extends TestCase
     {
         in = FixMetaUTF8.removeContentTypeMeta(in);
         String s = FixMetaUTF8.addContentTypeMeta(in);
-        this.assertEquals(sbExpect, s);
+        assertEquals(sbExpect, s);
     }
 }
