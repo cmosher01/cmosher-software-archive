@@ -42,6 +42,7 @@ public class AppInit implements ServletContextListener
 	{
 		return props;
 	}
+
     public void contextDestroyed(ServletContextEvent sce)
     {
     }
