@@ -15,4 +15,5 @@ package nu.mine.mosher.jdotest;
 public interface Named
 {
 	String getName();
+	int getId();
 }
