@@ -31,6 +31,8 @@ public class GDiffData extends GDiffCmd
      */
     public String toString()
     {
-        return "DATA ["+data.length+" bytes]"/*+" @<"+this.getTargetRange().getBegin()+","+this.getTargetRange().getEnd()+">"*/;
+//        return "DATA ["+data.length+" bytes]"/*+" @<"+this.getTargetRange().getBegin()+","+this.getTargetRange().getEnd()+">"*/;
+        Range trg = getTargetRange();
+        return "data ["+data.length+" bytes] to ["+trg.getBegin()+"-"+trg.getEnd()+"]";
     }
 }
