@@ -106,8 +106,8 @@ public class A2DiskEdit
 //        paneRight.setMinimumSize(minimumSize);
 //        treeView.setMinimumSize(minimumSize);
 
-//        mSplitPane.setDividerLocation(200);
-//        mSplitPane.setPreferredSize(new Dimension(600, 400));
+        splitPane.setDividerLocation(400);
+        splitPane.setPreferredSize(new Dimension(600, 400));
 
 		frameMain.getContentPane().add(splitPane,BorderLayout.CENTER);
 	}
