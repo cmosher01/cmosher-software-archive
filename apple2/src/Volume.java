@@ -39,7 +39,7 @@ public class Volume
             DiskPos tsmap = ent.getStart();
             if (disk.isDos33TSMapSector(tsmap))
             {
-                
+                VolumeFile f = new VolumeFile();
             }
         }
     }
