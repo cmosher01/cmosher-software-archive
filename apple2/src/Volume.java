@@ -30,6 +30,9 @@ public class Volume
     {
         cat = new VolumeCatalog();
         cat.readFromMedia(disk);
+
+        List rEntry = new ArrayList();
+        cat.getEntries(rEntry);
     }
 
     public void dump(StringBuffer s)
