@@ -27,6 +27,10 @@ public class DiskVTOCTest extends TestCase
         assertOnePos("DOS33_SystemMaster_19800825.dsk",new DiskPos(0x11,0));
     }
 
+    /**
+     * @throws IOException
+     * @throws InvalidPosException
+     */
     public void testDOS33_Master_1983() throws IOException, InvalidPosException
     {
         assertOnePos("DOS33_SystemMaster_19830101.dsk",new DiskPos(0x11,0));
