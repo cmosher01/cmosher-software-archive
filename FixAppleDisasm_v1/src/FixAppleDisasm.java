@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.Iterator;
@@ -104,15 +105,7 @@ public class FixAppleDisasm
 			inbuf = new BufferedReader(in);
 		}
 
-		BufferedWriter outbuf = null;
-		if (out instanceof BufferedWriter)
-		{
-			outbuf = (BufferedWriter)out;
-		}
-		else
-		{
-			outbuf = new BufferedWriter(out);
-		}
+		PrintWriter printout = new PrintWriter(new BufferedWriter(out));
 
 		Map lines = new TreeMap();
 		int lineNumber = 0;
@@ -270,8 +263,8 @@ public class FixAppleDisasm
 
 			if (ln.addr >= 0)
 			{
-				outbuf.print(Integer.toHexString(ln.addr));
-				out.print(":   ");
+				printout.print(Integer.toHexString(ln.addr));
+				printout.print(":   ");
 				if (ln.instr.length() > 0)
 				{
 					out.print(ln.instr);
