@@ -70,7 +70,7 @@ public class YMD implements Immutable, Serializable, Comparable
 			m = 7;
 			d = 3;
 		}
-		else if (day == 0)
+		else if (d == 0)
 		{
 			d = 15;
 		}
