@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class Persona
 {
+	private String nameDisplay;
 	private String nameLast;
 	private String nameFirst;
 	private String nameOther;
