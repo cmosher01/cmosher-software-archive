@@ -98,8 +98,8 @@ public class FixMetaUTF8Test extends TestCase
         System.out.println("----------------------");
         String s = FixMetaUTF8.addContentTypeMeta(in);
         System.out.println(s);
-        assertEquals(sbExpect.toString(), s);
         System.out.println("-----------------------------------------------------------------------------");
         System.out.flush();
+        assertEquals(sbExpect.toString(), s);
     }
 }
