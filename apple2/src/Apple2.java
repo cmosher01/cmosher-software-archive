@@ -77,8 +77,8 @@ public class Apple2
     }
 
     /**
-     * @param f
-     * @return
+     * @param f file containing the disk image to read
+     * @return the disk image read in from the file
      * @throws IOException
      */
     public static Disk readDisk(File f) throws IOException
