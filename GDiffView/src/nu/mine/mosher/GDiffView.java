@@ -1060,7 +1060,9 @@ public class GDiffView extends JFrame
      */
     private void doData(byte[] data)
     {
-        System.out.println("DATA ["+data.length+" bytes]");
+        GDiffData cmd = new GDiffData(data);
+        cmd.setTargetRange(null); // TODO
+        this.rData.add(cmd);
     }
 
     /**
@@ -1070,6 +1072,11 @@ public class GDiffView extends JFrame
      */
     private void doCopy(long offset, long length, boolean fromTarget)
     {
-        System.out.println("COPY "+(fromTarget?"trg":"src")+"@"+offset+", "+length);
+        if (fromTarget)
+        {
+            throw new IllegalStateException();
+        }
+        GDiffCopy cmd = new GDiffCopy(new Range(offset,offset+length-1));
+        this.rCopy.add(cmd);
     }
 }
