@@ -1,6 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
 	<jsp:directive.attribute name="classname" type="java.lang.String" required="true" />
+	<jsp:directive.variable alias="obj" name-from-attribute="var" variable-class="java.lang.String" />
 	<jsp:text>
 	A test tag ${classname}
+	<c:set var="obj" value="10" />
 	</jsp:text>
 </jsp:root>
