@@ -1,28 +1,35 @@
 /*
- * Created on Feb 16, 2005
+ * Created on February 16, 2005
  */
 package nu.mine.mosher.random;
 
 /**
- * TODO
+ * Helper for classes implementing <code>RandomNumberGenerator</code>.
  *
  * @author Chris Mosher
  */
-public class RNGDefault implements RandomNumberGenerator
+public abstract class RNGDefault implements RandomNumberGenerator
 {
+	private final int seed;
+
+	/**
+	 * @param seed
+	 */
+	public RNGDefault(final int seed)
+	{
+		this.seed = seed;
+	}
+
 	/**
 	 * @return
 	 */
 	public long getSeed()
 	{
-		return 0;
+		return this.seed;
 	}
 
 	/**
 	 * @return
 	 */
-	public int nextInt()
-	{
-		return 0;
-	}
+	abstract public int nextInt();
 }
