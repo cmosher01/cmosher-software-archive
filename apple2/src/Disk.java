@@ -289,8 +289,8 @@ public class Disk
             {
                 return goodEntries;
             }
-            return 0;
         }
+        return 0;
     }
 
     /**
