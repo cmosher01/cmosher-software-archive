@@ -1,6 +1,10 @@
 package nu.mine.mosher.grodb;
 
-public class YMD
+import java.io.Serializable;
+
+import nu.mine.mosher.core.Immutable;
+
+public class YMD implements Immutable, Serializable
 {
 	private int year;
 	private int month;
