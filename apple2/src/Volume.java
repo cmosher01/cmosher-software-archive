@@ -64,6 +64,72 @@ public class Volume
                 rFileRecovered.add(f);
             }
         }
+
+        List rKnownSectors = new ArrayList();
+        getUsedCatalog(rKnownSectors);
+        getUsedNondeletedFiles(rKnownSectors);
+        getUsedDeletedFiles(rKnownSectors);
+        // TODO getUsedBoot getUsedDOS
+        rKnownSectors.add(new DiskPos(0,0));
+        rKnownSectors.add(new DiskPos(0,1));
+        rKnownSectors.add(new DiskPos(0,2));
+        rKnownSectors.add(new DiskPos(0,3));
+        rKnownSectors.add(new DiskPos(0,4));
+        rKnownSectors.add(new DiskPos(0,5));
+        rKnownSectors.add(new DiskPos(0,6));
+        rKnownSectors.add(new DiskPos(0,7));
+        rKnownSectors.add(new DiskPos(0,8));
+        rKnownSectors.add(new DiskPos(0,9));
+        rKnownSectors.add(new DiskPos(0,10));
+        rKnownSectors.add(new DiskPos(0,11));
+        rKnownSectors.add(new DiskPos(0,12));
+        rKnownSectors.add(new DiskPos(0,13));
+        rKnownSectors.add(new DiskPos(0,14));
+        rKnownSectors.add(new DiskPos(0,15));
+        rKnownSectors.add(new DiskPos(1,0));
+        rKnownSectors.add(new DiskPos(1,1));
+        rKnownSectors.add(new DiskPos(1,2));
+        rKnownSectors.add(new DiskPos(1,3));
+        rKnownSectors.add(new DiskPos(1,4));
+        rKnownSectors.add(new DiskPos(1,5));
+        rKnownSectors.add(new DiskPos(1,6));
+        rKnownSectors.add(new DiskPos(1,7));
+        rKnownSectors.add(new DiskPos(1,8));
+        rKnownSectors.add(new DiskPos(1,9));
+        rKnownSectors.add(new DiskPos(1,10));
+        rKnownSectors.add(new DiskPos(1,11));
+        rKnownSectors.add(new DiskPos(1,12));
+        rKnownSectors.add(new DiskPos(1,13));
+        rKnownSectors.add(new DiskPos(1,14));
+        rKnownSectors.add(new DiskPos(1,15));
+        rKnownSectors.add(new DiskPos(2,0));
+        rKnownSectors.add(new DiskPos(2,1));
+        rKnownSectors.add(new DiskPos(2,2));
+        rKnownSectors.add(new DiskPos(2,3));
+        rKnownSectors.add(new DiskPos(2,4));
+        rKnownSectors.add(new DiskPos(2,5));
+        rKnownSectors.add(new DiskPos(2,6));
+        rKnownSectors.add(new DiskPos(2,7));
+        rKnownSectors.add(new DiskPos(2,8));
+        rKnownSectors.add(new DiskPos(2,9));
+        rKnownSectors.add(new DiskPos(2,10));
+        rKnownSectors.add(new DiskPos(2,11));
+        rKnownSectors.add(new DiskPos(2,12));
+        rKnownSectors.add(new DiskPos(2,13));
+        rKnownSectors.add(new DiskPos(2,14));
+        rKnownSectors.add(new DiskPos(2,15));
+
+        List rAllSectorsWithData = new ArrayList();
+        disk.getDataTS(rAllSectorsWithData);
+
+        for (Iterator i = rAllSectorsWithData.iterator(); i.hasNext();)
+        {
+            DiskPos p = (DiskPos)i.next();
+            if (!rKnownSectors.contains(p))
+            {
+                System.out.println("Found orphaned data sector "+p.toStringTS());
+            }
+        }
     }
 
     /**
