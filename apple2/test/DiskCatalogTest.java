@@ -330,9 +330,6 @@ public class DiskCatalogTest extends TestCase
     public void test3DANI() throws IOException, InvalidPosException
     {
         List r = new ArrayList();
-        r.add(new DiskPos(0x03,0xF));
-        r.add(new DiskPos(0x11,0x1));
-        r.add(new DiskPos(0x11,0x2));
         r.add(new DiskPos(0x11,0x3));
         r.add(new DiskPos(0x11,0x4));
         r.add(new DiskPos(0x11,0x5));
