@@ -69,4 +69,12 @@ public class VolumeCatalogSector extends VolumeEntity
         s.append("\n");
     }
 
+    /**
+     * @param entry
+     */
+    public void getEntries(List r)
+    {
+        r.addAll(rEntry);
+    }
+
 }
