@@ -87,12 +87,12 @@ public class Birthday extends RandomnessTest
         return pvalue;
     }
 
-    protected double P_fit(double lmb, int[] obs, int no_obs)
+    protected double P_fit(double lmb, int[] obs, int noob)
     {
-        int dim = no_obs / 5 + 1;
+        int dim = noob / 5 + 1;
         int i = -1;
         int j, k = 0;
-        double rest = no_obs;
+        double rest = noob;
 
         int[] f = new int[dim];
         Arrays.fill(f,0);
@@ -106,10 +106,10 @@ public class Birthday extends RandomnessTest
             while (Ef[j] < 4.99999999D)
             {
                 ++i;
-                Ef[j] += no_obs * Stats.Poisson(lmb, i);
+                Ef[j] += noob * Stats.Poisson(lmb, i);
             }
 
-            while (k < no_obs && obs[k] <= i)
+            while (k < noob && obs[k] <= i)
             {
                 ++f[j];
                 ++k;
@@ -119,7 +119,7 @@ public class Birthday extends RandomnessTest
             if (rest < 4.99999999D)
             {
                 Ef[j] += rest;
-                f[j] += no_obs - k;
+                f[j] += noob - k;
                 break;
             }
         }
