@@ -68,4 +68,13 @@ public class VolumeFile
     {
         return catEntry;
     }
+
+    /**
+     * @param rPos
+     */
+    public void getUsed(Collection rPos)
+    {
+        ts.getPos(rPos);
+        data.getPos(rPos);
+    }
 }
