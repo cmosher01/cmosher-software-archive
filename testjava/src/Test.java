@@ -84,6 +84,7 @@ public class Test
         if (su.equalsIgnoreCase("file"))
         {
             f = new File(uri.getPath());
+            f = f.getParentFile();
         }
         else if (su.equalsIgnoreCase("jar"))
         {
