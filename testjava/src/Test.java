@@ -1,26 +1,8 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.Writer;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.security.AccessController;
-import java.security.Permission;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ListIterator;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
-import sun.misc.Launcher;
-
-import com.surveysampling.util.CubbyHole;
 
 public class Test
 {
@@ -70,6 +52,7 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
+        System.setOut(new PrintStreamAdapter(new PrintWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out),"UTF-8"))));
         System.out.println("\u2401");
 
 
