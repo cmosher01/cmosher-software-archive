@@ -22,7 +22,7 @@ public class Test
         }
         else
         {
-            System.out.println("yes");
+            System.out.println("no");
         }
 //        System.err.println("Test()");
 //        System.err.println(x);
