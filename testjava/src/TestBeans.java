@@ -9,13 +9,10 @@ public class TestBeans
 {
     public static void main(String[] rArgs) throws Throwable
     {
-        PropertyEditor ed = PropertyEditorManager.findEditor(Integer.TYPE);
-        if (ed == null)
-        {
-            throw new Exception("can't get property editor for integer");
-        }
-        ed.setAsText("34");
-        Integer i = (Integer)ed.getValue();
+        SomeBean some = new SomeBean();
+
+
+
 
 
 
@@ -47,9 +44,22 @@ public class TestBeans
 
 
 
+        PropertyEditor ed = (PropertyEditor)pd.getPropertyEditorClass().newInstance();
+        if (ed == null)
+        {
+            throw new Exception("can't get property editor for integer");
+        }
+        ed.setAsText("34");
+        Integer i = (Integer)ed.getValue();
+
+
+
+
         Method wr = pd.getWriteMethod();
-        SomeBean some = new SomeBean();
         wr.invoke(some, new Object[] {i});
+
+
+
         showInt(some.getAInt());
     }
 
