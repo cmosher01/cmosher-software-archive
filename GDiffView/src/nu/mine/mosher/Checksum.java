@@ -31,9 +31,6 @@ import java.io.InputStream;
 
 public class Checksum
 {
-
-    public static final int BASE = 65521;
-
     public static final int S = 16;
 
     protected int hashtable[];
