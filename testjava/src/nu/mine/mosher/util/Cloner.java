@@ -1,5 +1,6 @@
 package com.surveysampling.util;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +30,7 @@ public final class Cloner
                 methodClone = getCloneMethod(cl);
                 mClasses.put(cl,methodClone);
             }
-            return (Cloneable)methodClone.invoke(cloneableObject,null);
+            return clone(cloneableObject, methodClone);
         }
         catch (CloneNotSupportedException e)
         {
@@ -42,6 +43,12 @@ public final class Cloner
             ex.initCause(cause);
             throw ex;
         }
+    }
+
+    private static Cloneable clone(Cloneable cloneableObject, Method methodClone)
+        throws IllegalAccessException, IllegalArgumentException, InvocationTargetException
+    {
+        return (Cloneable)methodClone.invoke(cloneableObject,null);
     }
 
     public static Method getCloneMethod(Class cl) throws NoSuchMethodException, SecurityException
