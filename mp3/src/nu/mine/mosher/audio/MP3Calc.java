@@ -30,7 +30,7 @@ public class MP3Calc
 
 		long flen = fin.length();
 
-		in = new FileInputStream();
+		InputStream in = new FileInputStream();
 
 		BufferedInputStream bufin = null;
     	if (in instanceof BufferedInputStream)
