@@ -103,8 +103,6 @@ public class GDiffView extends JFrame
     {
         super("GDiffVeiew");
 
-        JFrame.setDefaultLookAndFeelDecorated(true);
-
         src = new File(fileSrc);
         dif = new File(fileGDiff);
 
@@ -144,13 +142,21 @@ public class GDiffView extends JFrame
         StyleConstants.setItalic(style,false);
         styles.put("delete",style);
 
+
+
+        JFrame.setDefaultLookAndFeelDecorated(true);
+
+        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        this.setMaximizedBounds(env.getMaximumWindowBounds());
+        this.setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
+
         docSrc = new DefaultStyledDocument();
         paneSrc = new JTextPaneNoWrap(docSrc);
         paneSrc.setEditable(false);
         JScrollPane scrSrc = new JScrollPane(paneSrc);
 //        scrSrc.setMinimumSize(new Dimension(100,100));
 //        scrSrc.setPreferredSize(new Dimension(400,430));
-        scrSrc.setMaximumSize(new Dimension(Integer.MAX_VALUE,Integer.MAX_VALUE));
+//        scrSrc.setMaximumSize(new Dimension(Integer.MAX_VALUE,Integer.MAX_VALUE));
 
         docTrg = new DefaultStyledDocument();
         paneTrg = new JTextPaneNoWrap(docTrg);
@@ -313,10 +319,6 @@ public class GDiffView extends JFrame
         listGDiff.requestFocus();
 
 //        pack();
-
-        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        this.setMaximizedBounds(env.getMaximumWindowBounds());
-        this.setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
 
         setVisible(true);
     }
