@@ -5,6 +5,8 @@
  */
 package com.surveysampling.time;
 
+import java.util.Calendar;
+
 import junit.framework.TestCase;
 
 /**
@@ -12,6 +14,7 @@ import junit.framework.TestCase;
  */
 public class TimeOfDayTest extends TestCase
 {
+    private TimeOfDay tod = new TimeOfDay(Calendar.getInstance(),17,34,12,367);
 
     /**
      * Constructor for TimeOfDayTest.
@@ -45,22 +48,28 @@ public class TimeOfDayTest extends TestCase
 
     public void testGetHours()
     {
+        assertEquals(17,tod.getHours());
     }
 
     public void testGetMinutes()
     {
+        assertEquals(34,tod.getMinutes());
     }
 
     public void testGetSeconds()
     {
+        assertEquals(12,tod.getSeconds());
     }
 
     public void testGetMilliseconds()
     {
+        assertEquals(367,tod.getMilliseconds());
     }
 
     public void testGetCalendar()
     {
+        Calendar s = tod.getCalendar();
+        assertEquals(Calendar.getInstance(),s);
     }
 
     public void testGetTimeOnDay()
