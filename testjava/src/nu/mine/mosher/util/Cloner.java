@@ -38,13 +38,30 @@ public final class Cloner
         }
     }
 
-    private static Cloneable clone(Cloneable cloneableObject, Method methodClone)
-        throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, CloneNotSupportedException
+    static Cloneable clone(Cloneable cloneableObject, Method methodClone)
+        throws IllegalArgumentException, IllegalAccessException, CloneNotSupportedException, InvocationTargetException
     {
-        return (Cloneable)methodClone.invoke(cloneableObject, null);
+        Cloneable clon;
+        try
+        {
+            clon = (Cloneable)methodClone.invoke(cloneableObject, null);
+        }
+        catch (InvocationTargetException e)
+        {
+            Throwable cause = e.getCause();
+            if (cause instanceof CloneNotSupportedException)
+            {
+                throw (CloneNotSupportedException)cause;
+            }
+            else
+            {
+                throw e;
+            }
+        }
+        return clon;
     }
 
-    public static Method getCloneMethod(Class cl) throws NoSuchMethodException, SecurityException
+    static Method getCloneMethod(Class cl) throws SecurityException, NoSuchMethodException
     {
         Method methodClone;
         methodClone = cl.getMethod("clone", null);
