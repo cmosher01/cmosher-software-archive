@@ -405,6 +405,15 @@ public class DiskCatalogTest extends TestCase
     public void testSARG2() throws IOException, InvalidPosException
     {
         List r = new ArrayList();
+        r.add(new DiskPos(0x09,0x4));
+        r.add(new DiskPos(0x0C,0x5));
+        r.add(new DiskPos(0x0F,0x6));
+        r.add(new DiskPos(0x11,0x1));
+        r.add(new DiskPos(0x11,0x2));
+        r.add(new DiskPos(0x11,0x3));
+        r.add(new DiskPos(0x11,0x4));
+        r.add(new DiskPos(0x11,0x5));
+        r.add(new DiskPos(0x11,0x6));
         r.add(new DiskPos(0x11,0x7));
         r.add(new DiskPos(0x11,0x8));
         r.add(new DiskPos(0x11,0x9));
@@ -414,6 +423,8 @@ public class DiskCatalogTest extends TestCase
         r.add(new DiskPos(0x11,0xD));
         r.add(new DiskPos(0x11,0xE));
         r.add(new DiskPos(0x11,0xF));
+        r.add(new DiskPos(0x12,0x1));
+        r.add(new DiskPos(0x18,0x3));
         assertManyPos("SARG2.dsk",r);
     }
 
