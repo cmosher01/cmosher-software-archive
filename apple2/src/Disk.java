@@ -43,6 +43,10 @@ public class Disk
         return rb;
     }
 
+    /**
+     * @param len
+     * @return
+     */
     public String readASCII(int len)
     {
         StringBuffer sb = new StringBuffer();
