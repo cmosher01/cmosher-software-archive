@@ -3,6 +3,7 @@
  */
 package com.surveysampling.time;
 
+import java.text.FieldPosition;
 import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -203,17 +204,23 @@ public class TimeOfDay implements Comparable
     }
 
     /**
-     * Formats this time. The resulting String is of
+     * Formats this time. The resulting string is of
      * the form: "HH:mm", or "HH:mm:ss" if seconds are
      * greater than zero, or "HH:mm:ss.SSS" if milliseconds
-     * are greater than zero.
+     * are greater than zero. This string is appended
+     * to the given StringBuffer;
      * @param showAll
-     * @return
+     * @param s the StringBuffer to append the result to
+     * @return s
      */
-    public String format(boolean showAll)
+    public StringBuffer format(boolean showAll, StringBuffer s)
     {
-        if (seconds == 0 && milliseconds == 0)
+        FieldPosition pos = new FieldPosition(0);
+        if (seconds == 0 && milliseconds == 0 && !showAll)
         {
+            fmt.format(hours, s, pos);
         }
+
+        return s;
     }
 }
