@@ -587,10 +587,9 @@ public class Disk
 //    }
 
     /**
-     * @param tsmapMapsInCatalog
      * @throws InvalidPosException
      */
-    public void findDos33TSMapSector(TSMap tsmapMapsInCatalog) throws InvalidPosException
+    public void findDos33TSMapSector(/*TSMap tsmapMapsInCatalog*/) throws InvalidPosException
     {
         rewind();
         while (!EOF())
@@ -604,14 +603,14 @@ public class Disk
                 {
                     System.out.print(" (next @ T$"+Integer.toHexString(sector[1])+", S$"+Integer.toHexString(sector[2])+")");
                 }
-                if (tsmapMapsInCatalog.isMarked(cur))
-                {
-                    System.out.print(" (cataloged)");
-                }
-                else
-                {
-                    System.out.print(" (orphaned)");
-                }
+//                if (tsmapMapsInCatalog.isMarked(cur))
+//                {
+//                    System.out.print(" (cataloged)");
+//                }
+//                else
+//                {
+//                    System.out.print(" (orphaned)");
+//                }
                 System.out.println();
             }
         }
