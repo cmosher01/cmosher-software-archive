@@ -9,7 +9,7 @@ public class VelocityTest
         VelocityEngine velocity = new VelocityEngine();
         velocity.init();
         Context context = new VelocityContext();
-        FileDescriptor
+        FileDescriptor x;
         BufferedWriter writer = new OutputStreamWriter(new FileOutputStream());
         velocity.mergeTemplate("test.vm", context, );
     }
