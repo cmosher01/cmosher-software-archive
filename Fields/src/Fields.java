@@ -2,16 +2,36 @@
  * Created on Feb 8, 2005
  */
 
-
 /**
- * TODO
+ * Contains the "main" method (external entry point) for
+ * the application. This class is in the default package
+ * so that the program can be run with the following command:
+ * <code>java Fields [arguments]</code>
  * 
- * @author chrism
+ * @author Chris Mosher
  */
-public class Fields
+public final class Fields
 {
-
-    public static void main(String[] args)
+    /**
+     * This class is never instantiated.
+     */
+    private Fields()
     {
+        assert false : "Cannot instantiate main class.";
+    }
+
+    /**
+     * @param args
+     * @throws ApplicationAborting
+     */
+    public static void main(String[] args) throws ApplicationAborting
+    {
+        ExceptionHandler eh = new ExceptionHandler();
+        CommandLineArgHandler ch = new CommandLineArgHandler(args);
+        SwingGUI gui = new SwingGUI();
+
+        SwingApplication app = new SwingApplication(eh,ch,gui);
+
+        app.run();
     }
 }
