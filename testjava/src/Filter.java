@@ -15,7 +15,10 @@ public abstract class Filter
         for (Iterator i = input.iterator(); i.hasNext();)
         {
             Object element = i.next();
-            output.add(operation(element));
+            if (element != null)
+            {
+                output.add(operation(element));
+            }
         }
     }
 
