@@ -55,7 +55,7 @@ public class NormalizerTest extends TestCase
 				System.out.println();
 				assertNormalize(rCol[0],rCol[1]);
 				assertNormalize(rCol[1],rCol[1]);
-				assertNormalize(rCol[2],rCol[2]);
+				assertNormalize(rCol[2],rCol[1]);
 				assertNormalize(rCol[3],rCol[3]);
 				assertNormalize(rCol[4],rCol[3]);
 				cDone++;
