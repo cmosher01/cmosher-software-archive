@@ -38,21 +38,47 @@ public class MainFrame extends JFrame
      * @throws IllegalAccessException
      * @throws UnsupportedLookAndFeelException
      * @throws IOException
+     * @throws InvalidPosException
      */
-    public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException
+    public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, InvalidPosException, IOException
     {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         MainFrame frame = new MainFrame();
         frame.init();
 
-        doOneDisk(Apple2.readDisk(new File("test/DOS33_SystemMaster_19800825.dsk")));
+        frame.doOneDisk(Apple2.readDisk(new File("test/DOS33_SystemMaster_19800825.dsk")));
     }
 
     /**
      * @param disk
+     * @throws InvalidPosException
      */
-    private static void doOneDisk(Disk disk)
+    private void doOneDisk(Disk disk) throws InvalidPosException
     {
+        Volume vol = new Volume();
+        try
+        {
+            vol.readFromMedia(disk);
+        }
+        catch (VTOCNotFoundException e)
+        {
+            System.out.println("[no VTOC]");
+            return;
+        }
+        catch (MultipleVTOCException e)
+        {
+            System.out.println("[no VTOC]");
+            return;
+        }
+
+        StringBuffer s = new StringBuffer();
+
+        DefaultMutableTreeNode nDisk = new DefaultMutableTreeNode("DOS33_SystemMaster_19800825.dsk");
+        DefaultMutableTreeNode nBoot = new DefaultMutableTreeNode("Bootstrap Loader");
+        vol.getDos().appendSig(s);
+        DefaultMutableTreeNode nDos = new DefaultMutableTreeNode(s);
+        nDisk.add(nBoot);
+        top.add(nDisk);
         // TODO Auto-generated method stub
         
     }
