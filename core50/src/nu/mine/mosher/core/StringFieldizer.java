@@ -61,5 +61,6 @@ public class StringFieldizer implements Iterable<String>
 	public String getResidue(Iterator<String> i)
 	{
 		int pos = ((Iter)i).pos;
+		return "";
 	}
 }
