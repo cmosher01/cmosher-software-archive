@@ -167,6 +167,7 @@ public class TimeOfDay
 
     public int hashCode()
     {
+        verifyValidity();
         int hash = 17;
         hash *= 37;
         hash += hours;
