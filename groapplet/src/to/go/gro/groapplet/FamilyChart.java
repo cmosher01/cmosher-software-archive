@@ -17,7 +17,7 @@ public class FamilyChart extends JPanel
     {
         mIndis = indis;
         mFamis = famis;
-		GROMouseListener ml = new GROMouseListener();
+		GROMouseListener ml = new GROMouseListener(this);
 		addMouseListener(ml);
 		addMouseMotionListener(ml);
     }
