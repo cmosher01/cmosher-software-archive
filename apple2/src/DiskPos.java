@@ -25,6 +25,10 @@ public class DiskPos
 
 
 
+    public DiskPos()
+    {
+    }
+
     protected DiskPos(int iDisk)
     {
         this.iDisk = iDisk;
