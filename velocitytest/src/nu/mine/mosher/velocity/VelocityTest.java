@@ -99,7 +99,9 @@ public class VelocityTest
                     name = path;
                     version = "HEAD";
                 }
-                System.out.println(name+","+version);
+                Node nodeKind = mapAttrib.getNamedItem("kind");
+                String kind = nodeKind.getNodeValue();
+                boolean source = kind.equalsIgnoreCase("src");
             }
         }
         return deps;
