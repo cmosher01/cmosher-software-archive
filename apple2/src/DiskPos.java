@@ -217,7 +217,12 @@ public class DiskPos implements Comparable, Cloneable
 
     public void appendHex2(int hex, StringBuffer s)
     {
-        String shex = Integer.toHexString(getTrackInDisk());
+        String shex = Integer.toHexString(hex);
+        if (shex.length() < 2)
+        {
+            s.append("0");
+        }
+        s.append(shex);
     }
     /**
      * @param len
