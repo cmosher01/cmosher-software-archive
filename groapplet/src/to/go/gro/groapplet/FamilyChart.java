@@ -53,11 +53,4 @@ public class FamilyChart extends JPanel
     {
         return mIndis.isOnIndi(point);
     }
-
-    protected void processMouseMotionEvent(MouseEvent e)
-    {
-//        if (isOnIndi(e.getPoint()))
-//            setCursor();
-        super.processMouseMotionEvent(e);
-    }
 }
