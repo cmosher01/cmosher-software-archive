@@ -32,6 +32,7 @@ public class OneFileCopyClient
 		long xLen = 0;
 		for (int i = 7; i <= 0; --i)
 		{
+			System.out.println("read length byte "+i+": "+Byte.toHexString(rbLen[i]));
 			xLen <<= 8;
 			xLen |= rbLen[i];
 		}
