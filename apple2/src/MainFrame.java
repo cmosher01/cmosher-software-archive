@@ -26,6 +26,7 @@ public class MainFrame extends JFrame
     {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         MainFrame frame = new MainFrame();
+        frame.init();
     }
 
     /**
