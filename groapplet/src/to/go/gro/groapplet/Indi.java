@@ -30,6 +30,8 @@ class Indi
     private int h;
     private final List mLines = new ArrayList(); // <TextLine>
 
+	private boolean pushed;
+
     private class TextLine
     {
         private TextLayout text;
@@ -99,9 +101,15 @@ class Indi
 
     protected void drawBounds(Graphics g)
     {
-        g.setColor(bg);
+    	if (pushed)
+			g.setColor(fg);
+		else
+	        g.setColor(bg);
         g.fillRect(x,y,w,h);
-        g.setColor(fg);
+		if (pushed)
+			g.setColor(bg);
+		else
+			g.setColor(fg);
         g.drawRect(x,y,w-1,h-1);
     }
 
