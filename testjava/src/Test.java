@@ -50,7 +50,7 @@ public class Test
 
         X x = new X();
         long start = System.currentTimeMillis();
-        for (int i = 0; i < 10000; ++i)
+        for (int i = 0; i < 100000; ++i)
         {
             UniversalCloser.close(x);
         }
