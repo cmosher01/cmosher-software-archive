@@ -122,16 +122,11 @@ public class Disk
         while (i.hasNext())
         {
             DiskPos pos = (DiskPos)i.next();
-            byte[] rb = readSector(pos);
+            byte[] sector = readSector(pos);
 
-            if (DiskPos.isValidTrackSectorPointer(sector[1],sector[2]))
+            if (isDos33VTOC(pos))
             {
-                DiskPos cat = new DiskPos();
-                cat.setTS(sector[1], sector[2]);
-                if (isDos33CatalogSector(cat))
-                {
-                    rPosVtoc.add(pos);
-                }
+                rPosVtoc.add(pos);
             }
         }
     }
@@ -143,12 +138,20 @@ public class Disk
     public boolean isDos33VTOC(DiskPos pos)
     {
         byte[] sector = readSector(pos);
-        return
-            (sector[3]==3 || sector[3]==2 || sector[3]==1) &&
-            sector[4]==0 &&
-            (sector[5]==0 || sector[5]==4) &&
-            (match(sector,0x34,new byte[]{0x23,0x10,0x00,0x01}) || match(sector,0x34,new byte[]{0x23,0x10,0x01,0x00})) &&
-            match(sector,0x3a,new byte[]{0x00,0x00});
+        boolean valid = false;
+        if (DiskPos.isValidTrackSectorPointer(sector[1],sector[2]))
+        {
+            DiskPos cat = new DiskPos();
+            cat.setTS(sector[1],sector[2]);
+            valid = isDos33CatalogSector(cat);
+        }
+        return valid;
+//        return
+//            (sector[3]==3 || sector[3]==2 || sector[3]==1) &&
+//            sector[4]==0 &&
+//            (sector[5]==0 || sector[5]==4) &&
+//            (match(sector,0x34,new byte[]{0x23,0x10,0x00,0x01}) || match(sector,0x34,new byte[]{0x23,0x10,0x01,0x00})) &&
+//            match(sector,0x3a,new byte[]{0x00,0x00});
     }
 
     /**
