@@ -475,26 +475,26 @@ public class ProxyConnection extends Thread
             /*******************************************************************
              * Add Content to Cache
              ******************************************************************/
-            if (using_cache && c_header.Method.equals("GET"))
+            if (using_cache && c_header.getMethod().equals("GET"))
             {
 
                 // add url, header, content to cachepool
-                cachepool.setCache(c_header.URI,s_header.toString(),resp_content);
+                cachepool.setCache(URI,s_header.toString(),resp_content);
             }
 
         }
         catch (SocketException se)
         {
-            ((ServerInterface)console).logError("Error: SocketException, ",c_header.URI);
+            ((ServerInterface)console).logError("Error: SocketException, ",URI);
             ((ServerInterface)console).logError(tracer.getSource(),se.toString());
-            System.out.println(c_header.URI + " " + se);
+            System.out.println(URI + " " + se);
         }
         catch (IOException ie)
         {
-            ((ServerInterface)console).logError("Error: IOException, ",c_header.URI);
+            ((ServerInterface)console).logError("Error: IOException, ",URI);
             ((ServerInterface)console).logError(tracer.getSource(),ie.toString());
             // ie.printStackTrace();
-            System.out.println(c_header.URI + " " + ie);
+            System.out.println(URI + " " + ie);
         }
 
         closeSock(sock_c); // close connection to client
