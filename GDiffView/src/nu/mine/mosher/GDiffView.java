@@ -235,6 +235,7 @@ public class GDiffView extends JFrame
 
         SpringLayout layout = new SpringLayout();
         JPanel contentPane = new JPanel(layout);
+        setContentPane(contentPane);
 
 //        contentPane.add(spl2,BorderLayout.CENTER);
 
@@ -248,8 +249,6 @@ public class GDiffView extends JFrame
         layout.putConstraint(SpringLayout.SOUTH, scrTrg, 0, SpringLayout.SOUTH, contentPane);
         layout.putConstraint(SpringLayout.EAST, scrTrg, 0, SpringLayout.EAST, contentPane);
         layout.putConstraint(SpringLayout.WEST, scrSrc, 0, SpringLayout.WEST, contentPane);
-
-        setContentPane(contentPane);
 
         addWindowListener(new WindowAdapter()
         {
