@@ -276,7 +276,7 @@ public class GDiffView extends JFrame
             Range r = (Range)i.next();
             beginSrc = r.getBegin();
             endSrc = r.getEnd();
-            highlight("delete",true);
+            highlight("delete",false);
         }
 
         listGDiff.setSelectionModel(selectionModel);
