@@ -3,6 +3,8 @@ package com.surveysampling.mosher.fixlf;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 
+import UniversalCloser;
+
 public class Fixlf
 {
     public static void main(String[] rArg) throws Throwable
