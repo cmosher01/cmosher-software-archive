@@ -119,7 +119,7 @@ public class Delta
                     do
                     {
                         source_idx = source.read(sourceBuff,0,buff_size);
-                        if (source_idx == -1)
+                        if (source_idx < 0)
                         {
                             // Ran out of source bytes during match, so flag this
                             sourceOutofBytes = true;
