@@ -3,6 +3,8 @@ package nu.mine.mosher.com.caucho.http.log;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,7 @@ import com.caucho.server.connection.AbstractHttpResponse;
  */
 public class SimpleAccessLog extends AccessLog
 {
+	private static final SimpleDateFormat format = new SimpleDateFormat("YYYYmmdd HHmmssSSS");
     public SimpleAccessLog()
     {
         super();
@@ -23,6 +26,8 @@ public class SimpleAccessLog extends AccessLog
 
     public void log(HttpServletRequest request, HttpServletResponse response, ServletContext context) throws IOException
     {
+    	Date ts = new Date();
+
     	super.log(request,response,context);
 
     	int status = -1;
@@ -45,6 +50,8 @@ public class SimpleAccessLog extends AccessLog
 		StringBuffer sb = new StringBuffer(256);
     	sb.append("--------------------> ");
 
+		sb.append(format.format(ts));
+		sb.append(",");
 		sb.append(ip.getHostAddress());
 		sb.append(",");
 		sb.append(ip.getHostName());
@@ -59,5 +66,6 @@ public class SimpleAccessLog extends AccessLog
 		sb.append(",");
 		sb.append(status!=HttpServletResponse.SC_OK?Integer.toString(status):"");
 
+		System.err.println(sb.toString());
     }
 }
