@@ -3,12 +3,12 @@
 <jdo>
     <package name="nu.mine.mosher.jdotest">
         <class name="Item">
-        	<field name="relThing">
+        	<field name="rmmRel">
         		<collection element-type="Rel" />
         	</field>
         </class>
         <class name="Thing">
-        	<field name="relItem">
+        	<field name="rmmItem">
         		<collection element-type="Rel" />
         	</field>
         </class>
