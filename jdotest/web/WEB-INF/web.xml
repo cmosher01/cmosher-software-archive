@@ -10,6 +10,11 @@
 	<listener>
 		<listener-class>nu.mine.mosher.jdotest.RequestInit</listener-class>
 	</listener>
+	<welcome-file-list>
+		<welcome-file>index.jspx</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
 	<resource-ref>
 		<description>DB	Connection</description>
 		<res-ref-name>jdbc/jdotest</res-ref-name>
