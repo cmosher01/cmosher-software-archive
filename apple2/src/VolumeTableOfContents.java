@@ -53,4 +53,12 @@ public class VolumeTableOfContents extends VolumeEntity
     {
         return pCat;
     }
+
+    /**
+     * @param s
+     */
+    public void dump(StringBuffer s)
+    {
+        VolumeSector s = (VolumeSector)rSector.get(0);
+    }
 }
