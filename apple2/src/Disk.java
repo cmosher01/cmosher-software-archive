@@ -129,7 +129,7 @@ public class Disk
     {
         int track = read(pos);
         int sector = read(pos);
-        pos.set(track,sector);
+        pos.setTS(track,sector);
     }
 
     /**
