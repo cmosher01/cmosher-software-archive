@@ -17,6 +17,15 @@ public class RollingChecksumTest extends TestCase
     private static final int TEST_BUFFER_SIZE = 500000;
     private static final int WINDOW_SIZE = 99;
 
+    /**
+     * Tests the RollingChecksum object. Creates a buffer of
+     * TEST_BUFFER_SIZE random bytes. Then uses the given WINDOW_SIZE
+     * to compute a checksum for each window through two methods,
+     * one using the <code>init</code> to create a fresh checksum
+     * for the given window, and one using the <code>increment</code>
+     * method over and over again to create a sliding window. The
+     * two checksums are compared against each other for equality.
+     */
     public void testRollingChecksum()
     {
         byte[] rb = new byte[TEST_BUFFER_SIZE];
