@@ -43,6 +43,9 @@ public class Disk
         return rb;
     }
 
+    /**
+     * @return
+     */
     public int read()
     {
         int r = disk[pos.getIndex()];
@@ -50,6 +53,10 @@ public class Disk
         return r;
     }
 
+    /**
+     * @return
+     * @throws InvalidPosException
+     */
     public DiskPos readTS() throws InvalidPosException
     {
         int track = read();
