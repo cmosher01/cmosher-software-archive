@@ -15,6 +15,7 @@ public class Gedcom
 {
 	private Gedcom()
 	{
+		throw new UnsupportedOperationException();
 	}
 
 	public static void analyze(InputStream in) throws IOException
