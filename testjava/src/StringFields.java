@@ -13,4 +13,22 @@ public class SF
     {
         return new Iter();
     }
+
+    private class Iter implements Iterator
+    {
+        public boolean hasNext()
+        {
+            return false;
+        }
+
+        public Object next()
+        {
+            return null;
+        }
+
+        public void remove()
+        {
+            throw new UnsupportedOperationException();
+        }
+    }
 }
