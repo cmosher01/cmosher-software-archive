@@ -126,7 +126,12 @@ public class Volume
      */
     private void checkConflict(List knownSectors, List testSectors)
     {
-        List k = (List)knownSectors.clone();
+        List k = new ArrayList(knownSectors);
+        k.retainAll(testSectors);
+        if (!k.isEmpty())
+        {
+            
+        }
     }
 
     /**
