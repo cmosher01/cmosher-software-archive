@@ -36,11 +36,15 @@ import javax.swing.text.StyledDocument;
  */
 public class GDiffVeiew extends JFrame
 {
-    private StyledDocument doc;
+    private StyledDocument docSrc;
  
-    private JTextPane pane;
+    private JTextPane paneSrc;
    
-    private Map styles = new HashMap();
+    private StyledDocument docTrg;
+    
+   private JTextPane paneTrg;
+
+   private Map styles = new HashMap();
 
     private File src;
 
@@ -54,9 +58,9 @@ public class GDiffVeiew extends JFrame
 
     private StringBuffer sb;
 
-    private int srcBegin = -1;
+    private int beginSrc = -1;
 
-    private int srcEnd = -1;
+    private int endSrc = -1;
  
  
  
@@ -67,13 +71,20 @@ public class GDiffVeiew extends JFrame
         src = new File(fileSrc);
         dif = new File(fileGDiff);
 
-        doc = new DefaultStyledDocument();
-        pane = new JTextPane(doc);
-        pane.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(pane);
-        scrollPane.setPreferredSize(new Dimension(620,460));
+        docSrc = new DefaultStyledDocument();
+        paneSrc = new JTextPane(docSrc);
+        paneSrc.setEditable(false);
+        JScrollPane scrSrc = new JScrollPane(paneSrc);
+        scrSrc.setPreferredSize(new Dimension(620,460));
+
+        docTrg = new DefaultStyledDocument();
+        paneTrg = new JTextPane(docTrg);
+        paneTrg.setEditable(false);
+        JScrollPane scrTrg = new JScrollPane(paneTrg);
+        scrTrg.setPreferredSize(new Dimension(620,460));
+
         JPanel contentPane = new JPanel(new BorderLayout());
-        contentPane.add(scrollPane,BorderLayout.CENTER);
+        contentPane.add(scrSrc,BorderLayout.CENTER);
         setContentPane(contentPane);
  
         addWindowListener(new WindowAdapter()
@@ -86,7 +97,7 @@ public class GDiffVeiew extends JFrame
             public void windowActivated(WindowEvent e)
             {
                 // focus magic
-                pane.requestFocus();
+                paneSrc.requestFocus();
             }
         });
  
@@ -109,7 +120,7 @@ public class GDiffVeiew extends JFrame
         styles.put("highlight", style);
 
         readSrc();
-        doc.insertString(0,sb.toString(),(AttributeSet)styles.get("body"));
+        docSrc.insertString(0,sb.toString(),(AttributeSet)styles.get("body"));
         pack();
         setVisible(true);
     }
@@ -239,32 +250,32 @@ public class GDiffVeiew extends JFrame
 
     public void highlightSrc(int begin, int end)
     {
-        if (srcBegin >= 0 && srcEnd >= 0)
+        if (beginSrc >= 0 && endSrc >= 0)
         {
             highlight(false);
         }
-        srcBegin = begin;
-        srcEnd = end;
+        beginSrc = begin;
+        endSrc = end;
         highlight(true);
     }
     public void highlight(boolean highlight)
     {
-        if (getRow(srcBegin)==getRow(srcEnd))
+        if (getRow(beginSrc)==getRow(endSrc))
         {
-            highlight(getHexStart(srcBegin),getHexEnd(srcEnd),highlight);
-            highlight(getAscStart(srcBegin),getAscEnd(srcEnd),highlight);
+            highlight(getHexStart(beginSrc),getHexEnd(endSrc),highlight);
+            highlight(getAscStart(beginSrc),getAscEnd(endSrc),highlight);
         }
         else
         {
-            highlight(getHexStart(srcBegin),getHexRowEnd(getRow(srcBegin)),highlight);
-            highlight(getAscStart(srcBegin),getAscRowEnd(getRow(srcBegin)),highlight);
-            for (int i = getRow(srcBegin)+1; i <= getRow(srcEnd)-1; ++i)
+            highlight(getHexStart(beginSrc),getHexRowEnd(getRow(beginSrc)),highlight);
+            highlight(getAscStart(beginSrc),getAscRowEnd(getRow(beginSrc)),highlight);
+            for (int i = getRow(beginSrc)+1; i <= getRow(endSrc)-1; ++i)
             {
                 highlight(getHexRowStart(i),getHexRowEnd(i),highlight);
                 highlight(getAscRowStart(i),getAscRowEnd(i),highlight);
             }
-            highlight(getHexRowStart(getRow(srcEnd)),getHexEnd(srcEnd),highlight);
-            highlight(getAscRowStart(getRow(srcEnd)),getAscEnd(srcEnd),highlight);
+            highlight(getHexRowStart(getRow(endSrc)),getHexEnd(endSrc),highlight);
+            highlight(getAscRowStart(getRow(endSrc)),getAscEnd(endSrc),highlight);
         }
     }
     /**
@@ -316,7 +327,7 @@ public class GDiffVeiew extends JFrame
     public void highlight(int beginPoint, int endPoint, boolean highlight)
     {
         AttributeSet attr = (AttributeSet)styles.get(highlight ? "highlight": "body");
-        doc.setCharacterAttributes(beginPoint,endPoint-beginPoint,attr,true);
+        docSrc.setCharacterAttributes(beginPoint,endPoint-beginPoint,attr,true);
     }
 
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, InterruptedException, BadLocationException, IOException
