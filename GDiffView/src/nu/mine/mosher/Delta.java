@@ -249,8 +249,6 @@ public class Delta
     // sample program to compute the difference between two input files.
     public static void main(String argv[])
     {
-        //Delta delta = new Delta();
-
         if (argv.length != 3)
         {
             System.err.println("usage Delta [-d] source target [output]");
@@ -258,34 +256,23 @@ public class Delta
             System.err.println("aborting..");
             return;
         }
-        try
+        GDiffWriter output = null;
+        File sourceFile = null;
+        File targetFile = null;
+        sourceFile = new File(argv[0]);
+        targetFile = new File(argv[1]);
+        output = new GDiffWriter(new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(argv[2])))));
+
+        if (sourceFile.length() > Integer.MAX_VALUE || targetFile.length() > Integer.MAX_VALUE)
         {
-            GDiffWriter output = null;
-            File sourceFile = null;
-            File targetFile = null;
-            sourceFile = new File(argv[0]);
-            targetFile = new File(argv[1]);
-            output = new GDiffWriter(new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(argv[2])))));
-
-            if (sourceFile.length() > Integer.MAX_VALUE || targetFile.length() > Integer.MAX_VALUE)
-            {
-                System.err.println("source or target is too large, max length is " + Integer.MAX_VALUE);
-                System.err.println("aborting..");
-                return;
-            }
-
-            //output.close();
-
-            Delta.computeDelta(sourceFile,targetFile,output);
-
-            output.flush();
-            output.close();
+            System.err.println("source or target is too large, max length is " + Integer.MAX_VALUE);
+            System.err.println("aborting..");
+            return;
         }
-        //gls031504a start
-        catch (Exception e)
-        {
-            System.err.println("error while generating delta: " + e);
-        }
-        //gls031504a end
+
+        Delta.computeDelta(sourceFile,targetFile,output);
+
+        output.flush();
+        output.close();
     }
 }
