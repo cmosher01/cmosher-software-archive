@@ -19,7 +19,6 @@ public class CommandLineArgHandler
 
     /**
      * @throws InvalidCommandLine
-     * 
      */
     public void parse() throws InvalidCommandLine
     {
