@@ -1,6 +1,7 @@
 package nu.mine.mosher.jdotest;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
@@ -9,6 +10,8 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
+
+import org.jpox.store.QueryResult;
 
 /**
  * @author Chris Mosher
@@ -71,7 +74,13 @@ public class PersonPersist
 		transaction.begin();
 
 		Query q = pm.newQuery(Person.class,"");
-		Object result = q.execute();
+		Collection result = (Collection)q.execute();
+		for (Iterator i = result.iterator(); i.hasNext(); )
+		{
+			i.next();
+		}
+	
+}
 		System.out.println(result.getClass().getName());
 
 
