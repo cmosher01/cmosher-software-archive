@@ -78,6 +78,8 @@ public class Test
         URI uri = URI.create(sx);
         String su = uri.toASCIIString();
         System.out.println(su);
+        su = uri.getScheme();
+        System.out.println(su);
         su = uri.getSchemeSpecificPart();
         System.out.println(su);
         File f = new File(uri.getPath());
