@@ -6,13 +6,14 @@ public class GedcomTree
 {
 	private TreeNode root;
 
-	private int prevLevel = -1;
-	private TreeNode prevNode = new TreeNode();
+	private int prevLevel;
+	private TreeNode prevNode;
 
 	public GedcomTree()
 	{
 		root = new TreeNode();
 		prevNode = root;
+		prevLevel = -1;
 	}
 
 	public void appendLine(GedcomLine line) throws InvalidLevel
