@@ -21,7 +21,7 @@ public class SF
 
         private Iter(String s)
         {
-            if (s != null)
+            if (this.s != null)
             {
                 throw new UnsupportedOperationException();
             }
