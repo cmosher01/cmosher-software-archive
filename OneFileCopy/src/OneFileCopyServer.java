@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class OneFileCopy
+public class OneFileCopyServer
 {
 	private static final int cBufMax = 0x10000000;
 
