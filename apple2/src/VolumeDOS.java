@@ -74,6 +74,10 @@ public class VolumeDOS extends VolumeEntity
         {
             throw new RuntimeException(e);
         }
+
+        List rPos = new ArrayList();
+        getUsed(rPos);
+        disk.getDos33File(rPos);
     }
 
     /**
