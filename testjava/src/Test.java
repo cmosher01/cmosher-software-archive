@@ -67,19 +67,23 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
+        File f = new File("");
+        f = f.getAbsoluteFile();
+        f = f.getCanonicalFile();
+        System.out.println(f.getPath());
 
 
-        URI uri = new URI("smtp://leopard.surveyspot.com/?30000");
-        System.out.println(uri.toASCIIString());
-        System.out.println(uri.getScheme());
-        System.out.println(uri.getHost());
-        int port = uri.getPort();
-        if (port < 0)
-        {
-            port = 25;
-        }
-        System.out.println(port);
-        System.out.println(uri.getQuery());
+//        URI uri = new URI("smtp://leopard.surveyspot.com/?30000");
+//        System.out.println(uri.toASCIIString());
+//        System.out.println(uri.getScheme());
+//        System.out.println(uri.getHost());
+//        int port = uri.getPort();
+//        if (port < 0)
+//        {
+//            port = 25;
+//        }
+//        System.out.println(port);
+//        System.out.println(uri.getQuery());
 
 
 
