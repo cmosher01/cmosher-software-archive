@@ -66,4 +66,12 @@ public class TimeOfDay
     {
         return calendar != null;
     }
+
+    protected void verifyValidity()
+    {
+        if (!isValid())
+        {
+            throw new IllegalStateException("TimeOfDay has not been initialized correctly.");
+        }
+    }
 }
