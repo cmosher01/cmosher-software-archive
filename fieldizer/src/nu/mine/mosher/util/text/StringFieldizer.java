@@ -1,10 +1,10 @@
 package nu.mine.mosher.util.text;
 
 /**
- * Breaks a string into fields. This class is similar to StringTokenizer,
- * but this class is able to return empty fields, whereas the StringTokenizer
+ * Breaks a <code>String</code> into fields. This class is similar to <code>StringTokenizer</code>,
+ * but this class is able to return empty fields, whereas the <code>StringTokenizer</code>
  * class will skip over multiple occurrences of delimiters. Also, the
- * implementation of this class is much simpler than StringTokenizer's.
+ * implementation of this class is much simpler than <code>StringTokenizer</code>'s.
  * 
  * @author Chris Mosher
  */
@@ -15,7 +15,7 @@ public class StringFieldizer
     private int pos;
 
     /**
-     * Constructs a StringFieldizer that uses a comma for
+     * Constructs a <code>StringFieldizer</code> that uses a comma for
      * the delimiter.
      * @param s the String to break into fields
      */
@@ -25,10 +25,10 @@ public class StringFieldizer
     }
 
     /**
-     * Constructs a StringFieldizer that breaks up the given String,
+     * Constructs a <code>StringFieldizer</code> that breaks up the given <code>String</code>,
      * using the given character as a delimiter of fields.
-     * @param s the String to break into fields
-     * @param delim the character that delimits the fields
+     * @param s the <code>String</code> to break into fields
+     * @param delim the <code>char</code> that delimits the fields
      */
     public StringFieldizer(String s, char delim)
     {
@@ -37,7 +37,8 @@ public class StringFieldizer
     }
 
     /**
-     * Checks to see if nextToken can be called at least one more time.
+     * Checks to see if <code>nextToken</code> can be called
+     * successfully at least one more time.
      * @return true if any fields exist, false otherwise
      */
     public boolean hasMoreTokens()
@@ -61,7 +62,7 @@ public class StringFieldizer
      * Returns the current position.
      * @return the current position, that is, the position in
      * the string of the start of the field that would be returned
-     * by the next call to nextToken.
+     * by the next call to <code>nextToken</code>.
      */
     public int getPosition()
     {
@@ -70,9 +71,9 @@ public class StringFieldizer
 
     /**
      * A convenience method that returns the rest of the string.
-     * For a StringFieldizer f, f.getResidue() is equivalent to
-     * f.getString().substring(f.getPosition()).
-     * @return a String, the rest of the given string
+     * For a <code>StringFieldizer f</code>, <code>f.getResidue()</code> is equivalent to
+     * <code>f.getString().substring(f.getPosition())</code>.
+     * @return a <code>String</code>, the rest of the given string
      */
     public String getResidue()
     {
@@ -80,8 +81,8 @@ public class StringFieldizer
     }
 
     /**
-     * Returns the original string (passed into the constructor).
-     * @return the String
+     * Returns the original <code>String</code> (passed into the constructor).
+     * @return the <code>String</code>
      */
     public String getString()
     {
@@ -90,7 +91,7 @@ public class StringFieldizer
 
     /**
      * Returns the delimiter (passed into the constructor).
-     * @return the delimiter character
+     * @return the delimiter <code>char</code>
      */
     public char getDelimiter()
     {
