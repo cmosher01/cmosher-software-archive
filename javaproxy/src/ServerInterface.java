@@ -8,7 +8,7 @@
  * Author : Steve Yeong-Ching Hsueh
  */
 
-import java.util.*;
+import java.util.Properties;
 
 interface ServerInterface {
     public void showServerResponse(String msg);
