@@ -247,19 +247,19 @@ class WebConfigFolder implements ActionListener, ConfigInterface
     /**
      * event handler for action events
      */
-    public void actionPerformed(ActionEvent actevt)
-    {
-        FileDialog fd = new FileDialog(parentFrame,"Find File",FileDialog.LOAD);
-        Object actcomp = actevt.getSource();
-        String targetdir = "";
-        String targetuser = "";
-        int selecteditemnum;
-
-        Object evtsrc = actevt.getSource();
-        int evtid = actevt.getID();
-        String actcmd = actevt.getActionCommand();
-
-    }
+//    public void actionPerformed(ActionEvent actevt)
+//    {
+//        FileDialog fd = new FileDialog(parentFrame,"Find File",FileDialog.LOAD);
+//        Object actcomp = actevt.getSource();
+//        String targetdir = "";
+//        String targetuser = "";
+//        int selecteditemnum;
+//
+//        Object evtsrc = actevt.getSource();
+//        int evtid = actevt.getID();
+//        String actcmd = actevt.getActionCommand();
+//
+//    }
 
     /**
      * update configuration
