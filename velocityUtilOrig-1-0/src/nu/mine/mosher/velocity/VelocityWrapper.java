@@ -18,8 +18,6 @@ public class VelocityWrapper
 {
     private final VelocityEngine velocity = new VelocityEngine();
 
-
-
     public VelocityWrapper(Properties props) throws VelocityException
     {
         try
@@ -48,8 +46,6 @@ public class VelocityWrapper
         }
     }
 
-
-
     public static VelocityException wrapInVelocityException(Throwable e)
     {
         VelocityException ve = new VelocityException(e.getMessage());
@@ -62,10 +58,10 @@ public class VelocityWrapper
         Properties props = new Properties();
 
         // use our own LogSystem (VelocityLogger)
-        props.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,VelocityLogger.class.getClass().getName());
+        props.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS, VelocityLogger.class.getClass().getName());
 
         // This just prevents a warning message about no macro library
-        props.setProperty(VelocityEngine.VM_LIBRARY,"");
+        props.setProperty(VelocityEngine.VM_LIBRARY, "");
 
         return props;
     }
