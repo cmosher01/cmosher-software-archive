@@ -8,6 +8,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.security.AccessController;
 import java.security.Permission;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +70,7 @@ public class Test
         System.setProperty("java.security.debug","all");
         System.setSecurityManager(new SecurityManager());
 
+//        AccessController.checkPermission(perm);
         Reader rdr = new InputStreamReader(new FileInputStream(new File("\\temp\\test.txt")));
         BufferedReader br = new BufferedReader(rdr);
 
