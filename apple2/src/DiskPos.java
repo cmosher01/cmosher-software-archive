@@ -218,4 +218,14 @@ public class DiskPos
     {
         this.iDisk = 0;
     }
+
+    /**
+     * @param track
+     * @param sector
+     */
+    public void setTS(int track, int sector)
+    {
+        // TODO Auto-generated method stub
+        
+    }
 }
