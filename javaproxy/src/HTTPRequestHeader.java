@@ -99,6 +99,14 @@ class HTTPRequestHeader
     }
 
     /**
+     * get all headers in a Hashtable
+     */
+    public HashMap getHeaderFields()
+    {
+        return mHeaderFields;
+    }
+
+    /**
      * parse HTTP request headers
      */
     public boolean parseHeader(String input)
