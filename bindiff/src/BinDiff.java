@@ -41,7 +41,7 @@ public class BinDiff
 	private int cinsert;
 	private int posinsert = -1;
 	private TellStream fileinsert;
-	private int lastmark;
+	private long lastmark;
 
     public BinDiff(RandomAccessFile f1, RandomAccessFile f2, int cMinMatch, int cMaxSearch)
     {
