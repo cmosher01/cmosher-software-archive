@@ -64,7 +64,21 @@ public class Hex2Bin
 
     public static String hexbyte(byte x)
     {
-        String s = Integer.toHexString(x);
+        int i;
+        if (x < 0)
+        {
+            i = 256+x;
+        }
+        else
+        {
+            i = x;
+        }
+        String s = Integer.toHexString(i);
+        s = s.toUpperCase();
+        if (s.length() == 1)
+        {
+            s = "0"+x;
+        }
         return s;
     }
 }
