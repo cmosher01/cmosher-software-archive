@@ -126,8 +126,7 @@ public class Volume
      */
     private void checkConflict(List knownSectors, List testSectors)
     {
-        // TODO Auto-generated method stub
-        
+        List k = (List)knownSectors.clone();
     }
 
     /**
