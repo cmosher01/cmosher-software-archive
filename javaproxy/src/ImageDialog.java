@@ -70,12 +70,12 @@ class ImageDialog extends Dialog
     public void paint(Graphics g)
     {
         Insets in = getInsets();
-        Dimension d = setSize();
+        Dimension d = getSize();
         FontMetrics fm = g.getFontMetrics();
         int imgsx = 10;
         int imgsy = 0;
         int msgsx = 10;
-        int msgsy = (int)((d.height - in.top) / 2) + in.top;
+        int msgsy = (d.height - in.top) / 2 + in.top;
 
         if (image != null)
         {
