@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,6 +28,8 @@ public class FileFinder
         final List dirs = new ArrayList();
         dirs.add(new File(rArg[0]));
 
+        List results = new ArrayList();
+
         while (dirs.size() > 0)
         {
             File d = (File)dirs.remove(0);
@@ -43,6 +46,17 @@ public class FileFinder
                     return matFile.matches();
                 }
             });
+            for (int i = 0; i < rm.length; ++i)
+            {
+                File file = rm[i];
+                results.add(file);
+            }
+        }
+
+        for (Iterator i = results.iterator(); i.hasNext();)
+        {
+            File file = (File)i.next();
+            System.out.println(file.getCanonicalFile().getAbsolutePath());
         }
     }
 }
