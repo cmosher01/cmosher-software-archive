@@ -13,7 +13,8 @@
 </head>
 <body>
 <p>
-<form method="post" action="editact.jsp">
+<!-- form method="post" action="editact.jsp" -->
+<form method="post" action="dump.jsp">
     <input name="id" type="hidden" value="<%=id%>" />
     <p>
         Edit item: <input name="itemNew" type="text" value="<%=s%>" />
