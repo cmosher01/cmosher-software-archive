@@ -92,7 +92,7 @@ public class MySQLTest
     				log.info(
     					"Census"+year+","+id+","+
     					sGender+","+
-    					(ageMax<0 ? ""+(1790-150) : ""+(1790-ageMax))+","+
+    					(year-ageMax)+","+
     					(1790-ageMin));
     			}
     		}
@@ -152,6 +152,38 @@ public class MySQLTest
 		"    female0plus integer, "+
 		"    other integer, "+
 		"    slave integer "+
+		")");
+		dbUpdate("create table "+
+		"ImageIdent "+
+		"( "+
+		"    id integer unsigned not null auto_increment primary key, "+
+		"    year integer unsigned, "+
+		"    state char(2), "+
+		"    county varchar(64), "+
+		"    township varchar(64), "+
+		"    other varchar(8), "+
+		"    image integer unsigned "+
+		")");
+		dbUpdate("create table "+
+		"Household "+
+		"( "+
+		"    id integer unsigned not null auto_increment primary key, "+
+		"    image integer unsigned not null references ImageIdent(id), "+
+		"    family integer unsigned not null references Family(id), "+
+		"    nameLast varchar(64), "+
+		"    nameFirst varchar(64), "+
+		"    nameMiddle varchar(8), "+
+		"    nameSuffix varchar(8) "+
+		")");
+		dbUpdate("create table "+
+		"CountEntry "+
+		"( "+
+		"    id integer unsigned not null auto_increment primary key, "+
+		"    household integer unsigned not null references Household(id), "+
+		"    gender enum (\"M\",\"F\"), "+
+		"    minAge integer unsigned, "+
+		"    maxAge integer unsigned, "+
+		"    count  integer unsigned default 1 "+
 		")");
 	}
 
