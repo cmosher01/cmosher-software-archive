@@ -539,9 +539,9 @@ public class MySQLTest
 		"    known integer unsigned not null references KnownPerson(id), "+
 		"    calc integer unsigned not null references CalcPerson(id) "+
 		")");
-		dbUpdate("drop table if exists Match");
+		dbUpdate("drop table if exists AttribMatch");
 		dbUpdate("create table "+
-		"Match "+
+		"AttribMatch "+
 		"( "+
 		"    known integer unsigned not null references KnownPerson(id), "+
 		"    calc integer unsigned not null references CalcPerson(id) "+
