@@ -27,7 +27,6 @@ public final class MessageFormatter extends Formatter
 
     public String format(LogRecord record)
     {
-        return super.format(record);
+        return null;
     }
-
 }
