@@ -1,9 +1,3 @@
-/*
- * Created on Sep 11, 2003
- *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
 package nu.mine.mosher.com.caucho.http.log;
 
 import java.io.IOException;
