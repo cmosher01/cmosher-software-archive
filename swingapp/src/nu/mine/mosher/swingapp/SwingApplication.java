@@ -21,6 +21,7 @@ public class SwingApplication
     /**
      * @param eh
      * @param ch
+     * @param gui
      */
     public SwingApplication(ExceptionHandler eh, CommandLineArgHandler ch, SwingGUI gui)
     {
