@@ -52,6 +52,7 @@
 
 import com.go.teaservlet.*;
 import java.io.*;
+import java.util.Arrays;
 
 /******************************************************************************
  *
@@ -73,7 +74,6 @@ public class SampleDirectoryBrowserContext
     }
 
     // Gets an array of files in the directory specified by the "path" parameter.
-
     public File[] getFiles()
     {
 
@@ -90,7 +90,9 @@ public class SampleDirectoryBrowserContext
         File activefile = new File(path);
         if (activefile.isDirectory())
         {
-            return activefile.listFiles();
+        	File[] rf = activefile.listFiles();
+        	Arrays.sort(rf);
+            return rf;
         }
         else
         {
