@@ -20,5 +20,6 @@ public class Drop
             String arg = rArg[i];
             System.out.println(arg);
         }
+        System.in.read();
 	}
 }
