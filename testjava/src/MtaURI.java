@@ -120,9 +120,7 @@ public class MtaURI
 	}
 
 	/**
-	 * Checks if two MtaURIs are equal. Two
-	 * MtaURIs are considered equal if they have
-	 * the same protocol, host, and port.
+	 * Checks if two MtaURIs are equal.
 	 */
 	public boolean equals(Object obj)
 	{
