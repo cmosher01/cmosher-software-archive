@@ -64,6 +64,7 @@ public class FixAppleDisasm
 		public String instr;
 		public String oper;
 		public String comment;
+		public int refaddr = -1;
 	}
 
     public static void FixDis(Reader in, Writer out) throws IOException
@@ -118,6 +119,29 @@ public class FixAppleDisasm
 				String nextChar = s.substring(4,5);
 				if (nextChar.equalsIgnoreCase("-"))
 				{
+					if (s.substring(5,8).equalsIgnoreCase("   ") &&
+					s.substring(10,11).equalsIgnoreCase(" ") &&
+					s.substring(13,14).equalsIgnoreCase(" ") &&
+					s.substring(16,20).equalsIgnoreCase("    ") &&
+					!s.substring(20,23).equalsIgnoreCase("   ") &&
+					s.substring(23,26).equalsIgnoreCase("   "))
+					{
+						// normal instr line
+						ln.instr = s.substring(20,23);
+						ln.oper = s.substring(26);
+						if (ln.oper.startsWith("$"))
+						{
+							ln.refaddr = -1;
+							try
+							{
+								ln.refaddr = Integer.parseInt(ln.oper.substring(0,4),16);
+							}
+							catch (NumberFormatException e)
+							{
+								ln.refaddr = -1;
+							}
+						}
+					}
 				}
 				else if (nextChar.equalsIgnoreCase("."))
 				{
