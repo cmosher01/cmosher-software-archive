@@ -16,7 +16,7 @@ public class Thing
 {
 	private String name;
 
-	public Item()
+	public Thing()
 	{
 	}
 
