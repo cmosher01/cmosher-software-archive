@@ -1,6 +1,6 @@
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
-	<jsp:directive.attribute name="class" type="java.lang.String" required="true" />
+	<jsp:directive.attribute name="classname" type="java.lang.String" required="true" />
 	<jsp:text>
-	A test tag ${class}
+	A test tag ${classname}
 	</jsp:text>
 </jsp:root>
