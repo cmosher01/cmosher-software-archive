@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.io.File;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
@@ -11,7 +12,7 @@ import javax.swing.tree.TreeNode;
 
 import com.surveysampling.mosher.Flag;
 
-public class TreeFrame extends JFrame
+public class TreeFrame extends JPanel
 {
     private static JFrame frame;
     private static String dir;
@@ -19,7 +20,7 @@ public class TreeFrame extends JFrame
 
     public TreeFrame(String dir)
     {
-        getContentPane().setLayout(new BorderLayout());
+        setLayout(new BorderLayout());
         addNotify();
         setSize(getInsets().left + getInsets().right + 485, getInsets().top + getInsets().bottom + 367);
 
@@ -35,7 +36,7 @@ public class TreeFrame extends JFrame
         scrollpane.getViewport().add(tree);
         scrollpane.setDoubleBuffered(true);
 
-        getContentPane().add("Center", scrollpane);
+        add("Center", scrollpane);
     }
 
     public TreeNode buildTree(String dir)
