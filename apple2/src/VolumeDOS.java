@@ -33,19 +33,6 @@ public class VolumeDOS extends VolumeEntity
             0x00D42, 0x0194F, 0x019B7, 0x0225D, 0x0225E, 0x02297, 0x024FF, 0x000CF, 0x000FF, 0x0018D, 0x00192, 0x001DF, 0x001FF,
             0x003FD, 0x003FF, 0x00484, 0x00495, 0x00500, 0x00655, /*0x006DF, 0x006FF,*/ 0x009A8, 0x009B7};
 
-//    0x0148, // master: 03 slave: 84
-//    0x0149, // master: 1B slave: 9D
-//    0x0C0D, // master: 1B slave: 9D
-//    0x0C56, // master: 36 slave: FC
-//    0x0C57, // master: E8 slave: A4
-//    0x0C58, // master: E5 slave: FC
-//    0x0C59,
-//    0x0C5A, // master: E3 slave: 65
-//    0x0C5B, // master: E3 slave: D8
-//    0x0C5E, // master: 03 slave: 3C
-//    0x0C5F, // master: E0 slave: D4
-//    0x0A00-0x0BFF // T$00,S$A-$B DOS reloc routine
-
     private static final int[] rSlave1980 = {
             0x2240, 0x2243, 0x2246, 0x2249, 0x224C, 0x224F, 0x2252, 0x2255, 0x225A, 0x225D};
     private static final int[] rSlave1983 = {
