@@ -100,15 +100,15 @@ public class VolumeBoot extends VolumeEntity
 
         if (Arrays.equals(data,rDos80master))
         {
-            ident = "DOS 3.3 (1980) Master (A$3600)";
+            ident = "DOS 3.3 (1980) master (A$3600)";
         }
         else if (Arrays.equals(data,rDos83master))
         {
-            ident = "DOS 3.3 (1983) Master (A$3600)";
+            ident = "DOS 3.3 (1983) master (A$3600)";
         }
         else if (Arrays.equals(data,rDos86master))
         {
-            ident = "DOS 3.3 (1986) Master (A$3600)";
+            ident = "DOS 3.3 (1986) master (A$3600)";
         }
         else
         {
@@ -116,15 +116,15 @@ public class VolumeBoot extends VolumeEntity
             {
                 if (Arrays.equals(data,patch(rDos80master,(data[0xFE]&0xff)-0x36)))
                 {
-                    ident = "DOS 3.3 (1980) Slave (A$"+Hex2Bin.hexbyte((byte)(data[0xFE]-0x19))+"00)";
+                    ident = "DOS 3.3 (1980) slave (A$"+Hex2Bin.hexbyte((byte)(data[0xFE]-0x19))+"00)";
                 }
                 else if (Arrays.equals(data,patch(rDos83master,(data[0xFE]&0xff)-0x36)))
                 {
-                    ident = "DOS 3.3 (1983) Slave (A$"+Hex2Bin.hexbyte((byte)(data[0xFE]-0x19))+"00)";
+                    ident = "DOS 3.3 (1983) slave (A$"+Hex2Bin.hexbyte((byte)(data[0xFE]-0x19))+"00)";
                 }
                 else if (Arrays.equals(data,patch(rDos86master,(data[0xFE]&0xff)-0x36)))
                 {
-                    ident = "DOS 3.3 (1986) Slave (A$"+Hex2Bin.hexbyte((byte)(data[0xFE]-0x19))+"00)";
+                    ident = "DOS 3.3 (1986) slave (A$"+Hex2Bin.hexbyte((byte)(data[0xFE]-0x19))+"00)";
                 }
                 else
                 {
