@@ -239,18 +239,19 @@ public class Delta
         output.close();
     }
 
-    public void delta(File sourceFile, File targetFile) throws IOException
+    public ByteArrayOutputStream delta(File sourceFile, File targetFile) throws IOException
     {
         ByteArrayOutputStream gdiff = new ByteArrayOutputStream();
         GDiffWriter output = new GDiffWriter(new DataOutputStream(new BufferedOutputStream(gdiff)));
 
         if (sourceFile.length() > Integer.MAX_VALUE || targetFile.length() > Integer.MAX_VALUE)
         {
-            System.err.println("source or target is too large, max length is " + Integer.MAX_VALUE);
-            System.err.println("aborting..");
-            return;
+            throw new IOException("source or target is too large, max length is " + Integer.MAX_VALUE);
         }
 
         Delta.computeDelta(sourceFile,targetFile,output);
+        output.flush();
+
+        return gdiff;
     }
 }
