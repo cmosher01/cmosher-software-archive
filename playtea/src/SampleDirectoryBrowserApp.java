@@ -101,4 +101,8 @@ public class SampleDirectoryBrowserApp implements Application
     {
         return mConfig.getInitParameter(param);
     }
+
+    public void destroy()
+    {
+    }
 }
