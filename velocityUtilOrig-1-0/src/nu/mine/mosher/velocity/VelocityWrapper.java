@@ -36,15 +36,25 @@ public class VelocityWrapper
 
     public void evaluate(Context context, Writer writer, String nameTemplate, Reader reader) throws VelocityException
     {
+        boolean ok = false;
         try
         {
-            velocity.evaluate(context, writer, nameTemplate, reader);
+            ok = velocity.evaluate(context, writer, nameTemplate, reader);
         }
         catch (Throwable e)
         {
             throw wrapInVelocityException(e);
         }
+        if (!ok)
+        {
+            throw new VelocityException("error calling VelocityEngine.evaluate");
+        }
     }
+
+    public void mergeTemplate( String templateName, 
+                                         Context context, Writer writer )
+                                         {
+                                         }
 
     public static VelocityException wrapInVelocityException(Throwable e)
     {
