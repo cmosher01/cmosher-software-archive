@@ -159,8 +159,15 @@ public class Disk
                 // check catalog entries
                 int ce = 0x0B;
                 int penultimateSpace = 0;
+                int goodEntries = 0;
                 for (int cat = 0; cat < 7; ++cat)
                 {
+                    boolean good = false;
+                    if (sector[ce] != 0)
+                    {
+                        good = true;
+                        ++goodEntries;
+                    }
                     if (DiskPos.isValidSector(sector[ce+1]) &&
                         isValidFileType(sector[ce+2]) &&
                         isValidFileName(sector,ce+3))
@@ -172,6 +179,7 @@ public class Disk
                     }
                     ce += 35;
                 }
+                if (penultimateSpace)
                 System.out.println("Catalog Sector @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
             }
         }
