@@ -19,7 +19,7 @@ public class Volume
     private List rFile = new ArrayList(); // VolumeFile
     private List rFileRecovered = new ArrayList(); // VolumeFileRecovered
 //    private VolumeDOS dos;
-//    private VolumeBoot boot;
+    private VolumeBoot boot;
 //    private VolumeUnusedBlank blank;
 //    private VolumeUnusedData data;
     /**
@@ -53,6 +53,9 @@ public class Volume
             VolumeFile f = (VolumeFile)i.next();
             f.getTSMap().getPos(rKnownTSMaps);
         }
+
+        boot = new VolumeBoot();
+        boot.readFromMedia(disk);
 
         for (Iterator i = rAllTSMaps.iterator(); i.hasNext();)
         {
