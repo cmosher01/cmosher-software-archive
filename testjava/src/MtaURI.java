@@ -60,6 +60,7 @@ public class MtaURI
         }
         catch (Throwable e)
         {
+            e.printStackTrace();
             nRate = 0;
         }
         mRate = nRate;
@@ -71,6 +72,7 @@ public class MtaURI
         }
         catch (Throwable e)
         {
+            e.printStackTrace();
             nTimeout = 120000;
         }
         mTimeout = nTimeout;
