@@ -3,6 +3,8 @@
  */
 package nu.mine.mosher.javax.swing;
 
+import javax.swing.UIManager;
+
 /**
  * Contains static methods relating to Java's Swing API.
  * 
