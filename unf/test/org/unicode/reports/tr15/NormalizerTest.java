@@ -4,6 +4,8 @@ import junit.framework.TestCase;
 
 public class NormalizerTest extends TestCase
 {
+	Normalizer n;
+
     public NormalizerTest(String name)
     {
         super(name);
@@ -14,12 +16,13 @@ public class NormalizerTest extends TestCase
      */
     public void testNormalizeStringStringBuffer()
     {
-    	Normalizer n = new Normalizer();
-    	String s = "\u0041\u030a";
-    	String actual = n.normalize(s);
-    	String expected = "\u00c5";
-    	assertEquals(actual,expected);
+		assertNormalize("\u0041\u030a","\u00c5");
     }
+
+	protected void assertNormalize(String pre, String comp)
+	{
+		assertEquals(n.normalize(pre),comp);
+	}
 
 	private static void dumphex(String s)
 	{
@@ -42,4 +45,20 @@ public class NormalizerTest extends TestCase
 		String sn = n.normalize(s);
 		dumphex(sn);
 	}
+
+    protected void setUp() throws Exception
+    {
+        super.setUp();
+        n = new Normalizer();
+    }
+
+    /* (non-Javadoc)
+     * @see junit.framework.TestCase#tearDown()
+     */
+    protected void tearDown() throws Exception
+    {
+        // TODO Auto-generated method stub
+        super.tearDown();
+    }
+
 }
