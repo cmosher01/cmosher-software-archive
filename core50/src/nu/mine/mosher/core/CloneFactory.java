@@ -30,6 +30,10 @@ public final class Cloner
 				methodClone.setAccessible(true);
 				mClasses.put(cl,methodClone);
 			}
+			/*
+			 * Unchecked cast is OK here, because we know that the
+			 * clone of a Cloneable object will be Cloneable:
+			 */
 			return (T)methodClone.invoke(cloneableObject,null);
 		}
 		catch (Throwable cause)
