@@ -1,6 +1,6 @@
 public class TestBeans
 {
-    public void main(String[] rArgs) throws Throwable
+    public static void main(String[] rArgs) throws Throwable
     {
         System.out.println("test");
     }
