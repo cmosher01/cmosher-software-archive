@@ -2,7 +2,7 @@ import java.io.Serializable;
 
 import com.surveysampling.util.Cloner;
 
-public class ImmutableReference implements Comparable, Serializable
+public final class ImmutableReference implements Comparable, Serializable
 {
     private Cloneable ref;
 
