@@ -64,7 +64,7 @@ public class VelocityWrapper
      * @param templateName
      * @param context
      * @param writer
-     * @throws VelocityException
+     * @throws VelocityException any exceptions are wrapped in a VelocityException
      */
     public void mergeTemplate(String templateName, Context context, Writer writer) throws VelocityException
     {
@@ -92,7 +92,7 @@ public class VelocityWrapper
      * @param nameTemplate
      * @param context
      * @param writer
-     * @throws VelocityException
+     * @throws VelocityException any exceptions are wrapped in a VelocityException
      */
     public void evaluate(Reader reader, String nameTemplate, Context context, Writer writer) throws VelocityException
     {
@@ -109,7 +109,7 @@ public class VelocityWrapper
      * @param writer
      * @param nameTemplate
      * @param reader
-     * @throws VelocityException
+     * @throws VelocityException any exceptions are wrapped in a VelocityException
      */
     public void evaluate(Context context, Writer writer, String nameTemplate, Reader reader) throws VelocityException
     {
@@ -177,7 +177,7 @@ public class VelocityWrapper
      * @param inputTemplate
      * @param context
      * @param out
-     * @throws VelocityException
+     * @throws VelocityException any exceptions are wrapped in a VelocityException
      */
     public static void merge(File inputTemplate, Context context, Writer out) throws VelocityException
     {
@@ -206,7 +206,7 @@ public class VelocityWrapper
      * @param inputTemplate
      * @param context
      * @param outputFile
-     * @throws VelocityException
+     * @throws VelocityException any exceptions are wrapped in a VelocityException
      */
     public static void merge(File inputTemplate, Context context, File outputFile) throws VelocityException
     {
