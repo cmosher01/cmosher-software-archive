@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Logger;
 
 public class Util
@@ -69,5 +71,13 @@ public class Util
         }
     }
 
-    public static
+    public static ArrayList toList(Iterator i)
+    {
+        ArrayList r = new ArrayList();
+        while (i.hasNext())
+        {
+            r.add(i.next());
+        }
+        return r;
+    }
 }
