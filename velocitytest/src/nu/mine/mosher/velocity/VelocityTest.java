@@ -1,3 +1,8 @@
+import java.io.BufferedWriter;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.context.Context;
@@ -9,8 +14,7 @@ public class VelocityTest
         VelocityEngine velocity = new VelocityEngine();
         velocity.init();
         Context context = new VelocityContext();
-        FileDescriptor x;
-        BufferedWriter writer = new OutputStreamWriter(new FileOutputStream());
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out)));
         velocity.mergeTemplate("test.vm", context, writer);
     }
 }
