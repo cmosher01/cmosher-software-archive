@@ -12,7 +12,7 @@ public class CloneableReference implements Cloneable
         Object c = null;
         try
         {
-            c = super.clone();
+            c = referent.clone();
         }
         catch (CloneNotSupportedException e)
         {
