@@ -27,9 +27,9 @@ public final class Cloner
             if (methodClone == null)
             {
                 methodClone = cl.getMethod("clone",null);
+                methodClone.setAccessible(true);
                 mClasses.put(cl,methodClone);
             }
-            methodClone.setAccessible(true);
             return (Cloneable)methodClone.invoke(cloneableObject,null);
         }
         catch (Throwable cause)
