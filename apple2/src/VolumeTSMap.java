@@ -41,7 +41,7 @@ public class VolumeTSMap extends VolumeEntity
         if (this.rTS.size() == 0)
         {
             s.append("seedling file: ");
-            s.append(((DiskPos)this.rSector.get(0)).toStringTS());
+            s.append(((VolumeSector)this.rSector.get(0)).getPos().toStringTS());
         }
         else
         {
