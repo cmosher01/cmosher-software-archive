@@ -32,8 +32,7 @@ public class CachedCloner
         }
         catch (Throwable cause)
         {
-            CloneNotSupportedException ex;
-            ex = new CloneNotSupportedException();
+            CloneNotSupportedException ex = new CloneNotSupportedException();
             ex.initCause(cause);
             throw ex;
         }
