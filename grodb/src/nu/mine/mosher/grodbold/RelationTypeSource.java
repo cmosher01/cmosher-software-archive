@@ -12,10 +12,10 @@ public class RelationTypeSource implements Serializable
 
 	protected RelationTypeSource(String name)
 	{
-		this.id = PRIVATE_VALUES.size();
+		this.id = enumFactory.size();
 		this.name = name;
 
-		PRIVATE_VALUES.add(this);
+		enumFactory.add(this);
 	}
 
 	public String toString()
@@ -23,13 +23,13 @@ public class RelationTypeSource implements Serializable
 		return name;
 	}
 
-	private static final List PRIVATE_VALUES = new ArrayList();
+	private static final List enumFactory = new ArrayList();
 
 	public static final RelationTypeSource CITES = new RelationTypeSource("cites");
 	public static final RelationTypeSource CONTAINS = new RelationTypeSource("contains");
 
 	private Object readResolve() throws ObjectStreamException
 	{
-		return PRIVATE_VALUES.get(id);
+		return enumFactory.get(id);
 	}
 }
