@@ -38,37 +38,37 @@ public class ProxyConnection extends Thread
 
     public static final int _LOG_LEVEL_MAXIMAL = 0;
 
-    Properties httpconfig = null;
+    private Properties httpconfig = null;
 
-    int _RECV_TIMEOUT = 15 * 1000; // 15 second
+    private int _RECV_TIMEOUT = 15 * 1000; // 15 second
 
-    Socket sock_c, sock_s;
+    private Socket sock_c, sock_s;
 
-    Object console, parent;
+    private Object console, parent;
 
     static final boolean debug_mode = false;
 
-    DebugTracer tracer = new DebugTracer();
+    private DebugTracer tracer = new DebugTracer();
 
-    Hashtable MIMETypes = null;
+    private Hashtable MIMETypes = null;
 
-    HTTPRequestHeader c_header = null;
+    private HTTPRequestHeader c_header = null;
 
-    HTTPResponseHeader s_header = null;
+    private HTTPResponseHeader s_header = null;
 
-    ProxyCachePool cachepool = null;
+    private ProxyCachePool cachepool = null;
 
-    ProxyCache pc = null;
+    private ProxyCache pc = null;
 
-    public String proxy_addr = null;
+    private String proxy_addr = null;
 
-    public int proxy_port;
+    private int proxy_port;
 
-    boolean using_proxy = false;
+    private boolean using_proxy = false;
 
-    boolean using_cache = false;
+    private boolean using_cache = false;
 
-    boolean show_content = false;
+    private boolean show_content = false;
 
 
 
