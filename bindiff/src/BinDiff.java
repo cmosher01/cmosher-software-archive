@@ -79,11 +79,11 @@ public class BinDiff
                 f1.unread(c1);
                 f2.unread(c2);
 
-                if (difFindMatch())
+                if (difFindMatch(false))
                 {
                     statechange(INSERT,lastmark-f2.tell(),f2);
                 }
-                else if (difFindMatch())
+                else if (difFindMatch(true))
                 {
                     statechange(SKIP,lastmark-f1.tell(),f1);
                 }
@@ -188,44 +188,67 @@ public class BinDiff
         }
     }
 
-	protected boolean  difFindMatch() throws IOException
+	protected boolean  difFindMatch(boolean flipFiles) throws IOException
     {
-        long orig = f2.tell();
+		PushbackRandomFile lf2;
+    	if (flipFiles)
+    	{
+    		lf2 = f1;
+    	}
+    	else
+		{
+			lf2 = f2;
+		}
+
+        long orig = lf2.tell();
 
         boolean endoffile = false;
         int cs = cMaxSearch;
-        while ((cs-- > 0) && !endoffile && !difMatch())
+        while ((cs-- > 0) && !endoffile && !difMatch(flipFiles))
         {
-			endoffile = (f2.read() == EOF);
+			endoffile = (lf2.read() == EOF);
         }
 
         boolean found = (!endoffile && (cs > 0));
 
-        lastmark = f2.tell();
+        lastmark = lf2.tell();
 
-        f2.seek(orig);
+        lf2.seek(orig);
 
         return found;
     }
 
-    protected boolean difMatch() throws IOException
+    protected boolean difMatch(boolean flipFiles) throws IOException
     {
-        long orig1 = f1.tell();
-		long orig2 = f2.tell();
+		PushbackRandomFile lf1;
+		PushbackRandomFile lf2;
+		if (flipFiles)
+		{
+			lf1 = f2;
+			lf2 = f1;
+		}
+		else
+		{
+			lf1 = f1;
+			lf2 = f2;
+		}
+
+        long orig1 = lf1.tell();
+		long orig2 = lf2.tell();
 
         boolean same = true;
         for (int i = 0; i < cMinMatch && same; ++i)
         {
-            int c1 = f1.read();
-            int c2 = f2.read();
+            int c1 = lf1.read();
+            int c2 = lf2.read();
             if ((c2 == EOF && c1 != EOF) || (c1 != c2))
             {
 				same = false;
             }
         }
 
-		f1.seek(orig1);
-		f2.seek(orig2);
+		lf1.seek(orig1);
+		lf2.seek(orig2);
 
         return same;
     }
