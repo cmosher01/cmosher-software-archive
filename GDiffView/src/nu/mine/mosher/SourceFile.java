@@ -27,6 +27,6 @@ public class TargetFile
         InputStream in = new FileInputStream(target);
         SortedMap map = new TreeMap();
         StreamChecksum inCheck = new StreamChecksum(map);
-        inCheck.init(in, cWindow)
+        inCheck.init(in,cWindow);
     }
 }
