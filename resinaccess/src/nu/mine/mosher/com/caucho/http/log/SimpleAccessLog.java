@@ -45,6 +45,7 @@ public class SimpleAccessLog extends AccessLog
 		Inet4Address ip = (Inet4Address)InetAddress.getByName(request.getRemoteAddr());
 		String method = request.getMethod();
 		String uri = request.getRequestURI();
+		String query = request.getQueryString();
 		String browser = request.getHeader("User-Agent");
 		if (browser == null)
 		{
@@ -73,6 +74,8 @@ public class SimpleAccessLog extends AccessLog
 		sb.append(method);
 		sb.append(",");
 		sb.append(uri);
+		sb.append(",");
+		sb.append(query);
 		sb.append(",");
 		sb.append(browser);
 		sb.append(",");
