@@ -21,8 +21,8 @@ public class TestBeans
         Editors.register();
 
         Something some = new Something();
-        String prop = "AInt";
-        String val = "23";
+        String prop = "robjInteger";
+        String[] val = {"99","23"};
 
         setProperty(some, prop, val);
 
