@@ -58,10 +58,9 @@ public class Test
 //            UniversalCloser2.close(x);
         }
         long end = System.currentTimeMillis();
-        double ms = (end-start);
-        double sec = ms/1000;
-        double nanosec = sec*1000000000;
-        System.out.println("elapsed time: "+nanosec+" nanosec");
+        double milliseconds = (end-start);
+        double microseconds = milliseconds*1000;
+        System.out.println("elapsed time: "+microseconds+" microseconds");
 
 
 
