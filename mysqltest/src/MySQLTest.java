@@ -569,6 +569,20 @@ public class MySQLTest
 		"    birth date, "+
 		"    death date "+
 		")");
+		dbUpdate("drop table if exists CalcMatch");
+		dbUpdate("create table "+
+		"CalcMatch "+
+		"( "+
+		"    known integer unsigned not null references KnownPerson(id), "+
+		"    calc integer unsigned not null references CalcPerson(id) "+
+		")");
+		dbUpdate("drop table if exists Match");
+		dbUpdate("create table "+
+		"Match "+
+		"( "+
+		"    known integer unsigned not null references KnownPerson(id), "+
+		"    calc integer unsigned not null references CalcPerson(id) "+
+		")");
 	}
 
     protected void dbUpdate(String sql) throws SQLException
