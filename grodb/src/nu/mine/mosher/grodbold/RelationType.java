@@ -15,16 +15,10 @@ public class RelationType implements Serializable
 		this.name = name;
 	}
 
-	public String getName()
-	{
-		return name;
-	}
-
     public String toString()
     {
         return name;
     }
-
 
     public static final RelationType UNKNOWN = new RelationType("unknown relation");
 
@@ -32,6 +26,6 @@ public class RelationType implements Serializable
 
 	private Object readResolve() throws ObjectStreamException
 	{
-		return PRIVATE_VALUES[id];
+		return PRIVATE_VALUES[id]; // Canonicalize
 	}
 }
