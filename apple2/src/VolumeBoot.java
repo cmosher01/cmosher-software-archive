@@ -101,11 +101,11 @@ public class VolumeBoot extends VolumeEntity
         {
             ident = "DOS 3.3 (1980) Master (A$3600)";
         }
-        else if (same(data,rDos80master))
+        else if (same(data,rDos83master))
         {
             ident = "DOS 3.3 (1983) Master (A$3600)";
         }
-        else if (same(data,rDos80master))
+        else if (same(data,rDos86master))
         {
             ident = "DOS 3.3 (1986) Master (A$3600)";
         }
