@@ -6,6 +6,7 @@ package nu.mine.mosher;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedInputStream;
@@ -147,6 +148,7 @@ public class GDiffView extends JFrame
         listGDiff.setModel(model);
         listGDiff.setSelectionForeground(Color.BLACK);
         listGDiff.setSelectionBackground(new Color(173,194,245));
+        listGDiff.setFont(Font.decode("Courier"));
         ListSelectionModel selectionModel = new SingleSelectionModel()
         {
             public void updateSingleSelection(int oldIndex, int newIndex)
