@@ -307,6 +307,11 @@ public class Disk
         return 0;
     }
 
+    /**
+     * @param sector
+     * @param entries
+     * @throws InvalidPosException
+     */
     public static void getDos33CatalogEntries(byte[] sector, Collection entries) throws InvalidPosException
     {
         int p = 0x0B;
