@@ -8,9 +8,7 @@
  * Author : Steve Yeong-Ching Hsueh
  */
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.Rectangle;
 
 /**
  * Tag
