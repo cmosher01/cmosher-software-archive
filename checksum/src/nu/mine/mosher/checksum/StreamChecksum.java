@@ -26,8 +26,9 @@ public class ChecksumStream
      * from the given binary stream.
      * @param is
      * @param cWindow
+     * @throws IOException
      */
-    public void init(InputStream is, int cWindow)
+    public void init(InputStream is, int cWindow) throws IOException
     {
         is = new BufferedInputStream(is);
         byte[] rs = new byte[cWindow];
