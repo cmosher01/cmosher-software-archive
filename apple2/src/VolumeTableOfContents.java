@@ -15,6 +15,6 @@ public class VolumeTableOfContents extends VolumeEntity
      */
     public VolumeTableOfContents(final DiskPos pos)
     {
-        
+        rSector.add(pos);
     }
 }
