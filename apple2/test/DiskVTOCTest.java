@@ -245,6 +245,7 @@ public class DiskVTOCTest extends TestCase
     }
     /**
      * test VTOC for AMDOS system master
+     * Note: byte 5 has value 4 instead of usual 0
      */
     public void testVTOC_AMDOS()
     {
