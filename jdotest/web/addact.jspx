@@ -4,7 +4,7 @@
 <%@ page import="nu.mine.mosher.jdotest.Perm" %>
 <%
 	String s = request.getParameter("item");
-	PersistenceManager pm = new Perm().pm();
+	PersistenceManager pm = Perm.pm();
 	pm.currentTransaction().begin();
 	Item item = new Item();
 	item.setName(s);
