@@ -3,9 +3,16 @@
  */
 package nu.mine.mosher.velocity;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.Properties;
 
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.context.Context;
+import org.apache.velocity.exception.MethodInvocationException;
+import org.apache.velocity.exception.ParseErrorException;
+import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.exception.VelocityException;
 
 /**
@@ -14,6 +21,8 @@ import org.apache.velocity.exception.VelocityException;
 public class VelocityWrapper
 {
     private final VelocityEngine velocity = new VelocityEngine();
+
+
 
     public VelocityWrapper(Properties props) throws VelocityException
     {
@@ -30,6 +39,20 @@ public class VelocityWrapper
             throw wrapInVelocityException(e);
         }
     }
+
+    public void evaluate(Context context, Writer writer, String logTag, Reader reader) throws VelocityException
+    {
+        try
+        {
+            velocity.evaluate(context, writer, logTag, reader);
+        }
+        catch (Throwable e)
+        {
+            throw wrapInVelocityException(e);
+        }
+    }
+
+
 
     public static VelocityException wrapInVelocityException(Throwable e)
     {
