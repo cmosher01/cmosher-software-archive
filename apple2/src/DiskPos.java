@@ -39,16 +39,18 @@ public class DiskPos implements Comparable, Cloneable
 
     public Object clone()
     {
+        Object ret;
         try
         {
-            super.clone();
+            ret = super.clone();
         }
         catch (CloneNotSupportedException e)
         {
             throw new RuntimeException(e);
         }
-        return this;
+        return ret;
     }
+
     /**
      * @param block
      * @param allowLarge
