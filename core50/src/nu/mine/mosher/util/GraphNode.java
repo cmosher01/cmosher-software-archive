@@ -54,25 +54,16 @@ public class GraphNode<T>
 		}
 		child.parents.remove(this);
 		this.children.remove(child);
-
-		for (Iterator<GraphNode<T>> i = children(); i.hasNext();)
-		{
-			if (i.next()==child)
-			{
-				i.remove();
-				child.parent = null;
-			}
-		}
 	}
 
-	public void removeFromParent()
+	public void removeParent(GraphNode<T> parent)
 	{
-		if (parent == null)
+		if (!parent.hasChild(this))
 		{
-			return;
+			throw new IllegalArgumentException("given GraphNode is not a parent of this GraphNode");
 		}
-
-		parent.removeChild(this);
+		parent.children.remove(this);
+		this.parents.remove(parent);
 	}
 
 	public Iterator<GraphNode<T>> children()
@@ -80,9 +71,9 @@ public class GraphNode<T>
 		return children.iterator();
 	}
 
-	public GraphNode<T> parent()
+	public Iterator<GraphNode<T>> parents()
 	{
-		return parent;
+		return parents.iterator();
 	}
 
 	public int getChildCount()
@@ -90,51 +81,8 @@ public class GraphNode<T>
 		return children.size();
 	}
 
-	protected void appendStringDeep(StringBuffer sb, int level)
+	public int getParentCount()
 	{
-		for (int i = 0; i < level; ++i)
-		{
-			sb.append("    ");
-		}
-
-		appendStringShallow(sb);
-		sb.append("\n");
-
-		++level;
-		for (GraphNode<T> child : this.children)
-		{
-			child.appendStringDeep(sb,level);
-		}
-	}
-
-	public void appendStringDeep(StringBuffer sb)
-	{
-		appendStringDeep(sb,0);
-	}
-
-	public String toString()
-	{
-		StringBuffer sb = new StringBuffer();
-		appendStringDeep(sb);
-		return sb.toString();
-	}
-
-	public String toStringShallow()
-	{
-		StringBuffer sb = new StringBuffer();
-		appendStringShallow(sb);
-		return sb.toString();
-	}
-
-	public void appendStringShallow(StringBuffer sb)
-	{
-		if (object != null)
-		{
-			sb.append(object.toString());
-		}
-		else
-		{
-			sb.append("[null]");
-		}
+		return parents.size();
 	}
 }
