@@ -9,7 +9,7 @@ public class Main
 	public static void main(String[] args)
 	{
 		PersonPersist p = new PersonPersist();
-		p.persistPeople();
+//		p.persistPeople();
 		p.display();
 	}
 }
