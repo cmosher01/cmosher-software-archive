@@ -5,10 +5,7 @@
  */
 package com.surveysampling.time;
 
-import java.text.NumberFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 /**
  * TODO
@@ -42,20 +39,52 @@ public class TimeOfDayParser
             s = "0"+s;
         }
 
+        int hr, mn, sc, ms;
         if (s.length() == 5)
         {
             ensure(s,2,':');
+            hr = getd(s,0,2);
         }
         else if (s.length() == 8)
         {
+            ensure(s,2,':');
+            ensure(s,5,':');
         }
         else if (s.length() == 12)
         {
+            ensure(s,2,':');
+            ensure(s,5,':');
+            ensure(s,8,'.');
         }
         else
         {
             throw new ParseException("Invalid time-of-day string",0);
         }
+
+        this.hour = hr;
+        this.minute = mn;
+        this.second = sc;
+        this.millisecond = ms;
+    }
+
+    /**
+     * @param s
+     * @param i
+     * @param j
+     * @return
+     */
+    private int getd(String s, int i, int j)
+    {
+        assert (j < 10000); // sanity
+
+        int r = 0;
+        while (j-- > 0)
+        {
+            char c = s.charAt(i++);
+            r *= 10;
+            r += Character.digit(c,10);
+        }
+        return r;
     }
 
     /**
