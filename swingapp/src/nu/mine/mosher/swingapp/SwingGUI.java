@@ -4,14 +4,27 @@
 package nu.mine.mosher.ja2;
 
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 
 /**
  * @author Chris Mosher
  */
 public class GUI
 {
+    private ContentPane mPaneContent;
     private JFrame mFrame;
+    private JMenuBar mJMenuBar;
 
+    public GUI(ContentPane paneContent, JMenuBar jMenuBar)
+    {
+        this.mPaneContent = paneContent;
+        this.mJMenuBar = jMenuBar;
+
+        if (this.mPaneContent == null)
+        {
+            throw new IllegalStateException("GUI requires a ContentPane.");
+        }
+    }
     /**
      * 
      */
