@@ -43,4 +43,9 @@ public class Lister
 	{
 		return col;
 	}
+
+    public void close()
+    {
+        pw.close();
+    }
 }
