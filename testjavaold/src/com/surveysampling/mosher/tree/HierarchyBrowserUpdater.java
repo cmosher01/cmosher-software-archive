@@ -2,7 +2,7 @@ package com.surveysampling.mosher.tree;
 
 import java.awt.Cursor;
 
-import javax.swing.JPanel;
+import javax.swing.JFrame;
 import javax.swing.JTree;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
