@@ -43,7 +43,7 @@ public class Test
     {
         public Bad() throws Exception
         {
-            throw new Exception();
+//            throw new Exception();
         }
     }
     public static Object throwSomething() throws Exception
