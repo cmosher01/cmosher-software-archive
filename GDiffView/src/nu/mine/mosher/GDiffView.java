@@ -420,6 +420,7 @@ public class GDiffView extends JFrame
             }
             g = getGDiff(gdiff);
         }
+        listGDiff.setModel(new GDiffCmdListModel(rcmd));
 
         byte[] rb = new byte[cCol];
         int c = in.read(rb);
