@@ -22,5 +22,13 @@ public class RollingChecksumTest extends TestCase
             rb[i] = (byte)rc[i];
         }
 
+        int S = 3;
+        int k = 0;
+        byte[] rs = new byte[S];
+        System.arraycopy(rb, k, rs, 0, S);
+
+        RollingChecksum rollCheck = new RollingChecksum();
+        rollCheck.init(rs,k);
+        int check = rollCheck.getChecksum();
     }
 }
