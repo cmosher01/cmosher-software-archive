@@ -19,6 +19,7 @@ public class TreeFrame extends JPanel
     public TreeFrame(String dir)
     {
         setLayout(new BorderLayout());
+        setOpaque(true);
         addNotify();
 
         FileTreeNode root = buildTree(dir);
