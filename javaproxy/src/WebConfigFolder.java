@@ -46,7 +46,6 @@ class WebConfigFolder implements ActionListener, ConfigInterface
 
     Checkbox ckbox_spc = null;
 
-    //    List mime, authdir, authuser, alias;
     Button addauthdir, delauthdir, addauthuser, delauthuser;
 
     Button addmime, delmime, addalias, delalias;
