@@ -496,11 +496,24 @@ class NormalizerBuilder
 			if (!tok.startsWith("<"))
 			{
 				int cint = Integer.parseInt(tok,16);
-if (cint > 0xffff)
-	System.err.println("oops, we are not converting to UTF-16 correctly: "+tok);
-if (cint > 0x10FFFF)
-	System.err.println("VERY BAD: we cannot convert to UTF-16 correctly: "+tok);
-				sb.append((char)Integer.parseInt(tok,16));
+				if (cint > 0x10FFFF)
+					System.err.println("VERY BAD: we cannot convert to UTF-16 correctly: "+tok);
+				if (cint > 0xffff)
+				{
+					// special UTF-16 encoding
+					int uprime = cint - 0x10000;
+					int w1 = 0xD800;
+					int w2 = 0xDC00;
+					w2 |= uprime & 0x3ff;
+					uprime >>= 10;
+					w1 |= uprime & 0x3ff;
+					sb.append((char)w1);
+					sb.append((char)w2);
+				}
+				else
+				{
+					sb.append((char)cint);
+				}
 			}
 		}
 
