@@ -34,4 +34,10 @@ public class GDiffCopy extends GDiffCmd
     {
         return this.getPosition() <= that.getEnd() && that.getPosition() <= this.getEnd();
     }
+    public GDiffCopy[] normalize(GDiffCopy that)
+    {
+        GDiffCopy[] rnorm = new GDiffCopy[3];
+        GDiffCopy[0] = new GDiffCopy()
+        return rnorm;
+    }
 }
