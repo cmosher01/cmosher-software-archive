@@ -386,14 +386,12 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
             return false;
         }
 
-        host_addr = (String)httpconfig.getProperty("network.ip");
-        host_port = Integer.parseInt((String)httpconfig
-                .getProperty("network.port"));
+        host_addr = httpconfig.getProperty("network.ip");
+        host_port = Integer.parseInt(httpconfig.getProperty("network.port"));
 
-        access_log_name = (String)httpconfig.getProperty("log.access");
-        error_log_name = (String)httpconfig.getProperty("log.error");
-        log_level = Integer.parseInt((String)httpconfig
-                .getProperty("log.loglevel"));
+        access_log_name = httpconfig.getProperty("log.access");
+        error_log_name = httpconfig.getProperty("log.error");
+        log_level = Integer.parseInt(httpconfig.getProperty("log.loglevel"));
 
         logAccess(_LOG_LEVEL_MAXIMAL,tracer.getSource(),
                 "Console Re-Initialized");
