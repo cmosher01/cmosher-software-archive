@@ -148,7 +148,7 @@ public class GDiffView extends JFrame
         listGDiff.setModel(model);
         listGDiff.setSelectionForeground(Color.BLACK);
         listGDiff.setSelectionBackground(new Color(173,194,245));
-        listGDiff.setFont(Font.decode("Courier"));
+        listGDiff.setFont(Font.decode("Courier-PLAIN-10"));
         ListSelectionModel selectionModel = new SingleSelectionModel()
         {
             public void updateSingleSelection(int oldIndex, int newIndex)
