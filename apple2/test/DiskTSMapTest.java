@@ -52,6 +52,19 @@ public class DiskTSMapTest extends TestCase
     }
 
     /**
+     * @throws IOException
+     * @throws InvalidPosException
+     */
+    public void testMontezuma() throws IOException, InvalidPosException
+    {
+        List r = new ArrayList();
+        r.add(new DiskPos(0x12,0xA));
+        r.add(new DiskPos(0x12,0xF));
+        r.add(new DiskPos(0x1A,0xF));
+        assertManyPos("montezuma.dsk",r);
+    }
+
+    /**
      * @param f
      * @param rPosExpected
      * @throws IOException
