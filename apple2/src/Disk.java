@@ -169,7 +169,7 @@ public class Disk
     /**
      * @throws InvalidPosException
      */
-    public void findDos33CatalogSector(TSMap tsmapMaps) throws InvalidPosException
+    public void findDos33CatalogSector(boolean allowLarge, TSMap tsmapMaps) throws InvalidPosException
     {
         rewind();
         while (!EOF())
@@ -177,7 +177,7 @@ public class Disk
             DiskPos cur = this.pos;
             byte[] sector = read(DiskPos.cSector);
             if (sector[0] == 0 &&
-//                sector[1] > 0 &&
+                DiskPos.isValidTrack(sector[1],allowLarge) &&
                 DiskPos.isValidSector(sector[2]) &&
                 sector[3] == 0)
             {
@@ -198,7 +198,9 @@ public class Disk
                     {
                         ++goodEntries;
                     }
-                    if (live && DiskPos.isValidSector(sector[ce+1]) &&
+                    if (live && 
+                        DiskPos.isValidTrack(sector[ce],allowLarge) &&
+                        DiskPos.isValidSector(sector[ce+1]) &&
                         isValidFileType(sector[ce+2]))
                     {
                         boolean deleted = (sector[ce] == -1);
