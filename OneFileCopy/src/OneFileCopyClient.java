@@ -35,7 +35,10 @@ public class OneFileCopyClient
 			xLen |= rbLen[i];
 		}
 
+		System.out.println("read length: "+xLen+" bytes");
+
 		byte[] rb = new byte[1024];
+		System.out.println("Will read "+((xLen+rb.length-1)/rb.length)+" chunks.");
 		for (int i = 0; i < (xLen+rb.length-1)/rb.length; ++i)
 		{
 			int cb = in.read(rb);
