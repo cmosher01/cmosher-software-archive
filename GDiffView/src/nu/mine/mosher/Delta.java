@@ -200,14 +200,18 @@ public class Delta
                 alternativehashf = Checksum.incrementChecksum(alternativehashf,buf[0],b[0]);
 
                 for (int j = 0; j < 15; j++)
+                {
                     buf[j] = buf[j + 1];
+                }
                 buf[15] = b[0];
                 hashf = Checksum.queryChecksum(buf,S);
             }
             else
             {
                 for (int ix = 0; ix < S; ix++)
+                {
                     output.addData(buf[ix]);
+                }
                 done = true;
             }
 
