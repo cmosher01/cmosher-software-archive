@@ -101,7 +101,7 @@ public class GDiff2HTML
 	private static void outSame(byte[] rb)
 	{
         System.out.print("copy: ");
-		System.out.println(rb);
+		System.out.println(new String(rb));
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class GDiff2HTML
 	private static void outInsert(byte[] data)
 	{
         System.out.print("insert: ");
-        System.out.println(data);
+        System.out.println(new String(data));
 	}
 
 	/**
