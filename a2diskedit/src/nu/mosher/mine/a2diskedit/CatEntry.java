@@ -28,7 +28,11 @@ public class CatEntry implements TreeNode
 		StringBuffer s = new StringBuffer(100);
 		for (int i = 0; i < raw.length; ++i)
 		{
-			String h = Integer.toHexString(raw[i]);
+			byte b = raw[i];
+			int x = b;
+			if (x<0)
+				x += 256;
+			String h = Integer.toHexString(x);
 			if (h.length()==1)
 				s.append("0");
 			s.append(h);
