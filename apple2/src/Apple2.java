@@ -5,8 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /*
  * Created on Sep 17, 2004
@@ -58,23 +60,24 @@ public class Apple2
         List rPosCat = new ArrayList();
         disk.findDos33CatalogSector(rPosCat);
 
-        if (rPosCat.size() > 0)
-        {
-            List rCatEntry = new ArrayList();
-            for (Iterator i = rPosCat.iterator(); i.hasNext();)
-            {
-                DiskPos p = (DiskPos)i.next();
-                disk.getDos33CatalogEntries(p, rCatEntry);
-            }
-            for (Iterator ent = rCatEntry.iterator(); ent.hasNext();)
-            {
-                Dos33CatalogEntry entry = (Dos33CatalogEntry)ent.next();
-                System.out.println("    "+entry.getName());
-            }
-        }
-        else
+        if (rPosCat.size() == 0)
         {
             System.out.println("    [no files found]");
+            return;
+        }
+
+        List rCatEntry = new ArrayList();
+        Map mapDiskMap = new HashMap();
+        for (Iterator i = rPosCat.iterator(); i.hasNext();)
+        {
+            DiskPos p = (DiskPos)i.next();
+            mapDiskMap.put(p, new )
+            disk.getDos33CatalogEntries(p, rCatEntry);
+        }
+        for (Iterator ent = rCatEntry.iterator(); ent.hasNext();)
+        {
+            Dos33CatalogEntry entry = (Dos33CatalogEntry)ent.next();
+            System.out.println("    "+entry.getName());
         }
 //        List rCat = new ArrayList();
 //        disk.findDos33CatalogSector(rCat);
