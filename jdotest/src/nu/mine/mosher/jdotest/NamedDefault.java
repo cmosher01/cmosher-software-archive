@@ -12,7 +12,15 @@ package nu.mine.mosher.jdotest;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class NamedDefault
+public class NamedDefault implements Named
 {
+    public String getName()
+    {
+        return "";
+    }
 
+    public String getId()
+    {
+        return pm.getObjectId(this).toString();
+    }
 }
