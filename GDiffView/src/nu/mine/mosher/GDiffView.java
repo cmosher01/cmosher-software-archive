@@ -269,10 +269,9 @@ public class GDiffVeiew extends JFrame
      * @param i
      * @return
      */
-    private int getAscRowStart(int i)
+    private int getAscRowStart(int row)
     {
-        // TODO Auto-generated method stub
-        return false;
+        return (row+1)*rowLen-1-cCol-1-cCol;
     }
 
     /**
@@ -281,8 +280,7 @@ public class GDiffVeiew extends JFrame
      */
     private int getAscRowEnd(int row)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return (row+1)*rowLen-1-cCol-1;
     }
 
     public int getRow(int pos)
