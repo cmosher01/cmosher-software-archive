@@ -394,6 +394,7 @@ public class VolumeDOS extends VolumeEntity
                 {
                     int dif = (rb[0xFE]-0x36) & 0xFF;
                     byte[] rbClearSlave = makeSlave(rbClear1980,rSlave1980,dif);
+                    rbClearSlave = makeSlave(rbClearSlave,rSlaveCommon,dif);
                     if (Arrays.equals(rbCmp,rbClearSlave))
                     {
                         s.append(" (DOS 3.3 1980 slave (A$"+Hex2Bin.hexbyte((byte)(0x1D+dif))+"00): exact match)");
@@ -422,15 +423,23 @@ public class VolumeDOS extends VolumeEntity
                         else
                         {
                             rbClearSlave = makeSlave(rbClearFranklin,rSlave1980,dif);
+                            rbClearSlave = makeSlave(rbClearSlave,rSlaveCommon,dif);
                             rbClearSlave = makeSlave(rbClearSlave,rSlaveFranklin,dif);
-                            s.append(" (DOS 3.3 1980 slave (A$");
-                            s.append(Hex2Bin.hexbyte((byte)(0x1D+dif)));
-                            s.append("00): unknown alteration)");
-                            for (int i = 0; i < rbCmp.length; ++i)
+                            if (Arrays.equals(rbCmp,rbClearSlave))
                             {
-                                if (rbCmp[i] != rbClearSlave[i])
+                                s.append(" (DOS 3.3 1980 (Franklin version) slave (A$"+Hex2Bin.hexbyte((byte)(0x1D+dif))+"00): exact match)");
+                            }
+                            else
+                            {
+                                s.append(" (DOS 3.3 1980 slave (A$");
+                                s.append(Hex2Bin.hexbyte((byte)(0x1D+dif)));
+                                s.append("00): unknown alteration)");
+                                for (int i = 0; i < rbCmp.length; ++i)
                                 {
-                                    System.err.println("@$"+Integer.toHexString(i)+": "+Integer.toHexString(rbClearSlave[i]&0xFF)+" --> "+Integer.toHexString(rbCmp[i]&0xFF));
+                                    if (rbCmp[i] != rbClearSlave[i])
+                                    {
+                                        System.err.println("@$"+Integer.toHexString(i)+": "+Integer.toHexString(rbClearSlave[i]&0xFF)+" --> "+Integer.toHexString(rbCmp[i]&0xFF));
+                                    }
                                 }
                             }
                         }
@@ -449,6 +458,7 @@ public class VolumeDOS extends VolumeEntity
                 {
                     int dif = (rb[0xFE]-0x36) & 0xFF;
                     byte[] rbClearSlave = makeSlave(rbClear1983,rSlave1983,dif);
+                    rbClearSlave = makeSlave(rbClearSlave,rSlaveCommon,dif);
                     if (Arrays.equals(rbCmp,rbClearSlave))
                     {
                         s.append(" (DOS 3.3 1983 slave (A$"+Hex2Bin.hexbyte((byte)(0x1D+dif))+"00): exact match)");
@@ -480,6 +490,7 @@ public class VolumeDOS extends VolumeEntity
                 {
                     int dif = (rb[0xFE]-0x36) & 0xFF;
                     byte[] rbClearSlave = makeSlave(rbClear1986,rSlave1986,dif);
+                    rbClearSlave = makeSlave(rbClearSlave,rSlaveCommon,dif);
                     if (Arrays.equals(rbCmp,rbClearSlave))
                     {
                         s.append(" (DOS 3.3 1986 slave (A$"+Hex2Bin.hexbyte((byte)(0x1D+dif))+"00): exact match)");
@@ -541,15 +552,9 @@ public class VolumeDOS extends VolumeEntity
         rbSlave[0x0C5F] = (byte)0xD4;
 
         // apply diff to master image (at all known offsets)
-        for (int i = 0; i < rSlaveCommon.length; i++)
-        {
-            int bOff = rSlaveCommon[i];
-            rbSlave[bOff] += dif;
-        }
         for (int i = 0; i < rbSlaveOffset.length; i++)
         {
-            int bOff = rbSlaveOffset[i];
-            rbSlave[bOff] += dif;
+            rbSlave[rbSlaveOffset[i]] += dif;
         }
 
         // clear reloc routine:
