@@ -25,7 +25,7 @@ public final class Util
 
 	public static void unused(double i)
 	{
-		long x = i;
+		double x = i;
 		i = x;
 	}
 }
