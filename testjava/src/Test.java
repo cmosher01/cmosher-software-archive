@@ -10,6 +10,7 @@ import java.util.ListIterator;
 
 import com.surveysampling.util.Cloner;
 import com.surveysampling.util.ImmutableReference;
+import com.surveysampling.util.UndoableReference;
 import com.surveysampling.util.UniversalCloser;
 
 public class Test
@@ -63,8 +64,16 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
-        Mute x = new Mute(4);
-        Cloneable y = Cloner.cloneObject(null);
+
+
+
+        UndoableReference u = new UndoableReference(new Mute(5));
+        System.out.println(u.state().toString());
+
+
+
+
+
 
 //        ImmutableReference im = new ImmutableReference(new Mute(5));
 //        System.out.println(im);
