@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: Test1
+Class-Path: lib.jar
+
