@@ -16,7 +16,7 @@
 			IE doesn't understand application/xhtml+xml
 			Here is a tag being called:
 			<tg:testTag classname="Item" var="x">
-				"${x}"
+				"$x"
 			</tg:testTag>
 			</jsp:text>
 		</body>
