@@ -55,8 +55,20 @@ public class FixAppleDisasm
 		}
     }
 
-    public static void FixDis(Reader in, Writer out)
+    public static void FixDis(Reader in, Writer out) throws IOException
     {
+		BufferedReader inbuf = null;
+		if (in instanceof BufferedReader)
+		{
+			inbuf = (BufferedReader)in;
+		}
+		else
+		{
+			inbuf = new BufferedReader(in);
+		}
+		for (String s = inbuf.readLine(); s != null; s = inbuf.readLine())
+		{
+		}
     }
 
     private static void Dump2Bin(Reader in, OutputStream outbin)
