@@ -56,7 +56,6 @@ public class TestBeans
         Object v;
         if (classProp.isArray())
         {
-            classProp = classProp.getComponentType();
             v = convertArray(value, classProp);
         }
         else
@@ -91,6 +90,7 @@ public class TestBeans
     public static Object[] convertArray(String[] value, Class classProp)
         throws NegativeArraySizeException, IllegalArgumentException, IntrospectionException
     {
+        classProp = classProp.getComponentType();
         PropertyEditor ed = getPropertyEditor(classProp);
         Object[] rval = (Object[])Array.newInstance(classProp, value.length);
         for (int i = 0; i < value.length; ++i)
