@@ -65,7 +65,8 @@ public class MySQLTest
 	protected void insertData() throws SQLException
     {
     	dbUpdate("delete from family");
-    	dbInsert("insert into family(name) values(\"Flandreau\")");
+    	int fland = dbInsert("insert into family(name) values(\"Flandreau\")");
+    	log.fine("Inserted Flandreau with id "+fland);
     }
 
     protected void createSchema() throws SQLException
