@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -65,6 +66,12 @@ public class ExtrDos33
         {
             File file = rf[i];
             extrDos(file,dirNew);
+        }
+        System.out.println("=============================================================================");
+        for (Iterator i = doss.entrySet().iterator(); i.hasNext();)
+        {
+            type element = (type)i.next();
+            
         }
     }
 
