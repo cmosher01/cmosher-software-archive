@@ -1,4 +1,5 @@
 package org.unicode.reports.tr15;
+
 /**
  * Implements Unicode Normalization Forms C, D, KC, KD.<br>
  * See UTR#15 for details.<br>
