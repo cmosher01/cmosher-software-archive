@@ -1,6 +1,15 @@
 <%@ include file="htmlhead.jsp" %>
-<%@ page import="java.util.ArrayList" %>
-<jsp:useBean id="r" class="java.util.ArrayList" scope="session" />
+<%@ page import="nu.mine.mosher.jdotest.Item" %>
+<%@ page import="nu.mine.mosher.jdotest.Perm" %>
+<%
+    String id = request.getParameter("id");
+    Perm pm = new Perm();
+	PersistenceManager p = pm.begin();
+	Item item = (Item)p.getObjectById(p.newObjectIdInstance(Item.class,id),true);
+    String s = item.getName();
+    p.deletePersistent(item);
+    pm.commit(p);
+%>
 <%
     int i = Integer.parseInt(request.getParameter("i"));
     String s = (String)r.get(i);
