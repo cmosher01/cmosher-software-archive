@@ -46,7 +46,7 @@ public class Test
         for (Iterator i = new SF(x).iterator(); i.hasNext();)
         {
             String field = (String)i.next();
-            
+            System.out.println(field);
         }
 
 
