@@ -436,6 +436,10 @@ public class Disk
 //        }
 //    }
 
+    /**
+     * @param tsmapMapsInCatalog
+     * @throws InvalidPosException
+     */
     public void findDos33TSMapSector(TSMap tsmapMapsInCatalog) throws InvalidPosException
     {
         rewind();
