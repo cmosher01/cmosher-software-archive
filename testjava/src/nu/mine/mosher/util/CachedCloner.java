@@ -17,25 +17,6 @@ public class CachedCloner
         this.cache = cache;
     }
 
-    public void clone(Object obj)
-    {
-        try
-        {
-            Class cl = obj.getClass();
-            Method methodClose = (Method)cache.get(cl);
-            if (methodClose == null)
-            {
-                methodClose = cl.getMethod("clone",null);
-                methodClose.setAccessible(true);
-                cache.put(cl,methodClose);
-            }
-            methodClose.invoke(obj,null);
-        }
-        catch (Throwable ignore)
-        {
-            ignore.printStackTrace();
-        }
-    }
     public Cloneable cloneObject(Cloneable cloneableObject) throws CloneNotSupportedException
     {
         try
