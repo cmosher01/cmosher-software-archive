@@ -44,7 +44,7 @@ public class VolumeTSMap extends VolumeEntity
             s.append(p.toStringTS());
             if (i.hasNext())
             {
-                s.append(";");
+                s.append("; ");
             }
         }
     }
