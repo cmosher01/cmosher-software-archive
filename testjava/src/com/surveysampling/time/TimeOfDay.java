@@ -4,6 +4,7 @@
 package com.surveysampling.time;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Represents a time of day, for example, "3:00 PM",
@@ -107,6 +108,13 @@ public class TimeOfDay
         cal.set(Calendar.MINUTE, minutes);
         cal.set(Calendar.SECOND, seconds);
         cal.set(Calendar.MILLISECOND, milliseconds);
+    }
+
+    public Date getTimeOnDay(Calendar cal, Date d)
+    {
+        cal.setTime(d);
+        getTimeOnDay(cal);
+        return new Date(cal.getTimeInMillis());
     }
 
 
