@@ -21,8 +21,8 @@ public class GedcomTree
             parent = parent.parent();
         }
 
-		prevNode = new TreeNode(line);
 		prevLevel = line.getLevel();
+		prevNode = new TreeNode(line);
 		parent.addChild(prevNode);
 	}
 }
