@@ -9,18 +9,7 @@
 </head>
 <body>
 <p>
-<table>
-<%
-	PersistenceManager pm = Perm.pm();
-	for (Iterator i = pm.getExtent(Item.class,true).iterator(); i.hasNext(); )
-	{
-		Item item = (Item)i.next();
-		String id = pm.getObjectId(item).toString();
-		%><tr><td><a href="edit.jsp?id=<%=id%>"><%=item.getName()%></a></td></tr><%
-	}
-%>
-<tr><td>&lt;<a href="add.jsp">add</a>&gt;</td></tr>
-</table>
+<%=ListNamed.getList(Item.class)%>
 </p>
 </body>
 <%@ include file="htmlfoot.jsp" %>
