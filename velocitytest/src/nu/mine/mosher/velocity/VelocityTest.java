@@ -86,7 +86,20 @@ public class VelocityTest
                 {
                     path = path.substring(0,slash);
                 }
-                System.out.println(path);
+                int dash = path.indexOf("-");
+                String name;
+                String version;
+                if (dash >= 0)
+                {
+                    name = path.substring(0, dash);
+                    version = path.substring(dash+1);
+                }
+                else
+                {
+                    name = path;
+                    version = "HEAD";
+                }
+                System.out.println(name+","+version);
             }
         }
         return deps;
