@@ -17,7 +17,7 @@ public final class Editors
     {
         String[] rp = PropertyEditorManager.getEditorSearchPath();
         LinkedList listp = new LinkedList(Arrays.asList(rp));
-        listp.addFirst("com.surveysampling.beans.editors");
+        listp.addFirst(Editors.class.getPackage().getName());
         PropertyEditorManager.setEditorSearchPath((String[])listp.toArray(new String[listp.size()]));
     }
 }
