@@ -672,7 +672,7 @@ public class Disk
      * @param sector
      * @return
      */
-    static boolean isDos33TSMapSector(DiskPos pos)
+    public boolean isDos33TSMapSector(DiskPos pos)
     {
         byte[] sector = readSector(pos);
 
