@@ -99,6 +99,10 @@ public class DiskTSMapTest extends TestCase
         r.add(new DiskPos(0x1A,0x9));
         r.add(new DiskPos(0x1C,0x4));
         r.add(new DiskPos(0x1C,0xC));
+        r.add(new DiskPos(0x1D,0x0));
+        r.add(new DiskPos(0x1D,0xA));
+        r.add(new DiskPos(0x1E,0x1));
+        r.add(new DiskPos(0x1F,0x3));
         assertManyPos("uty4-1.dsk",r);
     }
 
