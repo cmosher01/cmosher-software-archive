@@ -44,6 +44,6 @@ public class FixMetaUTF8
             pos += cc;
         }
 
-        Pattern pat = Pattern.compile();
+        Pattern pat = Pattern.compile("<meta.*charset=.*>",Pattern.CASE_INSENSITIVE|Pattern.MULTILINE|Pattern.DOTALL);
     }
 }
