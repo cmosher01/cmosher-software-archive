@@ -22,7 +22,8 @@ public class Perm
 
 	public Perm() throws NamingException
 	{
-		Context ctx = new InitialContext();
+		DirContext ctx = new InitialDirContext();
+		ctx.s
 		Properties props = new Properties();
 		props.setProperty("javax.jdo.PersistenceManagerFactoryClass","org.jpox.PersistenceManagerFactoryImpl");
 		props.setProperty("javax.jdo.option.ConnectionDriverName","org.jpox.driver.JPOXDriver");
