@@ -775,8 +775,21 @@ public class Disk
         return true;
     }
 
-    private class SectorIter implements Iterator
+    public Iterator getSectorIterator()
     {
+        return new SectorIter();
+    }
+
+    private class SectorIter extends DiskPos, implements Iterator
+    {
+        /**
+         * @param iDisk
+         */
+        protected SectorIter()
+        {
+            super(0);
+        }
+
         /**
          * @see java.util.Iterator#hasNext()
          */
