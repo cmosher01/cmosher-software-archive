@@ -669,7 +669,7 @@ public class Disk
     }
 
     /**
-     * @param sector
+     * @param pos
      * @return
      */
     public boolean isDos33TSMapSector(DiskPos pos)
