@@ -45,13 +45,13 @@ public final class Cloner
         }
     }
 
-    private static Cloneable clone(Cloneable cloneableObject, Method methodClone)
+    private static Cloneable clone(Cloneable cloneableObject, Method methodClone) throws CloneNotSupportedException
         throws IllegalAccessException, IllegalArgumentException, InvocationTargetException
     {
         return (Cloneable)methodClone.invoke(cloneableObject,null);
     }
 
-    public static Method getCloneMethod(Class cl) throws NoSuchMethodException, SecurityException, CloneNotSupportedException
+    public static Method getCloneMethod(Class cl) throws NoSuchMethodException, SecurityException
     {
         Method methodClone;
         methodClone = cl.getMethod("clone",null);
