@@ -30,44 +30,53 @@ public class Player implements Immutable
 
     public static void main(String[] args) throws Throwable
     {
-        LoggingInitializer.init();
+//        LoggingInitializer.init();
+//
+//		if (!Charset.isSupported("x-gedcom-ansel"))
+//		{
+//			System.err.println("You must create a file META-INF/services/java.nio.charsets.spi.CharsetProvider");
+//			System.err.println("in the current classpath, with one line in it:");
+//			System.err.println("nu.mine.mosher.charsets.GedcomAnselCharsetProvider");
+//			throw new UnsupportedCharsetException("x-gedcom-ansel");
+//		}
+//
+//        InputStream stream;
+//        if (args.length > 0)
+//        {
+//            stream = new FileInputStream(args[0]);
+//        }
+//        else
+//        {
+//            stream = System.in;
+//        }
+//
+//		InputStreamReader reader = new InputStreamReader(stream,"x-gedcom-ansel");
+//		BufferedReader bufrd = new BufferedReader(reader);
+//
+//		FileOutputStream fil = new FileOutputStream(new File("test.txt"));
+//		OutputStreamWriter ow = new OutputStreamWriter(fil,"cp1252");
+//		PrintWriter pw = new PrintWriter(ow);
+//
+//        String s = bufrd.readLine();
+//        while (s != null)
+//        {
+//        	pw.println(s);
+//            dumphex(s);
+//            s = bufrd.readLine();
+//        }
+//		pw.flush();
+//		pw.close();
+//		bufrd.close();
 
-		if (!Charset.isSupported("x-gedcom-ansel"))
-		{
-			System.err.println("You must create a file META-INF/services/java.nio.charsets.spi.CharsetProvider");
-			System.err.println("in the current classpath, with one line in it:");
-			System.err.println("nu.mine.mosher.charsets.GedcomAnselCharsetProvider");
-			throw new UnsupportedCharsetException("x-gedcom-ansel");
-		}
-
-        InputStream stream;
-        if (args.length > 0)
+		byte[] rb = new byte[0x100];
+		for (byte i = 0; i < rb.length; i++)
         {
-            stream = new FileInputStream(args[0]);
+            rb[i] = i;
         }
-        else
-        {
-            stream = System.in;
-        }
+		ByteArrayInputStream bais = new ByteArrayInputStream(rb);
 
-		InputStreamReader reader = new InputStreamReader(stream,"x-gedcom-ansel");
-		BufferedReader bufrd = new BufferedReader(reader);
-
-		FileOutputStream fil = new FileOutputStream(new File("test.txt"));
-		OutputStreamWriter ow = new OutputStreamWriter(fil,"cp1252");
-		PrintWriter pw = new PrintWriter(ow);
-
-        String s = bufrd.readLine();
-        while (s != null)
-        {
-        	pw.println(s);
-            dumphex(s);
-            s = bufrd.readLine();
-        }
-		pw.flush();
-		pw.close();
-		bufrd.close();
     }
+
 
     /**
      * @param s
