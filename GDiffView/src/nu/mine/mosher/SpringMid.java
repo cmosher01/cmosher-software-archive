@@ -15,7 +15,7 @@ public class SpringMid extends Spring
     /**
      * 
      */
-    public SpringMid()
+    public SpringMid(Spring right, double fraction, int width)
     {
         super();
         // TODO Auto-generated constructor stub
@@ -57,13 +57,15 @@ public class SpringMid extends Spring
         return 0;
     }
 
-    /* (non-Javadoc)
+    /**
      * @see javax.swing.Spring#setValue(int)
      */
-    public void setValue(int value)
+    public void setValue(int val)
     {
-        // TODO Auto-generated method stub
-
+        if (val == UNSET)
+        {
+            return;
+        }
+        throw new UnsupportedOperationException("Cannot set value on a derived spring");
     }
-
 }
