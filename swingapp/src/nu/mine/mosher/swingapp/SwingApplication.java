@@ -60,4 +60,25 @@ public class Ja2
          */
         waitForException();
     }
+
+    protected void createGUI() throws MetadataViewerException
+    {
+        mGUI = new MetadataViewerGUI();
+    }
+
+    protected void waitForException() throws Throwable
+    {
+        throw (Throwable)mException.get();
+    }
+
+    /**
+     * Sends an exception to the program's main thread
+     * for handling.
+     * 
+     * @param exception
+     */
+    public static void sendException(Throwable exception)
+    {
+        mApp.mException.put(exception);
+    }
 }
