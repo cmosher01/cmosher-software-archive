@@ -28,7 +28,6 @@ public class HierarchyBrowserUpdater implements TreeExpansionListener
 
     public void treeExpanded(TreeExpansionEvent event)
     {
-
         TreePath path = event.getPath();
 
         System.out.print("Received expansion event on ");
