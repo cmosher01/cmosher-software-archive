@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 /*
  * Created on Sep 17, 2004
@@ -25,6 +26,8 @@ public class Apple2
         {
             throw new IllegalArgumentException("Usage: java Apple2 dos_3.3_order_disk_image");
         }
-        new FileInputStream(new File(args[0]));
+        InputStream fileDisk = new FileInputStream(new File(args[0]));
+        byte[] rbDisk = new byte[fileDisk.available()];
+        fileDisk.read(rbDisk);
     }
 }
