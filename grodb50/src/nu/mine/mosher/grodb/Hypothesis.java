@@ -17,7 +17,7 @@ public class Hypothesis
 
 	private List<Relation<Hypothesis,Hypothesis,HypothesisRelType>> rRelUp = new ArrayList<Relation<Hypothesis,Hypothesis,HypothesisRelType>>();
 	private List<Relation<Hypothesis,Hypothesis,HypothesisRelType>> rRelDown = new ArrayList<Relation<Hypothesis,Hypothesis,HypothesisRelType>>();
-	private List<Relation<Hypothesis,Search,HypoSearchRelType>> rSearch = new ArrayList<Hypothesis,Search,HypoSearchRelType>>();
+//	private List<Relation<Hypothesis,Search,HypoSearchRelType>> rSearch = new ArrayList<Hypothesis,Search,HypoSearchRelType>>();
 
 	public Hypothesis()
 	{
