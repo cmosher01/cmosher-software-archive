@@ -39,6 +39,7 @@ public class OneFileCopyServer
 
 		byte[] rb = new byte[1024];
 		
+		int i = 0;
 		int cb = in.read(rb);
 		while (cb > 0)
 		{
