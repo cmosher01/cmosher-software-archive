@@ -1,3 +1,4 @@
+package nu.mine.mosher;
 import javax.swing.Spring;
 /*
  * Created on Sep 1, 2004
