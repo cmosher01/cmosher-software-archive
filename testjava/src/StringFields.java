@@ -50,7 +50,7 @@ public class StringFields /* ??? implements Iterable */
             return tok;
         }
 
-        public void remove()
+        public void remove() /* ??? for SimpleIterator, don't provide this method */
         {
             throw new UnsupportedOperationException();
         }
