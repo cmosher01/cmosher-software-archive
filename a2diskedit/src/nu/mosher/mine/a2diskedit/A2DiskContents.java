@@ -68,7 +68,8 @@ public class A2DiskContents
 		int b = 0xB;
 		for (int i = 0; i < cFile; ++i)
 		{
-			byte[] catEntry = image.getBytes(catTrack,catSector,b,ENTRY_SIZE);
+			byte[] catBytes = image.getBytes(catTrack,catSector,b,ENTRY_SIZE);
+			CatEntryDos33 ce = new CatEntryDos33(catBytes);
 //			CDosFile* pf = new CDosFile(this);
 //			pf->Parse(rTSB,m_tsCatalog.track,m_tsCatalog.sector,b);
 //			if (!pf->m_bDeleted)
@@ -82,6 +83,20 @@ public class A2DiskContents
 	public String getVolumeName()
 	{
 		return sVolumeName;
+	}
+
+	public static String dosName(byte[] r)
+	{
+		CString s;
+	
+		// strip high bit
+		for (int i(0); i<m_strName.GetLength(); i++)
+			s += m_strName[i] & 0x7F;
+	
+		// trim
+		s.TrimRight();
+	
+		m_strName = s;
 	}
 }
 /*
