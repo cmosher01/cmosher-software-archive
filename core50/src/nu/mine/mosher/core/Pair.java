@@ -1,6 +1,8 @@
 package nu.mine.mosher.core;
 
-public final class Pair<T,U> implements Cloneable, Comparable<T>, Serializable,	Immutable
+import java.io.Serializable;
+
+public final class Pair<T,U> implements Cloneable, Comparable<Pair<T,U>>, Serializable,	Immutable
 {
 	private final ImmutableReference<T> a;
 	private final ImmutableReference<U> b;
@@ -46,7 +48,7 @@ public final class Pair<T,U> implements Cloneable, Comparable<T>, Serializable,	
 		return a.hashCode() ^ b.hashCode();
 	}
 
-	public int compareTo(T o)
+	public int compareTo(Pair<T,U> o)
 	{
 		Pair that = (Pair)o;
 		int c;
