@@ -182,8 +182,8 @@ public class MySQLTest
 		"    household integer unsigned not null references Household(id), "+
 		"    gender enum (\"M\",\"F\"), "+
 		"    minAge integer unsigned, "+
-		"    maxAge integer unsigned default minAge, "+
-		"    count  integer unsigned default 1 "+
+		"    maxAge integer unsigned, "+
+		"    count  integer unsigned "+
 		")");
 	}
 
