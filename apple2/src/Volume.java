@@ -69,6 +69,7 @@ public class Volume
         getUsedCatalog(rKnownSectors);
         getUsedNondeletedFiles(rKnownSectors);
         getUsedDeletedFiles(rKnownSectors);
+        getUsedRecoveredFiles(rKnownSectors);
         // TODO getUsedBoot getUsedDOS
         rKnownSectors.add(new DiskPos(0,0));
         rKnownSectors.add(new DiskPos(0,1));
