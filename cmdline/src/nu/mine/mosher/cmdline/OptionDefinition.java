@@ -75,13 +75,36 @@ public class OptionDefinition implements Comparable
         hash += this.hasValue ? 0 : 1;
         return hash;
     }
-    public String toString()
-    {
-        return this.name;
-    }
     public int compareTo(Object obj)
     {
-        ArgumentDefinition that = (ArgumentDefinition)obj;
-        return this.name.compareTo(that.name);
+        OptionDefinition that = (OptionDefinition)obj;
+        int c = 0;
+        if (c == 0)
+        {
+            c = this.optionLong.compareTo(that.optionLong);
+        }
+        if (c == 0)
+        {
+            if (this.optionShort < that.optionShort)
+            {
+                c = -1;
+            }
+            else if (this.optionShort > that.optionShort)
+            {
+                c = +1;
+            }
+        }
+        if (c == 0)
+        {
+            if (!this.hasValue && that.hasValue)
+            {
+                c = -1;
+            }
+            else if (this.hasValue && !that.hasValue)
+            {
+                c = +1;
+            }
+        }
+        return c;
     }
 }
