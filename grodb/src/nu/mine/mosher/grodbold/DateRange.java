@@ -27,6 +27,7 @@ public class DateRange implements Immutable, Serializable, Comparable
 	 */
 	private final boolean julian;
 
+	// used for "informational" purposes only (not included in calculations)
 	private final int hour;
 	private final int minute;
 	private final TimeZone timeZone;
