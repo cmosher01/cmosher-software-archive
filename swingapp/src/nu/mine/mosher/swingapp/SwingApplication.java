@@ -71,7 +71,7 @@ public class Application
     {
         if (me == null)
         {
-            RuntimeException re = new IllegalStateException();
+            RuntimeException re = new IllegalStateException("Application has not been initialized.");
             re.initCause(e);
             throw re;
         }
