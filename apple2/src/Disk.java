@@ -199,20 +199,22 @@ public class Disk
                         ++goodEntries;
                     }
                     if (live && DiskPos.isValidSector(sector[ce+1]) &&
-                        isValidFileType(sector[ce+2]) &&
-                        isValidFileName(sector,ce+3))
+                        isValidFileType(sector[ce+2]))
                     {
-                        if (sector[ce] == -1)
+                        if (isValidFileName(sector,ce+3))
                         {
-                            entries.add(convertASCII(sector,ce+3,29).trim()+" [deleted]");
-                        }
-                        else
-                        {
-                            entries.add(convertASCII(sector,ce+3,30));
-                        }
-                        if (sector[ce+31] == (byte)0xA0)
-                        {
-                            ++penultimateSpace;
+                            if (sector[ce] == -1)
+                            {
+                                entries.add(convertASCII(sector,ce+3,29).trim()+" [deleted]");
+                            }
+                            else
+                            {
+                                entries.add(convertASCII(sector,ce+3,30));
+                            }
+                            if (sector[ce+31] == (byte)0xA0)
+                            {
+                                ++penultimateSpace;
+                            }
                         }
                     }
                     else
