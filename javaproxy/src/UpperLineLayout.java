@@ -127,7 +127,7 @@ public class UpperLineLayout implements LayoutManager, Serializable
     {
         Dimension dim = new Dimension(0,0);
         setSizes(parent);
-        Insets insets = parent.insets();
+        Insets insets = parent.getInsets();
         dim.width = minWidth + insets.left + insets.right;
         dim.height = minHeight + insets.top + insets.bottom;
         return dim;
