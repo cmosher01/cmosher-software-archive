@@ -1,3 +1,4 @@
+package com.surveysampling.util;
 public class UniversalCloser
 {
     /**
