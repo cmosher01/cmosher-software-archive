@@ -14,6 +14,8 @@ import java.util.Date;
  * since midnight. Instances of this class are immutable.
  * Instances of this class hold a reference to
  * the given Calendar.
+ * This class is thread-safe, but only to the extent that
+ * given Calendar object is used in a thread-safe manner.
  */
 public class TimeOfDay implements Comparable
 {
