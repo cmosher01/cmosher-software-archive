@@ -26,26 +26,34 @@ public class DiskVTOCTest extends TestCase
         assertOnePos("DOS33_SystemMaster_19800825.dsk",new DiskPos(0x11,0));
     }
 
-    public void assertOnePos(String f, DiskPos pos) throws IOException
+    public void assertOnePos(String f, DiskPos posExpected) throws IOException
     {
         Disk disk = readDiskResource(f);
         List rPos = new ArrayList();
         disk.findDos33VTOC(rPos);
+
         assertEquals(1, rPos.size());
+
+        DiskPos posActual = (DiskPos)rPos.get(0);
+
+        assertEquals(posExpected,posActual);
+    }
+
+    public void assertManyPos(String f, List rPosExpected)
+    {
+        Disk disk = readDiskResource(f);
+        List rPosActual = new ArrayList();
+        disk.findDos33VTOC(rPosActual);
+
+        assertEquals(rPosExpected.size(),rPosActual.size());
+
         DiskPos posActual = (DiskPos)rPos.get(0);
         assertEquals(pos,posActual);
     }
 
-    public void assertPos(DiskPos expected, DiskPos actual)
-    {
-        assertEquals(pos,ts1100);
-    }
 
-    public void assertPosMany(List expected, List actual)
-    {
-        
-    }
-    //    private static byte[] zeroes = new byte[0x100];
+
+//    private static byte[] zeroes = new byte[0x100];
 //
 //    /**
 //     * negative test all zeroes
