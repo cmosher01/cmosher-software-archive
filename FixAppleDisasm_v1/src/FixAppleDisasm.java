@@ -292,9 +292,39 @@ public class FixAppleDisasm
 			else
 			{
 				s = s.trim();
-				if (s.length() > 0)
+				StringTokenizer st = new StringTokenizer(s);
+				for (int i = 0; i < st.countTokens(); ++i)
 				{
-					System.err.println(s);
+					String h = st.nextToken();
+					int x = -1;
+					try
+					{
+						x = Integer.parseInt(h,16);
+						if (x < 0 || 0x100 <= x)
+						{
+							x = -1;
+						}
+					}
+					catch (Throwable e)
+					{
+						x = -1;
+					}
+					if (x >= 0)
+					{
+						if (i > 0)
+						{
+							ln = new Line();
+							lines.put(new Integer(++lineNumber),ln);
+							ln.addr = addr+i;
+							addrs.put(new Integer(ln.addr),ln);
+						}
+						ln.instr = "DB";
+						ln.oper = "$"+hexByte(x);
+					}
+					else
+					{
+						ln.comment += " "+h;
+					}
 				}
 			}
 		}
