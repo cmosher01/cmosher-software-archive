@@ -16,6 +16,12 @@ public class FixMetaUTF8Test extends TestCase
 {
     public void testSimple() throws IOException
     {
-        String s = FixMetaUTF8.fix(new File("simple.html"));
+        StringBuffer sb = new StringBuffer();
+        sb.append("<html>\n");
+        sb.append("<head>\n");
+        sb.append("<META http-equiv=\"Content-Type\" content=\"text/html; charset=windows-1252\">\n");
+        sb.append("</head>\n");
+        sb.append("</html>\n");
+        String s = FixMetaUTF8.fixMeta(sb);
     }
 }
