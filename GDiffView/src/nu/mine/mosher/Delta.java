@@ -158,7 +158,7 @@ public class Delta
                         while (i < read_idx && ok);
                         b[0] = targetBuff[i - 1];
                     }
-                    while (ok && targetLength - targetidx > 0);
+                    while (ok && targetidx < targetLength);
 
                     // this is a copy instruction
                     output.addCopy(offset,length);
