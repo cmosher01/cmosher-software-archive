@@ -49,15 +49,16 @@ public class DiskVTOCTest extends TestCase
 
     public void testDOS33_Others() throws IOException, InvalidPosException
     {
-//        assertOnePos("daviddos2blank.dsk",new DiskPos(0x11,0));
-        assertOnePos("diversidos2c_blank.dsk",new DiskPos(0x11,0));
-        assertOnePos("diversidos41c_blank.dsk",new DiskPos(0x11,0));
-        assertOnePos("dos33(80)master.dsk",new DiskPos(0x11,0));
-        assertOnePos("dos33(80)slave.dsk",new DiskPos(0x11,0));
-        assertOnePos("dos33master.dsk",new DiskPos(0x11,0));
-        assertOnePos("dos33slave.dsk",new DiskPos(0x11,0));
-        assertOnePos("franklin83_slave.dsk",new DiskPos(0x11,0));
-        assertOnePos("hyperdos.dsk",new DiskPos(0x11,0));
+        assertOnePos("david_dos.dsk",new DiskPos(0x11,0));
+        assertOnePos("daviddos2.dsk",new DiskPos(0x11,0));
+//        assertOnePos("diversidos2c_blank.dsk",new DiskPos(0x11,0));
+//        assertOnePos("diversidos41c_blank.dsk",new DiskPos(0x11,0));
+//        assertOnePos("dos33(80)master.dsk",new DiskPos(0x11,0));
+//        assertOnePos("dos33(80)slave.dsk",new DiskPos(0x11,0));
+//        assertOnePos("dos33master.dsk",new DiskPos(0x11,0));
+//        assertOnePos("dos33slave.dsk",new DiskPos(0x11,0));
+//        assertOnePos("franklin83_slave.dsk",new DiskPos(0x11,0));
+//        assertOnePos("hyperdos.dsk",new DiskPos(0x11,0));
 //        zero.dsk,new DiskPos(0x11,0));
     }
 
