@@ -1,15 +1,21 @@
 <% template DirectoryBrowserSample() %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>Tea Test</title>
+</head>
+<body>
 <%
 	dir = getFiles()
 	if (dir != null)
 	{
 	    if (dir.length > 0)
 	    {
-	    	%><h2>Files in <%dir[0].parent%></h2>
-	    	<font color="#800000">
-	        <a href="DirectoryBrowserSample.tea?path=<%replace(dir[0].parent,"\\","/")%>/..">[-UP-]</a>
-	        </font><br />
-	        <%
+	    	%>
+<h2>Files in <%dir[0].parent%></h2>
+<font color="#800000">
+<a href="DirectoryBrowserSample.tea?path=<%replace(dir[0].parent,"\\","/")%>/..">[-UP-]</a>
+</font><br /><%
 	        foreach (file in dir)
 	        {
 	            nobackslashpath = replace(file.absolutePath,"\\","/")
@@ -41,3 +47,5 @@
 		%><h2>Not a Directory</h2><%
 	}
 %>
+</body>
+</html>
