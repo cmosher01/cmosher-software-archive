@@ -242,21 +242,21 @@ public class GDiffVeiew extends JFrame
     {
         if (srcBegin >= 0 && srcEnd >= 0)
         {
-            unhighlight(getHexStart(srcBegin),getHexRowEnd(srcBegin));
+            unhighlight(getHexStart(srcBegin),getHexRowEnd(getRow(srcBegin)));
             for (int i = getRow(srcBegin)+1; i < getRow(srcEnd)-1; ++i)
             {
                 unhighlight(getHexRowStart(i),getHexRowEnd(i));
             }
-            unhighlight(getHexRowStart(srcEnd),getHexEnd(srcEnd));
+            unhighlight(getHexRowStart(getRow(srcEnd)),getHexEnd(srcEnd));
         }
         srcBegin = begin;
         srcEnd = end;
-        highlight(getHexStart(srcBegin),getHexRowEnd(srcBegin));
+        highlight(getHexStart(srcBegin),getHexRowEnd(getRow(srcBegin)));
         for (int i = getRow(srcBegin)+1; i < getRow(srcEnd)-1; ++i)
         {
             highlight(getHexRowStart(i),getHexRowEnd(i));
         }
-        highlight(getHexRowStart(srcEnd),getHexEnd(srcEnd));
+        highlight(getHexRowStart(getRow(srcEnd)),getHexEnd(srcEnd));
     }
     public int getRow(int pos)
     {
