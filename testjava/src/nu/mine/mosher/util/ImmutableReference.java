@@ -15,8 +15,6 @@ public final class ImmutableReference implements Cloneable, Comparable, Serializ
             throw new IllegalArgumentException();
         }
         this.ref = Cloner.cloneObject(ref);
-        buildString();
-        buildHashCode();
     }
 
     private void buildString()
@@ -47,6 +45,7 @@ public final class ImmutableReference implements Cloneable, Comparable, Serializ
 
     public String toString()
     {
+        buildString();
         return this.str;
     }
 
@@ -57,6 +56,7 @@ public final class ImmutableReference implements Cloneable, Comparable, Serializ
 
     public int hashCode()
     {
+        buildHashCode();
         return this.hash;
     }
 
