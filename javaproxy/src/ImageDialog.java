@@ -82,7 +82,7 @@ class ImageDialog extends Dialog
             int img_width = image.getWidth(this);
             int img_height = image.getHeight(this);
 
-            imgsy = msgsy - (int)(img_height / 2);
+            imgsy = msgsy - (img_height / 2);
             msgsx += img_width;
             if (imgsy <= 0)
                 return;
