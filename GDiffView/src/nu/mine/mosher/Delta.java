@@ -233,7 +233,7 @@ public class Delta
 
             if (targetLength - targetidx > 0)
             {
-                // update the adler fingerpring with a single byte
+                // update the adler fingerprint with a single byte
 
                 target.read(b,0,1);
                 targetidx += 1;
