@@ -117,7 +117,7 @@ public class GDiffView extends JFrame
                 if (newIndex >= 0)
                 {
                     GDiffCmd newCmd = (GDiffCmd)rcmd.get(newIndex);
-                    System.out.println("highlight " + oldCmd);
+                    System.out.println("highlight " + newCmd);
                 }
             }
         };
