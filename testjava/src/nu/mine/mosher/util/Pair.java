@@ -34,7 +34,6 @@ public class Pair
         catch (CloneNotSupportedException cantHappen)
         {
         }
-
         return clon;
     }
 }
