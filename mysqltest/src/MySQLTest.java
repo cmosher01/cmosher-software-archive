@@ -45,6 +45,8 @@ public class MySQLTest
 			log.info("Inserting data...");
 			insertData();
 			log.info("Done inserting data.");
+
+			log.info("Calculating...");
 		}
 		finally
 		{
