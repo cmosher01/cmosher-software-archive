@@ -12,17 +12,11 @@ import javax.swing.SwingUtilities;
  */
 public class SwingApplication
 {
-//    private Ja2GUI mGUI;
     private ExceptionHandler mExceptionHandler;
     private CommandLineArgHandler mCommandLineArgHandler;
     private GUI mGUI;
 
 
-
-    public void thrown(Throwable e)
-    {
-        mExceptionHandler.send(e);
-    }
 
     /**
      * @param eh
@@ -84,6 +78,11 @@ public class SwingApplication
     protected void createGUI()
     {
         mGUI.create();
+    }
+
+    public void thrown(Throwable e)
+    {
+        mExceptionHandler.send(e);
     }
 
     public CommandLineArgHandler getCommandLineArgHandler()
