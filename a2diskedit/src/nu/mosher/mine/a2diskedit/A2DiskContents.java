@@ -32,7 +32,11 @@ public class A2DiskContents
 
 	private void parseDir(int track, int sector)
 	{
-		dos33volume = image.getByte(track,sector,6);
+		byte svol = image.getByte(track,sector,6);
+		if (svol<0)
+			dos33volume = 256+svol;
+		else
+			dos33volume = svol;
 		sVolumeName = "Disk volume "+Integer.toString(dos33volume);
 	}
 
