@@ -155,4 +155,10 @@ class Indi
     {
     	pushed = true;
     }
+
+	public boolean isHit()
+	{
+		return pushed;
+	}
+	}
 }
