@@ -5,6 +5,8 @@ package com.surveysampling.util;
  * but this class is able to return empty fields, whereas the StringTokenizer
  * class will skip over multiple occurrences of delimiters. Also, the
  * implementation of this class is much simpler than StringTokenizer's.
+ * 
+ * @author Chris Mosher
  */
 public class StringFieldizer
 {
