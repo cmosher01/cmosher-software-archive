@@ -41,8 +41,10 @@ public class MySQLTest
 			db = DriverManager.getConnection("jdbc:mysql:///test","root","");
 			log.info("Creating schema...");
 			createSchema();
-			insertData();
 			log.info("Done creating schema.");
+			log.info("inserting data...");
+			insertData();
+			log.info("Done inserting data.");
 		}
 		finally
 		{
