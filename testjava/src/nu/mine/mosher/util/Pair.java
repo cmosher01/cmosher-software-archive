@@ -23,4 +23,18 @@ public class Pair
     {
         return "("+a+","+b+")";
     }
+
+    public Object clone()
+    {
+        Pair clon = null;
+        try
+        {
+            clon = (Pair)super.clone();
+        }
+        catch (CloneNotSupportedException cantHappen)
+        {
+        }
+
+        return clon;
+    }
 }
