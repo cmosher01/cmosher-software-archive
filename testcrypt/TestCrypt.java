@@ -1,3 +1,5 @@
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 import java.security.Provider;
 import java.security.SecureRandom;
 import java.security.Security;
@@ -10,12 +12,15 @@ public class TestCrypt
 {
     public static void main(String[] rArg) throws Throwable
     {
-//        System.setProperty("java.security.egd","");
-//        Security.setProperty("securerandom.source","");
-//        SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
-//        random.setSeed(random.generateSeed(20));
-//        System.out.println(random.nextInt());
-        showProviders();
+        System.setProperty("java.security.egd","");
+        Security.setProperty("securerandom.source","");
+        SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+        random.setSeed(random.generateSeed(20));
+        System.out.println(random.nextInt());
+
+        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("DSA");
+        keyGen.initialize(1024,random);
+        KeyPair keypair = keyGen.generateKeyPair();
     }
 
     public static void showProviders()
