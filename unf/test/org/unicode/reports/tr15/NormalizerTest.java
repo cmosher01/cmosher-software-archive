@@ -33,4 +33,13 @@ public class NormalizerTest extends TestCase
 		}
 		System.out.println();
 	}
+
+	public void main(String[] rArg) throws Throwable
+	{
+		Normalizer n = new Normalizer();
+		String s = "\u0041\u030a";
+		dumphex(s);
+		String sn = n.normalize(s);
+		dumphex(sn);
+	}
 }
