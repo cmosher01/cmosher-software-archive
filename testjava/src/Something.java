@@ -1,6 +1,6 @@
 import java.io.File;
 
-public class SomeBean
+public class Something
 {
     private boolean aBoolean;
     private byte aByte;
@@ -16,7 +16,7 @@ public class SomeBean
     private Integer objInteger;
     private Integer[] robjInteger;
 
-    public SomeBean()
+    public Something()
     {
     }
 
