@@ -94,7 +94,7 @@ public class TestBeans
         BeanInfo bi = Introspector.getBeanInfo(bean.getClass());
         if (bi == null)
         {
-            throw new IntrospectionException("can't get info for bean");
+            throw new IntrospectionException("Cannot get BeanInfo for bean class "+bean.getClass().getName());
         }
         return bi;
     }
