@@ -23,7 +23,7 @@ class HTTPResponseHeader
 
     public String Reason = "";
 
-    public String primeheader = "";;
+    public String primeheader = "";
 
     public HashMap headerfields = new HashMap();
 
