@@ -153,7 +153,7 @@ public class Disk
             DiskPos cur = this.pos;
             byte[] sector = read(DiskPos.cSector);
             if (sector[0] == 0 &&
-                sector[1] > 0 &&
+//                sector[1] > 0 &&
                 DiskPos.isValidSector(sector[2]) &&
                 sector[3] == 0)
             {
