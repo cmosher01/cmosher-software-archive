@@ -16,12 +16,14 @@ public class VolumeFile
     /**
      * @param start
      * @param disk
+     * @throws InvalidPosException
      */
-    public void readFromMedia(DiskPos start, Disk disk)
+    public void readFromMedia(DiskPos start, Disk disk) throws InvalidPosException
     {
         if (disk.isDos33TSMapSector(start))
         {
             ts = new VolumeTSMap();
+            ts.readFromMedia(start,disk);
         }
         else
         {
