@@ -35,4 +35,43 @@ public class CachedCloner
             ignore.printStackTrace();
         }
     }
+    public Cloneable cloneObject(Cloneable cloneableObject) throws CloneNotSupportedException
+    {
+        try
+        {
+            Class cl = cloneableObject.getClass();
+            Method methodClone = (Method)cache.get(cl);
+            if (methodClone == null)
+            {
+                methodClone = getCloneMethod(cl);
+                cache.put(cl, methodClone);
+            }
+            return clone(cloneableObject, methodClone);
+        }
+        catch (CloneNotSupportedException e)
+        {
+            throw e;
+        }
+        catch (Throwable cause)
+        {
+            CloneNotSupportedException ex;
+            ex = new CloneNotSupportedException();
+            ex.initCause(cause);
+            throw ex;
+        }
+    }
+
+    private static Cloneable clone(Cloneable cloneableObject, Method methodClone)
+        throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, CloneNotSupportedException
+    {
+        return (Cloneable)methodClone.invoke(cloneableObject, null);
+    }
+
+    private static Method getCloneMethod(Class cl) throws NoSuchMethodException, SecurityException
+    {
+        Method methodClone;
+        methodClone = cl.getMethod("clone", null);
+        methodClone.setAccessible(true);
+        return methodClone;
+    }
 }
