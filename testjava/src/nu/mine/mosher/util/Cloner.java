@@ -1,4 +1,7 @@
-package mosher; // needs special class loader at runtime
+//package java.lang; // needs special class loader at runtime
+package mosher;
+
+import java.lang.reflect.Method;
 
 /**
  * Provides a static method that will clone any Cloneable Object.
@@ -14,6 +17,9 @@ public class Cloner
 
     public static Cloneable cloneObject(Cloneable cloneableObject) throws CloneNotSupportedException
     {
-        return (Cloneable)cloneableObject.clone();
+        Method objClone = cloneableObject.getClass().getMethod("clone", null);
+        objClone.setAccessible(true);
+        objClone.invoke(cloneableObject,null);
+//        return (Cloneable)cloneableObject.clone();
     }
 }
