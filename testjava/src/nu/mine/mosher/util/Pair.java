@@ -46,15 +46,7 @@ public final class Pair implements Cloneable, Comparable, Serializable
 
     public int hashCode()
     {
-        int h = 17;
-
-        h *= 37;
-        h += a.hashCode();
-
-        h *= 37;
-        h += b.hashCode();
-
-        return h;
+        return a.hashCode() ^ b.hashCode();
     }
 
     public int compareTo(Object o)
