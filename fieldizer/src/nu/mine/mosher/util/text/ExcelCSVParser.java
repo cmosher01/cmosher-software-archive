@@ -82,9 +82,9 @@ public class ExcelCSVParser
      * StringBuffer is parsed starting at the
      * given starting position.
      * @param sb the CSV line to be parsed
-     * @param start the position with sb to start parsing
-     * @throws IllegalStateException if start is negative
-     * or greater than the length of sb.
+     * @param start the position within <code>sb</code> to start parsing
+     * @throws IllegalStateException if <code>start</code> is negative
+     * or greater than the length of <code>sb</code>.
      */
     public ExcelCSVParser(StringBuffer sb, int start)
     {
