@@ -76,12 +76,6 @@ public class DailyWindow
      */
     protected DailyWindow(TimeOfDay start, TimeOfDay end) throws IllegalArgumentException
     {
-        // fail fast if given any null
-        if (start == null || end == null)
-        {
-            throw new NullPointerException();
-        }
-
         mStart = start;
         mEnd = end;
 
@@ -108,9 +102,15 @@ public class DailyWindow
      * @throws ParseException if start or end are in
      * an invalid format, or if the start and end times are the same.
      */
-    public static DailyWindow createDailyWindow(String start, String end) throws ParseException
+    public static DailyWindow createDailyWindow(TimeOfDay start, TimeOfDay end) throws ParseException
     {
-        if (start.length() == 0 && end.length() == 0)
+        // fail fast if given any null
+        if (start == null || end == null)
+        {
+            throw new NullPointerException();
+        }
+
+        if (start.equals(end))
         {
             return createDailyWindowAlwaysOpen();
         }
