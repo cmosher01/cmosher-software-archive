@@ -14,5 +14,11 @@ package nu.mine.mosher.jdotest;
  */
 public class ListNamed
 {
-
+	public String getList(Class named)
+	{
+		if (!(named.isAssignableFrom(Named))
+		{
+			return "Error";
+		}
+	}
 }
