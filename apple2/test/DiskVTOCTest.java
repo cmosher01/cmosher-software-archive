@@ -365,6 +365,7 @@ public class DiskVTOCTest extends TestCase
 
     /**
      * @param f
+     * @return
      * @throws IOException
      */
     private Disk readDiskResource(String f) throws IOException
