@@ -217,8 +217,9 @@ public class TimeOfDay implements Comparable
     {
         if (seconds == 0 && milliseconds == 0 && !showAll)
         {
-            FieldPosition pos = new FieldPosition(NumberFormat.INTEGER_FIELD);
-            fmt.format(hours,s,pos);
+            fmt.format(hours,s,new FieldPosition(0));
+            s.append(':');
+            fmt.format(minutes,s,new FieldPosition(0));
         }
 
         return s;
