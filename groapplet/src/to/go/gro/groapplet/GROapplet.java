@@ -1,11 +1,6 @@
 package to.go.gro.groapplet;
-import java.awt.Frame;
 import java.awt.HeadlessException;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -21,11 +16,10 @@ import javax.swing.JTextArea;
 import javax.swing.UIManager;
 
 import nu.mine.mosher.core.StringFieldizer;
-import nu.mine.mosher.core.Util;
 
 public class GROapplet extends JApplet
 {
-    private boolean test;
+//    private boolean test;
 
     private FamilyChart fc;
 
@@ -133,17 +127,17 @@ public class GROapplet extends JApplet
 
         InputStream streamTree;
 
-		if (test)
-		{
-			streamTree = new FileInputStream(new File("test.gro"));
-		}
-		else
-		{
+//		if (test)
+//		{
+//			streamTree = new FileInputStream(new File("test.gro"));
+//		}
+//		else
+//		{
 			URL url = new URL(getDocumentBase(), "?chartdata");
 			HttpURLConnection con = (HttpURLConnection)url.openConnection();
 			con.connect();
 			streamTree = con.getInputStream();
-		}
+//		}
 
         readFrom(streamTree);
 
@@ -211,32 +205,32 @@ public class GROapplet extends JApplet
         fc = new FamilyChart(this,indis,famis);
     }
 
-    public static void main(String[] args)
-    {
-        if (args.length > 0)
-            System.err.println("Arguments ignored.");
-
-        Frame f = new Frame("Paint Applet");
-        f.addWindowListener(new WindowAdapter()
-        {
-            public void windowClosing(WindowEvent e)
-            {
-                Util.unused(e);
-                System.exit(0);
-            }
-        });
-
-        GROapplet applet = new GROapplet();
-        applet.setTestMode();
-        applet.init();
-        f.add(applet);
-
-        f.setSize(640, 480);
-        f.setVisible(true);
-    }
-
-    private void setTestMode()
-    {
-    	test = true;
-    }
+//    public static void main(String[] args)
+//    {
+//        if (args.length > 0)
+//            System.err.println("Arguments ignored.");
+//
+//        Frame f = new Frame("Paint Applet");
+//        f.addWindowListener(new WindowAdapter()
+//        {
+//            public void windowClosing(WindowEvent e)
+//            {
+//                Util.unused(e);
+//                System.exit(0);
+//            }
+//        });
+//
+//        GROapplet applet = new GROapplet();
+//        applet.setTestMode();
+//        applet.init();
+//        f.add(applet);
+//
+//        f.setSize(640, 480);
+//        f.setVisible(true);
+//    }
+//
+//    private void setTestMode()
+//    {
+//    	test = true;
+//    }
 }
