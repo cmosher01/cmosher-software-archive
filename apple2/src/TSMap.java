@@ -73,6 +73,9 @@ public class TSMap
         return false;
     }
 
+    /**
+     * @param rDiskPos
+     */
     public void getMarks(Collection rDiskPos)
     {
         for (int i = 0; i < r.length; i++)
