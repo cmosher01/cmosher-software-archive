@@ -48,12 +48,18 @@ public class Test
         ExceptionUtil.newGeneric(e);
         System.out.println(ExceptionUtil.class.getClassLoader().getClass().getName());
         URLClassLoader cl = (URLClassLoader)ExceptionUtil.class.getClassLoader();
-        URL[] rurl = cl.getURLs();
-        for (int i = 0; i < rurl.length; ++i)
+        do
         {
-            URL url = rurl[i];
-            System.out.println(url.toString());
+            URL[] rurl = cl.getURLs();
+            for (int i = 0; i < rurl.length; ++i)
+            {
+                URL url = rurl[i];
+                System.out.println(url.toString());
+            }
+            System.out.println("------");
+            cl = (URLClassLoader)cl.getParent();
         }
+        while (cl != null);
 
         System.out.println(Test.class.getClassLoader().getClass().getName());
         System.out.println(System.getProperty("java.class.path"));
