@@ -15,8 +15,6 @@ public class PersonPersist
 {
 	private final static int SIZE = 3;
 	private PersistenceManagerFactory pmf;
-	private PersistenceManager pm;
-	private Transaction transaction;
 
 	private Person[] people;
 
@@ -48,18 +46,37 @@ public class PersonPersist
 		this.people[2] = new Person("test 3");
 
 		// persist the array of people
-		this.pm = this.pmf.getPersistenceManager();
-		this.transaction = this.pm.currentTransaction();
-		this.pm.makePersistentAll(this.people);
-		this.transaction.commit();
+		PersistenceManager pm = this.pmf.getPersistenceManager();
+		Transaction transaction = pm.currentTransaction();
+		pm.makePersistentAll(this.people);
+		transaction.commit();
 		// retrieve the object ids for the persisted objects
 		for (int i = 0; i < this.people.length; i++)
 		{
-			this.rid.add(this.pm.getObjectId(this.people[i]));
+			this.rid.add(pm.getObjectId(this.people[i]));
 		}
 		// close current persistence manager to ensure that
 		// objects are read from the db not the persistence
 		// manager's memory cache.
-		this.pm.close();
+		pm.close();
+	}
+
+	public void display()
+	{
+		Person person;
+		// get a new persistence manager
+		pm = pmf.getPersistenceManager();
+		// retrieve objects from datastore and display
+		for (int i = 0; i < max; i++)
+		{
+			person = (Person)pm.getObjectById(id.elementAt(i),false);
+			System.out.println("Name      : " + person.getName());
+			System.out.println("Address   : " + person.getAddress());
+			System.out.println("SSN       : " + person.getSsn());
+			System.out.println("Email     : " + person.getEmail());
+			System.out.println("Home Phone: " + person.getHomePhone());
+			System.out.println("Work Phone: " + person.getWorkPhone());
+		}
+		pm.close();
 	}
 }
