@@ -29,7 +29,7 @@ public class FileFinder
 
         while (dirs.size() > 0)
         {
-            String d = (String)dirs.remove(0);
+            File d = (File)dirs.remove(0);
             File[] rm = d.listFiles(new FileFilter()
             {
                 public boolean accept(File pathname)
