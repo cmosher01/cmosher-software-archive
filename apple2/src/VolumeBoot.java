@@ -113,11 +113,26 @@ public class VolumeBoot extends VolumeEntity
         {
             if (data[0] == 1 && data[1] == (byte)0xA5 && data[2] == 0x27 && data[0xFF] == 9)
             {
-                byte[] slave = patch(rDos80master,data[0xFE]-0x36);
-                if (same(data,slave))
+                if (same(data,patch(rDos80master,data[0xFE]-0x36)))
                 {
                     ident = "DOS 3.3 (1980) Slave (A$"+Hex2Bin.hexbyte(data[0xFE])+"00)";
                 }
+                else if (same(data,patch(rDos83master,data[0xFE]-0x36)))
+                {
+                    ident = "DOS 3.3 (1983) Slave (A$"+Hex2Bin.hexbyte(data[0xFE])+"00)";
+                }
+                else if (same(data,patch(rDos86master,data[0xFE]-0x36)))
+                {
+                    ident = "DOS 3.3 (1986) Slave (A$"+Hex2Bin.hexbyte(data[0xFE])+"00)";
+                }
+                else
+                {
+                    ident = "unknown DOS boot routine";
+                }
+            }
+            else
+            {
+                ident = "unknown boot sector";
             }
         }
     }
