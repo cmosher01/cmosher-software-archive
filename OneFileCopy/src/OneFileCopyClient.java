@@ -16,6 +16,7 @@ public class OneFileCopyClient
 		String sFileName = "test.dat";
 		BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File(sFileName)));
 
+		byte[] rb = new byte[1024];
 		int cb = in.read(rb);
 		while (cb > 0)
 		{
