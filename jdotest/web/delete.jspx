@@ -10,11 +10,6 @@
     p.deletePersistent(item);
     pm.commit(p);
 %>
-<%
-    int i = Integer.parseInt(request.getParameter("i"));
-    String s = (String)r.get(i);
-    r.remove(i);
-%>
 <head>
 <title>Delete</title>
 </head>
