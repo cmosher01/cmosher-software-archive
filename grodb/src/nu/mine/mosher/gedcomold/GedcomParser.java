@@ -71,22 +71,7 @@ public class GedcomParser
 		if (st.hasMoreTokens())
 		{
 			sValue = st.nextToken("\0"); // rest of line
-			int i = 0;
-//			while (i < sValue.length() && Character.isWhitespace(sValue.charAt(i)))
-//			{
-//				++i;
-//			}
-//			if (i > 0)
-//			{
-//				if (i < sValue.length())
-//				{
-//					sValue = sValue.substring(i);
-//				}
-//				else
-//				{
-//					sValue = "";
-//				}
-//			}
+			sValue = sValue.substring(1); // skip one space after tag
 		}
 		if (level < 0 || 99 < level)
 		{
