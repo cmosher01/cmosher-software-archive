@@ -67,7 +67,7 @@ public class GUI
     }
 
     /**
-     * @return
+     * @return menu bar for the application
      */
     private JMenuBar createMenuBar()
     {
@@ -76,7 +76,7 @@ public class GUI
     }
 
     /**
-     * @return
+     * @return main content pane for the application
      */
     private JPanel createContentPane()
     {
