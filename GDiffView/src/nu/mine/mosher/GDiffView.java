@@ -8,7 +8,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
  
@@ -42,10 +46,14 @@ public class GDiffVeiew extends JFrame
     private File src;
 
     private File dif;
+
+    private int cCol = 0x10;
+
+    private StringBuffer sb;
  
  
  
-    public GDiffVeiew(String fileSrc, String fileGDiff) throws BadLocationException
+    public GDiffVeiew(String fileSrc, String fileGDiff) throws BadLocationException, IOException
     {
         super("GDiffVeiew");
 
@@ -91,7 +99,8 @@ public class GDiffVeiew extends JFrame
         StyleConstants.setBold(style, false);
         StyleConstants.setItalic(style, false);
         styles.put("highlight", style);
- 
+
+        readSrc();
         doc.insertString(0,
             "          00 01 02 03 04 05 06 07          \n"+
             "00000000: D1 FF D1 FF 04 01 20 30  MWMWMWMW\n"+
@@ -105,7 +114,60 @@ public class GDiffVeiew extends JFrame
         setVisible(true);
     }
  
-    public static void main(String[] args) throws BadLocationException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, InterruptedException
+    /**
+     * @throws IOException
+     * 
+     */
+    private void readSrc() throws IOException
+    {
+        BufferedInputStream in = new BufferedInputStream(new FileInputStream(src));
+        byte[] rb = new byte[cCol];
+        int c = in.read(rb);
+        int nibs = 8;
+        sb = new StringBuffer(in.available()*6);
+        for (int i = 0; i < nibs+2; ++i)
+        {
+            sb.append(' ');
+        }
+        for (int i = 0; i < cCol; ++i)
+        {
+            appendHex(sb,i);
+            sb.append(' ');
+        }
+        while (c > 0)
+        {
+            c = in.read(rb);
+        }
+    }
+
+    /**
+     * @param sb2
+     * @param i
+     */
+    private void appendHex(StringBuffer sb, int i)
+    {
+        char lo = nib(i & 0xF);
+    }
+
+    /**
+     * @param i
+     * @return
+     */
+    private char nib(int i)
+    {
+        char c;
+        if (i < 10)
+        {
+            c = (char)(i+'0');
+        }
+        else
+        {
+            c = (char)(i+'A');
+        }
+        return c;
+    }
+
+    public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, InterruptedException, BadLocationException, IOException
     {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         GDiffVeiew frame = new GDiffVeiew(args[0],args[1]);
