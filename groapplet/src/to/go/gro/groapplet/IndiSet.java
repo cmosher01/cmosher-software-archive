@@ -53,16 +53,16 @@ class IndiSet
         }
     }
 
-    public boolean isOnIndi(Point point)
+    public Indi isOnIndi(Point point)
     {
         for (Iterator i = mrIndi.iterator(); i.hasNext();)
         {
             Indi indi = (Indi)i.next();
 
             if (indi.isOn(point))
-                return true;
+                return indi;
         }
 
-        return false;
+        return null;
     }
 }
