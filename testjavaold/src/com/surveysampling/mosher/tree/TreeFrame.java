@@ -9,6 +9,8 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 
+import com.surveysampling.mosher.Flag;
+
 public class TreeFrame extends JFrame
 {
     private static JFrame frame;
@@ -70,9 +72,11 @@ public class TreeFrame extends JFrame
         //Display the window.
         frame.pack();
         frame.setVisible(true);
+
+        begun.waitToSetTrue();
     }
 
-    public static void main(String argv[])
+    public static void main(String argv[]) throws Throwable
     {
         dir = System.getProperty("user.dir");
         if (argv != null && argv.length >= 1)
@@ -87,5 +91,7 @@ public class TreeFrame extends JFrame
                 createAndShowGUI();
             }
         });
+
+        begun.waitUntilTrue();
     }
 }
