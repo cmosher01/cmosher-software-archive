@@ -8,9 +8,8 @@
  * Author : Steve Yeong-Ching Hsueh
  */
 
-import java.net.*;
-import java.io.*;
-import java.util.*;
+import java.util.Hashtable;
+import java.util.StringTokenizer;
 
 /**
  * This class contains common functions for parsing HTTP response headers
