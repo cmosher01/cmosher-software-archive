@@ -43,6 +43,7 @@ public class MtaURI
         }
         if (uri.getPort() < 0x400 || 0x10000 <= uri.getPort())
         {
+            throw new URISyntaxException(""+uri.getPort(),"port must be: 1024 <= port < 65536");
         }
         mURI = uri;
 
