@@ -12,6 +12,7 @@ public class VelocityTest
 {
     public static void main(String[] args) throws Throwable
     {
+        System.err.println(System.getProperty("user.dir"));
         VelocityEngine velocity = new VelocityEngine();
         velocity.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM,new ErrLogger());
 
