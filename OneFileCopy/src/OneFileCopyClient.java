@@ -30,7 +30,7 @@ public class OneFileCopyClient
 		int cbLen = in.read(rbLen,0,8);
 		System.out.println("len of len: "+cbLen);
 		long xLen = 0;
-		for (int i = Long.SIZE-1; i <= 0; --i)
+		for (int i = 7; i <= 0; --i)
 		{
 			xLen <<= 8;
 			xLen |= rbLen[i];
