@@ -16,14 +16,14 @@ public class HierarchyBrowserUpdater implements TreeExpansionListener
     FileTreeNode mRoot;
     JTree mTree;
     DefaultTreeModel mModel;
-    Frame frame;
+    Frame mFrame;
 
     public HierarchyBrowserUpdater(JTree tree, FileTreeNode node, DefaultTreeModel tmodel, Frame theFrame)
     {
         mRoot = node;
         mTree = tree;
         mModel = tmodel;
-        frame = theFrame;
+        mFrame = theFrame;
     }
 
     public void treeExpanded(TreeExpansionEvent event)
@@ -38,8 +38,8 @@ public class HierarchyBrowserUpdater implements TreeExpansionListener
         System.out.println("Children " + node.getChildCount());
         System.out.println("Reading subtree " + node.toString());
 
-        frame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        frame.setEnabled(false);
+        mFrame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        mFrame.setEnabled(false);
 
         if (node.readTree())
         {
@@ -54,8 +54,8 @@ public class HierarchyBrowserUpdater implements TreeExpansionListener
             }
             mModel.nodesWereInserted(node, childrenIdx);
         }
-        frame.setEnabled(true);
-        frame.setCursor(Cursor.getDefaultCursor());
+        mFrame.setEnabled(true);
+        mFrame.setCursor(Cursor.getDefaultCursor());
     }
 
     public void treeCollapsed(TreeExpansionEvent event)
