@@ -40,15 +40,15 @@ public class Test
         Object o = new Object();
         o.getClass().getName();
 
-        OutputStream is = null;
+        OutputStream os = null;
         try
         {
-            is = new FileOutputStream(new File("test.txt"));
-            is.write(65);
+            os = new FileOutputStream(new File("test.txt"));
+            os.write(65);
         }
         finally
         {
-            UniversalCloser.close(is);
+            UniversalCloser.close(os);
         }
 //        Integer[] ri = new Integer[5];
 //        ri[0] = new Integer(10);
