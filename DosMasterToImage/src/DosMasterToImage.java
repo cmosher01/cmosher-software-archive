@@ -19,6 +19,10 @@ import java.io.IOException;
 public class DosMasterToImage
 {
 
+    /**
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException
     {
         if (args.length != 2)
