@@ -191,10 +191,10 @@ class NormalizerBuilder
 
                 // check consistency: all canon decomps must be singles or pairs!
 
-                if (decomp.length() < 1 || decomp.length() > 2 && !compat)
-                {
-                    System.err.println("Bad decomp ("+decomp+") at: " + line);
-                }
+//                if (decomp.length() < 1 || decomp.length() > 2 && !compat)
+//                {
+//                    System.err.println("Bad decomp ("+decomp+") at: " + line);
+//                }
                 decompose.put(value, decomp);
 
                 // only compositions are canonical pairs
