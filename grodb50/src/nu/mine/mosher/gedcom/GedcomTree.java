@@ -4,12 +4,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import nu.mine.mosher.gedcom.GedcomLine;
 import nu.mine.mosher.util.TreeNode;
 
 public class GedcomTree
 {
-	private TreeNode<GedcomLine> root;
+	private TreeNode<Integer> root;
 	private Map<String,TreeNode<GedcomLine>> mapIDtoNode = new HashMap<String,TreeNode<GedcomLine>>();
 
 	private int prevLevel;
