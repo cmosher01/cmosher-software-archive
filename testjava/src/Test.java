@@ -43,7 +43,7 @@ public class Test
 	{
 
         String x = "a,b,,d";
-        for (Iterator i = new SF(x).iterator(); i.hasNext();)
+        for (Iterator i = new StringFields(x).iterator(); i.hasNext();)
         {
             String field = (String)i.next();
             System.out.println(field);
