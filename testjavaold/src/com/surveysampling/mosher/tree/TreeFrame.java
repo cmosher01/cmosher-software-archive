@@ -55,7 +55,7 @@ public class TreeFrame extends JFrame
      * this method should be invoked from the
      * event-dispatching thread.
      */
-    private static void createAndShowGUI()
+    protected static void createAndShowGUI()
     {
         //Make sure we have nice window decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
