@@ -17,6 +17,7 @@ public class Volume
 {
     private VolumeCatalog cat;
     private List rFile = new ArrayList(); // VolumeFile
+    private List rFileRecovered = new ArrayList(); // VolumeFileRecovered
 //    private VolumeDOS dos;
 //    private VolumeBoot boot;
 //    private VolumeUnusedBlank blank;
@@ -58,7 +59,9 @@ public class Volume
             DiskPos pos = (DiskPos)i.next();
             if (!rKnownTSMaps.contains(pos))
             {
-                System.out.println("Unaccounted for TS Map at "+pos.toStringTS());
+                VolumeFileRecovered f = new VolumeFileRecovered();
+                f.readFromMedia(pos,disk);
+                rFileRecovered.add(f);
             }
         }
     }
