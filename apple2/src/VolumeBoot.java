@@ -52,4 +52,5 @@ public class VolumeBoot extends VolumeEntity
         s.append(sect.toString());
         s.append("\n");
     }
+    // TODO boot image signature identification
 }
