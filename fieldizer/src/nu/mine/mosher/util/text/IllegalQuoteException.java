@@ -58,8 +58,13 @@ public class IllegalQuoteException extends Exception
     }
 
     /**
-     * @param near
-     * @param cause
+     * Initializes an <code>IllegalQuoteException</code> with a
+     * generic, English error message incorporating the given
+     * piece of source string, and a given chained <code>Exception</code>.
+     * @param near some context from the source buffer, intended to
+     * provide additional information to the end user about where the
+     * error occurred.
+     * @param cause the chained <code>Throwable</code>
      */
     public IllegalQuoteException(String near, Throwable cause)
     {
