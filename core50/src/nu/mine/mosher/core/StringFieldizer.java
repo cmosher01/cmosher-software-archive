@@ -1,7 +1,8 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class StringFieldizer<E> implements Iterable<E>
+public class ArrayList<E> extends AbstractList<E>
+//public class StringFieldizer<E> implements Iterable<E>
 {
 	private final String s;
 
