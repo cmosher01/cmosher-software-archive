@@ -54,7 +54,7 @@ public class TestThreadIO
         int temp = 0;
         char cIn = ' ';
 
-        BufferedInputStream input = new BufferedInputStream(new FileInputStream(new File("test.txt")));
+        BufferedInputStream input = new BufferedInputStream(new FileInputStream("test.txt"));
 
         // Read the data into memory a line at a time
 
