@@ -125,11 +125,6 @@ public class TimeOfDay implements Comparable
         return milliseconds;
     }
 
-    public boolean isValid()
-    {
-        return calendar != null;
-    }
-
     /**
      * Sets the HOUR_OF_DAY, MINUTE, SECOND, and MILLISECOND
      * components of the given Calendar to the corresponding
