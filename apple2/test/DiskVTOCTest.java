@@ -92,8 +92,9 @@ public class DiskTest extends TestCase
 
     /**
      * test VTOC for DOS 3.3 blank disk T$11 S$00
-     * (includes HyperDOS, DavidDos, DiversiDos)  ??? need to make prontodos and franklin82 slaves ???
+     * (includes HyperDOS, DavidDos, DiversiDos)
      * (does not include Franklin 1983 disks)
+     * TODO need to make slaves for: prontodos, franklin82, esdos, amdos
      */
     public void testVTOC_Dos33_Blank()
     {
