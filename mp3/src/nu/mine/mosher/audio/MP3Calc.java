@@ -41,14 +41,11 @@ public class MP3Calc
 		h >>= 11;
 
 		// MPEG1 or MPEG2 or MPEG 2.5
-		int mpeg;
+		int mpeg = 0;
 		switch (h & 3)
         {
 			case 0:
 				mpeg = 25;
-			break;
-			case 1:
-				mpeg = 0;
 			break;
 			case 2:
 				mpeg = 2;
