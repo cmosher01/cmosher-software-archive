@@ -18,7 +18,7 @@ public final class Cloner
 		throw new UnsupportedOperationException();
 	}
 
-	public static<T> T cloneObject(T cloneableObject) throws CloneNotSupportedException
+	public static<T implements Cloneable> T cloneObject(T cloneableObject) throws CloneNotSupportedException
 	{
 		try
 		{
