@@ -30,6 +30,7 @@ public class VelocityTest
     public static void main(String[] args) throws Throwable
     {
         VelocityEngine velocity = new VelocityEngine();
+
         velocity.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM,new LogSystem()
         {
             public void init(RuntimeServices rs) throws Exception
@@ -48,6 +49,7 @@ public class VelocityTest
         velocity.setProperty(VelocityEngine.VM_LIBRARY,"");
 
         velocity.init();
+        velocity.info("velocity initialized");
 
 
         Context context = new VelocityContext();
