@@ -2,8 +2,14 @@ package java.lang;
 
 public class LangTest implements Cloneable
 {
-    public Object clone() throws CloneNotSupportedException
+    public Object clone()
     {
-        return super.clone();
+        try
+        {
+            return super.clone();
+        }
+        catch (CloneNotSupportedException e)
+        {
+        }
     }
 }
