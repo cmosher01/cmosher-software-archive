@@ -239,19 +239,16 @@ public class GDiffView extends JFrame
         setContentPane(contentPane);
 
         SpringLayout.Constraints cnsSrc = new SpringLayout.Constraints();
-        cnsSrc.setConstraint(SpringLayout.NORTH,new Spring());
-        layout.putConstraint(SpringLayout.NORTH, scrSrc, 0, SpringLayout.NORTH, contentPane);
-        layout.putConstraint(SpringLayout.SOUTH, scrSrc, 0, SpringLayout.SOUTH, contentPane);
-        layout.putConstraint(SpringLayout.WEST, scrSrc, 0, SpringLayout.WEST, contentPane);
+        cnsSrc.setConstraint(SpringLayout.NORTH,layout.getConstraint(SpringLayout.NORTH, contentPane));
+        cnsSrc.setConstraint(SpringLayout.SOUTH,layout.getConstraint(SpringLayout.SOUTH, contentPane));
+        cnsSrc.setConstraint(SpringLayout.WEST,layout.getConstraint(SpringLayout.WEST, contentPane));
+
 //        contentPane.add(spl2,BorderLayout.CENTER);
 
-        contentPane.add(scrSrc);
+        contentPane.add(scrSrc,cnsSrc);
         contentPane.add(scrGDiff);
         contentPane.add(scrTrg);
 
-        layout.putConstraint(SpringLayout.NORTH, scrSrc, 0, SpringLayout.NORTH, contentPane);
-        layout.putConstraint(SpringLayout.SOUTH, scrSrc, 0, SpringLayout.SOUTH, contentPane);
-        layout.putConstraint(SpringLayout.WEST, scrSrc, 0, SpringLayout.WEST, contentPane);
         layout.putConstraint(SpringLayout.NORTH, scrTrg, 0, SpringLayout.NORTH, contentPane);
         layout.putConstraint(SpringLayout.SOUTH, scrTrg, 0, SpringLayout.SOUTH, contentPane);
         layout.putConstraint(SpringLayout.EAST, scrTrg, 0, SpringLayout.EAST, contentPane);
