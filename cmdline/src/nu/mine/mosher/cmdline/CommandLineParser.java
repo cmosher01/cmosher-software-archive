@@ -13,20 +13,19 @@ import java.util.NoSuchElementException;
  */
 public class CommandLineParser
 {
-    private final String[] mrArg;
-
-    public CommandLineParser(String[] rArg)
+    public CommandLineParser()
     {
-        mrArg = rArg;
-    }
-
-    public Iterator getArguments()
-    {
-        return new Iter();
     }
 
     private static class Iter implements Iterator
     {
+        private final String[] mArg;
+
+        public Iter(String[] arg)
+        {
+            mArg = arg;
+        }
+
         public boolean hasNext()
         {
             return false;
@@ -45,5 +44,13 @@ public class CommandLineParser
         {
             throw new UnsupportedOperationException();
         }
+    }
+
+    /**
+     * @param rArg
+     */
+    public Iterator parse(String[] rArg)
+    {
+        return new Iter(rArg);
     }
 }
