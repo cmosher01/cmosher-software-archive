@@ -68,17 +68,17 @@ public class MySQLTest
 
 	protected void calc() throws SQLException
     {
-    	calcOneCount("Age16plus",1790,"male",16,-1);
-		calcOneCount("Age0to15",1790,"male",0,15);
+    	calcOneCount(1790,"male",16,-1);
+		calcOneCount(1790,"male",0,15);
     }
 
-	protected void calcOneCount(String sCol, int year, String sGender, int ageMin, int ageMax) throws SQLException
+	protected void calcOneCount(int year, String sGender, int ageMin, int ageMax) throws SQLException
     {
     	Statement st = null;
     	try
     	{
     		st = db.createStatement();
-    		ResultSet rs = st.executeQuery("select "+sGender+sCol+" c from Census"+year);
+    		ResultSet rs = st.executeQuery("select "+columnName(sGender,ageMin,ageMax)+" c from Census"+year);
     		while (rs.next())
     		{
     			int c = rs.getInt("c");
