@@ -74,6 +74,8 @@ public class Disk implements TreeNode
 
 	public Component getRightPane()
 	{
+		StringBuffer sb = new StringBuffer();
+		viewRight.setText("<html></html>");
 		return viewRight;
 	}
 
