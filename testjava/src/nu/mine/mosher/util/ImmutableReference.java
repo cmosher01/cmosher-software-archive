@@ -1,16 +1,16 @@
 public class ImmutableReference
 {
-    private Cloneable a;
+    private Cloneable ref;
 
     public ImmutableReference(Cloneable a, Cloneable b) throws CloneNotSupportedException
     {
-        this.a = Cloner.cloneObject(a);
+        this.ref = Cloner.cloneObject(a);
         this.b = Cloner.cloneObject(b);
     }
 
     public Cloneable a() throws CloneNotSupportedException
     {
-        return Cloner.cloneObject(this.a);
+        return Cloner.cloneObject(this.ref);
     }
 
     public Cloneable b() throws CloneNotSupportedException
@@ -20,7 +20,7 @@ public class ImmutableReference
 
     public String toString()
     {
-        return "("+a+","+b+")";
+        return "("+ref+","+b+")";
     }
 
     public Object clone()
@@ -46,7 +46,7 @@ public class ImmutableReference
         }
         Pair that = (Pair)o;
 
-        return eq(this.a,that.a) && eq(this.b,that.b);
+        return eq(this.ref,that.a) && eq(this.b,that.b);
     }
 
     private boolean eq(Object x, Object y)
@@ -71,7 +71,7 @@ public class ImmutableReference
         Pair that = (Pair)o;
 
         int c;
-        c = cmp(this.a,that.a);
+        c = cmp(this.ref,that.a);
         if (c == 0)
         {
             c = cmp(this.b,that.b);
@@ -102,7 +102,7 @@ public class ImmutableReference
         int h = 17;
 
         h *= 37;
-        h += a==null ? 0 : a.hashCode();
+        h += ref==null ? 0 : ref.hashCode();
 
         h *= 37;
         h += b==null ? 0 : b.hashCode();
