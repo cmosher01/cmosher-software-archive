@@ -136,10 +136,7 @@ public class Delta
                         target_idx = target.read(targetBuff,0,source_idx);
                         if (target_idx == -1)
                         {
-                            /*
-                             * Ran out of target bytes during this match, so
-                             * we're done
-                             */
+                            // Ran out of target bytes during this match, so we're done
                             break;
                         }
 
