@@ -65,7 +65,7 @@ public class NormalizerTest extends TestCase
 		System.out.println("processed NormalizationText.txt lines: "+cDone);
 	}
 
-	private static void normTestTxt() throws IOException
+	private static void normTestTxt() throws Exception
 	{
 		Normalizer n = new Normalizer();
 		BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(new File("NormalizationTest.txt"))));
