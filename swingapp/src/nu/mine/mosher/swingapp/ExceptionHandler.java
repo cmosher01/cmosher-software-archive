@@ -25,7 +25,13 @@ public class ExceptionHandler
     }
 
 
-    
+
+    /**
+     * Waits for another thread to send this thread
+     * an exception, then throws it.
+     * 
+     * @throws Throwable
+     */
     public static void waitForException() throws Throwable
     {
         throw (Throwable)mSingleton.mException.remove();
