@@ -96,7 +96,8 @@ public class GDiffView extends JFrame
 //        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 //        GDiffView frame = new GDiffView(new File(args[0]),new File(args[1]));
         TargetFile trg = new TargetFile();
-        trg.calculateWindowChecksums(new File(args[0]), 17);
+        int cWindow = 17;
+        trg.calculateWindowChecksums(new File(args[0]),cWindow);
     }
 
     public GDiffView(File fileSrc, File fileTrg) throws BadLocationException, IOException, InvalidMagicBytes
