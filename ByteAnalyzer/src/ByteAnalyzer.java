@@ -1,3 +1,7 @@
+/*
+ * Created on Jun 15, 2004
+ */
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -6,14 +10,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
-/*
- * TODO
- *
- * Created on Jun 15, 2004
- */
-
 /**
- * TODO
+ * Checks each byte of a file, and maintains a count of
+ * occurrences of each byte value in the file.
+ * 
+ * @author Chris Mosher
  */
 public class ByteAnalyzer
 {
@@ -27,6 +28,12 @@ public class ByteAnalyzer
 
     private int state;
 
+    /**
+     * Main program entry point. Creates a <code>ByteAnalyzer</code>
+     * object and calls its <code>execute</code> method.
+     * @param args array of one argument, the file specification to analyze
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException
     {
         if (args.length != 1)
@@ -37,6 +44,11 @@ public class ByteAnalyzer
         prog.execute(new File(args[0]));
     }
 
+    /**
+     * Counts occurrences of each byte value in the given file.
+     * @param f the <code>File</code> to analyze
+     * @throws IOException
+     */
     public void execute(File f) throws IOException
     {
         f = f.getCanonicalFile();
