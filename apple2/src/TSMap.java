@@ -1,3 +1,5 @@
+import java.util.Collection;
+
 /*
  * Created on Sep 18, 2004
  */
@@ -69,6 +71,17 @@ public class TSMap
             }
         }
         return false;
+    }
+
+    public void getMarks(Collection rDiskPos)
+    {
+        for (int i = 0; i < r.length; i++)
+        {
+            if (r[i])
+            {
+                rDiskPos.add(new DiskPos(i*DiskPos.cSector));
+            }
+        }
     }
 
     /**
