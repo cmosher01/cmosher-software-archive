@@ -94,7 +94,7 @@ public class FixAppleDisasm
 		public int refaddr = -1;
 	}
 
-    public static void FixDis(Reader in, Writer out) throws IOException
+    public static void FixDis(Reader in, Writer out) throws Exception
     {
 		BufferedReader inbuf = null;
 		if (in instanceof BufferedReader)
@@ -223,6 +223,7 @@ public class FixAppleDisasm
 					for (int i = 0; i < st.countTokens(); ++i)
 					{
 						String h = st.nextToken();
+						System.out.println(h);
 						int x = -1;
 						try
 						{
@@ -256,6 +257,7 @@ public class FixAppleDisasm
 							System.err.println(hexWord(ln.addr));
 						}
 					}
+					throw new Exception("test");
 				}
 			}
 			else if (nextChar.equalsIgnoreCase("."))
