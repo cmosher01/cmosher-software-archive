@@ -24,10 +24,12 @@ public class Apple2
 {
     /**
      * @param args
-     * @throws IOException
      * @throws InvalidPosException
+     * @throws IOException
+     * @throws MultipleVTOCException
+     * @throws VTOCNotFoundException
      */
-    public static void main(String[] args) throws InvalidPosException, IOException
+    public static void main(String[] args) throws VTOCNotFoundException, MultipleVTOCException, InvalidPosException, IOException
     {
         mainAll(args);
     }
