@@ -15,17 +15,6 @@ public class ExceptionHandler
     private final CubbyHole mException = new CubbyHole();
 
     /**
-     * Waits for another thread to send this thread
-     * an exception, then throws it.
-     * 
-     * @throws Throwable
-     */
-    public void waitFor() throws Throwable
-    {
-        throw (Throwable)mException.remove();
-    }
-
-    /**
      * Sends an exception to the program's main thread
      * for handling.
      * 
@@ -34,5 +23,16 @@ public class ExceptionHandler
     public void send(Throwable exception)
     {
         mException.put(exception);
+    }
+
+    /**
+     * Waits for another thread to send this thread
+     * an exception, then throws it.
+     * 
+     * @throws Throwable
+     */
+    public void waitFor() throws Throwable
+    {
+        throw (Throwable)mException.remove();
     }
 }
