@@ -39,5 +39,6 @@ public class VolumeFile
     public void dump(StringBuffer s)
     {
         s.append("File: ");
+        ts.dump(s);
     }
 }
