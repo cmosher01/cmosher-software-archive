@@ -5,6 +5,7 @@ import java.net.URL;
 
 public class HitWeb
 {
+	private static final int TIMES = 10;
     public static void main(String[] args) throws Throwable
     {
     	HttpURLConnection.setFollowRedirects(false);
@@ -16,6 +17,7 @@ public class HitWeb
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			for (String s = in.readLine(); s != null; s = in.readLine())
 			{
+				System.oiut.println(s);
 			}
 			con.disconnect();
     	}
