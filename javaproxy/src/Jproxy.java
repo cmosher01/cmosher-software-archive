@@ -169,8 +169,9 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
 
     /**
      * @throws IOException
+     * @throws InterruptedException
      */
-    Jproxy(int width, int height) throws IOException
+    Jproxy(int width, int height) throws IOException, InterruptedException
     {
         super("Java HTTP Proxy Server");
 
@@ -189,21 +190,13 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
         tracker.addImage(img4,4);
         tracker.addImage(img5,5);
 
-        try
-        { // run media tracker to wait for images
-            tracker.waitForID(0);
-            tracker.waitForID(1);
-            tracker.waitForID(2);
-            tracker.waitForID(3);
-            tracker.waitForID(4);
-            tracker.waitForID(5);
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.toString());
-            System.exit(0);
-        }
-
+        // run media tracker to wait for images
+        tracker.waitForID(0);
+        tracker.waitForID(1);
+        tracker.waitForID(2);
+        tracker.waitForID(3);
+        tracker.waitForID(4);
+        tracker.waitForID(5);
 
         ibstart = new ImageButton("start",img1);
         ibstop = new ImageButton("stop",img2);
