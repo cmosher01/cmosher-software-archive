@@ -18,7 +18,8 @@ import org.apache.velocity.context.Context;
 import org.apache.velocity.exception.VelocityException;
 
 /**
- * Provides a simple interface to Velocity.
+ * Provides a simple interface to Velocity. This class
+ * is a thin (but opaque) wrapper around VelocityEngine.
  * 
  * @author Chris Mosher
  */
