@@ -3,30 +3,29 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-/*
- * TODO
- *
- * Created on Apr 12, 2004
- */
-
-/**
- * TODO
- */
 public class TestThreadIO
 {
     public static void main(String[] args) throws Throwable
     {
-        ReadFormFile();
-        ReadFormFile();
-        ReadFormFile();
-        ReadFormFile();
-        ReadFormFile();
+        Thread t = new Thread(new Runnable()
+        {
+            public void run()
+            {
+                try
+                {
+                    ReadFormFile();
+                }
+                catch (Throwable e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
-    private static void ReadFormFile() throws IOException
+    public static void ReadFormFile() throws IOException
     {
         int numberOfEntries = 0;
         List lines = new ArrayList();
