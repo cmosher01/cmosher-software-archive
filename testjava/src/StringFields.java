@@ -1,6 +1,6 @@
 import java.util.Iterator;
 
-public class SF
+public class SF /* implements Iterable */
 {
     private final String s;
 
