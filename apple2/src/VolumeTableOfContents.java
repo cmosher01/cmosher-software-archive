@@ -17,4 +17,9 @@ public class VolumeTableOfContents extends VolumeEntity
     {
         rSector.add(pos);
     }
+
+    public String toString()
+    {
+        return "Table of Contents";
+    }
 }
