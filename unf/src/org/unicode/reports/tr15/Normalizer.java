@@ -15,6 +15,11 @@ public class Normalizer
 {
     static final String copyright = "Copyright © 1998-1999 Unicode, Inc.";
 
+	public Normalizer()
+	{
+		this(C,true);
+	}
+
     /**
      * Create a normalizer for a given form.
      */
