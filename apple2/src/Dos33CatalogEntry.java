@@ -42,4 +42,5 @@ public class Dos33CatalogEntry
         }
         this.name = sb.toString();
     }
+
 }
