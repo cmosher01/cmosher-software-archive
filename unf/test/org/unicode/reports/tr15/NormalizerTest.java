@@ -32,7 +32,7 @@ public class NormalizerTest extends TestCase
 	/*
 	 * Unicode Normalization Test Suite (see http://www.unicode.org/Public/UNIDATA/UCD.html re NormalizationTest)
 	 */
-	public void testNormalizationTestTxt()
+	public void testNormalizationTestTxt() throws IOException
 	{
 		BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(new File("NormalizationTest.txt"))));
 	}
