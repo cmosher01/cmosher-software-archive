@@ -1,4 +1,4 @@
-import mosher.Cloner;
+import com.surveysampling.util.Cloner;
 
 public class ImmutableReference
 {
