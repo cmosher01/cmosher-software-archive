@@ -12,16 +12,10 @@ import nu.mine.mosher.thread.CubbyHole;
  */
 public class ExceptionHandler
 {
-    private static final ExceptionHandler mSingleton = new ExceptionHandler();
-
     private final CubbyHole mException = new CubbyHole();
 
-    private ExceptionHandler() throws IllegalStateException
+    public ExceptionHandler()
     {
-        if (mSingleton != null)
-        {
-            throw new IllegalStateException();
-        }
     }
 
 
@@ -32,9 +26,9 @@ public class ExceptionHandler
      * 
      * @throws Throwable
      */
-    public static void waitFor() throws Throwable
+    public void waitFor() throws Throwable
     {
-        throw (Throwable)mSingleton.mException.remove();
+        throw (Throwable)mException.remove();
     }
 
     /**
@@ -43,8 +37,8 @@ public class ExceptionHandler
      * 
      * @param exception
      */
-    public static void send(Throwable exception)
+    public void send(Throwable exception)
     {
-        mSingleton.mException.put(exception);
+        mException.put(exception);
     }
 }
