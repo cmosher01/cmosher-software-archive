@@ -18,4 +18,9 @@ public class Pair
     {
         return new CloneableReference(b).clone();
     }
+
+    public String toString()
+    {
+        return "("+a+","+b+")";
+    }
 }
