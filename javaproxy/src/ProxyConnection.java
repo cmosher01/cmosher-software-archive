@@ -339,7 +339,7 @@ public class ProxyConnection extends Thread
                 // create the message to send to server
                 sb = new StringBuffer();
                 sb.append(c_header.Method).append(" ").append(doc).append(" ").append(c_header.Version).append(_CRLF);
-                Hashtable ht = c_header.getHeaderFields();
+                Map ht = c_header.getHeaderFields();
                 for (Enumeration enu = ht.keys(); enu.hasMoreElements();)
                 {
                     key = (String)enu.nextElement();
