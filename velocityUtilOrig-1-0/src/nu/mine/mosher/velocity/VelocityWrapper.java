@@ -46,6 +46,10 @@ public class VelocityWrapper
         {
             ok = velocity.evaluate(context,writer,nameTemplate,reader);
         }
+        catch (VelocityException e)
+        {
+            throw e;
+        }
         catch (Throwable e)
         {
             throw wrapInVelocityException(e);
@@ -62,6 +66,10 @@ public class VelocityWrapper
         try
         {
             ok = velocity.mergeTemplate(templateName,context,writer);
+        }
+        catch (VelocityException e)
+        {
+            throw e;
         }
         catch (Throwable e)
         {
