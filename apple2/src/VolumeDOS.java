@@ -590,7 +590,7 @@ public class VolumeDOS extends VolumeEntity
                 clearIgnored(rIgnore1983);
                 if (Arrays.equals(rbCmp,rbClear1983))
                 {
-                    s.append(" (DOS 3.3 1983 exact match)");
+                    s.append(" (DOS 3.3 1983 master exact match)");
                 }
                 else
                 {
@@ -612,7 +612,7 @@ public class VolumeDOS extends VolumeEntity
                 clearIgnored(rIgnore1986);
                 if (Arrays.equals(rbCmp,rbClear1986))
                 {
-                    s.append(" (DOS 3.3 1986 exact match)");
+                    s.append(" (DOS 3.3 1986 master exact match)");
                 }
                 else
                 {
