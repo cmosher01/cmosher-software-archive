@@ -72,10 +72,14 @@ public class MySQLTest
     	try
     	{
     		st = db.createStatement();
-    		ResultSet rs = st.executeQuery("select maleAge16plus m from Census1790");
+    		ResultSet rs = st.executeQuery("select maleAge16plus c from Census1790");
     		while (rs.next())
     		{
-    			log.info(""+rs.getInt("m"));
+    			int c = rs.getInt("c");
+    			for (int i = 0; i < c; ++i)
+    			{
+    				log.info("male,,"+(1790-16));
+    			}
     		}
     	}
     	finally
