@@ -11,7 +11,7 @@ package nu.mine.mosher.random;
 public interface RandomNumberGenerator
 {
     /**
-     * Gets the seed, as passed in to the constructor.
+     * Gets the seed (as passed in to the constructor).
      * @return the original seed
      */
     long getSeed();
