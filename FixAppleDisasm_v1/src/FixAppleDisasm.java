@@ -77,7 +77,7 @@ public class FixAppleDisasm
 		public String label;
 		public String instr;
 		public String oper;
-		public String comment;
+		public String comment = ";";
 		public int refaddr = -1;
 	}
 
