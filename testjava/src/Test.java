@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import com.surveysampling.util.CubbyHole;
 import com.surveysampling.util.ExceptionUtil;
 import com.surveysampling.util.UniversalCloser;
 import com.surveysampling.util.UniversalCloser2;
@@ -44,10 +45,9 @@ public class Test
     //throws MyException, IOException // other exceptions here...
 	{
 
-        Exception e = new Exception("test");
-        ExceptionUtil.newGeneric(e);
-        System.out.println(e.getClass().getClassLoader().getClass().getName());
-        URLClassLoader cl = (URLClassLoader)e.getClass().getClassLoader();
+        CubbyHole cub = new CubbyHole();
+        System.out.println(cub.getClass().getClassLoader().getClass().getName());
+        URLClassLoader cl = (URLClassLoader)cub.getClass().getClassLoader();
         do
         {
             URL[] rurl = cl.getURLs();
