@@ -59,6 +59,7 @@ public class VolumeTableOfContents extends VolumeEntity
      */
     public void dump(StringBuffer s)
     {
-        VolumeSector s = (VolumeSector)rSector.get(0);
+        VolumeSector sect = (VolumeSector)rSector.get(0);
+        s.append(sect.toString());
     }
 }
