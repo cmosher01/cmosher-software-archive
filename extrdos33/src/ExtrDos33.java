@@ -56,6 +56,10 @@ public class ExtrDos33
         }
     }
 
+    private static void extrDos(File file, File dirNew)
+    {
+    }
+
     public static File[] listRegFiles(String sDir, String regexpFile, String regexpDir) throws IOException
     {
         final Pattern patFile = Pattern.compile(regexpFile);
