@@ -39,4 +39,9 @@ public class GDiffCmdListModel extends AbstractListModel
     {
         return rGDiffCmd.get(index);
     }
+
+    public List list()
+    {
+        return rGDiffCmd;
+    }
 }
