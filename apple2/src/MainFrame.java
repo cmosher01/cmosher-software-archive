@@ -130,7 +130,7 @@ public class MainFrame extends JFrame
         {
             nDisk.add(nFilesRecovered);
         }
-        if (!rOrphaned.isEmpty())
+        if (!rOrphan.isEmpty())
         {
             nDisk.add(nOrphaned);
         }
