@@ -33,6 +33,9 @@ public class VolumeDOS extends VolumeEntity
             0x003FD, 0x003FF, 0x00484, 0x00495, 0x00500, 0x00655, 0x006DF, 0x006FF, 0x009A8, 0x009B7};
 
     private static List rPosDOS = new ArrayList();
+    private static int[] rbClear1980 = new int[0x4000-0x1B00];
+    private static int[] rbClear1983 = new int[0x4000-0x1B00];
+    private static int[] rbClear1986 = new int[0x4000-0x1B00];
     static
     {
         DiskPos p, pLim;
@@ -54,10 +57,44 @@ public class VolumeDOS extends VolumeEntity
         try
         {
             BufferedInputStream in = new BufferedInputStream(VolumeDOS.class.getClassLoader().getResourceAsStream("dos33_1980_clear.bin"));
+            int x = 0;
             int b = in.read();
             while (b != -1)
             {
-                    b = in.read();
+                rbClear1980[x++] = b;
+                b = in.read();
+            }
+            in.close();
+        }
+        catch (Throwable e)
+        {
+            e.printStackTrace();
+        }
+        try
+        {
+            BufferedInputStream in = new BufferedInputStream(VolumeDOS.class.getClassLoader().getResourceAsStream("dos33_1983_clear.bin"));
+            int x = 0;
+            int b = in.read();
+            while (b != -1)
+            {
+                rbClear1983[x++] = b;
+                b = in.read();
+            }
+            in.close();
+        }
+        catch (Throwable e)
+        {
+            e.printStackTrace();
+        }
+        try
+        {
+            BufferedInputStream in = new BufferedInputStream(VolumeDOS.class.getClassLoader().getResourceAsStream("dos33_1986_clear.bin"));
+            int x = 0;
+            int b = in.read();
+            while (b != -1)
+            {
+                rbClear1986[x++] = b;
+                b = in.read();
             }
             in.close();
         }
