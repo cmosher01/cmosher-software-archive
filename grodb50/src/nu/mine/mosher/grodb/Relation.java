@@ -2,28 +2,21 @@ package nu.mine.mosher.grodb;
 
 import java.io.Serializable;
 
-public class Relation implements Serializable
+public class Relation<T,U> implements Serializable
 {
-	private final Object a;
-	private final Object b;
+	private final T a;
+	private final U b;
 	private final String description;
-	private final RelationType type;
 
-	public Relation(Object a, Object b, RelationType type)
+	public Relation(T a, U b)
 	{
-		this(a,b,"",type);
+		this(a,b,"");
 	}
 
-	public Relation(Object a, Object b, String description)
-	{
-		this(a,b,description,null);
-	}
-
-	public Relation(Object a, Object b, String description, RelationType type)
+	public Relation(T a, U b, String description)
 	{
 		this.a = a;
 		this.b = b;
 		this.description = description;
-		this.type = type;
 	}
 }
