@@ -54,6 +54,11 @@ public class ExcelCSVFieldizer
         return new FieldIterator(new StringBuffer(this.sCSVRow));
     }
 
+    /**
+     * TODO
+     *
+     * @author Chris Mosher
+     */
     private static class FieldIterator implements Iterator<String>
     {
         private final ExcelCSVParser parser;
