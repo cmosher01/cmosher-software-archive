@@ -30,18 +30,11 @@ public class Pair implements Cloneable, Comparable
         return "("+a+","+b+")";
     }
 
-    public Object clone()
+    public Object clone() throws CloneNotSupportedException
     {
-        Pair clon = null;
-        try
-        {
-            clon = (Pair)super.clone();
-            clon.a = a();
-            clon.b = b();
-        }
-        catch (CloneNotSupportedException cantHappen)
-        {
-        }
+        Pair clon = (Pair)super.clone();
+        clon.a = a();
+        clon.b = b();
         return clon;
     }
 
