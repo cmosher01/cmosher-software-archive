@@ -192,8 +192,8 @@ public class ProxyConnection extends Thread
                     EOH = true;
                     continue;
                 }
-                else
-                    sb.append(new String(onebyte,"8859_1"));
+
+                sb.append(new String(onebyte,"8859_1"));
 
                 if (sb.toString().endsWith(_CRLF2) || sb.toString().endsWith(_LF2))
                 {
