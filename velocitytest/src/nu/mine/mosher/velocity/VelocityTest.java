@@ -25,7 +25,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class VelocityTest
+public class VelocityTest implements LogSystem
 {
     public static void main(String[] args) throws Throwable
     {
@@ -45,8 +45,7 @@ public class VelocityTest
 //                }
 //            }
 //        });
-        Class.forName("org.apache.velocity.runtime.log.LogManager");
-        velocity.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,"nu.mine.mosher.velocity.VelocityTest.ErrLogger");
+        velocity.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,"nu.mine.mosher.velocity.VelocityTest");
         velocity.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH,"C:\\Documents and Settings\\chrism\\My Documents");
         velocity.setProperty(VelocityEngine.VM_LIBRARY,"");
 
@@ -66,19 +65,29 @@ public class VelocityTest
         writer.close();
     }
 
-    public static class ErrLogger implements LogSystem
+    public void init(RuntimeServices rs) throws Exception
     {
-        public void init(RuntimeServices rs) throws Exception
+    }
+    public void logVelocityMessage(int level, String message)
+    {
+        if (level >= LogSystem.INFO_ID)
         {
-        }
-        public void logVelocityMessage(int level, String message)
-        {
-            if (level >= LogSystem.INFO_ID)
-            {
-                System.err.println(message);
-            }
+            System.err.println(message);
         }
     }
+//    public static class ErrLogger implements LogSystem
+//    {
+//        public void init(RuntimeServices rs) throws Exception
+//        {
+//        }
+//        public void logVelocityMessage(int level, String message)
+//        {
+//            if (level >= LogSystem.INFO_ID)
+//            {
+//                System.err.println(message);
+//            }
+//        }
+//    }
 
     public static ArrayList getDependencies() throws ParserConfigurationException, SAXException, IOException
     {
