@@ -2,6 +2,8 @@ package nu.mosher.mine.a2diskedit;
 
 import java.awt.Component;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+
 public class CommandNew extends Command
 {
 	public CommandNew()
@@ -21,4 +23,11 @@ public class CommandNew extends Command
 	{
 		return null;
 	}
+	/**
+	 * @see nu.mosher.mine.a2diskedit.TreeNode#setNode(DefaultMutableTreeNode)
+	 */
+	public void setNode(DefaultMutableTreeNode n)
+	{
+	}
+
 }
