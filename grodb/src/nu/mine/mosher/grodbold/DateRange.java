@@ -10,10 +10,25 @@ public class DateRange
 	private final boolean julian; // true==Julian, false==Gregorian
 	private final int hour;
 	private final int minute;
-	private final int hourOffGMT;
-	private final int minuteOffGMT;
 	private final boolean circa;
 	private final TimeZone timezone;
+
+	public DateRange(YMD ymd)
+	{
+		this(ymd,null,false,-1,-1,false,null);
+	}
+
+    public DateRange(YMD earliest, YMD latest, boolean julian, int hour, int minute, boolean circa, TimeZone timezone)
+    {
+        this.earliest = earliest;
+        this.latest = latest;
+        this.julian = julian;
+        this.hour = hour;
+        this.minute = minute;
+        this.circa = circa;
+        this.timezone = timezone;
+    }
+
     /**
      * @return
      */
