@@ -68,7 +68,7 @@ public class DiskCatalogTest extends TestCase
     public void testDAVIDDOS() throws IOException, InvalidPosException
     {
         List r = new ArrayList();
-//        r.add(new DiskPos(0x11,0xD));
+        r.add(new DiskPos(0x11,0xD));
         r.add(new DiskPos(0x11,0xE));
         r.add(new DiskPos(0x11,0xF));
         assertManyPos("david_dos.dsk",r);
