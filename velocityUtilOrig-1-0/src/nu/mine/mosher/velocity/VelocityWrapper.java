@@ -60,6 +60,9 @@ public class VelocityWrapper
         // use our own LogSystem (VelocityLogger)
         props.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS, VelocityLogger.class.getClass().getName());
 
+        props.setProperty(VelocityEngine.INPUT_ENCODING,"UTF-8");
+        props.setProperty(VelocityEngine.OUTPUT_ENCODING,"UTF-8");
+
         // This just prevents a warning message about no macro library
         props.setProperty(VelocityEngine.VM_LIBRARY, "");
 
