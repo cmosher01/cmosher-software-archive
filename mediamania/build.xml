@@ -1,0 +1,282 @@
+<project name="JDO Book Examples" default="all" basedir=".">
+
+   <target name="init">
+      <property name="jdori.lib" value="C:/JDORI_LIB" />
+      <property name="JDOimpl" value="jdori" />
+      <property name="srcdir" value="${basedir}/src"/>
+      <property name="destdir" value="${basedir}/classes"/>
+      <property name="enhancedir" value="${basedir}/enhanced"/>
+      <property name="booksrc" value="C:/ObjectIdentity/Projects/JDOBook/Contents/src" />
+
+      <path id="jdori.classpath" >
+         <pathelement location="${jdori.lib}" />
+         <fileset dir="${jdori.lib}">
+            <include name="*.jar"/>
+         </fileset>
+      </path>
+
+      <path id="build.classpath">
+        <path refid="${JDOimpl}.classpath" />
+      </path>
+
+      <path id="run.classpath">
+         <pathelement location="enhanced"/>
+         <pathelement location="classes"/>
+         <path refid="${JDOimpl}.classpath"/>
+      </path>
+   </target>
+
+   <target name="all" depends="compile"/>
+
+   <target name="compile" depends="init" >
+      <javac srcdir="${srcdir}" destdir="${destdir}" debug="on">
+         <classpath refid="build.classpath"/>
+         <include name="**/*.java"/>
+      </javac>
+   </target>
+
+   <target name="enhance1" depends="compile" >
+      <java fork="yes" failonerror="yes"
+            classname="com.sun.jdori.enhancer.Main"
+            classpathref="build.classpath">
+            <arg line="-v -d ${enhancedir}
+                        ${srcdir}/com/mediamania/prototype.jdo
+                        ${destdir}/com/mediamania/prototype/Movie.class
+                        ${destdir}/com/mediamania/prototype/Role.class
+                        ${destdir}/com/mediamania/prototype/Actor.class"
+            />
+       </java>
+   </target>
+
+   <target name="enhance" depends="compile" >
+      <copy file="${srcdir}/com/mediamania.jdo"
+            tofile="${destdir}/com/mediamania.jdo" overwrite="yes" />
+      <java fork="yes" failonerror="yes"
+            classname="com.sun.jdori.enhancer.Main"
+            classpathref="build.classpath">
+            <arg line="-v -d ${enhancedir}
+                        ${destdir}/com/mediamania.jdo
+                        ${destdir}/com/mediamania/content/Studio.class
+                        ${destdir}/com/mediamania/content/MediaContent.class
+                        ${destdir}/com/mediamania/content/Movie.class
+                        ${destdir}/com/mediamania/content/Game.class
+                        ${destdir}/com/mediamania/content/Role.class
+                        ${destdir}/com/mediamania/content/MediaPerson.class
+                        ${destdir}/com/mediamania/store/MediaItem.class
+                        ${destdir}/com/mediamania/store/RentalItem.class
+                        ${destdir}/com/mediamania/store/RentalCode.class
+                        ${destdir}/com/mediamania/store/Customer.class
+                        ${destdir}/com/mediamania/store/Address.class                        
+                        ${destdir}/com/mediamania/store/Transaction.class
+                        ${destdir}/com/mediamania/store/Purchase.class
+                        ${destdir}/com/mediamania/store/appid/Customer.class
+                        ${destdir}/com/mediamania/store/appid/RentalCode.class
+                        ${destdir}/com/mediamania/store/Order.class
+                        ${destdir}/com/mediamania/store/LineItem.class
+                        ${destdir}/com/mediamania/store/Rental.class"
+            />
+       </java>
+   </target>
+   
+    <target name="enhance2" depends="compile" >
+      <java fork="yes" failonerror="yes"
+            classname="com.sun.jdori.enhancer.Main"
+            classpathref="build.classpath">
+            <arg line="-v -d ${enhancedir}
+                        ${destdir}/productdesign.jdo
+                        ${destdir}/productdesign/Component.class
+                        ${destdir}/productdesign/Assembly.class
+                        ${destdir}/productdesign/Part.class"
+            />
+       </java>
+   </target>
+
+<!--
+
+-->
+   <target name="buildzip" >
+       <zip zipfile="bookexsrc.zip" basedir="."
+          includes="**/*.java, build.xml, **/*.jdo, **/*.sxd, **/*.gif" />
+   </target>
+   
+   <target name="copytobook" >
+       <copy todir="C:/ObjectIdentity/Projects/JDOBook/Contents/src" >
+           <fileset dir="src/com/mediamania">
+               <include name="**/*.java"/>
+           </fileset>
+           <fileset dir="src/com" >
+               <include name="mediamania.jdo"/>
+           </fileset>
+       </copy>
+   </target>
+   <!--
+            <arg line="-f -s ${destdir} -d ${enhancedir}
+   -->
+   <target name="clean" depends="init"
+           description="cleans up build directories">
+      <delete includeEmptyDirs="false" >
+         <fileset dir="enhanced"/>
+      </delete>
+      <delete includeEmptyDirs="false">
+         <fileset dir="classes"/>
+      </delete>
+   </target>
+
+   <target name="CreateDatabase" depends="init" >
+      <delete includeEmptyDirs="false" >
+         <fileset dir="database"/>
+      </delete>
+      <java fork="yes" failonerror="yes"
+            classname="com.mediamania.CreateDatabase"
+            classpathref="run.classpath">
+      </java>
+   </target>
+
+   <target name="CreateMovie" depends="init" >
+      <java fork="yes" failonerror="yes"
+            classname="com.mediamania.prototype.CreateMovie"
+            classpathref="run.classpath">
+      </java>
+   </target>
+
+   <target name="LoadMovies" depends="init" >
+      <java fork="yes" failonerror="yes"
+            classname="com.mediamania.prototype.LoadMovies"
+            classpathref="run.classpath">
+            <arg line="moviedata.txt"/>
+      </java>
+   </target>
+
+   <target name="LoadRoles" depends="init" >
+      <java fork="yes" failonerror="yes"
+            classname="com.mediamania.prototype.LoadRoles"
+            classpathref="run.classpath">
+            <arg line="roledata.txt"/>
+      </java>
+   </target>
+
+   <target name="PrintMovies" depends="init" >
+      <java fork="yes" failonerror="yes"
+            classname="com.mediamania.prototype.PrintMovies"
+            classpathref="run.classpath">
+      </java>
+   </target>
+
+   <target name="PrintActors" depends="init" >
+      <java fork="yes" failonerror="yes"
+            classname="com.mediamania.prototype.PrintActors"
+            classpathref="run.classpath">
+      </java>
+   </target>
+
+   <target name="GetRoles" depends="init" >
+	  <property name="actor" value="Sean Connery" />
+      <java fork="yes" failonerror="yes"
+            classname="com.mediamania.prototype.GetActorRoles"
+            classpathref="run.classpath">
+            <arg value="${actor}" />
+      </java>
+   </target>
+
+   <target name="DeleteMovie" depends="init" >
+	  <property name="movie" value="The Rock" />
+      <java fork="yes" failonerror="yes"
+            classname="com.mediamania.prototype.DeleteMovie"
+            classpathref="run.classpath">
+            <arg value="${movie}" />
+      </java>
+   </target>
+
+   <target name="GetOptions" depends="init" >
+      <java fork="yes" failonerror="yes"
+            classname="com.mediamania.prototype.GetOptions"
+            classpathref="run.classpath">
+      </java>
+   </target>
+
+   <target name="UpdateWebSite" depends="init" >
+	  <property name="site" value="http://bventertainment.go.com/movies/signs/index.html" />
+      <property name="movie" value="Goldfinger" />
+      <java fork="yes" failonerror="yes"
+            classname="com.mediamania.prototype.UpdateWebSite"
+            classpathref="run.classpath">
+            <arg value="${movie}" />
+            <arg value="${site}" />
+      </java>
+   </target>
+   
+   <target name="LoadStudios" depends="init" >
+      <java fork="yes" failonerror="yes"
+            classname="com.mediamania.content.LoadStudios"
+            classpathref="run.classpath">
+      </java>
+   </target>
+
+   <target name="LoadRentalCodes" depends="init" >
+      <java fork="yes" failonerror="yes"
+            classname="com.mediamania.store.LoadRentalCodes"
+            classpathref="run.classpath">
+      </java>
+   </target>
+   <target name="LoadNewMovies" depends="init" >
+      <java fork="yes" failonerror="yes"
+            classname="com.mediamania.store.LoadNewMovies"
+            classpathref="run.classpath">
+            <arg line="newmoviedata.txt"/>
+      </java>
+   </target>
+   <target name="GetMediaContent" depends="init" >
+      <java fork="yes" failonerror="yes"
+            classname="com.mediamania.store.GetMediaContent"
+            classpathref="run.classpath">
+      </java>
+   </target>
+   <target name="DVDMovieInStock" depends="init" >
+      <java fork="yes" failonerror="yes"
+            classname="com.mediamania.store.DVDMovieInStock"
+            classpathref="run.classpath">
+            <arg value="Gladiator" />
+      </java>
+   </target>
+   <target name="LoadCustomers" depends="init" >
+      <java fork="yes" failonerror="yes"
+            classname="com.mediamania.store.LoadCustomers"
+            classpathref="run.classpath">
+      </java>
+   </target>
+   <target name="runq" depends="init" >
+      <java fork="yes" failonerror="yes"
+            classname="com.mediamania.store.RunQuery"
+            classpathref="run.classpath">
+      </java>
+   </target>
+   <target name="testrc" depends="init" >
+      <java fork="yes" failonerror="yes"
+            classname="com.mediamania.store.TestRentalCodeAccessor"
+            classpathref="run.classpath">
+      </java>
+   </target>
+   <target name="testpd" depends="init" >
+      <java fork="yes" failonerror="yes"
+            classname="productdesign.TestProduct"
+            classpathref="run.classpath">
+      </java>
+   </target>
+   <target name="testorder" depends="init" >
+      <java fork="yes" failonerror="yes"
+            classname="com.mediamania.store.TestOrder"
+            classpathref="run.classpath">
+      </java>
+   </target>
+   <target name="testappid" depends="init" >
+      <java fork="yes" failonerror="yes"
+            classname="com.mediamania.store.appid.TestAppId"
+            classpathref="run.classpath">
+<!--
+            <jvmarg value="-Djdori-logger=jdori-logger.properties"/>
+-->
+      </java>
+   </target>
+
+
+</project>
