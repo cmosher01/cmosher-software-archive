@@ -42,7 +42,7 @@ public class SimpleAccessLog extends AccessLog
 		String browser = request.getHeader("User-Agent");
 		String referer = request.getHeader("Referer");
 
-		if (ip.isSiteLocalAddress() || ip.isLinkLocalAddress())
+		if (ip.isSiteLocalAddress() || ip.isLoopbackAddress())
 		{
 			return;
 		}
