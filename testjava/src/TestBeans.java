@@ -4,18 +4,17 @@ import java.beans.PropertyDescriptor;
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorManager;
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.List;
 
 public class TestBeans
 {
     public static void main(String[] rArgs) throws Throwable
     {
         String[] rp = PropertyEditorManager.getEditorSearchPath();
-        for (int i = 0; i < rp.length; ++i)
-        {
-            String string = rp[i];
-            System.out.println(string);
-        }
-        PropertyEditorManager.setEditorSearchPath(new String[] {"com.surveysampling.beans.editors"});
+        List listp = Arrays.asList(rp);
+        listp.add("com.surveysampling.beans.editors");
+        PropertyEditorManager.setEditorSearchPath((String[])listp.toArray(new String[listp.size()]));
 
         SomeBean some = new SomeBean();
         String prop = "AInt";
