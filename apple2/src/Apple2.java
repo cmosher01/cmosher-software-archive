@@ -29,6 +29,10 @@ public class Apple2
         mainAll(args);
     }
 
+    /**
+     * @param args
+     * @throws IOException
+     */
     public static void mainAll(String[] args) throws IOException
     {
         if (args.length != 1)
@@ -42,6 +46,10 @@ public class Apple2
         }
     }
 
+    /**
+     * @param f
+     * @throws IOException
+     */
     public static void doOneFile(File f) throws IOException
     {
         byte[] rbDisk;
@@ -79,6 +87,11 @@ public class Apple2
 //        disk.findDos33TSMapSector(rTSMap);
     }
 
+    /**
+     * @param sDir
+     * @return
+     * @throws IOException
+     */
     public static File[] list140KFiles(String sDir) throws IOException
     {
         final List dirs = new ArrayList();
