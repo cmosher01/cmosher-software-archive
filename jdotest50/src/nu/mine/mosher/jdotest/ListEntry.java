@@ -20,7 +20,7 @@ public class ListEntry
 		return this.s;
 	}
 
-	public static String formatListEntry(List<String> r)
+	public static String formatListEntry(List r)
 	{
 		return tr(r,"td");
 	}
