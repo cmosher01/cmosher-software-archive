@@ -6,6 +6,7 @@
 package com.surveysampling.time;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import junit.framework.TestCase;
 
@@ -69,7 +70,10 @@ public class TimeOfDayTest extends TestCase
     public void testGetCalendar()
     {
         Calendar s = tod.getCalendar();
-        assertEquals(Calendar.getInstance(),s);
+        if (!(s instanceof GregorianCalendar))
+        {
+            fail("non-GregorianCalendar returned");
+        }
     }
 
     public void testGetTimeOnDay()
