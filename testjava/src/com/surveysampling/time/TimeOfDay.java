@@ -46,6 +46,7 @@ public class TimeOfDay implements Comparable
          * opens up the possibility that the caller could create
          * a subclass of Calendar that would hold a reference to
          * our clone and allow him to mutate a TimeOfDay instance.
+         * TODO make an immutable Calendar wrapper and use that instead
          */
         this.calendar = (Calendar)calendar.clone();
         this.hours = hours;
