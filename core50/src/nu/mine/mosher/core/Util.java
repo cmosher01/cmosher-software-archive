@@ -1,6 +1,7 @@
 package nu.mine.mosher.core;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public final class Util
 {
@@ -44,4 +45,14 @@ public final class Util
         }
         return r;
     }
+
+	public static<T> HashSet set(Iterable<T> i)
+	{
+		HashSet<T> s = new HashSet<T>();
+		for (T x : i)
+		{
+			s.add(x);
+		}
+		return s;
+	}
 }
