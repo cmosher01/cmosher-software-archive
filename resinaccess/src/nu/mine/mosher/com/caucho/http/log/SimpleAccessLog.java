@@ -40,7 +40,15 @@ public class SimpleAccessLog extends AccessLog
 		String method = request.getMethod();
 		String uri = request.getRequestURI();
 		String browser = request.getHeader("User-Agent");
+		if (browser == null)
+		{
+			browser = "";
+		}
 		String referer = request.getHeader("Referer");
+		if (referer == null)
+		{
+			referer = "";
+		}
 
 		if (ip.isSiteLocalAddress() || ip.isLoopbackAddress())
 		{
