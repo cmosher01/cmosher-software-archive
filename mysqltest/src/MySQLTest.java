@@ -265,7 +265,7 @@ public class MySQLTest
 			st = db.prepareStatement(
 			"select id from ImageIdent where "+
 			"year = ? and state = ? and county = ? and township = ? and district = ? and image = ?");
-			st.setInt(1,1790);
+			st.setInt(1,1800);
 			st.setString(2,state);
 			st.setString(3,county);
 			st.setString(4,township);
@@ -288,7 +288,7 @@ public class MySQLTest
 			{
 				st = db.prepareStatement(
 				"insert into ImageIdent (year,state,county,township,district,image) values (?,?,?,?,?,?)");
-				st.setInt(1,1790);
+				st.setInt(1,1800);
 				st.setString(2,state);
 				st.setString(3,county);
 				st.setString(4,township);
