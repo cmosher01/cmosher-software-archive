@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -89,6 +90,19 @@ public class VolumeCatalog
         {
             VolumeCatalogSector sector = (VolumeCatalogSector)i.next();
             sector.getEntries(rEntry);
+        }
+    }
+
+    /**
+     * @param rPos
+     */
+    public void getUsed(Collection rPos)
+    {
+        vtoc.getPos(rPos);
+        for (Iterator i = this.rCatSect.iterator(); i.hasNext();)
+        {
+            VolumeCatalogSector cat = (VolumeCatalogSector)i.next();
+            cat.getPos(rPos);
         }
     }
 }
