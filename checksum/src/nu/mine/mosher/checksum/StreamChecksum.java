@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class StreamChecksum
 {
-    private Map mapChecksumToWindow;
+    private Map<int,Collection> mapChecksumToWindow;
 
 
 
@@ -62,7 +62,8 @@ public class StreamChecksum
             }
 
             rollCheck.init(rs);
-            Integer chk = new Integer(rollCheck.getChecksum());
+            
+            int chk = rollCheck.getChecksum();
 
             Collection rWind;
             if (!mapChecksumToWindow.containsKey(chk))
