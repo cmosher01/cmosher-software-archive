@@ -155,14 +155,40 @@ public class MySQLTest
 		}
 		if (idImage == 0)
 		{
+			try
+			{
+				st = db.prepareStatement(
+				"insert into ImageIdent (year,state,county,township,district,image) values (?,?,?,?,?,?)");
+				st.setInt(1,1790);
+				st.setString(2,state);
+				st.setString(3,county);
+				st.setString(4,township);
+				st.setInt(5,district);
+				st.setInt(6,image);
+				st.execute();
+				ResultSet rs = st.getGeneratedKeys();
+				while (rs.next())
+				{
+					idImage = rs.getInt(1);
+				}
+			}
+			finally
+			{
+				closeStatement(st);
+				st = null;
+			}
+		}
+
+		try
+		{
 			st = db.prepareStatement(
-			"insert into ImageIdent (year,state,county,township,district,image) values (?,?,?,?,?,?)");
-			st.setInt(1,1790);
-			st.setString(2,state);
-			st.setString(3,county);
-			st.setString(4,township);
-			st.setInt(5,district);
-			st.setInt(6,image);
+			"insert into Household (image,family,nameLast,nameFirst,nameMiddle,nameSuffix) values (?,?,?,?,?,?)");
+			st.setInt(1,idImage);
+			st.setInt(2,family);
+			st.setString(3,nameLast);
+			st.setString(4,nameFirst);
+			st.setString(5,nameMiddle);
+			st.setString(6,nameSuffix);
 			st.execute();
 			ResultSet rs = st.getGeneratedKeys();
 			while (rs.next())
@@ -170,6 +196,22 @@ public class MySQLTest
 				idImage = rs.getInt(1);
 			}
 		}
+		finally
+		{
+			closeStatement(st);
+			st = null;
+		}
+
+//		dbUpdate("drop table CountEntry");
+		dbUpdate("create table "+
+		"CountEntry "+
+		"( "+
+		"    id integer unsigned not null auto_increment primary key, "+
+		"    household integer unsigned not null references Household(id), "+
+		"    gender enum (\"M\",\"F\"), "+
+		"    minAge integer unsigned, "+
+		"    maxAge integer unsigned, "+
+		"    count  integer unsigned "+
     }
 
     protected int readInt(Object stringField)
