@@ -1,4 +1,7 @@
+package nu.mine.mosher.grodb;
 
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Chris Mosher
@@ -6,4 +9,11 @@
  */
 public class Role
 {
+	private Event event;
+	private Persona persona;
+	private ItemType<Role> type;
+
+	public Role()
+	{
+	}
 }
