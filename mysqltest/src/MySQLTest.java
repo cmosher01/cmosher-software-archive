@@ -308,7 +308,7 @@ public class MySQLTest
 
     protected void createSchema() throws SQLException
 	{
-		dbUpdate("drop table Family");
+		dbUpdate("drop table if exists Family");
 		dbUpdate("create table "+
 		"Family "+
 		"( "+
@@ -332,7 +332,7 @@ public class MySQLTest
 //		"    other integer, "+
 //		"    slave integer "+
 //		")");
-		dbUpdate("drop table ImageIdent");
+		dbUpdate("drop table if exists ImageIdent");
 		dbUpdate("create table "+
 		"ImageIdent "+
 		"( "+
@@ -344,7 +344,7 @@ public class MySQLTest
 		"    district integer unsigned default 0, "+
 		"    image integer unsigned "+
 		")");
-		dbUpdate("drop table Household");
+		dbUpdate("drop table if exists Household");
 		dbUpdate("create table "+
 		"Household "+
 		"( "+
@@ -356,7 +356,7 @@ public class MySQLTest
 		"    nameMiddle varchar(8), "+
 		"    nameSuffix varchar(8) "+
 		")");
-		dbUpdate("drop table CountEntry");
+		dbUpdate("drop table if exists CountEntry");
 		dbUpdate("create table "+
 		"CountEntry "+
 		"( "+
