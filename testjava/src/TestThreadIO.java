@@ -63,9 +63,9 @@ public class TestThreadIO
             i++;
         }
         for (Iterator j = lines.iterator(); j.hasNext();)
-            {
-                String s = (String)j.next();
-                System.out.println(s);
-            }
+        {
+            String s = (String)j.next();
+            System.out.println(s);
+        }
     }
 }
