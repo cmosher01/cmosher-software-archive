@@ -107,7 +107,6 @@ public class MySQLTest
 	{
 		String s = "";
 		s += sGender;
-		s += "Age";
 		s += minAge;
 		if (maxAge < 0)
 		{
@@ -154,9 +153,9 @@ public class MySQLTest
 		"    nameFirst varchar(64), "+
 		"    nameMiddle varchar(8), "+
 		"    nameSuffix varchar(8), "+
-		"    maleAge16plus integer, "+
-		"    maleAge0to15 integer, "+
-		"    femaleAge0plus integer, "+
+		"    male16plus integer, "+
+		"    male0to15 integer, "+
+		"    female0plus integer, "+
 		"    other integer, "+
 		"    slave integer "+
 		")");
