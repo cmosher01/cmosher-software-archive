@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-    <classpathentry kind="src" path="src"/>
-    <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-    <classpathentry kind="src" path="/core"/>
-    <classpathentry kind="src" path="/junit"/>
-    <classpathentry kind="src" path="/logging"/>
-    <classpathentry kind="src" path="/resin"/>
-    <classpathentry kind="output" path="bin"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="/core"/>
+	<classpathentry kind="src" path="/logging"/>
+	<classpathentry kind="src" path="/resin"/>
+	<classpathentry kind="src" path="/junit-3-8-1"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>
