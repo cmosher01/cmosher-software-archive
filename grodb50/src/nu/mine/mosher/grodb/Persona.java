@@ -1,4 +1,7 @@
+package nu.mine.mosher.grodb;
 
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Chris Mosher
@@ -6,4 +9,16 @@
  */
 public class Persona
 {
+	private String nameLast;
+	private String nameFirst;
+	private String nameOther;
+	private String nameLater;
+
+	private PersonaType type;
+
+	private List<Relation<Persona,Persona>> rPersona = new ArrayList<Relation<Persona,Persona>>();
+
+	public Persona()
+	{
+	}
 }
