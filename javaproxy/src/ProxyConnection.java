@@ -13,6 +13,8 @@ import java.net.SocketException;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Properties;
 
 
@@ -340,9 +342,9 @@ public class ProxyConnection extends Thread
                 sb = new StringBuffer();
                 sb.append(c_header.Method).append(" ").append(doc).append(" ").append(c_header.Version).append(_CRLF);
                 Map ht = c_header.getHeaderFields();
-                for (Enumeration enu = ht.keys(); enu.hasMoreElements();)
+                for (Iterator enu = ht.keySet().iterator(); enu.hasNext();)
                 {
-                    key = (String)enu.nextElement();
+                    key = (String)enu.getNext();
                     value = (String)ht.get(key);
                     if (key.equalsIgnoreCase("Proxy-Connection"))
                         continue; // bypass the proxy connection row
