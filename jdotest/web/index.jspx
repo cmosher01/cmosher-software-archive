@@ -10,7 +10,7 @@
 <p>
 <table>
 <%
-	PersistenceManager pm = new Perm().pm();
+	PersistenceManager pm = Perm.pm();
 	for (Iterator i = pm.getExtent(Item.class,true).iterator(); i.hasNext(); )
 	{
 		Item item = (Item)i.next();
