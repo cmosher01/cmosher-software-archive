@@ -44,11 +44,13 @@ public class TestBeans
         {
             throw new IntrospectionException("can't get info for bean");
         }
+
         PropertyDescriptor[] rpd = bi.getPropertyDescriptors();
         if (rpd == null)
         {
             throw new IntrospectionException("can't get property descriptors for bean");
         }
+
         Map mapPDs = buildPropertyDescriptorMap(rpd);
         if (!mapPDs.containsKey(property))
         {
