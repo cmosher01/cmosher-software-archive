@@ -4,15 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.TestCase;
-/*
- * Created on Sep 25, 2004
- */
-
 
 /**
  * TODO
+ * Created on Sep 25, 2004
  * 
- * @author Chris
+ * @author Chris Mosher
  */
 public class DiskTSMapTest extends TestCase
 {
