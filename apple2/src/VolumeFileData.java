@@ -1,3 +1,5 @@
+import java.util.List;
+
 /*
  * Created on Oct 9, 2004
  */
@@ -11,4 +13,12 @@
 public class VolumeFileData extends VolumeEntity
 {
     private byte[] data;
+
+    /**
+     * @param rPos
+     * @param disk
+     */
+    public void readFromMedia(List rPos, Disk disk)
+    {
+    }
 }
