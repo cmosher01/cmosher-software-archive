@@ -102,6 +102,8 @@ public class Volume
      */
     public void dump(StringBuffer s)
     {
+        boot.dump(s);
+        dos.dump(s);
         cat.dump(s);
         for (Iterator i = this.rFile.iterator(); i.hasNext();)
         {
@@ -113,6 +115,7 @@ public class Volume
             VolumeFileRecovered f = (VolumeFileRecovered)i.next();
             f.dump(s);
         }
+        orphaned.dump(s);
     }
 
     /**
