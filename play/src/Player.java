@@ -6,7 +6,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.logging.Logger;
 
-import nu.mine.mosher.charsets.GedcomAnselCharsetProvider;
 import nu.mine.mosher.core.Immutable;
 import nu.mine.mosher.logging.LoggingInitializer;
 
@@ -39,7 +38,6 @@ public class Player implements Immutable
     {
         LoggingInitializer.init();
 
-		GedcomAnselCharsetProvider cp = new GedcomAnselCharsetProvider();
 		if (!Charset.isSupported("x-gedcom-ansel"))
 		{
 			System.err.println("You must create a file META-INF/services/java.nio.charsets.spi.CharsetProvider");
