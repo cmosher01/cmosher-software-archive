@@ -38,32 +38,11 @@ public class PersonPersist
 			props.setProperty("org.jpox.validateTables","false");
 			props.setProperty("org.jpox.validateConstraints","false");
 			pmf = JDOHelper.getPersistenceManagerFactory(props);
-			pmf.setConnectionFactory(createConnectionFactory());
 		}
 		catch (Exception ex)
 		{
 			ex.printStackTrace();
 			System.exit(1);
 		}
-	}
-
-	public static Object createConnectionFactory()
-	{
-		ManagedConnectionFactoryImpl mcfi = new ManagedConnectionFactoryImpl();
-		Object connectionFactory = null;
-		try
-		{
-			mcfi.setUserName("scott");
-			mcfi.setPassword("tiger");
-			mcfi.setConnectionURL("jdbc:oracle:thin:@localhost:1521:thedb");
-			mcfi.setDBDriver("oracle.jdbc.driver.OracleDriver");
-			connectionFactory = mcfi.createConnectionFactory();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			System.exit(1);
-		}
-		return connectionFactory;
 	}
 }
