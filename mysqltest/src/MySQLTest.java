@@ -42,7 +42,7 @@ public class MySQLTest
 			log.info("Creating schema...");
 			createSchema();
 			log.info("Done creating schema.");
-			log.info("inserting data...");
+			log.info("Inserting data...");
 			insertData();
 			log.info("Done inserting data.");
 		}
