@@ -1,4 +1,4 @@
-package nu.mine.mosher.grodb.ui;
+package nu.mine.mosher.jdotest;
 
 import java.util.List;
 
