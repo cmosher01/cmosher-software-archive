@@ -19,6 +19,22 @@ public final class BeanUtil
 
     public static void parseParameters(ServletRequest request, Object bean) throws ParameterParseException
     {
+        try
+        {
+            tryParseParameters(request,bean);
+        }
+        catch (ParameterParseException e)
+        {
+            throw e;
+        }
+        catch (Throwable e)
+        {
+            throw new ParameterParseException(e);
+        }
+    }
+    
+    private static void tryParseParameters(ServletRequest request, Object bean) throws ParameterParseException
+    {
         for (Iterator params = new EnumIter(request.getParameterNames()); params.hasNext();)
         {
             String param = (String)params.next();
