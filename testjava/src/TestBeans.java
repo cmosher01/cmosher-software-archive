@@ -23,13 +23,18 @@ public class TestBeans
         Editors.register();
 
         SomeBean some = new SomeBean();
-        String prop = "robjInteger";
-        String[] val = { "34", "55" };
+        String prop = "objInteger";
+        String val = "34";
 
         setProperty(some, prop, val);
 
-        showInt(some.getRobjInteger()[0].intValue());
-        showInt(some.getRobjInteger()[1].intValue());
+        showInt(some.getObjInteger().intValue());
+    }
+
+    public static void setProperty(Object bean, String property, String value)
+        throws IntrospectionException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
+    {
+        setProperty(bean,property,new String[] { value });
     }
 
     public static void setProperty(Object bean, String property, String[] value)
