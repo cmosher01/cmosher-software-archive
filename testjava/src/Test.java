@@ -2,6 +2,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ListIterator;
@@ -67,7 +68,11 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
-        System.out.println(System.getProperty("user.name"));
+
+        URL x = Test.class.getClassLoader().getResource("");
+        System.out.println(x.getPath());
+
+//        System.out.println(System.getProperty("user.name"));
 
 
 
