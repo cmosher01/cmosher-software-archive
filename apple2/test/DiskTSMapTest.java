@@ -14,7 +14,7 @@ public class DiskTSMapTest extends TestCase
     private static byte[] zeroes = new byte[0x100];
 
     /**
-     * 
+     * negative test all zeroes
      */
     public void testTSMap_Zeroes()
     {
