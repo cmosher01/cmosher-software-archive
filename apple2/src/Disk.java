@@ -199,7 +199,7 @@ public class Disk
                         ++goodEntries;
                     }
                     if (live && 
-                        DiskPos.isValidTrack(sector[ce],allowLarge) &&
+                        (DiskPos.isValidTrack(sector[ce],allowLarge) || sector[ce] == -1) &&
                         DiskPos.isValidSector(sector[ce+1]) &&
                         isValidFileType(sector[ce+2]))
                     {
