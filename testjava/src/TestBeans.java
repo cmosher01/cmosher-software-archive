@@ -35,7 +35,7 @@ public class TestBeans
     public static void setProperty(Object bean, String property, String value)
         throws IntrospectionException, Exception, IllegalArgumentException, IllegalAccessException, InvocationTargetException
     {
-        BeanInfo bi = Introspector.getBeanInfo(SomeBean.class);
+        BeanInfo bi = Introspector.getBeanInfo(bean.getClass());
         if (bi == null)
         {
             throw new Exception("can't get info for bean");
