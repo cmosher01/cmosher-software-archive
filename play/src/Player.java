@@ -39,47 +39,63 @@ public class Player implements Immutable
 
     public static void main(String[] args) throws Throwable
     {
-	{
-		byte a = 1;
-		byte b = 0x7f;
-		byte c = (byte)0x80;
-		byte d = (byte)0x81;
-		byte e = (byte)0xff;
-		byte f = (byte)0x100;
-		byte g = -1;
-		byte h = -127;
-		byte i = -128;
-		System.out.println(a < 0);
-		System.out.println(b < 0);
-		System.out.println(c < 0);
-		System.out.println(d < 0);
-		System.out.println(e < 0);
-		System.out.println(f < 0);
-		System.out.println(g < 0);
-		System.out.println(h < 0);
-		System.out.println(i < 0);
-
-	}
 
 
-		Map map = new HashMap();
-		map.put("a",new Integer(1));
-		map.put("b",new Integer(2));
-		map.put("c",new Integer(3));
 
-		Set set = new HashSet();
-		set.add("a");
-		set.add("c");
 
-		map.keySet().retainAll(set);
 
-		for (Iterator i = map.entrySet().iterator(); i.hasNext();)
-        {
-            Map.Entry entry = (Map.Entry)i.next();
-            System.out.print(entry.getKey().toString());
-            System.out.print(":");
-            System.out.println(entry.getValue().toString());
-        }
+		String s = "\u0061\u0308"; // a-acute
+		byte[] rb = s.getBytes("windows-1252");
+		rbDump(rb);
+
+
+
+
+
+
+
+
+
+
+//		byte a = 1;
+//		byte b = 0x7f;
+//		byte c = (byte)0x80;
+//		byte d = (byte)0x81;
+//		byte e = (byte)0xff;
+//		byte f = (byte)0x100;
+//		byte g = -1;
+//		byte h = -127;
+//		byte i = -128;
+//		System.out.println(a < 0);
+//		System.out.println(b < 0);
+//		System.out.println(c < 0);
+//		System.out.println(d < 0);
+//		System.out.println(e < 0);
+//		System.out.println(f < 0);
+//		System.out.println(g < 0);
+//		System.out.println(h < 0);
+//		System.out.println(i < 0);
+
+
+
+//		Map map = new HashMap();
+//		map.put("a",new Integer(1));
+//		map.put("b",new Integer(2));
+//		map.put("c",new Integer(3));
+//
+//		Set set = new HashSet();
+//		set.add("a");
+//		set.add("c");
+//
+//		map.keySet().retainAll(set);
+//
+//		for (Iterator i = map.entrySet().iterator(); i.hasNext();)
+//        {
+//            Map.Entry entry = (Map.Entry)i.next();
+//            System.out.print(entry.getKey().toString());
+//            System.out.print(":");
+//            System.out.println(entry.getValue().toString());
+//        }
 
 //		List x = new ArrayList();
 //		String[] rs = (String[])x.toArray(new String[x.size()]);
@@ -163,6 +179,20 @@ public class Player implements Immutable
 
     }
 
+
+    /**
+     * @param rb
+     */
+    private static void rbDump(byte[] rb)
+    {
+    	for (int i = 0; i < rb.length; i++)
+        {
+            byte b = rb[i];
+            System.out.print(Integer.toHexString(b));
+            System.out.print(' ');
+        }
+        System.out.println();
+    }
 
     /**
      * @param s
