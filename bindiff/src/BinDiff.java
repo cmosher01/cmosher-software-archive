@@ -92,7 +92,7 @@ public class BinDiff
 		statechange(newstate,c,null);
 	}
 
-    protected void statechange(int newstate, long c, TellStream f)
+    protected void statechange(int newstate, long c, PushbackRandomFile f)
     {
         if (newstate == START)
         {
