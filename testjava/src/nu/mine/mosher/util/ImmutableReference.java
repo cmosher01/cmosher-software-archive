@@ -1,7 +1,6 @@
 package com.surveysampling.util;
-import java.io.Serializable;
 
-import com.surveysampling.util.Cloner;
+import java.io.Serializable;
 
 public final class ImmutableReference implements Comparable, Serializable
 {
