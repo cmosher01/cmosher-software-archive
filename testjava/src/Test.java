@@ -47,7 +47,7 @@ public class Test
         Exception e = new Exception("test");
         ExceptionUtil.newGeneric(e);
         System.out.println(e.getClass().getClassLoader().getClass().getName());
-        URLClassLoader cl = (URLClassLoader)e.getClass().class.getClassLoader();
+        URLClassLoader cl = (URLClassLoader)e.getClass().getClassLoader();
         do
         {
             URL[] rurl = cl.getURLs();
