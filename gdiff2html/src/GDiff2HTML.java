@@ -37,8 +37,10 @@ public class GDiff2HTML
         outln();
 
         int vers = gdiff.read();
+        out("version: ");
         out(lonib((byte)((vers&0xff)>>4)));
         out(lonib((byte)(vers&0xff)));
+        outln();
 
 		GDiffCmd g = getGDiff(gdiff);
 		while (!(g instanceof GDiffEnd))
