@@ -5,12 +5,14 @@ package nu.mine.mosher;
 
 import javax.swing.DefaultListSelectionModel;
 
+
+
 /**
  * TODO
  * 
  * @author Chris
  */
-public class SingleSelectionModel extends DefaultListSelectionModel
+public abstract class SingleSelectionModel extends DefaultListSelectionModel
 {
 
     /**
@@ -18,8 +20,19 @@ public class SingleSelectionModel extends DefaultListSelectionModel
      */
     public SingleSelectionModel()
     {
-        super();
-        // TODO Auto-generated constructor stub
+        setSelectionMode(SINGLE_SELECTION);
     }
 
+    public void setSelectionInterval(int index0, int index1)
+    {
+        int oldIndex = getMinSelectionIndex();
+        super.setSelectionInterval(index0,index1);
+        int newIndex = getMinSelectionIndex();
+        if (oldIndex != newIndex)
+        {
+            updateSingleSelection(oldIndex,newIndex);
+        }
+    }
+
+    public abstract void updateSingleSelection(int oldIndex, int newIndex);
 }
