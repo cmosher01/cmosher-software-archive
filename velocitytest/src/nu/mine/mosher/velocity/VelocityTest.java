@@ -44,6 +44,7 @@ public class VelocityTest
                 }
             }
         });
+        velocity.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH,"C:\\Documents and Settings\\chrism\\My Documents");
 
         velocity.init();
 
