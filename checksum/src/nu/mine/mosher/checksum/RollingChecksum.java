@@ -50,8 +50,7 @@ public class RollingChecksum
         a %= M;
 
         int b = (checksum >> 16) & 0xFFFF;
-        b -= len;
-        b *= xk;
+        b -= len*xk;
         b += a;
         b %= M;
 
