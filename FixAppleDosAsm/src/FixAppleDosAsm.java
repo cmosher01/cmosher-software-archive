@@ -3,6 +3,7 @@ import java.io.BufferedWriter;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
@@ -19,7 +20,7 @@ import java.io.OutputStreamWriter;
 public class FixAppleDosAsm
 {
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
         BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(FileDescriptor.in)));
         BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out)));
@@ -32,5 +33,15 @@ public class FixAppleDosAsm
         out.flush();
         out.close();
         in.close();
+    }
+
+    /**
+     * @param s
+     * @return
+     */
+    private static String processLine(String s)
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
