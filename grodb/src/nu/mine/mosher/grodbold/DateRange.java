@@ -40,7 +40,15 @@ public class DateRange implements Immutable, Serializable, Comparable
 
     public DateRange(YMD earliest, YMD latest, boolean julian, int hour, int minute, TimeZone timeZone, boolean circa)
     {
+    	if (earliest == null)
+    	{
+    		throw new NullPointerException("earliest cannot be null");
+    	}
         this.earliest = earliest;
+		if (latest == null)
+		{
+			throw new NullPointerException("latest cannot be null");
+		}
         this.latest = latest;
         this.julian = julian;
         this.hour = hour;
