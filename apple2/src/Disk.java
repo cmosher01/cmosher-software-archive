@@ -22,43 +22,13 @@ public class Disk
     public Disk(byte[] disk)
     {
         this.disk = disk;
-        try
-        {
-            this.pos = new DiskPos(0,0,0);
-        }
-        catch (InvalidPosException e)
-        {
-            throw new RuntimeException("shouldn't happen",e);
-        }
-    }
-
-    /**
-     */
-    public void rewind()
-    {
-        try
-        {
-            this.pos = new DiskPos(0,0,0);
-        }
-        catch (InvalidPosException e)
-        {
-            throw new RuntimeException("shouldn't happen",e);
-        }
-    }
-
-    /**
-     * @param newPos
-     */
-    public void seek(DiskPos newPos)
-    {
-        this.pos = newPos;
     }
 
     /**
      * @param len
      * @return
      */
-    public byte[] read(int len)
+    public byte[] read(DiskPos pos, int len)
     {
         byte[] rb = new byte[len];
         System.arraycopy(disk,pos.getIndex(),rb,0,len);
