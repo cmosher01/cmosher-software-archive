@@ -198,7 +198,7 @@ public class Delta
 
                 alternativehashf = Checksum.incrementChecksum(alternativehashf,rTrg[0],b[0]);
 
-                for (int j = 0; j < 15; j++)
+                for (int j = 0; j < S-1; j++)
                 {
                     rTrg[j] = rTrg[j + 1];
                 }
