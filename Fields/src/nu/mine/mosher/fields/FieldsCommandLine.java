@@ -3,6 +3,8 @@
  */
 package nu.mine.mosher.ja2;
 
+import nu.mine.mosher.swingapp.InvalidCommandLine;
+
 /**
  * Handles any command line arguments for the application
  * 
