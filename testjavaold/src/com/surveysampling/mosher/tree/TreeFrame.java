@@ -5,13 +5,14 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 
-public class TreeFrame extends JPanel implements WindowListener
+public class TreeFrame extends JPanel
 {
 
     public TreeFrame(String dir)
@@ -34,7 +35,6 @@ public class TreeFrame extends JPanel implements WindowListener
         scrollpane.setDoubleBuffered(true);
 
         add("Center", scrollpane);
-        addWindowListener(this);
     }
 
     public TreeNode buildTree(String dir)
@@ -48,35 +48,6 @@ public class TreeFrame extends JPanel implements WindowListener
     {
         setLocation(50,50);
         super.setVisible(show);
-    }
-
-    public void windowClosed(WindowEvent event)
-    {
-    }
-
-    public void windowDeiconified(WindowEvent event)
-    {
-    }
-
-    public void windowIconified(WindowEvent event)
-    {
-    }
-
-    public void windowActivated(WindowEvent event)
-    {
-    }
-
-    public void windowDeactivated(WindowEvent event)
-    {
-    }
-
-    public void windowOpened(WindowEvent event)
-    {
-    }
-
-    public void windowClosing(WindowEvent event)
-    {
-        System.exit(0);
     }
 
     /**
