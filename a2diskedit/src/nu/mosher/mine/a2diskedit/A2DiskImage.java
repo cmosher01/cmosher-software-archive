@@ -93,4 +93,9 @@ public class A2DiskImage
 	private void switchTSBlock()
 	{
 	}
+
+	public A2DiskContents getContents()
+	{
+		return contents;
+	}
 }
