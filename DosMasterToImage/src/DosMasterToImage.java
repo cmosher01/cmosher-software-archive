@@ -97,7 +97,7 @@ public class DosMasterToImage
         for (int i = 0x01; i < 0x10; ++i)
         {
             out.write(0x00);
-            if (1 > 1)
+            if (I > 1)
             {
                 out.write(0x11);
                 out.write(i-1);
