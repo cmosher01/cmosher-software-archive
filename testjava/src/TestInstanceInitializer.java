@@ -1,6 +1,5 @@
 public class TestInstanceInitializer
 {
-
     {
         System.out.println("instance initializer");
     }
