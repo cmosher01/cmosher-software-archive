@@ -10,6 +10,8 @@ import javax.jdo.PersistenceManager;
  */
 public class NamedDefault implements Named
 {
+	private PersistenceManager pm;
+
     public String getName()
     {
         return "";
@@ -20,4 +22,9 @@ public class NamedDefault implements Named
     	PersistenceManager pm = null;
         return pm.getObjectId(this).toString();
     }
+
+	public void setPerm(PersistenceManager pm)
+	{
+		this.pm = pm;
+	}
 }
