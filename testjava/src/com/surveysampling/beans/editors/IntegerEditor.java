@@ -10,7 +10,7 @@ public class IntegerEditor extends PropertyEditorSupport implements PropertyEdit
 
     public String getJavaInitializationString()
     {
-        return Integer.toString(DEFAULT_INT);
+        return DEFAULT.toString();
     }
 
     public void setAsText(String text) throws IllegalArgumentException
