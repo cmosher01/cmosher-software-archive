@@ -43,6 +43,19 @@ public class Disk
         return rb;
     }
 
+    public void readASCII(int len, StringBuffer sb, byte[] attrib)
+    {
+        if (attrib.length != len)
+        {
+            throw new RuntimeException("attribute array is wrong length.");
+        }
+        for (int i = 0; i < len; ++i)
+        {
+            int c = read();
+            sb.append((char)(byte)(c & 0x0000007F));
+        }
+    }
+
     /**
      * @return
      */
