@@ -10,13 +10,19 @@ public class JavaRNG extends RNGDefault implements RandomNumberGenerator
     private final Random rand;
 
     /**
-     * Constructor for JavaRNG.
+     * Initializes this <code>JavaRNG</code> with the default
+     * seed value.
      */
     public JavaRNG()
     {
-    	super();
+    	this(getDefaultSeed());
     }
 
+    /**
+     * Initializes this <code>JavaRNG</code> with the given
+     * seed value.
+     * @param seed the seed value
+     */
     public JavaRNG(long seed)
     {
         this.rand = new Random(seed);
