@@ -246,12 +246,12 @@ public class Disk
                     sector[3]==0 && sector[4]==0 &&
                     word(sector,5)%0x7A == 0 &&
                     match(sector,7,new byte[]{0,0,0,0,0}) &&
-                    sector[0x0C] > 0 && sector[0x0D] > 0 &&
+                    (sector[0x0C] > 0 || sector[0x0D] > 0) &&
                     DiskPos.isValidTrack(sector[0x0C]) && DiskPos.isValidSector(sector[0x0D]))
                     {
                         int ts = 0x0E;
                         boolean valid = true;
-                        while (ts+1 < sector.length && sector[ts] != 0 && sector[ts+1] != 0 && valid)
+                        while (ts+1 < sector.length && (sector[ts] != 0 || sector[ts+1] != 0) && valid)
                         {
                             if (!(DiskPos.isValidTrack(sector[ts]) && DiskPos.isValidSector(sector[ts+1])))
                             {
