@@ -42,7 +42,7 @@ public class VolumeDOS extends VolumeEntity
         try
         {
             p = new DiskPos(0,0);
-            pLim = new DiskPos(2,6);
+            pLim = new DiskPos(2,5);
         }
         catch (InvalidPosException e)
         {
