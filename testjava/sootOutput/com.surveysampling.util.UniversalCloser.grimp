@@ -1,0 +1,35 @@
+public class com.surveysampling.util.UniversalCloser extends java.lang.Object
+{
+
+    public static void close(java.lang.Object)
+    {
+        java.lang.Object obj;
+        java.lang.Throwable ignore;
+
+        obj := @parameter0;
+
+     label0:
+        obj.getClass().getMethod("close", null).invoke(obj, null);
+
+     label1:
+        goto label3;
+
+     label2:
+        ignore := @caughtexception;
+        goto label3;
+
+     label3:
+        return;
+
+        catch java.lang.Throwable from label0 to label1 with label2;
+    }
+
+    public void <init>()
+    {
+        com.surveysampling.util.UniversalCloser this;
+
+        this := @this;
+        this.<init>();
+        return;
+    }
+}
