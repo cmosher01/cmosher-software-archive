@@ -204,9 +204,6 @@ public class Disk
     }
 
     /**
-     * @param allowLarge
-     * @param tsmapMaps
-     * @throws InvalidPosException
      */
     public void findDos33CatalogSector(/*boolean allowLarge, TSMap tsmapMaps*/Collection rPosCat)
     {
@@ -323,9 +320,6 @@ public class Disk
 
     /**
      * @param sector
-     * @param allowLarge
-     * @param tsmapMaps
-     * @param entries
      * @return
      */
     static int isDos33CatalogSector(byte[] sector)
@@ -458,7 +452,6 @@ public class Disk
 
     /**
      * @param rDiskPosSectorsWithData
-     * @throws InvalidPosException
      */
     public void getDataTS(Collection rDiskPosSectorsWithData)
     {
@@ -476,7 +469,6 @@ public class Disk
 
     /**
      * @param m
-     * @throws InvalidPosException
      */
     public void getDataTS(TSMap m)
     {
@@ -601,7 +593,6 @@ public class Disk
 //    }
 
     /**
-     * @throws InvalidPosException
      */
     public void findDos33TSMapSector(/*TSMap tsmapMapsInCatalog*/)
     {
