@@ -14,16 +14,16 @@ import java.util.ListIterator;
  */
 public class Range implements Comparable
 {
-    private final int begin;
-    private final int end;
-    private final transient int len;
-    private final transient int lim;
+    private final long begin;
+    private final long end;
+    private final transient long len;
+    private final transient long lim;
 
     /**
      * @param begin
      * @param end
      */
-    public Range(int begin, int end)
+    public Range(long begin, long end)
     {
         this.begin = begin;
         this.end = end;
@@ -44,7 +44,7 @@ public class Range implements Comparable
     /**
      * @return Returns the begin.
      */
-    public int getBegin()
+    public long getBegin()
     {
         return begin;
     }
@@ -52,7 +52,7 @@ public class Range implements Comparable
     /**
      * @return Returns the end.
      */
-    public int getEnd()
+    public long getEnd()
     {
         return end;
     }
@@ -60,7 +60,7 @@ public class Range implements Comparable
     /**
      * @return Returns the length. Same as getLimit()-getBegin().
      */
-    public int getLength()
+    public long getLength()
     {
         return len;
     }
@@ -68,7 +68,7 @@ public class Range implements Comparable
     /**
      * @return Returns the limit. Same as getEnd()+1.
      */
-    public int getLimit()
+    public long getLimit()
     {
         return lim;
     }
@@ -104,7 +104,7 @@ public class Range implements Comparable
     /**
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
-    public int compareTo(Object o)
+    public long compareTo(Object o)
     {
         Range that = (Range)o;
         if (this.begin < that.begin)
@@ -140,7 +140,7 @@ public class Range implements Comparable
      * @param point
      * @return
      */
-    public boolean containsWithin(int point)
+    public boolean containsWithin(long point)
     {
         return this.begin < point && point < this.end;
     }
@@ -149,7 +149,7 @@ public class Range implements Comparable
      * @param point
      * @return
      */
-    public boolean contains(int point)
+    public boolean contains(long point)
     {
         return this.begin <= point && point <= this.end;
     }
