@@ -47,6 +47,5 @@ public class VolumeTSMap extends VolumeEntity
                 s.append(";");
             }
         }
-        s.append("\n");
     }
 }
