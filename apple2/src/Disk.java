@@ -172,8 +172,7 @@ public class Disk
     }
 
     /**
-     * @throws InvalidPosException
-     * 
+     * @param rPosVtoc
      */
     public void findDos33VTOC(Collection rPosVtoc)
     {
