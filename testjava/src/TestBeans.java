@@ -10,6 +10,14 @@ public class TestBeans
     public static void main(String[] rArgs) throws Throwable
     {
         PropertyEditorManager.setEditorSearchPath(new String[] {"com.surveysampling.beans.editors"});
+
+        Package[] rpkg = Package.getPackages();
+        for (int i = 0; i < rpkg.length; ++i)
+        {
+            Package pkg = rpkg[i];
+            System.out.println(pkg.getName());
+        }
+
         SomeBean some = new SomeBean();
         String prop = "objInteger";
         String val = "34";
