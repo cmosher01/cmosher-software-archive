@@ -135,6 +135,8 @@ public class VolumeDOS extends VolumeEntity
 
     private static final int[] rFranklinFixup = {0x1098};
 
+    private static byte[] rbClearFranklin = new byte[0x4000-0x1B00];
+
 
 
     private static List rPosDOS = new ArrayList();
@@ -208,6 +210,11 @@ public class VolumeDOS extends VolumeEntity
             e.printStackTrace();
         }
 
+        System.arraycopy(rbClear1980, 0, rbClearFranklin, 0, rbClear1980.length);
+        for (int i = 0; i < rFranklinOffset.length; ++i)
+        {
+            rbClearFranklin[rbFranklineOffset[i]] = (byte)rbFranklinValue[i];
+        }
     }
 
     /**
