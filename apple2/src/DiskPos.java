@@ -118,4 +118,19 @@ public class DiskPos
     {
         return iDisk-iDisk/cSector*cSector;
     }
+
+    public int getBlockInDisk()
+    {
+        return iDisk/cBlock;
+    }
+
+    public int getByteInBlock()
+    {
+        return iDisk-iDisk/cBlock*cBlock;
+    }
+
+    public boolean isZero()
+    {
+        return iDisk == 0;
+    }
 }
