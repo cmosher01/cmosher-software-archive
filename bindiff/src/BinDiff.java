@@ -80,12 +80,12 @@ public class BinDiff
         statechange(END,0);
     }
 
-	protected void statechange(int newstate, long c)
+	protected void statechange(int newstate, int c)
 	{
 		statechange(newstate,c,null);
 	}
 
-    protected void statechange(int newstate, long c, TellStream instr)
+    protected void statechange(int newstate, int c, TellStream instr)
     {
         static state_t state;
         static int ccopy(0);
