@@ -81,7 +81,7 @@ public class StringFieldizer
 
     /**
      * Returns the original string (passed into the constructor).
-     * @return
+     * @return the String
      */
     public String getString()
     {
@@ -90,7 +90,7 @@ public class StringFieldizer
 
     /**
      * Returns the delimiter (passed into the constructor).
-     * @return
+     * @return the delimiter character
      */
     public char getDelimiter()
     {
