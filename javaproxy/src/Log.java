@@ -8,8 +8,12 @@
  * Author : Steve Yeong-Ching Hsueh
  */
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /**
  * Log class writes message to a log
