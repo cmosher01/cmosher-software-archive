@@ -17,12 +17,12 @@ public class EnumIter extends Object implements Iterator
         return e.hasMoreElements();
     }
 
-    public Object next()
+    public Object next() throws NoSuchElementException
     {
         return e.nextElement();
     }
 
-    public void remove()
+    public void remove() throws UnsupportedOperationException
     {
         throw new UnsupportedOperationException();
     }
