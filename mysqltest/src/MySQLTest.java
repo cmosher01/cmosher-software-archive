@@ -79,19 +79,18 @@ public class MySQLTest
     	try
     	{
     		st = db.createStatement();
-    		ResultSet rs = st.executeQuery("select "+columnName(sGender,ageMin,ageMax)+" c, nameFirst, nameLast, nameMiddle, nameSuffix from Census"+year);
+    		ResultSet rs = st.executeQuery("select "+columnName(sGender,ageMin,ageMax)+" c, id from Census"+year);
     		while (rs.next())
     		{
     			int c = rs.getInt("c");
-    			String name =
-    				rs.getString("nameLast")+", "+
-    				rs.getString("nameFirst")/*+" "+
-    				rs.getString("nameMiddle")+" "+
-    				rs.getString("nameSuffix")*/;
+    			String id = rs.getString("id");
+//    				rs.getString("nameFirst")+" "+
+//    				rs.getString("nameMiddle")+" "+
+//    				rs.getString("nameSuffix");
     			for (int i = 0; i < c; ++i)
     			{
     				log.info(
-    					"family w/ head "+name+","+
+    					"Census"+year+" "+id+","+
     					sGender+","+
     					(ageMax<0 ? ""+(1790-150) : ""+(1790-ageMax))+","+
     					(1790-ageMin));
