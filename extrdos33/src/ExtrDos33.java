@@ -70,7 +70,8 @@ public class ExtrDos33
 
 	private static class DosImage
 	{
-		List files = new ArrayList();
+		File dosFile;
+        List files = new ArrayList();
         byte[] rb;
 		byte[] rbc;
 		public DosImage(byte[] x)
@@ -114,6 +115,10 @@ public class ExtrDos33
         {
         	files.add(file);
         }
+        public void setDosFile(File file)
+        {
+        	dosFile = file;
+        }
 	}
 
 	private static Map doss = new HashMap();
@@ -140,16 +145,17 @@ public class ExtrDos33
 
 		if (doss.containsKey(dos))
 		{
-			File saveDos = (File)doss.get(dos);
-			System.out.println("image already found: "+saveDos.getAbsolutePath());
-			dos.addFile(file);
+			DosImage existDos = (DosImage)doss.get(dos);
+			System.out.println("image already found: "+existDos.dosFile.getAbsolutePath());
+			existDos.addFile(file);
 		}
 		else
 		{
-			File saveDos = new File(dirNew,nextDosFileName());
-			System.out.println("New DOS 3.3 image. Saving Tracks $00-$03 to file: "+saveDos.getAbsolutePath());
-			doss.put(dos,saveDos);
-			BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(saveDos));
+			dos.setDosFile(new File(dirNew,nextDosFileName()));
+			System.out.println("New DOS 3.3 image. Saving Tracks $00-$03 to file: "+dos.dosFile.getAbsolutePath());
+			dos.addFile(file);
+			doss.put(dos,dos);
+			BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(dos.dosFile));
 			out.write(dos.rb);
 			out.flush();
 			out.close();
