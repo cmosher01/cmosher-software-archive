@@ -25,6 +25,8 @@ public final class MessageFormatter extends Formatter
         throw new UnsupportedOperationException();
     }
 
+
+
     public static String formatLogMessage(LogRecord record)
     {
         return formatter.formatMessage(record);
