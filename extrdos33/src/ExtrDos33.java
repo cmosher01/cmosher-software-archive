@@ -1,7 +1,9 @@
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -138,6 +140,10 @@ public class ExtrDos33
 			File saveDos = new File(dirNew,nextDosFileName());
 			System.out.println("New DOS 3.3 image. Saving Tracks $00-$03 to file: "+saveDos.getAbsolutePath());
 			doss.put(dos,saveDos);
+			BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(saveDos));
+			out.write(dos.rb);
+			out.flush();
+			out.close();
 		}
 
 
