@@ -19,8 +19,9 @@ public class DiskVTOCTest extends TestCase
     /**
      * test VTOC for DOS 3.3 System Master (Aug. 25, 1980), T$11 S$00
      * @throws IOException
+     * @throws InvalidPosException
      */
-    public void testDOS33_Master_1980() throws IOException
+    public void testDOS33_Master_1980() throws IOException, InvalidPosException
     {
         Disk disk = readDiskResource("DOS33_SystemMaster_19800825.dsk");
         List rPos = new ArrayList();
