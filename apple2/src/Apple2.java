@@ -33,6 +33,7 @@ public class Apple2
     {
 //        mainAll(args);
         doOneDisk(readDisk(new File("test/SARG2.DSK")));
+        doOneDisk(readDisk(new File("test/DOS33_SystemMaster_19800825.dsk")));
     }
 
     /**
