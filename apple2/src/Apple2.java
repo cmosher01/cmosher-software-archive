@@ -30,7 +30,8 @@ public class Apple2
         byte[] rbDisk = new byte[fileDisk.available()];
         fileDisk.read(rbDisk);
         Disk disk = new Disk(rbDisk);
-        disk.findDos33VTOC();
+        List rVTOC = new ArrayList();
+        disk.findDos33VTOC(rVTOC);
         disk.findDos33CatalogSector();
         disk.findDos33TSMapSector();
     }
