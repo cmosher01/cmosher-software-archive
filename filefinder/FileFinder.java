@@ -15,8 +15,8 @@ public class FileFinder
             System.exit(1);
         }
 
-        final File dir = new File(rArg[0]);
         final Pattern patFile = Pattern.compile(rArg[1]);
+
         String sub = "";
         if (rArg.length > 2)
         {
@@ -25,7 +25,7 @@ public class FileFinder
         final Pattern patSubdir = Pattern.compile(sub);
 
         List dirs = new ArrayList();
-        dirs.add(dir);
+        dirs.add(new File(rArg[0]));
 
         while (dirs.size() > 0)
         {
