@@ -18,12 +18,12 @@ public class VolumeFileData extends VolumeEntity
     private List rPos = new ArrayList();
 
     /**
-     * @param rPos
+     * @param rPosFile
      * @param disk
      */
-    public void readFromMedia(List rPos, Disk disk)
+    public void readFromMedia(List rPosFile, Disk disk)
     {
-        for (Iterator i = rPos.iterator(); i.hasNext();)
+        for (Iterator i = rPosFile.iterator(); i.hasNext();)
         {
             DiskPos pos = (DiskPos)i.next();
             this.rPos.add(pos.clone());
