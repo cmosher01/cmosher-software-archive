@@ -18,7 +18,7 @@ public abstract class RNGDefault implements RandomNumberGenerator
 	 */
 	public RNGDefault()
 	{
-		this.seed = seed;
+        this(System.currentTimeMillis());
 	}
 
 	/**
