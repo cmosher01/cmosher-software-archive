@@ -3,12 +3,16 @@
  */
 package nu.mine.mosher.ja2;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTree;
 import javax.swing.UIManager;
 
 /**
@@ -92,7 +96,18 @@ public class GUI
      */
     protected JPanel createContentPane()
     {
-        JPanel panel = new JPanel();
+        JPanel panel = new JPanel(new BorderLayout(),true);
+
+        panel.setOpaque(true);
+
+        panel.setPreferredSize(new Dimension(640,480));
+
+        panel.addNotify();
+
+        JScrollPane scrollpane = new JScrollPane();
+
+        panel.add(scrollpane,BorderLayout.CENTER);
+
         return panel;
     }
 }
