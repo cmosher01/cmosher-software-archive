@@ -27,8 +27,7 @@ public class FixAppleDosAsm
         Lister out = new Lister(new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out)))));
         for (String s = in.readLine(); s != null; s = in.readLine())
         {
-            s = processLine(s);
-            out.print(s);
+            processLine(s,out);
             out.newline();
         }
         out.close();
@@ -39,7 +38,7 @@ public class FixAppleDosAsm
      * @param s
      * @return
      */
-    private static String processLine(String s)
+    private static void processLine(String s, Lister out)
     {
         String tr = s.trim();
         if (tr.startsWith(";"))
