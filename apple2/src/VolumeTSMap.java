@@ -22,6 +22,10 @@ public class VolumeTSMap extends VolumeEntity
      */
     public void readFromMedia(DiskPos start, Disk disk) throws InvalidPosException
     {
-        disk.getDos33TSMapEntries(start, rTS);
+        while (!start.isZero())
+        {
+            disk.getDos33TSMapEntries(start, rTS);
+            start = disk.getDos33Next(start);
+        }
     }
 }
