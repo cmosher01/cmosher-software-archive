@@ -50,6 +50,10 @@ public class GDiffVeiew extends JFrame
     private int cCol = 0x10;
 
     private StringBuffer sb;
+
+    private int srcBegin = -1;
+
+    private int srcEnd = -1;
  
  
  
@@ -103,9 +107,6 @@ public class GDiffVeiew extends JFrame
         readSrc();
         doc.insertString(0,sb.toString(),(AttributeSet)styles.get("body"));
 
-//        doc.setCharacterAttributes(57,5,(AttributeSet)styles.get("highlight"),true);                                                                 
-//        doc.setCharacterAttributes(80,2,(AttributeSet)styles.get("highlight"),true);                                                                 
- 
         pack();
         setVisible(true);
     }
@@ -232,6 +233,21 @@ public class GDiffVeiew extends JFrame
             c = (char)(i-10+'A');
         }
         return c;
+    }
+
+    public void hilightSRc(int begin, int end)
+    {
+        if (srcBegin >= 0 && srcEnd >= 0)
+        {
+        }
+    }
+    public void highlight(int beginPoint, int endPoint)
+    {
+        doc.setCharacterAttributes(beginPoint,endPoint-beginPoint,(AttributeSet)styles.get("highlight"),true);
+    }
+    public void unhighlight(int beginPoint, int endPoint)
+    {
+        doc.setCharacterAttributes(beginPoint,endPoint-beginPoint,(AttributeSet)styles.get("body"),true);
     }
 
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, InterruptedException, BadLocationException, IOException
