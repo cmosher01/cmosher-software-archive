@@ -111,7 +111,7 @@ public class VolumeBoot extends VolumeEntity
         }
         else
         {
-            if (data[0] == 1 && data[2] == (byte)0xA5 && data[0xFF] == 9)
+            if (data[0] == 1 && data[2] == (byte)0xA5 && data[3] == 0x27 && data[0xFF] == 9)
             {
                 
             }
