@@ -24,6 +24,13 @@ public class ExceptionHandler
         }
     }
 
+
+    
+    public static void waitForException() throws Throwable
+    {
+        throw (Throwable)mSingleton.mException.remove();
+    }
+
     /**
      * Sends an exception to the program's main thread
      * for handling.
