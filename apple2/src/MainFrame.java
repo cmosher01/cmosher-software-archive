@@ -92,6 +92,16 @@ public class MainFrame extends JFrame
         }
 
         DefaultMutableTreeNode nFilesRecovered = new DefaultMutableTreeNode("Recovered Files");
+        List rFilesRecovered = new ArrayList();
+        vol.getFilesRecovered(rFilesRecovered);
+        for (Iterator i = rFilesRecovered.iterator(); i.hasNext();)
+        {
+            VolumeFileRecovered file = (VolumeFileRecovered)i.next();
+            List rPos = new ArrayList();
+            file.getTSMap().getPos(rPos);
+            VolumeSector vs = (VolumeSector)rPos.get(0);
+            nFilesRecovered.add(new DefaultMutableTreeNode("recovered @ "+vs.getPos().toStringTS()));
+        }
 
         DefaultMutableTreeNode nOrphaned = new DefaultMutableTreeNode("Orphaned Data");
 
@@ -102,7 +112,10 @@ public class MainFrame extends JFrame
         nDisk.add(nBoot);
         nDisk.add(nDos);
         nDisk.add(nCat);
-        nDisk.add(nFiles);
+        if (!rFiles.isEmpty())
+        {
+            nDisk.add(nFiles);
+        }
         nDisk.add(nFilesRecovered);
         nDisk.add(nOrphaned);
         nDisk.add(nBlank);
