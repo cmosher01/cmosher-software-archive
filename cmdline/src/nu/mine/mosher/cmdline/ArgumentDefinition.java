@@ -45,24 +45,19 @@ public class ArgumentDefinition implements Comparable
             return false;
         }
         ArgumentDefinition that = (ArgumentDefinition)obj;
-        return this.name.equalsIgnoreCase(that.name);
+        return this.name.equals(that.name);
     }
     public int hashCode()
     {
-        // TODO Auto-generated method stub
-        return super.hashCode();
+        return this.name.hashCode();
     }
     public String toString()
     {
-        // TODO Auto-generated method stub
-        return super.toString();
+        return this.name;
     }
-    /* (non-Javadoc)
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
     public int compareTo(Object o)
     {
-        // TODO Auto-generated method stub
-        return 0;
+        ArgumentDefinition that = (ArgumentDefinition)obj;
+        return this.name.compareTo(that.name);
     }
 }
