@@ -22,7 +22,7 @@ import nu.mine.mosher.checksum.StreamChecksum;
 public class SourceFile
 {
     private final SortedMap map = new TreeMap();
-    private final int w;
+    private int w;
 
     /**
      * @param src target file
