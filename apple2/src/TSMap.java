@@ -90,7 +90,7 @@ public class TSMap
     public static TSMap intersection(TSMap a, TSMap b)
     {
         TSMap m = new TSMap();
-        for (int i = 0; i < a.r.length; i++)
+        for (int i = 0; i < m.r.length; i++)
         {
             m.r[i] = a.r[i] && b.r[i];
         }
