@@ -783,7 +783,6 @@ public class Disk
     private class SectorIter extends DiskPos, implements Iterator
     {
         /**
-         * @param iDisk
          */
         protected SectorIter()
         {
