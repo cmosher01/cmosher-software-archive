@@ -61,4 +61,10 @@ public class Hex2Bin
         }
         throw new RuntimeException("invalid hex character");
     }
+
+    public static String hexbyte(byte x)
+    {
+        String s = Integer.toHexString(x);
+        return s;
+    }
 }
