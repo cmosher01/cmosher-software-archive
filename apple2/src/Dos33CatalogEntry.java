@@ -32,7 +32,7 @@ public class Dos33CatalogEntry
     public Dos33CatalogEntry(boolean deleted, DiskPos dataPos, boolean locked, int fileTypeID, int cSector, byte[] nameOrig)
     {
         this.deleted = deleted;
-        this.dataPos = dataPos;
+        this.dataPos = dataPos.clone();
         this.locked = locked;
         this.fileTypeID = fileTypeID;
         this.cSector = cSector;
