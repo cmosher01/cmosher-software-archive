@@ -29,8 +29,4 @@ public class SyntaxDefinition
     {
         return null;
     }
-    public boolean lastArgumentRepeat()
-    {
-        return mLastArgumentRepeats;
-    }
 }
