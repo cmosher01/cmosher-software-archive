@@ -1,4 +1,5 @@
 import nu.mine.mosher.fields.FieldsCommandLine;
+import nu.mine.mosher.fields.FieldsGUI;
 import nu.mine.mosher.swingapp.ApplicationAborting;
 import nu.mine.mosher.swingapp.CommandLineArgHandler;
 import nu.mine.mosher.swingapp.ExceptionHandler;
