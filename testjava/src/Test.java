@@ -44,7 +44,7 @@ public class Test
     {
         Object j = new Object();
         throw new Exception();
-        return j;
+//        return j;
     }
 
 	public static void main(String[] rArg) throws Throwable
