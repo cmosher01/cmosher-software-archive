@@ -47,11 +47,11 @@ public class MtaURI
         }
         mURI = uri;
 
+        // pre-parse the uri to pull out the rate and timeout
+        // values from the query string
         Map mapParamToValue = new HashMap();
         HttpUtil.parseQueryStringSimple(uri.getQuery(),mapParamToValue);
 
-        // pre-parse the uri to pull out the rate and timeout
-        // values from the query string
         int nRate = 0;
         try
         {
