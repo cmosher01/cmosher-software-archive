@@ -167,6 +167,10 @@ public class FixAppleDisasm
 							}
 						}
 					}
+					else
+					{
+						System.err.println(s);
+					}
 				}
 				else if (nextChar.equalsIgnoreCase("."))
 				{
