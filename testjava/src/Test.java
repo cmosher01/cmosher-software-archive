@@ -52,8 +52,14 @@ public class Test
         code.append(base);
         code.append("_");
         List mStepInts = new ArrayList();
+        mStepInts.add(new Integer(0));
+        mStepInts.add(new Integer(1));
+        mStepInts.add(new Integer(2));
         mStepInts.add(new Integer(3));
+        mStepInts.add(new Integer(4));
         mStepInts.add(new Integer(5));
+        mStepInts.add(new Integer(6));
+        mStepInts.add(new Integer(7));
         for (int i = 0; i < 8; ++i)
         {
             Integer inti = new Integer(i);
