@@ -3,6 +3,7 @@
  */
 package nu.mine.mosher.fields;
 
+import nu.mine.mosher.swingapp.CommandLineArgHandler;
 import nu.mine.mosher.swingapp.InvalidCommandLine;
 
 /**
@@ -10,13 +11,11 @@ import nu.mine.mosher.swingapp.InvalidCommandLine;
  * 
  * @author Chris Mosher
  */
-public class FieldsCommandLine
+public class FieldsCommandLine extends CommandLineArgHandler
 {
-    private final String[] mrArg;
-
     public FieldsCommandLine(String[] rArg)
     {
-        mrArg = rArg;
+        super(rArg);
     }
 
     /**
