@@ -4,6 +4,9 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	version="2.4">
 	<description>Test JDO</description>
+	<listener>
+		<listener-class>nu.mine.mosher.jdotest.AppInit</listener-class>
+	</listener>
 	<resource-ref>
 		<description>DB	Connection</description>
 		<res-ref-name>jdbc/jdotest</res-ref-name>
