@@ -116,9 +116,10 @@ public class Disk
      * @throws InvalidPosException
      * 
      */
-    public void findDos33Catalog() throws InvalidPosException
+    public void findDos33VTOC() throws InvalidPosException
     {
         int track = 0;
         seek(new DiskPos(track,0,0,true));
+        
     }
 }
