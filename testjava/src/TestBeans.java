@@ -21,8 +21,8 @@ public class TestBeans
         Editors.register();
 
         SomeBean some = new SomeBean();
-        String prop = "objInteger";
-        String val = "34";
+        String prop = "ABoolean";
+        String val = "true";
 
         setProperty(some, prop, val);
 
