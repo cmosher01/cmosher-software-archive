@@ -36,11 +36,11 @@ public class VelocityWrapper
         }
     }
 
-    public void evaluate(Context context, Writer writer, String logTag, Reader reader) throws VelocityException
+    public void evaluate(Context context, Writer writer, String nameTemplate, Reader reader) throws VelocityException
     {
         try
         {
-            velocity.evaluate(context, writer, logTag, reader);
+            velocity.evaluate(context, writer, nameTemplate, reader);
         }
         catch (Throwable e)
         {
