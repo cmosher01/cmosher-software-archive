@@ -153,16 +153,15 @@ public class Disk
         }
         DiskPos p = new DiskPos();
 
-        while (!EOF())
-        {
-            DiskPos cur = this.pos;
-            byte[] sector = read(DiskPos.cSector);
-            if (isDos33VTOC(sector))
-            {
-                rPosVtoc.add(cur);
-//                System.out.println("VTOC @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
-            }
-        }
+//        while (!EOF())
+//        {
+//            DiskPos cur = this.pos;
+//            byte[] sector = read(DiskPos.cSector);
+//            if (isDos33VTOC(sector))
+//            {
+//                rPosVtoc.add(cur);
+//            }
+//        }
     }
 
     /**
