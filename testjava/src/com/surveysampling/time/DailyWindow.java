@@ -166,7 +166,7 @@ public class DailyWindow
      * false otherwise.
      * @return
      */
-    public boolean isAlways()
+    public boolean isAlwaysOpen()
     {
         return false;
     }
@@ -176,7 +176,7 @@ public class DailyWindow
      * false otherwise.
      * @return
      */
-    public boolean isNever()
+    public boolean isNeverOpen()
     {
         return false;
     }
