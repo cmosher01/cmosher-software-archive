@@ -1,13 +1,16 @@
-/*
- * TODO
- *
- * Created on Oct 17, 2003
- */
+import java.lang.reflect.Method;
 
-/**
- * TODO
- */
 public class UniversalCloser
 {
-
+    public static void close(Object obj)
+    {
+        try
+        {
+            Method methodClose = obj.getClass().getMethod("close",null);
+            methodClose.invoke(obj,null);
+        }
+        catch (Throwable ignore)
+        {
+        }
+    }
 }
