@@ -185,19 +185,19 @@ public class Disk
                 int ce = 0x0B;
                 int penultimateSpace = 0;
                 int goodEntries = 0;
-                boolean good = true;
+                boolean live = true;
                 List entries = new ArrayList();
-                for (int cat = 0; cat < 7 && good; ++cat)
+                for (int cat = 0; cat < 7 && live; ++cat)
                 {
                     if (sector[ce] == 0)
                     {
-                        good = false;
+                        live = false;
                     }
                     else
                     {
                         ++goodEntries;
                     }
-                    if (good && DiskPos.isValidSector(sector[ce+1]) &&
+                    if (live && DiskPos.isValidSector(sector[ce+1]) &&
                         isValidFileType(sector[ce+2]) &&
                         isValidFileName(sector,ce+3))
                     {
