@@ -19,9 +19,9 @@ public class TimeOfDayParserTest extends TestCase
      * Constructor for TimeOfDayParserTest.
      * @param arg0
      */
-    public TimeOfDayParserTest(String arg0)
+    public TimeOfDayParserTest(String name)
     {
-        super(arg0);
+        super(name);
     }
 
     public static void main(String[] args)
