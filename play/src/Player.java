@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -74,6 +75,13 @@ public class Player implements Immutable
             rb[i] = i;
         }
 		ByteArrayInputStream bais = new ByteArrayInputStream(rb);
+		InputStreamReader isr = new InputStreamReader(bais,"US-ASCII");
+		int c = isr.read();
+		while (c != -1)
+		{
+			System.out.println(Integer.toHexString(c));
+			c = isr.read();
+		}
 
     }
 
