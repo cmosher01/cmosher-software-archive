@@ -1,13 +1,12 @@
 package to.go.gro.groapplet;
 
-import java.awt.Component;
 import java.awt.event.MouseEvent;
 
 import javax.swing.event.MouseInputAdapter;
 
 public class GROMouseListener extends MouseInputAdapter
 {
-	private Component mLastHit;
+	private Indi mLastIndi;
 	private final FamilyChart fc;
 
 	public GROMouseListener(FamilyChart fc)
@@ -17,18 +16,22 @@ public class GROMouseListener extends MouseInputAdapter
 
     public void mousePressed(MouseEvent evt)
     {
-		mLastHit = evt.getComponent();
-		Indi indi = fc.hitIndi(evt.getPoint());
-		if (indi != null)
+		mLastIndi = fc.hitIndi(evt.getPoint());
+		if (mLastIndi != null)
 		{
-			indi.hit();
+			mLastIndi.hit();
+			fc.repaint();
 		}
         super.mousePressed(evt);
     }
 
     public void mouseReleased(MouseEvent evt)
     {
-        // TODO Auto-generated method stub
+    	if (mLastIndi != null)
+    	{
+    		if (mLastIndi.isHit())
+			mLastIndi = null;
+    	}
         super.mouseReleased(evt);
     }
 
