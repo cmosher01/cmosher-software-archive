@@ -1,4 +1,5 @@
 <%@ include file="htmlhead.jsp" %>
+<%@ page isELEnabled="true" %>
 <%@ page session="false" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="javax.jdo.PersistenceManager" %>
