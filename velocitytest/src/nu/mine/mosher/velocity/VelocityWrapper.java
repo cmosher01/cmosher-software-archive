@@ -34,18 +34,13 @@ public class VelocityWrapper
         }
     }
 
-    public void evaluate(Reader reader, String nameTemplate, Context context, Writer writer) throws VelocityException
-    {
-        evaluate(context,writer,nameTemplate,reader);
-    }
-
-    public void evaluate(Context context, Writer writer, String nameTemplate, Reader reader) throws VelocityException
+    public void mergeTemplate(String templateName, Context context, Writer writer) throws VelocityException
     {
         try
         {
-            if (!velocity.evaluate(context,writer,nameTemplate,reader))
+            if (!velocity.mergeTemplate(templateName,context,writer))
             {
-                throw new VelocityException("error calling VelocityEngine.evaluate");
+                throw new VelocityException("error calling VelocityEngine.mergeTemplate");
             }
         }
         catch (VelocityException e)
@@ -58,13 +53,18 @@ public class VelocityWrapper
         }
     }
 
-    public void mergeTemplate(String templateName, Context context, Writer writer) throws VelocityException
+    public void evaluate(Reader reader, String nameTemplate, Context context, Writer writer) throws VelocityException
+    {
+        evaluate(context,writer,nameTemplate,reader);
+    }
+
+    public void evaluate(Context context, Writer writer, String nameTemplate, Reader reader) throws VelocityException
     {
         try
         {
-            if (!velocity.mergeTemplate(templateName,context,writer))
+            if (!velocity.evaluate(context,writer,nameTemplate,reader))
             {
-                throw new VelocityException("error calling VelocityEngine.mergeTemplate");
+                throw new VelocityException("error calling VelocityEngine.evaluate");
             }
         }
         catch (VelocityException e)
