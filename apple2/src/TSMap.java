@@ -27,6 +27,19 @@ public class TSMap
 
     /**
      * @param p
+     */
+    public void clear(DiskPos p)
+    {
+        int sector = p.getSectorInDisk();
+        if (sector < 0 || r.length <= sector)
+        {
+            throw new IllegalArgumentException();
+        }
+        r[sector] = false;
+    }
+
+    /**
+     * @param p
      * @return
      */
     public boolean isMarked(DiskPos p)
