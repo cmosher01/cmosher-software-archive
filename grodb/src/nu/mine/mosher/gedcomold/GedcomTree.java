@@ -4,11 +4,11 @@ public class GedcomTree
 {
 	private int prevLevel = -1;
 
-	public void appendLine(GedcomLine line) throws IllegalLevelChange
+	public void appendLine(GedcomLine line) throws InvalidLevel
 	{
 		if (prevLevel+1 < line.getLevel())
 		{
-			throw new IllegalLevelChange(line);
+			throw new InvalidLevel(line);
 		}
 	}
 }
