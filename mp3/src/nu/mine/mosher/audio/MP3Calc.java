@@ -1,7 +1,7 @@
 /*
  * Created on Sep 20, 2003
  */
-package nu.mine.mosher.mp3;
+package nu.mine.mosher.audio;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
