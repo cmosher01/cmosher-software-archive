@@ -130,7 +130,6 @@ public class GDiffView extends JFrame
                 if (oldIndex >= 0)
                 {
                     GDiffCmd oldCmd = (GDiffCmd)rcmd.get(oldIndex);
-                    System.out.println("unhighlight " + oldCmd);
                     if (oldCmd instanceof GDiffCopy)
                     {
                         GDiffCopy copy = (GDiffCopy)oldCmd;
@@ -142,7 +141,6 @@ public class GDiffView extends JFrame
                 if (newIndex >= 0)
                 {
                     GDiffCmd newCmd = (GDiffCmd)rcmd.get(newIndex);
-                    System.out.println("highlight " + newCmd);
                     if (newCmd instanceof GDiffCopy)
                     {
                         GDiffCopy copy = (GDiffCopy)newCmd;
