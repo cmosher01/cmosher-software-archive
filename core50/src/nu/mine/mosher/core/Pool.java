@@ -15,7 +15,7 @@ public class Pool<T>
 {
 	private final LinkedList<T> unused = new LinkedList<T>();
 	private final Map<WeakReference<T>,T> inUse = new HashMap<WeakReference<T>,T>();
-	private final ReferenceQueue recycleBin = new ReferenceQueue();
+	private final ReferenceQueue<T> recycleBin = new ReferenceQueue<T>();
 
 	public Pool(T[] pool)
 	{
