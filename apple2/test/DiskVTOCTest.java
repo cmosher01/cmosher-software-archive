@@ -240,13 +240,4 @@ public class DiskVTOCTest extends TestCase
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ")));
     }
-
-    public void testFindDos33CatalogSector()
-    {
-    }
-
-    public void testFindDos33TSMapSector()
-    {
-    }
-
 }
