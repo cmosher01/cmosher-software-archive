@@ -5,13 +5,13 @@
 <%
     String id = request.getParameter("id");
     Perm pm = new Perm();
-    Item item = (Item)pm.get(Item.class,id);
     String sOrig = request.getParameter("itemOrig");
     String sNew = request.getParameter("itemNew");
     boolean changed = !sOrig.equals(sNew);
     if (changed)
     {
     	PersistenceManager p = pm.begin();
+	    Item item = (Item)pm.get(Item.class,id);
 	    item.setName(sNew);
 	    pm.commit(p);
     }
