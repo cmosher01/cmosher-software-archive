@@ -59,7 +59,7 @@ public class Test
     //throws MyException, IOException // other exceptions here...
 	{
 
-        (Mute x = new Mute()).x = 5;
+        Mute x = (new Mute()).x = 5;
         System.out.println(x);
 
         ImmutableReference im = new ImmutableReference(x);
