@@ -1,8 +1,10 @@
 package com.surveysampling.mosher.tree;
 
 import java.io.File;
+import java.util.Enumeration;
 
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
 
 public class FileTreeNode extends DefaultMutableTreeNode
 {
@@ -56,5 +58,17 @@ public class FileTreeNode extends DefaultMutableTreeNode
     public boolean isLeaf()
     {
         return ((File)userObject).isFile();
+    }
+
+    public int[] getChildIndicies()
+    {
+        int rc[] = new int[getChildCount()];
+        int i = 0;
+        for (Enumeration e = children(); e.hasMoreElements();)
+        {
+            TreeNode child = (TreeNode)e.nextElement();
+            rc[i++] = getIndex(child);
+        }
+        return rc;
     }
 }
