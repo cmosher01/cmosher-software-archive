@@ -167,6 +167,8 @@ public class Disk
     }
 
     /**
+     * @param allowLarge
+     * @param tsmapMaps
      * @throws InvalidPosException
      */
     public void findDos33CatalogSector(boolean allowLarge, TSMap tsmapMaps) throws InvalidPosException
@@ -256,6 +258,7 @@ public class Disk
     }
 
     /**
+     * @param tsmapMapsInCatalog
      * @throws InvalidPosException
      */
     public void findDos33TSMapSector(TSMap tsmapMapsInCatalog) throws InvalidPosException
