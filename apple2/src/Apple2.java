@@ -36,11 +36,12 @@ public class Apple2
             throw new IllegalArgumentException("Usage: java Apple2 dirtree_of_dos_3.3_order_disk_images");
         }
         File[] rf = list140KFiles(args[0]);
+        byte[] rbDisk;
         InputStream fileDisk = null;
         try
         {
             fileDisk = new FileInputStream(new File(args[0]));
-            byte[] rbDisk = new byte[fileDisk.available()];
+            rbDisk = new byte[fileDisk.available()];
             fileDisk.read(rbDisk);
         }
         finally
