@@ -169,18 +169,21 @@ public class FixAppleDisasm
 
 			if (nextaddr != addr)
 			{
+				String err;
 				if (nextaddr < 0)
 				{
-					System.err.print("first address encountered: $");
-					System.err.println(hexWord(addr));
+					err = "first address encountered: $"+hexWord(addr);
 				}
 				else
 				{
-					System.err.print("address error: expected $");
-					System.err.print(hexWord(nextaddr));
-					System.err.print(", was $");
-					System.err.println(hexWord(addr));
+					err = "address error: expected $"+hexWord(nextaddr)+", was $"+hexWord(addr);
 				}
+				System.err.println(err);
+				if (ln.comment.length() == 0)
+				{
+					ln.comment = ";";
+				}
+				ln.comment += " "+err;
 				// resynch
 				nextaddr = addr;
 			}
