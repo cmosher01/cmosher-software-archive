@@ -131,6 +131,7 @@ public class DiskPos implements Comparable, Cloneable
     {
         return isValidTrack(track) && isValidSector(sector) && (track > 0 || sector > 0);
     }
+
     /**
      * @return
      */
