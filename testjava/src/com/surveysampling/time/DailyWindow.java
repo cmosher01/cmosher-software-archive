@@ -102,7 +102,7 @@ public class DailyWindow
      * @throws ParseException if start or end are in
      * an invalid format, or if the start and end times are the same.
      */
-    public static DailyWindow createDailyWindow(TimeOfDay start, TimeOfDay end) throws ParseException
+    public static DailyWindow createDailyWindow(TimeOfDay start, TimeOfDay end)
     {
         // fail fast if given any null
         if (start == null || end == null)
