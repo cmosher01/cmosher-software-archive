@@ -130,6 +130,10 @@ public class ExtrDos33
 		{
 			return (rb[0x1671] == 0x4C && rb[0x1672] == 0x4E && rb[0x1673] == 0xFFFFFFC1 && rb[0x1674] == 0x52);
 		}
+		public boolean hasHyperdosSignature()
+		{
+			return (rb[0x656] == 0xFFFFFFAD && rb[0x657] ==  0x61 && rb[0x658] ==  0xFFFFFFAA && rb[0x659] ==  0xFFFFFFC9 && rb[0x65A] ==  0x01 && rb[0x65B] ==  0xFFFFFFB0)
+		}
         public boolean equals(Object obj)
         {
         	if (!(obj instanceof DosImage))
