@@ -8,7 +8,8 @@
  * Author : Steve Yeong-Ching Hsueh
  */
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * common file utilities
