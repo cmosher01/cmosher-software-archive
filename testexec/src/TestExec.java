@@ -12,7 +12,7 @@ public class TestExec
     protected static void execDumpOutput() throws InterruptedException, IOException
     {
         System.out.println("starting subprocess...");
-        Process p = Runtime.getRuntime().exec("lsloop");
+        Process p = Runtime.getRuntime().exec("java -cp . Small");
 
         LineDumper procout = new LineDumper(new InputStreamReader(p.getInputStream()));
         LineDumper procerr = new LineDumper(new InputStreamReader(p.getErrorStream()));
