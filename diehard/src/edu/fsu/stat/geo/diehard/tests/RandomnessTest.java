@@ -20,7 +20,7 @@ public abstract class RandomnessTest
     {
         int intr = rng.nextInt();
 
-        long r = (long)intr;
+        long r = intr;
 
         if (intr < 0)
             r += 1L<<32;
