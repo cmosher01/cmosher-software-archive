@@ -21,6 +21,7 @@ public class VelocityTest
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out)));
 
         velocity.mergeTemplate("test.vm", context, writer);
+
         writer.flush();
         writer.close();
     }
