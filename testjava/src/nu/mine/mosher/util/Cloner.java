@@ -22,9 +22,15 @@ public final class Cloner
     {
         try
         {
-            Method objClone = cloneableObject.getClass().getMethod("clone",null);
-            objClone.setAccessible(true);
-            return (Cloneable)objClone.invoke(cloneableObject,null);
+            Class cl = cloneableObject.getClass();
+            Method methodClone = (Method)mClasses.get(cl);
+            if (methodClone == null)
+            {
+                methodClone = cl.getMethod("clone",null);
+                mClasses.put(cl,methodClone);
+            }
+            methodClone.setAccessible(true);
+            return (Cloneable)methodClone.invoke(cloneableObject,null);
         }
         catch (Throwable cause)
         {
