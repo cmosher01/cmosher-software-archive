@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
  */
 public class FixMetaUTF8
 {
+    private static final long MAX_SIZ = 2*1024*1024;
 
     public static void main(String[] args) throws IOException
     {
@@ -26,13 +27,20 @@ public class FixMetaUTF8
         File f = new File(args[0]);
         f = f.getAbsoluteFile();
         f = f.getCanonicalFile();
-        int siz = f.length();
-        if (siz >= MAX_SIZ)
+        long sizlong = f.length();
+        if (sizlong >= MAX_SIZ)
         {
-            throw new UnsupportedOperationException("file "+f+" is too big: "+siz+" (max supported is "+MAX_SIZ);
+            throw new UnsupportedOperationException("file "+f+" is too big: "+sizlong+" (max supported is "+MAX_SIZ);
         }
+        int siz = (int)sizlong;
 
         BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(f),"ISO-8859-1"));
-        if (in.)
+        char rb[] = new char[siz];
+        int pos = 0;
+        while (pos < siz)
+        {
+            int cc = in.read(rb, pos, siz-pos);
+            pos += cc;
+        }
     }
 }
