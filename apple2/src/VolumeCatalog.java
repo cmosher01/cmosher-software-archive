@@ -15,4 +15,18 @@ public class VolumeCatalog
 {
     private VolumeTableOfContents vtoc;
     private List rEntry = new ArrayList(); //VolumeCatalogEntry
+
+    public String toString()
+    {
+        return "Catalog";
+    }
+
+    /**
+     * @param disk
+     */
+    public void readFromMedia(Disk disk)
+    {
+        vtoc = new VolumeTableOfContents();
+        vtoc.readFromMedia(disk);
+    }
 }
