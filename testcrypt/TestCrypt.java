@@ -10,10 +10,12 @@ public class TestCrypt
 {
     public static void main(String[] rArg) throws Throwable
     {
-        System.setProperty("java.security.egd","");
-        System.setProperty("securerandom.source","");
         System.out.println(System.getProperty("java.security.egd"));
-        System.out.println(System.getProperty("securerandom.source"));
+        System.out.println(Security.getProperty("securerandom.source"));
+        System.setProperty("java.security.egd","");
+        Security.setProperty("securerandom.source","");
+        System.out.println(System.getProperty("java.security.egd"));
+        System.out.println(Security.getProperty("securerandom.source"));
         SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
         random.setSeed(random.generateSeed(128));
     }
