@@ -20,6 +20,7 @@ public class TimeOfDay
 
     public TimeOfDay(Calendar calendar, int hours, int minutes, int seconds, int milliseconds)
     {
+        this.calendar = calendar;
         this.hours = hours;
         this.minutes = minutes;
         this.seconds = seconds;
