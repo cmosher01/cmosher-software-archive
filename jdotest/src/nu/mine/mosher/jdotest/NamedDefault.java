@@ -10,7 +10,7 @@ import javax.jdo.PersistenceManager;
  */
 public class NamedDefault implements Named
 {
-	private PersistenceManager pm;
+	private transient PersistenceManager pm;
 
     public String getName()
     {
