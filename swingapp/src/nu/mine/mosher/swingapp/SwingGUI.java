@@ -3,6 +3,9 @@
  */
 package nu.mine.mosher.ja2;
 
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -33,6 +36,8 @@ public class GUI
         // Closing the window exits the program.
         mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        mFrame.setIconImage(getFrameIcon());
+
         // Create and set up the content pane.
         mFrame.setContentPane(createContentPane());
 
@@ -45,6 +50,15 @@ public class GUI
 
         // Display the window.
         mFrame.setVisible(true);
+    }
+
+    /**
+     * @return
+     */
+    protected Image getFrameIcon()
+    {
+        this.getClass().getResource("appicon.gif");
+        return new ImageIcon().getImage();
     }
 
     /**
