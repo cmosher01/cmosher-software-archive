@@ -160,5 +160,4 @@ class Indi
 	{
 		return pushed;
 	}
-	}
 }
