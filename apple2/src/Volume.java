@@ -15,10 +15,10 @@ public class Volume
 {
     private VolumeCatalog cat;
     private List rFile = new ArrayList(); // VolumeFile
-    private VolumeDOS dos;
-    private VolumeBoot boot;
-    private VolumeUnusedBlank blank;
-    private VolumeUnusedData data;
+//    private VolumeDOS dos;
+//    private VolumeBoot boot;
+//    private VolumeUnusedBlank blank;
+//    private VolumeUnusedData data;
     /**
      * @param disk
      */
