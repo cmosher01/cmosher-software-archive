@@ -66,6 +66,8 @@ public class Test
 //        List listLine = Util.list(new ReaderLines(r));
 //or build a Set of all lines
         Set setLine = Util.set(new ReaderLines(r).iterator());
+//or under 1.5:
+//        Set setLine = Util.set(new ReaderLines(r));
 
 
 
