@@ -114,6 +114,6 @@ public class VelocityWrapper
 
         VelocityWrapper velocity = new VelocityWrapper(props);
 
-        velocity.mergeTemplate(inputTemplate.getName(),context,writer);
+        velocity.mergeTemplate(inputTemplate.getName(),context,out);
     }
 }
