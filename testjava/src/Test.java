@@ -69,6 +69,9 @@ public class Test
 
         UndoableReference u = new UndoableReference(new Mute(5));
         System.out.println(u.state().toString());
+        u.save();
+        ((Mute)u.state()).x = 7;
+        System.out.println(u.state().toString());
 
 
 
