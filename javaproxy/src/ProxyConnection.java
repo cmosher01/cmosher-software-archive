@@ -279,9 +279,8 @@ public class ProxyConnection extends Thread
                 try
                 {
                     out_c.write(header); //, 0, header.length);
-                    //System.out.println("Using Cache " + c_header.URI);
-                    //System.out.println("Header:["+ new String(header)+"] " +
-                    // content.length);
+                    System.out.println("Using Cache " + c_header.URI);
+                    System.out.println("Header:["+ new String(header)+"] " +content.length);
                     if (content != null)
                     {
                         out_c.write(content); //, 0, content.length);
