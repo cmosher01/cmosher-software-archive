@@ -275,7 +275,7 @@ public class MySQLTest
     			for (int i = 0; i < c; ++i)
     			{
     				ins.setInt(1,entry);
-    				ins.setString(2.earliest);
+    				ins.setString(2,earliest);
 					ins.setString(3.latest);
     			}
     		}
