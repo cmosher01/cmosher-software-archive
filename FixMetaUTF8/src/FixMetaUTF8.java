@@ -35,6 +35,8 @@ public class FixMetaUTF8
         String s = addContentTypeMeta(sb);
         BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f),"UTF-8"));
         out.write(s);
+        out.flush();
+        out.close();
     }
 
     public static StringBuffer readFile(File f) throws IOException
