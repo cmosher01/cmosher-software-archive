@@ -51,7 +51,7 @@ public class MtaURI
         HttpUtil.parseQueryStringSimple(uri.getQuery(),mapParamToValue);
 
         // pre-parse the uri to pull out the rate and timeout
-        // values from the quesry string
+        // values from the query string
         int nRate = 0;
         try
         {
