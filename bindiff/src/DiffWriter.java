@@ -44,6 +44,7 @@ public class DiffWriter
     	{
     		s.append("   ");
     	}
+		s.append(" ");
     	for (int i = 0; i < lim; i++)
         {
             int b = line[i];
