@@ -114,7 +114,6 @@ public class Delta
 
                 if (match && !sourceOutofBytes)
                 {
-                    //System.out.println("before targetidx : " + targetidx );
                     // The length of the match is determined by comparing bytes.
                     //long start = System.currentTimeMillis();
 
@@ -128,7 +127,6 @@ public class Delta
                     do
                     {
                         source_idx = source.read(sourceBuff,0,buff_size);
-                        //System.out.print("Source: "+ source_idx);
                         if (source_idx == -1)
                         {
                             /*
@@ -136,26 +134,20 @@ public class Delta
                              * this
                              */
                             sourceOutofBytes = true;
-                            //System.out.println("Source out ... target has: "
-                            // + target.available());
                             break;
                         }
 
                         /*
-                         * Don't read more target bytes then source bytes ...
+                         * Don't read more target bytes than source bytes ...
                          * this is *VERY* important
                          */
                         target_idx = target.read(targetBuff,0,source_idx);
-                        //System.out.println(" Target: "+target_idx);
                         if (target_idx == -1)
                         {
                             /*
                              * Ran out of target bytes during this match, so
                              * we're done
                              */
-                            //System.err.println("Ran outta bytes
-                            // Sourceidx="+source_idx +" targetidx:"+target_idx
-                            // );
                             break;
                         }
 
@@ -178,13 +170,11 @@ public class Delta
                             }
                         }
                         while (i < read_idx && ok);
-                        b[0] = targetBuff[i - 1]; //gls100603a (fix from Dan
-                                                  // Morrione)
+                        b[0] = targetBuff[i - 1];
                     }
                     while (ok && targetLength - targetidx > 0);
 
                     // this is a insert instruction
-                    //System.out.println("output.addCopy("+offset+","+length+")");
                     output.addCopy(offset,length);
 
                     if (targetLength - targetidx <= S - 1)
@@ -192,7 +182,7 @@ public class Delta
                         // eof reached, special case for last bytes
                         buf[0] = b[0]; // don't loose this byte
                         int remaining = targetLength - targetidx;
-                        /*int readStatus =*/ target.read(buf,1,remaining);
+                        target.read(buf,1,remaining);
                         targetidx += remaining;
                         for (int ix = 0; ix < (remaining + 1); ix++)
                             output.addData(buf[ix]);
@@ -212,7 +202,6 @@ public class Delta
             if (targetLength - targetidx > 0)
             {
                 // update the adler fingerprint with a single byte
-
                 target.read(b,0,1);
                 targetidx += 1;
 
@@ -234,8 +223,8 @@ public class Delta
             }
 
         }
-        source.close(); //gls100603a (Fix from Torgeir Veimo)
-        target.close(); //gls110603a
+        source.close();
+        target.close();
         output.close();
     }
 
