@@ -1,0 +1,61 @@
+0817-   8D 05 C0    STA   $C005    ; write aux RAM
+081A-   8D 03 C0    STA   $C003    ; read aux RAM
+081D-   8D 01 C0    STA   $C001    ; 80STORE on (PAGE2 switches 1/1X)
+0820-   8D 54 C0    STA   $C054    ; write page 1X
+0823-   8D 5E C0    STA   $C05E    ; doublehires
+0826-   8D 08 C0    STA   $C008    ; main BSR
+0829-   20 99 08    JSR   $0899    ; JSR ($6000) (T$0B S$0 B$00.$01)
+082C-   8D 09 C0    STA   $C009    ; aux BSR
+082F-   20 99 08    JSR   $0899    ; JSR ($6000) (T$0B S$0 B$00.$01)
+0832-   8D 00 C0    STA   $C000    ; 80STORE off (PAGE2 switches 1/2)
+0835-   A2 40       LDX   #$40
+0837-   8D 05 C0    STA   $C005    ; write aux ram
+083A-   20 85 08    JSR   $0885    ; clear $2000.$5FFF aux
+083D-   A2 6D       LDX   #$6D
+083F-   8D 04 C0    STA   $C004
+0842-   20 85 08    JSR   $0885    ; clear $2000.$8CFF main
+0845-   8D 02 C0    STA   $C002    ; read main ram
+0848-   8D 82 C0    STA   $C082    ; read ROM $D000 bank 2
+084B-   AD C0 FB    LDA   $FBC0    ; 0=//c, other=IIe
+084E-   48          PHA
+084F-   8D 83 C0    STA   $C083    ; R/W RAM, $D000 bank 2
+0852-   8D 83 C0    STA   $C083
+0855-   BA          TSX
+0856-   8E FC 3F    STX   $3FFC
+0859-   AD 11 C0    LDA   $C011    ; is $D000 bank 2
+085C-   8D FB 3F    STA   $3FFB
+085F-   A9 45       LDA   #$45
+0861-   48          PHA
+0862-   28          PLP
+0863-   A0 0C       LDY   #$0C
+0865-   A9 60       LDA   #$60
+0867-   8C ED 03    STY   $03ED
+086A-   8D EE 03    STA   $03EE
+086D-   AD 30 BF    LDA   $BF30
+0870-   29 7F       AND   #$7F
+0872-   8D 30 BF    STA   $BF30
+0875-   A2 E3       LDX   #$E3
+0877-   68          PLA
+0878-   F0 02       BEQ   $087C
+087A-   A2 E5       LDX   #$E5
+087C-   AC 30 BF    LDY   $BF30
+087F-   20 00 09    JSR   $0900
+0882-   4C 14 C3    JMP   $C314    ; JMP $600C aux  DAZZLE DRAW PROGRAM ENTRY POINT
+
+
+
+                                   ; clear X pages starting at $2000
+0885-   A0 00       LDY   #$00
+0887-   A9 20       LDA   #$20
+0889-   84 00       STY   $00
+088B-   85 01       STA   $01
+088D-   98          TYA
+088E-   91 00       STA   ($00),Y
+0890-   C8          INY
+0891-   D0 FB       BNE   $088E
+0893-   E6 01       INC   $01
+0895-   CA          DEX
+0896-   D0 F6       BNE   $088E
+0898-   60          RTS
+
+0899-   6C 00 60    JMP   ($6000)
