@@ -554,7 +554,7 @@ public class VolumeDOS extends VolumeEntity
                     byte[] rbClearSlave = makeSlave(rbClear1980,rSlave1980,dif);
                     if (Arrays.equals(rbCmp,rbClearSlave))
                     {
-                        s.append(" (DOS 3.3 1980 slave (A$"+Integer.toHexString(0x1D00+dif*256)+") exact match)");
+                        s.append(" (DOS 3.3 1980 slave (A$"+Hex2Bin.hexbyte((byte)(0x1D+dif))+"00) exact match)");
                     }
                     else
                     {
