@@ -17,10 +17,14 @@ public class DateRange implements Immutable, Serializable, Comparable
 	private final YMD latest;
 
 	private final boolean julian; // display as: true==Julian, false==Gregorian
+
 	private final int hour;
 	private final int minute;
 	private final TimeZone timeZone;
+
 	private final boolean circa;
+
+
 
 	public DateRange(YMD ymd)
 	{
