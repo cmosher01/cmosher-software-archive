@@ -34,10 +34,12 @@ public class Apple2
 
     /**
      * @param args
-     * @throws IOException
      * @throws InvalidPosException
+     * @throws IOException
+     * @throws MultipleVTOCException
+     * @throws VTOCNotFoundException
      */
-    public static void mainAll(String[] args) throws InvalidPosException, IOException
+    public static void mainAll(String[] args) throws VTOCNotFoundException, MultipleVTOCException, InvalidPosException, IOException
     {
         if (args.length != 1)
         {
@@ -54,16 +56,16 @@ public class Apple2
     /**
      * @param disk
      * @throws InvalidPosException
+     * @throws MultipleVTOCException
+     * @throws VTOCNotFoundException
      */
-    public static void doOneDisk(Disk disk) throws InvalidPosException
+    public static void doOneDisk(Disk disk) throws VTOCNotFoundException, MultipleVTOCException, InvalidPosException
     {
         Volume vol = new Volume();
         vol.readFromMedia(disk);
         Map mapDiskMap = new HashMap();
 
 //        mapDiskMap.put(p, new VolumeTableOfContents(p));
-        Volume vol = new Volume();
-        vol.readFromMedia(disk);
 
 
 //        List rPosCat = new ArrayList();
