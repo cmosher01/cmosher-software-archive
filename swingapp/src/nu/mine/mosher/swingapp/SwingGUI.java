@@ -49,7 +49,7 @@ public class GUI
     /**
      * 
      */
-    private void setLookAndFeel()
+    protected void setLookAndFeel()
     {
         try
         {
@@ -66,7 +66,7 @@ public class GUI
     /**
      * @return menu bar for the application
      */
-    private JMenuBar createMenuBar()
+    protected JMenuBar createMenuBar()
     {
 //        JMenuBar mb = new JMenuBar();
 //        return mb;
@@ -76,7 +76,7 @@ public class GUI
     /**
      * @return main content pane for the application
      */
-    private JPanel createContentPane()
+    protected JPanel createContentPane()
     {
         JPanel panel = new JPanel();
         return panel;
