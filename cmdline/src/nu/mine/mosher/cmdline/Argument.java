@@ -12,10 +12,10 @@ package nu.mine.mosher.cmdline;
 public class Argument
 {
     private ArgumentDefinition mDef;
-    private Object mValue;
+    private String mValue;
     private boolean mIsSpecified;
 
-    public Argument(ArgumentDefinition def, Object value, boolean isSpecified)
+    public Argument(ArgumentDefinition def, String value, boolean isSpecified)
     {
         mDef = def;
         mValue = value;
@@ -26,7 +26,7 @@ public class Argument
     {
         return mIsSpecified;
     }
-    Object getValue()
+    String getValue()
     {
         return mValue;
     }
