@@ -1,5 +1,7 @@
 package nu.mine.mosher.core;
 
+import java.util.ArrayList;
+
 public final class Util
 {
 	private Util()
