@@ -107,7 +107,7 @@ public class VolumeBoot extends VolumeEntity
         s.append("\n");
     }
 
-    private static byte[] patch(byte[] masterBoot, int )
+    private static byte[] patch(byte[] masterBoot, int offset)
     {
         byte[] p = new byte[masterBoot.length];
         p[0x60] += offset;
