@@ -74,12 +74,13 @@ public class Apple2
             {
                 public boolean accept(File pathname)
                 {
+                    boolean accept = false;
                     if (pathname.isDirectory())
                     {
                         dirs.add(pathname);
-                        return false;
                     }
-                    return pathname.length() == 0x23000;
+                    accept = pathname.length() == 0x23000;
+                    return accept;
                 }
             });
             for (int i = 0; rm != null && i < rm.length; ++i)
