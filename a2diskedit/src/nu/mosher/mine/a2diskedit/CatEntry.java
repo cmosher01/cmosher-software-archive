@@ -32,6 +32,7 @@ public class CatEntry implements TreeNode
 			if (h.length()==1)
 				s.append("0");
 			s.append(h);
+			s.append(" ");
 		}
 		hexRaw = s.toString();
 
