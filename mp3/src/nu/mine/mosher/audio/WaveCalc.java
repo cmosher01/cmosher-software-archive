@@ -63,5 +63,10 @@ public class WaveCalc
 		{
 			throw new Exception("RIFF chunk is not followed by WAVE chunk.");
 		}
+
+		if (in.readInt() != 0x20746d66)
+		{
+			throw new Exception("WAVE does not start with fmt chunk.");
+		}
     }
 }
