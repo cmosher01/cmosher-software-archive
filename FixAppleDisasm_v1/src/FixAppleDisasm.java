@@ -295,19 +295,16 @@ public class FixAppleDisasm
             Map.Entry ent = (Map.Entry)i.next();
             Line ln = (Line)ent.getValue();
 
-			if (ln.addr >= 0)
+			printout.print(ln.label);
+			if (ln.instr.length() > 0)
 			{
-				printout.print(Integer.toHexString(ln.addr));
-				printout.print(":   ");
-				if (ln.instr.length() > 0)
-				{
-					printout.print(ln.instr);
-				}
-				if (ln.oper.length() > 0)
-				{
-					printout.print("   ");
-					printout.print(ln.oper);
-				}
+				printout.print("   ");
+				printout.print(ln.instr);
+			}
+			if (ln.oper.length() > 0)
+			{
+				printout.print("   ");
+				printout.print(ln.oper);
 			}
 			printout.print("          ");
 			printout.print(ln.comment);
