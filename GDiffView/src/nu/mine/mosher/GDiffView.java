@@ -95,7 +95,7 @@ public class GDiffView extends JFrame
     {
 //        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 //        GDiffView frame = new GDiffView(new File(args[0]),new File(args[1]));
-        TargetFile trg = new TargetFile();
+        SourceFile trg = new SourceFile();
         int cWindow = 17;
         trg.calculateWindowChecksums(new File(args[0]),cWindow);
     }
