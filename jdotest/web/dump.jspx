@@ -9,7 +9,7 @@
 <table>
 <%
 	Map mapParam = request.getParameterMap();
-	for (Iterator i = mapParam.entrySet.iterator(); i.hasNext(); )
+	for (Iterator i = mapParam.entrySet().iterator(); i.hasNext(); )
 	{
 		Map.Entry entry = (Map.Entry)i.next();
 		String paramName = (String)entry.getKey();
