@@ -24,7 +24,13 @@ public class GDiffCopy extends GDiffCmd
     {
 //        return "COPY "+range.getBegin()+", "+range.getLength()/*+" @<"+this.getTargetRange().getBegin()+","+this.getTargetRange().getEnd()+">"*/;
         Range trg = getTargetRange();
-        return "copy @"+range.getBegin()+": "+range.getLength()+"bytes";
+        StringBuffer sb = new StringBuffer(64);
+        sb.append("@");
+        append32(sb,range.getBegin());
+        sb.append(" L");
+        append32(sb,range.getLength());
+        return sb.toString();
+//        return "copy @"+range.getBegin()+": "+range.getLength()+"bytes";
     }
     /**
      * @param a
