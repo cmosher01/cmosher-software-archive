@@ -29,7 +29,7 @@
 				<tr><td><a href="${edit}">${i.name}</a></td></tr>
 			</c:forEach>
 			<c:url var="add" value="add.jsp" />
-			<tr><td>{<a href="${add}">add</a>}</td></tr>
+			<tr><td>{ <a href="${add}">add</a> }</td></tr>
 		</table>
 	</body>
 </html>
