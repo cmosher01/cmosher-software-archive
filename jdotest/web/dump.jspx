@@ -8,6 +8,18 @@
 </head>
 <body>
 <p>
+Entire Request
+<table>
+<tbody>
+<%
+	BufferedReader in = request.getReader();
+	for (String s = in.readLine(); s != null; s = in.readLine())
+	{
+		%><tr><td><%=s%></td></tr><%
+	}
+%>
+</tbody>
+</table>
 Parameters
 <table border="1">
 <thead>
@@ -42,18 +54,6 @@ Attributes
 		String attribName = (String)i.nextElement();
 		String attribValue = request.getAttribute(attribName).toString();
 		%><tr><td><%=attribName%></td><td><%=attribValue%></td></tr><%
-	}
-%>
-</tbody>
-</table>
-Entire Request
-<table>
-<tbody>
-<%
-	BufferedReader in = request.getReader();
-	for (String s = in.readLine(); s != null; s = in.readLine())
-	{
-		%><tr><td><%=s%></td></tr><%
 	}
 %>
 </tbody>
