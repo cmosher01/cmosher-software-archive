@@ -55,7 +55,7 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
-
+        System.out.println("hello");
 
         class Junk
         {
@@ -67,6 +67,8 @@ public class Test
 
         Junk j = new Junk();
         j.test();
+
+        System.out.println("hello");
 
 //        Date d = new Date(Long.MAX_VALUE);
 //        SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
