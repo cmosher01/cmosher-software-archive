@@ -56,7 +56,7 @@ public class ExtrDos33
         }
     }
 
-    private static void extrDos(File file, File dirNew)
+    public static void extrDos(File file, File dirNew)
     {
     }
 
