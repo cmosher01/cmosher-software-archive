@@ -152,7 +152,7 @@ public class FixAppleDisasm
 			if (addr >= 0)
 			{
 				ln.addr = addr;
-				addrs.put(new Integer(addr),ln);
+				addrs.put(new Integer(ln.addr),ln);
 				String nextChar = s.substring(4,5);
 				if (nextChar.equalsIgnoreCase("-"))
 				{
@@ -233,6 +233,7 @@ public class FixAppleDisasm
 								Line lnm = new Line();
 								lines.put(new Integer(++lineNumber),lnm);
 								lnm.addr = i;
+								addrs.put(new Integer(lnm.addr),lnm);
 								lnm.instr = "DB";
 								lnm.oper = sval;
 							}
