@@ -1,8 +1,5 @@
-import nu.mine.mosher.random.*;
-
-import edu.fsu.stat.geo.diehard.tests.*;
-import edu.fsu.stat.geo.random.*;
-
+import edu.fsu.stat.geo.diehard.tests.RandomnessTest;
+import edu.fsu.stat.geo.diehard.tests.Squeeze;
 import edu.stanford.cs.knuth.sa.random.RanArray;
 
 /**
