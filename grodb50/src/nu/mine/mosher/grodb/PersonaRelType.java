@@ -7,6 +7,7 @@ package nu.mine.mosher.grodb;
  */
 public enum PersonaRelType
 {
+	identical,
 	parent,
 	spouse
 }
