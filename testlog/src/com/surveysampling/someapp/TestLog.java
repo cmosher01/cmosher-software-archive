@@ -17,6 +17,7 @@ public class TestLog
 //        sc.someMethod();
 
         Handler[] rh = Logger.global.getHandlers();
+        Logger.global.setUseParentHandlers(false);
         for (int i = 0; i < rh.length; ++i)
         {
             Handler h = rh[i];
