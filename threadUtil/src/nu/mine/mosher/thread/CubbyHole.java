@@ -19,7 +19,7 @@ public class CubbyHole
      * this <code>CubbyHole</code> and returns it.
      * @return the <code>Object</code>; may be null;
      */
-    public synchronized Object get()
+    public synchronized Object remove()
     {
         Object contents = null;
         try
