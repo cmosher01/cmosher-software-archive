@@ -13,13 +13,6 @@ import java.util.List;
  */
 public class VolumeTableOfContents extends VolumeEntity
 {
-    /**
-     * @param pos
-     */
-    public VolumeTableOfContents()
-    {
-    }
-
     public String toString()
     {
         return "Table of Contents";
