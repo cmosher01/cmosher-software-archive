@@ -40,52 +40,48 @@ public class TestLog
         Logger.global.severe("bad bad bad");
     }
 
-        public synchronized String formatMessage(LogRecord record)
+    /**
+     * Stolen from java.util.logging.Formatter
+     * @param record
+     * @return
+     */
+    public synchronized String formatMessage(LogRecord record)
+    {
+        String format = record.getMessage();
+        java.util.ResourceBundle catalog = record.getResourceBundle();
+        if (catalog != null)
         {
-            String format = record.getMessage();
-            java.util.ResourceBundle catalog = record.getResourceBundle();
-            if (catalog != null)
-            {
-                //          // We cache catalog lookups.  This is mostly to avoid the
-                //          // cost of exceptions for keys that are not in the catalog.
-                //          if (catalogCache == null) {
-                //          catalogCache = new HashMap();
-                //          }
-                //          format = (String)catalogCache.get(record.essage);
-                //          if (format == null) {
-                try
-                {
-                    format = catalog.getString(record.getMessage());
-                }
-                catch (java.util.MissingResourceException ex)
-                {
-                    // Drop through.  Use record message as format
-                    format = record.getMessage();
-                }
-                //          catalogCache.put(record.message, format);
-                //          }
-            }
-            // Do the formatting.
             try
             {
-                Object parameters[] = record.getParameters();
-                if (parameters == null || parameters.length == 0)
-                {
-                    // No parameters.  Just return format string.
-                    return format;
-                }
-                // Is is a java.text style format?
-                if (format.indexOf("{0") >= 0)
-                {
-                    return java.text.MessageFormat.format(format, parameters);
-                }
-                return format;
-
+                format = catalog.getString(record.getMessage());
             }
-            catch (Exception ex)
+            catch (java.util.MissingResourceException ex)
             {
-                // Formatting failed: use localized format string.
-                return format;
+                // Drop through.  Use record message as format
+                format = record.getMessage();
             }
         }
+        // Do the formatting.
+        try
+        {
+            Object parameters[] = record.getParameters();
+            if (parameters == null || parameters.length == 0)
+            {
+                // No parameters.  Just return format string.
+                return format;
+            }
+            // Is is a java.text style format?
+            if (format.indexOf("{0") >= 0)
+            {
+                return java.text.MessageFormat.format(format, parameters);
+            }
+            return format;
+
+        }
+        catch (Exception ex)
+        {
+            // Formatting failed: use localized format string.
+            return format;
+        }
+    }
 }
