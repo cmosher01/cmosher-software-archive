@@ -6,6 +6,8 @@
  */
 package nu.mine.mosher.jdotest;
 
+import java.util.List;
+
 /**
  * @author Chris
  *
