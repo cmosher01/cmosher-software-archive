@@ -23,6 +23,7 @@ public class DiskTSMapTest extends TestCase
     public void testDOS33_Master_1980() throws IOException, InvalidPosException
     {
         List r = new ArrayList();
+        r.add(new DiskPos(0x0A,0xF));
         assertManyPos("DOS33_SystemMaster_19800825.dsk",r);
     }
 
