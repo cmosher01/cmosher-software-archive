@@ -221,7 +221,8 @@ public class FixAppleDisasm
 					s = s.substring(5).trim();
 					StringTokenizer st = new StringTokenizer(s," ");
 					System.out.println("toks: "+st.countTokens());
-					for (int i = 0; i < st.countTokens(); ++i)
+					int n = st.countTokens();
+					for (int i = 0; i < n; ++i)
 					{
 						String h = st.nextToken();
 						System.out.println(h);
@@ -258,13 +259,6 @@ public class FixAppleDisasm
 							System.err.println(hexWord(ln.addr));
 						}
 					}
-
-
-
-					if (addr==0x6092)
-						throw new Exception("break");
-
-
 				}
 			}
 			else if (nextChar.equalsIgnoreCase("."))
