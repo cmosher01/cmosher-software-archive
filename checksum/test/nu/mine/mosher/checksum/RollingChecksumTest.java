@@ -28,7 +28,7 @@ public class RollingChecksumTest extends TestCase
         System.arraycopy(rb, k, rs, 0, S);
 
         RollingChecksum rollCheck = new RollingChecksum();
-        rollCheck.init(rs,k);
+        rollCheck.init(rs);
         int check = rollCheck.getChecksum();
     }
 }
