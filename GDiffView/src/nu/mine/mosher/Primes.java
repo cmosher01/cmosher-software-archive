@@ -25,7 +25,7 @@ public class Primes
 {
 
 
-    private static final String EmbeddedCopyright = "Copyright 1997-2000 Roedy Green, Canadian Mind Products, http://mindprod.com";
+//    private static final String EmbeddedCopyright = "Copyright 1997-2000 Roedy Green, Canadian Mind Products, http://mindprod.com";
 
 
 
