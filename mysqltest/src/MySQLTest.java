@@ -119,7 +119,7 @@ public class MySQLTest
 		String state = (String)i.next();
 		String county = (String)i.next();
 		String township = (String)i.next();
-		int district = Integer.parseInt((String)i.next());
+		int district = readInt(i.next());
 		int image = Integer.parseInt((String)i.next());
 		String nameLast = (String)i.next();
 		String nameFirst = (String)i.next();
@@ -147,6 +147,15 @@ public class MySQLTest
 		{
 			closeStatement(st);
 		}
+    }
+
+    /**
+     * @param object
+     * @return
+     */
+    protected int readInt(Object stringField)
+    {
+    	return Integer.parseInt((String)stringField);
     }
 
     protected void calc() throws SQLException
