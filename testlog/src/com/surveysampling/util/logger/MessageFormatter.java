@@ -1,6 +1,4 @@
 /*
- * TODO
- *
  * Created on Apr 16, 2004
  */
 package com.surveysampling.util.logger;
@@ -9,7 +7,8 @@ import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 
 /**
- * TODO
+ * Provides static access to the formatMessage method
+ * of java.util.logging.Formatter
  */
 public final class MessageFormatter extends Formatter
 {
