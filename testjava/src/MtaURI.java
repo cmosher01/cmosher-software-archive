@@ -40,7 +40,7 @@ public class MtaURI
             // default to port 25 (smtp)
             uri = new URI(uri.getScheme(),uri.getUserInfo(),uri.getHost(),25,uri.getPath(),uri.getQuery(),uri.getFragment());
         }
-        if (uri.getPort() <= 0 || 0x10000 <= uri.getPort())
+        if (!(0 < uri.getPort() && uri.getPort() < 0x10000))
         {
             throw new URISyntaxException(""+uri.getPort(),"port must be: 0 < port < 65536");
         }
