@@ -24,7 +24,7 @@ public class TestBeans
         String prop = "ABoolean";
         String val = "true";
 
-//        setProperty(some, prop, val);
+        setProperty(some, prop, val);
 
         System.out.println(some.isABoolean() ? "yes" : "no");
     }
