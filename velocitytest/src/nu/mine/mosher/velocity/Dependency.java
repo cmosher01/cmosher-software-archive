@@ -1,3 +1,4 @@
+package nu.mine.mosher.velocity;
 public class Dependency
 {
     private final String name;
