@@ -111,7 +111,7 @@ public class FixAppleDisasm
 		Map lines = new TreeMap();
 		Map addrs = new TreeMap();
 		int lineNumber = 0;
-		int nextaddr = -1;
+		int nextaddr = 0;
 		for (String s = inbuf.readLine(); s != null; s = inbuf.readLine())
 		{
 			s = s.trim();
@@ -149,11 +149,6 @@ public class FixAppleDisasm
 			catch (NumberFormatException e)
 			{
 				addr = -1;
-			}
-
-			if (nextaddr < 0)
-			{
-				nextaddr = addr;
 			}
 
 			if (addr < 0)
