@@ -1,0 +1,107 @@
+<project name="testjava" default="compile">
+	<description>
+		Builds the testjava project.
+	</description>
+
+	<target name="props">
+		<property environment="env" />
+	
+		<property file="build.properties" />
+	
+		<xmlproperty file="build.properties.xml" collapseAttributes="true" />
+	
+		<!-- set global properties for this build -->
+		<property name="build" location="build" />
+		<property name="src" location="src" />
+		<property name="bin" location="bin" />
+		<property name="doc" location="doc" />
+	</target>
+
+	<target name="test" depends="props">
+		<echoproperties />
+		<echo>dumping test.prop files:</echo>
+		<concat>
+			<fileset dir="./" id="testfiles" includes="${test.prop}" />
+		</concat>
+	</target>
+
+	<!-- this is a user-defined task (by Chris Mosher at SSI) that reads the
+	".classpath" file in the basedir (which is in the format created by
+	the Eclipse IDE from http://www.eclipse.org), pulls out the path(s)
+	from the classpathentry element(s), and sets the "eclipse.classpath"
+	reference (id) to the resulting string. This string is intended to be
+	used in the javac task as classpathref="eclipse.classpath". -->
+	<taskdef name="eclipsecp" classname="EclipseCP" />
+
+	<target name="cp">
+		<!-- build the classpath from the Eclipse-genereated .classpath file -->
+		<eclipsecp />
+	</target>
+
+	<target name="ts">
+		<mkdir dir="${build}" />
+		<!-- Create the time stamp -->
+		<tstamp>
+			<format property="ANT_TIME" pattern="yyyyMMddhhmmssSSS" />
+		</tstamp>
+		<echo>build time stamp: ${ANT_TIME}</echo>
+		<echo file="${build}/build.tstamp" append="false">${ANT_TIME}</echo>
+	</target>
+
+	<target name="clean" depends="ts" description="delete all existing targets" >
+		<!-- Delete any existing targets -->
+		<delete dir="${bin}" />
+		<delete dir="${doc}" />
+	</target>
+
+	<target name="initbuild" depends="ts,cp">
+		<!-- Increment the build number -->
+		<buildnumber file="${build}/build.number"/>
+		<echo>build number: ${build.number}</echo>
+
+		<!-- Create the bin directory if necessary -->
+		<mkdir dir="${bin}" />
+	</target>
+
+	<target name="compile" depends="initbuild" description="compile the source">
+		<!-- Compile the java code from ${src} into ${bin} -->
+		<javac
+			srcdir="${src}"
+			destdir="${bin}"
+			classpathref="eclipse.classpath"
+			listfiles="true"
+			verbose="true"
+			deprecation="true"
+			includeAntRuntime="false"
+			includeJavaRuntime="false"
+		>
+		<classpath path=""></classpath>
+		</javac>
+	</target>
+
+	<target name="doc" depends="ts,cp" description="build all documentation (javadoc format)">
+		<!-- Remove any existing ${doc} files -->
+		<delete dir="${doc}" />
+		<mkdir dir="${doc}" />
+
+		<!-- Build javadoc from ${src} into ${doc} -->
+		<javadoc
+			access="private"
+			author="true"
+			classpathref="eclipse.classpath"
+			destdir="${doc}"
+			nodeprecated="false"
+			nodeprecatedlist="false"
+			noindex="false"
+			nonavbar="false"
+			notree="false"
+			sourcepath="${src}"
+			splitindex="true"
+			use="true"
+			version="true"
+		>
+			<fileset dir="${src}" />
+		</javadoc>
+	</target>
+
+</project>
