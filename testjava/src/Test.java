@@ -48,7 +48,7 @@ public class Test
 
         X x = new X();
         long start = System.currentTimeMillis();
-        for (int i = 0; i < 100000000; ++i)
+        for (int i = 0; i < 1000000000; ++i)
         {
             x.close();
         }
