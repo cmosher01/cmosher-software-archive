@@ -1,0 +1,29 @@
+public abstract class A extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        A this;
+        java.io.PrintStream $r0;
+
+        this := @this: A;
+        specialinvoke this.<java.lang.Object: void <init>()>();
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+        virtualinvoke $r0.<java.io.PrintStream: void println(java.lang.String)>("A constructor");
+        return;
+    }
+
+    public void c()
+    {
+        A this;
+        java.io.PrintStream $r0;
+
+        this := @this: A;
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+        virtualinvoke $r0.<java.io.PrintStream: void println(java.lang.String)>("A c");
+        virtualinvoke this.<A: void s()>();
+        return;
+    }
+
+    public abstract void s();
+}
