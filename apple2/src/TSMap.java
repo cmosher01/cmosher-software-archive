@@ -10,5 +10,5 @@
  */
 public class TSMap
 {
-
+    private final int[] r = new int[DiskPos.cSectorsPerTrack*DiskPos.cTracksPerDisk];
 }
