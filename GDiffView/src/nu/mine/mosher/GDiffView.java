@@ -862,10 +862,10 @@ public class GDiffView extends JFrame
      * @param args
      * @throws IOException
      */
-    public static void main(String[] args) throws IOException
+    public void svndelta() throws IOException
     {
-        FileInputStream streamSrc = new FileInputStream(new File(args[0]));
-        FileInputStream streamTrg = new FileInputStream(new File(args[1]));
+        FileInputStream streamSrc = new FileInputStream(this.fileSrc);
+        FileInputStream streamTrg = new FileInputStream(this.fileTrg);
         FileChannel channelSrc = streamSrc.getChannel();
         FileChannel channelTrg = streamTrg.getChannel();
         long cSrc = streamSrc.available();
