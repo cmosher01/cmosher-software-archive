@@ -120,7 +120,10 @@ public class A2DiskEdit
 		if (returnVal != JFileChooser.APPROVE_OPTION)
 			return;
 
-		addNode(new DefaultMutableTreeNode(new Disk(fc.getSelectedFile())),top);
+		TreeNode d = new Disk(fc.getSelectedFile());
+		DefaultMutableTreeNode n = new DefaultMutableTreeNode(d);
+		d.setNode(n);
+		addNode(n,top);
 		tree.setSelectionRow(0);
 
 /*
