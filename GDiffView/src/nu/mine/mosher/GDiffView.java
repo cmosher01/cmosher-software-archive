@@ -102,40 +102,51 @@ public class GDiffView extends JFrame
         src.calculateWindowChecksums(new File(args[0]),cWindow);
         File trg = new File(args[1]);
         InputStream streamTrg = new BufferedInputStream(new FileInputStream(trg));
+        if (streamTrg.available() == 0)
+        {
+            // TODO handle empty target file
+            return;
+        }
         byte[] rs = new byte[cWindow];
         RollingChecksum roll = new RollingChecksum();
         int trgPos = 0;
         List matches = new ArrayList();
+        int w = cWindow;
+
+        if (streamTrg.available() < cWindow)
+        {
+            w = streamTrg.available();
+            rs = new byte[w];
+        }
+        int c = streamTrg.read(rs);
+        if (c != w)
+        {
+            throw new IOException("error reading target file");
+        }
+        roll.init(rs);
+        int chk;
+        long srcPos;
+        chk = roll.getChecksum();
+        lookupUniqueMatch(src,chk,trgPos,matches,w);
+        byte xprev = rs[rs.length-1];
         while (streamTrg.available() > 0)
         {
-            int w = cWindow;
-            if (streamTrg.available() < cWindow)
-            {
-                w = streamTrg.available();
-                rs = new byte[w];
-            }
-            int c = streamTrg.read(rs);
-            if (c != w)
-            {
-                throw new IOException("error reading target file");
-            }
-            roll.init(rs);
-            int chk;
-            long srcPos;
-            lookupUniqueMatch(src,roll,trgPos,matches,w);
+            byte x = (byte)streamTrg.read();
+            roll.increment(xprev, x);
+            chk = roll.getChecksum();
+            lookupUniqueMatch(src,chk,trgPos,matches,w);
         }
     }
 
     /**
      * @param src
-     * @param roll
+     * @param chk
      * @param trgPos
      * @param matches
      * @param w
      */
-    private static void lookupUniqueMatch(SourceFile src, RollingChecksum roll, int trgPos, List matches, int w)
+    private static void lookupUniqueMatch(SourceFile src, int chk, int trgPos, List matches, int w)
     {
-        int chk = roll.getChecksum();
         long srcPos = src.lookupUnique(chk);
         if (srcPos >= 0)
         {
