@@ -1,0 +1,50 @@
+Release Note for Jproxy V. 01 Beta
+
+This release contains the following files :
+AboutDialog.java
+ProxyServer.java
+ProxyConnection.java
+ChartWatcher.java
+ConfigInterface.java
+DebugTracer.java
+FileUtil.java
+FileViewer.java
+Folder.java
+HTTPResponseHeader.java
+HTTPRequestHeader.java
+ProxyCache.java
+ImageButton.java
+ImageDialog.java
+Jproxy.java
+Log.java
+ProxyCachePool.java
+MessageWindow.java
+MultiLineLabel.java
+byteArrayOperator.java
+ServerInterface.java
+ServerTest.java
+SetupPage.java
+TagPanel.java
+ToolBarCaption.java
+UpperLineLayout.java
+WebConfigFolder.java
+BorderBox.java
+release.note
+ 
+
+Disclaimer :
+   The author of this program accepts no responsibility for 
+   damages resulting from the use of this product and makes no 
+   warranty or representation, either express or implied, including 
+   but not limited to, any implied warranty of merchantability or 
+   fitness for a particular purpose. This software is provided 
+   "AS IS", and you, its user, assume all risks when using it.
+
+Note :
+By releasing the source code, I hope people get the chance to
+add their ideas to this program and make it a useful tools for
+developers. 
+
+Send your opinions and questions to worldhearts@geocities.com.
+
+Author Steve Y.C. Hsueh  July 7, 1998
