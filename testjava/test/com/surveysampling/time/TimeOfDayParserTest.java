@@ -49,7 +49,7 @@ public class TimeOfDayParserTest extends TestCase
 
     public void testStrange() throws ParseException
     {
-        makeAndCheck("\u06F0:\u06F0\u06F0",0,0,0,0);
+        makeAndCheck("\u0661:\u0662\u0663",1,23,0,0);
     }
 
     public void testBadStrings() throws ParseException
