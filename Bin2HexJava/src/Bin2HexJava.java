@@ -20,9 +20,10 @@ public class Bin2HexJava
     private static final int BPL = 0x10;
     private static final boolean SHOW_CAST = false;
     private static final boolean SHOW_ZERO_X = false;
-    private static final boolean SHOW_COMMA = false;
-    private static final boolean SHOW_SPACE = true;
-    private static final boolean SHOW_QUOTES = true;
+    private static final boolean SHOW_DOLLAR = true;
+    private static final boolean SHOW_COMMA = true;
+    private static final boolean SHOW_SPACE = false;
+    private static final boolean SHOW_QUOTES = false;
 
     /**
      * @param args
@@ -86,6 +87,10 @@ public class Bin2HexJava
             if (SHOW_ZERO_X)
             {
                 System.out.print("0x");
+            }
+            if (SHOW_ZERO_X)
+            {
+                System.out.print("$");
             }
 
             outHexByte(c);
