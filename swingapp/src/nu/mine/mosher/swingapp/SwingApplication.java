@@ -15,6 +15,7 @@ public class Ja2
 //    private Ja2GUI mGUI;
     private ExceptionHandler mExceptionHandler;
     private CommandLineArgHandler mCommandLineArgHandler;
+    private static Ja2 me;
 
     /**
      * @param eh
@@ -24,6 +25,7 @@ public class Ja2
     {
         this.mExceptionHandler = eh;
         this.mCommandLineArgHandler = ch;
+        me = this;
     }
 
     /**
@@ -50,7 +52,7 @@ public class Ja2
                 }
                 catch (Throwable th)
                 {
-                    mExceptionHandler.send(th);
+                    Ja2.thrown(th);
                 }
             }
         });
@@ -63,6 +65,11 @@ public class Ja2
          * anything) (a race condition).
          */
         mExceptionHandler.waitFor();
+    }
+
+    public static void thrown(Throwable e)
+    {
+        me.mExceptionHandler.send(e);
     }
 
     protected void createGUI()
