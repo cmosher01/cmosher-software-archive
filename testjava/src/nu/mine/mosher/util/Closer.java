@@ -29,6 +29,7 @@ public class UniversalCloser
         }
         catch (Throwable ignore)
         {
+            ignore.printStackTrace();
         }
     }
 }
