@@ -12,3 +12,4 @@
 	<c:set var="obj" value="chris" />
 	</jsp:text>
 </jsp:root>
+<jsp:doBody />
