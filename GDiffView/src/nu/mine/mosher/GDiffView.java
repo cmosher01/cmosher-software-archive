@@ -95,9 +95,9 @@ public class GDiffView extends JFrame
 
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, BadLocationException, IOException, InvalidMagicBytes
     {
-        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        GDiffView frame = new GDiffView(new File(args[0]),new File(args[1]));
-        frame.init();
+//        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//        GDiffView frame = new GDiffView(new File(args[0]),new File(args[1]));
+//        frame.init();
         RollingChecksum c = new RollingChecksum();
         byte[] rb = new byte[] { (byte)0xA4, (byte)0xC2, (byte)0xEF, (byte)0xCE, (byte)0x48, (byte)0x21,
                 (byte)0x51, (byte)0x9B, (byte)0x50, (byte)0xAB, (byte)0xF9, (byte)0x7A, (byte)0xE6, (byte)0xE3, (byte)0xDB, (byte)0x92, (byte)0xBA, (byte)0xC6, (byte)0x42, (byte)0x65, (byte)0xE0, (byte)0xAA,
