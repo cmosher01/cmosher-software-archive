@@ -216,13 +216,13 @@ public class TimeOfDay implements Comparable
      */
     public StringBuffer format(boolean showAll, StringBuffer s)
     {
-        if (seconds == 0 && milliseconds == 0)
+        if (seconds == 0 && milliseconds == 0 && !showAll)
         {
             appendNumber(hours,2,s);
             s.append(':');
             appendNumber(minutes,2,s);
         }
-        else if (milliseconds == 0)
+        else if (milliseconds == 0 && !showAll)
         {
             appendNumber(hours,2,s);
             s.append(':');
