@@ -8,8 +8,16 @@
  * Author : Steve Yeong-Ching Hsueh
  */
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.AWTEvent;
+import java.awt.Dialog;
+import java.awt.Dimension;
+import java.awt.Event;
+import java.awt.FontMetrics;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.event.WindowEvent;
 
 /**
  * ImageDialog shows image as the background of a dialog box
