@@ -1,7 +1,7 @@
 <%@ include file="htmlhead.jsp" %>
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="nu.mine.mosher.jdotest.Item" %>
+<%@ page import="nu.mine.mosher.jdotest.Perm" %>
 <%@ page import="java.util.Iterator" %>
-<jsp:useBean id="r" class="java.util.ArrayList" scope="session" />
 <head>
 <title>List</title>
 </head>
@@ -9,11 +9,12 @@
 <p>
 <table>
 <%
-    int c = 0;
-    for (Iterator i = r.iterator(); i.hasNext(); )
+	Perm pm = new Perm();
+    for (Iterator i = pm.getList(); i.hasNext(); )
     {
-        String s = (String)i.next();
-        %><tr><td><a href="edit.jsp?i=<%=c++%>"><%=s%></a></td></tr><%
+        Item item = (Item)i.next();
+        String id = pm.getIDof(item);
+        %><tr><td><a href="edit.jsp?id=<%=id%>"><%=item.getName()%></a></td></tr><%
     }
 %>
 <tr><td>&lt;<a href="add.jsp">add</a>&gt;</td></tr>
