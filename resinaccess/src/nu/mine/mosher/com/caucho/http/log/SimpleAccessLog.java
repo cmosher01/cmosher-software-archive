@@ -46,6 +46,10 @@ public class SimpleAccessLog extends AccessLog
 		String method = request.getMethod();
 		String uri = request.getRequestURI();
 		String query = request.getQueryString();
+		if (query == null)
+		{
+			query = "";
+		}
 		String browser = request.getHeader("User-Agent");
 		if (browser == null)
 		{
