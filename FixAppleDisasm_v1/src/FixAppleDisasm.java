@@ -75,7 +75,7 @@ public class FixAppleDisasm
 			{
 				s = "";
 			}
-			if (com >= 0)
+			else if (com > 0)
 			{
 				s = s.substring(0,com);
 			}
