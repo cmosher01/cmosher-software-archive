@@ -104,6 +104,7 @@ public class TimeOfDay
      */
     public void getTimeOnDay(Calendar cal)
     {
+        verifyValidity();
         cal.set(Calendar.HOUR_OF_DAY, hours);
         cal.set(Calendar.MINUTE, minutes);
         cal.set(Calendar.SECOND, seconds);
