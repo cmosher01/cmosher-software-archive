@@ -1,4 +1,3 @@
-//package java.lang; // needs special class loader at runtime
 package mosher;
 
 import java.lang.reflect.Method;
@@ -29,6 +28,5 @@ public class Cloner
             ex2.initCause(ex);
             throw ex2;
         }
-//        return (Cloneable)cloneableObject.clone();
     }
 }
