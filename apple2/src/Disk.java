@@ -112,6 +112,10 @@ public class Disk
         return new DiskPos(track,sector,0,false);
     }
 
+    public boolean EOF()
+    {
+        return this.pos.getIndex() >= this.disk.length;
+    }
     /**
      * @throws InvalidPosException
      * 
@@ -119,7 +123,8 @@ public class Disk
     public void findDos33VTOC() throws InvalidPosException
     {
         int track = 0;
-        seek(new DiskPos(track,0,0,true));
+        int sector = 0;
+        seek(new DiskPos(track,sector,0,true));
         
     }
 }
