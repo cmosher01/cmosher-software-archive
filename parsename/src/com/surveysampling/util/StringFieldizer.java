@@ -33,7 +33,7 @@ public class StringFieldizer
         return pos;
     }
 
-    public String getRemainder()
+    public String getResidue()
     {
         return s.substring(pos);
     }
