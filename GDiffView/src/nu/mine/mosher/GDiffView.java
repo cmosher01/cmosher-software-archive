@@ -354,7 +354,7 @@ public class GDiffView extends JFrame
         return (row + 1) * rowLen - 1;
     }
 
-    public int getRow(int pos)
+    public int getRow(long beginSrc2)
     {
         return pos / cCol + 1;
     }
