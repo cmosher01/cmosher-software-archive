@@ -27,10 +27,11 @@ public class FixMetaUTF8
             throw new IllegalArgumentException("Usage: java FixMetaUTF8 htmlfile");
         }
         File f = new File(args[0]);
-        fix(f);
+        StringBuffer sb = readFile(f);
+        String s = fixMeta(sb);
     }
 
-    public static String fix(File f) throws IOException
+    public static StringBuffer readFile(File f) throws IOException
     {
         f = f.getAbsoluteFile();
         f = f.getCanonicalFile();
@@ -51,7 +52,11 @@ public class FixMetaUTF8
         }
         StringBuffer sb = new StringBuffer(siz);
         sb.append(rb);
+        return sb;
+    }
 
+    public static String fixMeta(StringBuffer sb)
+    {
         Pattern pat = Pattern.compile("<meta.*charset.*>",Pattern.CASE_INSENSITIVE|Pattern.MULTILINE|Pattern.DOTALL);
         Matcher matcher = pat.matcher(sb);
         return matcher.replaceFirst("<META test=\"chris\">");
