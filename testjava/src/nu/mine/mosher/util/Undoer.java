@@ -10,7 +10,7 @@ public class Undoer
     public void saveForUndo(Cloneable state) throws CloneNotSupportedException
     {
         mrUndo.addLast(new ImmutableReference(state));
-        mrRedo.clear(); // ???
+        mrRedo.clear();
     }
 
     public Cloneable undo(Cloneable state) throws CloneNotSupportedException
