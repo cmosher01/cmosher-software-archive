@@ -1,4 +1,4 @@
-package mosher;
+package com.surveysampling.util;
 
 import java.lang.reflect.Method;
 
