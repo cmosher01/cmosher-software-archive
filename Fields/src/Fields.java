@@ -35,7 +35,7 @@ public final class Fields
     {
         ExceptionHandler eh = new ExceptionHandler();
         CommandLineArgHandler ch = new FieldsCommandLine(args);
-        SwingGUI gui = new FieldsGUI();
+        SwingGUI gui = new SwingGUI();
 
         SwingApplication app = new SwingApplication(eh,ch,gui);
 
