@@ -41,10 +41,12 @@ public class VelocityWrapper
 
     public void evaluate(Context context, Writer writer, String nameTemplate, Reader reader) throws VelocityException
     {
-        boolean ok = false;
         try
         {
-            ok = velocity.evaluate(context,writer,nameTemplate,reader);
+            if (!velocity.evaluate(context,writer,nameTemplate,reader))
+            {
+                throw new VelocityException("error calling VelocityEngine.evaluate");
+            }
         }
         catch (VelocityException e)
         {
@@ -53,10 +55,6 @@ public class VelocityWrapper
         catch (Throwable e)
         {
             throw wrapInVelocityException(e);
-        }
-        if (!ok)
-        {
-            throw new VelocityException("error calling VelocityEngine.evaluate");
         }
     }
 
