@@ -73,7 +73,10 @@ public class MP3Calc
     	int bps = 0;
     	if (layer == 1)
     	{
-    		bps = key*32;
+    		if (1 <= key && key <= 14)
+    		{
+				bps = key*32;
+    		}
     	}
     	else if (layer == 2)
     	{
