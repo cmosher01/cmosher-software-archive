@@ -248,8 +248,11 @@ public class FixAppleDisasm
 				System.out.print(Integer.toHexString(ln.addr));
 				System.out.print(":   ");
 				System.out.print(ln.instr);
-				System.out.print("   ");
-				System.out.print(ln.oper);
+				if (ln.oper.length() > 0)
+				{
+					System.out.print("   ");
+					System.out.print(ln.oper);
+				}
 			}
 			System.out.print("          ");
 			System.out.print(ln.comment);
