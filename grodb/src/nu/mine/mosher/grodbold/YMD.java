@@ -1,5 +1,7 @@
 package nu.mine.mosher.grodb;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 import nu.mine.mosher.util.Immutable;
@@ -16,7 +18,7 @@ public class YMD implements Immutable, Serializable, Comparable
 	private final int month;
 	private final int day;
 
-	private final int hash;
+	private transient final int hash;
 
 	public YMD(int year)
 	{
@@ -100,4 +102,12 @@ public class YMD implements Immutable, Serializable, Comparable
 
 		return d;
     }
+
+	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException
+	{
+	    s.defaultReadObject();
+	    // customized deserialization code
+	    ...
+	    // followed by code to update the object, if necessary
+	}
 }
