@@ -305,7 +305,7 @@ public class Delta
 
             //output.close();
 
-            delta.computeDelta(sourceFile,targetFile,output);
+            Delta.computeDelta(sourceFile,targetFile,output);
 
             output.flush();
             output.close();
