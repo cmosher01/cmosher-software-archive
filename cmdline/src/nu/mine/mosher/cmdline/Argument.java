@@ -1,14 +1,17 @@
 /*
- * Created on Jul 15, 2004
+ * Created on July 15, 2004
  */
 package nu.mine.mosher.cmdline;
 
 /**
- * TODO
+ * Represents an argument (possibly) specified
+ * by the user on the command line.
  * 
- * @author chrism
+ * @author Chris Mosher
  */
 public class Argument
 {
-
+    public Argument(String name, String abbrev)
+    {
+    }
 }
