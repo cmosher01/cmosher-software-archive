@@ -12,6 +12,11 @@ public class MySQLTest
         try
         {
         	st = db.createStatement();
+        	ResultSet rs = st.executeQuery("select version() v;");
+        	while (rs.next())
+        	{
+        		System.out.println(rs.getString("v"));
+        	}
         }
         finally
         {
