@@ -53,7 +53,7 @@ public class MySQLTest
         try
         {
         	st = db.createStatement();
-        	st.execute(
+        	st.executeUpdate(
         	"create table if not exists family "+
         	"( "+
         	"    id integer unsigned not null auto_increment primary key, "+
