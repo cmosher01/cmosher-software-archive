@@ -54,14 +54,14 @@ public class MtaURI
         }
 
         int nRate = getParamInt(mapParamToValue,"rate",sMTA);
-        if (nRate == -1)
+        if (nRate < 0)
         {
             nRate = 0;
         }
         mRate = nRate;
 
         int nTimeout = getParamInt(mapParamToValue,"timeout",sMTA);
-        if (nTimeout == -1)
+        if (nTimeout < 0)
         {
             nTimeout = 120000;
         }
