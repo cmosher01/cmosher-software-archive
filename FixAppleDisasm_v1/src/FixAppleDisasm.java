@@ -153,188 +153,148 @@ public class FixAppleDisasm
 
 			if (addr < 0)
 			{
-				s = s.trim();
-				StringTokenizer st = new StringTokenizer(s);
-				for (int i = 0; i < st.countTokens(); ++i)
-				{
-					String h = st.nextToken();
-					int x = -1;
-					try
-					{
-						x = Integer.parseInt(h,16);
-						if (x < 0 || 0x100 <= x)
-						{
-							x = -1;
-						}
-					}
-					catch (Throwable e)
-					{
-						x = -1;
-					}
-					if (x >= 0)
-					{
-						if (i > 0)
-						{
-							ln = new Line();
-							lines.put(new Integer(++lineNumber),ln);
-							ln.addr = addr+i;
-							addrs.put(new Integer(ln.addr),ln);
-						}
-						ln.instr = "DB";
-						ln.oper = "$"+hexByte(x);
-					}
-					else
-					{
-						ln.comment += " "+h;
-					}
-				}
+				addr = nextaddr;
 			}
-			else
+
+			ln.addr = addr;
+			if (nextaddr > 0 && nextaddr != addr)
 			{
-				ln.addr = addr;
-				if (nextaddr > 0 && nextaddr != addr)
+				System.err.print("address error @ $");
+				System.err.println(hexWord(nextaddr));
+			}
+			addrs.put(new Integer(ln.addr),ln);
+			String nextChar = s.substring(4,5);
+			if (nextChar.equalsIgnoreCase("-"))
+			{
+				if (s.length() >= 23 &&
+				s.substring(5,8).equalsIgnoreCase("   ") &&
+				s.substring(10,11).equalsIgnoreCase(" ") &&
+				s.substring(13,14).equalsIgnoreCase(" ") &&
+				s.substring(16,20).equalsIgnoreCase("    ") &&
+				!s.substring(20,23).equalsIgnoreCase("   "))
 				{
-					System.err.print("address error @ $");
-					System.err.println(hexWord(nextaddr));
-				}
-				addrs.put(new Integer(ln.addr),ln);
-				String nextChar = s.substring(4,5);
-				if (nextChar.equalsIgnoreCase("-"))
-				{
-					if (s.length() >= 23 &&
-					s.substring(5,8).equalsIgnoreCase("   ") &&
-					s.substring(10,11).equalsIgnoreCase(" ") &&
-					s.substring(13,14).equalsIgnoreCase(" ") &&
-					s.substring(16,20).equalsIgnoreCase("    ") &&
-					!s.substring(20,23).equalsIgnoreCase("   "))
+					// normal instr line
+					ln.instr = s.substring(20,23);
+					if (s.length() > 26)
 					{
-						// normal instr line
-						ln.instr = s.substring(20,23);
-						if (s.length() > 26)
+						ln.oper = s.substring(26);
+						if (ln.oper.startsWith("$"))
 						{
-							ln.oper = s.substring(26);
-							if (ln.oper.startsWith("$"))
+							ln.refaddr = -1;
+							try
 							{
-								ln.refaddr = -1;
-								try
-								{
-									ln.refaddr = Integer.parseInt(ln.oper.substring(1,5),16);
-									if (ln.refaddr < 0 || 0x10000 <= ln.refaddr)
-									{
-										ln.refaddr = -1;
-									}
-								}
-								catch (Throwable e)
+								ln.refaddr = Integer.parseInt(ln.oper.substring(1,5),16);
+								if (ln.refaddr < 0 || 0x10000 <= ln.refaddr)
 								{
 									ln.refaddr = -1;
 								}
 							}
-						}
-						if (!s.substring(8,10).equalsIgnoreCase("  "))
-						{
-							++nextaddr;
-						}
-						if (!s.substring(11,13).equalsIgnoreCase("  "))
-						{
-							++nextaddr;
-						}
-						if (!s.substring(14,16).equalsIgnoreCase("  "))
-						{
-							++nextaddr;
-						}
-					}
-					else
-					{
-						s = s.substring(5).trim();
-						StringTokenizer st = new StringTokenizer(s," ");
-						for (int i = 0; i < st.countTokens(); ++i)
-						{
-							String h = st.nextToken();
-							int x = -1;
-							try
-							{
-								x = Integer.parseInt(h,16);
-								if (x < 0 || 0x100 <= x)
-								{
-									x = -1;
-								}
-							}
 							catch (Throwable e)
 							{
-								x = -1;
-							}
-							if (x >= 0)
-							{
-								if (i > 0)
-								{
-									ln = new Line();
-									lines.put(new Integer(++lineNumber),ln);
-									ln.addr = addr+i;
-									addrs.put(new Integer(ln.addr),ln);
-								}
-								ln.instr = "DB";
-								ln.oper = "$"+hexByte(x);
-								++nextaddr;
-							}
-							else
-							{
-								ln.comment += " "+h;
-								System.err.print("error parsing hex @ $");
-								System.err.println(hexWord(ln.addr));
+								ln.refaddr = -1;
 							}
 						}
+					}
+					if (!s.substring(8,10).equalsIgnoreCase("  "))
+					{
+						++nextaddr;
+					}
+					if (!s.substring(11,13).equalsIgnoreCase("  "))
+					{
+						++nextaddr;
+					}
+					if (!s.substring(14,16).equalsIgnoreCase("  "))
+					{
+						++nextaddr;
 					}
 				}
-				else if (nextChar.equalsIgnoreCase("."))
+				else
 				{
-					int addr2 = -1;
-					try
+					s = s.substring(5).trim();
+					StringTokenizer st = new StringTokenizer(s," ");
+					for (int i = 0; i < st.countTokens(); ++i)
 					{
-						addr2 = Integer.parseInt(s.substring(5,9),16);
-						if (addr2 < 0 || 0x10000 <= addr2)
-						{
-							addr2 = -1;
-						}
-					}
-					catch (Throwable e)
-					{
-						addr2 = -1;
-					}
-
-					if (addr2 >= 0)
-					{
-						int val = -1;
+						String h = st.nextToken();
+						int x = -1;
 						try
 						{
-							val = Integer.parseInt(s.substring(10).trim(),16);
-							if (val < 0 || 0x100 <= val)
+							x = Integer.parseInt(h,16);
+							if (x < 0 || 0x100 <= x)
 							{
-								val = -1;
+								x = -1;
 							}
 						}
 						catch (Throwable e)
 						{
-							val = -1;
+							x = -1;
 						}
-
-						if (val >= 0)
+						if (x >= 0)
 						{
-							String sval = "$"+hexByte(val);
-							ln.instr = "DB";
-							ln.oper = sval;
-							for (int i = addr+1; i <= addr2; ++i)
+							if (i > 0)
 							{
-								Line lnm = new Line();
-								lines.put(new Integer(++lineNumber),lnm);
-								lnm.addr = i;
-								addrs.put(new Integer(lnm.addr),lnm);
-								lnm.instr = "DB";
-								lnm.oper = sval;
+								ln = new Line();
+								lines.put(new Integer(++lineNumber),ln);
+								ln.addr = addr+i;
+								addrs.put(new Integer(ln.addr),ln);
 							}
+							ln.instr = "DB";
+							ln.oper = "$"+hexByte(x);
+							++nextaddr;
 						}
 						else
 						{
-							System.err.println(s);
+							ln.comment += " "+h;
+							System.err.print("error parsing hex @ $");
+							System.err.println(hexWord(ln.addr));
+						}
+					}
+				}
+			}
+			else if (nextChar.equalsIgnoreCase("."))
+			{
+				int addr2 = -1;
+				try
+				{
+					addr2 = Integer.parseInt(s.substring(5,9),16);
+					if (addr2 < 0 || 0x10000 <= addr2)
+					{
+						addr2 = -1;
+					}
+				}
+				catch (Throwable e)
+				{
+					addr2 = -1;
+				}
+
+				if (addr2 >= 0)
+				{
+					int val = -1;
+					try
+					{
+						val = Integer.parseInt(s.substring(10).trim(),16);
+						if (val < 0 || 0x100 <= val)
+						{
+							val = -1;
+						}
+					}
+					catch (Throwable e)
+					{
+						val = -1;
+					}
+
+					if (val >= 0)
+					{
+						String sval = "$"+hexByte(val);
+						ln.instr = "DB";
+						ln.oper = sval;
+						for (int i = addr+1; i <= addr2; ++i)
+						{
+							Line lnm = new Line();
+							lines.put(new Integer(++lineNumber),lnm);
+							lnm.addr = i;
+							addrs.put(new Integer(lnm.addr),lnm);
+							lnm.instr = "DB";
+							lnm.oper = sval;
 						}
 					}
 					else
@@ -346,6 +306,10 @@ public class FixAppleDisasm
 				{
 					System.err.println(s);
 				}
+			}
+			else
+			{
+				System.err.println(s);
 			}
 		}
 
