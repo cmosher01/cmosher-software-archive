@@ -56,11 +56,11 @@ public class SwingApplication
             {
                 try
                 {
-                    createGUI();
+                    getGUI().create();
                 }
-                catch (Throwable th)
+                catch (Throwable e)
                 {
-                    thrown(th);
+                    getExceptionHandler().send(e);
                 }
             }
         });
@@ -75,14 +75,14 @@ public class SwingApplication
         mExceptionHandler.waitFor();
     }
 
-    protected void createGUI()
+    protected GUI getGUI()
     {
-        mGUI.create();
+        return mGUI;
     }
 
-    public void thrown(Throwable e)
+    protected ExceptionHandler getExceptionHandler()
     {
-        mExceptionHandler.send(e);
+        return mExceptionHandler;
     }
 
     public CommandLineArgHandler getCommandLineArgHandler()
