@@ -215,10 +215,10 @@ public class TimeOfDay implements Comparable
      */
     public StringBuffer format(boolean showAll, StringBuffer s)
     {
-        FieldPosition pos = new FieldPosition(0);
         if (seconds == 0 && milliseconds == 0 && !showAll)
         {
-            fmt.format(hours, s, pos);
+            FieldPosition pos = new FieldPosition(NumberFormat.INTEGER_FIELD);
+            fmt.format(hours,s,pos);
         }
 
         return s;
