@@ -46,7 +46,7 @@ public class Ja2
                 }
                 catch (Throwable th)
                 {
-                    MetadataViewer.sendException(th);
+                    sendException(th);
                 }
             }
         });
@@ -55,8 +55,8 @@ public class Ja2
          * Wait for an exception (from another thread), and throw it.
          * This also prevents the main thread from exiting before
          * Swing's event-dispatching thread starts (which would have
-         * caused the program to exit immeiately without doing
-         * anything) (a race conditon).
+         * caused the program to exit immediately without doing
+         * anything) (a race condition).
          */
         waitForException();
     }
