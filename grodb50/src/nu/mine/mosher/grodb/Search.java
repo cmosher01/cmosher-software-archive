@@ -21,5 +21,9 @@ public class Search
 
 	public String getListEntry()
 	{
+		List<ListEntry> rCol = new ArrayList<ListEntry>();
+		rCol.add(new ListEntry(description));
+		rCol.add(new ListEntry(completed?"completed":""));
+		return formatListEntry(rCol);
 	}
 }
