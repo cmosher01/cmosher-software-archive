@@ -58,7 +58,7 @@ public class Volume
             DiskPos pos = (DiskPos)i.next();
             if (!rKnownTSMaps.contains(pos))
             {
-                System.out.println("Unaccounted for TS Map at "+pos);
+                System.out.println("Unaccounted for TS Map at "+pos.toStringTS());
             }
         }
     }
