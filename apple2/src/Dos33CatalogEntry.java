@@ -33,7 +33,7 @@ public class Dos33CatalogEntry
         this.locked = locked;
         this.fileTypeID = fileTypeID;
         this.cSector = cSector;
-        this.nameOrig = nameOrig;
+        this.nameOrig = (byte[])nameOrig.clone();
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < nameOrig.length; ++i)
         {
