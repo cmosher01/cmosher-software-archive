@@ -45,6 +45,7 @@ public class VelocityTest
 //                }
 //            }
 //        });
+        Class.forName("org.apache.velocity.runtime.log.LogManager");
         velocity.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,"nu.mine.mosher.velocity.VelocityTest.ErrLogger");
         velocity.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH,"C:\\Documents and Settings\\chrism\\My Documents");
         velocity.setProperty(VelocityEngine.VM_LIBRARY,"");
