@@ -325,13 +325,13 @@ public class GDiffView extends JFrame
         long begin, end;
         if (target)
         {
-            begin = beginSrc;
-            end = endSrc;
+            begin = beginTrg;
+            end = endTrg;
         }
         else
         {
-            begin = beginTrg;
-            end = endTrg;
+            begin = beginSrc;
+            end = endSrc;
         }
         if (getRow(beginSrc) == getRow(endSrc))
         {
