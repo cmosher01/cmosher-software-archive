@@ -21,8 +21,11 @@ public class Volume
 //    private VolumeUnusedData data;
     /**
      * @param disk
+     * @throws InvalidPosException
+     * @throws MultipleVTOCException
+     * @throws VTOCNotFoundException
      */
-    public void readFromMedia(Disk disk)
+    public void readFromMedia(Disk disk) throws VTOCNotFoundException, MultipleVTOCException, InvalidPosException
     {
         cat = new VolumeCatalog();
         cat.readFromMedia(disk);
