@@ -19,6 +19,7 @@ public class GROMouseListener extends MouseInputAdapter
 		mLastIndi = fc.hitIndi(evt.getPoint());
 		if (mLastIndi != null)
 		{
+System.out.println("on");
 			mLastIndi.hit(true);
 			fc.repaint();
 		}
@@ -43,11 +44,13 @@ public class GROMouseListener extends MouseInputAdapter
 		Indi indi = fc.hitIndi(evt.getPoint());
 		if (indi != mLastIndi && mLastIndi != null && mLastIndi.isHit())
 		{
+System.out.println("off");
 			mLastIndi.hit(false);
 			fc.repaint();
 		}
 		else if (indi == mLastIndi && mLastIndi != null && !mLastIndi.isHit())
 		{
+System.out.println("on");
 			mLastIndi.hit(true);
 			fc.repaint();
 		}
