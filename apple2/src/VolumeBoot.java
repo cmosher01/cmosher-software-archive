@@ -113,7 +113,7 @@ public class VolumeBoot extends VolumeEntity
         {
             if (data[0] == 1 && data[1] == (byte)0xA5 && data[2] == 0x27 && data[0xFF] == 9)
             {
-                if (same(data,patch(rDos80master,data[0xFE]-0x36)))
+                if (same(data,patch(rDos80master,(data[0xFE]&0xff)-0x36)))
                 {
                     ident = "DOS 3.3 (1980) Slave (A$"+Hex2Bin.hexbyte(data[0xFE])+"00)";
                 }
