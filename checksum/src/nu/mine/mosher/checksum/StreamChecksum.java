@@ -22,7 +22,7 @@ public class ChecksumStream
 
     /**
      * Computes checksums for non-overlapping
-     * windows of the given size over all bytes
+     * windows, of the given size, over all bytes
      * from the given binary stream.
      * @param is
      * @param cWindow
