@@ -142,13 +142,12 @@ public class BinDiff
 						s.append(" BYTES\n");
 
                         long orig = fileinsert.tell();
-
                         fileinsert.seek(posinsert);
                         for (int i = 0; i < cinsert; ++i)
                         {
-							//fputc(fgetc(fileinsert), fdif);
+                        	s.append(Integer.toHexString(fileinsert.read()));
+                        	s.append(" ");
                         }
-
                         fileinsert.seek(orig);
 
                         cinsert = 0;
