@@ -32,6 +32,9 @@ public class Test
 			gl = gp.nextLine();
 		}
 
+		GedcomConcatenator gc = new GedcomConcatenator(gt);
+		gc.concatenate();
+
 		bw.write(gt.toString());
 
 		bw.close();
