@@ -55,7 +55,7 @@ public class ExcelCSVFieldizer
     }
 
     /**
-     * TODO
+     * An <code>Iterator</code> that iterates over fields in a <code>StringBuffer</code>
      *
      * @author Chris Mosher
      */
@@ -64,7 +64,8 @@ public class ExcelCSVFieldizer
         private final ExcelCSVParser parser;
 
         /**
-         * @param s
+         * Initializes the <code>FieldIterator</code>
+         * @param s the <code>StringBuffer</code> to parse for fields
          */
         public FieldIterator(StringBuffer s)
         {
@@ -72,7 +73,8 @@ public class ExcelCSVFieldizer
         }
 
         /**
-         * @return
+         * Determines if another field is left to be returned by <code>next</code>.
+         * @return <code>true</code> if there is another field
          */
         public boolean hasNext()
         {
@@ -80,7 +82,7 @@ public class ExcelCSVFieldizer
         }
 
         /**
-         * @return
+         * @return the next field
          * @throws NoSuchElementException
          */
         public String next() throws NoSuchElementException
