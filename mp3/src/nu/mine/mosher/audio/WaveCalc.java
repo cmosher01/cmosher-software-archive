@@ -10,6 +10,7 @@ import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
@@ -51,9 +52,8 @@ public class WaveCalc
             System.exit(1);
         }
 
-        DataInputStream in = new DataInputStream(new FileInputStream(fin));
-        int riff = in.readInt();
-        if (riff != 0x52494646)
+        InputStream in = new InputStream(new FileInputStream(fin));
+        if (readString(in,4))
         {
         	throw new Exception("File does not start with RIFF.");
         }
@@ -111,5 +111,20 @@ public class WaveCalc
 		System.out.println();
 
 		in.close();
+    }
+
+    /**
+     * @param in
+     * @param i
+     * @return
+     */
+    private static String readString(InputStream in, int c) throws IOException
+    {
+    	StringBuffer sb = new StringBuffer();
+    	for (int i = 0; i < c; ++i)
+        {
+            int b = in.read();
+            sb.append((char)b);
+        }
     }
 }
