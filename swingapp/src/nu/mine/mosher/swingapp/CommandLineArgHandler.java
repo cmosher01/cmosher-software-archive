@@ -10,11 +10,11 @@ package nu.mine.mosher.ja2;
  */
 public class CommandLineArgHandler
 {
-    private final String[] rArg;
+    private final String[] mrArg;
 
     public CommandLineArgHandler(String[] rArg)
     {
-        this.rArg = rArg;
+        mrArg = rArg;
     }
 
     /**
@@ -22,7 +22,7 @@ public class CommandLineArgHandler
      */
     public void parse() throws InvalidCommandLine
     {
-        if (rArg.length > 0)
+        if (mrArg.length > 0)
         {
             throw new InvalidCommandLine();
         }
