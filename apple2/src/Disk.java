@@ -189,12 +189,47 @@ public class Disk
             match(sector,0x3a,new byte[]{0x00,0x00});
     }
 
+    public void findDos33CatalogSector(boolean allowLarge, TSMap tsmapMaps) throws InvalidPosException
+    {
+        rewind();
+        while (!EOF())
+        {
+            DiskPos cur = this.pos;
+            byte[] sector = read(DiskPos.cSector);
+            List entries = new ArrayList();
+            if (isDos33CatalogSector(sector,allowLarge,tsmapMaps,entries))
+            {
+                System.out.println("Catalog Sector @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack())+" ("+goodEntries+" entries)");
+                for (Iterator i = entries.iterator(); i.hasNext();)
+                {
+                    String f = (String)i.next();
+                    System.out.print("    \"");
+                    System.out.print(f.trim());
+                    System.out.println("\"");
+                }
+            }
+        }
+    }
+
+    /**
+     * @param sector
+     * @param allowLarge
+     * @param tsmapMaps
+     * @param entries
+     * @return
+     */
+    protected boolean isDos33CatalogSector(byte[] sector, boolean allowLarge, TSMap tsmapMaps, List entries)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
     /**
      * @param allowLarge
      * @param tsmapMaps
      * @throws InvalidPosException
      */
-    public void findDos33CatalogSector(boolean allowLarge, TSMap tsmapMaps) throws InvalidPosException
+    public void findDos33CatalogSectorX(boolean allowLarge, TSMap tsmapMaps) throws InvalidPosException
     {
         rewind();
         while (!EOF())
