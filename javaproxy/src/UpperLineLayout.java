@@ -138,7 +138,7 @@ public class UpperLineLayout implements LayoutManager, Serializable
      */
     public void layoutContainer(Container parent)
     {
-        Insets insets = parent.insets();
+        Insets insets = parent.getInsets();
         int containerWidth = parent.size().width - insets.left - insets.right;
         int containerHeight = parent.size().height - insets.top - insets.bottom;
         int n, i, cxpos = 0, cypos = 0; // component's x/y position
