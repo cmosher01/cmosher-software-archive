@@ -6,6 +6,6 @@ public class Test
     }
     public String dodo(String x)
     {
-        return "\'"+x+"\'";
+        return "VALUE";
     }
 }
