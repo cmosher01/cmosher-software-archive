@@ -70,6 +70,12 @@ public class Test
         System.out.println(x);
         System.out.println(im);
 
+        Mute y = (Mute)im.object();
+        y.x = 8;
+
+        System.out.println(x);
+        System.out.println(im);
+        System.out.println(y);
 
 //        Object x = new Object();
 //        if (x.getClass().isInstance(null))
