@@ -19,15 +19,15 @@ public class ArgumentDefinition
      */
     public ArgumentDefinition(String name, String desc)
     {
+        if (name == null || desc == null)
+        {
+            throw new NullPointerException();
+        }
         if (name.length() == 0)
         {
             name = "argument";
         }
         this.name = name;
         this.desc = desc;
-        if (this.name == null || this.desc == null)
-        {
-            throw new NullPointerException();
-        }
     }
 }
