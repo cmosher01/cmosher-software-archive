@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /*
@@ -28,5 +29,23 @@ public class VolumeTSMap extends VolumeEntity
             disk.getDos33TSMapEntries(start, rTS);
             start = disk.getDos33Next(start);
         }
+    }
+
+    /**
+     * @param s
+     */
+    public void dump(StringBuffer s)
+    {
+        s.append("T/S Map: ");
+        for (Iterator i = this.rTS.iterator(); i.hasNext();)
+        {
+            DiskPos p = (DiskPos)i.next();
+            s.append(p.toStringTS());
+            if (i.hasNext())
+            {
+                s.append(";");
+            }
+        }
+        s.append("\n");
     }
 }
