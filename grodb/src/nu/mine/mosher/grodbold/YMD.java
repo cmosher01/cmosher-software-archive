@@ -72,21 +72,13 @@ public class YMD implements Immutable, Serializable, Comparable
 
     private void updateHash()
     {
-    	this.hash = getHash();
-    }
-
-	private int getHash()
-    {
-		int h = 17;
-
-		h *= 37;
-		h += year;
-		h *= 37;
-		h += month;
-		h *= 37;
-		h += day;
-
-		return h;
+		hash = 17;
+		hash *= 37;
+		hash += year;
+		hash *= 37;
+		hash += month;
+		hash *= 37;
+		hash += day;
     }
 
     public int compareTo(Object o)
