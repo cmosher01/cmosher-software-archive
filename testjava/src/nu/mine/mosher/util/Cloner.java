@@ -22,11 +22,19 @@ public class Cloner
             objClone.setAccessible(true);
             return (Cloneable)objClone.invoke(cloneableObject,null);
         }
-        catch (Throwable ex)
+        catch (Throwable cause)
         {
-            CloneNotSupportedException ex2 = new CloneNotSupportedException();
-            ex2.initCause(ex);
-            throw ex2;
+            CloneNotSupportedException ex;
+            if (cause instanceof CloneNotSupportedException)
+            {
+                ex = (CloneNotSupportedException)cause;
+            }
+            else
+            {
+                ex = new CloneNotSupportedException();
+                ex.initCause(cause);
+            }
+            throw ex;
         }
     }
 }
