@@ -12,15 +12,17 @@ public class VolumeSector
 {
     private final DiskPos pos;
     private final int i;
+    private final VolumeEntity parent;
 
     /**
      * @param pos
      * @param index
      */
-    public VolumeSector(DiskPos pos, int index)
+    public VolumeSector(DiskPos pos, int index, VolumeEntity parent)
     {
         this.pos = (DiskPos)pos.clone();
         this.i = index;
+        this.parent = parent;
     }
 
     /**
