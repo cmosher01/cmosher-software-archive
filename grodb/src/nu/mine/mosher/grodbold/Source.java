@@ -1,18 +1,16 @@
-/*
- * Created on Jul 26, 2003
- *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
 package nu.mine.mosher.grodb;
 
-/**
- * @author Chris
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
+import java.util.List;
+
 public class Source
 {
+	private final String title;
+	private final String author;
+	private final DateRange dateWritten;
+	private final Place placeWritten;
+	private final String publication;
 
+	private final List rRel;
+	private final List rRep;
+	private final List rSearch;
 }
