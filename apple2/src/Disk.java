@@ -256,6 +256,18 @@ public class Disk
      * @param i
      * @return
      */
+    private int word(byte[] sector, int i)
+    {
+        int lo = sector[i++];
+        int hi = sector[i];
+        return (lo | (hi << 8)) & 0x7F;
+    }
+
+    /**
+     * @param sector
+     * @param i
+     * @return
+     */
     private boolean isValidFileName(byte[] sector, int i)
     {
         // only check 29 chars of filename (last char could be overwritten by file deletion)
