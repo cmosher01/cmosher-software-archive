@@ -86,15 +86,15 @@ public class MainFrame extends JFrame
         nDisk.add(nBoot);
         if (!bootonly)
         {
-            s.append("Apple ][ DOS 3.3");
             VolumeDOS dos = vol.getDos();
             if (dos != null)
             {
+                s.append("Apple ][ DOS 3.3");
                 dos.appendSig(s);
             }
             else
             {
-                s.append(" [unknown type]");
+                s.append("[unknown DOS]");
             }
             DefaultMutableTreeNode nDos = new DefaultMutableTreeNode(s);
 
