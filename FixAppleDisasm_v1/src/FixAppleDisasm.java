@@ -192,7 +192,11 @@ public class FixAppleDisasm
 			else
 			{
 				ln.addr = addr;
-				nextaddr = addr;
+				if (nextaddr > 0 && nextaddr != addr)
+				{
+					System.err.print("address error @ $");
+					System.err.println(hexWord(nextaddr));
+				}
 				addrs.put(new Integer(ln.addr),ln);
 				String nextChar = s.substring(4,5);
 				if (nextChar.equalsIgnoreCase("-"))
