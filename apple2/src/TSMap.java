@@ -28,6 +28,10 @@ public class TSMap
         set(p,false);
     }
 
+    /**
+     * @param p
+     * @param mark
+     */
     public void set(DiskPos p, boolean mark)
     {
         int sector = p.getSectorInDisk();
