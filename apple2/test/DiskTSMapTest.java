@@ -1,3 +1,8 @@
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import junit.framework.TestCase;
 /*
  * Created on Sep 25, 2004
@@ -11,6 +16,73 @@ import junit.framework.TestCase;
  */
 public class DiskTSMapTest extends TestCase
 {
+    /**
+     * @throws IOException
+     * @throws InvalidPosException
+     */
+    public void testSARG2() throws IOException, InvalidPosException
+    {
+        List r = new ArrayList();
+        r.add(new DiskPos(0x09,0x4));
+        r.add(new DiskPos(0x0C,0x5));
+        r.add(new DiskPos(0x0F,0x6));
+        r.add(new DiskPos(0x11,0x1));
+        r.add(new DiskPos(0x11,0x2));
+        r.add(new DiskPos(0x11,0x3));
+        r.add(new DiskPos(0x11,0x4));
+        r.add(new DiskPos(0x11,0x5));
+        r.add(new DiskPos(0x11,0x6));
+        r.add(new DiskPos(0x11,0x7));
+        r.add(new DiskPos(0x11,0x8));
+        r.add(new DiskPos(0x11,0x9));
+        r.add(new DiskPos(0x11,0xA));
+        r.add(new DiskPos(0x11,0xB));
+        r.add(new DiskPos(0x11,0xC));
+        r.add(new DiskPos(0x11,0xD));
+        r.add(new DiskPos(0x11,0xE));
+        r.add(new DiskPos(0x11,0xF));
+        r.add(new DiskPos(0x12,0x1));
+        r.add(new DiskPos(0x18,0x3));
+        r.add(new DiskPos(0x1D,0x1));
+        r.add(new DiskPos(0x20,0x0));
+        assertManyPos("SARG2.dsk",r);
+    }
+
+    /**
+     * @param f
+     * @param rPosExpected
+     * @throws IOException
+     */
+    public void assertManyPos(String f, List rPosExpected) throws IOException
+    {
+        Disk disk = readDiskResource(f);
+        List rPosActual = new ArrayList();
+        disk.findDos33CatalogSector(rPosActual);
+
+        assertEquals(rPosExpected.size(),rPosActual.size());
+
+        for (int i = 0; i < rPosExpected.size(); i++)
+        {
+            DiskPos posExpected = (DiskPos)rPosExpected.get(i);
+            DiskPos posActual = (DiskPos)rPosActual.get(i);
+            assertEquals(posExpected,posActual);
+        }
+    }
+
+    /**
+     * @param f
+     * @return
+     * @throws IOException
+     */
+    private Disk readDiskResource(String f) throws IOException
+    {
+        InputStream disk = this.getClass().getClassLoader().getResourceAsStream(f);
+        byte[] rbDisk = new byte[disk.available()];
+        disk.read(rbDisk);
+        disk.close();
+        return new Disk(rbDisk);
+    }
+
 //    private static byte[] zeroes = new byte[0x100];
 //
 //    /**
