@@ -2,6 +2,8 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -35,12 +37,24 @@ public class MainFrame extends JFrame
      * @throws InstantiationException
      * @throws IllegalAccessException
      * @throws UnsupportedLookAndFeelException
+     * @throws IOException
      */
-    public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
+    public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException
     {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         MainFrame frame = new MainFrame();
         frame.init();
+
+        doOneDisk(Apple2.readDisk(new File("test/DOS33_SystemMaster_19800825.dsk")));
+    }
+
+    /**
+     * @param disk
+     */
+    private static void doOneDisk(Disk disk)
+    {
+        // TODO Auto-generated method stub
+        
     }
 
     /**
