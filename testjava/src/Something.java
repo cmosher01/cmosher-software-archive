@@ -10,7 +10,7 @@ public class SomeBean
     private float aFloat;
     private long aLong;
     private double aDouble;
-    private String sString;
+    private String aString;
     private File aFile;
     private Object aObject;
 
@@ -189,8 +189,8 @@ public class SomeBean
     /**
      * @param string
      */
-    public void setSString(String string)
+    public void setaString(String string)
     {
-        sString = string;
+        aString = string;
     }
 }
