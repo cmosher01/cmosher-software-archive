@@ -275,7 +275,15 @@ public class Disk
                         }
                         if (valid)
                         {
-                            System.out.println("T/S map @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
+                            System.out.print("T/S map @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
+                            if (sector[1] != 0 || sector[2] != 0)
+                            {
+                                System.out.println(" (next @ T$"+Integer.toHexString(sector[1])+", S$"+Integer.toHexString(sector[2]));
+                            }
+                            else
+                            {
+                                System.out.println();
+                            }
                         }
                     }
         }
