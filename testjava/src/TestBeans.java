@@ -12,7 +12,7 @@ public class TestBeans
         PropertyEditorManager.setEditorSearchPath(new String[] {"com.surveysampling.beans.editors"});
 
         SomeBean some = new SomeBean();
-        String prop = "objInteger";
+        String prop = "AInt";
         String val = "34";
 
 
