@@ -14,8 +14,6 @@ public class Persona
 	private String nameOther;
 	private String nameLater;
 
-	private PersonaType type;
-
 	private List<Relation<Persona,Persona>> rPersona = new ArrayList<Relation<Persona,Persona>>();
 
 	public Persona()
