@@ -4,9 +4,6 @@ import java.io.ObjectStreamException;
 
 public class RelationTypeSource
 {
-	private static int idNext = 0;
-	private final int id = idNext++;
-
 	private final String name;
 
 	protected RelationTypeSource(String name)
