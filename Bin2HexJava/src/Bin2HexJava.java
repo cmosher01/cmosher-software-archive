@@ -88,7 +88,7 @@ public class Bin2HexJava
             {
                 System.out.print("0x");
             }
-            if (SHOW_ZERO_X)
+            if (SHOW_DOLLAR)
             {
                 System.out.print("$");
             }
