@@ -37,9 +37,7 @@ public class VolumeFileRecovered
      */
     public void dump(StringBuffer s)
     {
-        s.append("File: ");
-        s.append(catEntry.getName());
-        s.append(" [");
+        s.append("File: [recovered] [");
         ts.dump(s);
         s.append("]\n");
     }
