@@ -86,8 +86,6 @@ public class TimeOfDayParser
      */
     private int getd(String s, int i, int j) throws ParseException
     {
-        assert (j < 10000); // sanity
-
         int r = 0;
         while (j-- > 0)
         {
