@@ -26,4 +26,27 @@ public class GDiffCopy extends GDiffCmd
         Range trg = getTargetRange();
         return "copy @"+range.getBegin()+": "+range.getLength()+"bytes";
     }
+    /**
+     * @param a
+     */
+    private void append32(StringBuffer sb, long a)
+    {
+        // TODO make work with longs
+        appendHex(sb,(int)(a >> 24));
+        appendHex(sb,(int)(a >> 16));
+        appendHex(sb,(int)(a >> 8));
+        appendHex(sb,(int)(a));
+    }
+
+    /**
+     * @param i
+     */
+    private void appendHex(StringBuffer sb, int i)
+    {
+        char n0 = HexBuilder.nib(i & 0xF);
+        i >>= 4;
+        char n1 = HexBuilder.nib(i & 0xF);
+        sb.append(n1);
+        sb.append(n0);
+    }
 }
