@@ -455,27 +455,6 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
         paint(g);
     }
 
-    // the following functions are not used for jproxy
-    public void updateHTTPCounter()
-    {
-    }
-
-    public void drawHTTPChart(Graphics g, Rectangle r, int xn, int yn)
-    {
-    }
-
-    public void drawGameChart(Graphics g, Rectangle r, int xn, int yn)
-    {
-    }
-
-    private void drawPolyBar(Graphics g, int xs[], int ys[], int points, int baseY, Color ic, Color bc)
-    {
-    }
-
-    private void drawPoly3DBar(Graphics g, int xs[], int ys[], int points, int baseY, Color ic, Color bc)
-    {
-    }
-
     public void paint(Graphics g)
     {
 
@@ -907,6 +886,9 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
     }
 
 
-} // end of Jproxy
-
-
+    /**
+     */
+    public void updateHTTPCounter()
+    {
+    }
+}
