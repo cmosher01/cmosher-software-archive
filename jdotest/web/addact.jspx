@@ -10,7 +10,6 @@
 	item.setName(s);
 	pm.makePersistent(item);
 	pm.currentTransaction().commit();
-	pm.put(item);
 %>
 <head>
 <title>Added</title>
