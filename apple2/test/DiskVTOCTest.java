@@ -15,7 +15,7 @@ public class DiskTest extends TestCase
 
     public void testVTOC_Zeroes()
     {
-        assertFalse(Disk.isDos33VTOC(zeroes);
+        assertFalse(Disk.isDos33VTOC(zeroes));
     }
 
     /**
