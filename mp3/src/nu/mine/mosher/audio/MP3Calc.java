@@ -74,6 +74,7 @@ public class MP3Calc
     private static int calcBitRate(int key, int mpeg, int layer)
     {
     	int bps = 0;
+
     	if (layer == 1)
     	{
     		switch (mpeg)
@@ -87,19 +88,33 @@ public class MP3Calc
 				break;
             }
     	}
-    	else if (mpeg == 2)
-    	{
-    		bps = mpeg2bps[key];
-    	}
-    	else if (layer == 3)
-    	{
-    		if (mpeg == 1)
-    		{
-    		}
-    		else if (mpeg == 2 || mpeg == 25)
-    		{
-    		}
-    	}
+		else if (layer == 2)
+		{
+			switch (mpeg)
+			{
+				case 1:
+					bps = M1L2[key];
+				break;
+				case 2:
+				case 25:
+					bps = M2L2[key];
+				break;
+			}
+		}
+		else if (layer == 3)
+		{
+			switch (mpeg)
+			{
+				case 1:
+					bps = M1L3[key];
+				break;
+				case 2:
+				case 25:
+					bps = M2L3[key];
+				break;
+			}
+		}
+
     	return 1000*bps;
     }
 }
