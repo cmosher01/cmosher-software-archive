@@ -15,6 +15,8 @@ public class Drop
 {
 	public static void main(String[] rArg) throws Throwable
 	{
+		System.out.print(rArg.length);
+		System.out.println(" args:");
 		for (int i = 0; i < rArg.length; ++i)
         {
             String arg = rArg[i];
