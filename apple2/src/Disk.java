@@ -217,7 +217,7 @@ public class Disk
                             }
                         }
                     }
-                    else
+                    else if (live)
                     {
                         valid = false;
                     }
