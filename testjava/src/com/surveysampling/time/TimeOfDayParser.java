@@ -45,6 +45,8 @@ public class TimeOfDayParser
             ensure(s,2,':');
             hr = getd(s,0,2);
             mn = getd(s,3,2);
+            sc = 0;
+            ms = 0;
         }
         else if (s.length() == 8)
         {
@@ -53,6 +55,7 @@ public class TimeOfDayParser
             hr = getd(s,0,2);
             mn = getd(s,3,2);
             sc = getd(s,6,2);
+            ms = 0;
         }
         else if (s.length() == 12)
         {
