@@ -13,6 +13,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 public class Disk implements TreeNode
 {
@@ -20,6 +21,7 @@ public class Disk implements TreeNode
 	private static final Icon mIcon = new ImageIcon("d:\\temp\\floppy.gif");
 	private final JEditorPane viewRight = new JEditorPane();
 	private A2DiskImage img = null;
+	private DefaultMutableTreeNode node = null;
 
 	public Disk()
 	{
@@ -61,7 +63,7 @@ public class Disk implements TreeNode
 				img = new A2DiskImage(image);
 				List r = new ArrayList(30);
 				img.getContents().getCatList(r);
-				A2DiskEdit.getApp().addNode(null,this);
+				A2DiskEdit.getApp().addNode(null,node);
 			}
 		}
 
@@ -109,5 +111,13 @@ public class Disk implements TreeNode
 	public Icon getIcon()
 	{
 		return mIcon;
+	}
+
+	/**
+	 * @see nu.mosher.mine.a2diskedit.TreeNode#setNode(DefaultMutableTreeNode)
+	 */
+	public void setNode(DefaultMutableTreeNode n)
+	{
+		node = n;
 	}
 }
