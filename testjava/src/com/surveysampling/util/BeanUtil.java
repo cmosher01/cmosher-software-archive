@@ -113,7 +113,7 @@ public final class BeanUtil
         Method method,
         String[] values,
         Class t,
-        Class propertyEditorClass) throws InstantiationException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
+        Class propertyEditorClass) throws InstantiationException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, ParameterParseException
     {
         if (propertyEditorClass != null)
         {
