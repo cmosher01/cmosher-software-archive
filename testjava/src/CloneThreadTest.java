@@ -28,7 +28,7 @@ public class CloneThreadTest
         x.a = 6;
         x.b = 6;
 
-        Thread tPrint = new Thread(new Runnable()
+        Thread tMutate = new Thread(new Runnable()
         {
             public void run()
             {
@@ -39,9 +39,9 @@ public class CloneThreadTest
                 }
             }
         });
-        tPrint.setDaemon(true);
+        tMutate.setDaemon(true);
 
-        Thread tSet = new Thread(new Runnable()
+        Thread tClone = new Thread(new Runnable()
         {
             public void run()
             {
@@ -49,10 +49,10 @@ public class CloneThreadTest
                 System.out.println(y);
             }
         });
-        tSet.setDaemon(true);
+        tClone.setDaemon(true);
 
-        tSet.start();
-        tPrint.start();
+        tClone.start();
+        tMutate.start();
 
         Thread.sleep(30000);
     }
