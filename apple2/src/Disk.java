@@ -43,6 +43,22 @@ public class Disk
         return rb;
     }
 
+    public String readASCII(int len)
+    {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < len; ++i)
+        {
+            int c = read();
+            sb.append((char)(byte)(c & 0x0000007F));
+        }
+        return sb.toString();
+    }
+
+    /**
+     * @param len
+     * @param sb
+     * @param attrib array of attributes (0=inverse, 1=flash, 2=normal)
+     */
     public void readASCII(int len, StringBuffer sb, byte[] attrib)
     {
         if (attrib.length != len)
@@ -56,15 +72,15 @@ public class Disk
             byte a;
             if (c < 0x40)
             {
-                a = 1;
+                a = 1; // inverse
             }
             else if (c < 0x80)
             {
-                a = 2;
+                a = 2; // flash
             }
             else
             {
-                a = 0;
+                a = 0; // normal
             }
             attrib[i] = a;
         }
