@@ -5,7 +5,7 @@ import java.net.URL;
 
 public class HitWeb
 {
-	private static final int TIMES = 10;
+	private static final int TIMES = 1000;
     public static void main(String[] args) throws Throwable
     {
     	HttpURLConnection.setFollowRedirects(false);
