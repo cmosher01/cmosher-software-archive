@@ -49,11 +49,6 @@ public class StreamChecksum
         long w = 0;
         while (is.available() >= cWindow)
         {
-//            if (is.available() < cWindow)
-//            {
-//                cWindow = is.available();
-//                rs = new byte[cWindow];
-//            }
             int c = is.read(rs);
             if (c != cWindow)
             {
