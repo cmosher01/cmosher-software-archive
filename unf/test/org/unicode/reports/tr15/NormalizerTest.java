@@ -91,10 +91,10 @@ public class NormalizerTest extends TestCase
 				if (!rCol[1].equals(norm))
 				{
 					System.out.println("ERROR: ");
-					dumphex(rCol[0]);
+					for (int i = 0; i < rCol.length; ++i)
+						dumphex(rCol[i]);
 					String bad = n.normalize(rCol[0]);
 					dumphex(bad);
-					dumphex(rCol[1]);
 					System.out.println();
 				}
 //				System.out.println();
