@@ -43,4 +43,9 @@ public class GedcomTree
 			mapIDtoNode.put(line.getId(),prevNode);
 		}
 	}
+
+	public TreeNode getNode(String id)
+	{
+		return mapIDtoNode.get(id);
+	}
 }
