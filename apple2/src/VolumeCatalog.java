@@ -66,4 +66,17 @@ public class VolumeCatalog
             }
         }
     }
+
+    /**
+     * @param s
+     */
+    public void dump(StringBuffer s)
+    {
+        vtoc.dump(s);
+        for (Iterator i = this.rCatSect.iterator(); i.hasNext();)
+        {
+            VolumeCatalogSector sect = (VolumeCatalogSector)i.next();
+            
+        }
+    }
 }
