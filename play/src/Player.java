@@ -81,6 +81,7 @@ public class Player implements Immutable
 		while (c != -1)
 		{
 			System.out.print(Integer.toHexString(i++));
+			System.out.print(": ");
 			System.out.println(Integer.toHexString(c));
 			c = isr.read();
 		}
