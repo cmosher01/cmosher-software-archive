@@ -12,6 +12,14 @@ public class CloneThreadTest
 
     public static void main(String[] args)
     {
-        
+        final X x = new X();
+
+        Thread t = new Thread(new Runnable()
+        {
+            public void run()
+            {
+                System.out.println(x);
+            }
+        });
     }
 }
