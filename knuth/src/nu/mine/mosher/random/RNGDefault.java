@@ -13,6 +13,15 @@ public abstract class RNGDefault implements RandomNumberGenerator
 	private final long seed;
 
 	/**
+	 * Initializes the <code>RandomNumberGenerator</code> using
+	 * <code>System.currentTimeMillis()</code> as a seed number.
+	 */
+	public RNGDefault()
+	{
+		this.seed = seed;
+	}
+
+	/**
 	 * Initializes the <code>RandomNumberGenerator</code> with
 	 * the given seed number.
 	 * @param seed
