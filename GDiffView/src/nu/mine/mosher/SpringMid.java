@@ -11,14 +11,18 @@ import javax.swing.Spring;
  */
 public class SpringMid extends Spring
 {
+    private final Spring right;
+    private final double fraction;
+    private final int width;
 
     /**
      * 
      */
     public SpringMid(Spring right, double fraction, int width)
     {
-        super();
-        // TODO Auto-generated constructor stub
+        this.right = right;
+        this.fraction = fraction;
+        this.width = width;
     }
 
     /* (non-Javadoc)
@@ -53,8 +57,7 @@ public class SpringMid extends Spring
      */
     public int getValue()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return (int)Math.round(parent.getValue() * fraction);
     }
 
     /**
