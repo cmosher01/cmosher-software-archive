@@ -100,6 +100,7 @@ public class Disk
     }
 
     /**
+     * @param pos
      * @return
      * @throws InvalidPosException
      */
@@ -130,7 +131,7 @@ public class Disk
     }
 
     /**
-     * @param sector
+     * @param pos
      * @return
      */
     public boolean isDos33VTOC(DiskPos pos)
