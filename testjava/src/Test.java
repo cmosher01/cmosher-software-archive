@@ -67,7 +67,7 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
-        File f = new File("");
+        File f = new File("/temp");
         f = f.getAbsoluteFile();
         f = f.getCanonicalFile();
         System.out.println(f.getPath());
