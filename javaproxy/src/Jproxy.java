@@ -323,13 +323,13 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
             return false;
         }
 
-        host_addr = (String)httpconfig.getProperty("network.ip");
-        host_port = Integer.parseInt((String)httpconfig
+        host_addr = httpconfig.getProperty("network.ip");
+        host_port = Integer.parseInt(httpconfig
                 .getProperty("network.port"));
 
-        String cacheMaxString = (String)httpconfig
+        String cacheMaxString = httpconfig
                 .getProperty("network.cache.max");
-        String cacheExpString = (String)httpconfig
+        String cacheExpString = httpconfig
                 .getProperty("network.cache.expire");
         if (cacheMaxString == null || cacheMaxString.equals(""))
             cacheMaxString = "0";
