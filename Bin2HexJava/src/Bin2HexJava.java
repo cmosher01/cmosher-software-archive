@@ -18,10 +18,11 @@ import java.io.InputStream;
 public class Bin2HexJava
 {
     private static final int BPL = 0x10;
-    private static final boolean SHOW_CAST = true;
-    private static final boolean SHOW_ZERO_X = true;
-    private static final boolean SHOW_COMMA = true;
-    private static final boolean SHOW_SPACE = false;
+    private static final boolean SHOW_CAST = false;
+    private static final boolean SHOW_ZERO_X = false;
+    private static final boolean SHOW_COMMA = false;
+    private static final boolean SHOW_SPACE = true;
+    private static final boolean SHOW_QUOTES = true;
 
     /**
      * @param args
@@ -46,6 +47,10 @@ public class Bin2HexJava
         {
             if (first)
             {
+                if (SHOW_QUOTES)
+                {
+                    System.out.print("\"");
+                }
                 first = false;
             }
             else
@@ -62,7 +67,14 @@ public class Bin2HexJava
 
             if (pos >= BPL)
             {
-                System.out.println();
+                if (SHOW_QUOTES)
+                {
+                    System.out.println("\"+");
+                }
+                else
+                {
+                    System.out.println();
+                }
                 pos = 0;
             }
 
@@ -80,7 +92,14 @@ public class Bin2HexJava
 
             c = in.read();
         }
-        System.out.println();
+        if (SHOW_QUOTES)
+        {
+            System.out.println("\"+");
+        }
+        else
+        {
+            System.out.println();
+        }
         System.out.flush();
         in.close();
     }
