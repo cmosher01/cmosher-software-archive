@@ -36,7 +36,7 @@ public class StringFields /* ??? implements Iterable */
         public Object next()
         {
             int i = s.indexOf(',',pos);
-            if (i == -1)
+            if (i < 0)
             {
                 i = s.length();
             }
