@@ -114,21 +114,6 @@ public class YMD implements Immutable, Serializable, Comparable
     public int compareTo(Object o)
     {
     	YMD that = (YMD)o;
-    	int d = 0;
-
-		if (d==0)
-		{
-	    	d = Util.compare(this.year,that.year);
-		}
-    	if (d==0)
-    	{
-    		d = Util.compare(this.month,that.month);
-    	}
-		if (d==0)
-		{
-			d = Util.compare(this.day,that.day);
-		}
-
-		return d;
+    	return Util.compare(this.getApproxDay(),that.getApproxDay());
     }
 }
