@@ -15,7 +15,6 @@ import java.util.List;
 public class VolumeFileData extends VolumeEntity
 {
     private byte[] data;
-    private List rPos = new ArrayList();
 
     /**
      * @param rPosFile
@@ -23,10 +22,11 @@ public class VolumeFileData extends VolumeEntity
      */
     public void readFromMedia(List rPosFile, Disk disk)
     {
+        int x = 0;
         for (Iterator i = rPosFile.iterator(); i.hasNext();)
         {
             DiskPos pos = (DiskPos)i.next();
-            this.rPos.add(pos.clone());
+            this.rSector.add(new VolumeSector(pos.clone(),x++));
         }
     }
 }
