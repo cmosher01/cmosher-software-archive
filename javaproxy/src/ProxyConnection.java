@@ -159,11 +159,7 @@ public class ProxyConnection extends Thread
     public void run()
     {
         StringBuffer sb = new StringBuffer();
-        boolean keep_alive = true;
-        boolean read_finish = false;
-        String buf = "";
         String key, value;
-        URL url = null;
         InputStream in_c = null; // input from client socket
         InputStream in_s = null; // input from server socket
         OutputStream out_c = null; // output to client socket
