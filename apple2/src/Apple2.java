@@ -36,6 +36,14 @@ public class Apple2
             throw new IllegalArgumentException("Usage: java Apple2 dirtree_of_dos_3.3_order_disk_images");
         }
         File[] rf = list140KFiles(args[0]);
+        for (int i = 0; i < rf.length; i++)
+        {
+            doOneFile(rf[i]);
+        }
+    }
+
+    public static void doOneFile(File f) throws IOException
+    {
         byte[] rbDisk;
         InputStream fileDisk = null;
         try
@@ -58,18 +66,6 @@ public class Apple2
                 }
             }
         }
-
-        Disk disk = new Disk(rbDisk);
-
-        List rVTOC = new ArrayList();
-        disk.findDos33VTOC(rVTOC);
-    }
-
-    public static void doOneFile(File f) throws IOException
-    {
-        InputStream fileDisk = new FileInputStream(f);
-        byte[] rbDisk = new byte[fileDisk.available()];
-        fileDisk.read(rbDisk);
 
         Disk disk = new Disk(rbDisk);
 
