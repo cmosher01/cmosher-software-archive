@@ -7,6 +7,6 @@ public class CatEntry
 	{
 		byte[] rname = new byte[0x1e];
 		System.arraycopy(rb,3,rname,0,0x1e);
-		sName = (String) rname;
+		StringBuffer sb = new StringBuffer(rname);
 	}
 }
