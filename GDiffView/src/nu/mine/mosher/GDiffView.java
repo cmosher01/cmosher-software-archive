@@ -202,57 +202,6 @@ public class GDiffView extends JFrame
      */
     private void readSrc() throws IOException
     {
-//        
-//        for (int i = 0; i < nibs + 2; ++i)
-//        {
-//            sb.append(' ');
-//        }
-//        for (int i = 0; i < cCol; ++i)
-//        {
-//            appendHex(sb,i);
-//            sb.append(' ');
-//        }
-//        for (int i = 0; i < cCol; ++i)
-//        {
-//            sb.append(' ');
-//        }
-//        long addr = 0;
-//        byte[] rb = new byte[cCol];
-//        int c = in.read(rb);
-//        while (c > 0)
-//        {
-//            sb.append('\n');
-//            appendAddr(sb,addr);
-//            sb.append(": ");
-//            for (int i = 0; i < cCol; ++i)
-//            {
-//                if (i < c)
-//                {
-//                    appendHex(sb,rb[i]);
-//                }
-//                else
-//                {
-//                    sb.append("  ");
-//                }
-//                sb.append(' ');
-//            }
-//            for (int i = 0; i < cCol; ++i)
-//            {
-//                if (i < c)
-//                {
-//                    appendAsc(sb,rb[i]);
-//                }
-//                else
-//                {
-//                    sb.append(" ");
-//                }
-//            }
-//            addr += c;
-//            c = in.read(rb);
-//        }
-//        sb.append('\n');
-//        appendAddr(sb,addr);
-//        sb.append(": ");
         BufferedInputStream in = new BufferedInputStream(new FileInputStream(src));
         sb = new StringBuffer(in.available() * 6);
         HexBuilder hex = new HexBuilder(sb);
