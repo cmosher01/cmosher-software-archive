@@ -533,7 +533,14 @@ public class GDiffView extends JFrame
             highlight(getAscRowStart(getRow(end)),getAscEnd(end),highlight,target);
             if (highlight.equals("highlight"))
             {
-                pan.setCaretPosition((int)c);
+                try
+                {
+                    pan.setCaretPosition((int)c);
+                }
+                catch (IllegalArgumentException ex)
+                {
+                    // TODO
+                }
             }
         }
     }
