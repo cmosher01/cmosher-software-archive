@@ -9,6 +9,8 @@ import javax.swing.JTree;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeSelectionModel;
 /*
  * Created on Oct 16, 2004
  */
@@ -22,6 +24,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class MainFrame extends JFrame
 {
     private JTree tree;
+    private DefaultMutableTreeNode top = new DefaultMutableTreeNode("Program");
 
 
 
@@ -59,7 +62,11 @@ public class MainFrame extends JFrame
         this.setMaximizedBounds(env.getMaximumWindowBounds());
         this.setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
 
-        tree = new JTree();
+        tree = new JTree(top);
+        tree.setRootVisible(false);
+        tree.setShowsRootHandles(true);
+        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+
         JScrollPane scrollTree = new JScrollPane(tree);
         scrollTree.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollTree.setMaximumSize(new Dimension(Integer.MAX_VALUE,Integer.MAX_VALUE));
