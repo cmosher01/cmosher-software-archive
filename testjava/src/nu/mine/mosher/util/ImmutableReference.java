@@ -5,8 +5,8 @@ import java.io.Serializable;
 public final class ImmutableReference implements Cloneable, Comparable, Serializable, Immutable
 {
     private Cloneable ref;
-    private String str;
-    private int hash;
+    private transient String str;
+    private transient int hash;
 
     public ImmutableReference(Cloneable ref) throws CloneNotSupportedException
     {
