@@ -58,7 +58,10 @@ public class CatEntry implements TreeNode
 		StringBuffer sb = new StringBuffer();
 		sb.append("<html>Catalog entry: <b>");
 		sb.append(sName);
-		sb.append("</b></html>");
+		sb.append("</b><br></br>");
+		sb.append("Raw bytes: ");
+		sb.append(hexRaw);
+		sb.append("</html>");
 		viewRight.setText(sb.toString());
 		return viewRight;
 	}
