@@ -109,7 +109,16 @@ public class GDiffView extends JFrame
         {
             public void updateSingleSelection(int oldIndex, int newIndex)
             {
-                System.out.println("Index was " + oldIndex + " is " + newIndex);
+                if (oldIndex >= 0)
+                {
+                    GDiffCmd oldCmd = (GDiffCmd)rcmd.get(oldIndex);
+                    System.out.println("unhighlight " + oldCmd);
+                }
+                if (newIndex >= 0)
+                {
+                    GDiffCmd newCmd = (GDiffCmd)rcmd.get(newIndex);
+                    System.out.println("highlight " + oldCmd);
+                }
             }
         };
         listGDiff.setSelectionModel(selectionModel);
