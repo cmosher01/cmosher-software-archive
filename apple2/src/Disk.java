@@ -135,9 +135,9 @@ public class Disk
         {
             DiskPos cur = this.pos;
             byte[] sector = read(DiskPos.cSector);
-            if (match(sector,3,new byte[]{3,0,0}) &&
-                match(sector,0x34,new byte[]{0x23,0x10,0,1}) &&
-                match(sector,0x3a,new byte[]{0,0}))
+            if (match(sector,0x03,new byte[]{0x03,0x00,0x00}) &&
+                match(sector,0x34,new byte[]{0x23,0x10,0x00,0x01}) &&
+                match(sector,0x3a,new byte[]{0x00,0x00}))
             {
                 System.out.println("VTOC @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
             }
