@@ -16,14 +16,12 @@ public class Undoer
     public Cloneable undo(Cloneable state) throws CloneNotSupportedException
     {
         mrRedo.addFirst(new ImmutableReference(state));
-        ImmutableReference prevState = (ImmutableReference)mrUndo.removeLast();
-        return prevState.object();
+        return ((ImmutableReference)mrUndo.removeLast()).object();
     }
 
     public Cloneable redo(Cloneable state) throws CloneNotSupportedException
     {
         mrUndo.addLast(new ImmutableReference(state));
-        ImmutableReference prevState = (ImmutableReference)mrUndo.removeFirst();
-        return prevState.object();
+        return ((ImmutableReference)mrUndo.removeFirst()).object();
     }
 }
