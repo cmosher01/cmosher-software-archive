@@ -39,7 +39,7 @@ public class BitStream extends RandomnessTest
         super(rng);
     }
 
-    public double test() throws IOException
+    public double test()
     {
         long w20 = next();
         double mp = 0;
