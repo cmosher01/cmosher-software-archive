@@ -12,12 +12,18 @@ import javax.swing.SwingUtilities;
  */
 public class Ja2
 {
-    private final String[] rArg;
     private Ja2GUI mGUI;
+    private ExceptionHandler mExceptionHandler;
+    private CommandLineArgHandler mCommandLineArgHandler;
 
-    public Ja2(String[] rArg)
+    /**
+     * @param eh
+     * @param ch
+     */
+    public Ja2(ExceptionHandler eh, CommandLineArgHandler ch)
     {
-        this.rArg = rArg;
+        this.mExceptionHandler = eh;
+        this.mCommandLineArgHandler = ch;
     }
 
     /**
@@ -25,11 +31,7 @@ public class Ja2
      */
     public void run()
     {
-        // We don't allow any command line arguments.
-        if (rArg.length > 0)
-        {
-            throw new IllegalArgumentException("No arguments allowed.");
-        }
+        mCommandLineArgHandler.parse();
 
         /*
          * Start the GUI, making sure all Swing calls
@@ -47,7 +49,7 @@ public class Ja2
                 }
                 catch (Throwable th)
                 {
-                    ExceptionHandler.send(th);
+                    mExceptionHandler.send(th);
                 }
             }
         });
@@ -59,7 +61,7 @@ public class Ja2
          * caused the program to exit immediately without doing
          * anything) (a race condition).
          */
-        ExceptionHandler.waitFor();
+        mExceptionHandler.waitFor();
     }
 
     protected void createGUI()
