@@ -13,25 +13,21 @@ import java.util.logging.LogRecord;
  */
 public final class MessageFormatter extends Formatter
 {
-    private static MessageFormatter LOCAL = new MessageFormatter();
+    private static MessageFormatter formatter = new MessageFormatter();
 
     private MessageFormatter()
     {
         throw new UnsupportedOperationException();
     }
 
-    public static String formatMessage(LogRecord record)
+    public static String formatLogMessage(LogRecord record)
     {
-        return LOCAL.formatMessage(record);
+        return formatter.formatMessage(record);
     }
 
-    /* (non-Javadoc)
-     * @see java.util.logging.Formatter#format(java.util.logging.LogRecord)
-     */
     public String format(LogRecord record)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return super.format(record);
     }
 
 }
