@@ -7,6 +7,8 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
+import org.jpox.resource.ManagedConnectionFactoryImpl;
+
 /**
  * @author Chris Mosher
  * Created: Feb 18, 2004
@@ -27,7 +29,14 @@ public class PersonPersist
 		try
 		{
 			Properties props = new Properties();
-			props.setProperty("javax.jdo.PersistenceManagerFactoryClass","com.prismt.j2ee.jdo.PersistenceManagerFactoryImpl");
+			props.setProperty("javax.jdo.PersistenceManagerFactoryClass","org.jpox.PersistenceManagerFactoryImpl");
+			props.setProperty("javax.jdo.option.ConnectionDriverName","com.mysql.jdbc.Driver");
+			props.setProperty("javax.jdo.option.ConnectionURL","jdbc:mysql:///jdotest");
+			props.setProperty("javax.jdo.option.ConnectionUserName","root");
+			props.setProperty("javax.jdo.option.ConnectionPassword","rootroot");
+			props.setProperty("org.jpox.autoCreateTables","true");
+			props.setProperty("org.jpox.validateTables","false");
+			props.setProperty("org.jpox.validateConstraints","false");
 			pmf = JDOHelper.getPersistenceManagerFactory(props);
 			pmf.setConnectionFactory(createConnectionFactory());
 		}
@@ -36,5 +45,25 @@ public class PersonPersist
 			ex.printStackTrace();
 			System.exit(1);
 		}
+	}
+
+	public static Object createConnectionFactory()
+	{
+		ManagedConnectionFactoryImpl mcfi = new ManagedConnectionFactoryImpl();
+		Object connectionFactory = null;
+		try
+		{
+			mcfi.setUserName("scott");
+			mcfi.setPassword("tiger");
+			mcfi.setConnectionURL("jdbc:oracle:thin:@localhost:1521:thedb");
+			mcfi.setDBDriver("oracle.jdbc.driver.OracleDriver");
+			connectionFactory = mcfi.createConnectionFactory();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			System.exit(1);
+		}
+		return connectionFactory;
 	}
 }
