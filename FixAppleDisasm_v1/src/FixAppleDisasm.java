@@ -390,7 +390,10 @@ public class FixAppleDisasm
 				}
 				i.remove();
 			}
-			prevline = ln;
+			else
+			{
+				prevline = ln;
+			}
 		}
 
 		for (Iterator i = lines.entrySet().iterator(); i.hasNext();)
