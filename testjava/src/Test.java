@@ -58,7 +58,7 @@ public class Test
 
         SimpleDateFormat f = new SimpleDateFormat("HH:mm:ss.SSS");
         long x = 86400000-1;
-        System.out.print(x/86400000+" days + ");
+        System.out.print(x/86400000+" ");
         System.out.println(f.format(new Date(x%86400000-68400000)));
 
 //        int x;
