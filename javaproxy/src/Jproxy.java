@@ -691,13 +691,11 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
             helpviewer = new FileViewer(_HELP_FILE);
             return;
         }
-        else
+
+        if (!helpviewer.isVisible())
         {
-            if (!helpviewer.isVisible())
-            {
-                helpviewer.setVisible(true);
-                helpviewer.toFront();
-            }
+            helpviewer.setVisible(true);
+            helpviewer.toFront();
         }
     }
 
