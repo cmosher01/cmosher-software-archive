@@ -139,6 +139,20 @@ public class GDiffView extends JFrame
             roll.increment(xprev, x);
             lookupUniqueMatch(src,roll.getChecksum(),trgPos++,matches,w);
         }
+        consolidateCopies();
+    }
+
+    /**
+     * 
+     */
+    private void consolidateCopies()
+    {
+        for (Iterator i = this.rCopy.iterator(); i.hasNext();)
+        {
+            GDiffCopy cpy = (GDiffCopy)i.next();
+            Range rngSrc = cpy.getRange();
+            Range rngTrg = cpy.getTargetRange();
+        }
     }
 
     /**
