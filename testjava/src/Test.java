@@ -56,7 +56,7 @@ public class Test
 
         Mute x = new Mute();
         x.x = 5;
-        Object y = Cloner.cloneObject(x);
+        Object y = mosher.Cloner.cloneObject(x);
         x.x = 7;
 
 
