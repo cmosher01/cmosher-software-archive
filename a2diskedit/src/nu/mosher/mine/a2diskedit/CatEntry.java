@@ -1,14 +1,12 @@
 package nu.mosher.mine.a2diskedit;
 
-/**
- * @author Administrator
- *
- * To change this generated comment edit the template variable "typecomment":
- * Window>Preferences>Java>Templates.
- * To enable and disable the creation of type comments go to
- * Window>Preferences>Java>Code Generation.
- */
 public class CatEntry
 {
-
+	private String sName;
+	public CatEntry(byte[] rb)
+	{
+		byte[] rname = new byte[0x1e];
+		System.arraycopy(rb,3,rname,0,0x1e);
+		sName = rname;
+	}
 }
