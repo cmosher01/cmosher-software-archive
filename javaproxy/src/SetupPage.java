@@ -8,10 +8,16 @@
  * Author : Steve Yeong-Ching Hsueh
  */
 
-import java.awt.*;
-import java.awt.event.*;
-import java.lang.*;
-import java.util.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.LayoutManager;
+import java.awt.Panel;
+import java.awt.Rectangle;
+import java.util.Enumeration;
+import java.util.Vector;
 
 /**
  * SetupPage
