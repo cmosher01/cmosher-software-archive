@@ -2,6 +2,7 @@ import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.beans.PropertyEditor;
+import java.beans.PropertyEditorManager;
 import java.lang.reflect.Method;
 
 public class TestBeans
@@ -46,12 +47,7 @@ public class TestBeans
 
 
 
-        Class pec = pd.getPropertyEditorClass();
-        if (pec == null)
-        {
-            throw new Exception("can't get property editor class");
-        }
-        PropertyEditor ed = (PropertyEditor)pec.newInstance();
+        PropertyEditor ed = PropertyEditorManager.findEditor(pd.getPropertyType());
         if (ed == null)
         {
             throw new Exception("can't get property editor");
