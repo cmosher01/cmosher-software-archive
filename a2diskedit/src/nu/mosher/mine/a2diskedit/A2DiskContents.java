@@ -100,6 +100,11 @@ public class A2DiskContents
 		// trim
 		return s.toString().trim();
 	}
+
+	public void getCatList(List r)
+	{
+		r.addAll(rCatEntry);
+	}
 }
 /*
 void CDosDir::Parse(track rTSB[], ts tsCat)
