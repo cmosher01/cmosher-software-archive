@@ -11,7 +11,7 @@ package nu.mine.mosher.cmdline;
 public class OptionDefinition
 {
     private final String name;
-    private final String abbrev;
+    private final char abbrev;
     private final String desc;
     private final boolean hasValue;
 
@@ -20,7 +20,7 @@ public class OptionDefinition
      * @param abbrev
      * @param desc
      */
-    public OptionDefinition(final String name, final String abbrev, final String desc, boolean hasValue)
+    public OptionDefinition(final String name, final char abbrev, final String desc, boolean hasValue)
     {
         this.name = name;
         this.abbrev = abbrev;
