@@ -198,6 +198,11 @@ public class DosMasterToImage
         {
             clearIgnored(r,rIgnore1986);
         }
+
+        for (int i = 0; i < r.length; ++i)
+        {
+            out.write(r[i]);
+        }
         out.flush();
         out.close();
         in.close();
