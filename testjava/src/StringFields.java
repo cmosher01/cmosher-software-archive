@@ -1,7 +1,7 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class StringFields /* ??? implements Iterable */
+public class StringFields /* TODO implements Iterable */
 {
     private final Iterator i;
     
@@ -10,12 +10,12 @@ public class StringFields /* ??? implements Iterable */
         i = new Iter(s);
     }
 
-    public Iterator iterator() /* ??? SimpleIterator */
+    public Iterator iterator() /* TODO SimpleIterator */
     {
         return i;
     }
 
-    private static class Iter implements Iterator /* ??? SimpleIterator */
+    private static class Iter implements Iterator /* TODO SimpleIterator */
     {
         private final String s;
         private int pos;
@@ -50,7 +50,7 @@ public class StringFields /* ??? implements Iterable */
             return tok;
         }
 
-        public void remove() /* ??? for SimpleIterator, don't provide this method */
+        public void remove() /* TODO for SimpleIterator, don't provide this method */
         {
             throw new UnsupportedOperationException();
         }
