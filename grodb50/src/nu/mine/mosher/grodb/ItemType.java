@@ -17,7 +17,8 @@ public class ItemType<T extends Enum<T>>
 	{
 		try
 		{
-			T x = Enum.valueOf(Class<T>.getClass(),other);
+			Class<T> c = Class<T>.getClass();
+			T x = Enum.valueOf(c,other);
 			this.known = x;
 		}
 		catch (IllegalArgumentException e)
