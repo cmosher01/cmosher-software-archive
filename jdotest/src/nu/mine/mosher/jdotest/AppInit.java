@@ -38,6 +38,10 @@ public class AppInit implements ServletContextListener
 		}
     }
 
+	public Properties getJDOProperties()
+	{
+		return props;
+	}
     public void contextDestroyed(ServletContextEvent sce)
     {
     }
