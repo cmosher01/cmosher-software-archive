@@ -57,7 +57,42 @@ public class DiskTSMapTest extends TestCase
     {
         Disk disk = readDiskResource(f);
         List rPosActual = new ArrayList();
-        disk.findDos33CatalogSector(rPosActual);
+        disk.findDos33TSMa    /**
+         * @param f
+         * @param rPosExpected
+         * @throws IOException
+         */
+        public void assertManyPos(String f, List rPosExpected) throws IOException
+        {
+            Disk disk = readDiskResource(f);
+            List rPosActual = new ArrayList();
+            disk.findDos33CatalogSector(rPosActual);
+
+            assertEquals(rPosExpected.size(),rPosActual.size());
+
+            for (int i = 0; i < rPosExpected.size(); i++)
+            {
+                DiskPos posExpected = (DiskPos)rPosExpected.get(i);
+                DiskPos posActual = (DiskPos)rPosActual.get(i);
+                assertEquals(posExpected,posActual);
+            }
+        }
+
+        /**
+         * @param f
+         * @return
+         * @throws IOException
+         */
+        private Disk readDiskResource(String f) throws IOException
+        {
+            InputStream disk = this.getClass().getClassLoader().getResourceAsStream(f);
+            byte[] rbDisk = new byte[disk.available()];
+            disk.read(rbDisk);
+            disk.close();
+            return new Disk(rbDisk);
+        }
+    }
+(rPosActual);
 
         assertEquals(rPosExpected.size(),rPosActual.size());
 
