@@ -15,6 +15,7 @@ import junit.framework.TestCase;
 public class RollingChecksumTest extends TestCase
 {
     private static final int TEST_BUFFER_SIZE = 50000;
+    private static final int WINDOW_SIZE = 3;
 
     public void testRollingChecksum()
     {
@@ -22,18 +23,17 @@ public class RollingChecksumTest extends TestCase
         Random random = new Random();
         random.nextBytes(rb);
 
-        int n = 3;
-        byte[] rs = new byte[n];
+        byte[] rs = new byte[WINDOW_SIZE];
 
-        System.arraycopy(rb, 0, rs, 0, n);
+        System.arraycopy(rb, 0, rs, 0, WINDOW_SIZE);
         RollingChecksum rollCheck = new RollingChecksum(rs);
 
-        for (int k = 0; k < rb.length-n; ++k)
+        for (int k = 0; k < rb.length-WINDOW_SIZE; ++k)
         {
-            rollCheck.increment(rb[k], rb[k+n]);
+            rollCheck.increment(rb[k], rb[k+WINDOW_SIZE]);
             int check = rollCheck.getChecksum();
 
-            System.arraycopy(rb, k+1, rs, 0, n);
+            System.arraycopy(rb, k+1, rs, 0, WINDOW_SIZE);
             RollingChecksum rollCheck2 = new RollingChecksum(rs);
             int check2 = rollCheck2.getChecksum();
 
