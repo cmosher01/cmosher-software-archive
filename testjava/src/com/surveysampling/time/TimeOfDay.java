@@ -99,21 +99,21 @@ public class TimeOfDay implements Comparable
     }
 
     /**
-     * Returns a new Date object set to this object's
-     * time on the given Date's date.
+     * Returns a millisecond timestamp representing
+     * this object's time on the given Date's date.
      * This method uses its Calendar to compute the time
      * (from this object) and the date (from the given Date),
      * and returns a new Date object.
      * @param d the Date on which to get our time
      */
-    public Date getTimeOnDay(Date d)
+    public long getTimeOnDay(Date d)
     {
         calendar.setTimeInMillis(d.getTime());
         calendar.set(Calendar.HOUR_OF_DAY, hours);
         calendar.set(Calendar.MINUTE, minutes);
         calendar.set(Calendar.SECOND, seconds);
         calendar.set(Calendar.MILLISECOND, milliseconds);
-        return new Date(calendar.getTimeInMillis());
+        return calendar.getTimeInMillis();
     }
 
 
