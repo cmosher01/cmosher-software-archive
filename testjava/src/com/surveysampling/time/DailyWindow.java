@@ -3,12 +3,6 @@
  */
 package com.surveysampling.time;
 
-import java.text.ParseException;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 /**
  * Represents a period of time each day, for example
  * "9:00 AM to 5:00 PM." The period does not reflect
