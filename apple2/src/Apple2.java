@@ -31,9 +31,9 @@ public class Apple2
      */
     public static void main(String[] args) throws VTOCNotFoundException, MultipleVTOCException, InvalidPosException, IOException
     {
-        mainAll(args);
+//        mainAll(args);
 //        doOneDisk(readDisk(new File("test/SARG2.DSK")));
-//        doOneDisk(readDisk(new File("test/DOS33_SystemMaster_19800825.dsk")));
+        doOneDisk(readDisk(new File("test/DOS33_SystemMaster_19800825.dsk")));
 //        doOneDisk(readDisk(new File("test/montezuma.dsk")));
     }
 
