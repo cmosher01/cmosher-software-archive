@@ -19,11 +19,9 @@ import javax.jdo.PersistenceManagerFactory;
  */
 public class Perm
 {
-	private PersistenceManagerFactory pmf;
-
-	public Perm()
+	private static final Properties props = new Properties();
+	static
 	{
-		Properties props = new Properties();
 		props.setProperty("javax.jdo.PersistenceManagerFactoryClass","org.jpox.PersistenceManagerFactoryImpl");
 		props.setProperty("javax.jdo.option.ConnectionDriverName","org.jpox.driver.JPOXDriver");
 		props.setProperty("javax.jdo.option.ConnectionURL","jpox:comp/env/jdbc/TestDB");
@@ -32,7 +30,14 @@ public class Perm
 		props.setProperty("org.jpox.autoCreateTables","true");
 		props.setProperty("org.jpox.validateTables","false");
 		props.setProperty("org.jpox.validateConstraints","false");
+	}
 
+	private PersistenceManagerFactory pmf;
+
+	public Perm()
+	{
 		this.pmf = JDOHelper.getPersistenceManagerFactory(props);
 	}
+
+	
 }
