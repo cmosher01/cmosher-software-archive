@@ -33,7 +33,7 @@ public class TimeOfDay implements Comparable
      * @param milliseconds
      * @throws IllegalArgumentException
      */
-    public TimeOfDay(Calendar cal, int hours, int minutes, int seconds, int milliseconds) throws IllegalArgumentException
+    public TimeOfDay(Calendar calendar, int hours, int minutes, int seconds, int milliseconds) throws IllegalArgumentException
     {
         /*
          * To help ensure immutability, we need to make our own
@@ -44,24 +44,26 @@ public class TimeOfDay implements Comparable
          * a subclass that would hold on to a reference and
          * allow him to mute a TimeOfDay instance.
          */
-        this.calendar = (Calendar)cal.clone();
+        Calendar cal = (Calendar)calendar.clone();
 
-        if (hours < calendar.getMinimum(Calendar.HOUR_OF_DAY) || calendar.getMaximum(Calendar.HOUR_OF_DAY) < hours)
+        if (hours < cal.getMinimum(Calendar.HOUR_OF_DAY) || cal.getMaximum(Calendar.HOUR_OF_DAY) < hours)
         {
             throw new IllegalArgumentException("Invalid hour: "+hours);
         }
-        if (minutes < calendar.getMinimum(Calendar.MINUTE) || calendar.getMaximum(Calendar.MINUTE) < minutes)
+        if (minutes < cal.getMinimum(Calendar.MINUTE) || cal.getMaximum(Calendar.MINUTE) < minutes)
         {
             throw new IllegalArgumentException("Invalid minute: "+minutes);
         }
-        if (seconds < calendar.getMinimum(Calendar.SECOND) || calendar.getMaximum(Calendar.SECOND) < seconds)
+        if (seconds < cal.getMinimum(Calendar.SECOND) || cal.getMaximum(Calendar.SECOND) < seconds)
         {
             throw new IllegalArgumentException("Invalid second: "+seconds);
         }
-        if (milliseconds < calendar.getMinimum(Calendar.MILLISECOND) || calendar.getMaximum(Calendar.MILLISECOND) < milliseconds)
+        if (milliseconds < cal.getMinimum(Calendar.MILLISECOND) || cal.getMaximum(Calendar.MILLISECOND) < milliseconds)
         {
             throw new IllegalArgumentException("Invalid millisecond: "+milliseconds);
         }
+
+        this.calendar = cal;
         this.hours = hours;
         this.minutes = minutes;
         this.seconds = seconds;
@@ -120,7 +122,7 @@ public class TimeOfDay implements Comparable
 
     public boolean isValid()
     {
-        return valid;
+        return calendar != null;
     }
 
     /**
