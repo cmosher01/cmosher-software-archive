@@ -28,6 +28,11 @@ public class Gedcom
 			return "UTF-16LE";
 		}
 
+		if (w0==0xfffe)
+		{
+			return "UTF-16BE";
+		}
+
 		SortedMap mc = Charset.availableCharsets();
 		for (Iterator i = mc.entrySet().iterator(); i.hasNext();)
         {
