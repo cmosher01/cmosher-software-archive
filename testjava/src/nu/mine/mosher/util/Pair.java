@@ -87,10 +87,10 @@ public class Pair implements Cloneable, Comparable
         int h = 17;
 
         h *= 37;
-        h += a.hashCode();
+        h += a==null ? 0 : a.hashCode();
 
         h *= 37;
-        h += b.hashCode();
+        h += b==null ? 0 : b.hashCode();
 
         return h;
     }
