@@ -16,4 +16,16 @@ public final class Util
 		Object x = o;
 		o = x;
 	}
+
+	public static void unused(long i)
+	{
+		long x = i;
+		i = x;
+	}
+
+	public static void unused(double i)
+	{
+		long x = i;
+		i = x;
+	}
 }
