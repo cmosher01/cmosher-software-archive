@@ -13,12 +13,20 @@ import nu.mine.mosher.swingapp.InvalidCommandLine;
  */
 public class FieldsCommandLine extends CommandLineArgHandler
 {
+    /**
+     * Initializes this <code>FieldsCommandLine</code> to parse
+     * the given arguments (usually the arguments specified on
+     * the command line that executed this program).
+     * @param rArg
+     */
     public FieldsCommandLine(String[] rArg)
     {
         super(rArg);
     }
 
     /**
+     * Parses the command line. In this case, we do not allow
+     * any arguments on the command line.
      * @throws InvalidCommandLine
      */
     public void parse() throws InvalidCommandLine
