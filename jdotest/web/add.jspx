@@ -16,7 +16,6 @@
 		<title>Add</title>
 	</head>
 	<body>
-		<p>
 		<form method="post" action="addact.jsp">
 		    <p>Enter item to add: <input name="item" type="text" /></p>
 		    <p><input type="submit" value="save" /></p>
@@ -24,6 +23,5 @@
 		<form method="post" action="cancel.jsp">
 		    <p><input type="submit" value="cancel" /></p>
 		</form>
-		</p>
 	</body>
 </html>
