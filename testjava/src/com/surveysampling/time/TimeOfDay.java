@@ -22,4 +22,19 @@ public class TimeOfDay
         this.seconds = seconds;
         this.milliseconds = milliseconds;
     }
+
+    public TimeOfDay(int hours, int minutes, int seconds)
+    {
+        this(hours,minutes,seconds,0);
+    }
+
+    public TimeOfDay(int hours, int minutes)
+    {
+        this(hours,minutes,0,0);
+    }
+
+    public TimeOfDay(int hours)
+    {
+        this(hours,0,0,0);
+    }
 }
