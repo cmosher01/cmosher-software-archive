@@ -77,15 +77,15 @@ public class Test
 
 
 
-        Bad x = null;
-        try
-        {
-            x = new Bad();
-        }
-        catch (Exception e)
-        {
-            System.out.println(x);
-        }
+//        Bad x = null;
+//        try
+//        {
+//            x = new Bad();
+//        }
+//        catch (Exception e)
+//        {
+//            System.out.println(x);
+//        }
 
 
 
