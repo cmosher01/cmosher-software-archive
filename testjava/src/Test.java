@@ -57,7 +57,7 @@ public class Test
 	{
 
         SimpleDateFormat f = new SimpleDateFormat("HH:mm:ss.SSS");
-        long x = 86400000L*30;
+        long x = 86400000L*300;
         System.out.print(x/86400000L+" ");
         System.out.println(f.format(new Date(x%86400000L-68400000L)));
 
