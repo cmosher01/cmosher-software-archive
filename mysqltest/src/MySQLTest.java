@@ -9,14 +9,19 @@ import nu.mine.mosher.logging.LoggingInitializer;
 
 public class MySQLTest
 {
-	private static final MySQLTest app = new MySQLTest();
+	private static final MySQLTest app;
 
 	private Logger log = Logger.global;
 	private Connection db;
 
+	static
+	{
+		LoggingInitializer.init();
+		app = new MySQLTest();
+	}
+
     public static void main(String[] rArg) throws Throwable
     {
-		LoggingInitializer.init();
     	app.run(rArg);
     }
 
