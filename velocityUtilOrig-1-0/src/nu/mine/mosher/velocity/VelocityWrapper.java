@@ -3,16 +3,12 @@
  */
 package nu.mine.mosher.velocity;
 
-import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.Properties;
 
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.context.Context;
-import org.apache.velocity.exception.MethodInvocationException;
-import org.apache.velocity.exception.ParseErrorException;
-import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.exception.VelocityException;
 
 /**
