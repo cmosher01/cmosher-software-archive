@@ -62,10 +62,12 @@ public class VelocityWrapper
 
     public void mergeTemplate(String templateName, Context context, Writer writer) throws VelocityException
     {
-        boolean ok = false;
         try
         {
-            ok = velocity.mergeTemplate(templateName,context,writer);
+            if (!velocity.mergeTemplate(templateName,context,writer)
+            {
+                throw new VelocityException("error calling VelocityEngine.mergeTemplate");
+            }
         }
         catch (VelocityException e)
         {
@@ -74,10 +76,6 @@ public class VelocityWrapper
         catch (Throwable e)
         {
             throw wrapInVelocityException(e);
-        }
-        if (!ok)
-        {
-            throw new VelocityException("error calling VelocityEngine.mergeTemplate");
         }
     }
 
