@@ -133,11 +133,10 @@ public class MySQLTest
 		int f0to150 = readInt(i.next());
 
 		int idImage = insertImage(1790, state, county, township, district, image);
-
-        PreparedStatement st;
         int hh = insertHousehold(nameLast, nameFirst, nameMiddle, nameSuffix, idImage);
 
 //		dbUpdate("drop table CountEntry");
+		PreparedStatement st = null;
 		try
 		{
 			st = db.prepareStatement(
@@ -219,33 +218,10 @@ public class MySQLTest
 		int f45to150 = readInt(i.next());
 
         int idImage = insertImage(1800, state, county, township, district, image);
+		int hh = insertHousehold(nameLast, nameFirst, nameMiddle, nameSuffix, idImage);
+
 
 		PreparedStatement st = null;
-		int hh = 0;
-		try
-		{
-			st = db.prepareStatement(
-			"insert into Household (image,family,nameLast,nameFirst,nameMiddle,nameSuffix) values (?,?,?,?,?,?)");
-			st.setInt(1,idImage);
-			st.setInt(2,family);
-			st.setString(3,nameLast);
-			st.setString(4,nameFirst);
-			st.setString(5,nameMiddle);
-			st.setString(6,nameSuffix);
-			st.execute();
-			ResultSet rs = st.getGeneratedKeys();
-			while (rs.next())
-			{
-				hh = rs.getInt(1);
-			}
-		}
-		finally
-		{
-			closeStatement(st);
-			st = null;
-		}
-
-//		dbUpdate("drop table CountEntry");
 		try
 		{
 			st = db.prepareStatement(
