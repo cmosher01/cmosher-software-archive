@@ -35,6 +35,7 @@ public class Gedcom
 				hasStrange = false;
 			}
 
+			curline.add(new Integer(c));
 			if (c >= 0x80)
 				hasStrange = true;
 
@@ -42,7 +43,18 @@ public class Gedcom
 		}
 	}
 
-	public static String guessCharset(InputStream in) throws IOException
+	/**
+     * @param curline
+     */
+    private static void dumpLine(List curline)
+    {
+    	for (Iterator i = curline.iterator(); i.hasNext();)
+        {
+            Integer c = (Integer)i.next();
+        }
+    }
+
+    public static String guessCharset(InputStream in) throws IOException
 	{
 		// read first four bytes of input stream
 		int b0 = in.read();
