@@ -60,4 +60,12 @@ public class VolumeFile
         ts.dump(s);
         s.append("]\n");
     }
+
+    /**
+     * @return
+     */
+    public Dos33CatalogEntry getCatalogEntry()
+    {
+        return catEntry;
+    }
 }
