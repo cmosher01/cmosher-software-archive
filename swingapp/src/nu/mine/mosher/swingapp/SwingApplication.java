@@ -28,13 +28,12 @@ public class SwingApplication
         this.mCommandLineArgHandler = ch;
         this.mGUI = gui;
 
-        if (
-            this.mExceptionHandler == null ||
-            this.mCommandLineArgHandler == null ||
-            this.mGUI == null)
-        {
-            throw new IllegalStateException("Arguments cannot be null.");
-        }
+        assert this.mExceptionHandler != null :
+            "Argument eh to SwingApplication constructor cannot be null";
+        assert this.mCommandLineArgHandler != null :
+            "Argument ch to SwingApplication constructor cannot be null";
+        assert this.mGUI != null :
+            "Argument gui to SwingApplication constructor cannot be null";
     }
 
     /**
