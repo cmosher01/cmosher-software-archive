@@ -5,7 +5,7 @@ public class StringFieldizerOld implements Iterable<String>
 {
 	private final String s;
 
-	public StringFieldizer(String s)
+	public StringFieldizerOld(String s)
 	{
 		this.s = s;
 	}
