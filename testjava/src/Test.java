@@ -3,6 +3,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.URI;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ListIterator;
@@ -55,22 +56,33 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
+        Date d = sdf.parse("2004/04/04 02:30:00.000");
+
+        DateFormat fmt = DateFormat.getTimeInstance();
+        System.out.println(fmt.format(date));
 
 
 
-        SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
-        long ms = fmt.parse("2004/04/04 00:00:00.000").getTime();
-        for (int i = 0; i < 4*24; ++i)
-        {
-            System.out.println(fmt.format(new Date(ms)));
-            ms += 15*60*1000;
-        }
-        ms = fmt.parse("2004/10/31 00:59:00.000").getTime();
-        for (int i = 0; i < 4*24; ++i)
-        {
-            System.out.println(fmt.format(new Date(ms)));
-            ms += 15*60*1000;
-        }
+
+
+
+
+
+
+//        SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
+//        long ms = fmt.parse("2004/04/04 00:00:00.000").getTime();
+//        for (int i = 0; i < 4*24; ++i)
+//        {
+//            System.out.println(fmt.format(new Date(ms)));
+//            ms += 15*60*1000;
+//        }
+//        ms = fmt.parse("2004/10/31 00:59:00.000").getTime();
+//        for (int i = 0; i < 4*24; ++i)
+//        {
+//            System.out.println(fmt.format(new Date(ms)));
+//            ms += 15*60*1000;
+//        }
 
 
 
