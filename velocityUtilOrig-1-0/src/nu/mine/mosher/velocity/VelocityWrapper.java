@@ -77,6 +77,11 @@ public class VelocityWrapper
         }
     }
 
+    public boolean templateExists(String templateName)
+    {
+        return velocity.templateExists(templateName);
+    }
+
     public static VelocityException wrapInVelocityException(Throwable e)
     {
         VelocityException ve = new VelocityException(e.getMessage());
