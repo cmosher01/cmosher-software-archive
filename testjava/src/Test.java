@@ -40,10 +40,17 @@ public class Test
     private static class Mute implements Cloneable
     {
         public int x = 0;
-        UndoableReference u = new UndoableReference(this);
+        UndoableReference u;
         public Mute(int a)
         {
             x = a;
+            try
+            {
+                u = new UndoableReference(this);
+            }
+            catch (CloneNotSupportedException cantHappen)
+            {
+            }
         }
         public Object clone()
         {
