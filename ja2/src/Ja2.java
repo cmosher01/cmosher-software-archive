@@ -1,3 +1,7 @@
+import nu.mine.mosher.ja2.Application;
+import nu.mine.mosher.ja2.CommandLineArgHandler;
+import nu.mine.mosher.ja2.ExceptionHandler;
+import nu.mine.mosher.ja2.GUI;
 import nu.mine.mosher.ja2.Starter;
 
 /*
@@ -21,6 +25,12 @@ public final class Ja2
 
     public static void main(String[] args) throws Throwable
     {
-        Starter.start(args);
+        ExceptionHandler eh = new ExceptionHandler();
+        CommandLineArgHandler ch = new CommandLineArgHandler(rargs);
+        GUI gui = new GUI();
+
+        Application app = new Application(eh,ch,gui);
+
+        app.run();
     }
 }
