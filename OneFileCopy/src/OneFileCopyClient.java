@@ -16,11 +16,22 @@ public class OneFileCopyClient
 		String sFileName = "test.dat";
 		BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File(sFileName)));
 
-		byte[] rb = new byte[1024];
-		int cb = in.read(rb);
-		while (cb > 0)
+		try
 		{
-			out.write(rb,0,cb);
+			Thread.sleep(500);
+		}
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+		byte[] rb = new byte[1024];
+		while (in.available() != 0)
+		{
+			int cb = in.read(rb);
+			if (cb > 0)
+			{
+				out.write(rb,0,cb);
+			}
 		}
 
 		out.flush();
