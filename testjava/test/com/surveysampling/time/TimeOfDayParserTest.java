@@ -65,6 +65,7 @@ public class TimeOfDayParserTest extends TestCase
         shouldThrow("01:0");
         shouldThrow("0::0");
         shouldThrow(" ");
+        shouldThrow("  :  :  .   ");
     }
 
     private void shouldThrow(String s)
