@@ -45,8 +45,6 @@ public class MainFrame extends JFrame
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         MainFrame frame = new MainFrame();
         frame.init();
-
-        frame.doOneDisk(Apple2.readDisk(new File("test/DOS33_SystemMaster_19800825.dsk")));
     }
 
     /**
@@ -105,6 +103,8 @@ public class MainFrame extends JFrame
         this.setLocation(10, 10);
         this.setMaximizedBounds(env.getMaximumWindowBounds());
         this.setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
+
+        doOneDisk(Apple2.readDisk(new File("test/DOS33_SystemMaster_19800825.dsk")));
 
         tree = new JTree(top);
         tree.setRootVisible(false);
