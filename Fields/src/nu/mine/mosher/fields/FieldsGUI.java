@@ -114,7 +114,7 @@ public class GUI
 
         JPanel panel = new JPanel(new BorderLayout(),true);
         panel.setOpaque(true);
-        //panel.setPreferredSize(new Dimension(640,480));
+        panel.setPreferredSize(new Dimension(640,480));
         panel.addNotify();
         panel.add(scrollpane,BorderLayout.CENTER);
 
