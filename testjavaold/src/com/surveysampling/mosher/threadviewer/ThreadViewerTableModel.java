@@ -56,7 +56,7 @@ public class ThreadViewerTableModel extends AbstractTableModel
                 {
                     runWork();
                 }
-                catch (Exception x)
+                catch (Throwable x)
                 {
                     // in case ANY exception slips through
                     x.printStackTrace();
