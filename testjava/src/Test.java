@@ -60,7 +60,7 @@ public class Test
         Date d = sdf.parse("2004/04/04 02:30:00.000");
 
         DateFormat fmt = DateFormat.getTimeInstance();
-        System.out.println(fmt.format(date));
+        System.out.println(fmt.format(d));
 
 
 
