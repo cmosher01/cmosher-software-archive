@@ -170,8 +170,10 @@ public class VolumeDOS extends VolumeEntity
      */
     public boolean hasDaviddos2Signature()
     {
-        return hasDaviddosSignature() && 
-        (rb[0x2701] == 0xFFFFFFC4 && rb[0x2702] == 0xFFFFFFC1 && rb[0x2703] == 0xFFFFFFD6 && rb[0x270B] == 0xFFFFFFC9 && rb[0x270C] == 0xFFFFFFC9);
+//        return hasDaviddosSignature() && 
+//        (rb[0x2701] == 0xFFFFFFC4 && rb[0x2702] == 0xFFFFFFC1 && rb[0x2703] == 0xFFFFFFD6 && rb[0x270B] == 0xFFFFFFC9 && rb[0x270C] == 0xFFFFFFC9);
+        // TODO fix daviddos2
+        return false;
     }
     /**
      * @return
