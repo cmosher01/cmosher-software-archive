@@ -130,11 +130,12 @@ public class Disk
         rewind();
         while (!EOF())
         {
+            DiskPos cur = this.pos;
             byte[] sector = read(DiskPos.cSector);
             if (match(sector,3,new byte[]{3,0,0}) &&
                     match (sector,0x34,new byte[]{0x23,0x10,0,1}))
             {
-                System.out.println("VTOC @ T$"+Integer.toHexString(this.pos.getTrackInDisk())+", S$"+Integer.toHexString(this.pos.getSectorInTrack()));
+                System.out.println("VTOC @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
             }
         }
     }
