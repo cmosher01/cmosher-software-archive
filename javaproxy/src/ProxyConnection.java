@@ -426,7 +426,6 @@ public class ProxyConnection extends Thread
             if (content_len > 0)
             {
                 resp_content = new byte[content_len];
-                int last_byte = 0;
 
                 while (content_len > total_len)
                 {
