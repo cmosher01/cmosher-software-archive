@@ -14,7 +14,11 @@
 		Map.Entry entry = (Map.Entry)i.next();
 		String paramName = (String)entry.getKey();
 		String[] rParamValues = (String[])entry.getValue();
-		%><%=paramName%><%
+		for (int j = 0; j < rParamValues.length; ++j)
+		{
+			String paramValue = rParamValues[j];
+			%><tr><td><%=paramName%></td><td><%=paramValue%></td></tr><%
+		}
 	}
 %>
 </table>
