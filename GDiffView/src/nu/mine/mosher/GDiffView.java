@@ -409,7 +409,7 @@ public class GDiffView extends JFrame
                     hex.appendByte(gd.getData()[i]);
                 }
                 long t1 = t-1;
-x                new Range(t0,t1);
+                g.setTargetRange(new Range(t0,t1));
             }
             else
             {
@@ -417,10 +417,14 @@ x                new Range(t0,t1);
                 in.seek(gc.getRange().getBegin());
                 byte[] rb = new byte[(int)gc.getRange().getLength()];
                 in.readFully(rb);
+                long t0 = t;
                 for (int i = 0; i < rb.length; i++)
                 {
+                    ++t;
                     hex.appendByte(rb[i]);
                 }
+                long t1 = t-1;
+                g.setTargetRange(new Range(t0,t1));
             }
             g = getGDiff(gdiff);
         }
