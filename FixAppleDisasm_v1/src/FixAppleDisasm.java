@@ -321,8 +321,7 @@ public class FixAppleDisasm
 			}
 		}
 
-		System.err.println("********************************************************");
-
+		Map externs = new TreeMap();
 		for (Iterator i = lines.entrySet().iterator(); i.hasNext();)
 		{
 			Map.Entry ent = (Map.Entry)i.next();
@@ -342,10 +341,24 @@ public class FixAppleDisasm
 				}
 				else
 				{
-					System.err.println(hexWord(ln.refaddr));
+					Integer ref = new Integer(ln.refaddr);
+					if (!externs.containsKey(ref))
+					{
+						externs.put(ref,null);
+					}
 				}
 			}
 		}
+
+		printout.println("; external addresses referenced:");
+		printout.println(";**********************************************************");
+		for (Iterator i = externs.keySet().iterator(); i.hasNext();)
+        {
+            Integer ext = (Integer)i.next();
+            printout.print(" ; EQU $");
+			printout.print(hexWord(ext.intValue()));
+            printout.println();
+        }
 
 		for (Iterator i = lines.entrySet().iterator(); i.hasNext();)
         {
