@@ -553,7 +553,7 @@ public class GDiffView extends JFrame
     /**
      * @param gdiff
      * @return
-     * @throws IO
+     * @throws IOException
      */
     private static GDiffCmd getGDiff(BufferedInputStream gdiff) throws IOException
     {
