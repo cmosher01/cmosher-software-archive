@@ -262,6 +262,8 @@ public class FixAppleDisasm
 			}
 		}
 
+		System.err.println("********************************************************");
+
 		for (Iterator i = lines.entrySet().iterator(); i.hasNext();)
 		{
 			Map.Entry ent = (Map.Entry)i.next();
