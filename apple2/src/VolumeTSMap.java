@@ -79,4 +79,12 @@ public class VolumeTSMap extends VolumeEntity
             r.add(pos.clone());
         }
     }
+
+    /**
+     * @param start
+     */
+    public void degenerateSeedling(DiskPos start)
+    {
+        rSector.add(new VolumeSector(start,0));
+    }
 }
