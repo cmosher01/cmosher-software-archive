@@ -14,7 +14,6 @@ import com.surveysampling.mosher.Flag;
 
 public class TreeFrame extends JPanel
 {
-    private static String dir;
     private static Flag begun = new Flag();
 
     public TreeFrame(String dir)
@@ -48,7 +47,7 @@ public class TreeFrame extends JPanel
      * this method should be invoked from the
      * event-dispatching thread.
      */
-    protected static void createAndShowGUI() throws InterruptedException
+    protected static void createAndShowGUI(String dir) throws InterruptedException
     {
         //Make sure we have nice window decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
@@ -83,7 +82,7 @@ public class TreeFrame extends JPanel
             {
                 try
                 {
-                    createAndShowGUI();
+                    createAndShowGUI(dir);
                 }
                 catch (Throwable th)
                 {
