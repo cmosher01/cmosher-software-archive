@@ -94,6 +94,7 @@ public class MainFrame extends JFrame
         nDisk.add(nDos);
         nDisk.add(nCat);
         nDisk.add(nFiles);
+
         top.add(nDisk);
     }
 
