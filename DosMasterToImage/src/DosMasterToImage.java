@@ -29,7 +29,7 @@ public class DosMasterToImage
         BufferedInputStream in = new BufferedInputStream(new FileInputStream(new File(args[0])));
         BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File(args[1])));
 
-        if (in.available() != 0xC000-0x9B00)
+        if (in.available() != 0x4000-0x1B00)
         {
             throw new IllegalArgumentException("Input file length must be "+(0xC000-0x9B00)+" bytes.");
         }
