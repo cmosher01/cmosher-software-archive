@@ -306,10 +306,10 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
 
         enableEvents(AWTEvent.WINDOW_EVENT_MASK);
 
+        setExtendedState(Frame.ICONIFIED);
 
         tbcpt = new ToolBarCaption(this," ");
-
-    } // end of Jproxy
+    }
 
 
     private boolean initialization() throws IOException
