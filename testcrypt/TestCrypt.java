@@ -16,7 +16,6 @@ public class TestCrypt
         Security.setProperty("securerandom.source","");
         SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
         random.setSeed(random.generateSeed(20));
-        System.out.println(random.nextInt());
 
         KeyPairGenerator keyGen = KeyPairGenerator.getInstance("DSA");
         keyGen.initialize(1024,random);
