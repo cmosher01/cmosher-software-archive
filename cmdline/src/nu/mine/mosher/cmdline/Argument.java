@@ -75,4 +75,20 @@ public class Argument
             this.mIsSpecified==that.mIsSpecified &&
             this.mDesc.equals(that.mDesc);
     }
+
+    public int hashCode()
+    {
+        int hash = 17;
+        hash *= 37;
+        hash += mName.hashCode();
+        hash *= 37;
+        hash += mAbbrev.hashCode();
+        hash *= 37;
+        hash += mValue.hashCode();
+        hash *= 37;
+        hash += (mIsSpecified ? 0 : 1);
+        hash *= 37;
+        hash += mDesc.hashCode();
+        return hash;
+    }
 }
