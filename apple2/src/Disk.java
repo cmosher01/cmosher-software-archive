@@ -667,7 +667,6 @@ public class Disk
             DiskPos pos = (DiskPos)i.next();
             if (isDos33TSMapSector(pos))
             {
-                System.out.println(pos.toStringTS());
                 rPosTSMaps.add(pos);
             }
         }
