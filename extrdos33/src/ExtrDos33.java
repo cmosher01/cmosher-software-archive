@@ -109,6 +109,10 @@ public class ExtrDos33
 		{
 			return (rb[0x1602] == 0x54 && rb[0x1603] == 0x59 && rb[0x1604] == 0x50 && rb[0x1605] == 0xFFFFFFC5);
 		}
+		public boolean hasDaviddosSignature()
+		{
+			return (rb[0x1924] == 0x44 && rb[0x1925] == 0x2D && rb[0x1926] == 0x44 && rb[0x1927] == 0x4F && rb[0x1928] == 0x53);
+		}
         public boolean equals(Object obj)
         {
         	if (!(obj instanceof DosImage))
