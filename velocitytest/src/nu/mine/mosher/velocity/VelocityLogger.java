@@ -50,9 +50,9 @@ public class VelocityLogger implements LogSystem
      * @param Velocity log level
      * @return Java log level
      */
-    public static Level translateVelocityLogLevel(int level)
+    public static Level translateVelocityLogLevel(int loglevelVelocity)
     {
-        switch (level)
+        switch (loglevelVelocity)
         {
             case DEBUG_ID:
                 return Level.FINEST;
