@@ -34,7 +34,7 @@ public class TestBeans
         throws IntrospectionException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
     {
         PropertyDescriptor pd = getPropertyDescriptor(bean.getClass(), property);
-        Object v = convertValue(value, pd.getPropertyType());
+        Object v = convertScalarSafe(value, pd.getPropertyType());
         setProperty(bean, pd, v);
     }
 
@@ -42,11 +42,11 @@ public class TestBeans
         throws IntrospectionException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
     {
         PropertyDescriptor pd = getPropertyDescriptor(bean.getClass(), property);
-        Object v = getConvertedValue(value, pd.getPropertyType());
+        Object v = convertArraySafe(value, pd.getPropertyType());
         setProperty(bean, pd, v);
     }
 
-    public static Object convertValue(String value, Class classProp)
+    public static Object convertScalarSafe(String value, Class classProp)
         throws NegativeArraySizeException, IllegalArgumentException, IntrospectionException
     {
         if (classProp.isArray())
@@ -56,7 +56,7 @@ public class TestBeans
         return convertScalar(value,classProp);
     }
 
-    public static Object getConvertedValue(String[] value, Class classProp)
+    public static Object convertArraySafe(String[] value, Class classProp)
         throws NegativeArraySizeException, IllegalArgumentException, IntrospectionException
     {
         if (!classProp.isArray())
