@@ -26,7 +26,7 @@ public class VolumeFileData extends VolumeEntity
         for (Iterator i = rPosFile.iterator(); i.hasNext();)
         {
             DiskPos pos = (DiskPos)i.next();
-            this.rSector.add(new VolumeSector(pos,x++));
+            this.rSector.add(new VolumeSector(pos,x++,this));
         }
     }
 }
