@@ -263,6 +263,24 @@ public class FixAppleDisasm
 		}
 
 		for (Iterator i = lines.entrySet().iterator(); i.hasNext();)
+		{
+			Map.Entry ent = (Map.Entry)i.next();
+			Line ln = (Line)ent.getValue();
+
+			if (ln.refaddr >= 0)
+			{
+				Integer refint = new Integer(ln.refaddr);
+				if (addrs.containsKey(refint))
+				{
+				}
+				else
+				{
+					System.err.println(ln.addr);
+				}
+			}
+		}
+
+		for (Iterator i = lines.entrySet().iterator(); i.hasNext();)
         {
             Map.Entry ent = (Map.Entry)i.next();
             Line ln = (Line)ent.getValue();
