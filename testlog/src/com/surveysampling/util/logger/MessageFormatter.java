@@ -15,7 +15,12 @@ public final class MessageFormatter extends Formatter
 {
     private static MessageFormatter formatter = new MessageFormatter();
 
-    private MessageFormatter()
+    private MessageFormatter() throws UnsupportedOperationException
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    public String format(LogRecord record) throws UnsupportedOperationException
     {
         throw new UnsupportedOperationException();
     }
@@ -23,10 +28,5 @@ public final class MessageFormatter extends Formatter
     public static String formatLogMessage(LogRecord record)
     {
         return formatter.formatMessage(record);
-    }
-
-    public String format(LogRecord record)
-    {
-        return "";
     }
 }
