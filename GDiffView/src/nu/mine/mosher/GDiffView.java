@@ -1086,7 +1086,7 @@ public class GDiffView extends JFrame
     private long extendMatch(ByteBuffer data, long match, long from)
     {
         long here = from;
-        while (here < data.limit() && data.get((int)match) == data.get((int)here) && data.get((int)match) != 0)
+        while (here < data.limit() && data.get((int)match) == data.get((int)here))
         {
             ++match;
             ++here;
