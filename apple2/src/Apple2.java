@@ -34,6 +34,6 @@ public class Apple2
         TSMap tsmap = new TSMap();
         disk.findDos33CatalogSector(tsmap);
         System.out.println(tsmap);
-        disk.findDos33TSMapSector();
+        disk.findDos33TSMapSector(tsmap);
     }
 }
