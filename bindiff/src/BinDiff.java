@@ -27,7 +27,7 @@ public class BinDiff
 		RandomAccessFile f1 = new RandomAccessFile(rArg[0],"r");
 		RandomAccessFile f2 = new RandomAccessFile(rArg[1],"r");
 
-		BinDiff d = new BinDiff(f1,f2,4,128);
+		BinDiff d = new BinDiff(f1,f2,4,512);
 		d.diff();
 
 		f2.close();
