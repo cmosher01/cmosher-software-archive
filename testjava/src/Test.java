@@ -49,10 +49,11 @@ public class Test
 
 
         X x = new X();
+        Method c = x.getClass().getMethod("close",null);
         long start = System.currentTimeMillis();
         for (int i = 0; i < 1000000; ++i)
         {
-            UniversalCloser.close(x);
+            c.invoke(x,null);
         }
         long end = System.currentTimeMillis();
         System.out.println("elapsed time: "+(end-start)+" ms");
