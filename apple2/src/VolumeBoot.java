@@ -184,6 +184,10 @@ public class VolumeBoot extends VolumeEntity
     private static byte[] patch(byte[] masterBoot, int offset)
     {
         byte[] p = new byte[masterBoot.length];
+        for (int i = 0; i < masterBoot.length; i++)
+        {
+            p[i] = masterBoot[i];
+        }
         p[0x60] += offset;
         p[0x68] += offset;
         p[0x6D] += offset;
