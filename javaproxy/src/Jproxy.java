@@ -172,8 +172,9 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
 
     /**
      * construnctor
+     * @throws IOException
      */
-    Jproxy(int width, int height)
+    Jproxy(int width, int height) throws IOException
     {
         super("Java HTTP Proxy Server");
 
@@ -307,7 +308,7 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
     } // end of Jproxy
 
 
-    private boolean initialization()
+    private boolean initialization() throws IOException
     {
         httpconfig = new Properties();
 
@@ -767,8 +768,9 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
 
     /**
      * main
+     * @throws IOException
      */
-    public static void main(String argv[])
+    public static void main(String argv[]) throws IOException
     {
         Jproxy sc = new Jproxy(450,300);
         sc.pack();
