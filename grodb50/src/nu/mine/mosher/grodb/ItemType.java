@@ -4,7 +4,7 @@ package nu.mine.mosher.grodb;
  * @author Chris Mosher
  * Created: Feb 7, 2004
  */
-public class ItemType<T>
+public class ItemType<T extends Enum<T>>
 {
 	private T known;
 	private String other;
@@ -17,7 +17,7 @@ public class ItemType<T>
 	{
 		try
 		{
-			this.known = <T>valueOf(other);
+			this.known = T.valueOf(other);
 		}
 		catch (IllegalArgumentException e)
 		{
