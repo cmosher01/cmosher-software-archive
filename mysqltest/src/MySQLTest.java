@@ -384,7 +384,7 @@ public class MySQLTest
 		}
 		else
 		{
-			i = 0;
+			i = -1;
 		}
     	return i;
     }
