@@ -240,19 +240,25 @@ public class GDiffView extends JFrame
         JPanel contentPane = new JPanel(layout);
         setContentPane(contentPane);
 
+        SpringLayout.Constraints cnsDif = new SpringLayout.Constraints();
+        cnsDif.setConstraint(SpringLayout.NORTH,layout.getConstraint(SpringLayout.NORTH,contentPane));
+        cnsDif.setConstraint(SpringLayout.SOUTH,layout.getConstraint(SpringLayout.SOUTH,contentPane));
+
         SpringLayout.Constraints cnsSrc = new SpringLayout.Constraints();
         cnsSrc.setConstraint(SpringLayout.NORTH,layout.getConstraint(SpringLayout.NORTH,contentPane));
         cnsSrc.setConstraint(SpringLayout.SOUTH,layout.getConstraint(SpringLayout.SOUTH,contentPane));
         cnsSrc.setConstraint(SpringLayout.WEST,layout.getConstraint(SpringLayout.WEST,contentPane));
+        cnsSrc.setConstraint(SpringLayout.EAST,cnsDif.getConstraint(SpringLayout.WEST));
 
         SpringLayout.Constraints cnsTrg = new SpringLayout.Constraints();
         cnsTrg.setConstraint(SpringLayout.NORTH,layout.getConstraint(SpringLayout.NORTH,contentPane));
         cnsTrg.setConstraint(SpringLayout.SOUTH,layout.getConstraint(SpringLayout.SOUTH,contentPane));
         cnsTrg.setConstraint(SpringLayout.EAST,layout.getConstraint(SpringLayout.EAST,contentPane));
+        cnsTrg.setConstraint(SpringLayout.WEST,cnsDif.getConstraint(SpringLayout.EAST));
 //        contentPane.add(spl2,BorderLayout.CENTER);
 
         contentPane.add(scrSrc,cnsSrc);
-        contentPane.add(scrGDiff);
+        contentPane.add(scrGDiff,cnsDif);
         contentPane.add(scrTrg,cnsTrg);
 
         addWindowListener(new WindowAdapter()
