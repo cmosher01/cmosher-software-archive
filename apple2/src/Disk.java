@@ -325,7 +325,8 @@ public class Disk
             }
 
             boolean lck = (sector[p+2] & 0x80) != 0;
-            int fil;
+
+            int fil = (sector[p+2] & 0x7F);
             byte[] name;
             int cSector;
             entries.add(new Dos33CatalogEntry(deleted,new DiskPos(trk,sector[p+1],0,false),lck,fil,cSector,name));
