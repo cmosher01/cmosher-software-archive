@@ -8,7 +8,7 @@ package nu.mine.mosher.cmdline;
  * 
  * @author Chris Mosher
  */
-public class OptionDefinition
+public class OptionDefinition implements Comparable
 {
     private final String optionLong;
     private final char optionShort;
@@ -51,5 +51,30 @@ public class OptionDefinition
     public char getOptionShort()
     {
         return optionShort;
+    }
+    public boolean equals(Object obj)
+    {
+        if (!(obj instanceof ArgumentDefinition))
+        {
+            return false;
+        }
+        ArgumentDefinition that = (ArgumentDefinition)obj;
+        return
+            this.optionLong.equals(that.optionLong) &&
+            this.optionShort == that.optionShort &&
+            this.hasValue == that.hasValue;
+    }
+    public int hashCode()
+    {
+        return this.name.hashCode();
+    }
+    public String toString()
+    {
+        return this.name;
+    }
+    public int compareTo(Object obj)
+    {
+        ArgumentDefinition that = (ArgumentDefinition)obj;
+        return this.name.compareTo(that.name);
     }
 }
