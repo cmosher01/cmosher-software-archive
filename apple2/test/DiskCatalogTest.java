@@ -283,6 +283,31 @@ public class DiskCatalogTest extends TestCase
         assertManyPos("DOSBOSS.dsk",r);
     }
 
+    /**
+     * @throws IOException
+     * @throws InvalidPosException
+     */
+    public void testBeagleTip1() throws IOException, InvalidPosException
+    {
+        List r = new ArrayList();
+        r.add(new DiskPos(0x11,0x1));
+        r.add(new DiskPos(0x11,0x2));
+        r.add(new DiskPos(0x11,0x3));
+        r.add(new DiskPos(0x11,0x4));
+        r.add(new DiskPos(0x11,0x5));
+        r.add(new DiskPos(0x11,0x6));
+        r.add(new DiskPos(0x11,0x7));
+        r.add(new DiskPos(0x11,0x8));
+        r.add(new DiskPos(0x11,0x9));
+        r.add(new DiskPos(0x11,0xA));
+        r.add(new DiskPos(0x11,0xB));
+        r.add(new DiskPos(0x11,0xC));
+        r.add(new DiskPos(0x11,0xD));
+        r.add(new DiskPos(0x11,0xE));
+        r.add(new DiskPos(0x11,0xF));
+        assertManyPos("TIP1.dsk",r);
+    }
+
     //    public void testDOS33_Others() throws IOException, InvalidPosException
 //    {
 //        assertOnePos("daviddos_2.dsk",new DiskPos(0x11,0));
