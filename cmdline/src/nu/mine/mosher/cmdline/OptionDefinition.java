@@ -10,24 +10,24 @@ package nu.mine.mosher.cmdline;
  */
 public class OptionDefinition
 {
-    private final String name;
+    private final String optionLong;
     private final char abbrev;
     private final String desc;
     private final boolean hasValue;
 
     /**
-     * @param name
+     * @param optionLong
      * @param abbrev
      * @param desc
      */
     public OptionDefinition(final String name, final char abbrev, final String desc, boolean hasValue)
     {
-        this.name = name;
+        this.optionLong = name;
         this.abbrev = abbrev;
         this.desc = desc;
         this.hasValue = hasValue;
 
-        if (this.name.length() < 1)
+        if (this.optionLong.length() < 1)
         {
             throw new IllegalArgumentException("long option must be 2 or more characters in length");
         }
