@@ -79,4 +79,17 @@ public class DiffWriter
 		}
 		return s;
 	}
+
+    public void beginBlock()
+    {
+    }
+
+    public void endBlock()
+    {
+		if (i >= line.length)
+		{
+			i = 0;
+			outAscii();
+		}
+    }
 }
