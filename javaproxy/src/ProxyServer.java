@@ -8,10 +8,10 @@
  * Author : Steve Yeong-Ching Hsueh
  */
 
-import java.lang.*;
-import java.net.*;
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 
 /**
