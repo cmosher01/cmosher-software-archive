@@ -69,7 +69,7 @@ public class VelocityWrapper
         }
         if (!ok)
         {
-            throw new VelocityException("error calling VelocityEngine.evaluate");
+            throw new VelocityException("error calling VelocityEngine.mergeTemplate");
         }
     }
 
