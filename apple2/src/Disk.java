@@ -203,13 +203,22 @@ public class Disk
                     {
 //                        if (isValidFileName(sector,ce+3))
 //                        {
+                        int csect = word(sector,ce+33);
                             if (sector[ce] == -1)
                             {
                                 entries.add(convertASCII(sector,ce+3,29).trim()+" [deleted] [T/S map @ T$"+Integer.toHexString(sector[ce+32])+", S$"+Integer.toHexString(sector[ce+1])+"]");
                             }
                             else
                             {
-                                entries.add(convertASCII(sector,ce+3,30)+" [T/S map @ T$"+Integer.toHexString(sector[ce])+", S$"+Integer.toHexString(sector[ce+1])+"]");
+                                StringBuffer sb = new StringBuffer(64);
+                                sb.append(convertASCII(sector,ce+3,30));
+                                sb.append(" ["+csect+" sector");
+                                if (csect > 1)
+                                {
+                                    sb.append("s, T/S map");
+                                }
+                                sb.append(" @ T$"+Integer.toHexString(sector[ce])+", S$"+Integer.toHexString(sector[ce+1])+"]");
+                                entries.add(sb.toString());
                             }
                             if (sector[ce+31] == (byte)0xA0)
                             {
