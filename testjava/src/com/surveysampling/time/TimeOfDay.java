@@ -4,7 +4,6 @@
 package com.surveysampling.time;
 
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Represents a time of day, for example, "3:00 PM",
@@ -15,7 +14,7 @@ import java.util.Date;
  */
 public class TimeOfDay
 {
-    private final Calendar calendar;
+    private final boolean valid;
     private final int hours;
     private final int minutes;
     private final int seconds;
@@ -23,6 +22,7 @@ public class TimeOfDay
 
     public TimeOfDay(Calendar calendar, int hours, int minutes, int seconds, int milliseconds)
     {
+        // for safety, *clone* the caller's calendar
         calendar = (Calendar)calendar.clone();
 
         if (hours < calendar.getMinimum(Calendar.HOUR_OF_DAY) || calendar.getMaximum(Calendar.HOUR_OF_DAY) < hours)
@@ -41,11 +41,11 @@ public class TimeOfDay
         {
             throw new IllegalArgumentException("Invalid millisecond: "+milliseconds);
         }
-        this.calendar = calendar;
         this.hours = hours;
         this.minutes = minutes;
         this.seconds = seconds;
         this.milliseconds = milliseconds;
+        this.valid = true;
     }
 
     public TimeOfDay(Calendar calendar, int hours, int minutes, int seconds)
@@ -87,7 +87,7 @@ public class TimeOfDay
 
     public boolean isValid()
     {
-        return calendar != null;
+        return valid;
     }
 
     public void getTimeOnDay(Calendar cal)
