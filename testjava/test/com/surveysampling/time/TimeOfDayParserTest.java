@@ -31,21 +31,12 @@ public class TimeOfDayParserTest extends TestCase
 
     public void testAccessors() throws ParseException
     {
-        TimeOfDayParser p = new TimeOfDayParser("23:59:58.999");
-        assertEquals(23,p.getHour());
-        assertEquals(59,p.getMinute());
-        assertEquals(58,p.getSecond());
-        assertEquals(999,p.getMillisecond());
+        makeAndCheck("23:59:58.999",23,59,58,999);
     }
 
-    public void testFormats()
+    public void testFormats() throws ParseException
     {
-        makeAndCheck("23:59:58.999",23,59,58,999);
-        TimeOfDayParser p = new TimeOfDayParser("23:59:58.999");
-        assertEquals(23,p.getHour());
-        assertEquals(59,p.getMinute());
-        assertEquals(58,p.getSecond());
-        assertEquals(999,p.getMillisecond());
+        makeAndCheck("99:98:97.996",99,98,97,996);
     }
 
     /**
