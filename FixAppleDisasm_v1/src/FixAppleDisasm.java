@@ -237,7 +237,8 @@ public class FixAppleDisasm
 		}
 		for (Iterator i = lines.entrySet().iterator(); i.hasNext();)
         {
-            Line ln = (Line)i.next();
+            Map.Entry ent = (Map.Entry)i.next();
+            Line ln = (Line)ent.getValue();
             System.out.print(Integer.toHexString(ln.addr));
             System.out.print(":   ");
             System.out.print(ln.instr);
