@@ -384,12 +384,12 @@ public class GDiffView extends JFrame
 
         svndelta();
 
+        initText();
+        initHighlights();
+
         listGDiff.setSelectionModel(selectionModel);
         listGDiff.setSelectedIndex(0);
         listGDiff.requestFocus();
-
-        initText();
-        initHighlights();
 
         setVisible(true);
     }
