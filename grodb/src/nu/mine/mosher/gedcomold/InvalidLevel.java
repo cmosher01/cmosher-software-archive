@@ -14,14 +14,9 @@ package nu.mine.mosher.gedcom;
  */
 public class IllegalLevel extends Exception
 {
-
-    /**
-     * 
-     */
-    public IllegalLevel()
+    public IllegalLevel(Gedcom line)
     {
-        super();
-        // TODO Auto-generated constructor stub
+        super("GEDCOM line has illegal level number at line: "+line);
     }
 
     /**
