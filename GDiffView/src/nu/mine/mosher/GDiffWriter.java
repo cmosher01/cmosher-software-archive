@@ -18,7 +18,7 @@
  * from Torgeir Veimo
  */
 
-package com.nothome.delta;
+package nu.mine.mosher;
 
 
 /**
