@@ -47,7 +47,7 @@ public class TreeFrame extends JPanel
      * this method should be invoked from the
      * event-dispatching thread.
      */
-    private static void createAndShowGUI(String dir) throws InterruptedException
+    protected static void createAndShowGUI(String dir) throws InterruptedException
     {
         //Make sure we have nice window decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
