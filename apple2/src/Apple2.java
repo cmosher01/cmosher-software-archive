@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -80,6 +81,11 @@ public class Apple2
         List rVTOC = new ArrayList();
         disk.findDos33VTOC(rVTOC);
 
+        for (Iterator i = rVTOC.iterator(); i.hasNext();)
+        {
+            DiskPos p = (DiskPos)i.next();
+            System.out.println(f.getAbsolutePath()+": VTOC @ "+p.toStringTS());
+        }
 //        List rCat = new ArrayList();
 //        disk.findDos33CatalogSector(rCat);
 //
