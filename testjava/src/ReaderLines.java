@@ -48,6 +48,7 @@ public class ReaderLines /* TODO implements Iterable */
             }
             catch (IOException cause)
             {
+                this.nextLine = null;
                 NoSuchElementException e = new NoSuchElementException();
                 e.initCause(cause);
                 throw e;
