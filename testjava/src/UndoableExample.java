@@ -1,3 +1,5 @@
+import nu.mine.mosher.util.UndoableReference;
+
 public class UndoableExample implements Cloneable
 {
     private int x;
