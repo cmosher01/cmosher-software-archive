@@ -63,6 +63,7 @@ public class Player implements Immutable
         String s = bufrd.readLine();
         while (s != null)
         {
+			System.out.println(s);
             dumphex(s);
             s = bufrd.readLine();
         }
