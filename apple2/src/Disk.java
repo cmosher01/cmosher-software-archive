@@ -411,7 +411,7 @@ public class Disk
      */
     private static boolean hasData(byte[] sector)
     {
-        for (int i = 0; i < sector.length; i++)
+        for (int i = 0; i < sector.length; ++i)
         {
             byte b = sector[i];
             if (b != 0)
