@@ -8,7 +8,7 @@ import java.net.Socket;
 
 public class OneFileCopyClient
 {
-	private static final int rpt = 256*1024;
+	private static final int rpt = 10*1024;
 	public static void main(String[] args) throws IOException
 	{
 		Socket s = new Socket(InetAddress.getByName("192.168.1.102"),60013);
