@@ -1,5 +1,8 @@
 package nu.mine.mosher.core;
 
+import java.util.Comparator;
+import java.util.SortedSet;
+
 public final class Comparer
 {
 	private Comparer()
