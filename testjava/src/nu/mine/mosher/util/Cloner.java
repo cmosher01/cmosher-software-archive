@@ -6,4 +6,9 @@ public class Cloner
     {
         throw new UnsupportedOperationException();
     }
+
+    public Cloneable cloneObject(Cloneable object) throws CloneNotSupportedException
+    {
+        return (Cloneable)object.clone();
+    }
 }
