@@ -26,7 +26,7 @@ public class TestBeans
 
         setProperty(some, prop, val);
 
-        showInt(some.getObjInteger().intValue());
+        System.out.println(some.isABoolean() ? "yes" : "no");
     }
 
     public static void setProperty(Object bean, String property, String value)
