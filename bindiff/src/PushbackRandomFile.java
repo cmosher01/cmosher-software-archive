@@ -48,9 +48,6 @@ public class PushbackRandomFile
     	return pos;
     }
 
-    /**
-     * @param orig
-     */
     public void seek(long pos) throws IOException
     {
 		if (unread != -1)
