@@ -1,4 +1,5 @@
 <%@ include file="htmlhead.jsp" %>
+<%@ page import="javax.jdo.PersistenceManager" %>
 <%@ page import="nu.mine.mosher.jdotest.Item" %>
 <%@ page import="nu.mine.mosher.jdotest.Perm" %>
 <%@ page import="java.util.Iterator" %>
@@ -9,12 +10,12 @@
 <p>
 <table>
 <%
-	Perm pm = new Perm();
-	pm.pm().getExtent(Item.class,true).iterator();
+	PersistenceManager pm = new Perm().pm();
+	pm.getExtent(Item.class,true).iterator();
     for (Iterator i = pm.getList(); i.hasNext(); )
     {
         Item item = (Item)i.next();
-        String id = pm.pm().getObjectId(item).toString();
+        String id = pm.getObjectId(item).toString();
         %><tr><td><a href="edit.jsp?id=<%=id%>"><%=item.getName()%></a></td></tr><%
     }
 %>
