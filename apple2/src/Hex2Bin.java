@@ -29,7 +29,7 @@ public class Hex2Bin
             }
             int n1 = shex.charAt(0);
             int n0 = shex.charAt(1);
-            r.add(new Byte((byte)(nib(n1) << 4 | nib(n0));
+            r.add(new Byte((byte)(nib(n1) << 4 | nib(n0)));
         }
         byte[] rb = new byte[r.size()];
         int ib = 0;
