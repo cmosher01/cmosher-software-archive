@@ -105,7 +105,7 @@ public class GDiffView extends JFrame
     /**
      * @throws IOException
      */
-    private void testMyDiff() throws IOException
+    private void initDiff() throws IOException
     {
         SourceFile src = new SourceFile();
         int cWindow = 3;
@@ -318,9 +318,13 @@ public class GDiffView extends JFrame
             }
         });
 
+        initDiff();
+
         listGDiff.setSelectionModel(selectionModel);
         listGDiff.setSelectedIndex(0);
         listGDiff.requestFocus();
+
+        initText();
 
         setVisible(true);
     }
@@ -329,23 +333,24 @@ public class GDiffView extends JFrame
     {
         readSrc();
 
-//        readGDiff();
-        tempReadTarget();
+        StringBuffer sb = new StringBuffer(in.available() * 6);
+        tempReadTarget(sb);
         docTrg.insertString(0,sbTrg.toString(),(AttributeSet)styles.get("body"));
+    }
 
+    public void initHighlights()
+    {
         highlightInserts();
         highlightDeletes();
-
     }
 
     /**
      * @throws IOException
      * 
      */
-    private void tempReadTarget() throws IOException
+    private void tempReadTarget(StringBuffer sb) throws IOException
     {
         BufferedInputStream in = new BufferedInputStream(new FileInputStream(fileTrg));
-        StringBuffer sb = new StringBuffer(in.available() * 6);
         HexBuilder hex = new HexBuilder(sb);
         hex.appendHeader();
         int x = in.read();
