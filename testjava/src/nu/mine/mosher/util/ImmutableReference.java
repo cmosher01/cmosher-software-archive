@@ -33,6 +33,10 @@ public class ImmutableReference
 
     public boolean equals(Object o)
     {
+        if (!this.ref.getClass().isInstance(o))
+        {
+            return false;
+        }
         return eq(this.ref,o);
     }
 
