@@ -1,4 +1,5 @@
 <%@ include file="htmlhead.jsp" %>
+<%@ page import="javax.jdo.PersistenceManager" %>
 <%@ page import="nu.mine.mosher.jdotest.Item" %>
 <%@ page import="nu.mine.mosher.jdotest.Perm" %>
 <%
@@ -10,9 +11,9 @@
     boolean changed = !sOrig.equals(sNew);
     if (changed)
     {
-    	pm.begin();
+    	PersistenceManager p = pm.begin();
 	    item.setName(sNew);
-	    pm.commit();
+	    pm.commit(p);
     }
 %>
 <head>
