@@ -57,9 +57,11 @@ public class Test
         System.out.println(m);
         m.set(7);
         System.out.println(m);
+        m.set(8);
+        System.out.println(m);
         m.undo();
         System.out.println(m);
-        m.set(8);
+        m.undo();
         System.out.println(m);
         m.redo();
         System.out.println(m);
