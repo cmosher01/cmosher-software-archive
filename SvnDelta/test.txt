@@ -1,1 +1,12 @@
-ABCDEFG
+This is a
+test of the
+javaxdelta
+program
+that will
+generate a gdiff
+format file
+from two
+binary input
+files, a source
+file and a
+target file.
