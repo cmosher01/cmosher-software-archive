@@ -38,6 +38,7 @@ public class Volume
             Dos33CatalogEntry ent = (Dos33CatalogEntry)i.next();
             VolumeFile f = new VolumeFile();
             f.readFromMedia(ent.getStart(),disk);
+            rFile.add(f);
         }
     }
 
