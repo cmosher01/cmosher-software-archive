@@ -218,10 +218,17 @@ public class TimeOfDay implements Comparable
     {
         if (seconds == 0 && milliseconds == 0)
         {
-            appendNumber(hours,2,s).append(':').appendNumber(minutes,2,s);
+            appendNumber(hours,2,s);
+            s.append(':');
+            appendNumber(minutes,2,s);
         }
-        else
+        else if (milliseconds == 0)
         {
+            appendNumber(hours,2,s);
+            s.append(':');
+            appendNumber(minutes,2,s);
+            s.append(':');
+            appendNumber(seconds,2,s);
         }
 
         return s;
