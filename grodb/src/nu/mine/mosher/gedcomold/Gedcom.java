@@ -148,6 +148,7 @@ public class Gedcom
 		{
 			if (s.startsWith("1 CHAR"))
 			{
+				s = s.toUpperCase();
 				if (s.indexOf("WIN",6) >= 0)
 				{
 					return "windows-1252";
@@ -161,6 +162,10 @@ public class Gedcom
 					return "Cp850";
 				}
 				if (s.indexOf("PC",6) >= 0)
+				{
+					return "Cp850";
+				}
+				if (s.indexOf("OEM",6) >= 0)
 				{
 					return "Cp850";
 				}
