@@ -309,6 +309,7 @@ public class FixAppleDisasm
 			printout.print(ln.comment);
 			printout.println();
         }
+        printout.flush();
     }
 
     private static void Dump2Bin(Reader in, OutputStream outbin)
