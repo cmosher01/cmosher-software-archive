@@ -238,6 +238,7 @@ public class GDiffView extends JFrame
 
         SpringLayout layout = new SpringLayout();
         JPanel contentPane = new JPanel(layout);
+        contentPane.setMinimumSize(new Dimension(100,30));
         setContentPane(contentPane);
 
         SpringLayout.Constraints cnsDif = new SpringLayout.Constraints();
