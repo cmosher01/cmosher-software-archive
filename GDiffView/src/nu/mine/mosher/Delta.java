@@ -80,7 +80,7 @@ public class Delta
         // update method really is correct. I will remove it shortly.
         long alternativehashf = hashf;
 
-        /* This flag indicates that we've run out of source bytes */
+        // This flag indicates that we've run out of source bytes
         boolean sourceOutofBytes = false;
 
         while (!done)
@@ -95,7 +95,7 @@ public class Delta
                 int length = S - 1;
                 source.seek(offset);
 
-                //				possible match, need to check byte for byte
+                // possible match, need to check byte for byte
                 if (sourceOutofBytes == false && source.read(sourcebyte,0,S) != -1)
                 {
                     for (int ix = 0; ix < S /*CAM ??? && match*/; ix++)
