@@ -85,7 +85,7 @@ public class ExcelCSVFieldizer
          * @return the next field
          * @throws NoSuchElementException
          */
-        public String next() throws NoSuchElementException
+        public <String> String next() throws NoSuchElementException
         {
             try
             {
