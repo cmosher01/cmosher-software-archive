@@ -33,12 +33,4 @@ public class SyntaxDefinition
     {
         return mLastArgumentRepeats;
     }
-    public List getMrArgument()
-    {
-        return mrArgument;
-    }
-    public Set getMsetOption()
-    {
-        return msetOption;
-    }
 }
