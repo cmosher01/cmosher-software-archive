@@ -210,13 +210,13 @@ public class Volume
     {
         return dos;
     }
-/**
- * @return Returns the orphaned.
- */
-public VolumeUnusedData getOrphaned()
-{
-    return orphaned;
-}
+    /**
+     * @return Returns the orphaned.
+     */
+    public VolumeUnusedData getOrphaned()
+    {
+        return orphaned;
+    }
     /**
      * @return Returns the rFile.
      */
