@@ -1,18 +1,18 @@
-/*
- * Created on Jul 26, 2003
- *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
 package nu.mine.mosher.grodb;
 
-/**
- * @author Chris
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
 public class RelationTypeFactory
 {
+	private final int idNext = 0;
+	private final Class cl;
 
+	public RelationTypeFactory(Class relationType)
+	{
+		cl = relationType;
+		assert RelationType.class.isAssignableFrom(cl);
+	}
+
+	public RelationType make(String name)
+	{
+		return cl.newInstance();
+	}
 }
