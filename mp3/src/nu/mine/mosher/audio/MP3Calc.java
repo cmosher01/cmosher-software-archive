@@ -75,6 +75,12 @@ public class MP3Calc
     	}
     	else if (layer == 3)
     	{
+    		if (mpeg == 1)
+    		{
+    		}
+    		else if (mpeg == 2)
+    		{
+    		}
     	}
     	return 1000*bps;
     }
