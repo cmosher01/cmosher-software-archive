@@ -21,7 +21,7 @@
  * being written to stderr rather than throwing exception
  */
 
-package com.nothome.delta;
+package nu.mine.mosher;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
