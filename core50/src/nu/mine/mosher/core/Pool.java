@@ -28,11 +28,6 @@ public class Pool<T>
 		{
 			unused.addLast(t);
 		}
-//		for (int i = 0; i < pool.length; ++i)
-//		{
-//			Object object = pool[i];
-//			unused.addLast(object);
-//		}
 	}
 
 	public synchronized T get() throws NoSuchElementException
