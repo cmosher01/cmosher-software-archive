@@ -173,7 +173,7 @@ public class FixAppleDisasm
 								ln.refaddr = -1;
 								try
 								{
-									ln.refaddr = Integer.parseInt(ln.oper.substring(0,4),16);
+									ln.refaddr = Integer.parseInt(ln.oper.substring(1,5),16);
 									if (ln.refaddr < 0 || 0x10000 <= ln.refaddr)
 									{
 										ln.refaddr = -1;
