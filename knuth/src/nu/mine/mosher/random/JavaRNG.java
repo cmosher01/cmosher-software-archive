@@ -26,7 +26,7 @@ public class JavaRNG extends RNGDefault implements RandomNumberGenerator
     public JavaRNG(final long seed)
     {
     	super(seed);
-        this.rand = new Random(seed);
+        this.rand = new Random(getSeed());
     }
 
     /**
