@@ -36,4 +36,31 @@ public class Pair
         }
         return clon;
     }
+
+    public boolean equals(Object obj)
+    {
+        if (!(obj instanceof Pair))
+            return false;
+        Pair that = (Pair)obj;
+        if (this.a == null)
+        {
+            return that.a == null;
+        }
+        else if (!this.a.equals(that.a))
+        {
+            return false;
+        }
+        else if (this.b == null)
+        {
+            return that.b == null;
+        }
+        else if (!this.b.equals(that.b))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
 }
