@@ -54,6 +54,7 @@ public class BinDiff
 	private long posinsert = -1;
 	private PushbackRandomFile fileinsert;
 	private long lastmark;
+	private DiffWriter dw = new DiffWriter();
 
     public BinDiff(RandomAccessFile f1, RandomAccessFile f2, int cMinMatch, int cMaxSearch)
     {
@@ -99,17 +100,19 @@ public class BinDiff
         statechange(END,0);
     }
 
-	protected void outBytes(PushbackRandomFile f, int pos, int len)
+	protected void outBytes(PushbackRandomFile f, long pos, int len)
 	{
-		long orig = fileinsert.tell();
-		fileinsert.seek(posinsert);
-		for (int i = 0; i < cinsert; ++i)
+		long orig = f.tell();
+
+		f.seek(pos);
+		for (int i = 0; i < len; ++i)
 		{
-			s.append(Integer.toHexString(fileinsert.read()));
+			s.append(Integer.toHexString(f.read()));
 			s.append(" ");
 		}
 		s.append("\n");
-		fileinsert.seek(orig);
+
+		f.seek(orig);
 	}
 	protected void statechange(int newstate, long c) throws IOException
 	{
@@ -124,15 +127,11 @@ public class BinDiff
             return;
         }
 
-		StringBuffer s = new StringBuffer(256);
         if (newstate != state)
         {
             if (state == COPY)
             {
-            	s.append(">>>COPY ");
-            	s.append(ccopy);
-            	s.append(" BYTES\n");
-
+            	dw.outTag("COPY",ccopy);
 				ccopy = 0;
             }
             else if (state == SKIP || state == INSERT)
@@ -141,28 +140,13 @@ public class BinDiff
                 {
                     if (cskip > 0)
                     {
-						s.append(">>>DELETE ");
-						s.append(cskip);
-						s.append(" BYTES\n");
-
+						dw.outTag("DELETE",cskip);
                         cskip = 0;
                     }
                     if (cinsert > 0)
                     {
-						s.append(">>>INSERT ");
-						s.append(cinsert);
-						s.append(" BYTES\n");
+						dw.outTag("INSERT",cinsert);
 						outBytes(fileinsert,posinsert,cinsert);
-                        long orig = fileinsert.tell();
-                        fileinsert.seek(posinsert);
-                        for (int i = 0; i < cinsert; ++i)
-                        {
-                        	s.append(Integer.toHexString(fileinsert.read()));
-                        	s.append(" ");
-                        }
-						s.append("\n");
-                        fileinsert.seek(orig);
-
                         cinsert = 0;
                         posinsert = -1;
                     }
