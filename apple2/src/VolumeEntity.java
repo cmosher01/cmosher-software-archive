@@ -18,15 +18,6 @@ public class VolumeEntity
     protected List rSector = new ArrayList(); //VolumeSector
 
     /**
-     * @return
-     */
-    public String toString()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /**
      * @param rPos
      */
     public void getPos(Collection rPos)
