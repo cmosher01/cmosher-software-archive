@@ -90,6 +90,10 @@ public class Test
         {
             String jarpart = uri.getRawSchemeSpecificPart();
             System.out.println(jarpart);
+            if (!jarpart.startsWith("file:/"))
+            {
+                throw new UnsupportedOperationException("Cannot process non-file inside jar: "+uri.toASCIIString());
+            }
 
 //            f = new File(urijp.getPath());
         }
