@@ -63,7 +63,7 @@ public class DateRange implements Immutable, Serializable, Comparable
 		}
 		if (earliest.compareTo(latest) > 0)
 		{
-			throw new IllegalArgumentException("earliest date must be less that or equal to latest date");
+			throw new IllegalArgumentException("earliest date must be less than or equal to latest date");
 		}
 
 		this.earliest = earliest;
