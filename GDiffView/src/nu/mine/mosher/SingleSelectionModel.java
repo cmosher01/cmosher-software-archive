@@ -14,7 +14,6 @@ import javax.swing.DefaultListSelectionModel;
  */
 public abstract class SingleSelectionModel extends DefaultListSelectionModel
 {
-
     /**
      * 
      */
