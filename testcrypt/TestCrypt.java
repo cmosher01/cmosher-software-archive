@@ -12,8 +12,6 @@ public class TestCrypt
     {
         SecureRandom random = SecureRandom.getInstance("SHA1PRNG",sun.security.provider.SecureRandom);
         random.setSeed(random.generateSeed(128));
-        sun.security.provider.SecureRandom x;
-        x.
     }
 
     public static void showProviders()
