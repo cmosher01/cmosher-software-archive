@@ -60,7 +60,7 @@ public class VolumeCatalog
             DiskPos p = (DiskPos)i.next();
             if (!found.contains(p))
             {
-                VolumeCatalogSector c = new VolumeCatalogSector();
+                VolumeCatalogSector c = new VolumeCatalogSector(true);
                 c.readFromMedia(p,disk);
                 rCatSect.add(c);
             }
