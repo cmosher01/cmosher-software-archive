@@ -1,13 +1,16 @@
-/*
- * TODO
- *
- * Created on Apr 14, 2004
- */
+import java.io.File;
 
-/**
- * TODO
- */
 public class SomeBean
 {
-
+    boolean aBoolean;
+    byte aByte;
+    char aChar;
+    short aShort;
+    int aInt;
+    float aFloat;
+    long aLong;
+    double aDouble;
+    String sString;
+    File aFile;
+    Object aObject;
 }
