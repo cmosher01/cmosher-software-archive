@@ -107,7 +107,7 @@ public class GUI
                 {"Philip", "Milne", "Pool", new Integer(10), new Boolean(false)}};
 
         JTable table = new JTable(data,columnNames);
-        table.setPreferredScrollableViewportSize(new Dimension(640,480));
+        table.setPreferredScrollableViewportSize(new Dimension(640,240));
 
         JScrollPane scrollpane = new JScrollPane(table);
         scrollpane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
