@@ -62,6 +62,7 @@ public class TestThreadIO
             }
             i++;
         }
+        System.out.println(numberOfEntries);
         for (Iterator j = lines.iterator(); j.hasNext();)
         {
             String s = (String)j.next();
