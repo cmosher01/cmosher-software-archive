@@ -135,7 +135,6 @@ public class MySQLTest
 		int idImage = insertImage(1790, state, county, township, district, image);
         int hh = insertHousehold(nameLast, nameFirst, nameMiddle, nameSuffix, idImage);
 
-//		dbUpdate("drop table CountEntry");
 		PreparedStatement st = null;
 		try
 		{
