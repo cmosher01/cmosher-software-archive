@@ -203,5 +203,6 @@ public class DiskPos
         sb.append(Integer.toHexString(getTrackInDisk()));
         sb.append(",S$");
         sb.append(Integer.toHexString(getSectorInTrack()));
+        return sb.toString();
     }
 }
