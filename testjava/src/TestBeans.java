@@ -9,6 +9,12 @@ public class TestBeans
 {
     public static void main(String[] rArgs) throws Throwable
     {
+        String[] rp = PropertyEditorManager.getEditorSearchPath();
+        for (int i = 0; i < rp.length; ++i)
+        {
+            String string = rp[i];
+            System.out.println(string);
+        }
         PropertyEditorManager.setEditorSearchPath(new String[] {"com.surveysampling.beans.editors"});
 
         SomeBean some = new SomeBean();
