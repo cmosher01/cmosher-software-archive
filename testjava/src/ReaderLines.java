@@ -50,20 +50,24 @@ public class ReaderLines /* TODO implements Iterable */
             return nextLine != null;
         }
 
-        public Object next()
+        public Object next() throws NoSuchElementException
         {
             if (!hasNext())
             {
                 throw new NoSuchElementException();
             }
-            int i = s.indexOf(',',pos);
-            if (i < 0)
+            String thisLine = this.nextLine;
+            try
             {
-                i = s.length();
+                nextLine();
             }
-            String tok = s.substring(pos,i);
-            pos = i+1;
-            return tok;
+            catch (IOException cause)
+            {
+                NoSuchElementException e = new NoSuchElementException();
+                e.initCause(cause);
+                throw e;
+            }
+            return thisLine;
         }
 
         public void remove() /* TODO for SimpleIterator, don't provide this method */
