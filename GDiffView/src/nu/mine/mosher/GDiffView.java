@@ -873,8 +873,7 @@ public class GDiffView extends JFrame
         ByteBuffer data = ByteBuffer.allocate((int)(cSrc+cTrg)); // TODO
         channelSrc.read(data);
         channelTrg.read(data);
-        SvnDelta delta = new SvnDelta();
-        delta.vdelta(data,cSrc,cTrg);
+        vdelta(data,cSrc,cTrg);
     }
 
     /**
