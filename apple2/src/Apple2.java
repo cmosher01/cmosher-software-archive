@@ -60,12 +60,12 @@ public class Apple2
             for (Iterator i = rVTOC.iterator(); i.hasNext();)
             {
                 DiskPos p = (DiskPos)i.next();
-                System.out.println("VTOC @ "+p.toStringTS()+" "+f.getAbsolutePath());
+//                System.out.println("VTOC @ "+p.toStringTS()+" "+f.getAbsolutePath());
             }
         }
         else
         {
-            System.out.println("[no VTOC]       "+f.getAbsolutePath());
+//            System.out.println("[no VTOC]       "+f.getAbsolutePath());
         }
 //        List rCat = new ArrayList();
 //        disk.findDos33CatalogSector(rCat);
