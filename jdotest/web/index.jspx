@@ -2,7 +2,7 @@
 <%@ page session="false" %>
 <%@ page import="javax.jdo.PersistenceManager" %>
 <%@ page import="nu.mine.mosher.jdotest.Item" %>
-<%@ page import="nu.mine.mosher.jdotest.ListNamed" %>
+<%@ page import="nu.mine.mosher.jdotest.Named" %>
 <%@ page import="java.util.Iterator" %>
 <head>
 <title>List</title>
@@ -14,7 +14,7 @@
 		PersistenceManager pm = Perm.pm();
 		for (Iterator i = pm.getExtent(Item.class,true).iterator(); i.hasNext(); )
 		{
-			Item item = (Item)i.next();
+			Named item = (Named)i.next();
 			String id = pm.getObjectId(item).toString();
 			%>
 			<tr><td><a href="edit.jsp?id="<%=id%>">
