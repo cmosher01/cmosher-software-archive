@@ -1,4 +1,4 @@
-package nu.mine.mosher.gedcom;
+package nu.mine.mosher.gedcomold;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
