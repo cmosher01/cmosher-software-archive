@@ -28,9 +28,6 @@ public class PushbackRandomFile
     	return x;
     }
 
-    /**
-     * @param c1
-     */
     public void unread(int c)
     {
     	if (unread != -1)
