@@ -204,6 +204,12 @@ public class TimeOfDay implements Comparable
         }
     }
 
+    public String toString()
+    {
+        StringBuffer s = new StringBuffer(12);
+        format(false,s);
+        return s.toString();
+    }
     /**
      * Formats this time. The resulting string is of
      * the form: "HH:mm", or "HH:mm:ss" if seconds are
