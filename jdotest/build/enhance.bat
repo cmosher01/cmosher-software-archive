@@ -9,4 +9,4 @@ set CLASSPATH=%CLASSPATH%;%BIN%
 set SRC=%BIN%
 set SRC=%SRC%;%LIB%\jdo.jar
 set JDO=%BIN%\nu\mine\mosher\jdotest\package.jdo
-"C:\Program Files\Java\j2sdk1.4.2\bin\java" -cp %CLASSPATH% org.jpox.enhance.SunReferenceEnhancer -v -s %SRC% %JDO% -d %BIN%
+C:\Progra~1\Java\j2sdk1.4.2\bin\java -cp %CLASSPATH% org.jpox.enhance.SunReferenceEnhancer -v -s %SRC% %JDO% -d %BIN%
