@@ -33,14 +33,14 @@ public class DiffWriter
 
 		if (i >= line.length)
 		{
+			outAscii(line.length);
 			i = 0;
-			outAscii();
 		}
 	}
 
-    private void outAscii()
+    private void outAscii(int lim)
     {
-    	for (int i = 0; i < line.length; i++)
+    	for (int i = 0; i < lim; i++)
         {
             int b = line[i];
             b &= 0x7f;
@@ -86,10 +86,7 @@ public class DiffWriter
 
     public void endBlock()
     {
-		if (i >= line.length)
-		{
-			i = 0;
-			outAscii();
-		}
+		outAscii(i);
+		i = 0;
     }
 }
