@@ -1,21 +1,57 @@
 /*
  * Created on Sep 20, 2003
- *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package nu.mine.mosher.audio;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 /**
- * @author Chris
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * @author Chris Mosher
  */
 public class WaveCalc
 {
-
-    public static void main(String[] args)
+    public static void main(String[] rArg) throws Throwable
     {
+		if (rArg.length > 0)
+		{
+			calc(rArg[0]);
+		}
+
+		if (System.in.available() > 0)
+		{
+			BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(FileDescriptor.in)));
+			for (String s = in.readLine(); s != null; s = in.readLine())
+			{
+				calc(s);
+			}
+			in.close();
+		}
+	}
+
+	private static void calc(String filename) throws IOException, FileNotFoundException
+	{
+		File fin = new File(filename);
+		if (!fin.canRead())
+		{
+			System.err.println("Cannot access file "+fin.getCanonicalPath());
+			System.exit(1);
+		}
+        
+		long flen = fin.length();
+		System.out.print(flen);
+		System.out.print(",");
+        
+		DataInputStream in = new DataInputStream(new FileInputStream(fin));
+        
+		final int h = in.readInt();
+		System.out.print(Integer.toHexString(h));
+		System.out.print(",");
     }
 }
