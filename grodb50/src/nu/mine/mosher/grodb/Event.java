@@ -14,8 +14,9 @@ public class Event
 	private DateRange dateEnd;
 	private ItemType<EventType> type;
 
-	private List<Relation<Event,Event,EventRelType>> rEvent = new ArrayList<Relation<Event,Event,EventRelType>>();
-
+	private List<Relation<Event,Event,EventRelType>> rEventUp = new ArrayList<Relation<Event,Event,EventRelType>>();
+	private List<Relation<Event,Event,EventRelType>> rEventDown = new ArrayList<Relation<Event,Event,EventRelType>>();
+	
 	public Event()
 	{
 	}
