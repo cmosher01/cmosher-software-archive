@@ -210,7 +210,7 @@ public class Volume
      */
     public void getUsedBoot(List rPos)
     {
-        boot.getUsed(rPos)
+        boot.getUsed(rPos);
     }
 
 }
