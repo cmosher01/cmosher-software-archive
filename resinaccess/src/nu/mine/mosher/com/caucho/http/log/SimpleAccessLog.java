@@ -23,6 +23,7 @@ import com.caucho.server.connection.AbstractHttpResponse;
 public class SimpleAccessLog extends AccessLog
 {
 	private static final SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd HHmmssSSS");
+	private static final SimpleDateFormat form = new SimpleDateFormat("yyyyMMdd");
     public SimpleAccessLog()
     {
         super();
@@ -80,7 +81,6 @@ public class SimpleAccessLog extends AccessLog
 //		sb.append(!good?Integer.toString(status):"");
 		sb.append(status);
 
-		SimpleDateFormat form = new SimpleDateFormat("yyyyMMdd");
 		BufferedWriter accesslog = null;
 		try
 		{
