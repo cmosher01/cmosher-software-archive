@@ -31,7 +31,11 @@ public class SF
 
         public Object next()
         {
-            int i = nextPos();
+            int i = s.indexOf(',',pos);
+            if (i == -1)
+            {
+                i = s.length();
+            }
             String tok = s.substring(pos,i);
             pos = i+1;
             return tok;
@@ -40,16 +44,6 @@ public class SF
         public void remove()
         {
             throw new UnsupportedOperationException();
-        }
-
-        protected int nextPos()
-        {
-            int i = s.indexOf(',',pos);
-            if (i == -1)
-            {
-                i = s.length();
-            }
-            return i;
         }
     }
 }
