@@ -28,18 +28,20 @@ public class Perm
 		props.setProperty("org.jpox.validateConstraints","false");
 	}
 
-	private PersistenceManagerFactory pmf;
+	private final PersistenceManager pm;
 
 	public Perm() throws NamingException
 	{
-//		Context ctx = new InitialContext();
-//		this.pmf = (PersistenceManagerFactory)ctx.lookup("java:comp/env/jdo/jdotest");
-		this.pmf = JDOHelper.getPersistenceManagerFactory(props);
+		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(props);
+		this.pm = pmf.getPersistenceManager();
+	}
+	public PersistenceManager pm()
+	{
+		return this.pm;
 	}
 
 	public Iterator getList()
 	{
-		PersistenceManager pm = this.pmf.getPersistenceManager();
 		return pm.getExtent(Item.class,true).iterator();
 	}
 
