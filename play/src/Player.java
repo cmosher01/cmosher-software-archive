@@ -62,11 +62,26 @@ public class Player implements Immutable
         String s = bufrd.readLine();
         while (s != null)
         {
-            System.out.println(s);
+            dumphex(s);
             s = bufrd.readLine();
         }
 		System.out.flush();
 		bufrd.close();
+    }
+
+    /**
+     * @param s
+     */
+    private static void dumphex(String s)
+    {
+    	char[] rc = s.toCharArray();
+    	for (int i = 0; i < rc.length; ++i)
+        {
+            char c = rc[i];
+            String h = Integer.toHexString(c);
+            System.out.print(h);
+        }
+		System.out.println();
     }
 
     /**
