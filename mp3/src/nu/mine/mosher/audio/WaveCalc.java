@@ -60,17 +60,17 @@ public class WaveCalc
 
 		int totallen = readInt(in)+8;
 
-		if (in.readInt() != 0x57415645)
+		if (!readString(in,4).equals("WAVE"))
 		{
 			throw new Exception("RIFF chunk is not followed by WAVE chunk.");
 		}
 
-		if (in.readInt() != 0x666d7420)
+		if (!readString(in,4).equals("fmt "))
 		{
 			throw new Exception("WAVE does not start with fmt chunk.");
 		}
 
-		if (in.readInt() < 0x10)
+		if (readInt(in) < 0x10)
 		{
 			throw new Exception("Invalid fmt chunk.");
 		}
