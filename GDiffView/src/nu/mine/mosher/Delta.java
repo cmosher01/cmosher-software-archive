@@ -214,7 +214,7 @@ public class Delta
                             System.out.println("last part of file");
                         buf[0] = b[0]; // don't loose this byte
                         int remaining = targetLength - targetidx;
-                        int readStatus = target.read(buf,1,remaining);
+                        /*int readStatus =*/ target.read(buf,1,remaining);
                         targetidx += remaining;
                         for (int ix = 0; ix < (remaining + 1); ix++)
                             output.addData(buf[ix]);
