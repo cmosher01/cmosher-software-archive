@@ -18,7 +18,7 @@ public class TestBeans
         PropertyEditorManager.setEditorSearchPath((String[])listp.toArray(new String[listp.size()]));
 
         SomeBean some = new SomeBean();
-        String prop = "AInt";
+        String prop = "objInteger";
         String val = "34";
 
 
