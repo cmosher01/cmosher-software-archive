@@ -168,7 +168,6 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
 
 
     /**
-     * construnctor
      * @throws IOException
      */
     Jproxy(int width, int height) throws IOException
