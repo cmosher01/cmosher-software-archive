@@ -37,6 +37,7 @@ public class DiskPos
         verifyTrack(track,allowLarge);
         verifySector(sector);
         verifyByte(byt,cSector);
+        this.iDisk = track*cTrack+sector*cSector+byt;
     }
 
     /**
