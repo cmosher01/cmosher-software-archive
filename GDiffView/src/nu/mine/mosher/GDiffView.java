@@ -181,7 +181,7 @@ public class GDiffView extends JFrame
 //        ByteArrayOutputStream rbs = Delta.delta(fileSrc, fileTrg);
 //        dif = new ByteArrayInputStream(rbs.toByteArray());
         this.fileSrc = fileSrc;
-        this.fileTrg = fileTrg
+        this.fileTrg = fileTrg;
 
         initStyles();
 
