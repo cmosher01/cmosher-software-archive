@@ -1,0 +1,1 @@
+java -cp lib\jdo.jar;lib\jdori.jar;lib\jpox-1.0.0-beta-1.jar;lib\log4j-1.2.8.jar;bin org.jpox.enhance.SunReferenceEnhancer -s bin;lib\jdo.jar bin\nu\mine\mosher\jdotest\package.jdo
