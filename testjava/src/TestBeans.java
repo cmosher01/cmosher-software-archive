@@ -38,13 +38,7 @@ public class TestBeans
     public static void setProperty(Object bean, String property, String[] value)
         throws IntrospectionException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
     {
-        Map mapPDs = getPropertyDescriptors(getBeanInfo(bean));
-        if (!mapPDs.containsKey(property))
-        {
-            throw new IntrospectionException("Cannot find property descriptor for " + property);
-        }
-
-        PropertyDescriptor pd = (PropertyDescriptor)mapPDs.get(property);
+        PropertyDescriptor pd = getPropertyDescriptor(bean, property);
 
         Class classProp = pd.getPropertyType();
 
@@ -68,6 +62,18 @@ public class TestBeans
         }
 
         wr.invoke(bean, new Object[] { v });
+    }
+
+    public static PropertyDescriptor getPropertyDescriptor(Object bean, String property) throws IntrospectionException
+    {
+        Map mapPDs = getPropertyDescriptors(getBeanInfo(bean));
+        if (!mapPDs.containsKey(property))
+        {
+            throw new IntrospectionException("Cannot find property descriptor for " + property);
+        }
+        
+        PropertyDescriptor pd = (PropertyDescriptor)mapPDs.get(property);
+        return pd;
     }
 
     public static Object[] convertArray(String[] value, PropertyEditor ed, Class classProp)
