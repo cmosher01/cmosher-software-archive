@@ -17,13 +17,31 @@ public class VolumeDOS extends VolumeEntity
 {
     private byte[] rb;
 
+    00 B 4D  00 B 58
+    00 B 78  00 B 79
+    00 B 7B         
+    00 B 7D  00 B FF
+    00 D 42         
+    01 9 4F  01 9 B7
+                    
+    02 2 97  02 4 FF
+    00 0 B3  00 0 FF
+    00 1 8D  00 1 92
+    00 1 DF  00 1 FF
+    00 3 FD  00 3 FF
+    00 4 69  00 4 95
+    00 5 00  00 6 55
+    00 6 DF  00 6 FF
+    00 9 A8  00 9 B7
+    00 9 D9  00 9 DB
+
     private static List rPosDOS = new ArrayList();
     static
     {
         DiskPos p, pLim;
         try
         {
-            p = new DiskPos(0,1);
+            p = new DiskPos(0,0);
             pLim = new DiskPos(3,0);
         }
         catch (InvalidPosException e)
@@ -85,16 +103,16 @@ public class VolumeDOS extends VolumeEntity
     /**
      * @return
      */
-    public boolean hasProtodosSignature()
+    public boolean hasProntodosSignature()
     {
-        return (rb[0x1602-0x100] == 0x54 && rb[0x1603-0x100] == 0x59 && rb[0x1604-0x100] == 0x50 && rb[0x1605-0x100] == 0xFFFFFFC5);
+        return (rb[0x1602] == 0x54 && rb[0x1603] == 0x59 && rb[0x1604] == 0x50 && rb[0x1605] == 0xFFFFFFC5);
     }
     /**
      * @return
      */
     public boolean hasDaviddosSignature()
     {
-        return (rb[0x1924-0x100] == 0x44 && rb[0x1925-0x100] == 0x2D && rb[0x1926-0x100] == 0x44 && rb[0x1927-0x100] == 0x4F && rb[0x1928-0x100] == 0x53);
+        return (rb[0x1924] == 0x44 && rb[0x1925] == 0x2D && rb[0x1926] == 0x44 && rb[0x1927] == 0x4F && rb[0x1928] == 0x53);
     }
     /**
      * @return
@@ -102,43 +120,44 @@ public class VolumeDOS extends VolumeEntity
     public boolean hasDaviddos2Signature()
     {
         return hasDaviddosSignature() && 
-        (rb[0x2701-0x100] == 0xFFFFFFC4 && rb[0x2702-0x100] == 0xFFFFFFC1 && rb[0x2703-0x100] == 0xFFFFFFD6 && rb[0x270B-0x100] == 0xFFFFFFC9 && rb[0x270C-0x100] == 0xFFFFFFC9);
+        (rb[0x2701] == 0xFFFFFFC4 && rb[0x2702] == 0xFFFFFFC1 && rb[0x2703] == 0xFFFFFFD6 && rb[0x270B] == 0xFFFFFFC9 && rb[0x270C] == 0xFFFFFFC9);
     }
     /**
      * @return
      */
     public boolean hasDiversidos2cSignature()
     {
-        return (rb[0xA10-0x100] == 0x20 && rb[0xA11-0x100] == (byte)0x84 && rb[0xA12-0x100] == 0xFFFFFF9D && rb[0xA13-0x100] == 0xFFFFFFA0);
+        return (rb[0xA10] == 0x20 && rb[0xA11] == (byte)0x84 && rb[0xA12] == 0xFFFFFF9D && rb[0xA13] == 0xFFFFFFA0);
     }
     /**
      * @return
      */
     public boolean hasDiversidos41cSignature()
     {
-        return (rb[0xA10-0x100] == 0xFFFFFFA9 && rb[0xA11-0x100] == 0xFFFFFFFF && rb[0xA12-0x100] == 0xFFFFFF8D && rb[0xA13-0x100] == 0xFFFFFFFB);
+        return (rb[0xA10] == 0xFFFFFFA9 && rb[0xA11] == 0xFFFFFFFF && rb[0xA12] == 0xFFFFFF8D && rb[0xA13] == 0xFFFFFFFB);
     }
     /**
      * @return
      */
     public boolean hasEsdosSignature()
     {
-        return (rb[0x1671-0x100] == 0x4C && rb[0x1672-0x100] == 0x4E && rb[0x1673-0x100] == 0xFFFFFFC1 && rb[0x1674-0x100] == 0x52);
+        return (rb[0x1671] == 0x4C && rb[0x1672] == 0x4E && rb[0x1673] == 0xFFFFFFC1 && rb[0x1674] == 0x52);
     }
     /**
      * @return
      */
     public boolean hasHyperdosSignature()
     {
-        return (rb[0x656-0x100] == 0xFFFFFFAD && rb[0x657-0x100] ==  0x61 && rb[0x658-0x100] ==  0xFFFFFFAA && rb[0x659-0x100] ==  0xFFFFFFC9 && rb[0x65A-0x100] ==  0x01 && rb[0x65B-0x100] ==  0xFFFFFFB0);
+        return (rb[0x656] == 0xFFFFFFAD && rb[0x657] ==  0x61 && rb[0x658] ==  0xFFFFFFAA && rb[0x659] ==  0xFFFFFFC9 && rb[0x65A] ==  0x01 && rb[0x65B] ==  0xFFFFFFB0);
     }
     /**
      * @return
      */
     public boolean hasRdosSignature()
     {
-        return (rb[0x100-0x100] == 0x4C && rb[0x101-0x100] ==  0x74 && rb[0x102-0x100] ==  0xFFFFFFB9 && rb[0x103-0x100] ==  0xFFFFFFA0);
+        return (rb[0x100] == 0x4C && rb[0x101] ==  0x74 && rb[0x102] ==  0xFFFFFFB9 && rb[0x103] ==  0xFFFFFFA0);
     }
+
     /**
      * @param s
      */
@@ -175,7 +194,7 @@ public class VolumeDOS extends VolumeEntity
             s.append(" (Hyper-DOS)");
             alt = true;
         }
-        if (this.hasProtodosSignature())
+        if (this.hasProntodosSignature())
         {
             s.append(" (Pronto-DOS [Beagle Bros.])");
             alt = true;
