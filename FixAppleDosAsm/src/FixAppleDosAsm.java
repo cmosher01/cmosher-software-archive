@@ -99,6 +99,22 @@ public class FixAppleDosAsm
             {
                 String lb = tr.substring(0,sp);
                 out.print(lb);
+                tr = tr.substring(sp).trim();
+                out.tab(TAB_DIRECTIVE);
+                int semi = tr.indexOf(";");
+                if (semi < 0)
+                {
+                    out.print(tr);
+                }
+                else
+                {
+                    String dr = tr.substring(0,semi).trim();
+                    out.print(dr);
+                    String cm = tr.substring(semi+1).trim();
+                    out.tab(TAB_COMMENT);
+                    out.print("; ");
+                    out.print(cm);
+                }
             }
         }
     }
