@@ -5,6 +5,8 @@ package nu.mine.mosher.ja2;
 
 import javax.swing.SwingUtilities;
 
+import nu.mine.mosher.thread.CubbyHole;
+
 /**
  * TODO
  * 
@@ -63,9 +65,9 @@ public class Ja2
         waitForException();
     }
 
-    protected void createGUI() throws MetadataViewerException
+    protected void createGUI()
     {
-        mGUI = new MetadataViewerGUI();
+        mGUI = new Ja2GUI();
     }
 
     protected void waitForException() throws Throwable
@@ -81,6 +83,6 @@ public class Ja2
      */
     public static void sendException(Throwable exception)
     {
-        mApp.mException.put(exception);
+        Ja2.mException.put(exception);
     }
 }
