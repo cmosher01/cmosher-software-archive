@@ -158,6 +158,8 @@ public class BinDiff
             }
             state = newstate;
         }
+        System.out.print(s.toString());
+        System.out.flush();
 
         switch (state)
         {
