@@ -15,6 +15,7 @@ package nu.mine.mosher.jdotest;
 public class Item
 {
 	private String name;
+	private List rRel; // relation to Thing
 
 	public Item()
 	{
