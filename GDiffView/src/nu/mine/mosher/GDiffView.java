@@ -158,9 +158,8 @@ public class GDiffView extends JFrame
         paneSrc = new JTextPaneNoWrap(docSrc);
         paneSrc.setEditable(false);
         JScrollPane scrSrc = new JScrollPane(paneSrc);
-//        scrSrc.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrSrc.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-//        scrSrc.setMinimumSize(new Dimension(50,20));
+        scrSrc.setMinimumSize(new Dimension(10,10));
 //        scrSrc.setPreferredSize(new Dimension(400,430));
         scrSrc.setMaximumSize(new Dimension(Integer.MAX_VALUE,Integer.MAX_VALUE));
 
@@ -169,7 +168,7 @@ public class GDiffView extends JFrame
         paneTrg.setEditable(false);
         JScrollPane scrTrg = new JScrollPane(paneTrg);
         scrTrg.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-//        scrTrg.setMinimumSize(new Dimension(50,20));
+        scrTrg.setMinimumSize(new Dimension(10,10));
 //        scrTrg.setPreferredSize(new Dimension(400,430));
         scrTrg.setMaximumSize(new Dimension(Integer.MAX_VALUE,Integer.MAX_VALUE));
 
