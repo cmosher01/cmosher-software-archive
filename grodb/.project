@@ -4,10 +4,10 @@
 	<comment></comment>
 	<projects>
 		<project>ansel</project>
-		<project>core</project>
 		<project>logging</project>
 		<project>tree</project>
 		<project>unicode</project>
+		<project>util</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
