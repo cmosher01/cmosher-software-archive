@@ -134,7 +134,7 @@ public class VelocityWrapper
 
             writer.flush();
         }
-        catch (IOException e)
+        catch (Throwable e)
         {
             throw wrapInVelocityException(e);
         }
