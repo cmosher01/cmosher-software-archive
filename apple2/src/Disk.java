@@ -242,7 +242,7 @@ public class Disk
             DiskPos cur = this.pos;
             byte[] sector = read(DiskPos.cSector);
             if (sector[0]==0 &&
-                    isValidTrack(sector[1]) && isValidSector(sector[2]) &&
+                    DiskPos.isValidTrack(sector[1]) && DiskPos.isValidSector(sector[2]) &&
                     sector[3]==0 && sector[4]==0 &&
                     word(sector,5)%0x7A == 0)
                     {
