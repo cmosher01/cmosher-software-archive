@@ -22,7 +22,7 @@ public class ExcelCSVFieldizer
 
 
     /**
-     * Initializes the fieldizer to parse the given String.
+     * Initializes the <code>ExcelCSVFieldizer</code> to parse the given <code>String</code>.
      * @param sCSVRow the CSV line to be parsed.
      */
     public ExcelCSVFieldizer(String sCSVRow)
@@ -36,7 +36,7 @@ public class ExcelCSVFieldizer
      */
     public String getString()
     {
-        return sCSVRow;
+        return this.sCSVRow;
     }
 
     /**
@@ -49,30 +49,40 @@ public class ExcelCSVFieldizer
      * 
      * @return Iterator that iterates over each field
      */
-    public Iterator iterator()
+    public Iterator<String> iterator()
     {
-        return new FieldIterator(new StringBuffer(sCSVRow));
+        return new FieldIterator(new StringBuffer(this.sCSVRow));
     }
 
-    private static class FieldIterator implements Iterator
+    private static class FieldIterator implements Iterator<String>
     {
         private final ExcelCSVParser parser;
 
+        /**
+         * @param s
+         */
         public FieldIterator(StringBuffer s)
         {
             parser = new ExcelCSVParser(s);
         }
 
+        /**
+         * @return
+         */
         public boolean hasNext()
         {
-            return parser.getNextPos() >= 0;
+            return this.parser.getNextPos() >= 0;
         }
 
-        public Object next() throws NoSuchElementException
+        /**
+         * @return
+         * @throws NoSuchElementException
+         */
+        public String next() throws NoSuchElementException
         {
             try
             {
-                return parser.getOneValue();
+                return this.parser.getOneValue();
             }
             catch (Throwable cause)
             {
@@ -82,6 +92,9 @@ public class ExcelCSVFieldizer
             }
         }
 
+        /**
+         * @throws UnsupportedOperationException
+         */
         public void remove() throws UnsupportedOperationException
         {
             throw new UnsupportedOperationException();
