@@ -83,7 +83,7 @@ public class Test
             {
                 e.printStackTrace();
             }
-            ref().x = x;
+            this.x = x;
         }
         public void undo()
         {
