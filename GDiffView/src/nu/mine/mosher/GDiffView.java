@@ -147,6 +147,7 @@ public class GDiffView extends JFrame
     /**
      * @param rs
      * @param x
+     * @return
      */
     private static byte roll(byte[] rs, byte x)
     {
