@@ -84,7 +84,7 @@ public class MainFrame extends JFrame
 
         DefaultMutableTreeNode nFiles = new DefaultMutableTreeNode("Files");
         List rFiles = new ArrayList();
-        vol.getFiles(;)
+        vol.getFiles(rFiles);
         for (Iterator i = rFiles.iterator(); i.hasNext();)
         {
             VolumeFile file = (VolumeFile)i.next();
