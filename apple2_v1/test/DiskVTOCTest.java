@@ -1,3 +1,10 @@
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
 import junit.framework.TestCase;
 /*
  * Created on Sep 23, 2004
@@ -23,26 +30,55 @@ public class DiskVTOCTest extends TestCase
 
     /**
      * test VTOC for DOS 3.3 System Master (Aug. 25, 1980), T$11 S$00
+     * @throws IOException
      */
-    public void testVTOC_Dos33_Master_19800825()
+    public void testVTOC_Dos33_Master_19800825() throws IOException
     {
-        assertTrue(Disk.isDos33VTOC(Hex2Bin.hex2Bin(
-        "04 11 0F 03 00 00 FE 00 00 00 00 00 00 00 00 00 "+
-        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
-        "00 00 00 00 00 00 00 7A 00 00 00 00 00 00 00 00 "+
-        "0D FF 00 00 23 10 00 01 00 00 00 00 00 00 00 00 "+
-        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
-        "00 00 00 00 00 00 00 00 00 00 00 00 00 0F 00 00 "+
-        "FF FF 00 00 00 00 00 00 00 7F 00 00 01 FF 00 00 "+
-        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
-        "FF E0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
-        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
-        "00 00 00 00 00 03 00 00 00 00 00 00 00 00 00 00 "+
-        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
-        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
-        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
-        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
-        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ")));
+//        assertTrue(Disk.isDos33VTOC(Hex2Bin.hex2Bin(
+//        "04 11 0F 03 00 00 FE 00 00 00 00 00 00 00 00 00 "+
+//        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+//        "00 00 00 00 00 00 00 7A 00 00 00 00 00 00 00 00 "+
+//        "0D FF 00 00 23 10 00 01 00 00 00 00 00 00 00 00 "+
+//        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+//        "00 00 00 00 00 00 00 00 00 00 00 00 00 0F 00 00 "+
+//        "FF FF 00 00 00 00 00 00 00 7F 00 00 01 FF 00 00 "+
+//        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+//        "FF E0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+//        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+//        "00 00 00 00 00 03 00 00 00 00 00 00 00 00 00 00 "+
+//        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+//        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+//        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+//        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+//        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ")));
+        URL url = this.getClass().getClassLoader().getResource("Dos33_Master_19800825.dsk");
+        byte[] rbDisk;
+        InputStream fileDisk = null;
+        try
+        {
+            fileDisk = url.openStream();
+            rbDisk = new byte[fileDisk.available()];
+            fileDisk.read(rbDisk);
+        }
+        finally
+        {
+            if (fileDisk != null)
+            {
+                try
+                {
+                    fileDisk.close();
+                }
+                catch (Throwable e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        Disk disk = new Disk(rbDisk);
+
+        List rVTOC = new ArrayList();
+        disk.findDos33VTOC(rVTOC);
     }
 
     /**
