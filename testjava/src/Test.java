@@ -77,7 +77,7 @@ public class Test
         System.out.println(s);
 
         String s2 = br2.readLine();
-        System.err.println(s);
+        System.err.println(s2);
 
         while (s != null)
         {
