@@ -41,7 +41,12 @@ public class Dos33CatalogEntry
         for (int i = 0; i < nameOrig.length; ++i)
         {
             byte c = nameOrig[i];
-            sb.append((char)(byte)(c & 0x0000007F));
+            byte byt = (byte)(c & 0x0000007F);
+            if (byt < ' ')
+            {
+                byt += '@';
+            }
+            sb.append((char)byt);
         }
         this.name = sb.toString().trim();
     }
