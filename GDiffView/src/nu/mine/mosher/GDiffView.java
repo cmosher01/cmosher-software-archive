@@ -115,6 +115,15 @@ public class GDiffView extends JFrame
         StyleConstants.setItalic(style,false);
         styles.put("highlight",style);
 
+        style = new SimpleAttributeSet();
+        StyleConstants.setFontFamily(style,"Courier");
+        StyleConstants.setFontSize(style,10);
+        StyleConstants.setBackground(style,new Color(20,194,20));
+        StyleConstants.setForeground(style,Color.black);
+        StyleConstants.setBold(style,false);
+        StyleConstants.setItalic(style,false);
+        styles.put("insert",style);
+
         docSrc = new DefaultStyledDocument();
         paneSrc = new JTextPaneNoWrap(docSrc);
         paneSrc.setEditable(false);
