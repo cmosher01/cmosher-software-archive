@@ -278,7 +278,7 @@ public class Disk
                         }
                         catch (InvalidPosException e)
                         {
-                            return 0;
+                            throw new RuntimeException("shouldn't happen");
                         }
                         tsmapMaps.mark(tsm);
                     }
