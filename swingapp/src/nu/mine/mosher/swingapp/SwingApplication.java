@@ -10,7 +10,7 @@ import javax.swing.SwingUtilities;
  * 
  * @author Chris Mosher
  */
-public class Ja2
+public class Application
 {
 //    private Ja2GUI mGUI;
     private static Application me;
@@ -21,7 +21,7 @@ public class Ja2
      * @param eh
      * @param ch
      */
-    public Ja2(ExceptionHandler eh, CommandLineArgHandler ch)
+    public Application(ExceptionHandler eh, CommandLineArgHandler ch)
     {
         me = this;
         this.mExceptionHandler = eh;
