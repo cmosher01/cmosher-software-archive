@@ -33,4 +33,14 @@ public final class UndoableReference
     {
         state = undoer.redo(state);
     }
+
+    public boolean canUndo()
+    {
+        return undoer.canUndo();
+    }
+
+    public boolean canRedo()
+    {
+        return undoer.canRedo();
+    }
 }
