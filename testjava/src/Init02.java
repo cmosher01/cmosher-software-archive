@@ -1,4 +1,7 @@
-/*File Init02.java
+
+/*
+
+File Init02.java
 Copyright 2003 R.G.Baldwin
 
 Illustrates the use of instance initializers.
