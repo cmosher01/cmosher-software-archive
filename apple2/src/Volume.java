@@ -58,9 +58,6 @@ public class Volume
         boot = new VolumeBoot();
         boot.readFromMedia(disk);
 
-        dos = new VolumeDOS();
-        dos.readFromMedia(disk);
-
         for (Iterator i = rAllTSMaps.iterator(); i.hasNext();)
         {
             DiskPos pos = (DiskPos)i.next();
@@ -71,6 +68,10 @@ public class Volume
                 rFileRecovered.add(f);
             }
         }
+
+        // TODO check for DOS exists
+        dos = new VolumeDOS();
+        dos.readFromMedia(disk);
 
         List rKnownSectors = new ArrayList();
         getUsedCatalog(rKnownSectors);
