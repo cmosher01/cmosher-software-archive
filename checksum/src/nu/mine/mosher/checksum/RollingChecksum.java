@@ -66,10 +66,10 @@ public class RollingChecksum
      */
     public void increment(byte xk, byte xlplus1)
     {
-        int a = checksum & 0xFFFF;
+        int a = checksum & 0x0000FFFF;
         a += xlplus1-xk;
 
-        int b = (checksum >> 16) & 0xFFFF;
+        int b = (checksum >> 16) & 0x0000FFFF;
         b += a-len*xk;
 
         buildChecksum(a,b);
