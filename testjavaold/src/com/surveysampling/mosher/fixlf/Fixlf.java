@@ -23,7 +23,14 @@ public class Fixlf
         }
         finally
         {
-            br.close();
+            try
+            {
+                br.close();
+            }
+            catch (Throwable e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 }
