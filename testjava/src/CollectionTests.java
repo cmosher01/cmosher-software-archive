@@ -10,17 +10,12 @@ public final class CollectionTests
         throw new UnsupportedOperationException();
     }
 
-    public static void main(String rArg[])
+    public static void main(String rArg[]) throws Throwable
     {
-        try
-        {
-            test();
-        }
-        catch (Throwable e)
-        {
-            e.printStackTrace();
-        }
+        test();
     }
+
+
 
     private static void test() throws Throwable
     {
