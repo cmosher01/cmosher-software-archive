@@ -21,6 +21,7 @@ public class BinDiff
     {
     }
 
+    private int lastmark;
     private static final int START = 0;
     private static final int COPY = 1;
     private static final int SKIP = 2;
@@ -177,19 +178,20 @@ public class BinDiff
         }
     }
 
-	protected boolean  difFindMatch()
+	protected boolean  difFindMatch() throws IOException
     {
         f2.mark();
 
         boolean endoffile = false;
-        while (cs-- && !endoffile && !difMatch(f1, f2, cm))
+        int cs = cMaxSearch;
+        while ((cs-- > 0) && !endoffile && !difMatch())
         {
-			endoffile = fgetc(f2) == EOF;
+			endoffile = (f2.read() == EOF);
         }
 
-        boolean found = ()!endoffile && (cs > 0));
+        boolean found = (!endoffile && (cs > 0));
 
-        * fmark = ftell(f2);
+        lastmark = f2.tell();
 
         f2.reset();
 
@@ -202,7 +204,7 @@ public class BinDiff
         f2.mark();
 
         boolean same = true;
-        for (int i = 0; i < cMaxSearch && same; ++i)
+        for (int i = 0; i < cMinMatch && same; ++i)
         {
             int c1 = f1.read();
             int c2 = f2.read();
