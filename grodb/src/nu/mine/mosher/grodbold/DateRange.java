@@ -7,7 +7,7 @@ import nu.mine.mosher.core.Immutable;
 
 public class DateRange implements Immutable, Serializable, Comparable
 {
-	/*
+    /*
 	 * YMD always represent Gregorian calendar.
 	 * Range of possible dates is given by earliest
 	 * thru latest (inclusive).
@@ -23,6 +23,8 @@ public class DateRange implements Immutable, Serializable, Comparable
 	private final TimeZone timeZone;
 
 	private final boolean circa;
+
+	private final int hash;
 
 
 
@@ -45,6 +47,8 @@ public class DateRange implements Immutable, Serializable, Comparable
         this.minute = minute;
         this.timeZone = timeZone;
 		this.circa = circa;
+
+		this.hash = getHash();
     }
 
 	/**
@@ -124,4 +128,26 @@ public class DateRange implements Immutable, Serializable, Comparable
     {
     	return hash;
     }
+
+	private int getHash()
+	{
+		int h = 17;
+
+		h *= 37;
+		h += earliest.hashCode();
+		h *= 37;
+		h += latest.hashCode();
+		h *= 37;
+		h += julian ? 0 : 1;
+		h *= 37;
+		h += hour;
+		h *= 37;
+		h += minute;
+		h *= 37;
+		h += timeZone.hashCode();
+		h *= 37;
+		h += circa ? 0 : 1;
+
+		return h;
+	}
 }
