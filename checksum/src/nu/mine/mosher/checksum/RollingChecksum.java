@@ -5,6 +5,7 @@ package nu.mine.mosher.checksum;
 
 /**
  * Computes an efficient, but weak, rolling checksum.
+ * Based on Mark Adler's 32-bit checksum algorithm.
  * 
  * @author Chris Mosher
  */
