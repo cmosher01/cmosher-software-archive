@@ -231,7 +231,7 @@ public class DiskPos implements Comparable
     /**
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
-    public int compareTo(Object o)
+    public int compareTo(Object obj)
     {
         DiskPos that = (DiskPos)obj;
         if (this.iDisk < that.iDisk)
