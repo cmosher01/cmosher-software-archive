@@ -70,7 +70,6 @@ public class DiskPos
 
     /**
      * @param track
-     * @param allowLarge
      * @throws InvalidPosException
      */
     private void verifyTrack(int track) throws InvalidPosException
