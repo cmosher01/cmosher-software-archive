@@ -21,5 +21,9 @@ public class ArgumentDefinition
     {
         this.name = name;
         this.desc = desc;
+        if (this.desc == null)
+        {
+            throw new NullPointerException();
+        }
     }
 }
