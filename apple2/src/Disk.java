@@ -123,11 +123,32 @@ public class Disk
         {
             DiskPos pos = (DiskPos)i.next();
             byte[] rb = readSector(pos);
-            if (isDos33VTOC(rb))
+
+            if (DiskPos.isValidTrackSectorPointer(sector[1],sector[2]))
             {
-                rPosVtoc.add(pos);
+                DiskPos cat = new DiskPos();
+                cat.setTS(sector[1], sector[2]);
+                if (isDos33CatalogSector(cat))
+                {
+                    rPosVtoc.add(pos);
+                }
             }
         }
+    }
+
+    /**
+     * @param sector
+     * @return
+     */
+    public boolean isDos33VTOC(DiskPos pos)
+    {
+        byte[] sector = readSector(pos);
+        return
+            (sector[3]==3 || sector[3]==2 || sector[3]==1) &&
+            sector[4]==0 &&
+            (sector[5]==0 || sector[5]==4) &&
+            (match(sector,0x34,new byte[]{0x23,0x10,0x00,0x01}) || match(sector,0x34,new byte[]{0x23,0x10,0x01,0x00})) &&
+            match(sector,0x3a,new byte[]{0x00,0x00});
     }
 
     /**
@@ -182,19 +203,19 @@ public class Disk
         }
     }
 
-    /**
-     * @param sector
-     * @return
-     */
-    static boolean isDos33VTOC(byte[] sector)
-    {
-        return
-            (sector[3]==3 || sector[3]==2 || sector[3]==1) &&
-            sector[4]==0 &&
-            (sector[5]==0 || sector[5]==4) &&
-            (match(sector,0x34,new byte[]{0x23,0x10,0x00,0x01}) || match(sector,0x34,new byte[]{0x23,0x10,0x01,0x00})) &&
-            match(sector,0x3a,new byte[]{0x00,0x00});
-    }
+//    /**
+//     * @param sector
+//     * @return
+//     */
+//    static boolean isDos33VTOC(byte[] sector)
+//    {
+//        return
+//            (sector[3]==3 || sector[3]==2 || sector[3]==1) &&
+//            sector[4]==0 &&
+//            (sector[5]==0 || sector[5]==4) &&
+//            (match(sector,0x34,new byte[]{0x23,0x10,0x00,0x01}) || match(sector,0x34,new byte[]{0x23,0x10,0x01,0x00})) &&
+//            match(sector,0x3a,new byte[]{0x00,0x00});
+//    }
 
     /**
      * @param rPosCat
