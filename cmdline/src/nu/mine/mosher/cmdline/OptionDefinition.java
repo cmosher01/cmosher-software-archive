@@ -32,4 +32,20 @@ public class OptionDefinition
             throw new IllegalArgumentException("long option must be 2 or more characters in length");
         }
     }
+    public String getDesc()
+    {
+        return desc;
+    }
+    public boolean hasValue()
+    {
+        return hasValue;
+    }
+    public String getOptionLong()
+    {
+        return optionLong;
+    }
+    public char getOptionShort()
+    {
+        return optionShort;
+    }
 }
