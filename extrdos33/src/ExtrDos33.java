@@ -128,7 +128,14 @@ public class ExtrDos33
 			return;
 		}
 
-		if (doss.containsKey(rbc))
+		if (doss.containsKey(dos))
+		{
+//			doss
+		}
+		else
+		{
+		}
+
 		File saveDos = new File(dirNew,nextDosFileName());
 		System.out.println("Saving Tracks $00-$03 to file: "+saveDos.getAbsolutePath());
 
