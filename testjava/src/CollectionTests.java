@@ -11,7 +11,7 @@ public final class CollectionTests
     {
         ArrayList somelist = new ArrayList();
         somelist.add("test one");
-        somelist.add("test two");
+        somelist.add(new Integer(4));
         somelist.add("test three");
 
         String[] rs = (String[])somelist.toArray(new String[somelist.size()]);
