@@ -22,9 +22,10 @@ public final class ImmutableReference implements Comparable, Serializable
 
     public Object clone() throws CloneNotSupportedException
     {
-        ImmutableReference clon = (ImmutableReference)super.clone();
-        clon.ref = object();
-        return clon;
+//        ImmutableReference clon = (ImmutableReference)super.clone();
+//        clon.ref = object();
+//        return clon;
+        return super.clone();
     }
 
     public String toString()
