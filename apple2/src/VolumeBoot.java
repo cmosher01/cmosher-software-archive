@@ -203,4 +203,12 @@ public class VolumeBoot extends VolumeEntity
         p[0xFE] += offset;
         return p;
     }
+
+    /**
+     * @return
+     */
+    public String getIdent()
+    {
+        return ident;
+    }
 }
