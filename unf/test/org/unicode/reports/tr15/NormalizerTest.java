@@ -16,7 +16,11 @@ public class NormalizerTest extends TestCase
      */
     public void testNormalizeStringStringBuffer()
     {
+		assertNormalize("","");
+		assertNormalize("a","a");
+		assertNormalize("Chris","Chris");
 		assertNormalize("\u0041\u030a","\u00c5");
+		assertNormalize("\u212b","\u00c5");
     }
 
 	protected void assertNormalize(String pre, String comp)
