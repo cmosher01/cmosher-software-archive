@@ -30,8 +30,7 @@ public class GROapplet extends JApplet
 
     public GROapplet() throws HeadlessException
     {
-        enableEvents(AWTEvent.MOUSE_EVENT_MASK);
-        enableEvents(AWTEvent.MOUSE_MOTION_EVENT_MASK);
+        enableEvents(AWTEvent.MOUSE_EVENT_MASK|AWTEvent.MOUSE_MOTION_EVENT_MASK);
     }
 
     public void init()
@@ -131,8 +130,6 @@ public class GROapplet extends JApplet
     protected void tryinit() throws Exception
     {
         useOSLookAndFeel();
-
-        enableEvents(AWTEvent.MOUSE_MOTION_EVENT_MASK);
 
         InputStream streamTree;
 
