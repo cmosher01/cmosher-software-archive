@@ -37,11 +37,11 @@ public class Pair
         return clon;
     }
 
-    public boolean equals(Object obj)
+    public boolean equals(Object o)
     {
-        if (!(obj instanceof Pair))
+        if (!(o instanceof Pair))
             return false;
-        Pair that = (Pair)obj;
+        Pair that = (Pair)o;
 
         return eq(this.a,that.a) && eq(this.b,that.b);
     }
@@ -63,7 +63,7 @@ public class Pair
         return x.equals(y);
     }
 
-    public int compareTo(Object obj)
+    public int compareTo(Object o)
     {
     }
 }
