@@ -8,7 +8,7 @@ import java.util.List;
 
 public class TestThreadIO
 {
-    private static final int THREADS = 1020;
+    private static final int THREADS = 2000;
 
     private static class ReadFormRunner implements Runnable
     {
