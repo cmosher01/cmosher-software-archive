@@ -64,7 +64,7 @@ public class GDiffView extends JFrame
     private int rowLen = nibs + 2 + 4 * cCol + 1;
 
     private StringBuffer sb;
-    private String trg;
+    private StringBuffer trg;
 
     private long beginSrc;
 
@@ -416,6 +416,7 @@ public class GDiffView extends JFrame
         gdiff.read(); // ignore version
 
         GDiffCmd g = getGDiff(gdiff);
+        trg = new StringBuffer(sb.length());
         while (!(g instanceof GDiffEnd))
         {
             if (g instanceof GDiffData)
@@ -425,7 +426,7 @@ public class GDiffView extends JFrame
             else
             {
                 GDiffCopy gc = (GDiffCopy)g;
-                sb.substring((int)gc.getRange().getBegin(),(int)gc.getRange().getLimit());
+                trg.append(sb.substring((int)gc.getRange().getBegin(),(int)gc.getRange().getLimit()));
             }
             g = getGDiff(gdiff);
         }
