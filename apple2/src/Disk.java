@@ -260,7 +260,7 @@ public class Disk
     {
         int lo = sector[i++];
         int hi = sector[i];
-        return (lo | (hi << 8)) & 0x7F;
+        return (lo | (hi << 8)) & 0xFF;
     }
 
     /**
