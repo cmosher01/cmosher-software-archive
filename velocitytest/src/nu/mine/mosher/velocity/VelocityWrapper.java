@@ -120,19 +120,23 @@ public class VelocityWrapper
              * Wrap the caller's Writer in a BufferedWriter,
              * if it's not already a BufferedWriter.
              */
+            boolean localBuffer = !(out instanceof BufferedWriter);
             BufferedWriter writer;
-            if (out instanceof BufferedWriter)
+            if (localBuffer)
             {
-                writer = (BufferedWriter)out;
+                writer = new BufferedWriter(out);
             }
             else
             {
-                writer = new BufferedWriter(out);
+                writer = (BufferedWriter)out;
             }
 
             velocity.mergeTemplate(inputTemplate.getName(),context,writer);
 
-            writer.flush();
+            if (localBuffer)
+            {
+                writer.flush();
+            }
         }
         catch (Throwable e)
         {
