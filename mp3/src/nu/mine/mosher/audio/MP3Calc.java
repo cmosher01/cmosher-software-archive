@@ -192,7 +192,7 @@ public class MP3Calc
     	int n = 0;
     	for (int i = 0; i < 32; ++i)
         {
-        	n |= h&0x8000000;
+        	n |= (h & 1);
         	n <<= 1;
         }
     	return n;
