@@ -81,6 +81,8 @@ public class TimeOfDayTest extends TestCase
      */
     public void testEqualsObject()
     {
+        TimeOfDay tod2 = new TimeOfDay(Calendar.getInstance(),17,34,12,367);
+        assertEquals(tod2,tod);
     }
 
     public void testCompareTo()
