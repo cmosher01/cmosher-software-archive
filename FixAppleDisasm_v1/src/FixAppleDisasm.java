@@ -220,12 +220,10 @@ public class FixAppleDisasm
 				{
 					s = s.substring(5).trim();
 					StringTokenizer st = new StringTokenizer(s," ");
-					System.out.println("toks: "+st.countTokens());
 					int n = st.countTokens();
 					for (int i = 0; i < n; ++i)
 					{
 						String h = st.nextToken();
-						System.out.println(h);
 						int x = -1;
 						try
 						{
