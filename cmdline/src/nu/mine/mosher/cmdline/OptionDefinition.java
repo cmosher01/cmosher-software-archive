@@ -17,7 +17,7 @@ public class OptionDefinition
 
     /**
      * @param optionLong
-     * @param abbrev
+     * @param optionShort
      * @param desc
      */
     public OptionDefinition(final String optionLong, final char optionShort, final String desc, boolean hasValue)
