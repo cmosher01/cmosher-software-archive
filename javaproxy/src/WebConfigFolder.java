@@ -75,6 +75,9 @@ class WebConfigFolder implements ActionListener, ConfigInterface
      */
     WebConfigFolder(Frame p, String title)
     {
+        String s = title;
+        title = s;
+
         parentFrame = p;
         fldr = new Folder(p,this,"Server Configuration");
         fldr.setBounds(new Rectangle(100,100,500,320));
