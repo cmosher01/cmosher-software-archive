@@ -80,4 +80,15 @@ public class Util
         }
         return r;
     }
+
+//        public static ArrayList list(Iterable i)
+//        {
+//            ArrayList r = new ArrayList();
+//            Iterator it = i.iterator();
+//            while (it.hasNext())
+//            {
+//                r.add(it.next());
+//            }
+//            return r;
+//        }
 }
