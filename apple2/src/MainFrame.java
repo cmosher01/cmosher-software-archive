@@ -59,6 +59,7 @@ public class MainFrame extends JFrame
     {
         Disk disk = Apple2.readDisk(f);
         Volume vol = new Volume();
+        boolean bootonly = false;
         try
         {
             vol.readFromMedia(disk);
@@ -66,7 +67,7 @@ public class MainFrame extends JFrame
         catch (VTOCNotFoundException e)
         {
             System.out.println(f.getAbsolutePath()+" [no VTOC]");
-            return;
+            bootonly = true;
         }
         catch (MultipleVTOCException e)
         {
@@ -78,71 +79,74 @@ public class MainFrame extends JFrame
 
         DefaultMutableTreeNode nDisk = new DefaultMutableTreeNode(f.getName());
         DefaultMutableTreeNode nBoot = new DefaultMutableTreeNode("Bootstrap Loader ("+vol.getBoot().getIdent()+")");
-        s.append("APPLE ][ DOS 3.3");
-        VolumeDOS dos = vol.getDos();
-        if (dos != null)
-        {
-            dos.appendSig(s);
-        }
-        else
-        {
-            s.append(" [unknown type]");
-        }
-        DefaultMutableTreeNode nDos = new DefaultMutableTreeNode(s);
-
-        DefaultMutableTreeNode nCat = new DefaultMutableTreeNode("Catalog");
-
-        DefaultMutableTreeNode nFiles = new DefaultMutableTreeNode("Files");
-        List rFiles = new ArrayList();
-        vol.getFiles(rFiles);
-        for (Iterator i = rFiles.iterator(); i.hasNext();)
-        {
-            VolumeFile file = (VolumeFile)i.next();
-            nFiles.add(new DefaultMutableTreeNode(file.getCatalogEntry().getName()));
-        }
-
-        DefaultMutableTreeNode nFilesRecovered = new DefaultMutableTreeNode("Recovered Files");
-        List rFilesRecovered = new ArrayList();
-        vol.getFilesRecovered(rFilesRecovered);
-        for (Iterator i = rFilesRecovered.iterator(); i.hasNext();)
-        {
-            VolumeFileRecovered file = (VolumeFileRecovered)i.next();
-            List rPos = new ArrayList();
-            file.getTSMap().getPos(rPos);
-            DiskPos vs = (DiskPos)rPos.get(0);
-            nFilesRecovered.add(new DefaultMutableTreeNode("recovered @ "+vs.toStringTS()));
-        }
-
-        DefaultMutableTreeNode nOrphaned = new DefaultMutableTreeNode("Orphaned Data");
-        List rOrphaned = new ArrayList();
-        vol.getOrphaned().getUsed(rOrphaned);
-        for (Iterator i = rOrphaned.iterator(); i.hasNext();)
-        {
-            DiskPos p = (DiskPos)i.next();
-            nOrphaned.add(new DefaultMutableTreeNode(p.toStringTS()));
-        }
-
-        DefaultMutableTreeNode nBlank = new DefaultMutableTreeNode("Blank Sectors");
-
-        DefaultMutableTreeNode nMap = new DefaultMutableTreeNode("Track/Sector Map");
-
         nDisk.add(nBoot);
-        nDisk.add(nDos);
-        nDisk.add(nCat);
-        if (!rFiles.isEmpty())
+        if (!bootonly)
         {
-            nDisk.add(nFiles);
+            s.append("APPLE ][ DOS 3.3");
+            VolumeDOS dos = vol.getDos();
+            if (dos != null)
+            {
+                dos.appendSig(s);
+            }
+            else
+            {
+                s.append(" [unknown type]");
+            }
+            DefaultMutableTreeNode nDos = new DefaultMutableTreeNode(s);
+    
+            DefaultMutableTreeNode nCat = new DefaultMutableTreeNode("Catalog");
+    
+            DefaultMutableTreeNode nFiles = new DefaultMutableTreeNode("Files");
+            List rFiles = new ArrayList();
+            vol.getFiles(rFiles);
+            for (Iterator i = rFiles.iterator(); i.hasNext();)
+            {
+                VolumeFile file = (VolumeFile)i.next();
+                nFiles.add(new DefaultMutableTreeNode(file.getCatalogEntry().getName()));
+            }
+    
+            DefaultMutableTreeNode nFilesRecovered = new DefaultMutableTreeNode("Recovered Files");
+            List rFilesRecovered = new ArrayList();
+            vol.getFilesRecovered(rFilesRecovered);
+            for (Iterator i = rFilesRecovered.iterator(); i.hasNext();)
+            {
+                VolumeFileRecovered file = (VolumeFileRecovered)i.next();
+                List rPos = new ArrayList();
+                file.getTSMap().getPos(rPos);
+                DiskPos vs = (DiskPos)rPos.get(0);
+                nFilesRecovered.add(new DefaultMutableTreeNode("recovered @ "+vs.toStringTS()));
+            }
+    
+            DefaultMutableTreeNode nOrphaned = new DefaultMutableTreeNode("Orphaned Data");
+            List rOrphaned = new ArrayList();
+            vol.getOrphaned().getUsed(rOrphaned);
+            for (Iterator i = rOrphaned.iterator(); i.hasNext();)
+            {
+                DiskPos p = (DiskPos)i.next();
+                nOrphaned.add(new DefaultMutableTreeNode(p.toStringTS()));
+            }
+    
+            DefaultMutableTreeNode nBlank = new DefaultMutableTreeNode("Blank Sectors");
+    
+            DefaultMutableTreeNode nMap = new DefaultMutableTreeNode("Track/Sector Map");
+    
+            nDisk.add(nDos);
+            nDisk.add(nCat);
+            if (!rFiles.isEmpty())
+            {
+                nDisk.add(nFiles);
+            }
+            if (!rFilesRecovered.isEmpty())
+            {
+                nDisk.add(nFilesRecovered);
+            }
+            if (!rOrphaned.isEmpty())
+            {
+                nDisk.add(nOrphaned);
+            }
+            nDisk.add(nBlank);
+            nDisk.add(nMap);
         }
-        if (!rFilesRecovered.isEmpty())
-        {
-            nDisk.add(nFilesRecovered);
-        }
-        if (!rOrphaned.isEmpty())
-        {
-            nDisk.add(nOrphaned);
-        }
-        nDisk.add(nBlank);
-        nDisk.add(nMap);
 
         top.add(nDisk);
     }
