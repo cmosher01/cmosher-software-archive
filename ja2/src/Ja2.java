@@ -1,4 +1,4 @@
-import nu.mine.mosher.ja2.Application;
+import nu.mine.mosher.ja2.SwingApplication;
 import nu.mine.mosher.ja2.CommandLineArgHandler;
 import nu.mine.mosher.ja2.ExceptionHandler;
 import nu.mine.mosher.ja2.GUI;
@@ -28,7 +28,7 @@ public final class Ja2
         CommandLineArgHandler ch = new CommandLineArgHandler(args);
         GUI gui = new GUI();
 
-        Application app = new Application(eh,ch,gui);
+        SwingApplication app = new SwingApplication(eh,ch,gui);
 
         app.run();
     }
