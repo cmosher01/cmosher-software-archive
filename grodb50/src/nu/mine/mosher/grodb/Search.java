@@ -3,6 +3,8 @@ package nu.mine.mosher.grodb;
 import java.util.ArrayList;
 import java.util.List;
 
+import nu.mine.mosher.grodb.ui.ListEntry;
+
 /**
  * @author Chris Mosher
  * Created: Feb 7, 2004
