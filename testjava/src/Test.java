@@ -89,7 +89,11 @@ public class Test
         {
             String jarpart = uri.getSchemeSpecificPart();
             System.out.println(jarpart);
-            f = new File(uri.getPath());
+            URI urijp = URI.create(jarpart);
+            String sjp = urijp.toASCIIString();
+            System.out.println(sjp);
+            sjp = urijp.getPath();
+            System.out.println(sjp);
         }
         else
         {
