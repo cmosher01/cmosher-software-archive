@@ -1,5 +1,3 @@
-import java.awt.Component;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorSupport;
 
