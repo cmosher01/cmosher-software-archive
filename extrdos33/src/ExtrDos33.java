@@ -93,7 +93,7 @@ public class ExtrDos33
 		}
 
 		DosImage dos = new DosImage(rb);
-		if (rb[0] != 0x01 || rb[1] != 0xA5 || rb[2] != 0x27 || rb[3] != 0xC9)
+		if (!dos.hasSignature())
 		{
 			System.out.println("Track $00, Sector $0, Bytes $00-$03 are not: 01 A5 27 C9.");
 			System.out.println("therefore this doesn't appear to be a DOS 3.3 disk image; skipping.");
