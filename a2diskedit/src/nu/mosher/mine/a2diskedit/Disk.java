@@ -31,8 +31,8 @@ public class Disk implements TreeNode
 			try
 			{
 				FileInputStream fin = new FileInputStream(mFile);
-				mDiskBytes = new byte[fin.available()];
-				fin.read(mDiskBytes);
+				image = new byte[fin.available()];
+				fin.read(image);
 			}
 			catch (IOException e)
 			{
