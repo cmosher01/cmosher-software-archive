@@ -257,6 +257,15 @@ public class Range implements Comparable
         return rng.getLimit() == this.getBegin();
     }
 
+    /**
+     * If r immediately precedes s, returns a new range
+     * representing the same range at r and s combined.
+     * Likewise if s immediately precedes r. Otherwise,
+     * returns null.
+     * @param r
+     * @param s
+     * @return
+     */
     public static Range meld(Range r, Range s)
     {
         Range m = null;
