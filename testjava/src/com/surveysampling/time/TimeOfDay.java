@@ -154,6 +154,10 @@ public class TimeOfDay
             return false;
         }
         TimeOfDay that = (TimeOfDay)obj;
+        if (!this.isValid() || !that.isValid())
+        {
+            return false;
+        }
         return
             that.hours == this.hours &&
             that.minutes == this.minutes &&
