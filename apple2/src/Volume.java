@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,8 +21,8 @@ public class Volume
     private List rFileRecovered = new ArrayList(); // VolumeFileRecovered
     private VolumeBoot boot;
     private VolumeDOS dos;
-//    private VolumeUnusedBlank blank;
     private VolumeUnusedData orphaned;
+    private HashMap mapConflict;
 
     /**
      * @param disk
@@ -98,6 +99,35 @@ public class Volume
 
         orphaned = new VolumeUnusedData();
         orphaned.readFromMedia(rOrphaned,disk);
+
+        mapConflict = new HashMap(); // DiskPos to VolumeConflict
+        rKnownSectors.clear();
+        getUsedBoot(rKnownSectors);
+        List rTestSectors = new ArrayList();
+        getUsedCatalog(rTestSectors);
+        checkConflict(rKnownSectors,rTestSectors);
+        rKnownSectors.addAll(rTestSectors);
+        rTestSectors.clear();
+        getUsedNondeletedFiles(rTestSectors);
+        checkConflict(rKnownSectors,rTestSectors);
+        rKnownSectors.addAll(rTestSectors);
+        rTestSectors.clear();
+        getUsedDeletedFiles(rTestSectors);
+        checkConflict(rKnownSectors,rTestSectors);
+        rKnownSectors.addAll(rTestSectors);
+        rTestSectors.clear();
+        getUsedRecoveredFiles(rTestSectors);
+        // TODO check conflict DOS or orphaned
+    }
+
+    /**
+     * @param knownSectors
+     * @param testSectors
+     */
+    private void checkConflict(List knownSectors, List testSectors)
+    {
+        // TODO Auto-generated method stub
+        
     }
 
     /**
