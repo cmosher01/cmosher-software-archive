@@ -3,12 +3,6 @@
  */
 package nu.mine.mosher;
 
-import GDiffCmd;
-import GDiffCopy;
-import GDiffData;
-import GDiffEnd;
-import Range;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -70,6 +64,7 @@ public class GDiffView extends JFrame
     private int rowLen = nibs + 2 + 4 * cCol + 1;
 
     private StringBuffer sb;
+    private String trg;
 
     private long beginSrc;
 
@@ -410,7 +405,7 @@ public class GDiffView extends JFrame
         GDiffView frame = new GDiffView(args[0],args[1]);
     }
 
-    public void readGDiff() throws IOException
+    public void readGDiff() throws IOException, InvalidMagicBytes
     {
         BufferedInputStream gdiff = new BufferedInputStream(new FileInputStream(dif));
 
@@ -438,8 +433,9 @@ public class GDiffView extends JFrame
 
     /**
      * @param magic
+     * @throws InvalidMagicBytes
      */
-    private static void validateMagic(byte[] magic)
+    private static void validateMagic(byte[] magic) throws InvalidMagicBytes
     {
         if (
             magic.length != 4 ||
