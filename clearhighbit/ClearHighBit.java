@@ -1,20 +1,59 @@
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+
 /*
  * Created on Nov 23, 2003
- *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 
 /**
- * @author Chris
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * @author Chris Mosher
  */
 public class ClearHighBit
 {
-
-    public static void main(String[] args)
+    public static void main(String[] rArg) throws Throwable
     {
+    	if (rArg.length != 2)
+    	{
+    		System.err.println("Usage: java ClearHighBit infile outfile");
+    		System.exit(1);
+    	}
+
+    	BufferedInputStream in = null;
+		BufferedOutputStream out = null;
+    	try
+    	{
+    		in = new BufferedInputStream(new FileInputStream(rArg[0]));
+			out = new BufferedOutputStream(new FileOutputStream(rArg[1]));
+			for (int n = in.read(); n != -1; n = in.read())
+			{
+				out.write(n);
+			}
+			out.flush();
+    	}
+    	finally
+    	{
+			if (out != null)
+			{
+				try
+				{
+					out.close();
+				}
+				catch (Throwable ignore)
+				{
+				}
+			}
+    		if (in != null)
+    		{
+    			try
+    			{
+    				in.close();
+    			}
+    			catch (Throwable ignore)
+    			{
+    			}
+    		}
+    	}
     }
 }
