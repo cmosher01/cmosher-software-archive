@@ -31,8 +31,7 @@ public class HierarchyBrowserUpdater implements TreeExpansionListener
         TreePath path = event.getPath();
         FileTreeNode node = (FileTreeNode)path.getLastPathComponent();
 
-        mFrame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        mFrame.setEnabled(false);
+        beginWait();
 
         if (node.readTree())
         {
@@ -50,6 +49,12 @@ public class HierarchyBrowserUpdater implements TreeExpansionListener
 
         mFrame.setEnabled(true);
         mFrame.setCursor(Cursor.getDefaultCursor());
+    }
+
+    private void beginWait()
+    {
+        mFrame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        mFrame.setEnabled(false);
     }
 
     public void treeCollapsed(TreeExpansionEvent event)
