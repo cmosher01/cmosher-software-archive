@@ -18,5 +18,11 @@ public class A2DiskContents
 
 	public void parse(int osType)
 	{
+		if (osType == A2DiskImage.DOS33)
+		{
+		}
+		else if (osType == A2DiskImage.PRODOS)
+		{
+		}
 	}
 }
