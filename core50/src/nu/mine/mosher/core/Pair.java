@@ -48,9 +48,8 @@ public final class Pair<T extends Cloneable, U extends Cloneable> implements Clo
 		return a.hashCode() ^ b.hashCode();
 	}
 
-	public int compareTo(Pair<T,U> o)
+	public int compareTo(Pair<T,U> that)
 	{
-		Pair that = (Pair)o;
 		int c;
 		c = this.a.compareTo(that.a);
 		if (c == 0)
