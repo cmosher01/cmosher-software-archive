@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.TimeZone;
 
 import nu.mine.mosher.util.Immutable;
+import nu.mine.mosher.util.Util;
 
 public class DateRange implements Immutable, Serializable, Comparable
 {
@@ -138,26 +139,18 @@ public class DateRange implements Immutable, Serializable, Comparable
 
         if (d == 0)
         {
-        	d = this.earliest.compareTo(that.earliest);
+        	d = Util.compare(this.getApproxDay(),that.getApproxDay());
         }
 		if (d == 0)
 		{
-			d = this.latest.compareTo(that.latest);
-		}
-
-		// ??? ignore timezone in compareTo
-		if (d == 0)
-		{
-			d = this.hour-that.hour;
-		}
-		if (d == 0)
-		{
-			d = this.minute-that.minute;
-		}
-
-		if (d == 0)
-		{
-			d = (this.circa?1:0)-(that.circa?1:0);
+			if (this.circa && !that.circa)
+			{
+				d = -1;
+			}
+			if (that.circa && !this.circa)
+			{
+				d = +1;
+			}
 		}
 
         return d;
