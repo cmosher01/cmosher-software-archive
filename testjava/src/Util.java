@@ -100,10 +100,14 @@ public class Util
     public static HashSet set(Iterator i)
     {
         HashSet s = new HashSet();
+        set(i,s);
+        return s;
+    }
+    public static void set(Iterator i, HashSet set)
+    {
         while (i.hasNext())
         {
-            s.add(i.next());
+            set.add(i.next());
         }
-        return s;
     }
 }
