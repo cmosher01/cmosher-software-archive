@@ -105,6 +105,7 @@ public class TimeOfDay
      * method, then the values of this object could be invalid
      * for the given Calendar.
      * @param cal the Calendar, with date set, to have time overridden
+     * @throws IllegalStateException if the constructor was called with invalid arguments
      */
     public void getTimeOnDay(Calendar cal)
     {
