@@ -112,6 +112,9 @@ public class MySQLTest
 			case 1800:
 				parse1800(i);
 			break;
+			case 1810:
+				parse1800(i);
+			break;
 
             default:
             break;
