@@ -40,7 +40,7 @@ public class Dos33CatalogEntry
             byte c = nameOrig[i];
             sb.append((char)(byte)(c & 0x0000007F));
         }
-        this.name = sb.toString();
+        this.name = sb.toString().trim();
     }
 
 }
