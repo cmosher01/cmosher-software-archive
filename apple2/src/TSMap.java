@@ -13,7 +13,7 @@ public class TSMap
     private final boolean[] r = new boolean[DiskPos.cSectorsPerTrack*DiskPos.cTracksPerDisk];
 
     /**
-     * @param sector
+     * @param p
      */
     public void mark(DiskPos p)
     {
@@ -26,7 +26,7 @@ public class TSMap
     }
 
     /**
-     * @param sector
+     * @param p
      * @return
      */
     public boolean isMarked(DiskPos p)
