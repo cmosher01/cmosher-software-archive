@@ -233,15 +233,52 @@ public class MySQLTest
 			st.setInt(5,m0to9);
 			st.execute();
 
-			st.setInt(3,0);
+			st.setInt(3,10);
 			st.setInt(4,15);
-			st.setInt(5,m0to15);
+			st.setInt(5,m10to15);
+			st.execute();
+
+			st.setInt(3,16);
+			st.setInt(4,25);
+			st.setInt(5,m16to25);
+			st.execute();
+
+			st.setInt(3,26);
+			st.setInt(4,44);
+			st.setInt(5,m26to44);
+			st.execute();
+
+			st.setInt(3,45);
+			st.setInt(4,150);
+			st.setInt(5,m45to150);
 			st.execute();
 
 			st.setString(2,"f");
-			st.setInt(4,150);
-			st.setInt(5,f0to150);
+			st.setInt(3,0);
+			st.setInt(4,9);
+			st.setInt(5,m0to9);
 			st.execute();
+
+			st.setInt(3,10);
+			st.setInt(4,15);
+			st.setInt(5,m10to15);
+			st.execute();
+
+			st.setInt(3,16);
+			st.setInt(4,25);
+			st.setInt(5,m16to25);
+			st.execute();
+
+			st.setInt(3,26);
+			st.setInt(4,44);
+			st.setInt(5,m26to44);
+			st.execute();
+
+			st.setInt(3,45);
+			st.setInt(4,150);
+			st.setInt(5,m45to150);
+			st.execute();
+
 		}
 		finally
 		{
