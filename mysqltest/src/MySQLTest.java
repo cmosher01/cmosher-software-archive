@@ -8,6 +8,8 @@ public class MySQLTest
 {
 	private static final MySQLTest app = new MySQLTest();
 
+	private Connection db;
+
     public static void main(String[] rArg) throws Throwable
     {
     	app.run(rArg);
@@ -23,11 +25,9 @@ public class MySQLTest
 
     protected void run(String[] rArg) throws Throwable
     {
-		Class.forName("com.mysql.jdbc.Driver").newInstance();
-
-		Connection db = null;
 		try
 		{
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			db = DriverManager.getConnection("jdbc:mysql:///test","root","");
 			createSchema(db);
 		}
@@ -47,18 +47,22 @@ public class MySQLTest
 		}
     }
 
-    protected void createSchema(Connection db) throws SQLException
+	protected void createSchema() throws SQLException
+	{
+		"create table if not exists family "+
+		"( "+
+		"    id integer unsigned not null auto_increment primary key, "+
+		"    name varchar(64)"+
+		")");
+	}
+
+    protected void dbUpdate(String sql) throws SQLException
     {
         Statement st = null;
         try
         {
         	st = db.createStatement();
-        	st.executeUpdate(
-        	"create table if not exists family "+
-        	"( "+
-        	"    id integer unsigned not null auto_increment primary key, "+
-        	"    name varchar(64)"+
-        	")");
+        	st.executeUpdate(sql);
         }
         finally
         {
