@@ -72,6 +72,14 @@ public class Test
         URL x = Test.class.getClassLoader().getResource("");
         File f = new File(x.getPath());
         System.out.println(f.getCanonicalPath());
+        if (f.isDirectory())
+        {
+            System.out.println("isDirectory() --> true");
+        }
+        else
+        {
+            System.out.println("isDirectory() --> false");
+        }
 
 //        System.out.println(System.getProperty("user.name"));
 
