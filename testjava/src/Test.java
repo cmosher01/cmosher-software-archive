@@ -70,6 +70,7 @@ public class Test
 
 
         URI uri = new URI("smtp://sparky:25");
+        System.out.println(uri.toASCIIString());
 
 
 
