@@ -16,8 +16,22 @@ import java.io.RandomAccessFile;
  */
 public class BinDiff
 {
-    public static void main(String[] args)
+    public static void main(String[] rArg) throws Throwable
     {
+    	if (rArg.length != 2)
+    	{
+    		System.err.println("Usage: java BinDiff file1 file2");
+    		System.exit(1);
+    	}
+
+		RandomAccessFile f1 = new RandomAccessFile(rArg[0],"r");
+		RandomAccessFile f2 = new RandomAccessFile(rArg[1],"r");
+
+		BinDiff d = new BinDiff(f1,f2,2,64);
+		d.diff();
+
+		f2.close();
+		f1.close();
     }
 
     private static final int START = 0;
