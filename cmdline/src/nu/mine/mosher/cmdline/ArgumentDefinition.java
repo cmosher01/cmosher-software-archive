@@ -25,10 +25,5 @@ public class ArgumentDefinition
         {
             throw new NullPointerException();
         }
-
-        if (this.name.length() == 0)
-        {
-            throw new IllegalArgumentException("name must not be empty");
-        }
     }
 }
