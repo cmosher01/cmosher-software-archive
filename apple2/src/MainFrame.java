@@ -21,6 +21,10 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class MainFrame extends JFrame
 {
+    private JTree tree;
+
+
+
     /**
      * @param args
      * @throws ClassNotFoundException
@@ -55,7 +59,7 @@ public class MainFrame extends JFrame
         this.setMaximizedBounds(env.getMaximumWindowBounds());
         this.setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
 
-        JTree tree = new JTree();
+        tree = new JTree();
         JScrollPane scrollTree = new JScrollPane(tree);
         scrollTree.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollTree.setMaximumSize(new Dimension(Integer.MAX_VALUE,Integer.MAX_VALUE));
