@@ -158,6 +158,10 @@ public class FixAppleDisasm
 			}
 
 			ln.addr = addr;
+			if (nextaddr < 0)
+			{
+				nextaddr = addr;
+			}
 			if (nextaddr > 0 && nextaddr != addr)
 			{
 				System.err.print("address error @ $");
