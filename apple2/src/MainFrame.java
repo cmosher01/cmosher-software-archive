@@ -37,4 +37,13 @@ public class MainFrame extends JFrame
         super("Apple ][ DOS 3.3 Diskette Image Analyzer");
         JFrame.setDefaultLookAndFeelDecorated(true);
     }
+
+    /**
+     * 
+     */
+    private void init()
+    {
+        // TODO Auto-generated method stub
+        
+    }
 }
