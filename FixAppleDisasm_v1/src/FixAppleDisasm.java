@@ -107,11 +107,11 @@ public class FixAppleDisasm
 		BufferedWriter outbuf = null;
 		if (out instanceof BufferedWriter)
 		{
-			outbuf = (BufferedWriter)in;
+			outbuf = (BufferedWriter)out;
 		}
 		else
 		{
-			outbuf = new BufferedWriter(in);
+			outbuf = new BufferedWriter(out);
 		}
 
 		Map lines = new TreeMap();
