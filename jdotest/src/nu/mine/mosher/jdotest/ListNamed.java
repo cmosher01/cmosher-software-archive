@@ -20,7 +20,7 @@ public class ListNamed
 {
 	public static String getList(Class named)
 	{
-		if (!(named.isInstance(Named.class)))
+		if (!(Named.class.isAssignableFrom(named)))
 		{
 			return "Error";
 		}
