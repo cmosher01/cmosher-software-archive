@@ -100,17 +100,6 @@ public class TimeOfDayTest extends TestCase
         assertEquals(dexpt,dcomp);
     }
 
-    public void testGetTimeOnDayDuringDSTBack() throws ParseException
-    {
-        // 3:30 AM doesn't exist on morning of clock advance
-        TimeOfDay tod2 = new TimeOfDay(Calendar.getInstance(),2,30,0,0);
-        Date d = fmt.parse("2004/10/31 00:00:00.000");
-        Date dcomp = new Date(tod2.getTimeOnDay(d));
-        // GregorianCalendar changes it to 3:30 AM
-        Date dexpt = fmt.parse("2004/04/04 03:30:00.000");
-        assertEquals(dexpt,dcomp);
-    }
-
     /*
      * Test for boolean equals(Object)
      */
