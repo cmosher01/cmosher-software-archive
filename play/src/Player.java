@@ -11,7 +11,12 @@ import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import nu.mine.mosher.core.Immutable;
@@ -35,12 +40,28 @@ public class Player implements Immutable
     public static void main(String[] args) throws Throwable
     {
 
+		Map map = new HashMap();
+		map.put("a",new Integer(1));
+		map.put("b",new Integer(2));
+		map.put("c",new Integer(3));
 
+		Set set = new HashSet();
+		set.add("a");
+		set.add("c");
 
+		map.entrySet().retainAll(set);
 
+		for (Iterator i = map.entrySet().iterator(); i.hasNext();)
+        {
+            Map.Entry entry = (Map.Entry)i.next();
+            System.out.print(entry.getKey());
+            System.out.print(":");
+            System.out.println(entry.getValue().toString());
+        }
 
-		List x = new ArrayList();
-		String[] rs = (String[])x.toArray(new String[x.size()]);
+//		List x = new ArrayList();
+//		String[] rs = (String[])x.toArray(new String[x.size()]);
+//		System.out.println(rs.length);
 
 
 
