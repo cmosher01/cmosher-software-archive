@@ -49,6 +49,11 @@ public class NormalizerTest extends TestCase
 					String tok = st.nextToken();
 					rCol[iCol++] = hexToString(tok);
 				}
+				assertNormalize(rCol[1],rCol[0]);
+				assertNormalize(rCol[1],rCol[1]);
+				assertNormalize(rCol[1],rCol[2]);
+				assertNormalize(rCol[3],rCol[3]);
+				assertNormalize(rCol[3],rCol[4]);
 			}
 		}
 		in.close();
