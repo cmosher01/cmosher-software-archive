@@ -248,7 +248,6 @@ public class GDiffView extends JFrame
         cnsTrg.setConstraint(SpringLayout.SOUTH,layout.getConstraint(SpringLayout.SOUTH,contentPane));
         cnsTrg.setConstraint(SpringLayout.EAST,layout.getConstraint(SpringLayout.EAST,contentPane));
         cnsTrg.setConstraint(SpringLayout.WEST,cnsDif.getConstraint(SpringLayout.EAST));
-//        contentPane.add(spl2,BorderLayout.CENTER);
 
         contentPane.add(scrSrc,cnsSrc);
         contentPane.add(scrGDiff,cnsDif);
