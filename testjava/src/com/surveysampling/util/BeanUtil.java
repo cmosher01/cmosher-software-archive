@@ -325,9 +325,9 @@ public final class BeanUtil
     private static Object getValueFromBeanInfoPropertyEditor(String attrValue, Class propertyEditorClass)
         throws InstantiationException, IllegalAccessException
     {
-        PropertyEditor pe = (PropertyEditor)propertyEditorClass.newInstance();
-        pe.setAsText(attrValue);
-        return pe.getValue();
+        PropertyEditor propEditor = (PropertyEditor)propertyEditorClass.newInstance();
+        propEditor.setAsText(attrValue);
+        return propEditor.getValue();
     }
 
     private static Object getValueFromPropertyEditorManager(Class attrClass, String attrValue) throws ParameterParseException
