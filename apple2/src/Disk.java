@@ -24,7 +24,7 @@ public class Disk
     }
 
     /**
-     * @param pos
+     * @param newPos
      */
     public void seek(DiskPos newPos)
     {
