@@ -6,6 +6,8 @@
  */
 package nu.mine.mosher.jdotest;
 
+import javax.jdo.PersistenceManager;
+
 /**
  * @author Chris
  *
@@ -16,4 +18,5 @@ public interface Named
 {
 	String getName();
 	String getId();
+	void setPerm(PersistenceManager pm);
 }
