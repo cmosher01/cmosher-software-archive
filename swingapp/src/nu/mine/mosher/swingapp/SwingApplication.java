@@ -77,16 +77,16 @@ public class SwingApplication
 
     public GUI getGUI()
     {
-        return mGUI;
+        return this.mGUI;
     }
 
     public ExceptionHandler getExceptionHandler()
     {
-        return mExceptionHandler;
+        return this.mExceptionHandler;
     }
 
     public CommandLineArgHandler getCommandLineArgHandler()
     {
-        return mCommandLineArgHandler;
+        return this.mCommandLineArgHandler;
     }
 }
