@@ -33,7 +33,7 @@ public final class Cloner
 			Object newClone = methodClone.invoke(cloneableObject,null);
 			if (!(newClone instanceof T))
 			{
-				throw new CastClassException();
+				throw new ClassCastException();
 			}
 			return (T)newclone;
 		}
