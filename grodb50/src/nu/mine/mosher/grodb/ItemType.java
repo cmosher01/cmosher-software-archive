@@ -6,10 +6,10 @@
  */
 public class ItemType<T>
 {
-	private T /*ItemTypeEnum*/ known;
+	private T known;
 	private String other;
 
-	public ItemType(T /*ItemTypeEnum*/ known)
+	public ItemType(T known)
 	{
 		this.known = known;
 	}
@@ -30,7 +30,7 @@ public class ItemType<T>
 		}
 		return s;
 	}
-	public boolean isa(T /*ItemTypeEnum*/ x)
+	public boolean isa(T x)
 	{
 		return (known != null && known.equals(x));
 	}
