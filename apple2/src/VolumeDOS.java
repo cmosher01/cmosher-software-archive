@@ -32,7 +32,7 @@ public class VolumeDOS extends VolumeEntity
         }
         while (!p.equals(pLim))
         {
-            rPosDOS.add(p);
+            rPosDOS.add(p.clone());
             p.advance(DiskPos.cSector);
         }
     }
