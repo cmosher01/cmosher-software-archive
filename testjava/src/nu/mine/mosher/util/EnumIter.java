@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
  * 
  * @author Chris Mosher
  */
-public class EnumIter extends Object implements Iterator
+public class EnumIter implements Iterator
 {
     private final Enumeration e;
 
