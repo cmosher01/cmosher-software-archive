@@ -16,6 +16,7 @@ public class MySQLTest
 
     public static void main(String[] rArg) throws Throwable
     {
+		LoggingInitializer.init();
     	app.run(rArg);
     }
 
@@ -31,7 +32,6 @@ public class MySQLTest
     {
 		try
 		{
-			LoggingInitializer.init();
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			db = DriverManager.getConnection("jdbc:mysql:///test","root","");
 			log.info("Creating schema...");
