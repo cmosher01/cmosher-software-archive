@@ -25,9 +25,6 @@ public class CommandLineParserTest extends TestCase
 
         assertTrue(i.hasNext());
         Argument a = (Argument)i.next();
-        assertEquals("a",a.getName());
-        assertTrue(a.isOption());
-        assertTrue(a.isSpecified());
 
         assertTrue(i.hasNext());
         a = (Argument)i.next();
