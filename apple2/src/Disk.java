@@ -205,7 +205,7 @@ public class Disk
 //                        {
                             if (sector[ce] == -1)
                             {
-                                entries.add(convertASCII(sector,ce+3,29).trim()+" [deleted]");
+                                entries.add(convertASCII(sector,ce+3,29).trim()+" [deleted] [T/S map @ T$"+Integer.toHexString(sector[ce+32])+", S$"+Integer.toHexString(sector[ce+1])+"]");
                             }
                             else
                             {
