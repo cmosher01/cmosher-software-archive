@@ -26,8 +26,8 @@ public class TestExec
     protected static void execDumpOutput() throws InterruptedException, IOException
     {
         System.out.println("starting subprocess...");
-        p = Runtime.getRuntime().exec("java -cp . Small");
 
+        p = Runtime.getRuntime().exec("java -cp . Small");
         procout = new LineDumper(new InputStreamReader(p.getInputStream()));
         procerr = new LineDumper(new InputStreamReader(p.getErrorStream()));
     }
