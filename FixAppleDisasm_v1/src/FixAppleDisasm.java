@@ -160,7 +160,7 @@ public class FixAppleDisasm
 			if (nextaddr != addr)
 			{
 				System.err.print("address error: expected $");
-				System.err.println(hexWord(nextaddr));
+				System.err.print(hexWord(nextaddr));
 				System.err.print(", was $");
 				System.err.println(hexWord(addr));
 				// resynch
