@@ -7,6 +7,8 @@ import java.util.NoSuchElementException;
 /**
  * Adapts an Enumeration so it can be used
  * as an Iterator.
+ * 
+ * @author Chris Mosher
  */
 public class EnumIter extends Object implements Iterator
 {
