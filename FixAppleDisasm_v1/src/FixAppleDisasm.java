@@ -151,10 +151,17 @@ public class FixAppleDisasm
 				addr = -1;
 			}
 
-			if (addr < 0 && nextaddr >= 0)
+			if (addr < 0)
 			{
-				addr = nextaddr;
-				s = hexWord(addr)+"-   "+s.trim();
+				if (nextaddr >= 0)
+				{
+					addr = nextaddr;
+					s = hexWord(addr)+"-   "+s.trim();
+				}
+				else
+				{
+					s = "????-   "+s.trim();
+				}
 			}
 
 			if (nextaddr != addr)
