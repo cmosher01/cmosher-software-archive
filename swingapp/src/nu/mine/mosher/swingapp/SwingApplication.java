@@ -24,10 +24,11 @@ public class Application
     public Application(ExceptionHandler eh, CommandLineArgHandler ch)
     {
         me = this;
+
         this.mExceptionHandler = eh;
         this.mCommandLineArgHandler = ch;
-        if (this.mExceptionHandler == null ||
-            this.mCommandLineArgHandler == null)
+
+        if (this.mExceptionHandler == null || this.mCommandLineArgHandler == null)
         {
             throw new IllegalStateException("Arguments cannot be null.");
         }
