@@ -71,8 +71,8 @@ public class GUI
      */
     private JMenuBar createMenuBar()
     {
-        // TODO Auto-generated method stub
-        return null;
+        JMenuBar mb = new JMenuBar();
+        return mb;
     }
 
     /**
@@ -80,7 +80,7 @@ public class GUI
      */
     private JPanel createContentPane()
     {
-        // TODO Auto-generated method stub
-        return null;
+        JPanel panel = new JPanel();
+        return panel;
     }
 }
