@@ -65,7 +65,7 @@ public class MainFrame extends JFrame
         }
         catch (VTOCNotFoundException e)
         {
-            System.out.println("[no VTOC]");
+            System.out.println(f.getAbsolutePath()+" [no VTOC]");
             return;
         }
         catch (MultipleVTOCException e)
