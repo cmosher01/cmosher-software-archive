@@ -44,7 +44,7 @@ public class Player implements Immutable
 
 
 
-		String s = "\u0061\u0308"; // a-acute
+		String s = "\u0061\u0300"; // a-grave
 		byte[] rb = s.getBytes("windows-1252");
 		rbDump(rb);
 
