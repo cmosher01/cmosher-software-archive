@@ -15,7 +15,14 @@ public class ItemType<T>
 	}
 	public ItemType(String other)
 	{
-		this.other = other;
+		try
+		{
+			this.known = T.valueOf(other);
+		}
+		catch (IllegalArgumentException e)
+		{
+			this.other = other;
+		}
 	}
 	public String toString()
 	{
