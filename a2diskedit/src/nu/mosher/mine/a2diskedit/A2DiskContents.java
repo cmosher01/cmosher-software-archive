@@ -91,9 +91,7 @@ public class A2DiskContents
 
 		// strip high bit
 		for (int i = 0; i < r.length; ++i)
-		{
 			s.append(r[i] & 0x7F);
-		}
 
 		// trim
 		return s.toString().trim();
