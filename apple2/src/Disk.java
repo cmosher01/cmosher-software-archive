@@ -20,7 +20,6 @@ public class Disk
 
     /**
      * @param disk
-     * @throws InvalidPosException
      */
     public Disk(byte[] disk)
     {
