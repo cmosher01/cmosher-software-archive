@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE jdo SYSTEM "jdo.dtd">
+<jdo>
+    <package name="com.mediamania.prototype" >
+        <class name="Movie" >
+            <field name="cast" >
+                <collection element-type="com.mediamania.prototype.Role"/>
+            </field>
+        </class>
+        <class name="Role" />
+        <class name="Actor" >
+            <field name="roles" >
+                <collection element-type="com.mediamania.prototype.Role"/>
+            </field>
+        </class>
+    </package>
+</jdo>
