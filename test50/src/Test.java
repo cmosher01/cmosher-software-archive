@@ -11,12 +11,5 @@ public class Test
 		{
 			System.out.println(s);
 		}
-
-//		Iterator<String> i = sf.iterator();
-//		while (i.hasNext())
-//		{
-//			String s = i.next();
-//			System.out.println(s);
-//		}
 	}
 }
