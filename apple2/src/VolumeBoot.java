@@ -41,4 +41,15 @@ public class VolumeBoot extends VolumeEntity
     {
         getPos(rPos);
     }
+
+    /**
+     * @param s
+     */
+    public void dump(StringBuffer s)
+    {
+        s.append("Boot: ");
+        VolumeSector sect = (VolumeSector)rSector.get(0);
+        s.append(sect.toString());
+        s.append("\n");
+    }
 }
