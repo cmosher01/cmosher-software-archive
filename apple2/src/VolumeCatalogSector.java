@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class VolumeCatalogSector extends VolumeEntity
 {
+    List rEntry = new ArrayList();
 
     /**
      * @param p
@@ -22,8 +23,7 @@ public class VolumeCatalogSector extends VolumeEntity
     {
         rSector.add(p);
 
-        List rEnt = new ArrayList();
-        disk.getDos33CatalogEntries(p,rEnt);
+        disk.getDos33CatalogEntries(p,rEntry);
     }
 
 }
