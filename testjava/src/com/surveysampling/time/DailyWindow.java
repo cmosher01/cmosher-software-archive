@@ -302,8 +302,8 @@ public class DailyWindow
         DailyWindow that = (DailyWindow)obj;
 
         return
-            this.mStart.equalsIgnoreCase(that.mStart) &&
-            this.mEnd.equalsIgnoreCase(that.mEnd);
+            this.mStart.equals(that.mStart) &&
+            this.mEnd.equals(that.mEnd);
     }
 
     public int hashCode()
