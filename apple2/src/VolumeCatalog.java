@@ -76,7 +76,7 @@ public class VolumeCatalog
         for (Iterator i = this.rCatSect.iterator(); i.hasNext();)
         {
             VolumeCatalogSector sect = (VolumeCatalogSector)i.next();
-            
+            sect.dump(s);
         }
     }
 }
