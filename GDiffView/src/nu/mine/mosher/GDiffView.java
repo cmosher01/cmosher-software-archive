@@ -181,6 +181,6 @@ public class GDiffVeiew extends JFrame
     {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         GDiffVeiew frame = new GDiffVeiew(args[0],args[1]);
-        Thread.sleep(5000);
+//        Thread.sleep(5000);
     }
 }
