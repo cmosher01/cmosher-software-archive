@@ -57,6 +57,7 @@ public class MainFrame extends JFrame
      */
     private void doOneDisk(File f) throws InvalidPosException, IOException
     {
+        System.err.println("reading "+f);
         Disk disk = Apple2.readDisk(f);
         Volume vol = new Volume();
         boolean bootonly = false;
