@@ -93,6 +93,10 @@ public class TimeOfDayTest extends TestCase
     {
         TimeOfDay tod2 = new TimeOfDay(Calendar.getInstance(),17,34,13,000);
         assertTrue(tod.compareTo(tod2)<0);
+        TimeOfDay tod3 = new TimeOfDay(Calendar.getInstance(),17,34,11,000);
+        assertTrue(tod.compareTo(tod3)>0);
+        TimeOfDay tod4 = new TimeOfDay(Calendar.getInstance(),17,34,12,367);
+        assertTrue(tod.compareTo(tod4)==0);
     }
 
 }
