@@ -5,6 +5,7 @@ import java.io.Serializable;
 public final class ImmutableReference implements Cloneable, Comparable, Serializable
 {
     private Cloneable ref;
+    private String str;
     private int hash;
 
     public ImmutableReference(Cloneable ref) throws CloneNotSupportedException
@@ -15,6 +16,7 @@ public final class ImmutableReference implements Cloneable, Comparable, Serializ
         }
         this.ref = Cloner.cloneObject(ref);
         buildHashCode();
+        buildString();
     }
 
     public Cloneable object() throws CloneNotSupportedException
@@ -27,9 +29,14 @@ public final class ImmutableReference implements Cloneable, Comparable, Serializ
         return super.clone();
     }
 
+    private void buildString()
+    {
+        this.str = this.ref.toString();
+    }
+
     public String toString()
     {
-        return ref.toString();
+        return this.str;
     }
 
     public boolean equals(Object o)
