@@ -10,6 +10,7 @@
  */
 public class Dos33CatalogEntry
 {
+    private final boolean deleted;
     private final DiskPos dataPos;
     private final boolean locked;
     private final int fileTypeID;
@@ -27,8 +28,9 @@ public class Dos33CatalogEntry
      * @param cSector
      * @param nameOrig
      */
-    public Dos33CatalogEntry(DiskPos dataPos, boolean locked, int fileTypeID, int cSector, byte[] nameOrig)
+    public Dos33CatalogEntry(boolean deleted, DiskPos dataPos, boolean locked, int fileTypeID, int cSector, byte[] nameOrig)
     {
+        this.deleted = deleted;
         this.dataPos = dataPos;
         this.locked = locked;
         this.fileTypeID = fileTypeID;
