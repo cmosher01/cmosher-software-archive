@@ -35,6 +35,11 @@ public class A2DiskContents
 		dos33volume = image.getByte(track,sector,6);
 		sVolumeName = "Disk volume "+Integer.toString(dos33volume);
 	}
+
+	public String getVolumeName()
+	{
+		return sVolumeName;
+	}
 }
 /*
 void CDosDir::Parse(track rTSB[], ts tsCat)
