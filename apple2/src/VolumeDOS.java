@@ -393,8 +393,9 @@ public class VolumeDOS extends VolumeEntity
                 else
                 {
                     int dif = (rb[0xFE]-0x36) & 0xFF;
-                    byte[] rbClearSlave = makeSlave(rbClear1980,rSlave1980,dif);
-                    rbClearSlave = makeSlave(rbClearSlave,rSlaveCommon,dif);
+                    byte[] rbClearSlave = getClearSlave(rbClear1980);
+                    fixupSlave(rbClearSlave,rSlaveCommon,dif);
+                    fixupSlave(rbClearSlave,rSlave1980,dif);
                     if (Arrays.equals(rbCmp,rbClearSlave))
                     {
                         s.append(" (DOS 3.3 1980 slave (A$"+Hex2Bin.hexbyte((byte)(0x1D+dif))+"00): exact match)");
@@ -422,9 +423,10 @@ public class VolumeDOS extends VolumeEntity
                         }
                         else
                         {
-                            rbClearSlave = makeSlave(rbClearFranklin,rSlave1980,dif);
-                            rbClearSlave = makeSlave(rbClearSlave,rSlaveCommon,dif);
-                            rbClearSlave = makeSlave(rbClearSlave,rSlaveFranklin,dif);
+                            byte[] rbClearSlave = getClearSlave(rbClear1980);
+                            fixupSlave(rbClearSlave,rSlaveCommon,dif);
+                            fixupSlave(rbClearSlave,rSlave1980,dif);
+                            fixupSlave(rbClearSlave,rSlaveFranklin,dif);
                             if (Arrays.equals(rbCmp,rbClearSlave))
                             {
                                 s.append(" (DOS 3.3 1980 (Franklin version) slave (A$"+Hex2Bin.hexbyte((byte)(0x1D+dif))+"00): exact match)");
@@ -457,8 +459,9 @@ public class VolumeDOS extends VolumeEntity
                 else
                 {
                     int dif = (rb[0xFE]-0x36) & 0xFF;
-                    byte[] rbClearSlave = makeSlave(rbClear1983,rSlave1983,dif);
-                    rbClearSlave = makeSlave(rbClearSlave,rSlaveCommon,dif);
+                    byte[] rbClearSlave = getClearSlave(rbClear1983);
+                    fixupSlave(rbClearSlave,rSlaveCommon,dif);
+                    fixupSlave(rbClearSlave,rSlave1983,dif);
                     if (Arrays.equals(rbCmp,rbClearSlave))
                     {
                         s.append(" (DOS 3.3 1983 slave (A$"+Hex2Bin.hexbyte((byte)(0x1D+dif))+"00): exact match)");
@@ -489,8 +492,9 @@ public class VolumeDOS extends VolumeEntity
                 else
                 {
                     int dif = (rb[0xFE]-0x36) & 0xFF;
-                    byte[] rbClearSlave = makeSlave(rbClear1986,rSlave1986,dif);
-                    rbClearSlave = makeSlave(rbClearSlave,rSlaveCommon,dif);
+                    byte[] rbClearSlave = getClearSlave(rbClear1986);
+                    fixupSlave(rbClearSlave,rSlaveCommon,dif);
+                    fixupSlave(rbClearSlave,rSlave1986,dif);
                     if (Arrays.equals(rbCmp,rbClearSlave))
                     {
                         s.append(" (DOS 3.3 1986 slave (A$"+Hex2Bin.hexbyte((byte)(0x1D+dif))+"00): exact match)");
