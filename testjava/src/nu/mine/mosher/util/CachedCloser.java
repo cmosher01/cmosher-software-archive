@@ -65,4 +65,16 @@ public class UniversalCloser3
             ignore.printStackTrace();
         }
     }
+
+    private static void closeNoCache(Object obj)
+    {
+        try
+        {
+            obj.getClass().getMethod("close",null).invoke(obj,null);
+        }
+        catch (Throwable ignore)
+        {
+            ignore.printStackTrace();
+        }
+    }
 }
