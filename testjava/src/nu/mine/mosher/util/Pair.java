@@ -1,4 +1,4 @@
-public class Pair
+public class Pair implements Cloneable, Comparable
 {
     private Object a;
     private Object b;
@@ -40,7 +40,9 @@ public class Pair
     public boolean equals(Object o)
     {
         if (!(o instanceof Pair))
+        {
             return false;
+        }
         Pair that = (Pair)o;
 
         return eq(this.a,that.a) && eq(this.b,that.b);
@@ -65,5 +67,18 @@ public class Pair
 
     public int compareTo(Object o)
     {
+        Pair that = (Pair)o;
+
+        Comparable ca = (Comparable)a;
+        Comparable cb = (Comparable)b;
+
+        int c;
+        c = ca.compareTo(that.a);
+        if (c == 0)
+        {
+            c = cb.compareTo(that.b);
+        }
+
+        return c;
     }
 }
