@@ -74,7 +74,8 @@ public class MainFrame extends JFrame
 
         StringBuffer s = new StringBuffer();
 
-        DefaultMutableTreeNode nDisk = new DefaultMutableTreeNode("SARG2.dsk");
+        DefaultMutableTreeNode nDisk = new DefaultMutableTreeNode("CLC11.dsk");
+//        DefaultMutableTreeNode nDisk = new DefaultMutableTreeNode("SARG2.dsk");
 //        DefaultMutableTreeNode nDisk = new DefaultMutableTreeNode("DOS33_SystemMaster_19830101.dsk");
 //        DefaultMutableTreeNode nDisk = new DefaultMutableTreeNode("DiversiDOS_2_C_1982.dsk");
         DefaultMutableTreeNode nBoot = new DefaultMutableTreeNode("Bootstrap Loader");
@@ -160,7 +161,8 @@ public class MainFrame extends JFrame
         this.setMaximizedBounds(env.getMaximumWindowBounds());
         this.setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
 
-        doOneDisk(Apple2.readDisk(new File("test/SARG2.dsk")));
+        doOneDisk(Apple2.readDisk(new File("test/CLC11.dsk")));
+//        doOneDisk(Apple2.readDisk(new File("test/SARG2.dsk")));
 //        doOneDisk(Apple2.readDisk(new File("test/DOS33_SystemMaster_19830101.dsk")));
 //        doOneDisk(Apple2.readDisk(new File("test/DiversiDOS_2_C_1982.dsk")));
 
