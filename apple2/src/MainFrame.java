@@ -81,7 +81,7 @@ public class MainFrame extends JFrame
 //        DefaultMutableTreeNode nDisk = new DefaultMutableTreeNode("DiversiDOS_2_C_1982.dsk");
         DefaultMutableTreeNode nBoot = new DefaultMutableTreeNode("Bootstrap Loader");
         s.append("APPLE ][ DOS 3.3");
-        vol.getDos().appendSig(s);todos
+        vol.getDos().appendSig(s);
         DefaultMutableTreeNode nDos = new DefaultMutableTreeNode(s);
 
         DefaultMutableTreeNode nCat = new DefaultMutableTreeNode("Catalog");
