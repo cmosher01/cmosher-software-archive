@@ -19,7 +19,7 @@ public class FixMetaUTF8Test extends TestCase
         StringBuffer sb = new StringBuffer();
         sb.append("<html>\n");
         sb.append("<head>\n");
-        sb.append("<META http-equiv=\"Content-Type\" \ncontent=\"text/html; charset=windows-1252\">\n");
+        sb.append("<META http-equiv=\"Content-Type\" content=\"text/html; charset=windows-1252\">\n");
         sb.append("</head>\n");
         sb.append("</html>\n");
 
@@ -27,7 +27,6 @@ public class FixMetaUTF8Test extends TestCase
         sbExpect.append("<html>\n");
         sbExpect.append("<HEAD>\n");
         sbExpect.append("<META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
-        sbExpect.append("\n");
         sbExpect.append("</head>\n");
         sbExpect.append("</html>\n");
 
@@ -46,6 +45,26 @@ public class FixMetaUTF8Test extends TestCase
         sbExpect.append("<html>\n");
         sbExpect.append("<HEAD>\n");
         sbExpect.append("<META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
+        sbExpect.append("</head>\n");
+        sbExpect.append("</html>\n");
+
+        shouldBe(sbExpect,sb);
+    }
+
+    public void testTwoLines() throws IOException
+    {
+        StringBuffer sb = new StringBuffer();
+        sb.append("<html>\n");
+        sb.append("<head>\n");
+        sb.append("<META http-equiv=\"Content-Type\" \ncontent=\"text/html; charset=windows-1252\">\n");
+        sb.append("</head>\n");
+        sb.append("</html>\n");
+
+        StringBuffer sbExpect = new StringBuffer();
+        sbExpect.append("<html>\n");
+        sbExpect.append("<HEAD>\n");
+        sbExpect.append("<META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
+        sbExpect.append("\n");
         sbExpect.append("</head>\n");
         sbExpect.append("</html>\n");
 
