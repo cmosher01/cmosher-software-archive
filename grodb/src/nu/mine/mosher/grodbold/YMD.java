@@ -17,6 +17,7 @@ public class YMD implements Immutable, Serializable, Comparable
 	private final int day;
 
 	private transient int hash;
+	private transient int approx;
 
 	public YMD(int year)
 	{
@@ -49,6 +50,32 @@ public class YMD implements Immutable, Serializable, Comparable
     {
         return year;
     }
+
+	// YYYYMMDD (never display this to the user!)
+	public int getApproxDay()
+	{
+		if (approx == 0)
+		{
+			updateApprox();
+		}
+		return approx;
+	}
+
+	private void updateApprox()
+	{
+		if (month > 0 && day > 0)
+		{
+			approx = year*10000+month*100+day;
+		}
+		else if (month > 0)
+		{
+			approx = year*10000+month*100+15;
+		}
+		else
+		{
+			approx = year*10000+7*100+3;
+		}
+	}
 
 	public boolean equals(Object o)
 	{
