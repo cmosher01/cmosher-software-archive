@@ -780,14 +780,9 @@ public class Disk
         return new SectorIter();
     }
 
-    private class SectorIter extends DiskPos implements Iterator
+    private class SectorIter implements Iterator
     {
-        /**
-         */
-        protected SectorIter()
-        {
-            super(0);
-        }
+        private DiskPos d = new DiskPos(0);
 
         /**
          * @see java.util.Iterator#hasNext()
