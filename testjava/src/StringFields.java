@@ -3,6 +3,7 @@ import java.util.Iterator;
 public class SF
 {
     private final String s;
+    private int pos;
 
     public SF(String s)
     {
@@ -18,7 +19,7 @@ public class SF
     {
         public boolean hasNext()
         {
-            return false;
+            return pos <= s.length();
         }
 
         public Object next()
