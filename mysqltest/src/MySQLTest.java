@@ -251,9 +251,12 @@ public class MySQLTest
     protected void calc() throws SQLException
     {
     	Statement st = null;
+		PreparedStatement ins = null;
     	try
     	{
-    		st = db.createStatement();
+			st = db.createStatement();
+			ins = db.prepareStatement("insert into CalcPerson(entry,birthEarliest,birthLatest) values (?,?,?)");
+
     		ResultSet rs = st.executeQuery("select "+
     		"ce.id entry,"+
 			"date_add(date_sub(censusday,interval maxage+1 year), interval 1 day) earliest, "+
@@ -271,6 +274,9 @@ public class MySQLTest
 				String latest = rs.getString("latest");
     			for (int i = 0; i < c; ++i)
     			{
+    				ins.setInt(1,entry);
+    				ins.setString(2.earliest);
+					ins.setString(3.latest);
     			}
     		}
     	}
