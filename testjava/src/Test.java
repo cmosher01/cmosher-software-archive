@@ -78,7 +78,7 @@ public class Test
         URI uri = URI.create(sx);
         String su = uri.toASCIIString();
         System.out.println(su);
-        su = uri.getRawSchemeSpecificPart();
+        su = uri.getSchemeSpecificPart();
         System.out.println(su);
         File f = new File(uri.getPath());
         System.out.println(f.getCanonicalPath());
