@@ -18,7 +18,7 @@ import com.caucho.server.connection.AbstractHttpResponse;
  */
 public class SimpleAccessLog extends AccessLog
 {
-	private static final SimpleDateFormat format = new SimpleDateFormat("YYYYmmdd HHmmssSSS");
+	private static final SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd HHmmssSSS");
     public SimpleAccessLog()
     {
         super();
