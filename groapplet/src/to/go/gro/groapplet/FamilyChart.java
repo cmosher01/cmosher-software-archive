@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 public class FamilyChart extends JPanel
 {
-	private final Applet mApplet
+	private final Applet mApplet;
     private final IndiSet mIndis;
     private final FamiSet mFamis;
     private boolean mInitialized;
