@@ -3,6 +3,8 @@
  */
 package nu.mine.mosher.checksum;
 
+import java.util.Random;
+
 import junit.framework.TestCase;
 
 /**
@@ -12,20 +14,13 @@ import junit.framework.TestCase;
  */
 public class RollingChecksumTest extends TestCase
 {
+    private static final int TEST_BUFFER_SIZE = 5000;
+
     public void testRollingChecksum()
     {
-        String s = "q3o84yvq4ntvwjqnt798ntqmv8tm47otno7";
-        char[] rc = s.toCharArray();
-        byte[] rb = new byte[rc.length];
-        for (int i = 0; i < rc.length; i++)
-        {
-            rb[i] = (byte)rc[i];
-            // turn on high bit of about one third of the bytes
-            if (Math.random() < .3)
-            {
-                rb[i] |= 0x80;
-            }
-        }
+        byte[] rb = new byte[TEST_BUFFER_SIZE];
+        Random random = new Random();
+        random.nextBytes(rb);
 
         int n = 3;
         byte[] rs = new byte[n];
