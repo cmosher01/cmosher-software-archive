@@ -20,22 +20,22 @@ public class ListEntry
 		return this.s;
 	}
 
-	public static String formatListEntry(List<class T> r)
+	public static String formatListEntry(List<ListEntry> r)
 	{
 		return tr(r,"td");
 	}
 
-	public static String formatListHeader(List<T> r)
+	public static String formatListHeader(List<ListEntry> r)
 	{
 		return tr(r,"th");
 	}
 
-	private static String tr(List<T> r, String td)
+	private static String tr(List<ListEntry> r, String td)
 	{
 		StringBuffer sb = new StringBuffer(256);
 
 		sb.append("<tr>");
-		for (T e : r)
+		for (ListEntry e : r)
 		{
 			sb.append("<");
 			sb.append(td);
