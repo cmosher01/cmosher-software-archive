@@ -35,6 +35,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
+import javax.swing.Spring;
 import javax.swing.SpringLayout;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -237,6 +238,11 @@ public class GDiffView extends JFrame
         JPanel contentPane = new JPanel(layout);
         setContentPane(contentPane);
 
+        SpringLayout.Constraints cnsSrc = new SpringLayout.Constraints();
+        cnsSrc.setConstraint(SpringLayout.NORTH,new Spring());
+        layout.putConstraint(SpringLayout.NORTH, scrSrc, 0, SpringLayout.NORTH, contentPane);
+        layout.putConstraint(SpringLayout.SOUTH, scrSrc, 0, SpringLayout.SOUTH, contentPane);
+        layout.putConstraint(SpringLayout.WEST, scrSrc, 0, SpringLayout.WEST, contentPane);
 //        contentPane.add(spl2,BorderLayout.CENTER);
 
         contentPane.add(scrSrc);
