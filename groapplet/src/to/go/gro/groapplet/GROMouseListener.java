@@ -46,7 +46,7 @@ public class GROMouseListener extends MouseInputAdapter
 			mLastIndi.hit(false);
 			fc.repaint();
 		}
-		else if (indi == mLastIndi && !mLastIndi.isHit())
+		else if (indi == mLastIndi && mLastIndi != null && !mLastIndi.isHit())
 		{
 			mLastIndi.hit(true);
 			fc.repaint();
