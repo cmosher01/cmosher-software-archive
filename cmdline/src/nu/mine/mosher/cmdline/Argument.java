@@ -25,7 +25,12 @@ public class Argument
         return mValue;
     }
 
-    public boolean equals(Object obj)
+    public ArgumentDefinition getDefinition()
+    {
+        return mDef;
+    }
+
+   public boolean equals(Object obj)
     {
         if (!(obj instanceof Argument))
         {
