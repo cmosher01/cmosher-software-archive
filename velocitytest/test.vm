@@ -1,1 +1,1 @@
-This is a test: \${${test.value}} yes!
+This is a test: ${${test.value}} yes!
