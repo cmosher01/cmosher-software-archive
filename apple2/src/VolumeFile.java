@@ -54,7 +54,15 @@ public class VolumeFile
      */
     public void dump(StringBuffer s)
     {
-        s.append("File: ");
+        s.append("File:");
+        if (catEntry.isDeleted())
+        {
+            s.append("d");
+        }
+        else
+        {
+            s.append(" ");
+        }
         s.append(catEntry.getName());
         for (int i = 0; i < 40-catEntry.getName().length(); ++i)
         {
