@@ -31,6 +31,10 @@ public class Disk
         this.pos = pos;
     }
 
+    /**
+     * @param len
+     * @return
+     */
     public byte[] read(int len)
     {
         byte[] rb = new byte[len];
