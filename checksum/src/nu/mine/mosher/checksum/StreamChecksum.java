@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TODO
+ * Objects of this class are not synchronized.
  * 
  * @author Chris
  */
@@ -22,7 +22,7 @@ public class StreamChecksum
 
     /**
      * Initializes a <code>StreamChecksum</code> object to use
-     * the given map of <code>Integer</code> checksums to <code>Long</code>
+     * the given map of <code>Integer</code> checksums to <code>Set</code> of <code>Long</code>
      * window numbers (the first window number is zero).
      * @param mapChecksumToWindow
      */
@@ -59,6 +59,12 @@ public class StreamChecksum
                 throw new IOException("Error reading from input stream.");
             }
             rollCheck.init(rs);
+            Integer chk = new Integer(rollCheck.getChecksum());
+            List rWind;
+            if (!mapChecksumToWindow.containsKey(chk))
+            {
+                rWind = new ArrayList();
+            }
             mapChecksumToWindow.put(new Integer(rollCheck.getChecksum()),new Long(w++));
         }
     }
