@@ -75,12 +75,7 @@ public class WaveCalc
 			throw new Exception("Invalid fmt chunk.");
 		}
 
-		if (in.readByte() != 1)
-		{
-			throw new Exception("Invalid fmt chunk.");
-		}
-
-		if (in.readByte() != 0)
+		if (readWord(in) != 0x10)
 		{
 			throw new Exception("Invalid fmt chunk.");
 		}
