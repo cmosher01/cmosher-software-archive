@@ -17,7 +17,7 @@ public class ItemType<T>
 	{
 		try
 		{
-			this.known = T.valueOf(other);
+			this.known = <T>valueOf(other);
 		}
 		catch (IllegalArgumentException e)
 		{
