@@ -37,7 +37,7 @@ public class RollingChecksumTest extends TestCase
         ++k;
         System.arraycopy(rb, k, rs, 0, S);
         RollingChecksum rollCheck2 = new RollingChecksum();
-        rollCheck.init(rs);
+        rollCheck2.init(rs);
         int check2 = rollCheck2.getChecksum();
 
         assertEquals(check2,check);
