@@ -112,10 +112,10 @@ public class TimeOfDay
     }
 
     /**
-     * Convenience method that calls getTimeOnDay,
-     * first setting the Calendar's date to the
-     * given Date, and returns a new Date representing
-     * this object's time on the given Date.
+     * Convenience method that calls <code>getTimeOnDay(Calendar)</code>.
+     * setting the Calendar's date to the
+     * given Date first, and sets the given Date
+     * to the resulting time.
      * @param d
      * @param cal
      */
