@@ -965,7 +965,7 @@ public class GDiffView extends JFrame
                         }
                         if (cMatch == cMatchCurrent)
                         {
-                            System.out.println("more than one match are of the same length")
+                            System.out.println("more than one match are of the same length");
                         }
                         if (cMatch >= cWindow && cMatch > cMatchCurrent)
                         {
