@@ -493,9 +493,10 @@ class NormalizerBuilder
 		for (StringTokenizer st = new StringTokenizer(source); st.hasMoreTokens(); )
 		{
 			String tok = st.nextToken();
-			if (tok.startsWith("<",0))
-			{
-			}
+			if (tok.startsWith("<"))
+				continue;
+
+			sb.append((char)Integer.parseInt(tok,16));
 		}
 
 		return sb.toString();
