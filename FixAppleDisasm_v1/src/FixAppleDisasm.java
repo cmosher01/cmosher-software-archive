@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
@@ -7,11 +8,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-//import java.io.PipedReader;
-//import java.io.PipedWriter;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
@@ -104,6 +102,16 @@ public class FixAppleDisasm
 		else
 		{
 			inbuf = new BufferedReader(in);
+		}
+
+		BufferedWriter outbuf = null;
+		if (out instanceof BufferedWriter)
+		{
+			outbuf = (BufferedWriter)in;
+		}
+		else
+		{
+			outbuf = new BufferedWriter(in);
 		}
 
 		Map lines = new TreeMap();
@@ -254,8 +262,7 @@ public class FixAppleDisasm
 				}
 			}
 		}
-		System.err.flush();
-		System.out.flush();
+
 		for (Iterator i = lines.entrySet().iterator(); i.hasNext();)
         {
             Map.Entry ent = (Map.Entry)i.next();
@@ -263,11 +270,11 @@ public class FixAppleDisasm
 
 			if (ln.addr >= 0)
 			{
-				System.out.print(Integer.toHexString(ln.addr));
-				System.out.print(":   ");
+				out.print(Integer.toHexString(ln.addr));
+				out.print(":   ");
 				if (ln.instr.length() > 0)
 				{
-					System.out.print(ln.instr);
+					out.print(ln.instr);
 				}
 				if (ln.oper.length() > 0)
 				{
