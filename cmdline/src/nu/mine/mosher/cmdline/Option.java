@@ -25,7 +25,7 @@ public class Option
         return mValue;
     }
 
-    public OptionDefiniton getDefinition()
+    public OptionDefinition getDefinition()
     {
         return mDef;
     }
