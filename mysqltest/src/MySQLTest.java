@@ -119,12 +119,14 @@ public class MySQLTest
     	fland = dbInsert("insert into Family(name) values(\"Flandreau\")");
     	log.fine("Inserted Flandreau with id "+fland);
 
-		dbInsert("insert into Census1790(nameLast,nameFirst,nameSuffix,maleAge16plus,maleAge0to15,femaleAge0plus,family) values "+
-		"(\"Flandreau\",\"Benjamin\",null,4,2,5,"+fland+"), "+
-		"(\"Flandreau\",\"Elias\",null,3,0,4,"+fland+"), "+
-		"(\"Flandreau\",\"James\",null,2,2,5,"+fland+"), "+
-		"(\"Flandreau\",\"James\",\"Junr.\",1,3,2,"+fland+"), "+
-		"(\"Flandreau\",\"John\",null,1,3,3,"+fland+")");
+//		dbInsert("insert into Census1790(nameLast,nameFirst,nameSuffix,maleAge16plus,maleAge0to15,femaleAge0plus,family) values "+
+//		"(\"Flandreau\",\"Benjamin\",null,4,2,5,"+fland+"), "+
+//		"(\"Flandreau\",\"Elias\",null,3,0,4,"+fland+"), "+
+//		"(\"Flandreau\",\"James\",null,2,2,5,"+fland+"), "+
+//		"(\"Flandreau\",\"James\",\"Junr.\",1,3,2,"+fland+"), "+
+//		"(\"Flandreau\",\"John\",null,1,3,3,"+fland+")");
+		int image = dbInsert("insert into ImageIdent(year,state,county,township,image) values "+
+		"(1790,\"NY\")");
     }
 
     protected void createSchema() throws SQLException
@@ -137,22 +139,22 @@ public class MySQLTest
 		"    name varchar(64)"+
 		")");
 
-		dbUpdate("drop table Census1790");
-		dbUpdate("create table "+
-		"Census1790 "+
-		"( "+
-		"    id integer unsigned not null auto_increment primary key, "+
-		"    family integer unsigned not null references Family(id), "+
-		"    nameLast varchar(64), "+
-		"    nameFirst varchar(64), "+
-		"    nameMiddle varchar(8), "+
-		"    nameSuffix varchar(8), "+
-		"    male16plus integer, "+
-		"    male0to15 integer, "+
-		"    female0plus integer, "+
-		"    other integer, "+
-		"    slave integer "+
-		")");
+//		dbUpdate("drop table Census1790");
+//		dbUpdate("create table "+
+//		"Census1790 "+
+//		"( "+
+//		"    id integer unsigned not null auto_increment primary key, "+
+//		"    family integer unsigned not null references Family(id), "+
+//		"    nameLast varchar(64), "+
+//		"    nameFirst varchar(64), "+
+//		"    nameMiddle varchar(8), "+
+//		"    nameSuffix varchar(8), "+
+//		"    male16plus integer, "+
+//		"    male0to15 integer, "+
+//		"    female0plus integer, "+
+//		"    other integer, "+
+//		"    slave integer "+
+//		")");
 		dbUpdate("drop table ImageIdent");
 		dbUpdate("create table "+
 		"ImageIdent "+
