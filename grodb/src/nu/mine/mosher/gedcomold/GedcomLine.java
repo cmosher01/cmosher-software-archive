@@ -24,7 +24,7 @@ public class GedcomLine
 			this.pointer = "";
 		}
 	}
-	public static String getPointer(String s)
+	private static String getPointer(String s)
 	{
 		if (!s.startsWith("@") || !s.endsWith("@") || s.length() < 3)
 		{
@@ -38,7 +38,7 @@ public class GedcomLine
 		}
 		return pointer;
 	}
-	public static String replaceAts(String s)
+	private static String replaceAts(String s)
 	{
 		return s.replaceAll("@@","@");
 	}
