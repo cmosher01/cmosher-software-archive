@@ -136,14 +136,14 @@ public class Delta
                 {
                     //System.out.println("before targetidx : " + targetidx );
                     // The length of the match is determined by comparing bytes.
-                    long start = System.currentTimeMillis();
+                    //long start = System.currentTimeMillis();
 
                     boolean ok = true;
                     byte[] sourceBuff = new byte[buff_size];
                     byte[] targetBuff = new byte[buff_size];
                     int source_idx = 0;
                     int target_idx = 0;
-                    int tCount = 0;
+                    //int tCount = 0;
 
                     do
                     {
