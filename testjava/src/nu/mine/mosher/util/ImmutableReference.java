@@ -1,6 +1,8 @@
+import java.io.Serializable;
+
 import com.surveysampling.util.Cloner;
 
-public class ImmutableReference
+public class ImmutableReference implements Comparable, Serializable
 {
     private Cloneable ref;
 
@@ -48,5 +50,10 @@ public class ImmutableReference
     public int hashCode()
     {
         return this.ref.hashCode();
+    }
+
+    public int compareTo(Object o)
+    {
+        return this.ref.compareTo(o);
     }
 }
