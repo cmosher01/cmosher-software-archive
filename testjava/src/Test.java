@@ -9,33 +9,44 @@ import java.util.ListIterator;
 public class Test
 {
 
-    public String x = bad();
+//    public String x = bad();
+    private static class SubTest extends Test
+    {
+    }
 
     public Test()
     {
-        System.err.println("Test()");
-        System.err.println(x);
-    }
-
-    public Test(Test o)
-    {
-        Test x = o; o = x;
-        System.err.println("Test(Test)");
-        System.err.println(x);
-    }
-
-    private static String bad()
-    {
-        System.err.println("in bad");
-        return "bad";
-    }
-
-    public static class X
-    {
-        public void close()
+        if (this instanceof SubTest)
         {
+            System.out.println("yes");
         }
+        else
+        {
+            System.out.println("yes");
+        }
+//        System.err.println("Test()");
+//        System.err.println(x);
     }
+
+//    public Test(Test o)
+//    {
+//        Test x = o; o = x;
+//        System.err.println("Test(Test)");
+//        System.err.println(x);
+//    }
+//
+//    private static String bad()
+//    {
+//        System.err.println("in bad");
+//        return "bad";
+//    }
+//
+//    public static class X
+//    {
+//        public void close()
+//        {
+//        }
+//    }
 
 //    private static class Bad
 //    {
@@ -44,23 +55,36 @@ public class Test
 //            throw new Exception();
 //        }
 //    }
-    public static Object throwSomething() throws Exception
-    {
-        Object j = new Object();
-        if (true)
-            throw new Exception();
-        return j;
-    }
+
+//    public static Object throwSomething() throws Exception
+//    {
+//        Object j = new Object();
+//        if (true)
+//            throw new Exception();
+//        return j;
+//    }
 
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
-        File f1 = new File("\\c.txt");
-        f1.getParentFile().mkdirs();
-        BufferedWriter w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f1)));
-        w.write("test");
-        w.newLine();
-        w.close();
+
+
+
+
+
+
+
+
+
+
+
+
+//        File f1 = new File("\\c.txt");
+//        f1.getParentFile().mkdirs();
+//        BufferedWriter w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f1)));
+//        w.write("test");
+//        w.newLine();
+//        w.close();
 
 
 
