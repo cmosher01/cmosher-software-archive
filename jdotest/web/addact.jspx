@@ -5,10 +5,10 @@
 <%
 	String s = request.getParameter("item");
 	PersistenceManager pm = new Perm().pm();
+	pm.currentTransaction().begin();
 	Item item = new Item();
 	item.setName(s);
-	pm.currentTransaction().begin();
-	pm.makePersistent(obj);
+	pm.makePersistent(item);
 	pm.currentTransaction().commit();
 	pm.put(item);
 %>
