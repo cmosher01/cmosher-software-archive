@@ -63,5 +63,7 @@ public class GedcomTree
             sb.append(" --> ");
             sb.append(entry.getValue().toString());
         }
+
+        return sb.toString();
 	}
 }
