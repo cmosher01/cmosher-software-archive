@@ -4,6 +4,6 @@ public class Test
 	{
 		String test = "this,is,a,test";
 		StringFieldizer sf = new StringFieldizer(test);
-		SimpleIterator<String> i = sf.iterator();
+		Iterator i = sf.iterator();
 	}
 }
