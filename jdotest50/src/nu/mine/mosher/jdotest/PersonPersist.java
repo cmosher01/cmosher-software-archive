@@ -1,3 +1,5 @@
+package nu.mine.mosher.jdotest;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
