@@ -13,6 +13,7 @@ public class Search
 	private boolean completed;
 
 	private List<Relation<Source,Search,SourceSearchRelType>> rSource = new ArrayList<Relation<Source,Search,SourceSearchRelType>>();
+	private List<Relation<Hypothesis,Search,HypoSearchRelType>> rHypothesis = new ArrayList<Relation<Hypothesis,Search,HypoSearchRelType>>();
 
 	public Search()
 	{
