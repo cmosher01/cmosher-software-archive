@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 import junit.framework.TestCase;
 /*
  * Created on Sep 25, 2004
