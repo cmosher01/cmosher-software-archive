@@ -16,7 +16,7 @@ import java.util.Date;
  * the given Calendar.
  * The constructors fail atomically.
  */
-public class TimeOfDay
+public class TimeOfDay implements Comparable
 {
     private final boolean valid;
     private final int hours;
@@ -193,5 +193,10 @@ public class TimeOfDay
         hash *= 37;
         hash += milliseconds;
         return hash;
+    }
+
+    public int compareTo(Object obj)
+    {
+        TimeOfDay that = (TimeOfDay)obj;
     }
 }
