@@ -163,14 +163,6 @@ public class DiskPos
     }
 
     /**
-     * @param len
-     */
-    public void advance(int len)
-    {
-        this.iDisk += len;
-    }
-
-    /**
      * @return
      */
     public String toStringTS()
@@ -181,6 +173,14 @@ public class DiskPos
         sb.append(",S$");
         sb.append(Integer.toHexString(getSectorInTrack()));
         return sb.toString();
+    }
+
+    /**
+     * @param len
+     */
+    public void advance(int len)
+    {
+        this.iDisk += len;
     }
 
     /**
