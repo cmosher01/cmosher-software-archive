@@ -129,6 +129,7 @@ public class MySQLTest
 		int m0to15 = readInt(i.next());
 		int f0to150 = readInt(i.next());
 
+		int idImage = 0;
 		PreparedStatement st = null;
 		try
 		{
@@ -142,6 +143,10 @@ public class MySQLTest
 			st.setInt(5,district);
 			st.setInt(6,image);
 			ResultSet rs = st.executeQuery();
+			if (rs.next())
+			{
+				idImage = rs.getInt("id");
+			}
 		}
 		finally
 		{
