@@ -42,5 +42,7 @@ public class OneFileCopy
 		out.flush();
 		out.close();
 		in.close();
+		s.close();
+		srv.close();
 	}
 }
