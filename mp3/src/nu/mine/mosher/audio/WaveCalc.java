@@ -97,5 +97,13 @@ public class WaveCalc
 		{
 			throw new Exception("data chunk does not follow fmt chunk.");
 		}
+
+		long bytes = in.readInt();
+
+		System.out.print(bytes);
+		System.out.print(",");
+		System.out.print(Hz);
+		System.out.print(",");
+		System.out.print(bytes*1000/bytespersec);
     }
 }
