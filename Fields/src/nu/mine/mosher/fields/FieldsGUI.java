@@ -51,6 +51,7 @@ public class GUI
      */
     private void setLookAndFeel()
     {
+        if (true) return;
         try
         {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
