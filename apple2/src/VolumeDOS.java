@@ -17,6 +17,25 @@ public class VolumeDOS extends VolumeEntity
 {
     private byte[] rb;
 
+    private static List rPosDOS = new ArrayList();
+    static
+    {
+        DiskPos p, pLim;
+        try
+        {
+            pLim = new DiskPos(3,0);
+            p = new DiskPos(0,1);
+        }
+        catch (InvalidPosException e)
+        {
+            throw new RuntimeException(e);
+        }
+        while (!p.equals(pLim))
+        {
+            rPosDOS.add(p);
+            p.advance(DiskPos.cSector);
+        }
+    }
     /**
      * @param disk
      */
@@ -208,5 +227,15 @@ public class VolumeDOS extends VolumeEntity
         // TODO various DOS 3.3 signatures
         // TODO Franklin signature
         // TODO AMDOS signature
+    }
+
+    /**
+     * @param knownSectors
+     * @return
+     */
+    public static boolean isDOSKnown(Collection knownSectors)
+    {
+        // TODO Auto-generated method stub
+        return false;
     }
 }
