@@ -107,8 +107,8 @@ public class GUI
         for (int i = 0; i < columnModel.getColumnCount(); ++i)
         {
             TableColumn column = columnModel.getColumn(i);
-            column.setMinWidth(76);
-            column.setPreferredWidth(76);
+            column.setMinWidth(80);
+            column.setPreferredWidth(80);
         }
         table.setPreferredScrollableViewportSize(new Dimension(640,480));
 
