@@ -165,7 +165,7 @@ public class DiskCatalogTest extends TestCase
      * @throws IOException
      * @throws InvalidPosException
      */
-    public void testProntoDOS() throws IOException, InvalidPosException
+    public void testZeroes() throws IOException, InvalidPosException
     {
         List r = new ArrayList();
         assertManyPos("zero.dsk",r);
