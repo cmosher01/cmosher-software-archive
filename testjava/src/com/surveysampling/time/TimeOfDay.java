@@ -98,6 +98,11 @@ public class TimeOfDay implements Comparable
         return milliseconds;
     }
 
+    public Calendar getCalendar()
+    {
+        return (Calendar)calendar.clone();
+    }
+
     /**
      * Returns a millisecond timestamp representing
      * this object's time on the given Date's date.
