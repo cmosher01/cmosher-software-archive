@@ -8,15 +8,12 @@ import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-
 import javax.swing.JApplet;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
-
 import nu.mine.mosher.core.StringFieldizer;
 import nu.mine.mosher.core.StringFieldizer.Iter;
 
