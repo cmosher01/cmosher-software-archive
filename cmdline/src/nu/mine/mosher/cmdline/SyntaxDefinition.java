@@ -19,6 +19,6 @@ public class SyntaxDefinition
 
     public ArgumentDefinition getArgumentDefinition(String arg)
     {
-        
+        return null;
     }
 }
