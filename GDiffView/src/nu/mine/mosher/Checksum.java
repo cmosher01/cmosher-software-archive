@@ -177,33 +177,33 @@ public class Checksum
         return primes.below(size);
     }
 
-    private String printIntArray(int[] a)
-    {
-        String result = "";
-        result += "[";
-        for (int i = 0; i < a.length; i++)
-        {
-            result += a[i];
-            if (i != (a.length - 1))
-                result += ",";
-            else
-                result += "]";
-        }
-        return result;
-    }
-
-    private String printLongArray(long[] a)
-    {
-        String result = "";
-        result += "[";
-        for (int i = 0; i < a.length; i++)
-        {
-            result += a[i];
-            if (i != (a.length - 1))
-                result += ",";
-            else
-                result += "]";
-        }
-        return result;
-    }
+//    private String printIntArray(int[] a)
+//    {
+//        String result = "";
+//        result += "[";
+//        for (int i = 0; i < a.length; i++)
+//        {
+//            result += a[i];
+//            if (i != (a.length - 1))
+//                result += ",";
+//            else
+//                result += "]";
+//        }
+//        return result;
+//    }
+//
+//    private String printLongArray(long[] a)
+//    {
+//        String result = "";
+//        result += "[";
+//        for (int i = 0; i < a.length; i++)
+//        {
+//            result += a[i];
+//            if (i != (a.length - 1))
+//                result += ",";
+//            else
+//                result += "]";
+//        }
+//        return result;
+//    }
 }
