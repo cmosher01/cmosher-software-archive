@@ -79,7 +79,7 @@ public class ExtrDos33
 			return;
 		}
 
-		File saveDos = nextDosFile();
+		File saveDos = new File(dirNew,nextDosFileName());
 
 		byte[] rbc = new byte[rb.length];
 		System.arraycopy(rb,0,rbc,0,rb.length);
@@ -95,10 +95,10 @@ public class ExtrDos33
     }
 
 	private static int nextDosFileNumber;
-	public static File nextDosFile()
+	public static String nextDosFileName()
 	{
 		++nextDosFileNumber;
-		String s = nextDosFileNumber;
+		String s = Integer.toString(nextDosFileNumber);
 		if (nextDosFileNumber < 1000)
 		{
 			s = "0"+s;
@@ -111,6 +111,7 @@ public class ExtrDos33
 		{
 			s = "0"+s;
 		}
+		return s;
 	}
 
     public static File[] listRegFiles(String sDir, String regexpFile, String regexpDir) throws IOException
