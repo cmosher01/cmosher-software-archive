@@ -48,6 +48,20 @@ public class Test
             String field = (String)i.next();
             System.out.println(field);
         }
+
+        Iterator i = new StringFields(x).iterator();
+        String field = (String)i.next();
+        System.out.println(field);
+        field = (String)i.next();
+        System.out.println(field);
+        field = (String)i.next();
+        System.out.println(field);
+        field = (String)i.next();
+        System.out.println(field);
+        field = (String)i.next();
+        System.out.println(field);
+        field = (String)i.next();
+        System.out.println(field);
 //        for (String field : new StringFields(x))
 //        {
 //            System.out.println(field);
