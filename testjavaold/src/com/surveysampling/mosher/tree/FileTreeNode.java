@@ -21,7 +21,9 @@ public class FileTreeNode extends DefaultMutableTreeNode
     public boolean readTree(boolean b)
     {
         if (mRead)
+        {
             return false;
+        }
 
         String list[] = getFileObject().list();
         if (list != null)
@@ -35,6 +37,7 @@ public class FileTreeNode extends DefaultMutableTreeNode
             }
         }
         mRead = true;
+
         return true;
     }
 
