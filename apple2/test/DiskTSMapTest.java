@@ -26,7 +26,7 @@ public class DiskTSMapTest extends TestCase
      */
     public void testTSMap_120E()
     {
-        assertTrue(Disk.isfindDos33TSMapSector(Hex2Bin.hex2Bin(
+        assertTrue(Disk.isDos33TSMapSector(Hex2Bin.hex2Bin(
         "00 00 00 00 00 00 00 00 00 00 00 00 12 0E 00 00 "+
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
@@ -50,7 +50,7 @@ public class DiskTSMapTest extends TestCase
      */
     public void testTSMap_Continued()
     {
-        assertTrue(Disk.isfindDos33TSMapSector(Hex2Bin.hex2Bin(
+        assertTrue(Disk.isDos33TSMapSector(Hex2Bin.hex2Bin(
         "00 1A 0F 00 00 00 00 00 00 00 00 00 12 09 12 08 "+
         "12 07 12 06 12 05 12 04 12 03 12 02 12 01 12 00 "+
         "13 0F 13 0E 13 0D 13 0C 13 0B 13 0A 13 09 13 08 "+
@@ -74,7 +74,7 @@ public class DiskTSMapTest extends TestCase
      */
     public void testTSMap_Continuation()
     {
-        assertTrue(Disk.isfindDos33TSMapSector(Hex2Bin.hex2Bin(
+        assertTrue(Disk.isDos33TSMapSector(Hex2Bin.hex2Bin(
         "00 00 00 00 00 7A 00 00 00 00 00 00 1A 0E 1A 0D "+
         "1A 0C 1A 0B 1A 0A 1A 09 1A 08 00 00 00 00 00 00 "+
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
@@ -98,7 +98,7 @@ public class DiskTSMapTest extends TestCase
      */
     public void testTSMap_0001()
     {
-        assertTrue(Disk.isfindDos33TSMapSector(Hex2Bin.hex2Bin(
+        assertTrue(Disk.isDos33TSMapSector(Hex2Bin.hex2Bin(
         "00 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00 "+
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
@@ -122,7 +122,7 @@ public class DiskTSMapTest extends TestCase
      */
     public void testTSMap_0100()
     {
-        assertTrue(Disk.isfindDos33TSMapSector(Hex2Bin.hex2Bin(
+        assertTrue(Disk.isDos33TSMapSector(Hex2Bin.hex2Bin(
         "00 00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 "+
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
