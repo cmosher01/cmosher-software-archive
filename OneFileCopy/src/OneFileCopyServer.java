@@ -1,5 +1,7 @@
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -25,6 +27,20 @@ public class OneFileCopy
 
 		ServerSocket srv = new ServerSocket(60013);
 		Socket s = srv.accept();
+
+		byte[] rb = new byte[1024];
+
+		BufferedInputStream in = new BufferedInputStream(new FileInputStream(f));
 		BufferedOutputStream out = new BufferedOutputStream(s.getOutputStream(),cBuf);
+
+		int cb = in.read(rb);
+		while (cb > 0)
+		{
+			out.write(rb,0,cb);
+		}
+
+		out.flush();
+		out.close();
+		in.close();
 	}
 }
