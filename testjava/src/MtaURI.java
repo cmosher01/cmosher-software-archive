@@ -132,4 +132,9 @@ public class MtaURI
 		MtaURI that = (MtaURI)obj;
 		return this.mURI.equals(that.mURI);
 	}
+
+    public int hashCode()
+    {
+        return mURI.hashCode();
+    }
 }
