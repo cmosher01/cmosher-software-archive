@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import nu.mine.mosher.gedcom.GedcomLine;
 import nu.mine.mosher.util.TreeNode;
 
 public class GedcomTree
