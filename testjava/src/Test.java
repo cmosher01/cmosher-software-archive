@@ -52,7 +52,10 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
-        File temp = File.createTempFile("test",".tmp");
+        File ctemp = new File("c:\\temp");
+        File f1 = new File(ctemp,"a\\b\\c.txt");
+        f1.createNewFile();
+        f1.close();
 
 
 
