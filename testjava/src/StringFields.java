@@ -15,7 +15,7 @@ public class StringFields /* ??? implements Iterable */
         return i;
     }
 
-    private static class Iter implements Iterator
+    private static class Iter implements Iterator /* ??? SimpleIterator */
     {
         private final String s;
         private int pos;
