@@ -5,6 +5,7 @@ import java.awt.HeadlessException;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTree;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
@@ -70,5 +71,8 @@ public class MainFrame extends JFrame
         JScrollPane scrollTree = new JScrollPane(tree);
         scrollTree.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollTree.setMaximumSize(new Dimension(Integer.MAX_VALUE,Integer.MAX_VALUE));
+
+        JSplitPane split = new JSplitPane();
+        split.setLeftComponent(scrollTree);
     }
 }
