@@ -73,7 +73,8 @@ public class Apple2
         {
             // TODO multiple VTOC handling
         }
-        mapDiskMap.put(p, new VolumeTableOfContents((DiskPos)rPosVTOC.get(0)));
+        DiskPos p = (DiskPos)rPosVTOC.get(0);
+        mapDiskMap.put(p, new VolumeTableOfContents(p));
 
         List rPosCat = new ArrayList();
         disk.findDos33CatalogSector(rPosCat);
