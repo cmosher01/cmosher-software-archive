@@ -26,17 +26,29 @@ public class Disk implements TreeNode
 	{
 		mFile = file;
 
-		JHexEdit he = null;
 		if (mFile != null)
 		{
 			try
 			{
-				he = new JHexEdit(mFile);
-				image = he.image();
+				fin = new FileInputStream(mFile);
+				mDiskBytes = new byte[fin.available()];
+				fin.read(mDiskBytes);
 			}
 			catch (IOException e)
 			{
-				he = null;
+			}
+			finally
+			{
+				if (fin != null)
+				{
+					try
+					{
+						fin.close();
+					}
+					catch (Exception e)
+					{
+					}
+				}
 			}
 		}
 	}
