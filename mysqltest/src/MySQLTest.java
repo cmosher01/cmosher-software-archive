@@ -110,6 +110,11 @@ public class MySQLTest
 
 	protected void parse1790(Iterator i)
     {
+		String state = (String)i.next();
+		String county = (String)i.next();
+		String township = (String)i.next();
+		String other = (String)i.next();
+		int image = Integer.parseInt((String)i.next());
     }
 
     protected void calc() throws SQLException
