@@ -1,5 +1,7 @@
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import junit.framework.TestCase;
 /*
@@ -20,7 +22,9 @@ public class DiskVTOCTest extends TestCase
      */
     public void testDOS33_Master_1980() throws IOException
     {
-        byte[] rb = readDiskResource("DOS33_SystemMaster_19800825.dsk");
+        Disk disk = readDiskResource("DOS33_SystemMaster_19800825.dsk");
+        List rPos = new ArrayList();
+        disk.findDos33VTOC(rPos);
     }
 //    private static byte[] zeroes = new byte[0x100];
 //
@@ -283,12 +287,12 @@ public class DiskVTOCTest extends TestCase
      * @param f
      * @throws IOException
      */
-    private byte[] readDiskResource(String f) throws IOException
+    private Disk readDiskResource(String f) throws IOException
     {
         InputStream disk = this.getClass().getClassLoader().getResourceAsStream(f);
         byte[] rbDisk = new byte[disk.available()];
         disk.read(rbDisk);
         disk.close();
-        return rbDisk;
+        return new Disk(rbDisk);
     }
 }
