@@ -214,8 +214,9 @@ public class Disk
                     for (Iterator i = entries.iterator(); i.hasNext();)
                     {
                         String f = (String)i.next();
-                        System.out.print("    ");
-                        System.out.println(f);
+                        System.out.print("    \"");
+                        System.out.print(f.trim());
+                        System.out.println("\"");
                     }
                 }
             }
