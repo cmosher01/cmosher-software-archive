@@ -229,7 +229,7 @@ public final class BeanUtil
         }
     }
 
-    private static Object convert(String propertyName, String s, Class t, Class propertyEditorClass) throws ParameterParseException
+    private static Object convert(String propertyName, String s, Class t, Class propertyEditorClass) throws ParameterParseException, InstantiationException, IllegalAccessException
     {
         if (s == null)
         {
