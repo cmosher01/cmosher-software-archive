@@ -24,6 +24,7 @@ public class VolumeTSMap extends VolumeEntity
     {
         while (!start.isZero())
         {
+            this.rSector.add(start);
             disk.getDos33TSMapEntries(start, rTS);
             start = disk.getDos33Next(start);
         }
