@@ -49,18 +49,18 @@ public class PersonPersist
 		this.people[2] = new Person("test 3");
 
 		// persist the array of people
-		pm = pmf.getPersistenceManager();
-		transaction = pm.currentTransaction();
-		pm.makePersistentAll(this.people);
-		transaction.commit();
+		this.pm = this.pmf.getPersistenceManager();
+		this.transaction = this.pm.currentTransaction();
+		this.pm.makePersistentAll(this.people);
+		this.transaction.commit();
 		// retrieve the object ids for the persisted objects
 		for (int i = 0; i < this.people.length; i++)
 		{
-			rid.add(pm.getObjectId(this.people[i]));
+			this.rid.add(this.pm.getObjectId(this.people[i]));
 		}
 		// close current persistence manager to ensure that
 		// objects are read from the db not the persistence
 		// manager's memory cache.
-		pm.close();
+		this.pm.close();
 	}
 }
