@@ -55,8 +55,7 @@ public class TestBeans
         {
             classProp = classProp.getComponentType();
             PropertyEditor ed = getPropertyEditor(classProp);
-            Object[] rval = convertArray(value, classProp, ed);
-            v = rval;
+            v = convertArray(value, classProp, ed);
         }
         else
         {
