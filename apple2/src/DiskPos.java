@@ -215,7 +215,7 @@ public class DiskPos implements Comparable, Cloneable
         return sb.toString();
     }
 
-    public void appendHex2(int hex, StringBuffer s)
+    private staic void appendHex2(int hex, StringBuffer s)
     {
         String shex = Integer.toHexString(hex);
         if (shex.length() < 2)
