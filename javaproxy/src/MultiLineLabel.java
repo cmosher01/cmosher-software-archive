@@ -132,7 +132,7 @@ public class MultiLineLabel extends Canvas
     /**
      * return preferred size
      */
-    public Dimension preferredSize()
+    public Dimension getPreferredSize()
     {
         return new Dimension(max_width + margin_width * 2,num_lines * line_height + margin_height * 2);
     }
@@ -140,7 +140,7 @@ public class MultiLineLabel extends Canvas
     /**
      * return minimum size
      */
-    public Dimension minimumSize()
+    public Dimension getMinimumSize()
     {
         return new Dimension(max_width,num_lines * line_height);
     }
