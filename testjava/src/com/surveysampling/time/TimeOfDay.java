@@ -90,18 +90,12 @@ public class TimeOfDay
         return calendar != null;
     }
 
-    public Date getTimeOnDay(Date date)
+    public void getTimeOnDay(Calendar cal)
     {
-        Calendar cal = (Calendar)calendar.clone();
-        Date d = (Date)date.clone();
-
-        cal.setTime(d);
         cal.set(Calendar.HOUR_OF_DAY, hours);
         cal.set(Calendar.MINUTE, minutes);
         cal.set(Calendar.SECOND, seconds);
         cal.set(Calendar.MILLISECOND, milliseconds);
-
-        return cal.getTime();
     }
 
 
