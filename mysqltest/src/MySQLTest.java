@@ -85,9 +85,9 @@ public class MySQLTest
     			int c = rs.getInt("c");
     			String name =
     				rs.getString("nameLast")+", "+
-    				rs.getString("nameFirst")+" "+
+    				rs.getString("nameFirst")/*+" "+
     				rs.getString("nameMiddle")+" "+
-    				rs.getString("nameSuffix");
+    				rs.getString("nameSuffix")*/;
     			for (int i = 0; i < c; ++i)
     			{
     				log.info(
