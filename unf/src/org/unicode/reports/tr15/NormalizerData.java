@@ -10,9 +10,10 @@ import java.util.BitSet;
  * in connection with or arising out of the use of the information here.
  * @author Mark Davis
  */
-public class NormalizerData {
+public class NormalizerData
+{
     static final String copyright = "Copyright © 1998-1999 Unicode, Inc.";
-    
+
     /**
     * Constant for use in getPairwiseComposition
     */
@@ -24,7 +25,8 @@ public class NormalizerData {
     * @param   ch      the source character
     * @return          value from 0 to 255
     */
-    public int getCanonicalClass(char ch) {
+    public int getCanonicalClass(char ch)
+    {
         return canonicalClass.get(ch);
     }
 
@@ -35,7 +37,8 @@ public class NormalizerData {
     * @param   first   second character (e.g. '¸' cedilla)
     * @return          composite (e.g. 'ç')
     */
-    public char getPairwiseComposition(char first, char second) {
+    public char getPairwiseComposition(char first, char second)
+    {
         return (char)compose.get((first << 16) | second);
     }
 
@@ -49,47 +52,54 @@ public class NormalizerData {
     * @param   ch      the source character
     * @param   buffer  buffer to be filled with the decomposition
     */
-    public void getRecursiveDecomposition(boolean canonical, char ch, StringBuffer buffer) {
-        String decomp = decompose.get(ch); 
-        if (decomp != null && !(canonical && isCompatibility.get(ch))) {
-            for (int i = 0; i < decomp.length(); ++i) {
+    public void getRecursiveDecomposition(boolean canonical, char ch, StringBuffer buffer)
+    {
+        String decomp = decompose.get(ch);
+        if (decomp != null && !(canonical && isCompatibility.get(ch)))
+        {
+            for (int i = 0; i < decomp.length(); ++i)
+            {
                 getRecursiveDecomposition(canonical, decomp.charAt(i), buffer);
             }
-        } else {                    // if no decomp, append
+        }
+        else
+        { // if no decomp, append
             buffer.append(ch);
         }
     }
-    
+
     // =================================================
     //                   PRIVATES
     // =================================================
-    
+
     /**
      * Only accessed by NormalizerBuilder.
      */
-    NormalizerData(IntHashtable canonicalClass, IntStringHashtable decompose, 
-      IntHashtable compose, BitSet isCompatibility, BitSet isExcluded) {
+    NormalizerData(IntHashtable canonicalClass, IntStringHashtable decompose, IntHashtable compose, BitSet isCompatibility, BitSet isExcluded)
+    {
         this.canonicalClass = canonicalClass;
         this.decompose = decompose;
         this.compose = compose;
         this.isCompatibility = isCompatibility;
         this.isExcluded = isExcluded;
     }
-    
+
     /**
     * Just accessible for testing.
     */
-    boolean getExcluded (char ch) {
+    boolean getExcluded(char ch)
+    {
         return isExcluded.get(ch);
     }
-   
+
     /**
     * Just accessible for testing.
     */
-    String getRawDecompositionMapping (char ch) {
+    String getRawDecompositionMapping(char ch)
+    {
         return decompose.get(ch);
     }
-   
+
     /**
     * For now, just use IntHashtable
     * Two-stage tables would be used in an optimized implementation.
@@ -106,22 +116,22 @@ public class NormalizerData {
     * index in a small array of ints.
     */
     private IntStringHashtable decompose;
-    
+
     /**
     * Maps from pairs of characters to single.
     * If there is no decomposition, the value is NOT_COMPOSITE.
     */
     private IntHashtable compose;
-    
+
     /**
     * Tells whether decomposition is canonical or not.
     */
     private BitSet isCompatibility = new BitSet();
-    
+
     /**
     * Tells whether character is script-excluded or not.
     * Used only while building, and for testing.
     */
-    
+
     private BitSet isExcluded = new BitSet();
 }
