@@ -141,9 +141,9 @@ public class Disk
     }
 
     /**
-     * @param sector
-     * @param i
-     * @param bs
+     * @param actual
+     * @param pos
+     * @param expected
      * @return
      */
     private boolean match(byte[] actual, int pos, byte[] expected)
