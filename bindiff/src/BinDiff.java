@@ -91,11 +91,11 @@ public class BinDiff
 		statechange(newstate,c,null);
 	}
 
-    protected void statechange(int newstate, int c, TellStream instr)
+    protected void statechange(int newstate, int c, TellStream f)
     {
-        if (newstate == start)
+        if (newstate == START)
         {
-            state = start;
+            state = START;
             return;
         }
 
@@ -104,39 +104,39 @@ public class BinDiff
         {
             switch (state) //old state
             {
-                case copy :
-                    sprintf(s, "c%d", ccopy);
-                    fputs(s, fdif);
+                case COPY:
+                    //sprintf(s, "c%d", ccopy);
+                    //fputs(s, fdif);
                     ccopy = 0;
                     break;
-                case skip :
-                case insert :
+                case SKIP:
+                case INSERT:
                     {
-                        if (newstate == copy || newstate == end)
+                        if (newstate == COPY || newstate == END)
                         {
-                            if (cskip)
+                            if (cskip > 0)
                             {
-                                sprintf(s, "s%d", cskip);
-                                fputs(s, fdif);
+                                //sprintf(s, "s%d", cskip);
+                                //fputs(s, fdif);
                                 cskip = 0;
                             }
-                            if (cinsert)
+                            if (cinsert > 0)
                             {
 								StringBuffer s = new StringBuffer(256);
-                                sprintf(s, "i%d{", cinsert);
-                                fputs(s, fdif);
+                                //sprintf(s, "i%d{", cinsert);
+                                //fputs(s, fdif);
 
-                                long orig = ftell(fileinsert);
+                                fileinsert.mark();
 
                                 fseek(fileinsert, posinsert, SEEK_SET);
                                 for (int i = 0; i < cinsert; ++i)
                                 {
-									fputc(fgetc(fileinsert), fdif);
+									//fputc(fgetc(fileinsert), fdif);
                                 }
 
-                                fseek(fileinsert, orig, SEEK_SET);
+                                fileinsert.reset();
 
-                                fputc('}', fdif);
+                                //fputc('}', fdif);
                                 cinsert = 0;
                                 posinsert = -1;
                             }
@@ -148,23 +148,27 @@ public class BinDiff
 
         switch (state)
         {
-            case copy :
+            case COPY:
                 ccopy += c;
                 break;
-            case skip :
+            case SKIP:
                 cskip += c;
-                for (i = 0; i < c; i++)
-                     (void)fgetc(f);
+                for (int i = 0; i < c; ++i)
+                {
+                	f.read();
+                }
                 break;
-            case insert :
+            case INSERT:
                 if (posinsert < 0)
                 {
                     posinsert = ftell(f);
                     fileinsert = f;
                 }
                 cinsert += c;
-                for (i = 0; i < c; i++)
-                     (void)fgetc(f);
+				for (int i = 0; i < c; ++i)
+				{
+					f.read();
+				}
                 break;
         }
     }
