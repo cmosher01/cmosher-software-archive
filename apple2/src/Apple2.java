@@ -33,7 +33,6 @@ public class Apple2
         disk.findDos33VTOC();
         TSMap tsmap = new TSMap();
         disk.findDos33CatalogSector(tsmap);
-        System.out.println(tsmap);
         disk.findDos33TSMapSector(tsmap);
     }
 }
