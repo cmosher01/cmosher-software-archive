@@ -58,8 +58,8 @@ public class A2DiskImage
 			// OK
 		}
 		else if (
-			getByte([0x11][0xE][1]==0x11 &&
-			getByte([0x11][0xE][2]==0x0D)
+			getByte(0x11,0xE,1)==0x11 &&
+			getByte(0x11,0xE,2)==0x0D)
 		{
 			m_osType = osDos33;
 			// DOS 3.3 disk in track-sector order
