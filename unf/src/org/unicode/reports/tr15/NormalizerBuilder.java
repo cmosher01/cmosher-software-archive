@@ -58,7 +58,7 @@ class NormalizerBuilder
             {
                 System.out.println("Building Normalizer Data from file.");
                 readExclusionList(isExcluded);
-                System.out.println(isExcluded.get(0x00C0));
+//                System.out.println(isExcluded.get(0x00C0));
                 buildDecompositionTables(canonicalClass, decompose, compose, isCompatibility, isExcluded);
             }
             else
@@ -497,7 +497,7 @@ class NormalizerBuilder
 			{
 				int cint = Integer.parseInt(tok,16);
 if (cint > 0xffff)
-	System.err.println("oops, we are not converting to UTF-16 correctly");
+	System.err.println("oops, we are not converting to UTF-16 correctly: "+tok);
 				sb.append((char)Integer.parseInt(tok,16));
 			}
 		}
