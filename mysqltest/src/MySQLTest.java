@@ -204,8 +204,15 @@ public class MySQLTest
 		}
 
 //		dbUpdate("drop table CountEntry");
-		st = db.prepareStatement(
-		"insert into CountEntry(household,gender,minAge,maxAge,count) values (?,?,?,?,?)");
+		try
+		{
+			st = db.prepareStatement(
+			"insert into CountEntry(household,gender,minAge,maxAge,count) values (?,?,?,?,?)");
+		}
+		finally
+		{
+			closeStatement(st);
+		}
     }
 
     protected int readInt(Object stringField)
