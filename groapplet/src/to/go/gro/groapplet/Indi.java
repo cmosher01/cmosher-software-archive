@@ -151,9 +151,9 @@ class Indi
             y <= point.y && point.y <= y+h;
     }
 
-    public void hit()
+    public void hit(boolean isHit)
     {
-    	pushed = true;
+    	pushed = isHit;
     }
 
 	public boolean isHit()
