@@ -29,7 +29,7 @@ public class DiskVTOCTest extends TestCase
         assertEquals(1, rPos.size());
         DiskPos pos = (DiskPos)rPos.get(0);
         DiskPos ts1100 = new DiskPos();
-        ts1100.setTS(11,0);
+        ts1100.setTS(0x11,0x00);
         assertEquals(pos,ts1100);
     }
 //    private static byte[] zeroes = new byte[0x100];
