@@ -114,7 +114,7 @@ public class Checksum
      * i is inserted into an array at index i. This is not good enough, we also
      * need a hashtable into these indexes.
      */
-    public void generateChecksums(File sourceFile, int length) throws IOException
+    public void generateChecksums(File sourceFile) throws IOException
     {
 
         InputStream is = new BufferedInputStream(new FileInputStream(sourceFile));
