@@ -43,21 +43,18 @@ public class MP3Calc
 
 		DataInputStream in = new DataInputStream(new FileInputStream(fin));
 
-		int h = in.readInt();
+		final int h = in.readInt();
 		System.out.print(Integer.toHexString(h));
 		System.out.print(",");
 
-		h = flipBits(h);
-
 		// synch word
-		int synch = h & 0x7ff;
+		int synch = getbits(h,31,21);
 		System.out.print(Integer.toHexString(synch));
 		System.out.print(",");
-		h >>= 11;
 
 		// MPEG1 or MPEG2 or MPEG 2.5
 		int mpeg = 0;
-		switch (h & 3)
+		switch (getbits(h,20,19))
         {
 			case 0:
 				mpeg = 25;
@@ -72,24 +69,21 @@ public class MP3Calc
 				System.out.print("mpeg1,");
 			break;
         }
-		h >>= 2;
 
 		// layer 1, 2, or 3 (4 means undefined)
-		int layer = 4-(h&3);
+		int layer = 4-(getbits(h,18,17));
 		System.out.print("layer");
 		System.out.print(layer);
 		System.out.print(",");
-		h >>= 2;
 
 		// protection
-		boolean crc = ((h & 1) > 0);
+		boolean crc = (getbits(h,16,16) > 0);
 		if (!crc)
 		{
 			System.out.print("no");
 		}
 		System.out.print("crc");
 		System.out.print(",");
-		h >>= 1;
 
 		// bitrate
 		int bps = calcBitRate(h & 15,mpeg,layer);
@@ -187,15 +181,17 @@ public class MP3Calc
         h >>= 2;
     }
 
-    private static int flipBits(int h)
+    /**
+     * @param h
+     * @param i
+     * @param j
+     * @return
+     */
+    private static int getbits(int src, int hi, int lo)
     {
-    	int n = 0;
-    	for (int i = 0; i < 32; ++i)
-        {
-        	n |= (h & 1);
-        	n <<= 1;
-        }
-    	return n;
+    	src <<= (31-hi);
+    	src >>= (31+lo-hi);
+    	return src;
     }
 
     private static int calcBitRate(int key, int mpeg, int layer)
