@@ -17,7 +17,13 @@ public class YMD implements Immutable, Serializable
 		this.month = month;
 		this.day = day;
 
-		computeHash();
+		hash = 17;
+		hash *= 37;
+		hash += year;
+		hash *= 37;
+		hash += month;
+		hash *= 37;
+		hash += day;
 	}
 
     public int getDay()
@@ -54,14 +60,14 @@ public class YMD implements Immutable, Serializable
     	return hash;
     }
 
-    private void computeHash()
+    private int getHash()
     {
-		hash = 17;
-		hash *= 37;
-		hash += year;
-		hash *= 37;
-		hash += month;
-		hash *= 37;
-		hash += day;
+		int h = 17;
+		h *= 37;
+		h += year;
+		h *= 37;
+		h += month;
+		h *= 37;
+		h += day;
     }
 }
