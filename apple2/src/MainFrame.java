@@ -53,9 +53,11 @@ public class MainFrame extends JFrame
     /**
      * @param disk
      * @throws InvalidPosException
+     * @throws IOException
      */
-    private void doOneDisk(Disk disk) throws InvalidPosException
+    private void doOneDisk(File f) throws InvalidPosException, IOException
     {
+        Disk disk = Apple2.readDisk(f);
         Volume vol = new Volume();
         try
         {
@@ -173,7 +175,7 @@ public class MainFrame extends JFrame
         this.setMaximizedBounds(env.getMaximumWindowBounds());
         this.setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
 
-        doOneDisk(Apple2.readDisk(new File("test/Prontodos.dsk")));
+        doOneDisk(new File("test/Prontodos.dsk"));
 //        doOneDisk(Apple2.readDisk(new File("test/CLC11.dsk")));
 //        doOneDisk(Apple2.readDisk(new File("test/SARG2.dsk")));
 //        doOneDisk(Apple2.readDisk(new File("test/DOS33_SystemMaster_19830101.dsk")));
