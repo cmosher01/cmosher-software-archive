@@ -395,16 +395,21 @@ public class GDiffView extends JFrame
         hex.appendHeader();
 
         GDiffCmd g = getGDiff(gdiff);
+        long t = 0;
         while (!(g instanceof GDiffEnd))
         {
             rcmd.add(g);
             if (g instanceof GDiffData)
             {
                 GDiffData gd = (GDiffData)g;
+                long t0 = t;
                 for (int i = 0; i < gd.getData().length; i++)
                 {
+                    ++t;
                     hex.appendByte(gd.getData()[i]);
                 }
+                long t1 = t-1;
+x                new Range(t0,t1);
             }
             else
             {
