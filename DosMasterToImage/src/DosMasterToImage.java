@@ -86,7 +86,29 @@ public class DosMasterToImage
         {
             out.write(0xFF); out.write(0xFF); out.write(0x00); out.write(0x00);
         }
+        for (int i = 0; i < 0x3C; ++i)
+        {
+            out.write(0x00);
+        }
 
+        for (int i = 0x01; i < 0x10; ++i)
+        {
+            out.write(0x00);
+            if (1 > 1)
+            {
+                out.write(0x11);
+                out.write(i-1);
+            }
+            else
+            {
+                out.write(0x00);
+                out.write(0x00);
+            }
+            for (int j = 3; j < 0x100; ++j)
+            {
+                out.write(0x00);
+            }
+        }
         out.flush();
         out.close();
         in.close();
