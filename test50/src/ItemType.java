@@ -4,12 +4,12 @@
  * @author Chris Mosher
  * Created: Feb 7, 2004
  */
-public class ItemType
+public class ItemType<T>
 {
-	private ItemTypeEnum known;
+	private T /*ItemTypeEnum*/ known;
 	private String other;
 
-	public ItemType(ItemTypeEnum known)
+	public ItemType(T /*ItemTypeEnum*/ known)
 	{
 		this.known = known;
 	}
@@ -30,7 +30,7 @@ public class ItemType
 		}
 		return s;
 	}
-	public boolean isa(ItemTypeEnum x)
+	public boolean isa(T /*ItemTypeEnum*/ x)
 	{
 		return (known != null && known.equals(x));
 	}
