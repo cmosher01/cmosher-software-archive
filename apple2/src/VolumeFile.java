@@ -1,4 +1,7 @@
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 /*
  * Created on Oct 9, 2004
@@ -14,7 +17,7 @@ public class VolumeFile
 {
     private Dos33CatalogEntry catEntry;
     private VolumeTSMap ts;
-//    private VolumeFileData data;
+    private VolumeFileData data;
 
     /**
      * @param ent
@@ -24,15 +27,21 @@ public class VolumeFile
     public void readFromMedia(Dos33CatalogEntry ent, Disk disk) throws InvalidPosException
     {
         catEntry = ent;
+
+        List rPosFile = new ArrayList();
         if (disk.isDos33TSMapSector(catEntry.getStart()))
         {
             ts = new VolumeTSMap();
             ts.readFromMedia(catEntry.getStart(),disk);
+            ts.getTS(rPosFile);
         }
         else
         {
             // assume a single-sector file
+            rPosFile.add(catEntry.getStart());
         }
+        data = new VolumeFileData();
+        data.readFromMedia(rPosFile,disk);
     }
 
     /**
