@@ -204,6 +204,7 @@ public class TimeOfDayTest extends TestCase
         shouldFormatAs(2,0,0,0,"02:00");
         shouldFormatAs(2,0,0,1,"02:00:00.001");
         shouldFormatAs(23,59,59,999,"23:59:59.999");
+        shouldFormatAs(23,59,59,0,"23:59:59");
     }
 
     private void shouldFormatAs(int hour, int minute, int second, int millisecond, String should)
