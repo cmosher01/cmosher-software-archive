@@ -251,6 +251,15 @@ public class GDiffVeiew extends JFrame
     {
         return getHexStart(pos)+2;
     }
+    public int getAscStart(int pos)
+    {
+        int rowLen = nibs+2+4*cCol+1;
+        return rowLen+(pos/cCol)*rowLen+nibs+2+cCol*3+(pos%cCol);
+    }
+    public int getAscEnd(int pos)
+    {
+        return getAscStart(pos)+1;
+    }
     public void highlight(int beginPoint, int endPoint)
     {
         doc.setCharacterAttributes(beginPoint,endPoint-beginPoint,(AttributeSet)styles.get("highlight"),true);
