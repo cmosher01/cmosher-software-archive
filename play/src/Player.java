@@ -38,7 +38,7 @@ public class Player implements Immutable
     {
     	LoggingInitializer.init();
         BufferedReader in;
-
+		GedcomAnselCharsetProvider p;
 		Charset cs = Charset.forName("x-gedcom-ansel");
 		System.out.println(cs.displayName());
 
