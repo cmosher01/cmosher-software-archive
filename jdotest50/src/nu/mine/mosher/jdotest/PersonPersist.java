@@ -12,8 +12,6 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import org.jpox.store.QueryResult;
-
 /**
  * @author Chris Mosher
  * Created: Feb 18, 2004
@@ -23,7 +21,7 @@ public class PersonPersist
 	private final static int SIZE = 3;
 	private PersistenceManagerFactory pmf;
 
-	private List rid = new ArrayList(SIZE);
+//	private List rid = new ArrayList(SIZE);
 
 	public PersonPersist()
 	{
@@ -57,10 +55,10 @@ public class PersonPersist
 		pm.makePersistentAll(people);
 		transaction.commit();
 		// retrieve the object ids for the persisted objects
-		for (int i = 0; i < people.length; i++)
-		{
-			this.rid.add(pm.getObjectId(people[i]));
-		}
+//		for (int i = 0; i < people.length; i++)
+//		{
+//			this.rid.add(pm.getObjectId(people[i]));
+//		}
 		// close current persistence manager to ensure that
 		// objects are read from the db not the persistence
 		// manager's memory cache.
