@@ -56,7 +56,7 @@ public class PersonPersist
 		// retrieve the object ids for the persisted objects
 		for (int i = 0; i < this.people.length; i++)
 		{
-			id.add(pm.getObjectId(this.people[i]));
+			rid.add(pm.getObjectId(this.people[i]));
 		}
 		// close current persistence manager to ensure that
 		// objects are read from the db not the persistence
