@@ -8,6 +8,7 @@
 		<project>junit</project>
 		<project>logging</project>
 		<project>unicode</project>
+		<project>util</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
