@@ -11,8 +11,7 @@
 <table>
 <%
 	PersistenceManager pm = new Perm().pm();
-	pm.getExtent(Item.class,true).iterator();
-    for (Iterator i = pm.getList(); i.hasNext(); )
+    for (Iterator i = pm.getExtent(Item.class,true).iterator(); i.hasNext(); )
     {
         Item item = (Item)i.next();
         String id = pm.getObjectId(item).toString();
