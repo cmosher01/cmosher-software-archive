@@ -149,7 +149,6 @@ public class RanArray30bit
     /**
      * Generates some random numbers using this class.
      * @param rArg
-     * @throws IOException
      */
     public static void main(String[] rArg)
     {
