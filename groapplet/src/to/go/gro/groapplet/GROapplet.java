@@ -28,7 +28,6 @@ public class GROapplet extends JApplet
 
     public GROapplet() throws HeadlessException
     {
-//        enableEvents(AWTEvent.MOUSE_EVENT_MASK|AWTEvent.MOUSE_MOTION_EVENT_MASK);
     }
 
     public void init()
@@ -243,13 +242,4 @@ public class GROapplet extends JApplet
     {
     	test = true;
     }
-
-    //    protected void processMouseMotionEvent(MouseEvent e)
-    //    {
-    //        if (fc.isOnIndi(e.getPoint()))
-    //            setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-    //        else
-    //            setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-    //        super.processMouseMotionEvent(e);
-    //    }
 }
