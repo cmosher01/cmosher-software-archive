@@ -388,6 +388,7 @@ public class FixAppleDisasm
 					}
 					prevline.comment += " "+ln.comment;
 				}
+				i.remove();
 			}
 			prevline = ln;
 		}
