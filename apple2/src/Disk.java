@@ -458,7 +458,9 @@ public class Disk
         int p = 0x0C;
         while (p < 0x100 && (sector[p] != 0 || sector[p+1] != 0))
         {
-            entries.add(new DiskPos(sector[p],sector[p+1],0));
+            DiskPos posTS = new DiskPos();
+            posTS.setTS(sector[p],sector[p+1]);
+            entries.add(posTS);
 
             p += 2;
         }
