@@ -13,15 +13,13 @@ public class OneFileCopyServer
 
 	public static void main(String[] args) throws IOException
 	{
-		String sFileName = "C:\\Documents and Settings\\Chris\\My Documents\\My Videos\\199912\\199912.avi";
+		String sFileName = "C:\\Documents and Settings\\Chris\\My Documents\\My Videos\\199912\\test5.avi";
 		File f = new File(sFileName).getCanonicalFile().getAbsoluteFile();
 		if (!f.canRead())
 		{
 			throw new IllegalArgumentException("Bad input file: "+f.getAbsolutePath());
 		}
-		System.out.println(f.length());
-if(false)
-{
+
 		int cBuf = cBufMax;
 		if (f.length() < cBuf)
 		{
@@ -40,7 +38,16 @@ if(false)
 		BufferedOutputStream out = new BufferedOutputStream(s.getOutputStream(),cBuf);
 
 		byte[] rb = new byte[1024];
-		
+
+		byte[] rbLen = new byte[Long.SIZE];
+		long xLen = f.length();
+		for (int i = 0; i < Long.SIZE; ++i)
+		{
+			rbLen[i] = (byte)(xLen & 0xFF);
+			xLen >>= 8;
+		}
+		out.write(rbLen);
+
 		int i = 0;
 		while (in.available() != 0)
 		{
