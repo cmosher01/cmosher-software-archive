@@ -4,17 +4,13 @@ import java.io.Serializable;
 
 public class Pair implements Cloneable, Comparable, Serializable
 {
-    private Cloneable a;
-    private Cloneable b;
+    private ImmutableReference a;
+    private ImmutableReference b;
 
     public Pair(Cloneable a, Cloneable b) throws CloneNotSupportedException
     {
-        if (a == null || b == null)
-        {
-            throw new IllegalArgumentException();
-        }
-        this.a = Cloner.cloneObject(a);
-        this.b = Cloner.cloneObject(b);
+        this.a = new ImmutableReference(a);
+        this.b = new ImmutableReference(b);
     }
 
     public Cloneable a() throws CloneNotSupportedException
