@@ -196,7 +196,7 @@ public class Disk
      * @param tsmapMaps
      * @throws InvalidPosException
      */
-    public void findDos33CatalogSector(/*boolean allowLarge, TSMap tsmapMaps*/Collection rPosCat) throws InvalidPosException
+    public void findDos33CatalogSector(/*boolean allowLarge, TSMap tsmapMaps*/Collection rPosCat)
     {
         rewind();
         while (!EOF())
