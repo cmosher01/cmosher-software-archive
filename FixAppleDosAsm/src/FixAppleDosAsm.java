@@ -76,7 +76,8 @@ public class FixAppleDosAsm
             }
             else
             {
-                
+                String dr = tr.substring(1, semi).trim();
+                String cm = tr.substring(semi+1);
             }
         }
         else
