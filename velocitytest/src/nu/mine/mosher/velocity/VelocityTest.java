@@ -31,20 +31,21 @@ public class VelocityTest
     {
         VelocityEngine velocity = new VelocityEngine();
 
-        velocity.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM,new LogSystem()
-        {
-            public void init(RuntimeServices rs) throws Exception
-            {
-            }
-
-            public void logVelocityMessage(int level, String message)
-            {
-                if (level >= LogSystem.INFO_ID)
-                {
-                    System.err.println(message);
-                }
-            }
-        });
+//        velocity.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM,new LogSystem()
+//        {
+//            public void init(RuntimeServices rs) throws Exception
+//            {
+//            }
+//
+//            public void logVelocityMessage(int level, String message)
+//            {
+//                if (level >= LogSystem.INFO_ID)
+//                {
+//                    System.err.println(message);
+//                }
+//            }
+//        });
+        velocity.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM,"VelocityTest.ErrLogger");
         velocity.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH,"C:\\Documents and Settings\\chrism\\My Documents");
         velocity.setProperty(VelocityEngine.VM_LIBRARY,"");
 
@@ -62,6 +63,20 @@ public class VelocityTest
 
         writer.flush();
         writer.close();
+    }
+
+    private static class ErrLogger implements LogSystem
+    {
+        public void init(RuntimeServices rs) throws Exception
+        {
+        }
+        public void logVelocityMessage(int level, String message)
+        {
+            if (level >= LogSystem.INFO_ID)
+            {
+                System.err.println(message);
+            }
+        }
     }
 
     public static ArrayList getDependencies() throws ParserConfigurationException, SAXException, IOException
