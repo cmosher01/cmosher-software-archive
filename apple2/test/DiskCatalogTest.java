@@ -21,15 +21,13 @@ public class DiskCatalogTest extends TestCase
      */
     public void testCatalog_Zeroes()
     {
-        assertFalse(Disk.isDos33VTOC(zeroes));
+        assertEquals(0,Disk.isDos33CatalogSector(zeroes));
     }
 
     /**
      */
     public void testCatalog_Dos33_System_Master_19800825_110F()
     {
-        TSMap ts = new TSMap();
-        List ent = new ArrayList();
         assertEquals(7,Disk.isDos33CatalogSector(Hex2Bin.hex2Bin(
         "00 11 0E 00 00 00 00 00 00 00 00 13 0F 82 C8 C5 "+
         "CC CC CF A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 "+
@@ -55,8 +53,6 @@ public class DiskCatalogTest extends TestCase
      */
     public void testCatalog_Beagle_Tip1_1101()
     {
-        TSMap ts = new TSMap();
-        List ent = new ArrayList();
         assertEquals(7,Disk.isDos33CatalogSector(Hex2Bin.hex2Bin(
         "00 10 0F 00 00 00 00 00 00 00 00 1C 08 82 C2 C1 "+
         "D4 CF CE A0 D2 CF CC CC C5 D2 A0 A0 A0 A0 A0 A0 "+
@@ -82,8 +78,6 @@ public class DiskCatalogTest extends TestCase
      */
     public void testCatalog_Hello_Only()
     {
-        TSMap ts = new TSMap();
-        List ent = new ArrayList();
         assertEquals(1,Disk.isDos33CatalogSector(Hex2Bin.hex2Bin(
         "00 11 0E 00 00 00 00 00 00 00 00 12 0F 02 C8 C5 "+
         "CC CC CF A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 "+
@@ -109,8 +103,6 @@ public class DiskCatalogTest extends TestCase
      */
     public void testCatalog_Hello_Only_Deleted()
     {
-        TSMap ts = new TSMap();
-        List ent = new ArrayList();
         assertEquals(1,Disk.isDos33CatalogSector(Hex2Bin.hex2Bin(
         "00 11 0E 00 00 00 00 00 00 00 00 FF 0F 02 C8 C5 "+
         "CC CC CF A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 "+
@@ -136,8 +128,6 @@ public class DiskCatalogTest extends TestCase
      */
     public void testCatalog_Beagle_Extrak1_110F()
     {
-        TSMap ts = new TSMap();
-        List ent = new ArrayList();
         assertEquals(7,Disk.isDos33CatalogSector(Hex2Bin.hex2Bin(
         "00 11 0E 00 00 00 00 00 00 00 00 13 0F 82 20 20 "+
         "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 "+
