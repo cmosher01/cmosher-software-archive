@@ -68,7 +68,7 @@ public class TestThreadIO
             }
             i++;
         }
-        if (numberOfEntries != 2)
+        if (numberOfEntries != 3)
         {
             System.err.println("numberOfEntries != 2");
         }
