@@ -14,7 +14,7 @@ import junit.framework.TestCase;
  */
 public class FixMetaUTF8Test extends TestCase
 {
-    public void testSimple() throws IOException
+    public void testSimple()
     {
         StringBuffer sb = new StringBuffer();
         sb.append("<html>\n");
@@ -33,7 +33,7 @@ public class FixMetaUTF8Test extends TestCase
         shouldBe(sbExpect,sb);
     }
 
-    public void testMissing() throws IOException
+    public void testMissing()
     {
         StringBuffer sb = new StringBuffer();
         sb.append("<html>\n");
@@ -51,7 +51,7 @@ public class FixMetaUTF8Test extends TestCase
         shouldBe(sbExpect,sb);
     }
 
-    public void testTwoLines() throws IOException
+    public void testTwoLines()
     {
         StringBuffer sb = new StringBuffer();
         sb.append("<html>\n");
