@@ -79,13 +79,6 @@ public class TimeOfDayParserTest extends TestCase
         }
     }
 
-    /**
-     * @param string
-     * @param i
-     * @param j
-     * @param k
-     * @param l
-     */
     private void makeAndCheck(String s, int hour, int minute, int second, int millisecond) throws ParseException
     {
         TimeOfDayParser p = new TimeOfDayParser(s);
