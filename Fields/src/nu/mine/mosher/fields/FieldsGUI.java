@@ -58,7 +58,7 @@ public class GUI
     /**
      * @return
      */
-    private Container createContentPane()
+    private JPanel createContentPane()
     {
         // TODO Auto-generated method stub
         return null;
