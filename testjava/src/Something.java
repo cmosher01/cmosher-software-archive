@@ -13,6 +13,7 @@ public class SomeBean
     private String aString;
     private File aFile;
     private Object aObject;
+    private Integer objInteger;
 
     public SomeBean()
     {
@@ -101,10 +102,21 @@ public class SomeBean
     /**
      * @return
      */
-    public String getSString()
+    public String getAString()
     {
         return aString;
     }
+
+    /**
+     * @return
+     */
+    public Integer getObjInteger()
+    {
+        return objInteger;
+    }
+
+
+
 
     /**
      * @param b
@@ -189,8 +201,17 @@ public class SomeBean
     /**
      * @param string
      */
-    public void setaString(String string)
+    public void setAString(String string)
     {
         aString = string;
     }
+
+    /**
+     * @param integer
+     */
+    public void setObjInteger(Integer integer)
+    {
+        objInteger = integer;
+    }
+
 }
