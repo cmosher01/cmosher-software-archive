@@ -3,11 +3,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Logger;
 
 public class MySQLTest
 {
 	private static final MySQLTest app = new MySQLTest();
 
+	private Logger log = Logger.global;
 	private Connection db;
 
     public static void main(String[] rArg) throws Throwable
