@@ -307,7 +307,10 @@ public class DosMasterToImage
                 outHexShort(i);
                 if (bS-bM != 0x80 && bS != 0 && bM != 0)
                 {
-                    System.out.print(" // nonzero, non-$80 offset");
+                    System.out.print(" // master: ");
+                    outHexByte(bM);
+                    System.out.print(" slave: ");
+                    outHexByte(bS);
                 }
                 System.out.println();
             }
