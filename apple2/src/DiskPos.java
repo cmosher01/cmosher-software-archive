@@ -33,6 +33,17 @@ public class DiskPos
     }
 
     /**
+     * @param sector
+     */
+    private void verifySector(int sector)
+    {
+        if (sector < 0 || cSectorsPerTrack <= sector)
+        {
+            throw new InvalidPosException("Invalid sector: "+sector);
+        }
+    }
+
+    /**
      * @param track
      * @throws InvalidPosException
      */
