@@ -57,6 +57,6 @@ public class GDiffCopy extends GDiffCmd
      */
     public String toString()
     {
-        return "copy "+pos+","+len;
+        return "copy "+getPosition()+"-"+getEnd();
     }
 }
