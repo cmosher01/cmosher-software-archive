@@ -51,6 +51,9 @@ public class VolumeFileRecovered
         data.getPos(rPos);
     }
 
+    /**
+     * @return
+     */
     public VolumeTSMap getTSMap()
     {
         return ts;
