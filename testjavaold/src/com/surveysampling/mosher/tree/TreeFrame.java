@@ -20,23 +20,19 @@ public class TreeFrame extends JPanel
 
     public TreeFrame(String dir)
     {
-//        setDoubleBuffered(true);
-        setLayout(new BorderLayout());
+//        setLayout(new BorderLayout());
         addNotify();
         setSize(getInsets().left + getInsets().right + 485, getInsets().top + getInsets().bottom + 367);
 
         FileTreeNode root = (FileTreeNode)buildTree(dir);
         DefaultTreeModel treemodel = new DefaultTreeModel(root);
         JTree tree = new JTree(treemodel);
-//        tree.setDoubleBuffered(true);
 
         HierarchyBrowserUpdater upd = new HierarchyBrowserUpdater(tree, root, treemodel, this);
         tree.addTreeExpansionListener(upd);
 
         JScrollPane scrollpane = new JScrollPane();
         scrollpane.getViewport().add(tree);
-//        scrollpane.setDoubleBuffered(true);
-//        scrollpane.getViewport().setDoubleBuffered(true);
 
         add("Center", scrollpane);
     }
