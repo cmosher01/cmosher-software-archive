@@ -793,8 +793,6 @@ public class Disk
         }
 
         /**
-         * Iterates through sectors.
-         * TODO iterate thru blocks
          * @see java.util.Iterator#next()
          */
         public Object next() throws NoSuchElementException
