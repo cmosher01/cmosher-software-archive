@@ -46,6 +46,17 @@ public class TestBeans
         setProperty(bean, pd, v);
     }
 
+    public static PropertyDescriptor getPropertyDescriptor(Class forClass, String property) throws IntrospectionException
+    {
+        Map mapPDs = getPropertyDescriptors(getBeanInfo(forClass));
+        if (!mapPDs.containsKey(property))
+        {
+            throw new IntrospectionException("Cannot find property descriptor for " + property);
+        }
+        
+        return (PropertyDescriptor)mapPDs.get(property);
+    }
+
     public static Object convertScalarSafe(String value, Class classProp)
         throws NegativeArraySizeException, IllegalArgumentException, IntrospectionException
     {
@@ -64,29 +75,6 @@ public class TestBeans
             throw new IllegalArgumentException("Cannot set a scalar property to an array of values.");
         }
         return convertArray(value,classProp);
-    }
-
-    public static void setProperty(Object bean, PropertyDescriptor pd, Object value)
-        throws IllegalAccessException, IllegalArgumentException, InvocationTargetException
-    {
-        Method wr = pd.getWriteMethod();
-        if (wr == null)
-        {
-            throw new IllegalAccessException("Cannot write property " + pd.getName());
-        }
-        
-        wr.invoke(bean, new Object[] { value });
-    }
-
-    public static PropertyDescriptor getPropertyDescriptor(Class forClass, String property) throws IntrospectionException
-    {
-        Map mapPDs = getPropertyDescriptors(getBeanInfo(forClass));
-        if (!mapPDs.containsKey(property))
-        {
-            throw new IntrospectionException("Cannot find property descriptor for " + property);
-        }
-        
-        return (PropertyDescriptor)mapPDs.get(property);
     }
 
     public static Object convertScalar(String value, Class classProp) throws IntrospectionException, IllegalArgumentException
@@ -108,6 +96,18 @@ public class TestBeans
             rval[i] = ed.getValue();
         }
         return rval;
+    }
+
+    public static void setProperty(Object bean, PropertyDescriptor pd, Object value)
+        throws IllegalAccessException, IllegalArgumentException, InvocationTargetException
+    {
+        Method wr = pd.getWriteMethod();
+        if (wr == null)
+        {
+            throw new IllegalAccessException("Cannot write property " + pd.getName());
+        }
+        
+        wr.invoke(bean, new Object[] { value });
     }
 
     public static PropertyEditor getPropertyEditor(Class forClass) throws IntrospectionException
