@@ -25,35 +25,6 @@ public class DiskPos
 
 
 
-    /**
-     */
-    public DiskPos()
-    {
-    }
-
-    /**
-     * @param track
-     * @param sector
-     * @param byt
-     * @throws InvalidPosException
-     */
-    public DiskPos(int track, int sector, int byt) throws InvalidPosException
-    {
-    }
-
-    /**
-     * @param block
-     * @param byt
-     * @param allowLarge
-     * @throws InvalidPosException
-     */
-    public DiskPos(int block, int byt, boolean allowLarge) throws InvalidPosException
-    {
-        verifyBlock(block,allowLarge);
-        verifyByte(byt,cBlock);
-        this.iDisk = block*cBlock+byt;
-    }
-
     protected DiskPos(int iDisk)
     {
         this.iDisk = iDisk;
@@ -236,5 +207,18 @@ public class DiskPos
         verifySector(sector);
         verifyByte(byt,cSector);
         this.iDisk = track*cTrack+sector*cSector+byt;
+    }
+
+    /**
+     * @param block
+     * @param byt
+     * @param allowLarge
+     * @throws InvalidPosException
+     */
+    public void setBlock(int block, int byt, boolean allowLarge) throws InvalidPosException
+    {
+        verifyBlock(block,allowLarge);
+        verifyByte(byt,cBlock);
+        this.iDisk = block*cBlock+byt;
     }
 }
