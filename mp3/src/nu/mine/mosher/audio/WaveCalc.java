@@ -52,7 +52,8 @@ public class WaveCalc
         }
 
         DataInputStream in = new DataInputStream(new FileInputStream(fin));
-        if (in.readInt() != 0x46464952)
+        int riff = in.readInt();
+        if (riff != 0x46464952)
         {
         	throw new Exception("File does not start with RIFF.");
         }
