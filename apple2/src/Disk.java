@@ -189,6 +189,11 @@ public class Disk
             match(sector,0x3a,new byte[]{0x00,0x00});
     }
 
+    /**
+     * @param allowLarge
+     * @param tsmapMaps
+     * @throws InvalidPosException
+     */
     public void findDos33CatalogSector(boolean allowLarge, TSMap tsmapMaps) throws InvalidPosException
     {
         rewind();
