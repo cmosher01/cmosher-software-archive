@@ -21,6 +21,7 @@ import java.io.PrintWriter;
 public class FixAppleDosAsm
 {
     private static final int TAB_COMMENT = 32;
+    private static final int TAB_DIRECTIVE = 16;
 
     /**
      * @param args
@@ -65,9 +66,18 @@ public class FixAppleDosAsm
         {
             /*
              * Line: [sp [...]] directive [; [sp [...]] [comment] [sp [...]]]
-             * tr: ; [sp [...]] [comment] [sp [...]]
+             * tr: directive [; [sp [...]] [comment]
              */
-            // sp [sp [...]] directive [; comment]
+            out.tab(TAB_DIRECTIVE);
+            int semi = tr.indexOf(";");
+            if (semi < 0)
+            {
+                out.print(tr);
+            }
+            else
+            {
+                
+            }
         }
         else
         {
