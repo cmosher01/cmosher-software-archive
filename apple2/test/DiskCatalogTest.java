@@ -155,7 +155,7 @@ public class DiskCatalogTest extends TestCase
         "A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 20 02 00 19 0F 82 "+
         "20 A0 A0 A0 A0 A0 A0 C2 C5 C1 C7 CC C5 A0 C2 D2 "+
         "CF D3 A0 C9 CE C3 A0 A0 A0 A0 A0 A0 A0 20 02 00 "),
-        false);
+        false));
     }
 
 }
