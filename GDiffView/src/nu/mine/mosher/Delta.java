@@ -155,7 +155,7 @@ public class Delta
                                 }
                             }
                         }
-                        while (i < read_idx && ok);
+                        while (ok && i < read_idx);
                         b[0] = targetBuff[i - 1];
                     }
                     while (ok && targetidx < targetLength);
