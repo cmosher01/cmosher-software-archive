@@ -12,9 +12,9 @@ package nu.mine.mosher.gedcom;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class IllegalLevel extends Exception
+public class IllegalLevelChange extends Exception
 {
-    public IllegalLevel(GedcomLine line)
+    public IllegalLevelChange(GedcomLine line)
     {
         super("GEDCOM line has illegal level number at line: "+line);
     }
