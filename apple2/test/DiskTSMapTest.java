@@ -81,6 +81,20 @@ public class DiskTSMapTest extends TestCase
     public void testUTY41() throws IOException, InvalidPosException
     {
         List r = new ArrayList();
+        r.add(new DiskPos(0x05,0x0));
+        r.add(new DiskPos(0x05,0xB));
+        r.add(new DiskPos(0x05,0xF));
+        r.add(new DiskPos(0x06,0x7));
+        r.add(new DiskPos(0x0A,0xF));
+        r.add(new DiskPos(0x0C,0xF));
+        r.add(new DiskPos(0x0D,0xF));
+        r.add(new DiskPos(0x0E,0xD));
+        r.add(new DiskPos(0x0E,0xF));
+        r.add(new DiskPos(0x0F,0xF));
+        r.add(new DiskPos(0x10,0x2));
+        r.add(new DiskPos(0x10,0x4));
+        r.add(new DiskPos(0x12,0xA));
+        r.add(new DiskPos(0x1A,0x8));
         assertManyPos("uty4-1.dsk",r);
     }
 
