@@ -1,3 +1,4 @@
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,11 +21,16 @@ public class VolumeUnusedData extends VolumeEntity
      */
     public void readFromMedia(List rPos, Disk disk)
     {
-        int i = 0;
+        int x = 0;
         for (Iterator i = rPos.iterator(); i.hasNext();)
         {
             DiskPos p = (DiskPos)i.next();
-            rSector.add(new VolumeSector(p,i++));
+            rSector.add(new VolumeSector(p,x++));
         }
+    }
+
+    public void getUsed(Collection rPos)
+    {
+        getPos(rPos);
     }
 }
