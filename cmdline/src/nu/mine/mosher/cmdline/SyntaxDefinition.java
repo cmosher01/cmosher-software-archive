@@ -3,6 +3,8 @@
  */
 package nu.mine.mosher.cmdline;
 
+import java.io.Reader;
+
 /**
  * Defines the syntax of the command line (arguments and options).
  * 
@@ -10,5 +12,8 @@ package nu.mine.mosher.cmdline;
  */
 public class SyntaxDefinition
 {
-
+    public SyntaxDefinition(Reader xml)
+    {
+        
+    }
 }
