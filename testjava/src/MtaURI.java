@@ -1,6 +1,11 @@
 package com.surveysampling.bulkemailer.mta;
 
-import java.util.StringTokenizer;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.surveysampling.bulkemailer.util.HttpUtil;
 
 /**
  * A URI for a Mail Transport Authority. URI is of the
@@ -14,47 +19,52 @@ import java.util.StringTokenizer;
  */
 public class MtaURI
 {
-	private final int mPort;
-	private final String mProtocol;
-	private final String mHost;
+	private final URI mURI;
+	private final int mRate;
+	private final int mTimeout;
 
 	/**
 	 * Constructs an MtaURI given a URI.
 	 */
-	public MtaURI(String uri)
+	public MtaURI(String sMTA) throws URISyntaxException
 	{
-		StringTokenizer t = new StringTokenizer(uri,":/");
+        URI uri = new URI(sMTA);
 
+        if (!uri.getScheme().equalsIgnoreCase("smtp"))
+        {
+            throw new URISyntaxException(uri.getScheme(),"scheme must be smtp");
+        }
 
+        if (uri.getPort() < 0)
+        {
+            // default to port 25 (smtp)
+            uri = new URI(uri.getScheme(),uri.getUserInfo(),uri.getHost(),25,uri.getPath(),uri.getQuery(),uri.getFragment());
+        }
+        mURI = uri;
 
-		if (t.hasMoreTokens())
-			mProtocol = t.nextToken();
-		else
-			mProtocol = "";
+        Map mapParamToValue = new HashMap();
+        HttpUtil.parseQueryStringSimple(uri.getQuery(),mapParamToValue);
+        int nRate = 0;
+        try
+        {
+            nRate = Integer.parseInt((String)mapParamToValue.get("rate"));
+        }
+        catch (Throwable e)
+        {
+            nRate = 0;
+        }
+        mRate = nRate;
 
-
-
-		if (t.hasMoreTokens())
-			mHost = t.nextToken();
-		else
-			mHost = "";
-
-
-
-		String sPort = "";
-		if (t.hasMoreTokens())
-			sPort = t.nextToken();
-
-		int nPort = 25;
-		try
-		{
-			nPort = Integer.parseInt(sPort);
-		}
-		catch (NumberFormatException e)
-		{
-			nPort = 25;
-		}
-		mPort = nPort;
+        int nTimeout = 120000;
+        try
+        {
+            nTimeout = Integer.parseInt((String)mapParamToValue.get("timeout"));
+        }
+        catch (Throwable e)
+        {
+            nTimeout = 120000;
+        }
+        mTimeout = nTimeout;
 	}
 
 	/**
