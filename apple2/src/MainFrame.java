@@ -94,7 +94,7 @@ public class MainFrame extends JFrame
             }
             else
             {
-                s.append("[unknown DOS]");
+                s.append("unknown DOS");
             }
             DefaultMutableTreeNode nDos = new DefaultMutableTreeNode(s);
 
