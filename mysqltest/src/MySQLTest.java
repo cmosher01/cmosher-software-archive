@@ -110,10 +110,8 @@ public class MySQLTest
                 parse1790(i);
             break;
 			case 1800:
-				parse1800(i);
-			break;
 			case 1810:
-				parse1800(i);
+				parse1800or1810(i,year);
 			break;
 
             default:
@@ -198,7 +196,7 @@ public class MySQLTest
         return hh;
     }
 
-	protected void parse1800(Iterator i) throws SQLException
+	protected void parse1800or1810(Iterator i, int year) throws SQLException
 	{
 		String state = (String)i.next();
 		String county = (String)i.next();
@@ -220,7 +218,7 @@ public class MySQLTest
 		int f26to44 = readInt(i.next());
 		int f45to150 = readInt(i.next());
 
-        int idImage = insertImage(1800, state, county, township, district, image);
+        int idImage = insertImage(year, state, county, township, district, image);
 		int hh = insertHousehold(nameLast, nameFirst, nameMiddle, nameSuffix, idImage);
 
 
