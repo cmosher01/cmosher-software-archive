@@ -30,7 +30,7 @@ public class DiskCatalogTest extends TestCase
      */
     public void testCatalog_Dos33_System_Master_19800825_110F()
     {
-        assertTrue(Disk.isDos33CatalogSector(Hex2Bin.hex2Bin(
+        assertEquals(7,Disk.isDos33CatalogSector(Hex2Bin.hex2Bin(
         "00 11 0E 00 00 00 00 00 00 00 00 13 0F 82 C8 C5 "+
         "CC CC CF A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 "+
         "A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 06 00 14 0F "+
