@@ -7,9 +7,11 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 /**
- * TODO
+ * A simple <code>TableModel</code> that represents a table
+ * with 100000 rows and 1000 columns. whose values are
+ * of the form <code>"R<i>r</i> C<i>c</i>"</code>.
  * 
- * @author chrism
+ * @author Chris Mosher
  */
 public class BigTableModel implements TableModel
 {
