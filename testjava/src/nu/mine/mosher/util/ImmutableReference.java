@@ -2,7 +2,7 @@ package com.surveysampling.util;
 
 import java.io.Serializable;
 
-public final class ImmutableReference implements Comparable, Serializable
+public final class ImmutableReference implements Cloneable, Comparable, Serializable
 {
     private Cloneable ref;
 
