@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import nu.mine.mosher.core.Immutable;
+import nu.mine.mosher.util.Immutable;
 import nu.mine.mosher.logging.LoggingInitializer;
 
 public class Player implements Immutable
