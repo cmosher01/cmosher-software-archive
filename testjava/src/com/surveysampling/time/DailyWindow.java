@@ -77,7 +77,7 @@ public class DailyWindow
      */
     protected DailyWindow(TimeOfDay start, TimeOfDay end) throws ParseException
     {
-        // fail fast if given nulls
+        // fail fast if given any null
         if (start == null || end == null)
         {
             throw new NullPointerException();
