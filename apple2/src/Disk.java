@@ -158,11 +158,18 @@ public class Disk
             {
                 // check catalog entries
                 int ce = 0x0B;
+                int penultimateSpace = 0;
                 for (int cat = 0; cat < 7; ++cat)
                 {
                     if (DiskPos.isValidSector(sector[ce+1]) &&
                         isValidFileType(sector[ce+2]) &&
                         isValidFileName(sector,ce+3))
+                    {
+                        if (sector[ce+31] == 0xA0)
+                        {
+                            ++penultimateSpace;
+                        }
+                    }
                     ce += 35;
                 }
                 System.out.println("Catalog Sector @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
