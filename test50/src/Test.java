@@ -6,8 +6,8 @@ public class Test
 {
 	public static void main(String[] args)
 	{
-		ItemType x = new ItemType("madeup");
-		ItemType y = new ItemType(ItemTypeEnum.a);
+		ItemType<ItemTypeEnum> x = new ItemType<ItemTypeEnum>("madeup");
+		ItemType<ItemTypeEnum> y = new ItemType<ItemTypeEnum>(ItemTypeEnum.a);
 
 		System.out.println(x);
 		System.out.println(y);
