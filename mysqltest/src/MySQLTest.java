@@ -24,6 +24,7 @@ public class MySQLTest
         {
             closeStatement(st);
         }
+        db.close();
     }
 
     private static void closeStatement(Statement st)
