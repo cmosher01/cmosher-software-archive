@@ -88,11 +88,12 @@ public class FixAppleDisasm
 				continue;
 			}
 
+			Line ln = new Line();
+
 			int com = s.indexOf(';');
-			String comment = "";
 			if (com >= 0)
 			{
-				comment = s.substring(com);
+				ln.comment = s.substring(com);
 				s = s.substring(0,com);
 			}
 
