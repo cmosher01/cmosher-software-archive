@@ -32,4 +32,15 @@ public class SourceFile
         StreamChecksum inCheck = new StreamChecksum(map);
         inCheck.init(in,cWindow);
     }
+
+    public long lookupUnique(int chk)
+    {
+        long offset = -1;
+        Integer ck = new Integer(chk);
+        if (map.containsKey(ck))
+        {
+            Collection winds = (Collection)map.get(ck);
+        }
+        return offset;
+    }
 }
