@@ -157,7 +157,7 @@ public class GDiffView extends JFrame
         JScrollPane scrSrc = new JScrollPane(paneSrc);
 //        scrSrc.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 //        scrSrc.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-//        scrSrc.setMinimumSize(new Dimension(100,100));
+        scrSrc.setMinimumSize(new Dimension(50,20));
 //        scrSrc.setPreferredSize(new Dimension(400,430));
         scrSrc.setMaximumSize(new Dimension(Integer.MAX_VALUE,Integer.MAX_VALUE));
 
@@ -165,7 +165,7 @@ public class GDiffView extends JFrame
         paneTrg = new JTextPaneNoWrap(docTrg);
         paneTrg.setEditable(false);
         JScrollPane scrTrg = new JScrollPane(paneTrg);
-//        scrTrg.setMinimumSize(new Dimension(100,100));
+        scrTrg.setMinimumSize(new Dimension(50,20));
 //        scrTrg.setPreferredSize(new Dimension(400,430));
         scrTrg.setMaximumSize(new Dimension(Integer.MAX_VALUE,Integer.MAX_VALUE));
 
@@ -238,7 +238,6 @@ public class GDiffView extends JFrame
 
         SpringLayout layout = new SpringLayout();
         JPanel contentPane = new JPanel(layout);
-        contentPane.setMinimumSize(new Dimension(100,30));
         setContentPane(contentPane);
 
         SpringLayout.Constraints cnsDif = new SpringLayout.Constraints();
@@ -331,7 +330,7 @@ public class GDiffView extends JFrame
         listGDiff.setSelectedIndex(0);
         listGDiff.requestFocus();
 
-        pack();
+//        pack();
 
         setVisible(true);
     }
