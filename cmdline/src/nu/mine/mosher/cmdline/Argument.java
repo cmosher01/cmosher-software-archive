@@ -11,7 +11,6 @@ package nu.mine.mosher.cmdline;
  */
 public class Argument
 {
-    private final boolean mIsOption;
     private String mName;
     private String mAbbrev;
     private Object mValue;
@@ -20,7 +19,6 @@ public class Argument
 
     public Argument(String name, String abbrev, String desc, Object value, boolean isSpecified)
     {
-        mIsOption = name.length() > 0 || abbrev.length() > 0;
         mName = name;
         mAbbrev = abbrev;
         mDesc = desc;
@@ -30,7 +28,7 @@ public class Argument
 
     boolean isOption()
     {
-        return mIsOption;
+        return mName.length() > 0 || mAbbrev.length() > 0;
     }
     boolean isSpecified()
     {
