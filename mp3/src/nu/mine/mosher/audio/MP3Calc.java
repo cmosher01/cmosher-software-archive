@@ -184,6 +184,7 @@ public class MP3Calc
     	x &= 0xffffffff;
     	x <<= (31-hi);
     	x >>= (31+lo-hi);
+		x &= 0xffffffff;
     	return (int)x;
     }
 
