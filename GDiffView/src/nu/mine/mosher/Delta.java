@@ -75,7 +75,7 @@ public class Delta
 
         hashf = Checksum.queryChecksum(buf,S);
 
-        // The check for alternative hashf is only because I wanted to verify
+        // TODO The check for alternative hashf is only because I wanted to verify
         // that the update method really is correct. I will remove it shortly.
         long alternativehashf = hashf;
 
