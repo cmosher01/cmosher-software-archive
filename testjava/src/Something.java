@@ -103,7 +103,7 @@ public class SomeBean
      */
     public String getSString()
     {
-        return sString;
+        return aString;
     }
 
     /**
