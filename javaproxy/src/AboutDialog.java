@@ -76,16 +76,16 @@ class AboutDialog extends Dialog implements ActionListener
 
         if (system_properties == null)
         {
-            system_properties = " \nSystem Infomation:\n \n";
+            system_properties = " \nSystem Information:\n \n";
             system_properties += ("Java Version" + " : " + "JDK " + p.getProperty(_JAVA_VERSION) + "\n");
             system_properties += ("Java Vendor" + " : " + p.getProperty(_JAVA_VENDOR) + "\n");
-            system_properties += ("Local Timezone " + " : " + p.getProperty(_USER_TIMEZONE) + "\n");
+            system_properties += ("Local Time Zone " + " : " + p.getProperty(_USER_TIMEZONE) + "\n");
             system_properties += ("Hardware Architecture" + " : " + p.getProperty(_OS_ARCH) + "\n");
             system_properties += ("Operating System" + " : " + p.getProperty(_OS_NAME) + "\n");
             system_properties += ("OS Version" + " : " + p.getProperty(_OS_VERSION) + "\n");
             system_properties += ("User Name" + " : " + p.getProperty(_USER_NAME) + "\n");
-            system_properties += ("User Home Dir" + " : " + p.getProperty(_USER_HOME) + "\n");
-            system_properties += ("Current Dir" + " : " + p.getProperty(_USER_DIR) + "\n");
+            system_properties += ("User Home Directory" + " : " + p.getProperty(_USER_HOME) + "\n");
+            system_properties += ("Current Directory" + " : " + p.getProperty(_USER_DIR) + "\n");
             system_properties += " \nJava HTTP Proxy Server, " + _VERSION + "\nby Steve Y.C. Hsueh,  April 1998";
         } // end of if
 
