@@ -56,23 +56,20 @@ public class TestBeans
         {
             throw new IntrospectionException("can't get property descriptor");
         }
+
         PropertyDescriptor pd = (PropertyDescriptor)mapPDs.get(property);
-        
-        
-        
+
         PropertyEditor ed = PropertyEditorManager.findEditor(pd.getPropertyType());
         if (ed == null)
         {
             throw new IntrospectionException("can't get property editor");
         }
+
         ed.setAsText(value);
         Object val = ed.getValue();
-        
-        
-        
-        
+
         Method wr = pd.getWriteMethod();
-        wr.invoke(bean, new Object[] {val});
+        wr.invoke(bean, new Object[] { val });
     }
 
     public static HashMap buildPropertyDescriptorMap(PropertyDescriptor[] rpd)
