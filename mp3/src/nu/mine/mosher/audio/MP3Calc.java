@@ -41,6 +41,7 @@ public class MP3Calc
     		{
     			calc(s);
     		}
+    		in.close();
     	}
     }
 
