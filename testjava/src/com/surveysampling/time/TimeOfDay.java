@@ -112,7 +112,7 @@ public class TimeOfDay implements Comparable
      * verified against the Calendar provided to the constructor,
      * therefore, if a different Calendar is provided to this
      * method, then the values of this object could be invalid
-     * for the given Calendar.
+     * for that Calendar.
      * @param cal the Calendar, with date set, to have time overridden
      * @throws IllegalStateException if the constructor was called with invalid arguments
      */
