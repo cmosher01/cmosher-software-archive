@@ -166,16 +166,16 @@ public class GROapplet extends JApplet
         {
             String slineIndi = br.readLine();
             StringFieldizer sf = new StringFieldizer(slineIndi);
-            Iterator i = sf.iterator();
-            String id = sf.nextToken();
+            Iter it = sf.iterator();
+            String id = it.next();
 			int nid = Integer.parseInt(id.substring(1));
-            String name = sf.nextToken();
-            String birth = sf.nextToken();
-            String death = sf.nextToken();
-            String sx = sf.nextToken();
+            String name = it.next();
+            String birth = it.next();
+            String death = it.next();
+            String sx = it.next();
             double dx = Double.parseDouble(sx);
             int x = (int)Math.round(dx);
-            String sy = sf.nextToken();
+            String sy = it.next();
             double dy = Double.parseDouble(sy);
             int y = (int)Math.round(dy);
             Indi indi = new Indi(x, y, nid, name, birth, death);
@@ -190,16 +190,17 @@ public class GROapplet extends JApplet
         {
             String slineIndi = br.readLine();
             StringFieldizer sf = new StringFieldizer(slineIndi);
+            Iter it = sf.iterator();
             Fami fami = new Fami();
-            String husb = sf.nextToken();
+            String husb = it.next();
             fami.setHusb((Indi)mapIdToIndi.get(husb));
-            String wife = sf.nextToken();
+            String wife = it.next();
             fami.setWife((Indi)mapIdToIndi.get(wife));
-            String sc = sf.nextToken();
+            String sc = it.next();
             int c = Integer.parseInt(sc);
             for (int ic = 0; ic < c; ++ic)
             {
-                String chil = sf.nextToken();
+                String chil = it.next();
                 fami.addChild((Indi)mapIdToIndi.get(chil));
             }
             famis.add(fami);
