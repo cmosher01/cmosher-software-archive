@@ -17,6 +17,7 @@ public class Disk implements TreeNode
 	private final File mFile;
 	private static final Icon mIcon = new ImageIcon("d:\\temp\\floppy.gif");
 	private final JEditorPane viewRight = new JEditorPane();
+	private A2DiskImage img = null;
 
 	public Disk()
 	{
@@ -35,6 +36,7 @@ public class Disk implements TreeNode
 				fin = new FileInputStream(mFile);
 				byte[] image = new byte[fin.available()];
 				fin.read(image);
+				img = new A2DiskImage(image);
 			}
 			catch (IOException e)
 			{
