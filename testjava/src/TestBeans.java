@@ -44,7 +44,7 @@ public class TestBeans
         setProperty(bean, pd, v);
     }
 
-    public static void setProperty(Object bean, PropertyDescriptor pd, Object v)
+    public static void setProperty(Object bean, PropertyDescriptor pd, Object value)
         throws IllegalAccessException, IllegalArgumentException, InvocationTargetException
     {
         Method wr = pd.getWriteMethod();
@@ -53,7 +53,7 @@ public class TestBeans
             throw new IllegalAccessException("Cannot write property " + pd.getName());
         }
         
-        wr.invoke(bean, new Object[] { v });
+        wr.invoke(bean, new Object[] { value });
     }
 
     public static Object getConvertedValue(String[] value, Class classProp)
