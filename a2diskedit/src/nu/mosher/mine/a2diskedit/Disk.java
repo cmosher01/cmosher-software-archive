@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 
 public class Disk implements TreeNode
@@ -16,6 +17,7 @@ public class Disk implements TreeNode
 	private final File mFile;
 	private static Icon mIcon = new ImageIcon("d:\\temp\\floppy.gif");
 	private byte[] image = null;
+	private final JEditorPane viewRight;
 
 	public Disk()
 	{
@@ -52,6 +54,10 @@ public class Disk implements TreeNode
 				}
 			}
 		}
+
+		viewRight = new JEditorPane();
+        viewRight.setEditable(false);
+        viewRight.setContentType("text/html");
 	}
 
 	public String toString()
