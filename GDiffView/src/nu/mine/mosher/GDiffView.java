@@ -12,6 +12,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -243,6 +244,7 @@ public class GDiffView extends JFrame
         sb.append('\n');
         appendAddr(sb,addr);
         sb.append(": ");
+        in.close();
     }
 
     /**
@@ -415,6 +417,7 @@ public class GDiffView extends JFrame
 
         gdiff.read(); // ignore version
 
+        RandomAccessFile in = new RandomAccessFile(src,"r");
         GDiffCmd g = getGDiff(gdiff);
         trg = new StringBuffer(sb.length());
         while (!(g instanceof GDiffEnd))
@@ -426,10 +429,64 @@ public class GDiffView extends JFrame
             else
             {
                 GDiffCopy gc = (GDiffCopy)g;
-                trg.append(sb.substring((int)gc.getRange().getBegin(),(int)gc.getRange().getLimit()));
+                in.seek(gc.getRange().getBegin());
+                byte[] rb = new byte[(int)gc.getRange().getLength()];
+                in.readFully(rb);
             }
             g = getGDiff(gdiff);
         }
+
+        byte[] rb = new byte[cCol];
+        int c = in.read(rb);
+        sb = new StringBuffer(sb.length() * 6);
+        for (int i = 0; i < nibs + 2; ++i)
+        {
+            sb.append(' ');
+        }
+        for (int i = 0; i < cCol; ++i)
+        {
+            appendHex(sb,i);
+            sb.append(' ');
+        }
+        for (int i = 0; i < cCol; ++i)
+        {
+            sb.append(' ');
+        }
+        long addr = 0;
+        while (c > 0)
+        {
+            sb.append('\n');
+            appendAddr(sb,addr);
+            sb.append(": ");
+            for (int i = 0; i < cCol; ++i)
+            {
+                if (i < c)
+                {
+                    appendHex(sb,rb[i]);
+                }
+                else
+                {
+                    sb.append("  ");
+                }
+                sb.append(' ');
+            }
+            for (int i = 0; i < cCol; ++i)
+            {
+                if (i < c)
+                {
+                    appendAsc(sb,rb[i]);
+                }
+                else
+                {
+                    sb.append(" ");
+                }
+            }
+            addr += c;
+            c = in.read(rb);
+        }
+        sb.append('\n');
+        appendAddr(sb,addr);
+        sb.append(": ");
     }
 
     /**
