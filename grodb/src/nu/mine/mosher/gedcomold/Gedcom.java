@@ -119,7 +119,7 @@ public class Gedcom
 		{
 			return "UTF-8";
 		}
-
+		return "";
 //		SortedMap mc = Charset.availableCharsets();
 //		for (Iterator i = mc.entrySet().iterator(); i.hasNext();)
 //        {
