@@ -91,7 +91,7 @@ public class VelocityWrapper
         props.setProperty(VelocityEngine.OUTPUT_ENCODING,"UTF-8");
 
         // This just prevents a warning message about no macro library
-        props.setProperty(VelocityEngine.VM_LIBRARY, "");
+        props.setProperty(VelocityEngine.VM_LIBRARY,"");
 
         return props;
     }
