@@ -96,9 +96,9 @@ public class GDiffView extends JFrame
                 "DATA [2 bytes]", "COPY 2, 2", "COPY 1, 4", "EOF"};
 
         List rcmd = new ArrayList();
-        rcmd.add(new GDiffCopy(new Range(0,2)));
+        rcmd.add(new GDiffCopy(new Range(0,1)));
         rcmd.add(new GDiffData(new byte[]{65,67}));
-        rcmd.add(new GDiffCopy(new Range(2,2)));
+        rcmd.add(new GDiffCopy(new Range(2,3)));
         rcmd.add(new GDiffCopy(new Range(1,4)));
         rcmd.add(new GDiffEnd());
         ListModel model = new GDiffCmdListModel(rcmd);
