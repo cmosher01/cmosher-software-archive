@@ -32,5 +32,4 @@ public class NormalizerTest extends TestCase
 		}
 		System.out.println();
 	}
-
 }
