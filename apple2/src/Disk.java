@@ -14,7 +14,7 @@ import java.util.Iterator;
 public class Disk
 {
     private final byte[] disk;
-    private DiskPos pos;
+//    private DiskPos pos;
 
     /**
      * @param disk
