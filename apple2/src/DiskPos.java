@@ -109,6 +109,16 @@ public class DiskPos
         }
     }
 
+    public static boolean isValidTrack(int track)
+    {
+        return 0 <= track && track < cTracksPerDisk;
+    }
+
+    public static boolean isValidSector(int sesctor)
+    {
+        return 0 <= sesctor && sesctor < cSectorsPerTrack;
+    }
+
     /**
      * @return
      */
