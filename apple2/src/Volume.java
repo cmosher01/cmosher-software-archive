@@ -187,4 +187,16 @@ public class Volume
             }
         }
     }
+
+    /**
+     * @param rPos
+     */
+    public void getUsedRecoveredFiles(Collection rPos)
+    {
+        for (Iterator i = this.rFileRecovered.iterator(); i.hasNext();)
+        {
+            VolumeFile f = (VolumeFile)i.next();
+            f.getUsed(rPos);
+        }
+    }
 }
