@@ -10,7 +10,7 @@ package nu.mine.mosher.swingapp;
  */
 public class CommandLineArgHandler
 {
-    private final String[] mrArg;
+    protected final String[] mrArg;
 
     public CommandLineArgHandler(String[] rArg)
     {
