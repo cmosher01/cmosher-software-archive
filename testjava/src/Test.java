@@ -40,7 +40,7 @@ public class Test
 
 
 
-        Object x = new String("asdf");
+        Object x = null;//ew String("asdf");
         if (x instanceof String)
         {
             System.out.println("yes");
