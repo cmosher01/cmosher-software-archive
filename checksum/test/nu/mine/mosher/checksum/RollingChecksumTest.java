@@ -26,9 +26,7 @@ public class RollingChecksumTest extends TestCase
         byte[] rs = new byte[n];
 
         System.arraycopy(rb, 0, rs, 0, n);
-
         RollingChecksum rollCheck = new RollingChecksum(rs);
-        rollCheck.getChecksum();
 
         for (int k = 0; k < rb.length-n; ++k)
         {
