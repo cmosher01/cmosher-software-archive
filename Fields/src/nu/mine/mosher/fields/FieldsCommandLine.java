@@ -16,4 +16,16 @@ public class CommandLineArgHandler
     {
         this.rArg = rArg;
     }
+
+    /**
+     * @throws InvalidCommandLine
+     * 
+     */
+    public void parse() throws InvalidCommandLine
+    {
+        if (rArg.length > 0)
+        {
+            throw new InvalidCommandLine();
+        }
+    }
 }
