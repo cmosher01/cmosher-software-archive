@@ -1,52 +1,29 @@
-/*
- * TODO
- *
- * Created on Apr 1, 2004
- */
 package com.surveysampling.util;
 
+import java.util.Enumeration;
 import java.util.Iterator;
 
-/**
- * TODO
- */
 public class EnumIter extends Object implements Iterator
 {
+    private final Enumeration e;
 
-    /**
-     * 
-     */
-    public EnumIter()
+    public EnumIter(Enumeration e)
     {
-        super();
-        // TODO Auto-generated constructor stub
+        this.e = e;
     }
 
-    /* (non-Javadoc)
-     * @see java.util.Iterator#hasNext()
-     */
     public boolean hasNext()
     {
-        // TODO Auto-generated method stub
-        return false;
+        return e.hasMoreElements();
     }
 
-    /* (non-Javadoc)
-     * @see java.util.Iterator#next()
-     */
     public Object next()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return e.nextElement();
     }
 
-    /* (non-Javadoc)
-     * @see java.util.Iterator#remove()
-     */
     public void remove()
     {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException();
     }
-
 }
