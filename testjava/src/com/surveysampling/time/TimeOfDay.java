@@ -31,8 +31,8 @@ public class TimeOfDay implements Comparable
     private final int milliseconds;
 
     /**
-     * Initialized the object with the given time components,
-     * using min/max validity checks of the given Calendar.
+     * Initializes the object with the given time components,
+     * based on the given Calendar.
      * @param calendar
      * @param hours
      * @param minutes
@@ -63,37 +63,6 @@ public class TimeOfDay implements Comparable
         verifyCalendarValue(Calendar.SECOND,this.seconds);
         verifyCalendarValue(Calendar.MILLISECOND,this.milliseconds);
     }
-
-//    /**
-//     * Convenience constructor that initializes the object with
-//     * the given time components, and <code>Calendar.getInstance()</code>.
-//     * @param hours
-//     * @param minutes
-//     * @param seconds
-//     * @param milliseconds
-//     * @throws IllegalArgumentException
-//     */
-//    public TimeOfDay(int hours, int minutes, int seconds, int milliseconds) throws IllegalArgumentException
-//    {
-//        this(Calendar.getInstance(),hours,minutes,seconds,milliseconds);
-//    }
-//    public TimeOfDay(Calendar calendar, int hours, int minutes, int seconds)
-//    {
-//        this(calendar,hours,minutes,seconds,0);
-//    }
-//
-//    public TimeOfDay(Calendar calendar, int hours, int minutes)
-//    {
-//        this(calendar,hours,minutes,0,0);
-//    }
-//
-//    public TimeOfDay(Calendar calendar, int hours)
-//    {
-//        this(calendar,hours,0,0,0);
-//    }
-
-
-
 
     /**
      * 
