@@ -108,6 +108,9 @@ public class MySQLTest
             case 1790:
                 parse1790(i);
             break;
+			case 1800:
+				parse1800(i);
+			break;
 
             default:
             break;
@@ -232,6 +235,132 @@ public class MySQLTest
 			st = null;
 		}
     }
+
+	protected void parse1800(Iterator i) throws SQLException
+	{
+		String state = (String)i.next();
+		String county = (String)i.next();
+		String township = (String)i.next();
+		int district = readInt(i.next());
+		int image = readInt(i.next());
+		String nameLast = (String)i.next();
+		String nameFirst = (String)i.next();
+		String nameMiddle = (String)i.next();
+		String nameSuffix = (String)i.next();
+		int m0to9 = readInt(i.next());
+		int m10to15 = readInt(i.next());
+		int m16to25 = readInt(i.next());
+		int m26to44 = readInt(i.next());
+		int m45to150 = readInt(i.next());
+		int f0to9 = readInt(i.next());
+		int f10to15 = readInt(i.next());
+		int f16to25 = readInt(i.next());
+		int f26to44 = readInt(i.next());
+		int f45to150 = readInt(i.next());
+
+		int idImage = 0;
+		PreparedStatement st = null;
+		try
+		{
+			st = db.prepareStatement(
+			"select id from ImageIdent where "+
+			"year = ? and state = ? and county = ? and township = ? and district = ? and image = ?");
+			st.setInt(1,1790);
+			st.setString(2,state);
+			st.setString(3,county);
+			st.setString(4,township);
+			st.setInt(5,district);
+			st.setInt(6,image);
+			ResultSet rs = st.executeQuery();
+			if (rs.next())
+			{
+				idImage = rs.getInt("id");
+			}
+		}
+		finally
+		{
+			closeStatement(st);
+			st = null;
+		}
+		if (idImage == 0)
+		{
+			try
+			{
+				st = db.prepareStatement(
+				"insert into ImageIdent (year,state,county,township,district,image) values (?,?,?,?,?,?)");
+				st.setInt(1,1790);
+				st.setString(2,state);
+				st.setString(3,county);
+				st.setString(4,township);
+				st.setInt(5,district);
+				st.setInt(6,image);
+				st.execute();
+				ResultSet rs = st.getGeneratedKeys();
+				while (rs.next())
+				{
+					idImage = rs.getInt(1);
+				}
+			}
+			finally
+			{
+				closeStatement(st);
+				st = null;
+			}
+		}
+
+		int hh = 0;
+		try
+		{
+			st = db.prepareStatement(
+			"insert into Household (image,family,nameLast,nameFirst,nameMiddle,nameSuffix) values (?,?,?,?,?,?)");
+			st.setInt(1,idImage);
+			st.setInt(2,family);
+			st.setString(3,nameLast);
+			st.setString(4,nameFirst);
+			st.setString(5,nameMiddle);
+			st.setString(6,nameSuffix);
+			st.execute();
+			ResultSet rs = st.getGeneratedKeys();
+			while (rs.next())
+			{
+				hh = rs.getInt(1);
+			}
+		}
+		finally
+		{
+			closeStatement(st);
+			st = null;
+		}
+
+//		dbUpdate("drop table CountEntry");
+		try
+		{
+			st = db.prepareStatement(
+			"insert into CountEntry (household,gender,minAge,maxAge,cnt) values (?,?,?,?,?)");
+
+			st.setInt(1,hh);
+			st.setString(2,"m");
+			st.setInt(3,16);
+			st.setInt(4,150);
+			st.setInt(5,m16to150);
+			st.execute();
+
+			st.setInt(3,0);
+			st.setInt(4,15);
+			st.setInt(5,m0to15);
+			st.execute();
+
+			st.setString(2,"f");
+			st.setInt(4,150);
+			st.setInt(5,f0to150);
+			st.execute();
+		}
+		finally
+		{
+			closeStatement(st);
+			st = null;
+		}
+	}
 
     protected int readInt(Object stringField)
     {
