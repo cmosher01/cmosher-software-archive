@@ -1,21 +1,21 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class StringFieldizer /* TODO implements Iterable */
+public class StringFieldizer implements Iterable<String>
 {
-	private final Iterator i;
+	private final SimpleIterator<String> i;
 	
 	public StringFieldizer(String s)
 	{
 		i = new Iter(s);
 	}
 
-	public Iterator iterator() /* TODO SimpleIterator */
+	public SimpleIterator<String> iterator()
 	{
 		return i;
 	}
 
-	private static class Iter implements Iterator /* TODO SimpleIterator */
+	private static class Iter implements SimpleIterator<String>
 	{
 		private final String s;
 		private int pos;
