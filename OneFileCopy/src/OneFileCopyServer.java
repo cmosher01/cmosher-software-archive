@@ -9,6 +9,7 @@ import java.net.Socket;
 public class OneFileCopyServer
 {
 	private static final int cBufMax = 0x10000000;
+	private static final int rpt = 256*1024;
 
 	public static void main(String[] args) throws IOException
 	{
@@ -26,16 +27,26 @@ public class OneFileCopyServer
 		}
 
 		ServerSocket srv = new ServerSocket(60013);
+		System.out.println("Ready to serve:");
+		System.out.println("file: "+f.getAbsolutePath());
+		System.out.println("port: 60013");
+
 		Socket s = srv.accept();
+		System.out.println("accepted connection, sending file:");
 
 		BufferedInputStream in = new BufferedInputStream(new FileInputStream(f));
 		BufferedOutputStream out = new BufferedOutputStream(s.getOutputStream(),cBuf);
 
 		byte[] rb = new byte[1024];
+		
 		int cb = in.read(rb);
 		while (cb > 0)
 		{
 			out.write(rb,0,cb);
+			if (++i % rpt == 0)
+			{
+				System.out.println("sent @ "+(i*1024)+" bytes.");
+			}
 		}
 
 		out.flush();
