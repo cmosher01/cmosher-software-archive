@@ -10,6 +10,7 @@ public class Gedcom
 
 	public static String guessCharset(InputStream in)
 	{
+		System.out.println("test");
 		return "test";
 	}
 }
