@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import com.surveysampling.beans.editors.Editors;
 
@@ -48,6 +49,7 @@ public class TestBeans
         {
             throw new IntrospectionException("can't get property descriptors for bean");
         }
+        Map mapPDs = buildPropertyDescriptorMap(rpd);
         int ipd = -1;
         for (int i = 0; i < rpd.length; ++i)
         {
@@ -80,7 +82,7 @@ public class TestBeans
         wr.invoke(bean, new Object[] {val});
     }
 
-    public HashMap buildPropertyDescriptorMap(PropertyDescriptor[] rpd)
+    public static HashMap buildPropertyDescriptorMap(PropertyDescriptor[] rpd)
     {
         HashMap map = new HashMap();
         for (Iterator i = Arrays.asList(rpd).iterator(); i.hasNext();)
