@@ -176,10 +176,10 @@ public class MainFrame extends JFrame
         this.setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
 
         doOneDisk(new File("test/Prontodos.dsk"));
-//        doOneDisk(Apple2.readDisk(new File("test/CLC11.dsk")));
-//        doOneDisk(Apple2.readDisk(new File("test/SARG2.dsk")));
-//        doOneDisk(Apple2.readDisk(new File("test/DOS33_SystemMaster_19830101.dsk")));
-//        doOneDisk(Apple2.readDisk(new File("test/DiversiDOS_2_C_1982.dsk")));
+        doOneDisk(new File("test/CLC11.dsk"));
+        doOneDisk(new File("test/SARG2.dsk"));
+        doOneDisk(new File("test/DOS33_SystemMaster_19830101.dsk"));
+        doOneDisk(new File("test/DiversiDOS_2_C_1982.dsk"));
 
         tree = new JTree(top);
         tree.setRootVisible(false);
