@@ -21,6 +21,7 @@
         (originally: <%=s%>)<input name="itemOrig" type="hidden" value="<%=s%>" />
     </p>
     <p><input name="saveme" type="submit" value="save" /></p>
+    <p><input name="cancelme" type="submit" value="cancel" /></p>
 </form>
 <form method="post" action="delconf.jsp">
     <input name="id" type="hidden" value="<%=id%>" />
