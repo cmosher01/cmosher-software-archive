@@ -11,4 +11,13 @@
 public class VolumeCatalogSector extends VolumeEntity
 {
 
+    /**
+     * @param p
+     * @param disk
+     */
+    public void readFromMedia(DiskPos p, Disk disk)
+    {
+        rSector.add(p);
+    }
+
 }
