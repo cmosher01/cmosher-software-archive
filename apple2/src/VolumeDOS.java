@@ -71,7 +71,7 @@ public class VolumeDOS extends VolumeEntity
         }
         catch (InvalidPosException e)
         {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
