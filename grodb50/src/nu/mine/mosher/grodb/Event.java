@@ -12,7 +12,7 @@ public class Event
 	private Place place;
 	private DateRange dateStart;
 	private DateRange dateEnd;
-	private ItemType<Event> type;
+	private ItemType<EventType> type;
 
 	private List<Relation<Event,Event>> rEvent = new ArrayList<Relation<Event,Event>>();
 
