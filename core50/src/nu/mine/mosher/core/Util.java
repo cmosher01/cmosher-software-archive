@@ -39,9 +39,9 @@ public final class Util
 	public static<T> ArrayList<T> list(Iterable<T> i)
     {
         ArrayList<T> r = new ArrayList<T>();
-        for (T x : i)
+        for (T t : i)
         {
-            r.add(x);
+            r.add(t);
         }
         return r;
     }
@@ -49,9 +49,9 @@ public final class Util
 	public static<T> HashSet set(Iterable<T> i)
 	{
 		HashSet<T> s = new HashSet<T>();
-		for (T x : i)
+		for (T t : i)
 		{
-			s.add(x);
+			s.add(t);
 		}
 		return s;
 	}
