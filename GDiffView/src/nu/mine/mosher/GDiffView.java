@@ -320,7 +320,7 @@ public class GDiffView extends JFrame
     //        highlight(true);
     //    }
 
-    public void highlight(boolean highlight, boolean target)
+    public void highlight(String highlight, boolean target)
     {
         long begin, end;
         JTextPane pan;
@@ -341,7 +341,7 @@ public class GDiffView extends JFrame
             long c = getHexStart(begin);
             highlight(c,getHexEnd(end),highlight,target);
             highlight(getAscStart(begin),getAscEnd(end),highlight,target);
-            if (highlight)
+            if (highlight.equals("highlight"))
             {
                 pan.setCaretPosition((int)c);
             }
@@ -358,7 +358,7 @@ public class GDiffView extends JFrame
             }
             highlight(getHexRowStart(getRow(end)),getHexEnd(end),highlight,target);
             highlight(getAscRowStart(getRow(end)),getAscEnd(end),highlight,target);
-            if (highlight)
+            if (highlight.equals("highlight"))
             {
                 pan.setCaretPosition((int)c);
             }
@@ -418,9 +418,9 @@ public class GDiffView extends JFrame
         return getAscStart(pos) + 1;
     }
 
-    public void highlight(long beginPoint, long endPoint, boolean highlight, boolean target)
+    public void highlight(long beginPoint, long endPoint, String highlight, boolean target)
     {
-        AttributeSet attr = (AttributeSet)styles.get(highlight ? "highlight" : "body");
+        AttributeSet attr = (AttributeSet)styles.get(highlight);
         if (target)
         {
             docTrg.setCharacterAttributes((int)beginPoint,(int)(endPoint - beginPoint),attr,true);
