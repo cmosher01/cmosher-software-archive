@@ -23,7 +23,7 @@ public class DiskTSMapTest extends TestCase
      */
     public void testTSMap_120E()
     {
-        assertTrue(Disk.isDos33VTOC(Hex2Bin.hex2Bin(
+        assertTrue(Disk.isfindDos33TSMapSector(Hex2Bin.hex2Bin(
         "00 00 00 00 00 00 00 00 00 00 00 00 12 0E 00 00 "+
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
