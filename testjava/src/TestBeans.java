@@ -46,12 +46,12 @@ public class TestBeans
             throw new IntrospectionException("can't get property descriptors for bean");
         }
         int ipd = -1;
-        for (int j = 0; j < rpd.length; ++j)
+        for (int i = 0; i < rpd.length; ++i)
         {
-            PropertyDescriptor descriptor = rpd[j];
+            PropertyDescriptor descriptor = rpd[i];
             if (descriptor.getName().equals(property))
             {
-                ipd = j;
+                ipd = i;
             }
         }
         if (ipd == -1)
