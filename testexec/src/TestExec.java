@@ -4,8 +4,8 @@ public class TestExec
 {
     public static Process p;
     public static Flag done = new Flag();
-//    public static LineDumper procout;
-//    public static LineDumper procerr;
+    public static LineDumper procout;
+    public static LineDumper procerr;
 
     public static void main(String[] args) throws Throwable
     {
@@ -37,8 +37,8 @@ public class TestExec
         System.out.println("starting subprocess...");
 
         p = Runtime.getRuntime().exec("java -cp . Small");
-//        procout = new LineDumper(new InputStreamReader(p.getInputStream()));
-//        procerr = new LineDumper(new InputStreamReader(p.getErrorStream()));
+        procout = new LineDumper(new InputStreamReader(p.getInputStream()));
+        procerr = new LineDumper(new InputStreamReader(p.getErrorStream()));
     }
 
     public static void waitFor()
@@ -53,8 +53,8 @@ public class TestExec
         }
         System.out.println("subprocess done");
 
-//        procout.waitFor();
-//        procerr.waitFor();
+        procout.waitFor();
+        procerr.waitFor();
 
         int exitValue = p.exitValue();
         System.out.println("exit value: "+exitValue);
