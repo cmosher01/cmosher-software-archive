@@ -42,7 +42,8 @@ public class CubbyHole
     }
 
     /**
-     * Puts the specified <code>Object</code> into this <code>CubbyHole</code>, and
+     * Waits for this <code>CubbyHole</code> to be empty, then
+     * puts the specified <code>Object</code> into this <code>CubbyHole</code>, and
      * notifies threads waiting to get from this <code>CubbyHole</code>.
      * 
      * @param value the <code>Object</code> to put into this <code>CubbyHole</code>; can be null
