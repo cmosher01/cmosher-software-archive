@@ -40,8 +40,8 @@ public class Test
 
 
 
-        Object x = null;//ew String("asdf");
-        if (x instanceof String)
+        Object x = new Object();
+        if (x.getClass().isInstance(null))
         {
             System.out.println("yes");
         }
@@ -49,8 +49,6 @@ public class Test
         {
             System.out.println("no");
         }
-
-
 
 
 
