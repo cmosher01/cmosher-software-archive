@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.Writer;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -62,7 +66,11 @@ public class Test
 
 
 
-
+        File f = new File("");
+        Writer r = new FileWriter(f);
+        r.write("test");
+        r.flush();
+        r.close();
 
 
 
