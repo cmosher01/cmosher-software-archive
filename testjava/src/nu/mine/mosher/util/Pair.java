@@ -62,4 +62,8 @@ public class Pair
         }
         return x.equals(y);
     }
+
+    public int compareTo(Object obj)
+    {
+    }
 }
