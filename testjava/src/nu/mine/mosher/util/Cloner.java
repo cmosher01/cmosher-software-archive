@@ -39,15 +39,8 @@ public final class Cloner
         catch (Throwable cause)
         {
             CloneNotSupportedException ex;
-            if (cause instanceof CloneNotSupportedException)
-            {
-                ex = (CloneNotSupportedException)cause;
-            }
-            else
-            {
-                ex = new CloneNotSupportedException();
-                ex.initCause(cause);
-            }
+            ex = new CloneNotSupportedException();
+            ex.initCause(cause);
             throw ex;
         }
     }
