@@ -14,8 +14,7 @@ public class RequestInit implements ServletRequestListener
 {
     public void requestInitialized(ServletRequestEvent rre)
     {
-		ServletRequest req = rre.getServletRequest();
-		req.setAttribute("nu.mine.mosher.jdotest.Perm",new Perm());
+		rre.getServletRequest().setAttribute("nu.mine.mosher.jdotest.Perm",new Perm());
     }
 
 	public void requestDestroyed(ServletRequestEvent rre)
