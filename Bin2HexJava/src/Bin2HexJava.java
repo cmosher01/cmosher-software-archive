@@ -18,6 +18,7 @@ import java.io.InputStream;
 public class Bin2HexJava
 {
     private static final int BPL = 0x10;
+    private static final boolean SHOW_CAST = true;
     private static final boolean SHOW_ZERO_X = true;
     private static final boolean SHOW_COMMA = true;
     private static final boolean SHOW_SPACE = false;
@@ -65,6 +66,10 @@ public class Bin2HexJava
                 pos = 0;
             }
 
+            if (SHOW_CAST)
+            {
+                System.out.print("(byte)");
+            }
             if (SHOW_ZERO_X)
             {
                 System.out.print("0x");
