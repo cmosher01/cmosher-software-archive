@@ -1,6 +1,4 @@
 /*
- * TODO
- *
  * Created on Apr 16, 2004
  */
 package nu.mine.mosher.velocity;
@@ -12,7 +10,10 @@ import org.apache.velocity.runtime.RuntimeServices;
 import org.apache.velocity.runtime.log.LogSystem;
 
 /**
- * TODO
+ * Takes log messages from Velocity and writes them
+ * to a standard Java Logger.
+ * 
+ * @author Chris Mosher
  */
 public class VelocityLogger implements LogSystem
 {
