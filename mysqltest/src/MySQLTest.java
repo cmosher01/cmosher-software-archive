@@ -97,21 +97,38 @@ public class MySQLTest
     	}
     }
 
+	protected String columnName(String sGender, int minAge, int maxAge)
+	{
+		String s = "";
+		s += sGender;
+		s += "Age";
+		s += minAge;
+		if (maxAge < 0)
+		{
+			s += "plus";
+		}
+		else
+		{
+			s += "to"+maxAge;
+		}
+		return s;
+	}
+
     protected void insertData() throws SQLException
     {
     	dbUpdate("delete from Family");
     	fland = dbInsert("insert into Family(name) values(\"Flandreau\")");
     	log.fine("Inserted Flandreau with id "+fland);
 
-		dbInsert("insert into Census1790(nameLast,nameFirst,maleAge16plus,maleAge0to15,female,family) "+
+		dbInsert("insert into Census1790(nameLast,nameFirst,maleAge16plus,maleAge0to15,femaleAge0plus,family) "+
 		"values(\"Flandreau\",\"Benjamin\",4,2,5,"+fland+")");
-		dbInsert("insert into Census1790(nameLast,nameFirst,maleAge16plus,maleAge0to15,female,family) "+
+		dbInsert("insert into Census1790(nameLast,nameFirst,maleAge16plus,maleAge0to15,femaleAge0plus,family) "+
 		"values(\"Flandreau\",\"Elias\",3,0,4,"+fland+")");
-		dbInsert("insert into Census1790(nameLast,nameFirst,maleAge16plus,maleAge0to15,female,family) "+
+		dbInsert("insert into Census1790(nameLast,nameFirst,maleAge16plus,maleAge0to15,femaleAge0plus,family) "+
 		"values(\"Flandreau\",\"James\",2,2,5,"+fland+")");
-		dbInsert("insert into Census1790(nameLast,nameFirst,nameSuffix,maleAge16plus,maleAge0to15,female,family) "+
+		dbInsert("insert into Census1790(nameLast,nameFirst,nameSuffix,maleAge16plus,maleAge0to15,femaleAge0plus,family) "+
 		"values(\"Flandreau\",\"James\",\"Junr.\",1,3,2,"+fland+")");
-		dbInsert("insert into Census1790(nameLast,nameFirst,maleAge16plus,maleAge0to15,female,family) "+
+		dbInsert("insert into Census1790(nameLast,nameFirst,maleAge16plus,maleAge0to15,femaleAge0plus,family) "+
 		"values(\"Flandreau\",\"John\",1,3,3,"+fland+")");
     }
 
@@ -137,7 +154,7 @@ public class MySQLTest
 		"    nameSuffix varchar(8), "+
 		"    maleAge16plus integer, "+
 		"    maleAge0to15 integer, "+
-		"    female integer, "+
+		"    femaleAge0plus integer, "+
 		"    other integer, "+
 		"    slave integer "+
 		")");
