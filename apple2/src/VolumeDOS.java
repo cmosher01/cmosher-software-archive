@@ -43,6 +43,11 @@ public class VolumeDOS extends VolumeEntity
     public void readFromMedia(Disk disk)
     {
         int i = 0;
+        for (Iterator i = rPosDOS.iterator(); i.hasNext();)
+        {
+            DiskPos p = (DiskPos)i.next();
+            
+        }
         try
         {
             rSector.add(new VolumeSector(new DiskPos(0,1),i++));
