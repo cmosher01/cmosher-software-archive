@@ -49,6 +49,8 @@ public class GDiffVeiew extends JFrame
 
     private int cCol = 0x10;
 
+    private int nibs = 8;
+
     private StringBuffer sb;
 
     private int srcBegin = -1;
@@ -120,7 +122,6 @@ public class GDiffVeiew extends JFrame
         BufferedInputStream in = new BufferedInputStream(new FileInputStream(src));
         byte[] rb = new byte[cCol];
         int c = in.read(rb);
-        int nibs = 8;
         sb = new StringBuffer(in.available()*6);
         for (int i = 0; i < nibs+2; ++i)
         {
@@ -240,6 +241,15 @@ public class GDiffVeiew extends JFrame
         if (srcBegin >= 0 && srcEnd >= 0)
         {
         }
+    }
+    public int getHexStart(int pos)
+    {
+        int rowLen = nibs+2+4*cCol+1;
+        return rowLen+(pos/cCol)*rowLen+nibs+2+(pos%cCol)*3;
+    }
+    public int getHexEnd(int pos)
+    {
+        return getHexStart(pos)+2;
     }
     public void highlight(int beginPoint, int endPoint)
     {
