@@ -195,8 +195,20 @@ public class VolumeDOS extends VolumeEntity
              * Assume is normal DOS 3.3, so find out which
              * version (1980, 1983, or 1986).
              */
-            int x = rb[0x84];
-            if (addr == 0x)
+            int tempdostype = 0;
+            int x = rb[0x84] & 0xFF;
+            if (x == 0x46)
+            {
+                tempdostype = 1980;
+            }
+            else if (x == 0x84)
+            {
+                tempdostype = 1983;
+            }
+            else if (x == 0xB3)
+            {
+                tempdostype = 1986;
+            }
         }
     }
 
