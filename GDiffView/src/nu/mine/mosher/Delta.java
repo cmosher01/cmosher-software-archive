@@ -171,7 +171,7 @@ public class Delta
                         int remaining = targetLength - targetidx;
                         target.read(buf,1,remaining);
                         targetidx += remaining;
-                        for (int ix = 0; ix < (remaining + 1); ix++)
+                        for (int ix = 0; ix <= remaining; ix++)
                             output.addData(buf[ix]);
                         done = true;
                     }
