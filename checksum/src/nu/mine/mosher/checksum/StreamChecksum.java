@@ -60,8 +60,10 @@ public class StreamChecksum
             {
                 throw new IOException("Error reading from input stream.");
             }
+
             rollCheck.init(rs);
             Integer chk = new Integer(rollCheck.getChecksum());
+
             Collection rWind;
             if (!mapChecksumToWindow.containsKey(chk))
             {
@@ -72,6 +74,7 @@ public class StreamChecksum
             {
                 rWind = (Collection)mapChecksumToWindow.get(chk);
             }
+
             rWind.add(new Long(w++));
         }
     }
