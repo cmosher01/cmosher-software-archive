@@ -21,7 +21,7 @@ public class UndoableReference
 
     public void saveForUndo() throws CloneNotSupportedException
     {
-        undoer.saveForUndo(state);
+        undoer.save(state);
     }
 
     public void undo()
