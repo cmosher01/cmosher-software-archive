@@ -22,9 +22,12 @@ public class RanArray30bit
 
     public RanArray30bit()
     {
-        this((int)System.currentTimeMillis());
+        this((int)getDefaultSeed());
     }
 
+    /**
+     * @param seed
+     */
     public RanArray30bit(int seed)
     {
         int[] x = new int[KK+KK-1];
@@ -135,7 +138,7 @@ public class RanArray30bit
         return aa;
     }
 
-    public static int modDiff(int x, int y)
+    protected static int modDiff(int x, int y)
     {
         long t = x - y;
         if (t < 0)
@@ -143,7 +146,12 @@ public class RanArray30bit
         return (int)t;
     }
 
-    public static void main(String[] rArg) throws IOException
+    /**
+     * Generates some random numbers using this class.
+     * @param rArg
+     * @throws IOException
+     */
+    public static void main(String[] rArg)
     {
         int[] a = null;
 
