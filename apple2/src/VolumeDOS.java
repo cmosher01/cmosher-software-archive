@@ -420,12 +420,20 @@ public class VolumeDOS extends VolumeEntity
      */
     private byte[] makeSlave(byte[] rbClear, int[] rbSlaveOffset, int dif)
     {
+        // copy entire master image
         byte[] rbSlave = new byte[rbClear.length];
         System.arraycopy(rbClear, 0, rbSlave, 0, rbClear.length);
+
+        // apply diff to master image (at all known offsets)
         for (int i = 0; i < rbSlaveOffset.length; i++)
         {
             int bOff = rbSlaveOffset[i];
             rbSlave[bOff] -= dif;
+        }
+        // clear reloc routine:
+        for (int i = 0x0A00; i < 0x0C00; ++i)
+        {
+            rbSlave[i] = 0;
         }
         return rbSlave;
     }
