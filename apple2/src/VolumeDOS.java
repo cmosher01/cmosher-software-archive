@@ -436,13 +436,13 @@ public class VolumeDOS extends VolumeEntity
                                 s.append(" (DOS 3.3 1980 slave (A$");
                                 s.append(Hex2Bin.hexbyte((byte)(0x1D+dif)));
                                 s.append("00): unknown alteration)");
-                                for (int i = 0; i < rbCmp.length; ++i)
-                                {
-                                    if (rbCmp[i] != rbClearSlave[i])
-                                    {
-                                        System.err.println("@$"+Integer.toHexString(i)+": "+Integer.toHexString(rbClearSlave[i]&0xFF)+" --> "+Integer.toHexString(rbCmp[i]&0xFF));
-                                    }
-                                }
+//                                for (int i = 0; i < rbCmp.length; ++i)
+//                                {
+//                                    if (rbCmp[i] != rbClearSlave[i])
+//                                    {
+//                                        System.err.println("@$"+Integer.toHexString(i)+": "+Integer.toHexString(rbClearSlave[i]&0xFF)+" --> "+Integer.toHexString(rbCmp[i]&0xFF));
+//                                    }
+//                                }
                             }
                         }
                     }
