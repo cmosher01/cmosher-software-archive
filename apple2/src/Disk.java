@@ -245,7 +245,6 @@ public class Disk
                     isValidTrack(sector[1]) && isValidSector(sector[2]) &&
                     sector[3]==0 && sector[4]==0 &&
                     word(sector,5)%0x7A == 0)
-                    )
                     {
                         
                     }
