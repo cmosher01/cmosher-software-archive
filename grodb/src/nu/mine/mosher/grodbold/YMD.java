@@ -101,10 +101,4 @@ public class YMD implements Immutable, Serializable, Comparable
 
 		return d;
     }
-
-	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException
-	{
-	    s.defaultReadObject();
-	    getHash
-	}
 }
