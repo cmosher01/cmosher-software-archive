@@ -33,8 +33,35 @@ public class Apple2
     {
         if (args.length != 1)
         {
-            throw new IllegalArgumentException("Usage: java Apple2 dos_3.3_order_disk_image");
+            throw new IllegalArgumentException("Usage: java Apple2 dirtree_of_dos_3.3_order_disk_images");
         }
+        File[] rf = list140KFiles(args[0]);
+        InputStream fileDisk = null;
+        try
+        {
+            fileDisk = new FileInputStream(new File(args[0]));
+            byte[] rbDisk = new byte[fileDisk.available()];
+            fileDisk.read(rbDisk);
+        }
+        finally
+        {
+            if (fileDisk != null)
+            {
+                try
+                {
+                    fileDisk.close();
+                }
+                catch (Throwable e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        Disk disk = new Disk(rbDisk);
+
+        List rVTOC = new ArrayList();
+        disk.findDos33VTOC(rVTOC);
     }
 
     public static void mainOne(String[] args) throws IOException
