@@ -63,13 +63,12 @@ public class PersonPersist
 
 	public void display()
 	{
-		Person person;
 		// get a new persistence manager
 		PersistenceManager pm = this.pmf.getPersistenceManager();
 		// retrieve objects from datastore and display
 		for (int i = 0; i < SIZE; i++)
 		{
-			person = (Person)pm.getObjectById(this.rid.get(i),false);
+			Person person = (Person)pm.getObjectById(this.rid.get(i),false);
 			System.out.println("person "+i+": "+person.getName());
 		}
 		pm.close();
