@@ -130,6 +130,11 @@ public class VelocityWrapper
         }
     }
 
+    /**
+     * Wraps an exception in a VelocityException.
+     * @param e
+     * @return
+     */
     public static VelocityException wrapInVelocityException(Throwable e)
     {
         VelocityException ve = new VelocityException(e.getMessage());
