@@ -180,7 +180,7 @@ public class Disk
      * @param sector
      * @return
      */
-    protected static boolean isDos33VTOC(byte[] sector)
+    static boolean isDos33VTOC(byte[] sector)
     {
         return
             (sector[3]==3 || sector[3]==2) &&
@@ -220,7 +220,7 @@ public class Disk
      * @return
      * @throws InvalidPosException
      */
-    protected int isDos33CatalogSector(byte[] sector, boolean allowLarge, TSMap tsmapMaps, List entries) throws InvalidPosException
+    static int isDos33CatalogSector(byte[] sector, boolean allowLarge, TSMap tsmapMaps, List entries) throws InvalidPosException
     {
         if (sector[0] == 0 &&
                 DiskPos.isValidTrack(sector[1],allowLarge) &&
@@ -419,7 +419,7 @@ public class Disk
      * @param sector
      * @return
      */
-    protected static boolean isfindDos33TSMapSector(byte[] sector)
+    static boolean isfindDos33TSMapSector(byte[] sector)
     {
         boolean valid = false;
         if (sector[0]==0 &&
@@ -513,7 +513,7 @@ public class Disk
      * @param i
      * @return
      */
-    private static int word(byte[] sector, int i)
+    static int word(byte[] sector, int i)
     {
         int lo = sector[i++];
         int hi = sector[i];
@@ -525,7 +525,7 @@ public class Disk
      * @param i
      * @return
      */
-    private boolean isValidFileName(byte[] sector, int i)
+    static boolean isValidFileName(byte[] sector, int i)
     {
         // only check 29 chars of filename (last char could be overwritten by file deletion)
         for (int x = 0; x < 29; ++x)
@@ -542,7 +542,7 @@ public class Disk
      * @param b
      * @return
      */
-    private boolean isValidFileType(byte b)
+    static boolean isValidFileType(byte b)
     {
         b &= 0x7F;
         return b==0 || b==0x01 || b==0x02 || b==0x04 || b==0x08 ||
@@ -555,7 +555,7 @@ public class Disk
      * @param expected
      * @return
      */
-    private static boolean match(byte[] actual, int pos, byte[] expected)
+    static boolean match(byte[] actual, int pos, byte[] expected)
     {
         for (int i = 0; i < expected.length; ++i)
         {
