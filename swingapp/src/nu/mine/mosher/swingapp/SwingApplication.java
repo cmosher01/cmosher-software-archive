@@ -43,33 +43,38 @@ public class SwingApplication
     {
         try
         {
+            /*
+             * Parse the command line (possibly doing
+             * some other processing).
+             */
             getCommandLineArgHandler().parse();
+
+            /*
+             * Start the GUI, making sure all Swing calls
+             * are done on the event-dispatching thread.
+             * Catch any exceptions and pass them back to
+             * the main thread.
+             */
+            SwingUtilities.invokeLater(new Runnable()
+            {
+                public void run()
+                {
+                    try
+                    {
+                        getGUI().create();
+                    }
+                    catch (Throwable e)
+                    {
+                        getExceptionHandler().send(e);
+                    }
+                }
+            });
+
         }
         catch (Throwable e)
         {
             getExceptionHandler().send(e);
         }
-
-        /*
-         * Start the GUI, making sure all Swing calls
-         * are done on the event-dispatching thread.
-         * Catch any exceptions and pass them back to
-         * the main thread.
-         */
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                try
-                {
-                    getGUI().create();
-                }
-                catch (Throwable e)
-                {
-                    getExceptionHandler().send(e);
-                }
-            }
-        });
 
         /*
          * Wait for an exception (from another thread), and throw it.
