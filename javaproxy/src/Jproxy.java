@@ -406,8 +406,7 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
      */
     private void handleHTTPSetup()
     {
-        webconfigfolder = new WebConfigFolder(this,
-                "HTTP Proxy Server Configuration");
+        webconfigfolder = new WebConfigFolder(this,"HTTP Proxy Server Configuration");
     }
 
     /**
