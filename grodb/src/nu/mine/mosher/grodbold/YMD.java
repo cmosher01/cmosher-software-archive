@@ -18,7 +18,7 @@ public class YMD implements Immutable, Serializable, Comparable
 	private final int month;
 	private final int day;
 
-	private transient final int hash;
+	private transient int hash;
 
 	public YMD(int year)
 	{
@@ -30,8 +30,6 @@ public class YMD implements Immutable, Serializable, Comparable
 		this.year = year;
 		this.month = month;
 		this.day = day;
-
-		this.hash = getHash();
 	}
 
     public int getDay()
@@ -65,10 +63,19 @@ public class YMD implements Immutable, Serializable, Comparable
 
     public int hashCode()
     {
+    	if (hash == 0)
+    	{
+    		updateHash();
+    	}
     	return hash;
     }
 
-    private int getHash()
+    private void updateHash()
+    {
+    	this.hash = getHash();
+    }
+
+	private int getHash()
     {
 		int h = 17;
 
@@ -106,8 +113,6 @@ public class YMD implements Immutable, Serializable, Comparable
 	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException
 	{
 	    s.defaultReadObject();
-	    // customized deserialization code
-	    ...
-	    // followed by code to update the object, if necessary
+	    getHash
 	}
 }
