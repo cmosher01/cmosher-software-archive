@@ -79,4 +79,16 @@ public class VolumeCatalog
             sect.dump(s);
         }
     }
+
+    /**
+     * @param entry
+     */
+    public void getEntries(List rEntry)
+    {
+        for (Iterator i = this.rCatSect.iterator(); i.hasNext();)
+        {
+            VolumeCatalogSector sector = (VolumeCatalogSector)i.next();
+            sector.getEntries(rEntry);
+        }
+    }
 }
