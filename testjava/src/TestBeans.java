@@ -45,7 +45,12 @@ public class TestBeans
 
 
 
-        PropertyEditor ed = (PropertyEditor)pd.getPropertyEditorClass().newInstance();
+        Class pec = pd.getPropertyEditorClass();
+        if (pec == null)
+        {
+            throw new Exception("can't get property editor class");
+        }
+        PropertyEditor ed = (PropertyEditor)pec.newInstance();
         if (ed == null)
         {
             throw new Exception("can't get property editor");
