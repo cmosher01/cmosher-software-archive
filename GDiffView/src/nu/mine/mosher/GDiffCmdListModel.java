@@ -3,6 +3,7 @@
  */
 package nu.mine.mosher;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
@@ -42,6 +43,6 @@ public class GDiffCmdListModel extends AbstractListModel
 
     public List list()
     {
-        return rGDiffCmd;
+        return Collections.unmodifiableList(rGDiffCmd);
     }
 }
