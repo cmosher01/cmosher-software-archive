@@ -110,7 +110,6 @@ public class GDiffVeiew extends JFrame
 
         readSrc();
         doc.insertString(0,sb.toString(),(AttributeSet)styles.get("body"));
-        highlightSrc(3,0x26);
         pack();
         setVisible(true);
     }
@@ -324,6 +323,10 @@ public class GDiffVeiew extends JFrame
     {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         GDiffVeiew frame = new GDiffVeiew(args[0],args[1]);
-//        Thread.sleep(5000);
+        frame.highlightSrc(3,0x06);
+        Thread.sleep(2000);
+        frame.highlightSrc(4,0x16);
+        Thread.sleep(2000);
+        frame.highlightSrc(5,0x26);
     }
 }
