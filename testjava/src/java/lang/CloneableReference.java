@@ -1,14 +1,9 @@
-/*
- * TODO
- *
- * Created on Jan 13, 2004
- */
 package java.lang;
 
-/**
- * TODO
- */
 public class LangTest
 {
-
+    public Object clone() throws CloneNotSupportedException
+    {
+        return super.clone();
+    }
 }
