@@ -1,4 +1,5 @@
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -30,12 +31,16 @@ public class ByteAnalyzer
     public static void main(String[] args) throws IOException
     {
         ByteAnalyzer prog = new ByteAnalyzer();
-        prog.execute();
+        if (args.length != 1)
+        {
+            throw new IllegalArgumentException("Usage: java ByteAnalyzer input-file");
+        }
+        prog.execute(new File(args[0]));
     }
 
-    public void execute() throws IOException
+    public void execute(File f) throws IOException
     {
-        BufferedInputStream in = new BufferedInputStream(new FileInputStream(FileDescriptor.in));
+        BufferedInputStream in = new BufferedInputStream(new FileInputStream(f));
         int x = in.read();
         while (x != -1)
         {
