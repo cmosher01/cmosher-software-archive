@@ -182,7 +182,7 @@ public class DailyWindow
     }
 
     /**
-     * Equivalent to <code>!(isAlways()||isNever())</code>
+     * Equivalent to <code>!(isAlwaysOpen()||isNeverOpen())</code>
      * @return
      */
     public boolean hasWindow()
