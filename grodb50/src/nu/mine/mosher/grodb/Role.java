@@ -11,7 +11,7 @@ public class Role
 {
 	private Event event;
 	private Persona persona;
-	private ItemType<Role> type;
+	private ItemType<RoleType> type;
 
 	public Role()
 	{
