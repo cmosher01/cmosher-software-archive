@@ -115,8 +115,6 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
 
     String inifile = "Jproxy.properties";
 
-    int i;
-
     ToolBarCaption tbcpt;
 
     FileViewer helpviewer = null;
@@ -468,7 +466,7 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
         int img_height = bkgroundimg.getHeight(this);
 
         if (offscrimg == null)
-            offscrimg = createImage(size().width,size().height);
+            offscrimg = createImage(getSize().width,getSize().height);
         Graphics og = offscrimg.getGraphics();
 
         if (bkgroundimg != null)
