@@ -3,14 +3,13 @@ import com.surveysampling.util.UndoableReference;
 public class UndoableExample implements Cloneable
 {
     private int x;
-    private UndoableReference u;
+    private final UndoableReference u = new UndoableReference(this);
 
 
 
     public UndoableExample(int a)
     {
         x = a;
-        u = new UndoableReference(this);
     }
 
     public Object clone()
