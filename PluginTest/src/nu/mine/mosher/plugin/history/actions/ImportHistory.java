@@ -46,7 +46,7 @@ public class ImportHistory implements IObjectActionDelegate
         {
             workspace = ResourcesPlugin.getWorkspace();
             FileSystemResourceManager fileSystemManager = ((org.eclipse.core.internal.resources.Workspace)workspace).getFileSystemManager();
-            historyStore = fileSystemManager.getHistoryStore();
+            historyStore = (HistoryStore)fileSystemManager.getHistoryStore();
 
             Object o = ((IStructuredSelection) currentSelection).getFirstElement();
             IProject pr = (IProject)o;
