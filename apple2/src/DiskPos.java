@@ -103,4 +103,19 @@ public class DiskPos
             throw new InvalidPosException("Invalid track: "+track);
         }
     }
+
+    public int getTrackInDisk()
+    {
+        return iDisk/cTrack;
+    }
+
+    public int getSectorInTrack()
+    {
+        return (iDisk-iDisk/cTrack*cTrack)/cSector;
+    }
+
+    public int getByteInSector()
+    {
+        return iDisk-iDisk/cSector*cSector;
+    }
 }
