@@ -8,9 +8,14 @@
  * Author : Steve Yeong-Ching Hsueh
  */
 
-import java.awt.*;
-import java.io.*;
-import java.awt.event.*;
+import java.awt.AWTEvent;
+import java.awt.Event;
+import java.awt.Frame;
+import java.awt.TextArea;
+import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * FileViewer display file content in a frame window
