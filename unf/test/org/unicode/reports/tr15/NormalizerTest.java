@@ -36,9 +36,24 @@ public class NormalizerTest extends TestCase
 	public void testNormalizationTestTxt() throws IOException
 	{
 		BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(new File("NormalizationTest.txt"))));
+		for (String lin = in.readLine(); lin != null; lin = in.readLine())
+		{
+			char start = lin.charAt(0);
+			if (isHexDigit(start))
+			{
+			}
+		}
 	}
 
-	protected void assertNormalize(String pre, String comp)
+    private boolean isHexDigit(char start)
+    {
+		return
+			('0' <= start && start <= '9') ||
+			('a' <= start && start <= 'f') ||
+			('A' <= start && start <= 'F');
+    }
+
+    protected void assertNormalize(String pre, String comp)
 	{
 		assertEquals(n.normalize(pre),comp);
 	}
