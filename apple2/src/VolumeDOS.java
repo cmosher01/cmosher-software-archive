@@ -377,6 +377,9 @@ public class VolumeDOS extends VolumeEntity
                 else
                 {
                     // TODO check for slave DOS
+                    int dif = rb[0xFE]-0x36;
+                    byte[] rbClearSlave = makeSlave(rbClear1980,rSlave1980,dif);
+                    
                     s.append(" (DOS 3.3 1980 altered)");
                 }
             }
@@ -407,6 +410,23 @@ public class VolumeDOS extends VolumeEntity
                 }
             }
         }
+    }
+
+    /**
+     * @param rbClear19802
+     * @param dif
+     * @return
+     */
+    private byte[] makeSlave(byte[] rbClear, int[] rbSlaveOffset, int dif)
+    {
+        byte[] rb = new byte[rbClear.length];
+        System.arraycopy(rbClear, 0, rb, 0, rbClear.length);
+        for (int i = 0; i < rbSlaveOffset.length; i++)
+        {
+            int bOff = rbSlaveOffset[i];
+            rbClear[bOff]
+        }
+        return rb;
     }
 
     /**
