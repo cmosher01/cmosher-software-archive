@@ -7,13 +7,12 @@ public class UniversalCloser3
 {
     private final Map cache;
 
-    public UniversalCloser3()
-    {
-        this(null);
-    }
-
     public UniversalCloser3(Map cache)
     {
+        if (cache == null)
+        {
+            throw new NullPointerException();
+        }
         this.cache = cache;
     }
 
@@ -44,35 +43,16 @@ public class UniversalCloser3
      */
     public void close(Object obj)
     {
-        if (cache == null)
-        {
-            closeNoCache(obj);
-        }
-        else
-        {
-            try
-            {
-                Class cl = obj.getClass();
-                Method methodClose = (Method)cache.get(cl);
-                if (methodClose == null)
-                {
-                    methodClose = cl.getMethod("close",null);
-                    cache.put(cl,methodClose);
-                }
-                methodClose.invoke(obj,null);
-            }
-            catch (Throwable ignore)
-            {
-                ignore.printStackTrace();
-            }
-        }
-    }
-
-    public static void closeNoCache(Object obj)
-    {
         try
         {
-            obj.getClass().getMethod("close",null).invoke(obj,null);
+            Class cl = obj.getClass();
+            Method methodClose = (Method)cache.get(cl);
+            if (methodClose == null)
+            {
+                methodClose = cl.getMethod("close",null);
+                cache.put(cl,methodClose);
+            }
+            methodClose.invoke(obj,null);
         }
         catch (Throwable ignore)
         {
