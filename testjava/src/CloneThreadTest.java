@@ -58,7 +58,10 @@ public class CloneThreadTest
                     while (true)
                     {
                         X y = (X)x.clone();
-                        System.out.println(y);
+                        if (y.a != y.b)
+                        {
+                            System.err.println(y);
+                        }
                         Thread.sleep(9);
                     }
                 }
