@@ -28,14 +28,17 @@ class NormalizerBuilder
     /**
      * Constants for the data file version to use.
      */
-    static final boolean NEW_VERSION = true;
-    private static final String DIR = "D:\\UnicodeData\\" + (NEW_VERSION ? "WorkingGroups\\" : "");
+//    static final boolean NEW_VERSION = true;
+//    private static final String DIR = "D:\\UnicodeData\\" + (NEW_VERSION ? "WorkingGroups\\" : "");
+//
+//    static final String UNIDATA_VERSION = NEW_VERSION ? "3.0.0d12" : "2.1.9";
+//    static final String EXCLUSIONS_VERSION = NEW_VERSION ? "1d4" : "1";
+//
+//    public static final String UNICODE_DATA = DIR + "UnicodeData-" + UNIDATA_VERSION + ".txt";
+//    public static final String COMPOSITION_EXCLUSIONS = DIR + "CompositionExclusions-" + EXCLUSIONS_VERSION + ".txt";
 
-    static final String UNIDATA_VERSION = NEW_VERSION ? "3.0.0d12" : "2.1.9";
-    static final String EXCLUSIONS_VERSION = NEW_VERSION ? "1d4" : "1";
-
-    public static final String UNICODE_DATA = DIR + "UnicodeData-" + UNIDATA_VERSION + ".txt";
-    public static final String COMPOSITION_EXCLUSIONS = DIR + "CompositionExclusions-" + EXCLUSIONS_VERSION + ".txt";
+	public static final String UNICODE_DATA = "UnicodeData.txt";
+	public static final String COMPOSITION_EXCLUSIONS = "CompositionExclusions.txt";
 
     /**
      * Called exactly once by NormalizerData to build the static data
