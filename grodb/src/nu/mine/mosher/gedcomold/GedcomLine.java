@@ -7,6 +7,7 @@ public class GedcomLine
 	private final String tag;
 	private final String value;
 	private final String pointer;
+
 	public GedcomLine(int level, String id, String tag, String value)
 	{
 		this.level = level;
@@ -24,6 +25,7 @@ public class GedcomLine
 			this.pointer = "";
 		}
 	}
+
 	private static String getPointer(String s)
 	{
 		if (!s.startsWith("@") || !s.endsWith("@") || s.length() < 3)
@@ -38,10 +40,12 @@ public class GedcomLine
 		}
 		return pointer;
 	}
+
 	private static String replaceAts(String s)
 	{
 		return s.replaceAll("@@","@");
 	}
+
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer(256);
@@ -69,12 +73,55 @@ public class GedcomLine
 		}
 		return sb.toString();
 	}
+
 	public boolean hasID()
 	{
 		return id.length() > 0;
 	}
+
 	public boolean isPointer()
 	{
 		return pointer.length() > 0;
 	}
+
+    /**
+     * @return
+     */
+    public String getId()
+    {
+        return id;
+    }
+
+    /**
+     * @return
+     */
+    public int getLevel()
+    {
+        return level;
+    }
+
+    /**
+     * @return
+     */
+    public String getPointer()
+    {
+        return pointer;
+    }
+
+    /**
+     * @return
+     */
+    public String getTag()
+    {
+        return tag;
+    }
+
+    /**
+     * @return
+     */
+    public String getValue()
+    {
+        return value;
+    }
+
 }
