@@ -9,7 +9,7 @@ import junit.framework.TestCase;
  * 
  * @author Chris
  */
-public class DiskTest extends TestCase
+public class DiskVTOCTest extends TestCase
 {
     private static byte[] zeroes = new byte[0x100];
 
