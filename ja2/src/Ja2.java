@@ -19,6 +19,7 @@ import nu.mine.mosher.ja2.SwingGUI;
 public final class Ja2
 {
     /**
+     * This class is never instantiated.
      * @throws UnsupportedOperationException
      */
     private Ja2() throws UnsupportedOperationException
