@@ -270,8 +270,8 @@ public class MySQLTest
 				String nameLast = rs.getString("nameLast");
 				String nameFirst = rs.getString("nameFirst");
 				String gender = rs.getString("gender");
-				String earliest = rs.getString("earliest");
-    			String latest = rs.getString("latest");
+				int earliest = rs.getInt("earliest");
+				int latest = rs.getInt("latest");
 				int minage = rs.getInt("minage");
 				int maxage = rs.getInt("maxage");
     			for (int i = 0; i < c; ++i)
