@@ -21,7 +21,7 @@ public class BitStream extends RandomnessTest
     private static final int no_bits = 1<<16;
     private static final int dim = 1<<15;
     private static final int mask = (1<<20) - 1;
-    private static final double mean = (double)(1<<20) * Math.exp(-2);
+    private static final double mean = (1<<20) * Math.exp(-2);
     private static final double std = 428;
     
     private static int[] bitmask = new int[32];
@@ -79,7 +79,7 @@ public class BitStream extends RandomnessTest
                 }
             }
 
-            double z = ((double)no_mswds - mean) / std;
+            double z = (no_mswds - mean) / std;
             double p = 1-Stats.Phi(z);
             mp += p;
             ++cp;
