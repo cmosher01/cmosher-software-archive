@@ -191,6 +191,7 @@ public class ProxyConnection extends Thread {
         if (hostIP.length() > 0)
         {
             server_addr = hostIP;
+            this.using_proxy = false;
         }
 
         System.out.println(server_adpt);
