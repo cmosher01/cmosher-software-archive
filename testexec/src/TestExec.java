@@ -13,7 +13,7 @@ public class TestExec
         {
             public void run()
             {
-                System.out.println("parent shutdown handler");
+                System.out.println("stopping subprocess...");
                 p.destroy();
             }
         });
