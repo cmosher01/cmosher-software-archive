@@ -17,11 +17,14 @@ public class Dos33CatalogEntry
     private final byte[] nameOrig;
 
     private final String name;
+
+
+
     /**
      * @param dataPos
      * @param locked
      * @param fileTypeID
-     * @param sector
+     * @param cSector
      * @param nameOrig
      * @param name
      */
