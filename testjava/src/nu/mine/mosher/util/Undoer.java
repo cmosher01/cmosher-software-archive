@@ -2,7 +2,7 @@ package com.surveysampling.util;
 
 import java.util.LinkedList;
 
-public class Undoer
+public final class Undoer
 {
     private final LinkedList mrUndo = new LinkedList();
     private final LinkedList mrRedo = new LinkedList();
