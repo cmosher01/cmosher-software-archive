@@ -1,9 +1,12 @@
 <%@ include file="htmlhead.jsp" %>
-<%@ page import="java.util.ArrayList" %>
-<jsp:useBean id="r" class="java.util.ArrayList" scope="session" />
+<%@ page import="nu.mine.mosher.jdotest.Item" %>
+<%@ page import="nu.mine.mosher.jdotest.Perm" %>
 <%
     String s = request.getParameter("item");
-    r.add(s);
+    Perm pm = new Perm();
+    Item item = new Item();
+    item.setName(s);
+    pm.add(item);
 %>
 <head>
 <title>Added</title>
