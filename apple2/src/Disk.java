@@ -633,14 +633,23 @@ public class Disk
      */
     public void findDos33TSMapSector(/*TSMap tsmapMapsInCatalog*/Collection rPosTSMaps)
     {
-        rewind();
-        while (!EOF())
+        Iterator i = this.getSectorIterator();
+        while (i.hasNext())
         {
-            DiskPos cur = this.pos;
-            byte[] sector = read(DiskPos.cSector);
-            if (isDos33TSMapSector(sector))
+            DiskPos pos = (DiskPos)i.next();
+            if (isDos33TSMapSector(pos) > 0)
             {
-                rPosTSMaps.add(cur);
+                rPosTSMaps.add(pos);
+            }
+        }
+//        rewind();
+//        while (!EOF())
+//        {
+//            DiskPos cur = this.pos;
+//            byte[] sector = read(DiskPos.cSector);
+//            if (isDos33TSMapSector(sector))
+//            {
+//                rPosTSMaps.add(cur);
 //                System.out.print("T/S map @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
 //                if (sector[1] != 0 || sector[2] != 0)
 //                {
@@ -655,8 +664,8 @@ public class Disk
 //                    System.out.print(" (orphaned)");
 //                }
 //                System.out.println();
-            }
-        }
+//            }
+//        }
     }
 
     /**
