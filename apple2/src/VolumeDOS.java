@@ -23,8 +23,8 @@ public class VolumeDOS extends VolumeEntity
         DiskPos p, pLim;
         try
         {
-            pLim = new DiskPos(3,0);
             p = new DiskPos(0,1);
+            pLim = new DiskPos(3,0);
         }
         catch (InvalidPosException e)
         {
@@ -36,6 +36,7 @@ public class VolumeDOS extends VolumeEntity
             p.advance(DiskPos.cSector);
         }
     }
+
     /**
      * @param disk
      */
