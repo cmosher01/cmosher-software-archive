@@ -7,6 +7,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 public class CatEntry implements TreeNode
 {
+	private final JEditorPane viewRight = new JEditorPane();
 	private String sName;
 
 	public CatEntry(byte[] rb)
@@ -14,6 +15,8 @@ public class CatEntry implements TreeNode
 		byte[] rname = new byte[0x1e];
 		System.arraycopy(rb,3,rname,0,0x1e);
 		sName = A2DiskContents.dosName(rname);
+        viewRight.setEditable(false);
+        viewRight.setContentType("text/html");
 	}
 
 	public String getName()
