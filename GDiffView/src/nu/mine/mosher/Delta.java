@@ -53,11 +53,9 @@ public class Delta
         PushbackInputStream target = new PushbackInputStream(new BufferedInputStream(new FileInputStream(targetFile)),buff_size);
         RandomAccessFile source = new RandomAccessFile(sourceFile,"r");
 
-        boolean done = false;
-        byte buf[] = new byte[S];
-        long hashf = 0;
+        byte rSrc[] = new byte[S];
+        byte rTrg[] = new byte[S];
         byte b[] = new byte[1];
-        byte sourcebyte[] = new byte[S];
 
         if (targetLength - targetidx <= S)
         {
@@ -69,10 +67,10 @@ public class Delta
         }
 
         // initialize first complete checksum.
-        target.read(buf,0,S);
+        target.read(rTrg,0,S);
         targetidx += S;
 
-        hashf = Checksum.queryChecksum(buf,S);
+        long hashf = Checksum.queryChecksum(rTrg,S);
 
         // TODO The check for alternative hashf is only because I wanted to verify
         // that the update method really is correct. I will remove it shortly.
@@ -81,6 +79,7 @@ public class Delta
         // This flag indicates that we've run out of source bytes
         boolean sourceOutofBytes = false;
 
+        boolean done = false;
         while (!done)
         {
 
@@ -94,11 +93,11 @@ public class Delta
                 source.seek(offset);
 
                 // possible match, need to check byte for byte
-                if (sourceOutofBytes == false && source.read(sourcebyte,0,S) != -1)
+                if (!sourceOutofBytes && source.read(rSrc,0,S) != -1)
                 {
                     for (int ix = 0; ix < S /*CAM ??? && match*/; ix++)
                     {
-                        if (sourcebyte[ix] != buf[ix])
+                        if (rSrc[ix] != rTrg[ix])
                         {
                             match = false;
                         }
@@ -167,50 +166,50 @@ public class Delta
                     if (targetLength - targetidx < S)
                     {
                         // eof reached, special case for last bytes
-                        buf[0] = b[0]; // don't loose this byte
+                        rTrg[0] = b[0]; // don't loose this byte
                         int remaining = targetLength - targetidx;
-                        target.read(buf,1,remaining);
+                        target.read(rTrg,1,remaining);
                         targetidx += remaining;
                         for (int ix = 0; ix <= remaining; ix++)
                         {
-                            output.addData(buf[ix]);
+                            output.addData(rTrg[ix]);
                         }
                         done = true;
                     }
                     else
                     {
-                        buf[0] = b[0];
-                        target.read(buf,1,S - 1);
+                        rTrg[0] = b[0];
+                        target.read(rTrg,1,S - 1);
                         targetidx += S - 1;
-                        alternativehashf = hashf = Checksum.queryChecksum(buf,S);
+                        alternativehashf = hashf = Checksum.queryChecksum(rTrg,S);
                     }
                     continue; //continue loop
                 }
             }
 
-            if (targetLength - targetidx > 0)
+            if (targetidx > targetLength)
             {
                 // update the adler fingerprint with a single byte
                 target.read(b,0,1);
                 targetidx += 1;
 
                 // insert instruction with the old byte we no longer use...
-                output.addData(buf[0]);
+                output.addData(rTrg[0]);
 
-                alternativehashf = Checksum.incrementChecksum(alternativehashf,buf[0],b[0]);
+                alternativehashf = Checksum.incrementChecksum(alternativehashf,rTrg[0],b[0]);
 
                 for (int j = 0; j < 15; j++)
                 {
-                    buf[j] = buf[j + 1];
+                    rTrg[j] = rTrg[j + 1];
                 }
-                buf[15] = b[0];
-                hashf = Checksum.queryChecksum(buf,S);
+                rTrg[15] = b[0];
+                hashf = Checksum.queryChecksum(rTrg,S);
             }
             else
             {
                 for (int ix = 0; ix < S; ix++)
                 {
-                    output.addData(buf[ix]);
+                    output.addData(rTrg[ix]);
                 }
                 done = true;
             }
