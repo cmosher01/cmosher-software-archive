@@ -19,7 +19,7 @@ public class UndoableReference
         return state;
     }
 
-    public void saveForUndo() throws CloneNotSupportedException
+    public void save() throws CloneNotSupportedException
     {
         undoer.save(state);
     }
