@@ -86,6 +86,11 @@ public class Test
         }
 
 
+        while (s2 != null)
+        {
+            System.err.println(s2);
+            s2 = br.readLine();
+        }
 
 
 
