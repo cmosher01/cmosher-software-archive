@@ -30,6 +30,10 @@ public class CachedCloner
             }
             return clone(cloneableObject, methodClone);
         }
+        catch (CloneNotSupportedException e)
+        {
+            throw e;
+        }
         catch (Throwable cause)
         {
             CloneNotSupportedException ex = new CloneNotSupportedException();
