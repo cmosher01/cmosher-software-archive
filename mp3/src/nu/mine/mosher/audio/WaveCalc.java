@@ -68,5 +68,34 @@ public class WaveCalc
 		{
 			throw new Exception("WAVE does not start with fmt chunk.");
 		}
+
+		if (in.readInt() < 0x10)
+		{
+			throw new Exception("Invalid fmt chunk.");
+		}
+
+		if (in.readByte() != 1)
+		{
+			throw new Exception("Invalid fmt chunk.");
+		}
+
+		if (in.readByte() != 0)
+		{
+			throw new Exception("Invalid fmt chunk.");
+		}
+
+		byte stereolo = in.readByte();
+		byte stereohi = in.readByte();
+		boolean stereo = (stereolo==2);
+
+		int Hz = in.readInt();
+		int bytespersec = in.readInt();
+		in.readByte(); in.readByte(); // skip bytes per sample
+		in.readByte(); in.readByte(); // skip bits per sample
+
+		if (in.readInt() != 0x61746164)
+		{
+			throw new Exception("data chunk does not follow fmt chunk.");
+		}
     }
 }
