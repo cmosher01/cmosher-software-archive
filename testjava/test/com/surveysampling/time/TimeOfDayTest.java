@@ -18,6 +18,8 @@ import junit.framework.TestCase;
  */
 public class TimeOfDayTest extends TestCase
 {
+    private static final SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
+
     private TimeOfDay tod = new TimeOfDay(Calendar.getInstance(),17,34,12,367);
 
     /**
@@ -81,16 +83,18 @@ public class TimeOfDayTest extends TestCase
 
     public void testGetTimeOnDay() throws ParseException
     {
-        SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
         Date d = fmt.parse("2004/04/03 00:00:00.000");
         Date dcomp = new Date(tod.getTimeOnDay(d));
         Date dexpt = fmt.parse("2004/04/03 17:34:12.367");
         assertEquals(dexpt,dcomp);
+    }
 
+    public void testGetTimeOnDayDuringDSTChange() throws ParseException
+    {
         TimeOfDay tod2 = new TimeOfDay(Calendar.getInstance(),2,30,0,0);
-        d = fmt.parse("2004/04/04 00:00:00.000");
-        dcomp = new Date(tod2.getTimeOnDay(d));
-        dexpt = fmt.parse("2004/04/04 03:30:00.000");
+        Date d = fmt.parse("2004/04/04 00:00:00.000");
+        Date dcomp = new Date(tod2.getTimeOnDay(d));
+        Date dexpt = fmt.parse("2004/04/04 03:30:00.000");
         assertEquals(dexpt,dcomp);
     }
 
