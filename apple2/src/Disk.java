@@ -162,7 +162,7 @@ public class Disk
                 int penultimateSpace = 0;
                 int goodEntries = 0;
                 boolean good = true;
-                for (int cat = 0; cat < 7; ++cat)
+                for (int cat = 0; cat < 7 && good; ++cat)
                 {
                     if (sector[ce] == 0)
                     {
