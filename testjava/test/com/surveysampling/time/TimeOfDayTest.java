@@ -189,4 +189,10 @@ public class TimeOfDayTest extends TestCase
         new TimeOfDay(cal,0,0,0,0);
         new TimeOfDay(cal,23,59,59,999);
     }
+
+    public void testHashCode()
+    {
+        TimeOfDay tod2 = new TimeOfDay(Calendar.getInstance(),17,34,12,367);
+        assertEquals(tod2.hashCode(),tod.hashCode());
+    }
 }
