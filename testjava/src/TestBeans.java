@@ -7,14 +7,13 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import com.surveysampling.beans.editors.Editors;
+
 public class TestBeans
 {
     public static void main(String[] rArgs) throws Throwable
     {
-        String[] rp = PropertyEditorManager.getEditorSearchPath();
-        LinkedList listp = new LinkedList(Arrays.asList(rp));
-        listp.addFirst("com.surveysampling.beans.editors");
-        PropertyEditorManager.setEditorSearchPath((String[])listp.toArray(new String[listp.size()]));
+        Editors.register();
 
         SomeBean some = new SomeBean();
         String prop = "objInteger";
