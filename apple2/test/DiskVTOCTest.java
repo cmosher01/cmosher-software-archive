@@ -20,10 +20,7 @@ public class DiskVTOCTest extends TestCase
      */
     public void testDOS33_Master_1980() throws IOException
     {
-        InputStream disk = this.getClass().getClassLoader().getResourceAsStream("DOS33_SystemMaster_19800825.dsk");
-        byte[] rbDisk = new byte[disk.available()];
-        disk.read(rbDisk);
-        disk.close();
+        byte[] rb = readDiskResource("DOS33_SystemMaster_19800825.dsk");
     }
 //    private static byte[] zeroes = new byte[0x100];
 //
@@ -281,4 +278,17 @@ public class DiskVTOCTest extends TestCase
 //        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
 //        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ")));
 //    }
+
+    /**
+     * @param f
+     * @throws IOException
+     */
+    private byte[] readDiskResource(String f) throws IOException
+    {
+        InputStream disk = this.getClass().getClassLoader().getResourceAsStream(f);
+        byte[] rbDisk = new byte[disk.available()];
+        disk.read(rbDisk);
+        disk.close();
+        return rbDisk;
+    }
 }
