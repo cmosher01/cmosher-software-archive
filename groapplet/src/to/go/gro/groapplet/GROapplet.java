@@ -25,6 +25,8 @@ public class GROapplet extends JApplet
 
     public GROapplet() throws HeadlessException
     {
+        enableEvents(AWTEvent.MOUSE_EVENT_MASK);
+        enableEvents(AWTEvent.MOUSE_MOTION_EVENT_MASK);
     }
 
     public void init()
@@ -40,8 +42,6 @@ public class GROapplet extends JApplet
         }
     }
 
-
-
     protected void handleException(Throwable e)
     {
         try
@@ -53,30 +53,28 @@ public class GROapplet extends JApplet
              * from being displayed in the browser.
              */
             e.printStackTrace();
-        
-        
-        
+
             /*
              * Build a StringBuffer containing the entire
              * exception message and stack dump. This includes
              * any chained exceptions.
              */
             StringBuffer sb = new StringBuffer();
-            appendException(e,sb);
+            appendException(e, sb);
             Throwable cause = e.getCause();
             while (cause != null)
             {
                 sb.append("caused by:\r\n");
-                appendException(cause,sb);
+                appendException(cause, sb);
                 cause = cause.getCause();
             }
-        
+
             /*
              * Make a text area (with scrollbars as needed)
              * and display the exception message.
              */
             JTextArea errorPane = new JTextArea();
-            errorPane.read(new StringReader(sb.toString()),null);
+            errorPane.read(new StringReader(sb.toString()), null);
             JScrollPane areaScrollPane = new JScrollPane(errorPane);
             areaScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
             areaScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -114,8 +112,6 @@ public class GROapplet extends JApplet
         }
     }
 
-
-
     protected static void useOSLookAndFeel()
     {
         try
@@ -127,8 +123,6 @@ public class GROapplet extends JApplet
         }
     }
 
-
-
     protected void tryinit() throws Exception
     {
         useOSLookAndFeel();
@@ -137,20 +131,20 @@ public class GROapplet extends JApplet
 
         InputStream streamTree;
 
-        URL url = new URL(getDocumentBase(),"?chartdata");
+        URL url = new URL(getDocumentBase(), "?chartdata");
         HttpURLConnection con = (HttpURLConnection)url.openConnection();
         con.connect();
         streamTree = con.getInputStream();
 
         readFrom(streamTree);
 
-        JScrollPane scr = new JScrollPane(fc,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        JScrollPane scr = new JScrollPane(fc, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         getContentPane().add(scr);
     }
 
     protected void readFrom(InputStream instream) throws IOException
     {
-        BufferedReader br = new BufferedReader(new InputStreamReader(instream,"UTF-8"));
+        BufferedReader br = new BufferedReader(new InputStreamReader(instream, "UTF-8"));
 
         Map mapIdToIndi = new HashMap();
 
@@ -177,9 +171,9 @@ public class GROapplet extends JApplet
             String sy = sf.nextToken();
             double dy = Double.parseDouble(sy);
             int y = (int)Math.round(dy);
-            Indi indi = new Indi(x,y,name,birth,death);
+            Indi indi = new Indi(x, y, name, birth, death);
             indis.add(indi);
-            mapIdToIndi.put(id,indi);
+            mapIdToIndi.put(id, indi);
         }
 
         FamiSet famis = new FamiSet();
@@ -204,16 +198,15 @@ public class GROapplet extends JApplet
             famis.add(fami);
         }
 
-        fc = new FamilyChart(indis,famis);
+        fc = new FamilyChart(indis, famis);
     }
 
     protected void createIndi(IndiSet indis, Map mapIdToIndi, String id, int x, int y, String name, String birth, String death)
     {
-        Indi n = new Indi(x,y,name,birth,death);
+        Indi n = new Indi(x, y, name, birth, death);
         indis.add(n);
-        mapIdToIndi.put(id,n);
+        mapIdToIndi.put(id, n);
     }
-
 
     public static void main(String[] args)
     {
@@ -234,16 +227,16 @@ public class GROapplet extends JApplet
         applet.init();
         f.add(applet);
 
-        f.setSize(640,480);
+        f.setSize(640, 480);
         f.setVisible(true);
     }
 
-//    protected void processMouseMotionEvent(MouseEvent e)
-//    {
-//        if (fc.isOnIndi(e.getPoint()))
-//            setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-//        else
-//            setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-//        super.processMouseMotionEvent(e);
-//    }
+    //    protected void processMouseMotionEvent(MouseEvent e)
+    //    {
+    //        if (fc.isOnIndi(e.getPoint()))
+    //            setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    //        else
+    //            setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+    //        super.processMouseMotionEvent(e);
+    //    }
 }
