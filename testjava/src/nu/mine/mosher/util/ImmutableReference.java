@@ -16,11 +16,6 @@ public class ImmutableReference
         return Cloner.cloneObject(this.ref);
     }
 
-    public String toString()
-    {
-        return ref.toString();
-    }
-
     public Object clone()
     {
         ImmutableReference clon = null;
@@ -33,6 +28,11 @@ public class ImmutableReference
         {
         }
         return clon;
+    }
+
+    public String toString()
+    {
+        return ref.toString();
     }
 
     public boolean equals(Object o)
