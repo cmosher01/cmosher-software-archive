@@ -205,7 +205,8 @@ public class Disk
             int goodEntries = isDos33CatalogSector(sector,allowLarge,tsmapMaps,entries);
             if (goodEntries > 0)
             {
-                System.out.println("Catalog Sector @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack())+" ("+goodEntries+" entries)");
+                System.out.println("Catalog Sector @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+
+                        Integer.toHexString(cur.getSectorInTrack())+" ("+goodEntries+" entries)");
                 for (Iterator i = entries.iterator(); i.hasNext();)
                 {
                     String f = (String)i.next();
@@ -228,9 +229,9 @@ public class Disk
     static int isDos33CatalogSector(byte[] sector, boolean allowLarge, TSMap tsmapMaps, List entries) throws InvalidPosException
     {
         if (sector[0] == 0 &&
-                DiskPos.isValidTrack(sector[1],allowLarge) &&
-                DiskPos.isValidSector(sector[2]) &&
-                sector[3] == 0)
+            DiskPos.isValidTrack(sector[1],allowLarge) &&
+            DiskPos.isValidSector(sector[2]) &&
+            sector[3] == 0)
         {
             // check catalog entries
             int ce = 0x0B;
