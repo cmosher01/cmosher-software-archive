@@ -53,17 +53,11 @@ public class Item
 			throw new UnsupportedOperationException();
 		}
 
-        /* (non-Javadoc)
-         * @see java.util.Iterator#hasNext()
-         */
         public boolean hasNext()
         {
         	return this.iter.hasNext();
         }
 
-        /* (non-Javadoc)
-         * @see java.util.Iterator#next()
-         */
         public Object next()
         {
         	return ((Rel)this.iter.next()).getThing();
