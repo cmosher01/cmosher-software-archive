@@ -10,6 +10,7 @@
  */
 public class VolumeBoot extends VolumeEntity
 {
+    private byte[] data;
 
     /**
      * @param disk
@@ -27,5 +28,7 @@ public class VolumeBoot extends VolumeEntity
         }
 
         rSector.add(new VolumeSector(p,0));
+
+        data = disk.readSector(p);
     }
 }
