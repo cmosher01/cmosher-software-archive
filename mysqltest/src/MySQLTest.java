@@ -64,8 +64,9 @@ public class MySQLTest
 			}
 			log.info("Done reading data.");
 
-			log.info("Calculating...");
+			log.info("Calculating individuals...");
 			calc();
+			log.info("Done calculating individuals...");
 		}
 		finally
 		{
