@@ -29,6 +29,7 @@ public class TestExec
         execDumpOutput();
         waitFor();
         done.waitToSetTrue();
+        System.out.println("parent process done");
     }
 
     protected static void execDumpOutput() throws InterruptedException, IOException
