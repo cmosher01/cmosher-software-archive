@@ -1,6 +1,4 @@
 <%@ include file="htmlhead.jsp" %>
-<%@ page import="java.util.ArrayList" %>
-<jsp:useBean id="r" class="java.util.ArrayList" scope="session" />
 <head>
 <title>Add</title>
 </head>
