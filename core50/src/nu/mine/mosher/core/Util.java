@@ -1,9 +1,10 @@
 package nu.mine.mosher.core;
 
-public class Util
+public final class Util
 {
 	private Util()
 	{
+		throw new UnsupportedOperationException();
 	}
 
 	/**
