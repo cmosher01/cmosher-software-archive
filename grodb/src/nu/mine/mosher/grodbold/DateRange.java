@@ -122,7 +122,6 @@ public class DateRange implements Immutable, Serializable, Comparable
 
     public int hashCode()
     {
-        // TODO Auto-generated method stub
-        return super.hashCode();
+    	return hash;
     }
 }
