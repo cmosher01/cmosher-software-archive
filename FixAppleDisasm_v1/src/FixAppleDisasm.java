@@ -348,6 +348,36 @@ public class FixAppleDisasm
         printout.flush();
     }
 
+	private static String hexByte(int i)
+	{
+		return hexString(i,2);
+	}
+
+	private static String hexWord(int i)
+	{
+		return hexString(i,4);
+	}
+
+	private static String hexString(int i, int chars)
+	{
+		String h = Integer.toHexString(i);
+		StringBuffer sb = new StringBuffer(chars);
+		for (int c = 0; c < chars-h.length(); ++c)
+		{
+			sb.append("0");
+		}
+		for (int c = 0; c < h.length(); ++c)
+		{
+			char ch = h.charAt(c);
+			if ('a' <= ch && ch <= 'f')
+			{
+				ch -= 32;
+			}
+			sb.append(ch);
+		}
+		return sb.toString();
+	}
+
     private static void Dump2Bin(Reader in, OutputStream outbin)
     {
         BufferedReader inbuf = null;
