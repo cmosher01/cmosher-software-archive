@@ -2,7 +2,7 @@ package nu.mine.mosher.core;
 
 import java.io.Serializable;
 
-import static Cloner.cloneObject;
+import static nu.mine.mosher.core.Cloner.cloneObject;
 
 public final class ImmutableReference<T> implements Cloneable, Comparable<T>, Serializable, Immutable
 {
@@ -37,7 +37,7 @@ public final class ImmutableReference<T> implements Cloneable, Comparable<T>, Se
 
     public T object() throws CloneNotSupportedException
     {
-        return cloneObject(this.ref);
+        return (T)cloneObject((Cloneable)this.ref);
     }
 
     public Object clone() throws CloneNotSupportedException
