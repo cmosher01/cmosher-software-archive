@@ -62,7 +62,7 @@ public class SwingGUI
      */
     protected Image getFrameIcon()
     {
-        return new ImageIcon(this.getClass().getResource("appicon.gif")).getImage();
+        return new ImageIcon().getImage();
     }
 
     /**
