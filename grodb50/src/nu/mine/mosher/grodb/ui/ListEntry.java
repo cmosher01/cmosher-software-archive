@@ -49,7 +49,7 @@ public class ListEntry
 			}
 			else
 			{
-				sb.append(fixHTML(s));
+				sb.append(s);
 			}
 			sb.append("</");
 			sb.append(td);
