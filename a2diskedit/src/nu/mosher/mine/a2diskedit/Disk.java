@@ -75,7 +75,10 @@ public class Disk implements TreeNode
 	public Component getRightPane()
 	{
 		StringBuffer sb = new StringBuffer();
-		viewRight.setText("<html></html>");
+		sb.append("<html>Disk image file path: ");
+		sb.append(mFile.getAbsolutePath());
+		sb.append("</html>");
+		viewRight.setText(sb.toString());
 		return viewRight;
 	}
 
