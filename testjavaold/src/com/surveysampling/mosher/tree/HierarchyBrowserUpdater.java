@@ -29,14 +29,7 @@ public class HierarchyBrowserUpdater implements TreeExpansionListener
     public void treeExpanded(TreeExpansionEvent event)
     {
         TreePath path = event.getPath();
-
-        System.out.print("Received expansion event on ");
-        System.out.println(path);
-
         FileTreeNode node = (FileTreeNode)path.getLastPathComponent();
-        System.out.println("Node level: " + node.getLevel());
-        System.out.println("Children " + node.getChildCount());
-        System.out.println("Reading subtree " + node.toString());
 
         mFrame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         mFrame.setEnabled(false);
@@ -54,6 +47,7 @@ public class HierarchyBrowserUpdater implements TreeExpansionListener
             }
             mModel.nodesWereInserted(node, childrenIdx);
         }
+
         mFrame.setEnabled(true);
         mFrame.setCursor(Cursor.getDefaultCursor());
     }
