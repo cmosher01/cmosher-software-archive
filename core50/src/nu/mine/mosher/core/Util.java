@@ -35,7 +35,7 @@ public final class Util
 
 
 
-	public static ArrayList<T> list(Iterable<T> i)
+	public static<T> ArrayList<T> list(Iterable<T> i)
     {
         ArrayList<T> r = new ArrayList<T>();
         for (T x : i)
