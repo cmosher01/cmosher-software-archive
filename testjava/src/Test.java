@@ -88,7 +88,7 @@ public class Test
         }
         else if (su.equalsIgnoreCase("jar"))
         {
-            String jarpart = uri.getRawSchemeSpecificPart();
+            String jarpart = uri.getSchemeSpecificPart();
             System.out.println(jarpart);
             if (!jarpart.startsWith("file:/"))
             {
