@@ -32,8 +32,8 @@ public class Dependency
         {
             return false;
         }
-
         Dependency that = (Dependency)obj;
+
         boolean eq =
             this.name.equalsIgnoreCase(that.name) &&
             this.version.equalsIgnoreCase(that.version) &&
