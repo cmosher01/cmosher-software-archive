@@ -19,7 +19,7 @@ public class MySQLTest
 
 	private Logger log = Logger.global;
 	private Connection db;
-	private int fland;
+	private int family;
 
 	static
 	{
@@ -52,8 +52,8 @@ public class MySQLTest
 
 			log.info("Creating family...");
 			dbUpdate("delete from Family");
-			fland = dbInsert("insert into Family(name) values(\"Flandreau\")");
-			log.fine("Done creating family with id "+fland);
+			family = dbInsert("insert into Family(name) values(\"Flandreau\")");
+			log.fine("Done creating family with id "+family);
 
 			log.info("Reading data...");
 			BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(new File("F:\\Genealogy\\by family\\Flandreau\\census\\flandreau_census.csv"))));
