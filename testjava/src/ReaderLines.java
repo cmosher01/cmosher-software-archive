@@ -42,7 +42,7 @@ public class ReaderLines /* TODO implements Iterable */
 
         private void nextLine() throws IOException
         {
-            nextLine = this.r.readLine();
+            this.nextLine = this.r.readLine();
         }
 
         public boolean hasNext()
