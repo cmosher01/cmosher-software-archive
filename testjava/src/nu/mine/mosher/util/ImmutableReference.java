@@ -6,7 +6,7 @@ public class ImmutableReference
 {
     private Cloneable ref;
 
-    public ImmutableReference(Cloneable ref) throws IllegalArgumentException, SecurityException, CloneNotSupportedException, IllegalAccessException, InvocationTargetException, NoSuchMethodException
+    public ImmutableReference(Cloneable ref) throws CloneNotSupportedException
     {
         if (ref == null)
         {
@@ -15,7 +15,7 @@ public class ImmutableReference
         this.ref = Cloner.cloneObject(ref);
     }
 
-    public Cloneable object() throws IllegalArgumentException, SecurityException, CloneNotSupportedException, IllegalAccessException, InvocationTargetException, NoSuchMethodException
+    public Cloneable object() throws CloneNotSupportedException
     {
         return Cloner.cloneObject(this.ref);
     }
