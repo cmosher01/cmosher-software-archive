@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 import junit.framework.TestCase;
 
@@ -36,11 +37,18 @@ public class NormalizerTest extends TestCase
 	public void testNormalizationTestTxt() throws IOException
 	{
 		BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(new File("NormalizationTest.txt"))));
+		String[] rCol = new String[4];
 		for (String lin = in.readLine(); lin != null; lin = in.readLine())
 		{
 			char start = lin.charAt(0);
 			if (isHexDigit(start))
 			{
+				int iCol = 0;
+				for (StringTokenizer st = new StringTokenizer(lin,";"); i < 5; )
+				{
+					String tok = st.nextToken();
+					rCol[iCol++] = tok;
+				}
 			}
 		}
 		in.close();
