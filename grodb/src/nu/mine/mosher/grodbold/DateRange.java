@@ -126,10 +126,18 @@ public class DateRange implements Immutable, Serializable, Comparable
         return 0;
     }
 
-    public boolean equals(Object obj)
+    public boolean equals(Object o)
     {
-        // TODO Auto-generated method stub
-        return super.equals(obj);
+    	if (!(o instanceof DateRange))
+    	{
+    		return false;
+    	}
+
+		DateRange that = (DateRange)o;
+        return
+        	this.earliest.equals(that.earliest) &&
+			this.latest.equals(that.latest) &&
+			;
     }
 
     public int hashCode()
