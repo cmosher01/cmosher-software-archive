@@ -104,6 +104,7 @@ public class GDiffView extends JFrame
         InputStream streamTrg = new BufferedInputStream(new FileInputStream(trg));
         byte[] rs = new byte[cWindow];
         RollingChecksum roll = new RollingChecksum();
+        int trgPos = 0;
         while (streamTrg.available() > 0)
         {
             int w = cWindow;
@@ -122,7 +123,8 @@ public class GDiffView extends JFrame
             long srcPos = src.lookupUnique(chk);
             if (srcPos >= 0)
             {
-                
+                Range rngSrc = new Range(srcPos,srcPos+w-1);
+                Range rngTrg = new Range(trgPos,trgPos+w-1);
             }
         }
     }
