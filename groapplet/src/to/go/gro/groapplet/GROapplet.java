@@ -138,14 +138,14 @@ public class GROapplet extends JApplet
 
 		if (test)
 		{
-	        URL url = new URL(getDocumentBase(), "?chartdata");
-	        HttpURLConnection con = (HttpURLConnection)url.openConnection();
-	        con.connect();
-	        streamTree = con.getInputStream();
+			streamTree = new FileInputStream(new File("test.gro"));
 		}
 		else
 		{
-			streamTree = new FileInputStream(new File("test.gro"));
+			URL url = new URL(getDocumentBase(), "?chartdata");
+			HttpURLConnection con = (HttpURLConnection)url.openConnection();
+			con.connect();
+			streamTree = con.getInputStream();
 		}
 
         readFrom(streamTree);
