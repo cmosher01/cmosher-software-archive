@@ -277,7 +277,7 @@ public class FixAppleDisasm
 				}
 				else
 				{
-					System.err.println(Integer.toHexString(ln.addr));
+					System.err.println(Integer.toHexString(ln.refaddr));
 				}
 			}
 		}
