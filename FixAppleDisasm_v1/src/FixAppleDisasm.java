@@ -10,6 +10,8 @@ import java.io.PipedReader;
 import java.io.PipedWriter;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FixAppleDisasm
 {
@@ -75,23 +77,23 @@ public class FixAppleDisasm
 		{
 			inbuf = new BufferedReader(in);
 		}
+
+		Map lines = new HashMap();
 		for (String s = inbuf.readLine(); s != null; s = inbuf.readLine())
 		{
 			s = s.trim();
 
-			int com = s.indexOf(';');
-			if (com == 0)
-			{
-				s = "";
-			}
-			else if (com > 0)
-			{
-				s = s.substring(0,com);
-			}
-
 			if (s.length() == 0)
 			{
 				continue;
+			}
+
+			int com = s.indexOf(';');
+			String comment = "";
+			if (com >= 0)
+			{
+				comment = s.substring(com);
+				s = s.substring(0,com);
 			}
 
 			String saddr = s.substring(0,4);
