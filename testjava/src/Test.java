@@ -27,10 +27,49 @@ public class Test
         return "bad";
     }
 
+    private static class X
+    {
+        public void close()
+        {
+        }
+    }
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
-        FileReader r = new FileReader("c:\\temp\\ssprop.txt");
+
+
+
+
+
+
+
+
+
+
+        X x = new X();
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 10000; ++i)
+        {
+            x.close();
+        }
+        long end = System.currentTimeMillis();
+        System.out.println("elapsed time: "+end-start+" ms");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//        FileReader r = new FileReader("c:\\temp\\ssprop.txt");
 
 //use ReaderLines to read lines from a Reader:
 //        for (Iterator i = new ReaderLines(r).iterator(); i.hasNext();)
@@ -46,7 +85,7 @@ public class Test
 //        }
 
 //or build a List of all lines:
-        List listLine = Util.list(new ReaderLines(r).iterator());
+//        List listLine = Util.list(new ReaderLines(r).iterator());
 //or under 1.5:
 //        List listLine = Util.list(new ReaderLines(r));
 //or build a Set of all lines
@@ -54,16 +93,16 @@ public class Test
 //or under 1.5:
 //        Set setLine = Util.set(new ReaderLines(r));
 
-        List listTrimmedLine = new ArrayList();
-        new Filter(listLine)
-        {
-            protected Object operation(Object element)
-            {
-                return ((String)element).trim();
-            }
-        }.filter(listTrimmedLine);
-
-        System.out.println(listTrimmedLine);
+//        List listTrimmedLine = new ArrayList();
+//        new Filter(listLine)
+//        {
+//            protected Object operation(Object element)
+//            {
+//                return ((String)element).trim();
+//            }
+//        }.filter(listTrimmedLine);
+//
+//        System.out.println(listTrimmedLine);
 
 
 //        String x = "a,b,,d";
