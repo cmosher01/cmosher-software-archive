@@ -21,12 +21,12 @@ public class TestBeans
         Editors.register();
 
         Something some = new Something();
-        String prop = "ABoolean";
-        String val = "true";
+        String prop = "AString";
+        String val = "xyz";
 
         setProperty(some, prop, val);
 
-        System.out.println(some.isABoolean() ? "yes" : "no");
+        System.out.println(some.getAString());
     }
 
     public static void setProperty(Object bean, String property, String value)
