@@ -38,7 +38,7 @@ public class TestBeans
     public static void setProperty(Object bean, String property, String[] value)
         throws IntrospectionException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
     {
-        PropertyDescriptor pd = getPropertyDescriptor(bean, property);
+        PropertyDescriptor pd = getPropertyDescriptor(bean.getClass(), property);
         Object v = getConvertedValue(value, pd.getPropertyType());
 
         Method wr = pd.getWriteMethod();
@@ -70,9 +70,9 @@ public class TestBeans
         return v;
     }
 
-    public static PropertyDescriptor getPropertyDescriptor(Object bean, String property) throws IntrospectionException
+    public static PropertyDescriptor getPropertyDescriptor(Class classBean, String property) throws IntrospectionException
     {
-        Map mapPDs = getPropertyDescriptors(getBeanInfo(bean));
+        Map mapPDs = getPropertyDescriptors(getBeanInfo(classBean));
         if (!mapPDs.containsKey(property))
         {
             throw new IntrospectionException("Cannot find property descriptor for " + property);
@@ -125,9 +125,9 @@ public class TestBeans
         return map;
     }
 
-    public static BeanInfo getBeanInfo(Object bean) throws IntrospectionException
+    public static BeanInfo getBeanInfo(Class classBean) throws IntrospectionException
     {
-        BeanInfo bi = Introspector.getBeanInfo(bean.getClass());
+        BeanInfo bi = Introspector.getBeanInfo(classBean);
         if (bi == null)
         {
             throw new IntrospectionException("Cannot get BeanInfo for bean class " + bean.getClass().getName());
