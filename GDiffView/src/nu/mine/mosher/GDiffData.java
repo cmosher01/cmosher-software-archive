@@ -30,6 +30,6 @@ public class GDiffData extends GDiffCmd
      */
     public String toString()
     {
-        return "insert ["+data.length+" bytes]";
+        return "DATA ["+data.length+" bytes]";
     }
 }
