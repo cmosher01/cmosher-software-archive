@@ -14,7 +14,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
- 
+
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -31,6 +31,8 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+
+
 /**
  * TODO
  * 
@@ -39,14 +41,14 @@ import javax.swing.text.StyledDocument;
 public class GDiffView extends JFrame
 {
     private StyledDocument docSrc;
- 
-    private JTextPane paneSrc;
-   
-    private StyledDocument docTrg;
-    
-   private JTextPane paneTrg;
 
-   private Map styles = new HashMap();
+    private JTextPane paneSrc;
+
+    private StyledDocument docTrg;
+
+    private JTextPane paneTrg;
+
+    private Map styles = new HashMap();
 
     private File src;
 
@@ -56,7 +58,7 @@ public class GDiffView extends JFrame
 
     private int nibs = 8;
 
-    private int rowLen = nibs+2+4*cCol+1;
+    private int rowLen = nibs + 2 + 4 * cCol + 1;
 
     private StringBuffer sb;
 
@@ -65,9 +67,9 @@ public class GDiffView extends JFrame
     private int endSrc = -1;
 
     private JList listGDiff;
- 
- 
- 
+
+
+
     public GDiffView(String fileSrc, String fileGDiff) throws BadLocationException, IOException
     {
         super("GDiffVeiew");
@@ -87,17 +89,10 @@ public class GDiffView extends JFrame
         JScrollPane scrTrg = new JScrollPane(paneTrg);
         scrTrg.setPreferredSize(new Dimension(500,460));
 
-        String[] debugData = {
-                "magic D1FFD1FF",
-                "version 04",
-                "COPY 0, 2",
-                "DATA [2 bytes]",
-                "COPY 2, 2",
-                "COPY 1, 4",
-                "EOF"
-        };
+        String[] debugData = {"magic D1FFD1FF", "version 04", "COPY 0, 2",
+                "DATA [2 bytes]", "COPY 2, 2", "COPY 1, 4", "EOF"};
         listGDiff = new JList(debugData);
-        listGDiff.setSelectionForeground(Color.BLACK); 
+        listGDiff.setSelectionForeground(Color.BLACK);
         listGDiff.setSelectionBackground(new Color(173,194,245));
         listGDiff.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         listGDiff.setSelectedIndex(0);
@@ -110,56 +105,56 @@ public class GDiffView extends JFrame
         contentPane.add(scrTrg,BorderLayout.EAST);
 
         setContentPane(contentPane);
- 
+
         addWindowListener(new WindowAdapter()
         {
             public void windowClosing(WindowEvent e)
             {
                 System.exit(0);
             }
- 
+
             public void windowActivated(WindowEvent e)
             {
                 // focus magic
                 paneSrc.requestFocus();
             }
         });
- 
+
         MutableAttributeSet style = new SimpleAttributeSet();
-        StyleConstants.setFontFamily(style, "Courier");
-        StyleConstants.setFontSize(style, 10);
-        StyleConstants.setBackground(style, Color.white);
-        StyleConstants.setForeground(style, Color.black);
-        StyleConstants.setBold(style, false);
-        StyleConstants.setItalic(style, false);
-        styles.put("body", style);
- 
+        StyleConstants.setFontFamily(style,"Courier");
+        StyleConstants.setFontSize(style,10);
+        StyleConstants.setBackground(style,Color.white);
+        StyleConstants.setForeground(style,Color.black);
+        StyleConstants.setBold(style,false);
+        StyleConstants.setItalic(style,false);
+        styles.put("body",style);
+
         style = new SimpleAttributeSet();
-        StyleConstants.setFontFamily(style, "Courier");
-        StyleConstants.setFontSize(style, 10);
-        StyleConstants.setBackground(style, new Color(173,194,245));
-        StyleConstants.setForeground(style, Color.black);
-        StyleConstants.setBold(style, false);
-        StyleConstants.setItalic(style, false);
-        styles.put("highlight", style);
+        StyleConstants.setFontFamily(style,"Courier");
+        StyleConstants.setFontSize(style,10);
+        StyleConstants.setBackground(style,new Color(173,194,245));
+        StyleConstants.setForeground(style,Color.black);
+        StyleConstants.setBold(style,false);
+        StyleConstants.setItalic(style,false);
+        styles.put("highlight",style);
 
         readSrc();
         docSrc.insertString(0,sb.toString(),(AttributeSet)styles.get("body"));
         pack();
         setVisible(true);
     }
- 
+
     /**
      * @throws IOException
-     * 
      */
     private void readSrc() throws IOException
     {
-        BufferedInputStream in = new BufferedInputStream(new FileInputStream(src));
+        BufferedInputStream in = new BufferedInputStream(new FileInputStream(
+                src));
         byte[] rb = new byte[cCol];
         int c = in.read(rb);
-        sb = new StringBuffer(in.available()*6);
-        for (int i = 0; i < nibs+2; ++i)
+        sb = new StringBuffer(in.available() * 6);
+        for (int i = 0; i < nibs + 2; ++i)
         {
             sb.append(' ');
         }
@@ -235,9 +230,9 @@ public class GDiffView extends JFrame
      */
     private static void appendAddr(StringBuffer sb, long addr)
     {
-        appendHex(sb,(int)(addr>>24));
-        appendHex(sb,(int)(addr>>16));
-        appendHex(sb,(int)(addr>>8));
+        appendHex(sb,(int)(addr >> 24));
+        appendHex(sb,(int)(addr >> 16));
+        appendHex(sb,(int)(addr >> 8));
         appendHex(sb,(int)(addr));
     }
 
@@ -263,11 +258,11 @@ public class GDiffView extends JFrame
         char c;
         if (i < 10)
         {
-            c = (char)(i+'0');
+            c = (char)(i + '0');
         }
         else
         {
-            c = (char)(i-10+'A');
+            c = (char)(i - 10 + 'A');
         }
         return c;
     }
@@ -282,33 +277,39 @@ public class GDiffView extends JFrame
         endSrc = end;
         highlight(true);
     }
+
     public void highlight(boolean highlight)
     {
-        if (getRow(beginSrc)==getRow(endSrc))
+        if (getRow(beginSrc) == getRow(endSrc))
         {
             highlight(getHexStart(beginSrc),getHexEnd(endSrc),highlight);
             highlight(getAscStart(beginSrc),getAscEnd(endSrc),highlight);
         }
         else
         {
-            highlight(getHexStart(beginSrc),getHexRowEnd(getRow(beginSrc)),highlight);
-            highlight(getAscStart(beginSrc),getAscRowEnd(getRow(beginSrc)),highlight);
-            for (int i = getRow(beginSrc)+1; i <= getRow(endSrc)-1; ++i)
+            highlight(getHexStart(beginSrc),getHexRowEnd(getRow(beginSrc)),
+                    highlight);
+            highlight(getAscStart(beginSrc),getAscRowEnd(getRow(beginSrc)),
+                    highlight);
+            for (int i = getRow(beginSrc) + 1; i <= getRow(endSrc) - 1; ++i)
             {
                 highlight(getHexRowStart(i),getHexRowEnd(i),highlight);
                 highlight(getAscRowStart(i),getAscRowEnd(i),highlight);
             }
-            highlight(getHexRowStart(getRow(endSrc)),getHexEnd(endSrc),highlight);
-            highlight(getAscRowStart(getRow(endSrc)),getAscEnd(endSrc),highlight);
+            highlight(getHexRowStart(getRow(endSrc)),getHexEnd(endSrc),
+                    highlight);
+            highlight(getAscRowStart(getRow(endSrc)),getAscEnd(endSrc),
+                    highlight);
         }
     }
+
     /**
      * @param row
      * @return
      */
     private int getAscRowStart(int row)
     {
-        return (row+1)*rowLen-1-cCol;
+        return (row + 1) * rowLen - 1 - cCol;
     }
 
     /**
@@ -317,41 +318,52 @@ public class GDiffView extends JFrame
      */
     private int getAscRowEnd(int row)
     {
-        return (row+1)*rowLen-1;
+        return (row + 1) * rowLen - 1;
     }
 
     public int getRow(int pos)
     {
-        return pos/cCol+1;
+        return pos / cCol + 1;
     }
+
     public int getHexRowStart(int row)
     {
-        return row*rowLen+nibs+2;
+        return row * rowLen + nibs + 2;
     }
+
     public int getHexRowEnd(int row)
     {
-        return (row+1)*rowLen-1-cCol-1;
+        return (row + 1) * rowLen - 1 - cCol - 1;
     }
+
     public int getHexStart(int pos)
     {
-        return rowLen+(pos/cCol)*rowLen+nibs+2+(pos%cCol)*3;
+        return rowLen + (pos / cCol) * rowLen + nibs + 2 + (pos % cCol) * 3;
     }
+
     public int getHexEnd(int pos)
     {
-        return getHexStart(pos)+2;
+        return getHexStart(pos) + 2;
     }
+
     public int getAscStart(int pos)
     {
-        return rowLen+(pos/cCol)*rowLen+nibs+2+cCol*3+(pos%cCol);
+        return rowLen + (pos / cCol) * rowLen + nibs + 2 + cCol * 3
+                + (pos % cCol);
     }
+
     public int getAscEnd(int pos)
     {
-        return getAscStart(pos)+1;
+        return getAscStart(pos) + 1;
     }
+
     public void highlight(int beginPoint, int endPoint, boolean highlight)
     {
-        AttributeSet attr = (AttributeSet)styles.get(highlight ? "highlight": "body");
-        docSrc.setCharacterAttributes(beginPoint,endPoint-beginPoint,attr,true);
+        AttributeSet attr = (AttributeSet)styles.get(highlight
+                ? "highlight"
+                : "body");
+        docSrc.setCharacterAttributes(beginPoint,endPoint - beginPoint,attr,
+                true);
     }
 
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, InterruptedException, BadLocationException, IOException
