@@ -115,7 +115,7 @@ public class DiskCatalogTest extends TestCase
     {
         TSMap ts = new TSMap();
         List ent = new ArrayList();
-        assertEquals(1,Disk.isDos33CatalogSector(Hex2Bin.hex2Bin(
+        assertEquals(7,Disk.isDos33CatalogSector(Hex2Bin.hex2Bin(
         "00 11 0E 00 00 00 00 00 00 00 00 13 0F 82 20 20 "+
         "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 "+
         "20 20 20 20 20 20 20 20 20 20 20 20 02 00 14 0F "+
@@ -133,7 +133,7 @@ public class DiskCatalogTest extends TestCase
         "20 A0 A0 A0 A0 A0 A0 C2 C5 C1 C7 CC C5 A0 C2 D2 "+
         "CF D3 A0 C9 CE C3 A0 A0 A0 A0 A0 A0 A0 20 02 00 "),
         false,ts,ent));
-        assertEquals(1,ent.size());
+        assertEquals(7,ent.size());
     }
 
 }
