@@ -13,22 +13,15 @@ import javax.swing.SwingUtilities;
 public class SwingApplication
 {
 //    private Ja2GUI mGUI;
-    private static SwingApplication me;
     private ExceptionHandler mExceptionHandler;
     private CommandLineArgHandler mCommandLineArgHandler;
     private GUI mGUI;
 
 
 
-    public /*static*/ void thrown(Throwable e)
+    public void thrown(Throwable e)
     {
-        if (me == null)
-        {
-            RuntimeException re = new IllegalStateException("Application has not been initialized.");
-            re.initCause(e);
-            throw re;
-        }
-        me.mExceptionHandler.send(e);
+        mExceptionHandler.send(e);
     }
 
     /**
@@ -37,8 +30,6 @@ public class SwingApplication
      */
     public SwingApplication(ExceptionHandler eh, CommandLineArgHandler ch, GUI gui)
     {
-        me = this;
-
         this.mExceptionHandler = eh;
         this.mCommandLineArgHandler = ch;
         this.mGUI = gui;
