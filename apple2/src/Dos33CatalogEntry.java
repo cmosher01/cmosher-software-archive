@@ -26,7 +26,6 @@ public class Dos33CatalogEntry
      * @param fileTypeID
      * @param cSector
      * @param nameOrig
-     * @param name
      */
     public Dos33CatalogEntry(DiskPos dataPos, boolean locked, int fileTypeID, int cSector, byte[] nameOrig)
     {
