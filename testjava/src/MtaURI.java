@@ -49,6 +49,7 @@ public class MtaURI
 
         Map mapParamToValue = new HashMap();
         HttpUtil.parseQueryStringSimple(uri.getQuery(),mapParamToValue);
+
         int nRate = 0;
         try
         {
