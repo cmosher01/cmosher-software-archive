@@ -44,7 +44,11 @@ public class DosMasterToImage
 
         in.mark(in.available());
 
-        in.skip(0x1B00);
+        int c = in.skip(0x1B00);
+        if (c != 0x1B00)
+        {
+            throw new RuntimeException("error skipping bytes");
+        }
         for (int i = 0x3600; i < 0x4000; ++i)
         {
             out.write(in.read());
