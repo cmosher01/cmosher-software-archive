@@ -25,7 +25,7 @@ public class VelocityLogger implements LogSystem
         Object logUser = rs.getProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM);
         if (logUser != null && logUser instanceof Logger)
         {
-            log = logUser;
+            log = (Logger)logUser;
         }
     }
 
