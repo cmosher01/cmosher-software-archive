@@ -1,38 +1,50 @@
 package edu.fsu.stat.geo.random;
 
+import nu.mine.mosher.random.RNGDefault;
 import nu.mine.mosher.random.RandomNumberGenerator;
 
-public class Mwc implements RandomNumberGenerator
+/**
+ * TODO
+ *
+ * @author Chris Mosher
+ */
+public class Mwc extends RNGDefault implements RandomNumberGenerator
 {
     private static long a = 611373678L;
-    private final long seed;
+
     private int[] Q = new int[1038];
     private int i = 0;
     private int c = 362436;
 
+    /**
+     * 
+     */
     public Mwc()
     {
-        this(System.currentTimeMillis());
+        this(getDefaultSeed());
     }
 
-    public Mwc(long seed)
+    /**
+     * @param seed
+     */
+    public Mwc(final long seed)
     {
-        this.seed = seed;
+        super(seed);
         init();
     }
 
     protected void init()
     {
-        RandomNumberGenerator rand = new Kiss(seed);
-        for (int i = 0; i < Q.length; ++i)
-            Q[i] = rand.nextInt();
+        RandomNumberGenerator rand = new Kiss(getSeed());
+        for (int x = 0; i < Q.length; ++x)
+        {
+            Q[x] = rand.nextInt();
+        }
     }
 
-    public long getSeed()
-    {
-        return seed;
-    }
-
+    /**
+     * @return random number
+     */
     public int nextInt()
     {
         if (i == 0)
