@@ -18,12 +18,27 @@ import org.apache.velocity.context.Context;
 import org.apache.velocity.exception.VelocityException;
 
 /**
- * TODO
+ * Provides a simple interface to Velocity.
+ * 
+ * @author Chris Mosher
  */
 public class VelocityWrapper
 {
     private final VelocityEngine velocity = new VelocityEngine();
 
+
+
+    /**
+     * Initializes Velocity with a given set of properties.
+     * Before calling this constructor, call the static
+     * method <code>getDefaultProperties</code> to get a
+     * Properties object filled with some useful default values,
+     * then fill in any overriding properties desired, then
+     * pass it to this constructor.
+     * 
+     * @param props properties to initialize Velocity with
+     * @throws VelocityException any exceptions are wrapped in a VelocityException
+     */
     public VelocityWrapper(Properties props) throws VelocityException
     {
         try
@@ -40,6 +55,17 @@ public class VelocityWrapper
         }
     }
 
+    /**
+     * Parses a template, passing it a context, and writes
+     * the result to a writer.
+     * Same as VelocityEngine.mergeTemplate, but this method
+     * only throws VelocityException exceptions, and doesn't
+     * return a boolean.
+     * @param templateName
+     * @param context
+     * @param writer
+     * @throws VelocityException
+     */
     public void mergeTemplate(String templateName, Context context, Writer writer) throws VelocityException
     {
         try
@@ -59,11 +85,32 @@ public class VelocityWrapper
         }
     }
 
+    /**
+     * Same as the other evaluate method, but the parameters
+     * are in a somewhat more logical and consistent order.
+     * @param reader
+     * @param nameTemplate
+     * @param context
+     * @param writer
+     * @throws VelocityException
+     */
     public void evaluate(Reader reader, String nameTemplate, Context context, Writer writer) throws VelocityException
     {
         evaluate(context,writer,nameTemplate,reader);
     }
 
+    /**
+     * Parses a template (given as a Reader), passing it a context,
+     * and writes the results to a writer.
+     * Same as VelocityEngine.evaluate, but this method
+     * only throws VelocityException exceptions, and doesn't
+     * return a boolean.
+     * @param context
+     * @param writer
+     * @param nameTemplate
+     * @param reader
+     * @throws VelocityException
+     */
     public void evaluate(Context context, Writer writer, String nameTemplate, Reader reader) throws VelocityException
     {
         try
