@@ -38,6 +38,7 @@ public class NormalizerTest extends TestCase
 	{
 		BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(new File("NormalizationTest.txt"))));
 		String[] rCol = new String[4];
+		int cDone = 0;
 		for (String lin = in.readLine(); lin != null; lin = in.readLine())
 		{
 			char start = lin.charAt(0);
@@ -54,9 +55,11 @@ public class NormalizerTest extends TestCase
 				assertNormalize(rCol[1],rCol[2]);
 				assertNormalize(rCol[3],rCol[3]);
 				assertNormalize(rCol[3],rCol[4]);
+				cDone++;
 			}
 		}
 		in.close();
+		System.out.println("processed NormalizationText.txt lines: "+cDone);
 	}
 
     /**
