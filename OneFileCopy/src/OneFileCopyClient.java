@@ -35,9 +35,8 @@ public class OneFileCopyClient
 			xLen |= rbLen[i];
 		}
 
-		int i = 0;
 		byte[] rb = new byte[1024];
-		while (in.available() != 0)
+		for (int i = 0; i < (xLen+rb.length-1)/rb.length; ++i)
 		{
 			int cb = in.read(rb);
 			if (cb > 0)
