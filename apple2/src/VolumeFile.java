@@ -21,4 +21,14 @@ public class VolumeFile
     }
 //    private VolumeTSMap ts;
 //    private VolumeFileData data;
+
+    /**
+     * @param start
+     * @param disk
+     */
+    public void readFromMedia(DiskPos start, Disk disk)
+    {
+        // TODO Auto-generated method stub
+        
+    }
 }
