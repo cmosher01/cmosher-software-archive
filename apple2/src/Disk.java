@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 /*
  * Created on Sep 16, 2004
  */
@@ -178,6 +182,7 @@ public class Disk
                 int penultimateSpace = 0;
                 int goodEntries = 0;
                 boolean good = true;
+                List entries = new ArrayList();
                 for (int cat = 0; cat < 7 && good; ++cat)
                 {
                     if (sector[ce] == 0)
@@ -192,6 +197,7 @@ public class Disk
                         isValidFileType(sector[ce+2]) &&
                         isValidFileName(sector,ce+3))
                     {
+                        entries.add(convertASCII(sector,ce+3,30));
                         if (sector[ce+31] == (byte)0xA0)
                         {
                             ++penultimateSpace;
@@ -202,6 +208,12 @@ public class Disk
                 if (((goodEntries==1 && penultimateSpace==1) || (goodEntries > 1 && penultimateSpace >= goodEntries-1)) && goodEntries > 0)
                 {
                     System.out.println("Catalog Sector @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack())+" ("+goodEntries+" entries)");
+                    for (Iterator i = entries.iterator(); i.hasNext();)
+                    {
+                        String f = (String)i.next();
+                        System.out.print("    ");
+                        System.out.println(f);
+                    }
                 }
             }
         }
