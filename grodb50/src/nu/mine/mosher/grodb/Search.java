@@ -11,7 +11,7 @@ public class Search
 {
 	private String description;
 
-	private List<Relation<Source,Search>> rSource = new ArrayList<Relation<Source,Search>>();
+	private List<Relation<Source,Search,SourceSearchRelType>> rSource = new ArrayList<Relation<Source,Search,SourceSearchRelType>>();
 
 	public Search()
 	{
