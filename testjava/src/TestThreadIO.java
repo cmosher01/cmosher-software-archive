@@ -72,11 +72,15 @@ public class TestThreadIO
         }
         else
         {
-            Iterator j = lines.iterator();
-            for (; j.hasNext();)
+            String s = (String)lines.get(0);
+            if (!s.equals("this is a test"))
             {
-                String s = (String)j.next();
-                System.out.println(s);
+                System.err.println("s != this is a test");
+            }
+            s = (String)lines.get(1);
+            if (!s.equals("this is also test"))
+            {
+                System.err.println("s != this is also test");
             }
         }
     }
