@@ -93,6 +93,7 @@ public class FixAppleDisasm
 		}
 
 		Map lines = new HashMap();
+		int lineNumber = 0;
 		for (String s = inbuf.readLine(); s != null; s = inbuf.readLine())
 		{
 			s = s.trim();
@@ -103,6 +104,7 @@ public class FixAppleDisasm
 			}
 
 			Line ln = new Line();
+			lines.put(new Integer(++lineNumber),ln);
 
 			int com = s.indexOf(';');
 			if (com >= 0)
@@ -164,7 +166,53 @@ public class FixAppleDisasm
 				}
 				else if (nextChar.equalsIgnoreCase("."))
 				{
-					System.err.println(s);
+					int addr2 = -1;
+					try
+					{
+						addr2 = Integer.parseInt(s.substring(5,9),16);
+						if (addr2 < 0 || 0x10000 <= addr2)
+						{
+							addr2 = -1;
+						}
+					}
+					catch (Throwable e)
+					{
+						addr2 = -1;
+					}
+
+					if (addr2 >= 0)
+					{
+						int val = -1;
+						try
+						{
+							val = Integer.parseInt(s.substring(10),16);
+							if (val < 0 || 0x100 <= val)
+							{
+								val = -1;
+							}
+						}
+						catch (Throwable e)
+						{
+							val = -1;
+						}
+
+						if (val >= 0)
+						{
+							ln.instr = "DB";
+							ln.oper = "$"+val;
+							for (int i = addr+1; i <= addr2; ++i)
+							{
+							}
+						}
+						else
+						{
+							System.err.println(s);
+						}
+					}
+					else
+					{
+						System.err.println(s);
+					}
 				}
 				else
 				{
