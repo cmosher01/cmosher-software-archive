@@ -61,4 +61,9 @@ public class TimeOfDay
     {
         this(calendar,hours,0,0,0);
     }
+
+    public boolean isValid()
+    {
+        return calendar != null;
+    }
 }
