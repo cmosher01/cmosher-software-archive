@@ -321,7 +321,7 @@ public class VolumeDOS extends VolumeEntity
         }
         for (int i = 0; i < rbClear.length; ++i)
         {
-            if (rbCmp[i] != rbClear[i])
+            if ((rbCmp[i] & 0xFF) != rbClear[i])
             {
                 return false;
             }
