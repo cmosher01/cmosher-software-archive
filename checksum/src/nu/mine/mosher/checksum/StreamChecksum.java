@@ -14,7 +14,7 @@ import java.util.Map;
  * 
  * @author Chris
  */
-public class ChecksumStream
+public class StreamChecksum
 {
     private Map mapCheckOffset = new HashMap();
 
