@@ -1,0 +1,2643 @@
+; external addresses referenced:
+ ; EQU $00
+ ; EQU $01
+ ; EQU $02
+ ; EQU $03
+ ; EQU $08
+ ; EQU $18
+ ; EQU $1A
+ ; EQU $1B
+ ; EQU $1C
+ ; EQU $24
+ ; EQU $2B
+ ; EQU $32
+ ; EQU $38
+ ; EQU $3A
+ ; EQU $3B
+ ; EQU $3C
+ ; EQU $43
+ ; EQU $4E
+ ; EQU $50
+ ; EQU $51
+ ; EQU $52
+ ; EQU $53
+ ; EQU $54
+ ; EQU $55
+ ; EQU $56
+ ; EQU $57
+ ; EQU $58
+ ; EQU $59
+ ; EQU $5A
+ ; EQU $5B
+ ; EQU $5C
+ ; EQU $5D
+ ; EQU $80
+ ; EQU $81
+ ; EQU $82
+ ; EQU $90
+ ; EQU $91
+ ; EQU $92
+ ; EQU $93
+ ; EQU $94
+ ; EQU $95
+ ; EQU $96
+ ; EQU $97
+ ; EQU $98
+ ; EQU $99
+ ; EQU $9A
+ ; EQU $9B
+ ; EQU $9C
+ ; EQU $9D
+ ; EQU $A0
+ ; EQU $A1
+ ; EQU $A2
+ ; EQU $A3
+ ; EQU $A4
+ ; EQU $A5
+ ; EQU $A6
+ ; EQU $A7
+ ; EQU $A8
+ ; EQU $A9
+ ; EQU $E0
+ ; EQU $E1
+ ; EQU $E2
+ ; EQU $E3
+ ; EQU $E4
+ ; EQU $E5
+ ; EQU $FF
+ ; EQU $0300
+ ; EQU $03ED
+ ; EQU $03EE
+ ; EQU $03F2
+ ; EQU $03F3
+ ; EQU $03F4
+ ; EQU $03FE
+ ; EQU $03FF
+ ; EQU $04A2
+ ; EQU $04A8
+ ; EQU $04FB
+ ; EQU $0778
+ ; EQU $0885
+ ; EQU $0AA2
+ ; EQU $2000
+ ; EQU $2001
+ ; EQU $2002
+ ; EQU $2003
+ ; EQU $2004
+ ; EQU $2005
+ ; EQU $2100
+ ; EQU $2101
+ ; EQU $2234
+ ; EQU $2235
+ ; EQU $2236
+ ; EQU $2300
+ ; EQU $23A4
+ ; EQU $3FFB
+ ; EQU $3FFC
+ ; EQU $4000
+ ; EQU $4155
+ ; EQU $41AC
+ ; EQU $4200
+ ; EQU $55F0
+ ; EQU $55F1
+ ; EQU $6062
+ ; EQU $60BF
+ ; EQU $611C
+ ; EQU $6178
+ ; EQU $6770
+ ; EQU $6784
+ ; EQU $6785
+ ; EQU $6787
+ ; EQU $679D
+ ; EQU $67AB
+ ; EQU $67AC
+ ; EQU $67B1
+ ; EQU $67C3
+ ; EQU $67C4
+ ; EQU $67C6
+ ; EQU $67E2
+ ; EQU $6A19
+ ; EQU $71DC
+ ; EQU $7356
+ ; EQU $735D
+ ; EQU $736B
+ ; EQU $736C
+ ; EQU $77E1
+ ; EQU $7B0D
+ ; EQU $7B1C
+ ; EQU $7B4B
+ ; EQU $7B7E
+ ; EQU $B660
+ ; EQU $B760
+ ; EQU $B860
+ ; EQU $B8FD
+ ; EQU $BF30
+ ; EQU $BF31
+ ; EQU $BF32
+ ; EQU $BF33
+ ; EQU $C000
+ ; EQU $C001
+ ; EQU $C002
+ ; EQU $C003
+ ; EQU $C004
+ ; EQU $C005
+ ; EQU $C008
+ ; EQU $C009
+ ; EQU $C00C
+ ; EQU $C00D
+ ; EQU $C00E
+ ; EQU $C00F
+ ; EQU $C010
+ ; EQU $C011
+ ; EQU $C030
+ ; EQU $C050
+ ; EQU $C051
+ ; EQU $C052
+ ; EQU $C054
+ ; EQU $C057
+ ; EQU $C05E
+ ; EQU $C05F
+ ; EQU $C061
+ ; EQU $C062
+ ; EQU $C064
+ ; EQU $C065
+ ; EQU $C070
+ ; EQU $C080
+ ; EQU $C081
+ ; EQU $C082
+ ; EQU $C083
+ ; EQU $C088
+ ; EQU $C089
+ ; EQU $C08B
+ ; EQU $C08C
+ ; EQU $C08D
+ ; EQU $C08E
+ ; EQU $C08F
+ ; EQU $C0EC
+ ; EQU $C314
+ ; EQU $C400
+ ; EQU $F94A
+ ; EQU $FB2F
+ ; EQU $FB5B
+ ; EQU $FBB3
+ ; EQU $FBC0
+ ; EQU $FC58
+ ; EQU $FCA8
+ ; EQU $FDF0
+ ; EQU $FE89
+ ; EQU $FE93
+ ; EQU $FFA9
+ ; EQU $FFFF
+;**********************************************************
+                                        ;DAZZLE DRAW BOOT PROCESS
+                                        ;------------------------
+                                        ;Use "DOS 3.3 PATCHED" in COPY ][ PLUS 5.5 to read
+                                        ;Track $00, Sector $0
+                                        ;
+                                        ;BOOT 0: load T$00 S$0 at $0800.$08FF
+                                        ;        JMP $0801
+                                        ;
+                                        ;[FROM TRACK 0 SECTOR 0]
+                                        ; BEGIN BOOT PART 1
+L0800           DB    $01               ; first address encountered: $0800
+                STX   $43
+                LDA   #$FF
+                STA   $04FB
+                STA   $C008             ; ALTZP off
+                STA   $C004             ; RAMWRT off
+                STA   $C002             ; RAMRD off
+                STA   $C00C             ; 80COL off
+                STA   $C000             ; 80STORE off
+L0817           STA   $C081             ; ?
+                STA   $03F3             ; make DOS 3.3 reset vector invalid
+                STA   $03F4             ; (so reset causes a reboot)
+                JSR   $FB2F             ; INIT (text, normal, line 23, etc.)
+                JSR   $FE89             ; IN#0
+                JSR   $FE93             ; PR#0
+                JSR   $FC58             ; HOME
+                                        ;------------begin-not-needed------------------------------------------------------------
+                                        ; A0.A3: F5 F4 F3 F2
+                LDX   #$03
+L082E           LDA   L0845,X
+                STA   $A0,X
+                DEX
+                BPL   L082E
+                LDA   #$00
+                STA   $FF               ; current phase (we know we're at track $00)
+                LDA   #$3E              ; destination halftrack (= track $1F)
+                JSR   L0899             ; move disk arm to track $1F
+                JSR   L0849             ; read track $1F ($C sectors) to $6000.$6BFF
+                                        ;------------end-not-needed------------------------------------------------------------
+                JMP   L6000             ; go to beginning of program
+                                        ;------------begin-not-needed------------------------------------------------------------
+L0845           DB    $F5,$F4,$F3,$F2
+L0849           LDA   #$0C
+                STA   $A5               ; A5 <-- C (counts down to 1) (# of sectors)
+                LDY   #$00              ; A6.A7: $6000 (start of read buffer)
+                LDA   #$60
+                STY   $A6
+                STA   $A7
+                LDX   $2B               ; X <-- SLOT0000
+L0857           LDA   $C08C,X           ; wait for next byte
+                BPL   L0857
+L085C           CMP   $A0               ; is F5?
+                BNE   L0857             ; branch if not
+L0860           LDA   $C08C,X           ; wait for next byte
+                BPL   L0860
+L0865           CMP   $A1               ; is F4?
+                BNE   L085C             ; branch if not
+L0869           LDA   $C08C,X           ; wait for next byte
+                BPL   L0869
+                CMP   $A2               ; is F3?
+                BNE   L0865             ; branch if not
+                                        ; found "F5 F4 F3" on track
+                                        ; read $200 bytes (decode to $100 bytes)
+                                        ; and store in buffer
+L0872           LDA   $C08C,X           ; wait for next byte
+                BPL   L0872
+                ROL                     ; rotate this byte left
+                STA   $A4
+L087A           LDA   $C08C,X           ; wait for next byte
+                BPL   L087A
+                AND   $A4               ; 4&4 decode
+                STA   ($A6),Y           ; store the result (one byte) in buffer
+                INY
+                BNE   L0872
+                ASL   $FFFF             ; delay
+L0889           LDA   $C08C,X           ; wait for next byte
+                BPL   L0889
+                CMP   $A3               ; is F2?
+                BNE   L0849             ; if not then branch to start over
+                INC   $A7               ; incr buffer address
+                DEC   $A5               ; decr count of sectors
+                BNE   L0872
+                RTS
+                                        ; move disk arm
+                                        ; input:
+                                        ;   A   destination halftrack
+                                        ;   FF  current phase (0-3)
+L0899           STA   $A8               ; A8 = destination halftrack (constant)
+L089B           LDA   $FF
+                STA   $A9               ; phase, input to "turn phase off" fn
+                SEC
+                SBC   $A8               ; (FF - destination halftrack)
+                BEQ   L08D0             ; RTS if FF==halftracks (all done)
+                BCS   L08AA             ; if FF < halftracks then
+                INC   $FF               ;     FF++ (moving arm upwards?)
+                BCC   L08AC             ; else
+L08AA           DEC   $FF               ;     --FF (moving arm downwards?)
+                                        ; end if
+L08AC           JSR   L08C5             ; phase FF on
+                JSR   L08D1             ; wait 10 ms
+                                        ; turn phase off
+                                        ; input: A9 = phase (0-3)
+                LDA   $A9               ; A <-- ......ab (0,1,2,3)
+                AND   #$03              ; A <-- 000000ab
+                ASL                     ; A <-- 00000ab0 (0,2,4,6)
+                ORA   $2B               ; A <-- SLOT0ab0
+                TAY                     ; Y <-- SLOT0ab0
+                LDA   $C080,Y           ; phase ab off
+                JSR   L08D1             ; wait 10 ms
+                BEQ   L089B             ; branch always
+                JSR   L08D1             ; (dead code???)
+                                        ; turn phase on
+                                        ; input: FF = phase (0-3)
+L08C5           LDA   $FF               ; A <-- ......ab (0,1,2,3)
+                AND   #$03              ; A <-- 000000ab
+                ASL                     ; A <-- 00000ab0 (0,2,4,6)
+                ORA   $2B               ; A <-- SLOT0ab0
+                TAY                     ; Y <-- SLOT0ab0
+                LDA   $C081,Y           ; phase ab on
+L08D0           RTS
+L08D1           LDA   #$28              ; wait 10 ms
+                JMP   $FCA8
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00
+                                        ;------------end-not-needed------------------------------------------------------------
+                                        ;[FROM TRACK: 1F]
+L0900                                   ; BEGIN BOOT PART 2
+L6000           JMP   L601A             ; entry point address error: expected $0900, was $6000
+                JMP   L602C             ; load into $7000.$7FFF and check checksum
+                                        ;------------begin-not-needed------------------------------------------------------------
+                                        ; 90.93: F5 F4 F3 F2
+                LDX   #$F5
+                STX   $90
+                DEX
+                STX   $91
+                DEX
+                STX   $92
+                DEX
+                STX   $93
+                LDA   #$0A              ; read buffer = $0A00
+                LDX   #$03              ; # of sectors to read
+                JMP   L60B5             ; jmp and return
+                                        ;------------end-not-needed------------------------------------------------------------
+                                        ; (BOOT2 entry)
+L601A           LDX   #$FF
+                TXS                     ; clear the stack
+                LDX   $2B               ; slot
+                STX   $08               ; why?
+                JSR   L619A             ; check system
+                                        ;------------begin-not-needed------------------------------------------------------------
+L6024           JSR   L602C             ; read from T$20, T$20.5, T$21, T$21.5
+                                        ; into $7000.$7FFF
+                                        ; and check checksum
+                BCS   L6024             ; retry if checksum was bad
+                                        ;------------end-not-needed------------------------------------------------------------
+                JMP   L6400             ; go to BOOT PART 3
+                                        ;------------begin-not-needed------------------------------------------------------------
+L602C           LDA   #$40
+                JSR   L6119             ; move arm to track $20
+                LDY   #$00
+                STY   $80
+                                        ; read into $7000.$7FFF
+                                        ; from T$20, T$20.5, T$20, T$20.5
+                                        ;      T$21, T$21.5, T$21, T$21.5
+L6035           STY   $81
+                LDA   L6090,Y           ; $70, $78
+                BEQ   L6046
+                JSR   L606B
+                BCS   L6063
+                LDY   $81
+                INY
+                BNE   L6035
+                                        ; calc checksum of $7000.$7FFF
+L6046           LDY   #$00
+                LDA   #$70
+                STY   $90
+                STA   $91
+                LDX   #$10
+                TYA
+L6051           EOR   ($90),Y
+                INY
+                BNE   L6051
+                INC   $91
+                DEX
+                BNE   L6051
+                CMP   L61FF
+                BNE   $6062             ; br if checksum doesn't match
+                CLC
+                BIT   $38               ; doubled-up code with:
+                                        ;6062-  38          SEC
+L6063           PHP
+                LDA   #$36              ; move arm to track $1B
+                JSR   L6119
+                PLP
+                RTS
+                                        ;start at track H     read 2 sectors
+                                        ; move to track H+.5  read 2 sectors
+                                        ; move to track H     read 2 sectors
+                                        ; move to track H+.5  read 2 sectors
+                                        ; move to track H+1
+                                        ; input:
+                                        ;   A   page # of read buffer ($70, $78)
+                                        ;   $80 ? (counts from 0 up)
+                                        ;   $FF current halftrack H
+L606B           LDY   #$00
+L606D           STY   $82               ; index into 61EA table
+                PHA                     ; save
+                JSR   L6093             ; read 2 sectors
+                BCS   L608D             ; error exit
+                                        ; add/subtract one half track
+                LDY   $82
+                CLC
+                LDA   $FF
+                ADC   L61EA,Y           ; [61EA- 01 FF 01 01]
+                JSR   $611C             ; move arm to A halftrack (changes $FF)
+                PLA                     ; restore A as given to us
+                CLC
+                ADC   #$02              ; incr read buffer address (by $0200, because 2 sectors read)
+                LDY   $82
+                INY
+                CPY   #$04
+                BCC   L606D             ; repeat 4 times (Y = 0,1,2,3)
+                CLC
+                RTS                     ; OK exit
+L608D           PLA                     ; restore A as given to us
+                SEC
+                RTS                     ; error exit
+L6090           DB    $70,$78,$00
+                                        ; read 2 sectors
+                                        ; input:
+                                        ;   A   page # of read buffer
+                                        ;   $80 ? (counts from 0 up)
+L6093           PHA                     ; save
+                                        ; use A as index into table
+                                        ; read value and store at $90
+                LDA   $80
+                AND   #$07
+                TAY
+                LDA   L61EE,Y           ; [61EE- D5 B5 B7 BC DF D4 B4 DB]
+                STA   $90
+                                        ; $80 --> 4&4 encode --> $91.$92
+                LDA   $80
+                LSR
+                ORA   #$AA
+                STA   $91
+                LDA   $80
+                ORA   #$AA
+                STA   $92
+                LDA   L61F6             ; $93 <-- #$F5
+                STA   $93
+                PLA                     ; restore A as given to us
+                INC   $80
+                LDX   #$02              ; read 2 sectors and return
+                                        ; input:
+                                        ;   A page # of read buffer
+                                        ;   X number of sectors to read
+                                        ;   $99 ?
+L60B5           STA   $94
+                STX   $60BF             ; number of sectors (self-mod***)
+                LDA   #$68              ; ???
+                STA   $9A
+L60BE           LDX   #$02              ; LDX #***number of sectors
+                STX   $97               ; input to read sectors fn
+                LDY   #$00
+                LDA   $94
+                STY   $95
+                STA   $96               ; $95.$96: $aa00 (aa is Accumulator) (input to read sectors fn)
+                LDX   $2B
+L60CC           DEC   $99
+                BNE   L60D6             ; read sectors and return
+                DEC   $9A
+                BNE   L60D6             ; read sectors and return
+                SEC                     ; error and return
+                RTS
+                                        ; read sectors
+                                        ; track format:
+                                        ;     F5 F4 F3 ($200 bytes) F2 ($200 bytes) F2 ...
+                                        ; $200 bytes decodes to $100 bytes
+                                        ; input: $97 number of sectors
+                                        ; i/o:   $95.$96 buffer address
+                                        ; out:   carry set if error
+                                        ; read header F5 F4 F3
+L60D6           LDA   $C08C,X
+                BPL   L60D6
+L60DB           CMP   $90               ; #$F5
+                BNE   L60CC
+L60DF           LDA   $C08C,X
+                BPL   L60DF
+L60E4           CMP   $91               ; #$F4
+                BNE   L60DB
+L60E8           LDA   $C08C,X
+                BPL   L60E8
+                CMP   $92               ; #$F3
+                BNE   L60E4
+                                        ; found beginning of data
+                                        ; read $200 pairs of bytes and 4&4 decode
+L60F1           LDA   $C08C,X
+                BPL   L60F1
+                ROL
+                STA   $98
+L60F9           LDA   $C08C,X
+                BPL   L60F9
+                AND   $98
+                STA   ($95),Y           ; store decoded bytes into buffer
+                INY
+                BNE   L60F1
+                                        ; done reading sector
+                                        ; check trailer F2
+                ASL   $FFFF             ; short delay
+L6108           LDA   $C08C,X
+                BPL   L6108
+                CMP   $93               ; #$F2
+                BNE   L60BE             ; br if bad trailer byte
+                INC   $96
+                DEC   $97
+                BNE   L60F1             ; go back and read/decode another $200 bytes
+                CLC
+                RTS
+                                        ; move arm to destination halftrack
+                                        ; input: A  destination halftrack
+L6119           LDX   #$13
+                BIT   $0AA2             ; doubled-up code with:
+                                        ;611C-  A2 0A       LDX   #$0A
+                STX   $6178             ; self-mod*** wait factor
+                STA   $9B               ; constant: destination halftrack
+                CMP   $FF
+                BEQ   L6174             ; quick check: return if already there
+                LDA   #$00
+                STA   $9C               ; ??? (counts to $100)
+L612B           LDA   $FF               ; current phase (starts at track $1F = halftrack $3E)
+                STA   $9D               ; input for "phase off" below
+                SEC
+                SBC   $9B               ; phase minus destination halftrack
+                BEQ   L6165
+                BCS   L613C             ; track arith. (up or down)
+                EOR   #$FF              ; abs value (negate and add one)
+                INC   $FF
+                BCC   L6140             ; br always
+L613C           ADC   #$FE
+                DEC   $FF
+L6140           CMP   $9C
+                BCC   L6146
+                LDA   $9C
+L6146           CMP   #$0C
+                BCS   L614B
+                TAY
+                                        ; arm move
+L614B           SEC
+                JSR   L6169             ; phase FF on
+                LDA   L6182,Y
+                JSR   L6177             ; wait
+                LDA   $9D
+                CLC
+                JSR   L616B             ; phase 9D off
+                LDA   L618E,Y
+                JSR   L6177             ; wait
+                INC   $9C
+                BNE   L612B
+L6165           JSR   L6177             ; wait
+                CLC                     ; phase FF off
+                                        ; phase FF (~C=off,C=on)
+L6169           LDA   $FF               ; ......ab C
+L616B           AND   #$03              ; 000000ab C
+                ROL                     ; 00000abC 0
+                ORA   $2B               ; SLOT0abC
+                TAX
+                LDA   $C080,X
+L6174           LDX   $2B
+                RTS
+L6177           LDX   #$13              ; wait (***) * A loops
+L6179           DEX
+                BNE   L6179
+                SEC
+                SBC   #$01
+                BNE   L6177
+                RTS
+L6182           DB    $01,$30,$28,$24,$20,$1E,$1D,$1C,$1C,$1C,$1C,$1C,$70,$2C,$26,$22,$1F
+                DB    $1E,$1D,$1C,$1C,$1C,$1C,$1C
+                                        ;------------end-not-needed------------------------------------------------------------
+                                        ; check system
+                                        ; check Monitor version
+L619A           LDA   $FBB3
+                CMP   #$06              ; is $06 on IIe and //c machines, not ][ or ][+
+                BNE   L61B7             ; branch if neither //c nor IIe
+                                        ; make sure aux RAM exists
+                STA   $C009             ; use aux zero page, stack, and bsr
+                LDA   #$AA
+                STA   $00
+                CMP   $00
+                BNE   L61B7             ; br if doesn't exist
+                LSR
+                STA   $00
+                CMP   $00
+                BNE   L61B7             ; br if doesn't exist
+                STA   $C008             ; use main zero page, stack, and bsr
+                RTS                     ; all's well, so just return
+                                        ; print "requires //c or IIe" and halt
+L61B7           STA   $C008             ; ALTZP off
+                LDX   $2B
+                LDA   $C088,X           ; turn off drive motor
+                LDX   #$1C              ; print error message
+L61C1           LDA   L61CD,X
+                STA   $04A8,X
+                DEX
+                BPL   L61C1
+L61CA           JMP   L61CA             ; halt
+                                        ; "REQUIRED //C OR //E WITH 128K"
+L61CD           DB    $D2,$C5,$D1,$D5,$C9,$D2,$C5,$D3,$A0,$AF,$AF,$C3,$A0,$CF,$D2,$A0,$AF
+                DB    $AF,$C5,$A0,$D7,$C9,$D4,$C8,$A0,$B1,$B2,$B8,$CB
+                                        ;------------begin-not-needed------------------------------------------------------------
+L61EA           DB    $01,$FF,$01,$01,$D5,$B5,$B7,$BC,$DF,$D4,$B4,$DB,$F5,$00
+                                        ;------------end-not-needed------------------------------------------------------------
+                DB    $00,$00,$00,$00,$00,$00,$00,$00
+L6200           DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                                        ; 0 = backup disk, ? = original disk
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00
+                                        ; BEGIN BOOT PART 3
+L6400           JMP   L6489             ; entry point
+L6403           JMP   L64B7             ; skip splash screen & util menu, go run program
+                                        ;----begin---copied-to-$0900-and-kept-during-execution-of-program---------------------------
+L6406           STA   $C054             ; page 1
+                STA   $C052             ; not mixed
+                STA   $C057             ; hires
+                STA   $C001             ; 80STORE on
+                STA   $C050             ; graphics
+                STA   $C00D             ; 80 col
+                STA   $C05E             ; dhires on
+                STA   $C05F             ; dhires off
+                STA   $C05E             ; dhires on
+                STA   $C05F             ; dhires off
+                STA   $C05E             ; dhires on
+                RTS
+L6428           STA   $C00C             ; 40 col
+                STA   $C051             ; text
+                STA   $C000             ; 80STORE off
+                RTS
+                                        ;----end---copied-to-$0900-and-kept-during-execution-of-program---------------------------
+                                        ; (actually, more is copied, but cannot be used because the code is not relocatable)
+L6432           DB    $1F               ; track number
+                                        ; read tracks $6432  , $6432+1 to $2000.$3FFF aux
+                                        ; and  tracks $6432+2, $6432+3 to $2000.$3FFF main
+L6433           JSR   L643D             ; read track $6432,$6432+1 to $2000.3FFF
+                LDA   #$20
+                TAX
+                TAY
+                JSR   L645A             ; copy $2000.$3FFF main to aux
+                                        ; read track $6432++ to $2000.$2FFF
+L643D           LDA   #$20              ; dest page
+                JSR   L6444             ; read track $6432++ to $2000.$2FFF
+                LDA   #$30              ; read track $6432++ to $3000.3FFF
+                                        ; read track $6432++ to page A
+L6444           LDY   L6432             ; track # to read
+                INC   L6432             ; incr track for next time
+                JMP   L6700             ; read track & return
+                                        ; read track into given page list
+                                        ; input:
+                                        ;   list of $10 pages following JSR instr
+                                        ;   $6432 track to read
+                                        ; output:
+                                        ;   $6432 ++
+L644D           LDY   L6432             ; track # to read
+                INC   L6432             ; incr track for next time
+                JMP   L6703
+                                        ; copy $10 pages from $2000 main to aux
+                                        ; input:
+                                        ;   Y dst page (aux)
+L6456           LDA   #$20
+                LDX   #$10
+                                        ; copy pages from main to aux
+                                        ; input:
+                                        ;   A src page (main)
+                                        ;   Y dst page (aux)
+                                        ;   X number of pages
+L645A           STA   $E1
+                STY   $E3
+                LDY   #$00
+                STY   $E0
+                STY   $E2
+                STY   $C005             ; write aux ram
+L6467           LDA   ($E0),Y
+                STA   ($E2),Y
+                INY
+                BNE   L6467
+                INC   $E1
+                INC   $E3
+                DEX
+                BNE   L6467
+                STA   $C004             ; write main ram
+                RTS
+                                        ; read track $6432++ to $2000.$2FFF
+L6479           LDA   #$20              ; dest page
+                BNE   L6444             ; br always, then return
+                                        ; drive on
+L647D           LDX   $2B
+                LDA   $C089,X
+                RTS
+                                        ; drive off
+L6483           LDX   $2B
+                LDA   $C088,X
+                RTS
+                                        ; (BOOT3 entry)
+                                        ;------------begin-not-needed------------------------------------------------------------
+                                        ; show splash screen
+L6489           LDY   #$1A
+                STY   L6432             ; starting track number
+                JSR   L6433             ; read T$1A,T$1B to $2000.$3FFF aux;
+                                        ; and  T$1C,T$1D to $2000.$3FFF main
+                JSR   L6406             ; screen mode (dhires, etc.)
+                LDA   #$40
+                JSR   L6444             ; read T$1E to $4000.4FFF
+                JSR   L6483             ; drive off
+                                        ;------------end-not-needed------------------------------------------------------------
+                JSR   L7106             ; search for mouse card, and init
+                                        ;------------begin-not-needed------------------------------------------------------------
+                                        ; wait for keypress with timeout
+                LDA   #$65
+                STA   $E0               ; delay factor for keypress timeout
+L64A3           JSR   L7109             ; check for keypress (no wait)
+                BMI   L64B1             ; got one, branch out of loop
+                LDA   #$90
+                JSR   $FCA8             ; delay
+                DEC   $E0
+                BNE   L64A3             ; keep waiting
+                                        ;------------end-not-needed------------------------------------------------------------
+L64B1           JSR   L6428             ; 40 col text mode
+                JMP   L7100             ; show RETURN/ESC choice, & run utilities if desired
+                                        ; (settings the user can make in the utility menu
+                                        ; get saved at $66F0.$66F6, (menu items are 0-origin))
+                                        ; when user exits utility menu, he comes back here:
+                                        ; BEGIN BOOT PART 4
+                                        ; load and run the real DD program
+L64B7           JSR   L647D             ; turn disk drive on
+                LDA   #$00
+                JSR   $FCA8             ; delay
+                LDA   #$01
+                JSR   L6709             ; move disk arm to T$01
+                                        ; set up ptrs: ($00)-->$2000, ($2000)-->$0009, ($2100)-->0
+                LDY   #$00
+                LDA   #$20
+                STY   $00
+                STA   $01
+                LDY   #$00
+                LDA   #$09
+                STA   $2000
+                STY   $2001
+                STY   $2100
+                STY   $2101
+                                        ; read block 9 into $1E00.$1FFF (block map of prodos file)
+                LDY   #$00
+                LDA   #$1E
+                LDX   #$01
+                JSR   L6706
+                DEC   $01
+                DEC   $01
+                                        ; read prodos file (blocks 8,A-26) ($3C00 bytes) @ $2000.$5BFF
+                LDY   #$00
+                LDA   #$20
+                LDX   #$00
+                JSR   L6706
+                                        ; do some patching to the ProDOS image
+                                        ; don't display copyright screen
+                LDA   #$2C
+                STA   $2005             ; 2005: BIT $FFFF
+                                        ; break out of the boot process (somewhere)
+                                        ; and run DazzleDraw instead
+                LDA   #$4C
+                STA   $2234
+                LDY   #$16
+                LDA   #$65
+                STY   $2235
+                STA   $2236             ; 2234: JMP $6516
+                LDY   #$18
+                LDA   #$60
+                STY   $55F0             ; 55F0: CLC
+                STA   $55F1             ; 55F1: RTS
+                INC   $23A4             ; some data from $5A to $5B ???
+                JMP   $2000             ; init prodos
+                                        ; relocates,
+                                        ; loads slide.system???????
+                                        ; and jmps here:
+                STA   $C082             ; r/w ROM, D000:2
+                INC   $03F4             ; make reset reboot
+                JSR   L647D             ; turn disk drive on
+                                        ; remove any /RAM drive
+                LDY   #$00
+L6521           LDA   $BF32,Y
+                AND   #$F0
+                CMP   #$B0
+                BEQ   L6534
+                INY
+                CPY   $BF31
+                BEQ   L6521
+                BCC   L6521
+                BCS   L6553             ; done checking, not found, continue with next routine
+                                        ; remove /RAM drive from device list
+L6534           LDA   $BF33,Y
+                STA   $BF32,Y
+                INY
+                CPY   $BF31
+                BEQ   L6534
+                BCC   L6534
+                DEC   $BF31
+                LDA   $BF30
+                BNE   L6553
+                LDY   $BF31
+                LDA   $BF32,Y
+                STA   $BF30             ; update DEVNUM (last device)
+                                        ; read T$0B-T$10 to $6000.$BFFF aux
+L6553           LDA   #$0B
+                STA   L6432             ; track $0B (start of program)
+                JSR   L6479             ; read T$0B to $2000.$2FFF
+                LDA   $FBC0
+                BNE   L656C             ; br if IIe
+                LSR   $2003             ; //c only: $2002.$2003 /= 2
+                ROR   $2002
+                LSR   $2005             ; $2004.$2005 /= 2
+                ROR   $2004
+L656C           LDY   #$60
+                JSR   L6456             ; copy $2000.$2FFF main to $6000.$6FFF aux
+                JSR   L6479             ; read T$0C to $2000.$2FFF
+                LDY   #$70
+                JSR   L6456             ; copy $2000.$2FFF main to $7000.$7FFF aux
+                JSR   L6479             ; read T$0D to $2000.$2FFF
+                LDY   #$80
+                JSR   L6456             ; copy $2000.$2FFF main to $8000.$8FFF aux
+                JSR   L6479             ; read T$0E to $2000.$2FFF
+                LDY   #$90
+                JSR   L6456             ; copy $2000.$2FFF main to $9000.$9FFF aux
+                JSR   L6479             ; read T$0F to $2000.$2FFF
+                LDY   #$A0
+                JSR   L6456             ; copy $2000.$2FFF main to $A000.$AFFF aux
+                JSR   L6479             ; read T$10 to $2000.$2FFF
+                LDY   #$B0
+                JSR   L6456             ; copy $2000.$2FFF main to $B000.$BFFF aux
+                LDA   L66F3             ; get input device (0=mouse, etc.)
+                ASL
+                TAX
+                LDA   L65D9,X
+                STA   $E0
+                LDA   L65DA,X
+                STA   $E1               ; make ($E0)--> addr based on input device
+                STA   $C005             ; write aux RAM
+                                        ; copy $297 bytes from ($E0) to $B660.$B8F6 aux
+                LDY   #$00
+L65AD           LDA   ($E0),Y
+                STA   $B660,Y
+                INY
+                BNE   L65AD
+                INC   $E1
+L65B7           LDA   ($E0),Y
+                STA   $B760,Y
+                INY
+                BNE   L65B7
+                INC   $E1
+L65C1           LDA   ($E0),Y
+                STA   $B860,Y
+                INY
+                CPY   #$97
+                BCC   L65C1
+                                        ; copy settings (printer, card, printer slot) to $B8FD.$B8FF aux
+                LDX   #$02
+L65CD           LDA   L66F0,X
+                STA   $B8FD,X
+                DEX
+                BPL   L65CD
+                JMP   L65E1             ; skip table:
+                                        ; table of addr to copy from based on input device
+L65D9           DB    $00,$28           ; mouse    $2800
+                DB    $90,$2B           ; koala    $2B90
+                DB    $80,$28           ; tablet   $2880
+                DB    $80,$29           ; joystick $2980
+L65E1           STA   $C004             ; write main RAM
+                                        ; read T$11-T$14, in special order, into main RAM:
+                                        ; $0F00.$1FFF, $2300.$23FF, $8D00.BAFF
+                JSR   L644D             ; read T$11 into $0F00.$1EFF main
+                DB    $0F,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$1A,$1B,$1C,$1D,$1E
+                JSR   L644D             ; read T$12 into $1F00.$1FFF, $8D00.$9BFF main
+                DB    $1F,$8D,$8E,$8F,$90,$91,$92,$93,$94,$95,$96,$97,$89,$99,$9A,$9B
+                JSR   L644D             ; read T$13 into $9C00.$ABFF main
+                DB    $9C,$9D,$9E,$9F,$A0,$A1,$A2,$A3,$A4,$A5,$A6,$A7,$A8,$A9,$AA,$AB
+                JSR   L644D             ; read T$14 into $AC00.$BAFF, $2300.$23FF
+                DB    $AC,$AD,$AE,$AF,$B0,$B1,$B2,$B3,$B4,$B5,$B6,$B7,$B8,$B9,$BA,$23
+                                        ; copy $2300.$23CF to $0300.$03CF
+                LDY   #$00
+L6632           LDA   $2300,Y
+                STA   $0300,Y
+                INY
+                CPY   #$D0
+                BCC   L6632
+                                        ; IRQ-->$0300, RESET-->$0380
+                LDY   #$80
+                STY   $03F2
+                LDY   #$00
+                LDA   #$03
+                STY   $03FE
+                STA   $03FF
+                STA   $03F3
+                EOR   #$A5
+                STA   $03F4
+                STA   $C009             ; use aux BSR
+                JSR   L6663             ; copy (tablet, mouse, inp dev) settings to $1A.$1C aux
+                STA   $C008             ; use main BSR
+                JSR   L6663             ; copy same to main
+                JMP   L6673             ; skip the following routine:
+                                        ; copy settings to $1A.$1C
+L6663           LDA   L66F5
+                STA   $1A               ; tablet slot
+                LDA   L66F3
+                STA   $1B               ; current input device
+                LDA   L66F6
+                STA   $1C               ; mouse slot
+                RTS
+L6673           JSR   L6479             ; read T$15 to $2000.$2FFF
+                CLC
+                LDA   L66F4             ; file system (easy/pro)
+                ADC   #$16
+                STA   L6432             ; easy=T$16 pro=T$17
+                LDA   #$30
+                JSR   L6444             ; read T$16 or T$17 to $3000.$3FFF
+                LDA   #$18
+                STA   L6432             ; T$18
+                LDA   #$40
+                JSR   L6444             ; read T$18 to $4000.$4FFF
+                LDA   #$50
+                JSR   L6444             ; read T$19 to $5000.$5FFF
+                JSR   L6483             ; drive off
+                STA   $C009             ; use aux BSR
+                                        ; set ($E0)--> $2000, ($E2)--> $D000 (aux)
+                LDY   #$00
+                LDA   #$20
+                STY   $E0
+                STA   $E1
+                LDA   #$D0
+                STY   $E2
+                STA   $E3
+                BIT   $C08B             ; R/W RAM, $D000 bank 1
+                BIT   $C08B
+                JSR   L66D1             ; copy $2000.$2FFF (T$15) to aux $D000 bank 1
+                LDA   #$D0
+                STA   $E3
+                BIT   $C083             ; R/W RAM, $D000 bank 2
+                BIT   $C083
+                JSR   L66D1             ; copy $3000.$3FFF (T$16 or T$17) to aux $D000 bank 2
+                JSR   L66D1             ; copy $4000.$4FFF (T$18) to aux $E000.$EFFF
+                JSR   L66D1             ; copy $5000.$5FFF (T$19) to aux $F000.$FFFF
+                                        ; copy $6406.$6486 to $0900.$0980
+                                        ; most of that code is not relocatable, so
+                                        ; the only necessary part must be:
+                                        ; $6406.$6431
+                LDY   #$80
+L66C5           LDA   L6406,Y
+                STA   L0900,Y
+                DEY
+                BPL   L66C5
+                JMP   L7000             ; BOOT PART 5 (inits, then runs DD)
+                                        ; copy $1000 bytes from ($E0) to ($E2)
+                                        ; input: ($E0),($E2), Y must be zero
+L66D1           LDX   #$10
+L66D3           LDA   ($E0),Y
+                STA   ($E2),Y
+                INY
+                BNE   L66D3
+                INC   $E1
+                INC   $E3
+                DEX
+                BNE   L66D3
+                RTS
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                                        ;*************************************
+                                        ;   User Settings
+                                        ;*************************************
+L66F0           DB    $03               ; current printer
+L66F1           DB    $01               ; current interface card (always 1 on //c)
+L66F2           DB    $01               ; current printer slot (always 1 on //c)
+L66F3           DB    $01               ; current input device (1=mouse...)
+L66F4           DB    $02               ; current file system (1=easy 2=pro)
+L66F5           DB    $00               ; slot # of tablet, or 0 if none found
+L66F6           DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                                        ; slot # of mouse card, or 0 if none found
+L6700           JMP   L6B51             ; read track
+L6703           JMP   L6AED             ; read track (into given page list)
+L6706           JMP   L6B22             ; read track
+L6709           JMP   L67E9             ; move disk arm to track
+                JMP   L6B62
+                                        ; standard error-exit
+L670F           SEC
+                RTS
+                                        ; read sector and store at ($56)
+L6711           STX   $2B
+                TXA
+                ORA   #$8C
+                STA   $6770             ; self-mod code below (to correct disk slot for reads)
+                STA   $6787
+                STA   $679D
+                STA   $67B1
+                STA   $67C6
+                LDA   $56
+                LDY   $57
+                STA   $67C3             ; ******selfmod
+                STY   $67C4
+                SEC
+                SBC   #$54
+                BCS   L6736
+                DEY
+                SEC
+L6736           STA   $67AB             ; ******selfmod
+                STY   $67AC
+                SBC   #$57
+                BCS   L6741
+                DEY
+L6741           STA   $6784             ; ******selfmod
+                STY   $6785
+                                        ; read next sector's data
+                                        ; (format ... D5 AA AD ($200 bytes) DE ...
+                LDY   #$20
+L6749           DEY
+                BEQ   L670F
+                                        ; locate D5 AA AD
+L674C           LDA   $C08C,X
+                BPL   L674C
+L6751           EOR   #$D5
+                BNE   L6749
+                NOP
+L6756           LDA   $C08C,X
+                BPL   L6756
+                CMP   #$AA
+                BNE   L6751
+                NOP
+L6760           LDA   $C08C,X
+                BPL   L6760
+                CMP   #$AD
+                BNE   L6751
+                                        ;
+                LDY   #$AA
+                LDA   #$00
+L676D           STA   $51
+L676F           LDX   $C0EC             ; wait for next byte
+                BPL   L676F
+                LDA   L6800,X
+                STA   L6C00,Y
+                EOR   $51
+                INY
+                BNE   L676D
+                LDY   #$AA
+                BNE   L6786             ; branch always
+L6783           STA   $4155,Y           ; ******selfmodded addr
+L6786           LDX   $C0EC             ; wait for next byte
+                BPL   L6786
+                EOR   L6800,X
+                LDX   L6C00,Y
+                EOR   L6900,X
+                INY
+                BNE   L6783
+                PHA
+                AND   #$FC
+                LDY   #$AA
+L679C           LDX   $C0EC             ; wait for next byte
+                BPL   L679C
+                EOR   L6800,X
+                LDX   L6C00,Y
+                EOR   L6901,X
+                STA   $41AC,Y           ; ******selfmodded addr
+                INY
+                BNE   L679C
+L67B0           LDX   $C0EC             ; wait for next byte
+                BPL   L67B0
+                AND   #$FC
+                LDY   #$AC
+L67B9           EOR   L6800,X
+                LDX   L6BFE,Y
+                EOR   L6902,X
+                STA   $4200,Y           ; *******selfmodded addr
+L67C5           LDX   $C0EC             ; wait for next byte
+                BPL   L67C5
+                INY
+                BNE   L67B9
+                AND   #$FC
+                EOR   L6800,X
+                LDX   $2B
+                TAY
+                BNE   L67E0             ; error exit
+                                        ; ensure ends with DE
+L67D7           LDA   $C08C,X
+                BPL   L67D7
+                CMP   #$DE
+                BEQ   $67E2             ; ok
+L67E0           SEC                     ; indicate error
+                BIT   $18               ; doubled code, with:
+                                        ;67E2-  18          CLC
+                PLA
+                LDY   #$55
+                STA   ($56),Y
+                RTS
+                                        ; move disk arm
+                                        ; input: A = desired track
+L67E9           ASL                     ; A << 1 (so A = halftrack number)
+                STA   $5B
+L67EC           LDA   $FF
+                STA   $5C
+                SEC
+                SBC   $5B
+                BEQ   L681E             ; branch to return
+                BCS   L67FB
+                INC   $FF
+                BCC   L67FD
+L67FB           DEC   $FF
+L67FD           JSR   L6813             ; phase FF on
+L6800           JSR   L681F             ; delay
+                                        ; phase 5C off
+                LDA   $5C
+                AND   #$03
+                ASL
+                ORA   $2B
+                TAY
+                LDA   $C080,Y
+                JSR   L681F             ; delay
+                BEQ   L67EC             ; branch always
+                                        ; phase FF on
+L6813           LDA   $FF
+                AND   #$03
+                ASL
+                ORA   $2B
+                TAY
+                LDA   $C081,Y
+L681E           RTS
+L681F           LDA   #$28
+                JMP   L6B16             ; delay and return
+                                        ; return error
+L6824           SEC
+                RTS
+                                        ;read next sector's address header into vars:
+                                        ;$55 = volume
+                                        ;$54 = track
+                                        ;$53 = sector
+                                        ;$52 = checksum
+                                        ;(same as DOS 3.3 RDADDR)
+L6826           LDY   #$FC
+                STY   $5B
+L682A           INY
+                BNE   L6831
+                INC   $5B
+                BEQ   L6824             ; return error
+L6831           LDA   $C08C,X
+                BPL   L6831
+L6836           CMP   #$D5
+                BNE   L682A
+                NOP
+L683B           LDA   $C08C,X
+                BPL   L683B
+                CMP   #$AA
+                BNE   L6836
+                LDY   #$03
+L6846           LDA   $C08C,X
+                BPL   L6846
+                CMP   #$96
+                BNE   L6836
+                LDA   #$00
+L6851           STA   $5C
+L6853           LDA   $C08C,X
+                BPL   L6853
+                ROL
+                STA   $5B
+L685B           LDA   $C08C,X
+                BPL   L685B
+                AND   $5B
+                STA   $0052,Y
+                EOR   $5C
+                DEY
+                BPL   L6851
+                TAY
+                BNE   L6824
+L686D           LDA   $C08C,X
+                BPL   L686D
+                CMP   #$DE
+                BNE   L6824             ; check for DE (only)
+                CLC
+                RTS
+                DB    $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+                                        ; storage buffer for sector translations????????
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$04,$98,$99,$08,$0C,$9C,$10,$14,$18,$A0,$A1
+                DB    $A2,$A3,$A4,$A5,$1C,$20,$A8,$A9,$AA,$24,$28,$2C,$30,$34,$B0,$B1,$38
+                DB    $3C,$40,$44,$48,$4C,$B8,$50,$54,$58,$5C,$60,$64,$68,$C0,$C1,$C2,$C3
+                DB    $C4,$C5,$C6,$C7,$C8,$C9,$CA,$6C,$CC,$70,$74,$78,$D0,$D1,$D2,$7C,$D4
+                DB    $D5,$80,$84,$D8,$88,$8C,$90,$94,$98,$9C,$A0,$E0,$E1,$E2,$E3,$E4,$A4
+                DB    $A8,$AC,$E8,$B0,$B4,$B8,$BC,$C0,$C4,$C8,$F0,$F1,$CC,$D0,$D4,$D8,$DC
+                DB    $E0,$F8,$E4,$E8,$EC,$F0,$F4,$F8,$FC,$00,$00,$00,$96,$02,$00,$00,$97
+                DB    $01,$00,$00,$9A,$03,$00,$00,$9B,$00,$02,$00,$9D,$02,$02,$00,$9E,$01
+                DB    $02,$00,$9F,$03,$02,$00,$A6,$00,$01,$00,$A7,$02,$01,$00,$AB,$01,$01
+                DB    $00,$AC,$03,$01,$00,$AD,$00,$03,$00,$AE,$02,$03,$00,$AF,$01,$03,$00
+                DB    $B2,$03,$03,$00,$B3,$00,$00,$02,$B4,$02,$00,$02,$B5,$01,$00,$02,$B6
+                DB    $03,$00,$02,$B7,$00,$02,$02,$B9,$02,$02,$02,$BA,$01,$02,$02,$BB,$03
+                DB    $02,$02,$BC,$00,$01,$02,$BD,$02,$01,$02,$BE,$01,$01,$02,$BF,$03,$01
+                DB    $02,$CB,$00,$03,$02,$CD,$02,$03,$02,$CE,$01,$03,$02,$CF,$03,$03,$02
+                DB    $D3,$00,$00,$01,$D6,$02,$00,$01,$D7,$01,$00,$01,$D9,$03,$00,$01,$DA
+                DB    $00,$02,$01,$DB,$02,$02,$01,$DC,$01,$02,$01,$DD,$03,$02,$01,$DE,$00
+                DB    $01,$01,$DF,$02,$01,$01,$E5,$01,$01,$01,$E6,$03,$01,$01,$E7,$00,$03
+                DB    $01,$E9,$02,$03,$01,$EA,$01,$03,$01,$EB,$03,$03,$01,$EC,$00,$00,$03
+                DB    $ED,$02,$00,$03,$EE,$01,$00,$03,$EF,$03,$00,$03,$F2,$00,$02,$03,$F3
+                DB    $02,$02,$03,$F4,$01,$02,$03,$F5,$03,$02,$03,$F6,$00,$01,$03,$F7,$02
+                DB    $01,$03,$F9,$01,$01,$03,$FA,$03,$01,$03,$FB,$00,$03,$03,$FC,$02,$03
+                DB    $03,$FD,$01,$03,$03,$FE,$03,$03,$03,$FF
+                                        ; input:
+                                        ;   C A  track & sector: t tttttsss
+                                        ;   $6AC9.$6AD8  table of dest pages
+L6A00           PHA                     ; save A
+                AND   #$07              ; get sector (0-7 only???)
+                STA   $6A19             ; self-mod**** sector
+                PLA                     ; restore A
+                ROR
+                LSR
+                LSR                     ; A = track number
+                CMP   $5D               ; cmp w/dest track
+                BEQ   L6A18             ; br if arm is already at correct track
+                PHA                     ; save A
+                JSR   L6A33             ; move to correct track and read it
+                JSR   L6A9E             ; zero out sector page map
+                PLA                     ; restore A
+                STA   $5D               ; update track number
+                                        ; ???:
+L6A18           LDY   #$00              ; self-modded*** LDY #xx
+                LDX   L6AB9,Y
+                LDA   L6AEA             ; get page number?
+                INC   L6AEA
+                STA   L6AC9,X
+                LDX   L6AC1,Y
+                LDA   L6AEA
+                INC   L6AEA
+                STA   L6AC9,X
+                RTS
+                                        ; read one track & map it into memory
+                                        ; input:
+                                        ;   $6AC9.$6AD8  table of dest pages
+                                        ;     $5D        desired track
+                                        ;   $6AE9        ??? offset within page
+                                        ; remap 6AC9 table at 6AD9 (sector order)
+L6A33           LDX   #$0F
+L6A35           LDY   L6AA9,X
+                LDA   L6AC9,Y
+                STA   L6AD9,X
+                DEX
+                BPL   L6A35
+                LDX   $2B               ; slot
+                LDA   #$64
+                STA   $58               ; number of retries
+                BNE   L6A72             ; br always (entry into loop)
+L6A49           DEC   $58               ; decr number of retries
+                BEQ   L6A7E             ; tried too many times; error
+                JSR   L6826             ; read address header values into $52.$55
+                BCS   L6A49             ; retry if error
+                LDA   $54               ; track
+                CMP   $5D               ; desired track
+                BNE   L6A91             ; if on wrong track, move arm and retry
+                LDY   $53               ; sector
+                LDA   L6AD9,Y
+                BEQ   L6A49
+                STA   $57
+                LDA   L6AE9             ; ??? offset within page (constant zero)
+                STA   $56
+                JSR   L6711             ; read sector and store at $mm00, (mm from 6AD9 table)
+                BCS   L6A49
+                LDY   $53               ; sector
+                LDA   #$00
+                STA   L6AD9,Y           ; zero-out entry in map to indicate we've read this sector
+                                        ; loop through all sectors and see if any are left to be read
+L6A72           LDY   #$0F
+L6A74           LDA   L6AD9,Y
+                BNE   L6A49             ; found one we still haven't read
+                DEY
+                BPL   L6A74
+                                        ; all done reading this track
+                CLC
+                RTS                     ; good exit
+                                        ; error reading sectors
+L6A7E           SEC
+L6A7F           NOP
+                LDY   #$00
+L6A82           LDA   $C030             ; beep
+                TYA
+L6A86           SEC
+                SBC   #$01
+                BNE   L6A86
+                DEY
+                BNE   L6A82
+                JMP   L6A33             ; try again?
+L6A91           LDA   $54               ; track #
+                ASL                     ; cvt to halftrack #
+                STA   $FF
+                LDA   $5D               ; dest track
+                JSR   L67E9
+                JMP   L6A33
+                                        ; zero out sector page map
+L6A9E           LDY   #$0F
+                LDA   #$00
+L6AA2           STA   L6AC9,Y
+                DEY
+                BPL   L6AA2
+                RTS
+L6AA9           DB    $00,$07,$0E,$06,$0D,$05,$0C,$04,$0B,$03,$0A,$02,$09,$01,$08,$0F,$00
+                DB    $0D,$0B,$09,$07,$05,$03,$01,$0E,$0C,$0A,$08,$06,$04,$02,$0F
+L6AC9           DB    $40,$41,$42,$43,$44,$45,$46,$47,$48,$49,$4A,$4B,$4C,$4D,$4E,$4F,$00
+                                        ; dest pages
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+L6AEB           DB    $00,$00
+L6AED           STY   $5D               ; dest track
+                                        ; set ($5B)--> table following JSR
+                PLA
+                STA   $5B
+                PLA
+                STA   $5C
+                                        ; copy given table to 6AC9 table of dest pages
+                LDX   #$00
+L6AF7           JSR   L6B0B             ; A = next byte
+                STA   L6AC9,X
+                INX
+                CPX   #$10
+                BCC   L6AF7
+                                        ; put new return address on stack
+                LDA   $5C
+                PHA
+                LDA   $5B
+                PHA
+                JMP   L6A33             ; read track and return
+                                        ; A = ($5B)++
+L6B0B           INC   $5B
+                BNE   L6B11
+                INC   $5C
+L6B11           LDY   #$00
+                LDA   ($5B),Y
+                RTS
+                                        ; delay
+L6B16           SEC
+L6B17           PHA
+L6B18           SBC   #$01
+                BNE   L6B18
+                PLA
+                SBC   #$01
+                BNE   L6B17
+                RTS
+                                        ; read track
+                                        ; input:
+                                        ;   $00.$01 table of t/s to read
+                                        ;   Y  offset within page?
+                                        ;   A  starting page???
+                                        ;   X
+L6B22           STY   L6AE9             ; offset within page?
+                STA   L6AEA             ; starting page?
+                STX   L6AEB
+                JSR   L6A9E             ; zero out sector page map
+                LDY   #$00
+                STY   L6AEC             ; local counter (from 0 upwards)
+L6B33           LDY   L6AEC
+                INC   $01               ; next page?
+                LDA   ($00),Y           ; get byte
+                LSR                     ; store low bit in carry
+                DEC   $01               ; curr page?
+                LDA   ($00),Y           ; get byte
+                BCS   L6B43             ; if low bit was set
+                BEQ   L6B4E
+L6B43           JSR   L6A00
+                INC   L6AEC
+                DEC   L6AEB
+                BNE   L6B33
+L6B4E           JMP   L6A33             ; read one track and return
+                                        ; read track
+                                        ; input:
+                                        ;   A  page to read track into
+                                        ;   Y  desired track
+L6B51           STY   $5D
+                LDY   #$00
+L6B55           STA   L6AC9,Y
+                CLC
+                ADC   #$01
+                INY
+                CPY   #$10
+                BCC   L6B55
+                BCS   L6B4E             ; JMP $6A33
+L6B62           LDX   #$60
+                STX   L6A7F
+                JSR   L6B51
+                LDA   #$EA
+                STA   L6A7F
+                RTS
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00
+                                        ;[FROM TRACKS: 20, 20.5, 21, 21.5]
+                                        ;----begin---copied-to-$0800-M/A-and-kept-during-execution-of-program---------------------------
+                                        ; BOOT PART 5
+                                        ; relocate $7000.$70FF to $0800.$08FF
+L6C00                                   ; (in both main and aux RAM)
+L7000           LDY   #$00              ; address error: expected $6C00, was $7000
+L7002           LDA   L7000,Y
+                STA   $C005             ; write AUX RAM
+                STA   L0800,Y
+                STA   $C004             ; write main RAM
+                STA   L0800,Y
+                INY
+                BNE   L7002
+                JMP   L0817             ; continue running at new adddress
+                STA   $C005             ; write aux RAM
+                STA   $C003             ; read aux RAM
+                STA   $C001             ; 80STORE on (PAGE2 switches 1/1X)
+                STA   $C054             ; write page 1X
+                STA   $C05E             ; doublehires
+                STA   $C008             ; main BSR
+                JSR   L0899             ; JSR ($6000) (T$0B S$0 B$00.$01)
+                STA   $C009             ; aux BSR
+                JSR   L0899             ; JSR ($6000) (T$0B S$0 B$00.$01)
+                STA   $C000             ; 80STORE off (PAGE2 switches 1/2)
+                LDX   #$40
+                STA   $C005             ; write aux ram
+                JSR   $0885             ; clear $2000.$5FFF aux
+                LDX   #$6D
+                STA   $C004
+                JSR   $0885             ; clear $2000.$8CFF main
+                STA   $C002             ; read main ram
+                STA   $C082             ; read ROM $D000 bank 2
+                LDA   $FBC0             ; 0=//c, other=IIe
+                PHA
+                STA   $C083             ; R/W RAM, $D000 bank 2
+                STA   $C083
+                TSX
+                STX   $3FFC
+                LDA   $C011             ; is $D000 bank 2
+                STA   $3FFB
+                LDA   #$45
+                PHA
+                PLP
+                LDY   #$0C
+                LDA   #$60
+                STY   $03ED
+                STA   $03EE
+                LDA   $BF30
+                AND   #$7F
+                STA   $BF30
+                LDX   #$E3
+                PLA
+                BEQ   L707C
+                LDX   #$E5
+L707C           LDY   $BF30
+                JSR   L0900
+                JMP   $C314             ; JMP $600C aux  DAZZLE DRAW PROGRAM ENTRY POINT
+                                        ; clear X pages starting at $2000
+                LDY   #$00
+                LDA   #$20
+                STY   $00
+                STA   $01
+                TYA
+L708E           STA   ($00),Y
+                INY
+                BNE   L708E
+                INC   $01
+                DEX
+                BNE   L708E
+                RTS
+                JMP   ($6000)
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                                        ;----end---copied-to-$0800-M/A-and-kept-during-execution-of-program---------------------------
+L7100           JMP   L7BA7             ; display the "RETURN or ESC" screen and handle keypress
+                JMP   L7BA7             ; display the "RETURN or ESC" screen and handle keypress
+L7106           JMP   L736D             ; search for mouse; if exists, init and check btn
+L7109           JMP   L731D             ; check key press (return ascii in A)
+                                        ; save setup
+L710C           LDA   #$F5
+                STA   $00
+                LDA   #$F4
+                STA   $01
+                LDA   #$F3
+                STA   $02
+                LDA   #$F2
+                STA   $03
+                LDX   #$0D              ; # of pages
+                LDA   #$04              ; page $04
+                JSR   L7127             ; write $0400.$10FF
+                LDX   #$0C              ; # of pages
+                LDA   #$60              ; starting page
+                                        ; write $6000.$6BFF
+L7127           STX   $3C
+                STA   $3B
+                LDY   #$00
+                STY   $3A
+                LDX   $2B
+                LDA   $C08D,X           ; set to write mode; check write-protect
+                LDA   $C08E,X
+                BPL   L713B
+                SEC
+                RTS                     ; error exit if write protected
+                                        ; write 9 $FF's
+L713B           LDY   #$08
+                LDA   #$FF
+                STA   $C08F,X
+                ORA   $C08C,X
+                ROL   $4E
+L7147           NOP
+                JSR   L71B9             ; delay
+                JSR   L71B9             ; delay
+                STA   $C08D,X
+                ORA   $C08C,X
+                DEY
+                BNE   L7147
+                                        ; write F5 F4 F3 header
+                NOP
+                LDA   $00
+                JSR   L71AF
+                LDA   $01
+                JSR   L71AF
+                LDA   $02
+                JSR   L71AF
+                NOP
+                BCC   L7176
+L716A           TYA
+                BNE   L7176
+                LDA   $03               ; write F2 delimiter
+                NOP
+                NOP
+                JSR   L71B3
+                ROL   $4E
+L7176           LDA   ($3A),Y           ; get byte to write
+                PHA
+                LSR
+                ORA   #$AA
+                STA   $C08D,X           ; write 1st encoded byte
+                CMP   $C08C,X
+                INY
+                BNE   L718C
+                INC   $3B
+                DEC   $3C
+                JMP   L718F
+L718C           JSR   L71B9             ; delay
+L718F           PLA
+                ORA   #$AA
+                STA   $C08D,X           ; write 2nd encoded byte
+                CMP   $C08C,X
+                LDA   $3C
+                BNE   L716A
+                LDA   $03
+                LDA   $03
+                JSR   L71B0
+                                        ; write F2 trailer
+                LDA   $03
+                JSR   L71AF
+                                        ; put back to read mode
+                LDA   $C08E,X
+                LDA   $C08C,X
+                RTS
+                                        ; write one byte (in A)
+L71AF           CLC
+L71B0           NOP
+                NOP
+                NOP
+L71B3           STA   $C08D,X
+                ORA   $C08C,X
+L71B9           RTS
+                                        ;PRINTING routines*************************************
+                                        ; print string
+                                        ; input:
+                                        ;   string after JSR
+L71BA           PLA                     ; pop return address and save it at $E0.$E1
+                STA   $E0
+                PLA
+                STA   $E1
+L71C0           JSR   L7219             ; X,A = byte from after JSR that called us
+                JSR   L71CB             ; output chracter (or return if done)
+                JMP   L71C0             ; repeat for next byte
+L71C9           LDA   #$8D              ; \r
+L71CB           BPL   L71E0             ; br if 0 <= byte < 80
+                                        ; 80 <= byte < 100 do this:
+L71CD           CMP   #$A0
+                BCC   L71DB             ; br if < A0
+                BIT   $32
+                BMI   L71DB
+                CMP   #$E0              ; br if >= E0
+                BCS   L71DB
+                AND   #$3F              ; 00abcdef
+L71DB           ORA   #$00
+                JMP   $FDF0             ; COUT1 and return
+                                        ; 0 <= byte < 80 do this:
+                                        ; jump to routine from 71F1 table
+                                        ; then return to caller
+L71E0           CMP   #$20
+                BNE   L71E6
+                LDA   #$11
+L71E6           ASL
+                TAY
+                LDA   L71F2,Y
+                PHA
+                LDA   L71F1,Y
+                PHA
+                RTS
+                                        ; address table
+L71F1           DB    $31,$72           ;  0 END OF STRING
+                DB    $35,$FB           ;  1 INIT (but keep hires)
+                DB    $57,$FC           ;  2 HOME
+                DB    $3A,$72           ;  3 NORMAL
+                DB    $3D,$72           ;  4 FLASH
+                DB    $47,$72           ;  5 MOUSETEXT?
+                DB    $9B,$FC           ;  6 CLREOL
+                DB    $41,$FC           ;  7 CLREOP
+                DB    $4D,$72           ;  8 HTAB x
+                DB    $54,$72           ;  9 VTAB x
+                DB    $5C,$72           ;  A repeat char count
+                DB    $E9,$03           ;  B
+                DB    $92,$FE           ;  C PR#0 etc.
+                DB    $6B,$72           ;  D POKE addr val
+                DB    $74,$72           ;  E
+                DB    $76,$72           ;  F
+                DB    $C5,$72           ; 10 STRING@ addr
+                DB    $D3,$72           ; 11 or 20 JSR addr
+                DB    $EC,$72           ; 12 WAITKEY char addr [...]
+                DB    $AE,$73           ; 13 BEEP
+                                        ; X,A = ($E0)++
+                                        ; input: $E0.$E1
+L7219           LDY   #$00
+                INC   $E0
+                BNE   L7221
+                INC   $E1
+L7221           LDA   ($E0),Y
+                TAX
+                RTS
+                                        ; $E2.$E3 = ($E0)++,++
+                                        ; A = ($E2),Y
+L7225           JSR   L7219
+                STA   $E2
+                JSR   L7219
+                STA   $E3
+                LDA   ($E2),Y
+                RTS
+                                        ; 00 handler (END OF STRING)
+                PLA
+                PLA
+                LDA   $E1
+                PHA
+                LDA   $E0
+                PHA
+                RTS
+                                        ; 03 handler (NORMAL)
+L723B           LDA   #$FF              ; NORMAL
+                BIT   L7FA9             ; doubled code, with:
+                                        ; 04 handler (FLASH)
+                                        ;723E-  A9 7F       LDA   #$7F     ; FLASH
+                LDY   #$00
+L7242           STA   $32
+                STY   $71DC             ; self-mod
+                RTS
+                                        ; 05 handler (MOUSETEXT?)
+                LDA   #$7F
+                LDY   #$40
+                BNE   L7242
+                                        ; 08 handler (HTAB)
+                JSR   L7219             ; arg 1
+                DEX
+                STX   $24
+                RTS
+                                        ; 09 handler (VTAB)
+                JSR   L7219             ; arg 1
+                DEX
+                TXA
+                JMP   $FB5B
+                                        ; 0A handler (repeat char)
+                                        ; arg1 = char
+                                        ; arg2 = repeat count
+                JSR   L7219             ; arg 1
+                PHA
+                JSR   L7219             ; arg 2
+                PLA                     ; A = arg1, X = arg2
+L7265           JSR   L71CD             ; print A
+                DEX
+                BNE   L7265             ; repeat X time
+                RTS
+                                        ; 0D handler (POKE)
+                JSR   L7225             ; get arg1(addr) into $E2.$E3
+                JSR   L7219             ; arg 2
+                STA   ($E2),Y
+                RTS
+                                        ; 0E handler
+                SEC
+                BIT   $18               ; doubled code, with:
+                                        ; 0F handler
+                                        ;7277-  18          CLC
+                JSR   L7225             ; get arg1(addr) into $E2.$E3
+                BCS   L7283
+                PHA
+                INY
+                LDA   ($E2),Y
+                TAY
+                PLA
+L7283           STA   $E2
+                STY   $E3
+                LDY   #$04
+                LSR   $E5
+L728B           LDA   #$FF
+                STA   $E4
+L728F           INC   $E4
+                SEC
+                LDA   $E2
+                SBC   L72BC,Y
+                TAX
+                LDA   $E3
+                SBC   L72C1,Y
+                BCC   L72A5
+                STX   $E2
+                STA   $E3
+                BCS   L728F
+L72A5           LDA   $E4
+                DEY
+                BMI   L72B1
+                TAX
+                BNE   L72B1
+                BIT   $E5
+                BPL   L72B8
+L72B1           ORA   #$B0
+                STA   $E5
+                JSR   L71CD             ; print char
+L72B8           TYA
+                BPL   L728B
+                RTS
+L72BC           DB    $01,$0A,$64,$E8,$10,$00,$00,$00,$03,$27
+                                        ; 10 handler (STRING @)
+                JSR   L7225             ; get address arg1
+L72C9           LDA   ($E2),Y
+                BEQ   L72D3
+                JSR   L71CD             ; print char
+                INY
+                BNE   L72C9
+L72D3           RTS
+                                        ; 11 and 20 handler (JSR)
+                JSR   L7225             ; get address arg1
+                LDA   $E0               ; save $E0.$E1
+                PHA
+                LDA   $E1
+                PHA
+                JSR   L72E7             ; JSR addr
+                PLA                     ; restore $E0.$E1
+                STA   $E1
+                PLA
+                STA   $E0
+                RTS
+L72E7           JMP   ($00E2)
+L72EA           JSR   L73AF             ; BEEP
+                                        ; 12 handler (WAITKEY)
+                JSR   L730E             ; wait for key press
+                STA   $E4
+                LDY   #$01
+L72F4           LDA   ($E0),Y           ; peek at next arg
+                BEQ   L72EA
+                CMP   $E4
+                PHP
+                INY
+                LDA   ($E0),Y
+                STA   $E2
+                INY
+                LDA   ($E0),Y
+                STA   $E3
+                INY
+                PLP
+                BNE   L72F4
+                PLA
+                PLA
+                JMP   ($00E2)
+                                        ; wait for key press
+L730E           JSR   L731D
+                BPL   L730E
+                BIT   $C010
+                CMP   #$E0
+                BCC   L731C
+                AND   #$DF
+L731C           RTS
+                                        ;end PRINTING routines*************************************
+                                        ;MOUSE handling*******************************************************
+                                        ; get key press, if any
+                                        ; output:
+                                        ;   A  ascii value of key pressed
+                                        ;      0 if none pressed
+                                        ;      (mouse button press yields $8D)
+                                        ; in/out:
+                                        ;      $5B  apple button pressed status
+                                        ;           (not sure how it works)
+                                        ;
+                                        ;
+                                        ;
+                                        ; b equ $5B
+                                        ; assume b is false
+                                        ;
+                                        ; if key pressed
+                                        ;     return ascii value
+                                        ; else
+                                        ;     loop1:
+                                        ;     if either apple button pressed
+                                        ;         if (b)
+                                        ;             goto loop1
+                                        ;         else
+                                        ;             b = true
+                                        ;         end if
+                                        ;     end if
+                                        ;     b = false
+                                        ;     if no mouse, return 0
+                                        ;     do
+                                        ;     {
+                                        ;         set mouse vblint
+                                        ;         read mouse x,y
+                                        ;         set mouse active
+                                        ;     }
+                                        ;     while mouse button down
+                                        ;     if mouse button not pressed
+                                        ;         return 0
+                                        ;     else
+                                        ;         return '\r'
+                                        ;     end if
+                                        ; end if
+L731D           LDA   $C000             ; key pressed?
+                BMI   L7351             ; if yes, return ascii value
+L7322           LDA   $C061             ; either apple btn pressed?
+                ORA   $C062
+                BPL   L7332             ; branch if not pressed
+                                        ; btn was pressed:
+                BIT   $5B               ; check btn-pressed state from last time
+                BMI   L7322             ; br if was pressed (wait for btn to be released)
+                STA   $5B               ; turn on high on
+                BPL   L734F             ; ??? branch never taken ???
+L7332           LSR   $5B               ; clear btn-pressed state
+                LDA   L7B46             ; mouse slot
+                BEQ   L7351             ; if no mouse, return 0
+L7339           JSR   L7353             ; if have mouse then set vblint on movement
+                LDY   #$14
+                JSR   L735A             ; read mouse x-y position
+                JSR   $7356             ; set mouse active
+                LDY   L7B46             ; mouse slot #
+                LDA   $0778,Y           ; mouse status byte
+                ASL
+                BMI   L7339             ; br if btn down and still down
+                BCC   L7351             ; br if btn not pressed
+L734F           LDA   #$8D              ; "\r"
+L7351           SEI
+                RTS
+L7353           LDA   #$01              ; set mouse mode: vbl interrupt on movement
+                BIT   $00A9             ; doubled code, with:
+                                        ;7356-  A9 00       LDA   #$00     ; set mouse mode: active
+                LDY   #$12              ; set mouse mode to accum:
+                                        ; call mouse routine # Y
+L735A           PHA                     ; save A
+                LDA   $C400,Y           ; *** (self-moded, to mouse slot) get init lo byte
+                LDX   $735D             ; slot addr hi byte
+                LDY   $5A               ; ?
+                STA   $736B
+                STX   $736C             ; self mod to initialization entry point
+                PLA                     ; restore A
+                JMP   L735A             ; init card (*** self-modded), and return
+                                        ; search for mouse
+                                        ; (BOOT3 routine $6400 calls this)
+                                        ; if exists, init and check for button press (no wait)
+L736D           LSR   $5B               ; clear high bit of $5B (apple button pressed status)
+                JSR   L7ADB             ; search for known input devices
+                LDA   L7B46
+                BNE   L7378
+                RTS                     ; if no mouse card, then just return
+L7378           ORA   #$C0              ; turn slot # into addr (e.g., 4 becomes $C4)
+                STA   $735D             ; self-mod*** with mouse slot
+                ASL
+                ASL
+                ASL
+                ASL
+                STA   $5A               ; store slot0000 (e.g. $40) (input to $735A fn)
+                                        ; initialize mouse
+                LDY   #$19              ; offset in card of init routine offset
+                                        ; (e.g., $C419 contains $1C, meaning we
+                                        ; need to JSR $C41C to init the mouse)
+                JSR   L735A             ; init mouse
+                JSR   L7353             ; mouse: vbl interrupt on movement
+                LDY   #$15
+                JSR   L735A             ; set mouse to position 0
+                JSR   L731D             ; get key press, if any
+                JSR   $7356             ; set mouse mode active
+                SEI
+                RTS
+                                        ;end MOUSE handling*******************************************************
+                                        ;some PRINTING routines*******************************************************
+                                        ; print 27 dashes and a cr
+L7398           JSR   L71BA             ; print
+                DB    $0A,$AD,$27       ; 27 "-"
+                DB    $8D               ; "\r"
+                BRK
+                RTS
+                LDY   #$18
+L73A3           LDA   $C030
+                LDA   #$0B
+                JSR   $FCA8
+                DEY
+                BNE   L73A3
+                RTS
+                                        ; 13 handler (BEEP)
+L73AF           LDY   #$20
+L73B1           LDA   #$02
+                JSR   $FCA8             ; delay
+                STA   $C030             ; click
+                LDA   #$24
+                JSR   $FCA8             ; delay
+                STA   $C030
+                DEY
+                BNE   L73B1
+                RTS
+                                        ; print "press RETURN", wait for it, and HOME
+L73C5           JSR   L71BA             ; print string:
+                DB    $13,$13           ; BEEP BEEP
+                                        ; "\r\r\rPress RETURN to continue"
+                DB    $8D,$8D,$8D,$D0,$F2,$E5,$F3,$F3,$A0,$D2,$C5,$D4,$D5,$D2,$CE,$A0,$F4
+                DB    $EF,$A0,$E3,$EF,$EE,$F4,$E9,$EE,$F5,$E5
+                DB    $05,$A0,$03       ; cursor
+                DB    $12               ; wait for keypress and jump
+                DB    $8D,$ED,$73       ; RETURN: JMP $73ED
+                DB    $00               ; end of string to print
+                JMP   $FC58             ; HOME
+                                        ;end some PRINTING routines*******************************************************
+                                        ;DISK DRIVE routines****************************************************************
+                                        ; turn on disk drive and delay
+L73F0           LDX   $2B
+                LDA   $C089,X
+                LDA   #$00
+                JMP   $FCA8             ; delay and return
+                                        ; turn off disk drive
+L73FA           LDX   $2B
+                LDA   $C088,X
+                RTS
+L7400           JSR   L73F0             ; turn on disk drive
+                LDA   #$1F
+                JSR   L6709             ; move arm to track $1F
+                LDA   #$60
+                STA   $50
+                LDY   #$00
+                LDX   $2B
+L7410           DEY
+                BNE   L7419
+                DEC   $50
+                BNE   L7419
+                SEC                     ; error exit
+                RTS
+L7419           LDA   $C08C,X
+                BPL   L7419
+L741E           CMP   #$F5
+                BNE   L7410
+L7422           LDA   $C08C,X
+                BPL   L7422
+L7427           CMP   #$F4
+                BNE   L741E
+L742B           LDA   $C08C,X
+                BPL   L742B
+                CMP   #$F3
+                BNE   L7427
+                CLC                     ; good exit
+                RTS
+                                        ;end DISK DRIVE routines****************************************************************
+                                        ;Utility Menu (1-5)********************************************************************************************
+                                        ; display 1-5 Utilities menu and handle key press
+                JSR   L71BA             ; print:
+                DB    $01               ; INIT
+                DB    $02               ; HOME
+                DB    $03               ; NORMAL
+                JSR   L7398             ; 27 dashes \r
+                DB    $0A,$A0,$06       ; 6 spaces
+                                        ; "Dazzle Draw (TM)  Utilities\r"
+                DB    $C4,$E1,$FA,$FA,$EC,$E5,$A0,$C4,$F2,$E1,$F7,$A0,$A8,$D4,$CD,$A9,$A0
+                DB    $A0,$D5,$F4,$E9,$EC,$E9,$F4,$E9,$E5,$F3,$8D
+                JSR   L7398             ; 27 dashes \r
+                DB    $0D,$22,$00,$03   ; POKE 34,3 (set screen top to line 3)
+                BRK                     ; end of print
+L7466           SEC
+                ROR   $5C               ; set high bit of $5C dirty flag???
+                JSR   L71BA             ; print:
+                DB    $02               ; HOME
+                DB    $03               ; NORMAL
+                DB    $09,$07           ; VTAB 7
+                                        ; utility menu text (1-5)
+                DB    $B1,$A0,$AD,$A0,$D3,$E5,$EC,$E5,$E3,$F4,$A0,$C9,$EE,$F0,$F5,$F4,$A0
+                DB    $C4,$E5,$F6,$E9,$E3,$E5,$8D,$8D,$B2,$A0,$AD,$A0,$D3,$E5,$EC,$E5,$E3
+                DB    $F4,$A0,$C6,$E9,$EC,$E5,$A0,$D3,$F9,$F3,$F4,$E5,$ED,$8D,$8D,$B3,$A0
+                DB    $AD,$A0,$D0,$F2,$E9,$EE,$F4,$E5,$F2,$A0,$D3,$E5,$F4,$F5,$F0,$8D,$8D
+                DB    $B4,$A0,$AD,$A0,$CD,$E1,$EB,$E5,$A0,$E2,$E1,$E3,$EB,$F5,$F0,$A0,$E3
+                DB    $EF,$F0,$F9,$A0,$EF,$E6,$A0,$C4,$E1,$FA,$FA,$EC,$E5,$A0,$C4,$F2,$E1
+                DB    $F7,$8D,$8D,$B5,$A0,$AD,$A0,$C5,$F8,$E9,$F4,$A0,$D5,$F4,$E9,$EC,$E9
+                DB    $F4,$F9,$AF,$D3,$E1,$F6,$E5,$A0,$D3,$E5,$F4,$F5,$F0
+                DB    $8D,$8D,$8D,$8D,$D3,$E5,$EC,$E5,$E3,$F4,$E9,$EF,$EE,$A0,$BF,$A0
+                                        ; ..."Selection ?  "
+                DB    $05,$A0,$03       ; FLASH space NORMAL (cursor)
+                DB    $12               ; wait for key and jump:
+                DB    $B1,$56,$76       ; "1": $7656 Select input device
+                DB    $B2,$BA,$76       ; "2": $76BA Select file system
+                DB    $B3,$C2,$76       ; "3": $76C2 Set up printer
+                DB    $B4,$18,$75       ; "4": $7518 Make backup copy
+                DB    $B5,$5F,$75,$00   ; "5": $755F Save and quit
+                                        ;end Utility Menu (1-5)********************************************************************************************
+                                        ; check for/make backup
+L7518           LDA   L6200
+                BEQ   L7520
+                JMP   $4000             ; make backup and return
+L7520           JSR   L71BA             ; print:
+                DB    $02               ; HOME
+                DB    $09,$09           ; VTAB 9
+                                        ; "This disk has already been used\r\rto make a backup."
+                DB    $D4,$E8,$E9,$F3,$A0,$E4,$E9,$F3,$EB,$A0,$E8,$E1,$F3,$A0,$E1,$EC,$F2
+                DB    $E5,$E1,$E4,$F9,$A0,$E2,$E5,$E5,$EE,$A0,$F5,$F3,$E5,$E4,$8D,$8D,$F4
+                DB    $EF,$A0,$ED,$E1,$EB,$E5,$A0,$E1,$A0,$E2,$E1,$E3,$EB,$F5,$F0,$AE
+                DB    $00               ; end of print
+                JSR   L73C5             ; print "press RETURN", wait for it, and HOME
+                JMP   L7BA7             ; back to "RETURN or ESC" screen
+                                        ; user selected Save and quit from the menu
+                LDX   #$00
+                STX   $7B4B             ; self-mod***
+L7564           JSR   L71BA             ; print:
+                DB    $02               ; HOME
+                DB    $8D,$8D,$8D       ; "\r\r\r"
+                JSR   L7B4A             ; display current values of all settings
+                                        ; "Would you like to save this\rsetup to disk ? (Y/N) "
+                DB    $8D,$D7,$EF,$F5,$EC,$E4,$A0,$F9,$EF,$F5,$A0,$EC,$E9,$EB,$E5,$A0,$F4
+                DB    $EF,$A0,$F3,$E1,$F6,$E5,$A0,$F4,$E8,$E9,$F3,$8D,$F3,$E5,$F4,$F5,$F0
+                DB    $A0,$F4,$EF,$A0,$E4,$E9,$F3,$EB,$A0,$BF,$A0,$A8,$D9,$AF,$CE,$A9,$A0
+                DB    $05,$A0,$03       ; cursor
+                                        ; "\r\rpress ESC for Utility Menu"
+                DB    $8D,$8D,$F0,$F2,$E5,$F3,$F3,$A0,$C5,$D3,$C3,$A0,$E6,$EF,$F2,$A0,$D5
+                DB    $F4,$E9,$EC,$E9,$F4,$F9,$A0,$CD,$E5,$EE,$F5
+                DB    $12               ; wait for key and jump:
+                DB    $9B,$36,$74       ; ESC: $7436 back to main utility menu
+                DB    $D9,$CB,$75       ; "Y": $75CB
+                DB    $CE,$A7,$7B,$00   ; "N": $7BA7 back to RETURN or ESC page
+                                        ; Yes, save the setup
+                JSR   L71BA             ; print string
+                DB    $02               ; HOME
+                DB    $09,$09           ; VTAB 9
+                DB    $00               ; end print
+                JSR   L7400             ; make sure DD disk is in drive
+                BCC   L7603             ; if it is, branch to "save" routine
+                JSR   L71BA             ; print
+                                        ; "Please insert the Dazzle Draw disk..."
+                DB    $D0,$EC,$E5,$E1,$F3,$E5,$A0,$E9,$EE,$F3,$E5,$F2,$F4,$A0,$F4,$E8,$E5
+                DB    $A0,$C4,$E1,$FA,$FA,$EC,$E5,$A0,$C4,$F2,$E1,$F7,$A0,$E4,$E9,$F3,$EB
+                DB    $AE,$AE,$AE,$00
+                JMP   L764D             ; wait for RETURN
+L7603           JSR   L710C             ; "save" setup to dazzle draw disk (track 1F)
+                JSR   L73FA             ; turn off disk drive
+                BCS   L760E             ; br if disk is write protected
+                JMP   L7BA7             ; back to "RETURN or ESC" screen
+L760E           JSR   L71BA             ; print
+                                        ; "Please remove write protect tab"...
+                DB    $D0,$EC,$E5,$E1,$F3,$E5,$A0,$F2,$E5,$ED,$EF,$F6,$E5,$A0,$F7,$F2,$E9
+                DB    $F4,$E5,$A0,$F0,$F2,$EF,$F4,$E5,$E3,$F4,$A0,$F4,$E1,$E2,$A0,$E6,$F2
+                DB    $EF,$ED,$8D,$8D,$F4,$E8,$E5,$A0,$C4,$E1,$FA,$FA,$EC,$E5,$A0,$C4,$F2
+                DB    $E1,$F7,$A0,$E4,$E9,$F3,$EB,$AE,$00
+L764D           JSR   L73FA             ; turn off disk drive
+                JSR   L73C5             ; print "press RETURN", wait for it, and HOME
+                JMP   L7564             ; go to "would you like to save"
+                                        ; let user select input device
+                JSR   L765C
+                JMP   L7466             ; go back to main utility menu (1-5)
+L765C           LDA   #$03
+                JSR   L76E9             ; display input device menu and update $66F0 table
+L7661           PHP
+                JSR   L7ADB             ; search for known input devices
+                PLP
+                LDX   L66F3
+                LDA   L7B45,X           ; check table of found cards
+                BEQ   L766F             ; if card not found, branch
+                RTS                     ; if card was found, then OK, return
+L766F           JSR   L71BA             ; print string
+                DB    $02               ; HOME
+                DB    $09,$0A           ; VTAB 10
+                                        ; "The "
+                DB    $D4,$E8,$E5,$A0
+                JSR   L7B7B
+                                        ; "\r\r isn't connected.\r\rPlease select another input device."
+                DB    $8D,$8D,$E9,$F3,$EE,$A7,$F4,$A0,$E3,$EF,$EE,$EE,$E5,$E3,$F4,$E5,$E4
+                DB    $AE,$8D,$8D,$D0,$EC,$E5,$E1,$F3,$E5,$A0,$F3,$E5,$EC,$E5,$E3,$F4,$A0
+                DB    $E1,$EE,$EF,$F4,$E8,$E5,$F2,$A0,$E9,$EE,$F0,$F5,$F4,$A0,$E4,$E5,$F6
+                DB    $E9,$E3,$E5,$AE,$00
+                JSR   L73C5             ; print "press RETURN", wait for it, and HOME
+                JMP   L765C             ; check slots and return
+                                        ; let user select file system
+                LDA   #$04
+                JSR   L76E9
+                JMP   L7466             ; go back to main utility menu (1-5)
+                                        ; let user set up printer
+L76C2           LDA   #$00
+                JSR   L76E9             ; display printer menu and update $66F0 table
+                BCS   L76E6             ; br if error, exit
+                LDA   $FBC0
+                BNE   L76D8
+                LDA   #$01              ; for a //c, use:
+                STA   L66F1             ;     interface card #1 (Apple Super Serial)
+                STA   L66F2             ;     printer slot #1
+                BNE   L76E6             ;     br always
+                                        ; for a IIe:
+L76D8           LDA   #$01
+                JSR   L76E9             ; display interface card menu and update $66F0 table
+                BCS   L76C2             ; repeatif error
+                LDA   #$02
+                JSR   L76E9             ; display printer slot menu and update $66F0 table
+                BCS   L76D8             ; repeat if error
+L76E6           JMP   L7466             ; go back to main utility menu (1-5)
+                                        ; input:
+                                        ;   A  setting number (3=input dev, 4=file sys, tec.)
+                                        ; output:
+                                        ;   $66F0 table updated with new setting
+L76E9           STA   $C00F             ; mousetext on
+                STA   $53
+                TAX
+                LDY   L66F0,X
+                STY   $59               ; $59 = the setting's current value
+                ASL
+                TAX                     ; times 2
+                STX   $56               ; save it for later
+                LDA   L781D,X           ; name of setting ("Input Device", "Printer", etc.)
+                STA   L7711             ; modify string below***
+                LDA   L781E,X
+                STA   L7712
+                JSR   L71BA             ; display string:
+                DB    $02               ; HOME
+                DB    $04               ; FLASH
+                DB    $D3,$C5,$CC,$C5,$C3,$D4,$A0,$10
+                                        ; "SELECT "
+L7711           DB    $FF,$FF           ; gets modified by **** above to the
+                DB    $BA               ; ":"
+                DB    $03,$8D,$00       ; NORMAL
+                                        ; print menu of choices for setting's value
+L7717           LDX   $56               ; restore X from above
+                LDA   L7809,X
+                STA   $50
+                LDA   L780A,X
+                STA   $51               ; ($50)-->table of strings
+                                        ; calc vert and horiz position of menu on screen
+                LDA   L7813,X
+                JSR   $FB5B             ; VTAB
+                SEC
+                LDA   #$28
+                SBC   L7814,X
+                LSR
+                SEC
+                SBC   #$02
+                STA   $54
+                LDA   L7814,X
+                CLC
+                ADC   #$02
+                STA   $55
+                                        ; print menu
+                LDA   #$01
+                STA   $52
+L7741           LDA   #$FF
+                LDY   $52
+                CPY   $59               ; is this the currently selected one?
+                BNE   L774A
+                LSR                     ; if so, then inverse
+L774A           STA   $32
+                LDA   $54
+                STA   $24
+                LDA   $52
+                CLC
+                ADC   #$B0
+                CMP   #$BA
+                BCC   L775B
+                ADC   #$06
+L775B           STA   L7A6E
+                JSR   L71CD             ; print the number
+                LDA   #$AE
+                JSR   L71CD             ; print the period
+                LDX   $55
+L7768           JSR   L77F8             ; A = ($50)++ get next char from string table
+                PHA
+                ORA   #$80
+                JSR   L71CD             ; print char
+                DEX
+                PLA
+                BMI   L7768             ; print the rest of the string
+                                        ; print spaces
+                JSR   $F94A
+                JSR   L71C9
+                INC   $52
+                LDY   #$00
+                LDA   ($50),Y
+                BNE   L7741             ; print rest of menu
+                JSR   L723B             ; NORMAL
+                JSR   L7A53             ; print  "Use arraow keys.. Press RETURN... "
+                DEC   $52
+                BNE   L7790
+L778D           JSR   L73AF             ; BEEP
+L7790           JSR   L730E             ; wait for key press
+                CMP   #$9B
+                BEQ   L77B8             ; br if ESC
+                LDX   $59
+                JSR   L77C4             ; if user made valid selection 1-n, we don't return to here
+                                        ; check for arrow keys
+                CMP   #$88
+                BEQ   L77E3             ; move up one
+                CMP   #$8B
+                BEQ   L77E3             ; move up one
+                CMP   #$95
+                BEQ   L77EA             ; move down one
+                CMP   #$8A
+                BEQ   L77EA             ; move down one
+                CMP   #$8D
+                BNE   L778D             ; if not RETURN, go back to beep and wait for next key press
+                LDA   $59               ; current menu selection
+                LDX   $53
+                STA   L66F0,X           ; update selection in settings table
+                CLC
+L77B8           PHP
+                JSR   $FC58             ; HOME
+                STA   $C00E             ; mousetext off
+                SEC
+                ROR   $5C               ; set high bit of $5C
+                PLP
+                RTS
+                                        ; input:
+                                        ;   A  "1", "2", ...
+L77C4           STA   $77E1             ; self-mod (save accum)
+                CMP   #$BA
+                BCC   L77CD
+                SBC   #$07
+L77CD           SEC
+                SBC   #$B0              ; now A is 1, 2, ...
+                CMP   #$01
+                BCC   L77E0             ; if less than 1, return
+                CMP   $52
+                BEQ   L77DA
+                BCS   L77E0             ; if >n, return
+L77DA           TAX                     ; user made a good selection, put it in X
+                PLA                     ; remove return address from stack
+                PLA
+                JMP   L77F3
+L77E0           LDA   #$00              ; self-modded (restore accum)
+                RTS
+L77E3           DEX                     ; move menu up one
+                BNE   L77F3
+                LDX   $52
+                BNE   L77F3
+L77EA           INX                     ; move menu down one
+                CPX   $52
+                BEQ   L77F3
+                BCC   L77F3
+                LDX   #$01
+L77F3           STX   $59               ; store user's menu selection 1-n at $59
+                JMP   L7717             ; go back to redraw the menu
+                                        ; A = ($50)++
+L77F8           STY   $58               ; save Y
+                LDY   #$00
+                LDA   ($50),Y
+                INC   $50
+                BNE   L7804
+                INC   $51
+L7804           LDY   $58               ; restore Y
+                AND   #$FF
+                RTS
+                                        ; table of addresses of string tables
+L7809           DB    $64,$78           ; 0: table of printer names
+                DB    $37,$79           ; 1: table of interface card names
+                DB    $E8,$79           ; 2: table of "Slot x" names
+                DB    $0D,$7A           ; 3: table of input device names
+                DB    $38,$7A           ; 4: table of filing system names (easy/pro)
+                                        ; table of VTAB, maxwidth of strings
+L7813           DB    $05,$1E,$05,$17,$08,$0F,$0A,$15,$0A,$14
+                                        ; string table for types of settings
+L781D           DB    $27,$78           ; 0: "PRINTER"
+                DB    $2F,$78           ; 1: "INTERFACE CARD"
+                DB    $3E,$78           ; 2: "PRINTER SLOT"
+                DB    $4B,$78           ; 3: "INPUT DEVICE"
+                DB    $58,$78,$D0,$D2,$C9,$CE,$D4,$C5,$D2,$00,$C9,$CE,$D4,$C5,$D2,$C6,$C1
+                                        ; 4: "FILE SYSTEM"
+                DB    $C3,$C5,$A0,$C3,$C1,$D2,$C4,$00,$D0,$D2,$C9,$CE,$D4,$C5,$D2,$A0,$D3
+                DB    $CC,$CF,$D4,$00,$C9,$CE,$D0,$D5,$D4,$A0,$C4,$C5,$D6,$C9,$C3,$C5,$00
+                DB    $C6,$C9,$CC,$C5,$A0,$D3,$D9,$D3,$D4,$C5,$CD,$00
+                                        ;"APPLE Scribe w/color ribbon"
+                DB    $C1,$D0,$D0,$CC,$C5,$A0,$D3,$E3,$F2,$E9,$E2,$E5,$A0,$F7,$AF,$E3,$EF
+                DB    $EC,$EF,$F2,$A0,$F2,$E9,$E2,$E2,$EF,$6E,$C1,$D0,$D0,$CC,$C5,$A0,$D3
+                DB    $E3,$F2,$E9,$E2,$E5,$A0,$F7,$AF,$E2,$EC,$E1,$E3,$EB,$A0,$F2,$E9,$E2
+                DB    $E2,$EF,$6E,$C1,$D0,$D0,$CC,$C5,$A0,$C9,$ED,$E1,$E7,$E5,$F7,$F2,$E9
+                DB    $F4,$E5,$F2,$A0,$EF,$F2,$A0,$C4,$CD,$50,$C3,$AD,$C9,$F4,$EF,$E8,$A0
+                DB    $A8,$D0,$F2,$EF,$F7,$F2,$E9,$F4,$E5,$F2,$A9,$AC,$A0,$CE,$C5,$C3,$A0
+                DB    $B8,$B0,$B2,$33,$C5,$F0,$F3,$EF,$EE,$A0,$CA,$F8,$AD,$B8,$B0,$A0,$F7
+                DB    $AF,$E3,$EF,$EC,$EF,$F2,$A0,$F2,$E9,$E2,$E2,$EF,$6E,$C5,$F0,$F3,$EF
+                DB    $EE,$A0,$C6,$F8,$AF,$D2,$F8,$AF,$CA,$F8,$AD,$A0,$A8,$B8,$B0,$A0,$EF
+                DB    $F2,$A0,$B1,$B0,$B0,$29,$C5,$F0,$F3,$EF,$EE,$A0,$CD,$F8,$AD,$B8,$B0
+                DB    $A0,$EF,$F2,$A0,$CD,$F8,$AD,$B1,$B0,$30,$C7,$E5,$ED,$E9,$EE,$E9,$AD
+                DB    $B1,$B0,$F8,$AC,$A0,$AD,$B1,$B5,$F8,$AC,$A0,$C4,$E5,$EC,$F4,$E1,$AC
+                DB    $A0,$D2,$E1,$E4,$E9,$78,$00
+                                        ;"Apple Super Serial"...
+                DB    $C1,$D0,$D0,$CC,$C5,$A0,$D3,$F5,$F0,$E5,$F2,$A0,$D3,$E5,$F2,$E9,$E1
+                DB    $6C,$C5,$F0,$F3,$EF,$EE,$A0,$C1,$D0,$4C,$CF,$F2,$E1,$EE,$E7,$E5,$AC
+                DB    $A0,$C7,$F2,$E1,$F0,$F0,$EC,$E5,$72,$C7,$F2,$E1,$F0,$F0,$EC,$E5,$F2
+                DB    $2B,$C1,$D0,$D0,$CC,$C5,$A0,$C9,$C9,$A0,$D0,$E1,$F2,$E1,$EC,$EC,$E5
+                DB    $6C,$D6,$E9,$E4,$E5,$F8,$A0,$D5,$EE,$E9,$F0,$F2,$E9,$EE,$74,$D0,$CB
+                DB    $C1,$D3,$4F,$D3,$F4,$E1,$F2,$A0,$CD,$E9,$E3,$F2,$EF,$EE,$E9,$E3,$F3
+                DB    $A0,$C7,$F2,$E1,$E6,$F3,$F4,$E1,$72,$CD,$E9,$E3,$F2,$EF,$F4,$E5,$EB
+                DB    $A0,$C4,$F5,$ED,$F0,$EC,$E9,$EE,$E7,$A0,$C7,$58,$CD,$E9,$E3,$F2,$EF
+                DB    $F4,$E5,$EB,$A0,$C4,$F5,$ED,$F0,$EC,$E9,$EE,$E7,$A0,$B6,$34,$CD,$E9
+                DB    $E3,$F2,$EF,$F4,$E5,$EB,$A0,$D2,$D6,$AD,$B6,$B1,$B1,$43,$C8,$E1,$F0
+                DB    $F0,$E9,$E3,$E1,$F2,$64,$00
+                                        ;"Slot 1" - "Slot 7"
+                DB    $D3,$EC,$EF,$F4,$A0,$31,$D3,$EC,$EF,$F4,$A0,$32,$D3,$EC,$EF,$F4,$A0
+                DB    $34,$D3,$EC,$EF,$F4,$A0,$35,$D3,$EC,$EF,$F4,$A0,$36,$D3,$EC,$EF,$F4
+                DB    $A0,$37,$00
+                                        ;"Mouse" "KoalaPad" "Apple Graphics Tablet" "Joystick"
+                DB    $CD,$EF,$F5,$F3,$65,$CB,$EF,$E1,$EC,$E1,$D0,$E1,$64,$C1,$F0,$F0,$EC
+                DB    $E5,$A0,$C7,$F2,$E1,$F0,$E8,$E9,$E3,$F3,$A0,$D4,$E1,$E2,$EC,$E5,$74
+                DB    $CA,$EF,$F9,$F3,$F4,$E9,$E3,$6B,$00
+                                        ;"Easy File" "Professional File"
+                DB    $C5,$E1,$F3,$F9,$A0,$C6,$E9,$EC,$65,$D0,$F2,$EF,$E6,$E5,$F3,$F3,$E9
+                DB    $EF,$EE,$E1,$EC,$A0,$C6,$E9,$EC,$65,$00
+L7A53           JSR   L71BA             ; print "Use arrow keys..."
+                DB    $09,$14,$8D       ; VTAB 9
+                JSR   L7398
+                DB    $D5,$F3,$E5,$A0
+                JSR   L7ABB             ; "arrow" or " J K "
+                DB    $A0,$EB,$E5,$F9,$F3,$A0,$EF,$F2,$A0,$B1,$AD,$D8,$A0,$F4,$EF,$A0,$ED
+                DB    $E1,$EB,$E5,$A0,$F3,$E5,$EC,$E5,$E3,$F4,$E9,$EF,$EE,$8D,$08,$09
+                                        ;"Press RETURN to accept"
+                DB    $D0,$F2,$E5,$F3,$F3,$A0,$D2,$C5,$D4,$D5,$D2,$CE,$A0,$F4,$EF,$A0,$E1
+                DB    $E3,$E3,$E5,$F0,$F4,$8D,$00
+                BIT   $5C
+                BPL   L7ABA
+                JSR   L71BA
+                DB    $08,$0A
+                                        ;"Press ESC to go back"
+                DB    $D0,$F2,$E5,$F3,$F3,$A0,$C5,$D3,$C3,$A0,$F4,$EF,$A0,$E7,$EF,$A0,$E2
+                DB    $E1,$E3,$EB,$00
+L7ABA           RTS
+                                        ; print "arrow" or " J K " depending on machine type
+L7ABB           BIT   $FBC0             ; br on machine type
+                BPL   L7ACA
+                JSR   L71BA             ; print:
+                DB    $E1,$F2,$F2,$EF,$F7
+                                        ; "arrow"
+                DB    $00               ; end print
+                RTS
+                                        ; print " J K "
+L7ACA           LDY   #$04
+L7ACC           LDA   L7AD6,Y
+                JSR   L71CD             ; print char
+                DEY
+                BPL   L7ACC
+                RTS
+L7AD6           DB    $A0,$4B,$A0,$4A,$A0
+                                        ; " J K " backwards
+                                        ;SLOT searching*********************************************************
+                                        ; search for known input devices
+                                        ; (mouse, tablet, koalapad/joystick)
+                                        ; search slots mouse card and Apple Graphics Tablet,
+                                        ; (but for koalapad/joystick, the only thing we can
+                                        ; confirm is that if they pushed one of those buttons
+                                        ; already, then one of those is connected?????)
+                                        ; output:
+                                        ;   $7B46.$7B49
+L7ADB           LDX   #$00              ; refer to 2 pairs in 7B3A table
+                JSR   L7B10             ; search slots
+                STA   L7B46
+                                        ; search slots for tablet
+                LDX   #$05              ; refer to 3 pairs in 7B3F table
+                JSR   L7B10             ; search slots
+                STA   L7B48
+                JSR   L7AF5             ; chk analog inputs (w/ timeout)
+                STA   L7B49             ; save results (0=not, FF=pressed)
+                STA   L7B47
+                RTS
+                                        ; check analog inputs (w/ timeout)
+                                        ; output:
+                                        ;   A  0 no press; FF pressed
+L7AF5           LDY   #$00
+                LDX   #$10
+                LDA   $C070
+L7AFC           LDA   $C064             ; is btn 0 pressed
+                ORA   $C065             ; or btn 1 pressed
+                BPL   $7B0D             ; br if either btn pressed
+                DEY
+                BNE   L7AFC
+                DEX
+                BNE   L7AFC
+                LDA   #$00              ; no btn pressed within time limit, so return 0
+                BIT   $FFA9             ; doubled code with:
+                                        ;7B0D-  A9 FF       LDA   #$FF     ; btn pressed, so return -1
+                RTS
+                                        ; search slots for some kind of card???
+L7B10           STX   $7B1C             ; self-mod ***
+                LDY   #$00              ; ($50)-->$C700
+                LDA   #$C7
+                STY   $50
+                STA   $51
+                                        ; loop thru slots, from $C700 to $C100
+L7B1B           LDX   #$00              ; ***
+L7B1D           LDY   L7B3A,X           ; first byte in this pair into Y
+                BEQ   L7B35             ; br if no more pairs to check
+                LDA   L7B3B,X           ; second byte in this pair into A
+                CMP   ($50),Y           ; see if offset Y in slot is A
+                BNE   L7B2D             ; if no match, br to try prev slot
+                INX
+                INX
+                BNE   L7B1D             ; br always to check next pair in table
+                                        ; starting with the same slot we just found
+                                        ; and continuing down to slot 1
+L7B2D           DEC   $51               ; decr to previous slot
+                LDA   $51
+                CMP   #$C1
+                BCS   L7B1B             ; end of loop
+L7B35           LDA   $51
+                AND   #$0F              ; convert $C1-$C7 to actual slot # ($01-$07)
+                RTS
+                                        ;       offval  offval  offval
+                                        ;       Y  A    Y  A    Y  A
+L7B3A           DB    $0C,$20,$FB,$D6,$00
+                                        ; mouse card signature
+                DB    $02,$38,$05,$78,$06,$2C,$00
+                                        ; signature for tablet
+                                        ; slots of found cards, or 0 if not found
+L7B46           DB    $00               ; mouse
+L7B47           DB    $00               ; KoalaPad
+L7B48           DB    $00               ; Apple Graphics Tablet
+L7B49           DB    $00               ; Joystick
+                                        ;end SLOT searching*********************************************************
+                                        ; display all current settings on screen
+L7B4A           LDX   #$00              ; 7B4B gets modified***
+L7B4C           STX   $52
+                TXA
+                ASL
+                TAX
+                LDA   L781D,X
+                STA   L7B62
+                LDA   L781E,X
+                STA   L7B63             ; self-mod to string address of current setting
+                JSR   L71BA             ; print string:
+                DB    $04               ; FLASH
+                DB    $10,$FF,$FF       ; 7B62,7B63 gets modified to current setting string addr
+                DB    $BA               ; ":"
+                DB    $03               ; NORMAL
+                DB    $A0               ; " "
+                DB    $00               ; end of print string
+                LDX   $52
+                JSR   L7B80             ; name of current setting
+                JSR   L71C9             ; \r
+                JSR   L71C9             ; \r
+                LDX   $52
+                INX
+                CPX   #$05
+                BCC   L7B4C
+                RTS
+                                        ; display name of current input device
+L7B7B           LDX   #$03
+                BIT   $04A2             ; doubled code, with:
+                                        ; display name of current file system (easy/pro)
+                                        ;7B7E-  A2 04       LDX   #$04
+                                        ; X = which setting (3=input dev, 4=filing sys)
+L7B80           LDY   L66F0,X           ; current value of setting (1-n)
+                                        ; ($50)--> table of names for the setting
+                TXA
+                ASL
+                TAX
+                LDA   L7809,X
+                STA   $50
+                LDA   L780A,X
+                STA   $51
+                                        ; skip past names until we find ours
+L7B90           DEY
+                BEQ   L7B9A             ; br if we have found the correct name
+L7B93           JSR   L77F8             ; A = ($50)++ get next char from string
+                BMI   L7B93             ; move to end of this name
+                BPL   L7B90             ; br always to check next name
+L7B9A           JSR   L77F8             ; A = ($50)++ get next char from string
+                PHA
+                ORA   #$80              ; turn high bit on (only affects last char in string)
+                JSR   L71CD             ; print char
+                PLA
+                BMI   L7B9A             ; loop if we're not at the end (last char in string has high bit clear)
+                RTS
+                                        ; JMP $7100 comes here:
+                                        ; display the "RETURN or ESC" screen and handle keypress
+L7BA7           STA   $C00E             ; primary char set
+                JSR   L71BA             ; print:
+                DB    $01               ; INIT
+                DB    $02               ; HOME
+                DB    $03               ; NORMAL
+                JSR   L7398             ; 27 dashes \r
+                DB    $08,$0C           ; HTAB 12
+                                        ; "Dazzle Draw  (TM)\r"
+                DB    $C4,$E1,$FA,$FA,$EC,$E5,$A0,$C4,$F2,$E1,$F7,$A0,$A0,$A8,$D4,$CD,$A9
+                DB    $8D
+                DB    $08,$0D           ; HTAB 13
+                                        ; "by David Snyder\r"
+                DB    $E2,$F9,$A0,$C4,$E1,$F6,$E9,$E4,$A0,$D3,$EE,$E9,$E4,$E5,$F2,$8D
+                DB    $08,$0B           ; HTAB 11
+                                        ; "Copyright (C)  1984\r"
+                DB    $C3,$EF,$F0,$F9,$F2,$E9,$E7,$E8,$F4,$A0,$A8,$C3,$A9,$A0,$A0,$B1,$B9
+                DB    $B8,$B4,$8D
+                DB    $08,$0B           ; HTAB 11
+                                        ; "Broderbund Software\r"
+                DB    $C2,$F2,$EF,$E4,$E5,$F2,$E2,$F5,$EE,$E4,$A0,$D3,$EF,$E6,$F4,$F7,$E1
+                DB    $F2,$E5,$8D
+                JSR   L7398             ; 27 dashes \r
+                DB    $0D,$22,$00,$07   ; POKE $22,7 (set screen top row to 7)
+                JSR   L7CF8             ; check for "/" or ESC keypress (don't wait)
+                JSR   L7CD7             ; check for input device and printer, set if needed
+                JSR   L7661
+                DB    $02               ; HOME
+                DB    $09,$0A           ; VTAB 10
+                DB    $08,$04           ; HTAB 4
+                                        ; "Input Device: "
+                DB    $C9,$EE,$F0,$F5,$F4,$A0,$C4,$E5,$F6,$E9,$E3,$E5,$BA,$A0
+                JSR   L7B7B             ; display name of current input device
+                DB    $09,$0C           ; VTAB 12
+                DB    $08,$05           ; HTAB 5
+                                        ; "File System: "
+                DB    $C6,$E9,$EC,$E5,$A0,$D3,$F9,$F3,$F4,$E5,$ED,$BA,$A0
+                JSR   $7B7E             ; display name of current file system (easy/pro)
+                DB    $09,$11           ; VTAB 17
+                DB    $08,$07           ; HTAB 7
+                                        ; "Press RETURN "... "press ESC" ... "backup "
+                DB    $D0,$F2,$E5,$F3,$F3,$A0,$D2,$C5,$D4,$D5,$D2,$CE,$A0,$F4,$EF,$A0,$E7
+                DB    $EF,$8D,$08,$07,$E4,$E9,$F2,$E5,$E3,$F4,$EC,$F9,$A0,$F4,$EF,$A0,$C4
+                DB    $E1,$FA,$FA,$EC,$E5,$A0,$C4,$F2,$E1,$F7,$AC,$A0,$EF,$F2,$8D,$8D,$08
+                DB    $07,$F0,$F2,$E5,$F3,$F3,$A0,$C5,$D3,$C3,$A0,$E6,$EF,$F2,$A0,$D5,$F4
+                DB    $E9,$EC,$E9,$F4,$F9,$A0,$CD,$E5,$EE,$F5,$8D,$08,$07,$EF,$F2,$A0,$F4
+                DB    $EF,$A0,$ED,$E1,$EB,$E5,$A0,$E2,$E1,$E3,$EB,$F5,$F0,$A0
+                DB    $05,$A0,$03       ; flashing space (cursor)
+                DB    $8D,$8D,$8D       ; "\r\r\r"
+                DB    $0A,$AD,$27       ; 27 dashes
+                DB    $12               ; wait for key and jump:
+                DB    $8D,$B7,$7C       ; RETURN $7CB7 go below:
+                DB    $9B,$36,$74,$00   ; ESC    $7436 go to main utility menu
+                                        ; (user press RETURN "run DD" comes here)
+                                        ; ensure we've got the latest values for
+                                        ; the mouse and tablet slots
+L7CB7           LDA   L7B48
+                STA   L66F5
+                LDA   L7B46
+                STA   L66F6
+                                        ; decr $66F0.$66F4 (change settings from 1-origin to 0-origin)
+                LDX   #$04
+L7CC5           DEC   L66F0,X
+                DEX
+                BPL   L7CC5
+                JSR   L71BA             ; print:
+                DB    $01,$02,$00       ; INIT HOME
+                LDX   #$FF              ; clear out the stack
+                TXS
+                JMP   L6403             ; skip splash and util menu... go run program
+L7CD7           LDA   L66F3             ; input device setting (1=mouse, etc.)
+                BMI   L7CDD
+                RTS
+L7CDD           LDA   #$01
+                STA   L66F3             ; set to "use mouse for input"
+L7CE2           LSR   $5C
+                JSR   L765C
+                BCS   L7CE2
+                LDA   #$04
+                JSR   L76E9
+                BCS   L7CE2
+                LDX   #$03
+                STX   $7B4B             ; self-mod***
+                JMP   L7564             ; go to "would you like to save"
+                                        ; check for keypress (from splash screen) (don't wait)
+                                        ; "/" causes DD to launch
+                                        ; ESC causes backup routine to run
+L7CF8           LDA   $C000
+                CMP   #$AF              ; "/"
+                BEQ   L7D0A
+                BIT   $C010
+                CMP   #$9B              ; ESC
+                BEQ   L7D07
+                RTS                     ; otherwise, just return
+L7D07           JMP   L7518             ; ESC: jmp to backup routine
+                                        ; "/": launch DD program:
+L7D0A           LDA   #$04
+                STA   L66F3
+                JMP   L7CB7
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+L7FA9           DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+                DB    $00,$00
