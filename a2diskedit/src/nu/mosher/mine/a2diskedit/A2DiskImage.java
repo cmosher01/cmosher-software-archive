@@ -66,8 +66,8 @@ public class A2DiskImage
 			// OK
 		}
 		else if (
-			getByte([0x88][0x101]==0x11 &&
-			getByte([0x88][0x102]==0x0D)
+			getByte(0x88,0x101)==0x11 &&
+			getByte(0x88,0x102)==0x0D)
 		{
 			m_osType = osDos33;
 			// DOS 3.3 disk in block order
