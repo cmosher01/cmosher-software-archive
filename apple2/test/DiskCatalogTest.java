@@ -16,6 +16,10 @@ import junit.framework.TestCase;
  */
 public class DiskCatalogTest extends TestCase
 {
+    /**
+     * @throws IOException
+     * @throws InvalidPosException
+     */
     public void testDOS33_Master_1980() throws IOException, InvalidPosException
     {
         List r = new ArrayList();
