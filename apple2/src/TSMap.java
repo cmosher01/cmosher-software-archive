@@ -10,12 +10,17 @@
  */
 public class TSMap
 {
-    private final int[] r = new int[DiskPos.cSectorsPerTrack*DiskPos.cTracksPerDisk];
+    private final boolean[] r = new boolean[DiskPos.cSectorsPerTrack*DiskPos.cTracksPerDisk];
+
+    /**
+     * @param sector
+     */
     public void mark(int sector)
     {
         if (sector < 0 || r.length <= sector)
         {
-            throw IllegalArgumentException();
+            throw new IllegalArgumentException();
         }
+        r[sector] = true;
     }
 }
