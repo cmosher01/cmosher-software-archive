@@ -6,6 +6,7 @@
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.Iterator;
 import java.util.ListIterator;
 
 import com.surveysampling.util.Cloner;
@@ -41,6 +42,12 @@ public class Test
     //throws MyException, IOException // other exceptions here...
 	{
 
+        String x = "a,b,,d";
+        for (Iterator i = new SF(x).iterator(); i.hasNext();)
+        {
+            String field = (String)i.next();
+            
+        }
 
 
 //        UndoableReference u = new UndoableReference(new Mute(5));
@@ -53,20 +60,20 @@ public class Test
 //        u.redo();
 //        System.out.println(u.state().toString());
 
-        UndoableExample m = new UndoableExample(5);
-        System.out.println(m);
-        m.set(7);
-        System.out.println(m);
-        m.set(8);
-        System.out.println(m);
-        m.undo();
-        System.out.println(m);
-        m.undo();
-        System.out.println(m);
-        m.redo();
-        System.out.println(m);
-        m.redo();
-        System.out.println(m);
+//        UndoableExample m = new UndoableExample(5);
+//        System.out.println(m);
+//        m.set(7);
+//        System.out.println(m);
+//        m.set(8);
+//        System.out.println(m);
+//        m.undo();
+//        System.out.println(m);
+//        m.undo();
+//        System.out.println(m);
+//        m.redo();
+//        System.out.println(m);
+//        m.redo();
+//        System.out.println(m);
 
 
 
