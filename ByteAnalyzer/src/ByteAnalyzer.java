@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.Map.Entry;
 
 /**
  * Checks each byte of a file, and maintains a count of
@@ -148,11 +149,11 @@ public class ByteAnalyzer
 //            System.out.println("LFCR  : "+cLFCR);
 //        }
         boolean shown = false;
-        for (Iterator i = cBytes.entrySet().iterator(); i.hasNext();)
+        for (Iterator<Map.Entry<Integer,Integer>> i = cBytes.entrySet().iterator(); i.hasNext();)
         {
-            Map.Entry entry = (Map.Entry)i.next();
-            int byt = ((Integer)entry.getKey()).intValue();
-            int cnt = ((Integer)entry.getValue()).intValue();
+            Map.Entry<Integer,Integer> entry = i.next();
+            int byt = entry.getKey();
+            int cnt = entry.getValue();
             if (byt >= 0x80 && cnt > 0)
             {
                 if (!shown)
