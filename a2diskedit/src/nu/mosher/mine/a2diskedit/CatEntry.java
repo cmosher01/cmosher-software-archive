@@ -9,6 +9,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 public class CatEntry implements TreeNode
 {
 	private final JEditorPane viewRight = new JEditorPane();
+	private DefaultMutableTreeNode node = null;
 	private String sName;
 
 	public CatEntry(byte[] rb)
@@ -50,5 +51,6 @@ public class CatEntry implements TreeNode
 	 */
 	public void setNode(DefaultMutableTreeNode n)
 	{
+		node = n;
 	}
 }
