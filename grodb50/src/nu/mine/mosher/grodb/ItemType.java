@@ -15,17 +15,18 @@ public class ItemType<T extends Enum<T>>
 	}
 	public ItemType(String other)
 	{
-		try
-		{
+//		try
+//		{
 			Class<T> c = Class<T>.getClass();
 			T x = Enum.valueOf(c,other);
 			this.known = x;
-		}
-		catch (IllegalArgumentException e)
-		{
-			this.other = other;
-		}
+//		}
+//		catch (IllegalArgumentException e)
+//		{
+//			this.other = other;
+//		}
 	}
+
 	public String toString()
 	{
 		String s;
@@ -39,6 +40,7 @@ public class ItemType<T extends Enum<T>>
 		}
 		return s;
 	}
+
 	public boolean isa(T x)
 	{
 		return (known != null && known.equals(x));
