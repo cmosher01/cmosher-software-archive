@@ -3,7 +3,6 @@
 <%@ page import="java.util.Enumeration" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="javax.servlet.ServletInputStream" %>
 <head>
 <title>Request Dump</title>
 </head>
