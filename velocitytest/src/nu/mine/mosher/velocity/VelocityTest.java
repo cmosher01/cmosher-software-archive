@@ -11,6 +11,6 @@ public class VelocityTest
         Context context = new VelocityContext();
         FileDescriptor x;
         BufferedWriter writer = new OutputStreamWriter(new FileOutputStream());
-        velocity.mergeTemplate("test.vm", context, );
+        velocity.mergeTemplate("test.vm", context, writer);
     }
 }
