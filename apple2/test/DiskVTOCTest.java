@@ -51,8 +51,8 @@ public class DiskVTOCTest extends TestCase
     {
         assertOnePos("david_dos.dsk",new DiskPos(0x11,0));
         assertOnePos("daviddos_2.dsk",new DiskPos(0x11,0));
-//        assertOnePos("diversidos2c_blank.dsk",new DiskPos(0x11,0));
-//        assertOnePos("diversidos41c_blank.dsk",new DiskPos(0x11,0));
+        assertOnePos("DiversiDOS_41_C_1983.dsk",new DiskPos(0x11,0));
+        assertOnePos("DiversiDOS_2_C_1982.dsk",new DiskPos(0x11,0));
 //        assertOnePos("dos33(80)master.dsk",new DiskPos(0x11,0));
 //        assertOnePos("dos33(80)slave.dsk",new DiskPos(0x11,0));
 //        assertOnePos("dos33master.dsk",new DiskPos(0x11,0));
