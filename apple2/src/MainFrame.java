@@ -23,5 +23,6 @@ public class MainFrame extends JFrame
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
     {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        MainFrame frame = new MainFrame();
     }
 }
