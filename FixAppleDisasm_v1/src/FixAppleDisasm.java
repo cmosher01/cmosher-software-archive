@@ -55,10 +55,8 @@ public class FixAppleDisasm
 		}
     }
 
-    private static void FixDis(Reader in, Writer out)
+    public static void FixDis(Reader in, Writer out)
     {
-        // TODO Auto-generated method stub
-        
     }
 
     private static void Dump2Bin(Reader in, OutputStream outbin)
