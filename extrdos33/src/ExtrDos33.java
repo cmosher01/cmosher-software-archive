@@ -153,6 +153,10 @@ public class ExtrDos33
 		{
 			return (rb[0x656] == 0xFFFFFFAD && rb[0x657] ==  0x61 && rb[0x658] ==  0xFFFFFFAA && rb[0x659] ==  0xFFFFFFC9 && rb[0x65A] ==  0x01 && rb[0x65B] ==  0xFFFFFFB0);
 		}
+		public boolean hasRdosSignature()
+		{
+			return (rb[0x100] == 0x4C && rb[0x101] ==  0x74 && rb[0x102] ==  0xFFFFFFB9 && rb[0x103] ==  0xFFFFFFA0);
+		}
         public boolean equals(Object obj)
         {
         	if (!(obj instanceof DosImage))
