@@ -27,7 +27,8 @@ public class NormalizerData
     */
     public int getCanonicalClass(char ch)
     {
-        return canonicalClass.get(ch);
+    	int x = (int)ch;
+        return canonicalClass.get(x);
     }
 
     /**
