@@ -13,6 +13,7 @@ public class Event
 	private DateRange dateStart;
 	private DateRange dateEnd;
 	private ItemType<EventType> type;
+	private String notes;
 
 	private List<Relation<Event,Event,EventRelType>> rEventUp = new ArrayList<Relation<Event,Event,EventRelType>>();
 	private List<Relation<Event,Event,EventRelType>> rEventDown = new ArrayList<Relation<Event,Event,EventRelType>>();
