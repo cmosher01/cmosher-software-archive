@@ -57,6 +57,21 @@ public class TSMap
     }
 
     /**
+     * @return
+     */
+    public boolean hasAny()
+    {
+        for (int i = 0; i < r.length; i++)
+        {
+            if (r[i])
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * @see java.lang.Object#toString()
      */
     public String toString()
