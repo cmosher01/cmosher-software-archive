@@ -53,7 +53,7 @@ public class WaveCalc
         }
 
         InputStream in = new InputStream(new FileInputStream(fin));
-        if (readString(in,4))
+        if (!readString(in,4).equals("RIFF"))
         {
         	throw new Exception("File does not start with RIFF.");
         }
