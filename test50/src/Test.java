@@ -1,5 +1,7 @@
 import java.util.Iterator;
 
+import nu.mine.mosher.core.StringFieldizer;
+
 public class Test
 {
 	public static void main(String[] args)
