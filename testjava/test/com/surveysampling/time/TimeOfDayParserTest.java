@@ -47,6 +47,11 @@ public class TimeOfDayParserTest extends TestCase
         makeAndCheck("00:00:00.000",0,0,0,0);
     }
 
+    public void testStrange()
+    {
+        makeAndCheck("\u06F0:\u06F0\u06F0",0,0,0,0);
+    }
+
     public void testBadStrings() throws ParseException
     {
         shouldThrow("");
@@ -57,6 +62,7 @@ public class TimeOfDayParserTest extends TestCase
         shouldThrow("01:02:03.00e");
         shouldThrow("01:023");
         shouldThrow("01:0");
+        shouldThrow("0::0");
         shouldThrow("0::0");
     }
 
