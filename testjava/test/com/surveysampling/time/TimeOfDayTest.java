@@ -130,5 +130,61 @@ public class TimeOfDayTest extends TestCase
         catch (IllegalArgumentException shouldBeThrown)
         {
         }
+        try
+        {
+            new TimeOfDay(cal,24,0,0,0);
+            fail("should throw IllegalArgumentException");
+        }
+        catch (IllegalArgumentException shouldBeThrown)
+        {
+        }
+        try
+        {
+            new TimeOfDay(cal,0,-1,0,0);
+            fail("should throw IllegalArgumentException");
+        }
+        catch (IllegalArgumentException shouldBeThrown)
+        {
+        }
+        try
+        {
+            new TimeOfDay(cal,0,60,0,0);
+            fail("should throw IllegalArgumentException");
+        }
+        catch (IllegalArgumentException shouldBeThrown)
+        {
+        }
+        try
+        {
+            new TimeOfDay(cal,0,0,-1,0);
+            fail("should throw IllegalArgumentException");
+        }
+        catch (IllegalArgumentException shouldBeThrown)
+        {
+        }
+        try
+        {
+            new TimeOfDay(cal,0,0,60,0);
+            fail("should throw IllegalArgumentException");
+        }
+        catch (IllegalArgumentException shouldBeThrown)
+        {
+        }
+        try
+        {
+            new TimeOfDay(cal,0,0,0,-1);
+            fail("should throw IllegalArgumentException");
+        }
+        catch (IllegalArgumentException shouldBeThrown)
+        {
+        }
+        try
+        {
+            new TimeOfDay(cal,0,0,0,1000);
+            fail("should throw IllegalArgumentException");
+        }
+        catch (IllegalArgumentException shouldBeThrown)
+        {
+        }
     }
 }
