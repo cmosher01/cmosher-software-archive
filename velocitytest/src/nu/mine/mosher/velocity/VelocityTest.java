@@ -6,7 +6,6 @@ import java.io.OutputStreamWriter;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.context.Context;
-import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.RuntimeServices;
 import org.apache.velocity.runtime.log.LogSystem;
 
@@ -15,7 +14,7 @@ public class VelocityTest
     public static void main(String[] args) throws Throwable
     {
         VelocityEngine velocity = new VelocityEngine();
-        velocity.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM,new LogSystem()
+        velocity.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM,new LogSystem()
         {
             public void init(RuntimeServices rs) throws Exception
             {
