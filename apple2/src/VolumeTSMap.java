@@ -37,7 +37,17 @@ public class VolumeTSMap extends VolumeEntity
      */
     public void dump(StringBuffer s)
     {
-        s.append("T/S Map of: ");
+        s.append("T/S Map at: ");
+        for (Iterator i = this.rSector.iterator(); i.hasNext();)
+        {
+            VolumeSector sect = (VolumeSector)i.next();
+            s.append(sect.toString());
+            if (i.hasNext())
+            {
+                s.append("; ");
+            }
+        }
+        s.append("mapping to: ");
         for (Iterator i = this.rTS.iterator(); i.hasNext();)
         {
             DiskPos p = (DiskPos)i.next();
