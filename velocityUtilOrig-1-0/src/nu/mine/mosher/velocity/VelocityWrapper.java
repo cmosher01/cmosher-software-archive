@@ -95,9 +95,9 @@ public class VelocityWrapper
      * @param writer
      * @throws VelocityException any exceptions are wrapped in a VelocityException
      */
-    public void evaluate(Reader reader, String nameTemplate, Context context, Writer writer) throws VelocityException
+    public void evaluate(Reader reader, String templateName, Context context, Writer writer) throws VelocityException
     {
-        evaluate(context,writer,nameTemplate,reader);
+        evaluate(context,writer,templateName,reader);
     }
 
     /**
@@ -112,11 +112,11 @@ public class VelocityWrapper
      * @param reader
      * @throws VelocityException any exceptions are wrapped in a VelocityException
      */
-    public void evaluate(Context context, Writer writer, String nameTemplate, Reader reader) throws VelocityException
+    public void evaluate(Context context, Writer writer, String templateName, Reader reader) throws VelocityException
     {
         try
         {
-            if (!velocity.evaluate(context,writer,nameTemplate,reader))
+            if (!velocity.evaluate(context,writer,templateName,reader))
             {
                 throw new VelocityException("error calling VelocityEngine.evaluate");
             }
