@@ -1,7 +1,7 @@
 /*
  * Created on Feb 4, 2005
  */
-package nu.mine.mosher.ja2;
+package nu.mine.mosher.swingapp;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
