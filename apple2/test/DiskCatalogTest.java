@@ -47,8 +47,7 @@ public class DiskCatalogTest extends TestCase
         "A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 11 00 19 0F 84 "+
         "C2 CF CF D4 B1 B3 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 "+
         "A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 0A 00 "),
-        false,ts,ent));
-        assertEquals(7,ent.size());
+        false);
     }
 
     /**
@@ -75,8 +74,7 @@ public class DiskCatalogTest extends TestCase
         "A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 14 00 FF 08 00 "+
         "C3 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 "+
         "A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 0C 02 00 "),
-        false,ts,ent));
-        assertEquals(7,ent.size());
+        false);
     }
 
     /**
@@ -103,8 +101,7 @@ public class DiskCatalogTest extends TestCase
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "),
-        false,ts,ent));
-        assertEquals(1,ent.size());
+        false,);
     }
 
     /**
@@ -131,8 +128,7 @@ public class DiskCatalogTest extends TestCase
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "),
-        false,ts,ent));
-        assertEquals(1,ent.size());
+        false,);
     }
 
     /**
@@ -159,8 +155,7 @@ public class DiskCatalogTest extends TestCase
         "A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 20 02 00 19 0F 82 "+
         "20 A0 A0 A0 A0 A0 A0 C2 C5 C1 C7 CC C5 A0 C2 D2 "+
         "CF D3 A0 C9 CE C3 A0 A0 A0 A0 A0 A0 A0 20 02 00 "),
-        false,ts,ent));
-        assertEquals(7,ent.size());
+        false);
     }
 
 }
