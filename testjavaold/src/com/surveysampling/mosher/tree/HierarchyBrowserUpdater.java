@@ -50,10 +50,8 @@ public class HierarchyBrowserUpdater implements TreeExpansionListener
         endWait();
     }
 
-    private void endWait()
+    public void treeCollapsed(TreeExpansionEvent event)
     {
-        mFrame.setEnabled(true);
-        mFrame.setCursor(Cursor.getDefaultCursor());
     }
 
     private void beginWait()
@@ -62,7 +60,9 @@ public class HierarchyBrowserUpdater implements TreeExpansionListener
         mFrame.setEnabled(false);
     }
 
-    public void treeCollapsed(TreeExpansionEvent event)
+    private void endWait()
     {
+        mFrame.setEnabled(true);
+        mFrame.setCursor(Cursor.getDefaultCursor());
     }
 }
