@@ -20,7 +20,7 @@ public class DiskVTOCTest extends TestCase
      */
     public void testDOS33_Master_1980() throws IOException
     {
-        InputStream disk = this.getClass().getClassLoader().getResourceAsStream("");
+        InputStream disk = this.getClass().getClassLoader().getResourceAsStream("DOS33_SystemMaster_19800825.dsk");
         byte[] rbDisk = new byte[disk.available()];
         disk.read(rbDisk);
     }
