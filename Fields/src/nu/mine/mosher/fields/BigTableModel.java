@@ -13,59 +13,34 @@ import javax.swing.table.TableModel;
  */
 public class BigTableModel implements TableModel
 {
-
-    /* (non-Javadoc)
-     * @see javax.swing.table.TableModel#getRowCount()
-     */
     public int getRowCount()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return 100000;
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.table.TableModel#getColumnCount()
-     */
     public int getColumnCount()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return 1000;
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.table.TableModel#getColumnName(int)
-     */
     public String getColumnName(int columnIndex)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "C"+columnIndex;
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.table.TableModel#getColumnClass(int)
-     */
     public Class getColumnClass(int columnIndex)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return String.class;
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.table.TableModel#isCellEditable(int, int)
-     */
     public boolean isCellEditable(int rowIndex, int columnIndex)
     {
-        // TODO Auto-generated method stub
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.table.TableModel#getValueAt(int, int)
-     */
     public Object getValueAt(int rowIndex, int columnIndex)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return Integer.toHexString(rowIndex+columnIndex);
     }
 
     /* (non-Javadoc)
