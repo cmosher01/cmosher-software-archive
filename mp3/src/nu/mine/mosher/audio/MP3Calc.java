@@ -181,6 +181,7 @@ public class MP3Calc
     private static int getbits(int src, int hi, int lo)
     {
     	long x = src;
+    	x &= 0xffffffff;
     	x <<= (31-hi);
     	x >>= (31+lo-hi);
     	return (int)x;
