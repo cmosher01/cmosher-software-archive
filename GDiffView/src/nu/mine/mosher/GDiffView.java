@@ -170,6 +170,8 @@ public class GDiffVeiew extends JFrame
             addr += c;
             c = in.read(rb);
         }
+        sb.append('\n');
+        appendAddr(sb,addr);
     }
 
     /**
