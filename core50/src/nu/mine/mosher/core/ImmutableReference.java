@@ -49,7 +49,7 @@ public final class ImmutableReference<T> implements Cloneable, Comparable<T>, Se
         return this.str;
     }
 
-    public boolean equals(T o)
+    public boolean equals(Object o)
     {
         return this.ref.equals(o);
     }
