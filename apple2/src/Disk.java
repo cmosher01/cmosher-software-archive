@@ -471,9 +471,15 @@ public class Disk
      * @return
      * @throws InvalidPosException
      */
-    public static DiskPos getDos33Next(byte[] sector) throws InvalidPosException
+    public DiskPos getDos33Next(DiskPos pos) throws InvalidPosException
     {
-        return new DiskPos(sector[1],sector[2],0);
+        DiskPos p = (DiskPos)pos.clone();
+        p.advance(1);
+        int track = read(p);
+        p.advance(1);
+        int sector = read(p);
+        p.setTS(track,sector);
+        return p;
     }
 
     /**
