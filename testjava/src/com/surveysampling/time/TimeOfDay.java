@@ -99,7 +99,11 @@ public class TimeOfDay
     /**
      * Sets the HOUR_OF_DAY, MINUTE, SECOND, and MILLISECOND
      * components of the given Calendar to the corresponding
-     * values from this object.
+     * values from this object. Note that this object was
+     * verified against the Calendar provided to the constructor,
+     * therefore, if a different Calendar is provided to this
+     * method, then the values of this object could be invalid
+     * for the given Calendar.
      * @param cal the Calendar, with date set, to have time overridden
      */
     public void getTimeOnDay(Calendar cal)
