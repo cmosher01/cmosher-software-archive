@@ -12,7 +12,7 @@ public class TestBeans
     public static void main(String[] rArgs) throws Throwable
     {
         String[] rp = PropertyEditorManager.getEditorSearchPath();
-        List listp = Arrays.asList(rp);
+        List listp = new ArrayList(Arrays.asList(rp));
         listp.add("com.surveysampling.beans.editors");
         PropertyEditorManager.setEditorSearchPath((String[])listp.toArray(new String[listp.size()]));
 
