@@ -12,6 +12,8 @@ import java.util.Iterator;
 
 import javax.servlet.ServletRequest;
 
+import nu.mine.mosher.util.EnumIter;
+
 public final class BeanUtil
 {
     private BeanUtil()
