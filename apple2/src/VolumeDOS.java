@@ -213,7 +213,7 @@ public class VolumeDOS extends VolumeEntity
         System.arraycopy(rbClear1980, 0, rbClearFranklin, 0, rbClear1980.length);
         for (int i = 0; i < rFranklinOffset.length; ++i)
         {
-            rbClearFranklin[rbFranklinOffset[i]] = (byte)rbFranklinValue[i];
+            rbClearFranklin[rFranklinOffset[i]] = (byte)rFranklinValue[i];
         }
     }
 
