@@ -257,7 +257,7 @@ public class GDiffVeiew extends JFrame
     {
         return row*rowLen;
     }
-    public int getHexRowEnd(int pos)
+    public int getHexRowEnd(int row)
     {
         return (row+1)*rowLen-1;
     }
