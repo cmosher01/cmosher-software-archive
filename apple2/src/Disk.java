@@ -82,7 +82,7 @@ public class Disk
      * @param sb
      * @param attrib array of attributes (0=inverse, 1=flash, 2=normal)
      */
-    public void readASCII(int len, StringBuffer sb, byte[] attrib)
+    public void readASCII(DiskPos pos, int len, StringBuffer sb, byte[] attrib)
     {
         if (attrib.length != len)
         {
@@ -90,7 +90,7 @@ public class Disk
         }
         for (int i = 0; i < len; ++i)
         {
-            int c = read();
+            int c = read(pos);
             sb.append((char)(byte)(c & 0x0000007F));
             byte a;
             if (c < 0x40)
