@@ -15,6 +15,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
@@ -338,12 +339,23 @@ public class GDiffView extends JFrame
     }
 
     /**
+     * @throws IOException
      * 
      */
-    private void tempReadTarget()
+    private void tempReadTarget() throws IOException
     {
-        // TODO Auto-generated method stub
-        
+        BufferedInputStream in = new BufferedInputStream(new FileInputStream(fileTrg));
+        StringBuffer sb = new StringBuffer(in.available() * 6);
+        HexBuilder hex = new HexBuilder(sb);
+        hex.appendHeader();
+        int x = in.read();
+        while (x >= 0)
+        {
+            hex.appendByte(x);
+            x = in.read();
+        }
+        hex.appendNewLine();
+        in.close();
     }
 
     /**
