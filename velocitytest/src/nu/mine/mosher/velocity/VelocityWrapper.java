@@ -5,6 +5,7 @@ package nu.mine.mosher.velocity;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.Properties;
@@ -121,6 +122,13 @@ public class VelocityWrapper
 
         velocity.mergeTemplate(inputTemplate.getName(),context,writer);
 
-        writer.flush();
+        try
+        {
+            writer.flush();
+        }
+        catch (IOException e)
+        {
+            throw wrapInVelocityException(e);
+        }
     }
 }
