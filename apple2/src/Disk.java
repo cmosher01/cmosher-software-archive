@@ -417,7 +417,6 @@ public class Disk
 
     /**
      * @param sector
-     * @param tsmapMapsInCatalog
      * @return
      */
     protected boolean isfindDos33TSMapSector(byte[] sector)
