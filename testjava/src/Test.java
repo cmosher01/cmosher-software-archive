@@ -72,7 +72,7 @@ public class Test
 	{
         SortedSet s = new TreeSet();
         s.add("ac");
-        s.add("a\u2060b");
+        s.add("a\u2401b");
         s.add("aa");
         for (Iterator i = s.iterator(); i.hasNext();)
         {
