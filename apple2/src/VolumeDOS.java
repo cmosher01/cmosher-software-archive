@@ -78,12 +78,9 @@ public class VolumeDOS extends VolumeEntity
             throw new RuntimeException(e);
         }
 
-        rb = new byte[3*DiskPos.cTrack];
-
         List rPos = new ArrayList();
         getUsed(rPos);
-        byte[] rbdos = disk.getDos33File(rPos);
-        System.arraycopy(rbdos, 0, rb, DiskPos.cSector, rbdos.length);
+        rb = disk.getDos33File(rPos);
     }
 
     /**
