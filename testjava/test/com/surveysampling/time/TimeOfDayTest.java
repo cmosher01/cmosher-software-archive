@@ -186,5 +186,7 @@ public class TimeOfDayTest extends TestCase
         catch (IllegalArgumentException shouldBeThrown)
         {
         }
+        new TimeOfDay(cal,0,0,0,0);
+        new TimeOfDay(cal,23,59,59,999);
     }
 }
