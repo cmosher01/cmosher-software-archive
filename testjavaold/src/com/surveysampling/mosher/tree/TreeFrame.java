@@ -64,7 +64,7 @@ public class TreeFrame extends JFrame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create and set up the content pane.
-        JComponent newContentPane = new TreeFrame(dir);
+        TreeFrame newContentPane = new TreeFrame(dir);
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
 
