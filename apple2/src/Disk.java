@@ -125,11 +125,11 @@ public class Disk
      * @return
      * @throws InvalidPosException
      */
-    public DiskPos readTS() throws InvalidPosException
+    public void readTS(DiskPos pos) throws InvalidPosException
     {
-        int track = read();
-        int sector = read();
-        return new DiskPos(track,sector,0);
+        int track = read(pos);
+        int sector = read(pos);
+        pos.set(track,sector);
     }
 
     /**
