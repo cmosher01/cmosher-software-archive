@@ -16,11 +16,20 @@ public class Cloner
         throw new UnsupportedOperationException();
     }
 
-    public static Cloneable cloneObject(Cloneable cloneableObject) throws CloneNotSupportedException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, SecurityException, NoSuchMethodException
+    public static Cloneable cloneObject(Cloneable cloneableObject) throws CloneNotSupportedException
     {
-        Method objClone = cloneableObject.getClass().getMethod("clone", null);
-        objClone.setAccessible(true);
-        return (Cloneable)objClone.invoke(cloneableObject,null);
+        try
+        {
+            Method objClone = cloneableObject.getClass().getMethod("clone", null);
+            objClone.setAccessible(true);
+            return (Cloneable)objClone.invoke(cloneableObject,null);
+        }
+        catch (Throwable ex)
+        {
+            CloneNotSupportedException ex2 = new CloneNotSupportedException();
+            ex2.initCause(ex);
+            throw ex2;
+        }
 //        return (Cloneable)cloneableObject.clone();
     }
 }
