@@ -1,9 +1,11 @@
 <%@ include file="htmlhead.jsp" %>
-<%@ page import="java.util.ArrayList" %>
-<jsp:useBean id="r" class="java.util.ArrayList" scope="session" />
+<%@ page import="nu.mine.mosher.jdotest.Item" %>
+<%@ page import="nu.mine.mosher.jdotest.Perm" %>
 <%
-    int i = Integer.parseInt(request.getParameter("i"));
-    String s = (String)r.get(i);
+    String id = request.getParameter("id");
+    Perm pm = new Perm();
+    Item item = (Item)pm.get(Item.class,id);
+    String s = item.getName();
 %>
 <head>
 <title>Confirm Delete</title>
@@ -12,7 +14,7 @@
 <p>
 Are you sure you want to delete "<%=s%>" permanently?
 <form method="post" action="delete.jsp">
-    <input name="i" type="hidden" value="<%=i%>" />
+    <input name="id" type="hidden" value="<%=id%>" />
     <p><input type="submit" value="delete" /></p>
 </form>
 <form method="post" action="cancel.jsp">
