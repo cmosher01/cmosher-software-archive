@@ -35,6 +35,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.Spring;
 import javax.swing.SpringLayout;
 import javax.swing.UIManager;
@@ -158,7 +159,7 @@ public class GDiffView extends JFrame
         paneSrc.setEditable(false);
         JScrollPane scrSrc = new JScrollPane(paneSrc);
 //        scrSrc.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-//        scrSrc.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrSrc.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 //        scrSrc.setMinimumSize(new Dimension(50,20));
 //        scrSrc.setPreferredSize(new Dimension(400,430));
         scrSrc.setMaximumSize(new Dimension(Integer.MAX_VALUE,Integer.MAX_VALUE));
@@ -167,6 +168,7 @@ public class GDiffView extends JFrame
         paneTrg = new JTextPaneNoWrap(docTrg);
         paneTrg.setEditable(false);
         JScrollPane scrTrg = new JScrollPane(paneTrg);
+        scrTrg.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 //        scrTrg.setMinimumSize(new Dimension(50,20));
 //        scrTrg.setPreferredSize(new Dimension(400,430));
         scrTrg.setMaximumSize(new Dimension(Integer.MAX_VALUE,Integer.MAX_VALUE));
@@ -229,7 +231,7 @@ public class GDiffView extends JFrame
             }
         };
         JScrollPane scrGDiff = new JScrollPane(listGDiff);
-        scrGDiff.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrGDiff.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 //        scrGDiff.setMinimumSize(new Dimension(300,460));
 //        scrGDiff.setPreferredSize(new Dimension(300,460));
 //        scrGDiff.setMaximumSize(new Dimension(300,460));
