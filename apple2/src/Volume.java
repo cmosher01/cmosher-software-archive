@@ -77,6 +77,11 @@ public class Volume
             VolumeFile f = (VolumeFile)i.next();
             f.dump(s);
         }
+        for (Iterator i = this.rFileRecovered.iterator(); i.hasNext();)
+        {
+            VolumeFileRecovered f = (VolumeFileRecovered)i.next();
+            f.dump(s);
+        }
     }
 
     /**
