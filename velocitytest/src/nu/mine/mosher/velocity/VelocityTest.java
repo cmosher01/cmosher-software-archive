@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -106,6 +108,7 @@ public class VelocityTest
                 }
             }
         }
+        Collections.reverse(deps);
         return deps;
     }
 }
