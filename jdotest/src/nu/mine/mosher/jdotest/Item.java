@@ -35,7 +35,7 @@ public class Item
         this.name = name;
     }
 
-	public Iterator rThings()
+	public Iterator getThings()
 	{
 		return new Iter(rmmThing);
 	}
