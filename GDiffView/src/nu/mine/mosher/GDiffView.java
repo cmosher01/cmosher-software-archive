@@ -40,9 +40,9 @@ public class GDiffVeiew extends JFrame
  
  
  
-    public TextPaneDemo() throws BadLocationException
+    public GDiffVeiew() throws BadLocationException
     {
-        super("TextPaneDemo");
+        super("GDiffVeiew");
  
         doc = new DefaultStyledDocument();
         pane = new JTextPane(doc);
