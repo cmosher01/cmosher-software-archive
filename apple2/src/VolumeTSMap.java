@@ -8,7 +8,7 @@
  * 
  * @author Chris
  */
-public class VolumeTSMap
+public class VolumeTSMap extends VolumeEntity
 {
 
 }
