@@ -188,7 +188,17 @@ public class Player implements Immutable
     	for (int i = 0; i < rb.length; i++)
         {
             byte b = rb[i];
-            System.out.print(Byte.toHexString(b));
+            int x;
+            if (b < 0)
+            {
+            	x = b;
+            	x += 128;
+            }
+            else
+            {
+            	x = b;
+            }
+            System.out.print(Integer.toHexString(x));
             System.out.print(' ');
         }
         System.out.println();
