@@ -98,8 +98,6 @@ public class ImageButton extends Component
 
     /**
      * gets the label
-     * 
-     * @see setLabel
      */
     public String getLabel()
     {
@@ -109,8 +107,6 @@ public class ImageButton extends Component
 
     /**
      * sets the label
-     * 
-     * @see getLabel
      */
     public void setLabel(String label)
     {
