@@ -33,8 +33,8 @@ public final class Fields
     public static void main(String[] args) throws ApplicationAborting
     {
         ExceptionHandler eh = new ExceptionHandler();
-        CommandLineArgHandler ch = new CommandLineArgHandler(args);
-        SwingGUI gui = new SwingGUI();
+        CommandLineArgHandler ch = new FieldsCommandLine(args);
+        SwingGUI gui = new FieldsGUI();
 
         SwingApplication app = new SwingApplication(eh,ch,gui);
 
