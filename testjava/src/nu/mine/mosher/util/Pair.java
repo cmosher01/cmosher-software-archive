@@ -2,7 +2,7 @@ package com.surveysampling.util;
 
 import java.io.Serializable;
 
-public class Pair implements Cloneable, Comparable, Serializable
+public final class Pair implements Cloneable, Comparable, Serializable
 {
     private ImmutableReference a;
     private ImmutableReference b;
@@ -41,24 +41,7 @@ public class Pair implements Cloneable, Comparable, Serializable
         }
         Pair that = (Pair)o;
 
-        return eq(this.a,that.a) && eq(this.b,that.b);
-    }
-
-    private boolean eq(Object x, Object y)
-    {
-        if (x == null && y == null)
-        {
-            return true;
-        }
-        if (x == null)
-        {
-            return false;
-        }
-        if (y == null)
-        {
-            return false;
-        }
-        return x.equals(y);
+        return this.a.equals(that.a) && this.b.equals(that.b);
     }
 
     public int compareTo(Object o)
