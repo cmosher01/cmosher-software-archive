@@ -158,7 +158,7 @@ public class GDiffView extends JFrame
      * @param matches
      * @param w
      */
-    private static void lookupUniqueMatch(SourceFile src, int chk, int trgPos, List matches, int w)
+    private void lookupUniqueMatch(SourceFile src, int chk, int trgPos, List matches, int w)
     {
         long srcPos = src.lookupUnique(chk);
         if (srcPos >= 0)
@@ -167,7 +167,8 @@ public class GDiffView extends JFrame
             Range rngTrg = new Range(trgPos,trgPos+w-1);
             GDiffCopy cpy = new GDiffCopy(rngSrc);
             cpy.setTargetRange(rngTrg);
-            matches.add(cpy);
+//            matches.add(cpy);
+            rCopy.add(cpy);
         }
     }
 
