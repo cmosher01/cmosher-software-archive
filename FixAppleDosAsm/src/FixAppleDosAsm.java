@@ -36,7 +36,7 @@ public class FixAppleDosAsm
 
     /**
      * @param s
-     * @return
+     * @param out
      */
     private static void processLine(String s, Lister out)
     {
