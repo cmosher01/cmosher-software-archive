@@ -107,8 +107,23 @@ public class BinDiff
         dw.flush();
     }
 
-	protected void outBytes(PushbackRandomFile f, long pos, int len) throws IOException
+	protected void outBytes(int method, PushbackRandomFile f, long pos, int len) throws IOException
 	{
+		String s;
+		switch (method)
+		{
+			case 0:
+				s = "COPY";
+			break;
+			case 1:
+				s = "DELETE";
+			break;
+			case 2:
+				s = "INSERT";
+			break;
+		}
+		dw.outTag(s,len);
+
 		long orig = f.tell();
 
 		f.seek(pos);
@@ -136,8 +151,7 @@ public class BinDiff
         {
             if (state == COPY)
             {
-            	dw.outTag("COPY",ccopy);
-				outBytes(filecopy,poscopy,ccopy);
+				outBytes(0,filecopy,poscopy,ccopy);
 				poscopy = -1;
 				ccopy = 0;
             }
@@ -147,15 +161,13 @@ public class BinDiff
                 {
                     if (cskip > 0)
                     {
-						dw.outTag("DELETE",cskip);
-						outBytes(fileskip,posskip,cskip);
+						outBytes(1,fileskip,posskip,cskip);
 						posskip = -1;
                         cskip = 0;
                     }
                     if (cinsert > 0)
                     {
-						dw.outTag("INSERT",cinsert);
-						outBytes(fileinsert,posinsert,cinsert);
+						outBytes(2,fileinsert,posinsert,cinsert);
 						posinsert = -1;
                         cinsert = 0;
                     }
