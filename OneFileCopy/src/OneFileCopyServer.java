@@ -20,7 +20,7 @@ public class OneFileCopy
 		int cBuf = cBufMax;
 		if (f.length() < cBuf)
 		{
-			cBuf = f.length();
+			cBuf = (int)f.length();
 		}
 
 		ServerSocket srv = new ServerSocket(60013);
