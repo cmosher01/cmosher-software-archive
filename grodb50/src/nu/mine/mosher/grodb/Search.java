@@ -10,6 +10,7 @@ import java.util.List;
 public class Search
 {
 	private String description;
+	private boolean completed;
 
 	private List<Relation<Source,Search,SourceSearchRelType>> rSource = new ArrayList<Relation<Source,Search,SourceSearchRelType>>();
 
