@@ -6,5 +6,5 @@ package nu.mine.mosher.grodb;
  */
 public enum HypoSearchRelType
 {
-	raises_issue
+	raises
 }
