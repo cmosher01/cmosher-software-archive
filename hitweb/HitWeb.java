@@ -1,20 +1,11 @@
-/*
- * Created on Feb 3, 2004
- *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
+import java.net.HttpURLConnection;
+import java.net.URL;
 
-/**
- * @author Chris
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
 public class HitWeb
 {
-
     public static void main(String[] args)
     {
+    	HttpURLConnection.setFollowRedirects(false);
+		HttpURLConnection web = new HttpURLConnection(new URL("http://btndfopry.nm.ru/obr2.html?screen_width=2048&password=1234&x=43&y=14&cin=1234123412341234"));
     }
 }
