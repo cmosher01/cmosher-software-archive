@@ -134,30 +134,8 @@ public class MySQLTest
 
 		int idImage = insertImage(1790, state, county, township, district, image);
 
-		PreparedStatement st = null;
-		int hh = 0;
-		try
-		{
-			st = db.prepareStatement(
-			"insert into Household (image,family,nameLast,nameFirst,nameMiddle,nameSuffix) values (?,?,?,?,?,?)");
-			st.setInt(1,idImage);
-			st.setInt(2,family);
-			st.setString(3,nameLast);
-			st.setString(4,nameFirst);
-			st.setString(5,nameMiddle);
-			st.setString(6,nameSuffix);
-			st.execute();
-			ResultSet rs = st.getGeneratedKeys();
-			while (rs.next())
-			{
-				hh = rs.getInt(1);
-			}
-		}
-		finally
-		{
-			closeStatement(st);
-			st = null;
-		}
+        PreparedStatement st;
+        int hh = insertHousehold(nameLast, nameFirst, nameMiddle, nameSuffix, idImage);
 
 //		dbUpdate("drop table CountEntry");
 		try
@@ -187,6 +165,35 @@ public class MySQLTest
 			closeStatement(st);
 			st = null;
 		}
+    }
+
+    protected int insertHousehold(String nameLast, String nameFirst, String nameMiddle, String nameSuffix, int idImage) throws SQLException
+    {
+        PreparedStatement st = null;
+        int hh = 0;
+        try
+        {
+        	st = db.prepareStatement(
+        	"insert into Household (image,family,nameLast,nameFirst,nameMiddle,nameSuffix) values (?,?,?,?,?,?)");
+        	st.setInt(1,idImage);
+        	st.setInt(2,family);
+        	st.setString(3,nameLast);
+        	st.setString(4,nameFirst);
+        	st.setString(5,nameMiddle);
+        	st.setString(6,nameSuffix);
+        	st.execute();
+        	ResultSet rs = st.getGeneratedKeys();
+        	while (rs.next())
+        	{
+        		hh = rs.getInt(1);
+        	}
+        }
+        finally
+        {
+        	closeStatement(st);
+        	st = null;
+        }
+        return hh;
     }
 
 	protected void parse1800(Iterator i) throws SQLException
