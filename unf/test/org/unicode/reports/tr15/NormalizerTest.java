@@ -16,6 +16,7 @@ public class NormalizerTest extends TestCase
     {
     	Normalizer n = new Normalizer();
     	String s = "\u0041\u030a";
+		dumphex(s);
     	String sn = n.normalize(s);
     	dumphex(sn);
     }
