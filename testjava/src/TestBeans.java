@@ -4,11 +4,14 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorManager;
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import com.surveysampling.beans.editors.Editors;
@@ -53,10 +56,6 @@ public class TestBeans
         PropertyDescriptor pd = (PropertyDescriptor)mapPDs.get(property);
 
         Class classProp = pd.getPropertyType();
-        if (classProp.isArray())
-        {
-            throw new UnsupportedOperationException("array properties are not supported");
-        }
 
         PropertyEditor ed = PropertyEditorManager.findEditor(classProp);
         if (ed == null)
@@ -64,11 +63,26 @@ public class TestBeans
             throw new IntrospectionException("can't get property editor");
         }
 
-//        ed.setAsText(value);
-//        Object val = ed.getValue();
+        Object v;
+        if (classProp.isArray())
+        {
+            Object[] rval = (Object[])Array.newInstance(classProp.getComponentType(),value.length);
+            for (int i = 0; i < value.length; ++i)
+            {
+                String s = value[i];
+                ed.setAsText(s);
+                rval[i] = ed.getValue();
+            }
+            v = rval;
+        }
+        else
+        {
+            ed.setAsText(value[0]);
+            v = ed.getValue();
+        }
 
         Method wr = pd.getWriteMethod();
-        wr.invoke(bean, new Object[] { val });
+        wr.invoke(bean, new Object[] { v });
     }
 
     public static HashMap buildPropertyDescriptorMap(PropertyDescriptor[] rpd)
