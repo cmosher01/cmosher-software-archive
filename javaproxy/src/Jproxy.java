@@ -355,10 +355,9 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
 
         cachepool = new ProxyCachePool(cache_max,cache_expire);
 
-        access_log_name = (String)httpconfig.getProperty("log.access");
-        error_log_name = (String)httpconfig.getProperty("log.error");
-        log_level = Integer.parseInt((String)httpconfig
-                .getProperty("log.loglevel"));
+        access_log_name = httpconfig.getProperty("log.access");
+        error_log_name = httpconfig.getProperty("log.error");
+        log_level = Integer.parseInt(httpconfig.getProperty("log.loglevel"));
 
         access_log = new Log(access_log_name);
         error_log = new Log(error_log_name);
