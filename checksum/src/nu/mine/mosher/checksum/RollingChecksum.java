@@ -92,6 +92,6 @@ public class RollingChecksum
         }
         b %= M;
 
-        checksum = (b << 16) + a;
+        checksum = (b << 16) | a;
     }
 }
