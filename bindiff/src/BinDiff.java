@@ -77,7 +77,7 @@ public class BinDiff
         {
             if (c1 == c2)
             {
-                statechange(COPY,1);
+                statechange(COPY,1,f1);
             }
             else
             {
