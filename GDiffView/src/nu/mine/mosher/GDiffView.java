@@ -429,6 +429,14 @@ public class GDiffView extends JFrame
 
     public void highlight(long beginPoint, long endPoint, String highlight, boolean target)
     {
+        System.out.print("highlight: ");
+        System.out.print(target ? "TRG" : "SRC");
+        System.out.print("[");
+        System.out.print(beginPoint);
+        System.out.print("-");
+        System.out.print(endPoint);
+        System.out.print("] ");
+        System.out.println(highlight);
         AttributeSet attr = (AttributeSet)styles.get(highlight);
         if (target)
         {
