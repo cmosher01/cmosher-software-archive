@@ -6,6 +6,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -22,6 +24,8 @@ import javax.swing.UIManager;
 
 public class GROapplet extends JApplet
 {
+    private boolean test;
+
     private FamilyChart fc;
 
     public GROapplet() throws HeadlessException
@@ -132,10 +136,17 @@ public class GROapplet extends JApplet
 
         InputStream streamTree;
 
-        URL url = new URL(getDocumentBase(), "?chartdata");
-        HttpURLConnection con = (HttpURLConnection)url.openConnection();
-        con.connect();
-        streamTree = con.getInputStream();
+		if (test)
+		{
+	        URL url = new URL(getDocumentBase(), "?chartdata");
+	        HttpURLConnection con = (HttpURLConnection)url.openConnection();
+	        con.connect();
+	        streamTree = con.getInputStream();
+		}
+		else
+		{
+			streamTree = new FileInputStream(new File("test.gro"));
+		}
 
         readFrom(streamTree);
 
@@ -224,12 +235,18 @@ public class GROapplet extends JApplet
             }
         });
 
-        JApplet applet = new GROapplet();
+        GROapplet applet = new GROapplet();
+        applet.setTestMode();
         applet.init();
         f.add(applet);
 
         f.setSize(640, 480);
         f.setVisible(true);
+    }
+
+    private void setTestMode()
+    {
+    	test = true;
     }
 
     //    protected void processMouseMotionEvent(MouseEvent e)
