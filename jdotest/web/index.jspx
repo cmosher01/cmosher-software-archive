@@ -10,10 +10,11 @@
 <table>
 <%
 	Perm pm = new Perm();
+	pm.pm().getExtent(Item.class,true).iterator();
     for (Iterator i = pm.getList(); i.hasNext(); )
     {
         Item item = (Item)i.next();
-        String id = pm.getIDof(item);
+        String id = pm.pm().getObjectId(item).toString();
         %><tr><td><a href="edit.jsp?id=<%=id%>"><%=item.getName()%></a></td></tr><%
     }
 %>
