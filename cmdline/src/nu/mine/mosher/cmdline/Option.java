@@ -51,4 +51,14 @@ public class Option
         hash += mValue.hashCode();
         return hash;
     }
+
+    /**
+     * Convenience method.
+     * @param name
+     * @return
+     */
+    public boolean is(String name)
+    {
+        return mDef.is(name);
+    }
 }
