@@ -36,4 +36,29 @@ public class TSMap
         }
         return r[sector];
     }
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString()
+    {
+        StringBuffer sb = new StringBuffer();
+        boolean first = true;
+        for (int i = 0; i < r.length; i++)
+        {
+            boolean b = r[i];
+            if (b)
+            {
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    sb.append(",");
+                }
+                sb.append(Integer.toHexString(i));
+            }
+        }
+    }
 }
