@@ -167,7 +167,9 @@ public class GDiffView extends JFrame
             }
         };
         JScrollPane scrGDiff = new JScrollPane(listGDiff);
+        scrGDiff.setMinimumSize(new Dimension(300,460));
         scrGDiff.setPreferredSize(new Dimension(300,460));
+        scrGDiff.setMaximumSize(new Dimension(300,460));
 
         JPanel contentPane = new JPanel(new BorderLayout());
         contentPane.add(scrSrc,BorderLayout.WEST);
