@@ -155,8 +155,8 @@ public class GDiffView extends JFrame
         paneSrc = new JTextPaneNoWrap(docSrc);
         paneSrc.setEditable(false);
         JScrollPane scrSrc = new JScrollPane(paneSrc);
-        scrSrc.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scrSrc.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+//        scrSrc.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+//        scrSrc.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 //        scrSrc.setMinimumSize(new Dimension(100,100));
 //        scrSrc.setPreferredSize(new Dimension(400,430));
         scrSrc.setMaximumSize(new Dimension(Integer.MAX_VALUE,Integer.MAX_VALUE));
