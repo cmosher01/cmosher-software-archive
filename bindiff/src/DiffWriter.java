@@ -26,6 +26,14 @@ public class DiffWriter
 
 	public void outByte(int b)
 	{
+		if (pos > 93)
+		{
+			s.append("\n");
+			pos = 0;
+		}
+		s.append(Integer.toHexString(b));
+		s.append(" ");
+		pos += 3;
 	}
 
 	public void flush()
