@@ -212,6 +212,7 @@ public class MySQLTest
 		finally
 		{
 			closeStatement(st);
+			st = null;
 		}
     }
 
