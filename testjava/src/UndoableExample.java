@@ -45,7 +45,7 @@ public class UndoableExample implements Cloneable
         {
             e.printStackTrace();
         }
-        this.x = x;
+        ref().x = x;
     }
 
     public void undo()
