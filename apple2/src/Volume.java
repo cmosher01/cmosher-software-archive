@@ -75,7 +75,7 @@ public class Volume
         getUsedNondeletedFiles(rKnownSectors);
         getUsedDeletedFiles(rKnownSectors);
         getUsedRecoveredFiles(rKnownSectors);
-        getUsedBoot(rKnownSectors);
+//        getUsedBoot(rKnownSectors);
 
         if (!VolumeDOS.isDOSKnown(rKnownSectors))
         {
