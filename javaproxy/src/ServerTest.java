@@ -8,8 +8,9 @@
  * Author : Steve Yeong-Ching Hsueh
  */
 
-import java.net.*;
-import java.io.*;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 
 /**
  * ServerTest is an application the works as an HTTP client
