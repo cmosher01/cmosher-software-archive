@@ -1,5 +1,7 @@
 package nu.mine.mosher.gedcom;
 
+import nu.mine.mosher.util.TreeNode;
+
 public class GedcomTree
 {
 	private int prevLevel = -1;
