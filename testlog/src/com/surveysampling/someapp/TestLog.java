@@ -29,6 +29,7 @@ public class TestLog
 
             public void flush()
             {
+                System.err.flush();
             }
 
             public void close() throws SecurityException
