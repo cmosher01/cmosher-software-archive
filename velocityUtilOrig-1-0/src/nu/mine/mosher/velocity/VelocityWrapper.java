@@ -205,7 +205,7 @@ public class VelocityWrapper
      * default properties to initialize Velocity.
      * @param inputTemplate
      * @param context
-     * @param out
+     * @param outputFile
      * @throws VelocityException
      */
     public static void merge(File inputTemplate, Context context, File outputFile) throws VelocityException
