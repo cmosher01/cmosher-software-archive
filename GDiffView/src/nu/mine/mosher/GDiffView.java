@@ -229,6 +229,7 @@ public class GDiffView extends JFrame
             }
         };
         JScrollPane scrGDiff = new JScrollPane(listGDiff);
+        scrGDiff.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 //        scrGDiff.setMinimumSize(new Dimension(300,460));
 //        scrGDiff.setPreferredSize(new Dimension(300,460));
 //        scrGDiff.setMaximumSize(new Dimension(300,460));
