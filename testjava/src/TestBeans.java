@@ -46,13 +46,11 @@ public class TestBeans
         if (classProp.isArray())
         {
             classProp = classProp.getComponentType();
-            PropertyEditor ed = getPropertyEditor(classProp);
-            v = convertArray(value, ed, classProp);
+            v = convertArray(value, getPropertyEditor(classProp), classProp);
         }
         else
         {
-            PropertyEditor ed = getPropertyEditor(classProp);
-            v = convert(value[0], ed);
+            v = convert(value[0], getPropertyEditor(classProp));
         }
 
         Method wr = pd.getWriteMethod();
