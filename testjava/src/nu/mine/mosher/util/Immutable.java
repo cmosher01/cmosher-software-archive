@@ -1,4 +1,4 @@
-package com.surveysampling.util;
+package nu.mine.mosher.util;
 
 public interface Immutable
 {
