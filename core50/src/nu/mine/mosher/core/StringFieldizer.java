@@ -6,29 +6,44 @@ import java.util.NoSuchElementException;
 public class StringFieldizer implements Iterable<String>
 {
 	private final String s;
+	private final char delim;
+
+
 
 	public StringFieldizer(String s)
 	{
-		this.s = s;
+		this(s,',');
 	}
+
+	public StringFieldizer(String s, char delim)
+	{
+		this.s = s;
+		this.delim = delim;
+	}
+
+
 
 	public Iter iterator()
 	{
-		return new Iter(s);
+		return new Iter(s,delim);
 	}
+
+
 
 	public static class Iter implements Iterator<String>
 	{
 		private final String s;
+		private final char delim;
 		private int pos;
 
-		private Iter(String s) throws UnsupportedOperationException
+		private Iter(String s, char delim) throws UnsupportedOperationException
 		{
 			if (this.s != null)
 			{
 				throw new UnsupportedOperationException();
 			}
 			this.s = s;
+			this.delim = delim;
 		}
 
 		/**
@@ -50,7 +65,7 @@ public class StringFieldizer implements Iterable<String>
 			{
 				throw new NoSuchElementException();
 			}
-			int i = s.indexOf(',',pos);
+			int i = s.indexOf(delim,pos);
 			if (i < 0)
 			{
 				i = s.length();
