@@ -4,9 +4,10 @@
 	xmlns:jsp="http://java.sun.com/JSP/Page"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 >
-	<jsp:directive.attribute name="classname" type="java.lang.String" required="true" />
 	<jsp:directive.attribute name="var" type="java.lang.String" rtexprvalue="false" required="true" />
-	<jsp:directive.variable alias="obj" name-from-attribute="var" variable-class="java.lang.Object" />
-	<c:set var="obj" value="chris" />
+	<jsp:directive.variable alias="x" name-from-attribute="var" variable-class="java.lang.Object" />
+	<jsp:scriptlet>
+	<c:set var="x" value="pm.getExtent(Item.class,true).iterator()" />
+	</jsp:scriptlet>
 	<jsp:doBody />
 </jsp:root>
