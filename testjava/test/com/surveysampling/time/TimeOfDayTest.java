@@ -195,4 +195,9 @@ public class TimeOfDayTest extends TestCase
         TimeOfDay tod2 = new TimeOfDay(Calendar.getInstance(),17,34,12,367);
         assertEquals(tod2.hashCode(),tod.hashCode());
     }
+
+    public void testToString()
+    {
+        assertEquals("17:34:12.367",tod.toString());
+    }
 }
