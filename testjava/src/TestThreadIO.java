@@ -20,6 +20,10 @@ public class TestThreadIO
     public static void main(String[] args) throws Throwable
     {
         ReadFormFile();
+        ReadFormFile();
+        ReadFormFile();
+        ReadFormFile();
+        ReadFormFile();
     }
 
     private static void ReadFormFile() throws IOException
