@@ -390,7 +390,7 @@ public class GDiffView extends JFrame
         return getAscStart(pos) + 1;
     }
 
-    public void highlight(int beginPoint, int endPoint, boolean highlight)
+    public void highlight(long beginPoint, long endPoint, boolean highlight)
     {
         AttributeSet attr = (AttributeSet)styles.get(highlight
                 ? "highlight"
