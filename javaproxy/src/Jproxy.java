@@ -34,7 +34,7 @@ import java.util.Properties;
 
 
 /**
- * Jproxy , core of the Java Proxy server. It instantiates the server frame,
+ * Core of the Java Proxy server. Creates the server frame,
  * reads configurations, and handles events.
  */
 class Jproxy extends Frame implements ServerInterface, ActionListener,
