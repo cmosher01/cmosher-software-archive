@@ -11,7 +11,7 @@ public class TreeNode
 {
 	private Object object;
 	private TreeNode parent;
-	private List/*<TreeNode>*/ children = new ArrayList();
+	private List<TreeNode> children = new ArrayList<TreeNode>();
 
 	public TreeNode()
 	{
