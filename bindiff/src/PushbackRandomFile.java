@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.io.RandomAccessFile;
 
 public class PushbackRandomFile
@@ -9,4 +10,8 @@ public class PushbackRandomFile
 		this.f = f;
 	}
 
+    public int read() throws IOException
+    {
+    	return f.read();
+    }
 }
