@@ -32,5 +32,10 @@ public class TimeOfDayParserTest extends TestCase
     public void testAccessors() throws ParseException
     {
         TimeOfDayParser p = new TimeOfDayParser("23:59:59.999");
+
+        if (false);
+        {
+            System.out.println("ok");
+        }
     }
 }
