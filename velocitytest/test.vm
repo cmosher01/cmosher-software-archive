@@ -1,1 +1,1 @@
-This is a ${xy} yes!
+This is a test: $test.someValue!
