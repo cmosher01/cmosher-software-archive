@@ -197,7 +197,8 @@ public class Disk
             DiskPos cur = this.pos;
             byte[] sector = read(DiskPos.cSector);
             List entries = new ArrayList();
-            if (isDos33CatalogSector(sector,allowLarge,tsmapMaps,entries))
+            int goodEntries = isDos33CatalogSector(sector,allowLarge,tsmapMaps,entries);
+            if (goodEntries > 0)
             {
                 System.out.println("Catalog Sector @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack())+" ("+goodEntries+" entries)");
                 for (Iterator i = entries.iterator(); i.hasNext();)
@@ -218,7 +219,7 @@ public class Disk
      * @param entries
      * @return
      */
-    protected boolean isDos33CatalogSector(byte[] sector, boolean allowLarge, TSMap tsmapMaps, List entries)
+    protected int isDos33CatalogSector(byte[] sector, boolean allowLarge, TSMap tsmapMaps, List entries)
     {
         // TODO Auto-generated method stub
         return false;
