@@ -12,13 +12,13 @@ import java.util.Date;
  * of the calendar is not used.
  * It contains hours, minutes, seconds, and milliseconds
  * since midnight. Instances of this class are immutable.
- * Instances of this class do not hold a reference to
+ * Instances of this class hold a reference to
  * the given Calendar.
  * The constructors fail atomically.
  */
 public class TimeOfDay implements Comparable
 {
-    private final boolean valid;
+    private final Calendar calendar;
     private final int hours;
     private final int minutes;
     private final int seconds;
@@ -40,7 +40,7 @@ public class TimeOfDay implements Comparable
         // (there's no guarantee that getMinimun and getMaximum are thread safe).
         // We don't hold a reference to calendar, so clone is OK here
         // There's no other way to create our own calendar
-        calendar = (Calendar)calendar.clone();
+        this.calendar = (Calendar)calendar.clone();
 
         if (hours < calendar.getMinimum(Calendar.HOUR_OF_DAY) || calendar.getMaximum(Calendar.HOUR_OF_DAY) < hours)
         {
