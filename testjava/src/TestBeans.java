@@ -1,13 +1,7 @@
-/*
- * TODO
- *
- * Created on Apr 14, 2004
- */
-
-/**
- * TODO
- */
 public class TestBeans
 {
-
+    public void main(String[] rArgs) throws Throwable
+    {
+        System.out.println("test");
+    }
 }
