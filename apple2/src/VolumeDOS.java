@@ -372,15 +372,21 @@ public class VolumeDOS extends VolumeEntity
                 clearIgnored(rIgnore1980);
                 if (Arrays.equals(rbCmp,rbClear1980))
                 {
-                    s.append(" (DOS 3.3 1980 exact match)");
+                    s.append(" (DOS 3.3 1980 master exact match)");
                 }
                 else
                 {
                     // TODO check for slave DOS
                     int dif = rb[0xFE]-0x36;
                     byte[] rbClearSlave = makeSlave(rbClear1980,rSlave1980,dif);
-                    
-                    s.append(" (DOS 3.3 1980 altered)");
+                    if (Arrays.equals(rbCmp,rbClearSlave))
+                    {
+                        s.append(" (DOS 3.3 1980 slave (@"+Integer.toHexString(rb[0xFE])+") exact match)");
+                    }
+                    else
+                    {
+                        s.append(" (DOS 3.3 1980 altered)");
+                    }
                 }
             }
             else if (x == 0x84)
