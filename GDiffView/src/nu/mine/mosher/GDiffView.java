@@ -193,10 +193,9 @@ public class GDiffView extends JFrame
 
         initStyles();
 
-
-
         JFrame.setDefaultLookAndFeelDecorated(true);
     }
+
     public void init() throws IOException, BadLocationException
     {
         GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
