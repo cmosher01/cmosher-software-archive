@@ -372,11 +372,20 @@ public class Disk
     }
 
     /**
-     * @param rDiskPos
+     * @param rDiskPos list of DiskPos (track/sectors)
      * @return
      */
     public byte[] getDos33File(Collection rDiskPos)
     {
+        byte[] r = new byte[rDiskPos.size()*DiskPos.cSector];
+        int ir = 0;
+        for (Iterator i = rDiskPos.iterator(); i.hasNext();)
+        {
+            DiskPos p = (DiskPos)i.next();
+            System.arraycopy(this.disk, p.getIndex(), r, ir, DiskPos.cSector);
+            ir += DiskPos.cSector;
+        }
+        return r;
     }
 
 //    /**
