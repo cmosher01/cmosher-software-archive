@@ -167,7 +167,7 @@ public class BinDiff
             case COPY:
 				if (poscopy < 0)
 				{
-					poscopy = f.tell();
+					poscopy = f.tell()-1;
 					filecopy = f;
 				}
                 ccopy += c;
