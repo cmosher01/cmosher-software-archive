@@ -1,12 +1,16 @@
 <%@ include file="htmlhead.jsp" %>
+<%@ page import="javax.jdo.PersistenceManager" %>
 <%@ page import="nu.mine.mosher.jdotest.Item" %>
 <%@ page import="nu.mine.mosher.jdotest.Perm" %>
 <%
-    String s = request.getParameter("item");
-    Perm pm = new Perm();
-    Item item = new Item();
-    item.setName(s);
-    pm.put(item);
+	String s = request.getParameter("item");
+	PersistenceManager pm = new Perm().pm();
+	Item item = new Item();
+	item.setName(s);
+	pm.currentTransaction().begin();
+	pm.makePersistent(obj);
+	pm.currentTransaction().commit();
+	pm.put(item);
 %>
 <head>
 <title>Added</title>
