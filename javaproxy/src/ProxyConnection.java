@@ -344,7 +344,7 @@ public class ProxyConnection extends Thread
                 Map ht = c_header.getHeaderFields();
                 for (Iterator enu = ht.keySet().iterator(); enu.hasNext();)
                 {
-                    key = (String)enu.getNext();
+                    key = (String)enu.next();
                     value = (String)ht.get(key);
                     if (key.equalsIgnoreCase("Proxy-Connection"))
                         continue; // bypass the proxy connection row
