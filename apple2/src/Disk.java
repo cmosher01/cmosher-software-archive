@@ -183,7 +183,7 @@ public class Disk
                     }
                     ce += 35;
                 }
-                if (((goodEntries==1 && penultimateSpace==1) || (penultimateSpace >= goodEntries-1)) && goodEntries > 0)
+                if (((goodEntries==1 && penultimateSpace==1) || ((goodEntries > 1) && (penultimateSpace >= goodEntries-1))) && goodEntries > 0)
                 {
                     System.out.println("Catalog Sector @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack())+" ("+goodEntries+" entries)");
                 }
