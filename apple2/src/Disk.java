@@ -169,23 +169,23 @@ public class Disk
         {
             DiskPos cur = this.pos;
             byte[] sector = read(DiskPos.cSector);
-            isDos33VTOC(sector,cur);
+            if (isDos33VTOC(sector))
+            {
+                System.out.println("VTOC @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
+            }
         }
     }
 
     /**
      * @param sector
-     * @param cur
      */
-    protected void isDos33VTOC(byte[] sector, DiskPos cur)
+    protected boolean isDos33VTOC(byte[] sector)
     {
-        if ((sector[3]==3 || sector[3]==2) &&
+        return
+            (sector[3]==3 || sector[3]==2) &&
             match(sector,0x04,new byte[]{0x00,0x00}) &&
             match(sector,0x34,new byte[]{0x23,0x10,0x00,0x01}) &&
-            match(sector,0x3a,new byte[]{0x00,0x00}))
-        {
-            System.out.println("VTOC @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
-        }
+            match(sector,0x3a,new byte[]{0x00,0x00});
     }
 
     /**
