@@ -5,6 +5,8 @@
  */
 package com.surveysampling.time;
 
+import java.text.ParseException;
+
 import junit.framework.TestCase;
 
 /**
@@ -27,4 +29,8 @@ public class TimeOfDayParserTest extends TestCase
         junit.textui.TestRunner.run(TimeOfDayParserTest.class);
     }
 
+    public void testAccessors() throws ParseException
+    {
+        TimeOfDayParser p = new TimeOfDayParser("23:59:59.999");
+    }
 }
