@@ -8,8 +8,8 @@ public class smtpclient
     public static void main(String[] rArg) throws Throwable
     {
         Socket s1=new Socket("mail.surveysampling.com",25);
-        PrintStream d1=new DataInputStream(new BufferedInputStream(s1.getInputStream(),2500));
-        DataInputStream p1=new PrintStream(new BufferedOutputStream(s1.getOutputStream(),2500),true);
+        DataInputStream d1=new DataInputStream(new BufferedInputStream(s1.getInputStream(),2500));
+        PrintStream p1=new PrintStream(new BufferedOutputStream(s1.getOutputStream(),2500),true);
         String recvreply=d1.readLine();
         System.out.println("Server Response : " + recvreply);
 
