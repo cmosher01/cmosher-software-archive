@@ -23,15 +23,7 @@ public class TestBeans
         String prop = "objInteger";
         String val = "34";
 
-
-
-
-
-
-
         setProperty(some, prop, val);
-
-
 
         showInt(some.getObjInteger().intValue());
     }
