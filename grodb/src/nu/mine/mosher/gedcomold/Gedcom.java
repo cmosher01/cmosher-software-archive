@@ -55,6 +55,12 @@ public class Gedcom
             System.out.print(" ");
         }
 		System.out.println();
+		for (Iterator i = curline.iterator(); i.hasNext();)
+		{
+			Integer c = (Integer)i.next();
+			System.out.print((char)c.intValue());
+		}
+		System.out.println();
     }
 
     public static String guessCharset(InputStream in) throws IOException
