@@ -20,6 +20,7 @@ public class RollingChecksumTest extends TestCase
         for (int i = 0; i < rc.length; i++)
         {
             rb[i] = (byte)rc[i];
+            // turn on high bit of about one third of the bytes
             if (Math.random() < .3)
             {
                 rb[i] |= 0x80;
