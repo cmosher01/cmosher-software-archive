@@ -1,4 +1,4 @@
-package com.surveysampling.beans.editors.test;
+package com.surveysampling.beans.editors;
 
 /**
  */
