@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.nio.charset.UnsupportedCharsetException;
 import java.util.logging.Logger;
 
 import nu.mine.mosher.core.Immutable;
@@ -35,6 +37,14 @@ public class Player implements Immutable
     public static void main(String[] args) throws Throwable
     {
         LoggingInitializer.init();
+
+		if (!Charset.isSupported("x-gedcom-ansel"))
+		{
+			System.err.println("You must create a file META-INF/services/java.nio.charsets.spi.CharsetProvider");
+			System.err.println("in the current classpath, with one line in it:");
+			System.err.println("nu.mine.mosher.charsets.GedcomAnselCharsetProvider");
+			throw new UnsupportedCharsetException("x-gedcom-ansel");
+		}
 
         InputStream stream;
         if (args.length > 0)
