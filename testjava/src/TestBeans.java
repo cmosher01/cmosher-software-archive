@@ -77,7 +77,6 @@ public class TestBeans
     public static Object getConvertedValue(String value, Class classProp)
         throws NegativeArraySizeException, IllegalArgumentException, IntrospectionException
     {
-        Object v;
         if (classProp.isArray())
         {
             throw new IllegalArgumentException("Cannot set an array property to an scalar value.");
