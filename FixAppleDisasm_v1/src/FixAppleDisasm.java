@@ -155,7 +155,7 @@ public class FixAppleDisasm
 							{
 								ln.refaddr = Integer.parseInt(ln.oper.substring(0,4),16);
 							}
-							catch (NumberFormatException e)
+							catch (Throwable e)
 							{
 								ln.refaddr = -1;
 							}
