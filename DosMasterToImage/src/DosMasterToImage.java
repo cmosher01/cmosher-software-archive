@@ -138,6 +138,7 @@ public class DosMasterToImage
     private static final int[] rIgnore1986 = {  0x00B4D, 0x00B58, 0x00B7C, 0x00B7D, 0x00B7F, 0x00B7F, 0x00B81, 0x00BFF, 0x00D42,
             0x00D42, 0x0194F, 0x019B7, 0x0225D, 0x0225E, 0x02297, 0x024FF, 0x000CF, 0x000FF, 0x0018D, 0x00192, 0x001DF, 0x001FF,
             0x003FD, 0x003FF, 0x00484, 0x00495, 0x00500, 0x00655, 0x006DF, 0x006FF, 0x009A8, 0x009B7};
+
     /**
      * @param args
      * @throws IOException
@@ -164,21 +165,24 @@ public class DosMasterToImage
 
         in.mark(in.available());
 
+        int[] r = new int[0x4000-0x1B00];
+
         long c = 0;
         while (c < 0x1B00)
         {
             c += in.skip(0x1B00-c);
         }
 
+        int x = 0;
         for (int i = 0x3600; i < 0x4000; ++i)
         {
-            out.write(in.read());
+            r[x++] = in.read();
         }
 
         in.reset();
         for (int i = 0x1B00; i < 0x3600; ++i)
         {
-            out.write(in.read());
+            r[x++] = in.read();
         }
 
         out.flush();
