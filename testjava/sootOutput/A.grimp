@@ -1,0 +1,25 @@
+public abstract class A extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        A r0;
+
+        r0 := @this;
+        r0.<init>();
+        java.lang.System.out.println("A constructor");
+        return;
+    }
+
+    public void c()
+    {
+        A r0;
+
+        r0 := @this;
+        java.lang.System.out.println("A c");
+        r0.s();
+        return;
+    }
+
+    public abstract void s();
+}
