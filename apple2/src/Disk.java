@@ -50,10 +50,15 @@ public class Disk
 
     public static String convertASCII(byte[] rb)
     {
-        StringBuffer sb = new StringBuffer(rb.length);
-        for (int i = 0; i < rb.length; ++i)
+        return convertASCII(rb,0,rb.length);
+    }
+
+    public static String convertASCII(byte[] rb, int pos, int len)
+    {
+        StringBuffer sb = new StringBuffer(len);
+        for (int i = 0; i < len; ++i)
         {
-            int c = rb[i];
+            int c = rb[pos+i];
             sb.append((char)(byte)(c & 0x0000007F));
         }
         return sb.toString();
