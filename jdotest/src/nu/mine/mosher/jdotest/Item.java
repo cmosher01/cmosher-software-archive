@@ -48,11 +48,6 @@ public class Item
 			this.iter = rmmThing.iterator();
 		}
 
-		public void remove() throws UnsupportedOperationException
-		{
-			throw new UnsupportedOperationException();
-		}
-
         public boolean hasNext()
         {
         	return this.iter.hasNext();
@@ -62,5 +57,10 @@ public class Item
         {
         	return ((Rel)this.iter.next()).getThing();
         }
+
+		public void remove() throws UnsupportedOperationException
+		{
+			throw new UnsupportedOperationException();
+		}
 	}
 }
