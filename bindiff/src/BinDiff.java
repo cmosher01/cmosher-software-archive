@@ -196,8 +196,8 @@ public class BinDiff
 
     protected boolean difMatch() throws IOException
     {
-        f1.mark();
-        f2.mark();
+        long orig1 = f1.tell();
+		long orig2 = f2.tell();
 
         boolean same = true;
         for (int i = 0; i < cMinMatch && same; ++i)
@@ -210,8 +210,8 @@ public class BinDiff
             }
         }
 
-		f1.reset();
-		f2.reset();
+		f1.seek(orig1);
+		f2.seek(orig2);
 
         return same;
     }
