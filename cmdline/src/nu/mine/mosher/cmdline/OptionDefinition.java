@@ -1,12 +1,12 @@
 /*
- * Created on Jul 15, 2004
+ * Created on July 15, 2004
  */
 package nu.mine.mosher.cmdline;
 
 /**
  * TODO
  * 
- * @author chrism
+ * @author Chris Mosher
  */
 public class OptionDefinition
 {
