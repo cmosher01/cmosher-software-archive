@@ -50,7 +50,7 @@ public class IllegalQuoteException extends Exception
      * piece of source string.
      * @param near some context from the source buffer, intended to
      * provide additional information to the end user about where the
-     * error occurred
+     * error occurred.
      */
     public IllegalQuoteException(String near)
     {
