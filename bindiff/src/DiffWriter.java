@@ -40,6 +40,10 @@ public class DiffWriter
 
     private void outAscii(int lim)
     {
+    	for (int i = lim; i < line.length; ++i)
+    	{
+    		s.append("   ");
+    	}
     	for (int i = 0; i < lim; i++)
         {
             int b = line[i];
