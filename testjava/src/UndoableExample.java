@@ -3,7 +3,7 @@ import com.surveysampling.util.UndoableReference;
 public class UndoableExample implements Cloneable
 {
     private int x;
-    private final UndoableReference u = new UndoableReference(this);
+    private final nu.mine.mosher.util.UndoableReference u = new UndoableReference(this);
 
 
 
