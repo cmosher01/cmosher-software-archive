@@ -25,6 +25,7 @@ package nu.mine.mosher;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -250,7 +251,7 @@ public class Delta
         }
         File sourceFile = new File(argv[0]);
         File targetFile = new File(argv[1]);
-        GDiffWriter output = new GDiffWriter(new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(argv[2])))));
+        GDiffWriter output = new GDiffWriter(new DataOutputStream(new BufferedOutputStream(new ByteArrayOutputStream())));
 
         if (sourceFile.length() > Integer.MAX_VALUE || targetFile.length() > Integer.MAX_VALUE)
         {
