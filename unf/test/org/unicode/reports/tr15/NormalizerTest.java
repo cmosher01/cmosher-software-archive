@@ -92,8 +92,25 @@ public class NormalizerTest extends TestCase
 
     protected void assertNormalize(String pre, String comp)
 	{
-		assertEquals(n.normalize(pre),comp);
+		dumphex(pre);
+		String norm = n.normalize(pre);
+		dumphex(norm);
+		dumphex(comp);
+		assertEquals(norm,comp);
 	}
+
+    private static void dumphex(String s)
+    {
+        char[] rc = s.toCharArray();
+        for (int i = 0; i < rc.length; ++i)
+        {
+            char c = rc[i];
+            String h = Integer.toHexString(c);
+            System.out.print(h);
+            System.out.print(" ");
+        }
+        System.out.println();
+    }
 
     protected void setUp() throws Exception
     {
