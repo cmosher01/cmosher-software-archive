@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
@@ -45,8 +46,12 @@ public class Player implements Immutable
 
 
 		String s = "\u00e2";
-		byte[] rb = s.getBytes("UTF-8");
-		rbDump(rb);
+		Writer w = new OutputStreamWriter(new FileOutputStream(new File("test.txt")),"UTF-8");
+		w.write(s);
+		w.flush();
+		w.close();
+//		byte[] rb = s.getBytes("UTF-8");
+//		rbDump(rb);
 
 
 
