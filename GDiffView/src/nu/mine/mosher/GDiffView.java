@@ -170,7 +170,7 @@ public class GDiffView extends JFrame
                         beginSrc = copy.getRange().getBegin();
                         endSrc = copy.getRange().getEnd();
                         highlight(true,false);
-                        paneSrc.setCaretPosition(beginSrc);
+                        paneSrc.setCaretPosition((int)beginSrc);
                         beginTrg = copy.getTargetRange().getBegin();
                         endTrg = copy.getTargetRange().getEnd();
                         highlight(true,true);
