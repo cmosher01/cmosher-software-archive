@@ -388,7 +388,7 @@ public class VolumeDOS extends VolumeEntity
                 clearIgnored(rIgnore1980);
                 if (Arrays.equals(rbCmp,rbClear1980))
                 {
-                    s.append(" (DOS 3.3 1980 master exact match)");
+                    s.append(" (DOS 3.3 1980 master: exact match)");
                 }
                 else
                 {
@@ -396,10 +396,18 @@ public class VolumeDOS extends VolumeEntity
                     byte[] rbClearSlave = makeSlave(rbClear1980,rSlave1980,dif);
                     if (Arrays.equals(rbCmp,rbClearSlave))
                     {
-                        s.append(" (DOS 3.3 1980 slave (A$"+Hex2Bin.hexbyte((byte)(0x1D+dif))+"00) exact match)");
+                        s.append(" (DOS 3.3 1980 slave (A$"+Hex2Bin.hexbyte((byte)(0x1D+dif))+"00): exact match)");
                     }
                     else
                     {
+                        // check here for Franklin DOS
+                        if (dif == 0) // master
+                        {
+                            if (Arrays.equals(rbCmp,rbClearFranklin))
+                            {
+                                s.append(" (DOS 3.3 1980 (Franklin version) master: exact match)");
+                            }
+                        }
                         if (dif == 0)
                         {
                             s.append(" (DOS 3.3 1980 master: unknown alteration)");
@@ -433,7 +441,7 @@ public class VolumeDOS extends VolumeEntity
                 clearIgnored(rIgnore1983);
                 if (Arrays.equals(rbCmp,rbClear1983))
                 {
-                    s.append(" (DOS 3.3 1983 master exact match)");
+                    s.append(" (DOS 3.3 1983 master: exact match)");
                 }
                 else
                 {
@@ -441,7 +449,7 @@ public class VolumeDOS extends VolumeEntity
                     byte[] rbClearSlave = makeSlave(rbClear1983,rSlave1983,dif);
                     if (Arrays.equals(rbCmp,rbClearSlave))
                     {
-                        s.append(" (DOS 3.3 1983 slave (A$"+Hex2Bin.hexbyte((byte)(0x1D+dif))+"00) exact match)");
+                        s.append(" (DOS 3.3 1983 slave (A$"+Hex2Bin.hexbyte((byte)(0x1D+dif))+"00): exact match)");
                     }
                     else
                     {
@@ -464,7 +472,7 @@ public class VolumeDOS extends VolumeEntity
                 clearIgnored(rIgnore1986);
                 if (Arrays.equals(rbCmp,rbClear1986))
                 {
-                    s.append(" (DOS 3.3 1986 master exact match)");
+                    s.append(" (DOS 3.3 1986 master: exact match)");
                 }
                 else
                 {
@@ -472,7 +480,7 @@ public class VolumeDOS extends VolumeEntity
                     byte[] rbClearSlave = makeSlave(rbClear1986,rSlave1986,dif);
                     if (Arrays.equals(rbCmp,rbClearSlave))
                     {
-                        s.append(" (DOS 3.3 1986 slave (A$"+Hex2Bin.hexbyte((byte)(0x1D+dif))+"00) exact match)");
+                        s.append(" (DOS 3.3 1986 slave (A$"+Hex2Bin.hexbyte((byte)(0x1D+dif))+"00): exact match)");
                     }
                     else
                     {
