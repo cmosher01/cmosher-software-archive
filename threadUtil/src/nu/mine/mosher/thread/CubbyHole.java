@@ -1,5 +1,5 @@
 /*
- * Created on Jul 15, 2004
+ * Created on January 8, 2004
  */
 package nu.mine.mosher.thread;
 
