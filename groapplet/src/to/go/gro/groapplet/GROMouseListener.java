@@ -26,7 +26,7 @@ public class GROMouseListener extends MouseInputAdapter
         super.mousePressed(evt);
     }
 
-    public void mouseReleased(MouseEvent evt) throws MalformedURLException
+    public void mouseReleased(MouseEvent evt)
     {
     	if (mLastIndi != null)
     	{
