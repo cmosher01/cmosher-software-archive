@@ -54,6 +54,7 @@ public class Test
 	{
         System.setOut(new PrintStreamAdapter(new PrintWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out),"UTF-8"))));
         System.out.println("\u2401");
+        System.out.flush();
 
 
 
