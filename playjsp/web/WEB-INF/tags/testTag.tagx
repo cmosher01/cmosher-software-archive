@@ -9,7 +9,7 @@
 	<jsp:directive.variable alias="obj" name-from-attribute="var" variable-class="java.lang.String" />
 	<jsp:text>
 	A test tag ${classname}
-	<c:set var="obj" value="chris" />
 	</jsp:text>
+	<c:set var="obj" value="chris" />
 	<jsp:doBody />
 </jsp:root>
