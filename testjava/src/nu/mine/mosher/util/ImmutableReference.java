@@ -41,24 +41,7 @@ public class ImmutableReference
         {
             return false;
         }
-        return eq(this.ref,o);
-    }
-
-    private boolean eq(Object x, Object y)
-    {
-        if (x == null && y == null)
-        {
-            return true;
-        }
-        if (x == null)
-        {
-            return false;
-        }
-        if (y == null)
-        {
-            return false;
-        }
-        return x.equals(y);
+        return this.ref.equals(o);
     }
 
     public int compareTo(Object o)
