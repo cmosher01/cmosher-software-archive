@@ -41,6 +41,9 @@ public class VolumeFile
     public void dump(StringBuffer s)
     {
         s.append("File: ");
+        s.append(catEntry.getName());
+        s.append(" [");
         ts.dump(s);
+        s.append("]\n");
     }
 }
