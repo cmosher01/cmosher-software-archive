@@ -45,6 +45,14 @@ public class Volume
 
         List rAllTSMaps = new ArrayList();
         disk.findDos33TSMapSector(rAllTSMaps);
+
+        List rKnownTSMaps = new ArrayList();
+        for (Iterator i = this.rFile.iterator(); i.hasNext();)
+        {
+            VolumeFile f = (VolumeFile)i.next();
+            VolumeTSMap map = f.getTSMap();
+            map.getPos(rKnownTSMaps);
+        }
     }
 
     /**
