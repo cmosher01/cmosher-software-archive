@@ -230,6 +230,16 @@ public class TimeOfDay implements Comparable
             s.append(':');
             appendNumber(seconds,2,s);
         }
+        else
+        {
+            appendNumber(hours,2,s);
+            s.append(':');
+            appendNumber(minutes,2,s);
+            s.append(':');
+            appendNumber(seconds,2,s);
+            s.append('.');
+            appendNumber(milliseconds,3,s);
+        }
 
         return s;
     }
