@@ -25,7 +25,10 @@ public class BigTableModel implements TableModel
 
     public String getColumnName(int columnIndex)
     {
-        return "C"+columnIndex;
+        StringBuffer sb = new StringBuffer(13);
+        sb.append("C");
+        sb.append(Integer.toString(columnIndex+1));
+        return sb.toString();
     }
 
     public Class getColumnClass(int columnIndex)
