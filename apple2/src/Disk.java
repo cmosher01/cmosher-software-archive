@@ -591,8 +591,9 @@ public class Disk
 //    }
 
     /**
+     * @param rPosTSMaps
      */
-    public void findDos33TSMapSector(/*TSMap tsmapMapsInCatalog*/)
+    public void findDos33TSMapSector(/*TSMap tsmapMapsInCatalog*/Collection rPosTSMaps)
     {
         rewind();
         while (!EOF())
@@ -601,11 +602,12 @@ public class Disk
             byte[] sector = read(DiskPos.cSector);
             if (isDos33TSMapSector(sector))
             {
-                System.out.print("T/S map @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
-                if (sector[1] != 0 || sector[2] != 0)
-                {
-                    System.out.print(" (next @ T$"+Integer.toHexString(sector[1])+", S$"+Integer.toHexString(sector[2])+")");
-                }
+                rPosTSMaps.add(cr);
+//                System.out.print("T/S map @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
+//                if (sector[1] != 0 || sector[2] != 0)
+//                {
+//                    System.out.print(" (next @ T$"+Integer.toHexString(sector[1])+", S$"+Integer.toHexString(sector[2])+")");
+//                }
 //                if (tsmapMapsInCatalog.isMarked(cur))
 //                {
 //                    System.out.print(" (cataloged)");
@@ -614,7 +616,7 @@ public class Disk
 //                {
 //                    System.out.print(" (orphaned)");
 //                }
-                System.out.println();
+//                System.out.println();
             }
         }
     }
