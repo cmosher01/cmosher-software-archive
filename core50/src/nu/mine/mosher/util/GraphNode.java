@@ -52,8 +52,8 @@ public class GraphNode<T>
 		{
 			throw new IllegalArgumentException("given GraphNode is not a child of this GraphNode");
 		}
-		child.removeParent(this);
-		children.remove(child);
+		child.parents.remove(this);
+		this.children.remove(child);
 
 		for (Iterator<GraphNode<T>> i = children(); i.hasNext();)
 		{
