@@ -38,9 +38,7 @@ public class TestBeans
     public static void setProperty(Object bean, String property, String[] value)
         throws IntrospectionException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
     {
-        BeanInfo bi = getBeanInfo(bean);
-
-        Map mapPDs = getPropertyDescriptors(bi);
+        Map mapPDs = getPropertyDescriptors(getBeanInfo(bean));
         if (!mapPDs.containsKey(property))
         {
             throw new IntrospectionException("Cannot find property descriptor for " + property);
