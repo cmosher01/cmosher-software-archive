@@ -64,12 +64,35 @@ public class Test
             }
             return clon;
         }
+        public Mute ref()
+        {
+            return (Mute)u.state();
+        }
         public String toString()
         {
-            return ""+x;
+            return ""+ref().x;
         }
 
-        
+        public void set(int x)
+        {
+            try
+            {
+                u.save();
+            }
+            catch (CloneNotSupportedException e)
+            {
+                e.printStackTrace();
+            }
+            ref().x = x;
+        }
+        public void undo()
+        {
+            u.undo();
+        }
+        public void redo()
+        {
+            u.redo();
+        }
     }
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
@@ -77,18 +100,24 @@ public class Test
 
 
 
-        UndoableReference u = new UndoableReference(new Mute(5));
-        System.out.println(u.state().toString());
-        u.save();
-        ((Mute)u.state()).x = 7;
-        System.out.println(u.state().toString());
-        u.undo();
-        System.out.println(u.state().toString());
-        u.redo();
-        System.out.println(u.state().toString());
+//        UndoableReference u = new UndoableReference(new Mute(5));
+//        System.out.println(u.state().toString());
+//        u.save();
+//        ((Mute)u.state()).x = 7;
+//        System.out.println(u.state().toString());
+//        u.undo();
+//        System.out.println(u.state().toString());
+//        u.redo();
+//        System.out.println(u.state().toString());
 
-
-
+        Mute m = new Mute(5);
+        System.out.println(m);
+        m.set(7);
+        System.out.println(m);
+        m.undo();
+        System.out.println(m);
+        m.redo();
+        System.out.println(m);
 
 
 
