@@ -249,7 +249,7 @@ public class ProxyConnection extends Thread
             server_port = Integer.parseInt(server_adpt.substring(loc + 1));
         }
 
-        // TODO: lookup server_addr in hosts file
+        // CAM: lookup server_addr in hosts file
         String hostIP = ((Jproxy)(((ProxyServer)(this.parent)).console)).hosts.lookupHost(server_addr);
         if (hostIP.length() > 0)
         {
