@@ -22,13 +22,13 @@ public class SourceFile
     private final SortedMap map = new TreeMap();
 
     /**
-     * @param target target file
+     * @param src target file
      * @param cWindow window size, in bytes
      * @throws IOException
      */
-    public void calculateWindowChecksums(File target, int cWindow) throws IOException
+    public void calculateWindowChecksums(File src, int cWindow) throws IOException
     {
-        InputStream in = new FileInputStream(target);
+        InputStream in = new FileInputStream(src);
         StreamChecksum inCheck = new StreamChecksum(map);
         inCheck.init(in,cWindow);
     }
