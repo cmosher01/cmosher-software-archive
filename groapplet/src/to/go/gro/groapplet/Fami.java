@@ -102,7 +102,9 @@ public class Fami
         double dx = pt2.getX()-pt1.getX();
         double dy = pt2.getY()-pt1.getY();
         double dist = Math.sqrt(dx*dx+dy*dy);
-System.out.println(dist);
+        if (-1e-8 < Math.rint(dist) && Math.rint(dist) < 1e-8)
+        	dist = .1;
+
         double nx = pt1.getX()+(CHILD_LINE_DISTANCE*dx/dist);
         double ny = pt1.getY()+(CHILD_LINE_DISTANCE*dy/dist)+BAR_HEIGHT/2;
         Point2D ptP = new Point2D.Double(nx,ny);
