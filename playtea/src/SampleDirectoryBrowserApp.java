@@ -70,7 +70,6 @@ import com.go.trove.log.Log;
  */
 public class SampleDirectoryBrowserApp implements Application
 {
-
     private Log mLog;
     private ApplicationConfig mConfig;
 
