@@ -73,7 +73,7 @@ public class TimeOfDayParser
      * @param j
      * @return
      */
-    private int getd(String s, int i, int j)
+    private int getd(String s, int i, int j) throws ParseException
     {
         assert (j < 10000); // sanity
 
@@ -81,8 +81,13 @@ public class TimeOfDayParser
         while (j-- > 0)
         {
             char c = s.charAt(i++);
+            int x = Character.digit(c,10);
+            if (x < 0)
+            {
+                throw new ParseException("Invalid time-of-day string",i-1);
+            }
             r *= 10;
-            r += Character.digit(c,10);
+            r += x;
         }
         return r;
     }
