@@ -18,6 +18,9 @@ public class MP3Calc
     private static int[] M2L1 = { 0, 32, 48, 56, 64, 80, 96, 112, 128, 144, 160, 176, 192, 224, 256, 0 };
     private static int[] M2L2 = { 0, 8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 112, 128, 144, 160, 0 };
 	private static int[] M2L3 = { 0, 8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 112, 128, 144, 160, 0 };
+	private static int[] M1f = { 44100, 48000, 32000, 0 };
+	private static int[] M2f = { 22050, 24000, 16000, 0 };
+	private static int[] M25f = { 11025, 12000, 8000, 0 };
 
     public static void main(String[] rArg) throws Throwable
     {
@@ -69,6 +72,25 @@ public class MP3Calc
 		// bitrate
 		int bps = calcBitRate(h & 15,mpeg,layer);
 		h >>= 4;
+
+		int freq = 0;
+		int key = h&3;
+		if (mpeg == 1)
+		{
+			freq = M1f[key];
+		}
+		else if (mpeg == 2)
+		{
+			freq = M2f[key];
+		}
+		else if (mpeg == 25)
+		{
+			freq = M25f[key];
+		}
+		h >>= 2;
+
+		int padding = (h & 1);
+
     }
 
     private static int calcBitRate(int key, int mpeg, int layer)
