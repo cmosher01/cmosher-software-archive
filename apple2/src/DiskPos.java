@@ -195,7 +195,6 @@ public class DiskPos
 
     /**
      * @param len
-     * @return
      */
     public void advance(int len)
     {
