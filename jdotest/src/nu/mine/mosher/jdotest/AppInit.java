@@ -22,12 +22,13 @@ import javax.servlet.ServletContextListener;
  */
 public class AppInit implements ServletContextListener
 {
-	private static final Properties props = new Properties();
+	private static final Properties props;
 
     public void contextInitialized(ServletContextEvent sce)
     {
 		try
 		{
+			props = new Properties();
 			URL urlProps = Perm.class.getClassLoader().getResource("nu/mine/mosher/jdotest/jdo.properties");
 			FileInputStream inProps = null;
 			try
