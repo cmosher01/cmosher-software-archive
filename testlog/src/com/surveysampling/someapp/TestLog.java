@@ -45,7 +45,7 @@ public class TestLog
      * @param record
      * @return
      */
-    public synchronized String formatMessage(LogRecord record)
+    public static String formatMessage(LogRecord record)
     {
         String format = record.getMessage();
         java.util.ResourceBundle catalog = record.getResourceBundle();
