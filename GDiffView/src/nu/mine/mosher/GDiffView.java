@@ -508,7 +508,7 @@ public class GDiffView extends JFrame
         hex.appendNewLine();
         in.close();
 
-        listGDiff.setModel(new GDiffCmdListModel(rcmd)); // ???
+//        listGDiff.setModel(new GDiffCmdListModel(rcmd)); // ???
     }
 
     /**
