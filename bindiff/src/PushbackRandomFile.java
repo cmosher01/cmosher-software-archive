@@ -37,4 +37,14 @@ public class PushbackRandomFile
 
     	unread = c;
     }
+
+    public long tell() throws IOException
+    {
+    	long pos = f.getFilePointer();
+    	if (unread != -1)
+    	{
+    		--pos;
+    	}
+    	return pos;
+    }
 }
