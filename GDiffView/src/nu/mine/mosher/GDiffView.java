@@ -251,7 +251,7 @@ public class GDiffView extends JFrame
     {
         char lo = nib(i & 0xF);
         i >>= 4;
-        char hi = nib(i);
+        char hi = nib(i & 0xF);
         sb.append(hi);
         sb.append(lo);
     }
