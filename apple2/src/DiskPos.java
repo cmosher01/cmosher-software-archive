@@ -199,7 +199,7 @@ public class DiskPos
      */
     public DiskPos advance(int len)
     {
-        return new DiskPos(iDisk+len);
+        this.iDisk += len;
     }
 
     /**
