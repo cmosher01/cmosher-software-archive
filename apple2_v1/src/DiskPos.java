@@ -225,8 +225,7 @@ public class DiskPos implements Comparable
      */
     public int hashCode()
     {
-        // TODO Auto-generated method stub
-        return super.hashCode();
+        return this.iDisk;
     }
 
     /**
