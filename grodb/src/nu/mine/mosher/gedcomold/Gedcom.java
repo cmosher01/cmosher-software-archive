@@ -134,7 +134,7 @@ public class Gedcom
 //        }
 
 		/*
-		 * Charset:       CHAR value in GEDCOM file:
+		 * Charset:       CHAR values in GEDCOM file:
 		 * windows-1252   IBM WINDOWS, ANSI
 		 * Cp850          IBM DOS, IMBPC
 		 * MacRoman       MACINTOSH
