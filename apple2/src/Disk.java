@@ -201,8 +201,8 @@ public class Disk
                     if (live && DiskPos.isValidSector(sector[ce+1]) &&
                         isValidFileType(sector[ce+2]))
                     {
-                        if (isValidFileName(sector,ce+3))
-                        {
+//                        if (isValidFileName(sector,ce+3))
+//                        {
                             if (sector[ce] == -1)
                             {
                                 entries.add(convertASCII(sector,ce+3,29).trim()+" [deleted]");
@@ -215,7 +215,7 @@ public class Disk
                             {
                                 ++penultimateSpace;
                             }
-                        }
+//                        }
                     }
                     else if (live)
                     {
