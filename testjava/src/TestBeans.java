@@ -32,7 +32,7 @@ public class TestBeans
     public static void setProperty(Object bean, String property, String value)
         throws IntrospectionException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
     {
-        setProperty(bean,property,new String[] { value });
+        setProperty(bean, property, new String[] { value });
     }
 
     public static void setProperty(Object bean, String property, String[] value)
@@ -60,7 +60,7 @@ public class TestBeans
         else
         {
             PropertyEditor ed = getPropertyEditor(classProp);
-            v = convert(value[0],ed);
+            v = convert(value[0], ed);
         }
 
         Method wr = pd.getWriteMethod();
@@ -70,11 +70,11 @@ public class TestBeans
     public static Object[] convertArray(String[] value, PropertyEditor ed, Class classProp)
         throws NegativeArraySizeException, IllegalArgumentException
     {
-        Object[] rval = (Object[])Array.newInstance(classProp,value.length);
+        Object[] rval = (Object[])Array.newInstance(classProp, value.length);
         for (int i = 0; i < value.length; ++i)
         {
             String s = value[i];
-            rval[i] = convert(s,ed);
+            rval[i] = convert(s, ed);
         }
         return rval;
     }
@@ -107,7 +107,7 @@ public class TestBeans
         for (Iterator i = Arrays.asList(rpd).iterator(); i.hasNext();)
         {
             PropertyDescriptor pd = (PropertyDescriptor)i.next();
-            map.put(pd.getName(),pd);
+            map.put(pd.getName(), pd);
         }
         return map;
     }
