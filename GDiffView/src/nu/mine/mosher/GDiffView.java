@@ -226,6 +226,8 @@ public class GDiffView extends JFrame
         JScrollPane scrGDiff = new JScrollPane(listGDiff);
         scrGDiff.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
+
+
         SpringLayout layout = new SpringLayout();
         JPanel contentPane = new JPanel(layout);
         setContentPane(contentPane);
@@ -319,8 +321,6 @@ public class GDiffView extends JFrame
         listGDiff.setSelectionModel(selectionModel);
         listGDiff.setSelectedIndex(0);
         listGDiff.requestFocus();
-
-//        pack();
 
         setVisible(true);
     }
