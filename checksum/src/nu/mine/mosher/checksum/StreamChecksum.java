@@ -48,13 +48,13 @@ public class StreamChecksum
         RollingChecksum rollCheck = new RollingChecksum();
 
         long w = 0;
-        while (is.available() > 0)
+        while (is.available() >= cWindow)
         {
-            if (is.available() < cWindow)
-            {
-                cWindow = is.available();
-                rs = new byte[cWindow];
-            }
+//            if (is.available() < cWindow)
+//            {
+//                cWindow = is.available();
+//                rs = new byte[cWindow];
+//            }
             int c = is.read(rs);
             if (c != cWindow)
             {
