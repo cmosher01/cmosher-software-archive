@@ -4,7 +4,7 @@ import nu.mine.mosher.random.RNGDefault;
 import nu.mine.mosher.random.RandomNumberGenerator;
 
 /**
- * 32-bit version
+ * 32-bit version of Knuth's latest (as of 2003).
  * 
  * @author Chris Mosher
  */
