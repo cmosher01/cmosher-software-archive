@@ -13,19 +13,13 @@ public class Option
 {
     private OptionDefinition mDef;
     private String mValue;
-    private boolean mIsSpecified;
 
-    public Option(OptionDefinition def, String value, boolean isSpecified)
+    public Option(OptionDefinition def, String value)
     {
         mDef = def;
         mValue = value;
-        mIsSpecified = isSpecified;
     }
 
-    boolean isSpecified()
-    {
-        return mIsSpecified;
-    }
     String getValue()
     {
         return mValue;
@@ -40,8 +34,7 @@ public class Option
         Option that = (Option)obj;
         return
             this.mDef.equals(that.mDef) &&
-            this.mValue.equals(that.mValue) &&
-            this.mIsSpecified==that.mIsSpecified;
+            this.mValue.equals(that.mValue);
     }
 
     public int hashCode()
@@ -51,8 +44,6 @@ public class Option
         hash += mDef.hashCode();
         hash *= 37;
         hash += mValue.hashCode();
-        hash *= 37;
-        hash += (mIsSpecified ? 0 : 1);
         return hash;
     }
 }
