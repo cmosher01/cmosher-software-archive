@@ -40,40 +40,25 @@ public class Perm
 		return this.pm;
 	}
 
-	public Iterator getList()
-	{
-		return pm.getExtent(Item.class,true).iterator();
-	}
-
-	public String getIDof(Object obj)
-	{
-		PersistenceManager pm = this.pmf.getPersistenceManager();
-		return pm.getObjectId(obj).toString();
-	}
-
-	public void put(Object obj)
-	{
-		PersistenceManager pm = this.pmf.getPersistenceManager();
-		pm.currentTransaction().begin();
-		pm.makePersistent(obj);
-		pm.currentTransaction().commit();
-	}
-
-	public Object get(Class permClass, String id)
-	{
-		PersistenceManager pm = this.pmf.getPersistenceManager();
-		return pm.getObjectById(pm.newObjectIdInstance(permClass,id),true);
-	}
-
-	public PersistenceManager begin()
-	{
-		PersistenceManager pm = this.pmf.getPersistenceManager();
-		pm.currentTransaction().begin();
-		return pm;
-	}
-
-	public void commit(PersistenceManager pm)
-	{
-		pm.currentTransaction().commit();
-	}
+//	public Iterator getList()
+//	{
+//		return pm.getExtent(Item.class,true).iterator();
+//	}
+//
+//	public String getIDof(Object obj)
+//	{
+//		return pm.getObjectId(obj).toString();
+//	}
+//
+//	public void put(Object obj)
+//	{
+//		pm.currentTransaction().begin();
+//		pm.makePersistent(obj);
+//		pm.currentTransaction().commit();
+//	}
+//
+//	public Object get(Class permClass, String id)
+//	{
+//		return pm.getObjectById(pm.newObjectIdInstance(permClass,id),true);
+//	}
 }
