@@ -37,5 +37,10 @@ public class GedcomTree
 		prevLevel = line.getLevel();
 		prevNode = new TreeNode(line);
 		parent.addChild(prevNode);
+
+		if (line.hasID())
+		{
+			mapIDtoNode.put(line.getId(),prevNode);
+		}
 	}
 }
