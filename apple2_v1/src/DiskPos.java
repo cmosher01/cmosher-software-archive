@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
  * 
  * @author Chris
  */
-public class DiskPos implements Comparable, Iterator
+public class DiskPos implements Comparable
 {
     public static final int cSector = 0x100;
     public static final int cSectorsPerTrack = 0x10;
@@ -249,35 +249,4 @@ public class DiskPos implements Comparable, Iterator
         return 0;
     }
 
-    /**
-     * @see java.util.Iterator#hasNext()
-     */
-    public boolean hasNext()
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    /**
-     * Iterates through sectors.
-     * TODO iterate thru blocks
-     * @see java.util.Iterator#next()
-     */
-    public Object next() throws NoSuchElementException
-    {
-        if (!hasNext())
-        {
-            throw new NoSuchElementException();
-        }
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /**
-     * @see java.util.Iterator#remove()
-     */
-    public void remove() throws UnsupportedOperationException
-    {
-        throw new UnsupportedOperationException();
-    }
 }
