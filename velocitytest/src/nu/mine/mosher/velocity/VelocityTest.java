@@ -12,9 +12,16 @@ public class VelocityTest
     public static void main(String[] args) throws Throwable
     {
         VelocityEngine velocity = new VelocityEngine();
+
         velocity.init();
+
+
         Context context = new VelocityContext();
+
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out)));
+
         velocity.mergeTemplate("test.vm", context, writer);
+        writer.flush();
+        writer.close();
     }
 }
