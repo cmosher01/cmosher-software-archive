@@ -75,6 +75,16 @@ public class DiskTSMapTest extends TestCase
     }
 
     /**
+     * @throws IOException
+     * @throws InvalidPosException
+     */
+    public void testUTY41() throws IOException, InvalidPosException
+    {
+        List r = new ArrayList();
+        assertManyPos("uty4-1.dsk",r);
+    }
+
+    /**
      * @param f
      * @param rPosExpected
      * @throws IOException
