@@ -478,7 +478,7 @@ public class Disk
      * @param m
      * @throws InvalidPosException
      */
-    public void getDataTS(TSMap m) throws InvalidPosException
+    public void getDataTS(TSMap m)
     {
         rewind();
         while (!EOF())
