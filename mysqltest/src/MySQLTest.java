@@ -90,7 +90,7 @@ public class MySQLTest
     			for (int i = 0; i < c; ++i)
     			{
     				log.info(
-    					"Census"+year+" "+id+","+
+    					"Census"+year+","+id+","+
     					sGender+","+
     					(ageMax<0 ? ""+(1790-150) : ""+(1790-ageMax))+","+
     					(1790-ageMin));
