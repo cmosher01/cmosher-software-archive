@@ -498,20 +498,33 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
     }
 
 
-    /*
-     * public void confirmWebStartSuccess() { ImageDialog dlg = new
-     * ImageDialog(this, "Success", null, "Web Server Started!");
-     * dlg.setBounds(350, 250, 160, 60); dlg.setVisible(true); } public void
-     * confirmWebStopSuccess() { ImageDialog dlg = new ImageDialog(this,
-     * "Success", null, "Web Server Stopped!"); dlg.setBounds(350, 250, 160,
-     * 60); dlg.setVisible(true); } public void confirmWebStartFailure() {
-     * ImageDialog dlg = new ImageDialog(this, "Failed", null, "Web Server Not
-     * Started!"); dlg.setBounds(350, 250, 180, 60); dlg.setVisible(true); }
-     * public void confirmWebStopFailure() { ImageDialog dlg = new
-     * ImageDialog(this, "Failed", null, "Web Server Already Stopped!");
-     * dlg.setBounds(350, 250, 200, 60); dlg.setVisible(true); }
-     */
+    public void confirmWebStartSuccess()
+    {
+        ImageDialog dlg = new ImageDialog(this,"Success",null,"Web Server Started!");
+        dlg.setBounds(350,250,160,60);
+        dlg.setVisible(true);
+    }
 
+    public void confirmWebStopSuccess()
+    {
+        ImageDialog dlg = new ImageDialog(this,"Success",null,"Web Server Stopped!");
+        dlg.setBounds(350,250,160,60);
+        dlg.setVisible(true);
+    }
+
+    public void confirmWebStartFailure()
+    {
+        ImageDialog dlg = new ImageDialog(this,"Failed",null,"Web Server Not Started!");
+        dlg.setBounds(350,250,180,60);
+        dlg.setVisible(true);
+    }
+
+    public void confirmWebStopFailure()
+    {
+        ImageDialog dlg = new ImageDialog(this,"Failed",null,"Web Server Already Stopped!");
+        dlg.setBounds(350,250,200,60);
+        dlg.setVisible(true);
+    }
 
     /**
      * start proxy server
