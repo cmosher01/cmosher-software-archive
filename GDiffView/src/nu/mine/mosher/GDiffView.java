@@ -395,8 +395,7 @@ public class GDiffView extends JFrame
         AttributeSet attr = (AttributeSet)styles.get(highlight
                 ? "highlight"
                 : "body");
-        docSrc.setCharacterAttributes(beginPoint,endPoint - beginPoint,attr,
-                true);
+        docSrc.setCharacterAttributes((int)beginPoint,(int)(endPoint - beginPoint),attr,true);
     }
 
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, InterruptedException, BadLocationException, IOException
