@@ -77,7 +77,7 @@ public class Hex2Bin
         s = s.toUpperCase();
         if (s.length() == 1)
         {
-            s = "0"+x;
+            s = "0"+s;
         }
         return s;
     }
