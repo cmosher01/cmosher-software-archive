@@ -11,7 +11,8 @@ public class TestCrypt
     public static void main(String[] rArg) throws Throwable
     {
         SecureRandom random = SecureRandom.getInstance("SHA1PRNG","SUN");
-        random.nextInt();
+        byte[] x = new byte[1024/8];
+        random.nextBytes(x);
     }
 
     public static void showProviders()
