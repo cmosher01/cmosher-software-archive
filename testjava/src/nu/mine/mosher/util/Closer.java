@@ -1,5 +1,5 @@
 package com.surveysampling.util;
-public class UniversalCloser
+public class Closer
 {
     /**
      * Calls the given object's "close()" method, if it has one.
