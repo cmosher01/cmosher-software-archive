@@ -70,7 +70,7 @@ public class Player implements Immutable
 //		bufrd.close();
 
 		byte[] rb = new byte[0x100];
-		for (byte i = 0; i < rb.length; i++)
+		for (int i = 0; i < rb.length; i++)
         {
             rb[i] = i;
         }
