@@ -1,5 +1,7 @@
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ListIterator;
 
 import sun.misc.Launcher;
@@ -51,7 +53,10 @@ public class Test
 
              code.append(base);
              code.append("_");
-             for (int i = 0; i < mrStepNames.length; ++i)
+             List mStepInts = new ArrayList();
+             mStepInts.add(new Integer(3));
+             mStepInts.add(new Integer(5));
+             for (int i = 0; i < 8; ++i)
              {
                  Integer inti = new Integer(i);
                  if (mStepInts.contains(inti))
