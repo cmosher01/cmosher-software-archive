@@ -57,6 +57,9 @@ public class Apple2
      */
     public static void doOneDisk(Disk disk) throws InvalidPosException
     {
+        List rPosVTOC = new ArrayList();
+        disk.findDos33VTOC(rPosVTOC);
+
         List rPosCat = new ArrayList();
         disk.findDos33CatalogSector(rPosCat);
 
@@ -71,7 +74,7 @@ public class Apple2
         for (Iterator i = rPosCat.iterator(); i.hasNext();)
         {
             DiskPos p = (DiskPos)i.next();
-            mapDiskMap.put(p, new )
+            mapDiskMap.put(p, new VolumeCatalog(p));
             disk.getDos33CatalogEntries(p, rCatEntry);
         }
         for (Iterator ent = rCatEntry.iterator(); ent.hasNext();)
