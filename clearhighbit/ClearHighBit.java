@@ -28,6 +28,7 @@ public class ClearHighBit
 			out = new BufferedOutputStream(new FileOutputStream(rArg[1]));
 			for (int n = in.read(); n != -1; n = in.read())
 			{
+				n &= 0x7f;
 				out.write(n);
 			}
 			out.flush();
