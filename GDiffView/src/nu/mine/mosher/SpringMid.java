@@ -30,8 +30,7 @@ public class SpringMid extends Spring
      */
     public int getMaximumValue()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return (int)Math.round(fraction*right.getMaximumValue() - width/2);
     }
 
     /* (non-Javadoc)
@@ -39,8 +38,7 @@ public class SpringMid extends Spring
      */
     public int getMinimumValue()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return (int)Math.round(fraction*right.getMinimumValue() - width/2);
     }
 
     /* (non-Javadoc)
@@ -48,8 +46,7 @@ public class SpringMid extends Spring
      */
     public int getPreferredValue()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return (int)Math.round(fraction*right.getPreferredValue() - width/2);
     }
 
     /* (non-Javadoc)
