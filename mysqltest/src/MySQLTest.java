@@ -65,7 +65,7 @@ public class MySQLTest
 	protected void insertData() throws SQLException
     {
     	dbUpdate("delete from family");
-    	dbUpdate("insert into family(name) values(\"Flandreau\")");
+    	dbInsert("insert into family(name) values(\"Flandreau\")");
     }
 
     protected void createSchema() throws SQLException
@@ -105,6 +105,27 @@ public class MySQLTest
             closeStatement(st);
         }
     }
+
+	protected int dbInsert(String sql) throws SQLException
+	{
+		int key = -1;
+		Statement st = null;
+		try
+		{
+			st = db.createStatement();
+			st.execute(sql,Statement.RETURN_GENERATED_KEYS);
+			ResultSet rs = st.getGeneratedKeys();
+			while (rs.next())
+			{
+				key = rs.getInt(1);
+			}
+		}
+		finally
+		{
+			closeStatement(st);
+		}
+		return key;
+	}
 
     private static void closeStatement(Statement st)
     {
