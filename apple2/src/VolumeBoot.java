@@ -29,7 +29,7 @@ public class VolumeBoot extends VolumeEntity
             throw new RuntimeException(e);
         }
 
-        rSector.add(new VolumeSector(p,0));
+        rSector.add(new VolumeSector(p,0,this));
 
         data = disk.readSector(p);
     }
