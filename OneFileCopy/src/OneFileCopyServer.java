@@ -39,9 +39,9 @@ public class OneFileCopyServer
 
 		byte[] rb = new byte[1024];
 
-		byte[] rbLen = new byte[Long.SIZE];
+		byte[] rbLen = new byte[8];
 		long xLen = f.length();
-		for (int i = 0; i < Long.SIZE; ++i)
+		for (int i = 0; i < 8; ++i)
 		{
 			rbLen[i] = (byte)(xLen & 0xFF);
 			xLen >>= 8;
