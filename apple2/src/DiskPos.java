@@ -40,6 +40,12 @@ public class DiskPos
         this.iDisk = track*cTrack+sector*cSector+byt;
     }
 
+    /**
+     * @param block
+     * @param byt
+     * @param allowLarge
+     * @throws InvalidPosException
+     */
     public DiskPos(int block, int byt, boolean allowLarge) throws InvalidPosException
     {
         verifyBlock(block,allowLarge);
