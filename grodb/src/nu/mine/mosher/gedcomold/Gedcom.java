@@ -134,12 +134,11 @@ public class Gedcom
 //        }
 
 		/*
+		 * Charset:       CHAR value in GEDCOM file:
 		 * windows-1252   IBM WINDOWS, ANSI
 		 * Cp850          IBM DOS, IMBPC
 		 * MacRoman       MACINTOSH
 		 * x-gedcom-ansel ANSEL
-		 * UTF-16BE       (detected automatically)
-		 * UTF-16LE       (detected automatically)
 		 */
 		BufferedReader bin = new BufferedReader(new InputStreamReader(in,"US-ASCII"));
 		bin.readLine(); // ignore rest of header line
