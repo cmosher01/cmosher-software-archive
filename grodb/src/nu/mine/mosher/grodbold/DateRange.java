@@ -16,7 +16,15 @@ public class DateRange implements Immutable, Serializable, Comparable
 	private final YMD earliest;
 	private final YMD latest;
 
-	private final boolean julian; // display as: true==Julian, false==Gregorian
+	/**
+	 * Inidicates what the preferred display calendar is.
+	 * true==Julian, false==Gregorian
+	 * Note that this indicates only how to display the date(s),
+	 * not how they are stored. Dates are always stored using
+	 * the Gregorian calendar. Further, it is only a preference,
+	 * and therefore the value may be ignored.
+	 */
+	private final boolean julian;
 
 	private final int hour;
 	private final int minute;
@@ -139,7 +147,16 @@ public class DateRange implements Immutable, Serializable, Comparable
         {
         	d = this.earliest.compareTo(that.earliest);
         }
-        return 0;
+		if (d == 0)
+		{
+			d = this.latest.compareTo(that.latest);
+		}
+		if (d == 0)
+		{
+			d = this.latest.compareTo(that.latest);
+		}
+
+        return d;
     }
 
     public boolean equals(Object o)
