@@ -161,7 +161,7 @@ public class Delta
                     }
                     while (ok && targetLength - targetidx > 0);
 
-                    // this is a insert instruction
+                    // this is a copy instruction
                     output.addCopy(offset,length);
 
                     if (targetLength - targetidx <= S - 1)
