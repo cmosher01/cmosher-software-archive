@@ -64,8 +64,8 @@ public class MySQLTest
 			}
 			log.info("Done reading data.");
 
-//			log.info("Calculating...");
-//			calc();
+			log.info("Calculating...");
+			calc();
 		}
 		finally
 		{
@@ -250,32 +250,30 @@ public class MySQLTest
 
     protected void calc() throws SQLException
     {
-    	calcOneCount(1790,"male",16,150);
-		calcOneCount(1790,"male",0,15);
-		calcOneCount(1790,"female",0,150);
-    }
-
-	protected void calcOneCount(int year, String sGender, int ageMin, int ageMax) throws SQLException
-    {
     	Statement st = null;
     	try
     	{
     		st = db.createStatement();
-    		ResultSet rs = st.executeQuery("select "+columnName(sGender,ageMin,ageMax)+" c, id from Census"+year);
+    		ResultSet rs = st.executeQuery("select "+
+    		"censusday, gender, minage, maxage, count, "+
+    		"date_sub(censusday,interval minage year) latest, "+
+			"date_add(date_sub(censusday,interval maxage+1 year), interval 1 day) earliest "+
+
+			"from imageident im "+
+			"join household hh on (hh.image=im.id) "+
+			"join countentry ce on (ce.household=hh.id) "+
+			"join census cen on (cen.year=im.year)");
+
     		while (rs.next())
     		{
-    			int c = rs.getInt("c");
-    			String id = rs.getString("id");
-//    				rs.getString("nameFirst")+" "+
-//    				rs.getString("nameMiddle")+" "+
-//    				rs.getString("nameSuffix");
+    			int c = rs.getInt("count");
+    			String latest = rs.getString("latest");
+				String earliest = rs.getString("earliest");
+				int minage = rs.getInt("minage");
+				int maxage = rs.getInt("maxage");
     			for (int i = 0; i < c; ++i)
     			{
-    				log.info(
-    					"Census"+year+","+id+","+
-    					sGender+","+
-    					(year-ageMax)+","+
-    					(1790-ageMin));
+    				log.info(earliest+" to "+latest+", "+minage+"-"+maxage);
     			}
     		}
     	}
