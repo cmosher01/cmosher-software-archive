@@ -34,8 +34,8 @@ package com.nothome.delta;
  * http://www.w3.org/TR/NOTE-gdiff-19970901.html.
  */
 
-import java.util.*;
-import java.io.*;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 public class GDiffWriter implements DiffWriter {
     
