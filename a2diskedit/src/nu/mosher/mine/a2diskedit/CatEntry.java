@@ -1,6 +1,6 @@
 package nu.mosher.mine.a2diskedit;
 
-public class CatEntry
+public class CatEntry implements TreeNode
 {
 	private String sName;
 
