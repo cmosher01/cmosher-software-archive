@@ -20,6 +20,22 @@ public class TimeOfDay
 
     public TimeOfDay(Calendar calendar, int hours, int minutes, int seconds, int milliseconds)
     {
+        if (hours < calendar.getMinimum(Calendar.HOUR_OF_DAY) || calendar.getMaximum(Calendar.HOUR_OF_DAY) < hours)
+        {
+            throw new IllegalArgumentException("Invalid hour: "+hours);
+        }
+        if (minutes < calendar.getMinimum(Calendar.MINUTE) || calendar.getMaximum(Calendar.MINUTE) < minutes)
+        {
+            throw new IllegalArgumentException("Invalid minute: "+minutes);
+        }
+        if (seconds < calendar.getMinimum(Calendar.SECOND) || calendar.getMaximum(Calendar.SECOND) < seconds)
+        {
+            throw new IllegalArgumentException("Invalid second: "+seconds);
+        }
+        if (milliseconds < calendar.getMinimum(Calendar.MILLISECOND) || calendar.getMaximum(Calendar.MILLISECOND) < milliseconds)
+        {
+            throw new IllegalArgumentException("Invalid millisecond: "+milliseconds);
+        }
         this.calendar = calendar;
         this.hours = hours;
         this.minutes = minutes;
