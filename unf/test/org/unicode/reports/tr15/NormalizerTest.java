@@ -92,6 +92,8 @@ public class NormalizerTest extends TestCase
 					throw new Exception("bad");
 				System.out.println();
 				cDone++;
+if (cDone>100)
+throw new Exception("stop");
 			}
 		}
 		in.close();
