@@ -7,6 +7,16 @@ public class Relation
 	private final String description;
 	private final RelationType type;
 
+	public Relation(Object a, Object b, RelationType type)
+	{
+		this(a,b,"",type);
+	}
+
+	public Relation(Object a, Object b, String description)
+	{
+		this(a,b,description,null);
+	}
+
 	public Relation(Object a, Object b, String description, RelationType type)
 	{
 		this.a = a;
