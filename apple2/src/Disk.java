@@ -196,7 +196,7 @@ public class Disk
      * @param tsmapMaps
      * @throws InvalidPosException
      */
-    public void findDos33CatalogSector(/*boolean allowLarge, TSMap tsmapMaps*/) throws InvalidPosException
+    public void findDos33CatalogSector(/*boolean allowLarge, TSMap tsmapMaps*/Collection rPosCat) throws InvalidPosException
     {
         rewind();
         while (!EOF())
@@ -207,8 +207,9 @@ public class Disk
             int goodEntries = isDos33CatalogSector(sector/*,allowLarge,tsmapMaps,entries*/);
             if (goodEntries > 0)
             {
-                System.out.println("Catalog Sector @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+
-                        Integer.toHexString(cur.getSectorInTrack())+" ("+goodEntries+" entries)");
+                rPosCat.add(cur);
+//                System.out.println("Catalog Sector @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+
+//                        Integer.toHexString(cur.getSectorInTrack())+" ("+goodEntries+" entries)");
 //                for (Iterator i = entries.iterator(); i.hasNext();)
 //                {
 //                    String f = (String)i.next();
