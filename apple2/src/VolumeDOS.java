@@ -80,5 +80,6 @@ public class VolumeDOS extends VolumeEntity
      */
     public void getUsed(Collection rPos)
     {
+        getPos(rPos);
     }
 }
