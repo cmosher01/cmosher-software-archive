@@ -14,6 +14,8 @@ import java.util.NoSuchElementException;
  * into the constructor, then calling <code>iterator</code>
  * to get an <code>Iterator</code> that iterates over
  * each field.
+ * 
+ * @author Chris Mosher
  */
 public class ExcelCSVFieldizer
 {
