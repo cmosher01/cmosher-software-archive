@@ -9,6 +9,10 @@ public class DiffWriter
 
 	public void outTag(String type, int c)
 	{
+		if (pos > 0)
+		{
+			s.append("\n");
+		}
 		s.append(">>>");
 		s.append(type);
 		s.append(" ");
