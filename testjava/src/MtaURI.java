@@ -24,6 +24,8 @@ public class MtaURI
 	private final int mRate;
 	private final int mTimeout;
 
+
+
 	public MtaURI(String sMTA) throws URISyntaxException
 	{
         URI uri = new URI(sMTA);
