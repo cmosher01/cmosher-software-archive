@@ -3,7 +3,6 @@
  */
 package nu.mine.mosher.jdotest;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
 
