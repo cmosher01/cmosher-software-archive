@@ -14,16 +14,16 @@ public class Source
 	private DateRange dateTopicEnd;
 	private Place placeTopic;
 
-	private List<RelationSource> rRel = new ArrayList<RelationSource>();
-	private List<Representation> rRep = new ArrayList<Representation>();
-	private List<Search> rSearch = new ArrayList<Search>();
+	private List<Relation<Source,Source>> rRel = new ArrayList<Relation<Source,Source>>();
+	private List<Relation<Source,Representation>> rRep = new ArrayList<Relation<Source,Representation>>();
+	private List<Relation<Source,Search>> rSearch = new ArrayList<Relation<Source,Search>>();
 
 	public Source()
 	{
 	}
 
-	public void addRel(Source that, RelationTypeSource relThisToThat)
+	public void addRel(Source that, String description)
 	{
-//		rRel.add(new RelationSource(that,relThisToThat));
+		rRel.add(new Relation<Source,Source>(this,that,description));
 	}
 }
