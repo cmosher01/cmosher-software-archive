@@ -222,9 +222,13 @@ public class TimeOfDay implements Comparable
     private static int cmp(int i0, int i1)
     {
         if (i0 < i1)
+        {
             return -1;
+        }
         if (i0 > i1)
+        {
             return +1;
+        }
         return 0;
     }
 }
