@@ -20,49 +20,13 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import nu.mine.mosher.fields.BigTableModel;
+import nu.mine.mosher.swingapp.SwingGUI;
 
 /**
  * @author Chris Mosher
  */
-public class FieldsGUI
+public class FieldsGUI extends SwingGUI
 {
-    private JFrame mFrame;
-
-    /**
-     * 
-     */
-    public void create()
-    {
-        // Use look and feel for current OS.
-        setLookAndFeel();
-
-        // Use look and feel's (not OS's) decorations.
-        // Must be done before creating the JFrame.
-        JFrame.setDefaultLookAndFeelDecorated(true);
-
-        // Create the window.
-        mFrame = new JFrame();
-
-        // Closing the window exits the program.
-        mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        mFrame.setIconImage(getFrameIcon());
-
-        // Create and set up the content pane.
-        mFrame.setContentPane(createContentPane());
-
-        // Create and set up the menu bar.
-        mFrame.setJMenuBar(createMenuBar());
-
-        // Set the window's size and position.
-        mFrame.pack();
-        mFrame.setLocationRelativeTo(null);
-        mFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
-
-        // Display the window.
-        mFrame.setVisible(true);
-    }
-
     /**
      * @return image to use as the main frame's icon
      */
@@ -72,30 +36,12 @@ public class FieldsGUI
     }
 
     /**
-     * 
-     */
-    protected void setLookAndFeel()
-    {
-        try
-        {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (Throwable e)
-        {
-            RuntimeException re = new IllegalStateException();
-            re.initCause(e);
-            throw re;
-        }
-    }
-
-    /**
      * @return menu bar for the application
      */
     protected JMenuBar createMenuBar()
     {
-//        JMenuBar mb = new JMenuBar();
-//        return mb;
-        return null;
+        JMenuBar mb = new JMenuBar();
+        return mb;
     }
 
     /**
