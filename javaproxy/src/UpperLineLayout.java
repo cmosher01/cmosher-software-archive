@@ -73,14 +73,14 @@ public class UpperLineLayout implements LayoutManager, Serializable
 
         if (sizeset)
             return;
-        n = parent.countComponents();
+        n = parent.getComponentCount();
 
         for (i = 0; i < n; i++)
         {
             comp = parent.getComponent(i);
             if (comp.isVisible())
             {
-                dim = comp.preferredSize();
+                dim = comp.getPreferredSize();
                 maxComponentWidth = Math.max(maxComponentWidth,dim.width);
                 maxComponentHeight = Math.max(maxComponentHeight,dim.height);
                 preferredHeight += dim.height;
