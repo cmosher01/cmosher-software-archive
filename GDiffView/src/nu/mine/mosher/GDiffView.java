@@ -148,6 +148,7 @@ public class GDiffView extends JFrame
         JFrame.setDefaultLookAndFeelDecorated(true);
 
         GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        this.setSize(200, 50);
         this.setMaximizedBounds(env.getMaximumWindowBounds());
         this.setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
 
