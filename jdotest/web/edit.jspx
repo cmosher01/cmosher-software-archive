@@ -29,7 +29,7 @@
 			%><tr><td><%=thing.getName()%></td></tr><%
 		}
 	%>
-	<tr><td>&lt;<a href="add.jsp">add</a>&gt;</td></tr>
+	<!-- <tr><td>&lt;<a href="add.jsp">add</a>&gt;</td></tr> -->
 	</table>
     <p><input type="submit" value="save" /></p>
 </form>
