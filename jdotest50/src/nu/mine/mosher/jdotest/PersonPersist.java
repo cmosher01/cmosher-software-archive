@@ -7,8 +7,6 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
 
-import org.jpox.resource.ManagedConnectionFactoryImpl;
-
 /**
  * @author Chris Mosher
  * Created: Feb 18, 2004
