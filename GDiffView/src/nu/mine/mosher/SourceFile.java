@@ -43,7 +43,7 @@ public class SourceFile
             List winds = (List)map.get(ck);
             if (winds.size() == 1)
             {
-                winds
+                winds;
             }
         }
         return offset;
