@@ -672,8 +672,10 @@ public class Disk
      * @param sector
      * @return
      */
-    static boolean isDos33TSMapSector(byte[] sector)
+    static boolean isDos33TSMapSector(DiskPos pos)
     {
+        byte[] sector = readSector(pos);
+
         boolean valid = false;
         if (sector[0]==0 &&
             DiskPos.isValidTrack(sector[1]) && DiskPos.isValidSector(sector[2]) &&
