@@ -60,4 +60,19 @@ public class Argument
     {
         return mDesc;
     }
+
+    public boolean equals(Object obj)
+    {
+        if (!(obj instanceof Argument))
+        {
+            return false;
+        }
+        Argument that = (Argument)obj;
+        return
+            this.mName.equals(that.mName) &&
+            this.mAbbrev.equals(that.mAbbrev) &&
+            this.mValue.equals(that.mValue) &&
+            this.mIsSpecified==that.mIsSpecified &&
+            this.mDesc.equals(that.mDesc);
+    }
 }
