@@ -24,4 +24,14 @@ public final class Undoer
         mrUndo.addLast(state);
         return (Cloneable)mrRedo.removeFirst();
     }
+
+    public boolean canUndo()
+    {
+        return !mrUndo.isEmpty();
+    }
+
+    public boolean canRedo()
+    {
+        return !mrRedo.isEmpty();
+    }
 }
