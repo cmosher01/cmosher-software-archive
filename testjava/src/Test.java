@@ -70,7 +70,8 @@ public class Test
 	{
 
         URL x = Test.class.getClassLoader().getResource("");
-        System.out.println(x.getPath());
+        File f = new File(x.getPath());
+        System.out.println(f.getCanonicalPath());
 
 //        System.out.println(System.getProperty("user.name"));
 
