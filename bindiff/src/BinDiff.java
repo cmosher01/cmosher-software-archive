@@ -183,9 +183,11 @@ public class BinDiff
 
         boolean endoffile = false;
         while (cs-- && !endoffile && !difMatch(f1, f2, cm))
-            endoffile = fgetc(f2) == EOF;
+        {
+			endoffile = fgetc(f2) == EOF;
+        }
 
-        bool found(!endoffile && cs > 0);
+        boolean found = ()!endoffile && (cs > 0));
 
         * fmark = ftell(f2);
 
