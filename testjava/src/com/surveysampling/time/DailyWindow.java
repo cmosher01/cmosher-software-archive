@@ -32,8 +32,8 @@ public class DailyWindow
      */
     protected static class Always extends DailyWindow
     {
-        public String getStart() { throw new RuntimeException("no start time"); }
-        public String getEnd() { throw new RuntimeException("no end time"); }
+        public TimeOfDay getStart() { throw new RuntimeException("no start time"); }
+        public TimeOfDay getEnd() { throw new RuntimeException("no end time"); }
         public boolean isStartFirst() { throw new RuntimeException("cannot call isStartFirst on Always"); }
         public boolean isAlways() { return true; }
         public boolean isNever() { return false; }
@@ -46,8 +46,8 @@ public class DailyWindow
      */
     protected static class Never extends DailyWindow
     {
-        public String getStart() { throw new RuntimeException("no start time"); }
-        public String getEnd() { throw new RuntimeException("no end time"); }
+        public TimeOfDay getStart() { throw new RuntimeException("no start time"); }
+        public TimeOfDay getEnd() { throw new RuntimeException("no end time"); }
         public boolean isStartFirst() { throw new RuntimeException("cannot call isStartFirst on Never"); }
         public boolean isAlways() { return false; }
         public boolean isNever() { return true; }
@@ -198,92 +198,6 @@ public class DailyWindow
     public boolean hasWindow()
     {
         return true;
-    }
-
-    /**
-     * Returns the start time, as an absolute Date,
-     * on a given number of days away from now. If
-     * daysFromNow is zero, this method returns the
-     * start time today. If daysFromNow is negative,
-     * this method returns the start time on the
-     * date that is the given number of days before now.
-     * If daysFromNow is positive, this method returns
-     * the start time on the date that is the given
-     * number of days in the future from now.
-     * @param daysFromNow days away
-     * @return start time as a Date
-     */
-    public Date getStart(int daysFromNow)
-    {
-        try
-        {
-            return parseHHMM(getStart(),daysFromNow);
-        }
-        catch (Throwable e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Returns the end time, as an absolute Date,
-     * on a given number of days away from now. If
-     * daysFromNow is zero, this method returns the
-     * end time today. If daysFromNow is negative,
-     * this method returns the end time on the
-     * date that is the given number of days before now.
-     * If daysFromNow is positive, this method returns
-     * the end time on the date that is the given
-     * number of days in the future from now.
-     * @param daysFromNow days away
-     * @return end time as a Date
-     */
-    public Date getEnd(int daysFromNow)
-    {
-        try
-        {
-            return parseHHMM(getEnd(),daysFromNow);
-        }
-        catch (Throwable e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-
-    protected static String checkTime(String t) throws ParseException
-    {
-        return fmtHHMM.format(parseHHMM(t));
-    }
-
-    protected static Date parseHHMM(String hhmm) throws ParseException
-    {
-        return parseHHMM(hhmm,0);
-    }
-
-    protected static Date parseHHMM(String hhmm, int daysFromNow) throws ParseException
-    {
-        Calendar day = Calendar.getInstance();
-        if (daysFromNow != 0)
-        {
-            day.add(Calendar.DATE, daysFromNow);
-        }
-
-        ParsePosition pp = new ParsePosition(0);
-        fmtHHMM.parse(hhmm,pp);
-        // make sure there is no unparsed text remaining
-        if (pp.getIndex() != hhmm.length())
-        {
-            throw new ParseException("invalid time",pp.getIndex());
-        }
-
-        Calendar c = fmtHHMM.getCalendar();
-        c.set(Calendar.YEAR, day.get(Calendar.YEAR));
-        c.set(Calendar.MONTH, day.get(Calendar.MONTH));
-        c.set(Calendar.DAY_OF_MONTH, day.get(Calendar.DAY_OF_MONTH));
-
-        return c.getTime();
     }
 
     /**
