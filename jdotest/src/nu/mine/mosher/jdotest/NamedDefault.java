@@ -8,14 +8,11 @@ import javax.jdo.PersistenceManager;
 /**
  * @author Chris
  */
-public class NamedDefault implements Named
+public abstract class NamedDefault implements Named
 {
 	private transient PersistenceManager pm;
 
-    public String getName()
-    {
-        return "";
-    }
+    public abstract String getName();
 
     public String getId()
     {
