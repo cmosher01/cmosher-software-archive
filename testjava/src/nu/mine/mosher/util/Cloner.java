@@ -18,7 +18,7 @@ public class Cloner
     {
         try
         {
-            Method objClone = cloneableObject.getClass().getMethod("clone", null);
+            Method objClone = cloneableObject.getClass().getMethod("clone",null);
             objClone.setAccessible(true);
             return (Cloneable)objClone.invoke(cloneableObject,null);
         }
