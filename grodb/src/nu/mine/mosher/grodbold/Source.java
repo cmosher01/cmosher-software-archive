@@ -4,13 +4,17 @@ import java.util.List;
 
 public class Source
 {
-	private final String title;
-	private final String author;
-	private final DateRange dateWritten;
-	private final Place placeWritten;
-	private final String publication;
+	private String title;
+	private String author;
+	private DateRange dateWritten;
+	private Place placeWritten;
+	private String publication;
+	private DateRange dateTopicStart;
+	private DateRange dateTopicEnd;
+	private Place placeTopic;
 
-	private final List rRel;
-	private final List rRep;
-	private final List rSearch;
+	private List rRel;
+	private List rRep;
+	private List rSearch;
+
 }
