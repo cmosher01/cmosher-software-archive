@@ -3,6 +3,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.URI;
+import java.text.SimpleDateFormat;
 import java.util.ListIterator;
 
 public class Test
@@ -53,6 +54,10 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
+
+        SimpleDateFormat f = new SimpleDateFormat("HHmmss.SSS");
+        System.out.println(f.format(new Date(234)));
+
 //        int x;
 //        System.out.println(x);
 
