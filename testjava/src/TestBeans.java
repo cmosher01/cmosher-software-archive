@@ -68,13 +68,13 @@ public class TestBeans
             throw new IntrospectionException("can't get property editor");
         }
         ed.setAsText(value);
-        Integer i = (Integer)ed.getValue();
+        Object val = ed.getValue();
         
         
         
         
         Method wr = pd.getWriteMethod();
-        wr.invoke(bean, new Object[] {i});
+        wr.invoke(bean, new Object[] {val});
     }
 
     public static void showInt(int i)
