@@ -371,7 +371,6 @@ public class VolumeDOS extends VolumeEntity
             alt = true;
         }
         // TODO AMDOS signature
-        // TODO Franklin signature
 
         // various DOS 3.3 signatures
         if (true) //(!alt)
