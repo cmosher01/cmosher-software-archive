@@ -160,6 +160,11 @@ public class DiskPos
         return (iDisk-iDisk/cTrack*cTrack)/cSector;
     }
 
+    public int getSectorInDisk()
+    {
+        return iDisk/cSector;
+    }
+
     /**
      * @return
      */
