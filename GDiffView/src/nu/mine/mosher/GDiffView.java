@@ -7,6 +7,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Frame;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedInputStream;
@@ -102,6 +104,14 @@ public class GDiffView extends JFrame
         super("GDiffVeiew");
 
         JFrame.setDefaultLookAndFeelDecorated(true);
+
+        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        /*
+         * The next line determines if the taskbar (win) is covered if
+         * unremarked, the task will not be covered by the maximized JFRAME.
+         */
+        this.setMaximizedBounds(env.getMaximumWindowBounds());
+        this.setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
 
         src = new File(fileSrc);
         dif = new File(fileGDiff);
