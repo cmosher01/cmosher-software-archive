@@ -56,11 +56,15 @@ public class Bin2HexJava
                 pos = 0;
             }
 
+            System.out.print("0x");
             outHexByte(c);
             ++pos;
 
             c = in.read();
         }
+        System.out.println();
+        System.out.flush();
+        in.close();
     }
 
     private static void outHexByte(int i)
