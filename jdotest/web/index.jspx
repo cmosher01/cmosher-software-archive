@@ -16,7 +16,6 @@
 		<title>List</title>
 	</head>
 	<body>
-		<!-- tags:getAllItems var="items" / -->
 		<jsp:scriptlet>
 			PersistenceManager pm = (PersistenceManager)request.getAttribute("pm");
 			request.setAttribute("items",pm.getExtent(Item.class,true).iterator());
