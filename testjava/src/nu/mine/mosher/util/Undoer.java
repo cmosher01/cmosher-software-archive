@@ -22,6 +22,6 @@ public class Undoer
     public Cloneable redo(Cloneable state) throws CloneNotSupportedException
     {
         mrUndo.addLast(new ImmutableReference(state));
-        return ((ImmutableReference)mrUndo.removeFirst()).object();
+        return ((ImmutableReference)mrRedo.removeFirst()).object();
     }
 }
