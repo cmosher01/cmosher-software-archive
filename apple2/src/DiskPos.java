@@ -68,6 +68,7 @@ public class DiskPos
 
     /**
      * @param byt
+     * @param siz
      * @throws InvalidPosException
      */
     private void verifyByte(int byt, int siz) throws InvalidPosException
@@ -92,6 +93,7 @@ public class DiskPos
 
     /**
      * @param track
+     * @param allowLarge
      * @throws InvalidPosException
      */
     private void verifyTrack(int track, boolean allowLarge) throws InvalidPosException
