@@ -164,7 +164,7 @@ public class Delta
                     // this is a copy instruction
                     output.addCopy(offset,length);
 
-                    if (targetLength - targetidx <= S - 1)
+                    if (targetLength - targetidx < S)
                     {
                         // eof reached, special case for last bytes
                         buf[0] = b[0]; // don't loose this byte
