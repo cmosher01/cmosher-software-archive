@@ -62,12 +62,11 @@ public class Delta
 
         if (targetLength - targetidx <= S)
         {
-            //gls031504a start
             source.close();
             target.close();
             output.close();
             throw new IOException("Unable to compute delta, input file is too short");
-            //gls031504a end
+            // TODO do something nicer here (maybe generate a diff with just one insert instruction)
         }
 
         // initialize first complete checksum.
