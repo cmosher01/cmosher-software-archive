@@ -607,7 +607,7 @@ public class VolumeDOS extends VolumeEntity
                     byte[] rbClearSlave = makeSlave(rbClear1983,rSlave1983,dif);
                     if (Arrays.equals(rbCmp,rbClearSlave))
                     {
-                        s.append(" (DOS 3.3 1983 slave (A$"+Integer.toHexString(0x1D00+dif*256)+") exact match)");
+                        s.append(" (DOS 3.3 1983 slave (A$"+Hex2Bin.hexbyte((byte)(0x1D+dif))+"00) exact match)");
                     }
                     else
                     {
@@ -638,7 +638,7 @@ public class VolumeDOS extends VolumeEntity
                     byte[] rbClearSlave = makeSlave(rbClear1986,rSlave1986,dif);
                     if (Arrays.equals(rbCmp,rbClearSlave))
                     {
-                        s.append(" (DOS 3.3 1986 slave (A$"+Integer.toHexString(0x1D00+dif*256)+") exact match)");
+                        s.append(" (DOS 3.3 1986 slave (A$"+Hex2Bin.hexbyte((byte)(0x1D+dif))+"00) exact match)");
                     }
                     else
                     {
