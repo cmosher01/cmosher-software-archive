@@ -382,7 +382,7 @@ public class Disk
                     ++goodEntries;
                 }
                 if (live && 
-                    (DiskPos.isValidTrack(sector[ce]) || sector[ce] == -1) &&
+                    (DiskPos.isValidTrack(sector[ce]) || (sector[ce] == -1 == DiskPos.isValidTrack(sector[ce+0x20]))) &&
                     DiskPos.isValidSector(sector[ce+1]) &&
                     isValidFileType(sector[ce+2]))
                 {
