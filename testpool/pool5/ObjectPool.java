@@ -19,8 +19,10 @@ public class ObjectPool
 
     public ObjectPool(Object[] pool)
     {
-        if (pool.length == 0)
+        if (pool == null || pool.length == 0)
+        {
             throw new IllegalArgumentException();
+        }
 
         for (int i = 0; i < pool.length; ++i)
         {
@@ -58,7 +60,9 @@ public class ObjectPool
     protected synchronized void recycle()
     {
         if (unused.isEmpty())
+        {
             System.gc();
+        }
 
         Reference ref = recycleBin.poll();
         while (ref != null)
