@@ -37,6 +37,6 @@ public class Apple2
         List rCat = new ArrayList();
         disk.findDos33CatalogSector(rCat);
         List rTSMap = new ArrayList();
-        disk.findDos33TSMapSector(tTSMap);
+        disk.findDos33TSMapSector(rTSMap);
     }
 }
