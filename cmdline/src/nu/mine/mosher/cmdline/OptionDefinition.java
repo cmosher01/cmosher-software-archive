@@ -44,6 +44,17 @@ public class OptionDefinition implements Comparable
     {
         return hasValue;
     }
+    public boolean is(String name)
+    {
+        if (name.length() == 0)
+        {
+            throw new IllegalArgumentException("name cannot be empty");
+        }
+        if (name.length() == 1)
+        {
+            return optionShort == name.charAt(0);
+        }
+    }
     public String getOptionLong()
     {
         return optionLong;
