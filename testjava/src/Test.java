@@ -61,7 +61,7 @@ public class Test
 //        }
 
 //or build a List of all lines:
-        List listLine = Util.list(new ReaderLines(r).iterator());
+//        List listLine = Util.list(new ReaderLines(r).iterator());
 //or under 1.5:
 //        List listLine = Util.list(new ReaderLines(r));
 //or build a Set of all lines
