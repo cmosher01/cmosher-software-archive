@@ -529,7 +529,7 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
     /**
      * start proxy server
      */
-    public boolean startProxyServer(boolean doconfirm)
+    public boolean startProxyServer()
     {
 
 
@@ -561,7 +561,7 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
     /**
      * stop proxy server
      */
-    public boolean stopProxyServer(boolean doconfirm)
+    public boolean stopProxyServer()
     {
 
         if (proxyserver == null || !proxyserver.isServerRunning())
@@ -714,9 +714,9 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
         if (evtsrc instanceof ImageButton)
         {
             if (evtsrc == ibstart)
-                startProxyServer(false);
+                startProxyServer();
             else if (evtsrc == ibstop)
-                stopProxyServer(false);
+                stopProxyServer();
             else if (evtsrc == ibexit)
             {
                 System.exit(0);
@@ -732,9 +732,9 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
         if (evtsrc instanceof MenuItem)
         {
             if (actcmd.equals(_START_SERVER))
-                startProxyServer(false);
+                startProxyServer();
             else if (actcmd.equals(_SHUTDOWN_SERVER))
-                stopProxyServer(false);
+                stopProxyServer();
             else if (actcmd.equals(_EXIT))
                 System.exit(0);
             else if (actcmd.equals(_SERVER_RESPONSES))
