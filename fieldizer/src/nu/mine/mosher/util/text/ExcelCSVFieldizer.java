@@ -59,7 +59,7 @@ public class ExcelCSVFieldizer
      *
      * @author Chris Mosher
      */
-    private static class FieldIterator<String> implements Iterator<String>
+    private static class FieldIterator implements Iterator<String>
     {
         private final ExcelCSVParser parser;
 
@@ -89,7 +89,7 @@ public class ExcelCSVFieldizer
         {
             try
             {
-                return (String)this.parser.getOneValue();
+                return this.parser.getOneValue();
             }
             catch (Throwable cause)
             {
