@@ -90,7 +90,7 @@ public class FixAppleDisasm
 		public String label = "";
 		public String instr = "";
 		public String oper = "";
-		public String comment = ";";
+		public String comment = "";
 		public int refaddr = -1;
 	}
 
@@ -249,7 +249,7 @@ public class FixAppleDisasm
 						}
 						else
 						{
-							ln.comment += " "+h;
+							ln.comment += ";"+h;
 							System.err.print("error parsing hex @ $");
 							System.err.println(hexWord(ln.addr));
 						}
@@ -370,6 +370,28 @@ public class FixAppleDisasm
 		printout.print(";**********************************************************");
 		printout.newline();
 
+		Line prevline = null;
+
+		for (Iterator i = lines.entrySet().iterator(); i.hasNext();)
+		{
+			Map.Entry ent = (Map.Entry)i.next();
+			Line ln = (Line)ent.getValue();
+
+			if (ln.instr.equalsIgnoreCase("DB") && prevline.instr.equalsIgnoreCase("DB"))
+			{
+				prevline.oper += ","+ln.oper;
+				if (ln.comment.length() > 0)
+				{
+					if (prevline.comment.length() == 0)
+					{
+						prevline.comment = ";";
+					}
+					prevline.comment += " "+ln.comment;
+				}
+			}
+			prevline = ln;
+		}
+
 		for (Iterator i = lines.entrySet().iterator(); i.hasNext();)
         {
             Map.Entry ent = (Map.Entry)i.next();
@@ -386,8 +408,11 @@ public class FixAppleDisasm
 				printout.tab(22);
 				printout.print(ln.oper);
 			}
-			printout.tab(40);
-			printout.print(ln.comment);
+			if (ln.comment.length() > 0)
+			{
+				printout.tab(40);
+				printout.print(ln.comment);
+			}
 			printout.newline();
         }
     }
