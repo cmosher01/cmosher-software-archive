@@ -141,7 +141,14 @@ public class Disk
         if (DiskPos.isValidTrackSectorPointer(sector[1],sector[2]))
         {
             DiskPos cat = new DiskPos();
-            cat.setTS(sector[1],sector[2]);
+            try
+            {
+                cat.setTS(sector[1],sector[2]);
+            }
+            catch (InvalidPosException e)
+            {
+                throw new RuntimeException(e);
+            }
             valid = isDos33CatalogSector(cat) > 0;
         }
         return valid;
