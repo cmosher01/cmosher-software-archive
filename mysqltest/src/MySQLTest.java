@@ -47,26 +47,26 @@ public class MySQLTest
 		{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			db = DriverManager.getConnection("jdbc:mysql:///test","root","");
-			log.info("Creating schema...");
-			createSchema();
-			log.info("Done creating schema.");
-
-			log.info("Creating family...");
-			dbUpdate("delete from Family");
-			family = dbInsert("insert into Family(name) values(\"Flandreau\")");
-			log.fine("Done creating family with id "+family);
+//			log.info("Creating schema...");
+//			createSchema();
+//			log.info("Done creating schema.");
+//
+//			log.info("Creating family...");
+//			dbUpdate("delete from Family");
+//			family = dbInsert("insert into Family(name) values(\"Flandreau\")");
+//			log.fine("Done creating family with id "+family);
 
 			log.info("Reading data...");
-			BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(new File("F:\\Genealogy\\by family\\Flandreau\\census\\flandreau_census.csv"))));
+			BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(new File("F:\\Genealogy\\by family\\Flandreau\\cemetery_newrochelle\\cemetery.csv"))));
 			for (String s = in.readLine(); s != null; s = in.readLine())
 			{
 				processLine(s);
 			}
 			log.info("Done reading data.");
 
-			log.info("Calculating individuals...");
-			calc();
-			log.info("Done calculating individuals...");
+//			log.info("Calculating individuals...");
+//			calc();
+//			log.info("Done calculating individuals...");
 		}
 		finally
 		{
@@ -106,6 +106,9 @@ public class MySQLTest
 		int year = readInt(i.next());
 		switch (year)
         {
+        	case 1:
+        		parseKnown(i);
+        	break;
             case 1790:
                 parse1790(i);
             break;
