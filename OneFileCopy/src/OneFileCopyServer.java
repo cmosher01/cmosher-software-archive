@@ -1,13 +1,12 @@
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class OneFileCopy
 {
-	private static final long cBufMax = 0x4000000000L;
+	private static final int cBufMax = 0x10000000;
 
 	public static void main(String[] args) throws IOException
 	{
@@ -18,10 +17,10 @@ public class OneFileCopy
 			throw new IllegalArgumentException("Bad input file: "+f.getAbsolutePath());
 		}
 
-		long cBuf = f.length();
-		if (cBuf >= cBufMax)
+		int cBuf = cBufMax;
+		if (f.length() < cBuf)
 		{
-			cBuf = cBufMax;
+			cBuf = f.length();
 		}
 
 		ServerSocket srv = new ServerSocket(60013);
