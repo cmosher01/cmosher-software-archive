@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
  
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
@@ -61,6 +62,8 @@ public class GDiffVeiew extends JFrame
     private int beginSrc = -1;
 
     private int endSrc = -1;
+
+    private JList listGDiff;
  
  
  
@@ -83,6 +86,7 @@ public class GDiffVeiew extends JFrame
         JScrollPane scrTrg = new JScrollPane(paneTrg);
         scrTrg.setPreferredSize(new Dimension(620,460));
 
+        listGDiff = new JList();
         JPanel contentPane = new JPanel(new BorderLayout());
         contentPane.add(scrSrc,BorderLayout.WEST);
         contentPane.add(scrTrg,BorderLayout.EAST);
