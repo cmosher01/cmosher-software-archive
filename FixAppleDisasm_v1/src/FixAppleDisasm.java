@@ -114,6 +114,13 @@ public class FixAppleDisasm
 
 			if (addr >= 0)
 			{
+				String nextChar = s.substring(4,5);
+				if (nextChar.equalsIgnoreCase("-"))
+				{
+				}
+				else if (nextChar.equalsIgnoreCase("."))
+				{
+				}
 			}
 		}
     }
