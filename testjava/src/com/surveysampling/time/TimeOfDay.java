@@ -21,6 +21,9 @@ import java.util.Date;
  * This class is thread-safe, but only to the extent that
  * the given Calendar object's clone method (called by this
  * class's constructor) is thread-safe.
+ * Note that Daylight Saving Time is handled by the
+ * given Calendar object. This class does not handle
+ * leap seconds.
  */
 public class TimeOfDay implements Comparable
 {
