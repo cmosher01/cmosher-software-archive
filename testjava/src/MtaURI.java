@@ -66,22 +66,21 @@ public class MtaURI
 
     private int getParamInt(Map mapParamToValue, String param, String sMTA) throws URISyntaxException
     {
-        int nRate = 0;
         String sRate = (String)mapParamToValue.get(param);
-        if (sRate.length() > 0)
+        if (sRate.length() == 0)
         {
-            try
-            {
-                nRate = Integer.parseInt(sRate);
-            }
-            catch (NumberFormatException e)
-            {
-                URISyntaxException ex = new URISyntaxException(sRate,"Invalid "+param+" specified in MTA "+sMTA);
-                ex.initCause(e);
-                throw ex;
-            }
+            return -1;
         }
-        return nRate;
+        try
+        {
+            return Integer.parseInt(sRate);
+        }
+        catch (NumberFormatException e)
+        {
+            URISyntaxException ex = new URISyntaxException(sRate,"Invalid "+param+" specified in MTA "+sMTA);
+            ex.initCause(e);
+            throw ex;
+        }
     }
 
     public URI getURI()
