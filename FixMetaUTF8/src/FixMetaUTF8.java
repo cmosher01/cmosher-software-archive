@@ -55,10 +55,17 @@ public class FixMetaUTF8
         return sb;
     }
 
-    public static String fixMeta(StringBuffer sb)
+    public static String removeContentTypeMeta(StringBuffer sb)
     {
         Pattern pat = Pattern.compile("<meta.*?charset.*?>",Pattern.CASE_INSENSITIVE|Pattern.MULTILINE|Pattern.DOTALL);
         Matcher matcher = pat.matcher(sb);
         return matcher.replaceFirst("");
+    }
+
+    public static String addContentTypeMeta(StringBuffer sb)
+    {
+        Pattern pat = Pattern.compile("<head>",Pattern.CASE_INSENSITIVE|Pattern.MULTILINE|Pattern.DOTALL);
+        Matcher matcher = pat.matcher(sb);
+        return matcher.replaceFirst("<HEAD>\n<META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF8\">");
     }
 }
