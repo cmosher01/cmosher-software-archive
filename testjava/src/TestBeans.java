@@ -54,11 +54,7 @@ public class TestBeans
         if (classProp.isArray())
         {
             classProp = classProp.getComponentType();
-            PropertyEditor ed = PropertyEditorManager.findEditor(classProp);
-            if (ed == null)
-            {
-                throw new IntrospectionException("can't get property editor");
-            }
+            PropertyEditor ed = getPropertyEditor(classProp);
             Object[] rval = (Object[])Array.newInstance(classProp,value.length);
             for (int i = 0; i < value.length; ++i)
             {
@@ -81,6 +77,16 @@ public class TestBeans
 
         Method wr = pd.getWriteMethod();
         wr.invoke(bean, new Object[] { v });
+    }
+
+    private static PropertyEditor getPropertyEditor(Class classProp) throws IntrospectionException
+    {
+        PropertyEditor ed = PropertyEditorManager.findEditor(classProp);
+        if (ed == null)
+        {
+            throw new IntrospectionException("can't get property editor");
+        }
+        return ed;
     }
 
     public static HashMap getPropertyDescriptors(BeanInfo bi) throws IntrospectionException
