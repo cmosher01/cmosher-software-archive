@@ -24,7 +24,16 @@ public class TimeOfDay
     private final int seconds;
     private final int milliseconds;
 
-    public TimeOfDay(Calendar calendar, int hours, int minutes, int seconds, int milliseconds)
+    /**
+     * 
+     * @param calendar
+     * @param hours
+     * @param minutes
+     * @param seconds
+     * @param milliseconds
+     * @throws IllegalArgumentException
+     */
+    public TimeOfDay(Calendar calendar, int hours, int minutes, int seconds, int milliseconds) throws IllegalArgumentException
     {
         // for safety, *clone* the caller's calendar first
         // (there's no guarantee that getMinimun and getMaximum are thread safe).
@@ -107,7 +116,7 @@ public class TimeOfDay
      * @param cal the Calendar, with date set, to have time overridden
      * @throws IllegalStateException if the constructor was called with invalid arguments
      */
-    public void getTimeOnDay(Calendar cal)
+    public void getTimeOnDay(Calendar cal) throws IllegalStateException
     {
         verifyValidity();
         cal.set(Calendar.HOUR_OF_DAY, hours);
@@ -144,7 +153,7 @@ public class TimeOfDay
 
 
 
-    protected void verifyValidity()
+    protected void verifyValidity() throws IllegalStateException
     {
         if (!isValid())
         {
