@@ -1,6 +1,6 @@
 package com.surveysampling.util;
 
-public class Pair implements Cloneable, Comparable
+public class Pair implements Cloneable, Comparable, Serializable
 {
     private Cloneable a;
     private Cloneable b;
