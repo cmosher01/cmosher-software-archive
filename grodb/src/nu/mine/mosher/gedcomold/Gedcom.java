@@ -8,7 +8,8 @@ public class Gedcom
 	{
 	}
 
-	public String guessCharset(InputStream in)
+	public static String guessCharset(InputStream in)
 	{
+		return "test";
 	}
 }
