@@ -36,7 +36,7 @@ import javax.swing.text.StyledDocument;
  * 
  * @author Chris
  */
-public class GDiffVeiew extends JFrame
+public class GDiffView extends JFrame
 {
     private StyledDocument docSrc;
  
@@ -68,7 +68,7 @@ public class GDiffVeiew extends JFrame
  
  
  
-    public GDiffVeiew(String fileSrc, String fileGDiff) throws BadLocationException, IOException
+    public GDiffView(String fileSrc, String fileGDiff) throws BadLocationException, IOException
     {
         super("GDiffVeiew");
 
@@ -357,7 +357,7 @@ public class GDiffVeiew extends JFrame
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, InterruptedException, BadLocationException, IOException
     {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        GDiffVeiew frame = new GDiffVeiew(args[0],args[1]);
+        GDiffView frame = new GDiffView(args[0],args[1]);
         frame.highlightSrc(3,0x06);
         Thread.sleep(2000);
         frame.highlightSrc(4,0x16);
