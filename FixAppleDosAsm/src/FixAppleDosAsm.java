@@ -21,6 +21,10 @@ import java.io.PrintWriter;
 public class FixAppleDosAsm
 {
 
+    /**
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException
     {
         BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(FileDescriptor.in)));
