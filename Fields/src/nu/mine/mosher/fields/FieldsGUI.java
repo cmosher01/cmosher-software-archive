@@ -20,7 +20,7 @@ public class GUI
     public void create()
     {
         // Use look and feel for current OS.
-        //SwingUtil.useOSLookAndFeel();
+        SwingUtil.useOSLookAndFeel();
 
         // Use look and feel's (not OS's) decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
