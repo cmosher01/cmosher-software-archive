@@ -14,12 +14,6 @@ public class ExceptionHandler
 {
     private final CubbyHole mException = new CubbyHole();
 
-    public ExceptionHandler()
-    {
-    }
-
-
-
     /**
      * Waits for another thread to send this thread
      * an exception, then throws it.
