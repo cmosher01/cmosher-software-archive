@@ -72,7 +72,7 @@ public class Test
     //throws MyException, IOException // other exceptions here...
 	{
 
-        URL x = Test.class.getClassLoader().getResource("");
+        URL x = Test.class.getClassLoader().getResource(".");
         String sx = x.toExternalForm();
         System.out.println(sx);
         URI uri = URI.create(sx);
