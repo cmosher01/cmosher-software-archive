@@ -59,7 +59,7 @@ public class OneFileCopyServer
 			{
 				out.write(rb,0,cb);
 			}
-			if (++i % rpt == 0)
+			if (i % rpt == 0)
 			{
 				System.out.println("sent @ "+(i*1024)+" bytes.");
 			}
