@@ -40,9 +40,9 @@ public class ListNamed
 			sb.append("</a></td></tr>\n");
 		}
 
-		sb.append("<tr><td>&lt;<a href=\"add.jsp\">add</a>&gt;</td></tr>");
+		sb.append("<tr><td>&lt;<a href=\"add.jsp\">add</a>&gt;</td></tr>\n");
 
-		sb.append("</table>");
+		sb.append("</table>\n");
 
 		return sb.toString();
 	}
