@@ -7,7 +7,7 @@ public class UndoableReference
 
     public UndoableReference(Cloneable state) throws CloneNotSupportedException
     {
-        if (object == null)
+        if (state == null)
         {
             throw new IllegalArgumentException();
         }
