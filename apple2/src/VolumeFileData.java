@@ -10,5 +10,5 @@
  */
 public class VolumeFileData extends VolumeEntity
 {
-    
+    private byte[] data;
 }
