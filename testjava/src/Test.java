@@ -48,6 +48,10 @@ public class Test
             String field = (String)i.next();
             System.out.println(field);
         }
+//        for (String field : new SF(x))
+//        {
+//            System.out.println(field);
+//        }
 
 
 //        UndoableReference u = new UndoableReference(new Mute(5));
