@@ -963,6 +963,10 @@ public class GDiffView extends JFrame
                         {
                             cMatch = start-match;
                         }
+                        if (cMatch == cMatchCurrent)
+                        {
+                            System.out.println("more than one match are of the same length")
+                        }
                         if (cMatch >= cWindow && cMatch > cMatchCurrent)
                         {
                             matchCurrent = match;
