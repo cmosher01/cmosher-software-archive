@@ -5,6 +5,7 @@
 	<projects>
 		<project>ansel</project>
 		<project>core</project>
+		<project>logging</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
