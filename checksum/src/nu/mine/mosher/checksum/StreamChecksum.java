@@ -6,6 +6,8 @@ package nu.mine.mosher.checksum;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * TODO
@@ -14,6 +16,10 @@ import java.io.InputStream;
  */
 public class ChecksumStream
 {
+    private Map mapCheckOffset = new HashMap();
+
+
+
     /**
      * Computes checksums for non-overlapping
      * windows of the given size over all bytes
@@ -27,19 +33,23 @@ public class ChecksumStream
         byte[] rs = new byte[cWindow];
         RollingChecksum rollCheck = new RollingChecksum();
 
-        if (is.available() < cWindow)
+        int w = 0;
+        while (is.available() > 0)
         {
-            cWindow = is.available();
-            rs = new byte[cWindow];
+            if (is.available() < cWindow)
+            {
+                cWindow = is.available();
+                rs = new byte[cWindow];
+            }
+            int c = is.read(rs);
+            if (c != cWindow)
+            {
+                throw new IOException("Error reading from input stream.");
+            }
+            rollCheck.init(rs);
+            mapCheckOffset.put(new Integer(rollCheck.getChecksum()),new Long(w++));
         }
-        int c = is.read(rs);
-        if (c != cWindow)
-        {
-            throw new IOException("Error reading from input stream.");
-        }
-        rollCheck.init(rs);
 
-        RollingChecksum rollCheck2 = new RollingChecksum();
         for (int k = 0; k < rb.length-cWindow; ++k)
         {
             rollCheck.increment(rb[k], rb[k+cWindow]);
