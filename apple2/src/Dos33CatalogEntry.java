@@ -91,7 +91,7 @@ public class Dos33CatalogEntry
         return name;
     }
     /**
-     * @return Returns the nameOrig.
+     * @return Returns the original name.
      */
     public byte[] getNameOrig()
     {
