@@ -34,7 +34,15 @@ public class TestExec
 
     public static void waitFor()
     {
-        p.waitFor();
+        try
+        {
+            p.waitFor();
+        }
+        catch (InterruptedException e)
+        {
+            System.out.println("interrupted exception");
+            e.printStackTrace();
+        }
         System.out.println("subprocess done");
 
         procout.waitFor();
