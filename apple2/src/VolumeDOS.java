@@ -139,6 +139,43 @@ public class VolumeDOS extends VolumeEntity
             0x220E, 0x2211, 0x2216, 0x221C, 0x2226, 0x2229, 0x222C, 0x2230, 0x2234, 0x2237, 0x223A, 0x2279, 0x2281, 0x2289, 0x2290,
             0x2294};
 
+    private static final int[] rFranklinOffset = {
+    0x06df,
+    0x06e0,
+    0x06e1,
+    0x06e2,
+    0x06e3,
+    0x06e4,
+    0x06e5,
+    0x06e6,
+    0x06e7,
+    0x06e8,
+    0x06e9,
+    0x06ea,
+    0x06eb,
+    0x06ec,
+    0x1096,
+    0x1097,
+    0x1098};
+    private static final int[] rFranklinValue = {
+            @$6df: 88 --> bd
+            @$6e0: a5 --> 0
+            @$6e1: e8 --> 2
+            @$6e2: 91 --> c9
+            @$6e3: a0 --> e1
+            @$6e4: 94 --> 90
+            @$6e5: 88 --> 6
+            @$6e6: 96 --> c9
+            @$6e7: e8 --> fb
+            @$6e8: 91 --> b0
+            @$6e9: a0 --> 2
+            @$6ea: 94 --> 29
+            @$6eb: 88 --> df
+            @$6ec: 96 --> 60
+
+            @$1096: bd --> 20
+            @$1097: 0 --> df
+            @$1098: 2 --> 3c
     //    {0x0060, 0x0068, 0x006D, 0x0070, 0x0073, 0x0078, 0x007D, 0x0082, 0x0085,
     // 0x0088,
 //            0x008B, 0x008E, 0x0091, 0x00A3, 0x00AB, 0x00B0, 0x0102, 0x0105, 0x010A,
