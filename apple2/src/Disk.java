@@ -178,6 +178,7 @@ public class Disk
 
     /**
      * @param sector
+     * @return
      */
     protected boolean isDos33VTOC(byte[] sector)
     {
