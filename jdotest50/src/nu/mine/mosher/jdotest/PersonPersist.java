@@ -1,5 +1,8 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
+import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Transaction;
@@ -17,7 +20,7 @@ public class PersonPersist
 
 	private Person[] people;
 
-	private List<Integer> rid = new ArrayList<Integer>(SIZE);
+	private List rid = new ArrayList(SIZE);
 
 	public PersonPersist()
 	{
