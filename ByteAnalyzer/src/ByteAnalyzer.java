@@ -22,7 +22,7 @@ public class ByteAnalyzer
     private static final int CR = 1;
     private static final int LF = 2;
 
-    private Map cBytes = new TreeMap();
+    private Map<Integer,Integer> cBytes = new TreeMap<Integer,Integer>();
     private int cCRLF;
     private int cLFCR;
 
@@ -122,18 +122,21 @@ public class ByteAnalyzer
 
     private void incByte(int x)
     {
-        Integer i = new Integer(x);
-        if (!cBytes.containsKey(i))
+        if (!cBytes.containsKey(x))
         {
-            cBytes.put(i,new Integer(1));
+            cBytes.put(x,1);
         }
         else
         {
-            int cx = ((Integer)cBytes.get(i)).intValue();
-            cBytes.put(i,new Integer(++cx));
+            int cx = cBytes.get(x);
+            cBytes.put(x,++cx);
         }
     }
 
+    /**
+     * Prints a summary of the analyzed file.
+     * @param f the <code>File</code> analyzed
+     */
     public void showMap(File f)
     {
 //        if (cCRLF > 0)
