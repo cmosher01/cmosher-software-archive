@@ -38,7 +38,7 @@ public class Disk
     public byte[] read(int len)
     {
         byte[] rb = new byte[len];
-        System.arraycopy(this.disk, pos.getIndex(), rb, 0, len);
+        System.arraycopy(disk,pos.getIndex(),rb,0,len);
         return rb;
     }
 }
