@@ -87,7 +87,7 @@ public class MySQLTest
     				log.info(
     					sGender+","+
     					(ageMax<0 ? "" : ""+(1790-ageMax))+","+
-    					(ageMin<0 ? "" : ""+(1790-ageMin)));
+    					(1790-ageMin));
     			}
     		}
     	}
