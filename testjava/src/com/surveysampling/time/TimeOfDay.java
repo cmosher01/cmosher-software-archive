@@ -218,15 +218,18 @@ public class TimeOfDay implements Comparable
     {
         if (seconds == 0 && milliseconds == 0)
         {
-            appendNumber(hours,2,s);
+            appendNumber(hours,2,s).append(':').appendNumber(minutes,2,s);
+        }
+        else
+        {
         }
 
         return s;
     }
 
-    private StringBuffer appendNumber(int n, int min, StringBuffer s)
+    private void appendNumber(int n, int min, StringBuffer s)
     {
         fmt.setMinimumIntegerDigits(min);
-        return fmt.format(n,s,new FieldPosition(0));
+        fmt.format(n,s,new FieldPosition(0));
     }
 }
