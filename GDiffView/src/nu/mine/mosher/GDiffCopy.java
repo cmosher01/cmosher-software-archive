@@ -48,7 +48,7 @@ public class GDiffCopy extends GDiffCmd
             dif1 = that;
         }
         GDiffCopy[] rnorm = new GDiffCopy[3];
-        GDiffCopy[0] = new GDiffCopy()
+//        GDiffCopy[0] = new GDiffCopy()
         return rnorm;
     }
 }
