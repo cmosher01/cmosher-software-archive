@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -17,6 +18,9 @@ import org.apache.velocity.context.Context;
 import org.apache.velocity.runtime.RuntimeServices;
 import org.apache.velocity.runtime.log.LogSystem;
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class VelocityTest
@@ -67,6 +71,14 @@ public class VelocityTest
         DocumentBuilderFactory fact = DocumentBuilderFactory.newInstance();
         DocumentBuilder build = fact.newDocumentBuilder();
         Document doc = build.parse(f);
+        NodeList rcpe = doc.getElementsByTagName("classpathentry");
+        for (int i = 0; i < rcpe.getLength(); ++i)
+        {
+            Node cpe = rcpe.item(i);
+            NamedNodeMap mapAttrib = cpe.getAttributes();
+            Node nodeKind = mapAttrib.getNamedItem("kind");
+            System.out.println(nodeKind.getNodeValue());
+        }
         return deps;
     }
 }
