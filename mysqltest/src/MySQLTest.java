@@ -47,6 +47,7 @@ public class MySQLTest
 			log.info("Done inserting data.");
 
 			log.info("Calculating...");
+			calc();
 		}
 		finally
 		{
@@ -64,7 +65,11 @@ public class MySQLTest
 		}
     }
 
-	protected void insertData() throws SQLException
+	protected void calc()
+    {
+    }
+
+    protected void insertData() throws SQLException
     {
     	dbUpdate("delete from Family");
     	int fland = dbInsert("insert into Family(name) values(\"Flandreau\")");
