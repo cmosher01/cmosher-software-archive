@@ -38,11 +38,17 @@ public class SwingApplication
 
     /**
      * @throws ApplicationAborting
-     * @throws InvalidCommandLine
      */
-    public void run() throws ApplicationAborting, InvalidCommandLine
+    public void run() throws ApplicationAborting
     {
-        getCommandLineArgHandler().parse();
+        try
+        {
+            getCommandLineArgHandler().parse();
+        }
+        catch (Throwable e)
+        {
+            getExceptionHandler().send(e);
+        }
 
         /*
          * Start the GUI, making sure all Swing calls
