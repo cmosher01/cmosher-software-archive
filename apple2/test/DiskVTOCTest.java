@@ -56,7 +56,8 @@ public class DiskVTOCTest extends TestCase
         assertOnePos("ESDOS.dsk",new DiskPos(0x11,0));
         assertOnePos("Franklin_19820921.dsk",new DiskPos(0x11,0));
         assertOnePos("Franklin_19830215.dsk",new DiskPos(0x11,0));
-        assertOnePos("HYPERDOS_restored.DSK",new DiskPos(0x11,0));
+        assertOnePos("HYPERDOS_restored.dsk",new DiskPos(0x11,0));
+        assertOnePos("prontodos.dsk",new DiskPos(0x11,0));
 //        assertOnePos("dos33master.dsk",new DiskPos(0x11,0));
 //        assertOnePos("dos33slave.dsk",new DiskPos(0x11,0));
 //        assertOnePos("franklin83_slave.dsk",new DiskPos(0x11,0));
