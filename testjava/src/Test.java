@@ -55,7 +55,7 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
-        Date d = new Date(-1);
+        Date d = new Date(Long.MIN_VALUE);
         SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
         System.out.println(f.format(d));
         
