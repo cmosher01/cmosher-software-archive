@@ -36,6 +36,7 @@ public class TreeFrame extends JPanel
         JScrollPane scrollpane = new JScrollPane();
         scrollpane.getViewport().add(tree);
         scrollpane.setDoubleBuffered(true);
+        scrollpane.getViewport().setDoubleBuffered(true);
 
         add("Center", scrollpane);
     }
