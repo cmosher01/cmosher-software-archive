@@ -358,7 +358,7 @@ public class VolumeDOS extends VolumeEntity
         // TODO Franklin signature
 
         // various DOS 3.3 signatures
-        if (!alt)
+        if (true) //(!alt)
         {
             /*
              * Assume is normal DOS 3.3, so find out which
