@@ -38,38 +38,39 @@ public class Test
         {
         }
     }
+
+    public Object throwSomething()
+    {
+        Object j = new Object();
+        throw new Exception();
+        return j;
+    }
+
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
-        StringBuffer code = new StringBuffer(20);
 
-        String base = "thisfqawsede";
-        if (base.length() > 11)
+
+
+
+
+
+
+
+
+
+
+
+
+        Object x = null;
+        try
         {
-            base = base.substring(0, 11);
+            x = throwSomething();
         }
-
-        code.append(base);
-        code.append("_");
-        List mStepInts = new ArrayList();
-        mStepInts.add(new Integer(0));
-        mStepInts.add(new Integer(1));
-        mStepInts.add(new Integer(2));
-        mStepInts.add(new Integer(3));
-        mStepInts.add(new Integer(4));
-        mStepInts.add(new Integer(5));
-        mStepInts.add(new Integer(6));
-        mStepInts.add(new Integer(7));
-        for (int i = 0; i < 8; ++i)
+        catch (Exception e)
         {
-            Integer inti = new Integer(i);
-            if (mStepInts.contains(inti))
-            {
-                code.append(new Integer(i + 1));
-            }
+            System.out.println(x);
         }
-        System.out.println(code.toString());
-
 
 
 
