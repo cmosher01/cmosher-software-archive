@@ -19,7 +19,7 @@ public class OneFileCopyClient
 
 		try
 		{
-			Thread.sleep(500);
+			Thread.sleep(2500);
 		}
 		catch (InterruptedException e)
 		{
