@@ -78,8 +78,6 @@ public class RollingChecksum
     {
         int a = checksum & 0xFFFF;
         a += xlplus1-xk;
-//        a -= xk;
-//        a += xlplus1;
         while (a < 0)
         {
             a += M;
@@ -88,8 +86,6 @@ public class RollingChecksum
 
         int b = (checksum >> 16) & 0xFFFF;
         b += a-len*xk;
-//        b -= len*xk;
-//        b += a;
         while (b < 0)
         {
             b += M;
