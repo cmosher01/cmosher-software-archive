@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
+import java.text.NumberFormat;
 import java.util.logging.Logger;
 
 import nu.mine.mosher.core.Immutable;
@@ -74,14 +75,15 @@ public class Player implements Immutable
      */
     private static void dumphex(String s)
     {
-    	char[] rc = s.toCharArray();
-    	for (int i = 0; i < rc.length; ++i)
+        char[] rc = s.toCharArray();
+        for (int i = 0; i < rc.length; ++i)
         {
             char c = rc[i];
             String h = Integer.toHexString(c);
             System.out.print(h);
+			System.out.print(" ");
         }
-		System.out.println();
+        System.out.println();
     }
 
     /**
