@@ -91,8 +91,6 @@ public class SwingGUI
      */
     protected JMenuBar createMenuBar()
     {
-//        JMenuBar mb = new JMenuBar();
-//        return mb;
         return null;
     }
 
@@ -101,17 +99,7 @@ public class SwingGUI
      */
     protected JPanel createContentPane()
     {
-        JTable table = new JTable(new BigTableModel());
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        TableColumnModel columnModel = table.getColumnModel();
-        for (int i = 0; i < columnModel.getColumnCount(); ++i)
-        {
-            TableColumn column = columnModel.getColumn(i);
-            column.setPreferredWidth(80);
-        }
-        table.setPreferredScrollableViewportSize(new Dimension(640,480));
-
-        JScrollPane scrollpane = new JScrollPane(table);
+        JScrollPane scrollpane = new JScrollPane();
         scrollpane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollpane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
