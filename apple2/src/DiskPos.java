@@ -37,6 +37,9 @@ public class DiskPos implements Comparable, Cloneable
         this.iDisk = iDisk;
     }
 
+    /**
+     * @see java.lang.Object#clone()
+     */
     public Object clone()
     {
         Object ret;
