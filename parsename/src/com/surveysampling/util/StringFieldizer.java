@@ -33,6 +33,11 @@ public class StringFieldizer
         return pos;
     }
 
+    public char getDelimiter()
+    {
+        return delim;
+    }
+
     protected int nextPos()
     {
         int i = s.indexOf(delim,pos);
