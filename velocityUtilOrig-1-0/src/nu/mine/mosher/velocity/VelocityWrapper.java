@@ -5,7 +5,10 @@ package nu.mine.mosher.velocity;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.Properties;
@@ -129,7 +132,12 @@ public class VelocityWrapper
         BufferedWriter out = null;
         try
         {
+            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile)));
             merge(inputTemplate,context,out);
+        }
+        catch (FileNotFoundException e)
+        {
+            throw wrapInVelocityException(e);
         }
         finally
         {
