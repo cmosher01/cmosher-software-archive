@@ -172,7 +172,7 @@ public class GDiff2HTML
 			case 255: pos = readLong(gdiff); len = readInt(gdiff); break;
 			default: throw new RuntimeException("Can't happen.");
 		}
-		return new GDiffCopy(pos,len);
+		return new GDiffCopy(new Range(pos,pos+len-1));
 	}
 
 	/**
