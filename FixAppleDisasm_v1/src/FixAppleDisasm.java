@@ -145,13 +145,16 @@ public class FixAppleDisasm
 				}
 				else if (nextChar.equalsIgnoreCase("."))
 				{
+					System.err.println(s);
 				}
 				else
 				{
+					System.err.println(s);
 				}
 			}
 			else
 			{
+				System.err.println(s);
 			}
 		}
     }
