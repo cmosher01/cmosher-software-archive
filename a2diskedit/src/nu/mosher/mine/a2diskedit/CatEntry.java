@@ -1,5 +1,10 @@
 package nu.mosher.mine.a2diskedit;
 
+import java.awt.Component;
+
+import javax.swing.Icon;
+import javax.swing.tree.DefaultMutableTreeNode;
+
 public class CatEntry implements TreeNode
 {
 	private String sName;
@@ -14,5 +19,27 @@ public class CatEntry implements TreeNode
 	public String getName()
 	{
 		return sName;
+	}
+	/**
+	 * @see nu.mosher.mine.a2diskedit.TreeNode#getIcon()
+	 */
+	public Icon getIcon()
+	{
+		return null;
+	}
+
+	/**
+	 * @see nu.mosher.mine.a2diskedit.TreeNode#getRightPane()
+	 */
+	public Component getRightPane()
+	{
+		return null;
+	}
+
+	/**
+	 * @see nu.mosher.mine.a2diskedit.TreeNode#setNode(DefaultMutableTreeNode)
+	 */
+	public void setNode(DefaultMutableTreeNode n)
+	{
 	}
 }
