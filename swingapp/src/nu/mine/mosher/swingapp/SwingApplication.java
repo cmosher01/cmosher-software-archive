@@ -75,12 +75,12 @@ public class SwingApplication
         mExceptionHandler.waitFor();
     }
 
-    protected GUI getGUI()
+    public GUI getGUI()
     {
         return mGUI;
     }
 
-    protected ExceptionHandler getExceptionHandler()
+    public ExceptionHandler getExceptionHandler()
     {
         return mExceptionHandler;
     }
