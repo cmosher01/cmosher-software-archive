@@ -14,7 +14,7 @@ import java.util.NoSuchElementException;
 public class Pool<T>
 {
 	private final LinkedList<T> unused = new LinkedList<T>();
-	private final Map<WeakReference,T> inUse = new HashMap<WeakReference,T>();
+	private final Map<WeakReference<T>,T> inUse = new HashMap<WeakReference<T>,T>();
 	private final ReferenceQueue recycleBin = new ReferenceQueue();
 
 	public Pool(T[] pool)
