@@ -65,6 +65,8 @@ public class Test
         System.out.println(m);
         m.redo();
         System.out.println(m);
+        m.redo();
+        System.out.println(m);
 
 
 
