@@ -1,4 +1,5 @@
 import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 /*
@@ -176,29 +177,30 @@ public class BinDiff
         }
     }
 
-	protected boolean  difFindMatch(FILE * f1, FILE * f2, long * fmark, int cs, int cm)
+	protected boolean  difFindMatch()
     {
-        long orig = ftell(f2);
+        f2.mark();
 
-        bool endoffile(false);
+        boolean endoffile = false;
         while (cs-- && !endoffile && !difMatch(f1, f2, cm))
             endoffile = fgetc(f2) == EOF;
 
         bool found(!endoffile && cs > 0);
 
         * fmark = ftell(f2);
-        fseek(f2, orig, SEEK_SET);
+
+        f2.reset();
 
         return found;
     }
 
-    protected boolean difMatch(int cm)
+    protected boolean difMatch() throws IOException
     {
         f1.mark();
         f2.mark();
 
         boolean same = true;
-        for (int i = 0; i < cm && same; ++i)
+        for (int i = 0; i < cMaxSearch && same; ++i)
         {
             int c1 = f1.read();
             int c2 = f2.read();
