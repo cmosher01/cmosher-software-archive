@@ -134,10 +134,38 @@ public class DateRange implements Immutable, Serializable, Comparable
     	}
 
 		DateRange that = (DateRange)o;
+
+		if (this.circa || that.circa)
+		{
+			return false;
+		}
+
+		if (!this.isExact() || !that.isExact())
+		{
+			return false;
+		}
+
+		if (!this.earliest.equals(that.earliest))
+		{
+			return false;
+		}
+
+		if (this.hour != that.hour || this.minute != that.minute)
+		{
+			return false;
+		}
+
+		boolean tzeq = true;
+		if (this.hour >= 0 || this.minute >= 0)
+		{
+			if (this.timeZone != null && that.timeZone != null)
+			{
+				tzeq = this.timeZone.equals(that.timeZone);
+			}
+		}
+
         return
         	this.earliest.equals(that.earliest) &&
-			this.latest.equals(that.latest) &&
-			;
     }
 
     public int hashCode()
