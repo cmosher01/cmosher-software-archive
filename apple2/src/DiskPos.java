@@ -29,7 +29,18 @@ public class DiskPos
     {
         verifyTrack(track,allowLarge);
         verifySector(sector);
-        verifyByte(byt);
+        verifyByte(byt,cSector);
+    }
+
+    /**
+     * @param byt
+     */
+    private void verifyByte(int byt, int siz)
+    {
+        if (byt < 0 || siz <= byt)
+        {
+            throw new InvalidPosException("Invalid sector: "+sector);
+        }
     }
 
     /**
