@@ -26,7 +26,7 @@ public class Disk implements TreeNode
 
 	public Disk()
 	{
-		this(null);
+		this(null,null);
 	}
 
 	public Disk(File file, DefaultMutableTreeNode n)
