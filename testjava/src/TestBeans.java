@@ -61,6 +61,10 @@ public class TestBeans
         }
         else
         {
+            if (value.length > 1)
+            {
+                throw new IllegalArgumentException("Cannot set a scalar property to an array of values.");
+            }
             v = convert(value[0], getPropertyEditor(classProp));
         }
         return v;
