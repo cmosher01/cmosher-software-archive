@@ -11,6 +11,8 @@ import java.util.Calendar;
  * of the calendar is not used.
  * It contains hours, minutes, seconds, and milliseconds
  * since midnight. Instances of this class are immutable.
+ * Instances of this class do not hold a reference to
+ * the given Calendar. This class is thread-safe.
  */
 public class TimeOfDay
 {
@@ -24,6 +26,7 @@ public class TimeOfDay
     {
         // for safety, *clone* the caller's calendar first
         // (there's no guarantee that getMinimun and getMaximum are thread safe).
+        // We don't hold a reference to calendar, so clone is OK here
         calendar = (Calendar)calendar.clone();
 
         if (hours < calendar.getMinimum(Calendar.HOUR_OF_DAY) || calendar.getMaximum(Calendar.HOUR_OF_DAY) < hours)
