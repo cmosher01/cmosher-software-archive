@@ -45,8 +45,8 @@ public final class Cloner
         }
     }
 
-    private static Cloneable clone(Cloneable cloneableObject, Method methodClone) throws CloneNotSupportedException
-        throws IllegalAccessException, IllegalArgumentException, InvocationTargetException
+    private static Cloneable clone(Cloneable cloneableObject, Method methodClone)
+        throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, CloneNotSupportedException
     {
         return (Cloneable)methodClone.invoke(cloneableObject,null);
     }
