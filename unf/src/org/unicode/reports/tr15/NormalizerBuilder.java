@@ -532,4 +532,3 @@ class NormalizerBuilder
             return result.toString();
         }
     }
-}
