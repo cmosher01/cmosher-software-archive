@@ -1,5 +1,7 @@
 import java.io.FileReader;
 import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -45,6 +47,13 @@ public class Test
         Exception e = new Exception("test");
         ExceptionUtil.newGeneric(e);
         System.out.println(ExceptionUtil.class.getClassLoader().getClass().getName());
+        URLClassLoader cl = (URLClassLoader)ExceptionUtil.class.getClassLoader();
+        URL[] rurl = cl.getURLs();
+        for (int i = 0; i < rurl.length; ++i)
+        {
+            URL url = rurl[i];
+            System.out.println(url.toString());
+        }
 
         System.out.println(Test.class.getClassLoader().getClass().getName());
         System.out.println(System.getProperty("java.class.path"));
