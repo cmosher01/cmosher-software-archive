@@ -1076,10 +1076,10 @@ public class GDiffView extends JFrame
     /**
      * @param data
      */
-    private void doData(byte[] data)
+    private void doData(byte[] data, Range target)
     {
         GDiffData cmd = new GDiffData(data);
-        cmd.setTargetRange(null); // TODO
+        cmd.setTargetRange(target);
         this.rData.add(cmd);
     }
 
@@ -1088,14 +1088,14 @@ public class GDiffView extends JFrame
      * @param length
      * @param fromTarget
      */
-    private void doCopy(long offset, long length, boolean fromTarget)
+    private void doCopy(long offset, long length, boolean fromTarget, Range target)
     {
         if (fromTarget)
         {
             throw new IllegalStateException();
         }
         GDiffCopy cmd = new GDiffCopy(new Range(offset,offset+length-1));
-        cmd.setTargetRange(null); // TODO
+        cmd.setTargetRange(target);
         this.rCopy.add(cmd);
     }
 }
