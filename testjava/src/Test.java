@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import com.surveysampling.util.UniversalCloser;
+import com.surveysampling.util.UniversalCloser2;
 
 public class Test
 {
