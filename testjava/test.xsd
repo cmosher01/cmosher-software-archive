@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:element name="template">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ROWSET">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ROW" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="default-tag-values">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="header">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="to" type="xs:string" />
+							<xs:element name="subject" type="xs:string" />
+							<xs:element name="from" type="xs:string" />
+							<xs:element name="reply" type="xs:string" />
+							<xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="message" type="xs:string" />
+				<xs:element name="control">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="name" type="xs:string" />
+							<xs:element name="submitter" type="xs:string" />
+							<xs:element name="notify-email" minOccurs="0" type="xs:string" />
+							<xs:element name="ship-rate" minOccurs="0" type="xs:integer" />
+							<xs:element name="send-window" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="start" type="xs:string" />
+										<xs:element name="end" type="xs:string" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>
