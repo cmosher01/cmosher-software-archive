@@ -169,6 +169,10 @@ public class Gedcom
 				{
 					return "Cp850";
 				}
+				if (s.indexOf("ASCII",6) >= 0)
+				{
+					return "Cp850";
+				}
 				if (s.indexOf("MAC",6) >= 0)
 				{
 					return "MacRoman";
