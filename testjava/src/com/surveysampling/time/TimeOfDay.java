@@ -112,7 +112,7 @@ public class TimeOfDay
 
     public Date getTimeOnDay(Calendar cal, Date d)
     {
-        cal.setTime(d);
+        cal.setTimeInMillis(d.getTime());
         getTimeOnDay(cal);
         return new Date(cal.getTimeInMillis());
     }
