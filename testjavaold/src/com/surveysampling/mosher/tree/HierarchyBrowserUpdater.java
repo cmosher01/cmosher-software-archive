@@ -13,14 +13,14 @@ import javax.swing.tree.TreePath;
 
 public class HierarchyBrowserUpdater implements TreeExpansionListener
 {
-    FileTreeNode root;
+    FileTreeNode mRoot;
     JTree jtree;
     DefaultTreeModel treemodel;
     Frame frame;
 
     public HierarchyBrowserUpdater(JTree tree, FileTreeNode node, DefaultTreeModel tmodel, Frame theFrame)
     {
-        root = node;
+        mRoot = node;
         jtree = tree;
         treemodel = tmodel;
         frame = theFrame;
