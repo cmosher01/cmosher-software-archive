@@ -57,7 +57,7 @@ public class SpringMid extends Spring
      */
     public int getValue()
     {
-        return (int)Math.round(parent.getValue() * fraction);
+        return (int)Math.round(fraction*right.getValue() - width/2);
     }
 
     /**
