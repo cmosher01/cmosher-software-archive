@@ -29,20 +29,20 @@ public class Rel
         return item;
     }
 
+	/**
+	 * @param item
+	 */
+	public void setItem(Item item)
+	{
+		this.item = item;
+	}
+
     /**
      * @return
      */
     public Thing getThing()
     {
         return thing;
-    }
-
-    /**
-     * @param item
-     */
-    public void setItem(Item item)
-    {
-        this.item = item;
     }
 
     /**
