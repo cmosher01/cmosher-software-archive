@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -113,7 +114,7 @@ public class MySQLTest
         }
     }
 
-	protected void parse1790(Iterator i)
+	protected void parse1790(Iterator i) throws SQLException
     {
 		String state = (String)i.next();
 		String county = (String)i.next();
@@ -127,6 +128,25 @@ public class MySQLTest
 		int m16to150 = Integer.parseInt((String)i.next());
 		int m0to15 = Integer.parseInt((String)i.next());
 		int f0to150 = Integer.parseInt((String)i.next());
+
+		PreparedStatement st = null;
+		try
+		{
+			st = db.prepareStatement(
+			"select id from ImageIdent where "+
+			"year = ? and state = ? and county = ? and township = ? and other = ? and image = ?");
+			st.setInt(1,1790);
+			st.setString(2,state);
+			st.setString(3,county);
+			st.setString(4,township);
+			st.setString(5,other);
+			st.setInt(6,image);
+			ResultSet rs = st.executeQuery();
+		}
+		finally
+		{
+			closeStatement(st);
+		}
     }
 
     protected void calc() throws SQLException
@@ -185,8 +205,6 @@ public class MySQLTest
 //		"(\"Flandreau\",\"James\",null,2,2,5,"+fland+"), "+
 //		"(\"Flandreau\",\"James\",\"Junr.\",1,3,2,"+fland+"), "+
 //		"(\"Flandreau\",\"John\",null,1,3,3,"+fland+")");
-		int image = dbInsert("insert into ImageIdent(year,state,county,township,image) values "+
-		"(1790,\"NY\")");
     }
 
     protected void createSchema() throws SQLException
