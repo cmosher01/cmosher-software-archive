@@ -47,7 +47,7 @@ public class OneFileCopyClient
 			if (cb > 0)
 			{
 				out.write(rb,0,cb);
-				if (++i % rpt == 0)
+				if (i % rpt == 0)
 				{
 					System.out.println("wrote @ "+(i*1024)+" bytes.");
 				}
