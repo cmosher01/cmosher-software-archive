@@ -27,6 +27,7 @@ public class Disk
     {
         this.pos = new DiskPos(0,0,0,false);
     }
+
     /**
      * @param newPos
      */
@@ -126,11 +127,14 @@ public class Disk
      */
     public void findDos33VTOC() throws InvalidPosException
     {
-        int track = 0;
-        int sector = 0;
-        seek(new DiskPos(track,sector,0,true));
+        rewind();
         while (!EOF())
         {
+            byte[] sector = read(DiskPos.cSector);
+            if (match(sector,3,new byte[]{3,0,0}))
+            {
+                
+            }
         }
     }
 }
