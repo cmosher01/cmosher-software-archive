@@ -81,7 +81,7 @@ public class VolumeCatalog
     }
 
     /**
-     * @param entry
+     * @param rEntry
      */
     public void getEntries(List rEntry)
     {
