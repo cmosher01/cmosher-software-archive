@@ -88,7 +88,7 @@ class AboutDialog extends Dialog implements ActionListener
             system_properties += " \nJava HTTP Proxy Server, " + _VERSION + "\nby Steve Y.C. Hsueh,  April 1998";
         } // end of if
 
-        //  this.add("North", new Label("System Infomation:"));
+        //  this.add("North", new Label("System Information:"));
         system_info = new MultiLineLabel(system_properties,10,10);
         this.add("Center",system_info);
 
