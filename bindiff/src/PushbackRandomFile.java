@@ -13,7 +13,19 @@ public class PushbackRandomFile
 
     public int read() throws IOException
     {
-    	return f.read();
+    	int x;
+
+    	if (unread != -1)
+    	{
+    		x = unread;
+    		unread = -1;
+    	}
+    	else
+    	{
+			x = f.read();
+    	}
+
+    	return x;
     }
 
     /**
