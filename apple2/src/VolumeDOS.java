@@ -386,11 +386,20 @@ public class VolumeDOS extends VolumeEntity
                     else
                     {
                         s.append(" (DOS 3.3 1980 altered)");
+                        System.err.println("compared to good cleared slave:------------------------------------------------------------");
                         for (int i = 0; i < rbCmp.length; ++i)
                         {
                             if (rbCmp[i] != rbClearSlave[i])
                             {
                                 System.err.println("@$"+Integer.toHexString(i)+": "+Integer.toHexString(rbClearSlave[i]&0xFF)+" --> "+Integer.toHexString(rbCmp[i]&0xFF));
+                            }
+                        }
+                        System.err.println("compared to good cleared master:-----------------------------------------------------------");
+                        for (int i = 0; i < rbCmp.length; ++i)
+                        {
+                            if (rbCmp[i] != rbClear1980[i])
+                            {
+                                System.err.println("@$"+Integer.toHexString(i)+": "+Integer.toHexString(rbClear1980[i]&0xFF)+" --> "+Integer.toHexString(rbCmp[i]&0xFF));
                             }
                         }
                     }
