@@ -119,7 +119,7 @@ public class MySQLTest
 		String state = (String)i.next();
 		String county = (String)i.next();
 		String township = (String)i.next();
-		String other = (String)i.next();
+		int district = Integer.parseInt((String)i.next());
 		int image = Integer.parseInt((String)i.next());
 		String nameLast = (String)i.next();
 		String nameFirst = (String)i.next();
@@ -134,12 +134,12 @@ public class MySQLTest
 		{
 			st = db.prepareStatement(
 			"select id from ImageIdent where "+
-			"year = ? and state = ? and county = ? and township = ? and other = ? and image = ?");
+			"year = ? and state = ? and county = ? and township = ? and district = ? and image = ?");
 			st.setInt(1,1790);
 			st.setString(2,state);
 			st.setString(3,county);
 			st.setString(4,township);
-			st.setString(5,other);
+			st.setInt(5,district);
 			st.setInt(6,image);
 			ResultSet rs = st.executeQuery();
 		}
