@@ -1,4 +1,7 @@
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ListIterator;
@@ -54,7 +57,10 @@ public class Test
 	{
         File ctemp = new File("c:\\temp");
         File f1 = new File(ctemp,"a\\b\\c.txt");
-        f1.createNewFile();
+        BufferedWriter w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f1)));
+        w.write("test");
+        w.newLine();
+        w.close();
 
 
 
