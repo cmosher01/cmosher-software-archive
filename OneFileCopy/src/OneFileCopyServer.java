@@ -55,5 +55,6 @@ public class OneFileCopyServer
 		in.close();
 		s.close();
 		srv.close();
+		System.out.println("done.");
 	}
 }
