@@ -5,9 +5,10 @@ import java.beans.PropertyEditorSupport;
 
 public class IntegerEditor extends PropertyEditorSupport implements PropertyEditor
 {
+    public static final int DEFAULT_INT = 0;
     public String getJavaInitializationString()
     {
-        return "0";
+        return Integer.toString(DEFAULT_INT);
     }
 
     public void setAsText(String text) throws IllegalArgumentException
