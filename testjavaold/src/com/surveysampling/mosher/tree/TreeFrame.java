@@ -19,7 +19,7 @@ public class TreeFrame extends JFrame
 
     public TreeFrame(String dir)
     {
-        setLayout(new BorderLayout());
+        getContentPane().setLayout(new BorderLayout());
         addNotify();
         setSize(getInsets().left + getInsets().right + 485, getInsets().top + getInsets().bottom + 367);
 
