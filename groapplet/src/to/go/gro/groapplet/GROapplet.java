@@ -14,6 +14,7 @@ import java.util.Map;
 import javax.swing.JApplet;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 
 import nu.mine.mosher.core.StringFieldizer;
@@ -143,7 +144,7 @@ public class GROapplet extends JApplet
 
         readFrom(streamTree);
 
-        JScrollPane scr = new JScrollPane(fc, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        JScrollPane scr = new JScrollPane(fc, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         getContentPane().add(scr);
     }
 
