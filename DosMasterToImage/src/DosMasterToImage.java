@@ -189,19 +189,19 @@ public class DosMasterToImage
             r[x++] = in.read();
         }
 
-        int test = r[0x84] & 0xFF;
-        if (test == 0x46)
-        {
-            clearIgnored(r,rIgnore1980);
-        }
-        else if (test == 0x84)
-        {
-            clearIgnored(r,rIgnore1983);
-        }
-        else if (test == 0xB3)
-        {
-            clearIgnored(r,rIgnore1986);
-        }
+//        int test = r[0x84] & 0xFF;
+//        if (test == 0x46)
+//        {
+//            clearIgnored(r,rIgnore1980);
+//        }
+//        else if (test == 0x84)
+//        {
+//            clearIgnored(r,rIgnore1983);
+//        }
+//        else if (test == 0xB3)
+//        {
+//            clearIgnored(r,rIgnore1986);
+//        }
 
         for (int i = 0; i < r.length; ++i)
         {
