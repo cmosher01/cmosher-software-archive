@@ -22,7 +22,8 @@ public class TimeOfDay
 
     public TimeOfDay(Calendar calendar, int hours, int minutes, int seconds, int milliseconds)
     {
-        // for safety, *clone* the caller's calendar
+        // for safety, *clone* the caller's calendar first
+        // (there's no guarantee that getMinimun and getMaximum are thread safe).
         calendar = (Calendar)calendar.clone();
 
         if (hours < calendar.getMinimum(Calendar.HOUR_OF_DAY) || calendar.getMaximum(Calendar.HOUR_OF_DAY) < hours)
