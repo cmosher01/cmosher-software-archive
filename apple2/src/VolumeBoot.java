@@ -127,6 +127,6 @@ public class VolumeBoot extends VolumeEntity
         p[0xAB] += offset;
         p[0xB0] += offset;
         p[0xFE] += offset;
+        return p;
     }
-    return p;
 }
