@@ -19,7 +19,7 @@ public class Kiss extends RNGDefault implements RandomNumberGenerator
 
     public Kiss(long seed)
     {
-        this.seed = seed;
+        super(seed);
         this.x = (int)seed;
         this.z = (int)(seed >> 32);
     }
