@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class StreamChecksum
 {
-    private Map<int,Collection> mapChecksumToWindow;
+    private Map<Integer,Collection<Long>> mapChecksumToWindow;
 
 
 
@@ -28,7 +28,7 @@ public class StreamChecksum
      * window numbers (the first window number is zero).
      * @param mapChecksumToWindow
      */
-    public StreamChecksum(Map mapChecksumToWindow)
+    public StreamChecksum(Map<Integer,Collection<Long>> mapChecksumToWindow)
     {
         this.mapChecksumToWindow = mapChecksumToWindow;
     }
@@ -73,10 +73,10 @@ public class StreamChecksum
             }
             else
             {
-                rWind = (Collection)mapChecksumToWindow.get(chk);
+                rWind = mapChecksumToWindow.get(chk);
             }
 
-            rWind.add(new Long(w++));
+            rWind.add(w++);
         }
     }
 }
