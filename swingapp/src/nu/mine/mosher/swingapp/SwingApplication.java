@@ -69,6 +69,12 @@ public class Application
 
     public static void thrown(Throwable e)
     {
+        if (me == null)
+        {
+            RuntimeException re = new IllegalStateException();
+            re.initCause(e);
+            throw re;
+        }
         me.mExceptionHandler.send(e);
     }
 
