@@ -37,7 +37,7 @@ public class VelocityTest
 
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out)));
 
-        velocity.mergeTemplate("test.vm", context, writer);
+        velocity.mergeTemplate("C:\\Documents and Settings\\chrism\\My Documents\\build\\build_template.vm", context, writer);
 
         writer.flush();
         writer.close();
