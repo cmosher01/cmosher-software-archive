@@ -66,12 +66,12 @@ public class Disk
      * @param len
      * @return
      */
-    public String readASCII(int len)
+    public String readASCII(DiskPos pos, int len)
     {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < len; ++i)
         {
-            int c = read();
+            int c = read(pos);
             sb.append((char)(byte)(c & 0x0000007F));
         }
         return sb.toString();
