@@ -290,9 +290,7 @@ class TagPanel extends Panel implements MouseListener
 
     public void actionPerformed(ActionEvent evt)
     {
-
-
-    } // end of public void actionPerformed(ActionEvent evt)
+    }
 
 
 }
