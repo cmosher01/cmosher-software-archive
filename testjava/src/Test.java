@@ -69,9 +69,6 @@ public class Test
 //or under 1.5:
 //        Set setLine = Util.set(new ReaderLines(r));
 
-        System.out.println(setLine);
-
-
         Set setTrimmedLine = new HashSet();
         new Filter(setLine)
         {
@@ -81,6 +78,7 @@ public class Test
             }
         }.filter(setTrimmedLine);
 
+        System.out.println(setTrimmedLine);
 
 
 //        String x = "a,b,,d";
