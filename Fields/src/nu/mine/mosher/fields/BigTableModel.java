@@ -3,75 +3,95 @@
  */
 package nu.mine.mosher.ja2;
 
-import java.util.Vector;
-
-import javax.swing.table.DefaultTableModel;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
 
 /**
  * TODO
  * 
  * @author chrism
  */
-public class BigTableModel extends DefaultTableModel
+public class BigTableModel implements TableModel
 {
 
-    /**
-     * 
+    /* (non-Javadoc)
+     * @see javax.swing.table.TableModel#getRowCount()
      */
-    public BigTableModel()
+    public int getRowCount()
     {
-        super();
-        // TODO Auto-generated constructor stub
+        // TODO Auto-generated method stub
+        return 0;
     }
 
-    /**
-     * @param rowCount
-     * @param columnCount
+    /* (non-Javadoc)
+     * @see javax.swing.table.TableModel#getColumnCount()
      */
-    public BigTableModel(int rowCount, int columnCount)
+    public int getColumnCount()
     {
-        super(rowCount,columnCount);
-        // TODO Auto-generated constructor stub
+        // TODO Auto-generated method stub
+        return 0;
     }
 
-    /**
-     * @param columnNames
-     * @param rowCount
+    /* (non-Javadoc)
+     * @see javax.swing.table.TableModel#getColumnName(int)
      */
-    public BigTableModel(Vector columnNames, int rowCount)
+    public String getColumnName(int columnIndex)
     {
-        super(columnNames,rowCount);
-        // TODO Auto-generated constructor stub
+        // TODO Auto-generated method stub
+        return null;
     }
 
-    /**
-     * @param columnNames
-     * @param rowCount
+    /* (non-Javadoc)
+     * @see javax.swing.table.TableModel#getColumnClass(int)
      */
-    public BigTableModel(Object[] columnNames, int rowCount)
+    public Class getColumnClass(int columnIndex)
     {
-        super(columnNames,rowCount);
-        // TODO Auto-generated constructor stub
+        // TODO Auto-generated method stub
+        return null;
     }
 
-    /**
-     * @param data
-     * @param columnNames
+    /* (non-Javadoc)
+     * @see javax.swing.table.TableModel#isCellEditable(int, int)
      */
-    public BigTableModel(Vector data, Vector columnNames)
+    public boolean isCellEditable(int rowIndex, int columnIndex)
     {
-        super(data,columnNames);
-        // TODO Auto-generated constructor stub
+        // TODO Auto-generated method stub
+        return false;
     }
 
-    /**
-     * @param data
-     * @param columnNames
+    /* (non-Javadoc)
+     * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
-    public BigTableModel(Object[][] data, Object[] columnNames)
+    public Object getValueAt(int rowIndex, int columnIndex)
     {
-        super(data,columnNames);
-        // TODO Auto-generated constructor stub
+        // TODO Auto-generated method stub
+        return null;
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.table.TableModel#setValueAt(java.lang.Object, int, int)
+     */
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /* (non-Javadoc)
+     * @see javax.swing.table.TableModel#addTableModelListener(javax.swing.event.TableModelListener)
+     */
+    public void addTableModelListener(TableModelListener l)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /* (non-Javadoc)
+     * @see javax.swing.table.TableModel#removeTableModelListener(javax.swing.event.TableModelListener)
+     */
+    public void removeTableModelListener(TableModelListener l)
+    {
+        // TODO Auto-generated method stub
+        
+    }
 }
