@@ -33,6 +33,11 @@ public class Volume
 
         List rEntry = new ArrayList();
         cat.getEntries(rEntry);
+        for (Iterator i = rEntry.iterator(); i.hasNext();)
+        {
+            Dos33CatalogEntry ent = (Dos33CatalogEntry)i.next();
+            DiskPos tsmap = ent.getStart();
+        }
     }
 
     public void dump(StringBuffer s)
