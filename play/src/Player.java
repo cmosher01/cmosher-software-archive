@@ -7,8 +7,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import nu.mine.mosher.core.Immutable;
@@ -31,6 +34,36 @@ public class Player implements Immutable
 
     public static void main(String[] args) throws Throwable
     {
+
+
+
+
+
+		List x = new ArrayList();
+		String[] rs = (String[])x.toArray(new String[x.size()]);
+		System.out.println(rs.length);
+
+
+
+
+
+
+
+
+
+
+//		Thing x = new Thing();
+//		Method t = Thing.class.getMethod("test",null);
+//		t.invoke(x,null);
+
+
+
+
+
+
+
+
+
 //        LoggingInitializer.init();
 //
 //		if (!Charset.isSupported("x-gedcom-ansel"))
@@ -69,22 +102,22 @@ public class Player implements Immutable
 //		pw.close();
 //		bufrd.close();
 
-		byte[] rb = new byte[0x100];
-		for (int i = 0; i < rb.length; i++)
-        {
-            rb[i] = (byte)i;
-        }
-		ByteArrayInputStream bais = new ByteArrayInputStream(rb);
-		InputStreamReader isr = new InputStreamReader(bais,"windows-1252");
-		int c = isr.read();
-		int i = 0;
-		while (c != -1)
-		{
-			System.out.print(Integer.toHexString(i++));
-			System.out.print(": ");
-			System.out.println(Integer.toHexString(c));
-			c = isr.read();
-		}
+//		byte[] rb = new byte[0x100];
+//		for (int i = 0; i < rb.length; i++)
+//        {
+//            rb[i] = (byte)i;
+//        }
+//		ByteArrayInputStream bais = new ByteArrayInputStream(rb);
+//		InputStreamReader isr = new InputStreamReader(bais,"windows-1252");
+//		int c = isr.read();
+//		int i = 0;
+//		while (c != -1)
+//		{
+//			System.out.print(Integer.toHexString(i++));
+//			System.out.print(": ");
+//			System.out.println(Integer.toHexString(c));
+//			c = isr.read();
+//		}
 
     }
 
