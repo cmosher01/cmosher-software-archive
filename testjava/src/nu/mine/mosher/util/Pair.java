@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public final class Pair implements Cloneable, Comparable, Serializable, Immutable
 {
-    private ImmutableReference a;
-    private ImmutableReference b;
+    private final ImmutableReference a;
+    private final ImmutableReference b;
 
     public Pair(Cloneable a, Cloneable b) throws CloneNotSupportedException
     {
