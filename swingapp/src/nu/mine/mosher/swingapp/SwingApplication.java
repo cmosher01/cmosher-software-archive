@@ -27,9 +27,10 @@ public class Ja2
     }
 
     /**
+     * @throws Throwable
      * 
      */
-    public void run()
+    public void run() throws Throwable
     {
         mCommandLineArgHandler.parse();
 
