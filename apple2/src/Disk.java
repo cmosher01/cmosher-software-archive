@@ -363,7 +363,7 @@ public class Disk
         if (sector[0] == 0 &&
             DiskPos.isValidTrack(sector[1]) &&
             DiskPos.isValidSector(sector[2]) &&
-            sector[3] == 0)
+            sector[5] == 0)
         {
             // check catalog entries
             int ce = 0x0B;
