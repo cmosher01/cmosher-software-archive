@@ -70,12 +70,7 @@ public class PersonPersist
 		for (int i = 0; i < SIZE; i++)
 		{
 			person = (Person)pm.getObjectById(this.rid.get(i),false);
-			System.out.println("Name      : " + person.getName());
-			System.out.println("Address   : " + person.getAddress());
-			System.out.println("SSN       : " + person.getSsn());
-			System.out.println("Email     : " + person.getEmail());
-			System.out.println("Home Phone: " + person.getHomePhone());
-			System.out.println("Work Phone: " + person.getWorkPhone());
+			System.out.println("person "+i+": "+person.getName());
 		}
 		pm.close();
 	}
