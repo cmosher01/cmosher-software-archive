@@ -32,7 +32,7 @@ public class Apple2
         Disk disk = new Disk(rbDisk);
         disk.findDos33VTOC();
         TSMap tsmapMapsInCatalog = new TSMap();
-        disk.findDos33CatalogSector(tsmapMapsInCatalog);
+        disk.findDos33CatalogSector(false,tsmapMapsInCatalog);
         disk.findDos33TSMapSector(tsmapMapsInCatalog);
     }
 }
