@@ -1,3 +1,8 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 /*
  * Created on Sep 17, 2004
  */
@@ -10,8 +15,16 @@
  */
 public class Apple2
 {
-
-    public static void main(String[] args)
+    /**
+     * @param args
+     * @throws IOException
+     */
+    public static void main(String[] args) throws IOException
     {
+        if (args.length != 1)
+        {
+            throw new IllegalArgumentException("Usage: java Apple2 dos_3.3_order_disk_image");
+        }
+        new FileInputStream(new File(args[0]));
     }
 }
