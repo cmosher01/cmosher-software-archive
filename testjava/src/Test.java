@@ -71,7 +71,7 @@ public class Test
 
         URI uri = new URI("smtp://sparky:25");
         System.out.println(uri.toASCIIString());
-        System.out.println(uri.getSchemeSpecificPart());
+        System.out.println(uri.getScheme());
 
 
 
