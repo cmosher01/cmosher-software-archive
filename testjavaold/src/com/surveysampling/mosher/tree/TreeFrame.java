@@ -13,6 +13,7 @@ import javax.swing.tree.TreeNode;
 public class TreeFrame extends JFrame
 {
     private static JFrame frame;
+    private static String dir;
 
     public TreeFrame(String dir)
     {
@@ -63,7 +64,7 @@ public class TreeFrame extends JFrame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create and set up the content pane.
-        JComponent newContentPane = new FocusConceptsDemo();
+        JComponent newContentPane = new TreeFrame(dir);
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
 
@@ -74,7 +75,7 @@ public class TreeFrame extends JFrame
 
     public static void main(String argv[])
     {
-        String dir = System.getProperty("user.dir");
+        dir = System.getProperty("user.dir");
         if (argv != null && argv.length >= 1)
         {
             dir = argv[0];
