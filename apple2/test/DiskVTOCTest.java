@@ -28,8 +28,7 @@ public class DiskVTOCTest extends TestCase
         disk.findDos33VTOC(rPos);
         assertEquals(1, rPos.size());
         DiskPos pos = (DiskPos)rPos.get(0);
-        DiskPos ts1100 = new DiskPos(0x11,0x00);
-        assertEquals(pos,ts1100);
+        assertEquals(pos,new DiskPos(0x11,0x00));
     }
 
     public void assertPos(DiskPos expected, DiskPos actual)
