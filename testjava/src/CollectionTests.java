@@ -83,7 +83,7 @@ public final class CollectionTests
 
         //converting from Iterator (to List) to Array
         String[] rs2 = (String[])Util.list(t).toArray(new String[somelist.size()]);
-        for (int i = 0; i < rs2.length; ++i)
+        for (int i = rs2.length-1; i >= 0; --i)
         {
             String string = rs[i];
             System.out.println(string);
