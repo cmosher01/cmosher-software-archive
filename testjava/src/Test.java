@@ -43,34 +43,48 @@ public class Test
     //throws MyException, IOException // other exceptions here...
 	{
         FileReader f = new FileReader("c:\\temp\\ssprop.txt");
-
-        String x = "a,b,,d";
-        for (Iterator i = new StringFields(x).iterator(); i.hasNext();)
+        for (Iterator i = new ReaderLines(f).iterator(); i.hasNext();)
         {
-            String field = (String)i.next();
-            System.out.println(field);
+            String s = (String)i.next();
+            System.out.println(s);
         }
 
-        Iterator i = new StringFields(x).iterator();
-        String field = (String)i.next();
-        System.out.println(field);
-        field = (String)i.next();
-        System.out.println(field);
-        field = (String)i.next();
-        System.out.println(field);
-        field = (String)i.next();
-        System.out.println(field);
-        try
-        {
-            field = (String)i.next();
-            System.out.println(field);
-        }
-        catch (Throwable nse)
-        {
-            nse.printStackTrace();
-        }
-        field = (String)i.next();
-        System.out.println(field);
+
+
+
+
+//        String x = "a,b,,d";
+//        for (Iterator i = new StringFields(x).iterator(); i.hasNext();)
+//        {
+//            String field = (String)i.next();
+//            System.out.println(field);
+//        }
+//
+//        Iterator i = new StringFields(x).iterator();
+//        String field = (String)i.next();
+//        System.out.println(field);
+//        field = (String)i.next();
+//        System.out.println(field);
+//        field = (String)i.next();
+//        System.out.println(field);
+//        field = (String)i.next();
+//        System.out.println(field);
+//        try
+//        {
+//            field = (String)i.next();
+//            System.out.println(field);
+//        }
+//        catch (Throwable nse)
+//        {
+//            nse.printStackTrace();
+//        }
+//        field = (String)i.next();
+//        System.out.println(field);
+
+
+
+
+
 //        for (String field : new StringFields(x))
 //        {
 //            System.out.println(field);
