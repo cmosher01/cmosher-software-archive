@@ -255,7 +255,7 @@ public class MySQLTest
     	{
     		st = db.createStatement();
     		ResultSet rs = st.executeQuery("select "+
-    		"censusday, gender, minage, maxage, count, "+
+    		"censusday, gender, minage, maxage, count, nameLast, nameFirst,"+
     		"date_sub(censusday,interval minage year) latest, "+
 			"date_add(date_sub(censusday,interval maxage+1 year), interval 1 day) earliest "+
 
@@ -267,6 +267,8 @@ public class MySQLTest
     		while (rs.next())
     		{
     			int c = rs.getInt("count");
+				String nameLast = rs.getString("nameLast");
+				String nameFirst = rs.getString("nameFirst");
     			String latest = rs.getString("latest");
 				String earliest = rs.getString("earliest");
 				int minage = rs.getInt("minage");
