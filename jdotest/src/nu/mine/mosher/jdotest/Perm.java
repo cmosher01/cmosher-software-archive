@@ -9,6 +9,9 @@ import java.util.Properties;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  * @author Chris Mosher
@@ -17,8 +20,9 @@ public class Perm
 {
 	private PersistenceManagerFactory pmf;
 
-	public Perm()
+	public Perm() throws NamingException
 	{
+		Context ctx = new InitialContext();
 		Properties props = new Properties();
 		props.setProperty("javax.jdo.PersistenceManagerFactoryClass","org.jpox.PersistenceManagerFactoryImpl");
 		props.setProperty("javax.jdo.option.ConnectionDriverName","org.jpox.driver.JPOXDriver");
