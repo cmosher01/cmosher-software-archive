@@ -873,7 +873,7 @@ public class GDiffView extends JFrame
         return n;
     }
 
-    private final int cWindow = 4;
+    private final int cWindow = 17;
     private final Map map = new HashMap();
 
     /**
