@@ -9,7 +9,7 @@ import java.net.Socket;
 public class OneFileCopyServer
 {
 	private static final int cBufMax = 0x10000000;
-	private static final int rpt = 256*1024;
+	private static final int rpt = 1;//256*1024;
 
 	public static void main(String[] args) throws IOException
 	{
