@@ -269,7 +269,7 @@ public class GDiffVeiew extends JFrame
      * @param i
      * @return
      */
-    private boolean getAscRowStart(int i)
+    private int getAscRowStart(int i)
     {
         // TODO Auto-generated method stub
         return false;
@@ -279,7 +279,7 @@ public class GDiffVeiew extends JFrame
      * @param row
      * @return
      */
-    private Object getAscRowEnd(int row)
+    private int getAscRowEnd(int row)
     {
         // TODO Auto-generated method stub
         return null;
