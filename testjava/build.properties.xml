@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<build>
+	<javasdk>
+		<version>1.4.1_01</version>
+	</javasdk>
+	<ant>
+		<version>1.5.3</version>
+	</ant>
+</build>
