@@ -32,5 +32,6 @@ public class Apple2
         Disk disk = new Disk(rbDisk);
         disk.findDos33VTOC();
         disk.findDos33CatalogSector();
+        disk.findDos33TSMapSector();
     }
 }
