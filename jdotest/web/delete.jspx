@@ -4,12 +4,12 @@
 <%@ page import="nu.mine.mosher.jdotest.Perm" %>
 <%
     String id = request.getParameter("id");
-    Perm pm = new Perm();
-	PersistenceManager p = pm.begin();
-	Item item = (Item)p.getObjectById(p.newObjectIdInstance(Item.class,id),true);
+	PersistenceManager pm = new Perm().pm();
+    pm.currentTransaction().begin();
+	Item item = (Item)pm.getObjectById(pm.newObjectIdInstance(Item.class,id),true);
     String s = item.getName();
-    p.deletePersistent(item);
-    pm.commit(p);
+    pm.deletePersistent(item);
+    pm.currentTransaction().commit();
 %>
 <head>
 <title>Delete</title>
