@@ -38,6 +38,7 @@ public class VolumeFile
         else
         {
             // assume a single-sector file
+            ts = new VolumeTSMap(); // a bogus one
             rPosFile.add(catEntry.getStart());
         }
         data = new VolumeFileData();
