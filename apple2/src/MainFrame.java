@@ -149,11 +149,6 @@ public class MainFrame extends JFrame
         }
 
         top.add(nDisk);
-        int c = tree.getRowCount();
-        for ( int i = c; i > 0; --i)
-        {
-            tree.expandRow(i-1);
-        }
     }
 
     /**
@@ -190,6 +185,11 @@ public class MainFrame extends JFrame
         tree.setRootVisible(false);
         tree.setShowsRootHandles(true);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+        int c = tree.getRowCount();
+        for ( int i = c; i > 0; --i)
+        {
+            tree.expandRow(i-1);
+        }
 
         JScrollPane scrollTree = new JScrollPane(tree);
         scrollTree.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
