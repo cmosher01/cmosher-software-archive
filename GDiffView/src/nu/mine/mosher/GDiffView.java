@@ -322,6 +322,7 @@ public class GDiffView extends JFrame
         listGDiff.requestFocus();
 
         initText();
+        initHighlights();
 
         setVisible(true);
     }
