@@ -11,4 +11,14 @@
 public class VolumeFileRecovered
 {
 
+    /**
+     * @param pos
+     * @param disk
+     */
+    public void readFromMedia(DiskPos pos, Disk disk)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
 }
