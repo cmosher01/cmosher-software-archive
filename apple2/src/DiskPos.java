@@ -34,8 +34,9 @@ public class DiskPos
 
     /**
      * @param sector
+     * @throws InvalidPosException
      */
-    private void verifySector(int sector)
+    private void verifySector(int sector) throws InvalidPosException
     {
         if (sector < 0 || cSectorsPerTrack <= sector)
         {
