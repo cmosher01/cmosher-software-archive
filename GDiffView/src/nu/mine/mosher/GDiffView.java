@@ -965,36 +965,36 @@ public class GDiffView extends JFrame
                         }
                         if (cMatch >= cWindow)
                         {
-                            if (cMatch == cMatchCurrent)
-                            {
-                                System.out.print("same len  "+cMatch);
-                                System.out.print(" candidate src: "+Long.toHexString(match));
-                                System.out.print(" prev cand src: "+Long.toHexString(matchCurrent));
-                                System.out.print(" target       : "+Long.toHexString(here));
-                                if (here-match < here-matchCurrent)
-//                                long corresp = there+start;
-//                                long thatdif = match;
-//                                if (thatdif < 0)
+//                            if (cMatch == cMatchCurrent)
+//                            {
+//                                System.out.print("same len  "+cMatch);
+//                                System.out.print(" candidate src: "+Long.toHexString(match));
+//                                System.out.print(" prev cand src: "+Long.toHexString(matchCurrent));
+//                                System.out.print(" target       : "+Long.toHexString(here));
+//                                if (here-match < here-matchCurrent)
+////                                long corresp = there+start;
+////                                long thatdif = match;
+////                                if (thatdif < 0)
+////                                {
+////                                    thatdif = -thatdif;
+////                                }
+////                                long thisdif = matchCurrent-corresp;
+////                                if (thisdif < 0)
+////                                {
+////                                    thisdif = -thisdif;
+////                                }
+////                                System.out.print("that: "+Long.toHexString(thatdif));
+////                                System.out.print(" this: "+Long.toHexString(thisdif));
+////                                if (thatdif < thisdif)
 //                                {
-//                                    thatdif = -thatdif;
+//                                    System.out.print("          using: "+Long.toHexString(match));
+//                                    matchCurrent = match;
+//                                    cMatchCurrent = cMatch;
+//                                    progress = true;
 //                                }
-//                                long thisdif = matchCurrent-corresp;
-//                                if (thisdif < 0)
-//                                {
-//                                    thisdif = -thisdif;
-//                                }
-//                                System.out.print("that: "+Long.toHexString(thatdif));
-//                                System.out.print(" this: "+Long.toHexString(thisdif));
-//                                if (thatdif < thisdif)
-                                {
-                                    System.out.print("          using: "+Long.toHexString(match));
-                                    matchCurrent = match;
-                                    cMatchCurrent = cMatch;
-                                    progress = true;
-                                }
-                                System.out.println();
-                            }
-                            else if (cMatch > cMatchCurrent)
+//                                System.out.println();
+//                            }
+                            if (cMatch >= cMatchCurrent)
                             {
                                 matchCurrent = match;
                                 cMatchCurrent = cMatch;
