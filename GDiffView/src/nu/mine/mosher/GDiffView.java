@@ -312,7 +312,7 @@ public class GDiffView extends JFrame
         readSrc();
         docSrc.insertString(0,sb.toString(),(AttributeSet)styles.get("body"));
 
-        readGDiff();
+//        readGDiff();
         docTrg.insertString(0,trg.toString(),(AttributeSet)styles.get("body"));
 
         highlightInserts();
