@@ -151,10 +151,7 @@ public class DateRange implements Immutable, Serializable, Comparable
 		{
 			d = this.latest.compareTo(that.latest);
 		}
-		if (d == 0)
-		{
-			d = (this.circa?1:0)-(that.circa?1:0);
-		}
+
 		// ??? ignore timezone in compareTo
 		if (d == 0)
 		{
@@ -163,6 +160,11 @@ public class DateRange implements Immutable, Serializable, Comparable
 		if (d == 0)
 		{
 			d = this.minute-that.minute;
+		}
+
+		if (d == 0)
+		{
+			d = (this.circa?1:0)-(that.circa?1:0);
 		}
 
         return d;
