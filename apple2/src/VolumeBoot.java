@@ -106,6 +106,26 @@ public class VolumeBoot extends VolumeEntity
         s.append(sect.toString());
         s.append("\n");
     }
-    // TODO boot image signature identification
 
+    private static byte[] patch(byte[] masterBoot, int offset)
+    {
+        byte[] p = new byte[masterBoot.length];
+        p[0x60] += d;
+        p[0x68] += d;
+        p[0x6D] += d;
+        p[0x70] += d;
+        p[0x73] += d;
+        p[0x78] += d;
+        p[0x7D] += d;
+        p[0x82] += d;
+        p[0x85] += d;
+        p[0x88] += d;
+        p[0x8B] += d;
+        p[0x8E] += d;
+        p[0x91] += d;
+        p[0xA3] += d;
+        p[0xAB] += d;
+        p[0xB0] += d;
+        p[0xFE] += d;
+    }
 }
