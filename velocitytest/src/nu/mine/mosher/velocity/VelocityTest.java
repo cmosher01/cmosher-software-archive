@@ -77,7 +77,10 @@ public class VelocityTest
             Node cpe = rcpe.item(i);
             NamedNodeMap mapAttrib = cpe.getAttributes();
             Node nodeKind = mapAttrib.getNamedItem("kind");
-            System.out.println(nodeKind.getNodeValue());
+            String kind = nodeKind.getNodeValue();
+            Node nodePath = mapAttrib.getNamedItem("path");
+            String path = nodePath.getNodeValue();
+            System.out.println(kind+","+path);
         }
         return deps;
     }
