@@ -75,9 +75,15 @@ public class MtaURI
         {
             return -1;
         }
+
         try
         {
-            return Integer.parseInt(s);
+            int r = Integer.parseInt(s);
+            if (r < 0)
+            {
+                throw new NumberFormatException("parameter "+param+" cannot be negative");
+            }
+            return r;
         }
         catch (NumberFormatException e)
         {
