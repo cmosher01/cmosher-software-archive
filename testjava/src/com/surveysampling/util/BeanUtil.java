@@ -34,6 +34,7 @@ public final class BeanUtil
             {
                 continue;
             }
+
             Class type = pd.getPropertyType();
             Class propertyEditorClass = pd.getPropertyEditorClass();
             if (type.isArray())
@@ -62,10 +63,14 @@ public final class BeanUtil
             {
                 String value = request.getParameter(param);
                 if (value == null || (param != null && value.equals("")))
+                {
                     return;
+                }
                 Object oval = convert(param, value, type, propertyEditorClass);
                 if (oval != null)
+                {
                     method.invoke(bean, new Object[] { oval });
+                }
             }
         }
     }
