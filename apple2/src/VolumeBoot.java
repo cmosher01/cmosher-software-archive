@@ -113,7 +113,11 @@ public class VolumeBoot extends VolumeEntity
         {
             if (data[0] == 1 && data[1] == (byte)0xA5 && data[2] == 0x27 && data[0xFF] == 9)
             {
-                
+                byte[] slave = patch(rDos80master,data[0xFE]-0x36);
+                if (same(data,slave))
+                {
+                    ident = "DOS 3.3 (1980) Slave (A$";
+                }
             }
         }
     }
