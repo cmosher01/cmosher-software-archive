@@ -106,7 +106,7 @@ public class FixAppleDisasm
 			inbuf = new BufferedReader(in);
 		}
 
-		PrintWriter printout = new PrintWriter(new BufferedWriter(out));
+		Lister printout = new Lister(new PrintWriter(new BufferedWriter(out)));
 
 		Map lines = new TreeMap();
 		Map addrs = new TreeMap();
@@ -350,7 +350,8 @@ public class FixAppleDisasm
 			}
 		}
 
-		printout.println("; external addresses referenced:");
+		printout.print("; external addresses referenced:");
+		printout.newline();
 		for (Iterator i = externs.keySet().iterator(); i.hasNext();)
         {
             Integer extInt = (Integer)i.next();
@@ -364,9 +365,10 @@ public class FixAppleDisasm
             {
 				printout.print(hexWord(ext));
             }
-            printout.println();
+            printout.newline();
         }
-		printout.println(";**********************************************************");
+		printout.print(";**********************************************************");
+		printout.newline();
 
 		for (Iterator i = lines.entrySet().iterator(); i.hasNext();)
         {
@@ -386,9 +388,8 @@ public class FixAppleDisasm
 			}
 			printout.print("          ");
 			printout.print(ln.comment);
-			printout.println();
+			printout.newline();
         }
-        printout.flush();
     }
 
 	private static String hexByte(int i)
