@@ -1,7 +1,6 @@
 //package java.lang; // needs special class loader at runtime
 package mosher;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
