@@ -332,12 +332,21 @@ public class MySQLTest
 //		"    other integer, "+
 //		"    slave integer "+
 //		")");
+		dbUpdate("drop table if exists Census");
+		dbUpdate("create table "+
+		"Census "+
+		"( "+
+		"    year integer unsigned not null primary key, "+
+		"    month integer unsigned, "+
+		"    day integer unsigned, "+
+		"    censusDay date "+
+		")");
 		dbUpdate("drop table if exists ImageIdent");
 		dbUpdate("create table "+
 		"ImageIdent "+
 		"( "+
 		"    id integer unsigned not null auto_increment primary key, "+
-		"    year integer unsigned, "+
+		"    year integer unsigned not null references Census(year), "+
 		"    state char(2), "+
 		"    county varchar(64), "+
 		"    township varchar(64), "+
