@@ -2,10 +2,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.net.URI;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ListIterator;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class Test
 {
@@ -70,7 +73,8 @@ public class Test
 	{
 
         URL x = Test.class.getClassLoader().getResource("");
-        File f = new File(x.toExternalForm());
+        URI uri = URI.create(x.toExternalForm());
+        File f = new File(uri.getPath());
         System.out.println(f.getCanonicalPath());
         if (f.isDirectory())
         {
