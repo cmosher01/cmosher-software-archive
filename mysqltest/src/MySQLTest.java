@@ -126,16 +126,12 @@ public class MySQLTest
     	fland = dbInsert("insert into Family(name) values(\"Flandreau\")");
     	log.fine("Inserted Flandreau with id "+fland);
 
-		dbInsert("insert into Census1790(nameLast,nameFirst,maleAge16plus,maleAge0to15,femaleAge0plus,family) "+
-		"values(\"Flandreau\",\"Benjamin\",4,2,5,"+fland+")");
-		dbInsert("insert into Census1790(nameLast,nameFirst,maleAge16plus,maleAge0to15,femaleAge0plus,family) "+
-		"values(\"Flandreau\",\"Elias\",3,0,4,"+fland+")");
-		dbInsert("insert into Census1790(nameLast,nameFirst,maleAge16plus,maleAge0to15,femaleAge0plus,family) "+
-		"values(\"Flandreau\",\"James\",2,2,5,"+fland+")");
-		dbInsert("insert into Census1790(nameLast,nameFirst,nameSuffix,maleAge16plus,maleAge0to15,femaleAge0plus,family) "+
-		"values(\"Flandreau\",\"James\",\"Junr.\",1,3,2,"+fland+")");
-		dbInsert("insert into Census1790(nameLast,nameFirst,maleAge16plus,maleAge0to15,femaleAge0plus,family) "+
-		"values(\"Flandreau\",\"John\",1,3,3,"+fland+")");
+		dbInsert("insert into Census1790(nameLast,nameFirst,maleAge16plus,maleAge0to15,femaleAge0plus,family) values "+
+		"(\"Flandreau\",\"Benjamin\",4,2,5,"+fland+"), "+
+		"(\"Flandreau\",\"Elias\",3,0,4,"+fland+"), "+
+		"(\"Flandreau\",\"James\",2,2,5,"+fland+"), "+
+		"(\"Flandreau\",\"James\",\"Junr.\",1,3,2,"+fland+"), "+
+		"(\"Flandreau\",\"John\",1,3,3,"+fland+")");
     }
 
     protected void createSchema() throws SQLException
