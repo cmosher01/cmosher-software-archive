@@ -10,5 +10,16 @@ package nu.mine.mosher.cmdline;
  */
 public class ArgumentDefinition
 {
+    private final String name;
+    private final String desc;
 
+    /**
+     * @param name
+     * @param desc
+     */
+    public ArgumentDefinition(final String name, final String desc)
+    {
+        this.name = name;
+        this.desc = desc;
+    }
 }
