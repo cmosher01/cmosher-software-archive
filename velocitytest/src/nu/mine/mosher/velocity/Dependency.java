@@ -29,12 +29,16 @@ public class Dependency
     public boolean equals(Object obj)
     {
         if (!(obj instanceof Dependency))
+        {
             return false;
+        }
+
         Dependency that = (Dependency)obj;
         boolean eq =
             this.name.equalsIgnoreCase(that.name) &&
             this.version.equalsIgnoreCase(that.version) &&
             this.source == that.source;
+
         return eq;
     }
 }
