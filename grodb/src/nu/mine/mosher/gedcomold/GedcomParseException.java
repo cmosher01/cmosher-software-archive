@@ -12,7 +12,7 @@ public class GedcomParseException extends Exception
 		this.parsedGedcomLine = parsedGedcomLine;
 	}
 
-	public GedcomParseException(String message, Exception cause)
+	public GedcomParseException(String message, Throwable cause)
 	{
 		super(message,cause);
 		this.rawGedcomLine = "";
