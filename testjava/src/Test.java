@@ -102,6 +102,7 @@ public class Test
             }
 
             f = new File(jarpart);
+            f = f.getParentFile();
         }
         else
         {
