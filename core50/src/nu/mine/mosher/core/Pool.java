@@ -49,7 +49,7 @@ public class Pool<T>
 
 	protected static<T> T makeProxy(final T theObject)
 	{
-		return Proxy.newProxyInstance(
+		return (T)Proxy.newProxyInstance(
 			theObject.getClass().getClassLoader(),
 			theObject.getClass().getInterfaces(),
 			new InvocationHandler()
