@@ -22,8 +22,8 @@ public class Source
 	{
 	}
 
-	public void addRel(Source that, String description)
+	public void addRel(Source that, String descriptionThisToThat)
 	{
-		rRel.add(new Relation<Source,Source>(this,that,description));
+		rRel.add(new Relation<Source,Source>(this,that,descriptionThisToThat));
 	}
 }
