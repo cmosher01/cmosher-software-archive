@@ -33,7 +33,9 @@ public class FileTreeNode extends DefaultMutableTreeNode
                 FileTreeNode subnode = new FileTreeNode(new File(getFileObject(), list[i]));
                 add(subnode);
                 if (b)
+                {
                     subnode.readTree(b);
+                }
             }
         }
         mRead = true;
