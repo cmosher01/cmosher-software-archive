@@ -21,7 +21,7 @@ public class DiffWriter
 			return;
 		}
 
-		System.out.println(s.toString());
+		System.out.print(s.toString());
 		System.out.flush();
 		s = new StringBuffer(1024);
 	}
