@@ -126,5 +126,6 @@ public class WaveCalc
             int b = in.read();
             sb.append((char)b);
         }
+        return sb.toString();
     }
 }
