@@ -437,7 +437,7 @@ public class VolumeDOS extends VolumeEntity
             rbSlave[i] = 0;
         }
 
-        // change a few other vectors
+        // change the remaining differences
 //      0x0148, // master: 03 slave: 84
         rbSlave[0x0148] = (byte)0x84;
 //      0x0149, // master: 1B slave: 9D
