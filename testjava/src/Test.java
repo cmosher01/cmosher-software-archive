@@ -56,8 +56,8 @@ public class Test
     //throws MyException, IOException // other exceptions here...
 	{
         Date d = new Date(0);
-        SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");;
-        System.out.println(f.format(d))
+        SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
+        System.out.println(f.format(d));
         
 
 //        SimpleDateFormat f = new SimpleDateFormat("HH:mm:ss.SSS");
