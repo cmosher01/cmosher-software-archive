@@ -2,7 +2,6 @@ import nu.mine.mosher.ja2.Application;
 import nu.mine.mosher.ja2.CommandLineArgHandler;
 import nu.mine.mosher.ja2.ExceptionHandler;
 import nu.mine.mosher.ja2.GUI;
-import nu.mine.mosher.ja2.Starter;
 
 /*
  * Created on Aug 31, 2004
