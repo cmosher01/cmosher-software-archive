@@ -438,8 +438,7 @@ public class Disk
 
             int cSector = word(sector,p+0x21);
 
-            DiskPos posTS = new DiskPos();
-            posTS.setTS(trk,sector[p+1]);
+            DiskPos posTS = new DiskPos(trk,sector[p+1]);
 
             entries.add(new Dos33CatalogEntry(deleted,posTS,lck,fil,cSector,name));
 
@@ -458,8 +457,7 @@ public class Disk
         int p = 0x0C;
         while (p < 0x100 && (sector[p] != 0 || sector[p+1] != 0))
         {
-            DiskPos posTS = new DiskPos();
-            posTS.setTS(sector[p],sector[p+1]);
+            DiskPos posTS = new DiskPos(sector[p],sector[p+1]);
             entries.add(posTS);
 
             p += 2;
