@@ -232,6 +232,27 @@ public class Disk
     }
 
     /**
+     * @throws InvalidPosException
+     */
+    public void findDos33TSMapSector() throws InvalidPosException
+    {
+        rewind();
+        while (!EOF())
+        {
+            DiskPos cur = this.pos;
+            byte[] sector = read(DiskPos.cSector);
+            if (sector[0]==0 &&
+                    isValidTrack(sector[1]) && isValidSector(sector[2]) &&
+                    sector[3]==0 && sector[4]==0 &&
+                    word(sector,5)%0x7A == 0)
+                    )
+                    {
+                        
+                    }
+        }
+    }
+
+    /**
      * @param sector
      * @param i
      * @return
