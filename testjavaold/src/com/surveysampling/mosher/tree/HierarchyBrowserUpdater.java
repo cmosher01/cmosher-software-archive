@@ -28,10 +28,10 @@ public class HierarchyBrowserUpdater implements TreeExpansionListener
 
     public void treeExpanded(TreeExpansionEvent event)
     {
+        beginWait();
+
         TreePath path = event.getPath();
         FileTreeNode node = (FileTreeNode)path.getLastPathComponent();
-
-        beginWait();
 
         if (node.readTree())
         {
