@@ -103,6 +103,7 @@ public class GUI
     protected JPanel createContentPane()
     {
         JTable table = new JTable(new BigTableModel());
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         TableColumnModel columnModel = table.getColumnModel();
         for (int i = 0; i < columnModel.getColumnCount(); ++i)
         {
@@ -111,7 +112,6 @@ public class GUI
             column.setPreferredWidth(64);
         }
         table.setPreferredScrollableViewportSize(new Dimension(640,480));
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         JScrollPane scrollpane = new JScrollPane(table);
         scrollpane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
