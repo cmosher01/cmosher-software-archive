@@ -63,6 +63,14 @@ public class RollingChecksum
         return checksum;
     }
 
+    /**
+     * Rolls the checksum one place along the source buffer.
+     * The two bytes passed in are the lowest byte (the one
+     * leaving the checksum) and the highest, new, byte (the
+     * one just entering the checksum anew).
+     * @param xk the byte going out
+     * @param xlplus1 the byte coming in
+     */
     public void increment(byte xk, byte xlplus1)
     {
         int a = checksum & 0xFFFF;
