@@ -100,6 +100,9 @@ public class VolumeDOS extends VolumeEntity
             }
         }
         s.append("\n");
+        s.append("(");
+        appendSig(s);
+        s.append(")\n");
     }
 
     private byte[] rb;
@@ -135,5 +138,40 @@ public class VolumeDOS extends VolumeEntity
     public boolean hasRdosSignature()
     {
         return (rb[0x100-0x100] == 0x4C && rb[0x101-0x100] ==  0x74 && rb[0x102-0x100] ==  0xFFFFFFB9 && rb[0x103-0x100] ==  0xFFFFFFA0);
+    }
+    public void appendSig(StringBuffer s)
+    {
+        if (hasDaviddosSignature())
+        {
+            s.append("David DOS");
+        }
+        if (hasDaviddos2Signature())
+        {
+            s.append("David DOS II");
+        }
+        if (hasDiversidos2cSignature())
+        {
+            s.append("Diversi-DOS 2-C");
+        }
+        if (hasDiversidos41cSignature())
+        {
+            s.append("Diversi-DOS 4.1-C");
+        }
+        if (hasEsdosSignature())
+        {
+            s.append("ES DOS");
+        }
+        if (hasHyperdosSignature())
+        {
+            s.append("Hyper-DOS");
+        }
+        if (this.hasProtodosSignature())
+        {
+            s.append("Pronto-DOS (Beagle Bros.)");
+        }
+        if (this.hasRdosSignature())
+        {
+            s.append("RDOS (SSI)");
+        }
     }
 }
