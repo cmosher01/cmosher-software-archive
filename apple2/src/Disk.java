@@ -602,7 +602,7 @@ public class Disk
             byte[] sector = read(DiskPos.cSector);
             if (isDos33TSMapSector(sector))
             {
-                rPosTSMaps.add(cr);
+                rPosTSMaps.add(cur);
 //                System.out.print("T/S map @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack()));
 //                if (sector[1] != 0 || sector[2] != 0)
 //                {
