@@ -17,6 +17,19 @@ public class Application
     private ExceptionHandler mExceptionHandler;
     private CommandLineArgHandler mCommandLineArgHandler;
 
+
+
+    public static void thrown(Throwable e)
+    {
+        if (me == null)
+        {
+            RuntimeException re = new IllegalStateException("Application has not been initialized.");
+            re.initCause(e);
+            throw re;
+        }
+        me.mExceptionHandler.send(e);
+    }
+
     /**
      * @param eh
      * @param ch
@@ -70,17 +83,6 @@ public class Application
          * anything) (a race condition).
          */
         mExceptionHandler.waitFor();
-    }
-
-    public static void thrown(Throwable e)
-    {
-        if (me == null)
-        {
-            RuntimeException re = new IllegalStateException("Application has not been initialized.");
-            re.initCause(e);
-            throw re;
-        }
-        me.mExceptionHandler.send(e);
     }
 
     protected void createGUI()
