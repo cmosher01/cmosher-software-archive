@@ -52,4 +52,9 @@ public class FamilyChart extends JPanel
     {
         return mIndis.isOnIndi(point);
     }
+
+    public void gotoIndi(Indi mLastIndi)
+    {
+        // TODO Auto-generated method stub
+    }
 }
