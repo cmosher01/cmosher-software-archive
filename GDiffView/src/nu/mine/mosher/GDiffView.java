@@ -117,6 +117,7 @@ public class GDiffView extends JFrame
                     {
                         GDiffCopy copy = (GDiffCopy)oldCmd;
                         beginSrc = copy.getRange().getBegin();
+                        endSrc = copy.getRange().getEnd();
                         highlight(false);
                     }
                 }
@@ -124,6 +125,13 @@ public class GDiffView extends JFrame
                 {
                     GDiffCmd newCmd = (GDiffCmd)rcmd.get(newIndex);
                     System.out.println("highlight " + newCmd);
+                    if (newCmd instanceof GDiffCopy)
+                    {
+                        GDiffCopy copy = (GDiffCopy)newCmd;
+                        beginSrc = copy.getRange().getBegin();
+                        endSrc = copy.getRange().getEnd();
+                        highlight(true);
+                    }
                 }
             }
         };
