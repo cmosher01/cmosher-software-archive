@@ -132,6 +132,7 @@ public class TimeOfDay
      * to the resulting time.
      * @param d
      * @param cal
+     * @throws IllegalStateException if the constructor was called with invalid arguments
      */
     public void getTimeOnDay(Date d, Calendar cal) throws IllegalStateException
     {
@@ -144,7 +145,7 @@ public class TimeOfDay
      * Convenience method that calls getTimeOnDay
      * with <code>Calendar.getInstance()</code>
      * @param d
-     * @return
+     * @throws IllegalStateException if the constructor was called with invalid arguments
      */
     public void getTimeOnDay(Date d) throws IllegalStateException
     {
