@@ -92,14 +92,13 @@ public class Util
         return s;
     }
 
-//        public static ArrayList list(Iterable i)
-//        {
-//            ArrayList r = new ArrayList();
-//            Iterator it = i.iterator();
-//            while (it.hasNext())
-//            {
-//                r.add(it.next());
-//            }
-//            return r;
-//        }
+        public static ArrayList list(Iterable i)
+        {
+            ArrayList r = new ArrayList();
+            for (Object x : i)
+            {
+                r.add(x);
+            }
+            return r;
+        }
 }
