@@ -200,7 +200,14 @@ public class Disk
                         isValidFileType(sector[ce+2]) &&
                         isValidFileName(sector,ce+3))
                     {
-                        entries.add(convertASCII(sector,ce+3,30));
+                        if (sector[ce+1] == -1)
+                        {
+                            entries.add("[deleted]");                            
+                        }
+                        else
+                        {
+                            entries.add(convertASCII(sector,ce+3,30));
+                        }
                         if (sector[ce+31] == (byte)0xA0)
                         {
                             ++penultimateSpace;
