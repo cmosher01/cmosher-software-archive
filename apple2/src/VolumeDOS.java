@@ -133,7 +133,7 @@ public class VolumeDOS extends VolumeEntity
     private static final int[] rFranklinValue = {0xBD, 0x00, 0x02, 0xC9, 0xE1, 0x90, 0x06, 0xC9, 0xFB, 0xB0, 0x02, 0x29, 0xDF,
             0x60, 0x20, 0xDF, 0x3C};
 
-    private static final int[] rFranklinFixup = {0x1098};
+    private static final int[] rSlaveFranklin = {0x1098};
 
     private static byte[] rbClearFranklin = new byte[0x4000-0x1B00];
 
@@ -407,20 +407,22 @@ public class VolumeDOS extends VolumeEntity
                             {
                                 s.append(" (DOS 3.3 1980 (Franklin version) master: exact match)");
                             }
-                        }
-                        if (dif == 0)
-                        {
-                            s.append(" (DOS 3.3 1980 master: unknown alteration)");
-                            for (int i = 0; i < rbCmp.length; ++i)
+                            else
                             {
-                                if (rbCmp[i] != rbClear1980[i])
+                                s.append(" (DOS 3.3 1980 master: unknown alteration)");
+                                for (int i = 0; i < rbCmp.length; ++i)
                                 {
-                                    System.err.println("@$"+Integer.toHexString(i)+": "+Integer.toHexString(rbClear1980[i]&0xFF)+" --> "+Integer.toHexString(rbCmp[i]&0xFF));
+                                    if (rbCmp[i] != rbClear1980[i])
+                                    {
+                                        System.err.println("@$"+Integer.toHexString(i)+": "+Integer.toHexString(rbClear1980[i]&0xFF)+" --> "+Integer.toHexString(rbCmp[i]&0xFF));
+                                    }
                                 }
                             }
                         }
                         else
                         {
+                            rbClearSlave = makeSlave(rbClearFranklin,rSlave1980,dif);
+                            rbClearSlave = makeSlave(rbClearSlave,rSlaveFranklin,dif);
                             s.append(" (DOS 3.3 1980 slave (A$");
                             s.append(Hex2Bin.hexbyte((byte)(0x1D+dif)));
                             s.append("00): unknown alteration)");
