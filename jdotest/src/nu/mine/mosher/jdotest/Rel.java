@@ -14,5 +14,41 @@ package nu.mine.mosher.jdotest;
  */
 public class Rel
 {
+	private Item item;
+	private Thing thing;
+	public Rel()
+	{
+	}
+    /**
+     * @return
+     */
+    public Item getItem()
+    {
+        return item;
+    }
+
+    /**
+     * @return
+     */
+    public Thing getThing()
+    {
+        return thing;
+    }
+
+    /**
+     * @param item
+     */
+    public void setItem(Item item)
+    {
+        this.item = item;
+    }
+
+    /**
+     * @param thing
+     */
+    public void setThing(Thing thing)
+    {
+        this.thing = thing;
+    }
 
 }
