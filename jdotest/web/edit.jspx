@@ -6,11 +6,10 @@
 <%@ page import="nu.mine.mosher.jdotest.Perm" %>
 <%@ page import="nu.mine.mosher.jdotest.Thing" %>
 <%
-    String id = request.getParameter("id");
+//    String id = request.getParameter("id");
 	PersistenceManager pm = Perm.pm();
-    Item item = (Item)pm.getObjectById(pm.newObjectIdInstance(Item.class,id),true);
+    Item item = (Item)pm.getObjectById(pm.newObjectIdInstance(Item.class,${id}),true);
     pageContext.setAttribute("item",item);
-    String s = item.getName();
 %>
 <head>
 <title>Edit</title>
@@ -18,10 +17,10 @@
 <body>
 <p>
 <form method="post" action="editact.jsp">
-    <input name="id" type="hidden" value="<%=id%>" />
+    <input name="id" type="hidden" value="${id}" />
     <p>
         Edit item: <input name="itemNew" type="text" value="${item.name}" />
-        (originally: ${item.name})<input name="itemOrig" type="hidden" value="<%=s%>" />
+        (originally: ${item.name})<input name="itemOrig" type="hidden" value="${item.name}" />
     </p>
 	<table>
 	<%
@@ -36,7 +35,7 @@
     <p><input type="submit" value="save" /></p>
 </form>
 <form method="post" action="delconf.jsp">
-    <input name="id" type="hidden" value="<%=id%>" />
+    <input name="id" type="hidden" value="${id}" />
     <p><input type="submit" value="delete" /></p>
 </form>
 <form method="post" action="cancel.jsp">
