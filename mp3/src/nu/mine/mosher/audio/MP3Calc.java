@@ -15,7 +15,7 @@ public class MP3Calc
 {
     public static void main(String[] rArg) throws Throwable
     {
-    	InputStream in;
+    	InputStream in = null;
     	if (System.in.available() > 0)
     	{
     		in = System.in;
@@ -24,11 +24,13 @@ public class MP3Calc
     	{
     		in = new FileInputStream(new File(rArg[0]));
     	}
-    	else
+
+    	if (in == null)
     	{
     		System.err.println("Must specify input mp3 file.");
     		System.exit(1);
     	}
+
     	if (!(in instanceof BufferedInputStream))
     	{
     		in = new BufferedInputStream(in);
