@@ -5,7 +5,8 @@ import java.beans.PropertyEditorSupport;
 
 public class IntegerEditor extends PropertyEditorSupport implements PropertyEditor
 {
-    public static final int DEFAULT_INT = 0;
+    public static final int DEFAULT_PRIMITIVE = 0;
+    public static final Integer DEFAULT = new Integer(DEFAULT_PRIMITIVE);
 
     public String getJavaInitializationString()
     {
