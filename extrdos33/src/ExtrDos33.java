@@ -70,7 +70,8 @@ public class ExtrDos33
 
 	private static class DosImage
 	{
-		byte[] rb;
+		List files = new ArrayList();
+        byte[] rb;
 		byte[] rbc;
 		public DosImage(byte[] x)
 		{
@@ -109,7 +110,10 @@ public class ExtrDos33
 			}
 			return hash;
         }
-
+        public void addFile(File file)
+        {
+        	files.add(file);
+        }
 	}
 
 	private static Map doss = new HashMap();
@@ -138,6 +142,7 @@ public class ExtrDos33
 		{
 			File saveDos = (File)doss.get(dos);
 			System.out.println("image already found: "+saveDos.getAbsolutePath());
+			dos.addFile(file);
 		}
 		else
 		{
