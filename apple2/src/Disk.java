@@ -137,4 +137,22 @@ public class Disk
             }
         }
     }
+
+    /**
+     * @param sector
+     * @param i
+     * @param bs
+     * @return
+     */
+    private boolean match(byte[] actual, int pos, byte[] expected)
+    {
+        for (int i = 0; i < expected.length; ++i)
+        {
+            if (actual[pos+i] != expected[i])
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }
