@@ -647,19 +647,19 @@ public class VolumeDOS extends VolumeEntity
 //      0x0148, // master: 03 slave: 84
         rbSlave[0x0148] = (byte)0x84;
 //      0x0149, // master: 1B slave: 9D
-        rbSlave[0x0149] = (byte)0x1D; //*
+        rbSlave[0x0149] = (byte)0x1D; //* needs fixup
 
 //      0x0C0D, // master: 1B slave: 9D
-        rbSlave[0x0C0D] = (byte)0x1D; //*
+        rbSlave[0x0C0D] = (byte)0x1D; //* needs fixup
 
 //      0x0C56, // master: 36 slave: FC
         rbSlave[0x0C56] = (byte)0xFC;
 //      0x0C57, // master: E8 slave: A4
-        rbSlave[0x0C57] = (byte)0x24; //*
+        rbSlave[0x0C57] = (byte)0x24; //* needs fixup
 //      0x0C58, // master: E5 slave: FC
         rbSlave[0x0C58] = (byte)0xFC;
 //      0x0C59 (???)
-        rbSlave[0x0C59] = (byte)0x24; //*
+        rbSlave[0x0C59] = (byte)0x24; //* needs fixup
 //      0x0C5A, // master: E3 slave: 65
         rbSlave[0x0C5A] = (byte)0x65;
 //      0x0C5B, // master: E3 slave: D8
