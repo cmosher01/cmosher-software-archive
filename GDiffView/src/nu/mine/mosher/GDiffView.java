@@ -12,6 +12,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PipedOutputStream;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
@@ -434,7 +435,7 @@ public class GDiffView extends JFrame
                 in.seek(gc.getRange().getBegin());
                 byte[] rb = new byte[(int)gc.getRange().getLength()];
                 in.readFully(rb);
-                pipeOut
+//                pipeOut;
             }
             g = getGDiff(gdiff);
         }
