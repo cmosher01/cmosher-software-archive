@@ -35,7 +35,7 @@ public class VelocityTest implements LogSystem
         context.put("deps",deps);
 
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out)));
-        VelocityWrapper.merge(new File("C:\\Documents and Settings\\chrism\\My Documents\\build_template.vm"), context, writer);
+        VelocityWrapper.merge(new File("C:\\Documents and Settings\\chrism\\My Documents\\build_template.vm"), context, System.out);
         writer.close();
     }
 
