@@ -27,4 +27,55 @@ public class TimeOfDayTest extends TestCase
         junit.textui.TestRunner.run(TimeOfDayTest.class);
     }
 
+    /*
+     * @see TestCase#setUp()
+     */
+    protected void setUp() throws Exception
+    {
+        super.setUp();
+    }
+
+    /*
+     * @see TestCase#tearDown()
+     */
+    protected void tearDown() throws Exception
+    {
+        super.tearDown();
+    }
+
+    public void testGetHours()
+    {
+    }
+
+    public void testGetMinutes()
+    {
+    }
+
+    public void testGetSeconds()
+    {
+    }
+
+    public void testGetMilliseconds()
+    {
+    }
+
+    public void testGetCalendar()
+    {
+    }
+
+    public void testGetTimeOnDay()
+    {
+    }
+
+    /*
+     * Test for boolean equals(Object)
+     */
+    public void testEqualsObject()
+    {
+    }
+
+    public void testCompareTo()
+    {
+    }
+
 }
