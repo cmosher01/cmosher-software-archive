@@ -37,8 +37,8 @@ public class CloneThreadTest
                     while (true)
                     {
                         x.a++;
+                        Thread.sleep(30);
                         x.b++;
-                        Thread.sleep(10);
                     }
                 }
                 catch (InterruptedException e)
