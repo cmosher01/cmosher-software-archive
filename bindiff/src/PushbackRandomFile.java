@@ -55,7 +55,7 @@ public class PushbackRandomFile
     {
 		if (unread != -1)
 		{
-			throw new IllegalStateException("only one byte can be unread at a time.");
+			throw new IllegalStateException("can't seek with an unread character.");
 		}
 		f.seek(pos);
     }
