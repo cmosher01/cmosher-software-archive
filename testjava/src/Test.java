@@ -72,6 +72,13 @@ public class Test
         System.out.println(setLine);
 
 
+        Set setTrimmedLine = new HashSet();
+        Filter filt = new Filter(setLine)
+        {
+        };
+
+
+
 //        String x = "a,b,,d";
 //        for (Iterator i = new StringFields(x).iterator(); i.hasNext();)
 //        {
