@@ -23,12 +23,17 @@ public class DiskVTOCTest extends TestCase
      */
     public void testDOS33_Master_1980() throws IOException, InvalidPosException
     {
-        Disk disk = readDiskResource("DOS33_SystemMaster_19800825.dsk");
+        assertOnePos("DOS33_SystemMaster_19800825.dsk",new DiskPos(0x11,0));
+    }
+
+    public void assertOnePos(String f, DiskPos pos) throws IOException
+    {
+        Disk disk = readDiskResource(f);
         List rPos = new ArrayList();
         disk.findDos33VTOC(rPos);
         assertEquals(1, rPos.size());
-        DiskPos pos = (DiskPos)rPos.get(0);
-        assertEquals(pos,new DiskPos(0x11,0x00));
+        DiskPos posActual = (DiskPos)rPos.get(0);
+        assertEquals(pos,posActual);
     }
 
     public void assertPos(DiskPos expected, DiskPos actual)
