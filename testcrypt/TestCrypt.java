@@ -10,11 +10,12 @@ public class TestCrypt
 {
     public static void main(String[] rArg) throws Throwable
     {
-        System.setProperty("java.security.egd","");
-        Security.setProperty("securerandom.source","");
-        SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
-        random.setSeed(random.generateSeed(20));
-        System.out.println(random.nextInt());
+//        System.setProperty("java.security.egd","");
+//        Security.setProperty("securerandom.source","");
+//        SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+//        random.setSeed(random.generateSeed(20));
+//        System.out.println(random.nextInt());
+        showProviders();
     }
 
     public static void showProviders()
