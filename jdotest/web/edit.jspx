@@ -1,5 +1,6 @@
 <%@ include file="htmlhead.jsp" %>
 <%@ page session="false" %>
+<%@ page import="java.util.Iterator" %>
 <%@ page import="javax.jdo.PersistenceManager" %>
 <%@ page import="nu.mine.mosher.jdotest.Item" %>
 <%@ page import="nu.mine.mosher.jdotest.Perm" %>
