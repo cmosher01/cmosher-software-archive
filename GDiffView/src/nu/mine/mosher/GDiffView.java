@@ -148,17 +148,17 @@ public class GDiffView extends JFrame
                         GDiffCopy copy = (GDiffCopy)oldCmd;
                         beginSrc = copy.getRange().getBegin();
                         endSrc = copy.getRange().getEnd();
-                        highlight(false,false);
+                        highlight("body",false);
                         beginTrg = copy.getTargetRange().getBegin();
                         endTrg = copy.getTargetRange().getEnd();
-                        highlight(false,true);
+                        highlight("body",true);
                     }
                     else if (oldCmd instanceof GDiffData)
                     {
                         GDiffData data = (GDiffData)oldCmd;
                         beginTrg = data.getTargetRange().getBegin();
                         endTrg = data.getTargetRange().getEnd();
-                        highlight(false,true);
+                        highlight("body",true);
                     }
                 }
                 if (newIndex >= 0 && newIndex < rcmd.size())
@@ -169,17 +169,17 @@ public class GDiffView extends JFrame
                         GDiffCopy copy = (GDiffCopy)newCmd;
                         beginSrc = copy.getRange().getBegin();
                         endSrc = copy.getRange().getEnd();
-                        highlight(true,false);
+                        highlight("highlight",false);
                         beginTrg = copy.getTargetRange().getBegin();
                         endTrg = copy.getTargetRange().getEnd();
-                        highlight(true,true);
+                        highlight("highlight",true);
                     }
                     else if (newCmd instanceof GDiffData)
                     {
                         GDiffData data = (GDiffData)newCmd;
                         beginTrg = data.getTargetRange().getBegin();
                         endTrg = data.getTargetRange().getEnd();
-                        highlight(true,true);
+                        highlight("highlight",true);
                     }
                 }
             }
