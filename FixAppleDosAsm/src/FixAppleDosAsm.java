@@ -20,6 +20,7 @@ import java.io.PrintWriter;
  */
 public class FixAppleDosAsm
 {
+    private static final int TAB_COMMENT = 32;
 
     /**
      * @param args
@@ -47,7 +48,18 @@ public class FixAppleDosAsm
         String tr = s.trim();
         if (tr.startsWith(";"))
         {
-            // [sp [...]] ; comment
+            /*
+             * Line: [sp [...]] ; [sp [...]] [comment] [sp [...]]
+             * tr: ; [sp [...]] [comment] [sp [...]]
+             */
+            tr = tr.substring(1);
+            // tr: [sp [...]] [comment] [sp [...]]
+            tr = tr.trim();
+            // tr: [comment]
+
+            out.tab(TAB_COMMENT);
+            out.print(";");
+            out.print(tr);
         }
         else if (s.startsWith(" "))
         {
