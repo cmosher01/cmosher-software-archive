@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * Created on Oct 9, 2004
  */
@@ -10,5 +13,10 @@
  */
 public class Volume
 {
-
+    private VolumeCatalog cat;
+    private List rFile = new ArrayList(); // VolumeFile
+    private VolumeDOS dos;
+    private VolumeBoot boot;
+    private VolumeUnusedBlank blank;
+    private VolumeUnusedData data;
 }
