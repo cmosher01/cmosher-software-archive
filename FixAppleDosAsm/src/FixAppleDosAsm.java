@@ -41,7 +41,18 @@ public class FixAppleDosAsm
      */
     private static String processLine(String s)
     {
-        // TODO Auto-generated method stub
-        return null;
+        String tr = s.trim();
+        if (tr.startsWith(";"))
+        {
+            // [sp [...]] ; comment
+        }
+        else if (s.startsWith(" "))
+        {
+            // sp [sp [...]] directive [; comment]
+        }
+        else
+        {
+            // label sp [sp [...]] [directive] [; comment]
+        }
     }
 }
