@@ -159,8 +159,6 @@ public class GDiffView extends JFrame
         paneSrc.setEditable(false);
         JScrollPane scrSrc = new JScrollPane(paneSrc);
         scrSrc.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-//        scrSrc.setMinimumSize(new Dimension(10,10));
-//        scrSrc.setPreferredSize(new Dimension(400,430));
         scrSrc.setMaximumSize(new Dimension(Integer.MAX_VALUE,Integer.MAX_VALUE));
 
         docTrg = new DefaultStyledDocument();
@@ -168,8 +166,6 @@ public class GDiffView extends JFrame
         paneTrg.setEditable(false);
         JScrollPane scrTrg = new JScrollPane(paneTrg);
         scrTrg.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-//        scrTrg.setMinimumSize(new Dimension(10,10));
-//        scrTrg.setPreferredSize(new Dimension(400,430));
         scrTrg.setMaximumSize(new Dimension(Integer.MAX_VALUE,Integer.MAX_VALUE));
 
         ListModel model = new GDiffCmdListModel(rCopy);
@@ -179,8 +175,6 @@ public class GDiffView extends JFrame
         listGDiff.setSelectionBackground(new Color(173,194,245));
         listGDiff.setFont(Font.decode("Courier-PLAIN-10"));
         listGDiff.setPrototypeCellValue("@FFFFFFFF LFFFFFFFF");
-//        listGDiff.setMaximumSize(new Dimension(listGDiff.getFixedCellWidth(),Integer.MAX_VALUE)); // ???
-//        listGDiff.setMinimumSize(new Dimension(listGDiff.getFixedCellWidth(),0)); // ???
         ListSelectionModel selectionModel = new SingleSelectionModel()
         {
             public void updateSingleSelection(int oldIndex, int newIndex)
