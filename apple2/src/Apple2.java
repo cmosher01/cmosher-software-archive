@@ -58,20 +58,21 @@ public class Apple2
     public static void doOneDisk(Disk disk) throws InvalidPosException
     {
         Volume vol = new Volume();
-        try
-        {
-            vol.readFromMedia(disk);
-        }
-        catch (VTOCNotFoundException e)
-        {
-            System.out.println("[no VTOC]");
-            return;
-        }
-        catch (MultipleVTOCException e)
-        {
-            System.out.println("[no VTOC]");
-            return;
-        }
+        vol.readFromMedia(disk);
+//        try
+//        {
+//            vol.readFromMedia(disk);
+//        }
+//        catch (VTOCNotFoundException e)
+//        {
+//            System.out.println("[no VTOC]");
+//            return;
+//        }
+//        catch (MultipleVTOCException e)
+//        {
+//            System.out.println("[no VTOC]");
+//            return;
+//        }
 
         StringBuffer s = new StringBuffer(256);
         vol.dump(s);
