@@ -186,9 +186,14 @@ public class FixAppleDisasm
 						if (ln.oper.startsWith("$"))
 						{
 							ln.refaddr = -1;
+							int stopat = ln.oper.length();
+							if (stopat > 5)
+							{
+								stopat = 5;
+							}
 							try
 							{
-								ln.refaddr = Integer.parseInt(ln.oper.substring(1,5),16);
+								ln.refaddr = Integer.parseInt(ln.oper.substring(1,stopat),16);
 								if (ln.refaddr < 0 || 0x10000 <= ln.refaddr)
 								{
 									ln.refaddr = -1;
