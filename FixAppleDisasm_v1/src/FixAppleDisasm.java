@@ -59,7 +59,7 @@ public class FixAppleDisasm
 
 	private static class Line
 	{
-		public int addr;
+		public int addr = -1;
 		public String label;
 		public String instr;
 		public String oper;
@@ -114,6 +114,7 @@ public class FixAppleDisasm
 
 			if (addr >= 0)
 			{
+				ln.addr = addr;
 				String nextChar = s.substring(4,5);
 				if (nextChar.equalsIgnoreCase("-"))
 				{
@@ -124,6 +125,9 @@ public class FixAppleDisasm
 				else
 				{
 				}
+			}
+			else
+			{
 			}
 		}
     }
