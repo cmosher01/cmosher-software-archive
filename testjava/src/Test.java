@@ -52,8 +52,8 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
-        int x;
-        System.out.println(x);
+//        int x;
+//        System.out.println(x);
 
 
 
