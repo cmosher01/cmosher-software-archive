@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jardesc>
+<jar path="H:/eclipse30/eclipse/workspace/grodb/webapp/WEB-INF/lib/core.jar"/>
+<options buildIfNeeded="true" compress="true" descriptionLocation="/grodb/core.jardesc" exportErrors="true" exportWarnings="true" overwrite="false" saveDescription="true" useSourceFolders="false"/>
+<manifest generateManifest="true" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+<sealing sealJar="false">
+<packagesToSeal/>
+<packagesToUnSeal/>
+</sealing>
+</manifest>
+<selectedElements exportClassFiles="true" exportJavaFiles="false">
+<javaElement handleIdentifier="=core/bin15"/>
+</selectedElements>
+</jardesc>
