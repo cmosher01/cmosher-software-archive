@@ -173,7 +173,7 @@ public class Disk
                         isValidFileType(sector[ce+2]) &&
                         isValidFileName(sector,ce+3))
                     {
-                        if (sector[ce+31] == 0xA0)
+                        if (sector[ce+31] == (byte)0xA0)
                         {
                             ++penultimateSpace;
                         }
