@@ -25,10 +25,10 @@ public class CachedCloner
             Method methodClone = (Method)cache.get(cl);
             if (methodClone == null)
             {
-                methodClone = getCloneMethod(cl);
+                methodClone = Cloner.getCloneMethod(cl);
                 cache.put(cl, methodClone);
             }
-            return clone(cloneableObject, methodClone);
+            return Cloner.clone(cloneableObject, methodClone);
         }
         catch (CloneNotSupportedException e)
         {
@@ -42,34 +42,4 @@ public class CachedCloner
         }
     }
 
-    private static Cloneable clone(Cloneable cloneableObject, Method methodClone)
-        throws IllegalArgumentException, IllegalAccessException, CloneNotSupportedException, InvocationTargetException
-    {
-        Cloneable clon;
-        try
-        {
-            clon = (Cloneable)methodClone.invoke(cloneableObject, null);
-        }
-        catch (InvocationTargetException e)
-        {
-            Throwable cause = e.getCause();
-            if (cause instanceof CloneNotSupportedException)
-            {
-                throw (CloneNotSupportedException)cause;
-            }
-            else
-            {
-                throw e;
-            }
-        }
-        return clon;
-    }
-
-    private static Method getCloneMethod(Class cl) throws SecurityException, NoSuchMethodException
-    {
-        Method methodClone;
-        methodClone = cl.getMethod("clone", null);
-        methodClone.setAccessible(true);
-        return methodClone;
-    }
 }
