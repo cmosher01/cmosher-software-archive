@@ -46,7 +46,7 @@ public class TreeFrame extends JPanel
      * this method should be invoked from the
      * event-dispatching thread.
      */
-    protected static void createAndShowGUI(Container contentPane)
+    protected static void createAppFrame(Container contentPane)
     {
         useOSLookAndFeel();
 
@@ -91,7 +91,7 @@ public class TreeFrame extends JPanel
             {
                 try
                 {
-                    createAndShowGUI(new TreeFrame(dirArg));
+                    createAppFrame(new TreeFrame(dirArg));
                     begun.waitToSetTrue();
                 }
                 catch (Throwable th)
