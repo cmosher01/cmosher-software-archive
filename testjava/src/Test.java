@@ -7,8 +7,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.OutputStream;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 
 import com.surveysampling.util.Cloner;
 import com.surveysampling.util.ImmutableReference;
@@ -44,16 +47,25 @@ public class Test
 	{
         FileReader r = new FileReader("c:\\temp\\ssprop.txt");
 
-        for (Iterator i = new ReaderLines(r).iterator(); i.hasNext();)
-        {
-            String s = (String)i.next();
-            System.out.println(s);
-        }
-//      for (String s : new ReaderLines(r))
-//      {
-//          System.out.println(s);
-//      }
+//use ReaderLines to read lines from a Reader:
+//        for (Iterator i = new ReaderLines(r).iterator(); i.hasNext();)
+//        {
+//            String s = (String)i.next();
+//            System.out.println(s);
+//        }
 
+//or for 1.5:
+//        for (String s : new ReaderLines(r))
+//        {
+//            System.out.println(s);
+//        }
+
+//convert to a List:
+        List listLine = Util.list(new ReaderLines(r).iterator());
+//or under 1.5:
+//        List listLine = Util.list(new ReaderLines(r));
+//convert the list to a Set:
+        Set setLine = new HashSet(listLine);
 
 
 
