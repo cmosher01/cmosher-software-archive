@@ -40,7 +40,7 @@ public class CachedCloner
     }
 
     private static Cloneable clone(Cloneable cloneableObject, Method methodClone)
-        throws IllegalArgumentException, IllegalAccessException, InvocationTargetException
+        throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, CloneNotSupportedException
     {
         return (Cloneable)methodClone.invoke(cloneableObject, null);
     }
