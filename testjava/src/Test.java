@@ -50,20 +50,16 @@ public class Test
 
 
 
-        final int LOOP = 10000000;
         X x = new X();
         long start = System.currentTimeMillis();
-        for (int i = 0; i < LOOP; ++i)
+        for (int i = 0; i < 10000000; ++i)
         {
 //            x.close();
             UniversalCloser2.close(x);
         }
         long end = System.currentTimeMillis();
-        double /*milliseconds*/ y = (end-start)/10.0;
-//        double microseconds = milliseconds*1000;
-//        double nanoseconds = microseconds*1000;
-//        double per = nanoseconds/LOOP;
-        System.out.println("elapsed time: "+y+" nanoseconds");
+        double ns = (end-start)/10.0;
+        System.out.println("elapsed time: "+ns+" nanoseconds");
 
 
 
