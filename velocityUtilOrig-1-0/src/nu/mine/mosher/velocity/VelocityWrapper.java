@@ -103,6 +103,8 @@ public class VelocityWrapper
         return props;
     }
 
+
+
     public static void merge(File inputTemplate, Context context, Writer out) throws VelocityException
     {
         Properties props = VelocityWrapper.getDefaultProperties();
