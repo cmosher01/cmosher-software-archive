@@ -39,10 +39,7 @@ public class TestBeans
         throws IntrospectionException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
     {
         PropertyDescriptor pd = getPropertyDescriptor(bean, property);
-
-        Class classProp = pd.getPropertyType();
-
-        Object v = getConvertedValue(value, classProp);
+        Object v = getConvertedValue(value, pd.getPropertyType());
 
         Method wr = pd.getWriteMethod();
         if (wr == null)
