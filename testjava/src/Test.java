@@ -59,15 +59,18 @@ public class Test
 
         class Junk
         {
-            public test()
+            public void test()
             {
                 System.out.println("junk");
             }
         }
 
-        Date d = new Date(Long.MAX_VALUE);
-        SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
-        System.out.println(f.format(d));
+        Junk j = new Junk();
+        j.test();
+
+//        Date d = new Date(Long.MAX_VALUE);
+//        SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
+//        System.out.println(f.format(d));
         
 
 //        SimpleDateFormat f = new SimpleDateFormat("HH:mm:ss.SSS");
