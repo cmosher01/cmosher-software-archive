@@ -47,7 +47,7 @@ public class VolumeTSMap extends VolumeEntity
                 s.append("; ");
             }
         }
-        s.append("mapping to: ");
+        s.append(" mapping to: ");
         for (Iterator i = this.rTS.iterator(); i.hasNext();)
         {
             DiskPos p = (DiskPos)i.next();
