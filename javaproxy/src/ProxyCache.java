@@ -8,9 +8,7 @@
  * Author : Steve Yeong-Ching Hsueh
  */
 
-import java.lang.*;
-import java.io.*;
-import java.util.*;
+import java.util.Date;
 
 /**
  * ProxyCache stores the server response of an url
