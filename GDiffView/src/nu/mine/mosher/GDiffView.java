@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -239,6 +241,28 @@ public class GDiffView extends JFrame
             endTrg = g.getTargetRange().getEnd();
             highlight("insert",true);
         }
+
+        SortedSet setSrcUsed = new TreeSet();
+        for (Iterator i = rCopy.iterator(); i.hasNext();)
+        {
+            GDiffCopy g = (GDiffCopy)i.next();
+            Range r = g.getTargetRange();
+            setSrcUsed.add(r);
+        }
+
+        SortedSet setSrcUnused = new TreeSet();
+        long prev = 0;
+        for (Iterator i = setSrcUsed.iterator(); i.hasNext();)
+        {
+            Range r = (Range)i.next();
+            long next = r.getBegin();
+            if (prev < next)
+            {
+                setSrcUnused.add(new Range(prev,next-1));
+            }
+            r.getLimit();
+        }
+//        highlight("delete",true);
 
         listGDiff.setSelectionModel(selectionModel);
         listGDiff.setSelectedIndex(0);
