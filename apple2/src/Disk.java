@@ -53,6 +53,20 @@ public class Disk
         {
             int c = read();
             sb.append((char)(byte)(c & 0x0000007F));
+            byte a;
+            if (c < 0x40)
+            {
+                a = 1;
+            }
+            else if (c < 0x80)
+            {
+                a = 2;
+            }
+            else
+            {
+                a = 0;
+            }
+            attrib[i] = a;
         }
     }
 
@@ -62,6 +76,7 @@ public class Disk
     public int read()
     {
         int r = disk[pos.getIndex()];
+        r &= 0x000000FF;
         pos = pos.advance(1);
         return r;
     }
