@@ -54,9 +54,9 @@ public class JTextPaneNoWrap extends JTextPane
     /**
      * @see java.awt.Component#setBounds(int, int, int, int)
      */
-    public void setBounds(int x, int y, int width, int height)
-    {
-        Dimension size = getPreferredSize();
-        super.setBounds(x,y,Math.max(size.width,width),Math.max(size.height,height));
-    }
+//    public void setBounds(int x, int y, int width, int height)
+//    {
+//        Dimension size = getPreferredSize();
+//        super.setBounds(x,y,Math.max(size.width,width),Math.max(size.height,height));
+//    }
 }
