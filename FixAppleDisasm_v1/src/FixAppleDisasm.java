@@ -274,11 +274,13 @@ public class FixAppleDisasm
 								}
 								ln.instr = "DB";
 								ln.oper = "$"+hexByte(x);
+								++nextaddr;
 							}
 							else
 							{
+								ln.comment += " "+h;
 								System.err.print("error parsing hex @ $");
-								System.err.println(Integer.toHexString(ln.addr));
+								System.err.println(hexWord(ln.addr));
 							}
 						}
 					}
