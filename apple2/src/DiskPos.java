@@ -37,8 +37,9 @@ public class DiskPos
 
     /**
      * @param track
+     * @throws InvalidPosException
      */
-    private void verifyTrack(int track)
+    private void verifyTrack(int track) throws InvalidPosException
     {
         if (track < 0 || cTracksPerDisk <= track)
         {
