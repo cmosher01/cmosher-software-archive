@@ -37,7 +37,7 @@ public final class ImmutableReference<T> implements Cloneable, Comparable<T>, Se
 
     public T object() throws CloneNotSupportedException
     {
-        return (T)cloneObject((Cloneable)this.ref);
+        return cloneObject((Cloneable)this.ref);
     }
 
     public Object clone() throws CloneNotSupportedException
