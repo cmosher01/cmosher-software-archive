@@ -44,11 +44,6 @@ public class TreeFrame extends JPanel
         return root;
     }
 
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
-     * event-dispatching thread.
-     */
     protected static void createAppFrame()
     {
         useOSLookAndFeel();
