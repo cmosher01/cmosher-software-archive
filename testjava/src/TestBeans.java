@@ -14,4 +14,9 @@ public class TestBeans
         Integer i = (Integer)ed.getValue();
         System.out.println(i.getClass().getName());
     }
+
+    public static void showInt(int i)
+    {
+        System.out.println(i);
+    }
 }
