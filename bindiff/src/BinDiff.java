@@ -87,12 +87,12 @@ public class BinDiff
         statechange(END,0);
     }
 
-	protected void statechange(int newstate, int c)
+	protected void statechange(int newstate, long c)
 	{
 		statechange(newstate,c,null);
 	}
 
-    protected void statechange(int newstate, int c, TellStream f)
+    protected void statechange(int newstate, long c, TellStream f)
     {
         if (newstate == START)
         {
