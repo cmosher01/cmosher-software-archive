@@ -33,11 +33,6 @@ public class StringFieldizer
         return pos;
     }
 
-    public char getDelimiter()
-    {
-        return delim;
-    }
-
     public String getRemainder()
     {
         return s.substring(pos);
@@ -46,6 +41,11 @@ public class StringFieldizer
     public String getString()
     {
         return s;
+    }
+
+    public char getDelimiter()
+    {
+        return delim;
     }
 
     protected int nextPos()
