@@ -8,15 +8,13 @@
  * 
  * @author Chris
  */
-public class VolumeTableOfContents
+public class VolumeTableOfContents extends VolumeSector
 {
-    private final DiskPos pos;
-
     /**
      * @param pos
      */
     public VolumeTableOfContents(final DiskPos pos)
     {
-        this.pos = pos;
+        super(pos);
     }
 }
