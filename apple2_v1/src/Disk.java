@@ -780,7 +780,7 @@ public class Disk
         return new SectorIter();
     }
 
-    private class SectorIter extends DiskPos, implements Iterator
+    private class SectorIter extends DiskPos implements Iterator
     {
         /**
          */
