@@ -4,20 +4,14 @@
 package nu.mine.mosher.ja2;
 
 /**
- * TODO
- * 
- * @author chrism
+ * @author Chris Mosher
  */
 public class GUI
 {
-
     /**
      * 
      */
     public void create()
     {
-        // TODO Auto-generated method stub
-        
     }
-
 }
