@@ -27,7 +27,7 @@ public class OneFileCopyClient
 		}
 
 		byte[] rbLen = new byte[Long.SIZE];
-		int cbLen = in.read(rbLen);
+		int cbLen = in.read(rbLen,0,8);
 		System.out.println("len of len: "+cbLen);
 		long xLen = 0;
 		for (int i = Long.SIZE-1; i <= 0; --i)
