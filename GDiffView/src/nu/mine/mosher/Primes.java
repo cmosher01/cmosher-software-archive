@@ -84,7 +84,7 @@ public class Primes
     } // end above
 
     /**
-     * @param return first prime less than candidate
+     * @param candidate return first prime less than candidate
      */
     public int below(int candidate)
     {
