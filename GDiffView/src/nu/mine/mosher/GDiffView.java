@@ -174,7 +174,7 @@ public class GDiffVeiew extends JFrame
     }
 
     /**
-     * @param sb2
+     * @param sb
      * @param b
      */
     private static void appendAsc(StringBuffer sb, byte b)
@@ -194,7 +194,7 @@ public class GDiffVeiew extends JFrame
     }
 
     /**
-     * @param sb2
+     * @param sb
      * @param addr
      */
     private static void appendAddr(StringBuffer sb, long addr)
@@ -206,7 +206,7 @@ public class GDiffVeiew extends JFrame
     }
 
     /**
-     * @param sb2
+     * @param sb
      * @param i
      */
     private static void appendHex(StringBuffer sb, int i)
