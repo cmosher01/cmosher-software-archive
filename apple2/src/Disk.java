@@ -500,16 +500,25 @@ public class Disk
      */
     public void getDataTS(Collection rDiskPosSectorsWithData)
     {
-        rewind();
-        while (!EOF())
+        Iterator i = this.getSectorIterator();
+        while (i.hasNext())
         {
-            DiskPos cur = this.pos;
-            byte[] sector = read(DiskPos.cSector);
-            if (hasData(sector))
+            DiskPos pos = (DiskPos)i.next();
+            if (hasDataInSector(pos))
             {
-                rDiskPosSectorsWithData.add(cur);
+                rDiskPosSectorsWithData.add(pos);
             }
         }
+//        rewind();
+//        while (!EOF())
+//        {
+//            DiskPos cur = this.pos;
+//            byte[] sector = read(DiskPos.cSector);
+//            if (hasData(sector))
+//            {
+//                rDiskPosSectorsWithData.add(cur);
+//            }
+//        }
     }
 
     /**
@@ -517,24 +526,34 @@ public class Disk
      */
     public void getDataTS(TSMap m)
     {
-        rewind();
-        while (!EOF())
+        Iterator i = this.getSectorIterator();
+        while (i.hasNext())
         {
-            DiskPos cur = this.pos;
-            byte[] sector = read(DiskPos.cSector);
-            if (hasData(sector))
+            DiskPos pos = (DiskPos)i.next();
+            if (hasDataInSector(pos))
             {
-                m.mark(cur);
+                m.mark(pos);
             }
         }
+//        rewind();
+//        while (!EOF())
+//        {
+//            DiskPos cur = this.pos;
+//            byte[] sector = read(DiskPos.cSector);
+//            if (hasData(sector))
+//            {
+//                m.mark(cur);
+//            }
+//        }
     }
 
     /**
      * @param sector
      * @return
      */
-    private static boolean hasData(byte[] sector)
+    public boolean hasDataInSector(DiskPos pos)
     {
+        byte[] sector = readSector(pos);
         for (int i = 0; i < sector.length; ++i)
         {
             byte b = sector[i];
