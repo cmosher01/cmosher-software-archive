@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 /*
  * Created on Sep 15, 2004
  */
@@ -8,7 +10,7 @@
  * 
  * @author Chris
  */
-public class DiskPos implements Comparable
+public class DiskPos implements Comparable, Iterator
 {
     public static final int cSector = 0x100;
     public static final int cSectorsPerTrack = 0x10;
@@ -244,5 +246,35 @@ public class DiskPos implements Comparable
             return +1;
         }
         return 0;
+    }
+
+    /**
+     * @see java.util.Iterator#hasNext()
+     */
+    public boolean hasNext()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /**
+     * @see java.util.Iterator#next()
+     */
+    public Object next()
+    {
+        if (!hasNext())
+        {
+            throw new ill
+        }
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @see java.util.Iterator#remove()
+     */
+    public void remove() throws UnsupportedOperationException
+    {
+        throw new UnsupportedOperationException();
     }
 }
