@@ -1,5 +1,3 @@
-import java.lang.reflect.Method;
-
 public class UniversalCloser
 {
     public static void close(Object obj)
