@@ -31,9 +31,16 @@ public class Disk
     /**
      * @throws InvalidPosException
      */
-    public void rewind() throws InvalidPosException
+    public void rewind()
     {
-        this.pos = new DiskPos(0,0,0);
+        try
+        {
+            this.pos = new DiskPos(0,0,0);
+        }
+        catch (InvalidPosException e)
+        {
+            throw new RuntimeException("shouldn't happen",e);
+        }
     }
 
     /**
