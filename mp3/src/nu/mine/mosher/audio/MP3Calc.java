@@ -13,6 +13,8 @@ import java.io.FileInputStream;
 public class MP3Calc
 {
     private static int[] layer2bps = {0,32,48,56,64,80,96,112,128,160,192,224,256,320,384,0};
+	private static int[] layer3mpeg1bps = {0,32,40,48,56,64,80,96,112,128,160,192,224,256,320,0};
+	private static int[] layer3mpeg2bps = {0,8,16,24,32,64,80,56,64,128,160,112,128,256,320,0};
 
     public static void main(String[] rArg) throws Throwable
     {
@@ -36,19 +38,26 @@ public class MP3Calc
 		int h = in.readInt();
 
 		// ignore synch word
-		h >>= 12;
+		h >>= 11;
 
-		// MPEG1 or MPEG2
+		// MPEG1 or MPEG2 or MPEG 2.5
 		int mpeg;
-		if ((h & 1) == 0)
-		{
-			mpeg = 2;
-		}
-		else
-		{
-			mpeg = 1;
-		}
-		h >>= 1;
+		switch (h & 3)
+        {
+			case 0:
+				mpeg = 25;
+			break;
+			case 1:
+				mpeg = 0;
+			break;
+			case 2:
+				mpeg = 2;
+			break;
+			case 3:
+				mpeg = 1;
+			break;
+        }
+		h >>= 2;
 
 		// layer 1, 2, or 3 (4 means undefined)
 		int layer = 4-(h&3);
@@ -78,7 +87,7 @@ public class MP3Calc
     		if (mpeg == 1)
     		{
     		}
-    		else if (mpeg == 2)
+    		else if (mpeg == 2 || mpeg == 25)
     		{
     		}
     	}
