@@ -22,7 +22,6 @@ public class TreeFrame extends JFrame
         setLayout(new BorderLayout());
         addNotify();
         setSize(getInsets().left + getInsets().right + 485, getInsets().top + getInsets().bottom + 367);
-        setTitle("Java Directory Browser");
 
         FileTreeNode root = (FileTreeNode)buildTree(dir);
         DefaultTreeModel treemodel = new DefaultTreeModel(root);
@@ -63,6 +62,7 @@ public class TreeFrame extends JFrame
         JFrame.setDefaultLookAndFeelDecorated(true);
 
         //Create and set up the window.
+        frame = new JFrame("Java Directory Browser");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create and set up the content pane.
