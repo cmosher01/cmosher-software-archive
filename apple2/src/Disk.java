@@ -169,7 +169,7 @@ public class Disk
             {
                 throw new NoSuchElementException();
             }
-            DiskPos p = d.clone();
+            DiskPos p = (DiskPos)d.clone();
             d.advance(DiskPos.cSector);
             return p;
         }
