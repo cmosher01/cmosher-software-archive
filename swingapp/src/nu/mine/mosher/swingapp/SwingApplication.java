@@ -3,6 +3,8 @@
  */
 package nu.mine.mosher.ja2;
 
+import javax.swing.SwingUtilities;
+
 /**
  * TODO
  * 
