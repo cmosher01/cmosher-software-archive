@@ -1,6 +1,3 @@
-import java.io.File;
-import java.io.IOException;
-
 import junit.framework.TestCase;
 /*
  * Created on Sep 29, 2004
