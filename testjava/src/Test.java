@@ -55,8 +55,7 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
-        File ctemp = new File("c:\\");
-        File f1 = new File(ctemp,"c.txt");
+        File f1 = new File("\\c.txt");
         f1.getParentFile().mkdirs();
         BufferedWriter w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f1)));
         w.write("test");
