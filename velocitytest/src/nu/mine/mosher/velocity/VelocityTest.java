@@ -34,7 +34,7 @@ public class VelocityTest
 
 
         Context context = new VelocityContext();
-        context.put("x", "test");
+        context.put("x.y", "test");
 
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out)));
 
