@@ -52,17 +52,14 @@ public class Pair
         {
             return true;
         }
-        else if (x == null)
+        if (x == null)
         {
             return false;
         }
-        else if (y == null)
+        if (y == null)
         {
             return false;
         }
-        else
-        {
-            return x.equals(y);
-        }
+        return x.equals(y);
     }
 }
