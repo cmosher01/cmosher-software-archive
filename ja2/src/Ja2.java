@@ -28,7 +28,7 @@ public final class Ja2
         CommandLineArgHandler ch = new CommandLineArgHandler(args);
         GUI gui = new GUI();
 
-        SwingApplication app = new SwingApplication(eh,ch,gui);
+        SwingApplication app = new SwingApplication(eh,ch,null);
 
         app.run();
     }
