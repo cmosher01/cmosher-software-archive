@@ -412,7 +412,7 @@ public class Disk
      * @param entries
      * @throws InvalidPosException
      */
-    public void getDos33CatalogEntries(DiskPos pos, Collection entries) throws InvalidPosException
+    public void getDos33CatalogEntries(DiskPos pos, Collection entries)
     {
         byte[] sector = readSector(pos);
         int p = 0x0B;
