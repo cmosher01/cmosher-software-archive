@@ -63,8 +63,7 @@ public class StreamChecksum
             Integer chk = new Integer(rollCheck.getChecksum());
             if (!mapChecksumToWindow.containsKey(chk))
             {
-                List rWind = new ArrayList();
-                mapChecksumToWindow.put(chk,rWind);
+                mapChecksumToWindow.put(chk,new ArrayList());
             }
             List rWind = (List)mapChecksumToWindow.get(chk);
             rWind.add(new Long(w++));
