@@ -30,7 +30,7 @@ public class VelocityTest implements LogSystem
 {
     public static void main(String[] args) throws Throwable
     {
-        Properties props = new Properties(VelocityWrapper.getDefaultProperties());
+        Properties props = VelocityWrapper.getDefaultProperties();
         props.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH,"C:\\Documents and Settings\\chrism\\My Documents");
 
         VelocityWrapper velocity = new VelocityWrapper(props);
