@@ -65,6 +65,16 @@ public class DiskTSMapTest extends TestCase
     }
 
     /**
+     * @throws IOException
+     * @throws InvalidPosException
+     */
+    public void testZeroes() throws IOException, InvalidPosException
+    {
+        List r = new ArrayList();
+        assertManyPos("zero.dsk",r);
+    }
+
+    /**
      * @param f
      * @param rPosExpected
      * @throws IOException
