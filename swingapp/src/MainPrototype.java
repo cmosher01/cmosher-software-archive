@@ -2,11 +2,10 @@
  * Created on Feb 8, 2005
  */
 
-
 /**
  * TODO
  * 
- * @author chrism
+ * @author Chris Mosher
  */
 public class MainPrototype
 {
