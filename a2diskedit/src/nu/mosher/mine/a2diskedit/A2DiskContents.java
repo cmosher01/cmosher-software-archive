@@ -73,7 +73,9 @@ public class A2DiskContents
 		for (int i = 0; i < cFile; ++i)
 		{
 			byte[] catBytes = image.getBytes(catTrack,catSector,b,ENTRY_SIZE);
-			rCatEntry.add(new CatEntryDos33(catBytes));
+			CatEntryDos33 ce = new CatEntryDos33(catBytes);
+			if (ce.isDisplayable())
+				rCatEntry.add(ce);
 //			CDosFile* pf = new CDosFile(this);
 //			pf->Parse(rTSB,m_tsCatalog.track,m_tsCatalog.sector,b);
 //			if (!pf->m_bDeleted)
