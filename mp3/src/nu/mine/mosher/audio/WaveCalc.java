@@ -113,10 +113,6 @@ public class WaveCalc
 		in.close();
     }
 
-    /**
-     * @param in
-     * @return
-     */
     private static int readInt(InputStream in) throws IOException
     {
 		int b0 = in.read();
@@ -135,11 +131,18 @@ public class WaveCalc
         return h;
     }
 
-    /**
-     * @param in
-     * @param i
-     * @return
-     */
+	private static int readWord(InputStream in) throws IOException
+	{
+		int b0 = in.read();
+		int b1 = in.read();
+
+		int h = b1;
+		h <<= 8;
+		h |= b0;
+
+		return h;
+	}
+
     private static String readString(InputStream in, int c) throws IOException
     {
     	StringBuffer sb = new StringBuffer();
