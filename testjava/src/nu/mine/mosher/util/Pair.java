@@ -1,5 +1,7 @@
 package com.surveysampling.util;
 
+import java.io.Serializable;
+
 public class Pair implements Cloneable, Comparable, Serializable
 {
     private Cloneable a;
