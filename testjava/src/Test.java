@@ -56,6 +56,7 @@ public class Test
     //throws MyException, IOException // other exceptions here...
 	{
 
+        Bad b = new Bad();
 
 
 
