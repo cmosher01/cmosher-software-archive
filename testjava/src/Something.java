@@ -2,15 +2,15 @@ import java.io.File;
 
 public class SomeBean
 {
-    boolean aBoolean;
-    byte aByte;
-    char aChar;
-    short aShort;
-    int aInt;
-    float aFloat;
-    long aLong;
-    double aDouble;
-    String sString;
-    File aFile;
-    Object aObject;
+    private boolean aBoolean;
+    private byte aByte;
+    private char aChar;
+    private short aShort;
+    private int aInt;
+    private float aFloat;
+    private long aLong;
+    private double aDouble;
+    private String sString;
+    private File aFile;
+    private Object aObject;
 }
