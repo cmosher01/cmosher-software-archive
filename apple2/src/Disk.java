@@ -111,4 +111,14 @@ public class Disk
         int sector = read();
         return new DiskPos(track,sector,0,false);
     }
+
+    /**
+     * @throws InvalidPosException
+     * 
+     */
+    public void findDos33Catalog() throws InvalidPosException
+    {
+        int track = 0;
+        seek(new DiskPos(track,0,0,true));
+    }
 }
