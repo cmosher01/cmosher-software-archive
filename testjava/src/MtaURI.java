@@ -59,7 +59,7 @@ public class MtaURI
         {
             try
             {
-                nRate = Integer.parseInt();
+                nRate = Integer.parseInt(sRate);
             }
             catch (Throwable e)
             {
