@@ -1,18 +1,18 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class StringFieldizer implements Iterable<String>
+public class StringFieldizer implements Iterable<String>, Immutable
 {
-	private final SimpleIterator<String> i;
-	
+	private final String s;
+
 	public StringFieldizer(String s)
 	{
-		i = new Iter(s);
+		this.s = s;
 	}
 
 	public SimpleIterator<String> iterator()
 	{
-		return i;
+		return new Iter(s);
 	}
 
 	private static class Iter implements SimpleIterator<String>
