@@ -1,6 +1,4 @@
 /*
- * TODO
- *
  * Created on Apr 16, 2004
  */
 package nu.mine.mosher.velocity;
@@ -10,14 +8,7 @@ package nu.mine.mosher.velocity;
  */
 public class VelocityWrapper
 {
-
-    /**
-     * 
-     */
     public VelocityWrapper()
     {
-        super();
-        // TODO Auto-generated constructor stub
     }
-
 }
