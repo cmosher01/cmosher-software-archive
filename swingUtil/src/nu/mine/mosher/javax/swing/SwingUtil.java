@@ -4,11 +4,14 @@
 package nu.mine.mosher.javax.swing;
 
 /**
- * TODO
+ * Contains static methods relating to Java's Swing API.
  * 
- * @author chrism
+ * @author Chris Mosher
  */
-public class SwingUtil
+public final class SwingUtil
 {
-
+    private SwingUtil() throws UnsupportedOperationException
+    {
+        throw new UnsupportedOperationException();
+    }
 }
