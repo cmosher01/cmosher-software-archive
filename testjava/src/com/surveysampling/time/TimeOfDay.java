@@ -12,8 +12,9 @@ import java.util.Date;
  * of the calendar is not used.
  * It contains hours, minutes, seconds, and milliseconds
  * since midnight. Instances of this class are immutable.
- * Instances of this class hold a reference to
- * the given Calendar.
+ * Instances of this class do not hold a reference to
+ * the given Calendar object passed into the constructor
+ * (they clone it instead).
  * This class is thread-safe, but only to the extent that
  * given Calendar object is used in a thread-safe manner.
  */
