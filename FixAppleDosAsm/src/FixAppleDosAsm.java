@@ -29,8 +29,8 @@ public class FixAppleDosAsm
      */
     public static void main(String[] args) throws IOException
     {
-        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(FileDescriptor.in),"ASCII"));
-        Lister out = new Lister(new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out),"ASCII"))));
+        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(FileDescriptor.in),"US-ASCII"));
+        Lister out = new Lister(new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out),"US-ASCII"))));
         for (String s = in.readLine(); s != null; s = in.readLine())
         {
             processLine(s,out);
