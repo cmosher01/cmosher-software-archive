@@ -1,9 +1,55 @@
+/*
+ * Created on Jul 19, 2003
+ *
+ * To change the template for this generated file go to
+ * Window>Preferences>Java>Code Generation>Code and Comments
+ */
 package nu.mine.mosher.gedcom;
 
-public class InvalidLevel extends GedcomParseException
+/**
+ * @author Chris
+ *
+ * To change the template for this generated type comment go to
+ * Window>Preferences>Java>Code Generation>Code and Comments
+ */
+public class IllegalLevel extends Exception
 {
-	public InvalidLevel(String rawGedcomLine, GedcomLine parsedGedcomLine)
-	{
-		super("GEDCOM line has an invalid level number",rawGedcomLine,parsedGedcomLine);
-	}
+
+    /**
+     * 
+     */
+    public IllegalLevel()
+    {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+    /**
+     * @param message
+     */
+    public IllegalLevel(String message)
+    {
+        super(message);
+        // TODO Auto-generated constructor stub
+    }
+
+    /**
+     * @param cause
+     */
+    public IllegalLevel(Throwable cause)
+    {
+        super(cause);
+        // TODO Auto-generated constructor stub
+    }
+
+    /**
+     * @param message
+     * @param cause
+     */
+    public IllegalLevel(String message, Throwable cause)
+    {
+        super(message, cause);
+        // TODO Auto-generated constructor stub
+    }
+
 }
