@@ -1,7 +1,6 @@
 package com.surveysampling.mosher.tree;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.io.File;
 
 import javax.swing.JFrame;
@@ -11,7 +10,6 @@ import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
 
 import com.surveysampling.mosher.Flag;
 
@@ -21,9 +19,8 @@ public class TreeFrame extends JPanel
     {
         setLayout(new BorderLayout());
         addNotify();
-//        setSize(getInsets().left + getInsets().right + 640, getInsets().top + getInsets().bottom + 480);
 
-        FileTreeNode root = (FileTreeNode)buildTree(dir);
+        FileTreeNode root = buildTree(dir);
         DefaultTreeModel treemodel = new DefaultTreeModel(root);
         JTree tree = new JTree(treemodel);
 
@@ -36,11 +33,11 @@ public class TreeFrame extends JPanel
         add("Center", scrollpane);
     }
 
-    public TreeNode buildTree(String dir)
+    public FileTreeNode buildTree(String dir)
     {
         FileTreeNode root = new FileTreeNode(new File(dir));
         root.readTree(false);
-        return (TreeNode)root;
+        return root;
     }
 
     /**
@@ -57,8 +54,7 @@ public class TreeFrame extends JPanel
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create and set up the content pane.
-        Container contentPane = new TreeFrame(dir);
-        frame.setContentPane(contentPane);
+        frame.setContentPane(new TreeFrame(dir));
 
         //Display the window.
         frame.pack();
