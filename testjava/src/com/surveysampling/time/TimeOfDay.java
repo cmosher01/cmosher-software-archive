@@ -110,11 +110,25 @@ public class TimeOfDay
         cal.set(Calendar.MILLISECOND, milliseconds);
     }
 
-    public Date getTimeOnDay(Calendar cal, Date d)
+    /**
+     * Convenience method that calls getTimeOnDay,
+     * first setting the Calendar's date to the
+     * given Date, and returns a new Date representing
+     * this object's time on the given Date.
+     * @param d
+     * @param cal
+     * @return
+     */
+    public Date getTimeOnDay(Date d, Calendar cal)
     {
         cal.setTimeInMillis(d.getTime());
         getTimeOnDay(cal);
         return new Date(cal.getTimeInMillis());
+    }
+
+    public Date getTimeOnDay(Date d)
+    {
+        return getTimeOnDay(d,Calendar.getInstance());
     }
 
 
