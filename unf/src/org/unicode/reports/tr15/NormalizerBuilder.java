@@ -103,7 +103,7 @@ class NormalizerBuilder
 
             // store -1 in the excluded table for each character hit
 
-            int value = (char)Integer.parseInt(line.substring(0, 4), 16);
+            int value = Integer.parseInt(line,16);
             isExcluded.set(value);
             System.out.println("Excluding " + hex(value) + " for line: "+line);
         }
