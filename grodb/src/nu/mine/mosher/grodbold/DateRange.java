@@ -159,6 +159,7 @@ public class DateRange implements Immutable, Serializable, Comparable
 		{
 			d = this.minute-that.minute;
 		}
+		// ??? ignore timezone in compareTo
 		if (d == 0)
 		{
 			d = (this.circa?1:0)-(that.circa?1:0);
