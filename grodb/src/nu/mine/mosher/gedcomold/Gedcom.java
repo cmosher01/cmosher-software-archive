@@ -4,7 +4,9 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
@@ -13,6 +15,31 @@ public class Gedcom
 {
 	private Gedcom()
 	{
+	}
+
+	public static void analyze(InputStream in) throws IOException
+	{
+		List curline = new ArrayList(256);
+		boolean hasStrange = false;
+		BufferedInputStream bis = new BufferedInputStream(in);
+		int c = bis.read();
+		while (c != -1)
+		{
+			if (c==0x0d || c==0x0a)
+			{
+				if (hasStrange)
+				{
+					dumpLine(curline);
+				}
+				curline.clear();
+				hasStrange = false;
+			}
+
+			if (c >= 0x80)
+				hasStrange = true;
+
+			c = bis.read();
+		}
 	}
 
 	public static String guessCharset(InputStream in) throws IOException
