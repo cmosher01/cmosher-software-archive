@@ -42,8 +42,8 @@ public class Apple2
         File[] rf = list140KFiles(args[0]);
         for (int i = 0; i < rf.length; i++)
         {
-            doOneDisk(readDisk(rf[i]));
             System.out.println(rf[i].getAbsolutePath());
+            doOneDisk(readDisk(rf[i]));
         }
     }
 
