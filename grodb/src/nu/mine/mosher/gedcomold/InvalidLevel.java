@@ -18,33 +18,4 @@ public class IllegalLevel extends Exception
     {
         super("GEDCOM line has illegal level number at line: "+line);
     }
-
-    /**
-     * @param message
-     */
-    public IllegalLevel(String message)
-    {
-        super(message);
-        // TODO Auto-generated constructor stub
-    }
-
-    /**
-     * @param cause
-     */
-    public IllegalLevel(Throwable cause)
-    {
-        super(cause);
-        // TODO Auto-generated constructor stub
-    }
-
-    /**
-     * @param message
-     * @param cause
-     */
-    public IllegalLevel(String message, Throwable cause)
-    {
-        super(message, cause);
-        // TODO Auto-generated constructor stub
-    }
-
 }
