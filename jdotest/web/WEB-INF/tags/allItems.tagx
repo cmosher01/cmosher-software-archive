@@ -11,5 +11,5 @@
 	A test tag ${classname}
 	<c:set var="obj" value="chris" />
 	</jsp:text>
+	<jsp:doBody />
 </jsp:root>
-<jsp:doBody />
