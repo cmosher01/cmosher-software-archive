@@ -172,7 +172,9 @@ public class Delta
                         target.read(buf,1,remaining);
                         targetidx += remaining;
                         for (int ix = 0; ix <= remaining; ix++)
+                        {
                             output.addData(buf[ix]);
+                        }
                         done = true;
                     }
                     else
