@@ -1,7 +1,7 @@
 /*
  * Created on Jun 8, 2004
  */
-package com.surveysampling.bulkemailer.util;
+package com.surveysampling.time;
 
 import java.text.ParseException;
 import java.text.ParsePosition;
