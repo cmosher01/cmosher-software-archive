@@ -82,6 +82,24 @@ public class GDiffView extends JFrame
         src = new File(fileSrc);
         dif = new File(fileGDiff);
 
+        MutableAttributeSet style = new SimpleAttributeSet();
+        StyleConstants.setFontFamily(style,"Courier");
+        StyleConstants.setFontSize(style,10);
+        StyleConstants.setBackground(style,Color.white);
+        StyleConstants.setForeground(style,Color.black);
+        StyleConstants.setBold(style,false);
+        StyleConstants.setItalic(style,false);
+        styles.put("body",style);
+
+        style = new SimpleAttributeSet();
+        StyleConstants.setFontFamily(style,"Courier");
+        StyleConstants.setFontSize(style,10);
+        StyleConstants.setBackground(style,new Color(173,194,245));
+        StyleConstants.setForeground(style,Color.black);
+        StyleConstants.setBold(style,false);
+        StyleConstants.setItalic(style,false);
+        styles.put("highlight",style);
+
         docSrc = new DefaultStyledDocument();
         paneSrc = new JTextPane(docSrc);
         paneSrc.setEditable(false);
@@ -160,24 +178,6 @@ public class GDiffView extends JFrame
                 paneSrc.requestFocus();
             }
         });
-
-        MutableAttributeSet style = new SimpleAttributeSet();
-        StyleConstants.setFontFamily(style,"Courier");
-        StyleConstants.setFontSize(style,10);
-        StyleConstants.setBackground(style,Color.white);
-        StyleConstants.setForeground(style,Color.black);
-        StyleConstants.setBold(style,false);
-        StyleConstants.setItalic(style,false);
-        styles.put("body",style);
-
-        style = new SimpleAttributeSet();
-        StyleConstants.setFontFamily(style,"Courier");
-        StyleConstants.setFontSize(style,10);
-        StyleConstants.setBackground(style,new Color(173,194,245));
-        StyleConstants.setForeground(style,Color.black);
-        StyleConstants.setBold(style,false);
-        StyleConstants.setItalic(style,false);
-        styles.put("highlight",style);
 
         readSrc();
         docSrc.insertString(0,sb.toString(),(AttributeSet)styles.get("body"));
