@@ -3,12 +3,14 @@
  */
 package nu.mine.mosher.ja2;
 
+import nu.mine.mosher.thread.CubbyHole;
+
 /**
- * TODO
+ * Handles exceptions for the main application.
  * 
- * @author chrism
+ * @author Chris Mosher
  */
 public class ExceptionHandler
 {
-
+    private final CubbyHole mException = new CubbyHole();
 }
