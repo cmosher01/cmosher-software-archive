@@ -6,6 +6,10 @@ import edu.stanford.cs.knuth.sa.random.RanArray;
  */
 public class TestRun
 {
+    /**
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception
     {
         RandomnessTest s = new Squeeze(new RanArray());
