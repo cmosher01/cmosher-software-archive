@@ -11,14 +11,14 @@ public class DateRange
 	private final int hour;
 	private final int minute;
 	private final boolean circa;
-	private final TimeZone timezone;
+	private final TimeZone timeZone;
 
 	public DateRange(YMD ymd)
 	{
 		this(ymd,null,false,-1,-1,false,null);
 	}
 
-    public DateRange(YMD earliest, YMD latest, boolean julian, int hour, int minute, boolean circa, TimeZone timezone)
+    public DateRange(YMD earliest, YMD latest, boolean julian, int hour, int minute, boolean circa, TimeZone timeZone)
     {
         this.earliest = earliest;
         this.latest = latest;
@@ -26,7 +26,7 @@ public class DateRange
         this.hour = hour;
         this.minute = minute;
         this.circa = circa;
-        this.timezone = timezone;
+        this.timeZone = timeZone;
     }
 
     /**
@@ -58,7 +58,22 @@ public class DateRange
      */
     public TimeZone getTimeZone()
     {
-        return timezone;
+        return timeZone;
     }
 
+    /**
+     * @return
+     */
+    public YMD getEarliest()
+    {
+        return earliest;
+    }
+
+    /**
+     * @return
+     */
+    public int getHour()
+    {
+        return hour;
+    }
 }
