@@ -142,10 +142,9 @@ public class Disk
     /**
      * @return
      */
-    private Iterator getSectorIterator()
+    public Iterator getSectorIterator()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return new SectorIter();
     }
 
     private class SectorIter implements Iterator
