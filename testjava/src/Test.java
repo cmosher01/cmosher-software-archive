@@ -39,6 +39,13 @@ public class Test
         }
     }
 
+    private static class Bad
+    {
+        public Bad() throws Exception
+        {
+            throw new Exception();
+        }
+    }
     public static Object throwSomething() throws Exception
     {
         Object j = new Object();
@@ -62,10 +69,10 @@ public class Test
 
 
 
-        Object x = null;
+        Bad x = null;
         try
         {
-            x = throwSomething();
+            x = new Bad();
         }
         catch (Exception e)
         {
