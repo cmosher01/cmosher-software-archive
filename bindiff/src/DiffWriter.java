@@ -8,6 +8,18 @@ public class DiffWriter
 
 	public void outTag(String type, int c)
 	{
+		s.append(">>>");
+		s.append(type);
+		s.append(" ");
+		s.append(c);
+		if (c == 1)
+		{
+			s.append(" BYTE\n");
+		}
+		else
+		{
+			s.append(" BYTES\n");
+		}
 	}
 
 	public void outByte(int b)
