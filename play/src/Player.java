@@ -28,6 +28,9 @@ import nu.mine.mosher.logging.LoggingInitializer;
  */
 public class Player implements Immutable
 {
+	/**
+	 * The global logger object.
+	 */
     private Logger log = Logger.global;
 
     /**
@@ -63,8 +66,8 @@ public class Player implements Immutable
 		InputStreamReader reader = new InputStreamReader(stream,"x-gedcom-ansel");
 		BufferedReader bufrd = new BufferedReader(reader);
 
-		FileOutputStream fil = new FileOutputStream(new File("test.utf8"));
-		OutputStreamWriter ow = new OutputStreamWriter(fil,"utf-8");
+		FileOutputStream fil = new FileOutputStream(new File("test.txt"));
+		OutputStreamWriter ow = new OutputStreamWriter(fil,"cp1252");
 		PrintWriter pw = new PrintWriter(ow);
 
         String s = bufrd.readLine();
