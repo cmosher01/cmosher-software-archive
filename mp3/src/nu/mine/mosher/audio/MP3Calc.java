@@ -68,7 +68,7 @@ public class MP3Calc
 			System.exit(1);
         }
 
-		final int h = (rb[3]<<24)+(rb[2]<<16)+(rb[1]<<8)+rb[0];
+		final int h = (rb[0]<<24)+(rb[1]<<16)+(rb[2]<<8)+rb[3];
 
         System.out.print(Integer.toHexString(h));
         System.out.print(",");
