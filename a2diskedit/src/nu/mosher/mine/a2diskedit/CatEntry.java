@@ -33,7 +33,12 @@ public class CatEntry implements TreeNode
 	 */
 	public Component getRightPane()
 	{
-		return null;
+		StringBuffer sb = new StringBuffer();
+		sb.append("<html>Catalog entry: <b>");
+		sb.append(sName);
+		sb.append("</b></html>");
+		viewRight.setText(sb.toString());
+		return viewRight;
 	}
 
 	/**
