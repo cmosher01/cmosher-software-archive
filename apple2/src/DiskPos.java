@@ -21,7 +21,7 @@ public class DiskPos
 
 
 
-    private final int iDisk;
+    private int iDisk;
 
 
 
@@ -207,5 +207,10 @@ public class DiskPos
         sb.append(",S$");
         sb.append(Integer.toHexString(getSectorInTrack()));
         return sb.toString();
+    }
+
+    public void rewind()
+    {
+        this.iDisk = 0;
     }
 }
