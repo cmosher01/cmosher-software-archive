@@ -22,7 +22,7 @@ public class CommandLineParserTest extends TestCase
         CommandLineParser p = new CommandLineParser(new String[] { "-a", "test.dat"});
         Iterator i = p.getArguments();
         Argument a = (Argument)i.next();
-        Argument a = (Argument)i.next();
+        a = (Argument)i.next();
         assertFalse(i.hasNext());
     }
 }
