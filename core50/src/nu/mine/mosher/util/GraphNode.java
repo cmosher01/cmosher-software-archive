@@ -1,8 +1,6 @@
 package nu.mine.mosher.util;
 
 import java.util.Iterator;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -61,7 +59,7 @@ public class GraphNode<T>
 
 
 
-	private List<GraphNode<T>> parents = new ArrayList<GraphNode<T>>();
+	private Set<GraphNode<T>> parents = new HashSet<GraphNode<T>>();
 
 	public void addParent(GraphNode<T> parent)
 	{
