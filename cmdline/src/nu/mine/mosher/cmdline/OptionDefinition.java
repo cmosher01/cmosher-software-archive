@@ -54,6 +54,7 @@ public class OptionDefinition implements Comparable
         {
             return optionShort == name.charAt(0);
         }
+        return optionLong.equals(name);
     }
     public String getOptionLong()
     {
