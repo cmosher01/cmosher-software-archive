@@ -115,13 +115,17 @@ public class GDiffView extends JFrame
         paneSrc = new JTextPaneNoWrap(docSrc);
         paneSrc.setEditable(false);
         JScrollPane scrSrc = new JScrollPane(paneSrc);
-//        scrSrc.setPreferredSize(new Dimension(400,430));
+        scrSrc.setMinimumSize(new Dimension(100,100));
+        scrSrc.setPreferredSize(new Dimension(400,430));
+        scrSrc.setMaximumSize(new Dimension(5000,5000));
 
         docTrg = new DefaultStyledDocument();
         paneTrg = new JTextPaneNoWrap(docTrg);
         paneTrg.setEditable(false);
         JScrollPane scrTrg = new JScrollPane(paneTrg);
-//        scrTrg.setPreferredSize(new Dimension(400,430));
+        scrTrg.setMinimumSize(new Dimension(100,100));
+        scrTrg.setPreferredSize(new Dimension(400,430));
+        scrTrg.setMaximumSize(new Dimension(5000,5000));
 
         rcmd.add(new GDiffCopy(new Range(0,1)));
         rcmd.add(new GDiffData(new byte[] {65, 67}));
