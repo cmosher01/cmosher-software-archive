@@ -81,7 +81,8 @@ public class GDiffView extends JFrame
 
     private JList listGDiff;
 
-    List rcmd = new ArrayList();
+    List rCopy = new ArrayList();
+    List rData = new ArrayList();
 
 
 
@@ -141,7 +142,7 @@ public class GDiffView extends JFrame
         scrTrg.setPreferredSize(new Dimension(400,430));
         scrTrg.setMaximumSize(new Dimension(5000,5000));
 
-        ListModel model = new GDiffCmdListModel(rcmd);
+        ListModel model = new GDiffCmdListModel(rCopy);
         listGDiff = new JList();
         listGDiff.setModel(model);
         listGDiff.setSelectionForeground(Color.BLACK);
@@ -150,9 +151,9 @@ public class GDiffView extends JFrame
         {
             public void updateSingleSelection(int oldIndex, int newIndex)
             {
-                if (oldIndex >= 0 && oldIndex < rcmd.size())
+                if (oldIndex >= 0 && oldIndex < rCopy.size())
                 {
-                    GDiffCmd oldCmd = (GDiffCmd)rcmd.get(oldIndex);
+                    GDiffCmd oldCmd = (GDiffCmd)rCopy.get(oldIndex);
                     if (oldCmd instanceof GDiffCopy)
                     {
                         GDiffCopy copy = (GDiffCopy)oldCmd;
@@ -171,9 +172,9 @@ public class GDiffView extends JFrame
                         highlight("body",true);
                     }
                 }
-                if (newIndex >= 0 && newIndex < rcmd.size())
+                if (newIndex >= 0 && newIndex < rCopy.size())
                 {
-                    GDiffCmd newCmd = (GDiffCmd)rcmd.get(newIndex);
+                    GDiffCmd newCmd = (GDiffCmd)rCopy.get(newIndex);
                     if (newCmd instanceof GDiffCopy)
                     {
                         GDiffCopy copy = (GDiffCopy)newCmd;
@@ -228,18 +229,12 @@ public class GDiffView extends JFrame
         readGDiff();
         docTrg.insertString(0,trg.toString(),(AttributeSet)styles.get("body"));
 
-        for (Iterator i = rcmd.iterator(); i.hasNext();)
+        for (Iterator i = rData.iterator(); i.hasNext();)
         {
-            GDiffCmd g = (GDiffCmd)i.next();
-            if (g instanceof GDiffData)
-            {
-                beginTrg = g.getTargetRange().getBegin();
-                endTrg = g.getTargetRange().getEnd();
-                highlight("insert",true);
-            }
-            else
-            {
-            }
+            GDiffData g = (GDiffData)i.next();
+            beginTrg = g.getTargetRange().getBegin();
+            endTrg = g.getTargetRange().getEnd();
+            highlight("insert",true);
         }
 
         listGDiff.setSelectionModel(selectionModel);
@@ -483,16 +478,16 @@ public class GDiffView extends JFrame
         long t = 0;
         while (!(g instanceof GDiffEnd))
         {
-//            rcmd.add(g);
             byte[] rb;
             if (g instanceof GDiffData)
             {
+                rData.add(g);
                 GDiffData gd = (GDiffData)g;
                 rb = gd.getData();
             }
             else
             {
-                rcmd.add(g);
+                rCopy.add(g);
                 GDiffCopy gc = (GDiffCopy)g;
                 in.seek(gc.getRange().getBegin());
                 rb = new byte[(int)gc.getRange().getLength()];
