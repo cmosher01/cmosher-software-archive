@@ -1,5 +1,3 @@
-package com.surveysampling.util;
-
 /**
  * A thread-safe boolean flag. Provides methods
  * to wait for the flag to be in a specified state.
