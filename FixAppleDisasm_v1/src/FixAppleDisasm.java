@@ -234,6 +234,14 @@ public class FixAppleDisasm
 						{
 							++nextaddr;
 						}
+						if (!s.substring(11,13).equalsIgnoreCase("  "))
+						{
+							++nextaddr;
+						}
+						if (!s.substring(14,16).equalsIgnoreCase("  "))
+						{
+							++nextaddr;
+						}
 					}
 					else
 					{
