@@ -3,8 +3,7 @@ import java.util.Iterator;
 public class SF
 {
     private final String s;
-    private int pos;
-
+    
     public SF(String s)
     {
         this.s = s;
@@ -12,11 +11,19 @@ public class SF
 
     public Iterator iterator()
     {
-        return new Iter();
+        return new Iter(s);
     }
 
-    private class Iter implements Iterator
+    private static class Iter implements Iterator
     {
+        private final String s;
+        private int pos;
+
+        private Iter(String s)
+        {
+            this.s = s;
+        }
+
         public boolean hasNext()
         {
             return pos <= s.length();
