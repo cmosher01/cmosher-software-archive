@@ -33,11 +33,11 @@ public class Checksum
 {
     public static final int S = 16;
 
-    protected int hashtable[];
+    private int hashtable[];
 
-    protected long checksums[];
+    private long checksums[];
 
-    protected int prime;
+    private int prime;
 
 
 
