@@ -9,7 +9,9 @@ public final class Util
 
 	/**
 	 * Documents an Object as being unused.
-	 * @param o the object that is (documented as being) not used
+	 * 
+	 * @param o
+	 *        the object that is (documented as being) not used
 	 */
 	public static void unused(Object o)
 	{
@@ -28,4 +30,16 @@ public final class Util
 		double x = i;
 		i = x;
 	}
+
+
+
+	public static ArrayList<T> list(Iterable<T> i)
+    {
+        ArrayList<T> r = new ArrayList<T>();
+        for (T x : i)
+        {
+            r.add(x);
+        }
+        return r;
+    }
 }
