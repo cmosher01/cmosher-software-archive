@@ -61,10 +61,11 @@ public class MtaURI
             {
                 nRate = Integer.parseInt(sRate);
             }
-            catch (Throwable e)
+            catch (NumberFormatException e)
             {
-                e.printStackTrace();
-                nRate = 0;
+                URISyntaxException ex = new URISyntaxException(sRate,"Invalid rate specified in MTA "+sMTA);
+                ex.initCause(e);
+                throw ex;
             }
         }
         mRate = nRate;
