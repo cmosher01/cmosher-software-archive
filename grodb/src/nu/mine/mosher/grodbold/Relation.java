@@ -1,6 +1,8 @@
 package nu.mine.mosher.grodb;
 
-public class Relation
+import java.io.Serializable;
+
+public class Relation implements Serializable
 {
 	private final Object a;
 	private final Object b;
