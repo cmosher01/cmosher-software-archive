@@ -103,7 +103,7 @@ public class Fami
         double dy = pt2.getY()-pt1.getY();
         double dist = Math.sqrt(dx*dx+dy*dy);
         if (-1e-8 < Math.rint(dist) && Math.rint(dist) < 1e-8)
-        	dist = .1;
+        	dist = 1;
 
         double nx = pt1.getX()+(CHILD_LINE_DISTANCE*dx/dist);
         double ny = pt1.getY()+(CHILD_LINE_DISTANCE*dy/dist)+BAR_HEIGHT/2;
