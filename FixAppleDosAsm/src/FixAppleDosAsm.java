@@ -23,7 +23,7 @@ public class FixAppleDosAsm
     public static void main(String[] args) throws IOException
     {
         BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(FileDescriptor.in)));
-        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out)));
+        Lister out = new Lister(new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out)))));
         for (String s = in.readLine(); s != null; s = in.readLine())
         {
             s = processLine(s);
