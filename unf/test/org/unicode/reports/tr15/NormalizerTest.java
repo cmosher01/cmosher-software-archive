@@ -84,10 +84,10 @@ public class NormalizerTest extends TestCase
 					System.out.print(";");
 					rCol[iCol++] = hexToString(tok);
 				}
-				dumphex(rCol[0]);
+//				dumphex(rCol[0]);
 				String norm = n.normalize(rCol[0]);
-				dumphex(norm);
-				dumphex(rCol[1]);
+//				dumphex(norm);
+//				dumphex(rCol[1]);
 				if (!rCol[1].equals(norm))
 					throw new Exception("bad");
 				System.out.println();
