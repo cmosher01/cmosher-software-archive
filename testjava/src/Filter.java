@@ -19,8 +19,5 @@ public class Filter
         }
     }
 
-    protected Object operation(Object element)
-    {
-        return element;
-    }
+    protected abstract Object operation(Object element);
 }
