@@ -204,15 +204,8 @@ public class MySQLTest
 		}
 
 //		dbUpdate("drop table CountEntry");
-		dbUpdate("create table "+
-		"CountEntry "+
-		"( "+
-		"    id integer unsigned not null auto_increment primary key, "+
-		"    household integer unsigned not null references Household(id), "+
-		"    gender enum (\"M\",\"F\"), "+
-		"    minAge integer unsigned, "+
-		"    maxAge integer unsigned, "+
-		"    count  integer unsigned "+
+		st = db.prepareStatement(
+		"insert into CountEntry(household,gender,minAge,maxAge,count) values (?,?,?,?,?)");
     }
 
     protected int readInt(Object stringField)
