@@ -1,4 +1,4 @@
-package nu.mine.mosher.gedcom;
+package nu.mine.mosher.gedcomold;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -23,8 +23,8 @@ public class Test
 
 		br.close();
 
-		GedcomConcatenator gc = new GedcomConcatenator(gt);
-		gc.concatenate();
+		GedcomConcatenator gcat = new GedcomConcatenator(gt);
+		gcat.concatenate();
 
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File("parsed.txt"))));
 		bw.write(gt.toString());
