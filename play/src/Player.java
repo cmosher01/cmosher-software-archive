@@ -54,7 +54,7 @@ public class Player implements Immutable
 		for (Iterator i = map.entrySet().iterator(); i.hasNext();)
         {
             Map.Entry entry = (Map.Entry)i.next();
-            System.out.print(entry.getKey());
+            System.out.print(entry.getKey().toString());
             System.out.print(":");
             System.out.println(entry.getValue().toString());
         }
