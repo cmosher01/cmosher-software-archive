@@ -202,15 +202,15 @@ public class GROapplet extends JApplet
             Iter it = sf.iterator();
             Fami fami = new Fami();
             String husb = it.next();
-            fami.setHusb((Indi)mapIdToIndi.get(husb));
+            fami.setHusb(mapIdToIndi.get(husb));
             String wife = it.next();
-            fami.setWife((Indi)mapIdToIndi.get(wife));
+            fami.setWife(mapIdToIndi.get(wife));
             String sc = it.next();
             int c = Integer.parseInt(sc);
             for (int ic = 0; ic < c; ++ic)
             {
                 String chil = it.next();
-                fami.addChild((Indi)mapIdToIndi.get(chil));
+                fami.addChild(mapIdToIndi.get(chil));
             }
             famis.add(fami);
         }
