@@ -23,4 +23,12 @@ public class GDiffData extends GDiffCmd
 	{
 		return data;
 	}
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString()
+    {
+        return "insert ["+data.length+" bytes]";
+    }
 }
