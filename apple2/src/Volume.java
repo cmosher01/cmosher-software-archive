@@ -32,6 +32,9 @@ public class Volume
      */
     public void readFromMedia(Disk disk) throws VTOCNotFoundException, MultipleVTOCException, InvalidPosException
     {
+        boot = new VolumeBoot();
+        boot.readFromMedia(disk);
+
         cat = new VolumeCatalog();
         cat.readFromMedia(disk);
 
@@ -55,9 +58,6 @@ public class Volume
             VolumeFile f = (VolumeFile)i.next();
             f.getTSMap().getPos(rKnownTSMaps);
         }
-
-        boot = new VolumeBoot();
-        boot.readFromMedia(disk);
 
         for (Iterator i = rAllTSMaps.iterator(); i.hasNext();)
         {
