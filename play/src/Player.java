@@ -77,8 +77,10 @@ public class Player implements Immutable
 		ByteArrayInputStream bais = new ByteArrayInputStream(rb);
 		InputStreamReader isr = new InputStreamReader(bais,"US-ASCII");
 		int c = isr.read();
+		int i = 0;
 		while (c != -1)
 		{
+			System.out.print(Integer.toHexString(i++));
 			System.out.println(Integer.toHexString(c));
 			c = isr.read();
 		}
