@@ -16,6 +16,7 @@ import java.util.List;
 public class VolumeDOS extends VolumeEntity
 {
     private byte[] rb;
+    private byte[] rbCmp;
 
     private static final int[] rIgnore1980 = {  0x00B4D, 0x00B58, 0x00B78, 0x00B79, 0x00B7B, 0x00B7B, 0x00B7D, 0x00BFF, 0x00D42,
             0x00D42, 0x0194F, 0x019B7, 0x02297, 0x024FF, 0x000B3, 0x000FF, 0x0018D, 0x00192, 0x001DF, 0x001FF, 0x003FD, 0x003FF,
@@ -56,6 +57,7 @@ public class VolumeDOS extends VolumeEntity
         List rPos = new ArrayList();
         getUsed(rPos);
         rb = disk.getDos33File(rPos);
+        System.arraycopy(rb, 0, rbCmp, 0, rb.length);
     }
 
     /**
@@ -205,6 +207,7 @@ public class VolumeDOS extends VolumeEntity
             if (x == 0x46)
             {
                 tempdostype = 1980;
+                clearIgnored(rIgnore1980);
             }
             else if (x == 0x84)
             {
