@@ -79,7 +79,7 @@ public class GROapplet extends JApplet
             }
 
             /*
-             * Make a text area (with scrollbars as needed)
+             * Make a text area (with scroll bars as needed)
              * and display the exception message.
              */
             JTextArea errorPane = new JTextArea();
