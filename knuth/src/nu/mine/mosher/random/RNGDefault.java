@@ -24,7 +24,7 @@ public abstract class RNGDefault implements RandomNumberGenerator
 	/**
 	 * Initializes the <code>RandomNumberGenerator</code> with
 	 * the given seed number.
-	 * @param seed
+	 * @param seed the random generator's seed
 	 */
 	public RNGDefault(final long seed)
 	{
