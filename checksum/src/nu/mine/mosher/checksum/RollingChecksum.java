@@ -5,6 +5,8 @@ package nu.mine.mosher.checksum;
 
 /**
  * Computes an efficient, but weak, rolling checksum.
+ * Based on the rsync algorithm by Andrew Tridgell and
+ * Paul Mackerras.
  * Based on Mark Adler's 32-bit checksum algorithm.
  * 
  * @author Chris Mosher
