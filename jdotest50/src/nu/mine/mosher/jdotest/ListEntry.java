@@ -25,12 +25,12 @@ public class ListEntry
 		return tr(r,"td");
 	}
 
-	public static String formatListHeader(List<ListEntry> r)
+	public static String formatListHeader(List r)
 	{
 		return tr(r,"th");
 	}
 
-	private static String tr(List<ListEntry> r, String td)
+	private static String tr(List r, String td)
 	{
 		StringBuffer sb = new StringBuffer(256);
 
