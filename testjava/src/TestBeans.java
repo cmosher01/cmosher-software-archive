@@ -50,20 +50,11 @@ public class TestBeans
             throw new IntrospectionException("can't get property descriptors for bean");
         }
         Map mapPDs = buildPropertyDescriptorMap(rpd);
-        int ipd = -1;
-        for (int i = 0; i < rpd.length; ++i)
-        {
-            PropertyDescriptor descriptor = rpd[i];
-            if (descriptor.getName().equals(property))
-            {
-                ipd = i;
-            }
-        }
-        if (ipd == -1)
+        if (!mapPDs.containsKey(property))
         {
             throw new IntrospectionException("can't get property descriptor");
         }
-        PropertyDescriptor pd = rpd[ipd];
+        PropertyDescriptor pd = (PropertyDescriptor)mapPDs.get(property);
         
         
         
