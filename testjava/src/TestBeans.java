@@ -26,7 +26,8 @@ public class TestBeans
 
         setProperty(some, prop, val);
 
-        System.out.println(some.getAInt());
+        System.out.println(some.getRobjInteger()[0].toString());
+        System.out.println(some.getRobjInteger()[1].toString());
     }
 
     public static void setProperty(Object bean, String property, String value)
