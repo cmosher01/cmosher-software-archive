@@ -32,9 +32,9 @@ public class DiskPos
      * @param allowLarge
      * @throws InvalidPosException
      */
-    public DiskPos(int track, int sector, int byt, boolean allowLarge) throws InvalidPosException
+    public DiskPos(int track, int sector, int byt) throws InvalidPosException
     {
-        verifyTrack(track,allowLarge);
+        verifyTrack(track);
         verifySector(sector);
         verifyByte(byt,cSector);
         this.iDisk = track*cTrack+sector*cSector+byt;
@@ -101,9 +101,9 @@ public class DiskPos
      * @param allowLarge
      * @throws InvalidPosException
      */
-    private void verifyTrack(int track, boolean allowLarge) throws InvalidPosException
+    private void verifyTrack(int track) throws InvalidPosException
     {
-        if (track < 0 || (!allowLarge && cTracksPerDisk <= track))
+        if (track < 0 || cTracksPerDisk <= track)
         {
             throw new InvalidPosException("Invalid track: "+track);
         }
