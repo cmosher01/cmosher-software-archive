@@ -7,7 +7,7 @@ public class Cloner
         throw new UnsupportedOperationException();
     }
 
-    public Cloneable cloneObject(Cloneable cloneableObject) throws CloneNotSupportedException
+    public static Cloneable cloneObject(Cloneable cloneableObject) throws CloneNotSupportedException
     {
         return (Cloneable)cloneableObject.clone();
     }
