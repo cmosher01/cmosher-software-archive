@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class VolumeTableOfContents extends VolumeEntity
 {
+    /**
+     */
     public String toString()
     {
         return "Table of Contents";
