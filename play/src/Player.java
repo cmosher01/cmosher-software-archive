@@ -1,5 +1,7 @@
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.nio.charset.Charset;
@@ -24,7 +26,7 @@ import nu.mine.mosher.logging.LoggingInitializer;
  */
 public class Player implements Immutable
 {
-	private Logger log = Logger.global;
+    private Logger log = Logger.global;
 
     /**
      * 
@@ -36,35 +38,34 @@ public class Player implements Immutable
 
     public static void main(String[] args) throws Throwable
     {
-    	LoggingInitializer.init();
+        LoggingInitializer.init();
         BufferedReader in;
-		GedcomAnselCharsetProvider p = new GedcomAnselCharsetProvider();
-		Charset cs = p.charsetForName("x-gedcom-ansel");
+        GedcomAnselCharsetProvider p = new GedcomAnselCharsetProvider();
+        Charset cs = p.charsetForName("x-gedcom-ansel");
 
-		System.out.println(cs.displayName());
+        System.out.println(cs.displayName());
 
+        InputStream stream;
         if (args.length > 0)
         {
-            // open the named file
-            in = new BufferedReader(new FileReader(args[0]));
+            stream = new FileInputStream(args[0]);
         }
         else
         {
-            // wrap a BufferedReader around stdin
-            in = new BufferedReader(new InputStreamReader(System.in));
+            stream = System.in;
         }
 
-        PrintStream out = new PrintStream(System.out,false,"x-gedcom-ansel");
+		InputStreamReader reader = new InputStreamReader(stream,cs);
+		BufferedReader bufrd = new BufferedReader(reader);
 
-        String s = in.readLine();
+        String s = bufrd.readLine();
         while (s != null)
         {
-            out.println(s);
-			s = in.readLine();
+            System.out.println(s);
+            s = bufrd.readLine();
         }
-
-        out.flush();
-        out.close();
+		System.out.flush();
+		bufrd.close();
     }
 
     /**
@@ -72,6 +73,6 @@ public class Player implements Immutable
      */
     private void play()
     {
-    	log.finest("This is a message displayed at the finest level of detail.");
+        log.finest("This is a message displayed at the finest level of detail.");
     }
 }
