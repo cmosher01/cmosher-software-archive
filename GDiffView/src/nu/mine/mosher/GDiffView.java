@@ -78,7 +78,6 @@ public class GDiffView extends JFrame
 
     private int rowLen = nibs + 2 + 4 * cCol + 1;
 
-    private StringBuffer sbTrg;
     private long srcEOF;
 
     private long beginSrc;
@@ -334,7 +333,7 @@ public class GDiffView extends JFrame
 
         StringBuffer sb = new StringBuffer((int)srcEOF);
         tempReadTarget(sb);
-        docTrg.insertString(0,sbTrg.toString(),(AttributeSet)styles.get("body"));
+        docTrg.insertString(0,sb.toString(),(AttributeSet)styles.get("body"));
     }
 
     public void initHighlights()
