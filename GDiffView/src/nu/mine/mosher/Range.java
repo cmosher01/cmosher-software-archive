@@ -256,4 +256,14 @@ public class Range implements Comparable
     {
         return rng.getLimit() == this.getBegin();
     }
+
+    public static Range meld(Range r, Range s)
+    {
+        Range m = null;
+        if (r.precedes(s))
+        {
+            m = new Range(r.getBegin(), s.getEnd());
+        }
+        return m;
+    }
 }
