@@ -40,6 +40,26 @@ public class DiskPos
         this.iDisk = track*cTrack+sector*cSector+byt;
     }
 
+    public DiskPos(int block, int byt, boolean allowLarge) throws InvalidPosException
+    {
+        verifyBlock(block,allowLarge);
+        verifyByte(byt,cBlock);
+        this.iDisk = block*cBlock+byt;
+    }
+
+    /**
+     * @param block
+     * @param allowLarge
+     * @throws InvalidPosException
+     */
+    private void verifyBlock(int block, boolean allowLarge) throws InvalidPosException
+    {
+        if (block < 0 || (!allowLarge && cBlocksPerDisk <= block))
+        {
+            throw new InvalidPosException("Invalid block: "+block);
+        }
+    }
+
     /**
      * @param byt
      * @throws InvalidPosException
