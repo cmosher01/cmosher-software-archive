@@ -153,6 +153,7 @@ public class Disk
             DiskPos cur = this.pos;
             byte[] sector = read(DiskPos.cSector);
             if (sector[0] == 0 &&
+                sector[1] > 0 &&
                 DiskPos.isValidSector(sector[2]) &&
                 sector[3] == 0)
             {
@@ -168,7 +169,7 @@ public class Disk
                         good = true;
                         ++goodEntries;
                     }
-                    if (DiskPos.isValidSector(sector[ce+1]) &&
+                    if (good && DiskPos.isValidSector(sector[ce+1]) &&
                         isValidFileType(sector[ce+2]) &&
                         isValidFileName(sector,ce+3))
                     {
