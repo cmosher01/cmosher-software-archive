@@ -1,6 +1,6 @@
 import java.util.Iterator;
 
-public class StringFields /* implements Iterable */
+public class StringFields /* implements Iterable ??? */
 {
     private final Iterator i;
     
@@ -9,7 +9,7 @@ public class StringFields /* implements Iterable */
         i = new Iter(s);
     }
 
-    public Iterator iterator()
+    public Iterator iterator() /* ReadOnlyIterator ??? */
     {
         return i;
     }
