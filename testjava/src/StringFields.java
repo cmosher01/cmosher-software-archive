@@ -34,7 +34,7 @@ public class StringFields /* TODO implements Iterable */
             return pos <= s.length();
         }
 
-        public Object next()
+        public Object next() throws NoSuchElementException
         {
             if (!hasNext())
             {
