@@ -386,13 +386,13 @@ public class VolumeDOS extends VolumeEntity
                     else
                     {
                         s.append(" (DOS 3.3 1980 altered)");
-                        for (int i = 0; i < rbCmp.length; ++i)
-                        {
-                            if (rbCmp[i] != rbClearSlave[i])
-                            {
-                                System.err.println(""+rbClearSlave[i]+" --> "+rbCmp[i]);
-                            }
-                        }
+//                        for (int i = 0; i < rbCmp.length; ++i)
+//                        {
+//                            if (rbCmp[i] != rbClearSlave[i])
+//                            {
+//                                System.err.println(""+rbClearSlave[i]+" --> "+rbCmp[i]);
+//                            }
+//                        }
                     }
                 }
             }
