@@ -71,7 +71,7 @@ public class GDiffWriter implements DiffWriter
             System.err.println("COPY off: " + offset + ", len: " + length);
 
         // output real data
-        byte command;
+        //byte command;
         if (offset > Integer.MAX_VALUE)
         {
             // use long, int format
