@@ -52,6 +52,12 @@ public class RollingChecksum
         checksum = (b << 16) + a;
     }
 
+    /**
+     * Returns the most recently calculated checksum. The checksum returned
+     * will be the one calculated by the most recent call to the constructor
+     * or the <code>increment</code> method.
+     * @return the checksum
+     */
     public int getChecksum()
     {
         return checksum;
