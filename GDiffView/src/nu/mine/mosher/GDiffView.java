@@ -460,7 +460,7 @@ public class GDiffView extends JFrame
         long t = 0;
         while (!(g instanceof GDiffEnd))
         {
-//            rcmd.add(g);
+            rcmd.add(g);
             byte[] rb;
             if (g instanceof GDiffData)
             {
@@ -469,7 +469,6 @@ public class GDiffView extends JFrame
             }
             else
             {
-                rcmd.add(g);
                 GDiffCopy gc = (GDiffCopy)g;
                 in.seek(gc.getRange().getBegin());
                 rb = new byte[(int)gc.getRange().getLength()];
