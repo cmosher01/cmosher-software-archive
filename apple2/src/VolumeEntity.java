@@ -18,6 +18,14 @@ public class VolumeEntity
     protected List rSector = new ArrayList(); //VolumeSector
 
     /**
+     * @return
+     */
+    public String toString()
+    {
+        return "";
+    }
+
+    /**
      * @param rPos
      */
     public void getPos(Collection rPos)
