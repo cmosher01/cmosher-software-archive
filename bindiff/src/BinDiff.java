@@ -86,15 +86,15 @@ public class BinDiff
                 f1.unread(c1);
                 f2.unread(c2);
 
-                if (difFindMatch(false))
-                {
-                    statechange(INSERT,lastmark-f2.tell(),f2);
-                }
-                else if (difFindMatch(true))
-                {
-                    statechange(SKIP,lastmark-f1.tell(),f1);
-                }
-                else
+//                if (difFindMatch(false))
+//                {
+//                    statechange(INSERT,lastmark-f2.tell(),f2);
+//                }
+//                else if (difFindMatch(true))
+//                {
+//                    statechange(SKIP,lastmark-f1.tell(),f1);
+//                }
+//                else
                 {
                     statechange(SKIP,1,f1);
                     statechange(INSERT,1,f2);
