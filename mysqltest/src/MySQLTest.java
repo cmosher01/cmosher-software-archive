@@ -106,9 +106,6 @@ public class MySQLTest
 		int year = readInt(i.next());
 		switch (year)
         {
-        	case 0:
-        		parseKnown(i);
-        	break;
             case 1790:
                 parse1790(i);
             break;
@@ -384,7 +381,7 @@ public class MySQLTest
 		}
 		else
 		{
-			i = -1;
+			i = 0;
 		}
     	return i;
     }
@@ -439,17 +436,6 @@ public class MySQLTest
 		return s;
 	}
 
-    protected void insertData() throws SQLException
-    {
-
-//		dbInsert("insert into Census1790(nameLast,nameFirst,nameSuffix,maleAge16plus,maleAge0to15,femaleAge0plus,family) values "+
-//		"(\"Flandreau\",\"Benjamin\",null,4,2,5,"+fland+"), "+
-//		"(\"Flandreau\",\"Elias\",null,3,0,4,"+fland+"), "+
-//		"(\"Flandreau\",\"James\",null,2,2,5,"+fland+"), "+
-//		"(\"Flandreau\",\"James\",\"Junr.\",1,3,2,"+fland+"), "+
-//		"(\"Flandreau\",\"John\",null,1,3,3,"+fland+")");
-    }
-
     protected void createSchema() throws SQLException
 	{
 		dbUpdate("drop table if exists Family");
@@ -460,22 +446,6 @@ public class MySQLTest
 		"    name varchar(64)"+
 		")");
 
-//		dbUpdate("drop table Census1790");
-//		dbUpdate("create table "+
-//		"Census1790 "+
-//		"( "+
-//		"    id integer unsigned not null auto_increment primary key, "+
-//		"    family integer unsigned not null references Family(id), "+
-//		"    nameLast varchar(64), "+
-//		"    nameFirst varchar(64), "+
-//		"    nameMiddle varchar(8), "+
-//		"    nameSuffix varchar(8), "+
-//		"    male16plus integer, "+
-//		"    male0to15 integer, "+
-//		"    female0plus integer, "+
-//		"    other integer, "+
-//		"    slave integer "+
-//		")");
 		dbUpdate("drop table if exists Census");
 		dbUpdate("create table "+
 		"Census "+
