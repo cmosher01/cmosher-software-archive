@@ -11,7 +11,6 @@ public class FileTreeNode extends DefaultMutableTreeNode
     public FileTreeNode(File file)
     {
         super(file);
-        hasbeenread = false;
     }
 
     public boolean readTree()
