@@ -9,5 +9,4 @@ public interface TreeNode
 	public String toString();
 	public Icon getIcon();
 	public Component getRightPane();
-	public void setNode(DefaultMutableTreeNode n);
 }
