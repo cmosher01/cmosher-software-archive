@@ -1,0 +1,238 @@
+public class Pair extends java.lang.Object implements java.lang.Cloneable, java.lang.Comparable
+{
+    private java.lang.Object a;
+    private java.lang.Object b;
+
+    public void <init>(java.lang.Object, java.lang.Object)
+    {
+        Pair this;
+        java.lang.Object a, b;
+
+        this := @this;
+        a := @parameter0;
+        b := @parameter1;
+        this.<init>();
+        this.a = (new java.lang.CloneableReference(a)).clone();
+        this.b = (new java.lang.CloneableReference(b)).clone();
+        return;
+    }
+
+    public java.lang.Object a()
+    {
+        Pair this;
+
+        this := @this;
+        return (new java.lang.CloneableReference(this.a)).clone();
+    }
+
+    public java.lang.Object b()
+    {
+        Pair this;
+
+        this := @this;
+        return (new java.lang.CloneableReference(this.b)).clone();
+    }
+
+    public java.lang.String toString()
+    {
+        Pair this;
+        java.lang.Object $r0, $r9;
+        java.lang.String $r4, $r8, $r13;
+
+        this := @this;
+        $r0 = this.a;
+        $r4 = (new java.lang.StringBuffer()).append("(").append($r0).toString();
+        $r8 = (new java.lang.StringBuffer()).append($r4).append(",").toString();
+        $r9 = this.b;
+        $r13 = (new java.lang.StringBuffer()).append($r8).append($r9).toString();
+        return (new java.lang.StringBuffer()).append($r13).append(")").toString();
+    }
+
+    public java.lang.Object clone()
+    {
+        Pair this, clon;
+        java.lang.CloneNotSupportedException cantHappen;
+
+        this := @this;
+        clon = null;
+
+     label0:
+        clon = (Pair) this.clone();
+
+     label1:
+        goto label3;
+
+     label2:
+        cantHappen := @caughtexception;
+        goto label3;
+
+     label3:
+        return clon;
+
+        catch java.lang.CloneNotSupportedException from label0 to label1 with label2;
+    }
+
+    public boolean equals(java.lang.Object)
+    {
+        Pair this, that;
+        java.lang.Object o;
+        boolean $z1, $z2;
+
+        this := @this;
+        o := @parameter0;
+        if o instanceof Pair != 0 goto label0;
+
+        $z1 = 1;
+        goto label1;
+
+     label0:
+        $z1 = 0;
+
+     label1:
+        if $z1 == 0 goto label2;
+
+        return 0;
+
+     label2:
+        that = (Pair) o;
+        if this.eq(this.a, that.a) == 0 goto label3;
+
+        if this.eq(this.b, that.b) == 0 goto label3;
+
+        $z2 = 1;
+        goto label4;
+
+     label3:
+        $z2 = 0;
+
+     label4:
+        return $z2;
+    }
+
+    private boolean eq(java.lang.Object, java.lang.Object)
+    {
+        Pair this;
+        java.lang.Object x, y;
+        boolean $z0;
+
+        this := @this;
+        x := @parameter0;
+        y := @parameter1;
+        if x != null goto label0;
+
+        if y != null goto label0;
+
+        $z0 = 1;
+        goto label1;
+
+     label0:
+        $z0 = 0;
+
+     label1:
+        if $z0 == 0 goto label2;
+
+        return 1;
+
+     label2:
+        if x != null goto label3;
+
+        return 0;
+
+     label3:
+        if y != null goto label4;
+
+        return 0;
+
+     label4:
+        return x.equals(y);
+    }
+
+    public int compareTo(java.lang.Object)
+    {
+        Pair this, that;
+        java.lang.Object o;
+        int c;
+
+        this := @this;
+        o := @parameter0;
+        that = (Pair) o;
+        c = this.cmp(this.a, that.a);
+        if c != 0 goto label0;
+
+        c = this.cmp(this.b, that.b);
+        goto label0;
+
+     label0:
+        return c;
+    }
+
+    private int 'cmp'(java.lang.Object, java.lang.Object)
+    {
+        Pair this;
+        java.lang.Object x, y;
+        boolean $z0;
+
+        this := @this;
+        x := @parameter0;
+        y := @parameter1;
+        if x != null goto label0;
+
+        if y != null goto label0;
+
+        $z0 = 1;
+        goto label1;
+
+     label0:
+        $z0 = 0;
+
+     label1:
+        if $z0 == 0 goto label2;
+
+        return 0;
+
+     label2:
+        if x != null goto label3;
+
+        return -1;
+
+     label3:
+        if y != null goto label4;
+
+        return 1;
+
+     label4:
+        return ((java.lang.Comparable) x).compareTo(y);
+    }
+
+    public int hashCode()
+    {
+        Pair this;
+        int h, $i0, $i1;
+
+        this := @this;
+        h = 17;
+        h = h * 37;
+        if this.a != null goto label0;
+
+        $i0 = 0;
+        goto label1;
+
+     label0:
+        $i0 = this.a.hashCode();
+
+     label1:
+        h = h + $i0;
+        h = h * 37;
+        if this.b != null goto label2;
+
+        $i1 = 0;
+        goto label3;
+
+     label2:
+        $i1 = this.b.hashCode();
+
+     label3:
+        h = h + $i1;
+        return h;
+    }
+}
