@@ -18,10 +18,8 @@ import java.util.Date;
  */
 public class DailyWindow
 {
-    private static final SimpleDateFormat fmtHHMM = new SimpleDateFormat("HH:mm");
-
-    private final String mStart;
-    private final String mEnd;
+    private final TimeOfDay mStart;
+    private final TimeOfDay mEnd;
     private final boolean mIsStartFirst;
 
 
@@ -63,9 +61,6 @@ public class DailyWindow
      */
     protected DailyWindow()
     {
-        mIsStartFirst = false;
-        mStart = "";
-        mEnd = "";
     }
 
     /**
