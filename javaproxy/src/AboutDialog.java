@@ -99,7 +99,7 @@ class AboutDialog extends Dialog implements ActionListener
 
         //System.out.println(system_properties);
         this.add("South",pnl);
-        resize(300,350);
+        setSize(300,350);
 
         enableEvents(AWTEvent.WINDOW_EVENT_MASK);
 
