@@ -44,7 +44,7 @@ public final class Cloner
         }
     }
 
-    public static Method getCloneMethod(Class cl) throws NoSuchMethodException, SecurityException, CloneNotSupportedException
+    public static Method getCloneMethod(Class cl) throws NoSuchMethodException, SecurityException
     {
         Method methodClone;
         methodClone = cl.getMethod("clone",null);
