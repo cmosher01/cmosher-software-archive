@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import com.surveysampling.util.UniversalCloser;
+
 public class Test
 {
 
@@ -50,7 +52,7 @@ public class Test
         long start = System.currentTimeMillis();
         for (int i = 0; i < 1000000000; ++i)
         {
-            x.close();
+            UniversalCloser.close(x);
         }
         long end = System.currentTimeMillis();
         System.out.println("elapsed time: "+(end-start)+" ms");
