@@ -123,6 +123,9 @@ public class DiskPos
         return (iDisk-iDisk/cTrack*cTrack)/cSector;
     }
 
+    /**
+     * @return
+     */
     public int getSectorInDisk()
     {
         return iDisk/cSector;
