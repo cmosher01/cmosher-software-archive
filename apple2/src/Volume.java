@@ -220,15 +220,9 @@ public class Volume
     /**
      * @return Returns the rFile.
      */
-    public List getRFile()
+    public void getFiles(Collection r)
     {
-        return rFile;
-    }
-    /**
-     * @return Returns the rFileRecovered.
-     */
-    public List getRFileRecovered()
-    {
-        return rFileRecovered;
+        r.addAll(this.rFile);
+        r.addAll(this.rFileRecovered);
     }
 }
