@@ -63,8 +63,7 @@ class AboutDialog extends Dialog implements ActionListener
 
 
     public AboutDialog(Frame parent)
-    { // constructor
-
+    {
         super(parent,"About Java HTTP Proxy Server",true);
         this.setLayout(new BorderLayout(30,30));
 
@@ -102,9 +101,7 @@ class AboutDialog extends Dialog implements ActionListener
         setSize(300,350);
 
         enableEvents(AWTEvent.WINDOW_EVENT_MASK);
-
-
-    } // end of public AboutDialog(Frame parent)
+    }
 
 
     /**
@@ -118,7 +115,7 @@ class AboutDialog extends Dialog implements ActionListener
             this.dispose();
         }
 
-    } // end of public void actionPerformed(ActionEvent evt)
+    }
 
     /**
      * event handler for window event
