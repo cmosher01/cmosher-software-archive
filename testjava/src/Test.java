@@ -71,25 +71,12 @@ public class Test
 
         Reader rdr = new InputStreamReader(new FileInputStream(new File("\\temp\\test.txt")));
         BufferedReader br = new BufferedReader(rdr);
-        BufferedReader br2 = new BufferedReader(rdr);
 
         String s = br.readLine();
-        System.out.println(s);
-
-        String s2 = br2.readLine();
-        System.err.println(s2);
-
         while (s != null)
         {
             System.out.println(s);
             s = br.readLine();
-        }
-
-
-        while (s2 != null)
-        {
-            System.err.println(s2);
-            s2 = br.readLine();
         }
 
 
