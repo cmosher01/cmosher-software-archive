@@ -52,7 +52,8 @@ public class Disk
 
     public DiskPos readTS()
     {
-        int track = 
-        DiskPos r = new DiskPos(disk)
+        int track = read();
+        int sector = read();
+        DiskPos r = new DiskPos(track,sector,0,false);
     }
 }
