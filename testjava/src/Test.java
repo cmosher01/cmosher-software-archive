@@ -14,6 +14,8 @@ import java.security.Permission;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import sun.misc.Launcher;
 
@@ -67,10 +69,19 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
-        File f = new File("/temp/test");
-        f = f.getAbsoluteFile();
-        f = f.getCanonicalFile();
-        System.out.println(f.getPath());
+        SortedSet s = new TreeSet();
+        s.add("ac");
+        s.add("a\u2060b");
+        s.add("aa");
+
+
+
+
+
+//        File f = new File("/temp/test");
+//        f = f.getAbsoluteFile();
+//        f = f.getCanonicalFile();
+//        System.out.println(f.getPath());
 
 
 //        URI uri = new URI("smtp://leopard.surveyspot.com/?30000");
