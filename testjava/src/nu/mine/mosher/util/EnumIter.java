@@ -4,6 +4,10 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Adapts an Enumeration so it can be used
+ * as an Iterator.
+ */
 public class EnumIter extends Object implements Iterator
 {
     private final Enumeration e;
