@@ -82,7 +82,7 @@ public class TreeFrame extends Frame implements WindowListener
     public static void main(String argv[])
     {
         String dir = System.getProperty("user.dir");
-        if (argv != null && argv.length == 1)
+        if (argv != null && argv.length >= 1)
         {
             dir = argv[0];
         }
