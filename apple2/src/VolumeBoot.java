@@ -39,14 +39,6 @@ public class VolumeBoot extends VolumeEntity
      */
     public void getUsed(Collection rPos)
     {
-        try
-        {
-            rPos.add(new DiskPos(0,0));
-        }
-        catch (InvalidPosException e)
-        {
-            throw new RuntimeException(e);
-        }
+        getPos(rPos);
     }
-
 }
