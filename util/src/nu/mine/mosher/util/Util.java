@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Logger;
 
 public final class Util
@@ -98,10 +99,10 @@ public final class Util
     public static<T> ArrayList<T> list(Iterable<T> i)
     {
         ArrayList<T> r = new ArrayList<T>();
-        addAll(i,r);
+        addAll(i.iterator(),r);
         return r;
     }
-    public static<T> void addAll(Iterator<T> i, List<T> collection)
+    public static<T> void addAll(Iterator<T> i, Collection<T> collection)
     {
         while (i.hasNext())
         {
