@@ -40,13 +40,7 @@ public class TestBeans
     {
         BeanInfo bi = getBeanInfo(bean);
 
-        PropertyDescriptor[] rpd = bi.getPropertyDescriptors();
-        if (rpd == null)
-        {
-            throw new IntrospectionException("can't get property descriptors for bean");
-        }
-
-        Map mapPDs = buildPropertyDescriptorMap(rpd);
+        Map mapPDs = getPropertyDescriptors(bi);
         if (!mapPDs.containsKey(property))
         {
             throw new IntrospectionException("can't get property descriptor");
@@ -87,6 +81,18 @@ public class TestBeans
 
         Method wr = pd.getWriteMethod();
         wr.invoke(bean, new Object[] { v });
+    }
+
+    public static Map getPropertyDescriptors(BeanInfo bi) throws IntrospectionException
+    {
+        PropertyDescriptor[] rpd = bi.getPropertyDescriptors();
+        if (rpd == null)
+        {
+            throw new IntrospectionException("can't get property descriptors for bean");
+        }
+        
+        Map mapPDs = buildPropertyDescriptorMap(rpd);
+        return mapPDs;
     }
 
     public static BeanInfo getBeanInfo(Object bean) throws IntrospectionException
