@@ -13,6 +13,7 @@ public class TreeFrame extends JFrame
 {
     private static JFrame frame;
     private static String dir;
+    private static Flag begun;
 
     public TreeFrame(String dir)
     {
