@@ -66,7 +66,7 @@ public class Test
 	{
 
 
-
+        System.setSecurityManager(new SecurityManager());
 
 
         Reader rdr = new InputStreamReader(new FileInputStream(new File("\\temp\\test.txt")));
