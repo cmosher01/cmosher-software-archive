@@ -40,7 +40,6 @@ import java.util.Properties;
 class Jproxy extends Frame implements ServerInterface, ActionListener,
         WindowListener, MouseListener
 {
-    // Constant Variables Here
     static final String _ADMIN = "Administration";
 
     static final String _START_SERVER = "Start Server";
