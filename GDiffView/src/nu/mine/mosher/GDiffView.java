@@ -249,6 +249,14 @@ public class GDiffVeiew extends JFrame
             }
             unhighlight(getHexRowStart(srcEnd),getHexEnd(srcEnd));
         }
+        srcBegin = begin;
+        srcEnd = end;
+        highlight(getHexStart(srcBegin),getHexRowEnd(srcBegin));
+        for (int i = getRow(srcBegin)+1; i < getRow(srcEnd)-1; ++i)
+        {
+            highlight(getHexRowStart(i),getHexRowEnd(i));
+        }
+        highlight(getHexRowStart(srcEnd),getHexEnd(srcEnd));
     }
     public int getRow(int pos)
     {
