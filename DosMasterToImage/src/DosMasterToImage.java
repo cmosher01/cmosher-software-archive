@@ -33,5 +33,28 @@ public class DosMasterToImage
         {
             throw new IllegalArgumentException("Input file length must be "+(0xC000-0x9B00)+" bytes.");
         }
+
+        if (!in.markSupported())
+        {
+            throw new RuntimeException("mark not supported.");
+        }
+
+        in.mark(in.available());
+
+        in.skip(0x3600-0x1B00);
+        for (int i = 0x3600; i < 0x4000; ++i)
+        {
+            out.write(in.read());
+        }
+
+        in.reset();
+        for (int i = 0x1B00; i < 0x3600; ++i)
+        {
+            out.write(in.read());
+        }
+
+        out.flush();
+        out.close();
+        in.close();
     }
 }
