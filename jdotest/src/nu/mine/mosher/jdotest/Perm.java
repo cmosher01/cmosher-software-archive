@@ -20,19 +20,24 @@ import javax.naming.NamingException;
  */
 public class Perm
 {
-	private final PersistenceManager pm;
+	private static final Properties props = new Properties();
 
-	public Perm() throws NamingException, FileNotFoundException, IOException
+	static
 	{
 		URL urlProps = Perm.class.getClassLoader().getResource("nu/mine/mosher/jdotest/jdo.properties");
-		Properties props = new Properties();
-		props.load(new FileInputStream(new File(urlProps.getFile())));
-		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(props);
-		this.pm = pmf.getPersistenceManager();
+		try
+        {
+            props.load(new FileInputStream(new File(urlProps.getFile())));
+        }
+        catch (Throwable e)
+        {
+            e.printStackTrace();
+        }
 	}
 
-	public PersistenceManager pm()
+	public static PersistenceManager getPM()
 	{
-		return this.pm;
+		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory(props);
+		return pmf.getPersistenceManager();
 	}
 }
