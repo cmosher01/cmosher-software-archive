@@ -25,6 +25,7 @@ public class TestThreadIO
     {
         Thread t = new Thread(new ReadFormRunner());
         t.start();
+        t.join();
     }
 
     public static void ReadFormFile() throws IOException
