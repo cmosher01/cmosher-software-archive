@@ -40,7 +40,12 @@ public class BigTableModel implements TableModel
 
     public Object getValueAt(int rowIndex, int columnIndex)
     {
-        return Integer.toHexString(rowIndex+columnIndex);
+        StringBuffer sb = new StringBuffer(13);
+        sb.append("R");
+        sb.append(Integer.toString(rowIndex+1));
+        sb.append(" C");
+        sb.append(Integer.toString(columnIndex+1));
+        return sb.toString();
     }
 
     public void setValueAt(Object aValue, int rowIndex, int columnIndex)
