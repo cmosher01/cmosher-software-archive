@@ -102,7 +102,7 @@ public final class BeanUtil
             Object[] tmpval = new Integer[values.length];
             for (int i = 0; i < values.length; i++)
             {
-                tmpval[i] = getValueFromBeanInfoPropertyEditor(t, propertyName, values[i], propertyEditorClass);
+                tmpval[i] = getValueFromBeanInfoPropertyEditor(values[i], propertyEditorClass);
             }
             method.invoke(bean, new Object[] { tmpval });
         }
@@ -223,7 +223,7 @@ public final class BeanUtil
             Object[] tmpval = new Integer[values.length];
             for (int i = 0; i < values.length; i++)
             {
-                tmpval[i] = getValueFromPropertyEditorManager(t, propertyName, values[i]);
+                tmpval[i] = getValueFromPropertyEditorManager(t, values[i]);
             }
             method.invoke(bean, new Object[] { tmpval });
         }
@@ -240,7 +240,7 @@ public final class BeanUtil
         }
         if (propertyEditorClass != null)
         {
-            return getValueFromBeanInfoPropertyEditor(t, propertyName, s, propertyEditorClass);
+            return getValueFromBeanInfoPropertyEditor(s, propertyEditorClass);
         }
         else if (t.equals(Boolean.class) || t.equals(Boolean.TYPE))
         {
@@ -292,13 +292,11 @@ public final class BeanUtil
         }
         else
         {
-            return getValueFromPropertyEditorManager(t, propertyName, s);
+            return getValueFromPropertyEditorManager(t, s);
         }
     }
 
     private static Object getValueFromBeanInfoPropertyEditor(
-        Class attrClass,
-        String attrName,
         String attrValue,
         Class propertyEditorClass) throws InstantiationException, IllegalAccessException
     {
@@ -307,7 +305,7 @@ public final class BeanUtil
         return pe.getValue();
     }
 
-    private static Object getValueFromPropertyEditorManager(Class attrClass, String attrName, String attrValue) throws ParameterParseException
+    private static Object getValueFromPropertyEditorManager(Class attrClass, String attrValue) throws ParameterParseException
     {
         PropertyEditor propEditor = PropertyEditorManager.findEditor(attrClass);
         if (propEditor != null)
