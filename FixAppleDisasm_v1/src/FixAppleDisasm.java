@@ -111,6 +111,7 @@ public class FixAppleDisasm
 		Map lines = new TreeMap();
 		Map addrs = new TreeMap();
 		int lineNumber = 0;
+		int prevaddr = -1;
 		for (String s = inbuf.readLine(); s != null; s = inbuf.readLine())
 		{
 			s = s.trim();
@@ -150,7 +151,45 @@ public class FixAppleDisasm
 				addr = -1;
 			}
 
-			if (addr >= 0)
+			if (addr < 0)
+			{
+				s = s.trim();
+				StringTokenizer st = new StringTokenizer(s);
+				for (int i = 0; i < st.countTokens(); ++i)
+				{
+					String h = st.nextToken();
+					int x = -1;
+					try
+					{
+						x = Integer.parseInt(h,16);
+						if (x < 0 || 0x100 <= x)
+						{
+							x = -1;
+						}
+					}
+					catch (Throwable e)
+					{
+						x = -1;
+					}
+					if (x >= 0)
+					{
+						if (i > 0)
+						{
+							ln = new Line();
+							lines.put(new Integer(++lineNumber),ln);
+							ln.addr = addr+i;
+							addrs.put(new Integer(ln.addr),ln);
+						}
+						ln.instr = "DB";
+						ln.oper = "$"+hexByte(x);
+					}
+					else
+					{
+						ln.comment += " "+h;
+					}
+				}
+			}
+			else
 			{
 				ln.addr = addr;
 				addrs.put(new Integer(ln.addr),ln);
@@ -287,44 +326,6 @@ public class FixAppleDisasm
 				else
 				{
 					System.err.println(s);
-				}
-			}
-			else
-			{
-				s = s.trim();
-				StringTokenizer st = new StringTokenizer(s);
-				for (int i = 0; i < st.countTokens(); ++i)
-				{
-					String h = st.nextToken();
-					int x = -1;
-					try
-					{
-						x = Integer.parseInt(h,16);
-						if (x < 0 || 0x100 <= x)
-						{
-							x = -1;
-						}
-					}
-					catch (Throwable e)
-					{
-						x = -1;
-					}
-					if (x >= 0)
-					{
-						if (i > 0)
-						{
-							ln = new Line();
-							lines.put(new Integer(++lineNumber),ln);
-							ln.addr = addr+i;
-							addrs.put(new Integer(ln.addr),ln);
-						}
-						ln.instr = "DB";
-						ln.oper = "$"+hexByte(x);
-					}
-					else
-					{
-						ln.comment += " "+h;
-					}
 				}
 			}
 		}
