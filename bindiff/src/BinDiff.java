@@ -46,14 +46,14 @@ public class BinDiff
 
     public void diff() throws IOException
     {
-        statechange(START, 0);
+        statechange(START,0);
         int c1 = f1.read();
         int c2 = f2.read();
         while ((c1 != EOF) || (c2 != EOF))
         {
             if (c1 == c2)
             {
-                statechange(COPY, 1);
+                statechange(COPY,1);
             }
             else
             {
@@ -62,22 +62,22 @@ public class BinDiff
 
                 if (difFindMatch())
                 {
-                    statechange(INSERT, lastmark - f2.tell(), f2);
+                    statechange(INSERT,lastmark-f2.tell(),f2);
                 }
                 else if (difFindMatch())
                 {
-                    statechange(SKIP, lastmark - f1.tell(), f1);
+                    statechange(SKIP,lastmark-f1.tell(),f1);
                 }
                 else
                 {
-                    statechange(SKIP, 1, f1);
-                    statechange(INSERT, 1, f2);
+                    statechange(SKIP,1,f1);
+                    statechange(INSERT,1,f2);
                 }
             }
             c1 = f1.read();
             c2 = f2.read();
         }
-        statechange(END, 0);
+        statechange(END,0);
     }
 
 	protected void statechange(int newstate, long c)
