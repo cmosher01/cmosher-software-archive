@@ -8,11 +8,24 @@
  * Author : Steve Yeong-Ching Hsueh
  */
 
-import java.awt.*;
-import java.awt.event.*;
-import java.lang.*;
-import java.util.*;
-import java.io.*;
+import java.awt.AWTEvent;
+import java.awt.BorderLayout;
+import java.awt.Event;
+import java.awt.FileDialog;
+import java.awt.Font;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Menu;
+import java.awt.MenuBar;
+import java.awt.MenuItem;
+import java.awt.PrintJob;
+import java.awt.TextArea;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.StringTokenizer;
 
 /**
  * MessageWindow shows message in a frame
