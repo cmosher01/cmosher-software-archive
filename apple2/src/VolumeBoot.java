@@ -26,7 +26,7 @@ public class VolumeBoot extends VolumeEntity
         }
         catch (InvalidPosException e)
         {
-            throw new RuntimeException(e,"can't happen.");
+            throw new RuntimeException("can't happen.");
         }
 
         rSector.add(new VolumeSector(p,0));
@@ -45,7 +45,7 @@ public class VolumeBoot extends VolumeEntity
         }
         catch (InvalidPosException e)
         {
-            throw new RuntimeException(e,"can't happen.");
+            throw new RuntimeException("can't happen.");
         }
     }
 
