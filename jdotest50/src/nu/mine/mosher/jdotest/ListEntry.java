@@ -35,7 +35,7 @@ public class ListEntry
 		StringBuffer sb = new StringBuffer(256);
 
 		sb.append("<tr>");
-		for (ListEntry e : r)
+		for (Object e : r)
 		{
 			sb.append("<");
 			sb.append(td);
