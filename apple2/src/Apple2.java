@@ -74,6 +74,11 @@ public class Apple2
             {
                 public boolean accept(File pathname)
                 {
+                    if (pathname.isDirectory())
+                    {
+                        dirs.add(pathname);
+                        return false;
+                    }
                     return pathname.length() == 0x23000;
                 }
             });
