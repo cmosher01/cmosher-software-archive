@@ -5,7 +5,6 @@ package com.surveysampling.time;
 
 import java.text.FieldPosition;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
