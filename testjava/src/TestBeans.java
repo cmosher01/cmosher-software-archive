@@ -74,6 +74,17 @@ public class TestBeans
         return v;
     }
 
+    public static Object getConvertedValue(String value, Class classProp)
+        throws NegativeArraySizeException, IllegalArgumentException, IntrospectionException
+    {
+        Object v;
+        if (classProp.isArray())
+        {
+            throw new IllegalArgumentException("Cannot set an array property to an scalar value.");
+        }
+        return convertScalar(value,classProp);
+    }
+
     public static PropertyDescriptor getPropertyDescriptor(Class forClass, String property) throws IntrospectionException
     {
         Map mapPDs = getPropertyDescriptors(getBeanInfo(forClass));
