@@ -67,4 +67,9 @@ public class GedcomTree
 
         return sb.toString();
 	}
+
+	public TreeNode getRoot()
+	{
+		return root;
+	}
 }
