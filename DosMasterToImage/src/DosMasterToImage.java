@@ -310,12 +310,51 @@ public class DosMasterToImage
 
 
 
+    private static void outHexShort(int i)
+    {
+        int b0 = i & 0xFF;
+        i >>= 8;
+        int b1 = i & 0xFF;
+        System.out.print("0x");
+        outHexByte(b1);
+        outHexByte(b0);
+        System.out.println(",");
+    }
 
 
 
+    private static void outHexByte(int i)
+    {
+        char n0 = nib(i & 0xF);
+        i >>= 4;
+        char n1 = nib(i & 0xF);
+        System.out.print(n1);
+        System.out.print(n0);
+    }
 
 
 
+    private static char nib(int i)
+    {
+        char c;
+        if (i < 0)
+        {
+            throw new IllegalArgumentException("nibble cannot be negative");
+        }
+        else if (i < 10)
+        {
+            c = (char)(i + '0');
+        }
+        else if (i < 0x10)
+        {
+            c = (char)('A' - 10 + i);
+        }
+        else
+        {
+            throw new IllegalArgumentException("nibble cannot be >= 16");
+        }
+        return c;
+    }
 
 
 
