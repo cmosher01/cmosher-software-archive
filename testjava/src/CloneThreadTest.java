@@ -60,7 +60,11 @@ public class CloneThreadTest
                 {
                     while (true)
                     {
-                        X y = (X)x.clone();
+                        X y = null;
+                        synchronized (x)
+                        {
+                            y = (X)x.clone();
+                        }
                         if (y.a != y.b)
                         {
                             System.err.println(y);
