@@ -258,7 +258,7 @@ public class MySQLTest
 			ins = db.prepareStatement("insert into CalcPerson(entry,birthEarliest,birthLatest) values (?,?,?)");
 
     		ResultSet rs = st.executeQuery("select "+
-    		"ce.id entry,"+
+    		"cnt, ce.id entry,"+
 			"date_add(date_sub(censusday,interval maxage+1 year), interval 1 day) earliest, "+
     		"date_sub(censusday,interval minage year) latest "+
 			"from imageident im "+
@@ -268,7 +268,7 @@ public class MySQLTest
 
     		while (rs.next())
     		{
-    			int c = rs.getInt("count");
+    			int c = rs.getInt("cnt");
 				int entry = rs.getInt("entry");
 				String earliest = rs.getString("earliest");
 				String latest = rs.getString("latest");
@@ -404,7 +404,7 @@ public class MySQLTest
 		"    gender enum (\"m\",\"f\"), "+
 		"    minAge integer unsigned, "+
 		"    maxAge integer unsigned, "+
-		"    count  integer unsigned "+
+		"    cnt  integer unsigned "+
 		")");
 		dbUpdate("drop table if exists CalcPerson");
 		dbUpdate("create table "+
