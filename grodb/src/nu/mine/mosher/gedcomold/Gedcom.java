@@ -23,12 +23,12 @@ public class Gedcom
 		w0 <<= 8;
 		w0 |= b0;
 
-		if (w0==0xfeff)
+		if (w0==0xfeff || w0==0x3000)
 		{
 			return "UTF-16LE";
 		}
 
-		if (w0==0xfffe)
+		if (w0==0xfffe || w0==0x0030)
 		{
 			return "UTF-16BE";
 		}
