@@ -11,4 +11,13 @@ package nu.mine.mosher.ja2;
 public class GUI
 {
 
+    /**
+     * 
+     */
+    public void create()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
 }
