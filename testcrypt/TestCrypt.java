@@ -9,7 +9,12 @@ public class TestCrypt
 {
     public static void main(String[] rArg) throws Throwable
     {
-        SecureRandom rand = new SecureRandom();
+        String[] rr = getCryptoImpls()"SecureRandom");
+        for (int i = 0; i < rr.length; ++i)
+        {
+            System.out.println(rr[i]);
+        }
+//        SecureRandom rand = new SecureRandom();
     }
 
     public static String[] getCryptoImpls(String serviceType)
