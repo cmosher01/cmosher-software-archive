@@ -12,7 +12,7 @@ import java.util.Calendar;
  * It contains hours, minutes, seconds, and milliseconds
  * since midnight. Instances of this class are immutable.
  * Instances of this class do not hold a reference to
- * the given Calendar. This class is thread-safe.
+ * the given Calendar.
  * The constructors fail atomically.
  */
 public class TimeOfDay
