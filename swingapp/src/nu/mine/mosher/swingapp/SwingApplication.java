@@ -13,6 +13,8 @@ import javax.swing.SwingUtilities;
 public class Ja2
 {
     private final String[] rArg;
+    private final CubbyHole mException = new CubbyHole();
+    private Ja2GUI mGUI;
 
     public Ja2(String[] rArg)
     {
