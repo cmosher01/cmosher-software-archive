@@ -585,8 +585,8 @@ public class ZoneInfo extends TimeZone {
       return fmt.format(new Date(time * 1000L));
     }
     private void dump(int time) {
-      tm t = tz.localtime(time);
-      System.out.println(zone + ' ' + tz.gmtime(t) + " = " + dumplcl(t));
+//      tm t = tz.localtime(time);
+      System.out.println(zone + ' ' + tz.gmtime(time) + " = " + dumplcl(time));
     }
     /** Dump daylight savings time transitions. */
     private void dumpdst() {
