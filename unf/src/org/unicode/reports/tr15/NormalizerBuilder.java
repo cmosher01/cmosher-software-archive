@@ -418,7 +418,7 @@ class NormalizerBuilder
     
         // build the same tables we would otherwise get from the
         // Unicode Character Database, just with limited data
-
+         
         for (int i = 0; i < decomposeData.length; i += 3)
         {
             char value = decomposeData[i].charAt(0);
@@ -446,89 +446,69 @@ class NormalizerBuilder
             canonicalClass.put(classData[i++], classData[i++]);
         }
     }
-
-        /**
-         * Utility: Parses a sequence of hex Unicode characters separated by spaces
-         */
-        static public String fromHex(String source)
+    
+    /**
+     * Utility: Parses a sequence of hex Unicode characters separated by spaces
+     */
+    static public String fromHex(String source)
+    {
+        StringBuffer result = new StringBuffer();
+        for (int i = 0; i < source.length(); ++i)
         {
-            StringBuffer result = new StringBuffer();
-            for (int i = 0; i < source.length(); ++i)
+            char c = source.charAt(i);
+            switch (c)
             {
-                char c = source.charAt(i);
-                switch (c)
-                {
-                    case ' ' :
-                        break; // ignore
-                    case '0' :
-                    case '1' :
-                    case '2' :
-                    case '3' :
-                    case '4' :
-                    case '5' :
-                    case '6' :
-                    case '7' :
-                    case '8' :
-                    case '9' :
-                    case 'A' :
-                    case 'B' :
-                    case 'C' :
-                    case 'D' :
-                    case 'E' :
-                    case 'F' :
-                    case 'a' :
-                    case 'b' :
-                    case 'c' :
-                    case 'd' :
-                    case 'e' :
-                    case 'f' :
-                        result.append((char)Integer.parseInt(source.substring(i, i + 4), 16));
-                        i += 3; // skip rest of number
-                        break;
-                    case '<' :
-                        int j = source.indexOf('>', i); // skip <...>
-                        if (j > 0)
-                        {
-                            i = j;
-                            break;
-                        } // else fall through--error
-                    default :
-                        throw new IllegalArgumentException("Bad hex value in " + source);
-                }
+				case ' ': break; // ignore
+				case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': 
+				case '8': case '9': case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': 
+				case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
+					result.append((char)Integer.parseInt(source.substring(i, i + 4),16));
+					i+= 3; // skip rest of number
+					break;
+	            case '<' :
+	                int j = source.indexOf('>', i); // skip <...>
+	                if (j > 0)
+	                {
+	                    i = j;
+	                    break;
+	                } // else fall through--error
+				default:
+	                throw new IllegalArgumentException("Bad hex value in " + source);
             }
-            return result.toString();
         }
-
-        /**
-         * Utility: Supplies a zero-padded hex representation of an integer (without 0x)
-         */
-        static public String hex(int i)
-        {
-            String result = Long.toString(i & 0xFFFFFFFFL, 16).toUpperCase();
-            return "00000000".substring(result.length(), 8) + result;
-        }
-
-        /**
-         * Utility: Supplies a zero-padded hex representation of a Unicode character (without 0x, \\u)
-         */
-        static public String hex(char i)
-        {
-            String result = Integer.toString(i, 16).toUpperCase();
-            return "0000".substring(result.length(), 4) + result;
-        }
-
-        /**
-         * Utility: Supplies a zero-padded hex representation of a Unicode character (without 0x, \\u)
-         */
-        public static String hex(String s, String sep)
-        {
-            StringBuffer result = new StringBuffer();
-            for (int i = 0; i < s.length(); ++i)
-            {
-                if (i != 0)
-                    result.append(sep);
-                result.append(hex(s.charAt(i)));
-            }
-            return result.toString();
-        }
+        return result.toString();
     }
+    
+    /**
+     * Utility: Supplies a zero-padded hex representation of an integer (without 0x)
+     */
+    static public String hex(int i)
+    {
+        String result = Long.toString(i & 0xFFFFFFFFL, 16).toUpperCase();
+        return "00000000".substring(result.length(), 8) + result;
+    }
+
+    /**
+     * Utility: Supplies a zero-padded hex representation of a Unicode character (without 0x, \\u)
+     */
+    static public String hex(char i)
+    {
+        String result = Integer.toString(i, 16).toUpperCase();
+        return "0000".substring(result.length(), 4) + result;
+    }
+
+    /**
+     * Utility: Supplies a zero-padded hex representation of a Unicode character (without 0x, \\u)
+     */
+    public static String hex(String s, String sep)
+    {
+        StringBuffer result = new StringBuffer();
+        for (int i = 0; i < s.length(); ++i)
+        {
+            if (i != 0)
+                result.append(sep);
+            result.append(hex(s.charAt(i)));
+        }
+        return result.toString();
+    }
+}
