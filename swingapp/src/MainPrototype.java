@@ -20,7 +20,7 @@ public class MainPrototype
      */
     private MainPrototype()
     {
-        assert false : "Cannot instantiate Ja2 class.";
+        assert false : "Cannot instantiate main class.";
     }
 
     /**
