@@ -1,5 +1,6 @@
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /*
  * Created on Sep 16, 2004
@@ -772,5 +773,41 @@ public class Disk
             }
         }
         return true;
+    }
+
+    private class SectorIter implements Iterator
+    {
+        /**
+         * @see java.util.Iterator#hasNext()
+         */
+        public boolean hasNext()
+        {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        /**
+         * Iterates through sectors.
+         * TODO iterate thru blocks
+         * @see java.util.Iterator#next()
+         */
+        public Object next() throws NoSuchElementException
+        {
+            if (!hasNext())
+            {
+                throw new NoSuchElementException();
+            }
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /**
+         * @see java.util.Iterator#remove()
+         */
+        public void remove() throws UnsupportedOperationException
+        {
+            throw new UnsupportedOperationException();
+        }
+
     }
 }
