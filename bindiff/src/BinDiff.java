@@ -87,7 +87,7 @@ public class BinDiff
         statechange(END,0);
     }
 
-	protected void statechange(int newstate, long c)
+	protected void statechange(int newstate, long c) throws IOException
 	{
 		statechange(newstate,c,null);
 	}
