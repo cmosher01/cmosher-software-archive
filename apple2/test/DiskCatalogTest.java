@@ -331,6 +331,11 @@ public class DiskCatalogTest extends TestCase
     {
         List r = new ArrayList();
         r.add(new DiskPos(0x11,0x1));
+        r.add(new DiskPos(0x11,0x5));
+        r.add(new DiskPos(0x11,0x6));
+        r.add(new DiskPos(0x11,0x7));
+        r.add(new DiskPos(0x11,0x8));
+        r.add(new DiskPos(0x11,0x9));
         assertManyPos("PRSHP.dsk",r);
     }
 
