@@ -25,7 +25,7 @@ public class HostsFile
     {
         String sf = "C:\\winnt\\system32\\drivers\\etc\\hosts";
         BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(new File(sf))));
-        for (String s = in.readLine(); in != null; s = in.readLine())
+        for (String s = in.readLine(); s != null; s = in.readLine())
         {
             StringTokenizer st = new StringTokenizer(s);
             String ip = st.nextToken();
