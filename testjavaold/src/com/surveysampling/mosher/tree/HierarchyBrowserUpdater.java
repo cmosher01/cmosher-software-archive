@@ -35,7 +35,6 @@ public class HierarchyBrowserUpdater implements TreeExpansionListener
 
         if (node.readTree())
         {
-            System.out.println("Calling nodesWereInserted");
             int childrenIdx[] = new int[node.getChildCount()];
             int i = 0;
             for (Enumeration e = node.children(); e.hasMoreElements();)
