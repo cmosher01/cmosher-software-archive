@@ -1,6 +1,5 @@
 package edu.stanford.cs.knuth.sa.random;
 
-import java.io.IOException;
 import nu.mine.mosher.random.RNGDefault;
 import nu.mine.mosher.random.RandomNumberGenerator;
 
@@ -22,6 +21,9 @@ public class RanArray30bit extends RNGDefault implements RandomNumberGenerator
     private int[] ranbuf;
     private int nextat = KK;
 
+    /**
+     * 
+     */
     public RanArray30bit()
     {
         this((int)getDefaultSeed());
