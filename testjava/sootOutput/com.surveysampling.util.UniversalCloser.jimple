@@ -1,0 +1,39 @@
+public class com.surveysampling.util.UniversalCloser extends java.lang.Object
+{
+
+    public static void close(java.lang.Object)
+    {
+        java.lang.Object obj;
+        java.lang.Class $r0;
+        java.lang.reflect.Method $r1;
+        java.lang.Throwable ignore;
+
+        obj := @parameter0: java.lang.Object;
+
+     label0:
+        $r0 = virtualinvoke obj.<java.lang.Object: java.lang.Class getClass()>();
+        $r1 = virtualinvoke $r0.<java.lang.Class: java.lang.reflect.Method getMethod(java.lang.String,java.lang.Class[])>("close", null);
+        virtualinvoke $r1.<java.lang.reflect.Method: java.lang.Object invoke(java.lang.Object,java.lang.Object[])>(obj, null);
+
+     label1:
+        goto label3;
+
+     label2:
+        ignore := @caughtexception;
+        goto label3;
+
+     label3:
+        return;
+
+        catch java.lang.Throwable from label0 to label1 with label2;
+    }
+
+    public void <init>()
+    {
+        com.surveysampling.util.UniversalCloser this;
+
+        this := @this: com.surveysampling.util.UniversalCloser;
+        specialinvoke this.<java.lang.Object: void <init>()>();
+        return;
+    }
+}
