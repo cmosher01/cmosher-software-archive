@@ -26,7 +26,7 @@ public class TestBeans
 
         setProperty(some, prop, val);
 
-        System.out.println(some.getAString());
+        System.out.println(some.getAInt());
     }
 
     public static void setProperty(Object bean, String property, String value)
