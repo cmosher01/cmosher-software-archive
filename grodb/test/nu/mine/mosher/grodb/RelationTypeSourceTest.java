@@ -16,6 +16,6 @@ public class RelationTypeSourceTest extends TestCase
 
     public void testRelationTypeSource()
     {
-    	assertEquals("cites",RelationTypeSource.CITES);
+    	assertEquals("cites",RelationTypeSource.CITES.toString());
     }
 }
