@@ -6,7 +6,7 @@
     Perm pm = new Perm();
     Item item = new Item();
     item.setName(s);
-    pm.add(item);
+    pm.put(item);
 %>
 <head>
 <title>Added</title>
