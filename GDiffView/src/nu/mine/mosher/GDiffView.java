@@ -100,6 +100,7 @@ public class GDiffVeiew extends JFrame
         listGDiff.setSelectionForeground(Color.BLACK); 
         listGDiff.setSelectionBackground(new Color(173,194,245));
         listGDiff.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        listGDiff.setSelectedIndex(0);
         JScrollPane scrGDiff = new JScrollPane(listGDiff);
         scrGDiff.setPreferredSize(new Dimension(100,460));
 
