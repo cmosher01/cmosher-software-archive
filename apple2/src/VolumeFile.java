@@ -77,6 +77,9 @@ public class VolumeFile
         data.getPos(rPos);
     }
 
+    /**
+     * @return
+     */
     public VolumeTSMap getTSMap()
     {
         return ts;
