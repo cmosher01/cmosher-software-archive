@@ -31,9 +31,14 @@ public class FileFinder
         }
 
         File[] rf = listRegFiles(sDir, regexpFile, regexpDir);
+        for (int i = 0; i < rf.length; ++i)
+        {
+            File file = rf[i];
+            System.out.println(file.getPath());
+        }
     }
 
-    public File[] listRegFiles(String sDir, String regexpFile, String regexpDir) throws IOException
+    public static File[] listRegFiles(String sDir, String regexpFile, String regexpDir) throws IOException
     {
         final Pattern patFile = Pattern.compile(regexpFile);
         final Pattern patSubdir = Pattern.compile(regexpDir);
@@ -62,7 +67,7 @@ public class FileFinder
             for (int i = 0; rm != null && i < rm.length; ++i)
             {
                 File file = rm[i];
-                results.add(file);
+                results.add(file.getCanonicalFile().getAbsoluteFile());
             }
         }
         return (File[])results.toArray(new File[results.size()]);
