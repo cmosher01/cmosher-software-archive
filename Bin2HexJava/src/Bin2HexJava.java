@@ -55,13 +55,15 @@ public class Bin2HexJava
                 System.out.println();
                 pos = 0;
             }
+
+            outHexByte(c);
             ++pos;
 
             c = in.read();
         }
     }
 
-    private static void appendHex(int i)
+    private static void outHexByte(int i)
     {
         char n0 = nib(i & 0xF);
         i >>= 4;
@@ -88,7 +90,7 @@ public class Bin2HexJava
         }
         else if (i < 0x10)
         {
-            c = (char)(i - 10 + 'A');
+            c = (char)('A' - 10 + i);
         }
         else
         {
