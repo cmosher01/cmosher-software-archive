@@ -17,7 +17,7 @@ import org.apache.velocity.runtime.log.LogSystem;
  * By default this class will use the global logger.
  * You can specify an alternate logger by setting
  * the Velocity property VelocityEngine.RUNTIME_LOG_LOGSYSTEM
- * to an instance of the Logger object to use.
+ * to the name (a String) of the Logger to use.
  * 
  * @author Chris Mosher
  */
@@ -30,9 +30,10 @@ public class VelocityLogger implements LogSystem
     public void init(RuntimeServices rs)
     {
         Object logUser = rs.getProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM);
-        if (logUser != null && logUser instanceof Logger)
+        if (logUser != null && logUser instanceof String)
         {
-            log = (Logger)logUser;
+            String nameLogUser = (String)logUser;
+            log = Logger.getLogger(nameLogUser);
         }
     }
 
