@@ -35,7 +35,7 @@ public class DiffWriter
 			s.append("\n");
 			pos = 0;
 		}
-		s.append(Integer.toHexString(b));
+		s.append(hexByte(b));
 		s.append(" ");
 		pos += 3;
 	}
@@ -50,5 +50,16 @@ public class DiffWriter
 		System.out.print(s.toString());
 		System.out.flush();
 		s = new StringBuffer(1024);
+	}
+
+	protected String hexByte(int b)
+	{
+		String s = Integer.toHexString(b);
+		s = s.toUpperCase();
+		if (s.length() == 1)
+		{
+			s = "0"+s;
+		}
+		return s;
 	}
 }
