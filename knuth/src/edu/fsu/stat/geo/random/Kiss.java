@@ -4,7 +4,7 @@ import nu.mine.mosher.random.RNGDefault;
 import nu.mine.mosher.random.RandomNumberGenerator;
 
 /**
- * TODO
+ * "Keep it simple, stupid," random number generator.
  *
  * @author Chris Mosher
  */
