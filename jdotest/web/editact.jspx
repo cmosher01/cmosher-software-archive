@@ -4,16 +4,16 @@
 <%@ page import="nu.mine.mosher.jdotest.Perm" %>
 <%
     String id = request.getParameter("id");
-    Perm pm = new Perm();
+    PersistenceManager pm = new Perm(),pm();
     String sOrig = request.getParameter("itemOrig");
     String sNew = request.getParameter("itemNew");
     boolean changed = !sOrig.equals(sNew);
     if (changed)
     {
-    	PersistenceManager p = pm.begin();
-		Item item = (Item)p.getObjectById(p.newObjectIdInstance(Item.class,id),true);
+    	pm.currentTransaction().begin();
+		Item item = (Item)pm.getObjectById(pm.newObjectIdInstance(Item.class,id),true);
 	    item.setName(sNew);
-	    pm.commit(p);
+	    pm.currentTransaction().commit();
     }
 %>
 <head>
