@@ -59,4 +59,9 @@ public class ListEntry
 
 		return sb.toString();
 	}
+
+	public static String linkEdit(String s)
+	{
+		return "<a href=\"edit.jsp\">"+s+"</a>";
+	}
 }
