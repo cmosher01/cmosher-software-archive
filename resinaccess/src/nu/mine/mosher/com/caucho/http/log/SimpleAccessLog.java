@@ -42,11 +42,22 @@ public class SimpleAccessLog extends AccessLog
 			return;
 		}
 
-    	System.err.println("--------------------> IP:"+request.getRemoteAddr()+
-			", method:"+request.getMethod()+
-			", URI:"+request.getRequestURI()+
-			status+
-			", browser:"+request.getHeader("User-Agent")+
-			", referer:"+request.getHeader("Referer"));
+		StringBuffer sb = new StringBuffer(256);
+    	sb.append("--------------------> ");
+
+		sb.append(ip.getHostAddress());
+		sb.append(",");
+		sb.append(ip.getHostName());
+		sb.append(",");
+		sb.append(method);
+		sb.append(",");
+		sb.append(uri);
+		sb.append(",");
+		sb.append(browser);
+		sb.append(",");
+		sb.append(referer.startsWith("http://mosher.mine.nu")?"":referer);
+		sb.append(",");
+		sb.append(status!=HttpServletResponse.SC_OK?Integer.toString(status):"");
+
     }
 }
