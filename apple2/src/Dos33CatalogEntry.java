@@ -84,7 +84,7 @@ public class Dos33CatalogEntry
         return locked;
     }
     /**
-     * @return Returns the name.
+     * @return Returns the translated name.
      */
     public String getName()
     {
