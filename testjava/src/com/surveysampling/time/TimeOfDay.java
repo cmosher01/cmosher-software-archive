@@ -72,7 +72,7 @@ public class TimeOfDay implements Comparable
      */
     private void verifyCalendarValue(int field, int value) throws IllegalArgumentException
     {
-        if (value < this.calendar.getMinimum(field) || this.calendar.getMaximum(field) < value)
+        if (value < calendar.getMinimum(field) || calendar.getMaximum(field) < value)
         {
             throw new IllegalArgumentException("Invalid value: "+value);
         }
