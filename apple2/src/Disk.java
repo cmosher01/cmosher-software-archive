@@ -248,7 +248,15 @@ public class Disk
                     match(sector,7,new byte[]{0,0,0,0,0}) &&
                     DiskPos.isValidTrack(sector[0x0C]) && DiskPos.isValidSector(sector[0x0D]))
                     {
-                        
+                        int ts = 0x0E;
+                        boolean valid = true;
+                        while (sector[ts] != 0 && sector[ts+1] != 0 && valid)
+                        {
+                            if (!(DiskPos.isValidTrack(sector[ts]) && DiskPos.isValidSector(sector[ts+1])))
+                            {
+                                valid = false;
+                            }
+                        }
                     }
         }
     }
