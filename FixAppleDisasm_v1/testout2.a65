@@ -1,0 +1,82 @@
+; external addresses referenced:
+ ; EQU $00
+ ; EQU $01
+ ; EQU $03ED
+ ; EQU $03EE
+ ; EQU $0900
+ ; EQU $3FFB
+ ; EQU $3FFC
+ ; EQU $BF30
+ ; EQU $C000
+ ; EQU $C001
+ ; EQU $C002
+ ; EQU $C003
+ ; EQU $C004
+ ; EQU $C005
+ ; EQU $C008
+ ; EQU $C009
+ ; EQU $C011
+ ; EQU $C054
+ ; EQU $C05E
+ ; EQU $C082
+ ; EQU $C083
+ ; EQU $C314
+ ; EQU $FBC0
+;**********************************************************
+                STA   $C005             ; write aux RAM first address encountered: $0817
+                STA   $C003             ; read aux RAM
+                STA   $C001             ; 80STORE on (PAGE2 switches 1/1X)
+                STA   $C054             ; write page 1X
+                STA   $C05E             ; doublehires
+                STA   $C008             ; main BSR
+                JSR   L0899             ; JSR ($6000) (T$0B S$0 B$00.$01)
+                STA   $C009             ; aux BSR
+                JSR   L0899             ; JSR ($6000) (T$0B S$0 B$00.$01)
+                STA   $C000             ; 80STORE off (PAGE2 switches 1/2)
+                LDX   #$40
+                STA   $C005             ; write aux ram
+                JSR   L0885             ; clear $2000.$5FFF aux
+                LDX   #$6D
+                STA   $C004
+                JSR   L0885             ; clear $2000.$8CFF main
+                STA   $C002             ; read main ram
+                STA   $C082             ; read ROM $D000 bank 2
+                LDA   $FBC0             ; 0=//c, other=IIe
+                PHA
+                STA   $C083             ; R/W RAM, $D000 bank 2
+                STA   $C083
+                TSX
+                STX   $3FFC
+                LDA   $C011             ; is $D000 bank 2
+                STA   $3FFB
+                LDA   #$45
+                PHA
+                PLP
+                LDY   #$0C
+                LDA   #$60
+                STY   $03ED
+                STA   $03EE
+                LDA   $BF30
+                AND   #$7F
+                STA   $BF30
+                LDX   #$E3
+                PLA
+                BEQ   L087C
+                LDX   #$E5
+L087C           LDY   $BF30
+                JSR   $0900
+                JMP   $C314             ; JMP $600C aux  DAZZLE DRAW PROGRAM ENTRY POINT
+                                        ; clear X pages starting at $2000
+L0885           LDY   #$00
+                LDA   #$20
+                STY   $00
+                STA   $01
+                TYA
+L088E           STA   ($00),Y
+                INY
+                BNE   L088E
+                INC   $01
+                DEX
+                BNE   L088E
+                RTS
+L0899           JMP   ($6000)
