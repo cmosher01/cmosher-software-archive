@@ -187,7 +187,8 @@ public class Disk
                 int goodEntries = 0;
                 boolean live = true;
                 List entries = new ArrayList();
-                for (int cat = 0; cat < 7 && live; ++cat)
+                boolean valid = true;
+                for (int cat = 0; cat < 7 && live && valid; ++cat)
                 {
                     if (sector[ce] == 0)
                     {
@@ -214,9 +215,13 @@ public class Disk
                             ++penultimateSpace;
                         }
                     }
+                    else
+                    {
+                        valid = false;
+                    }
                     ce += 35;
                 }
-                if (((goodEntries==1 && penultimateSpace==1) || (goodEntries > 1 && penultimateSpace >= goodEntries-2)) && goodEntries > 0)
+                if (valid && ((goodEntries==1 && penultimateSpace==1) || (goodEntries > 1 && penultimateSpace >= goodEntries-2)) && goodEntries > 0)
                 {
                     System.out.println("Catalog Sector @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+Integer.toHexString(cur.getSectorInTrack())+" ("+goodEntries+" entries)");
                     for (Iterator i = entries.iterator(); i.hasNext();)
