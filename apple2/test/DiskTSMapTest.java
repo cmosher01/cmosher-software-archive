@@ -117,7 +117,7 @@ public class DiskTSMapTest extends TestCase
     /**
      * test T/S map with one entry of T$01 S$00
      */
-    public void testTSMap_0001()
+    public void testTSMap_0100()
     {
         assertTrue(Disk.isfindDos33TSMapSector(Hex2Bin.hex2Bin(
         "00 00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 "+
