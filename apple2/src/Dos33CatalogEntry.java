@@ -62,6 +62,13 @@ public class Dos33CatalogEntry
         return cSector;
     }
     /**
+     * @return Returns true if this entry has a T/S map
+     */
+    public boolean hasTSMap()
+    {
+        return cSector > 1;
+    }
+    /**
      * @return Returns the track/sector position (of T/S map or single file sector)
      */
     public DiskPos getStart()
