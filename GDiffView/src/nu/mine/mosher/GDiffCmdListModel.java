@@ -3,41 +3,40 @@
  */
 package nu.mine.mosher;
 
+import java.util.List;
+
 import javax.swing.AbstractListModel;
 
 /**
  * TODO
  * 
- * @author Chris
+ * @author Chris Mosher
  */
 public class GDiffCmdListModel extends AbstractListModel
 {
+    private List rGDiffCmd;
 
     /**
      * 
      */
-    public GDiffCmdListModel()
+    public GDiffCmdListModel(List rGDiffCmd)
     {
-        super();
-        // TODO Auto-generated constructor stub
+        this.rGDiffCmd = rGDiffCmd;
     }
 
-    /* (non-Javadoc)
+    /**
      * @see javax.swing.ListModel#getSize()
      */
     public int getSize()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return rGDiffCmd.size();
     }
 
-    /* (non-Javadoc)
+    /**
      * @see javax.swing.ListModel#getElementAt(int)
      */
     public Object getElementAt(int index)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return rGDiffCmd.get(index);
     }
-
 }
