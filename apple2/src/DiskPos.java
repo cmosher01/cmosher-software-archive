@@ -195,4 +195,13 @@ public class DiskPos
     {
         return new DiskPos(iDisk+len);
     }
+
+    public String toStringTS()
+    {
+        StringBuffer sb = new StringBuffer();
+        sb.append("T$");
+        sb.append(Integer.toHexString(getTrackInDisk()));
+        sb.append(",S$");
+        sb.append(Integer.toHexString(getSectorInTrack()));
+    }
 }
