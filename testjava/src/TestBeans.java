@@ -9,6 +9,7 @@ public class TestBeans
 {
     public static void main(String[] rArgs) throws Throwable
     {
+        PropertyEditorManager.setEditorSearchPath(new String[] {"com.surveysampling.beans.editors"});
         SomeBean some = new SomeBean();
         String prop = "objInteger";
         String val = "34";
