@@ -9,6 +9,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -30,12 +31,12 @@ public class VelocityTest implements LogSystem
     public static void main(String[] args) throws Throwable
     {
         VelocityEngine velocity = new VelocityEngine();
+        Properties props = new Properties();
+        props.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,"nu.mine.mosher.velocity.VelocityLogger");
+        props.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH,"C:\\Documents and Settings\\chrism\\My Documents");
+        props.setProperty(VelocityEngine.VM_LIBRARY,"");
 
-        velocity.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,"nu.mine.mosher.velocity.VelocityLogger");
-        velocity.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH,"C:\\Documents and Settings\\chrism\\My Documents");
-        velocity.setProperty(VelocityEngine.VM_LIBRARY,"");
-
-        velocity.init();
+        velocity.init(props);
         velocity.info("velocity initialized");
 
 
