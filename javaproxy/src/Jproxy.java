@@ -458,8 +458,8 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
     public void paint(Graphics g)
     {
 
-        Dimension d = size();
-        Insets in = insets();
+        Dimension d = getSize();
+        Insets in = getInsets();
         int client_area_width = d.width - in.right - in.left;
         int client_area_height = d.height - in.bottom - in.top;
         int client_area_x = in.left;
