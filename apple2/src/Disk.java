@@ -310,18 +310,27 @@ public class Disk
     public static void getDos33CatalogEntries(byte[] sector, Collection entries)
     {
         int p = 0x0B;
-        boolean hitEnd = false;
-        while (p < 0x100 && !hitEnd)
+        while (p < 0x100 && sector[p] != 0)
         {
-            
+            boolean deleted = (sector[p] == -1);
+            int trk;
+            if (deleted)
+            {
+                trk = sector[p+0x20];
+            }
+            else
+            {
+                trk = sector[p];
+            }
+            int sec;
+            boolean lck;
+            int fil;
+            byte[] name;
+            int cSector;
+            entries.add(new Dos33CatalogEntry(deleted,new DiskPos(trk,sec,0,false),lck,fil,cSector,name));
+
+            p += 0x23;
         }
-        int trk;
-        int sec;
-        boolean lck;
-        int fil;
-        byte[] name;
-        int cSector;
-        entries.add(new Dos33CatalogEntry(new DiskPos(trk,sec,0,false),lck,fil,cSector,name));
     }
 /**
  * @param tsmapMapsInCatalog
