@@ -70,15 +70,6 @@ public class TestBeans
         return v;
     }
 
-    public static Object convertScalar(String[] value, Class classProp) throws IntrospectionException, IllegalArgumentException
-    {
-        Object v;
-        PropertyEditor ed = getPropertyEditor(classProp);
-        ed.setAsText(value[0]);
-        v = ed.getValue();
-        return v;
-    }
-
     public static PropertyDescriptor getPropertyDescriptor(Class forClass, String property) throws IntrospectionException
     {
         Map mapPDs = getPropertyDescriptors(getBeanInfo(forClass));
@@ -88,6 +79,15 @@ public class TestBeans
         }
         
         return (PropertyDescriptor)mapPDs.get(property);
+    }
+
+    public static Object convertScalar(String[] value, Class classProp) throws IntrospectionException, IllegalArgumentException
+    {
+        Object v;
+        PropertyEditor ed = getPropertyEditor(classProp);
+        ed.setAsText(value[0]);
+        v = ed.getValue();
+        return v;
     }
 
     public static Object[] convertArray(String[] value, Class classProp)
