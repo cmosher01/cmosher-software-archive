@@ -133,14 +133,6 @@ public class Disk
     }
 
     /**
-     * @return
-     */
-    public boolean EOF()
-    {
-        return this.pos.getIndex() >= this.disk.length;
-    }
-
-    /**
      * @param rPosVtoc
      */
     public void findDos33VTOC(Collection rPosVtoc)
