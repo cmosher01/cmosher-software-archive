@@ -256,8 +256,8 @@ public class MySQLTest
     		st = db.createStatement();
     		ResultSet rs = st.executeQuery("select "+
     		"censusday, gender, minage, maxage, count, nameLast, nameFirst,"+
-    		"date_sub(censusday,interval minage year) latest, "+
-			"date_add(date_sub(censusday,interval maxage+1 year), interval 1 day) earliest "+
+			"date_add(date_sub(censusday,interval maxage+1 year), interval 1 day) earliest, "+
+    		"date_sub(censusday,interval minage year) latest "+
 
 			"from imageident im "+
 			"join household hh on (hh.image=im.id) "+
@@ -269,13 +269,14 @@ public class MySQLTest
     			int c = rs.getInt("count");
 				String nameLast = rs.getString("nameLast");
 				String nameFirst = rs.getString("nameFirst");
-    			String latest = rs.getString("latest");
+				String gender = rs.getString("gender");
 				String earliest = rs.getString("earliest");
+    			String latest = rs.getString("latest");
 				int minage = rs.getInt("minage");
 				int maxage = rs.getInt("maxage");
     			for (int i = 0; i < c; ++i)
     			{
-    				log.info(earliest+" to "+latest+", "+minage+"-"+maxage);
+    				log.info("In household of "+nameFirst+" "+nameLast+": "+gender+" born "+earliest+" to "+latest+", "+minage+"-"+maxage);
     			}
     		}
     	}
