@@ -389,6 +389,9 @@ public class GDiffView extends JFrame
         RandomAccessFile in = new RandomAccessFile(src,"r");
         trg = new StringBuffer((int)in.length()); // TODO long doesn't work
 
+        HexBuilder hex = new HexBuilder(sb);
+        hex.appendHeader();
+
         GDiffCmd g = getGDiff(gdiff);
         while (!(g instanceof GDiffEnd))
         {
@@ -396,6 +399,11 @@ public class GDiffView extends JFrame
             if (g instanceof GDiffData)
             {
                 GDiffData gd = (GDiffData)g;
+                for (int i = 0; i < gd.getData().length; i++)
+                {
+                    byte b = gd.getData()[i];
+                    hex.appendByte(b);
+                }
             }
             else
             {
@@ -403,22 +411,13 @@ public class GDiffView extends JFrame
                 in.seek(gc.getRange().getBegin());
                 byte[] rb = new byte[(int)gc.getRange().getLength()];
                 in.readFully(rb);
-                pipeOut.write(rb);
             }
             g = getGDiff(gdiff);
-        }
-        HexBuilder hex = new HexBuilder(sb);
-        hex.appendHeader();
-        int x = in.read();
-        while (x >= 0)
-        {
-            hex.appendByte(x);
-            x = in.read();
         }
         hex.appendNewLine();
         in.close();
 
-        listGDiff.setModel(new GDiffCmdListModel(rcmd));
+        listGDiff.setModel(new GDiffCmdListModel(rcmd)); // ???
     }
 
     /**
