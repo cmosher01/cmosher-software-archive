@@ -43,6 +43,8 @@ public class Test
     public static Object throwSomething() throws Exception
     {
         Object j = new Object();
+        Object x = j;
+        j = x;
         throw new Exception();
 //        return j;
     }
