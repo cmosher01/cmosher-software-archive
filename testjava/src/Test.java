@@ -2,6 +2,7 @@ import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.net.URI;
 import java.util.ListIterator;
 
 public class Test
