@@ -129,12 +129,6 @@ public class GDiffView extends JFrame
         scrTrg.setPreferredSize(new Dimension(400,430));
         scrTrg.setMaximumSize(new Dimension(5000,5000));
 
-        rcmd.add(new GDiffCopy(new Range(0,1)));
-        rcmd.add(new GDiffData(new byte[] {65, 67}));
-        rcmd.add(new GDiffCopy(new Range(2,3)));
-        rcmd.add(new GDiffCopy(new Range(1,4)));
-        rcmd.add(new GDiffEnd());
-
         ListModel model = new GDiffCmdListModel(rcmd);
         listGDiff = new JList();
         listGDiff.setModel(model);
@@ -411,6 +405,7 @@ public class GDiffView extends JFrame
         trg = new StringBuffer(sb.length());
         while (!(g instanceof GDiffEnd))
         {
+            rcmd.add(g);
             if (g instanceof GDiffData)
             {
                 GDiffData gd = (GDiffData)g;
