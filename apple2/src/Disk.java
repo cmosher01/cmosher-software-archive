@@ -27,6 +27,9 @@ public class Disk
         this.pos = new DiskPos(0,0,0,false);
     }
 
+    /**
+     * @throws InvalidPosException
+     */
     public void rewind() throws InvalidPosException
     {
         this.pos = new DiskPos(0,0,0,false);
@@ -52,11 +55,21 @@ public class Disk
         return rb;
     }
 
+    /**
+     * @param rb
+     * @return
+     */
     public static String convertASCII(byte[] rb)
     {
         return convertASCII(rb,0,rb.length);
     }
 
+    /**
+     * @param rb
+     * @param pos
+     * @param len
+     * @return
+     */
     public static String convertASCII(byte[] rb, int pos, int len)
     {
         StringBuffer sb = new StringBuffer(len);
