@@ -260,7 +260,7 @@ public class Disk
                         }
                         while (ts < sector.length && valid)
                         {
-                            if (sector[ts] != 0)
+                            if (sector[ts++] != 0)
                             {
                                 valid = false;
                             }
