@@ -26,6 +26,12 @@ public class DiskPos
 
 
     /**
+     */
+    public DiskPos()
+    {
+    }
+
+    /**
      * @param track
      * @param sector
      * @param byt
