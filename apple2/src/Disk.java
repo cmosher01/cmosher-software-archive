@@ -198,7 +198,7 @@ public class Disk
         // only check 29 chars of filename (last char could be overwritten by file deletion)
         for (int x = 0; x < 29; ++x)
         {
-            if ((sector[i+x] & 0x80) != 0)
+            if ((sector[i+x] & 0x80) == 0)
             {
                 return false;
             }
