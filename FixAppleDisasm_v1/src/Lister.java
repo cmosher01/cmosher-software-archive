@@ -1,59 +1,45 @@
-import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.io.Writer;
-
-/*
- * Created on Nov 15, 2003
- *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
 
 /**
- * @author Chris
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * Created on Nov 15, 2003
+ * @author Chris Mosher
  */
-public class Lister extends PrintWriter
+public class Lister
 {
+	private final PrintWriter pw;
+	private int col;
 
-    /**
-     * @param out
-     */
-    public Lister(OutputStream out)
+    public Lister(PrintWriter out)
     {
-        super(out);
-        // TODO Auto-generated constructor stub
+    	pw = out;
     }
 
-    /**
-     * @param out
-     * @param autoFlush
-     */
-    public Lister(OutputStream out, boolean autoFlush)
-    {
-        super(out, autoFlush);
-        // TODO Auto-generated constructor stub
-    }
+	public void print(String s)
+	{
+		col += s.length();
+		pw.print(s);
+	}
 
-    /**
-     * @param out
-     */
-    public Lister(Writer out)
-    {
-        super(out);
-        // TODO Auto-generated constructor stub
-    }
+	public void newline()
+	{
+		pw.println();
+		col = 0;
+	}
 
-    /**
-     * @param out
-     * @param autoFlush
-     */
-    public Lister(Writer out, boolean autoFlush)
-    {
-        super(out, autoFlush);
-        // TODO Auto-generated constructor stub
-    }
+	public void tab(int n)
+	{
+		if (n <= col)
+		{
+			newline();
+		}
+		for (int i = col; i < n; ++i)
+		{
+			print(" ");
+		}
+	}
 
+	public int getTab()
+	{
+		return col;
+	}
 }
