@@ -242,6 +242,8 @@ public class FixAppleDisasm
 				}
 			}
 		}
+		System.err.flush();
+		System.out.flush();
 		for (Iterator i = lines.entrySet().iterator(); i.hasNext();)
         {
             Map.Entry ent = (Map.Entry)i.next();
