@@ -12,7 +12,7 @@ import javax.swing.SwingUtilities;
  */
 public class Ja2
 {
-    private Ja2GUI mGUI;
+//    private Ja2GUI mGUI;
     private ExceptionHandler mExceptionHandler;
     private CommandLineArgHandler mCommandLineArgHandler;
 
@@ -66,6 +66,6 @@ public class Ja2
 
     protected void createGUI()
     {
-        mGUI = new Ja2GUI();
+//        mGUI = new Ja2GUI();
     }
 }
