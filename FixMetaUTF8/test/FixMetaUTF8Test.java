@@ -23,7 +23,9 @@ public class FixMetaUTF8Test extends TestCase
         sb.append("</head>\n");
         sb.append("</html>\n");
         System.out.println(sb);
-        String s = FixMetaUTF8.fixMeta(sb);
-        System.out.println(s);
+        sb = FixMetaUTF8.removeContentTypeMeta(sb);
+        System.out.println(sb);
+        sb = FixMetaUTF8.addContentTypeMeta(sb);
+        System.out.println(sb);
     }
 }
