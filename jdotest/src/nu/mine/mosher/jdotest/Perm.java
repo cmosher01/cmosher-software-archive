@@ -9,40 +9,29 @@ import java.util.Properties;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
-import javax.naming.directory.DirContext;
-import javax.naming.directory.InitialDirContext;
-import javax.naming.directory.SearchControls;
 
 /**
  * @author Chris Mosher
  */
 public class Perm
 {
+	private static final Properties props = new Properties();
+	static
+	{
+		props.setProperty("javax.jdo.PersistenceManagerFactoryClass","org.jpox.PersistenceManagerFactoryImpl");
+		props.setProperty("javax.jdo.option.ConnectionDriverName","org.jpox.driver.JPOXDriver");
+		props.setProperty("javax.jdo.option.ConnectionURL","jpox:java:comp/env/jdbc/jdotest");
+		props.setProperty("javax.jdo.option.NontransactionalRead","true");
+		props.setProperty("org.jpox.autoCreateTables","true");
+		props.setProperty("org.jpox.validateTables","false");
+		props.setProperty("org.jpox.validateConstraints","false");
+	}
+
 	private PersistenceManagerFactory pmf;
 
 	public Perm() throws NamingException
 	{
-//		DirContext dctx = new InitialDirContext();
-//		SearchControls ctls = new SearchControls();
-//		ctls.setReturningObjFlag(true);
-//		String filter = "(objectclass=*)";
-//		NamingEnumeration answer = dctx.search("",filter,ctls);
-//		while (answer.hasMore())
-//		{
-//			System.err.println(answer.next().toString());
-//		}
-
-		Properties props = new Properties();
-		props.setProperty("javax.jdo.PersistenceManagerFactoryClass","org.jpox.PersistenceManagerFactoryImpl");
-		props.setProperty("javax.jdo.option.ConnectionDriverName","org.jpox.driver.JPOXDriver");
-		props.setProperty("javax.jdo.option.ConnectionURL","jpox:java:comp/env/jdbc/jdotest");
-		props.setProperty("org.jpox.autoCreateTables","true");
-		props.setProperty("org.jpox.validateTables","false");
-		props.setProperty("org.jpox.validateConstraints","false");
 		this.pmf = JDOHelper.getPersistenceManagerFactory(props);
 	}
 
