@@ -3,6 +3,7 @@
 	<name>unf</name>
 	<comment></comment>
 	<projects>
+		<project>junit</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
