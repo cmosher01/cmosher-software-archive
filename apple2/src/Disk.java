@@ -30,4 +30,11 @@ public class Disk
     {
         this.pos = pos;
     }
+
+    public byte[] read(int len)
+    {
+        byte[] rb = new byte[len];
+        System.arraycopy(this.disk, pos.getIndex(), rb, 0, len);
+        return rb;
+    }
 }
