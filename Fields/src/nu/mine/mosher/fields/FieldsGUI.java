@@ -6,6 +6,10 @@ package nu.mine.mosher.ja2;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
+import nu.mine.mosher.javax.swing.SwingUtil;
 
 /**
  * @author Chris Mosher
@@ -20,7 +24,7 @@ public class GUI
     public void create()
     {
         // Use look and feel for current OS.
-        SwingUtil.useOSLookAndFeel();
+        setLookAndFeel();
 
         // Use look and feel's (not OS's) decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
@@ -43,6 +47,23 @@ public class GUI
 
         // Display the window.
         mFrame.setVisible(true);
+    }
+
+    /**
+     * 
+     */
+    private void setLookAndFeel()
+    {
+        try
+        {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (Throwable e)
+        {
+            RuntimeException re = new IllegalStateException();
+            re.initCause(e);
+            throw re;
+        }
     }
 
     /**
