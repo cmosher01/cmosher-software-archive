@@ -11,7 +11,7 @@ public final class HTMLUtil
 		throw new UnsupportedOperationException();
 	}
 
-	public String fixHTML(String s)
+	public static String fixHTML(String s)
 	{
 		return s
 			.replaceAll("&","&amp;")
