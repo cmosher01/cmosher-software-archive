@@ -789,8 +789,7 @@ public class Disk
          */
         public boolean hasNext()
         {
-            // TODO Auto-generated method stub
-            return false;
+            return d.getSectorInDisk() < d.cSectorsPerTrack*d.cTracksPerDisk;
         }
 
         /**
