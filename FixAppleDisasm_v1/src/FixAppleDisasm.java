@@ -209,6 +209,15 @@ public class FixAppleDisasm
 							}
 							if (x >= 0)
 							{
+								if (i > 0)
+								{
+									ln = new Line();
+									lines.put(new Integer(++lineNumber),ln);
+									ln.addr = addr+i;
+									addrs.put(new Integer(ln.addr),ln);
+								}
+								ln.instr = "DB";
+								ln.oper = "$"+Integer.toHexString(x);
 							}
 							else
 							{
