@@ -6,6 +6,7 @@
 		<project>core</project>
 		<project>junit</project>
 		<project>logging</project>
+		<project>resin</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
