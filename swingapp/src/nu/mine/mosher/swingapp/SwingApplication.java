@@ -92,7 +92,7 @@ public class Application
 
     protected void createGUI()
     {
-//        mGUI = new Ja2GUI();
+        mGUI.create();
     }
 
     public CommandLineArgHandler getCommandLineArgHandler()
