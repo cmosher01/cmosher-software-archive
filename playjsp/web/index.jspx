@@ -3,6 +3,7 @@
 	xml:lang="en"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:tg="urn:jsptagdir:/WEB-INF/tags/"
 >
 	<jsp:output omit-xml-declaration="false" doctype-root-element="html" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd" />
@@ -11,6 +12,9 @@
 		<title><jsp:text>Play JSP</jsp:text></title>
 	</head>
 	<body>
+		<c:forEach var="i" first="0" last="5">
+			${i}
+		</c:forEach>
 		<jsp:text>
 		Testing a JSP Document (as opposed to a JSP Page)!
 		IE doesn't understand application/xhtml+xml
