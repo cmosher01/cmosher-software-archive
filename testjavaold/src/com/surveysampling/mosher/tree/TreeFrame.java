@@ -83,7 +83,10 @@ public class TreeFrame extends Frame implements WindowListener
     {
         String dir = System.getProperty("user.dir");
         if (argv != null && argv.length == 1)
+        {
             dir = argv[0];
+        }
+
         TreeFrame myframe = new TreeFrame(dir);
         myframe.setVisible(true);
     }
