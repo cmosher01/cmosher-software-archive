@@ -83,7 +83,7 @@ public class VolumeDOS extends VolumeEntity
         List rPos = new ArrayList();
         getUsed(rPos);
         byte[] rbdos = disk.getDos33File(rPos);
-        System.arraycopy(rbdos, 0, rb, DiskPos.cSector, 3*DiskPos.cTrack-DiskPos.cSector);
+        System.arraycopy(rbdos, 0, rb, DiskPos.cSector, rbdos.length);
     }
 
     /**
