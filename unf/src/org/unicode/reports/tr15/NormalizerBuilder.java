@@ -1,6 +1,7 @@
 package org.unicode.reports.tr15;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.BitSet;
 
 /**
@@ -63,7 +64,7 @@ class NormalizerBuilder
             }
             return new NormalizerData(canonicalClass, decompose, compose, isCompatibility, isExcluded);
         }
-        catch (java.io.IOException e)
+        catch (IOException e)
         {
             System.err.println("Can't load data file." + e + ", " + e.getMessage());
             return null;
@@ -77,7 +78,7 @@ class NormalizerBuilder
     /**
      * Reads exclusion list and stores the data
      */
-    private static void readExclusionList(BitSet isExcluded) throws java.io.IOException
+    private static void readExclusionList(BitSet isExcluded) throws IOException
     {
         if (DEBUG)
             System.out.println("Reading Exclusions");
@@ -110,7 +111,7 @@ class NormalizerBuilder
     /**
      * Builds a decomposition table from a UnicodeData file
      */
-    private static void buildDecompositionTables(IntHashtable canonicalClass, IntStringHashtable decompose, IntHashtable compose, BitSet isCompatibility, BitSet isExcluded) throws java.io.IOException
+    private static void buildDecompositionTables(IntHashtable canonicalClass, IntStringHashtable decompose, IntHashtable compose, BitSet isCompatibility, BitSet isExcluded) throws IOException
     {
         if (DEBUG)
             System.out.println("Reading Unicode Character Database");
@@ -262,9 +263,10 @@ class NormalizerBuilder
     /**
      * For use in an applet: just load a minimal set of data.
      */
-    private static void setMinimalDecomp(IntHashtable canonicalClass, IntStringHashtable decompose, 
-      IntHashtable compose, BitSet isCompatibility, BitSet isExcluded) {
-        String[] decomposeData = {
+    private static void setMinimalDecomp(IntHashtable canonicalClass, IntStringHashtable decompose, IntHashtable compose, BitSet isCompatibility, BitSet isExcluded)
+    {
+        String[] decomposeData =
+        {
             "\u005E", "\u0020\u0302", "K",
             "\u005F", "\u0020\u0332", "K",
             "\u0060", "\u0020\u0300", "K",
@@ -341,7 +343,8 @@ class NormalizerBuilder
             "\u1EA7", "\u00E2\u0300", "",
         };
 
-        int[] classData = {
+        int[] classData =
+        {
             0x0300, 230,
             0x0301, 230,
             0x0302, 230,
