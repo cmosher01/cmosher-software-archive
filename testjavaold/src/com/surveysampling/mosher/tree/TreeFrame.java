@@ -14,7 +14,6 @@ import com.surveysampling.mosher.Flag;
 
 public class TreeFrame extends JPanel
 {
-    private static JFrame frame;
     private static String dir;
     private static Flag begun = new Flag();
 
@@ -55,7 +54,7 @@ public class TreeFrame extends JPanel
         JFrame.setDefaultLookAndFeelDecorated(true);
 
         //Create and set up the window.
-        frame = new JFrame("Java Directory Browser");
+        JFrame frame = new JFrame("Java Directory Browser");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create and set up the content pane.
