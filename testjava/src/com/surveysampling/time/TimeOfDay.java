@@ -22,7 +22,8 @@ public class TimeOfDay
 
     public TimeOfDay(Calendar calendar, int hours, int minutes, int seconds, int milliseconds)
     {
-        // use a clone of the caller's Calendar object, in case he changes it
+        // use a clone of the caller's Calendar object
+        // in case he changes it out from underneath us
         calendar = (Calendar)calendar.clone();
 
         if (hours < calendar.getMinimum(Calendar.HOUR_OF_DAY) || calendar.getMaximum(Calendar.HOUR_OF_DAY) < hours)
