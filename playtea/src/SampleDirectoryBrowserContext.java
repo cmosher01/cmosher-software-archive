@@ -50,9 +50,11 @@
  * For more information about Tea, please see http://opensource.go.com/.
  */
 
-import com.go.teaservlet.*;
-import java.io.*;
+import java.io.File;
 import java.util.Arrays;
+
+import com.go.teaservlet.ApplicationRequest;
+import com.go.teaservlet.ApplicationResponse;
 
 /******************************************************************************
  *
