@@ -5,6 +5,7 @@ package nu.mine.mosher.ja2;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.Image;
 
@@ -116,10 +117,10 @@ public class GUI
         scrollpane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollpane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-        JPanel panel = new JPanel(new BorderLayout(),true);
+        JPanel panel = new JPanel(new FlowLayout(),true);
         panel.setOpaque(true);
         panel.addNotify();
-        panel.add(scrollpane,BorderLayout.CENTER);
+        panel.add(scrollpane);
 
         return panel;
     }
