@@ -369,7 +369,7 @@ public class FixAppleDisasm
 					}
 					char[] rc = ln.oper.toCharArray();
 					int ic = 1;
-					while (ic < rc.length && Characters.isHexDigit(rc[ic]))
+					while (ic < rc.length && isHexDigit(rc[ic]))
 					{
 						++ic;
 					}
@@ -456,7 +456,19 @@ public class FixAppleDisasm
         }
     }
 
-	private static String hexByte(int i)
+	/**
+     * @param c
+     * @return
+     */
+    private static boolean isHexDigit(char c)
+    {
+        return
+            ('0' <= c && c <= '9') ||
+            ('A' <= c && c <= 'F') ||
+            ('A\a' <= c && c <= 'f')
+    }
+
+    private static String hexByte(int i)
 	{
 		return hexString(i,2);
 	}
