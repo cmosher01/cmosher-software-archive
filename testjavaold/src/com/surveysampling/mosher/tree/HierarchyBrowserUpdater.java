@@ -47,6 +47,11 @@ public class HierarchyBrowserUpdater implements TreeExpansionListener
             mModel.nodesWereInserted(node, childrenIdx);
         }
 
+        endWait();
+    }
+
+    private void endWait()
+    {
         mFrame.setEnabled(true);
         mFrame.setCursor(Cursor.getDefaultCursor());
     }
