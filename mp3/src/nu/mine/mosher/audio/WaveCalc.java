@@ -56,5 +56,12 @@ public class WaveCalc
         {
         	throw new Exception("File does not start with RIFF.");
         }
+
+		int totallen = in.readInt()+8;
+
+		if (in.readInt() != 0x45564157)
+		{
+			throw new Exception("RIFF chunk is not followed by WAVE chunk.");
+		}
     }
 }
