@@ -12,7 +12,7 @@ public class Test
 		System.out.println(x);
 		System.out.println(y);
 
-		if (x.isa(ItemTypeEnum.a))
+		if (y.isa(ItemTypeEnum.a))
 		{
 			System.out.println("yes");
 		}
