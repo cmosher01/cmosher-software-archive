@@ -42,7 +42,7 @@ public class MtaURI
         }
         if (!(0 < uri.getPort() && uri.getPort() < 0x10000))
         {
-            throw new URISyntaxException(""+uri.getPort(),"port must be: 0 < port < 65536");
+            throw new URISyntaxException("invalid port "+uri.getPort(),"port must be: 0 < port < 65536");
         }
         mURI = uri;
 
