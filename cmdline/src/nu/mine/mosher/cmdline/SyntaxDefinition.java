@@ -1,12 +1,12 @@
 /*
- * Created on Jul 15, 2004
+ * Created on July 15, 2004
  */
 package nu.mine.mosher.cmdline;
 
 /**
- * TODO
+ * Defines the syntax of the command line (arguments and options).
  * 
- * @author chrism
+ * @author Chris Mosher
  */
 public class SyntaxDefinition
 {
