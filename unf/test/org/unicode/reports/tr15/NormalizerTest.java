@@ -36,7 +36,7 @@ public class NormalizerTest extends TestCase
 
     protected void tearDown() throws Exception
     {
-        super.tearDown();
 		n = null;
+        super.tearDown();
     }
 }
