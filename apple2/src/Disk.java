@@ -324,7 +324,7 @@ public class Disk
                 trk = sector[p];
             }
 
-            boolean lck;
+            boolean lck = (sector[p+2] & 0x80) != 0;
             int fil;
             byte[] name;
             int cSector;
