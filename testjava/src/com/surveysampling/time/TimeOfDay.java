@@ -146,4 +146,32 @@ public class TimeOfDay
             throw new IllegalStateException("TimeOfDay has not been initialized correctly.");
         }
     }
+
+    public boolean equals(Object obj)
+    {
+        if (!(obj instanceof TimeOfDay))
+        {
+            return false;
+        }
+        TimeOfDay that = (TimeOfDay)obj;
+        return
+            that.hours == this.hours &&
+            that.minutes == this.minutes &&
+            that.seconds == this.seconds &&
+            that.milliseconds == this.milliseconds;
+    }
+
+    public int hashCode()
+    {
+        int hash = 17;
+        hash *= 37;
+        hash += hours;
+        hash *= 37;
+        hash += minutes;
+        hash *= 37;
+        hash += seconds;
+        hash *= 37;
+        hash += milliseconds;
+        return hash;
+    }
 }
