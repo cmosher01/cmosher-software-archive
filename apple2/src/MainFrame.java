@@ -179,7 +179,7 @@ public class MainFrame extends JFrame
         this.setMaximizedBounds(env.getMaximumWindowBounds());
         this.setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
 
-        File[] rf = Apple2.list140KFiles("D:\\20040812\\to_organize");
+        File[] rf = Apple2.list140KFiles("C:\\apple2\\research\\dos\\test");
         for (int i = 0; i < rf.length; i++)
         {
             doOneDisk(rf[i]);
