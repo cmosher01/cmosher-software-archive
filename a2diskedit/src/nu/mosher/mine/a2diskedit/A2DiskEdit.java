@@ -136,7 +136,7 @@ public class A2DiskEdit
 		tree.setSelectionRow(0);
 	}
 
-	private void addNode(DefaultMutableTreeNode n, DefaultMutableTreeNode par)
+	public void addNode(DefaultMutableTreeNode n, DefaultMutableTreeNode par)
 	{
 		((DefaultTreeModel)tree.getModel()).insertNodeInto(n,par,0);
 	}
