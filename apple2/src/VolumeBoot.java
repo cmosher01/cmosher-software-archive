@@ -107,25 +107,25 @@ public class VolumeBoot extends VolumeEntity
         s.append("\n");
     }
 
-    private static byte[] patch(byte[] masterBoot, int offset)
+    private static byte[] patch(byte[] masterBoot, int )
     {
         byte[] p = new byte[masterBoot.length];
-        p[0x60] += d;
-        p[0x68] += d;
-        p[0x6D] += d;
-        p[0x70] += d;
-        p[0x73] += d;
-        p[0x78] += d;
-        p[0x7D] += d;
-        p[0x82] += d;
-        p[0x85] += d;
-        p[0x88] += d;
-        p[0x8B] += d;
-        p[0x8E] += d;
-        p[0x91] += d;
-        p[0xA3] += d;
-        p[0xAB] += d;
-        p[0xB0] += d;
-        p[0xFE] += d;
+        p[0x60] += offset;
+        p[0x68] += offset;
+        p[0x6D] += offset;
+        p[0x70] += offset;
+        p[0x73] += offset;
+        p[0x78] += offset;
+        p[0x7D] += offset;
+        p[0x82] += offset;
+        p[0x85] += offset;
+        p[0x88] += offset;
+        p[0x8B] += offset;
+        p[0x8E] += offset;
+        p[0x91] += offset;
+        p[0xA3] += offset;
+        p[0xAB] += offset;
+        p[0xB0] += offset;
+        p[0xFE] += offset;
     }
 }
