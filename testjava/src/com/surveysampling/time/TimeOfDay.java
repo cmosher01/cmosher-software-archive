@@ -5,6 +5,7 @@ package com.surveysampling.time;
 
 import java.text.FieldPosition;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -35,11 +36,9 @@ public class TimeOfDay implements Comparable
     private final int seconds;
     private final int milliseconds;
 
-    private static final NumberFormat fmt = NumberFormat.getIntegerInstance();
-    static
-    {
-        fmt.setMinimumIntegerDigits(2);
-    }
+    private static final SimpleDateFormat fmtHM = new SimpleDateFormat("HH:mm");
+    private static final SimpleDateFormat fmtHMS = new SimpleDateFormat("HH:mm:ss");
+    private static final SimpleDateFormat fmtHMSS = new SimpleDateFormat("HH:mm:ss.SSS");
 
     /**
      * Initializes the object with the given time components,
