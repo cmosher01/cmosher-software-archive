@@ -305,9 +305,6 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
     } // end of Jproxy
 
 
-    /**
-     * initialization
-     */
     private boolean initialization()
     {
         httpconfig = new Properties();
