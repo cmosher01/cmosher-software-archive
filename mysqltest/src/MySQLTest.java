@@ -75,6 +75,10 @@ public class MySQLTest
 
 	protected void calcOneCount(int year, String sGender, int ageMin, int ageMax) throws SQLException
     {
+    	if (ageMax < 0)
+    	{
+    		ageMax = 150;
+    	}
     	Statement st = null;
     	try
     	{
