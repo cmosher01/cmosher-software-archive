@@ -1,9 +1,9 @@
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class TestExec
 {
     public static Process p;
+    public static Flag done = new Flag();
 //    public static LineDumper procout;
 //    public static LineDumper procerr;
 
@@ -15,11 +15,20 @@ public class TestExec
             {
                 System.out.println("stopping subprocess...");
                 p.destroy();
+                try
+                {
+                    done.waitUntilTrue();
+                }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
             }
         });
         System.out.println("parent process");
         execDumpOutput();
         waitFor();
+        done.waitToSetTrue();
     }
 
     protected static void execDumpOutput() throws InterruptedException, IOException
@@ -39,7 +48,6 @@ public class TestExec
         }
         catch (InterruptedException e)
         {
-            System.out.println("interrupted exception");
             e.printStackTrace();
         }
         System.out.println("subprocess done");
