@@ -11,5 +11,6 @@ public class HitWeb
 		HttpURLConnection con = (HttpURLConnection)url.openConnection();
 		String s = (String)con.getContent();
 		System.out.println(s);
+		con.disconnect();
     }
 }
