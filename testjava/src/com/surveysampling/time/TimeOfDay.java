@@ -13,6 +13,7 @@ import java.util.Calendar;
  * since midnight. Instances of this class are immutable.
  * Instances of this class do not hold a reference to
  * the given Calendar. This class is thread-safe.
+ * The constructors fail atomically.
  */
 public class TimeOfDay
 {
