@@ -71,11 +71,10 @@ public class DailyWindow
      * factory method.
      * @param start window start time; cannot be null
      * @param end window end time; cannot be null
-     * @throws ParseException if start or end are in
-     * an invalid format, if start or end are empty,
-     * or if the start and end times are the same.
+     * @throws IllegalArgumentException if the start and end
+     * times are the same.
      */
-    protected DailyWindow(TimeOfDay start, TimeOfDay end) throws ParseException
+    protected DailyWindow(TimeOfDay start, TimeOfDay end) throws IllegalArgumentException
     {
         // fail fast if given any null
         if (start == null || end == null)
@@ -89,7 +88,7 @@ public class DailyWindow
         int cmp = mStart.compareTo(mEnd);
         if (cmp == 0)
         {
-            throw new ParseException("Start window time and end window time cannot be the same",0);
+            throw new IllegalArgumentException("Start window time and end window time cannot be the same");
         }
 
         mIsStartFirst =  cmp < 0;
