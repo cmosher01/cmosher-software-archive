@@ -42,7 +42,7 @@ public class SwingApplication
      */
     public void run() throws Throwable
     {
-        mCommandLineArgHandler.parse();
+        getCommandLineArgHandler().parse();
 
         /*
          * Start the GUI, making sure all Swing calls
@@ -72,7 +72,7 @@ public class SwingApplication
          * caused the program to exit immediately without doing
          * anything) (a race condition).
          */
-        mExceptionHandler.waitFor();
+        getExceptionHandler().waitFor();
     }
 
     public GUI getGUI()
