@@ -91,7 +91,7 @@ public class Delta
         target.read(buf,0,S);
         targetidx += S;
 
-        hashf = checksum.queryChecksum(buf,S);
+        hashf = Checksum.queryChecksum(buf,S);
 
         // The check for alternative hashf is only because I wanted to verify
         // that the
@@ -225,7 +225,7 @@ public class Delta
                         buf[0] = b[0];
                         target.read(buf,1,S - 1);
                         targetidx += S - 1;
-                        alternativehashf = hashf = checksum.queryChecksum(buf,S);
+                        alternativehashf = hashf = Checksum.queryChecksum(buf,S);
                     }
                     continue; //continue loop
                 }
@@ -241,12 +241,12 @@ public class Delta
                 // insert instruction with the old byte we no longer use...
                 output.addData(buf[0]);
 
-                alternativehashf = checksum.incrementChecksum(alternativehashf,buf[0],b[0]);
+                alternativehashf = Checksum.incrementChecksum(alternativehashf,buf[0],b[0]);
 
                 for (int j = 0; j < 15; j++)
                     buf[j] = buf[j + 1];
                 buf[15] = b[0];
-                hashf = checksum.queryChecksum(buf,S);
+                hashf = Checksum.queryChecksum(buf,S);
 
                 if (debug)
                     System.out.println("raw: " + Integer.toHexString((int)hashf) + ", incremental: "
