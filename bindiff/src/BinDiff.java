@@ -32,6 +32,8 @@ public class BinDiff
 
 		f2.close();
 		f1.close();
+
+		System.in.read();
     }
 
     private static final int START = 0;
