@@ -69,17 +69,18 @@ public class Pair implements Cloneable, Comparable
     {
         Pair that = (Pair)o;
 
-        Comparable ca = (Comparable)a;
-        Comparable cb = (Comparable)b;
-
         int c;
-        c = ca.cmp(that.a);
+        c = cmp(this.a,that.a);
         if (c == 0)
         {
-            c = cb.cmp(that.b);
+            c = cmp(this.b,that.b);
         }
 
         return c;
+    }
+
+    private int cmp(Object x, Object y)
+    {
     }
 
     public int hashCode()
