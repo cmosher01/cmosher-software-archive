@@ -63,6 +63,11 @@ public class Test
 
     private static void test()
     {
+        SecurityManager security = System.getSecurityManager();
+        if (security != null)
+        {
+            security.checkAccess(Thread.currentThread());
+        }
     }
 
 	public static void main(String[] rArg) throws Throwable
