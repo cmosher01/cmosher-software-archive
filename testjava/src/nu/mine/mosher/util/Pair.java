@@ -81,6 +81,19 @@ public class Pair implements Cloneable, Comparable
 
     private int cmp(Object x, Object y)
     {
+        if (x == null && y == null)
+        {
+            return 0;
+        }
+        if (x == null)
+        {
+            return -1;
+        }
+        if (y == null)
+        {
+            return +1;
+        }
+        return ((Compareable)a)
     }
 
     public int hashCode()
