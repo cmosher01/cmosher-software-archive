@@ -1,4 +1,4 @@
-package java.lang;
+//package java.lang;
 
 /**
  * Provides a static method that will clone any Cloneable Object.
