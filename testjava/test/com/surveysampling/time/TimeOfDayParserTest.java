@@ -55,6 +55,7 @@ public class TimeOfDayParserTest extends TestCase
         shouldThrow("01:ab");
         shouldThrow("01:02:cd");
         shouldThrow("01:02:03.00e");
+        shouldThrow("01:023");
     }
 
     private void shouldThrow(String s)
