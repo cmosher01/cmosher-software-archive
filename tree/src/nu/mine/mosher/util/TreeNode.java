@@ -66,7 +66,7 @@ public class TreeNode
 		parent.removeChild(this);
 	}
 
-	public Iterator/*<TreeNode>*/ children()
+	public Iterator<TreeNode> children()
 	{
 		return children.iterator();
 	}
