@@ -12,9 +12,6 @@ import java.util.Map;
  */
 public final class Cloner
 {
-    private static final Map /*<Class,Method>*/
-    mClasses = new HashMap();
-
     private Cloner()
     {
         throw new UnsupportedOperationException();
@@ -25,12 +22,7 @@ public final class Cloner
         try
         {
             Class cl = cloneableObject.getClass();
-            Method methodClone = (Method)mClasses.get(cl);
-            if (methodClone == null)
-            {
-                methodClone = getCloneMethod(cl);
-                mClasses.put(cl, methodClone);
-            }
+            Method methodClone = getCloneMethod(cl);
             return clone(cloneableObject, methodClone);
         }
         catch (CloneNotSupportedException e)
