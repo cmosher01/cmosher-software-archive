@@ -107,6 +107,14 @@ public class DiskPos
     /**
      * @return
      */
+    public int getIndex()
+    {
+        return iDisk;
+    }
+
+    /**
+     * @return
+     */
     public int getTrackInDisk()
     {
         return iDisk/cTrack;
