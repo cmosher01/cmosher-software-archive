@@ -226,7 +226,7 @@ public class Disk
      * @return
      * @throws InvalidPosException
      */
-    static int isDos33CatalogSector(byte[] sector, boolean allowLarge, TSMap tsmapMaps, List entries) throws InvalidPosException
+    static int isDos33CatalogSector(byte[] sector, boolean allowLarge, TSMap tsmapMaps, List entries)
     {
         if (sector[0] == 0 &&
             DiskPos.isValidTrack(sector[1],allowLarge) &&
@@ -271,7 +271,15 @@ public class Disk
                     if (csect > 1)
                     {
                         sb.append("s, T/S map");
-                        DiskPos tsm = new DiskPos(trk,sector[ce+1],0,allowLarge);
+                        DiskPos tsm;
+                        try
+                        {
+                            tsm = new DiskPos(trk,sector[ce+1],0,allowLarge);
+                        }
+                        catch (InvalidPosException e)
+                        {
+                            return 0;
+                        }
                         tsmapMaps.mark(tsm.getSectorInDisk());
                     }
                     sb.append(" @ T$"+Integer.toHexString(trk)+", S$"+Integer.toHexString(sector[ce+1])+"]");
