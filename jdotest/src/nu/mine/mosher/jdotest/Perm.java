@@ -3,9 +3,11 @@
  */
 package nu.mine.mosher.jdotest;
 
+import java.util.Iterator;
 import java.util.Properties;
 
 import javax.jdo.JDOHelper;
+import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 
 /**
@@ -33,5 +35,9 @@ public class Perm
 		this.pmf = JDOHelper.getPersistenceManagerFactory(props);
 	}
 
-	
+	public Iterator getList()
+	{
+		PersistenceManager pm = this.pmf.getPersistenceManager();
+		return pm.getExtent(Item.class,true).iterator();
+	}
 }
