@@ -303,13 +303,15 @@ public class MySQLTest
 		try
 		{
 			st = db.prepareStatement(
-			"insert into KnownPerson (household,gender,minAge,maxAge,cnt) values (?,?,?,?,?)");
+			"insert into KnownPerson (gender,nameLast,nameFirst,nameMiddle,nameSuffix,birth,death) values (?,?,?,?,?,?,?)");
 
-			st.setInt(1,hh);
-			st.setString(2,"m");
-			st.setInt(3,0);
-			st.setInt(4,9);
-			st.setInt(5,m0to9);
+			st.setString(1,gender);
+			st.setString(2,nameLast);
+			st.setString(3,nameFirst);
+			st.setString(4,nameMiddle);
+			st.setString(5,nameSuffix);
+			st.setInt(6,birth);
+			st.setInt(7,death);
 			st.execute();
 		}
 		finally
