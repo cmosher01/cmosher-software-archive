@@ -371,6 +371,14 @@ public class Disk
         return new DiskPos(sector[1],sector[2],0,false);
     }
 
+    /**
+     * @param rDiskPos
+     * @return
+     */
+    public byte[] getDos33File(Collection rDiskPos)
+    {
+    }
+
 //    /**
 //     * @param allowLarge
 //     * @param tsmapMaps
