@@ -111,7 +111,7 @@ public class ExcelCSVParser
     /**
      * The current position within the buffer
      * that parsing will continue at.
-     * @return
+     * @return the next position to be parsed
      */
     public int getNextPos()
     {
@@ -148,9 +148,9 @@ public class ExcelCSVParser
      */
     public String getOneValue() throws IllegalQuoteException, UnmatchedQuoteException
     {
-        StringBuffer sb = new StringBuffer(256);
-        appendOneField(sb);
-        return sb.toString();
+        StringBuffer s = new StringBuffer(256);
+        appendOneField(s);
+        return s.toString();
     }
 
 
