@@ -61,7 +61,7 @@ public class YMD implements Immutable, Serializable, Comparable
 			this.day == that.day;
 	}
 
-    public int hashCode()
+    public synchronized int hashCode()
     {
     	if (hash == 0)
     	{
@@ -70,7 +70,7 @@ public class YMD implements Immutable, Serializable, Comparable
     	return hash;
     }
 
-    private synchronized void updateHash()
+    private void updateHash()
     {
 		hash = 17;
 		hash *= 37;
