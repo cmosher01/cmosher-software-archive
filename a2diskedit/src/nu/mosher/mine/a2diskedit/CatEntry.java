@@ -10,4 +10,9 @@ public class CatEntry
 		System.arraycopy(rb,3,rname,0,0x1e);
 		sName = A2DiskContents.dosName(rname);
 	}
+
+	public String getName()
+	{
+		return sName;
+	}
 }
