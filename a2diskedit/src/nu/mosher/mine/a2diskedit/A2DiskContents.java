@@ -10,5 +10,9 @@ package nu.mosher.mine.a2diskedit;
  */
 public class A2DiskContents
 {
-
+	private final A2DiskImage image;
+	public A2DiskContents(A2DiskImage img)
+	{
+		image = img;
+	}
 }
