@@ -9,7 +9,6 @@ import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
 
 public class HierarchyBrowserUpdater implements TreeExpansionListener
 {
@@ -30,8 +29,7 @@ public class HierarchyBrowserUpdater implements TreeExpansionListener
     {
         beginWait();
 
-        TreePath path = event.getPath();
-        FileTreeNode node = (FileTreeNode)path.getLastPathComponent();
+        FileTreeNode node = (FileTreeNode)event.getPath().getLastPathComponent();
 
         if (node.readTree())
         {
