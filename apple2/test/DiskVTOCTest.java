@@ -92,6 +92,8 @@ public class DiskTest extends TestCase
 
     /**
      * test VTOC for DOS 3.3 blank disk T$11 S$00
+     * (includes HyperDOS, DavidDos, DiversiDos)  ??? need to make prontodos slave ???
+     * (does not include Franklin 1983 disks)
      */
     public void testVTOC_Dos33_Blank()
     {
@@ -100,6 +102,31 @@ public class DiskTest extends TestCase
         "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
         "00 00 00 00 00 00 00 7A 00 00 00 00 00 00 00 00 "+
         "11 01 00 00 23 10 00 01 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 "+
+        "FF FF 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 "+
+        "FF FF 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 "+
+        "FF FF 00 00 FF FF 00 00 FF FF 00 00 00 00 00 00 "+
+        "FF FF 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 "+
+        "FF FF 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 "+
+        "FF FF 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 "+
+        "FF FF 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 "+
+        "FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ")));
+    }
+
+    /**
+     * test VTOC for Franklin (1983) blank disk T$11 S$00
+     * (note, has error in sector count).
+     */
+    public void testVTOC_Franklin1983_Blank()
+    {
+        assertTrue(Disk.isDos33VTOC(Hex2Bin.hex2Bin(
+        "04 11 0F 03 00 00 FE 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 7A 00 00 00 00 00 00 00 00 "+
+        "11 01 00 00 23 10 01 00 00 00 00 00 00 00 00 00 "+
         "00 00 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 "+
         "FF FF 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 "+
         "FF FF 00 00 FF FF 00 00 FF FF 00 00 FF FF 00 00 "+
