@@ -49,7 +49,8 @@ public class MySQLTest
 
 	protected void createSchema() throws SQLException
 	{
-		"create table if not exists family "+
+		dbUpdate("create table if not exists "+
+		"family "+
 		"( "+
 		"    id integer unsigned not null auto_increment primary key, "+
 		"    name varchar(64)"+
