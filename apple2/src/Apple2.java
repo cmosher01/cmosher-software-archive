@@ -106,8 +106,7 @@ public class Apple2
             }
         }
 
-        Disk disk = new Disk(rbDisk);
-        return disk;
+        return new Disk(rbDisk);
     }
 
     /**
