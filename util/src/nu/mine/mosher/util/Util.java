@@ -95,27 +95,13 @@ public final class Util
 
 
 //  TODO Fix these for Java 1.5:
-//      public static ArrayList<T> list(Iterable<T> i)
-//      {
-//          ArrayList<T> r = new ArrayList<T>();
-//          addAll(i,r);
-//          return r;
-//      }
-//    public static void addAll(Iterator<?> i, Collection<?> collection)
-//    {
-//        while (i.hasNext())
-//        {
-//            collection.add(i.next());
-//        }
-//    }
-
-    /**
-     * Iterates through the given Iterator and adds
-     * its elements to the given collection.
-     * @param i the Iterator to get the elements of
-     * @param collection the Collection to add the elements to
-     */
-    public static void addAll(Iterator i, Collection collection)
+    public static ArrayList<T> list(Iterable<T> i)
+    {
+        ArrayList<T> r = new ArrayList<T>();
+        addAll(i,r);
+        return r;
+    }
+    public static void addAll(Iterator<?> i, Collection<?> collection)
     {
         while (i.hasNext())
         {
@@ -123,18 +109,32 @@ public final class Util
         }
     }
 
-    /**
-     * Iterates through the given Iterator and builds
-     * an ArrayList out of its elements.
-     * @param i the Iterator to get the elements of
-     * @return an ArrayList of the elements from i
-     */
-    public static ArrayList list(Iterator i)
-    {
-        ArrayList r = new ArrayList();
-        addAll(i,r);
-        return r;
-    }
+//    /**
+//     * Iterates through the given Iterator and adds
+//     * its elements to the given collection.
+//     * @param i the Iterator to get the elements of
+//     * @param collection the Collection to add the elements to
+//     */
+//    public static void addAll(Iterator i, Collection collection)
+//    {
+//        while (i.hasNext())
+//        {
+//            collection.add(i.next());
+//        }
+//    }
+//
+//    /**
+//     * Iterates through the given Iterator and builds
+//     * an ArrayList out of its elements.
+//     * @param i the Iterator to get the elements of
+//     * @return an ArrayList of the elements from i
+//     */
+//    public static ArrayList list(Iterator i)
+//    {
+//        ArrayList r = new ArrayList();
+//        addAll(i,r);
+//        return r;
+//    }
 
     /**
      * Iterates through the given Iterator and builds
