@@ -70,7 +70,7 @@ public class GedcomParser
 		String sValue = "";
 		if (st.hasMoreTokens())
 		{
-			sValue = st.nextToken("\n"); // rest of line
+			sValue = st.nextToken("\0"); // rest of line
 			int i = 0;
 			while (i < sValue.length() && Character.isWhitespace(sValue.charAt(i)))
 			{
