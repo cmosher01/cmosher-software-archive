@@ -56,7 +56,7 @@ public class GedcomTree
 		root.appendStringDeep(sb);
 
 		sb.append("--------map-of-IDs-to-Nodes--------\n");
-		for (Map<String,TreeNode<GedcomLine>>.Entry entry : mapIDtoNode.entrySet())
+		for (Map.Entry<String,TreeNode<GedcomLine>> entry : mapIDtoNode.entrySet())
         {
             sb.append(entry.getKey());
             sb.append(" --> ");
