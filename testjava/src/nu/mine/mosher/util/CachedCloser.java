@@ -6,6 +6,18 @@ import java.util.Map;
 
 public class UniversalCloser3
 {
+    private final Map cache;
+
+    public UniversalCloser3()
+    {
+        this(null);
+    }
+
+    public UniversalCloser3(Map cache)
+    {
+        this.cache = cache;
+    }
+
     /**
      * Calls the given object's "close()" method, if it has one.
      * Any exceptions are ignored.
@@ -31,13 +43,16 @@ public class UniversalCloser3
      * 
      * @param obj the Object whose close() method is to be called.
      */
-    private static final Map /*<Class,Method>*/ mClasses = new HashMap();
-    public static void close(Object obj)
+    public void close(Object obj)
     {
         try
         {
             Class cl = obj.getClass();
-            Method methodClose = (Method)mClasses.get(cl);
+            Method methodClose = null;
+            if (cache != null)
+            {
+                methodClose = (Method)cache.get(cl);
+            }
             if (methodClose == null)
             {
                 methodClose = cl.getMethod("close",null);
