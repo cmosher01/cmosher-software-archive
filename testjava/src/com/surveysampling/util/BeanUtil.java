@@ -3,6 +3,8 @@ package com.surveysampling.util;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.beans.PropertyEditor;
+import java.beans.PropertyEditorManager;
 import java.lang.reflect.Method;
 import java.util.Iterator;
 
@@ -291,6 +293,31 @@ public final class BeanUtil
         else
         {
             return getValueFromPropertyEditorManager(t, propertyName, s);
+        }
+    }
+
+    private static Object getValueFromBeanInfoPropertyEditor(
+        Class attrClass,
+        String attrName,
+        String attrValue,
+        Class propertyEditorClass) throws InstantiationException, IllegalAccessException
+    {
+        PropertyEditor pe = (PropertyEditor)propertyEditorClass.newInstance();
+        pe.setAsText(attrValue);
+        return pe.getValue();
+    }
+
+    private static Object getValueFromPropertyEditorManager(Class attrClass, String attrName, String attrValue) throws ParameterParseException
+    {
+        PropertyEditor propEditor = PropertyEditorManager.findEditor(attrClass);
+        if (propEditor != null)
+        {
+            propEditor.setAsText(attrValue);
+            return propEditor.getValue();
+        }
+        else
+        {
+            throw new ParameterParseException();
         }
     }
 }
