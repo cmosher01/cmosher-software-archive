@@ -1,0 +1,2365 @@
+[null]
+    0,tag=HEAD,value=""
+        1,tag=SOUR,value="GEDitCOM"
+            2,tag=NAME,value="GEDitCOM"
+            2,tag=VERS,value="2.9.4"
+            2,tag=CORP,value="RSAC Software"
+                3,tag=ADDR,value="7108 South Pine Cone Street
+Salt Lake City, UT 84121
+USA"
+                    4,tag=ADR1,value="RSAC Software"
+                    4,tag=ADR2,value="7108 South Pine Cone Street"
+                    4,tag=CITY,value="Salt Lake City"
+                    4,tag=STAE,value="UT"
+                    4,tag=POST,value="84121"
+                    4,tag=CTRY,value="USA"
+                3,tag=PHON,value="+1-801-942-7768"
+                3,tag=PHON,value="+1-801-555-1212"
+                3,tag=PHON,value="+1-801-942-1148 (FAX) (last one!)"
+            2,tag=DATA,value="Name of source data"
+                3,tag=DATE,value="1 JAN 1998"
+                3,tag=COPR,value="Copyright of source data"
+        1,tag=SUBM,pointer=SUBMITTER
+        1,tag=SUBN,pointer=SUBMISSION
+        1,tag=_HME,pointer=PERSON1
+        1,tag=DEST,value="ANSTFILE"
+        1,tag=DATE,value="1 JAN 1998"
+            2,tag=TIME,value="13:57:24.80"
+        1,tag=FILE,value="TGC55C.ged"
+        1,tag=COPR,value="Ã 1997 by H. Eichmann, parts Ã 1999-2000 by J. A. Nairn."
+        1,tag=GEDC,value=""
+            2,tag=VERS,value="5.5"
+            2,tag=FORM,value="LINEAGE-LINKED"
+        1,tag=LANG,value="English"
+        1,tag=CHAR,value="ANSEL"
+            2,tag=VERS,value="ANSI Z39.47-1985"
+        1,tag=PLAC,value=""
+            2,tag=FORM,value="City, County, State, Country"
+        1,tag=NOTE,value="This file demonstrates all tags that are allowed in GEDCOM 5.5. Here are some comments about the HEADER record and comments about where to look for information on the other 9 types of GEDCOM records. Most other records will have their own notes that describe what to look for in that record and what to hope the importing software will find.
+
+Many applications will fail to import these notes. The notes are therefore also provided with the files as a plain-text "Read-Me" file.
+
+--------------------------
+The HEADER Record:
+     This record has all possible tags for a HEADER record. In uses one custom tag ("_HME") to see what the software will say about custom tags.
+
+--------------------------
+INDIVIDUAL Records:
+     This file has a small number of INDIVIDUAL records. The record named "Joseph Tag Torture" has all possible tags for an INDIVIDUAL record. All remaining  individuals have less tags. Some test specific features; for example:
+
+     Name: Standard GEDCOM Filelinks
+     Name: Nonstandard Multimedia Filelinks
+     Name: General Custom Filelinks
+     Name: Extra URL Filelinks
+          These records link to multimedia files mentioned by the GEDCOM standard and to a variety of other types of multimedia files, general files, or URL names.
+
+     Name: Chris Locked Torture
+          Has a "locked" restriction (RESN) tag - should not be able to edit this record it. This record has one set of notes that is used to test line breaking in notes and a few other text-parsing features of the GEDCOM software. Read those notes to see what they are testing.
+
+     Name: Sandy Privacy Torture
+          Has a "privacy" restriction (RESN) tag. Is the tag recognized and how is the record displayed and/or printed?
+
+     Name: Chris Locked Torture
+     Name: Sandy Privacy Torture
+     Name: Pat Smith Torture
+          The three children in this file have unknown sex (no SEX tag). An ancestor tree from each should give five generations of ancestors.
+
+     Name: Charlie Accented ANSEL
+     Name: Lucy Special ANSEL
+          The notes in these records use all possible special characters in the ANSEL character set. The header of this file denotes this file as using the ANSEL character set. The importing software should handle these special characters in a reasonable way.
+
+     Name: Torture GEDCOM Matriarch
+           All individuals in this file are related and all are descendants (or spouses of descendants) of Torture GEDCOM Matriarch. A descendant tree or report from this individual should show five generations of descendants.
+
+--------------------------
+FAMILY Records:
+     The FAMILY record for "Joseph Tag Torture" (husband) and "Mary First Jones" (wife) has all tags allowed in family records. All other family records use only a few tags and are used to provide records for extra family links in other records.
+
+--------------------------
+SOURCE Records:
+     There are two SOURCE records in this file. The "Everything You Every Wanted to Know about GEDCOM Tags" source has all possible GEDCOM tags for a SOURCE record. The other source only has only a few tags.
+
+--------------------------
+REPOSITORY Record:
+     There is just one REPOSITORY record and it uses all possible tags for such a record.
+
+--------------------------
+SUBMITTER Records:
+     This file has three SUBMITTER records. The "John A. Nairn" record has all tags allowed in such records. The second and third submitter are to test how programs input files with multiple submitters. The GEDCOM standard does not allow for notes in SUBMITTER records. Look in the "Main Submitter" to verify all address data comes through, that all three phone numbers appear, and that the multimedia file link is preserved.
+
+--------------------------
+MULTIMEDIA OBJECT Record:
+     The one MULTIMEDIA record has all possible tags and even has encoded data for a small image of a flower. There are no known GEDCOM programs that can read or write such records. The record is included here to test how programs might respond to finding multimedia records present. There are possible plans to eliminate encoded multimedia objects in the next version of GEDCOM. In the future all multimedia will be included by links to other files. To test current file links and extended file links, see the "Filelinks" family records described above.
+
+--------------------------
+SUBMISSION Record:
+     The one (maximum allowed) SUBMISSION record in this file has all possible tags for such a record.
+
+--------------------------
+NOTE Records:
+     This file has many NOTE records. These are all linked to other records.
+
+--------------------------
+TRLR Records:
+     This file ends in the standard TRLR record.
+
+--------------------------
+ADDITIONAL NOTES
+     This file was originally created by H. Eichmann at <h.eichmann@mbox.iqo.uni-hannover.de> and posted on the Internet.
+
+(NOTE: email addresses are listed here with double "at" signs. A rule of GEDCOM parsing is that these should be converted to single "at" at signs, but not many programs follow that rule. In addition, that rule is not needed and may be abandoned in a future version of GEDCOM).
+
+This original file was extensively modified by J. A. Nairn using GEDitCOM 2.9.4 (1999-2001) at <support@geditcom.com> and posted on the Internet at <http://www.geditcom.com>. Some changes included many more notes, the use or more tags, extensive testing of multimedia file links, and some notes to test all special ANSEL characters.
+
+Feel free to copy and use this GEDCOM file for any  non-commercial purpose.
+
+For selecting the allowed tags, the GEDCOM standard Release 5.5 (2 JAN 1996) was used. Copyright: The Church of Jesus Christ of Latter-Day Saints, <gedcom@gedcom.org>.
+
+You can download the GEDCOM 5.5 specs from: <ftp.gedcom.com/pub/genealogy/gedcom>. You can read the GEDCOM 5.5 specs on the Internet at <http://homepages.rootsweb.com/~pmcbride/gedcom/55gctoc.htm>."
+    0,id=SUBMISSION,tag=SUBN,value=""
+        1,tag=SUBM,pointer=SUBMITTER
+        1,tag=FAMF,value="NameOfFamilyFile"
+        1,tag=TEMP,value="Abbreviated Temple Code"
+        1,tag=ANCE,value="1"
+        1,tag=DESC,value="1"
+        1,tag=ORDI,value="yes"
+        1,tag=RIN,value="1"
+    0,id=SUBMITTER,tag=SUBM,value=""
+        1,tag=NAME,value="John A. Nairn"
+        1,tag=ADDR,value="Submitter address line 1
+Submitter address line 2
+Submitter address line 3
+Submitter address line 4"
+            2,tag=ADR1,value="Submitter address line 1"
+            2,tag=ADR2,value="Submitter address line 2"
+            2,tag=CITY,value="Submitter address city"
+            2,tag=STAE,value="Submitter address state"
+            2,tag=POST,value="Submitter address ZIP code"
+            2,tag=CTRY,value="Submitter address country"
+        1,tag=PHON,value="Submitter phone number 1"
+        1,tag=PHON,value="Submitter phone number 2"
+        1,tag=PHON,value="Submitter phone number 3 (last one!)"
+        1,tag=LANG,value="English"
+        1,tag=OBJE,value=""
+            2,tag=FORM,value="jpeg"
+            2,tag=TITL,value="Submitter Multimedia File"
+            2,tag=FILE,value="ImgFile.JPG"
+            2,tag=NOTE,pointer=N1
+        1,tag=RFN,value="Submitter Registered RFN"
+        1,tag=RIN,value="1"
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="7 Sep 2000"
+                3,tag=TIME,value="8:35:36"
+    0,id=SM2,tag=SUBM,value=""
+        1,tag=NAME,value="Secondary Submitter"
+        1,tag=ADDR,value="Secondary Submitter Address 1
+Secondary Submitter Address 2"
+        1,tag=LANG,value="English"
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="12 Mar 2000"
+                3,tag=TIME,value="10:38:33"
+        1,tag=RIN,value="2"
+    0,id=SM3,tag=SUBM,value=""
+        1,tag=NAME,value="H. Eichmann"
+        1,tag=ADDR,value="email: h.eichmann@mbox.iqo.uni-hannover.de
+or: heiner_eichmann@h.maus.de (no more than 16k!!!!)"
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="13 Jun 2000"
+                3,tag=TIME,value="17:07:32"
+        1,tag=RIN,value="3"
+    0,id=I14,tag=INDI,value=""
+        1,tag=NAME,value="Charlie Accented /ANSEL/"
+        1,tag=SEX,value="M"
+        1,tag=BIRT,value=""
+            2,tag=DATE,value="15 JUN 1900"
+        1,tag=DEAT,value=""
+            2,tag=DATE,value="5 JUL 1974"
+        1,tag=FAMS,pointer=F6
+        1,tag=FAMC,pointer=F7
+        1,tag=NOTE,pointer=N24
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="16:00:06"
+        1,tag=RIN,value="1"
+    0,id=I13,tag=INDI,value=""
+        1,tag=NAME,value="Lucy Special /ANSEL/"
+        1,tag=SEX,value="F"
+        1,tag=BIRT,value=""
+            2,tag=DATE,value="12 AUG 1905"
+        1,tag=DEAT,value=""
+            2,tag=DATE,value="31 DEC 1990"
+        1,tag=FAMS,pointer=F6
+        1,tag=NOTE,pointer=N25
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="16:00:23"
+        1,tag=RIN,value="2"
+    0,id=PERSON6,tag=INDI,value=""
+        1,tag=NAME,value="Teresa Mary /Caregiver/"
+        1,tag=SEX,value="F"
+        1,tag=BIRT,value=""
+            2,tag=DATE,value="6 JUN 1944"
+        1,tag=FAMS,pointer=ADOPTIVE_PARENTS
+        1,tag=NOTE,pointer=N27
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="16:03:05"
+        1,tag=RIN,value="3"
+    0,id=I12,tag=INDI,value=""
+        1,tag=NAME,value="Extra URL /Filelinks/"
+        1,tag=SEX,value="F"
+        1,tag=BIRT,value=""
+            2,tag=DATE,value="1875"
+        1,tag=FAMC,pointer=F5
+        1,tag=NOTE,pointer=N23
+        1,tag=OBJE,value=""
+            2,tag=FORM,value="URL"
+            2,tag=TITL,value="GEDCOM 5.5 documentation web site"
+            2,tag=FILE,value="http://homepages.rootsweb.com/~pmcbride/gedcom/55gctoc.htm"
+        1,tag=OBJE,value=""
+            2,tag=FORM,value="URL"
+            2,tag=TITL,value="FTP site with many GEDCOM files"
+            2,tag=FILE,value="ftp://ftp.genealogy.org/genealogy/GEDCOM/"
+        1,tag=OBJE,value=""
+            2,tag=FORM,value="URL"
+            2,tag=TITL,value="GEDitCOM Macintosh genealogy software home page"
+            2,tag=FILE,value="http://www.geditcom.com"
+        1,tag=OBJE,value=""
+            2,tag=FORM,value="URL"
+            2,tag=TITL,value="Email comments on this GEDCOM file to here"
+            2,tag=FILE,value="mailto:support@geditcom.com"
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="16:01:19"
+        1,tag=RIN,value="4"
+    0,id=I11,tag=INDI,value=""
+        1,tag=NAME,value="General Custom /Filelinks/"
+        1,tag=SEX,value="M"
+        1,tag=BIRT,value=""
+            2,tag=DATE,value="1872"
+        1,tag=DEAT,value=""
+            2,tag=DATE,value="7 DEC 1941"
+        1,tag=FAMC,pointer=F5
+        1,tag=NOTE,pointer=N22
+        1,tag=OBJE,value=""
+            2,tag=FORM,value="TEXT"
+            2,tag=TITL,value="Plain TEXT document"
+            2,tag=FILE,value="Document.tex"
+        1,tag=OBJE,value=""
+            2,tag=FORM,value="W8BN"
+            2,tag=TITL,value="Microsoft Word document"
+            2,tag=FILE,value="Document.DOC"
+        1,tag=OBJE,value=""
+            2,tag=FORM,value="RTF"
+            2,tag=TITL,value="Rich text format document"
+            2,tag=FILE,value="Document.RTF"
+        1,tag=OBJE,value=""
+            2,tag=FORM,value="PDF"
+            2,tag=TITL,value="Portable document format file"
+            2,tag=FILE,value="Document.pdf"
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="16:01:03"
+        1,tag=RIN,value="5"
+    0,id=I10,tag=INDI,value=""
+        1,tag=NAME,value="Nonstandard Multimedia /Filelinks/"
+        1,tag=SEX,value="F"
+        1,tag=BIRT,value=""
+            2,tag=DATE,value="1870"
+        1,tag=DEAT,value="Y"
+        1,tag=FAMS,pointer=F7
+        1,tag=FAMC,pointer=F5
+        1,tag=NOTE,pointer=N21
+        1,tag=OBJE,value=""
+            2,tag=FORM,value="PICT"
+            2,tag=TITL,value="Macintosh PICT file"
+            2,tag=FILE,value="ImgFile.PIC"
+        1,tag=OBJE,value=""
+            2,tag=FORM,value="PNTG"
+            2,tag=TITL,value="Macintosh MacPaint file"
+            2,tag=FILE,value="ImgFile.MAC"
+        1,tag=OBJE,value=""
+            2,tag=FORM,value="TPIC"
+            2,tag=TITL,value="TGA image file"
+            2,tag=FILE,value="ImgFile.TGA"
+        1,tag=OBJE,value=""
+            2,tag=FORM,value="aiff"
+            2,tag=TITL,value="Macintosh sound file"
+            2,tag=FILE,value="enthist.aif"
+        1,tag=OBJE,value=""
+            2,tag=FORM,value="mov"
+            2,tag=TITL,value="QuickTime movie file"
+            2,tag=FILE,value="suntun.mov"
+        1,tag=OBJE,value=""
+            2,tag=TITL,value="Adobe Photoshop file"
+            2,tag=FORM,value="8BPS"
+            2,tag=FILE,value="ImgFile.PSD"
+        1,tag=OBJE,value=""
+            2,tag=FORM,value="mpeg"
+            2,tag=TITL,value="Mpeg Movie File"
+            2,tag=FILE,value="top.mpg"
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="16:00:39"
+        1,tag=RIN,value="6"
+    0,id=I9,tag=INDI,value=""
+        1,tag=NAME,value="Standard GEDCOM /Filelinks/"
+        1,tag=SEX,value="M"
+        1,tag=BIRT,value=""
+            2,tag=DATE,value="1835"
+        1,tag=FAMS,pointer=F5
+        1,tag=NOTE,pointer=N18
+        1,tag=OBJE,value=""
+            2,tag=TITL,value="Windows bit mapped image file"
+            2,tag=FORM,value="bmp"
+            2,tag=FILE,value="ImgFile.BMP"
+        1,tag=OBJE,value=""
+            2,tag=TITL,value="GIF image file"
+            2,tag=FORM,value="gif"
+            2,tag=FILE,value="ImgFile.GIF"
+        1,tag=OBJE,value=""
+            2,tag=TITL,value="JPEG image file"
+            2,tag=FORM,value="jpeg"
+            2,tag=FILE,value="ImgFile.JPG"
+        1,tag=OBJE,value=""
+            2,tag=TITL,value="Tagged image format file"
+            2,tag=FORM,value="tiff"
+            2,tag=FILE,value="ImgFile.TIF"
+        1,tag=OBJE,value=""
+            2,tag=FORM,value="pcx"
+            2,tag=TITL,value="Windows paint brush file"
+            2,tag=FILE,value="ImgFile.PCX"
+        1,tag=OBJE,value=""
+            2,tag=TITL,value="Windows sound File"
+            2,tag=FORM,value="wav"
+            2,tag=FILE,value="force.wav"
+        1,tag=OBJE,pointer=M1
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="16:02:06"
+        1,tag=RIN,value="7"
+    0,id=PERSON2,tag=INDI,value=""
+        1,tag=NAME,value="Mary First /Jones/"
+        1,tag=SEX,value="F"
+        1,tag=BIRT,value=""
+            2,tag=DATE,value="BEF 1970"
+        1,tag=DEAT,value=""
+            2,tag=DATE,value="AFT 2000"
+        1,tag=FAMS,pointer=FAMILY1
+        1,tag=NOTE,pointer=N31
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="15:58:16"
+        1,tag=RIN,value="8"
+    0,id=I15,tag=INDI,value=""
+        1,tag=NAME,value="Torture GEDCOM /Matriarch/"
+        1,tag=SEX,value="F"
+        1,tag=BIRT,value=""
+            2,tag=DATE,value="12 FEB 1840"
+        1,tag=DEAT,value=""
+            2,tag=DATE,value="15 JUN 1915"
+        1,tag=FAMS,pointer=F5
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="16:01:59"
+        1,tag=RIN,value="9"
+    0,id=PERSON8,tag=INDI,value=""
+        1,tag=NAME,value="Elizabeth Second /Smith/"
+        1,tag=SEX,value="F"
+        1,tag=BIRT,value=""
+            2,tag=DATE,value="BET MAY 1979 AND AUG 1979"
+        1,tag=DEAT,value=""
+            2,tag=DATE,value="FROM APR 2000 TO 5 MAR 2001"
+        1,tag=FAMS,pointer=FAMILY2
+        1,tag=NOTE,pointer=N32
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="15:58:58"
+        1,tag=RIN,value="10"
+    0,id=PERSON3,tag=INDI,value=""
+        1,tag=NAME,value="Chris Locked /Torture/"
+        1,tag=BIRT,value=""
+            2,tag=DATE,value="MAR 1999"
+            2,tag=PLAC,value="Las Vegas, Nevada USA"
+        1,tag=FAMC,pointer=FAMILY1
+        1,tag=NOTE,pointer=N20
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="15:55:43"
+            2,tag=NOTE,value="This date is the last time this record was changed"
+        1,tag=RESN,value="locked"
+        1,tag=RIN,value="11"
+    0,id=PERSON1,tag=INDI,value=""
+        1,tag=NAME,value="Joseph Tag /Torture/"
+            2,tag=NPFX,value="Prof."
+            2,tag=GIVN,value="Joseph"
+            2,tag=NICK,value="Joe"
+            2,tag=SPFX,value="Le"
+            2,tag=SURN,value="Torture"
+            2,tag=NSFX,value="Jr."
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+            2,tag=NOTE,value="These are notes about the first NAME structure in this record. These notes are embedded in the INDIVIDUAL record itself.
+
+The second name structure in this record uses all possible tags for a personal name structure.
+
+NOTE: many applications are confused by two NAME structures."
+        1,tag=SEX,value="M"
+        1,tag=NAME,value="William John /Smith/"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="55"
+                3,tag=EVEN,value="Event type cited in source"
+                    4,tag=ROLE,value="Role in cited event"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="1 JAN 1900"
+                    4,tag=TEXT,value="Here is some text from the source specific to this source citation.
+Here is more text but on a new line."
+                3,tag=QUAY,value="0"
+                3,tag=OBJE,value=""
+                    4,tag=TITL,value="Multimedia link about this source"
+                    4,tag=FORM,value="jpeg"
+                    4,tag=NOTE,pointer=N26
+                    4,tag=FILE,value="ImgFile.JPG"
+                3,tag=NOTE,pointer=N7
+            2,tag=NOTE,value="This is a second personal NAME structure in a single INDIVIDUAL record which is allowed in GEDCOM. This second NAME structure has all possible fields for a NAME structure.
+
+These notes are embedded in the INDIVIDUAL record."
+        1,tag=BIRT,value=""
+            2,tag=DATE,value="31 DEC 1965"
+            2,tag=PLAC,value="Salt Lake City, UT, USA"
+            2,tag=TYPE,value="Normal"
+            2,tag=ADDR,value="St. Marks Hospital
+Salt Lake City, UT
+USA"
+            2,tag=AGNC,value="none"
+            2,tag=OBJE,value=""
+                3,tag=TITL,value="Link to multimedia file"
+                3,tag=FORM,value="tiff"
+                3,tag=FILE,value="ImgFile.TIF"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=QUAY,value="2"
+                3,tag=NOTE,value="Some notes about this birth source citation which are embedded in the citation structure itself."
+            2,tag=NOTE,pointer=N8
+            2,tag=FAMC,pointer=PARENTS
+        1,tag=DEAT,value=""
+            2,tag=DATE,value="ABT 15 JAN 2001"
+            2,tag=PLAC,value="New York, New York, USA"
+                3,tag=FORM,value="city, state, country"
+                3,tag=NOTE,value="The place structure has more detail than usually used for places"
+                3,tag=SOUR,pointer=SOURCE1
+            2,tag=AGE,value="76"
+            2,tag=TYPE,value="slow"
+            2,tag=ADDR,value="at Home"
+            2,tag=CAUS,value="Cancer"
+            2,tag=AGNC,value="none"
+            2,tag=OBJE,value=""
+                3,tag=FORM,value="jpeg"
+                3,tag=TITL,value="Multimedia link about the death event"
+                3,tag=FILE,value="ImgFile.JPG"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some death source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A death source note."
+            2,tag=NOTE,value="A death event note."
+        1,tag=FAMS,pointer=FAMILY1
+            2,tag=NOTE,value="Note about the link to the family record with his first spouse."
+            2,tag=NOTE,value="Another note about the link to the family record with his first spouse."
+        1,tag=FAMS,pointer=FAMILY2
+        1,tag=FAMC,pointer=PARENTS
+            2,tag=NOTE,value="Note about this link to his parents family record."
+            2,tag=NOTE,value="Another note about this link to his parents family record"
+        1,tag=FAMC,pointer=ADOPTIVE_PARENTS
+            2,tag=PEDI,value="adopted"
+            2,tag=NOTE,value="Note about the link to his adoptive parents family record."
+        1,tag=BAPM,value="Y"
+            2,tag=DATE,value="ABT 31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=AGE,value="3 months"
+            2,tag=TYPE,value="BAPM"
+            2,tag=ADDR,value="Church Name
+Street Address
+City Name, zip
+Country"
+            2,tag=CAUS,value="Birth"
+            2,tag=AGNC,value="The Church"
+            2,tag=OBJE,value=""
+                3,tag=FORM,value="jpeg"
+                3,tag=TITL,value="JPEG File Link"
+                3,tag=FILE,value="ImgFile.JPG"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Sample baptism Source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A baptism source note."
+            2,tag=NOTE,value="A baptism event note (the event of baptism (not LDS), performed in infancy or later. See also BAPL and CHR)."
+        1,tag=CHR,value=""
+            2,tag=DATE,value="CAL 31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="CHR"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Sample CHR Source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A christening Source note."
+            2,tag=NOTE,value="Christening event note (the religious event (not LDS) of baptizing and/or naming a child)."
+            2,tag=FAMC,pointer=ADOPTIVE_PARENTS
+        1,tag=CHR,value=""
+            2,tag=DATE,value="EST 30 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="CHR"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some christening source text.
+This is the second christening structure."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A christening Source note."
+            2,tag=NOTE,value="Alternative christening event note. GEDOM allows more than one of the same type of event."
+        1,tag=BLES,value=""
+            2,tag=DATE,value="BEF 31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="BLES"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some blessing source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A blessing source note."
+            2,tag=NOTE,value="Blessing event note (a religious event of bestowing divine care or intercession. Sometimes given in connection with a naming ceremony)"
+        1,tag=BARM,value=""
+            2,tag=DATE,value="AFT 31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="BARM"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some Bar Mitzvah source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A Bar Mitzvah source note."
+            2,tag=NOTE,value="Bar Mitzvah event note (the ceremonial event held when a Jewish boy reaches age 13)."
+        1,tag=BASM,value=""
+            2,tag=DATE,value="FROM 31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="BASM"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some Bas Mitzvah source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A Bas Mitzvah source note."
+            2,tag=NOTE,value="Bas Mitzvah event note (the ceremonial event held when a Jewish girl reaches age 13, also known as "Bat Mitzvah")."
+        1,tag=ADOP,value="Y"
+            2,tag=DATE,value="TO 31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="ADOP"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some adoption source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="An adoption source note."
+            2,tag=NOTE,value="Adoption event note (pertaining to creation of a child-parent relationship that does not exist biologically)."
+            2,tag=FAMC,pointer=ADOPTIVE_PARENTS
+                3,tag=ADOP,value="BOTH"
+        1,tag=CHRA,value=""
+            2,tag=DATE,value="BET 31 DEC 1997 AND 1 FEB 1998"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="CHRA"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some christening source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A christening source note."
+            2,tag=NOTE,value="Adult christening event note (the religious event (not LDS) of baptizing and/or naming an adult person)."
+        1,tag=CONF,value=""
+            2,tag=DATE,value="FROM 31 DEC 1997 TO 2 JAN 1998"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="CONF"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some CONF Source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A CONF Source note."
+            2,tag=NOTE,value="CONFIRMATION event note (the religious event (not LDS) of conferring the gift of the Holy Ghost and, among protestants, full church membership)."
+        1,tag=FCOM,value=""
+            2,tag=DATE,value="INT 31 DEC 1997 (a test)"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="FCOM"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some first communion source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="An first communion source note."
+            2,tag=NOTE,value="First communion event note (a religious rite, the first act of sharing in the Lord's supper as part of church worship)."
+        1,tag=ORDN,value=""
+            2,tag=DATE,value="(No idea of the date)"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="ORDN"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some ordination source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="An ordination source note."
+            2,tag=NOTE,value="Ordination event note (a religious event of receiving authority to act in religious matters)."
+        1,tag=GRAD,value=""
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="GRAD"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some graduation source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A graduation source note."
+            2,tag=NOTE,value="Graduation event note (an event of awarding educational diplomas or degrees to individuals)."
+        1,tag=EMIG,value=""
+            2,tag=DATE,value="1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="EMIG"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some emigration source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="An emigration source note."
+            2,tag=NOTE,value="Emigration event note (an event of leaving one's homeland with the intent of residing elsewhere)."
+        1,tag=IMMI,value=""
+            2,tag=DATE,value="DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="IMMI"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some immigration source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="An immigration source note."
+            2,tag=NOTE,value="Immigration event note (an event of entering into a new locality with the intent of residing there)."
+        1,tag=NATU,value=""
+            2,tag=DATE,value="5 AUG 1100 B.C."
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="NATU"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some naturalization source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A naturalization source note."
+            2,tag=NOTE,value="Naturalization event note (the event of obtaining citizenship)."
+        1,tag=CENS,value=""
+            2,tag=DATE,value="2 TVT 5758"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="CENS"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some census source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A census source note."
+            2,tag=NOTE,value="Census event note (the event of the periodic count of the population for a designated locality, such as a national or state Census)."
+        1,tag=RETI,value=""
+            2,tag=DATE,value="11 NIVO 0006"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="RETI"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some retirement source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A retirement source note."
+            2,tag=NOTE,value="Retirement event note (an event of exiting an occupational relationship with an employer after a qualifying time period)."
+        1,tag=PROB,value=""
+            2,tag=DATE,value="FROM 25 SVN 5757 TO 26 IYR 5757"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="PROB"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some probate source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A probate source note."
+            2,tag=NOTE,value="Probate event note (an event of judicial determination of the validity of a will. May indicate several related court activities over several dates)."
+        1,tag=BURI,value=""
+            2,tag=DATE,value="5 VEND 0010"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="BURI"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some burial source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A burial source note."
+            2,tag=NOTE,value="Burial event note (the event of the proper disposing of the mortal remains of a deceased person)."
+        1,tag=WILL,value=""
+            2,tag=DATE,value="INT 2 TVT 5758 (interpreted Hebrew date)"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="WILL"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some will source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A will source note."
+            2,tag=NOTE,value="Will event note (a legal document treated as an event, by which a person disposes of his or her estate, to take effect after death. The event date is the date the will was signed while the person was alive. See also Probate)."
+        1,tag=CREM,value="Y"
+        1,tag=EVEN,value=""
+            2,tag=DATE,value="5 MAY 0005"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="EVEN"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some generic event source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A generic event source note."
+            2,tag=NOTE,value="Generic event note (a noteworthy happening related to an individual, a group, or an organization). The TYPE tag specifies the type of event."
+        1,tag=BAPL,value=""
+            2,tag=DATE,value="5 MAY 0005 B.C."
+            2,tag=PLAC,value="Salt Lake City"
+            2,tag=STAT,value="Cleared"
+            2,tag=TEMP,value="Mormon Temple"
+            2,tag=SOUR,pointer=SOURCE1
+            2,tag=NOTE,pointer=N5
+        1,tag=CONL,value="Y"
+        1,tag=ENDL,value=""
+            2,tag=DATE,value="BET 5 APR 1712/13 AND 28 SEP 1714/15"
+        1,tag=SLGC,value=""
+            2,tag=DATE,value="27 OCT 1699/00"
+            2,tag=FAMC,pointer=PARENTS
+        1,tag=RESI,value=""
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=AGE,value="35"
+            2,tag=TYPE,value="RESI"
+            2,tag=ADDR,value="Address in Free Form Line 1
+Address in Free Form Line 2
+Address in Free Form Line 3"
+                3,tag=ADR1,value="Special Address Line 1"
+                3,tag=ADR2,value="Special Address Line 2"
+                3,tag=CITY,value="City Name"
+                3,tag=STAE,value="State name"
+                3,tag=POST,value="Postal Code"
+                3,tag=CTRY,value="USA"
+            2,tag=PHON,value="+1-800-555-5555"
+            2,tag=CAUS,value="Needed housing"
+            2,tag=AGNC,value="None"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some residence source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A residence source note."
+            2,tag=NOTE,value="Residence attribute note (the act of dwelling at an address for a period of time)."
+        1,tag=OCCU,value="Occupation"
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=AGE,value="40"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="OCCU"
+            2,tag=ADDR,value="Work address line 1
+Work address line 2
+Work address line 3"
+            2,tag=CAUS,value="Need for money"
+            2,tag=AGNC,value="Employer"
+            2,tag=OBJE,value=""
+                3,tag=FORM,value="gif"
+                3,tag=TITL,value="GIF Image File"
+                3,tag=FILE,value="ImgFile.GIF"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some occupation source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="An occupation source note."
+            2,tag=NOTE,value="Occupation attribute note (the type of work or profession of an individual)."
+        1,tag=OCCU,value="Another occupation"
+            2,tag=DATE,value="31 DEC 1998"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="OCCU"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some occupation source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="An occupation source note."
+            2,tag=NOTE,value="Occupation attribute note. This is the second occupation attribute in the record."
+        1,tag=EDUC,value="Education"
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="EDUC"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some education source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="An education source note."
+            2,tag=NOTE,value="Education attribute note (indicator of a level of education attained)."
+        1,tag=DSCR,value="Physical description"
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="PHYS"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some physical description source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A physical description source note."
+            2,tag=NOTE,value="Physical description attribute note (the physical characteristics of a person, place, or thing)."
+        1,tag=RELI,value="Religion"
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="RELI"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some religion source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A religion source note."
+            2,tag=NOTE,value="Religion attribute note (a religious denomination to which a person is affiliated or for which a record applies)."
+        1,tag=SSN,value="6942"
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="SSN"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some Social security number source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="An Social security number source note."
+            2,tag=NOTE,value="Social security number attribute note (a number assigned by the United States Social Security Administration. Used for tax identification purposes)."
+        1,tag=IDNO,value="6942"
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="IDNO"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some national identification number source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="An national identification number source note."
+            2,tag=NOTE,value="National identification number attribute note (a number assigned to identify a person within some significant external system)."
+        1,tag=PROP,value="Possessions"
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="PROP"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some possessions source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,pointer=N11
+            2,tag=NOTE,value="Possessions or property attribute note (pertaining to possessions such as real estate or other property of interest)."
+        1,tag=CAST,value="Cast name"
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="CAST"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some caste name source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A caste name source note."
+            2,tag=NOTE,value="Caste name attribute note (the name of an individual's rank or status in society, based on racial or religious differences, or differences in wealth, inherited rank, profession, occupation, etc)."
+        1,tag=NCHI,value="42"
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="NCHI"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some number of children source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="Am number of children source note."
+            2,tag=NOTE,value="Number of children attribute note."
+        1,tag=NMR,value="42"
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="NMR"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some number of marriages source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="An number of marriages source note."
+            2,tag=NOTE,value="Number of marriages attribute note."
+        1,tag=TITL,value="Nobility title"
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="TITL"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some title source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A title source note."
+            2,tag=NOTE,value="Title attribute note (a description of a specific writing or other work, such as the title of a book when used in a source context, or a formal designation used by an individual in connection with positions of royalty or other social status, 
+such as Grand Duke)."
+        1,tag=NATI,value="National or tribe origin"
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="NATI"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Some nationality source text."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="An nationality source note."
+            2,tag=NOTE,value="Nationality attribute note (the national heritage of an individual)."
+        1,tag=NOTE,pointer=N4
+            2,tag=SOUR,pointer=SOURCE1
+        1,tag=NOTE,value="This is a second set of notes for this single individual record. It is embedded in the INDIVIDUAL record instead of being in a separate NOTE record.
+
+These notes also have a source citation to a SOURCE record. In GEDCOM this source can only be a single line and links to a SOURCE record."
+            2,tag=SOUR,pointer=SOURCE1
+        1,tag=SOUR,pointer=SOURCE1
+            2,tag=PAGE,value="42"
+            2,tag=DATA,value=""
+                3,tag=DATE,value="31 DEC 1900"
+                3,tag=TEXT,value="Some sample text from the first source on this record."
+            2,tag=QUAY,value="0"
+            2,tag=NOTE,value="A source note."
+        1,tag=SOUR,pointer=SR2
+            2,tag=NOTE,pointer=N12
+        1,tag=SOUR,value="This source is embedded in the record instead of being a link to a separate SOURCE record.
+The source description can use any number of lines"
+            2,tag=TEXT,value="Text from a source. The preferred approach is to cite sources by links to SOURCE records.
+Here is a new line of text from the source."
+            2,tag=NOTE,pointer=N17
+        1,tag=OBJE,value=""
+            2,tag=FORM,value="gif"
+            2,tag=TITL,value="GIF Image File"
+            2,tag=FILE,value="ImgFile.GIF"
+        1,tag=ALIA,pointer=I9
+        1,tag=ASSO,pointer=I9
+            2,tag=RELA,value="Has multimedia links"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Sample text about this source on an association."
+            2,tag=NOTE,value="Note on association link."
+        1,tag=ASSO,pointer=PERSON5
+            2,tag=RELA,value="Father"
+        1,tag=SUBM,pointer=SUBMITTER
+        1,tag=ANCI,pointer=SUBMITTER
+        1,tag=DESI,pointer=SUBMITTER
+        1,tag=REFN,value="User reference number"
+            2,tag=TYPE,value="Type of user number"
+        1,tag=RIN,value="12"
+        1,tag=RFN,value="Record File Number"
+        1,tag=AFN,value="Ancestral File Number"
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="12 Feb 2001"
+                3,tag=TIME,value="19:16:42"
+    0,id=PERSON7,tag=INDI,value=""
+        1,tag=NAME,value="Pat Smith /Torture/"
+        1,tag=BIRT,value=""
+            2,tag=DATE,value="1 JAN 2001"
+            2,tag=PLAC,value="London, UK"
+        1,tag=FAMC,pointer=FAMILY2
+        1,tag=NOTE,pointer=N30
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="15:56:49"
+        1,tag=RIN,value="13"
+    0,id=PERSON4,tag=INDI,value=""
+        1,tag=NAME,value="Sandy Privacy /Torture/"
+        1,tag=RESN,value="privacy"
+        1,tag=BIRT,value=""
+            2,tag=DATE,value="15 FEB 2000"
+            2,tag=PLAC,value="Chicago, IL, USA"
+        1,tag=FAMC,pointer=FAMILY1
+        1,tag=NOTE,pointer=N29
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="15:56:15"
+        1,tag=RIN,value="14"
+    0,id=PERSON5,tag=INDI,value=""
+        1,tag=NAME,value="William Joseph /Torture/"
+        1,tag=SEX,value="M"
+        1,tag=BIRT,value=""
+            2,tag=DATE,value="ABT 1930"
+        1,tag=DEAT,value="Y"
+            2,tag=DATE,value="INT 1995 (from estimated age)"
+            2,tag=AGE,value="65"
+            2,tag=CAUS,value="Old age"
+        1,tag=FAMS,pointer=PARENTS
+        1,tag=FAMC,pointer=F6
+        1,tag=NOTE,pointer=N28
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="15:59:40"
+        1,tag=RIN,value="15"
+    0,id=FAMILY1,tag=FAM,value=""
+        1,tag=HUSB,pointer=PERSON1
+        1,tag=WIFE,pointer=PERSON2
+        1,tag=MARR,value=""
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="Man and Wife"
+            2,tag=ADDR,value="A Church
+Main Street, USA"
+            2,tag=CAUS,value="Love"
+            2,tag=AGNC,value="Catholic Church"
+            2,tag=HUSB,value=""
+                3,tag=AGE,value="42y"
+            2,tag=WIFE,value=""
+                3,tag=AGE,value="42y 6m"
+            2,tag=OBJE,value=""
+                3,tag=FORM,value="jpeg"
+                3,tag=TITL,value="Multimedia link about the marriage event"
+                3,tag=FILE,value="ImgFile.JPG"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Text from marriage source."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A note about the marriage source."
+            2,tag=NOTE,value="Marriage event note (a legal, common-law, or customary event of creating a family unit of a man and a woman as husband and wife)."
+        1,tag=CHIL,pointer=PERSON3
+        1,tag=CHIL,pointer=PERSON4
+        1,tag=NCHI,value="42"
+        1,tag=ENGA,value="Y"
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=AGE,value="42"
+            2,tag=TYPE,value="ENGA"
+            2,tag=ADDR,value="The house
+Anytown, USA"
+            2,tag=CAUS,value="Desire"
+            2,tag=AGNC,value="None"
+            2,tag=HUSB,value=""
+                3,tag=AGE,value="42y"
+            2,tag=WIFE,value=""
+                3,tag=AGE,value="STILLBORN"
+            2,tag=OBJE,value=""
+                3,tag=FORM,value="bmp"
+                3,tag=TITL,value="BMP Image File"
+                3,tag=FILE,value="ImgFile.BMP"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Sample text from engagement source."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A note about this engagement source."
+            2,tag=NOTE,value="Engagement event note (an event of recording or announcing an agreement between two people to become married)."
+        1,tag=MARB,value=""
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="MARB"
+            2,tag=HUSB,value=""
+                3,tag=AGE,value="42y"
+            2,tag=WIFE,value=""
+                3,tag=AGE,value="42y 6m"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Sample text from marriage banns source."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A note about this marriage banns source."
+            2,tag=NOTE,value="Marriage banns event note (an event of an official public notice given that two people intend to marry)."
+        1,tag=MARC,value=""
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="MARC"
+            2,tag=HUSB,value=""
+                3,tag=AGE,value="42y"
+            2,tag=WIFE,value=""
+                3,tag=AGE,value=">42y 6m"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Sample text from marriage contract source."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A note about this marriage contract source."
+            2,tag=NOTE,value="Marriage contract event note (an event of recording a formal agreement of marriage, including the prenuptial agreement in which marriage partners reach agreement about the property rights of one or both, securing property to their children)."
+        1,tag=MARL,value=""
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="MARL"
+            2,tag=HUSB,value=""
+                3,tag=AGE,value="42y"
+            2,tag=WIFE,value=""
+                3,tag=AGE,value="<42y 6m"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Sample text from marriage license source."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A note about this marriage license source."
+            2,tag=NOTE,value="Marriage license event note (an event of obtaining a legal license to marry)."
+        1,tag=MARS,value=""
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="MARS"
+            2,tag=HUSB,value=""
+                3,tag=AGE,value="42y"
+            2,tag=WIFE,value=""
+                3,tag=AGE,value="INFANT"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Sample text from marriage settlement source."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A note about this marriage settlement source."
+            2,tag=NOTE,value="Marriage settlement event note (an event of creating an agreement between two people contemplating marriage, at which time they agree to release or modify property rights that would otherwise arise from the marriage)."
+        1,tag=DIV,value=""
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="DIV"
+            2,tag=HUSB,value=""
+                3,tag=AGE,value="42y 3d"
+            2,tag=WIFE,value=""
+                3,tag=AGE,value="42m"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Sample text from divorce source."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A note about this divorce source."
+            2,tag=NOTE,value="Divorce event note (an event of dissolving a marriage through civil action)."
+        1,tag=DIVF,value=""
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=HUSB,value=""
+                3,tag=AGE,value="42d"
+            2,tag=WIFE,value=""
+                3,tag=AGE,value="CHILD"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Sample text from divorce filing source."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A note about this divorce filing source."
+            2,tag=NOTE,value="DIVORCE_FILED event note (an event of filing for a divorce by a spouse)."
+        1,tag=ANUL,value="Y"
+            2,tag=DATE,value="31 DEC 1997"
+        1,tag=CENS,value=""
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="CENS"
+            2,tag=HUSB,value=""
+                3,tag=AGE,value="42y 6m 9d"
+            2,tag=WIFE,value=""
+                3,tag=AGE,value="6m 9d"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Sample text from census source."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A note about this census source."
+            2,tag=NOTE,value="Census event note (the event of the periodic count of the population for a designated locality, such as a national or state Census)."
+        1,tag=EVEN,value=""
+            2,tag=DATE,value="31 DEC 1997"
+            2,tag=PLAC,value="The place"
+            2,tag=TYPE,value="EVEN"
+            2,tag=HUSB,value=""
+                3,tag=AGE,value="42y"
+            2,tag=WIFE,value=""
+                3,tag=AGE,value="42y 6m"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=PAGE,value="42"
+                3,tag=DATA,value=""
+                    4,tag=DATE,value="31 DEC 1900"
+                    4,tag=TEXT,value="Sample text from generic family event source."
+                3,tag=QUAY,value="3"
+                3,tag=NOTE,value="A note about this generic family event source."
+            2,tag=NOTE,value="Generic family vent note (a noteworthy happening related to an individual, a group, or an organization)."
+        1,tag=SLGS,value=""
+            2,tag=DATE,value="12 DEC 1976"
+            2,tag=PLAC,value="Temple"
+            2,tag=STAT,value="Child"
+            2,tag=TEMP,value="Temple Code"
+            2,tag=SOUR,pointer=SOURCE1
+                3,tag=DATA,value=""
+                    4,tag=TEXT,value="Sample text from LDS spouse sealing source."
+                3,tag=NOTE,pointer=N19
+            2,tag=NOTE,pointer=N6
+        1,tag=NOTE,value="Comments on "Joseph Tag Torture-Mary First Jones" FAMILY Record.
+
+This record contains all possible types of data that can be stored in a FAMILY (FAM) GEDCOM record. Here are some comments on the data tested here and things to look for when this file is imported into any GEDCOM application:
+
+1. The marriage event (MARR) uses all possible tags for such a structure including notes, sources, and a link to a multimedia file.
+
+2. This family has two children.
+
+3. This family has all possible family events (including a generic event or EVEN structure). Some notes are:
+     a. The engaged structure has all possible tags for event detail.
+     b. The annulment event (ANUL) has no data except a "Y" in the first line to indicate that the event has occurred. The importing software should keep this event in this record even though it contains no data.
+     c. The LDS Spouse Sealing event tests all possible detail tags for an LDS.
+     d. The TYPE tag of each event has the name of the GEDCOM tag for that event. There is no TYPE tag in the annulment event because that structure is empty.
+
+4. This record has this one note structure which is to a set of embedded notes (and which you are reading now).
+
+5. This record has one source citation.
+
+6. This record is linked a submitter.
+
+7. This record has all remaining tags allowed in FAMILY records for user reference number, record ID, and the changed date."
+        1,tag=SOUR,pointer=SOURCE1
+            2,tag=PAGE,value="42"
+            2,tag=DATA,value=""
+                3,tag=DATE,value="31 DEC 1900"
+                3,tag=TEXT,value="A sample text from a source of this family"
+            2,tag=QUAY,value="0"
+            2,tag=NOTE,value="A note this source on the FAMILY record."
+        1,tag=OBJE,value=""
+            2,tag=FORM,value="bmp"
+            2,tag=TITL,value="BMP Image File"
+            2,tag=FILE,value="ImgFile.BMP"
+        1,tag=SUBM,pointer=SUBMITTER
+        1,tag=REFN,value="User Reference Number"
+            2,tag=TYPE,value="Type of user number"
+        1,tag=RIN,value="1"
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="16:18:40"
+    0,id=PARENTS,tag=FAM,value=""
+        1,tag=HUSB,pointer=PERSON5
+        1,tag=CHIL,pointer=PERSON1
+        1,tag=NOTE,pointer=N33
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="13 Jun 2000"
+                3,tag=TIME,value="17:00:35"
+        1,tag=RIN,value="2"
+    0,id=ADOPTIVE_PARENTS,tag=FAM,value=""
+        1,tag=WIFE,pointer=PERSON6
+        1,tag=CHIL,pointer=PERSON1
+        1,tag=NOTE,pointer=N34
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="13 Jun 2000"
+                3,tag=TIME,value="17:01:18"
+        1,tag=RIN,value="3"
+    0,id=FAMILY2,tag=FAM,value=""
+        1,tag=HUSB,pointer=PERSON1
+        1,tag=WIFE,pointer=PERSON8
+        1,tag=CHIL,pointer=PERSON7
+        1,tag=NOTE,pointer=N35
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="13 Jun 2000"
+                3,tag=TIME,value="17:01:46"
+        1,tag=RIN,value="4"
+    0,id=F5,tag=FAM,value=""
+        1,tag=HUSB,pointer=I9
+        1,tag=WIFE,pointer=I15
+        1,tag=CHIL,pointer=I10
+        1,tag=CHIL,pointer=I11
+        1,tag=CHIL,pointer=I12
+        1,tag=NOTE,pointer=N36
+        1,tag=RIN,value="5"
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="16:50:37"
+    0,id=F6,tag=FAM,value=""
+        1,tag=HUSB,pointer=I14
+        1,tag=WIFE,pointer=I13
+        1,tag=CHIL,pointer=PERSON5
+        1,tag=NOTE,pointer=N37
+        1,tag=RIN,value="6"
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="16:51:48"
+    0,id=F7,tag=FAM,value=""
+        1,tag=WIFE,pointer=I10
+        1,tag=CHIL,pointer=I14
+        1,tag=NOTE,pointer=N38
+        1,tag=RIN,value="7"
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="16:52:53"
+    0,id=SOURCE1,tag=SOUR,value=""
+        1,tag=TITL,value="Everything You Every Wanted to Know about GEDCOM Tags, But Were Afraid to Ask!
+You can start new lines in this field too."
+        1,tag=ABBR,value="All About GEDCOM Tags"
+        1,tag=AUTH,value="Author or Authorss of this Source using multiple lines if necessary.
+Here is a new line in this field"
+        1,tag=PUBL,value="Details of the publisher of this source using multiple lines if necessary.
+Here is a new line in this field"
+        1,tag=REPO,pointer=R1
+            2,tag=CALN,value="920.23"
+                3,tag=MEDI,value="Book (or other description of this source)"
+            2,tag=NOTE,value="A short note about the repository link. This note is about the repository (if more information is needed other than call number and simple description). Notes about the Source itself are usually entered elsewhere."
+        1,tag=TEXT,value="This section is used to generic text from the course. It will usually be a quote from the text that is relevant to the use of this source in the current GEDCOM file.
+
+It may use as many lines as needed."
+        1,tag=DATA,value=""
+            2,tag=EVEN,value="BIRT, CHR"
+                3,tag=DATE,value="FROM 1 JAN 1980 TO 1 FEB 1982"
+                3,tag=PLAC,value="Anytown, Anycounty, USA"
+            2,tag=EVEN,value="DEAT"
+                3,tag=DATE,value="FROM 1 JAN 1980 TO 1 FEB 1982"
+                3,tag=PLAC,value="County Some, Ireland"
+            2,tag=AGNC,value="Responsible agency for data in this source"
+            2,tag=NOTE,value="A note about data in source.
+
+This note includes a blank line before this text. These notes are used to describe the data in this source. Notes about the source itself are usually entered in a different set of notes."
+        1,tag=NOTE,pointer=N15
+        1,tag=NOTE,value="These are notes embedded in the SOURCE Record instead of in a separate NOTE RECORD."
+        1,tag=OBJE,value=""
+            2,tag=TITL,value="JPEG image file link"
+            2,tag=FORM,value="jpeg"
+            2,tag=NOTE,pointer=N14
+            2,tag=FILE,value="ImgFile.JPG"
+        1,tag=REFN,value="User Reference Number"
+            2,tag=TYPE,value="User Reference Type"
+        1,tag=RIN,value="1"
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="14 Jan 2001"
+                3,tag=TIME,value="14:29:25"
+    0,id=SR2,tag=SOUR,value=""
+        1,tag=TITL,value="All I Know About GEDCOM, I Learned on the Internet"
+        1,tag=ABBR,value="What I Know About GEDCOM"
+        1,tag=AUTH,value="Second Source Author"
+        1,tag=NOTE,pointer=N16
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="16:21:39"
+        1,tag=RIN,value="2"
+    0,id=R1,tag=REPO,value=""
+        1,tag=NAME,value="Family History Library"
+        1,tag=ADDR,value="35 North West Temple
+Salt Lake City, UT 84111
+USA"
+            2,tag=ADR1,value="35 North West Temple"
+            2,tag=ADR2,value="Across the street from Temple Square"
+            2,tag=CITY,value="Salt Lake City"
+            2,tag=STAE,value="Utah"
+            2,tag=POST,value="84111"
+            2,tag=CTRY,value="USA"
+        1,tag=PHON,value="+1-801-240-2331 (information)"
+        1,tag=PHON,value="+1-801-240-1278 (gifts & donations)"
+        1,tag=PHON,value="+1-801-240-2584 (support)"
+        1,tag=NOTE,pointer=N2
+        1,tag=REFN,value="User Ref Number"
+            2,tag=TYPE,value="Sample"
+        1,tag=RIN,value="1"
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="12 Mar 2000"
+                3,tag=TIME,value="10:36:02"
+    0,id=N1,tag=NOTE,value="Test link to a graphics file about the main Submitter of this file."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="24 May 1999"
+                3,tag=TIME,value="16:39:55"
+    0,id=N2,tag=NOTE,value="Comments on "Family History Library" REPOSITORY Record.
+
+This record uses all possible GEDCOM tags for a REPOSITORY record. Some things to look for are:
+
+1. The address is specified twice. Once in a multi-line address record and once in separate lines. The first method is usually enough. The second method is to be more specific about parts of the address. Is everything imported?
+
+2. There are multiple phone numbers. Are they all imported?"
+        1,tag=SOUR,pointer=SOURCE1
+            2,tag=PAGE,value="1"
+            2,tag=DATA,value=""
+                3,tag=DATE,value="1 MAY 1999"
+                3,tag=TEXT,value="Text from the source about this repository."
+            2,tag=QUAY,value="3"
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="12 Mar 2000"
+                3,tag=TIME,value="11:44:05"
+    0,id=N4,tag=NOTE,value="Comments on "Joseph Tag Torture" INDIVIDUAL Record.
+
+This record contains all possible types of data that can be stored in an INDIVIDUAL (INDI) GEDCOM record. Here are some comments on the data tested here and things to look for when this file is imported into any GEDCOM application:
+
+1. This record has two NAME structures. How will a program handle this type of data which is allowed in GEDCOM? (Because some GEDCOM files get very bothered by a second name, the files TGC551.ged and TGC551LF files are identical to the TGC55.ged and TGC55LF.ged files except only one name structure is used for this individual - hence the "1" in their names).
+
+2. The first NAME structure has all possible subordinate tags for a NAME structure including source and notes a source citation and some notes. The second NAME structure (when used) has a source citation and some notes. Are these all imported?
+
+3. The Birth and Death events use all possible fields including subordinate tags, sources, multimedia links (in Birth), and notes. The birth data has an attached family link which is sometimes needed in case of ambiguous parentage.
+
+4. This individual has two spouses. The links to the spouses have attached notes.
+
+5. This individual has two sets of parents - natural parents and adoptive parents. Each parent link has attached notes. The adoptive parents has a subordinate pedigree (PEDI) tag.
+
+6. This individual has all possible events (including a generic event or EVEN structure). The GEDCOM tags for the events are given in the TYPE tag of each event. Some comments are:
+     a. The baptism record has all possible tags for event detail.
+     b. There are 2 christening records to see how programs react to duplicate events (which are allowed).
+     c. The adoption event has a family link to give more information about adoptive parentage.
+     d. The cremation event (CREM) has no data except a "Y" in the first line to indicate that the event has occurred. The importing software should keep this event in this record even though it contains no data (The GEDCOM tag is not in this TYPE tag).
+     e. The LDS Baptism event tests all possible detail tags for an LDS ordinance.
+     f. The LDS confirmation has no data except a "Y" in the first line to indicate that the event has occurred. The importing software should keep this event in this record even though it contains no data.
+     g. The date fields in the various events test the possible GEDCOM methods for expressing dates, approximate dates, date ranges, and interpreted dates. There are also a few Hebrew dates, French Republic dates. and "B.C" dates.
+
+7. The residence structure use all possible subordinate tags in the address part of the residence.
+
+8. This individual has all possible attributes. The GEDCOM tags for the attributes are given in the TYPE tag of each attribute. Some notes are:
+     a. There are 2 occupation attributes to test how programs handle multiple tags of the same type (which is allowed).
+     b. The first OCCU attribute uses all possible subordinate tags for an attribute.
+
+9. This record has three note structures. The first is this set of notes which is in a separate NOTE record. The other two are NOTE structures embedded in the record. Are all imported and kept separate? Furthermore, the two embedded note structures have subordinate source citations. The second set of notes has a source citation to a SOURCE record and the third set of notes has an embedded source citation.
+
+10. This record has three source citations. Two are citations to a SOURCE record; one is an embedded source citation (used in older GEDCOM files).
+
+11. This record has one link to a multimedia file. For more testing of multimedia links, see the "Standard GEDCOM Filelinks," "Nonstandard Multimedia Filelinks," "General Custom Filelinks," and "Extra URL Filelinks" INDIVIDUAL records.
+
+12. This individual has one alias and two associations. All possible tags in the first association link are used.
+
+13. This record is linked to a submitter and to two submitters with interest in the ancestors and descendants of this individual.
+
+14. This record has all remaining tags allowed in individual records for user reference number, record ID, record file number, ancestral file number, and the changed date."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="12 Jan 2001"
+                3,tag=TIME,value="0:36:39"
+    0,id=N5,tag=NOTE,value="Notes on this LDS event. All possible LDS ordinance detail tags are used in this event."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="6 Mar 2000"
+                3,tag=TIME,value="22:05:42"
+    0,id=N6,tag=NOTE,value="Notes on this LDS Spouse Sealing Event."
+        1,tag=SOUR,pointer=SOURCE1
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="26 May 1999"
+                3,tag=TIME,value="22:38:25"
+    0,id=N7,tag=NOTE,value="This source citation has all fields possible in a source citation to a separate SOURCE record. Besides the link to the SOURCE record there are possible fields about this citation (e.g., PAGE, TEXT, etc.)
+
+These notes on the source citation are in a separate NOTE record."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="13 Jun 2000"
+                3,tag=TIME,value="16:02:33"
+    0,id=N8,tag=NOTE,value="Some specific note about the birth event.
+
+These notes are in a separate NOTE record. These notes also have their own source citation structure."
+        1,tag=SOUR,pointer=SR2
+            2,tag=DATA,value=""
+                3,tag=DATE,value="1 JUN 1945"
+                3,tag=TEXT,value="Here is some text from the source. The source is about the notes for the birth event."
+            2,tag=QUAY,value="3"
+            2,tag=NOTE,pointer=N9
+            2,tag=PAGE,value="102"
+            2,tag=EVEN,value="Event type cited in source"
+                3,tag=ROLE,value="Role in cited event"
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="18 Jun 2000"
+                3,tag=TIME,value="1:09:46"
+    0,id=N9,tag=NOTE,value="These are notes in a NOTE record. It is a bit redundant, but you can add source citations directly to NOTE records in addition to adding source citations to the initial GEDCOM structure that the notes are about.
+
+This example source citation in a NOTE record has all possible source citation fields filled in."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="9 Jun 1999"
+                3,tag=TIME,value="13:16:57"
+    0,id=N11,tag=NOTE,value="A possessions source note."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="18 Jun 2000"
+                3,tag=TIME,value="1:37:42"
+    0,id=N12,tag=NOTE,value="This is a second source citation in this record."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="6 Mar 2000"
+                3,tag=TIME,value="22:18:51"
+    0,id=N14,tag=NOTE,value="These notes can be used to add more information about the multimedia file linked to this SOURCE record."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="12 Mar 2000"
+                3,tag=TIME,value="9:49:23"
+    0,id=N15,tag=NOTE,value="Comments on "Everything You Every Wanted to Know about GEDCOM Tags" SOURCE Record.
+
+This is a set of notes about this SOURCE record. These notes are for anything else needed. There are other places to enter notes about the storage of the source (in the Repository link) and about the data in the source (in the DATA structure).
+
+This particular SOURCE record uses all possible GEDCOM tags for a SOURCE record. Some things to check are:
+
+1. Are the separate notes structures in the Repository link and the DATA structure preserved on importing?
+
+2. Does the software recognize two sets of event types in the DATA structure?
+
+3. Are the multimedia links preserved?
+
+4. This record as two sets of notes - this one in a separate record and a second one embedded in the SOURCE record. Are they both imported and kept separate?"
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="13 Jun 2000"
+                3,tag=TIME,value="17:04:24"
+    0,id=N16,tag=NOTE,value="Comments on "All I Know About GEDCOM, I Learned on the Internet" SOURCE record.
+
+This is another SOURCE record. How does the importing software handle multiple sources in the GEDCOM file? This source only fills a few GEDCOM structures."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="12 Mar 2000"
+                3,tag=TIME,value="12:46:21"
+    0,id=N17,tag=NOTE,value="How does software handle embedded SOURCE records on import? Such source citations are common in old GEDCOM files. More modern GEDCOM files should use source citations to SOURCE records."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="12 Mar 2000"
+                3,tag=TIME,value="10:56:56"
+    0,id=N18,tag=NOTE,value="Comments on "Standard GEDCOM Filelinks" INDIVIDUAL Record.
+
+The GEDCOM standard lets you link records to multimedia objects kept in separate files. When GEDCOM 5.5 was released, it only mentioned allowing links to a small number of multimedia files types and some of them are Windows-only file types. The recommended list is
+
+     bmp - Windows but map file
+     gif - Bit map, 256 color GIF files (common on the Internet)
+     jpeg - Bit-mapped files developed for photographs (also common on the Internet)
+     ole - Linked object
+     pcx - Windows paintbrush file
+     tiff - Tagged image format file
+     wav - Windows sound file
+
+This INDIVIDUAL record has links to this limited set of multimedia files (except for ole). These links are created by having an OBJE structure with the path name to the file in a subordinate FILE tag and the format of the file in a subordinate FORM tag.
+
+It does not make sense to limit files links to this small set of file types. It does not allow for future file types and, for example, it ignores movie files types. You can visit the "Nonstandard Multimedia Filelinks" record to see links to other types of multimedia files. You can visit the "General Custom Filelinks" and the "Extra URL Filelinks" records to see links to any file type and to universal resource locators.
+
+NOTE: The path names for the linked files here are just the file names. A good GEDCOM program should search for the files and might look first in the same folder as this test GEDCOM file. A weaker program might be unable to locate these files and you will have to enter the full path names.
+
+EMBEDDED Multimedia Object:
+     GEDCOM 5.5 has a method for encoding multimedia objects and storing them in MULTIMEDIA Records. This INDIVIDUAL has a link to such an embedded object. The object has encoded data, written using the GEDCOM 5.5 encoding algorithm, for the image of a small flower. To my knowledge, there are no genealogy programs that can actually read and decode such objects. The main reason for inclusion of the object here is to see how programs will treat this record. Good programs will leave them in the file (it is bad manners to delete someone's data). Bad programs will simple delete the object from the file."
+        1,tag=REFN,value="User Reference Number"
+            2,tag=TYPE,value="User Reference Type"
+        1,tag=RIN,value="1"
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="15:41:51"
+    0,id=N19,tag=NOTE,value="A note about this LDS spouse sealing source."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="12 Mar 2000"
+                3,tag=TIME,value="12:32:13"
+    0,id=N20,tag=NOTE,value="Comments on "Chris Locked Torture" record.
+
+These notes test line breaking in note records with multiple lines. These notes are for a locked individual and thus you should not be able to edit them.
+
+TEST #1: Line breaks in the middle of a word
+     These lines appear together. The word TEST should appear as a single word and not be broken onto two lines.
+
+TEST #2: Translation of "at" signs
+     The GEDCOM standard says the "@" sign should appear in any text in the file as double "@@" signs. This recommendation is superfluous, because there is never a case when an "@" sign in data can be confused with other GEDCOM uses of the "@" sign. The question here is how does the software import:
+
+     A single @ sign in some notes entered by using two characters.
+
+If all "at" signs above appear above as 2 or 4 at signs, that GEDCOM software is not converting double at signs to single at signs.
+
+TEST #3: Bad line breaks between word but a forgotten space
+     A little below, the words "End" and "Start" are on two lines in the note record. The line with "End," however, forgot the required trailing blank. Thus, a proper importing of these bad notes should combine the two words with no space between "End" and "Start". Here is EndStart as described above. They should appear as one word.
+
+TEST #4: Blank lines
+     The above paragraphs should have blank lines between them."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="15:35:25"
+    0,id=N21,tag=NOTE,value="Comments on "Nonstandard Multimedia Filelinks" INDIVIDUAL Record.
+
+File links in GEDCOM are created by having an OBJE structure with the path name to the file in a subordinate FILE tag and the format of the file in a subordinate FORM tag. It does not make sense to limit file links to the small set of file types mentioned in the GEDCOM standard (see INDIVIDUAL record "Standard GEDCOM Filelinks"  for those file types). This INDIVIDUAL record has links to other types of multimedia files including movie files, other image file types, and some Macintosh file types.
+
+What will a genealogy program do when in encounters to logical extensions to GEDCOM file links? Good programs will follow the links. Weaker programs will simply delete them from your file (it is bad manners to delete someone's data).
+
+Some other possible multimedia file type not yet linked to this record are:
+   avi - Microsoft movie file
+   midi - sound file
+   mp3 - music file"
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="15:43:04"
+    0,id=N22,tag=NOTE,value="Comments on "General Custom Filelinks" INDIVIDUAL Record.
+
+File links in GEDCOM are created by having an OBJE structure with the path name to the file in a subordinate FILE tag and the format of the file in a subordinate FORM tag. It does not make sense to limit file links to the small set of multimedia file types mentioned in the GEDCOM standard (see INDIVIDUAL record "Standard GEDCOM Filelinks" for those file types). The INDIVIDUAL record "Nonstandard Multimedia Filelinks" has sample links to other types of multimedia files not included in the standard GEDCOM list. This INDIVIDUAL record has links to some non-multimedia files types.
+
+What will a genealogy program do when it encounters such logical extensions to GEDCOM file links? Good programs will follow the links. Weaker programs will simply delete them from your file (it is bad manners to delete someone's data)."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="20 Jun 2000"
+                3,tag=TIME,value="1:06:34"
+    0,id=N23,tag=NOTE,value="Comments on "Extra URL Filelinks" INDIVIDUAL Record.
+
+File links in GEDCOM are created by having an OBJE structure with the path name to the file in a subordinate FILE tag and the format of the file in a subordinate FORM tag. It does not make sense to limit file links to the small set of multimedia file types mentioned in the GEDCOM standard (see INDIVIDUAL record "Standard GEDCOM Filelinks" for those file types) or even to limit them to local files. This INDIVIDUAL record has a series of links with universal resource locators (URL) in the FILE tag and the file "URL" in the FORM tag.
+
+The sample URL links include links to a web sites, a link to an FTP site, and a link to send email.
+
+This extension of file links to URL links is non-standard GEDCOM. What will a genealogy program do when in encounters URL file links? Cleaver programs will find the file on the Internet using your default browser, FTP program, or email program. Weaker programs will simply delete them from your file (it is bad manners to delete someone's data)."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="20 Jun 2000"
+                3,tag=TIME,value="1:09:48"
+    0,id=N24,tag=NOTE,value="Comments on "Charlie Accented ANSEL" INDIVIDUAL Record.
+
+To represent accented characters, the ANSEL character set uses two-byte codes. The first byte is E0 to FB or FE (hexadecimal); the second byte is the letter to be accented.
+
+These notes have all possible accented characters. How many of the characters are represented correctly? Even programs that fully support ANSEL will not draw all these accented characters correctly. Many of them correspond to accents that can not be found in any langauge and therefore do not correspond to any computer fonts.
+
+code: E0 (Unicode: hook above, 0309) low rising tone mark
+     àAàBàCàDàEàFàGàHàIàJàKàLàM
+     àNàOàPàQàRàSàTàUàVàWàXàYàZ
+     àaàbàcàdàeàfàgàhàiàjàkàlàm
+     ànàoàpàqàràsàtàuàvàwàxàyàz
+
+code: E1 (Unicode: grave, 0300) grave accent
+     áAáBáCáDáEáFáGáHáIáJáKáLáM
+     áNáOáPáQáRáSáTáUáVáWáXáYáZ
+     áaábácádáeáfágáháiájákálám
+     ánáoápáqárásátáuáváwáxáyáz
+
+code: E2 (Unicode: acute, 0301) acute accent:
+     âAâBâCâDâEâFâGâHâIâJâKâLâM
+     âNâOâPâQâRâSâTâUâVâWâXâYâZ
+     âaâbâcâdâeâfâgâhâiâjâkâlâm
+     ânâiâpâqârâsâtâuâvâwâxâyâz
+
+code: E3 (Unicode: circumflex, 0302) circumflex accent
+     ãAãBãCãDãEãFãGãHãIãJãKãLãM
+     ãNãOãPãQãRãSãTãUãVãWãXãYãZ
+     ãaãbãcãdãeãfãgãhãiãjãkãlãm
+     ãnãoãpãqãrãsãtãuãvãwãxãyãz
+
+code: E4 (Unicode: tilde, 0303) tilde
+     äAäBäCäDäEäFäGäHäIäJäKäLäM
+     äNäOäPäQäRäSäTäUäVäWäXäYäZ
+     äNäbäcädäeäfägähäiäjäkäläm
+     änäoäpäqäräsätäuäväwäxäyäz
+
+code: E5 (Unicode: macron, 0304) macron
+     åAåBåCåDåEåFåGåHåIåJåKåLåM
+     åNåOåPåQåRåSåTåUåVåWåXåYåZ
+     åaåbåcådåeåfågåhåiåjåkålåm
+     ånåoåpåqåråsåtåuåvåwåxåyåz
+
+code: E6 (Unicode: breve, 0306) breve
+     æAæBæCæDæEæFæGæHæIæJæKæLæM
+     æNæOæPæQæRæSæTæUæVæWæXæYæZ
+     æaæbæcædæeæfægæhæiæjækælæm
+     ænæoæpæqæræsætæuævæwæxæyæz
+
+code: E7 (Unicode: dot above, 0307) dot above
+     çAçBçCçDçEçFçGçHçIçJçKçLçM
+     çNçOçPçQçRçSçTçUçVçWçXçYçZ
+     çaçbçcçdçeçfçgçhçiçjçkçlçm
+     çnçoçpçqçrçsçtçuçvçwçxçyçz
+
+code: E8 (Unicode: diaeresis, 0308) umlaut (dieresis)
+     èAèBèCèDèEèFèGèHèIèJèKèLèM
+     èNèOèPèQèRèSèTèUèVèWèXèYèZ
+     èaèbècèdèeèfègèhèièjèkèlèm
+     ènèoèpèqèrèsètèuèvèwèxèyèz
+
+code: E9 (Unicode: caron, 030C) hacek
+     éAéBéCéDéEéFéGéHéIéJéKéLéM
+     éNéOéPéQéRéSéTéUéVéWéXéYéZ
+     éaébécédéeéfégéhéiéjékélém
+     énéoépéqérésétéuévéwéxéyéz
+
+code: EA (Unicode: ring above, 030A) circle above (angstrom)
+     êAêBêCêDêEêFêGêHêIêJêKêLêM
+     êNêOêPêQêRêSêTêUêVêWêXêYêZ
+     êaêbêcêdêeêfêgêhêiêjêkêlêm
+     ênêoêpêqêrêsêtêuêvêwêxêyêz
+
+code: EB (Unicode: ligature left half, FE20) ligature, left half
+     ëAëBëCëDëEëFëGëHëIëJëKëLëM
+     ëNëOëPëQëRëSëTëUëVëWëXëYëZ
+     ëaëbëcëdëeëfëgëhëiëjëkëlëm
+     ënëoëpëqërësëtëuëvëwëxëyëz
+
+code: EC (Unicode: ligature right half, FE21) ligature, right half
+     ìAìBìCìDìEìFìGìHìIìJìKìLìM
+     ìNìOìPìQìRìSìTìUìVìWìXìYìZ
+     ìaìbìcìdìeìfìgìhìiìjìkìlìm
+     ìnìoìpìqìrìsìtìuìvìwìxìyìz
+
+code: ED (Unicode: comma above right, 0315) high comma, off center
+     íAíBíCíDíEíFíGíHíIíJíKíLíM
+     íNíOíPíQíRíSíTíUíVíWíXíYíZ
+     íaíbícídíeífígíhíiíjíkílím
+     íníoípíqírísítíuívíwíxíyíz
+
+code: EE (Unicode: double acute, 030B) double acute accent
+     îAîBîCîDîEîFîGîHîIîJîKîLîM
+     îNîOîPîQîRîSîTîUîVîWîXîYîZ
+     îaîbîcîdîeîfîgîhîiîjîkîlîm
+     înîoîpîqîrîsîtîuîvîwîxîyîz
+
+code: EF (Unicode: candrabindu, 0310) candrabindu
+     ïAïBïCïDïEïFïGïHïIïJïKïLïM
+     ïNïOïPïQïRïSïTïUïVïWïXïYïZ
+     ïaïbïcïdïeïfïgïhïiïjïkïlïm
+     ïnïoïpïqïrïsïtïuïvïwïxïyïz
+
+code: F0 (Unicode: cedilla, 0327) cedilla
+     ðAðBðCðDðEðFðGðHðIðJðKðLðM
+     ðNðOðPðQðRðSðTðUðVðWðXðYðZ
+     ðaðbðcðdðeðfðgðhðiðjðkðlðm
+     ðnðoðpðqðrðsðtðuðvðwðxðyðz
+
+code: F1 (Unicode: ogonek, 0328) right hook
+     ñAñBñCñDñEñFñGñHñIñJñKñLñM
+     ñNñOñPñQñRñSñTñUñVñWñXñYñZ
+     ñañbñcñdñeñfñgñhñiñjñkñlñm
+     ñnñoñpñqñrñsñtñuñvñwñxñyñz
+
+code: F2 (Unicode: dot below, 0323) dot below
+     òAòBòCòDòEòFòGòHòIòJòKòLòM
+     òNòOòPòQòRòSòTòUòVòWòXòYòZ
+     òaòbòcòdòeòfògòhòiòjòkòlòm
+     ònòoòpòqòròsòtòuòvòwòxòyòz
+
+code: F3 (Unicode: diaeresis below, 0324) double dot below
+     óAóBóCóDóEóFóGóHóIóJóKóLóM
+     óNóOóPóQóRóSóTóUóVóWóXóYóZ
+     óaóbócódóeófógóhóiójókólóm
+     ónóoópóqórósótóuóvówóxóyóz
+
+code: F4 (Unicode: ring below, 0325) circle below
+     ôAôBôCôDôEôFôGôHôIôJôKôLôM
+     ôNôOôPôQôRôSôTôUôVôWôXôYôZ
+     ôaôbôcôdôeôfôgôhôiôjôkôlôm
+     ônôoôpôqôrôsôtôuôvôwôxôyôz
+
+code: F5 (Unicode: double low line, 0333) double underscore
+     õAõBõCõDõEõFõGõHõIõJõKõLõM
+     õNõOõPõQõRõSõTõUõVõWõXõYõZ
+     õaõbõcõdõeõfõgõhõiõjõkõlõm
+     õnõoõpõqõrõsõtõuõvõwõxõyõz
+
+code: F6 (Unicode: line below, 0332) underscore
+     öAöBöCöDöEöFöGöHöIöJöKöLöM
+     öNöOöPöQöRöSöTöUöVöWöXöYöZ
+     öaöböcödöeöfögöhöiöjökölöm
+     önöoöpöqörösötöuövöwöxöyöz
+
+code: F7 (Unicode: comma below, 0326) left hook
+     ÷A÷B÷C÷D÷E÷F÷G÷H÷I÷J÷K÷L÷M
+     ÷N÷O÷P÷Q÷R÷S÷T÷U÷V÷W÷X÷Y÷Z
+     ÷a÷b÷c÷d÷e÷f÷g÷h÷i÷j÷k÷l÷m
+     ÷n÷o÷p÷q÷r÷s÷t÷u÷v÷w÷x÷y÷z
+
+code: F8 (Unicode: left half ring below, 031C) right cedilla
+     øAøBøCøDøEøFøGøHøIøJøKøLøM
+     øNøOøPøQøRøSøTøUøVøWøXøYøZ
+     øaøbøcødøeøføgøhøiøjøkøløm
+     ønøoøpøqørøsøtøuøvøwøxøyøz
+
+code: F9 (Unicode: breve below, 032E) half circle below
+     ùAùBùCùDùEùFùGùHùIùJùKùLùM
+     ùNùOùPùQùRùSùTùUùVùWùXùYùZ
+     ùaùbùcùdùeùfùgùhùiùjùkùlùm
+     ùnùoùpùqùrùsùtùuùvùwùxùyùz
+
+code: FA (Unicode: double tilde left half, FE22) double tilde, left half
+     úAúBúCúDúEúFúGúHúIúJúKúLúM
+     úNúOúPúQúRúSúTúUúVúWúXúYúZ
+     úaúbúcúdúeúfúgúhúiújúkúlúm
+     únúoúpúqúrúsútúuúvúwúxúyúz
+
+code: FB (Unicode: double tilde right half, FE23) double tilde, right half
+     ûAûBûCûDûEûFûGûHûIûJûKûLûM
+     ûNûOûPûQûRûSûTûUûVûWûXûYûZ
+     ûaûbûcûdûeûfûgûhûiûjûkûlûm
+     ûnûoûpûqûrûsûtûuûvûwûxûyûz
+
+code: FE (Unicode: comma above, 0313) high comma, centered
+     þAþBþCþDþEþFþGþHþIþJþKþLþM
+     þNþOþPþQþRþSþTþUþVþWþXþYþZ
+     þaþbþcþdþeþfþgþhþiþjþkþlþm
+     þnþoþpþqþrþsþtþuþvþwþxþyþz"
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="12 Jan 2001"
+                3,tag=TIME,value="0:32:24"
+    0,id=N25,tag=NOTE,value="Comments on "Lucy Special ANSEL" INDIVIDUAL Record.
+
+The following are the special characters supported by the ANSEL character set. The first two letters are the Hex code. The following text describes the character. Finally, that character, or a character as close as possible to that character, should appear in the parentheses.
+
+A1 slash l - uppercase (¡)
+A2 slash o - uppercase (¢)
+A3 slash d - uppercase (£)
+A4 thorn - uppercase (¤)
+A5 ligature ae - uppercase (¥)
+A6 ligature oe - uppercase (¦)
+A7 single prime (§)
+A8 middle dot (¨)
+A9 musical flat (©)
+AA registered sign (ª)
+AB plus-or-minus («)
+AC hook o - uppercase (¬)
+AD hook u - uppercase (­)
+AE left half ring (®)
+BO right half ring (°)
+B1 slash l - lowercase (±)
+B2 slash o - lowercase (²)
+B3 slash d - lowercase (³)
+B4 thorn - lowercase (´)
+B5 ligature ae - lowercase (µ)
+B6 ligature oe - lowercase (¶)
+B7 double prime (·)
+B8 dotless i - lowercase (¸)
+B9 british pound (¹)
+BA eth (º)
+BC hook o - lowercase (¼)
+BD hook u - lowercase (½)
+BE empty box - LDS extension (¾)
+BF black box - LDS extensions (¿)
+CO degree sign (À)
+C1 script l (Á)
+C2 phonograph copyright mark (Â)
+C3 copyright symbol (Ã)
+C4 musical sharp (Ä)
+C5 inverted question mark (Å)
+C6 inverted exclamation mark (Æ)
+CD midline e - LDS extension (Í)
+CE midline o - LDS extension (Î)
+CF es zet (Ï)"
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="13 Jun 2000"
+                3,tag=TIME,value="16:28:45"
+    0,id=N26,tag=NOTE,value="These are some notes of this multimedia link in the NAME structure."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="16 Jun 2000"
+                3,tag=TIME,value="1:20:11"
+    0,id=N27,tag=NOTE,value="Comments on "Teresa Mary Caregiver" INDIVIDUAL Record.
+
+This record is the adoptive mother of "Joseph Tag Torture". She is linked to a family record, but there is no husband in that record."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="13 Jun 2000"
+                3,tag=TIME,value="17:14:28"
+    0,id=N28,tag=NOTE,value="Comments on "William Joseph Torture" INDIVIDUAL Record.
+
+This record is the natural father of "Joseph Tag Torture". He is linked to a family record, but there is no wife in that record."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="15:31:12"
+    0,id=N29,tag=NOTE,value="Comments on "Sandy Privacy Torture" INDIVIDUAL Record.
+
+This record has a restriction setting of "privacy." In public applications of GEDCOM files, "privacy" records should be hidden from all viewing and printing. It is less clear how GEDCOM software on your own PC reading your own copies of GEDCOM files should treat "privacy" records. At a minimum, it should import and preserve the "privacy" setting."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="15:36:50"
+    0,id=N30,tag=NOTE,value="Comments on "Pat Smith Torture" INDIVIDUAL Record.
+
+The record simply provides a child to "Joseph Tag Torture" in his family with "Mary First Jones" as his spouse."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="15:40:04"
+    0,id=N31,tag=NOTE,value="Comments on "Mary First Jones" INDIVIDUAL Record.
+
+This record is used to provide the first wife to "Joseph Tag Torture." Not many other tags are used."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="15:38:17"
+    0,id=N32,tag=NOTE,value="Comments on "Elizabeth Second Smith" INDIVIDUAL Record.
+
+This record is used to provide a second wife to "Joseph Tag Torture." Not many other tags are used."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="15:38:55"
+    0,id=N33,tag=NOTE,value="Comments on "William Joseph Torture-<unknown>" FAMILY Record.
+
+This record has the natural father of "Joseph Tag Torture." The wife is not known."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="16:49:33"
+    0,id=N34,tag=NOTE,value="Comments on "<unknown>-Teresa Mary Caregiver" FAMILY Record.
+
+This record has the adoptive mother of "Joseph Tag Torture." The husband is not known."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="16:50:06"
+    0,id=N35,tag=NOTE,value="Comments on "Joseph Tag Torture-Elizabeth Second Smith" FAMILY Record.
+
+This record has a second marriage for "Joseph Tag Torture" and the family has one child."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="16:50:21"
+    0,id=N36,tag=NOTE,value="Comments on "Standard GEDCOM Filelinks-Torture GEDCOM Matriarch" FAMILY record.
+
+The children in this family test logical extensions to the GEDCOM method for linking to a multimedia file."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="16:51:33"
+    0,id=N37,tag=NOTE,value="Comments on "Charlie Accented ANSEL-Lucy Special ANSEL" FAMILY Record.
+
+The two spouses in this family test reading of the ANSEL character set."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="16:52:38"
+    0,id=N38,tag=NOTE,value="Comments on "<unknown>-Nonstandard Multimedia Filelinks" FAMILY Record.
+
+The record is simply used to make family connections between records in this file."
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="11 Jan 2001"
+                3,tag=TIME,value="16:53:38"
+    0,id=M1,tag=OBJE,value=""
+        1,tag=TITL,value="Dummy Multimedia Object"
+        1,tag=FORM,value="PICT"
+        1,tag=BLOB,value="
+.HM.......k.1..F.jwA.Dzzzzw............A....1.........0U.66..E.8
+.......A..k.a6.A.......A..k.........../6....G.......0../..U.....
+.w1/m........HC0..../...zzzzzzzz..5zzk..AnA..U..W6U....2rRrRrRrR
+.Dw...............k.1.......1..A...5ykE/zzzx/.g//.Hxzk6/.Tzy/.k1
+/Dw/.Tvz.E5zzUE9/kHz.Tw2/DzzzEEA.kE2zk5yzk2/zzs21.U2/Dw/.Tw/.Tzy
+/.fy/.HzzkHzzzo21Ds00.E2.UE2.U62/.k./Ds0.UE0/Do0..E8/UE2.U62.U9w
+/.Tx/.20.jg2/jo2..9u/.0U.6A.zk"
+        1,tag=NOTE,value="Here are some notes on this multimedia object.
+If decoded it should be an image of a flower."
+        1,tag=REFN,value="User Reference Number"
+            2,tag=TYPE,value="User Reference Type"
+        1,tag=RIN,value="1"
+        1,tag=CHAN,value=""
+            2,tag=DATE,value="14 Jan 2001"
+                3,tag=TIME,value="14:10:31"
+    0,tag=TRLR,value=""
+--------map-of-IDs-to-Nodes--------
+F5 --> 0,id=F5,tag=FAM,value=""
+PERSON5 --> 0,id=PERSON5,tag=INDI,value=""
+N21 --> 0,id=N21,tag=NOTE,value="Comments on "Nonstandard Multimedia Filelinks" INDIVIDUAL Record.
+
+File links in GEDCOM are created by having an OBJE structure with the path name to the file in a subordinate FILE tag and the format of the file in a subordinate FORM tag. It does not make sense to limit file links to the small set of file types mentioned in the GEDCOM standard (see INDIVIDUAL record "Standard GEDCOM Filelinks"  for those file types). This INDIVIDUAL record has links to other types of multimedia files including movie files, other image file types, and some Macintosh file types.
+
+What will a genealogy program do when in encounters to logical extensions to GEDCOM file links? Good programs will follow the links. Weaker programs will simply delete them from your file (it is bad manners to delete someone's data).
+
+Some other possible multimedia file type not yet linked to this record are:
+   avi - Microsoft movie file
+   midi - sound file
+   mp3 - music file"
+ADOPTIVE_PARENTS --> 0,id=ADOPTIVE_PARENTS,tag=FAM,value=""
+PERSON4 --> 0,id=PERSON4,tag=INDI,value=""
+N15 --> 0,id=N15,tag=NOTE,value="Comments on "Everything You Every Wanted to Know about GEDCOM Tags" SOURCE Record.
+
+This is a set of notes about this SOURCE record. These notes are for anything else needed. There are other places to enter notes about the storage of the source (in the Repository link) and about the data in the source (in the DATA structure).
+
+This particular SOURCE record uses all possible GEDCOM tags for a SOURCE record. Some things to check are:
+
+1. Are the separate notes structures in the Repository link and the DATA structure preserved on importing?
+
+2. Does the software recognize two sets of event types in the DATA structure?
+
+3. Are the multimedia links preserved?
+
+4. This record as two sets of notes - this one in a separate record and a second one embedded in the SOURCE record. Are they both imported and kept separate?"
+FAMILY2 --> 0,id=FAMILY2,tag=FAM,value=""
+N18 --> 0,id=N18,tag=NOTE,value="Comments on "Standard GEDCOM Filelinks" INDIVIDUAL Record.
+
+The GEDCOM standard lets you link records to multimedia objects kept in separate files. When GEDCOM 5.5 was released, it only mentioned allowing links to a small number of multimedia files types and some of them are Windows-only file types. The recommended list is
+
+     bmp - Windows but map file
+     gif - Bit map, 256 color GIF files (common on the Internet)
+     jpeg - Bit-mapped files developed for photographs (also common on the Internet)
+     ole - Linked object
+     pcx - Windows paintbrush file
+     tiff - Tagged image format file
+     wav - Windows sound file
+
+This INDIVIDUAL record has links to this limited set of multimedia files (except for ole). These links are created by having an OBJE structure with the path name to the file in a subordinate FILE tag and the format of the file in a subordinate FORM tag.
+
+It does not make sense to limit files links to this small set of file types. It does not allow for future file types and, for example, it ignores movie files types. You can visit the "Nonstandard Multimedia Filelinks" record to see links to other types of multimedia files. You can visit the "General Custom Filelinks" and the "Extra URL Filelinks" records to see links to any file type and to universal resource locators.
+
+NOTE: The path names for the linked files here are just the file names. A good GEDCOM program should search for the files and might look first in the same folder as this test GEDCOM file. A weaker program might be unable to locate these files and you will have to enter the full path names.
+
+EMBEDDED Multimedia Object:
+     GEDCOM 5.5 has a method for encoding multimedia objects and storing them in MULTIMEDIA Records. This INDIVIDUAL has a link to such an embedded object. The object has encoded data, written using the GEDCOM 5.5 encoding algorithm, for the image of a small flower. To my knowledge, there are no genealogy programs that can actually read and decode such objects. The main reason for inclusion of the object here is to see how programs will treat this record. Good programs will leave them in the file (it is bad manners to delete someone's data). Bad programs will simple delete the object from the file."
+N23 --> 0,id=N23,tag=NOTE,value="Comments on "Extra URL Filelinks" INDIVIDUAL Record.
+
+File links in GEDCOM are created by having an OBJE structure with the path name to the file in a subordinate FILE tag and the format of the file in a subordinate FORM tag. It does not make sense to limit file links to the small set of multimedia file types mentioned in the GEDCOM standard (see INDIVIDUAL record "Standard GEDCOM Filelinks" for those file types) or even to limit them to local files. This INDIVIDUAL record has a series of links with universal resource locators (URL) in the FILE tag and the file "URL" in the FORM tag.
+
+The sample URL links include links to a web sites, a link to an FTP site, and a link to send email.
+
+This extension of file links to URL links is non-standard GEDCOM. What will a genealogy program do when in encounters URL file links? Cleaver programs will find the file on the Internet using your default browser, FTP program, or email program. Weaker programs will simply delete them from your file (it is bad manners to delete someone's data)."
+PARENTS --> 0,id=PARENTS,tag=FAM,value=""
+SUBMISSION --> 0,id=SUBMISSION,tag=SUBN,value=""
+N34 --> 0,id=N34,tag=NOTE,value="Comments on "<unknown>-Teresa Mary Caregiver" FAMILY Record.
+
+This record has the adoptive mother of "Joseph Tag Torture." The husband is not known."
+I10 --> 0,id=I10,tag=INDI,value=""
+N24 --> 0,id=N24,tag=NOTE,value="Comments on "Charlie Accented ANSEL" INDIVIDUAL Record.
+
+To represent accented characters, the ANSEL character set uses two-byte codes. The first byte is E0 to FB or FE (hexadecimal); the second byte is the letter to be accented.
+
+These notes have all possible accented characters. How many of the characters are represented correctly? Even programs that fully support ANSEL will not draw all these accented characters correctly. Many of them correspond to accents that can not be found in any langauge and therefore do not correspond to any computer fonts.
+
+code: E0 (Unicode: hook above, 0309) low rising tone mark
+     àAàBàCàDàEàFàGàHàIàJàKàLàM
+     àNàOàPàQàRàSàTàUàVàWàXàYàZ
+     àaàbàcàdàeàfàgàhàiàjàkàlàm
+     ànàoàpàqàràsàtàuàvàwàxàyàz
+
+code: E1 (Unicode: grave, 0300) grave accent
+     áAáBáCáDáEáFáGáHáIáJáKáLáM
+     áNáOáPáQáRáSáTáUáVáWáXáYáZ
+     áaábácádáeáfágáháiájákálám
+     ánáoápáqárásátáuáváwáxáyáz
+
+code: E2 (Unicode: acute, 0301) acute accent:
+     âAâBâCâDâEâFâGâHâIâJâKâLâM
+     âNâOâPâQâRâSâTâUâVâWâXâYâZ
+     âaâbâcâdâeâfâgâhâiâjâkâlâm
+     ânâiâpâqârâsâtâuâvâwâxâyâz
+
+code: E3 (Unicode: circumflex, 0302) circumflex accent
+     ãAãBãCãDãEãFãGãHãIãJãKãLãM
+     ãNãOãPãQãRãSãTãUãVãWãXãYãZ
+     ãaãbãcãdãeãfãgãhãiãjãkãlãm
+     ãnãoãpãqãrãsãtãuãvãwãxãyãz
+
+code: E4 (Unicode: tilde, 0303) tilde
+     äAäBäCäDäEäFäGäHäIäJäKäLäM
+     äNäOäPäQäRäSäTäUäVäWäXäYäZ
+     äNäbäcädäeäfägähäiäjäkäläm
+     änäoäpäqäräsätäuäväwäxäyäz
+
+code: E5 (Unicode: macron, 0304) macron
+     åAåBåCåDåEåFåGåHåIåJåKåLåM
+     åNåOåPåQåRåSåTåUåVåWåXåYåZ
+     åaåbåcådåeåfågåhåiåjåkålåm
+     ånåoåpåqåråsåtåuåvåwåxåyåz
+
+code: E6 (Unicode: breve, 0306) breve
+     æAæBæCæDæEæFæGæHæIæJæKæLæM
+     æNæOæPæQæRæSæTæUæVæWæXæYæZ
+     æaæbæcædæeæfægæhæiæjækælæm
+     ænæoæpæqæræsætæuævæwæxæyæz
+
+code: E7 (Unicode: dot above, 0307) dot above
+     çAçBçCçDçEçFçGçHçIçJçKçLçM
+     çNçOçPçQçRçSçTçUçVçWçXçYçZ
+     çaçbçcçdçeçfçgçhçiçjçkçlçm
+     çnçoçpçqçrçsçtçuçvçwçxçyçz
+
+code: E8 (Unicode: diaeresis, 0308) umlaut (dieresis)
+     èAèBèCèDèEèFèGèHèIèJèKèLèM
+     èNèOèPèQèRèSèTèUèVèWèXèYèZ
+     èaèbècèdèeèfègèhèièjèkèlèm
+     ènèoèpèqèrèsètèuèvèwèxèyèz
+
+code: E9 (Unicode: caron, 030C) hacek
+     éAéBéCéDéEéFéGéHéIéJéKéLéM
+     éNéOéPéQéRéSéTéUéVéWéXéYéZ
+     éaébécédéeéfégéhéiéjékélém
+     énéoépéqérésétéuévéwéxéyéz
+
+code: EA (Unicode: ring above, 030A) circle above (angstrom)
+     êAêBêCêDêEêFêGêHêIêJêKêLêM
+     êNêOêPêQêRêSêTêUêVêWêXêYêZ
+     êaêbêcêdêeêfêgêhêiêjêkêlêm
+     ênêoêpêqêrêsêtêuêvêwêxêyêz
+
+code: EB (Unicode: ligature left half, FE20) ligature, left half
+     ëAëBëCëDëEëFëGëHëIëJëKëLëM
+     ëNëOëPëQëRëSëTëUëVëWëXëYëZ
+     ëaëbëcëdëeëfëgëhëiëjëkëlëm
+     ënëoëpëqërësëtëuëvëwëxëyëz
+
+code: EC (Unicode: ligature right half, FE21) ligature, right half
+     ìAìBìCìDìEìFìGìHìIìJìKìLìM
+     ìNìOìPìQìRìSìTìUìVìWìXìYìZ
+     ìaìbìcìdìeìfìgìhìiìjìkìlìm
+     ìnìoìpìqìrìsìtìuìvìwìxìyìz
+
+code: ED (Unicode: comma above right, 0315) high comma, off center
+     íAíBíCíDíEíFíGíHíIíJíKíLíM
+     íNíOíPíQíRíSíTíUíVíWíXíYíZ
+     íaíbícídíeífígíhíiíjíkílím
+     íníoípíqírísítíuívíwíxíyíz
+
+code: EE (Unicode: double acute, 030B) double acute accent
+     îAîBîCîDîEîFîGîHîIîJîKîLîM
+     îNîOîPîQîRîSîTîUîVîWîXîYîZ
+     îaîbîcîdîeîfîgîhîiîjîkîlîm
+     înîoîpîqîrîsîtîuîvîwîxîyîz
+
+code: EF (Unicode: candrabindu, 0310) candrabindu
+     ïAïBïCïDïEïFïGïHïIïJïKïLïM
+     ïNïOïPïQïRïSïTïUïVïWïXïYïZ
+     ïaïbïcïdïeïfïgïhïiïjïkïlïm
+     ïnïoïpïqïrïsïtïuïvïwïxïyïz
+
+code: F0 (Unicode: cedilla, 0327) cedilla
+     ðAðBðCðDðEðFðGðHðIðJðKðLðM
+     ðNðOðPðQðRðSðTðUðVðWðXðYðZ
+     ðaðbðcðdðeðfðgðhðiðjðkðlðm
+     ðnðoðpðqðrðsðtðuðvðwðxðyðz
+
+code: F1 (Unicode: ogonek, 0328) right hook
+     ñAñBñCñDñEñFñGñHñIñJñKñLñM
+     ñNñOñPñQñRñSñTñUñVñWñXñYñZ
+     ñañbñcñdñeñfñgñhñiñjñkñlñm
+     ñnñoñpñqñrñsñtñuñvñwñxñyñz
+
+code: F2 (Unicode: dot below, 0323) dot below
+     òAòBòCòDòEòFòGòHòIòJòKòLòM
+     òNòOòPòQòRòSòTòUòVòWòXòYòZ
+     òaòbòcòdòeòfògòhòiòjòkòlòm
+     ònòoòpòqòròsòtòuòvòwòxòyòz
+
+code: F3 (Unicode: diaeresis below, 0324) double dot below
+     óAóBóCóDóEóFóGóHóIóJóKóLóM
+     óNóOóPóQóRóSóTóUóVóWóXóYóZ
+     óaóbócódóeófógóhóiójókólóm
+     ónóoópóqórósótóuóvówóxóyóz
+
+code: F4 (Unicode: ring below, 0325) circle below
+     ôAôBôCôDôEôFôGôHôIôJôKôLôM
+     ôNôOôPôQôRôSôTôUôVôWôXôYôZ
+     ôaôbôcôdôeôfôgôhôiôjôkôlôm
+     ônôoôpôqôrôsôtôuôvôwôxôyôz
+
+code: F5 (Unicode: double low line, 0333) double underscore
+     õAõBõCõDõEõFõGõHõIõJõKõLõM
+     õNõOõPõQõRõSõTõUõVõWõXõYõZ
+     õaõbõcõdõeõfõgõhõiõjõkõlõm
+     õnõoõpõqõrõsõtõuõvõwõxõyõz
+
+code: F6 (Unicode: line below, 0332) underscore
+     öAöBöCöDöEöFöGöHöIöJöKöLöM
+     öNöOöPöQöRöSöTöUöVöWöXöYöZ
+     öaöböcödöeöfögöhöiöjökölöm
+     önöoöpöqörösötöuövöwöxöyöz
+
+code: F7 (Unicode: comma below, 0326) left hook
+     ÷A÷B÷C÷D÷E÷F÷G÷H÷I÷J÷K÷L÷M
+     ÷N÷O÷P÷Q÷R÷S÷T÷U÷V÷W÷X÷Y÷Z
+     ÷a÷b÷c÷d÷e÷f÷g÷h÷i÷j÷k÷l÷m
+     ÷n÷o÷p÷q÷r÷s÷t÷u÷v÷w÷x÷y÷z
+
+code: F8 (Unicode: left half ring below, 031C) right cedilla
+     øAøBøCøDøEøFøGøHøIøJøKøLøM
+     øNøOøPøQøRøSøTøUøVøWøXøYøZ
+     øaøbøcødøeøføgøhøiøjøkøløm
+     ønøoøpøqørøsøtøuøvøwøxøyøz
+
+code: F9 (Unicode: breve below, 032E) half circle below
+     ùAùBùCùDùEùFùGùHùIùJùKùLùM
+     ùNùOùPùQùRùSùTùUùVùWùXùYùZ
+     ùaùbùcùdùeùfùgùhùiùjùkùlùm
+     ùnùoùpùqùrùsùtùuùvùwùxùyùz
+
+code: FA (Unicode: double tilde left half, FE22) double tilde, left half
+     úAúBúCúDúEúFúGúHúIúJúKúLúM
+     úNúOúPúQúRúSúTúUúVúWúXúYúZ
+     úaúbúcúdúeúfúgúhúiújúkúlúm
+     únúoúpúqúrúsútúuúvúwúxúyúz
+
+code: FB (Unicode: double tilde right half, FE23) double tilde, right half
+     ûAûBûCûDûEûFûGûHûIûJûKûLûM
+     ûNûOûPûQûRûSûTûUûVûWûXûYûZ
+     ûaûbûcûdûeûfûgûhûiûjûkûlûm
+     ûnûoûpûqûrûsûtûuûvûwûxûyûz
+
+code: FE (Unicode: comma above, 0313) high comma, centered
+     þAþBþCþDþEþFþGþHþIþJþKþLþM
+     þNþOþPþQþRþSþTþUþVþWþXþYþZ
+     þaþbþcþdþeþfþgþhþiþjþkþlþm
+     þnþoþpþqþrþsþtþuþvþwþxþyþz"
+N12 --> 0,id=N12,tag=NOTE,value="This is a second source citation in this record."
+N31 --> 0,id=N31,tag=NOTE,value="Comments on "Mary First Jones" INDIVIDUAL Record.
+
+This record is used to provide the first wife to "Joseph Tag Torture." Not many other tags are used."
+N4 --> 0,id=N4,tag=NOTE,value="Comments on "Joseph Tag Torture" INDIVIDUAL Record.
+
+This record contains all possible types of data that can be stored in an INDIVIDUAL (INDI) GEDCOM record. Here are some comments on the data tested here and things to look for when this file is imported into any GEDCOM application:
+
+1. This record has two NAME structures. How will a program handle this type of data which is allowed in GEDCOM? (Because some GEDCOM files get very bothered by a second name, the files TGC551.ged and TGC551LF files are identical to the TGC55.ged and TGC55LF.ged files except only one name structure is used for this individual - hence the "1" in their names).
+
+2. The first NAME structure has all possible subordinate tags for a NAME structure including source and notes a source citation and some notes. The second NAME structure (when used) has a source citation and some notes. Are these all imported?
+
+3. The Birth and Death events use all possible fields including subordinate tags, sources, multimedia links (in Birth), and notes. The birth data has an attached family link which is sometimes needed in case of ambiguous parentage.
+
+4. This individual has two spouses. The links to the spouses have attached notes.
+
+5. This individual has two sets of parents - natural parents and adoptive parents. Each parent link has attached notes. The adoptive parents has a subordinate pedigree (PEDI) tag.
+
+6. This individual has all possible events (including a generic event or EVEN structure). The GEDCOM tags for the events are given in the TYPE tag of each event. Some comments are:
+     a. The baptism record has all possible tags for event detail.
+     b. There are 2 christening records to see how programs react to duplicate events (which are allowed).
+     c. The adoption event has a family link to give more information about adoptive parentage.
+     d. The cremation event (CREM) has no data except a "Y" in the first line to indicate that the event has occurred. The importing software should keep this event in this record even though it contains no data (The GEDCOM tag is not in this TYPE tag).
+     e. The LDS Baptism event tests all possible detail tags for an LDS ordinance.
+     f. The LDS confirmation has no data except a "Y" in the first line to indicate that the event has occurred. The importing software should keep this event in this record even though it contains no data.
+     g. The date fields in the various events test the possible GEDCOM methods for expressing dates, approximate dates, date ranges, and interpreted dates. There are also a few Hebrew dates, French Republic dates. and "B.C" dates.
+
+7. The residence structure use all possible subordinate tags in the address part of the residence.
+
+8. This individual has all possible attributes. The GEDCOM tags for the attributes are given in the TYPE tag of each attribute. Some notes are:
+     a. There are 2 occupation attributes to test how programs handle multiple tags of the same type (which is allowed).
+     b. The first OCCU attribute uses all possible subordinate tags for an attribute.
+
+9. This record has three note structures. The first is this set of notes which is in a separate NOTE record. The other two are NOTE structures embedded in the record. Are all imported and kept separate? Furthermore, the two embedded note structures have subordinate source citations. The second set of notes has a source citation to a SOURCE record and the third set of notes has an embedded source citation.
+
+10. This record has three source citations. Two are citations to a SOURCE record; one is an embedded source citation (used in older GEDCOM files).
+
+11. This record has one link to a multimedia file. For more testing of multimedia links, see the "Standard GEDCOM Filelinks," "Nonstandard Multimedia Filelinks," "General Custom Filelinks," and "Extra URL Filelinks" INDIVIDUAL records.
+
+12. This individual has one alias and two associations. All possible tags in the first association link are used.
+
+13. This record is linked to a submitter and to two submitters with interest in the ancestors and descendants of this individual.
+
+14. This record has all remaining tags allowed in individual records for user reference number, record ID, record file number, ancestral file number, and the changed date."
+I13 --> 0,id=I13,tag=INDI,value=""
+I9 --> 0,id=I9,tag=INDI,value=""
+F6 --> 0,id=F6,tag=FAM,value=""
+FAMILY1 --> 0,id=FAMILY1,tag=FAM,value=""
+SM2 --> 0,id=SM2,tag=SUBM,value=""
+N2 --> 0,id=N2,tag=NOTE,value="Comments on "Family History Library" REPOSITORY Record.
+
+This record uses all possible GEDCOM tags for a REPOSITORY record. Some things to look for are:
+
+1. The address is specified twice. Once in a multi-line address record and once in separate lines. The first method is usually enough. The second method is to be more specific about parts of the address. Is everything imported?
+
+2. There are multiple phone numbers. Are they all imported?"
+N33 --> 0,id=N33,tag=NOTE,value="Comments on "William Joseph Torture-<unknown>" FAMILY Record.
+
+This record has the natural father of "Joseph Tag Torture." The wife is not known."
+PERSON7 --> 0,id=PERSON7,tag=INDI,value=""
+SR2 --> 0,id=SR2,tag=SOUR,value=""
+N11 --> 0,id=N11,tag=NOTE,value="A possessions source note."
+N7 --> 0,id=N7,tag=NOTE,value="This source citation has all fields possible in a source citation to a separate SOURCE record. Besides the link to the SOURCE record there are possible fields about this citation (e.g., PAGE, TEXT, etc.)
+
+These notes on the source citation are in a separate NOTE record."
+N30 --> 0,id=N30,tag=NOTE,value="Comments on "Pat Smith Torture" INDIVIDUAL Record.
+
+The record simply provides a child to "Joseph Tag Torture" in his family with "Mary First Jones" as his spouse."
+N20 --> 0,id=N20,tag=NOTE,value="Comments on "Chris Locked Torture" record.
+
+These notes test line breaking in note records with multiple lines. These notes are for a locked individual and thus you should not be able to edit them.
+
+TEST #1: Line breaks in the middle of a word
+     These lines appear together. The word TEST should appear as a single word and not be broken onto two lines.
+
+TEST #2: Translation of "at" signs
+     The GEDCOM standard says the "@" sign should appear in any text in the file as double "@@" signs. This recommendation is superfluous, because there is never a case when an "@" sign in data can be confused with other GEDCOM uses of the "@" sign. The question here is how does the software import:
+
+     A single @ sign in some notes entered by using two characters.
+
+If all "at" signs above appear above as 2 or 4 at signs, that GEDCOM software is not converting double at signs to single at signs.
+
+TEST #3: Bad line breaks between word but a forgotten space
+     A little below, the words "End" and "Start" are on two lines in the note record. The line with "End," however, forgot the required trailing blank. Thus, a proper importing of these bad notes should combine the two words with no space between "End" and "Start". Here is EndStart as described above. They should appear as one word.
+
+TEST #4: Blank lines
+     The above paragraphs should have blank lines between them."
+I14 --> 0,id=I14,tag=INDI,value=""
+N25 --> 0,id=N25,tag=NOTE,value="Comments on "Lucy Special ANSEL" INDIVIDUAL Record.
+
+The following are the special characters supported by the ANSEL character set. The first two letters are the Hex code. The following text describes the character. Finally, that character, or a character as close as possible to that character, should appear in the parentheses.
+
+A1 slash l - uppercase (¡)
+A2 slash o - uppercase (¢)
+A3 slash d - uppercase (£)
+A4 thorn - uppercase (¤)
+A5 ligature ae - uppercase (¥)
+A6 ligature oe - uppercase (¦)
+A7 single prime (§)
+A8 middle dot (¨)
+A9 musical flat (©)
+AA registered sign (ª)
+AB plus-or-minus («)
+AC hook o - uppercase (¬)
+AD hook u - uppercase (­)
+AE left half ring (®)
+BO right half ring (°)
+B1 slash l - lowercase (±)
+B2 slash o - lowercase (²)
+B3 slash d - lowercase (³)
+B4 thorn - lowercase (´)
+B5 ligature ae - lowercase (µ)
+B6 ligature oe - lowercase (¶)
+B7 double prime (·)
+B8 dotless i - lowercase (¸)
+B9 british pound (¹)
+BA eth (º)
+BC hook o - lowercase (¼)
+BD hook u - lowercase (½)
+BE empty box - LDS extension (¾)
+BF black box - LDS extensions (¿)
+CO degree sign (À)
+C1 script l (Á)
+C2 phonograph copyright mark (Â)
+C3 copyright symbol (Ã)
+C4 musical sharp (Ä)
+C5 inverted question mark (Å)
+C6 inverted exclamation mark (Æ)
+CD midline e - LDS extension (Í)
+CE midline o - LDS extension (Î)
+CF es zet (Ï)"
+SOURCE1 --> 0,id=SOURCE1,tag=SOUR,value=""
+N17 --> 0,id=N17,tag=NOTE,value="How does software handle embedded SOURCE records on import? Such source citations are common in old GEDCOM files. More modern GEDCOM files should use source citations to SOURCE records."
+N28 --> 0,id=N28,tag=NOTE,value="Comments on "William Joseph Torture" INDIVIDUAL Record.
+
+This record is the natural father of "Joseph Tag Torture". He is linked to a family record, but there is no wife in that record."
+N19 --> 0,id=N19,tag=NOTE,value="A note about this LDS spouse sealing source."
+N16 --> 0,id=N16,tag=NOTE,value="Comments on "All I Know About GEDCOM, I Learned on the Internet" SOURCE record.
+
+This is another SOURCE record. How does the importing software handle multiple sources in the GEDCOM file? This source only fills a few GEDCOM structures."
+I15 --> 0,id=I15,tag=INDI,value=""
+N5 --> 0,id=N5,tag=NOTE,value="Notes on this LDS event. All possible LDS ordinance detail tags are used in this event."
+N38 --> 0,id=N38,tag=NOTE,value="Comments on "<unknown>-Nonstandard Multimedia Filelinks" FAMILY Record.
+
+The record is simply used to make family connections between records in this file."
+N8 --> 0,id=N8,tag=NOTE,value="Some specific note about the birth event.
+
+These notes are in a separate NOTE record. These notes also have their own source citation structure."
+PERSON2 --> 0,id=PERSON2,tag=INDI,value=""
+N37 --> 0,id=N37,tag=NOTE,value="Comments on "Charlie Accented ANSEL-Lucy Special ANSEL" FAMILY Record.
+
+The two spouses in this family test reading of the ANSEL character set."
+SUBMITTER --> 0,id=SUBMITTER,tag=SUBM,value=""
+N29 --> 0,id=N29,tag=NOTE,value="Comments on "Sandy Privacy Torture" INDIVIDUAL Record.
+
+This record has a restriction setting of "privacy." In public applications of GEDCOM files, "privacy" records should be hidden from all viewing and printing. It is less clear how GEDCOM software on your own PC reading your own copies of GEDCOM files should treat "privacy" records. At a minimum, it should import and preserve the "privacy" setting."
+M1 --> 0,id=M1,tag=OBJE,value=""
+N1 --> 0,id=N1,tag=NOTE,value="Test link to a graphics file about the main Submitter of this file."
+PERSON6 --> 0,id=PERSON6,tag=INDI,value=""
+N9 --> 0,id=N9,tag=NOTE,value="These are notes in a NOTE record. It is a bit redundant, but you can add source citations directly to NOTE records in addition to adding source citations to the initial GEDCOM structure that the notes are about.
+
+This example source citation in a NOTE record has all possible source citation fields filled in."
+R1 --> 0,id=R1,tag=REPO,value=""
+N27 --> 0,id=N27,tag=NOTE,value="Comments on "Teresa Mary Caregiver" INDIVIDUAL Record.
+
+This record is the adoptive mother of "Joseph Tag Torture". She is linked to a family record, but there is no husband in that record."
+N22 --> 0,id=N22,tag=NOTE,value="Comments on "General Custom Filelinks" INDIVIDUAL Record.
+
+File links in GEDCOM are created by having an OBJE structure with the path name to the file in a subordinate FILE tag and the format of the file in a subordinate FORM tag. It does not make sense to limit file links to the small set of multimedia file types mentioned in the GEDCOM standard (see INDIVIDUAL record "Standard GEDCOM Filelinks" for those file types). The INDIVIDUAL record "Nonstandard Multimedia Filelinks" has sample links to other types of multimedia files not included in the standard GEDCOM list. This INDIVIDUAL record has links to some non-multimedia files types.
+
+What will a genealogy program do when it encounters such logical extensions to GEDCOM file links? Good programs will follow the links. Weaker programs will simply delete them from your file (it is bad manners to delete someone's data)."
+N32 --> 0,id=N32,tag=NOTE,value="Comments on "Elizabeth Second Smith" INDIVIDUAL Record.
+
+This record is used to provide a second wife to "Joseph Tag Torture." Not many other tags are used."
+I12 --> 0,id=I12,tag=INDI,value=""
+F7 --> 0,id=F7,tag=FAM,value=""
+N26 --> 0,id=N26,tag=NOTE,value="These are some notes of this multimedia link in the NAME structure."
+SM3 --> 0,id=SM3,tag=SUBM,value=""
+N6 --> 0,id=N6,tag=NOTE,value="Notes on this LDS Spouse Sealing Event."
+I11 --> 0,id=I11,tag=INDI,value=""
+PERSON3 --> 0,id=PERSON3,tag=INDI,value=""
+PERSON8 --> 0,id=PERSON8,tag=INDI,value=""
+N36 --> 0,id=N36,tag=NOTE,value="Comments on "Standard GEDCOM Filelinks-Torture GEDCOM Matriarch" FAMILY record.
+
+The children in this family test logical extensions to the GEDCOM method for linking to a multimedia file."
+N14 --> 0,id=N14,tag=NOTE,value="These notes can be used to add more information about the multimedia file linked to this SOURCE record."
+N35 --> 0,id=N35,tag=NOTE,value="Comments on "Joseph Tag Torture-Elizabeth Second Smith" FAMILY Record.
+
+This record has a second marriage for "Joseph Tag Torture" and the family has one child."
+PERSON1 --> 0,id=PERSON1,tag=INDI,value=""
