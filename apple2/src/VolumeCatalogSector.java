@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /*
@@ -24,6 +25,19 @@ public class VolumeCatalogSector extends VolumeEntity
         rSector.add(new VolumeSector(p,0));
 
         disk.getDos33CatalogEntries(p,rEntry);
+    }
+
+    /**
+     * @param s
+     */
+    public void dump(StringBuffer s)
+    {
+        for (Iterator i = this.rSector.iterator(); i.hasNext();)
+        {
+            VolumeSector sect = (VolumeSector)i.next();
+            
+        }
+        s.append("")
     }
 
 }
