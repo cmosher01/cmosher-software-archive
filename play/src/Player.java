@@ -40,6 +40,19 @@ public class Player implements Immutable
     public static void main(String[] args) throws Throwable
     {
 
+		byte a = 1;
+		byte b = 0x7f;
+		byte c = (byte)0x80;
+		byte d = (byte)0x81;
+		byte e = (byte)0xff;
+		byte f = (byte)0x100;
+		byte g = -1;
+		byte g = -127;
+		byte h = -128;
+		System.out.println();
+
+
+
 		Map map = new HashMap();
 		map.put("a",new Integer(1));
 		map.put("b",new Integer(2));
