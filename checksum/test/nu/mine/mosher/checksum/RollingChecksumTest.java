@@ -42,7 +42,6 @@ public class RollingChecksumTest extends TestCase
             int check2 = rollCheck2.getChecksum();
 
             assertEquals(check2,check);
-            System.out.println(Integer.toHexString(check2)+","+Integer.toHexString(check));
         }
     }
 }
