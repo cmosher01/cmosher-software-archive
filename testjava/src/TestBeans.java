@@ -70,7 +70,7 @@ public class TestBeans
 
 
 
-        showInt(some.getObjInteger());
+        showInt(some.getObjInteger().intValue());
     }
 
     public static void showInt(int i)
