@@ -207,7 +207,24 @@ public class MySQLTest
 		try
 		{
 			st = db.prepareStatement(
-			"insert into CountEntry(household,gender,minAge,maxAge,count) values (?,?,?,?,?)");
+			"insert into CountEntry (household,gender,minAge,maxAge,count) values (?,?,?,?,?)");
+
+			st.setInt(1,hh);
+			st.setString(2,"m");
+			st.setInt(3,16);
+			st.setInt(4,150);
+			st.setInt(5,m16to150);
+			st.execute();
+
+			st.setInt(3,0);
+			st.setInt(4,15);
+			st.setInt(5,m0to15);
+			st.execute();
+
+			st.setString(2,"f");
+			st.setInt(4,150);
+			st.setInt(5,f0to150);
+			st.execute();
 		}
 		finally
 		{
@@ -345,7 +362,7 @@ public class MySQLTest
 		"( "+
 		"    id integer unsigned not null auto_increment primary key, "+
 		"    household integer unsigned not null references Household(id), "+
-		"    gender enum (\"M\",\"F\"), "+
+		"    gender enum (\"m\",\"f\"), "+
 		"    minAge integer unsigned, "+
 		"    maxAge integer unsigned, "+
 		"    count  integer unsigned "+
