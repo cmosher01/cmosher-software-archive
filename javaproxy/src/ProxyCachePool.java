@@ -8,9 +8,9 @@
  * Author : Steve Yeong-Ching Hsueh
  */
 
-import java.lang.*;
-import java.io.*;
-import java.util.*;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.Vector;
 
 /**
  * ProxyCachePool stores the server response of an url
