@@ -31,4 +31,18 @@ public class YMD implements Immutable, Serializable
     {
         return year;
     }
+
+	public boolean equals(Object obj)
+	{
+		if (!(obj instanceof YMD))
+		{
+			return false;
+		}
+
+		YMD that = (YMD)obj;
+		return
+			this.year == that.year &&
+			this.month = that.month &&
+			this.day == that.day;
+	}
 }
