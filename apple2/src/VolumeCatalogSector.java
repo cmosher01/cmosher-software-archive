@@ -18,7 +18,6 @@ public class VolumeCatalogSector extends VolumeEntity
     private final boolean isOrphan;
 
     /**
-     * @param b
      */
     public VolumeCatalogSector()
     {
@@ -26,7 +25,7 @@ public class VolumeCatalogSector extends VolumeEntity
     }
 
     /**
-     * @param b
+     * @param isOrphan
      */
     public VolumeCatalogSector(boolean isOrphan)
     {
