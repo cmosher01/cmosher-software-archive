@@ -27,8 +27,6 @@ public class Volume
     /**
      * @param disk
      * @throws InvalidPosException
-     * @throws MultipleVTOCException
-     * @throws VTOCNotFoundException
      */
     public void readFromMedia(Disk disk) throws InvalidPosException
     {
