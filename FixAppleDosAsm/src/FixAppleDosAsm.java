@@ -50,10 +50,10 @@ public class FixAppleDosAsm
         {
             /*
              * Line: [sp [...]] ; [sp [...]] [comment] [sp [...]]
-             * tr: ; [sp [...]] [comment] [sp [...]]
+             * tr: ; [sp [...]] [comment]
              */
             tr = tr.substring(1);
-            // tr: [sp [...]] [comment] [sp [...]]
+            // tr: [sp [...]] [comment]
             tr = tr.trim();
             // tr: [comment]
 
@@ -63,6 +63,10 @@ public class FixAppleDosAsm
         }
         else if (s.startsWith(" "))
         {
+            /*
+             * Line: [sp [...]] directive [; [sp [...]] [comment] [sp [...]]]
+             * tr: ; [sp [...]] [comment] [sp [...]]
+             */
             // sp [sp [...]] directive [; comment]
         }
         else
