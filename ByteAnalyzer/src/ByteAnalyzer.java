@@ -29,11 +29,11 @@ public class ByteAnalyzer
 
     public static void main(String[] args) throws IOException
     {
-        ByteAnalyzer prog = new ByteAnalyzer();
         if (args.length != 1)
         {
             throw new IllegalArgumentException("Usage: java ByteAnalyzer input-file");
         }
+        ByteAnalyzer prog = new ByteAnalyzer();
         prog.execute(new File(args[0]));
     }
 
