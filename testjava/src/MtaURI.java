@@ -54,14 +54,18 @@ public class MtaURI
         }
 
         int nRate = 0;
-        try
+        String sRate = (String)mapParamToValue.get("rate");
+        if (sRate.length() > 0)
         {
-            nRate = Integer.parseInt((String)mapParamToValue.get("rate"));
-        }
-        catch (Throwable e)
-        {
-            e.printStackTrace();
-            nRate = 0;
+            try
+            {
+                nRate = Integer.parseInt();
+            }
+            catch (Throwable e)
+            {
+                e.printStackTrace();
+                nRate = 0;
+            }
         }
         mRate = nRate;
 
