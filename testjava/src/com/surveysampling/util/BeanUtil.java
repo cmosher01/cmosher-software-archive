@@ -333,14 +333,11 @@ public final class BeanUtil
     private static Object getValueFromPropertyEditorManager(Class attrClass, String attrValue) throws ParameterParseException
     {
         PropertyEditor propEditor = PropertyEditorManager.findEditor(attrClass);
-        if (propEditor != null)
-        {
-            propEditor.setAsText(attrValue);
-            return propEditor.getValue();
-        }
-        else
+        if (propEditor == null)
         {
             throw new ParameterParseException();
         }
+        propEditor.setAsText(attrValue);
+        return propEditor.getValue();
     }
 }
