@@ -24,7 +24,7 @@ public class TestLog
         {
             public void publish(LogRecord record)
             {
-                System.err.println(getFormatter().format(record));
+                System.err.println(formatMessage(record));
             }
 
             public void flush()
