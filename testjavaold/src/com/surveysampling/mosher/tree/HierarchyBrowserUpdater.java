@@ -13,9 +13,9 @@ public class HierarchyBrowserUpdater implements TreeExpansionListener
     FileTreeNode mRoot;
     JTree mTree;
     DefaultTreeModel mModel;
-    JPanel mFrame;
+    JFrame mFrame;
 
-    public HierarchyBrowserUpdater(JTree tree, FileTreeNode node, DefaultTreeModel tmodel, JPanel theFrame)
+    public HierarchyBrowserUpdater(JTree tree, FileTreeNode node, DefaultTreeModel tmodel, JFrame theFrame)
     {
         mRoot = node;
         mTree = tree;
