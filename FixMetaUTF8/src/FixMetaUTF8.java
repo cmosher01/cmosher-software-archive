@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.regex.Pattern;
 
 /*
  * Created on Sep 29, 2004
@@ -42,5 +43,7 @@ public class FixMetaUTF8
             int cc = in.read(rb, pos, siz-pos);
             pos += cc;
         }
+
+        Pattern pat = Pattern.compile();
     }
 }
