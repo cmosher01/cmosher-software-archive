@@ -884,19 +884,19 @@ public class ExtendedProperties extends Hashtable {
      *
      * @param key  the property key to remove along with corresponding value
      */
-    public void clearProperty(String key) {
-        if (containsKey(key)) {
-            // we also need to rebuild the keysAsListed or else
-            // things get *very* confusing
-            for (int i = 0; i < keysAsListed.size(); i++) {
-                if (( keysAsListed.get(i)).equals(key)) {
-                    keysAsListed.remove(i);
-                    break;
-                }
-            }
-            remove(key);
-        }
-    }
+//    public void clearProperty(String key) {
+//        if (containsKey(key)) {
+//            // we also need to rebuild the keysAsListed or else
+//            // things get *very* confusing
+//            for (int i = 0; i < keysAsListed.size(); i++) {
+//                if (( keysAsListed.get(i)).equals(key)) {
+//                    keysAsListed.remove(i);
+//                    break;
+//                }
+//            }
+//            remove(key);
+//        }
+//    }
 
     /**
      * Get the list of the keys contained in the configuration
