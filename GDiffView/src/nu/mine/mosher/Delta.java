@@ -239,7 +239,7 @@ public class Delta
         output.close();
     }
 
-    public ByteArrayOutputStream delta(File sourceFile, File targetFile) throws IOException
+    public static ByteArrayOutputStream delta(File sourceFile, File targetFile) throws IOException
     {
         ByteArrayOutputStream gdiff = new ByteArrayOutputStream();
         GDiffWriter output = new GDiffWriter(new DataOutputStream(new BufferedOutputStream(gdiff)));
