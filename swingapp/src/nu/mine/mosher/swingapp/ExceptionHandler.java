@@ -31,7 +31,7 @@ public class ExceptionHandler
      * 
      * @throws Throwable
      */
-    public void waitFor() throws Throwable
+    public void waitFor() throws ApplicationAborting
     {
         throw (ApplicationAborting)mException.remove();
     }
