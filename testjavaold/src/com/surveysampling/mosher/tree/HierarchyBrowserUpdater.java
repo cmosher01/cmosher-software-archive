@@ -1,8 +1,5 @@
 package com.surveysampling.mosher.tree;
 
-//import java.awt.Cursor;
-
-//import javax.swing.JPanel;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
 import javax.swing.tree.DefaultTreeModel;
@@ -10,41 +7,23 @@ import javax.swing.tree.DefaultTreeModel;
 public class HierarchyBrowserUpdater implements TreeExpansionListener
 {
     DefaultTreeModel mModel;
-//    JPanel mFrame;
 
-    public HierarchyBrowserUpdater(DefaultTreeModel tmodel/*, JPanel theFrame*/)
+    public HierarchyBrowserUpdater(DefaultTreeModel tmodel)
     {
         mModel = tmodel;
-//        mFrame = theFrame;
     }
 
     public void treeExpanded(TreeExpansionEvent event)
     {
-//        beginWait();
-
         FileTreeNode node = (FileTreeNode)event.getPath().getLastPathComponent();
 
         if (node.readTree())
         {
             mModel.nodesWereInserted(node,node.getChildrenIndicies());
         }
-
-//        endWait();
     }
 
     public void treeCollapsed(TreeExpansionEvent event)
     {
     }
-
-//    private void beginWait()
-//    {
-//        mFrame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-//        mFrame.setEnabled(false);
-//    }
-//
-//    private void endWait()
-//    {
-//        mFrame.setEnabled(true);
-//        mFrame.setCursor(Cursor.getDefaultCursor());
-//    }
 }
