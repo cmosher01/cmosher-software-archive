@@ -66,12 +66,15 @@ public class PersonPersist
 	{
 		// get a new persistence manager
 		PersistenceManager pm = this.pmf.getPersistenceManager();
+		Transaction transaction = pm.currentTransaction();
+		transaction.begin();
 		// retrieve objects from datastore and display
 		for (int i = 0; i < SIZE; i++)
 		{
 			Person person = (Person)pm.getObjectById(this.rid.get(i),false);
 			System.out.println("person "+i+": "+person.getName());
 		}
+		transaction.commit();
 		pm.close();
 	}
 }
