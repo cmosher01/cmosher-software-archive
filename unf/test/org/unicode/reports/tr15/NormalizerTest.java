@@ -21,6 +21,7 @@ public class NormalizerTest extends TestCase
 		assertNormalize("Chris","Chris");
 		assertNormalize("\u0041\u030a","\u00c5");
 		assertNormalize("\u212b","\u00c5");
+		assertNormalize("Henry \u2163","Henry \u2163");
     }
 
 	protected void assertNormalize(String pre, String comp)
