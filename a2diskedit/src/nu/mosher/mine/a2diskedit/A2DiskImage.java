@@ -47,11 +47,11 @@ public class A2DiskImage
 			SwitchTSBlock();
 		}
 		else if (
-			getByte([2][0]==0 &&
-			getByte([2][1]==0 &&
-			getByte([2][2]==3 &&
-			getByte([2][3]==0 &&
-			getByte([2][4]>>4==0xF)
+			getByte(2,0)==0 &&
+			getByte(2,1)==0 &&
+			getByte(2,2)==3 &&
+			getByte(2,3)==0 &&
+			getByte(2,4)>>4==0xF)
 		{
 			m_osType = osProdos;
 			// Prodos disk in block order
