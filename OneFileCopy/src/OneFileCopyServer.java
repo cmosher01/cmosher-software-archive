@@ -9,7 +9,7 @@ import java.net.Socket;
 public class OneFileCopyServer
 {
 	private static final int cBufMax = 0x10000000;
-	private static final int rpt = 1;//256*1024;
+	private static final int rpt = 256*1024;
 
 	public static void main(String[] args) throws IOException
 	{
@@ -40,10 +40,13 @@ public class OneFileCopyServer
 		byte[] rb = new byte[1024];
 		
 		int i = 0;
-		int cb = in.read(rb);
-		while (cb > 0)
+		while (in.available() != 0)
 		{
-			out.write(rb,0,cb);
+			int cb = in.read(rb);
+			if (cb > 0)
+			{
+				out.write(rb,0,cb);
+			}
 			if (++i % rpt == 0)
 			{
 				System.out.println("sent @ "+(i*1024)+" bytes.");
