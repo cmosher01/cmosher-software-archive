@@ -56,7 +56,7 @@ public class Test
     //throws MyException, IOException // other exceptions here...
 	{
 
-        SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd,HH:mm:ss.SSS");
+        SimpleDateFormat f = new SimpleDateFormat("HH:mm:ss.SSS");
         long x = 86400000-1;
         System.out.println(x/86400000+" days");
         System.out.println(f.format(new Date(86400000%86400000-68400000)));
