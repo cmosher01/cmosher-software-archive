@@ -1,3 +1,5 @@
+package nu.mine.mosher.jdotest;
+
 /**
  * @author Chris Mosher
  * Created: Feb 18, 2004
