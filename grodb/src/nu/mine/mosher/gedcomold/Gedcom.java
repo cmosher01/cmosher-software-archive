@@ -37,7 +37,6 @@ public class Gedcom
 		 * x-gedcom-ansel ANSEL
 		 * UTF-16BE       (detected automatically)
 		 * UTF-16LE       (detected automatically)
-		 * UTF-8          UNICODE???
 		 */
 	}
 }
