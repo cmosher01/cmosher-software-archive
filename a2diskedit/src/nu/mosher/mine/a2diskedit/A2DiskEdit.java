@@ -33,7 +33,7 @@ public class A2DiskEdit
 	private DefaultMutableTreeNode top = new DefaultMutableTreeNode("Program");
 	private static A2DiskEdit staticApp = new A2DiskEdit();
 	private JTree tree;
-	private JSplitPane mSplitPane;
+	private JScrollPane rightView;
 
 	public void createComponents()
 	{
@@ -81,7 +81,7 @@ public class A2DiskEdit
 					}
 					else
 					{
-				        mSplitPane.setRightComponent(((TreeNode)node).getRightPane());
+				        rightView.setViewportView(((TreeNode)node).getRightPane());
 					}
 				}
             }
@@ -90,6 +90,7 @@ public class A2DiskEdit
         //Create the scroll pane and add the tree to it. 
         JScrollPane treeView = new JScrollPane(tree);
 
+		rightView = new JScrollPane()
         //Create the right-hand pane.
 		//htmlPane = new JEditorPane();
         //htmlPane.setEditable(false);
@@ -97,9 +98,9 @@ public class A2DiskEdit
 //        initHelp();
 //        JScrollPane paneRight = null;
         //Add the scroll panes to a split pane.
-        mSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        mSplitPane.setLeftComponent(treeView);
-        mSplitPane.setRightComponent(new JScrollPane());
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        splitPane.setLeftComponent(treeView);
+        splitPane.setRightComponent(rightView);
 
 //        Dimension minimumSize = new Dimension(50, 100);
 //        paneRight.setMinimumSize(minimumSize);
@@ -108,7 +109,7 @@ public class A2DiskEdit
 //        mSplitPane.setDividerLocation(200);
 //        mSplitPane.setPreferredSize(new Dimension(600, 400));
 
-		frameMain.getContentPane().add(mSplitPane,BorderLayout.CENTER);
+		frameMain.getContentPane().add(splitPane,BorderLayout.CENTER);
 	}
 
     private void createNodes()
