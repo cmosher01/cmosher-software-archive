@@ -47,7 +47,7 @@ public class TimeOfDayParserTest extends TestCase
         makeAndCheck("00:00:00.000",0,0,0,0);
     }
 
-    public void testStrange() throws ParseException
+    public void testI18n() throws ParseException
     {
         // even Arabic-Indic digits work!
         makeAndCheck("\u0661:\u0662\u0663",1,23,0,0);
