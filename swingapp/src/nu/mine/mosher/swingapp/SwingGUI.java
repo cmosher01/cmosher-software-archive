@@ -5,6 +5,7 @@ package nu.mine.mosher.ja2;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
@@ -53,6 +54,7 @@ public class GUI
         // Set the window's size and position.
         mFrame.pack();
         mFrame.setLocationRelativeTo(null);
+        mFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
 
         // Display the window.
         mFrame.setVisible(true);
@@ -107,7 +109,6 @@ public class GUI
                 {"Philip", "Milne", "Pool", new Integer(10), new Boolean(false)}};
 
         JTable table = new JTable(data,columnNames);
-        table.setPreferredScrollableViewportSize(new Dimension(640,240));
 
         JScrollPane scrollpane = new JScrollPane(table);
         scrollpane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -115,7 +116,6 @@ public class GUI
 
         JPanel panel = new JPanel(new BorderLayout(),true);
         panel.setOpaque(true);
-        //panel.setPreferredSize(new Dimension(640,480));
         panel.addNotify();
         panel.add(scrollpane,BorderLayout.CENTER);
 
