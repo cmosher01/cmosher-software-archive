@@ -116,21 +116,4 @@ public class Log
 
         return true;
     }
-
-    /**
-     * close this log
-     */
-    private boolean closeLog()
-    {
-        try
-        {
-            fos.close();
-        }
-        catch (IOException e)
-        {
-            return false;
-        }
-        return true;
-    }
-
 }
