@@ -96,12 +96,6 @@ public class TestBeans
         return rval;
     }
 
-//    public static Object convert(String value, PropertyEditor ed) throws IllegalArgumentException
-//    {
-//        ed.setAsText(value);
-//        return ed.getValue();
-//    }
-
     public static PropertyEditor getPropertyEditor(Class forClass) throws IntrospectionException
     {
         PropertyEditor ed = PropertyEditorManager.findEditor(forClass);
