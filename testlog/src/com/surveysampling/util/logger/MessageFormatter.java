@@ -14,9 +14,8 @@ public final class MessageFormatter extends Formatter
 {
     private static MessageFormatter formatter = new MessageFormatter();
 
-    private MessageFormatter() throws UnsupportedOperationException
+    private MessageFormatter()
     {
-        throw new UnsupportedOperationException();
     }
 
     public String format(LogRecord record) throws UnsupportedOperationException
