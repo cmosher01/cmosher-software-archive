@@ -88,18 +88,10 @@ public class Test
         }
         else if (su.equalsIgnoreCase("jar"))
         {
-            URL x2 = Test.class.getClassLoader().getResource("Test.class");
-            String sx2 = x2.toExternalForm();
-            System.out.println(sx2);
-
             String jarpart = uri.getRawSchemeSpecificPart();
             System.out.println(jarpart);
-            URI urijp = URI.create(jarpart);
-            String sjp = urijp.toASCIIString();
-            System.out.println(sjp);
-            sjp = urijp.getPath();
-            System.out.println(sjp);
-            f = new File(urijp.getPath());
+
+//            f = new File(urijp.getPath());
         }
         else
         {
