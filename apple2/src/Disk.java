@@ -140,7 +140,8 @@ public class Disk
      */
     public void findDos33VTOC(Collection rPosVtoc)
     {
-        rewind();
+        DiskPos p = new DiskPos();
+
         while (!EOF())
         {
             DiskPos cur = this.pos;
