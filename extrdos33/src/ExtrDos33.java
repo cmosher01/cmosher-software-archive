@@ -36,6 +36,12 @@ public class ExtrDos33
             System.err.println("subdir-reg-exp: " + regexpDir);
         }
 
+		File dirNew = new File(sDir,"extrdos33");
+		if (dirNew.exists())
+		{
+			throw new Exception(dirNew.getCanonicalFile().getAbsolutePath()+" directory already exists");
+		}
+
         File[] rf = listRegFiles(sDir, regexpFile, regexpDir);
         for (int i = 0; i < rf.length; ++i)
         {
