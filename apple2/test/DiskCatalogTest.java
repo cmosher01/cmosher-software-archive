@@ -65,6 +65,31 @@ public class DiskCatalogTest extends TestCase
      * @throws IOException
      * @throws InvalidPosException
      */
+    public void testFranklin82() throws IOException, InvalidPosException
+    {
+        List r = new ArrayList();
+        r.add(new DiskPos(0x11,0xE));
+        r.add(new DiskPos(0x11,0xF));
+        assertManyPos("Franklin_19820921.dsk",r);
+    }
+
+    /**
+     * @throws IOException
+     * @throws InvalidPosException
+     */
+    public void testFranklin83() throws IOException, InvalidPosException
+    {
+        List r = new ArrayList();
+        r.add(new DiskPos(0x11,0xD));
+        r.add(new DiskPos(0x11,0xE));
+        r.add(new DiskPos(0x11,0xF));
+        assertManyPos("Franklin_19830215.dsk",r);
+    }
+
+    /**
+     * @throws IOException
+     * @throws InvalidPosException
+     */
     public void testDAVIDDOS() throws IOException, InvalidPosException
     {
         List r = new ArrayList();
