@@ -150,4 +150,9 @@ class Indi
             x <= point.x && point.x <= x+w &&
             y <= point.y && point.y <= y+h;
     }
+
+    public void hit()
+    {
+    	pushed = true;
+    }
 }
