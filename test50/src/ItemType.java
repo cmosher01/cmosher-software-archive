@@ -6,4 +6,15 @@
  */
 public class ItemType
 {
+	private ItemTypeEnum known;
+	private String other;
+
+	public ItemType(ItemTypeEnum known)
+	{
+		this.known = known;
+	}
+	public ItemType(String other)
+	{
+		this.other = other;
+	}
 }
