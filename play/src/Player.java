@@ -1,7 +1,11 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.text.NumberFormat;
@@ -60,14 +64,19 @@ public class Player implements Immutable
 		InputStreamReader reader = new InputStreamReader(stream,"x-gedcom-ansel");
 		BufferedReader bufrd = new BufferedReader(reader);
 
+		FileOutputStream fil = new FileOutputStream(new File("test.utf8"));
+		OutputStreamWriter ow = new OutputStreamWriter(fil,"utf-8");
+		PrintWriter pw = new PrintWriter(ow);
+
         String s = bufrd.readLine();
         while (s != null)
         {
-			System.out.println(s);
+        	pw.println(s);
             dumphex(s);
             s = bufrd.readLine();
         }
-		System.out.flush();
+		pw.flush();
+		pw.close();
 		bufrd.close();
     }
 
