@@ -8,7 +8,7 @@ package nu.mine.mosher.cmdline;
  * 
  * @author chrism
  */
-public class ArgumentDefinition
+public class OptionDefinition
 {
     private final String name;
     private final String abbrev;
@@ -20,7 +20,7 @@ public class ArgumentDefinition
      * @param abbrev
      * @param desc
      */
-    public ArgumentDefinition(final String name, final String abbrev, final String desc, boolean hasValue)
+    public OptionDefinition(final String name, final String abbrev, final String desc, boolean hasValue)
     {
         this.name = name;
         this.abbrev = abbrev;
