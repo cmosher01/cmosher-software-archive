@@ -142,7 +142,8 @@ public class Gedcom
 		 * UTF-16LE       (detected automatically)
 		 */
 		BufferedReader bin = new BufferedReader(new InputStreamReader(in,"US-ASCII"));
-		bin.readLine(); // rest of header line... ignore
+		bin.readLine(); // ignore rest of header line
+
 		String s = bin.readLine();
 		while (s != null && s.length() > 0 && s.charAt(0) != '0')
 		{
