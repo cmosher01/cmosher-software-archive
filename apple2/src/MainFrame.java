@@ -91,10 +91,13 @@ public class MainFrame extends JFrame
             nFiles.add(new DefaultMutableTreeNode(file.getCatalogEntry().getName()));
         }
 
+        DefaultMutableTreeNode nFilesRecovered = new DefaultMutableTreeNode("Recovered Files");
+
         nDisk.add(nBoot);
         nDisk.add(nDos);
         nDisk.add(nCat);
         nDisk.add(nFiles);
+        nDisk.add(nFilesRecovered);
 
         top.add(nDisk);
     }
