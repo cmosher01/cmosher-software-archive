@@ -9,24 +9,20 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.context.Context;
-import org.apache.velocity.runtime.RuntimeServices;
-import org.apache.velocity.runtime.log.LogSystem;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class VelocityTest implements LogSystem
+public class VelocityTest
 {
     public static void main(String[] args) throws Throwable
     {
@@ -38,30 +34,6 @@ public class VelocityTest implements LogSystem
         VelocityWrapper.merge(new File("C:\\Documents and Settings\\chrism\\My Documents\\build_template.vm"), context, writer);
         writer.close();
     }
-
-    public void init(RuntimeServices rs) throws Exception
-    {
-    }
-    public void logVelocityMessage(int level, String message)
-    {
-        if (level >= LogSystem.INFO_ID)
-        {
-            System.err.println(message);
-        }
-    }
-//    public static class ErrLogger implements LogSystem
-//    {
-//        public void init(RuntimeServices rs) throws Exception
-//        {
-//        }
-//        public void logVelocityMessage(int level, String message)
-//        {
-//            if (level >= LogSystem.INFO_ID)
-//            {
-//                System.err.println(message);
-//            }
-//        }
-//    }
 
     public static ArrayList getDependencies() throws ParserConfigurationException, SAXException, IOException
     {
