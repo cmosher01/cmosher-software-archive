@@ -25,9 +25,10 @@ public class TestCrypt
             {
                 Map.Entry entry = (Map.Entry)e.next();
                 String key = (String)entry.getKey();
+                String val = (String)entry.getValue();
                 System.out.print(key);
-                System.out.print(": value type: ");
-                System.out.println(entry.getValue().getClass().getName());
+                System.out.print(",");
+                System.out.print(val);
             }
         }
     }
