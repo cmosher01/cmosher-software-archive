@@ -44,17 +44,25 @@ public class TimeOfDayParser
         {
             ensure(s,2,':');
             hr = getd(s,0,2);
+            mn = getd(s,3,2);
         }
         else if (s.length() == 8)
         {
             ensure(s,2,':');
             ensure(s,5,':');
+            hr = getd(s,0,2);
+            mn = getd(s,3,2);
+            sc = getd(s,6,2);
         }
         else if (s.length() == 12)
         {
             ensure(s,2,':');
             ensure(s,5,':');
             ensure(s,8,'.');
+            hr = getd(s,0,2);
+            mn = getd(s,3,2);
+            sc = getd(s,6,2);
+            ms = getd(s,9,3);
         }
         else
         {
