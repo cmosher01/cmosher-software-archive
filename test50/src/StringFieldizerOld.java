@@ -1,7 +1,7 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class StringFieldizer implements Iterable <String>
+public class StringFieldizer implements Iterable<String>
 {
 	private final String s;
 
@@ -10,12 +10,12 @@ public class StringFieldizer implements Iterable <String>
 		this.s = s;
 	}
 
-	public Iterator <String> iterator()
+	public Iterator<String> iterator()
 	{
 		return new Iter(s);
 	}
 
-	private static class Iter implements Iterator <String>
+	private static class Iter implements Iterator<String>
 	{
 		private final String s;
 		private int pos;
