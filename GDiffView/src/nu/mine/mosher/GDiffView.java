@@ -525,7 +525,7 @@ public class GDiffView extends JFrame
             if (target != null)
             {
                 beginTrg = target.getBegin();
-                endTrg = target().getEnd();
+                endTrg = target.getEnd();
                 highlight("insert",true);
             }
         }
