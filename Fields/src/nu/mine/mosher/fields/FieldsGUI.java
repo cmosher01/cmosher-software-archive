@@ -17,6 +17,8 @@ import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 /**
  * @author Chris Mosher
@@ -101,6 +103,12 @@ public class GUI
     protected JPanel createContentPane()
     {
         JTable table = new JTable(new BigTableModel());
+        TableColumnModel columnModel = table.getColumnModel();
+        for (int i = 0; i < columnModel.getColumnCount(); ++i)
+        {
+            TableColumn column = columnModel.getColumn(i);
+            column.setPreferredWidth(64);
+        }
         table.setPreferredScrollableViewportSize(new Dimension(640,480));
 
         JScrollPane scrollpane = new JScrollPane(table);
