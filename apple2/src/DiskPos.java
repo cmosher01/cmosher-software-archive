@@ -25,7 +25,7 @@ public class DiskPos
 
 
 
-    public DiskPos(int track, int sector, int byt, boolean allowLarge)
+    public DiskPos(int track, int sector, int byt, boolean allowLarge) throws InvalidPosException
     {
         verifyTrack(track,allowLarge);
         verifySector(sector);
@@ -34,12 +34,13 @@ public class DiskPos
 
     /**
      * @param byt
+     * @throws InvalidPosException
      */
-    private void verifyByte(int byt, int siz)
+    private void verifyByte(int byt, int siz) throws InvalidPosException
     {
         if (byt < 0 || siz <= byt)
         {
-            throw new InvalidPosException("Invalid sector: "+sector);
+            throw new InvalidPosException("Invalid byte offset: "+byt);
         }
     }
 
