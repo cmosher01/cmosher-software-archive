@@ -108,10 +108,9 @@ public class Disk
         DiskPos p = (DiskPos)pos.clone();
         int track = read(p);
         p.advance(1);
-        int sector = read(pos);
-        DiskPos pret = new DiskPos();
-        pret.setTS(track,sector);
-        return pret;
+        int sector = read(p);
+        p.setTS(track,sector);
+        return p;
     }
 
     /**
