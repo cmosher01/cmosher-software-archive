@@ -56,6 +56,6 @@ public class FamilyChart extends JPanel
 
     public void gotoIndi(Indi mLastIndi)
     {
-        // TODO Auto-generated method stub
+    	mApplet.getAppletContext().showDocument(mLastIndi.getURL());
     }
 }
