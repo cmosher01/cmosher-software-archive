@@ -20,32 +20,10 @@ public class DiskTSMapTest extends TestCase
      * @throws IOException
      * @throws InvalidPosException
      */
-    public void testSARG2() throws IOException, InvalidPosException
+    public void testDOS33_Master_1980() throws IOException, InvalidPosException
     {
         List r = new ArrayList();
-        r.add(new DiskPos(0x09,0x4));
-        r.add(new DiskPos(0x0C,0x5));
-        r.add(new DiskPos(0x0F,0x6));
-        r.add(new DiskPos(0x11,0x1));
-        r.add(new DiskPos(0x11,0x2));
-        r.add(new DiskPos(0x11,0x3));
-        r.add(new DiskPos(0x11,0x4));
-        r.add(new DiskPos(0x11,0x5));
-        r.add(new DiskPos(0x11,0x6));
-        r.add(new DiskPos(0x11,0x7));
-        r.add(new DiskPos(0x11,0x8));
-        r.add(new DiskPos(0x11,0x9));
-        r.add(new DiskPos(0x11,0xA));
-        r.add(new DiskPos(0x11,0xB));
-        r.add(new DiskPos(0x11,0xC));
-        r.add(new DiskPos(0x11,0xD));
-        r.add(new DiskPos(0x11,0xE));
-        r.add(new DiskPos(0x11,0xF));
-        r.add(new DiskPos(0x12,0x1));
-        r.add(new DiskPos(0x18,0x3));
-        r.add(new DiskPos(0x1D,0x1));
-        r.add(new DiskPos(0x20,0x0));
-        assertManyPos("SARG2.dsk",r);
+        assertManyPos("DOS33_SystemMaster_19800825.dsk",r);
     }
 
     /**
