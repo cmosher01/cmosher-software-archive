@@ -19,6 +19,8 @@ import java.io.InputStream;
 public class Bin2HexJava
 {
     private static final int BPL = 0x10;
+    private static final boolean SHOW_ZERO_X = false;
+    private static final boolean SHOW_COMMA = false;
 
     /**
      * @param args
@@ -45,7 +47,7 @@ public class Bin2HexJava
             {
                 first = false;
             }
-            else
+            else if (SHOW_COMMA)
             {
                 System.out.print(",");
             }
@@ -56,7 +58,11 @@ public class Bin2HexJava
                 pos = 0;
             }
 
-            System.out.print("0x");
+            if (SHOW_ZERO_X)
+            {
+                System.out.print("0x");
+            }
+
             outHexByte(c);
             ++pos;
 
