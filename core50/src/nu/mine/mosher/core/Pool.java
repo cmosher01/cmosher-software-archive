@@ -51,7 +51,6 @@ public class Pool<T>
 			{
 				public Object invoke(Object proxy, Method method, Object[] args) throws Throwable
 				{
-					Object notUsed = proxy; proxy = notUsed;
 					return method.invoke(theObject,args);
 				}
 			});
