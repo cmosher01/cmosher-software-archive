@@ -71,11 +71,45 @@ public class ExtrDos33
 			System.arraycopy(x,0,rb,0,x.length);
 			rbc = new byte[x.length];
 			System.arraycopy(x,0,rbc,0,x.length);
+
+			// clear HELLO program name for comparison
+			for (int i = 0x1975; i < 0x19B1; ++i)
+			{
+				rbc[i] = 0;
+			}
+
 		}
 		public boolean hasSignature()
 		{
 			return (rb[0] == 0x01 && rb[1] == 0xA5 && rb[2] == 0x27 && rb[3] == 0xC9);
 		}
+        public boolean equals(Object obj)
+        {
+        	if (!(obj instanceof DosImage))
+        	{
+        		return false;
+        	}
+        	DosImage that = (DosImage)obj;
+        	for (int i= 0; i < this.rbc.length; ++i)
+            {
+                if (this.rbc[i] != that.rbc[i])
+                {
+                	return false;
+                }
+            }
+            return true;
+        }
+        public int hashCode()
+        {
+        	int hash = 17;
+			for (int i= 0; i < rbc.length; ++i)
+			{
+				hash *= 37;
+				hash += rbc[i];
+			}
+			return hash;
+        }
+
 	}
 
 	private static Map doss = new HashMap();
@@ -98,15 +132,6 @@ public class ExtrDos33
 			System.out.println("Track $00, Sector $0, Bytes $00-$03 are not: 01 A5 27 C9.");
 			System.out.println("therefore this doesn't appear to be a DOS 3.3 disk image; skipping.");
 			return;
-		}
-
-		byte[] rbc = new byte[rb.length];
-		System.arraycopy(rb,0,rbc,0,rb.length);
-
-		// clear HELLO program name for comparison
-		for (int i = 0x1975; i < 0x19B1; ++i)
-		{
-			rbc[i] = 0;
 		}
 
 		if (doss.containsKey(rbc))
