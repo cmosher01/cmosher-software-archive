@@ -21,9 +21,14 @@ public class ArgumentDefinition
     {
         this.name = name;
         this.desc = desc;
-        if (this.desc == null)
+        if (this.name == null || this.desc == null)
         {
             throw new NullPointerException();
+        }
+
+        if (this.name.length() == 0)
+        {
+            throw new IllegalArgumentException("name must not be empty");
         }
     }
 }
