@@ -259,371 +259,163 @@ class NormalizerBuilder
      */
         static final int SBase = 0xAC00, LBase = 0x1100, VBase = 0x1161, TBase = 0x11A7, LCount = 19, VCount = 21, TCount = 28, NCount = VCount * TCount, // 588
     SCount = LCount * NCount; // 11172
-
     /**
      * For use in an applet: just load a minimal set of data.
      */
-    private static void setMinimalDecomp(IntHashtable canonicalClass, IntStringHashtable decompose, IntHashtable compose, BitSet isCompatibility, BitSet isExcluded)
-    {
-        String[] decomposeData =
-            {
-                "\u005E",
-                "\u0020\u0302",
-                "K",
-                "\u005F",
-                "\u0020\u0332",
-                "K",
-                "\u0060",
-                "\u0020\u0300",
-                "K",
-                "\u00A0",
-                "\u0020",
-                "K",
-                "\u00A8",
-                "\u0020\u0308",
-                "K",
-                "\u00AA",
-                "\u0061",
-                "K",
-                "\u00AF",
-                "\u0020\u0304",
-                "K",
-                "\u00B2",
-                "\u0032",
-                "K",
-                "\u00B3",
-                "\u0033",
-                "K",
-                "\u00B4",
-                "\u0020\u0301",
-                "K",
-                "\u00B5",
-                "\u03BC",
-                "K",
-                "\u00B8",
-                "\u0020\u0327",
-                "K",
-                "\u00B9",
-                "\u0031",
-                "K",
-                "\u00BA",
-                "\u006F",
-                "K",
-                "\u00BC",
-                "\u0031\u2044\u0034",
-                "K",
-                "\u00BD",
-                "\u0031\u2044\u0032",
-                "K",
-                "\u00BE",
-                "\u0033\u2044\u0034",
-                "K",
-                "\u00C0",
-                "\u0041\u0300",
-                "",
-                "\u00C1",
-                "\u0041\u0301",
-                "",
-                "\u00C2",
-                "\u0041\u0302",
-                "",
-                "\u00C3",
-                "\u0041\u0303",
-                "",
-                "\u00C4",
-                "\u0041\u0308",
-                "",
-                "\u00C5",
-                "\u0041\u030A",
-                "",
-                "\u00C7",
-                "\u0043\u0327",
-                "",
-                "\u00C8",
-                "\u0045\u0300",
-                "",
-                "\u00C9",
-                "\u0045\u0301",
-                "",
-                "\u00CA",
-                "\u0045\u0302",
-                "",
-                "\u00CB",
-                "\u0045\u0308",
-                "",
-                "\u00CC",
-                "\u0049\u0300",
-                "",
-                "\u00CD",
-                "\u0049\u0301",
-                "",
-                "\u00CE",
-                "\u0049\u0302",
-                "",
-                "\u00CF",
-                "\u0049\u0308",
-                "",
-                "\u00D1",
-                "\u004E\u0303",
-                "",
-                "\u00D2",
-                "\u004F\u0300",
-                "",
-                "\u00D3",
-                "\u004F\u0301",
-                "",
-                "\u00D4",
-                "\u004F\u0302",
-                "",
-                "\u00D5",
-                "\u004F\u0303",
-                "",
-                "\u00D6",
-                "\u004F\u0308",
-                "",
-                "\u00D9",
-                "\u0055\u0300",
-                "",
-                "\u00DA",
-                "\u0055\u0301",
-                "",
-                "\u00DB",
-                "\u0055\u0302",
-                "",
-                "\u00DC",
-                "\u0055\u0308",
-                "",
-                "\u00DD",
-                "\u0059\u0301",
-                "",
-                "\u00E0",
-                "\u0061\u0300",
-                "",
-                "\u00E1",
-                "\u0061\u0301",
-                "",
-                "\u00E2",
-                "\u0061\u0302",
-                "",
-                "\u00E3",
-                "\u0061\u0303",
-                "",
-                "\u00E4",
-                "\u0061\u0308",
-                "",
-                "\u00E5",
-                "\u0061\u030A",
-                "",
-                "\u00E7",
-                "\u0063\u0327",
-                "",
-                "\u00E8",
-                "\u0065\u0300",
-                "",
-                "\u00E9",
-                "\u0065\u0301",
-                "",
-                "\u00EA",
-                "\u0065\u0302",
-                "",
-                "\u00EB",
-                "\u0065\u0308",
-                "",
-                "\u00EC",
-                "\u0069\u0300",
-                "",
-                "\u00ED",
-                "\u0069\u0301",
-                "",
-                "\u00EE",
-                "\u0069\u0302",
-                "",
-                "\u00EF",
-                "\u0069\u0308",
-                "",
-                "\u00F1",
-                "\u006E\u0303",
-                "",
-                "\u00F2",
-                "\u006F\u0300",
-                "",
-                "\u00F3",
-                "\u006F\u0301",
-                "",
-                "\u00F4",
-                "\u006F\u0302",
-                "",
-                "\u00F5",
-                "\u006F\u0303",
-                "",
-                "\u00F6",
-                "\u006F\u0308",
-                "",
-                "\u00F9",
-                "\u0075\u0300",
-                "",
-                "\u00FA",
-                "\u0075\u0301",
-                "",
-                "\u00FB",
-                "\u0075\u0302",
-                "",
-                "\u00FC",
-                "\u0075\u0308",
-                "",
-                "\u00FD",
-                "\u0079\u0301",
-                "",
-            // EXTRAS, outside of Latin 1
-            "\u1EA4", "\u00C2\u0301", "", "\u1EA5", "\u00E2\u0301", "", "\u1EA6", "\u00C2\u0300", "", "\u1EA7", "\u00E2\u0300", "", };
+    private static void setMinimalDecomp(IntHashtable canonicalClass, IntStringHashtable decompose, 
+      IntHashtable compose, BitSet isCompatibility, BitSet isExcluded) {
+        String[] decomposeData = {
+            "\u005E", "\u0020\u0302", "K",
+            "\u005F", "\u0020\u0332", "K",
+            "\u0060", "\u0020\u0300", "K",
+            "\u00A0", "\u0020", "K",
+            "\u00A8", "\u0020\u0308", "K",
+            "\u00AA", "\u0061", "K",
+            "\u00AF", "\u0020\u0304", "K",
+            "\u00B2", "\u0032", "K",
+            "\u00B3", "\u0033", "K",
+            "\u00B4", "\u0020\u0301", "K",
+            "\u00B5", "\u03BC", "K",
+            "\u00B8", "\u0020\u0327", "K",
+            "\u00B9", "\u0031", "K",
+            "\u00BA", "\u006F", "K",
+            "\u00BC", "\u0031\u2044\u0034", "K",
+            "\u00BD", "\u0031\u2044\u0032", "K",
+            "\u00BE", "\u0033\u2044\u0034", "K",
+            "\u00C0", "\u0041\u0300", "",
+            "\u00C1", "\u0041\u0301", "",
+            "\u00C2", "\u0041\u0302", "",
+            "\u00C3", "\u0041\u0303", "",
+            "\u00C4", "\u0041\u0308", "",
+            "\u00C5", "\u0041\u030A", "",
+            "\u00C7", "\u0043\u0327", "",
+            "\u00C8", "\u0045\u0300", "",
+            "\u00C9", "\u0045\u0301", "",
+            "\u00CA", "\u0045\u0302", "",
+            "\u00CB", "\u0045\u0308", "",
+            "\u00CC", "\u0049\u0300", "",
+            "\u00CD", "\u0049\u0301", "",
+            "\u00CE", "\u0049\u0302", "",
+            "\u00CF", "\u0049\u0308", "",
+            "\u00D1", "\u004E\u0303", "",
+            "\u00D2", "\u004F\u0300", "",
+            "\u00D3", "\u004F\u0301", "",
+            "\u00D4", "\u004F\u0302", "",
+            "\u00D5", "\u004F\u0303", "",
+            "\u00D6", "\u004F\u0308", "",
+            "\u00D9", "\u0055\u0300", "",
+            "\u00DA", "\u0055\u0301", "",
+            "\u00DB", "\u0055\u0302", "",
+            "\u00DC", "\u0055\u0308", "",
+            "\u00DD", "\u0059\u0301", "",
+            "\u00E0", "\u0061\u0300", "",
+            "\u00E1", "\u0061\u0301", "",
+            "\u00E2", "\u0061\u0302", "",
+            "\u00E3", "\u0061\u0303", "",
+            "\u00E4", "\u0061\u0308", "",
+            "\u00E5", "\u0061\u030A", "",
+            "\u00E7", "\u0063\u0327", "",
+            "\u00E8", "\u0065\u0300", "",
+            "\u00E9", "\u0065\u0301", "",
+            "\u00EA", "\u0065\u0302", "",
+            "\u00EB", "\u0065\u0308", "",
+            "\u00EC", "\u0069\u0300", "",
+            "\u00ED", "\u0069\u0301", "",
+            "\u00EE", "\u0069\u0302", "",
+            "\u00EF", "\u0069\u0308", "",
+            "\u00F1", "\u006E\u0303", "",
+            "\u00F2", "\u006F\u0300", "",
+            "\u00F3", "\u006F\u0301", "",
+            "\u00F4", "\u006F\u0302", "",
+            "\u00F5", "\u006F\u0303", "",
+            "\u00F6", "\u006F\u0308", "",
+            "\u00F9", "\u0075\u0300", "",
+            "\u00FA", "\u0075\u0301", "",
+            "\u00FB", "\u0075\u0302", "",
+            "\u00FC", "\u0075\u0308", "",
+            "\u00FD", "\u0079\u0301", "",
+// EXTRAS, outside of Latin 1
+            "\u1EA4", "\u00C2\u0301", "",
+            "\u1EA5", "\u00E2\u0301", "",
+            "\u1EA6", "\u00C2\u0300", "",
+            "\u1EA7", "\u00E2\u0300", "",
+        };
 
-        int[] classData =
-            {
-                0x0300,
-                230,
-                0x0301,
-                230,
-                0x0302,
-                230,
-                0x0303,
-                230,
-                0x0304,
-                230,
-                0x0305,
-                230,
-                0x0306,
-                230,
-                0x0307,
-                230,
-                0x0308,
-                230,
-                0x0309,
-                230,
-                0x030A,
-                230,
-                0x030B,
-                230,
-                0x030C,
-                230,
-                0x030D,
-                230,
-                0x030E,
-                230,
-                0x030F,
-                230,
-                0x0310,
-                230,
-                0x0311,
-                230,
-                0x0312,
-                230,
-                0x0313,
-                230,
-                0x0314,
-                230,
-                0x0315,
-                232,
-                0x0316,
-                220,
-                0x0317,
-                220,
-                0x0318,
-                220,
-                0x0319,
-                220,
-                0x031A,
-                232,
-                0x031B,
-                216,
-                0x031C,
-                220,
-                0x031D,
-                220,
-                0x031E,
-                220,
-                0x031F,
-                220,
-                0x0320,
-                220,
-                0x0321,
-                202,
-                0x0322,
-                202,
-                0x0323,
-                220,
-                0x0324,
-                220,
-                0x0325,
-                220,
-                0x0326,
-                220,
-                0x0327,
-                202,
-                0x0328,
-                202,
-                0x0329,
-                220,
-                0x032A,
-                220,
-                0x032B,
-                220,
-                0x032C,
-                220,
-                0x032D,
-                220,
-                0x032E,
-                220,
-                0x032F,
-                220,
-                0x0330,
-                220,
-                0x0331,
-                220,
-                0x0332,
-                220,
-                0x0333,
-                220,
-                0x0334,
-                1,
-                0x0335,
-                1,
-                0x0336,
-                1,
-                0x0337,
-                1,
-                0x0338,
-                1,
-                0x0339,
-                220,
-                0x033A,
-                220,
-                0x033B,
-                220,
-                0x033C,
-                220,
-                0x033D,
-                230,
-                0x033E,
-                230,
-                0x033F,
-                230,
-                0x0340,
-                230,
-                0x0341,
-                230,
-                0x0342,
-                230,
-                0x0343,
-                230,
-                0x0344,
-                230,
-                0x0345,
-                240,
-                0x0360,
-                234,
-                0x0361,
-                234 };
-
+        int[] classData = {
+            0x0300, 230,
+            0x0301, 230,
+            0x0302, 230,
+            0x0303, 230,
+            0x0304, 230,
+            0x0305, 230,
+            0x0306, 230,
+            0x0307, 230,
+            0x0308, 230,
+            0x0309, 230,
+            0x030A, 230,
+            0x030B, 230,
+            0x030C, 230,
+            0x030D, 230,
+            0x030E, 230,
+            0x030F, 230,
+            0x0310, 230,
+            0x0311, 230,
+            0x0312, 230,
+            0x0313, 230,
+            0x0314, 230,
+            0x0315, 232,
+            0x0316, 220,
+            0x0317, 220,
+            0x0318, 220,
+            0x0319, 220,
+            0x031A, 232,
+            0x031B, 216,
+            0x031C, 220,
+            0x031D, 220,
+            0x031E, 220,
+            0x031F, 220,
+            0x0320, 220,
+            0x0321, 202,
+            0x0322, 202,
+            0x0323, 220,
+            0x0324, 220,
+            0x0325, 220,
+            0x0326, 220,
+            0x0327, 202,
+            0x0328, 202,
+            0x0329, 220,
+            0x032A, 220,
+            0x032B, 220,
+            0x032C, 220,
+            0x032D, 220,
+            0x032E, 220,
+            0x032F, 220,
+            0x0330, 220,
+            0x0331, 220,
+            0x0332, 220,
+            0x0333, 220,
+            0x0334, 1,
+            0x0335, 1,
+            0x0336, 1,
+            0x0337, 1,
+            0x0338, 1,
+            0x0339, 220,
+            0x033A, 220,
+            0x033B, 220,
+            0x033C, 220,
+            0x033D, 230,
+            0x033E, 230,
+            0x033F, 230,
+            0x0340, 230,
+            0x0341, 230,
+            0x0342, 230,
+            0x0343, 230,
+            0x0344, 230,
+            0x0345, 240,
+            0x0360, 234,
+            0x0361, 234
+        };
+    
         // build the same tables we would otherwise get from the
         // Unicode Character Database, just with limited data
 
@@ -655,88 +447,89 @@ class NormalizerBuilder
         }
     }
 
-    /**
-     * Utility: Parses a sequence of hex Unicode characters separated by spaces
-     */
-    static public String fromHex(String source)
-    {
-        StringBuffer result = new StringBuffer();
-        for (int i = 0; i < source.length(); ++i)
+        /**
+         * Utility: Parses a sequence of hex Unicode characters separated by spaces
+         */
+        static public String fromHex(String source)
         {
-            char c = source.charAt(i);
-            switch (c)
+            StringBuffer result = new StringBuffer();
+            for (int i = 0; i < source.length(); ++i)
             {
-                case ' ' :
-                    break; // ignore
-                case '0' :
-                case '1' :
-                case '2' :
-                case '3' :
-                case '4' :
-                case '5' :
-                case '6' :
-                case '7' :
-                case '8' :
-                case '9' :
-                case 'A' :
-                case 'B' :
-                case 'C' :
-                case 'D' :
-                case 'E' :
-                case 'F' :
-                case 'a' :
-                case 'b' :
-                case 'c' :
-                case 'd' :
-                case 'e' :
-                case 'f' :
-                    result.append((char)Integer.parseInt(source.substring(i, i + 4), 16));
-                    i += 3; // skip rest of number
-                    break;
-                case '<' :
-                    int j = source.indexOf('>', i); // skip <...>
-                    if (j > 0)
-                    {
-                        i = j;
+                char c = source.charAt(i);
+                switch (c)
+                {
+                    case ' ' :
+                        break; // ignore
+                    case '0' :
+                    case '1' :
+                    case '2' :
+                    case '3' :
+                    case '4' :
+                    case '5' :
+                    case '6' :
+                    case '7' :
+                    case '8' :
+                    case '9' :
+                    case 'A' :
+                    case 'B' :
+                    case 'C' :
+                    case 'D' :
+                    case 'E' :
+                    case 'F' :
+                    case 'a' :
+                    case 'b' :
+                    case 'c' :
+                    case 'd' :
+                    case 'e' :
+                    case 'f' :
+                        result.append((char)Integer.parseInt(source.substring(i, i + 4), 16));
+                        i += 3; // skip rest of number
                         break;
-                    } // else fall through--error
-                default :
-                    throw new IllegalArgumentException("Bad hex value in " + source);
+                    case '<' :
+                        int j = source.indexOf('>', i); // skip <...>
+                        if (j > 0)
+                        {
+                            i = j;
+                            break;
+                        } // else fall through--error
+                    default :
+                        throw new IllegalArgumentException("Bad hex value in " + source);
+                }
             }
+            return result.toString();
         }
-        return result.toString();
-    }
 
-    /**
-     * Utility: Supplies a zero-padded hex representation of an integer (without 0x)
-     */
-    static public String hex(int i)
-    {
-        String result = Long.toString(i & 0xFFFFFFFFL, 16).toUpperCase();
-        return "00000000".substring(result.length(), 8) + result;
-    }
-
-    /**
-     * Utility: Supplies a zero-padded hex representation of a Unicode character (without 0x, \\u)
-     */
-    static public String hex(char i)
-    {
-        String result = Integer.toString(i, 16).toUpperCase();
-        return "0000".substring(result.length(), 4) + result;
-    }
-
-    /**
-     * Utility: Supplies a zero-padded hex representation of a Unicode character (without 0x, \\u)
-     */
-    public static String hex(String s, String sep)
-    {
-        StringBuffer result = new StringBuffer();
-        for (int i = 0; i < s.length(); ++i)
+        /**
+         * Utility: Supplies a zero-padded hex representation of an integer (without 0x)
+         */
+        static public String hex(int i)
         {
-            if (i != 0)
-                result.append(sep);
-            result.append(hex(s.charAt(i)));
+            String result = Long.toString(i & 0xFFFFFFFFL, 16).toUpperCase();
+            return "00000000".substring(result.length(), 8) + result;
         }
-        return result.toString();
+
+        /**
+         * Utility: Supplies a zero-padded hex representation of a Unicode character (without 0x, \\u)
+         */
+        static public String hex(char i)
+        {
+            String result = Integer.toString(i, 16).toUpperCase();
+            return "0000".substring(result.length(), 4) + result;
+        }
+
+        /**
+         * Utility: Supplies a zero-padded hex representation of a Unicode character (without 0x, \\u)
+         */
+        public static String hex(String s, String sep)
+        {
+            StringBuffer result = new StringBuffer();
+            for (int i = 0; i < s.length(); ++i)
+            {
+                if (i != 0)
+                    result.append(sep);
+                result.append(hex(s.charAt(i)));
+            }
+            return result.toString();
+        }
     }
 }
