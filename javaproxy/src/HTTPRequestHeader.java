@@ -23,7 +23,7 @@ class HTTPRequestHeader
 
     public String Version = null;
 
-    public String primeheader = "";;
+    public String primeheader = "";
 
     public Hashtable headerfields = new Hashtable();
 
