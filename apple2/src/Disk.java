@@ -48,6 +48,14 @@ public class Disk
         return rb;
     }
 
+    public static String convertASCII(byte[] rb)
+    {
+        for (int i = 0; i < len; ++i)
+        {
+            int c = read();
+            sb.append((char)(byte)(c & 0x0000007F));
+    }
+
     /**
      * @param len
      * @return
