@@ -94,7 +94,7 @@ public class WaveCalc
 		in.readByte(); in.readByte(); // skip bytes per sample
 		in.readByte(); in.readByte(); // skip bits per sample
 
-		if (in.readInt() != 0x61417461)
+		if (in.readInt() != 0x64617461)
 		{
 			throw new Exception("data chunk does not follow fmt chunk.");
 		}
