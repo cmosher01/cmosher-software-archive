@@ -179,5 +179,7 @@ public class VolumeDOS extends VolumeEntity
         {
             s.append(" (RDOS [SSI])");
         }
+        // TODO various DOS 3.3 signatures
+        // TODO AMDOS signature
     }
 }
