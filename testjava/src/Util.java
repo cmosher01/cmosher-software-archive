@@ -92,10 +92,10 @@ public class Util
         return s;
     }
 
-//    public static ArrayList list(Iterable i)
+//    public static ArrayList<T> list(Iterable<T> i)
 //    {
-//        ArrayList r = new ArrayList();
-//        for (Object x : i)
+//        ArrayList<T> r = new ArrayList<T>();
+//        for (T x : i)
 //        {
 //            r.add(x);
 //        }
