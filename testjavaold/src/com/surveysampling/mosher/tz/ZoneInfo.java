@@ -533,7 +533,7 @@ public class ZoneInfo extends TimeZone {
     t.setClock(clock,offset);
 
     // A positive leap second requires a special
-    // representation.  This uses "... ??:59:60".
+    // representation.  This uses "... xx:59:60".
     if (hit) t.tm_sec += 1;
 
     if (tz != null) {
