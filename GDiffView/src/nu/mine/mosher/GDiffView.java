@@ -242,27 +242,24 @@ public class GDiffVeiew extends JFrame
     {
         if (srcBegin >= 0 && srcEnd >= 0)
         {
-            unhighlight(getHexStart(srcBegin),getHexRowEnd(getRow(srcBegin)));
-            for (int i = getRow(srcBegin)+1; i < getRow(srcEnd)-1; ++i)
-            {
-                unhighlight(getHexRowStart(i),getHexRowEnd(i));
-            }
-            unhighlight(getHexRowStart(getRow(srcEnd)),getHexEnd(srcEnd));
         }
         srcBegin = begin;
         srcEnd = end;
+    }
+    public int highlight(boolean highlight)
+    {
         if (getRow(srcBegin)==getRow(srcEnd))
         {
-            highlight(getHexStart(srcBegin),getHexEnd(srcEnd));
+            highlight(getHexStart(srcBegin),getHexEnd(srcEnd),highlight);
         }
         else
         {
-            highlight(getHexStart(srcBegin),getHexRowEnd(getRow(srcBegin)));
+            highlight(getHexStart(srcBegin),getHexRowEnd(getRow(srcBegin)),highlight);
             for (int i = getRow(srcBegin)+1; i <= getRow(srcEnd)-1; ++i)
             {
-                highlight(getHexRowStart(i),getHexRowEnd(i));
+                highlight(getHexRowStart(i),getHexRowEnd(i),highlight);
             }
-            highlight(getHexRowStart(getRow(srcEnd)),getHexEnd(srcEnd));
+            highlight(getHexRowStart(getRow(srcEnd)),getHexEnd(srcEnd),highlight);
         }
     }
     public int getRow(int pos)
@@ -293,13 +290,10 @@ public class GDiffVeiew extends JFrame
     {
         return getAscStart(pos)+1;
     }
-    public void highlight(int beginPoint, int endPoint)
+    public void highlight(int beginPoint, int endPoint, boolean highlight)
     {
-        doc.setCharacterAttributes(beginPoint,endPoint-beginPoint,(AttributeSet)styles.get("highlight"),true);
-    }
-    public void unhighlight(int beginPoint, int endPoint)
-    {
-        doc.setCharacterAttributes(beginPoint,endPoint-beginPoint,(AttributeSet)styles.get("body"),true);
+        AttributeSet attr = (AttributeSet)styles.get(highlight ? "highlight": "body");
+        doc.setCharacterAttributes(beginPoint,endPoint-beginPoint,attr,true);
     }
 
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, InterruptedException, BadLocationException, IOException
