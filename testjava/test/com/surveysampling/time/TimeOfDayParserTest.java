@@ -50,6 +50,11 @@ public class TimeOfDayParserTest extends TestCase
     public void testBadStrings() throws ParseException
     {
         shouldThrow("");
+        shouldThrow("a");
+        shouldThrow("a:00");
+        shouldThrow("01:ab");
+        shouldThrow("01:02:cd");
+        shouldThrow("01:02:03.00e");
     }
 
     private void shouldThrow(String s)
