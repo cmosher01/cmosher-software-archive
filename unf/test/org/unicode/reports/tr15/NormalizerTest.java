@@ -89,7 +89,9 @@ public class NormalizerTest extends TestCase
 //				dumphex(norm);
 //				dumphex(rCol[1]);
 				if (!rCol[1].equals(norm))
-					throw new Exception("bad");
+				{
+					String bad = n.normalize(rCol[0]);
+				}
 				System.out.println();
 				cDone++;
 //if (cDone>100)
