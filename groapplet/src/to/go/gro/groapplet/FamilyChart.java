@@ -49,7 +49,7 @@ public class FamilyChart extends JPanel
         mInitialized = true;
     }
 
-    public boolean isOnIndi(Point point)
+    public Indi hitIndi(Point point)
     {
         return mIndis.isOnIndi(point);
     }
