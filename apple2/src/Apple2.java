@@ -51,7 +51,7 @@ public class Apple2
      * @param disk
      * @throws IOException
      */
-    public static void doOneDisk(Disk disk) throws IOException
+    public static void doOneDisk(Disk disk)
     {
         List rVTOC = new ArrayList();
         disk.findDos33VTOC(rVTOC);
