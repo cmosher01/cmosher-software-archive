@@ -1,6 +1,5 @@
 package edu.fsu.stat.geo.diehard.tests;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 import nu.mine.mosher.math.Stats;
