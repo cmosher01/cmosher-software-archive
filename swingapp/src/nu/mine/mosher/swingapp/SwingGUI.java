@@ -52,8 +52,8 @@ public class GUI
         mFrame.setJMenuBar(createMenuBar());
 
         // Set the window's size and position.
-        mFrame.pack();
-        mFrame.setLocationRelativeTo(null);
+//        mFrame.pack();
+//        mFrame.setLocationRelativeTo(null);
         mFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
 
         // Display the window.
