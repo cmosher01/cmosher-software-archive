@@ -33,7 +33,7 @@ public class A2DiskEdit
 	private DefaultMutableTreeNode top = new DefaultMutableTreeNode("Program");
 	private static A2DiskEdit staticApp = new A2DiskEdit();
 	private JTree tree;
-	private JScrollPane rightView = null;
+	private JScrollPane rightView = new JScrollPane();
 
 	public void createComponents()
 	{
@@ -90,13 +90,6 @@ public class A2DiskEdit
         //Create the scroll pane and add the tree to it. 
         JScrollPane treeView = new JScrollPane(tree);
 
-		rightView = new JScrollPane();
-        //Create the right-hand pane.
-		//htmlPane = new JEditorPane();
-        //htmlPane.setEditable(false);
-        //htmlPane.setContentType("text/html");
-//        initHelp();
-//        JScrollPane paneRight = null;
         //Add the scroll panes to a split pane.
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         splitPane.setLeftComponent(treeView);
