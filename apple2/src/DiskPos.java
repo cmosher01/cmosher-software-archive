@@ -10,14 +10,14 @@
  */
 public class DiskPos
 {
-    private static final int cSector = 0x100;
-    private static final int cSectorsPerTrack = 0x10;
-    private static final int cSectorsPerBlock = 2;
-    private static final int cTrack = cSectorsPerTrack*cSector;
-    private static final int cBlock = cSectorsPerBlock*cSector;
+    public static final int cSector = 0x100;
+    public static final int cSectorsPerTrack = 0x10;
+    public static final int cSectorsPerBlock = 2;
+    public static final int cTrack = cSectorsPerTrack*cSector;
+    public static final int cBlock = cSectorsPerBlock*cSector;
 
-    private static final int cTracksPerDisk = 0x23;
-    private static final int cBlocksPerDisk = cTracksPerDisk*cSectorsPerTrack/cSectorsPerBlock;
+    public static final int cTracksPerDisk = 0x23;
+    public static final int cBlocksPerDisk = cTracksPerDisk*cSectorsPerTrack/cSectorsPerBlock;
 
 
 
