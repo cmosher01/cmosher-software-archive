@@ -30,14 +30,14 @@ public class DiffWriter
 
 	public void outByte(int b)
 	{
-		if (pos > 93)
-		{
-			s.append("\n");
-			pos = 0;
-		}
-		s.append(hexByte(b));
-		s.append(" ");
-		pos += 3;
+//		if (pos > 93)
+//		{
+//			s.append("\n");
+//			pos = 0;
+//		}
+//		s.append(hexByte(b));
+//		s.append(" ");
+//		pos += 3;
 	}
 
 	public void flush()
