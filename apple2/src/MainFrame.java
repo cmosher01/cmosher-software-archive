@@ -93,11 +93,20 @@ public class MainFrame extends JFrame
 
         DefaultMutableTreeNode nFilesRecovered = new DefaultMutableTreeNode("Recovered Files");
 
+        DefaultMutableTreeNode nOrphaned = new DefaultMutableTreeNode("Orphaned Data");
+
+        DefaultMutableTreeNode nBlank = new DefaultMutableTreeNode("Blank Sectors");
+
+        DefaultMutableTreeNode nMap = new DefaultMutableTreeNode("Track/Sector Map");
+
         nDisk.add(nBoot);
         nDisk.add(nDos);
         nDisk.add(nCat);
         nDisk.add(nFiles);
         nDisk.add(nFilesRecovered);
+        nDisk.add(nOrphaned);
+        nDisk.add(nBlank);
+        nDisk.add(nMap);
 
         top.add(nDisk);
     }
