@@ -606,6 +606,14 @@ public class GDiffView extends JFrame
         }
     }
 
+
+
+
+
+
+
+
+
     public void readGDiff() throws IOException, InvalidMagicBytes
     {
         BufferedInputStream gdiff = new BufferedInputStream(dif);
