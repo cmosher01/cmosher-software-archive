@@ -18,4 +18,8 @@ public class Search
 	public Search()
 	{
 	}
+
+	public String getListEntry()
+	{
+	}
 }
