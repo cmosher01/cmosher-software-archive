@@ -57,8 +57,7 @@ public class GUI
      */
     protected Image getFrameIcon()
     {
-        this.getClass().getResource("appicon.gif");
-        return new ImageIcon().getImage();
+        return new ImageIcon(this.getClass().getResource("appicon.gif")).getImage();
     }
 
     /**
