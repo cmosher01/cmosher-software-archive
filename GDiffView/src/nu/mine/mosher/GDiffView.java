@@ -242,9 +242,11 @@ public class GDiffVeiew extends JFrame
     {
         if (srcBegin >= 0 && srcEnd >= 0)
         {
+            highlight(false);
         }
         srcBegin = begin;
         srcEnd = end;
+        highlight(true);
     }
     public void highlight(boolean highlight)
     {
