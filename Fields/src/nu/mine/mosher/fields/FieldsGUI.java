@@ -98,15 +98,6 @@ public class GUI
      */
     protected JPanel createContentPane()
     {
-        JPanel panel = new JPanel(new BorderLayout(),true);
-        panel.setOpaque(true);
-        panel.setPreferredSize(new Dimension(640,480));
-        panel.addNotify();
-
-        JScrollPane scrollpane = new JScrollPane();
-        scrollpane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollpane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-
         String[] columnNames = {"First Name", "Last Name", "Sport", "# of Years", "Vegetarian"};
 
         Object[][] data = { {"Mary", "Campione", "Snowboarding", new Integer(5), new Boolean(false)},
@@ -117,6 +108,14 @@ public class GUI
 
         JTable table = new JTable(data,columnNames);
 
+        JScrollPane scrollpane = new JScrollPane(table);
+        scrollpane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollpane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+        JPanel panel = new JPanel(new BorderLayout(),true);
+        panel.setOpaque(true);
+        panel.setPreferredSize(new Dimension(640,480));
+        panel.addNotify();
         panel.add(scrollpane,BorderLayout.CENTER);
 
         return panel;
