@@ -430,19 +430,6 @@ public class DiskCatalogTest extends TestCase
         assertManyPos("SARG2.dsk",r);
     }
 
-    //    public void testDOS33_Others() throws IOException, InvalidPosException
-//    {
-//        assertOnePos("daviddos_2.dsk",new DiskPos(0x11,0));
-//        assertOnePos("DiversiDOS_41_C_1983.dsk",new DiskPos(0x11,0));
-//        assertOnePos("DiversiDOS_2_C_1982.dsk",new DiskPos(0x11,0));
-//        assertOnePos("ESDOS.dsk",new DiskPos(0x11,0));
-//        assertOnePos("Franklin_19820921.dsk",new DiskPos(0x11,0));
-//        assertOnePos("Franklin_19830215.dsk",new DiskPos(0x11,0));
-//        assertOnePos("HYPERDOS_restored.dsk",new DiskPos(0x11,0));
-//        assertOnePos("prontodos.dsk",new DiskPos(0x11,0));
-//        assertOnePos("apa.dsk",new DiskPos(0x11,0));
-//    }
-
     /**
      * @param f
      * @param posExpected
