@@ -83,11 +83,9 @@ public class TestBeans
 
     public static Object convertScalar(String[] value, Class classProp) throws IntrospectionException, IllegalArgumentException
     {
-        Object v;
         PropertyEditor ed = getPropertyEditor(classProp);
         ed.setAsText(value[0]);
-        v = ed.getValue();
-        return v;
+        return ed.getValue();
     }
 
     public static Object[] convertArray(String[] value, Class classProp)
