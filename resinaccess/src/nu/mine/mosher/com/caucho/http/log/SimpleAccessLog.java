@@ -21,5 +21,6 @@ public class SimpleAccessLog extends AccessLog
     public void log(HttpServletRequest request, HttpServletResponse response, ServletContext context) throws IOException
     {
     	super.log(request,response,context);
+    	System.err.println(request.getRemoteAddr());
     }
 }
