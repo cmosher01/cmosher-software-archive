@@ -24,12 +24,12 @@ public class FixMetaUTF8Test extends TestCase
         sb.append("</html>\n");
 
         StringBuffer sbExpect = new StringBuffer();
-        sb.append("<html>");
-        sb.append("<HEAD>\");
-        sb.append("<META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\");
-
-        sb.append("</head>\");
-        sb.append("</html>\");
+        sb.append("<html>\n");
+        sb.append("<HEAD>\n");
+        sb.append("<META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
+        sb.append("\n");
+        sb.append("</head>\n");
+        sb.append("</html>\n");
 
 
         System.out.println(sb);
