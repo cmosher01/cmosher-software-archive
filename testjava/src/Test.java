@@ -94,8 +94,14 @@ public class Test
             {
                 throw new UnsupportedOperationException("Cannot process non-file inside jar: "+uri.toASCIIString());
             }
+            jarpart = jarpart.substring(6);
+            int bang = jarpart.indexOf('!');
+            if (bang >= 0)
+            {
+                jarpart = jarpart.substring(0,bang-1);
+            }
 
-//            f = new File(urijp.getPath());
+            f = new File(jarpart);
         }
         else
         {
