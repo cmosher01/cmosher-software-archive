@@ -64,7 +64,7 @@ public class Test
             }
             return clon;
         }
-        public Mute ref()
+        private Mute ref()
         {
             return (Mute)u.state();
         }
