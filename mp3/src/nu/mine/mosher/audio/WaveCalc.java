@@ -82,17 +82,17 @@ public class WaveCalc
 
 		boolean stereo = (readWord(in)==2);
 
-		int Hz = in.readInt();
-		int bytespersec = in.readInt();
-		in.readByte(); in.readByte(); // skip bytes per sample
-		in.readByte(); in.readByte(); // skip bits per sample
+		int Hz = readInt(in);
+		int bytespersec = readInt(in);
+		int bytespersamp = readWord(in);
+		int bitspersample = readWord(in);
 
-		if (in.readInt() != 0x64617461)
+		if (!readString(in,4).equals("data"))
 		{
 			throw new Exception("data chunk does not follow fmt chunk.");
 		}
 
-		long bytes = in.readInt();
+		long bytes = readInt(in);
 
 		System.out.print(bytes);
 		System.out.print(",");
