@@ -101,7 +101,7 @@ public final class Util
         addAll(i,r);
         return r;
     }
-    public static<T> void addAll(Iterator<T> i, Collection<T> collection)
+    public static<T> void addAll(Iterator<T> i, List<T> collection)
     {
         while (i.hasNext())
         {
