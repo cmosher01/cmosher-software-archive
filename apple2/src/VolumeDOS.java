@@ -561,35 +561,27 @@ public class VolumeDOS extends VolumeEntity
                         if (dif == 0)
                         {
                             s.append(" (DOS 3.3 1980 master: unknown alteration)");
+                            for (int i = 0; i < rbCmp.length; ++i)
+                            {
+                                if (rbCmp[i] != rbClear1980[i])
+                                {
+                                    System.err.println("@$"+Integer.toHexString(i)+": "+Integer.toHexString(rbClear1980[i]&0xFF)+" --> "+Integer.toHexString(rbCmp[i]&0xFF));
+                                }
+                            }
                         }
                         else
                         {
                             s.append(" (DOS 3.3 1980 slave (A$");
                             s.append(Hex2Bin.hexbyte((byte)(0x1D+dif)));
                             s.append("00): unknown alteration)");
+                            for (int i = 0; i < rbCmp.length; ++i)
+                            {
+                                if (rbCmp[i] != rbClearSlave[i])
+                                {
+                                    System.err.println("@$"+Integer.toHexString(i)+": "+Integer.toHexString(rbClearSlave[i]&0xFF)+" --> "+Integer.toHexString(rbCmp[i]&0xFF));
+                                }
+                            }
                         }
-//                        if (dif != 0)
-//                        {
-//                            System.err.println("compared to good cleared slave:------------------------------------------------------------");
-//                            for (int i = 0; i < rbCmp.length; ++i)
-//                            {
-//                                if (rbCmp[i] != rbClearSlave[i])
-//                                {
-//                                    System.err.println("@$"+Integer.toHexString(i)+": "+Integer.toHexString(rbClearSlave[i]&0xFF)+" --> "+Integer.toHexString(rbCmp[i]&0xFF));
-//                                }
-//                            }
-//                        }
-//                        if (dif != 0x80)
-//                        {
-//                            System.err.println("compared to good cleared master:-----------------------------------------------------------");
-//                            for (int i = 0; i < rbCmp.length; ++i)
-//                            {
-//                                if (rbCmp[i] != rbClear1980[i])
-//                                {
-//                                    System.err.println("@$"+Integer.toHexString(i)+": "+Integer.toHexString(rbClear1980[i]&0xFF)+" --> "+Integer.toHexString(rbCmp[i]&0xFF));
-//                                }
-//                            }
-//                        }
                     }
                 }
             }
