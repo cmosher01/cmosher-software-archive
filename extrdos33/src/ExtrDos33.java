@@ -36,17 +36,23 @@ public class ExtrDos33
             System.err.println("subdir-reg-exp: " + regexpDir);
         }
 
+        File[] rf = listRegFiles(sDir, regexpFile, regexpDir);
+
 		File dirNew = new File(sDir,"extrdos33");
 		if (dirNew.exists())
 		{
 			throw new Exception(dirNew.getCanonicalFile().getAbsolutePath()+" directory already exists");
 		}
 
-        File[] rf = listRegFiles(sDir, regexpFile, regexpDir);
+		if (!dirNew.mkdir())
+		{
+			throw new Exception("could not create directory "+dirNew.getCanonicalFile().getAbsolutePath());
+		}
+
         for (int i = 0; i < rf.length; ++i)
         {
             File file = rf[i];
-            System.out.println(file.getPath());
+            extrDos(file,newDir);
         }
     }
 
