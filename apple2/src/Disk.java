@@ -128,17 +128,6 @@ public class Disk
                 rPosVtoc.add(pos);
             }
         }
-//        DiskPos p = new DiskPos();
-
-//        while (!EOF())
-//        {
-//            DiskPos cur = this.pos;
-//            byte[] sector = read(DiskPos.cSector);
-//            if (isDos33VTOC(sector))
-//            {
-//                rPosVtoc.add(cur);
-//            }
-//        }
     }
 
     /**
@@ -180,8 +169,9 @@ public class Disk
             {
                 throw new NoSuchElementException();
             }
-            // TODO Auto-generated method stub
-            return d.clone();
+            DiskPos p = d.clone();
+            d.advance(DiskPos.cSector);
+            return p;
         }
 
         /**
