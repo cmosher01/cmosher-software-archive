@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public final class Cloner
 {
-	private static final Map<Class,Method> mClasses = new HashMap();
+	private static final Map<Class,Method> mClasses = new HashMap<Class,Method>();
 
 	private Cloner()
 	{
