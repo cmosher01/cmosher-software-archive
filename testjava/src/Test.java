@@ -64,7 +64,7 @@ public class Test
         for (int i = 0; i < 200; ++i)
         {
             System.out.println(fmt.format(new Date(ms)));
-            ms += 15*60:1000;
+            ms += 15*60*1000;
         }
 
 
