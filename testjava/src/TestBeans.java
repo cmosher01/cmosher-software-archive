@@ -83,7 +83,6 @@ public class TestBeans
         HashMap map = new HashMap();
         if (rpd != null)
         {
-            int ipd = -1;
             for (int i = 0; i < rpd.length; ++i)
             {
                 PropertyDescriptor descriptor = rpd[i];
