@@ -81,10 +81,8 @@ public class TestBeans
 
     public static Object convert(String value, PropertyEditor ed) throws IllegalArgumentException
     {
-        Object v;
         ed.setAsText(value);
-        v = ed.getValue();
-        return v;
+        return ed.getValue();
     }
 
     public static PropertyEditor getPropertyEditor(Class forClass) throws IntrospectionException
