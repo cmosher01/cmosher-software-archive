@@ -161,6 +161,8 @@ class NormalizerBuilder
             // check consistency: canonical classes must be from 0 to 255
 
             int cc = Integer.parseInt(line.substring(start, end));
+if (cc != 0)
+	System.err.println("non-zero canonical class (good)");
             if (cc != (cc & 0xFF))
                 System.err.println("Bad canonical class at: " + line);
             canonicalClass.put(value, cc);
