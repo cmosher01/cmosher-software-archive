@@ -31,7 +31,7 @@ public class BigTableModel implements TableModel
         return sb.toString();
     }
 
-    public Class getColumnClass(int columnIndex)
+    public Class<String> getColumnClass(int columnIndex)
     {
         return String.class;
     }
