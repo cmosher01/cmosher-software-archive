@@ -32,7 +32,7 @@ public class Gedcom
 		return "test";
 		/*
 		 * windows-1252   IBM WINDOWS, ANSI
-		 * cp850          IBM DOS, IMBPC
+		 * Cp850          IBM DOS, IMBPC
 		 * MacRoman       MACINTOSH
 		 * x-gedcom-ansel ANSEL
 		 * UTF-16BE       (detected automatically)
