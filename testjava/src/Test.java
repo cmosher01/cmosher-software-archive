@@ -67,13 +67,14 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
+        System.out.println(System.getProperty("user.name"));
 
 
 
 
 
-        SubTest sb = new SubTest();
-        Test b = new Test();
+//        SubTest sb = new SubTest();
+//        Test b = new Test();
 
 
 
