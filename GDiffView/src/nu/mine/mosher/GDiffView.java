@@ -967,7 +967,8 @@ public class GDiffView extends JFrame
                         {
                             if (cMatch == cMatchCurrent)
                             {
-                                System.out.print("candidate src: "+Long.toHexString(match));
+                                System.out.print("same len  "+cMatch);
+                                System.out.print(" candidate src: "+Long.toHexString(match));
                                 System.out.print(" prev cand src: "+Long.toHexString(matchCurrent));
                                 System.out.print(" target       : "+Long.toHexString(here));
                                 if (here-match < here-matchCurrent)
