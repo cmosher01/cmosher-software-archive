@@ -268,7 +268,7 @@ public class BinDiff
         {
             int c1 = lf1.read();
             int c2 = lf2.read();
-            if ((c2 == EOF && c1 != EOF) || (c1 != c2) || c1 == 0 || c2 == 0)
+            if ((c2 == EOF && c1 != EOF) || (c1 != c2))
             {
 				same = false;
             }
