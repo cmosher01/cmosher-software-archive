@@ -1,7 +1,10 @@
 <%@ include file="htmlhead.jsp" %>
+<%@ page import="java.io.BufferedReader" %>
+<%@ page import="java.io.InputStreamReader" %>
 <%@ page import="java.util.Enumeration" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="javax.servlet.ServletInputStream" %>
 <head>
 <title>Request Dump</title>
 </head>
@@ -41,6 +44,18 @@ Attributes
 		String attribName = (String)i.nextElement();
 		String attribValue = request.getAttribute(attribName).toString();
 		%><tr><td><%=attribName%></td><td><%=attribValue%></td></tr><%
+	}
+%>
+</tbody>
+</table>
+Entire Request
+<table>
+<tbody>
+<%
+	BufferedReader in = new BufferedReader(new InputStreamReader(request.getInputStream()));
+	for (String s = in.readLine(); s != null; s = in.readLine())
+	{
+		%><tr><td><%=s%></td></tr><%
 	}
 %>
 </tbody>
