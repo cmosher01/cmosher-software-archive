@@ -52,7 +52,7 @@ public class Test
             {
             }
         }
-        public Object clone()
+        protected Object clone()
         {
             Mute clon = null;
             try
