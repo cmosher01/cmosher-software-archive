@@ -79,7 +79,7 @@ public class GedcomTree
 
 	public TreeNode getNode(String id)
 	{
-		return (TreeNode)mapIDtoNode.get(id);
+		return mapIDtoNode.get(id);
 	}
 
 	public String toString()
