@@ -1,8 +1,11 @@
 package nu.mine.mosher.grodb;
 
+import java.io.Serializable;
 import java.util.TimeZone;
 
-public class DateRange
+import nu.mine.mosher.core.Immutable;
+
+public class DateRange implements Immutable, Serializable, Comparable
 {
 	/*
 	 * YMD always represent Gregorian calendar.
@@ -56,6 +59,11 @@ public class DateRange
         return latest;
     }
 
+	public boolean isExact()
+	{
+		return earliest.equals(latest);
+	}
+
 	/**
 	 * @return
 	 */
@@ -94,5 +102,23 @@ public class DateRange
     public boolean isCirca()
     {
         return circa;
+    }
+
+    public int compareTo(Object o)
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public boolean equals(Object obj)
+    {
+        // TODO Auto-generated method stub
+        return super.equals(obj);
+    }
+
+    public int hashCode()
+    {
+        // TODO Auto-generated method stub
+        return super.hashCode();
     }
 }
