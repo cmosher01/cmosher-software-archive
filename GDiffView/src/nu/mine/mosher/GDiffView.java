@@ -624,7 +624,7 @@ public class GDiffView extends JFrame
         gdiff.read(); // ignore version
 
         RandomAccessFile in = new RandomAccessFile(fileSrc,"r");
-        sbTrg = new StringBuffer((int)in.length()); // TODO long doesn't work
+        StringBuffer sbTrg = new StringBuffer((int)in.length()); // TODO long doesn't work
 
         HexBuilder hex = new HexBuilder(sbTrg);
         hex.appendHeader();
