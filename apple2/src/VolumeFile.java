@@ -42,6 +42,7 @@ public class VolumeFile
         {
             // assume a single-sector file
             ts = new VolumeTSMap(); // a bogus one
+            ts.degenerateSeedling(start);
             rPosFile.add(start);
         }
         data = new VolumeFileData();
