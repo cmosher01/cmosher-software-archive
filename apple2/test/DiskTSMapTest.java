@@ -37,6 +37,7 @@ public class DiskTSMapTest extends TestCase
         r.add(new DiskPos(0x15,0x4));
         r.add(new DiskPos(0x15,0xF));
         r.add(new DiskPos(0x16,0xF));
+        r.add(new DiskPos(0x17,0xF));
         r.add(new DiskPos(0x18,0xF));
         r.add(new DiskPos(0x19,0xF));
         r.add(new DiskPos(0x1A,0xF));
