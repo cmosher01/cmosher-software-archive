@@ -1,3 +1,4 @@
+package nu.mine.mosher.velocity;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileDescriptor;
