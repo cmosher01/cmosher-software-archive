@@ -107,6 +107,33 @@ public class DiskCatalogTest extends TestCase
         assertEquals(1,ent.size());
     }
 
+    /**
+     * test Beagle Bros. Tip Disk 1, T$11, S$01
+     */
+    public void testCatalog_Hello_Only_Deleted()
+    {
+        TSMap ts = new TSMap();
+        List ent = new ArrayList();
+        assertEquals(1,Disk.isDos33CatalogSector(Hex2Bin.hex2Bin(
+        "00 11 0E 00 00 00 00 00 00 00 00 FF 0F 02 C8 C5 "+
+        "CC CC CF A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 "+
+        "A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 12 02 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "),
+        false,ts,ent));
+        assertEquals(1,ent.size());
+    }
 
     /**
      * test Beagle Bros. Tip Disk 1, T$11, S$01
