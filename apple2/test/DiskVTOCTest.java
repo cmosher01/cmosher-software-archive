@@ -23,6 +23,7 @@ public class DiskVTOCTest extends TestCase
         InputStream disk = this.getClass().getClassLoader().getResourceAsStream("DOS33_SystemMaster_19800825.dsk");
         byte[] rbDisk = new byte[disk.available()];
         disk.read(rbDisk);
+        disk.close();
     }
 //    private static byte[] zeroes = new byte[0x100];
 //
