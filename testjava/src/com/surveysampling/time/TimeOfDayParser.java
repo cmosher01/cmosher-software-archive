@@ -63,7 +63,7 @@ public class TimeOfDayParser
      * @param i
      * @param c
      */
-    private void ensure(String s, int i, char c)
+    private void ensure(String s, int i, char c) throws ParseException
     {
         if (s.charAt(i) != c)
         {
