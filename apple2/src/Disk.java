@@ -140,10 +140,10 @@ public class Disk
         boolean valid = false;
         if (DiskPos.isValidTrackSectorPointer(sector[1],sector[2]) && sector[0x35]==0x10)
         {
-            DiskPos cat = new DiskPos();
+            DiskPos cat;
             try
             {
-                cat.setTS(sector[1],sector[2]);
+                cat = new DiskPos(sector[1],sector[2]);
             }
             catch (InvalidPosException e)
             {
