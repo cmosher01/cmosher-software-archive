@@ -35,15 +35,6 @@ public class IntegerEditor extends PropertyEditorSupport implements PropertyEdit
     }
 
     /* (non-Javadoc)
-     * @see java.beans.PropertyEditor#isPaintable()
-     */
-    public boolean isPaintable()
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    /* (non-Javadoc)
      * @see java.beans.PropertyEditor#paintValue(java.awt.Graphics, java.awt.Rectangle)
      */
     public void paintValue(Graphics gfx, Rectangle box)
