@@ -153,7 +153,6 @@ public class GDiffView extends JFrame
                 }
             }
         };
-        listGDiff.setSelectionModel(selectionModel);
         listGDiff.setSelectedIndex(0);
         JScrollPane scrGDiff = new JScrollPane(listGDiff);
         scrGDiff.setPreferredSize(new Dimension(100,460));
@@ -181,6 +180,9 @@ public class GDiffView extends JFrame
 
         readSrc();
         docSrc.insertString(0,sb.toString(),(AttributeSet)styles.get("body"));
+
+        listGDiff.setSelectionModel(selectionModel);
+
         pack();
         setVisible(true);
     }
