@@ -378,7 +378,7 @@ public class FixAppleDisasm
 			Map.Entry ent = (Map.Entry)i.next();
 			Line ln = (Line)ent.getValue();
 
-			if (ln.instr.equalsIgnoreCase("DB") && prevline.instr.equalsIgnoreCase("DB") && ct < 16)
+			if (ln.instr.equalsIgnoreCase("DB") && prevline.instr.equalsIgnoreCase("DB") && ct < 16 && ln.comment.length() == 0)
 			{
 				++ct;
 				prevline.oper += ","+ln.oper;
