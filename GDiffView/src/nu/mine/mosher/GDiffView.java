@@ -264,7 +264,7 @@ public class GDiffVeiew extends JFrame
     }
     public int getHexRowStart(int row)
     {
-        return row*rowLen;
+        return row*rowLen+nibs+2;
     }
     public int getHexRowEnd(int row)
     {
