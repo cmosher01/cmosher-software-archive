@@ -73,7 +73,12 @@ public class Test
         System.out.println(uri.toASCIIString());
         System.out.println(uri.getScheme());
         System.out.println(uri.getHost());
-        System.out.println(uri.getPort());
+        int port = uri.getPort();
+        if (port < 0)
+        {
+            port = 25;
+        }
+        System.out.println(port);
         System.out.println(uri.getQuery());
 
 
