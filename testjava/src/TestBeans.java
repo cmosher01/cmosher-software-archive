@@ -12,7 +12,7 @@ public class TestBeans
         }
         ed.setAsText("34");
         Integer i = (Integer)ed.getValue();
-        showInt(i);
+        showInt(i.intValue());
     }
 
     public static void showInt(int i)
