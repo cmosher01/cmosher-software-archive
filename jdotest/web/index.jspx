@@ -22,12 +22,12 @@
 		</jsp:scriptlet>
 		<table>
 			<c:forEach var="i" items="${items}">
-				<c:url var="edit" value="edit.jsp">
+				<c:url var="edit" value="edit.jspx">
 					<c:param name="id" value="${i.id}" />
 				</c:url>
 				<tr><td><a href="${edit}">${i.name}</a></td></tr>
 			</c:forEach>
-			<c:url var="add" value="add.jsp" />
+			<c:url var="add" value="add.jspx" />
 			<tr><td>{ <a href="${add}">add</a> }</td></tr>
 		</table>
 	</body>
