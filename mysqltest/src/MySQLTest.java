@@ -31,7 +31,9 @@ public class MySQLTest
 		{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			db = DriverManager.getConnection("jdbc:mysql:///test","root","");
+			log.info("Creating schema...");
 			createSchema();
+			log.info("Done creating schema.");
 		}
 		finally
 		{
