@@ -397,10 +397,5 @@ public class GDiffView extends JFrame
     {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         GDiffView frame = new GDiffView(args[0],args[1]);
-        frame.highlightSrc(3,0x06);
-        Thread.sleep(2000);
-        frame.highlightSrc(4,0x16);
-        Thread.sleep(2000);
-        frame.highlightSrc(5,0x26);
     }
 }
