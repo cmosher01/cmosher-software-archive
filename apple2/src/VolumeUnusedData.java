@@ -25,7 +25,7 @@ public class VolumeUnusedData extends VolumeEntity
         for (Iterator i = rPos.iterator(); i.hasNext();)
         {
             DiskPos p = (DiskPos)i.next();
-            rSector.add(new VolumeSector(p,x++));
+            rSector.add(new VolumeSector(p,x++,this));
         }
     }
 
