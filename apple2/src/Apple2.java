@@ -43,6 +43,7 @@ public class Apple2
         for (int i = 0; i < rf.length; i++)
         {
             doOneDisk(readDisk(rf[i]));
+            System.out.println(rf[i].getAbsolutePath());
         }
     }
 
@@ -55,18 +56,18 @@ public class Apple2
         List rVTOC = new ArrayList();
         disk.findDos33VTOC(rVTOC);
 
-//        if (rVTOC.size() > 0)
-//        {
-//            for (Iterator i = rVTOC.iterator(); i.hasNext();)
-//            {
-//                DiskPos p = (DiskPos)i.next();
-////                System.out.println("VTOC @ "+p.toStringTS()+" "+f.getAbsolutePath());
-//            }
-//        }
-//        else
-//        {
-//            System.out.println("[no VTOC]       "+f.getAbsolutePath());
-//        }
+        if (rVTOC.size() > 0)
+        {
+            for (Iterator i = rVTOC.iterator(); i.hasNext();)
+            {
+                DiskPos p = (DiskPos)i.next();
+                System.out.println("VTOC @ "+p.toStringTS()+" ");
+            }
+        }
+        else
+        {
+            System.out.println("[no VTOC]       ");
+        }
 //        List rCat = new ArrayList();
 //        disk.findDos33CatalogSector(rCat);
 //
