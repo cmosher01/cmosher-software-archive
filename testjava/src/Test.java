@@ -52,7 +52,7 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
-        System.setOut(new PrintStreamAdapter(new PrintWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out),"UTF-8"))));
+        System.setOut(new PrintStreamAdapter(new PrintWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out),"UTF-16"))));
         System.out.println("\u22C7");
         System.out.flush();
 
