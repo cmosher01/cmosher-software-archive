@@ -1,14 +1,10 @@
-/*
- * TODO
- *
- * Created on Apr 14, 2004
- */
 package com.surveysampling.beans.editors.test;
 
 /**
- * TODO
  */
-public class Editors
+public final class Editors
 {
-
+    public static void register()
+    {
+    }
 }
