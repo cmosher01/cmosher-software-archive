@@ -6,7 +6,7 @@ package com.surveysampling.time;
 import java.util.Calendar;
 
 /**
- * Represents a time of day, for example, "3:00 AM".
+ * Represents a time of day, for example, "3:00 PM".
  * It contains hours, minutes, seconds, and milliseconds
  * since midnight. Instances of this class are immutable.
  */
