@@ -68,9 +68,9 @@ public class MySQLTest
 
 	protected void calc() throws SQLException
     {
-    	calcOneCount(1790,"male",16,-1);
+    	calcOneCount(1790,"male",16,150);
 		calcOneCount(1790,"male",0,15);
-		calcOneCount(1790,"female",0,-1);
+		calcOneCount(1790,"female",0,150);
     }
 
 	protected void calcOneCount(int year, String sGender, int ageMin, int ageMax) throws SQLException
@@ -108,14 +108,8 @@ public class MySQLTest
 		String s = "";
 		s += sGender;
 		s += minAge;
-		if (maxAge < 0)
-		{
-			s += "plus";
-		}
-		else
-		{
-			s += "to"+maxAge;
-		}
+		s += "to";
+		s += maxAge;
 		return s;
 	}
 
