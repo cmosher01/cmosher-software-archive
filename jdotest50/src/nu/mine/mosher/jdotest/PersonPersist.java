@@ -27,7 +27,7 @@ public class PersonPersist
 		props.setProperty("javax.jdo.option.ConnectionDriverName","com.mysql.jdbc.Driver");
 		props.setProperty("javax.jdo.option.ConnectionURL","jdbc:mysql:///jdotest");
 		props.setProperty("javax.jdo.option.ConnectionUserName","root");
-		props.setProperty("javax.jdo.option.ConnectionPassword","rootroot");
+		props.setProperty("javax.jdo.option.ConnectionPassword","");
 		props.setProperty("org.jpox.autoCreateTables","true");
 		props.setProperty("org.jpox.validateTables","false");
 		props.setProperty("org.jpox.validateConstraints","false");
