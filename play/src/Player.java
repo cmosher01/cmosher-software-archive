@@ -10,6 +10,8 @@ import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import nu.mine.mosher.core.Immutable;
@@ -35,9 +37,23 @@ public class Player implements Immutable
 
 
 
-		Thing x = new Thing();
-		Method t = Thing.class.getMethod("test",null);
-		t.invoke(x,null);
+
+
+		List x = new ArrayList();
+		String[] rs = (String[])x.toArray(new String[x.size()]);
+
+
+
+
+
+
+
+
+
+
+//		Thing x = new Thing();
+//		Method t = Thing.class.getMethod("test",null);
+//		t.invoke(x,null);
 
 
 
