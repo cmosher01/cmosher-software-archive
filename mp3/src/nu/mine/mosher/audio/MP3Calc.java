@@ -15,21 +15,22 @@ public class MP3Calc
 {
     public static void main(String[] rArg) throws Throwable
     {
-    	InputStream in = null;
-    	if (System.in.available() > 0)
+    	if (rArg.length == 0)
     	{
-    		in = System.in;
-    	}
-    	else if (rArg.length > 0)
-    	{
-    		in = new FileInputStream(new File(rArg[0]));
+			System.err.println("Must specify input mp3 file.");
+			System.exit(1);
     	}
 
-    	if (in == null)
-    	{
-    		System.err.println("Must specify input mp3 file.");
-    		System.exit(1);
-    	}
+		File fin = new File(rArg[0]);
+		if (!fin.canRead())
+		{
+			System.err.println("Cannot access file "+fin.getCanonicalPath());
+			System.exit(1);
+		}
+
+		long flen = fin.length();
+
+		in = new FileInputStream();
 
 		BufferedInputStream bufin = null;
     	if (in instanceof BufferedInputStream)
@@ -40,5 +41,7 @@ public class MP3Calc
     	{
     		bufin = new BufferedInputStream(in);
     	}
+
+		bufin.readInt();
     }
 }
