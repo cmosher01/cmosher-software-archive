@@ -5,6 +5,7 @@
 //import java.util.List;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.ListIterator;
@@ -41,6 +42,7 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
+        FileReader f = new FileReader("c:\\temp\\ssprop.txt");
 
         String x = "a,b,,d";
         for (Iterator i = new StringFields(x).iterator(); i.hasNext();)
