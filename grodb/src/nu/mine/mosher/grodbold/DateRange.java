@@ -18,6 +18,11 @@ public class DateRange
 		this(ymd,null,false,-1,-1,false,null);
 	}
 
+	public DateRange(YMD earliest, YMD latest)
+	{
+		this(earliest,latest,false,-1,-1,false,null);
+	}
+
     public DateRange(YMD earliest, YMD latest, boolean julian, int hour, int minute, boolean circa, TimeZone timeZone)
     {
         this.earliest = earliest;
