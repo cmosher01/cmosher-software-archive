@@ -214,7 +214,7 @@ public class TimeOfDay implements Comparable
      * @param s the StringBuffer to append the result to
      * @return s
      */
-    public StringBuffer format(boolean showAll, StringBuffer s)
+    public void format(boolean showAll, StringBuffer s)
     {
         if (seconds == 0 && milliseconds == 0 && !showAll)
         {
@@ -240,8 +240,6 @@ public class TimeOfDay implements Comparable
             s.append('.');
             appendNumber(milliseconds,3,s);
         }
-
-        return s;
     }
 
     private void appendNumber(int n, int min, StringBuffer s)
