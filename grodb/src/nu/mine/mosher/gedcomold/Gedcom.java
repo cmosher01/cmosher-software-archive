@@ -173,6 +173,7 @@ public class Gedcom
 					return "x-gedcom-ansel";
 				}
 			}
+			s = bin.readLine();
 		}
 
 		return "";
