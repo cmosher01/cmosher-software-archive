@@ -52,10 +52,10 @@ public final class Pair<T extends Cloneable, U extends Cloneable> implements Clo
 	{
 		Pair that = (Pair)o;
 		int c;
-		c = this.a.compareTo(that.a);
+		c = this.a.compareTo(that.a.ref);
 		if (c == 0)
 		{
-			c = this.b.compareTo(that.b);
+			c = this.b.compareTo(that.b.ref);
 		}
 		return c;
 	}
