@@ -126,27 +126,21 @@ public class TimeOfDay implements Comparable
     }
 
     /**
-     * Sets the HOUR_OF_DAY, MINUTE, SECOND, and MILLISECOND
-     * components of the given Calendar to the corresponding
-     * values from this object. Note that this object was
-     * verified against the Calendar provided to the constructor,
-     * therefore, if a different Calendar is provided to this
-     * method, then the values of this object could be invalid
-     * for that Calendar.
-     * @param cal the Calendar, with date set, to have time overridden
-     * @throws IllegalStateException if the constructor was called with invalid arguments
+     * Returns a new Date object set to this object's
+     * time on the given Date's date.
+     * This method uses its Calendar to compute the time
+     * (from this object) and the date (from the given Date),
+     * and returns a new Date object.
+     * @param d the Date on which to get our time
      */
-    public Date getTimeOnDay(Date d) throws IllegalStateException
+    public Date getTimeOnDay(Date d)
     {
-        synchronized (calendar)
-        {
-            calendar.setTimeInMillis(d.getTime());
-            calendar.set(Calendar.HOUR_OF_DAY, hours);
-            calendar.set(Calendar.MINUTE, minutes);
-            calendar.set(Calendar.SECOND, seconds);
-            calendar.set(Calendar.MILLISECOND, milliseconds);
-            return new Date(calendar.getTimeInMillis());
-        }
+        calendar.setTimeInMillis(d.getTime());
+        calendar.set(Calendar.HOUR_OF_DAY, hours);
+        calendar.set(Calendar.MINUTE, minutes);
+        calendar.set(Calendar.SECOND, seconds);
+        calendar.set(Calendar.MILLISECOND, milliseconds);
+        return new Date(calendar.getTimeInMillis());
     }
 
 
