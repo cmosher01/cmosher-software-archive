@@ -73,12 +73,12 @@ public class TestThreadIO
         else
         {
             String s = (String)lines.get(0);
-            if (!s.equals("this is a test"))
+            if (!s.equals("this is a test\r"))
             {
                 System.err.println("s != this is a test");
             }
             s = (String)lines.get(1);
-            if (!s.equals("this is also test"))
+            if (!s.equals("this is also test\r"))
             {
                 System.err.println("s != this is also test");
             }
