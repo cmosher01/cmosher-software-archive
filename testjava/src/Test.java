@@ -41,34 +41,28 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
-        protected String getJobCode()
-         {
-             StringBuffer code = new StringBuffer(20);
+        StringBuffer code = new StringBuffer(20);
 
-             String base = "thisisabigfilenametest.dat";
-             if (base.length() > 11)
-             {
-                 base = base.substring(0,11);
-             }
+        String base = "thisisabigfilenametest.dat";
+        if (base.length() > 11)
+        {
+            base = base.substring(0, 11);
+        }
 
-             code.append(base);
-             code.append("_");
-             List mStepInts = new ArrayList();
-             mStepInts.add(new Integer(3));
-             mStepInts.add(new Integer(5));
-             for (int i = 0; i < 8; ++i)
-             {
-                 Integer inti = new Integer(i);
-                 if (mStepInts.contains(inti))
-                 {
-                     code.append(new Integer(i+1));
-                 }
-             }
-
-             System.out.println(code.toString());
-
-
-
+        code.append(base);
+        code.append("_");
+        List mStepInts = new ArrayList();
+        mStepInts.add(new Integer(3));
+        mStepInts.add(new Integer(5));
+        for (int i = 0; i < 8; ++i)
+        {
+            Integer inti = new Integer(i);
+            if (mStepInts.contains(inti))
+            {
+                code.append(new Integer(i + 1));
+            }
+        }
+        System.out.println(code.toString());
 
 
 
