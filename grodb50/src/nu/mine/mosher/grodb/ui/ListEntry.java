@@ -2,6 +2,8 @@ package nu.mine.mosher.grodb.ui;
 
 import java.util.List;
 
+import static nu.mine.mosher.net.HTMLUtil.fixHTML;
+
 /**
  * @author Chris Mosher
  * Created: Feb 15, 2004
