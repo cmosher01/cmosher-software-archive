@@ -133,7 +133,7 @@ public class TimeOfDay
      * @param d
      * @param cal
      */
-    public void getTimeOnDay(Date d, Calendar cal)
+    public void getTimeOnDay(Date d, Calendar cal) throws IllegalStateException
     {
         cal.setTimeInMillis(d.getTime());
         getTimeOnDay(cal);
@@ -146,7 +146,7 @@ public class TimeOfDay
      * @param d
      * @return
      */
-    public void getTimeOnDay(Date d)
+    public void getTimeOnDay(Date d) throws IllegalStateException
     {
         getTimeOnDay(d,Calendar.getInstance());
     }
