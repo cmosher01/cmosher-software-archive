@@ -54,6 +54,6 @@ public class Disk
     {
         int track = read();
         int sector = read();
-        DiskPos r = new DiskPos(track,sector,0,false);
+        return new DiskPos(track,sector,0,false);
     }
 }
