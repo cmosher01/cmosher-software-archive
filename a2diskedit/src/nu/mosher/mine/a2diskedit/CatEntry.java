@@ -3,6 +3,7 @@ package nu.mosher.mine.a2diskedit;
 import java.awt.Component;
 
 import javax.swing.Icon;
+import javax.swing.JEditorPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 public class CatEntry implements TreeNode
