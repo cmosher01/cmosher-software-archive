@@ -74,6 +74,8 @@ public class Flag
 	public synchronized void waitUntilStateIs(boolean bState) throws InterruptedException
 	{
 		while (mFlag != bState)
+		{
 			wait();
+		}
 	}
 }
