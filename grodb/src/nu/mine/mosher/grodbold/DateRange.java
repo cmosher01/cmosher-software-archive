@@ -172,24 +172,14 @@ public class DateRange implements Immutable, Serializable, Comparable
 
 		DateRange that = (DateRange)o;
 
-		private final YMD earliest;
-		private final YMD latest;
-
-		/**
-		 * Inidicates what the preferred display calendar is.
-		 * true==Julian, false==Gregorian
-		 * Note that this indicates only how to display the date(s),
-		 * not how they are stored. Dates are always stored using
-		 * the Gregorian calendar. Further, it is only a preference,
-		 * and therefore the value may be ignored.
-		 */
-		private final boolean julian;
-
-		private final int hour;
-		private final int minute;
-		private final TimeZone timeZone;
-
-		private final boolean circa;
+		return
+		this.earliest == that.earliest &&
+		this.latest == that.latest &&
+		this.julian == that.julian &&
+		this.hour == that.hour &&
+		this.minute == that.minute &&
+		this.timeZone.equals(that.timeZone) &&
+		this.circa == that.circa;
     }
 
 	// YYYYMMDD (never display this to the user)
