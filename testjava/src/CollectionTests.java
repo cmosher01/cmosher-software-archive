@@ -1,13 +1,11 @@
-/*
- * TODO
- *
- * Created on Apr 9, 2004
- */
-
-/**
- * TODO
- */
-public class CollectionTests
+public final class CollectionTests
 {
+    private CollectionTests() throws UnsupportedOperationException
+    {
+        throw new UnsupportedOperationException();
+    }
 
+    public static void main(String rArg[]) throws Throwable
+    {
+    }
 }
