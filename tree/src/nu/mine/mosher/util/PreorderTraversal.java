@@ -19,9 +19,9 @@ public class PreorderTraversal
 		}
 
 		tr.enter();
-		for (Iterator children = node.children(); children.hasNext();)
+		for (Iterator<TreeNode> children = node.children(); children.hasNext();)
 		{
-			traverse((TreeNode)children.next());
+			traverse(children.next());
 		}
 		tr.leave();
 	}
