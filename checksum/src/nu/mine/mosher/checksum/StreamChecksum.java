@@ -7,6 +7,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -65,7 +66,7 @@ public class StreamChecksum
             {
                 mapChecksumToWindow.put(chk,new ArrayList());
             }
-            List rWind = (List)mapChecksumToWindow.get(chk);
+            Collection rWind = (Collection)mapChecksumToWindow.get(chk);
             rWind.add(new Long(w++));
         }
     }
