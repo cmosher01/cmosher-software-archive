@@ -6,16 +6,16 @@ import java.util.NoSuchElementException;
 
 public class ReaderLines /* TODO implements Iterable */
 {
-    private final Iterator i;
+    private final Reader r;
     
     public ReaderLines(Reader r) throws NoSuchElementException
     {
-        i = new Iter(r);
+        this.r = r;
     }
 
     public Iterator iterator() /* TODO SimpleIterator */
     {
-        return i;
+        return new Iter(r);
     }
 
     private static class Iter implements Iterator /* TODO SimpleIterator */
@@ -25,10 +25,6 @@ public class ReaderLines /* TODO implements Iterable */
 
         private Iter(Reader r) throws NoSuchElementException
         {
-            if (this.r != null)
-            {
-                throw new UnsupportedOperationException();
-            }
             if (r instanceof BufferedReader)
             {
                 this.r = (BufferedReader)r;
