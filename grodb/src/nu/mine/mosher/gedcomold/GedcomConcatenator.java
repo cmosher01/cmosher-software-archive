@@ -31,10 +31,12 @@ public class GedcomConcatenator
             if (cont)
             {
             	parentLine.contValue(line.getValue());
+            	i.remove();
             }
             else if (conc)
             {
-				parentLine.contValue(line.getValue());
+				parentLine.concValue(line.getValue());
+				i.remove();
             }
             else
             {
