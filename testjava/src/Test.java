@@ -40,6 +40,7 @@ public class Test
     private static class Mute implements Cloneable
     {
         public int x = 0;
+        UndoableReference u = new UndoableReference(this);
         public Mute(int a)
         {
             x = a;
@@ -60,6 +61,8 @@ public class Test
         {
             return ""+x;
         }
+
+        
     }
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
