@@ -1,7 +1,7 @@
 /*
  * Created on July 15, 2004
  */
-package nu.mine.mosher.ja2;
+package nu.mine.mosher.fields;
 
 import nu.mine.mosher.swingapp.InvalidCommandLine;
 
