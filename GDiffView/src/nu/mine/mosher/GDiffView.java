@@ -366,7 +366,7 @@ public class GDiffView extends JFrame
             }
         });
 
-        initDiff();
+        svndelta();
 
         listGDiff.setSelectionModel(selectionModel);
         listGDiff.setSelectedIndex(0);
