@@ -17,4 +17,28 @@ public class ListEntry
 	{
 		return this.s;
 	}
+
+	public String formatListEntry(List<ListEntry> r)
+	{
+		StringBuffer sb = new StringBuffer(256);
+
+		sb.append("<tr>");
+		for (ListEntry e : r)
+		{
+			sb.append("<td>");
+			String s = e.toString();
+			if (s.isEmpty())
+			{
+				sb.append("&nbsp;);
+			}
+			else
+			{
+				sb.append(fixHTML(s));
+			}
+			sb.append("</td>");
+		}
+		sb.append("</tr>");
+
+		return sb.toString();
+	}
 }
