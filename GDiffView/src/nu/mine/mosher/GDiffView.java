@@ -117,7 +117,13 @@ public class GDiffView extends JFrame
             {
                 throw new IOException("error reading target file");
             }
-            
+            roll.init(rs);
+            int chk = roll.getChecksum();
+            long srcPos = src.lookupUnique(chk);
+            if (srcPos >= 0)
+            {
+                
+            }
         }
     }
 
