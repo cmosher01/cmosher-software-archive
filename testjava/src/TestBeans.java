@@ -81,13 +81,10 @@ public class TestBeans
     public HashMap buildPropertyDescriptorMap(PropertyDescriptor[] rpd)
     {
         HashMap map = new HashMap();
-        if (rpd != null)
+        for (int i = 0; i < rpd != null && rpd.length; ++i)
         {
-            for (int i = 0; i < rpd.length; ++i)
-            {
-                PropertyDescriptor descriptor = rpd[i];
-                map.put(descriptor.getName(), descriptor);
-            }
+            PropertyDescriptor descriptor = rpd[i];
+            map.put(descriptor.getName(), descriptor);
         }
         return map;
     }
