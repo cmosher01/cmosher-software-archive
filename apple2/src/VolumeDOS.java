@@ -390,7 +390,7 @@ public class VolumeDOS extends VolumeEntity
                         {
                             if (rbCmp[i] != rbClearSlave[i])
                             {
-                                System.err.println("@$"+Integer.toHexString(i)+": "+Integer.toHexString(rbClearSlave[i])+" --> "+Integer.toHexString(rbCmp[i]));
+                                System.err.println("@$"+Integer.toHexString(i)+": "+Integer.toHexString(rbClearSlave[i]&0xFF)+" --> "+Integer.toHexString(rbCmp[i]&0xFF));
                             }
                         }
                     }
