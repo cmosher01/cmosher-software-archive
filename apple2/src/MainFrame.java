@@ -74,6 +74,8 @@ public class MainFrame extends JFrame
 
         JSplitPane split = new JSplitPane();
         split.setLeftComponent(scrollTree);
+        split.setDividerLocation(320);
+        split.setPreferredSize(new Dimension(640,480));
 
         setContentPane(split);
 
