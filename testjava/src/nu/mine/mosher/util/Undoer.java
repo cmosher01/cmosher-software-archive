@@ -4,7 +4,6 @@ import java.util.LinkedList;
 
 public class Undoer
 {
-    private Cloneable mCurrent;
     private final LinkedList mrUndo = new LinkedList();
     private final LinkedList mrRedo = new LinkedList();
 
@@ -25,26 +24,21 @@ public class Undoer
 //        mrUndo.addLast(new ImmutableReference(state));
 //        return ((ImmutableReference)mrRedo.removeFirst()).object();
 //    }
-    public Undoer(Cloneable state)
+    public void saveForUndo(Cloneable state) throws CloneNotSupportedException
     {
-        mCurrent = state;
-    }
-
-    public void saveForUndo() throws CloneNotSupportedException
-    {
-        mrUndo.addLast(Cloner.cloneObject(mCurrent));
+        mrUndo.addLast(Cloner.cloneObject(state));
         mrRedo.clear();
     }
 
-    public Cloneable undo() throws CloneNotSupportedException
+    public Cloneable undo(Cloneable state) throws CloneNotSupportedException
     {
-        mrRedo.addFirst(Cloner.cloneObject(mCurrent));
+        mrRedo.addFirst(Cloner.cloneObject(state));
         return (Cloneable)mrUndo.removeLast();
     }
 
-    public Cloneable redo() throws CloneNotSupportedException
+    public Cloneable redo(Cloneable state) throws CloneNotSupportedException
     {
-        mrUndo.addLast(Cloner.cloneObject(mCurrent));
+        mrUndo.addLast(Cloner.cloneObject(state));
         return (Cloneable)mrRedo.removeFirst();
     }
 }
