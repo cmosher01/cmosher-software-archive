@@ -113,9 +113,9 @@ public class DiskPos
      * @param track
      * @return
      */
-    public static boolean isValidTrack(int track)
+    public static boolean isValidTrack(int track, boolean allowLarge)
     {
-        return 0 <= track && track < cTracksPerDisk;
+        return 0 <= track && (allowLarge || track < cTracksPerDisk);
     }
 
     /**
