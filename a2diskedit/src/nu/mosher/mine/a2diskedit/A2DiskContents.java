@@ -15,4 +15,8 @@ public class A2DiskContents
 	{
 		image = img;
 	}
+
+	public void parse(int osType)
+	{
+	}
 }
