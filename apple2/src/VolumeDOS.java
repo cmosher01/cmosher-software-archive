@@ -187,7 +187,8 @@ public class VolumeDOS extends VolumeEntity
      */
     public static boolean isDOSKnown(Collection knownSectors)
     {
-        for (Iterator i = rPosDOS.iterator(); i.hasNext();)
+        int c = 0x1f; // check T$00,S$1 thru T$01,S$F only (e.g. Prontodos)
+        for (Iterator i = rPosDOS.iterator(); i.hasNext() && c-- > 0;)
         {
             DiskPos p = (DiskPos)i.next();
             if (knownSectors.contains(p))
