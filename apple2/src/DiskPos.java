@@ -39,10 +39,6 @@ public class DiskPos
      */
     public DiskPos(int track, int sector, int byt) throws InvalidPosException
     {
-        verifyTrack(track);
-        verifySector(sector);
-        verifyByte(byt,cSector);
-        this.iDisk = track*cTrack+sector*cSector+byt;
     }
 
     /**
@@ -225,7 +221,19 @@ public class DiskPos
      */
     public void setTS(int track, int sector)
     {
-        // TODO Auto-generated method stub
-        
+        setTS(track,sector,0);
+    }
+
+    /**
+     * @param track
+     * @param sector
+     * @throws InvalidPosException
+     */
+    public void setTS(int track, int sector, int byt) throws InvalidPosException
+    {
+        verifyTrack(track);
+        verifySector(sector);
+        verifyByte(byt,cSector);
+        this.iDisk = track*cTrack+sector*cSector+byt;
     }
 }
