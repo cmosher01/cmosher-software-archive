@@ -107,4 +107,33 @@ public class DiskCatalogTest extends TestCase
         assertEquals(1,ent.size());
     }
 
+
+    /**
+     * test Beagle Bros. Tip Disk 1, T$11, S$01
+     */
+    public void testCatalog_Beagle_Extrak1_110F()
+    {
+        TSMap ts = new TSMap();
+        List ent = new ArrayList();
+        assertEquals(1,Disk.isDos33CatalogSector(Hex2Bin.hex2Bin(
+        "00 11 0E 00 00 00 00 00 00 00 00 13 0F 82 20 20 "+
+        "20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 "+
+        "20 20 20 20 20 20 20 20 20 20 20 20 02 00 14 0F "+
+        "82 20 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 "+
+        "A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 20 02 "+
+        "00 15 0F 82 20 A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 C5 "+
+        "D8 D4 D2 C1 A0 CB A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 "+
+        "A0 20 02 00 16 0F 82 20 A0 A0 A0 A0 A0 A0 C2 D9 "+
+        "A0 CD C1 D2 CB A0 D3 C9 CD CF CE D3 C5 CE A0 A0 "+
+        "A0 A0 A0 A0 20 02 00 17 0F 82 20 A0 A0 A0 A0 A0 "+
+        "A0 A0 C1 CE C4 A0 C1 CC C1 CE A0 C2 C9 D2 C4 A0 "+
+        "A0 A0 A0 A0 A0 A0 A0 20 02 00 18 0F 82 20 A0 A0 "+
+        "A0 A0 A0 A0 A0 A0 A0 A0 A8 C3 A9 A0 B1 B9 B8 B5 "+
+        "A0 A0 A0 A0 A0 A0 A0 A0 A0 A0 20 02 00 19 0F 82 "+
+        "20 A0 A0 A0 A0 A0 A0 C2 C5 C1 C7 CC C5 A0 C2 D2 "+
+        "CF D3 A0 C9 CE C3 A0 A0 A0 A0 A0 A0 A0 20 02 00 "),
+        false,ts,ent));
+        assertEquals(1,ent.size());
+    }
+
 }
