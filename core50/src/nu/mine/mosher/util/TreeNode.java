@@ -83,7 +83,7 @@ public class TreeNode<T>
 		return children.size();
 	}
 
-	public void appendStringDeep(StringBuffer sb, int level)
+	protected void appendStringDeep(StringBuffer sb, int level)
 	{
 		for (int i = 0; i < level; ++i)
         {
