@@ -122,39 +122,42 @@ public class ByteAnalyzer
 
     public void showMap()
     {
-        if (cCRLF > 0)
-        {
-            System.out.println("CRLF  : "+cCRLF);
-        }
-        if (cLFCR > 0)
-        {
-            System.out.println("LFCR  : "+cLFCR);
-        }
+//        if (cCRLF > 0)
+//        {
+//            System.out.println("CRLF  : "+cCRLF);
+//        }
+//        if (cLFCR > 0)
+//        {
+//            System.out.println("LFCR  : "+cLFCR);
+//        }
         for (Iterator i = cBytes.entrySet().iterator(); i.hasNext();)
         {
             Map.Entry entry = (Map.Entry)i.next();
             int byt = ((Integer)entry.getKey()).intValue();
             int cnt = ((Integer)entry.getValue()).intValue();
-            String s = Integer.toHexString(byt);
-            if (s.length() == 1)
+            if (byt >= 0x80 && cnt > 0)
             {
-                s = "0"+s;
+                String s = Integer.toHexString(byt);
+                if (s.length() == 1)
+                {
+                    s = "0"+s;
+                }
+                System.out.print(s);
+                System.out.print(" ");
+                if ('!' <= byt && byt <= '~')
+                {
+                    char c = (char)byt;
+                    System.out.print('\'');
+                    System.out.print(c);
+                    System.out.print('\'');
+                }
+                else
+                {
+                    System.out.print("   ");
+                }
+                System.out.print(": ");
+                System.out.println(cnt);
             }
-            System.out.print(s);
-            System.out.print(" ");
-            if ('!' <= byt && byt <= '~')
-            {
-                char c = (char)byt;
-                System.out.print('\'');
-                System.out.print(c);
-                System.out.print('\'');
-            }
-            else
-            {
-                System.out.print("   ");
-            }
-            System.out.print(": ");
-            System.out.println(cnt);
         }
     }
 }
