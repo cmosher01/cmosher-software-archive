@@ -872,12 +872,12 @@ public class ExtendedProperties extends Hashtable {
      *
      * @param props  the properties to combine
      */
-//    public void combine(ExtendedProperties props) {
-//        for (Iterator it = props.getKeys(); it.hasNext();) {
-//            String key = (String) it.next();
-//            setProperty(key, props.get(key));
-//        }
-//    }
+    public void combine(ExtendedProperties props) {
+        for (Iterator it = props.getKeys(); it.hasNext();) {
+            String key = (String) it.next();
+            setProperty(key, props.get(key));
+        }
+    }
     
     /**
      * Clear a property in the configuration.
@@ -982,15 +982,15 @@ public class ExtendedProperties extends Hashtable {
     /**
      * Display the configuration for debugging purposes to System.out.
      */
-//    public void display() {
-//        Iterator i = getKeys();
-//
-//        while (i.hasNext()) {
-//            String key = (String) i.next();
-//            Object value = get(key);
-//            System.out.println(key + " => " + value);
-//        }
-//    }
+    public void display() {
+        Iterator i = getKeys();
+
+        while (i.hasNext()) {
+            String key = (String) i.next();
+            Object value = get(key);
+            System.out.println(key + " => " + value);
+        }
+    }
 
     /**
      * Get a string associated with the given configuration key.
