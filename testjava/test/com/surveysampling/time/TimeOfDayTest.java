@@ -86,6 +86,12 @@ public class TimeOfDayTest extends TestCase
         Date dcomp = new Date(tod.getTimeOnDay(d));
         Date dexpt = fmt.parse("2004/04/03 17:34:12.367");
         assertEquals(dexpt,dcomp);
+
+        TimeOfDay tod2 = new TimeOfDay(Calendar.getInstance(),2,30,0,0);
+        d = fmt.parse("2004/04/03 00:00:00.000");
+        dcomp = new Date(tod2.getTimeOnDay(d));
+        dexpt = fmt.parse("2004/04/03 03:30:00.000");
+        assertEquals(dexpt,dcomp);
     }
 
     /*
