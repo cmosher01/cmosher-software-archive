@@ -31,6 +31,7 @@ public class NormalizerTest extends TestCase
      */
     public void testNormalizeStringStringBuffer()
     {
+    	Normalizer n = new Normalizer();
     }
 
 }
