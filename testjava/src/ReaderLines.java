@@ -8,7 +8,7 @@ public class ReaderLines /* TODO implements Iterable */
 {
     private final Iterator i;
     
-    public ReaderLines(Reader r) throws IOException
+    public ReaderLines(Reader r) throws NoSuchElementException
     {
         i = new Iter(r);
     }
