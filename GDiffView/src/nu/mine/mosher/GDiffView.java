@@ -147,11 +147,26 @@ public class GDiffView extends JFrame
      */
     private void consolidateCopies()
     {
+        int a = 0;
+        int b = 1;
+        while (b < rCopy.size())
+        {
+            GDiffCopy cpya = (GDiffCopy)rCopy.get(a);
+            Range rngSrca = cpya.getRange();
+            Range rngTrga = cpya.getTargetRange();
+            GDiffCopy cpyb = (GDiffCopy)rCopy.get(b);
+            Range rngSrcb = cpyb.getRange();
+            Range rngTrgb = cpyb.getTargetRange();
+            Range rngCombSrc = Range.meld(rngSrca, rngSrcb);
+            Range rngCombTrg = Range.meld(rngTrga, rngTrgb);
+            if (rngCombSrc != null && rngCombTrg != null)
+            {
+                GDiffCopy cpyComb = new GDiffCopy(rngCombSrc);
+                cpyComb.setTargetRange(rngCombTrg);
+            }
+        }
         for (Iterator i = this.rCopy.iterator(); i.hasNext();)
         {
-            GDiffCopy cpy = (GDiffCopy)i.next();
-            Range rngSrc = cpy.getRange();
-            Range rngTrg = cpy.getTargetRange();
         }
     }
 
