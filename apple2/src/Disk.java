@@ -347,7 +347,7 @@ public class Disk
 
     /**
      * @param sector
-     * @param entries
+     * @return
      * @throws InvalidPosException
      */
     public static DiskPos getDos33CatalogNext(byte[] sector) throws InvalidPosException
