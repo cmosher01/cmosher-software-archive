@@ -26,7 +26,7 @@ public final class Cloner
 			Method methodClone = mClasses.get(cl);
 			if (methodClone == null)
 			{
-				methodClone = cl.getMethod("clone",null);
+				methodClone = cl.getMethod("clone",(Class[])null);
 				methodClone.setAccessible(true);
 				mClasses.put(cl,methodClone);
 			}
