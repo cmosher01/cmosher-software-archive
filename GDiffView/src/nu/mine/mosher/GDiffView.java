@@ -934,7 +934,7 @@ public class GDiffView extends JFrame
                     byte[] rb = new byte[(int)(end-from)];
                     data.position((int)from); // TODO long
                     data.get(rb);
-                    doData(rb,new Range(trgpos,end-1));
+                    doData(rb,new Range(trgpos,trgpos+end-from-1));
                     trgpos += end-from;
                 }
                 return;
@@ -998,7 +998,7 @@ public class GDiffView extends JFrame
                     byte[] rb = new byte[(int)(here-insertFrom)];
                     data.position((int)insertFrom); // TODO long
                     data.get(rb);
-                    doData(rb,new Range(trgpos,here-1));
+                    doData(rb,new Range(trgpos,trgpos+here-insertFrom-1));
                     trgpos += here-insertFrom;
                     insertFrom = -1;
                 }
