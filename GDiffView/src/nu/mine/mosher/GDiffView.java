@@ -158,7 +158,7 @@ public class GDiffView extends JFrame
 //        scrSrc.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 //        scrSrc.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrSrc.setMinimumSize(new Dimension(50,20));
-//        scrSrc.setPreferredSize(new Dimension(400,430));
+        scrSrc.setPreferredSize(new Dimension(400,430));
         scrSrc.setMaximumSize(new Dimension(Integer.MAX_VALUE,Integer.MAX_VALUE));
 
         docTrg = new DefaultStyledDocument();
@@ -166,7 +166,7 @@ public class GDiffView extends JFrame
         paneTrg.setEditable(false);
         JScrollPane scrTrg = new JScrollPane(paneTrg);
         scrTrg.setMinimumSize(new Dimension(50,20));
-//        scrTrg.setPreferredSize(new Dimension(400,430));
+        scrTrg.setPreferredSize(new Dimension(400,430));
         scrTrg.setMaximumSize(new Dimension(Integer.MAX_VALUE,Integer.MAX_VALUE));
 
         ListModel model = new GDiffCmdListModel(rCopy);
