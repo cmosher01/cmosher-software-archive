@@ -17,7 +17,7 @@ public class GDiffCopy extends GDiffCmd
     public GDiffCopy(long pos, long end)
     {
         this.pos = pos;
-        this.len = end-pos;
+        this.len = (int)(end-pos);
     }
 	public long getPosition()
 	{
