@@ -11,9 +11,12 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,7 +66,7 @@ public class GDiffView extends JFrame
 
     private File src;
 
-    private File dif;
+    private InputStream dif;
 
     private int cCol = 0x10;
 
@@ -91,15 +94,16 @@ public class GDiffView extends JFrame
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, BadLocationException, IOException, InvalidMagicBytes
     {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        GDiffView frame = new GDiffView(args[0],args[1]);
+        GDiffView frame = new GDiffView(new File(args[0]),new File(args[1]));
     }
 
-    public GDiffView(String fileSrc, String fileGDiff) throws BadLocationException, IOException, InvalidMagicBytes
+    public GDiffView(File fileSrc, File fileTrg) throws BadLocationException, IOException, InvalidMagicBytes
     {
         super("GDiffVeiew");
 
-        src = new File(fileSrc);
-        dif = new File(fileGDiff);
+        ByteArrayOutputStream rbs = Delta.delta(fileSrc, fileTrg);
+        dif = new ByteArrayInputStream(rbs.toByteArray());
+        src = fileSrc;
 
         MutableAttributeSet style = new SimpleAttributeSet();
         StyleConstants.setFontFamily(style,"Courier");
@@ -475,7 +479,7 @@ public class GDiffView extends JFrame
 
     public void readGDiff() throws IOException, InvalidMagicBytes
     {
-        BufferedInputStream gdiff = new BufferedInputStream(new FileInputStream(dif));
+        BufferedInputStream gdiff = new BufferedInputStream(dif);
 
         byte[] magic = new byte[4];
         gdiff.read(magic);
