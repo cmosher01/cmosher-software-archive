@@ -14,7 +14,7 @@ import javax.servlet.ServletRequestEvent;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class RequestInit extends ServletRequestEvent
+public class RequestInit implements ServletRequestEvent
 {
 
 }
