@@ -4,7 +4,9 @@ import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,6 +61,24 @@ public class ExtrDos33
         }
     }
 
+	private static class DosImage
+	{
+		byte[] rb;
+		byte[] rbc;
+		public DosImage(byte[] x)
+		{
+			rb = new byte[x.length];
+			System.arraycopy(x,0,rb,0,x.length);
+			rbc = new byte[x.length];
+			System.arraycopy(x,0,rbc,0,x.length);
+		}
+		public boolean hasSignature()
+		{
+			return (rb[0] == 0x01 && rb[1] == 0xA5 && rb[2] == 0x27 && rb[3] == 0xC9);
+		}
+	}
+
+	private static Map doss = new HashMap();
     public static void extrDos(File file, File dirNew) throws IOException
     {
 		System.out.println("-----------------------------------------------------------------------------------");
@@ -72,15 +92,13 @@ public class ExtrDos33
 			return;
 		}
 
+		DosImage dos = new DosImage(rb);
 		if (rb[0] != 0x01 || rb[1] != 0xA5 || rb[2] != 0x27 || rb[3] != 0xC9)
 		{
 			System.out.println("Track $00, Sector $0, Bytes $00-$03 are not: 01 A5 27 C9.");
 			System.out.println("therefore this doesn't appear to be a DOS 3.3 disk image; skipping.");
 			return;
 		}
-
-		File saveDos = new File(dirNew,nextDosFileName());
-		System.out.println("Saving Tracks $00-$03 to file: "+saveDos.getAbsolutePath());
 
 		byte[] rbc = new byte[rb.length];
 		System.arraycopy(rb,0,rbc,0,rb.length);
@@ -91,8 +109,10 @@ public class ExtrDos33
 			rbc[i] = 0;
 		}
 
-		List doss = new ArrayList();
-		doss.add(rbc);
+		if (doss.containsKey(rbc))
+		File saveDos = new File(dirNew,nextDosFileName());
+		System.out.println("Saving Tracks $00-$03 to file: "+saveDos.getAbsolutePath());
+
     }
 
 	private static int nextDosFileNumber;
