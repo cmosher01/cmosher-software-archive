@@ -1,5 +1,6 @@
 package com.surveysampling.util;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
@@ -62,12 +63,12 @@ public class CachedCloner
     }
 
     private static Cloneable clone(Cloneable cloneableObject, Method methodClone)
-        throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, CloneNotSupportedException
+        throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, ExceptionInInitializerError
     {
         return (Cloneable)methodClone.invoke(cloneableObject, null);
     }
 
-    private static Method getCloneMethod(Class cl) throws NoSuchMethodException, SecurityException
+    private static Method getCloneMethod(Class cl) throws SecurityException, NoSuchMethodException
     {
         Method methodClone;
         methodClone = cl.getMethod("clone", null);
