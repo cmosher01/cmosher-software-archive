@@ -10,12 +10,12 @@ public class StringFieldizer implements Iterable
 		this.s = s;
 	}
 
-	public SimpleIterator iterator()
+	public Iterator iterator()
 	{
 		return new Iter(s);
 	}
 
-	private static class Iter implements SimpleIterator
+	private static class Iter implements Iterator
 	{
 		private final String s;
 		private int pos;
@@ -48,6 +48,11 @@ public class StringFieldizer implements Iterable
 			String tok = s.substring(pos,i);
 			pos = i+1;
 			return tok;
+		}
+
+		public void remove() throws UnsupportedOperationException
+		{
+			throw new UnsupportedOperationException();
 		}
 	}
 }
