@@ -31,9 +31,14 @@ public class MP3Calc
     		System.exit(1);
     	}
 
-    	if (!(in instanceof BufferedInputStream))
+		BufferedInputStream bufin = null;
+    	if (in instanceof BufferedInputStream)
     	{
-    		in = new BufferedInputStream(in);
+			bufin = (BufferedInputStream)in;
+    	}
+    	else
+    	{
+    		bufin = new BufferedInputStream(in);
     	}
     }
 }
