@@ -14,10 +14,10 @@ public class CubbyHole
     private boolean mHasContents;
 
     /**
-     * Waits for another thread to put and object into this
-     * cubbyhole, then (this thread) removes the object from
-     * this cubbyhole and returns it.
-     * @return the Object; may be null;
+     * Waits for another thread to put an <code>Object</code> into this
+     * <code>CubbyHole</code>, then (this thread) removes the <code>Object</code> from
+     * this <code>CubbyHole</code> and returns it.
+     * @return the <code>Object</code>; may be null;
      */
     public synchronized Object get()
     {
@@ -42,10 +42,10 @@ public class CubbyHole
     }
 
     /**
-     * Puts the specified object into this cubbyhole, and
-     * notifies threads waiting to get from this cubbyhole.
+     * Puts the specified <code>Object</code> into this <code>CubbyHole</code>, and
+     * notifies threads waiting to get from this <code>CubbyHole</code>.
      * 
-     * @param value the Object to put into this cubbyhole; can be null
+     * @param value the <code>Object</code> to put into this <code>CubbyHole</code>; can be null
      */
     public synchronized void put(Object value)
     {
