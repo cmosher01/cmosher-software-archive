@@ -59,7 +59,7 @@ public class Gedcom
 		System.out.println();
     }
 
-    public static String guessCharset(InputStream in) throws IOException
+    public static String guessGedcomCharset(InputStream in) throws IOException
 	{
 		// read first four bytes of input stream
 		int b0 = in.read();
