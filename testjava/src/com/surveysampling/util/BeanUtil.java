@@ -78,7 +78,7 @@ public final class BeanUtil
     private static PropertyDescriptor getPropDesc(BeanInfo info, String param)
     {
         PropertyDescriptor pd[] = info.getPropertyDescriptors();
-        for (int i = 0; i < pd.length; i++)
+        for (int i = 0; i < pd.length; ++i)
         {
             if (pd[i].getName().equals(param))
             {
