@@ -2,7 +2,7 @@ package nu.mine.mosher.core;
 
 import java.util.LinkedList;
 
-import static nu.mine.mosher.core.Cloner.cloneObject;
+import static nu.mine.mosher.core.Cloner;
 
 public final class Undoer<T extends Cloneable>
 {
