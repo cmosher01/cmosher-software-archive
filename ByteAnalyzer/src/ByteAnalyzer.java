@@ -41,7 +41,6 @@ public class ByteAnalyzer
     {
         f = f.getCanonicalFile();
         f = f.getAbsoluteFile();
-        System.out.println("processing file: "+f);
         BufferedInputStream in = new BufferedInputStream(new FileInputStream(f));
         int x = in.read();
         while (x != -1)
@@ -106,7 +105,7 @@ public class ByteAnalyzer
             x = in.read();
         }
         in.close();
-        showMap();
+        showMap(f);
     }
 
     private void incByte(int x)
@@ -123,7 +122,7 @@ public class ByteAnalyzer
         }
     }
 
-    public void showMap()
+    public void showMap(File f)
     {
 //        if (cCRLF > 0)
 //        {
@@ -133,6 +132,7 @@ public class ByteAnalyzer
 //        {
 //            System.out.println("LFCR  : "+cLFCR);
 //        }
+        boolean shown = false;
         for (Iterator i = cBytes.entrySet().iterator(); i.hasNext();)
         {
             Map.Entry entry = (Map.Entry)i.next();
@@ -140,6 +140,11 @@ public class ByteAnalyzer
             int cnt = ((Integer)entry.getValue()).intValue();
             if (byt >= 0x80 && cnt > 0)
             {
+                if (!shown)
+                {
+                    System.out.println(f);
+                    shown = true;
+                }
                 String s = Integer.toHexString(byt);
                 if (s.length() == 1)
                 {
