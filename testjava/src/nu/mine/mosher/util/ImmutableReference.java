@@ -10,7 +10,7 @@ public final class ImmutableReference implements Comparable, Serializable
     {
         if (ref == null)
         {
-            throw new NullPointerException();
+            throw new IllegalArgumentException();
         }
         this.ref = Cloner.cloneObject(ref);
     }
