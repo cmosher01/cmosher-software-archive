@@ -2,7 +2,6 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,12 +60,36 @@ public class ExtrDos33
 
     public static void extrDos(File file, File dirNew) throws IOException
     {
+    	file = file.getCanonicalFile();
+		System.out.println("-----------------------------------------------------------------------------------");
+    	System.out.println("Processing file: "+file.getAbsolutePath());
+
 		BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
 		byte[] rb = new byte[0x3000];
 		if (in.read(rb) != rb.length)
 		{
-			
+			System.out.println("Disk image doesn't have at least 3 tracks; skipping.");
+			return;
 		}
+
+		if (rb[0] != 0x01 || rb[1] != 0xA5 || rb[2] != 0x27 || rb[3] != 0xC9)
+		{
+			System.out.println("Track $00, Sector $0, Bytes $00-$03 are not: 01 A5 27 C9.");
+			System.out.println("therefore this doesn't appear to be a DOS 3.3 disk image; skipping.");
+			return;
+		}
+
+		byte[] rbc = new byte[rb.length];
+		System.arraycopy(rb,0,rbc,0,rb.length);
+
+		// clear HELLO program name for comparison
+		for (int i = 0x1975; i < 0x19B1; ++i)
+		{
+			rbc[i] = 0;
+		}
+
+		List doss = new ArrayList();
+		doss.add(rbc);
     }
 
     public static File[] listRegFiles(String sDir, String regexpFile, String regexpDir) throws IOException
