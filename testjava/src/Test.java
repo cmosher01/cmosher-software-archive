@@ -61,24 +61,24 @@ public class Test
 //        }
 
 //or build a List of all lines:
-//        List listLine = Util.list(new ReaderLines(r).iterator());
+        List listLine = Util.list(new ReaderLines(r).iterator());
 //or under 1.5:
 //        List listLine = Util.list(new ReaderLines(r));
 //or build a Set of all lines
-        Set setLine = Util.set(new ReaderLines(r).iterator());
+//        Set setLine = Util.set(new ReaderLines(r).iterator());
 //or under 1.5:
 //        Set setLine = Util.set(new ReaderLines(r));
 
-        Set setTrimmedLine = new HashSet();
-        new Filter(setLine)
+        List listTrimmedLine = new ArrayList();
+        new Filter(listLine)
         {
             protected Object operation(Object element)
             {
                 return ((String)element).trim();
             }
-        }.filter(setTrimmedLine);
+        }.filter(listTrimmedLine);
 
-        System.out.println(setTrimmedLine);
+        System.out.println(listTrimmedLine);
 
 
 //        String x = "a,b,,d";
