@@ -43,7 +43,7 @@ public class ListEntry
 			sb.append(td);
 			sb.append(">");
 			String s = e.toString();
-			if (s.isEmpty())
+			if (s.length() == 0)
 			{
 				sb.append("&nbsp;");
 			}
