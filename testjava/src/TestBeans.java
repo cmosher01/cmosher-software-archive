@@ -59,25 +59,24 @@ public class TestBeans
             for (int i = 0; i < value.length; ++i)
             {
                 String s = value[i];
-                ed.setAsText(s);
-                rval[i] = ed.getValue();
+                rval[i] = convert(s,ed);
             }
             v = rval;
         }
         else
         {
             PropertyEditor ed = getPropertyEditor(classProp);
-            v = convert(value, ed);
+            v = convert(value[0],ed);
         }
 
         Method wr = pd.getWriteMethod();
         wr.invoke(bean, new Object[] { v });
     }
 
-    public static Object convert(String[] value, PropertyEditor ed) throws IllegalArgumentException
+    public static Object convert(String value, PropertyEditor ed) throws IllegalArgumentException
     {
         Object v;
-        ed.setAsText(value[0]);
+        ed.setAsText(value);
         v = ed.getValue();
         return v;
     }
