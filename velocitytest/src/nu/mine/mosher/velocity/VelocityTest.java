@@ -7,13 +7,14 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.log.NullLogSystem;
 
 public class VelocityTest
 {
     public static void main(String[] args) throws Throwable
     {
         VelocityEngine velocity = new VelocityEngine();
-        velocity.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM,new ErrLogger());
+        velocity.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM,new NullLogSystem());
 
         velocity.init();
 
