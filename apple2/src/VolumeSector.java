@@ -30,4 +30,12 @@ public class VolumeSector
     {
         return pos.toStringTS();
     }
+
+    /**
+     * @return
+     */
+    public DiskPos getPos()
+    {
+        return (DiskPos)pos.clone();
+    }
 }
