@@ -265,6 +265,7 @@ public class FixAppleDisasm
 
 		System.err.println("********************************************************");
 
+		int genlabel = 0;
 		for (Iterator i = lines.entrySet().iterator(); i.hasNext();)
 		{
 			Map.Entry ent = (Map.Entry)i.next();
@@ -275,6 +276,12 @@ public class FixAppleDisasm
 				Integer refint = new Integer(ln.refaddr);
 				if (addrs.containsKey(refint))
 				{
+					Line fn = (Line)addrs.get(refint);
+					if (fn.label.length() == 0)
+					{
+						fn.label = "L"+Integer.toString(++genlabel);
+					}
+					ln.oper = fn.label;
 				}
 				else
 				{
