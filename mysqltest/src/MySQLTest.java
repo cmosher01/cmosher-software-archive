@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Logger;
 
+import nu.mine.mosher.logging.LoggingInitializer;
+
 public class MySQLTest
 {
 	private static final MySQLTest app = new MySQLTest();
@@ -29,6 +31,7 @@ public class MySQLTest
     {
 		try
 		{
+			LoggingInitializer.init();
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			db = DriverManager.getConnection("jdbc:mysql:///test","root","");
 			log.info("Creating schema...");
