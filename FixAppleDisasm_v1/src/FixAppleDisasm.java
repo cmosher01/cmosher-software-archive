@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -6,8 +7,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PipedReader;
-import java.io.PipedWriter;
+//import java.io.PipedReader;
+//import java.io.PipedWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.HashMap;
@@ -17,9 +18,14 @@ public class FixAppleDisasm
 {
     public static void main(String[] args) throws Throwable
     {
+    	String file = "";
         if (args.length > 0)
         {
-            System.err.println("arguments ignored.");
+        	file = args[0];
+        	if (args.length > 1)
+        	{
+				System.err.println("arguments beyond the first were ignored.");
+        	}
         }
 
 //        Reader in = null;
@@ -45,7 +51,14 @@ public class FixAppleDisasm
 		Writer out = null;
 		try
 		{
-			in = new InputStreamReader(new FileInputStream(FileDescriptor.in));
+			if (file.length() > 0)
+			{
+				in = new InputStreamReader(new FileInputStream(new File(file)));
+			}
+			else
+			{
+				in = new InputStreamReader(new FileInputStream(FileDescriptor.in));
+			}
 			out = new OutputStreamWriter(new FileOutputStream(FileDescriptor.out));
 
 			FixDis(in,out);
