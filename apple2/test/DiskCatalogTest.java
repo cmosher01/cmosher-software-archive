@@ -38,6 +38,9 @@ public class DiskCatalogTest extends TestCase
     public void testDOS33_Master_1983() throws IOException, InvalidPosException
     {
         List r = new ArrayList();
+        r.add(new DiskPos(0x11,0xA));
+        r.add(new DiskPos(0x11,0xB));
+        r.add(new DiskPos(0x11,0xC));
         r.add(new DiskPos(0x11,0xD));
         r.add(new DiskPos(0x11,0xE));
         r.add(new DiskPos(0x11,0xF));
