@@ -49,7 +49,15 @@ public class Player implements Immutable
 		byte g = -1;
 		byte h = -127;
 		byte i = -128;
-		System.out.println();
+		System.out.println(a < 0);
+		System.out.println(b < 0);
+		System.out.println(c < 0);
+		System.out.println(d < 0);
+		System.out.println(e < 0);
+		System.out.println(f < 0);
+		System.out.println(g < 0);
+		System.out.println(h < 0);
+		System.out.println(i < 0);
 
 	}
 
