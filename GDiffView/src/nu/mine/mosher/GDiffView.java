@@ -98,12 +98,20 @@ public class GDiffView extends JFrame
     {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         GDiffView frame = new GDiffView(new File(args[0]),new File(args[1]));
+        frame.testMyDiff();
+        frame.init();
+    }
 
+    /**
+     * @throws IOException
+     * 
+     */
+    private void testMyDiff() throws IOException
+    {
         SourceFile src = new SourceFile();
         int cWindow = 3;
-        src.calculateWindowChecksums(new File(args[0]),cWindow);
-        File trg = new File(args[1]);
-        InputStream streamTrg = new BufferedInputStream(new FileInputStream(trg));
+        src.calculateWindowChecksums(fileSrc,cWindow);
+        InputStream streamTrg = new BufferedInputStream(new FileInputStream(fileTrg));
         if (streamTrg.available() == 0)
         {
             // TODO handle empty target file
