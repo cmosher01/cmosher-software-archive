@@ -85,6 +85,7 @@ public class TreeFrame extends JPanel
             dir = argv[0];
         }
         final String dirArg = dir;
+
         final Flag begun = new Flag();
 
         SwingUtilities.invokeLater(new Runnable()
