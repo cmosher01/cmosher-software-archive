@@ -75,7 +75,7 @@ public final class BeanUtil
                 }
                 else
                 {
-                    createTypedArray(param, bean, method, values, t, propertyEditorClass);
+                    createTypedArray(bean, method, values, t, propertyEditorClass);
                 }
             }
             else
@@ -108,7 +108,6 @@ public final class BeanUtil
     }
 
     public static void createTypedArray(
-        String propertyName,
         Object bean,
         Method method,
         String[] values,
