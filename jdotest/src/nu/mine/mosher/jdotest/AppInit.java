@@ -29,7 +29,26 @@ public class AppInit implements ServletContextListener
 		try
 		{
 			URL urlProps = Perm.class.getClassLoader().getResource("nu/mine/mosher/jdotest/jdo.properties");
-			props.load(new FileInputStream(new File(urlProps.getFile())));
+			FileInputStream inProps = null;
+			try
+			{
+				ipProps = new FileInputStream(new File(urlProps.getFile()));
+				props.load(inProps);
+			}
+			finally
+			{
+				if (inProps != null)
+				{
+					try
+					{
+						inProps.close();
+					}
+					catch (Throwable ignore)
+					{
+						ignore.printStackTrace();
+					}
+				}
+			}
 		}
 		catch (Throwable e)
 		{
