@@ -17,15 +17,15 @@ import java.util.StringTokenizer;
 class HTTPResponseHeader
 {
 
-    public String Version = "";
+    private String Version = "";
 
-    public String ResponseCode = "";
+    private String ResponseCode = "";
 
-    public String Reason = "";
+    private String Reason = "";
 
-    public String primeheader = "";
+    private String primeheader = "";
 
-    public HashMap headerfields = new HashMap();
+    private HashMap headerfields = new HashMap();
 
     private boolean MalFormedHeader = false;
 
