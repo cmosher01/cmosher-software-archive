@@ -36,7 +36,6 @@ public class TestBeans
         PropertyDescriptor pd = getPropertyDescriptor(bean.getClass(), property);
         Object v = getConvertedValue(value, pd.getPropertyType());
         setProperty(bean, pd, v);
-//        setProperty(bean, property, new String[] { value });
     }
 
     public static void setProperty(Object bean, String property, String[] value)
