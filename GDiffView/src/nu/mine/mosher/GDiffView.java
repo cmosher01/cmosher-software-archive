@@ -216,7 +216,7 @@ public class GDiffView extends JFrame
 //        scrGDiff.setMaximumSize(new Dimension(300,460));
 
         JSplitPane spl1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,scrSrc,scrGDiff);
-        sp1.setResizeWeight(1.0);
+        spl1.setResizeWeight(1.0);
         JSplitPane spl2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,spl1,scrTrg);
 
         JPanel contentPane = new JPanel(new BorderLayout());
