@@ -6,4 +6,7 @@
  */
 public enum ItemTypeEnum
 {
+	a,
+	b,
+	c
 }
