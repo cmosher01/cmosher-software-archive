@@ -58,6 +58,35 @@ public class DosMasterToImage
             out.write(0);
         }
 
+        out.write(0x04); out.write(0x11); out.write(0x0F); out.write(0x03);
+        out.write(0x00); out.write(0x00); out.write(0xFE);
+        for (int i = 0; i < 0x20; ++i)
+        {
+            out.write(0x00);
+        }
+        out.write(0x7A);
+        for (int i = 0; i < 0x08; ++i)
+        {
+            out.write(0x00);
+        }
+        out.write(0x11); out.write(0x01); out.write(0x00); out.write(0x00);
+        out.write(0x23); out.write(0x10); out.write(0x00); out.write(0x01);
+
+        // T/S Map
+        out.write(0x00); out.write(0x00); out.write(0x00); out.write(0x00);
+        out.write(0x00); out.write(0x00); out.write(0x00); out.write(0x00);
+        out.write(0x00); out.write(0x00); out.write(0x00); out.write(0x00);
+
+        for (int i = 3; i < 0x11; ++i)
+        {
+            out.write(0xFF); out.write(0xFF); out.write(0x00); out.write(0x00);
+        }
+        out.write(0x00); out.write(0x00); out.write(0x00); out.write(0x00);
+        for (int i = 0x12; i < 0x23; ++i)
+        {
+            out.write(0xFF); out.write(0xFF); out.write(0x00); out.write(0x00);
+        }
+
         out.flush();
         out.close();
         in.close();
