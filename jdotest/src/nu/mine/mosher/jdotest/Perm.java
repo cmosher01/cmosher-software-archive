@@ -46,4 +46,10 @@ public class Perm
 		PersistenceManager pm = this.pmf.getPersistenceManager();
 		return pm.getObjectId(obj).toString();
 	}
+
+	public void add(Object obj)
+	{
+		PersistenceManager pm = this.pmf.getPersistenceManager();
+		pm.makePersistent(obj);
+	}
 }
