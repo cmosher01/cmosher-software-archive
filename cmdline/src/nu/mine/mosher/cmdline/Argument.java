@@ -4,8 +4,8 @@
 package nu.mine.mosher.cmdline;
 
 /**
- * Represents an argument (possibly) specified
- * by the user on the command line.
+ * Represents an argument (typically specified
+ * by the user on the command line).
  * 
  * @author Chris Mosher
  */
