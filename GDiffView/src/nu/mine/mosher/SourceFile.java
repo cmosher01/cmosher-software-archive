@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -39,7 +40,11 @@ public class SourceFile
         Integer ck = new Integer(chk);
         if (map.containsKey(ck))
         {
-            Collection winds = (Collection)map.get(ck);
+            List winds = (List)map.get(ck);
+            if (winds.size() == 1)
+            {
+                winds
+            }
         }
         return offset;
     }
