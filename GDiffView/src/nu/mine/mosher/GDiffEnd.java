@@ -7,5 +7,11 @@
  */
 public class GDiffEnd extends GDiffCmd
 {
-	
+    /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString()
+    {
+        return "END";
+    }
 }
