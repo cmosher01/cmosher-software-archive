@@ -34,7 +34,7 @@ public class TestBeans
         throws IntrospectionException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
     {
         PropertyDescriptor pd = getPropertyDescriptor(bean.getClass(), property);
-        Object v = getConvertedValue(value, pd.getPropertyType());
+        Object v = convertValue(value, pd.getPropertyType());
         setProperty(bean, pd, v);
     }
 
@@ -46,7 +46,7 @@ public class TestBeans
         setProperty(bean, pd, v);
     }
 
-    public static Object getConvertedValue(String value, Class classProp)
+    public static Object convertValue(String value, Class classProp)
         throws NegativeArraySizeException, IllegalArgumentException, IntrospectionException
     {
         if (classProp.isArray())
