@@ -26,10 +26,8 @@ public class Apple2
      * @param args
      * @throws InvalidPosException
      * @throws IOException
-     * @throws MultipleVTOCException
-     * @throws VTOCNotFoundException
      */
-    public static void main(String[] args) throws VTOCNotFoundException, MultipleVTOCException, InvalidPosException, IOException
+    public static void main(String[] args) throws InvalidPosException, IOException
     {
 //        mainAll(args);
         doOneDisk(readDisk(new File("test/SARG2.DSK")));
@@ -41,10 +39,8 @@ public class Apple2
      * @param args
      * @throws InvalidPosException
      * @throws IOException
-     * @throws MultipleVTOCException
-     * @throws VTOCNotFoundException
      */
-    public static void mainAll(String[] args) throws VTOCNotFoundException, MultipleVTOCException, InvalidPosException, IOException
+    public static void mainAll(String[] args) throws InvalidPosException, IOException
     {
         if (args.length != 1)
         {
