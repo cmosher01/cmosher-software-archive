@@ -197,7 +197,7 @@ public class DiskPos
      * @param len
      * @return
      */
-    public DiskPos advance(int len)
+    public void advance(int len)
     {
         this.iDisk += len;
     }
