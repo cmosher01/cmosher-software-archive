@@ -16,14 +16,18 @@ import java.util.Map;
  */
 public class StreamChecksum
 {
-    private Map mapChecksumToWindow = new HashMap();
+    private Map mapChecksumToWindow;
 
 
 
+    /**
+     * @param mapChecksumToWindow
+     */
     public StreamChecksum(Map mapChecksumToWindow)
     {
         this.mapChecksumToWindow = mapChecksumToWindow;
     }
+
     /**
      * Computes checksums for non-overlapping
      * windows, of the given size, over all bytes
