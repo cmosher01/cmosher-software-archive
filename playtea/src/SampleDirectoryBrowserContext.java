@@ -50,7 +50,6 @@
  * For more information about Tea, please see http://opensource.go.com/.
  */
 
-
 import com.go.teaservlet.*;
 import java.io.*;
 
@@ -60,15 +59,14 @@ import java.io.*;
  * @version
  * <!--$$Revision:--> 6 <!-- $-->, <!--$$JustDate:-->  7/10/00 <!-- $-->
  */
-public class SampleDirectoryBrowserContext {
+public class SampleDirectoryBrowserContext
+{
+    private final ApplicationRequest mRequest;
+	private final ApplicationResponse mResponse;
+	private final SampleDirectoryBrowserApp mApp;
 
-    ApplicationRequest mRequest;
-    ApplicationResponse mResponse;
-    SampleDirectoryBrowserApp mApp;
-
-    public SampleDirectoryBrowserContext(ApplicationRequest request,
-                              ApplicationResponse response,
-                              SampleDirectoryBrowserApp app) {
+    public SampleDirectoryBrowserContext(ApplicationRequest request, ApplicationResponse response, SampleDirectoryBrowserApp app)
+    {
         mRequest = request;
         mResponse = response;
         mApp = app;
@@ -76,20 +74,26 @@ public class SampleDirectoryBrowserContext {
 
     // Gets an array of files in the directory specified by the "path" parameter.
 
-    public File[] getFiles() {
+    public File[] getFiles()
+    {
 
         String path = mRequest.getParameter("path");
-        if (path == null) {
+        if (path == null)
+        {
             path = mApp.getInitParameter("defaultPath");
         }
-        if (path == null) {
+        if (path == null)
+        {
             path = "/";
         }
 
         File activefile = new File(path);
-        if( activefile.isDirectory()) {
+        if (activefile.isDirectory())
+        {
             return activefile.listFiles();
-        } else {
+        }
+        else
+        {
             return null;
         }
     }
