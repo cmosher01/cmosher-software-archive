@@ -14,13 +14,26 @@ public class CatEntry implements TreeNode
 	private String sName;
 	private static final Icon mIcon = new ImageIcon("d:\\temp\\a2file.gif");
 	private byte[] raw;
+	private String hexRaw;
 
 	public CatEntry(byte[] rb)
 	{
 		System.arraycopy(rb,0,raw,0,rb.length);
+
 		byte[] rname = new byte[0x1e];
-		System.arraycopy(rb,3,rname,0,0x1e);
+		System.arraycopy(raw,3,rname,0,0x1e);
 		sName = A2DiskContents.dosName(rname);
+
+		StringBuffer s = new StringBuffer(100);
+		for (int i = 0; i < raw.length; ++i)
+		{
+			String h = Integer.toHexString(raw[i]);
+			if (h.length()==1)
+				s.append("0");
+			s.append(h);
+		}
+		hexRaw = s.toString();
+
         viewRight.setEditable(false);
         viewRight.setContentType("text/html");
 	}
