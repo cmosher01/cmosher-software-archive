@@ -1,5 +1,6 @@
 package nu.mine.mosher.gedcom;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Iterator;
@@ -13,8 +14,20 @@ public class Gedcom
 	{
 	}
 
-	public static String guessCharset(InputStream in)
+	public static String guessCharset(InputStream in) throws IOException
 	{
+		int b0 = in.read();
+		int b1 = in.read();
+
+		int w0 = b1;
+		w0 <<= 8;
+		w0 |= b0;
+
+		if (w0==0xfeff)
+		{
+			return "UTF-16LE";
+		}
+
 		SortedMap mc = Charset.availableCharsets();
 		for (Iterator i = mc.entrySet().iterator(); i.hasNext();)
         {
