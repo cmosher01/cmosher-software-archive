@@ -30,7 +30,7 @@ public final class Cloner
 				methodClone.setAccessible(true);
 				mClasses.put(cl,methodClone);
 			}
-			return (Cloneable)methodClone.invoke(cloneableObject,null);
+			return (T)methodClone.invoke(cloneableObject,null);
 		}
 		catch (Throwable cause)
 		{
