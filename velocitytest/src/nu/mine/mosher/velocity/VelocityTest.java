@@ -40,6 +40,7 @@ public class VelocityTest
         deps.add(new Dependency("SurveySampling","2-3",true));
         context.put("deps",deps);
         context.put("main","com.surveysampling.example.Example");
+        context.put("lib","lib");
 
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out)));
 
