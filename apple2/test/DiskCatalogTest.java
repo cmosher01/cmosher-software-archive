@@ -309,6 +309,20 @@ public class DiskCatalogTest extends TestCase
         assertManyPos("TIP1.dsk",r);
     }
 
+    /**
+     * @throws IOException
+     * @throws InvalidPosException
+     */
+    public void testDOS34() throws IOException, InvalidPosException
+    {
+        List r = new ArrayList();
+        r.add(new DiskPos(0x11,0xC));
+        r.add(new DiskPos(0x11,0xD));
+        r.add(new DiskPos(0x11,0xE));
+        r.add(new DiskPos(0x11,0xF));
+        assertManyPos("UTY4-1.dsk",r);
+    }
+
     //    public void testDOS33_Others() throws IOException, InvalidPosException
 //    {
 //        assertOnePos("daviddos_2.dsk",new DiskPos(0x11,0));
