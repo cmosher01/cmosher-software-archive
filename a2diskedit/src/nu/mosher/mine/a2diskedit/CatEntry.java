@@ -12,7 +12,7 @@ public class CatEntry implements TreeNode
 	private final JEditorPane viewRight = new JEditorPane();
 	private DefaultMutableTreeNode node = null;
 	private String sName;
-	private static final Icon mIcon = new ImageIcon("d:\\temp\\floppy.gif");
+	private static final Icon mIcon = new ImageIcon("d:\\temp\\a2file.gif");
 
 	public CatEntry(byte[] rb)
 	{
