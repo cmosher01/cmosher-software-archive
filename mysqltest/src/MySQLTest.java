@@ -242,7 +242,7 @@ public class MySQLTest
 		"    state char(2), "+
 		"    county varchar(64), "+
 		"    township varchar(64), "+
-		"    other varchar(8), "+
+		"    district integer unsigned default 0, "+
 		"    image integer unsigned "+
 		")");
 		dbUpdate("drop table Household");
