@@ -22,7 +22,7 @@ public class Apple2
      * @throws IOException
      * @throws InvalidPosException
      */
-    public static void main(String[] args) throws IOException, InvalidPosException
+    public static void main(String[] args) throws IOException
     {
         if (args.length != 1)
         {
