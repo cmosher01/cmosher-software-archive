@@ -19,7 +19,7 @@ public class VolumeFile
         // TODO Auto-generated method stub
         
     }
-//    private VolumeTSMap ts;
+    private VolumeTSMap ts;
 //    private VolumeFileData data;
 
     /**
@@ -28,7 +28,13 @@ public class VolumeFile
      */
     public void readFromMedia(DiskPos start, Disk disk)
     {
-        // TODO Auto-generated method stub
-        
+        if (disk.isDos33TSMapSector(start))
+        {
+            ts = new VolumeTSMap();
+        }
+        else
+        {
+            // assume a single-sector file
+        }
     }
 }
