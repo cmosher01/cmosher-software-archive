@@ -50,10 +50,10 @@ public class PushbackRandomFile
 
     public void seek(long pos) throws IOException
     {
-		if (unread != -1)
-		{
-			throw new IllegalStateException("can't seek with an unread character.");
-		}
+//		if (unread != -1)
+//		{
+//			throw new IllegalStateException("can't seek with an unread character.");
+//		}
 		f.seek(pos);
     }
 }
