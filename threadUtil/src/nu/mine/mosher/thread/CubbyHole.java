@@ -43,7 +43,7 @@ public class CubbyHole
 
     /**
      * Puts the specified object into this cubbyhole, and
-     * nofities threads waiting to get from this cubbyhole.
+     * notifies threads waiting to get from this cubbyhole.
      * 
      * @param value the Object to put into this cubbyhole; can be null
      */
