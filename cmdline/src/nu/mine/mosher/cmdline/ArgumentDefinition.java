@@ -55,7 +55,7 @@ public class ArgumentDefinition implements Comparable
     {
         return this.name;
     }
-    public int compareTo(Object o)
+    public int compareTo(Object obj)
     {
         ArgumentDefinition that = (ArgumentDefinition)obj;
         return this.name.compareTo(that.name);
