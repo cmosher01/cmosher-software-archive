@@ -78,6 +78,7 @@ public class MainFrame extends JFrame
         s.append("APPLE ][ DOS 3.3");
         vol.getDos().appendSig(s);
         DefaultMutableTreeNode nDos = new DefaultMutableTreeNode(s);
+
         nDisk.add(nBoot);
         nDisk.add(nDos);
         top.add(nDisk);
