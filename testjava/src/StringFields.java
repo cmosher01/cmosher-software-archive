@@ -1,6 +1,6 @@
 import java.util.Iterator;
 
-public class StringFields
+public class StringFields /* implements Iterable */
 {
     private final Iterator i;
     
