@@ -18,8 +18,9 @@ public class Apple2
     /**
      * @param args
      * @throws IOException
+     * @throws InvalidPosException
      */
-    public static void main(String[] args) throws IOException
+    public static void main(String[] args) throws IOException, InvalidPosException
     {
         if (args.length != 1)
         {
