@@ -105,6 +105,7 @@ public class GDiffView extends JFrame
         byte[] rs = new byte[cWindow];
         RollingChecksum roll = new RollingChecksum();
         int trgPos = 0;
+        List matches = new ArrayList();
         while (streamTrg.available() > 0)
         {
             int w = cWindow;
@@ -125,6 +126,9 @@ public class GDiffView extends JFrame
             {
                 Range rngSrc = new Range(srcPos,srcPos+w-1);
                 Range rngTrg = new Range(trgPos,trgPos+w-1);
+                GDiffCopy cpy = new GDiffCopy(rngSrc);
+                cpy.setTargetRange(rngTrg);
+                matches.add(cpy);
             }
         }
     }
