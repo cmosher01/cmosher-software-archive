@@ -28,6 +28,11 @@ public class StringFieldizer
         return tok;
     }
 
+    public int getPosition()
+    {
+        return pos;
+    }
+
     protected int nextPos()
     {
         int i = s.indexOf(delim,pos);
