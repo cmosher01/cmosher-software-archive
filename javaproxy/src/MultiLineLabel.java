@@ -152,7 +152,7 @@ public class MultiLineLabel extends Canvas
     public void paint(Graphics g)
     {
         int x, y;
-        Dimension d = this.size();
+        Dimension d = this.getSize();
         x = 0;
         y = line_ascent + (d.height - num_lines * line_height) / 2;
         for (int i = 0; i < num_lines; i++, y += line_height)
