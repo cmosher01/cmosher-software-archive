@@ -15,8 +15,9 @@ public class TSMap
     /**
      * @param sector
      */
-    public void mark(int sector)
+    public void mark(DiskPos p)
     {
+        int sector = p.getSectorInDisk();
         if (sector < 0 || r.length <= sector)
         {
             throw new IllegalArgumentException();
@@ -28,8 +29,9 @@ public class TSMap
      * @param sector
      * @return
      */
-    public boolean isMarked(int sector)
+    public boolean isMarked(DiskPos p)
     {
+        int sector = p.getSectorInDisk();
         if (sector < 0 || r.length <= sector)
         {
             throw new IllegalArgumentException();
