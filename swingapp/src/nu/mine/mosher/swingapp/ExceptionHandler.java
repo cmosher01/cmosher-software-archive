@@ -30,7 +30,7 @@ public class ExceptionHandler
      * 
      * @param exception
      */
-    public static void sendException(Throwable exception)
+    public static void send(Throwable exception)
     {
         mSingleton.mException.put(exception);
     }
