@@ -122,9 +122,4 @@ public class TestBeans
 
         return bi;
     }
-
-    public static void showInt(int i)
-    {
-        System.out.println(i);
-    }
 }
