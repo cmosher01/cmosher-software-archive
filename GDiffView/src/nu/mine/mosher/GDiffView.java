@@ -915,6 +915,7 @@ public class GDiffView extends JFrame
         long end = data.limit();
         long here = start;
         long insertFrom = -1;
+        long trgpos = 0;
         while (true)
         {
             if (end-here < cWindow)
@@ -933,7 +934,8 @@ public class GDiffView extends JFrame
                     byte[] rb = new byte[(int)(end-from)];
                     data.position((int)from); // TODO long
                     data.get(rb);
-                    doData(rb);
+                    doData(rb,new Range(from,end-1));
+                    trgpos += end-from;
                 }
                 return;
             }
@@ -996,10 +998,12 @@ public class GDiffView extends JFrame
                     byte[] rb = new byte[(int)(here-insertFrom)];
                     data.position((int)insertFrom); // TODO long
                     data.get(rb);
-                    doData(rb);
+                    doData(rb,new Range(insertFrom,here-1));
+                    trgpos += here-insertFrom;
                     insertFrom = -1;
                 }
-                doCopy(matchCurrent,cMatchCurrent,(start < matchCurrent));
+                doCopy(matchCurrent,cMatchCurrent,(start < matchCurrent),new Range(trgpos,trgpos+cMatchCurrent-1));
+                trgpos += cMatchCurrent;
             }
             here += cMatchCurrent;
             if (end-here >= cWindow && !output)
