@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import nu.mine.mosher.core.Immutable;
 
-public class YMD implements Immutable, Serializable
+public class YMD implements Immutable, Serializable, Comparable
 {
 	private final int year;
 	private final int month;
@@ -35,14 +35,14 @@ public class YMD implements Immutable, Serializable
         return year;
     }
 
-	public boolean equals(Object obj)
+	public boolean equals(Object o)
 	{
-		if (!(obj instanceof YMD))
+		if (!(o instanceof YMD))
 		{
 			return false;
 		}
 
-		YMD that = (YMD)obj;
+		YMD that = (YMD)o;
 		return
 			this.year == that.year &&
 			this.month == that.month &&
@@ -66,5 +66,21 @@ public class YMD implements Immutable, Serializable
 		h += day;
 
 		return h;
+    }
+
+    public int compareTo(Object o)
+    {
+    	YMD that = (YMD)o;
+    	int d;
+    	d = that.year-this.year;
+    	if (d==0)
+    	{
+    		d = that.month-this.month;
+    	}
+		if (d==0)
+		{
+			d = that.day-this.day;
+		}
+		return d;
     }
 }
