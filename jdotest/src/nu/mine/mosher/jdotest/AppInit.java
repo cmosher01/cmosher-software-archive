@@ -6,9 +6,7 @@
  */
 package nu.mine.mosher.jdotest;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.net.URL;
+import java.io.InputStream;
 import java.util.Properties;
 
 import javax.servlet.ServletContextEvent;
@@ -29,27 +27,8 @@ public class AppInit implements ServletContextListener
 		try
 		{
 			props = new Properties();
-			URL urlProps = Perm.class.getClassLoader().getResource("nu/mine/mosher/jdotest/jdo.properties");
-			FileInputStream inProps = null;
-			try
-			{
-				inProps = new FileInputStream(new File(urlProps.getFile()));
-				props.load(inProps);
-			}
-			finally
-			{
-				if (inProps != null)
-				{
-					try
-					{
-						inProps.close();
-					}
-					catch (Throwable ignore)
-					{
-						ignore.printStackTrace();
-					}
-				}
-			}
+			InputStream inProps = sce.getServletContext().getResourceAsStream("WEB-INF/jdo.properties");
+			props.load(inProps);
 		}
 		catch (Throwable e)
 		{
