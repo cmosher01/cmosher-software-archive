@@ -26,7 +26,7 @@ public class RollingChecksum
      * Initializes a checksum object in preparation for
      * calculating a rolling sequence of checksums. The length
      * of the given array of bytes establishes the window size.
-     * @param rx
+     * @param rx array of initial bytes to be checksummed.
      */
     public RollingChecksum(byte[] rx)
     {
