@@ -14,7 +14,24 @@ import java.util.List;
  */
 public class VolumeCatalogSector extends VolumeEntity
 {
-    List rEntry = new ArrayList();
+    private final List rEntry = new ArrayList();
+    private final boolean isOrphan;
+
+    /**
+     * @param b
+     */
+    public VolumeCatalogSector()
+    {
+        this(false);
+    }
+
+    /**
+     * @param b
+     */
+    public VolumeCatalogSector(boolean isOrphan)
+    {
+        this.isOrphan = isOrphan;
+    }
 
     /**
      * @param p
@@ -33,6 +50,10 @@ public class VolumeCatalogSector extends VolumeEntity
     public void dump(StringBuffer s)
     {
         VolumeSector sect = (VolumeSector)rSector.get(0);
+        if (isOrphan)
+        {
+            s.append("Orphan ");
+        }
         s.append("Catalog ");
         s.append(sect.toString());
         s.append(": ");
