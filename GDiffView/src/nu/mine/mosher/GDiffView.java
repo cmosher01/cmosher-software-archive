@@ -430,9 +430,7 @@ public class GDiffView extends JFrame
             else
             {
                 GDiffCopy gc = (GDiffCopy)g;
-                in.seek(gc.getRange().getBegin());
-                byte[] rb = new byte[(int)gc.getRange().getLength()];
-                in.readFully(rb);
+                sb.substring((int)gc.getRange().getBegin(),(int)gc.getRange().getLimit());
             }
             g = getGDiff(gdiff);
         }
