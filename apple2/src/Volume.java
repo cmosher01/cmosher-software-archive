@@ -50,8 +50,7 @@ public class Volume
         for (Iterator i = this.rFile.iterator(); i.hasNext();)
         {
             VolumeFile f = (VolumeFile)i.next();
-            VolumeTSMap map = f.getTSMap();
-            map.getPos(rKnownTSMaps);
+            f.getTSMap().getPos(rKnownTSMaps);
         }
     }
 
