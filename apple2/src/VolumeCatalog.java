@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -49,5 +50,15 @@ public class VolumeCatalog
         // then scan whole disk for other catalog sectors, if any
         List rCatSearch = new ArrayList();
         disk.findDos33CatalogSector(rCatSearch);
+        for (Iterator i = rCatSearch.iterator(); i.hasNext();)
+        {
+            DiskPos p = (DiskPos)i.next();
+            if (!found.contains(p))
+            {
+                VolumeCatalogSector c = new VolumeCatalogSector();
+                c.readFromMedia(p,disk);
+                rCatSect.add(c);
+            }
+        }
     }
 }
