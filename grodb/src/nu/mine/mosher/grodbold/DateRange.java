@@ -32,7 +32,8 @@ public class DateRange implements Immutable, Serializable, Comparable
 
 	private final boolean circa;
 
-	private final int hash;
+	private transient int hash;
+	private transient int approx;
 
 
 
@@ -73,8 +74,6 @@ public class DateRange implements Immutable, Serializable, Comparable
         this.minute = minute;
         this.timeZone = (TimeZone)timeZone.clone();
 		this.circa = circa;
-
-		this.hash = getHash();
     }
 
 	public YMD getEarliest()
@@ -173,41 +172,51 @@ public class DateRange implements Immutable, Serializable, Comparable
 
 		DateRange that = (DateRange)o;
 
-		if (this.circa || that.circa)
-		{
-			return false;
-		}
+		private final YMD earliest;
+		private final YMD latest;
 
-		if (!this.isExact() || !that.isExact())
-		{
-			return false;
-		}
+		/**
+		 * Inidicates what the preferred display calendar is.
+		 * true==Julian, false==Gregorian
+		 * Note that this indicates only how to display the date(s),
+		 * not how they are stored. Dates are always stored using
+		 * the Gregorian calendar. Further, it is only a preference,
+		 * and therefore the value may be ignored.
+		 */
+		private final boolean julian;
 
-		if (!this.earliest.equals(that.earliest))
-		{
-			return false;
-		}
+		private final int hour;
+		private final int minute;
+		private final TimeZone timeZone;
 
-		if (this.hour != that.hour || this.minute != that.minute)
-		{
-			return false;
-		}
-		// TODO finish date equality
-		return true;
+		private final boolean circa;
     }
 
 	// YYYYMMDD (never display this to the user)
 	public int getApproxDay()
 	{
-		return (earliest.getApproxDay()+latest.getApproxDay())/2;
+		if (approx == 0)
+		{
+			updateApprox();
+		}
+		return approx;
+	}
+
+	private void updateApprox()
+	{
+		approx = (earliest.getApproxDay()+latest.getApproxDay())/2;
 	}
 
     public int hashCode()
     {
+    	if (hash == 0)
+    	{
+    		updateHash();
+    	}
     	return hash;
     }
 
-	private int getHash()
+	private void updateHash()
 	{
 		int h = 17;
 
@@ -226,6 +235,6 @@ public class DateRange implements Immutable, Serializable, Comparable
 		h *= 37;
 		h += circa ? 0 : 1;
 
-		return h;
+		hash = h;
 	}
 }
