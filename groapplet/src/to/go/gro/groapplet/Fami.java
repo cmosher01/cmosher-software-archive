@@ -51,7 +51,7 @@ public class Fami
 
     public void calc(Graphics g)
     {
-        g = g; // not used
+        Util.unused(g);
         if (husb == null && wife == null && rChild.size()==0)
             return;
 
