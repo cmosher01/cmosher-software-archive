@@ -112,11 +112,11 @@ public class Disk
     /**
      * @return
      */
-    public int read()
+    public int read(DiskPos pos)
     {
         int r = disk[pos.getIndex()];
         r &= 0x000000FF;
-        pos = pos.advance(1);
+        pos.advance(1);
         return r;
     }
 
