@@ -54,6 +54,6 @@ public class ImmutableReference implements Comparable, Serializable
 
     public int compareTo(Object o)
     {
-        return this.ref.compareTo(o);
+        return ((Comparable)this.ref).compareTo(o);
     }
 }
