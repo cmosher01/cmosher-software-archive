@@ -25,11 +25,11 @@ public class SpringMid extends Spring
         this.fraction = fraction;
         if (isRight)
         {
-            this.offset = -width/2;
+            this.offset = +width/2;
         }
         else
         {
-            this.offset = +width/2;
+            this.offset = -width/2;
         }
     }
 
