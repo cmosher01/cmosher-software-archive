@@ -21,7 +21,7 @@ public class DiskCatalogTest extends TestCase
      */
     public void testCatalog_Zeroes()
     {
-        assertEquals(0,Disk.isDos33CatalogSector(zeroes));
+        assertEquals(0,Disk.isDos33CatalogSector(zeroes,false));
     }
 
     /**
