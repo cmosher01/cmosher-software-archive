@@ -179,41 +179,7 @@ public class GDiffView extends JFrame
         dif = new ByteArrayInputStream(rbs.toByteArray());
         src = fileSrc;
 
-        MutableAttributeSet style = new SimpleAttributeSet();
-        StyleConstants.setFontFamily(style,"Courier");
-        StyleConstants.setFontSize(style,10);
-        StyleConstants.setBackground(style,Color.white);
-        StyleConstants.setForeground(style,Color.black);
-        StyleConstants.setBold(style,false);
-        StyleConstants.setItalic(style,false);
-        styles.put("body",style);
-
-        style = new SimpleAttributeSet();
-        StyleConstants.setFontFamily(style,"Courier");
-        StyleConstants.setFontSize(style,10);
-        StyleConstants.setBackground(style,new Color(173,194,245));
-        StyleConstants.setForeground(style,Color.black);
-        StyleConstants.setBold(style,false);
-        StyleConstants.setItalic(style,false);
-        styles.put("highlight",style);
-
-        style = new SimpleAttributeSet();
-        StyleConstants.setFontFamily(style,"Courier");
-        StyleConstants.setFontSize(style,10);
-        StyleConstants.setBackground(style,new Color(120,194,120));
-        StyleConstants.setForeground(style,Color.black);
-        StyleConstants.setBold(style,false);
-        StyleConstants.setItalic(style,false);
-        styles.put("insert",style);
-
-        style = new SimpleAttributeSet();
-        StyleConstants.setFontFamily(style,"Courier");
-        StyleConstants.setFontSize(style,10);
-        StyleConstants.setBackground(style,new Color(194,120,120));
-        StyleConstants.setForeground(style,Color.black);
-        StyleConstants.setBold(style,false);
-        StyleConstants.setItalic(style,false);
-        styles.put("delete",style);
+        initStyles();
 
 
 
@@ -353,6 +319,48 @@ public class GDiffView extends JFrame
         listGDiff.requestFocus();
 
         setVisible(true);
+    }
+
+    /**
+     * 
+     */
+    private void initStyles()
+    {
+        MutableAttributeSet style = new SimpleAttributeSet();
+        StyleConstants.setFontFamily(style,"Courier");
+        StyleConstants.setFontSize(style,10);
+        StyleConstants.setBackground(style,Color.white);
+        StyleConstants.setForeground(style,Color.black);
+        StyleConstants.setBold(style,false);
+        StyleConstants.setItalic(style,false);
+        styles.put("body",style);
+
+        style = new SimpleAttributeSet();
+        StyleConstants.setFontFamily(style,"Courier");
+        StyleConstants.setFontSize(style,10);
+        StyleConstants.setBackground(style,new Color(173,194,245));
+        StyleConstants.setForeground(style,Color.black);
+        StyleConstants.setBold(style,false);
+        StyleConstants.setItalic(style,false);
+        styles.put("highlight",style);
+
+        style = new SimpleAttributeSet();
+        StyleConstants.setFontFamily(style,"Courier");
+        StyleConstants.setFontSize(style,10);
+        StyleConstants.setBackground(style,new Color(120,194,120));
+        StyleConstants.setForeground(style,Color.black);
+        StyleConstants.setBold(style,false);
+        StyleConstants.setItalic(style,false);
+        styles.put("insert",style);
+
+        style = new SimpleAttributeSet();
+        StyleConstants.setFontFamily(style,"Courier");
+        StyleConstants.setFontSize(style,10);
+        StyleConstants.setBackground(style,new Color(194,120,120));
+        StyleConstants.setForeground(style,Color.black);
+        StyleConstants.setBold(style,false);
+        StyleConstants.setItalic(style,false);
+        styles.put("delete",style);
     }
 
     /**
