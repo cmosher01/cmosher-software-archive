@@ -29,4 +29,16 @@ public class SyntaxDefinition
     {
         return null;
     }
+    public boolean lastArgumentRepeat()
+    {
+        return mLastArgumentRepeats;
+    }
+    public List getMrArgument()
+    {
+        return mrArgument;
+    }
+    public Set getMsetOption()
+    {
+        return msetOption;
+    }
 }
