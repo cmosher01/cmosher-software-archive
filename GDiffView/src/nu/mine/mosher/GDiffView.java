@@ -12,7 +12,9 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JFrame;
@@ -20,6 +22,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -91,7 +94,12 @@ public class GDiffView extends JFrame
 
         String[] debugData = {"magic D1FFD1FF", "version 04", "COPY 0, 2",
                 "DATA [2 bytes]", "COPY 2, 2", "COPY 1, 4", "EOF"};
-        listGDiff = new JList(debugData);
+
+        List rcmd = new ArrayList();
+        rcmd.add(new GDiffCopy(new Range(0L,2L)));
+        ListModel model = new GDiffCmdListModel(rcmd);
+        listGDiff = new JList();
+        listGDiff.setModel(model);
         listGDiff.setSelectionForeground(Color.BLACK);
         listGDiff.setSelectionBackground(new Color(173,194,245));
         ListSelectionModel selectionModel = new SingleSelectionModel()
