@@ -46,7 +46,7 @@ public class TreeFrame extends JPanel
 
     protected static void createAppFrame()
     {
-        useOSLookAndFeel();
+        SwingUtil.useOSLookAndFeel();
 
         //Create and set up the window.
         JFrame frame = new JFrame("Java Directory Browser");
@@ -64,17 +64,6 @@ public class TreeFrame extends JPanel
     protected static Container createContentPane()
     {
         return new TreeFrame();
-    }
-
-    protected static void useOSLookAndFeel()
-    {
-        try
-        {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (Throwable ignoreAnyExceptions)
-        {
-        }
     }
 
     public static void main(String argv[]) throws Throwable
