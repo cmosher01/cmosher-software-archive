@@ -47,5 +47,5 @@ public class StringFieldizer implements Iterable<String>, Immutable
 				return tok;
 			}
 		}
-//	}
+	}
 }
