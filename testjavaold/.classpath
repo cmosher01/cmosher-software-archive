@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-    <classpathentry kind="src" path="src"/>
-    <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-    <classpathentry kind="lib" path="/jaxp-1-2-0/lib/jaxp-api.jar"/>
-    <classpathentry kind="lib" path="/jaxp-1-2-0/lib/dom.jar"/>
-    <classpathentry kind="lib" path="/jaxp-1-2-0/lib/sax.jar"/>
-    <classpathentry kind="lib" path="/jaxp-1-2-0/lib/xercesImpl.jar"/>
-    <classpathentry kind="lib" path="/javamail-1-2/lib/mail.jar"/>
-    <classpathentry kind="lib" path="/jaf-1-0-2/lib/activation.jar"/>
-    <classpathentry kind="lib" path="/oraclejdbc-1-4/lib/ojdbc14.jar"/>
-    <classpathentry kind="src" path="/testjava"/>
-    <classpathentry kind="output" path="bin"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>
