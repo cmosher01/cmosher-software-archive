@@ -167,13 +167,15 @@ class Indi
 
     public URL getURL()
     {
+    	URL url = null;
         try
         {
-            return new URL("?indi="+mID);
+            url = new URL("?indi="+mID);
         }
         catch (MalformedURLException e)
         {
             e.printStackTrace();
         }
+        return url;
     }
 }
