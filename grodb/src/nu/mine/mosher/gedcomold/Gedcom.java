@@ -33,12 +33,12 @@ public class Gedcom
 		i0 <<= 8;
 		i0 |= b0;
 
-		if (i0==0x0000feff)
+		if (i0==0x0000feff || i0==0x00000030)
 		{
 			return "UTF-32LE";
 		}
 
-		if (i0==0xfffe0000)
+		if (i0==0xfffe0000 || i0==0x30000000)
 		{
 			return "UTF-32BE";
 		}
