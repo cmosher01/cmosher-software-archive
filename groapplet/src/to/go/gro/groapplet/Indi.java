@@ -165,8 +165,15 @@ class Indi
 		return pushed;
 	}
 
-    public URL getURL() throws MalformedURLException
+    public URL getURL()
     {
-        return new URL("?indi="+mID);
+        try
+        {
+            return new URL("?indi="+mID);
+        }
+        catch (MalformedURLException e)
+        {
+            e.printStackTrace();
+        }
     }
 }
