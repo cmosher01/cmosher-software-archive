@@ -16,7 +16,7 @@ public final class ImmutableReference<T> implements Cloneable, Comparable<T>, Se
         {
             throw new IllegalArgumentException();
         }
-        this.ref = Cloner.cloneObject(ref);
+        this.ref = cloneObject((Cloneable)ref);
     }
 
     private void buildString()
