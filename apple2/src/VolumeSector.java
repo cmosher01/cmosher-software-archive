@@ -18,7 +18,7 @@ public class VolumeSector
      */
     public VolumeSector(DiskPos pos, int index)
     {
-        this.pos = pos;
+        this.pos = (DiskPos)pos.clone();
         this.i = index;
     }
 
