@@ -44,12 +44,6 @@ public class TreeFrame extends JPanel
         return (TreeNode)root;
     }
 
-    public synchronized void setVisible(boolean show)
-    {
-        setLocation(50,50);
-        super.setVisible(show);
-    }
-
     /**
      * Create the GUI and show it.  For thread safety,
      * this method should be invoked from the
@@ -70,6 +64,7 @@ public class TreeFrame extends JPanel
 
         //Display the window.
         frame.pack();
+        frame.setLocation(50,50);
         frame.setVisible(true);
 
         begun.waitToSetTrue();
