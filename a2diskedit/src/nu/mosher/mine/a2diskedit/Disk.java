@@ -24,12 +24,12 @@ public class Disk implements TreeNode
 	private A2DiskImage img = null;
 	private DefaultMutableTreeNode node = null;
 
-	public Disk()
+	public Disk(DefaultMutableTreeNode n)
 	{
-		this(null,null);
+		this(n,null);
 	}
 
-	public Disk(File file, DefaultMutableTreeNode n)
+	public Disk(DefaultMutableTreeNode n, File file)
 	{
 		node = n;
 		mFile = file;
