@@ -27,6 +27,11 @@ public class DiskVTOCTest extends TestCase
         assertOnePos("DOS33_SystemMaster_19800825.dsk",new DiskPos(0x11,0));
     }
 
+    /**
+     * @param f
+     * @param posExpected
+     * @throws IOException
+     */
     public void assertOnePos(String f, DiskPos posExpected) throws IOException
     {
         Disk disk = readDiskResource(f);
@@ -40,6 +45,11 @@ public class DiskVTOCTest extends TestCase
         assertEquals(posExpected,posActual);
     }
 
+    /**
+     * @param f
+     * @param rPosExpected
+     * @throws IOException
+     */
     public void assertManyPos(String f, List rPosExpected) throws IOException
     {
         Disk disk = readDiskResource(f);
