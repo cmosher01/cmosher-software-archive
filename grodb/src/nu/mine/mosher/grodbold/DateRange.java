@@ -77,17 +77,11 @@ public class DateRange implements Immutable, Serializable, Comparable
 		this.hash = getHash();
     }
 
-	/**
-	 * @return
-	 */
 	public YMD getEarliest()
 	{
 		return earliest;
 	}
 
-    /**
-     * @return
-     */
     public YMD getLatest()
     {
         return latest;
