@@ -132,14 +132,12 @@ public class GDiffView extends JFrame
         }
         roll.init(rs);
         lookupUniqueMatch(src,roll.getChecksum(),trgPos,matches,w);
-        trgPos += w;
         while (streamTrg.available() > 0)
         {
             byte x = (byte)streamTrg.read();
             byte xprev = roll(rs,x);
             roll.increment(xprev, x);
-            lookupUniqueMatch(src,roll.getChecksum(),trgPos,matches,w);
-            ++trgPos;
+            lookupUniqueMatch(src,roll.getChecksum(),++trgPos,matches,w);
         }
     }
 
