@@ -8,12 +8,7 @@ import java.util.Map;
 import com.surveysampling.bulkemailer.util.HttpUtil;
 
 /**
- * A URI for a Mail Transport Authority. URI is of the
- * form "protocol://host:port?rate=n&timeout=n",
- * where port, rate, and timeout are optional. For
- * example "smtp://mail.surveysampling.com?rate=25000"
- * or "smtp://mail.surveysampling.com:2525?rate=30000&timeout=10000".
- * Port defaults to 25, timeout defaults to 120000 ms (2 mins.).
+ * A URI for a Mail Transport Authority.
  * 
  * @author Chris Mosher
  */
@@ -26,6 +21,16 @@ public class MtaURI
 
 
 
+    /**
+     * Parses the given URI. The URI is of the
+     * form "protocol://host:port?rate=n&timeout=n",
+     * where port, rate, and timeout are optional. For
+     * example "smtp://mail.surveysampling.com?rate=25000"
+     * or "smtp://mail.surveysampling.com:2525?rate=30000&timeout=10000".
+     * Port defaults to 25, timeout defaults to 120000 ms (2 mins.).
+     * @param sMTA
+     * @throws URISyntaxException
+     */
 	public MtaURI(String sMTA) throws URISyntaxException
 	{
         URI uri = new URI(sMTA);
