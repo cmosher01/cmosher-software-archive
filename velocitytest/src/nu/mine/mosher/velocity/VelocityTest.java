@@ -1,15 +1,23 @@
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.runtime.RuntimeServices;
 import org.apache.velocity.runtime.log.LogSystem;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 public class VelocityTest
 {
@@ -46,11 +54,19 @@ public class VelocityTest
         writer.flush();
         writer.close();
     }
-    public static List getDependencies()
+
+    public static ArrayList getDependencies() throws ParserConfigurationException, SAXException, IOException
     {
-        List deps = new ArrayList();
+        ArrayList deps = new ArrayList();
+
         deps.add(new Dependency("jaxp","1-2-0",false));
         deps.add(new Dependency("SurveySampling","2-3",true));
+
+        File f = new File("C:\\Documents and Settings\\chrism\\workspace\\metadataImport-1-0\\.classpath");
+
+        DocumentBuilderFactory fact = DocumentBuilderFactory.newInstance();
+        DocumentBuilder build = fact.newDocumentBuilder();
+        Document doc = build.parse(f);
         return deps;
     }
 }
