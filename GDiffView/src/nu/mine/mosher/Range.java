@@ -104,7 +104,7 @@ public class Range implements Comparable
     /**
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
-    public long compareTo(Object o)
+    public int compareTo(Object o)
     {
         Range that = (Range)o;
         if (this.begin < that.begin)
