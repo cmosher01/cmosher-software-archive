@@ -31,7 +31,7 @@ import java.io.IOException;
 
 
 
-public class GDiffWriter implements DiffWriter
+public class GDiffWriter
 {
 
     byte buf[] = new byte[256];
