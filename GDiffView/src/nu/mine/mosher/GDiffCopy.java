@@ -22,6 +22,6 @@ public class GDiffCopy extends GDiffCmd
      */
     public String toString()
     {
-        return "copy "+range.getBegin()+"-"+range.getEnd();
+        return "COPY "+range.getBegin()+", "+range.getLength();
     }
 }
