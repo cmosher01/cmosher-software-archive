@@ -153,6 +153,7 @@ public class MySQLTest
 		"    other integer, "+
 		"    slave integer "+
 		")");
+		dbUpdate("drop table ImageIdent");
 		dbUpdate("create table "+
 		"ImageIdent "+
 		"( "+
@@ -164,6 +165,7 @@ public class MySQLTest
 		"    other varchar(8), "+
 		"    image integer unsigned "+
 		")");
+		dbUpdate("drop table Household");
 		dbUpdate("create table "+
 		"Household "+
 		"( "+
@@ -175,6 +177,7 @@ public class MySQLTest
 		"    nameMiddle varchar(8), "+
 		"    nameSuffix varchar(8) "+
 		")");
+		dbUpdate("drop table CountEntry");
 		dbUpdate("create table "+
 		"CountEntry "+
 		"( "+
