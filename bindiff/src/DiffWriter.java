@@ -52,9 +52,9 @@ public class DiffWriter
             {
             	b += 64;
             }
-            System.out.print((char)b);
+            s.append((char)b);
         }
-		System.out.println();
+		s.append("\n");
     }
 
     public void flush()
