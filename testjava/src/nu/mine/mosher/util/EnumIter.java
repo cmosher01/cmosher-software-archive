@@ -2,6 +2,7 @@ package com.surveysampling.util;
 
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class EnumIter extends Object implements Iterator
 {
