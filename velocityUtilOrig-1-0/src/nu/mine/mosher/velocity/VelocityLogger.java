@@ -44,6 +44,12 @@ public class VelocityLogger implements LogSystem
 
 
 
+    /**
+     * Translates a Velocity log level into a
+     * standard Java Logger Level.
+     * @param Velocity log level
+     * @return Java log level
+     */
     public static Level translateVelocityLogLevel(int level)
     {
         switch (level)
