@@ -3,6 +3,7 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorManager;
+import java.lang.reflect.Method;
 
 public class TestBeans
 {
@@ -40,6 +41,10 @@ public class TestBeans
         {
             throw new Exception("can't get AInt property descriptors for SomeBean");
         }
+        Method wr = rpd[ipd].getWriteMethod();
+        SomeBean some = new SomeBean();
+        wr.invoke(bi, new Object[] {i});
+        showInt(some.getAInt());
     }
 
     public static void showInt(int i)
