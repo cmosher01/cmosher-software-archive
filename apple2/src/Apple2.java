@@ -31,5 +31,6 @@ public class Apple2
         fileDisk.read(rbDisk);
         Disk disk = new Disk(rbDisk);
         disk.findDos33VTOC();
+        disk.findDos33CatalogSector();
     }
 }
