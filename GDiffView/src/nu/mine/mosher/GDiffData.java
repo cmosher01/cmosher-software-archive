@@ -9,7 +9,6 @@ package nu.mine.mosher;
 public class GDiffData extends GDiffCmd
 {
 	private final byte[] data;
-    private Range trg;
 
     /**
 	 * @param data
@@ -33,18 +32,5 @@ public class GDiffData extends GDiffCmd
     public String toString()
     {
         return "DATA ["+data.length+" bytes]";
-    }
-
-    public void setTargetRange(Range r)
-    {
-        trg = r;
-    }
-
-    /**
-     * @return Returns the trg.
-     */
-    public Range getTargetRange()
-    {
-        return trg;
     }
 }
