@@ -67,6 +67,6 @@ public class FixMetaUTF8
     {
         Pattern pat = Pattern.compile("<head>",Pattern.CASE_INSENSITIVE|Pattern.MULTILINE|Pattern.DOTALL);
         Matcher matcher = pat.matcher(sb);
-        return matcher.replaceFirst("<HEAD>\n<META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF8\">");
+        return matcher.replaceFirst("<HEAD>\n<META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">");
     }
 }
