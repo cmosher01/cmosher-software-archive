@@ -256,7 +256,7 @@ public class GDiffView extends JFrame
         for (Iterator i = rCopy.iterator(); i.hasNext();)
         {
             GDiffCopy g = (GDiffCopy)i.next();
-            Range r = g.getTargetRange();
+            Range r = g.getRange();
             setSrcUsed.add(r);
         }
 
