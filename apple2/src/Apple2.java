@@ -79,10 +79,9 @@ public class Apple2
     /**
      * @param f
      * @return
-     * @throws FileNotFoundException
      * @throws IOException
      */
-    public static Disk readDisk(File f) throws FileNotFoundException, IOException
+    public static Disk readDisk(File f) throws IOException
     {
         byte[] rbDisk;
         InputStream fileDisk = null;
