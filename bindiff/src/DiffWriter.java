@@ -1,5 +1,7 @@
 public class DiffWriter
 {
+	StringBuffer s = new StringBuffer(1024);
+
 	public DiffWriter()
 	{
 	}
