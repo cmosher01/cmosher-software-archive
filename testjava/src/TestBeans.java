@@ -9,6 +9,8 @@ public class TestBeans
     public static void main(String[] rArgs) throws Throwable
     {
         SomeBean some = new SomeBean();
+        String prop = "AInt";
+        String val = "34";
 
 
 
@@ -30,7 +32,7 @@ public class TestBeans
         for (int j = 0; j < rpd.length; ++j)
         {
             PropertyDescriptor descriptor = rpd[j];
-            if (descriptor.getName().equals("AInt"))
+            if (descriptor.getName().equals(prop))
             {
                 ipd = j;
             }
@@ -48,7 +50,7 @@ public class TestBeans
         {
             throw new Exception("can't get property editor");
         }
-        ed.setAsText("34");
+        ed.setAsText(val);
         Integer i = (Integer)ed.getValue();
 
 
