@@ -1,17 +1,10 @@
-import java.io.FileReader;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ListIterator;
 
 import sun.misc.Launcher;
 
 import com.surveysampling.util.CubbyHole;
-import com.surveysampling.util.ExceptionUtil;
-import com.surveysampling.util.UniversalCloser;
-import com.surveysampling.util.UniversalCloser2;
 
 public class Test
 {
