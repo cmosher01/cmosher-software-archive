@@ -163,6 +163,8 @@ class NormalizerBuilder
             int cc = Integer.parseInt(line.substring(start, end));
 if (cc != 0)
 	System.err.println("non-zero canonical class (good) for: "+value+" is: "+cc);
+if (value==775)
+	System.err.println("at 775");
             if (cc != (cc & 0xFF))
                 System.err.println("Bad canonical class at: " + line);
             canonicalClass.put(value, cc);
