@@ -95,7 +95,7 @@ public class Bin2HexJava
         }
         if (SHOW_QUOTES)
         {
-            System.out.println("\"+");
+            System.out.println("\"");
         }
         else
         {
