@@ -4,6 +4,9 @@ import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -77,8 +80,20 @@ public class MainFrame extends JFrame
         vol.getDos().appendSig(s);
         DefaultMutableTreeNode nDos = new DefaultMutableTreeNode(s);
 
+        DefaultMutableTreeNode nCat = new DefaultMutableTreeNode("Catalog");
+
+        DefaultMutableTreeNode nFiles = new DefaultMutableTreeNode("Files");
+        List rFiles = new ArrayList();
+        for (Iterator i = rFiles.iterator(); i.hasNext();)
+        {
+            VolumeFile file = (VolumeFile)i.next();
+            nFiles.add(new DefaultMutableTreeNode(file.getCatalogEntry().getName()));
+        }
+
         nDisk.add(nBoot);
         nDisk.add(nDos);
+        nDisk.add(nCat);
+        nDisk.add(nFiles);
         top.add(nDisk);
     }
 
