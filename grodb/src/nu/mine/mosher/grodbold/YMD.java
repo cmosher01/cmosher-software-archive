@@ -6,9 +6,14 @@ import nu.mine.mosher.core.Immutable;
 
 public class YMD implements Immutable, Serializable, Comparable
 {
+	/*
+	 * one-based year, month, and day.
+	 * zero indicates that field is "unknown"
+	 */
 	private final int year;
 	private final int month;
 	private final int day;
+
 	private final int hash;
 
 	public YMD(int year)
