@@ -51,7 +51,13 @@ public class TestBeans
 
         PropertyDescriptor pd = (PropertyDescriptor)mapPDs.get(property);
 
-        PropertyEditor ed = PropertyEditorManager.findEditor(pd.getPropertyType());
+        Class classProp = pd.getPropertyType();
+        if (classProp.isArray())
+        {
+            throw new UnsupportedOperationException("array properties are not supported");
+        }
+
+        PropertyEditor ed = PropertyEditorManager.findEditor(classProp);
         if (ed == null)
         {
             throw new IntrospectionException("can't get property editor");
