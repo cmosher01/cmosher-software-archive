@@ -29,7 +29,7 @@
 			"${item.name}" has been added.
 		</p>
 		<p>
-			<c:url var="list" value="index.jsp" />
+			<c:url var="list" value="index.jspx" />
 			{ <a href="${list}">list</a> }
 		</p>
 	</body>
