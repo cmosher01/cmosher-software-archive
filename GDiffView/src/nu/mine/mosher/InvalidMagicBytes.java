@@ -14,7 +14,7 @@ public class InvalidMagicBytes extends Exception
     /**
      * 
      */
-    public InvalidMagicBytes()
+    public InvalidMagicBytes(byte[] magic)
     {
         super();
         // TODO Auto-generated constructor stub
@@ -23,7 +23,7 @@ public class InvalidMagicBytes extends Exception
     /**
      * @param message
      */
-    public InvalidMagicBytes(String message)
+    public InvalidMagicBytes(byte[] magic, String message)
     {
         super(message);
         // TODO Auto-generated constructor stub
@@ -32,7 +32,7 @@ public class InvalidMagicBytes extends Exception
     /**
      * @param cause
      */
-    public InvalidMagicBytes(Throwable cause)
+    public InvalidMagicBytes(byte[] magic, Throwable cause)
     {
         super(cause);
         // TODO Auto-generated constructor stub
@@ -42,7 +42,7 @@ public class InvalidMagicBytes extends Exception
      * @param message
      * @param cause
      */
-    public InvalidMagicBytes(String message, Throwable cause)
+    public InvalidMagicBytes(byte[] magic, String message, Throwable cause)
     {
         super(message,cause);
         // TODO Auto-generated constructor stub
