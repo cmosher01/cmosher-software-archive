@@ -49,6 +49,15 @@ public class GUI
     /**
      * @return
      */
+    private JMenuBar createMenuBar()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @return
+     */
     private Container createContentPane()
     {
         // TODO Auto-generated method stub
