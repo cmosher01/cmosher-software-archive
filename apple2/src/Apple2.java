@@ -60,6 +60,18 @@ public class Apple2
         List rPosVTOC = new ArrayList();
         disk.findDos33VTOC(rPosVTOC);
 
+        if (rPosVTOC.size() == 0)
+        {
+            rPosVTOC.add(new DiskPos(0x11,0x0));
+        }
+        else if (rPosVTOC.size() == 1)
+        {
+        }
+        else if (rPosVTOC.size() > 1)
+        {
+            // TODO multiple VTOC handling
+        }
+
         List rPosCat = new ArrayList();
         disk.findDos33CatalogSector(rPosCat);
 
