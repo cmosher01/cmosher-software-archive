@@ -31,10 +31,14 @@ public class GDiff2HTML
         for (int i = 0; i < magic.length; ++i)
         {
             byte b = magic[i];
-            out(lonib((byte)(b>>4))));
-            out(lonib(b);
+            out(lonib((byte)(b>>4)));
+            out(lonib(b));
         }
-		int vers = gdiff.read();
+        outln();
+
+        int vers = gdiff.read();
+        out(lonib((byte)((vers&0xff)>>4)));
+        out(lonib((byte)(vers&0xff)));
 
 		GDiffCmd g = getGDiff(gdiff);
 		while (!(g instanceof GDiffEnd))
