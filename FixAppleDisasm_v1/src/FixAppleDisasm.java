@@ -16,6 +16,9 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 
+import nu.mine.mosher.core.Characters;
+import nu.mine.mosher.core.Util;
+
 public class FixAppleDisasm
 {
     public static void main(String[] args) throws Throwable
@@ -357,7 +360,21 @@ public class FixAppleDisasm
 					{
 						fn.label = "L"+hexWord(fn.addr);
 					}
+					if (!ln.oper.startsWith("$"))
+					{
+						System.err.println("operator parsing error @ $"+hexWord(ln.addr));
+					}
+					char[] rc = ln.oper.toCharArray();
+					int ic = 1;
+					while (ic < rc.length && Characters.isHexDigit(rc[ic]))
+					{
+						++ic;
+					}
 					ln.oper = fn.label;
+					for (int ic2 = ic; ic2 < rc.length; ++ic2)
+					{
+						ln.oper += rc[ic2];
+					}
 				}
 				else
 				{
