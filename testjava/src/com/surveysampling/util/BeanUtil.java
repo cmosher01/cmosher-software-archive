@@ -23,7 +23,7 @@ public final class BeanUtil
     {
         try
         {
-            tryParseParameters(request,bean);
+            tryParseParameters(request, bean);
         }
         catch (ParameterParseException e)
         {
@@ -34,8 +34,15 @@ public final class BeanUtil
             throw new ParameterParseException(e);
         }
     }
-    
-    private static void tryParseParameters(ServletRequest request, Object bean) throws IntrospectionException, IllegalArgumentException, InvocationTargetException, ParameterParseException, InstantiationException, IllegalAccessException
+
+    private static void tryParseParameters(ServletRequest request, Object bean)
+        throws
+            IntrospectionException,
+            IllegalArgumentException,
+            InvocationTargetException,
+            ParameterParseException,
+            InstantiationException,
+            IllegalAccessException
     {
         for (Iterator params = new EnumIter(request.getParameterNames()); params.hasNext();)
         {
@@ -43,7 +50,7 @@ public final class BeanUtil
 
             BeanInfo info = Introspector.getBeanInfo(bean.getClass());
 
-            PropertyDescriptor pd = getPropDesc(info,param);
+            PropertyDescriptor pd = getPropDesc(info, param);
             if (pd == null)
             {
                 continue;
@@ -107,12 +114,13 @@ public final class BeanUtil
         return null;
     }
 
-    public static void createTypedArray(
-        Object bean,
-        Method method,
-        String[] values,
-        Class t,
-        Class propertyEditorClass) throws InstantiationException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, ParameterParseException
+    public static void createTypedArray(Object bean, Method method, String[] values, Class t, Class propertyEditorClass)
+        throws
+            InstantiationException,
+            IllegalArgumentException,
+            IllegalAccessException,
+            InvocationTargetException,
+            ParameterParseException
     {
         if (propertyEditorClass != null)
         {
@@ -246,7 +254,8 @@ public final class BeanUtil
         }
     }
 
-    private static Object convert(String s, Class t, Class propertyEditorClass) throws ParameterParseException, InstantiationException, IllegalAccessException
+    private static Object convert(String s, Class t, Class propertyEditorClass)
+        throws ParameterParseException, InstantiationException, IllegalAccessException
     {
         if (s == null)
         {
@@ -313,9 +322,8 @@ public final class BeanUtil
         }
     }
 
-    private static Object getValueFromBeanInfoPropertyEditor(
-        String attrValue,
-        Class propertyEditorClass) throws InstantiationException, IllegalAccessException
+    private static Object getValueFromBeanInfoPropertyEditor(String attrValue, Class propertyEditorClass)
+        throws InstantiationException, IllegalAccessException
     {
         PropertyEditor pe = (PropertyEditor)propertyEditorClass.newInstance();
         pe.setAsText(attrValue);
