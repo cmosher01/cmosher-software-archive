@@ -47,6 +47,23 @@ public class TimeOfDayParserTest extends TestCase
         makeAndCheck("00:00:00.000",0,0,0,0);
     }
 
+    public void testBadStrings() throws ParseException
+    {
+        shouldThrow("");
+    }
+
+    private void shouldThrow(String s)
+    {
+        try
+        {
+            new TimeOfDayParser(s);
+            fail("Should throw ParseException");
+        }
+        catch (ParseException shouldBeThrown)
+        {
+        }
+    }
+
     /**
      * @param string
      * @param i
