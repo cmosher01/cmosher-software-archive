@@ -69,32 +69,30 @@ public class DailyWindow
     /**
      * This constructor is only called by the static
      * factory method.
-     * @param start window start time in HH:MM format; cannot be null
-     * @param end window end time in HH:MM format; cannot be null
+     * @param start window start time; cannot be null
+     * @param end window end time; cannot be null
      * @throws ParseException if start or end are in
      * an invalid format, if start or end are empty,
      * or if the start and end times are the same.
      */
-    protected DailyWindow(String start, String end) throws ParseException
+    protected DailyWindow(TimeOfDay start, TimeOfDay end) throws ParseException
     {
-        // must give exactly two times.
-        if (start.length() == 0 || end.length() == 0)
+        // fail fast if given nulls
+        if (start == null || end == null)
         {
-            throw new ParseException("Must specify exactly two times for a window.",0);
+            throw new NullPointerException();
         }
 
-        start = checkTime(start);
-        end = checkTime(end);
+        mStart = start;
+        mEnd = end;
 
-        int cmp = parseHHMM(start).compareTo(parseHHMM(end));
+        int cmp = mStart.compareTo(mEnd);
         if (cmp == 0)
         {
             throw new ParseException("Start window time and end window time cannot be the same",0);
         }
 
         mIsStartFirst =  cmp < 0;
-        mStart = start;
-        mEnd = end;
     }
 
 
