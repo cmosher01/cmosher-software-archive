@@ -88,7 +88,7 @@ public class Test
         }
         else if (su.equalsIgnoreCase("jar"))
         {
-            String jarpart = uri.getSchemeSpecificPart();
+            String jarpart = uri.getRawSchemeSpecificPart();
             System.out.println(jarpart);
             URI urijp = URI.create(jarpart);
             String sjp = urijp.toASCIIString();
