@@ -2,7 +2,7 @@
 <%@ page session="false" %>
 <%@ page import="javax.jdo.PersistenceManager" %>
 <%@ page import="nu.mine.mosher.jdotest.Item" %>
-<%@ page import="nu.mine.mosher.jdotest.Perm" %>
+<%@ page import="nu.mine.mosher.jdotest.ListNamed" %>
 <%@ page import="java.util.Iterator" %>
 <head>
 <title>List</title>
