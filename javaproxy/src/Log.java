@@ -1,11 +1,8 @@
 /**
- * @(#)Log.java	April 3, 1998
- *
- * I MAKE NO WARRANTIES ABOUT THE SUITABILITY OF THIS SOFTWARE, EITHER
- * EXPRESS OR IMPLIED AND SHALL NOT BE LIABLE FOR ANY DAMAGES THIS
- * SOFTWARE MAY BRING TO YOUR SYSTEM. USE IT AT YOUR OWN RISK.
- *
- * Author : Steve Yeong-Ching Hsueh
+ * @(#)Log.java April 3, 1998 I MAKE NO WARRANTIES ABOUT THE SUITABILITY OF THIS
+ * SOFTWARE, EITHER EXPRESS OR IMPLIED AND SHALL NOT BE LIABLE FOR ANY DAMAGES
+ * THIS SOFTWARE MAY BRING TO YOUR SYSTEM. USE IT AT YOUR OWN RISK. Author :
+ * Steve Yeong-Ching Hsueh
  */
 
 import java.io.File;
@@ -15,26 +12,37 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
+
+
 /**
  * Log class writes message to a log
  */
-public class Log {
+public class Log
+{
     private File log = null;
-    private boolean logopened     = false;
-    private FileOutputStream fos  = null;
+
+    private boolean logopened = false;
+
+    private FileOutputStream fos = null;
+
     private static byte[] newline = new byte[2];
+
+
 
     /**
      * constructor
      */
-    public Log(String filename) {
+    public Log(String filename)
+    {
         newline[0] = '\r';
         newline[1] = '\n';
         log = new File(filename);
-        try {
+        try
+        {
             fos = new FileOutputStream(log);
         }
-        catch(IOException e) {
+        catch (IOException e)
+        {
             logopened = false;
             System.out.println("Error: Can't open " + filename + " for writing");
             System.out.println(e.toString());
@@ -45,7 +53,8 @@ public class Log {
     /**
      * is log opened?
      */
-    public boolean isLogopened() {
+    public boolean isLogopened()
+    {
 
         return logopened;
     }
@@ -53,7 +62,8 @@ public class Log {
     /**
      * rotate this log(currently not implemented)
      */
-    public boolean rotateLog() {
+    public boolean rotateLog()
+    {
 
         return true;
     }
@@ -61,17 +71,20 @@ public class Log {
     /**
      * add message to this log
      */
-    public boolean addMessage(String message) {
+    public boolean addMessage(String message)
+    {
 
-        return addMessage("N/A", message);
+        return addMessage("N/A",message);
 
     }
 
     /**
      * add message to this log
      */
-    public boolean addMessage(String source, String message) {
-        if(!logopened) return false;
+    public boolean addMessage(String source, String message)
+    {
+        if (!logopened)
+            return false;
 
 
         Calendar calendar = new GregorianCalendar(TimeZone.getDefault());
@@ -86,7 +99,8 @@ public class Log {
         sb_now.append(calendar.get(Calendar.SECOND)).append(" ");
         String now = sb_now.toString();
 
-        try {
+        try
+        {
             fos.write(now.getBytes());
             fos.write('\t');
             fos.write(source.getBytes());
@@ -95,7 +109,8 @@ public class Log {
             fos.write(newline);
             fos.flush();
         }
-        catch(IOException e) {
+        catch (IOException e)
+        {
             return false;
         }
 
@@ -105,11 +120,16 @@ public class Log {
     /**
      * close this log
      */
-    private boolean closeLog() {
-        try {
+    private boolean closeLog()
+    {
+        try
+        {
             fos.close();
         }
-        catch(IOException e) { return false; }
+        catch (IOException e)
+        {
+            return false;
+        }
         return true;
     }
 
