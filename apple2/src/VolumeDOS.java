@@ -46,7 +46,7 @@ public class VolumeDOS extends VolumeEntity
         for (Iterator i = rPosDOS.iterator(); i.hasNext();)
         {
             DiskPos p = (DiskPos)i.next();
-            rSector.add(new VolumeSector(p,x++));
+            rSector.add(new VolumeSector(p,x++,this));
         }
 
         List rPos = new ArrayList();
