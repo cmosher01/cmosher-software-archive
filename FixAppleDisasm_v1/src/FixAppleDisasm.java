@@ -141,13 +141,12 @@ public class FixAppleDisasm
 				String nextChar = s.substring(4,5);
 				if (nextChar.equalsIgnoreCase("-"))
 				{
-					if (s.length() >= 26 &&
+					if (s.length() >= 23 &&
 					s.substring(5,8).equalsIgnoreCase("   ") &&
 					s.substring(10,11).equalsIgnoreCase(" ") &&
 					s.substring(13,14).equalsIgnoreCase(" ") &&
 					s.substring(16,20).equalsIgnoreCase("    ") &&
-					!s.substring(20,23).equalsIgnoreCase("   ") &&
-					s.substring(23,26).equalsIgnoreCase("   "))
+					!s.substring(20,23).equalsIgnoreCase("   "))
 					{
 						// normal instr line
 						ln.instr = s.substring(20,23);
@@ -240,11 +239,15 @@ public class FixAppleDisasm
         {
             Map.Entry ent = (Map.Entry)i.next();
             Line ln = (Line)ent.getValue();
-            System.out.print(Integer.toHexString(ln.addr));
-            System.out.print(":   ");
-            System.out.print(ln.instr);
-			System.out.print("   ");
-			System.out.print(ln.oper);
+
+			if (ln.addr >= 0)
+			{
+				System.out.print(Integer.toHexString(ln.addr));
+				System.out.print(":   ");
+				System.out.print(ln.instr);
+				System.out.print("   ");
+				System.out.print(ln.oper);
+			}
 			System.out.print("          ");
 			System.out.print(ln.comment);
 			System.out.println();
