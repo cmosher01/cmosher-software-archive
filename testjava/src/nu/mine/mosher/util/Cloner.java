@@ -21,9 +21,7 @@ public final class Cloner
     {
         try
         {
-            Class cl = cloneableObject.getClass();
-            Method methodClone = getCloneMethod(cl);
-            return clone(cloneableObject, methodClone);
+            return clone(cloneableObject, getCloneMethod(cloneableObject.getClass()));
         }
         catch (CloneNotSupportedException e)
         {
