@@ -61,9 +61,21 @@ public class DiskCatalogTest extends TestCase
         assertManyPos("DOS33_SystemMaster_1986.dsk",r);
     }
 
-//    public void testDOS33_Others() throws IOException, InvalidPosException
+    /**
+     * @throws IOException
+     * @throws InvalidPosException
+     */
+    public void testDAVIDDOS() throws IOException, InvalidPosException
+    {
+        List r = new ArrayList();
+        r.add(new DiskPos(0x11,0xD));
+        r.add(new DiskPos(0x11,0xE));
+        r.add(new DiskPos(0x11,0xF));
+        assertManyPos("david_dos.dsk",r);
+    }
+
+    //    public void testDOS33_Others() throws IOException, InvalidPosException
 //    {
-//        assertOnePos("david_dos.dsk",new DiskPos(0x11,0));
 //        assertOnePos("daviddos_2.dsk",new DiskPos(0x11,0));
 //        assertOnePos("DiversiDOS_41_C_1983.dsk",new DiskPos(0x11,0));
 //        assertOnePos("DiversiDOS_2_C_1982.dsk",new DiskPos(0x11,0));
