@@ -15,5 +15,6 @@
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="false">
         <javaElement handleIdentifier="=groapplet/src"/>
+        <javaElement handleIdentifier="=core/src"/>
     </selectedElements>
 </jardesc>
