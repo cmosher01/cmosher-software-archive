@@ -47,30 +47,29 @@ public class TimeOfDay implements Comparable
          * a subclass that would hold a reference to our clone and
          * allow him to mutate a TimeOfDay instance.
          */
-        Calendar cal = (Calendar)calendar.clone();
-
-        if (hours < cal.getMinimum(Calendar.HOUR_OF_DAY) || cal.getMaximum(Calendar.HOUR_OF_DAY) < hours)
-        {
-            throw new IllegalArgumentException("Invalid hour: "+hours);
-        }
-        if (minutes < cal.getMinimum(Calendar.MINUTE) || cal.getMaximum(Calendar.MINUTE) < minutes)
-        {
-            throw new IllegalArgumentException("Invalid minute: "+minutes);
-        }
-        if (seconds < cal.getMinimum(Calendar.SECOND) || cal.getMaximum(Calendar.SECOND) < seconds)
-        {
-            throw new IllegalArgumentException("Invalid second: "+seconds);
-        }
-        if (milliseconds < cal.getMinimum(Calendar.MILLISECOND) || cal.getMaximum(Calendar.MILLISECOND) < milliseconds)
-        {
-            throw new IllegalArgumentException("Invalid millisecond: "+milliseconds);
-        }
-
-        this.calendar = cal;
+        this.calendar = (Calendar)calendar.clone();
         this.hours = hours;
         this.minutes = minutes;
         this.seconds = seconds;
         this.milliseconds = milliseconds;
+
+        verifyCalendarValue(Calendar.HOUR_OF_DAY,hours);
+        if (this.hours < this.calendar.getMinimum(Calendar.HOUR_OF_DAY) || this.calendar.getMaximum(Calendar.HOUR_OF_DAY) < this.hours)
+        {
+            throw new IllegalArgumentException("Invalid hour: "+hours);
+        }
+        if (this.minutes < this.calendar.getMinimum(Calendar.MINUTE) || this.calendar.getMaximum(Calendar.MINUTE) < this.minutes)
+        {
+            throw new IllegalArgumentException("Invalid minute: "+minutes);
+        }
+        if (this.seconds < this.calendar.getMinimum(Calendar.SECOND) || this.calendar.getMaximum(Calendar.SECOND) < this.seconds)
+        {
+            throw new IllegalArgumentException("Invalid second: "+seconds);
+        }
+        if (this.milliseconds < this.calendar.getMinimum(Calendar.MILLISECOND) || this.calendar.getMaximum(Calendar.MILLISECOND) < this.milliseconds)
+        {
+            throw new IllegalArgumentException("Invalid millisecond: "+milliseconds);
+        }
     }
 
 //    /**
@@ -102,6 +101,21 @@ public class TimeOfDay implements Comparable
 //    }
 
 
+
+
+    /**
+     * 
+     * @param field
+     * @param value
+     * @throws IllegalArgumentException
+     */
+    private void verifyCalendarValue(int field, int value) throws IllegalArgumentException
+    {
+        if (value < this.calendar.getMinimum(field) || this.calendar.getMaximum(field) < value)
+        {
+            throw new IllegalArgumentException("Invalid value: "+value);
+        }
+    }
 
     public int getHours()
     {
