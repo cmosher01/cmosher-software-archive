@@ -11,7 +11,7 @@ public class TestCrypt
     public static void main(String[] rArg) throws Throwable
     {
         SecureRandom random = SecureRandom.getInstance("SHA1PRNG","SUN");
-        random.setSeed(random.generateSeed(128));
+        random.setSeed(random.generateSeed(32));
     }
 
     public static void showProviders()
