@@ -20,13 +20,18 @@ public class FixAppleDisasm
 {
     public static void main(String[] args) throws Throwable
     {
-    	String file = "";
+    	String fileIn = "";
+		String fileOut = "";
         if (args.length > 0)
         {
-        	file = args[0];
+        	fileIn = args[0];
         	if (args.length > 1)
         	{
-				System.err.println("arguments beyond the first were ignored.");
+				fileOut = args[1];
+				if (args.length > 2)
+				{
+					System.err.println("arguments beyond the first were ignored.");
+				}
         	}
         }
 
@@ -53,9 +58,9 @@ public class FixAppleDisasm
 		Writer out = null;
 		try
 		{
-			if (file.length() > 0)
+			if (fileIn.length() > 0)
 			{
-				in = new InputStreamReader(new FileInputStream(new File(file)));
+				in = new InputStreamReader(new FileInputStream(new File(fileIn)));
 			}
 			else
 			{
