@@ -14,7 +14,7 @@ public class VelocityTest
     public static void main(String[] args) throws Throwable
     {
         VelocityEngine velocity = new VelocityEngine();
-        velocity.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM,new NullLogSystem());
+        velocity.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM,new ErrLogger());
 
         velocity.init();
 
