@@ -18,9 +18,9 @@ import java.io.InputStream;
 public class Bin2HexJava
 {
     private static final int BPL = 0x10;
-    private static final boolean SHOW_ZERO_X = false;
-    private static final boolean SHOW_COMMA = false;
-    private static final boolean SHOW_SPACE = true;
+    private static final boolean SHOW_ZERO_X = true;
+    private static final boolean SHOW_COMMA = true;
+    private static final boolean SHOW_SPACE = false;
 
     /**
      * @param args
