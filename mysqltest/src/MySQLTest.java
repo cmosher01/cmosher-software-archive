@@ -94,10 +94,9 @@ public class MySQLTest
 			return;
 		}
 
-		for (Iterator i = new StringFields(s).iterator(); i.hasNext();)
-		{
-			String field = (String)i.next();
-	    }
+		Iterator i = new StringFields(s).iterator();
+
+		int year = Integer.parseInt((String)i.next());
     }
 
     protected void calc() throws SQLException
