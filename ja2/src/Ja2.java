@@ -1,3 +1,4 @@
+import nu.mine.mosher.ja2.ApplicationAborting;
 import nu.mine.mosher.ja2.SwingApplication;
 import nu.mine.mosher.ja2.CommandLineArgHandler;
 import nu.mine.mosher.ja2.ExceptionHandler;
@@ -22,7 +23,7 @@ public final class Ja2
         throw new UnsupportedOperationException();
     }
 
-    public static void main(String[] args) throws Throwable
+    public static void main(String[] args) throws ApplicationAborting
     {
         ExceptionHandler eh = new ExceptionHandler();
         CommandLineArgHandler ch = new CommandLineArgHandler(args);
