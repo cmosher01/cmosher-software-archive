@@ -13,19 +13,14 @@ public class Argument
 {
     private ArgumentDefinition mDef;
     private String mValue;
-    private boolean mIsSpecified;
 
-    public Argument(ArgumentDefinition def, String value, boolean isSpecified)
+    public Argument(ArgumentDefinition def, String value)
     {
         mDef = def;
         mValue = value;
         mIsSpecified = isSpecified;
     }
 
-    boolean isSpecified()
-    {
-        return mIsSpecified;
-    }
     String getValue()
     {
         return mValue;
@@ -40,8 +35,7 @@ public class Argument
         Argument that = (Argument)obj;
         return
             this.mDef.equals(that.mDef) &&
-            this.mValue.equals(that.mValue) &&
-            this.mIsSpecified==that.mIsSpecified;
+            this.mValue.equals(that.mValue);
     }
 
     public int hashCode()
@@ -51,8 +45,6 @@ public class Argument
         hash += mDef.hashCode();
         hash *= 37;
         hash += mValue.hashCode();
-        hash *= 37;
-        hash += (mIsSpecified ? 0 : 1);
         return hash;
     }
 }
