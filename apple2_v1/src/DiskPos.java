@@ -220,6 +220,7 @@ public class DiskPos implements Comparable
         DiskPos that = (DiskPos)obj;
         return this.iDisk == that.iDisk;
     }
+
     /**
      * @see java.lang.Object#hashCode()
      */
