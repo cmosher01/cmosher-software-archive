@@ -16,6 +16,7 @@ public class Application
     private static Application me;
     private ExceptionHandler mExceptionHandler;
     private CommandLineArgHandler mCommandLineArgHandler;
+    private GUI mGUI;
 
 
 
@@ -34,14 +35,18 @@ public class Application
      * @param eh
      * @param ch
      */
-    public Application(ExceptionHandler eh, CommandLineArgHandler ch)
+    public Application(ExceptionHandler eh, CommandLineArgHandler ch, GUI gui)
     {
         me = this;
 
         this.mExceptionHandler = eh;
         this.mCommandLineArgHandler = ch;
+        this.mGUI = gui;
 
-        if (this.mExceptionHandler == null || this.mCommandLineArgHandler == null)
+        if (
+            this.mExceptionHandler == null ||
+            this.mCommandLineArgHandler == null ||
+            this.mGUI == null)
         {
             throw new IllegalStateException("Arguments cannot be null.");
         }
