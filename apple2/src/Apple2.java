@@ -61,10 +61,21 @@ public class Apple2
      * @throws MultipleVTOCException
      * @throws VTOCNotFoundException
      */
-    public static void doOneDisk(Disk disk) throws VTOCNotFoundException, MultipleVTOCException, InvalidPosException
+    public static void doOneDisk(Disk disk) throws InvalidPosException
     {
         Volume vol = new Volume();
-        vol.readFromMedia(disk);
+        try
+        {
+            vol.readFromMedia(disk);
+        }
+        catch (VTOCNotFoundException e)
+        {
+            System.out.println("[no VTOC]");
+        }
+        catch (MultipleVTOCException e)
+        {
+            System.out.println("[no VTOC]");
+        }
 
         StringBuffer s = new StringBuffer(256);
         vol.dump(s);
