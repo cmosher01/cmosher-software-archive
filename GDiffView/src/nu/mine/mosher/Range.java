@@ -239,14 +239,21 @@ public class Range implements Comparable
         }
     }
 
-
-
     /**
-     * @param rngSrcb
+     * @param rng
      * @return
      */
-    public boolean isContiguousWith(Range rng)
+    public boolean precedes(Range rng)
     {
         return this.getLimit() == rng.getBegin();
+    }
+
+    /**
+     * @param rng
+     * @return
+     */
+    public boolean follows(Range rng)
+    {
+        return rng.getLimit() == this.getBegin();
     }
 }
