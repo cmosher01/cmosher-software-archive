@@ -190,7 +190,7 @@ public class A2DiskEdit
 		});
 
 		//Create the top-level container and add contents to it.
-		A2DiskEdit.getApp().createComponents();
+		createComponents();
 
 		frameMain.pack();
 		frameMain.setVisible(true);
