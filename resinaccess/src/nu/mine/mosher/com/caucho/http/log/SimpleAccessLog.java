@@ -89,7 +89,10 @@ public class SimpleAccessLog extends AccessLog
 		}
 		finally
 		{
-			accesslog.close();
+			if (accesslog != null)
+			{
+				accesslog.close();
+			}
 		}
     }
 }
