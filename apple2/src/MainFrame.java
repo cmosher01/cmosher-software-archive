@@ -100,8 +100,8 @@ public class MainFrame extends JFrame
             VolumeFileRecovered file = (VolumeFileRecovered)i.next();
             List rPos = new ArrayList();
             file.getTSMap().getPos(rPos);
-            VolumeSector vs = (VolumeSector)rPos.get(0);
-            nFilesRecovered.add(new DefaultMutableTreeNode("recovered @ "+vs.getPos().toStringTS()));
+            DiskPos vs = (DiskPos)rPos.get(0);
+            nFilesRecovered.add(new DefaultMutableTreeNode("recovered @ "+vs.toStringTS()));
         }
 
         DefaultMutableTreeNode nOrphaned = new DefaultMutableTreeNode("Orphaned Data");
