@@ -7,7 +7,7 @@ import nu.mine.mosher.ja2.Main;
 /**
  * Contains the "main" method (external entry point) for
  * the application. This class is in the default package
- * so that it can be run as follows:
+ * so that the program can be run as follows:
  * <code>java Ja2</code>
  * 
  * @author Chris Mosher
