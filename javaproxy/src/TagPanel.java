@@ -11,7 +11,6 @@ import java.awt.Graphics;
 import java.awt.Panel;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Enumeration;
