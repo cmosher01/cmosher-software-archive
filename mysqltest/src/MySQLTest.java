@@ -277,6 +277,7 @@ public class MySQLTest
     				ins.setInt(1,entry);
     				ins.setString(2,earliest);
 					ins.setString(3,latest);
+					ins.executeUpdate();
     			}
     		}
     	}
