@@ -98,19 +98,18 @@ public class BinDiff
             c2 = f2.read();
         }
         statechange(END,0);
+        dw.flush();
     }
 
-	protected void outBytes(PushbackRandomFile f, long pos, int len)
+	protected void outBytes(PushbackRandomFile f, long pos, int len) throws IOException
 	{
 		long orig = f.tell();
 
 		f.seek(pos);
 		for (int i = 0; i < len; ++i)
 		{
-			s.append(Integer.toHexString(f.read()));
-			s.append(" ");
+			dw.outByte(f.read());
 		}
-		s.append("\n");
 
 		f.seek(orig);
 	}
@@ -154,8 +153,6 @@ public class BinDiff
             }
             state = newstate;
         }
-        System.out.print(s.toString());
-        System.out.flush();
 
         switch (state)
         {
