@@ -8,11 +8,21 @@
  * Author : Steve Yeong-Ching Hsueh
  */
 
-import java.lang.*;
-import java.util.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.* ;
+import java.awt.AWTEvent;
+import java.awt.AWTEventMulticaster;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.image.ColorModel;
+import java.awt.image.DirectColorModel;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageFilter;
+import java.awt.image.RGBImageFilter;
 
 /**
  * DarkenFilter darkens the color of a pixel
