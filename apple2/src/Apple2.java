@@ -31,7 +31,9 @@ public class Apple2
         fileDisk.read(rbDisk);
         Disk disk = new Disk(rbDisk);
         disk.findDos33VTOC();
-        disk.findDos33CatalogSector();
+        TSMap tsmap = new TSMap();
+        disk.findDos33CatalogSector(tsmap);
+        System.out.println(tsmap);
         disk.findDos33TSMapSector();
     }
 }
