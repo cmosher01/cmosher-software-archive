@@ -88,6 +88,10 @@ public class Test
         }
         else if (su.equalsIgnoreCase("jar"))
         {
+            URL x2 = Test.class.getClassLoader().getResource("/META-INF");
+            String sx2 = x2.toExternalForm();
+            System.out.println(sx2);
+
             String jarpart = uri.getRawSchemeSpecificPart();
             System.out.println(jarpart);
             URI urijp = URI.create(jarpart);
