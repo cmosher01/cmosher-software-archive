@@ -20,16 +20,27 @@ import javax.swing.UIManager;
 import nu.mine.mosher.core.StringFieldizer;
 import nu.mine.mosher.core.StringFieldizer.Iter;
 
+/**
+ * TODO
+ *
+ * @author Chris Mosher
+ */
 public class GROapplet extends JApplet
 {
 //    private boolean test;
 
     private FamilyChart fc;
 
+    /**
+     * @throws HeadlessException
+     */
     public GROapplet() throws HeadlessException
     {
     }
 
+    /**
+     * 
+     */
     public void init()
     {
         try
