@@ -30,15 +30,10 @@ public class VelocityTest implements LogSystem
 {
     public static void main(String[] args) throws Throwable
     {
-        VelocityEngine velocity = new VelocityEngine();
-        Properties props = new Properties();
-        props.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,"nu.mine.mosher.velocity.VelocityLogger");
+        Properties props = new Properties(VelocityWrapper.getDefaultProperties());
         props.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH,"C:\\Documents and Settings\\chrism\\My Documents");
-        props.setProperty(VelocityEngine.VM_LIBRARY,"");
 
-        velocity.init(props);
-        velocity.info("velocity initialized");
-
+        VelocityWrapper velocity = new VelocityWrapper(props);
 
         Context context = new VelocityContext();
         List deps = getDependencies();
