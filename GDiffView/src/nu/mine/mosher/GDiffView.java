@@ -33,6 +33,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
+import javax.swing.SpringLayout;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.SplitPaneUI;
@@ -99,6 +100,8 @@ public class GDiffView extends JFrame
     public GDiffView(String fileSrc, String fileGDiff) throws BadLocationException, IOException, InvalidMagicBytes
     {
         super("GDiffVeiew");
+
+        JFrame.setDefaultLookAndFeelDecorated(true);
 
         src = new File(fileSrc);
         dif = new File(fileGDiff);
@@ -215,13 +218,15 @@ public class GDiffView extends JFrame
 //        scrGDiff.setPreferredSize(new Dimension(300,460));
 //        scrGDiff.setMaximumSize(new Dimension(300,460));
 
-        JSplitPane spl1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,scrSrc,scrGDiff);
-        spl1.setResizeWeight(1.0);
-        spl1.setDividerLocation(spl1.getSize().width - spl1.getInsets().right - spl1.getDividerSize() - (int)listGDiff.getPreferredSize().getWidth());
-        JSplitPane spl2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,spl1,scrTrg);
+//        JSplitPane spl1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,scrSrc,scrGDiff);
+//        spl1.setResizeWeight(1.0);
+//        spl1.setDividerLocation(spl1.getSize().width - spl1.getInsets().right - spl1.getDividerSize() - (int)listGDiff.getPreferredSize().getWidth());
+//        JSplitPane spl2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,spl1,scrTrg);
 
-        JPanel contentPane = new JPanel(new BorderLayout());
-        contentPane.add(spl2,BorderLayout.CENTER);
+        JPanel contentPane = new JPanel(new SpringLayout());
+
+//        contentPane.add(spl2,BorderLayout.CENTER);
+
 //        contentPane.add(scrSrc,BorderLayout.WEST);
 //        contentPane.add(scrGDiff,BorderLayout.CENTER);
 //        contentPane.add(scrTrg,BorderLayout.EAST);
