@@ -1,0 +1,767 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html lang="en-US"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="copyright" content="© 2001, 2002, 2003, Tex Texin">
+<meta http-equiv="Content-Language" content="en-US, th, fa, es, fr, zh, it">
+<meta name="keywords" lang="en-US" content="Unicode, standard, example, languages, scripts, code page, ISO, character, set, worldwide">
+<meta name="keywords" lang="en-US" content="UTF-8, utf-16, utf-32, ISO 10646, Texin, XenCraft, charset, encoding, transliterations">
+<meta name="keywords" lang="en-US" content="compelling, business, multilingual, multinational, syllabary, celebrity, demonstration, executive, sales personnel">
+<meta name="Author" content="Tex Texin">
+<meta name="robots" content="all">
+<meta name="description" content="This page demonstrates a compelling business usage for Unicode with many multilingual entries. It is suitable for managers, business executives, and sales personnel.">
+
+<title>Compelling example of Unicode usage for business applications</title><meta http-equiv="Content-Style-Type" content="text/css">
+<link href="utf8example_files/unicode-example.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+
+</style></head>
+
+<body id="top">
+<h1>Compelling Example Of Unicode Usage<br>For Business Applications</h1>
+
+<a href="http://www.i18nguy.com/unicode/unicodeexample.pdf">
+<img src="utf8example_files/pdfbuttonup.jpg" style="border: 0pt none ; float: right;" alt="This button takes you to the pdf version of this page" title="Click here to switch to the Acrobat pdf version of this page"></a>
+
+
+<p>This page demonstrates the use of the
+<a href="http://www.unicode.org/" target="_blank">Unicode Character Standard</a> to
+store names and places from anywhere in the world, in any language.
+Unicode is therefore the best choice for a database character set for
+companies that do business internationally. Unicode is also useful for
+creating multilingual documents, or simply to print forms (mailing
+labels, tickets, invoices) that might address customers of any
+ethnicity by their native name, anywhere in the world. (Also see:
+<a href="http://www.i18nguy.com/UnicodeBenefits.html">Benefits of Unicode</a>.)</p>
+
+<p class="subhead"><a href="http://www.i18nguy.com/index.html">I18nGuy Home page</a></p>
+
+<p>Look at the third and fourth columns in the table below.
+These are the birthplaces and native names of celebrities (actors,
+singers, sports figures, etc.). Only Unicode can be used to produce
+this list, store the names in a database, or address mail to everyone
+on the list. The first two columns tell you the English transliteration of the name and location.</p>
+
+<p>
+<span style="background-color: fuchsia;"> Displaying this page </span>
+<br>This page displays well with <b>IE 5.5+, Mozilla 1.1b+, Netscape 6.2+, Opera 6+</b>.
+<br>
+<b>This page is encoded in Unicode UTF-8. Some characters may require fonts that are not installed on your system.</b>
+If the display does not seem correct to you, click here for information on displaying this
+<a href="http://www.i18nguy.com/unicode/unicode-example-intro.html#encoding">encoding</a> and <a href="http://www.i18nguy.com/unicode/unicode-example-intro.html#display">required fonts and display details</a>.
+</p>
+
+<p>
+<span style="background-color: lime;"> Data file for this table </span>
+<br>
+A version of this table is available as a comma-separated,
+UTF-8 text file. This, and other examples, including examples for
+Supplementary Plane characters can be found in the <a href="http://www.i18nguy.com/unicode/unicode-example-intro.html#example-table">navigation table</a> in
+the "<a href="http://www.i18nguy.com/unicode/unicode-example-intro.html">Introduction To The Unicode Examples For Business Usage</a>".
+</p>
+
+<p><span style="background-color: yellow;"> Useful related links </span>
+<br>• <a href="http://www.i18nguy.com/unicode/unicode-example-intro.html">Introduction To The Unicode Examples For Business Usage</a>,
+<br>• <a href="http://www.i18nguy.com/unicode/unicode-example-intro.html#submit">Submitting additional examples</a>,
+<br>• <a href="http://www.i18nguy.com/unicode/unicode-example-intro.html#samples">Other web pages with Unicode examples</a>,
+<br>• <a href="http://www.i18nguy.com/unicode/unicode-example-intro.html#translit">Information on online transliteration of text from this page</a>,
+<br>• <a href="http://www.unicode.org/help/display_problems.html">Solutions for problems displaying Unicode</a>,
+<br>• <a href="http://www.i18nguy.com/unicode/unicode-example-intro.html#braille">Notes on Braille used on this page</a>,
+<br>• <a href="http://www.ethiozena.net/info/faq.html" target="_blank">Ethiopic fonts</a>,
+<br>• <a href="http://www.assembly.nu.ca/unicode/fonts/index.html" target="_blank">Inuktitut font</a>,
+<br>• <a href="http://home.att.net/%7Ejameskass/CODE2000.ZIP">James Kass' Code2000 font zip file</a>,
+<br>• <a href="http://groups.yahoo.com/group/unicode/message/8324" target="_blank">Licensing and downloading Microsoft's
+"Arial Unicode MS" font</a> <span class="small">(click continue if you get a Yahoo ad page first)</span>.
+</p>
+
+<p>The table now has 79 entries!</p>
+
+<p class="big" style="page-break-before: always;">
+The names below are actual celebrities in their
+home countries. See how many you recognize.</p>
+
+<table class="ctr" cellspacing="0" border="1">
+<caption>Example Unicode Data</caption>
+
+<tbody><tr>
+<td class="english">
+<b>Origin</b>
+<br><span class="small">(in English)</span>
+</td>
+
+<td class="english">
+<b>Name</b>
+<br><span class="small">(English transliteration)</span>
+</td>
+
+<td class="native" style="text-align: center;">
+<b>Origin</b>
+<br><span class="small">(in native language)</span>
+</td>
+
+<td class="native" style="text-align: center;">
+<b>Name</b>
+<br><span class="small">(in native language)</span>
+</td>
+</tr>
+
+<tr>
+<td class="english">Armenia</td>
+<td class="english">Aram Khachatryan (composer)</td>
+<td class="bignative" lang="hy">Հայաստան</td>
+<td class="bignative" lang="hy">Արամ Խաչատրյան</td>
+</tr>
+
+<tr>
+<td class="english">Australia</td>
+<td class="english">Nicole Kidman (actress)</td>
+<td class="native" lang="en-AU">Australia</td>
+<td class="native" lang="en-AU">Nicole Kidman</td>
+</tr>
+
+<tr>
+<td class="english">Austria</td>
+<td class="english">Johann Strauss<br>(The "waltz king")</td>
+<td class="native">Österreich</td>
+<td class="native">Johann Strauß</td>
+</tr>
+
+<tr>
+<td class="english" title="Azerbaijan=az-AZ">Azerbaijan<br>(Latin Script)</td>
+<td class="english">Vagif Samadoghlu (author)</td>
+<td class="native" lang="az-AZ">Azərbaycan</td>
+<td class="native" lang="az-AZ">Vaqif Səmədoğlu</td>
+</tr>
+
+<tr>
+<td class="english" title="Azerbaijan=az-AZ">Azerbaijan<br>(Cyrillic Script)</td>
+<td class="english">Vagif Samadoghlu (author)</td>
+<td class="native" lang="az-AZ">Азәрбајҹан</td>
+<td class="native" lang="az-AZ">Вагиф Сәмәдоғлу</td>
+</tr>
+
+<tr>
+<td class="english" title="Azerbaijan=az-AZ">Azerbaijan<br>(Latin script)</td>
+<td class="english">Heydar Aliyev (president)</td>
+<td class="native" lang="az-AZ">Azərbaycan</td>
+<td class="native" lang="az-AZ">Heydər Əliyev</td>
+</tr>
+
+<tr>
+<td class="english" title="Azerbaijan=az-AZ">Azerbaijan<br>(Cyrillic script)</td>
+<td class="english">Heydar Aliyev (president)</td>
+<td class="native" lang="az-AZ">Азәрбајҹан</td>
+<td class="native" lang="az-AZ">Һејдәр Әлијев</td>
+</tr>
+
+<tr>
+<td class="english">Belgium<br>(Flemish)</td>
+<td class="english">Rene Magritte (painter)</td>
+<td class="native">België</td>
+<td class="native">René Magritte</td>
+
+</tr>
+<tr>
+<td class="english">Belgium<br>(French)</td>
+<td class="english">Rene Magritte (painter)</td>
+<td class="native" lang="fr-BE">Belgique</td>
+<td class="native" lang="fr-BE">René Magritte</td>
+</tr>
+
+<tr>
+<td class="english">Belgium<br>(German)</td>
+<td class="english">Rene Magritte (painter)</td>
+<td class="native" lang="de-BE">Belgien</td>
+<td class="native" lang="de-BE">René Magritte</td>
+</tr>
+
+<tr>
+<td class="english">Bengal</td>
+<td class="english">Sukumar Ray</td>
+<td class="bignative" lang="bn">বাংলা</td>
+<td class="bignative" lang="bn">সুকুমার রায়</td>
+</tr>
+
+<tr>
+<td class="english" title="Bhutan=dz-BT">Bhutan</td>
+<td class="english">Gonpo Dorji (film actor)</td>
+<td class="bignative" lang="dz-BT">འབྲུག་ཡུལ།</td>
+<td class="bignative" lang="dz-BT">མགོན་པོ་རྡོ་རྗེ།</td>
+</tr>
+
+<tr>
+<td class="english">Cambodia<br>(Khmer)</td>
+<td class="english">Venerable PreahBuddhaghosachar Chuon Nath</td>
+<td class="bignative" lang="km-KH">ប្រទេស​​​កម្ពុជា</td>
+<td class="bignative" lang="km-KH">ព្រះ​ពុទ្ឋឃោសាចារ‌្យ​ជួន​ណាត</td>
+</tr>
+
+<tr>
+<td class="english" title="French Canadian=fr-CA">Canada</td>
+<td class="english">Celine Dion (singer)</td>
+<td class="native" lang="fr-CA">Canada</td>
+<td class="native" lang="fr-CA">Céline Dion</td>
+</tr>
+
+<tr>
+<td class="english" title="Inuktitut=iu">Canada - Nunavut<br>(Inuktitut language)</td>
+<td class="english">Susan Aglukark (singer)</td>
+<td class="nunavut" lang="iu">ᓄᓇᕗᒻᒥᐅᑦ</td>
+<td class="nunavut" lang="iu">ᓱᓴᓐ ᐊᒡᓗᒃᑲᖅ
+</td>
+</tr>
+
+<tr>
+<td class="english" title="Cherokee = chr">Southeast USA<br>(Cherokee Nation)</td>
+<td class="english">Sequoyah (invented syllabary)</td>
+<td class="native">ᏣᎳᎩ<br><span class="small">(Tsalagi)</span></td>
+<td class="native">ᏍᏏᏉᏯ</td>
+</tr>
+
+<tr>
+<td class="english" title="Mainland Chinese=zh-CN">People's Rep. of China</td>
+<td class="english">ZHANG Ziyi (actress)</td>
+<td class="native" lang="zh-CN">中国</td>
+<td class="native" lang="zh-CN">章子怡</td>
+</tr>
+
+<tr>
+<td class="english" title="Mainland Chinese=zh-CN">People's Rep. of China</td>
+<td class="english">WONG Faye (singer)</td>
+<td class="native" lang="zh-CN">中国</td>
+<td class="native" lang="zh-CN">王菲</td>
+</tr>
+
+<tr style="page-break-before: always;">
+<td class="english" title="Czech=cs-CZ">Czechia<br><span class="small">(Czech Republic)</span></td>
+<td class="english">Antonin Dvorak (composer)</td>
+<td class="native" lang="cs-CZ">Česko<br><span class="small">(Česká republika)</span></td>
+<td class="native" lang="cs-CZ">Antonín Dvořák</td>
+</tr>
+
+<tr>
+<td class="english">Denmark</td>
+<td class="english">Soren Hauch-Fausboll</td>
+<td class="native" lang="da">Danmark</td>
+<td class="native" lang="da">Søren Hauch-Fausbøll</td>
+</tr>
+
+<tr>
+<td class="english">Denmark</td>
+<td class="english">Soren Kierkegaard<br>(theologian 1813-1855)</td>
+<td class="native" lang="da">Danmark</td>
+<td class="native" lang="da">Søren Kierkegård</td>
+</tr>
+
+<tr>
+<td class="english" title="Egypt = ar-EG">Egypt<br>(Masr)</td>
+<td class="english">Abdel Halim Hafez<br>(singer)</td>
+<td class="rtlnative" lang="ar-EG">مصر</td>
+<td class="rtlnative" lang="ar-EG">عبدالحليم حافظ</td>
+</tr>
+
+<tr>
+<td class="english">Egypt<br>(Masr)</td>
+<td class="english">Om Kolthoum (singer)</td>
+<td class="egypt" lang="ar-EG">مصر</td>
+<td class="egypt" lang="ar-EG">أم كلثوم</td>
+</tr>
+
+<tr>
+<td class="english">Eritrea</td>
+<td class="english">Berhane Zeray</td>
+<td class="bignative">ኤርትራ</td>
+<td class="bignative">ብርሃነ ዘርኣይ</td>
+</tr>
+
+<tr>
+<td class="english">Ethiopia</td>
+<td class="english">Haile Gebreselassie
+<br>(Fastest man)</td>
+<td class="bignative">ኢትዮጵያ</td>
+<td class="bignative">ኃይሌ ገብረሥላሴ
+</td>
+</tr>
+
+<tr>
+<td class="english">Finland</td>
+<td class="english">Mika Hakkinen<br>(Formula 1 driver)</td>
+<td class="native" lang="fi">Suomi</td>
+<td class="native" lang="fi">Mika Häkkinen</td>
+</tr>
+
+<tr>
+<td class="english" title="French=fr-FR">France</td>
+<td class="english">Gerard Depardieu (actor)</td>
+<td class="native" lang="fr-FR">France</td>
+<td class="native" lang="fr-FR">Gérard Depardieu</td>
+</tr>
+
+<tr>
+<td class="english" title="French=fr-FR">France</td>
+<td class="english">Jean Reno (actor)</td>
+<td class="native" lang="fr-FR">France</td>
+<td class="native" lang="fr-FR">Jean Réno</td>
+</tr>
+
+<tr>
+<td class="english" title="French=fr-FR">France</td>
+<td class="english">Camille Saint-Saens (composer)</td>
+<td class="native" lang="fr-FR">France</td>
+<td class="native" lang="fr-FR">Camille Saint-Saëns</td>
+</tr>
+
+<tr>
+<td class="english" title="French=fr-FR">France</td>
+<td class="english">Mylene Demongeot (actress)</td>
+<td class="native" lang="fr-FR">France</td>
+<td class="native" lang="fr-FR">Mylène Demongeot</td>
+</tr>
+
+<tr>
+<td class="english" title="French=fr-FR">France</td>
+<td class="english">Francois Truffaut<br>(film director)</td>
+<td class="native" lang="fr-FR">France</td>
+<td class="native" lang="fr-FR">François Truffaut</td>
+</tr>
+
+<tr>
+<td class="english" title="French=fr-FR">France<br>(Braille)</td>
+<td class="english">Louis Braille</td>
+<td class="braille" lang="fr-FR">⠋⠗⠁⠝⠉⠑</td>
+<td class="braille" lang="fr-FR">⠇⠕⠥⠊⠎⠀<br>⠃⠗⠁⠊⠇⠇⠑</td>
+</tr>
+
+
+<tr>
+<td class="english">Georgia</td>
+<td class="english">Eduard Shevardnadze</td>
+<td class="native" lang="ga">საქართველო</td>
+<td class="native" lang="ga">ედუარდ შევარდნაძე
+</td>
+</tr>
+
+<tr>
+<td class="english">Germany</td>
+<td class="english">Rudi Voeller<br>(soccer coach)</td>
+<td class="native" lang="de">Deutschland</td>
+<td class="native" lang="de">Rudi Völler</td>
+</tr>
+
+<tr>
+<td class="english">Germany</td>
+<td class="english">Walter Schultheiss<br>(Actor)</td>
+<td class="native" lang="de">Deutschland</td>
+<td class="native" lang="de">Walter Schultheiß</td>
+</tr>
+
+<tr>
+<td class="english">Greece<br>(Hellas)</td>
+<td class="english">George Dalaras<br>(Giorgos Dalaras)</td>
+<td class="native" lang="el">Ελλάς</td>
+<td class="native" lang="el">Γιώργος Νταλάρας</td>
+</tr>
+
+<tr>
+<td class="english">Hungary</td>
+<td class="english">Andras Suto (author)</td>
+<td class="native" lang="hu">Magyarország</td>
+<td class="native" lang="hu">András Sütő</td>
+</tr>
+
+<tr>
+<td class="english">Iceland</td>
+<td class="english">Bjork Gudmundsdottir<br>(singer)</td>
+<td class="native" lang="is">Ísland</td>
+<td class="native" lang="is">Björk Guðmundsdóttir</td>
+</tr>
+
+<tr>
+<td class="english" title="Hindi=hi">India<br>(Hindi)</td>
+<td class="english">Madhuri Dixit (movie star)</td>
+<td class="bignative" lang="hi">भारत</td>
+<td class="bignative" lang="hi">माधुरी दीक्षित</td>
+</tr>
+
+<tr>
+<td class="english">Iran<br>(Persian/Farsi)</td>
+<td class="english">Mohsen Makhmalbaf<br>(writer/director)</td>
+<td class="rtlnative" lang="fa">ایران</td>
+<td class="rtlnative" lang="fa">محسن مخملباف</td>
+</tr>
+
+<tr style="page-break-before: always;">
+<td class="english">Ireland<br>(Eire)</td>
+<td class="english">Sinead O’Connor<br>(singer)</td>
+<td class="native" lang="ga">Éire</td>
+<td class="native" lang="ga">Sinéad O’Connor</td>
+</tr>
+
+<tr>
+<td class="english">Israel</td>
+<td class="english">Yehoram Gaon<br>(singer, actor)</td>
+<td class="rtlnative" lang="he">ישראל</td>
+<td class="rtlnative" lang="he">יהורם גאון</td>
+</tr>
+
+<tr>
+<td class="english">Italy</td>
+<td class="english">Fabrizio DeAndre<br>(poet, singer)</td>
+<td class="native" lang="it">Italia</td>
+<td class="native" lang="it">Fabrizio De André</td>
+</tr>
+
+<tr>
+<td class="english">Japan</td>
+<td class="english">KUBOTA Toshinobu (singer)</td>
+<td class="native" lang="ja">日本</td>
+<td class="native" lang="ja">久保田    利伸</td>
+</tr>
+
+<tr>
+<td class="english">Japan<br>(kanji+hiragana)</td>
+<td class="english">HAYASHIBARA Megumi<br>(voice actress)</td>
+<td class="native" lang="ja">日本</td>
+<td class="native" lang="ja">林原 めぐみ</td>
+</tr>
+
+<tr>
+<td class="english">Japan<br>(kanji)</td>
+<td class="english">MIYAZAKI Hayao (animated-film director)</td>
+<td class="native" lang="ja">日本</td>
+<td class="native" lang="ja">宮崎　駿</td>
+</tr>
+
+<tr>
+<td class="english">Japan<br>(kanji)</td>
+<td class="english">MORI Ogai (author)</td>
+<td class="native" lang="ja">日本</td>
+<td class="native" lang="ja">森鷗外</td>
+</tr>
+
+<tr>
+<td class="english">Japan<br>(katakana)</td>
+<td class="english">Tex Texin<br>(te-ku-su ・ te-ku-sa-n)</td>
+<td class="native" lang="ja">日本</td>
+<td class="native" lang="ja">テクス・テクサン</td>
+</tr>
+
+<tr>
+<td class="english">Democratic People's Rep. of Korea
+<br>(N. Korea)</td>
+<td class="english">LEE Sol-Hee (actress)</td>
+<td class="native" lang="ko-KP">조선 민주주의 인민 공화국</td>
+<td class="native" lang="ko-KP">이설희</td>
+</tr>
+
+<tr>
+<td class="english">Rep. of Korea<br>(S. Korea)</td>
+<td class="english">AHN Sung-Gi (actor)</td>
+<td class="native" lang="ko-KR">대한민국</td>
+<td class="native" lang="ko-KR">안성기</td>
+</tr>
+
+<tr>
+<td class="english">Rep. of Korea<br>(S. Korea)</td>
+<td class="english">SHIM Eun-Ha (actress)</td>
+<td class="native" lang="ko-KR">대한민국</td>
+<td class="native" lang="ko-KR">심은하</td>
+</tr>
+
+<tr>
+<td class="english">Korea (Chosun)</td>
+<td class="english">Sejong<br><span class="small">(King, inventor of Korean script, Hangul)</span></td>
+<td class="native" lang="ko-KR">조선</td>
+<td class="native" lang="ko-KR">솅조ᇰ (세종대왕)</td>
+</tr>
+
+<tr>
+<td class="english" title="Maltese=mt-MT">Republic of Malta</td>
+<td class="english">Trevor Zahra (author)</td>
+<td class="native" lang="mt-MT">Repubblika ta' Malta</td>
+<td class="native" lang="mt-MT">Trevor Żahra</td>
+</tr>
+
+<tr>
+<td class="english">Norway</td>
+<td class="english">Tor Age Bringsvaerd<br>(author)</td>
+<td class="native" lang="nb">Norge<br>(bokmål)</td>
+<td class="native" lang="nb">Tor Åge Bringsværd</td>
+
+</tr>
+<tr>
+<td class="english">Norway</td>
+<td class="english">Herbjorn Sorebo (author)</td>
+<td class="native" lang="nn">Noreg<br>(nynorsk)</td>
+<td class="native" lang="nn">Herbjørn Sørebø</td>
+
+</tr>
+
+<tr>
+<td class="english">Pakistan<br>(Urdu)</td>
+<td class="english">Nusrat Fatah Ali Khan<br>(singer)</td>
+<td class="rtlnative" lang="ur">پاکستان</td>
+<td class="rtlnative" lang="ur">نصرت فتح علی خان</td>
+
+</tr>
+
+<tr>
+<td class="english">Peru</td>
+<td class="english">Nicomedes Santa Cruz<br>(singer)</td>
+<td class="native" lang="es-PE">Perú</td>
+<td class="native" lang="es-PE">Nicómedes Santa Cruz</td>
+
+</tr>
+
+<tr>
+<td class="english">Poland</td>
+<td class="english">Lech Walesa</td>
+<td class="native" lang="pl">Polska</td>
+<td class="native" lang="pl">Lech Wałęsa</td>
+</tr>
+
+<tr>
+<td class="english">Portugal</td>
+<td class="english">Amalia Rodrigues (singer)</td>
+<td class="native" lang="pt-PT">Portugal</td>
+<td class="native" lang="pt-PT">Amália Rodrigues</td>
+</tr>
+
+<tr>
+<td class="english">Puerto Rico</td>
+<td class="english">Olga Tanon<br>(singer, merenguera)</td>
+<td class="native" lang="es-PR">Puerto Rico</td>
+<td class="native" lang="es-PR">Olga Tañón</td>
+</tr>
+
+<tr>
+<td class="english">Ancient Rome</td>
+<td class="english">Publius Cornelius Scipio Africanus
+<br><span class="small">(general &amp; politician, 236-183 B.C.)</span></td>
+<td class="native" lang="la">Rōma</td>
+<td class="native" lang="la">Pūblius Cornēlius Scīpiō Africānus</td>
+</tr>
+
+<tr style="page-break-before: always;">
+<td class="english">Russia</td>
+<td class="english">Mikhail Gorbachev</td>
+<td class="native" lang="ru">Россия</td>
+<td class="native" lang="ru">Михаил Горбачёв</td>
+</tr>
+
+<tr>
+<td class="english">Russia</td>
+<td class="english">Boris Grebenshchikov
+<br>(musician)</td>
+<td class="native" lang="ru">Россия</td>
+<td class="native" lang="ru">Борис Гребенщиков</td>
+</tr>
+
+<tr>
+<td class="english">Russia<br>(Yiddish, Hebrew Script)</td>
+<td class="english">Sholom Aleichem<br>(Author)</td>
+<td class="rtlnative" lang="yi">רוסלאַנד</td>
+<td class="rtlnative" lang="yi">שלום עליכם</td>
+</tr>
+
+<tr>
+<td class="english">Samiland<br>(Sami language)</td>
+<td class="english">Nils Aslak Valkeapaa<br>(singer)</td>
+<td class="native" lang="se">Sápmi</td>
+<td class="native" lang="se">Áillohaš<br>
+<span class="small">(aka Nils Aslak Valkeapää)</span></td>
+</tr>
+
+
+<tr>
+<td class="english" title="Slovak = sk">Slovakia</td>
+<td class="english">Ludovit Stur</td>
+<td class="native" lang="sk">Slovensko</td>
+<td class="native" lang="sk">Ľudovít Štúr</td>
+</tr>
+
+<tr>
+<td class="english" title="Slovenian = sl">Slovenia</td>
+<td class="english">Frane "Jezek" Milcinski<br>(actor, singer)</td>
+<td class="native" lang="sl">Slovenija</td>
+<td class="native" lang="sl">Frane Milčinski - Ježek</td>
+</tr>
+
+<tr>
+<td class="english" title="Swedish = sv">Sweden</td>
+<td class="english">Bjorn Borg<br>(Tennis player)</td>
+<td class="native" lang="sv">Sverige</td>
+<td class="native" lang="sv">Björn Borg</td>
+</tr>
+
+<tr>
+<td class="english">Syracuse<br>(Sicily)</td>
+<td class="english">Archimedes<br><span class="small">(physicist c. 287-212 BC)</span></td>
+<td class="native">Συρακούσα</td>
+<td class="native">Ἀρχιμήδης</td>
+</tr>
+
+<tr>
+<td class="english" title="Tajik = tg">Tajikistan<br>(Arabic script)</td>
+<td class="english">Sadriddin Aini (poet)</td>
+<td class="rtlnative" lang="tg">تاجيكستان</td>
+<td class="rtlnative" lang="tg">صدر الدين عيني</td>
+</tr>
+
+<tr>
+<td class="english" title="Tajik = tg">Tajikistan<br>(Cyrillic script)</td>
+<td class="english">Sadriddin Aini (poet)</td>
+<td class="native" lang="tg">Тоҷикистон</td>
+<td class="native" lang="tg">Садриддин Айнӣ</td>
+</tr>
+
+<tr>
+<td class="english" title="Tamil = ta-IN">Tamil Nadu</td>
+<td class="english">Sivaji Ganesan (actor)</td>
+<td class="bignative" lang="ta-IN">தமிழ் நாடு</td>
+<td class="bignative" lang="ta-IN">சிவாஜி
+கனேசன்</td>
+</tr>
+
+<tr>
+<td class="english">Rep. of China</td>
+<td class="english">Hsu Chi (actress)</td>
+<td class="native" lang="zh-TW">臺灣</td>
+<td class="native" lang="zh-TW">舒淇</td>
+</tr>
+
+<tr>
+<td class="english">Rep. of China</td>
+<td class="english">Ang Lee (movie director)</td>
+<td class="native" lang="zh-TW">臺灣</td>
+<td class="native" lang="zh-TW">李安</td>
+</tr>
+
+<tr>
+<td class="english">Thailand</td>
+<td class="english">Thongchai McIntai</td>
+<td class="bigAT" lang="th">ประเทศไทย</td>
+<td class="bigAT" lang="th">ธงไชย แม็คอินไตย์
+</td>
+</tr>
+
+<tr>
+<td class="english">U.S.A.</td>
+<td class="english">Brad Pitt (actor)</td>
+<td class="native" lang="en-US">U.S.A.</td>
+<td class="native" lang="en-US">Brad Pitt</td>
+</tr>
+
+<tr>
+<td class="english" title="Uzbek=uz">Uzbekistan<br>(Cyrillic script)</td>
+<td class="english">Solizhon Sharipov<br>(cosmonaut)</td>
+<td class="native" lang="uz">Ўзбекистон</td>
+<td class="native" lang="uz">Солижон Шарипов</td>
+</tr>
+
+<tr>
+<td class="english" title="Uzbek=uz">Uzbekistan<br>(Latin script)</td>
+<td class="english">Ali Sher ibn Ghiyas ad-Din Nava'i (poet)</td>
+<td class="native" lang="uz">O'zbekiston</td>
+<td class="native" lang="uz">Alisher ibn G'iyosiddin Navoiy</td>
+</tr>
+
+<tr>
+<td class="english">Viet Nam</td>
+<td class="english">Trinh Cong Son (singer/composer)</td>
+<td class="native" lang="vi-VN">Việt Nam</td>
+<td class="native" lang="vi-VN">Trịnh Công Sơn</td>
+</tr>
+
+<tr>
+<td class="english">Yugoslavia<br>(Latin script)</td>
+<td class="english">Djordje Balasevic<br>(singer)</td>
+<td class="native" lang="sr">Jugoslavija</td>
+<td class="native" lang="sr">Đorđe Balašević</td>
+</tr>
+
+<tr>
+<td class="english">Yugoslavia<br>(Cyrillic script)</td>
+<td class="english">Djordje Balasevic<br>(singer)</td>
+<td class="native" lang="sr">Југославија</td>
+<td class="native" lang="sr">Ђорђе Балашевић</td>
+</tr>
+
+</tbody></table>
+
+<p id="contributors">
+<span style="background-color: purple; color: white;"><b> Contributors </b></span></p>
+
+<p class="contributors">
+The following people contributed to the entries in the table:
+
+<table class="contributors" cellspacing="0">
+<tbody><tr>
+<td class="contributors">Sajjad Raza Abidi,
+</td><td class="contributors">Mike Ayers,
+</td><td class="contributors">Edward Cherlin,
+</td><td class="contributors">Marco Cimarosti,
+</td><td class="contributors">Frank da Cruz,
+</td></tr><tr>
+<td class="contributors">Magda Danish,
+</td><td class="contributors">Jacline Deridder,
+</td><td class="contributors">Donald Figge,
+</td><td class="contributors">Chris Fynn,
+</td><td class="contributors">Mikael Hjerpe,
+</td></tr><tr>
+<td class="contributors">Juuichiketajin,
+</td><td class="contributors">Nigel Kerr,
+</td><td class="contributors">Lars Kristan,
+</td><td class="contributors">Akekarat Lekpornprasert
+<br>(<span lang="th">เอกรัตน์
+เล็กพรประเสริฐ</span>),
+</td><td class="contributors">Gavin Nesbitt,
+</td></tr><tr>
+<td class="contributors">David Perry,
+</td><td class="contributors">Toby Phipps,
+</td><td class="contributors">Audun Lona,
+</td><td class="contributors">Roozbeh Pournader
+<br>(<span lang="fa" dir="rtl">روزبه پورنادر</span>),
+</td><td class="contributors">Chris Pratley,
+</td></tr><tr>
+<td class="contributors">Yaap Raaf,
+</td><td class="contributors">Herman Ranes,
+</td><td class="contributors">Graham Rhind,
+</td><td class="contributors">Ken Robinson,
+</td><td class="contributors">Jony Rosenne,
+</td></tr><tr>
+<td class="contributors">Jungshik Shin,
+</td><td class="contributors">Thierry Sourbier,
+</td><td class="contributors">Otto Stolz,
+</td><td class="contributors">Marie-Anne de Warren,
+</td><td class="contributors">Daniel Yacob,
+</td></tr><tr>
+<td class="contributors">Maurice Bauhahn,
+</td><td class="contributors">James Do,
+</td><td class="contributors">Deborah Goldsmith,
+</td><td class="contributors">Michael Kaplan,
+</td><td class="contributors">Muthu Nedumaran,
+</td></tr>
+<tr>
+<td class="contributors">Radovan Garabík,
+</td><td class="contributors">Philipp Reichmuth,
+</td><td class="contributors">Andrew Dunbar,
+</td><td class="contributors">Steven R. Loomis,
+</td><td class="contributors">Kaushik Ghose,
+</td>
+</tr>
+<tr>
+<td class="contributors">Tex Texin
+</td><td class="contributors"> 
+</td><td class="contributors"> 
+</td><td class="contributors"> 
+</td><td class="contributors"> 
+</td>
+</tr>
+
+</tbody></table>
+
+</p><p class="subhead"><b>(Created by <a href="mailto:tex@i18nGuy.com">Tex Texin</a>)</b>
+<br>This page was last updated 2003-10-22.</p>
+
+<p class="subhead"><a href="#top">Top of page</a></p>
+</body></html>
