@@ -268,6 +268,7 @@ public final class BeanUtil
         {
             return getValueFromBeanInfoPropertyEditor(s, propertyEditorClass);
         }
+
         if (t.equals(Boolean.class) || t.equals(Boolean.TYPE))
         {
             if (s.equalsIgnoreCase("on") || s.equalsIgnoreCase("true"))
