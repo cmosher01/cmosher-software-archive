@@ -32,11 +32,6 @@ public class GraphNode<T>
 		child.addParent(this);
 	}
 
-	public boolean hasChild(GraphNode<T> child)
-	{
-		return this.children.contains(child);
-	}
-
 	public void removeChild(GraphNode<T> child)
 	{
 		if (!child.hasParent(this))
@@ -45,6 +40,11 @@ public class GraphNode<T>
 		}
 		child.parents.remove(this);
 		this.children.remove(child);
+	}
+
+	public boolean hasChild(GraphNode<T> child)
+	{
+		return this.children.contains(child);
 	}
 
 	public Iterator<GraphNode<T>> children()
@@ -67,11 +67,6 @@ public class GraphNode<T>
 		parent.addChild(this);
 	}
 
-	public boolean hasParent(GraphNode<T> parent)
-	{
-		return this.parents.contains(parent);
-	}
-
 	public void removeParent(GraphNode<T> parent)
 	{
 		if (!parent.hasChild(this))
@@ -80,6 +75,11 @@ public class GraphNode<T>
 		}
 		parent.children.remove(this);
 		this.parents.remove(parent);
+	}
+
+	public boolean hasParent(GraphNode<T> parent)
+	{
+		return this.parents.contains(parent);
 	}
 
 	public Iterator<GraphNode<T>> parents()
