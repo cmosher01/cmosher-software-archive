@@ -182,6 +182,7 @@ public class GDiffView extends JFrame
 
         listGDiff.setSelectionModel(selectionModel);
         listGDiff.setSelectedIndex(0);
+        listGDiff.requestFocus();
 
         pack();
         setVisible(true);
