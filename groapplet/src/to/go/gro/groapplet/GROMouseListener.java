@@ -33,6 +33,7 @@ public class GROMouseListener extends MouseInputAdapter
     		{
 				mLastIndi.hit(false);
 				fc.repaint();
+				fc.gotoIndi(mLastIndi);
     		}
 			mLastIndi = null;
     	}
