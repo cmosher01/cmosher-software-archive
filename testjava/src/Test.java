@@ -75,6 +75,10 @@ public class Test
         Set setTrimmedLine = new HashSet();
         Filter filt = new Filter(setLine)
         {
+            protected Object operation(Object element)
+            {
+                return ((String)element).trim();
+            }
         };
 
 
