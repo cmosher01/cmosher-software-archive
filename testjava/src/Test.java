@@ -57,7 +57,7 @@ public class Test
 	{
         System.out.println("hello");
 
-        static class Junk
+        class Junk
         {
             public void test()
             {
