@@ -134,6 +134,11 @@ public class GDiffVeiew extends JFrame
             appendHex(sb,i);
             sb.append(' ');
         }
+        for (int i = 0; i < cCol+2; ++i)
+        {
+            sb.append(' ');
+        }
+        sb.append('\n');
         while (c > 0)
         {
             c = in.read(rb);
@@ -144,7 +149,7 @@ public class GDiffVeiew extends JFrame
      * @param sb2
      * @param i
      */
-    private void appendHex(StringBuffer sb, int i)
+    private static void appendHex(StringBuffer sb, int i)
     {
         char lo = nib(i & 0xF);
         i >>= 4;
@@ -157,7 +162,7 @@ public class GDiffVeiew extends JFrame
      * @param i
      * @return
      */
-    private char nib(int i)
+    private static char nib(int i)
     {
         char c;
         if (i < 10)
