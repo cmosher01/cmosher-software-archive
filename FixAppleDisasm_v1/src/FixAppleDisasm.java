@@ -154,6 +154,7 @@ public class FixAppleDisasm
 			if (addr < 0)
 			{
 				addr = nextaddr;
+				s = hexWord(addr)+"-   "+s.trim();
 			}
 
 			ln.addr = addr;
