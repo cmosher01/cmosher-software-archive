@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 /*
  * Created on Oct 9, 2004
  */
@@ -36,6 +38,6 @@ public class VolumeFile
      */
     public void dump(StringBuffer s)
     {
-        s.append("T/S Map: ");
+        s.append("File: ");
     }
 }
