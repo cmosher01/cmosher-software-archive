@@ -1,0 +1,10 @@
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="1.2">
+<html>
+<head>
+<title>Play JSP</title>
+</head>
+<body>
+Testing a JSP Document (as opposed to a JSP Page)!
+</body>
+</html>
+</jsp:root>
