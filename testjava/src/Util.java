@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class Util
@@ -75,11 +76,16 @@ public class Util
     public static ArrayList list(Iterator i)
     {
         ArrayList r = new ArrayList();
+        list(i,r);
+        return r;
+    }
+
+    public static void list(Iterator i, List list)
+    {
         while (i.hasNext())
         {
-            r.add(i.next());
+            list.add(i.next());
         }
-        return r;
     }
 //    public static ArrayList<T> list(Iterable<T> i)
 //    {
