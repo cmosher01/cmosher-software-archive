@@ -61,20 +61,13 @@ public class MP3Calc
 
         InputStream in = new FileInputStream(fin);
 
-		byte[] rb = new byte[4];
-        if (in.read(rb,0,4) != 4)
-        {
-			System.err.println("Cannot read first 4 bytes of file " + fin.getCanonicalPath());
-			System.exit(1);
-        }
-
-		int h = rb[0];
+		int h = in.read();
 		h <<= 8;
-		h |= rb[1];
+		h |= in.read();
 		h <<= 8;
-		h |= rb[2];
+		h |= in.read();
 		h <<= 8;
-		h |= rb[3];
+		h |= in.read();
 
         System.out.print(Integer.toHexString(h));
         System.out.print(",");
