@@ -19,24 +19,22 @@
 	</head>
 	<body>
 		<table>
-			<jsp:scriptlet>
-					<tags:forExtent pm="${pm}" class="Item">
-					for (Iterator i = pm.getExtent(Item.class,true).iterator(); i.hasNext(); )
-					{
-						Named item = (Named)i.next();
-						String id = pm.getObjectId(item).toString();
-						</jsp:scriptlet>
-						<tr><td>
-						<c:url var="edit" value="/edit.jsp">
-							<c:param name="id" value="${id}" />
-						</c:url>
-						<a href="${edit}">
-						<%=item.getName()%>
-						</a></td></tr>
-						<jsp:scriptlet>
-					}
-					</tags:forExtent>
-			</jsp:scriptlet>
+			<tags:allItems var="items">
+				<c:forEach var="i" items="${items}">
+				for (Iterator i = pm.getExtent(Item.class,true).iterator(); i.hasNext(); )
+				{
+					Named item = (Named)i.next();
+					String id = pm.getObjectId(item).toString();
+					</jsp:scriptlet>
+					<tr><td>
+					<c:url var="edit" value="/edit.jsp">
+						<c:param name="id" value="${id}" />
+					</c:url>
+					<a href="${edit}">${item.name}</a></td></tr>
+					<jsp:scriptlet>
+				}
+				</c:forEach>
+			</tags:allItems>
 			<c:url var="add" value="/add.jsp" />
 			<tr><td>&lt;<a href="${add}">add</a>&gt;</td></tr>
 		</table>
