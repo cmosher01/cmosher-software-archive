@@ -21,62 +21,56 @@ public final class BeanUtil
         {
             String param = (String)params.next();
 
-            Method method = null;
-            Class type = null;
-            Class propertyEditorClass = null;
-
             BeanInfo info = Introspector.getBeanInfo(bean.getClass());
 
-            PropertyDescriptor pd[] = info.getPropertyDescriptors();
-            for (int i = 0; i < pd.length; i++)
+            PropertyDescriptor pd = getPropDesc(info,param);
+            if (pd == null)
             {
-                if (pd[i].getName().equals(param))
-                {
-                    method = pd[i].getWriteMethod();
-                    type = pd[i].getPropertyType();
-                    propertyEditorClass = pd[i].getPropertyEditorClass();
-                    break;
-                }
+                continue;
             }
 
-            if (method != null)
+            Method method = pd.getWriteMethod();
+            if (method == null)
             {
-                if (type.isArray())
+                continue;
+            }
+            Class type = pd.getPropertyType();
+            Class propertyEditorClass = pd.getPropertyEditorClass();
+            if (type.isArray())
+            {
+                if (request == null)
                 {
-                    if (request == null)
-                    {
-                        throw new ParameterParseException();
-                    }
-                    Class t = type.getComponentType();
-                    String[] values = request.getParameterValues(param);
-                    if (values == null)
-                    {
-                        return;
-                    }
-                    if (t.equals(String.class))
-                    {
-                        method.invoke(bean, new Object[] { values });
-                    }
-                    else
-                    {
-                        Object tmpval = null;
-                        createTypedArray(param, bean, method, values, t, propertyEditorClass);
-                    }
+                    throw new ParameterParseException();
+                }
+                Class t = type.getComponentType();
+                String[] values = request.getParameterValues(param);
+                if (values == null)
+                {
+                    return;
+                }
+                if (t.equals(String.class))
+                {
+                    method.invoke(bean, new Object[] { values });
                 }
                 else
                 {
-                    String value = request.getParameter(param);
-                    if (value == null || (param != null && value.equals("")))
-                        return;
-                    Object oval = convert(param, value, type, propertyEditorClass);
-                    if (oval != null)
-                        method.invoke(bean, new Object[] { oval });
+                    Object tmpval = null;
+                    createTypedArray(param, bean, method, values, t, propertyEditorClass);
                 }
+            }
+            else
+            {
+                String value = request.getParameter(param);
+                if (value == null || (param != null && value.equals("")))
+                    return;
+                Object oval = convert(param, value, type, propertyEditorClass);
+                if (oval != null)
+                    method.invoke(bean, new Object[] { oval });
             }
         }
     }
 
-    private static PropertyDescriptor getPropDesc(BeanInfo info)
+    private static PropertyDescriptor getPropDesc(BeanInfo info, String param)
     {
         PropertyDescriptor pd[] = info.getPropertyDescriptors();
         for (int i = 0; i < pd.length; i++)
@@ -86,5 +80,6 @@ public final class BeanUtil
                 return pd[i];
             }
         }
+        return null;
     }
 }
