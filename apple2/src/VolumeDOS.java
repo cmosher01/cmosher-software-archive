@@ -611,7 +611,16 @@ public class VolumeDOS extends VolumeEntity
                     }
                     else
                     {
-                        s.append(" (DOS 3.3 1983 altered)");
+                        if (dif == 0)
+                        {
+                            s.append(" (DOS 3.3 1983 master: unknown alteration)");
+                        }
+                        else
+                        {
+                            s.append(" (DOS 3.3 1983 slave (A$");
+                            s.append(Integer.toHexString(0x1D00+dif*256));
+                            s.append("): unknown alteration)");
+                        }
                     }
                 }
             }
@@ -633,7 +642,16 @@ public class VolumeDOS extends VolumeEntity
                     }
                     else
                     {
-                        s.append(" (DOS 3.3 1986 altered)");
+                        if (dif == 0)
+                        {
+                            s.append(" (DOS 3.3 1986 master: unknown alteration)");
+                        }
+                        else
+                        {
+                            s.append(" (DOS 3.3 1986 slave (A$");
+                            s.append(Integer.toHexString(0x1D00+dif*256));
+                            s.append("): unknown alteration)");
+                        }
                     }
                 }
             }
