@@ -1,5 +1,8 @@
 package nu.mine.mosher.grodb;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Place
 {
 	private String nameDisplay;
