@@ -25,6 +25,8 @@ public class WordTearing extends Thread
     public static void main(String[] args)
     {
         for (int i = 0; i < LENGTH; ++i)
-             (threads[i] = new WordTearing(i)).start();
+        {
+            (threads[i] = new WordTearing(i)).start();
+        }
     }
 }
