@@ -37,10 +37,8 @@ import java.io.RandomAccessFile;
 
 public class Delta
 {
-
-    public final static int S = Checksum.S;
-
-    public final static int buff_size = 64 * S;
+    public static final int S = Checksum.S;
+    public static final int buff_size = 64 * S;
 
 
 
