@@ -86,13 +86,12 @@ public class MP3Calc
 		System.out.print(",");
 
 		// bitrate
-		int bps = calcBitRate(h & 15,mpeg,layer);
+		int bps = calcBitRate(getbits(h,15,12),mpeg,layer);
 		System.out.print(bps);
 		System.out.print(",");
-		h >>= 4;
 
 		int freq = 0;
-		int key = h&3;
+		int key = getbits(h,11,10);
 		if (mpeg == 1)
 		{
 			freq = M1f[key];
@@ -107,26 +106,23 @@ public class MP3Calc
 		}
 		System.out.print(freq);
 		System.out.print(",");
-		h >>= 2;
 
 		// padding
-		boolean padding = ((h & 1) > 0);
+		boolean padding = (getbits(h,9,9) > 0);
 		if (!padding)
 		{
 			System.out.print("no");
 		}
 		System.out.print("padding");
 		System.out.print(",");
-		h >>= 1;
 
 		// private bit
-		int priv = (h & 1);
+		int priv = getbits(h,8,8);
 		System.out.print(priv);
 		System.out.print(",");
-		h >>= 1;
 
 		// channel mode
-		int mode = h & 3;
+		int mode = getbits(h,7,6);
 		switch (mode)
         {
 			case 0:
@@ -142,27 +138,23 @@ public class MP3Calc
 				System.out.print("mono");
 			break;
         }
-		h >>= 2;
 
-		int jointstereo = h & 3;
+		int jointstereo = getbits(h,5,4);
 		System.out.print(jointstereo);
 		System.out.print(",");
-		h >>= 2;
 
-		boolean copyright = ((h & 1) > 0);
+		boolean copyright = (getbits(h,3,3) > 0);
 		if (!copyright)
 		{
 			System.out.print("no");
 		}
 		System.out.print("copyright");
 		System.out.print(",");
-		h >>= 1;
 
-		boolean original = ((h & 1) > 0);
+		boolean original = (getbits(h,2,2) > 0);
 		System.out.print(original ? "original," : "copy,");
-		h >>= 1;
 
-		int emphasis = (h & 3);
+		int emphasis = getbits(h,1,0);
 		switch (emphasis)
         {
 			case 0:
@@ -178,7 +170,6 @@ public class MP3Calc
 				System.out.print("CCITT J.17");
 			break;
         }
-        h >>= 2;
     }
 
     /**
