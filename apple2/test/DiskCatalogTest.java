@@ -425,6 +425,7 @@ public class DiskCatalogTest extends TestCase
         r.add(new DiskPos(0x11,0xF));
         r.add(new DiskPos(0x12,0x1));
         r.add(new DiskPos(0x18,0x3));
+        r.add(new DiskPos(0x1D,0x1));
         assertManyPos("SARG2.dsk",r);
     }
 
