@@ -72,10 +72,10 @@ public class MainFrame extends JFrame
         }
 
         StringBuffer s = new StringBuffer();
-        s.append("APPLE ][ DOS 3.3");
 
         DefaultMutableTreeNode nDisk = new DefaultMutableTreeNode("DOS33_SystemMaster_19800825.dsk");
         DefaultMutableTreeNode nBoot = new DefaultMutableTreeNode("Bootstrap Loader");
+        s.append("APPLE ][ DOS 3.3");
         vol.getDos().appendSig(s);
         DefaultMutableTreeNode nDos = new DefaultMutableTreeNode(s);
         nDisk.add(nBoot);
