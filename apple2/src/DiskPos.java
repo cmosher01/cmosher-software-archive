@@ -26,10 +26,12 @@ public class DiskPos implements Comparable, Cloneable
 
 
     /**
+     * @throws InvalidPosException
      * 
      */
-    public DiskPos()
+    public DiskPos(int track, int sector) throws InvalidPosException
     {
+        setTS(track, sector);
     }
 
     protected DiskPos(int iDisk)
