@@ -3,7 +3,6 @@
  */
 package nu.mine.mosher.jdotest;
 
-import java.util.Iterator;
 import java.util.Properties;
 
 import javax.jdo.JDOHelper;
