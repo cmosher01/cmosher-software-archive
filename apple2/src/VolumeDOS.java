@@ -413,7 +413,8 @@ public class VolumeDOS extends VolumeEntity
     }
 
     /**
-     * @param rbClear19802
+     * @param rbClear
+     * @param rbSlaveOffset
      * @param dif
      * @return
      */
