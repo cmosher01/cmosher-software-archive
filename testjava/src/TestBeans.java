@@ -79,8 +79,7 @@ public class TestBeans
         Object[] rval = (Object[])Array.newInstance(classProp, value.length);
         for (int i = 0; i < value.length; ++i)
         {
-            String s = value[i];
-            rval[i] = convert(s, ed);
+            rval[i] = convert(value[i], ed);
         }
         return rval;
     }
