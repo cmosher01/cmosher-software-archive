@@ -220,7 +220,7 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
         ibviewresp = new ImageButton("view1",img4);
         ibviewreq = new ImageButton("view2",img5);
 
-        this.setSize(width,height);
+        setSize(width,height);
 
         setLayout(new UpperLineLayout());
 
