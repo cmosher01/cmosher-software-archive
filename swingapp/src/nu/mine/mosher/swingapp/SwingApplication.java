@@ -46,7 +46,7 @@ public class Ja2
                 }
                 catch (Throwable th)
                 {
-                    sendException(th);
+                    Ja2.sendException(th);
                 }
             }
         });
