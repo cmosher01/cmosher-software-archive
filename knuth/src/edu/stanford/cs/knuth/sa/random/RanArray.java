@@ -1,5 +1,6 @@
 package edu.stanford.cs.knuth.sa.random;
 
+import nu.mine.mosher.random.RNGDefault;
 import nu.mine.mosher.random.RandomNumberGenerator;
 
 /**
@@ -7,7 +8,7 @@ import nu.mine.mosher.random.RandomNumberGenerator;
  * 
  * @author Chris Mosher
  */
-public class RanArray implements RandomNumberGenerator
+public class RanArray extends RNGDefault implements RandomNumberGenerator
 {
     private static final int KK = 100;
     private static final int LL = 37;
@@ -18,24 +19,28 @@ public class RanArray implements RandomNumberGenerator
     private long[] ranbuf;
     private int nextat = KK;
 
-    private final long seed;
 
+
+    /**
+     * 
+     */
     public RanArray()
     {
-        this(System.currentTimeMillis());
+        this(getDefaultSeed());
     }
 
-    public RanArray(long seed)
+    /**
+     * @param seed
+     */
+    public RanArray(final long seed)
     {
-        this.seed = seed;
+        super(seed);
         init();
     }
 
-    public long getSeed()
-    {
-        return seed;
-    }
-
+    /**
+     * @return
+     */
     public synchronized int nextInt()
     {
         if (nextat >= KK)
@@ -50,18 +55,20 @@ public class RanArray implements RandomNumberGenerator
     {
         long[] x = new long[KK+KK-1];
 
-        long ss = (seed+2)&(MM-2);
+        long ss = (getSeed()+2)&(MM-2);
         for (int j = 0; j < KK; ++j)
         {
             x[j] = ss;
             ss <<= 1;
             if (ss >= MM)
+            {
                 ss -= MM-2;
+            }
         }
         ++x[1];
 
 
-        ss = modDiff(seed,0);
+        ss = modDiff(getSeed(),0);
         int t = 69;
         while (t > 0)
         {
@@ -79,47 +86,69 @@ public class RanArray implements RandomNumberGenerator
             if (ss%2 == 1)
             {
                 for (int j = KK-1; j >= 0; --j)
+                {
                     x[j+1] = x[j];
+                }
                 x[0] = x[KK];
                 x[LL] = modDiff(x[LL],x[KK]);
             }
             if (ss != 0)
+            {
                 ss >>= 1;
+            }
             else
+            {
                 --t;
+            }
         }
 
         for (int j = 0; j < LL; ++j)
+        {
             ranx[j+KK-LL] = x[j];
+        }
         for (int j = LL; j < KK; ++j)
+        {
             ranx[j-LL] = x[j];
+        }
         for (int j = 0; j < 10; ++j)
+        {
             generate(KK+KK-1);
+        }
     }
 
-    protected synchronized long[] generate(int n)
+    protected synchronized long[] generate(final int n)
     {
         if (n < KK)
+        {
             throw new IllegalArgumentException("n must be >= "+KK);
+        }
 
         long[] x = new long[n];
 
         for (int j = 0; j < KK; ++j)
+        {
             x[j] = ranx[j];
+        }
 
         for (int j = KK; j < n; ++j)
+        {
             x[j] = modDiff(x[j-KK],x[j-LL]);
+        }
 
         for (int j = 0; j < LL; ++j)
+        {
             ranx[j] = modDiff(x[n+j-KK],x[n+j-LL]);
+        }
 
         for (int j = LL; j < KK; ++j)
+        {
             ranx[j] = modDiff(x[n+j-KK],ranx[j-LL]);
+        }
 
         return x;
     }
 
-    private static long modDiff(long x, long y)
+    private static long modDiff(final long x, final long y)
     {
         return (x-y)&(MM-1);
     }
