@@ -26,18 +26,15 @@ public class MP3Calc
 
     public static void main(String[] rArg) throws Throwable
     {
-    	if (rArg.length == 0)
+    	if (rArg.length > 0)
     	{
-			System.err.println("Must specify input mp3 file.");
-			System.exit(1);
+			calc(rArg[0]);
     	}
-
-        calc(rArg);
     }
 
-    private static void calc(String[] file) throws IOException, FileNotFoundException
+    private static void calc(String filename) throws IOException, FileNotFoundException
     {
-        File fin = new File(file[0]);
+        File fin = new File(filename);
         if (!fin.canRead())
         {
         	System.err.println("Cannot access file "+fin.getCanonicalPath());
