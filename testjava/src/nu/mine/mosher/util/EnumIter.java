@@ -1,4 +1,4 @@
-package com.surveysampling.util;
+package nu.mine.mosher.util;
 
 import java.util.Enumeration;
 import java.util.Iterator;
