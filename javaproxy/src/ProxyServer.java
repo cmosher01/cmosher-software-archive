@@ -156,15 +156,7 @@ public class ProxyServer implements Runnable
                 catch (InterruptedException e)
                 {
                 }
-                ;
-            } // end of if( server_running )
-
-        } // end of while( true )
-
-    } // end of void run()
-
-
-
-} // end of ProxyServer
-
-
+            }
+        }
+    }
+}
