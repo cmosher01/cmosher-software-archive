@@ -37,9 +37,10 @@ public class SwingApplication
     }
 
     /**
-     * @throws Throwable
+     * @throws ApplicationAborting
+     * @throws InvalidCommandLine
      */
-    public void run() throws Throwable
+    public void run() throws ApplicationAborting, InvalidCommandLine
     {
         getCommandLineArgHandler().parse();
 
