@@ -20,6 +20,7 @@ public class Gedcom
         {
             Map.Entry entry = (Map.Entry)i.next();
             String csn = (String)entry.getKey();
+			System.out.println(csn);
             Charset cs = Charset.forName(csn);
             Set als = cs.aliases();
             for (Iterator j = als.iterator(); j.hasNext();)
