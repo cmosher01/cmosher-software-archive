@@ -87,16 +87,16 @@ public class A2DiskContents
 
 	public static String dosName(byte[] r)
 	{
+		StringBuffer s = new StringBuffer(r.length);
+
 		// strip high bit
-		for (int i = 0; i<r.length; ++i)
+		for (int i = 0; i < r.length; ++i)
 		{
-			s += m_strName[i] & 0x7F;
+			s.append(r[i] & 0x7F);
 		}
-	
+
 		// trim
-		s.TrimRight();
-	
-		m_strName = s;
+		return s.toString()
 	}
 }
 /*
