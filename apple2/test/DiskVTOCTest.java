@@ -28,6 +28,7 @@ public class DiskVTOCTest extends TestCase
     }
 
     /**
+     * test VTOC for DOS 3.3 System Master (Jan. 1, 1983), T$11 S$00
      * @throws IOException
      * @throws InvalidPosException
      */
@@ -35,6 +36,17 @@ public class DiskVTOCTest extends TestCase
     {
         assertOnePos("DOS33_SystemMaster_19830101.dsk",new DiskPos(0x11,0));
     }
+
+    /**
+     * test VTOC for DOS 3.3 System Master (1986), T$11 S$00
+     * @throws IOException
+     * @throws InvalidPosException
+     */
+    public void testDOS33_Master_1986() throws IOException, InvalidPosException
+    {
+        assertOnePos("DOS33_SystemMaster_1986.dsk",new DiskPos(0x11,0));
+    }
+
     /**
      * @param f
      * @param posExpected
