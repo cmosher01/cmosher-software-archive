@@ -1,7 +1,7 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class StringFieldizer implements Iterable<String>
+public class StringFieldizerOld implements Iterable<String>
 {
 	private final String s;
 
