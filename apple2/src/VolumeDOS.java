@@ -377,11 +377,11 @@ public class VolumeDOS extends VolumeEntity
                 else
                 {
                     // TODO check for slave DOS
-                    int dif = rb[0xFE]-0x36;
+                    int dif = (rb[0xFE]-0x36) & 0xFF;
                     byte[] rbClearSlave = makeSlave(rbClear1980,rSlave1980,dif);
                     if (Arrays.equals(rbCmp,rbClearSlave))
                     {
-                        s.append(" (DOS 3.3 1980 slave (@$"+Integer.toHexString(rb[0xFE])+") exact match)");
+                        s.append(" (DOS 3.3 1980 slave (A$"+Integer.toHexString(0x1D00+dif*256)+") exact match)");
                     }
                     else
                     {
