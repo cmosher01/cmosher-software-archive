@@ -54,6 +54,7 @@ public class DiffWriter
             }
             System.out.print((char)b);
         }
+		System.out.println();
     }
 
     public void flush()
