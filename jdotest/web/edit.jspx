@@ -1,9 +1,9 @@
 <%@ include file="htmlhead.jsp" %>
-<%@ page import="java.util.ArrayList" %>
-<jsp:useBean id="r" class="java.util.ArrayList" scope="session" />
 <%
-    int i = Integer.parseInt(request.getParameter("i"));
-    String s = (String)r.get(i);
+    String id = request.getParameter("id");
+    Perm pm = new Perm();
+    Item item = (Item)pm.get(id);
+    String s = item.getName();
 %>
 <head>
 <title>Edit</title>
