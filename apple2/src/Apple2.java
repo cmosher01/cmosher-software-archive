@@ -74,7 +74,7 @@ public class Apple2
         }
         else
         {
-            System.out.print("[no files found] ");
+            System.out.println("    [no files found]");
         }
 //        List rCat = new ArrayList();
 //        disk.findDos33CatalogSector(rCat);
