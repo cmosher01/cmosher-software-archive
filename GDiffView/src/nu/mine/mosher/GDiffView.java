@@ -75,6 +75,7 @@ public class GDiffView extends JFrame
 
     private StringBuffer sb;
     private StringBuffer trg;
+    private long srcEOF;
 
     private long beginSrc;
     private long endSrc;
@@ -275,6 +276,11 @@ public class GDiffView extends JFrame
                 prev = lim;
             }
         }
+        long next = this.srcEOF;
+        if (prev < next)
+        {
+            setSrcUnused.add(new Range(prev,next-1));
+        }
         for (Iterator i = setSrcUnused.iterator(); i.hasNext();)
         {
             Range r = (Range)i.next();
@@ -309,6 +315,7 @@ public class GDiffView extends JFrame
         }
         hex.appendNewLine();
         in.close();
+        srcEOF = hex.getAddr();
     }
 
     /**
