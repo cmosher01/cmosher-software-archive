@@ -70,7 +70,7 @@ public class ThreadViewerTableModel extends AbstractTableModel
         internalThread.start();
     }
 
-    private void runWork()
+    public void runWork()
     {
 
         // The run() method of transferPending is called by 
