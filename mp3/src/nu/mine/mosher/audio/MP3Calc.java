@@ -170,6 +170,7 @@ public class MP3Calc
 				System.out.print("CCITT J.17");
 			break;
         }
+        System.out.println();
     }
 
     /**
