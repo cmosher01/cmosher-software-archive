@@ -108,6 +108,7 @@ public class FixAppleDisasm
 		PrintWriter printout = new PrintWriter(new BufferedWriter(out));
 
 		Map lines = new TreeMap();
+		Map addrs = new TreeMap();
 		int lineNumber = 0;
 		for (String s = inbuf.readLine(); s != null; s = inbuf.readLine())
 		{
@@ -151,6 +152,7 @@ public class FixAppleDisasm
 			if (addr >= 0)
 			{
 				ln.addr = addr;
+				addrs.put(new Integer(addr),ln);
 				String nextChar = s.substring(4,5);
 				if (nextChar.equalsIgnoreCase("-"))
 				{
@@ -176,6 +178,13 @@ public class FixAppleDisasm
 								catch (Throwable e)
 								{
 									ln.refaddr = -1;
+								}
+								if (ln.refaddr >= 0)
+								{
+								}
+								else
+								{
+									System.err.println(s);
 								}
 							}
 						}
