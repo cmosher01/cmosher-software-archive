@@ -67,7 +67,7 @@ public class TreeFrame extends JPanel
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create and set up the content pane.
-        TreeFrame newContentPane = new TreeFrame(dir);
+        JPanel newContentPane = new TreeFrame(dir);
         frame.setContentPane(newContentPane);
 
         //Display the window.
