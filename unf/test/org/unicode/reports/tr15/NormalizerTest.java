@@ -43,6 +43,7 @@ public class NormalizerTest extends TestCase
 			{
 			}
 		}
+		in.close();
 	}
 
     private boolean isHexDigit(char start)
