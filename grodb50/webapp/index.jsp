@@ -1,4 +1,11 @@
 <%@ include file="htmlhead.jsp" %>
+<%@ page import="nu.mine.mosher.grodb.Search" %>
+<%
+	Search s1 = new Search();
+	s1.setDescription("Search Saratoga County, NY, probate records for Luthers");
+	Search s2 = new Search();
+	s2.setDescription("Search Washington County, NY, land records for Lovejoys");
+%>
 <head>
 <title>Genealogy Research Organizer--Database Edition</title>
 <link rel="stylesheet" href="gro.css" type="text/css" media="all" />
@@ -6,13 +13,15 @@
 <body>
 <table>
 <thead>
-<tr><th>title</th><th>author</th></tr>
+<%=Search.getListHeader()%>
 </thead>
 <tfoot>
 </tfoot>
 <tbody>
-<tr><td class="title">US Census, 1860, NC, Craven, New Bern</td><td class="author">US Census Bureau</td></tr>
-<tr><td class="title">US Census, 1880, NY, Brooklyn, ED 35</td><td class="author">US Census Bureau</td></tr>
+<%
+	out.println(s1.getListEntry());
+	out.println(s2.getListEntry());
+%>
 </tbody>
 </table>
 </body>
