@@ -57,14 +57,7 @@ public class Test
 	{
         File ctemp = new File("c:\\temp");
         File f1 = new File(ctemp,"a\\b\\c.txt");
-        if (f1.isFile())
-        {
-            f1.getParentFile().mkdirs();
-        }
-        else
-        {
-            f1.mkdirs();
-        }
+        f1.getParentFile().mkdirs();
         BufferedWriter w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f1)));
         w.write("test");
         w.newLine();
