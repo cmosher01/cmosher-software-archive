@@ -203,6 +203,7 @@ public class DosMasterToImage
         in.close();
     }
     /**
+     * @param r
      * @param rIgn
      */
     private static void clearIgnored(int[] r, int[] rIgn)
