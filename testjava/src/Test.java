@@ -56,8 +56,6 @@ public class Test
     //throws MyException, IOException // other exceptions here...
 	{
 
-        Bad b = new Bad();
-
 
 
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
