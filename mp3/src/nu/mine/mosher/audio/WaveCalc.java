@@ -58,7 +58,7 @@ public class WaveCalc
         	throw new Exception("File does not start with RIFF.");
         }
 
-		int totallen = in.readInt()+8;
+		int totallen = readInt(in)+8;
 
 		if (in.readInt() != 0x57415645)
 		{
@@ -111,6 +111,28 @@ public class WaveCalc
 		System.out.println();
 
 		in.close();
+    }
+
+    /**
+     * @param in
+     * @return
+     */
+    private static int readInt(InputStream in) throws IOException
+    {
+		int b0 = in.read();
+		int b1 = in.read();
+		int b2 = in.read();
+		int b3 = in.read();
+
+		int h = b3;
+		h <<= 8;
+		h |= b2;
+		h <<= 8;
+		h |= b1;
+		h <<= 8;
+		h |= b0;
+
+        return h;
     }
 
     /**
