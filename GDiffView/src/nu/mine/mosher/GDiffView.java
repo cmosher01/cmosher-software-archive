@@ -457,6 +457,9 @@ public class GDiffView extends JFrame
             {
                 GDiffData gd = (GDiffData)g;
                 rb = gd.getData();
+                beginTrg = gd.getTargetRange().getBegin();
+                endTrg = gd.getTargetRange().getEnd();
+                highlight("insert",true);
             }
             else
             {
