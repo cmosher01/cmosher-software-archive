@@ -4,9 +4,16 @@ import java.util.TimeZone;
 
 public class DateRange
 {
+	/*
+	 * YMD always represent Gregorian calendar.
+	 * Range of possible dates is given by earliest
+	 * thru latest (inclusive).
+	 * Date is exact iff earliest==latest.
+	 */
 	private final YMD earliest;
 	private final YMD latest;
-	private final boolean julian; // true==Julian, false==Gregorian
+
+	private final boolean julian; // display as: true==Julian, false==Gregorian
 	private final int hour;
 	private final int minute;
 	private final TimeZone timeZone;
@@ -14,7 +21,7 @@ public class DateRange
 
 	public DateRange(YMD ymd)
 	{
-		this(ymd,null,false,-1,-1,null,false);
+		this(ymd,ymd,false,-1,-1,null,false);
 	}
 
 	public DateRange(YMD earliest, YMD latest)
