@@ -36,7 +36,7 @@ public class UpperLineLayout implements LayoutManager, Serializable
 
     private int maxComponentHeight = 0;
 
-    private int vgap, hgap, rgap, lgap, cgap;
+    private int vgap;
 
 
 
@@ -45,7 +45,7 @@ public class UpperLineLayout implements LayoutManager, Serializable
      */
     public UpperLineLayout()
     {
-        vgap = hgap = rgap = lgap = cgap = 5;
+        vgap = 5;
     }
 
     /**
