@@ -24,6 +24,10 @@ public class ExtrDos33
 {
     public static void main(String[] rArg) throws Throwable
     {
+    	for (int i = 0; i < rArg.length; ++i)
+    	{
+			System.err.println("arg "+i+": "+rArg[i]);
+    	}
         if (rArg.length < 2 || 3 < rArg.length)
         {
             System.err.println("Usage: java FileFinder dir file-reg-exp [subdir-reg-exp]");
