@@ -24,6 +24,7 @@ public class MySQLTest
     protected void run(String[] rArg) throws Throwable
     {
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
+
 		Connection db = null;
 		try
 		{
