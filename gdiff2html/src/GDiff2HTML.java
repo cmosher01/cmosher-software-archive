@@ -100,7 +100,8 @@ public class GDiff2HTML
 	 */
 	private static void outSame(byte[] rb)
 	{
-		// TODO Auto-generated method stub
+        System.out.print("copy: ");
+		System.out.println(rb);
 	}
 
 	/**
@@ -108,7 +109,8 @@ public class GDiff2HTML
 	 */
 	private static void outInsert(byte[] data)
 	{
-		// TODO Auto-generated method stub
+        System.out.print("insert: ");
+        System.out.println(data);
 	}
 
 	/**
