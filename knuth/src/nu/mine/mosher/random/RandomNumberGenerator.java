@@ -2,7 +2,7 @@ package nu.mine.mosher.random;
 
 /**
  * A generator of a random sequence of numbers. Classes that implement this interface
- * should provide a constructor that takes an integer used to seed the sequence.
+ * will typically provide a constructor that takes an integer used to seed the sequence.
  * Users then call <code>getSeed</code> (repeatedly if desired) to get a random
  * number (or sequence of numbers).
  *
