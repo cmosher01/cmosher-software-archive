@@ -1,5 +1,5 @@
 <%@ include file="htmlhead.jsp" %>
-<%@ page import="nu.mine.mosher.grodb.Search" %>
+<%@ page import="nu.mine.mosher.jdotest.Person" %>
 <%
 	Search s1 = new Search();
 	s1.setDescription("Search Saratoga County, NY, probate records for Luthers");
@@ -7,13 +7,13 @@
 	s2.setDescription("Search Washington County, NY, land records for Lovejoys");
 %>
 <head>
-<title>Genealogy Research Organizer--Database Edition</title>
-<link rel="stylesheet" href="gro.css" type="text/css" media="all" />
+<title>People</title>
+<link rel="stylesheet" href="plain.css" type="text/css" media="all" />
 </head>
 <body>
 <table>
 <thead>
-<%=Search.getListHeader()%>
+<%=Person.getListHeader()%>
 </thead>
 <tfoot>
 </tfoot>
