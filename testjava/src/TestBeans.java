@@ -67,12 +67,19 @@ public class TestBeans
         else
         {
             PropertyEditor ed = getPropertyEditor(classProp);
-            ed.setAsText(value[0]);
-            v = ed.getValue();
+            v = convert(value, ed);
         }
 
         Method wr = pd.getWriteMethod();
         wr.invoke(bean, new Object[] { v });
+    }
+
+    public static Object convert(String[] value, PropertyEditor ed) throws IllegalArgumentException
+    {
+        Object v;
+        ed.setAsText(value[0]);
+        v = ed.getValue();
+        return v;
     }
 
     public static PropertyEditor getPropertyEditor(Class forClass) throws IntrospectionException
