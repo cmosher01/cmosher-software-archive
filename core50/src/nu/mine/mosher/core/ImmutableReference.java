@@ -66,4 +66,9 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
     {
         return ((Comparable<T>)this.ref).compareTo(o);
     }
+
+    public int compareTo(ImmutableReference<T> o)
+	{
+    	return ((Comparable<T>)this.ref).compareTo(o.ref);
+    }
 }
