@@ -151,7 +151,7 @@ public class Disk
                 rPosVtoc.add(pos);
             }
         }
-        DiskPos p = new DiskPos();
+//        DiskPos p = new DiskPos();
 
 //        while (!EOF())
 //        {
