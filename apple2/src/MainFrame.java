@@ -77,7 +77,7 @@ public class MainFrame extends JFrame
         StringBuffer s = new StringBuffer();
 
         DefaultMutableTreeNode nDisk = new DefaultMutableTreeNode(f.getName());
-        DefaultMutableTreeNode nBoot = new DefaultMutableTreeNode("Bootstrap Loader");
+        DefaultMutableTreeNode nBoot = new DefaultMutableTreeNode("Bootstrap Loader ("+vol.getBoot().getIdent()+")");
         s.append("APPLE ][ DOS 3.3");
         VolumeDOS dos = vol.getDos();
         if (dos != null)
