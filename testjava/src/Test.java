@@ -69,7 +69,7 @@ public class Test
 //or under 1.5:
 //        Set setLine = Util.set(new ReaderLines(r));
 
-        System.out.println(setLine);
+        System.out.println(listLine);
 
 
 //        String x = "a,b,,d";
