@@ -91,7 +91,7 @@ public class ProxyConnection extends Thread
 
         _RECV_TIMEOUT = Integer.parseInt(httpconfig.getProperty("network.receive_timeout")) * 1000;
 
-        proxy_addr = (String)httpconfig.getProperty("network.proxy.ip");
+        proxy_addr = httpconfig.getProperty("network.proxy.ip");
         if (proxy_addr != null)
             proxy_addr = proxy_addr.trim();
         try
