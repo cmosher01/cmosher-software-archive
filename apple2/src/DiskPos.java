@@ -209,12 +209,16 @@ public class DiskPos implements Comparable, Cloneable
     {
         StringBuffer sb = new StringBuffer();
         sb.append("T$");
-        sb.append(Integer.toHexString(getTrackInDisk()));
+        appendHex2(getTrackInDisk(),sb);
         sb.append(",S$");
         sb.append(Integer.toHexString(getSectorInTrack()));
         return sb.toString();
     }
 
+    public void appendHex2(int hex, StringBuffer s)
+    {
+        String shex = Integer.toHexString(getTrackInDisk());
+    }
     /**
      * @param len
      */
