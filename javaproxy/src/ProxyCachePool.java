@@ -37,8 +37,8 @@ public class ProxyCachePool
             cacheEnabled = false;
             return;
         }
-        else
-            cacheEnabled = true;
+
+        cacheEnabled = true;
 
         size = s;
         this.ttl = t * 3600 * 1000; // t: time in hours, ttl: time in
