@@ -1,5 +1,8 @@
 package nu.mosher.mine.a2diskedit;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Administrator
  *
@@ -13,6 +16,7 @@ public class A2DiskContents
 	private final A2DiskImage image;
 	private int dos33volume = 0;
 	private String sVolumeName = "";
+	private List rCatEntry = new ArrayList(30);
 
 	private int catTrack;
 	private int catSector;
@@ -69,7 +73,7 @@ public class A2DiskContents
 		for (int i = 0; i < cFile; ++i)
 		{
 			byte[] catBytes = image.getBytes(catTrack,catSector,b,ENTRY_SIZE);
-			CatEntryDos33 ce = new CatEntryDos33(catBytes);
+			rCatEntry.add(new CatEntryDos33(catBytes));
 //			CDosFile* pf = new CDosFile(this);
 //			pf->Parse(rTSB,m_tsCatalog.track,m_tsCatalog.sector,b);
 //			if (!pf->m_bDeleted)
