@@ -27,7 +27,7 @@ public class OptionDefinition
         this.desc = desc;
         this.hasValue = hasValue;
 
-        if (this.optionLong.length() < 1)
+        if (this.optionLong.length() < 2)
         {
             throw new IllegalArgumentException("long option must be 2 or more characters in length");
         }
