@@ -4,6 +4,10 @@ public class ImmutableReference
 
     public ImmutableReference(Cloneable ref) throws CloneNotSupportedException
     {
+        if (ref == null)
+        {
+            throw new NullPointerException();
+        }
         this.ref = Cloner.cloneObject(ref);
     }
 
