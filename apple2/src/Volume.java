@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /*
@@ -29,5 +30,15 @@ public class Volume
     {
         cat = new VolumeCatalog();
         cat.readFromMedia(disk);
+    }
+
+    public void dump(StringBuffer s)
+    {
+        cat.dump(s);
+        for (Iterator i = this.rFile.iterator(); i.hasNext();)
+        {
+            VolumeFile f = (VolumeFile)i.next();
+            f.dump(s);
+        }
     }
 }
