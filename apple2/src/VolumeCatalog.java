@@ -14,7 +14,7 @@ import java.util.List;
 public class VolumeCatalog
 {
     private VolumeTableOfContents vtoc;
-    private List rEntry = new ArrayList(); //VolumeCatalogEntry
+    private List rEntry = new ArrayList(); //VolumeCatalogSector
 
     public String toString()
     {
@@ -31,5 +31,11 @@ public class VolumeCatalog
     {
         vtoc = new VolumeTableOfContents();
         vtoc.readFromMedia(disk);
+
+        // first walk sector trail from VTOC
+        DiskPos p = vtoc.getCatalogPointer();
+        VolumeCatalogSector c = new VolumeCatalogSector();
+        c.readFromMedia(p,disk);
+        // then scan whole disk for other catalog sectors, if any
     }
 }
