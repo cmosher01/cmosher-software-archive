@@ -43,7 +43,13 @@ public class MySQLTest
 			log.info("Creating schema...");
 			createSchema();
 			log.info("Done creating schema.");
-			log.info("Inserting data...");
+
+			log.info("Reading data...");
+			BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream()));
+			for (String s = in.readLine(); s != null; s = in.readLine())
+			{
+				processLine(s);
+			}
 			insertData();
 			log.info("Done inserting data.");
 
