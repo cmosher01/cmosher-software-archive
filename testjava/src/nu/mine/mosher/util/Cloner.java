@@ -1,4 +1,4 @@
-package java.lang; // needs special class loader at runtime
+package mosher; // needs special class loader at runtime
 
 /**
  * Provides a static method that will clone any Cloneable Object.
