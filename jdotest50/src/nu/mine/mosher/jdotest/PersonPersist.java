@@ -37,4 +37,30 @@ public class PersonPersist
 		this.pmf = JDOHelper.getPersistenceManagerFactory(props);
 		this.pm = this.pmf.getPersistenceManager();
 	}
+
+	public void persistPeople()
+	{
+		// create an array of Person's
+		this.people = new Person[SIZE];
+
+		// create three people
+		this.people[0] = new Person("test 1");
+		this.people[1] = new Person("test 2");
+		this.people[2] = new Person("test 3");
+
+		// persist the array of people
+		pm = pmf.getPersistenceManager();
+		transaction = pm.currentTransaction();
+		pm.makePersistentAll(this.people);
+		transaction.commit();
+		// retrieve the object ids for the persisted objects
+		for (int i = 0; i < this.people.length; i++)
+		{
+			id.add(pm.getObjectId(this.people[i]));
+		}
+		// close current persistence manager to ensure that
+		// objects are read from the db not the persistence
+		// manager's memory cache.
+		pm.close();
+	}
 }
