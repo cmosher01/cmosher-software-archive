@@ -1,8 +1,10 @@
 package nu.mine.mosher.gedcom;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -91,6 +93,7 @@ public class Gedcom
 		i0 <<= 8;
 		i0 |= b0;
 
+		// check BOM's for UTF-32,-16,-8 encodings
 		if (i0==0x0000feff || i0==0x00000030)
 		{
 			return "UTF-32LE";
@@ -115,7 +118,6 @@ public class Gedcom
 		{
 			return "UTF-8";
 		}
-		return "";
 //		SortedMap mc = Charset.availableCharsets();
 //		for (Iterator i = mc.entrySet().iterator(); i.hasNext();)
 //        {
@@ -139,5 +141,40 @@ public class Gedcom
 		 * UTF-16BE       (detected automatically)
 		 * UTF-16LE       (detected automatically)
 		 */
+		BufferedReader bin = new BufferedReader(new InputStreamReader(in,"US-ASCII"));
+		bin.readLine(); // rest of header line
+		String s = bin.readLine();
+		while (s != null && s.length() > 0 && s.charAt(0) != '0')
+		{
+			if (s.startsWith("1 CHAR"))
+			{
+				if (s.indexOf("WIN",6) >= 0)
+				{
+					return "windows-1252";
+				}
+				if (s.indexOf("ANSI",6) >= 0)
+				{
+					return "windows-1252";
+				}
+				if (s.indexOf("DOS",6) >= 0)
+				{
+					return "Cp850";
+				}
+				if (s.indexOf("PC",6) >= 0)
+				{
+					return "Cp850";
+				}
+				if (s.indexOf("MAC",6) >= 0)
+				{
+					return "MacRoman";
+				}
+				if (s.indexOf("ANSEL",6) >= 0)
+				{
+					return "x-gedcom-ansel";
+				}
+			}
+		}
+
+		return "";
 	}
 }
