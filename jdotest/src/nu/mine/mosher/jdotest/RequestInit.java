@@ -3,6 +3,7 @@
  */
 package nu.mine.mosher.jdotest;
 
+import javax.jdo.JDOHelper;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
 
@@ -13,7 +14,9 @@ public class RequestInit implements ServletRequestListener
 {
     public void requestInitialized(ServletRequestEvent rre)
     {
-		rre.getServletRequest().setAttribute("nu.mine.mosher.jdotest.Perm",Perm.pm());
+        rre.getServletRequest().setAttribute(
+			"nu.mine.mosher.jdotest.Perm",
+        	JDOHelper.getPersistenceManagerFactory(AppInit.getJDOProperties()).getPersistenceManager());
     }
 
 	public void requestDestroyed(ServletRequestEvent rre)
