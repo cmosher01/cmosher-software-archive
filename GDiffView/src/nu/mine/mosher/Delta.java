@@ -132,7 +132,7 @@ public class Delta
                     sourceOutofBytes = true;
                 }
 
-                if (match & sourceOutofBytes == false)
+                if (match && !sourceOutofBytes)
                 {
                     //System.out.println("before targetidx : " + targetidx );
                     // The length of the match is determined by comparing bytes.
