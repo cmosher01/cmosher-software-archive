@@ -151,7 +151,7 @@ public class GROapplet extends JApplet
     {
         BufferedReader br = new BufferedReader(new InputStreamReader(instream, "UTF-8"));
 
-        Map mapIdToIndi = new HashMap();
+        Map<String,Indi> mapIdToIndi = new HashMap<String,Indi>();
 
         IndiSet indis = new IndiSet();
 
