@@ -222,6 +222,14 @@ public class VolumeDOS extends VolumeEntity
     }
 
     /**
+     * @param rIgn
+     */
+    private void clearIgnored(int[] rIgn)
+    {
+        for (int i = 0; i < rIgn.length)
+    }
+
+    /**
      * @param knownSectors
      * @return
      */
