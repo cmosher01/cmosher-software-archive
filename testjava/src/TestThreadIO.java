@@ -7,22 +7,24 @@ import java.util.List;
 
 public class TestThreadIO
 {
+    private static class ReadFormRunner implements Runnable
+    {
+        public void run()
+        {
+            try
+            {
+                ReadFormFile();
+            }
+            catch (Throwable e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
     public static void main(String[] args) throws Throwable
     {
-        Thread t = new Thread(new Runnable()
-        {
-            public void run()
-            {
-                try
-                {
-                    ReadFormFile();
-                }
-                catch (Throwable e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        });
+        Thread t = new Thread(new ReadFormRunner());
+        t.start();
     }
 
     public static void ReadFormFile() throws IOException
