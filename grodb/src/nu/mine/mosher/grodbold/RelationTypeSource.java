@@ -1,6 +1,8 @@
 package nu.mine.mosher.grodb;
 
 import java.io.ObjectStreamException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RelationTypeSource
 {
@@ -10,8 +12,10 @@ public class RelationTypeSource
 
 	protected RelationTypeSource(String name)
 	{
-		this.id = PRIVATE_VALUES.length;
+		this.id = PRIVATE_VALUES.size();
 		this.name = name;
+
+		PRIVATE_VALUES.add(this);
 	}
 
 	public String toString()
@@ -22,10 +26,10 @@ public class RelationTypeSource
 	public static final RelationTypeSource CITES = new RelationTypeSource("cites");
 	public static final RelationTypeSource CONTAINS = new RelationTypeSource("contains");
 
-	private static final RelationTypeSource[] PRIVATE_VALUES = { CITES, CONTAINS };
+	private static final List PRIVATE_VALUES = new ArrayList();
 
 	private Object readResolve() throws ObjectStreamException
 	{
-		return PRIVATE_VALUES[id];
+		return PRIVATE_VALUES.get(id);
 	}
 }
