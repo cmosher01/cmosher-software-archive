@@ -351,7 +351,6 @@ public class FixAppleDisasm
 		}
 
 		printout.println("; external addresses referenced:");
-		printout.println(";**********************************************************");
 		for (Iterator i = externs.keySet().iterator(); i.hasNext();)
         {
             Integer extInt = (Integer)i.next();
@@ -367,6 +366,7 @@ public class FixAppleDisasm
             }
             printout.println();
         }
+		printout.println(";**********************************************************");
 
 		for (Iterator i = lines.entrySet().iterator(); i.hasNext();)
         {
