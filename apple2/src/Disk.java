@@ -309,6 +309,18 @@ public class Disk
 
     public static void getDos33CatalogEntries(byte[] sector, Collection entries)
     {
+        int p = 0x0B;
+        boolean hitEnd = false;
+        while (p < 0x100 && !hitEnd)
+        {
+            
+        }
+        int trk;
+        int sec;
+        boolean lck;
+        int fil;
+        byte[] name;
+        int cSector;
         entries.add(new Dos33CatalogEntry(new DiskPos(trk,sec,0,false),lck,fil,cSector,name));
     }
 /**
