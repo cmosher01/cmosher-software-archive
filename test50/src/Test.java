@@ -7,5 +7,10 @@ public class Test
 		String test = "this,is,a,test";
 		StringFieldizer sf = new StringFieldizer(test);
 		Iterator i = sf.iterator();
+		while (i.hasNext())
+		{
+			String s = i.next()l
+			System.out.println(s);
+		}
 	}
 }
