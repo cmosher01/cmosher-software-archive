@@ -176,6 +176,17 @@ public class DiskCatalogTest extends TestCase
      * @throws IOException
      * @throws InvalidPosException
      */
+    public void testAMDOS() throws IOException, InvalidPosException
+    {
+        List r = new ArrayList();
+        r.add(new DiskPos(0x11,0xF));
+        assertManyPos("AMDOS.dsk",r);
+    }
+    
+    /**
+     * @throws IOException
+     * @throws InvalidPosException
+     */
     public void testZeroes() throws IOException, InvalidPosException
     {
         List r = new ArrayList();
