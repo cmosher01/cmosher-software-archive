@@ -68,6 +68,41 @@ public class FixAppleDisasm
 		}
 		for (String s = inbuf.readLine(); s != null; s = inbuf.readLine())
 		{
+			s = s.trim();
+
+			int com = s.indexOf(';');
+			if (com == 0)
+			{
+				s = "";
+			}
+			if (com >= 0)
+			{
+				s = s.substring(0,com);
+			}
+
+			if (s.length() == 0)
+			{
+				continue;
+			}
+
+			String saddr = s.substring(0,4);
+			int addr = -1;
+			try
+			{
+				addr = Integer.parseInt(saddr,16);
+				if (addr < 0 || 0x10000 <= addr)
+				{
+					addr = -1;
+				}
+			}
+			catch (NumberFormatException e)
+			{
+				addr = -1;
+			}
+
+			if (addr >= 0)
+			{
+			}
 		}
     }
 
