@@ -127,10 +127,12 @@ public class BinDiff
 		long orig = f.tell();
 
 		f.seek(pos);
+		dw.beginBlock();
 		for (int i = 0; i < len; ++i)
 		{
 			dw.outByte(f.read());
 		}
+		dw.endBlock();
 
 		f.seek(orig);
 	}
