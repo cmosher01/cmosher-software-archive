@@ -11,7 +11,10 @@ import java.util.Date;
  * using the given calendar. Note that the time component
  * of the calendar is not used.
  * It contains hours, minutes, seconds, and milliseconds
- * since midnight. Instances of this class are immutable.
+ * since midnight. Instances of this class are immutable,
+ * but only to the extent that the caller doesn't pass in
+ * a Calendar subclass that has a clone method that deliberately
+ * circumvents the immutability of this class.
  * Instances of this class do not hold a reference to
  * the given Calendar object passed into the constructor
  * (they clone it instead).
