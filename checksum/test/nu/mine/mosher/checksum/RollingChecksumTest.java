@@ -39,6 +39,7 @@ public class RollingChecksumTest extends TestCase
         RollingChecksum rollCheck2 = new RollingChecksum();
         rollCheck.init(rs);
         int check2 = rollCheck2.getChecksum();
-        
+
+        assertEquals(check2,check);
     }
 }
