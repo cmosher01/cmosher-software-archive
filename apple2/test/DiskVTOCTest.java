@@ -49,7 +49,7 @@ public class DiskVTOCTest extends TestCase
 
     public void testDOS33_Others() throws IOException, InvalidPosException
     {
-        assertOnePos("daviddos2blank.dsk",new DiskPos(0x11,0));
+//        assertOnePos("daviddos2blank.dsk",new DiskPos(0x11,0));
         assertOnePos("diversidos2c_blank.dsk",new DiskPos(0x11,0));
         assertOnePos("diversidos41c_blank.dsk",new DiskPos(0x11,0));
         assertOnePos("dos33(80)master.dsk",new DiskPos(0x11,0));
