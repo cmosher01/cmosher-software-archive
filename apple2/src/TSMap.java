@@ -23,4 +23,17 @@ public class TSMap
         }
         r[sector] = true;
     }
+
+    /**
+     * @param sector
+     * @return
+     */
+    public boolean isMarked(int sector)
+    {
+        if (sector < 0 || r.length <= sector)
+        {
+            throw new IllegalArgumentException();
+        }
+        return r[sector];
+    }
 }
