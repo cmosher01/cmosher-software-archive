@@ -47,6 +47,14 @@ public class Dos33CatalogEntry
     }
 
     /**
+     * 
+     * @return Returns if the file is deleted
+     */
+    public boolean isDeleted()
+    {
+        return deleted;
+    }
+    /**
      * @return Returns the cSector.
      */
     public int getSectorCount()
