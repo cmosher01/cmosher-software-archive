@@ -56,9 +56,12 @@ public class Disk implements TreeNode
 					}
 				}
 			}
-			img = new A2DiskImage(image);
-			List r = new ArrayList(30);
-			img.getContents().getCatList(r);
+			if (image != null)
+			{
+				img = new A2DiskImage(image);
+				List r = new ArrayList(30);
+				img.getContents().getCatList(r);
+			}
 		}
 
         viewRight.setEditable(false);
