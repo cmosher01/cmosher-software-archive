@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
@@ -24,8 +25,13 @@ public class BinDiff
     		System.exit(1);
     	}
 
-		RandomAccessFile f1 = new RandomAccessFile(rArg[0],"r");
-		RandomAccessFile f2 = new RandomAccessFile(rArg[1],"r");
+		File fil1 = new File(rArg[0]);
+		File fil2 = new File(rArg[1]);
+		RandomAccessFile f1 = new RandomAccessFile(fil1,"r");
+		RandomAccessFile f2 = new RandomAccessFile(fil2,"r");
+
+		System.out.println("file 1: "+fil1.getAbsolutePath());
+		System.out.println("file 2: "+fil2.getAbsolutePath());
 
 		BinDiff d = new BinDiff(f1,f2,4,512);
 		d.diff();
