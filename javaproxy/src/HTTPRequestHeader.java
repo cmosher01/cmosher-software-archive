@@ -17,15 +17,15 @@ import java.util.StringTokenizer;
 class HTTPRequestHeader
 {
 
-    public String Method = null;
+    private String Method = null;
 
-    public String URI = null;
+    private String URI = null;
 
-    public String Version = null;
+    private String Version = null;
 
-    public String primeheader = "";
+    private String primeheader = "";
 
-    public HashMap headerfields = new HashMap();
+    private HashMap headerfields = new HashMap();
 
     private boolean MalFormedHeader = false;
 
