@@ -38,7 +38,7 @@ public class VolumeCatalogSector extends VolumeEntity
      */
     public void readFromMedia(DiskPos p, Disk disk)
     {
-        rSector.add(new VolumeSector(p,0));
+        rSector.add(new VolumeSector(p,0,this));
 
         disk.getDos33CatalogEntries(p,rEntry);
     }
