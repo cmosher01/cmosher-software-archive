@@ -105,14 +105,6 @@ public class GDiffView extends JFrame
 
         JFrame.setDefaultLookAndFeelDecorated(true);
 
-        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        /*
-         * The next line determines if the taskbar (win) is covered if
-         * unremarked, the task will not be covered by the maximized JFRAME.
-         */
-        this.setMaximizedBounds(env.getMaximumWindowBounds());
-        this.setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
-
         src = new File(fileSrc);
         dif = new File(fileGDiff);
 
@@ -320,7 +312,11 @@ public class GDiffView extends JFrame
         listGDiff.setSelectedIndex(0);
         listGDiff.requestFocus();
 
-        pack();
+//        pack();
+
+        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        this.setMaximizedBounds(env.getMaximumWindowBounds());
+        this.setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
 
         setVisible(true);
     }
