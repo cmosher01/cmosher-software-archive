@@ -1,10 +1,11 @@
 package nu.mine.mosher.grodb;
 
 import java.io.ObjectStreamException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RelationTypeSource
+public class RelationTypeSource implements Serializable
 {
 	private final int id;
 	private final String name;
