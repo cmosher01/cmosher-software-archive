@@ -43,7 +43,7 @@ public class Test
 	{
         StringBuffer code = new StringBuffer(20);
 
-        String base = "thisisabigfilenametest.dat";
+        String base = "thist.dat";
         if (base.length() > 11)
         {
             base = base.substring(0, 11);
