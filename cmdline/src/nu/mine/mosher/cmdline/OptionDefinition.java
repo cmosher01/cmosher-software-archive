@@ -20,8 +20,12 @@ public class OptionDefinition
      * @param optionShort
      * @param desc
      */
-    public OptionDefinition(final String optionLong, final char optionShort, final String desc, boolean hasValue)
+    public OptionDefinition(String optionLong, char optionShort, String desc, boolean hasValue)
     {
+        if (optionLong == null || desc == null)
+        {
+            throw new NullPointerException();
+        }
         this.optionLong = optionLong;
         this.optionShort = optionShort;
         this.desc = desc;
