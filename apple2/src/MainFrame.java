@@ -1,3 +1,5 @@
+import java.awt.Frame;
+import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
 
 import javax.swing.JFrame;
@@ -43,7 +45,10 @@ public class MainFrame extends JFrame
      */
     private void init()
     {
-        // TODO Auto-generated method stub
-        
+        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        this.setSize(400,470);
+        this.setLocation(10, 10);
+        this.setMaximizedBounds(env.getMaximumWindowBounds());
+        this.setExtendedState(this.getExtendedState() | Frame.MAXIMIZED_BOTH);
     }
 }
