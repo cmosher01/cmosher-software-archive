@@ -18,7 +18,11 @@ public class GROMouseListener extends MouseInputAdapter
     public void mousePressed(MouseEvent evt)
     {
 		mLastHit = evt.getComponent();
-		evt.getPoint();
+		Indi indi = fc.hitIndi(evt.getPoint());
+		if (indi != null)
+		{
+			indi.hit();
+		}
         super.mousePressed(evt);
     }
 
