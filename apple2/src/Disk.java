@@ -25,7 +25,7 @@ public class Disk
     public Disk(byte[] disk) throws InvalidPosException
     {
         this.disk = disk;
-        this.pos = new DiskPos(0,0,0,false);
+        this.pos = new DiskPos(0,0,0);
     }
 
     /**
@@ -33,7 +33,7 @@ public class Disk
      */
     public void rewind() throws InvalidPosException
     {
-        this.pos = new DiskPos(0,0,0,false);
+        this.pos = new DiskPos(0,0,0);
     }
 
     /**
@@ -148,7 +148,7 @@ public class Disk
     {
         int track = read();
         int sector = read();
-        return new DiskPos(track,sector,0,false);
+        return new DiskPos(track,sector,0);
     }
 
     /**
@@ -195,7 +195,7 @@ public class Disk
      * @param tsmapMaps
      * @throws InvalidPosException
      */
-    public void findDos33CatalogSector(boolean allowLarge, TSMap tsmapMaps) throws InvalidPosException
+    public void findDos33CatalogSector(/*boolean allowLarge, TSMap tsmapMaps*/) throws InvalidPosException
     {
         rewind();
         while (!EOF())
@@ -203,7 +203,7 @@ public class Disk
             DiskPos cur = this.pos;
             byte[] sector = read(DiskPos.cSector);
 //            List entries = new ArrayList();
-            int goodEntries = isDos33CatalogSector(sector,allowLarge/*,tsmapMaps,entries*/);
+            int goodEntries = isDos33CatalogSector(sector/*,allowLarge,tsmapMaps,entries*/);
             if (goodEntries > 0)
             {
                 System.out.println("Catalog Sector @ T$"+Integer.toHexString(cur.getTrackInDisk())+", S$"+
@@ -314,10 +314,10 @@ public class Disk
      * @param entries
      * @return
      */
-    static int isDos33CatalogSector(byte[] sector, boolean allowLarge)
+    static int isDos33CatalogSector(byte[] sector)
     {
         if (sector[0] == 0 &&
-            DiskPos.isValidTrack(sector[1],allowLarge) &&
+            DiskPos.isValidTrack(sector[1]) &&
             DiskPos.isValidSector(sector[2]) &&
             sector[3] == 0)
         {
@@ -338,7 +338,7 @@ public class Disk
                     ++goodEntries;
                 }
                 if (live && 
-                    (DiskPos.isValidTrack(sector[ce],allowLarge) || sector[ce] == -1) &&
+                    (DiskPos.isValidTrack(sector[ce]) || sector[ce] == -1) &&
                     DiskPos.isValidSector(sector[ce+1]) &&
                     isValidFileType(sector[ce+2]))
                 {
@@ -393,7 +393,7 @@ public class Disk
 
             int cSector = word(sector,p+0x21);
 
-            entries.add(new Dos33CatalogEntry(deleted,new DiskPos(trk,sector[p+1],0,false),lck,fil,cSector,name));
+            entries.add(new Dos33CatalogEntry(deleted,new DiskPos(trk,sector[p+1],0),lck,fil,cSector,name));
 
             p += 0x23;
         }
@@ -409,7 +409,7 @@ public class Disk
         int p = 0x0C;
         while (p < 0x100 && (sector[p] != 0 || sector[p+1] != 0))
         {
-            entries.add(new DiskPos(sector[p],sector[p+1],0,false));
+            entries.add(new DiskPos(sector[p],sector[p+1],0));
 
             p += 2;
         }
@@ -422,7 +422,7 @@ public class Disk
      */
     public static DiskPos getDos33Next(byte[] sector) throws InvalidPosException
     {
-        return new DiskPos(sector[1],sector[2],0,false);
+        return new DiskPos(sector[1],sector[2],0);
     }
 
     /**
