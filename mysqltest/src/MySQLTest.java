@@ -6,15 +6,22 @@ import java.sql.Statement;
 
 public class MySQLTest
 {
+	private static final MySQLTest app = new MySQLTest();
+
     public static void main(String[] rArg) throws Throwable
     {
-        Class.forName("com.mysql.jdbc.Driver").newInstance();
-        Connection db = DriverManager.getConnection("jdbc:mysql:///test","root","");
-        createSchema(db);
-        db.close();
+    	app.run(rArg);
     }
 
-    private static void createSchema(Connection db) throws SQLException
+    protected void run(String[] rArg) throws Throwable
+    {
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+		Connection db = DriverManager.getConnection("jdbc:mysql:///test","root","");
+		createSchema(db);
+		db.close();
+    }
+
+    protected void createSchema(Connection db) throws SQLException
     {
         Statement st = null;
         try
