@@ -3,7 +3,7 @@
  *
  * Created on Apr 14, 2004
  */
-package com.surveysampling.beans.editors;
+package com.surveysampling.beans.editors.test;
 
 /**
  * TODO
