@@ -170,7 +170,6 @@ public class GDiffView extends JFrame
                         beginSrc = copy.getRange().getBegin();
                         endSrc = copy.getRange().getEnd();
                         highlight(true,false);
-                        paneSrc.setCaretPosition((int)beginSrc);
                         beginTrg = copy.getTargetRange().getBegin();
                         endTrg = copy.getTargetRange().getEnd();
                         highlight(true,true);
@@ -324,24 +323,33 @@ public class GDiffView extends JFrame
     public void highlight(boolean highlight, boolean target)
     {
         long begin, end;
+        JTextPane pan;
         if (target)
         {
             begin = beginTrg;
             end = endTrg;
+            pan = paneTrg;
         }
         else
         {
             begin = beginSrc;
             end = endSrc;
+            pan = paneSrc;
         }
         if (getRow(begin) == getRow(end))
         {
-            highlight(getHexStart(begin),getHexEnd(end),highlight,target);
+            long c = getHexStart(begin);
+            highlight(c,getHexEnd(end),highlight,target);
             highlight(getAscStart(begin),getAscEnd(end),highlight,target);
+            if (highlight)
+            {
+                pan.setCaretPosition((int)c);
+            }
         }
         else
         {
-            highlight(getHexStart(begin),getHexRowEnd(getRow(begin)),highlight,target);
+            long c = getHexStart(begin);
+            highlight(c,getHexRowEnd(getRow(begin)),highlight,target);
             highlight(getAscStart(begin),getAscRowEnd(getRow(begin)),highlight,target);
             for (long i = getRow(begin) + 1; i <= getRow(end) - 1; ++i)
             {
@@ -350,6 +358,10 @@ public class GDiffView extends JFrame
             }
             highlight(getHexRowStart(getRow(end)),getHexEnd(end),highlight,target);
             highlight(getAscRowStart(getRow(end)),getAscEnd(end),highlight,target);
+            if (highlight)
+            {
+                pan.setCaretPosition((int)c);
+            }
         }
     }
 
