@@ -8,7 +8,6 @@
 import java.awt.Button;
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
-import java.awt.FileDialog;
 import java.awt.Frame;
 import java.awt.Label;
 import java.awt.Rectangle;
