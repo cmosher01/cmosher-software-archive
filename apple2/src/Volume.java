@@ -189,4 +189,46 @@ public class Volume
     {
         dos.getUsed(rPos);
     }
+    /**
+     * @return Returns the boot.
+     */
+    public VolumeBoot getBoot()
+    {
+        return boot;
+    }
+    /**
+     * @return Returns the cat.
+     */
+    public VolumeCatalog getCat()
+    {
+        return cat;
+    }
+    /**
+     * @return Returns the dos.
+     */
+    public VolumeDOS getDos()
+    {
+        return dos;
+    }
+/**
+ * @return Returns the orphaned.
+ */
+public VolumeUnusedData getOrphaned()
+{
+    return orphaned;
+}
+    /**
+     * @return Returns the rFile.
+     */
+    public List getRFile()
+    {
+        return rFile;
+    }
+    /**
+     * @return Returns the rFileRecovered.
+     */
+    public List getRFileRecovered()
+    {
+        return rFileRecovered;
+    }
 }
