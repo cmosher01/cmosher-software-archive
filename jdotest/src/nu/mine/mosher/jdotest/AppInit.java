@@ -28,9 +28,11 @@ public class AppInit implements ServletContextListener
     	ServletContext ctx = sce.getServletContext();
 		try
 		{
+			ctx.log("Initializing JDO properties...");
 			props = new Properties();
 			InputStream inProps = ctx.getResourceAsStream("WEB-INF/jdo.properties");
 			props.load(inProps);
+			ctx.log("Done initializing JDO properties.");
 		}
 		catch (Throwable e)
 		{
