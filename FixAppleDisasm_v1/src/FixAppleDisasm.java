@@ -13,6 +13,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.TreeMap;
 
 public class FixAppleDisasm
@@ -188,7 +189,33 @@ public class FixAppleDisasm
 					}
 					else
 					{
-						System.err.println(s);
+						s = s.substring(5).trim();
+						StringTokenizer st = new StringTokenizer(s," ");
+						for (int i = 0; i < st.countTokens(); ++i)
+						{
+							String h = st.nextToken();
+							int x = -1;
+							try
+							{
+								x = Integer.parseInt(h,16);
+								if (x < 0 || 0x100 <= x)
+								{
+									x = -1;
+								}
+							}
+							catch (Throwable e)
+							{
+								x = -1;
+							}
+							if (x >= 0)
+							{
+							}
+							else
+							{
+								System.err.print("error parsing hex @ $");
+								System.err.println(Integer.toHexString(ln.addr));
+							}
+						}
 					}
 				}
 				else if (nextChar.equalsIgnoreCase("."))
