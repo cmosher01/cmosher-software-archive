@@ -21,6 +21,9 @@ public class StreamChecksum
 
 
     /**
+     * Initializes a <code>StreamChecksum</code> object to use
+     * the given map of <code>Integer</code> checksums to <code>Long</code>
+     * window numbers (the first window number is zero).
      * @param mapChecksumToWindow
      */
     public StreamChecksum(Map mapChecksumToWindow)
