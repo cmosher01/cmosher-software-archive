@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.net.MalformedURLException;
 
 import javax.swing.JPanel;
 
@@ -54,7 +55,7 @@ public class FamilyChart extends JPanel
         return mIndis.isOnIndi(point);
     }
 
-    public void gotoIndi(Indi mLastIndi)
+    public void gotoIndi(Indi mLastIndi) throws MalformedURLException
     {
     	mApplet.getAppletContext().showDocument(mLastIndi.getURL());
     }
