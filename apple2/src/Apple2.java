@@ -77,6 +77,8 @@ public class Apple2
     }
 
     /**
+     * Reads a disk image from a file.
+     * 
      * @param f file containing the disk image to read
      * @return the disk image read in from the file
      * @throws IOException
