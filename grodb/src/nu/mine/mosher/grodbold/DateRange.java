@@ -1,5 +1,7 @@
 package nu.mine.mosher.grodb;
 
+import java.util.Calendar;
+
 public class DateRange
 {
 	YMD earliest;
@@ -9,5 +11,10 @@ public class DateRange
 	int hourOffGMT;
 	int minuteOffGMT;
 	boolean circa;
-	boolean julian;
+	Calendar cal;
+
+	void DateRange()
+	{
+		Calendar c;
+	}
 }
