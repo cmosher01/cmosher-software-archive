@@ -37,7 +37,7 @@ public class NormalizerTest extends TestCase
 	public void testNormalizationTestTxt() throws IOException
 	{
 		BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(new File("NormalizationTest.txt"))));
-		String[] rCol = new String[4];
+		String[] rCol = new String[5];
 		int cDone = 0;
 		for (String lin = in.readLine(); lin != null; lin = in.readLine())
 		{
