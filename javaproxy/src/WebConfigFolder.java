@@ -247,8 +247,8 @@ class WebConfigFolder implements ActionListener, ConfigInterface
     /**
      * event handler for action events
      */
-//    public void actionPerformed(ActionEvent actevt)
-//    {
+    public void actionPerformed(ActionEvent actevt)
+    {
 //        FileDialog fd = new FileDialog(parentFrame,"Find File",FileDialog.LOAD);
 //        Object actcomp = actevt.getSource();
 //        String targetdir = "";
@@ -259,7 +259,7 @@ class WebConfigFolder implements ActionListener, ConfigInterface
 //        int evtid = actevt.getID();
 //        String actcmd = actevt.getActionCommand();
 //
-//    }
+    }
 
     /**
      * update configuration
@@ -312,6 +312,5 @@ class WebConfigFolder implements ActionListener, ConfigInterface
 
         ((ServerInterface)parentFrame).re_initialization();
     }
-
 }
 
