@@ -424,7 +424,7 @@ public class VolumeDOS extends VolumeEntity
         for (int i = 0; i < rbSlaveOffset.length; i++)
         {
             int bOff = rbSlaveOffset[i];
-            rbClear[bOff]
+            rb[bOff] -= dif;
         }
         return rb;
     }
