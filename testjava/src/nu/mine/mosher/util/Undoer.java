@@ -7,7 +7,7 @@ public class Undoer
     private final LinkedList mrUndo = new LinkedList();
     private final LinkedList mrRedo = new LinkedList();
 
-    public void saveForUndo(Cloneable state) throws CloneNotSupportedException
+    public void save(Cloneable state) throws CloneNotSupportedException
     {
         mrUndo.addLast(Cloner.cloneObject(state));
         mrRedo.clear();
