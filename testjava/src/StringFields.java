@@ -1,10 +1,10 @@
 import java.util.Iterator;
 
-public class SF
+public class StringFields
 {
     private final Iterator i;
     
-    public SF(String s)
+    public StringFields(String s)
     {
         i = new Iter(s);
     }
