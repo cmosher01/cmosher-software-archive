@@ -3,6 +3,7 @@ package com.surveysampling.mosher.tree;
 import java.awt.Cursor;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JTree;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
@@ -13,9 +14,9 @@ public class HierarchyBrowserUpdater implements TreeExpansionListener
     FileTreeNode mRoot;
     JTree mTree;
     DefaultTreeModel mModel;
-    JFrame mFrame;
+    JPanel mFrame;
 
-    public HierarchyBrowserUpdater(JTree tree, FileTreeNode node, DefaultTreeModel tmodel, JFrame theFrame)
+    public HierarchyBrowserUpdater(JTree tree, FileTreeNode node, DefaultTreeModel tmodel, JPanel theFrame)
     {
         mRoot = node;
         mTree = tree;
