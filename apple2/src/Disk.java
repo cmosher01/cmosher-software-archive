@@ -244,7 +244,9 @@ public class Disk
             if (sector[0]==0 &&
                     DiskPos.isValidTrack(sector[1]) && DiskPos.isValidSector(sector[2]) &&
                     sector[3]==0 && sector[4]==0 &&
-                    word(sector,5)%0x7A == 0)
+                    word(sector,5)%0x7A == 0 &&
+                    match(sector,7,new byte[]{0,0,0,0,0}) &&
+                    DiskPos.isValidTrack(sector[0x0C]) && DiskPos.isValidSector(sesctor[0x0D]))
                     {
                         
                     }
