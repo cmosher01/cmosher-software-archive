@@ -296,6 +296,7 @@ public class FixAppleDisasm
 						String sval = "$"+hexByte(val);
 						ln.instr = "DB";
 						ln.oper = sval;
+						++nextaddr;
 						for (int i = addr+1; i <= addr2; ++i)
 						{
 							Line lnm = new Line();
@@ -304,6 +305,7 @@ public class FixAppleDisasm
 							addrs.put(new Integer(lnm.addr),lnm);
 							lnm.instr = "DB";
 							lnm.oper = sval;
+							++nextaddr;
 						}
 					}
 					else
