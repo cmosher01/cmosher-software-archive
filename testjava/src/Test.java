@@ -80,9 +80,21 @@ public class Test
         System.out.println(su);
         su = uri.getScheme();
         System.out.println(su);
-        su = uri.getSchemeSpecificPart();
-        System.out.println(su);
-        File f = new File(uri.getPath());
+        File f = null;
+        if (su.equalsIgnoreCase("file"))
+        {
+            f = new File(uri.getPath());
+        }
+        else if (su.equalsIgnoreCase("jar"))
+        {
+            String jarpart = uri.getSchemeSpecificPart();
+            System.out.println(jarpart);
+            f = new File(uri.getPath());
+        }
+        else
+        {
+            throw new UnsupportedOperationException("Cannot process scheme: "+su);
+        }
         System.out.println(f.getCanonicalPath());
         if (f.isDirectory())
         {
