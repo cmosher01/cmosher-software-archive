@@ -1,7 +1,6 @@
 public class DiffWriter
 {
 	private StringBuffer s = new StringBuffer(1024);
-	private int pos;
 
 	public DiffWriter()
 	{
@@ -9,10 +8,6 @@ public class DiffWriter
 
 	public void outTag(String type, int c)
 	{
-		if (pos > 0)
-		{
-			s.append("\n");
-		}
 		s.append(">>>");
 		s.append(type);
 		s.append(" ");
@@ -25,19 +20,22 @@ public class DiffWriter
 		{
 			s.append(" BYTES\n");
 		}
-		pos = 0;
 	}
 
+	private int[] line = new int[32];
+	private int i;
 	public void outByte(int b)
 	{
-//		if (pos > 93)
-//		{
-//			s.append("\n");
-//			pos = 0;
-//		}
-//		s.append(hexByte(b));
-//		s.append(" ");
-//		pos += 3;
+		line[i++] = b;
+
+		s.append(hexByte(b));
+		s.append(" ");
+
+		if (i >= line.length)
+		{
+			i = 0;
+			outAscii();
+		}
 	}
 
 	public void flush()
