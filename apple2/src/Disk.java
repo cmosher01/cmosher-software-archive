@@ -220,6 +220,10 @@ public class Disk
                             sb.append("s, T/S map");
                         }
                         sb.append(" @ T$"+Integer.toHexString(trk)+", S$"+Integer.toHexString(sector[ce+1])+"]");
+                        if (deleted)
+                        {
+                            sb.append(" [deleted]");
+                        }
                         entries.add(sb.toString());
                         if (sector[ce+31] == (byte)0xA0)
                         {
