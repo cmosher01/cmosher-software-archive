@@ -7,7 +7,6 @@ import java.util.List;
 public class RelationTypeSource
 {
 	private final int id;
-
 	private final String name;
 
 	protected RelationTypeSource(String name)
