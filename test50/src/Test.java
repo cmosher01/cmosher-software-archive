@@ -6,7 +6,7 @@ public class Test
 	{
 		String test = "this,is,a,test";
 		StringFieldizer sf = new StringFieldizer(test);
-		Iterator i = sf.iterator();
+		Iterator<String> i = sf.iterator();
 		while (i.hasNext())
 		{
 			String s = i.next();
