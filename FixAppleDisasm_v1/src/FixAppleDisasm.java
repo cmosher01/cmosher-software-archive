@@ -198,10 +198,15 @@ public class FixAppleDisasm
 
 						if (val >= 0)
 						{
+							String sval = "$"+Integer.toHexString(val);
 							ln.instr = "DB";
-							ln.oper = "$"+val;
+							ln.oper = sval;
 							for (int i = addr+1; i <= addr2; ++i)
 							{
+								Line lnm = new Line();
+								lines.put(new Integer(++lineNumber),lnm);
+								lnm.addr = i;
+								lnm.oper = sval;
 							}
 						}
 						else
