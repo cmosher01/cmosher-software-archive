@@ -374,12 +374,12 @@ public class GDiffView extends JFrame
         return rowLen + (pos / cCol) * rowLen + nibs + 2 + (pos % cCol) * 3;
     }
 
-    public int getHexEnd(long pos)
+    public long getHexEnd(long pos)
     {
         return getHexStart(pos) + 2;
     }
 
-    public int getAscStart(long pos)
+    public long getAscStart(long pos)
     {
         return rowLen + (pos / cCol) * rowLen + nibs + 2 + cCol * 3
                 + (pos % cCol);
