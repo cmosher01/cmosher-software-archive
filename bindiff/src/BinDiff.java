@@ -129,8 +129,10 @@ public class BinDiff
                                 long orig = ftell(fileinsert);
 
                                 fseek(fileinsert, posinsert, SEEK_SET);
-                                for (int i(0); i < cinsert; i++)
-                                    fputc(fgetc(fileinsert), fdif);
+                                for (int i = 0; i < cinsert; ++i)
+                                {
+									fputc(fgetc(fileinsert), fdif);
+                                }
 
                                 fseek(fileinsert, orig, SEEK_SET);
 
