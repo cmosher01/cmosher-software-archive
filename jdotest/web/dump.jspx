@@ -6,7 +6,11 @@
 </head>
 <body>
 <p>
-<table>
+<table border="1">
+<thead>
+<tr><th>name</th><th>value</th></tr>
+</thead>
+<tbody>
 <%
 	Map mapParam = request.getParameterMap();
 	for (Iterator i = mapParam.entrySet().iterator(); i.hasNext(); )
@@ -21,6 +25,7 @@
 		}
 	}
 %>
+</tbody>
 </table>
 </p>
 </body>
