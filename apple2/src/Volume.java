@@ -73,9 +73,9 @@ public class Volume
         getUsedNondeletedFiles(rKnownSectors);
         getUsedDeletedFiles(rKnownSectors);
         getUsedRecoveredFiles(rKnownSectors);
+        getUsedBoot(rKnownSectors);
 
-        // TODO getUsedBoot getUsedDOS
-        rKnownSectors.add(new DiskPos(0,0));
+        // TODO getUsedDOS
         rKnownSectors.add(new DiskPos(0,1));
         rKnownSectors.add(new DiskPos(0,2));
         rKnownSectors.add(new DiskPos(0,3));
@@ -204,4 +204,13 @@ public class Volume
             f.getUsed(rPos);
         }
     }
+
+    /**
+     * @param rPos
+     */
+    public void getUsedBoot(List rPos)
+    {
+        boot.getUsed(rPos)
+    }
+
 }
