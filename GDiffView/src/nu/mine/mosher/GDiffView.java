@@ -333,7 +333,7 @@ public class GDiffView extends JFrame
     {
         readSrc();
 
-        StringBuffer sb = new StringBuffer(in.available() * 6);
+        StringBuffer sb = new StringBuffer((int)srcEOF);
         tempReadTarget(sb);
         docTrg.insertString(0,sbTrg.toString(),(AttributeSet)styles.get("body"));
     }
