@@ -47,8 +47,10 @@ public class Mwc extends RNGDefault implements RandomNumberGenerator
      */
     public int nextInt()
     {
-        if (i == 0)
+        if (i <= 0)
+        {
             i = Q.length-1;
+        }
 
         long t = a * Q[i--] + c;
 
