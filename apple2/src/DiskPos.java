@@ -8,7 +8,7 @@
  * 
  * @author Chris
  */
-public class DiskPos
+public class DiskPos implements Comparable
 {
     public static final int cSector = 0x100;
     public static final int cSectorsPerTrack = 0x10;
@@ -243,5 +243,42 @@ public class DiskPos
         verifyBlock(block,allowLarge);
         verifyByte(byt,cBlock);
         this.iDisk = block*cBlock+byt;
+    }
+
+    /**
+     */
+    public boolean equals(Object obj)
+    {
+        if (!(obj instanceof DiskPos))
+        {
+            return false;
+        }
+        DiskPos that = (DiskPos)obj;
+        return this.iDisk == that.iDisk;
+    }
+
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode()
+    {
+        return this.iDisk;
+    }
+
+    /**
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    public int compareTo(Object obj)
+    {
+        DiskPos that = (DiskPos)obj;
+        if (this.iDisk < that.iDisk)
+        {
+            return -1;
+        }
+        if (that.iDisk < this.iDisk)
+        {
+            return +1;
+        }
+        return 0;
     }
 }
