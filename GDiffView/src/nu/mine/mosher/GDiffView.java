@@ -134,7 +134,7 @@ public class GDiffVeiew extends JFrame
             appendHex(sb,i);
             sb.append(' ');
         }
-        for (int i = 0; i < cCol+2; ++i)
+        for (int i = 0; i < cCol; ++i)
         {
             sb.append(' ');
         }
@@ -156,7 +156,6 @@ public class GDiffVeiew extends JFrame
                 }
                 sb.append(' ');
             }
-            sb.append("  ");
             for (int i = 0; i < cCol; ++i)
             {
                 if (i < c)
