@@ -318,6 +318,15 @@ public class GDiffView extends JFrame
             }
         });
 
+        listGDiff.setSelectionModel(selectionModel);
+        listGDiff.setSelectedIndex(0);
+        listGDiff.requestFocus();
+
+        setVisible(true);
+    }
+
+    public void initText() throws IOException, BadLocationException
+    {
         readSrc();
         docSrc.insertString(0,sbSrc.toString(),(AttributeSet)styles.get("body"));
 
@@ -328,11 +337,15 @@ public class GDiffView extends JFrame
         highlightInserts();
         highlightDeletes();
 
-        listGDiff.setSelectionModel(selectionModel);
-        listGDiff.setSelectedIndex(0);
-        listGDiff.requestFocus();
+    }
 
-        setVisible(true);
+    /**
+     * 
+     */
+    private void tempReadTarget()
+    {
+        // TODO Auto-generated method stub
+        
     }
 
     /**
