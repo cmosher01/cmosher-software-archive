@@ -265,10 +265,10 @@ public class ProxyConnection extends Thread
         /***********************************************************************
          * Check if request is in cache(for GET only)
          **********************************************************************/
-        if (using_cache && c_header.Method.equals("GET"))
+        if (using_cache && c_header.getMethod().equals("GET"))
         {
 
-            pc = cachepool.getCache(c_header.URI);
+            pc = cachepool.getCache(URI);
             if (pc == null)
             {
                 // Not in Cache
@@ -335,7 +335,7 @@ public class ProxyConnection extends Thread
 
                 // create the message to send to server
                 sb = new StringBuffer();
-                sb.append(c_header.Method).append(" ").append(doc).append(" ").append(c_header.Version).append(_CRLF);
+                sb.append(c_header.getMethod()).append(" ").append(doc).append(" ").append(c_header.Version).append(_CRLF);
                 Map ht = c_header.getHeaderFields();
                 for (Iterator enu = ht.keySet().iterator(); enu.hasNext();)
                 {
