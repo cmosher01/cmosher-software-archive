@@ -72,6 +72,10 @@ public class Test
         u.save();
         ((Mute)u.state()).x = 7;
         System.out.println(u.state().toString());
+        u.undo();
+        System.out.println(u.state().toString());
+        u.redo();
+        System.out.println(u.state().toString());
 
 
 
