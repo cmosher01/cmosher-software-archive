@@ -75,7 +75,7 @@ public class TestThreadIO
             String s = (String)lines.get(0);
             if (!s.equals("this is a test"))
             {
-                System.err.println("s != this is a test\n");
+                System.err.println("s != this is a test");
             }
             s = (String)lines.get(1);
             if (!s.equals("this is also test"))
