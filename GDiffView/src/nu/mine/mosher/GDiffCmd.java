@@ -14,4 +14,18 @@ package nu.mine.mosher;
  */
 public class GDiffCmd
 {
+    private Range trg;
+
+    public void setTargetRange(Range r)
+    {
+        trg = r;
+    }
+
+    /**
+     * @return Returns the trg.
+     */
+    public Range getTargetRange()
+    {
+        return trg;
+    }
 }
