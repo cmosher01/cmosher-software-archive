@@ -9,37 +9,37 @@ public class DateRange
 	private final boolean julian; // true==Julian, false==Gregorian
 	private final int hour;
 	private final int minute;
-	private final boolean circa;
 	private final TimeZone timeZone;
+	private final boolean circa;
 
 	public DateRange(YMD ymd)
 	{
-		this(ymd,null,false,-1,-1,false,null);
+		this(ymd,null,false,-1,-1,null,false);
 	}
 
 	public DateRange(YMD earliest, YMD latest)
 	{
-		this(earliest,latest,false,-1,-1,false,null);
+		this(earliest,latest,false,-1,-1,null,false);
 	}
 
-    public DateRange(YMD earliest, YMD latest, boolean julian, int hour, int minute, boolean circa, TimeZone timeZone)
+    public DateRange(YMD earliest, YMD latest, boolean julian, int hour, int minute, TimeZone timeZone, boolean circa)
     {
         this.earliest = earliest;
         this.latest = latest;
         this.julian = julian;
         this.hour = hour;
         this.minute = minute;
-        this.circa = circa;
         this.timeZone = timeZone;
+		this.circa = circa;
     }
 
-    /**
-     * @return
-     */
-    public boolean isJulian()
-    {
-        return julian;
-    }
+	/**
+	 * @return
+	 */
+	public YMD getEarliest()
+	{
+		return earliest;
+	}
 
     /**
      * @return
@@ -48,6 +48,22 @@ public class DateRange
     {
         return latest;
     }
+
+	/**
+	 * @return
+	 */
+	public boolean isJulian()
+	{
+		return julian;
+	}
+
+	/**
+	 * @return
+	 */
+	public int getHour()
+	{
+		return hour;
+	}
 
     /**
      * @return
@@ -63,21 +79,5 @@ public class DateRange
     public TimeZone getTimeZone()
     {
         return timeZone;
-    }
-
-    /**
-     * @return
-     */
-    public YMD getEarliest()
-    {
-        return earliest;
-    }
-
-    /**
-     * @return
-     */
-    public int getHour()
-    {
-        return hour;
     }
 }
