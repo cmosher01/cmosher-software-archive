@@ -61,8 +61,6 @@ public class Apple2
     /**
      * @param disk
      * @throws InvalidPosException
-     * @throws MultipleVTOCException
-     * @throws VTOCNotFoundException
      */
     public static void doOneDisk(Disk disk) throws InvalidPosException
     {
