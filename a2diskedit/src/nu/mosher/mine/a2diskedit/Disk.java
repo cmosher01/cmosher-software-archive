@@ -71,7 +71,7 @@ public class Disk implements TreeNode
 					CatEntry e = (CatEntry) i.next();
 					e.setNode(ne);
 					ne.setUserObject(e);
-					A2DiskEdit.getApp().addNode(n,node);
+					A2DiskEdit.getApp().addNode(ne,node);
 				}
 			}
 		}
