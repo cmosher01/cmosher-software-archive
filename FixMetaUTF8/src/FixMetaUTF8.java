@@ -57,8 +57,8 @@ public class FixMetaUTF8
 
     public static String fixMeta(StringBuffer sb)
     {
-        Pattern pat = Pattern.compile("<head>(.*?)(<meta.*?charset.*?>)?",Pattern.CASE_INSENSITIVE|Pattern.MULTILINE|Pattern.DOTALL);
+        Pattern pat = Pattern.compile("<meta.*?charset.*?>",Pattern.CASE_INSENSITIVE|Pattern.MULTILINE|Pattern.DOTALL);
         Matcher matcher = pat.matcher(sb);
-        return matcher.replaceFirst("<HEAD>"+matcher.group(1)+"<META test=\"chris\">");
+        return matcher.replaceFirst("");
     }
 }
