@@ -42,10 +42,6 @@ public class Delta
 
 
 
-    public Delta()
-    {
-    }
-
     public static void computeDelta(File sourceFile, File targetFile, GDiffWriter output) throws IOException
     {
         int targetLength = (int)targetFile.length();
