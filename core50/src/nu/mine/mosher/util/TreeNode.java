@@ -4,49 +4,53 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 
-public class TreeNode
+public class TreeNode<T>
 {
-	private Object object;
-	private TreeNode parent;
-	private List/*<TreeNode>*/ children = new ArrayList();
+	private T object;
+	private TreeNode<T> parent;
+	private List<TreeNode<T>> children = new ArrayList<TreeNode<T>>();
 
 	public TreeNode()
 	{
 		this(null);
 	}
 
-	public TreeNode(Object obj)
+	public TreeNode(T obj)
 	{
 		this.object = obj;
 	}
 
-	public Object getObject()
+	public T getObject()
 	{
 		return object;
 	}
 
-	public void setObject(Object obj)
+	public void setObject(T obj)
 	{
 		this.object = obj;
 	}
 
-	public void addChild(TreeNode child)
+	public void addChild(TreeNode<T> child)
 	{
 		if (child.parent != null)
+		{
 			child.removeFromParent();
+		}
 
 		children.add(child);
 		child.parent = this;
 	}
 
-	public void removeChild(TreeNode child)
+	public void removeChild(TreeNode<T> child)
 	{
 		if (child.parent != this)
+		{
 			throw new IllegalArgumentException("given TreeNode is not a child of this TreeNode");
+		}
 
-		for (Iterator i = children(); i.hasNext();)
+		for (Iterator<TreeNode<T>> i = children(); i.hasNext();)
         {
-            TreeNode childN = (TreeNode)i.next();
+            TreeNode<T> childN = i.next();
             if (childN==child)
             {
             	i.remove();
@@ -58,17 +62,19 @@ public class TreeNode
 	public void removeFromParent()
 	{
 		if (parent == null)
+		{
 			return;
+		}
 
 		parent.removeChild(this);
 	}
 
-	public Iterator/*<TreeNode>*/ children()
+	public Iterator<TreeNode<T>> children()
 	{
 		return children.iterator();
 	}
 
-	public TreeNode parent()
+	public TreeNode<T> parent()
 	{
 		return parent;
 	}
@@ -89,12 +95,10 @@ public class TreeNode
 		sb.append("\n");
 
 		++level;
-
-		for (Iterator i = children(); i.hasNext();)
-        {
-            TreeNode child = (TreeNode)i.next();
-            child.appendStringDeep(sb,level);
-        }
+		for (TreeNode<T> child : this.children)
+		{
+			child.appendStringDeep(sb,level);
+		}
 	}
 
 	public void appendStringDeep(StringBuffer sb)
