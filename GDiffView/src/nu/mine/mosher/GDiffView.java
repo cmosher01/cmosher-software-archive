@@ -324,7 +324,7 @@ public class GDiffView extends JFrame
                     highlight);
             highlight(getAscStart(beginSrc),getAscRowEnd(getRow(beginSrc)),
                     highlight);
-            for (int i = getRow(beginSrc) + 1; i <= getRow(endSrc) - 1; ++i)
+            for (long i = getRow(beginSrc) + 1; i <= getRow(endSrc) - 1; ++i)
             {
                 highlight(getHexRowStart(i),getHexRowEnd(i),highlight);
                 highlight(getAscRowStart(i),getAscRowEnd(i),highlight);
