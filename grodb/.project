@@ -5,7 +5,6 @@
 	<projects>
 		<project>ansel</project>
 		<project>core</project>
-		<project>junit</project>
 		<project>logging</project>
 		<project>tree</project>
 		<project>unicode</project>
