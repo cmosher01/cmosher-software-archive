@@ -55,6 +55,10 @@ public class VolumeFile
     {
         s.append("File: ");
         s.append(catEntry.getName());
+        for (int i = 0; i < 40-catEntry.getName().getLength(); ++i)
+        {
+            s.append(" ");
+        }
         s.append(" [");
         ts.dump(s);
         s.append("]\n");
