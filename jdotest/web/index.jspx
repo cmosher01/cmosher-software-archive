@@ -26,7 +26,11 @@
 						Named item = (Named)i.next();
 						String id = pm.getObjectId(item).toString();
 						</jsp:scriptlet>
-						<tr><td><a href="edit.jsp?id="<%=id%>">
+						<tr><td>
+						<c:url var="edit" value="/edit.jsp">
+							<c:param name="id" value="${id}" />
+						</c:url>
+						<a href="${edit}">
 						<%=item.getName()%>
 						</a></td></tr>
 						<jsp:scriptlet>
