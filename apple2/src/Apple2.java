@@ -64,6 +64,11 @@ public class Apple2
             {
                 DiskPos p = (DiskPos)i.next();
                 disk.getDos33CatalogEntries(p, rCatEntry);
+                for (Iterator ent = rCatEntry.iterator(); ent.hasNext();)
+                {
+                    Dos33CatalogEntry entry = (Dos33CatalogEntry)ent.next();
+                    System.out.println("    "+entry.getName());
+                }
             }
         }
         else
