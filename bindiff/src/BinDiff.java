@@ -44,7 +44,7 @@ public class BinDiff
         this.cMaxSearch = cMaxSearch;
     }
 
-    public void diff()
+    public void diff() throws IOException
     {
         statechange(START, 0);
         int c1 = f1.read();
@@ -85,7 +85,7 @@ public class BinDiff
 		statechange(newstate,c,null);
 	}
 
-    protected void statechange(int newstate, long c, InputStream instr)
+    protected void statechange(int newstate, long c, TellStream instr)
     {
         static state_t state;
         static int ccopy(0);
