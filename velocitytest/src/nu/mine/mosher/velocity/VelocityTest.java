@@ -85,7 +85,7 @@ public class VelocityTest
                 {
                     path = path.substring(0,slash);
                 }
-                System.out.println(kind+","+path);
+                System.out.println(path);
             }
         }
         return deps;
