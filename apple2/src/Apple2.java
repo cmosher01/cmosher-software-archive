@@ -79,7 +79,10 @@ public class Apple2
                     {
                         dirs.add(pathname);
                     }
-                    accept = pathname.length() == 0x23000;
+                    else
+                    {
+                        accept = pathname.length() == 0x23000;
+                    }
                     return accept;
                 }
             });
