@@ -1,8 +1,12 @@
+import java.lang.reflect.InvocationTargetException;
+
+import mosher.Cloner;
+
 public class ImmutableReference
 {
     private Cloneable ref;
 
-    public ImmutableReference(Cloneable ref) throws CloneNotSupportedException
+    public ImmutableReference(Cloneable ref) throws IllegalArgumentException, SecurityException, CloneNotSupportedException, IllegalAccessException, InvocationTargetException, NoSuchMethodException
     {
         if (ref == null)
         {
@@ -11,12 +15,12 @@ public class ImmutableReference
         this.ref = Cloner.cloneObject(ref);
     }
 
-    public Cloneable object() throws CloneNotSupportedException
+    public Cloneable object() throws IllegalArgumentException, SecurityException, CloneNotSupportedException, IllegalAccessException, InvocationTargetException, NoSuchMethodException
     {
         return Cloner.cloneObject(this.ref);
     }
 
-    public Object clone()
+    public Object clone() throws CloneNotSupportedException
     {
         ImmutableReference clon = null;
         try
@@ -24,8 +28,11 @@ public class ImmutableReference
             clon = (ImmutableReference)super.clone();
             clon.ref = object();
         }
-        catch (CloneNotSupportedException cantHappen)
+        catch (Throwable ex)
         {
+            CloneNotSupportedException ex2 = new CloneNotSupportedException();
+            ex2.initCause(ex);
+            throw ex2;
         }
         return clon;
     }
