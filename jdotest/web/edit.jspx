@@ -9,6 +9,7 @@
     String id = request.getParameter("id");
 	PersistenceManager pm = Perm.pm();
     Item item = (Item)pm.getObjectById(pm.newObjectIdInstance(Item.class,id),true);
+    pageContext.addAttribute("item",item);
     String s = item.getName();
 %>
 <head>
