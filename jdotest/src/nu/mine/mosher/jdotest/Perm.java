@@ -50,6 +50,8 @@ public class Perm
 	public void add(Object obj)
 	{
 		PersistenceManager pm = this.pmf.getPersistenceManager();
+		pm.currentTransaction().begin();
 		pm.makePersistent(obj);
+		pm.currentTransaction().commit();
 	}
 }
