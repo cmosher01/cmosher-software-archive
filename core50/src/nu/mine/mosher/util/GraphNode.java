@@ -17,7 +17,7 @@ public class GraphNode<T>
 		this.object = object;
 	}
 
-	public T getObject()
+	public T object()
 	{
 		return object;
 	}
