@@ -23,10 +23,10 @@ public class RelationTypeSource
 		return name;
 	}
 
+	private static final List PRIVATE_VALUES = new ArrayList();
+
 	public static final RelationTypeSource CITES = new RelationTypeSource("cites");
 	public static final RelationTypeSource CONTAINS = new RelationTypeSource("contains");
-
-	private static final List PRIVATE_VALUES = new ArrayList();
 
 	private Object readResolve() throws ObjectStreamException
 	{
