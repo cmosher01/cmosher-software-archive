@@ -6,4 +6,9 @@ package nu.mine.mosher.grodb;
  */
 public class Search
 {
+	private String description;
+
+	public Search()
+	{
+	}
 }
