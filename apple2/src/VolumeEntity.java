@@ -10,5 +10,5 @@
  */
 public class VolumeEntity
 {
-
+    private List rSector = new ArrayList(); //VolumeSector
 }
