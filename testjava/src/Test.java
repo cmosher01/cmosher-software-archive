@@ -57,7 +57,7 @@ public class Test
     //throws MyException, IOException // other exceptions here...
 	{
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
-        Date d = sdf.parse("17:30:01.000");
+        Date d = sdf.parse("17:30:01.002");
 
         SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
         System.out.println(sdf2.format(d));
