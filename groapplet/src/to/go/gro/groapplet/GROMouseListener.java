@@ -41,7 +41,7 @@ public class GROMouseListener extends MouseInputAdapter
     public void mouseDragged(MouseEvent evt)
     {
 		Indi indi = fc.hitIndi(evt.getPoint());
-		if (indi == null && mLastIndi!=null)
+		if (indi == null && mLastIndi != null && mLastIndi.isHit())
 		{
 			mLastIndi.hit(false);
 			fc.repaint();
