@@ -148,6 +148,7 @@ public class BinDiff
                         	s.append(Integer.toHexString(fileinsert.read()));
                         	s.append(" ");
                         }
+						s.append("\n");
                         fileinsert.seek(orig);
 
                         cinsert = 0;
