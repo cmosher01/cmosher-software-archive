@@ -70,7 +70,7 @@ public class TreeFrame extends JPanel
 
     public static void main(String argv[]) throws Throwable
     {
-        dir = System.getProperty("user.dir");
+        String dir = System.getProperty("user.dir");
         if (argv != null && argv.length >= 1)
         {
             dir = argv[0];
