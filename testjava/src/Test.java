@@ -37,63 +37,6 @@ public class Test
         return "bad";
     }
 
-    private static class Mute implements Cloneable
-    {
-        public int x = 0;
-        UndoableReference u;
-        public Mute(int a)
-        {
-            x = a;
-            try
-            {
-                u = new UndoableReference(this);
-            }
-            catch (CloneNotSupportedException cantHappen)
-            {
-            }
-        }
-        public Object clone()
-        {
-            Mute clon = null;
-            try
-            {
-                clon = (Mute)super.clone();
-            }
-            catch (CloneNotSupportedException cantHappen)
-            {
-            }
-            return clon;
-        }
-        private Mute ref()
-        {
-            return (Mute)u.state();
-        }
-        public String toString()
-        {
-            return ""+ref().x;
-        }
-
-        public void set(int x)
-        {
-            try
-            {
-                u.save();
-            }
-            catch (CloneNotSupportedException e)
-            {
-                e.printStackTrace();
-            }
-            this.x = x;
-        }
-        public void undo()
-        {
-            u.undo();
-        }
-        public void redo()
-        {
-            u.redo();
-        }
-    }
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
@@ -110,11 +53,13 @@ public class Test
 //        u.redo();
 //        System.out.println(u.state().toString());
 
-        Mute m = new Mute(5);
+        UndoableExample m = new UndoableExample(5);
         System.out.println(m);
         m.set(7);
         System.out.println(m);
         m.undo();
+        System.out.println(m);
+        m.set(8);
         System.out.println(m);
         m.redo();
         System.out.println(m);
