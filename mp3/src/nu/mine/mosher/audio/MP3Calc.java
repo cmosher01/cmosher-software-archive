@@ -180,9 +180,10 @@ public class MP3Calc
      */
     private static int getbits(int src, int hi, int lo)
     {
-    	src <<= (31-hi);
-    	src >>= (31+lo-hi);
-    	return src;
+    	long x = src;
+    	x <<= (31-hi);
+    	x >>= (31+lo-hi);
+    	return (int)x;
     }
 
     private static int calcBitRate(int key, int mpeg, int layer)
