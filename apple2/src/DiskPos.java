@@ -27,10 +27,7 @@ public class DiskPos
 
     public DiskPos(int track, int sector, int byt, boolean allowLarge)
     {
-        if (!allowLarge)
-        {
-            verifyTrack(track);
-        }
+        verifyTrack(track,allowLarge);
         verifySector(sector);
         verifyByte(byt);
     }
@@ -39,9 +36,9 @@ public class DiskPos
      * @param track
      * @throws InvalidPosException
      */
-    private void verifyTrack(int track) throws InvalidPosException
+    private void verifyTrack(int track, boolean allowLarge) throws InvalidPosException
     {
-        if (track < 0 || cTracksPerDisk <= track)
+        if (track < 0 || (!allowLarge && cTracksPerDisk <= track))
         {
             throw new InvalidPosException("Invalid track: "+track);
         }
