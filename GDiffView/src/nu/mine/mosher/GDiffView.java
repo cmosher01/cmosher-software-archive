@@ -138,15 +138,16 @@ public class GDiffVeiew extends JFrame
         {
             sb.append(' ');
         }
-        int iCol = 0;
         long addr = 0;
         while (c > 0)
         {
-            if (iCol == 0)
+            sb.append('\n');
+            appendAddr(sb,addr);
+            sb.append(": ");
+            for (int i = 0; i < c; ++i)
             {
-                sb.append('\n');
-                appendAddr(sb,addr);
-                sb.append(": ");
+                appendHex(sb,rb[i]);
+                sb.append(' ');
             }
             c = in.read(rb);
         }
