@@ -111,7 +111,7 @@ public class NormalizerTest extends TestCase
 			String tok = st.nextToken();
 			int cint = Integer.parseInt(tok,16);
 if (cint > 0xffff)
-	System.err.println("oops, we are not converting to UTF-16 correctly");
+	System.err.println("oops, we are not converting to UTF-16 correctly in hexToString: "+source);
 			sb.append((char)Integer.parseInt(tok,16));
 		}
 
