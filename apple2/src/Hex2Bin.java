@@ -40,4 +40,25 @@ public class Hex2Bin
         }
         return rb;
     }
+
+    /**
+     * @param n0
+     * @return
+     */
+    private static int nib(int n)
+    {
+        if ('0' <= n && n <= '9')
+        {
+            return n - '0';
+        }
+        if ('A' <= n && n <= 'F')
+        {
+            return 10 - 'A' + n;
+        }
+        if ('a' <= n && n <= 'f')
+        {
+            return 10 - 'a' + n;
+        }
+        throw new RuntimeException("invalid hex character");
+    }
 }
