@@ -19,6 +19,9 @@ public class VolumeCatalog
     private VolumeTableOfContents vtoc;
     private List rCatSect = new ArrayList(); //VolumeCatalogSector
 
+    /**
+     * @return
+     */
     public String toString()
     {
         return "Catalog";
