@@ -48,8 +48,7 @@ public class OneFileCopyServer
 		}
 		out.write(rbLen);
 
-		int i = 0;
-		while (in.available() != 0)
+		for (int i = 0; i < (xLen+rb.length-1)/rb.length; ++i)
 		{
 			int cb = in.read(rb);
 			if (cb > 0)
