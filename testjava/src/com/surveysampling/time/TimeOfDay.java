@@ -36,9 +36,7 @@ public class TimeOfDay implements Comparable
     private final int seconds;
     private final int milliseconds;
 
-    private static final SimpleDateFormat fmtHM = new SimpleDateFormat("HH:mm");
-    private static final SimpleDateFormat fmtHMS = new SimpleDateFormat("HH:mm:ss");
-    private static final SimpleDateFormat fmtHMSS = new SimpleDateFormat("HH:mm:ss.SSS");
+
 
     /**
      * Initializes the object with the given time components,
@@ -214,11 +212,9 @@ public class TimeOfDay implements Comparable
      */
     public StringBuffer format(boolean showAll, StringBuffer s)
     {
-        if (seconds == 0 && milliseconds == 0 && !showAll)
+        if (seconds == 0 && milliseconds == 0)
         {
-            fmt.format(hours,s,new FieldPosition(0));
-            s.append(':');
-            fmt.format(minutes,s,new FieldPosition(0));
+            fmtHM.format(date, s, pos)
         }
 
         return s;
