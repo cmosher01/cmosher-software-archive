@@ -69,7 +69,7 @@ public class PersonPersist
 		// retrieve objects from datastore and display
 		for (int i = 0; i < SIZE; i++)
 		{
-			person = (Person)pm.getObjectById(id.elementAt(i),false);
+			person = (Person)pm.getObjectById(rid.get(i),false);
 			System.out.println("Name      : " + person.getName());
 			System.out.println("Address   : " + person.getAddress());
 			System.out.println("SSN       : " + person.getSsn());
