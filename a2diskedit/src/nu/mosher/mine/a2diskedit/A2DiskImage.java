@@ -16,11 +16,13 @@ public class A2DiskImage
 
 	public byte getByte(int track, int sector, int offset)
 	{
-		return 0;
+		int i = (track*SECTORS_PER_TRACK+sector)*BYTES_PER_SECTOR + offset;
+		return byte[i];
 	}
 
 	public byte getByte(int block, int offset)
 	{
-		return 0;
+		int i = block*BYTES_PER_BLOCK + offset;
+		return byte[i];
 	}
 }
