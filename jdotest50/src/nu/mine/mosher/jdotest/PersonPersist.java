@@ -24,23 +24,15 @@ public class PersonPersist
 
 	public PersonPersist()
 	{
-		try
-		{
-			Properties props = new Properties();
-			props.setProperty("javax.jdo.PersistenceManagerFactoryClass","org.jpox.PersistenceManagerFactoryImpl");
-			props.setProperty("javax.jdo.option.ConnectionDriverName","com.mysql.jdbc.Driver");
-			props.setProperty("javax.jdo.option.ConnectionURL","jdbc:mysql:///jdotest");
-			props.setProperty("javax.jdo.option.ConnectionUserName","root");
-			props.setProperty("javax.jdo.option.ConnectionPassword","rootroot");
-			props.setProperty("org.jpox.autoCreateTables","true");
-			props.setProperty("org.jpox.validateTables","false");
-			props.setProperty("org.jpox.validateConstraints","false");
-			this.pmf = JDOHelper.getPersistenceManagerFactory(props);
-		}
-		catch (Exception ex)
-		{
-			ex.printStackTrace();
-			System.exit(1);
-		}
+		Properties props = new Properties();
+		props.setProperty("javax.jdo.PersistenceManagerFactoryClass","org.jpox.PersistenceManagerFactoryImpl");
+		props.setProperty("javax.jdo.option.ConnectionDriverName","com.mysql.jdbc.Driver");
+		props.setProperty("javax.jdo.option.ConnectionURL","jdbc:mysql:///jdotest");
+		props.setProperty("javax.jdo.option.ConnectionUserName","root");
+		props.setProperty("javax.jdo.option.ConnectionPassword","rootroot");
+		props.setProperty("org.jpox.autoCreateTables","true");
+		props.setProperty("org.jpox.validateTables","false");
+		props.setProperty("org.jpox.validateConstraints","false");
+		this.pmf = JDOHelper.getPersistenceManagerFactory(props);
 	}
 }
