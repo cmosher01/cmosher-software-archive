@@ -6,4 +6,13 @@ package nu.mine.mosher.grodb;
  */
 public class Representation
 {
+	private String transcript;
+	private String notes;
+
+	private String mimeType;
+	private Object other;
+
+	public Representation()
+	{
+	}
 }
