@@ -220,7 +220,7 @@ public class Disk
                         if (csect > 1)
                         {
                             sb.append("s, T/S map");
-                            DiskPos tsm = new DiskPos(trk,sector[ce+1],0,false);
+                            DiskPos tsm = new DiskPos(trk,sector[ce+1],0,allowLarge);
                             tsmapMaps.mark(tsm.getSectorInDisk());
                         }
                         sb.append(" @ T$"+Integer.toHexString(trk)+", S$"+Integer.toHexString(sector[ce+1])+"]");
