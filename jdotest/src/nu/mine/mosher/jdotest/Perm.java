@@ -24,9 +24,9 @@ public class Perm
 
 	static
 	{
-		URL urlProps = Perm.class.getClassLoader().getResource("nu/mine/mosher/jdotest/jdo.properties");
 		try
         {
+			URL urlProps = Perm.class.getClassLoader().getResource("nu/mine/mosher/jdotest/jdo.properties");
             props.load(new FileInputStream(new File(urlProps.getFile())));
         }
         catch (Throwable e)
