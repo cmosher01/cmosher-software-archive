@@ -76,5 +76,12 @@ public final class CollectionTests
             String string = (String)i.next();
             System.out.println(string);
         }
+
+
+
+
+
+        //converting from Iterator (to List) to Array
+        String[] rs2 = (String[])Util.list(t).toArray(new String[somelist.size()]);
     }
 }
