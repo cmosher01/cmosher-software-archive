@@ -104,7 +104,6 @@ public class GDiffView extends JFrame
 
     /**
      * @throws IOException
-     * 
      */
     private void testMyDiff() throws IOException
     {
