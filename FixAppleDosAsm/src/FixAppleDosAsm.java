@@ -31,7 +31,6 @@ public class FixAppleDosAsm
             out.print(s);
             out.newline();
         }
-        out.flush();
         out.close();
         in.close();
     }
