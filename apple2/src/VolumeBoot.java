@@ -173,6 +173,9 @@ public class VolumeBoot extends VolumeEntity
     public void dump(StringBuffer s)
     {
         s.append("Boot: ");
+        s.append("(");
+        s.append(ident);
+        s.append(") ");
         VolumeSector sect = (VolumeSector)rSector.get(0);
         s.append(sect.toString());
         s.append("\n");
