@@ -7,7 +7,7 @@ public class StringFieldizer implements Iterable<String>, Immutable
 
 	public StringFieldizer(String s)
 	{
-		this.s = s;
+		this.s = s;x
 	}
 
 	public SimpleIterator<String> iterator()
