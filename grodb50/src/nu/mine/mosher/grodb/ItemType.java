@@ -15,7 +15,7 @@ public class ItemType<T extends Enum<T>>
 	}
 	public ItemType(String other)
 	{
-		Enum.valueOf(Class<T>);
+		Enum.valueOf(Class<T>.getClass());
 		this.other = other;
 	}
 
