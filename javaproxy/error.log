@@ -1,0 +1,15 @@
+0/19/2005 9:50:8 	Jproxy.initialization(Jproxy.java:374)	Console Initialized
+0/19/2005 9:50:29 	Error: IOException, 	http://www.google.com/
+0/19/2005 9:50:29 	ProxyConnection.run(ProxyConnection.java:491)	java.net.SocketTimeoutException: Read timed out
+0/19/2005 9:51:10 	Error: IOException, 	http://testepanel/ssi
+0/19/2005 9:51:10 	ProxyConnection.run(ProxyConnection.java:491)	java.net.SocketTimeoutException: Read timed out
+0/19/2005 9:51:22 	Error: IOException, 	http://testepanel/ssi
+0/19/2005 9:51:22 	ProxyConnection.run(ProxyConnection.java:491)	java.net.SocketTimeoutException: Read timed out
+0/19/2005 9:51:39 	Error: IOException, 	http://testepanel/ssi
+0/19/2005 9:51:39 	ProxyConnection.run(ProxyConnection.java:491)	java.net.SocketTimeoutException: Read timed out
+0/19/2005 9:51:57 	Error: IOException, 	http://testepanel/ssi
+0/19/2005 9:51:57 	ProxyConnection.run(ProxyConnection.java:491)	java.net.SocketTimeoutException: Read timed out
+0/19/2005 9:52:4 	Error: IOException, 	http://epanel/ssi
+0/19/2005 9:52:4 	ProxyConnection.run(ProxyConnection.java:491)	java.net.SocketTimeoutException: Read timed out
+0/19/2005 9:53:38 	Error: IOException, 	http://epanel/ssi
+0/19/2005 9:53:38 	ProxyConnection.run(ProxyConnection.java:491)	java.net.SocketTimeoutException: Read timed out
