@@ -20,9 +20,14 @@ public class Option
         mValue = value;
     }
 
-    String getValue()
+    public String getValue()
     {
         return mValue;
+    }
+
+    public OptionDefiniton getDefinition()
+    {
+        return mDef;
     }
 
     public boolean equals(Object obj)
