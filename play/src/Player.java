@@ -8,7 +8,6 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
-import java.text.NumberFormat;
 import java.util.logging.Logger;
 
 import nu.mine.mosher.core.Immutable;
