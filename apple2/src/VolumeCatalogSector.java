@@ -33,6 +33,7 @@ public class VolumeCatalogSector extends VolumeEntity
     public void dump(StringBuffer s)
     {
         VolumeSector sect = (VolumeSector)rSector.get(0);
+        s.append("Catalog ");
         s.append(sect.toString());
         s.append(": ");
         for (Iterator i = this.rEntry.iterator(); i.hasNext();)
