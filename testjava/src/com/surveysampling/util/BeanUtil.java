@@ -86,4 +86,145 @@ public final class BeanUtil
         }
         return null;
     }
+
+    public static void createTypedArray(
+        String propertyName,
+        Object bean,
+        Method method,
+        String[] values,
+        Class t,
+        Class propertyEditorClass)
+    {
+
+        if (propertyEditorClass != null)
+        {
+            Object[] tmpval = new Integer[values.length];
+            for (int i = 0; i < values.length; i++)
+            {
+                tmpval[i] = getValueFromBeanInfoPropertyEditor(t, propertyName, values[i], propertyEditorClass);
+            }
+            method.invoke(bean, new Object[] { tmpval });
+        }
+        else if (t.equals(Integer.class))
+        {
+            Integer[] tmpval = new Integer[values.length];
+            for (int i = 0; i < values.length; i++)
+                tmpval[i] = new Integer(values[i]);
+            method.invoke(bean, new Object[] { tmpval });
+        }
+        else if (t.equals(Byte.class))
+        {
+            Byte[] tmpval = new Byte[values.length];
+            for (int i = 0; i < values.length; i++)
+                tmpval[i] = new Byte(values[i]);
+            method.invoke(bean, new Object[] { tmpval });
+        }
+        else if (t.equals(Boolean.class))
+        {
+            Boolean[] tmpval = new Boolean[values.length];
+            for (int i = 0; i < values.length; i++)
+                tmpval[i] = new Boolean(values[i]);
+            method.invoke(bean, new Object[] { tmpval });
+        }
+        else if (t.equals(Short.class))
+        {
+            Short[] tmpval = new Short[values.length];
+            for (int i = 0; i < values.length; i++)
+                tmpval[i] = new Short(values[i]);
+            method.invoke(bean, new Object[] { tmpval });
+        }
+        else if (t.equals(Long.class))
+        {
+            Long[] tmpval = new Long[values.length];
+            for (int i = 0; i < values.length; i++)
+                tmpval[i] = new Long(values[i]);
+            method.invoke(bean, new Object[] { tmpval });
+        }
+        else if (t.equals(Double.class))
+        {
+            Double[] tmpval = new Double[values.length];
+            for (int i = 0; i < values.length; i++)
+                tmpval[i] = new Double(values[i]);
+            method.invoke(bean, new Object[] { tmpval });
+        }
+        else if (t.equals(Float.class))
+        {
+            Float[] tmpval = new Float[values.length];
+            for (int i = 0; i < values.length; i++)
+                tmpval[i] = new Float(values[i]);
+            method.invoke(bean, new Object[] { tmpval });
+        }
+        else if (t.equals(Character.class))
+        {
+            Character[] tmpval = new Character[values.length];
+            for (int i = 0; i < values.length; i++)
+                tmpval[i] = new Character(values[i].charAt(0));
+            method.invoke(bean, new Object[] { tmpval });
+        }
+        else if (t.equals(int.class))
+        {
+            int[] tmpval = new int[values.length];
+            for (int i = 0; i < values.length; i++)
+                tmpval[i] = Integer.parseInt(values[i]);
+            method.invoke(bean, new Object[] { tmpval });
+        }
+        else if (t.equals(byte.class))
+        {
+            byte[] tmpval = new byte[values.length];
+            for (int i = 0; i < values.length; i++)
+                tmpval[i] = Byte.parseByte(values[i]);
+            method.invoke(bean, new Object[] { tmpval });
+        }
+        else if (t.equals(boolean.class))
+        {
+            boolean[] tmpval = new boolean[values.length];
+            for (int i = 0; i < values.length; i++)
+                tmpval[i] = (Boolean.valueOf(values[i])).booleanValue();
+            method.invoke(bean, new Object[] { tmpval });
+        }
+        else if (t.equals(short.class))
+        {
+            short[] tmpval = new short[values.length];
+            for (int i = 0; i < values.length; i++)
+                tmpval[i] = Short.parseShort(values[i]);
+            method.invoke(bean, new Object[] { tmpval });
+        }
+        else if (t.equals(long.class))
+        {
+            long[] tmpval = new long[values.length];
+            for (int i = 0; i < values.length; i++)
+                tmpval[i] = Long.parseLong(values[i]);
+            method.invoke(bean, new Object[] { tmpval });
+        }
+        else if (t.equals(double.class))
+        {
+            double[] tmpval = new double[values.length];
+            for (int i = 0; i < values.length; i++)
+                tmpval[i] = Double.valueOf(values[i]).doubleValue();
+            method.invoke(bean, new Object[] { tmpval });
+        }
+        else if (t.equals(float.class))
+        {
+            float[] tmpval = new float[values.length];
+            for (int i = 0; i < values.length; i++)
+                tmpval[i] = Float.valueOf(values[i]).floatValue();
+            method.invoke(bean, new Object[] { tmpval });
+        }
+        else if (t.equals(char.class))
+        {
+            char[] tmpval = new char[values.length];
+            for (int i = 0; i < values.length; i++)
+                tmpval[i] = values[i].charAt(0);
+            method.invoke(bean, new Object[] { tmpval });
+        }
+        else
+        {
+            Object[] tmpval = new Integer[values.length];
+            for (int i = 0; i < values.length; i++)
+            {
+                tmpval[i] = getValueFromPropertyEditorManager(t, propertyName, values[i]);
+            }
+            method.invoke(bean, new Object[] { tmpval });
+        }
+    }
 }
