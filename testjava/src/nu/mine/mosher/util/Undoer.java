@@ -1,14 +1,29 @@
-/*
- * TODO
- *
- * Created on Jan 14, 2004
- */
 package com.surveysampling.util;
 
-/**
- * TODO
- */
+import java.util.LinkedList;
+
 public class Undoer
 {
+    private final LinkedList mrUndo = new LinkedList();
+    private final LinkedList mrRedo = new LinkedList();
 
+    protected void saveForUndo(Cloneable state) throws CloneNotSupportedException
+    {
+        mrUndo.addLast(new ImmutableReference(state));
+        mrRedo.clear(); // ???
+    }
+
+    public Cloneable undo(Cloneable state) throws CloneNotSupportedException
+    {
+        mrRedo.addFirst(new ImmutableReference(state));
+        ImmutableReference prevState = (ImmutableReference)mrUndo.removeLast();
+        return prevState.object();
+    }
+
+    public Cloneable redo(Cloneable state) throws CloneNotSupportedException
+    {
+        mrUndo.addLast(new ImmutableReference(state));
+        ImmutableReference prevState = (ImmutableReference)mrUndo.removeFirst();
+        return prevState.object();
+    }
 }
