@@ -1,14 +1,14 @@
 /*
- * Created on Jul 15, 2004
+ * Created on July 15, 2004
  */
 package nu.mine.mosher.ja2;
 
 /**
- * TODO
+ * Indicates that an invalid command line
+ * was passed to the application.
  * 
- * @author chrism
+ * @author Chris Mosher
  */
 public class InvalidCommandLine extends Exception
 {
-
 }
