@@ -65,7 +65,7 @@ public class TestBeans
             {
                 throw new IllegalArgumentException("Cannot set a scalar property to an array of values.");
             }
-            v = convertScalar(value, classProp);
+            v = convertScalar(value[0], classProp);
         }
         return v;
     }
@@ -81,10 +81,10 @@ public class TestBeans
         return (PropertyDescriptor)mapPDs.get(property);
     }
 
-    public static Object convertScalar(String[] value, Class classProp) throws IntrospectionException, IllegalArgumentException
+    public static Object convertScalar(String value, Class classProp) throws IntrospectionException, IllegalArgumentException
     {
         PropertyEditor ed = getPropertyEditor(classProp);
-        ed.setAsText(value[0]);
+        ed.setAsText(value);
         return ed.getValue();
     }
 
