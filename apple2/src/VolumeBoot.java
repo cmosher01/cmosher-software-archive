@@ -104,8 +104,8 @@ public class VolumeBoot extends VolumeEntity
     }
 
     /**
-     * @param data2
-     * @param dos80master2
+     * @param r1
+     * @param r2
      * @return
      */
     private boolean same(byte[] r1, byte[] r2)
