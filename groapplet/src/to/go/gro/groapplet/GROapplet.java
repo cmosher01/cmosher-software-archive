@@ -8,6 +8,7 @@ import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.swing.JApplet;
@@ -16,6 +17,7 @@ import javax.swing.JTextArea;
 import javax.swing.UIManager;
 
 import nu.mine.mosher.core.StringFieldizer;
+import nu.mine.mosher.core.StringFieldizer.Iter;
 
 public class GROapplet extends JApplet
 {
@@ -164,6 +166,7 @@ public class GROapplet extends JApplet
         {
             String slineIndi = br.readLine();
             StringFieldizer sf = new StringFieldizer(slineIndi);
+            Iterator i = sf.iterator();
             String id = sf.nextToken();
 			int nid = Integer.parseInt(id.substring(1));
             String name = sf.nextToken();
