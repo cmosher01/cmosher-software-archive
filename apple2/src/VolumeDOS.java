@@ -226,7 +226,13 @@ public class VolumeDOS extends VolumeEntity
      */
     private void clearIgnored(int[] rIgn)
     {
-        for (int i = 0; i < rIgn.length)
+        for (int i = 0; i < rIgn.length/2; ++i)
+        {
+            for (int b = rIgn[i*2]; b <= rIgn[i*2+1]; ++b)
+            {
+                rbCmp[b] = 0;
+            }
+        }
     }
 
     /**
