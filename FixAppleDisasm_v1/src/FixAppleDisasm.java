@@ -55,6 +55,15 @@ public class FixAppleDisasm
 		}
     }
 
+	private static class Line
+	{
+		public int addr;
+		public String label;
+		public String instr;
+		public String oper;
+		public String comment;
+	}
+
     public static void FixDis(Reader in, Writer out) throws IOException
     {
 		BufferedReader inbuf = null;
