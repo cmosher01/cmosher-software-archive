@@ -67,7 +67,7 @@ public final class BeanUtil
                 {
                     return;
                 }
-                Object val = convert(param, value, type, propertyEditorClass);
+                Object val = convert(value, type, propertyEditorClass);
                 if (val != null)
                 {
                     method.invoke(bean, new Object[] { val });
@@ -229,7 +229,7 @@ public final class BeanUtil
         }
     }
 
-    private static Object convert(String propertyName, String s, Class t, Class propertyEditorClass) throws ParameterParseException, InstantiationException, IllegalAccessException
+    private static Object convert(String s, Class t, Class propertyEditorClass) throws ParameterParseException, InstantiationException, IllegalAccessException
     {
         if (s == null)
         {
