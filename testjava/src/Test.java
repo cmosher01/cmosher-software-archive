@@ -70,7 +70,7 @@ public class Test
 	{
 
         URL x = Test.class.getClassLoader().getResource("");
-        File f = new File(x.getPath());
+        File f = new File(x.toExternalForm());
         System.out.println(f.getCanonicalPath());
         if (f.isDirectory())
         {
