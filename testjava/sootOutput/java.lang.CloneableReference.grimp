@@ -1,0 +1,41 @@
+public class java.lang.CloneableReference extends java.lang.Object implements java.lang.Cloneable
+{
+    private java.lang.Object referent;
+
+    public void <init>(java.lang.Object)
+    {
+        java.lang.CloneableReference this;
+        java.lang.Object referent;
+
+        this := @this;
+        referent := @parameter0;
+        this.<init>();
+        this.referent = referent;
+        return;
+    }
+
+    public java.lang.Object clone()
+    {
+        java.lang.CloneableReference this;
+        java.lang.Object c;
+        java.lang.CloneNotSupportedException e;
+
+        this := @this;
+        c = null;
+
+     label0:
+        c = this.referent.clone();
+
+     label1:
+        goto label3;
+
+     label2:
+        e := @caughtexception;
+        goto label3;
+
+     label3:
+        return c;
+
+        catch java.lang.CloneNotSupportedException from label0 to label1 with label2;
+    }
+}
