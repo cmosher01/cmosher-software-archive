@@ -29,6 +29,7 @@ public class Hex2BinTest extends TestCase
         assertEquals("1A",Hex2Bin.hexbyte((byte)26));
         assertEquals("7F",Hex2Bin.hexbyte((byte)127));
         assertEquals("80",Hex2Bin.hexbyte((byte)128));
+        assertEquals("80",Hex2Bin.hexbyte((byte)-128));
     }
 
 }
