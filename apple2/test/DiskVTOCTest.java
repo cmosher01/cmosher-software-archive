@@ -142,6 +142,33 @@ public class DiskTest extends TestCase
     }
 
     /**
+     * test VTOC for DOS 3.2 (?) disk T$11 S$00
+     * I have some disks from "Computer Learning Center" in Tacoma, Washington, that
+     * have a 2 in the 4th byte, which theoretically indicates a DOS 3.2 disk. Possibly
+     * these are DOS 3.3 disks converted from DOS 3.2 disks.
+     */
+    public void testVTOC_Dos32()
+    {
+        assertTrue(Disk.isDos33VTOC(Hex2Bin.hex2Bin(
+        "00 11 0F 02 00 00 FE 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 7A 00 00 00 00 00 00 00 00 "+
+        "04 FF 00 00 23 10 00 01 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
+        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ")));
+    }
+
+    /**
      * test VTOC for Franklin (1983) blank disk T$11 S$00
      * (note, has error in sector count).
      */
