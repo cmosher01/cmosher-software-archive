@@ -60,7 +60,7 @@ public class FileTreeNode extends DefaultMutableTreeNode
         return ((File)userObject).isFile();
     }
 
-    public int[] getChildIndicies()
+    public int[] getChildrenIndicies()
     {
         int rc[] = new int[getChildCount()];
         int i = 0;
