@@ -71,6 +71,8 @@ public class GDiffView extends JFrame
 
     private JList listGDiff;
 
+    List rcmd = new ArrayList();
+
 
 
     public GDiffView(String fileSrc, String fileGDiff) throws BadLocationException, IOException
@@ -92,12 +94,12 @@ public class GDiffView extends JFrame
         JScrollPane scrTrg = new JScrollPane(paneTrg);
         scrTrg.setPreferredSize(new Dimension(500,460));
 
-        List rcmd = new ArrayList();
         rcmd.add(new GDiffCopy(new Range(0,1)));
         rcmd.add(new GDiffData(new byte[]{65,67}));
         rcmd.add(new GDiffCopy(new Range(2,3)));
         rcmd.add(new GDiffCopy(new Range(1,4)));
         rcmd.add(new GDiffEnd());
+
         ListModel model = new GDiffCmdListModel(rcmd);
         listGDiff = new JList();
         listGDiff.setModel(model);
