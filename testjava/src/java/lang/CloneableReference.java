@@ -1,6 +1,6 @@
 package java.lang;
 
-public class LangTest
+public class LangTest implements Cloneable
 {
     public Object clone() throws CloneNotSupportedException
     {
