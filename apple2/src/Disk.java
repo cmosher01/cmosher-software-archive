@@ -297,7 +297,11 @@ public class Disk
                             }
                             if (tsmapMapsInCatalog.isMarked(cur.getSectorInDisk()))
                             {
-                                System.out.print
+                                System.out.print(" (cataloged)");
+                            }
+                            else
+                            {
+                                System.out.print(" (orphaned)");
                             }
                             System.out.println();
                         }
