@@ -11,8 +11,8 @@ public class RelationTypeFactory
 		assert RelationType.class.isAssignableFrom(cl);
 	}
 
-	public RelationType make(String name)
-	{
-		return cl.newInstance();
-	}
+//	public RelationType make(String name)
+//	{
+//		return cl.newInstance();
+//	}
 }
