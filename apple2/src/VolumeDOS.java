@@ -133,6 +133,9 @@ public class VolumeDOS extends VolumeEntity
     private static final int[] rFranklinValue = {0xBD, 0x00, 0x02, 0xC9, 0xE1, 0x90, 0x06, 0xC9, 0xFB, 0xB0, 0x02, 0x29, 0xDF,
             0x60, 0x20, 0xDF, 0x3C};
 
+    private static final int[] rFranklinFixup = {0x1098};
+
+
 
     private static List rPosDOS = new ArrayList();
     private static byte[] rbClear1980 = new byte[0x4000-0x1B00];
@@ -204,6 +207,7 @@ public class VolumeDOS extends VolumeEntity
         {
             e.printStackTrace();
         }
+
     }
 
     /**
