@@ -9,11 +9,13 @@ public class A2DiskImage
 	private final int BYTES_PER_SECTOR = 0x100;
 	private final int SECTORS_PER_TRACK = 0x10;
 
-	private static final int UNKNOWN = 0;
-	private static final int DOS33 = 1;
-	private static final int PRODOS = 2;
+	static final int UNKNOWN = 0;
+	static final int DOS33 = 1;
+	static final int PRODOS = 2;
 
 	private int osType = UNKNOWN;
+
+	private A2DiskContents contents = null;
 
 	public A2DiskImage(byte[] image)
 	{
@@ -36,6 +38,8 @@ public class A2DiskImage
 	private void parseImage()
 	{
 		fixOrder();
+		contents = new A2DiskContents(this);
+		contents.parse(osType);
 	}
 
 	private void fixOrder()
