@@ -335,7 +335,7 @@ public class ProxyConnection extends Thread
 
                 // create the message to send to server
                 sb = new StringBuffer();
-                sb.append(c_header.getMethod()).append(" ").append(doc).append(" ").append(c_header.Version).append(_CRLF);
+                sb.append(c_header.getMethod()).append(" ").append(doc).append(" ").append(c_header.getVersion()).append(_CRLF);
                 Map ht = c_header.getHeaderFields();
                 for (Iterator enu = ht.keySet().iterator(); enu.hasNext();)
                 {
