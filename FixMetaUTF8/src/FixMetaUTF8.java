@@ -65,7 +65,7 @@ public class FixMetaUTF8
 
     public static StringBuffer removeContentTypeMeta(StringBuffer sb)
     {
-        Pattern pat = Pattern.compile("<meta.*?charset.*?>",Pattern.CASE_INSENSITIVE|Pattern.MULTILINE|Pattern.DOTALL);
+        Pattern pat = Pattern.compile("<meta\\shttp-equiv.*?>",Pattern.CASE_INSENSITIVE|Pattern.MULTILINE|Pattern.DOTALL);
         Matcher matcher = pat.matcher(sb);
         return new StringBuffer(matcher.replaceFirst(""));
     }
