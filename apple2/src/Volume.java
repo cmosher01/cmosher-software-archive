@@ -37,6 +37,10 @@ public class Volume
         {
             Dos33CatalogEntry ent = (Dos33CatalogEntry)i.next();
             DiskPos tsmap = ent.getStart();
+            if (disk.isDos33TSMapSector(tsmap))
+            {
+                
+            }
         }
     }
 
