@@ -39,7 +39,7 @@ public class Player implements Immutable
     {
         LoggingInitializer.init();
 
-		GedcomAnselCharsetProvider cp;
+		GedcomAnselCharsetProvider cp = new GedcomAnselCharsetProvider();
 		if (!Charset.isSupported("x-gedcom-ansel"))
 		{
 			System.err.println("You must create a file META-INF/services/java.nio.charsets.spi.CharsetProvider");
