@@ -5,13 +5,13 @@ public class UndoableReference
     private Cloneable state;
     private Undoer undoer;
 
-    public UndoableReference(Cloneable object) throws CloneNotSupportedException
+    public UndoableReference(Cloneable state) throws CloneNotSupportedException
     {
         if (object == null)
         {
             throw new IllegalArgumentException();
         }
-        state = object;
+        this.state = state;
     }
 
     public Cloneable state()
