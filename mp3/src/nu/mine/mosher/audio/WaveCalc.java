@@ -80,9 +80,7 @@ public class WaveCalc
 			throw new Exception("Invalid fmt chunk.");
 		}
 
-		byte stereolo = in.readByte();
-		byte stereohi = in.readByte();
-		boolean stereo = (stereolo==2);
+		boolean stereo = (readWord(in)==2);
 
 		int Hz = in.readInt();
 		int bytespersec = in.readInt();
