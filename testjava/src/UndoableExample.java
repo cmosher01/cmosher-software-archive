@@ -3,7 +3,7 @@ import com.surveysampling.util.UndoableReference;
 public class UndoableExample implements Cloneable
 {
     private int x;
-    private UndoableReference u;
+    private final UndoableReference u;
 
 
 
