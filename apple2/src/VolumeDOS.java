@@ -195,7 +195,7 @@ public class VolumeDOS extends VolumeEntity
              * Assume is normal DOS 3.3, so find out which
              * version (1980, 1983, or 1986).
              */
-            short addr = (short)rb[0x84]+rb[0x85]<<8;
+            short addr = (short)(rb[0x84]+rb[0x85]<<8);
             
         }
     }
