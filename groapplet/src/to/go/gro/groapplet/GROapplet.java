@@ -206,7 +206,7 @@ public class GROapplet extends JApplet
             famis.add(fami);
         }
 
-        fc = new FamilyChart(indis, famis);
+        fc = new FamilyChart(this,indis,famis);
     }
 
     protected void createIndi(IndiSet indis, Map mapIdToIndi, String id, int x, int y, String name, String birth, String death)
