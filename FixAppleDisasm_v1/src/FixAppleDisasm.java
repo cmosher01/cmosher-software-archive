@@ -98,7 +98,12 @@ public class FixAppleDisasm
 				s = s.substring(0,com).trim();
 			}
 
-			String saddr = s.substring(0,4);
+			String saddr = "";
+			if (s.length() >= 4)
+			{
+				saddr = s.substring(0,4);
+			}
+
 			int addr = -1;
 			try
 			{
@@ -119,7 +124,8 @@ public class FixAppleDisasm
 				String nextChar = s.substring(4,5);
 				if (nextChar.equalsIgnoreCase("-"))
 				{
-					if (s.substring(5,8).equalsIgnoreCase("   ") &&
+					if (s.length() >= 26 &&
+					s.substring(5,8).equalsIgnoreCase("   ") &&
 					s.substring(10,11).equalsIgnoreCase(" ") &&
 					s.substring(13,14).equalsIgnoreCase(" ") &&
 					s.substring(16,20).equalsIgnoreCase("    ") &&
