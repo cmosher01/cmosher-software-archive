@@ -6,12 +6,12 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.caucho.http.log.AbstractAccessLog;
+import com.caucho.http.log.AccessLog;
 
 /**
  * @author Chris Mosher
  */
-public class SimpleAccessLog extends AbstractAccessLog
+public class SimpleAccessLog extends AccessLog
 {
     public SimpleAccessLog()
     {
