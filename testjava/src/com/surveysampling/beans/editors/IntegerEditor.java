@@ -1,4 +1,4 @@
-package java.lang;
+package com.surveysampling.beans.editors;
 
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorSupport;
