@@ -42,7 +42,7 @@ public class Pool<T>
 		T theObject = unused.removeFirst();
 		T theProxy = makeProxy(theObject);
 
-		inUse.put(new WeakReference(theProxy,recycleBin),theObject);
+		inUse.put(new WeakReference<T>(theProxy,recycleBin),theObject);
 
 		return theProxy;
 	}
