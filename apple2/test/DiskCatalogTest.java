@@ -171,7 +171,7 @@ public class DiskCatalogTest extends TestCase
         r.add(new DiskPos(0x11,0xF));
         assertManyPos("ESDOS.dsk",r);
     }
-    
+
     /**
      * @throws IOException
      * @throws InvalidPosException
@@ -205,6 +205,18 @@ public class DiskCatalogTest extends TestCase
         r.add(new DiskPos(0x11,0xF));
         assertManyPos("Bootlegger.dsk",r);
     }
+
+    /**
+     * @throws IOException
+     * @throws InvalidPosException
+     */
+    public void testHybrid() throws IOException, InvalidPosException
+    {
+        List r = new ArrayList();
+        r.add(new DiskPos(0x11,0xF));
+        assertManyPos("hybrid.dsk",r);
+    }
+
     //    public void testDOS33_Others() throws IOException, InvalidPosException
 //    {
 //        assertOnePos("daviddos_2.dsk",new DiskPos(0x11,0));
