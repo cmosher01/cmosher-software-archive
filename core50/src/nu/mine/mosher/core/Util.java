@@ -46,7 +46,7 @@ public final class Util
         return r;
     }
 
-	public static<T> HashSet set(Iterable<T> i)
+	public static<T> HashSet<T> set(Iterable<T> i)
 	{
 		HashSet<T> s = new HashSet<T>();
 		for (T t : i)
