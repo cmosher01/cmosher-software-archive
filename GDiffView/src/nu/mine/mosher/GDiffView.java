@@ -154,10 +154,9 @@ public class GDiffView extends JFrame
         paneSrc = new JTextPaneNoWrap(docSrc);
         paneSrc.setEditable(false);
         JScrollPane scrSrc = new JScrollPane(paneSrc);
-        Dimension d = scrSrc.getMaximumSize();
 //        scrSrc.setMinimumSize(new Dimension(100,100));
 //        scrSrc.setPreferredSize(new Dimension(400,430));
-//        scrSrc.setMaximumSize(new Dimension(Integer.MAX_VALUE,Integer.MAX_VALUE));
+        scrSrc.setMaximumSize(new Dimension(Integer.MAX_VALUE,Integer.MAX_VALUE));
 
         docTrg = new DefaultStyledDocument();
         paneTrg = new JTextPaneNoWrap(docTrg);
@@ -165,7 +164,7 @@ public class GDiffView extends JFrame
         JScrollPane scrTrg = new JScrollPane(paneTrg);
 //        scrTrg.setMinimumSize(new Dimension(100,100));
 //        scrTrg.setPreferredSize(new Dimension(400,430));
-//        scrTrg.setMaximumSize(new Dimension(5000,5000));
+        scrTrg.setMaximumSize(new Dimension(Integer.MAX_VALUE,Integer.MAX_VALUE));
 
         ListModel model = new GDiffCmdListModel(rCopy);
         listGDiff = new JList();
