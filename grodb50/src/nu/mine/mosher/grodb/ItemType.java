@@ -35,7 +35,7 @@ public class ItemType<T extends Enum<T>>
 
 	public boolean isa(T x)
 	{
-		x.valueOf("test");
+		x.valueOf(T,"test");
 		return (known != null && known.equals(x));
 	}
 }
