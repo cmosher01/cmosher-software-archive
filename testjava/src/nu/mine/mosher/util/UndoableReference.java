@@ -5,7 +5,7 @@ public final class UndoableReference
     private Cloneable state;
     private Undoer undoer = new Undoer();
 
-    public UndoableReference(Cloneable state) throws CloneNotSupportedException
+    public UndoableReference(Cloneable state)
     {
         if (state == null)
         {
