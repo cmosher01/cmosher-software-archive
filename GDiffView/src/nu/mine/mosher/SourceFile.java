@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -21,6 +22,7 @@ import nu.mine.mosher.checksum.StreamChecksum;
 public class SourceFile
 {
     private final SortedMap map = new TreeMap();
+    private final int w;
 
     /**
      * @param src target file
@@ -29,6 +31,7 @@ public class SourceFile
      */
     public void calculateWindowChecksums(File src, int cWindow) throws IOException
     {
+        this.w = cWindow;
         InputStream in = new FileInputStream(src);
         StreamChecksum inCheck = new StreamChecksum(map);
         inCheck.init(in,cWindow);
@@ -43,7 +46,8 @@ public class SourceFile
             List winds = (List)map.get(ck);
             if (winds.size() == 1)
             {
-                winds;
+                Long lng = (Long)winds.get(0);
+                offset = lng.longValue()*w;
             }
         }
         return offset;
