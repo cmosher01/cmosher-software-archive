@@ -50,6 +50,11 @@ public class MySQLTest
 			createSchema();
 			log.info("Done creating schema.");
 
+			log.info("Creating family...");
+			dbUpdate("delete from Family");
+			fland = dbInsert("insert into Family(name) values(\"Flandreau\")");
+			log.fine("Done creating family with id "+fland);
+
 			log.info("Reading data...");
 			BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(new File("F:\\Genealogy\\by family\\Flandreau\\census\\flandreau_census.csv"))));
 			for (String s = in.readLine(); s != null; s = in.readLine())
@@ -173,9 +178,6 @@ public class MySQLTest
 
     protected void insertData() throws SQLException
     {
-    	dbUpdate("delete from Family");
-    	fland = dbInsert("insert into Family(name) values(\"Flandreau\")");
-    	log.fine("Inserted Flandreau with id "+fland);
 
 //		dbInsert("insert into Census1790(nameLast,nameFirst,nameSuffix,maleAge16plus,maleAge0to15,femaleAge0plus,family) values "+
 //		"(\"Flandreau\",\"Benjamin\",null,4,2,5,"+fland+"), "+
