@@ -84,14 +84,6 @@ public class ImmutableReference
 
     public int hashCode()
     {
-        int h = 17;
-
-        h *= 37;
-        h += ref==null ? 0 : ref.hashCode();
-
-        h *= 37;
-        h += b==null ? 0 : b.hashCode();
-
-        return h;
+        this.ref.hashCode();
     }
 }
