@@ -62,6 +62,11 @@ public class TestBeans
         }
 
         Method wr = pd.getWriteMethod();
+        if (wr == null)
+        {
+            throw new IllegalAccessException("Cannot write property " + property);
+        }
+
         wr.invoke(bean, new Object[] { v });
     }
 
