@@ -1,12 +1,12 @@
-import nu.mine.mosher.ja2.ApplicationAborting;
-import nu.mine.mosher.ja2.SwingApplication;
-import nu.mine.mosher.ja2.CommandLineArgHandler;
-import nu.mine.mosher.ja2.ExceptionHandler;
-import nu.mine.mosher.ja2.SwingGUI;
-
 /*
  * Created on Aug 31, 2004
  */
+
+import nu.mine.mosher.swingapp.ApplicationAborting;
+import nu.mine.mosher.swingapp.CommandLineArgHandler;
+import nu.mine.mosher.swingapp.ExceptionHandler;
+import nu.mine.mosher.swingapp.SwingApplication;
+import nu.mine.mosher.swingapp.SwingGUI;
 
 /**
  * Contains the "main" method (external entry point) for
