@@ -258,55 +258,8 @@ public class MySQLTest
 		int f26to44 = readInt(i.next());
 		int f45to150 = readInt(i.next());
 
-		int idImage = 0;
-		PreparedStatement st = null;
-		try
-		{
-			st = db.prepareStatement(
-			"select id from ImageIdent where "+
-			"year = ? and state = ? and county = ? and township = ? and district = ? and image = ?");
-			st.setInt(1,1800);
-			st.setString(2,state);
-			st.setString(3,county);
-			st.setString(4,township);
-			st.setInt(5,district);
-			st.setInt(6,image);
-			ResultSet rs = st.executeQuery();
-			if (rs.next())
-			{
-				idImage = rs.getInt("id");
-			}
-		}
-		finally
-		{
-			closeStatement(st);
-			st = null;
-		}
-		if (idImage == 0)
-		{
-			try
-			{
-				st = db.prepareStatement(
-				"insert into ImageIdent (year,state,county,township,district,image) values (?,?,?,?,?,?)");
-				st.setInt(1,1800);
-				st.setString(2,state);
-				st.setString(3,county);
-				st.setString(4,township);
-				st.setInt(5,district);
-				st.setInt(6,image);
-				st.execute();
-				ResultSet rs = st.getGeneratedKeys();
-				while (rs.next())
-				{
-					idImage = rs.getInt(1);
-				}
-			}
-			finally
-			{
-				closeStatement(st);
-				st = null;
-			}
-		}
+        PreparedStatement st;
+        int idImage = insertImage(state, county, township, district, image);
 
 		int hh = 0;
 		try
@@ -361,6 +314,60 @@ public class MySQLTest
 			st = null;
 		}
 	}
+
+    protected int insertImage(String state, String county, String township, int district, int image) throws SQLException
+    {
+        int idImage = 0;
+        PreparedStatement st = null;
+        try
+        {
+        	st = db.prepareStatement(
+        	"select id from ImageIdent where "+
+        	"year = ? and state = ? and county = ? and township = ? and district = ? and image = ?");
+        	st.setInt(1,1800);
+        	st.setString(2,state);
+        	st.setString(3,county);
+        	st.setString(4,township);
+        	st.setInt(5,district);
+        	st.setInt(6,image);
+        	ResultSet rs = st.executeQuery();
+        	if (rs.next())
+        	{
+        		idImage = rs.getInt("id");
+        	}
+        }
+        finally
+        {
+        	closeStatement(st);
+        	st = null;
+        }
+        if (idImage == 0)
+        {
+        	try
+        	{
+        		st = db.prepareStatement(
+        		"insert into ImageIdent (year,state,county,township,district,image) values (?,?,?,?,?,?)");
+        		st.setInt(1,1800);
+        		st.setString(2,state);
+        		st.setString(3,county);
+        		st.setString(4,township);
+        		st.setInt(5,district);
+        		st.setInt(6,image);
+        		st.execute();
+        		ResultSet rs = st.getGeneratedKeys();
+        		while (rs.next())
+        		{
+        			idImage = rs.getInt(1);
+        		}
+        	}
+        	finally
+        	{
+        		closeStatement(st);
+        		st = null;
+        	}
+        }
+        return idImage;
+    }
 
     protected int readInt(Object stringField)
     {
