@@ -28,6 +28,7 @@ import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PushbackInputStream;
@@ -48,7 +49,7 @@ public class Delta
     {
     }
 
-    public static void computeDelta(File sourceFile, File targetFile, GDiffWriter output) throws IOException, Exception //gls031504a
+    public static void computeDelta(File sourceFile, File targetFile, GDiffWriter output) throws IOException
     {
 
         int targetLength = (int)targetFile.length();
@@ -73,7 +74,7 @@ public class Delta
             source.close();
             target.close();
             output.close();
-            throw new Exception("Unable to compute delta, input file is too short");
+            throw new IOException("Unable to compute delta, input file is too short");
             //gls031504a end
         }
 
@@ -247,7 +248,7 @@ public class Delta
     }
 
     // sample program to compute the difference between two input files.
-    public static void main(String argv[])
+    public static void main(String argv[]) throws IOException
     {
         if (argv.length != 3)
         {
