@@ -49,7 +49,7 @@ public class Test
             String s = (String)i.next();
             System.out.println(s);
         }
-//      for (String s : new ReaderLines(f))
+//      for (String s : new ReaderLines(r))
 //      {
 //          System.out.println(s);
 //      }
