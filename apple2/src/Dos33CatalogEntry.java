@@ -24,7 +24,7 @@ public class Dos33CatalogEntry
      * @param nameOrig
      * @param name
      */
-    public Dos33CatalogEntry(final DiskPos dataPos, final boolean locked, final int fileTypeID, final int sector, final byte[] nameOrig, final String name)
+    public Dos33CatalogEntry(final DiskPos dataPos, final boolean locked, final int fileTypeID, final int sector, final byte[] nameOrig)
     {
         this.dataPos = dataPos;
         this.locked = locked;
@@ -32,5 +32,12 @@ public class Dos33CatalogEntry
         cSector = sector;
         this.nameOrig = nameOrig;
         this.name = name;
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < nameOrig.length; ++i)
+        {
+            byte c = nameOrig[i];
+            sb.append((char)(byte)(c & 0x0000007F));
+        }
+        this.name = sb.toString();
     }
 }
