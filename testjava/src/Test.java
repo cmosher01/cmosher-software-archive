@@ -62,7 +62,7 @@ public class Test
         double milliseconds = (end-start);
         double microseconds = milliseconds*1000;
         double per = microseconds/LOOP;
-        System.out.println("elapsed time: "+microseconds+" microseconds");
+        System.out.println("elapsed time: "+per+" microseconds");
 
 
 
