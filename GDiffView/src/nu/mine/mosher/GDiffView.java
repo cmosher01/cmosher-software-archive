@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
  
@@ -37,13 +38,20 @@ public class GDiffVeiew extends JFrame
     private JTextPane pane;
    
     private Map styles = new HashMap();
+
+    private File src;
+
+    private File dif;
  
  
  
-    public GDiffVeiew() throws BadLocationException
+    public GDiffVeiew(String fileSrc, String fileGDiff) throws BadLocationException
     {
         super("GDiffVeiew");
- 
+
+        src = new File(fileSrc);
+        dif = new File(fileGDiff);
+
         doc = new DefaultStyledDocument();
         pane = new JTextPane(doc);
         JScrollPane scrollPane = new JScrollPane(pane);
@@ -100,7 +108,7 @@ public class GDiffVeiew extends JFrame
     public static void main(String[] args) throws BadLocationException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, InterruptedException
     {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        GDiffVeiew frame = new GDiffVeiew();
+        GDiffVeiew frame = new GDiffVeiew(args[0],args[1]);
         Thread.sleep(5000);
     }
 }
