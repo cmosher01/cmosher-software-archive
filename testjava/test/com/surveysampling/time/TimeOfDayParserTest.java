@@ -36,6 +36,9 @@ public class TimeOfDayParserTest extends TestCase
 
     public void testFormats() throws ParseException
     {
+        makeAndCheck("9:98",9,98,0,0);
+        makeAndCheck("99:98",99,98,0,0);
+        makeAndCheck("99:98:97",99,98,97,0);
         makeAndCheck("99:98:97.996",99,98,97,996);
     }
 
