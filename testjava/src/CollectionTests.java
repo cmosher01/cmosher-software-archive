@@ -15,6 +15,7 @@ public final class CollectionTests
         somelist.add("test three");
 
         String[] rs = (String[])somelist.toArray(new String[somelist.size()]);
+
         for (int i = 0; i < rs.length; ++i)
         {
             String string = rs[i];
