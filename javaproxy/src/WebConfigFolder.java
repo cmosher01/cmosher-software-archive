@@ -297,7 +297,7 @@ class WebConfigFolder implements ActionListener, ConfigInterface
         try
         {
             os = new FileOutputStream(inifile);
-            httpconfig.save(os,header);
+            httpconfig.store(os,header);
             os.close();
         }
         catch (IOException e)
