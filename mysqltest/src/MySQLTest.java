@@ -64,9 +64,12 @@ public class MySQLTest
 
 	protected void insertData() throws SQLException
     {
-    	dbUpdate("delete from family");
-    	int fland = dbInsert("insert into family(name) values(\"Flandreau\")");
+    	dbUpdate("delete from Family");
+    	int fland = dbInsert("insert into Family(name) values(\"Flandreau\")");
     	log.fine("Inserted Flandreau with id "+fland);
+
+		dbInsert("insert into Census1790(nameLast,nameFirst,maleAge16plus,maleAge0to15,female,family) "+
+		"values(\"Flandreau\",\"Benjamin\",4,2,5,"+fland+")");
     }
 
     protected void createSchema() throws SQLException
@@ -81,6 +84,7 @@ public class MySQLTest
 		"Census1790 "+
 		"( "+
 		"    id integer unsigned not null auto_increment primary key, "+
+		"    family integer unsigned not null foreign key references Family.id on delete cascade, "+
 		"    nameLast varchar(64), "+
 		"    nameFirst varchar(64), "+
 		"    nameMiddle varchar(8), "+
