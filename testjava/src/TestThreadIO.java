@@ -61,5 +61,11 @@ public class TestThreadIO
             }
             i++;
         }
+
+        for (int j = 0; j < lines.length; ++j)
+        {
+            String s = lines[j];
+            System.out.println(s);
+        }
     }
 }
