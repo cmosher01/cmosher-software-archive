@@ -1,4 +1,6 @@
+import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.context.Context;
 
 public class VelocityTest
 {
@@ -6,5 +8,9 @@ public class VelocityTest
     {
         VelocityEngine velocity = new VelocityEngine();
         velocity.init();
+        Context context = new VelocityContext();
+        FileDescriptor
+        BufferedWriter writer = new OutputStreamWriter(new FileOutputStream());
+        velocity.mergeTemplate("test.vm", context, );
     }
 }
