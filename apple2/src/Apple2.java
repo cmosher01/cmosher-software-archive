@@ -33,7 +33,7 @@ public class Apple2
         disk.findDos33VTOC();
         disk.findDos33CatalogSector();
         disk.findDos33TSMapSector();
-        DiskPos test = new DiskPos(2,1,0,false);
+        DiskPos test = new DiskPos(2,15,0,false);
         System.out.println(test.getTrackInDisk());
         System.out.println(test.getSectorInTrack());
         System.out.println(test.getSectorInDisk());
