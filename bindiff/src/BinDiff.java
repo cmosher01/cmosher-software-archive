@@ -48,12 +48,16 @@ public class BinDiff
     private final int cMaxSearch;
 
 	private int state;
+	private long lastmark;
 	private int ccopy;
 	private int cskip;
 	private int cinsert;
+	private long poscopy = -1;
+	private long posskip = -1;
 	private long posinsert = -1;
+	private PushbackRandomFile filecopy;
+	private PushbackRandomFile fileskip;
 	private PushbackRandomFile fileinsert;
-	private long lastmark;
 	private DiffWriter dw = new DiffWriter();
 
     public BinDiff(RandomAccessFile f1, RandomAccessFile f2, int cMinMatch, int cMaxSearch)
@@ -131,6 +135,8 @@ public class BinDiff
             if (state == COPY)
             {
             	dw.outTag("COPY",ccopy);
+				outBytes(filecopy,poscopy,ccopy);
+				poscopy = -1;
 				ccopy = 0;
             }
             else if (state == SKIP || state == INSERT)
@@ -140,14 +146,16 @@ public class BinDiff
                     if (cskip > 0)
                     {
 						dw.outTag("DELETE",cskip);
+						outBytes(fileskip,posskip,cskip);
+						posskip = -1;
                         cskip = 0;
                     }
                     if (cinsert > 0)
                     {
 						dw.outTag("INSERT",cinsert);
 						outBytes(fileinsert,posinsert,cinsert);
+						posinsert = -1;
                         cinsert = 0;
-                        posinsert = -1;
                     }
                 }
             }
@@ -157,9 +165,19 @@ public class BinDiff
         switch (state)
         {
             case COPY:
+				if (poscopy < 0)
+				{
+					poscopy = f.tell();
+					filecopy = f;
+				}
                 ccopy += c;
             break;
             case SKIP:
+				if (posskip < 0)
+				{
+					posskip = f.tell();
+					fileskip = f;
+				}
                 cskip += c;
                 for (int i = 0; i < c; ++i)
                 {
