@@ -166,7 +166,7 @@ class Jproxy extends Frame implements ServerInterface, ActionListener,
 
     ProxyCachePool cache_pool = null;
 
-    HostsFile hosts = new HostsFile(); // CAM
+    public HostsFile hosts = new HostsFile(); // CAM
 
 
 
