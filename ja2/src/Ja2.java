@@ -21,6 +21,6 @@ public final class Ja2
 
     public static void main(String[] args)
     {
-        Main.main(args);
+        Main.run(args);
     }
 }
