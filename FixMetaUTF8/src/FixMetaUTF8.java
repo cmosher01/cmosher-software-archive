@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*
@@ -26,6 +27,11 @@ public class FixMetaUTF8
             throw new IllegalArgumentException("Usage: java FixMetaUTF8 htmlfile");
         }
         File f = new File(args[0]);
+        fix(f);
+    }
+
+    public static String fix(File f)
+    {
         f = f.getAbsoluteFile();
         f = f.getCanonicalFile();
         long sizlong = f.length();
@@ -43,7 +49,11 @@ public class FixMetaUTF8
             int cc = in.read(rb, pos, siz-pos);
             pos += cc;
         }
+        StringBuffer sb = new StringBuffer(siz);
+        sb.append(rb);
 
         Pattern pat = Pattern.compile("<meta.*charset.*>",Pattern.CASE_INSENSITIVE|Pattern.MULTILINE|Pattern.DOTALL);
+        Matcher matcher = pat.matcher(sb);
+        return matcher.replaceFirst("<META test=\"chris\">");
     }
 }
