@@ -146,6 +146,7 @@ public class GDiffWriter
     public void close() throws IOException
     {
         this.flush();
+        output.close();
     }
 }
 
