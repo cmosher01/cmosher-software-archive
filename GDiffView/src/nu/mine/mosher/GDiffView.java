@@ -486,12 +486,12 @@ public class GDiffView extends JFrame
 
             if (g instanceof GDiffData)
             {
-            }
-            else
-            {
                 beginTrg = g.getTargetRange().getBegin();
                 endTrg = g.getTargetRange().getEnd();
                 highlight("insert",true);
+            }
+            else
+            {
             }
 
             g = getGDiff(gdiff);
