@@ -31,14 +31,14 @@ public class TestBeans
         for (int j = 0; j < rpd.length; ++j)
         {
             PropertyDescriptor descriptor = rpd[j];
-            if (descriptor.getName().equals("aInt"))
+            if (descriptor.getName().equals("AInt"))
             {
                 ipd = j;
             }
         }
         if (ipd == -1)
         {
-            throw new Exception("can't get aInt property descriptors for SomeBean");
+            throw new Exception("can't get AInt property descriptors for SomeBean");
         }
     }
 
