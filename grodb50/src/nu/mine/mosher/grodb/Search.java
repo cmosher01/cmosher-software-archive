@@ -21,11 +21,19 @@ public class Search
 	{
 	}
 
+	public static String getListHeader()
+	{
+		List<ListEntry> rCol = new ArrayList<ListEntry>();
+		rCol.add(new ListEntry("done"));
+		rCol.add(new ListEntry("search description"));
+		return ListEntry.formatListHeader(rCol);
+	}
+
 	public String getListEntry()
 	{
 		List<ListEntry> rCol = new ArrayList<ListEntry>();
+		rCol.add(new ListEntry(completed?"x":""));
 		rCol.add(new ListEntry(description));
-		rCol.add(new ListEntry(completed?"completed":""));
 		return ListEntry.formatListEntry(rCol);
 	}
 }
