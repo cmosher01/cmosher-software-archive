@@ -52,7 +52,6 @@ public class VelocityTest
         Context context = new VelocityContext();
         List deps = getDependencies();
         context.put("deps",deps);
-        context.put("main","com.surveysampling.example.Example");
 
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out)));
 
