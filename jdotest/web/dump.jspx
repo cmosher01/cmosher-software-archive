@@ -8,18 +8,6 @@
 </head>
 <body>
 <p>
-Entire Request
-<table>
-<tbody>
-<%
-	BufferedReader in = request.getReader();
-	for (String s = in.readLine(); s != null; s = in.readLine())
-	{
-		%><tr><td><![CDATA[<%=s%>]]></td></tr><%
-	}
-%>
-</tbody>
-</table>
 Parameters
 <table border="1">
 <thead>
