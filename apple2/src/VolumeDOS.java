@@ -144,41 +144,55 @@ public class VolumeDOS extends VolumeEntity
      */
     public void appendSig(StringBuffer s)
     {
+        boolean alt = false;
         if (hasDaviddosSignature())
         {
             s.append(" (David DOS)");
+            alt = true;
         }
         if (hasDaviddos2Signature())
         {
             s.append(" (David DOS II)");
+            alt = true;
         }
         if (hasDiversidos2cSignature())
         {
             s.append(" (Diversi-DOS 2-C)");
+            alt = true;
         }
         if (hasDiversidos41cSignature())
         {
             s.append(" (Diversi-DOS 4.1-C)");
+            alt = true;
         }
         if (hasEsdosSignature())
         {
             s.append(" (ES DOS)");
+            alt = true;
         }
         if (hasHyperdosSignature())
         {
             s.append(" (Hyper-DOS)");
+            alt = true;
         }
         if (this.hasProtodosSignature())
         {
             s.append(" (Pronto-DOS [Beagle Bros.])");
+            alt = true;
         }
         if (this.hasRdosSignature())
         {
             s.append(" (RDOS [SSI])");
+            alt = true;
         }
-        // TODO various DOS 3.3 signatures
-        // TODO Franklin signature
         // TODO AMDOS signature
+        // TODO Franklin signature
+
+        // various DOS 3.3 signatures
+        if (!alt)
+        {
+            
+        }
     }
 
     /**
