@@ -36,11 +36,8 @@ public class Volume
         for (Iterator i = rEntry.iterator(); i.hasNext();)
         {
             Dos33CatalogEntry ent = (Dos33CatalogEntry)i.next();
-            DiskPos tsmap = ent.getStart();
-            if (disk.isDos33TSMapSector(tsmap))
-            {
-                VolumeFile f = new VolumeFile();
-            }
+            VolumeFile f = new VolumeFile();
+            f.readFromMedia(ent.getStart(),disk);
         }
     }
 
