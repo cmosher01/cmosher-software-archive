@@ -42,12 +42,17 @@ public class Test
 	public static void main(String[] rArg) throws Throwable
     //throws MyException, IOException // other exceptions here...
 	{
-        FileReader f = new FileReader("c:\\temp\\ssprop.txt");
-        for (Iterator i = new ReaderLines(f).iterator(); i.hasNext();)
+        FileReader r = new FileReader("c:\\temp\\ssprop.txt");
+
+        for (Iterator i = new ReaderLines(r).iterator(); i.hasNext();)
         {
             String s = (String)i.next();
             System.out.println(s);
         }
+//      for (String s : new ReaderLines(f))
+//      {
+//          System.out.println(s);
+//      }
 
 
 
