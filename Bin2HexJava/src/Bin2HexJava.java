@@ -21,6 +21,7 @@ public class Bin2HexJava
     private static final int BPL = 0x10;
     private static final boolean SHOW_ZERO_X = false;
     private static final boolean SHOW_COMMA = false;
+    private static final boolean SHOW_SPACE = true;
 
     /**
      * @param args
@@ -47,9 +48,16 @@ public class Bin2HexJava
             {
                 first = false;
             }
-            else if (SHOW_COMMA)
+            else
             {
-                System.out.print(",");
+                if (SHOW_COMMA)
+                {
+                    System.out.print(",");
+                }
+                if (SHOW_SPACE)
+                {
+                    System.out.print(" ");
+                }
             }
 
             if (pos >= BPL)
