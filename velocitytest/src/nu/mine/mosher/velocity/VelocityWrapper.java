@@ -107,31 +107,31 @@ public class VelocityWrapper
 
     public static void merge(File inputTemplate, Context context, Writer out) throws VelocityException
     {
-        inputTemplate = inputTemplate.getAbsoluteFile().getCanonicalFile();
-
-        Properties props = VelocityWrapper.getDefaultProperties();
-        props.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH,inputTemplate.getParentFile().getAbsolutePath());
-
-        VelocityWrapper velocity = new VelocityWrapper(props);
-
-        /*
-         * Wrap the caller's Writer in a BufferedWriter,
-         * if it's not already a BufferedWriter.
-         */
-        BufferedWriter writer;
-        if (out instanceof BufferedWriter)
-        {
-            writer = (BufferedWriter)out;
-        }
-        else
-        {
-            writer = new BufferedWriter(out);
-        }
-
-        velocity.mergeTemplate(inputTemplate.getName(),context,writer);
-
         try
         {
+            inputTemplate = inputTemplate.getAbsoluteFile().getCanonicalFile();
+
+            Properties props = VelocityWrapper.getDefaultProperties();
+            props.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH,inputTemplate.getParentFile().getAbsolutePath());
+
+            VelocityWrapper velocity = new VelocityWrapper(props);
+
+            /*
+             * Wrap the caller's Writer in a BufferedWriter,
+             * if it's not already a BufferedWriter.
+             */
+            BufferedWriter writer;
+            if (out instanceof BufferedWriter)
+            {
+                writer = (BufferedWriter)out;
+            }
+            else
+            {
+                writer = new BufferedWriter(out);
+            }
+
+            velocity.mergeTemplate(inputTemplate.getName(),context,writer);
+
             writer.flush();
         }
         catch (IOException e)
