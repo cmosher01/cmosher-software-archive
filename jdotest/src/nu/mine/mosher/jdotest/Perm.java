@@ -40,4 +40,10 @@ public class Perm
 		PersistenceManager pm = this.pmf.getPersistenceManager();
 		return pm.getExtent(Item.class,true).iterator();
 	}
+
+	public String getIDof(Object obj)
+	{
+		PersistenceManager pm = this.pmf.getPersistenceManager();
+		return pm.getObjectId(obj).toString();
+	}
 }
