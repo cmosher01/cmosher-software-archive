@@ -86,6 +86,15 @@ public class GDiffVeiew extends JFrame
         JScrollPane scrTrg = new JScrollPane(paneTrg);
         scrTrg.setPreferredSize(new Dimension(620,460));
 
+        String[] debugData = {
+                "magic D1FFD1FF",
+                "version 04",
+                "COPY 0, 2",
+                "DATA [2 bytes]",
+                "COPY 2, 2",
+                "COPY 1, 4",
+                "EOF"
+        }
         listGDiff = new JList();
         JPanel contentPane = new JPanel(new BorderLayout());
         contentPane.add(scrSrc,BorderLayout.WEST);
