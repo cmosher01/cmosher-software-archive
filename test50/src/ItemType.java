@@ -17,4 +17,17 @@ public class ItemType
 	{
 		this.other = other;
 	}
+	public String toString()
+	{
+		String s;
+		if (known != null)
+		{
+			s = known.toString();
+		}
+		else
+		{
+			s = other;
+		}
+		return s;
+	}
 }
