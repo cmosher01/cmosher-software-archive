@@ -66,7 +66,7 @@ public class Test
     //throws MyException, IOException // other exceptions here...
 	{
 
-
+        System.setProperty("java.security.debug","all");
         System.setSecurityManager(new SecurityManager());
 
         Reader rdr = new InputStreamReader(new FileInputStream(new File("\\temp\\test.txt")));
