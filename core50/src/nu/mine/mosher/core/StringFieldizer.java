@@ -1,3 +1,5 @@
+package nu.mine.mosher.core;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
