@@ -43,7 +43,7 @@ public class TestBeans
         }
         Method wr = rpd[ipd].getWriteMethod();
         SomeBean some = new SomeBean();
-        wr.invoke(bi, new Object[] {i});
+        wr.invoke(some, new Object[] {i});
         showInt(some.getAInt());
     }
 
