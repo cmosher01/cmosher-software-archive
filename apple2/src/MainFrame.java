@@ -86,7 +86,7 @@ public class MainFrame extends JFrame
         nDisk.add(nBoot);
         if (!bootonly)
         {
-            s.append("APPLE ][ DOS 3.3");
+            s.append("Apple ][ DOS 3.3");
             VolumeDOS dos = vol.getDos();
             if (dos != null)
             {
