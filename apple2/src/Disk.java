@@ -355,6 +355,16 @@ public class Disk
         return new DiskPos(sector[1],sector[2],0,false);
     }
 
+    /**
+     * @param sector
+     * @return
+     * @throws InvalidPosException
+     */
+    public static DiskPos getDos33TSMapNext(byte[] sector) throws InvalidPosException
+    {
+        return new DiskPos(sector[1],sector[2],0,false);
+    }
+
 //    /**
 //     * @param allowLarge
 //     * @param tsmapMaps
