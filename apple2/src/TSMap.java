@@ -31,6 +31,22 @@ public class TSMap
     }
 
     /**
+     * @param rDiskPos
+     */
+    public void markAll(Collection rDiskPos)
+    {
+        setAll(rDiskPos,true);
+    }
+
+    /**
+     * @param rDiskPos
+     */
+    public void clearAll(Collection rDiskPos)
+    {
+        setAll(rDiskPos,false);
+    }
+
+    /**
      * @param p
      */
     public void mark(DiskPos p)
