@@ -30,16 +30,20 @@ public class DiskCatalogTest extends TestCase
         assertManyPos("DOS33_SystemMaster_19800825.dsk",r);
     }
 
-//    /**
-//     * test VTOC for DOS 3.3 System Master (Jan. 1, 1983), T$11 S$00
-//     * @throws IOException
-//     * @throws InvalidPosException
-//     */
-//    public void testDOS33_Master_1983() throws IOException, InvalidPosException
-//    {
-//        assertOnePos("DOS33_SystemMaster_19830101.dsk",new DiskPos(0x11,0));
-//    }
-//
+    /**
+     * test VTOC for DOS 3.3 System Master (Jan. 1, 1983), T$11 S$00
+     * @throws IOException
+     * @throws InvalidPosException
+     */
+    public void testDOS33_Master_1983() throws IOException, InvalidPosException
+    {
+        List r = new ArrayList();
+        r.add(new DiskPos(0x11,0xD));
+        r.add(new DiskPos(0x11,0xE));
+        r.add(new DiskPos(0x11,0xF));
+        assertManyPos("DOS33_SystemMaster_19830101.dsk",r);
+    }
+
 //    /**
 //     * test VTOC for DOS 3.3 System Master (1986), T$11 S$00
 //     * @throws IOException
