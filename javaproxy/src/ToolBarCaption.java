@@ -8,7 +8,12 @@
  * Author : Steve Yeong-Ching Hsueh
  */
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FontMetrics;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Window;
 
 /**
  * ToolBarCaption displays a caption window when mouse over a certain area
