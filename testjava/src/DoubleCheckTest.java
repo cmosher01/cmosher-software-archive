@@ -1,17 +1,21 @@
 public class DoubleCheckTest
 {
-
     // static data to aid in creating N singletons
     static final Object dummyObject = new Object(); // for reference init
     static final int A_VALUE = 256; // value to initialize 'a' to
     static final int B_VALUE = 512; // value to initialize 'b' to
     static final int C_VALUE = 1024;
+
+
+
     static ObjectHolder[] singletons; // array of static references
     static Thread[] threads; // array of racing threads
     static int threadCount; // number of threads to create
     static int singletonCount; // number of singletons to create
 
     static volatile int recentSingleton;
+
+
 
     // I am going to set a couple of threads racing,
     // trying to create N singletons. Basically the
@@ -54,19 +58,21 @@ public class DoubleCheckTest
         int s_b = s.b;
         int s_c = s.c;
         Object s_d = s.dummy;
+
         if (s_a != A_VALUE)
             System.out.println("[" + index + "] Singleton.a not initialized " + s_a);
         if (s_b != B_VALUE)
-            System.out.println("[" + index + "] Singleton.b not intialized " + s_b);
-
+            System.out.println("[" + index + "] Singleton.b not initialized " + s_b);
         if (s_c != C_VALUE)
-            System.out.println("[" + index + "] Singleton.c not intialized " + s_c);
+            System.out.println("[" + index + "] Singleton.c not initialized " + s_c);
 
         if (s_d != dummyObject)
+        {
             if (s_d == null)
                 System.out.println("[" + index + "] Singleton.dummy not initialized," + " value is null");
             else
                 System.out.println("[" + index + "] Singleton.dummy not initialized," + " value is garbage");
+        }
     }
 
     // Holder used for synchronization of 
