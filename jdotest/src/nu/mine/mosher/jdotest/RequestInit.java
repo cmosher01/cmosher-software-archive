@@ -21,5 +21,6 @@ public class RequestInit implements ServletRequestListener
 
 	public void requestDestroyed(ServletRequestEvent rre)
 	{
+		rre.getServletRequest().removeAttribute("pm");
 	}
 }
