@@ -14,7 +14,8 @@ public class Source
 	private DateRange dateTopicEnd;
 	private Place placeTopic;
 
-	private List<Relation<Source,Source,SourceRelType>> rRel = new ArrayList<Relation<Source,Source,SourceRelType>>();
+	private List<Relation<Source,Source,SourceRelType>> rRelUp = new ArrayList<Relation<Source,Source,SourceRelType>>();
+	private List<Relation<Source,Source,SourceRelType>> rRelDown = new ArrayList<Relation<Source,Source,SourceRelType>>();
 	private List<Relation<Source,Representation,SourceRepRelType>> rRep = new ArrayList<Relation<Source,Representation,SourceRepRelType>>();
 	private List<Relation<Source,Search,SourceSearchRelType>> rSearch = new ArrayList<Relation<Source,Search,SourceSearchRelType>>();
 
