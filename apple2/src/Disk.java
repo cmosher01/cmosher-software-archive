@@ -345,6 +345,16 @@ public class Disk
         }
     }
 
+    /**
+     * @param sector
+     * @param entries
+     * @throws InvalidPosException
+     */
+    public static DiskPos getDos33CatalogNext(byte[] sector) throws InvalidPosException
+    {
+        return new DiskPos(sector[1],sector[2],0,false);
+    }
+
 //    /**
 //     * @param allowLarge
 //     * @param tsmapMaps
