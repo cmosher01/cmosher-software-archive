@@ -30,7 +30,10 @@ public class GROapplet extends JApplet
 
     public GROapplet() throws HeadlessException
     {
-        enableEvents(AWTEvent.MOUSE_EVENT_MASK|AWTEvent.MOUSE_MOTION_EVENT_MASK);
+		GROMouseListener ml = new GROMouseListener();
+		addMouseListener(ml);
+		addMouseMotionListener(ml);
+//        enableEvents(AWTEvent.MOUSE_EVENT_MASK|AWTEvent.MOUSE_MOTION_EVENT_MASK);
     }
 
     public void init()
