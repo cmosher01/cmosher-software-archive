@@ -8,7 +8,7 @@ package nu.mine.mosher.util.text;
  * mark (U+0022) in an illegal position. This can
  * occur in two cases:
  * <ol>
- * <li>a quote in the middle of an unquoted field,
+ * <li>a quote in the middle of a non-quoted field,
  * for example, test"test</li>
  * <li>a single quote in the middle of a quoted field,
  * for example "test"test"</li>
