@@ -61,6 +61,9 @@ public class DailyWindow
      */
     protected DailyWindow()
     {
+        mIsStartFirst = false;
+        mStart = null;
+        mEnd = null;
     }
 
     /**
