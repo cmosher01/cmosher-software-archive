@@ -4,9 +4,9 @@
 package nu.mine.mosher.checksum;
 
 /**
- * TODO
+ * Computes an efficient, but weak, rolling checksum.
  * 
- * @author Chris
+ * @author Chris Mosher
  */
 public class RollingChecksum
 {
@@ -14,12 +14,13 @@ public class RollingChecksum
      * 0xFFF1, the largest prime number less than 0x10000.
      */
     private static final int M = 0xFFF1;
+
+
+
     private int checksum;
     private int len;
 
-    public RollingChecksum()
-    {
-    }
+
 
     void init(byte[] rx)
     {
