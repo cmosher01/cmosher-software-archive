@@ -28,6 +28,12 @@ public class GDiff2HTML
 		byte[] magic = new byte[4];
 		gdiff.read(magic);
 		out("magic: ");
+        for (int i = 0; i < magic.length; ++i)
+        {
+            byte b = magic[i];
+            out(lonib(b));
+            out(lonib(b>>4));
+        }
 		int vers = gdiff.read();
 
 		GDiffCmd g = getGDiff(gdiff);
@@ -52,14 +58,37 @@ public class GDiff2HTML
 	}
 
 	/**
+     * @param b
+     * @return
+     */
+    private static String lonib(byte b)
+    {
+        b &= 0x0f;
+        if (b >= 10)
+        {
+            b -= 10;
+            b += 'A';
+        }
+        else
+        {
+            b += '0';
+        }
+    }
+
+    /**
 	 * @param string
 	 */
 	private static void out(String string)
 	{
-		// TODO Auto-generated method stub
+		System.out.print(string);
 	}
 
-	/**
+    private static void outln()
+    {
+        System.out.println();
+    }
+
+    /**
 	 * @param rb
 	 */
 	private static void outSame(byte[] rb)
