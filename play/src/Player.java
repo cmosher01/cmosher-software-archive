@@ -75,7 +75,7 @@ public class Player implements Immutable
             rb[i] = (byte)i;
         }
 		ByteArrayInputStream bais = new ByteArrayInputStream(rb);
-		InputStreamReader isr = new InputStreamReader(bais,"US-ASCII");
+		InputStreamReader isr = new InputStreamReader(bais,"windows-1252");
 		int c = isr.read();
 		int i = 0;
 		while (c != -1)
