@@ -9,7 +9,7 @@ public class StringFields /* ??? implements Iterable */
         i = new Iter(s);
     }
 
-    public Iterator iterator() /* ??? ReadOnlyIterator */
+    public Iterator iterator() /* ??? SimpleIterator */
     {
         return i;
     }
