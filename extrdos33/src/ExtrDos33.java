@@ -82,6 +82,7 @@ public class ExtrDos33
 
 	private static class DosImage
 	{
+		private int hash;
 		File dosFile;
         List files = new ArrayList();
         byte[] rb;
@@ -115,12 +116,15 @@ public class ExtrDos33
         }
         public int hashCode()
         {
-        	int hash = 17;
-			for (int i= 0; i < rbc.length; ++i)
-			{
-				hash *= 37;
-				hash += rbc[i];
-			}
+        	if (hash == 0)
+        	{
+				hash = 17;
+				for (int i= 0; i < rbc.length; ++i)
+				{
+					hash *= 37;
+					hash += rbc[i];
+				}
+        	}
 			return hash;
         }
         public void addFile(File file)
