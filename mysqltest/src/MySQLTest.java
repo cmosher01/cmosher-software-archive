@@ -559,6 +559,7 @@ public class MySQLTest
 		"KnownPerson "+
 		"( "+
 		"    id integer unsigned not null auto_increment primary key, "+
+		"    gender enum (\"m\",\"f\"), "+
 		"    nameLast varchar(64), "+
 		"    nameFirst varchar(64), "+
 		"    nameMiddle varchar(8), "+
