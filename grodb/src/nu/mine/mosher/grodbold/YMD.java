@@ -70,7 +70,7 @@ public class YMD implements Immutable, Serializable, Comparable
     	return hash;
     }
 
-    private void updateHash()
+    private synchronized void updateHash()
     {
 		hash = 17;
 		hash *= 37;
