@@ -344,10 +344,7 @@ public class Disk
             p += 0x23;
         }
     }
-/**
- * @param tsmapMapsInCatalog
- * @throws InvalidPosException
- */
+
 //    /**
 //     * @param allowLarge
 //     * @param tsmapMaps
