@@ -124,14 +124,13 @@ public class GDiffView extends JFrame
             throw new IOException("error reading target file");
         }
         roll.init(rs);
-        long srcPos;
         lookupUniqueMatch(src,roll.getChecksum(),trgPos,matches,w);
         while (streamTrg.available() > 0)
         {
             byte x = (byte)streamTrg.read();
             byte xprev = roll(rs,x);
             roll.increment(xprev, x);
-            lookupUniqueMatch(src,roll.getChecksum(),trgPos,matches,w);
+            lookupUniqueMatch(src,roll.getChecksum(),++trgPos,matches,w);
         }
     }
 
