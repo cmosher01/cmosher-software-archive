@@ -166,6 +166,15 @@ public class Disk
     }
 
     /**
+     * @param pos
+     * @return
+     */
+    public byte[] readSector(DiskPos pos)
+    {
+        return read(pos,DiskPos.cSector);
+    }
+
+    /**
      * @return
      */
     private Iterator getSectorIterator()
