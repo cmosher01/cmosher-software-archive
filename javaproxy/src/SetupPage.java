@@ -168,7 +168,7 @@ class SetupPage extends Panel
     {
         FontMetrics fm = g.getFontMetrics();
         int fontheight = fm.getHeight();
-        ;
+
         Dimension d = new Dimension(this.getSize());
         BorderBox nextitem;
         Color backgroundcolor = this.getBackground();
