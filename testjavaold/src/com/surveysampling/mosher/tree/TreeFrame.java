@@ -4,13 +4,12 @@ import java.awt.BorderLayout;
 import java.io.File;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 
-public class TreeFrame extends JPanel
+public class TreeFrame extends JFrame
 {
     public TreeFrame(String dir)
     {
@@ -86,7 +85,5 @@ public class TreeFrame extends JPanel
                 createAndShowGUI();
             }
         });
-
-        myframe.setVisible(true);
     }
 }
