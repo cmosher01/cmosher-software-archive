@@ -1,6 +1,7 @@
 package to.go.gro.groapplet;
 
 import java.awt.event.MouseEvent;
+import java.net.MalformedURLException;
 
 import javax.swing.event.MouseInputAdapter;
 
@@ -25,7 +26,7 @@ public class GROMouseListener extends MouseInputAdapter
         super.mousePressed(evt);
     }
 
-    public void mouseReleased(MouseEvent evt)
+    public void mouseReleased(MouseEvent evt) throws MalformedURLException
     {
     	if (mLastIndi != null)
     	{
