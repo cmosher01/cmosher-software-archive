@@ -180,7 +180,7 @@ public class Disk
      * @param sector
      * @return
      */
-    protected boolean isDos33VTOC(byte[] sector)
+    protected static boolean isDos33VTOC(byte[] sector)
     {
         return
             (sector[3]==3 || sector[3]==2) &&
@@ -384,7 +384,7 @@ public class Disk
      * @param expected
      * @return
      */
-    private boolean match(byte[] actual, int pos, byte[] expected)
+    private static boolean match(byte[] actual, int pos, byte[] expected)
     {
         for (int i = 0; i < expected.length; ++i)
         {
