@@ -57,7 +57,7 @@ public class TreeFrame extends JFrame
      * this method should be invoked from the
      * event-dispatching thread.
      */
-    protected static void createAndShowGUI()
+    protected static void createAndShowGUI() throws InterruptedException
     {
         //Make sure we have nice window decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
@@ -88,7 +88,14 @@ public class TreeFrame extends JFrame
         {
             public void run()
             {
-                createAndShowGUI();
+                try
+                {
+                    createAndShowGUI();
+                }
+                catch (Throwable th)
+                {
+                    th.printStackTrace();
+                }
             }
         });
 
