@@ -30,7 +30,12 @@ public final class Cloner
 				methodClone.setAccessible(true);
 				mClasses.put(cl,methodClone);
 			}
-			return (T)methodClone.invoke(cloneableObject,null);
+			Object newClone = methodClone.invoke(cloneableObject,null);
+			if (!(newClone instanceof T))
+			{
+				throw new CastClassException();
+			}
+			return (T);
 		}
 		catch (Throwable cause)
 		{
