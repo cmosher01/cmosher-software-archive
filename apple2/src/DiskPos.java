@@ -25,6 +25,10 @@ public class DiskPos implements Comparable, Cloneable
 
 
 
+    public DiskPos(0)
+    {
+    }
+
     /**
      * @throws InvalidPosException
      * 
