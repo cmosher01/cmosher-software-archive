@@ -94,10 +94,14 @@ public class GDiffVeiew extends JFrame
                 "COPY 2, 2",
                 "COPY 1, 4",
                 "EOF"
-        }
-        listGDiff = new JList();
+        };
+        listGDiff = new JList(debugData);
+        JScrollPane scrGDiff = new JScrollPane(listGDiff);
+        scrGDiff.setPreferredSize(new Dimension(100,460));
+
         JPanel contentPane = new JPanel(new BorderLayout());
         contentPane.add(scrSrc,BorderLayout.WEST);
+        contentPane.add(scrGDiff,BorderLayout.CENTER);
         contentPane.add(scrTrg,BorderLayout.EAST);
 
         setContentPane(contentPane);
