@@ -184,7 +184,7 @@ public class Disk
 
     private class SectorIter implements Iterator
     {
-        private DiskPos d = new DiskPos(0);
+        private DiskPos d = new DiskPos();
 
         /**
          * @see java.util.Iterator#hasNext()
