@@ -3,6 +3,7 @@
 	<name>mysqltest</name>
 	<comment></comment>
 	<projects>
+		<project>logging</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
