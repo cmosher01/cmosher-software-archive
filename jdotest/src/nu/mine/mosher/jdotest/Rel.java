@@ -16,9 +16,11 @@ public class Rel
 {
 	private Item item;
 	private Thing thing;
+
 	public Rel()
 	{
 	}
+
     /**
      * @return
      */
