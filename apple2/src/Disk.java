@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -306,6 +307,10 @@ public class Disk
         return 0;
     }
 
+    public static void getDos33CatalogEntries(byte[] sector, Collection entries)
+    {
+        entries.add(new Dos33CatalogEntry(new DiskPos(trk,sec,0,false),lck,fil,cSector,name));
+    }
 /**
  * @param tsmapMapsInCatalog
  * @throws InvalidPosException
