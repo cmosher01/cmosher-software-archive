@@ -51,7 +51,7 @@ public class DiskVTOCTest extends TestCase
 //        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
 //        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "+
 //        "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ")));
-        URL url = this.getClass().getClassLoader().getResource("Dos33_Master_19800825.dsk");
+        URL url = this.getClass().getClassLoader().getResource("DOS33_SystemMaster_19800825.dsk");
         byte[] rbDisk;
         InputStream fileDisk = null;
         try
