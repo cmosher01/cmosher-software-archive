@@ -53,7 +53,7 @@ public class Dos33CatalogEntry
     /**
      * @return Returns the dataPos.
      */
-    public DiskPos getPos()
+    public DiskPos getStart()
     {
         return dataPos;
     }
