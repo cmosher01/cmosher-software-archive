@@ -22,7 +22,7 @@ public class CommandLineArgHandler
      */
     public void parse() throws InvalidCommandLine
     {
-        if (mrArg.length == 0)
+        if (mrArg.length > 0)
         {
             throw new InvalidCommandLine();
         }
