@@ -32,7 +32,7 @@ public class ExceptionHandler
      * 
      * @throws Throwable
      */
-    public static void waitForException() throws Throwable
+    public static void waitFor() throws Throwable
     {
         throw (Throwable)mSingleton.mException.remove();
     }
