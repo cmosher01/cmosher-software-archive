@@ -43,13 +43,20 @@ public class VolumeUnusedData extends VolumeEntity
     public void dump(StringBuffer s)
     {
         s.append("Orphaned data sectors: ");
-        for (Iterator i = this.rSector.iterator(); i.hasNext();)
+        if (this.rSector.size() == 0)
         {
-            VolumeSector sect = (VolumeSector)i.next();
-            s.append(sect.toString());
-            if (i.hasNext())
+            s.append("[none]");
+        }
+        else
+        {
+            for (Iterator i = this.rSector.iterator(); i.hasNext();)
             {
-                s.append("; ");
+                VolumeSector sect = (VolumeSector)i.next();
+                s.append(sect.toString());
+                if (i.hasNext())
+                {
+                    s.append("; ");
+                }
             }
         }
     }
