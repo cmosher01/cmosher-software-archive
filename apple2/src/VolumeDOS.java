@@ -271,17 +271,40 @@ public class VolumeDOS extends VolumeEntity
             {
                 tempdostype = 1980;
                 clearIgnored(rIgnore1980);
-                cmpDOS(rbClear1980);
+                if (cmpDOS(rbClear1980))
+                {
+                    s.append(" (DOS 3.3 1980 exact match)");
+                }
+                else
+                {
+                    s.append(" (DOS 3.3 1980 altered)");
+                }
             }
             else if (x == 0x84)
             {
                 tempdostype = 1983;
                 clearIgnored(rIgnore1983);
+                if (cmpDOS(rbClear1983))
+                {
+                    s.append(" (DOS 3.3 1983 exact match)");
+                }
+                else
+                {
+                    s.append(" (DOS 3.3 1983 altered)");
+                }
             }
             else if (x == 0xB3)
             {
                 tempdostype = 1986;
                 clearIgnored(rIgnore1986);
+                if (cmpDOS(rbClear1986))
+                {
+                    s.append(" (DOS 3.3 1986 exact match)");
+                }
+                else
+                {
+                    s.append(" (DOS 3.3 1986 altered)");
+                }
             }
         }
     }
@@ -289,12 +312,20 @@ public class VolumeDOS extends VolumeEntity
     /**
      * @param rbClear
      */
-    private void cmpDOS(int[] rbClear)
+    private boolean cmpDOS(int[] rbClear)
     {
         if (rbCmp.length != rbClear.length)
         {
             throw new RuntimeException("DOS array lengths don't match");
         }
+        for (int i = 0; i < rbClear.length; ++i)
+        {
+            if (rbCmp[i] != rbClear[i])
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
