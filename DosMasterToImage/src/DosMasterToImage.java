@@ -231,7 +231,7 @@ public class DosMasterToImage
      * @param args
      * @throws IOException
      */
-    public static void main2(String[] args) throws IOException
+    public static void main(String[] args) throws IOException
     {
         if (args.length != 2)
         {
@@ -288,7 +288,7 @@ public class DosMasterToImage
      * Compares two DOS images, one master and one slave. Writes differences
      * to standard out (as offsets in hex).
      */
-    public static void main(String[] args) throws IOException
+    public static void main2(String[] args) throws IOException
     {
         if (args.length != 2)
         {
