@@ -106,5 +106,7 @@ public class WaveCalc
 		System.out.print(",");
 		System.out.print(bytes*1000/bytespersec);
 		System.out.println();
+
+		in.close();
     }
 }
