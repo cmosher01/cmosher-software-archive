@@ -37,4 +37,14 @@ public class VelocityWrapper
         ve.initCause(e);
         return ve;
     }
+
+    public static Properties getDefaultProperties()
+    {
+        Properties props = new Properties();
+
+        props.setProperty(VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,VelocityLogger.class.getClass().getName());
+
+        // This just prevents a warning message about no macro library
+        props.setProperty(VelocityEngine.VM_LIBRARY,"");
+    }
 }
