@@ -54,11 +54,11 @@ public class OptionDefinition implements Comparable
     }
     public boolean equals(Object obj)
     {
-        if (!(obj instanceof ArgumentDefinition))
+        if (!(obj instanceof OptionDefinition))
         {
             return false;
         }
-        ArgumentDefinition that = (ArgumentDefinition)obj;
+        OptionDefinition that = (OptionDefinition)obj;
         return
             this.optionLong.equals(that.optionLong) &&
             this.optionShort == that.optionShort &&
@@ -66,7 +66,14 @@ public class OptionDefinition implements Comparable
     }
     public int hashCode()
     {
-        return this.name.hashCode();
+        int hash = 17;
+        hash *= 37;
+        hash += this.optionLong.hashCode();
+        hash *= 37;
+        hash += this.optionShort;
+        hash *= 37;
+        hash += this.hasValue ? 0 : 1;
+        return hash;
     }
     public String toString()
     {
