@@ -6,7 +6,9 @@ package com.surveysampling.time;
 import java.util.Calendar;
 
 /**
- * Represents a time of day, for example, "3:00 PM".
+ * Represents a time of day, for example, "3:00 PM",
+ * using the given calendar. Note that the time component
+ * of the calendar is not used.
  * It contains hours, minutes, seconds, and milliseconds
  * since midnight. Instances of this class are immutable.
  */
@@ -20,6 +22,9 @@ public class TimeOfDay
 
     public TimeOfDay(Calendar calendar, int hours, int minutes, int seconds, int milliseconds)
     {
+        // use a clone of the caller's Calendar object, in case he changes it
+        calendar = (Calendar)calendar.clone();
+
         if (hours < calendar.getMinimum(Calendar.HOUR_OF_DAY) || calendar.getMaximum(Calendar.HOUR_OF_DAY) < hours)
         {
             throw new IllegalArgumentException("Invalid hour: "+hours);
