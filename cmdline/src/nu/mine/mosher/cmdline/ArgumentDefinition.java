@@ -17,8 +17,12 @@ public class ArgumentDefinition
      * @param name
      * @param desc
      */
-    public ArgumentDefinition(final String name, final String desc)
+    public ArgumentDefinition(String name, String desc)
     {
+        if (name.length() == 0)
+        {
+            name = "argument";
+        }
         this.name = name;
         this.desc = desc;
         if (this.name == null || this.desc == null)
