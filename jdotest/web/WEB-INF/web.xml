@@ -7,6 +7,9 @@
 	<listener>
 		<listener-class>nu.mine.mosher.jdotest.AppInit</listener-class>
 	</listener>
+	<listener>
+		<listener-class>nu.mine.mosher.jdotest.RequestInit</listener-class>
+	</listener>
 	<resource-ref>
 		<description>DB	Connection</description>
 		<res-ref-name>jdbc/jdotest</res-ref-name>
