@@ -3,20 +3,31 @@ package edu.fsu.stat.geo.random;
 import nu.mine.mosher.random.RNGDefault;
 import nu.mine.mosher.random.RandomNumberGenerator;
 
+/**
+ * TODO
+ *
+ * @author Chris Mosher
+ */
 public class Kiss extends RNGDefault implements RandomNumberGenerator
 {
     private static final long a = 698769069L;
-    private final long seed;
+
     private int x;
     private int y = 362436;
     private int z;
     private int c = 7654321;
 
+    /**
+     * 
+     */
     public Kiss()
     {
         this(getDefaultSeed());
     }
 
+    /**
+     * @param seed
+     */
     public Kiss(long seed)
     {
         super(seed);
@@ -24,11 +35,9 @@ public class Kiss extends RNGDefault implements RandomNumberGenerator
         this.z = (int)(seed >> 32);
     }
 
-    public long getSeed()
-    {
-        return seed;
-    }
-
+    /**
+     * @return random number
+     */
     public int nextInt()
     {
         x *= 69069;
