@@ -166,6 +166,6 @@ class Indi
 
     public URL getURL()
     {
-        return new URL()
+        return new URL("?indi="+mID);
     }
 }
