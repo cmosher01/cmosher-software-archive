@@ -78,13 +78,13 @@ public class GDiffVeiew extends JFrame
         paneSrc = new JTextPane(docSrc);
         paneSrc.setEditable(false);
         JScrollPane scrSrc = new JScrollPane(paneSrc);
-        scrSrc.setPreferredSize(new Dimension(620,460));
+        scrSrc.setPreferredSize(new Dimension(500,460));
 
         docTrg = new DefaultStyledDocument();
         paneTrg = new JTextPane(docTrg);
         paneTrg.setEditable(false);
         JScrollPane scrTrg = new JScrollPane(paneTrg);
-        scrTrg.setPreferredSize(new Dimension(620,460));
+        scrTrg.setPreferredSize(new Dimension(500,460));
 
         String[] debugData = {
                 "magic D1FFD1FF",
