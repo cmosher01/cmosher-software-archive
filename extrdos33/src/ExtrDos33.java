@@ -118,15 +118,15 @@ public class ExtrDos33
 			return hasDaviddosSignature() && 
 			(rb[0x2701] == 0xFFFFFFC4 && rb[0x2702] == 0xFFFFFFC1 && rb[0x2703] == 0xFFFFFFD6 && rb[0x270B] == 0xFFFFFFC9 && rb[0x270C] == 0xFFFFFFC9);
 		}
-		public boolean hadDiversidos2cSignature()
+		public boolean hasDiversidos2cSignature()
 		{
 			return (rb[0xA10] == 0x20 && rb[0xA11] == 0xFFFFFF84 && rb[0xA12] == 0xFFFFFF9D && rb[0xA13] == 0xFFFFFFA0);
 		}
-		public boolean hadDiversidos41cSignature()
+		public boolean hasDiversidos41cSignature()
 		{
 			return (rb[0xA10] == 0xFFFFFFA9 && rb[0xA11] == 0xFFFFFFFF && rb[0xA12] == 0xFFFFFF8D && rb[0xA13] == 0xFFFFFFFB);
 		}
-		public boolean hadEsdosSignature()
+		public boolean hasEsdosSignature()
 		{
 			return (rb[0x1671] == 0x4C && rb[0x1672] == 0x4E && rb[0x1673] == 0xFFFFFFC1 && rb[0x1674] == 0x52);
 		}
@@ -163,6 +163,41 @@ public class ExtrDos33
         public void setDosFile(File file)
         {
         	dosFile = file;
+        }
+        public void showSigs()
+        {
+			if (hasDaviddosSignature())
+			{
+				sig("David DOS");
+			}
+			if (hasDaviddos2Signature())
+			{
+				sig("David DOS II");
+			}
+			if (hasDiversidos2cSignature())
+			{
+				sig("Diversi-DOS 2-C");
+			}
+			if (hasDiversidos41cSignature())
+			{
+				sig("Diversi-DOS 4.1-C");
+			}
+			if (hasEsdosSignature())
+			{
+				sig("ES DOS");
+			}
+			if (hasHyperdosSignature())
+			{
+				sig("Hyper-DOS");
+			}
+			if (this.hasProtodosSignature())
+			{
+				sig("Pronto-DOS (Beagle Bros.)");
+			}
+        }
+        private void sig(String s)
+        {
+        	System.out.println("-----> has "+s+" signature <-----");
         }
 	}
 
