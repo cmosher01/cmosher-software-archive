@@ -13,6 +13,7 @@ public class MySQLTest
 
 	private Logger log = Logger.global;
 	private Connection db;
+	private int fland;
 
 	static
 	{
@@ -65,14 +66,28 @@ public class MySQLTest
 		}
     }
 
-	protected void calc()
+	protected void calc() throws SQLException
     {
+    	Statement st = null;
+    	try
+    	{
+    		st = db.createStatement();
+    		ResultSet rs = st.executeQuery("select maleAge16plus m from Census1790");
+    		while (rs.next())
+    		{
+    			log.info(""+rs.getInt("m"));
+    		}
+    	}
+    	finally
+    	{
+    		closeStatement(st);
+    	}
     }
 
     protected void insertData() throws SQLException
     {
     	dbUpdate("delete from Family");
-    	int fland = dbInsert("insert into Family(name) values(\"Flandreau\")");
+    	fland = dbInsert("insert into Family(name) values(\"Flandreau\")");
     	log.fine("Inserted Flandreau with id "+fland);
 
 		dbInsert("insert into Census1790(nameLast,nameFirst,maleAge16plus,maleAge0to15,female,family) "+
