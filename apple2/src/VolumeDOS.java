@@ -187,7 +187,14 @@ public class VolumeDOS extends VolumeEntity
      */
     public static boolean isDOSKnown(Collection knownSectors)
     {
-        // TODO Auto-generated method stub
+        for (Iterator i = rPosDOS.iterator(); i.hasNext();)
+        {
+            DiskPos p = (DiskPos)i.next();
+            if (knownSectors.contains(p))
+            {
+                return true;
+            }
+        }
         return false;
     }
 }
