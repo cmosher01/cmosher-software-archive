@@ -219,93 +219,93 @@ public class Disk
         }
     }
 
-    /**
-     * @param sector
-     * @param allowLarge
-     * @param tsmapMaps
-     * @param entries
-     * @return
-     */
-    static int isDos33CatalogSector(byte[] sector, boolean allowLarge, TSMap tsmapMaps, List entries)
-    {
-        if (sector[0] == 0 &&
-            DiskPos.isValidTrack(sector[1],allowLarge) &&
-            DiskPos.isValidSector(sector[2]) &&
-            sector[3] == 0)
-        {
-            // check catalog entries
-            int ce = 0x0B;
-            int penultimateSpace = 0;
-            int goodEntries = 0;
-            boolean live = true;
-            boolean valid = true;
-            for (int cat = 0; cat < 7 && live && valid; ++cat)
-            {
-                if (sector[ce] == 0)
-                {
-                    live = false;
-                }
-                else
-                {
-                    ++goodEntries;
-                }
-                if (live && 
-                    (DiskPos.isValidTrack(sector[ce],allowLarge) || sector[ce] == -1) &&
-                    DiskPos.isValidSector(sector[ce+1]) &&
-                    isValidFileType(sector[ce+2]))
-                {
-                    boolean deleted = (sector[ce] == -1);
-                    int trk;
-                    if (deleted)
-                    {
-                        trk = sector[ce+32];
-                    }
-                    else
-                    {
-                        trk = sector[ce];
-                    }
-                    StringBuffer sb = new StringBuffer(64);
-                    sb.append(convertASCII(sector,ce+3,30));
-                    int csect = word(sector,ce+33);
-                    sb.append(" ["+csect+" sector");
-                    if (csect > 1)
-                    {
-                        sb.append("s, T/S map");
-                        DiskPos tsm;
-                        try
-                        {
-                            tsm = new DiskPos(trk,sector[ce+1],0,allowLarge);
-                        }
-                        catch (InvalidPosException e)
-                        {
-                            throw new RuntimeException("shouldn't happen");
-                        }
-                        tsmapMaps.mark(tsm);
-                    }
-                    sb.append(" @ T$"+Integer.toHexString(trk)+", S$"+Integer.toHexString(sector[ce+1])+"]");
-                    if (deleted)
-                    {
-                        sb.append(" [deleted]");
-                    }
-                    entries.add(sb.toString());
-                    if (sector[ce+31] == (byte)0xA0)
-                    {
-                        ++penultimateSpace;
-                    }
-                }
-                else if (live)
-                {
-                    valid = false;
-                }
-                ce += 35;
-            }
-            if (valid && (goodEntries == penultimateSpace || penultimateSpace >= 3) && goodEntries > 0)
-            {
-                return goodEntries;
-            }
-        }
-        return 0;
-    }
+//    /**
+//     * @param sector
+//     * @param allowLarge
+//     * @param tsmapMaps
+//     * @param entries
+//     * @return
+//     */
+//    static int isDos33CatalogSector(byte[] sector, boolean allowLarge, TSMap tsmapMaps, List entries)
+//    {
+//        if (sector[0] == 0 &&
+//            DiskPos.isValidTrack(sector[1],allowLarge) &&
+//            DiskPos.isValidSector(sector[2]) &&
+//            sector[3] == 0)
+//        {
+//            // check catalog entries
+//            int ce = 0x0B;
+//            int penultimateSpace = 0;
+//            int goodEntries = 0;
+//            boolean live = true;
+//            boolean valid = true;
+//            for (int cat = 0; cat < 7 && live && valid; ++cat)
+//            {
+//                if (sector[ce] == 0)
+//                {
+//                    live = false;
+//                }
+//                else
+//                {
+//                    ++goodEntries;
+//                }
+//                if (live && 
+//                    (DiskPos.isValidTrack(sector[ce],allowLarge) || sector[ce] == -1) &&
+//                    DiskPos.isValidSector(sector[ce+1]) &&
+//                    isValidFileType(sector[ce+2]))
+//                {
+//                    boolean deleted = (sector[ce] == -1);
+//                    int trk;
+//                    if (deleted)
+//                    {
+//                        trk = sector[ce+32];
+//                    }
+//                    else
+//                    {
+//                        trk = sector[ce];
+//                    }
+//                    StringBuffer sb = new StringBuffer(64);
+//                    sb.append(convertASCII(sector,ce+3,30));
+//                    int csect = word(sector,ce+33);
+//                    sb.append(" ["+csect+" sector");
+//                    if (csect > 1)
+//                    {
+//                        sb.append("s, T/S map");
+//                        DiskPos tsm;
+//                        try
+//                        {
+//                            tsm = new DiskPos(trk,sector[ce+1],0,allowLarge);
+//                        }
+//                        catch (InvalidPosException e)
+//                        {
+//                            throw new RuntimeException("shouldn't happen");
+//                        }
+//                        tsmapMaps.mark(tsm);
+//                    }
+//                    sb.append(" @ T$"+Integer.toHexString(trk)+", S$"+Integer.toHexString(sector[ce+1])+"]");
+//                    if (deleted)
+//                    {
+//                        sb.append(" [deleted]");
+//                    }
+//                    entries.add(sb.toString());
+//                    if (sector[ce+31] == (byte)0xA0)
+//                    {
+//                        ++penultimateSpace;
+//                    }
+//                }
+//                else if (live)
+//                {
+//                    valid = false;
+//                }
+//                ce += 35;
+//            }
+//            if (valid && (goodEntries == penultimateSpace || penultimateSpace >= 3) && goodEntries > 0)
+//            {
+//                return goodEntries;
+//            }
+//        }
+//        return 0;
+//    }
 
     /**
      * @param sector
@@ -314,7 +314,7 @@ public class Disk
      * @param entries
      * @return
      */
-    static int isDos33CatalogSectorNew(byte[] sector, boolean allowLarge)
+    static int isDos33CatalogSector(byte[] sector, boolean allowLarge)
     {
         if (sector[0] == 0 &&
             DiskPos.isValidTrack(sector[1],allowLarge) &&
