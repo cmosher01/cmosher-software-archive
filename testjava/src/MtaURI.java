@@ -71,7 +71,7 @@ public class MtaURI
     private int getParamInt(Map mapParamToValue, String param, String sMTA) throws URISyntaxException
     {
         String s = (String)mapParamToValue.get(param);
-        if (s.length() == 0)
+        if (s == null || s.length() == 0)
         {
             return -1;
         }
