@@ -138,7 +138,6 @@ public class GedcomLine
      */
     public void concValue(String string)
     {
-        // TODO Auto-generated method stub
-        
+		value += string;
     }
 }
