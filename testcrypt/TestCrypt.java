@@ -27,8 +27,8 @@ public class TestCrypt
                 String key = (String)entry.getKey();
                 String val = (String)entry.getValue();
                 System.out.print(key);
-                System.out.print(",");
-                System.out.print(val);
+                System.out.print(", ");
+                System.out.println(val);
             }
         }
     }
