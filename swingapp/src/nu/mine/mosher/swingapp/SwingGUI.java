@@ -6,6 +6,8 @@ package nu.mine.mosher.swingapp;
 import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.image.MemoryImageSource;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -62,7 +64,20 @@ public class SwingGUI
      */
     protected Image getFrameIcon()
     {
-        return new ImageIcon().getImage();
+        int w = 100;
+        int h = 100;
+        int pix[] = new int[w * h];
+        int index = 0;
+        for (int y = 0; y < h; y++)
+        {
+            int red = (y * 255) / (h - 1);
+            for (int x = 0; x < w; x++)
+            {
+                int blue = (x * 255) / (w - 1);
+                pix[index++] = (255 << 24) | (red << 16) | blue;
+            }
+        }
+        return Toolkit.getDefaultToolkit().createImage(new MemoryImageSource(w,h,pix,0,w));
     }
 
     /**
