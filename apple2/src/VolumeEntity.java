@@ -13,5 +13,5 @@ import java.util.List;
  */
 public class VolumeEntity
 {
-    private List rSector = new ArrayList(); //VolumeSector
+    protected List rSector = new ArrayList(); //VolumeSector
 }
