@@ -33,7 +33,7 @@ public class Disk implements TreeNode
 			try
 			{
 				fin = new FileInputStream(mFile);
-				byte[] = new byte[fin.available()];
+				byte[] image = new byte[fin.available()];
 				fin.read(image);
 			}
 			catch (IOException e)
