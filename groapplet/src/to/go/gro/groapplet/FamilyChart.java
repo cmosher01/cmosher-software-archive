@@ -43,8 +43,6 @@ public class FamilyChart extends JPanel
         setSize(dimBounds);
         setPreferredSize(dimBounds);
 
-        enableEvents(AWTEvent.MOUSE_MOTION_EVENT_MASK);
-
         mInitialized = true;
     }
 
