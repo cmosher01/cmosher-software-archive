@@ -15,6 +15,7 @@ public class VolumeSector
 
     /**
      * @param pos
+     * @param index
      */
     public VolumeSector(DiskPos pos, int index)
     {
@@ -23,6 +24,7 @@ public class VolumeSector
     }
 
     /**
+     * @return
      */
     public String toString()
     {
