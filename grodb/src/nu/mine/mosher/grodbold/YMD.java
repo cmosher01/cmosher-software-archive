@@ -42,7 +42,19 @@ public class YMD implements Immutable, Serializable
 		YMD that = (YMD)obj;
 		return
 			this.year == that.year &&
-			this.month = that.month &&
+			this.month == that.month &&
 			this.day == that.day;
 	}
+
+    public int hashCode()
+    {
+    	int hash = 17;
+		hash *= 37;
+		hash += year;
+		hash *= 37;
+		hash += month;
+		hash *= 37;
+		hash += day;
+		return hash;
+    }
 }
