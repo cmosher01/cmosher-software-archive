@@ -113,4 +113,36 @@ public class TimeOfDayParser
             throw new ParseException("Invalid time-of-day string",i);
         }
     }
+
+    /**
+     * @return
+     */
+    public int getHour()
+    {
+        return hour;
+    }
+
+    /**
+     * @return
+     */
+    public int getMinute()
+    {
+        return minute;
+    }
+
+    /**
+     * @return
+     */
+    public int getSecond()
+    {
+        return second;
+    }
+
+    /**
+     * @return
+     */
+    public int getMillisecond()
+    {
+        return millisecond;
+    }
 }
