@@ -12,8 +12,6 @@ public abstract class NamedDefault implements Named
 {
 	private transient PersistenceManager pm;
 
-    public abstract String getName();
-
     public String getId()
     {
         return this.pm.getObjectId(this).toString();
@@ -23,4 +21,6 @@ public abstract class NamedDefault implements Named
 	{
 		this.pm = pm;
 	}
+
+	public abstract String getName();
 }
