@@ -175,7 +175,7 @@ public class GDiffView extends JFrame
         listGDiff.setSelectionBackground(new Color(173,194,245));
         listGDiff.setFont(Font.decode("Courier-PLAIN-10"));
         listGDiff.setPrototypeCellValue("@FFFFFFFF LFFFFFFFF");
-        listGDiff.setMaximumSize(new Dimension(listGDiff.getFixedCellWidth(),listGDiff.getFixedCellHeight()));
+        listGDiff.setMaximumSize(new Dimension(listGDiff.getFixedCellWidth(),Integer.MAX_VALUE));
         ListSelectionModel selectionModel = new SingleSelectionModel()
         {
             public void updateSingleSelection(int oldIndex, int newIndex)
