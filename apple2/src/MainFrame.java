@@ -88,7 +88,7 @@ public class MainFrame extends JFrame
         }
         else
         {
-            s.append("[unknown type]");
+            s.append(" [unknown type]");
         }
         DefaultMutableTreeNode nDos = new DefaultMutableTreeNode(s);
 
