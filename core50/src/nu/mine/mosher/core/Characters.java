@@ -10,6 +10,7 @@ public final class Characters
 {
 	private Characters()
 	{
+		throw new UnsupportedOperationException();
 	}
 
     public static boolean isHexDigit(char c)
