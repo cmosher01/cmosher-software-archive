@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 public final class ImmutableReference<T> implements Cloneable, Comparable<T>, Serializable, Immutable
 {
-    private final Cloneable ref;
+    private final T ref;
     private transient String str;
     private transient int hash;
 
-    public ImmutableReference(Cloneable ref) throws CloneNotSupportedException
+    public ImmutableReference(T ref) throws CloneNotSupportedException
     {
         if (ref == null)
         {
