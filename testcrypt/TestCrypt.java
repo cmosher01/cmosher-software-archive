@@ -3,6 +3,7 @@ import java.security.SecureRandom;
 import java.security.Security;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 public class TestCrypt
@@ -17,6 +18,20 @@ public class TestCrypt
 //        SecureRandom rand = new SecureRandom();
     }
 
+    public void showProviders()
+    {
+        Provider[] providers = Security.getProviders();
+        for (int i = 0; i < providers.length; i++)
+        {
+            // Get services provided by each provider
+            Set ent = providers[i].entrySet();
+            for (Iterator i = ent.iterator(); i.hasNext();)
+            {
+                Map.Entry entry = (Map.Entry)i.next();
+                
+            }
+        }
+    }
     public static String[] getCryptoImpls(String serviceType)
     {
         Set result = new HashSet();
