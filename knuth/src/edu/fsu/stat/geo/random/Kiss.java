@@ -1,8 +1,9 @@
 package edu.fsu.stat.geo.random;
 
+import nu.mine.mosher.random.RNGDefault;
 import nu.mine.mosher.random.RandomNumberGenerator;
 
-public class Kiss implements RandomNumberGenerator
+public class Kiss extends RNGDefault implements RandomNumberGenerator
 {
     private static final long a = 698769069L;
     private final long seed;
@@ -13,7 +14,7 @@ public class Kiss implements RandomNumberGenerator
 
     public Kiss()
     {
-        this(System.currentTimeMillis());
+        this(RNGDefault.getDefaultValue());
     }
 
     public Kiss(long seed)
