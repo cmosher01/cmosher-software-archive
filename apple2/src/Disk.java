@@ -345,14 +345,15 @@ public class Disk
         }
     }
 
-    /**
-     * @param sector
-     * @return
-     * @throws InvalidPosException
-     */
-    public static DiskPos getDos33CatalogNext(byte[] sector) throws InvalidPosException
+    public static void getDos33TSMapEntries(byte[] sector, Collection entries) throws InvalidPosException
     {
-        return new DiskPos(sector[1],sector[2],0,false);
+        int p = 0x0C;
+        while (p < 0x100 && (sector[p] != 0 || sector[p+1] != 0))
+        {
+            entries.add(new DiskPos(sector[p],sector[p+1],0,false));
+
+            p += 2;
+        }
     }
 
     /**
@@ -360,7 +361,7 @@ public class Disk
      * @return
      * @throws InvalidPosException
      */
-    public static DiskPos getDos33TSMapNext(byte[] sector) throws InvalidPosException
+    public static DiskPos getDos33Next(byte[] sector) throws InvalidPosException
     {
         return new DiskPos(sector[1],sector[2],0,false);
     }
