@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Collection;
 
 /*
@@ -113,15 +114,15 @@ public class VolumeBoot extends VolumeEntity
         {
             if (data[0] == 1 && data[1] == (byte)0xA5 && data[2] == 0x27 && data[0xFF] == 9)
             {
-                if (same(data,patch(rDos80master,(data[0xFE]&0xff)-0x36)))
+                if (Arrays.equals(data,patch(rDos80master,(data[0xFE]&0xff)-0x36)))
                 {
                     ident = "DOS 3.3 (1980) Slave (A$"+Hex2Bin.hexbyte(data[0xFE])+"00)";
                 }
-                else if (same(data,patch(rDos83master,(data[0xFE]&0xff)-0x36)))
+                else if (Arrays.equals(data,patch(rDos83master,(data[0xFE]&0xff)-0x36)))
                 {
                     ident = "DOS 3.3 (1983) Slave (A$"+Hex2Bin.hexbyte(data[0xFE])+"00)";
                 }
-                else if (same(data,patch(rDos86master,(data[0xFE]&0xff)-0x36)))
+                else if (Arrays.equals(data,patch(rDos86master,(data[0xFE]&0xff)-0x36)))
                 {
                     ident = "DOS 3.3 (1986) Slave (A$"+Hex2Bin.hexbyte(data[0xFE])+"00)";
                 }
@@ -135,28 +136,6 @@ public class VolumeBoot extends VolumeEntity
                 ident = "unknown boot sector";
             }
         }
-    }
-
-    /**
-     * @param r1
-     * @param r2
-     * @return
-     */
-    private boolean same(byte[] r1, byte[] r2)
-    {
-        if (r1.length != r2.length)
-        {
-            return false;
-        }
-        for (int i = 0; i < r1.length; i++)
-        {
-            if (r1[i] != r2[i])
-            {
-                return false;
-            }
-            
-        }
-        return true;
     }
 
     /**
