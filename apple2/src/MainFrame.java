@@ -105,6 +105,13 @@ public class MainFrame extends JFrame
         }
 
         DefaultMutableTreeNode nOrphaned = new DefaultMutableTreeNode("Orphaned Data");
+        List rOrphan = new ArrayList();
+        vol.getOrphaned().getUsed(rOrphan);
+        for (Iterator i = rOrphan.iterator(); i.hasNext();)
+        {
+            DiskPos p = (DiskPos)i.next();
+            nOrphaned.add(new DefaultMutableTreeNode(p.toStringTS()));
+        }
 
         DefaultMutableTreeNode nBlank = new DefaultMutableTreeNode("Blank Sectors");
 
