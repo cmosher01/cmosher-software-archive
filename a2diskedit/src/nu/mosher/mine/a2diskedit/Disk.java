@@ -76,7 +76,14 @@ public class Disk implements TreeNode
 	{
 		StringBuffer sb = new StringBuffer();
 		sb.append("<html>Disk image file path: ");
-		sb.append(mFile.getAbsolutePath());
+		if (mFile != null)
+		{
+			sb.append(mFile.getAbsolutePath());
+		}
+		else
+		{
+			sb.append("[no file]");
+		}
 		sb.append("</html>");
 		viewRight.setText(sb.toString());
 		return viewRight;
