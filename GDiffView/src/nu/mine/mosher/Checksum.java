@@ -48,12 +48,6 @@ public class Checksum
 
 
 
-    public Checksum()
-    {
-    }
-
-
-
     protected static final char single_hash[] = {
     /* Random numbers generated using SLIB's pseudo-random number generator. */
     0xbcd1, 0xbb65, 0x42c2, 0xdffe, 0x9666, 0x431b, 0x8504, 0xeb46, 0x6379, 0xd460, 0xcf14, 0x53cf, 0xdb51, 0xdb08, 0x12c8, 0xf602,
