@@ -45,6 +45,8 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+import nu.mine.mosher.checksum.RollingChecksum;
+
 
 
 /**
@@ -95,9 +97,28 @@ public class GDiffView extends JFrame
     {
 //        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 //        GDiffView frame = new GDiffView(new File(args[0]),new File(args[1]));
-        SourceFile trg = new SourceFile();
+        SourceFile src = new SourceFile();
         int cWindow = 17;
-        trg.calculateWindowChecksums(new File(args[0]),cWindow);
+        src.calculateWindowChecksums(new File(args[0]),cWindow);
+        File trg = new File(args[1]);
+        InputStream streamTrg = new BufferedInputStream(new FileInputStream(trg));
+        byte[] rs = new byte[cWindow];
+        RollingChecksum roll = new RollingChecksum();
+        while (streamTrg.available() > 0)
+        {
+            int w = cWindow;
+            if (streamTrg.available() < cWindow)
+            {
+                w = streamTrg.available();
+                rs = new byte[w];
+            }
+            int c = streamTrg.read(rs);
+            if (c != w)
+            {
+                throw new IOException("error reading target file");
+            }
+            
+        }
     }
 
     public GDiffView(File fileSrc, File fileTrg) throws BadLocationException, IOException, InvalidMagicBytes
