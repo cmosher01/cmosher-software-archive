@@ -1,6 +1,7 @@
 /*
  * Created on Aug 25, 2004
  */
+package nu.mine.mosher;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
