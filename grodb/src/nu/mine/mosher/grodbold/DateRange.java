@@ -155,6 +155,7 @@ public class DateRange implements Immutable, Serializable, Comparable
 			return false;
 		}
 		// TODO finish date equality
+		return true;
     }
 
     public int hashCode()
