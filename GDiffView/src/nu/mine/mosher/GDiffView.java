@@ -452,33 +452,29 @@ public class GDiffView extends JFrame
         while (!(g instanceof GDiffEnd))
         {
             rcmd.add(g);
+            byte[] rb;
             if (g instanceof GDiffData)
             {
                 GDiffData gd = (GDiffData)g;
-                long t0 = t;
-                for (int i = 0; i < gd.getData().length; i++)
-                {
-                    ++t;
-                    hex.appendByte(gd.getData()[i]);
-                }
-                long t1 = t-1;
-                g.setTargetRange(new Range(t0,t1));
+                rb = gd.getData();
             }
             else
             {
                 GDiffCopy gc = (GDiffCopy)g;
                 in.seek(gc.getRange().getBegin());
-                byte[] rb = new byte[(int)gc.getRange().getLength()];
+                rb = new byte[(int)gc.getRange().getLength()];
                 in.readFully(rb);
-                long t0 = t;
-                for (int i = 0; i < rb.length; i++)
-                {
-                    ++t;
-                    hex.appendByte(rb[i]);
-                }
-                long t1 = t-1;
-                g.setTargetRange(new Range(t0,t1));
             }
+
+            long t0 = t;
+            for (int i = 0; i < rb.length; i++)
+            {
+                ++t;
+                hex.appendByte(rb[i]);
+            }
+            long t1 = t-1;
+            g.setTargetRange(new Range(t0,t1));
+
             g = getGDiff(gdiff);
         }
         hex.appendNewLine();
