@@ -17,7 +17,7 @@ import java.util.List;
 public class Thing
 {
 	private String name;
-	private List rRel; // relation to items
+	private List rmmItem;
 
 	public Thing()
 	{
