@@ -175,7 +175,7 @@ public class Disk
      * @throws InvalidPosException
      * 
      */
-    public void findDos33VTOC(Collection rPosVtoc) throws InvalidPosException
+    public void findDos33VTOC(Collection rPosVtoc)
     {
         rewind();
         while (!EOF())
