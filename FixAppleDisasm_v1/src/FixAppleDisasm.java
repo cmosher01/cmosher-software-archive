@@ -66,7 +66,14 @@ public class FixAppleDisasm
 			{
 				in = new InputStreamReader(new FileInputStream(FileDescriptor.in));
 			}
-			out = new OutputStreamWriter(new FileOutputStream(FileDescriptor.out));
+			if (fileOut.length() > 0)
+			{
+				out = new OutputStreamWriter(new FileOutputStream(new File(fileOut)));
+			}
+			else
+			{
+				out = new OutputStreamWriter(new FileOutputStream(FileDescriptor.out));
+			}
 
 			FixDis(in,out);
 		}
