@@ -1,5 +1,6 @@
 <%@ include file="htmlhead.jsp" %>
 <%@ page import="java.util.Iterator" %>
+<%@ page import="java.util.Map" %>
 <head>
 <title>Request Dump</title>
 </head>
