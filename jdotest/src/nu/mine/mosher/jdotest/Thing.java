@@ -6,6 +6,8 @@
  */
 package nu.mine.mosher.jdotest;
 
+import java.util.List;
+
 /**
  * @author Chris
  *
@@ -15,6 +17,7 @@ package nu.mine.mosher.jdotest;
 public class Thing
 {
 	private String name;
+	private List rRel; // relation to items
 
 	public Thing()
 	{
