@@ -55,7 +55,6 @@ public final class BeanUtil
                 }
                 else
                 {
-                    Object tmpval = null;
                     createTypedArray(param, bean, method, values, t, propertyEditorClass);
                 }
             }
@@ -66,10 +65,10 @@ public final class BeanUtil
                 {
                     return;
                 }
-                Object oval = convert(param, value, type, propertyEditorClass);
-                if (oval != null)
+                Object val = convert(param, value, type, propertyEditorClass);
+                if (val != null)
                 {
-                    method.invoke(bean, new Object[] { oval });
+                    method.invoke(bean, new Object[] { val });
                 }
             }
         }
