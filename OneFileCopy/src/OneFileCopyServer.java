@@ -13,7 +13,7 @@ public class OneFileCopyServer
 
 	public static void main(String[] args) throws IOException
 	{
-		String sFileName = "C:\\Documents and Settings\\Chris\\My Documents\\My Videos\\TEMP\\mp4.bat";
+		String sFileName = "C:\\Documents and Settings\\Chris\\My Documents\\My Videos\\199912\\test5.avi";
 		File f = new File(sFileName).getCanonicalFile().getAbsoluteFile();
 		if (!f.canRead())
 		{
