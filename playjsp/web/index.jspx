@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
-<jsp:output omit-xml-declaration="false" doctype-root-element="html" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd" />
-<jsp:directive.page session="false" contentType="application/xhtml+xml" pageEncoding="UTF-8" />
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head>
-<title>Play JSP</title>
-</head>
-<body>
-Testing a JSP Document (as opposed to a JSP Page)!
-</body>
-</html>
+	<jsp:output omit-xml-declaration="false" doctype-root-element="html" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd" />
+	<jsp:directive.page session="false" contentType="application/xhtml+xml" pageEncoding="UTF-8" />
+	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+		<head>
+			<title><jsp:text>Play JSP</jsp:text></title>
+		</head>
+		<body>
+			<jsp:text>Testing a JSP Document (as opposed to a JSP Page)!</jsp:text>
+		</body>
+	</html>
 </jsp:root>
