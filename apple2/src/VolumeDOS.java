@@ -423,11 +423,11 @@ public class VolumeDOS extends VolumeEntity
                         }
                         else
                         {
-                            rbClearSlave = getClearSlave(rbClearFranklin);
-                            fixupSlave(rbClearSlave,rSlaveCommon,dif);
-                            fixupSlave(rbClearSlave,rSlave1980,dif);
-                            fixupSlave(rbClearSlave,rSlaveFranklin,dif);
-                            if (Arrays.equals(rbCmp,rbClearSlave))
+                            byte[] rbClearSlaveFrank = getClearSlave(rbClearFranklin);
+                            fixupSlave(rbClearSlaveFrank,rSlaveCommon,dif);
+                            fixupSlave(rbClearSlaveFrank,rSlave1980,dif);
+                            fixupSlave(rbClearSlaveFrank,rSlaveFranklin,dif);
+                            if (Arrays.equals(rbCmp,rbClearSlaveFrank))
                             {
                                 s.append(" (DOS 3.3 1980 (Franklin version) slave (A$"+Hex2Bin.hexbyte((byte)(0x1D+dif))+"00): exact match)");
                             }
