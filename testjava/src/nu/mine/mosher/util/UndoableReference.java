@@ -24,12 +24,12 @@ public class UndoableReference
         undoer.saveForUndo(state);
     }
 
-    public void undo() throws CloneNotSupportedException
+    public void undo()
     {
         state = undoer.undo(state);
     }
 
-    public void redo() throws CloneNotSupportedException
+    public void redo()
     {
         state = undoer.redo(state);
     }
