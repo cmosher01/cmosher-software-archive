@@ -26,7 +26,7 @@ public class CloneThreadTest
     {
         final X x = new X();
         x.a = 6;
-        x.b = 7;
+        x.b = 6;
 
         Thread tPrint = new Thread(new Runnable()
         {
@@ -34,15 +34,8 @@ public class CloneThreadTest
             {
                 while (true)
                 {
-                    System.out.println(x);
-                    try
-                    {
-                        Thread.sleep(500);
-                    }
-                    catch (InterruptedException e)
-                    {
-                        e.printStackTrace();
-                    }
+                    x.a++;
+                    x.b++;
                 }
             }
         });
@@ -52,7 +45,8 @@ public class CloneThreadTest
         {
             public void run()
             {
-                X y = x.clone();
+                X y = (X)x.clone();
+                System.out.println(y);
             }
         });
         tSet.setDaemon(true);
