@@ -25,8 +25,6 @@ public class TimeOfDayParser
      * HH:mm:ss
      * HH:mm:ss.SSS
      * 
-     * Numbers are assumed to be decimal.
-     * 
      * @param cal
      * @param s
      * @return
