@@ -53,7 +53,7 @@ public class GedcomTree
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer(1024);
-		root.appendString(sb);
+		root.appendStringDeep(sb);
 
 		sb.append("--------map-of-IDs-to-Nodes--------\n");
 		for (Iterator i = mapIDtoNode.entrySet().iterator(); i.hasNext();)
@@ -61,7 +61,7 @@ public class GedcomTree
             Map.Entry entry = (Map.Entry)i.next();
             sb.append(entry.getKey().toString());
             sb.append(" --> ");
-            sb.append(entry.getValue().toString());
+            ((TreeNode)entry.getValue()).appendStringShallow(sb);
 			sb.append("\n");
         }
 
