@@ -18,6 +18,7 @@ import java.io.PipedOutputStream;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -226,6 +227,20 @@ public class GDiffView extends JFrame
         docSrc.insertString(0,sb.toString(),(AttributeSet)styles.get("body"));
         readGDiff();
         docTrg.insertString(0,trg.toString(),(AttributeSet)styles.get("body"));
+
+        for (Iterator i = rcmd.iterator(); i.hasNext();)
+        {
+            GDiffCmd g = (GDiffCmd)i.next();
+            if (g instanceof GDiffData)
+            {
+                beginTrg = g.getTargetRange().getBegin();
+                endTrg = g.getTargetRange().getEnd();
+                highlight("insert",true);
+            }
+            else
+            {
+            }
+        }
 
         listGDiff.setSelectionModel(selectionModel);
         listGDiff.setSelectedIndex(0);
@@ -491,16 +506,6 @@ public class GDiffView extends JFrame
             }
             long t1 = t-1;
             g.setTargetRange(new Range(t0,t1));
-
-            if (g instanceof GDiffData)
-            {
-                beginTrg = g.getTargetRange().getBegin();
-                endTrg = g.getTargetRange().getEnd();
-                highlight("insert",true);
-            }
-            else
-            {
-            }
 
             g = getGDiff(gdiff);
         }
