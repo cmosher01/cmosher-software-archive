@@ -16,8 +16,6 @@ public class PersonPersist
 	private final static int SIZE = 3;
 	private PersistenceManagerFactory pmf;
 
-	private Person[] people;
-
 	private List rid = new ArrayList(SIZE);
 
 	public PersonPersist()
@@ -38,22 +36,22 @@ public class PersonPersist
 	public void persistPeople()
 	{
 		// create an array of Person's
-		this.people = new Person[SIZE];
+		Person[] people = new Person[SIZE];
 
 		// create three people
-		this.people[0] = new Person("test 1");
-		this.people[1] = new Person("test 2");
-		this.people[2] = new Person("test 3");
+		people[0] = new Person("test 1");
+		people[1] = new Person("test 2");
+		people[2] = new Person("test 3");
 
 		// persist the array of people
 		PersistenceManager pm = this.pmf.getPersistenceManager();
 		Transaction transaction = pm.currentTransaction();
-		pm.makePersistentAll(this.people);
+		pm.makePersistentAll(people);
 		transaction.commit();
 		// retrieve the object ids for the persisted objects
-		for (int i = 0; i < this.people.length; i++)
+		for (int i = 0; i < people.length; i++)
 		{
-			this.rid.add(pm.getObjectId(this.people[i]));
+			this.rid.add(pm.getObjectId(people[i]));
 		}
 		// close current persistence manager to ensure that
 		// objects are read from the db not the persistence
