@@ -1,13 +1,21 @@
-/*
- * TODO
- *
- * Created on Jan 13, 2004
- */
-
-/**
- * TODO
- */
 public class Pair
 {
+    private Object a;
+    private Object b;
 
+    public Pair(Object a, Object b)
+    {
+        this.a = new CloneableReference(a).clone();
+        this.b = new CloneableReference(b).clone();
+    }
+
+    public Object a()
+    {
+        return new CloneableReference(a).clone();
+    }
+
+    public Object b()
+    {
+        return new CloneableReference(b).clone();
+    }
 }
