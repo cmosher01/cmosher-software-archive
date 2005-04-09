@@ -45,9 +45,7 @@ public final class Comparer
 			needOld = needNew = false;
 			if (objOld != null || objNew != null)
 			{
-				int cmp;
-				cmp = compareObjects(c,objOld,objNew);
-
+				final int cmp = compareObjects(c,objOld,objNew);
 				if (cmp < 0)
 				{
 					needOld = true;
