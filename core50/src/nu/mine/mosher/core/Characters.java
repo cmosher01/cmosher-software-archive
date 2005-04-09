@@ -10,7 +10,7 @@ public final class Characters
 {
 	private Characters()
 	{
-		throw new UnsupportedOperationException();
+		assert false : "can't instantiate";
 	}
 
     public static boolean isHexDigit(char c)
