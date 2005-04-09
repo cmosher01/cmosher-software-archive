@@ -15,7 +15,7 @@ public final class Cloner
 
 	private Cloner()
 	{
-		throw new UnsupportedOperationException();
+		assert false : "can't instantiate";
 	}
 
 	public static<T extends Cloneable> T cloneObject(T cloneableObject) throws CloneNotSupportedException
