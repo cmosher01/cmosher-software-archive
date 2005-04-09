@@ -31,6 +31,7 @@ public final class Comparer
 
 		final Have<T> have = new Have<T>();
 		final Need need = new Need();
+
 		while (need.needEither())
 		{
 			if (need.needOld())
@@ -41,6 +42,7 @@ public final class Comparer
 			{
 				have.setNew(getNext(iNew));
 			}
+
 			need.clearBoth();
 			if (have.haveEither())
 			{
