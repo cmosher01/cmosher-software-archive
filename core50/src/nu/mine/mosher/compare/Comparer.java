@@ -88,18 +88,12 @@ public final class Comparer
 
 	private static<T> T getNext(final Iterator<T> i)
 	{
-		T obj;
-
-		if (i.hasNext())
+		if (!i.hasNext())
 		{
-			obj = i.next();
-		}
-		else
-		{
-			obj = null;
+			return null;
 		}
 
-		return obj;
+		return i.next();
 	}
 
 //private static class CompareInts implements Comparator
