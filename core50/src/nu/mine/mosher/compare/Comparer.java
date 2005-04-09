@@ -40,8 +40,8 @@ public final class Comparer
 			if (have.haveEither())
 			{
 				final int cmp = have.compareUsing(c);
-				setNeed(cmp,need);
 				update(cmp,have,upd);
+				setNeed(cmp,need);
 			}
 		}
 
