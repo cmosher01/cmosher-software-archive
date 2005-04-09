@@ -29,9 +29,14 @@ public final class Comparer
 		final Iterator<T> iOld = setOld.iterator();
 		final Iterator<T> iNew = setNew.iterator();
 
+		/*
+		 * objOld and objNew must be maintained across loop
+		 * interations, so must be defined here, outside
+		 * the loop, not inside the loop.
+		 */
 		T objOld = null;
 		T objNew = null;
-		Need need = new Need();
+		final Need need = new Need();
 		while (need.needEither())
 		{
 			if (need.needOld())
