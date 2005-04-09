@@ -34,36 +34,52 @@ public final class Comparer
 
 		while (need.needEither())
 		{
-			if (need.needOld())
-			{
-				have.setOld(getNext(iOld));
-			}
-			if (need.needNew())
-			{
-				have.setNew(getNext(iNew));
-			}
+			getNext(need,iOld,iNew,have);
 
 			need.clearBoth();
 			if (have.haveEither())
 			{
 				final int cmp = have.compareUsing(c);
-				if (cmp < 0)
-				{
-					need.setOld();
-					upd.delete(have.getOld());
-				}
-				else if (cmp > 0)
-				{
-					need.setNew();
-					upd.insert(have.getNew());
-				}
-				else
-				{
-					need.setBoth();
-					upd.update(have.getOld(),have.getNew());
-				}
+				setNeed(cmp,need);
+				update(cmp,have,upd);
 			}
 		}
+
+//		final Have<T> have = new Have<T>();
+//		final Need need = new Need();
+//
+//		while (need.needEither())
+//		{
+//			if (need.needOld())
+//			{
+//				have.setOld(getNext(iOld));
+//			}
+//			if (need.needNew())
+//			{
+//				have.setNew(getNext(iNew));
+//			}
+//
+//			need.clearBoth();
+//			if (have.haveEither())
+//			{
+//				final int cmp = have.compareUsing(c);
+//				if (cmp < 0)
+//				{
+//					need.setOld();
+//					upd.delete(have.getOld());
+//				}
+//				else if (cmp > 0)
+//				{
+//					need.setNew();
+//					upd.insert(have.getNew());
+//				}
+//				else
+//				{
+//					need.setBoth();
+//					upd.update(have.getOld(),have.getNew());
+//				}
+//			}
+//		}
 
 //		/*
 //		 * objOld and objNew must be maintained across loop
@@ -139,6 +155,66 @@ public final class Comparer
 //				}
 //			}
 //		}
+	}
+
+	/**
+	 * @param cmp
+	 * @param have
+	 * @param upd
+	 * @throws UpdateException
+	 */
+	private static<T> void update(final int cmp, final Have<T> have, final Updater<T> upd) throws UpdateException
+	{
+		if (cmp < 0)
+		{
+			upd.delete(have.getOld());
+		}
+		else if (cmp > 0)
+		{
+			upd.insert(have.getNew());
+		}
+		else
+		{
+			upd.update(have.getOld(),have.getNew());
+		}
+	}
+
+	/**
+	 * @param cmp
+	 * @param need
+	 */
+	private static void setNeed(final int cmp, final Need need)
+	{
+		if (cmp < 0)
+		{
+			need.setOld();
+		}
+		else if (cmp > 0)
+		{
+			need.setNew();
+		}
+		else
+		{
+			need.setBoth();
+		}
+	}
+
+	/**
+	 * @param iOld
+	 * @param iNew
+	 * @param have
+	 * @param need
+	 */
+	private static<T> void getNext(final Need need, final Iterator<T> iOld, final Iterator<T> iNew, final Have<T> have)
+	{
+		if (need.needOld())
+		{
+			have.setOld(getNext(iOld));
+		}
+		if (need.needNew())
+		{
+			have.setNew(getNext(iNew));
+		}
 	}
 
 	private static final class Have<T>
