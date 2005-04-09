@@ -209,11 +209,11 @@ public final class Comparer
 	{
 		if (need.needOld())
 		{
-			have.setOld(getNext(iOld));
+			have.setOld(nextOrNull(iOld));
 		}
 		if (need.needNew())
 		{
-			have.setNew(getNext(iNew));
+			have.setNew(nextOrNull(iNew));
 		}
 	}
 
@@ -261,7 +261,7 @@ public final class Comparer
 		return c.compare(objOld,objNew);
 	}
 
-	private static<T> T getNext(final Iterator<T> i)
+	private static<T> T nextOrNull(final Iterator<T> i)
 	{
 		if (!i.hasNext())
 		{
