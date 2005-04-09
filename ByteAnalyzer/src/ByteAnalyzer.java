@@ -153,7 +153,7 @@ public class ByteAnalyzer
             Map.Entry<Integer,Integer> entry = i.next();
             int byt = entry.getKey();
             int cnt = entry.getValue();
-            if (byt >= 0x80 && cnt > 0)
+            if (/*byt >= 0x80*/ && cnt > 0)
             {
                 if (!shown)
                 {
