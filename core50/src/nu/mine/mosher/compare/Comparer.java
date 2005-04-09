@@ -46,18 +46,7 @@ public final class Comparer
 			if (objOld != null || objNew != null)
 			{
 				int cmp;
-				if (objOld == null)
-				{
-					cmp = 1;
-				}
-				else if (objNew == null)
-				{
-					cmp = -1;
-				}
-				else
-				{
-					cmp = c.compare(objOld,objNew);
-				}
+				cmp = compareObjects(c,objOld,objNew);
 
 				if (cmp < 0)
 				{
@@ -77,6 +66,31 @@ public final class Comparer
 				}
 			}
 		}
+	}
+
+	/**
+	 * @param <T>
+	 * @param c
+	 * @param objOld
+	 * @param objNew
+	 * @return
+	 */
+	private static <T>int compareObjects(Comparator<T> c, T objOld, T objNew)
+	{
+		int cmp;
+		if (objOld == null)
+		{
+			cmp = 1;
+		}
+		else if (objNew == null)
+		{
+			cmp = -1;
+		}
+		else
+		{
+			cmp = c.compare(objOld,objNew);
+		}
+		return cmp;
 	}
 
 	private static<T> T getNext(Iterator<T> i)
