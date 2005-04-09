@@ -209,11 +209,13 @@ public final class Comparer
 	{
 		if (need.needOld())
 		{
-			have.setOld(nextIf(iOld));
+			T t = nextIf(iOld);
+			have.setOld(t);
 		}
 		if (need.needNew())
 		{
-			have.setNew(nextIf(iNew));
+			T t = nextIf(iNew);
+			have.setNew(t);
 		}
 	}
 
