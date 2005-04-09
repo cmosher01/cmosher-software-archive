@@ -8,8 +8,10 @@ public final class Closer
 {
 	private Closer()
 	{
-		throw new UnsupportedOperationException();
+		assert false : "can't instantiate";
 	}
+
+	private static final Map<Class,Method> mClasses = new HashMap<Class,Method>();
 
 	/**
 	 * Calls the given object's "close()" method, if it has one.
@@ -36,7 +38,6 @@ public final class Closer
 	 * 
 	 * @param obj the Object whose close() method is to be called.
 	 */
-	private static final Map<Class,Method> mClasses = new HashMap<Class,Method>();
 	public static void close(Object obj)
 	{
 		try
