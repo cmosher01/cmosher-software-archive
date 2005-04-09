@@ -29,42 +29,36 @@ public final class Comparer
 		final Iterator<T> iOld = setOld.iterator();
 		final Iterator<T> iNew = setNew.iterator();
 
-		/*
-		 * objOld and objNew must be maintained across loop
-		 * iterations, so must be defined here, outside
-		 * the loop, not inside the loop.
-		 */
-		T objOld = null;
-		T objNew = null;
+		final Have<T> have = new Have<T>();
 		final Need need = new Need();
 		while (need.needEither())
 		{
 			if (need.needOld())
 			{
-				objOld = getNext(iOld);
+				have.setOld(getNext(iOld));
 			}
 			if (need.needNew())
 			{
-				objNew = getNext(iNew);
+				have.setNew(getNext(iNew));
 			}
 			need.clearBoth();
-			if (objOld != null || objNew != null)
+			if (have.haveEither())
 			{
-				final int cmp = compareObjects(c,objOld,objNew);
+				final int cmp = have.compareUsing(c);
 				if (cmp < 0)
 				{
 					need.setOld();
-					upd.delete(objOld);
+					upd.delete(have.getOld());
 				}
 				else if (cmp > 0)
 				{
 					need.setNew();
-					upd.insert(objNew);
+					upd.insert(have.getNew());
 				}
 				else
 				{
 					need.setBoth();
-					upd.update(objOld,objNew);
+					upd.update(have.getOld(),have.getNew());
 				}
 			}
 		}
@@ -154,7 +148,9 @@ public final class Comparer
 		public boolean haveEither() { return objOld != null || objNew != null; }
 		public T getOld() { return objOld; }
 		public T getNew() { return objNew; }
+		public int compareUsing(Comparator<T> c) { return compareObjects(c,objOld,objNew); }
 	}
+
 	private static final class Need
 	{
 		private boolean needOld = true;
