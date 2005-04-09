@@ -87,6 +87,10 @@ public class ExcelCSVFieldizer
          */
         public String next() throws NoSuchElementException
         {
+        	if (!this.hasNext())
+        	{
+        		throw new NoSuchElementException();
+        	}
             try
             {
                 return this.parser.getOneValue();
