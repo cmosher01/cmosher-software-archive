@@ -11,6 +11,14 @@ public final class Comparer
 		assert false : "can't instantiate";
 	}
 
+	/**
+	 * @param <T>
+	 * @param setOld
+	 * @param setNew
+	 * @param c
+	 * @param upd
+	 * @throws UpdateException
+	 */
 	public static<T extends Comparable<T>> void compare(SortedSet<T> setOld, SortedSet<T> setNew, Comparator<T> c, Updater<T> upd) throws UpdateException
 	{
 		if (!setOld.comparator().equals(setNew.comparator()))
