@@ -68,6 +68,47 @@ public final class Comparer
 				}
 			}
 		}
+
+//		/*
+//		 * objOld and objNew must be maintained across loop
+//		 * iterations, so must be defined here, outside
+//		 * the loop, not inside the loop.
+//		 */
+//		T objOld = null;
+//		T objNew = null;
+//		final Need need = new Need();
+//		while (need.needEither())
+//		{
+//			if (need.needOld())
+//			{
+//				objOld = getNext(iOld);
+//			}
+//			if (need.needNew())
+//			{
+//				objNew = getNext(iNew);
+//			}
+//			need.clearBoth();
+//			if (objOld != null || objNew != null)
+//			{
+//				final int cmp = compareObjects(c,objOld,objNew);
+//				if (cmp < 0)
+//				{
+//					need.setOld();
+//					upd.delete(objOld);
+//				}
+//				else if (cmp > 0)
+//				{
+//					need.setNew();
+//					upd.insert(objNew);
+//				}
+//				else
+//				{
+//					need.setBoth();
+//					upd.update(objOld,objNew);
+//				}
+//			}
+//		}
+
 //		boolean needOld = true;
 //		boolean needNew = true;
 //		while (needOld || needNew)
@@ -104,6 +145,16 @@ public final class Comparer
 //		}
 	}
 
+	private static final class Have<T>
+	{
+		private T objOld;
+		private T objNew;
+		public void setOld(T objOld) { this.objOld = objOld; }
+		public void setNew(T objNew) { this.objNew = objNew; }
+		public boolean haveEither() { return objOld != null || objNew != null; }
+		public T getOld() { return objOld; }
+		public T getNew() { return objNew; }
+	}
 	private static final class Need
 	{
 		private boolean needOld = true;
