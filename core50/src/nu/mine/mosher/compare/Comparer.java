@@ -73,7 +73,7 @@ public final class Comparer
 	 * @param objNew
 	 * @return positive for greater than, negative for less than
 	 */
-	private static <T>int compareObjects(final Comparator<T> c, final T objOld, final T objNew)
+	private static<T>int compareObjects(final Comparator<T> c, final T objOld, final T objNew)
 	{
 		if (objOld == null)
 		{
