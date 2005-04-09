@@ -19,15 +19,15 @@ public final class Comparer
 	 * @param upd
 	 * @throws UpdateException
 	 */
-	public static<T extends Comparable<T>> void compare(SortedSet<T> setOld, SortedSet<T> setNew, Comparator<T> c, Updater<T> upd) throws UpdateException
+	public static<T extends Comparable<T>> void compare(final SortedSet<T> setOld, final SortedSet<T> setNew, final Comparator<T> c, final Updater<T> upd) throws UpdateException
 	{
 		if (!setOld.comparator().equals(setNew.comparator()))
 		{
 			throw new IllegalArgumentException("the two sets must have comparators that are equal");
 		}
 
-		Iterator<T> iOld = setOld.iterator();
-		Iterator<T> iNew = setNew.iterator();
+		final Iterator<T> iOld = setOld.iterator();
+		final Iterator<T> iNew = setNew.iterator();
 		T objOld = null;
 		T objNew = null;
 		boolean needOld = true;
@@ -73,7 +73,7 @@ public final class Comparer
 	 * @param objNew
 	 * @return positive for greater than, negative for less than
 	 */
-	private static <T>int compareObjects(Comparator<T> c, T objOld, T objNew)
+	private static <T>int compareObjects(final Comparator<T> c, final T objOld, final T objNew)
 	{
 		if (objOld == null)
 		{
@@ -86,7 +86,7 @@ public final class Comparer
 		return c.compare(objOld,objNew);
 	}
 
-	private static<T> T getNext(Iterator<T> i)
+	private static<T> T getNext(final Iterator<T> i)
 	{
 		T obj;
 
