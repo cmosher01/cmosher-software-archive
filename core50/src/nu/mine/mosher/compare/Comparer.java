@@ -28,6 +28,7 @@ public final class Comparer
 
 		final Iterator<T> iOld = setOld.iterator();
 		final Iterator<T> iNew = setNew.iterator();
+
 		T objOld = null;
 		T objNew = null;
 		boolean needOld = true;
@@ -66,6 +67,18 @@ public final class Comparer
 		}
 	}
 
+	private static final class Need
+	{
+		private boolean needOld = true;
+		private boolean needNew = true;
+		public boolean needEither() { return needOld || needNew; }
+		public boolean needOld() { return needOld; }
+		public boolean needNew() { return needNew; }
+		public void setOld() { needOld = true; }
+		public void setNew() { needNew = true; }
+		public void setBoth() { needOld = needNew = true; }
+		public void clearBoth() { needOld = needNew = false; }
+	}
 	/**
 	 * @param <T>
 	 * @param c
