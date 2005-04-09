@@ -77,20 +77,15 @@ public final class Comparer
 	 */
 	private static <T>int compareObjects(Comparator<T> c, T objOld, T objNew)
 	{
-		int cmp;
 		if (objOld == null)
 		{
-			cmp = 1;
+			return +1;
 		}
-		else if (objNew == null)
+		if (objNew == null)
 		{
-			cmp = -1;
+			return -1;
 		}
-		else
-		{
-			cmp = c.compare(objOld,objNew);
-		}
-		return cmp;
+		return c.compare(objOld,objNew);
 	}
 
 	private static<T> T getNext(Iterator<T> i)
