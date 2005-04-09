@@ -8,7 +8,7 @@ public final class Comparer
 {
 	private Comparer()
 	{
-		throw new UnsupportedOperationException();
+		assert false : "can't instantiate";
 	}
 
 	public static<T extends Comparable<T>> void compare(SortedSet<T> setOld, SortedSet<T> setNew, Comparator<T> c, Updater<T> upd) throws UpdateException
