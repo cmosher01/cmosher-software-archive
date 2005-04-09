@@ -31,7 +31,7 @@ public final class Comparer
 
 		/*
 		 * objOld and objNew must be maintained across loop
-		 * interations, so must be defined here, outside
+		 * iterations, so must be defined here, outside
 		 * the loop, not inside the loop.
 		 */
 		T objOld = null;
