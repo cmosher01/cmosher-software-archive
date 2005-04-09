@@ -31,40 +31,72 @@ public final class Comparer
 
 		T objOld = null;
 		T objNew = null;
-		boolean needOld = true;
-		boolean needNew = true;
-		while (needOld || needNew)
+		Need need = new Need();
+		while (need.needEither())
 		{
-			if (needOld)
+			if (need.needOld())
 			{
 				objOld = getNext(iOld);
 			}
-			if (needNew)
+			if (need.needNew())
 			{
 				objNew = getNext(iNew);
 			}
-			needOld = needNew = false;
+			need.clearBoth();
 			if (objOld != null || objNew != null)
 			{
 				final int cmp = compareObjects(c,objOld,objNew);
 				if (cmp < 0)
 				{
-					needOld = true;
+					need.setOld();
 					upd.delete(objOld);
 				}
 				else if (cmp > 0)
 				{
-					needNew = true;
+					need.setNew();
 					upd.insert(objNew);
 				}
 				else
 				{
-					needOld = true;
-					needNew = true;
+					need.setBoth();
 					upd.update(objOld,objNew);
 				}
 			}
 		}
+//		boolean needOld = true;
+//		boolean needNew = true;
+//		while (needOld || needNew)
+//		{
+//			if (needOld)
+//			{
+//				objOld = getNext(iOld);
+//			}
+//			if (needNew)
+//			{
+//				objNew = getNext(iNew);
+//			}
+//			needOld = needNew = false;
+//			if (objOld != null || objNew != null)
+//			{
+//				final int cmp = compareObjects(c,objOld,objNew);
+//				if (cmp < 0)
+//				{
+//					needOld = true;
+//					upd.delete(objOld);
+//				}
+//				else if (cmp > 0)
+//				{
+//					needNew = true;
+//					upd.insert(objNew);
+//				}
+//				else
+//				{
+//					needOld = true;
+//					needNew = true;
+//					upd.update(objOld,objNew);
+//				}
+//			}
+//		}
 	}
 
 	private static final class Need
