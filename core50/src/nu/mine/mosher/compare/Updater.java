@@ -7,6 +7,6 @@ package nu.mine.mosher.core;
 public interface Updater<T>
 {
 	void insert(T objNew) throws UpdateException;
-	void update(T objOld, Object objNew) throws UpdateException;
+	void update(T objOld, T objNew) throws UpdateException;
 	void delete(T objOld) throws UpdateException;
 }
