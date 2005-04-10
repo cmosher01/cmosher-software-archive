@@ -17,7 +17,7 @@ public final class Characters
      * Returns <code>true</code> if the given <code>char</code>
      * is 0-9 or A-F or a-f (a hexadecimal digit).
      * @param c
-     * @return
+     * @return <code>true</code> if <code>c</code> is a hex digit
      */
     public static boolean isHexDigit(char c)
     {
