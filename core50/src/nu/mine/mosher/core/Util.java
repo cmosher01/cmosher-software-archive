@@ -5,6 +5,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Various general-purpose utility functions.
+ *
+ * @author Chris Mosher
+ */
 public final class Util
 {
 	private Util()
