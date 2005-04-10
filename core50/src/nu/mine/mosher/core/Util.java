@@ -54,6 +54,12 @@ public final class Util
         return (ArrayList<T>)r;
     }
 
+	/**
+	 * Converts and <ocde>Iterable</code> into a <code>Set</code>.
+	 * @param <T> class of elements in the <code>List</code>
+	 * @param i <ocde>Iterable</code> to read all elements from
+	 * @return the new <code>Set</code> of all elements from <code>i</code>
+	 */
 	public static<T> HashSet<T> set(final Iterable<T> i)
 	{
 		final Set<T> s = new HashSet<T>();
