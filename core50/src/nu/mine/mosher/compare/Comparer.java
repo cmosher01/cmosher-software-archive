@@ -236,7 +236,7 @@ public final class Comparer
 		public boolean needNew() { return needNew; }
 		public void setOld() { needOld = true; }
 		public void setNew() { needNew = true; }
-		public void setBoth() { needOld = needNew = true; }
+//		public void setBoth() { needOld = needNew = true; }
 		public void clearBoth() { needOld = needNew = false; }
 	}
 	/**
