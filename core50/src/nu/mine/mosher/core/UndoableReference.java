@@ -7,11 +7,11 @@ public final class UndoableReference<T extends Cloneable>
 
 	public UndoableReference(T state)
 	{
-		if (state == null)
+		this.state = state;
+		if (this.state == null)
 		{
 			throw new IllegalArgumentException();
 		}
-		this.state = state;
 	}
 
 	public T state()
