@@ -8,24 +8,8 @@ package nu.mine.mosher.core;
  *
  * @author Chris Mosher
  */
-public class UpdateDefault implements Updater
+public abstract class UpdateDefault<T> implements Updater<T>
 {
-	/**
-	 * 
-	 */
-	public UpdateDefault()
-	{
-		super();
-	}
-
-	/**
-	 * @param objNew
-	 * @throws UpdateException
-	 */
-	public void insert(T objNew) throws UpdateException
-	{
-	}
-
 	/**
 	 * @param objOld
 	 * @param objNew
@@ -33,13 +17,7 @@ public class UpdateDefault implements Updater
 	 */
 	public void update(T objOld, T objNew) throws UpdateException
 	{
-	}
-
-	/**
-	 * @param objOld
-	 * @throws UpdateException
-	 */
-	public void delete(T objOld) throws UpdateException
-	{
+		delete(objOld);
+		insert(objNew);
 	}
 }
