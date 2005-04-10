@@ -19,7 +19,10 @@ public final class Cloner
 	}
 
 	/**
-	 * @param <T> class of object to be cloned
+	 * Clones the given object. This method uses reflection to
+	 * call the (otherwise protected) <code>clone</code> method
+	 * of the givne object, which must be <code>Cloneable</code>.
+	 * @param <T> class of <code>Cloneable</code> object to be cloned
 	 * @param cloneableObject object to be cloned
 	 * @return clone of <code>cloneableObject</code>
 	 * @throws CloneNotSupportedException
