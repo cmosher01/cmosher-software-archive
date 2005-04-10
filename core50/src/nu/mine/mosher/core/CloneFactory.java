@@ -18,6 +18,12 @@ public final class Cloner
 		assert false : "can't instantiate";
 	}
 
+	/**
+	 * @param <T>
+	 * @param cloneableObject
+	 * @return
+	 * @throws CloneNotSupportedException
+	 */
 	public static<T extends Cloneable> T cloneObject(T cloneableObject) throws CloneNotSupportedException
 	{
 		try
@@ -36,11 +42,10 @@ public final class Cloner
 			 */
 			return (T)methodClone.invoke(cloneableObject,(Object[])null);
 		}
-		// ???
-//		catch (CloneNotSupportedException e)
-//		{
-//		    throw e;
-//		}
+		catch (CloneNotSupportedException e)
+		{
+		    throw e;
+		}
 		catch (Throwable cause)
 		{
 			CloneNotSupportedException ex = new CloneNotSupportedException();
