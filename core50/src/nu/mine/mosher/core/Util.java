@@ -24,12 +24,20 @@ public final class Util
 		o = x;
 	}
 
+	/**
+	 * Documents an integral type as being unused.
+	 * @param i
+	 */
 	public static void unused(long i)
 	{
 		final long x = i;
 		i = x;
 	}
 
+	/**
+	 * Documents a real type as being unused.
+	 * @param i
+	 */
 	public static void unused(double i)
 	{
 		final double x = i;
