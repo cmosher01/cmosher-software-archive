@@ -51,7 +51,7 @@ public final class Util
 	public static<T> HashSet<T> set(final Iterable<T> i)
 	{
 		final Set<T> s = new HashSet<T>();
-		for (T t : i)
+		for (final T t : i)
 		{
 			s.add(t);
 		}
