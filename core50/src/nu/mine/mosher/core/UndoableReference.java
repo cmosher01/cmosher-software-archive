@@ -3,7 +3,7 @@ package nu.mine.mosher.core;
 public final class UndoableReference<T extends Cloneable>
 {
 	private T state;
-	private Undoer<T> undoer = new Undoer<T>();
+	private final Undoer<T> undoer = new Undoer<T>();
 
 	public UndoableReference(T state)
 	{
