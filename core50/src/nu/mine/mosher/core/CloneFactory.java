@@ -31,14 +31,7 @@ public final class Cloner
 	{
 		try
 		{
-			Class cl = cloneableObject.getClass();
-			Method methodClone = mClasses.get(cl);
-			if (methodClone == null)
-			{
-				methodClone = cl.getMethod("clone",(Class[])null);
-				methodClone.setAccessible(true);
-				mClasses.put(cl,methodClone);
-			}
+			Method methodClone = getCloneMethod(cloneableObject);
 			/*
 			 * Unchecked cast is OK here, because we know that the
 			 * clone of a T will be a T:
@@ -51,5 +44,25 @@ public final class Cloner
 			ex.initCause(cause);
 			throw ex;
 		}
+	}
+
+	/**
+	 * @param <T>
+	 * @param cloneableObject
+	 * @return
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 */
+	private static <T>Method getCloneMethod(T cloneableObject) throws NoSuchMethodException, SecurityException
+	{
+		Class cl = cloneableObject.getClass();
+		Method methodClone = mClasses.get(cl);
+		if (methodClone == null)
+		{
+			methodClone = cl.getMethod("clone",(Class[])null);
+			methodClone.setAccessible(true);
+			mClasses.put(cl,methodClone);
+		}
+		return methodClone;
 	}
 }
