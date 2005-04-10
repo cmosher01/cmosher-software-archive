@@ -49,7 +49,7 @@ public final class Cloner
 	/**
 	 * @param <T>
 	 * @param cloneableObject
-	 * @return
+	 * @return <code>clone Method</code>
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 */
