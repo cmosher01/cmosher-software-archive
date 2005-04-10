@@ -43,9 +43,7 @@ public final class Cloner
 //		}
 		catch (Throwable cause)
 		{
-			CloneNotSupportedException ex = new CloneNotSupportedException();
-			ex.initCause(cause);
-			throw ex;
+			throw new CloneNotSupportedException().initCause(cause);
 		}
 	}
 }
