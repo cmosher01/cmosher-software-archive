@@ -86,15 +86,18 @@ public class YMD implements Immutable, Serializable, Comparable
 
 		if (d==0)
 		{
-	    	d = this.year-that.year;
+	    	if (this.year < that.year) d = -1;
+	    	if (this.year > that.year) d = +1;
 		}
     	if (d==0)
     	{
-    		d = this.month-that.month;
+	    	if (this.month < that.month) d = -1;
+	    	if (this.month > that.month) d = +1;
     	}
 		if (d==0)
 		{
-			d = this.day-that.day;
+	    	if (this.day < that.day) d = -1;
+	    	if (this.day > that.day) d = +1;
 		}
 
 		return d;
