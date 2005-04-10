@@ -36,7 +36,7 @@ public final class Comparer
 		{
 			getNext(need,iOld,iNew,have);
 
-			need.clearBoth();
+			need.clear();
 			if (have.haveEither())
 			{
 				final int cmp = have.compareUsing(c);
@@ -237,7 +237,7 @@ public final class Comparer
 		public void setOld() { needOld = true; }
 		public void setNew() { needNew = true; }
 //		public void setBoth() { needOld = needNew = true; }
-		public void clearBoth() { needOld = needNew = false; }
+		public void clear() { needOld = needNew = false; }
 	}
 	/**
 	 * @param <T>
