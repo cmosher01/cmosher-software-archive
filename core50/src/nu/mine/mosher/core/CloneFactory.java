@@ -42,10 +42,10 @@ public final class Cloner
 			 */
 			return (T)methodClone.invoke(cloneableObject,(Object[])null);
 		}
-		catch (CloneNotSupportedException e)
-		{
-		    throw e;
-		}
+//		catch (CloneNotSupportedException e)
+//		{
+//		    throw e;
+//		}
 		catch (Throwable cause)
 		{
 			CloneNotSupportedException ex = new CloneNotSupportedException();
