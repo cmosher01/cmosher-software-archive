@@ -13,6 +13,12 @@ public final class Characters
 		assert false : "can't instantiate";
 	}
 
+    /**
+     * Returns <code>true</code> if the given <code>char</code>
+     * is 0-9 or A-F or a-f (a hexadecimal digit).
+     * @param c
+     * @return
+     */
     public static boolean isHexDigit(char c)
     {
     	return
