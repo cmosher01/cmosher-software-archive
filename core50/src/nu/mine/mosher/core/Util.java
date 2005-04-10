@@ -38,6 +38,12 @@ public final class Util
 
 
 
+	/**
+	 * Converts and <ocde>Iterable</code> into a <code>List</code>.
+	 * @param <T> class of elements in the <code>List</code>
+	 * @param i <ocde>Iterable</code> to read all elements from
+	 * @return the new <code>List</code> of all elements from <code>i</code>
+	 */
 	public static<T> ArrayList<T> list(final Iterable<T> i)
     {
 		final List<T> r = new ArrayList<T>();
