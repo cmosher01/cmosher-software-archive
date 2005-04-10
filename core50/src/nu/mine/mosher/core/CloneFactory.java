@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Provides a static method that will clone any Cloneable Object.
+ * Provides a static method that will clone any <code>Cloneable</code> <code>Object</code>.
  * This class reflection in order to be
- * able to access the protected clone method of Object.
+ * able to access the protected <code>clone</code> method of the class <code>Object</code>.
  */
 public final class Cloner
 {
