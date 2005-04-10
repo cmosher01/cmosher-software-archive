@@ -185,17 +185,13 @@ public final class Comparer
 	 */
 	private static void setNeed(final int cmp, final Need need)
 	{
-		if (cmp < 0)
+		if (cmp <= 0)
 		{
 			need.setOld();
 		}
-		else if (cmp > 0)
+		if (cmp >= 0)
 		{
 			need.setNew();
-		}
-		else
-		{
-			need.setBoth();
 		}
 	}
 
