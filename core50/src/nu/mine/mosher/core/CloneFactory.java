@@ -53,7 +53,7 @@ public final class Cloner
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 */
-	private static <T>Method getCloneMethod(final T cloneable) throws NoSuchMethodException, SecurityException
+	private static<T> Method getCloneMethod(final T cloneable) throws NoSuchMethodException, SecurityException
 	{
 		final Class cl = cloneable.getClass();
 		Method methodClone = mClasses.get(cl);
