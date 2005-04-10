@@ -19,9 +19,9 @@ public final class Cloner
 	}
 
 	/**
-	 * @param <T>
-	 * @param cloneableObject
-	 * @return
+	 * @param <T> class of object to be cloned
+	 * @param cloneableObject object to be cloned
+	 * @return clone of <code>cloneableObject</code>
 	 * @throws CloneNotSupportedException
 	 */
 	public static<T extends Cloneable> T cloneObject(T cloneableObject) throws CloneNotSupportedException
