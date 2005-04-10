@@ -9,7 +9,7 @@ public final class Util
 {
 	private Util()
 	{
-		throw new UnsupportedOperationException();
+		assert false : "can't instantiate";
 	}
 
 	/**
