@@ -2,6 +2,8 @@ package nu.mine.mosher.core;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public final class Util
 {
@@ -18,41 +20,41 @@ public final class Util
 	 */
 	public static void unused(Object o)
 	{
-		Object x = o;
+		final Object x = o;
 		o = x;
 	}
 
 	public static void unused(long i)
 	{
-		long x = i;
+		final long x = i;
 		i = x;
 	}
 
 	public static void unused(double i)
 	{
-		double x = i;
+		final double x = i;
 		i = x;
 	}
 
 
 
-	public static<T> ArrayList<T> list(Iterable<T> i)
+	public static<T> ArrayList<T> list(final Iterable<T> i)
     {
-        ArrayList<T> r = new ArrayList<T>();
+		final List<T> r = new ArrayList<T>();
         for (T t : i)
         {
             r.add(t);
         }
-        return r;
+        return (ArrayList<T>)r;
     }
 
-	public static<T> HashSet<T> set(Iterable<T> i)
+	public static<T> HashSet<T> set(final Iterable<T> i)
 	{
-		HashSet<T> s = new HashSet<T>();
+		final Set<T> s = new HashSet<T>();
 		for (T t : i)
 		{
 			s.add(t);
 		}
-		return s;
+		return (HashSet<T>)s;
 	}
 }
