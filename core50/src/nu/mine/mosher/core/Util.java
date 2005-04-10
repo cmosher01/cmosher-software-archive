@@ -41,7 +41,7 @@ public final class Util
 	public static<T> ArrayList<T> list(final Iterable<T> i)
     {
 		final List<T> r = new ArrayList<T>();
-        for (T t : i)
+        for (final T t : i)
         {
             r.add(t);
         }
