@@ -25,6 +25,7 @@ public class Gedcom
 		}
 
         GedcomTree gt = parseFile(new File(rArg[0]));
+        System.out.println(gt.toString());
 	}
 
     protected static GedcomTree parseFile(File in)
