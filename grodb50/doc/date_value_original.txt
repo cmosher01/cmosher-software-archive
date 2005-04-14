@@ -1,0 +1,68 @@
+DATE_VALUE: = {Size=1:35}
+{<DATE> | <DATE_PERIOD> | <DATE_RANGE> | <DATE_APPROXIMATED> | 
+INT <DATE> (<DATE_PHRASE>) |
+(<DATE_PHRASE>)
+]
+
+DATE: = {Size=4:35}
+[ <DATE_CALENDAR_ESCAPE> | <NULL>]
+<DATE_CALENDAR>
+
+DATE_CALENDAR_ESCAPE: = {Size=4:15}
+[ @#DHEBREW@ | @#DROMAN@ | @#DFRENCH R@ | @#DGREGORIAN@ |
+@#DJULIAN@ | @#DUNKNOWN@ ]
+
+DATE_CALENDAR: = {Size=4:35}
+[ <DATE_GREG> | <DATE_JULN> | <DATE_HEBR> | <DATE_FREN> |
+<DATE_FUTURE> ]
+
+DATE_GREG: = {Size=4:35}
+[ <YEAR_GREG> | <MONTH> <YEAR_GREG> | <DAY> <MONTH> <YEAR_GREG> ]
+
+YEAR_GREG: = {Size=3:7}
+[ <NUMBER> | <NUMBER>/<DIGIT><DIGIT> ]
+
+NUMBER: =
+[<DIGIT> | <NUMBER>+<DIGIT>]
+
+DIGIT: = {Size=1:1}
+A single digit (0-9).
+
+MONTH: = {Size=3}
+[ JAN | FEB | MAR | APR | MAY | JUN |
+JUL | AUG | SEP | OCT | NOV | DEC ]
+
+DAY: = {Size=1:2}
+dd
+
+DATE_JULN: = {Size=4:35}
+[ <YEAR> | <MONTH> <YEAR> | <DAY> <MONTH> <YEAR> ]
+
+YEAR: = {Size=3:4}
+
+DATE_PERIOD: = {Size=7:35}
+[
+FROM <DATE> |
+TO <DATE> |
+FROM <DATE> TO <DATE>
+] 
+
+DATE_RANGE: = {Size=8:35}
+[
+BEF <DATE> |
+AFT <DATE> |
+BET <DATE> AND <DATE>
+]
+
+DATE_APPROXIMATED: = {Size=4:35}
+[
+ABT <DATE> |
+CAL <DATE> |
+EST <DATE>
+] 
+
+DATE_PHRASE: = {Size=1:35}
+(<TEXT>)
+
+TEXT: = {Size=1:248}
+
