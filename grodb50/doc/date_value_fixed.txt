@@ -1,0 +1,59 @@
+DATE_VALUE ::=
+	DATE_PERIOD |
+	DATE_RANGE |
+	DATE_APPROXIMATED |
+	DATE_INTERPRETED |
+	DATE_PHRASE |
+	DATE
+
+
+
+DATE_PERIOD ::=
+	'FROM' S DATE |
+	'TO' S DATE |
+	'FROM' S DATE S 'TO' S DATE
+
+DATE_RANGE ::=
+	'BEF' S DATE |
+	'AFT' S DATE |
+	'BET' S DATE S 'AND' S DATE
+
+DATE_APPROXIMATED ::=
+	'ABT' S DATE |
+	'CAL' S DATE |
+	'EST' S DATE
+
+DATE_INTERPRETED :==
+	'INT' S DATE S DATE_PHRASE
+
+DATE_PHRASE ::=
+	'(' TEXT ')'
+
+
+
+DATE ::= (DATE_CALENDAR_ESCAPE S)? DATE_CALENDAR
+
+DATE_CALENDAR_ESCAPE ::= '@#D' CALENDAR '@'
+
+CALENDAR ::= 'GREGORIAN' | 'JULIAN'
+	/* don't support others, but note that spaces are allowed in the calendar name */
+
+DATE_CALENDAR ::= ((DAY S)? MONTH S)? YEAR
+
+YEAR ::= NUMBER ('/' NUMBER)? ( "("? ("BC"|"B.C.") ")"? )?
+
+MONTH ::=
+	'JAN' | 'FEB' | 'MAR' | 'APR' | 'MAY' | 'JUN' |
+	'JUL' | 'AUG' | 'SEP' | 'OCT' | 'NOV' | 'DEC'
+
+DAY ::= NUMBER
+
+
+
+NUMBER ::= DIGIT+
+
+DIGIT ::= [0-9]
+
+TEXT ::= CHAR+
+
+S ::= WHITESPACE_CHAR+
