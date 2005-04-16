@@ -1,0 +1,48 @@
+start DT, end DT := parseGedcomDate(Gedcom DATE_VALUE string)
+where:
+(if start = end, then date is one day, else it's a longer period of time)
+DT is earliest YMD, latest YMD, calendar, circa
+(if earliest = latest, then date is exact, else approx within range)
+YMD is year, month, day
+calendar is gregorian | julian
+circa is true | false
+-----------------------------------------------------------------
+
+What to do with given GEDCOM tokens:
+
+@#DGREGORIAN@ "use Gregorian Calendar"--use Gregorian calendar
+@#DJULIAN@ "use Julian Calendar"--use Julian calendar
+@#D[other]@ "use [other] or unknown calendar"--note
+ABT "about"--circa := true
+CAL "calculated"--ignore this indicator
+EST "estimated"--circa := true
+FROM TO "period"--start := from, end := to
+BEF AFT "range"--start,end: earlist := after+1, latest := before-1
+INT "interpreted"--start,end := date; note := phrase
+(x) "phrase"--note := phrase
+
+(DATE) compute YMD
+
+
+
+
+Pseudocode for parseGedcomDate function
+---------------------------------------
+input:
+d: GEDCOM DATE_VALUE string
+
+output:
+s.e: start date earliest YMD
+s.l: start date latest YMD
+s.c: start date circa?
+s.j: start date julian?
+e.e: end   date earliest YMD
+e.l: end   date latest YMD
+e.c: end   date circa?
+e.j: end   date julian?
+
+algorithm:
+tokenize d
+get next token
+switch token
+    FROM: type = PERIOD; PD(rest)
