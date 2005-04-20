@@ -19,6 +19,15 @@
 
 	</target>
 
+	<target name="compile_jjt" description="jjt->JJTree->jj">
+		<mkdir dir="binjj" />
+		<jjtree
+			javacchome="/eclipse_organize/installations/javacc/javacc-3.2"
+			target="srcjj/*.jjt"
+			outputdirectory="binjj"
+		/>
+	</target>
+
 	<!-- - - - - - - - - - - - - - - - - -
           target: depends
          - - - - - - - - - - - - - - - - - -->
