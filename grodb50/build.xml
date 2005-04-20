@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Apr 19, 2005 9:49:59 PM
+
+     project
+     description
+
+     Chris
+     ====================================================================== -->
+<project name="grodb50" default="package">
+	<description>
+            description
+    </description>
+
+	<!-- =================================
+          target: default
+         ================================= -->
+	<target name="compile_jj" depends="compile_jjt" description="jj->JavaCC->java">
+
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - -
+          target: depends
+         - - - - - - - - - - - - - - - - - -->
+	<target name="package">
+	</target>
+
+</project>
