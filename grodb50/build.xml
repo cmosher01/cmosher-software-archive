@@ -23,7 +23,7 @@
 		<jjtree
 			javacchome="${javacchome}"
 			target="srcjj/GedcomDateValueParser.jjt"
-			outputdirectory="binjj"
+			outputdirectory="binjj/nu/mine/mosher/gedcom/date/parser"
 		/>
 	</target>
 
