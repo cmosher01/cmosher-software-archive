@@ -23,7 +23,7 @@
 		<mkdir dir="binjj" />
 		<jjtree
 			javacchome="/eclipse_organize/installations/javacc/javacc-3.2"
-			target="srcjj/*.jjt"
+			target="srcjj/GedcomDateValueParser.jjt"
 			outputdirectory="binjj"
 		/>
 	</target>
