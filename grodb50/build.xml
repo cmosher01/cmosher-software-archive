@@ -19,7 +19,7 @@
 	</target>
 
 	<target name="compile_jjt" description="jjt->JJTree->jj">
-		<mkdir dir="binjj" />
+		<mkdir dir="binjj/nu/mine/mosher/gedcom/date/parser" />
 		<jjtree
 			javacchome="${javacchome}"
 			target="srcjj/GedcomDateValueParser.jjt"
