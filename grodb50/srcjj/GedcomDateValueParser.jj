@@ -5,6 +5,8 @@ options
 
 PARSER_BEGIN(GedcomDateValueParser)
 
+package nu.mine.mosher.gedcom.date.parser;
+
 class GedcomDateValueParser
 {
 	public static void main(String args[]) throws ParseException
