@@ -13,8 +13,8 @@
 	<target name="compile_jj" depends="compile_jjt" description="jj->JavaCC->java">
 		<javacc
 			javacchome="${javacchome}"
-			target="binjj/GedcomDateValueParser.jj"
-			outputdirectory="binjj"
+			target="binjj/nu/mine/mosher/gedcom/date/parser/GedcomDateValueParser.jj"
+			outputdirectory="binjj/nu/mine/mosher/gedcom/date/parser"
 		/>
 	</target>
 
