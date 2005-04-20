@@ -11,7 +11,7 @@
 	<property name="javacchome" location="/eclipse_organize/installations/javacc/javacc-3.2"/>
 
 	<target name="compile_jj" depends="compile_jjt" description="jj->JavaCC->java">
-		<javacc javacchome="${javacchome}"
+		<javacc
 			javacchome="${javacchome}"
 			target="binjj/GedcomDateValueParser.jj"
 			outputdirectory="binjj"
