@@ -1,37 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- ====================================================================== 
      Apr 19, 2005 9:49:59 PM
-
-     project
-     description
-
-     Chris
+     Chris Mosher
      ====================================================================== -->
 <project name="grodb50" default="package">
 	<description>
-            description
+            Builds some parts of GRO-DB (for Java 5.0) project.
     </description>
 
-	<!-- =================================
-          target: default
-         ================================= -->
-	<target name="compile_jj" depends="compile_jjt" description="jj->JavaCC->java">
+	<property name="javacchome" location="/eclipse_organize/installations/javacc/javacc-3.2"/>
 
+	<target name="compile_jj" depends="compile_jjt" description="jj->JavaCC->java">
+		<javacc javacchome="${javacchome}" target=""/>
 	</target>
 
 	<target name="compile_jjt" description="jjt->JJTree->jj">
 		<mkdir dir="binjj" />
 		<jjtree
-			javacchome="/eclipse_organize/installations/javacc/javacc-3.2"
-			target="srcjj/GedcomDateValueParser.jjt"
+			javacchome="${javacchome}"
+			target="binjj/GedcomDateValueParser.jj"
 			outputdirectory="binjj"
 		/>
 	</target>
 
-	<!-- - - - - - - - - - - - - - - - - -
-          target: depends
-         - - - - - - - - - - - - - - - - - -->
 	<target name="package">
 	</target>
-
 </project>
