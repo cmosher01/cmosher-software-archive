@@ -1,6 +1,7 @@
 options
 {
-  IGNORE_CASE = true;
+	IGNORE_CASE = true;
+	STATIC = false;
 }
 
 PARSER_BEGIN(GedcomDateValueParser)
@@ -22,7 +23,7 @@ PARSER_END(GedcomDateValueParser)
 
 SKIP :
 {
-  " " | "\t" | "\n" | "\r"
+	" " | "\t" | "\n" | "\r"
 }
 
 TOKEN :
