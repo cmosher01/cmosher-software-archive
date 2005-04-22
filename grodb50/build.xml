@@ -10,14 +10,14 @@
 
 	<property name="javacchome" location="/eclipse_organize/installations/javacc/javacc-3.2"/>
 
-	<target name="compile_jj" depends="compile_jjt" description="jj->JavaCC->java">
+	<target name="compile_jj" description="jj->JavaCC->java">
 		<javacc
 			javacchome="${javacchome}"
 			target="binjj/nu/mine/mosher/gedcom/date/parser/GedcomDateValueParser.jj"
 			outputdirectory="binjj/nu/mine/mosher/gedcom/date/parser"
 		/>
 	</target>
-
+	<!--
 	<target name="compile_jjt" description="jjt->JJTree->jj">
 		<mkdir dir="binjj/nu/mine/mosher/gedcom/date/parser" />
 		<jjtree
@@ -26,6 +26,7 @@
 			outputdirectory="binjj/nu/mine/mosher/gedcom/date/parser"
 		/>
 	</target>
+	-->
 
 	<target name="package">
 	</target>
