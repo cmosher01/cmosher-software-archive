@@ -134,12 +134,13 @@ void Month() : {}
 }
 
 void Year() :
+{}
 {
-	Token year;
-	boolean gregorian = false;
-	boolean bc = false;
-}
-{
+	{
+		Token year;
+		boolean gregorian = false;
+		boolean bc = false;
+	}
 	year = <NUMBER>	[ gregorian = SlashYear() ]	[ LOOKAHEAD(2) bc = BC() ]
 	{
 		int y = Integer.parseInt(year.image);
