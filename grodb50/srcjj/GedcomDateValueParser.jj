@@ -135,7 +135,7 @@ void Month() : {}
 
 void Year() :
 {
-	Token tokYear;
+	Token year;
 	boolean gregorian;
 	boolean bc;
 }
