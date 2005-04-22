@@ -122,9 +122,12 @@ void DateCalendar() : {}
 	[ LOOKAHEAD(2) [ Day() ] Month() ] Year()
 }
 
-void Day() : {}
+int Day() : {}
 {
 	<NUMBER>
+	{
+		return Integer.parseInt(token.image);
+	}
 }
 
 void Month() : {}
