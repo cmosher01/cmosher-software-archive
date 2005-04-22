@@ -154,7 +154,7 @@ int Day() : {}
 
 int Month() : {}
 {
-	( <JAN> | <FEB> )
+	( <JAN> | <FEB> | <MAR> | <APR> | <MAY> | <JUN> | <JUL> | <AUG> | <SEP> | <OCT> | <NOV> | <DEC> )
 	{
 		return this.token.kind - MONTH_LOWER_LIMIT;
 	}
