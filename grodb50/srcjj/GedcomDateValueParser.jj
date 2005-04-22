@@ -142,7 +142,7 @@ boolean DateCalendarEscape() : {}
 	{
 		Token cal;
 	}
-	<AT> <CALENDAR_ESC> cal = ( <GREGORIAN> | <JULIAN> ) <AT>
+	<AT> <CALENDAR_ESC> ( cal = <GREGORIAN> | cal = <JULIAN> ) <AT>
 	{
 		return cal.kind == JULIAN;
 	}
