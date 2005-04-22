@@ -10,18 +10,18 @@ PARSER_BEGIN(GedcomDateValueParser)
 
 package nu.mine.mosher.gedcom.date.parser;
 
-import java.util.HashMap;
-import java.util.Map;
+//import java.util.HashMap;
+//import java.util.Map;
 
 class GedcomDateValueParser
 {
-	private static final Map mapMonthTokenToInt = new HashMap();
-	private static int nextMonth = 1;
-	public static void addNextMonth(final String month)
-	{
-		mapMonthTokenToInt.put(month,new Integer(nextMonth));
-		++nextMonth;
-	}
+//	private static final Map mapMonthTokenToInt = new HashMap();
+//	private static int nextMonth = 1;
+//	public static void addNextMonth(final String month)
+//	{
+//		mapMonthTokenToInt.put(month,new Integer(nextMonth));
+//		++nextMonth;
+//	}
 }
 
 PARSER_END(GedcomDateValueParser)
@@ -52,10 +52,6 @@ TOKEN :
 	< MONTH:
 		"JAN" | "FEB" | "MAR" | "APR" | "MAY" | "JUN" |
 		"JUL" | "AUG" | "SEP" | "OCT" | "NOV" | "DEC" >
-		{
-			GedcomDateValueParser.addNextMonth("JAN");
-			GedcomDateValueParser.addNextMonth("FEB");
-		}
 }
 
 TOKEN :
