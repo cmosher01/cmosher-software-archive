@@ -143,7 +143,7 @@ void Year() :
 {
 	tokYear = <NUMBER>
 	[ slashYear = SlashYear() ]
-	[ LOOKAHEAD(2) BC() { bc = true; ]
+	[ LOOKAHEAD(2) BC() { bc = true; } ]
 	{
 //		final String year = tokYear.image;
 //		StringBuffer sb;
