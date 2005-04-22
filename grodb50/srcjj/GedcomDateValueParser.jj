@@ -133,7 +133,7 @@ void Month() : {}
 	<MONTH>
 }
 
-void Year() :
+int Year() :
 {}
 {
 	{
