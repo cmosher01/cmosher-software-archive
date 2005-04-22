@@ -181,6 +181,10 @@ int Year() : {}
 		{
 			y = -y;
 		}
+		if (y == 0)
+		{
+			throw new ParseException("year cannot be zero.");
+		}
 		return y;
 	}
 }
