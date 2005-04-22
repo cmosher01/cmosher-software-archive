@@ -10,6 +10,9 @@ PARSER_BEGIN(GedcomDateValueParser)
 
 package nu.mine.mosher.gedcom.date.parser;
 
+import java.util.HashMap;
+import java.util.Map;
+
 class GedcomDateValueParser
 {
 	public static Map mapMonthTokenToInt = new HashMap();
