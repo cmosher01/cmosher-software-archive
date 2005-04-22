@@ -135,11 +135,19 @@ void Month() : {}
 
 void Year() :
 {
-	String year;
+	Token tokYear;
 	String slashYear;
+	Token tokBC;
 }
 {
-	year = <NUMBER> [ slashYear = SlashYear() ] [ LOOKAHEAD(2) BC() ]
+	tokYear = <NUMBER>
+	[ slashYear = SlashYear() ]
+	[ LOOKAHEAD(2) BC() boolean bc = true; ]
+	{
+//		final String year = tokYear.image;
+//		StringBuffer sb;
+//		sb.
+	}
 }
 
 String SlashYear() : {}
