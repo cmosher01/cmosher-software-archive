@@ -55,24 +55,25 @@ TOKEN :
 		"JAN" | "FEB" | "MAR" | "APR" | "MAY" | "JUN" |
 		"JUL" | "AUG" | "SEP" | "OCT" | "NOV" | "DEC" 
 		JAN | FEB > |*/
-	<MONTH_LOWER_LIMIT: []> |
-	<JAN: "JAN"> |
-	<FEB: "FEB"> |
-	<MAR: "MAR"> |
-	<APR: "APR"> |
-	<MAY: "MAY"> |
-	<JUN: "JUN"> |
-	<JUL: "JUL"> |
-	<AUG: "AUG"> |
-	<SEP: "SEP"> |
-	<OCT: "OCT"> |
-	<NOV: "NOV"> |
-	<DEC: "DEC">
+	< MONTH_LOWER_LIMIT: [] > |
+	< JAN: "JAN" > |
+	< FEB: "FEB" > |
+	< MAR: "MAR" > |
+	< APR: "APR" > |
+	< MAY: "MAY" > |
+	< JUN: "JUN" > |
+	< JUL: "JUL" > |
+	< AUG: "AUG" > |
+	< SEP: "SEP" > |
+	< OCT: "OCT" > |
+	< NOV: "NOV" > |
+	< DEC: "DEC" >
 }
 
 TOKEN :
 {
-	< CALENDAR:  "GREGORIAN" | "JULIAN" >
+	< GREGORIAN: "GREGORIAN" > |
+	< JULIAN: "JULIAN" >
 }
 
 TOKEN :
@@ -138,7 +139,7 @@ void Date() : {}
 
 void DateCalendarEscape() : {}
 {
-	<AT> <CALENDAR_ESC> <CALENDAR> <AT>
+	<AT> <CALENDAR_ESC> (<GREGORIAN> | <JULIAN>) <AT>
 }
 
 YMD DateCalendar() : {}
