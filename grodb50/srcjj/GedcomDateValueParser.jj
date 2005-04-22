@@ -133,9 +133,12 @@ void Month() : {}
 	<MONTH>
 }
 
-void Year() : {}
+void Year() :
 {
-	<NUMBER> [ SlashYear() ] [ LOOKAHEAD(2) BC() ]
+	String slashYear;
+}
+{
+	<NUMBER> [ slashYear = SlashYear() ] [ LOOKAHEAD(2) BC() ]
 }
 
 String SlashYear() : {}
