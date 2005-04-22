@@ -14,7 +14,7 @@
 		<mkdir dir="binjj/nu/mine/mosher/gedcom/date/parser" />
 		<javacc
 			javacchome="${javacchome}"
-			target="srcjj/nu/mine/mosher/gedcom/date/parser/GedcomDateValueParser.jj"
+			target="srcjj/GedcomDateValueParser.jj"
 			outputdirectory="binjj/nu/mine/mosher/gedcom/date/parser"
 		/>
 	</target>
