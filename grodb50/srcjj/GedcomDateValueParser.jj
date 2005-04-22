@@ -142,9 +142,11 @@ void Year() :
 {
 	year = <NUMBER>	[ gregorian = SlashYear() ]	[ LOOKAHEAD(2) bc = BC() ]
 	{
-//		final String year = tokYear.image;
-//		StringBuffer sb;
-//		sb.
+		int y = Integer.parseInt(year.image);
+		if (gregorian)
+		{
+			++y;
+		}
 	}
 }
 
