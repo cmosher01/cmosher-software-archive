@@ -15,7 +15,8 @@ import java.util.Map;
 
 class GedcomDateValueParser
 {
-	public static Map mapMonthTokenToInt = new HashMap();
+	private static final Map mapMonthTokenToInt = new HashMap();
+//	private static
 }
 
 PARSER_END(GedcomDateValueParser)
@@ -47,7 +48,6 @@ TOKEN :
 		"JAN" | "FEB" | "MAR" | "APR" | "MAY" | "JUN" |
 		"JUL" | "AUG" | "SEP" | "OCT" | "NOV" | "DEC" >
 		{
-		boolean javahere = false;
 		}
 }
 
