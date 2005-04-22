@@ -138,10 +138,10 @@ void Year() :
 	Token tokYear;
 	String slashYear;
 	Token tokBC;
-	boolean bc;
+	boolean bc = false;
 }
 {
-	tokYear = <NUMBER>
+	tokYear=<NUMBER>
 	[ slashYear = SlashYear() ]
 	[ LOOKAHEAD(2) BC() { bc = true; } ]
 	{
