@@ -141,7 +141,7 @@ void DateCalendarEscape() : {}
 	<AT> <CALENDAR_ESC> <CALENDAR> <AT>
 }
 
-void DateCalendar() : {}
+YMD DateCalendar() : {}
 {
 	{
 		int year = 0;
