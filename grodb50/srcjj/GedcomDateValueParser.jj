@@ -138,12 +138,10 @@ void Year() :
 	Token tokYear;
 	String slashYear;
 	Token tokBC;
-	boolean bc = false;
+	boolean bc;
 }
 {
-	tokYear=<NUMBER>
-	[ slashYear = SlashYear() ]
-	[ LOOKAHEAD(2) BC() { bc = true; } ]
+	year = <NUMBER>	[ slashYear = SlashYear() ]	[ LOOKAHEAD(2) bc = BC() ]
 	{
 //		final String year = tokYear.image;
 //		StringBuffer sb;
@@ -159,7 +157,10 @@ String SlashYear() : {}
 	}
 }
 
-void BC() : {}
+boolean BC() : {}
 {
 	[ <LPAREN> ] <BC> [ <RPAREN> ]
+	{
+		return true;
+	}
 }
