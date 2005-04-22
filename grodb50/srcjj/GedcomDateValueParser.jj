@@ -128,9 +128,12 @@ int Day() : {}
 	}
 }
 
-void Month() : {}
+int Month() : {}
 {
 	<MONTH>
+	{
+		return 0;
+	}
 }
 
 int Year() : {}
