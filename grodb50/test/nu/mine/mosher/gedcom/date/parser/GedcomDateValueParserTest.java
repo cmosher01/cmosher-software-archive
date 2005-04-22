@@ -26,7 +26,7 @@ public class GedcomDateValueParserTest extends TestCase
 
 	public void testDateValue() throws ParseException
 	{
-		String s = "1 JAN 2001";
+		String s = "1 JAK 2001";
 		GedcomDateValueParser parser = new GedcomDateValueParser(new StringReader(s));
 		parser.DateValue();
 	}
