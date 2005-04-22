@@ -148,6 +148,10 @@ int Year() :
 		{
 			++y;
 		}
+		if (bc)
+		{
+			y = -y;
+		}
 		return y;
 	}
 }
