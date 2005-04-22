@@ -126,7 +126,7 @@ int Day() : {}
 {
 	<NUMBER>
 	{
-		return Integer.parseInt(token.image);
+		return Integer.parseInt(this.token.image);
 	}
 }
 
