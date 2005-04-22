@@ -136,12 +136,11 @@ void Month() : {}
 void Year() :
 {
 	Token tokYear;
-	String slashYear;
-	Token tokBC;
+	boolean gregorian;
 	boolean bc;
 }
 {
-	year = <NUMBER>	[ slashYear = SlashYear() ]	[ LOOKAHEAD(2) bc = BC() ]
+	year = <NUMBER>	[ gregorian = SlashYear() ]	[ LOOKAHEAD(2) bc = BC() ]
 	{
 //		final String year = tokYear.image;
 //		StringBuffer sb;
@@ -149,11 +148,11 @@ void Year() :
 	}
 }
 
-String SlashYear() : {}
+boolean SlashYear() : {}
 {
 	<SLASH> <NUMBER>
 	{
-		return this.token.image;
+		return true;
 	}
 }
 
