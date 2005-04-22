@@ -50,8 +50,11 @@ TOKEN :
 TOKEN :
 {
 	< MONTH:
-		"JAN" | "FEB" | "MAR" | "APR" | "MAY" | "JUN" |
-		"JUL" | "AUG" | "SEP" | "OCT" | "NOV" | "DEC" >
+/*		"JAN" | "FEB" | "MAR" | "APR" | "MAY" | "JUN" |
+		"JUL" | "AUG" | "SEP" | "OCT" | "NOV" | "DEC" */
+		JAN | FEB >
+	<JAN: "JAN">
+	<FEB: "FEB">
 }
 
 TOKEN :
