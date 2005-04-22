@@ -52,8 +52,8 @@ TOKEN :
 	< MONTH:
 /*		"JAN" | "FEB" | "MAR" | "APR" | "MAY" | "JUN" |
 		"JUL" | "AUG" | "SEP" | "OCT" | "NOV" | "DEC" */
-		JAN | FEB >
-	<JAN: "JAN">
+		JAN | FEB > |
+	<JAN: "JAN"> |
 	<FEB: "FEB">
 }
 
