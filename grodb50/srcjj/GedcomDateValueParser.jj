@@ -135,10 +135,11 @@ void Month() : {}
 
 void Year() :
 {
+	String year;
 	String slashYear;
 }
 {
-	<NUMBER> [ slashYear = SlashYear() ] [ LOOKAHEAD(2) BC() ]
+	year = <NUMBER> [ slashYear = SlashYear() ] [ LOOKAHEAD(2) BC() ]
 }
 
 String SlashYear() : {}
