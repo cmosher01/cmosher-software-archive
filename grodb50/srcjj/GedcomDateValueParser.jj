@@ -138,9 +138,12 @@ void Year() : {}
 	<NUMBER> [ SlashYear() ] [ LOOKAHEAD(2) BC() ]
 }
 
-void SlashYear() : {}
+String SlashYear() : {}
 {
 	<SLASH> <NUMBER>
+	{
+		return this.token.image;
+	}
 }
 
 void BC() : {}
