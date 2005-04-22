@@ -53,7 +53,7 @@ TOKEN :
 		"JAN" | "FEB" | "MAR" | "APR" | "MAY" | "JUN" |
 		"JUL" | "AUG" | "SEP" | "OCT" | "NOV" | "DEC" 
 		JAN | FEB > |*/
-	<MONTH_LOWER_LIMIT:> |
+	<MONTH_LOWER_LIMIT:[]> |
 	<JAN: "JAN"> |
 	<FEB: "FEB">
 }
