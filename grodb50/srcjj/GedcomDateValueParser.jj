@@ -79,9 +79,6 @@ void DateValue() : {}
 	)
 
 	<EOF>
-	{
-		return jjtThis;
-	}
 }
 
 void DateRange() : {}
