@@ -134,7 +134,13 @@ void DatePeriod() : {}
 
 void Date() : {}
 {
-	[ DateCalendarEscape() ] DateCalendar()
+	{
+		boolean julian = false;
+		YMD ymd;
+	}
+	[ julian = DateCalendarEscape() ] ymd = DateCalendar()
+	{
+	}
 }
 
 boolean DateCalendarEscape() : {}
