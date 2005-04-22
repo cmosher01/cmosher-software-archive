@@ -13,8 +13,7 @@ class GedcomDateValueParser
 	public static void main(String args[]) throws ParseException
 	{
 		GedcomDateValueParser t = new GedcomDateValueParser(System.in);
-		SimpleNode n = t.DateValue();
-		n.dump("");
+		t.DateValue();
 	}
 }
 
