@@ -4,20 +4,18 @@ options
 	STATIC = false;
 }
 
+
+
 PARSER_BEGIN(GedcomDateValueParser)
 
 package nu.mine.mosher.gedcom.date.parser;
 
 class GedcomDateValueParser
 {
-	public static void main(String args[]) throws ParseException
-	{
-		GedcomDateValueParser t = new GedcomDateValueParser(System.in);
-		t.DateValue();
-	}
 }
 
 PARSER_END(GedcomDateValueParser)
+
 
 
 SKIP :
