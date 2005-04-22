@@ -133,8 +133,7 @@ void Month() : {}
 	<MONTH>
 }
 
-int Year() :
-{}
+int Year() : {}
 {
 	{
 		Token year;
