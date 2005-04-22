@@ -144,7 +144,9 @@ void DateCalendarEscape() : {}
 void DateCalendar() : {}
 {
 	{
-		int year, month, day;
+		int year = 0;
+		int month = 0;
+		int day = 0;
 	}
 	[ LOOKAHEAD(2) [ day = Day() ] month = Month() ] year = Year()
 	{
