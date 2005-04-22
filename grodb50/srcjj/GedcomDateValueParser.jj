@@ -16,7 +16,12 @@ import java.util.Map;
 class GedcomDateValueParser
 {
 	private static final Map mapMonthTokenToInt = new HashMap();
-//	private static
+	private static int nextMonth = 1;
+	public static addNextMonth(final String month)
+	{
+		mapMonthTokenToInt.put(month,new Integer(nextMonth));
+		++nextMonth;
+	}
 }
 
 PARSER_END(GedcomDateValueParser)
