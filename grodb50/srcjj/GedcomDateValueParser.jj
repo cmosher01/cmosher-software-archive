@@ -147,6 +147,7 @@ void Year() :
 		{
 			++y;
 		}
+		return y;
 	}
 }
 
