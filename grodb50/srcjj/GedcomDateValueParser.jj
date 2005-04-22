@@ -53,6 +53,8 @@ TOKEN :
 		"JAN" | "FEB" | "MAR" | "APR" | "MAY" | "JUN" |
 		"JUL" | "AUG" | "SEP" | "OCT" | "NOV" | "DEC" >
 		{
+			GedcomDateValueParser.addNextMonth("JAN");
+			GedcomDateValueParser.addNextMonth("FEB");
 		}
 }
 
