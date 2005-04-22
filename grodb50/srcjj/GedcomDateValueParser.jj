@@ -12,6 +12,7 @@ package nu.mine.mosher.gedcom.date.parser;
 
 class GedcomDateValueParser
 {
+	public static Map mapMonthTokenToInt = new HashMap();
 }
 
 PARSER_END(GedcomDateValueParser)
