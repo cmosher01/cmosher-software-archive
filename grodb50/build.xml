@@ -11,6 +11,7 @@
 	<property name="javacchome" location="/eclipse_organize/installations/javacc/javacc-3.2"/>
 
 	<target name="compile_jj" description="jj->JavaCC->java">
+		<mkdir dir="binjj/nu/mine/mosher/gedcom/date/parser" />
 		<javacc
 			javacchome="${javacchome}"
 			target="binjj/nu/mine/mosher/gedcom/date/parser/GedcomDateValueParser.jj"
