@@ -68,7 +68,7 @@ public class RandomSeedKeyListener implements KeyListener
 			System.out.print(Integer.toHexString(x));
 			if (prev >= 0)
 			{
-				System.out.print(" delta: "+(x.intValue()-prev));
+				System.out.println(" delta: "+(x.intValue()-prev));
 			}
 			prev = x.intValue();
 		}
