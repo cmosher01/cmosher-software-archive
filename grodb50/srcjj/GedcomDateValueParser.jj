@@ -142,6 +142,7 @@ void Date() : {}
 	}
 	[ julian = DateCalendarEscape() ] ymd = DateCalendar()
 	{
+		// TODO convert julian to gregorian here
 	}
 }
 
