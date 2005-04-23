@@ -179,15 +179,17 @@ DatePeriod DatePeriod() : {}
 		if (fromDate == null)
 		{
 			julian = toDate.isJulian();
-			fromDate = new DateRange(YMD.getMinimum(),YMD.getMinimum(),julian,-1,-1,new TimeZoneUnknown(),false);
+			fromDate = new CalYMD(YMD.getMinimum(),julian);
 		}
 		if (toDate == null)
 		{
 			julian = fromDate.isJulian();
-			toDate = new DateRange(YMD.getMaximum(),YMD.getMaximum(),julian,-1,-1,new TimeZoneUnknown(),false);
+			toDate = new CalYMD(YMD.getMaximum(),julian);
 		}
 		julian = fromDate.isJulian();
-		return new DatePeriod(fromDate,toDate);
+		return new DatePeriod(
+			new DateRange(fromDate.getYMD(),fromDate.getYMD(),julian,-1,-1,new TimeZoneUnknown(),false),
+			new DateRange(toDate.getYMD(),toDate.getYMD(),julian,-1,-1,new TimeZoneUnknown(),false));
 	}
 }
 
