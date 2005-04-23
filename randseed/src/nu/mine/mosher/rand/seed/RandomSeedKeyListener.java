@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * TODO
@@ -48,6 +49,24 @@ public class RandSeedListener implements KeyListener
 	{
 		long t = e.getWhen();
 		int lowByte = (int)(t & 0xFF);
-		this.rBytes.add(new Integer(lowByte));
+		synchronized (this)
+		{
+			this.rBytes.add(new Integer(lowByte));
+		}
+	}
+
+	public synchronized boolean hasSeed()
+	{
+		return rBytes.size() >= (Long.SIZE/8);
+	}
+
+	public void seedRNG(final Random rng)
+	{
+		if (!hasSeed())
+		{
+			throw new IllegalStateException("not enough seed bytes");
+		}
+		long seed = 0;
+		rng.setSeed(seed);
 	}
 }
