@@ -125,7 +125,7 @@ DatePeriod DateValue() : {}
 		DatePeriod datePeriod = null;
 		DateRange dateRange = null;
 		DateWithNotes dateNotes = null;
-		String notes;
+		String notes = null;
 		CalYMD date = null;
 	}
 	(
