@@ -44,7 +44,7 @@ public class RandSeed extends SwingGUI
 
     protected JPanel createContentPane()
     {
-        JPanel panel = new RandPanel(new BorderLayout(),true);
+    	RandPanel panel = new RandPanel(new BorderLayout(),true);
         panel.setOpaque(true);
         panel.addNotify();
         panel.init();
