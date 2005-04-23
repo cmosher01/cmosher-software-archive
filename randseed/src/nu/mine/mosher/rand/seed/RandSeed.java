@@ -3,6 +3,9 @@
  */
 package nu.mine.mosher.rand.seed;
 
+import nu.mine.mosher.swingapp.ApplicationAborting;
+
+
 /**
  * TODO
  *
@@ -10,7 +13,26 @@ package nu.mine.mosher.rand.seed;
  */
 public class RandSeed
 {
-	public static void main(String[] args)
-	{
-	}
+    /**
+     * This class is never instantiated.
+     */
+    private RandSeed()
+    {
+        assert false : "Cannot instantiate main class.";
+    }
+
+    /**
+     * @param args
+     * @throws ApplicationAborting
+     */
+    public static void main(String[] args) throws ApplicationAborting
+    {
+        ExceptionHandler eh = new ExceptionHandler();
+        CommandLineArgHandler ch = new CommandLineArgHandler(args);
+        SwingGUI gui = new SwingGUI();
+
+        SwingApplication app = new SwingApplication(eh,ch,gui);
+
+        app.run();
+    }
 }
