@@ -68,6 +68,10 @@ public class RandomSeedKeyListener implements KeyListener
 		return rBytes.size() >= (Long.SIZE/8);
 	}
 
+	/**
+	 * Gets the next seed from this <code>RandomSeedKeyListener</code>.
+	 * @return the next <code>long</code> seed
+	 */
 	public synchronized long getSeed()
 	{
 		if (!hasSeed())
