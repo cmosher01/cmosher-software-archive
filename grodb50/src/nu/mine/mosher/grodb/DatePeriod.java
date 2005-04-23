@@ -22,4 +22,14 @@ public class DatePeriod
 		this.dateStart = dateStart;
 		this.dateEnd = dateEnd;
 	}
+
+	public DateRange getStartDate()
+	{
+		return this.dateStart;
+	}
+
+	public DateRange getEndDate()
+	{
+		return this.dateEnd;
+	}
 }
