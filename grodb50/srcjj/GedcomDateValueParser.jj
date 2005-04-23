@@ -122,7 +122,18 @@ void DateValue() : {}
 
 void DateRange() : {}
 {
-	( <BEFORE> Date() | <AFTER> Date() | <BETWEEN> Date() <AND> Date() )
+	{
+		CalYMD earliest = null;
+		CalYMD latest = null;
+	}
+	(
+		<AFTER> earliest = Date() |
+		<BEFORE> latest = Date() |
+		<BETWEEN> earliest = Date() <AND> latest = Date()
+	)
+	{
+		
+	}
 }
 
 void DateApproximated() : {}
@@ -151,7 +162,7 @@ void DatePeriod() : {}
 		toDate = <TO> Date()
 	)
 	{
-		
+		// TODO handle period of time
 	}
 }
 
