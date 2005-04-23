@@ -15,7 +15,7 @@ import nu.mine.mosher.swingapp.SwingGUI;
  *
  * @author Chris Mosher
  */
-public class RandSeed
+public class RandSeed extends SwingGUI
 {
     /**
      * This class is never instantiated.
@@ -33,7 +33,7 @@ public class RandSeed
     {
         ExceptionHandler eh = new ExceptionHandler();
         CommandLineArgHandler ch = new CommandLineArgHandler(args);
-        SwingGUI gui = new SwingGUI();
+        SwingGUI gui = new RandSeed();
 
         SwingApplication app = new SwingApplication(eh,ch,gui);
 
