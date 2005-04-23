@@ -23,10 +23,7 @@ public class RandSeedListener implements KeyListener
 	{
 		long t = System.currentTimeMillis();
 		int lowByte = (int)(t & 0xFF);
-		rBytes.add(`)
-		System.out.print(Long.toHexString(t));
-		System.out.print(": ");
-		System.out.println(Integer.toHexString(lowByte));
+		this.rBytes.add(new Integer(lowByte));
 	}
 
 	/**
