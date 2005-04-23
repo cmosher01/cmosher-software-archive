@@ -11,20 +11,13 @@ import java.awt.event.ActionListener;
  *
  * @author Chris Mosher
  */
-public class RandSeedListener implements ActionListener
+public class RandSeedListener implements KeyListener
 {
-	/**
-	 * 
-	 */
-	public RandSeedListener()
-	{
-		super();
-	}
-
 	/**
 	 * @param e
 	 */
-	public void actionPerformed(ActionEvent e)
+	public void actionPerformed(final ActionEvent e)
 	{
+		e.getID();
 	}
 }
