@@ -5,8 +5,6 @@ package nu.mine.mosher.rand.seed;
 
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
 import nu.mine.mosher.swingapp.ApplicationAborting;
 import nu.mine.mosher.swingapp.CommandLineArgHandler;
 import nu.mine.mosher.swingapp.ExceptionHandler;
