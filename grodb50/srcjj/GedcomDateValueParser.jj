@@ -109,13 +109,18 @@ TOKEN :
 
 void DateValue() : {}
 {
+	{
+		DatePeriod datePeriod = null;
+		DateRange dateRange = null;
+		CalYMD date = null;
+	}
 	(
-		DatePeriod() |
-		DateRange() |
-		DateApproximated() |
+		datePeriod = DatePeriod() |
+		dateRange = DateRange() |
+		date = DateApproximated() |
 		DateInterpreted() |
 		DatePhrase() |
-		Date()
+		date = Date()
 	)
 
 	<EOF>
@@ -149,19 +154,25 @@ DateRange DateRange() : {}
 	}
 }
 
-void DateApproximated() : {}
+DatePeriod DateApproximated() : {}
 {
 	( <ABOUT> Date() | <CALCULATED> Date() | <ESTIMATED> Date() )
 }
 
-void DateInterpreted() : {}
+DateWithNotes DateInterpreted() : {}
 {
 	<INTERPRETED> Date() DatePhrase()
 }
 
-void DatePhrase() : {}
+String DatePhrase() : {}
 {
-	<LPAREN> <RAWTEXT> <RPAREN>
+	{
+		Token text;
+	}
+	<LPAREN> text = <RAWTEXT> <RPAREN>
+	{
+		return text.image;
+	}
 }
 
 DatePeriod DatePeriod() : {}
