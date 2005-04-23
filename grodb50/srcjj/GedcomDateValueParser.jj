@@ -120,7 +120,7 @@ void DateValue() : {}
 	<EOF>
 }
 
-void DateRange() : {}
+DateRange DateRange() : {}
 {
 	{
 		CalYMD earliest = null;
@@ -132,7 +132,19 @@ void DateRange() : {}
 		<BETWEEN> earliest = Date() <AND> latest = Date()
 	)
 	{
-		
+		boolean julian;
+		if (earliest == null)
+		{
+			julian = latest.isJulian();
+			earliest = new CalYMD(YMD.getMinimum(),julian);
+		}
+		if (latest == null)
+		{
+			julian = earliest.isJulian();
+			latest = new CalYMD(YMD.getMaximum(),julian);
+		}
+		julian = earliest.isJulian();
+		return new DateRange(earliest.getYMD(),latest.getYMD(),julian,-1,-1,new TimeZoneUnknown(),false);
 	}
 }
 
