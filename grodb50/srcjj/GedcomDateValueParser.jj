@@ -134,9 +134,11 @@ void DatePeriod() : {}
 	<TO> Date()
 }
 
-private static class CalYMD
 {
-	
+	private static class CalYMD
+	{
+		
+	}
 }
 
 void Date() : {}
