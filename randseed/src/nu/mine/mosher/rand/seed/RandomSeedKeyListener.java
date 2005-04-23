@@ -16,38 +16,38 @@ import java.util.List;
 public class RandSeedListener implements KeyListener
 {
 	private final List rBytes = new ArrayList();
+
 	/**
 	 * @param e
 	 */
-	public void keyTyped(KeyEvent e)
+	public void keyTyped(final KeyEvent e)
 	{
+		// ignore
 	}
 
 	/**
 	 * @param e
 	 */
-	public void keyPressed(KeyEvent e)
+	public void keyPressed(final KeyEvent e)
 	{
-		long t = //System.currentTimeMillis();
-		e.getWhen();
-		int lowByte = (int)(t & 0xFF);
-		this.rBytes.add(new Integer(lowByte));
-		System.out.print(Long.toHexString(t));
-		System.out.print(" DOWN : ");
-		System.out.println(Integer.toHexString(lowByte));
+		saveLowByteOfTimeStamp(e);
 	}
 
 	/**
 	 * @param e
 	 */
-	public void keyReleased(KeyEvent e)
+	public void keyReleased(final KeyEvent e)
 	{
-		long t = //System.currentTimeMillis();
-			e.getWhen();
+		saveLowByteOfTimeStamp(e);
+	}
+
+	/**
+	 * @param e
+	 */
+	private void saveLowByteOfTimeStamp(KeyEvent e)
+	{
+		long t = e.getWhen();
 		int lowByte = (int)(t & 0xFF);
 		this.rBytes.add(new Integer(lowByte));
-		System.out.print(Long.toHexString(t));
-		System.out.print("  UP  : ");
-		System.out.println(Integer.toHexString(lowByte));
 	}
 }
