@@ -6,6 +6,7 @@ package nu.mine.mosher.rand.seed;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -58,6 +59,20 @@ public class RandomSeedKeyListener implements KeyListener
 
 
 
+	public void check()
+	{
+		int prev = -1;
+		for (Iterator i = this.rBytes.iterator(); i.hasNext();)
+		{
+			Integer x = (Integer)i.next();
+			System.out.print(Integer.toHexString(x));
+			if (prev >= 0)
+			{
+				System.out.print(" delta: "+(x.intValue()-prev));
+			}
+			prev = x.intValue();
+		}
+	}
 	/**
 	 * Checks if this <code>RandomSeedKeyListener</code> currently
 	 * has enough bytes to generate a seed.
