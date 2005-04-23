@@ -14,14 +14,6 @@ import java.util.TimeZone;
 public class TimeZoneUnknown extends TimeZone
 {
 	/**
-	 * 
-	 */
-	public TimeZoneUnknown()
-	{
-		super();
-	}
-
-	/**
 	 * @param era
 	 * @param year
 	 * @param month
@@ -32,7 +24,7 @@ public class TimeZoneUnknown extends TimeZone
 	 */
 	public int getOffset(int era, int year, int month, int day, int dayOfWeek, int milliseconds)
 	{
-		return 0;
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -40,6 +32,7 @@ public class TimeZoneUnknown extends TimeZone
 	 */
 	public void setRawOffset(int offsetMillis)
 	{
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -47,7 +40,7 @@ public class TimeZoneUnknown extends TimeZone
 	 */
 	public int getRawOffset()
 	{
-		return 0;
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -55,7 +48,7 @@ public class TimeZoneUnknown extends TimeZone
 	 */
 	public boolean useDaylightTime()
 	{
-		return false;
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -64,6 +57,6 @@ public class TimeZoneUnknown extends TimeZone
 	 */
 	public boolean inDaylightTime(Date date)
 	{
-		return false;
+		throw new UnsupportedOperationException();
 	}
 }
