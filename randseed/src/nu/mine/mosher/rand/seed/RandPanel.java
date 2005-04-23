@@ -53,7 +53,7 @@ public class RandPanel extends JPanel
 	public void init()
 	{
 		JLabel label = new JLabel("username:", SwingConstants.LEADING);
-		JTextField editText = new JTextField();
+		JTextField editText = new JTextField(30);
 		add(label,BorderLayout.WEST);
 		add(editText,BorderLayout.EAST);
 	}
