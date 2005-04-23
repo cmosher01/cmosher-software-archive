@@ -119,7 +119,9 @@ TOKEN :
 	< CALENDAR_ESC: "#D" >
 }
 
-DatePeriod DateValue() :
+
+	
+	DatePeriod DateValue() :
 {
 	DatePeriod datePeriod = null;
 	DateRange dateRange = null;
@@ -138,6 +140,8 @@ DatePeriod DateValue() :
 	)
 
 	<EOF>
+
+
 
 	{
 		if (datePeriod != null)
@@ -168,17 +172,22 @@ DatePeriod DateValue() :
 	}
 }
 
-DateRange DateRange() : {}
+
+
+DateRange DateRange() :
 {
-	{
-		CalYMD earliest = null;
-		CalYMD latest = null;
-	}
+	CalYMD earliest = null;
+	CalYMD latest = null;
+}
+{
 	(
 		<AFTER> earliest = Date() |
 		<BEFORE> latest = Date() |
 		<BETWEEN> earliest = Date() <AND> latest = Date()
 	)
+
+
+
 	{
 		boolean julian;
 		if (earliest == null)
@@ -196,12 +205,17 @@ DateRange DateRange() : {}
 	}
 }
 
-DatePeriod DateApproximated() : {}
+
+
+DatePeriod DateApproximated() :
 {
-	{
-		CalYMD date;
-	}
+	CalYMD date;
+}
+{
 	( <ABOUT> date = Date() | <CALCULATED> date = Date() | <ESTIMATED> date = Date() )
+
+
+	
 	{
 		return new DatePeriod(
 			new DateRange(date.getYMD(),date.getYMD(),date.isJulian(),-1,-1,new TimeZoneUnknown(),true),
@@ -209,39 +223,54 @@ DatePeriod DateApproximated() : {}
 	}
 }
 
-DateWithNotes DateInterpreted() : {}
+
+
+DateWithNotes DateInterpreted() :
 {
-	{
-		CalYMD date;
-		String notes;
-	}
+	CalYMD date;
+	String notes;
+}
+{
 	<INTERPRETED> date = Date() notes = DatePhrase()
+
+
+
 	{
 		return new DateWithNotes(date,notes);
 	}
 }
 
-String DatePhrase() : {}
+
+
+String DatePhrase() :
 {
-	{
-		Token text;
-	}
+	Token text;
+}
+{
 	<LPAREN> text = <RAWTEXT> <RPAREN>
+
+
+
 	{
 		return text.image;
 	}
 }
 
-DatePeriod DatePeriod() : {}
+
+
+DatePeriod DatePeriod() :
 {
-	{
-		CalYMD fromDate = null;
-		CalYMD toDate = null;
-	}
+	CalYMD fromDate = null;
+	CalYMD toDate = null;
+}
+{
 	(
 		<FROM> fromDate = Date() [ <TO> toDate = Date() ] |
 		<TO> toDate = Date()
 	)
+
+
+
 	{
 		boolean julian;
 		if (fromDate == null)
@@ -261,13 +290,18 @@ DatePeriod DatePeriod() : {}
 	}
 }
 
-CalYMD Date() : {}
+
+
+CalYMD Date() :
 {
-	{
-		boolean julian = false;
-		YMD ymd;
-	}
+	boolean julian = false;
+	YMD ymd;
+}
+{
 	[ julian = DateCalendarEscape() ] ymd = DateCalendar()
+
+
+
 	{
 		// TODO need to convert julian to gregorian, because YMD always
 		// stores as gregorian.
@@ -275,37 +309,54 @@ CalYMD Date() : {}
 	}
 }
 
-boolean DateCalendarEscape() : {}
+
+
+boolean DateCalendarEscape() :
 {
-	{
-		Token cal;
-	}
+	Token cal;
+}
+{
 	<AT> <CALENDAR_ESC> ( cal = <GREGORIAN> | cal = <JULIAN> ) <AT>
+
+
+
 	{
 		return cal.kind == JULIAN;
 	}
 }
 
-YMD DateCalendar() : {}
+
+
+YMD DateCalendar() :
 {
-	{
-		int year = 0;
-		int month = 0;
-		int day = 0;
-	}
+	int year = 0;
+	int month = 0;
+	int day = 0;
+}
+{
 	[ LOOKAHEAD(2) [ day = Day() ] month = Month() ] year = Year()
+
+
+
 	{
 		return new YMD(year,month,day);
 	}
 }
 
+
+
 int Day() : {}
 {
 	<NUMBER>
+
+
+
 	{
 		return Integer.parseInt(this.token.image);
 	}
 }
+
+
 
 int Month() : {}
 {
@@ -313,19 +364,27 @@ int Month() : {}
 		<JAN> | <FEB> | <MAR> | <APR> | <MAY> | <JUN> |
 		<JUL> | <AUG> | <SEP> | <OCT> | <NOV> | <DEC>
 	)
+
+
+
 	{
 		return this.token.kind - MONTH_LOWER_LIMIT;
 	}
 }
 
-int Year() : {}
+
+
+int Year() :
 {
-	{
-		Token year;
-		boolean gregorian = false;
-		boolean bc = false;
-	}
+	Token year;
+	boolean gregorian = false;
+	boolean bc = false;
+}
+{
 	year = <NUMBER>	[ gregorian = SlashYear() ]	[ LOOKAHEAD(2) bc = BC() ]
+
+
+
 	{
 		int y = Integer.parseInt(year.image);
 		if (gregorian)
@@ -344,17 +403,27 @@ int Year() : {}
 	}
 }
 
+
+
 boolean SlashYear() : {}
 {
 	<SLASH> <NUMBER>
+
+
+
 	{
 		return true;
 	}
 }
 
+
+
 boolean BC() : {}
 {
 	[ <LPAREN> ] <BC> [ <RPAREN> ]
+
+
+
 	{
 		return true;
 	}
