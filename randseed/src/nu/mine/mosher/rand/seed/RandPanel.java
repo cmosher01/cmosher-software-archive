@@ -4,7 +4,9 @@
 package nu.mine.mosher.rand.seed;
 
 import java.awt.LayoutManager;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 /**
  * TODO
@@ -44,5 +46,11 @@ public class RandPanel extends JPanel
 	public RandPanel()
 	{
 		super();
+	}
+
+	public void init()
+	{
+		JLabel x = new JLabel("Test", SwingConstants.LEFT);
+		add(x);
 	}
 }
