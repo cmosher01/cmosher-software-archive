@@ -19,7 +19,7 @@ import nu.mine.mosher.swingapp.SwingGUI;
  */
 public class RandSeed extends SwingGUI
 {
-	private RandSeedListener rand = new RandSeedListener();
+	private RandomSeedKeyListener rand = new RandomSeedKeyListener();
 
 	/**
      * This class is never instantiated.
