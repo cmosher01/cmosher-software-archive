@@ -26,6 +26,18 @@ class GedcomDateValueParser
 //		mapMonthTokenToInt.put(month,new Integer(nextMonth));
 //		++nextMonth;
 //	}
+	private static class CalYMD
+	{
+		private final YMD ymd;
+		private final boolean julian;
+		CalYMD(final YMD ymd, final boolean julian)
+		{
+			this.ymd = ymd;
+			this.julian = julian;
+		}
+		YMD getYMD() { return this.ymd; }
+		boolean isJulian { return this.julian; }
+	}
 }
 
 PARSER_END(GedcomDateValueParser)
@@ -132,13 +144,6 @@ void DatePeriod() : {}
 {
 	<FROM> Date() [ <TO> Date() ] |
 	<TO> Date()
-}
-
-{
-	private static class CalYMD
-	{
-		
-	}
 }
 
 void Date() : {}
