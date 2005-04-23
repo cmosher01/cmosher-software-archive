@@ -36,7 +36,7 @@ class GedcomDateValueParser
 			this.julian = julian;
 		}
 		YMD getYMD() { return this.ymd; }
-		boolean isJulian { return this.julian; }
+		boolean isJulian() { return this.julian; }
 	}
 }
 
