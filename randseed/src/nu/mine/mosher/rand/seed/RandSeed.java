@@ -3,6 +3,10 @@
  */
 package nu.mine.mosher.rand.seed;
 
+import java.awt.BorderLayout;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import nu.mine.mosher.swingapp.ApplicationAborting;
 import nu.mine.mosher.swingapp.CommandLineArgHandler;
 import nu.mine.mosher.swingapp.ExceptionHandler;
@@ -38,5 +42,14 @@ public class RandSeed extends SwingGUI
         SwingApplication app = new SwingApplication(eh,ch,gui);
 
         app.run();
+    }
+
+    protected JPanel createContentPane()
+    {
+        JPanel panel = new RandPanel(new BorderLayout(),true);
+        panel.setOpaque(true);
+        panel.addNotify();
+
+        return panel;
     }
 }
