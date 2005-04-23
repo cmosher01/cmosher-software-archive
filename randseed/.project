@@ -3,6 +3,7 @@
 	<name>randseed</name>
 	<comment></comment>
 	<projects>
+		<project>swingapp</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
