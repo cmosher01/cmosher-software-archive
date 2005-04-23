@@ -119,15 +119,15 @@ TOKEN :
 	< CALENDAR_ESC: "#D" >
 }
 
-DatePeriod DateValue() : {}
+DatePeriod DateValue() :
 {
-	{
-		DatePeriod datePeriod = null;
-		DateRange dateRange = null;
-		DateWithNotes dateNotes = null;
-		String notes = null;
-		CalYMD date = null;
-	}
+	DatePeriod datePeriod = null;
+	DateRange dateRange = null;
+	DateWithNotes dateNotes = null;
+	String notes = null;
+	CalYMD date = null;
+}
+{
 	(
 		datePeriod = DatePeriod() |
 		dateRange = DateRange() |
