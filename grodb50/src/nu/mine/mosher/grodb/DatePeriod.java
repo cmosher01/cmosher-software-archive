@@ -42,6 +42,7 @@ public class DatePeriod
 		final DatePeriod that = (DatePeriod)object;
 		return this.dateStart.equals(that.dateStart) && this.dateEnd.equals(that.dateEnd);
 	}
+
 	public int hashCode()
 	{
 		return dateStart.hashCode() ^ dateEnd.hashCode();
