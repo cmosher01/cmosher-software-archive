@@ -47,6 +47,7 @@ public class RandSeed extends SwingGUI
         JPanel panel = new RandPanel(new BorderLayout(),true);
         panel.setOpaque(true);
         panel.addNotify();
+        panel.init();
 
         return panel;
     }
