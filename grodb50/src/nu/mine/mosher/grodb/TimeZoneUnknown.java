@@ -59,4 +59,14 @@ public class TimeZoneUnknown extends TimeZone
 	{
 		throw new UnsupportedOperationException();
 	}
+
+	public boolean equals(final Object object)
+	{
+		return false;
+	}
+
+	public int hashCode()
+	{
+		return 0;
+	}
 }
