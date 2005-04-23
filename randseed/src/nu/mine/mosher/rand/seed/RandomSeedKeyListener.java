@@ -71,8 +71,10 @@ public class RandomSeedKeyListener implements KeyListener
 	/**
 	 * Gets the next seed from this <code>RandomSeedKeyListener</code>.
 	 * @return the next <code>long</code> seed
+	 * @throws IllegalStateException if this doesn't have enough bytes
+	 * to generate a seed.
 	 */
-	public synchronized long getSeed()
+	public synchronized long getSeed() throws IllegalStateException
 	{
 		if (!hasSeed())
 		{
