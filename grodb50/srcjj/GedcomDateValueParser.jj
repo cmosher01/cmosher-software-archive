@@ -163,7 +163,7 @@ void DatePhrase() : {}
 	<LPAREN> <RAWTEXT> <RPAREN>
 }
 
-void DatePeriod() : {}
+DatePeriod DatePeriod() : {}
 {
 	{
 		CalYMD fromDate = null;
@@ -174,7 +174,19 @@ void DatePeriod() : {}
 		<TO> toDate = Date()
 	)
 	{
-		// TODO handle period of time
+		boolean julian;
+		if (fromDate == null)
+		{
+			julian = toDate.isJulian();
+			fromDate = new DateRange(new CalYMD(YMD.getMinimum(),julian),new CalYMD(YMD.getMinimum(),julian),julian,-1,-1,new TimeZoneUnknown(),false));
+		}
+		if (toDate == null)
+		{
+			julian = fromDate.isJulian();
+			toDate = new DateRange(new CalYMD(YMD.getMaximum(),julian),new CalYMD(YMD.getMaximum(),julian),julian,-1,-1,new TimeZoneUnknown(),false));
+		}
+		julian = fromDate.isJulian();
+		return new DatePeriod(fromDate,toDate);
 	}
 }
 
