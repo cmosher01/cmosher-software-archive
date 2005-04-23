@@ -49,6 +49,9 @@ public class RandPanel extends JPanel
 		super();
 	}
 
+	/**
+	 * 
+	 */
 	public void init()
 	{
 		JLabel label = new JLabel("username:", SwingConstants.LEADING);
