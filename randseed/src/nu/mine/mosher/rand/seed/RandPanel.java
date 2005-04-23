@@ -3,6 +3,7 @@
  */
 package nu.mine.mosher.rand.seed;
 
+import java.awt.BorderLayout;
 import java.awt.LayoutManager;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -53,7 +54,7 @@ public class RandPanel extends JPanel
 	{
 		JLabel label = new JLabel("username:", SwingConstants.LEADING);
 		JTextField editText = new JTextField();
-		add(label,SwingConstants.WEST);
-		add(editText,SwingConstants.EAST);
+		add(label,BorderLayout.WEST);
+		add(editText,BorderLayout.EAST);
 	}
 }
