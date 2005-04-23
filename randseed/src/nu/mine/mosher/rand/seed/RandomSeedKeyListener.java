@@ -56,6 +56,8 @@ public class RandomSeedKeyListener implements KeyListener
 		}
 	}
 
+
+
 	public synchronized boolean hasSeed()
 	{
 		return rBytes.size() >= (Long.SIZE/8);
