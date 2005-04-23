@@ -122,12 +122,12 @@ void DateValue() : {}
 
 void DateRange() : {}
 {
-	<BEFORE> Date() | <AFTER> Date() | <BETWEEN> Date() <AND> Date()
+	( <BEFORE> Date() | <AFTER> Date() | <BETWEEN> Date() <AND> Date() )
 }
 
 void DateApproximated() : {}
 {
-	<ABOUT> Date() | <CALCULATED> Date() | <ESTIMATED> Date()
+	( <ABOUT> Date() | <CALCULATED> Date() | <ESTIMATED> Date() )
 }
 
 void DateInterpreted() : {}
@@ -142,8 +142,17 @@ void DatePhrase() : {}
 
 void DatePeriod() : {}
 {
-	<FROM> Date() [ <TO> Date() ] |
-	<TO> Date()
+	{
+		CalYMD fromDate = null;
+		CalYMD toDate = null;
+	}
+	(
+		<FROM> fromDate = Date() [ <TO> toDate = Date() ] |
+		toDate = <TO> Date()
+	)
+	{
+		
+	}
 }
 
 CalYMD Date() : {}
