@@ -53,6 +53,7 @@ public class RandSeedListener implements KeyListener
 		{
 			this.rBytes.add(new Integer(lowByte));
 		}
+		System.out.println("adding: "+Integer.toHexString(lowByte));
 	}
 
 	public synchronized boolean hasSeed()
@@ -60,7 +61,7 @@ public class RandSeedListener implements KeyListener
 		return rBytes.size() >= (Long.SIZE/8);
 	}
 
-	public void seedRNG(final Random rng)
+	public long getSeed()
 	{
 		if (!hasSeed())
 		{
@@ -73,6 +74,7 @@ public class RandSeedListener implements KeyListener
 			seed <<= 8;
 			seed |= x.intValue();
 		}
-		rng.setSeed(seed);
+		System.out.println("seed: "+Long.toHexString(seed));
+		return seed;
 	}
 }
