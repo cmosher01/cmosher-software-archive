@@ -5,6 +5,8 @@ package nu.mine.mosher.rand.seed;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * TODO
@@ -13,14 +15,17 @@ import java.awt.event.KeyListener;
  */
 public class RandSeedListener implements KeyListener
 {
+	private final List rBytes = new ArrayList();
 	/**
 	 * @param e
 	 */
 	public void keyTyped(KeyEvent e)
 	{
-		System.out.print(Long.toHexString(System.currentTimeMillis()));
+		long t = System.currentTimeMillis();
+		int lowByte = (int)(t & 0xFF);
+		System.out.print(Long.toHexString(t));
 		System.out.print(": ");
-		System.out.println(e.getKeyChar());
+		System.out.println(Integer.toHexString(lowByte));
 	}
 
 	/**
