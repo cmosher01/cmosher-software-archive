@@ -112,14 +112,16 @@ void DateValue() : {}
 	{
 		DatePeriod datePeriod = null;
 		DateRange dateRange = null;
+		DateWithNotes dateNotes = null;
+		String notes;
 		CalYMD date = null;
 	}
 	(
 		datePeriod = DatePeriod() |
 		dateRange = DateRange() |
-		date = DateApproximated() |
-		DateInterpreted() |
-		DatePhrase() |
+		datePeriod = DateApproximated() |
+		dateNotes = DateInterpreted() |
+		notes = DatePhrase() |
 		date = Date()
 	)
 
@@ -156,12 +158,27 @@ DateRange DateRange() : {}
 
 DatePeriod DateApproximated() : {}
 {
-	( <ABOUT> Date() | <CALCULATED> Date() | <ESTIMATED> Date() )
+	{
+		CalYMD date;
+	}
+	( <ABOUT> date = Date() | <CALCULATED> date = Date() | <ESTIMATED> date = Date() )
+	{
+		return new DatePeriod(
+			new DateRange(date.getYMD(),date.getYMD(),date.isJulian(),-1,-1,new TimeZoneUnknown(),true),
+			new DateRange(date.getYMD(),date.getYMD(),date.isJulian(),-1,-1,new TimeZoneUnknown(),true));
+	}
 }
 
 DateWithNotes DateInterpreted() : {}
 {
-	<INTERPRETED> Date() DatePhrase()
+	{
+		CalYMD date;
+		String notes;
+	}
+	<INTERPRETED> date = Date() notes = DatePhrase()
+	{
+		return new DateWithNotes(date,notes);
+	}
 }
 
 String DatePhrase() : {}
