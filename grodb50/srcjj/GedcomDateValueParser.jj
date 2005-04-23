@@ -119,7 +119,7 @@ TOKEN :
 	< CALENDAR_ESC: "#D" >
 }
 
-void DateValue() : {}
+DatePeriod DateValue() : {}
 {
 	{
 		DatePeriod datePeriod = null;
@@ -138,6 +138,31 @@ void DateValue() : {}
 	)
 
 	<EOF>
+
+	{
+		if (datePeriod != null)
+		{
+			return datePeriod;
+		}
+		if (dateRange != null)
+		{
+			return new DatePeriod(dateRange,dateRange);
+		}
+		if (dateNotes != null)
+		{
+			// TODO date with notes
+		}
+		if (notes != null)
+		{
+			// TODO notes
+		}
+		if (date != null)
+		{
+			return new DatePeriod(
+				new DateRange(date.getYMD(),date.getYMD(),date.isJulian(),-1,-1,new TimeZoneUnknown(),true),
+				new DateRange(date.getYMD(),date.getYMD(),date.isJulian(),-1,-1,new TimeZoneUnknown(),true));
+		}
+	}
 }
 
 DateRange DateRange() : {}
