@@ -4,6 +4,7 @@
 package nu.mine.mosher.rand.seed;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import javax.swing.JPanel;
 import nu.mine.mosher.swingapp.ApplicationAborting;
 import nu.mine.mosher.swingapp.CommandLineArgHandler;
@@ -44,7 +45,7 @@ public class RandSeed extends SwingGUI
 
     protected JPanel createContentPane()
     {
-    	RandPanel panel = new RandPanel(new BorderLayout(),true);
+    	RandPanel panel = new RandPanel(new FlowLayout(),true);
         panel.setOpaque(true);
         panel.addNotify();
         panel.init();
