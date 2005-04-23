@@ -13,18 +13,16 @@ import java.awt.event.ActionListener;
  */
 public class ShowSeed implements ActionListener
 {
-	/**
-	 * 
-	 */
-	public ShowSeed()
+	private final RandSeedListener rand;
+	public ShowSeed(final RandSeedListener rand)
 	{
-		super();
+		this.rand = rand;
 	}
-
 	/**
 	 * @param e
 	 */
 	public void actionPerformed(ActionEvent e)
 	{
+		this.rand.getSeed();
 	}
 }
