@@ -102,4 +102,14 @@ public class YMD implements Immutable, Serializable, Comparable
 
 		return d;
     }
+
+    public static YMD getMinimum()
+    {
+    	return new YMD(Integer.MIN_VALUE,Integer.MIN_VALUE,Integer.MIN_VALUE);
+    }
+
+    public static YMD getMaximum()
+    {
+    	return new YMD(Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE);
+    }
 }
