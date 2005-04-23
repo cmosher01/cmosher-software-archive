@@ -50,7 +50,7 @@ public class RandPanel extends JPanel
 
 	public void init()
 	{
-		JLabel x = new JLabel("Test", SwingConstants.LEFT);
+		JLabel x = new JLabel("Test", SwingConstants.NORTH_WEST);
 		add(x);
 	}
 }
