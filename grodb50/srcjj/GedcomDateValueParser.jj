@@ -151,6 +151,9 @@ DatePeriod DateValue() : {}
 		if (dateNotes != null)
 		{
 			// TODO date with notes
+			return new DatePeriod(
+				new DateRange(dateNotes.getCalYMD().getYMD(),dateNotes.getCalYMD().getYMD(),dateNotes.getCalYMD().isJulian(),-1,-1,new TimeZoneUnknown(),false),
+				new DateRange(dateNotes.getCalYMD().getYMD(),dateNotes.getCalYMD().getYMD(),dateNotes.getCalYMD().isJulian(),-1,-1,new TimeZoneUnknown(),false));
 		}
 		if (notes != null)
 		{
