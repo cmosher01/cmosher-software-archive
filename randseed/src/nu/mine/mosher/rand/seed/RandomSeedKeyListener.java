@@ -20,7 +20,7 @@ public class RandSeedListener implements KeyListener
 	 */
 	public void keyTyped(KeyEvent e)
 	{
-		System.out.print(System.currentTimeMillis());
+		System.out.print(Long.toHexString(System.currentTimeMillis()));
 		System.out.print(": ");
 		System.out.println(e.getKeyChar());
 	}
