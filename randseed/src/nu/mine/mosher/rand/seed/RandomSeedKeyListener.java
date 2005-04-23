@@ -28,7 +28,8 @@ public class RandSeedListener implements KeyListener
 	 */
 	public void keyPressed(KeyEvent e)
 	{
-		long t = System.currentTimeMillis();
+		long t = //System.currentTimeMillis();
+		e.getWhen();
 		int lowByte = (int)(t & 0xFF);
 		this.rBytes.add(new Integer(lowByte));
 		System.out.print(Long.toHexString(t));
@@ -41,7 +42,8 @@ public class RandSeedListener implements KeyListener
 	 */
 	public void keyReleased(KeyEvent e)
 	{
-		long t = System.currentTimeMillis();
+		long t = //System.currentTimeMillis();
+			e.getWhen();
 		int lowByte = (int)(t & 0xFF);
 		this.rBytes.add(new Integer(lowByte));
 		System.out.print(Long.toHexString(t));
