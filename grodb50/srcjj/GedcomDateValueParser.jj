@@ -154,6 +154,8 @@ CalYMD Date() : {}
 	}
 	[ julian = DateCalendarEscape() ] ymd = DateCalendar()
 	{
+		// TODO need to convert julian to gregorian, because YMD always
+		// stores as gregorian.
 		return new CalYMD(ymd,julian);
 	}
 }
