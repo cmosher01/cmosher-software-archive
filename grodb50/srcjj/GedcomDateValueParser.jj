@@ -171,7 +171,7 @@ void DatePeriod() : {}
 	}
 	(
 		<FROM> fromDate = Date() [ <TO> toDate = Date() ] |
-		toDate = <TO> Date()
+		<TO> toDate = Date()
 	)
 	{
 		// TODO handle period of time
