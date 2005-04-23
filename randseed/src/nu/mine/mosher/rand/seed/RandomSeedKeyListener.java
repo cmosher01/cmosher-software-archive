@@ -50,7 +50,7 @@ public class RandomSeedKeyListener implements KeyListener
 	private void saveLowByteOfTimeStamp(KeyEvent e)
 	{
 		long t = e.getWhen();
-		t >>>= 1;
+		t >>>= 2;
 		int lowByte = (int)(t & 0xFF);
 		synchronized (this)
 		{
