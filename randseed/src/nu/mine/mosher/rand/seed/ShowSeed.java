@@ -23,6 +23,7 @@ public class ShowSeed implements ActionListener
 	 */
 	public void actionPerformed(ActionEvent e)
 	{
+		this.rand.check();
 		long seed = this.rand.getSeed();
 		System.out.println(Long.toHexString(seed));
 	}
