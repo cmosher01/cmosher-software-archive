@@ -67,6 +67,12 @@ public class RandSeedListener implements KeyListener
 			throw new IllegalStateException("not enough seed bytes");
 		}
 		long seed = 0;
+		for (int byt = 0; byt < Long.SIZE/8; ++byt)
+		{
+			Integer x = (Integer)this.rBytes.get(byt);
+			seed <<= 8;
+			seed |= x.intValue();
+		}
 		rng.setSeed(seed);
 	}
 }
