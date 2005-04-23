@@ -134,6 +134,11 @@ void DatePeriod() : {}
 	<TO> Date()
 }
 
+private static class CalYMD
+{
+	
+}
+
 void Date() : {}
 {
 	{
@@ -142,7 +147,6 @@ void Date() : {}
 	}
 	[ julian = DateCalendarEscape() ] ymd = DateCalendar()
 	{
-		// TODO convert julian to gregorian here
 	}
 }
 
