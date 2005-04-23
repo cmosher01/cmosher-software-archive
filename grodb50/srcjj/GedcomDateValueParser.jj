@@ -39,6 +39,18 @@ class GedcomDateValueParser
 		YMD getYMD() { return this.ymd; }
 		boolean isJulian() { return this.julian; }
 	}
+	private static class DateWithNotes
+	{
+		private final CalYMD date;
+		private final String notes;
+		DateWithNotes(final CalYMD date, final String notes)
+		{
+			this.date = date;
+			this.notes = notes;
+		}
+		CalYMD getCalYMD() { return this.date; }
+		String getNotes() { return this.notes; }
+	}
 }
 
 PARSER_END(GedcomDateValueParser)
