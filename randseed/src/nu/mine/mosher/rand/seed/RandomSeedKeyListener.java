@@ -15,7 +15,7 @@ import java.util.Random;
  *
  * @author Chris Mosher
  */
-public class RandSeedListener implements KeyListener
+public class RandomSeedKeyListener implements KeyListener
 {
 	private final LinkedList rBytes = new LinkedList();
 
