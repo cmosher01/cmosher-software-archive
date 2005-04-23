@@ -3,7 +3,6 @@
  */
 package nu.mine.mosher.rand.seed;
 
-import java.awt.FlowLayout;
 import java.awt.LayoutManager;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
