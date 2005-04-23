@@ -4,6 +4,7 @@
 package nu.mine.mosher.rand.seed;
 
 import java.awt.LayoutManager;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -57,7 +58,11 @@ public class RandPanel extends JPanel
 		JLabel label = new JLabel("username:", SwingConstants.LEADING);
 		JTextField editText = new JTextField(30);
 		editText.addKeyListener(rand);
+		JButton seed = new JButton("seed");
+		seed.addActionListener(new ShowSeed(rand));
+
 		add(label);
 		add(editText);
+		add(seed);
 	}
 }
