@@ -19,7 +19,9 @@ import nu.mine.mosher.swingapp.SwingGUI;
  */
 public class RandSeed extends SwingGUI
 {
-    /**
+	private RandSeedListener rand = new RandSeedListener();
+
+	/**
      * This class is never instantiated.
      */
     private RandSeed()
@@ -47,7 +49,7 @@ public class RandSeed extends SwingGUI
     	RandPanel panel = new RandPanel(new FlowLayout(),true);
         panel.setOpaque(true);
         panel.addNotify();
-        panel.init();
+        panel.init(this.rand);
 
         return panel;
     }
