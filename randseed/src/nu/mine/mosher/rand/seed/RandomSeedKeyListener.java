@@ -58,6 +58,11 @@ public class RandomSeedKeyListener implements KeyListener
 
 
 
+	/**
+	 * Checks if this <code>RandomSeedKeyListener</code> currently
+	 * has enough bytes to generate a seed.
+	 * @return <code>true</code> if there are at least 8 bytes
+	 */
 	public synchronized boolean hasSeed()
 	{
 		return rBytes.size() >= (Long.SIZE/8);
