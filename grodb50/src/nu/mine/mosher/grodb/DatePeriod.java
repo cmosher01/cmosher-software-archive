@@ -32,4 +32,18 @@ public class DatePeriod
 	{
 		return this.dateEnd;
 	}
+
+	public boolean equals(final Object object)
+	{
+		if (!(object instanceof DatePeriod))
+		{
+			return false;
+		}
+		final DatePeriod that = (DatePeriod)object;
+		return this.dateStart.equals(that.dateStart) && this.dateEnd.equals(that.dateEnd);
+	}
+	public int hashCode()
+	{
+		return dateStart.hashCode() ^ dateEnd.hashCode();
+	}
 }
