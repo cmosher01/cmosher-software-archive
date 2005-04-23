@@ -6,6 +6,7 @@ package nu.mine.mosher.rand.seed;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -16,7 +17,7 @@ import java.util.Random;
  */
 public class RandSeedListener implements KeyListener
 {
-	private final List rBytes = new ArrayList();
+	private final LinkedList rBytes = new LinkedList();
 
 	/**
 	 * @param e
@@ -51,7 +52,7 @@ public class RandSeedListener implements KeyListener
 		int lowByte = (int)(t & 0xFF);
 		synchronized (this)
 		{
-			this.rBytes.add(new Integer(lowByte));
+			this.rBytes.addLast(new Integer(lowByte));
 		}
 		System.out.println("adding: "+Integer.toHexString(lowByte));
 	}
@@ -61,7 +62,7 @@ public class RandSeedListener implements KeyListener
 		return rBytes.size() >= (Long.SIZE/8);
 	}
 
-	public long getSeed()
+	public synchronized long getSeed()
 	{
 		if (!hasSeed())
 		{
@@ -70,7 +71,7 @@ public class RandSeedListener implements KeyListener
 		long seed = 0;
 		for (int byt = 0; byt < Long.SIZE/8; ++byt)
 		{
-			Integer x = (Integer)this.rBytes.get(byt);
+			Integer x = (Integer)this.rBytes.removeFirst();
 			seed <<= 8;
 			seed |= x.intValue();
 		}
