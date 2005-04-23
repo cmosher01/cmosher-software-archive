@@ -50,6 +50,7 @@ public class RandomSeedKeyListener implements KeyListener
 	private void saveLowByteOfTimeStamp(KeyEvent e)
 	{
 		long t = e.getWhen();
+		t >>>= 1;
 		int lowByte = (int)(t & 0xFF);
 		synchronized (this)
 		{
@@ -68,8 +69,9 @@ public class RandomSeedKeyListener implements KeyListener
 			System.out.print(Integer.toHexString(x));
 			if (prev >= 0)
 			{
-				System.out.println(" delta: "+(x.intValue()-prev));
+				System.out.print(" delta: "+(x.intValue()-prev));
 			}
+			System.out.println();
 			prev = x.intValue();
 		}
 	}
