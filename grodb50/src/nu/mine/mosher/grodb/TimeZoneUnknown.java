@@ -62,7 +62,7 @@ public class TimeZoneUnknown extends TimeZone
 
 	public boolean equals(final Object object)
 	{
-		return false;
+		return object instanceof TimeZoneUnknown;
 	}
 
 	public int hashCode()
