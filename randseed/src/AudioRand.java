@@ -49,11 +49,11 @@ public class AudioRand
 		targetDataLine = (TargetDataLine)AudioSystem.getLine(info);
 		targetDataLine.open(audioFormat);
 		targetDataLine.start();
-		byte[] rb = new byte[64];
+		byte[] rb = new byte[128*8];
 		targetDataLine.read(rb,0,rb.length);
-		for (int i = 0; i < rb.length; i++)
+		for (int i = 0; i < rb.length/128; i++)
 		{
-			byte b = rb[i];
+			byte b = rb[i*128];
 			int x = (int)b;
 			x &= 0xFF;
 			System.out.println(Integer.toHexString(x));
