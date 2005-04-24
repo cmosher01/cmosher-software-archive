@@ -43,7 +43,7 @@ public class AudioRand
 			System.out.println();
 		}
 
-    	AudioFormat audioFormat = new AudioFormat(AudioSystem.NOT_SPECIFIED,AudioSystem.NOT_SPECIFIED,AudioSystem.NOT_SPECIFIED,false,true);
+    	AudioFormat audioFormat = new AudioFormat(AudioSystem.NOT_SPECIFIED,AudioSystem.NOT_SPECIFIED,AudioSystem.NOT_SPECIFIED,true,true);
 		DataLine.Info info = new DataLine.Info(TargetDataLine.class,audioFormat);
 		TargetDataLine targetDataLine = null;
 		targetDataLine = (TargetDataLine)AudioSystem.getLine(info);
