@@ -38,7 +38,7 @@ public class ScreenRand
 				}
 				else
 				{
-					prevRGB = 0;
+					prevRGB = rgb;
 					System.out.println(Integer.toHexString(cDups));
 					cDups = 0;
 				}
