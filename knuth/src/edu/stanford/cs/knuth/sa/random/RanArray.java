@@ -68,14 +68,7 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
 
         fillArray(x);
 
-        for (int j = 0; j < LL; ++j)
-        {
-            ranx[j+KK-LL] = x[j];
-        }
-        for (int j = LL; j < KK; ++j)
-        {
-            ranx[j-LL] = x[j];
-        }
+        initFromArray(x);
 
         /*
          * warm things up
@@ -85,6 +78,21 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
             generate(KK+KK-1);
         }
     }
+
+	/**
+	 * @param x
+	 */
+	private void initFromArray(long[] x)
+	{
+		for (int j = 0; j < LL; ++j)
+        {
+            ranx[j+KK-LL] = x[j];
+        }
+		for (int j = LL; j < KK; ++j)
+        {
+            ranx[j-LL] = x[j];
+        }
+	}
 
 	/**
 	 * Bootstrap the buffer.
