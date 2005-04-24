@@ -41,6 +41,10 @@ public class ScreenRand
 				}
 			}
 		}
-		System.out.println(Integer.toHexString(seed));
+		for (int i = 0; i < rb.length; i++)
+		{
+			int j = rb[i];
+			System.out.println(Integer.toHexString(j));
+		}
 	}
 }
