@@ -54,7 +54,9 @@ public class AudioRand
 		for (int i = 0; i < rb.length; i++)
 		{
 			byte b = rb[i];
-			System.out.println(Integer.toHexString(b));
+			int x = (int)b;
+			x &= 0xFF;
+			System.out.println(Integer.toHexString(x));
 		}
 		targetDataLine.stop();
 		targetDataLine.close();
