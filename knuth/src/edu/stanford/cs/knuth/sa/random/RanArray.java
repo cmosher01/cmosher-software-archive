@@ -81,32 +81,6 @@ public final class RanArray extends RNGDefault implements RandomNumberGenerator
     }
 
 	/**
-     * warm things up
-     */
-	private void primeThePump()
-	{
-        for (int j = 0; j < 10; ++j)
-        {
-            generate(KK+KK-1);
-        }
-	}
-
-	/**
-	 * @param x
-	 */
-	private void initFromArray(final long[] x)
-	{
-		for (int j = 0; j < LL; ++j)
-        {
-            ranx[j+KK-LL] = x[j];
-        }
-		for (int j = LL; j < KK; ++j)
-        {
-            ranx[j-LL] = x[j];
-        }
-	}
-
-	/**
 	 * Bootstrap the buffer.
 	 * @param x array to initialize
 	 */
@@ -171,6 +145,32 @@ public final class RanArray extends RNGDefault implements RandomNumberGenerator
             {
                 --t;
             }
+        }
+	}
+
+	/**
+	 * @param x
+	 */
+	private void initFromArray(final long[] x)
+	{
+		for (int j = 0; j < LL; ++j)
+        {
+            ranx[j+KK-LL] = x[j];
+        }
+		for (int j = LL; j < KK; ++j)
+        {
+            ranx[j-LL] = x[j];
+        }
+	}
+
+	/**
+     * warm things up
+     */
+	private void primeThePump()
+	{
+        for (int j = 0; j < 10; ++j)
+        {
+            generate(KK+KK-1);
         }
 	}
 
