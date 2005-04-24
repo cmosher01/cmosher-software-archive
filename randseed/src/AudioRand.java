@@ -57,7 +57,7 @@ public class AudioRand
 		long seed = 0;
 		for (int i = 0; i < rb.length; i++)
 		{
-			if (1 % 128 == 0)
+			if (i % 128 == 0)
 			{
 				byte b = rb[i];
 				seed <<= 2;
