@@ -19,8 +19,9 @@ public class AudioRand
 {
 	/**
 	 * @param args
+	 * @throws LineUnavailableException 
 	 */
-	public static void main(String[] args)
+	public static void main(String[] args) throws LineUnavailableException
 	{
     	Mixer.Info[] rInfo = AudioSystem.getMixerInfo();
     	for (int i = 0; i < rInfo.length; i++)
