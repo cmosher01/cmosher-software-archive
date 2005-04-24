@@ -29,7 +29,7 @@ public class HotBitsAndRanArray
 			int[] rUByte = new int[4];
 			for (int iUByte = 0; iUByte < rUByte.length; ++iUByte)
 			{
-				int uByte = inHotBits.read();
+				final int uByte = inHotBits.read();
 				if (uByte < 0)
 				{
 					throw new IOException("Not enough bytes hot bits provided.");
