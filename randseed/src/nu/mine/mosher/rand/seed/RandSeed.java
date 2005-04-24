@@ -4,6 +4,8 @@
 package nu.mine.mosher.rand.seed;
 
 import java.awt.FlowLayout;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Mixer.Info;
 import javax.swing.JPanel;
 import nu.mine.mosher.swingapp.ApplicationAborting;
 import nu.mine.mosher.swingapp.CommandLineArgHandler;
@@ -35,13 +37,19 @@ public class RandSeed extends SwingGUI
      */
     public static void main(String[] args) throws ApplicationAborting
     {
-        ExceptionHandler eh = new ExceptionHandler();
-        CommandLineArgHandler ch = new CommandLineArgHandler(args);
-        SwingGUI gui = new RandSeed();
-
-        SwingApplication app = new SwingApplication(eh,ch,gui);
-
-        app.run();
+//        ExceptionHandler eh = new ExceptionHandler();
+//        CommandLineArgHandler ch = new CommandLineArgHandler(args);
+//        SwingGUI gui = new RandSeed();
+//
+//        SwingApplication app = new SwingApplication(eh,ch,gui);
+//
+//        app.run();
+    	Info[] rInfo = AudioSystem.getMixerInfo();
+    	for (int i = 0; i < rInfo.length; i++)
+		{
+			Info info = rInfo[i];
+			System.out.println(info.toString());
+		}
     }
 
     protected JPanel createContentPane()
