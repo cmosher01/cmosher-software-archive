@@ -1,6 +1,5 @@
 package randomX;
 
-import randomX.*;
 
 /**
     Implementation of a <b>randomX</b>-compliant class using the
