@@ -87,9 +87,9 @@ public class HotBitsAndRanArray
 	 * @return
 	 * @throws IOException
 	 */
-	private static int getOneByte(InputStream inHotBits) throws IOException
+	private static int getOneByte(final InputStream inHotBits) throws IOException
 	{
-		int uByte = inHotBits.read();
+		final int uByte = inHotBits.read();
 		if (uByte < 0)
 		{
 			throw new IOException("Not enough hot bits provided.");
