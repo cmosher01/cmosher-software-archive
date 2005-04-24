@@ -2,9 +2,13 @@
  * Created on Apr 23, 2005
  */
 
+import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
 import javax.sound.sampled.Line;
+import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
+import javax.sound.sampled.TargetDataLine;
 
 /**
  * TODO
@@ -36,6 +40,21 @@ public class AudioRand
 			}
 
 			System.out.println();
+		}
+
+    	AudioFormat audioFormat = new AudioFormat(AudioSystem.NOT_SPECIFIED,AudioSystem.NOT_SPECIFIED,AudioSystem.NOT_SPECIFIED,false,false);
+		DataLine.Info info = new DataLine.Info(TargetDataLine.class,audioFormat);
+		TargetDataLine targetDataLine = null;
+		try
+		{
+			targetDataLine = (TargetDataLine)AudioSystem.getLine(info);
+			targetDataLine.open(audioFormat);
+		}
+		catch (LineUnavailableException e)
+		{
+			out("unable to get a recording line");
+			e.printStackTrace();
+			System.exit(1);
 		}
 	}
 }
