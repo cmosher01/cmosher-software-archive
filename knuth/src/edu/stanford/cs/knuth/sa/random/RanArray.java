@@ -64,8 +64,7 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
 
         seedx(x);
 
-        final long seed = modDiff(getSeed(),0);
-        fillx(x,seed);
+        fillx(x);
 
         for (int j = 0; j < LL; ++j)
         {
@@ -85,7 +84,7 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
     }
 
 	/**
-	 * Bootstrap the buffer
+	 * Bootstrap the buffer.
 	 * @param x buffer to initialize
 	 */
 	private void seedx(long[] x)
@@ -111,8 +110,9 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
 	 * @param x
 	 * @param ss
 	 */
-	private void fillx(long[] x, long ss)
+	private void fillx(long[] x)
 	{
+        long ss = modDiff(getSeed(),0);
 		int t = 69;
 		while (t > 0)
         {
