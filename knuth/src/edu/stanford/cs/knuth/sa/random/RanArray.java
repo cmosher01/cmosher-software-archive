@@ -212,6 +212,13 @@ public final class RanArray extends RNGDefault implements RandomNumberGenerator
         return x;
     }
 
+	/**
+	 * Calculates <code>x-y</code> modulo <code>2^32-1</code>.
+	 * Adapted from Knuth's original <code>mod_diff</code>.
+	 * @param x
+	 * @param y
+	 * @return
+	 */
     private static long modDiff(final long x, final long y)
     {
         return (x-y)&(MM-1);
