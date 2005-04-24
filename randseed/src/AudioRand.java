@@ -60,8 +60,11 @@ public class AudioRand
 			if (i % 99 == 0)
 			{
 				byte b = rb[i];
-				seed <<= 2;
-				seed |= (b & 0x88);
+				seed <<= 1;
+				if ((b & 1) != 0)
+				{
+					seed |= 1;
+				}
 			}
 		}
 		System.out.println(Long.toHexString(seed));
