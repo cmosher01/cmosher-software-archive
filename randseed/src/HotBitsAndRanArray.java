@@ -23,7 +23,7 @@ public class HotBitsAndRanArray
 		{
 			urlHotBits = new URL("http://www.fourmilab.ch/cgi-bin/uncgi/Hotbits?nbytes="+cSeedBytes+"&fmt=bin");
 		}
-		catch (MalformedURLException e)
+		catch (final MalformedURLException e)
 		{
 			throw new RuntimeException(e);
 		}
