@@ -47,7 +47,7 @@ public class ScreenRand
 			seed <<= 1;
 			if ((j & 0x400) == 0)
 			{
-				seed &= 1;
+				seed |= 1;
 			}
 		}
 		System.out.println(Long.toHexString(seed));
