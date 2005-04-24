@@ -10,6 +10,9 @@ import edu.stanford.cs.knuth.sa.random.RanArray;
  */
 public class HotBitsAndRanArray
 {
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args)
 	{
 		// RanArray only uses low 32 bits of seed:
