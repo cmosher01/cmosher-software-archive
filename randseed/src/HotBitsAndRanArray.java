@@ -46,7 +46,7 @@ public class HotBitsAndRanArray
 		{
 			inHotBits = urlHotBits.openStream();
 
-			for (int iUByte = 0; iUByte < rUByte.length; ++iUByte)
+			for (int iUByte = 0; iUByte < cSeedBytes; ++iUByte)
 			{
 				int uByte = inHotBits.read();
 				if (uByte < 0)
