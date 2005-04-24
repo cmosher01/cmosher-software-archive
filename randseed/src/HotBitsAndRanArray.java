@@ -47,7 +47,7 @@ public class HotBitsAndRanArray
 		}
 
 		int seed = 0;
-		for (int byt = 0; byt < cSeedBytes; ++byt)
+		for (int byt = cSeedBytes-1; byt >= 0; --byt)
 		{
 			seed <<= Byte.SIZE;
 			seed |= rUByte[byt];
