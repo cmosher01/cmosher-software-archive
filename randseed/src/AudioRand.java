@@ -49,7 +49,7 @@ public class AudioRand
 		targetDataLine = (TargetDataLine)AudioSystem.getLine(info);
 		targetDataLine.open(audioFormat);
 		targetDataLine.start();
-		byte[] rb = new byte[4*8*128];
+		byte[] rb = new byte[4*8*99];
 		targetDataLine.read(rb,0,rb.length);
 		targetDataLine.stop();
 		targetDataLine.close();
@@ -57,7 +57,7 @@ public class AudioRand
 		long seed = 0;
 		for (int i = 0; i < rb.length; i++)
 		{
-			if (i % 128 == 0)
+			if (i % 99 == 0)
 			{
 				byte b = rb[i];
 				seed <<= 2;
