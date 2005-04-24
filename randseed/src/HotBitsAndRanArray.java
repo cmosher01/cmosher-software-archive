@@ -75,7 +75,7 @@ public class HotBitsAndRanArray
 			seed <<= Byte.SIZE;
 			seed |= rUByte[iUByte];
 		}
-		seed = Integer.reverseBytes(seed);
-		return seed;
+
+		return Integer.reverseBytes(seed);
 	}
 }
