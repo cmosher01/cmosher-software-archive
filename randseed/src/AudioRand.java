@@ -48,5 +48,6 @@ public class AudioRand
 		TargetDataLine targetDataLine = null;
 		targetDataLine = (TargetDataLine)AudioSystem.getLine(info);
 		targetDataLine.open(audioFormat);
+		targetDataLine.close();
 	}
 }
