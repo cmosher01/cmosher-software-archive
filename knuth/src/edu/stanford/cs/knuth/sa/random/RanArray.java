@@ -199,6 +199,8 @@ public final class RanArray extends RNGDefault implements RandomNumberGenerator
             x[j] = modDiff(x[j-KK],x[j-LL]);
         }
 
+
+
         for (int j = 0; j < LL; ++j)
         {
             ranx[j] = modDiff(x[count+j-KK],x[count+j-LL]);
