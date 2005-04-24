@@ -45,16 +45,7 @@ public class AudioRand
     	AudioFormat audioFormat = new AudioFormat(AudioSystem.NOT_SPECIFIED,AudioSystem.NOT_SPECIFIED,AudioSystem.NOT_SPECIFIED,false,false);
 		DataLine.Info info = new DataLine.Info(TargetDataLine.class,audioFormat);
 		TargetDataLine targetDataLine = null;
-		try
-		{
-			targetDataLine = (TargetDataLine)AudioSystem.getLine(info);
-			targetDataLine.open(audioFormat);
-		}
-		catch (LineUnavailableException e)
-		{
-			out("unable to get a recording line");
-			e.printStackTrace();
-			System.exit(1);
-		}
+		targetDataLine = (TargetDataLine)AudioSystem.getLine(info);
+		targetDataLine.open(audioFormat);
 	}
 }
