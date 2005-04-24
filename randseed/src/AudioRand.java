@@ -59,7 +59,7 @@ public class AudioRand
 		{
 			byte b = rb[i];
 			seed <<= 1;
-			seed |= (b & 1);
+			seed |= (b & 0x80);
 		}
 		System.out.println(Long.toHexString(seed));
 	}
