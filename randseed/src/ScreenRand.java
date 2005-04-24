@@ -27,6 +27,10 @@ public class ScreenRand
 		BufferedImage image = robot.createScreenCapture(rect);
 		int c = 0;
 		int[] rb = new int[64];
+		for (int i = 0; i < rb.length; i++)
+		{
+			rb[i] = (int)System.currentTimeMillis();
+		}
 		for (int y = 0; y < image.getHeight(); ++y)
 		{
 			for (int x = 0; x < image.getWidth(); ++x)
@@ -40,7 +44,7 @@ public class ScreenRand
 				}
 			}
 		}
-		long seed = System.currentTimeMillis();
+		long seed = 0;
 		for (int i = 0; i < rb.length; i++)
 		{
 			int j = rb[i];
