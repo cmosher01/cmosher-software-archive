@@ -187,7 +187,7 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
             throw new IllegalArgumentException("n must be >= "+KK);
         }
 
-        long[] x = new long[n];
+        final long[] x = new long[n];
 
         for (int j = 0; j < KK; ++j)
         {
