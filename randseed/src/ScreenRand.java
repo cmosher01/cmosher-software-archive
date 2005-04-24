@@ -25,7 +25,7 @@ public class ScreenRand
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		Rectangle rect = new Rectangle(0, 0, d.width, d.height);
 		BufferedImage image = robot.createScreenCapture(rect);
-		int seed = 0xa55aa55a;
+		int seed = 0xFFFFFFFF;
 		for (int y = 0; y < image.getHeight(); ++y)
 		{
 			for (int x = 0; x < image.getWidth(); ++x)
