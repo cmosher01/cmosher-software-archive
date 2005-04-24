@@ -57,10 +57,10 @@ public class HotBitsAndRanArray
 		}
 
 		int seed = 0;
-		for (int byt = 0; byt < cSeedBytes; ++byt)
+		for (int iUByte = 0; iUByte < rUByte.length; ++iUByte)
 		{
 			seed <<= Byte.SIZE;
-			seed |= rUByte[byt];
+			seed |= rUByte[iUByte];
 		}
 		seed = Integer.reverseBytes(seed);
 
