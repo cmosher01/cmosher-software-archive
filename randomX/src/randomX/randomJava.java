@@ -1,5 +1,6 @@
 package randomX;
 
+import randomX;
 import randomX.*;
 import java.util.Random;
 
