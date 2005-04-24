@@ -64,9 +64,9 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
     {
         long[] x = new long[KK+KK-1];
 
-        seedArray(x);
+        seedArray(x,getSeed());
 
-        fillArray(x);
+        fillArray(x,getSeed());
 
         initFromArray(x);
 
@@ -98,9 +98,9 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
 	 * Bootstrap the buffer.
 	 * @param x array to initialize
 	 */
-	private void seedArray(final long[] x)
+	private static void seedArray(final long[] x, final long seed)
 	{
-		long ss = (getSeed()+2)&(MM-2);
+		long ss = (seed+2)&(MM-2);
 		for (int j = 0; j < KK; ++j)
         {
             x[j] = ss;
@@ -123,9 +123,9 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
 	 * @param x
 	 * @param ss
 	 */
-	private void fillArray(final long[] x)
+	private static void fillArray(final long[] x, final long seed)
 	{
-        long ss = modDiff(getSeed(),0);
+        long ss = modDiff(seed,0);
 		int t = 69;
 		while (t > 0)
         {
