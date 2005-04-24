@@ -22,12 +22,13 @@ public class HotBitsAndRanArray
 	{
 		final URL urlHotBits = new URL("http://www.fourmilab.ch/cgi-bin/uncgi/Hotbits?nbytes="+Integer.SIZE+"&fmt=bin");
 
+		final int[] rUByte = new int[Integer.SIZE];
+
 		InputStream inHotBits = null;
 		try
 		{
 			inHotBits = urlHotBits.openStream();
 
-			final int[] rUByte = new int[Integer.SIZE];
 			for (int iUByte = 0; iUByte < rUByte.length; ++iUByte)
 			{
 				final int uByte = inHotBits.read();
@@ -47,7 +48,7 @@ public class HotBitsAndRanArray
 		for (int byt = 0; byt < Integer.SIZE; ++byt)
 		{
 			seed <<= Byte.SIZE;
-			seed |= rUByte[byt]
+			seed |= rUByte[byt];
 		}
 		RanArray ra = new RanArray(0x12345678Fabcdef0L);
 		int r = ra.nextInt();
