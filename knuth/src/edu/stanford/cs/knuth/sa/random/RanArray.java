@@ -82,7 +82,7 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
 	/**
 	 * @param x
 	 */
-	private void initFromArray(long[] x)
+	private void initFromArray(final long[] x)
 	{
 		for (int j = 0; j < LL; ++j)
         {
