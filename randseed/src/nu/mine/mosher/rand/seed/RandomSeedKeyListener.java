@@ -33,7 +33,7 @@ public class RandomSeedKeyListener implements KeyListener
 	 */
 	public void keyPressed(final KeyEvent e)
 	{
-		saveLowByteOfTimeStamp(e);
+		putSeedBits(e);
 	}
 
 	/**
@@ -41,13 +41,13 @@ public class RandomSeedKeyListener implements KeyListener
 	 */
 	public void keyReleased(final KeyEvent e)
 	{
-		saveLowByteOfTimeStamp(e);
+		putSeedBits(e);
 	}
 
 	/**
 	 * @param e
 	 */
-	private void saveLowByteOfTimeStamp(KeyEvent e)
+	private void putSeedBits(KeyEvent e)
 	{
 		long t = e.getWhen();
 		t >>>= 2;
