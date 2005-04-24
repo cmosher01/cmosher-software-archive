@@ -177,36 +177,36 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
     /**
      * Create an array of <code>n</code> new random numbers.
      * Adapted from Knuth's original <code>ran_array</code> function.
-     * @param n count of numbers to generate; must be greater than or equal to 100
+     * @param count count of numbers to generate; must be greater than or equal to 100
      * @return array of random numbers (32-bits each)
      */
-    protected synchronized long[] generate(final int n)
+	private synchronized long[] generate(final int count)
     {
-        if (n < KK)
+        if (count < KK)
         {
             throw new IllegalArgumentException("n must be >= "+KK);
         }
 
-        final long[] x = new long[n];
+        final long[] x = new long[count];
 
         for (int j = 0; j < KK; ++j)
         {
             x[j] = ranx[j];
         }
 
-        for (int j = KK; j < n; ++j)
+        for (int j = KK; j < count; ++j)
         {
             x[j] = modDiff(x[j-KK],x[j-LL]);
         }
 
         for (int j = 0; j < LL; ++j)
         {
-            ranx[j] = modDiff(x[n+j-KK],x[n+j-LL]);
+            ranx[j] = modDiff(x[count+j-KK],x[count+j-LL]);
         }
 
         for (int j = LL; j < KK; ++j)
         {
-            ranx[j] = modDiff(x[n+j-KK],ranx[j-LL]);
+            ranx[j] = modDiff(x[count+j-KK],ranx[j-LL]);
         }
 
         return x;
