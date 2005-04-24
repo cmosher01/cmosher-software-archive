@@ -217,7 +217,7 @@ public final class RanArray extends RNGDefault implements RandomNumberGenerator
 	 * Adapted from Knuth's original <code>mod_diff</code>.
 	 * @param x
 	 * @param y
-	 * @return
+	 * @return <code>x-y</code> modulo <code>2^32</code>
 	 */
     private static long modDiff(final long x, final long y)
     {
