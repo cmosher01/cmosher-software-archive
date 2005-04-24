@@ -30,6 +30,8 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
     }
 
     /**
+     * This class only uses the low-order 32 bits
+     * of the given seed.
      * @param seed
      */
     public RanArray(final long seed)
