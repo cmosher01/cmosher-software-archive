@@ -25,7 +25,6 @@ public class ScreenRand
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		Rectangle rect = new Rectangle(0, 0, d.width, d.height);
 		BufferedImage image = robot.createScreenCapture(rect);
-		int seed = 0xFFFFFFFF;
 		int c = 0;
 		int[] rb = new int[64];
 		for (int y = 0; y < image.getHeight(); ++y)
@@ -41,10 +40,16 @@ public class ScreenRand
 				}
 			}
 		}
+		int seed = 0;
 		for (int i = 0; i < rb.length; i++)
 		{
 			int j = rb[i];
-			System.out.println(Integer.toHexString(j));
+			seed <<= 1;
+			if ((j & 0x400) == 0)
+			{
+				seed &= 1;
+			}
 		}
+		System.out.println(Long.toHexString(seed));
 	}
 }
