@@ -24,7 +24,7 @@ public class HotBitsAndRanArray
 	{
 		final URL urlHotBits = new URL("http://www.fourmilab.ch/cgi-bin/uncgi/Hotbits?nbytes="+cSeedBytes+"&fmt=bin");
 
-		final byte[] rUByte = new byte[cSeedBytes];
+		final int[] rUByte = new int[cSeedBytes];
 
 		InputStream inHotBits = null;
 		try
@@ -38,7 +38,7 @@ public class HotBitsAndRanArray
 				{
 					throw new IOException("Not enough bytes hot bits provided.");
 				}
-				rUByte[iUByte] = (byte)uByte;
+				rUByte[iUByte] = uByte;
 			}
 		}
 		finally
