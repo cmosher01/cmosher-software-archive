@@ -40,7 +40,7 @@ public class ScreenRand
 				}
 			}
 		}
-		int seed = 0;
+		long seed = 0;
 		for (int i = 0; i < rb.length; i++)
 		{
 			int j = rb[i];
