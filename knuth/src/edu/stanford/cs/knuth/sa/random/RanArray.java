@@ -55,17 +55,8 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
     {
         long[] x = new long[KK+KK-1];
 
-        long ss = (getSeed()+2)&(MM-2);
-        for (int j = 0; j < KK; ++j)
-        {
-            x[j] = ss;
-            ss <<= 1;
-            if (ss >= MM)
-            {
-                ss -= MM-2;
-            }
-        }
-        ++x[1];
+        long ss;
+        seedx(x);
 
 
         ss = modDiff(getSeed(),0);
@@ -84,6 +75,24 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
             generate(KK+KK-1);
         }
     }
+
+	/**
+	 * @param x
+	 */
+	private void seedx(long[] x)
+	{
+		long ss = (getSeed()+2)&(MM-2);
+		for (int j = 0; j < KK; ++j)
+        {
+            x[j] = ss;
+            ss <<= 1;
+            if (ss >= MM)
+            {
+                ss -= MM-2;
+            }
+        }
+		++x[1];
+	}
 
 	/**
 	 * @param x
