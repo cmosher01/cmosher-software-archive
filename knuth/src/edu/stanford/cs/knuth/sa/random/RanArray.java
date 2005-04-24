@@ -134,7 +134,7 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
 
     /**
      * Create an array of <code>n</code> new random numbers.
-     * @param n
+     * @param n count of numbers to generate; must be greater than or equal to 100
      * @return array of random numbers (32-bits each)
      */
     protected synchronized long[] generate(final int n)
