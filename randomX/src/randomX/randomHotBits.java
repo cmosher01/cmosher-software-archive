@@ -1,8 +1,8 @@
 package randomX;
 
-import java.net.*;
-import java.io.*;
-import randomX.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 /**
     Implementation of a <b>randomX</b>-compliant class which obtains
