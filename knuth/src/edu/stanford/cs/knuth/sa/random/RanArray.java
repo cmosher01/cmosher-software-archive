@@ -106,6 +106,8 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
                 ss -= MM-2;
             }
         }
+
+		/* make x[1] (and only x[1]) odd */
 		++x[1];
 	}
 
