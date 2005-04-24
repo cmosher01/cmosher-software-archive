@@ -54,5 +54,6 @@ public class HotBitsAndRanArray
 		RanArray ra = new RanArray(seed);
 		int r = ra.nextInt();
 		r = ra.nextInt();
+		int x = r; r = x;
 	}
 }
