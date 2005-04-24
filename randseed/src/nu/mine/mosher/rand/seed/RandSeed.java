@@ -49,6 +49,9 @@ public class RandSeed extends SwingGUI
 		{
 			Info info = rInfo[i];
 			System.out.println(info.toString());
+			System.out.println(info.getName());
+			System.out.println(info.getDescription());
+			System.out.println();
 		}
     }
 
