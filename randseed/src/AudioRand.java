@@ -31,7 +31,7 @@ public class AudioRand
 			{
 				Line line = targetLines[j];
 				Line.Info lineInfo = line.getLineInfo();
-				System.out.print("line "+(j+1)+": ");
+				System.out.print("line "+(j+1)+". ");
 				System.out.println(lineInfo.toString());
 			}
 
