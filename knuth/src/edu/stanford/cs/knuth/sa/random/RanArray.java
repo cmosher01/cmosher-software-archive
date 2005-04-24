@@ -69,8 +69,30 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
 
 
         ss = modDiff(getSeed(),0);
-        int t = 69;
-        while (t > 0)
+        fillx(x,ss);
+
+        for (int j = 0; j < LL; ++j)
+        {
+            ranx[j+KK-LL] = x[j];
+        }
+        for (int j = LL; j < KK; ++j)
+        {
+            ranx[j-LL] = x[j];
+        }
+        for (int j = 0; j < 10; ++j)
+        {
+            generate(KK+KK-1);
+        }
+    }
+
+	/**
+	 * @param x
+	 * @param ss
+	 */
+	private void fillx(long[] x, long ss)
+	{
+		int t = 69;
+		while (t > 0)
         {
             for (int j = KK-1; j > 0; --j)
             {
@@ -101,20 +123,7 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
                 --t;
             }
         }
-
-        for (int j = 0; j < LL; ++j)
-        {
-            ranx[j+KK-LL] = x[j];
-        }
-        for (int j = LL; j < KK; ++j)
-        {
-            ranx[j-LL] = x[j];
-        }
-        for (int j = 0; j < 10; ++j)
-        {
-            generate(KK+KK-1);
-        }
-    }
+	}
 
     protected synchronized long[] generate(final int n)
     {
