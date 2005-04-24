@@ -45,7 +45,7 @@ public class ScreenRand
 		{
 			int j = rb[i];
 			seed <<= 1;
-			if ((j & 0x400) == 0)
+			if ((j & 0x200) == 0)
 			{
 				seed |= 1;
 			}
