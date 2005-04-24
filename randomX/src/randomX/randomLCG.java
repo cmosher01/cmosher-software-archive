@@ -1,5 +1,6 @@
 package randomX;
 
+import randomX;
 import randomX.*;
 
 /**
@@ -14,7 +15,7 @@ import randomX.*;
 
     <p>
     <center>
-        <em>I<sub>j+1</sub></em> = (<em>I<sub>j</sub></em> × 1103515245 + 12345) & 0x7FFFFFFF
+        <em>I<sub>j+1</sub></em> = (<em>I<sub>j</sub></em> ï¿½ 1103515245 + 12345) & 0x7FFFFFFF
     </center>
 
     <p>
