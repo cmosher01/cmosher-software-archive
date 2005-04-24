@@ -68,14 +68,22 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
 
         initFromArray(x);
 
-        /*
+        primeThePump();
+    }
+
+	/**
+	 * 
+	 */
+	private void primeThePump()
+	{
+		/*
          * warm things up
          */
         for (int j = 0; j < 10; ++j)
         {
             generate(KK+KK-1);
         }
-    }
+	}
 
 	/**
 	 * @param x
