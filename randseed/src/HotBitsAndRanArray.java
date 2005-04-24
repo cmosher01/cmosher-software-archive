@@ -84,7 +84,7 @@ public class HotBitsAndRanArray
 
 	/**
 	 * @param inHotBits
-	 * @return
+	 * @return one random unsigned byte
 	 * @throws IOException
 	 */
 	private static int getOneByte(final InputStream inHotBits) throws IOException
