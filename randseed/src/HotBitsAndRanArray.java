@@ -59,11 +59,7 @@ public class HotBitsAndRanArray
 
 			for (int iUByte = 0; iUByte < cSeedBytes; ++iUByte)
 			{
-				int uByte = inHotBits.read();
-				if (uByte < 0)
-				{
-					throw new IOException("Not enough hot bits provided.");
-				}
+				int uByte = getOneByte(inHotBits);
 				uByte <<= Byte.SIZE*iUByte;
 				seed |= uByte;
 			}
@@ -84,5 +80,20 @@ public class HotBitsAndRanArray
 		}
 
 		return seed;
+	}
+
+	/**
+	 * @param inHotBits
+	 * @return
+	 * @throws IOException
+	 */
+	private static int getOneByte(InputStream inHotBits) throws IOException
+	{
+		int uByte = inHotBits.read();
+		if (uByte < 0)
+		{
+			throw new IOException("Not enough hot bits provided.");
+		}
+		return uByte;
 	}
 }
