@@ -36,7 +36,7 @@ public class HotBitsAndRanArray
 				final int uByte = inHotBits.read();
 				if (uByte < 0)
 				{
-					throw new IOException("Not enough bytes hot bits provided.");
+					throw new IOException("Not enough hot bits provided.");
 				}
 				rUByte[iUByte] = uByte;
 			}
