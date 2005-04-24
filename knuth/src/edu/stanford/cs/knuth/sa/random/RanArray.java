@@ -109,6 +109,7 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
 		int t = 69;
 		while (t > 0)
         {
+			/* "square" */
             for (int j = KK-1; j > 0; --j)
             {
                 x[j+j] = x[j];
@@ -120,7 +121,7 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
                 x[j-KK] = modDiff(x[j-KK],x[j]);
             }
     
-            if (ss%2 == 1)
+            if (ss%2 == 1) /* "multiply by z" */
             {
                 for (int j = KK-1; j >= 0; --j)
                 {
