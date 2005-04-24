@@ -1,3 +1,5 @@
+import edu.stanford.cs.knuth.sa.random.RanArray;
+
 /*
  * Created on Apr 24, 2005
  */
@@ -10,5 +12,8 @@ public class HotBitsAndRanArray
 {
 	public static void main(String[] args)
 	{
+		RanArray ra = new RanArray(0x123456789abcdef0L);
+		int r = ra.nextInt();
+		r = ra.nextInt();
 	}
 }
