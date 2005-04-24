@@ -1,8 +1,9 @@
+/*
+ * Created on April 24, 2005
+ */
+
 import edu.stanford.cs.knuth.sa.random.RanArray;
 
-/*
- * Created on Apr 24, 2005
- */
 /**
  * TODO
  *
