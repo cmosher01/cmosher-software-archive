@@ -1,9 +1,10 @@
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Mixer.Info;
-
 /*
  * Created on Apr 23, 2005
  */
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Mixer.Info;
+
 /**
  * TODO
  *
@@ -11,6 +12,9 @@ import javax.sound.sampled.Mixer.Info;
  */
 public class AudioRand
 {
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args)
 	{
     	Info[] rInfo = AudioSystem.getMixerInfo();
