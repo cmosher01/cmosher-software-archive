@@ -26,10 +26,10 @@ public class AudioRand
 			System.out.println(info.getDescription());
 
 			Mixer mixer = AudioSystem.getMixer(info);
-			Line[] targetLines = mixer.getTargetLines();
-			for (int j = 0; j < targetLines.length; j++)
+			Line[] lines = mixer.getSourceLines();
+			for (int j = 0; j < lines.length; j++)
 			{
-				Line line = targetLines[j];
+				Line line = lines[j];
 				Line.Info lineInfo = line.getLineInfo();
 				System.out.print("line "+(j+1)+". ");
 				System.out.println(lineInfo.toString());
