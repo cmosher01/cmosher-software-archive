@@ -15,7 +15,6 @@ public class HotBitsAndRanArray
 	 */
 	public static void main(String[] args)
 	{
-		// RanArray only uses low 32 bits of seed:
 		RanArray ra = new RanArray(0x12345678Fabcdef0L);
 		int r = ra.nextInt();
 		r = ra.nextInt();
