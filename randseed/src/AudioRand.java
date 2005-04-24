@@ -26,7 +26,7 @@ public class AudioRand
 			System.out.println(info.getDescription());
 
 			Mixer mixer = AudioSystem.getMixer(info);
-			Line[] lines = mixer.getSourceLines();
+			Line[] lines = mixer.getTargetLines();
 			for (int j = 0; j < lines.length; j++)
 			{
 				Line line = lines[j];
