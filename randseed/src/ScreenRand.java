@@ -26,12 +26,19 @@ public class ScreenRand
 		Rectangle rect = new Rectangle(0, 0, d.width, d.height);
 		BufferedImage image = robot.createScreenCapture(rect);
 		int seed = 0xFFFFFFFF;
+		int c = 0;
+		int[] rb = new int[64];
 		for (int y = 0; y < image.getHeight(); ++y)
 		{
 			for (int x = 0; x < image.getWidth(); ++x)
 			{
 				int rgb = image.getRGB(x,y);
-				seed ^= rgb;
+				rb[c] ^= rgb;
+				++c;
+				if (c >= rb.length)
+				{
+					c = 0;
+				}
 			}
 		}
 		System.out.println(Integer.toHexString(seed));
