@@ -127,6 +127,7 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
                 {
                     x[j+1] = x[j];
                 }
+                /* shift the buffer cyclically */
                 x[0] = x[KK];
                 x[LL] = modDiff(x[LL],x[KK]);
             }
