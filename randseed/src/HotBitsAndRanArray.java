@@ -14,15 +14,17 @@ import edu.stanford.cs.knuth.sa.random.RanArray;
  */
 public class HotBitsAndRanArray
 {
+	private static final int cSeedBytes = Integer.SIZE/Byte.SIZE;
+
 	/**
 	 * @param args
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException
 	{
-		final URL urlHotBits = new URL("http://www.fourmilab.ch/cgi-bin/uncgi/Hotbits?nbytes="+Integer.SIZE+"&fmt=bin");
+		final URL urlHotBits = new URL("http://www.fourmilab.ch/cgi-bin/uncgi/Hotbits?nbytes="+cSeedBytes+"&fmt=bin");
 
-		final int[] rUByte = new int[Integer.SIZE];
+		final int[] rUByte = new int[cSeedBytes];
 
 		InputStream inHotBits = null;
 		try
@@ -45,7 +47,7 @@ public class HotBitsAndRanArray
 		}
 
 		int seed = 0;
-		for (int byt = 0; byt < Integer.SIZE; ++byt)
+		for (int byt = 0; byt < cSeedBytes; ++byt)
 		{
 			seed <<= Byte.SIZE;
 			seed |= rUByte[byt];
