@@ -50,7 +50,8 @@ public class HotBitsAndRanArray
 			seed <<= Byte.SIZE;
 			seed |= rUByte[byt];
 		}
-		RanArray ra = new RanArray(0x12345678Fabcdef0L);
+
+		RanArray ra = new RanArray(seed);
 		int r = ra.nextInt();
 		r = ra.nextInt();
 	}
