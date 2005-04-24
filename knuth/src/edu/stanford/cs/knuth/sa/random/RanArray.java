@@ -88,7 +88,7 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
 
 	/**
 	 * Bootstrap the buffer.
-	 * @param x buffer to initialize
+	 * @param x array to initialize
 	 */
 	private void seedArray(final long[] x)
 	{
