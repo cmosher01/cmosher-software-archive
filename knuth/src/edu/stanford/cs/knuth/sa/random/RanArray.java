@@ -51,6 +51,10 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
         return (int)ranbuf[nextat++];
     }
 
+    /**
+     * Initializes this random number generator.
+     * Adapted from Knuth's original <code>ran_start</code> function.
+     */
     protected void init()
     {
         long[] x = new long[KK+KK-1];
