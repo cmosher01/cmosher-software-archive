@@ -109,6 +109,11 @@ extends Thread
 
 
 
+	/**
+	 * @param line
+	 * @param targetType
+	 * @param file
+	 */
 	public SimpleAudioRecorder(TargetDataLine line,
 				     AudioFileFormat.Type targetType,
 				     File file)
