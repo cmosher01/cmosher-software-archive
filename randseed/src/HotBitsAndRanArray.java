@@ -32,7 +32,7 @@ public class HotBitsAndRanArray
 	}
 
 	/**
-	 * @return
+	 * @return 32-bit random seed
 	 * @throws MalformedURLException
 	 * @throws IOException
 	 */
