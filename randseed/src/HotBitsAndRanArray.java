@@ -48,7 +48,7 @@ public class HotBitsAndRanArray
 	 * @throws MalformedURLException
 	 * @throws IOException
 	 */
-	private static int getIntFromHotBits() throws MalformedURLException, IOException
+	private static int getIntFromHotBits() throws IOException
 	{
 		int seed = 0;
 
