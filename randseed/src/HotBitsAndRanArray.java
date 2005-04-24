@@ -47,11 +47,12 @@ public class HotBitsAndRanArray
 		}
 
 		int seed = 0;
-		for (int byt = cSeedBytes-1; byt >= 0; --byt)
+		for (int byt = 0; byt < cSeedBytes; ++byt)
 		{
 			seed <<= Byte.SIZE;
 			seed |= rUByte[byt];
 		}
+		seed = Integer.reverseBytes(seed);
 
 		RanArray ra = new RanArray(seed);
 		int r = ra.nextInt();
