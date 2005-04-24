@@ -24,7 +24,7 @@ public class HotBitsAndRanArray
 	{
 		final URL urlHotBits = new URL("http://www.fourmilab.ch/cgi-bin/uncgi/Hotbits?nbytes="+cSeedBytes+"&fmt=bin");
 
-		final byte[] rUByte = new int[cSeedBytes];
+		final byte[] rUByte = new byte[cSeedBytes];
 
 		InputStream inHotBits = null;
 		try
