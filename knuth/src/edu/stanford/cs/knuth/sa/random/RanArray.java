@@ -39,6 +39,9 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
     }
 
     /**
+     * Gets the next random number in this generator's sequence.
+     * Adapted from Knuth's original <code>ran_arr_next</code> and
+     * <code>ran_arr_cycle</code>.
      * @return random number
      */
     public synchronized int nextInt()
