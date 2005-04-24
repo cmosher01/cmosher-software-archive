@@ -20,13 +20,14 @@ public class HotBitsAndRanArray
 	 */
 	public static void main(String[] args) throws IOException
 	{
-		final URL urlHotBits = new URL("http://www.fourmilab.ch/cgi-bin/uncgi/Hotbits?nbytes=4&fmt=bin");
+		final URL urlHotBits = new URL("http://www.fourmilab.ch/cgi-bin/uncgi/Hotbits?nbytes="+Integer.SIZE+"&fmt=bin");
 
 		InputStream inHotBits = null;
 		try
 		{
 			inHotBits = urlHotBits.openStream();
-			final int[] rUByte = new int[4];
+
+			final int[] rUByte = new int[Integer.SIZE];
 			for (int iUByte = 0; iUByte < rUByte.length; ++iUByte)
 			{
 				final int uByte = inHotBits.read();
@@ -42,6 +43,12 @@ public class HotBitsAndRanArray
 			inHotBits.close();
 		}
 
+		int seed = 0;
+		for (int byt = 0; byt < Integer.SIZE; ++byt)
+		{
+			seed <<= Byte.SIZE;
+			seed |= rUByte[byt]
+		}
 		RanArray ra = new RanArray(0x12345678Fabcdef0L);
 		int r = ra.nextInt();
 		r = ra.nextInt();
