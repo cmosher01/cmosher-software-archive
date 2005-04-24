@@ -67,4 +67,4 @@ public class randomHotBits extends randomX
 			throw new RuntimeException("Cannot obtain HotBits");
 		}
 	}
-};
+}
