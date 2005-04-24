@@ -38,8 +38,9 @@ public class HotBitsAndRanArray
 	 */
 	private static int getIntFromHotBits() throws MalformedURLException, IOException
 	{
+		int seed = 0;
+
 		final URL urlHotBits = new URL("http://www.fourmilab.ch/cgi-bin/uncgi/Hotbits?nbytes="+cSeedBytes+"&fmt=bin");
-		final int[] rUByte = new int[cSeedBytes];
 		InputStream inHotBits = null;
 		try
 		{
@@ -47,12 +48,13 @@ public class HotBitsAndRanArray
 
 			for (int iUByte = 0; iUByte < rUByte.length; ++iUByte)
 			{
-				final int uByte = inHotBits.read();
+				int uByte = inHotBits.read();
 				if (uByte < 0)
 				{
 					throw new IOException("Not enough hot bits provided.");
 				}
-				rUByte[iUByte] = uByte;
+				uByte <<= Byte.SIZE*iUByte;
+				seed |= uByte;
 			}
 		}
 		finally
@@ -69,13 +71,7 @@ public class HotBitsAndRanArray
 				}
 			}
 		}
-		int seed = 0;
-		for (int iUByte = 0; iUByte < rUByte.length; ++iUByte)
-		{
-			seed <<= Byte.SIZE;
-			seed |= rUByte[iUByte];
-		}
 
-		return Integer.reverseBytes(seed);
+		return seed;
 	}
 }
