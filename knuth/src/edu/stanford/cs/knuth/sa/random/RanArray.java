@@ -8,7 +8,7 @@ import nu.mine.mosher.random.RandomNumberGenerator;
  * 
  * @author Chris Mosher
  */
-public class RanArray extends RNGDefault implements RandomNumberGenerator
+public final class RanArray extends RNGDefault implements RandomNumberGenerator
 {
     private static final int KK = 100;
     private static final int LL = 37;
