@@ -135,11 +135,11 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
     
             if (ss%2 == 1) /* "multiply by z" */
             {
+                /* shift the buffer cyclically */
                 for (int j = KK-1; j >= 0; --j)
                 {
                     x[j+1] = x[j];
                 }
-                /* shift the buffer cyclically */
                 x[0] = x[KK];
                 x[LL] = modDiff(x[LL],x[KK]);
             }
