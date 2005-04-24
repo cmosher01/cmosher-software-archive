@@ -40,7 +40,7 @@ public class ScreenRand
 				}
 			}
 		}
-		long seed = 0;
+		long seed = System.currentTimeMillis();
 		for (int i = 0; i < rb.length; i++)
 		{
 			int j = rb[i];
