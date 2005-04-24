@@ -43,7 +43,17 @@ public class HotBitsAndRanArray
 		}
 		finally
 		{
-			inHotBits.close();
+			if (inHotBits != null)
+			{
+				try
+				{
+					inHotBits.close();
+				}
+				catch (final Throwable e)
+				{
+					e.printStackTrace();
+				}
+			}
 		}
 
 		int seed = 0;
