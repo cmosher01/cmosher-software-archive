@@ -55,12 +55,10 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
     {
         long[] x = new long[KK+KK-1];
 
-        long ss;
         seedx(x);
 
-
-        ss = modDiff(getSeed(),0);
-        fillx(x,ss);
+        final long seed = modDiff(getSeed(),0);
+        fillx(x,seed);
 
         for (int j = 0; j < LL; ++j)
         {
