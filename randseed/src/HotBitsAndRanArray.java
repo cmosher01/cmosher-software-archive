@@ -26,12 +26,15 @@ public class HotBitsAndRanArray
 		try
 		{
 			inHotBits = urlHotBits.openStream();
-			int ubyte;
-			int iUByte = 0;
 			int[] rUByte = new int[4];
-			while ((ubyte = inHotBits.read()) != -1)
+			for (int iUByte = 0; iUByte < rUByte.length; ++iUByte)
 			{
-				rUByte[iUByte++] = (byte)ubyte;
+				int uByte = inHotBits.read();
+				if (uByte < 0)
+				{
+					throw new IOException("Not enough bytes hot bits provided.");
+				}
+				rUByte[iUByte] = uByte;
 			}
 		}
 		finally
