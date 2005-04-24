@@ -16,6 +16,18 @@ import edu.stanford.cs.knuth.sa.random.RanArray;
 public class HotBitsAndRanArray
 {
 	private static final int cSeedBytes = Integer.SIZE/Byte.SIZE;
+	private static final URL urlHotBits;
+	static
+	{
+		try
+		{
+			urlHotBits = new URL("http://www.fourmilab.ch/cgi-bin/uncgi/Hotbits?nbytes="+cSeedBytes+"&fmt=bin");
+		}
+		catch (MalformedURLException e)
+		{
+			throw new RuntimeException(e);
+		}
+	}
 
 	/**
 	 * @param args
@@ -40,7 +52,6 @@ public class HotBitsAndRanArray
 	{
 		int seed = 0;
 
-		final URL urlHotBits = new URL("http://www.fourmilab.ch/cgi-bin/uncgi/Hotbits?nbytes="+cSeedBytes+"&fmt=bin");
 		InputStream inHotBits = null;
 		try
 		{
