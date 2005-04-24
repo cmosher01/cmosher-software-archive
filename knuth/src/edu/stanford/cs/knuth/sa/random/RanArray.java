@@ -62,8 +62,7 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
      */
     protected void init()
     {
-        long[] x = new long[KK+KK-1];
-
+        final long[] x = new long[KK+KK-1];
         seedArray(x,getSeed());
         fillArray(x,getSeed());
 
