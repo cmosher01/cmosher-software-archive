@@ -84,6 +84,9 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
 		for (int j = 0; j < KK; ++j)
         {
             x[j] = ss;
+            /*
+             * Cyclic shift 29 bits
+             */
             ss <<= 1;
             if (ss >= MM)
             {
