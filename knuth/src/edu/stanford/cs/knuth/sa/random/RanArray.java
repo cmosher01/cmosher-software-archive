@@ -68,6 +68,9 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
         {
             ranx[j-LL] = x[j];
         }
+        /*
+         * warm things up
+         */
         for (int j = 0; j < 10; ++j)
         {
             generate(KK+KK-1);
