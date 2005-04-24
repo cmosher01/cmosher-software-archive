@@ -14,8 +14,17 @@ public class RanArray extends RNGDefault implements RandomNumberGenerator
     private static final int LL = 37;
     private static final long MM = 1L<<32;
 
+    /**
+     * Seed-type values for this generator to get
+     * its random numbers from
+     */
     private long[] ranx = new long[KK];
 
+    /**
+     * Internal buffer of generated random numbers,
+     * which will be returned by <code>nextInt</code>
+     * to the caller.
+     */
     private long[] ranbuf;
     private int nextat = KK;
 
