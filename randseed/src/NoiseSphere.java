@@ -172,7 +172,7 @@ public class NoiseSphere extends Applet implements Runnable
 
 	public void run()
 	{
-		Random r = new Random();
+		Random r = new SecureRandom();
 		byte x[] = new byte[3];
 		Polar p = new Polar();
 		int n = 0;
