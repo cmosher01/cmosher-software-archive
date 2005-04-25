@@ -11,7 +11,7 @@ public class BoundedRandom
 	public static void main(String[] args)
 	{
 		int n = 5;
-		for (int rand = 0; rand < 0x80000000; ++rand)
+		for (int rand = 0; rand <= 0x7FFFFFF; ++rand)
 		{
 	       int bits, val;
 	        do {
