@@ -10,7 +10,7 @@ public class BoundedRandom
 {
 	public static void main(String[] args)
 	{
-		int n = 3;
+		int n = 5;
 		for (int rand = 0; rand < 8; ++rand)
 		{
 	       int bits, val;
