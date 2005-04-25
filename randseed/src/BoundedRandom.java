@@ -29,7 +29,7 @@ public class BoundedRandom
 					val = bits % n;
 					if (bits - val + (n - 1) < 0)
 					{
-						System.out.println("bits: "+bits+" val: "+val+" nr: "+nr);
+						System.out.println("bits: "+Integer.toHexString(bits)+" val: "+Integer.toHexString(val)+" nr: "+Integer.toHexString(nr));
 					}
 				}
 				while (bits - val + (n - 1) < 0);
