@@ -17,11 +17,15 @@ public class BoundedRandom
 	        do {
 	            bits = rand;
 	            val = bits % n;
-	            System.out.print("bits: "+bits);
-	            System.out.print(" val: "+val);
-	            System.out.print(" bits - val + (n-1): "+(bits - val + (n-1)));
+//	            System.out.print("bits: "+bits);
+//	            System.out.print(" val: "+val);
+//	            System.out.print(" bits - val + (n-1): "+(bits - val + (n-1)));
+	            if (bits - val + (n-1) < 0)
+	            {
+	            	System.out.println("bits: "+bits+" val: "+val);
+	            }
 	        } while(bits - val + (n-1) < 0);
-            System.out.println("  VAL: "+val);
+//            System.out.println("  VAL: "+val);
 		}
 	}
 }
