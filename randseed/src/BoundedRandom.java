@@ -29,7 +29,7 @@ public class BoundedRandom
 					val = bits % n;
 					if (bits - val + (n - 1) < 0)
 					{
-						System.out.println("met");
+						System.out.println("bits: "+bits+" val: "+val+" nr: "+nr);
 					}
 				}
 				while (bits - val + (n - 1) < 0);
