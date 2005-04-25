@@ -37,6 +37,10 @@ public class BoundedRandom
 			}
 			public int next(int bits)
 			{
+				if (nr == 0)
+				{
+					System.out.println("starting nr");
+				}
 				return nr++;
 			}
 		};
