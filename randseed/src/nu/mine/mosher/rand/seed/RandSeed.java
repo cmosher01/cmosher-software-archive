@@ -37,22 +37,13 @@ public class RandSeed extends SwingGUI
      */
     public static void main(String[] args) throws ApplicationAborting
     {
-//        ExceptionHandler eh = new ExceptionHandler();
-//        CommandLineArgHandler ch = new CommandLineArgHandler(args);
-//        SwingGUI gui = new RandSeed();
-//
-//        SwingApplication app = new SwingApplication(eh,ch,gui);
-//
-//        app.run();
-    	Info[] rInfo = AudioSystem.getMixerInfo();
-    	for (int i = 0; i < rInfo.length; i++)
-		{
-			Info info = rInfo[i];
-			System.out.println(info.toString());
-			System.out.println(info.getName());
-			System.out.println(info.getDescription());
-			System.out.println();
-		}
+        ExceptionHandler eh = new ExceptionHandler();
+        CommandLineArgHandler ch = new CommandLineArgHandler(args);
+        SwingGUI gui = new RandSeed();
+
+        SwingApplication app = new SwingApplication(eh,ch,gui);
+
+        app.run();
     }
 
     protected JPanel createContentPane()
