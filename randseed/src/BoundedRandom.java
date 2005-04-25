@@ -10,7 +10,7 @@ import java.util.Random;
  */
 public class BoundedRandom
 {
-	private static final int N = 5;
+	private static final int N = 20;
 	private static final int TESTS = 500000;
 	public static void main(String[] args)
 	{
