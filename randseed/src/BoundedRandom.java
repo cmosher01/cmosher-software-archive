@@ -14,7 +14,26 @@ public class BoundedRandom
 	private static final int TESTS = 2000000;
 	public static void main(String[] args)
 	{
-		Random rng = new Random();
+		Random rng = new Random()
+		{
+			public int nextInt(int n)
+			{
+				if ((n & -n) == n) // i.e., n is a power of 2
+					return (int)((n * (long)next(31)) >> 31);
+				int bits, val;
+				do
+				{
+					bits = next(31);
+					val = bits % n;
+					if (bits - val + (n - 1) < 0)
+					{
+						System.out.println("met");
+					}
+				}
+				while (bits - val + (n - 1) < 0);
+				return val;
+			}
+		};
 
 		int[] rc = new int[N];
 		for (int i = 0; i < rc.length; i++)
