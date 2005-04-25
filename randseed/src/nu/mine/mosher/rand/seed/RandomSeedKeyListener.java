@@ -50,6 +50,7 @@ public class RandomSeedKeyListener implements KeyListener
 	private void putSeedBits(KeyEvent e)
 	{
 		long t = e.getWhen();
+		showT(t);
 		t >>>= 2;
 		int lowByte = (int)(t & 0xFF);
 		synchronized (this)
@@ -59,6 +60,16 @@ public class RandomSeedKeyListener implements KeyListener
 	}
 
 
+
+	/**
+	 * @param t
+	 */
+	private void showT(long t)
+	{
+		t >>>= 4;
+		t &= 0xF;
+		System.out.println(Long.toHexString(t));
+	}
 
 	public void check()
 	{
