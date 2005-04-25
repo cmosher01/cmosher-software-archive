@@ -12,6 +12,8 @@ public class BoundedRandom
 {
 	private static final int N = 20;
 	private static final int TESTS = 2000000;
+	private static int nr = 0;
+
 	public static void main(String[] args)
 	{
 		Random rng = new Random()
@@ -33,6 +35,10 @@ public class BoundedRandom
 				while (bits - val + (n - 1) < 0);
 				return val;
 			}
+			public int next(int bits)
+			{
+				return nr++;
+			}
 		};
 
 		int[] rc = new int[N];
@@ -52,5 +58,6 @@ public class BoundedRandom
 			int j = rc[i];
 			System.out.println(i+": "+rc[i]);
 		}
+		System.out.println("nr: "+nr);
 	}
 }
