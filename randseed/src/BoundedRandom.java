@@ -11,7 +11,7 @@ import java.util.Random;
 public class BoundedRandom
 {
 	private static final int N = 5;
-	private static final int TESTS = 100;
+	private static final int TESTS = 10000;
 	public static void main(String[] args)
 	{
 		Random rng = new Random();
