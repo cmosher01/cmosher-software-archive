@@ -13,6 +13,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.MemoryImageSource;
+import java.security.SecureRandom;
 import java.util.Random;
 
 /**
