@@ -20,6 +20,7 @@ public class BoundedRandom
 	            System.out.print("bits: "+bits);
 	            System.out.print(" val: "+val);
 	            System.out.print(" bits - val + (n-1): "+(bits - val + (n-1)));
+	            System.out.println();
 	        } while(bits - val + (n-1) < 0);
 		}
 	}
