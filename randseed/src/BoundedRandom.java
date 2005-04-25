@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /*
  * Created on Apr 24, 2005
  */
@@ -8,24 +10,28 @@
  */
 public class BoundedRandom
 {
+	private static final int N = 5;
+	private static final int TESTS = 100;
 	public static void main(String[] args)
 	{
-		int n = 5;
-		for (int rand = 0; rand <= 0x7FFFFFF; ++rand)
+		Random rng = new Random();
+
+		int[] rc = new int[N];
+		for (int i = 0; i < rc.length; i++)
 		{
-	       int bits, val;
-	        do {
-	            bits = rand;
-	            val = bits % n;
-//	            System.out.print("bits: "+bits);
-//	            System.out.print(" val: "+val);
-//	            System.out.print(" bits - val + (n-1): "+(bits - val + (n-1)));
-	            if (bits - val + (n-1) < 0)
-	            {
-	            	System.out.println("bits: "+bits+" val: "+val);
-	            }
-	        } while(bits - val + (n-1) < 0);
-//            System.out.println("  VAL: "+val);
+			rc[i] = 0;
+		}
+
+		for (int test = 0; test < TESTS; ++test)
+		{
+			int rnd = rng.nextInt(N);
+			++rc[rnd];
+		}
+
+		for (int i = 0; i < rc.length; i++)
+		{
+			int j = rc[i];
+			System.out.println(i+": "+rc[i]);
 		}
 	}
 }
