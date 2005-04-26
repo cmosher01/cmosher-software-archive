@@ -66,6 +66,7 @@ public class RandomSeedKeyListener implements KeyListener
 	 */
 	private void showT(long t)
 	{
+		t = System.currentTimeMillis();
 		t >>>= 4;
 		t &= 0xF;
 		System.out.println(Long.toHexString(t));
