@@ -1,8 +1,7 @@
-import sun.security.provider.SeedGenerator;
-
 /*
- * Created on Apr 25, 2005
+ * Created on April 25, 2005
  */
+
 /**
  * TODO
  *
