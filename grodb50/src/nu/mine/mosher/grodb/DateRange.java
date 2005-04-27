@@ -17,7 +17,7 @@ public class DateRange implements Immutable, Serializable, Comparable
 	private final YMD latest;
 
 	/**
-	 * Idicates what the preferred display calendar is.
+	 * Indicates what the preferred display calendar is.
 	 * true==Julian, false==Gregorian
 	 * Note that this indicates only how to display the date(s),
 	 * not how they are stored. Dates are always stored using
