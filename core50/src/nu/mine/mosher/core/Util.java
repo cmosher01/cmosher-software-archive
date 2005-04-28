@@ -131,7 +131,7 @@ public final class Util
      * given array is empty.
      * @param rArgument
      */
-    public static void ignoreMainArguments(String[] rArgument)
+    public static void ignoreMainArguments(final String[] rArgument)
     {
         if (rArgument.length > 0)
         {
