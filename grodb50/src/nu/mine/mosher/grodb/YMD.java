@@ -2,7 +2,8 @@ package nu.mine.mosher.grodb;
 
 import java.io.Serializable;
 
-import nu.mine.mosher.core.Immutable;
+import nu.mine.mosher.util.Immutable;
+import nu.mine.mosher.util.Util;
 
 public class YMD implements Immutable, Serializable, Comparable
 {
@@ -15,11 +16,17 @@ public class YMD implements Immutable, Serializable, Comparable
 	private final int month;
 	private final int day;
 
-	private final int hash;
+	private transient int hash;
+	private transient int approx;
 
 	public YMD(int year)
 	{
 		this(year,0,0);
+	}
+
+	public YMD(int year, int month)
+	{
+		this(year,month,0);
 	}
 
 	public YMD(int year, int month, int day)
@@ -27,8 +34,6 @@ public class YMD implements Immutable, Serializable, Comparable
 		this.year = year;
 		this.month = month;
 		this.day = day;
-
-		this.hash = getHash();
 	}
 
     public int getDay()
@@ -46,6 +51,32 @@ public class YMD implements Immutable, Serializable, Comparable
         return year;
     }
 
+	// YYYYMMDD (never display this to the user!)
+	public int getApproxDay()
+	{
+		if (approx == 0)
+		{
+			updateApprox();
+		}
+		return approx;
+	}
+
+	private void updateApprox()
+	{
+		int m = month;
+		int d = day;
+		if (m == 0 && d == 0)
+		{
+			m = 7;
+			d = 3;
+		}
+		else if (d == 0)
+		{
+			d = 15;
+		}
+		approx = year*10000+m*100+d;
+	}
+
 	public boolean equals(Object o)
 	{
 		if (!(o instanceof YMD))
@@ -60,47 +91,30 @@ public class YMD implements Immutable, Serializable, Comparable
 			this.day == that.day;
 	}
 
-    public int hashCode()
+    public synchronized int hashCode()
     {
+    	if (hash == 0)
+    	{
+    		updateHash();
+    	}
     	return hash;
     }
 
-    private int getHash()
+    private void updateHash()
     {
-		int h = 17;
-
-		h *= 37;
-		h += year;
-		h *= 37;
-		h += month;
-		h *= 37;
-		h += day;
-
-		return h;
+		hash = 17;
+		hash *= 37;
+		hash += year;
+		hash *= 37;
+		hash += month;
+		hash *= 37;
+		hash += day;
     }
 
     public int compareTo(Object o)
     {
     	YMD that = (YMD)o;
-    	int d = 0;
-
-		if (d==0)
-		{
-	    	if (this.year < that.year) d = -1;
-	    	if (this.year > that.year) d = +1;
-		}
-    	if (d==0)
-    	{
-	    	if (this.month < that.month) d = -1;
-	    	if (this.month > that.month) d = +1;
-    	}
-		if (d==0)
-		{
-	    	if (this.day < that.day) d = -1;
-	    	if (this.day > that.day) d = +1;
-		}
-
-		return d;
+    	return Util.compare(this.getApproxDay(),that.getApproxDay());
     }
 
     public static YMD getMinimum()
