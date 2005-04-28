@@ -141,53 +141,45 @@ public final class Util
 
 
 
+//	public static<T> ArrayList<T> list(final Iterable<T> i)
+//    {
+//		final List<T> r = new ArrayList<T>();
+//        for (final T t : i)
+//        {
+//            r.add(t);
+//        }
+//        return (ArrayList<T>)r;
+//    }
+//
+//	/**
+//	 * Converts and <ocde>Iterable</code> into a <code>Set</code>.
+//	 * @param <T> class of elements in the <code>List</code>
+//	 * @param i <ocde>Iterable</code> to read all elements from
+//	 * @return the new <code>Set</code> of all elements from <code>i</code>
+//	 */
+//	public static<T> HashSet<T> set(final Iterable<T> i)
+//	{
+//		final Set<T> s = new HashSet<T>();
+//		for (final T t : i)
+//		{
+//			s.add(t);
+//		}
+//		return (HashSet<T>)s;
+//	}
+
+
+
 	/**
-	 * Converts and <ocde>Iterable</code> into a <code>List</code>.
+	 * Converts an <ocde>Iterable</code> into a <code>List</code>.
 	 * @param <T> class of elements in the <code>List</code>
-	 * @param i <ocde>Iterable</code> to read all elements from
-	 * @return the new <code>List</code> of all elements from <code>i</code>
+	 * @param i <code>Iterable</code> to read all elements from
+	 * @return a new <code>ArrayList</code> of all elements from <code>i</code>
 	 */
-	public static<T> ArrayList<T> list(final Iterable<T> i)
-    {
-		final List<T> r = new ArrayList<T>();
-        for (final T t : i)
-        {
-            r.add(t);
-        }
-        return (ArrayList<T>)r;
-    }
-
-	/**
-	 * Converts and <ocde>Iterable</code> into a <code>Set</code>.
-	 * @param <T> class of elements in the <code>List</code>
-	 * @param i <ocde>Iterable</code> to read all elements from
-	 * @return the new <code>Set</code> of all elements from <code>i</code>
-	 */
-	public static<T> HashSet<T> set(final Iterable<T> i)
-	{
-		final Set<T> s = new HashSet<T>();
-		for (final T t : i)
-		{
-			s.add(t);
-		}
-		return (HashSet<T>)s;
-	}
-
-
-
-    /**
-     * Creates a <code>List</code> containing all 
-     * items (of type <code>T</code>) from the given <code>Iterable</code>
-     * object.
-     * @param <T>
-     * @param i
-     * @return a new <code>ArrayList</code>
-     */
     public static<T> ArrayList<T> list(Iterable<T> i)
     {
-        ArrayList<T> r = new ArrayList<T>();
+        final List<T> r = new ArrayList<T>();
         addAll(i.iterator(),r);
-        return r;
+        return (ArrayList<T>)r;
     }
 
     /**
@@ -197,11 +189,15 @@ public final class Util
      * @param i the <code>Iterator</code> to get items from
      * @param collection the <code>Collection</code> to add the items to
      */
-    public static<T> void addAll(Iterator<T> i, Collection<T> collection)
+    public static<T> void addAll(final Iterator<T> i, final Collection<T> collection)
     {
         while (i.hasNext())
         {
             collection.add(i.next());
+        }
+        for (final T t : i)
+        {
+        	collection.add(t);
         }
     }
 
