@@ -20,6 +20,14 @@ public final class Util
 		assert false : "can't instantiate";
 	}
 
+
+
+
+
+
+
+
+
 	/**
 	 * Documents an <code>Object</code> as being unused. Calling
 	 * this method can be useful to prevent certain
@@ -29,7 +37,8 @@ public final class Util
 	 */
 	public static<T> void unused(T x)
 	{
-		final T unused = x; x = unused;
+		final T unused = x;
+		x = unused;
 	}
 
     /**
@@ -38,7 +47,7 @@ public final class Util
      */
     public static void unused(boolean primitiveBoolean)
     {
-        boolean x = primitiveBoolean;
+    	final boolean x = primitiveBoolean;
         primitiveBoolean = x;
     }
 
@@ -48,7 +57,7 @@ public final class Util
      */
     public static void unused(byte primitiveByte)
     {
-        byte x = primitiveByte;
+    	final byte x = primitiveByte;
         primitiveByte = x;
     }
 
@@ -58,7 +67,7 @@ public final class Util
      */
     public static void unused(short primitiveShort)
     {
-        short x = primitiveShort;
+    	final short x = primitiveShort;
         primitiveShort = x;
     }
 
@@ -68,7 +77,7 @@ public final class Util
      */
     public static void unused(int primitiveInt)
     {
-        int x = primitiveInt;
+    	final int x = primitiveInt;
         primitiveInt = x;
     }
 
@@ -78,7 +87,7 @@ public final class Util
      */
     public static void unused(long primitiveLong)
     {
-        long x = primitiveLong;
+    	final long x = primitiveLong;
         primitiveLong = x;
     }
 
@@ -88,7 +97,7 @@ public final class Util
      */
     public static void unused(char primitiveChar)
     {
-        char x = primitiveChar;
+    	final char x = primitiveChar;
         primitiveChar = x;
     }
 
@@ -98,7 +107,7 @@ public final class Util
      */
     public static void unused(float primitiveFloat)
     {
-        float x = primitiveFloat;
+    	final float x = primitiveFloat;
         primitiveFloat = x;
     }
 
@@ -108,9 +117,13 @@ public final class Util
      */
     public static void unused(double primitiveDouble)
     {
-        double x = primitiveDouble;
+        final double x = primitiveDouble;
         primitiveDouble = x;
     }
+
+
+
+
 
 
     /**
