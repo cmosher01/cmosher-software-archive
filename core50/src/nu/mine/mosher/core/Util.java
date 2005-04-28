@@ -32,6 +32,85 @@ public final class Util
 		final T unused = x; x = unused;
 	}
 
+    /**
+     * Documents a <code>boolean</code> variable as being unused.
+     * @param primitiveBoolean
+     */
+    public static void unused(boolean primitiveBoolean)
+    {
+        boolean x = primitiveBoolean;
+        primitiveBoolean = x;
+    }
+
+    /**
+     * Documents a <code>byte</code> variable as being unused.
+     * @param primitiveByte
+     */
+    public static void unused(byte primitiveByte)
+    {
+        byte x = primitiveByte;
+        primitiveByte = x;
+    }
+
+    /**
+     * Documents a <code>short</code> variable as being unused.
+     * @param primitiveShort
+     */
+    public static void unused(short primitiveShort)
+    {
+        short x = primitiveShort;
+        primitiveShort = x;
+    }
+
+    /**
+     * Documents a <code>int</code> variable as being unused.
+     * @param primitiveInt
+     */
+    public static void unused(int primitiveInt)
+    {
+        int x = primitiveInt;
+        primitiveInt = x;
+    }
+
+    /**
+     * Documents a <code>long</code> variable as being unused.
+     * @param primitiveLong
+     */
+    public static void unused(long primitiveLong)
+    {
+        long x = primitiveLong;
+        primitiveLong = x;
+    }
+
+    /**
+     * Documents a <code>char</code> variable as being unused.
+     * @param primitiveChar
+     */
+    public static void unused(char primitiveChar)
+    {
+        char x = primitiveChar;
+        primitiveChar = x;
+    }
+
+    /**
+     * Documents a <code>float</code> variable as being unused.
+     * @param primitiveFloat
+     */
+    public static void unused(float primitiveFloat)
+    {
+        float x = primitiveFloat;
+        primitiveFloat = x;
+    }
+
+    /**
+     * Documents a <code>double</code> variable as being unused.
+     * @param primitiveDouble
+     */
+    public static void unused(double primitiveDouble)
+    {
+        double x = primitiveDouble;
+        primitiveDouble = x;
+    }
 
 
     /**
