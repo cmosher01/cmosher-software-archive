@@ -21,7 +21,7 @@ public final class Util
 	}
 
 	/**
-	 * Documents a variable as being unused. Calling
+	 * Documents an <code>Object</code> as being unused. Calling
 	 * this method can be useful to prevent certain
 	 * compiler warnings regarding unused variables.
 	 * @param <T> class of object
