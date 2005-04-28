@@ -178,7 +178,7 @@ public final class Util
     public static<T> ArrayList<T> list(Iterable<T> i)
     {
         final List<T> r = new ArrayList<T>();
-        addAll(i.iterator(),r);
+        addAll(i,r);
         return (ArrayList<T>)r;
     }
 
@@ -186,15 +186,11 @@ public final class Util
      * Adds all the items from the given <code>Iterator</code> to the
      * given <code>Collection</code>.
      * @param <T> type of item in each container
-     * @param i the <code>Iterator</code> to get items from
+     * @param i the <code>Iterable</code> to get items from
      * @param collection the <code>Collection</code> to add the items to
      */
-    public static<T> void addAll(final Iterator<T> i, final Collection<T> collection)
+    public static<T> void addAll(final Iterable<T> i, final Collection<T> collection)
     {
-        while (i.hasNext())
-        {
-            collection.add(i.next());
-        }
         for (final T t : i)
         {
         	collection.add(t);
