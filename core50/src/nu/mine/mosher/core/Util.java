@@ -20,98 +20,13 @@ public final class Util
 		assert false : "can't instantiate";
 	}
 
-//	/**
-//	 * Documents an Object as being unused.
-//	 * 
-//	 * @param o
-//	 *        the object that is (documented as being) not used
-//	 */
-//	public static void unused(Object o)
-//	{
-//		final Object x = o;
-//		o = x;
-//	}
-//
-//	/**
-//	 * Documents an integral type as being unused.
-//	 * @param i
-//	 */
-//	public static void unused(long i)
-//	{
-//		final long x = i;
-//		i = x;
-//	}
-//
-//	/**
-//	 * Documents a real type as being unused.
-//	 * @param i
-//	 */
-//	public static void unused(double i)
-//	{
-//		final double x = i;
-//		i = x;
-//	}
-//
-//
-//
-//	/**
-//	 * Documents an Object as being unused.
-//	 * @param o the object that is (documented as being) not used
-//	 */
-//	public static void unused(Object o)
-//	{
-//		Object x = o;
-//		o = x;
-//	}
-//
-//    public static void unused(boolean primitiveBoolean)
-//    {
-//        boolean x = primitiveBoolean;
-//        primitiveBoolean = x;
-//    }
-//
-//    public static void unused(byte primitiveByte)
-//    {
-//        byte x = primitiveByte;
-//        primitiveByte = x;
-//    }
-//
-//    public static void unused(short primitiveShort)
-//    {
-//        short x = primitiveShort;
-//        primitiveShort = x;
-//    }
-//
-//    public static void unused(int primitiveInt)
-//    {
-//        int x = primitiveInt;
-//        primitiveInt = x;
-//    }
-//
-//    public static void unused(long primitiveLong)
-//    {
-//        long x = primitiveLong;
-//        primitiveLong = x;
-//    }
-//
-//    public static void unused(char primitiveChar)
-//    {
-//        char x = primitiveChar;
-//        primitiveChar = x;
-//    }
-//
-//    public static void unused(float primitiveFloat)
-//    {
-//        float x = primitiveFloat;
-//        primitiveFloat = x;
-//    }
-//
-//    public static void unused(double primitiveDouble)
-//    {
-//        double x = primitiveDouble;
-//        primitiveDouble = x;
-//    }
-
+	/**
+	 * Documents a variable as being unused. Calling
+	 * this method can be useful to prevent certain
+	 * compiler warnings regarding unused variables.
+	 * @param <T> class of object
+	 * @param x object
+	 */
 	public static<T> void unused(T x)
 	{
 		final T unused = x; x = unused;
