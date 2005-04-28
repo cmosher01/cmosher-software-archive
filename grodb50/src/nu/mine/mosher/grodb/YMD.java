@@ -2,8 +2,8 @@ package nu.mine.mosher.grodb;
 
 import java.io.Serializable;
 
-import nu.mine.mosher.util.Immutable;
-import nu.mine.mosher.util.Util;
+import nu.mine.mosher.core.Immutable;
+import nu.mine.mosher.core.Util;
 
 public class YMD implements Immutable, Serializable, Comparable
 {
