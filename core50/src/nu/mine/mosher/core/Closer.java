@@ -47,7 +47,7 @@ public final class Closer
 	{
 		try
 		{
-			Class cl = obj.getClass();
+			final Class cl = obj.getClass();
 			Method methodClose = mClasses.get(cl);
 			if (methodClose == null)
 			{
