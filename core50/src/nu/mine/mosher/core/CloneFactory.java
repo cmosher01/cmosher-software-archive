@@ -73,6 +73,7 @@ public class CloneFactory<T extends Cloneable>
 //    }
 
 	private final T cloneableSource;
+    private Method methodClone;
 
 	/**
 	 * @param cloneableSource
@@ -100,8 +101,11 @@ public class CloneFactory<T extends Cloneable>
 
 	protected Method getCloneMethod() throws SecurityException, NoSuchMethodException
 	{
-		final Method methodClone = this.cloneableSource.getClass().getMethod("clone");
-		methodClone.setAccessible(true);
+		if (this.methodClone == null)
+		{
+			this.methodClone = this.cloneableSource.getClass().getMethod("clone");
+			this.methodClone.setAccessible(true);
+		}
 	    return methodClone;
 	}
 
