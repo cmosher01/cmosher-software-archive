@@ -100,7 +100,7 @@ public final class Cloner<T extends Cloneable>
 
 	protected Method getCloneMethod() throws SecurityException, NoSuchMethodException
 	{
-		final Class cl = this.cloneableSource.getClass();
+		final Class<? extends Object> cl = this.cloneableSource.getClass();
 		final Method methodClone = cl.getMethod("clone");
 		methodClone.setAccessible(true);
 	    return methodClone;
