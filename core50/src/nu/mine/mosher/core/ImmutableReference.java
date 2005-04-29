@@ -21,11 +21,11 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
      */
     public ImmutableReference(final T ref) throws CloningException
     {
-    	this.cloneFactory = new CloneFactory<T>(ref);
         if (ref == null)
         {
             throw new IllegalArgumentException();
         }
+    	this.cloneFactory = new CloneFactory<T>(ref);
         this.ref = this.cloneFactory.createClone();
     }
 
