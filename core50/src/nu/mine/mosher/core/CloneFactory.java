@@ -74,11 +74,18 @@ public final class Cloner<T extends Cloneable>
 
 	private final T cloneableSource;
 
+	/**
+	 * @param cloneableSource
+	 */
 	public Cloner(final T cloneableSource)
 	{
 		this.cloneableSource = cloneableSource;
 	}
 
+	/**
+	 * @return
+	 * @throws CloningException
+	 */
 	public T createClone() throws CloningException
 	{
 		try
