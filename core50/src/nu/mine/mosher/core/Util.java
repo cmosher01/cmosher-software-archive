@@ -246,7 +246,7 @@ public final class Util
 	/**
 	 * @param x0
 	 * @param x1
-	 * @return
+     * @return -1 if x0 &lt; x1, +1 if x0 &gt; x1, else 0
 	 */
 	public static int compare(short x0, short x1)
 	{
@@ -255,7 +255,7 @@ public final class Util
 	/**
 	 * @param x0
 	 * @param x1
-	 * @return
+     * @return -1 if x0 &lt; x1, +1 if x0 &gt; x1, else 0
 	 */
 	public static int compare(int x0, int x1)
 	{
@@ -264,7 +264,7 @@ public final class Util
 	/**
 	 * @param x0
 	 * @param x1
-	 * @return
+     * @return -1 if x0 &lt; x1, +1 if x0 &gt; x1, else 0
 	 */
 	public static int compare(long x0, long x1)
 	{
@@ -273,7 +273,7 @@ public final class Util
 	/**
 	 * @param x0
 	 * @param x1
-	 * @return
+     * @return -1 if x0 &lt; x1, +1 if x0 &gt; x1, else 0
 	 */
 	public static int compare(char x0, char x1)
 	{
@@ -281,6 +281,14 @@ public final class Util
 	}
 
 
+
+
+
+	/**
+	 * @param x0
+	 * @param x1
+	 * @return the minimum of x0 or x1
+	 */
 	public Comparable min(Comparable x0, Comparable x1)
 	{
 		int cmp = x0.compareTo(x1);
