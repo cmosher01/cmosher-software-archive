@@ -90,11 +90,11 @@ public final class Cloner<T extends Cloneable, Object>
         {
             return clone(cloneable,getCloneMethod(cloneable));
         }
-        catch (CloneNotSupportedException e)
+        catch (final CloneNotSupportedException e)
         {
             throw e;
         }
-        catch (Throwable cause)
+        catch (final Throwable cause)
         {
             CloneNotSupportedException ex;
             ex = new CloneNotSupportedException();
