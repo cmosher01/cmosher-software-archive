@@ -77,10 +77,20 @@ public class CloneFactory<T extends Cloneable>
 
 	/**
 	 * @param cloneableSource
+	 * @throws CloningException 
 	 */
-	public CloneFactory(final T cloneableSource)
+	public CloneFactory(final T cloneableSource) throws CloningException
 	{
-		this.cloneableSource = cloneableSource;
+		try
+		{
+			this.cloneableSource = cloneableSource;
+			this.methodClone = this.cloneableSource.getClass().getMethod("clone");
+			this.methodClone.setAccessible(true);
+		}
+		catch (final Throwable e)
+		{
+			throw new CloningException(e);
+		}
 	}
 
 	/**
@@ -99,15 +109,13 @@ public class CloneFactory<T extends Cloneable>
 		}
 	}
 
-	protected Method getCloneMethod() throws SecurityException, NoSuchMethodException
-	{
-		if (this.methodClone == null)
-		{
-			this.methodClone = this.cloneableSource.getClass().getMethod("clone");
-			this.methodClone.setAccessible(true);
-		}
-	    return methodClone;
-	}
+//	protected Method getCloneMethod() throws SecurityException, NoSuchMethodException
+//	{
+//		if (this.methodClone == null)
+//		{
+//		}
+//	    return methodClone;
+//	}
 
 	protected T tryCreateClone(final Method methodClone) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException
 	{
