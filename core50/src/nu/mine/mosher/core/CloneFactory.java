@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
  */
 public class CloneFactory<T extends Cloneable>
 {
-	private T clone;
+	private final T clone;
     private final Method methodClone;
 
 	/**
