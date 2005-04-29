@@ -32,7 +32,7 @@ public final class Closer
      * 
      * @param obj the Object whose close() method is to be called.
      */
-    public static void close(Object obj)
+    public static void close(final Object obj)
     {
         try
         {
