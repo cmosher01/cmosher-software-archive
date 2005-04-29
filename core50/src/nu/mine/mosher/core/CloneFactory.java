@@ -79,6 +79,34 @@ public final class Cloner<T extends Cloneable>
 		this.cloneableSource = cloneableSource;
 	}
 
+	public T createClone() throws CloningException
+	{
+		try
+		{
+			return tryCreateClone(getCloneMethod());
+		}
+		catch (IllegalArgumentException e)
+		{
+			e.printStackTrace();
+		}
+		catch (SecurityException e)
+		{
+			e.printStackTrace();
+		}
+		catch (IllegalAccessException e)
+		{
+			e.printStackTrace();
+		}
+		catch (InvocationTargetException e)
+		{
+			e.printStackTrace();
+		}
+		catch (NoSuchMethodException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
 	protected Method getCloneMethod() throws SecurityException, NoSuchMethodException
 	{
 		final Class cl = this.cloneableSource.getClass();
