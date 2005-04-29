@@ -104,13 +104,13 @@ public final class Cloner
         }
     }
 
-    static<T extends Cloneable> T clone(final T cloneableObject, final Method methodClone)
+    static<T extends Cloneable> T clone(final T cloneable, final Method methodClone)
         throws IllegalArgumentException, IllegalAccessException, CloneNotSupportedException, InvocationTargetException
     {
         T clon;
         try
         {
-            clon = (T)methodClone.invoke(cloneableObject,(Object[])null);
+            clon = (T)methodClone.invoke(cloneable,(Object[])null);
         }
         catch (final InvocationTargetException e)
         {
@@ -119,10 +119,7 @@ public final class Cloner
             {
                 throw (CloneNotSupportedException)cause;
             }
-            else
-            {
-                throw e;
-            }
+            throw e;
         }
         return clon;
     }
