@@ -46,7 +46,7 @@ public final class Cloner<T extends Cloneable>
         }
     }
 
-    static<T extends Cloneable, Object> T clone(final T cloneable, final Method methodClone)
+    static<T extends Cloneable> T clone(final T cloneable, final Method methodClone)
         throws IllegalArgumentException, IllegalAccessException, CloneNotSupportedException, InvocationTargetException
     {
         T clon;
