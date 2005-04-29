@@ -46,10 +46,10 @@ public final class Closer
 			Method methodClose = mClasses.get(cl);
 			if (methodClose == null)
 			{
-				methodClose = cl.getMethod("close",(Class[])null);
+				methodClose = cl.getMethod("close");
 				mClasses.put(cl,methodClose);
 			}
-			methodClose.invoke(obj,(Object[])null);
+			methodClose.invoke(obj);
 		}
 		catch (Throwable ignore)
 		{
