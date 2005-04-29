@@ -109,7 +109,7 @@ public final class Cloner<T extends Cloneable>
         T clon;
         try
         {
-            clon = (T)methodClone.invoke(cloneable,(Object[])null);
+            clon = (T)methodClone.invoke(cloneable,(Object)null);
         }
         catch (final InvocationTargetException e)
         {
