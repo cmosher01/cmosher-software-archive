@@ -55,9 +55,9 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
      * @return
      * @throws CloneNotSupportedException
      */
-    public Object clone() throws CloneNotSupportedException
+    public T clone() throws CloneNotSupportedException
     {
-        return super.clone();
+        return (T)super.clone();
     }
 
     /**
