@@ -84,7 +84,7 @@ public final class Cloner<T extends Cloneable>
 	 * @return clone of <code>cloneableObject</code>
 	 * @throws CloneNotSupportedException
 	 */
-    public static<T extends Cloneable> T cloneObject(final T cloneable) throws CloneNotSupportedException
+    public static<T extends Cloneable, Object> T cloneObject(final T cloneable) throws CloneNotSupportedException
     {
         try
         {
@@ -103,7 +103,7 @@ public final class Cloner<T extends Cloneable>
         }
     }
 
-    static<T extends Cloneable> T clone(final T cloneable, final Method methodClone)
+    static<T extends Cloneable, Object> T clone(final T cloneable, final Method methodClone)
         throws IllegalArgumentException, IllegalAccessException, CloneNotSupportedException, InvocationTargetException
     {
         T clon;
@@ -123,7 +123,7 @@ public final class Cloner<T extends Cloneable>
         return clon;
     }
 
-    static<T extends Cloneable> Method getCloneMethod(final T x) throws SecurityException, NoSuchMethodException
+    static<T extends Cloneable, Object> Method getCloneMethod(final T x) throws SecurityException, NoSuchMethodException
     {
 		final Class cl = x.getClass();
         final Method methodClone = cl.getMethod("clone",(Class[])null);
