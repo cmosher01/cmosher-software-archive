@@ -13,6 +13,10 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
     private transient String str;
     private transient int hash;
 
+    /**
+     * @param ref
+     * @throws CloneNotSupportedException
+     */
     public ImmutableReference(T ref) throws CloneNotSupportedException
     {
         if (ref == null)
@@ -38,38 +42,64 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
         }
     }
 
+    /**
+     * @return
+     * @throws CloneNotSupportedException
+     */
     public T object() throws CloneNotSupportedException
     {
         return CloneFactory.cloneObject(this.ref);
     }
 
+    /**
+     * @return
+     * @throws CloneNotSupportedException
+     */
     public Object clone() throws CloneNotSupportedException
     {
         return super.clone();
     }
 
+    /**
+     * @return
+     */
     public String toString()
     {
         buildString();
         return this.str;
     }
 
+    /**
+     * @param o
+     * @return
+     */
     public boolean equals(Object o)
     {
         return this.ref.equals(o);
     }
 
+    /**
+     * @return
+     */
     public int hashCode()
     {
         buildHashCode();
         return this.hash;
     }
 
+    /**
+     * @param o
+     * @return
+     */
     public int compareTo(T o)
     {
         return ((Comparable<T>)this.ref).compareTo(o);
     }
 
+    /**
+     * @param o
+     * @return
+     */
     public int compareTo(ImmutableReference<T> o)
 	{
     	return compareTo(o.ref);
