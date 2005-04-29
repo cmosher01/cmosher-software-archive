@@ -87,20 +87,8 @@ public final class Cloner<T extends Cloneable>
 	    return methodClone;
 	}
 
-	protected T tryCreateClone(final Method methodClone) throws IllegalArgumentException, IllegalAccessException, CloneNotSupportedException, InvocationTargetException
+	protected T tryCreateClone(final Method methodClone) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException
 	{
-	  try
-	  {
-	      return (T)methodClone.invoke(this.cloneableSource);
-	  }
-	  catch (final InvocationTargetException e)
-	  {
-	      final Throwable cause = e.getCause();
-	      if (cause instanceof CloneNotSupportedException)
-	      {
-	          throw (CloneNotSupportedException)cause;
-	      }
-	      throw e;
-	  }
+		return (T)methodClone.invoke(this.cloneableSource);
 	}
 }
