@@ -285,6 +285,7 @@ public final class Util
 
 
 	/**
+	 * @param <T> class of objects to compare
 	 * @param x0
 	 * @param x1
 	 * @return the minimum of x0 or x1
@@ -296,10 +297,7 @@ public final class Util
 		{
 			return x0;
 		}
-		else
-		{
-			return x1;
-		}
+		return x1;
 	}
 	public static<T> Comparable max(Comparable x0, Comparable x1)
 	{
