@@ -33,7 +33,7 @@ public final class Closer
         {
             obj.getClass().getMethod("close").invoke(obj);
         }
-        catch (Throwable ignore)
+        catch (final Throwable ignore)
         {
             ignore.printStackTrace();
         }
