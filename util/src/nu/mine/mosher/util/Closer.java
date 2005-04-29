@@ -1,10 +1,15 @@
 package nu.mine.mosher.util;
 
+/**
+ * TODO
+ *
+ * @author Chris Mosher
+ */
 public final class Closer
 {
     private Closer() throws UnsupportedOperationException
     {
-        throw new UnsupportedOperationException();
+        assert false : "can't instantiate";
     }
 
     /**
