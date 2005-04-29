@@ -126,7 +126,7 @@ public final class Cloner<T extends Cloneable>
     static<T extends Cloneable> Method getCloneMethod(final T x) throws SecurityException, NoSuchMethodException
     {
 		final Class cl = x.getClass();
-        final Method methodClone = cl.getMethod("clone",(Class[])null);
+        final Method methodClone = cl.getMethod("clone");
         methodClone.setAccessible(true);
         return methodClone;
     }
