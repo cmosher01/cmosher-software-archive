@@ -299,16 +299,20 @@ public final class Util
 		}
 		return x1;
 	}
-	public static<T> Comparable max(Comparable x0, Comparable x1)
+
+	/**
+	 * @param <T> class of objects to compare
+	 * @param x0
+	 * @param x1
+	 * @return the maximum of x0 or x1
+	 */
+	public static<T extends Comparable<T>> T max(final T x0, final T x1)
 	{
 		int cmp = x0.compareTo(x1);
 		if (cmp >= 0)
 		{
 			return x0;
 		}
-		else
-		{
-			return x1;
-		}
+		return x1;
 	}
 }
