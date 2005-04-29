@@ -35,7 +35,7 @@ public class CloneFactory<T extends Cloneable>
 	 * @return the next clone
 	 * @throws CloningException 
 	 */
-	public T nextClone() throws CloningException
+	public T createClone() throws CloningException
 	{
 		return createClone(this.clone);
 	}
