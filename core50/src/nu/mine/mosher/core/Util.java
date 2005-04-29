@@ -291,7 +291,6 @@ public final class Util
 	 */
 	public static<T extends Comparable> T min(final T x0, final T x1)
 	{
-		x0.compareTo(x1);
 		int cmp = x0.compareTo(x1);
 		if (cmp <= 0)
 		{
