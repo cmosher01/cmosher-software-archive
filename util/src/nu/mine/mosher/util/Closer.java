@@ -7,7 +7,7 @@ package nu.mine.mosher.util;
  */
 public final class Closer
 {
-    private Closer() throws UnsupportedOperationException
+    private Closer()
     {
         assert false : "can't instantiate";
     }
