@@ -289,8 +289,9 @@ public final class Util
 	 * @param x1
 	 * @return the minimum of x0 or x1
 	 */
-	public static<T> Comparable<T> min(final Comparable<T> x0, final Comparable<T> x1)
+	public static<T extends Comparable> T min(final T x0, final T x1)
 	{
+		x0.compareTo(x1);
 		int cmp = x0.compareTo(x1);
 		if (cmp <= 0)
 		{
