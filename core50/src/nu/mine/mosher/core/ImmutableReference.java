@@ -2,6 +2,11 @@ package nu.mine.mosher.core;
 
 import java.io.Serializable;
 
+/**
+ * Holds an immutable reference to a (cloneable) object.
+ *
+ * @author Chris Mosher
+ */
 public final class ImmutableReference<T extends Cloneable> implements Cloneable, Comparable<T>, Serializable, Immutable
 {
     private final T ref;
