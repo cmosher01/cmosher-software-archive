@@ -32,6 +32,14 @@ public class CloneFactory<T extends Cloneable>
 	}
 
 	/**
+	 * @return the next clone
+	 */
+	public T nextClone()
+	{
+		return this.nextClone;
+	}
+
+	/**
 	 * @param source
 	 * @return the new clone
 	 * @throws CloningException
