@@ -26,7 +26,7 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
         {
             throw new IllegalArgumentException();
         }
-        this.ref = this.cloneFactory.nextClone();
+        this.ref = this.cloneFactory.createClone();
     }
 
     private void buildString()
@@ -51,7 +51,7 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
      */
     public T object() throws CloningException
     {
-        return this.cloneFactory.nextClone();
+        return this.cloneFactory.createClone();
     }
 
     /**
