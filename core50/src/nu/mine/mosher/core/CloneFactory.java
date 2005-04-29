@@ -110,7 +110,7 @@ public final class Cloner
         T clon;
         try
         {
-            clon = (T)methodClone.invoke(cloneableObject, null);
+            clon = (T)methodClone.invoke(cloneableObject,(Object[])null);
         }
         catch (final InvocationTargetException e)
         {
