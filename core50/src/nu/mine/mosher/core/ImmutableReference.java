@@ -9,6 +9,7 @@ import java.io.Serializable;
  */
 public final class ImmutableReference<T extends Cloneable> implements Cloneable, Comparable<T>, Serializable, Immutable
 {
+	private final CloneFactory<T> cloneFactory;
     private final T ref;
     private transient String str;
     private transient int hash;
@@ -19,6 +20,7 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
      */
     public ImmutableReference(T ref) throws CloneNotSupportedException
     {
+    	this.cloneFactory = new CloneFactory<T>(ref);
         if (ref == null)
         {
             throw new IllegalArgumentException();
