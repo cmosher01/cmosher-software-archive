@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
  */
 public class Cloner<T extends Cloneable>
 {
-//	private Cloner()
+//	private CloneFactory()
 //	{
 //		assert false : "can't instantiate";
 //	}
