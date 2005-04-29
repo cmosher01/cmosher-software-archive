@@ -31,7 +31,7 @@ public final class Closer
     {
         try
         {
-            obj.getClass().getMethod("close",null).invoke(obj);
+            obj.getClass().getMethod("close").invoke(obj);
         }
         catch (Throwable ignore)
         {
