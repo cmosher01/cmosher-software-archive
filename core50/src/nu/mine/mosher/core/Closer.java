@@ -9,7 +9,7 @@ import java.util.Map;
  *
  * @author Chris Mosher
  */
-public final class Closer<T>
+public final class Closer
 {
 	private Closer()
 	{
