@@ -4,6 +4,11 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * TODO
+ *
+ * @author Chris Mosher
+ */
 public final class Closer
 {
 	private Closer()
