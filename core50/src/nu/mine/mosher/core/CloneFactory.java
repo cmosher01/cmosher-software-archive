@@ -85,25 +85,9 @@ public final class Cloner<T extends Cloneable>
 		{
 			return tryCreateClone(getCloneMethod());
 		}
-		catch (IllegalArgumentException e)
+		catch (final Throwable e)
 		{
-			e.printStackTrace();
-		}
-		catch (SecurityException e)
-		{
-			e.printStackTrace();
-		}
-		catch (IllegalAccessException e)
-		{
-			e.printStackTrace();
-		}
-		catch (InvocationTargetException e)
-		{
-			e.printStackTrace();
-		}
-		catch (NoSuchMethodException e)
-		{
-			e.printStackTrace();
+			throw new CloningException(e);
 		}
 	}
 
