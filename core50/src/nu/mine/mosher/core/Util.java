@@ -253,11 +253,7 @@ public final class Util
 	 */
 	public static<T extends Comparable<T>> T min(final T x0, final T x1)
 	{
-		if (x0.compareTo(x1) <= 0)
-		{
-			return x0;
-		}
-		return x1;
+		return x0.compareTo(x1) <= 0 ? x0 : x1;
 	}
 
 	/**
@@ -268,10 +264,6 @@ public final class Util
 	 */
 	public static<T extends Comparable<T>> T max(final T x0, final T x1)
 	{
-		if (x0.compareTo(x1) >= 0)
-		{
-			return x0;
-		}
-		return x1;
+		return x0.compareTo(x1) >= 0 ? x0 : x1;
 	}
 }
