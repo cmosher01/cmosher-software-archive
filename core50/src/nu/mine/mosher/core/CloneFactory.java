@@ -88,7 +88,7 @@ public final class Cloner<T extends Cloneable, Object>
     {
         try
         {
-            return clone(cloneable,getCloneMethod(cloneable.getClass()));
+            return clone(cloneable,getCloneMethod(cloneable));
         }
         catch (CloneNotSupportedException e)
         {
