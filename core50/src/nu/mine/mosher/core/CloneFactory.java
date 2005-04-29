@@ -5,9 +5,9 @@ import java.lang.reflect.Method;
 
 /**
  * Provides a static method that will clone any <code>Cloneable</code> <code>Object</code>.
- * This class reflection in order to be
+ * This class uses reflection in order to be
  * able to access the protected <code>clone</code> method of the class <code>Object</code>.
- * @param <T> 
+ * @param <T> <code>Cloneable</code> sub-class of object to be cloned
  */
 public final class Cloner<T extends Cloneable>
 {
