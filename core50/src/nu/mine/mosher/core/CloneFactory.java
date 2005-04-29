@@ -83,7 +83,7 @@ public final class Cloner<T extends Cloneable>
 	}
 
 	/**
-	 * @return
+	 * @return the new clone
 	 * @throws CloningException
 	 */
 	public T createClone() throws CloningException
