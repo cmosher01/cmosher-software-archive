@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
  * able to access the protected <code>clone</code> method of the class <code>Object</code>.
  * @param <T> 
  */
-public final class Cloner<T extends Cloneable>
+public final class Cloner<T extends Cloneable, Object>
 {
 //	private static final Map<Class,Method> mClasses = new HashMap<Class,Method>();
 
