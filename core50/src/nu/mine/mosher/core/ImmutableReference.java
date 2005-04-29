@@ -88,20 +88,20 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
     }
 
     /**
-     * @param o
-     * @return
+     * @param object
+     * @return <code>compareTo</code> referred to object with <code>object</code>
      */
-    public int compareTo(final T o)
+    public int compareTo(final T object)
     {
-        return ((Comparable<T>)this.ref).compareTo(o);
+        return ((Comparable<T>)this.ref).compareTo(object);
     }
 
     /**
-     * @param object
-     * @return <code>compareTo</code> referred to object with object <code>object</code> refers to 
+     * @param objectRef
+     * @return <code>compareTo</code> referred to object with object <code>objectRef</code> refers to 
      */
-    public int compareTo(final ImmutableReference<T> object)
+    public int compareTo(final ImmutableReference<T> objectRef)
 	{
-    	return compareTo(object.ref);
+    	return compareTo(objectRef.ref);
     }
 }
