@@ -73,7 +73,7 @@ public class CloneFactory<T extends Cloneable>
 //    }
 
 	private final T cloneableSource;
-    private Method methodClone;
+    private final Method methodClone;
 
 	/**
 	 * @param cloneableSource
