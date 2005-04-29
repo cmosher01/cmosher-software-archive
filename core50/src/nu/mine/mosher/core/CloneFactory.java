@@ -126,7 +126,7 @@ public final class Cloner
 
     static Method getCloneMethod(Class cl) throws SecurityException, NoSuchMethodException
     {
-        Method methodClone = cl.getMethod("clone",(Object[])null);
+        Method methodClone = cl.getMethod("clone",(Class[])null);
         methodClone.setAccessible(true);
         return methodClone;
     }
