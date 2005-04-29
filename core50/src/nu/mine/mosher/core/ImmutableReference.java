@@ -27,22 +27,9 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
         }
     	this.cloneFactory = new CloneFactory<T>(ref);
         this.ref = this.cloneFactory.createClone();
-    }
 
-    private void buildString()
-    {
-        if (this.str == null)
-        {
-            this.str = this.ref.toString();
-        }
-    }
-
-    private void buildHashCode()
-    {
-        if (this.hash == 0)
-        {
-            this.hash = this.ref.hashCode();
-        }
+        this.str = this.ref.toString();
+        this.hash = this.ref.hashCode();
     }
 
     /**
@@ -68,7 +55,6 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
      */
     public String toString()
     {
-        buildString();
         return this.str;
     }
 
@@ -86,7 +72,6 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
      */
     public int hashCode()
     {
-        buildHashCode();
         return this.hash;
     }
 
