@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * Holds an immutable reference to a (cloneable) object.
+ * @param <T> 
  *
  * @author Chris Mosher
  */
