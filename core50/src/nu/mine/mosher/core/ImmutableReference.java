@@ -16,16 +16,16 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
 
     /**
      * @param ref
-     * @throws CloneNotSupportedException
+     * @throws CloningException 
      */
-    public ImmutableReference(T ref) throws CloneNotSupportedException
+    public ImmutableReference(T ref) throws CloningException
     {
     	this.cloneFactory = new CloneFactory<T>(ref);
         if (ref == null)
         {
             throw new IllegalArgumentException();
         }
-        this.ref = CloneFactory.cloneObject(ref);
+        this.ref = this.cloneFactory.createClone();
     }
 
     private void buildString()
