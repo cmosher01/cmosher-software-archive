@@ -61,7 +61,7 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
     }
 
     /**
-     * @return
+     * @return <code>toString</code> of wrapped object
      */
     public String toString()
     {
@@ -73,7 +73,7 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
      * @param o
      * @return
      */
-    public boolean equals(Object o)
+    public boolean equals(final Object o)
     {
         return this.ref.equals(o);
     }
@@ -91,17 +91,17 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
      * @param o
      * @return
      */
-    public int compareTo(T o)
+    public int compareTo(final T o)
     {
         return ((Comparable<T>)this.ref).compareTo(o);
     }
 
     /**
-     * @param o
-     * @return
+     * @param object
+     * @return <code>compareTo</code> referred to object with object <code>object</code> refers to 
      */
-    public int compareTo(ImmutableReference<T> o)
+    public int compareTo(final ImmutableReference<T> object)
 	{
-    	return compareTo(o.ref);
+    	return compareTo(object.ref);
     }
 }
