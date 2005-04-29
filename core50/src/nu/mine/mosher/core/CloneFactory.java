@@ -112,9 +112,9 @@ public final class Cloner
         {
             clon = methodClone.invoke(cloneableObject, null);
         }
-        catch (InvocationTargetException e)
+        catch (final InvocationTargetException e)
         {
-            Throwable cause = e.getCause();
+            final Throwable cause = e.getCause();
             if (cause instanceof CloneNotSupportedException)
             {
                 throw (CloneNotSupportedException)cause;
