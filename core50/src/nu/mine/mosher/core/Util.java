@@ -141,49 +141,41 @@ public final class Util
 
 
 
-//	public static<T> ArrayList<T> list(final Iterable<T> i)
-//    {
-//		final List<T> r = new ArrayList<T>();
-//        for (final T t : i)
-//        {
-//            r.add(t);
-//        }
-//        return (ArrayList<T>)r;
-//    }
-//
-//	/**
-//	 * Converts and <ocde>Iterable</code> into a <code>Set</code>.
-//	 * @param <T> class of elements in the <code>List</code>
-//	 * @param i <ocde>Iterable</code> to read all elements from
-//	 * @return the new <code>Set</code> of all elements from <code>i</code>
-//	 */
-//	public static<T> HashSet<T> set(final Iterable<T> i)
-//	{
-//		final Set<T> s = new HashSet<T>();
-//		for (final T t : i)
-//		{
-//			s.add(t);
-//		}
-//		return (HashSet<T>)s;
-//	}
 
 
+
+
+
+
+
+    /**
+	 * Converts an <code>Iterable</code> into a <code>Set</code>.
+	 * @param <T> class of elements in the <code>List</code>
+	 * @param i <code>Iterable</code> to read all elements from
+	 * @return the new <code>Set</code> of all elements from <code>i</code>
+	 */
+	public static<T> HashSet<T> set(final Iterable<T> i)
+	{
+		final Set<T> set = new HashSet<T>();
+		addAll(i,set);
+		return (HashSet<T>)set;
+	}
 
 	/**
-	 * Converts an <ocde>Iterable</code> into a <code>List</code>.
+	 * Converts an <code>Iterable</code> into a <code>List</code>.
 	 * @param <T> class of elements in the <code>List</code>
 	 * @param i <code>Iterable</code> to read all elements from
 	 * @return a new <code>ArrayList</code> of all elements from <code>i</code>
 	 */
-    public static<T> ArrayList<T> list(Iterable<T> i)
+    public static<T> ArrayList<T> list(final Iterable<T> i)
     {
-        final List<T> r = new ArrayList<T>();
-        addAll(i,r);
-        return (ArrayList<T>)r;
+        final List<T> list = new ArrayList<T>();
+        addAll(i,list);
+        return (ArrayList<T>)list;
     }
 
     /**
-     * Adds all the items from the given <code>Iterator</code> to the
+     * Adds all the items from the given <code>Iterable</code> to the
      * given <code>Collection</code>.
      * @param <T> type of item in each container
      * @param i the <code>Iterable</code> to get items from
@@ -223,41 +215,66 @@ public final class Util
 //        addAll(i,r);
 //        return r;
 //    }
+//
+//    /**
+//     * Iterates through the given Iterator and builds
+//     * a HashSet out of its elements.
+//     * @param i the Iterator to get the elements of
+//     * @return a HashSet of the elements from i
+//     */
+//    public static HashSet set(Iterator i)
+//    {
+//        HashSet r = new HashSet();
+//        addAll(i,r);
+//        return r;
+//    }
+
+
+
+
+
 
     /**
-     * Iterates through the given Iterator and builds
-     * a HashSet out of its elements.
-     * @param i the Iterator to get the elements of
-     * @return a HashSet of the elements from i
+     * @param x0
+     * @param x1
+     * @return -1 if x0 &lt; x1, +1 if x0 &gt; x1, else 0
      */
-    public static HashSet set(Iterator i)
-    {
-        HashSet r = new HashSet();
-        addAll(i,r);
-        return r;
-    }
-
-
-
-
-
-
 	public static int compare(byte x0, byte x1)
 	{
 		return x0 < x1 ? -1 : x1 < x0 ? +1 : 0;
 	}
+	/**
+	 * @param x0
+	 * @param x1
+	 * @return
+	 */
 	public static int compare(short x0, short x1)
 	{
 		return x0 < x1 ? -1 : x1 < x0 ? +1 : 0;
 	}
+	/**
+	 * @param x0
+	 * @param x1
+	 * @return
+	 */
 	public static int compare(int x0, int x1)
 	{
 		return x0 < x1 ? -1 : x1 < x0 ? +1 : 0;
 	}
+	/**
+	 * @param x0
+	 * @param x1
+	 * @return
+	 */
 	public static int compare(long x0, long x1)
 	{
 		return x0 < x1 ? -1 : x1 < x0 ? +1 : 0;
 	}
+	/**
+	 * @param x0
+	 * @param x1
+	 * @return
+	 */
 	public static int compare(char x0, char x1)
 	{
 		return x0 < x1 ? -1 : x1 < x0 ? +1 : 0;
