@@ -79,11 +79,28 @@ public final class Cloner<T extends Cloneable>
 		this.cloneableSource = cloneableSource;
 	}
 
-	Method getCloneMethod() throws SecurityException, NoSuchMethodException
+	protected Method getCloneMethod() throws SecurityException, NoSuchMethodException
 	{
 		final Class cl = this.cloneableSource.getClass();
 		final Method methodClone = cl.getMethod("clone");
 		methodClone.setAccessible(true);
 	    return methodClone;
+	}
+
+	protected T tryCreateClone(final Method methodClone) throws IllegalArgumentException, IllegalAccessException, CloneNotSupportedException, InvocationTargetException
+	{
+	  try
+	  {
+	      return (T)methodClone.invoke(this.cloneableSource);
+	  }
+	  catch (final InvocationTargetException e)
+	  {
+	      final Throwable cause = e.getCause();
+	      if (cause instanceof CloneNotSupportedException)
+	      {
+	          throw (CloneNotSupportedException)cause;
+	      }
+	      throw e;
+	  }
 	}
 }
