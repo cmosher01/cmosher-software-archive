@@ -84,7 +84,7 @@ public final class Cloner<T extends Cloneable>
 	 * @return clone of <code>cloneableObject</code>
 	 * @throws CloneNotSupportedException
 	 */
-    public static T cloneObject(final T cloneable) throws CloneNotSupportedException
+    public static<T extends Cloneable> T cloneObject(final T cloneable) throws CloneNotSupportedException
     {
         try
         {
