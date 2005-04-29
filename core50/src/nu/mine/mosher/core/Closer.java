@@ -16,9 +16,9 @@ public final class Closer
 		assert false : "can't instantiate";
 	}
 
-	private static<T> Method getCloseMethod()
+	private static<T> Method getCloseMethod(final T bogus) throws SecurityException, NoSuchMethodException
 	{
-		return T.class.getMethod("close");
+		return bogus.getClass().getMethod("close");
 	}
 //	private static final Map<Class,Method> mClasses = new HashMap<Class,Method>();
 //
