@@ -27,63 +27,6 @@ public final class Cloner<T extends Cloneable>
 	 * @return clone of <code>cloneableObject</code>
 	 * @throws CloneNotSupportedException
 	 */
-//	public static<T extends Cloneable> T cloneObject(final T cloneable) throws CloneNotSupportedException
-//	{
-//		try
-//		{
-//			final Method methodClone = getCloneMethod(cloneable);
-//			/*
-//			 * Unchecked cast is OK here, because we know that the
-//			 * clone of a T will be a T:
-//			 */
-//			return (T)methodClone.invoke(cloneable,(Object[])null);
-//		}
-//		catch (Throwable cause)
-//		{
-//			CloneNotSupportedException ex = new CloneNotSupportedException();
-//			ex.initCause(cause);
-//			throw ex;
-//		}
-//	}
-
-//	/**
-//	 * @param <T>
-//	 * @param cloneable
-//	 * @return <code>clone Method</code>
-//	 * @throws NoSuchMethodException
-//	 * @throws SecurityException
-//	 */
-//	private static<T> Method getCloneMethod(final T cloneable) throws NoSuchMethodException, SecurityException
-//	{
-//		final Class cl = cloneable.getClass();
-//		Method methodClone = mClasses.get(cl);
-//		if (methodClone == null)
-//		{
-//			methodClone = cl.getMethod("clone",(Class[])null);
-//			methodClone.setAccessible(true);
-//			mClasses.put(cl,methodClone);
-//		}
-//		return methodClone;
-//	}
-
-
-
-
-
-
-
-
-
-
-	/**
-	 * Clones the given object. This method uses reflection to
-	 * call the (otherwise protected) <code>clone</code> method
-	 * of the givne object, which must be <code>Cloneable</code>.
-	 * @param <T> class of <code>Cloneable</code> object to be cloned
-	 * @param cloneable object to be cloned
-	 * @return clone of <code>cloneableObject</code>
-	 * @throws CloneNotSupportedException
-	 */
     public static<T extends Cloneable> T cloneObject(final T cloneable) throws CloneNotSupportedException
     {
         try
