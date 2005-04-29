@@ -239,7 +239,7 @@ public final class Util
      * @param x1
      * @return -1 if x0 &lt; x1, +1 if x0 &gt; x1, else 0
      */
-	public static int compare(byte x0, byte x1)
+	public static int compare(final byte x0, final byte x1)
 	{
 		return x0 < x1 ? -1 : x1 < x0 ? +1 : 0;
 	}
@@ -248,7 +248,7 @@ public final class Util
 	 * @param x1
      * @return -1 if x0 &lt; x1, +1 if x0 &gt; x1, else 0
 	 */
-	public static int compare(short x0, short x1)
+	public static int compare(final short x0, final short x1)
 	{
 		return x0 < x1 ? -1 : x1 < x0 ? +1 : 0;
 	}
@@ -257,7 +257,7 @@ public final class Util
 	 * @param x1
      * @return -1 if x0 &lt; x1, +1 if x0 &gt; x1, else 0
 	 */
-	public static int compare(int x0, int x1)
+	public static int compare(final int x0, final int x1)
 	{
 		return x0 < x1 ? -1 : x1 < x0 ? +1 : 0;
 	}
@@ -266,7 +266,7 @@ public final class Util
 	 * @param x1
      * @return -1 if x0 &lt; x1, +1 if x0 &gt; x1, else 0
 	 */
-	public static int compare(long x0, long x1)
+	public static int compare(final long x0, final long x1)
 	{
 		return x0 < x1 ? -1 : x1 < x0 ? +1 : 0;
 	}
@@ -275,7 +275,7 @@ public final class Util
 	 * @param x1
      * @return -1 if x0 &lt; x1, +1 if x0 &gt; x1, else 0
 	 */
-	public static int compare(char x0, char x1)
+	public static int compare(final char x0, final char x1)
 	{
 		return x0 < x1 ? -1 : x1 < x0 ? +1 : 0;
 	}
@@ -289,7 +289,7 @@ public final class Util
 	 * @param x1
 	 * @return the minimum of x0 or x1
 	 */
-	public Comparable min(Comparable x0, Comparable x1)
+	public Comparable<T> min(final Comparable<T> x0, final Comparable<T> x1)
 	{
 		int cmp = x0.compareTo(x1);
 		if (cmp <= 0)
