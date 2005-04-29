@@ -47,25 +47,25 @@ public final class Cloner
 //		}
 //	}
 
-	/**
-	 * @param <T>
-	 * @param cloneable
-	 * @return <code>clone Method</code>
-	 * @throws NoSuchMethodException
-	 * @throws SecurityException
-	 */
-	private static<T> Method getCloneMethod(final T cloneable) throws NoSuchMethodException, SecurityException
-	{
-		final Class cl = cloneable.getClass();
-		Method methodClone = mClasses.get(cl);
-		if (methodClone == null)
-		{
-			methodClone = cl.getMethod("clone",(Class[])null);
-			methodClone.setAccessible(true);
-			mClasses.put(cl,methodClone);
-		}
-		return methodClone;
-	}
+//	/**
+//	 * @param <T>
+//	 * @param cloneable
+//	 * @return <code>clone Method</code>
+//	 * @throws NoSuchMethodException
+//	 * @throws SecurityException
+//	 */
+//	private static<T> Method getCloneMethod(final T cloneable) throws NoSuchMethodException, SecurityException
+//	{
+//		final Class cl = cloneable.getClass();
+//		Method methodClone = mClasses.get(cl);
+//		if (methodClone == null)
+//		{
+//			methodClone = cl.getMethod("clone",(Class[])null);
+//			methodClone.setAccessible(true);
+//			mClasses.put(cl,methodClone);
+//		}
+//		return methodClone;
+//	}
 
 
 
@@ -85,11 +85,11 @@ public final class Cloner
 	 * @return clone of <code>cloneableObject</code>
 	 * @throws CloneNotSupportedException
 	 */
-    public static<T extends Cloneable> T cloneObject(final T cloneableObject) throws CloneNotSupportedException
+    public static<T extends Cloneable> T cloneObject(final T cloneable) throws CloneNotSupportedException
     {
         try
         {
-            return clone(cloneableObject, getCloneMethod(cloneableObject.getClass()));
+            return clone(cloneable,getCloneMethod(cloneable.getClass()));
         }
         catch (CloneNotSupportedException e)
         {
