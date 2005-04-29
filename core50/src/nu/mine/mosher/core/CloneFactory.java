@@ -2,17 +2,16 @@ package nu.mine.mosher.core;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Provides a static method that will clone any <code>Cloneable</code> <code>Object</code>.
  * This class reflection in order to be
  * able to access the protected <code>clone</code> method of the class <code>Object</code>.
+ * @param <T> 
  */
-public final class Cloner
+public final class Cloner<T extends Cloneable>
 {
-	private static final Map<Class,Method> mClasses = new HashMap<Class,Method>();
+//	private static final Map<Class,Method> mClasses = new HashMap<Class,Method>();
 
 	private Cloner()
 	{
