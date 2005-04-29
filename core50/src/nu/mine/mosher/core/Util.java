@@ -289,7 +289,7 @@ public final class Util
 	 * @param x1
 	 * @return the minimum of x0 or x1
 	 */
-	public Comparable<T> min(final Comparable<T> x0, final Comparable<T> x1)
+	public static<T> Comparable<T> min(final Comparable<T> x0, final Comparable<T> x1)
 	{
 		int cmp = x0.compareTo(x1);
 		if (cmp <= 0)
@@ -301,7 +301,7 @@ public final class Util
 			return x1;
 		}
 	}
-	public Comparable max(Comparable x0, Comparable x1)
+	public static<T> Comparable max(Comparable x0, Comparable x1)
 	{
 		int cmp = x0.compareTo(x1);
 		if (cmp >= 0)
