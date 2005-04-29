@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
  * able to access the protected <code>clone</code> method of the class <code>Object</code>.
  * @param <T> <code>Cloneable</code> sub-class of object to be cloned
  */
-public class Cloner<T extends Cloneable>
+public class CloneFactory<T extends Cloneable>
 {
 //	private CloneFactory()
 //	{
@@ -77,7 +77,7 @@ public class Cloner<T extends Cloneable>
 	/**
 	 * @param cloneableSource
 	 */
-	public Cloner(final T cloneableSource)
+	public CloneFactory(final T cloneableSource)
 	{
 		this.cloneableSource = cloneableSource;
 	}
