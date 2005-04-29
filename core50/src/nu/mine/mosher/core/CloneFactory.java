@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
  */
 public class CloneFactory<T extends Cloneable>
 {
-	private final T cloneableSource;
+	private final T nextClone;
     private final Method methodClone;
 
 	/**
@@ -21,9 +21,9 @@ public class CloneFactory<T extends Cloneable>
 	{
 		try
 		{
-			this.cloneableSource = cloneableSource;
-			this.methodClone = this.cloneableSource.getClass().getMethod("clone");
+			this.methodClone = cloneableSource.getClass().getMethod("clone");
 			this.methodClone.setAccessible(true);
+			this.nextClone = createClone(cloneableSource);
 		}
 		catch (final Throwable e)
 		{
@@ -32,14 +32,15 @@ public class CloneFactory<T extends Cloneable>
 	}
 
 	/**
+	 * @param source
 	 * @return the new clone
 	 * @throws CloningException
 	 */
-	public T createClone() throws CloningException
+	private T createClone(final T source) throws CloningException
 	{
 		try
 		{
-			return (T)this.methodClone.invoke(this.cloneableSource);
+			return (T)this.methodClone.invoke(source);
 		}
 		catch (final Throwable e)
 		{
