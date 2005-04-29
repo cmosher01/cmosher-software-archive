@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
  * able to access the protected <code>clone</code> method of the class <code>Object</code>.
  * @param <T> <code>Cloneable</code> sub-class of object to be cloned
  */
-public final class Cloner<T extends Cloneable>
+public class Cloner<T extends Cloneable>
 {
 //	private Cloner()
 //	{
