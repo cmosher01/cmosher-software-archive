@@ -54,9 +54,10 @@ public final class Closer
 				methodClose = cl.getMethod("close");
 				mClasses.put(cl,methodClose);
 			}
+
 			methodClose.invoke(obj);
 		}
-		catch (Throwable ignore)
+		catch (final Throwable ignore)
 		{
 			ignore.printStackTrace();
 		}
