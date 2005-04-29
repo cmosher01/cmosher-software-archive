@@ -101,24 +101,11 @@ public class CloneFactory<T extends Cloneable>
 	{
 		try
 		{
-			return tryCreateClone(getCloneMethod());
+			return (T)this.methodClone.invoke(this.cloneableSource);
 		}
 		catch (final Throwable e)
 		{
 			throw new CloningException(e);
 		}
-	}
-
-//	protected Method getCloneMethod() throws SecurityException, NoSuchMethodException
-//	{
-//		if (this.methodClone == null)
-//		{
-//		}
-//	    return methodClone;
-//	}
-
-	protected T tryCreateClone(final Method methodClone) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException
-	{
-		return (T)methodClone.invoke(this.cloneableSource);
 	}
 }
