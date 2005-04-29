@@ -70,16 +70,16 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
     }
 
     /**
-     * @param o
-     * @return
+     * @param object
+     * @return <code>equals</code> of referred to object
      */
-    public boolean equals(final Object o)
+    public boolean equals(final Object object)
     {
-        return this.ref.equals(o);
+        return this.ref.equals(object);
     }
 
     /**
-     * @return
+     * @return hash of referred to object
      */
     public int hashCode()
     {
