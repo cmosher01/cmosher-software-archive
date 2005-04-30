@@ -19,7 +19,7 @@ public final class UndoableReference<T extends Cloneable>
 		return state;
 	}
 
-	public void save() throws CloneNotSupportedException
+	public void save() throws CloningException
 	{
 		undoer.save(state);
 	}
