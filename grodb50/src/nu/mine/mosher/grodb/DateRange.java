@@ -37,17 +37,17 @@ public class DateRange implements Immutable, Serializable, Comparable
 		assert Immutable.class.isAssignableFrom(YMD.class);
 	}
 
-	public DateRange(YMD ymd)
+	public DateRange(final YMD ymd)
 	{
 		this(ymd,ymd,false,false);
 	}
 
-	public DateRange(YMD earliest, YMD latest)
+	public DateRange(final YMD earliest, final YMD latest)
 	{
 		this(earliest,latest,false,false);
 	}
 
-    public DateRange(YMD earliest, YMD latest, boolean julian, boolean circa)
+    public DateRange(final YMD earliest, final YMD latest, final boolean julian, final boolean circa)
     {
     	if (earliest == null)
     	{
