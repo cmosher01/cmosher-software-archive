@@ -34,6 +34,9 @@ public class YMD implements Immutable, Serializable, Comparable
 		this.year = year;
 		this.month = month;
 		this.day = day;
+
+		this.approx = calcApprox();
+		this.hash = calcHash();
 	}
 
     public int getDay()
@@ -54,14 +57,10 @@ public class YMD implements Immutable, Serializable, Comparable
 	// YYYYMMDD (never display this to the user!)
 	public int getApproxDay()
 	{
-		if (approx == 0)
-		{
-			updateApprox();
-		}
-		return approx;
+		return this.approx;
 	}
 
-	private void updateApprox()
+	private int calcApprox()
 	{
 		int m = month;
 		int d = day;
@@ -74,7 +73,7 @@ public class YMD implements Immutable, Serializable, Comparable
 		{
 			d = 15;
 		}
-		approx = year*10000+m*100+d;
+		return year*10000+m*100+d;
 	}
 
 	public boolean equals(Object o)
@@ -93,22 +92,19 @@ public class YMD implements Immutable, Serializable, Comparable
 
     public synchronized int hashCode()
     {
-    	if (hash == 0)
-    	{
-    		updateHash();
-    	}
-    	return hash;
+    	return this.hash;
     }
 
-    private void updateHash()
+    private int calcHash()
     {
-		hash = 17;
-		hash *= 37;
-		hash += year;
-		hash *= 37;
-		hash += month;
-		hash *= 37;
-		hash += day;
+		int h = 17;
+		h *= 37;
+		h += year;
+		h *= 37;
+		h += month;
+		h *= 37;
+		h += day;
+		return h;
     }
 
     public int compareTo(Object o)
