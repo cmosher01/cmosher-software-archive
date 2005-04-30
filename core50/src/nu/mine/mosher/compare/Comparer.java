@@ -34,21 +34,7 @@ public final class Comparer
 		final Iterator<T> iOld = setOld.iterator();
 		final Iterator<T> iNew = setNew.iterator();
 
-		final Have<T> have = new Have<T>();
-		final Need need = new Need();
-
-		while (need.needEither())
-		{
-			getNext(need,iOld,iNew,have);
-
-			need.clear();
-			if (have.haveEither())
-			{
-				final int cmp = have.compareUsing(c);
-				update(cmp,have,upd);
-				setNeed(cmp,need);
-			}
-		}
+		compare(iOld,iNew,c,upd);
 
 //		final Have<T> have = new Have<T>();
 //		final Need need = new Need();
@@ -160,6 +146,32 @@ public final class Comparer
 //				}
 //			}
 //		}
+	}
+
+	/**
+	 * @param <T>
+	 * @param iOld
+	 * @param iNew
+	 * @param c
+	 * @param upd
+	 * @throws UpdateException
+	 */
+	public static <T>void compare(final Iterator<T> iOld, final Iterator<T> iNew, final Comparator<T> c, final Updater<T> upd) throws UpdateException
+	{
+		final Have<T> have = new Have<T>();
+		final Need need = new Need();
+		while (need.needEither())
+		{
+			getNext(need,iOld,iNew,have);
+
+			need.clear();
+			if (have.haveEither())
+			{
+				final int cmp = have.compareUsing(c);
+				update(cmp,have,upd);
+				setNeed(cmp,need);
+			}
+		}
 	}
 
 	/**
