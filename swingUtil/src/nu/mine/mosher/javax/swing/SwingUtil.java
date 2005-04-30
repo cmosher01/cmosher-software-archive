@@ -27,8 +27,9 @@ public final class SwingUtil
         {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }
-        catch (Throwable ignoreAnyExceptions)
+        catch (final Throwable ignoreAnyExceptions)
         {
+        	ignoreAnyExceptions.printStackTrace();
         }
     }
 }
