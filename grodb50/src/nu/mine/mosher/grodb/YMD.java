@@ -19,6 +19,8 @@ public class YMD implements Immutable, Serializable, Comparable
 	private transient int hash;
 	private transient int approx;
 
+
+
 	public YMD(int year)
 	{
 		this(year,0,0);
@@ -39,7 +41,9 @@ public class YMD implements Immutable, Serializable, Comparable
 		this.hash = calcHash();
 	}
 
-    public int getDay()
+
+
+	public int getDay()
     {
         return day;
     }
@@ -58,22 +62,6 @@ public class YMD implements Immutable, Serializable, Comparable
 	public int getApproxDay()
 	{
 		return this.approx;
-	}
-
-	private int calcApprox()
-	{
-		int m = month;
-		int d = day;
-		if (m == 0 && d == 0)
-		{
-			m = 7;
-			d = 3;
-		}
-		else if (d == 0)
-		{
-			d = 15;
-		}
-		return year*10000+m*100+d;
 	}
 
 	public boolean equals(Object o)
@@ -95,18 +83,6 @@ public class YMD implements Immutable, Serializable, Comparable
     	return this.hash;
     }
 
-    private int calcHash()
-    {
-		int h = 17;
-		h *= 37;
-		h += year;
-		h *= 37;
-		h += month;
-		h *= 37;
-		h += day;
-		return h;
-    }
-
     public int compareTo(Object o)
     {
     	YMD that = (YMD)o;
@@ -121,5 +97,33 @@ public class YMD implements Immutable, Serializable, Comparable
     public static YMD getMaximum()
     {
     	return new YMD(Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE);
+    }
+
+	private int calcApprox()
+	{
+		int m = month;
+		int d = day;
+		if (m == 0 && d == 0)
+		{
+			m = 7;
+			d = 3;
+		}
+		else if (d == 0)
+		{
+			d = 15;
+		}
+		return year*10000+m*100+d;
+	}
+
+    private int calcHash()
+    {
+		int h = 17;
+		h *= 37;
+		h += year;
+		h *= 37;
+		h += month;
+		h *= 37;
+		h += day;
+		return h;
     }
 }
