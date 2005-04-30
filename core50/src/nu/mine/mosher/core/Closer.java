@@ -46,12 +46,12 @@ public final class Closer<T>
 	{
 		synchronized (lock)
 		{
-			if (this.methodClose == null)
+			if (Closer.methodClose == null)
 			{
-				this.methodClose = object.getClass().getMethod("close");
+				Closer.methodClose = object.getClass().getMethod("close");
 			}
 		}
-		this.methodClose.invoke(object);
+		Closer.methodClose.invoke(object);
 	}
 //	private static final Map<Class,Method> mClasses = new HashMap<Class,Method>();
 //
