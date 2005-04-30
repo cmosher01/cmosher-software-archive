@@ -45,17 +45,17 @@ public class YMD implements Immutable, Serializable, Comparable
 
 	public int getDay()
     {
-        return day;
+        return this.day;
     }
 
     public int getMonth()
     {
-        return month;
+        return this.month;
     }
 
     public int getYear()
     {
-        return year;
+        return this.year;
     }
 
 	// YYYYMMDD (never display this to the user!)
