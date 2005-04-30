@@ -5,7 +5,7 @@ public final class UndoableReference<T extends Cloneable>
 	private T state;
 	private final Undoer<T> undoer = new Undoer<T>();
 
-	public UndoableReference(T state)
+	public UndoableReference(final T state)
 	{
 		this.state = state;
 		if (this.state == null)
