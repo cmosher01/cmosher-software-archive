@@ -83,9 +83,9 @@ public class YMD implements Immutable, Serializable, Comparable
     	return this.hash;
     }
 
-    public int compareTo(Object o)
+    public int compareTo(Object object)
     {
-    	YMD that = (YMD)o;
+    	final YMD that = (YMD)object;
     	return Util.compare(this.approx,that.approx);
     }
 
