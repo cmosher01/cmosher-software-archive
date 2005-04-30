@@ -7,18 +7,18 @@ public final class Pair<T extends Cloneable, U extends Cloneable> implements Clo
 	private final ImmutableReference<T> a;
 	private final ImmutableReference<U> b;
 
-	public Pair(T a, U b) throws CloneNotSupportedException
+	public Pair(T a, U b) throws CloningException
 	{
 		this.a = new ImmutableReference<T>(a);
 		this.b = new ImmutableReference<U>(b);
 	}
 
-	public T a() throws CloneNotSupportedException
+	public T a() throws CloningException
 	{
 		return this.a.object();
 	}
 
-	public U b() throws CloneNotSupportedException
+	public U b() throws CloningException
 	{
 		return this.b.object();
 	}
