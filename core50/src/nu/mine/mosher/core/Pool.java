@@ -39,7 +39,7 @@ public class Pool<T>
 	}
 
 	/**
-	 * @return
+	 * @return an object from this pool
 	 * @throws NoSuchElementException
 	 */
 	public synchronized T get() throws NoSuchElementException
