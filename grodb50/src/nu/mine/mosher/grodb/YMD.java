@@ -78,7 +78,7 @@ public class YMD implements Immutable, Serializable, Comparable
 			this.day == that.day;
 	}
 
-    public synchronized int hashCode()
+    public int hashCode()
     {
     	return this.hash;
     }
