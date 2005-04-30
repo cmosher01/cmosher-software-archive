@@ -9,7 +9,7 @@ public final class Undoer<T extends Cloneable>
 
 	public void save(final T state) throws CloningException
 	{
-		CloneFactory<T> cf = new CloneFactory<T>(state);
+		final CloneFactory<T> cf = new CloneFactory<T>(state);
 		mrUndo.addLast(cf.createClone());
 		mrRedo.clear();
 	}
