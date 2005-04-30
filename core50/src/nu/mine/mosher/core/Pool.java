@@ -86,13 +86,10 @@ public class Pool<T>
 			System.gc();
 		}
 
-		Reference ref = recycleBin.poll();
-		while (ref != null)
+		for (Reference ref = recycleBin.poll(); ref != null; ref = recycleBin.poll())
 		{
 			final T recyclable = inUse.remove(ref);
 			unused.addLast(recyclable);
-
-			ref = recycleBin.poll();
 		}
 	}
 }
