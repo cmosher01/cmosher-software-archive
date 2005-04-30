@@ -21,7 +21,7 @@ public final class Closer
 
 //	private static final Object lock = new Object();
 //	private static Method methodClose;
-//	private static List<Throwable> rException = new ArrayList<Throwable>();
+	private static List<Throwable> rException = new ArrayList<Throwable>();
 //
 //	/**
 //	 * @param object
@@ -38,13 +38,13 @@ public final class Closer
 //		}
 //	}
 //
-//	/**
-//	 * @return
-//	 */
-//	public boolean hasErrors()
-//	{
-//		return !rException.isEmpty();
-//	}
+	/**
+	 * @return
+	 */
+	public boolean hasErrors()
+	{
+		return !rException.isEmpty();
+	}
 //
 //	/**
 //	 * @param object
@@ -101,7 +101,8 @@ public final class Closer
 		}
 		catch (final Throwable ignore)
 		{
-			ignore.printStackTrace();
+			rException.add(ignore);
+//			ignore.printStackTrace();
 		}
 	}
 
