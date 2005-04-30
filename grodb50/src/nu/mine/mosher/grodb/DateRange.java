@@ -26,10 +26,6 @@ public class DateRange implements Immutable, Serializable, Comparable
 	 */
 	private final boolean julian;
 
-	private final int hour;
-	private final int minute;
-	private final TimeZone timeZone;
-
 	private final boolean circa;
 
 	private final int hash;
@@ -43,15 +39,15 @@ public class DateRange implements Immutable, Serializable, Comparable
 
 	public DateRange(YMD ymd)
 	{
-		this(ymd,ymd,false,-1,-1,null,false);
+		this(ymd,ymd,false,false);
 	}
 
 	public DateRange(YMD earliest, YMD latest)
 	{
-		this(earliest,latest,false,-1,-1,null,false);
+		this(earliest,latest,false,false);
 	}
 
-    public DateRange(YMD earliest, YMD latest, boolean julian, int hour, int minute, TimeZone timeZone, boolean circa)
+    public DateRange(YMD earliest, YMD latest, boolean julian, boolean circa)
     {
     	if (earliest == null)
     	{
@@ -69,12 +65,9 @@ public class DateRange implements Immutable, Serializable, Comparable
 		this.earliest = earliest;
         this.latest = latest;
         this.julian = julian;
-        this.hour = hour;
-        this.minute = minute;
-        this.timeZone = (TimeZone)timeZone.clone();
 		this.circa = circa;
 
-		this.hash = getHash();
+		this.hash = calcHash();
     }
 
 	/**
@@ -106,30 +99,6 @@ public class DateRange implements Immutable, Serializable, Comparable
 		return julian;
 	}
 
-	/**
-	 * @return
-	 */
-	public int getHour()
-	{
-		return hour;
-	}
-
-    /**
-     * @return
-     */
-    public int getMinute()
-    {
-        return minute;
-    }
-
-    /**
-     * @return
-     */
-    public TimeZone getTimeZone()
-    {
-        return (TimeZone)timeZone.clone();
-    }
-
     /**
      * @return
      */
@@ -150,16 +119,6 @@ public class DateRange implements Immutable, Serializable, Comparable
 		if (d == 0)
 		{
 			d = this.latest.compareTo(that.latest);
-		}
-
-		// ??? ignore timezone in compareTo
-		if (d == 0)
-		{
-			d = this.hour-that.hour;
-		}
-		if (d == 0)
-		{
-			d = this.minute-that.minute;
 		}
 
 		if (d == 0)
@@ -194,11 +153,6 @@ public class DateRange implements Immutable, Serializable, Comparable
 			return false;
 		}
 
-		if (this.hour != that.hour || this.minute != that.minute)
-		{
-			return false;
-		}
-		// TODO finish date equality
 		return true;
     }
 
@@ -207,7 +161,7 @@ public class DateRange implements Immutable, Serializable, Comparable
     	return hash;
     }
 
-	private int getHash()
+	private int calcHash()
 	{
 		int h = 17;
 
@@ -217,12 +171,6 @@ public class DateRange implements Immutable, Serializable, Comparable
 		h += latest.hashCode();
 		h *= 37;
 		h += julian ? 0 : 1;
-		h *= 37;
-		h += hour;
-		h *= 37;
-		h += minute;
-		h *= 37;
-		h += timeZone.hashCode();
 		h *= 37;
 		h += circa ? 0 : 1;
 
