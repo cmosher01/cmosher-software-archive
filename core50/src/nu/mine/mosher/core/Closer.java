@@ -9,16 +9,26 @@ import java.util.Map;
  *
  * @author Chris Mosher
  */
-public final class Closer
+public final class Closer<T>
 {
 	private Closer()
 	{
 		assert false : "can't instantiate";
 	}
 
-	private static<T> Method getCloseMethod(final T bogus) throws SecurityException, NoSuchMethodException
+	private static final Object lock = new Object();
+	private static Method methodClose;
+
+	public void close(final T object)
 	{
-		return bogus.getClass().getMethod("close");
+		synchronized (lock)
+		{
+			if (this.methodClose == null)
+			{
+				this.methodClose = object.getClass().getMethod("close");
+			}
+		}
+		this.methodClose.invoke(object);
 	}
 //	private static final Map<Class,Method> mClasses = new HashMap<Class,Method>();
 //
