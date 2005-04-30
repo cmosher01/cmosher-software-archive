@@ -3,16 +3,23 @@
  */
 package nu.mine.mosher.grodb;
 
+import java.io.Serializable;
+import nu.mine.mosher.core.Immutable;
+
 /**
  * TODO
  *
  * @author Chris Mosher
  */
-public class DatePeriod
+public class DatePeriod implements Immutable, Serializable
 {
 	private final DateRange dateStart;
 	private final DateRange dateEnd;
-	
+
+	static
+	{
+		assert Immutable.class.isAssignableFrom(YMD.class);
+	}
 	/**
 	 * @param dateStart
 	 * @param dateEnd
