@@ -41,7 +41,7 @@ public final class Closer
 	/**
 	 * @return
 	 */
-	public boolean hasErrors()
+	public static boolean hasErrors()
 	{
 		return !rException.isEmpty();
 	}
