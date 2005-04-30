@@ -16,8 +16,8 @@ public class YMD implements Immutable, Serializable, Comparable
 	private final int month;
 	private final int day;
 
-	private transient int hash;
-	private transient int approx;
+	private transient final int hash;
+	private transient final int approx;
 
 
 
