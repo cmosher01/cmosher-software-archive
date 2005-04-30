@@ -106,20 +106,20 @@ public final class Closer
 	}
 
 	/**
-	 * @param cl
+	 * @param clas
 	 * @return the close Method
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 */
-	private static Method getCloseMethod(final Class cl) throws NoSuchMethodException, SecurityException
+	private static Method getCloseMethod(final Class clas) throws NoSuchMethodException, SecurityException
 	{
 		synchronized (Closer.mClasses)
 		{
-			if (!Closer.mClasses.containsKey(cl))
+			if (!Closer.mClasses.containsKey(clas))
 			{
-				Closer.mClasses.put(cl,cl.getMethod("close"));
+				Closer.mClasses.put(clas,clas.getMethod("close"));
 			}
-			return Closer.mClasses.get(cl);
+			return Closer.mClasses.get(clas);
 		}
 	}
 }
