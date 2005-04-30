@@ -18,8 +18,9 @@ public class DatePeriod implements Immutable, Serializable
 
 	static
 	{
-		assert Immutable.class.isAssignableFrom(YMD.class);
+		assert Immutable.class.isAssignableFrom(DateRange.class);
 	}
+
 	/**
 	 * @param dateStart
 	 * @param dateEnd
