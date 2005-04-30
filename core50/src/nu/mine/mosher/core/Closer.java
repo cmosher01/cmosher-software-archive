@@ -20,11 +20,14 @@ public final class Closer<T>
 	private static final Object lock = new Object();
 	private static Method methodClose;
 
+	/**
+	 * @param object
+	 */
 	public void close(final T object)
 	{
 		try
 		{
-			tryClose();
+			tryClose(object);
 		}
 		catch (final Throwable ignore)
 		{
