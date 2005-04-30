@@ -31,7 +31,7 @@ public final class Closer<T>
 		}
 		catch (final Throwable ignore)
 		{
-			// ignore all exceptions
+			ignore.printStackTrace();
 		}
 	}
 	/**
