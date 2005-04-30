@@ -11,12 +11,20 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+/**
+ * TODO
+ *
+ * @author Chris Mosher
+ */
 public class Pool<T>
 {
 	private final LinkedList<T> unused = new LinkedList<T>();
 	private final Map<WeakReference<T>,T> inUse = new HashMap<WeakReference<T>,T>();
 	private final ReferenceQueue<T> recycleBin = new ReferenceQueue<T>();
 
+	/**
+	 * @param pool
+	 */
 	public Pool(final T[] pool)
 	{
 		if (pool.length == 0)
@@ -30,6 +38,10 @@ public class Pool<T>
 		}
 	}
 
+	/**
+	 * @return
+	 * @throws NoSuchElementException
+	 */
 	public synchronized T get() throws NoSuchElementException
 	{
 		recycle();
