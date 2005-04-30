@@ -47,7 +47,12 @@ public class DateRange implements Immutable, Serializable, Comparable
 		this(earliest,latest,false,false);
 	}
 
-    public DateRange(final YMD earliest, final YMD latest, final boolean julian, final boolean circa)
+    public DateRange(final YMD earliest, final YMD latest, final boolean circa)
+    {
+		this(earliest,latest,circa,false);
+    }
+
+    public DateRange(final YMD earliest, final YMD latest, final boolean circa, final boolean julian)
     {
     	if (earliest == null)
     	{
