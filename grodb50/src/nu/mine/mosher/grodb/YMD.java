@@ -31,7 +31,7 @@ public class YMD implements Immutable, Serializable, Comparable
 		this(year,month,0);
 	}
 
-	public YMD(ifinal nt year, final int month, final int day)
+	public YMD(final int year, final int month, final int day)
 	{
 		this.year = year;
 		this.month = month;
