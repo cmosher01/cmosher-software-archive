@@ -1,7 +1,7 @@
 /*
  * Created on Apr 9, 2005
  */
-package nu.mine.mosher.core;
+package nu.mine.mosher.compare;
 
 /**
  * TODO
