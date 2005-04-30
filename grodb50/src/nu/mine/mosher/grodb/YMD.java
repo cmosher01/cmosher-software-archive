@@ -64,14 +64,14 @@ public class YMD implements Immutable, Serializable, Comparable
 		return this.approx;
 	}
 
-	public boolean equals(Object o)
+	public boolean equals(final Object object)
 	{
-		if (!(o instanceof YMD))
+		if (!(object instanceof YMD))
 		{
 			return false;
 		}
 
-		YMD that = (YMD)o;
+		final YMD that = (YMD)object;
 		return
 			this.year == that.year &&
 			this.month == that.month &&
@@ -86,7 +86,7 @@ public class YMD implements Immutable, Serializable, Comparable
     public int compareTo(Object o)
     {
     	YMD that = (YMD)o;
-    	return Util.compare(this.getApproxDay(),that.getApproxDay());
+    	return Util.compare(this.approx,that.approx);
     }
 
     public static YMD getMinimum()
