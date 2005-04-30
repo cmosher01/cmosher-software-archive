@@ -97,15 +97,7 @@ public final class Closer
 		try
 		{
 			final Class cl = obj.getClass();
-			Method methodClose;
-			synchronized (Closer.mClasses)
-			{
-				if (!Closer.mClasses.containsKey(cl))
-				{
-					Closer.mClasses.put(cl,cl.getMethod("close"));
-				}
-				methodClose = Closer.mClasses.get(cl);
-			}
+			Method methodClose = getCloseMethod(cl);
 
 			methodClose.invoke(obj);
 		}
@@ -113,5 +105,25 @@ public final class Closer
 		{
 			ignore.printStackTrace();
 		}
+	}
+
+	/**
+	 * @param cl
+	 * @return
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 */
+	private static Method getCloseMethod(final Class cl) throws NoSuchMethodException, SecurityException
+	{
+		Method methodClose;
+		synchronized (Closer.mClasses)
+		{
+			if (!Closer.mClasses.containsKey(cl))
+			{
+				Closer.mClasses.put(cl,cl.getMethod("close"));
+			}
+			methodClose = Closer.mClasses.get(cl);
+		}
+		return methodClose;
 	}
 }
