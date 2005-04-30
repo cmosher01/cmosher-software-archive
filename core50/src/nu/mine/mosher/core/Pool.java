@@ -72,7 +72,7 @@ public class Pool<T>
 			object.getClass().getInterfaces(),
 			new InvocationHandler()
 			{
-				public Object invoke(Object proxy, Method method, Object[] args) throws Throwable
+				public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable
 				{
 					return method.invoke(object,args);
 				}
@@ -89,7 +89,7 @@ public class Pool<T>
 		Reference ref = recycleBin.poll();
 		while (ref != null)
 		{
-			T recyclable = inUse.remove(ref);
+			final T recyclable = inUse.remove(ref);
 			unused.addLast(recyclable);
 
 			ref = recycleBin.poll();
