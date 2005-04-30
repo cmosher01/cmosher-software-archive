@@ -1,1 +1,1 @@
-I have extracted most useful things from this project and incorporated it into the core50 project.
+I have extracted most useful things from this project and incorporated them into the core50 project.
