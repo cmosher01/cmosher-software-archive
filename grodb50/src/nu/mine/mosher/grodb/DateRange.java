@@ -6,6 +6,11 @@ import java.util.TimeZone;
 import nu.mine.mosher.core.Immutable;
 import nu.mine.mosher.core.Util;
 
+/**
+ * TODO
+ *
+ * @author Chris Mosher
+ */
 public class DateRange implements Immutable, Serializable, Comparable
 {
     /*
