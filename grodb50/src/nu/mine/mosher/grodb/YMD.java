@@ -101,8 +101,8 @@ public class YMD implements Immutable, Serializable, Comparable
 
 	private int calcApprox()
 	{
-		int m = month;
-		int d = day;
+		int m = this.month;
+		int d = this.day;
 		if (m == 0 && d == 0)
 		{
 			m = 7;
@@ -112,18 +112,18 @@ public class YMD implements Immutable, Serializable, Comparable
 		{
 			d = 15;
 		}
-		return year*10000+m*100+d;
+		return this.year*10000+m*100+d;
 	}
 
     private int calcHash()
     {
 		int h = 17;
 		h *= 37;
-		h += year;
+		h += this.year;
 		h *= 37;
-		h += month;
+		h += this.month;
 		h *= 37;
-		h += day;
+		h += this.day;
 		return h;
     }
 }
