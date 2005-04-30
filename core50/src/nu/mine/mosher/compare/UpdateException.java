@@ -1,4 +1,4 @@
-package nu.mine.mosher.core;
+package nu.mine.mosher.compare;
 
 public class UpdateException extends Exception
 {
