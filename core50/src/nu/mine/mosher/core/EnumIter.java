@@ -10,11 +10,11 @@ import java.util.NoSuchElementException;
  * 
  * @author Chris Mosher
  */
-public class EnumIter implements Iterator
+public class EnumIter<T> implements Iterator<T>
 {
     private final Enumeration e;
 
-    public EnumIter(Enumeration e)
+    public EnumIter(final Enumeration<T> e)
     {
         this.e = e;
     }
@@ -24,7 +24,7 @@ public class EnumIter implements Iterator
         return e.hasMoreElements();
     }
 
-    public Object next() throws NoSuchElementException
+    public T next() throws NoSuchElementException
     {
         return e.nextElement();
     }
