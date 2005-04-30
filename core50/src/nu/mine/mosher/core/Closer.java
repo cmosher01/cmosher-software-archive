@@ -12,10 +12,10 @@ import java.util.Map;
  */
 public final class Closer<T>
 {
-	private Closer()
-	{
-		assert false : "can't instantiate";
-	}
+//	private Closer()
+//	{
+//		assert false : "can't instantiate";
+//	}
 
 	private static final Object lock = new Object();
 	private static Method methodClose;
