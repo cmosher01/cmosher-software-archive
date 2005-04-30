@@ -141,14 +141,14 @@ public class DateRange implements Immutable, Serializable, Comparable
         return d;
     }
 
-    public boolean equals(Object o)
+    public boolean equals(final Object object)
     {
-    	if (!(o instanceof DateRange))
+    	if (!(object instanceof DateRange))
     	{
     		return false;
     	}
 
-		DateRange that = (DateRange)o;
+		final DateRange that = (DateRange)object;
 
 		return
 			this.earliest == that.earliest &&
