@@ -80,7 +80,7 @@ public final class Closer
 	 * }
 	 * finally
 	 * {
-	 *     UniversalCloser.close(os);
+	 *     Closer.close(os);
 	 * }
 	 * </pre>
 	 * 
