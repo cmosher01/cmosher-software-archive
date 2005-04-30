@@ -82,7 +82,7 @@ public class DateRange implements Immutable, Serializable, Comparable
 	 */
 	public YMD getEarliest()
 	{
-		return earliest;
+		return this.earliest;
 	}
 
     /**
@@ -90,12 +90,12 @@ public class DateRange implements Immutable, Serializable, Comparable
      */
     public YMD getLatest()
     {
-        return latest;
+        return this.latest;
     }
 
 	public boolean isExact()
 	{
-		return earliest.equals(latest);
+		return this.earliest.equals(this.latest);
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class DateRange implements Immutable, Serializable, Comparable
 	 */
 	public boolean isJulian()
 	{
-		return julian;
+		return this.julian;
 	}
 
     /**
@@ -111,10 +111,15 @@ public class DateRange implements Immutable, Serializable, Comparable
      */
     public boolean isCirca()
     {
-        return circa;
+        return this.circa;
     }
 
-    public int compareTo(Object o)
+	public int getApproxDay()
+	{
+		return this.approx;
+	}
+
+	public int compareTo(Object o)
     {
     	DateRange that = (DateRange)o;
         int d = 0;
