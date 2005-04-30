@@ -1,4 +1,4 @@
-package nu.mine.mosher.util;
+package nu.mine.mosher.core;
 
 import java.util.Enumeration;
 import java.util.Iterator;
