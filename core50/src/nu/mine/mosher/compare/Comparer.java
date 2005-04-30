@@ -4,6 +4,11 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.SortedSet;
 
+/**
+ * Has a method to compare two <code>SortedSet</code>s and report differences.
+ *
+ * @author Chris Mosher
+ */
 public final class Comparer
 {
 	private Comparer()
