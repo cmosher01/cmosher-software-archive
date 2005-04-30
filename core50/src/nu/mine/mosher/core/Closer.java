@@ -89,14 +89,15 @@ public final class Closer
 	 * with Java 1.4.2, where calling close on an object took
 	 * about 4 nanoseconds, calling UniversalCloser2.close on
 	 * that object took about 384 nanoseconds.
+	 * @param <T> 
 	 * 
-	 * @param obj the Object whose close() method is to be called.
+	 * @param object the Object whose close() method is to be called.
 	 */
-	public static<T> void close(final T obj)
+	public static<T> void close(final T object)
 	{
 		try
 		{
-			getCloseMethod(obj.getClass()).invoke(obj);
+			getCloseMethod(object.getClass()).invoke(object);
 		}
 		catch (final Throwable ignore)
 		{
