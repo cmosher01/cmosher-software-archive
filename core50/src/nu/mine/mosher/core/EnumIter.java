@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
  */
 public class EnumIter<T> implements Iterator<T>
 {
-    private final Enumeration e;
+    private final Enumeration<T> e;
 
     public EnumIter(final Enumeration<T> e)
     {
