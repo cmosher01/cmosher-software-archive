@@ -31,10 +31,7 @@ public final class Comparer
 			throw new IllegalArgumentException("the two sets must have comparators that are equal");
 		}
 
-		final Iterator<T> iOld = setOld.iterator();
-		final Iterator<T> iNew = setNew.iterator();
-
-		compare(iOld,iNew,c,upd);
+		compare(setOld.iterator(),setNew.iterator(),c,upd);
 
 //		final Have<T> have = new Have<T>();
 //		final Need need = new Need();
