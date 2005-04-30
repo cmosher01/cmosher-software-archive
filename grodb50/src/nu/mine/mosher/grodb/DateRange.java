@@ -150,22 +150,11 @@ public class DateRange implements Immutable, Serializable, Comparable
 
 		DateRange that = (DateRange)o;
 
-		if (this.circa || that.circa)
-		{
-			return false;
-		}
-
-		if (!this.isExact() || !that.isExact())
-		{
-			return false;
-		}
-
-		if (!this.earliest.equals(that.earliest))
-		{
-			return false;
-		}
-
-		return true;
+		return
+			this.earliest == that.earliest &&
+			this.latest == that.latest &&
+			this.julian == that.julian &&
+			this.circa == that.circa;
     }
 
     public int hashCode()
