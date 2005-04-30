@@ -31,6 +31,8 @@ public class CloserTest extends TestCase
 		Closer<Thing1> clos1 = new Closer<Thing1>();
 		clos1.close(t1);
 		assertTrue(t1.closed);
+
+		assertFalse(clos1.hasErrors());
 	}
 
 	public void testClose2()
@@ -50,5 +52,7 @@ public class CloserTest extends TestCase
 			clos1.close(u1);
 			assertTrue(u1.closed);
 		}
+
+		assertFalse(clos1.hasErrors());
 	}
 }
