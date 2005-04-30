@@ -107,7 +107,7 @@ public final class Closer
 
 	/**
 	 * @param cl
-	 * @return
+	 * @return the close Method
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 */
