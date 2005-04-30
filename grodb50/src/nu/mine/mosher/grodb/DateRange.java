@@ -28,7 +28,7 @@ public class DateRange implements Immutable, Serializable, Comparable
 
 	private final boolean circa;
 
-	private final int hash;
+	private transient final int hash;
 
 
 
