@@ -89,7 +89,17 @@ public class YMD implements Immutable, Serializable, Comparable
     	return Util.compare(this.approx,that.approx);
     }
 
-    public static YMD getMinimum()
+    public boolean isExact()
+    {
+    	return valid(this.year) && valid(this.month) && valid(this.day);
+    }
+
+	private static boolean valid(int i)
+	{
+		return 0 < i && i < Integer.MAX_VALUE;
+	}
+
+	public static YMD getMinimum()
     {
     	return new YMD(Integer.MIN_VALUE,Integer.MIN_VALUE,Integer.MIN_VALUE);
     }
