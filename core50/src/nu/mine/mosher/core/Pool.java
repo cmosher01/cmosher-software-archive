@@ -74,6 +74,7 @@ public class Pool<T>
 			{
 				public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable
 				{
+					Util.unused(proxy);
 					return method.invoke(object,args);
 				}
 			});
