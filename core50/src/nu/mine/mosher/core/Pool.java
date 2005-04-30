@@ -50,10 +50,10 @@ public class Pool<T>
 	/**
 	 * @param <T>
 	 * @param object
-	 * @return
+	 * @return proxy object
 	 * @throws IllegalArgumentException
 	 */
-	private static <T>Object makeProxyObject(final T object) throws IllegalArgumentException
+	private static<T> Object makeProxyObject(final T object) throws IllegalArgumentException
 	{
 		return Proxy.newProxyInstance(
 			object.getClass().getClassLoader(),
