@@ -7,9 +7,10 @@ public final class Undoer<T extends Cloneable>
 	private final LinkedList<T> mrUndo = new LinkedList<T>();
 	private final LinkedList<T> mrRedo = new LinkedList<T>();
 
-	public void save(T state) throws CloningException
+	public void save(final T state) throws CloningException
 	{
-		mrUndo.addLast(CloneFactory.cloneObject(state));
+		CloneFactory<T> cf = new CloneFactory<T>(state);
+		mrUndo.addLast(cf.createClone());
 		mrRedo.clear();
 	}
 
