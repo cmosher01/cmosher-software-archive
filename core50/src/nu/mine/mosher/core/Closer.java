@@ -2,7 +2,9 @@ package nu.mine.mosher.core;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,6 +21,7 @@ public final class Closer<T>
 
 	private static final Object lock = new Object();
 	private static Method methodClose;
+	private static List<Throwable> rException = new ArrayList<Throwable>();
 
 	/**
 	 * @param object
@@ -31,8 +34,13 @@ public final class Closer<T>
 		}
 		catch (final Throwable ignore)
 		{
-			ignore.printStackTrace();
+			rException.add(ignore);
 		}
+	}
+
+	public boolean hasErrors()
+	{
+		return !rException.isEmpty();
 	}
 	/**
 	 * @param object
