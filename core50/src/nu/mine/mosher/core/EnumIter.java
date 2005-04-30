@@ -24,7 +24,7 @@ public class EnumIter<T> implements Iterator<T>
     }
 
     /**
-     * @return
+     * @return if has a next item to get
      */
     public boolean hasNext()
     {
@@ -32,7 +32,8 @@ public class EnumIter<T> implements Iterator<T>
     }
 
     /**
-     * @return
+     * Gets next item.
+     * @return next item
      * @throws NoSuchElementException
      */
     public T next() throws NoSuchElementException
