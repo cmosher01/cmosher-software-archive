@@ -29,6 +29,7 @@ public class DateRange implements Immutable, Serializable, Comparable
 	private final boolean circa;
 
 	private transient final int hash;
+	private transient final int approx;
 
 
 
@@ -72,6 +73,7 @@ public class DateRange implements Immutable, Serializable, Comparable
         this.julian = julian;
 		this.circa = circa;
 
+		this.approx = calcApprox();
 		this.hash = calcHash();
     }
 
@@ -163,8 +165,13 @@ public class DateRange implements Immutable, Serializable, Comparable
 
     public int hashCode()
     {
-    	return hash;
+    	return this.hash;
     }
+
+	private int calcApprox()
+	{
+		return (this.earliest.getApproxDay()+this.latest.getApproxDay())/2;
+	}
 
 	private int calcHash()
 	{
