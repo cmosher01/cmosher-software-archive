@@ -1,13 +1,17 @@
 package nu.mine.mosher.grodb;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
 import nu.mine.mosher.core.Immutable;
 import nu.mine.mosher.core.Util;
 
+/**
+ * Represents a date, specified as a year, month, and day, allowing
+ * for some values to be unknown.
+ *
+ * @author Chris Mosher
+ */
 public class YMD implements Immutable, Serializable, Comparable
 {
 	/*
