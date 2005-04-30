@@ -1,5 +1,6 @@
 package nu.mine.mosher.core;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +20,15 @@ public final class Closer<T>
 	private static final Object lock = new Object();
 	private static Method methodClose;
 
-	public void close(final T object)
+	/**
+	 * @param object
+	 * @throws SecurityException
+	 * @throws NoSuchMethodException
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
+	public void close(final T object) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
 	{
 		synchronized (lock)
 		{
