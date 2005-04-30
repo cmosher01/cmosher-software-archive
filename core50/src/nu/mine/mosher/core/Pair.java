@@ -2,7 +2,7 @@ package nu.mine.mosher.core;
 
 import java.io.Serializable;
 
-public final class Pair<T extends Cloneable, U extends Cloneable> implements Cloneable, Comparable<Pair<T,U>>, Serializable,	Immutable
+public final class Pair<T extends Cloneable, U extends Cloneable> implements Cloneable, Comparable<Pair<T,U>>, Serializable, Immutable
 {
 	private final ImmutableReference<T> a;
 	private final ImmutableReference<U> b;
