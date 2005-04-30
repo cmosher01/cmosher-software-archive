@@ -55,23 +55,23 @@ public class DateRange implements Immutable, Serializable, Comparable
 
     public DateRange(final YMD earliest, final YMD latest, final boolean circa, final boolean julian)
     {
-    	if (earliest == null)
-    	{
-    		throw new NullPointerException("earliest date cannot be null");
-    	}
-		if (latest == null)
-		{
-			throw new NullPointerException("latest date cannot be null");
-		}
-		if (earliest.compareTo(latest) > 0)
-		{
-			throw new IllegalArgumentException("earliest date must be less than or equal to latest date");
-		}
-
 		this.earliest = earliest;
         this.latest = latest;
         this.julian = julian;
 		this.circa = circa;
+
+    	if (this.earliest == null)
+    	{
+    		throw new NullPointerException("earliest date cannot be null");
+    	}
+		if (this.latest == null)
+		{
+			throw new NullPointerException("latest date cannot be null");
+		}
+		if (this.earliest.compareTo(this.latest) > 0)
+		{
+			throw new IllegalArgumentException("earliest date must be less than or equal to latest date");
+		}
 
 		this.approx = calcApprox();
 		this.hash = calcHash();
