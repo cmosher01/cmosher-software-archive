@@ -12,9 +12,9 @@ import javax.swing.UIManager;
  */
 public final class SwingUtil
 {
-    private SwingUtil() throws UnsupportedOperationException
+    private SwingUtil()
     {
-        throw new UnsupportedOperationException();
+        assert false : "can't instantiate";
     }
 
     /**
