@@ -39,7 +39,7 @@ public final class Closer
 //	}
 //
 	/**
-	 * @return
+	 * @return <code>true</code> if any errors have occurred calling <code>close</code> for this class
 	 */
 	public static boolean hasErrors()
 	{
