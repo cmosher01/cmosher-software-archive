@@ -1,4 +1,4 @@
-package nu.mine.mosher.grodb;
+package nu.mine.mosher.grodbold;
 
 public class RelationTypeFactory
 {
