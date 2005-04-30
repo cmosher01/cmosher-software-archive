@@ -21,17 +21,17 @@ public class YMD implements Immutable, Serializable, Comparable
 
 
 
-	public YMD(int year)
+	public YMD(final int year)
 	{
 		this(year,0,0);
 	}
 
-	public YMD(int year, int month)
+	public YMD(final int year, final int month)
 	{
 		this(year,month,0);
 	}
 
-	public YMD(int year, int month, int day)
+	public YMD(ifinal nt year, final int month, final int day)
 	{
 		this.year = year;
 		this.month = month;
@@ -83,7 +83,7 @@ public class YMD implements Immutable, Serializable, Comparable
     	return this.hash;
     }
 
-    public int compareTo(Object object)
+    public int compareTo(final Object object)
     {
     	final YMD that = (YMD)object;
     	return Util.compare(this.approx,that.approx);
