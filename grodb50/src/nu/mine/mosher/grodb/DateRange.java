@@ -11,7 +11,7 @@ public class DateRange implements Immutable, Serializable, Comparable
 	 * YMD always represent Gregorian calendar.
 	 * Range of possible dates is given by earliest
 	 * thru latest (inclusive).
-	 * Date is exact iff earliest==latest.
+	 * Date is exact iff earliest.equals(latest).
 	 */
 	private final YMD earliest;
 	private final YMD latest;
