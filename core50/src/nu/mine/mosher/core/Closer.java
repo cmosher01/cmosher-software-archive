@@ -38,10 +38,14 @@ public final class Closer<T>
 		}
 	}
 
+	/**
+	 * @return
+	 */
 	public boolean hasErrors()
 	{
 		return !rException.isEmpty();
 	}
+
 	/**
 	 * @param object
 	 * @throws SecurityException
