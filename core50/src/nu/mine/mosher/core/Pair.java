@@ -7,7 +7,7 @@ public final class Pair<T extends Cloneable, U extends Cloneable> implements Clo
 	private final ImmutableReference<T> a;
 	private final ImmutableReference<U> b;
 
-	public Pair(T a, U b) throws CloningException
+	public Pair(final T a, final U b) throws CloningException
 	{
 		this.a = new ImmutableReference<T>(a);
 		this.b = new ImmutableReference<U>(b);
@@ -33,13 +33,13 @@ public final class Pair<T extends Cloneable, U extends Cloneable> implements Clo
 		return "(" + a + "," + b + ")";
 	}
 
-	public boolean equals(Object o)
+	public boolean equals(final Object object)
 	{
-		if (!(o instanceof Pair))
+		if (!(object instanceof Pair))
 		{
 			return false;
 		}
-		Pair that = (Pair)o;
+		final Pair that = (Pair)object;
 		return this.a.equals(that.a) && this.b.equals(that.b);
 	}
 
@@ -48,13 +48,19 @@ public final class Pair<T extends Cloneable, U extends Cloneable> implements Clo
 		return a.hashCode() ^ b.hashCode();
 	}
 
-	public int compareTo(Pair<T,U> that)
+	public int compareTo(final Pair<T,U> that)
 	{
-		int c = this.a.compareTo(that.a);
+		int c = 0;
+
+		if (c == 0)
+		{
+			c = this.a.compareTo(that.a);
+		}
 		if (c == 0)
 		{
 			c = this.b.compareTo(that.b);
 		}
+
 		return c;
 	}
 }
