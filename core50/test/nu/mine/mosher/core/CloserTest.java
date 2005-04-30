@@ -28,6 +28,8 @@ public class CloserTest extends TestCase
 	{
 		Thing1 t1 = new Thing1();
 		assertFalse(t1.closed);
-		Closer clos1 = new Closer<Thing1>();
+		Closer<Thing1> clos1 = new Closer<Thing1>();
+		clos1.close(t1);
+		assertTrue(t1.closed);
 	}
 }
