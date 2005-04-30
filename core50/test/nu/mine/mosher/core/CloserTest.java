@@ -16,7 +16,18 @@ public class CloserTest extends TestCase
 	{
 	}
 
+	private static final class Thing1
+	{
+		public boolean closed;
+		public void close()
+		{
+			closed = true;
+		}
+	}
 	public void testClose()
 	{
+		Thing1 t1 = new Thing1();
+		assertFalse(t1.closed);
+		Closer clos1 = new Closer<Thing1>();
 	}
 }
