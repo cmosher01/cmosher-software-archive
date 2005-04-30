@@ -76,7 +76,7 @@ public class DateRange implements Immutable, Serializable, Comparable
     }
 
 	/**
-	 * @return
+	 * @return earliest possible date
 	 */
 	public YMD getEarliest()
 	{
@@ -84,7 +84,7 @@ public class DateRange implements Immutable, Serializable, Comparable
 	}
 
     /**
-     * @return
+     * @return latest possible date
      */
     public YMD getLatest()
     {
