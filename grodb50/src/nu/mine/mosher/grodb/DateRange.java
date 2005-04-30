@@ -127,7 +127,7 @@ public class DateRange implements Immutable, Serializable, Comparable
 
         if (d == 0)
         {
-        	d = Util.compare(this.getApproxDay(),that.getApproxDay());
+        	d = Util.compare(this.approx,that.approx);
         }
 		if (d == 0)
 		{
