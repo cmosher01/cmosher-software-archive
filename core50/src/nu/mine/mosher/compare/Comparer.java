@@ -156,7 +156,7 @@ public final class Comparer
 	 * @param upd
 	 * @throws UpdateException
 	 */
-	public static <T>void compare(final Iterator<T> iOld, final Iterator<T> iNew, final Comparator<T> c, final Updater<T> upd) throws UpdateException
+	public static<T extends Comparable<T>> void compare(final Iterator<T> iOld, final Iterator<T> iNew, final Comparator<T> c, final Updater<T> upd) throws UpdateException
 	{
 		final Have<T> have = new Have<T>();
 		final Need need = new Need();
