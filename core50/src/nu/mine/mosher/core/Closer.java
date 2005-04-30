@@ -96,9 +96,7 @@ public final class Closer
 	{
 		try
 		{
-			final Method methodClose = getCloseMethod(obj.getClass());
-
-			methodClose.invoke(obj);
+			getCloseMethod(obj.getClass()).invoke(obj);
 		}
 		catch (final Throwable ignore)
 		{
