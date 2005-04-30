@@ -20,6 +20,17 @@ public final class Closer<T>
 	private static final Object lock = new Object();
 	private static Method methodClose;
 
+	public void close(final T object)
+	{
+		try
+		{
+			tryClose();
+		}
+		catch (final Throwable ignore)
+		{
+			// ignore all exceptions
+		}
+	}
 	/**
 	 * @param object
 	 * @throws SecurityException
@@ -28,7 +39,7 @@ public final class Closer<T>
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
 	 */
-	public void close(final T object) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
+	private void tryClose(final T object) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
 	{
 		synchronized (lock)
 		{
