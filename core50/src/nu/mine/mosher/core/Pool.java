@@ -57,9 +57,7 @@ public class Pool<T>
 
 	protected static<T> T makeProxy(final T object)
 	{
-		Object x = makeProxyObject(object);
-		T t = (T)x;
-		return t;
+		return (T)makeProxyObject(object);
 	}
 
 	/**
