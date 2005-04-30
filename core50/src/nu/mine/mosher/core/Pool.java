@@ -17,7 +17,7 @@ public class Pool<T>
 	private final Map<WeakReference<T>,T> inUse = new HashMap<WeakReference<T>,T>();
 	private final ReferenceQueue<T> recycleBin = new ReferenceQueue<T>();
 
-	public Pool(T[] pool)
+	public Pool(final T[] pool)
 	{
 		if (pool.length == 0)
 		{
@@ -42,16 +42,27 @@ public class Pool<T>
 		return theProxy;
 	}
 
-	protected static<T> T makeProxy(final T theObject)
+	protected static<T> T makeProxy(final T object)
 	{
-		return (T)Proxy.newProxyInstance(
-			theObject.getClass().getClassLoader(),
-			theObject.getClass().getInterfaces(),
+		return (T)makeProxyObject(object);
+	}
+
+	/**
+	 * @param <T>
+	 * @param object
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	private static <T>Object makeProxyObject(final T object) throws IllegalArgumentException
+	{
+		return Proxy.newProxyInstance(
+			object.getClass().getClassLoader(),
+			object.getClass().getInterfaces(),
 			new InvocationHandler()
 			{
 				public Object invoke(Object proxy, Method method, Object[] args) throws Throwable
 				{
-					return method.invoke(theObject,args);
+					return method.invoke(object,args);
 				}
 			});
 	}
