@@ -1,6 +1,9 @@
 package nu.mine.mosher.grodb;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import nu.mine.mosher.core.Immutable;
 import nu.mine.mosher.core.Util;
@@ -94,7 +97,19 @@ public class YMD implements Immutable, Serializable, Comparable
     	return valid(this.year) && valid(this.month) && valid(this.day);
     }
 
-	private static boolean valid(int i)
+    public Date asDate()
+    {
+    	if (!isExact())
+    	{
+    		throw new IllegalStateException();
+    	}
+    	GregorianCalendar cal = new GregorianCalendar();
+    	cal.setGregorianChange(new Date(Long.MIN_VALUE));
+    	cal.set(this.year,this.month,this.day);
+    	return cal.getTime();
+    }
+
+    private static boolean valid(int i)
 	{
 		return 0 < i && i < Integer.MAX_VALUE;
 	}
