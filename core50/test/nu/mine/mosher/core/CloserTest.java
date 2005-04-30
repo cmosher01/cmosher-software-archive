@@ -33,7 +33,7 @@ public class CloserTest extends TestCase
 		assertTrue(t1.closed);
 	}
 
-	public void testClose1()
+	public void testClose2()
 	{
 		Closer<Thing1> clos1 = new Closer<Thing1>();
 
