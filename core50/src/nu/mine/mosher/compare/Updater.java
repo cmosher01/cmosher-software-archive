@@ -1,6 +1,7 @@
 package nu.mine.mosher.compare;
 
 /**
+ * @param <T> 
  * @author Chris Mosher
  * Created: Feb 7, 2004
  */
