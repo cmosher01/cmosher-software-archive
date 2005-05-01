@@ -303,7 +303,12 @@ CalYMD Date() :
 	{
 		// TODO need to convert julian to gregorian, because YMD always
 		// stores as gregorian.
-		return new CalYMD(ymd,julian);
+    	final GregorianCalendar cal = new GregorianCalendar();
+    	cal.setGregorianChange(new Date(Long.MAX_VALUE));
+    	cal.set(ymd.getYear(),ymd.getMonth()-1,ymd.getDay());
+    	cal.setGregorianChange(new Date(Long.MIN_VALUE));
+    	final YMD ymdGreg = new YMD(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH)+1,cal.get(Calendar.DAY_OF_MONTH));
+		return new CalYMD(ymdGreg,julian);
 	}
 }
 
@@ -366,7 +371,7 @@ int Month() : {}
 
 
 	{
-		return this.token.kind - JAN; // 0 == January...
+		return this.token.kind - MONTH_LOWER_LIMIT;
 	}
 }
 
