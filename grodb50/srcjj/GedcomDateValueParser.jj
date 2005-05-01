@@ -13,7 +13,6 @@ package nu.mine.mosher.gedcom.date.parser;
 import nu.mine.mosher.grodb.YMD;
 import nu.mine.mosher.grodb.DateRange;
 import nu.mine.mosher.grodb.DatePeriod;
-import nu.mine.mosher.grodb.TimeZoneUnknown;
 
 import java.util.Calendar;
 import java.util.Date;
