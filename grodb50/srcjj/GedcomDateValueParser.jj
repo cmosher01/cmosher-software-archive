@@ -123,7 +123,7 @@ TOKEN :
 
 
 	
-	DatePeriod DateValue() :
+DatePeriod DateValue() :
 {
 	DatePeriod datePeriod = null;
 	DateRange dateRange = null;
