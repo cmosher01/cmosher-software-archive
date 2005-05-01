@@ -158,8 +158,8 @@ TOKEN :
 		{
 			// TODO date with notes
 			return new DatePeriod(
-				new DateRange(dateNotes.getCalYMD().getYMD(),dateNotes.getCalYMD().getYMD(),dateNotes.getCalYMD().isJulian(),-1,-1,new TimeZoneUnknown(),false),
-				new DateRange(dateNotes.getCalYMD().getYMD(),dateNotes.getCalYMD().getYMD(),dateNotes.getCalYMD().isJulian(),-1,-1,new TimeZoneUnknown(),false));
+				new DateRange(dateNotes.getCalYMD().getYMD(),dateNotes.getCalYMD().getYMD(),dateNotes.getCalYMD().isJulian(),false),
+				new DateRange(dateNotes.getCalYMD().getYMD(),dateNotes.getCalYMD().getYMD(),dateNotes.getCalYMD().isJulian(),false));
 		}
 		if (notes != null)
 		{
@@ -168,8 +168,8 @@ TOKEN :
 		if (date != null)
 		{
 			return new DatePeriod(
-				new DateRange(date.getYMD(),date.getYMD(),date.isJulian(),-1,-1,new TimeZoneUnknown(),true),
-				new DateRange(date.getYMD(),date.getYMD(),date.isJulian(),-1,-1,new TimeZoneUnknown(),true));
+				new DateRange(date.getYMD(),date.getYMD(),date.isJulian(),true),
+				new DateRange(date.getYMD(),date.getYMD(),date.isJulian(),true));
 		}
 	}
 }
@@ -203,7 +203,7 @@ DateRange DateRange() :
 			latest = new CalYMD(YMD.getMaximum(),julian);
 		}
 		julian = earliest.isJulian();
-		return new DateRange(earliest.getYMD(),latest.getYMD(),julian,-1,-1,new TimeZoneUnknown(),false);
+		return new DateRange(earliest.getYMD(),latest.getYMD(),julian,false);
 	}
 }
 
@@ -220,8 +220,8 @@ DatePeriod DateApproximated() :
 	
 	{
 		return new DatePeriod(
-			new DateRange(date.getYMD(),date.getYMD(),date.isJulian(),-1,-1,new TimeZoneUnknown(),true),
-			new DateRange(date.getYMD(),date.getYMD(),date.isJulian(),-1,-1,new TimeZoneUnknown(),true));
+			new DateRange(date.getYMD(),date.getYMD(),date.isJulian(),true),
+			new DateRange(date.getYMD(),date.getYMD(),date.isJulian(),true));
 	}
 }
 
@@ -287,8 +287,8 @@ DatePeriod DatePeriod() :
 		}
 		julian = fromDate.isJulian();
 		return new DatePeriod(
-			new DateRange(fromDate.getYMD(),fromDate.getYMD(),julian,-1,-1,new TimeZoneUnknown(),false),
-			new DateRange(toDate.getYMD(),toDate.getYMD(),julian,-1,-1,new TimeZoneUnknown(),false));
+			new DateRange(fromDate.getYMD(),fromDate.getYMD(),julian,false),
+			new DateRange(toDate.getYMD(),toDate.getYMD(),julian,false));
 	}
 }
 
