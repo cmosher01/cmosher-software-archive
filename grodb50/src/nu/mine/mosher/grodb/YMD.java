@@ -18,6 +18,7 @@ public class YMD implements Immutable, Serializable, Comparable
 	 * One-based year, month, and day.
 	 * Gregorian calendar is assumed.
 	 * Zero indicates that field is "unknown"
+	 * Negative year means B.C.
 	 */
 	private final int year;
 	private final int month;
