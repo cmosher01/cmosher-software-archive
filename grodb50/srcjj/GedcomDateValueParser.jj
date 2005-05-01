@@ -366,7 +366,7 @@ int Month() : {}
 
 
 	{
-		return this.token.kind - MONTH_LOWER_LIMIT;
+		return this.token.kind - JAN; // 0 == January...
 	}
 }
 
