@@ -110,7 +110,7 @@ public class YMD implements Immutable, Serializable, Comparable
 
     	final GregorianCalendar cal = new GregorianCalendar();
     	cal.setGregorianChange(new Date(Long.MIN_VALUE));
-    	cal.set(this.year,this.month,this.day);
+    	cal.set(this.year,this.month-1,this.day);
     	return cal.getTime();
     }
 
