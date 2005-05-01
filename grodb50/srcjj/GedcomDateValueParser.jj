@@ -305,11 +305,10 @@ CalYMD Date() :
 
 
 	{
-		// TODO need to convert julian to gregorian, because YMD always
-		// stores as gregorian.
     	YMD ymdGreg;
     	if (julian)
     	{
+    		// convert julian date to gregorian
 	    	final GregorianCalendar cal = new GregorianCalendar();
 	    	cal.setGregorianChange(new Date(Long.MAX_VALUE));
 	    	cal.set(ymd.getYear(),ymd.getMonth()-1,ymd.getDay());
