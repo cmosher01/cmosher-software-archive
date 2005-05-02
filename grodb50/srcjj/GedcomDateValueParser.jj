@@ -18,18 +18,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-//import java.util.HashMap;
-//import java.util.Map;
-
 class GedcomDateValueParser
 {
-//	private static final Map mapMonthTokenToInt = new HashMap();
-//	private static int nextMonth = 1;
-//	public static void addNextMonth(final String month)
-//	{
-//		mapMonthTokenToInt.put(month,new Integer(nextMonth));
-//		++nextMonth;
-//	}
 	private DatePeriod period;
 	private String notes = "";
 
