@@ -30,6 +30,9 @@ class GedcomDateValueParser
 //		mapMonthTokenToInt.put(month,new Integer(nextMonth));
 //		++nextMonth;
 //	}
+	private DatePeriod period;
+	private String notes = "";
+
 	private static class CalYMD
 	{
 		private final YMD ymd;
@@ -53,6 +56,21 @@ class GedcomDateValueParser
 		}
 		CalYMD getCalYMD() { return this.date; }
 		String getNotes() { return this.notes; }
+	}
+
+	public void parse()
+	{
+		DateValue();
+	}
+
+	public DatePeriod getPeriod()
+	{
+		return this.period;
+	}
+
+	public String getNotes()
+	{
+		return this.notes;
 	}
 }
 
@@ -122,12 +140,12 @@ TOKEN :
 
 
 	
-DatePeriod DateValue() :
+void DateValue() :
 {
 	DatePeriod datePeriod = null;
 	DateRange dateRange = null;
 	DateWithNotes dateNotes = null;
-	String notes = null;
+	String sNotes = null;
 	CalYMD date = null;
 }
 {
@@ -136,7 +154,7 @@ DatePeriod DateValue() :
 		dateRange = DateRange() |
 		datePeriod = DateApproximated() |
 		dateNotes = DateInterpreted() |
-		notes = DatePhrase() |
+		sNotes = DatePhrase() |
 		date = Date()
 	)
 
@@ -147,22 +165,22 @@ DatePeriod DateValue() :
 	{
 		if (datePeriod != null)
 		{
-			return datePeriod;
+			this.period = datePeriod;
 		}
 		if (dateRange != null)
 		{
-			return new DatePeriod(dateRange,dateRange);
+			this.period = new DatePeriod(dateRange,dateRange);
 		}
 		if (dateNotes != null)
 		{
-			// TODO date with notes
-			return new DatePeriod(
+			this.notes = dateNotes.getNotes();
+			this.period = new DatePeriod(
 				new DateRange(dateNotes.getCalYMD().getYMD(),dateNotes.getCalYMD().getYMD(),dateNotes.getCalYMD().isJulian(),false),
 				new DateRange(dateNotes.getCalYMD().getYMD(),dateNotes.getCalYMD().getYMD(),dateNotes.getCalYMD().isJulian(),false));
 		}
-		if (notes != null)
+		if (sNotes != null)
 		{
-			// TODO notes
+			this.notes = sNotes;
 		}
 		if (date != null)
 		{
