@@ -184,7 +184,7 @@ void DateValue() :
 		}
 		if (date != null)
 		{
-			return new DatePeriod(
+			this.period = new DatePeriod(
 				new DateRange(date.getYMD(),date.getYMD(),date.isJulian(),true),
 				new DateRange(date.getYMD(),date.getYMD(),date.isJulian(),true));
 		}
