@@ -58,7 +58,7 @@ class GedcomDateValueParser
 		String getNotes() { return this.notes; }
 	}
 
-	public void parse()
+	public void parse() throws ParseException
 	{
 		DateValue();
 	}
