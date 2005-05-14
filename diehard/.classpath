@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry sourcepath="JRE_SRC" kind="var" path="JRE_LIB">
+		<attributes>
+			<attribute value="http://java.sun.com/j2se/1.5.0/docs/api/" name="javadoc_location"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="/knuth"/>
+	<classpathentry kind="src" path="/math"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
