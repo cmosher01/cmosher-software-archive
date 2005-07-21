@@ -1,0 +1,20 @@
+<?xml version="1.0"	encoding="UTF-8" standalone="no"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
+
+	<description>Small Servlet</description>
+
+
+
+	<servlet>
+		<servlet-name>small</servlet-name>
+		<servlet-class>Small</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>small</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+
+</web-app>
