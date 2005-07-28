@@ -10,9 +10,9 @@ PARSER_BEGIN(GedcomDateValueParser)
 
 package nu.mine.mosher.gedcom.date.parser;
 
-import nu.mine.mosher.grodb.YMD;
-import nu.mine.mosher.grodb.DateRange;
-import nu.mine.mosher.grodb.DatePeriod;
+import nu.mine.mosher.grodb.date.YMD;
+import nu.mine.mosher.grodb.date.DateRange;
+import nu.mine.mosher.grodb.date.DatePeriod;
 
 import java.util.Calendar;
 import java.util.Date;
