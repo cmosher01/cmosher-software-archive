@@ -4,7 +4,6 @@
 package nu.mine.mosher.gedcom.date.parser;
 
 import java.io.StringReader;
-import nu.mine.mosher.gedcom.GedcomTest;
 import junit.framework.TestCase;
 
 /**
@@ -21,7 +20,7 @@ public class GedcomDateValueParserTest extends TestCase
 
     public static void main(final String[] args)
     {
-        junit.textui.TestRunner.run(GedcomTest.class);
+        junit.textui.TestRunner.run(GedcomDateValueParserTest.class);
     }
 
 	public void testDateValue() throws ParseException
