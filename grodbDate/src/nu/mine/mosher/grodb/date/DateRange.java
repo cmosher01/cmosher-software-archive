@@ -1,4 +1,4 @@
-package nu.mine.mosher.grodb;
+package nu.mine.mosher.grodb.date;
 
 import java.io.Serializable;
 import java.util.TimeZone;

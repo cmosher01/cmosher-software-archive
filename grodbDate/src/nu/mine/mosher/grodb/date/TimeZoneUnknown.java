@@ -1,7 +1,7 @@
 /*
  * Created on Apr 22, 2005
  */
-package nu.mine.mosher.grodb;
+package nu.mine.mosher.grodb.date;
 
 import java.util.Date;
 import java.util.TimeZone;

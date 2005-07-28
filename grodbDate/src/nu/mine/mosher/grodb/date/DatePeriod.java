@@ -1,7 +1,7 @@
 /*
  * Created on Apr 23, 2005
  */
-package nu.mine.mosher.grodb;
+package nu.mine.mosher.grodb.date;
 
 import java.io.Serializable;
 import nu.mine.mosher.core.Immutable;
