@@ -6,5 +6,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="/core50"/>
 	<classpathentry kind="src" path="/junit-3-8-1"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/grodbDate"/>
 	<classpathentry kind="output" path="webapp/WEB-INF/classes"/>
 </classpath>
