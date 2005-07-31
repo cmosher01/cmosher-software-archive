@@ -1,10 +1,11 @@
 package nu.mine.mosher.grodb.date;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.TimeZone;
-
+import java.sql.Time;
 import nu.mine.mosher.core.Immutable;
-import nu.mine.mosher.core.Util;
 
 /**
  * TODO
@@ -19,8 +20,8 @@ public class DateRange implements Immutable, Serializable, Comparable
 	 * thru latest (inclusive).
 	 * Date is exact iff earliest.equals(latest).
 	 */
-	private final YMD earliest;
-	private final YMD latest;
+	private YMD earliest;
+	private YMD latest;
 
 	/**
 	 * Indicates what the preferred display calendar is.
@@ -30,12 +31,12 @@ public class DateRange implements Immutable, Serializable, Comparable
 	 * the Gregorian calendar. Further, it is only a preference,
 	 * and therefore the value may be ignored.
 	 */
-	private final boolean julian;
+	private boolean julian;
 
-	private final boolean circa;
+	private boolean circa;
 
-	private transient final int hash;
-	private transient final int approx;
+	private transient int hash;
+	private transient Time approx;
 
 
 
@@ -44,21 +45,39 @@ public class DateRange implements Immutable, Serializable, Comparable
 		assert Immutable.class.isAssignableFrom(YMD.class);
 	}
 
+	/**
+	 * @param ymd
+	 */
 	public DateRange(final YMD ymd)
 	{
 		this(ymd,ymd,false,false);
 	}
 
+	/**
+	 * @param earliest
+	 * @param latest
+	 */
 	public DateRange(final YMD earliest, final YMD latest)
 	{
 		this(earliest,latest,false,false);
 	}
 
+    /**
+     * @param earliest
+     * @param latest
+     * @param circa
+     */
     public DateRange(final YMD earliest, final YMD latest, final boolean circa)
     {
 		this(earliest,latest,circa,false);
     }
 
+    /**
+     * @param earliest
+     * @param latest
+     * @param circa
+     * @param julian
+     */
     public DateRange(final YMD earliest, final YMD latest, final boolean circa, final boolean julian)
     {
 		this.earliest = earliest;
@@ -66,6 +85,11 @@ public class DateRange implements Immutable, Serializable, Comparable
         this.julian = julian;
 		this.circa = circa;
 
+		init();
+    }
+
+    private void init()
+    {
     	if (this.earliest == null)
     	{
     		throw new NullPointerException("earliest date cannot be null");
@@ -83,7 +107,9 @@ public class DateRange implements Immutable, Serializable, Comparable
 		this.hash = calcHash();
     }
 
-	/**
+
+
+    /**
 	 * @return earliest possible date
 	 */
 	public YMD getEarliest()
@@ -99,13 +125,17 @@ public class DateRange implements Immutable, Serializable, Comparable
         return this.latest;
     }
 
+	/**
+	 * @return if this represents an exact date
+	 */
 	public boolean isExact()
 	{
 		return this.earliest.equals(this.latest);
 	}
 
 	/**
-	 * @return
+	 * @return if this date should be show using the Julian calendar
+	 * (if so, the caller is responsible for converting it).
 	 */
 	public boolean isJulian()
 	{
@@ -113,26 +143,79 @@ public class DateRange implements Immutable, Serializable, Comparable
 	}
 
     /**
-     * @return
+     * @return if this is an approximate date
      */
     public boolean isCirca()
     {
         return this.circa;
     }
 
-	public int getApproxDay()
+	/**
+	 * @return an approximation of this range
+	 */
+	public Time getApproxDay()
 	{
 		return this.approx;
 	}
 
-	public int compareTo(final Object object)
+
+
+    @Override
+	public boolean equals(final Object object)
+    {
+    	if (!(object instanceof DateRange))
+    	{
+    		return false;
+    	}
+
+		final DateRange that = (DateRange)object;
+
+		return
+			this.earliest.equals(that.earliest) &&
+			this.latest.equals(that.latest) &&
+			this.julian == that.julian &&
+			this.circa == that.circa;
+    }
+
+    @Override
+	public int hashCode()
+    {
+    	return this.hash;
+    }
+
+    @Override
+    public String toString()
+    {
+    	final StringBuffer sb = new StringBuffer();
+
+		if (this.circa)
+		{
+			sb.append("c. ");
+		}
+
+		if (isExact())
+    	{
+    		sb.append(this.earliest.toString());
+    	}
+    	else
+    	{
+    		sb.append("[between ");
+    		sb.append(this.earliest.toString());
+    		sb.append(" and ");
+    		sb.append(this.latest.toString());
+    		sb.append("]");
+    	}
+		return sb.toString();
+    }
+
+    public int compareTo(final Object object)
     {
     	final DateRange that = (DateRange)object;
         int d = 0;
 
         if (d == 0)
         {
-        	d = Util.compare(this.approx,that.approx);
+        	d = this.approx.compareTo(that.approx);
         }
 		if (d == 0)
 		{
@@ -149,30 +232,11 @@ public class DateRange implements Immutable, Serializable, Comparable
         return d;
     }
 
-    public boolean equals(final Object object)
-    {
-    	if (!(object instanceof DateRange))
-    	{
-    		return false;
-    	}
 
-		final DateRange that = (DateRange)object;
 
-		return
-			this.earliest == that.earliest &&
-			this.latest == that.latest &&
-			this.julian == that.julian &&
-			this.circa == that.circa;
-    }
-
-    public int hashCode()
-    {
-    	return this.hash;
-    }
-
-	private int calcApprox()
+    private Time calcApprox()
 	{
-		return (this.earliest.getApproxDay()+this.latest.getApproxDay())/2;
+		return new Time((this.earliest.getApproxTime().getTime()+this.latest.getApproxTime().getTime())/2);
 	}
 
 	private int calcHash()
@@ -180,14 +244,32 @@ public class DateRange implements Immutable, Serializable, Comparable
 		int h = 17;
 
 		h *= 37;
-		h += earliest.hashCode();
+		h += this.earliest.hashCode();
 		h *= 37;
-		h += latest.hashCode();
+		h += this.latest.hashCode();
 		h *= 37;
-		h += julian ? 0 : 1;
+		h += this.julian ? 0 : 1;
 		h *= 37;
-		h += circa ? 0 : 1;
+		h += this.circa ? 0 : 1;
 
 		return h;
 	}
+
+    private void writeObject(final ObjectOutputStream s) throws IOException
+    {
+        s.writeObject(this.earliest);
+        s.writeObject(this.latest);
+        s.writeBoolean(this.circa);
+        s.writeBoolean(this.julian);
+    }
+
+    private void readObject(final ObjectInputStream s) throws IOException, ClassNotFoundException
+    {
+    	this.earliest = (YMD)s.readObject();
+    	this.latest = (YMD)s.readObject();
+    	this.circa = s.readBoolean();
+    	this.julian = s.readBoolean();
+
+    	init();
+    }
 }
