@@ -1,5 +1,6 @@
 package nu.mine.mosher.util;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class TreeNode<T>
 			throw new IllegalArgumentException("given TreeNode is not a child of this TreeNode");
 		}
 
-		for (Iterator<TreeNode<T>> i = children(); i.hasNext();)
+		for (Iterator<TreeNode<T>> i = this.children.iterator(); i.hasNext();)
         {
             if (i.next()==child)
             {
@@ -64,9 +65,9 @@ public class TreeNode<T>
 		parent.removeChild(this);
 	}
 
-	public Iterator<TreeNode<T>> children()
+	public List<TreeNode<T>> children()
 	{
-		return children.iterator();
+		return Collections.unmodifiableList(this.children);
 	}
 
 	public TreeNode<T> parent()
