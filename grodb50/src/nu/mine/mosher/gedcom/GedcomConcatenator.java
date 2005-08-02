@@ -18,17 +18,21 @@ public class GedcomConcatenator
 		concatenateHelper(tree.getRoot());
 	}
 
-	private void concatenateHelper(TreeNode parent)
+	private void concatenateHelper(final TreeNode<GedcomLine> parent)
 	{
-		GedcomLine parentLine = (GedcomLine)parent.getObject();
-		for (Iterator i = parent.children(); i.hasNext();)
+		final GedcomLine parentLine = parent.getObject();
+
+		for (final Iterator<TreeNode<GedcomLine>> i = parent.children().iterator(); i.hasNext();)
         {
-            TreeNode child = (TreeNode)i.next();
-            GedcomLine line = (GedcomLine)child.getObject();
-            String tag = line.getTag();
-            boolean cont = tag.equalsIgnoreCase("cont");
-			boolean conc = tag.equalsIgnoreCase("conc");
-            if (cont)
+            final TreeNode<GedcomLine> child = i.next();
+
+            final GedcomLine line = child.getObject();
+
+            final String tag = line.getTag();
+            final boolean cont = tag.equalsIgnoreCase("cont");
+			final boolean conc = tag.equalsIgnoreCase("conc");
+
+			if (cont)
             {
             	parentLine.contValue(line.getValue());
             	i.remove();
