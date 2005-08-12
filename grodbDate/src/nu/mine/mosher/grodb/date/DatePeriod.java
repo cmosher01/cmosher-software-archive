@@ -11,7 +11,7 @@ import nu.mine.mosher.core.Immutable;
  *
  * @author Chris Mosher
  */
-public class DatePeriod implements Immutable, Serializable, Comparable
+public class DatePeriod implements Immutable, Serializable, Comparable<DatePeriod>
 {
 	private final DateRange dateStart;
 	private final DateRange dateEnd;
@@ -70,10 +70,8 @@ public class DatePeriod implements Immutable, Serializable, Comparable
 		return "from "+this.dateStart+" to "+this.dateEnd;
 	}
 
-	public int compareTo(final Object object)
+	public int compareTo(final DatePeriod that)
 	{
-		final DatePeriod that = (DatePeriod)object;
-
 		int d = 0;
 		if (d == 0)
 		{

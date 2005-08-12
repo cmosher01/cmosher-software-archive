@@ -4,15 +4,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.sql.Time;
+import java.util.Date;
+
 import nu.mine.mosher.core.Immutable;
+import nu.mine.mosher.time.Time;
 
 /**
  * TODO
  *
  * @author Chris Mosher
  */
-public class DateRange implements Immutable, Serializable, Comparable
+public class DateRange implements Immutable, Serializable, Comparable<DateRange>
 {
     /*
 	 * YMD always represent Gregorian calendar.
@@ -208,9 +210,8 @@ public class DateRange implements Immutable, Serializable, Comparable
 		return sb.toString();
     }
 
-    public int compareTo(final Object object)
+    public int compareTo(final DateRange that)
     {
-    	final DateRange that = (DateRange)object;
         int d = 0;
 
         if (d == 0)
@@ -236,7 +237,7 @@ public class DateRange implements Immutable, Serializable, Comparable
 
     private Time calcApprox()
 	{
-		return new Time((this.earliest.getApproxTime().getTime()+this.latest.getApproxTime().getTime())/2);
+		return new Time(new Date((this.earliest.getApproxTime().asDate().getTime()+this.latest.getApproxTime().asDate().getTime())/2));
 	}
 
 	private int calcHash()
@@ -257,18 +258,12 @@ public class DateRange implements Immutable, Serializable, Comparable
 
     private void writeObject(final ObjectOutputStream s) throws IOException
     {
-        s.writeObject(this.earliest);
-        s.writeObject(this.latest);
-        s.writeBoolean(this.circa);
-        s.writeBoolean(this.julian);
+    	s.defaultWriteObject();
     }
 
     private void readObject(final ObjectInputStream s) throws IOException, ClassNotFoundException
     {
-    	this.earliest = (YMD)s.readObject();
-    	this.latest = (YMD)s.readObject();
-    	this.circa = s.readBoolean();
-    	this.julian = s.readBoolean();
+    	s.defaultReadObject();
 
     	init();
     }

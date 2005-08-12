@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import nu.mine.mosher.core.Immutable;
+import nu.mine.mosher.time.Time;
 
 /**
  * Represents a date, specified as a year, month, and day, allowing
@@ -15,7 +15,7 @@ import nu.mine.mosher.core.Immutable;
  *
  * @author Chris Mosher
  */
-public class YMD implements Immutable, Serializable, Comparable
+public class YMD implements Immutable, Serializable, Comparable<YMD>
 {
 	/*
 	 * One-based year, month, and day.
@@ -31,6 +31,11 @@ public class YMD implements Immutable, Serializable, Comparable
 	private transient Time approx;
 
 
+
+	static
+	{
+		assert Immutable.class.isAssignableFrom(Time.class);
+	}
 
 	/**
 	 * @param year
@@ -60,8 +65,7 @@ public class YMD implements Immutable, Serializable, Comparable
 		this.month = month;
 		this.day = day;
 
-		this.approx = calcApprox();
-		this.hash = calcHash();
+		init();
 	}
 
 
@@ -157,9 +161,8 @@ public class YMD implements Immutable, Serializable, Comparable
     		", day: "+(this.day==0 ? "unknown" : ""+this.day);
     }
 
-    public int compareTo(final Object object)
+    public int compareTo(final YMD that)
     {
-    	final YMD that = (YMD)object;
     	return this.approx.compareTo(that.approx);
     }
 
@@ -195,7 +198,7 @@ public class YMD implements Immutable, Serializable, Comparable
 
     	cal.set(year,month-1,day);
 
-    	return new Time(cal.getTime().getTime());
+    	return new Time(cal.getTime());
 	}
 
     private int calcHash()
@@ -205,18 +208,19 @@ public class YMD implements Immutable, Serializable, Comparable
 
     private void writeObject(final ObjectOutputStream s) throws IOException
     {
-        s.writeInt(this.year);
-        s.writeInt(this.month);
-        s.writeInt(this.day);
+    	s.defaultWriteObject();
     }
 
-    private void readObject(final ObjectInputStream s) throws IOException
+    private void readObject(final ObjectInputStream s) throws IOException, ClassNotFoundException
     {
-        this.year = s.readInt();
-        this.month = s.readInt();
-        this.day = s.readInt();
+    	s.defaultReadObject();
 
+		init();
+    }
+
+	private void init()
+	{
 		this.approx = calcApprox();
 		this.hash = calcHash();
-    }
+	}
 }
