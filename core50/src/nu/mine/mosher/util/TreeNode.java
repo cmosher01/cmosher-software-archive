@@ -26,19 +26,19 @@ public class TreeNode<T>
 		return object;
 	}
 
-	public void setObject(T obj)
+	public void setObject(final T obj)
 	{
 		this.object = obj;
 	}
 
-	public void addChild(TreeNode<T> child)
+	public void addChild(final TreeNode<T> child)
 	{
 		child.removeFromParent();
 		children.add(child);
 		child.parent = this;
 	}
 
-	public void removeChild(TreeNode<T> child)
+	public void removeChild(final TreeNode<T> child)
 	{
 		if (child.parent != this)
 		{
@@ -80,7 +80,7 @@ public class TreeNode<T>
 		return children.size();
 	}
 
-	protected void appendStringDeep(StringBuffer sb, int level)
+	protected void appendStringDeep(final StringBuffer sb, int level)
 	{
 		for (int i = 0; i < level; ++i)
         {
@@ -97,26 +97,26 @@ public class TreeNode<T>
 		}
 	}
 
-	public void appendStringDeep(StringBuffer sb)
+	public void appendStringDeep(final StringBuffer sb)
 	{
 		appendStringDeep(sb,0);
 	}
 
 	public String toString()
 	{
-		StringBuffer sb = new StringBuffer();
+		final StringBuffer sb = new StringBuffer();
 		appendStringDeep(sb);
 		return sb.toString();
 	}
 
 	public String toStringShallow()
 	{
-		StringBuffer sb = new StringBuffer();
+		final StringBuffer sb = new StringBuffer();
 		appendStringShallow(sb);
 		return sb.toString();
 	}
 
-	public void appendStringShallow(StringBuffer sb)
+	public void appendStringShallow(final StringBuffer sb)
 	{
 		if (object != null)
 		{
