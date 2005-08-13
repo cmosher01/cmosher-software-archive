@@ -1,33 +1,61 @@
 package nu.mine.mosher.gedcom;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.FileInputStream;
-import java.io.File;
 import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import nu.mine.mosher.util.TreeNode;
 
+/**
+ * TODO
+ *
+ * @author Chris Mosher
+ */
 public class Test
 {
+	/**
+	 * @param rArg
+	 * @throws Throwable
+	 */
 	public static void main(String[] rArg) throws Throwable
 	{
-		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File("tgc55c.ged"))));
-		GedcomParser gp = new GedcomParser(br);
+		final Reader gedcom = new InputStreamReader(new FileInputStream(new File("tgc55c.ged")));
+		final GedcomParser gp = new GedcomParser(gedcom);
 
-		GedcomTree gt = new GedcomTree();
-		for (GedcomLine gl = gp.nextLine(); gl != null; gl = gp.nextLine())
+		final GedcomTree gt = new GedcomTree();
+		for (final GedcomLine line: gp)
 		{
-			gt.appendLine(gl);
+			gt.appendLine(line);
 		}
 
-		br.close();
+		gedcom.close();
 
-		GedcomConcatenator gcat = new GedcomConcatenator(gt);
+		final GedcomConcatenator gcat = new GedcomConcatenator(gt);
 		gcat.concatenate();
 
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File("parsed.txt"))));
+		final BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File("parsed2.txt"))));
 		bw.write(gt.toString());
 		bw.close();
+
+		for (final TreeNode<GedcomLine> node : gt.getRoot().children())
+		{
+			final GedcomLine line = node.getObject();
+			final GedcomTag tag = line.getTag();
+			switch (tag)
+			{
+				case INDI:
+					System.out.print("individual: ");
+					System.out.println(line.getID());
+				break;
+				case FAM:
+					System.out.print("family: ");
+					System.out.println(line.getID());
+				break;
+				default:
+			}
+		}
 	}
 }

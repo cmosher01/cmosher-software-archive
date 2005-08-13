@@ -2,63 +2,182 @@ package nu.mine.mosher.gedcom;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Reader;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
+import nu.mine.mosher.gedcom.exception.GedcomParseException;
+import nu.mine.mosher.gedcom.exception.IllegalLevel;
+import nu.mine.mosher.gedcom.exception.InvalidID;
+import nu.mine.mosher.gedcom.exception.MissingTag;
 
-public class GedcomParser
+/**
+ * A tool to parse a GEDCOM document.
+ * Given a <code>Reader</code> containing a GEDCOM
+ * transmission, this parser returns a series of
+ * <code>GedcomLine</code> objects representing the
+ * lines of the transmission.
+ *
+ * @author Chris Mosher
+ */
+public class GedcomParser implements Iterable<GedcomLine>
 {
 	private final BufferedReader in;
-	public GedcomParser(BufferedReader in)
+
+	/**
+	 * Initializes the <code>GedcomParser</code> to read
+	 * lines from the given GEDCOM transmission.
+	 * @param in the GEDCOM transmission to read from
+	 */
+	public GedcomParser(final Reader in)
 	{
-		this.in = in;
+		this.in = new BufferedReader(in);
 	}
-	public GedcomLine nextLine() throws GedcomParseException
+
+	public Iterator<GedcomLine> iterator()
 	{
-		String s = "";
-		try
+		return new Iter();
+	}
+
+
+
+	private class Iter implements Iterator<GedcomLine>
+	{
+		private GedcomLine lineNext;
+		private GedcomParseException exception;
+
+		private void prepareNext()
 		{
-			s = in.readLine();
-			while (s != null && s.trim().length() == 0)
+			try
 			{
-				s = in.readLine();
+				this.lineNext = nextLine();
+				this.exception = null;
+			}
+			catch (final GedcomParseException e)
+			{
+				this.lineNext = null;
+				this.exception = e;
 			}
 		}
-		catch (IOException e)
+
+		private void checkNext() throws NoSuchElementException
+		{
+			if (this.lineNext == null)
+			{
+				if (this.exception != null)
+				{
+					throw (NoSuchElementException)new NoSuchElementException().initCause(this.exception);
+				}
+				throw new NoSuchElementException();
+			}
+		}
+
+		/**
+		 * 
+		 */
+		public Iter()
+		{
+			prepareNext();
+		}
+
+		public boolean hasNext()
+		{
+			return this.lineNext != null;
+		}
+
+		public GedcomLine next() throws NoSuchElementException
+		{
+			checkNext();
+			final GedcomLine returned = this.lineNext;
+			prepareNext();
+
+			return returned;
+		}
+
+		public void remove() throws UnsupportedOperationException
+		{
+			throw new UnsupportedOperationException();
+		}
+	}
+
+
+
+	/**
+	 * Parses the next line from this parser's GEDCOM transmission.
+	 * @return a (new) <code>GedcomLine</code> object representing
+	 * the next GEDCOM line read from the transmission. Returns
+	 * <code>null</code> at the end of the transmission.
+	 * @throws GedcomParseException
+	 */
+	private GedcomLine nextLine() throws GedcomParseException
+	{
+		final String sLine = getNextNonblankLine();
+		if (sLine == null)
+		{
+			return null;
+		}
+
+		return parseLine(sLine);
+	}
+
+
+
+	private String getNextNonblankLine() throws GedcomParseException
+	{
+		try
+		{
+			String s = this.in.readLine();
+			while (s != null && s.trim().length() == 0)
+			{
+				s = this.in.readLine();
+			}
+			return s;
+		}
+		catch (final IOException e)
 		{
 			throw new GedcomParseException("Error reading from input source.",e);
 		}
-		if (s == null)
-			return null;
+	}
 
-		StringTokenizer st = new StringTokenizer(s);
+
+
+	private static GedcomLine parseLine(final String sLine) throws IllegalLevel, MissingTag, InvalidID
+	{
+		final StringTokenizer st = new StringTokenizer(sLine);
 		if (!st.hasMoreTokens())
 		{
-			// should never happen, because lines with only whitespace
+			// should never happen, because lines with only white-space
 			// are skipped in the read loop above.
-			throw new IllegalLevel(s,new GedcomLine(-1,"","",""));
+			throw new IllegalLevel(sLine,new GedcomLine(-1,"","",""));
 		}
-		String sLevel = st.nextToken();
+
+
+
+		final String sLevel = st.nextToken();
 		int level = -1;
 		try
 		{
 			level = Integer.parseInt(sLevel);
 		}
-		catch (NumberFormatException e)
+		catch (final NumberFormatException e)
 		{
 			level = -1;
 		}
 
+
+
 		if (!st.hasMoreTokens()) // missing tag
 		{
-			throw new MissingTag(s,new GedcomLine(level,"","",""));
+			throw new MissingTag(sLine,new GedcomLine(level,"","",""));
 		}
-		String sID, sTag;
-		String sIDorTag = st.nextToken();
+		final String sID, sTag;
+		final String sIDorTag = st.nextToken();
 		if (sIDorTag.startsWith("@"))
 		{
 			sID = sIDorTag;
 			if (!st.hasMoreTokens()) // missing tag
 			{
-				throw new MissingTag(s,new GedcomLine(level,sID,"",""));
+				throw new MissingTag(sLine,new GedcomLine(level,sID,"",""));
 			}
 			sTag = st.nextToken();
 		}
@@ -67,20 +186,29 @@ public class GedcomParser
 			sID = "";
 			sTag = sIDorTag;
 		}
+
+
+
 		String sValue = "";
 		if (st.hasMoreTokens())
 		{
 			sValue = st.nextToken("\0"); // rest of line
 			sValue = sValue.substring(1); // skip one space after tag
 		}
+
+
+
 		if (level < 0 || 99 < level)
 		{
-			throw new IllegalLevel(s,new GedcomLine(level,sID,sTag,sValue));
+			throw new IllegalLevel(sLine,new GedcomLine(level,sID,sTag,sValue));
 		}
 		if (level > 0 && sID.length() > 0)
 		{
-			throw new InvalidID(s,new GedcomLine(level,sID,sTag,sValue));
+			throw new InvalidID(sLine,new GedcomLine(level,sID,sTag,sValue));
 		}
+
+
+
 		return new GedcomLine(level,sID,sTag,sValue);
 	}
 }

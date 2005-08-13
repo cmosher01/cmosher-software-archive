@@ -11,6 +11,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 
+/**
+ * Handles reading in a GEDCOM file and parsing into an
+ * internal representation.
+ * 
+ * Still a work-in-progress.
+ *
+ * @author Chris Mosher
+ */
 public class Gedcom
 {
 	private Gedcom()

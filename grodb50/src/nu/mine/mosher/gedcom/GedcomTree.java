@@ -3,59 +3,83 @@ package nu.mine.mosher.gedcom;
 import java.util.HashMap;
 import java.util.Map;
 
+import nu.mine.mosher.gedcom.exception.InvalidLevel;
 import nu.mine.mosher.util.TreeNode;
 
+/**
+ * Represents a GEDCOM document. A GEDCOM document is
+ * a tree structure or <code>GedcomLine</code> objects.
+ *
+ * @author Chris Mosher
+ */
 public class GedcomTree
 {
-	private TreeNode<GedcomLine> root;
-	private Map<String,TreeNode<GedcomLine>> mapIDtoNode = new HashMap<String,TreeNode<GedcomLine>>();
+	private final TreeNode<GedcomLine> root;
+	private final Map<String,TreeNode<GedcomLine>> mapIDtoNode = new HashMap<String,TreeNode<GedcomLine>>();
 
 	private int prevLevel;
 	private TreeNode<GedcomLine> prevNode;
 
+	/**
+	 * Initializes a new <code>GedcomTree</code>.
+	 */
 	public GedcomTree()
 	{
-		root = new TreeNode<GedcomLine>();
-		prevNode = root;
-		prevLevel = -1;
+		this.root = new TreeNode<GedcomLine>();
+		this.prevNode = this.root;
+		this.prevLevel = -1;
 	}
 
-	public void appendLine(GedcomLine line) throws InvalidLevel
+	/**
+	 * Appends a <code>GedcomLine</code> to this tree.
+	 * This method must be called in the same sequence
+	 * that GEDCOM lines appear in the file.
+	 * @param line
+	 * @throws InvalidLevel
+	 */
+	public void appendLine(final GedcomLine line) throws InvalidLevel
 	{
-		int cPops = prevLevel+1-line.getLevel();
+		final int cPops = this.prevLevel+1-line.getLevel();
 		if (cPops < 0)
 		{
 			throw new InvalidLevel(line);
 		}
 
-		TreeNode<GedcomLine> parent = prevNode;
+		TreeNode<GedcomLine> parent = this.prevNode;
 		for (int i = 0; i < cPops; ++i)
         {
             parent = parent.parent();
         }
 
-		prevLevel = line.getLevel();
-		prevNode = new TreeNode<GedcomLine>(line);
-		parent.addChild(prevNode);
+		this.prevLevel = line.getLevel();
+		this.prevNode = new TreeNode<GedcomLine>(line);
+		parent.addChild(this.prevNode);
 
 		if (line.hasID())
 		{
-			mapIDtoNode.put(line.getId(),prevNode);
+			this.mapIDtoNode.put(line.getID(),this.prevNode);
 		}
 	}
 
-	public TreeNode<GedcomLine> getNode(String id)
+	/**
+	 * Gets the node in this <code>GedcomTree</code> with
+	 * the given ID.
+	 * @param id
+	 * @return the node with the given ID.
+	 */
+	public TreeNode<GedcomLine> getNode(final String id)
 	{
-		return mapIDtoNode.get(id);
+		return this.mapIDtoNode.get(id);
 	}
 
+	@Override
 	public String toString()
 	{
-		StringBuffer sb = new StringBuffer(1024);
-		root.appendStringDeep(sb);
+		final StringBuffer sb = new StringBuffer(1024);
+		this.root.appendStringDeep(sb);
 
 		sb.append("--------map-of-IDs-to-Nodes--------\n");
-		for (Map.Entry<String,TreeNode<GedcomLine>> entry : mapIDtoNode.entrySet())
+		for (final Map.Entry<String,TreeNode<GedcomLine>> entry : this.mapIDtoNode.entrySet())
         {
             sb.append(entry.getKey());
             sb.append(" --> ");
@@ -66,8 +90,12 @@ public class GedcomTree
         return sb.toString();
 	}
 
+	/**
+	 * Gets the root of this tree.
+	 * @return root node
+	 */
 	public TreeNode<GedcomLine> getRoot()
 	{
-		return root;
+		return this.root;
 	}
 }

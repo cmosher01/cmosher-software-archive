@@ -1,4 +1,6 @@
-package nu.mine.mosher.gedcom;
+package nu.mine.mosher.gedcom.exception;
+
+import nu.mine.mosher.gedcom.GedcomLine;
 
 public class InvalidID extends GedcomParseException
 {

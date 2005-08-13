@@ -1,19 +1,35 @@
 package nu.mine.mosher.gedcom;
 
-public class GedcomLine
+import nu.mine.mosher.core.Immutable;
+
+/**
+ * Represents one GEDCOM entry (usually one line).
+ * Objects of this class are immutable.
+ *
+ * @author Chris Mosher
+ */
+public class GedcomLine implements Immutable
 {
 	private final int level;
 	private final String id;
-	private final String tag;
-	private String value;
+	private final String tagString;
+	private final String value;
 	private final String pointer;
+	private final GedcomTag tag;
 
-	public GedcomLine(int level, String id, String tag, String value)
+	/**
+	 * Initializes a <code>GedcomLine</code>.
+	 * @param level
+	 * @param id
+	 * @param tag
+	 * @param value
+	 */
+	public GedcomLine(final int level, final String id, final String tag, final String value)
 	{
 		this.level = level;
 		this.id = getPointer(id);
-		this.tag = tag;
-		String v = getPointer(value);
+		this.tagString = tag;
+		final String v = getPointer(value);
 		if (v.length() > 0)
 		{
 			this.pointer = v;
@@ -24,16 +40,32 @@ public class GedcomLine
 			this.value = replaceAts(value);
 			this.pointer = "";
 		}
+
+		this.tag = parseTag();
 	}
 
-	private static String getPointer(String s)
+	private GedcomTag parseTag()
+	{
+		GedcomTag parsedTag;
+		try
+		{
+			parsedTag = GedcomTag.valueOf(this.tagString);
+		}
+		catch (final IllegalArgumentException e)
+		{
+			parsedTag = GedcomTag.UNKNOWN;
+		}
+		return parsedTag;
+	}
+
+	private static String getPointer(final String s)
 	{
 		if (!s.startsWith("@") || !s.endsWith("@") || s.length() < 3)
 		{
 			return "";
 		}
 
-		String pointer = s.substring(1,s.length()-1);
+		final String pointer = s.substring(1,s.length()-1);
 		if (pointer.indexOf('@') >= 0)
 		{
 			return "";
@@ -41,103 +73,120 @@ public class GedcomLine
 		return pointer;
 	}
 
-	private static String replaceAts(String s)
+	private static String replaceAts(final String s)
 	{
 		return s.replaceAll("@@","@");
 	}
 
+	@Override
 	public String toString()
 	{
-		StringBuffer sb = new StringBuffer(256);
-		sb.append(level);
+		final StringBuffer sb = new StringBuffer(256);
+		sb.append(this.level);
 		sb.append(",");
 		if (hasID())
 		{
 			sb.append("id=");
-			sb.append(id);
+			sb.append(this.id);
 			sb.append(",");
 		}
 		sb.append("tag=");
-		sb.append(tag);
+		sb.append(this.tagString);
 		sb.append(",");
 		if (isPointer())
 		{
 			sb.append("pointer=");
-			sb.append(pointer);
+			sb.append(this.pointer);
 		}
 		else
 		{
 			sb.append("value=\"");
-			sb.append(value);
+			appendFilteredValue(this.value,sb);
 			sb.append("\"");
 		}
 		return sb.toString();
 	}
 
-	public boolean hasID()
+	private static void appendFilteredValue(final String value, final StringBuffer appendTo)
 	{
-		return id.length() > 0;
+		appendTo.append(value.replaceAll("\n","[NEWLINE]"));
 	}
 
+	/**
+	 * @return if this line has an ID
+	 */
+	public boolean hasID()
+	{
+		return this.id.length() > 0;
+	}
+
+	/**
+	 * @return if this line has a pointer
+	 */
 	public boolean isPointer()
 	{
-		return pointer.length() > 0;
+		return this.pointer.length() > 0;
 	}
 
     /**
-     * @return
+     * @return the ID for this line
      */
-    public String getId()
+    public String getID()
     {
-        return id;
+        return this.id;
     }
 
     /**
-     * @return
+     * @return the level number of this line
      */
     public int getLevel()
     {
-        return level;
+        return this.level;
     }
 
     /**
-     * @return
+     * @return the pointer value, if any, in this line
      */
     public String getPointer()
     {
-        return pointer;
+        return this.pointer;
     }
 
     /**
-     * @return
+     * @return the GEDCOM tag on this line
      */
-    public String getTag()
+    public GedcomTag getTag()
     {
-        return tag;
+        return this.tag;
     }
 
     /**
-     * @return
+     * @return the actual value of this line
      */
     public String getValue()
     {
-        return value;
+        return this.value;
     }
 
     /**
-     * @param string
+     * Handles CONT tags by appending the given string to the
+     * value of this line, and returning a new <code>GedcomLine</code>.
+     * @param sContinuedLine
+     * @return new <code>GedcomLine</code>
      */
-    public void contValue(String string)
+    public GedcomLine contValue(final String sContinuedLine)
     {
-    	value += "\n";
-    	value += string;
+    	return new GedcomLine(this.level,this.id,this.tagString,this.value+"\n"+sContinuedLine);
     }
 
     /**
-     * @param string
+     * Handles CONC tags by appending the given string to the
+     * value of this line, and returning a new <code>GedcomLine</code>.
+     * @param sConcatenatedLine
+     * @return new <code>GedcomLine</code>
      */
-    public void concValue(String string)
+    public GedcomLine concValue(final String sConcatenatedLine)
     {
-		value += string;
+    	return new GedcomLine(this.level,this.id,this.tagString,this.value+sConcatenatedLine);
     }
 }
