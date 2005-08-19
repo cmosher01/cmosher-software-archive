@@ -10,16 +10,18 @@ package nu.mine.mosher.util.text;
  */
 public class StringFieldizer
 {
-    private final String s;
+    private final String string;
     private final char delim;
     private int pos;
+
+
 
     /**
      * Constructs a <code>StringFieldizer</code> that uses a comma for
      * the delimiter.
      * @param s the String to break into fields
      */
-    public StringFieldizer(String s)
+    public StringFieldizer(final String s)
     {
         this(s,',');
     }
@@ -30,9 +32,9 @@ public class StringFieldizer
      * @param s the <code>String</code> to break into fields
      * @param delim the <code>char</code> that delimits the fields
      */
-    public StringFieldizer(String s, char delim)
+    public StringFieldizer(final String s, final char delim)
     {
-        this.s = s;
+        this.string = s;
         this.delim = delim;
     }
 
@@ -43,7 +45,7 @@ public class StringFieldizer
      */
     public boolean hasMoreTokens()
     {
-        return pos <= s.length();
+        return this.pos <= this.string.length();
     }
 
     /**
@@ -52,9 +54,9 @@ public class StringFieldizer
      */
     public String nextToken()
     {
-        int i = nextPos();
-        String tok = s.substring(pos,i);
-        pos = i+1;
+    	final int i = nextPos();
+    	final String tok = this.string.substring(this.pos,i);
+        this.pos = i+1;
         return tok;
     }
 
@@ -66,7 +68,7 @@ public class StringFieldizer
      */
     public int getPosition()
     {
-        return pos;
+        return this.pos;
     }
 
     /**
@@ -77,7 +79,7 @@ public class StringFieldizer
      */
     public String getResidue()
     {
-        return s.substring(pos);
+        return this.string.substring(this.pos);
     }
 
     /**
@@ -86,7 +88,7 @@ public class StringFieldizer
      */
     public String getString()
     {
-        return s;
+        return this.string;
     }
 
     /**
@@ -95,15 +97,15 @@ public class StringFieldizer
      */
     public char getDelimiter()
     {
-        return delim;
+        return this.delim;
     }
 
     protected int nextPos()
     {
-        int i = s.indexOf(delim,pos);
+        int i = this.string.indexOf(this.delim,this.pos);
         if (i == -1)
         {
-            i = s.length();
+            i = this.string.length();
         }
         return i;
     }

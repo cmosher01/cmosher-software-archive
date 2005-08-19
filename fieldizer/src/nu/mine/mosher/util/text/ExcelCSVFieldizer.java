@@ -3,8 +3,11 @@
  */
 package nu.mine.mosher.util.text;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import nu.mine.mosher.util.text.exception.IllegalQuoteException;
+import nu.mine.mosher.util.text.exception.UnmatchedQuoteException;
 
 /**
  * Uses <code>ExcelCSVParser</code> to parse a String.
@@ -25,7 +28,7 @@ public class ExcelCSVFieldizer
      * Initializes the <code>ExcelCSVFieldizer</code> to parse the given <code>String</code>.
      * @param sCSVRow the CSV line to be parsed.
      */
-    public ExcelCSVFieldizer(String sCSVRow)
+    public ExcelCSVFieldizer(final String sCSVRow)
     {
         this.sCSVRow = sCSVRow;
     }
@@ -40,75 +43,19 @@ public class ExcelCSVFieldizer
     }
 
     /**
-     * Returns an <code>Iterator</code> that iterates over
-     * each field.
-     * 
-     * Any exceptions that occur during parsing will be
-     * nested inside a <code>NoSuchElementException</code>
-     * exception when calling the iterator's <code>next</code> method.
-     * 
-     * @return Iterator that iterates over each field
+     * Parses the CSV line passed into the constructor and adds the
+     * resulting fields to the given <code>Collection</code>.
+     * @param addTo
+     * @throws IllegalQuoteException
+     * @throws UnmatchedQuoteException
      */
-    public Iterator<String> iterator()
+    public void getFields(final Collection<String> addTo) throws IllegalQuoteException, UnmatchedQuoteException
     {
-        return new FieldIterator(new StringBuffer(this.sCSVRow));
-    }
-
-    /**
-     * An <code>Iterator</code> that iterates over fields in a <code>StringBuffer</code>
-     *
-     * @author Chris Mosher
-     */
-    private static class FieldIterator implements Iterator<String>
-    {
-        private final ExcelCSVParser parser;
-
-        /**
-         * Initializes the <code>FieldIterator</code>
-         * @param s the <code>StringBuffer</code> to parse for fields
-         */
-        public FieldIterator(StringBuffer s)
+    	final StringBuilder str = new StringBuilder(this.sCSVRow);
+        final ExcelCSVParser parser = new ExcelCSVParser(str);
+        while (parser.getNextPos() >= 0)
         {
-            parser = new ExcelCSVParser(s);
-        }
-
-        /**
-         * Determines if another field is left to be returned by <code>next</code>.
-         * @return <code>true</code> if there is another field
-         */
-        public boolean hasNext()
-        {
-            return this.parser.getNextPos() >= 0;
-        }
-
-        /**
-         * @return the next field
-         * @throws NoSuchElementException
-         */
-        public String next() throws NoSuchElementException
-        {
-        	if (!this.hasNext())
-        	{
-        		throw new NoSuchElementException();
-        	}
-            try
-            {
-                return this.parser.getOneValue();
-            }
-            catch (Throwable cause)
-            {
-                NoSuchElementException e = new NoSuchElementException();
-                e.initCause(cause);
-                throw e;
-            }
-        }
-
-        /**
-         * @throws UnsupportedOperationException
-         */
-        public void remove() throws UnsupportedOperationException
-        {
-            throw new UnsupportedOperationException();
+	        addTo.add(parser.getOneValue());
         }
     }
 }

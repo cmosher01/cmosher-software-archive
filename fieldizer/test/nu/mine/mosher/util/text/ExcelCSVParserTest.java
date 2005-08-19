@@ -1,5 +1,7 @@
 package nu.mine.mosher.util.text;
 
+import nu.mine.mosher.util.text.exception.IllegalQuoteException;
+import nu.mine.mosher.util.text.exception.UnmatchedQuoteException;
 import junit.framework.TestCase;
 
 public class ExcelCSVParserTest extends TestCase
@@ -16,7 +18,7 @@ public class ExcelCSVParserTest extends TestCase
 
     public void testParse1() throws Throwable
     {
-        StringBuffer s = new StringBuffer("a,b,c");
+        StringBuilder s = new StringBuilder("a,b,c");
         ExcelCSVParser parser = new ExcelCSVParser(s);
 
         assertEquals("a",parser.getOneValue());
@@ -31,7 +33,7 @@ public class ExcelCSVParserTest extends TestCase
 
     public void testParse2() throws Throwable
     {
-        StringBuffer s = new StringBuffer("a,,c");
+        StringBuilder s = new StringBuilder("a,,c");
         ExcelCSVParser parser = new ExcelCSVParser(s);
 
         assertEquals("a",parser.getOneValue());
@@ -46,7 +48,7 @@ public class ExcelCSVParserTest extends TestCase
 
     public void testParse3() throws Throwable
     {
-        StringBuffer s = new StringBuffer("a,abc,c");
+        StringBuilder s = new StringBuilder("a,abc,c");
         ExcelCSVParser parser = new ExcelCSVParser(s);
 
         assertEquals("a",parser.getOneValue());
@@ -61,7 +63,7 @@ public class ExcelCSVParserTest extends TestCase
 
     public void testParse4() throws Throwable
     {
-        StringBuffer s = new StringBuffer("abc,a,c");
+        StringBuilder s = new StringBuilder("abc,a,c");
         ExcelCSVParser parser = new ExcelCSVParser(s);
 
         assertEquals("abc",parser.getOneValue());
@@ -76,7 +78,7 @@ public class ExcelCSVParserTest extends TestCase
 
     public void testParse5() throws Throwable
     {
-        StringBuffer s = new StringBuffer("abc,a,cdef");
+        StringBuilder s = new StringBuilder("abc,a,cdef");
         ExcelCSVParser parser = new ExcelCSVParser(s);
 
         assertEquals("abc",parser.getOneValue());
@@ -91,7 +93,7 @@ public class ExcelCSVParserTest extends TestCase
 
     public void testParse6() throws Throwable
     {
-        StringBuffer s = new StringBuffer(",a,cdef");
+        StringBuilder s = new StringBuilder(",a,cdef");
         ExcelCSVParser parser = new ExcelCSVParser(s);
 
         assertEquals("",parser.getOneValue());
@@ -106,7 +108,7 @@ public class ExcelCSVParserTest extends TestCase
 
     public void testParse7() throws Throwable
     {
-        StringBuffer s = new StringBuffer("abc,a,");
+        StringBuilder s = new StringBuilder("abc,a,");
         ExcelCSVParser parser = new ExcelCSVParser(s);
 
         assertEquals("abc",parser.getOneValue());
@@ -121,7 +123,7 @@ public class ExcelCSVParserTest extends TestCase
 
     public void testParse8() throws Throwable
     {
-        StringBuffer s = new StringBuffer("abc,,");
+        StringBuilder s = new StringBuilder("abc,,");
         ExcelCSVParser parser = new ExcelCSVParser(s);
 
         assertEquals("abc",parser.getOneValue());
@@ -136,7 +138,7 @@ public class ExcelCSVParserTest extends TestCase
 
     public void testParse9() throws Throwable
     {
-        StringBuffer s = new StringBuffer("x");
+        StringBuilder s = new StringBuilder("x");
         try
         {
             new ExcelCSVParser(s,-1);
@@ -159,7 +161,7 @@ public class ExcelCSVParserTest extends TestCase
 
     public void testParse10() throws Throwable
     {
-        StringBuffer s = new StringBuffer(256);
+        StringBuilder s = new StringBuilder(256);
         ExcelCSVParser parser = new ExcelCSVParser(s);
 
         assertEquals("",parser.getOneValue());
@@ -168,7 +170,7 @@ public class ExcelCSVParserTest extends TestCase
 
     public void testParse11() throws Throwable
     {
-        StringBuffer s = new StringBuffer(",");
+        StringBuilder s = new StringBuilder(",");
         ExcelCSVParser parser = new ExcelCSVParser(s);
 
         assertEquals("",parser.getOneValue());
@@ -180,7 +182,7 @@ public class ExcelCSVParserTest extends TestCase
 
     public void testParse12() throws Throwable
     {
-        StringBuffer s = new StringBuffer("\"abc\",\"def\"");
+        StringBuilder s = new StringBuilder("\"abc\",\"def\"");
         ExcelCSVParser parser = new ExcelCSVParser(s);
 
         assertEquals("abc",parser.getOneValue());
@@ -192,7 +194,7 @@ public class ExcelCSVParserTest extends TestCase
 
     public void testParse13() throws Throwable
     {
-        StringBuffer s = new StringBuffer("\"ab\"\"c\",\"def\"");
+        StringBuilder s = new StringBuilder("\"ab\"\"c\",\"def\"");
         ExcelCSVParser parser = new ExcelCSVParser(s);
 
         assertEquals("ab\"c",parser.getOneValue());
@@ -204,7 +206,7 @@ public class ExcelCSVParserTest extends TestCase
 
     public void testParse14() throws Throwable
     {
-        StringBuffer s = new StringBuffer("\"ab,c\",\"def\"");
+        StringBuilder s = new StringBuilder("\"ab,c\",\"def\"");
         ExcelCSVParser parser = new ExcelCSVParser(s);
 
         assertEquals("ab,c",parser.getOneValue());
@@ -216,7 +218,7 @@ public class ExcelCSVParserTest extends TestCase
 
     public void testParse15() throws Throwable
     {
-        StringBuffer s = new StringBuffer("\"ab,c\",\"def\",ghi,x");
+        StringBuilder s = new StringBuilder("\"ab,c\",\"def\",ghi,x");
         ExcelCSVParser parser = new ExcelCSVParser(s);
 
         assertEquals("ab,c",parser.getOneValue());
@@ -234,7 +236,7 @@ public class ExcelCSVParserTest extends TestCase
 
     public void testParse16() throws Throwable
     {
-        StringBuffer s = new StringBuffer("\"\"");
+        StringBuilder s = new StringBuilder("\"\"");
         ExcelCSVParser parser = new ExcelCSVParser(s);
 
         assertEquals("",parser.getOneValue());
@@ -243,7 +245,7 @@ public class ExcelCSVParserTest extends TestCase
 
     public void testParse17() throws Throwable
     {
-        StringBuffer s = new StringBuffer("\"test\"bad\"");
+        StringBuilder s = new StringBuilder("\"test\"bad\"");
         ExcelCSVParser parser = new ExcelCSVParser(s);
         try
         {
@@ -257,7 +259,7 @@ public class ExcelCSVParserTest extends TestCase
 
     public void testParse18() throws Throwable
     {
-        StringBuffer s = new StringBuffer("\"test,unma,tchedquote");
+        StringBuilder s = new StringBuilder("\"test,unma,tchedquote");
         ExcelCSVParser parser = new ExcelCSVParser(s);
         try
         {
@@ -271,7 +273,7 @@ public class ExcelCSVParserTest extends TestCase
 
     public void testParse19() throws Throwable
     {
-        StringBuffer s = new StringBuffer("test\"abc");
+        StringBuilder s = new StringBuilder("test\"abc");
         ExcelCSVParser parser = new ExcelCSVParser(s);
         try
         {
@@ -285,7 +287,7 @@ public class ExcelCSVParserTest extends TestCase
 
     public void testParse20() throws Throwable
     {
-        StringBuffer s = new StringBuffer(256);
+        StringBuilder s = new StringBuilder(256);
         try
         {
             new ExcelCSVParser(s,-1);

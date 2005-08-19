@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import nu.mine.mosher.util.text.exception.IllegalQuoteException;
+import nu.mine.mosher.util.text.exception.UnmatchedQuoteException;
 
 import junit.framework.TestCase;
 

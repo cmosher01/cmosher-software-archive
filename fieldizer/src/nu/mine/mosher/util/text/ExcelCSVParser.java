@@ -3,6 +3,9 @@
  */
 package nu.mine.mosher.util.text;
 
+import nu.mine.mosher.util.text.exception.IllegalQuoteException;
+import nu.mine.mosher.util.text.exception.UnmatchedQuoteException;
+
 /**
  * Parses a comma-separated value (CSV) line.
  * The CSV line is of the format of a record in an
@@ -45,67 +48,70 @@ public class ExcelCSVParser
     private static final char QUOTE = '\"';
     private static final char EOL = '\uFFFF';
 
+    private static enum STATE
+    {
+        START,
+        FIELD,
+        IN_QUOTE,
+        ESCAPING_QUOTE,
+        END,
+    }
 
 
-    private static final int START = 0;
-    private static final int FIELD = 1;
-    private static final int IN_QUOTE = 2;
-    private static final int ESCAPING_QUOTE = 3;
-    private static final int END = 4;
 
 
 
-    private final StringBuffer sb;
+    private final StringBuilder str;
 
-    private int state = START;
+    private STATE state = STATE.START;
     private int pos;
-    private char c;
+    private char charNext;
 
 
 
     /**
      * Initializes a parser object to parse the
-     * CSV line (given as a StringBuffer). The
-     * StringBuffer is parsed starting at the
+     * CSV line (given as a <code>StringBuilder</code>). The
+     * <code>StringBuilder</code> is parsed starting at the
      * beginning.
-     * @param sb the CSV line to be parsed
+     * @param str the CSV line to be parsed
      */
-    public ExcelCSVParser(StringBuffer sb)
+    public ExcelCSVParser(final StringBuilder str)
     {
-        this.sb = sb;
+        this(str,0);
     }
 
     /**
      * 
      * Initializes a parser object to parse the
-     * CSV line (given as a StringBuffer). The
-     * StringBuffer is parsed starting at the
+     * CSV line (given as a <code>StringBuilder</code>). The
+     * <code>StringBuilder</code> is parsed starting at the
      * given starting position.
-     * @param sb the CSV line to be parsed
-     * @param start the position within <code>sb</code> to start parsing
+     * @param str the CSV line to be parsed
+     * @param start the position within <code>str</code> to start parsing
      * @throws IllegalStateException if <code>start</code> is negative
-     * or greater than the length of <code>sb</code>.
+     * or greater than the length of <code>str</code>.
      */
-    public ExcelCSVParser(StringBuffer sb, int start)
+    public ExcelCSVParser(final StringBuilder str, final int start)
     {
-        if (start < 0 || sb.length() < start)
+        if (start < 0 || str.length() < start)
         {
             throw new IllegalStateException();
         }
         this.pos = start;
-        this.sb = sb;
+        this.str = str;
     }
 
 
 
     /**
-     * Returns the StringBuffer that was passed
-     * in to the constructor.
-     * @return the <code>StringBuffer</code> passed in to the constructor
+     * Returns the <code>StringBuilder</code> that was passed
+     * into the constructor.
+     * @return the <code>StringBuilder</code> passed into the constructor
      */
-    public StringBuffer getBuffer()
+    public StringBuilder getBuffer()
     {
-        return sb;
+        return this.str;
     }
 
     /**
@@ -115,40 +121,40 @@ public class ExcelCSVParser
      */
     public int getNextPos()
     {
-        return pos;
+        return this.pos;
     }
 
     /**
      * Parses the buffer at the current position,
-     * appends the next field to the given StringBuffer,
+     * appends the next field to the given <code>StringBuilder</code>,
      * and advances the current position to the
      * following field.
-     * @param s the buffer to which the next field is appended
+     * @param appendTo the buffer to which the next field is appended
      * @throws IllegalQuoteException
      * @throws UnmatchedQuoteException if a field starts with a
      * quotation mark and is valid except for having no ending
      * quotation mark.
      */
-    public void appendOneField(StringBuffer s) throws IllegalQuoteException, UnmatchedQuoteException
+    public void appendOneField(final StringBuilder appendTo) throws IllegalQuoteException, UnmatchedQuoteException
     {
-        while (state != END)
+        while (this.state != STATE.END)
         {
             next();
-            transition(s);
+            transition(appendTo);
         }
-        state = START;
+        this.state = STATE.START;
     }
 
     /**
      * Convenience method that calls <code>appendOneField</code>
-     * with a new StringBuffer and returns the buffer as a String.
+     * with a new <code>StringBuilder</code> and returns the buffer as a String.
      * @return the next field
      * @throws IllegalQuoteException
      * @throws UnmatchedQuoteException
      */
     public String getOneValue() throws IllegalQuoteException, UnmatchedQuoteException
     {
-        StringBuffer s = new StringBuffer(256);
+        final StringBuilder s = new StringBuilder(256);
         appendOneField(s);
         return s.toString();
     }
@@ -157,80 +163,80 @@ public class ExcelCSVParser
 
     protected void next()
     {
-        if (pos >= sb.length() || pos == -1)
+        if (this.pos == -1 || this.str.length() <= this.pos)
         {
-            pos = -1;
-            c = EOL;
+            this.pos = -1;
+            this.charNext = EOL;
         }
         else
         {
-            c = sb.charAt(pos++);
+            this.charNext = this.str.charAt(this.pos++);
         }
     }
 
-    protected void transition(StringBuffer s) throws IllegalQuoteException, UnmatchedQuoteException
+    protected void transition(final StringBuilder appendTo) throws IllegalQuoteException, UnmatchedQuoteException
     {
-        switch (state)
+        switch (this.state)
         {
             case START:
             {
-                if (c == COMMA || c == EOL)
+                if (this.charNext == COMMA || this.charNext == EOL)
                 {
-                    state = END;
+                    this.state = STATE.END;
                 }
-                else if (c == QUOTE)
+                else if (this.charNext == QUOTE)
                 {
-                    state = IN_QUOTE;
+                    this.state = STATE.IN_QUOTE;
                 }
                 else
                 {
-                    s.append(c);
-                    state = FIELD;
+                    appendTo.append(this.charNext);
+                    this.state = STATE.FIELD;
                 }
             }
             break;
             case FIELD:
             {
-                if (c == COMMA || c == EOL)
+                if (this.charNext == COMMA || this.charNext == EOL)
                 {
-                    state = END;
+                    this.state = STATE.END;
                 }
-                else if (c == QUOTE)
+                else if (this.charNext == QUOTE)
                 {
                     throw new IllegalQuoteException(near());
                 }
                 else
                 {
-                    s.append(c);
+                    appendTo.append(this.charNext);
                 }
             }
             break;
             case IN_QUOTE:
             {
-                if (c == QUOTE)
+                if (this.charNext == QUOTE)
                 {
-                    state = ESCAPING_QUOTE;
+                    this.state = STATE.ESCAPING_QUOTE;
                 }
-                else if (c == EOL)
+                else if (this.charNext == EOL)
                 {
                     throw new UnmatchedQuoteException(near());
                 }
                 else
                 {
-                    s.append(c);
+                    appendTo.append(this.charNext);
                 }
             }
             break;
             case ESCAPING_QUOTE:
             {
-                if (c == COMMA || c == EOL)
+                if (this.charNext == COMMA || this.charNext == EOL)
                 {
-                    state = END;
+                    this.state = STATE.END;
                 }
-                else if (c == QUOTE)
+                else if (this.charNext == QUOTE)
                 {
-                    s.append(c);
-                    state = IN_QUOTE;
+                    appendTo.append(this.charNext);
+                    this.state = STATE.IN_QUOTE;
                 }
                 else
                 {
@@ -247,21 +253,22 @@ public class ExcelCSVParser
 
     protected String near()
     {
-        int posEnd = pos;
-        if (posEnd > sb.length() || posEnd == -1)
+        int posEnd = this.pos;
+        if (posEnd == -1 || this.str.length() < posEnd)
         {
-            posEnd = sb.length();
+            posEnd = this.str.length();
         }
         int posStart = posEnd-10;
         if (posStart < 0)
         {
             posStart = 0;
         }
+
         if (posStart > posEnd)
         {
             return "";
         }
 
-        return sb.substring(posStart, posEnd);
+        return this.str.substring(posStart,posEnd);
     }
 }

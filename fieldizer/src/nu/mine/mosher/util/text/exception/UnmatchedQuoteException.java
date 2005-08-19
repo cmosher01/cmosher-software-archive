@@ -1,7 +1,7 @@
 /*
  * Created on Apr 12, 2004
  */
-package nu.mine.mosher.util.text;
+package nu.mine.mosher.util.text.exception;
 
 /**
  * Indicates that a field started with a quotation
