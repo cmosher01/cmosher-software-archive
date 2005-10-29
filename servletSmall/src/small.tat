@@ -1,0 +1,5 @@
+@template small(rHeader)@
+@include header()@
+@include head()@
+@include body(rHeader)@
+@include footer()@

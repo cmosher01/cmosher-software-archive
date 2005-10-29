@@ -1,0 +1,16 @@
+@template body(rHeader)@
+<body>
+<p>
+A small servlet.
+</p>
+<table border="1">
+<thead>
+<tr><th>Header</th><th>Value</th></tr>
+</thead>
+<tbody>
+@loop i: rHeader.size()@
+	<tr><td>@rHeader[i].getName()@</td><td>@rHeader[i].getValue()@</td></tr>
+@end loop@
+</tbody>
+</table>
+</body>

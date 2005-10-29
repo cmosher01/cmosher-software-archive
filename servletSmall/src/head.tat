@@ -1,0 +1,4 @@
+@template head()@
+<head>
+<title>A Small Servlet</title>
+</head>

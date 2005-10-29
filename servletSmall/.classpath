@@ -3,5 +3,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/jetty/jetty-5.1.4/lib/javax.servlet.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/templat"/>
 	<classpathentry kind="output" path="webapp/WEB-INF/classes"/>
 </classpath>
