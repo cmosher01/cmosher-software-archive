@@ -1,12 +1,11 @@
 package nu.mine.mosher.gedcom;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Collection;
 import nu.mine.mosher.util.TreeNode;
 
 /**
@@ -36,13 +35,16 @@ public class Test
 		final GedcomConcatenator gcat = new GedcomConcatenator(gt);
 		gcat.concatenate();
 
-		final BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File("parsed2.txt"))));
-		bw.write(gt.toString());
-		bw.close();
+//		final BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File("parsed2.txt"))));
+//		bw.write(gt.toString());
+//		bw.close();
 
-		for (final TreeNode<GedcomLine> node : gt.getRoot().children())
+		final Collection<TreeNode<GedcomLine>> rNodeTop = new ArrayList<TreeNode<GedcomLine>>();
+		gt.getRoot().getChildren(rNodeTop);
+		for (final TreeNode<GedcomLine> nodeTop : rNodeTop)
 		{
-			final GedcomLine line = node.getObject();
+			final GedcomLine line = nodeTop.getObject();
+
 			final GedcomTag tag = line.getTag();
 			switch (tag)
 			{

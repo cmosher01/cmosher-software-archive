@@ -28,7 +28,7 @@ public class Gedcom
 
 	public static void analyze(InputStream in) throws IOException
 	{
-		List curline = new ArrayList(256);
+		List<Integer> curline = new ArrayList<Integer>(256);
 		boolean hasStrange = false;
 		BufferedInputStream bis = new BufferedInputStream(in);
 		int c = bis.read();
@@ -44,9 +44,11 @@ public class Gedcom
 				hasStrange = false;
 			}
 
-			curline.add(new Integer(c));
+			curline.add(c);
 			if (c >= 0x80)
+			{
 				hasStrange = true;
+			}
 
 			c = bis.read();
 		}
@@ -55,18 +57,16 @@ public class Gedcom
 	/**
      * @param curline
      */
-    private static void dumpLine(List curline)
+    private static void dumpLine(List<Integer> curline)
     {
-		for (Iterator i = curline.iterator(); i.hasNext();)
+		for (final int c : curline)
 		{
-			Integer c = (Integer)i.next();
-			System.out.print((char)c.intValue());
+			System.out.print((char)c);
 		}
 		System.out.println();
-    	for (Iterator i = curline.iterator(); i.hasNext();)
+		for (final int c : curline)
         {
-            Integer c = (Integer)i.next();
-            System.out.print(Integer.toHexString(c.intValue()));
+            System.out.print(Integer.toHexString(c));
             System.out.print(" ");
         }
 		System.out.println();
