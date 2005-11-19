@@ -52,7 +52,8 @@ public class GedcomTree
         }
 
 		this.prevLevel = line.getLevel();
-		this.prevNode = new TreeNode<GedcomLine>(line);
+		this.prevNode = new TreeNode<GedcomLine>();
+		this.prevNode.setObject(line);
 		parent.addChild(this.prevNode);
 
 		if (line.hasID())
