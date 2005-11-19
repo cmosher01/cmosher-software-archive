@@ -7,5 +7,8 @@
 	<classpathentry kind="src" path="/core50"/>
 	<classpathentry kind="src" path="/junit-3-8-1"/>
 	<classpathentry kind="src" path="example"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/je-2.0.90"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/timeUtil"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/uuid"/>
 	<classpathentry kind="output" path="webapp/WEB-INF/classes"/>
 </classpath>
