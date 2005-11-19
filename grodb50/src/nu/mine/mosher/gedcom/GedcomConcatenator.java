@@ -1,6 +1,7 @@
 package nu.mine.mosher.gedcom;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import nu.mine.mosher.util.TreeNode;
@@ -35,7 +36,9 @@ public class GedcomConcatenator
 	{
 		final List<TreeNode<GedcomLine>> rToBeRemoved = new ArrayList<TreeNode<GedcomLine>>();
 
-		for (final TreeNode<GedcomLine> nodeChild : nodeParent.children())
+		final Collection<TreeNode<GedcomLine>> rNodeChild = new ArrayList<TreeNode<GedcomLine>>();
+		nodeParent.getChildren(rNodeChild);
+		for (final TreeNode<GedcomLine> nodeChild : rNodeChild)
 		{
         	// TODO: remove recursion
 			concatenateHelper(nodeChild);
@@ -65,7 +68,7 @@ public class GedcomConcatenator
             }
         }
 
-		for (final TreeNode<GedcomLine> nodeRemove: rToBeRemoved)
+		for (final TreeNode<GedcomLine> nodeRemove : rToBeRemoved)
 		{
 			nodeRemove.removeFromParent();
 		}
