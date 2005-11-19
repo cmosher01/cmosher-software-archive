@@ -9,4 +9,5 @@ package nu.mine.mosher.core;
  */
 public interface Immutable
 {
+	// no methods
 }

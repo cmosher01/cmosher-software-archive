@@ -4,35 +4,37 @@ import java.util.LinkedList;
 
 public final class Undoer<T extends Cloneable>
 {
-	private final LinkedList<T> mrUndo = new LinkedList<T>();
-	private final LinkedList<T> mrRedo = new LinkedList<T>();
+	private final LinkedList<T> rUndo = new LinkedList<T>();
+	private final LinkedList<T> rRedo = new LinkedList<T>();
+
+
 
 	public void save(final T state) throws CloningException
 	{
 		final CloneFactory<T> cf = new CloneFactory<T>(state);
-		mrUndo.addLast(cf.createClone());
-		mrRedo.clear();
+		this.rUndo.addLast(cf.createClone());
+		this.rRedo.clear();
 	}
 
-	public T undo(T state)
+	public T undo(final T state)
 	{
-		mrRedo.addFirst(state);
-		return mrUndo.removeLast();
+		this.rRedo.addFirst(state);
+		return this.rUndo.removeLast();
 	}
 
-	public T redo(T state)
+	public T redo(final T state)
 	{
-		mrUndo.addLast(state);
-		return mrRedo.removeFirst();
+		this.rUndo.addLast(state);
+		return this.rRedo.removeFirst();
 	}
 
 	public boolean canUndo()
 	{
-		return !mrUndo.isEmpty();
+		return !this.rUndo.isEmpty();
 	}
 
 	public boolean canRedo()
 	{
-		return !mrRedo.isEmpty();
+		return !this.rRedo.isEmpty();
 	}
 }

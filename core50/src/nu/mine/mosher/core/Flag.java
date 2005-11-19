@@ -8,7 +8,7 @@ package nu.mine.mosher.core;
  */
 public class Flag
 {
-	private boolean mFlag;
+	private boolean flag;
 
 
 
@@ -25,16 +25,16 @@ public class Flag
 	 */
 	public Flag(boolean bInitialState)
 	{
-		mFlag = bInitialState;
+		this.flag = bInitialState;
 	}
 
 
 
 	public synchronized void set(boolean bNewState)
 	{
-		if (mFlag != bNewState)
+		if (this.flag != bNewState)
 		{
-			mFlag = bNewState;
+			this.flag = bNewState;
 			notifyAll();
 		}
 	}
@@ -53,12 +53,12 @@ public class Flag
 
 	public synchronized boolean isTrue()
 	{
-		return mFlag;
+		return this.flag;
 	}
 
 	public synchronized boolean isFalse()
 	{
-		return !mFlag;
+		return !this.flag;
 	}
 
 	public synchronized void waitUntilTrue() throws InterruptedException
@@ -73,7 +73,7 @@ public class Flag
 
 	public synchronized void waitUntilStateIs(boolean bState) throws InterruptedException
 	{
-		while (mFlag != bState)
+		while (this.flag != bState)
 		{
 			wait();
 		}

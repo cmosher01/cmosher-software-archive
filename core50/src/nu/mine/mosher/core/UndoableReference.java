@@ -16,31 +16,31 @@ public final class UndoableReference<T extends Cloneable>
 
 	public T state()
 	{
-		return state;
+		return this.state;
 	}
 
 	public void save() throws CloningException
 	{
-		undoer.save(state);
+		this.undoer.save(this.state);
 	}
 
 	public void undo()
 	{
-		state = undoer.undo(state);
+		this.state = this.undoer.undo(this.state);
 	}
 
 	public void redo()
 	{
-		state = undoer.redo(state);
+		this.state = this.undoer.redo(this.state);
 	}
 
 	public boolean canUndo()
 	{
-		return undoer.canUndo();
+		return this.undoer.canUndo();
 	}
 
 	public boolean canRedo()
 	{
-		return undoer.canRedo();
+		return this.undoer.canRedo();
 	}
 }

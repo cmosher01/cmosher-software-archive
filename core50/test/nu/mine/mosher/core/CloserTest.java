@@ -12,10 +12,6 @@ import junit.framework.TestCase;
  */
 public class CloserTest extends TestCase
 {
-	public static void main(String[] args)
-	{
-	}
-
 	private static final class Thing1
 	{
 		public boolean closed;

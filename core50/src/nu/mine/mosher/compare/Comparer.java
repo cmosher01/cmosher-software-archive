@@ -126,7 +126,7 @@ public final class Comparer
 		public void clear() { this.needOld = this.needNew = false; }
 	}
 
-	private static<T> int compareObjects(final Comparator<T> c, final T objOld, final T objNew)
+	protected static<T> int compareObjects(final Comparator<T> c, final T objOld, final T objNew)
 	{
 		if (objOld == null)
 		{

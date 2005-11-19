@@ -28,7 +28,7 @@ public class EnumIter<T> implements Iterator<T>
      */
     public boolean hasNext()
     {
-        return e.hasMoreElements();
+        return this.e.hasMoreElements();
     }
 
     /**
@@ -38,7 +38,7 @@ public class EnumIter<T> implements Iterator<T>
      */
     public T next() throws NoSuchElementException
     {
-        return e.nextElement();
+        return this.e.nextElement();
     }
 
     /**

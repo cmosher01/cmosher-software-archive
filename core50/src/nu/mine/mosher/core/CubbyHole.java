@@ -1,9 +1,15 @@
 package nu.mine.mosher.core;
 
+/**
+ * TODO
+ *
+ * @author Chris Mosher
+ * @param <T> 
+ */
 public class CubbyHole<T>
 {
-	private T mContents;
-	private boolean mHasContents;
+	private T contents;
+	private boolean hasContents;
 
 	/**
 	 * Waits for another thread to put and object into this
@@ -13,45 +19,45 @@ public class CubbyHole<T>
 	 */
 	public synchronized T get()
 	{
-		T contents = null;
+		T retContents = null;
 		try
 		{
-			while (!mHasContents)
+			while (!this.hasContents)
 			{
 				wait();
 			}
-			contents = mContents;
-			mHasContents = false;
+			retContents = this.contents;
+			this.hasContents = false;
 			notifyAll();
 		}
-		catch (InterruptedException e)
+		catch (final InterruptedException e)
 		{
 			Thread.currentThread().interrupt();
 		}
-		mContents = null;
+		this.contents = null;
 
-		return contents;
+		return retContents;
 	}
 
 	/**
 	 * Puts the specified object into this cubbyhole, and
-	 * nofities threads waiting to get from this cubbyhole.
+	 * notifies threads waiting to get from this cubbyhole.
 	 * 
 	 * @param value the Object to put into this cubbyhole; can be null
 	 */
-	public synchronized void put(T value)
+	public synchronized void put(final T value)
 	{
 		try
 		{
-			while (mHasContents)
+			while (this.hasContents)
 			{
 				wait();
 			}
-			mContents = value;
-			mHasContents = true;
+			this.contents = value;
+			this.hasContents = true;
 			notifyAll();
 		}
-		catch (InterruptedException e)
+		catch (final InterruptedException e)
 		{
 			Thread.currentThread().interrupt();
 		}

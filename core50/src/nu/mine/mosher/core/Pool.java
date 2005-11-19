@@ -35,7 +35,7 @@ public class Pool<T>
 
 		for (T t : pool)
 		{
-			unused.addLast(t);
+			this.unused.addLast(t);
 		}
 	}
 
@@ -47,10 +47,10 @@ public class Pool<T>
 	{
 		recycle();
 
-		T theObject = unused.removeFirst();
+		T theObject = this.unused.removeFirst();
 		T theProxy = makeProxy(theObject);
 
-		inUse.put(new WeakReference<T>(theProxy,recycleBin),theObject);
+		this.inUse.put(new WeakReference<T>(theProxy,this.recycleBin),theObject);
 
 		return theProxy;
 	}
@@ -83,15 +83,15 @@ public class Pool<T>
 
 	protected synchronized void recycle()
 	{
-		if (unused.isEmpty())
+		if (this.unused.isEmpty())
 		{
 			System.gc();
 		}
 
-		for (Reference ref = recycleBin.poll(); ref != null; ref = recycleBin.poll())
+		for (Reference ref = this.recycleBin.poll(); ref != null; ref = this.recycleBin.poll())
 		{
-			final T recyclable = inUse.remove(ref);
-			unused.addLast(recyclable);
+			final T recyclable = this.inUse.remove(ref);
+			this.unused.addLast(recyclable);
 		}
 	}
 }

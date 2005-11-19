@@ -45,6 +45,7 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
      * @return a bit-wise (shallow) copy of the referred to object
      * @throws CloneNotSupportedException
      */
+    @Override
     public T clone() throws CloneNotSupportedException
     {
         return (T)super.clone();
@@ -53,6 +54,7 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
     /**
      * @return <code>toString</code> of wrapped object
      */
+    @Override
     public String toString()
     {
         return this.str;
@@ -62,6 +64,7 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
      * @param object
      * @return <code>equals</code> of referred to object
      */
+    @Override
     public boolean equals(final Object object)
     {
         return this.ref.equals(object);
@@ -70,7 +73,8 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
     /**
      * @return hash of referred to object
      */
-    public int hashCode()
+    @Override
+	public int hashCode()
     {
         return this.hash;
     }

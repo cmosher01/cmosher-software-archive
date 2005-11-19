@@ -23,16 +23,19 @@ public final class Pair<T extends Cloneable, U extends Cloneable> implements Clo
 		return this.b.object();
 	}
 
+	@Override
 	public Object clone() throws CloneNotSupportedException
 	{
 		return super.clone();
 	}
 
+	@Override
 	public String toString()
 	{
-		return "(" + a + "," + b + ")";
+		return "(" + this.a + "," + this.b + ")";
 	}
 
+	@Override
 	public boolean equals(final Object object)
 	{
 		if (!(object instanceof Pair))
@@ -43,9 +46,10 @@ public final class Pair<T extends Cloneable, U extends Cloneable> implements Clo
 		return this.a.equals(that.a) && this.b.equals(that.b);
 	}
 
+	@Override
 	public int hashCode()
 	{
-		return a.hashCode() ^ b.hashCode();
+		return this.a.hashCode() ^ this.b.hashCode();
 	}
 
 	public int compareTo(final Pair<T,U> that)

@@ -1,38 +1,43 @@
 package nu.mine.mosher.util;
 
-import java.util.Iterator;
+import java.util.Collection;
 import java.util.Set;
 import java.util.HashSet;
 
+/**
+ * Represents the node of a graph. A node can have any number
+ * of "parent" nodes and any number of "child" nodes.
+ * It can also have an object of type <code>T</code> associated with it.
+ * 
+ * @author Chris Mosher
+ */
 public class GraphNode<T>
 {
+	private final Set<GraphNode<T>> parents = new HashSet<GraphNode<T>>();
+	private final Set<GraphNode<T>> children = new HashSet<GraphNode<T>>();
 	private T object;
 
-	public GraphNode(T object)
+
+
+	public T getObject()
 	{
-		if (object == null)
-		{
-			throw new IllegalArgumentException("GraphNode object cannot be null");
-		}
+		return this.object;
+	}
+
+	public void setObject(final T object)
+	{
 		this.object = object;
 	}
 
-	public T get()
-	{
-		return object;
-	}
 
 
-
-	private Set<GraphNode<T>> children = new HashSet<GraphNode<T>>();
-
-	public void addChild(GraphNode<T> child)
+	public void addChild(final GraphNode<T> child)
 	{
 		this.children.add(child);
 		child.addParent(this);
 	}
 
-	public void removeChild(GraphNode<T> child)
+	public void removeChild(final GraphNode<T> child)
 	{
 		if (!child.hasParent(this))
 		{
@@ -42,32 +47,30 @@ public class GraphNode<T>
 		this.children.remove(child);
 	}
 
-	public boolean hasChild(GraphNode<T> child)
+	public boolean hasChild(final GraphNode<T> child)
 	{
 		return this.children.contains(child);
 	}
 
-	public Iterator<GraphNode<T>> children()
+	public void getChildren(final Collection<GraphNode<T>> addTo)
 	{
-		return children.iterator();
+		addTo.addAll(this.children);
 	}
 
 	public int getChildCount()
 	{
-		return children.size();
+		return this.children.size();
 	}
 
 
 
-	private Set<GraphNode<T>> parents = new HashSet<GraphNode<T>>();
-
-	public void addParent(GraphNode<T> parent)
+	public void addParent(final GraphNode<T> parent)
 	{
 		this.parents.add(parent);
 		parent.addChild(this);
 	}
 
-	public void removeParent(GraphNode<T> parent)
+	public void removeParent(final GraphNode<T> parent)
 	{
 		if (!parent.hasChild(this))
 		{
@@ -77,18 +80,18 @@ public class GraphNode<T>
 		this.parents.remove(parent);
 	}
 
-	public boolean hasParent(GraphNode<T> parent)
+	public boolean hasParent(final GraphNode<T> parent)
 	{
 		return this.parents.contains(parent);
 	}
 
-	public Iterator<GraphNode<T>> parents()
+	public void getParents(final Collection<GraphNode<T>> addTo)
 	{
-		return parents.iterator();
+		addTo.addAll(this.parents);
 	}
 
 	public int getParentCount()
 	{
-		return parents.size();
+		return this.parents.size();
 	}
 }

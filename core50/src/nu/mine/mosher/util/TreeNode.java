@@ -1,29 +1,26 @@
 package nu.mine.mosher.util;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ArrayList;
 
+/**
+ * A node of a tree; also represents the (sub-)tree rooted at this node.
+ *
+ * @author Chris Mosher
+ */
 public class TreeNode<T>
 {
 	private T object;
 	private TreeNode<T> parent;
-	private List<TreeNode<T>> children = new ArrayList<TreeNode<T>>();
+	private final List<TreeNode<T>> children = new ArrayList<TreeNode<T>>();
 
-	public TreeNode()
-	{
-		this(null);
-	}
 
-	public TreeNode(T obj)
-	{
-		this.object = obj;
-	}
 
 	public T getObject()
 	{
-		return object;
+		return this.object;
 	}
 
 	public void setObject(final T obj)
@@ -31,10 +28,12 @@ public class TreeNode<T>
 		this.object = obj;
 	}
 
+
+
 	public void addChild(final TreeNode<T> child)
 	{
 		child.removeFromParent();
-		children.add(child);
+		this.children.add(child);
 		child.parent = this;
 	}
 
@@ -57,30 +56,30 @@ public class TreeNode<T>
 
 	public void removeFromParent()
 	{
-		if (parent == null)
+		if (this.parent == null)
 		{
 			return;
 		}
 
-		parent.removeChild(this);
+		this.parent.removeChild(this);
 	}
 
-	public List<TreeNode<T>> children()
+	public void getChildren(final Collection<TreeNode<T>> addTo)
 	{
-		return Collections.unmodifiableList(this.children);
+		addTo.addAll(this.children);
 	}
 
 	public TreeNode<T> parent()
 	{
-		return parent;
+		return this.parent;
 	}
 
 	public int getChildCount()
 	{
-		return children.size();
+		return this.children.size();
 	}
 
-	protected void appendStringDeep(final StringBuffer sb, int level)
+	protected void appendStringDeep(int level, final StringBuffer sb)
 	{
 		for (int i = 0; i < level; ++i)
         {
@@ -93,15 +92,16 @@ public class TreeNode<T>
 		++level;
 		for (TreeNode<T> child : this.children)
 		{
-			child.appendStringDeep(sb,level);
+			child.appendStringDeep(level,sb);
 		}
 	}
 
 	public void appendStringDeep(final StringBuffer sb)
 	{
-		appendStringDeep(sb,0);
+		appendStringDeep(0,sb);
 	}
 
+	@Override
 	public String toString()
 	{
 		final StringBuffer sb = new StringBuffer();
@@ -118,9 +118,9 @@ public class TreeNode<T>
 
 	public void appendStringShallow(final StringBuffer sb)
 	{
-		if (object != null)
+		if (this.object != null)
 		{
-			sb.append(object.toString());
+			sb.append(this.object.toString());
 		}
 		else
 		{
