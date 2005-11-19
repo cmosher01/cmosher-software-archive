@@ -44,18 +44,26 @@ public class GedcomLine implements Immutable
 		this.tag = parseTag();
 	}
 
+	private GedcomLine(final String id, final int level, final String pointer, final GedcomTag tag, final String tagString, final String value)
+	{
+		this.id = id;
+		this.level = level;
+		this.pointer = pointer;
+		this.tag = tag;
+		this.tagString = tagString;
+		this.value = value;
+	}
+
 	private GedcomTag parseTag()
 	{
-		GedcomTag parsedTag;
 		try
 		{
-			parsedTag = GedcomTag.valueOf(this.tagString);
+			return GedcomTag.valueOf(this.tagString);
 		}
 		catch (final IllegalArgumentException e)
 		{
-			parsedTag = GedcomTag.UNKNOWN;
+			return GedcomTag.UNKNOWN;
 		}
-		return parsedTag;
 	}
 
 	private static String getPointer(final String s)
@@ -176,7 +184,13 @@ public class GedcomLine implements Immutable
      */
     public GedcomLine contValue(final String sContinuedLine)
     {
-    	return new GedcomLine(this.level,this.id,this.tagString,this.value+"\n"+sContinuedLine);
+    	return new GedcomLine(
+			this.id,
+			this.level,
+			this.pointer,
+			this.tag,
+			this.tagString,
+			this.value+"\n"+sContinuedLine);
     }
 
     /**
@@ -187,6 +201,12 @@ public class GedcomLine implements Immutable
      */
     public GedcomLine concValue(final String sConcatenatedLine)
     {
-    	return new GedcomLine(this.level,this.id,this.tagString,this.value+sConcatenatedLine);
+    	return new GedcomLine(
+			this.id,
+			this.level,
+			this.pointer,
+			this.tag,
+			this.tagString,
+			this.value+sConcatenatedLine);
     }
 }
