@@ -15,106 +15,129 @@ import java.util.Map;
  */
 public class GedcomAnselCharset extends Charset
 {
-	public static final String name = "x-gedcom-ansel";
+	static final String name = "x-gedcom-ansel";
 
+    /**
+     * 
+     */
     public GedcomAnselCharset()
     {
-        this(name, null);
+        this(name,null);
     }
 
-    public GedcomAnselCharset(String canonicalName, String[] aliases)
+    /**
+     * @param canonicalName
+     * @param aliases
+     */
+    public GedcomAnselCharset(final String canonicalName, final String[] aliases)
     {
         super(canonicalName,aliases);
     }
 
-    public boolean contains(Charset cs)
+    @Override
+	public boolean contains(final Charset cs)
     {
         return cs instanceof GedcomAnselCharset;
     }
 
-    public CharsetDecoder newDecoder()
+    @Override
+	public CharsetDecoder newDecoder()
     {
         return new CharsetDecoder(this,1,1)
         {
-        	private List listCombining = new ArrayList();
-			boolean combining = false;
-            protected CoderResult decodeLoop(ByteBuffer in, CharBuffer out)
+        	private final List<Integer> listCombining = new ArrayList<Integer>();
+			private boolean combining = false;
+
+			@Override
+			protected CoderResult decodeLoop(final ByteBuffer in, final CharBuffer out)
             {
-				Map map = GedcomAnselTable.getDecoder();
-				if (!combining)
+				final Map<Integer,Integer> map = AnselDoc.map();
+				if (!this.combining)
 				{
-					while (out.position() < out.limit() && listCombining.size() > 0)
+					while (out.position() < out.limit() && this.listCombining.size() > 0)
 					{
-						Integer cint = (Integer)listCombining.remove(0);
-						out.put((char)cint.intValue());
+						final int cint = this.listCombining.remove(0);
+						out.put((char)cint);
 					}
 				}
                 while (in.hasRemaining() && out.position() < out.limit())
                 {
-                    Byte b = new Byte(in.get());
-					char c;
-					int bint = b.intValue();
-					bint &= 0xff;
+					final int bint = getChar(in);
 
-					combining = false;
-					if (map.containsKey(b))
+					char c;
+					this.combining = false;
+					if (map.containsKey(bint))
 					{
-						c = ((Character)map.get(b)).charValue();
-						if (bint >= 0xe0)
+						final int mappedUni = map.get(bint);
+						c = (char)mappedUni;
+
+						if (c != 0 && bint >= 0xe0) // ANSEL standard: any char E0-FF is combining (with *following* char)
 						{
-							listCombining.add(new Integer(c));
-							combining = true;
+							this.listCombining.add((int)c);
+							this.combining = true;
 						}
 					}
 					else
 					{
-						c = (char)b.byteValue();
+						c = (char)bint;
 						c &= 0xff;
 					}
-					if (!combining)
+					if (!this.combining)
 					{
-						out.put(c);
-						while (out.position() < out.limit() && listCombining.size() > 0)
+						if (c != 0)
 						{
-							Integer cint = (Integer)listCombining.remove(0);
-                            out.put((char)cint.intValue());
+							out.put(c);
+						}
+						while (out.position() < out.limit() && this.listCombining.size() > 0)
+						{
+							final int cint = this.listCombining.remove(0);
+                            out.put((char)cint);
                         }
 					}
                 }
 				return in.hasRemaining() ? CoderResult.OVERFLOW : CoderResult.UNDERFLOW;
             }
+
+			private int getChar(final ByteBuffer in)
+			{
+				int bint = in.get();
+				bint &= 0xff;
+				return bint;
+			}
         };
     }
 
-    public CharsetEncoder newEncoder()
+    @Override
+	public CharsetEncoder newEncoder()
     {
-        return new CharsetEncoder(this,1,1)
-        {
-        	// TODO fix ansel encoding (needs to reverse combining chars)
-            protected CoderResult encodeLoop(CharBuffer in, ByteBuffer out)
-            {
-				Map map = GedcomAnselTable.getEncoder();
-				while (in.hasRemaining())
-				{
-					Character c = new Character(in.get());
-					byte b;
-
-					if (map.containsKey(c))
-					{
-						b = ((Byte)map.get(c)).byteValue();
-					}
-					else
-					{
-						char cn = c.charValue();
-						if (cn >= 0x100)
-							return CoderResult.unmappableForLength(1);
-						b = (byte)cn;
-					}
-
-					out.put(b);
-				}
-				return in.hasRemaining() ? CoderResult.OVERFLOW : CoderResult.UNDERFLOW;
-            }
-        };
+    	throw new UnsupportedOperationException("encoding to ANSEL is not supported.");
+//        return new CharsetEncoder(this,1,1)
+//        {
+//        	// TODO fix ansel encoding (needs to reverse combining chars)
+//            protected CoderResult encodeLoop(CharBuffer in, ByteBuffer out)
+//            {
+//				Map map = GedcomAnselTable.getEncoder();
+//				while (in.hasRemaining())
+//				{
+//					Character c = new Character(in.get());
+//					byte b;
+//
+//					if (map.containsKey(c))
+//					{
+//						b = ((Byte)map.get(c)).byteValue();
+//					}
+//					else
+//					{
+//						char cn = c.charValue();
+//						if (cn >= 0x100)
+//							return CoderResult.unmappableForLength(1);
+//						b = (byte)cn;
+//					}
+//
+//					out.put(b);
+//				}
+//				return in.hasRemaining() ? CoderResult.OVERFLOW : CoderResult.UNDERFLOW;
+//            }
+//        };
     }
 }

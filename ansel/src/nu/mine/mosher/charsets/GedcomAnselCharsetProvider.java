@@ -11,27 +11,32 @@ import java.util.Set;
  */
 public class GedcomAnselCharsetProvider extends CharsetProvider
 {
-	private Charset charset;
+	private final Charset charset;
 
+    /**
+     * 
+     */
     public GedcomAnselCharsetProvider()
     {
-		charset = new GedcomAnselCharset();
+		this.charset = new GedcomAnselCharset();
     }
 
-    public Iterator charsets()
+    @Override
+	public Iterator<Charset> charsets()
     {
-		Set set = new HashSet(1);
-		set.add(charset);
+		final Set<Charset> set = new HashSet<Charset>(1,1);
+		set.add(this.charset);
 		return set.iterator();
     }
 
-    public Charset charsetForName(String charsetName)
+    @Override
+	public Charset charsetForName(final String charsetName)
     {
-    	Charset cs = null;
+		if (!charsetName.equalsIgnoreCase(GedcomAnselCharset.name))
+		{
+			return null;
+		}
 
-		if (charsetName.equalsIgnoreCase(GedcomAnselCharset.name))
-			cs = charset;
-
-		return cs;
+		return this.charset;
     }
 }
