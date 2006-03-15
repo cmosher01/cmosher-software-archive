@@ -1,6 +1,7 @@
 package nu.mine.mosher.util.text;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -11,19 +12,9 @@ import junit.framework.TestCase;
 
 public class ExcelCSVFieldizerTest extends TestCase
 {
-    public ExcelCSVFieldizerTest(String name)
-    {
-        super(name);
-    }
-
-    public static void main(String[] args)
-    {
-        junit.textui.TestRunner.run(ExcelCSVFieldizerTest.class);
-    }
-
     public void testParse1() throws Throwable
     {
-        List r = new ArrayList();
+        List<String> r = new ArrayList<String>();
         r.add("a");
         r.add("b");
         r.add("c");
@@ -32,7 +23,7 @@ public class ExcelCSVFieldizerTest extends TestCase
 
     public void testParse2() throws Throwable
     {
-        List r = new ArrayList();
+        List<String> r = new ArrayList<String>();
         r.add("a");
         r.add("");
         r.add("c");
@@ -41,7 +32,7 @@ public class ExcelCSVFieldizerTest extends TestCase
 
     public void testParse3() throws Throwable
     {
-        List r = new ArrayList();
+        List<String> r = new ArrayList<String>();
         r.add("a");
         r.add("abc");
         r.add("c");
@@ -50,7 +41,7 @@ public class ExcelCSVFieldizerTest extends TestCase
 
     public void testParse4() throws Throwable
     {
-        List r = new ArrayList();
+        List<String> r = new ArrayList<String>();
         r.add("abc");
         r.add("b");
         r.add("c");
@@ -59,7 +50,7 @@ public class ExcelCSVFieldizerTest extends TestCase
 
     public void testParse5() throws Throwable
     {
-        List r = new ArrayList();
+        List<String> r = new ArrayList<String>();
         r.add("abc");
         r.add("b");
         r.add("cde");
@@ -68,7 +59,7 @@ public class ExcelCSVFieldizerTest extends TestCase
 
     public void testParse6() throws Throwable
     {
-        List r = new ArrayList();
+        List<String> r = new ArrayList<String>();
         r.add("");
         r.add("b");
         r.add("cde");
@@ -77,7 +68,7 @@ public class ExcelCSVFieldizerTest extends TestCase
 
     public void testParse7() throws Throwable
     {
-        List r = new ArrayList();
+        List<String> r = new ArrayList<String>();
         r.add("abc");
         r.add("b");
         r.add("");
@@ -86,7 +77,7 @@ public class ExcelCSVFieldizerTest extends TestCase
 
     public void testParse8() throws Throwable
     {
-        List r = new ArrayList();
+        List<String> r = new ArrayList<String>();
         r.add("abc");
         r.add("");
         r.add("");
@@ -95,21 +86,21 @@ public class ExcelCSVFieldizerTest extends TestCase
 
     public void testParse9() throws Throwable
     {
-        List r = new ArrayList();
+        List<String> r = new ArrayList<String>();
         r.add("");
         testOneRow("",r);
     }
 
     public void testParse10() throws Throwable
     {
-        List r = new ArrayList();
+        List<String> r = new ArrayList<String>();
         r.add("");
         testOneRow("\"\"",r);
     }
 
     public void testParse11() throws Throwable
     {
-        List r = new ArrayList();
+        List<String> r = new ArrayList<String>();
         r.add("");
         r.add("");
         testOneRow(",",r);
@@ -117,7 +108,7 @@ public class ExcelCSVFieldizerTest extends TestCase
 
     public void testParse12() throws Throwable
     {
-        List r = new ArrayList();
+        List<String> r = new ArrayList<String>();
         r.add("abc");
         r.add("def");
         testOneRow("\"abc\",\"def\"",r);
@@ -125,7 +116,7 @@ public class ExcelCSVFieldizerTest extends TestCase
 
     public void testParse13() throws Throwable
     {
-        List r = new ArrayList();
+        List<String> r = new ArrayList<String>();
         r.add("ab\"c");
         r.add("def");
         testOneRow("\"ab\"\"c\",\"def\"",r);
@@ -133,7 +124,7 @@ public class ExcelCSVFieldizerTest extends TestCase
 
     public void testParse14() throws Throwable
     {
-        List r = new ArrayList();
+        List<String> r = new ArrayList<String>();
         r.add("ab,c");
         r.add("def");
         testOneRow("\"ab,c\",\"def\"",r);
@@ -141,7 +132,7 @@ public class ExcelCSVFieldizerTest extends TestCase
 
     public void testParse15() throws Throwable
     {
-        List r = new ArrayList();
+        List<String> r = new ArrayList<String>();
         r.add("ab,c");
         r.add("def");
         r.add("ghi");
@@ -151,10 +142,13 @@ public class ExcelCSVFieldizerTest extends TestCase
 
 
 
-    public void testOneRow(String row, List fieldsExpected)
+    public void testOneRow(String row, List<String> fieldsExpected) throws IllegalQuoteException, UnmatchedQuoteException
     {
-        String[] r = (String[])fieldsExpected.toArray(new String[fieldsExpected.size()]);
-        Iterator i = new ExcelCSVFieldizer(row).iterator();
+        String[] r = fieldsExpected.toArray(new String[fieldsExpected.size()]);
+        final ExcelCSVFieldizer fieldizer = new ExcelCSVFieldizer(row);
+        final Collection<String> rField = new ArrayList<String>();
+        fieldizer.getFields(rField);
+        Iterator i = rField.iterator();
         for (int j = 0; j < r.length; ++j)
         {
             assertTrue(i.hasNext());
@@ -168,6 +162,7 @@ public class ExcelCSVFieldizerTest extends TestCase
         }
         catch (NoSuchElementException shouldBeThrown)
         {
+        	// OK
         }
     }
 
@@ -175,7 +170,11 @@ public class ExcelCSVFieldizerTest extends TestCase
 
     public void testParse17() throws Throwable
     {
-        Iterator i = new ExcelCSVFieldizer("\"test\"bad\"").iterator();
+        final ExcelCSVFieldizer fieldizer = new ExcelCSVFieldizer("\"test\"bad\"");
+        final Collection<String> rField = new ArrayList<String>();
+        fieldizer.getFields(rField);
+        Iterator i = rField.iterator();
+
         try
         {
             i.next();
@@ -192,7 +191,10 @@ public class ExcelCSVFieldizerTest extends TestCase
 
     public void testParse18() throws Throwable
     {
-        Iterator i = new ExcelCSVFieldizer("\"test,unma,tchedquote").iterator();
+        final ExcelCSVFieldizer fieldizer = new ExcelCSVFieldizer("\"test,unma,tchedquote");
+        final Collection<String> rField = new ArrayList<String>();
+        fieldizer.getFields(rField);
+        Iterator i = rField.iterator();
         try
         {
             i.next();
@@ -209,7 +211,11 @@ public class ExcelCSVFieldizerTest extends TestCase
 
     public void testParse19() throws Throwable
     {
-        Iterator i = new ExcelCSVFieldizer("test\"bad").iterator();
+        final ExcelCSVFieldizer fieldizer = new ExcelCSVFieldizer("test\"bad");
+        final Collection<String> rField = new ArrayList<String>();
+        fieldizer.getFields(rField);
+        Iterator i = rField.iterator();
+
         try
         {
             i.next();

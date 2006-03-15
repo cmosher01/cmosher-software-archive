@@ -50,11 +50,11 @@ public class ExcelCSVParser
 
     private static enum STATE
     {
-        START,
-        FIELD,
-        IN_QUOTE,
-        ESCAPING_QUOTE,
-        END,
+        /** start */ START,
+        /** in a normal field */ FIELD,
+        /** in a quoted string */ IN_QUOTE,
+        /** escaping a quote within a quoted string */ ESCAPING_QUOTE,
+        /** end of finite-state machine */ END,
     }
 
 

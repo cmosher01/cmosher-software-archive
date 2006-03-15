@@ -4,8 +4,6 @@
 package nu.mine.mosher.util.text;
 
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 import nu.mine.mosher.util.text.exception.IllegalQuoteException;
 import nu.mine.mosher.util.text.exception.UnmatchedQuoteException;
 
