@@ -3,7 +3,7 @@
  */
 package nu.mine.mosher.grodb2.datatype;
 
-import nu.mine.mosher.grodb.date.DatePeriod;
+//import nu.mine.mosher.grodb.date.DatePeriod;
 import nu.mine.mosher.time.Time;
 
 
@@ -22,7 +22,7 @@ public class Source
 	private final String placeWritten;
 	private final String publication;
 
-	private final DatePeriod dateTopic;
+//	private final DatePeriod dateTopic;
 //	private final Place placeTopic;
 
 
@@ -33,15 +33,14 @@ public class Source
 	 * @param dateWritten
 	 * @param placeWritten
 	 * @param publication
-	 * @param dateTopic
 	 */
 	public Source(
 		final String title,
 		final String author,
 		final Time dateWritten,
 		final String placeWritten,
-		final String publication,
-		final DatePeriod dateTopic)
+		final String publication)
+//		final DatePeriod dateTopic)
 //		final Place placeTopic,
 	{
 		this.title = title;
@@ -49,7 +48,7 @@ public class Source
 		this.dateWritten = dateWritten;
 		this.placeWritten = placeWritten;
 		this.publication = publication;
-		this.dateTopic = dateTopic;
+//		this.dateTopic = dateTopic;
 //		this.placeTopic = placeTopic;
 
 		if (this.title == null)
@@ -72,10 +71,10 @@ public class Source
 		{
 			throw new IllegalArgumentException();
 		}
-		if (this.dateTopic == null)
-		{
-			throw new IllegalArgumentException();
-		}
+//		if (this.dateTopic == null)
+//		{
+//			throw new IllegalArgumentException();
+//		}
 	}
 //
 //	public DatabaseEntry asEntry()
@@ -100,14 +99,14 @@ public class Source
 		return this.author;
 	}
 
-	/**
-	 * @return Returns the dateTopic.
-	 */
-	public DatePeriod getDateTopic()
-	{
-		return this.dateTopic;
-	}
-
+//	/**
+//	 * @return Returns the dateTopic.
+//	 */
+//	public DatePeriod getDateTopic()
+//	{
+//		return this.dateTopic;
+//	}
+//
 	/**
 	 * @return Returns the dateWritten.
 	 */
@@ -138,5 +137,10 @@ public class Source
 	public String getTitle()
 	{
 		return this.title;
+	}
+
+	public String toString()
+	{
+		return this.author+". "+this.title+". "+this.dateWritten+". "+this.placeWritten+". ("+this.publication+").";
 	}
 }

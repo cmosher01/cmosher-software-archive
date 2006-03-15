@@ -44,7 +44,7 @@ public class SourceBinding extends TupleBinding
 		this.bindingTime.objectToEntry(source.getDateWritten(),output);
 		output.writeString(source.getPlaceWritten());
 		output.writeString(source.getPublication());
-		this.bindingDatePeriod.objectToEntry(source.getDateTopic(),output);
+//		this.bindingDatePeriod.objectToEntry(source.getDateTopic(),output);
 		//place
 
 //		final Set<SourceID> setParent = source.getParents();
@@ -67,7 +67,7 @@ public class SourceBinding extends TupleBinding
 		final Time dateWritten = this.bindingTime.entryToObject(input);
 		final String placeWritten = input.readString();
 		final String publication = input.readString();
-		final DatePeriod dateTopic = this.bindingDatePeriod.entryToObject(input);
+//		final DatePeriod dateTopic = this.bindingDatePeriod.entryToObject(input);
 //		final Place placeTopic = bindingPlace.entryToObject(input);
 
 //		final int cParent = input.readInt();
@@ -78,6 +78,6 @@ public class SourceBinding extends TupleBinding
 //			setParent.add(sourceID);
 //		}
 
-		return new Source(/*id,*/title,author,dateWritten,placeWritten,publication,dateTopic/*,placeTopic*/);
+		return new Source(/*id,*/title,author,dateWritten,placeWritten,publication/*,dateTopic,placeTopic*/);
 	}
 }
