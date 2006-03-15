@@ -6,6 +6,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -50,7 +51,9 @@ public class Small extends HttpServlet
 
 	private void getPage(final HttpServletRequest request, final StringBuilder bufPage) throws TemplateLexingException, TemplateParsingException, IOException
 	{
-		final Templat page = new Templat(this.getClass().getResource("small.tat"));
+		final URL urlSmallTemplate = this.getClass().getResource("small.tat");
+
+		final Templat page = new Templat(urlSmallTemplate);
 
 	    final Collection<Header> rHeader = new ArrayList<Header>();
 	    getHeaders(request,rHeader);
