@@ -21,7 +21,6 @@ import nu.mine.mosher.grodb2.datatype.SourceRelChild;
 import nu.mine.mosher.grodb2.datatype.SourceRelParent;
 import nu.mine.mosher.grodb2.datatype.TimeBinding;
 import nu.mine.mosher.grodb2.datatype.UUIDBinding;
-import nu.mine.mosher.grodb2.util.TransactionConfigFactory;
 import nu.mine.mosher.time.Time;
 import nu.mine.mosher.uuid.UUIDFactory;
 import com.sleepycat.je.Database;
@@ -47,11 +46,6 @@ public class DBSourceTesting
 {
 	private static final Transaction NO_PARENT = null;
 
-	private static final String dbnSource = "Source";
-	private static final String dbnSourceRel = "SourceRel";
-	private static final String idxnSourceRelChild = "SourceRelChild";
-	private static final String idxnSourceRelParent = "SourceRelParent";
-
 	private final static UUIDFactory factoryUUID = new UUIDFactory();
 
 	/**
@@ -61,7 +55,8 @@ public class DBSourceTesting
 	public static void main(String[] args) throws DatabaseException
 	{
 //		createDatabase();
-		testRead();
+//		testRead();
+		System.out.println(Source.class.getSimpleName());
 	}
 
 	/*
@@ -108,8 +103,8 @@ public class DBSourceTesting
 
 	private static void readTable(Environment env) throws DatabaseException
 	{
-		final TransactionConfig confTxn = TransactionConfigFactory.createReadCommitted();
-
+		final TransactionConfig confTxn = new TransactionConfig();
+		confTxn.setReadCommitted(true);
 		final Transaction txn = env.beginTransaction(NO_PARENT,confTxn);
 
 		final DatabaseConfig confDB = new DatabaseConfig();
@@ -118,7 +113,7 @@ public class DBSourceTesting
 
         confDB.setSortedDuplicates(true);
 
-        final Database db = env.openDatabase(txn,idxnSourceRelChild/*dbnSource*/,confDB);
+        final Database db = env.openDatabase(txn,SourceRelChild.class.getSimpleName()/*dbnSource*/,confDB);
 
         readRows(db,txn);
 
@@ -207,7 +202,8 @@ public class DBSourceTesting
 
 	private static void createTable(final Environment env) throws DatabaseException
 	{
-		final TransactionConfig confTxn = TransactionConfigFactory.createReadCommitted();
+		final TransactionConfig confTxn = new TransactionConfig();
+		confTxn.setReadCommitted(true);
 		final Transaction txn = env.beginTransaction(NO_PARENT,confTxn);
 
 
@@ -215,11 +211,11 @@ public class DBSourceTesting
 		final DatabaseConfig confDB = new DatabaseConfig();
         confDB.setTransactional(true); 
         confDB.setAllowCreate(true);
-        final Database dbSource = env.openDatabase(txn,dbnSource,confDB);
+        final Database dbSource = env.openDatabase(txn,Source.class.getSimpleName(),confDB);
 
 
 
-        final Database dbSourceRel = env.openDatabase(txn,dbnSourceRel,confDB);
+        final Database dbSourceRel = env.openDatabase(txn,SourceRel.class.getSimpleName(),confDB);
 
         final SecondaryConfig confDB2 = new SecondaryConfig();
         confDB2.setTransactional(true);
@@ -230,9 +226,9 @@ public class DBSourceTesting
         confDB2.setForeignKeyDatabase(dbSource);
         confDB2.setForeignKeyDeleteAction(ForeignKeyDeleteAction.CASCADE);
         confDB2.setKeyCreator(new SourceRelChild(new SourceRelBinding(new SourceIDBinding(new UUIDBinding()))));
-        final SecondaryDatabase idxSourceRelChild = env.openSecondaryDatabase(txn,idxnSourceRelChild,dbSourceRel,confDB2);
+        final SecondaryDatabase idxSourceRelChild = env.openSecondaryDatabase(txn,SourceRelChild.class.getSimpleName(),dbSourceRel,confDB2);
         confDB2.setKeyCreator(new SourceRelParent(new SourceRelBinding(new SourceIDBinding(new UUIDBinding()))));
-        final SecondaryDatabase idxSourceRelParent = env.openSecondaryDatabase(txn,idxnSourceRelParent,dbSourceRel,confDB2);
+        final SecondaryDatabase idxSourceRelParent = env.openSecondaryDatabase(txn,SourceRelParent.class.getSimpleName(),dbSourceRel,confDB2);
 
 
 
@@ -258,13 +254,13 @@ public class DBSourceTesting
 
 		Source src;
 
-		src = new Source("USA","",new Time(new Date(0L)),"USA","",new DatePeriod(new DateRange(YMD.getMinimum())));
+		src = new Source("USA","",new Time(new Date(0L)),"USA",""/*,new DatePeriod(new DateRange(YMD.getMinimum()))*/);
 		final SourceID idUSA = insertSource(src,dbSource,txn,bindingSourceID,bindingSource);
 
-		src = new Source("US Census","US Census Bureau",new Time(new Date(0L)),"USA","",new DatePeriod(new DateRange(new YMD(1790)),new DateRange(new YMD(1930))));
+		src = new Source("US Census","US Census Bureau",new Time(new Date(0L)),"USA",""/*,new DatePeriod(new DateRange(new YMD(1790)),new DateRange(new YMD(1930)))*/);
 		final SourceID idUSCensus = insertSource(src,dbSource,txn,bindingSourceID,bindingSource);
 
-		src = new Source("US Census, 1790","US Census Bureau",new Time(new Date(0L)),"","",new DatePeriod(new DateRange(new YMD(1790))));
+		src = new Source("US Census, 1790","US Census Bureau",new Time(new Date(0L)),"",""/*,new DatePeriod(new DateRange(new YMD(1790)))*/);
 		final SourceID idUSCensus1790 = insertSource(src,dbSource,txn,bindingSourceID,bindingSource);
 
 
