@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.MemoryImageSource;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -21,7 +22,7 @@ import javax.swing.UIManager;
  */
 public class SwingGUI
 {
-    private JFrame mFrame;
+    protected JFrame mFrame;
 
     /**
      * 
@@ -34,6 +35,7 @@ public class SwingGUI
         // Use look and feel's (not OS's) decorations.
         // Must be done before creating the JFrame.
         JFrame.setDefaultLookAndFeelDecorated(true);
+        JDialog.setDefaultLookAndFeelDecorated(true);
 
         // Create the window.
         mFrame = new JFrame();
@@ -42,6 +44,8 @@ public class SwingGUI
         mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         mFrame.setIconImage(getFrameIcon());
+
+        mFrame.setTitle(getTitle());
 
         // Create and set up the content pane.
         mFrame.setContentPane(createContentPane());
@@ -52,7 +56,7 @@ public class SwingGUI
         // Set the window's size and position.
         mFrame.pack();
         mFrame.setLocationRelativeTo(null);
-        mFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        //mFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
 
         // Display the window.
         mFrame.setVisible(true);
@@ -119,5 +123,10 @@ public class SwingGUI
         panel.add(scrollpane,BorderLayout.CENTER);
 
         return panel;
+    }
+
+    protected String getTitle()
+    {
+    	return "";
     }
 }
