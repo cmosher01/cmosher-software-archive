@@ -10,5 +10,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/je-2.0.90"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/timeUtil"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/uuid"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/gedcomDateParser"/>
 	<classpathentry kind="output" path="webapp/WEB-INF/classes"/>
 </classpath>
