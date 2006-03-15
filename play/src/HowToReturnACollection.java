@@ -62,7 +62,7 @@ public class HowToReturnACollection
 		return Collections.unmodifiableCollection(this.rLong);
 	}
 
-	public void addToCollection(final Collection<Long> addTo)
+	public void addToCollection(final Collection<Long> addTo) // maybe this is best
 	{
 		addTo.addAll(this.rLong);
 	}
@@ -106,7 +106,7 @@ public class HowToReturnACollection
 
 
 
-		final Collection<Long> rx = new HashSet<Long>();
+		final Collection<Long> rx = new HashSet<Long>(); // maybe this is best
 		i.addToCollection(rx);
 		for (Long x: rx)
 		{
@@ -135,7 +135,7 @@ public class HowToReturnACollection
 
 
 
-		final SortedSet<Long> rs4 = new TreeSet<Long>();
+		final SortedSet<Long> rs4 = new TreeSet<Long>(); // maybe this is best
 		i.addToCollection(rs4);
 	}
 }

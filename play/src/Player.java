@@ -8,10 +8,14 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -41,15 +45,31 @@ public class Player //implements Immutable
     public static void main(String[] args) throws Throwable
     {
 
+    	Collection<String> c1 = null;
 
+    	Collection<String> c2 = (c1 == null) ? Collections.<String>emptyList() : new ArrayList<String>(c1);
 
+    	int[] ri = new int[34];
+    	ri[3] = 22;
+    	if (ri.getClass().isArray())
+    	{
+    		System.out.println("array");
+    	}
+		System.out.println(ri.getClass().getName());
+    	Class[] rm = ri.getClass().getClasses();
+    	for (final Class m : rm)
+    	{
+    		System.out.println(m.getName());
+    	}
 
+    	Object o = Array.get(ri,3);
+    	System.out.println(o.getClass().getCanonicalName());
 
-		String s = "\u00e2";
-		Writer w = new OutputStreamWriter(new FileOutputStream(new File("test.txt")),"UTF-8");
-		w.write(s);
-		w.flush();
-		w.close();
+//		String s = "\u00e2";
+//		Writer w = new OutputStreamWriter(new FileOutputStream(new File("test.txt")),"UTF-8");
+//		w.write(s);
+//		w.flush();
+//		w.close();
 //		byte[] rb = s.getBytes("UTF-8");
 //		rbDump(rb);
 

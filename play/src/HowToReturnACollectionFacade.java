@@ -163,6 +163,15 @@ public class HowToReturnACollectionFacade
 	}
 
 
+	// OR... how about just this? It's MUCH simpler!
+	public void addToCollection(final Collection<Integer> addTo) throws IOException
+	{
+		for (int x = this.stream.read(); x >= 0; x = this.stream.read())
+		{
+			addTo.add(x);
+		}
+	}
+
 
 	/**
 	 * @param args
