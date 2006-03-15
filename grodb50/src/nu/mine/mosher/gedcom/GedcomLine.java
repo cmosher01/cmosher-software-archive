@@ -89,33 +89,53 @@ public class GedcomLine implements Immutable
 	@Override
 	public String toString()
 	{
-		final StringBuffer sb = new StringBuffer(256);
-		sb.append(this.level);
-		sb.append(",");
+		final StringBuilder sb = new StringBuilder(256);
 		if (hasID())
 		{
-			sb.append("id=");
 			sb.append(this.id);
-			sb.append(",");
+			sb.append(": ");
 		}
-		sb.append("tag=");
 		sb.append(this.tagString);
-		sb.append(",");
+		sb.append(" ");
 		if (isPointer())
 		{
-			sb.append("pointer=");
+			sb.append("--> ");
 			sb.append(this.pointer);
 		}
 		else
 		{
-			sb.append("value=\"");
 			appendFilteredValue(this.value,sb);
-			sb.append("\"");
 		}
 		return sb.toString();
 	}
 
-	private static void appendFilteredValue(final String value, final StringBuffer appendTo)
+	public void dump(final StringBuilder appendTo)
+	{
+		appendTo.append(this.level);
+		appendTo.append(",");
+		if (hasID())
+		{
+			appendTo.append("id=");
+			appendTo.append(this.id);
+			appendTo.append(",");
+		}
+		appendTo.append("tag=");
+		appendTo.append(this.tagString);
+		appendTo.append(",");
+		if (isPointer())
+		{
+			appendTo.append("pointer=");
+			appendTo.append(this.pointer);
+		}
+		else
+		{
+			appendTo.append("value=\"");
+			appendFilteredValue(this.value,appendTo);
+			appendTo.append("\"");
+		}
+	}
+
+	private static void appendFilteredValue(final String value, final StringBuilder appendTo)
 	{
 		appendTo.append(value.replaceAll("\n","[NEWLINE]"));
 	}

@@ -37,7 +37,7 @@ public class GedcomTree
 	 * @param line
 	 * @throws InvalidLevel
 	 */
-	public void appendLine(final GedcomLine line) throws InvalidLevel
+	void appendLine(final GedcomLine line) throws InvalidLevel
 	{
 		final int cPops = this.prevLevel+1-line.getLevel();
 		if (cPops < 0)
@@ -77,14 +77,15 @@ public class GedcomTree
 	public String toString()
 	{
 		final StringBuffer sb = new StringBuffer(1024);
-		this.root.appendStringDeep(sb);
+
+		this.root.dump(sb);
 
 		sb.append("--------map-of-IDs-to-Nodes--------\n");
 		for (final Map.Entry<String,TreeNode<GedcomLine>> entry : this.mapIDtoNode.entrySet())
         {
             sb.append(entry.getKey());
             sb.append(" --> ");
-            entry.getValue().appendStringShallow(sb);
+            sb.append(entry.getValue());
 			sb.append("\n");
         }
 

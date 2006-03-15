@@ -12,7 +12,7 @@ import nu.mine.mosher.util.TreeNode;
  *
  * @author Chris Mosher
  */
-public class GedcomConcatenator
+class GedcomConcatenator
 {
 	private final GedcomTree tree;
 

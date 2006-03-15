@@ -1,15 +1,14 @@
 package nu.mine.mosher.gedcom;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedMap;
+import nu.mine.mosher.gedcom.exception.InvalidLevel;
+
+
 
 /**
  * Handles reading in a GEDCOM file and parsing into an
@@ -24,6 +23,22 @@ public class Gedcom
 	private Gedcom()
 	{
 		throw new UnsupportedOperationException();
+	}
+
+	public static GedcomTree readTree(final BufferedReader reader) throws InvalidLevel
+	{
+		final GedcomParser parser = new GedcomParser(reader);
+
+		final GedcomTree tree = new GedcomTree();
+		for (final GedcomLine line : parser)
+		{
+			tree.appendLine(line);
+		}
+
+		final GedcomConcatenator concat = new GedcomConcatenator(tree);
+		concat.concatenate();
+
+		return tree;
 	}
 
 	public static void analyze(InputStream in) throws IOException

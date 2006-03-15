@@ -2,7 +2,6 @@ package nu.mine.mosher.gedcom;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
@@ -20,7 +19,7 @@ import nu.mine.mosher.gedcom.exception.MissingTag;
  *
  * @author Chris Mosher
  */
-public class GedcomParser implements Iterable<GedcomLine>
+class GedcomParser implements Iterable<GedcomLine>
 {
 	private final BufferedReader in;
 
@@ -29,9 +28,9 @@ public class GedcomParser implements Iterable<GedcomLine>
 	 * lines from the given GEDCOM transmission.
 	 * @param in the GEDCOM transmission to read from
 	 */
-	public GedcomParser(final Reader in)
+	public GedcomParser(final BufferedReader in)
 	{
-		this.in = new BufferedReader(in);
+		this.in = in;
 	}
 
 	public Iterator<GedcomLine> iterator()
