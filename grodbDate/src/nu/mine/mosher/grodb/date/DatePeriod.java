@@ -22,6 +22,14 @@ public class DatePeriod implements Immutable, Serializable, Comparable<DatePerio
 	}
 
 	/**
+	 * @param date
+	 */
+	public DatePeriod(final DateRange date)
+	{
+		this(date,date);
+	}
+
+	/**
 	 * @param dateStart
 	 * @param dateEnd
 	 */
