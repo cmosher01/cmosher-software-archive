@@ -21,6 +21,7 @@ import nu.mine.mosher.sudoku.gui.FrameManager;
 import nu.mine.mosher.sudoku.gui.exception.UserCancelled;
 import nu.mine.mosher.sudoku.solve.SolverManager;
 import nu.mine.mosher.sudoku.state.GameManager;
+import nu.mine.mosher.sudoku.util.BruteForce;
 
 
 
@@ -189,7 +190,7 @@ public class FileManager
 			in = new BufferedReader(new InputStreamReader(new FileInputStream(this.file),"UTF-8"));
 			this.game.read(in);
 		    this.gameLastSaved = (GameManager)this.game.clone();
-			// TODO upon read-in, do brute force solve to count the number of possible solutions (there should be one and only one).
+		    verifyUniqueSolution();
 		}
 		catch (final UserCancelled cancelled)
 		{
@@ -225,7 +226,7 @@ public class FileManager
 			this.file = null;
 			this.game.read(sBoard);
 			this.gameLastSaved = (GameManager)this.game.clone();
-			// TODO upon new entry by user, do brute force solve to count the number of possible solutions (there should be one and only one, otherwise allow user the option to re-enter).
+		    verifyUniqueSolution();
 		}
 		catch (UserCancelled e)
 		{
@@ -246,24 +247,23 @@ public class FileManager
 		}
 	}
 
-	public int countSolutions()
+	private void verifyUniqueSolution() throws UserCancelled
 	{
-		final GameManager gameCopy = (GameManager)this.game.clone();
-		final SolverManager solver = new SolverManager(gameCopy);
-		solver.appendMenuItems(new JMenu());
-		solver.solve();
-
-		// now the game is in a (possibly) unsolved state
-		// so from here we check all possible answers and see
-		// how many of them are correct
-
-		CheckerManager checker = new CheckerManager(gameCopy,null);
-		int cSolution = 0;
-		if (checker.isCorrect())
+		final BruteForce brute = new BruteForce(this.game);
+		final int cSolution = brute.countSolutions();
+		if (cSolution < 1)
 		{
-			++cSolution;
+			if (!this.framer.askOK("There is actually no solution to this puzzle. Are you sure you want to play it?"))
+			{
+				throw new UserCancelled();
+			}
 		}
-		// TODO brute force solve here
-		return cSolution;
+		if (1 < cSolution)
+		{
+			if (!this.framer.askOK("This puzzle actually has "+cSolution+" solutions. Are you sure you want to play it?"))
+			{
+				throw new UserCancelled();
+			}
+		}
 	}
 }

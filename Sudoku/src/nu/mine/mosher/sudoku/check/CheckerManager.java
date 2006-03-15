@@ -15,13 +15,15 @@ public class CheckerManager
 {
 	private final GameManager game;
 	private final FrameManager framer;
-	private final AnswerChecker checker;
+	private final AnswerChecker checkerAnswer;
+	private final ValidityChecker checkerValidity;
 
 	public CheckerManager(final GameManager gameToCheck, final FrameManager framer)
 	{
 		this.game = gameToCheck;
 		this.framer = framer;
-		this.checker = new AnswerChecker(this.game);
+		this.checkerAnswer = new AnswerChecker(this.game);
+		this.checkerValidity = new ValidityChecker(this.game);
 	}
 
 	public void appendMenuItems(final JMenu appendTo)
@@ -51,6 +53,11 @@ public class CheckerManager
 
 	public boolean isCorrect()
 	{
-		return this.checker.check();
+		return this.checkerAnswer.check();
+	}
+
+	public boolean isValid()
+	{
+		return this.checkerValidity.check();
 	}
 }
