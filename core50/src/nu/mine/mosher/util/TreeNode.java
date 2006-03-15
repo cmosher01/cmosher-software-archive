@@ -9,6 +9,7 @@ import java.util.List;
  * A node of a tree; also represents the (sub-)tree rooted at this node.
  *
  * @author Chris Mosher
+ * @param <T> Type of object this node contains
  */
 public class TreeNode<T>
 {
@@ -79,52 +80,35 @@ public class TreeNode<T>
 		return this.children.size();
 	}
 
-	protected void appendStringDeep(int level, final StringBuffer sb)
+	public void dump(final StringBuffer sb)
+	{
+		dump(0,sb);
+	}
+
+	private void dump(int level, final StringBuffer sb)
 	{
 		for (int i = 0; i < level; ++i)
         {
 			sb.append("    ");
         }
 
-		appendStringShallow(sb);
+		sb.append(toString());
 		sb.append("\n");
 
 		++level;
-		for (TreeNode<T> child : this.children)
+		for (final TreeNode<T> child : this.children)
 		{
-			child.appendStringDeep(level,sb);
+			child.dump(level,sb);
 		}
-	}
-
-	public void appendStringDeep(final StringBuffer sb)
-	{
-		appendStringDeep(0,sb);
 	}
 
 	@Override
 	public String toString()
 	{
-		final StringBuffer sb = new StringBuffer();
-		appendStringDeep(sb);
-		return sb.toString();
-	}
-
-	public String toStringShallow()
-	{
-		final StringBuffer sb = new StringBuffer();
-		appendStringShallow(sb);
-		return sb.toString();
-	}
-
-	public void appendStringShallow(final StringBuffer sb)
-	{
-		if (this.object != null)
+		if (this.object == null)
 		{
-			sb.append(this.object.toString());
+			return "";
 		}
-		else
-		{
-			sb.append("[null]");
-		}
+		return this.object.toString();
 	}
 }
