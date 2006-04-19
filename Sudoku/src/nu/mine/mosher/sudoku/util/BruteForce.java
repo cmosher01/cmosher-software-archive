@@ -36,15 +36,15 @@ public class BruteForce
 		return this.cSolution;
 	}
 
-	private void brute(final GameManager game)
+	private void brute(final GameManager gameSoFar)
 	{
-		final SolverManager solver = new SolverManager(game);
+		final SolverManager solver = new SolverManager(gameSoFar);
 		solver.appendMenuItems(new JMenu());
 		solver.solve();
 
 
 
-		final CheckerManager checker = new CheckerManager(game,null);
+		final CheckerManager checker = new CheckerManager(gameSoFar,null);
 
 		if (!checker.isValid())
 		{
@@ -66,7 +66,7 @@ public class BruteForce
 		{
 			for (int square = 0; square < 9 && squareEmpty < 0; ++square)
 			{
-				if (!game.hasAnswer(sbox,square))
+				if (!gameSoFar.hasAnswer(sbox,square))
 				{
 					sboxEmpty = sbox;
 					squareEmpty = square;
@@ -77,9 +77,9 @@ public class BruteForce
 		// try each remaining possibility in that square
 		for (int iPoss = 0; iPoss < 9; ++iPoss)
 		{
-			if (!game.isEliminated(sboxEmpty,squareEmpty,iPoss))
+			if (!gameSoFar.isEliminated(sboxEmpty,squareEmpty,iPoss))
 			{
-				final GameManager trial = (GameManager)game.clone();
+				final GameManager trial = (GameManager)gameSoFar.clone();
 				trial.keep(sboxEmpty,squareEmpty,iPoss,MoveAutomationType.AUTOMATIC);
 				brute(trial);
 			}

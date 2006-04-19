@@ -16,10 +16,8 @@ import java.io.OutputStreamWriter;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
-import nu.mine.mosher.sudoku.check.CheckerManager;
 import nu.mine.mosher.sudoku.gui.FrameManager;
 import nu.mine.mosher.sudoku.gui.exception.UserCancelled;
-import nu.mine.mosher.sudoku.solve.SolverManager;
 import nu.mine.mosher.sudoku.state.GameManager;
 import nu.mine.mosher.sudoku.util.BruteForce;
 

@@ -3,7 +3,6 @@
  */
 package nu.mine.mosher.sudoku;
 
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -11,17 +10,12 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.Closeable;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Enumeration;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.plaf.FontUIResource;
 import nu.mine.mosher.sudoku.check.CheckerManager;
 import nu.mine.mosher.sudoku.file.FileManager;
 import nu.mine.mosher.sudoku.gui.FrameManager;
@@ -47,8 +41,11 @@ public class HowardGarns implements Runnable, Closeable
      */
     public static void main(String[] args) throws InterruptedException, InvocationTargetException
     {
-		SwingUtilities.invokeAndWait(new HowardGarns());
+    	final HowardGarns howardgarns = new HowardGarns();
+
+    	SwingUtilities.invokeAndWait(howardgarns);
     }
+
 
 
     private final GameManager game = new GameManager();
@@ -65,21 +62,14 @@ public class HowardGarns implements Runnable, Closeable
     	// Don't do any Swing stuff in this constructor
     }
 
-	/**
+
+
+    /**
 	 * Runs the application.
 	 */
 	public void run()
 	{
-		registerObserver();
-
-		setLookAndFeel();
-
-        // Use look and feel's (not OS's) decorations.
-        // Must be done before creating any JFrame or JDialog
-        JFrame.setDefaultLookAndFeelDecorated(true);
-        JDialog.setDefaultLookAndFeelDecorated(true);
-
-        setDefaultFont();
+		FrameManager.setUpSwingDefaults();
 
         // create the application's menu bar
 		final JMenuBar menubar = new JMenuBar();
@@ -96,10 +86,7 @@ public class HowardGarns implements Runnable, Closeable
     	});
 
 		updateGameChange();
-	}
 
-	private void registerObserver()
-	{
 		this.game.addObserver(new Observer()
 		{
 			public void update(final Observable observableThatChagned, final Object typeOfChange)
@@ -117,38 +104,6 @@ public class HowardGarns implements Runnable, Closeable
 		this.checker.updateMenu();
 
 		this.framer.repaint();
-	}
-
-    private void setLookAndFeel()
-    {
-		try
-		{
-			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-		}
-		catch (final Throwable e)
-		{
-			throw new IllegalStateException(e);
-		}
-    }
-
-	private void setDefaultFont()
-	{
-		/*
-		 * Use Java's platform independent font, Lucida Sans, plain, at 12 points,
-		 * as the default for every Swing component.
-		 */
-
-		final FontUIResource font = new FontUIResource("Lucida Sans",Font.PLAIN,12);
-
-		final Enumeration<Object> iterKeys = UIManager.getDefaults().keys();
-    	while (iterKeys.hasMoreElements())
-		{
-    		final Object key = iterKeys.nextElement();
-			if (UIManager.get(key) instanceof FontUIResource)
-			{
-				UIManager.put(key,font);
-			}
-		}
 	}
 
     private void appendMenus(final JMenuBar bar)
