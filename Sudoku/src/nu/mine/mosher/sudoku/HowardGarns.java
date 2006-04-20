@@ -19,6 +19,7 @@ import javax.swing.SwingUtilities;
 import nu.mine.mosher.sudoku.check.CheckerManager;
 import nu.mine.mosher.sudoku.file.FileManager;
 import nu.mine.mosher.sudoku.gui.FrameManager;
+import nu.mine.mosher.sudoku.gui.MenuBarFactory;
 import nu.mine.mosher.sudoku.gui.exception.UserCancelled;
 import nu.mine.mosher.sudoku.solve.SolverManager;
 import nu.mine.mosher.sudoku.state.GameManager;
@@ -69,21 +70,24 @@ public class HowardGarns implements Runnable, Closeable
 	 */
 	public void run()
 	{
-		FrameManager.setUpSwingDefaults();
-
-        // create the application's menu bar
-		final JMenuBar menubar = new JMenuBar();
-        appendMenus(menubar);
-
         // create the main frame window for the application
-        this.framer.init(menubar,new WindowAdapter()
-    	{
-			@Override
-			public void windowClosing(final WindowEvent e)
-			{
-				close();
-			}
-    	});
+        this.framer.init(
+        	new MenuBarFactory()
+	    	{
+				public JMenuBar createMenuBar()
+				{
+					return createAppMenuBar();
+				}
+	    	
+	    	},
+	    	new WindowAdapter()
+	    	{
+				@Override
+				public void windowClosing(final WindowEvent e)
+				{
+					close();
+				}
+	    	});
 
 		updateGameChange();
 
@@ -106,7 +110,14 @@ public class HowardGarns implements Runnable, Closeable
 		this.framer.repaint();
 	}
 
-    private void appendMenus(final JMenuBar bar)
+	private JMenuBar createAppMenuBar()
+	{
+		final JMenuBar menubar = new JMenuBar();
+        appendMenus(menubar);
+        return menubar;
+	}
+
+	private void appendMenus(final JMenuBar bar)
 	{
 		final JMenu menuFile = new JMenu("File");
 		menuFile.setMnemonic(KeyEvent.VK_F);

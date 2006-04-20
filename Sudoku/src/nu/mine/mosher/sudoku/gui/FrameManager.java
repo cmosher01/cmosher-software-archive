@@ -15,7 +15,6 @@ import java.util.Enumeration;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
@@ -33,11 +32,38 @@ public class FrameManager implements Closeable
 		this.game = game;
 	}
 
-	public static void setUpSwingDefaults()
+	public void init(final MenuBarFactory factoryMenuBar, final WindowListener listenerWindow)
 	{
 		setLookAndFeel();
+
 		setDecorated();
-        setDefaultFont();
+
+		setDefaultFont();
+
+		// Create the window.
+        this.frame = new JFrame();
+
+        // If the user clicks the close box, we call the WindowListener
+        // that's passed in by the caller (who is responsible for calling
+        // our close method if he determines it is OK to terminate the app)
+        this.frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        this.frame.addWindowListener(listenerWindow);
+
+        this.frame.setIconImage(getFrameIcon());
+
+        this.frame.setTitle("Howard Garns\u2019s Number Place (Sudoku)");
+
+        this.frame.setJMenuBar(factoryMenuBar.createMenuBar());
+
+        // Create and set up the content pane.
+        this.frame.setContentPane(new Board(this.game));
+
+        // Set the window's size and position.
+        this.frame.pack();
+        this.frame.setLocationRelativeTo(null);
+
+        // Display the window.
+        this.frame.setVisible(true);
 	}
 
     private static void setLookAndFeel()
@@ -80,36 +106,6 @@ public class FrameManager implements Closeable
 		}
 	}
 
-	public void init(final JMenuBar bar, final WindowListener listenerWindow)
-	{
-        // Create the window.
-        this.frame = new JFrame();
-
-        // If the user clicks the close box, we call the WindowListener
-        // that's passed in by the caller (who is responsible for calling
-        // our close method if he determines it is OK to terminate the app)
-        this.frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        this.frame.addWindowListener(listenerWindow);
-
-        this.frame.setIconImage(getFrameIcon());
-
-        this.frame.setTitle("Howard Garns\u2019s Number Place (Sudoku)");
-
-        this.frame.setJMenuBar(bar);
-
-        // Create and set up the content pane.
-        this.frame.setContentPane(new Board(this.game));
-
-        // Set the window's size and position.
-        this.frame.pack();
-        this.frame.setLocationRelativeTo(null);
-        //mFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
-
-        // Display the window.
-        this.frame.setVisible(true);
-
-	}
-
     private Image getFrameIcon()
     {
         final int w = 100;
@@ -139,6 +135,8 @@ public class FrameManager implements Closeable
         }
         return Toolkit.getDefaultToolkit().createImage(new MemoryImageSource(w,h,pix,0,w));
     }
+
+
 
     public void repaint()
 	{
