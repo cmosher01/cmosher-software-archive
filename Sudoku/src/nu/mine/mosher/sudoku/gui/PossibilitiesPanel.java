@@ -11,7 +11,7 @@ class PossibilitiesPanel extends JPanel
 {
 	public PossibilitiesPanel(final GameManager game, final int iSbox, final int iSquare)
 	{
-		super(new GridLayout(3,3),true);
+		super(new GridLayout(3,3));
 
 		setOpaque(false);
 

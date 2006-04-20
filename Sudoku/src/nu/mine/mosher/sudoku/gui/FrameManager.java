@@ -36,12 +36,7 @@ public class FrameManager implements Closeable
 	public static void setUpSwingDefaults()
 	{
 		setLookAndFeel();
-
-        // Use look and feel's (not OS's) decorations.
-        // Must be done before creating any JFrame or JDialog
-        JFrame.setDefaultLookAndFeelDecorated(true);
-        JDialog.setDefaultLookAndFeelDecorated(true);
-
+		setDecorated();
         setDefaultFont();
 	}
 
@@ -57,7 +52,15 @@ public class FrameManager implements Closeable
 		}
     }
 
-	private static void setDefaultFont()
+    private static void setDecorated()
+    {
+        // Use look and feel's (not OS's) decorations.
+        // Must be done before creating any JFrame or JDialog
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        JDialog.setDefaultLookAndFeelDecorated(true);
+    }
+
+    private static void setDefaultFont()
 	{
 		/*
 		 * Use Java's platform independent font, Lucida Sans, plain, at 12 points,

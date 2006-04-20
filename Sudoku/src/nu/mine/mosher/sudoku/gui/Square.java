@@ -20,7 +20,7 @@ class Square extends JPanel
 
 	public Square(final GameManager game, final int iSbox, final int iSquare)
 	{
-		super(new BorderLayout(),true);
+		super(new BorderLayout());
 		this.game = game;
 		this.iSbox = iSbox;
 		this.iSquare = iSquare;

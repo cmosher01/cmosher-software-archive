@@ -7,7 +7,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
@@ -26,7 +25,6 @@ class PossibililtyPanel extends JPanel
 
 	public PossibililtyPanel(final GameManager game, final int iSbox, final int iSquare, final int i)
 	{
-		super(new GridLayout(1,1),true);
 		this.game = game;
 		this.iSbox = iSbox;
 		this.iSquare = iSquare;

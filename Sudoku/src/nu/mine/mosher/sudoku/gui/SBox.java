@@ -12,7 +12,7 @@ class SBox extends JPanel
 {
 	public SBox(final GameManager game, int iSbox)
 	{
-		super(new GridLayout(3,3,1,1),true);
+		super(new GridLayout(3,3,1,1));
 
 		setBackground(Color.LIGHT_GRAY);
 
