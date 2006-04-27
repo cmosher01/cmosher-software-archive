@@ -1,0 +1,125 @@
+/*
+ * Created on Apr 19, 2006
+ */
+package ui;
+
+
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.WindowListener;
+import java.io.Closeable;
+import java.util.Enumeration;
+
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JScrollPane;
+import javax.swing.UIManager;
+import javax.swing.WindowConstants;
+import javax.swing.plaf.FontUIResource;
+
+
+
+public class DraggerUserInterface implements Closeable
+{
+    private JFrame frame;
+
+    public static void setSwingDefaults()
+    {
+        setLookAndFeel();
+
+        // Use look and feel's (not OS's) decorations.
+        // Must be done before creating any JFrame or JDialog
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        JDialog.setDefaultLookAndFeelDecorated(true);
+
+        setDefaultFont();
+    }
+
+
+    private static void setLookAndFeel()
+    {
+        try
+        {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        }
+        catch (final Throwable e)
+        {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private static void setDefaultFont()
+    {
+        /*
+         * Use Java's platform independent font, Lucida Sans, plain, at 12 points,
+         * as the default for every Swing component.
+         */
+
+        final FontUIResource font = new FontUIResource("Lucida Sans",Font.PLAIN,12);
+
+        final Enumeration<Object> iterKeys = UIManager.getDefaults().keys();
+        while (iterKeys.hasMoreElements())
+        {
+            final Object key = iterKeys.nextElement();
+            if (UIManager.get(key) instanceof FontUIResource)
+            {
+                UIManager.put(key,font);
+            }
+        }
+    }
+
+
+
+    public void init(final WindowListener listenerWindow)
+    {
+        // Create the window.
+        this.frame = new JFrame();
+
+        // If the user clicks the close box, we call the WindowListener
+        // that's passed in by the caller (who is responsible for calling
+        // our close method if he determines it is OK to terminate the app)
+        this.frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        this.frame.addWindowListener(listenerWindow);
+
+        //this.frame.setIconImage(getFrameIcon());
+
+        this.frame.setTitle("Testing my app");
+
+        this.frame.setJMenuBar(buildMenuBar());
+
+        // Create and set up the content pane.
+        final DragPanel dragger = new DragPanel();
+        final JScrollPane scroller = new JScrollPane(dragger);
+        scroller.setPreferredSize(new Dimension(666,360));
+
+        this.frame.setContentPane(scroller);
+
+        // Set the window's size and position.
+        this.frame.pack();
+        this.frame.setLocationRelativeTo(null);
+
+        // Display the window.
+        this.frame.setVisible(true);
+    }
+
+    public void close()
+    {
+        this.frame.dispose();
+    }
+
+    private JMenuBar buildMenuBar()
+    {
+        final JMenuBar bar = new JMenuBar();
+
+        final JMenu menuFile = new JMenu("File");
+        final JMenuItem itemExit = new JMenuItem("Exit");
+        menuFile.add(itemExit);
+
+        bar.add(menuFile);
+
+        return bar;
+    }
+}
