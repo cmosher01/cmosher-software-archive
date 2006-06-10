@@ -63,11 +63,9 @@ class GedcomParser implements Iterable<GedcomLine>
 		{
 			if (this.lineNext == null)
 			{
-				if (this.exception != null)
-				{
-					throw (NoSuchElementException)new NoSuchElementException().initCause(this.exception);
-				}
-				throw new NoSuchElementException();
+				final NoSuchElementException noElement = new NoSuchElementException();
+				noElement.initCause(this.exception);
+				throw noElement;
 			}
 		}
 
