@@ -188,6 +188,11 @@ public class GedcomLine implements Immutable
         return this.tag;
     }
 
+    public String getTagString()
+    {
+    	return this.tagString;
+    }
+
     /**
      * @return the actual value of this line
      */
