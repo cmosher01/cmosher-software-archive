@@ -167,8 +167,8 @@ void DateValue() :
 		{
 			this.notes = dateNotes.getNotes();
 			this.period = new DatePeriod(
-				new DateRange(dateNotes.getCalYMD().getYMD(),dateNotes.getCalYMD().getYMD(),dateNotes.getCalYMD().isJulian(),false),
-				new DateRange(dateNotes.getCalYMD().getYMD(),dateNotes.getCalYMD().getYMD(),dateNotes.getCalYMD().isJulian(),false));
+				new DateRange(dateNotes.getCalYMD().getYMD(),dateNotes.getCalYMD().getYMD(),false,dateNotes.getCalYMD().isJulian()),
+				new DateRange(dateNotes.getCalYMD().getYMD(),dateNotes.getCalYMD().getYMD(),false,dateNotes.getCalYMD().isJulian()));
 		}
 		if (sNotes != null)
 		{
@@ -177,8 +177,8 @@ void DateValue() :
 		if (date != null)
 		{
 			this.period = new DatePeriod(
-				new DateRange(date.getYMD(),date.getYMD(),date.isJulian(),true),
-				new DateRange(date.getYMD(),date.getYMD(),date.isJulian(),true));
+				new DateRange(date.getYMD(),date.getYMD(),true,date.isJulian()),
+				new DateRange(date.getYMD(),date.getYMD(),true,date.isJulian()));
 		}
 	}
 }
@@ -212,7 +212,7 @@ DateRange DateRange() :
 			latest = new CalYMD(YMD.getMaximum(),julian);
 		}
 		julian = earliest.isJulian();
-		return new DateRange(earliest.getYMD(),latest.getYMD(),julian,false);
+		return new DateRange(earliest.getYMD(),latest.getYMD(),false,julian);
 	}
 }
 
@@ -229,8 +229,8 @@ DatePeriod DateApproximated() :
 	
 	{
 		return new DatePeriod(
-			new DateRange(date.getYMD(),date.getYMD(),date.isJulian(),true),
-			new DateRange(date.getYMD(),date.getYMD(),date.isJulian(),true));
+			new DateRange(date.getYMD(),date.getYMD(),true,date.isJulian()),
+			new DateRange(date.getYMD(),date.getYMD(),true,date.isJulian()));
 	}
 }
 
