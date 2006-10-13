@@ -24,7 +24,7 @@ public class GedcomLine implements Immutable
 	 * @param tag
 	 * @param value
 	 */
-	public GedcomLine(final int level, final String id, final String tag, final String value)
+	GedcomLine(final int level, final String id, final String tag, final String value)
 	{
 		this.level = level;
 		this.id = getPointer(id);
@@ -207,7 +207,7 @@ public class GedcomLine implements Immutable
      * @param sContinuedLine
      * @return new <code>GedcomLine</code>
      */
-    public GedcomLine contValue(final String sContinuedLine)
+    GedcomLine contValue(final String sContinuedLine)
     {
     	return new GedcomLine(
 			this.id,
@@ -224,7 +224,7 @@ public class GedcomLine implements Immutable
      * @param sConcatenatedLine
      * @return new <code>GedcomLine</code>
      */
-    public GedcomLine concValue(final String sConcatenatedLine)
+    GedcomLine concValue(final String sConcatenatedLine)
     {
     	return new GedcomLine(
 			this.id,
