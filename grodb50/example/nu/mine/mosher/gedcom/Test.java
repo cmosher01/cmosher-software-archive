@@ -186,12 +186,14 @@ public class Test
 		final StringTokenizer st = new StringTokenizer(place,",");
 		while (st.hasMoreTokens())
 		{
-			final String placePart = st.nextToken();
+			String placePart = st.nextToken();
+			placePart = placePart.trim();
+
 			if (sb.length() > 0)
 			{
-				sb.append(",");
+				sb.append(", ");
 			}
-			sb.append(placePart.trim());
+			sb.append(placePart);
 		}
 		return sb.toString();
 	}
@@ -313,7 +315,7 @@ public class Test
 
 
 	private static UUID pointsToUUID(final TreeNode<GedcomLine> nodePointer, final Map<String,UUID> mapIDtoUUID)
-	{;
+	{
 		final GedcomLine line = nodePointer.getObject();
 		final UUID uuid = mapIDtoUUID.get(line.getPointer());
 		if (uuid == null)
@@ -341,17 +343,6 @@ public class Test
 		{
 			final GedcomLine line = node.getObject();
 			final GedcomTag tag = line.getTag();
-//						if (.getTag().equals(GedcomTag.TEXT))
-//						{
-//							System.out.print("[TEXT, len: ");
-//							System.out.print(node.getObject().getValue().length());
-//							System.out.println("]");
-//						}
-//						else
-//						{
-//							System.out.print(node);
-//						}
-
 			switch (tag)
 			{
 				case TITL:
