@@ -7,12 +7,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import nu.mine.mosher.checksum.StreamChecksum;
+//import nu.mine.mosher.checksum.StreamChecksum;
 
 /**
  * TODO
@@ -33,8 +32,8 @@ public class SourceFile
     {
         this.w = cWindow;
         InputStream in = new FileInputStream(src);
-        StreamChecksum inCheck = new StreamChecksum(map);
-        inCheck.init(in,cWindow);
+//        StreamChecksum inCheck = new StreamChecksum(map);
+//        inCheck.init(in,cWindow);
     }
 
     public long lookupUnique(int chk)

@@ -49,7 +49,6 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
-import nu.mine.mosher.checksum.RollingChecksum;
 
 
 
@@ -119,117 +118,117 @@ public class GDiffView extends JFrame
 
     }
 
-    /**
-     * @throws IOException
-     */
-    private void initDiff() throws IOException
-    {
-        SourceFile src = new SourceFile();
-        int cWindow = 5;
-        src.calculateWindowChecksums(fileSrc,cWindow);
-        InputStream streamTrg = new BufferedInputStream(new FileInputStream(fileTrg));
-        if (streamTrg.available() == 0)
-        {
-            // TODO handle empty target file
-            return;
-        }
-        byte[] rs = new byte[cWindow];
-        RollingChecksum roll = new RollingChecksum();
-
-        int trgPos = 0;
-        int w = cWindow;
-
-        if (streamTrg.available() < cWindow)
-        {
-            w = streamTrg.available();
-            rs = new byte[w];
-        }
-        int c = streamTrg.read(rs);
-        if (c != w)
-        {
-            throw new IOException("error reading target file");
-        }
-        roll.init(rs);
-        lookupUniqueMatch(src,roll.getChecksum(),trgPos++,w);
-        while (streamTrg.available() > 0)
-        {
-            byte x = (byte)streamTrg.read();
-            byte xprev = roll(rs,x);
-            roll.increment(xprev, x);
-            lookupUniqueMatch(src,roll.getChecksum(),trgPos++,w);
-        }
-        consolidateCopies();
-    }
-
-    /**
-     * 
-     */
-    private void consolidateCopies()
-    {
-        int a = 0;
-        int b = 1;
-        while (b < rCopy.size())
-        {
-            GDiffCopy cpya = (GDiffCopy)rCopy.get(a);
-            Range rngSrca = cpya.getRange();
-            Range rngTrga = cpya.getTargetRange();
-            GDiffCopy cpyb = (GDiffCopy)rCopy.get(b);
-            Range rngSrcb = cpyb.getRange();
-            Range rngTrgb = cpyb.getTargetRange();
-            Range rngCombSrc = Range.meld(rngSrca, rngSrcb);
-            Range rngCombTrg = Range.meld(rngTrga, rngTrgb);
-            if (rngCombSrc != null && rngCombTrg != null)
-            {
-                GDiffCopy cpyComb = new GDiffCopy(rngCombSrc);
-                cpyComb.setTargetRange(rngCombTrg);
-                rCopy.remove(b);
-                rCopy.set(a,cpyComb);
-            }
-            else
-            {
-                ++a;
-                ++b;
-            }
-        }
-    }
-
-    /**
-     * @param rs
-     * @param x
-     * @return
-     */
-    private static byte roll(byte[] rs, byte x)
-    {
-        byte xk = rs[0];
-        int e = rs.length-1;
-        for (int i = 0; i < e; i++)
-        {
-            rs[i] = rs[i+1];
-        }
-        rs[e] = x;
-        return xk;
-    }
-
-    /**
-     * @param src
-     * @param chk
-     * @param trgPos
-     * @param w
-     */
-    private void lookupUniqueMatch(SourceFile src, int chk, int trgPos, int w)
-    {
-        long srcPos = src.lookupUnique(chk);
-        if (srcPos >= 0)
-        {
-            Range rngSrc = new Range(srcPos,srcPos+w-1);
-            Range rngTrg = new Range(trgPos,trgPos+w-1);
-            GDiffCopy cpy = new GDiffCopy(rngSrc);
-            cpy.setTargetRange(rngTrg);
-//            matches.add(cpy);
-            rCopy.add(cpy);
-        }
-    }
-
+//    /**
+//     * @throws IOException
+//     */
+//    private void initDiff() throws IOException
+//    {
+//        SourceFile src = new SourceFile();
+//        int cWindow = 5;
+//        src.calculateWindowChecksums(fileSrc,cWindow);
+//        InputStream streamTrg = new BufferedInputStream(new FileInputStream(fileTrg));
+//        if (streamTrg.available() == 0)
+//        {
+//            // TODO handle empty target file
+//            return;
+//        }
+//        byte[] rs = new byte[cWindow];
+//        RollingChecksum roll = new RollingChecksum();
+//
+//        int trgPos = 0;
+//        int w = cWindow;
+//
+//        if (streamTrg.available() < cWindow)
+//        {
+//            w = streamTrg.available();
+//            rs = new byte[w];
+//        }
+//        int c = streamTrg.read(rs);
+//        if (c != w)
+//        {
+//            throw new IOException("error reading target file");
+//        }
+//        roll.init(rs);
+//        lookupUniqueMatch(src,roll.getChecksum(),trgPos++,w);
+//        while (streamTrg.available() > 0)
+//        {
+//            byte x = (byte)streamTrg.read();
+//            byte xprev = roll(rs,x);
+//            roll.increment(xprev, x);
+//            lookupUniqueMatch(src,roll.getChecksum(),trgPos++,w);
+//        }
+//        consolidateCopies();
+//    }
+//
+//    /**
+//     * 
+//     */
+//    private void consolidateCopies()
+//    {
+//        int a = 0;
+//        int b = 1;
+//        while (b < rCopy.size())
+//        {
+//            GDiffCopy cpya = (GDiffCopy)rCopy.get(a);
+//            Range rngSrca = cpya.getRange();
+//            Range rngTrga = cpya.getTargetRange();
+//            GDiffCopy cpyb = (GDiffCopy)rCopy.get(b);
+//            Range rngSrcb = cpyb.getRange();
+//            Range rngTrgb = cpyb.getTargetRange();
+//            Range rngCombSrc = Range.meld(rngSrca, rngSrcb);
+//            Range rngCombTrg = Range.meld(rngTrga, rngTrgb);
+//            if (rngCombSrc != null && rngCombTrg != null)
+//            {
+//                GDiffCopy cpyComb = new GDiffCopy(rngCombSrc);
+//                cpyComb.setTargetRange(rngCombTrg);
+//                rCopy.remove(b);
+//                rCopy.set(a,cpyComb);
+//            }
+//            else
+//            {
+//                ++a;
+//                ++b;
+//            }
+//        }
+//    }
+//
+//    /**
+//     * @param rs
+//     * @param x
+//     * @return
+//     */
+//    private static byte roll(byte[] rs, byte x)
+//    {
+//        byte xk = rs[0];
+//        int e = rs.length-1;
+//        for (int i = 0; i < e; i++)
+//        {
+//            rs[i] = rs[i+1];
+//        }
+//        rs[e] = x;
+//        return xk;
+//    }
+//
+//    /**
+//     * @param src
+//     * @param chk
+//     * @param trgPos
+//     * @param w
+//     */
+//    private void lookupUniqueMatch(SourceFile src, int chk, int trgPos, int w)
+//    {
+//        long srcPos = src.lookupUnique(chk);
+//        if (srcPos >= 0)
+//        {
+//            Range rngSrc = new Range(srcPos,srcPos+w-1);
+//            Range rngTrg = new Range(trgPos,trgPos+w-1);
+//            GDiffCopy cpy = new GDiffCopy(rngSrc);
+//            cpy.setTargetRange(rngTrg);
+////            matches.add(cpy);
+//            rCopy.add(cpy);
+//        }
+//    }
+//
     public GDiffView(File fileSrc, File fileTrg) throws BadLocationException, IOException, InvalidMagicBytes
     {
         super("GDiffVeiew");

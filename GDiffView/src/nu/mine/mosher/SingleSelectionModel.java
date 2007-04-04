@@ -22,7 +22,8 @@ public abstract class SingleSelectionModel extends DefaultListSelectionModel
         setSelectionMode(SINGLE_SELECTION);
     }
 
-    public void setSelectionInterval(int index0, int index1)
+    @Override
+	public void setSelectionInterval(int index0, int index1)
     {
         int oldIndex = getMinSelectionIndex();
         super.setSelectionInterval(index0,index1);
