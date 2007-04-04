@@ -1,0 +1,5 @@
+@template displayBooks(books)@
+We have the following books:
+@loop b : books.size()@
+    @books.get(b).getTitle()@ by @books.get(b).getAuthor()@.
+@end loop@
