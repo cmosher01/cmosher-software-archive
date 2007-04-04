@@ -4,12 +4,14 @@
 package ui;
 
 
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.WindowListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.Closeable;
 import java.util.Enumeration;
-
+import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -25,8 +27,9 @@ import javax.swing.plaf.FontUIResource;
 public class DraggerUserInterface implements Closeable
 {
     private JFrame frame;
+    private DragPanel panelDrag;
 
-    public static void setSwingDefaults()
+    private static void setSwingDefaults()
     {
         setLookAndFeel();
 
@@ -73,16 +76,25 @@ public class DraggerUserInterface implements Closeable
 
 
 
-    public void init(final WindowListener listenerWindow)
+    public void init()
     {
-        // Create the window.
+    	setSwingDefaults();
+
+    	// Create the window.
         this.frame = new JFrame();
 
         // If the user clicks the close box, we call the WindowListener
         // that's passed in by the caller (who is responsible for calling
         // our close method if he determines it is OK to terminate the app)
         this.frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        this.frame.addWindowListener(listenerWindow);
+        this.frame.addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(final WindowEvent e)
+            {
+                close();
+            }
+        });
 
         //this.frame.setIconImage(getFrameIcon());
 
@@ -90,12 +102,10 @@ public class DraggerUserInterface implements Closeable
 
         this.frame.setJMenuBar(buildMenuBar());
 
-        // Create and set up the content pane.
-        final DragPanel dragger = new DragPanel();
-        final JScrollPane scroller = new JScrollPane(dragger);
-        scroller.setPreferredSize(new Dimension(666,360));
+        this.panelDrag = new DragPanel();
 
-        this.frame.setContentPane(scroller);
+        // Create and set up the content pane.
+        this.frame.setContentPane(new JScrollPane(panelDrag));
 
         // Set the window's size and position.
         this.frame.pack();
@@ -116,10 +126,26 @@ public class DraggerUserInterface implements Closeable
 
         final JMenu menuFile = new JMenu("File");
         final JMenuItem itemExit = new JMenuItem("Exit");
+		itemExit.addActionListener(
+			new ActionListener()
+			{
+				public void actionPerformed(final ActionEvent e)
+				{
+					close();
+				}
+			});
         menuFile.add(itemExit);
 
         bar.add(menuFile);
 
         return bar;
     }
+
+
+	public void test(List<DrawablePersona> rPersona, List<DrawableFamily> rFamily)
+	{
+        this.panelDrag.set(rPersona,rFamily);
+        this.panelDrag.calc();
+        this.panelDrag.repaint();
+	}
 }

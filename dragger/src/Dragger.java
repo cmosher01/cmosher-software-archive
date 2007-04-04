@@ -1,31 +1,24 @@
-
-
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.Closeable;
 import java.lang.reflect.InvocationTargetException;
-
 import javax.swing.SwingUtilities;
-
 import ui.DraggerUserInterface;
 
 
 
 
-public class Dragger implements Runnable, Closeable
+public class Dragger implements Runnable
 {
     /**
-     * @param args
+     * @param rArg
      * @throws InvocationTargetException 
      * @throws InterruptedException 
      */
-    public static void main(String[] args) throws InterruptedException, InvocationTargetException
+    public static void main(final String... rArg) throws InterruptedException, InvocationTargetException
     {
         final Dragger dragger = new Dragger();
         SwingUtilities.invokeAndWait(dragger);
     }
 
-    private final DraggerUserInterface ui = new DraggerUserInterface();
+
 
     private Dragger()
     {
@@ -36,21 +29,7 @@ public class Dragger implements Runnable, Closeable
 
     public void run()
     {
-        DraggerUserInterface.setSwingDefaults();
-
-        // create the main frame window for the application
-        this.ui.init(new WindowAdapter()
-        {
-            @Override
-            public void windowClosing(final WindowEvent e)
-            {
-                close();
-            }
-        });
-    }
-
-    public void close()
-    {
-        this.ui.close();
+    	final DraggerUserInterface ui = new DraggerUserInterface();
+        ui.init();
     }
 }

@@ -6,6 +6,7 @@ package ui;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Paint;
@@ -14,23 +15,33 @@ import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Random;
 import java.util.Set;
 import javax.swing.JPanel;
+import javax.swing.Scrollable;
 import model.MovableShape;
 
-class DragPanel extends JPanel
+class DragPanel extends JPanel implements Scrollable
 {
-    private final Set<MovableShape> model = new HashSet<MovableShape>();
-    private final Set<MovableShape> selection = new HashSet<MovableShape>();
+	private final List<DrawablePersona> rDrawPersona = new ArrayList<DrawablePersona>();
+	private final List<DrawableFamily> rDrawFamily = new ArrayList<DrawableFamily>();
 
-    private BasicStroke stroke = new BasicStroke(4);
-    private Paint paint = Color.BLACK;
+    private final Set<DrawablePersona> selection = new HashSet<DrawablePersona>();
 
-    private BasicStroke strokeSelecting = new BasicStroke(1);//,BasicStroke.CAP_BUTT,BasicStroke.JOIN_MITER,1f,new float[] {1f},0f);
+//    private BasicStroke strokePartner = new BasicStroke(1);
+//    private Paint paintPartner = Color.BLUE;
+
+    private BasicStroke strokeSelecting = new BasicStroke(1);//,BasicStroke.CAP_BUTT,BasicStroke.JOIN_MITER);//,3f,new float[] {1f},0f);
     private Paint paintSelecting = Color.RED.darker();
 
     private boolean moving;
@@ -48,7 +59,8 @@ class DragPanel extends JPanel
     {
         setOpaque(true);
 
-        setPreferredSize(new Dimension(1024,768));
+//        setPreferredSize(new Dimension(16000,12000));
+
         setAutoscrolls(true);
 
         addMouseListener(new MouseAdapter()
@@ -76,15 +88,53 @@ class DragPanel extends JPanel
 //        final int sizeStroke = getStrokeSize();
 //        this.deltaStrokeMin = sizeStroke / 2;
 //        this.deltaStrokeMax = sizeStroke-this.deltaStrokeMin;
-
-//        this.rModel = new ShapeModel();
-//        this.rModel = this.rModel.addShape(new Rectangle2D.Double(10,10,100,50));
-//        this.rModel = this.rModel.addShape(new Rectangle2D.Double(160,70,100,50));
-        this.model.add(new MovableShape(new Rectangle2D.Double(10,10,100,50)));
-        this.model.add(new MovableShape(new Rectangle2D.Double(160,70,100,50)));
     }
 
-    @Override
+
+	public void set(final List<DrawablePersona> rPersona, final List<DrawableFamily> rFamily)
+	{
+		this.rDrawPersona.clear();
+		this.rDrawPersona.addAll(rPersona);
+
+		this.rDrawFamily.clear();
+		this.rDrawFamily.addAll(rFamily);
+	}
+
+	public void calc()
+	{
+        final Graphics gr = getGraphics();
+        final Graphics2D graphics = (Graphics2D)gr.create();
+
+        for (final Drawable drawable: this.rDrawPersona)
+		{
+			drawable.calc(graphics);
+		}
+
+        for (final Drawable drawable: this.rDrawFamily)
+		{
+			drawable.calc(graphics);
+		}
+
+        graphics.dispose();
+
+        Rectangle2D union = null;
+        for (final DrawablePersona persona: this.rDrawPersona)
+        {
+        	persona.place();
+        	final Rectangle2D bnd = persona.getBounds2D();
+        	if (union == null)
+        	{
+        		union = bnd;
+        	}
+        	else
+        	{
+        		union = union.createUnion(bnd);
+        	}
+        }
+        setPreferredSize(new Dimension((int)(union.getMaxX()),(int)(union.getMaxY())));
+	}
+
+	@Override
     public void paintComponent(final Graphics g)
     {
         super.paintComponent(g);
@@ -93,15 +143,17 @@ class DragPanel extends JPanel
 //        final AffineTransform scaler = AffineTransform.getScaleInstance(2,2);
 //        g2.transform(scaler);
 
+        for (final Drawable drawable : this.rDrawFamily)
+		{
+			drawable.draw(g2,null);
+		}
 
-        for (final MovableShape shape : this.model)
+        for (final DrawablePersona persona : this.rDrawPersona)
         {
-            drawShape(shape,this.selection.contains(shape),g2);
+            final DrawingOptions opt = new DrawingOptions();
+            opt.setSelected(this.selection.contains(persona));
+            persona.draw(g2,opt);
         }
-//        drawShape(this.rect,this.rectIsSelected,g2);
-//        drawShape(this.rect2,this.rectIsSelected2,g2);
-
-
 
         if (this.selecting)
         {
@@ -111,31 +163,6 @@ class DragPanel extends JPanel
         }
 
         g2.dispose();
-    }
-
-    private void drawShape(final MovableShape shapeMovable, final boolean selected, final Graphics2D g2)
-    {
-        final Shape shape = shapeMovable.getMovedShape();
-
-        // Optimization (this "if" block could be removed).
-        // don't draw the shape if it's not in the clipping area
-        if (!g2.getClip().intersects(shape.getBounds2D()))
-        {
-            return;
-        }
-        g2.setStroke(this.stroke);
-        g2.setPaint(this.paint);
-        g2.draw(shape);
-
-        if (selected)
-        {
-            g2.setPaint(new Color(200,255,200));
-        }
-        else
-        {
-            g2.setPaint(Color.WHITE);
-        }
-        g2.fill(shape);
     }
 
 //    private int getStrokeSize()
@@ -152,33 +179,33 @@ class DragPanel extends JPanel
     {
         this.pressedAt = press;
 
-        MovableShape shapeHit = null;
-        for (final MovableShape shape : this.model)
-        {
-            // TODO account for the stroke when checking for hit shapes
-            if (shape.getOriginalShape().contains(press))
-            {
-                shapeHit = shape;
-                break;
-            }
-        }
-
-        if (shapeHit != null)
+        int iHit = -1;
+        for (int iPersona = this.rDrawPersona.size()-1; iPersona >= 0; --iPersona)
+		{
+			final DrawablePersona persona = this.rDrawPersona.get(iPersona);
+			if (persona.getMovable().getOriginalShape().contains(press))
+			{
+				iHit = iPersona;
+				break;
+			}
+		}
+        if (iHit >= 0)
         {
             this.moving = true;
-            if (!this.selection.contains(shapeHit))
+            final DrawablePersona persona = this.rDrawPersona.get(iHit);
+            if (!this.selection.contains(persona))
             {
                 if (!extending)
                 {
                     this.selection.clear();
                 }
-                this.selection.add(shapeHit);
+                this.selection.add(persona);
             }
             else
             {
                 if (extending)
                 {
-                    this.selection.remove(shapeHit);
+                    this.selection.remove(persona);
                     this.moving = false;
                 }
             }
@@ -193,34 +220,33 @@ class DragPanel extends JPanel
 
     private void dragged(final Point2D.Double draggedTo, final boolean extending)
     {
-        this.draggingTo = draggedTo;
+    	assert this.moving || this.selecting;
+
+    	this.draggingTo = draggedTo;
         this.rectDrag = createRectFromPoints(this.pressedAt,this.draggingTo);
         this.rectDragNormal = normalizeRect(this.rectDrag);
-        final Rectangle scrollTo = pointToRect(this.draggingTo);
+        scrollRectToVisible(pointToRect(this.draggingTo));
 
         if (this.moving)
         {
-            scrollRectToVisible(scrollTo);
             moveSelectedShapes();
-            repaint();
         }
         else if (this.selecting)
         {
-            scrollRectToVisible(scrollTo);
             if (!extending)
             {
                 this.selection.clear();
             }
-            for (final MovableShape shape : this.model)
+            for (final DrawablePersona persona : this.rDrawPersona)
             {
                 // TODO account for the stroke when checking for hit shapes
-                if (shape.getOriginalShape().intersects(this.rectDragNormal))
+                if (persona.getMovable().getOriginalShape().intersects(this.rectDragNormal))
                 {
-                    this.selection.add(shape);
+                    this.selection.add(persona);
                 }
             }
-            repaint();
         }
+        repaint();
     }
 
     private void released()
@@ -231,9 +257,9 @@ class DragPanel extends JPanel
         this.draggingTo = null;
         this.rectDrag = null;
         this.rectDragNormal = null;
-        for (final MovableShape shape : this.model)
+        for (final DrawablePersona persona : this.selection)
         {
-            shape.commit();
+            persona.getMovable().commit();
         }
 
         repaint();
@@ -255,11 +281,14 @@ class DragPanel extends JPanel
     {
         final AffineTransform move = AffineTransform.getTranslateInstance(this.rectDrag.getWidth(),this.rectDrag.getHeight());
 
+        final Graphics gr = this.getGraphics();
+        final Graphics2D graphics = (Graphics2D)gr.create();
+
         Rectangle2D boundsShapes = null;
-        for (final MovableShape shape : this.selection)
+        for (final DrawablePersona persona : this.selection)
         {
-            final Shape moved = move.createTransformedShape(shape.getOriginalShape());
-            shape.setShape(moved);
+            final Shape moved = move.createTransformedShape(persona.getMovable().getOriginalShape());
+            movePersona(persona,moved,graphics);
 
             if (boundsShapes == null)
             {
@@ -270,10 +299,30 @@ class DragPanel extends JPanel
                 boundsShapes.add(moved.getBounds2D());
             }
         }
-        constrainMovement(boundsShapes);
+        constrainMovement(boundsShapes,graphics);
+
+        graphics.dispose();
     }
 
-    private void constrainMovement(Rectangle2D boundsShapes)
+
+	private void movePersona(final DrawablePersona persona, final Shape moved, final Graphics2D graphics)
+	{
+		persona.move(moved);
+		persona.calc(graphics);
+		final DrawableFamily ch = persona.getChildInFamily();
+		if (ch != null)
+		{
+			ch.calc(graphics);
+		}
+		final List<DrawableFamily> fam = new ArrayList<DrawableFamily>();
+		persona.getParentInFamilies(fam);
+		for (final DrawableFamily family : fam)
+		{
+			family.calc(graphics);
+		}
+	}
+
+    private void constrainMovement(final Rectangle2D boundsShapes,final Graphics2D graphics)
     {
         // TODO account for stroke width when constraining movement
         final Rectangle2D bounds = new Rectangle2D.Double(0,0,getWidth(),getHeight());
@@ -298,9 +347,10 @@ class DragPanel extends JPanel
             }
 
             final AffineTransform moveBack = AffineTransform.getTranslateInstance(dx,dy);
-            for (final MovableShape shape : this.selection)
+            for (final DrawablePersona persona : this.selection)
             {
-                shape.setShape(moveBack.createTransformedShape(shape.getMovedShape()));
+                final Shape moved = moveBack.createTransformedShape(persona.getMovable().getMovedShape());
+                movePersona(persona,moved,graphics);
             }
         }
     }
@@ -351,4 +401,29 @@ class DragPanel extends JPanel
         Rectangle2D.union(rect,rect,rectNormal);
         return rectNormal;
     }
+
+	public Dimension getPreferredScrollableViewportSize()
+	{
+		return new Dimension(666,360);
+	}
+
+	public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction)
+	{
+		return 40;
+	}
+
+	public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction)
+	{
+		return 240;
+	}
+
+	public boolean getScrollableTracksViewportWidth()
+	{
+		return false;
+	}
+
+	public boolean getScrollableTracksViewportHeight()
+	{
+		return false;
+	}
 }

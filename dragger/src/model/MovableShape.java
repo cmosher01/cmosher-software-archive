@@ -39,11 +39,11 @@ public class MovableShape
         this.moving = false;
     }
 
-    public void rollBack()
-    {
-        this.shapeMoved = this.shape;
-        this.moving = false;
-    }
+//    public void rollBack()
+//    {
+//        this.shapeMoved = this.shape;
+//        this.moving = false;
+//    }
 
     public boolean isMoving()
     {
