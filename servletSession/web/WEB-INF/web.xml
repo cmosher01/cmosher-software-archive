@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+    <display-name>Test Small Servlet</display-name>
+    <description>A small servlet to test things.</description>
+    <servlet>
+        <servlet-name>test</servlet-name>
+	    <servlet-class>SimpleShowParameters</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>test</servlet-name>
+        <url-pattern>/show/*</url-pattern>
+    </servlet-mapping>
+</web-app>
