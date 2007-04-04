@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import nu.mine.mosher.core.Immutable;
 import nu.mine.mosher.time.Time;
 
 /**
@@ -15,7 +15,7 @@ import nu.mine.mosher.time.Time;
  *
  * @author Chris Mosher
  */
-public class YMD implements Immutable, Serializable, Comparable<YMD>
+public class YMD implements Serializable, Comparable<YMD>
 {
 	/*
 	 * One-based year, month, and day.
@@ -31,11 +31,6 @@ public class YMD implements Immutable, Serializable, Comparable<YMD>
 	private transient Time approx;
 
 
-
-	static
-	{
-		assert Immutable.class.isAssignableFrom(Time.class);
-	}
 
 	/**
 	 * @param year
@@ -66,6 +61,21 @@ public class YMD implements Immutable, Serializable, Comparable<YMD>
 		this.day = day;
 
 		init();
+	}
+
+
+	/**
+	 * @param time
+	 */
+	public YMD(final Time time)
+	{
+		final GregorianCalendar cal = new GregorianCalendar();
+    	cal.setGregorianChange(new Date(Long.MIN_VALUE));
+    	cal.setTime(time.asDate());
+    	this.year = cal.get(Calendar.YEAR);
+    	this.month = cal.get(Calendar.MONTH)+1;
+    	this.day = cal.get(Calendar.DAY_OF_MONTH);
+    	init();
 	}
 
 
@@ -117,12 +127,12 @@ public class YMD implements Immutable, Serializable, Comparable<YMD>
 
 	public static YMD getMinimum()
     {
-    	return new YMD(Integer.MIN_VALUE,Integer.MIN_VALUE,Integer.MIN_VALUE);
+    	return new YMD(-9999,1,1);
     }
 
     public static YMD getMaximum()
     {
-    	return new YMD(Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE);
+    	return new YMD(9999,12,31);
     }
 
 
@@ -151,14 +161,24 @@ public class YMD implements Immutable, Serializable, Comparable<YMD>
     @Override
     public String toString()
     {
-    	if (isExact())
+    	final StringBuilder sb = new StringBuilder();
+    	if (this.year != 0)
     	{
-    		return this.approx.toString();
+        	if (this.year < 0)
+        	{
+        		sb.append('-');
+        	}
+    		sb.append(String.format("%04d",Math.abs(this.year)));
+    		if (this.month > 0)
+    		{
+        		sb.append(String.format("-%02d",this.month));
+        		if (this.day > 0)
+        		{
+        			sb.append(String.format("-%02d",this.day));
+        		}
+    		}
     	}
-
-    	return "year: "+this.year+
-    		", month: "+(this.month==0 ? "unknown" : ""+this.month)+
-    		", day: "+(this.day==0 ? "unknown" : ""+this.day);
+    	return sb.toString();
     }
 
     public int compareTo(final YMD that)
@@ -166,9 +186,9 @@ public class YMD implements Immutable, Serializable, Comparable<YMD>
     	return this.approx.compareTo(that.approx);
     }
 
-    private static boolean valid(int i)
+    private static boolean valid(final int i)
 	{
-		return 0 < i && i < Integer.MAX_VALUE;
+		return i != 0;
 	}
 
 	private Time calcApprox()
@@ -196,7 +216,8 @@ public class YMD implements Immutable, Serializable, Comparable<YMD>
 		final GregorianCalendar cal = new GregorianCalendar();
     	cal.setGregorianChange(new Date(Long.MIN_VALUE));
 
-    	cal.set(year,month-1,day);
+    	cal.set(year,month-1,day,12,0,0);
+    	cal.set(Calendar.MILLISECOND,0);
 
     	return new Time(cal.getTime());
 	}

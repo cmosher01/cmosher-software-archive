@@ -5,8 +5,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Date;
-
-import nu.mine.mosher.core.Immutable;
 import nu.mine.mosher.time.Time;
 
 /**
@@ -14,7 +12,7 @@ import nu.mine.mosher.time.Time;
  *
  * @author Chris Mosher
  */
-public class DateRange implements Immutable, Serializable, Comparable<DateRange>
+public class DateRange implements Serializable, Comparable<DateRange>
 {
     /*
 	 * YMD always represent Gregorian calendar.
@@ -41,11 +39,6 @@ public class DateRange implements Immutable, Serializable, Comparable<DateRange>
 	private transient Time approx;
 
 
-
-	static
-	{
-		assert Immutable.class.isAssignableFrom(YMD.class);
-	}
 
 	/**
 	 * @param ymd
@@ -218,17 +211,6 @@ public class DateRange implements Immutable, Serializable, Comparable<DateRange>
         {
         	d = this.approx.compareTo(that.approx);
         }
-		if (d == 0)
-		{
-			if (this.circa && !that.circa)
-			{
-				d = -1;
-			}
-			if (that.circa && !this.circa)
-			{
-				d = +1;
-			}
-		}
 
         return d;
     }

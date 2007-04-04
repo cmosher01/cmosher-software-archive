@@ -4,22 +4,16 @@
 package nu.mine.mosher.grodb.date;
 
 import java.io.Serializable;
-import nu.mine.mosher.core.Immutable;
 
 /**
  * TODO
  *
  * @author Chris Mosher
  */
-public class DatePeriod implements Immutable, Serializable, Comparable<DatePeriod>
+public class DatePeriod implements Serializable, Comparable<DatePeriod>
 {
 	private final DateRange dateStart;
 	private final DateRange dateEnd;
-
-	static
-	{
-		assert Immutable.class.isAssignableFrom(DateRange.class);
-	}
 
 	/**
 	 * @param date
@@ -75,7 +69,11 @@ public class DatePeriod implements Immutable, Serializable, Comparable<DatePerio
 	@Override
 	public String toString()
 	{
-		return "from "+this.dateStart+" to "+this.dateEnd;
+		if (this.dateStart.equals(this.dateEnd))
+		{
+			return this.dateStart.toString();
+		}
+		return this.dateStart+"\u2013"+this.dateEnd;
 	}
 
 	public int compareTo(final DatePeriod that)
@@ -90,5 +88,15 @@ public class DatePeriod implements Immutable, Serializable, Comparable<DatePerio
 			d = this.dateEnd.compareTo(that.dateEnd);
 		}
 		return d;
+	}
+
+	/**
+	 * Checks to see if this DatePeriod overlaps the given DatePeriod.
+	 * @param periodTarget
+	 * @return true if they overlap
+	 */
+	public boolean overlaps(final DatePeriod periodTarget)
+	{
+		return this.dateStart.compareTo(periodTarget.dateEnd) <= 0 && periodTarget.dateStart.compareTo(this.dateEnd) <= 0;
 	}
 }
