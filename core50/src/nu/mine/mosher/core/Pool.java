@@ -6,6 +6,7 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -26,17 +27,14 @@ public class Pool<T>
 	/**
 	 * @param pool
 	 */
-	public Pool(final T[] pool)
+	public Pool(final Collection<T> pool)
 	{
-		if (pool.length == 0)
+		if (pool.size() == 0)
 		{
 			throw new IllegalArgumentException();
 		}
 
-		for (T t : pool)
-		{
-			this.unused.addLast(t);
-		}
+		this.unused.addAll(pool);
 	}
 
 	/**
@@ -47,8 +45,8 @@ public class Pool<T>
 	{
 		recycle();
 
-		T theObject = this.unused.removeFirst();
-		T theProxy = makeProxy(theObject);
+		final T theObject = this.unused.removeFirst();
+		final T theProxy = makeProxy(theObject);
 
 		this.inUse.put(new WeakReference<T>(theProxy,this.recycleBin),theObject);
 
@@ -88,7 +86,7 @@ public class Pool<T>
 			System.gc();
 		}
 
-		for (Reference ref = this.recycleBin.poll(); ref != null; ref = this.recycleBin.poll())
+		for (Reference<? extends T> ref = this.recycleBin.poll(); ref != null; ref = this.recycleBin.poll())
 		{
 			final T recyclable = this.inUse.remove(ref);
 			this.unused.addLast(recyclable);
