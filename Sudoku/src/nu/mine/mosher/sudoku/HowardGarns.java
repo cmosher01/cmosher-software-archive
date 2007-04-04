@@ -42,9 +42,15 @@ public class HowardGarns implements Runnable, Closeable
      */
     public static void main(String[] args) throws InterruptedException, InvocationTargetException
     {
-    	final HowardGarns howardgarns = new HowardGarns();
-
-    	SwingUtilities.invokeAndWait(howardgarns);
+    	SwingUtilities.invokeAndWait(new Runnable()
+    	{
+			public void run()
+			{
+		    	final Runnable program = new HowardGarns();
+		    	program.run();
+			}
+    	}
+    	);
     }
 
 
@@ -59,8 +65,7 @@ public class HowardGarns implements Runnable, Closeable
 
     private HowardGarns()
     {
-    	// instantiated by the main static method, only
-    	// Don't do any Swing stuff in this constructor
+    	// instantiated by main only
     }
 
 
