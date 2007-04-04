@@ -14,9 +14,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import nu.mine.mosher.template.Templat;
-import nu.mine.mosher.template.exception.TemplateLexingException;
-import nu.mine.mosher.template.exception.TemplateParsingException;
+import net.sourceforge.templat.Templat;
+import net.sourceforge.templat.exception.TemplateLexingException;
+import net.sourceforge.templat.exception.TemplateParsingException;
 
 /**
  * A small servlet.
@@ -57,9 +57,8 @@ public class Small extends HttpServlet
 
 	    final Collection<Header> rHeader = new ArrayList<Header>();
 	    getHeaders(request,rHeader);
-	    page.addArg(rHeader);
 
-	    page.parse(bufPage);
+	    page.render(bufPage,rHeader);
 	}
 
 	/**

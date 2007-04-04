@@ -23,10 +23,10 @@ public class HTTPHeaderParser
      */
     public HTTPHeaderParser(final HttpServletRequest request, final String name)
     {
-        final Enumeration headers = request.getHeaders(name);
+        final Enumeration<String> headers = request.getHeaders(name);
         while (headers.hasMoreElements())
         {
-            final String values = (String)headers.nextElement();
+            final String values = headers.nextElement();
             parseValues(values);
         }
     }
