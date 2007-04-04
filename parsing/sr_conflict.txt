@@ -1,0 +1,18 @@
+To eliminate shift/reduce conflicts
+using IF-THEN/IF-THEN-ELSE as as example:
+
+original
+--------
+s : I x T s E s
+  | I x T s
+  | other
+
+fixed
+-----
+s : m | u
+
+m : I x T m E m
+  | other
+
+u : I x T s
+  | I x T m E u
