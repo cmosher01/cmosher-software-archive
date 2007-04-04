@@ -1,0 +1,23 @@
+@template vep(rImage)@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/tr/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Figgers Family</title>
+<link rel="stylesheet" type="text/css" href="figgers.css" />
+</head>
+<body>
+<table>
+<tbody>
+@loop i: rImage.size()@
+	<tr><td>
+	<div class="image">
+	<img src="@rImage[i].getName()@.png">
+	<div class="caption">@rImage[i].getDate()@&nbsp;&nbsp;@rImage[i].getTitle()@</div>
+	</div>
+	</td></tr>
+@end loop@
+</tbody>
+</table>
+</body>
+</html>
