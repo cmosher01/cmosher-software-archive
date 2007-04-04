@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/tomcat/apache-tomcat-5.5.17/common/lib/servlet-api.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/templat"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/grodbDate"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/grodb50"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/core50"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/timeUtil"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/gedcomDateParser"/>
+	<classpathentry kind="output" path="web/WEB-INF/classes"/>
+</classpath>

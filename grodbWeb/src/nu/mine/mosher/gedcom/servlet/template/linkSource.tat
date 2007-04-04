@@ -1,0 +1,6 @@
+@template linkSource(source)@
+@if (Util.isNull(source))@
+    &nbsp;
+@else@
+	<a href="?source=@source.getLink()@">@source.getShortName()@</a>
+@end if@

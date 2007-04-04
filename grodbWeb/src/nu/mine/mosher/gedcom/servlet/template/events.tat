@@ -1,0 +1,31 @@
+@template events(rEvent)@
+@if (!rEvent.isEmpty())@
+	<table border="1" cellspacing="0" cellpadding="3">
+		<thead>
+			<tr>
+				<th>&nbsp;</th>
+				<th>date</th>
+				<th>place</th>
+				<th>notes</th>
+				<th>source</th>
+			</tr>
+		</thead>
+		<tbody>
+			@loop iEvent : rEvent.size()@
+				<tr>
+					<td><strong>@rEvent[iEvent].getType()@</strong></td>
+					<td>
+						@if (rEvent[iEvent].getDate().exists())@
+							@rEvent[iEvent].getDate().get()@
+						@else@
+							&nbsp;
+						@end if@
+					</td>
+					<td>@rEvent[iEvent].getPlace()@</td>
+					<td width="20%">@rEvent[iEvent].getNote()@</td>
+					<td width="10%">@include linkSource(rEvent[iEvent].getSource())@</td>
+				</tr>
+			@end loop@
+		</tbody>
+	</table>
+@end if@

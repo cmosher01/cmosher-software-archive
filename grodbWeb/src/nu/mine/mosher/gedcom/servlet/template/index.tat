@@ -1,0 +1,31 @@
+@template index(rGed)@
+
+@include header()@
+
+<head>
+	<title>Genealogy</title>
+	<style type="text/css">
+	body
+	{
+		font-family: "Arial Unicode MS", "Lucida Sans Unicode", Arial, sans-serif;
+		font-size: small;
+	}
+	</style>
+</head>
+
+<body>
+	<p>Please choose a GEDCOM file to explore:</p>
+
+	<table border="1" cellspacing="0" cellpadding="3">
+		<tbody>
+			@loop iGed : rGed.size()@
+				<tr>
+					<td><a href="@rGed[iGed].getFile()@?person=@rGed[iGed].getFirstID()@">@rGed[iGed].getFile()@</a></td>
+					<td>@rGed[iGed].getDescription()@</td>
+				</tr>
+			@end loop@
+		</tbody>
+	</table>
+</body>
+
+@include footer()@

@@ -1,0 +1,34 @@
+@template source(source)@
+
+@include header()@
+
+<head>
+	<title>@source.getTitle()@</title>
+	<style type="text/css">
+	body
+	{
+		font-family: "Arial Unicode MS", "Lucida Sans Unicode", Arial, sans-serif;
+		font-size: small;
+	}
+	</style>
+</head>
+
+<body>
+	<h1>@source.getTitle()@</h1>
+
+	<table>
+		<tbody>
+			<tr><td>author:</td><td>@source.getAuthor()@</td></tr>
+			<tr><td>title:</td><td>@source.getTitle()@</td></tr>
+			<tr><td>publ.:</td><td>@source.getPublication()@</td></tr>
+		</tbody>
+	</table>
+
+	<p>actual transcription and/or representation of source [with notes in brackets]:</p>
+	<hr />
+	<p>@source.getText()@</p>
+	<hr />
+
+</body>
+
+@include footer()@

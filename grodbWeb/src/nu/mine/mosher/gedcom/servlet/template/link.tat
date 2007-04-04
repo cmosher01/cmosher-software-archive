@@ -1,0 +1,6 @@
+@template link(person)@
+@if (Util.isNull(person))@
+	[unknown]
+@else@
+	<a href="?person=@person.getLink()@">@person@</a>
+@end if@
