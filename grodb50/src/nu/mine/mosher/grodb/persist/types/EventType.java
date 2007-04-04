@@ -15,6 +15,7 @@ public enum EventType
 	wedding,
 	census,
 	residence,
+	photograph,
 	;
 
 	public static EventType fromGedcom(final GedcomTag tagEvent)

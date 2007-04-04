@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="junit"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="example"/>
+	<classpathentry kind="src" path="junit"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/gedcomDateParser"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/grodbDate"/>
 	<classpathentry kind="src" path="/core50"/>
-	<classpathentry kind="src" path="/junit-3-8-1"/>
-	<classpathentry kind="src" path="example"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/timeUtil"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/uuid"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/gedcomDateParser"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/je-3.0.12"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/je-3.1.0"/>
+	<classpathentry kind="src" path="/junit-3-8-1"/>
 	<classpathentry kind="output" path="webapp/WEB-INF/classes"/>
 </classpath>

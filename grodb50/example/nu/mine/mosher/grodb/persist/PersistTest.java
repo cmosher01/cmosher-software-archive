@@ -18,6 +18,7 @@ import nu.mine.mosher.grodb.persist.key.SourceID;
 import nu.mine.mosher.grodb.persist.proxy.DatePeriodProxy;
 import nu.mine.mosher.grodb.persist.proxy.DateRangeProxy;
 import nu.mine.mosher.grodb.persist.proxy.EnumProxy;
+import nu.mine.mosher.grodb.persist.proxy.Proxies;
 import nu.mine.mosher.grodb.persist.proxy.TimeProxy;
 import nu.mine.mosher.grodb.persist.proxy.UUIDProxy;
 import nu.mine.mosher.grodb.persist.proxy.YMDProxy;
@@ -51,12 +52,7 @@ public class PersistTest
         final Environment env = new Environment(new File("persistdb"),envConfig);
 
         final EntityModel model = new AnnotationModel();
-        model.registerClass(UUIDProxy.class);
-        model.registerClass(TimeProxy.class);
-        model.registerClass(YMDProxy.class);
-        model.registerClass(DateRangeProxy.class);
-        model.registerClass(DatePeriodProxy.class);
-        model.registerClass(EnumProxy.class);
+        Proxies.register(model);
 
         final StoreConfig storeConfig = new StoreConfig();
         storeConfig.setModel(model);

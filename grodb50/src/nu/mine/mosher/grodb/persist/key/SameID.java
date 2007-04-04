@@ -13,11 +13,11 @@ import com.sleepycat.persist.model.Persistent;
  * @author Chris Mosher
  */
 @Persistent
-public class EventID
+public class SameID
 {
 	@KeyField(1) private final String uuid;
 
-	private EventID()
+	private SameID()
 	{
 		this.uuid = null;
 	}
@@ -25,7 +25,7 @@ public class EventID
 	/**
 	 * @param uuid
 	 */
-	public EventID(final UUID uuid)
+	public SameID(final UUID uuid)
 	{
 		this.uuid = uuid.toString();
 	}
@@ -38,11 +38,11 @@ public class EventID
 	@Override
 	public boolean equals(final Object object)
 	{
-		if (!(object instanceof EventID))
+		if (!(object instanceof SameID))
 		{
 			return false;
 		}
-		final EventID that = (EventID)object;
+		final SameID that = (SameID)object;
 		return this.uuid.equals(that.uuid);
 	}
 

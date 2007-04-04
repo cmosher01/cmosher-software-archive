@@ -22,4 +22,5 @@ public enum RoleType
 	mother,
 	spouse,
 	recipient,
+	subjectOfPhotograph,
 }

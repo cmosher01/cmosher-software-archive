@@ -47,6 +47,12 @@ public class PersonaID
 	}
 
 	@Override
+	public int hashCode()
+	{
+		return this.uuid.hashCode();
+	}
+
+	@Override
 	public String toString()
 	{
 		return this.uuid;

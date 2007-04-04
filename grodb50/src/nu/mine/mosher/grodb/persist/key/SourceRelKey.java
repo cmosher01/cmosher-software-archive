@@ -45,4 +45,10 @@ public class SourceRelKey
 		final SourceRelKey that = (SourceRelKey)object;
 		return this.idParent.equals(that.idParent) && this.idChild.equals(that.idChild);
 	}
+
+	@Override
+	public int hashCode()
+	{
+		return this.idParent.hashCode() ^ this.idChild.hashCode();
+	}
 }

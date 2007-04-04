@@ -14,6 +14,11 @@ import nu.mine.mosher.grodb.persist.key.PlaceID;
 import nu.mine.mosher.grodb.persist.types.EventType;
 import nu.mine.mosher.grodb.persist.types.Surety;
 
+/**
+ * An event (type, date, and place).
+ *
+ * @author Chris Mosher
+ */
 @Entity
 public class Event
 {
@@ -61,6 +66,9 @@ public class Event
 		this.suretyOfPlace = suretyOfPlace;
 	}
 
+	/**
+	 * @return the ID (pk)
+	 */
 	public EventID getID()
 	{
 		return this.id;

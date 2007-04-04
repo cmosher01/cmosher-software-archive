@@ -36,4 +36,21 @@ public class FacsimileKey
 	{
 		return this.seqDisplay;
 	}
+
+	@Override
+	public boolean equals(final Object object)
+	{
+		if (!(object instanceof FacsimileKey))
+		{
+			return false;
+		}
+		final FacsimileKey that = (FacsimileKey)object;
+		return this.idSource.equals(that.idSource) && this.seqDisplay == that.seqDisplay;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return this.idSource.hashCode() ^ this.seqDisplay;
+	}
 }

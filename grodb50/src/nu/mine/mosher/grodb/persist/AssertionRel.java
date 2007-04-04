@@ -11,16 +11,23 @@ import com.sleepycat.persist.model.PrimaryKey;
 import com.sleepycat.persist.model.Relationship;
 import com.sleepycat.persist.model.SecondaryKey;
 
+/**
+ * A relation between two <code>Assertion</code>s.
+ *
+ * @author Chris Mosher
+ */
 @Entity
 public class AssertionRel
 {
 	@PrimaryKey
 	private final AssertionRelKey pk;
 
+	// redundant fields to allow JE's secondary keys
 	@SecondaryKey(relate=Relationship.MANY_TO_ONE,relatedEntity=Assertion.class,onRelatedEntityDelete=DeleteAction.CASCADE)
 	private final AssertionID idParent;
 	@SecondaryKey(relate=Relationship.MANY_TO_ONE,relatedEntity=Assertion.class,onRelatedEntityDelete=DeleteAction.CASCADE)
 	private final AssertionID idChild;
+
 	/**
 	 * @param child
 	 * @param parent

@@ -4,16 +4,22 @@
 package nu.mine.mosher.grodb.persist;
 
 import nu.mine.mosher.grodb.persist.key.AssertionID;
-import nu.mine.mosher.grodb.persist.key.PersonaID;
 import nu.mine.mosher.grodb.persist.key.RoleID;
+import nu.mine.mosher.grodb.persist.key.SameID;
 import nu.mine.mosher.grodb.persist.key.SourceID;
-import nu.mine.mosher.grodb.persist.types.Surety;
 import com.sleepycat.persist.model.DeleteAction;
 import com.sleepycat.persist.model.Entity;
 import com.sleepycat.persist.model.PrimaryKey;
 import com.sleepycat.persist.model.Relationship;
 import com.sleepycat.persist.model.SecondaryKey;
 
+/**
+ * Represents a <code>Source</code>'s assertion that
+ * a <code>Persona</code> played a <code>Role</code> in an <code>Event</code>,
+ * or that two <code>Persona</code>e are identical.
+ *
+ * @author Chris Mosher
+ */
 @Entity
 public class Assertion
 {
@@ -33,11 +39,8 @@ public class Assertion
 	@SecondaryKey(relate=Relationship.MANY_TO_ONE, relatedEntity=Role.class, onRelatedEntityDelete=DeleteAction.CASCADE)
 	private final RoleID idRole;
 	// or
-	@SecondaryKey(relate=Relationship.MANY_TO_ONE, relatedEntity=Persona.class, onRelatedEntityDelete=DeleteAction.CASCADE)
-	private final PersonaID idPersonaSameAsA;
-	@SecondaryKey(relate=Relationship.MANY_TO_ONE, relatedEntity=Persona.class, onRelatedEntityDelete=DeleteAction.CASCADE)
-	private final PersonaID idPersonaSameAsB;
-	private final Surety suretySameAs;
+	@SecondaryKey(relate=Relationship.MANY_TO_ONE, relatedEntity=Same.class, onRelatedEntityDelete=DeleteAction.CASCADE)
+	private final SameID idSame;
 	// end
 
 	private Assertion()
@@ -47,19 +50,16 @@ public class Assertion
 		this.affirmed = false;
 		this.rationale = null;
 		this.idRole = null;
-		this.idPersonaSameAsA = null;
-		this.idPersonaSameAsB = null;
-		this.suretySameAs = null;
+		this.idSame = null;
 	}
 
 	/**
+	 * @param id 
 	 * @param source
 	 * @param affirmed
 	 * @param rationale
 	 * @param role
-	 * @param sameA
-	 * @param sameB
-	 * @param suretySame
+	 * @param same
 	 */
 	public Assertion(
 		final AssertionID id,
@@ -67,18 +67,24 @@ public class Assertion
 		final boolean affirmed,
 		final String rationale,
 		final RoleID role,
-		final PersonaID sameA,
-		final PersonaID sameB,
-		final Surety suretySame)
+		final SameID same)
 	{
 		this.id = id;
 		this.idSource = source;
 		this.affirmed = affirmed;
 		this.rationale = rationale;
 		this.idRole = role;
-		this.idPersonaSameAsA = sameA;
-		this.idPersonaSameAsB = sameB;
-		this.suretySameAs = suretySame;
+		this.idSame = same;
+
+		if (this.idRole == null && this.idSame == null)
+		{
+			throw new IllegalArgumentException();
+		}
+
+		if (this.idRole != null && this.idSame != null)
+		{
+			throw new IllegalArgumentException();
+		}
 	}
 
 	/**
@@ -122,26 +128,10 @@ public class Assertion
 	}
 
 	/**
-	 * @return Returns the idPersonaSameAsA.
+	 * @return Returns the idSame.
 	 */
-	public PersonaID getPersonaSameAsA()
+	public SameID getIdSame()
 	{
-		return this.idPersonaSameAsA;
-	}
-
-	/**
-	 * @return Returns the idPersonaSameAsB.
-	 */
-	public PersonaID getPersonaSameAsB()
-	{
-		return this.idPersonaSameAsB;
-	}
-
-	/**
-	 * @return Returns the suretySameAs.
-	 */
-	public Surety getSuretySameAs()
-	{
-		return this.suretySameAs;
+		return this.idSame;
 	}
 }
