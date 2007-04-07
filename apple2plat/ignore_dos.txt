@@ -1,0 +1,74 @@
+Areas of Apple ][ DOS 3.3 to ignore for comparison purposes.
+Basically, these are uninitiallized data storage areas.
+These areas may have different values on different disks,
+but shouldn't be taken into account when comparing disks
+to determine if a disk has a particular version of DOS or not.
+
+MASTER addresses range from 1B00-3FFF
+
+adr range df track/sector rng
+--------- -- ----------------
+
+MASTER 1980
+-----------
+1C4D-1C58    00 B 4D  00 B 58
+1C78-1C79 *  00 B 78  00 B 79
+1C7B      *  00 B 7B
+1C7D-1CFF *  00 B 7D  00 B FF
+1E42         00 D 42
+2A4F-2AB7    01 9 4F  01 9 B7
+          *
+3397-35FF    02 2 97  02 4 FF
+36B3-36FF *  00 0 B3  00 0 FF
+378D-3792    00 1 8D  00 1 92
+37DF-37FF    00 1 DF  00 1 FF
+39FD-39FF    00 3 FD  00 3 FF
+3A69-3A95 *  00 4 69  00 4 95
+3B00-3C55    00 5 00  00 6 55
+3CDF-3CFF    00 6 DF  00 6 FF
+3FA8-3FB7    00 9 A8  00 9 B7
+3FD9-3FDB *  00 9 D9  00 9 DB
+
+
+
+MASTER 1983
+-----------
+1C4D-1C58    00 B 4D  00 B 58
+1C7C-1C7D *  00 B 7C  00 B 7D
+1C7F      *  00 B 7F
+1C81-1CFF *  00 B 81  00 B FF
+1E42         00 D 42
+2A4F-2AB7    01 9 4F  01 9 B7
+335D-335E *  02 2 5D  02 2 5E
+3397-35FF    02 2 97  02 4 FF
+36B3-36FF *  00 0 B3  00 0 FF
+378D-3792    00 1 8D  00 1 92
+37DF-37FF    00 1 DF  00 1 FF
+39FD-39FF    00 3 FD  00 3 FF
+3A94-3A95 *  00 4 94  00 4 95
+3B00-3C55    00 5 00  00 6 55
+3CDF-3CFF    00 6 DF  00 6 FF
+3FA8-3FB7    00 9 A8  00 9 B7
+          *
+
+
+
+MASTER 1986
+-----------
+1C4D-1C58    00 B 4D  00 B 58
+1C7C-1C7D *  00 B 7C  00 B 7D
+1C7F      *  00 B 7F
+1C81-1CFF *  00 B 81  00 B FF
+1E42         00 D 42
+2A4F-2AB7    01 9 4F  01 9 B7
+335D-335E *  02 2 5D  02 2 5E
+3397-35FF    02 2 97  02 4 FF
+36CF-36FF *  00 0 CF  00 0 FF
+378D-3792    00 1 8D  00 1 92
+37DF-37FF    00 1 DF  00 1 FF
+39FD-39FF    00 3 FD  00 3 FF
+3A84-3A95 *  00 4 84  00 4 95
+3B00-3C55    00 5 00  00 6 55
+3CDF-3CFF    00 6 DF  00 6 FF
+3FA8-3FB7    00 9 A8  00 9 B7
+          *

@@ -1,0 +1,40 @@
+T S address
+- - -------
+0 0 B6 36 BOOT1
+0 1 B7 37 begin BOOT2
+0 2 B8 38
+0 3 B9 39
+0 4 BA 3A
+0 5 BB 3B
+0 6 BC 3C
+0 7 BD 3D
+0 8 BE 3E
+0 9 BF 3F end BOOT2
+---------
+0 A 9B 1B begin MASTER relocation
+0 B 9C 1C end MASTER relocation
+0 C 9D 1D begin DOS
+0 D 9E 1E
+0 E 9F 1F
+0 F A0 20
+1 0 A1 21
+1 1 A2 22
+1 2 A3 23
+1 3 A4 24
+1 4 A5 25
+1 5 A6 26
+1 6 A7 27
+1 7 A8 28
+1 8 A9 29
+1 9 AA 2A
+1 A AB 2B
+1 B AC 2C
+1 C AD 2D
+1 D AE 2E
+1 E AF 2F
+1 F B0 30
+2 0 B1 31
+2 1 B2 32
+2 2 B3 33
+2 3 B4 34
+2 4 B5 35 end DOS
