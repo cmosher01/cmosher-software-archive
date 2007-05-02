@@ -1,0 +1,121 @@
+#!/bin/bash
+#
+# Startup script for Tomcat
+#
+# chkconfig: 345 99 01
+# description: tomcat
+# processname: tomcat
+# pidfile: /var/run/tomcat.pid
+
+
+
+. /etc/rc.d/init.d/functions
+
+. /etc/sysconfig/tomcat
+
+TOMCAT=/opt/tomcat/bin/catalina.sh
+LOCKFILE=/var/lock/subsys/tomcat
+
+start()
+{
+    echo -n "Starting tomcat: "
+
+    if [ -f $LOCKFILE ]
+    then
+        if [ -f $CATALINA_PID ]
+        then
+            read kpid < $CATALINA_PID
+            if checkpid $kpid 2>&1
+            then
+                echo "tomcat was already running"
+                return 1
+            else
+                echo "lock file found but no process running for pid $kpid; continuing..."
+            fi
+        fi
+    fi
+
+    daemon --check tomcat $TOMCAT start
+    RETVAL=$?
+
+    echo
+    [ $RETVAL = 0 ] && touch $LOCKFILE
+    return $RETVAL
+}
+
+stop()
+{
+    echo -n "Stopping tomcat: "
+
+    RETVAL=0
+    if [ -f $LOCKFILE ]
+    then
+        $TOMCAT stop
+        RETVAL=$?
+
+        if [ $RETVAL = 0 ]
+        then
+            count=0
+
+            if [ -f $CATALINA_PID ]
+            then
+                read kpid < $CATALINA_PID
+                let kwait=30
+
+                until [ `ps --pid $kpid | grep -c $kpid` = '0' ] || [ $count -gt $kwait ]
+                do
+                    echo -n -e "\nwaiting for processes to exit";
+                    sleep 1
+                    let count=$count+1;
+                done
+
+                if [ $count -gt $kwait ]
+                then
+                    echo -n -e "\nkilling processes which didn't stop after 30 seconds"
+                    kill -9 $kpid
+                fi
+
+                if [ $count -gt 0 ]
+                then
+                    echo -n -e "\n"
+                fi
+            fi
+
+            rm -f $LOCKFILE $CATALINA_PID
+        fi
+    fi
+    return $RETVAL
+}
+
+restart()
+{
+    stop
+    sleep 2
+    start
+}
+
+condrestart()
+{
+    if [ -f $CATALINA_PID ]
+    then
+        restart
+    fi
+}
+
+case "$1" in
+    start)
+        start
+    ;;
+    stop)
+        stop
+    ;;
+    restart)
+        restart
+    ;;
+    condrestart)
+        condrestart
+    ;;
+    *)
+        echo "Usage: /etc/init.d/tomcat {start|stop|restart|condrestart}"
+        exit 1
+esac

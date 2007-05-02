@@ -1,0 +1,1 @@
+To configure tomcat so it can host the buildServlet webapp, you need to create a symbolic link in tomcat's webapps directory named buildServlet.war that points to the real buildServlet.war file (currently in ~svnowner/buildServlet directory).

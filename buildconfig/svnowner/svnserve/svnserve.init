@@ -1,0 +1,54 @@
+#!/bin/bash
+#
+# Manages the svnserve daemon process
+#
+# chkconfig: 345 98 2
+# description: svnserve
+# processname: svnserve
+
+source /etc/rc.d/init.d/functions
+
+PROG=svnserve
+
+[ -x /usr/bin/$PROG ] || exit 1
+
+### Default variables
+SYSCONFIG=/etc/sysconfig/$PROG
+[ -r "$SYSCONFIG" ] && source "$SYSCONFIG"
+
+start()
+{
+    echo -n $"Starting $PROG: "
+    daemon $DAEMON_OPTIONS $PROG $OPTIONS
+    RV=$?
+    [ $RV -eq 0 ] && touch /var/lock/subsys/$PROG
+    return $RV
+}
+
+stop()
+{
+    echo -n $"Shutting down $PROG: "
+    killproc $PROG
+    RV=$?
+    [ $RV -eq 0 ] && success || failure
+    [ $RV -eq 0 ] && rm -f /var/lock/subsys/$PROG
+    return $RV
+}
+
+case "$1" in
+    start)
+        start
+    ;;
+    stop)
+        stop
+    ;;
+    restart)
+        stop
+        start
+    ;;
+    condrestart)
+        [ -e /var/lock/subsys/$PROG ] && restart
+    ;;
+    *)
+        echo $"Usage: $0 {start|stop|restart|condrestart}"
+esac
