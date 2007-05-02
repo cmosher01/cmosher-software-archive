@@ -1,0 +1,1 @@
+CREATE SEQUENCE XdemPredicateID_Seq ORDER;
