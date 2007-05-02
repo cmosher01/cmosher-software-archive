@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="parseclasspath.macro">
+    <!--
+    Parses the Eclipse-style .classpath file using the
+    given xslt transformation, writing output to the given file
+    -->
+    <macrodef name="parseclasspath">
+    
+        <!-- XSLT stylesheet -->
+        <attribute name="style" />
+
+        <!-- output file -->
+        <attribute name="out" />
+
+        <sequential>
+            <!-- first remove any existing output file -->
+            <delete file="@{out}" failOnError="false" verbose="true" />
+
+            <!-- do the XSLT transformation -->
+            <xslt in=".classpath" style="@{style}" out="@{out}" />
+        </sequential>
+    </macrodef>
+</project>

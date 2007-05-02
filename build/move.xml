@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="move" default="move">
+    <import file="exports_gen.xml" />
+    <target name="move" depends="exports">
+        <move toDir="${move.to.dir}" flatten="true">
+            <fileset refid="exports" />
+        </move>
+    </target>
+</project>

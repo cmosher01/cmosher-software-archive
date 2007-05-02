@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="default" default="default">
+    <import file="parseclasspath.macro.xml" />
+
+    <target name="init_proj">
+        <property file="build.properties" />
+        <property name="lib" value="lib" />
+    </target>
+
+    <!--
+        Parses the (Eclipse) .classpath file from the project being
+        built to determine all dependent 3rd party vendor projects;
+        then moves their exported jars to the lib directory of the
+        project being build (see the "move" target, below).
+    -->
+    <target name="move_vendor_jars_proj" depends="init_proj">
+    	<mkdir dir="${lib}" />
+
+        <parseclasspath style="${build.tools}/vendor_deps.xsl" out="${build.tools}/vendor_gen.deps" />
+        <if>
+            <isfileselected file="${build.tools}/vendor_gen.deps">
+                <size when="more" value="0" />
+            </isfileselected>
+            <then>
+                <subant genericantfile="${ant.file}" target="move" inheritAll="true">
+                    <dirset dir=".." includesfile="${build.tools}/vendor_gen.deps" />
+                    <property name="move.to.dir" location="${lib}" />
+                </subant>
+            </then>
+        </if>
+    </target>
+
+        <!--
+            Called (via subant) from the "move_vendor_jars_proj" target, above.
+            Parses the (3rd party vendor project) .classpath file to
+            see what .jar files it exports, and moves them to the
+            directory given in the "move.to.dir" property (which will
+            be the lib directory of the project being built).
+        -->
+        <target name="move">
+            <parseclasspath style="${build.tools}/exports.xsl" out="${build.tools}/exports_gen.xml" />
+            <ant antfile="${build.tools}/move.xml" />
+        </target>
+
+
+
+    <!--
+        Compiles the project being built, and all its dependent, non-vendor
+        projects, putting lib/*.jar (3rd party jars) in the classpath.
+    -->
+    <target name="compile_proj" depends="move_vendor_jars_proj">
+        <parseclasspath style="${build.tools}/compile.xsl" out="${build.tools}/compile_gen.xml" />
+        <ant antfile="${build.tools}/compile.xml" />
+
+        <!-- copy non-java files (usually called resources) -->
+        <parseclasspath style="${build.tools}/rsrc.xsl" out="${build.tools}/rsrc_gen.xml" />
+        <ant antfile="${build.tools}/rsrc.xml" />
+    </target>
+
+
+
+    <!--
+        Creates three .version files, containing the
+        svn.base.path, in the base dir, the lib dir, and
+        the bin dir.
+    -->
+    <target name="vers_proj" depends="compile_proj">
+        <echo file=".version">${svn.base.path},b${svn.repos.rev}${line.separator}</echo>
+        <echo file="${lib}/.version">${svn.base.path},b${svn.repos.rev}${line.separator}</echo>
+        <echo file="bin/.version">${svn.base.path},b${svn.repos.rev}${line.separator}</echo>
+    </target>
+
+
+
+    <target name="jar_proj" depends="vers_proj">
+        <pathconvert property="build.jar.cp" pathSep=" " setOnEmpty="false">
+            <path>
+                <fileset dir=".">
+                    <include name="${lib}/*.jar" />
+                    <exclude name="${lib}/junit.jar" />
+                    <exclude name="${lib}/servlet.jar" />
+                    <exclude name="${lib}/jsp-api.jar" />
+                </fileset>
+            </path>
+            <flattenmapper />
+        </pathconvert>
+
+        <if>
+            <and>
+                <isset property="build.jar.cp" />
+                <isset property="build.jar.main" />
+            </and>
+            <then>
+                <jar destfile="${lib}/${build.app}.jar" basedir="bin">
+                    <manifest>
+                        <attribute name="Class-Path" value="${build.jar.cp}" />
+                        <attribute name="Main-Class" value="${build.jar.main}" />
+                    </manifest>
+                </jar>
+            </then>
+            <elseif>
+                <isset property="build.jar.cp" />
+                <then>
+                    <jar destfile="${lib}/${build.app}.jar" basedir="bin">
+                        <manifest>
+                            <attribute name="Class-Path" value="${build.jar.cp}" />
+                        </manifest>
+                    </jar>
+                </then>
+            </elseif>
+            <elseif>
+                <isset property="build.jar.main" />
+                <then>
+                    <jar destfile="${lib}/${build.app}.jar" basedir="bin">
+                        <manifest>
+                            <attribute name="Main-Class" value="${build.jar.main}" />
+                        </manifest>
+                    </jar>
+                </then>
+            </elseif>
+            <else>
+                <jar destfile="${lib}/${build.app}.jar" basedir="bin" />
+            </else>
+        </if>
+    </target>
+
+
+
+	<!-- sign all jar files -->
+    <target name="sign_jar_proj" depends="jar_proj">
+        <signjar keystore="${build.tools}/build.keystore" storepass="ssidev89" alias="build">
+            <fileset dir=".">
+                <include name="${lib}/*.jar" />
+                <exclude name="${lib}/junit.jar" />
+                <exclude name="${lib}/servlet.jar" />
+                <exclude name="${lib}/jsp-api.jar" />
+            </fileset>
+        </signjar>
+    </target>
+
+
+
+    <!-- convert text files to have unix-style line terminators -->
+    <target name="fix_text_proj" depends="sign_jar_proj">
+        <fixcrlf srcDir="." includesfile="${build.tools}/fixcrlf.include" defaultexcludes="no" eol="lf" eof="remove" />
+    </target>
+
+
+
+	<!-- create a war file of webDocs dir (if it exists) -->
+    <target name="war_proj" depends="fix_text_proj">
+        <if>
+            <available file="webDocs" />
+            <then>
+                <zip destFile="${build.app}.war">
+                    <fileset dir="webDocs">
+                        <include name="**/*" />
+                        <exclude name="**/junit.jar" />
+                        <exclude name="**/servlet.jar" />
+                        <exclude name="**/jsp-api.jar" />
+                    </fileset>
+                </zip>
+            </then>
+        </if>
+    </target>
+
+
+
+    <!--
+        tars and gzips the deliverables for this project (and its dependents).
+        Tars the following three directory trees in this project:
+        lib, scripts, webDocs
+    -->
+    <target name="targz_proj" depends="war_proj">
+        <basename property="build.tar.time" file="${build.base}" />
+        <property name="build.tar.file" value="${build.app}.b${svn.repos.rev}.build.${build.tar.time}.tar.gz" />
+
+        <!-- archive this build into a tar.gz file -->
+        <tar destfile="${build.tar.file}" compression="gzip">
+            <tarfileset dir=".">
+                <include name=".version" />
+                <include name="${lib}/" />
+                <exclude name="${lib}/junit.jar" />
+                <exclude name="${lib}/servlet.jar" />
+                <exclude name="${lib}/jsp-api.jar" />
+                <include name="${build.app}.war" />
+                <include name="webDocs/" />
+            </tarfileset>
+            <tarfileset dir="." mode="755">
+                <include name="scripts/" />
+            </tarfileset>
+        </tar>
+    </target>
+
+
+
+    <target name="ftp_proj" depends="targz_proj">
+    	<move toDir="${build.deploy.directory}" flatten="true">
+            <fileset dir="." includes="${build.tar.file}" />
+        </move>
+    	<chown owner="svnowner:">
+            <fileset dir="${build.deploy.directory}" includes="${build.tar.file}" />
+        </chown>
+
+    	<echo><![CDATA[<span>
+            The build archive file is: <strong>${build.tar.file}</strong>
+        </span>]]></echo>
+    </target>
+
+
+
+    <!--
+        Runs junit tests for the given project.
+    -->
+    <target name="test_proj" depends="compile_proj">
+        <if>
+            <available file="test" />
+            <then>
+                <ant antfile="${build.tools}/compiletest.xml" />
+        
+                <taskdef name="junit" classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask">
+                    <classpath>
+                        <fileset dir="${build.lib}">
+                            <include name="ant-junit.jar" />
+                            <include name="junit.jar" />
+                        </fileset>
+                    </classpath>
+                </taskdef>
+        
+                <junit>
+                    <batchtest>
+                        <fileset dir="bintest">
+                            <include name="**/*Test.class" />
+                        </fileset>
+                    </batchtest>
+                    <formatter type="brief" usefile="false" />
+                    <classpath>
+                        <dirset dir="." includes="bintest" />
+                        <dirset dir="." includes="bin" />
+                        <fileset dir="${lib}" includes="*.jar" />
+                    </classpath>
+                </junit>
+            </then>
+            <else>
+                <echo>No "test" directory exists.</echo>
+            </else>
+        </if>
+    </target>
+
+    <target name="default" depends="ftp_proj" />
+</project>

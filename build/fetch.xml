@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="fetch" default="default">
+    <import file="fetch_gen.xml" />
+    <target name="default" depends="fetch" />
+</project>

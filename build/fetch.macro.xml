@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="fetch.macro">
+    <!--
+    Checks out (fetches) a project from a subversion repository.
+    Depends on:
+    svn.repos.base property being set to (the URI of)
+        the parent directory of the repository;
+    svnant* directory (in current directory) with subversion ant jars.
+    If you want the subversion task to use javahl, you must put the
+    necessary native javahl libraries into the PATH somewhere.
+    -->
+    <macrodef name="fetch">
+
+        <!-- repository name; must be within ${svn.repos.base} (a URI) -->
+        <attribute name="repository" />
+
+        <!-- path within the repository of the project's parent directory -->
+        <attribute name="path" default="" />
+
+        <!-- name of the project -->
+        <attribute name="project" />
+
+        <!-- revision to fetch, default 0 which means HEAD -->
+        <attribute name="rev" default="0" />
+
+
+
+        <sequential>
+            <taskdef name="checkout" classname="FetchTask">
+                <classpath>
+                    <fileset dir="${build.lib}">
+                        <include name="fetch.jar" />
+                        <include name="javasvn.jar" />
+                    </fileset>
+                </classpath>
+            </taskdef>
+            <checkout
+        	    url="${svn.repos.base}/@{repository}/@{path}/@{project}"
+            	url2="${svn.repos.base}/@{repository}/${path.default}/@{project}"
+        	    todir="@{project}"
+        	    rev="@{rev}"
+            />
+        </sequential>
+    </macrodef>
+</project>

@@ -1,0 +1,27 @@
+<project name="select.macro">
+    <macrodef name="select">
+        <attribute name="src" />
+        <attribute name="output" />
+        <attribute name="username" default="${databaseUsername}" />
+        <attribute name="password" default="${databasePassword}" />
+        <sequential>
+            <sql
+                driver="${databaseDriver}"
+                userid="@{username}" password="@{password}"
+                url="${databaseConnect}"
+                print="true"
+                showheaders="false"
+                output="@{output}"
+                caching="true"
+                src="@{src}"
+            >
+                <classpath>
+                    <fileset dir="${build.lib}" includes="ojdbc14.jar" />
+                </classpath>
+            </sql>
+            <replace file="@{output}">
+                <replacetoken>&#x0D;&#x0A;0 rows affected&#x0D;&#x0A;</replacetoken>
+            </replace>
+        </sequential>
+    </macrodef>
+</project>

@@ -1,0 +1,17 @@
+<project name="antOrDefault.macro">
+    <macrodef name="antOrDefault">
+        <attribute name="target" />
+        <attribute name="dir" />
+        <sequential>
+            <if>
+                <available file="@{dir}/build.xml" />
+                <then>
+                    <ant dir="@{dir}" target="@{target}" />
+                </then>
+                <else>
+                    <ant antfile="${build.tools}/default.xml" dir="@{dir}" target="@{target}" />
+                </else>
+            </if>
+        </sequential>
+    </macrodef>
+</project>

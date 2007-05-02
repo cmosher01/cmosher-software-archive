@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="master" default="default" basedir="..">
+
+    <import file="fetch.macro.xml" />
+    <import file="antOrDefault.macro.xml" />
+
+    <!--
+        Set up properties, etc., for the build.
+    -->
+    <target name="init">
+        <property name="build.base" location="." />
+        <property name="build.tools" location="build" />
+        <property name="build.lib" location="../buildlib" />
+
+        <property file="${build.tools}/build.properties" />
+
+        <echo>svn.repos.base -&gt; ${svn.repos.base}</echo>
+        <echo>svn.repos.rev -&gt; ${svn.repos.rev}</echo>
+        <echo>svn.base.path -&gt; ${svn.base.path}</echo>
+        <echo>svn.base.path.filtered -&gt; ${svn.base.path.filtered}</echo>
+
+        <echo>build.base -&gt; ${build.base}</echo>
+        <echo>build.tools -&gt; ${build.tools}</echo>
+        <echo>build.app -&gt; ${build.app}</echo>
+
+        <taskdef resource="net/sf/antcontrib/antlib.xml">
+            <classpath>
+                <fileset dir="${build.lib}" includes="ant-contrib.jar" />
+            </classpath>
+        </taskdef>
+    </target>
+
+
+
+    <!--
+        Fetches the project being built from subversion.
+    -->
+    <target name="fetch" depends="init">
+        <fetch repository="${svn.repos.name}" path="${svn.base.path}" project="${build.app}" rev="${svn.repos.rev}" />
+    </target>
+
+    <!--
+        Parses the (Eclipse) .classpath file from the project being
+        built to determine all dependent projects; then fetches them
+        from subversion.
+    -->
+    <target name="fetch_deps" depends="fetch">
+        <xslt in="${build.app}/.classpath" style="${build.tools}/fetch.xsl" out="${build.tools}/fetch_gen.xml" />
+        <ant antfile="${build.tools}/fetch.xml" />
+    </target>
+
+
+
+
+    <target name="ftp" depends="fetch_deps">
+        <antOrDefault dir="${build.app}" target="ftp_proj" />
+    </target>
+
+
+
+    <!--
+        Runs junit tests for the given project.
+    -->
+    <target name="test" depends="fetch_deps">
+        <antOrDefault dir="${build.app}" target="test_proj" />
+    </target>
+
+
+
+    <!--
+        Builds the JavaDoc API documentation for the entire set of
+        projects (only the base path may be given, which defaults
+        to trunk).
+    -->
+    <target name="javadoc" depends="init">
+        <fetch repository="${svn.repos.name}" path="${svn.base.path}" project="." rev="${svn.repos.rev}" />
+        <delete dir="${javadoc.base.dir}/${svn.base.path}" verbose="false" failonerror="false" includeEmptyDirs="true" />
+        <mkdir dir="${javadoc.base.dir}/${svn.base.path}" />
+        <javadoc destdir="${javadoc.base.dir}/${svn.base.path}" packagenames="*" author="true" source="1.5" breakiterator="yes" verbose="false" classpath="." maxmemory="512m" docencoding="UTF-8">
+            <sourcepath>
+                <dirset dir="." includes="*/src" />
+            </sourcepath>
+            <link href="http://java.sun.com/j2se/1.5/docs/api/" />
+            <link href="http://java.sun.com/j2ee/1.4/docs/api/" />
+        </javadoc>
+    </target>
+
+
+
+    <target name="default" depends="ftp" />
+</project>
