@@ -4,8 +4,10 @@
 package nu.mine.mosher.uuid;
 
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.security.SecureRandom;
 import java.security.Security;
+import java.util.Enumeration;
 import java.util.Random;
 import java.util.UUID;
 import org.safehaus.uuid.EthernetAddress;
@@ -24,7 +26,8 @@ public class UUIDFactory
     private final EthernetAddress macAddr;
 
     /**
-     * 
+     * Initializes the UUID generator. This may be a
+     * time-consuming process.
      */
     public UUIDFactory()
     {
@@ -32,8 +35,9 @@ public class UUIDFactory
     }
 
     /**
-     * Initializes the UUID generator. This may be a
-     * time-consuming process.
+     * Initializes the UUID generator. If <code>quick</code> is
+     * <code>false</code>, then this may be a
+     * time-consuming process (5 seconds).
      * @param quick 
      */
     public UUIDFactory(final boolean quick)
@@ -41,8 +45,30 @@ public class UUIDFactory
     	this.gen = UUIDGenerator.getInstance();
     	final Random rng = createRandomNumberGenerator(quick);
         this.gen.setRandomNumberGenerator(rng);
-        this.macAddr = generateFakeMACAddress(rng);
+        this.macAddr = getMACAddress(rng);
     }
+
+    private static EthernetAddress getMACAddress(final Random rng)
+	{
+        try
+		{
+			final Enumeration<NetworkInterface> networkInterfaces = java.net.NetworkInterface.getNetworkInterfaces();
+			while (networkInterfaces.hasMoreElements())
+			{
+				final NetworkInterface inet = networkInterfaces.nextElement();
+				final byte[] mac = inet.getHardwareAddress();
+				if (mac != null)
+				{
+					return new EthernetAddress(mac);
+				}
+			}
+		}
+		catch (final Throwable e)
+		{
+			e.printStackTrace();
+		}
+        return generateFakeMACAddress(rng);
+	}
 
     /**
      * Creates a UUID.
@@ -171,9 +197,10 @@ public class UUIDFactory
          * not a real MAC address.
          */
         dummy[0] = (byte)(rand2[2] | 1);
+
         dummy[1] = rand2[1];
 
-        // get the 4 byte IP address
+        // get the 4 byte IP address (if possible, else random)
         final byte[] ip = getIPAddrElseRandom(rng);
         dummy[2] = ip[0];
         dummy[3] = ip[1];
