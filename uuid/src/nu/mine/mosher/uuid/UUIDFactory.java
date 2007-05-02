@@ -57,7 +57,7 @@ public class UUIDFactory
 			{
 				final NetworkInterface inet = networkInterfaces.nextElement();
 				final byte[] mac = inet.getHardwareAddress();
-				if (mac != null)
+				if (mac != null && mac.length == 6)
 				{
 					return new EthernetAddress(mac);
 				}
