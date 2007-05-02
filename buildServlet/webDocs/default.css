@@ -1,0 +1,56 @@
+body
+{
+    margin: 0;
+    font-family: Tahoma, "microsoft sans serif", arial, helvetica, sans-serif;
+    font-size: 11px;
+    background-color:#FFFFFF;
+    color:#000000;
+}
+
+
+
+.MSG_ERR
+{
+    color:red;
+}
+
+.MSG_WARN
+{
+    color:brown;
+}
+
+.MSG_DEBUG
+{
+    color:gray;
+}
+
+
+
+.oddRow td
+{ 
+    background: #EFEFEF;
+}
+
+.evenRow td
+{ 
+    background: #FFFFFF;
+}
+
+
+
+div
+{
+    margin-left: 16px;
+    margin-top: 16px;
+}
+
+td
+{
+    vertical-align: top;
+}
+
+pre
+{
+    font-family: monospace;
+    font-size: 1em;
+}

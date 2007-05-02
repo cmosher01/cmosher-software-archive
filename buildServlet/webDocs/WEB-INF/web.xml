@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app
+    id="antServlet"
+    version="2.4"
+    xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+>
+    <servlet>
+        <servlet-name>BuildWhat</servlet-name>
+        <servlet-class>com.surveysampling.build.servlet.BuildWhat</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BuildWhat</servlet-name>
+        <url-pattern>/build</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AskMakeJavadoc</servlet-name>
+        <servlet-class>com.surveysampling.build.servlet.AskMakeJavadocServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AskMakeJavadoc</servlet-name>
+        <url-pattern>/askmakejavadoc</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ViewJavadoc</servlet-name>
+        <servlet-class>com.surveysampling.build.servlet.ViewJavadoc</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ViewJavadoc</servlet-name>
+        <url-pattern>/javadoc/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Paths</servlet-name>
+        <servlet-class>com.surveysampling.build.servlet.Paths</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Paths</servlet-name>
+        <url-pattern>/paths</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AntServlet</servlet-name>
+        <servlet-class>com.surveysampling.build.servlet.AntServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AntServlet</servlet-name>
+        <url-pattern>/ant</url-pattern>
+    </servlet-mapping>
+</web-app>
