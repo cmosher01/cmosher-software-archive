@@ -1,0 +1,24 @@
+<body>
+<p>
+Provides a
+{@link com.surveysampling.util.key.DatalessKey DatalessKey}
+interface that represents a primary key.
+</p>
+<p>
+Applications can be written to use a
+{@link com.surveysampling.util.key.DatalessKey DatalessKey}
+in order to insulate themselves from an particular
+underlying datatype used to represent that key.
+</p>
+<p>
+Use
+{@link com.surveysampling.util.key.DatalessKeyAccessFactory DatalessKeyAccessFactory}
+to create an instance of
+{@link com.surveysampling.util.key.DatalessKeyAccess DatalessKeyAccess}
+for the appropriate datatype, then the rest of the
+application just uses
+{@link com.surveysampling.util.key.DatalessKey DatalessKey} and
+{@link com.surveysampling.util.key.DatalessKeyAccess DatalessKeyAccess},
+unaware of the underlying datatype.
+</p>
+</body>

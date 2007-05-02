@@ -1,0 +1,23 @@
+<body>
+<p>
+Contains implementations for the <code>com.surveysampling.util.key</code>
+package.
+</p>
+<p>
+This package contains implementations of the
+{@link com.surveysampling.util.key.DatalessKeyAccess DatalessKeyAccess}
+and
+{@link com.surveysampling.util.key.DatalessKey DatalessKey}
+interfaces for each underlying datatype used to represent
+keys.
+</p>
+<p>
+Developers of new datatypes can create a class with a name of
+the form <code>DatalessKeyAccess<i>Datatype</i></code>, where
+<code><i>Datatype</i></code> is a name for the underlying
+datatype, which applications will specify as the
+<code>datalessKeyUnderlyingTypeName</code> argument in the
+{@link com.surveysampling.util.key.DatalessKeyAccessFactory#createDatalessKeyAccess DatalessKeyAccessFactory.createDatalessKeyAccess}
+method.
+</p>
+</body>
