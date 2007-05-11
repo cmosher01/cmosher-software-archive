@@ -1,9 +1,5 @@
 package nu.mine.mosher.grodb.date;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -12,10 +8,11 @@ import nu.mine.mosher.time.Time;
 /**
  * Represents a date, specified as a year, month, and day, allowing
  * for some values to be unknown. An unknown day or month is specified as zero.
- *
+ * Objects of this class are immutable and thread-safe.
+ * 
  * @author Chris Mosher
  */
-public class YMD implements Serializable, Comparable<YMD>
+public class YMD implements Comparable<YMD>
 {
 	/*
 	 * One-based year, month, and day.
@@ -23,12 +20,12 @@ public class YMD implements Serializable, Comparable<YMD>
 	 * Zero indicates that field is "unknown"
 	 * Negative year means B.C.
 	 */
-	private int year;
-	private int month;
-	private int day;
+	private final int year;
+	private final int month;
+	private final int day;
 
-	private transient int hash;
-	private transient Time approx;
+	private transient final int hash;
+	private transient final Time approx;
 
 
 
@@ -59,8 +56,8 @@ public class YMD implements Serializable, Comparable<YMD>
 		this.year = year;
 		this.month = month;
 		this.day = day;
-
-		init();
+		this.approx = calcApprox();
+		this.hash = calcHash();
 	}
 
 
@@ -75,7 +72,8 @@ public class YMD implements Serializable, Comparable<YMD>
     	this.year = cal.get(Calendar.YEAR);
     	this.month = cal.get(Calendar.MONTH)+1;
     	this.day = cal.get(Calendar.DAY_OF_MONTH);
-    	init();
+		this.approx = calcApprox();
+		this.hash = calcHash();
 	}
 
 
@@ -97,13 +95,19 @@ public class YMD implements Serializable, Comparable<YMD>
     }
 
     /**
-     * @return the year
+     * @return the year, or zero if unknown. (negative means BC)
      */
     public int getYear()
     {
         return this.year;
     }
 
+    /**
+     * Gets the exact <code>Time</code> represented by this <code>YMD</code>,
+     * assuming it is exact. Throws otherwise.
+     * @return the <code>Time</code> representing this exact <code>YMD</code> (at noon, local time).
+     * @throws IllegalStateException if this <code>YMD</code> if any of year, month, or day are zero
+     */
     public Time getExactTime()
     {
     	if (!isExact())
@@ -114,22 +118,39 @@ public class YMD implements Serializable, Comparable<YMD>
     	return this.approx;
     }
 
-	// never display this to the user!
+	/**
+	 * Gets a <code>Time</code> that can be used as an approximation
+	 * of this <code>YMD</code> for computation purposes.
+	 * Never display this value to the user!
+	 * @return an approximate <code>Time</code> for this <code>YMD</code>
+	 */
 	public Time getApproxTime()
 	{
 		return this.approx;
 	}
 
+    /**
+     * Gets if this <code>YMD</code> is exact.
+     * @return <code>true</code> if exact
+     */
     public boolean isExact()
     {
     	return valid(this.year) && valid(this.month) && valid(this.day);
     }
 
+	/**
+	 * Returns a new <code>YMD</code> representing January 1, 9999 BC.
+	 * @return Jan. 1, 9999 BC
+	 */
 	public static YMD getMinimum()
     {
     	return new YMD(-9999,1,1);
     }
 
+	/**
+	 * Returns a new <code>YMD</code> representing December 31, AD 9999.
+	 * @return Dec. 31, AD 9999
+	 */
     public static YMD getMaximum()
     {
     	return new YMD(9999,12,31);
@@ -186,6 +207,8 @@ public class YMD implements Serializable, Comparable<YMD>
     	return this.approx.compareTo(that.approx);
     }
 
+
+
     private static boolean valid(final int i)
 	{
 		return i != 0;
@@ -226,22 +249,4 @@ public class YMD implements Serializable, Comparable<YMD>
     {
     	return this.approx.hashCode();
     }
-
-    private void writeObject(final ObjectOutputStream s) throws IOException
-    {
-    	s.defaultWriteObject();
-    }
-
-    private void readObject(final ObjectInputStream s) throws IOException, ClassNotFoundException
-    {
-    	s.defaultReadObject();
-
-		init();
-    }
-
-	private void init()
-	{
-		this.approx = calcApprox();
-		this.hash = calcHash();
-	}
 }

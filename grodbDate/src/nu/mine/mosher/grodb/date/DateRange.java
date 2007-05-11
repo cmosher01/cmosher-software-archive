@@ -1,9 +1,5 @@
 package nu.mine.mosher.grodb.date;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.Date;
 import nu.mine.mosher.time.Time;
 
@@ -12,7 +8,7 @@ import nu.mine.mosher.time.Time;
  *
  * @author Chris Mosher
  */
-public class DateRange implements Serializable, Comparable<DateRange>
+public class DateRange implements Comparable<DateRange>
 {
     /*
 	 * YMD always represent Gregorian calendar.
@@ -20,8 +16,8 @@ public class DateRange implements Serializable, Comparable<DateRange>
 	 * thru latest (inclusive).
 	 * Date is exact iff earliest.equals(latest).
 	 */
-	private YMD earliest;
-	private YMD latest;
+	private final YMD earliest;
+	private final YMD latest;
 
 	/**
 	 * Indicates what the preferred display calendar is.
@@ -31,12 +27,12 @@ public class DateRange implements Serializable, Comparable<DateRange>
 	 * the Gregorian calendar. Further, it is only a preference,
 	 * and therefore the value may be ignored.
 	 */
-	private boolean julian;
+	private final boolean julian;
 
-	private boolean circa;
+	private final boolean circa;
 
-	private transient int hash;
-	private transient Time approx;
+	private transient final int hash;
+	private transient final Time approx;
 
 
 
@@ -80,11 +76,6 @@ public class DateRange implements Serializable, Comparable<DateRange>
         this.julian = julian;
 		this.circa = circa;
 
-		init();
-    }
-
-    private void init()
-    {
     	if (this.earliest == null)
     	{
     		throw new NullPointerException("earliest date cannot be null");
@@ -93,7 +84,7 @@ public class DateRange implements Serializable, Comparable<DateRange>
 		{
 			throw new NullPointerException("latest date cannot be null");
 		}
-		if (this.earliest.compareTo(this.latest) > 0)
+		if (this.latest.compareTo(this.earliest) < 0)
 		{
 			throw new IllegalArgumentException("earliest date must be less than or equal to latest date");
 		}
@@ -237,16 +228,4 @@ public class DateRange implements Serializable, Comparable<DateRange>
 
 		return h;
 	}
-
-    private void writeObject(final ObjectOutputStream s) throws IOException
-    {
-    	s.defaultWriteObject();
-    }
-
-    private void readObject(final ObjectInputStream s) throws IOException, ClassNotFoundException
-    {
-    	s.defaultReadObject();
-
-    	init();
-    }
 }

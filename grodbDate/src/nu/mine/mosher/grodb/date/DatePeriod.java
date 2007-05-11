@@ -3,14 +3,12 @@
  */
 package nu.mine.mosher.grodb.date;
 
-import java.io.Serializable;
-
 /**
  * TODO
  *
  * @author Chris Mosher
  */
-public class DatePeriod implements Serializable, Comparable<DatePeriod>
+public class DatePeriod implements Comparable<DatePeriod>
 {
 	private final DateRange dateStart;
 	private final DateRange dateEnd;
