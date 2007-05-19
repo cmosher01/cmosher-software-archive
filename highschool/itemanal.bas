@@ -103,12 +103,12 @@
 	Print
 	If All.% Then &
 		For Co.% = 1% To Len(Answer.Key.$)
-			Print Co.%; Tab(20%); Mid$(Answer.Key.$, Co.%, 1%)
-		Next Co.%
-		Goto 1100
+		Print Co.%; Tab(20%); Mid$(Answer.Key.$, Co.%, 1%)
+	Next Co.%
+	Goto 1100
 	Else
 		Print Resp.%; Tab(20%); Mid$(Answer.Key.$, Resp.%, 1%)
-		Goto 1100
+	Goto 1100
 4000	Print
 	Print "Print scores."
 	Print
@@ -124,8 +124,8 @@
 	All.% = (Resp.$ = "*")
 	I% = 1%
 	While -1%
-		Linput #2%, Line.$(I%)
-		I% = I% + 1%
+	Linput #2%, Line.$(I%)
+	I% = I% + 1%
 	Next
 4010	Close #2%
 	Answer.Key.$ = Line.$(1%)
@@ -140,18 +140,17 @@
 	Correct.%(I%) = 0% For I% = 1% To Num.Test.%
 	Correct.%(F%) = Correct.%(F%)+1% &
 		If Mid$(Answer.$(F%), F2%, 1%) = Mid$(Answer.Key.$, F2%, 1%) &
-			For F2% = 1% to Num.Ans.% &
-				For F% = 1% To Num.Test.%
-	If Alph.% Then &
-		Dum.$(I%) = Name.$(I%)+"\"+Num1$(Correct.%(I%)) For I% = 1% To Num.Test.%
+		For F2% = 1% to Num.Ans.% &
+		For F% = 1% To Num.Test.%
+	If Alph.% &
+	Then	Dum.$(I%) = Name.$(I%)+"\"+Num1$(Correct.%(I%)) For I% = 1% To Num.Test.%
 		Call.% = Alphabetize(Num.Test.%)
 		Name.$(I%) = Seg$(Dum.$(I%), 1%, Pos(Dum.$(I%), "\", 1%)-1%) &
 			For I% = 1% To Num.Test.%
 		Correct.%(I%) = Val(Seg$(Dum.$(I%), 1%, Pos(Dum.$(I%), "\", 1%)-1%)) &
 			For I% = 1% To Num.Test.%
 
-	Else
-		Dum.$(I%) = Num1$(Correct.%(I%))+"\"+Name.$(I%) For I% = 1% To Num.Test.%
+	Else	Dum.$(I%) = Num1$(Correct.%(I%))+"\"+Name.$(I%) For I% = 1% To Num.Test.%
 		Call.% = Numberize(Num.Test.%)
 		Name.$(I%) = Seg$(Dum.$(I%), Pos(Dum.$(I%), "\", 1%)+1%, Len(Dum.$(I%))) &
 			For I% = 1% To Num.Test.%
@@ -168,7 +167,7 @@
 	Return Unless All.%
 	Print Using Score.Line, &
 		Cap(Name.$(P%)), Correct.%(P%), Num.Ans.%-Correct.%(P%), Correct.%(P%)*10000%/Num.Ans.%/100 &
-			For P% = 1% To Num.Test.%
+		For P% = 1% To Num.Test.%
 	All.Average = All.Average - (Correct.%(P%)*10000%/Num.Ans.%/100) &
 		For P% = 1% To Num.Test.%
 	Print
@@ -181,19 +180,19 @@
 	Correct.% = 0%
 	Print.% = -1%
 	For P% = 1% To Num.Test.%
-		Right.Name.% = (Edit$(Fninvert.Name.$(Resp.$), -1%) = Edit$(Name.$(P%), -1%))
-		Temp.Counter.% = Temp.Counter.%+1% &
-			If Mid$(Anser.$(P%),F2%,1%)=Mid$(Answer.Key.$,F2%,1%) &
-				For F2% = 1% To Num.Ans.%
-		All.Average = All.Average+(Temp.Counter.%*10000/Num.Ans.%/100)
-		Correct.% = Correct.%+1% &
-			If Mid$(Anser.$(P%), F2%, 1%)=Mid$(Answer.Key.$, F2%, 1%) &
-				For F2% = 1% To Num.Ans.% &
-					If Right.Name.%
-		Print Using Score.Line, &
-			Cap(Name.$(P%)), Correct.%, Num.Ans.%-Correct.%, Correct.%*10000%/Num.Ans.%/100 &
-				If Right.Name.%
-		Temp.Counter.% = 0%
+	Right.Name.% = (Edit$(Fninvert.Name.$(Resp.$), -1%) = Edit$(Name.$(P%), -1%))
+	Temp.Counter.% = Temp.Counter.%+1% &
+		If Mid$(Anser.$(P%),F2%,1%)=Mid$(Answer.Key.$,F2%,1%) &
+		For F2% = 1% To Num.Ans.%
+	All.Average = All.Average+(Temp.Counter.%*10000/Num.Ans.%/100)
+	Correct.% = Correct.%+1% &
+		If Mid$(Anser.$(P%), F2%, 1%)=Mid$(Answer.Key.$, F2%, 1%) &
+		For F2% = 1% To Num.Ans.% &
+		If Right.Name.%
+	Print Using Score.Line, &
+		Cap(Name.$(P%)), Correct.%, Num.Ans.%-Correct.%, Correct.%*10000%/Num.Ans.%/100 &
+		If Right.Name.%
+	Temp.Counter.% = 0%
 	Next P%
 	Print
 	Print "The average score for all tests is:";All.Average/Num.Test.%
@@ -214,8 +213,8 @@
 	All.% = (Resp.N.$ = "*")
 	I% = 1%
 	While -1%
-		Linput #2%, Line.$(I%)
-		I% = I% + 1%
+	Linput #2%, Line.$(I%)
+	I% = I% + 1%
 	Next
 5020	Close #2%
 	Answer.Key.$ = Line.$(1%)
@@ -227,26 +226,25 @@
 	Print "----"; Tab(25%); "--------"; Tab(35%); "------- ------"
 	Print
 	Print.% = 0%
-	If All.% Then &
-		For T% = 1% To Num.Test.%
-			Print Cap(Name.$(T%));
-			Print Tab(26%); "#"; Num1$(A%); ")"; Tab(31%); Mid$(Answer.$(T%), A%, 1%); &
-				Tab(41%); Mid$(Answer.Key.$, A%, 1%) &
-				Unless Mid$(Answer.$(T%), A%, 1%) = Mid$(Answer.Key.$, A%, 1%) &
-					For A% = 1% To Num.Ans.%
-			Print
+	If All.%
+	Then	For T% = 1% To Num.Test.%
+		Print Cap(Name.$(T%));
+		Print Tab(26%); "#"; Num1$(A%); ")"; Tab(31%); Mid$(Answer.$(T%), A%, 1%); &
+			Tab(41%); Mid$(Answer.Key.$, A%, 1%) &
+			Unless Mid$(Answer.$(T%), A%, 1%) = Mid$(Answer.Key.$, A%, 1%) &
+			For A% = 1% To Num.Ans.%
+		Print
 		Next T%
 		Print.% = -1%
-	Else
-		For T% = 1% To Num.Test.%
-			Right.Name.% = (Edit$(Fninvert.Name.$(Resp.N.$), 189%) = Edit$(Name.$(T%), 189%))
-			Print Cap(Name.$(T%)); If Right.Name.%
-			Print.% = -1% If Right.Name.%
-			Print Tab(26%); "#"; Num1$(A%); ")"; Tab(31%); Mid$(Answer.$(T%), A%, 1%); &
-				Tab(41%); Mid$(Answer.Key.$, A%, 1%) &
-				Unless Mid$(Answer.$(T%), A%, 1%) = Mid$(Answer.Key.$, A%, 1%) &
-					For A% = 1% To Num.Ans.% &
-						If Right.Name.%
+	Else	For T% = 1% To Num.Test.%
+		Right.Name.% = (Edit$(Fninvert.Name.$(Resp.N.$), 189%) = Edit$(Name.$(T%), 189%))
+		Print Cap(Name.$(T%)); If Right.Name.%
+		Print.% = -1% If Right.Name.%
+		Print Tab(26%); "#"; Num1$(A%); ")"; Tab(31%); Mid$(Answer.$(T%), A%, 1%); &
+			Tab(41%); Mid$(Answer.Key.$, A%, 1%) &
+			Unless Mid$(Answer.$(T%), A%, 1%) = Mid$(Answer.Key.$, A%, 1%) &
+			For A% = 1% To Num.Ans.% &
+			If Right.Name.%
 		Next T%
 5030	Print
 	Print "?"; Cap(Resp.N.$); " not found." Unless Print.%
@@ -260,8 +258,8 @@
 	Print
 	I% = 1%
 	While -1%
-		Linput #2%, Line.$(I%)
-		I% = I% + 1%
+	Linput #2%, Line.$(I%)
+	I% = I% + 1%
 	Next
 6010	Close #2%
 	Answer.Key.$ = Line.$(1%)
@@ -284,22 +282,21 @@
 	Print "Problem"; Tab(20%); "Correct"; Tab(30%); "Incorrect"
 	Print "-------"; Tab(20%); "-------"; Tab(30%); "---------"
 	Print
-	If All.% Then &
-		For Problem.% = 1% To Num.Ans.%
-			For Co.% = 1% To Num.Test.%
-				Correct(Problem.%) = Correct(Problem.%) + 1% If &
-				Mid$(Answer.$(Co.%), Problem.%, 1%) = &
-				Mid$(Answer.Key.$(Co.%), Problem.%, 1%)
-			Next Co.%
-			Print Problem.%; Tab(20%); Correct(Problem.%); Tab(30%); Num.Test.%-Correct(Problem.%)
+	If All.% Then For Problem.% = 1% To Num.Ans.%
+		For Co.% = 1% To Num.Test.%
+		Correct(Problem.%) = Correct(Problem.%) + 1% If &
+		Mid$(Answer.$(Co.%), Problem.%, 1%) = &
+		Mid$(Answer.Key.$(Co.%), Problem.%, 1%)
+		Next Co.%
+		Print Problem.%; Tab(20%); Correct(Problem.%); Tab(30%); Num.Test.%-Correct(Problem.%)
 		Next Problem.%
 		Print
 		Goto 110
 	Else
 		For Co.% = 1% To Num.Test.%
-			Correct(Resp.%) = Correct(Resp.%) + 1% If &
-			Mid$(Answer.$(Co.%), Resp.%, 1%) = &
-			Mid$(Answer.Key.$(Co.%), Resp.%, 1%)
+		Correct(Resp.%) = Correct(Resp.%) + 1% If &
+		Mid$(Answer.$(Co.%), Resp.%, 1%) = &
+		Mid$(Answer.Key.$(Co.%), Resp.%, 1%)
 		Next Co.%
 		Print Resp.%; Tab(20%); Correct(Resp.%); Tab(30%); Num.Test.%-Correct(Resp.%)
 		Print
@@ -338,22 +335,22 @@
 	Print
 	Print "Enter name of person and answer to each question for all tests:"
 	For Count.% = T.%+1% While -1%
-		Print "Enter name #"; Num1$(Count.%-1%); ": ";
-		Input #1%, Sub.Name.$
-		Sub.Name.$ = Edit$(Sub.Name.$, 189%)
-		Goto 8030 If Len(Sub.Name.$)=0%
-		Print "Enter #"; Num1$(Count.%-1%); "'s answers: ";
-8020		Linput #1%, Sub.Answer.$
-		Sub.Answer.$ = Edit$(Sub.Answer.$, 189%)
-		Print "?No commas allowed" If Instr(1%, Sub.Answer.$, ",")
-		Print "%Re-enter answers" If Instr(1%, Sub.Answer.$, ",")
-		Goto 8020 If Instr(1%, Sub.Answer.$, ",")
-		Correct.% = (Len(Sub.Answer.$) = Len(Add.$(1%)))
-		Print "?You entered "; Len(Sub.Answer.$); "answers." Unless Correct.%
-		Print "%Re-enter answers" Unless Correct.%
-		Goto 8020 Unless Correct.%
-		Print
-		Add.$(Count.%) = Fninvert.Name.$(Sub.Name.$)+"\"+Sub.Answer.$
+	Print "Enter name #"; Num1$(Count.%-1%); ": ";
+	Input #1%, Sub.Name.$
+	Sub.Name.$ = Edit$(Sub.Name.$, 189%)
+	Goto 8030 If Len(Sub.Name.$)=0%
+	Print "Enter #"; Num1$(Count.%-1%); "'s answers: ";
+8020	Linput #1%, Sub.Answer.$
+	Sub.Answer.$ = Edit$(Sub.Answer.$, 189%)
+	Print "?No commas allowed" If Instr(1%, Sub.Answer.$, ",")
+	Print "%Re-enter answers" If Instr(1%, Sub.Answer.$, ",")
+	Goto 8020 If Instr(1%, Sub.Answer.$, ",")
+	Correct.% = (Len(Sub.Answer.$) = Len(Add.$(1%)))
+	Print "?You entered "; Len(Sub.Answer.$); "answers." Unless Correct.%
+	Print "%Re-enter answers" Unless Correct.%
+	Goto 8020 Unless Correct.%
+	Print
+	Add.$(Count.%) = Fninvert.Name.$(Sub.Name.$)+"\"+Sub.Answer.$
 	Next Count.%
 8030	Open Test.File.$ For Output As File 2%, Defaultname ".ITA;1"
 	Margin #2%, 255%
@@ -373,8 +370,8 @@
 	Goto 1100 If Len(Resp.$)=0%
 8510	I% = 1%
 	While -1%
-		Linput #2%, Line.$(I%)
-		I% = I% + 1%
+	Linput #2%, Line.$(I%)
+	I% = I% + 1%
 	Next
 8520	Close #2%
 	Answer.Key.$ = Line.$(1%)
@@ -411,12 +408,12 @@
 	Goto 8551 If Num.% < 0% Or Num.% > Num.Ans.%
 	Found.% = 0%
 	For S% = 1% Until (Found.% Or (S% > Num.Ans.%))
-		Goto 8555 Unless Found.%
-		Print
-		Print "Current answer is : "; Mid$(Answer.$(S%), Num.%, 1%)
-8552		Input #1%, "Enter new answer: "; Ans.$
-		Ans.$ = Left(Edit$(Ans.$, -1%), 1%)
-		Answer.$(S%) = Left$(Answer.$(S%), Num.%-1%)+Ans.$+Right$(Answer.$(S%), Num.%+1%)
+	Goto 8555 Unless Found.%
+	Print
+	Print "Current answer is : "; Mid$(Answer.$(S%), Num.%, 1%)
+8552	Input #1%, "Enter new answer: "; Ans.$
+	Ans.$ = Left(Edit$(Ans.$, -1%), 1%)
+	Answer.$(S%) = Left$(Answer.$(S%), Num.%-1%)+Ans.$+Right$(Answer.$(S%), Num.%+1%)
 8555	Next S%
 	Print Cap(Resp.$); " not found." If S% > Num.Ans.%
 	Goto 1100 If S% > Num.Ans.%
@@ -427,10 +424,9 @@
 	Print "Problem number"; Number.%; "will be changed to 'X' on"
 	Print "the answer key and on every student.  Is this okay? ";
 	Input #1%, Resp.$
-	If Left$(Edit$(Resp.$, -1%), 1%) = "Y" Then &
-		8540
-	Else
-		1100
+	If Left$(Edit$(Resp.$, -1%), 1%) = "Y" &
+	Then 8540
+	Else 1100
 	!
 9010	!	curve
 15000	!	Defined functions
@@ -487,8 +483,8 @@
 	Def Alphabetize(P.1.%)
 	For A% = 1% To P.1.%
 		For B% = A%+1% To P.1.%
-		If Dum.$(A%) > Dum.$(B%) Then &
-			Store.$ = Dum.$(A%)
+		If Dum.$(A%) > Dum.$(B%)
+		Then	Store.$ = Dum.$(A%)
 			Dum.$(A%) = Dum.$(B%)
 			Dum.$(B%) = Store.$
 15041		Next B%
@@ -499,8 +495,8 @@
 	Def Numberize(P.1.%)
 	For A% = 1% To P.1.%
 		For B% = A%+1% To P.1.%
-		If Val(Seg$(Dum.$(A%), 1%, Pos(Dum.$(A%), "\", 1%)-1%)) < Val(Seg$(Dum.$(B%), 1%, Pos(Dum.$(B%), "\", 1%)-1%)) Then
-			Store.$ = Dum.$(A%)
+		If Val(Seg$(Dum.$(A%), 1%, Pos(Dum.$(A%), "\", 1%)-1%)) < Val(Seg$(Dum.$(B%), 1%, Pos(Dum.$(B%), "\", 1%)-1%))
+		Then	Store.$ = Dum.$(A%)
 			Dum.$(A%) = Dum.$(B%)
 			Dum.$(B%) = Store.$
 15051		Next B%
