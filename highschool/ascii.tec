@@ -1,0 +1,239 @@
+The two $'s at the end are actually two escape characters (ASCII 27).
+
+
+Here is the original:
+-----------------------------------------------------<begin>------------------------------------------------------
+0,12ETBJ:@S|/S|"S-1US'BJ:@S|/N|"S'@^A/
+Char.           Ascii
+-----           -----
+/<0,32768ET^TUCQS"TC"E^Anul^A'QC-1"E^Asoh^A'QC-2"E^Astx^A'QC-3"E^Aetx^A'QC-4"E^Aeot^A'QC-5"E^Aenq^A'
+QC-6"E^Aack^A'QC-7"E^Abel^A'QC-8"E^Abs^A'QC-9"E^Atab^A'QC-10"E^Alf^A'
+QC-11"E^Avt^A'QC-12"E^Aff^A'QC-13"E^Acr^A'QC-14"E^Aso^A'QC-15"E^Asi^A'
+QC-16"E^Adle^A'QC-17"E^Adc1^A'QC-18"E^Adc2^A'QC-19"E^Adc3^A'QC-20"E^Adc4^A'
+QC-21"E^Anak^A'QC-22"E^Asyn^A'QC-23"E^Aetb^A'QC-24"E^Acan^A'QC-25"E^Aem^A'
+QC-26"E^Asub^A'QC-27"E^Aesc^A'QC-28"E^Afs^A'QC-29"E^Ags^A'QC-30"E^Ars^A'
+QC-31"E^Aus^A'QC-32"E^Asp^A'QC-127"E^Adel^A'
+QC-32"GQC-127"NQC^T''|QC^T'9^T9^TQC=>$$
+------------------------------------------------------<end>-------------------------------------------------------
+
+
+
+Here is a reformatted version:
+Note: I changed this construct: ^Atext^A  to this construct:  @^A/text/
+Note that you cannot format with tabs (because a <tab> is a TECO command).
+I had problems typing in a vertical bar, so I used the TECO command 124I to insert it.
+I also needed to use 27I twice to insert two escapes at the end of the file.
+
+-----------------------------------------------------<begin>------------------------------------------------------
+0,12ET
+
+BJ
+:@S|/S| "S -1US '
+
+BJ
+:@S|/N| "S '
+
+@^A/
+Char.           Ascii
+-----           -----
+/
+
+<
+    0,32768ET
+
+    ^TUC
+
+    QS"T
+        QC-000 "E @^A/nul/ '
+        QC-001 "E @^A/soh/ '
+        QC-002 "E @^A/stx/ '
+        QC-003 "E @^A/etx/ '
+        QC-004 "E @^A/eot/ '
+        QC-005 "E @^A/enq/ '
+        QC-006 "E @^A/ack/ '
+        QC-007 "E @^A/bel/ '
+        QC-008 "E @^A/bs / '
+        QC-009 "E @^A/tab/ '
+        QC-010 "E @^A/lf / '
+        QC-011 "E @^A/vt / '
+        QC-012 "E @^A/ff / '
+        QC-013 "E @^A/cr / '
+        QC-014 "E @^A/so / '
+        QC-015 "E @^A/si / '
+        QC-016 "E @^A/dle/ '
+        QC-017 "E @^A/dc1/ '
+        QC-018 "E @^A/dc2/ '
+        QC-019 "E @^A/dc3/ '
+        QC-020 "E @^A/dc4/ '
+        QC-021 "E @^A/nak/ '
+        QC-022 "E @^A/syn/ '
+        QC-023 "E @^A/etb/ '
+        QC-024 "E @^A/can/ '
+        QC-025 "E @^A/em / '
+        QC-026 "E @^A/sub/ '
+        QC-027 "E @^A/esc/ '
+        QC-028 "E @^A/fs / '
+        QC-029 "E @^A/gs / '
+        QC-030 "E @^A/rs / '
+        QC-031 "E @^A/us / '
+        QC-032 "E @^A/sp / '
+        QC-127 "E @^A/del/ '
+        QC-032 "G
+            QC-127 "N
+                QC^T
+            '
+        '
+    |
+        QC^T
+    '
+
+    9^T
+    9^T
+
+    QC=
+>
+$$
+------------------------------------------------------<end>-------------------------------------------------------
+
+And the same, but with comments:
+
+-----------------------------------------------------<begin>------------------------------------------------------
+0,12ET ! Read lower case characters, and don't echo during ^T command !
+
+! Note that the buffer is assumed to contain the command line that invoked the macro,
+for example, MUNG ASCII.TEC /S !
+
+BJ ! Jump to beginning of buffer !
+:@S|/S| "S -1US ' ! Search for /S switch, if found, Q-reg S = true !
+
+BJ ! Jump to beginning of buffer !
+:@S|/N| "S ' ! Search for /N switch, if found, do nothing !
+
+@^A/ ! print header !
+Char.           Ascii
+-----           -----
+/
+
+< ! loop for ever !
+    0,32768ET ! trap Ctrl/C !
+
+    ^TUC ! read one character from the keyboard (wait for the user to type it) !
+
+    QS"T ! if /S was specified !
+        QC-000 "E @^A/nul/ ' ! check for control characters 0-32 or 127 !
+        QC-001 "E @^A/soh/ ' ! and if so, print the name out !
+        QC-002 "E @^A/stx/ '
+        QC-003 "E @^A/etx/ '
+        QC-004 "E @^A/eot/ '
+        QC-005 "E @^A/enq/ '
+        QC-006 "E @^A/ack/ '
+        QC-007 "E @^A/bel/ '
+        QC-008 "E @^A/bs / '
+        QC-009 "E @^A/tab/ '
+        QC-010 "E @^A/lf / '
+        QC-011 "E @^A/vt / '
+        QC-012 "E @^A/ff / '
+        QC-013 "E @^A/cr / '
+        QC-014 "E @^A/so / '
+        QC-015 "E @^A/si / '
+        QC-016 "E @^A/dle/ '
+        QC-017 "E @^A/dc1/ '
+        QC-018 "E @^A/dc2/ '
+        QC-019 "E @^A/dc3/ '
+        QC-020 "E @^A/dc4/ '
+        QC-021 "E @^A/nak/ '
+        QC-022 "E @^A/syn/ '
+        QC-023 "E @^A/etb/ '
+        QC-024 "E @^A/can/ '
+        QC-025 "E @^A/em / '
+        QC-026 "E @^A/sub/ '
+        QC-027 "E @^A/esc/ '
+        QC-028 "E @^A/fs / '
+        QC-029 "E @^A/gs / '
+        QC-030 "E @^A/rs / '
+        QC-031 "E @^A/us / '
+        QC-032 "E @^A/sp / '
+        QC-127 "E @^A/del/ '
+
+        QC-032 "G ! if character is > 32 or is 127, (that is, if it wasn't printed above !
+            QC-127 "N
+                QC^T ! then just print the character !
+            '
+        '
+    |
+        QC^T ! if /N was specified, or no switch was specified, then just print the character !
+    '
+
+    9^T ! print two tabs !
+    9^T
+
+    QC= ! then print the character's ASCII value (in decimal) !
+> ! end of loop !
+$$ ! escape escape to execute the macro !
+------------------------------------------------------<end>-------------------------------------------------------
+
+
+Here is another version that doesn't check for /S or /N switches,
+and doesn't trap Ctrl/C.
+
+
+-----------------------------------------------------<begin>------------------------------------------------------
+0,12ET
+
+@^A/
+Char.           Ascii
+-----           -----
+/
+
+<
+    ^TUC
+
+    QC-000 "E @^A/nul/ '
+    QC-001 "E @^A/soh/ '
+    QC-002 "E @^A/stx/ '
+    QC-003 "E @^A/etx/ '
+    QC-004 "E @^A/eot/ '
+    QC-005 "E @^A/enq/ '
+    QC-006 "E @^A/ack/ '
+    QC-007 "E @^A/bel/ '
+    QC-008 "E @^A/bs / '
+    QC-009 "E @^A/tab/ '
+    QC-010 "E @^A/lf / '
+    QC-011 "E @^A/vt / '
+    QC-012 "E @^A/ff / '
+    QC-013 "E @^A/cr / '
+    QC-014 "E @^A/so / '
+    QC-015 "E @^A/si / '
+    QC-016 "E @^A/dle/ '
+    QC-017 "E @^A/dc1/ '
+    QC-018 "E @^A/dc2/ '
+    QC-019 "E @^A/dc3/ '
+    QC-020 "E @^A/dc4/ '
+    QC-021 "E @^A/nak/ '
+    QC-022 "E @^A/syn/ '
+    QC-023 "E @^A/etb/ '
+    QC-024 "E @^A/can/ '
+    QC-025 "E @^A/em / '
+    QC-026 "E @^A/sub/ '
+    QC-027 "E @^A/esc/ '
+    QC-028 "E @^A/fs / '
+    QC-029 "E @^A/gs / '
+    QC-030 "E @^A/rs / '
+    QC-031 "E @^A/us / '
+    QC-032 "E @^A/sp / '
+    QC-127 "E @^A/del/ '
+    QC-032 "G
+        QC-127 "N
+            QC^T
+        '
+    '
+
+    9^T
+    9^T
+
+    QC=
+>
+$$
+------------------------------------------------------<end>-------------------------------------------------------
+Here is a simple one-liner that doesn't translate control characters:
+0,12ET<^TUCQC^T9^T9^TQC=>$$
