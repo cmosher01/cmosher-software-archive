@@ -5,7 +5,7 @@ package nu.mine.mosher.sudoku.check;
 
 import nu.mine.mosher.sudoku.state.GameManager;
 
-public class ValidityChecker
+class ValidityChecker
 {
 	private final GameManager game;
 
