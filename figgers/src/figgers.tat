@@ -1,0 +1,13 @@
+@template figgers(dates)@
+<html>
+<body>
+<table>
+@loop d : dates.size()@
+	<tr>
+	<td>@dates.get(d).toString()@</td>
+	<td><img src="@dates.get(d).toString()@.png" /></td>
+	</tr>
+@end loop@
+</table>
+</body>
+</html>
