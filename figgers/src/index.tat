@@ -1,0 +1,33 @@
+@template index(groups)@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/tr/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Figgers Family</title>
+<link rel="stylesheet" href="figgers.css" type="text/css" media="all" />
+</head>
+<body>
+<p>
+<img src="title.png"/>
+</p>
+<p style="float:left;">
+<img src="1926-12-30-small.png"/>
+</p>
+<table style="white-space:nowrap;" border="1" cellpadding="3">
+<thead>
+<tr><th>start date</th><th>episodes</th><th>subject</th></tr>
+</thead>
+<tbody>
+@loop g : groups.size()@
+	@if (!groups.get(g).getTitle().isEmpty())@
+	<tr>
+	<td>@groups.get(g).getDate()@</td>
+	<td style="text-align:right;">@groups.get(g).getSize()@</td>
+	<td><a href="@groups.get(g).getLink()@">@groups.get(g).getTitle()@</a></td>
+	</tr>
+	@end if@
+@end loop@
+</tbody>
+</table>
+</body>
+</html>

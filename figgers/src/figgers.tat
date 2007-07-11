@@ -1,13 +1,26 @@
-@template figgers(dates)@
-<html>
+@template figgers(title,dates)@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/tr/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>@title@</title>
+<link rel="stylesheet" href="figgers.css" type="text/css" media="all" />
+</head>
 <body>
+<h1>@title@</h1>
 <table>
+<tbody>
 @loop d : dates.size()@
 	<tr>
-	<td>@dates.get(d).toString()@</td>
-	<td><img src="@dates.get(d).toString()@.png" /></td>
+	<td>
+		<div class="image">
+		<div class="caption">@dates.get(d).toString()@&nbsp;&nbsp;&nbsp;@dates.get(d).getTitle()@</div>
+		<img src="@dates.get(d).toString()@.png">
+		</div>
+	</td>
 	</tr>
 @end loop@
+</tbody>
 </table>
 </body>
 </html>
