@@ -46,7 +46,7 @@
                                 ; 
                                 ; 
                                 ; 
-                                ; Chris Mosher's observatiions:
+                                ; Chris Mosher's observations:
                                 ; Location $B685 is in the boot sector, T$00, S$00,
                                 ; and is the high byte of the address of a JMP instruction.
                                 ; Values are as follows
@@ -472,7 +472,7 @@ L1B51           INY
 
                                 ; fix this pointer inside DOS: it used to
                                 ; point to us (the relocation), but since we
-                                ; are dioing the relocating now, change it
+                                ; are doing the relocating now, change it
                                 ; so it just goes right to the DOS cold-start routine
                 LDA   #HI DOSCOLD
                 STA   TODOSCLD2+2
