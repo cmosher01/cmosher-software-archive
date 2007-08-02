@@ -19,6 +19,11 @@ public class CPU6502 implements Clock.Timed
 
 	private Memory memory;
 
+	CPU6502(final Memory memory)
+	{
+		this.memory = memory;
+	}
+
 	public void tick()
 	{
 		if (this.t == 0)
@@ -45,6 +50,7 @@ public class CPU6502 implements Clock.Timed
 						this.address = this.pc;
 						read(); // ignored
 						execute();
+						done();
 					break;
 				}
 			break;
@@ -55,6 +61,7 @@ public class CPU6502 implements Clock.Timed
 						this.address = this.pc++;
 						read();
 						execute();
+						done();
 					break;
 				}
 			break;
@@ -71,6 +78,7 @@ public class CPU6502 implements Clock.Timed
 						this.address = ad();
 						read();
 						execute();
+						done();
 					break;
 				}
 			break;
@@ -91,6 +99,7 @@ public class CPU6502 implements Clock.Timed
 						this.address = ad();
 						read();
 						execute();
+						done();
 					break;
 				}
 			break;
@@ -103,9 +112,16 @@ public class CPU6502 implements Clock.Timed
 		return this.adh << 8 | this.adl;
 	}
 
-	private void execute()
+	private void done()
 	{
 		this.t = -1;
+	}
+
+	private void execute()
+	{
+		switch (this.opcode)
+		{
+		}
 	}
 
 	private Addressing addressing(int op)
