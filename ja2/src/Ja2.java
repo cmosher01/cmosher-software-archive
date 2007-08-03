@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * Created on Aug 31, 2004
  */
@@ -26,5 +29,17 @@ public final class Ja2
      */
     public static void main(String[] args)
     {
+    	final Memory memory = new Memory();
+
+    	final Video video = new Video(memory);
+
+    	final CPU6502 cpu = new CPU6502(memory);
+
+    	final List<Clock.Timed> rTimed = new ArrayList<Clock.Timed>();
+    	rTimed.add(cpu);
+    	rTimed.add(video);
+    	final Clock clock = new Clock(rTimed);
+
+    	clock.run();
     }
 }

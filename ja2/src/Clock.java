@@ -20,9 +20,12 @@ public class Clock
 
 	public void run()
 	{
-		for (final Timed timed : this.rTimed)
+		while (true)
 		{
-			timed.tick();
+			for (final Timed timed : this.rTimed)
+			{
+				timed.tick();
+			}
 		}
 	}
 }

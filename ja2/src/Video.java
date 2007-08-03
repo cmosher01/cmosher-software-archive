@@ -13,8 +13,10 @@ public class Video implements Clock.Timed
 	private int cur;
 
 	private int scanbyte;
-
 	private int scanline;
+	private int thirdOfScreen;
+	private int cellInThird;
+	private int rowInCell;
 
 	Video(final Memory memory)
 	{
@@ -47,17 +49,21 @@ public class Video implements Clock.Timed
 				this.cur = mod(this.base-25);
 				this.scanbyte = 0;
 				this.scanline = 0;
+				this.thirdOfScreen = 0;
+				this.cellInThird = 0;
+				this.rowInCell = 0;
 			break;
 		}
 	}
 
 	private int mod(int i)
 	{
-		while (i < 0)
+		int m = i % this.mod;
+		if (m < 0)
 		{
-			i += this.mod;
+			m += this.mod;
 		}
-		return i % this.mod;
+		return m;
 	}
 
 	public void tick()
