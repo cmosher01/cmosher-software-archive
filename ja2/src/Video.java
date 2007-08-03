@@ -8,15 +8,15 @@ public class Video implements Clock.Timed
 	private VideoMode mode;
 	private int page;
 
-	private int base;
-	private int mod;
-	private int cur;
+	private int t;
 
-	private int scanbyte;
-	private int scanline;
-	private int thirdOfScreen;
-	private int cellInThird;
-	private int rowInCell;
+	private int[] lutText0 = VideoAddressing.buildLUT(0x0400,0x0400);
+	private int[] lutText1 = VideoAddressing.buildLUT(0x0800,0x0800);
+	private int[][] lutText = { lutText0, lutText1 };
+	private int[][] lutLoRes = { lutText0, lutText1 };
+	private int[] lutHiRes0 = VideoAddressing.buildLUT(0x2000,0x2000);
+	private int[] lutHiRes1 = VideoAddressing.buildLUT(0x4000,0x2000);
+	private int[][] lutHiRes = { lutHiRes0, lutHiRes1 };
 
 	Video(final Memory memory)
 	{
@@ -33,61 +33,27 @@ public class Video implements Clock.Timed
 		this.mode = mode;
 		this.page = page;
 
-		switch (this.mode)
-		{
-			case TEXT:
-				this.base = 0x0400*this.page;
-				this.mod = 0x0400;
-			break;
-			case LORES:
-				this.base = 0x0400*this.page;
-				this.mod = 0x0400; //???
-			break;
-			case HIRES:
-				this.base = 0x2000*this.page;
-				this.mod = 0x2000;
-				this.cur = mod(this.base-25);
-				this.scanbyte = 0;
-				this.scanline = 0;
-				this.thirdOfScreen = 0;
-				this.cellInThird = 0;
-				this.rowInCell = 0;
-			break;
-		}
-	}
-
-	private int mod(int i)
-	{
-		int m = i % this.mod;
-		if (m < 0)
-		{
-			m += this.mod;
-		}
-		return m;
 	}
 
 	public void tick()
 	{
-		memory.read(this.cur);
-
-		if (this.scanbyte > 24)
+		int a = 0;
+		switch (this.mode)
 		{
-			// display
+			case TEXT:
+				a = lutText[page][t];
+			break;
+			case LORES:
+				a = lutLoRes[page][t];
+			break;
+			case HIRES:
+				a = lutHiRes[page][t];
+			break;
 		}
 
-		this.cur = mod(this.cur + 1);
+		int d = memory.read(a);
 
-		++this.scanbyte;
-		if (this.scanbyte > 64)
-		{
-			this.scanbyte = 0;
-			++this.scanline;
-			this.cur += 0x0400;
-			if (this.cur >= this.mod)
-			{
-				this.cur -= 0x1F80;
-			}
-			if (this.scanline > 0) { } //???
-		}
+		++this.t;
+		this.t %= VideoAddressing.BYTES_PER_FRAME;
 	}
 }
