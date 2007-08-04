@@ -41,33 +41,6 @@ public class VideoAddressing
 		return (dividend+divisor-1)/divisor;
 	}
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args)
-	{
-//		int[] lut = buildLUT(0x2000,0x2000);
-//		for (int i = 0; i < lut.length; i++)
-//		{
-//			int a = lut[i];
-//			
-//			if (i % 0x1040 == 0)
-//			{
-//				System.out.println();
-//			}
-//	
-//			if (i % 65 == 0)
-//			{
-//				System.out.println();
-//			}
-//	
-//			System.out.print(Integer.toHexString(a));
-//			System.out.print(",");
-//		}
-
-		System.out.println(CRYSTAL_HZ);
-	}
-
 	private static int calc(final int t)
 	{
 		int c = t % VISIBLE_BYTES_PER_FRAME;
@@ -81,7 +54,7 @@ public class VideoAddressing
 		n -= s*0x40;
 		final int q = (n/8);
 		n -= q*8;
-		final int base = 0x400*n+0x80*q+40*s;
+		final int base = 0x400*n+0x80*q+VISIBLE_BYTES_PER_ROW*s;
 
 		final int hp = (base >> 7) << 7;
 
