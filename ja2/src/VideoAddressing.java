@@ -16,19 +16,19 @@ public class VideoAddressing
 
 	private static final int VISIBLE_BYTES_PER_ROW = 40;
 	private static final int BLANKED_BYTES_PER_ROW = BYTES_PER_ROW-VISIBLE_BYTES_PER_ROW;
-	private static final int VISIBLE_ROWS_PER_FRAME = 192;
-	private static final int BLANKED_ROWS_PER_FRAME = NTSC_LINES_PER_FIELD-VISIBLE_ROWS_PER_FRAME;
-	private static final int ROWS_PER_FRAME = VISIBLE_ROWS_PER_FRAME+BLANKED_ROWS_PER_FRAME;
-	public static final int BYTES_PER_FRAME = BYTES_PER_ROW*ROWS_PER_FRAME;
-	private static final int VISIBLE_BYTES_PER_FRAME = BYTES_PER_ROW*VISIBLE_ROWS_PER_FRAME;
+	private static final int VISIBLE_ROWS_PER_FIELD = 192;
+	private static final int BLANKED_ROWS_PER_FIELD = NTSC_LINES_PER_FIELD-VISIBLE_ROWS_PER_FIELD;
+	private static final int ROWS_PER_FIELD = VISIBLE_ROWS_PER_FIELD+BLANKED_ROWS_PER_FIELD;
+	public static final int BYTES_PER_FIELD = BYTES_PER_ROW*ROWS_PER_FIELD;
+	private static final int VISIBLE_BYTES_PER_FIELD = BYTES_PER_ROW*VISIBLE_ROWS_PER_FIELD;
 	private static final int SCANNABLE_ROWS = 0x100;
 	private static final int SCANNABLE_BYTES = SCANNABLE_ROWS*BYTES_PER_ROW;
-	private static final int RESET_ROWS = 6;
+	private static final int RESET_ROWS = NTSC_LINES_PER_FIELD-SCANNABLE_ROWS;
 	private static final int RESET_BYTES = RESET_ROWS*BYTES_PER_ROW;
 
 	public static int[] buildLUT(final int base, final int len)
 	{
-		final int[] lut = new int[BYTES_PER_FRAME];
+		final int[] lut = new int[BYTES_PER_FIELD];
 		for (int t = 0; t < lut.length; ++t)
 		{
 			lut[t] = base + (calc(t) % len);
@@ -43,7 +43,7 @@ public class VideoAddressing
 
 	private static int calc(final int t)
 	{
-		int c = t % VISIBLE_BYTES_PER_FRAME;
+		int c = t % VISIBLE_BYTES_PER_FIELD;
 		if (t >= SCANNABLE_BYTES)
 		{
 			c -= RESET_BYTES;

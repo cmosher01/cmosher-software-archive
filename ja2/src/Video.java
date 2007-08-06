@@ -54,6 +54,6 @@ public class Video implements Clock.Timed
 		int d = memory.read(a);
 
 		++this.t;
-		this.t %= VideoAddressing.BYTES_PER_FRAME;
+		this.t %= VideoAddressing.BYTES_PER_FIELD;
 	}
 }
