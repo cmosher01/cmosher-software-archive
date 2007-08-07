@@ -1,3 +1,6 @@
+import java.io.IOException;
+import java.io.InputStream;
+
 /*
  * Created on Aug 2, 2007
  */
@@ -18,9 +21,36 @@ public class Video implements Clock.Timed
 	private int[] lutHiRes1 = VideoAddressing.buildLUT(0x4000,0x2000);
 	private int[][] lutHiRes = { lutHiRes0, lutHiRes1 };
 
-	Video(final Memory memory)
+	private int[] char_rom;
+
+	Video(final Memory memory) throws IOException
 	{
 		this.memory = memory;
+
+		this.char_rom = readCharRom();
+	}
+
+	private static final int EOF = -1;
+
+	private int[] readCharRom() throws IOException
+	{
+		final int[] r = new int[0x400];
+		final InputStream rom = getClass().getResourceAsStream("charrom.bin");
+		int cc = 0;
+		for (int c = rom.read(); c != EOF; c = rom.read())
+		{
+			if (cc < r.length)
+			{
+				r[cc] = c;
+			}
+			++cc;
+		}
+		rom.close();
+		if (cc != 0x400)
+		{
+			throw new IllegalStateException();
+		}
+		return r;
 	}
 
 	/**

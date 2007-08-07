@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +26,10 @@ public final class Ja2
 
     /**
      * @param args
+     * @throws IOException 
      * @throws ApplicationAborting
      */
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
     	final Memory memory = new Memory();
 

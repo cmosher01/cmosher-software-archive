@@ -14,12 +14,11 @@ public class VideoAddressing
 	private static final int LINES = NTSC_FIELDS_PER_SECOND*NTSC_COLOR_FIELD_EVERY*NTSC_LINES_PER_FIELD;
 	private static final int BYTES_PER_ROW = APPLE_BYTES/LINES;
 
+	public static final int BYTES_PER_FIELD = BYTES_PER_ROW*NTSC_LINES_PER_FIELD;
+
 	private static final int VISIBLE_BYTES_PER_ROW = 40;
 	private static final int BLANKED_BYTES_PER_ROW = BYTES_PER_ROW-VISIBLE_BYTES_PER_ROW;
 	private static final int VISIBLE_ROWS_PER_FIELD = 192;
-	private static final int BLANKED_ROWS_PER_FIELD = NTSC_LINES_PER_FIELD-VISIBLE_ROWS_PER_FIELD;
-	private static final int ROWS_PER_FIELD = VISIBLE_ROWS_PER_FIELD+BLANKED_ROWS_PER_FIELD;
-	public static final int BYTES_PER_FIELD = BYTES_PER_ROW*ROWS_PER_FIELD;
 	private static final int VISIBLE_BYTES_PER_FIELD = BYTES_PER_ROW*VISIBLE_ROWS_PER_FIELD;
 	private static final int SCANNABLE_ROWS = 0x100;
 	private static final int SCANNABLE_BYTES = SCANNABLE_ROWS*BYTES_PER_ROW;
@@ -56,10 +55,10 @@ public class VideoAddressing
 		n -= q*8;
 		final int base = 0x400*n+0x80*q+VISIBLE_BYTES_PER_ROW*s;
 
-		final int hp = (base >> 7) << 7;
+		final int half_page = (base >> 7) << 7;
 
 		int a = base+(c%BYTES_PER_ROW)-BLANKED_BYTES_PER_ROW;
-		if (a < hp)
+		if (a < half_page)
 		{
 			a += 0x80;
 		}
