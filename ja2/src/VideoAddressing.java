@@ -3,7 +3,7 @@
 public class VideoAddressing
 {
 	private static final int NTSC_LINES_PER_FRAME = 3*5*5*7;
-	private static final int NTSC_LINES_PER_FIELD = NTSC_LINES_PER_FRAME/2;
+	public static final int NTSC_LINES_PER_FIELD = NTSC_LINES_PER_FRAME/2;
 	private static final int NTSC_FIELDS_PER_SECOND = 60;
 	private static final int NTSC_COLOR_FIELD_EVERY = 1000;
 
@@ -12,13 +12,13 @@ public class VideoAddressing
 	private static final int CPU_HZ = divideRoundUp(CRYSTAL_HZ,CPU_CYCLES_PER_CRYSTAL_CYCLES);
 	private static final int APPLE_BYTES = (NTSC_COLOR_FIELD_EVERY+1)*CPU_HZ;
 	private static final int LINES = NTSC_FIELDS_PER_SECOND*NTSC_COLOR_FIELD_EVERY*NTSC_LINES_PER_FIELD;
-	private static final int BYTES_PER_ROW = APPLE_BYTES/LINES;
+	public static final int BYTES_PER_ROW = APPLE_BYTES/LINES;
 
 	public static final int BYTES_PER_FIELD = BYTES_PER_ROW*NTSC_LINES_PER_FIELD;
 
-	private static final int VISIBLE_BYTES_PER_ROW = 40;
+	public static final int VISIBLE_BYTES_PER_ROW = 40;
 	private static final int BLANKED_BYTES_PER_ROW = BYTES_PER_ROW-VISIBLE_BYTES_PER_ROW;
-	private static final int VISIBLE_ROWS_PER_FIELD = 192;
+	public static final int VISIBLE_ROWS_PER_FIELD = 192;
 	private static final int VISIBLE_BYTES_PER_FIELD = BYTES_PER_ROW*VISIBLE_ROWS_PER_FIELD;
 	private static final int SCANNABLE_ROWS = 0x100;
 	private static final int SCANNABLE_BYTES = SCANNABLE_ROWS*BYTES_PER_ROW;

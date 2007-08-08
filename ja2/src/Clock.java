@@ -15,17 +15,20 @@ public class Clock
 	private final List<Timed> rTimed = new ArrayList<Timed>();
 	Clock(final Collection<Timed> rTimed)
 	{
-		rTimed.addAll(rTimed);
+		this.rTimed.addAll(rTimed);
 	}
 
 	public void run()
 	{
-		while (true)
+		System.out.println("clock is starting");
+		int t = 17030*2;
+		while (t-- > 0)
 		{
 			for (final Timed timed : this.rTimed)
 			{
 				timed.tick();
 			}
 		}
+		System.out.println("clock is stopping");
 	}
 }
