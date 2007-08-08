@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /*
  * Created on Aug 1, 2007
  */
@@ -25,6 +27,24 @@ public class CPU6502 implements Clock.Timed
 	}
 
 	public void tick()
+	{
+		testtick();
+	}
+
+	public void testtick()
+	{
+		++this.t;
+		if (this.t >= 1000)
+		{
+			this.t = 0;
+			Random rnd = new Random();
+			int c = rnd.nextInt(0x100);
+			int a = rnd.nextInt(0x400);
+			this.memory.write(0x400+a,c);
+		}
+	}
+
+	public void realtick()
 	{
 		if (this.t == 0)
 		{

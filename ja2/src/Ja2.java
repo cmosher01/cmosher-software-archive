@@ -28,7 +28,9 @@ public final class Ja2 implements Runnable
 {
 	private final FrameManager framer = new FrameManager();
 
-    private Ja2()
+	Clock clock;
+
+	private Ja2()
     {
     	// only instantiated by main
     }
@@ -66,16 +68,14 @@ public final class Ja2 implements Runnable
     private void tryRun() throws IOException
     {
         final Memory memory = new Memory();
-    	memory.write(0x400,'A'|0x80);
-    	memory.write(0x401,'B'|0x80);
-    	memory.write(0x402,'C'|0x80);
-    	memory.write(0x403,'D'|0x80);
-    	memory.write(0x404,'E'|0x80);
-    	memory.write(0x405,'F'|0x80);
+        for (int addr = 0; addr < 0x10000; ++addr)
+        {
+        	memory.write(addr,0xA0);
+        }
 
     	final Video video = new Video(memory);
 
-//    	final CPU6502 cpu = new CPU6502(memory);
+    	final CPU6502 cpu = new CPU6502(memory);
 
         // create the main frame window for the application
         this.framer.init(
@@ -98,18 +98,10 @@ public final class Ja2 implements Runnable
 	    	video);
 
     	final List<Clock.Timed> rTimed = new ArrayList<Clock.Timed>();
-//    	rTimed.add(cpu);
+    	rTimed.add(cpu);
     	rTimed.add(video);
-    	final Clock clock = new Clock(rTimed);
-
-    	final Thread clth = new Thread(new Runnable()
-    	{
-			public void run()
-			{
-		    	clock.run();
-			}
-    	});
-    	clth.start();
+    	this.clock = new Clock(rTimed);
+    	this.clock.run();
 	}
 
     private JMenuBar createAppMenuBar()
@@ -145,6 +137,7 @@ public final class Ja2 implements Runnable
 
 	public void close()
 	{
+		this.clock.shutdown();
 		this.framer.close(); // this exits the app
 	}
 }

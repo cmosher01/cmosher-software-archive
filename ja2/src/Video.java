@@ -1,11 +1,13 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GraphicsConfiguration;
 import java.awt.Image;
 import java.awt.image.ColorModel;
 import java.awt.image.ImageProducer;
 import java.awt.image.IndexColorModel;
 import java.awt.image.MemoryImageSource;
+import java.awt.image.VolatileImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -79,9 +81,11 @@ public class Video extends JPanel implements Clock.Timed
 
 	private Image scrnimage;
 
-	private int plot_t;
+	volatile private int plot_t;
+	volatile private int plot_d;
 
-	private int plot_d;
+	/*Volatile*/Image vImg;
+	Graphics grimg;
 
 	Video(final Memory memory) throws IOException
 	{
@@ -101,8 +105,8 @@ public class Video extends JPanel implements Clock.Timed
 
 	private int[] readCharRom() throws IOException
 	{
-		final int[] r = new int[0x400];
-		final InputStream rom = getClass().getResourceAsStream("charrom2.bin");
+		final int[] r = new int[0x800];
+		final InputStream rom = getClass().getResourceAsStream("charrom.bin");
 		int cc = 0;
 		for (int c = rom.read(); c != EOF; c = rom.read())
 		{
@@ -113,7 +117,7 @@ public class Video extends JPanel implements Clock.Timed
 			++cc;
 		}
 		rom.close();
-		if (cc != 0x400)
+		if (cc != 0x800)
 		{
 			throw new IllegalStateException();
 		}
@@ -138,19 +142,7 @@ public class Video extends JPanel implements Clock.Timed
 //		{
 //			System.out.println();
 //		}
-		int a = 0;
-		switch (this.mode)
-		{
-			case TEXT:
-				a = lutText[page][t];
-			break;
-			case LORES:
-				a = lutLoRes[page][t];
-			break;
-			case HIRES:
-				a = lutHiRes[page][t];
-			break;
-		}
+		final int a = getAddr();
 
 		int d = memory.read(a);
 //		if (d != 0)
@@ -164,45 +156,103 @@ public class Video extends JPanel implements Clock.Timed
 //			sb.append(" ");
 //			System.out.print (sb.toString());
 		}
-		setPlot(d);
+//		setPlot(d);
+//		this.plot_t = t;
+//		this.plot_d = d;
 
-
-//		if (t == 0)
-//		{
 //			System.out.println();
 //			System.out.println();
-			try
-			{
-				SwingUtilities.invokeAndWait(new Runnable()
-				{
-					public void run()
-					{
-						plotByte();
-//						swing(getGraphics());
-					}
-				});
-			}
-			catch (InterruptedException e)
-			{
-				e.printStackTrace();
-			}
-			catch (InvocationTargetException e)
-			{
-				e.printStackTrace();
-			}
+			plotByte(t,d);
 //		}
 
 		++this.t;
+		if (t == VideoAddressing.BYTES_PER_FIELD)
+		{
+//			try
+//			{
+				SwingUtilities.invokeLater(new Runnable()
+				{
+					public void run()
+					{
+						plotScreen();
+					}
+				});
+//			}
+//			catch (InterruptedException e)
+//			{
+//				e.printStackTrace();
+//			}
+//			catch (InvocationTargetException e)
+//			{
+//				e.printStackTrace();
+//			}
+		}
 		this.t %= VideoAddressing.BYTES_PER_FIELD;
 	}
 
-	private synchronized void setPlot(int d)
+	private void invokePlotByte(int t, int d)
+	{
+		plotByte(t,d);
+//		try
+//		{
+//			SwingUtilities.invokeAndWait(new SwingPlotByte(t,d));
+////				new Runnable()
+////				{
+////					public void run()
+////					{
+////						plotByte();
+//////						swing(getGraphics());
+////					}
+////				}
+////				);
+//		}
+//		catch (InterruptedException e)
+//		{
+//			e.printStackTrace();
+//		}
+//		catch (InvocationTargetException e)
+//		{
+//			e.printStackTrace();
+//		}
+	}
+
+	private int getAddr()
+	{
+		switch (this.mode)
+		{
+			case TEXT:
+				return lutText[page][t];
+			case LORES:
+				return lutLoRes[page][t];
+			case HIRES:
+				return lutHiRes[page][t];
+			default:
+				throw new IllegalStateException();
+		}
+	}
+
+	private class SwingPlotByte implements Runnable
+	{
+		volatile private int t;
+		volatile private int d;
+		public SwingPlotByte(int t, int d)
+		{
+			this.t = t;
+			this.d = d;
+		}
+		public void run()
+		{
+			plotByte(t,d);
+		}
+	}
+
+	private /*synchronized*/ void setPlot(int d)
 	{
 		this.plot_t = t;
 		this.plot_d = d;
 	}
-	private synchronized int getPlotT() { return this.plot_t; }
-	private synchronized int getPlotD() { return this.plot_d; }
+	private /*synchronized*/ int getPlotT() { return this.plot_t; }
+	private /*synchronized*/ int getPlotD() { return this.plot_d; }
 
 	@Override
 	protected void paintComponent(final Graphics g)
@@ -236,35 +286,82 @@ public class Video extends JPanel implements Clock.Timed
 				System.out.println();
 		}
 	}
-	
-	private void plotByte()
+
+	void plotScreen()
 	{
-		int d = getPlotD();
-		int pt = getPlotT();
-		Graphics g = getGraphics();
-		Color orig = g.getColor();
-		final int base = t*VISIBLE_BITS_PER_BYTE;
-		d = d << 1; // TODO high-order bit half-dot shift
-		int x = (pt % VideoAddressing.BYTES_PER_ROW) * VISIBLE_BITS_PER_BYTE;
-		int y = (pt / VideoAddressing.BYTES_PER_ROW);
+		if (vImg == null)
+		{
+			return;
+		}
+		Graphics gr = getGraphics();
+		vImg.flush();
+		gr.drawImage(vImg,0,0,this);
+	}
+
+	void plotByte(int t, int d)
+	{
+		if (vImg == null)
+		{
+//			GraphicsConfiguration gc = getGraphicsConfiguration();
+			createOffscreenImage();
+		}
+
+//		int d = getPlotD();
+//		int pt = getPlotT();
+//		Color orig = grimg.getColor();
+//		final int base = t*VISIBLE_BITS_PER_BYTE;
+		plotByteGr(t,d,grimg);
+//		grimg.setColor(orig);
+	}
+
+	private void createOffscreenImage()
+	{
+		final Dimension size = getSize();
+		vImg = createImage(size.width,size.height);
+		grimg = vImg.getGraphics();
+	}
+
+	private void plotByteGr(int t, int d, Graphics g)
+	{
+		d >>= 1; // TODO high-order bit half-dot shift
+		int x = (t % VideoAddressing.BYTES_PER_ROW) * VISIBLE_BITS_PER_BYTE;
+		int y = (t / VideoAddressing.BYTES_PER_ROW);
 //		System.out.println(""+pt+": plot 7 pixels at "+x+","+y);
+		boolean prevOn = g.getColor().equals(Color.GREEN);
 		for (int i = 0; i < VISIBLE_BITS_PER_BYTE; ++i)
 		{
 //			final int p = ((d & 0x80) != 0) ? PIXELON : PIXELOFF;
 //			pixels[base+y] = p;
 //			System.err.println("setting pixel @ "+(base+y)+" to "+p);
-			if ((d & 0x80) != 0)
+			if ((d & 1) != 0)
 			{
-				g.setColor(Color.GREEN);
+				if (!prevOn)
+				{
+					g.setColor(Color.GREEN);
+					prevOn = true;
+				}
 			}
 			else
 			{
-				g.setColor(Color.BLACK);
+				if (prevOn)
+				{
+					g.setColor(Color.BLACK);
+					prevOn = false;
+				}
 			}
-			g.fillRect(x+i,y,DISPLAY_FACTOR,DISPLAY_FACTOR);
-			d = d << 1;
+			g.drawLine(x,y,x,y);
+			++x;
+			d >>= 1;
 		}
-		g.setColor(orig);
+	}
+
+	private void setColor(int d, Graphics g)
+	{
+	}
+
+	private void doFill(Graphics g, int x, int y)
+	{
+//		g.fillRect(x,y,DISPLAY_FACTOR,DISPLAY_FACTOR);
 	}
 
 	private int getTextCharLine(int d, int i)

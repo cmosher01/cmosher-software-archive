@@ -13,7 +13,7 @@ public class Memory
 
 	public void write(final int address, final int data)
 	{
-		System.out.println("w $"+Integer.toHexString(address));
+//		System.out.println("w $"+Integer.toHexString(address));
 		this.ram[address % 0x10000] = data;
 	}
 }

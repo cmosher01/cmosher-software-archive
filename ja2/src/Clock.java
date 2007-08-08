@@ -7,6 +7,9 @@ import java.util.List;
  */
 public class Clock
 {
+	volatile boolean shutdown;
+	private Thread clth;
+
 	public interface Timed
 	{
 		void tick();
@@ -20,9 +23,23 @@ public class Clock
 
 	public void run()
 	{
+		if (this.clth == null)
+		{
+			this.clth = new Thread(new Runnable()
+			{
+				public void run()
+				{
+			    	runth();
+				}
+			});
+			this.clth.start();
+		}
+	}
+
+	private void runth()
+	{
 		System.out.println("clock is starting");
-		int t = 17030*2;
-		while (t-- > 0)
+		while (!this.shutdown)
 		{
 			for (final Timed timed : this.rTimed)
 			{
@@ -30,5 +47,21 @@ public class Clock
 			}
 		}
 		System.out.println("clock is stopping");
+	}
+
+	public void shutdown()
+	{
+		this.shutdown = true;
+		if (this.clth != null)
+		{
+			try
+			{
+				this.clth.join();
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 }
