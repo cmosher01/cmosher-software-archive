@@ -145,6 +145,7 @@ public class Video extends JPanel implements Clock.Timed
 		final int a = getAddr();
 
 		int d = memory.read(a);
+		memory.write(0xC051,d);
 //		if (d != 0)
 //			System.err.println("read from video ram "+d);
 
