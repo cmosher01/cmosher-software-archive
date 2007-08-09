@@ -560,7 +560,7 @@ public class M6502
             Unoff();
             break;
 
-        case 96: // '`'
+        case 96: // accent grave
             Imp();
             RTS();
             break;
