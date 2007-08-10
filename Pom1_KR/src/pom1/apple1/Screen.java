@@ -1,12 +1,11 @@
-// Decompiled by Jad v1.5.8e. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.geocities.com/kpdus/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   Screen.java
-
 package pom1.apple1;
 
-import java.awt.*;
-import java.io.*;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
 import java.net.URL;
 
 public class Screen extends Canvas
@@ -14,25 +13,13 @@ public class Screen extends Canvas
 
     public Screen(int pixelSize)
     {
-        lastTime = System.currentTimeMillis();
-        loggingOutput = false;
-        appletMode = false;
-        charac = new int[128][8];
-        screenTbl = new int[40][24];
-        loadCharac();
-        this.pixelSize = pixelSize;
-        if(pixelSize == 1)
-            scanline = false;
-//        terminalSpeed = 60;
-        terminalSpeed = 60000;
-        setSynchronise(true);
-        reset();
+    	this(pixelSize,null,false);
     }
 
     public Screen(int pixelSize, URL appletCodeBase, boolean appletMode)
     {
         lastTime = System.currentTimeMillis();
-        loggingOutput = false;
+        loggingOutput = true;
         this.appletMode = false;
         charac = new int[128][8];
         screenTbl = new int[40][24];
@@ -41,7 +28,6 @@ public class Screen extends Canvas
         this.appletCodeBase = appletCodeBase;
         loadCharac();
         this.pixelSize = pixelSize;
-//      terminalSpeed = 60;
         terminalSpeed = 60000;
         reset();
     }
@@ -76,11 +62,27 @@ public class Screen extends Canvas
     public void outputDsp(int dsp)
     {
         if(loggingOutput)
-            System.out.print((char)dsp);
+        {
+            switch (dsp)
+    		{
+    			case 0x5F: // Backspace
+    				System.out.print("<BS>");
+    			break;
+    			case 0x0A: // '\n'
+    			case 0x0D: // '\r'
+    				System.out.println();
+    			break;
+    			default:
+    				if (0x20 <= dsp && dsp < 0x5F) // legal characters
+    				{
+        				System.out.print((char)dsp);
+    				}
+    			break;
+    		}
+        }
         switch (dsp)
 		{
-			case 0x5F:
-				// Backspace
+			case 0x5F: // Backspace
 				if (indexX == 0)
 				{
 					indexY--;
@@ -92,11 +94,8 @@ public class Screen extends Canvas
 				}
 				screenTbl[indexX][indexY] = 0x00;
 			break;
-			case 10: // '\n'
-				indexX = 0;
-				indexY++;
-			break;
-			case 13: // '\r'
+			case 0x0A: // '\n'
+			case 0x0D: // '\r'
 				indexX = 0;
 				indexY++;
 			break;

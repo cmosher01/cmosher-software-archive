@@ -2,10 +2,18 @@ package pom1.apple1;
 
 public class Pia6820
 {
+	private final Screen screen;
+
+	private int dspCr;
+	private int dsp;
+	private int kbdCr;
+	private int kbd;
+	private boolean kbdInterrups;
+	private boolean dspOutput;
+
 	public Pia6820(Screen screen)
 	{
 		this.screen = screen;
-		echo = true;//System.getProperty("ECHO","N").equalsIgnoreCase("Y");
 		reset();
 	}
 
@@ -43,13 +51,6 @@ public class Pia6820
 	public void writeDsp(int dsp)
 	{
 		dsp &= 0x7F;
-		if (echo)
-		{
-			if (dsp == 0x0D)
-				System.out.println();
-			else
-				System.out.print((char)dsp);
-		}
 		screen.outputDsp(dsp);
 		this.dsp = dsp;
 	}
@@ -107,13 +108,4 @@ public class Pia6820
 		dspOutput = false;
 		dspCr = 0;
 	}
-
-	private int dspCr;
-	private int dsp;
-	private int kbdCr;
-	private int kbd;
-	private boolean kbdInterrups;
-	private boolean dspOutput;
-	private Screen screen;
-	private boolean echo;
 }
