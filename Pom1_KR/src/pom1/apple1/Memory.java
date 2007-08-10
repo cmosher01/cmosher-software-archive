@@ -3,6 +3,7 @@ package pom1.apple1;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 
@@ -24,12 +25,12 @@ public class Memory
 	private boolean ram8k;
 	private boolean writeInRom;
 
-	public Memory(Pia6820 pia)
+	public Memory(Pia6820 pia) throws IOException
 	{
 		this(pia,null,false);
 	}
 
-	public Memory(Pia6820 pia, URL appletCodeBase, boolean appletMode)
+	public Memory(Pia6820 pia, URL appletCodeBase, boolean appletMode) throws IOException
 	{
 		this.mem = new int[MEMSIZE];
 		this.appletMode = appletMode;
@@ -67,25 +68,25 @@ public class Memory
 	{
 		if (address == DSPCR)
 		{
-			mem[address] = value;
+//			mem[address] = value;
 			pia.writeDspCr(value);
 			return;
 		}
 		if (address == DSP)
 		{
-			mem[address] = value;
+//			mem[address] = value;
 			pia.writeDsp(value);
 			return;
 		}
 		if (address == KBDCR)
 		{
-			mem[address] = value;
+//			mem[address] = value;
 			pia.writeKbdCr(value);
 			return;
 		}
 		if (address == KBD)
 		{
-			mem[address] = value;
+//			mem[address] = value;
 			pia.writeKbd(value);
 			return;
 		}
@@ -101,7 +102,7 @@ public class Memory
 		mem[address % MEMSIZE] = value;
 	}
 
-	public void reset()
+	public void reset() throws IOException
 	{
 		Arrays.fill(mem,0);
 		loadRom();
@@ -115,47 +116,35 @@ public class Memory
 		return fbrut;
 	}
 
-	public void loadRom()
+	public void loadRom() throws IOException
 	{
 		if (!appletMode)
 		{
 			String filename;
 			int startingAddress;
-			filename = System.getProperty("user.dir") + "/bios/" + System.getProperty("ROMFILE","apple1.rom");
+			filename = System.getProperty("user.dir") + "/bios/" + System.getProperty("ROMFILE","6502.rom.bin");
 			FileInputStream fis = null;
-			try
+			File romFile = new File(filename);
+			fis = new FileInputStream(romFile);
+			int romsize = (int)romFile.length();
+			startingAddress = MEMSIZE - romsize;
+			if (startingAddress < 0)
 			{
-				File romFile = new File(filename);
-				fis = new FileInputStream(romFile);
-				int romsize = (int)romFile.length();
-				startingAddress = MEMSIZE - romsize;
-				for (int i = startingAddress; i < MEMSIZE; i++)
-					mem[i] = fis.read();
-				fis.close();
+				throw new IOException("file is larger than available address space of 65536 bytes");
 			}
-			catch (Exception e)
-			{
-				System.out.println(e);
-			}
+			for (int i = startingAddress; i < MEMSIZE; i++)
+				mem[i] = fis.read();
+			fis.close();
 		}
 		else
 		{
 			DataInputStream fis = null;
-			try
-			{
-				URL u = new URL(appletCodeBase,"apple1.rom");
-				int startingAddress = ROMBASE;
-				fis = new DataInputStream(u.openStream());
-				for (int i = startingAddress; i < MEMSIZE; i++)
-					mem[i] = fis.read();
-				fis.close();
-			}
-			catch (Exception e)
-			{
-				System.out.println(e);
-				System.out.println("URL Error Access in Memory.class");
-				return;
-			}
+			URL u = new URL(appletCodeBase,"apple1.rom");
+			int startingAddress = ROMBASE;
+			fis = new DataInputStream(u.openStream());
+			for (int i = startingAddress; i < MEMSIZE; i++)
+				mem[i] = fis.read();
+			fis.close();
 		}
 	}
 }

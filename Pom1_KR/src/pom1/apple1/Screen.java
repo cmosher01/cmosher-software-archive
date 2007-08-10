@@ -6,17 +6,18 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 
 public class Screen extends Canvas
 {
 
-    public Screen(int pixelSize)
+    public Screen(int pixelSize) throws IOException
     {
     	this(pixelSize,null,false);
     }
 
-    public Screen(int pixelSize, URL appletCodeBase, boolean appletMode)
+    public Screen(int pixelSize, URL appletCodeBase, boolean appletMode) throws IOException
     {
         lastTime = System.currentTimeMillis();
         loggingOutput = true;
@@ -63,22 +64,18 @@ public class Screen extends Canvas
     {
         if(loggingOutput)
         {
-            switch (dsp)
+            if (dsp == 0x0A || dsp == 0x0D)
     		{
-    			case 0x5F: // Backspace
-    				System.out.print("<BS>");
-    			break;
-    			case 0x0A: // '\n'
-    			case 0x0D: // '\r'
-    				System.out.println();
-    			break;
-    			default:
-    				if (0x20 <= dsp && dsp < 0x5F) // legal characters
-    				{
-        				System.out.print((char)dsp);
-    				}
-    			break;
+				System.out.println();
     		}
+            else if (0x20 <= dsp && dsp < 0x5F) // legal characters
+			{
+				System.out.print((char)dsp);
+			}
+			else
+			{
+				System.out.println("<x"+Integer.toHexString(dsp)+">");
+			}
         }
         switch (dsp)
 		{
@@ -179,51 +176,36 @@ public class Screen extends Canvas
 
     }
 
-    private void loadCharac()
+    private void loadCharac() throws IOException
     {
         if(!appletMode)
         {
             String filename = System.getProperty("user.dir") + "/bios/apple1.vid";
             FileInputStream fis = null;
-            try
+            fis = new FileInputStream(filename);
+            for(int i = 0; i < 128; i++)
             {
-                fis = new FileInputStream(filename);
-                for(int i = 0; i < 128; i++)
-                {
-                    for(int j = 0; j < 8; j++)
-                        charac[i][j] = fis.read();
+                for(int j = 0; j < 8; j++)
+                    charac[i][j] = fis.read();
 
-                }
+            }
 
-                fis.close();
-                charac[95][6] = 63;
-            }
-            catch(Exception e)
-            {
-                System.out.println(e);
-            }
-        } else
+            fis.close();
+            charac[95][6] = 63;
+        }
+        else
         {
-            try
+            URL u = new URL(appletCodeBase, "apple1.vid");
+            DataInputStream fis = null;
+            fis = new DataInputStream(u.openStream());
+            for(int i = 0; i < 128; i++)
             {
-                URL u = new URL(appletCodeBase, "apple1.vid");
-                DataInputStream fis = null;
-                fis = new DataInputStream(u.openStream());
-                for(int i = 0; i < 128; i++)
-                {
-                    for(int j = 0; j < 8; j++)
-                        charac[i][j] = fis.read();
+                for(int j = 0; j < 8; j++)
+                    charac[i][j] = fis.read();
 
-                }
+            }
 
-                fis.close();
-            }
-            catch(Exception e)
-            {
-                System.out.println(e);
-                System.out.println("URL Error Access in Screen.class");
-                return;
-            }
+            fis.close();
         }
     }
 

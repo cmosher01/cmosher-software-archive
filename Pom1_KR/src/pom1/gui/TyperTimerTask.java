@@ -1,14 +1,14 @@
 package pom1.gui;
 
 import java.util.TimerTask;
-import pom1.apple1.Keyboard;
 
 class TyperTimerTask extends TimerTask
 {
-	private GUI gui;
-	String data;
-	int i;
-	private long delay;
+	private final GUI gui;
+	private final String data;
+	private final long delay;
+
+	private int i;
 
 	TyperTimerTask(String data, GUI gui, long delay)
 	{
@@ -20,9 +20,10 @@ class TyperTimerTask extends TimerTask
 	public void sendNextCharacter()
 	{
 		char key = data.charAt(i++);
-		gui.handleKeyEntry(Keyboard.translateKey(key));
+		gui.keyTyped(key);
 		if (key == '\n')
 		{
+			// TODO sleep after CR during paste doesn't work
 			try
 			{
 				// sleep 10 times as long on an end of line 

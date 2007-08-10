@@ -1,17 +1,39 @@
-// Decompiled by Jad v1.5.8e. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.geocities.com/kpdus/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   Gui.java
-
 package pom1.gui;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import pom1.apple1.*;
-
-// Referenced classes of package pom1.gui:
-//            ClipboardHandler
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Checkbox;
+import java.awt.CheckboxGroup;
+import java.awt.Dialog;
+import java.awt.FileDialog;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.Insets;
+import java.awt.Label;
+import java.awt.Menu;
+import java.awt.MenuBar;
+import java.awt.MenuItem;
+import java.awt.Point;
+import java.awt.TextArea;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import pom1.apple1.Keyboard;
+import pom1.apple1.Memory;
+import pom1.apple1.Pia6820;
+import pom1.apple1.Screen;
+import pom1.apple1.cpu.M6502;
+import pom1.apple1.cpu.M65C02;
 
 public class GUI
     implements WindowListener, ActionListener, KeyListener
@@ -19,7 +41,7 @@ public class GUI
 
     private ClipboardHandler clipboardHandler ;
 
-    public GUI()
+    public GUI() throws IOException
     {
         initVariable();
         initApple1();
@@ -51,18 +73,17 @@ public class GUI
         if(guiMenuEmulatorHardReset.equals(evt.getSource()))
         {
             micro.stop();
-            micro.reset();
-            screen.reset();
             pia.reset();
-            mem.reset();
             try
-            {
-                Thread.sleep(200L);
-            }
-            catch(Exception e)
-            {
-                System.out.println(e);
-            }
+			{
+				mem.reset();
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+            screen.reset();
+            micro.reset();
             micro.start();
             return;
         }
@@ -245,14 +266,20 @@ public class GUI
         screen.requestFocus();
     }
 
-    private void initApple1()
+    private void initApple1() throws IOException
     {
         screen = new Screen(pixelSize);
         pia = new Pia6820(screen);
-        new Keyboard();
         mem = new Memory(pia);
-        boolean use65C02 = System.getProperty("65C02", "N").equalsIgnoreCase("Y");
-        micro = new M65C02(mem, 1000, 50, use65C02);
+        keyboard = new Keyboard(pia);
+        if (System.getProperty("65C02", "N").equalsIgnoreCase("Y"))
+        {
+	        micro = new M65C02(mem, 1000, 50);
+        }
+        else
+        {
+	        micro = new M6502(mem, 1000, 50);
+        }
         micro.start();
         synchronise(true);
     }
@@ -542,7 +569,7 @@ public class GUI
         guiDialog.add(wRomCbox);
         guiDialog.add(new Label("    "));
         guiDialog.add(new Label("IRQ/BRK vector :"));
-        miscTxt.setText(toHex(mem.read(65535)) + toHex(mem.read(65534)));
+        miscTxt.setText(toHex(mem.read(0xFFFF)) + toHex(mem.read(0xFFFE)));
         guiDialog.add(miscTxt);
         guiDialog.add(new Label("    "));
         guiDialog.add(btMemory);
@@ -566,8 +593,8 @@ public class GUI
         writeInRom = wRomCbox.getState();
         mem.setWriteInRom(writeInRom);
         int brkVector = hexStringToInt(miscTxt.getText());
-        mem.write(65534, brkVector & 0xff);
-        mem.write(65535, brkVector / 256 & 0xff);
+        mem.write(0xFFFE, brkVector & 0xFF);
+        mem.write(0xFFFF, brkVector >>> 8 & 0xFF);
         guiDialog.dispose();
     }
 
@@ -618,12 +645,12 @@ public class GUI
         return s;
     }
 
-    Pia6820 getPIA() { return pia; }
-    Screen getScreen() { return screen; }
-    M65C02 getMicro() { return micro; }
-    Keyboard getKeyboard() { return keyboard; }
-    Memory getMemory() { return mem; }
-
+//    Pia6820 getPIA() { return pia; }
+//    Screen getScreen() { return screen; }
+//    M6502 getMicro() { return micro; }
+//    Keyboard getKeyboard() { return keyboard; }
+//    Memory getMemory() { return mem; }
+//
     private Frame guiFrame;
     private MenuBar guiMenuBar;
     private Menu guiMenuFile;
@@ -661,7 +688,7 @@ public class GUI
     private boolean writeInRom;
     private boolean ram8k;
     private Memory mem;
-    private M65C02 micro;
+    private M6502 micro;
     private Pia6820 pia;
     private Screen screen;
     private Keyboard keyboard;
@@ -669,19 +696,12 @@ public class GUI
 
     public void keyTyped(KeyEvent e)
     {
-        if(pia.getKbdInterrups())
-        {
-          handleKeyEntry(Keyboard.translateKey(e.getKeyChar()));
-        }
+    	keyboard.keyTyped(e.getKeyChar());
     }
-    
-    public void handleKeyEntry(int key)
+
+    public void keyTyped(char key)
     {
-//      if(key != -1)
-//      {
-          pia.writeKbd(key);
-          pia.writeKbdCr(167);
-//      }
+    	keyboard.keyTyped(key);
     }
 
     public void keyPressed(KeyEvent keyevent)
@@ -691,5 +711,4 @@ public class GUI
     public void keyReleased(KeyEvent keyevent)
     {
     }
-
 }

@@ -3,24 +3,23 @@
 // Decompiler options: packimports(3) 
 // Source File Name:   M6502.java
 
-package pom1.apple1;
+package pom1.apple1.cpu;
+
+import pom1.apple1.Memory;
 
 // Referenced classes of package pom1.apple1:
 //            Memory
 
 public class M65C02 extends M6502
 {
-    private boolean use65C02Extensions;
-
-	public M65C02(Memory mem, int freq, int synchroMillis, boolean use65C02)
+	public M65C02(Memory mem, int freq, int synchroMillis)
     {
     	super(mem, freq, synchroMillis);
-    	use65C02Extensions = use65C02;
     }
     
     public boolean executeOpcode()
     {
-    	if (super.executeOpcode() == false && use65C02Extensions)
+    	if (super.executeOpcode() == false)
     	{
         	valid = true;
 	        int opcode = mem.read(--programCounter);	// step back and refetch
@@ -306,36 +305,26 @@ public class M65C02 extends M6502
     // these all do nothing now
     protected void Unoff()
     {
-    	if (!use65C02Extensions)
-    		super.Unoff();
     	valid = false;
     }
 
     protected void Unoff1()
     {
-    	if (!use65C02Extensions)
-    		super.Unoff1();
     	valid = false;
     }
 
     protected void Unoff2()
     {
-    	if (!use65C02Extensions)
-    		super.Unoff2();
     	valid = false;
     }
 
     protected void Unoff3()
     {
-    	if (!use65C02Extensions)
-    		super.Unoff3();
     	valid = false;
     }
 
     protected void Hang()
     {
-    	if (!use65C02Extensions)
-    		super.Hang();
     	valid = false;
     }
 

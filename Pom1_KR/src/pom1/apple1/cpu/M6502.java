@@ -3,14 +3,15 @@
 // Decompiler options: packimports(3)
 // Source File Name:   M6502.java
 
-package pom1.apple1;
+package pom1.apple1.cpu;
+
+import pom1.apple1.Memory;
 
 
 // Referenced classes of package pom1.apple1:
 //            Memory
 
-public class M6502
-    implements Runnable
+public class M6502 implements Runnable
 {
 	protected boolean valid = false;
 

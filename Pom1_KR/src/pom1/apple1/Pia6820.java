@@ -6,10 +6,11 @@ public class Pia6820
 
 	private int dspCr;
 	private int dsp;
+	private boolean dspOutput;
+
 	private int kbdCr;
 	private int kbd;
 	private boolean kbdInterrups;
-	private boolean dspOutput;
 
 	public Pia6820(Screen screen)
 	{
@@ -62,8 +63,8 @@ public class Pia6820
 			if ((kbdCr & 0x80) != 0)
 			{
 				kbdInterrups = true;
-				this.kbdCr = 0;
 			}
+			this.kbdCr = 0;
 		}
 		else
 		{
