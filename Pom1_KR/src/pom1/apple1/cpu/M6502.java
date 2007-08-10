@@ -25,8 +25,8 @@ public class M6502 implements Runnable
         D = false;
         IRQ = false;
         NMI = false;
-        stackPointer = 255;
-        programCounter = memReadAbsolute(65532);
+        stackPointer = 0xFF;
+        programCounter = memReadAbsolute(0xFFFc);
         setSpeed(freq, synchroMillis);
         setSynchronise(true);
     }
@@ -40,8 +40,8 @@ public class M6502 implements Runnable
     public void reset()
     {
         I = true;
-        stackPointer = 255;
-        programCounter = memReadAbsolute(65532);
+        stackPointer = 0xFF;
+        programCounter = memReadAbsolute(0xFFFc);
     }
 
     public void IRQ(boolean state)
@@ -56,17 +56,17 @@ public class M6502 implements Runnable
 
     public void start()
     {
-        if(runner == null)
-        {
-            runner = new Thread(this);
-            runner.start();
-        }
+    	if (runner != null)
+    	{
+    		throw new IllegalStateException("CPU already running");
+    	}
+        runner = new Thread(this);
+        runner.start();
     }
 
     public void stop()
     {
-        if(runner != null)
-            runner = null;
+        runner = null;
     }
 
     public void setStepping()
@@ -86,23 +86,30 @@ public class M6502 implements Runnable
 
     public void run()
     {
-        for(Thread thisThread = Thread.currentThread(); runner == thisThread;)
+    	Thread thisThread = Thread.currentThread();
+        while (runner == thisThread)
         {
             synchronize();
-            for(cycles = 0; cycles < cyclesBeforeSynchro;)
+            for (cycles = 0; cycles < cyclesBeforeSynchro;)
             {
-                if(stepping)
-                    while(!takeStep) ;
-                if(!I && IRQ)
+                if (stepping)
+                {
+                    while (!takeStep)
+                    {
+                    	// do nothing
+                    }
+                }
+                if (!I && IRQ)
+                {
                     handleIRQ();
+                }
                 if(NMI)
+                {
                     handleNMI();
+                }
                 executeOpcode();
-                Thread.yield(); // give the GUI some CPU time
             }
-
         }
-
     }
 
     protected void updateDebugDisplay()
@@ -113,14 +120,9 @@ public class M6502 implements Runnable
     {
     	valid = true;
 
-        int opcode = mem.read(programCounter++);        
-        
-//        if (programCounter < 0xF001 && programCounter > 0xE007)
-//        {
-//                System.out.printf("%9d\t%4x: %2x\t%2x\n", cycles, programCounter - 1, opcode, getStatusRegisterByte());
-//        }
+        final int opcode = mem.read(programCounter++);        
 
-        switch(opcode)
+        switch (opcode)
         {
         case 0: // '\0'
             Imm();
@@ -1793,7 +1795,7 @@ public class M6502 implements Runnable
     protected void PHA()
     {
         mem.write(256 + stackPointer, accumulator & 0xff);
-        stackPointer = stackPointer - 1 & 0xff;
+        stackPointer = (stackPointer - 1) & 0xff;
         cycles++;
     }
 
@@ -1801,14 +1803,14 @@ public class M6502 implements Runnable
     {
         statusRegister = getStatusRegisterByte();
         mem.write(256 + stackPointer, statusRegister & 0xff);
-        stackPointer = stackPointer - 1 & 0xff;
+        stackPointer = (stackPointer - 1) & 0xff;
         cycles++;
     }
 
     protected void PLA()
     {
         mem.read(stackPointer + 256);
-        stackPointer = stackPointer + 1 & 0xff;
+        stackPointer = (stackPointer + 1) & 0xff;
         accumulator = mem.read(stackPointer + 256) & 0xff;
         setStatusRegisterNZ((byte)accumulator);
         cycles += 2;
@@ -1817,7 +1819,7 @@ public class M6502 implements Runnable
     protected void PLP()
     {
         mem.read(stackPointer + 256);
-        stackPointer = stackPointer + 1 & 0xff;
+        stackPointer = (stackPointer + 1) & 0xff;
         statusRegister = mem.read(stackPointer + 256) & 0xff;
         setStatusRegisterByte(statusRegister);
         cycles += 2;
@@ -1830,7 +1832,7 @@ public class M6502 implements Runnable
         PHP();
         //I = true;
         B = true;
-        programCounter = memReadAbsolute(65534);
+        programCounter = memReadAbsolute(0xFFFE);
         cycles += 3;
     }
 
@@ -2026,9 +2028,9 @@ public class M6502 implements Runnable
     {
         pushProgramCounter();
         mem.write(256 + stackPointer, (byte)(getStatusRegisterByte() & 0xffffffef));
-        stackPointer--;
+        stackPointer = (stackPointer - 1) & 0xff;
         I = true;
-        programCounter = memReadAbsolute(65534);
+        programCounter = memReadAbsolute(0xFFFE);
         cycles += 8;
     }
 
@@ -2036,10 +2038,10 @@ public class M6502 implements Runnable
     {
         pushProgramCounter();
         mem.write(256 + stackPointer, (byte)(getStatusRegisterByte() & 0xffffffef));
-        stackPointer--;
+        stackPointer = (stackPointer - 1) & 0xff;
         I = true;
         NMI = false;
-        programCounter = memReadAbsolute(65530);
+        programCounter = memReadAbsolute(0xFFFA);
         cycles += 8;
     }
 
@@ -2051,17 +2053,17 @@ public class M6502 implements Runnable
     protected void pushProgramCounter()
     {
         mem.write(stackPointer + 256, (byte)(programCounter >> 8));
-        stackPointer = stackPointer - 1 & 0xff;
+        stackPointer = (stackPointer - 1) & 0xff;
         mem.write(stackPointer + 256, (byte)programCounter);
-        stackPointer = stackPointer - 1 & 0xff;
+        stackPointer = (stackPointer - 1) & 0xff;
         cycles += 2;
     }
 
     protected void popProgramCounter()
     {
-        stackPointer = stackPointer + 1 & 0xff;
+        stackPointer = (stackPointer + 1) & 0xff;
         programCounter = mem.read(stackPointer + 256) & 0xff;
-        stackPointer = stackPointer + 1 & 0xff;
+        stackPointer = (stackPointer + 1) & 0xff;
         programCounter += (mem.read(stackPointer + 256) & 0xff) << 8;
         cycles += 2;
     }
