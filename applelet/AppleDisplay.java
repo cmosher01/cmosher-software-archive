@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.Graphics;
@@ -394,7 +393,7 @@ public class AppleDisplay extends Panel implements Runnable
 		}
 	}
 
-	final void drawTextCharOLD(int x, int y, int b, boolean invert)
+	 private final void drawTextCharOLD(int x, int y, int b, boolean invert)
 	{
 		int base = (y * 8) * XSIZE + x * 7;
 		int on, off;
@@ -422,10 +421,9 @@ public class AppleDisplay extends Panel implements Runnable
 		}
 	}
 
-	final void drawHiresLine(int y)
+	private final void drawHiresLine(int y)
 	{
 		int xx = 0;
-		int yy = y;
 		int base = hires_lut[y] + (((apple.grswitch & GR_PAGE1) != 0) ? 0x4000 : 0x2000);
 		if (!dirty[base >> 7])
 			return;
