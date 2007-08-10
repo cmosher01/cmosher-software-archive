@@ -269,8 +269,10 @@ public class GUI
 
     private void initVariable()
     {
-        pixelSize = 2;
-        terminalSpeed = 60;
+//        pixelSize = 2;
+//        terminalSpeed = 60;
+        pixelSize = 1;
+        terminalSpeed = 60000;
         writeInRom = true;
         ram8k = false;
     }
@@ -669,17 +671,17 @@ public class GUI
     {
         if(pia.getKbdInterrups())
         {
-          handleKeyEntry(Keyboard.kbdTranslator(e));
+          handleKeyEntry(Keyboard.translateKey(e.getKeyChar()));
         }
     }
     
     public void handleKeyEntry(int key)
     {
-      if(key != -1)
-      {
+//      if(key != -1)
+//      {
           pia.writeKbd(key);
           pia.writeKbdCr(167);
-      }
+//      }
     }
 
     public void keyPressed(KeyEvent keyevent)

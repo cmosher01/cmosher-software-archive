@@ -23,7 +23,8 @@ public class Screen extends Canvas
         this.pixelSize = pixelSize;
         if(pixelSize == 1)
             scanline = false;
-        terminalSpeed = 60;
+//        terminalSpeed = 60;
+        terminalSpeed = 60000;
         setSynchronise(true);
         reset();
     }
@@ -40,7 +41,8 @@ public class Screen extends Canvas
         this.appletCodeBase = appletCodeBase;
         loadCharac();
         this.pixelSize = pixelSize;
-        terminalSpeed = 60;
+//      terminalSpeed = 60;
+        terminalSpeed = 60000;
         reset();
     }
 
@@ -75,26 +77,37 @@ public class Screen extends Canvas
     {
         if(loggingOutput)
             System.out.print((char)dsp);
-        switch(dsp)
-        {
-        case 10: // '\n'
-            indexX = 0;
-            indexY++;
-            break;
-
-        case 13: // '\r'
-            indexX = 0;
-            indexY++;
-            break;
-
-        default:
-          if (dsp >= 0x20 && dsp <= 0x5F) // legal characters
-          {
-            screenTbl[indexX][indexY] = dsp;
-            indexX++;
-          }
-          break;
-        }
+        switch (dsp)
+		{
+			case 0x5F:
+				// Backspace
+				if (indexX == 0)
+				{
+					indexY--;
+					indexX = 39;
+				}
+				else
+				{
+					indexX--;
+				}
+				screenTbl[indexX][indexY] = 0x00;
+			break;
+			case 10: // '\n'
+				indexX = 0;
+				indexY++;
+			break;
+			case 13: // '\r'
+				indexX = 0;
+				indexY++;
+			break;
+			default:
+				if (0x20 <= dsp && dsp < 0x5F) // legal characters
+				{
+					screenTbl[indexX][indexY] = dsp;
+					indexX++;
+				}
+			break;
+		}
         if(indexX == 40)
         {
             indexX = 0;
@@ -140,7 +153,7 @@ public class Screen extends Canvas
 
     private void synchronizeOutput()
     {
-        int sleepMillis = (int)((long)(1000 / terminalSpeed) - (System.currentTimeMillis() - lastTime));
+        int sleepMillis = (int)((1000 / terminalSpeed) - (System.currentTimeMillis() - lastTime));
         if(sleepMillis > 0)
             try
             {
