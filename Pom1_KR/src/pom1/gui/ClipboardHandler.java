@@ -61,6 +61,10 @@ public class ClipboardHandler
         return data;
     }
 
-    static Timer theTimer = new Timer();
+    public void close()
+    {
+    	theTimer.cancel();
+    }
 
+    static Timer theTimer = new Timer();
 }

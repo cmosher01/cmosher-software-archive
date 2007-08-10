@@ -1,21 +1,14 @@
 package pom1.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Checkbox;
-import java.awt.CheckboxGroup;
-import java.awt.Dialog;
+import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.awt.FileDialog;
 import java.awt.FlowLayout;
-import java.awt.Frame;
 import java.awt.Insets;
 import java.awt.Label;
-import java.awt.Menu;
-import java.awt.MenuBar;
-import java.awt.MenuItem;
 import java.awt.Point;
 import java.awt.TextArea;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -28,6 +21,18 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import javax.swing.AbstractButton;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 import pom1.apple1.Keyboard;
 import pom1.apple1.Memory;
 import pom1.apple1.Pia6820;
@@ -61,18 +66,21 @@ public class GUI
             return;
         }
         if(guiMenuFileExit.equals(evt.getSource()))
-            System.exit(0);
+        {
+        	close();
+        }
         if(guiMenuFilePaste.equals(evt.getSource()))
             clipboardHandler .sendDataToApple1(pia);
         if(guiMenuEmulatorReset.equals(evt.getSource()))
         {
             pia.reset();
-            micro.reset();
+            cpu.reset();
             return;
         }
+        // TODO two hard resets in a row do crazy things
         if(guiMenuEmulatorHardReset.equals(evt.getSource()))
         {
-            micro.stop();
+            cpu.stop();
             pia.reset();
             try
 			{
@@ -83,8 +91,8 @@ public class GUI
 				e.printStackTrace();
 			}
             screen.reset();
-            micro.reset();
-            micro.start();
+            cpu.reset();
+            cpu.start();
             return;
         }
         if(guiMenuConfigScreen.equals(evt.getSource()))
@@ -137,12 +145,20 @@ public class GUI
         }
     }
 
-    public void windowClosing(WindowEvent e)
+    private void close()
+	{
+    	cpu.stop();
+    	clipboardHandler.close();
+        guiDialog.dispose();
+    	guiFrame.dispose();
+	}
+
+	public void windowClosing(WindowEvent e)
     {
         if(guiFrame.equals(e.getSource()))
-            System.exit(0);
-        if(guiDialog.equals(e.getSource()))
-            guiDialog.dispose();
+        {
+			close();
+        }
     }
 
     public void windowActivated(WindowEvent e)
@@ -183,78 +199,77 @@ public class GUI
 
     private void initGui()
     {
-      clipboardHandler = new ClipboardHandler(this);
+    	clipboardHandler = new ClipboardHandler(this);
       
-        guiFrame = new Frame("Pom1 : Apple1 Java Emulator");
+        guiFrame = new JFrame("Pom1: The Apple I Emulator");
         guiFrame.setLayout(new BorderLayout());
-        guiMenuBar = new MenuBar();
-        guiMenuFile = new Menu("File");
-        guiMenuFileLoad = new MenuItem("Load Memory");
+        this.guiFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        this.guiFrame.addWindowListener(this);
+        guiMenuBar = new JMenuBar();
+        this.guiFrame.setJMenuBar(this.guiMenuBar);
+        guiMenuFile = new JMenu("File");
+        guiMenuFileLoad = new JMenuItem("Load Memory");
         guiMenuFileLoad.addActionListener(this);
-        guiMenuFileSave = new MenuItem("Save Memory");
+        guiMenuFileSave = new JMenuItem("Save Memory");
         guiMenuFileSave.addActionListener(this);
-        guiMenuFileSeparator = new MenuItem("-");
-        guiMenuFileSeparator.addActionListener(this);
-        guiMenuFilePaste = new MenuItem("Paste");
+        guiMenuFilePaste = new JMenuItem("Paste");
         guiMenuFilePaste.addActionListener(this);
-        guiMenuFileExit = new MenuItem("Exit");
+        guiMenuFileExit = new JMenuItem("Exit");
         guiMenuFileExit.addActionListener(this);
         guiMenuFile.add(guiMenuFileLoad);
         guiMenuFile.add(guiMenuFileSave);
-        guiMenuFile.add(guiMenuFileSeparator);
+        guiMenuFile.addSeparator();
         guiMenuFile.add(guiMenuFilePaste);
-        guiMenuFile.add(guiMenuFileSeparator);
+        guiMenuFile.addSeparator();
         guiMenuFile.add(guiMenuFileExit);
         guiMenuBar.add(guiMenuFile);
-        guiMenuEmulator = new Menu("Emulator");
-        guiMenuEmulatorReset = new MenuItem("Reset");
+        guiMenuEmulator = new JMenu("Emulator");
+        guiMenuEmulatorReset = new JMenuItem("Reset");
         guiMenuEmulatorReset.addActionListener(this);
-        guiMenuEmulatorHardReset = new MenuItem("Hard Reset");
+        guiMenuEmulatorHardReset = new JMenuItem("Hard Reset");
         guiMenuEmulatorHardReset.addActionListener(this);
         guiMenuEmulator.add(guiMenuEmulatorReset);
         guiMenuEmulator.add(guiMenuEmulatorHardReset);
         guiMenuBar.add(guiMenuEmulator);
-        guiMenuConfig = new Menu("Config");
-        guiMenuConfigScreen = new MenuItem("Screen");
+        guiMenuConfig = new JMenu("Config");
+        guiMenuConfigScreen = new JMenuItem("Screen");
         guiMenuConfigScreen.addActionListener(this);
         guiMenuConfig.add(guiMenuConfigScreen);
-        guiMenuConfigMemory = new MenuItem("Memory");
+        guiMenuConfigMemory = new JMenuItem("Memory");
         guiMenuConfigMemory.addActionListener(this);
         guiMenuConfig.add(guiMenuConfigMemory);
         guiMenuBar.add(guiMenuConfig);
-        guiMenuDebug = new Menu("Debug");
-        guiMenuDebugShow = new MenuItem("Show");
+        guiMenuDebug = new JMenu("Debug");
+        guiMenuDebugShow = new JMenuItem("Show");
         guiMenuDebugShow.addActionListener(this);
-        guiMenuDebugDispose = new MenuItem("Dispose");
+        guiMenuDebugDispose = new JMenuItem("Dispose");
         guiMenuDebugDispose.addActionListener(this);
         guiMenuDebug.add(guiMenuDebugShow);
         guiMenuDebug.add(guiMenuDebugDispose);
         guiMenuBar.add(guiMenuDebug);
-        guiMenuHelp = new Menu("Help");
-        guiMenuHelpAbout = new MenuItem("About");
+        guiMenuHelp = new JMenu("Help");
+        guiMenuHelpAbout = new JMenuItem("About");
         guiMenuHelpAbout.addActionListener(this);
         guiMenuHelp.add(guiMenuHelpAbout);
         guiMenuBar.add(guiMenuHelp);
-        guiDialog = new Dialog(guiFrame, true);
+        guiDialog = new JDialog(guiFrame, true);
         guiDialog.addWindowListener(this);
-        startHexTxt = new TextField("0000", 4);
-        endHexTxt = new TextField("FFFF", 4);
-        rawCbox = new Checkbox("Raw Data");
-        btSave = new Button("Save");
+        guiDialog.setModal(true);
+        startHexTxt = new JTextField("0000", 4);
+        endHexTxt = new JTextField("FFFF", 4);
+        rawCbox = new JCheckBox("Raw Data");
+        btSave = new JButton("Save");
         btSave.addActionListener(this);
-        btLoad = new Button("Load");
+        btLoad = new JButton("Load");
         btLoad.addActionListener(this);
-        cbg = new CheckboxGroup();
-        btScreen = new Button("OK");
+        btScreen = new JButton("OK");
         btScreen.addActionListener(this);
-        miscTxt = new TextField("", 2);
-        wRomCbox = new Checkbox("Write in ROM enabled");
-        btMemory = new Button("OK");
+        miscTxt = new JTextField("", 2);
+        wRomCbox = new JCheckBox("Write in ROM enabled");
+        btMemory = new JButton("OK");
         btMemory.addActionListener(this);
-        bt6502 = new Button("OK");
+        bt6502 = new JButton("OK");
         bt6502.addActionListener(this);
-        guiFrame.addWindowListener(this);
-        guiFrame.setMenuBar(guiMenuBar);
         guiFrame.add(screen);
         guiFrame.setVisible(true);
         Insets i = guiFrame.getInsets();
@@ -274,13 +289,13 @@ public class GUI
         keyboard = new Keyboard(pia);
         if (System.getProperty("65C02", "N").equalsIgnoreCase("Y"))
         {
-	        micro = new M65C02(mem, 1000, 50);
+	        cpu = new M65C02(mem, 1000, 50);
         }
         else
         {
-	        micro = new M6502(mem, 1000, 50);
+	        cpu = new M6502(mem, 1000, 50);
         }
-        micro.start();
+        cpu.start();
         synchronise(true);
     }
 
@@ -290,7 +305,7 @@ public class GUI
       {
         synchronised = sync;
         screen.setSynchronise(sync);
-        micro.setSynchronise(sync);
+        cpu.setSynchronise(sync);
       }
     }
 
@@ -314,15 +329,14 @@ public class GUI
 
     private void fileLoad()
     {
-        guiDialog.removeAll();
         guiDialog.setTitle("Load memory");
         guiDialog.setLayout(new FlowLayout());
-        guiDialog.add(new Label("Starting Address (Hex): "));
-        guiDialog.add(startHexTxt);
-        guiDialog.add(new Label("(Used only if Raw data is checked)"));
-        guiDialog.add(rawCbox);
-        guiDialog.add(btLoad);
-        Button cancel = new Button("Cancel");
+        guiDialog.getContentPane().add(new Label("Starting Address (Hex): "));
+        guiDialog.getContentPane().add(startHexTxt);
+        guiDialog.getContentPane().add(new Label("(Used only if Raw data is checked)"));
+        guiDialog.getContentPane().add(rawCbox);
+        guiDialog.getContentPane().add(btLoad);
+        JButton cancel = new JButton("Cancel");
         cancel.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e)
@@ -331,13 +345,14 @@ public class GUI
             }
 
         });
-        guiDialog.add(cancel);
+        guiDialog.getContentPane().add(cancel);
         Point point = new Point();
         point = guiFrame.getLocation();
         int x = (int)point.getX();
         int y = (int)point.getY();
         guiDialog.setLocation(60 + x, 70 + y);
         guiDialog.setSize(220, 130);
+        guiDialog.pack();
         guiDialog.setVisible(true);
     }
 
@@ -353,7 +368,7 @@ public class GUI
             return;
         fileName = fileDialog.getDirectory() + File.separator + fileDialog.getFile();
         FileInputStream fis = null;
-        if(rawCbox.getState())
+        if(rawCbox.isSelected())
             try
             {
                 fis = new FileInputStream(fileName);
@@ -418,16 +433,15 @@ public class GUI
 
     private void fileSave()
     {
-        guiDialog.removeAll();
         guiDialog.setTitle("Save memory");
         guiDialog.setLayout(new FlowLayout());
-        guiDialog.add(new Label("From(Hex): "));
-        guiDialog.add(startHexTxt);
-        guiDialog.add(new Label("To(Hex): "));
-        guiDialog.add(endHexTxt);
-        guiDialog.add(rawCbox);
-        guiDialog.add(btSave);
-        Button cancel = new Button("Cancel");
+        guiDialog.getContentPane().add(new Label("From(Hex): "));
+        guiDialog.getContentPane().add(startHexTxt);
+        guiDialog.getContentPane().add(new Label("To(Hex): "));
+        guiDialog.getContentPane().add(endHexTxt);
+        guiDialog.getContentPane().add(rawCbox);
+        guiDialog.getContentPane().add(btSave);
+        JButton cancel = new JButton("Cancel");
         cancel.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e)
@@ -436,13 +450,14 @@ public class GUI
             }
 
         });
-        guiDialog.add(cancel);
+        guiDialog.getContentPane().add(cancel);
         Point point = new Point();
         point = guiFrame.getLocation();
         int x = (int)point.getX();
         int y = (int)point.getY();
         guiDialog.setLocation(60 + x, 70 + y);
         guiDialog.setSize(210, 130);
+        guiDialog.pack();
         guiDialog.setVisible(true);
     }
 
@@ -459,7 +474,7 @@ public class GUI
         fileDialog.setVisible(true);
         if(fileDialog.getFile() == null)
             return;
-        if(rawCbox.getState())
+        if(rawCbox.isSelected())
         {
             fileName = fileDialog.getDirectory() + File.separator + fileDialog.getFile();
             FileOutputStream fos = null;
@@ -507,41 +522,53 @@ public class GUI
 
     private void configScreen()
     {
-        guiDialog.removeAll();
+    	guiDialog.getContentPane().removeAll();
         guiDialog.setTitle("Screen Configuration");
         guiDialog.setLayout(new FlowLayout());
-        guiDialog.add(new Label("Choose the Pixel Size :"));
-        guiDialog.add(new Checkbox("x1", cbg, pixelSize == 1));
-        guiDialog.add(new Checkbox("x2", cbg, pixelSize == 2));
-        guiDialog.add(new Checkbox(" Or choose the Scanlines", cbg, scanlines));
-        guiDialog.add(new Label("Terminal speed in Charac/s :"));
-        miscTxt.setText((new Integer(terminalSpeed)).toString());
-        guiDialog.add(miscTxt);
-        guiDialog.add(new Label("  "));
-        guiDialog.add(btScreen);
+        guiDialog.setPreferredSize(new Dimension(315, 175));
+        guiDialog.getContentPane().add(new Label("Choose the Pixel Size :"));
+        grpScreenX = new ButtonGroup();
+        AbstractButton b = new JCheckBox("x1", pixelSize == 1);
+        b.setMnemonic('1');
+        grpScreenX.add(b);
+        guiDialog.getContentPane().add(b);
+        b = new JCheckBox("x2", pixelSize == 2);
+        b.setMnemonic('2');
+        grpScreenX.add(b);
+        guiDialog.getContentPane().add(b);
+        b = new JCheckBox("single field", scanlines);
+        b.setMnemonic('F');
+        grpScreenX.add(b);
+        guiDialog.getContentPane().add(b);
+        guiDialog.getContentPane().add(new Label("Terminal speed (characters per second):"));
+        miscTxt.setText(Integer.toString(terminalSpeed,10));
+        miscTxt.setMinimumSize(new Dimension(100,30));
+        guiDialog.getContentPane().add(miscTxt);
+        guiDialog.getContentPane().add(new Label("  "));
+        guiDialog.getContentPane().add(btScreen);
         Point point = new Point();
         point = guiFrame.getLocation();
         int x = (int)point.getX();
         int y = (int)point.getY();
         guiDialog.setLocation(60 + x, 70 + y);
-        guiDialog.setSize(315, 140);
+        guiDialog.pack();
         guiDialog.setVisible(true);
     }
 
     private void configScreenExec()
     {
-        String _str = cbg.getSelectedCheckbox().getLabel();
-        if(_str == "x1")
+    	int mnemonic = grpScreenX.getSelection().getMnemonic();
+        if(mnemonic == '1')
         {
             pixelSize = 1;
             scanlines = false;
         }
-        if(_str == "x2")
+        else if(mnemonic == '2')
         {
             pixelSize = 2;
             scanlines = false;
         }
-        if(_str == " Or choose the Scanlines")
+        else if(mnemonic == 'F')
         {
             pixelSize = 2;
             scanlines = true;
@@ -558,39 +585,39 @@ public class GUI
 
     private void configMemory()
     {
-        guiDialog.removeAll();
         guiDialog.setTitle("Memory Configuration");
         guiDialog.setLayout(new FlowLayout());
-        guiDialog.add(new Label("Apple I available RAM size :"));
-        guiDialog.add(new Checkbox("8kb", cbg, ram8k));
-        guiDialog.add(new Checkbox("Max", cbg, !ram8k));
-        wRomCbox.setState(writeInRom);
-        guiDialog.add(new Label("    "));
-        guiDialog.add(wRomCbox);
-        guiDialog.add(new Label("    "));
-        guiDialog.add(new Label("IRQ/BRK vector :"));
+        guiDialog.getContentPane().add(new Label("Apple I available RAM size :"));
+        guiDialog.getContentPane().add(new JCheckBox("8kb", ram8k));
+        guiDialog.getContentPane().add(new JCheckBox("Max", !ram8k));
+        wRomCbox.setSelected(writeInRom);
+        guiDialog.getContentPane().add(new Label("    "));
+        guiDialog.getContentPane().add(wRomCbox);
+        guiDialog.getContentPane().add(new Label("    "));
+        guiDialog.getContentPane().add(new Label("IRQ/BRK vector :"));
         miscTxt.setText(toHex(mem.read(0xFFFF)) + toHex(mem.read(0xFFFE)));
-        guiDialog.add(miscTxt);
-        guiDialog.add(new Label("    "));
-        guiDialog.add(btMemory);
+        guiDialog.getContentPane().add(miscTxt);
+        guiDialog.getContentPane().add(new Label("    "));
+        guiDialog.getContentPane().add(btMemory);
         Point point = new Point();
         point = guiFrame.getLocation();
         int x = (int)point.getX();
         int y = (int)point.getY();
         guiDialog.setLocation(60 + x, 70 + y);
         guiDialog.setSize(320, 150);
+        guiDialog.pack();
         guiDialog.setVisible(true);
     }
 
     private void configMemoryExec()
     {
-        String _str = cbg.getSelectedCheckbox().getLabel();
+        String _str = " max" ; // TODO fix
         if(_str == "8kb")
             ram8k = true;
         if(_str == "Max")
             ram8k = false;
         mem.setRam8k(ram8k);
-        writeInRom = wRomCbox.getState();
+        writeInRom = wRomCbox.isSelected();
         mem.setWriteInRom(writeInRom);
         int brkVector = hexStringToInt(miscTxt.getText());
         mem.write(0xFFFE, brkVector & 0xFF);
@@ -602,10 +629,9 @@ public class GUI
     {
         TextArea ta = new TextArea(" *Pom1 0.7b* the Java Apple I Emulator\nWritten by Verhille Arnaud\nE.mail : gist@wanadoo.fr\nhttp://www.chez.com/apple1/\n\nEnhanced by Ken Wessen (21/2/06)\n\nThanks to :\nSteve Wozniak (The Brain)\nFabrice Frances (Java Microtan Emulator)\nAchim Breidenbach from Boinx Software \n(Sim6502, Online 'Apple-1 Operation Manual')\nJuergen Buchmueller (MAME and MESS 6502 core)\nFrancis Limousy (for his help, and his friendship)\nStephano Priore from the MESS DEV\nJoe Torzewski (Apple I owners Club)\nTom Owad (http://applefritter.com/apple1/)", 23, 45, 3);
         ta.setEditable(false);
-        guiDialog.removeAll();
         guiDialog.setTitle("About Pom1");
         guiDialog.setLayout(new FlowLayout());
-        guiDialog.add(ta);
+        guiDialog.getContentPane().add(ta);
         Point point = new Point();
         point = guiFrame.getLocation();
         int x = (int)point.getX();
@@ -651,44 +677,44 @@ public class GUI
 //    Keyboard getKeyboard() { return keyboard; }
 //    Memory getMemory() { return mem; }
 //
-    private Frame guiFrame;
-    private MenuBar guiMenuBar;
-    private Menu guiMenuFile;
-    private Menu guiMenuEmulator;
-    private Menu guiMenuConfig;
-    private Menu guiMenuDebug;
-    private Menu guiMenuHelp;
-    private MenuItem guiMenuFileLoad;
-    private MenuItem guiMenuFileSave;
-    private MenuItem guiMenuFileSeparator;
-    private MenuItem guiMenuFilePaste;
-    private MenuItem guiMenuFileExit;
-    private MenuItem guiMenuEmulatorReset;
-    private MenuItem guiMenuEmulatorHardReset;
-    private MenuItem guiMenuConfigScreen;
-    private MenuItem guiMenuConfigMemory;
-    private MenuItem guiMenuDebugShow;
-    private MenuItem guiMenuDebugDispose;
-    private MenuItem guiMenuHelpAbout;
-    private Dialog guiDialog;
-    private Button btSave;
-    private Button btLoad;
-    private TextField startHexTxt;
-    private TextField endHexTxt;
-    private TextField miscTxt;
-    private Checkbox rawCbox;
-    private Checkbox wRomCbox;
-    private CheckboxGroup cbg;
-    private Button btScreen;
-    private Button btMemory;
-    private Button bt6502;
+    private JFrame guiFrame;
+    private JMenuBar guiMenuBar;
+    private JMenu guiMenuFile;
+    private JMenu guiMenuEmulator;
+    private JMenu guiMenuConfig;
+    private JMenu guiMenuDebug;
+    private JMenu guiMenuHelp;
+    private JMenuItem guiMenuFileLoad;
+    private JMenuItem guiMenuFileSave;
+    private JMenuItem guiMenuFilePaste;
+    private JMenuItem guiMenuFileExit;
+    private JMenuItem guiMenuEmulatorReset;
+    private JMenuItem guiMenuEmulatorHardReset;
+    private JMenuItem guiMenuConfigScreen;
+    private JMenuItem guiMenuConfigMemory;
+    private JMenuItem guiMenuDebugShow;
+    private JMenuItem guiMenuDebugDispose;
+    private JMenuItem guiMenuHelpAbout;
+    private JDialog guiDialog;
+    private JButton btSave;
+    private JButton btLoad;
+    private JTextField startHexTxt;
+    private JTextField endHexTxt;
+    private JTextField miscTxt;
+    private JCheckBox rawCbox;
+    private JCheckBox wRomCbox;
+    private JButton btScreen;
+    private JButton btMemory;
+    private JButton bt6502;
+    private ButtonGroup grpScreenX;
+
     private int pixelSize;
     private boolean scanlines;
     private int terminalSpeed;
     private boolean writeInRom;
     private boolean ram8k;
     private Memory mem;
-    private M6502 micro;
+    private M6502 cpu;
     private Pia6820 pia;
     private Screen screen;
     private Keyboard keyboard;

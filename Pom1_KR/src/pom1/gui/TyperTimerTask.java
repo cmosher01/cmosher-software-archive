@@ -21,20 +21,20 @@ class TyperTimerTask extends TimerTask
 	{
 		char key = data.charAt(i++);
 		gui.keyTyped(key);
-		if (key == '\n')
-		{
-			// TODO sleep after CR during paste doesn't work
-			try
-			{
-				// sleep 10 times as long on an end of line 
-				// to allow for the extra processing by the emulated machine
-				Thread.sleep(10 * delay);
-			}
-			catch (InterruptedException e)
-			{
-				e.printStackTrace();
-			}
-		}
+//		if (key == '\n')
+//		{
+///TODO sleep after CR during paste doesn't work
+//			try
+//			{
+//				// sleep 10 times as long on an end of line 
+//				// to allow for the extra processing by the emulated machine
+//				Thread.sleep(10 * delay);
+//			}
+//			catch (InterruptedException e)
+//			{
+//				e.printStackTrace();
+//			}
+//		}
 		//screen.dispatchEvent(new KeyEvent(screen, 400, 0L, 0, 0, key));
 		if (i == data.length())
 		{
@@ -47,6 +47,5 @@ class TyperTimerTask extends TimerTask
 	public void run()
 	{
 		sendNextCharacter();
-		Thread.yield(); // give the GUI a chance to update
 	}
 }

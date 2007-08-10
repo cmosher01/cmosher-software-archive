@@ -17,7 +17,6 @@ public class M6502 implements Runnable
 
     public M6502(Memory mem, int freq, int synchroMillis)
     {
-        runner = null;
         lastTime = System.currentTimeMillis();
         this.mem = mem;
         M = true;
@@ -66,7 +65,16 @@ public class M6502 implements Runnable
 
     public void stop()
     {
+    	final Thread th = runner;
         runner = null;
+        try
+		{
+			th.join();
+		}
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
     }
 
     public void setStepping()

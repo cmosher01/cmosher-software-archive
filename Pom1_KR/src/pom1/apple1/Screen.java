@@ -8,8 +8,9 @@ import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import javax.swing.JPanel;
 
-public class Screen extends Canvas
+public class Screen extends JPanel
 {
 
     public Screen(int pixelSize) throws IOException
