@@ -25,14 +25,21 @@ public class ClipboardHandler
 	{
 		if (pia.getKbdInterrups())
 		{
-			String data = getClipboardContents();
+			final String data = getClipboardContents();
 //			TyperTimerTask typerTask = new TyperTimerTask(data,keyboard,delay);
 //			theTimer.schedule(typerTask,delay,delay);
-			for (int i = 0; i < data.length(); ++i)
+			Thread th = new Thread(new Runnable()
 			{
-				final char c = data.charAt(i);
-				keyboard.keyTyped(c);
-			}
+				public void run()
+				{
+					for (int i = 0; i < data.length(); ++i)
+					{
+						final char c = data.charAt(i);
+						keyboard.keyTyped(c);
+					}
+				}
+			});
+			th.start();
 		}
 	}
 

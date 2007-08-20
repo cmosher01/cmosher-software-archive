@@ -58,6 +58,17 @@ public class Pia6820
 
 	public void writeKbdCr(int kbdCr)
 	{
+		while (this.kbdCr != 0)
+		{
+			try
+			{
+				Thread.sleep(100);
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+		}
 		if (!kbdInterrups)
 		{
 			if ((kbdCr & 0x80) != 0)
