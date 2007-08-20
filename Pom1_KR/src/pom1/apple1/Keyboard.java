@@ -1,18 +1,28 @@
 package pom1.apple1;
 
-public class Keyboard
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+public class Keyboard extends KeyAdapter implements KeyListener
 {
 	private static final char BS = 0x08;
 	private static final char LF = 0x0A;
 	private static final char CR = 0x0D;
+
 	private final Pia6820 pia;
 
-	public Keyboard(Pia6820 pia)
+	public Keyboard(final Pia6820 pia)
 	{
 		this.pia = pia;
 	}
 
-	public void keyTyped(char key)
+	public void keyTyped(final KeyEvent e)
+	{
+		keyTyped(e.getKeyChar());
+	}
+
+	public void keyTyped(final char key)
 	{
 		if (pia.getKbdInterrups())
 		{
@@ -34,6 +44,8 @@ public class Keyboard
 
 		key = Character.toUpperCase(key);
 
-		return key | 0x80;
+		key |= 0x80;
+
+		return key;
 	}
 }

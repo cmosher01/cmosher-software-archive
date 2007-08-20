@@ -1,26 +1,27 @@
 package pom1.gui;
 
 import java.util.TimerTask;
+import pom1.apple1.Keyboard;
 
 class TyperTimerTask extends TimerTask
 {
-	private final GUI gui;
+	private final Keyboard keyboard;
 	private final String data;
 	private final long delay;
 
 	private int i;
 
-	TyperTimerTask(String data, GUI gui, long delay)
+	TyperTimerTask(String data, Keyboard keyboard, long delay)
 	{
 		this.data = data;
-		this.gui = gui;
+		this.keyboard = keyboard;
 		this.delay = delay;
 	}
 
 	public void sendNextCharacter()
 	{
 		char key = data.charAt(i++);
-		gui.keyTyped(key);
+		keyboard.keyTyped(key);
 //		if (key == '\n')
 //		{
 ///TODO sleep after CR during paste doesn't work
@@ -38,8 +39,8 @@ class TyperTimerTask extends TimerTask
 		//screen.dispatchEvent(new KeyEvent(screen, 400, 0L, 0, 0, key));
 		if (i == data.length())
 		{
-			if (gui != null)
-				gui.synchronise(true);
+//			if (gui != null)
+//				gui.synchronise(true);
 			cancel();
 		}
 	}

@@ -1,84 +1,80 @@
 package pom1.apple1;
 
-import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URL;
 import javax.swing.JPanel;
 
 public class Screen extends JPanel
 {
+	private static final int CHARSET_SIZE = 128;
+	private static final int Y_PIX = 8;
+	private static final int X_PIX = 7;
+	private static final int Y_CHARS = 24;
+	private static final int X_CHARS = 40;
 
-    public Screen(int pixelSize) throws IOException
-    {
-    	this(pixelSize,null,false);
-    }
+	public Screen() throws IOException
+	{
+		lastTime = System.currentTimeMillis();
+		loggingOutput = false;
+		charac = new int[CHARSET_SIZE][Y_PIX];
+		screenTbl = new int[X_CHARS][Y_CHARS];
+		scanline = false;
+		loadCharac();
+		this.pixelSize = 1;
+		terminalSpeed = 60000;
+		setPreferredSize(new Dimension(X_CHARS * X_PIX * this.pixelSize,Y_CHARS * Y_PIX * this.pixelSize));
+		reset();
+	}
 
-    public Screen(int pixelSize, URL appletCodeBase, boolean appletMode) throws IOException
-    {
-        lastTime = System.currentTimeMillis();
-        loggingOutput = true;
-        this.appletMode = false;
-        charac = new int[128][8];
-        screenTbl = new int[40][24];
-        this.appletMode = appletMode;
-        scanline = false;
-        this.appletCodeBase = appletCodeBase;
-        loadCharac();
-        this.pixelSize = pixelSize;
-        terminalSpeed = 60000;
-        reset();
-    }
+	public void setPixelSize(int ps)
+	{
+		pixelSize = ps;
+	}
 
-    public void setPixelSize(int ps)
-    {
-        pixelSize = ps;
-    }
+	public void setScanline(boolean scanline)
+	{
+		this.scanline = scanline;
+	}
 
-    public void setScanline(boolean scanline)
-    {
-        this.scanline = scanline;
-    }
+	public void setTerminalSpeed(int ts)
+	{
+		terminalSpeed = ts;
+	}
 
-    public void setTerminalSpeed(int ts)
-    {
-        terminalSpeed = ts;
-    }
+//	public int getTerminalSpeed()
+//	{
+//		return terminalSpeed;
+//	}
 
-    public int getTerminalSpeed()
-    {
-        return terminalSpeed;
-    }
+	public void reset()
+	{
+		indexX = indexY = 0;
+		initScreenTbl();
+		repaint();
+	}
 
-    public void reset()
-    {
-        indexX = indexY = 0;
-        initScreenTbl();
-        repaint();
-    }
-
-    public void outputDsp(int dsp)
-    {
-        if(loggingOutput)
-        {
-            if (dsp == 0x0A || dsp == 0x0D)
-    		{
+	public void outputDsp(int dsp)
+	{
+		if (loggingOutput)
+		{
+			if (dsp == 0x0A || dsp == 0x0D)
+			{
 				System.out.println();
-    		}
-            else if (0x20 <= dsp && dsp < 0x5F) // legal characters
+			}
+			else if (0x20 <= dsp && dsp < 0x5F) // legal characters
 			{
 				System.out.print((char)dsp);
 			}
 			else
 			{
-				System.out.println("<x"+Integer.toHexString(dsp)+">");
+				System.out.println("<x" + Integer.toHexString(dsp) + ">");
 			}
-        }
-        switch (dsp)
+		}
+		switch (dsp)
 		{
 			case 0x5F: // Backspace
 				if (indexX == 0)
@@ -105,152 +101,131 @@ public class Screen extends JPanel
 				}
 			break;
 		}
-        if(indexX == 40)
-        {
-            indexX = 0;
-            indexY++;
-        }
-        if(indexY == 24)
-        {
-            newLine();
-            indexY--;
-        }
-        repaint();
-        synchronizeOutput();
-    }
+		if (indexX == X_CHARS)
+		{
+			indexX = 0;
+			indexY++;
+		}
+		if (indexY == Y_CHARS)
+		{
+			newLine();
+			indexY--;
+		}
+		repaint();
+		synchronizeOutput();
+	}
 
-    public void update(Graphics gc)
-    {
-        if(offScrImg == null)
-            offScrImg = createImage(280 * pixelSize, 192 * pixelSize);
-        Graphics og = offScrImg.getGraphics();
-        paint(og);
-        gc.drawImage(offScrImg, 0, 0, this);
-        og.dispose();
-    }
+	public void update(Graphics gc)
+	{
+		if (offScrImg == null)
+			offScrImg = createImage(X_CHARS * X_PIX * pixelSize,Y_CHARS * Y_PIX * pixelSize);
+		Graphics og = offScrImg.getGraphics();
+		paint(og);
+		gc.drawImage(offScrImg,0,0,this);
+		og.dispose();
+	}
 
-    public void paint(Graphics gc)
-    {
-        gc.setColor(Color.black);
-        gc.fillRect(0, 0, 280 * pixelSize, 192 * pixelSize);
-        gc.setColor(Color.green);
-        for(int i = 0; i < 40; i++)
-        {
-            for(int j = 0; j < 24; j++)
-            {
-                int xPosition = i * (pixelSize * 7);
-                int yPosition = j * (pixelSize * 8);
-                drawCharac(gc, xPosition, yPosition, screenTbl[i][j]);
-            }
+	public void paint(Graphics gc)
+	{
+		gc.setColor(Color.black);
+		gc.fillRect(0,0,X_CHARS * X_PIX * pixelSize,Y_CHARS * Y_PIX * pixelSize);
+		gc.setColor(Color.green);
+		for (int i = 0; i < X_CHARS; i++)
+		{
+			for (int j = 0; j < Y_CHARS; j++)
+			{
+				int xPosition = i * (pixelSize * X_PIX);
+				int yPosition = j * (pixelSize * Y_PIX);
+				drawCharac(gc,xPosition,yPosition,screenTbl[i][j]);
+			}
+		}
+		drawCharac(gc,indexX * (pixelSize * X_PIX),indexY * (pixelSize * Y_PIX),1); // cursor
+	}
 
-        }
+	private void synchronizeOutput()
+	{
+		if (!synchronise)
+		{
+			return;
+		}
+		int sleepMillis = (int)((1000 / terminalSpeed) - (System.currentTimeMillis() - lastTime));
+		if (sleepMillis > 0)
+			try
+			{
+				if (synchronise)
+					Thread.sleep(sleepMillis);
+			}
+			catch (Exception e)
+			{
+				System.out.println(e);
+			}
+		lastTime = System.currentTimeMillis();
+	}
 
-        drawCharac(gc, indexX * (pixelSize * 7), indexY * (pixelSize * 8), 1);
-    }
+	private void drawCharac(Graphics gc, int xPosition, int yPosition, int characNumber)
+	{
+		gc.setColor(Color.green);
+		for (int k = 0; k < Y_PIX; k++)
+		{
+			for (int l = 1; l < Y_PIX; l++)
+				if ((charac[characNumber][k] & 1 << l) == 1 << l)
+					gc.fillRect(xPosition + pixelSize * (l - 1),yPosition + pixelSize * k,pixelSize,pixelSize - (scanline ? 1 : 0));
+		}
+	}
 
-    private void synchronizeOutput()
-    {
-        int sleepMillis = (int)((1000 / terminalSpeed) - (System.currentTimeMillis() - lastTime));
-        if(sleepMillis > 0)
-            try
-            {
-              if (synchronise)
-                Thread.sleep(sleepMillis);
-            }
-            catch(Exception e)
-            {
-                System.out.println(e);
-            }
-        lastTime = System.currentTimeMillis();
-    }
+	private void loadCharac() throws IOException
+	{
+		String filename = System.getProperty("user.dir") + "/bios/apple1.vid";
+		FileInputStream fis = new FileInputStream(filename);
+		for (int i = 0; i < CHARSET_SIZE; i++)
+		{
+			for (int j = 0; j < Y_PIX; j++)
+			{
+				charac[i][j] = fis.read();
+			}
+		}
+		fis.close();
+		//charac[95][6] = 63; underscore???
+	}
 
-    private void drawCharac(Graphics gc, int xPosition, int yPosition, int characNumber)
-    {
-        gc.setColor(Color.green);
-        for(int k = 0; k < 8; k++)
-        {
-            for(int l = 1; l < 8; l++)
-                if((charac[characNumber][k] & 1 << l) == 1 << l)
-                    gc.fillRect(xPosition + pixelSize * (l - 1), yPosition + pixelSize * k, pixelSize, pixelSize - (scanline ? 1 : 0));
+	private void initScreenTbl()
+	{
+		for (int i = 0; i < X_CHARS; i++)
+		{
+			for (int j = 0; j < Y_CHARS; j++)
+				screenTbl[i][j] = 0;
+		}
+	}
 
-        }
+	private void newLine()
+	{
+		for (int i = 0; i < X_CHARS; i++)
+		{
+			for (int j = 0; j < Y_CHARS - 1; j++)
+			{
+				screenTbl[i][j] = screenTbl[i][j + 1];
+			}
+		}
+		for (int i = 0; i < X_CHARS; i++)
+		{
+			screenTbl[i][Y_CHARS - 1] = 0;
+		}
+	}
 
-    }
+	public void setSynchronise(boolean sync)
+	{
+		synchronise = sync;
+	}
 
-    private void loadCharac() throws IOException
-    {
-        if(!appletMode)
-        {
-            String filename = System.getProperty("user.dir") + "/bios/apple1.vid";
-            FileInputStream fis = null;
-            fis = new FileInputStream(filename);
-            for(int i = 0; i < 128; i++)
-            {
-                for(int j = 0; j < 8; j++)
-                    charac[i][j] = fis.read();
-
-            }
-
-            fis.close();
-            charac[95][6] = 63;
-        }
-        else
-        {
-            URL u = new URL(appletCodeBase, "apple1.vid");
-            DataInputStream fis = null;
-            fis = new DataInputStream(u.openStream());
-            for(int i = 0; i < 128; i++)
-            {
-                for(int j = 0; j < 8; j++)
-                    charac[i][j] = fis.read();
-
-            }
-
-            fis.close();
-        }
-    }
-
-    private void initScreenTbl()
-    {
-        for(int i = 0; i < 40; i++)
-        {
-            for(int j = 0; j < 24; j++)
-                screenTbl[i][j] = 0;
-
-        }
-
-    }
-
-    private void newLine()
-    {
-        for(int i = 0; i < 40; i++)
-        {
-            for(int j = 0; j < 23; j++)
-                screenTbl[i][j] = screenTbl[i][j + 1];
-
-        }
-
-        for(int i = 0; i < 40; i++)
-            screenTbl[i][23] = 0;
-
-    }
-    
-    public void setSynchronise(boolean sync)
-    {
-      synchronise = sync;
-    }
-
-    private int charac[][];
-    private int screenTbl[][];
-    private int indexX;
-    private int indexY;
-    private int pixelSize;
-    private boolean scanline;
-    private int terminalSpeed;
-    private Image offScrImg;
-    private long lastTime;
-    private boolean loggingOutput;
-    private boolean appletMode;
-    private URL appletCodeBase;
-    boolean synchronise = true;
+	private int charac[][];
+	private int screenTbl[][];
+	private int indexX;
+	private int indexY;
+	private int pixelSize;
+	private boolean scanline;
+	private int terminalSpeed;
+	private Image offScrImg;
+	private long lastTime;
+	private boolean loggingOutput;
+	boolean synchronise = true;
 }

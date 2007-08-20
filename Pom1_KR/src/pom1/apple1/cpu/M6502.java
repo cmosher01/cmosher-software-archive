@@ -1337,22 +1337,14 @@ public class M6502 implements Runnable
 
     protected void setStatusRegisterByte(int statusRegister)
     {
-        if((statusRegister & 0x80) == 128)
-            N = true;
-        if((statusRegister & 0x40) == 64)
-            V = true;
-        if((statusRegister & 0x20) == 32)
-            M = true;
-        if((statusRegister & 0x10) == 16)
-            B = true;
-        if((statusRegister & 8) == 8)
-            D = true;
-        if((statusRegister & 4) == 4)
-            I = true;
-        if((statusRegister & 2) == 2)
-            Z = true;
-        if((statusRegister & 1) == 1)
-            C = true;
+        N = ((statusRegister & 0x80) != 0);
+        V = ((statusRegister & 0x40) != 0);
+        M = ((statusRegister & 0x20) != 0);
+        B = ((statusRegister & 0x10) != 0);
+        D = ((statusRegister & 0x08) != 0);
+        I = ((statusRegister & 0x04) != 0);
+        Z = ((statusRegister & 0x02) != 0);
+        C = ((statusRegister & 0x01) != 0);
     }
 
     protected void setStatusRegisterNZ(byte val)
@@ -1383,13 +1375,13 @@ public class M6502 implements Runnable
         if(B)
             statusRegister |= 0x10;
         if(D)
-            statusRegister |= 8;
+            statusRegister |= 0x08;
         if(I)
-            statusRegister |= 4;
+            statusRegister |= 0x04;
         if(Z)
-            statusRegister |= 2;
+            statusRegister |= 0x02;
         if(C)
-            statusRegister |= 1;
+            statusRegister |= 0x01;
         return statusRegister;
     }
 
