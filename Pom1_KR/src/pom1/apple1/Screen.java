@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.io.FileInputStream;
 import java.io.IOException;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class Screen extends JPanel
 {
@@ -15,6 +16,13 @@ public class Screen extends JPanel
 	private static final int X_PIX = 7;
 	private static final int Y_CHARS = 24;
 	private static final int X_CHARS = 40;
+	private final Runnable repainter = new Runnable()
+	{
+		public void run()
+		{
+			repaint();
+		}
+	};
 
 	public Screen() throws IOException
 	{
@@ -111,14 +119,15 @@ public class Screen extends JPanel
 			newLine();
 			indexY--;
 		}
-		repaint();
-		synchronizeOutput();
+		SwingUtilities.invokeLater(repainter);
+//		repaint();
+//		synchronizeOutput();
 	}
 
 	public void update(Graphics gc)
 	{
 		if (offScrImg == null)
-			offScrImg = createImage(X_CHARS * X_PIX * pixelSize,Y_CHARS * Y_PIX * pixelSize);
+			offScrImg = createVolatileImage(X_CHARS * X_PIX * pixelSize,Y_CHARS * Y_PIX * pixelSize);
 		Graphics og = offScrImg.getGraphics();
 		paint(og);
 		gc.drawImage(offScrImg,0,0,this);

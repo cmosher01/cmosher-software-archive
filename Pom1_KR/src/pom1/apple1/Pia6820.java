@@ -4,13 +4,13 @@ public class Pia6820
 {
 	private final Screen screen;
 
-	private int dspCr;
-	private int dsp;
-	private boolean dspOutput;
+	private volatile int dspCr;
+	private volatile int dsp;
+	private volatile boolean dspOutput;
 
-	private int kbdCr;
-	private int kbd;
-	private boolean kbdInterrups;
+	private volatile int kbdCr;
+	private volatile int kbd;
+	private volatile boolean kbdInterrups;
 
 	public Pia6820(Screen screen)
 	{
@@ -18,10 +18,10 @@ public class Pia6820
 		reset();
 	}
 
-	public void setKbdInterrups(boolean b)
-	{
-		kbdInterrups = b;
-	}
+//	public void setKbdInterrups(boolean b)
+//	{
+//		kbdInterrups = b;
+//	}
 
 	public boolean getKbdInterrups()
 	{
@@ -58,17 +58,6 @@ public class Pia6820
 
 	public void writeKbdCr(int kbdCr)
 	{
-		while (this.kbdCr != 0)
-		{
-			try
-			{
-				Thread.sleep(100);
-			}
-			catch (InterruptedException e)
-			{
-				e.printStackTrace();
-			}
-		}
 		if (!kbdInterrups)
 		{
 			if ((kbdCr & 0x80) != 0)
@@ -85,6 +74,17 @@ public class Pia6820
 
 	public void writeKbd(int kbd)
 	{
+		while ((this.kbdCr & 0x80) != 0)
+		{
+			try
+			{
+				Thread.sleep(10);
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+		}
 		this.kbd = kbd;
 	}
 

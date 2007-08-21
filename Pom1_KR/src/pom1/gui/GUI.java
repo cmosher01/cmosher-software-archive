@@ -140,6 +140,7 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 		guiFrame.dispose();
 	}
 
+	@Override
 	public void windowClosing(WindowEvent e)
 	{
 		if (guiFrame.equals(e.getSource()))
@@ -239,7 +240,7 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 
 		screen.addKeyListener(keyboard);
 
-		if (System.getProperty("65C02","N").equalsIgnoreCase("Y"))
+		if (System.getProperty("65C02","false").equalsIgnoreCase("true"))
 		{
 			cpu = new M65C02(mem,1000,50);
 		}
@@ -273,6 +274,7 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 
 	private void fileLoad()
 	{
+		guiDialog.getContentPane().removeAll();
 		guiDialog.setTitle("Load memory");
 		guiDialog.setLayout(new FlowLayout());
 		guiDialog.getContentPane().add(new Label("Starting Address (Hex): "));
@@ -370,11 +372,11 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 				System.out.println(e);
 			}
 		guiDialog.dispose();
-		guiFrame.toFront();
 	}
 
 	private void fileSave()
 	{
+		guiDialog.getContentPane().removeAll();
 		guiDialog.setTitle("Save memory");
 		guiDialog.setLayout(new FlowLayout());
 		guiDialog.getContentPane().add(new Label("From(Hex): "));
@@ -398,7 +400,6 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 		int y = (int)point.getY();
 		guiDialog.setLocation(60 + x,70 + y);
 		guiDialog.setSize(210,130);
-		guiDialog.pack();
 		guiDialog.setVisible(true);
 	}
 
@@ -569,14 +570,15 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 			" *Pom1 0.7b* the Java Apple I Emulator\nWritten by Verhille Arnaud\nE.mail : gist@wanadoo.fr\nhttp://www.chez.com/apple1/\n\nEnhanced by Ken Wessen (21/2/06)\n\nThanks to :\nSteve Wozniak (The Brain)\nFabrice Frances (Java Microtan Emulator)\nAchim Breidenbach from Boinx Software \n(Sim6502, Online 'Apple-1 Operation Manual')\nJuergen Buchmueller (MAME and MESS 6502 core)\nFrancis Limousy (for his help, and his friendship)\nStephano Priore from the MESS DEV\nJoe Torzewski (Apple I owners Club)\nTom Owad (http://applefritter.com/apple1/)",
 			23,45,3);
 		ta.setEditable(false);
+		guiDialog.getContentPane().removeAll();
 		guiDialog.setTitle("About Pom1");
 		guiDialog.setLayout(new FlowLayout());
 		guiDialog.getContentPane().add(ta);
-		Point point = new Point();
-		point = guiFrame.getLocation();
-		int x = (int)point.getX();
-		int y = (int)point.getY();
-		guiDialog.setLocation(60 + x,70 + y);
+//		Point point = new Point();
+//		point = guiFrame.getLocation();
+//		int x = (int)point.getX();
+//		int y = (int)point.getY();
+//		guiDialog.setLocation(60 + x,70 + y);
 		guiDialog.setSize(375,250);
 		guiDialog.pack();
 		guiDialog.setVisible(true);
@@ -590,7 +592,7 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 	private String toHex(int i)
 	{
 		String s = Integer.toHexString(i).toUpperCase();
-		if (i < 16)
+		if (i < 0x10)
 			s = "0" + s;
 		return s;
 	}
@@ -598,13 +600,13 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 	private String toHex4(int i)
 	{
 		String s = Integer.toHexString(i).toUpperCase();
-		if (i < 4096)
+		if (i < 0x1000)
 		{
 			s = "0" + s;
-			if (i < 256)
+			if (i < 0x100)
 			{
 				s = "0" + s;
-				if (i < 16)
+				if (i < 0x10)
 					s = "0" + s;
 			}
 		}
