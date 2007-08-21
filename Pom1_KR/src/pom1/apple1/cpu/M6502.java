@@ -27,7 +27,7 @@ public class M6502 implements Runnable
         stackPointer = 0xFF;
         programCounter = memReadAbsolute(0xFFFc);
         setSpeed(freq, synchroMillis);
-        setSynchronise(true);
+//        setSynchronise(true);
     }
 
     public void setSpeed(int freq, int synchroMillis)
@@ -59,7 +59,7 @@ public class M6502 implements Runnable
     	{
     		throw new IllegalStateException("CPU already running");
     	}
-        runner = new Thread(this);
+        runner = new Thread(this,"M6502");
         runner.start();
     }
 
@@ -2100,5 +2100,5 @@ public class M6502 implements Runnable
     protected int synchroMillis;
     protected boolean stepping;
     protected boolean takeStep;
-    protected boolean synchronise = true;
+    protected boolean synchronise;
 }

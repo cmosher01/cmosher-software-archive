@@ -12,16 +12,22 @@ public class Pia6820
 	private volatile int kbd;
 	private volatile boolean kbdInterrups;
 
-	public Pia6820(Screen screen)
+	private volatile Keyboard keyboard;
+
+	public Pia6820(final Screen screen, final Keyboard keyboard)
 	{
 		this.screen = screen;
+		this.keyboard = keyboard;
 		reset();
 	}
 
-//	public void setKbdInterrups(boolean b)
-//	{
-//		kbdInterrups = b;
-//	}
+	public void reset()
+	{
+		kbdInterrups = false;
+		kbdCr = 0;
+		dspOutput = false;
+		dspCr = 0;
+	}
 
 	public boolean getKbdInterrups()
 	{
@@ -33,13 +39,27 @@ public class Pia6820
 		return dspOutput;
 	}
 
+
+
+
+
+	public int readDspCr()
+	{
+		return this.dspCr;
+	}
+
+	public int readDsp()
+	{
+		return this.dsp;
+	}
+
 	public void writeDspCr(int dspCr)
 	{
-		if (!dspOutput)
+		if (!this.dspOutput)
 		{
 			if ((dspCr & 0x80) != 0)
 			{
-				dspOutput = true;
+				this.dspOutput = true;
 			}
 			this.dspCr = 0;
 		}
@@ -52,72 +72,50 @@ public class Pia6820
 	public void writeDsp(int dsp)
 	{
 		dsp &= 0x7F;
-		screen.outputDsp(dsp);
+		this.screen.outputDsp(dsp);
 		this.dsp = dsp;
 	}
 
-	public void writeKbdCr(int kbdCr)
-	{
-		if (!kbdInterrups)
-		{
-			if ((kbdCr & 0x80) != 0)
-			{
-				kbdInterrups = true;
-			}
-			this.kbdCr = 0;
-		}
-		else
-		{
-			this.kbdCr = kbdCr;
-		}
-	}
 
-	public void writeKbd(int kbd)
-	{
-		while ((this.kbdCr & 0x80) != 0)
-		{
-			try
-			{
-				Thread.sleep(10);
-			}
-			catch (InterruptedException e)
-			{
-				e.printStackTrace();
-			}
-		}
-		this.kbd = kbd;
-	}
 
-	public int readDspCr()
-	{
-		return dspCr;
-	}
 
-	public int readDsp()
-	{
-		return dsp;
-	}
 
 	public int readKbdCr()
 	{
-		if (kbdInterrups && (kbdCr & 0x80) != 0)
+//		if (kbdInterrups && (kbdCr & 0x80) != 0)
+//		{
+//			kbdCr = 0;
+//			return 0xA7;
+//		}
+//		return kbdCr;
+
+		final int kbdCr = this.kbdCr;
+		if (this.kbdInterrups && this.keyboard.isReady())
 		{
-			kbdCr = 0;
-			return 0xA7;
+			this.kbdCr = 0;
 		}
 		return kbdCr;
 	}
 
 	public int readKbd()
 	{
-		return kbd;
+		return this.keyboard.getNextKey();
 	}
 
-	public void reset()
+	public void writeKbdCr(int kbdCr)
 	{
-		kbdInterrups = false;
-		kbdCr = 0;
-		dspOutput = false;
-		dspCr = 0;
+		if (!this.kbdInterrups)
+		{
+			if ((kbdCr & 0x80) != 0)
+			{
+				this.kbdInterrups = true;
+			}
+		}
+		this.kbdCr = kbdCr;
+	}
+
+	public void writeKbd(int kbd)
+	{
+		System.err.println("Write to KBD not supported");
 	}
 }

@@ -39,7 +39,7 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 
 	public GUI() throws IOException
 	{
-		initVariable();
+//		initVariable();
 		initApple1();
 		initGui();
 	}
@@ -234,11 +234,11 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 	private void initApple1() throws IOException
 	{
 		screen = new Screen();
-		pia = new Pia6820(screen);
-		mem = new Memory(pia);
-		keyboard = new Keyboard(pia);
+		keyboard = new Keyboard();
 
-		screen.addKeyListener(keyboard);
+		pia = new Pia6820(screen,keyboard);
+
+		mem = new Memory(pia);
 
 		if (System.getProperty("65C02","false").equalsIgnoreCase("true"))
 		{
@@ -250,6 +250,8 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 		}
 		cpu.start();
 		synchronise(false);
+
+		screen.addKeyListener(keyboard);
 	}
 
 	public void synchronise(boolean sync)
@@ -262,15 +264,15 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 		}
 	}
 
-	private void initVariable()
-	{
-		//        pixelSize = 2;
-		//        terminalSpeed = 60;
-		//        pixelSize = 1;
-		//        terminalSpeed = 60000;
-		//        writeInRom = true;
-		//        ram8k = false;
-	}
+//	private void initVariable()
+//	{
+//		        pixelSize = 2;
+//		        terminalSpeed = 60;
+//		        pixelSize = 1;
+//		        terminalSpeed = 60000;
+//		        writeInRom = true;
+//		        ram8k = false;
+//	}
 
 	private void fileLoad()
 	{
