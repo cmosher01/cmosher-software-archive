@@ -76,6 +76,7 @@ public class Screen extends JPanel
 		switch (dsp)
 		{
 			case '_': // Backspace
+				drawCharacCurr(gr,0);
 				if (indexX == 0)
 				{
 					indexY--;
@@ -89,6 +90,7 @@ public class Screen extends JPanel
 			break;
 			case '\n':
 			case '\r':
+				drawCharacCurr(gr,0);
 				indexX = 0;
 				indexY++;
 			break;
