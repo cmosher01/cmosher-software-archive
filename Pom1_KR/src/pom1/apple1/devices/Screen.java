@@ -90,7 +90,7 @@ public class Screen extends JPanel implements OutputDevice
 		{
 			case '_': // Backspace
 				drawCharacCurr(gr,0);
-				if (indexX == 0)
+				if (indexX <= 0)
 				{
 					indexY--;
 					indexX = 39;

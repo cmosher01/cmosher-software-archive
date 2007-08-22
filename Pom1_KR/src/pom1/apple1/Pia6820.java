@@ -19,7 +19,7 @@ public class Pia6820
 
 	private int kbdCrReady;
 
-	public Pia6820(final OutputDevice out, final InputDevice in)
+	public Pia6820(final InputDevice in, final OutputDevice out)
 	{
 		this.out = out;
 		this.in = in;

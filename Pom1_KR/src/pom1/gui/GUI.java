@@ -32,6 +32,8 @@ import pom1.apple1.cpu.M6502;
 import pom1.apple1.cpu.M65C02;
 import pom1.apple1.devices.Keyboard;
 import pom1.apple1.devices.Screen;
+import pom1.apple1.devices.StandardInput;
+import pom1.apple1.devices.StandardOutput;
 
 public class GUI extends WindowAdapter implements WindowListener, ActionListener
 {
@@ -248,7 +250,8 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 		screen = new Screen();
 		keyboard = new Keyboard();
 
-		pia = new Pia6820(screen,keyboard);
+		pia = new Pia6820(keyboard,screen);
+//		pia = new Pia6820(new StandardInput(), new StandardOutput());
 
 		mem = new Memory(pia);
 
