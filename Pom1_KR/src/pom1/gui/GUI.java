@@ -65,7 +65,14 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 		if (guiMenuEmulatorReset.equals(evt.getSource()))
 		{
 			pia.reset();
-			cpu.reset();
+			try
+			{
+				cpu.reset();
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
 			return;
 		}
 		if (guiMenuEmulatorHardReset.equals(evt.getSource()))
@@ -81,7 +88,14 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 				e.printStackTrace();
 			}
 			screen.reset();
-			cpu.reset();
+			try
+			{
+				cpu.reset();
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
 			cpu.start();
 			return;
 		}
@@ -238,13 +252,20 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 
 		mem = new Memory(pia);
 
-		if (System.getProperty("65C02","false").equalsIgnoreCase("true"))
+		try
 		{
-			cpu = new M65C02(mem);
+			if (System.getProperty("65C02","false").equalsIgnoreCase("true"))
+			{
+				cpu = new M65C02(mem);
+			}
+			else
+			{
+				cpu = new M6502(mem);
+			}
 		}
-		else
+		catch (InterruptedException e)
 		{
-			cpu = new M6502(mem);
+			e.printStackTrace();
 		}
 		cpu.start();
 

@@ -40,7 +40,7 @@ public class Memory
 //		writeInRom = b;
 //	}
 
-	public int read(int address)
+	public int read(int address) throws InterruptedException
 	{
 		if (address == KBD)
 			return pia.readKbd();

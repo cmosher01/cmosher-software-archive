@@ -12,6 +12,10 @@ public class Pia6820
 
 	private volatile Keyboard keyboard;
 
+	private int prevKey;
+
+	private int kbdCrReady;
+
 	public Pia6820(final Screen screen, final Keyboard keyboard)
 	{
 		this.screen = screen;
@@ -60,20 +64,26 @@ public class Pia6820
 		int kbdCr = this.kbdCr;
 		if (this.keyboard.isReady())
 		{
-			kbdCr = 0xA7;
+			kbdCr = this.kbdCrReady;
 			this.kbdCr = 0;
 		}
 		return kbdCr;
 	}
 
-	public int readKbd()
+	public int readKbd() throws InterruptedException
 	{
-		return this.keyboard.getNextKey();
+		if (this.keyboard.isReady())
+		{
+			final int c = this.keyboard.getNextKey();
+			this.prevKey = c & 0x7F;
+			return c;
+		}
+		return this.prevKey;
 	}
 
 	public void writeKbdCr(final int kbdCr)
 	{
-		this.kbdCr = kbdCr;
+		this.kbdCrReady = kbdCr;
 	}
 
 	public void writeKbd(final int kbd)

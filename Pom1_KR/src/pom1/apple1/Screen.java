@@ -61,6 +61,18 @@ public class Screen extends JPanel
 				System.out.println("<x" + Integer.toHexString(dsp) + ">");
 			}
 		}
+		while (offScrImg == null)
+		{
+			try
+			{
+				Thread.sleep(100);
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		Graphics gr = offScrImg.getGraphics();
 		switch (dsp)
 		{
 			case '_': // Backspace
@@ -84,6 +96,7 @@ public class Screen extends JPanel
 				if (' ' <= dsp && dsp < '_') // legal characters
 				{
 					screenTbl[indexX][indexY] = dsp;
+					drawCharacCurrTbl(gr);
 					indexX++;
 				}
 			break;
@@ -95,9 +108,12 @@ public class Screen extends JPanel
 		}
 		if (Y_CHARS <= indexY)
 		{
-			newLine();
+			scroll(gr);
+			//newLine();
 			indexY--;
 		}
+		drawCharacCurr(gr,1);
+		gr.dispose();
 		repaint();
 	}
 
@@ -120,17 +136,21 @@ public class Screen extends JPanel
 	{
 		super.paintComponent(gc);
 		if (offScrImg == null)
+		{
 			offScrImg = createVolatileImage(X_CHARS * X_PIX * pixelSize,Y_CHARS * Y_PIX * pixelSize);
-		Graphics og = offScrImg.getGraphics();
-		x(og);
+			Graphics g = offScrImg.getGraphics();
+			g.setColor(Color.black);
+			g.fillRect(0,0,X_CHARS * X_PIX * pixelSize,Y_CHARS * Y_PIX * pixelSize);
+			g.dispose();
+		}
 		gc.drawImage(offScrImg,0,0,this);
-		og.dispose();
 	}
+
 	private void x(Graphics gc)
 	{
-		gc.setColor(Color.black);
-		gc.fillRect(0,0,X_CHARS * X_PIX * pixelSize,Y_CHARS * Y_PIX * pixelSize);
-		gc.setColor(Color.green);
+		//gc.setColor(Color.black);
+		//gc.fillRect(0,0,X_CHARS * X_PIX * pixelSize,Y_CHARS * Y_PIX * pixelSize);
+		//gc.setColor(Color.green);
 		int yPosition = 0;
 		for (int j = 0; j < Y_CHARS; ++j)
 		{
@@ -145,6 +165,16 @@ public class Screen extends JPanel
 		drawCharac(gc,indexX * (pixelSize * X_PIX),indexY * (pixelSize * Y_PIX),1); // cursor
 	}
 
+	private void drawCharacCurrTbl(final Graphics gc)
+	{
+		drawCharac(gc, indexX * (pixelSize * X_PIX), indexY * (pixelSize * Y_PIX), screenTbl[indexX][indexY]);
+	}
+
+	private void drawCharacCurr(final Graphics gc, final int characNumber)
+	{
+		drawCharac(gc, indexX * (pixelSize * X_PIX), indexY * (pixelSize * Y_PIX), characNumber);
+	}
+
 	private void drawCharac(final Graphics gc, final int xPosition, final int yPosition, final int characNumber)
 	{
 		final int[] rc = this.charac[characNumber];
@@ -154,16 +184,32 @@ public class Screen extends JPanel
 			for (int x = 0; x < X_PIX; ++x)
 			{
 				c >>>= 1;
-				if ((c & 1) != 0)
-				{
-					gc.fillRect(
-						xPosition + pixelSize * x,
-						yPosition + pixelSize * y,
-						pixelSize,
-						pixelSize /*- (scanline ? 1 : 0)*/);
-				}
+				gc.setColor((c&1) == 0 ? Color.black : Color.green);
+				drawPixel(gc,xPosition,yPosition,y,x);
 			}
 		}
+	}
+
+	private void drawPixel(final Graphics gc, final int xPosition, final int yPosition, int y, int x)
+	{
+		gc.fillRect(
+			xPosition + pixelSize * x,
+			yPosition + pixelSize * y,
+			pixelSize,
+			pixelSize /*- (scanline ? 1 : 0)*/);
+	}
+
+	private void scroll(final Graphics gc)
+	{
+		gc.copyArea(
+			0, 0,
+			X_CHARS * X_PIX * pixelSize, Y_CHARS * Y_PIX * pixelSize,
+			0, - Y_PIX * pixelSize);
+
+		gc.setColor(Color.black);
+		gc.fillRect(
+			0, (Y_CHARS-1) * Y_PIX * pixelSize,
+			X_CHARS * X_PIX * pixelSize, Y_PIX * pixelSize);
 	}
 
 	private void loadCharac() throws IOException
@@ -211,6 +257,6 @@ public class Screen extends JPanel
 	private volatile int indexY;
 	private final int pixelSize;
 	private final boolean scanline;
-	private Image offScrImg;
+	private volatile Image offScrImg;
 	private static final boolean loggingOutput = false;
 }

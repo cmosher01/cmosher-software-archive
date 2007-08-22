@@ -5,6 +5,7 @@
 
 package pom1.apple1.cpu;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import pom1.apple1.Memory;
 
 
@@ -15,7 +16,9 @@ public class M6502 implements Runnable
 {
 	protected boolean valid = false;
 
-    public M6502(Memory mem)
+	private AtomicBoolean stop = new AtomicBoolean();
+
+    public M6502(Memory mem) throws InterruptedException
     {
         this.mem = mem;
         M = true;
@@ -27,7 +30,7 @@ public class M6502 implements Runnable
         programCounter = memReadAbsolute(0xFFFC);
     }
 
-    public void reset()
+    public void reset() throws InterruptedException
     {
         I = true;
         stackPointer = 0xFF;
@@ -56,6 +59,7 @@ public class M6502 implements Runnable
 
     public void stop()
     {
+		this.stop.set(true);
         this.runner.interrupt();
         try
 		{
@@ -70,24 +74,39 @@ public class M6502 implements Runnable
 
     public void run()
     {
-        while (!Thread.currentThread().isInterrupted())
+        while (!stopped())
         {
-//            for (cycles = 0; cycles < cyclesBeforeSynchro;)
-//            {
-                if (!I && IRQ)
-                {
-                    handleIRQ();
-                }
-                if(NMI)
-                {
-                    handleNMI();
-                }
-                executeOpcode();
-//            }
+            try
+			{
+				handleInterrupts();
+	            executeOpcode();
+			}
+			catch (InterruptedException e)
+			{
+				this.stop.set(true);
+			}
         }
     }
 
-    public boolean executeOpcode()
+	private void handleInterrupts() throws InterruptedException
+	{
+		if (!I && IRQ)
+		{
+		    handleIRQ();
+		}
+		if(NMI)
+		{
+		    handleNMI();
+		}
+	}
+
+    private boolean stopped()
+    {
+    	return this.stop.get();
+//    	return this.runner.isInterrupted();
+    }
+
+    public boolean executeOpcode() throws InterruptedException
     {
     	valid = true;
 
@@ -1357,42 +1376,42 @@ public class M6502 implements Runnable
         op = programCounter++;
     }
 
-    protected void Zero()
+    protected void Zero() throws InterruptedException
     {
         op = mem.read(programCounter++);
     }
 
-    protected void ZeroX()
+    protected void ZeroX() throws InterruptedException
     {
         op = mem.read(programCounter++) + xRegister & 0xff;
     }
 
-    protected void ZeroY()
+    protected void ZeroY() throws InterruptedException
     {
         op = mem.read(programCounter++) + yRegister & 0xff;
     }
 
-    protected void Abs()
+    protected void Abs() throws InterruptedException
     {
         op = memReadAbsolute(programCounter);
         programCounter += 2;
     }
 
-    protected void AbsX()
+    protected void AbsX() throws InterruptedException
     {
         opL = mem.read(programCounter++) + xRegister;
         opH = mem.read(programCounter++) << 8;
         op = opH + opL;
     }
 
-    protected void AbsY()
+    protected void AbsY() throws InterruptedException
     {
         opL = mem.read(programCounter++) + yRegister;
         opH = mem.read(programCounter++) << 8;
         op = opH + opL;
     }
 
-    protected void Ind()
+    protected void Ind() throws InterruptedException
     {
         ptrL = mem.read(programCounter++);
         ptrH = mem.read(programCounter++) << 8;
@@ -1401,14 +1420,14 @@ public class M6502 implements Runnable
         op += mem.read(ptrH + ptrL) << 8;
     }
 
-    protected void IndZeroX()
+    protected void IndZeroX() throws InterruptedException
     {
         ptr = xRegister + mem.read(programCounter++);
         op = mem.read(ptr);
         op += mem.read(ptr + 1 & 0xff) << 8;
     }
 
-    protected void IndZeroY()
+    protected void IndZeroY() throws InterruptedException
     {
         ptr = mem.read(programCounter++);
         opL = mem.read(ptr) + yRegister;
@@ -1416,7 +1435,7 @@ public class M6502 implements Runnable
         op = opH + opL;
     }
 
-    protected void Rel()
+    protected void Rel() throws InterruptedException
     {
         op = mem.read(programCounter++);
         if(op >= 128)
@@ -1424,21 +1443,21 @@ public class M6502 implements Runnable
         op = op + programCounter & 0xffff;
     }
 
-    protected void WAbsX()
+    protected void WAbsX() throws InterruptedException
     {
         opL = mem.read(programCounter++) + xRegister;
         opH = mem.read(programCounter++) << 8;
         op = opH + opL;
     }
 
-    protected void WAbsY()
+    protected void WAbsY() throws InterruptedException
     {
         opL = mem.read(programCounter++) + yRegister;
         opH = mem.read(programCounter++) << 8;
         op = opH + opL;
     }
 
-    protected void WIndZeroY()
+    protected void WIndZeroY() throws InterruptedException
     {
         ptr = mem.read(programCounter++);
         opL = mem.read(ptr) + yRegister;
@@ -1446,19 +1465,19 @@ public class M6502 implements Runnable
         op = opH + opL;
     }
 
-    protected void LDA()
+    protected void LDA() throws InterruptedException
     {
         accumulator = mem.read(op);
         setStatusRegisterNZ((byte)accumulator);
     }
 
-    protected void LDX()
+    protected void LDX() throws InterruptedException
     {
         xRegister = mem.read(op);
         setStatusRegisterNZ((byte)xRegister);
     }
 
-    protected void LDY()
+    protected void LDY() throws InterruptedException
     {
         yRegister = mem.read(op);
         setStatusRegisterNZ((byte)yRegister);
@@ -1479,7 +1498,7 @@ public class M6502 implements Runnable
         mem.write(op, yRegister & 0xff);
     }
 
-    protected void ADC()
+    protected void ADC() throws InterruptedException
     {
         int Op1 = accumulator;
         int Op2 = mem.read(op);
@@ -1505,7 +1524,7 @@ public class M6502 implements Runnable
         }
     }
 
-    protected void SBC()
+    protected void SBC() throws InterruptedException
     {
         int Op1 = accumulator;
         int Op2 = mem.read(op);
@@ -1529,46 +1548,46 @@ public class M6502 implements Runnable
         }
     }
 
-    protected void CMP()
+    protected void CMP() throws InterruptedException
     {
         tmp = accumulator - mem.read(op);
         setFlagBorrow(tmp);
         setStatusRegisterNZ((byte)tmp);
     }
 
-    protected void CPX()
+    protected void CPX() throws InterruptedException
     {
         tmp = xRegister - mem.read(op);
         setFlagBorrow(tmp);
         setStatusRegisterNZ((byte)tmp);
     }
 
-    protected void CPY()
+    protected void CPY() throws InterruptedException
     {
         tmp = yRegister - mem.read(op);
         setFlagBorrow(tmp);
         setStatusRegisterNZ((byte)tmp);
     }
 
-    protected void AND()
+    protected void AND() throws InterruptedException
     {
         accumulator &= mem.read(op) & 0xff;
         setStatusRegisterNZ((byte)accumulator);
     }
 
-    protected void ORA()
+    protected void ORA() throws InterruptedException
     {
         accumulator |= mem.read(op) & 0xff;
         setStatusRegisterNZ((byte)accumulator);
     }
 
-    protected void EOR()
+    protected void EOR() throws InterruptedException
     {
         accumulator ^= mem.read(op) & 0xff;
         setStatusRegisterNZ((byte)accumulator);
     }
 
-    protected void ASL()
+    protected void ASL() throws InterruptedException
     {
         btmp = (byte)(mem.read(op) & 0xff);
         mem.write(op, btmp);
@@ -1586,7 +1605,7 @@ public class M6502 implements Runnable
         setStatusRegisterNZ((byte)accumulator);
     }
 
-    protected void LSR()
+    protected void LSR() throws InterruptedException
     {
         btmp = (byte)(mem.read(op) & 0xff);
         C = (btmp & 1) != 0;
@@ -1602,7 +1621,7 @@ public class M6502 implements Runnable
         setStatusRegisterNZ((byte)accumulator);
     }
 
-    protected void ROL()
+    protected void ROL() throws InterruptedException
     {
         btmp = (byte)(mem.read(op) & 0xff);
         boolean newCarry = btmp < 0;
@@ -1620,7 +1639,7 @@ public class M6502 implements Runnable
         setStatusRegisterNZ((byte)accumulator);
     }
 
-    protected void ROR()
+    protected void ROR() throws InterruptedException
     {
         btmp = (byte)(mem.read(op) & 0xff);
         boolean newCarry = (btmp & 1) != 0;
@@ -1638,7 +1657,7 @@ public class M6502 implements Runnable
         setStatusRegisterNZ((byte)accumulator);
     }
 
-    protected void INC()
+    protected void INC() throws InterruptedException
     {
         btmp = (byte)(mem.read(op) & 0xff);
         mem.write(op, btmp);
@@ -1647,7 +1666,7 @@ public class M6502 implements Runnable
         mem.write(op, btmp & 0xff);
     }
 
-    protected void DEC()
+    protected void DEC() throws InterruptedException
     {
         btmp = (byte)(mem.read(op) & 0xff);
         mem.write(op, btmp);
@@ -1680,7 +1699,7 @@ public class M6502 implements Runnable
         setStatusRegisterNZ((byte)yRegister);
     }
 
-    protected void BIT()
+    protected void BIT() throws InterruptedException
     {
         btmp = (byte)(mem.read(op) & 0xff);
         V = (btmp & 0x40) != 0;
@@ -1701,7 +1720,7 @@ public class M6502 implements Runnable
         stackPointer = (stackPointer - 1) & 0xff;
     }
 
-    protected void PLA()
+    protected void PLA() throws InterruptedException
     {
         mem.read(stackPointer + 256);
         stackPointer = (stackPointer + 1) & 0xff;
@@ -1709,7 +1728,7 @@ public class M6502 implements Runnable
         setStatusRegisterNZ((byte)accumulator);
     }
 
-    protected void PLP()
+    protected void PLP() throws InterruptedException
     {
         mem.read(stackPointer + 256);
         stackPointer = (stackPointer + 1) & 0xff;
@@ -1717,7 +1736,7 @@ public class M6502 implements Runnable
         setStatusRegisterByte(statusRegister);
     }
 
-    protected void BRK()
+    protected void BRK() throws InterruptedException
     {
         mem.read(op);
         pushProgramCounter();
@@ -1727,7 +1746,7 @@ public class M6502 implements Runnable
         programCounter = memReadAbsolute(0xFFFE);
     }
 
-    protected void RTI()
+    protected void RTI() throws InterruptedException
     {
         mem.read(stackPointer + 256);
         PLP();
@@ -1739,14 +1758,14 @@ public class M6502 implements Runnable
         programCounter = op;
     }
 
-    protected void RTS()
+    protected void RTS() throws InterruptedException
     {
         mem.read(stackPointer + 256);
         popProgramCounter();
         mem.read(programCounter++);
     }
 
-    protected void JSR()
+    protected void JSR() throws InterruptedException
     {
         opL = mem.read(programCounter++) & 0xff;
         mem.read(stackPointer + 256);
@@ -1909,7 +1928,7 @@ public class M6502 implements Runnable
         programCounter--;
     }
 
-    protected void handleIRQ()
+    protected void handleIRQ() throws InterruptedException
     {
         pushProgramCounter();
         mem.write(256 + stackPointer, (byte)(getStatusRegisterByte() & 0xffffffef));
@@ -1918,7 +1937,7 @@ public class M6502 implements Runnable
         programCounter = memReadAbsolute(0xFFFE);
     }
 
-    protected void handleNMI()
+    protected void handleNMI() throws InterruptedException
     {
         pushProgramCounter();
         mem.write(256 + stackPointer, (byte)(getStatusRegisterByte() & 0xffffffef));
@@ -1928,7 +1947,7 @@ public class M6502 implements Runnable
         programCounter = memReadAbsolute(0xFFFA);
     }
 
-    protected int memReadAbsolute(int adr)
+    protected int memReadAbsolute(int adr) throws InterruptedException
     {
         return mem.read(adr) | (mem.read(adr + 1) & 0xff) << 8;
     }
@@ -1941,7 +1960,7 @@ public class M6502 implements Runnable
         stackPointer = (stackPointer - 1) & 0xff;
     }
 
-    protected void popProgramCounter()
+    protected void popProgramCounter() throws InterruptedException
     {
         stackPointer = (stackPointer + 1) & 0xff;
         programCounter = mem.read(stackPointer + 256) & 0xff;

@@ -12,12 +12,12 @@ import pom1.apple1.Memory;
 
 public class M65C02 extends M6502
 {
-	public M65C02(Memory mem)
+	public M65C02(Memory mem) throws InterruptedException
     {
     	super(mem);
     }
     
-    public boolean executeOpcode()
+    public boolean executeOpcode() throws InterruptedException
     {
     	if (super.executeOpcode() == false)
     	{
@@ -199,7 +199,7 @@ public class M65C02 extends M6502
 	}
 
     /* additional addressing modes for the 65C02 */
-	protected void IndAbsX()
+	protected void IndAbsX() throws InterruptedException
     {
         ptrL = xRegister + mem.read(programCounter++);
         ptrH = mem.read(programCounter++) << 8;
@@ -208,7 +208,7 @@ public class M65C02 extends M6502
         op += mem.read(ptrH + ptrL) << 8;
     }
     
-    protected void IndZero()
+    protected void IndZero() throws InterruptedException
     {
         ptr = mem.read(programCounter++);
         op = mem.read(ptr);
@@ -217,7 +217,7 @@ public class M65C02 extends M6502
     
     /* additional 65C02 instructions */
     
-    private void TSB()
+    private void TSB() throws InterruptedException
     {
     	// Z = M & A
     	// M = M | A
@@ -229,7 +229,7 @@ public class M65C02 extends M6502
         mem.write(op, btmp & 0xff);
     }
 
-    private void TRB()
+    private void TRB() throws InterruptedException
     {
     	// Z = M & A
     	// M = M & ~A
@@ -270,7 +270,7 @@ public class M65C02 extends M6502
         stackPointer = stackPointer - 1 & 0xff;
     }
 
-    private void PLX()
+    private void PLX() throws InterruptedException
     {
         mem.read(stackPointer + 256);
         stackPointer = stackPointer + 1 & 0xff;
@@ -278,7 +278,7 @@ public class M65C02 extends M6502
         setStatusRegisterNZ((byte)xRegister);
     }
 
-    private void PLY()
+    private void PLY() throws InterruptedException
     {
         mem.read(stackPointer + 256);
         stackPointer = stackPointer + 1 & 0xff;

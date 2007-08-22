@@ -50,17 +50,9 @@ public class Keyboard extends KeyAdapter implements KeyListener
 		return intKey;
 	}
 
-	public int getNextKey()
+	public int getNextKey() throws InterruptedException
 	{
-		try
-		{
-			return this.qKeys.take();
-		}
-		catch (InterruptedException e)
-		{
-			Thread.currentThread().interrupt();
-			return '\uFFFF';
-		}
+		return this.qKeys.take();
 	}
 
 	public boolean isReady()
