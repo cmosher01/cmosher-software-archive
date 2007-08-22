@@ -6,11 +6,9 @@ public class Pia6820
 
 	private volatile int dspCr;
 	private volatile int dsp;
-	private volatile boolean dspOutput;
 
 	private volatile int kbdCr;
 	private volatile int kbd;
-	private volatile boolean kbdInterrups;
 
 	private volatile Keyboard keyboard;
 
@@ -23,20 +21,8 @@ public class Pia6820
 
 	public void reset()
 	{
-		kbdInterrups = false;
-		kbdCr = 0;
-		dspOutput = false;
-		dspCr = 0;
-	}
-
-	public boolean getKbdInterrups()
-	{
-		return kbdInterrups;
-	}
-
-	public boolean getDspOutput()
-	{
-		return dspOutput;
+		this.kbdCr = 0;
+		this.dspCr = 0;
 	}
 
 
@@ -53,20 +39,9 @@ public class Pia6820
 		return this.dsp;
 	}
 
-	public void writeDspCr(int dspCr)
+	public void writeDspCr(final int dspCr)
 	{
-		if (!this.dspOutput)
-		{
-			if ((dspCr & 0x80) != 0)
-			{
-				this.dspOutput = true;
-			}
-			this.dspCr = 0;
-		}
-		else
-		{
-			this.dspCr = dspCr;
-		}
+		this.dspCr = dspCr;
 	}
 
 	public void writeDsp(int dsp)
@@ -82,16 +57,10 @@ public class Pia6820
 
 	public int readKbdCr()
 	{
-//		if (kbdInterrups && (kbdCr & 0x80) != 0)
-//		{
-//			kbdCr = 0;
-//			return 0xA7;
-//		}
-//		return kbdCr;
-
-		final int kbdCr = this.kbdCr;
-		if (this.kbdInterrups && this.keyboard.isReady())
+		int kbdCr = this.kbdCr;
+		if (this.keyboard.isReady())
 		{
+			kbdCr = 0xA7;
 			this.kbdCr = 0;
 		}
 		return kbdCr;
@@ -102,19 +71,12 @@ public class Pia6820
 		return this.keyboard.getNextKey();
 	}
 
-	public void writeKbdCr(int kbdCr)
+	public void writeKbdCr(final int kbdCr)
 	{
-		if (!this.kbdInterrups)
-		{
-			if ((kbdCr & 0x80) != 0)
-			{
-				this.kbdInterrups = true;
-			}
-		}
 		this.kbdCr = kbdCr;
 	}
 
-	public void writeKbd(int kbd)
+	public void writeKbd(final int kbd)
 	{
 		System.err.println("Write to KBD not supported");
 	}

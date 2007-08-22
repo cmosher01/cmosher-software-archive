@@ -12,9 +12,9 @@ import pom1.apple1.Memory;
 
 public class M65C02 extends M6502
 {
-	public M65C02(Memory mem, int freq, int synchroMillis)
+	public M65C02(Memory mem)
     {
-    	super(mem, freq, synchroMillis);
+    	super(mem);
     }
     
     public boolean executeOpcode()
@@ -176,27 +176,22 @@ public class M65C02 extends M6502
     	
     	if (test == 2)
     	{
-    		cycles += 2;
     		programCounter++;
     	}
     	else if (test == 3)
     	{
-    		cycles += 1;
     	}
     	else if (opcode == 0x44)
     	{
-    		cycles += 3;
     		programCounter++;
     	}
     	else if (opcode == 0x5A)
     	{
-    		cycles += 8;
     		programCounter++;
     		programCounter++;
     	}
     	else
     	{
-    		cycles += 4;
     		programCounter++;
     		if ((opcode & 0x08) > 0)
         		programCounter++;
@@ -211,7 +206,6 @@ public class M65C02 extends M6502
         op = mem.read(ptrH + ptrL);
         ptrL = ptrL + 1 & 0xff;
         op += mem.read(ptrH + ptrL) << 8;
-        cycles += 4;
     }
     
     protected void IndZero()
@@ -219,7 +213,6 @@ public class M65C02 extends M6502
         ptr = mem.read(programCounter++);
         op = mem.read(ptr);
         op += mem.read(ptr + 1 & 0xff) << 8;
-        cycles += 2;
     }
     
     /* additional 65C02 instructions */
@@ -231,11 +224,9 @@ public class M65C02 extends M6502
         btmp = (byte)(mem.read(op) & 0xff);
         btmp &= accumulator;
         setStatusRegisterZ(btmp);
-        cycles += 2;
         btmp = (byte)(mem.read(op) & 0xff);
         btmp |= accumulator;
         mem.write(op, btmp & 0xff);
-        cycles += 2;
     }
 
     private void TRB()
@@ -245,17 +236,14 @@ public class M65C02 extends M6502
         btmp = (byte)(mem.read(op) & 0xff);
         btmp &= accumulator;
         setStatusRegisterZ(btmp);
-        cycles += 2;
         btmp = (byte)(mem.read(op) & 0xff);
         btmp &= (~accumulator);
         mem.write(op, btmp & 0xff);
-        cycles += 2;
     }
 
     private void STZ()
     {
         mem.write(op, 0);
-        cycles++;
     }
 
     private void INA()
@@ -274,14 +262,12 @@ public class M65C02 extends M6502
     {
         mem.write(256 + stackPointer, xRegister & 0xff);
         stackPointer = stackPointer - 1 & 0xff;
-        cycles++;
     }
 
     private void PHY()
     {
         mem.write(256 + stackPointer, yRegister & 0xff);
         stackPointer = stackPointer - 1 & 0xff;
-        cycles++;
     }
 
     private void PLX()
@@ -290,7 +276,6 @@ public class M65C02 extends M6502
         stackPointer = stackPointer + 1 & 0xff;
         xRegister = mem.read(stackPointer + 256) & 0xff;
         setStatusRegisterNZ((byte)xRegister);
-        cycles += 2;
     }
 
     private void PLY()
@@ -299,7 +284,6 @@ public class M65C02 extends M6502
         stackPointer = stackPointer + 1 & 0xff;
         yRegister = mem.read(stackPointer + 256) & 0xff;
         setStatusRegisterNZ((byte)yRegister);
-        cycles += 2;
     }
     
     // these all do nothing now

@@ -61,7 +61,7 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 			close();
 		}
 		if (guiMenuFilePaste.equals(evt.getSource()))
-			clipboardHandler.sendDataToApple1(pia);
+			clipboardHandler.paste();
 		if (guiMenuEmulatorReset.equals(evt.getSource()))
 		{
 			pia.reset();
@@ -135,7 +135,6 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 	private void close()
 	{
 		cpu.stop();
-		clipboardHandler.close();
 		guiDialog.dispose();
 		guiFrame.dispose();
 	}
@@ -205,7 +204,6 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 		guiMenuBar.add(guiMenuHelp);
 		guiDialog = new JDialog(guiFrame,true);
 		guiDialog.addWindowListener(this);
-		guiDialog.setModal(true);
 		startHexTxt = new JTextField("0000",4);
 		endHexTxt = new JTextField("FFFF",4);
 		rawCbox = new JCheckBox("Raw Data");
@@ -242,37 +240,16 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 
 		if (System.getProperty("65C02","false").equalsIgnoreCase("true"))
 		{
-			cpu = new M65C02(mem,1000,50);
+			cpu = new M65C02(mem);
 		}
 		else
 		{
-			cpu = new M6502(mem,1000,50);
+			cpu = new M6502(mem);
 		}
 		cpu.start();
-		synchronise(false);
 
 		screen.addKeyListener(keyboard);
 	}
-
-	public void synchronise(boolean sync)
-	{
-		if (synchronised != sync)
-		{
-			synchronised = sync;
-			screen.setSynchronise(sync);
-			cpu.setSynchronise(sync);
-		}
-	}
-
-//	private void initVariable()
-//	{
-//		        pixelSize = 2;
-//		        terminalSpeed = 60;
-//		        pixelSize = 1;
-//		        terminalSpeed = 60000;
-//		        writeInRom = true;
-//		        ram8k = false;
-//	}
 
 	private void fileLoad()
 	{
@@ -400,7 +377,7 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 		point = guiFrame.getLocation();
 		int x = (int)point.getX();
 		int y = (int)point.getY();
-		guiDialog.setLocation(60 + x,70 + y);
+//		guiDialog.setLocation(60 + x,70 + y);
 		guiDialog.setSize(210,130);
 		guiDialog.setVisible(true);
 	}
@@ -582,7 +559,7 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 //		int y = (int)point.getY();
 //		guiDialog.setLocation(60 + x,70 + y);
 		guiDialog.setSize(375,250);
-		guiDialog.pack();
+//		guiDialog.pack();
 		guiDialog.setVisible(true);
 	}
 
@@ -661,5 +638,4 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 	private Pia6820 pia;
 	private Screen screen;
 	private Keyboard keyboard;
-	private boolean synchronised;
 }

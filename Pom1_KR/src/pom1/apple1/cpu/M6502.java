@@ -15,9 +15,8 @@ public class M6502 implements Runnable
 {
 	protected boolean valid = false;
 
-    public M6502(Memory mem, int freq, int synchroMillis)
+    public M6502(Memory mem)
     {
-        lastTime = System.currentTimeMillis();
         this.mem = mem;
         M = true;
         I = true;
@@ -25,22 +24,14 @@ public class M6502 implements Runnable
         IRQ = false;
         NMI = false;
         stackPointer = 0xFF;
-        programCounter = memReadAbsolute(0xFFFc);
-        setSpeed(freq, synchroMillis);
-//        setSynchronise(true);
-    }
-
-    public void setSpeed(int freq, int synchroMillis)
-    {
-        cyclesBeforeSynchro = synchroMillis * freq;
-        this.synchroMillis = synchroMillis;
+        programCounter = memReadAbsolute(0xFFFC);
     }
 
     public void reset()
     {
         I = true;
         stackPointer = 0xFF;
-        programCounter = memReadAbsolute(0xFFFc);
+        programCounter = memReadAbsolute(0xFFFC);
     }
 
     public void IRQ(boolean state)
@@ -53,60 +44,36 @@ public class M6502 implements Runnable
         NMI = true;
     }
 
-    public void start()
+    public synchronized void start()
     {
-    	if (runner != null)
+    	if (this.runner != null)
     	{
     		throw new IllegalStateException("CPU already running");
     	}
-        runner = new Thread(this,"M6502");
-        runner.start();
+    	this.runner = new Thread(this,"M6502");
+        this.runner.start();
     }
 
     public void stop()
     {
-    	final Thread th = runner;
-        runner = null;
+        this.runner.interrupt();
         try
 		{
-			th.join();
+        	this.runner.join();
 		}
 		catch (InterruptedException e)
 		{
-			e.printStackTrace();
+			Thread.currentThread().interrupt();
 		}
-    }
-
-    public void setStepping()
-    {
-        stepping = true;
-    }
-
-    public void stopStepping()
-    {
-        stepping = false;
-    }
-
-    public void takeStep()
-    {
-        takeStep = true;
+		this.runner = null;
     }
 
     public void run()
     {
-    	Thread thisThread = Thread.currentThread();
-        while (runner == thisThread)
+        while (!Thread.currentThread().isInterrupted())
         {
-            synchronize();
-            for (cycles = 0; cycles < cyclesBeforeSynchro;)
-            {
-                if (stepping)
-                {
-                    while (!takeStep)
-                    {
-                    	// do nothing
-                    }
-                }
+//            for (cycles = 0; cycles < cyclesBeforeSynchro;)
+//            {
                 if (!I && IRQ)
                 {
                     handleIRQ();
@@ -116,12 +83,8 @@ public class M6502 implements Runnable
                     handleNMI();
                 }
                 executeOpcode();
-            }
+//            }
         }
-    }
-
-    protected void updateDebugDisplay()
-    {
     }
 
     public boolean executeOpcode()
@@ -1385,32 +1348,8 @@ public class M6502 implements Runnable
         return statusRegister;
     }
 
-    protected void synchronize()
-    {
-        int realTimeMillis = (int)(System.currentTimeMillis() - lastTime);
-        int sleepMillis = synchroMillis - realTimeMillis;
-        if(sleepMillis < 0)
-            sleepMillis = 5;
-        try
-        {
-          if (synchronise)
-            Thread.sleep(sleepMillis);
-        }
-        catch(Exception e)
-        {
-            System.out.println(e);
-        }
-        lastTime = System.currentTimeMillis();
-    }
-
-    public void setSynchronise(boolean sync)
-    {
-      this.synchronise = sync;
-    }
-    
     protected void Imp()
     {
-        cycles++;
     }
 
     protected void Imm()
@@ -1421,35 +1360,28 @@ public class M6502 implements Runnable
     protected void Zero()
     {
         op = mem.read(programCounter++);
-        cycles++;
     }
 
     protected void ZeroX()
     {
         op = mem.read(programCounter++) + xRegister & 0xff;
-        cycles++;
     }
 
     protected void ZeroY()
     {
         op = mem.read(programCounter++) + yRegister & 0xff;
-        cycles++;
     }
 
     protected void Abs()
     {
         op = memReadAbsolute(programCounter);
         programCounter += 2;
-        cycles += 2;
     }
 
     protected void AbsX()
     {
         opL = mem.read(programCounter++) + xRegister;
         opH = mem.read(programCounter++) << 8;
-        cycles += 2;
-        if(opL >= 256)
-            cycles++;
         op = opH + opL;
     }
 
@@ -1457,9 +1389,6 @@ public class M6502 implements Runnable
     {
         opL = mem.read(programCounter++) + yRegister;
         opH = mem.read(programCounter++) << 8;
-        cycles += 2;
-        if(opL >= 256)
-            cycles++;
         op = opH + opL;
     }
 
@@ -1470,7 +1399,6 @@ public class M6502 implements Runnable
         op = mem.read(ptrH + ptrL);
         ptrL = ptrL + 1 & 0xff;
         op += mem.read(ptrH + ptrL) << 8;
-        cycles += 4;
     }
 
     protected void IndZeroX()
@@ -1478,7 +1406,6 @@ public class M6502 implements Runnable
         ptr = xRegister + mem.read(programCounter++);
         op = mem.read(ptr);
         op += mem.read(ptr + 1 & 0xff) << 8;
-        cycles += 3;
     }
 
     protected void IndZeroY()
@@ -1486,9 +1413,6 @@ public class M6502 implements Runnable
         ptr = mem.read(programCounter++);
         opL = mem.read(ptr) + yRegister;
         opH = (mem.read(ptr + 1) & 0xff) << 8;
-        cycles += 3;
-        if(opL >= 256)
-            cycles++;
         op = opH + opL;
     }
 
@@ -1498,14 +1422,12 @@ public class M6502 implements Runnable
         if(op >= 128)
             op = -(256 - op);
         op = op + programCounter & 0xffff;
-        cycles++;
     }
 
     protected void WAbsX()
     {
         opL = mem.read(programCounter++) + xRegister;
         opH = mem.read(programCounter++) << 8;
-        cycles += 3;
         op = opH + opL;
     }
 
@@ -1513,7 +1435,6 @@ public class M6502 implements Runnable
     {
         opL = mem.read(programCounter++) + yRegister;
         opH = mem.read(programCounter++) << 8;
-        cycles += 3;
         op = opH + opL;
     }
 
@@ -1522,7 +1443,6 @@ public class M6502 implements Runnable
         ptr = mem.read(programCounter++);
         opL = mem.read(ptr) + yRegister;
         opH = mem.read(ptr + 1 & 0xff) << 8;
-        cycles += 4;
         op = opH + opL;
     }
 
@@ -1530,46 +1450,39 @@ public class M6502 implements Runnable
     {
         accumulator = mem.read(op);
         setStatusRegisterNZ((byte)accumulator);
-        cycles++;
     }
 
     protected void LDX()
     {
         xRegister = mem.read(op);
         setStatusRegisterNZ((byte)xRegister);
-        cycles++;
     }
 
     protected void LDY()
     {
         yRegister = mem.read(op);
         setStatusRegisterNZ((byte)yRegister);
-        cycles++;
     }
 
     protected void STA()
     {
         mem.write(op, accumulator & 0xff);
-        cycles++;
     }
 
     protected void STX()
     {
         mem.write(op, xRegister & 0xff);
-        cycles++;
     }
 
     protected void STY()
     {
         mem.write(op, yRegister & 0xff);
-        cycles++;
     }
 
     protected void ADC()
     {
         int Op1 = accumulator;
         int Op2 = mem.read(op);
-        cycles++;
         if(D)
         {
             Z = (Op1 + Op2 + (C ? 1 : 0) & 0xff) == 0;
@@ -1596,7 +1509,6 @@ public class M6502 implements Runnable
     {
         int Op1 = accumulator;
         int Op2 = mem.read(op);
-        cycles++;
         if(D)
         {
             tmp = (Op1 & 0xf) - (Op2 & 0xf) - (C ? 0 : 1);
@@ -1620,7 +1532,6 @@ public class M6502 implements Runnable
     protected void CMP()
     {
         tmp = accumulator - mem.read(op);
-        cycles++;
         setFlagBorrow(tmp);
         setStatusRegisterNZ((byte)tmp);
     }
@@ -1628,7 +1539,6 @@ public class M6502 implements Runnable
     protected void CPX()
     {
         tmp = xRegister - mem.read(op);
-        cycles++;
         setFlagBorrow(tmp);
         setStatusRegisterNZ((byte)tmp);
     }
@@ -1636,7 +1546,6 @@ public class M6502 implements Runnable
     protected void CPY()
     {
         tmp = yRegister - mem.read(op);
-        cycles++;
         setFlagBorrow(tmp);
         setStatusRegisterNZ((byte)tmp);
     }
@@ -1644,21 +1553,18 @@ public class M6502 implements Runnable
     protected void AND()
     {
         accumulator &= mem.read(op) & 0xff;
-        cycles++;
         setStatusRegisterNZ((byte)accumulator);
     }
 
     protected void ORA()
     {
         accumulator |= mem.read(op) & 0xff;
-        cycles++;
         setStatusRegisterNZ((byte)accumulator);
     }
 
     protected void EOR()
     {
         accumulator ^= mem.read(op) & 0xff;
-        cycles++;
         setStatusRegisterNZ((byte)accumulator);
     }
 
@@ -1670,7 +1576,6 @@ public class M6502 implements Runnable
         btmp <<= 1;
         setStatusRegisterNZ(btmp);
         mem.write(op, btmp & 0xff);
-        cycles += 3;
     }
 
     protected void ASL_A()
@@ -1684,12 +1589,10 @@ public class M6502 implements Runnable
     protected void LSR()
     {
         btmp = (byte)(mem.read(op) & 0xff);
-        cycles += 2;
         C = (btmp & 1) != 0;
         btmp = (byte)((btmp & 0xff) >> 1);
         setStatusRegisterNZ(btmp);
         mem.write(op, btmp & 0xff);
-        cycles++;
     }
 
     protected void LSR_A()
@@ -1702,13 +1605,11 @@ public class M6502 implements Runnable
     protected void ROL()
     {
         btmp = (byte)(mem.read(op) & 0xff);
-        cycles += 2;
         boolean newCarry = btmp < 0;
         btmp = (byte)((btmp & 0xff) << 1 | (C ? 1 : 0));
         C = newCarry;
         setStatusRegisterNZ(btmp);
         mem.write(op, btmp & 0xff);
-        cycles++;
     }
 
     protected void ROL_A()
@@ -1722,13 +1623,11 @@ public class M6502 implements Runnable
     protected void ROR()
     {
         btmp = (byte)(mem.read(op) & 0xff);
-        cycles += 2;
         boolean newCarry = (btmp & 1) != 0;
         btmp = (byte)((btmp & 0xff) >> 1 | (C ? 0x80 : 0));
         C = newCarry;
         setStatusRegisterNZ(btmp);
         mem.write(op, btmp & 0xff);
-        cycles++;
     }
 
     protected void ROR_A()
@@ -1746,7 +1645,6 @@ public class M6502 implements Runnable
         btmp++;
         setStatusRegisterNZ(btmp);
         mem.write(op, btmp & 0xff);
-        cycles += 2;
     }
 
     protected void DEC()
@@ -1756,7 +1654,6 @@ public class M6502 implements Runnable
         btmp--;
         setStatusRegisterNZ(btmp);
         mem.write(op, btmp & 0xff);
-        cycles += 2;
     }
 
     protected void INX()
@@ -1789,14 +1686,12 @@ public class M6502 implements Runnable
         V = (btmp & 0x40) != 0;
         N = btmp < 0;
         Z = (btmp & accumulator) == 0;
-        cycles++;
     }
 
     protected void PHA()
     {
         mem.write(256 + stackPointer, accumulator & 0xff);
         stackPointer = (stackPointer - 1) & 0xff;
-        cycles++;
     }
 
     protected void PHP()
@@ -1804,7 +1699,6 @@ public class M6502 implements Runnable
         statusRegister = getStatusRegisterByte();
         mem.write(256 + stackPointer, statusRegister & 0xff);
         stackPointer = (stackPointer - 1) & 0xff;
-        cycles++;
     }
 
     protected void PLA()
@@ -1813,7 +1707,6 @@ public class M6502 implements Runnable
         stackPointer = (stackPointer + 1) & 0xff;
         accumulator = mem.read(stackPointer + 256) & 0xff;
         setStatusRegisterNZ((byte)accumulator);
-        cycles += 2;
     }
 
     protected void PLP()
@@ -1822,7 +1715,6 @@ public class M6502 implements Runnable
         stackPointer = (stackPointer + 1) & 0xff;
         statusRegister = mem.read(stackPointer + 256) & 0xff;
         setStatusRegisterByte(statusRegister);
-        cycles += 2;
     }
 
     protected void BRK()
@@ -1833,7 +1725,6 @@ public class M6502 implements Runnable
         //I = true;
         B = true;
         programCounter = memReadAbsolute(0xFFFE);
-        cycles += 3;
     }
 
     protected void RTI()
@@ -1841,7 +1732,6 @@ public class M6502 implements Runnable
         mem.read(stackPointer + 256);
         PLP();
         popProgramCounter();
-        cycles++;
     }
 
     protected void JMP()
@@ -1854,7 +1744,6 @@ public class M6502 implements Runnable
         mem.read(stackPointer + 256);
         popProgramCounter();
         mem.read(programCounter++);
-        cycles += 2;
     }
 
     protected void JSR()
@@ -1863,14 +1752,10 @@ public class M6502 implements Runnable
         mem.read(stackPointer + 256);
         pushProgramCounter();
         programCounter = opL + ((mem.read(programCounter) & 0xff) << 8);
-        cycles += 3;
     }
 
     protected void branch()
     {
-        cycles++;
-        if((programCounter & 0xff00) != (op & 0xff00))
-            cycles++;
         programCounter = op;
     }
 
@@ -2031,7 +1916,6 @@ public class M6502 implements Runnable
         stackPointer = (stackPointer - 1) & 0xff;
         I = true;
         programCounter = memReadAbsolute(0xFFFE);
-        cycles += 8;
     }
 
     protected void handleNMI()
@@ -2042,7 +1926,6 @@ public class M6502 implements Runnable
         I = true;
         NMI = false;
         programCounter = memReadAbsolute(0xFFFA);
-        cycles += 8;
     }
 
     protected int memReadAbsolute(int adr)
@@ -2056,7 +1939,6 @@ public class M6502 implements Runnable
         stackPointer = (stackPointer - 1) & 0xff;
         mem.write(stackPointer + 256, (byte)programCounter);
         stackPointer = (stackPointer - 1) & 0xff;
-        cycles += 2;
     }
 
     protected void popProgramCounter()
@@ -2065,10 +1947,12 @@ public class M6502 implements Runnable
         programCounter = mem.read(stackPointer + 256) & 0xff;
         stackPointer = (stackPointer + 1) & 0xff;
         programCounter += (mem.read(stackPointer + 256) & 0xff) << 8;
-        cycles += 2;
     }
 
+    private Thread runner;
+
     protected Memory mem;
+
     protected int accumulator;
     protected int xRegister;
     protected int yRegister;
@@ -2083,9 +1967,10 @@ public class M6502 implements Runnable
     protected int statusRegister;
     protected int programCounter;
     protected int stackPointer;
+
     protected boolean IRQ;
     protected boolean NMI;
-    protected volatile Thread runner;
+
     protected byte btmp;
     protected int op;
     protected int opL;
@@ -2094,11 +1979,4 @@ public class M6502 implements Runnable
     protected int ptrH;
     protected int ptrL;
     protected int tmp;
-    protected long lastTime;
-    protected int cycles;
-    protected int cyclesBeforeSynchro;
-    protected int synchroMillis;
-    protected boolean stepping;
-    protected boolean takeStep;
-    protected boolean synchronise;
 }

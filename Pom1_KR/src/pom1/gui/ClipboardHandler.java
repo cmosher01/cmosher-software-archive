@@ -6,50 +6,33 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
-import java.util.Timer;
 import pom1.apple1.Keyboard;
-import pom1.apple1.Pia6820;
 
 public class ClipboardHandler
 {
-	final Keyboard keyboard;
-	long delay;
+	private final Keyboard keyboard;
 
 	public ClipboardHandler(Keyboard keyboard)
 	{
 		this.keyboard = keyboard;
-		this.delay = Long.parseLong(System.getProperty("PASTE_DELAY","15"));
 	}
 
-	public void sendDataToApple1(Pia6820 pia)
+	public void paste()
 	{
-		if (pia.getKbdInterrups())
+		final String data = getClipboardContents();
+		for (int i = 0; i < data.length(); ++i)
 		{
-			final String data = getClipboardContents();
-//			TyperTimerTask typerTask = new TyperTimerTask(data,keyboard,delay);
-//			theTimer.schedule(typerTask,delay,delay);
-			Thread th = new Thread(new Runnable()
-			{
-				public void run()
-				{
-					for (int i = 0; i < data.length(); ++i)
-					{
-						final char c = data.charAt(i);
-						keyboard.keyTyped(c);
-					}
-				}
-			});
-			th.start();
+			final char c = data.charAt(i);
+			this.keyboard.keyTyped(c);
 		}
 	}
 
-	public static String getClipboardContents()
+	private static String getClipboardContents()
 	{
 		String data = "";
-		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-		Transferable contents = clipboard.getContents(null);
-		boolean hasTransferableText = contents != null && contents.isDataFlavorSupported(DataFlavor.stringFlavor);
-		if (hasTransferableText)
+		final Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		final Transferable contents = clipboard.getContents(null);
+		if (contents != null && contents.isDataFlavorSupported(DataFlavor.stringFlavor))
 		{
 			try
 			{
@@ -57,20 +40,13 @@ public class ClipboardHandler
 			}
 			catch (UnsupportedFlavorException ex)
 			{
-				System.out.println(ex);
+				ex.printStackTrace();
 			}
 			catch (IOException ex)
 			{
-				System.out.println(ex);
+				ex.printStackTrace();
 			}
 		}
 		return data;
 	}
-
-	public void close()
-	{
-		theTimer.cancel();
-	}
-
-	static Timer theTimer = new Timer();
 }
