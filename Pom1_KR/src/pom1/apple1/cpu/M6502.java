@@ -21,13 +21,12 @@ public class M6502 implements Runnable
     public M6502(Memory mem) throws InterruptedException
     {
         this.mem = mem;
+
         M = true;
-        I = true;
         D = false;
         IRQ = false;
         NMI = false;
-        stackPointer = 0xFF;
-        programCounter = memReadAbsolute(0xFFFC);
+        reset();
     }
 
     public void reset() throws InterruptedException
@@ -55,9 +54,10 @@ public class M6502 implements Runnable
     	}
     	this.runner = new Thread(this,"M6502");
         this.runner.start();
+		this.stop.set(false);
     }
 
-    public void stop()
+    public synchronized void stop()
     {
 		this.stop.set(true);
         this.runner.interrupt();
@@ -74,7 +74,7 @@ public class M6502 implements Runnable
 
     public void run()
     {
-        while (!stopped())
+        while (!this.stop.get())
         {
             try
 			{
@@ -94,17 +94,11 @@ public class M6502 implements Runnable
 		{
 		    handleIRQ();
 		}
-		if(NMI)
+		if (NMI)
 		{
 		    handleNMI();
 		}
 	}
-
-    private boolean stopped()
-    {
-    	return this.stop.get();
-//    	return this.runner.isInterrupted();
-    }
 
     public boolean executeOpcode() throws InterruptedException
     {

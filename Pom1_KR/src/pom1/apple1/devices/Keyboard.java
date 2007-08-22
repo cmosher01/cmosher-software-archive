@@ -1,4 +1,4 @@
-package pom1.apple1;
+package pom1.apple1.devices;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class Keyboard extends KeyAdapter implements KeyListener
+public class Keyboard extends KeyAdapter implements KeyListener, InputDevice
 {
 	private static final char BS = 0x08;
 	private static final char LF = 0x0A;
@@ -50,11 +50,18 @@ public class Keyboard extends KeyAdapter implements KeyListener
 		return intKey;
 	}
 
-	public int getNextKey() throws InterruptedException
+	/**
+	 * @return
+	 * @throws InterruptedException
+	 */
+	public int getCharacter() throws InterruptedException
 	{
 		return this.qKeys.take();
 	}
 
+	/**
+	 * @return
+	 */
 	public boolean isReady()
 	{
 		return !this.qKeys.isEmpty();

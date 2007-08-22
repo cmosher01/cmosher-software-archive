@@ -6,7 +6,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
-import pom1.apple1.Keyboard;
+import pom1.apple1.devices.Keyboard;
 
 public class ClipboardHandler
 {

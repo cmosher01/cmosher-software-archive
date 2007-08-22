@@ -26,12 +26,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
-import pom1.apple1.Keyboard;
 import pom1.apple1.Memory;
 import pom1.apple1.Pia6820;
-import pom1.apple1.Screen;
 import pom1.apple1.cpu.M6502;
 import pom1.apple1.cpu.M65C02;
+import pom1.apple1.devices.Keyboard;
+import pom1.apple1.devices.Screen;
 
 public class GUI extends WindowAdapter implements WindowListener, ActionListener
 {

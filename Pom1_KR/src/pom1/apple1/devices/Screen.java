@@ -1,4 +1,4 @@
-package pom1.apple1;
+package pom1.apple1.devices;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -6,20 +6,26 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
-public class Screen extends JPanel
+public class Screen extends JPanel implements OutputDevice
 {
 	private static final int CHARSET_SIZE = 128;
 	private static final int Y_PIX = 8;
 	private static final int X_PIX = 7;
 	private static final int Y_CHARS = 24;
 	private static final int X_CHARS = 40;
+	private AtomicBoolean ready = new AtomicBoolean();
 
 	public Screen() throws IOException
 	{
 		charac = new int[CHARSET_SIZE][Y_PIX];
-		screenTbl = new int[X_CHARS][Y_CHARS];
+//		screenTbl = new int[X_CHARS][Y_CHARS];
 		scanline = false;
 		loadCharac();
 		this.pixelSize = 1;
@@ -37,31 +43,38 @@ public class Screen extends JPanel
 //		this.scanline = scanline;
 //	}
 
+	/**
+	 * 
+	 */
 	public void reset()
 	{
 		indexX = indexY = 0;
-		initScreenTbl();
+		ready.set(false);
+//		initScreenTbl();
 		repaint();
 	}
 
-	public void outputDsp(int dsp)
+	/**
+	 * @param c
+	 */
+	public void putCharacter(final int c)
 	{
-		if (loggingOutput)
-		{
-			if (dsp == 0x0A || dsp == 0x0D)
-			{
-				System.out.println();
-			}
-			else if (0x20 <= dsp && dsp < 0x5F) // legal characters
-			{
-				System.out.print((char)dsp);
-			}
-			else
-			{
-				System.out.println("<x" + Integer.toHexString(dsp) + ">");
-			}
-		}
-		while (offScrImg == null)
+//		if (loggingOutput)
+//		{
+//			if (c == 0x0A || c == 0x0D)
+//			{
+//				System.out.println();
+//			}
+//			else if (0x20 <= c && c < 0x5F) // legal characters
+//			{
+//				System.out.print((char)c);
+//			}
+//			else
+//			{
+//				System.out.println("<x" + Integer.toHexString(c) + ">");
+//			}
+//		}
+		while (!ready.get())
 		{
 			try
 			{
@@ -73,7 +86,7 @@ public class Screen extends JPanel
 			}
 		}
 		Graphics gr = offScrImg.getGraphics();
-		switch (dsp)
+		switch (c)
 		{
 			case '_': // Backspace
 				drawCharacCurr(gr,0);
@@ -86,7 +99,7 @@ public class Screen extends JPanel
 				{
 					indexX--;
 				}
-				screenTbl[indexX][indexY] = 0x00;
+//				screenTbl[indexX][indexY] = 0x00;
 			break;
 			case '\n':
 			case '\r':
@@ -95,10 +108,10 @@ public class Screen extends JPanel
 				indexY++;
 			break;
 			default:
-				if (' ' <= dsp && dsp < '_') // legal characters
+				if (' ' <= c && c < '_') // legal characters
 				{
-					screenTbl[indexX][indexY] = dsp;
-					drawCharacCurrTbl(gr);
+//					screenTbl[indexX][indexY] = dsp;
+					drawCharacCurr(gr,c);
 					indexX++;
 				}
 			break;
@@ -116,9 +129,16 @@ public class Screen extends JPanel
 		}
 		drawCharacCurr(gr,1);
 		gr.dispose();
-		repaint();
+		SwingUtilities.invokeLater(repaint);
 	}
 
+	private final Runnable repaint = new Runnable()
+	{
+		public void run()
+		{
+			repaint();
+		}
+	};
 //	public void update(Graphics gc)
 //	{
 //		if (offScrImg == null)
@@ -137,40 +157,54 @@ public class Screen extends JPanel
 	public void paintComponent(final Graphics gc)
 	{
 		super.paintComponent(gc);
-		if (offScrImg == null)
+		if (!ready.get())
 		{
 			offScrImg = createVolatileImage(X_CHARS * X_PIX * pixelSize,Y_CHARS * Y_PIX * pixelSize);
+			createCharImages();
 			Graphics g = offScrImg.getGraphics();
 			g.setColor(Color.black);
 			g.fillRect(0,0,X_CHARS * X_PIX * pixelSize,Y_CHARS * Y_PIX * pixelSize);
 			g.dispose();
+			ready.set(true);
 		}
 		gc.drawImage(offScrImg,0,0,this);
 	}
 
-	private void x(Graphics gc)
+	private void createCharImages()
 	{
-		//gc.setColor(Color.black);
-		//gc.fillRect(0,0,X_CHARS * X_PIX * pixelSize,Y_CHARS * Y_PIX * pixelSize);
-		//gc.setColor(Color.green);
-		int yPosition = 0;
-		for (int j = 0; j < Y_CHARS; ++j)
+		for (int i = 0; i < CHARSET_SIZE; i++)
 		{
-			int xPosition = 0;
-			for (int i = 0; i < X_CHARS; ++i)
-			{
-				drawCharac(gc,xPosition,yPosition,screenTbl[i][j]);
-				xPosition += pixelSize * X_PIX;
-			}
-			yPosition += pixelSize * Y_PIX;
+			final Image img = createVolatileImage(X_PIX*pixelSize,Y_PIX*pixelSize);
+			Graphics g = img.getGraphics();
+			drawCharacImg(g,0,0,i);
+			g.dispose();
+			this.offScrImgChar.add(img);
 		}
-		drawCharac(gc,indexX * (pixelSize * X_PIX),indexY * (pixelSize * Y_PIX),1); // cursor
 	}
 
-	private void drawCharacCurrTbl(final Graphics gc)
-	{
-		drawCharac(gc, indexX * (pixelSize * X_PIX), indexY * (pixelSize * Y_PIX), screenTbl[indexX][indexY]);
-	}
+//	private void x(Graphics gc)
+//	{
+//		//gc.setColor(Color.black);
+//		//gc.fillRect(0,0,X_CHARS * X_PIX * pixelSize,Y_CHARS * Y_PIX * pixelSize);
+//		//gc.setColor(Color.green);
+//		int yPosition = 0;
+//		for (int j = 0; j < Y_CHARS; ++j)
+//		{
+//			int xPosition = 0;
+//			for (int i = 0; i < X_CHARS; ++i)
+//			{
+//				drawCharac(gc,xPosition,yPosition,screenTbl[i][j]);
+//				xPosition += pixelSize * X_PIX;
+//			}
+//			yPosition += pixelSize * Y_PIX;
+//		}
+//		drawCharac(gc,indexX * (pixelSize * X_PIX),indexY * (pixelSize * Y_PIX),1); // cursor
+//	}
+
+//	private void drawCharacCurrTbl(final Graphics gc)
+//	{
+//		drawCharac(gc, indexX * (pixelSize * X_PIX), indexY * (pixelSize * Y_PIX), screenTbl[indexX][indexY]);
+//	}
 
 	private void drawCharacCurr(final Graphics gc, final int characNumber)
 	{
@@ -178,6 +212,11 @@ public class Screen extends JPanel
 	}
 
 	private void drawCharac(final Graphics gc, final int xPosition, final int yPosition, final int characNumber)
+	{
+		gc.drawImage(this.offScrImgChar.get(characNumber),xPosition,yPosition,this);
+	}
+
+	private void drawCharacImg(final Graphics gc, final int xPosition, final int yPosition, final int characNumber)
 	{
 		final int[] rc = this.charac[characNumber];
 		for (int y = 0; y < Y_PIX; ++y)
@@ -229,36 +268,37 @@ public class Screen extends JPanel
 		//charac[95][6] = 63; underscore???
 	}
 
-	private void initScreenTbl()
-	{
-		for (int i = 0; i < X_CHARS; i++)
-		{
-			for (int j = 0; j < Y_CHARS; j++)
-				screenTbl[i][j] = 0;
-		}
-	}
+//	private void initScreenTbl()
+//	{
+//		for (int i = 0; i < X_CHARS; i++)
+//		{
+//			for (int j = 0; j < Y_CHARS; j++)
+//				screenTbl[i][j] = 0;
+//		}
+//	}
 
-	private void newLine()
-	{
-		for (int x = 0; x < X_CHARS; x++)
-		{
-			for (int y = 0; y < Y_CHARS - 1; y++)
-			{
-				screenTbl[x][y] = screenTbl[x][y + 1];
-			}
-		}
-		for (int i = 0; i < X_CHARS; i++)
-		{
-			screenTbl[i][Y_CHARS - 1] = 0;
-		}
-	}
+//	private void newLine()
+//	{
+//		for (int x = 0; x < X_CHARS; x++)
+//		{
+//			for (int y = 0; y < Y_CHARS - 1; y++)
+//			{
+//				screenTbl[x][y] = screenTbl[x][y + 1];
+//			}
+//		}
+//		for (int i = 0; i < X_CHARS; i++)
+//		{
+//			screenTbl[i][Y_CHARS - 1] = 0;
+//		}
+//	}
 
 	private int charac[][];
-	private volatile int screenTbl[][];
+//	private volatile int screenTbl[][];
 	private volatile int indexX;
 	private volatile int indexY;
 	private final int pixelSize;
 	private final boolean scanline;
 	private volatile Image offScrImg;
-	private static final boolean loggingOutput = false;
+	private volatile List<Image> offScrImgChar = new ArrayList<Image>(CHARSET_SIZE);
+//	private static final boolean loggingOutput = false;
 }

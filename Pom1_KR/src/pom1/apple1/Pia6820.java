@@ -1,8 +1,11 @@
 package pom1.apple1;
 
+import pom1.apple1.devices.InputDevice;
+import pom1.apple1.devices.OutputDevice;
+
 public class Pia6820
 {
-	private final Screen screen;
+	private final OutputDevice out;
 
 	private volatile int dspCr;
 	private volatile int dsp;
@@ -10,16 +13,16 @@ public class Pia6820
 	private volatile int kbdCr;
 	private volatile int kbd;
 
-	private volatile Keyboard keyboard;
+	private volatile InputDevice in;
 
 	private int prevKey;
 
 	private int kbdCrReady;
 
-	public Pia6820(final Screen screen, final Keyboard keyboard)
+	public Pia6820(final OutputDevice out, final InputDevice in)
 	{
-		this.screen = screen;
-		this.keyboard = keyboard;
+		this.out = out;
+		this.in = in;
 		reset();
 	}
 
@@ -51,7 +54,7 @@ public class Pia6820
 	public void writeDsp(int dsp)
 	{
 		dsp &= 0x7F;
-		this.screen.outputDsp(dsp);
+		this.out.putCharacter(dsp);
 		this.dsp = dsp;
 	}
 
@@ -62,7 +65,7 @@ public class Pia6820
 	public int readKbdCr()
 	{
 		int kbdCr = this.kbdCr;
-		if (this.keyboard.isReady())
+		if (this.in.isReady())
 		{
 			kbdCr = this.kbdCrReady;
 			this.kbdCr = 0;
@@ -72,9 +75,9 @@ public class Pia6820
 
 	public int readKbd() throws InterruptedException
 	{
-		if (this.keyboard.isReady())
+		if (this.in.isReady())
 		{
-			final int c = this.keyboard.getNextKey();
+			final int c = this.in.getCharacter();
 			this.prevKey = c & 0x7F;
 			return c;
 		}
