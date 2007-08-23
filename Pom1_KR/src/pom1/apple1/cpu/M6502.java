@@ -12,7 +12,7 @@ import pom1.apple1.Memory;
 // Referenced classes of package pom1.apple1:
 //            Memory
 
-public class M6502 implements Runnable
+public class M6502
 {
 	protected boolean valid = false;
 
@@ -52,13 +52,23 @@ public class M6502 implements Runnable
     	{
     		throw new IllegalStateException("CPU already running");
     	}
-    	this.runner = new Thread(this,"M6502");
+    	this.runner = new Thread(new Runnable()
+    	{
+			public void run()
+			{
+				runFetchExecuteCycle();
+			}
+    	},"M6502");
         this.runner.start();
 		this.stop.set(false);
     }
 
     public synchronized void stop()
     {
+    	if (this.runner == null)
+    	{
+    		throw new IllegalStateException("CPU not running");
+    	}
 		this.stop.set(true);
         this.runner.interrupt();
         try
@@ -72,7 +82,7 @@ public class M6502 implements Runnable
 		this.runner = null;
     }
 
-    public void run()
+    private void runFetchExecuteCycle()
     {
         while (!this.stop.get())
         {
@@ -100,7 +110,7 @@ public class M6502 implements Runnable
 		}
 	}
 
-    public boolean executeOpcode() throws InterruptedException
+	protected boolean executeOpcode() throws InterruptedException
     {
     	valid = true;
 

@@ -27,7 +27,7 @@ public class Screen extends JPanel implements OutputDevice
 //		screenTbl = new int[X_CHARS][Y_CHARS];
 		scanline = false;
 		loadCharac();
-		this.pixelSize = 2;
+		this.pixelSize = 1;
 		setPreferredSize(new Dimension(X_CHARS * X_PIX * this.pixelSize,Y_CHARS * Y_PIX * this.pixelSize));
 		reset();
 	}

@@ -24,6 +24,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import pom1.apple1.Memory;
@@ -235,7 +236,10 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 		//        btMemory.addActionListener(this);
 		bt6502 = new JButton("OK");
 		bt6502.addActionListener(this);
-		guiFrame.add(screen);
+		JScrollPane scroll = new JScrollPane(screen);
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		guiFrame.add(scroll);
 		//        Insets i = guiFrame.getInsets();
 		//        guiFrame.setSize((280 * pixelSize + (i.left + i.right)) - 2, (192 * pixelSize + (i.top + i.bottom)) - 2);
 		guiFrame.setResizable(false);
@@ -251,13 +255,13 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 		keyboard = new Keyboard();
 
 		pia = new Pia6820(keyboard,screen);
-//		pia = new Pia6820(new StandardInput(), new StandardOutput());
+//		pia = new Pia6820(new StandardInput(), new StandardOutput()); //TODO
 
 		mem = new Memory(pia);
 
 		try
 		{
-			if (System.getProperty("65C02","false").equalsIgnoreCase("true"))
+			if (Boolean.parseBoolean(System.getProperty("65C02","false")))
 			{
 				cpu = new M65C02(mem);
 			}
