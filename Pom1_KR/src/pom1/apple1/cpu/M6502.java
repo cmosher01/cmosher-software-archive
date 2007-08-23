@@ -1992,4 +1992,9 @@ public class M6502 implements Runnable
     protected int ptrH;
     protected int ptrL;
     protected int tmp;
+
+	public int pc()
+	{
+		return this.programCounter;
+	}
 }

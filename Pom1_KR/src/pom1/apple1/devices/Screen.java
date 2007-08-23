@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -28,7 +27,7 @@ public class Screen extends JPanel implements OutputDevice
 //		screenTbl = new int[X_CHARS][Y_CHARS];
 		scanline = false;
 		loadCharac();
-		this.pixelSize = 1;
+		this.pixelSize = 2;
 		setPreferredSize(new Dimension(X_CHARS * X_PIX * this.pixelSize,Y_CHARS * Y_PIX * this.pixelSize));
 		reset();
 	}
@@ -132,6 +131,15 @@ public class Screen extends JPanel implements OutputDevice
 		SwingUtilities.invokeLater(repaint);
 	}
 
+	private void drawCharacCurr(final Graphics gc, final int characNumber)
+	{
+		gc.drawImage(
+			this.offScrImgChar.get(characNumber),
+			indexX * pixelSize * X_PIX,
+			indexY * pixelSize * Y_PIX,
+			this);
+	}
+
 	private final Runnable repaint = new Runnable()
 	{
 		public void run()
@@ -206,15 +214,7 @@ public class Screen extends JPanel implements OutputDevice
 //		drawCharac(gc, indexX * (pixelSize * X_PIX), indexY * (pixelSize * Y_PIX), screenTbl[indexX][indexY]);
 //	}
 
-	private void drawCharacCurr(final Graphics gc, final int characNumber)
-	{
-		drawCharac(gc, indexX * (pixelSize * X_PIX), indexY * (pixelSize * Y_PIX), characNumber);
-	}
 
-	private void drawCharac(final Graphics gc, final int xPosition, final int yPosition, final int characNumber)
-	{
-		gc.drawImage(this.offScrImgChar.get(characNumber),xPosition,yPosition,this);
-	}
 
 	private void drawCharacImg(final Graphics gc, final int xPosition, final int yPosition, final int characNumber)
 	{

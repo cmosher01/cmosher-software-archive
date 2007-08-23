@@ -271,6 +271,7 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 			e.printStackTrace();
 		}
 		cpu.start();
+		mem.setCpu(cpu);
 
 		screen.addKeyListener(keyboard);
 	}

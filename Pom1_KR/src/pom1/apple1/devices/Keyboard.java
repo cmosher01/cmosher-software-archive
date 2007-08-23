@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 public class Keyboard extends KeyAdapter implements KeyListener, InputDevice
 {
@@ -61,9 +62,20 @@ public class Keyboard extends KeyAdapter implements KeyListener, InputDevice
 
 	/**
 	 * @return
+	 * @throws InterruptedException 
 	 */
-	public boolean isReady()
+	public boolean isReady(boolean wait) throws InterruptedException
 	{
-		return !this.qKeys.isEmpty();
+		if (!wait)
+		{
+			return !this.qKeys.isEmpty();
+		}
+		final Integer keyOrNull = this.qKeys.poll(1,TimeUnit.SECONDS);
+		if (keyOrNull == null)
+		{
+			return false;
+		}
+		this.qKeys.add(keyOrNull);
+		return true;
 	}
 }

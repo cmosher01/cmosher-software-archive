@@ -62,20 +62,24 @@ public class Pia6820
 
 
 
-	public int readKbdCr()
+	public int readKbdCr(boolean wait) throws InterruptedException
 	{
-		int kbdCr = this.kbdCr;
-		if (this.in.isReady())
+		final int kbdCr;
+		if (this.in.isReady(wait))
 		{
 			kbdCr = this.kbdCrReady;
 			this.kbdCr = 0;
+		}
+		else
+		{
+			kbdCr = this.kbdCr;
 		}
 		return kbdCr;
 	}
 
 	public int readKbd() throws InterruptedException
 	{
-		if (this.in.isReady())
+		if (this.in.isReady(false))
 		{
 			final int c = this.in.getCharacter();
 			this.prevKey = c & 0x7F;

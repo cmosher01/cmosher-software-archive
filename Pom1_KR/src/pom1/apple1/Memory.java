@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import pom1.apple1.cpu.M6502;
 
 public class Memory
 {
@@ -23,6 +24,7 @@ public class Memory
 //	private boolean ram8k;
 //	private boolean writeInRom;
 
+	private M6502 cpu;
 	public Memory(Pia6820 pia) throws IOException
 	{
 		this.pia = pia;
@@ -40,12 +42,19 @@ public class Memory
 //		writeInRom = b;
 //	}
 
+	public void setCpu(M6502 cpu)
+	{
+		this.cpu = cpu;
+	}
 	public int read(int address) throws InterruptedException
 	{
 		if (address == KBD)
 			return pia.readKbd();
 		if (address == KBDCR)
-			return pia.readKbdCr();
+		{
+			int pc = cpu.pc();
+			return pia.readKbdCr((mem[pc] == 0x10 && mem[pc+1] == 0xFB));
+		}
 		if (address == DSP)
 			return pia.readDsp();
 		if (address == DSPCR)

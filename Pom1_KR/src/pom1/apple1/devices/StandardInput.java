@@ -20,7 +20,7 @@ public class StandardInput implements InputDevice
 		}
 	}
 
-	public boolean isReady()
+	public boolean isReady(boolean wait)
 	{
 		try
 		{
