@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -115,17 +116,21 @@ public class Screen extends JPanel implements OutputDevice
 				}
 			break;
 		}
+		gr.dispose();
 		if (X_CHARS <= indexX)
 		{
 			indexX = 0;
 			indexY++;
 		}
-		if (Y_CHARS <= indexY)
+		if (maxy <= indexY)
 		{
-			scroll(gr);
-			//newLine();
-			indexY--;
+//			scroll(gr);
+//			//newLine();
+//			indexY--;
+			maxy++;
+			addLine();
 		}
+		gr = offScrImg.getGraphics();
 		drawCharacCurr(gr,1);
 		gr.dispose();
 		SwingUtilities.invokeLater(repaint);
@@ -140,6 +145,7 @@ public class Screen extends JPanel implements OutputDevice
 			this);
 	}
 
+	private int maxy = Y_CHARS;
 	private final Runnable repaint = new Runnable()
 	{
 		public void run()
@@ -176,6 +182,23 @@ public class Screen extends JPanel implements OutputDevice
 			ready.set(true);
 		}
 		gc.drawImage(offScrImg,0,0,this);
+	}
+
+	private void addLine()
+	{
+		Image img = createVolatileImage(offScrImg.getWidth(this), offScrImg.getHeight(this) + Y_PIX * pixelSize);
+		Graphics gc = img.getGraphics();
+		gc.drawImage(offScrImg,0,0,this);
+		gc.setColor(Color.black);
+		gc.fillRect(
+			0, offScrImg.getHeight(this),
+			X_CHARS * X_PIX * pixelSize, Y_PIX * pixelSize);
+		gc.dispose();
+		offScrImg.flush();
+		offScrImg = img;
+		setPreferredSize(new Dimension(offScrImg.getWidth(this), offScrImg.getHeight(this)));
+		revalidate();
+		scrollRectToVisible(new Rectangle(0,offScrImg.getHeight(this),1,1));
 	}
 
 	private void createCharImages()

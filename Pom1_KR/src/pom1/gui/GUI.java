@@ -242,7 +242,7 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 		guiFrame.add(scroll);
 		//        Insets i = guiFrame.getInsets();
 		//        guiFrame.setSize((280 * pixelSize + (i.left + i.right)) - 2, (192 * pixelSize + (i.top + i.bottom)) - 2);
-		guiFrame.setResizable(false);
+		guiFrame.setResizable(true);
 		guiFrame.pack();
 		guiFrame.setVisible(true);
 		screen.setFocusTraversalKeysEnabled(false);
