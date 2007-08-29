@@ -175,6 +175,8 @@ FRMTKCTR        = $44           ; TRK# TO WRITE/READ WHEN FORMAT-
                                 ; TING/VERIFYING. ALSO ACTS AS A
                                 ; CNTR OF THE # OF TRKS FORMATTED/
                                 ; VERIFIED.
+A5H             = $45
+
 SYNCNTR         = $45           ; # OF SYNC BYTES 2 WRT BTWN SECS
                                 ; & DELAY CNTR TO LET SOME SYNCS
                                 ; PASS BY READ HEAD WHEN VERIFYING
@@ -1927,7 +1929,7 @@ OPTNOK          LDA OPTNISSD-1,X
 
                                 ; CHECK IF ARGUMENT IS TOO LARGE.
 
-                LDA A5L+1       ; GET HI BYTE OF ARGUMENT.
+                LDA A5H         ; GET HI BYTE OF ARGUMENT.
                 BNE CKMAXVAL    ; BRANCH IF NOT 0.
                 LDA A5L         ; HI BYTE WAS 0 SO CHK LOW BYTE.
                 CMP OPTNRNG,Y
@@ -1935,7 +1937,7 @@ OPTNOK          LDA OPTNISSD-1,X
 
                                 ; CHECK IF ARGUMENT < = MAX LEGAL PLUS 1.
 
-                LDA A5L+1
+                LDA A5H
 CKMAXVAL        CMP OPTNRNG+3,Y ; CMP HI BYTE TO MAX LEGAL VAL.
                 BCC SVALOPTN    ; LESS THAN MAX SO ARGUMENT OK.
 TOARGRNG        BNE ARGRNGER    ; ARGUMENT > MAX LGL, SO RNG ERR.
@@ -1953,7 +1955,7 @@ SVALOPTN        LDA TEMPBYT     ; OBSOLETE, TEMPBYT WAS SET TO 0
                                 ; TABLE HAS 4 BYTES, BUT @ PARSED
                                 ; VAL ENTRY IS ONLY 2 BYTES LONG.
                 TAY             ; PUT INDEX 2 PARSED TABLE IN (Y).
-                LDA A5L+1       ; STORE ARGUMENT IN PARSED TBL.
+                LDA A5H         ; STORE ARGUMENT IN PARSED TBL.
                 STA VOLPRSD+1,Y
                 LDA A5L
                 STA VOLPRSD,Y
@@ -2104,7 +2106,7 @@ ZFMPARM         STA FMPRMLST-1,Y
 
 CNVRTASC        LDA #0          ; ZERO OUT LOC'S TO HOLD RESULT.
                 STA A5L         ; LOW BYTE OF RESULT.
-                STA A5L+1       ; HI BYTE OF RESULT.
+                STA A5H         ; HI BYTE OF RESULT.
                 JSR PURGECMD    ; GET 1RST NON-SPACE CHAR.
                 PHP             ; SAVE STATUS (Z-FLAG) ON STK.
                                 ; (IF <CR> OR COMMA, Z-FLAG = 1.)
@@ -2136,7 +2138,7 @@ CKIFDONE        BNE SUBTRASC    ; BRANCH IF NOT <CR> OR COMMA.
                                 ; LOW/HI BYTES OF RESULT.
 
                 LDX A5L         ; RESULT LOW.
-                LDA A5L+1       ; RESULT HI.
+                LDA A5H         ; RESULT HI.
                 CLC             ; (C)=0 TO SIGNAL GOOD CONVERSION.
                 RTS             ; EXIT TO CALLER OF CNVRTASC.
 
@@ -2156,7 +2158,7 @@ SUBTRASC        SEC
                 ADC A5L
                 TAX             ; (X) = LOW RESULT * 2 + NEW DIGIT
                 LDA #0
-                ADC A5L+1       ; ADD (C) TO HI BYTE OF RESULT.
+                ADC A5H         ; ADD (C) TO HI BYTE OF RESULT.
                 TAY             ; (Y) = HI BYTE OF RESULT*2 + (C).
                 JSR DOUBLE      ; (A) = RESULT * 8.
                 JSR DOUBLE
@@ -2164,8 +2166,8 @@ SUBTRASC        SEC
                 ADC A5L
                 STA A5L         ; (RESULT*2+NEW DIGIT)+(RESULT*8).
                 TYA
-                ADC A5L+1       ; ADD (C) TO UPDATE HI BYTE.
-                STA A5L+1
+                ADC A5H         ; ADD (C) TO UPDATE HI BYTE.
+                STA A5H
                 BCC ASC2DEC     ; BRANCH IF # <65536.
 
                                 ; ERROR - INVALID ASCII NUMBER.
@@ -2176,7 +2178,7 @@ NOTASCII        SEC             ; EXIT WITH (C)=1 TO SIGNAL ERROR.
                                 ; MULTIPLY 2-BYTE RESULT TIMES 2.
 
 DOUBLE          ASL A5L         ; "ROLL" HI & LOW BYTES AS A UNIT.
-                ROL A5L+1       ; (PICK UP (C) IN HI BYTE.)
+                ROL A5H         ; (PICK UP (C) IN HI BYTE.)
                 RTS
 
 
@@ -2501,7 +2503,7 @@ SAVLENFM        LDA LENPRSD     ; PUT LENGTH IN FM PARAMETER LIST.
                                 ; ----------------------------------
 
 CLOSIFOP        JSR CMDCLOSE    ; CLOSE IF ALREADY OPEN.
-                LDA A5L+1       ; A5L/H POINTS AT HIGHEST NUMBERED
+                LDA A5H         ; A5L/H POINTS AT HIGHEST NUMBERED
                                 ; (LOWEST IN MEMORY) FREE DOS BUF.
                 BNE SAVFNPTR    ; BRANCH IF FOUND A FREE BUFFER.
                 JMP NOBUFERR    ; COULDN'T LOCATE A FREE BUFFER SO
@@ -3816,7 +3818,7 @@ RESTAT0         LDY #0
                                 ; ==================================
 
 GETBUFF         LDA #0          ; DEFAULT HI BYTE OF PTR TO 0.
-                STA A5L+1       ; (IE. ASSUME NO FREE BUFS AVAIL.)
+                STA A5H         ; (IE. ASSUME NO FREE BUFS AVAIL.)
                 JSR GETFNBF1    ; PT A3L/H AT 1RST DOS FILE NAME
                                 ; BUFFER IN THE DOS BUFFER CHAIN.
                 JMP FNCHAR1     ; GO GET 1RST CHR OF NAME FRM BUF.
@@ -3830,7 +3832,7 @@ FNCHAR1         JSR GETFNBY1    ; GET 1RST CHR OF NAME FRM NAM BUF
                 LDA A3L         ; BUF WAS FREE, THERE4 POINT THE
                 STA A5L         ; A5L/H POINTERS AT THE FREE BUF.
                 LDA A3L+1
-                STA A5L+1
+                STA A5H
                 BNE GETFNLNK    ; ALWAYS.
 
 NXFNBUF         LDY #29         ; BUF WASN'T FREE SO CMP NAME OF
@@ -5375,7 +5377,7 @@ PRDSKVOL        LDA DSKVOLUM,X  ; GET CHAR OF REVERSE STRING.
                 JSR COUT        ; PRINT CHAR.
                 DEX
                 BPL PRDSKVOL    ; MORE CHARS IN STRING.
-                STX A5L+1       ; NONSENSE INSTRUCTION (CAUSE THE
+                STX A5H         ; NONSENSE INSTRUCTION (BECAUSE THE
                                 ; HI BYTE IS NOT USED IN THE
                                 ; PRVOLNMB ROUTINE ($AE42).)
                 LDA IBSMOD      ; GET VOL# FOUND (FROM RWTS'S IOB)
@@ -5441,7 +5443,7 @@ PRTFTYPE        LDA FTYPETBL,Y  ; GOT A SET BIT SO NOW GET CHAR
                 STA A5L         ; (IN SECTORS) FROM FILE DESCRIP
                 LDA FIL1SIZE+1,X
                                 ; IN CUR DIR SEC & STICK THEM IN
-                STA A5L+1       ; IN A5L/H.
+                STA A5H         ; IN A5L/H.
                 JSR PRVOLNMB    ; PRINT FILE SIZE.
                                 ; *** NOTE *** - ROUTINE IS BUGGY.
                                 ; (DOESN'T USE HI BYTE, SO FILES
@@ -5534,9 +5536,9 @@ GETVNMB         LDA A5L         ; GET LOW BTE HEX AND CMP IT TO
                 BCC TONEGASC    ; BRANCH IF # < CONVERSION FACTOR.
                 SBC BASETEN,Y   ; SUBTRACT THE CONVERSION FACTOR.
                 STA A5L         ; STORE THE REMAINDER.
-                LDA A5L+1       ; NONSENSE - NOT USED.
+                LDA A5H         ; NONSENSE - NOT USED.
                 SBC #0          ; NONSENSE - NOT USED.
-                STA A5L+1       ; NONSENSE - NOT USED.
+                STA A5H         ; NONSENSE - NOT USED.
                 PLA             ; GET COUNTER OF # OF SUBT'S AND
                 ADC #0          ; ADD (C). IF REMAIN. > CONVERSION
                 PHA             ; FACTOR, ADD 1, ELSE ADD NOTHING.
