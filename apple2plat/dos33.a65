@@ -76,7 +76,7 @@
                                 ;                ENDIF
                                 ;                ENDIF
                                 ; 
-VERS            = 1986          ; set VERS to 1980, 1983, or 1986
+VERS            = 31            ; set VERS to 1980, 1983, or 1986, or 31
 FRANKLIN        = 0             ; set to 1 for Franklin Ace patch (also set VERS=1980), else 0
 
                 ORG   $1B00
@@ -389,10 +389,76 @@ MONRTS          = $FF58         ; AN RTS INSTRUC LOC'D IN MONITOR
 MON             = $FF65         ; NORM ENTRY ROUTE 2 MONITOR ROM.
                                 ; ("CALL -151" GOES HERE.)
 
-STAZ            MACRO LOC
-;                STA   LOC
+LDAZ            MACRO ZEROPAGE_LOC
+                IF VERS = 31
+                DB    $AD
+                DW    ZEROPAGE_LOC
+                ELSE
+                LDA   ZEROPAGE_LOC
+                ENDIF
+                ENDM
+
+LDYZ            MACRO ZEROPAGE_LOC
+                IF VERS = 31
+                DB    $AC
+                DW    ZEROPAGE_LOC
+                ELSE
+                LDY   ZEROPAGE_LOC
+                ENDIF
+                ENDM
+
+STAZ            MACRO ZEROPAGE_LOC
+                IF VERS = 31
                 DB    $8D
-                DW    LOC
+                DW    ZEROPAGE_LOC
+                ELSE
+                STA   ZEROPAGE_LOC
+                ENDIF
+                ENDM
+
+STXZ            MACRO ZEROPAGE_LOC
+                IF VERS = 31
+                DB    $8E
+                DW    ZEROPAGE_LOC
+                ELSE
+                STX   ZEROPAGE_LOC
+                ENDIF
+                ENDM
+
+STYZ            MACRO ZEROPAGE_LOC
+                IF VERS = 31
+                DB    $8C
+                DW    ZEROPAGE_LOC
+                ELSE
+                STY   ZEROPAGE_LOC
+                ENDIF
+                ENDM
+
+ADCZ            MACRO ZEROPAGE_LOC
+                IF VERS = 31
+                DB    $6D
+                DW    ZEROPAGE_LOC
+                ELSE
+                ADC   ZEROPAGE_LOC
+                ENDIF
+                ENDM
+
+DECZ            MACRO ZEROPAGE_LOC
+                IF VERS = 31
+                DB    $CE
+                DW    ZEROPAGE_LOC
+                ELSE
+                DEC   ZEROPAGE_LOC
+                ENDIF
+                ENDM
+
+INCZ            MACRO ZEROPAGE_LOC
+                IF VERS = 31
+                DB    $EE
+                DW    ZEROPAGE_LOC
+                ELSE
+                INC   ZEROPAGE_LOC
+                ENDIF
                 ENDM
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                 ; Chris Mosher:
@@ -408,7 +474,7 @@ DOSRELOC
                 LDA   #HI DOSTOP
                 STAZ  A3H
                 LDX   #LO DOSTOP
-                STX   A3L
+                STXZ  A3L
 
                                 ; check for existence of RAM,
                                 ; starting at page $BF and working downwards
@@ -427,15 +493,19 @@ L1B11           TYA
                 BNE   L1B11
                 BEQ   L1B28
 
-L1B24           DEC   A3H
+L1B24
+                DECZ  A3H
                 BNE   L1B0B     ; always branches
 
-
+                IF VERS = 31
+L1B28           JSR   L1B28SR
+                ELSE
                                 ; upon entry, A3 --> first byte of highest RAM page (e.g., $BF00)
-L1B28           LDA   A3H
+L1B28
+                LDAZ  A3H
                 AND   #$DF      ; $BF becomes $9F
-                STA   A4H
-                STX   A4L       ; (A4) --> $9F00
+                STAZ  A4H
+                STXZ  A4L       ; (A4) --> $9F00
                 LDA   (A4L,X)
                 PHA             ; save (A4) in case we need to restore it below
                 STA   PROSCRTH
@@ -454,10 +524,14 @@ L1B35           TYA
                 PLA             ; (A4)
                 JMP   L1B51
 
+
+
+
 L1B4C           PLA
                 STA   (A4L,X)   ; restore (A4)
                 LDY   A3H       ; $BF
 
+                ENDIF
 
 
                                 ; upon entry Y contains highest destination page (e.g., $BF)
@@ -490,12 +564,12 @@ L1B51           INY
                                 ; fix up DOS vectors (ranges defined
                                 ; in FIXVECTBL).
                 LDX   #0
-                STX   A3L
+                STXZ  A3L
 
 FIXVEC          LDA   FIXVECTBL,X
                 TAY
                 LDA   FIXVECTBL+1,X
-                STA   A3H
+                STAZ  A3H
                 JMP   L1B93
 
 L1B86           CLC
@@ -504,11 +578,12 @@ L1B86           CLC
                 STA   (A3L),Y
                 INY
                 BNE   L1B93
-                INC   A3H
+                INCZ  A3H
 L1B93           INY
                 BNE   L1B98
-                INC   A3H
-L1B98           LDA   A3H
+                INCZ  A3H
+L1B98
+                LDAZ  A3H
                 CMP   FIXVECTBL+3,X
                 BCC   L1B86
                 TYA
@@ -532,14 +607,14 @@ L1B98           LDA   A3H
                 LDX   #0
 FIXCOD          STX   CURDIRNX
                 LDA   FIXCODTBL,X
-                STA   A3L
+                STAZ  A3L
                 LDA   FIXCODTBL+1,X
-                STA   A3H
+                STAZ  A3H
 
 .LOOP           LDX   #0
                 LDA   (A3L,X)
                 JSR   INSDS2
-                LDY   $2F
+                LDYZ  $2F
                 CPY   #2
                 BNE   .NOCHANGE
                 LDA   (A3L),Y
@@ -550,16 +625,16 @@ FIXCOD          STX   CURDIRNX
                 ADC   OFFSET
                 STA   (A3L),Y
 .NOCHANGE       SEC
-                LDA   $2F
-                ADC   A3L
-                STA   A3L
+                LDAZ  $2F
+                ADCZ  A3L
+                STAZ  A3L
                 LDA   #$00
-                ADC   A3H
-                STA   A3H
+                ADCZ  A3H
+                STAZ  A3H
                 LDX   CURDIRNX
                 CMP   FIXCODTBL+3,X
                 BCC   .LOOP
-                LDA   A3L
+                LDAZ  A3L
                 CMP   FIXCODTBL+2,X
                 BCC   .LOOP
 
@@ -572,13 +647,13 @@ FIXCOD          STX   CURDIRNX
 
                                 ; Copy the image to the new location
 RELOC           LDA   #$3F
-                STA   A3H
+                STAZ  A3H
                 LDY   DSTPAGELIM
                 DEY
-                STY   A4H
+                STYZ  A4H
                 LDA   #0
-                STA   A3L
-                STA   A4L
+                STAZ  A3L
+                STAZ  A4L
                 TAY
 .LOOP2          LDA   (A3L),Y
                 STA   (A4L),Y
@@ -586,8 +661,8 @@ RELOC           LDA   #$3F
                 BNE   .LOOP2
                 DEC   PAGECNT2
                 BEQ   .DONE
-                DEC   A3H
-                DEC   A4H
+                DECZ  A3H
+                DECZ  A4H
                 BNE   .LOOP2
 .DONE
                                 ; Done relocating, so now cold-start it
@@ -648,6 +723,9 @@ PAGECNT2        DB    $23       ; (redundant?) number of pages to be moved
                 DS    4
                 ENDIF
 DOSNMBF1        DS    $2D       ; this label represents the first DOS buffer
+                IF VERS = 31 ; TODO ???
+                DS    $13
+                ENDIF
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -736,7 +814,13 @@ CMDTBL          DW CMDINIT-1    ; $A54F-1
                 DW CMDBRUN-1    ; $A38E-1
                 DW CMDVERFY-1   ; $A27D-1
 
-
+;                IF VERS = 31
+;CHAINTRY
+;RUNTRY
+;ADBSCERR
+;TOCLDVEC
+;TOWRMVEC
+;                ELSE
                                 ; ===========================================
                                 ; ACTIVE BASIC ENTRY POINT VECTOR TABLE
                                 ; ($9D56 - $9D61)
@@ -758,6 +842,9 @@ TOWRMVEC        DW BASICWRM     ; ADR OF BASIC'S WARM START ROUT'N
 
                                 ; ADR OF ROUT'N THAT ENABLES BASIC
                                 ; PRGMS TO BE RELOCATABLE.
+                IF VERS = 31
+RLOCNTRY ; TODO ?????
+                ELSE
 ;mosher ??? may be different on slaves vs. master ???
 ;                IF VERS = 1986 | VERS = 1983
 ;RLOCNTRY        DW 0
@@ -766,7 +853,8 @@ TOWRMVEC        DW BASICWRM     ; ADR OF BASIC'S WARM START ROUT'N
 RLOCNTRY        DW SETLINKS
 ;                ENDIF
 ;                ENDIF
-
+;                ENDIF
+                ENDIF
 
                                 ; ====================================
                                 ; IMAGE OF INTEGER BASIC'S ENTRY
@@ -789,8 +877,10 @@ IMGFPV          DW RUNFPROM
                 DW RUNFPROM
                 DW BSCERHLR
                 DW BASICCLD
+                IF VERS != 31
                 DW RESTART
                 DW SETLINKS
+                ENDIF
 
 
                                 ; ========================================
@@ -3652,7 +3742,7 @@ TOAPPTCH        JMP APNDPTCH    ; GO HANDLE END-OF-DATA ERROR.
 BK2FMDRV        JSR CKIFAPND    ; <---NOTE: APNDPTCH RETURN HERE!!
                                 ; GO CHK IF THE APPEND FLAG IS ON.
                 ELSE
-                IF VERS = 1980
+                IF VERS = 1980 | VERS = 31
                 NOP
 BK2FMDRV        NOP
                 NOP
@@ -10242,3 +10332,33 @@ DOSLIM
                                 ; ********************************
                                 ; END OF DOS ($BFFF)
                                 ; ********************************
+
+
+
+
+; TODO: where to put this???
+				IF VERS = 31
+                                ; upon entry, A3 --> first byte of highest RAM page (e.g., $BF00)
+L1B28SR
+                LDAZ  A3H
+                AND   #$DF      ; $BF becomes $9F
+                STAZ  A4H
+                STXZ  A4L       ; (A4) --> $9F00
+                LDA   (A4L,X)
+                PHA             ; save (A4) in case we need to restore it below
+                STA   PROSCRTH
+L1B35           TYA
+                EOR   PROSCRTH
+                STA   PROSCRTH
+                TYA
+                EOR   (A3L,X)
+                STA   (A4L,X)
+                CMP   PROSCRTH
+                BNE   L1B4C
+                INY
+                BNE   L1B35
+                                ; comes here if 9F page maps to BF page
+                LDY   A4H       ; $9F
+                PLA             ; (A4)
+L1B4C           RTS
+				ENDIF
