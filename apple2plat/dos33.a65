@@ -161,20 +161,22 @@ HOLDAA          = $3E           ; - HOLDS  A CONSTANT ($AA) FOR
                                 ; - ALSO USED AS A TEMP REG WHEN
                                 ; CREATING ODD-EVEN ENCODED BYTS
                                 ; ASSOC WITH THE ADDR FIELD.
+
 FRMTSEC         = $3F           ; HOLDS # OF SEC TO BE FORMATTED &
                                 ; ALSO ACTS AS CNTR FOR # OF SECS
                                 ; VERIFIED WHEN CHECKING TRK JUST
                                 ; FORMATTED.
-A3L             = $40           ; MULTIPURPOSE REG & PTR ($40,$41)
-A3H             = $41
 FRMTVOL         = $41           ; VOL # TO WRITE WHEN FORMATTING.
-A4L             = $42           ; MULTIPURPOSE REG & PTR ($42,$43)
-A4H             = $43
-A5L             = $44           ; MULTIPURPOSE REG & PTR ($44,$45)
 FRMTKCTR        = $44           ; TRK# TO WRITE/READ WHEN FORMAT-
                                 ; TING/VERIFYING. ALSO ACTS AS A
                                 ; CNTR OF THE # OF TRKS FORMATTED/
                                 ; VERIFIED.
+
+A3L             = $40           ; MULTIPURPOSE REG & PTR ($40,$41)
+A3H             = $41
+A4L             = $42           ; MULTIPURPOSE REG & PTR ($42,$43)
+A4H             = $43
+A5L             = $44           ; MULTIPURPOSE REG & PTR ($44,$45)
 A5H             = $45
 
 SYNCNTR         = $45           ; # OF SYNC BYTES 2 WRT BTWN SECS
@@ -310,8 +312,6 @@ RUNFPRAM        = $FD4          ; ENTRY POINT 2 EXECUTE RAM-BASED
                                 ; DOS BUFFER START
                                 ; --------------------------------
 
-;DOSNMBF1        = $9CD3         ; ADDR OF FIRST DOS NAME BUFFER. (mosher: defined in-line below)
-
 DOSTOP          = $BF00         ; Mosher: first byte of highest page to
                                 ; relocate DOS to
 
@@ -389,6 +389,11 @@ MONRTS          = $FF58         ; AN RTS INSTRUC LOC'D IN MONITOR
 MON             = $FF65         ; NORM ENTRY ROUTE 2 MONITOR ROM.
                                 ; ("CALL -151" GOES HERE.)
 
+STAZ            MACRO LOC
+;                STA   LOC
+                DB    $8D
+                DW    LOC
+                ENDM
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                 ; Chris Mosher:
                                 ; added DOS master relocation routine disassembly
@@ -401,7 +406,7 @@ MASTERDOS       JMP   DOSCOLD
 DOSRELOC
                                 ; (A3) --> DOSTOP
                 LDA   #HI DOSTOP
-                STA   A3H
+                STAZ  A3H
                 LDX   #LO DOSTOP
                 STX   A3L
 
@@ -771,8 +776,8 @@ RLOCNTRY        DW SETLINKS
 IMGINTV         DW $E836
                 DW RUNINTGR
                 DW $E3E3
-                DW $E000
-                DW $E003
+                DW BASICCLD
+                DW BASICWRM
 
 
                                 ; =======================================
@@ -2508,7 +2513,7 @@ CLOSIFOP        JSR CMDCLOSE    ; CLOSE IF ALREADY OPEN.
                 BNE SAVFNPTR    ; BRANCH IF FOUND A FREE BUFFER.
                 JMP NOBUFERR    ; COULDN'T LOCATE A FREE BUFFER SO
                                 ; GO ISSUE OUT OF BUF'S MSG.
-SAVFNPTR        STA A3L+1       ; RESET A3L/H TO POINT AT DOS BUF
+SAVFNPTR        STA A3H         ; RESET A3L/H TO POINT AT DOS BUF
                 LDA A5L         ; THAT WILL USE 4 FILENAME FIELD.
                 STA A3L
                 JSR CPYPFN      ; REASSIGN A DOS BUFFER 2 THE FILE
@@ -3603,7 +3608,7 @@ RDTXTBYT        LDA #3          ; SET FM PRM LIST 2 READ ONE BYTE.
                                 ; =================================
 
 PT2EXEC         LDA EXECBUFF+1  ; GET ADR OF DOS BUF USING 2 EXEC.
-                STA A3L+1       ; PUT IT IN POINTER.
+                STA A3H         ; PUT IT IN POINTER.
                 LDA EXECBUFF
                 STA A3L
                 RTS
@@ -3762,7 +3767,7 @@ CPY2PARM        LDA VOLPRSD     ; FROM PARSED TABLE.
                 STA FNAMBUFM+1
                 LDA A3L         ; SAVE ADR OF CURRENT DOS FILENAME
                 STA CURFNADR    ; BUF IN TABLE OF DOS VARIABLES.
-                LDA A3L+1
+                LDA A3H
                 STA CURFNADR+1
                 RTS
 
@@ -3831,7 +3836,7 @@ FNCHAR1         JSR GETFNBY1    ; GET 1RST CHR OF NAME FRM NAM BUF
                 BNE NXFNBUF     ; TAKE BRANCH IF BUF NOT FREE.
                 LDA A3L         ; BUF WAS FREE, THERE4 POINT THE
                 STA A5L         ; A5L/H POINTERS AT THE FREE BUF.
-                LDA A3L+1
+                LDA A3H
                 STA A5H
                 BNE GETFNLNK    ; ALWAYS.
 
@@ -3879,7 +3884,7 @@ GETNXBUF        LDY #37         ; OFFSET TO CHAIN BUF.
                 TAX             ; SAVE HI BYTE IN (X).
                 DEY             ; OFFSET FOR LOW BYTE.
                 LDA (A3L),Y     ; PUT ADR OF FILE NAME BUF IN PTR.
-SETNXPTR        STX A3L+1       ; PUT HI BYTE IN POINTER.
+SETNXPTR        STX A3H         ; PUT HI BYTE IN POINTER.
                 STA A3L         ; PUT LOW BYTE IN POINTER.
                 TXA             ; GET HI BYTE BACK IN (A).
 GETNXRTN        RTS
@@ -3910,7 +3915,7 @@ CKEXCBUF        LDA EXECFLAG    ; CHK TO SEE IF EXECING.
                 CMP A3L         ; BELONGS TO THE EXEC FILE.
                 BNE CKEXCRTN    ; NO.
                 LDA EXECBUFF+1  ; MAYBE - LOW BYTES MATCHED SO
-                CMP A3L+1       ; CHK HI BYTES OF ADR.
+                CMP A3H         ; CHK HI BYTES OF ADR.
                 BEQ CKEXCRTN    ; YES, EXEC BUF = CURRENT BUF.
 NOTEXCBF        DEX             ; NOT EXECING, SO REDUCE (X) TO
                                 ; MAKE SURE THAT Z-FLAG IS OFF.
@@ -3949,7 +3954,7 @@ BILDBUFS        SEC             ; IRREL, MIGHT AS WELL BE A "NOP".
                 LDA ADOSFNB1    ; GET ADDR OF 1RST FILE NAME FIELD
                 STA A3L         ; & PUT IT IN A3L/H POINTER.
                 LDA ADOSFNB1+1
-                STA A3L+1
+                STA A3H
 
                                 ; GET # OF MAXFILES WANTED & STORE
                                 ; IT IN THE COUNTER (TEMPBYT).
@@ -3976,7 +3981,7 @@ ZDOSBUFN        LDY #0
                 SBC #45         ; OF NAME BUF TO CALC LOW BYTE OF
                 STA (A3L),Y     ; ADDR OF FM WORK BUF & PUT IT IN
                 PHA             ; THE CHAIN PTR BUF & ON THE STK.
-                LDA A3L+1       ; SUBT (C) FROM HIGH BYTE OF ADR
+                LDA A3H         ; SUBT (C) FROM HIGH BYTE OF ADR
                 SBC #0          ; OF NAME BUF TO GET HI BYTE OF
                                 ; FM WRK BUF ADR.
                 INY             ; KICK UP (Y) TO INDEX ADDR OF HI
@@ -4051,7 +4056,7 @@ ZDOSBUFN        LDY #0
 
                                 ; POINT A3L/H AT NEXT NAME BUF.
 
-                STA A3L+1
+                STA A3H
                 PLA
                 STA A3L
                 JMP ZDOSBUFN    ; GO BACK TO FREE NEXT NAME BUF
@@ -4968,7 +4973,7 @@ FNRENAME        JSR COMNOPEN    ; LOCATE FILE WITH SAME NAME & OPN
                 LDA RENAMBUF    ; GET ADR OF SECONDARY NAME BUFFER
                 STA A4L         ; FROM FM PARM LIST & PUT IN A4L/H
                 LDA RENAMBUF+1
-                STA A4L+1
+                STA A4H
                 LDX CURDIRNX    ; (X) = INDEX INTO CURRENT DIR SEC.
                 JSR NWDESCRP    ; COPY NEW NAME TO DIREC SEC BUF.
                 JSR WRDIRECT    ; WRIT MODIFIED DIR SEC BUF 2 DSK.
@@ -5708,7 +5713,7 @@ SELDABUF        LDX #4          ; SELECT DATA BUFFER.
 PT2FMBUF        LDA WRKBUFFM,X  ; GET ADDR OF SELECTED BUF FROM
                 STA A4L         ; FM PARM LST & PUT IT IN POINTER.
                 LDA WRKBUFFM+1,X
-                STA A4L+1
+                STA A4H
                 RTS
 
 
@@ -6481,7 +6486,7 @@ INCPTRTN        RTS
 INCIOBUF        LDY CURIOBUF    ; GET ADR OF DEST'N/SOURCE LOC'N
                 LDX CURIOBUF+1  ; FROM FM PARM LIST.
                 STY A4L         ; POINT A4L/H AT TARGET.
-                STX A4L+1
+                STX A4H
                 INC CURIOBUF    ; KICK UP ADR OF DEST'N/SOURCE LOC
                 BNE INCIORTN
                 INC CURIOBUF+1
@@ -6529,7 +6534,7 @@ GETFNTRY        JSR READVTOC    ; READ IN VTOC SO CAN GET LINK TO
                 LDA FNAMBUFM    ; GET ADR OF NAME BUF FROM THE
                 STA A4L         ; FM PARM LIST & PUT IT IN A4L/H.
                 LDA FNAMBUFM+1
-                STA A4L+1
+                STA A4H
 
 
                                 ; TRY TO FIND THE DIRECTORY SECTOR
