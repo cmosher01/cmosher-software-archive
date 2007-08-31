@@ -3176,12 +3176,27 @@ CMDLOAD         JSR CLOSEALL    ; CLOSE ALL FILES (EXCEPT ACTIVE
                                 ; EXEC FILE).
 OPENLOAD        JSR HNDLCMD     ; GO OPEN THE FILE.
 
+                IF VERS = 31
+                LDA #6
+                CMP   $34F9 ; TODO
+                BNE OPENLOAD2
+                JSR CMDELETE
+                LDA #6
+                JMP ERRHNDLR
+OPENLOAD2       LDA #%01111111
+                ELSE
                 LDA #%00100011  ; SET BITS IN (A) TO RESTRICT LOAD
                                 ; CMD 2 APLSFT ($02), INTGR ($01)
                                 ; OR A-TYPE ($20) FILES.
+                ENDIF
                 AND FILTYPFM    ; TYPE FOUND (VIA OPEN FUNCTION).
                 BEQ TOTYPMIS    ; ERR -NOT ONE OF THE ABOVE TYPES.
                                 ; GO ISSUE TYPE-MISMATCH ERR MSG.
+                IF VERS = 31
+                AND #3
+                BEQ TOTYPMIS
+				ENDIF
+
                 STA FILTYPFM    ; SAVE TYPE WANTED IN FM PARM LIST
 
                 LDA ACTBSFLG    ; CHK WHICH LANG IS ACTIVE:
@@ -3220,6 +3235,10 @@ OPENLOAD        JSR HNDLCMD     ; GO OPEN THE FILE.
                 LDX TXTTAB
                 LDY TXTTAB+1
 
+                IF VERS = 31
+                JMP L2444
+                ELSE
+
                 JSR LODINTFP    ; DESIGNATE WHERE IN FREE MEMORY 2
                                 ; LOAD PRGM & THEN GO LOAD IT.
                 JSR INITIOHK    ; POINT THE I/O HOOKS AT DOS.
@@ -3241,6 +3260,7 @@ OPENLOAD        JSR HNDLCMD     ; GO OPEN THE FILE.
                                 ; PORTION OF BASIC EVENTUALLY
                                 ; REQUESTS FURTHER PRGM OR KEYBRD
                                 ; INPUT & ANOTHER CMD IS PARSED.
+                ENDIF
 
 
                                 ; ---------------------------------
@@ -3274,10 +3294,14 @@ LODINTGR        LDA #1          ; CODE 4 INTEGER BASIC FILE TYPE.
                                 ; FP OR INTEGER LOAD CMDS.)
                                 ; =================================
 
-LODINTFP        STX CURIOBUF    ; DESIGNATE LOAD ADDR AS I/O BUF
+LODINTFP
+                IF VERS = 31
+                JMP L2444
+                ELSE
+                STX CURIOBUF    ; DESIGNATE LOAD ADDR AS I/O BUF
                 STY CURIOBUF+1  ; IN THE FM PARAMETER LIST.
                 JMP CLOSEFM     ; USE FILE MANAGER TO LOAD PRGM.
-
+                ENDIF
 
                                 ; =================================
                                 ; COMMON CODE USED TO READ THE
@@ -3309,6 +3333,12 @@ RDADRLEN        LDA ADLENADR    ; GET ADR OF TWO-BYTE INPUT BUFFER
                 STA LEN2RDWR
                 RTS
 
+                IF VERS = 31
+L2444           STX   CURIOBUF   ; TODO RENAME L2444
+                STY   CURIOBUF+1
+                JSR   $260C ; TODO
+                JMP   CMDCLOSE
+				ENDIF
 
                                 ; =================================
                                 ; CLOSE FILE & ISSUE A PROGRAM-
@@ -3359,13 +3389,17 @@ SELBSRTN        RTS             ; DESIRED BASIC WAS ACTIVE.
                                 ; RUN COMMAND HANDLER
                                 ; =================================
 
-CMDRUN          LDA ACTBSFLG    ; CHK WHICH BASIC IS CURRENT.
+CMDRUN
+                IF VERS != 31
+                LDA ACTBSFLG    ; CHK WHICH BASIC IS CURRENT.
                 BEQ LOAD4RUN    ; BRANCH IF USING INTEGER BASIC.
 
                 STA RUNTRUPT    ; SET THE RUN INTERCEPT FLAG TO
                                 ; SIGNAL THAT WE ARE ABOUT TO
                                 ; INTERRUPT THE RUN COMMAND TO DO
                                 ; LOAD.  ($40=A(ROM), $80=A(RAM).)
+                ENDIF
+
 LOAD4RUN        JSR CMDLOAD     ; GO LOAD THE PROGRAM.
                                 ; ************* NOTE ************
                                 ; * THE "JSR" IS ACTUALLY A
@@ -3419,8 +3453,10 @@ CMDCHAIN        JSR OPENLOAD    ; LOAD THE INTEGER PRGM.
                                 ; =================================
 
 RUNFPROM        JSR SETZPTRS    ; CLEAR OUT ALL VARIABLES.
+                IF VERS != 31
                 STA PROMPT      ; ZERO OUT PROMPT & ON-ERROR FLAG.
                 STA ERRFLG
+				ENDIF
                 JMP NEWSTT      ; JUMP INTO BASIC TO EXECUTE PRGM.
 
 
@@ -3431,8 +3467,10 @@ RUNFPROM        JSR SETZPTRS    ; CLEAR OUT ALL VARIABLES.
                                 ; =================================
 
 FPRAMRUN        JSR CLRFPRAM    ; CLEAR ALL VARIABLES.
+                IF VERS != 31
                 STA PROMPT      ; ZERO OUT PROMPT & ON ERROR FLAG.
                 STA ERRFLG
+				ENDIF
                 JMP RUNFPRAM    ; GO RUN THE PROGRAM.
 
                                 ; =================================
@@ -3521,12 +3559,20 @@ RDWRRTN         RTS
 
 CMDINIT         LDA #%01000000  ; CHK TO SEE IF V(OLUME) OPTION
                 AND CUMLOPTN    ; WAS ISSUED WITH INIT COMMAND.
+				IF VERS = 31
+				BEQ L24FE
+				ELSE
                 BEQ VOL254      ; NO V-PARM ISSUED, SO USE A DFLT
                                 ; VOLUME VALUE OF 254.
+				ENDIF
                 LDA VOLPRSD     ; A VOL VAL WAS ISSUED, SO USE IT
+				IF VERS = 31
+                BEQ L24FE
+				ELSE
                 BNE OTHRVOL     ; (BUT ONLY IF IT IS NOT ZERO).
-VOL254          LDA #254        ; USE VOL 254 AS DEFAULT VALUE.
+VOL254          LDA #$FE        ; USE VOL 254 AS DEFAULT VALUE.
                 STA VOLPRSD
+				ENDIF
 OTHRVOL         LDA ADOSTART+1  ; HI BYTE OF DOS LOAD ADDR FROM
                                 ; DOS'S MAIN VARIABLE TABLE.
                 STA SUBCODFM
@@ -3538,7 +3584,9 @@ OTHRVOL         LDA ADOSTART+1  ; HI BYTE OF DOS LOAD ADDR FROM
                                 ; CMD.  (NORMALLY RTNS TO AFTRCMD
                                 ; ($A17D) LOCATED IN THE COMMAND
                                 ; PARSING & PROCESSING ROUTINES.)
-
+                IF VERS = 31
+L24FE           JMP CKIFCTRL
+                ENDIF
 
                                 ; =================================
                                 ; CATALOG COMMAND HANDLER.
@@ -3609,6 +3657,9 @@ CPYAPPLE        LDA RUNTRUPT,X  ; GET CHARS OF NAME.
 CMDINT          LDA #$20        ; OPCODE FOR "JSR".
                 JSR SETROM      ; TEST TO SEE IF LANGUAGE WANTED
                                 ; IS ON CARD OR MOTHERBOARD.
+                IF VERS = 31
+                BNE CMDFP
+                ELSE
                 BEQ INTPRSNT    ; INTEGER BASIC IS PRESENT (EITHER
                                 ; ON CARD OR MOTHERBOARD).
 
@@ -3623,6 +3674,7 @@ NOLNGINT        LDA #1          ; SET ERROR CODE FOR LANGUAGE-NOT-
 INTPRSNT        LDA #0          ; CAUSE DESIRED BASIC IS PRESENT,
                 STA RUNTRUPT    ; ZERO OUT THE RUN INTERCEPT FLAG
                                 ; CAUSE WE WON'T BE LOADING A LANG
+                ENDIF
 TODOSCLD        JMP DOSCOLD     ; GO INTO THE COLDSTART ROUTINE.
 
 
@@ -3759,10 +3811,12 @@ DONEPOSN        RTS             ; EXIT - EITHER DONE POSITIONING,
                                 ; =================================
 
 WRITEXT         JSR CKBSCRUN    ; CHK IF BASIC IS RUNNING A PRGM.
+                IF VERS != 31
                 BCS CLOSZERO    ; NOT RUNNING, SO GO CLOSE FILE,
                                 ; RESET TO CONDITION 0 & THEN DO A
                                 ; WARMSTART.  (REMEMBER, WRITE CMD
                                 ; IS RESTRICTED TO DEFERRED MODE.)
+                ENDIF
                 LDA ASAVED      ; RETRIEVE BYTE TO WRITE.
                 STA ONEIOBUF    ; PUT IT IN FM PARM LIST.
                 LDA #4          ; SET PARM LIST TO WRITE ONE BYTE.
@@ -3777,10 +3831,12 @@ WRITEXT         JSR CKBSCRUN    ; CHK IF BASIC IS RUNNING A PRGM.
                                 ; =================================
 
 READTEXT        JSR CKBSCRUN    ; CHK IF BASIC IS RUNNING A PRGM.
+                IF VERS != 31
                 BCS CLOSZERO    ; BASIC NOT RUNNING SO GO CLOSE
                                 ; FILE, RESET 2 CONDITION 0 & DO A
                                 ; WARMSTART.  (REMEMBER READ CMD
                                 ; IS RESTRICTED 2 DEFERRED MODE.)
+                ENDIF
                 LDA #6          ; SET COND'N6 -IGNORE INPUT PROMPT
 
 SETCOND         STA OPUTCOND
@@ -3802,7 +3858,17 @@ SETCOND         STA OPUTCOND
 ENDATERR        LDA #5          ; NO - THERE4 GOT OUT-OF-DATA ERR.
                 JMP ERRHNDLR    ; GO HANDLE ERROR.
 
-NOTEND          CMP #$E0        ; LOWERCASE?
+
+NOTEND
+                IF VERS = 31
+                STA ASAVED
+                JMP DOSEXIT
+CKBSCRUN        LDA ACTBSFLG
+                BEQ INTBASIC
+                LDX CURLIN+1
+                JMP   $3FD5 ; TODO
+                ELSE
+                CMP #$E0        ; LOWERCASE?
                 BCC SAVIT       ; BRANCH IF UPPERCASE.
                 AND #$7F        ; CONVERT LOWER TO UPPER IN ORDER
                                 ; 2 FOOL CAPTST ROUTINE ($FD7E)
@@ -3850,13 +3916,17 @@ CKBSCRUN        PHA             ; SAVE (A) ON STK.
 RUNNING         PLA             ; GET SAVED (A) BACK FROM STK.
                 CLC             ; SIGNAL PRGM IS RUNNING.
                 RTS
+                ENDIF
 
 INTBASIC        LDA RUNMODE     ; CHK INTGR BASIC'S RUN MODE FLG.
                 BMI RUNNING     ; IF NEG, INT BASIC IN DEFERRED.
 
-IMEDMODE        PLA             ; GET SAVED (A) BACK FROM STK.
+IMEDMODE
+                IF VERS != 31
+                PLA             ; GET SAVED (A) BACK FROM STK.
                 SEC             ; SIGNAL IN IMMEDIATE MODE.
                 RTS
+				ENDIF
 
 
                                 ; ====================================
