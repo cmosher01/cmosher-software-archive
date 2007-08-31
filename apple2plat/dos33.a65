@@ -946,7 +946,11 @@ INT2BSIC        LDA IMGINTV-1,X
 
 ISFPROM         LDA #$40        ; SET ACTIVE BASIC FLAG TO #$40
                 STA ACTBSFLG    ; SO SIGNAL APPLESOFT ROM.
-                LDX #12
+                IF VERS = 31
+                LDX #10
+                ELSE
+                LDX #12         ; TODO ??? fix this so not hardcoded
+                ENDIF
 AROM2BSC        LDA IMGFPV-1,X
                 STA CHAINTRY-1,X
                 DEX
@@ -963,7 +967,9 @@ BYPASWRM        SEC             ; (C) = 1, SIGNAL FOR COLDSTART.
                                 ; WARMSTART ROUTINE - RESTART.)
                                 ; =================================
 
-DOSWARM         LDA ACTBSFLG    ; SEE WHICH LANGUAGE IS UP.
+DOSWARM
+                IF VERS != 31
+                LDA ACTBSFLG    ; SEE WHICH LANGUAGE IS UP.
                 BNE CKBASIC     ; IF A(ROM), #$40 OR A(RAM), #$80.
 
                                 ; INTEGER WAS UP.
@@ -988,15 +994,24 @@ CKBASIC         ASL A           ; MULTIPLY CODE TIMES 2.
 DTRMNBSC        JSR SETROM      ; GO TEST CARD OR MOTHERBOARD TO
                                 ; INSURE THAT DEVICE CONTAINING
                                 ; ROM VERSION WE WANT IS SELECTED.
+                ENDIF
+
 FORWARM         CLC             ; (C) = 0, SIGNAL FOR WARMSTART.
 CMWRMCLD        PHP             ; SAVE (C) DENOTING WARM OR COLD.
                 JSR INITIOHK    ; INITIALIZE THE I/O HOOKS SO THAT
                                 ; DOS INTERCEPTS ALL IN/OUTPUT.
+                IF VERS = 31
+                LDA #$70
+                ELSE
                 LDA #0
+                ENDIF
                 STA CIOCUMUL    ; SIMULATE A "NOMON" COMMAND.
                                 ; NOTE: CAN "NOP" OUT THIS INSTRUC
                                 ; TO DEFEAT "NOMONCIO" WHEN COLD-
                                 ; OR WARMSTARTING.
+                IF VERS = 31
+                LDA #0
+                ENDIF
                 STA OPUTCOND    ; SET CONDITION 0.
                 PLP             ; GET SAVED STATUS BACK OFF STK &
                 ROR A           ; ROTATE (C) INTO HI BIT OF (A) TO
@@ -1035,7 +1050,11 @@ KEYCOLD         ASL A           ; (A) * 2 TO DROP OUT HI BIT.
                                 ; ACTIVE BASIC ENTRY POINT VECTOR
                                 ; TABLE.
 
-                LDX #12
+                IF VERS = 31
+                LDX #10
+                ELSE
+                LDX #12         ; TODO ??? don't hardcode
+                ENDIF
 ARAM2BSC        LDA IMGARAMV-1,X
                 STA CHAINTRY-1,X
                 DEX
@@ -1078,20 +1097,35 @@ SKPDEXEC        JSR RESTAT0     ; SET CONDNFLG=0 SO SIGNAL FILE
                                 ; CONTAINS A $00 WHICH WAS ETCHED
                                 ; ON THE DISK WHEN THE DISK WAS
                                 ; ORIGINALLY INITED.)
-
+                IF VERS != 31
                 LDA NDX2CMD     ; WAS LAST CMD AN "INIT"?
                 BNE OLDBOOT     ; NO - TAKE BRANCH.
+                ENDIF
 
                                 ; DISK WAS JUST BOOTED SO COPY IMAGE
                                 ; OF DOS'S ENTRY POINT VECTOR TABLE
                                 ; TO PAGE 3.
 
+                IF VERS = 31
+                LDX #39         ; TODO don't hardcode
+                ELSE
                 LDX #47         ; 48 BYTES TO COPY (47 --> 0).
+                ENDIF
+
 STOR3DOS        LDA IMGDOSVT,X  ; COPY IMAGE TO PAGE 3.
                 STA PG3DOSVT,X
                 DEX
                 BPL STOR3DOS
 
+                IF VERS = 31
+                ;TODO
+                LDA   $29A2
+                BNE   OLDBOOT
+                LDA   $29B8
+                EOR   #$A0
+                BEQ   OLDBOOT
+                JMP   $2476
+                ELSE
                                 ; PROGRAM THE RESET KEY TO POINT AT
                                 ; DOS'S WARMSTART ROUTINE.
                                 ; 
@@ -1118,6 +1152,7 @@ STOR3DOS        LDA IMGDOSVT,X  ; COPY IMAGE TO PAGE 3.
                 LDA #6          ; CMD INDEX FOR "RUN".
                                 ; (CAN BE CHANGED TO "BRUN", ETC.)
                 BNE DOPENDNG    ; ALWAYS.
+                ENDIF
 
                                 ; CHECK IF A COMMAND IS PENDING.
 
@@ -1141,7 +1176,12 @@ OLDBOOT         LDA NEXTCMD
 
 DOPENDNG        STA NDX2CMD     ; SET CMD INDEX & GO DO CMD.
                 JMP DODOSCMD
-NOPEND          RTS
+NOPEND
+                IF VERS = 31
+                JMP   $1F50 ; TODO
+                ELSE
+                RTS
+                ENDIF
 
 
                                 ; =================================
@@ -1168,6 +1208,7 @@ IMGCOLVT        JMP DOSCOLD     ; $3D3 - GO TO DOS'S COLD START
                 LDY ADRIOB
                 RTS
 
+                IF VERS != 31
                 JMP INITIOHK    ; $3EA - PT I/O HOOKS AT DOS'S
                                 ; INTERCEPT HANDLERS.
                 NOP
@@ -1194,6 +1235,7 @@ IMGCOLVT        JMP DOSCOLD     ; $3D3 - GO TO DOS'S COLD START
                 JMP MON         ; $3F8 - LET CTL-Y ENTER MONITOR.
                 JMP MON         ; $3FB - HNDL NON-MASK INTERUPTS.
                 DW MON          ; ROUT'N 2 HNDL MASKABLE INTERUPTS
+                ENDIF
 
 
                                 ; ==================================
@@ -1211,6 +1253,12 @@ INPTINCP        JSR PREP4DOS    ; SAVE THE REGS & RESTORE I/O HKS
                 LDA CONDNFLG    ; TEST IF DOING WARMSTART.
                 BEQ INPUTWRM    ; YES - BRANCH IF WARM.
 
+                IF VERS = 31
+                BPL INPUTCLD ; TODO ???
+                JMP KEYCOLD
+INPUTCLD        LDA ASAVED ; TODO ???
+                
+                ELSE
                                 ; READING FILE OR COLDSTARTING.
 
                 PHA             ; SAVE THE CONDITION FLAG.
@@ -1228,23 +1276,34 @@ INPUTCLD        JSR KEYCOLD     ; SET IMPORTANT PAGE 3 VECTORS.
                                 ; EXECUTE PENDING COMMAND.
                 LDY CH          ; GET HORZ CURSOR POS'N.
                 LDA #$60        ; GET CURSOR.
+                ENDIF
+
                 STA (BASL),Y    ; REINSTATE CURSOR ON SCREEN.
 
                                 ; USING WARMSTART STATUS.
                                 ; AT THIS POINT IN TIME, BOTH
                                 ; CONDNFLG & OPUTCOND = 0 FOR
                                 ; WARM- & COLDSTARTS.
+                IF VERS = 31
+                JMP   $25AD ; TODO
+                ENDIF
 
 INPUTWRM        LDA EXECFLAG    ; ARE WE EXECING?
                 BEQ INPTNOXC    ; NO.
+                IF VERS = 31
+                JMP   $25E6 ; TODO
+                ELSE
                 JSR READEXEC    ; YES - GO READ AN EXEC FILE BYTE.
+                ENDIF
 INPTNOXC        LDA #3          ; SET OUTPUT CONDITION = 3 CAUSE
                 STA OPUTCOND    ; WANT TO PROCESS INPUT INFO.
                 JSR RESTOREG    ; RESTORE (A), (Y) & (X) REGS.
                 JSR TOTRUIN     ; GET CHAR & PUT IT ON SCREEN VIA
                                 ; THE TRUE OUTPUT HANDLER (COUT1).
                 STA ASAVED      ; SAVE CHAR & (X).
+                IF VERS != 31
                 STX XSAVED
+                ENDIF
                 JMP DOSEXIT     ; EXIT DOS.
 
 TOTRUIN         JMP (KSW)       ; JUMP TO THE TRUE INPUT HANDLER.
@@ -1316,9 +1375,12 @@ SETRUHKS        LDA CSWTRUE,X   ; KSWTRUE: KEYIN --> KSW: KEYIN
                                 ; (EVALUATE START OF LINE.)
                                 ; =================================
 
-OPUTHDL0        LDX RUNTRUPT    ; CONTAINS A NONZERO VALUE IF RUN
+OPUTHDL0
+                IF VERS != 31
+                LDX RUNTRUPT    ; CONTAINS A NONZERO VALUE IF RUN
                 BEQ NONTRUPT    ; CMD WAS INTERRUPTED TO DO A LOAD
                 JMP FINSHRUN    ; FINISH OFF THE RUN COMMAND.
+                ENDIF
 
                                 ; FILE NOT BEING READ.
 
@@ -1395,7 +1457,9 @@ TESTEXEC        LDA EXECFLAG    ; ARE WE EXECING?
                 BNE DSPLYINP    ; YES.  EXECFLAG CONTAINS THE 1RST
                                 ; CHR OF NAME OF THE EXEC FILE.
 
-ASUMIMED        PHA             ; SAVE CHAR ON STK.
+ASUMIMED
+                IF VERS != 31
+                PHA             ; SAVE CHAR ON STK.
                 SEC             ; (C)=1, DFLT, ASSUME IMMED MODE.
                 LDA EXECFLAG    ; ARE WE EXECING?
                 BNE TESTMODE    ; BRANCH IF EXECING.
@@ -1405,6 +1469,7 @@ ASUMIMED        PHA             ; SAVE CHAR ON STK.
                                 ; (C) = 1 IF IMMEDIATE.
 TESTMODE        PLA             ; RETRIEVE CHAR FROM STK.
                 BCC TESTEXEC    ; BASIC RUNNING, DSPLY INPUT & XIT
+                ENDIF
 
                                 ; EXECING OR IN IMMEDIATE MODE
                                 ; (CAUSE (C) = 1).
@@ -1450,7 +1515,8 @@ OPUTHDL5        CMP DCTRLCHR    ; IS CHAR = DOS'S CTRL CHAR?
                                 ; (SKIP THE QUESTION MARK PROMPT.)
                                 ; =================================
 
-OPUTHDL6        LDA #0          ; SET CONDITION 0.
+OPUTHDL6
+                LDA #0          ; SET CONDITION 0.
                 STA OPUTCOND
                 BEQ DSPLYINP    ; ALWAYS.
                                 ; GO CONDITIONALLY DISPLAY INPUT.
@@ -1462,7 +1528,9 @@ OPUTHDL6        LDA #0          ; SET CONDITION 0.
                                 ; DO A LOAD.)
                                 ; =================================
 
-FINSHRUN        LDA #0          ; ZERO OUT THE RUN INTERRUPT FLAG.
+FINSHRUN
+                IF VERS != 31
+                LDA #0          ; ZERO OUT THE RUN INTERRUPT FLAG.
                 STA RUNTRUPT
                 JSR INITIOHK    ; RESET I/O HOOKS 2 PT AT DOS.
                 JMP RUNFPINT    ; JUMP BACK INTO THE RUN COMMAND
@@ -1471,6 +1539,7 @@ FINSHRUN        LDA #0          ; ZERO OUT THE RUN INTERRUPT FLAG.
                                 ; * THE STACK WAS RESET SO WE
                                 ; * RETURN AT THE CORRECT LEVEL.
                                 ; *******************************
+                ENDIF
 
 
                                 ; ======================================
@@ -1489,9 +1558,16 @@ FINSHCMD        LDA BUF200      ; GET FIRST CHAR IN BUF.
                                 ; CANCEL CMD BY REPLACING THE CHAR
                                 ; WITH A <CR> & THEN FALL THRU TO
                                 ; CONTINUE THE EXIT SEQUENCE.
-
+                IF VERS = 31
+                LDA #$A0
+                STA BUF200
+                LDA #$8D
+                STA BUF200+1
+                ELSE
                 LDA #$8D        ; <CR>
                 STA BUF200      ; SET 200: 8D.
+                ENDIF
+
                 LDX #0          ; SET INDEX TO START OF INPUT BUF.
                 STX XSAVED
 
@@ -1518,9 +1594,11 @@ DSPLYCHR        AND CIOCUMUL    ; TEST FLAG:  SEE IF SHOULD DSPLY.
 
 DSPLYALL        JSR RESTOREG    ; RESTORE (A), (Y) & (X) REGS.
                 JSR GODSPLY     ; OUTPUT  CHR VIA TRU OUTPUT HNDLR
+                IF VERS != 31
                 STA ASAVED      ; SAVE (A), (Y) & (X) REGS.
                 STY YSAVED
                 STX XSAVED
+                ENDIF
 
 
                                 ; =================================
@@ -1535,7 +1613,9 @@ DOSEXIT         JSR INITIOHK    ; RESET I/O HKS TO POINT TO DOS.
 RESTOREG        LDA ASAVED      ; RESTORE (A), (Y) & (X) REGS.
                 LDY YSAVED
                 LDX XSAVED
+                IF VERS != 31
                 SEC             ; WHY?????
+                ENDIF
                 RTS             ; ************ NOTE *************
                                 ; * IF THIS RTS IS ENCOUNTERED
                                 ; * VIA A FALL THRU FROM DOSEXIT,
@@ -1552,13 +1632,26 @@ RESTOREG        LDA ASAVED      ; RESTORE (A), (Y) & (X) REGS.
 
 GODSPLY         JMP (CSW)       ; USUALLY POINTS 2 THE TRUE OUTPUT
                                 ; HANDLER (COUT1, $FDF0 IF SCRN).
-CRVIADOS        LDA #$8D        ; <CR>.
+
+CRVIADOS
+                IF VERS = 31
+                BIT   $29A1 ; TODO
+                BVC   L1F6E
+                ENDIF
+
+                LDA #$8D        ; <CR>.
+
+                IF VERS = 31
+                JSR GODSPLY
+L1F6E           RTS
+                ELSE
                 JMP GODSPLY     ; USUALLY PRINTS A <CR> THRU THE
                                 ; OUTPUT HANDLER (COUT1). HOWEVER,
                                 ; WHEN ACCESSED BY RUNFPINT($A4DC)
                                 ; DURING A COLDSTART, GOES INTO
                                 ; DOS'S OUTPUT INTERCEPT ROUTINE
                                 ; (OPUTINCP, $9EBD).
+                ENDIF
 
 
                                 ; =================================
@@ -1678,7 +1771,14 @@ PRSYNERR        JMP SYNTXERR    ; EITHER A CTRL CHR DENOTED THAT A
                                 ; ATTRIBUTES ASSOCIATED WITH @ COMMAND.
                                 ; ========================================
 
-PRPDOCMD        ASL NDX2CMD     ; DOUBLE INDEX CAUSE 2 BYTES/ADDR
+PRPDOCMD
+                IF VERS = 31
+                LDA NDX2CMD
+                ASL A
+                STA NDX2CMD
+                TAY
+                ELSE   
+                ASL NDX2CMD     ; DOUBLE INDEX CAUSE 2 BYTES/ADDR
                 LDY NDX2CMD     ; IN TABLE OF DOS CMD ENTRY PTS.
                 JSR CKBSCRUN    ; CHECK IF BASIC IS RUNNING A PGM:
                 BCC CHKIFRUN    ; (C)=0= BASIC RUNNING.
@@ -1703,6 +1803,7 @@ CHKIFRUN        CPY #6          ; CHECK TO SEE IF CMD WAS A "RUN".
 
                                 ; CHECK TO SEE IF A FILENAME
                                 ; IS APPLICABLE TO THE COMMAND.
+                ENDIF
 
 TST4NAME        LDA #%00100000  ; BIT5 = 1 IF FILENAME APPLICABLE.
                 AND CMDATTRB,Y
@@ -1769,7 +1870,11 @@ SVFNCHAR        STA PRIMFNBF,Y  ; (Y)=OFFSET FRM PRIMARY NAME BUF.
                                 ; OF CHARS UNTIL GET "," OR <CR>.
 
 PURGEFN         JSR CMDCHAR     ; GET NEXT CHAR.
+                IF VERS = 31
+                BEQ PURGEFN     ; TODO BUG?
+                ELSE
                 BNE PURGEFN     ; NOT $00 YET SO GO GET NXT CHAR.
+                ENDIF
 
                                 ; JUST FINISHED NAME, SO CHK IF IT
                                 ; WAS FIRST OR SECOND FILENAME.
@@ -1842,7 +1947,11 @@ GOXITDOS        JMP CKIFCTRL    ; CMD WAS LOAD, RUN OR SAVE WHICH
                                 ; BUFFERS.
                                 ; ======================================
 
-BLNKFNBF        LDY #60         ; 30 BYTES IN EACH BUFFER.
+BLNKFNBF
+                IF VERS = 31
+                LDA #0
+                ENDIF
+                LDY #60         ; 30 BYTES IN EACH BUFFER.
 BLNK1RST        LDA #" "|0x80   ; BLANK.
 STORBLNK        STA PRIMFNBF-1,Y
                 DEY
@@ -1888,13 +1997,25 @@ FNOTAPPL        STA PRIMFNBF    ; PUT A $00 IN THE FIRST BYTE OF
 
 INPRMAX         JSR CNVRTASC    ; CONVERT ASCII NUMBER ARGUMENT TO
                                 ; HEX WITH RESULT IN A5L/H.
+                IF VERS = 31
+                BCS GOXITDOS
+                ELSE
                 BCS TOSYNTX     ; CHR NOT #, EXIT WITH SYNTAX ERR.
+                ENDIF
                 TAY             ; (Y) = HI BYTE OF CONVERTED CHAR.
+                IF VERS = 31
+                BNE GOXITDOS
+                ELSE
                 BNE ARGRNGER    ; RANGE ERROR - CAUSE VALUE > 255.
+                ENDIF
                 CPX #17
+                IF VERS = 31
+                BCS GOXITDOS
+                ELSE
                 BCS ARGRNGER    ; RANGE ERROR CAUSE IF MAXFILES OR
                                 ; IN# OR PR# ARGUMENT > 16, THEN
                                 ; VALUE TOO LARGE.
+                ENDIF
 
                                 ; WAS COMMAND A PR# OR IN#?
 
@@ -1916,6 +2037,10 @@ INPRMAX         JSR CNVRTASC    ; CONVERT ASCII NUMBER ARGUMENT TO
                                 ; (LEGAL RANGE IS 1 TO 16.)
 
 MAXFMIN         TXA
+                IF VERS = 31
+                BEQ GOXITDOS
+                ELSE
+                
                 BNE DFLTPRSD    ; NOT 0, SO OKAY.
 
                                 ; ARGUMENT FOR MAXFILES, SLOT, IN#
@@ -1925,7 +2050,7 @@ ARGRNGER        LDA #2          ; SET RETURN CODE FOR RANGE ERROR.
                 JMP ERRHNDLR    ; GO HANDLE THE ERROR.
 
 TOSYNTX         JMP SYNTXERR    ; EXIT VIA SYNTAX ERROR.
-
+                ENDIF
                                 ; INITIALIZE CUMLOPTN & PARSED TABLE.
 
 DFLTPRSD        LDA #0
@@ -1935,7 +2060,9 @@ DFLTPRSD        LDA #0
                 STA VOLPRSD     ; THAT IS ASSUME THAT:
                 STA LENPRSD     ; - C, I, O WEREN'T ISSUED.
                 STA LENPRSD+1   ; - VOL # AND LENGTH ARE 0.
+                IF VERS != 31
                 JSR ZEROPTCH    ; SET TEMPBYT & BYTPRSD TO 0 DFLTS
+                ENDIF
                 LDA NDX2INBF    ; IRREL, MIGHT AS WELL BE 3 "NOP"S
                                 ; (MADE OBSOLETE BY ZEROPTCH).
 
@@ -1982,13 +2109,16 @@ CKNXOPTN        CMP OPTNTXT-1,X
                 BEQ OPTNOK      ; FOUND AN OPTION.
                 DEX
                 BNE CKNXOPTN    ; HAVEN'T CHKD ALL OPTIONS YET.
-
-TOTOSYNT        BEQ TOSYNTX     ; COULDN'T FIND A MATCH.
+TOTOSYNT
+                IF VERS = 31
+                BEQ TONXOPTN
+                ELSE
+                BEQ TOSYNTX     ; COULDN'T FIND A MATCH.
                                 ; (SYNTAX ERR - CHAR NOT OPTION.)
-
                                 ; GOT AN OPTION SO CHK IF IT WAS
                                 ; "C", "I" OR "O".  (IE. IS A
                                 ; NUMERIC ARGUMENT EXPECTED?)
+                ENDIF
 
 OPTNOK          LDA OPTNISSD-1,X
                 BMI CIOPTNS     ; IF HI BIT=0, THEN OPTION WAS A
@@ -2012,7 +2142,11 @@ OPTNOK          LDA OPTNISSD-1,X
 
                                 ; WAS IT A NUMERIC CHARACTER?
 
+                IF VERS = 31
+                BCS TONXOPTN
+                ELSE
                 BCS TOSYNTX     ; NO - SYNTAX ERROR.
+                ENDIF
 
                                 ; CHARACTER WAS NUMERIC.
 
@@ -2028,14 +2162,23 @@ OPTNOK          LDA OPTNISSD-1,X
                 BNE CKMAXVAL    ; BRANCH IF NOT 0.
                 LDA A5L         ; HI BYTE WAS 0 SO CHK LOW BYTE.
                 CMP OPTNRNG,Y
+                IF VERS = 31
+                BCC TONXOPTN
+                ELSE
                 BCC ARGRNGER    ; RANGE ERR -ARGUMENT < MIN LEGAL.
+                ENDIF
 
                                 ; CHECK IF ARGUMENT < = MAX LEGAL PLUS 1.
 
                 LDA A5H
 CKMAXVAL        CMP OPTNRNG+3,Y ; CMP HI BYTE TO MAX LEGAL VAL.
                 BCC SVALOPTN    ; LESS THAN MAX SO ARGUMENT OK.
-TOARGRNG        BNE ARGRNGER    ; ARGUMENT > MAX LGL, SO RNG ERR.
+TOARGRNG
+                IF VERS = 31
+                BNE TONXOPTN
+                ELSE
+                BNE ARGRNGER    ; ARGUMENT > MAX LGL, SO RNG ERR.
+                ENDIF
                 LDA A5L         ; NOW CHK IF LOW BYTE OF ARGUMENT
                 CMP OPTNRNG+2,Y ; COMPLIES TO MAX LEGAL LOW BYTE.
                 BCC SVALOPTN    ; ARGUMENT IS LEGAL.
@@ -2071,14 +2214,26 @@ CIOPTNS         PHA             ; PUT (A) = OPTNISSD ON STK.
                 ORA MONPRSD     ; UPDATE MONPRSD IN PARSED TABLE.
                 STA MONPRSD
                 BNE TONXOPTN    ; GO SEE IF ANY MORE OPTIONS.
+                IF VERS != 31
                 BEQ TOTOSYNT    ; IRRELEVANT.
+                ENDIF
 
 
                                 ; =================================
                                 ; FINAL PROCESSING OF DOS COMMAND.
                                 ; =================================
 
-TODOSCMD        JSR DODOSCMD    ; GO DO THE DOS COMMAND.
+TODOSCMD
+                IF VERS = 31
+                JMP CKIFCTRL
+                JSR RESTAT0     ; RESET CONDITION TO 0.  THAT IS,
+                                ; SET CONDNFLG AND OPUTCOND = 0.
+                JSR CLRFMPRM    ; CLEAR OUT THE FM PARAMETER LIST
+                                ; SO WE CAN CUSTOMIZE IT IN
+                                ; ACCORDANCE WITH THE SPECIFIC DOS
+                                ; COMMAND HANDLER CALLED.
+                ENDIF
+                JSR DODOSCMD    ; GO DO THE DOS COMMAND.
 
 
                                 ; ---------------------------------------
@@ -2127,12 +2282,15 @@ AFTRCMD         JMP FINSHCMD
                                 ; DO THE DOS COMMAND.
                                 ; =================================
 
-DODOSCMD        JSR RESTAT0     ; RESET CONDITION TO 0.  THAT IS,
+DODOSCMD
+                IF VERS != 31
+                JSR RESTAT0     ; RESET CONDITION TO 0.  THAT IS,
                                 ; SET CONDNFLG AND OPUTCOND = 0.
                 JSR CLRFMPRM    ; CLEAR OUT THE FM PARAMETER LIST
                                 ; SO WE CAN CUSTOMIZE IT IN
                                 ; ACCORDANCE WITH THE SPECIFIC DOS
                                 ; COMMAND HANDLER CALLED.
+                ENDIF
                 LDA NDX2CMD     ; GET (A) = INDEX TO COMMAND.
                 TAX             ; (X) = INDEX 2 TBL OF ENTRY PTS.
                 LDA CMDTBL+1,X  ; GET ADR-1 OF THE CMD'S ROUTINE &
@@ -2274,6 +2432,9 @@ NOTASCII        SEC             ; EXIT WITH (C)=1 TO SIGNAL ERROR.
 
 DOUBLE          ASL A5L         ; "ROLL" HI & LOW BYTES AS A UNIT.
                 ROL A5H         ; (PICK UP (C) IN HI BYTE.)
+                IF VERS = 31
+                BCS NOTASCII
+                ENDIF
                 RTS
 
 
@@ -2302,10 +2463,18 @@ GETASCII        JSR PURGECMD    ; GET 1RST & SUBSEQUENT CHARS THAT
                                 ; MOVE RESULT IN A5L/H UP A NIBBLE
                                 ; BY ROLLING IT AS A UNIT (IE. *16).
 
-PRP2DUBL        LDX #4          ; (X) = # OF TIMES TO DOUBLE UNIT.
+PRP2DUBL
+                IF VERS = 31
+                JSR DOUBLE      ; MULTIPLY RESULT * 2.
+                JSR DOUBLE      ; MULTIPLY RESULT * 2.
+                JSR DOUBLE      ; MULTIPLY RESULT * 2.
+                JSR DOUBLE      ; MULTIPLY RESULT * 2.
+                ELSE
+                LDX #4          ; (X) = # OF TIMES TO DOUBLE UNIT.
 TIMES2          JSR DOUBLE      ; MULTIPLY RESULT * 2.
                 DEX
                 BNE TIMES2      ; MORE MULTIPLICATION TO DO.
+                ENDIF
 
                                 ; MERGE HEX REPRESENTATION OF DIGIT
                                 ; INTO LOW NIBBLE POS'N OF RESULT.
@@ -2509,9 +2678,15 @@ LOKUNLOK        JSR HNDLCMD1    ; CALL PART OF THE MAIN COMMAND
                                 ; THE VERIFY COMMAND HANDLER.
                                 ; =================================
 
-CMDVERFY        LDA #12         ; VERIFY OPCODE.
+CMDVERFY
+                IF VERS = 31
+                JMP $37B5 ; TODO
+                DS  1
+                ELSE
+                LDA #12         ; VERIFY OPCODE.
                 BNE LOKUNLOK    ; GO CALL THE CMD HNDLR TO VERIFY
                                 ; FILE & THEN EXIT VIA CLOSE CMD.
+                ENDIF
 
 
                                 ; =================================
@@ -2540,6 +2715,13 @@ CMDRENAM        LDA ADRSFNBF    ; COPY ADR OF SECONDARY FILENAME 2
                                 ; =================================
 
 CMDAPPND        JSR CMDOPEN     ; GO OPEN THE FILE TO BE APPENDED.
+                IF VERS = 31
+                LDA   #6
+                CMP   $34F9 ; TODO
+                BNE   READ2END
+                RTS   
+                ENDIF
+
 READ2END        JSR RDTXTBYT    ; GO READ A TEXT FILE BYTE.  (USE
                                 ; THE READ FUNCTION AND READ-ONE-
                                 ; BYTE SUBFUNCTION.)
@@ -2566,12 +2748,15 @@ READ2END        JSR RDTXTBYT    ; GO READ A TEXT FILE BYTE.  (USE
                                 ; THE OPEN COMMAND HANDLER.
                                 ; =================================
 
-CMDOPEN         LDA #0          ; CODE FOR TEXT FILE.
+CMDOPEN
+                IF VERS != 31
+                LDA #0          ; CODE FOR TEXT FILE.
                 JMP OPNCKTYP    ; GO OPEN THE FILE & CHK ITS TYPE.
                                 ; RTN 2 THE CALLER OF THE OPEN CMD
                                 ; (OFTEN RETURNS 2 AFTRCMD ($A17D)
                                 ; ASSOCIATED WITH THE COMMAND
                                 ; PARSING & PROCESSING ROUTINES.)
+                ENDIF
 
 
                                 ; ====================================
@@ -2631,20 +2816,26 @@ CMDCLOSE        LDA PRIMFNBF    ; GET 1RST CHR FRM PRMRY NAME BUF.
                 JSR GETBUFF     ; LOCATE A DOS BUFFER WITH SAME
                                 ; NAME, ELSE LOCATE A FREE BUFFER.
 
-EVENTXIT        BCS CLOSERTS    ; EVENTUALLY EXIT VIA THIS ROUTE!!
+EVENTXIT
+                IF VERS = 31
+                BCS CLOSERTSX   ; EVENTUALLY EXIT VIA THIS ROUTE!!
+                ELSE
+                BCS CLOSERTS    ; EVENTUALLY EXIT VIA THIS ROUTE!!
+                ENDIF
 
                 JSR CLOSEONE    ; MATCHING FILENAME WAS FOUND SO
                                 ; GO CLOSE THAT FILE.
                 JMP CMDCLOSE    ; GO BACK TO POINT A5L/H AT A FREE
                                 ; DOS BUFFER & EXIT VIA EVENTXIT
                                 ; ($A2F4) AND CLOSERTS ($A330).
-
+                IF VERS = 31
+CLOSERTSX       RTS
+                ENDIF
 
                                 ; ---------------------------------
                                 ; CLOSE A SPECIFIC FILE
                                 ; (& FREE ITS BUFFER).
                                 ; ---------------------------------
-
 CLOSEONE        JSR CKEXCBUF    ; CHK IF CURRENT FILENAME BUFFER
                                 ; BELONGS TO AN EXEC FILE.
                 BNE FREEBUFF    ; BRANCH IF NOT EXECING FROM THIS
@@ -2757,11 +2948,16 @@ DOBSAV          LDA #4          ; CODE FOR BINARY FILE.
 
 CMDBLOAD        JSR HNDLCMD     ; CALL THE FM COMMAND HANDLER TO
                                 ; OPEN THE FILE.
-
+                IF VERS = 31
+                LDA   #6
+                CMP   $34F9 ; TODO
+                BNE   LCK4BLOD
+                JMP   $23B2 ; TODO
+                ENDIF
                                 ; COMPARE FILE TYPE WANTED
                                 ; WITH FILE TYPE FOUND.
 
-                LDA #$7F        ; STRIP LOCK BIT FROM FILE TYPE
+LCK4BLOD        LDA #$7F        ; STRIP LOCK BIT FROM FILE TYPE
                 AND FILTYPFM    ; FOUND (VIA OPEN FUNCTION).
                 CMP #4          ; WAS FILE FOUND A BINARY FILE?
                 BEQ ADR4BLOD    ; YES.
@@ -2826,6 +3022,7 @@ CMDBRUN         JSR CMDBLOAD    ; BLOAD THE PRGM.
 CMDSAVE         LDA ACTBSFLG    ; CHK WHICH BASIC IS ACTIVE.
                 BEQ SAVINTGR    ; BRANCH IF USING INTEGER.
                                 ; INT=$00, A(ROM)=$40, A(RAM)=$80.
+                IF VERS != 31
                 LDA PROTFLG     ; IF PROTECTION FLAG IS ON (IE. IS
                                 ; NEGATIVE), THEN ALL APPLESOFT
                                 ; CMDS CAUSE RUN & DOS'S SAVE CMD
@@ -2834,6 +3031,7 @@ CMDSAVE         LDA ACTBSFLG    ; CHK WHICH BASIC IS ACTIVE.
                 BPL SAVAPSFT    ; BRANCH IF PROTECTION FLG IS OFF.
                 JMP TOOLARGE    ; PROTECTED!!! - SPIT OUT PHONY
                                 ; PROGRAM-TOO-LARGE MESSAGE & XIT.
+                ENDIF
 
 
                                 ; ---------------------------------
@@ -2946,9 +3144,13 @@ WRADRLEN        STY LEN2RDWR    ; PUT LOW BYTE IN FM PARM LIST IN
 RDWRANGE        STY CURIOBUF    ; PUT ADR OF OUTPUT BUF IN PRM LST
                 STA CURIOBUF+1
                 LDA #2          ; SET SUBCODE FOR RANGE OF BYTES.
+                IF VERS = 31
+                STA $34F0 ; TODO
+                ELSE
                 JMP VRFYRWNG    ; GO CALL THE FILE MANAGER TO WRITE
                                 ; DATA TO THE DISK.  NEXT VERIFY
                                 ; THE INFO & CLOSE THE FILE.
+                ENDIF
 
 
                                 ; =================================
