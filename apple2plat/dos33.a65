@@ -1,5 +1,5 @@
                                 ; Apple ][ DOS 3.3
-                                ; 
+                                ;
                                 ; There were (at least) 3 different versions of
                                 ; DOS 3.3.
                                 ; This is from the Apple ][ FAQ at
@@ -7,45 +7,45 @@
                                 ; under Csa2DOSMM, question 17
                                 ; -----------------------------------------------------------
                                 ; From: Edhel Iaur, Esq.
-                                ; 
+                                ;
                                 ; 017- How many 'official' versions of DOS 3.3 are there
                                 ; and how can I tell which is running?
-                                ; 
+                                ;
                                 ; According to The Dostalk Scrapbook, there are 3 official (as in Apple made
                                 ; 'em, I think) versions of DOS 3.3.  PEEK (46725) supposedly tells you which is
                                 ; running:
-                                ; 
+                                ;
                                 ; 165: oldest  (1980)
                                 ; 186: better  (January 1, 1983)
                                 ; 182: latest  (?)
-                                ; 
+                                ;
                                 ; I remember one had something to do with the way text files are handled.
-                                ; 
+                                ;
                                 ; ---------------------
-                                ; 
+                                ;
                                 ; From: Dave Althoff
-                                ; 
+                                ;
                                 ; The second version would be the IIe release ("DOS 3.3e") which contains yet another
                                 ; APPEND patch, and an additional bit of code which shuts off the 80-column
                                 ; firmware during boot. That version comes on a new System Master which uses the
                                 ; LOADER.OBJ0 program to fast-load INTBASIC (or FPBASIC), and a revised "HELLO"
                                 ; program which displays the "BE SURE CAPS LOCK IS DOWN" reminder on a IIe.
-                                ; 
+                                ;
                                 ; ---------------------
-                                ; 
+                                ;
                                 ; From: Rubywand and Olcott
-                                ; 
+                                ;
                                 ; One big problem with DOS 3.3e is that it uses some memory in the DOS area which
                                 ; the 1980 release leaves alone. This means it can not be safely patched with Beagle's
                                 ; "Prontodos" speed-up mods.
-                                ; 
+                                ;
                                 ; With the newer DOS,  you get an APPEND patch (which turns out to introduce a new
                                 ; APPEND bug),  a few IIe display frills, and a DOS which is _much_ slower than the 1980
                                 ; DOS 3.3 patched for Prontodos.
                                 ; -----------------------------------------------------------
-                                ; 
-                                ; 
-                                ; 
+                                ;
+                                ;
+                                ;
                                 ; Chris Mosher's observations:
                                 ; Location $B685 is in the boot sector, T$00, S$00,
                                 ; and is the high byte of the address of a JMP instruction.
@@ -54,7 +54,7 @@
                                 ; 1980: $A5
                                 ; 1983: $BA
                                 ; 1986: $B6
-                                ; 
+                                ;
                                 ; According to the above list, then, this source code
                                 ; would be for the last version, shown as "latest" or "1986".
                                 ; This is consistent with the fact that I found a disk
@@ -75,7 +75,16 @@
                                 ;                ENDIF
                                 ;                ENDIF
                                 ;                ENDIF
-                                ; 
+                                ;
+                                ;
+                                ; Summary of versions and release dates:
+                                ; DOS 3.1     1978-07-20
+                                ; DOS 3.2     1979-06-01
+                                ; DOS 3.2.1   ?
+                                ; DOS 3.3 (0) 1980-08-25
+                                ; DOS 3.3 (1) 1983-01-01
+                                ; DOS 3.3 (2) 1986-03?
+                                ;
 VERS            = 31            ; set VERS to 1980, 1983, or 1986, or 31
 FRANKLIN        = 0             ; set to 1 for Franklin Ace patch (also set VERS=1980), else 0
 
@@ -84,9 +93,9 @@ FRANKLIN        = 0             ; set to 1 for Franklin Ace patch (also set VERS
                                 ; original starts here:
 
                                 ; ********************************
-                                ; 
+                                ;
                                 ; ADDRESSES REFERRED TO BY DOS
-                                ; 
+                                ;
                                 ; ********************************
 
 
@@ -693,9 +702,23 @@ FIXVECTBLLIM
 FIXCODTBLSIZ    DB    FIXCODTBLLIM-FIXCODTBL ; size of table in bytes
 FIXCODTBL       DW    DOSCOLD,CMDTXTBL
                 DW    FMXTNTRY,CURDIRTK
-                DW    APPNDFLG,NMPG2RD
+                IF VERS = 31
+                DW    BOOT2
+                ELSE
+                DW    APPNDFLG
+                ENDIF
+                DW    NMPG2RD
+                IF VERS = 31
+                DW    $3532, $35FE ; NONSENSE ENTRIES?
+                ELSE
                 DW    WRITADR,FREE1
-                DW    PRENIBL,ONTABLE
+                ENDIF
+                DW    PRENIBL
+                IF VERS = 31
+                DW    ONTABLE-1
+                ELSE
+                DW    ONTABLE
+                ENDIF
                 IF VERS = 1986
                 DW    CKIFAPND,CMPATCH
                 ELSE
@@ -703,9 +726,15 @@ FIXCODTBL       DW    DOSCOLD,CMDTXTBL
                 DW    CKIFAPND,CMPATCHLIM
                 ENDIF
                 ENDIF
-                DW    RWTS,SECFLGS
-                DW    CLOBCARD,DOSLIM-1
+                DW    RWTS
+                IF VERS != 31
+                DW    SECFLGS,CLOBCARD
+                ENDIF
+                DW    DOSLIM-1
 FIXCODTBLLIM
+                IF VERS = 31
+                DS 4
+                ENDIF
 
 SRCPAGE         DB    $1D
 SRCPAGELIM      DB    $40
@@ -717,14 +746,84 @@ PAGECNT         DB    $23       ; number of pages to be moved
 OFFSET          DS    1         ; number of pages to add, to reloc addresses
 PAGECNT2        DB    $23       ; (redundant?) number of pages to be moved
 
+                IF VERS = 31
+                DB    $13       ; UNUSED CODE???
+                BMI   *-$46
+                JSR   L1C7B
+                LDA   #$80
+                STA   $13
+                PLA
+                BNE   $1C4B
+L1C7B           LDX   $73
+                LDA   $74
+                STX   $6F
+                STA   $70
+                LDY   #$00
+                STY   $8B
+                LDA   $6D
+                LDX   $6E
+                STA   $9B
+                STX   $9C
+                LDA   #$55
+                LDX   #$00
+                STA   $5E
+                STX   $5F
+L1C97           CMP   $52
+                BEQ   L1CA0
+                JSR   $1D1A
+                BEQ   L1C97
+L1CA0           LDA   #$07
+                STA   $8F
+                LDA   $69
+                LDX   $6A
+                STA   $5E
+                STX   $5F
+L1CAC           CPX   $6C
+                BNE   L1CB4
+                CMP   $6B
+                BEQ   L1CB9
+L1CB4           JSR   $1D10
+                BEQ   L1CAC
+L1CB9           STA   $94
+                STX   $95
+                LDA   #$03
+                STA   $8F
+L1CC1           LDA   $94
+                LDX   $95
+                CPX   $6E
+                BNE   L1CD0
+                CMP   $6D
+                BNE   L1CD0
+                JMP   $1D59
+L1CD0           STA   $5E
+                STX   $00
+DOSNMBF1        LDY   #$00
+                LDA   ($5E),Y
+                TAX
+                INY
+                LDA   ($5E),Y
+                PHP
+                INY
+                LDA   ($5E),Y
+                ADC   $94
+                STA   $94
+                INY
+                LDA   ($5E),Y
+                ADC   $95
+                STA   $95
+                PLP
+                BPL   L1CC1
+                TXA
+                BMI   L1CC1
+                DW $1CA6,$1BA6,$1AA6,$1A80,$5E65,$5E85
+                DB $90,$02,$E6
+                ELSE
                                 ; unused:
                 DS    $52
                 IF VERS = 1980
                 DS    4
                 ENDIF
 DOSNMBF1        DS    $2D       ; this label represents the first DOS buffer
-                IF VERS = 31 ; TODO ???
-                DS    $13
                 ENDIF
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -737,8 +836,13 @@ DOSNMBF1        DS    $2D       ; this label represents the first DOS buffer
                                 ; CUSTOMIZED ROUTINES, TABLES, ETC.)
                                 ; ====================================
 
-ADOSFNB1        DW DOSNMBF1     ; PTS TO FIRST DOS BUFFER AT ITS
+ADOSFNB1
+                IF VERS = 31
+                DW DOSNMBF1-1   ; PTS TO FIRST DOS BUFFER AT ITS
+                ELSE
+                DW DOSNMBF1     ; PTS TO FIRST DOS BUFFER AT ITS
                                 ; FILE NAME FIELD.
+                ENDIF
 ADINPTCP        DW INPTINCP     ; PTS TO DOS'S INPUT INTERCEPT
                                 ; ROUTINE.
 ADOPUTCP        DW OPUTINCP     ; PTS TO DOS'S OUTPUT INTERCEPT
@@ -842,18 +946,8 @@ TOWRMVEC        DW BASICWRM     ; ADR OF BASIC'S WARM START ROUT'N
 
                                 ; ADR OF ROUT'N THAT ENABLES BASIC
                                 ; PRGMS TO BE RELOCATABLE.
-                IF VERS = 31
-RLOCNTRY ; TODO ?????
-                ELSE
-;mosher ??? may be different on slaves vs. master ???
-;                IF VERS = 1986 | VERS = 1983
-;RLOCNTRY        DW 0
-;                ELSE
-;                IF VERS = 1980
+                IF VERS != 31
 RLOCNTRY        DW SETLINKS
-;                ENDIF
-;                ENDIF
-;                ENDIF
                 ENDIF
 
                                 ; ====================================
@@ -890,13 +984,20 @@ IMGFPV          DW RUNFPROM
                                 ; VERSION OF APPLESOFT BASIC THAT IS
                                 ; HOUSED ON THE "SYSTEMS MASTER" DISK.)
                                 ; ========================================
+                IF VERS = 31
+                DS 2
+                ENDIF
 
 IMGARAMV        DW FPRAMRUN
                 DW FPRAMRUN
                 DW $1067
                 DW DOSCOLD
+                IF VERS = 31
+                DS 2
+                ELSE
                 DW $C3C
                 DW $CF2
+                ENDIF
 
 
                                 ; =================================
@@ -1118,17 +1219,16 @@ STOR3DOS        LDA IMGDOSVT,X  ; COPY IMAGE TO PAGE 3.
                 BPL STOR3DOS
 
                 IF VERS = 31
-                ;TODO
-                LDA   $29A2
+                LDA   NDX2CMD
                 BNE   OLDBOOT
-                LDA   $29B8
+                LDA   PRIMFNBF
                 EOR   #$A0
                 BEQ   OLDBOOT
-                JMP   $2476
+                JMP   CMDRUN
                 ELSE
                                 ; PROGRAM THE RESET KEY TO POINT AT
                                 ; DOS'S WARMSTART ROUTINE.
-                                ; 
+                                ;
                                 ; NOTE THAT THE RESET KEY CAN BE
                                 ; PROGRAMMED TO PT AT ANY LOCATION
                                 ; SIMPLY BY PUTTING THE ADR OF THE
@@ -1175,10 +1275,14 @@ OLDBOOT         LDA NEXTCMD
                                 ; (TRK$01/SEC$09/OFFSETS$75-$92).
 
 DOPENDNG        STA NDX2CMD     ; SET CMD INDEX & GO DO CMD.
+                IF VERS = 31
+                JMP TORESTAT0
+                ELSE
                 JMP DODOSCMD
+                ENDIF
 NOPEND
                 IF VERS = 31
-                JMP   $1F50 ; TODO
+                JMP DOSEXIT
                 ELSE
                 RTS
                 ENDIF
@@ -1198,8 +1302,12 @@ IMGCOLVT        JMP DOSCOLD     ; $3D3 - GO TO DOS'S COLD START
                                 ; BUFS & WIPE OUT PRGM.
                 JMP FMXTNTRY    ; $3D6 - ALLOW USER TO ACCESS FM
                                 ; VIA HIS OWN ASSEMBLY LANG PRGMS.
+                IF VERS = 31
+                JMP RWTS
+                ELSE
                 JMP ENTERWTS    ; $3D9 - ALLOW USER TO ACCESS RWTS
                                 ; VIA HIS OWN ASSEMBLY LANG PRGMS.
+                ENDIF
                 LDA ADFMPARM+1  ; $3DC - LOCATE FM PARAMETER LIST.
                 LDY ADFMPARM
                 RTS
@@ -1254,10 +1362,10 @@ INPTINCP        JSR PREP4DOS    ; SAVE THE REGS & RESTORE I/O HKS
                 BEQ INPUTWRM    ; YES - BRANCH IF WARM.
 
                 IF VERS = 31
-                BPL INPUTCLD ; TODO ???
+                BPL INPUTCLD
                 JMP KEYCOLD
-INPUTCLD        LDA ASAVED ; TODO ???
-                
+INPUTCLD        LDA ASAVED
+
                 ELSE
                                 ; READING FILE OR COLDSTARTING.
 
@@ -1285,13 +1393,13 @@ INPUTCLD        JSR KEYCOLD     ; SET IMPORTANT PAGE 3 VECTORS.
                                 ; CONDNFLG & OPUTCOND = 0 FOR
                                 ; WARM- & COLDSTARTS.
                 IF VERS = 31
-                JMP   $25AD ; TODO
+                JMP READTEXT
                 ENDIF
 
 INPUTWRM        LDA EXECFLAG    ; ARE WE EXECING?
                 BEQ INPTNOXC    ; NO.
                 IF VERS = 31
-                JMP   $25E6 ; TODO
+                JMP READEXEC
                 ELSE
                 JSR READEXEC    ; YES - GO READ AN EXEC FILE BYTE.
                 ENDIF
@@ -1399,7 +1507,11 @@ NONTRUPT        LDX CONDNFLG    ; GET CONDITION FLAG. CHECK IF WE
                                 ; GETTING READY 2 READ A TEXT FILE
                                 ; BYTE.
                 CMP PROMPT      ; ARE WE PRINTING A PROMPT?
+                IF VERS = 31
+                BEQ OPUTHDL6
+                ELSE
                 BEQ SET2EVAL    ; BRANCH IF ABOUT TO PRINT PROMPT.
+                ENDIF
 SETIGNOR        LDX #2          ; SET CONDITION 2 FOR DEFAULT TO
                 STX OPUTCOND    ; SIGNAL SHOULD IGNORE NON-DOS
                                 ; COMMANDS.
@@ -1635,7 +1747,7 @@ GODSPLY         JMP (CSW)       ; USUALLY POINTS 2 THE TRUE OUTPUT
 
 CRVIADOS
                 IF VERS = 31
-                BIT   $29A1 ; TODO
+                BIT CIOCUMUL
                 BVC   L1F6E
                 ENDIF
 
@@ -1777,7 +1889,7 @@ PRPDOCMD
                 ASL A
                 STA NDX2CMD
                 TAY
-                ELSE   
+                ELSE
                 ASL NDX2CMD     ; DOUBLE INDEX CAUSE 2 BYTES/ADDR
                 LDY NDX2CMD     ; IN TABLE OF DOS CMD ENTRY PTS.
                 JSR CKBSCRUN    ; CHECK IF BASIC IS RUNNING A PGM:
@@ -1871,7 +1983,7 @@ SVFNCHAR        STA PRIMFNBF,Y  ; (Y)=OFFSET FRM PRIMARY NAME BUF.
 
 PURGEFN         JSR CMDCHAR     ; GET NEXT CHAR.
                 IF VERS = 31
-                BEQ PURGEFN     ; TODO BUG?
+                BEQ PURGEFN     ; BUG???
                 ELSE
                 BNE PURGEFN     ; NOT $00 YET SO GO GET NXT CHAR.
                 ENDIF
@@ -2040,7 +2152,7 @@ MAXFMIN         TXA
                 IF VERS = 31
                 BEQ GOXITDOS
                 ELSE
-                
+
                 BNE DFLTPRSD    ; NOT 0, SO OKAY.
 
                                 ; ARGUMENT FOR MAXFILES, SLOT, IN#
@@ -2057,10 +2169,14 @@ DFLTPRSD        LDA #0
                 STA CUMLOPTN    ; SET CUMLOPTN TO DEFAULT VAL OF 0
                                 ; TO ASSUME NO OPTIONS ISSUED.
                 STA MONPRSD     ; SET DEFAULT VALS IN PARSED TBL.
-                STA VOLPRSD     ; THAT IS ASSUME THAT:
+                IF VERS = 31
+                STA VOLPRSD2    ; THAT IS ASSUME THAT:
+                STA LENPRSD+1   ; - C, I, O WEREN'T ISSUED.
+                STA TEMPBYT
+                ELSE
+                STA VOLPRSD    ; THAT IS ASSUME THAT:
                 STA LENPRSD     ; - C, I, O WEREN'T ISSUED.
                 STA LENPRSD+1   ; - VOL # AND LENGTH ARE 0.
-                IF VERS != 31
                 JSR ZEROPTCH    ; SET TEMPBYT & BYTPRSD TO 0 DFLTS
                 ENDIF
                 LDA NDX2INBF    ; IRREL, MIGHT AS WELL BE 3 "NOP"S
@@ -2092,7 +2208,11 @@ NXCMDCHR        JSR PURGECMD    ; GET NEXT CHAR.
                                 ; LEGALLY BE ASSOCIATED WITH COMMAND.
 
                 LDX TEMPBYT     ; TEMPBYT = 0 AS SET IN ZEROPTCH.
+                IF VERS = 31
+                BEQ TORESTAT0
+                ELSE
                 BEQ TODOSCMD    ; ALWAYS.
+                ENDIF
 
                                 ; MEANINGLESS INSTRUCTIONS (MADE
                                 ; OBSOLETE BY INCLUSION OF ZEROPTCH).
@@ -2111,7 +2231,7 @@ CKNXOPTN        CMP OPTNTXT-1,X
                 BNE CKNXOPTN    ; HAVEN'T CHKD ALL OPTIONS YET.
 TOTOSYNT
                 IF VERS = 31
-                BEQ TONXOPTN
+                BEQ TODOSCMD
                 ELSE
                 BEQ TOSYNTX     ; COULDN'T FIND A MATCH.
                                 ; (SYNTAX ERR - CHAR NOT OPTION.)
@@ -2143,7 +2263,7 @@ OPTNOK          LDA OPTNISSD-1,X
                                 ; WAS IT A NUMERIC CHARACTER?
 
                 IF VERS = 31
-                BCS TONXOPTN
+                BCS TODOSCMD
                 ELSE
                 BCS TOSYNTX     ; NO - SYNTAX ERROR.
                 ENDIF
@@ -2163,7 +2283,7 @@ OPTNOK          LDA OPTNISSD-1,X
                 LDA A5L         ; HI BYTE WAS 0 SO CHK LOW BYTE.
                 CMP OPTNRNG,Y
                 IF VERS = 31
-                BCC TONXOPTN
+                BCC TODOSCMD
                 ELSE
                 BCC ARGRNGER    ; RANGE ERR -ARGUMENT < MIN LEGAL.
                 ENDIF
@@ -2175,14 +2295,18 @@ CKMAXVAL        CMP OPTNRNG+3,Y ; CMP HI BYTE TO MAX LEGAL VAL.
                 BCC SVALOPTN    ; LESS THAN MAX SO ARGUMENT OK.
 TOARGRNG
                 IF VERS = 31
-                BNE TONXOPTN
+                BNE TODOSCMD
                 ELSE
                 BNE ARGRNGER    ; ARGUMENT > MAX LGL, SO RNG ERR.
                 ENDIF
                 LDA A5L         ; NOW CHK IF LOW BYTE OF ARGUMENT
                 CMP OPTNRNG+2,Y ; COMPLIES TO MAX LEGAL LOW BYTE.
                 BCC SVALOPTN    ; ARGUMENT IS LEGAL.
+                IF VERS = 31
+                BNE TODOSCMD
+                ELSE
                 BNE TOARGRNG    ; ARGUMENT IS ILLEGAL.
+                ENDIF
 
                                 ; SAVE THE OPTION VALUE IN THE PARSED TABLE.
 
@@ -2226,7 +2350,7 @@ CIOPTNS         PHA             ; PUT (A) = OPTNISSD ON STK.
 TODOSCMD
                 IF VERS = 31
                 JMP CKIFCTRL
-                JSR RESTAT0     ; RESET CONDITION TO 0.  THAT IS,
+TORESTAT0       JSR RESTAT0     ; RESET CONDITION TO 0.  THAT IS,
                                 ; SET CONDNFLG AND OPUTCOND = 0.
                 JSR CLRFMPRM    ; CLEAR OUT THE FM PARAMETER LIST
                                 ; SO WE CAN CUSTOMIZE IT IN
@@ -2237,7 +2361,7 @@ TODOSCMD
 
 
                                 ; ---------------------------------------
-                                ; 
+                                ;
                                 ; - MOST, BUT NOT ALL, DOS CMDS RTN HERE.
                                 ; - IF AN ERROR IS ENCOUNTERED, EXECUTION
                                 ; EXITS DOS'S ERROR HANDLER VIA RESTART
@@ -2271,7 +2395,7 @@ TODOSCMD
                                 ; - THE RUN CMD EXITS INTO APPLESOFT AT
                                 ; STKINI ($D683) & EVENTUALLY RTNS TO
                                 ; THE RESTART ROUTINE ($D43C).
-                                ; 
+                                ;
                                 ; -----------------------------------------
 
 AFTRCMD         JMP FINSHCMD
@@ -2478,7 +2602,7 @@ TIMES2          JSR DOUBLE      ; MULTIPLY RESULT * 2.
 
                                 ; MERGE HEX REPRESENTATION OF DIGIT
                                 ; INTO LOW NIBBLE POS'N OF RESULT.
-                                ; 
+                                ;
                                 ; NOTE BUG:  NO CHK IS MADE TO TRAP
                                 ; NUMBERS > $FFFF.  IF TOO MANY #'S
                                 ; ARE INPUT, ONLY THE LAST 4 DIGITS
@@ -2680,7 +2804,7 @@ LOKUNLOK        JSR HNDLCMD1    ; CALL PART OF THE MAIN COMMAND
 
 CMDVERFY
                 IF VERS = 31
-                JMP $37B5 ; TODO
+                JMP VERFY
                 DS  1
                 ELSE
                 LDA #12         ; VERIFY OPCODE.
@@ -2717,9 +2841,9 @@ CMDRENAM        LDA ADRSFNBF    ; COPY ADR OF SECONDARY FILENAME 2
 CMDAPPND        JSR CMDOPEN     ; GO OPEN THE FILE TO BE APPENDED.
                 IF VERS = 31
                 LDA   #6
-                CMP   $34F9 ; TODO
+                CMP   RTNCODFM
                 BNE   READ2END
-                RTS   
+                RTS
                 ENDIF
 
 READ2END        JSR RDTXTBYT    ; GO READ A TEXT FILE BYTE.  (USE
@@ -2730,6 +2854,9 @@ READ2END        JSR RDTXTBYT    ; GO READ A TEXT FILE BYTE.  (USE
                                 ; HAVEN'T ENCOUNTERED AN END-OF-
                                 ; FILE MARKER ($00) YET,SO GO BACK
                                 ; TO READ THE REST OF THE FILE.
+                IF VERS = 31
+                JMP BK2APND
+                ELSE
                 JMP CKAPFLG     ; FOUND END OF FILE,SO NOW GO BACK
                                 ; UP THE FILE POINTER IF NECESSARY
                                 ; AND EVENTUALLY EXIT THE APPEND
@@ -2742,6 +2869,7 @@ READ2END        JSR RDTXTBYT    ; GO READ A TEXT FILE BYTE.  (USE
                                 ; OFTEN RETURNS TO AFTRCMD ($A17D)
                                 ; LOCATED IN THE COMMAND PARSING
                                 ; AND PROCESSING ROUTINES.
+                ENDIF
 
 
                                 ; =================================
@@ -2950,9 +3078,9 @@ CMDBLOAD        JSR HNDLCMD     ; CALL THE FM COMMAND HANDLER TO
                                 ; OPEN THE FILE.
                 IF VERS = 31
                 LDA   #6
-                CMP   $34F9 ; TODO
+                CMP   RTNCODFM
                 BNE   LCK4BLOD
-                JMP   $23B2 ; TODO
+                JMP   TONOTFND
                 ENDIF
                                 ; COMPARE FILE TYPE WANTED
                                 ; WITH FILE TYPE FOUND.
@@ -2961,7 +3089,11 @@ LCK4BLOD        LDA #$7F        ; STRIP LOCK BIT FROM FILE TYPE
                 AND FILTYPFM    ; FOUND (VIA OPEN FUNCTION).
                 CMP #4          ; WAS FILE FOUND A BINARY FILE?
                 BEQ ADR4BLOD    ; YES.
+                IF VERS = 31
+                JMP NOTBINARY
+                ELSE
                 JMP TYPMISM     ; NO - GO ISSUE FILE-MISMATCH MSG.
+                ENDIF
 
                                 ; REDUNDANT CODE!  CLOSE (IF NECESSARY)
                                 ; AND THEN OPEN THE FILE AGAIN.
@@ -2984,6 +3116,9 @@ LEN4BLOD        JSR RDADRLEN    ; READ THE BLOAD LENGTH OFF DSK.
                                 ; (PUT RESULTS IN LEN2RDWR.)
                 LDX ADRPRSD     ; SET (X)/(Y) = EITHER ORIG PARSED
                 LDY ADRPRSD+1   ; A-PARM ADR OR BLOAD ADR FRM DSK.
+                IF VERS = 31
+                JMP READREST
+                ELSE
                 JMP LODINTFP    ; GO READ THE REST OF THE FILE IN.
                                 ; EXITS VIA THE CLOSE COMMAND.
                                 ; RETURNS TO CALLER OF THE BLOAD
@@ -2991,6 +3126,7 @@ LEN4BLOD        JSR RDADRLEN    ; READ THE BLOAD LENGTH OFF DSK.
                                 ; BRUN, THEN OFTEN RTNS TO AFTRCMD
                                 ; ($A17D) LOCATED IN THE COMMAND
                                 ; PARSING & PROCESSING ROUTINES.)
+                ENDIF
 
 
                                 ; =================================
@@ -3145,7 +3281,7 @@ RDWRANGE        STY CURIOBUF    ; PUT ADR OF OUTPUT BUF IN PRM LST
                 STA CURIOBUF+1
                 LDA #2          ; SET SUBCODE FOR RANGE OF BYTES.
                 IF VERS = 31
-                STA $34F0 ; TODO
+                STA SUBCODFM
                 ELSE
                 JMP VRFYRWNG    ; GO CALL THE FILE MANAGER TO WRITE
                                 ; DATA TO THE DISK.  NEXT VERIFY
@@ -3178,9 +3314,9 @@ OPENLOAD        JSR HNDLCMD     ; GO OPEN THE FILE.
 
                 IF VERS = 31
                 LDA #6
-                CMP   $34F9 ; TODO
+                CMP RTNCODFM
                 BNE OPENLOAD2
-                JSR CMDELETE
+TONOTFND        JSR CMDELETE
                 LDA #6
                 JMP ERRHNDLR
 OPENLOAD2       LDA #%01111111
@@ -3225,7 +3361,7 @@ OPENLOAD2       LDA #%01111111
 
                                 ; PRGM IS SHORT ENOUGH TO BE
                                 ; ACCOMODATED IN FREE MEMORY SPACE.
-                                ; 
+                                ;
                                 ; SET ZERO-PAGE POINTERS.
 
                 STA PRGEND+1    ; SET END OF PRGM POINTER.
@@ -3236,7 +3372,7 @@ OPENLOAD2       LDA #%01111111
                 LDY TXTTAB+1
 
                 IF VERS = 31
-                JMP L2444
+                JMP READREST
                 ELSE
 
                 JSR LODINTFP    ; DESIGNATE WHERE IN FREE MEMORY 2
@@ -3296,7 +3432,7 @@ LODINTGR        LDA #1          ; CODE 4 INTEGER BASIC FILE TYPE.
 
 LODINTFP
                 IF VERS = 31
-                JMP L2444
+                JMP READREST
                 ELSE
                 STX CURIOBUF    ; DESIGNATE LOAD ADDR AS I/O BUF
                 STY CURIOBUF+1  ; IN THE FM PARAMETER LIST.
@@ -3334,9 +3470,9 @@ RDADRLEN        LDA ADLENADR    ; GET ADR OF TWO-BYTE INPUT BUFFER
                 RTS
 
                 IF VERS = 31
-L2444           STX   CURIOBUF   ; TODO RENAME L2444
+READREST        STX   CURIOBUF
                 STY   CURIOBUF+1
-                JSR   $260C ; TODO
+                JSR   FMDRIVER
                 JMP   CMDCLOSE
 				ENDIF
 
@@ -3440,7 +3576,12 @@ RUNINTGR        LDA LOMEM       ; CLEAR OUT ALL VARIABLES.
                                 ; CHAIN COMMAND HANDLER
                                 ; =================================
 
-CMDCHAIN        JSR OPENLOAD    ; LOAD THE INTEGER PRGM.
+CMDCHAIN
+                IF VERS = 31
+                JSR CMDLOAD
+                ELSE
+                JSR OPENLOAD    ; LOAD THE INTEGER PRGM.
+                ENDIF
                 JSR CRVIADOS    ; PRINT A <CR>.
                 JSR INITIOHK    ; POINT I/O HOOKS AT DOS.
                 JMP (CHAINTRY)  ; GO INTO INTEGER BASIC 2 EXECUTE.
@@ -3614,7 +3755,7 @@ CMDFP           LDA #$4C        ; (A) = OPCODE FOR "JMP".
                                 ; DO A COLDSTART.
 
                                 ; USING MACHINE WITH INTEGER IN ROM.
-                                ; 
+                                ;
                                 ; ASSUME USING "SYSTEM MASTER" DISK
                                 ; SO TRY TO RUN AN INTEGER PRGM
                                 ; CALLED "APPLESOFT".  WHEN RUN, THE
@@ -3853,7 +3994,11 @@ SETCOND         STA OPUTCOND
                 JSR CLOSEONE    ; RAN OUT OF DATA SO CLOSE FILE.
                 LDA #3          ; USING CONDITION 3?
                 CMP OPUTCOND    ; IE. HNDLING AN INPUT STATEMENT?
+                IF VERS = 31
+                BEQ TOEXIT2
+                ELSE
                 BEQ DONEPOSN    ; YES - JUST GO TO AN "RTS".
+                ENDIF
 
 ENDATERR        LDA #5          ; NO - THERE4 GOT OUT-OF-DATA ERR.
                 JMP ERRHNDLR    ; GO HANDLE ERROR.
@@ -3862,11 +4007,11 @@ ENDATERR        LDA #5          ; NO - THERE4 GOT OUT-OF-DATA ERR.
 NOTEND
                 IF VERS = 31
                 STA ASAVED
-                JMP DOSEXIT
+TOEXIT2         JMP DOSEXIT
 CKBSCRUN        LDA ACTBSFLG
                 BEQ INTBASIC
                 LDX CURLIN+1
-                JMP   $3FD5 ; TODO
+                JMP L3FD5
                 ELSE
                 CMP #$E0        ; LOWERCASE?
                 BCC SAVIT       ; BRANCH IF UPPERCASE.
@@ -3919,11 +4064,15 @@ RUNNING         PLA             ; GET SAVED (A) BACK FROM STK.
                 ENDIF
 
 INTBASIC        LDA RUNMODE     ; CHK INTGR BASIC'S RUN MODE FLG.
+                IF VERS = 31
+                BMI PT2EXEC2
+                ELSE
                 BMI RUNNING     ; IF NEG, INT BASIC IN DEFERRED.
+                ENDIF
 
-IMEDMODE
+
                 IF VERS != 31
-                PLA             ; GET SAVED (A) BACK FROM STK.
+IMEDMODE        PLA             ; GET SAVED (A) BACK FROM STK.
                 SEC             ; SIGNAL IN IMMEDIATE MODE.
                 RTS
 				ENDIF
@@ -3973,7 +4122,7 @@ PT2EXEC         LDA EXECBUFF+1  ; GET ADR OF DOS BUF USING 2 EXEC.
                 STA A3H         ; PUT IT IN POINTER.
                 LDA EXECBUFF
                 STA A3L
-                RTS
+PT2EXEC2        RTS
 
 
                                 ; =================================
@@ -3996,9 +4145,20 @@ FMDRIVER        JSR FILEMGR     ; CALL FM MANAGER TO DO FUNCTION.
                                 ; THEN ENTER WITH CARRY SET.
 
 
+                IF VERS = 31
+                BCS AFTRFUNC2
+                RTS
+                ELSE
 AFTRFUNC        BCC FMDRVRTN    ; (C) = 0 = NO ERRORS.
+                ENDIF
+
+AFTRFUNC2
                 LDA RTNCODFM    ; GET RETURN CODE FRM FM PARM LIST
                 CMP #5          ; "END-OF-DATA" ERROR?
+                IF VERS = 31
+                BNE FMDRVRTN2
+
+                ELSE
                 BEQ TOAPPTCH    ; YES -NOT HANDLED LIKE OTHER ERRS
                                 ; FILE ENDS AT A FULL DATA SEC SO
                                 ; WE ENCOUNTERED A ZEROED-OUT T/S
@@ -4014,10 +4174,11 @@ TOAPPTCH        JMP APNDPTCH    ; GO HANDLE END-OF-DATA ERROR.
 BK2FMDRV        JSR CKIFAPND    ; <---NOTE: APNDPTCH RETURN HERE!!
                                 ; GO CHK IF THE APPEND FLAG IS ON.
                 ELSE
-                IF VERS = 1980 | VERS = 31
+                IF VERS = 1980
                 NOP
 BK2FMDRV        NOP
                 NOP
+                ENDIF
                 ENDIF
                 ENDIF
 
@@ -4026,7 +4187,10 @@ BK2FMDRV        NOP
                                 ; REFERRED TO AS THE LOW BYTE OF
                                 ; CURIOBUF.)
 FMDRVRTN        RTS             ; RETURN TO CALLER OF FM DRIVER.
-
+                IF VERS = 31
+BK2FMDRV
+FMDRVRTN2       JMP ERRHNDLR
+                ENDIF
 
                                 ; =================================
                                 ; SELECTED ERROR PROCESSING.
@@ -4046,32 +4210,58 @@ TOOLARGE        LDA #14
                 BNE ERRHNDLR    ; ALWAYS.
 TYPMISM         LDA #13
 
+                IF VERS = 31
+                BNE ERRHNDLR    ; ALWAYS.
+NOTBINARY       LDA #15
+                ENDIF
 
                                 ; =================================
                                 ; DOS'S MAIN ERROR-HANDLER ROUTINE
                                 ; =================================
 
 ERRHNDLR        STA ASAVED      ; SAVE RETURN CODE FOR LATER USE.
+                IF VERS = 31
+                JSR RESTAT0
+                ELSE
                 JSR RESTATIN    ; RESET THE FOLLOWING FLAGS TO 0:
                                 ; OPUTCOND, CONDNFLG & RUNTRUPT.
+                ENDIF
                 LDA ACTBSFLG    ; CHK IF INT OR FP BASIC ACTIVE.
                 BEQ WASINT      ; BRANCH IF USING INTEGER.
                                 ; (ONERR FLAG NOT APPLIC TO INT.)
                 LDA ERRFLG      ; CHK IF BASIC'S ONERR FLAG IS ON.
+                IF VERS = 31
+                BMI ONERRACT2
+                ELSE
                 BMI ONERRACT    ; YES - SKIP PRINTING OF ERROR MSG
                                 ; CAUSE WE EVENTUALLY WANT 2 GO 2
                                 ; OUR OWN CUSTOMIZED ERROR-HNDLING
                                 ; ROUTINE.
+                ENDIF
 WASINT          LDX #0          ; INITIALIZE INDEX TO TABLE OF
                                 ; OFFSETS TO ERRORS.
                 JSR PRDOSERR    ; GO PRINT <RTN>, BELL, <RTN>.
                 LDX ASAVED      ; GET SAVED RETURN CODE.
                 JSR PRDOSERR    ; GO PRINT THE ERROR MESSAGE.
+                IF VERS = 31
+                LDX #$10
+                ELSE
                 JSR CRVIADOS    ; PRINT A <CR>.
-ONERRACT        JSR INITIOHK    ; RESET I/O HKS TO POINT TO DOS.
+                ENDIF
+ONERRACT
+                IF VERS = 31
+                JSR PRDOSERR
+                ELSE
+                JSR INITIOHK    ; RESET I/O HKS TO POINT TO DOS.
+                ENDIF
+ONERRACT2
+                IF VERS = 31
+                JSR INITIOHK
+                ELSE
                 JSR CKBSCRUN    ; CHK IF BASIC IS RUNNING A PRGM:
                                 ; (C) = 0 IF RUNNING.
                                 ; (C) = 1 IF IMMEDIATE.
+                ENDIF
                 LDX ASAVED      ; GET SAVED RETURN CODE.
                 LDA #3          ; SET (A) = 3 IN CASE FALL THRU TO
                                 ; GO TO BASIC'S ERROR HANDLING
@@ -4081,13 +4271,17 @@ ONERRACT        JSR INITIOHK    ; RESET I/O HKS TO POINT TO DOS.
                                 ; COMPLY WITH THE BASIC ROUTINE
                                 ; THAT IS RESPONSIBLE FOR PRINTING
                                 ; BASIC'S ERROR MESSAGES.
+                IF VERS != 31
                 BCS DOWRM       ; BASIC IS NOT RUNNING.
+                ENDIF
 
 TOBSCERR        JMP (ADBSCERR)  ; 2 BASIC'S ERROR HANDLING ROUTINE
                                 ; (BSCERHLR, $D865).
 
+                IF VERS != 31
 DOWRM           JMP (TOWRMVEC)  ; TO BASIC'S WARMSTART ROUTINE
                                 ; (RESTART, $D43C).
+                ENDIF
 
 
                                 ; =================================
@@ -4485,7 +4679,7 @@ SETINTPT        PLA
                                 ; TO "RDKEY: JMP (KSW)" WILL ACTUALLY
                                 ; JUMP TO DOS'S INPUT ROUTINE
                                 ; (INPTINCP, $9E81).
-                                ; 
+                                ;
                                 ; THE TRUE (IE. NORMAL) HOOKS ARE SAVED,
                                 ; EX.  KSW: KEYIN --> KSWTRUE: KEYIN.
                                 ; CSW: COUT1 --> CSWTRUE: COUT1.
@@ -4599,14 +4793,14 @@ CMDTXTBL        DB "INI","T"|0x80
                                 ; ROUTINES HOWEVER, YOU SHOULD BE ABLE TO
                                 ; SAFELY MAKE EXTENSIVE CHANGES IF YOU SO
                                 ; DESIRE.
-                                ; 
+                                ;
                                 ; THIS TABLE IS INDEXED BY A VALUE
                                 ; CORRESPONDING TO THE PARSED DOS
                                 ; COMMAND.  TWO BYTES OF INFORMATION
                                 ; ARE ASSOC WITH @ CMD.  A SET BIT
                                 ; DENOTES THE FOLLOWING:
-                                ; 
-                                ; FIRST BYTE
+                                ;
+                                ; LO BYTE
                                 ; 7  6  5  4  3  2  1  0
                                 ; .  .  .  .  .  .  .  .
                                 ; .  .  .  .  .  .  .  ...CMD CAN CREATE NEW FILE IF FILE
@@ -4621,7 +4815,7 @@ CMDTXTBL        DB "INI","T"|0x80
                                 ; .  .................... DO DOS CMD EVEN IF NO NAME GIVEN
                                 ; ....................... INTERPRET AS BASIC CMD IF NO NAM
 
-                                ; SECOND BYTE
+                                ; HI BYTE
                                 ; 7  6  5  4  3  2  1  0
                                 ; .  .  .  .  .  .  .  .
                                 ; .  .  .  .  .  .  .  ...A(DDRESS) PARAMETER ALLOWED.
@@ -4634,34 +4828,94 @@ CMDTXTBL        DB "INI","T"|0x80
                                 ; .  .....................V(OLUME) PARAMETER ALLOWED.
                                 ; ........................C, I, OR O PARAMETER ALLOWED.
 
-CMDATTRB        DB $21,$70      ; INIT      00100001 01110000
-                DB $A0,$70      ; LOAD      10100000 01110000
-                DB $A1,$70      ; SAVE      10100001 01110000
-                DB $A0,$70      ; RUN       10100000 01110000
-                DB $20,$70      ; CHAIN     00100000 01110000
-                DB $20,$70      ; DELETE    00100000 01110000
-                DB $20,$70      ; LOCK      00100000 01110000
-                DB $20,$70      ; UNLOCK    00100000 01110000
-                DB $60,$00      ; CLOSE     01100000 00000000
-                DB $22,$06      ; READ      00100010 00000110
-                DB $20,$74      ; EXEC      00100000 01110100
-                DB $22,$06      ; WRITE     00100010 00000110
-                DB $22,$04      ; POSITION  00100010 00000100
-                DB $23,$78      ; OPEN      00100011 01111000
-                DB $22,$70      ; APPEND    00100010 01110000
-                DB $30,$70      ; RENAME    00110000 01110000
-                DB $40,$70      ; CATALOG   01000000 01110000
-                DB $40,$80      ; MON       01000000 10000000
-                DB $40,$80      ; NOMON     01000000 10000000
-                DB $08,$00      ; PR#       00001000 00000000
-                DB $08,$00      ; IN#       00001000 00000000
-                DB $04,$00      ; MAXFILES  00000100 00000000
-                DB $40,$70      ; FP        01000000 01110000
-                DB $40,$00      ; INT       01000000 00000000
-                DB $21,$79      ; BSAVE     01000001 01111001
-                DB $20,$71      ; BLOAD     01000000 01110001
-                DB $20,$71      ; BRUN      01000000 01110001
-                DB $20,$70      ; VERIFY    00100000 01110000
+CMDATTRB
+                IF VERS = 31
+                DW %0111000000100000 ; INIT    
+                DW %0111000010100000 ; LOAD    
+                DW %0111000010100000 ; SAVE    
+                DW %0111000010100000 ; RUN     
+                DW %0111000000100000 ; CHAIN   
+                DW %0111000000100000 ; DELETE  
+                DW %0111000000100000 ; LOCK    
+                DW %0111000000100000 ; UNLOCK  
+                DW %0000000001100000 ; CLOSE   
+                DW %0000011000100000 ; READ    
+                DW %0111010000100000 ; EXEC    
+                DW %0000011000100000 ; WRITE   
+                DW %0000010000100000 ; POSITION
+                DW %0111100000100000 ; OPEN    
+                DW %0111100000100000 ; APPEND  
+                DW %0111000000110000 ; RENAME  
+                DW %0111000001000000 ; CATALOG 
+                DW %1000000001000000 ; MON     
+                DW %1000000001000000 ; NOMON   
+                DW %0000000000001000 ; PR#     
+                DW %0000000000001000 ; IN#     
+                DW %0000000000000100 ; MAXFILES
+                DW %0111000001000000 ; FP      
+                DW %0000000001000000 ; INT     
+                DW %0111100100100000 ; BSAVE   
+                DW %0111000100100000 ; BLOAD   
+                DW %0111000100100000 ; BRUN    
+                DW %0111000000100000 ; VERIFY  
+                ELSE
+                DW %0111000000100001 ; INIT
+                DW %0111000010100000 ; LOAD
+                DW %0111000010100001 ; SAVE
+                DW %0111000010100000 ; RUN
+                DW %0111000000100000 ; CHAIN
+                DW %0111000000100000 ; DELETE
+                DW %0111000000100000 ; LOCK
+                DW %0111000000100000 ; UNLOCK
+                DW %0000000001100000 ; CLOSE
+                DW %0000011000100010 ; READ
+                DW %0111010000100000 ; EXEC
+                DW %0000011000100010 ; WRITE
+                DW %0000010000100010 ; POSITION
+                DW %0111100000100011 ; OPEN
+                DW %0111000000100010 ; APPEND
+                DW %0111000000110000 ; RENAME
+                DW %0111000001000000 ; CATALOG
+                DW %1000000001000000 ; MON
+                DW %1000000001000000 ; NOMON
+                DW %0000000000001000 ; PR#
+                DW %0000000000001000 ; IN#
+                DW %0000000000000100 ; MAXFILES
+                DW %0111000001000000 ; FP
+                DW %0000000001000000 ; INT
+                DW %0111100101000001 ; BSAVE
+                DW %0111000101000000 ; BLOAD
+                DW %0111000101000000 ; BRUN
+                DW %0111000000100000 ; VERIFY
+                ENDIF
+;               DB $21,$70      ; INIT      00100001 01110000
+;               DB $A0,$70      ; LOAD      10100000 01110000
+;               DB $A1,$70      ; SAVE      10100001 01110000
+;               DB $A0,$70      ; RUN       10100000 01110000
+;               DB $20,$70      ; CHAIN     00100000 01110000
+;               DB $20,$70      ; DELETE    00100000 01110000
+;               DB $20,$70      ; LOCK      00100000 01110000
+;               DB $20,$70      ; UNLOCK    00100000 01110000
+;               DB $60,$00      ; CLOSE     01100000 00000000
+;               DB $22,$06      ; READ      00100010 00000110
+;               DB $20,$74      ; EXEC      00100000 01110100
+;               DB $22,$06      ; WRITE     00100010 00000110
+;               DB $22,$04      ; POSITION  00100010 00000100
+;               DB $23,$78      ; OPEN      00100011 01111000
+;               DB $22,$70      ; APPEND    00100010 01110000
+;               DB $30,$70      ; RENAME    00110000 01110000
+;               DB $40,$70      ; CATALOG   01000000 01110000
+;               DB $40,$80      ; MON       01000000 10000000
+;               DB $40,$80      ; NOMON     01000000 10000000
+;               DB $08,$00      ; PR#       00001000 00000000
+;               DB $08,$00      ; IN#       00001000 00000000
+;               DB $04,$00      ; MAXFILES  00000100 00000000
+;               DB $40,$70      ; FP        01000000 01110000
+;               DB $40,$00      ; INT       01000000 00000000
+;               DB $21,$79      ; BSAVE     01000001 01111001
+;               DB $20,$71      ; BLOAD     01000000 01110001
+;               DB $20,$71      ; BRUN      01000000 01110001
+;               DB $20,$70      ; VERIFY    00100000 01110000
 
 
                                 ; =================================
@@ -4714,20 +4968,18 @@ OPTNISSD        DB $40          ; V(OLUME) PARAMETER.
                                 ; LARGER FILES.
                                 ; =================================
 
-OPTNRNG         DB $00,$00,$FE,$00
-                                ; ($A955 - $A958)  V: (0 - 254).
-                DB $01,$00,$02,$00
-                                ; ($A959 - $A95C)  D: (1 - 2).
-                DB $01,$00,$07,$00
-                                ; ($A95D - $A960)  S: (1 - 7).
-                DB $01,$00,$FF,$7F
-                                ; ($A961 - $A964)  L: (1 - 32767).
-                DB $00,$00,$FF,$7F
-                                ; ($A965 - $A968)  R: (0 - 32767).
-                DB $00,$00,$FF,$7F
-                                ; ($A969 - $A96C)  B: (0 - 32767).
-                DB $00,$00,$FF,$FF
-                                ; ($A96D - $A970)  A: (0 - 65535).
+OPTNRNG
+                DW 0,$100-2     ; ($A955 - $A958)  V: (0 - 254).
+                DW 1,2          ; ($A959 - $A95C)  D: (1 - 2).
+                DW 1,7          ; ($A95D - $A960)  S: (1 - 7).
+                DW 1,$8000-1    ; ($A961 - $A964)  L: (1 - 32767).
+                DW 0,$8000-1    ; ($A965 - $A968)  R: (0 - 32767).
+                DW 0,$8000-1    ; ($A969 - $A96C)  B: (0 - 32767).
+                IF VERS = 31
+                DW 0,$C000      ; ($A96D - $A970)  A: (0 - 49152).
+                ELSE
+                DW 0,$10000-1   ; ($A96D - $A970)  A: (0 - 65535).
+                ENDIF
 
 
                                 ; ==================================
@@ -4741,17 +4993,30 @@ OPTNRNG         DB $00,$00,$FE,$00
                                 ; ==================================
 
                                 ; CORRESPONDING ERROR CODE & ADDRS
-ERRTXTBL        DB $0D,$07,$8D  ; 0  ($A971 - $A973)
+ERRTXTBL        DB $0D,$07     ; 0  ($A971 - $A973)
                                 ; <CR>, <BELL>, <CR>
+                IF VERS != 31
+                DB $8D
+                ENDIF
+
+                IF VERS = 31
+                DB "***DISK:"," "|0x80
+                DB "SY","S"|0x80
+                ELSE
                 DB "LANGUAGE NOT AVAILABL","E"|0x80
                                 ; 1 ($A974  - $A989)
                 DB "RANGE ERRO","R"|0x80
+                ENDIF
                                 ; 2&3 ($A98A - $A994)
                                 ; BAD FM OPCODE OR SUBCODE ELSE,
                                 ; ILLEGAL ARGUMENTS ISSUED 4 IN#,
                                 ; PR#, MAXFILES CMDS OR FOR A, B,
                                 ; R, L, S, D, V, C, I, OR O OPT'NS
+                IF VERS = 31
+                DB "WRITE PROTEC","T"|0x80
+                ELSE
                 DB "WRITE PROTECTE","D"|0x80
+                ENDIF
                                 ; 4  ($A995 - $A9A3)
                 DB "END OF DAT","A"|0x80
                                 ; 5  ($A9A4 - $A9AE)
@@ -4759,22 +5024,41 @@ ERRTXTBL        DB $0D,$07,$8D  ; 0  ($A971 - $A973)
                                 ; 6  ($A9AF - $A9BC)
                 DB "VOLUME MISMATC","H"|0x80
                                 ; 7  ($A9BD - $A9CB)
+                IF VERS = 31
+                DB "DISK I/","O"|0x80
+                ELSE
                 DB "I/O ERRO","R"|0x80
+                ENDIF
                                 ; 8  ($A9CC - $A9D4)
                 DB "DISK FUL","L"|0x80
                                 ; 9  ($A9D5 - $A9DD)
                 DB "FILE LOCKE","D"|0x80
                                 ; 10  ($A9DE - $A9E8)
+                IF VERS = 31
+                DB "CMD SYNTA","X"|0x80
+                                ; 11  ($A9E9 - $A9F4)
+                DB "NO FILE BUFFS AVAI","L"|0x80
+                                ; 12  ($A9F5 - $AA08)
+                DB "NOT BASIC PROGRA","M"|0x80
+                                ; 13  ($AA09 - $AA1A)
+                ELSE
                 DB "SYNTAX ERRO","R"|0x80
                                 ; 11  ($A9E9 - $A9F4)
                 DB "NO BUFFERS AVAILABL","E"|0x80
                                 ; 12  ($A9F5 - $AA08)
                 DB "FILE TYPE MISMATC","H"|0x80
                                 ; 13  ($AA09 - $AA1A)
+                ENDIF
                 DB "PROGRAM TOO LARG","E"|0x80
                                 ; 14  ($AA1B - $AA2B)
+                IF VERS = 31
+                DB "NOT BINARY FIL","E"|0x80
+                                ; 15  ($AA2C - $AA3D)
+                DB " ERROR"
+                ELSE
                 DB "NOT DIRECT COMMAN","D"|0x80
                                 ; 15  ($AA2C - $AA3D)
+                ENDIF
                 DB $8D          ; <CR>      NO CODE    ($AA3E)
 
 
@@ -4785,8 +5069,26 @@ ERRTXTBL        DB $0D,$07,$8D  ; 0  ($A971 - $A973)
                                 ; AROUND SO ERRONEOUS ERROR MSGS
                                 ; WILL BE USED.)
                                 ; =================================
-
+; TODO DON'T HARDCODE
 OFF2ERR         DB $00          ; ERROR CODE - 0
+                IF VERS = 31
+                DB $0B
+                DB $0B
+                DB $0B
+                DB $0E
+                DB $1B
+                DB $26
+                DB $34
+                DB $43
+                DB $4B
+                DB $54
+                DB $5F
+                DB $69
+                DB $7C
+                DB $8D
+                DB $9E
+                DB $AD
+                ELSE
                 DB $03          ; - 1
                 DB $19          ; - 2
                 DB $19          ; - 3
@@ -4802,8 +5104,7 @@ OFF2ERR         DB $00          ; ERROR CODE - 0
                 DB $98          ; - 13
                 DB $AA          ; - 14
                 DB $BB          ; - 15
-
-
+                ENDIF
                                 ; =================================
                                 ; DOS MAIN ROUTINE VARIABLES.
                                 ; ($AA4F - $AA65)
@@ -4858,7 +5159,6 @@ NDX2OPTN        DS 1            ; INDEX TO OPTION (USED TO INDEX
 CUMLOPTN        DS 1            ; HOLDS CUMMULTIVE RECORD OF
                                 ; OPTIONS PARSED ON CMD LINE.
 
-
                                 ; =================================
                                 ; OPTION PARSED VALUES TABLE.
                                 ; ($AA66 - $AA74)
@@ -4867,6 +5167,27 @@ CUMLOPTN        DS 1            ; HOLDS CUMMULTIVE RECORD OF
                                 ; COMMAND.  SOME OF THESE BYTES
                                 ; ARE DEFAULTED TO NON-ZERO VALS.)
                                 ; =================================
+                IF VERS = 31
+VOLPRSD
+                DS 1            ; PARSED VOLUME NUMBER.
+                DS 1
+DRVPRSD         DS 1            ; PARSED DRIVE NUMBER.
+                DS 1
+SLOTPRSD        DS 1            ; PARSED SLOT NUMBER.
+                DS 1
+VOLPRSD2
+LENPRSD         DS 1            ; PARSED LENGTH VALUE.
+                DS 1
+RECPRSD         DS 1            ; PARSED RECORD OR RELATIVE FIELD
+                                ; POSITION NUMBER.
+                DS 1
+                DS 1
+                DS 1
+ADRPRSD         DS 1            ; PARSED ADDRESS PARAMETER.
+                DS 1
+MONPRSD         DS 1            ; PARSED MON/NOMON CHR CODE VALS.
+                ELSE
+
 
 VOLPRSD         DS 2            ; PARSED VOLUME NUMBER.
 DRVPRSD         DS 2            ; PARSED DRIVE NUMBER.
@@ -4877,6 +5198,7 @@ RECPRSD         DS 2            ; PARSED RECORD OR RELATIVE FIELD
 BYTPRSD         DS 2            ; PARSED BYTE VALUE.
 ADRPRSD         DS 2            ; PARSED ADDRESS PARAMETER.
 MONPRSD         DS 1            ; PARSED MON/NOMON CHR CODE VALS.
+                ENDIF
 
 
                                 ; ==================================
@@ -4909,8 +5231,13 @@ EXECFLAG        DS 1            ; EXEC FLAG: $00 = NOT EXECING,
                                 ; (ELSE CONTAINS 1RST CHAR OF NAME
                                 ; OF EXEC FILE).
 EXECBUFF        DS 2            ; PTS TO EXEC FILE'S BUFFER.
-ACTBSFLG        DS 1            ; ACTIVE BASIC FLAG (INT=$00,
+
+ACTBSFLG                        ; ACTIVE BASIC FLAG (INT=$00,
                                 ; A(ROM)=$40, A(RAM)=$80).
+                IF VERS != 31
+                DS 1
+                ENDIF
+
 RUNTRUPT        DS 1            ; RUN INTERCEPTED FLAG:
                                 ; $00 = RUN NOT INTECEPTED.
                                 ; NON-ZERO = RUN INTERCEPTED TO DO
@@ -5005,10 +5332,13 @@ WRSUBTBL        DW GOODFMXT-1   ; (0), EXIT.
                                 ; FROM CUSTOM ASSEMBLY LANGUAGE ROUTINES.
                                 ; =========================================
 
-FMXTNTRY        CPX #0
+FMXTNTRY
+                IF VERS != 31
+                CPX #0
                 BEQ FMXTCMD     ; ALLOW NEW FILE-SIMUL8 AN "INIT".
                 LDX #02         ; REQUIRES OLD FILE (SIMUL8 LOAD).
 FMXTCMD         STX NDX2CMD     ; SET INDEX TO COMMAND.
+                ENDIF
 
 
                                 ; =================================
@@ -5086,7 +5416,7 @@ STRECLEN        STA RECLENWA    ; PUT LENGTH IN FM WORK AREA.
                                 ; THE DIRECTORY, SO PREPARE A NEW
                                 ; FILE ENTRY IN CASE THE CMD CAN
                                 ; LEGALLY CREATE A NEW FILE.
-
+                IF VERS != 31
                 STX CURDIRNX    ; OFFSET TO NEW DESCRIP ENTRY IN
                                 ; CASE WANT TO CREATE A NEW FILE.
 
@@ -5113,6 +5443,7 @@ NEWILLGL        LDA CONDNFLG    ; $00=WARMSTART, $01=READING,
                 JMP LNGNOTAV    ; HANDLE LANGUAGE-NOT-AVAIL ERROR.
 
 TOFILNOT        JMP FILENOT     ; HANDLE FILE-NOT-FOUND ERROR.
+                ENDIF
 
 
                                 ; ---------------------------------
@@ -5134,6 +5465,9 @@ CREATNEW        LDA #0          ; INITIALIZE FILE SIZE = 1 SECTOR.
                 STA FIL1SIZE,X
                 STX CURDIRNX    ; SAVE BYTE OFFSET INTO DIR SEC
                                 ; FOR FILE DESCRIPTION.
+                IF VERS = 31
+                STX BYTNXD1R
+                ENDIF
                 JSR ASGNTKSC    ; FIND TRK/SEC VALS FOR NEW FILE.
 
                                 ; FINISH SETTING UP PARAMETERS
@@ -5189,7 +5523,10 @@ FILLINWA        LDA FIL1TSTK,X  ; T/S LIST TRK (FRM DIRECTORY SEC)
                 STA FILENSEC
                 LDA FIL1SIZE+1,X
                 STA FILENSEC+1
+
+                IF VERS != 31
                 STX BYTNXD1R    ; INDEX IN2 DIREC SEC FOR DESCRIP.
+                ENDIF
                 LDA #$FF        ; PRETEND THAT THE LAST DATA SEC
                 STA RELPREV     ; USED HAD A RELATIVE SECTOR #
                 STA RELPREV+1   ; (IN RELATION TO THE ENTIRE FILE)
@@ -5593,16 +5930,23 @@ FNVERIFY        JSR COMNOPEN    ; LOCATE FILE WITH SAME NAME
 VRFYREAD        JSR NXTDATRD    ; READ NEXT DATA SEC IN.  (ASSUME
                                 ; DATA SEC WE WANT NOT PRESENTLY
                                 ; IN MEMORY.)
+                IF VERS = 31
+                BCS TOOKFMXT2
+                ELSE
                 BCS TOOKFMXT    ; END OF FILE DETECTED - EXIT FM.
                                 ; EVENTUALLT RETURNS TO AFTRFUNC
                                 ; ($A6AB) LOCATED IN THE FMDRIVER
                                 ; ROUTINE ($A6A8).
+                ENDIF
                 INC FILPTSEC    ; KICK UP FILE POINTER POS'N
                 BNE VRFYREAD    ; AND THEN GO BACK TO READ NEXT
                 INC FILPTSEC+1  ; DATA SECTOR UNTIL ENCOUNTER END
                 JMP VRFYREAD    ; OF FILE MARKER.
 
 
+                IF VERS = 31
+TOOKFMXT2       JMP GOODFMXT
+                ENDIF
                                 ; =================================
                                 ; DELETE FUNCTION HANDLER.
                                 ; =================================
@@ -5706,7 +6050,11 @@ FREESEC         SEC             ; SET CARRY SO FREE UP PRESENT SEC
                                 ; TO SEC #.  NEXT, MERGE ASIGNMAP
                                 ; WITH THE APPROP BIT MAP IN VTOC.
                 LDA #0          ; ZERO OUT ASIGNSEC, ASIGNTRK
+                IF VERS = 31
+                LDX #3
+                ELSE
                 LDX #5          ; & ASIGNMAP (6 BYTES) IN WRK AREA
+                ENDIF
 RELEASEC        STA ASIGNSEC,X
                 DEX
                 BPL RELEASEC
@@ -5786,12 +6134,18 @@ PRLOCODE        TYA             ; EITHER PRINT "*" OR <SPC>.
                                 ; A TRAILING <SPC>.
 
                 LDA FIL1TYPE,X  ; GET FILE TYPE AGAIN & MAKE SURE
-                AND #$7F        ; HI BYTE IS OFF SO CAN INDEX TBL
+                IF VERS = 31
+                AND #%00000111
+                LDY #3
+CHRTYPIX        LSR A
+                ELSE
+                AND #%01111111  ; HI BYTE IS OFF SO CAN INDEX TBL
                                 ; THAT CONTAINS SYMBOLS FOR TYPES.
                 LDY #7          ; SET (Y) TO INDICATE 7 RELEVANT
                                 ; BITS AFTER SHIFT OUT HI BIT.
                 ASL A           ; THROW AWAY HI BIT.
 CHRTYPIX        ASL A           ; SHIFT REST OF BITS UNTIL HI SET.
+                ENDIF
                 BCS PRTFTYPE    ; # OF SHIFTS 2 SET (C) DESIGNATES
                                 ; INDEX TO TYPE CHAR TABLE.
                 DEY             ; REDUCE COUNT OF SHIFTS.
@@ -5884,7 +6238,7 @@ CRCATRTN        RTS
                                 ; - DOESN'T USE HI BYTE SO NUMBERS
                                 ; GREATER THAN 255 ARE EXPRESSED
                                 ; AS 256 MOD.
-                                ; 
+                                ;
                                 ; (PS. TO USE AS A STAND-ALONE
                                 ; ROUTINE, LOAD A5L WITH HEX & CALL
                                 ; PRVOLNMB.  DESTROYS (A) & (Y) REGS.
@@ -5991,7 +6345,7 @@ ZVTOC           STA VTOCBUFF,X  ; ZERO OUT A TRKMAP BYTE.
 
                                 ; FREE UP ALL TRKS EXCEPT TRKS 0,
                                 ; 1, 2 & CAT TRK (#17).
-                                ; 
+                                ;
                                 ; NOTE: DOS ONLY OCCUPIES SECTORS
                                 ; 0 TO 4 ON TRK 2, BUT ROUTINE
                                 ; TAKES REST OF SECS ON TRK 2 OUT
@@ -6060,7 +6414,16 @@ DOIMAGE         JSR PRPWRDOS    ; GET READY TO WRITE DOS IMAGE.
                 JMP GOODFMXT    ; EXIT FM CLEANLY. EVENTUALLY RTNS
                                 ; TO AFTRFUNC ($A6AB) LOCATED IN
                                 ; THE FMDRIVER ROUTINE ($A6A8).
-
+                IF VERS = 31
+PRPWRDOS        LDA SUBCODFM
+                STA   IBBUFP+1
+                LDA   #0
+                STA   IBBUFP
+                LDA   VOLWA
+                EOR   #$FF
+                STA   IBVOL
+                RTS
+                ENDIF
 
                                 ; =================================
                                 ; POINT A4L/H AT A SPECIFIC
@@ -6078,6 +6441,14 @@ PT2FMBUF        LDA WRKBUFFM,X  ; GET ADDR OF SELECTED BUF FROM
                 STA A4H
                 RTS
 
+                IF VERS = 31
+ZCURBUF         LDA #0
+                TAY
+L2E53           STA (A4L),Y
+                INY
+                BNE L2E53
+                RTS
+                ENDIF
 
                                 ; =================================
                                 ; CHK IF DATA SEC BUF HAS CHANGED
@@ -6443,8 +6814,12 @@ SKPWRSET        LDA VOLWA       ; PUT COMPLEMENTED VOL IN IOB.
                                 ; CALL RWTS
                                 ; =================================
 
+                IF VERS = 31
+                JSR RWTS
+                ELSE
                 JSR ENTERWTS    ; SAV STATUS,SET INTERRUPT DISABLE
                                 ; FLAG & CALL RWTS TO PERFORM TASK
+                ENDIF
                                 ; (SEEK, READ, WRITE, FORMAT).
                 LDA IBSMOD      ; GET VOL FOUND (FRM IOB) & PUT IT
                 STA VOLFM       ; IN THE FM PARAMETER LIST.
@@ -6489,7 +6864,7 @@ SETFMERR        TYA             ; DESIGNATE IT AS GENERAL I/O ERR.
 
                                 ; CHECK IF NEED TO READ THE NEXT DATA
                                 ; SECTOR INTO THE DATA SECTOR BUFFER.
-                                ; 
+                                ;
                                 ; - IS DATA SEC WE WANT ALREADY IN MEMORY?
                                 ; - IF SO, DOES IT REQUIRE UPDATING?
 
@@ -7055,7 +7430,7 @@ CHNGSRCH        LDA #0          ; SET (A) = 0 SO WE CAN RESET
                                 ; IS LOCATED, THE ENTIRE TRACK IS
                                 ; IS ASSIGNED.  THE UNNEEDED SECS ARE
                                 ; LATER RELEASED BY THE CLOSE COMMAND.
-                                ; 
+                                ;
                                 ; NOTE:  DOS DOES NOT SUPPORT THE
                                 ; ALLOCATION OF TRK 0 FOR A FILE.
                                 ; INSTEAD, TRK 0 IS RESERVED FOR STORING
@@ -7269,7 +7644,7 @@ FREEXTRA        PHA             ; SAVE TRK # ON STK.
                                 ; IN DESCENDING ORDER.
                                 ; 4) # OF ROR'S = # OF SECS THAT
                                 ; NEED TO BE ASSIGNED.
-                                ; 
+                                ;
                                 ; FOR EX:  IF LAST TRK HAD NEVER
                                 ; BEEN ASSIGNED & ONLY SECS $0F
                                 ; AND $0E WERE NEEDED, THEN ON
@@ -7341,7 +7716,7 @@ SUB2RTN         RTS
                                 ; FORMAT) INTO THE ENTIRE FILE (2 BYTES).
                                 ; - FILPTBYT = BYTE OFFSET INTO THE CURRENT
                                 ; SECTOR (1 BYTE).
-                                ; 
+                                ;
                                 ; ALL 3 BYTES BYTES DEFINE THE EXACT POS'N
                                 ; OF THE FILE POINTER VIA THE FOLLOWING
                                 ; FORMULA:
@@ -7444,7 +7819,7 @@ NMBXLEN2        ROR A           ; SHIFT (AS A UNIT) RUNNING RESULT
                 BCC CALCRTS
                 INC FILPTSEC+1
                 ELSE
-                IF VERS = 1980
+                IF VERS = 1980 | VERS = 31
                 LDA #0
                 ADC FILPTSEC+1
                 STA FILPTSEC+1
@@ -7473,8 +7848,14 @@ ENDOFDAT        LDA #5
                 BNE BADFMXIT    ; ALWAYS.
 FILENOT         LDA #6
                 BNE BADFMXIT    ; ALWAYS.
-DISKFULL        JMP FULLPTCH
+DISKFULL
+                IF VERS = 31
+                LDA #9
+                BNE BADFMXIT
+                ELSE
+                JMP FULLPTCH
                 NOP
+                ENDIF
 FILELOKD        LDA #10
                 BNE BADFMXIT    ; ALWAYS.
 
@@ -7509,8 +7890,10 @@ BADFMXIT        SEC             ; (C) = 1 TO SIGNAL UNSUCCESSFUL.
 
 FMEXIT          PHP
                 STA RTNCODFM    ; STORE RTN CODE IN FM PARM LIST.
+                IF VERS != 31
                 LDA #0          ; AVOID THAT INFAMOUS $48 BUG.
                 STA STATUS
+                ENDIF
                 JSR CPYFMWA     ; COPY WORK AREA TO WORK BUFFER.
                 PLP             ; RETRIEVE STATUS OF SUCCESS OF
                                 ; OPERATION BACK OFF STK.
@@ -7579,7 +7962,11 @@ BASETEN         DB $01,$0A,$64  ; 10^0=0, 10^1=10, 10^2=100.
                 CMAP     " ",160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191
                 CMAP     "@",192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223
                 CMAP     "`",224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255
+                IF VERS = 31
+FTYPETBL        DB "TBAI"       ; TEXT, BINARY, APPLESOFT, INTEGER
+                ELSE
 FTYPETBL        DB "TIABSRAB"   ; TEXT, INTEGER, APPLESOFT, BINARY
+                ENDIF
                 CMAP
                                 ; S-TYPE, R(ELOCATABLE)-TYPE,
                                 ; A-TYPE, B-TYPE.  THESE CODES ARE
@@ -7609,7 +7996,16 @@ VTOCBUFF        DS 1            ; UNUSED ($B3BB).
                                 ; REFERENCE FOR START OF TABLE.
 FIRDIRTK        DS 1            ; TRK# OF 1RST DIRECTORY SECTOR.
 FIRDIRSC        DS 1            ; SEC# OF 1RST DIRECTORY SECTOR.
-VERSION         DB $03          ; DOS VERSION RELEASE NUMBER.
+VERSION                         ; DOS VERSION RELEASE NUMBER.
+                IF VERS = 31
+                DB 1
+                ELSE
+                IF VERS = 32
+                DB 2
+                ELSE
+                DB 3
+                ENDIF
+                ENDIF
                 DS 2            ; UNUSED ($B3BF-$B3C0).
 VOLUSED         DS 1            ; DISK VOL# (NORMALLY, $FE).
                 DS 32           ; UNUSED ($B3C2-$B3E1).
@@ -7623,7 +8019,13 @@ TKPERDSK        DB $23          ; TRKS/DISK (#35).
                                 ; AFTER DRIVE ADJUSTMENT, VALUE IN
                                 ; TKPERDSK CAN BE ALTERED 2 ENABLE
                                 ; THE USE OF AN EXTRA TRK ON DISK.
-SECPERTK        DB $10          ; SECS/TRK ($10, #16, $00 --> $0F)
+SECPERTK
+                IF VERS = 31 | VERS = 32
+                DB $0D           ; SECS/TRK ($0D, 13, $00 --> $0C)
+                ELSE
+                DB $10          ; SECS/TRK ($10, 16, $00 --> $0F)
+                ENDIF
+
 BYTPERSC        DB $00,$01      ; BYTES/SECTOR ($0100, #256).
 
 
@@ -7693,7 +8095,12 @@ TRKMAP30        DS 4            ; $B46B: TRK$1E
 TRKMAP31        DS 4            ; $B46F: TRK$1F
 TRKMAP32        DS 4            ; $B473: TRK$20
 TRKMAP33        DS 4            ; $B477: TRK$21
-TRKMAP34        DB $FF,$FF,$00,$00
+TRKMAP34
+                IF VERS = 31
+                DB $FF,$F8,$00,$00
+                ELSE
+                DB $FF,$FF,$00,$00
+                ENDIF
                                 ; $B47B: TRK$22
 
 
@@ -7963,6 +8370,39 @@ TRKWA           DS 1            ; TRACK NUMBER.
 SEC2RDB6        DB $01          ; IMAGE OF SEC2RD08.  DENOTES # OF
                                 ; SECS TO BE READ FROM TRK0 DURING
                                 ; BOOT0.
+
+				IF VERS = 31
+				DS 11
+                                ; upon entry, A3 --> first byte of highest RAM page (e.g., $BF00)
+L1B28SR
+                LDA   A3H
+                AND   #$DF      ; $BF becomes $9F
+                STA   A4H
+                STX   A4L       ; (A4) --> $9F00
+                LDA   (A4L,X)
+                PHA             ; save (A4) in case we need to restore it below
+                STA   PROSCRTH
+L1B35           TYA
+                EOR   PROSCRTH
+                STA   PROSCRTH
+                TYA
+                EOR   (A3L,X)
+                STA   (A4L,X)
+                CMP   PROSCRTH
+                BNE   L1B4D
+                INY
+                BNE   L1B35
+                                ; comes here if 9F page maps to BF page
+                LDY   A4H       ; $9F
+                PLA             ; (A4)
+                RTS
+L1B4D           PLA
+                STA (A4L,X)
+                LDY A3H
+                RTS
+
+                DS $195
+                ELSE
 
 BT1EXCB6        LDA PT2BTBUF+1  ; IMAGE OF BT1EXC08. GET NEXT PAGE
                                 ; TO BE READ IN.
@@ -8328,6 +8768,7 @@ RSETPTRS        LDA RECNMBFM    ; RECONCILE RECORD NUMBER VERSIONS
 
                 DS 21           ; ($B6E8-$B6FC.)
 
+                ENDIF
 
                                 ; =================================
                                 ; STORAGE FOR BOOT1.
@@ -8361,7 +8802,9 @@ IMG8FF          DB 9            ; DS 1 ;CONTAINS # OF PAGES TO READ WHEN (Chris 
                                 ; - NOTE THAT ON ENTRY:  (X) = SLOT * 16.
                                 ; :::::::::::::::::::::::::::::::::::::::::
 
-
+;                IF VERS = 31
+;                DS $D0
+;                ENDIF
                                 ; PREPARE RWTS'S INPUT-OUTOUT BLOCK
                                 ; (IOB) AND DESIGNATE THE NUMBER OF
                                 ; SECTORS TO READ.
@@ -8373,6 +8816,15 @@ BOOT2           STX IBSLOT      ; (X) = SLOT*16 WANTED.
                 STA IBDRVN
                 LDA NMPG2RD     ; SET NUMBER OF PAGES TO READ.
                 STA BT2PGCTR    ; COUNTER 4 NUMBER OF PGS 2 READ.
+
+                IF VERS = 31
+                LDA #0
+                STA IBTRK
+                LDA BT1RSTSC
+                STA IBSECT
+                LDA BT1RSTSC+1
+                STA IBBUFP+1
+                ELSE
                 LDA #2          ; START WITH TRK$02/SEC$04.
                 STA IBTRK       ; TRACK.
                 LDA #4
@@ -8381,6 +8833,8 @@ BOOT2           STX IBSLOT      ; (X) = SLOT*16 WANTED.
                                 ; BOOT1 (#$B6 ON 48K SLAVE).
                 DEY             ; DEFINE I/O BUF AS 1 PAGE BELOW
                 STY IBBUFP+1    ; BOOT1.
+                ENDIF
+
                 LDA #1          ; OPCODE FOR READ.
                 STA IBCMD
 
@@ -8407,9 +8861,13 @@ BOOT2           STX IBSLOT      ; (X) = SLOT*16 WANTED.
                 LDX #$FF        ; COMPLETELY CLEAR OUT THE STACK.
                 TXS
                 STX IBVOL       ; SET VOL TO $FF (COMPLEMENT OF 0)
+                IF VERS = 31
+                JSR SETVID
+                ELSE
                 JMP CLOBCARD    ; GO CLOBBER THE LANGUAGE CARD AND
                                 ; SET VIDEO OUTPUT (SIMUL8 PR#0).
                                 ; (RETURNS TO NEXT INSTRUC BELOW.)
+                ENDIF
 
 BK2BOOT2        JSR SETKBD      ; SIMULATE "IN#0" STATEMENT.
                                 ; (THAT IS, SELECT KEYBOARD.)
@@ -8435,12 +8893,65 @@ TODOSCLD2       JMP DOSRELOC    ; JUMP IN2 DOS'S COLDSTART ROUTINE
                                 ; ================================
                                 ; WRITE DOS IMAGE ON TRKS 0 - 2.
                                 ; (USED BY INIT FUNCTION.)
-                                ; 
+                                ;
                                 ; WRITE TRK02/SEC04 ($B5FF) DOWN
                                 ; TO TRK00/SEC0C ($9D00).
                                 ; ================================
 
-WRDOSIMG        LDA BTSTAGE+1   ; CALC # OF PAGES TO WRITE:
+WRDOSIMG
+                IF VERS = 31
+                LDA   IBBUFP+1
+                STA   BT1RSTSC+1
+                SEC
+                LDA   BTSTAGE+1
+                SBC   BT1RSTSC+1
+                STA   NMPG2RD
+                LDA   #$00
+                STA   IBTRK
+                STA   IBSECT
+                STA   IBBUFP
+                LDA   BTSTAGE+1
+                STA   IBBUFP+1
+                STA   IMG8FD+1
+                LDA   #$0A
+                STA   BT2PGCTR
+                STA   BT1RSTSC
+                LDA   #$48
+                STA   IMG8FF
+                LDA   #$02
+                STA   IBCMD
+                JSR   RWPAGES
+                LDA   BT1RSTSC+1
+                STA   IBBUFP+1
+                LDA   NMPG2RD
+                STA   BT2PGCTR
+                JSR   RWPAGES
+                RTS
+
+RWPAGES         LDA   ADROFIOB+1
+                LDY   ADROFIOB
+                JSR   RWTS
+                LDY   IBSECT
+                INY
+                CPY   #$0D
+                BNE   L37A9
+                LDY   #$00
+                INC   IBTRK
+L37A9           STY   IBSECT
+                INC   IBBUFP+1
+                DEC   BT2PGCTR
+                BNE   RWPAGES
+                RTS
+VERFY           LDA   #$0C
+                JSR   HNDLCMD1
+                LDA   #$06
+                CMP   RTNCODFM
+                BNE   TOCLOSE
+                JMP   TONOTFND
+TOCLOSE         JMP   CMDCLOSE
+                DS 24
+                ELSE
+                LDA BTSTAGE+1   ; CALC # OF PAGES TO WRITE:
                 SEC             ; (#$B6 - #$9D = #$19 OR #25.)
                 SBC IBBUFP+1
                 STA BT2PGCTR    ; SET COUNTER FOR 25 PAGES.
@@ -8551,7 +9062,6 @@ ERRENTER        PLP             ; THROW STATUS OFF STACK.
                                 ; =================================
                                 ; SET UP RWTS'S IOB TO WRITE DOS.
                                 ; =================================
-
 PRPWRDOS        LDA FIRDOSPG+1  ; DESIGNATE START OF DOS AS ADR OF
                 STA IBBUFP+1    ; I/O BUF IN RWTS'S IOB.
                 LDA #0
@@ -8566,13 +9076,17 @@ PRPWRDOS        LDA FIRDOSPG+1  ; DESIGNATE START OF DOS AS ADR OF
                                 ; ZERO OUT THE CURRENT (256-BYTE)
                                 ; BUFFER.
                                 ; =================================
-
 ZCURBUF         LDA #0
                 TAY
 ZCURBUF1        STA (A4L),Y
                 INY
                 BNE ZCURBUF1
                 RTS
+
+
+
+
+                ENDIF
 
 
                                 ; =================================
@@ -8653,7 +9167,7 @@ MONTC           DB $EF,$D8      ; MOTOR-ON-TIME COUNT.
                                 ; .
                                 ; .
                                 ; BBFF: 0 0 FF-7 FF-6 FF-5 FF-4 FF-3 FF-2
-                                ; 
+                                ;
                                 ; RWTSBUF2
                                 ; BC00: 0 0 01-0 01-1 AB-0 AB-1 55-0 55-1
                                 ; BC01: 0 0 00-0 00-1 AA-0 AA-1 54-0 54-1
@@ -8673,7 +9187,71 @@ MONTC           DB $EF,$D8      ; MOTOR-ON-TIME COUNT.
                                 ; ARE IGNORED IN $BC00-$BC01:
                                 ; 01-0,01-1,00-0,00-1.
 
-PRENIBL         LDX #0
+PRENIBL
+                IF VERS = 31
+                LDX   #$32 ; TODO
+                LDY   #$00
+L3804           LDA   ($3E),Y
+                STA   $26
+                LSR   A
+                LSR   A
+                LSR   A
+                STA   $3B00,X
+                INY
+                LDA   ($3E),Y
+                STA   $27
+                LSR   A
+                LSR   A
+                LSR   A
+                STA   $3B33,X
+                INY
+                LDA   ($3E),Y
+                STA   $2A
+                LSR   A
+                LSR   A
+                LSR   A
+                STA   $3B66,X
+                INY
+                LDA   ($3E),Y
+                LSR   A
+                ROL   $2A
+                LSR   A
+                ROL   $27
+                LSR   A
+                ROL   $26
+                STA   $3B99,X
+                INY
+                LDA   ($3E),Y
+                LSR   A
+                ROL   $2A
+                LSR   A
+                ROL   $27
+                LSR   A
+                STA   $3BCC,X
+                LDA   $26
+                ROL   A
+                AND   #$1F
+                STA   $3C00,X
+                LDA   $27
+                AND   #$1F
+                STA   $3C33,X
+                LDA   $2A
+                AND   #$1F
+                STA   $3C66,X
+                INY
+                DEX
+                BPL   L3804
+                LDA   ($3E),Y
+                TAX
+                AND   #$07
+                STA   $3C99
+                TXA
+                LSR   A
+                LSR   A
+                LSR   A
+                STA   $3BFF
+                ELSE
+                LDX #0
                 LDY #2
 PRENIB1         DEY
                 LDA (PTR2BUF),Y ; GET BYTE FROM "DATA" BUFFER.
@@ -8695,6 +9273,8 @@ PRENIB2         LDA RWTSBUF2,X  ; ARE ZEROES.
                 STA RWTSBUF2,X
                 DEX
                 BPL PRENIB2
+                ENDIF
+
                 RTS
 
 
@@ -8712,11 +9292,17 @@ PRENIB2         LDA RWTSBUF2,X  ; ARE ZEROES.
 
 WRITESEC        SEC             ; (C)=1, ASSUME WRITE PROTECTED
                                 ; ERROR AS DEFAULT CONDITION.
+                IF VERS != 31
                 STX FRMTSLOT    ; SAVE SLOT*16 IN PAGES 0 & 6.
                 STX SLOTPG6
+                ENDIF
                 LDA Q6H,X       ; CHK IF DISK IS WRITE PROTECTED.
                 LDA Q7L,X
                 BMI PROTECTD    ; BRANCH IF WRITE PROTECTED.
+                IF VERS = 31
+                STX FRMTSLOT    ; SAVE SLOT*16 IN PAGES 0 & 6.
+                STX SLOTPG6
+                ENDIF
                 LDA RWTSBUF2    ; GET 1RST 2-ENCODED BYTE AND SAVE
                 STA HOLDNIBL    ; IT FOR LATER USE.
 
@@ -8729,9 +9315,18 @@ WRITESEC        SEC             ; (C)=1, ASSUME WRITE PROTECTED
                 PHA             ; (3 CYC)
                 PLA             ; (4 CYC)
                 NOP             ; (2 CYC)
+                IF VERS = 31
+                LDY #10
+                ELSE
                 LDY #4          ; WRITE 4 MORE SYNCS (2 CYC).
-WRITE4FF        PHA             ; (3 CYC)
+                ENDIF
+WRITE4FF
+                IF VERS = 31
+                ORA HOLDNIBL
+                ELSE
+                PHA             ; (3 CYC)
                 PLA             ; (4 CYC)
+                ENDIF
                 JSR WRITE2      ; (12 CYC BEFORE, 6 AFTER.)
                 DEY             ; (2 CYC)
                 BNE WRITE4FF    ; (2 OR 3 CYC)
@@ -8755,7 +9350,7 @@ WRITE4FF        PHA             ; (3 CYC)
                                 ; NIBBLES FROM RWTSBUF2.
                                 ; (EOR TO CALC (X) & THEN USE (X)
                                 ; AS INDEX TO TBL OF DISK BYTES.)
-                                ; 
+                                ;
                                 ; #0 EOR $BC55 = (X)
                                 ; $BC55 EOR $BC54 = (X)
                                 ; $BC54 EOR $BC53 = (X)
@@ -8765,7 +9360,11 @@ WRITE4FF        PHA             ; (3 CYC)
                                 ; $BC01 EOR $BC00 = (X)
 
                 TYA             ; (A) = 0.
+                IF VERS = 31
+                LDY #$9A
+                ELSE
                 LDY #$56        ; (DEC #86.)
+                ENDIF
                 BNE DOEOR       ; ALWAYS.
 GETNIBL         LDA RWTSBUF2,Y
 DOEOR           EOR RWTSBUF2-1,Y
@@ -8779,7 +9378,7 @@ DOEOR           EOR RWTSBUF2-1,Y
 
                                 ; CONVERT & WRITE 6-ENCODED
                                 ; NIBBLES FROM RWTSBUF1.
-                                ; 
+                                ;
                                 ; $BC00 EOR $BB00 = (X)
                                 ; $BB00 EOR $BB01 = (X)
                                 ; $BB01 EOR $BB02 = (X)
@@ -8818,9 +9417,10 @@ SCNDEOR         EOR RWTSBUF1,Y
                 JSR WRITE1      ; (14 CYCS BEFORE, 6 AFTER.)
 
                                 ; WRITE A SYNC BYTE.
-
+                IF VERS != 31
                 LDA #$FF        ; (2 CYC)
                 JSR WRITE1      ; (14 CYCS BEFORE, 6 AFTER.)
+                ENDIF
                 LDA Q7L,X       ; SET READ MODE.
 PROTECTD        LDA Q6L,X
                 RTS
@@ -8857,7 +9457,9 @@ WRITE3          STA Q6H,X       ; (5 CYC) - SHIFT REGISTER)
                                 ; FOR RWTBUF2.
                                 ; (C) = 1.
 
-POSTNB16        LDY #0
+POSTNB16
+                IF VERS != 31
+                LDY #0
 POSTNIB1        LDX #$56        ; (DEC #86.)
 POSTNIB2        DEX
                 BMI POSTNIB1
@@ -8871,6 +9473,7 @@ POSTNIB2        DEX
                 CPY PROSCRTH
                 BNE POSTNIB2
                 RTS
+                ENDIF
 
 
                                 ; ===================================
@@ -8899,8 +9502,12 @@ PRODATAA        LDA Q6L,X       ; READ NEXT DATA PROLOGUE BYTE.
                 BPL PRODATAA    ; WAIT FOR FULL BYTE.
                 CMP #$AA        ; WAS IT AN "AA"?
                 BNE VERSD5      ; NO - GO RESTART SEQUENCE.
+                IF VERS = 31
+                LDY #$9A
+                ELSE
                 LDY #$56        ; SET (Y) FOR LATER USE IN READ
                                 ; DATA ROUTINE.
+                ENDIF
 PRODATAD        LDA Q6L,X       ; READ NEXT BYTE IN DATA PROLOGUE.
                 BPL PRODATAD    ; WAIT FOR FULL BYTE.
                 CMP #$AD        ; WAS IT AN "AD"?
@@ -8908,7 +9515,7 @@ PRODATAD        LDA Q6L,X       ; READ NEXT BYTE IN DATA PROLOGUE.
 
                                 ; READ 1RST 86 BYTES OF DATA INTO
                                 ; RWTSBUF2 ($BC55 --> $BC00).
-                                ; 
+                                ;
                                 ; USE DISK BYTE AS INDEX TO THE
                                 ; NDX2NIBL TABLE WHICH CONTAINS
                                 ; OFFSETS THAT WE WOULD BE USING
@@ -8926,7 +9533,7 @@ RDUCY           DEY             ; REDUCE INDEX TO RWTSBUF2.
                 STY PROSCRTH    ; SAVE INDEX.
 RDSKBYT         LDY Q6L,X       ; (Y) = DISK BYTE.
                 BPL RDSKBYT     ; WAIT FOR FULL BYTE.
-                EOR NDX2NIBL-$96,Y
+                EOR NDX2NIBL-N2NOFF,Y
                                 ; USE (Y) AS INDEX TO TABLE OF
                                 ; 2-ENCODED NIBBLES.
                 LDY PROSCRTH    ; RETRIEVE INDEX TO SECOND BUF.
@@ -8935,7 +9542,7 @@ RDSKBYT         LDY Q6L,X       ; (Y) = DISK BYTE.
 
                                 ; READ REST OF SEC INTO RWTSBUF1
                                 ; ($BB00 --> $BBFF).
-                                ; 
+                                ;
                                 ; USE DISK BYTE AS INDEX TO THE
                                 ; NDX2NIBL TABLE WHICH CONTAINS
                                 ; OFFSETS THAT WE WOULD BE USING
@@ -8949,7 +9556,7 @@ RDSKBYT         LDY Q6L,X       ; (Y) = DISK BYTE.
 SAVYNDX         STY PROSCRTH    ; SAVE INDEX TO RWTSBUF1.
 RDSKBYT2        LDY Q6L,X       ; (Y) = DISK BYTE.
                 BPL RDSKBYT2    ; WAIT FOR FULL BYTE.
-                EOR NDX2NIBL-$96,Y
+                EOR NDX2NIBL-N2NOFF,Y
                                 ; GET 6-ENCODED NIBL FRM TBL.
                 LDY PROSCRTH    ; GET INDEX TO RWTSBUF1.
                 STA RWTSBUF1,Y  ; STORE 6-ENCODED NIBL N RWTSBUF1.
@@ -8960,7 +9567,7 @@ RDSKBYT2        LDY Q6L,X       ; (Y) = DISK BYTE.
 
 RDCHECK         LDY Q6L,X       ; GET DATA CHECKSUM BYTE FROM DSK.
                 BPL RDCHECK     ; WAIT FOR FULL BYTE.
-                CMP NDX2NIBL-$96,Y
+                CMP NDX2NIBL-N2NOFF,Y
                                 ; DOES CONVERTED CHKSUM EQUAL
                                 ; THE VALUE IN $BBFF?
                                 ; REMEMBER: VAL IN $BBFF IS RESULT
@@ -9008,7 +9615,12 @@ ERRTN           SEC             ; SIGNAL BAD READ.
 
                                 ; READ THE ADDRESS HEADER.
 
-RDADDR          LDY #$FC        ; SET 772 CHANCES TO FIND CORRECT
+RDADDR
+                IF VERS = 31
+                LDY #$F8
+                ELSE
+                LDY #$FC        ; SET 772 CHANCES TO FIND CORRECT
+                ENDIF
                 STY PROSCRTH    ; ADR PROLOGUE (#$FCFC-#$10000).
 KICKNTR         INY
                 BNE TRYD5
@@ -9031,7 +9643,11 @@ TRYAA           LDA Q6L,X
                                 ; ADRRESS FIELD.
 TRY96           LDA Q6L,X
                 BPL TRY96       ; WAIT FOR A FULL BYTE.
+                IF VERS = 31
+                CMP #$B5        ; WAS IT "96"?
+                ELSE
                 CMP #$96        ; WAS IT "96"?
+                ENDIF
                 BNE VERSUSD5    ; NO - RETRY SEQUENCE.
 
                                 ; READ ODD-EVEN ENCODED VOL, TRK,
@@ -9082,7 +9698,62 @@ TRYEPIAA        LDA Q6L,X       ; GET 2ND BYTE.
 GOODRTN         CLC             ; SIGNAL GOOD READ.
                 RTS
 
-
+                IF VERS = 31
+                LDX   #$32 ; TODO
+                LDY   #$00
+L39C5           LDA   $3C00,X
+                LSR   A
+                LSR   A
+                LSR   A
+                STA   $27
+                LSR   A
+                STA   $26
+                LSR   A
+                ORA   $3B00,X
+                STA   ($3E),Y
+                INY
+                LDA   $3C33,X
+                LSR   A
+                LSR   A
+                LSR   A
+                LSR   A
+                ROL   $27
+                LSR   A
+                ROL   $26
+                ORA   $3B33,X
+                STA   ($3E),Y
+                INY
+                LDA   $3C66,X
+                LSR   A
+                LSR   A
+                LSR   A
+                LSR   A
+                ROL   $27
+                LSR   A
+                ROL   $26
+                ORA   $3B66,X
+                STA   ($3E),Y
+                INY
+                LDA   $26
+                AND   #$07
+                ORA   $3B99,X
+                STA   ($3E),Y
+                INY
+                LDA   $27
+                AND   #$07
+                ORA   $3BCC,X
+                STA   ($3E),Y
+                INY
+                DEX
+                BPL   L39C5
+                LDA   $3C99
+                LSR   A
+                LSR   A
+                LSR   A
+                ORA   $3BFF
+                STA   ($3E),Y
+                RTS
+                ENDIF
                                 ; ======================================
                                 ; MOVE DISK ARM TO A GIVEN HALFTRACK
                                 ; POSITION ($B9A0-$B9FF).
@@ -9098,10 +9769,16 @@ GOODRTN         CLC             ; SIGNAL GOOD READ.
                                 ; PRESTRK = FINAL HALFTRK.
                                 ; HOLDPRES = PREVIOUS HALFTRK.
 
-SEEKABS         STX SLT16ZPG    ; SAVE SLOT*16 IN ZERO PAGE.
+SEEKABS
+                IF VERS != 31
+                STX SLT16ZPG    ; SAVE SLOT*16 IN ZERO PAGE.
+                ENDIF
                 STA DESTRK      ; SAVE DESTINATION HALFTRK#.
                 CMP PRESTRK     ; DESTINATION 1/2TRK=PRES 1/2TRK?
                 BEQ ARRIVED     ; YES-WE'RE ALREADY THERE, SO XIT.
+                IF VERS = 31
+                STX SLT16ZPG    ; SAVE SLOT*16 IN ZERO PAGE.
+                ENDIF
                 LDA #0          ; INIT COUNTER 4 # OF TRKS MOVED.
                 STA STPSDONE
 
@@ -9161,6 +9838,33 @@ CKDLYNDX        CMP STPSDONE    ; COMPARE # OF HALFTRKS ALREADY
 
 CLSR2ND         CMP #12         ; ARE WE WITHIN 12 STEPS OF START
                                 ; OR DESTINATION POS'N?
+                IF VERS = 31
+                BCC   L3A4F ; TODO
+                LDA   #$0B
+L3A4F           TAY
+                LDA   PRESTRK
+                AND   #$03
+                ASL   A
+                ORA   $2B
+                TAX
+                LDA   $C081,X
+                LDA   ONTABLE,Y
+                JSR   DELAY
+                LDA   $27
+                AND   #$03
+                ASL   A
+                ORA   $2B
+                TAX
+                LDA   $C080,X
+                LDA   OFFTABLE,Y
+                JSR   DELAY
+                INC   $26
+                BNE   SAVCURTK
+ATDESTN         LDA   #$FF
+                JSR   DELAY
+                LDX   $2B
+ARRIVED         RTS
+                ELSE
                 BCS TURNON      ; WE ARE AT OR BEYOND 12 STEPS FRM
                                 ; START OR DEST'N POS'N SO USE OLD
                                 ; INDEX TO ACCESS DELAY TABLE.
@@ -9221,7 +9925,7 @@ ENTRYOFF        AND #%00000011  ; ONLY KEEP LWR 2 BITS OF HALFTRK#
                 LDA MAG0FF,X    ; USE MAGNET-0-OFF AS BASE ADR.
                 LDX SLT16ZPG    ; RESTORE (X) = SLOT*16.
 ARRIVED         RTS
-
+                ENDIF
 
                                 ; =================================
                                 ; FREE SPACE ($B9FD-$B9FF).
@@ -9285,6 +9989,7 @@ OFFTABLE        DB $70,$2C,$26,$22,$1F,$1E,$1D,$1C,$1C,$1C,$1C,$1C
                                 ; ($BA29 - $BA68)
                                 ; =================================
 
+                IF VERS != 31
 DSKNBTBL        DB $96,$97,$9A,$9B,$9D,$9E,$9F
                 DB $A6,$A7,$AB,$AC,$AD,$AE,$AF
                 DB $B2,$B3,$B4,$B5,$B6,$B7,$B9,$BA,$BB,$BC,$BD,$BE,$BF
@@ -9292,6 +9997,7 @@ DSKNBTBL        DB $96,$97,$9A,$9B,$9D,$9E,$9F
                 DB $D3,$D6,$D7,$D9,$DA,$DB,$DC,$DD,$DE,$DF
                 DB $E5,$E6,$E7,$E9,$EA,$EB,$EC,$ED,$EE,$EF
                 DB $F2,$F3,$F4,$F5,$F6,$F7,$F9,$FA,$FB,$FC,$FD,$FE,$FF
+                ENDIF
 
 
                                 ; =================================
@@ -9350,7 +10056,18 @@ CMPATCHLIM      DS  2
                 DB $AA, $88, $82, $C5, $C4, $B3, $B0, $88
                 ENDIF
                 ENDIF
-
+NDX2NIBL
+                IF VERS = 31
+N2NOFF          EQU $A8
+                DS 3
+                DB $00,$01,$08,$10,$18,$02,$03,$04,$05,$06,$20,$28,$30,$07,$09,$38
+                DB $40,$0A,$48,$50,$58,$0B,$0C,$0D,$0E,$0F
+                DB $11,$12,$13,$14,$15,$16,$17,$19,$1A,$1B,$1C,$1D,$1E
+                DB $21,$22,$23,$24,$60,$68,$25,$26,$70,$78,$27,$80,$88,$90
+                DB $29,$2A,$2B,$2C,$2D,$2E,$2F,$31,$32,$33
+                DB $98,$A0,$34,$A8,$B0,$B8,$35,$36,$37,$39,$3A,$C0,$C8
+                DB $D0,$3B,$3C,$D8,$E0,$3E,$E8,$F0,$F8
+                ELSE
                                 ; ==================================
                                 ; TABLE OF BYTES USED WHEN READING.
                                 ; ($BA96 - $BAFF)
@@ -9365,7 +10082,8 @@ CMPATCHLIM      DS  2
                                 ; mosher: note: values
                                 ; $00-$3F are valid
                                 ; $96-$FF are spacers
-NDX2NIBL        DB $00,$01                     ; VALID INDICES.
+N2NOFF          EQU $96
+                DB $00,$01                     ; VALID INDICES.
                 DB $98,$99                     ; 2 SPACERS.
                 DB $02,$03                     ; VALID INDICES.
                 DB $9C                         ; 1 SPACER.
@@ -9398,6 +10116,7 @@ NDX2NIBL        DB $00,$01                     ; VALID INDICES.
                 DB $F8                         ; 1 SPACER.
                 DB $39,$3A,$3B,$3C,$3D,$3E,$3F ; VALID INDICES.
 
+                ENDIF
 
 
                                 ; =================================
@@ -9427,7 +10146,32 @@ RWTSBUF1        DS 256
                                 ; (IE. JJ-0 REPRESENTS BIT 0 FROM
                                 ; ORIGINAL MEMORY BYTE JJ.)
 
-RWTSBUF2        DS 86
+RWTSBUF2
+                IF VERS = 31
+                DS 154
+                ELSE
+                DS 86
+                ENDIF
+
+                IF VERS = 31
+DSKNBTBL        DB $AB,$AD,$AE,$AF
+                DB $B5,$B6,$B7,$BA,$BB,$BD,$BE,$BF
+                DB $D6,$D7,$DA,$DB,$DD,$DE,$DF
+                DB $EA,$EB,$ED,$EE,$EF
+                DB $F5,$F6,$F7,$FA,$FB,$FD,$FE,$FF
+
+                DB $1C,$1C,$1C
+                DS 3
+                LDY SECDSK
+                LDA PHYSECTR13,Y ; TODO
+                LDY #5
+                JMP L3E0A
+FREE1
+                DS 6
+
+PHYSECTR13      DB $00,$05,$0A,$02,$07,$0C,$04,$09,$01,$06,$0B,$03,$08
+                DS 35
+                ELSE
 
 
                                 ; ======================================
@@ -9614,13 +10358,411 @@ FRANK1          RTS
                 ENDIF
                 ENDIF
 
+                ENDIF
+
+
+
+
+
+
+
                                 ; =================================
                                 ; READ/WRITE TRACK/SECTOR (RWTS).
                                 ; (ENTER WITH (Y)/(A) POINTING AT
                                 ; RWTS'S INPUT/OUTPUT BLOCK (IOB).
                                 ; =================================
 
-RWTS            STY PTR2IOB     ; SET UP A Z-PG PTR 2 RWTS'S IOB.
+RWTS
+				IF VERS = 31
+
+
+
+; TODO
+
+
+
+                STY   PTR2IOB
+                STA   PTR2IOB+1
+                LDY   #$01
+                LDA   (PTR2IOB),Y
+                TAX
+                STY   RSEEKCNT
+                LDY   #$0F
+                CMP   (PTR2IOB),Y
+                BEQ   L3D2D
+                TXA
+                PHA
+                LDA   (PTR2IOB),Y
+                TAX
+                PLA
+                PHA
+                STA   (PTR2IOB),Y
+                LDA   Q7L,X
+L3D1E           LDY   #$08
+                LDA   Q6L,X
+L3D23           CMP   Q6L,X
+                BNE   L3D1E
+                DEY
+                BNE   L3D23
+                PLA
+                TAX
+L3D2D           LDA   Q7L,X
+                LDA   Q6L,X
+                LDA   Q6L,X
+                PHA
+                PLA
+                STX   SLOTPG5
+                CMP   Q6L,X
+                PHP
+                LDA   $C089,X
+                LDY   #$06
+L3D44           LDA   (PTR2IOB),Y
+                STA   $0036,Y
+                INY
+                CPY   #$0A
+                BNE   L3D44
+                LDY   #$02
+                LDA   (PTR2IOB),Y
+                LDY   #$10
+                CMP   (PTR2IOB),Y
+                BEQ   L3D5E
+                STA   (PTR2IOB),Y
+                PLP
+                LDY   #$00
+                PHP
+L3D5E           ROR   A
+                LDA   SELDRV1,X
+                BCS   L3D67
+                LDA   SELDRV2,X
+L3D67           ROR   $35
+                LDY   #$02
+                LDA   ($3C),Y
+                STA   $46
+                INY
+                LDA   ($3C),Y
+                STA   $47
+                INY
+                LDA   (PTR2IOB),Y
+                JSR   L3E3B
+                PLP
+                BNE   L3D8A
+L3D7D           LDY   #$12
+L3D7F           DEY
+                BNE   L3D7F
+                INC   $46
+                BNE   L3D7D
+                INC   $47
+                BNE   L3D7D
+L3D8A           LDY   #$0C
+                LDA   (PTR2IOB),Y
+                BEQ   L3DE5
+                CMP   #$04
+                BEQ   L3DE7
+                ROR   A
+                PHP
+                BCS   L3D9B
+                JSR   $3800
+L3D9B           LDY   #$30
+                STY   READCNTR
+L3DA0           LDX   SLOTPG5
+                JSR   $3965
+                BCC   L3DC7
+L3DA8           DEC   READCNTR
+                BPL   L3DA0
+                LDA   PRESTRK
+                PHA
+                LDA   #$60
+                JSR   L3E82
+                DEC   RSEEKCNT
+                BNE   L3DDE
+                LDA   #$00
+                JSR   L3E3B
+                PLA
+L3DC1           JSR   L3E3B
+                JMP   L3D9B
+L3DC7           LDY   $2E
+                CPY   PRESTRK
+                BEQ   L3DF0
+                LDA   PRESTRK
+                PHA
+                TYA
+                JSR   L3E82
+                PLA
+                DEC   READCNTR
+                BPL   L3DC1
+                BMI   L3DA8
+L3DDE           PLA
+                LDA   #$40
+L3DE1           PLP
+                JMP   $3E29
+L3DE5           BEQ   L3E27
+L3DE7           LDY   #$03
+                LDA   (PTR2IOB),Y
+                STA   $2F
+                JMP   L3E9C
+L3DF0           LDY   #$03
+                LDA   (PTR2IOB),Y
+                PHA
+                LDA   $2F
+                LDY   #$0E
+                STA   (PTR2IOB),Y
+                PLA
+                BEQ   L3E06
+                CMP   $2F
+                BEQ   L3E06
+                LDA   #$20
+                BNE   L3DE1
+L3E06           LDY   #$05
+                LDA   $2D
+L3E0A           CMP   (PTR2IOB),Y
+                BEQ   L3E17
+                DEC   READCNTR
+                BPL   L3DA0
+                LDA   #$80
+                BNE   L3DE1
+L3E17           PLP
+                BCC   L3E32
+                JSR   $38FD
+                PHP
+                BCS   L3DA8
+                PLP
+                JSR   $39C1
+                LDX   SLOTPG5
+L3E27           CLC
+                BIT   $38
+                LDY   #$0D
+                STA   (PTR2IOB),Y
+                LDA   $C088,X
+                RTS
+L3E32           JSR   $386A
+                BCC   L3E27
+                LDA   #$10
+                BCS   L3E27+2
+L3E3B           PHA
+                LDY   #$01
+                LDA   ($3C),Y
+                ROR   A
+                PLA
+                BCC   L3E4C
+                ASL   A
+                JSR   L3E4C
+                LSR   PRESTRK
+                RTS
+L3E4C           STA   $2E
+                LDA   $C080,X
+                LDA   $C082,X
+                LDA   $C084,X
+                LDA   $C086,X
+                JSR   L3E7B
+                LDA   PRESTRK,Y
+                BIT   $35
+                BMI   L3E67
+                LDA   RSEEKCNT,Y
+L3E67           STA   PRESTRK
+                LDA   $2E
+                BIT   $35
+                BMI   L3E75
+                STA   RSEEKCNT,Y
+                BPL   L3E78
+L3E75           STA   PRESTRK,Y
+L3E78           JMP   $3A1E
+L3E7B           TXA
+                LSR   A
+                LSR   A
+                LSR   A
+                LSR   A
+                TAY
+                RTS
+L3E82           PHA
+                LDY   #$02
+                LDA   (PTR2IOB),Y
+                ROR   A
+                ROR   $35
+                JSR   L3E7B
+                PLA
+                ASL   A
+                BIT   $35
+                BMI   L3E98
+                STA   RSEEKCNT,Y
+                BPL   L3E9B
+L3E98           STA   PRESTRK,Y
+L3E9B           RTS
+L3E9C           LDA   #$80
+                STA   PRESTRK
+                LDA   #$00
+                STA   $41
+                JSR   $3A1E
+                LDA   #$AA
+                STA   $4A
+                LDY   #$50
+L3EAE           STY   $47
+                LDA   #$27
+                STA   $4B
+                LDA   Q6H,X
+                LDA   Q7L,X
+                LDA   #$FF
+                STA   Q7H,X
+                CMP   Q6L,X
+                BIT   $00
+L3EC4           DEY
+                BEQ   L3ED6
+                PHA
+                PLA
+                NOP
+L3ECA           PHA
+                PLA
+                NOP
+                NOP
+                STA   Q6H,X
+                CMP   Q6L,X
+                BCS   L3EC4
+L3ED6           DEC   $4B
+                BNE   L3ECA
+                LDY   $47
+                NOP
+                NOP
+                BNE   L3EE6
+L3EE0           PHA
+                PLA
+                PHA
+                PLA
+                CMP   ($00,X)
+L3EE6           NOP
+L3EE7           STA   Q6H,X
+                CMP   Q6L,X
+                DEY
+                BNE   L3EE0
+                LDA   #$D5
+                JSR   L3FCA
+                LDA   #$AA
+                JSR   L3FCB
+                LDA   #$B5
+                JSR   L3FCB
+                LDA   $2F
+                JSR   L3FBB
+                LDA   $41
+                JSR   L3FBB
+                LDA   $4B
+                JSR   L3FBB
+                LDA   $2F
+                EOR   $41
+                EOR   $4B
+                PHA
+                LSR   A
+                ORA   $4A
+                STA   Q6H,X
+                CMP   Q6L,X
+                PLA
+                ORA   #$AA
+                JSR   L3FCA
+                LDA   #$DE
+                JSR   L3FCB
+                LDA   #$AA
+                JSR   L3FCB
+                LDA   #$EB
+                JSR   L3FCB
+                LDA   #$FF
+                JSR   L3FCB
+                LDY   #$02
+                STY   $46
+                LDY   #$AD
+                BNE   L3F46
+L3F40           DEY
+                BEQ   L3F50
+                PHA
+                PLA
+                NOP
+L3F46           PHA
+                PLA
+                STA   Q6H,X
+                CMP   Q6L,X
+                BCS   L3F40
+L3F50           DEC   $46
+                BNE   L3F46
+                LDY   $47
+                CLC
+                BIT   $00
+                STA   Q6H,X
+                LDA   Q6L,X
+                LDA   $4B
+                ADC   #$0A
+                STA   $4B
+                SBC   #$0C
+                BEQ   L3F73
+                BCS   L3F6B+1
+L3F6B           BIT   $4B85
+                LDA   #$FF
+                JMP   L3EE7
+L3F73           PHA
+                PLA
+                LDY   $47
+                LDA   Q6H,X
+                LDA   Q7L,X
+                BMI   L3FB3
+                DEY
+L3F80           PHA
+                PLA
+                NOP
+                NOP
+                BIT   $00
+                PHA
+                PLA
+                DEY
+                BNE   L3F80
+                JSR   $3965
+                BCS   L3F94
+                LDA   $2D
+                BEQ   L3F9E
+L3F94           LDY   $47
+                DEY
+                CPY   #$10
+                BCC   L3FB3
+                JMP   L3EAE
+L3F9E           INC   $41
+                LDA   $41
+                CMP   #$23
+                BCS   L3FB8
+                ASL   A
+                JSR   $3A1E
+                LDY   $47
+                INY
+                INY
+                STY   $47
+                JMP   L3EAE
+L3FB3           LDA   #$40
+                JMP   $3E29
+L3FB8           JMP   L3E27
+L3FBB           PHA
+                LSR   A
+                ORA   $4A
+                STA   Q6H,X
+                CMP   Q6L,X
+                PLA
+                CMP   ($00,X)
+                ORA   #$AA
+L3FCA           NOP
+L3FCB           PHA
+                PLA
+                NOP
+                STA   Q6H,X
+                CMP   Q6L,X
+                RTS
+L3FD5           INX
+                BEQ   L3FD9
+                RTS
+L3FD9           JMP   CLOSZERO
+
+                DS    36
+
+
+
+
+				ELSE
+
+
+
+
+                STY PTR2IOB     ; SET UP A Z-PG PTR 2 RWTS'S IOB.
                 STA PTR2IOB+1
                 LDY #2          ; INITIALIZE CNTR FOR MAXIMUM
                 STY RECLBCNT    ; NUMBER OF RECALIBRATION TRIES.
@@ -9769,7 +10911,7 @@ USEDRV1         ROR DRVZPG      ; PUT SIGN BIT FOR WHICH DRIVE
                                 ; DOWN CAUSE MOTOR ON/OFF SWITCH
                                 ; REQUIRES MORE CURRENT THAN THE
                                 ; STEPPER MOTOR.)
-                                ; 
+                                ;
                                 ; (AMOUNT OF DELAY IS NOT CONSTANT
                                 ; CAUSE IT DEPENDS ON WHAT IS IN
                                 ; ACCUMULATOR & WE DON'T KNOW
@@ -9827,7 +10969,7 @@ TIME2           DEY
                                 ; RSEEKCNT = ALLOW UP TO 4 RE-SEEKS
                                 ; BTWN RECALIBRATIONS.
                                 ; RECLBCNT = ALLOW UP TO 2 RECALIBRATIONS.
-                                ; 
+                                ;
                                 ; (THERE4, IF NECESSARY, ALLOW UP
                                 ; TO 384 ATTEMPTS TO FIND CORRECT
                                 ; PROLOGUE ADDR.)
@@ -10600,37 +11742,9 @@ FULLPTCH        JSR CPYFMWA     ; COPY FM WRK AREA--->FM WRK BUF.
                 LDA #9          ; EXIT WITH DISK-FULL ERROR CODE.
                 JMP BADFMXIT
 
+                ENDIF
+
 DOSLIM
                                 ; ********************************
-                                ; END OF DOS ($BFFF)
+                                ; END OF DOS
                                 ; ********************************
-
-
-
-
-; TODO: where to put this???
-				IF VERS = 31
-                                ; upon entry, A3 --> first byte of highest RAM page (e.g., $BF00)
-L1B28SR
-                LDAZ  A3H
-                AND   #$DF      ; $BF becomes $9F
-                STAZ  A4H
-                STXZ  A4L       ; (A4) --> $9F00
-                LDA   (A4L,X)
-                PHA             ; save (A4) in case we need to restore it below
-                STA   PROSCRTH
-L1B35           TYA
-                EOR   PROSCRTH
-                STA   PROSCRTH
-                TYA
-                EOR   (A3L,X)
-                STA   (A4L,X)
-                CMP   PROSCRTH
-                BNE   L1B4C
-                INY
-                BNE   L1B35
-                                ; comes here if 9F page maps to BF page
-                LDY   A4H       ; $9F
-                PLA             ; (A4)
-L1B4C           RTS
-				ENDIF
