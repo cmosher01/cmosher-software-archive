@@ -85,7 +85,7 @@
                                 ; DOS 3.3 (1) 1983-01-01
                                 ; DOS 3.3 (2) 1986-03?
                                 ;
-VERS            = 32            ; set VERS to 1980, 1983, or 1986, or 31
+VERS            = 1980          ; set VERS to 1980, 1983, or 1986, or 31, or 32
 FRANKLIN        = 0             ; set to 1 for Franklin Ace patch (also set VERS=1980), else 0
 
                 ORG   $1B00
@@ -494,6 +494,12 @@ INCZ            MACRO ZEROPAGE_LOC
                 INC   ZEROPAGE_LOC
                 ENDIF
                 ENDM
+
+
+
+
+CR              = $8D
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                 ; Chris Mosher:
                                 ; added DOS master relocation routine disassembly
@@ -734,10 +740,10 @@ FIXCODTBL       DW    DOSCOLD,CMDTXTBL
                 ENDIF
                 DW    NMPG2RD
                 IF VERS = 31
-                DW    $3532, $35FE ; NONSENSE ENTRIES?
+                DW    SEC2RDB6-2, BOOT2-$102 ; NONSENSE ENTRIES?
                 ELSE
                 IF VERS = 32
-                DW    $35FE, $35FE ; NONSENSE ENTRIES?
+                DW    SEC2RDB6-2, SEC2RDB6-2 ; NONSENSE ENTRIES?
                 ELSE
                 DW    WRITADR,FREE1
                 ENDIF
@@ -748,12 +754,8 @@ FIXCODTBL       DW    DOSCOLD,CMDTXTBL
                 ELSE
                 DW    ONTABLE
                 ENDIF
-                IF VERS = 1986
+                IF VERS = 1986 || VERS = 1983
                 DW    CKIFAPND,CMPATCH
-                ELSE
-                IF VERS = 1983
-                DW    CKIFAPND,CMPATCHLIM
-                ENDIF
                 ENDIF
                 DW    RWTS
                 IF VERS != 31 && VERS != 32
@@ -786,7 +788,7 @@ PAGECNT2        DB    $23       ; (redundant?) number of pages to be moved
 L1C7B           LDX   MEMSIZ
                 ENDIF
                 IF VERS = 31 || VERS = 32
-                LDA   MEMSIZ+1
+                LDA   MEMSIZ+1  ; UNUSED CODE???
                 STX   FRETOP
                 STA   FRETOP+1
                 LDY   #$00
@@ -853,6 +855,9 @@ DOSNMBF1        LDY   #$00
                 IF VERS = 1980 || VERS = 32
                 DS    4
                 ENDIF
+                IF VERS != 31 && VERS != 32
+                DS    $52
+                ENDIF
 DOSNMBF1        DS    $2D       ; this label represents the first DOS buffer
                 ENDIF
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -869,20 +874,18 @@ DOSNMBF1        DS    $2D       ; this label represents the first DOS buffer
 ADOSFNB1
                 IF VERS = 31 || VERS = 32
                 DW DOSNMBF1-1   ; PTS TO FIRST DOS BUFFER AT ITS
-                ELSE
-                DW DOSNMBF1     ; PTS TO FIRST DOS BUFFER AT ITS
                                 ; FILE NAME FIELD.
+                ELSE
+                DW DOSNMBF1
                 ENDIF
-ADINPTCP        DW INPTINCP     ; PTS TO DOS'S INPUT INTERCEPT
-                                ; ROUTINE.
-ADOPUTCP        DW OPUTINCP     ; PTS TO DOS'S OUTPUT INTERCEPT
-                                ; ROUTINE.
+
+ADINPTCP        DW INPTINCP     ; PTS TO DOS'S INPUT INTERCEPT ROUTINE.
+ADOPUTCP        DW OPUTINCP     ; PTS TO DOS'S OUTPUT INTERCEPT ROUTINE.
 ADRPFNBF        DW PRIMFNBF     ; PTS TO PRIMARY FILENAME BUFFER.
 ADRSFNBF        DW SCNDFNBF     ; PTS TO SECONDARY FILENAME BUFFER.
 ADLENADR        DW LENADRBF     ; PTS TO 2-BYTE BUF THAT RECEIVES
                                 ; BLOAD ADR & LENGTH READ FROM DSK
-;ADOSTART        DW ADOSFNB1     ; PTS TO 1RST BYTE OF DOS.
-ADOSTART        DW MASTERDOS     ; PTS TO 1RST BYTE OF DOS.
+ADOSTART        DW MASTERDOS    ; PTS TO 1RST BYTE OF DOS.
 ADFMPARM        DW OPCODEFM     ; PTS TO FM PARAMETER LIST.
 
 
@@ -948,13 +951,6 @@ CMDTBL          DW CMDINIT-1    ; $A54F-1
                 DW CMDBRUN-1    ; $A38E-1
                 DW CMDVERFY-1   ; $A27D-1
 
-;                IF VERS = 31
-;CHAINTRY
-;RUNTRY
-;ADBSCERR
-;TOCLDVEC
-;TOWRMVEC
-;                ELSE
                                 ; ===========================================
                                 ; ACTIVE BASIC ENTRY POINT VECTOR TABLE
                                 ; ($9D56 - $9D61)
@@ -964,24 +960,20 @@ CMDTBL          DW CMDINIT-1    ; $A54F-1
                                 ; ASSUME THAT APPLESOFT BASIC IS ACTIVE.)
                                 ; ===========================================
 
-;CHAINTRY        DW RUNFPROM     ; ADR OF CHAIN ENTRY PT TO BASIC.
 CHAINTRY        DW $E836        ; ADR OF CHAIN ENTRY PT TO BASIC.
-;RUNTRY          DW RUNFPROM     ; ADR OF BASIC'S RUN CMD.
 RUNTRY          DW RUNINTGR     ; ADR OF BASIC'S RUN CMD.
-;ADBSCERR        DW BSCERHLR     ; ADR OF BASIC'S ERROR HANDLER.
 ADBSCERR        DW $E3E3        ; ADR OF BASIC'S ERROR HANDLER.
 TOCLDVEC        DW BASICCLD     ; ADR OF BASIC'S COLD START ROUT'N
-;TOWRMVEC        DW RESTART      ; ADR OF BASIC'S WARM START ROUT'N
 TOWRMVEC        DW BASICWRM     ; ADR OF BASIC'S WARM START ROUT'N
 
-                                ; ADR OF ROUT'N THAT ENABLES BASIC
-                                ; PRGMS TO BE RELOCATABLE.
                 IF VERS != 31
 RLOCNTRY
                 IF VERS = 32
                 DW 0
                 ELSE
                 DW SETLINKS
+                                ; ADR OF ROUT'N THAT ENABLES BASIC
+                                ; PRGMS TO BE RELOCATABLE.
                 ENDIF
 
                 ENDIF
@@ -1007,7 +999,9 @@ IMGFPV          DW RUNFPROM
                 DW RUNFPROM
                 DW BSCERHLR
                 DW BASICCLD
-                IF VERS != 31
+                IF VERS = 31
+                DS 2
+                ELSE
                 DW RESTART
                 DW SETLINKS
                 ENDIF
@@ -1020,9 +1014,6 @@ IMGFPV          DW RUNFPROM
                                 ; VERSION OF APPLESOFT BASIC THAT IS
                                 ; HOUSED ON THE "SYSTEMS MASTER" DISK.)
                                 ; ========================================
-                IF VERS = 31
-                DS 2
-                ENDIF
 
 IMGARAMV        DW FPRAMRUN
                 DW FPRAMRUN
@@ -1083,11 +1074,7 @@ INT2BSIC        LDA IMGINTV-1,X
 
 ISFPROM         LDA #$40        ; SET ACTIVE BASIC FLAG TO #$40
                 STA ACTBSFLG    ; SO SIGNAL APPLESOFT ROM.
-                IF VERS = 31
-                LDX #10
-                ELSE
-                LDX #12         ; TODO ??? fix this so not hardcoded
-                ENDIF
+                LDX #IMGARAMV-IMGFPV
 AROM2BSC        LDA IMGFPV-1,X
                 STA CHAINTRY-1,X
                 DEX
@@ -1187,11 +1174,7 @@ KEYCOLD         ASL A           ; (A) * 2 TO DROP OUT HI BIT.
                                 ; ACTIVE BASIC ENTRY POINT VECTOR
                                 ; TABLE.
 
-                IF VERS = 31
-                LDX #10
-                ELSE
-                LDX #12         ; TODO ??? don't hardcode
-                ENDIF
+                LDX #DOSCOLD-IMGARAMV
 ARAM2BSC        LDA IMGARAMV-1,X
                 STA CHAINTRY-1,X
                 DEX
@@ -1244,9 +1227,9 @@ SKPDEXEC        JSR RESTAT0     ; SET CONDNFLG=0 SO SIGNAL FILE
                                 ; TO PAGE 3.
 
                 IF VERS = 31
-                LDX #39         ; TODO don't hardcode
+                LDX #INPUTCLD-IMGDOSVT
                 ELSE
-                LDX #47         ; 48 BYTES TO COPY (47 --> 0).
+                LDX #INPTINCP-IMGDOSVT-1
                 ENDIF
 
 STOR3DOS        LDA IMGDOSVT,X  ; COPY IMAGE TO PAGE 3.
@@ -1572,7 +1555,7 @@ OPUTHDL1        LDX NDX2INBF    ; GET INDEX TO INPUT BUFFER.
 PUTINBUF        STA BUF200,X    ; PUT CHAR IN INPUT BUFFER.
                 INX             ; KICK UP INDEX 4 NEXT BUF POS'N.
                 STX NDX2INBF
-                CMP #$8D        ; WAS CHAR A <CR>?
+                CMP #CR        ; WAS CHAR A <CR>?
                 BNE DSPLYCMD    ; NO.
                 JMP PARSECMD    ; YES - GOT END OF INPUT, SO NOW
                                 ; SEE IF IT IS A DOS CMD.
@@ -1582,7 +1565,7 @@ PUTINBUF        STA BUF200,X    ; PUT CHAR IN INPUT BUFFER.
                                 ; (IGNORE NON-DOS COMMAND.)
                                 ; =================================
 
-OPUTHDL2        CMP #$8D        ; <CR>?
+OPUTHDL2        CMP #CR        ; <CR>?
                 BNE DSPLYALL    ; NO - (WAS AN "RH BRACKETT"?)
 SET2EVAL        LDX #0          ; SET CONDITION0 - EVALUATE START
                 STX OPUTCOND    ; OF LINE.
@@ -1596,7 +1579,7 @@ SET2EVAL        LDX #0          ; SET CONDITION0 - EVALUATE START
 
 OPUTHDL3        LDX #0          ; SET CONDITION 0 WHEN INPUT ENDS.
                 STX OPUTCOND
-                CMP #$8D        ; <CR>?
+                CMP #CR        ; <CR>?
                 BEQ ASUMIMED    ; YES.
 
 
@@ -1631,7 +1614,7 @@ TESTMODE        PLA             ; RETRIEVE CHAR FROM STK.
                                 ; (WRITING DATA.)
                                 ; =================================
 
-OPUTHDL4        CMP #$8D        ; <CR>?
+OPUTHDL4        CMP #CR        ; <CR>?
                 BNE CMWRTBYT    ; NO.
                 LDA #5          ; SET CONDITION 5.
                 STA OPUTCOND
@@ -1709,10 +1692,10 @@ FINSHCMD        LDA BUF200      ; GET FIRST CHAR IN BUF.
                 IF VERS = 31
                 LDA #$A0
                 STA BUF200
-                LDA #$8D
+                LDA #CR
                 STA BUF200+1
                 ELSE
-                LDA #$8D        ; <CR>
+                LDA #CR        ; <CR>
                 STA BUF200      ; SET 200: 8D.
                 ENDIF
 
@@ -1787,7 +1770,7 @@ CRVIADOS
                 BVC   L1F6E
                 ENDIF
 
-                LDA #$8D        ; <CR>.
+                LDA #CR        ; <CR>.
 
                 IF VERS = 31
                 JSR GODSPLY
@@ -1895,7 +1878,7 @@ CKIFCTRL        LDA BUF200      ; IS 1RST CHAR IN THE INPUT BUFFER
                                 ; WAS DOS'S CTRL CHAR THE ONLY CHAR ON LINE?
 
 CHKIFCR         LDA BUF200+1    ; GET 2ND BYTE IN INPUT BUFFER.
-                CMP #$8D        ; WAS IT A <CR>?
+                CMP #CR        ; WAS IT A <CR>?
                 BNE PRSYNERR    ; NO -NOT SIMPLY DEALING WITH CMD
                                 ; CANCELLING DOS CTRL CHR AND <CR>
                                 ; SO GO ISSUE A SYNTAX-ERROR MSG.
@@ -2225,7 +2208,7 @@ NXCMDCHR        JSR PURGECMD    ; GET NEXT CHAR.
                 BNE CHKOPTNS    ; IF IT ISN'T A <CR> OR COMMA THEN
                                 ; MAYBE ITS AN OPTION, SO TAKE
                                 ; BRANCH TO CHECK IT OUT.
-                CMP #$8D        ; WAS IT A <CR>?
+                CMP #CR        ; WAS IT A <CR>?
                 BNE NXCMDCHR    ; NO - SO MUST HAVE BEEN A COMMA.
                                 ; BRANCH BACK TO IGNORE COMMAS.
 
@@ -2471,7 +2454,7 @@ CMDCHAR         LDX NDX2INBF    ; (X) = INDEX TO INPUT BUFFER.
                 ELSE
                 LDA BUF200,X    ; GET NEXT CHAR.
                 ENDIF
-                CMP #$8D        ; IS IT A <CR>?
+                CMP #CR        ; IS IT A <CR>?
                 BEQ CMDCHRTS    ; YES.
                 INX             ; (X)=INDEX 4 NXT ANTICIPATED CHR.
                 STX NDX2INBF
@@ -3967,7 +3950,7 @@ PSNFIELD        JSR RDTXTBYT    ; GO READ A TEXT FILE BYTE.
                                 ; A ZEROED-OUT T/S LINK OR A
                                 ; ZEROED-OUT DATA PAIR (TRK/SEC
                                 ; VALUES) LISTED IN A T/S LIST.
-                CMP #$8D        ; WAS BYT A FIELD-DELIMITING <CR>?
+                CMP #CR        ; WAS BYT A FIELD-DELIMITING <CR>?
                 BNE PSNFIELD    ; NO -GO READ THE NEXT BYTE IN THE
                                 ; SAME FIELD.
                 BEQ CKPSNDUN    ; YES - GOT END-OF-FIELD MARKER SO
@@ -4194,7 +4177,6 @@ AFTRFUNC        BCC FMDRVRTN    ; (C) = 0 = NO ERRORS.
                 LDA #0
                 TAY
                 STA (A3L),Y
-BK2FMDRV ; TODO
                 ENDIF
 
 AFTRFUNC2
@@ -4932,15 +4914,9 @@ CMDATTRB
                 DW %0000000000000100 ; MAXFILES
                 DW %0111000001000000 ; FP
                 DW %0000000001000000 ; INT
-                IF VERS = 32
                 DW %0111100100100001 ; BSAVE
                 DW %0111000100100000 ; BLOAD
                 DW %0111000100100000 ; BRUN
-                ELSE
-                DW %0111100101000001 ; BSAVE
-                DW %0111000101000000 ; BLOAD
-                DW %0111000101000000 ; BRUN
-                ENDIF
                 DW %0111000000100000 ; VERIFY
                 ENDIF
 ;               DB $21,$70      ; INIT      00100001 01110000
@@ -5010,14 +4986,14 @@ OPTNISSD        DB $40          ; V(OLUME) PARAMETER.
 
 
                                 ; =================================
-                                ; TABLE OF VALID RANGES ASSOC
+                                ; TABLE OF VALID RANGES ASSOCIATED
                                 ; WITH EACH OPTION CHARACTER.
                                 ; ($A955 - $A970)
                                 ; (THESE VALUES ARE FREQUENTLY
                                 ; CHANGED IN AN EFFORT TO
-                                ; "ENCHANCE" DOS OR IMPLEMENT
+                                ; "ENHANCE" DOS OR IMPLEMENT
                                 ; A PROTECTION SCHEME.  FOR
-                                ; EXAMPLE, THE UPPER RANGE ASSOC
+                                ; EXAMPLE, THE UPPER RANGE ASSOCIATED
                                 ; WITH THE L-PARAMETER IS OFTEN
                                 ; CHANGED TO ALLOW DOS TO HANDLE
                                 ; LARGER FILES.
@@ -5026,7 +5002,7 @@ OPTNISSD        DB $40          ; V(OLUME) PARAMETER.
 OPTNRNG
                 DW 0,$100-2     ; ($A955 - $A958)  V: (0 - 254).
                 DW 1,2          ; ($A959 - $A95C)  D: (1 - 2).
-                DW 1,7          ; ($A95D - $A960)  S: (1 - 7).
+                DW 1,$8-1       ; ($A95D - $A960)  S: (1 - 7).
                 DW 1,$8000-1    ; ($A961 - $A964)  L: (1 - 32767).
                 DW 0,$8000-1    ; ($A965 - $A968)  R: (0 - 32767).
                 DW 0,$8000-1    ; ($A969 - $A96C)  B: (0 - 32767).
@@ -5047,74 +5023,68 @@ OPTNRNG
                                 ; IN COMMERCIAL PROGRAMS.)
                                 ; ==================================
 
-                                ; CORRESPONDING ERROR CODE & ADDRS
-ERRTXTBL        DB $0D,$07     ; 0  ($A971 - $A973)
-                                ; <CR>, <BELL>, <CR>
-                IF VERS != 31
-                DB $8D
-                ENDIF
-
+ERRTXTBL
+ERR00           DB $0D,$07
                 IF VERS = 31
                 DB "***DISK:"," "|0x80
+                ELSE
+                DB CR
+                ENDIF
+
+
+                IF VERS = 31
+ERR01
+ERR02
+ERR03
                 DB "SY","S"|0x80
                 ELSE
-                DB "LANGUAGE NOT AVAILABL","E"|0x80
-                                ; 1 ($A974  - $A989)
-                DB "RANGE ERRO","R"|0x80
+ERR01           DB "LANGUAGE NOT AVAILABL","E"|0x80
+ERR02
+ERR03           DB "RANGE ERRO","R"|0x80
                 ENDIF
-                                ; 2&3 ($A98A - $A994)
-                                ; BAD FM OPCODE OR SUBCODE ELSE,
-                                ; ILLEGAL ARGUMENTS ISSUED 4 IN#,
-                                ; PR#, MAXFILES CMDS OR FOR A, B,
-                                ; R, L, S, D, V, C, I, OR O OPT'NS
+
+ERR04
                 IF VERS = 31
                 DB "WRITE PROTEC","T"|0x80
                 ELSE
                 DB "WRITE PROTECTE","D"|0x80
                 ENDIF
-                                ; 4  ($A995 - $A9A3)
-                DB "END OF DAT","A"|0x80
-                                ; 5  ($A9A4 - $A9AE)
-                DB "FILE NOT FOUN","D"|0x80
-                                ; 6  ($A9AF - $A9BC)
-                DB "VOLUME MISMATC","H"|0x80
-                                ; 7  ($A9BD - $A9CB)
+
+
+ERR05           DB "END OF DAT","A"|0x80
+ERR06           DB "FILE NOT FOUN","D"|0x80
+ERR07           DB "VOLUME MISMATC","H"|0x80
+
+ERR08
                 IF VERS = 31
                 DB "DISK I/","O"|0x80
                 ELSE
                 DB "I/O ERRO","R"|0x80
                 ENDIF
-                                ; 8  ($A9CC - $A9D4)
-                DB "DISK FUL","L"|0x80
-                                ; 9  ($A9D5 - $A9DD)
-                DB "FILE LOCKE","D"|0x80
-                                ; 10  ($A9DE - $A9E8)
+
+ERR09           DB "DISK FUL","L"|0x80
+ERR10           DB "FILE LOCKE","D"|0x80
+
                 IF VERS = 31
-                DB "CMD SYNTA","X"|0x80
-                                ; 11  ($A9E9 - $A9F4)
-                DB "NO FILE BUFFS AVAI","L"|0x80
-                                ; 12  ($A9F5 - $AA08)
-                DB "NOT BASIC PROGRA","M"|0x80
-                                ; 13  ($AA09 - $AA1A)
+ERR11           DB "CMD SYNTA","X"|0x80
+ERR12           DB "NO FILE BUFFS AVAI","L"|0x80
+ERR13           DB "NOT BASIC PROGRA","M"|0x80
                 ELSE
-                DB "SYNTAX ERRO","R"|0x80
-                                ; 11  ($A9E9 - $A9F4)
-                DB "NO BUFFERS AVAILABL","E"|0x80
-                                ; 12  ($A9F5 - $AA08)
-                DB "FILE TYPE MISMATC","H"|0x80
-                                ; 13  ($AA09 - $AA1A)
+ERR11           DB "SYNTAX ERRO","R"|0x80
+ERR12           DB "NO BUFFERS AVAILABL","E"|0x80
+ERR13           DB "FILE TYPE MISMATC","H"|0x80
                 ENDIF
-                DB "PROGRAM TOO LARG","E"|0x80
-                                ; 14  ($AA1B - $AA2B)
+
+ERR14           DB "PROGRAM TOO LARG","E"|0x80
+
                 IF VERS = 31
-                DB "NOT BINARY FIL","E"|0x80
-                                ; 15  ($AA2C - $AA3D)
-                DB " ERROR"
+ERR15           DB "NOT BINARY FIL","E"|0x80
+ERR16           DB " ERROR"
                 ELSE
-                DB "NOT DIRECT COMMAN","D"|0x80
-                                ; 15  ($AA2C - $AA3D)
+ERR15           DB "NOT DIRECT COMMAN","D"|0x80
                 ENDIF
-                DB $8D          ; <CR>      NO CODE    ($AA3E)
+
+                DB CR
 
 
                                 ; =================================
@@ -5124,41 +5094,25 @@ ERRTXTBL        DB $0D,$07     ; 0  ($A971 - $A973)
                                 ; AROUND SO ERRONEOUS ERROR MSGS
                                 ; WILL BE USED.)
                                 ; =================================
-; TODO DON'T HARDCODE
-OFF2ERR         DB $00          ; ERROR CODE - 0
+
+OFF2ERR         DB ERR00-ERRTXTBL
+                DB ERR01-ERRTXTBL
+                DB ERR02-ERRTXTBL
+                DB ERR03-ERRTXTBL
+                DB ERR04-ERRTXTBL
+                DB ERR05-ERRTXTBL
+                DB ERR06-ERRTXTBL
+                DB ERR07-ERRTXTBL
+                DB ERR08-ERRTXTBL
+                DB ERR09-ERRTXTBL
+                DB ERR10-ERRTXTBL
+                DB ERR11-ERRTXTBL
+                DB ERR12-ERRTXTBL
+                DB ERR13-ERRTXTBL
+                DB ERR14-ERRTXTBL
+                DB ERR15-ERRTXTBL
                 IF VERS = 31
-                DB $0B
-                DB $0B
-                DB $0B
-                DB $0E
-                DB $1B
-                DB $26
-                DB $34
-                DB $43
-                DB $4B
-                DB $54
-                DB $5F
-                DB $69
-                DB $7C
-                DB $8D
-                DB $9E
-                DB $AD
-                ELSE
-                DB $03          ; - 1
-                DB $19          ; - 2
-                DB $19          ; - 3
-                DB $24          ; - 4
-                DB $33          ; - 5
-                DB $3E          ; - 6
-                DB $4C          ; - 7
-                DB $5B          ; - 8
-                DB $64          ; - 9
-                DB $6D          ; - 10
-                DB $78          ; - 11
-                DB $84          ; - 12
-                DB $98          ; - 13
-                DB $AA          ; - 14
-                DB $BB          ; - 15
+                DB ERR16-ERRTXTBL
                 ENDIF
                                 ; =================================
                                 ; DOS MAIN ROUTINE VARIABLES.
@@ -6273,7 +6227,7 @@ TOFMXTOK        JMP GOODFMXT    ; EVENTUALY RETURNS TO AFTRFUNC
                                 ; PRINT <CR> & CHK FOR PAUSE.
                                 ; =================================
 
-CRCATLOG        LDA #$8D        ; PRINT A <CR>.
+CRCATLOG        LDA #CR        ; PRINT A <CR>.
                 JSR COUT
                 DEC SCRNSRCH    ; DEC INDEX 2 SEE IF PAUSE NEEDED.
                 BNE CRCATRTN    ; PAUSE NOT REQUIRED.
@@ -11777,15 +11731,8 @@ NOTRK0          CLC             ; TO ACCOMMODATE A TIGHTER TRACK.
                                 ; - TABLE IS INDEXED BY (Y),
                                 ; WHERE (Y) = SECTOR NUMBER.
                                 ; =================================
-;mosher ??? may be different on slave disks vs. master disks ???
-;                IF VERS = 1986 | VERS = 1983
-;SECFLGS         DS 16
-;                ELSE
-;                IF VERS = 1980
 SECFLGS         DB $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
                 DB $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-;                ENDIF
-;                ENDIF
 
 
                                 ; =================================
