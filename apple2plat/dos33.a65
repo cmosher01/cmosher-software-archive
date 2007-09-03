@@ -753,11 +753,11 @@ PAGECNT2        DB    $23       ; (redundant?) number of pages to be moved
                 LDA   #$80
                 STA   $13
                 PLA
-                BNE   $1C4B
-L1C7B           LDX   $73
-                LDA   $74
-                STX   $6F
-                STA   $70
+                BNE   *-$2E
+L1C7B           LDX   MEMSIZ
+                LDA   MEMSIZ+1
+                STX   FRETOP
+                STA   FRETOP+1
                 LDY   #$00
                 STY   $8B
                 LDA   $6D
@@ -770,19 +770,19 @@ L1C7B           LDX   $73
                 STX   $5F
 L1C97           CMP   $52
                 BEQ   L1CA0
-                JSR   $1D1A
+                JSR   *+$7F
                 BEQ   L1C97
 L1CA0           LDA   #$07
                 STA   $8F
-                LDA   $69
-                LDX   $6A
+                LDA   VARTAB
+                LDX   VARTAB+1
                 STA   $5E
                 STX   $5F
 L1CAC           CPX   $6C
                 BNE   L1CB4
                 CMP   $6B
                 BEQ   L1CB9
-L1CB4           JSR   $1D10
+L1CB4           JSR   OUTHNDTB
                 BEQ   L1CAC
 L1CB9           STA   $94
                 STX   $95
@@ -794,7 +794,7 @@ L1CC1           LDA   $94
                 BNE   L1CD0
                 CMP   $6D
                 BNE   L1CD0
-                JMP   $1D59
+                JMP   *+$8C
 L1CD0           STA   $5E
                 STX   $00
 DOSNMBF1        LDY   #$00
@@ -6333,11 +6333,11 @@ FNINIT          JSR ZWRKAREA    ; INIT THE FM WRK AREA (NON-CHAIN)
                 LDA #1          ; ALLOCATION DIRECTION = FORWARD.
                 STA DRECTION
 
-                                ; ZERO OUT VTOC FROM TRKMAP0 TO
+                                ; ZERO OUT VTOC FROM FRESECMAP TO
                                 ; END OF SECTOR.  (NOTE:  THIS
                                 ; ASSIGNS ALL TRACKS.)
 
-                LDX #56         ; OFFSET INTO VTOC TO TRKMAP0.
+                LDX #56         ; OFFSET INTO VTOC TO FRESECMAP.
                 LDA #0
 ZVTOC           STA VTOCBUFF,X  ; ZERO OUT A TRKMAP BYTE.
                 INX
@@ -6359,7 +6359,7 @@ FREEIT          LDA FRETKMSK,Y  ; FREE MOST TRKMAPS.  (STARTING
                                 ; WITH TRKMAP3).
                                 ; NOTE:  NOT FREEING UP VTOC SEC
                                 ; OR TRKS USED BY DOS.
-                STA TRKMAP0,X   ; FREE TRKS BY PLACING FOLLOWING
+                STA FRESECMAP,X   ; FREE TRKS BY PLACING FOLLOWING
                                 ; BYTES IN @ TRKMAP:  "FF FF 00 00"
                 INX             ; KICK UP INDEX TO BYTE IN TRKMAP.
                 DEY             ; REDUCE INDEX TO FRETKMSK CAUSE
@@ -7551,10 +7551,10 @@ CHK4FREE        STA NXTRKUSE
                 TAY             ; IRRELEVANT.
                 ASL A           ; TRK*4 CAUSE 4BYTES/TRK N TRKMAP.
                 ASL A
-                TAY             ; INDEX FROM LAST BYTE OF TRKMAP0.
+                TAY             ; INDEX FROM LAST BYTE OF FRESECMAP.
                 LDX #4          ; INDEX TO THE ASIGNMAP.
                 CLC             ; (C)=0, ASSUME NO FREE SEC AVAIL.
-CPYTKMAP        LDA TRKMAP0+3,Y ; COPY BYTE FROM TRKMAP TO THE
+CPYTKMAP        LDA FRESECMAP+3,Y ; COPY BYTE FROM TRKMAP TO THE
                 STA ASIGNMAP-1,X
                                 ; ASSIGNMENT MAP.
                 BEQ NXMAPBYT    ; 0 = SEC USED.
@@ -7563,7 +7563,7 @@ CPYTKMAP        LDA TRKMAP0+3,Y ; COPY BYTE FROM TRKMAP TO THE
 
                 SEC             ; (C) = 1 = FREE SECTOR FOUND.
                 LDA #0          ; PUT 0 IN TRKMAP 2 REASSIGN ALL 8
-                STA TRKMAP0+3,Y ; SECS REPRESENTED BY THIS BYTE.
+                STA FRESECMAP+3,Y ; SECS REPRESENTED BY THIS BYTE.
                                 ; (REMEMBER ONLY 2 BYTES OF TRKMAP
                                 ; ACTUALLY REPRESENT SECS.  THE
                                 ; OTHER 2 BYTES ARE DUDS.)
@@ -7699,8 +7699,8 @@ STNDARD         ROR ASIGNMAP-$FC,X
 
                 LDX #4
 MERGMAPS        LDA ASIGNMAP-1,X
-                ORA TRKMAP0+3,Y ; DO THE MERGE.
-                STA TRKMAP0+3,Y
+                ORA FRESECMAP+3,Y ; DO THE MERGE.
+                STA FRESECMAP+3,Y
                 DEY             ; REDUCE INDICES.
                 DEX
                 BNE MERGMAPS
@@ -7940,7 +7940,12 @@ TRK0YET         DS 2            ; ASSIGNMENT FLAG = SIGNAL IF TRK0
                                 ; BEEN SCANNED WHEN LOOKING 4 FREE
                                 ; SECS TO ASSIGN.)
 LOKUNMSK        = TRK0YET       ; LOCK/UNLOCK MASK ($80/$00).
-FRETKMSK        DB $00,$00,$FF,$FF
+FRETKMSK
+                IF VERS = 31
+                DB $00,$00,$F8,$FF
+                ELSE
+                DB $00,$00,$FF,$FF
+                ENDIF
                                 ; 4-BYTE MASK USED BY INIT FUNC'N
                                 ; TO FREE AN ENTIRE TRACK.
 
@@ -8053,55 +8058,80 @@ BYTPERSC        DB $00,$01      ; BYTES/SECTOR ($0100, #256).
                                 ; DESPERATE NEED OF AN AVAILABLE HOLE
                                 ; IN DOS.)
 
-TRKMAP0         DB $00,$00,$00,$00
-                                ; $B3F3: TRK0 (DOS IMAGE).
-TRKMAP1         DB $00,$00,$00,$00
-                                ; $B3F7: TRK1 (DOS IMAGE).
-TRKMAP2         DB $00,$00,$00,$00
-                                ; $B3FB: TRK2 (SECS 0 TO 4 USD FOR
-                                ; DOS IMAGE.  REST OF SECS ARE
-                                ; SET ASIDE BUT NOT USED BY DOS.
-                                ; THEY ARE FREE TO THE USER AFTER
-                                ; ALTERING TRKMAP2, USING RWTS
-                                ; DIRECTLY OR ALTERING THE BOOT.)
-TRKMAP3         DS 4            ; $B3FF: TRK 3
-TRKMAP4         DS 4            ; $B403: TRK4
-TRKMAP5         DS 4            ; $B407: TRK5
-TRKMAP6         DS 4            ; $B40B: TRK6
-TRKMAP7         DS 4            ; $B40F: TRK7
-TRKMAP8         DS 4            ; $B413: TRK8
-TRKMAP9         DS 4            ; $B417: TRK9
-TRKMAP10        DS 4            ; $B41B: TRK$0A
-TRKMAP11        DS 4            ; $B41F: TRK$0B
-TRKMAP12        DS 4            ; $B423: TRK$0C
-TRKMAP13        DS 4            ; $B427: TRL$0D
-TRKMAP14        DS 4            ; $B42B: TRK$0E
-TRKMAP15        DS 4            ; $B42F: TRK$0F
-TRKMAP16        DS 4            ; $B433: TRK $10
-TRKMAP17        DS 4            ; $B437: TRK$11 (DIRECT/VTOC).
-TRKMAP18        DS 4            ; $B43B: TRK$12
-TRKMAP19        DS 4            ; $B43F: TRK$13
-TRKMAP20        DS 4            ; $B443: TRK$14
-TRKMAP21        DS 4            ; $B447: TRK$15
-TRKMAP22        DS 4            ; $B44B: TRK$16
-TRKMAP23        DS 4            ; $B44F: TRK$17
-TRKMAP24        DS 4            ; $B453: TRK$18
-TRKMAP25        DS 4            ; $B457: TRK$19
-TRKMAP26        DS 4            ; $B45B: TRK$1A
-TRKMAP27        DS 4            ; $B45F: TRK$1B
-TRKMAP28        DS 4            ; $B463: TRK$1C
-TRKMAP29        DS 4            ; $B467: TRK$1D
-TRKMAP30        DS 4            ; $B46B: TRK$1E
-TRKMAP31        DS 4            ; $B46F: TRK$1F
-TRKMAP32        DS 4            ; $B473: TRK$20
-TRKMAP33        DS 4            ; $B477: TRK$21
-TRKMAP34
+FRESECMAP
                 IF VERS = 31
-                DB $FF,$F8,$00,$00
+                DB %00000000,%00000000,%00000000,%00000000 ; 00
+                DB %00000000,%00000000,%00000000,%00000000 ; 01
+                DB %00000000,%00000000,%00000000,%00000000 ; 02
+                DB %11111111,%11111000,%00000000,%00000000 ; 03
+                DB %11111111,%11111000,%00000000,%00000000 ; 04
+                DB %11111111,%11111000,%00000000,%00000000 ; 05
+                DB %11111111,%11111000,%00000000,%00000000 ; 06
+                DB %11111111,%11111000,%00000000,%00000000 ; 07
+                DB %11111111,%11111000,%00000000,%00000000 ; 08
+                DB %11111111,%11111000,%00000000,%00000000 ; 09
+                DB %11111111,%11111000,%00000000,%00000000 ; 0A
+                DB %11111111,%11111000,%00000000,%00000000 ; 0B
+                DB %11111111,%11111000,%00000000,%00000000 ; 0C
+                DB %11111111,%11111000,%00000000,%00000000 ; 0D
+                DB %11111111,%11111000,%00000000,%00000000 ; 0E
+                DB %11111111,%11111000,%00000000,%00000000 ; 0F
+                DB %11111111,%11111000,%00000000,%00000000 ; 10
+                DB %00000000,%00000000,%00000000,%00000000 ; 11
+                DB %11111111,%11111000,%00000000,%00000000 ; 12
+                DB %11111111,%11111000,%00000000,%00000000 ; 13
+                DB %11111111,%11111000,%00000000,%00000000 ; 14
+                DB %11111111,%11111000,%00000000,%00000000 ; 15
+                DB %11111111,%11111000,%00000000,%00000000 ; 16
+                DB %11111111,%11111000,%00000000,%00000000 ; 17
+                DB %11111111,%11111000,%00000000,%00000000 ; 18
+                DB %11111111,%11111000,%00000000,%00000000 ; 19
+                DB %11111111,%11111000,%00000000,%00000000 ; 1A
+                DB %11111111,%11111000,%00000000,%00000000 ; 1B
+                DB %11111111,%11111000,%00000000,%00000000 ; 1C
+                DB %11111111,%11111000,%00000000,%00000000 ; 1D
+                DB %11111111,%11111000,%00000000,%00000000 ; 1E
+                DB %11111111,%11111000,%00000000,%00000000 ; 1F
+                DB %11111111,%11111000,%00000000,%00000000 ; 20
+                DB %11111111,%11111000,%00000000,%00000000 ; 21
+                DB %11111111,%11111000,%00000000,%00000000 ; 22
                 ELSE
-                DB $FF,$FF,$00,$00
+                DB %00000000,%00000000,%00000000,%00000000 ; 00
+                DB %00000000,%00000000,%00000000,%00000000 ; 01
+                DB %00000000,%00000000,%00000000,%00000000 ; 02
+                DB %11111111,%11111111,%00000000,%00000000 ; 03
+                DB %11111111,%11111111,%00000000,%00000000 ; 04
+                DB %11111111,%11111111,%00000000,%00000000 ; 05
+                DB %11111111,%11111111,%00000000,%00000000 ; 06
+                DB %11111111,%11111111,%00000000,%00000000 ; 07
+                DB %11111111,%11111111,%00000000,%00000000 ; 08
+                DB %11111111,%11111111,%00000000,%00000000 ; 09
+                DB %11111111,%11111111,%00000000,%00000000 ; 0A
+                DB %11111111,%11111111,%00000000,%00000000 ; 0B
+                DB %11111111,%11111111,%00000000,%00000000 ; 0C
+                DB %11111111,%11111111,%00000000,%00000000 ; 0D
+                DB %11111111,%11111111,%00000000,%00000000 ; 0E
+                DB %11111111,%11111111,%00000000,%00000000 ; 0F
+                DB %11111111,%11111111,%00000000,%00000000 ; 10
+                DB %00000000,%00000000,%00000000,%00000000 ; 11
+                DB %11111111,%11111111,%00000000,%00000000 ; 12
+                DB %11111111,%11111111,%00000000,%00000000 ; 13
+                DB %11111111,%11111111,%00000000,%00000000 ; 14
+                DB %11111111,%11111111,%00000000,%00000000 ; 15
+                DB %11111111,%11111111,%00000000,%00000000 ; 16
+                DB %11111111,%11111111,%00000000,%00000000 ; 17
+                DB %11111111,%11111111,%00000000,%00000000 ; 18
+                DB %11111111,%11111111,%00000000,%00000000 ; 19
+                DB %11111111,%11111111,%00000000,%00000000 ; 1A
+                DB %11111111,%11111111,%00000000,%00000000 ; 1B
+                DB %11111111,%11111111,%00000000,%00000000 ; 1C
+                DB %11111111,%11111111,%00000000,%00000000 ; 1D
+                DB %11111111,%11111111,%00000000,%00000000 ; 1E
+                DB %11111111,%11111111,%00000000,%00000000 ; 1F
+                DB %11111111,%11111111,%00000000,%00000000 ; 20
+                DB %11111111,%11111111,%00000000,%00000000 ; 21
+                DB %11111111,%11111111,%00000000,%00000000 ; 22
                 ENDIF
-                                ; $B47B: TRK$22
 
 
                                 ; ---------------------------------
@@ -8367,9 +8397,17 @@ TRKWA           DS 1            ; TRACK NUMBER.
                                 ; STEM FROM THE FACT THAT APPLESOFT LATER STORES A $00 IN
                                 ; $800.)
 
-SEC2RDB6        DB $01          ; IMAGE OF SEC2RD08.  DENOTES # OF
+SEC2RDB6
+                IF VERS = 31
+                DB 0
+                ELSE
+                DB 1            ; IMAGE OF SEC2RD08.  DENOTES # OF
                                 ; SECS TO BE READ FROM TRK0 DURING
                                 ; BOOT0.
+                ENDIF
+
+
+
 
 				IF VERS = 31
 				DS 11
@@ -8776,15 +8814,25 @@ RSETPTRS        LDA RECNMBFM    ; RECONCILE RECORD NUMBER VERSIONS
                                 ; (IMAGE MOVED TO $8FD-$8FF.)
                                 ; =================================
 
-IMG8FD          DW SEC2RDB6     ; VARIES FROM $B600-$BF00 ON 48K (Chris Mosher: was hardcoded $B600)
+IMG8FD
+                IF VERS = 31
+                DW BOOT2-$F8
+                ELSE
+                DW SEC2RDB6     ; VARIES FROM $B600-$BF00 ON 48K (Chris Mosher: was hardcoded $B600)
                                 ; SLAVE.  (EVENTUALLY POINTS TO THE
                                 ; START OF BOOT2 AT $B700.  IMAGE
                                 ; OF BT1LDADR AT $8FD.)
-IMG8FF          DB 9            ; DS 1 ;CONTAINS # OF PAGES TO READ WHEN (Chris Mosher DS 1 to DB 9)
+                ENDIF
+IMG8FF
+                IF VERS = 31
+                DB $48
+                ELSE
+                DB 9            ; DS 1 ;CONTAINS # OF PAGES TO READ WHEN (Chris Mosher DS 1 to DB 9)
                                 ; EXECUTING BOOT1.  ALSO DOUBLES AS
                                 ; LOGICAL SEC#.  INITIALLY = $01.
                                 ; VARIES FROM:$09 --> $00 --> $FF.
                                 ; (IMAGE OF BT1PG2RD AT $8FF.)
+                ENDIF
 
 
                                 ; =========================================
@@ -9099,10 +9147,20 @@ NMPG2RD         DB $1B          ; # OF PAGES TO READ (#27).
 BT2PGCTR        DS 1            ; # OF PAGES LEFT 2 READ (VARIES).
 BT1RSTSC        DB $0A          ; FIRST SEC # IN STAGE (#10).
 
+                IF VERS = 31
+                DB $1B          ; IMPORTANT!
+                ELSE
                 DS 1            ; UNUSED ($B7E3).
+                ENDIF
+
 ADROFIOB        DW IBTYPE       ; ADR OF RWTS'S IOB (NORM $B7E8).
-BTSTAGE         DW SEC2RDB6     ; ADR OF START OF IMAGE OF BOOT1.
+BTSTAGE
+                IF VERS = 31
+                DW BOOT2-$100
+                ELSE
+                DW SEC2RDB6     ; ADR OF START OF IMAGE OF BOOT1.
                                 ; (NORMALLY, $B600.)
+                ENDIF
 BT1MGADR        = BTSTAGE
 
 
@@ -9191,65 +9249,65 @@ PRENIBL
                 IF VERS = 31
                 LDX   #$32 ; TODO
                 LDY   #$00
-L3804           LDA   ($3E),Y
-                STA   $26
+PRENIB1         LDA   (PTR2BUF),Y
+                STA   PT2BTBUF
                 LSR   A
                 LSR   A
                 LSR   A
-                STA   $3B00,X
+                STA   RWTSBUF1,X
                 INY
-                LDA   ($3E),Y
-                STA   $27
+                LDA   (PTR2BUF),Y
+                STA   HOLDPRES
                 LSR   A
                 LSR   A
                 LSR   A
-                STA   $3B33,X
+                STA   RWTSBUF1+$33,X
                 INY
-                LDA   ($3E),Y
-                STA   $2A
+                LDA   (PTR2BUF),Y
+                STA   DESTRK
                 LSR   A
                 LSR   A
                 LSR   A
-                STA   $3B66,X
+                STA   RWTSBUF1+$66,X
                 INY
-                LDA   ($3E),Y
+                LDA   (PTR2BUF),Y
                 LSR   A
-                ROL   $2A
+                ROL   DESTRK
                 LSR   A
-                ROL   $27
+                ROL   HOLDPRES
                 LSR   A
-                ROL   $26
-                STA   $3B99,X
+                ROL   PT2BTBUF
+                STA   RWTSBUF1+$99,X
                 INY
-                LDA   ($3E),Y
+                LDA   (PTR2BUF),Y
                 LSR   A
-                ROL   $2A
+                ROL   DESTRK
                 LSR   A
-                ROL   $27
+                ROL   HOLDPRES
                 LSR   A
-                STA   $3BCC,X
-                LDA   $26
+                STA   RWTSBUF1+$CC,X
+                LDA   PT2BTBUF
                 ROL   A
-                AND   #$1F
-                STA   $3C00,X
-                LDA   $27
-                AND   #$1F
-                STA   $3C33,X
-                LDA   $2A
-                AND   #$1F
-                STA   $3C66,X
+                AND   #%00011111
+                STA   RWTSBUF2,X
+                LDA   HOLDPRES
+                AND   #%00011111
+                STA   RWTSBUF2+$33,X
+                LDA   DESTRK
+                AND   #%00011111
+                STA   RWTSBUF2+$66,X
                 INY
                 DEX
-                BPL   L3804
-                LDA   ($3E),Y
+                BPL   PRENIB1
+                LDA   (PTR2BUF),Y
                 TAX
                 AND   #$07
-                STA   $3C99
+                STA   RWTSBUF2+$99
                 TXA
                 LSR   A
                 LSR   A
                 LSR   A
-                STA   $3BFF
+                STA   RWTSBUF1+$FF
                 ELSE
                 LDX #0
                 LDY #2
@@ -9457,9 +9515,9 @@ WRITE3          STA Q6H,X       ; (5 CYC) - SHIFT REGISTER)
                                 ; FOR RWTBUF2.
                                 ; (C) = 1.
 
-POSTNB16
+
                 IF VERS != 31
-                LDY #0
+POSTNB16        LDY #0
 POSTNIB1        LDX #$56        ; (DEC #86.)
 POSTNIB2        DEX
                 BMI POSTNIB1
@@ -9699,59 +9757,59 @@ GOODRTN         CLC             ; SIGNAL GOOD READ.
                 RTS
 
                 IF VERS = 31
-                LDX   #$32 ; TODO
+POSTNB16        LDX   #$32 ; TODO
                 LDY   #$00
-L39C5           LDA   $3C00,X
+POSTNIB1        LDA   RWTSBUF2,X
                 LSR   A
                 LSR   A
                 LSR   A
-                STA   $27
+                STA   HOLDPRES
                 LSR   A
-                STA   $26
+                STA   PT2BTBUF
                 LSR   A
-                ORA   $3B00,X
-                STA   ($3E),Y
+                ORA   RWTSBUF1,X
+                STA   (PTR2BUF),Y
                 INY
-                LDA   $3C33,X
+                LDA   RWTSBUF2+$33,X
                 LSR   A
                 LSR   A
                 LSR   A
                 LSR   A
-                ROL   $27
+                ROL   HOLDPRES
                 LSR   A
-                ROL   $26
-                ORA   $3B33,X
-                STA   ($3E),Y
+                ROL   PT2BTBUF
+                ORA   RWTSBUF1+$33,X
+                STA   (PTR2BUF),Y
                 INY
-                LDA   $3C66,X
+                LDA   RWTSBUF2+$66,X
                 LSR   A
                 LSR   A
                 LSR   A
                 LSR   A
-                ROL   $27
+                ROL   HOLDPRES
                 LSR   A
-                ROL   $26
-                ORA   $3B66,X
-                STA   ($3E),Y
+                ROL   PT2BTBUF
+                ORA   RWTSBUF1+$66,X
+                STA   (PTR2BUF),Y
                 INY
-                LDA   $26
+                LDA   PT2BTBUF
                 AND   #$07
-                ORA   $3B99,X
-                STA   ($3E),Y
+                ORA   RWTSBUF1+$99,X
+                STA   (PTR2BUF),Y
                 INY
-                LDA   $27
+                LDA   HOLDPRES
                 AND   #$07
-                ORA   $3BCC,X
-                STA   ($3E),Y
+                ORA   RWTSBUF1+$CC,X
+                STA   (PTR2BUF),Y
                 INY
                 DEX
-                BPL   L39C5
-                LDA   $3C99
+                BPL   POSTNIB1
+                LDA   RWTSBUF2+$99
                 LSR   A
                 LSR   A
                 LSR   A
-                ORA   $3BFF
-                STA   ($3E),Y
+                ORA   RWTSBUF1+$FF
+                STA   (PTR2BUF),Y
                 RTS
                 ENDIF
                                 ; ======================================
@@ -9850,7 +9908,7 @@ L3A4F           TAY
                 LDA   $C081,X
                 LDA   ONTABLE,Y
                 JSR   DELAY
-                LDA   $27
+                LDA   HOLDPRES
                 AND   #$03
                 ASL   A
                 ORA   $2B
@@ -10526,7 +10584,7 @@ L3E17           PLP
                 PHP
                 BCS   L3DA8
                 PLP
-                JSR   $39C1
+                JSR   POSTNB16
                 LDX   SLOTPG5
 L3E27           CLC
                 BIT   $38
@@ -10596,7 +10654,7 @@ L3E9C           LDA   #$80
                 STA   $4A
                 LDY   #$50
 L3EAE           STY   $47
-                LDA   #$27
+                LDA   #HOLDPRES
                 STA   $4B
                 LDA   Q6H,X
                 LDA   Q7L,X
