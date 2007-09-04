@@ -524,7 +524,8 @@ INCZ            MACRO ZEROPAGE_LOC
 
 
 
-CR              = $8D
+CR              = $0D|0x80
+SP              = " "|0x80
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                 ; Chris Mosher:
@@ -2065,7 +2066,7 @@ FINFIRST        LDY NDX2CMD     ; GET INDEX ASSOC WITH CMD ISSUED.
                                 ; THE SECONDARY FILENAME BUFFER.
 
 CKFN2LGL        LDA SCNDFNBF    ; CHK 1RST BYTE IN SECONDARY.
-                CMP #" "|0x80   ; IF IT IS A <SPC>, THEN NO CHARS
+                CMP #SP         ; IF IT IS A <SPC>, THEN NO CHARS
                 BEQ GOXITDOS    ; WERE GOOD & SO A 2ND NAME WAS
                                 ; REQUIRED BUT NOT ISSUED,SO EXIT.
 
@@ -2075,7 +2076,7 @@ CKFN2LGL        LDA SCNDFNBF    ; CHK 1RST BYTE IN SECONDARY.
                                 ; PRIMARY FILENAME BUFFER.
 
 CKFN1LGL        LDA PRIMFNBF    ; IF 1RST CHAR IN BUF IS A <SPC>,
-                CMP #" "|0x80   ; A LEGAL PRIMARY FILENAME WAS NOT
+                CMP #SP         ; A LEGAL PRIMARY FILENAME WAS NOT
                                 ; ISSUED SO FALL THRU TO SEE IF IT
                                 ; WAS REQUIRED OR OPTIONAL.
                 BNE DFLTPRSD    ; BRANCH IF GOT PRIMARY FILENAME.
@@ -2109,7 +2110,7 @@ BLNKFNBF
                 LDA #0
                 ENDIF
                 LDY #60         ; 30 BYTES IN EACH BUFFER.
-BLNK1RST        LDA #" "|0x80   ; BLANK.
+BLNK1RST        LDA #SP         ; BLANK.
 STORBLNK        STA PRIMFNBF-1,Y
                 DEY
                 BNE STORBLNK    ; MORE BYTES TO BLANK OUT.
@@ -2496,7 +2497,7 @@ CMDCHRTS        RTS             ; EXIT WITH Z-FLAG CONDITIONED.
 
 PURGECMD        JSR CMDCHAR     ; GET 1RST CHAR.
                 BEQ CMDCHRTS    ; EXIT IF <CR> OR COMMA.
-                CMP #" "|0x80   ; SPACE?
+                CMP #SP         ; SPACE?
                 BEQ PURGECMD    ; YES - IGNORE LEADING SPACES.
                 RTS
 
@@ -2982,7 +2983,7 @@ SAVFNPTR        STA A3H         ; RESET A3L/H TO POINT AT DOS BUF
                                 ; =================================
 
 CMDCLOSE        LDA PRIMFNBF    ; GET 1RST CHR FRM PRMRY NAME BUF.
-                CMP #" "|0x80   ; DON'T ALLOW LEADING SPACES.
+                CMP #SP         ; DON'T ALLOW LEADING SPACES.
                 BEQ CLOSEALL    ; LEADING SPC = SIGNAL 2 CLOSE ALL
                                 ; FILES.  (A CLOSE CMD WAS ISSUED
                                 ; WITH NO ACCOMPANYING FILE NAME.)
@@ -6158,7 +6159,7 @@ DESCRPTK        STX CURDIRNX    ; SAVE NDEX TO ENTRIES IN DIR SEC.
                                 ; CHK FILE STATUS & PRINT LOCKED
                                 ; SYMBOL ("*") OR SPACE.
 
-                LDY #" "|0x80   ; DEFAULT (Y)=<SPC> N CASE NOT LCK
+                LDY #SP         ; DEFAULT (Y)=<SPC> N CASE NOT LCK
                 LDA FIL1TYPE,X  ; GET FILE TYPE.
                 BPL PRLOCODE    ; HI BIT CLR SO FILE UNLOCKED.
                 LDY #"*"|0x80   ; RESET (Y) = LOCKED SYMBOL.
@@ -6189,7 +6190,7 @@ CHRTYPIX        ASL A           ; SHIFT REST OF BITS UNTIL HI SET.
 PRTFTYPE        LDA FTYPETBL,Y  ; GOT A SET BIT SO NOW GET CHAR
                                 ; FROM TABLE OF TYPE SYMBOLS.
                 JSR COUT        ; PRINT TYPE SYMBOL.
-                LDA #" "|0x80   ; PRINT TRAILING <SPC>.
+                LDA #SP         ; PRINT TRAILING <SPC>.
                 JSR COUT
 
                                 ; PRINT FILE SIZE (EXPRESSED IN
@@ -6205,7 +6206,7 @@ PRTFTYPE        LDA FTYPETBL,Y  ; GOT A SET BIT SO NOW GET CHAR
                                 ; (DOESN'T USE HI BYTE, SO FILES
                                 ; > 255 SECS LONG ARE EXPRESSED
                                 ; AS 256 MOD.)
-                LDA #" "|0x80   ; PRINT <SPC> AFTER SIZE.
+                LDA #SP         ; PRINT <SPC> AFTER SIZE.
                 JSR COUT
 
                                 ; PRINT THE FILE NAME.
