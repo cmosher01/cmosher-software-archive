@@ -226,6 +226,45 @@ public class DosMasterToImage
         }
     }
 
+    public static void main(String[] args) throws IOException
+    {
+        if (args.length != 3)
+        {
+            throw new IllegalArgumentException("Usage: java DosMasterToImage in-dos-image in-disk-image out-disk-image");
+        }
+        // combines dos from in-dos-image (rearranging it as necessary) plus rest of disk from in-disk-image and write to out-disk-image
+        BufferedInputStream inDos = new BufferedInputStream(new FileInputStream(new File(args[0])));
+        BufferedInputStream inDisk = new BufferedInputStream(new FileInputStream(new File(args[1])));
+        BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File(args[2])));
+
+        final int dos[] = new int[0x4000-0x1B00];
+        for (int a = 0x1B00; a < 0x4000; ++a)
+        {
+        	final int byt = inDos.read();
+        	dos[a-0x1B00] = byt;
+        }
+        inDos.close();
+
+        for (int a = 0x3600; a < 0x4000; ++a)
+        {
+        	final int byt = dos[a-0x1B00];
+        	out.write(byt);
+        }
+        for (int a = 0x1B00; a < 0x3600; ++a)
+        {
+        	final int byt = dos[a-0x1B00];
+        	out.write(byt);
+        }
+
+        inDisk.skip(0x4000L-0x1B00L);
+        for (int byt = inDisk.read(); byt >= 0; byt = inDisk.read())
+        {
+        	out.write(byt);
+        	
+        }
+        out.close();
+        inDisk.close();
+    }
     /**
      * Clear a master image.
      * @param args
@@ -288,7 +327,7 @@ public class DosMasterToImage
      * Compares two DOS images, one master and one slave. Writes differences
      * to standard out (as offsets in hex).
      */
-    public static void main(String[] args) throws IOException
+    public static void main3(String[] args) throws IOException
     {
         if (args.length != 2)
         {
