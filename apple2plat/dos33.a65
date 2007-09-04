@@ -416,7 +416,8 @@ NEWSTT          = $D7D2         ; ROUTINE TO COLLECT & EXECUTE THE
 BSCERHLR        = $D865         ; BASIC'S ERROR-HANDLING ROUTINE.
 BASICCLD        = $E000         ; BASIC'S COLDSTART ROUTINE.
 BASICWRM        = $E003         ; BASIC'S WARMSTART ROUTINE.
-
+BASICCHN        = $E836         ; BASIC'S CHAIN ENTRY POINT.
+BASICERR        = $E3E3         ; BASIC'S ERROR HANDLER???
 
                                 ; --------------------------------
                                 ; MONITOR ROM ROUTINES
@@ -987,16 +988,16 @@ CMDTBL          DW CMDINIT-1    ; $A54F-1
                                 ; ASSUME THAT APPLESOFT BASIC IS ACTIVE.)
                                 ; ===========================================
 
-CHAINTRY        DW $E836        ; ADR OF CHAIN ENTRY PT TO BASIC.
+CHAINTRY        DW BASICCHN     ; ADR OF CHAIN ENTRY PT TO BASIC.
 RUNTRY          DW RUNINTGR     ; ADR OF BASIC'S RUN CMD.
-ADBSCERR        DW $E3E3        ; ADR OF BASIC'S ERROR HANDLER.
+ADBSCERR        DW BASICERR     ; ADR OF BASIC'S ERROR HANDLER.
 TOCLDVEC        DW BASICCLD     ; ADR OF BASIC'S COLD START ROUT'N
 TOWRMVEC        DW BASICWRM     ; ADR OF BASIC'S WARM START ROUT'N
 
                 IF !DOS31
 RLOCNTRY
                 IF DOS32
-                DW 0
+                DS 2
                 ELSE
                 DW SETLINKS
                                 ; ADR OF ROUT'N THAT ENABLES BASIC
@@ -1010,9 +1011,9 @@ RLOCNTRY
                                 ; POINT VECTOR TABLE ($9D62 - $9D6B).
                                 ; ====================================
 
-IMGINTV         DW $E836
+IMGINTV         DW BASICCHN
                 DW RUNINTGR
-                DW $E3E3
+                DW BASICERR
                 DW BASICCLD
                 DW BASICWRM
 
@@ -3326,7 +3327,7 @@ WRADRLEN        STY LEN2RDWR    ; PUT LOW BYTE IN FM PARM LIST IN
 RDWRANGE        STY CURIOBUF    ; PUT ADR OF OUTPUT BUF IN PRM LST
                 STA CURIOBUF+1
                 LDA #2          ; SET SUBCODE FOR RANGE OF BYTES.
-                IF DOS31 | DOS32
+                IF DOS31 || DOS32
                 STA SUBCODFM
                 ELSE
                 JMP VRFYRWNG    ; GO CALL THE FILE MANAGER TO WRITE
@@ -4227,7 +4228,7 @@ AFTRFUNC2
 TOAPPTCH        JMP APNDPTCH    ; GO HANDLE END-OF-DATA ERROR.
 
                 NOP
-                IF DOS33_1986 | DOS33_1983
+                IF DOS33_1986 || DOS33_1983
 BK2FMDRV        JSR CKIFAPND    ; <---NOTE: APNDPTCH RETURN HERE!!
                                 ; GO CHK IF THE APPEND FLAG IS ON.
                 ELSE
@@ -4889,49 +4890,38 @@ CMDTXTBL        DB "INI","T"|0x80
 CMDATTRB
                 IF DOS31
                 DW %0111000000100000 ; INIT
+                ELSE
+                DW %0111000000100001 ; INIT
+                ENDIF
                 DW %0111000010100000 ; LOAD
+                IF DOS31
                 DW %0111000010100000 ; SAVE
+                ELSE
+                DW %0111000010100001 ; SAVE
+                ENDIF
                 DW %0111000010100000 ; RUN
                 DW %0111000000100000 ; CHAIN
                 DW %0111000000100000 ; DELETE
                 DW %0111000000100000 ; LOCK
                 DW %0111000000100000 ; UNLOCK
                 DW %0000000001100000 ; CLOSE
+                IF DOS31
                 DW %0000011000100000 ; READ
+                ELSE
+                DW %0000011000100010 ; READ
+                ENDIF
                 DW %0111010000100000 ; EXEC
+                IF DOS31
                 DW %0000011000100000 ; WRITE
                 DW %0000010000100000 ; POSITION
                 DW %0111100000100000 ; OPEN
                 DW %0111100000100000 ; APPEND
-                DW %0111000000110000 ; RENAME
-                DW %0111000001000000 ; CATALOG
-                DW %1000000001000000 ; MON
-                DW %1000000001000000 ; NOMON
-                DW %0000000000001000 ; PR#
-                DW %0000000000001000 ; IN#
-                DW %0000000000000100 ; MAXFILES
-                DW %0111000001000000 ; FP
-                DW %0000000001000000 ; INT
-                DW %0111100100100000 ; BSAVE
-                DW %0111000100100000 ; BLOAD
-                DW %0111000100100000 ; BRUN
-                DW %0111000000100000 ; VERIFY
                 ELSE
-                DW %0111000000100001 ; INIT
-                DW %0111000010100000 ; LOAD
-                DW %0111000010100001 ; SAVE
-                DW %0111000010100000 ; RUN
-                DW %0111000000100000 ; CHAIN
-                DW %0111000000100000 ; DELETE
-                DW %0111000000100000 ; LOCK
-                DW %0111000000100000 ; UNLOCK
-                DW %0000000001100000 ; CLOSE
-                DW %0000011000100010 ; READ
-                DW %0111010000100000 ; EXEC
                 DW %0000011000100010 ; WRITE
                 DW %0000010000100010 ; POSITION
                 DW %0111100000100011 ; OPEN
                 DW %0111000000100010 ; APPEND
+                ENDIF
                 DW %0111000000110000 ; RENAME
                 DW %0111000001000000 ; CATALOG
                 DW %1000000001000000 ; MON
@@ -4941,39 +4931,16 @@ CMDATTRB
                 DW %0000000000000100 ; MAXFILES
                 DW %0111000001000000 ; FP
                 DW %0000000001000000 ; INT
+                IF DOS31
+                DW %0111100100100000 ; BSAVE
+                ELSE
                 DW %0111100100100001 ; BSAVE
+                ENDIF
                 DW %0111000100100000 ; BLOAD
                 DW %0111000100100000 ; BRUN
                 DW %0111000000100000 ; VERIFY
-                ENDIF
-;               DB $21,$70      ; INIT      00100001 01110000
-;               DB $A0,$70      ; LOAD      10100000 01110000
-;               DB $A1,$70      ; SAVE      10100001 01110000
-;               DB $A0,$70      ; RUN       10100000 01110000
-;               DB $20,$70      ; CHAIN     00100000 01110000
-;               DB $20,$70      ; DELETE    00100000 01110000
-;               DB $20,$70      ; LOCK      00100000 01110000
-;               DB $20,$70      ; UNLOCK    00100000 01110000
-;               DB $60,$00      ; CLOSE     01100000 00000000
-;               DB $22,$06      ; READ      00100010 00000110
-;               DB $20,$74      ; EXEC      00100000 01110100
-;               DB $22,$06      ; WRITE     00100010 00000110
-;               DB $22,$04      ; POSITION  00100010 00000100
-;               DB $23,$78      ; OPEN      00100011 01111000
-;               DB $22,$70      ; APPEND    00100010 01110000
-;               DB $30,$70      ; RENAME    00110000 01110000
-;               DB $40,$70      ; CATALOG   01000000 01110000
-;               DB $40,$80      ; MON       01000000 10000000
-;               DB $40,$80      ; NOMON     01000000 10000000
-;               DB $08,$00      ; PR#       00001000 00000000
-;               DB $08,$00      ; IN#       00001000 00000000
-;               DB $04,$00      ; MAXFILES  00000100 00000000
-;               DB $40,$70      ; FP        01000000 01110000
-;               DB $40,$00      ; INT       01000000 00000000
-;               DB $21,$79      ; BSAVE     01000001 01111001
-;               DB $20,$71      ; BLOAD     01000000 01110001
-;               DB $20,$71      ; BRUN      01000000 01110001
-;               DB $20,$70      ; VERIFY    00100000 01110000
+
+
 
 
                                 ; =================================
@@ -5000,17 +4967,16 @@ OPTNTXT         DB "VDSLRBACIO"
                                 ; WITH THE COMMAND.
                                 ; =================================
 
-OPTNISSD        DB $40          ; V(OLUME) PARAMETER.
-                DB $20          ; D(RIVE) PARAMETER.
-                DB $10          ; S(LOT) PARAMETER.
-                DB $08          ; L(ENGTH) PARAMETER.
-                DB $04          ; R(ECORD # OR R(EL FIELD POS'N).
-                DB $02          ; B(YTE) PARAMETER.
-                DB $01          ; A(DDRESS) PARAMETER.
-                DB $C0          ; C(OMMAND).
-                DB $A0          ; I(NPUT).
-                DB $90          ; O(UTPUT).
-
+OPTNISSD        DB %01000000          ; V(OLUME) PARAMETER.
+                DB %00100000          ; D(RIVE) PARAMETER.
+                DB %00010000          ; S(LOT) PARAMETER.
+                DB %00001000          ; L(ENGTH) PARAMETER.
+                DB %00000100          ; R(ECORD # OR R(EL FIELD POS'N).
+                DB %00000010          ; B(YTE) PARAMETER.
+                DB %00000001          ; A(DDRESS) PARAMETER.
+                DB %11000000          ; C(OMMAND).
+                DB %10100000          ; I(NPUT).
+                DB %10010000          ; O(UTPUT).
 
                                 ; =================================
                                 ; TABLE OF VALID RANGES ASSOCIATED
@@ -7831,7 +7797,7 @@ NMBXLEN2        ROR A           ; SHIFT (AS A UNIT) RUNNING RESULT
                                 ; THE FM PARAMETER LIST TO THE WORK
                                 ; AREA.
 
-                IF DOS33_1986 | DOS33_1983
+                IF DOS33_1986 || DOS33_1983
                 CLC
                 ENDIF
 
@@ -7851,11 +7817,11 @@ NMBXLEN2        ROR A           ; SHIFT (AS A UNIT) RUNNING RESULT
                 ADC FILPTSEC
                 STA FILPTSEC
 
-                IF DOS33_1986 | DOS33_1983
+                IF DOS33_1986 || DOS33_1983
                 BCC CALCRTS
                 INC FILPTSEC+1
                 ELSE
-                IF DOS33_1980 | DOS31 || DOS32
+                IF DOS33_1980 || DOS31 || DOS32
                 LDA #0
                 ADC FILPTSEC+1
                 STA FILPTSEC+1
@@ -7864,7 +7830,7 @@ NMBXLEN2        ROR A           ; SHIFT (AS A UNIT) RUNNING RESULT
 
 CALCRTS         RTS
 
-                IF DOS33_1986 | DOS33_1983
+                IF DOS33_1986 || DOS33_1983
                 DS 2
                 ENDIF
 
@@ -8061,7 +8027,7 @@ TKPERDSK        DB $23          ; TRKS/DISK (#35).
                                 ; TKPERDSK CAN BE ALTERED 2 ENABLE
                                 ; THE USE OF AN EXTRA TRK ON DISK.
 SECPERTK
-                IF DOS31 | DOS32
+                IF DOS31 || DOS32
                 DB $0D           ; SECS/TRK ($0D, 13, $00 --> $0C)
                 ELSE
                 DB $10          ; SECS/TRK ($10, 16, $00 --> $0F)
@@ -8668,14 +8634,14 @@ CKAPFLG         LDA APPNDFLG    ; IS APPEND FLAG ON?
 CLRAPFLG        LDA #0          ; DON'T NEED THE APPEND FLAG ANY
                 STA APPNDFLG    ; MORE, SO TURN IT OFF.
 
-                IF DOS33_1986
-                JMP RSETPTRS    ; GO BACK UP THE FILE POINTER.
+                IF DOS33_1980
+                JMP BK2APND
                 ELSE
                 IF DOS33_1983
                 JMP CMPATCH
                 ELSE
-                IF DOS33_1980
-                JMP BK2APND
+                IF DOS33_1986
+                JMP RSETPTRS    ; GO BACK UP THE FILE POINTER.
                 ENDIF
                 ENDIF
                 ENDIF
@@ -8792,13 +8758,7 @@ RSETPTRS        LDA RECNMBFM    ; RECONCILE RECORD NUMBER VERSIONS
                                 ; CMD PARSING AND PROCESSING
                                 ; ROUTINES.
                 ELSE
-                IF DOS33_1983
                 DS 28
-                ELSE
-                IF DOS33_1980
-                DS 28
-                ENDIF
-                ENDIF
                 ENDIF
 
 
@@ -8809,12 +8769,6 @@ RSETPTRS        LDA RECNMBFM    ; RECONCILE RECORD NUMBER VERSIONS
                 DS 1            ; ($B6CF)
 
 
-                IF DOS33_1986
-                DS 24
-                ELSE
-                IF DOS33_1983
-                DS 24
-                ELSE
                 IF DOS33_1980
                                 ; =================================
                                 ; STRAY CODE (NOT USED).
@@ -8834,8 +8788,8 @@ RSETPTRS        LDA RECNMBFM    ; RECONCILE RECORD NUMBER VERSIONS
                 LDA #$00
                 JSR PRBYTE
                 RTS
-                ENDIF
-                ENDIF
+                ELSE
+                DS 24
                 ENDIF
 
 
@@ -8891,9 +8845,6 @@ IMG8FF
                                 ; - NOTE THAT ON ENTRY:  (X) = SLOT * 16.
                                 ; :::::::::::::::::::::::::::::::::::::::::
 
-;                IF DOS31
-;                DS $D0
-;                ENDIF
                                 ; PREPARE RWTS'S INPUT-OUTOUT BLOCK
                                 ; (IOB) AND DESIGNATE THE NUMBER OF
                                 ; SECTORS TO READ.
@@ -9035,8 +8986,8 @@ L37A9           STY   IBSECT
                 DEC   BT2PGCTR
                 BNE   RWPAGES
                 RTS
- ENDIF
- IF DOS31
+                ENDIF
+                IF DOS31
 VERFY           LDA   #$0C
                 JSR   HNDLCMD1
                 LDA   #$06
@@ -9045,10 +8996,15 @@ VERFY           LDA   #$0C
                 JMP   TONOTFND
 TOCLOSE         JMP   CMDCLOSE
                 DS 24
- ENDIF
- IF !DOS31
+                ENDIF
 
- IF !DOS32
+
+
+
+
+                IF !DOS31
+
+                IF !DOS32
                 LDA BTSTAGE+1   ; CALC # OF PAGES TO WRITE:
                 SEC             ; (#$B6 - #$9D = #$19 OR #25.)
                 SBC IBBUFP+1
@@ -9082,14 +9038,7 @@ TOCLOSE         JMP   CMDCLOSE
                 JSR RWPAGES     ; WRITE TRK00/SEC09 2 TRK00/SEC00.
                 RTS
 
-
-                                ; ================================
-                                ; FREE SPACE ($B78D-$B792).
-                                ; ================================
-
-                DB $00,$00,$00,$00,$00,$00
-                                ; UNUSED.
-
+                DS 6            ; UNUSED.
 
                                 ; =================================
                                 ; READ/WRITE A GROUP OF PAGES.
@@ -9119,7 +9068,10 @@ SAMETRK         STY IBSECT      ; STORE NUMBER OF SEC WANTED.
                 BNE RWPAGES     ; MORE SECS TO READ.
                 RTS
 
- ENDIF
+                ENDIF
+
+
+
                                 ; ===================================
                                 ; ROUTE EXECUTION TO RWTS.
                                 ; ===================================
@@ -9185,6 +9137,11 @@ ZCURBUF1        STA (A4L),Y
 
 
                 ENDIF
+
+
+
+
+
 
 
                                 ; =================================
@@ -9296,7 +9253,7 @@ MONTC           DB $EF,$D8      ; MOTOR-ON-TIME COUNT.
                                 ; 01-0,01-1,00-0,00-1.
 
 PRENIBL
-                IF DOS31 | DOS32
+                IF DOS31 || DOS32
                 LDX   #$32
                 LDY   #$00
 PRENIB1         LDA   (PTR2BUF),Y
@@ -10039,15 +9996,11 @@ ARRIVED         RTS
                                 ; FREE SPACE ($B9FD-$B9FF).
                                 ; =================================
 
-                IF DOS33_1986
-                DS 3
-                ELSE
-                IF DOS33_1983
-                DS 3
-                ELSE
                 IF DOS33_1980
                 DB $AA,$A0,$A0
-                ENDIF
+                ELSE
+                IF DOS33_1983 || DOS33_1986
+                DS 3
                 ENDIF
                 ENDIF
 
@@ -10116,7 +10069,7 @@ DSKNBTBL        DB $96,$97,$9A,$9B,$9D,$9E,$9F
                                 ; RAN OUT OF DATA SO BETTER CHECK
                                 ; IF WE ARE APPENDING.
 
-                IF DOS33_1986 | DOS33_1983
+                IF DOS33_1986 || DOS33_1983
 CKIFAPND        LDX NDX2CMD     ; GET COMMAND INDEX.
                 CPX #$1C        ; ARE WE APPENDING?
                 BEQ RTNCKAPN    ; YES - LEAVE APPEND FLAG ON.
@@ -10436,7 +10389,7 @@ WRBYTE3         NOP             ; (2 CYC)
                                 ; ($BCDF - $BCFF)
                                 ; =================================
 FREE1
-                IF DOS33_1986 | DOS33_1983
+                IF DOS33_1986 || DOS33_1983
                 DS 33
                 ELSE
                 IF DOS33_1980
@@ -11802,7 +11755,7 @@ CLOBCARD        JSR SETVID      ; SIMULATE A "PR#0" STATEMENT.
                                 ; MACHINE WILL BE FORCED TO USE
                                 ; MOTHERBOARD VERSION OF FP.
 
-                IF DOS33_1986 | DOS33_1983
+                IF DOS33_1986 || DOS33_1983
                 JSR CONTCLOB    ; NOW CLOBBER THE 80-COLUMN CARD.
                 ENDIF
                 JMP BK2BOOT2    ; RTN TO ORIGINAL PART OF BOOT2.

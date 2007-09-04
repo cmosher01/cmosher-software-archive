@@ -1,1 +1,5 @@
-"C:\as65\as65-dos" -c -h0 -i -l -m -n -t -v -w -z -x -DDOS33_1986 -o%1.obj %1.a65
+call asmdos DOS31
+call asmdos DOS32
+call asmdos DOS33_1980
+call asmdos DOS33_1983
+call asmdos DOS33_1986
