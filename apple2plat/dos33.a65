@@ -16,9 +16,10 @@
                                 ; by defining the corresponding label:
                                 ;
                                 ; version       release date   label
+                                ; DOS 3.0       1978-06        DOS30 (not yet implemented)
                                 ; DOS 3.1       1978-07-20     DOS31
                                 ; DOS 3.2       1979-06-01     DOS32
-                                ; DOS 3.2.1     ?              DOS321 (not yet implemented)
+                                ; DOS 3.2.1     1979-07-31     DOS321 (not yet implemented)
                                 ; DOS 3.3 (0)   1980-08-25     DOS33_1980
                                 ; DOS 3.3 (1)   1983-01-01     DOS33_1983
                                 ; DOS 3.3 (2)   1986-03?       DOS33_1986
@@ -114,15 +115,6 @@ DOS33_1980      = 1
 ERROR: Must define DOS version to build.
                 ENDIF
 
-                ORG   $1B00
-
-                                ; original starts here:
-
-                                ; ********************************
-                                ;
-                                ; ADDRESSES REFERRED TO BY DOS
-                                ;
-                                ; ********************************
 
 
 
@@ -280,12 +272,14 @@ RUNMODE         = $D9           ; INTEGER BASIC'S MODE FLAG.
 
 
                                 ; --------------------------------
-                                ; PAGES TWO TO EIGHT
+                                ; PAGE TWO
                                 ; --------------------------------
-
 BUF200          = $200          ; THE INPUT BUFFER ($200-$2FF).
                                 ; (ALSO KNOWN AS KEYBOARD BUFFER.)
 
+                                ; --------------------------------
+                                ; PAGE THREE
+                                ; --------------------------------
 PG3DOSVT        = $3D0          ; START OF PAGE-3 DOS VECTOR TBL.
 RESETVEC        = $3F2          ; RESET VECTOR.  CONTAINS ADDR OF
                                 ; ROUT'N WHERE EXECUT'N DIVERTS TO
@@ -297,6 +291,10 @@ VLDBYTE         = $3F4          ; RESET VALIDATION BYTE.
                                 ; EXECUTION GOES TO THE ADDR IN
                                 ; $3F2/$3F3.
 
+
+                                ; --------------------------------
+                                ; TEXTSCREEN HOLES
+                                ; --------------------------------
 TRK4DRV1        = $478          ; BASE ADR USED TO REFERENCE THE
                                 ; LOCATION THAT CONTAINS THE LAST
                                 ; HALFTRACK ON WHICH DRIVE 1 WAS
@@ -321,16 +319,6 @@ SLOTPG6         = $678          ; SLOT*16 USED WHEN FORMATTING &
 RECLBCNT        = $6F8          ; CNTR FOR # OF RECALIBRATIONS
                                 ; ALLOWED BEFORE RWTS GIVES UP.
 
-BT1LDADR        = $8FD          ; BOOT1 LOAD ADDRESS ($8FD,$8FE).
-                                ; VARIES FROM $B600 TO $BF00.
-                                ; EVENTUALLY POINTS 2 THE START OF
-                                ; BOOT2 ($B700).
-BT1PG2RD        = $8FF          ; INITIALLY CONTAINS # OF SECS TO
-                                ; READ IN WHEN EXECUTING BOOT1.
-                                ; ALSO DOUBLES AS LOGICAL SEC #.
-                                ; (VARIES FROM $09 --> $00 -->$FF)
-                                ; (SEE DISCUSSION IN FORMATTED
-                                ; DIS'MBLY "THE BOOT PROCESS".)
 
 
                                 ; --------------------------------
@@ -450,6 +438,20 @@ MONRTS          = $FF58         ; AN RTS INSTRUC LOC'D IN MONITOR
 MON             = $FF65         ; NORM ENTRY ROUTE 2 MONITOR ROM.
                                 ; ("CALL -151" GOES HERE.)
 
+
+
+
+
+
+                                ; ASCII VALUES (WITH HIGH-BIT SET)
+CR              = $0D|%10000000 ; carriage-return
+SP              = " "|%10000000 ; space
+
+
+
+
+
+
 LDAZ            MACRO ZEROPAGE_LOC
                 IF DOS31
                 DB    $AD
@@ -525,15 +527,13 @@ INCZ            MACRO ZEROPAGE_LOC
 
 
 
-CR              = $0D|0x80
-SP              = " "|0x80
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                 ; Chris Mosher:
                                 ; added DOS master relocation routine disassembly
                                 ; to beginning of original DOS (slave) disassembly,
                                 ; and fixed original assembly code to assemble at
-                                ; $1D00 instead of $9D00
+                                ; $1B00 instead of $9B00
+                ORG   $1B00
 
 MASTERDOS       JMP   DOSCOLD
 
@@ -768,10 +768,10 @@ FIXCODTBL       DW    DOSCOLD,CMDTXTBL
                 ENDIF
                 DW    NMPG2RD
                 IF DOS31
-                DW    SEC2RDB6-2, BOOT2-$102 ; NONSENSE ENTRIES?
+                DW    BOOT1-2, BOOT2-$102 ; NONSENSE ENTRIES?
                 ELSE
                 IF DOS32
-                DW    SEC2RDB6-2, SEC2RDB6-2 ; NONSENSE ENTRIES?
+                DW    BOOT1-2, BOOT1-2 ; NONSENSE ENTRIES?
                 ELSE
                 DW    WRITADR,FREE1
                 ENDIF
@@ -6339,7 +6339,7 @@ FNINIT          JSR ZWRKAREA    ; INIT THE FM WRK AREA (NON-CHAIN)
                                 ; END OF SECTOR.  (NOTE:  THIS
                                 ; ASSIGNS ALL TRACKS.)
 
-                LDX #56         ; OFFSET INTO VTOC TO FRESECMAP.
+                LDX #FRESECMAP-VTOCBUFF ; OFFSET INTO VTOC TO FRESECMAP.
                 LDA #0
 ZVTOC           STA VTOCBUFF,X  ; ZERO OUT A TRKMAP BYTE.
                 INX
@@ -6353,8 +6353,8 @@ ZVTOC           STA VTOCBUFF,X  ; ZERO OUT A TRKMAP BYTE.
                                 ; TAKES REST OF SECS ON TRK 2 OUT
                                 ; OF CIRCULATION.
 
-                LDX #$0C        ; OFFSET TO START OF TRKMAP3.
-FREETRK         CPX #$8C        ; OFFSET 1 PAST END OF TRKMAP34.
+                LDX #$03*4      ; OFFSET TO START OF TRKMAP3.
+FREETRK         CPX #$23*4      ; OFFSET 1 PAST END OF TRKMAP34.
                 BEQ FREEDTKS    ; DONE UP TO END OF TRKMAP34.
                 LDY #3          ; INIT INDEX TO END OF FRETKMSK.
 FREEIT          LDA FRETKMSK,Y  ; FREE MOST TRKMAPS.  (STARTING
@@ -6368,11 +6368,11 @@ FREEIT          LDA FRETKMSK,Y  ; FREE MOST TRKMAPS.  (STARTING
                                 ; LOADING FROM END OF FRETKMSK:
                                 ; "00 00 FF FF".
                 BPL FREEIT      ; (4BYTES/TRKMAP & 4BYTS/FRETKMSK)
-                CPX #$44        ; OFFSET TO START OF TRKMAP17
+                CPX #$11*4      ; OFFSET TO START OF TRKMAP17
                                 ; (IE. CATALOG TRACK).
                 BNE FREETRK     ; HAVE WE FREED TRKS 3 TO 16 YET?
                                 ; IF NOT - BRANCH.
-                LDX #$48        ; OFFSET TO TRK 18 (IE. SKIP THE
+                LDX #$12*4      ; OFFSET TO TRK 18 (IE. SKIP THE
                                 ; CATALOG TRACK).
                 BNE FREETRK     ; ALWAYS - GO FREE TRKS 18 TO 34.
 FREEDTKS        JSR WRITVTOC    ; WRITE FREED UP VTOC TO DISK.
@@ -7858,6 +7858,7 @@ DISKFULL
                 JMP FULLPTCH
                 NOP
                 ENDIF
+
 FILELOKD        LDA #10
                 BNE BADFMXIT    ; ALWAYS.
 
@@ -7944,9 +7945,9 @@ TRK0YET         DS 2            ; ASSIGNMENT FLAG = SIGNAL IF TRK0
 LOKUNMSK        = TRK0YET       ; LOCK/UNLOCK MASK ($80/$00).
 FRETKMSK
                 IF DOS31 || DOS32
-                DB $00,$00,$F8,$FF
+                DB %00000000,%00000000,%11111000,%11111111
                 ELSE
-                DB $00,$00,$FF,$FF
+                DB %00000000,%00000000,%11111111,%11111111
                 ENDIF
                                 ; 4-BYTE MASK USED BY INIT FUNC'N
                                 ; TO FREE AN ENTIRE TRACK.
@@ -7957,7 +7958,7 @@ FRETKMSK
                                 ; ($B3A4 - $B3A6)
                                 ; =================================
 
-BASETEN         DB $01,$0A,$64  ; 10^0=0, 10^1=10, 10^2=100.
+BASETEN         DB 1,10,100     ; 10^0=1, 10^1=10, 10^2=100.
 
 
                                 ; =================================
@@ -7994,6 +7995,10 @@ DSKVOLUM        DB " EMULOV KSID"
                                 ; TO PERSONALIZE A CATALOG.
 
 
+
+
+
+
                                 ; =================================
                                 ; VOLUME TABLE OF CONTENTS (VTOC)
                                 ; BUFFER ($B3BB - $B4BA).
@@ -8028,12 +8033,12 @@ TKPERDSK        DB $23          ; TRKS/DISK (#35).
                                 ; THE USE OF AN EXTRA TRK ON DISK.
 SECPERTK
                 IF DOS31 || DOS32
-                DB $0D           ; SECS/TRK ($0D, 13, $00 --> $0C)
+                DB $0D          ; SECS/TRK ($0D, 13, $00 --> $0C)
                 ELSE
                 DB $10          ; SECS/TRK ($10, 16, $00 --> $0F)
                 ENDIF
 
-BYTPERSC        DB $00,$01      ; BYTES/SECTOR ($0100, #256).
+BYTPERSC        DW $100         ; BYTES/SECTOR ($0100, #256).
 
 
                                 ; ------------------------------------
@@ -8048,100 +8053,21 @@ BYTPERSC        DB $00,$01      ; BYTES/SECTOR ($0100, #256).
                                 ; FOLLOWING CONVENTION:
                                 ; SET BIT = FREE SECTOR.
                                 ; CLEAR BIT = USED SECTOR.
-                                ; 1RST BYTE:  FEDC BA98
+                                ; 1ST BYTE:  FEDC BA98
                                 ; 2ND BYTE:  7654 3210
                                 ; (THE 3RD & 4TH BYTES ASSOCIATED
-                                ; WITH @ TRK ARE WASTED.  THESE BYTES
-                                ; ARE WASTED BECAUSE THEY ARE WRITTEN
-                                ; OVER BY DOS BUT NOT ACTUALLY USED
-                                ; FOR ANYTHING.  THERE4 THEY ARE NOT
-                                ; READILY AVAILABLE TO THE ASSEMBLY
-                                ; LANGUAGE PROGRAMMER THAT IS IN
-                                ; DESPERATE NEED OF AN AVAILABLE HOLE
-                                ; IN DOS.)
+                                ; WITH EACH TRACK ARE NOT USED.)
 
-FRESECMAP
-                IF DOS31 || DOS32
-                DB %00000000,%00000000,%00000000,%00000000 ; 00
-                DB %00000000,%00000000,%00000000,%00000000 ; 01
-                DB %00000000,%00000000,%00000000,%00000000 ; 02
-                DB %11111111,%11111000,%00000000,%00000000 ; 03
-                DB %11111111,%11111000,%00000000,%00000000 ; 04
-                DB %11111111,%11111000,%00000000,%00000000 ; 05
-                DB %11111111,%11111000,%00000000,%00000000 ; 06
-                DB %11111111,%11111000,%00000000,%00000000 ; 07
-                DB %11111111,%11111000,%00000000,%00000000 ; 08
-                DB %11111111,%11111000,%00000000,%00000000 ; 09
-                DB %11111111,%11111000,%00000000,%00000000 ; 0A
-                DB %11111111,%11111000,%00000000,%00000000 ; 0B
-                DB %11111111,%11111000,%00000000,%00000000 ; 0C
-                DB %11111111,%11111000,%00000000,%00000000 ; 0D
-                DB %11111111,%11111000,%00000000,%00000000 ; 0E
-                DB %11111111,%11111000,%00000000,%00000000 ; 0F
-                DB %11111111,%11111000,%00000000,%00000000 ; 10
-                DB %00000000,%00000000,%00000000,%00000000 ; 11
-                DB %11111111,%11111000,%00000000,%00000000 ; 12
-                DB %11111111,%11111000,%00000000,%00000000 ; 13
-                DB %11111111,%11111000,%00000000,%00000000 ; 14
-                DB %11111111,%11111000,%00000000,%00000000 ; 15
-                DB %11111111,%11111000,%00000000,%00000000 ; 16
-                DB %11111111,%11111000,%00000000,%00000000 ; 17
-                DB %11111111,%11111000,%00000000,%00000000 ; 18
-                DB %11111111,%11111000,%00000000,%00000000 ; 19
-                DB %11111111,%11111000,%00000000,%00000000 ; 1A
-                DB %11111111,%11111000,%00000000,%00000000 ; 1B
-                DB %11111111,%11111000,%00000000,%00000000 ; 1C
-                DB %11111111,%11111000,%00000000,%00000000 ; 1D
-                DB %11111111,%11111000,%00000000,%00000000 ; 1E
-                DB %11111111,%11111000,%00000000,%00000000 ; 1F
-                DB %11111111,%11111000,%00000000,%00000000 ; 20
-                DB %11111111,%11111000,%00000000,%00000000 ; 21
-                DB %11111111,%11111000,%00000000,%00000000 ; 22
-                ELSE
-                DB %00000000,%00000000,%00000000,%00000000 ; 00
-                DB %00000000,%00000000,%00000000,%00000000 ; 01
-                DB %00000000,%00000000,%00000000,%00000000 ; 02
-                DB %11111111,%11111111,%00000000,%00000000 ; 03
-                DB %11111111,%11111111,%00000000,%00000000 ; 04
-                DB %11111111,%11111111,%00000000,%00000000 ; 05
-                DB %11111111,%11111111,%00000000,%00000000 ; 06
-                DB %11111111,%11111111,%00000000,%00000000 ; 07
-                DB %11111111,%11111111,%00000000,%00000000 ; 08
-                DB %11111111,%11111111,%00000000,%00000000 ; 09
-                DB %11111111,%11111111,%00000000,%00000000 ; 0A
-                DB %11111111,%11111111,%00000000,%00000000 ; 0B
-                DB %11111111,%11111111,%00000000,%00000000 ; 0C
-                DB %11111111,%11111111,%00000000,%00000000 ; 0D
-                DB %11111111,%11111111,%00000000,%00000000 ; 0E
-                DB %11111111,%11111111,%00000000,%00000000 ; 0F
-                DB %11111111,%11111111,%00000000,%00000000 ; 10
-                DB %00000000,%00000000,%00000000,%00000000 ; 11
-                DB %11111111,%11111111,%00000000,%00000000 ; 12
-                DB %11111111,%11111111,%00000000,%00000000 ; 13
-                DB %11111111,%11111111,%00000000,%00000000 ; 14
-                DB %11111111,%11111111,%00000000,%00000000 ; 15
-                DB %11111111,%11111111,%00000000,%00000000 ; 16
-                DB %11111111,%11111111,%00000000,%00000000 ; 17
-                DB %11111111,%11111111,%00000000,%00000000 ; 18
-                DB %11111111,%11111111,%00000000,%00000000 ; 19
-                DB %11111111,%11111111,%00000000,%00000000 ; 1A
-                DB %11111111,%11111111,%00000000,%00000000 ; 1B
-                DB %11111111,%11111111,%00000000,%00000000 ; 1C
-                DB %11111111,%11111111,%00000000,%00000000 ; 1D
-                DB %11111111,%11111111,%00000000,%00000000 ; 1E
-                DB %11111111,%11111111,%00000000,%00000000 ; 1F
-                DB %11111111,%11111111,%00000000,%00000000 ; 20
-                DB %11111111,%11111111,%00000000,%00000000 ; 21
-                DB %11111111,%11111111,%00000000,%00000000 ; 22
-                ENDIF
-
-
-                                ; ---------------------------------
-                                ; UNUSED PART OF VTOC
-                                ; ($B47F - $B4BA)
-                                ; ---------------------------------
+FRESECMAP       DS $23*4
 
                 DS 60           ; UNUSED ($B47F-$B4BA).
+
+                                ; END VTOC
+                                ; =================================
+
+
+
+
 
 
                                 ; =================================
@@ -8305,7 +8231,7 @@ RELPREV         DS 2            ; RELATIVE SEC# (IN RELATION 2 THE
                                 ; THAT WAS READ OR WRITTEN.
                                 ; (POSSIBLE VAL ARE: $0000, $007A,
                                 ; 2*$007A, 3*$007A OR 4*$007A.)
-SECSIZWA        DB $00,$01      ; BYTES/SECTOR (#256, $00-$FF).
+SECSIZWA        DW $100         ; BYTES/SECTOR (#256, $00-$FF).
 
                                 ; --- FILE POINTER ---
                                 ; (3 BYTES)
@@ -8348,6 +8274,15 @@ DRVWA           DS 1            ; DRIVE NUMBER.
 VOLWA           DS 1            ; 1'S COMPLEMENT OF VOLUME NUMBER.
 TRKWA           DS 1            ; TRACK NUMBER.
                 DS 5            ; UNUSED ($B5FB-$B5FF).
+
+
+
+
+
+
+
+
+
 
 
                                 ; =================================
@@ -8398,7 +8333,7 @@ TRKWA           DS 1            ; TRACK NUMBER.
                                 ; STEM FROM THE FACT THAT APPLESOFT LATER STORES A $00 IN
                                 ; $800.)
 
-SEC2RDB6
+BOOT1
                 IF DOS31
                 DB 0
                 ELSE
@@ -8809,15 +8744,17 @@ RSETPTRS        LDA RECNMBFM    ; RECONCILE RECORD NUMBER VERSIONS
 
 
 IMG8FD
+BT1LDADR        = IMG8FD-(BOOT1-$800)
                 IF DOS31
                 DW BOOT2-$F8
                 ELSE
-                DW SEC2RDB6     ; VARIES FROM $B600-$BF00 ON 48K (Chris Mosher: was hardcoded $B600)
+                DW BOOT1        ; VARIES FROM $B600-$BF00 ON 48K (Chris Mosher: was hardcoded $B600)
                                 ; SLAVE.  (EVENTUALLY POINTS TO THE
                                 ; START OF BOOT2 AT $B700.  IMAGE
                                 ; OF BT1LDADR AT $8FD.)
                 ENDIF
 IMG8FF
+BT1PG2RD        = IMG8FF-(BOOT1-$800)
                 IF DOS31 || DOS32
                 DB $48
                 ELSE
@@ -8827,6 +8764,16 @@ IMG8FF
                                 ; VARIES FROM:$09 --> $00 --> $FF.
                                 ; (IMAGE OF BT1PG2RD AT $8FF.)
                 ENDIF
+
+
+
+
+
+
+
+
+
+
 
 
                                 ; =========================================
@@ -8868,7 +8815,7 @@ BOOT2           STX IBSLOT      ; (X) = SLOT*16 WANTED.
                 STA IBTRK       ; TRACK.
                 LDA #4
                 STA IBSECT      ; SECTOR.
-                LDY BT1MGADR+1  ; (Y)=HI BYTE OF ADDR OF IMAGE OF
+                LDY BTSTAGE+1   ; (Y)=HI BYTE OF ADDR OF IMAGE OF
                                 ; BOOT1 (#$B6 ON 48K SLAVE).
                 DEY             ; DEFINE I/O BUF AS 1 PAGE BELOW
                 STY IBBUFP+1    ; BOOT1.
@@ -9155,14 +9102,14 @@ BT1RSTSC        DB $0A          ; FIRST SEC # IN STAGE (#10).
 BT1STPAG        DB HI MASTERDOS ; BASE PAGE TO READ INTO?
 
 ADROFIOB        DW IBTYPE       ; ADR OF RWTS'S IOB (NORM $B7E8).
-BTSTAGE
+
+BTSTAGE                         ; ADR OF START OF IMAGE OF BOOT1.
                 IF DOS31
                 DW BOOT2-$100
                 ELSE
-                DW SEC2RDB6     ; ADR OF START OF IMAGE OF BOOT1.
-                                ; (NORMALLY, $B600.)
+                DW BOOT1
                 ENDIF
-BT1MGADR        = BTSTAGE
+
 
 
                                 ; =================================
@@ -9179,7 +9126,7 @@ IBSECT          DS 1            ; LOGICAL SEC WANTED.
 IBDCTP          DW DEVTPC       ; PTS 2 DEVICE CHARACTERISTIC TBL.
                                 ; (NORMALLY, $B7FB).
 IBBUFP          DS 2            ; PTS 2 RWTS'S I/O BUFFER.
-IBSECSZ         DB $00,$01      ; SEC SIZ IN BYTS (LOW/HI FORMAT). ; mosher ??? DS 2 ???
+IBSECSZ         DW $100         ; SEC SIZ IN BYTS (LOW/HI FORMAT). ; mosher ??? DS 2 ???
 IBCMD           DS 1            ; RWTS COMMAND CODE:
                                 ; $00=SEEK, $01=READ,
                                 ; $02=WRITE, $04=FORMAT.
@@ -9248,6 +9195,8 @@ MONTC           DB $EF,$D8      ; MOTOR-ON-TIME COUNT.
 
 PRENIBL
                 IF DOS31 || DOS32
+                                ; Note: DOS 3.2 and DOS 3.1 use "5 and 3" encoding,
+                                ; instead of the "6 and 2" encoding used by DOS 3.3.
                 LDX   #$32
                 LDY   #$00
 PRENIB1         LDA   (PTR2BUF),Y
@@ -9927,7 +9876,7 @@ ARRIVED         RTS
                 BCS TURNON      ; WE ARE AT OR BEYOND 12 STEPS FRM
                                 ; START OR DEST'N POS'N SO USE OLD
                                 ; INDEX TO ACCESS DELAY TABLE.
-PRESNDX         TAY             ; USE PRES DISTANCE 2 INDEX TABLE.
+                TAY             ; USE PRES DISTANCE 2 INDEX TABLE.
 TURNON          SEC             ; (C)=1 SO GET ODD INDEX TO BASE
                                 ; ADR SO MAGNET WILL BE TURNED ON.
                 JSR ONOROFF     ; TURN MAGNET ON TO SUCK STEPPER
