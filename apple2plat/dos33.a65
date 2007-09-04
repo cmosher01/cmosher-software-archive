@@ -8347,8 +8347,7 @@ SLOT16WA        DS 1            ; SLOT*16.
 DRVWA           DS 1            ; DRIVE NUMBER.
 VOLWA           DS 1            ; 1'S COMPLEMENT OF VOLUME NUMBER.
 TRKWA           DS 1            ; TRACK NUMBER.
-                DB $00,$00,$00,$00,$00
-                                ; UNUSED ($B5FB-$B5FF).
+                DS 5            ; UNUSED ($B5FB-$B5FF).
 
 
                                 ; =================================
@@ -8862,7 +8861,7 @@ BOOT2           STX IBSLOT      ; (X) = SLOT*16 WANTED.
                 STA IBTRK
                 LDA BT1RSTSC
                 STA IBSECT
-                LDA BT1RSTSC+1
+                LDA BT1STPAG
                 STA IBBUFP+1
                 ELSE
                 LDA #2          ; START WITH TRK$02/SEC$04.
@@ -8941,10 +8940,10 @@ TODOSCLD2       JMP DOSRELOC    ; JUMP IN2 DOS'S COLDSTART ROUTINE
 WRDOSIMG
                 IF DOS31 || DOS32
                 LDA   IBBUFP+1
-                STA   BT1RSTSC+1
+                STA   BT1STPAG
                 SEC
                 LDA   BTSTAGE+1
-                SBC   BT1RSTSC+1
+                SBC   BT1STPAG
                 STA   NMPG2RD
                 LDA   #$00
                 STA   IBTRK
@@ -8961,7 +8960,7 @@ WRDOSIMG
                 LDA   #$02
                 STA   IBCMD
                 JSR   RWPAGES
-                LDA   BT1RSTSC+1
+                LDA   BT1STPAG
                 STA   IBBUFP+1
                 LDA   NMPG2RD
                 STA   BT2PGCTR
@@ -9153,12 +9152,7 @@ ZCURBUF1        STA (A4L),Y
 NMPG2RD         DB $1B          ; # OF PAGES TO READ (#27).
 BT2PGCTR        DS 1            ; # OF PAGES LEFT 2 READ (VARIES).
 BT1RSTSC        DB $0A          ; FIRST SEC # IN STAGE (#10).
-
-                IF DOS31 || DOS32
-                DB $1B          ; IMPORTANT!
-                ELSE
-                DS 1            ; UNUSED ($B7E3).
-                ENDIF
+BT1STPAG        DB HI MASTERDOS ; BASE PAGE TO READ INTO?
 
 ADROFIOB        DW IBTYPE       ; ADR OF RWTS'S IOB (NORM $B7E8).
 BTSTAGE
@@ -9196,7 +9190,7 @@ IBSTAT          DS 1            ; ERROR CODE:
 IBSMOD          DS 1            ; VOLUME FOUND.
 IOBPSN          DS 1            ; SLOT*16 OF LAST ACCESS (FOUND).
 IOBPDN          DS 1            ; DRIVE # OF LAST ACCESS (FOUND).
-                DB $00,$00      ; UNUSED ($B7F9-$B7FA).
+                DS 2            ; UNUSED ($B7F9-$B7FA).
 
 
                                 ; =================================
