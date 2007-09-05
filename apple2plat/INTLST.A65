@@ -1,0 +1,3583 @@
+;************************************************
+;                                               *
+;                 INTEGER BASIC                 *
+;                                               *
+;                      WOZ                      *
+;                                               *
+;************************************************
+;                                               *
+; "That BASIC, which we shipped with the first  *
+;  Apple II's, was never assembled -- ever.     *
+;  There was one handwritten copy, all          *
+;  handwritten, all hand assembled."            *
+;                                               *
+;              Steve Wozniak                    *
+;              Call-A.P.P.L.E., October 1986    *
+;                                               *
+;************************************************
+
+; Computer  Apple II family
+; O/S       none needed, but usually DOS 3.3
+; Language  6502 assembly -- Merlin assembler
+; Disassembled by:
+;           Paul R. Santa-Maria
+;           P.O. Box 924
+;           Monroe  MI  48161
+; Revised   1 May 2000
+; Reference "What's Where in the Apple"; William F. Luebbert
+;           Peeking at Call-A.P.P.L.E.  Vol 2  1979; pp44-61
+
+;************************************************
+
+; zero-page
+
+LOMEM = $004A ;ptr: start of vars
+HIMEM = $004C ;ptr: end of BASIC program
+NOUNSTKL = $0050 ;noun stack low bytes (80-87)
+SYNSTKH = $0058 ;syntax stack high byte
+NOUNSTKH = $0078 ;noun stack high bytes (78-97)
+SYNSTKL = $0080 ;syntax stack low bytes (80-9F)
+NOUNSTKC = $00A0 ;noun stack counter (A0-BF)
+TXTNDXSTK = $00A8 ;text index stack (A8-C7)
+TXTNDX = $00C8 ;text index val (OUTVAL)
+LEADBL = $00C9 ;leading blanks index (YTEMP)
+PP = $00CA ;ptr: start of program
+PV = $00CC ;ptr: end of vars
+ACC = $00CE ;word: main accumulator
+SRCH = $00D0 ;ptr to search var tbl
+TOKNDXSTK = $00D1 ;token index stack (D1-F0)
+SRCH2 = $00D2 ;second var search ptr
+IFFLAG = $00D4 ;IF/THEN fail flag
+CRFLAG = $00D5 ;carriage return flag
+VERBNOW = $00D6 ;verb currently in use
+PRFLAG = $00D7 ;print it now flag
+XSAVE = $00D8 ;temp Xreg save
+RUNFLAG = $00D9 ;run mode flag
+AUX = $00DA ;word: aux ctr
+PR = $00DC ;word: current line value
+;PN = $00DE ;ptr to current noun
+PX = $00E0 ;ptr to current verb
+P1 = $00E2 ;aux ptr 1 (delete line ptr)
+P2 = $00E4 ;aux ptr 2 ...
+;  (line num adr) (next line num) (general flag)
+P3 = $00E6 ;aux ptr 3 (next ptr)
+TOKNDX = $00F1 ;token index val
+PCON = $00F2 ;continue ptr (PRDEC low/high)
+AUTOINC = $00F4 ;auto line increment
+AUTOLN = $00F6 ;current auto line
+AUTOFLAG = $00F8 ;auto line mode flag ($FF = on)
+CHAR = $00F9 ;current char
+LEADZR = $00FA ;leading zeros index ($00,$A0,$B0)
+FORNDX = $00FB ;FOR-NEXT loop index
+GOSUBNDX = $00FC ;GOSUB index
+SYNSTKDX = $00FD ;syntax stack index val
+SYNPAG = $00FE ;ptr: syntax page
+;if SYNPAG+1 <> 0 then error condition exists
+
+STACK = $0100 ;6502 STACK
+
+;   GOSUB/RETURN usage
+
+STK_00 = STACK+$00
+STK_10 = STACK+$10
+STK_20 = STACK+$20
+STK_30 = STACK+$30
+
+;   FOR/NEXT/STEP usage
+
+STK_40 = STACK+$40
+STK_50 = STACK+$50
+STK_60 = STACK+$60
+STK_70 = STACK+$70
+STK_80 = STACK+$80
+STK_90 = STACK+$90
+STK_A0 = STACK+$A0
+STK_B0 = STACK+$B0
+STK_C0 = STACK+$C0
+STK_D0 = STACK+$D0
+
+; I/O addresses
+
+KBD = $C000
+KBDSTRB = $C010
+
+; Monitor zero page and low memory
+
+WNDWDTH = $0021
+CH = $0024
+CV = $0025
+GBAS = $0026
+H2 = $002C
+V2 = $002D
+A1 = $003C
+A2 = $003E
+PROMPT = $0033
+RNDL = $004E
+RNDH = $004F
+
+IN = $0200
+
+; Monitor routines
+
+PLOT = $F800
+HLINE = $F819
+VLINE = $F828
+GBASCALC = $F847
+SETCOL = $F864
+PREAD = $FB1E
+SETTXT = $FB39
+SETGR = $FB40
+VTAB = $FC22
+WRITE = $FECD
+WRITE0 = $FECF
+READ = $FEFD
+NXTCHAR = $FD75
+CROUT = $FD8E
+COUT = $FDED
+INPORT = $FE8B
+OUTPORT = $FE95
+BELL = $FF3A
+
+; ASCII
+
+ETX = $03 ;CTRL-C
+LF = $0A
+CR = $0D
+BLANK = $20
+DQT = $22
+SQT = $27
+
+;*************************************************
+; ;Z  = unreferenced area
+; ;V  = referenced in verb table
+; ;VO = referenced in verb table only
+; = one reference only (could be in-line)
+
+                ORG $E000
+BASIC           JSR COLD
+BASIC2          JMP WARM
+
+SetPrompt
+                STA PROMPT
+                JMP COUT
+;>
+
+                RTS ;Z
+;*
+
+HE00C
+                TXA ;?print a trailing blank?
+                AND #$20
+                BEQ HE034 ;=>RTS
+HE011
+                LDA #BLANK+$80
+                STA P2
+                JMP COUT
+;>
+
+HE018
+                LDA #32 ;check line length
+HE01A
+                CMP CH
+                BCS NextByte ;=HS> line too short
+                LDA #CR+$80 ;print CR, then 7 blanks
+                LDY #7
+;!LOOP
+                JSR COUT
+                LDA #BLANK+$80
+                DEY
+;!UNTIL <EQ>
+
+NextByte ;get next byte 16-bit ptr
+                LDY #0
+                LDA (P1),Y
+                INCW P1
+HE034
+                RTS
+;*
+
+; tkn $75 , (with tkn $74 LIST)
+;   LIST 5,30
+
+COMMA_LIST ;VO
+                JSR GET16BIT
+                JSR HE576
+HE03B
+                CMPW P1;P3
+                BCS HE034 ;=>P1 <HS> P3, RTS
+                JSR UNPACK
+                JMP HE03B
+;>
+
+
+; tkn $76 LIST
+;   list entire program
+
+LISTX ;VO
+                MOVW PP;P1
+                MOVW HIMEM;P3
+                BNE HE03B ;=>always
+
+; tkn $74 LIST
+;   specific line number or range of numbers
+;   LIST 10: LIST 5,30
+
+LISTNUM ;VO
+                JSR GET16BIT
+                JSR HE56D
+                MOVW P2;P1
+                BCS HE034 ;=>RTS
+UNPACK ;unpack tokens to mnemonics
+                STX XSAVE
+                LDA #BLANK+$80
+                STA LEADZR
+                JSR NextByte
+                TYA
+HE077
+                STA P2
+                JSR NextByte
+                TAX
+                JSR NextByte
+                JSR PRDEC
+;!LOOP
+                JSR HE018
+                STY LEADZR
+                TAX
+                BPL HE0A3 ;=>
+                ASL
+                BPL HE077 ;=>
+                LDA P2
+;!  IF <EQ>
+                JSR HE011
+;!  ENDIF
+                TXA
+;!  LOOP
+                JSR COUT
+HE099
+                LDA #$25
+                JSR HE01A
+                TAX
+;!  UNTIL <PL>
+                STA P2
+HE0A3
+                CMP #$01
+;!  IF <EQ>
+                LDX XSAVE
+                JMP CROUT
+;!  ENDIF
+                PHA
+                STY ACC
+                LDX #>SYNTABL2
+                STX ACC+1
+                CMP #$51 ;END tkn
+;!  IF <HS>
+                DEC ACC+1 ; in SYNTABL
+                SBC #$50 ;TAB tkn
+;!  ENDIF
+;!  LOOP
+                PHA
+                LDA (ACC),Y
+;!    LOOP
+;!      LOOP
+                TAX
+                DEY
+                LDA (ACC),Y
+;!      UNTIL <MI>
+                CPX #$C0
+;!    WHILE <LO>
+                CPX #0
+;!    UNTIL <PL>
+                TAX
+                PLA
+                SBC #1 ;carry is set
+;!  UNTIL <EQ>
+                BIT P2
+;!  IF <PL>
+                JSR HEFF8
+;!  ENDIF
+;!  LOOP
+                LDA (ACC),Y
+;!  WHILE <MI>
+                TAX
+                AND #$3F
+                STA P2
+                CLC
+                ADC #BLANK+$80
+                JSR COUT
+                DEY
+                CPX #$C0
+;!  UNTIL <HS>
+                JSR HE00C
+                PLA
+                CMP #$5D ;93 ]
+                BEQ HE099 ;=>
+                CMP #$28 ;40 (
+;!UNTIL <EQ>
+                BEQ HE099 ;=>always
+
+; tkn $2A (
+;   substring
+;   PRINT A$(12,14)
+
+PAREN_SUBSTR ;VO
+                JSR HE118
+                STA NOUNSTKL,X
+                CMP NOUNSTKH,X
+HE102
+                BCC HE115 ;=LO>
+HE104
+                LDY #ErrMsg05 ;"STRING"
+HE106
+                JMP ERRMESS
+;>
+
+; tkn $23 ,
+;   substring
+;   PRINT A$(3,3)
+
+COMMA_SUBSTR ;VO
+                JSR GETBYTE
+                CMP NOUNSTKL,X
+                BCC HE104 ;=LO>"STRING"
+                JSR HEFE4
+                STA NOUNSTKH,X
+HE115
+                JMP HE823
+;>
+
+HE118
+                JSR GETBYTE
+                BEQ HE104 ;=>"STRING"
+                SEC
+                SBC #1
+                RTS
+;*
+
+; tkn $42 (
+;   string array is destination of the data
+;   A$(1)="HELLO"
+
+HE121 ;VO
+                JSR HE118
+                STA NOUNSTKL,X
+                CLC
+                SBC NOUNSTKH,X
+                JMP HE102
+;>
+
+HE12C
+                LDY #ErrMsg03 ;"MEM FULL"
+                BNE HE106 ;=>always
+
+; tkn $43 ,
+;   next var in DIM statement is string
+;   DIM X(5),A$(5)
+
+; tkn $4E DIM
+;   string var.  uses tkn $22 (
+;   DIM A$(5)
+
+DIMSTR ;VO
+                JSR HE118
+                INX
+HE134
+                LDA NOUNSTKL,X
+                STA AUX
+                ADC ACC
+                PHA
+                TAY
+                LDA NOUNSTKH,X
+                STA AUX+1
+                ADC ACC+1
+                PHA
+                CPY PP
+                SBC PP+1
+                BCS HE12C ;=HS>"MEM FULL" error
+                LDA AUX ;AUX := AUX-2
+                ADC #LO 0-2
+                STA AUX
+                LDA #>0-2
+                TAY
+                ADC AUX+1
+                STA AUX+1
+;!LOOP
+                INY
+                LDA (AUX),Y
+                CMP PV,Y
+                BNE DimErr ;=>
+                TYA
+;!UNTIL <NE>
+;!LOOP
+                PLA
+                STA (AUX),Y
+                STA PV,Y
+                DEY
+;!UNTIL <MI>
+                INX
+                RTS
+;*
+
+                NOP ;Z
+DimErr
+                LDY #ErrMsg17 ;"DIM"
+HE16F
+                BNE HE106 ;=>always
+
+INPUTSTR ;input a string
+                LDA #0
+                JSR HE70A
+                LDY #$02
+                STY NOUNSTKH,X
+                JSR HE70A
+                STX XSAVE
+                TAX
+                INC PROMPT ;change '>' to '?'
+                JSR RDKEY
+                DEC PROMPT ;change '?' to '>'
+                TXA
+                LDX XSAVE
+                STA NOUNSTKH,X
+
+; tkn $70 =
+;   string - non-conditional
+;   A$ = "HELLO"
+
+HE18C ;VO
+                LDA NOUNSTKL+1,X
+                STA ACC
+                LDA NOUNSTKH+1,X
+                STA ACC+1
+                INX
+                INX
+                JSR HE1BC
+;!LOOP
+                LDA NOUNSTKL-2,X
+                CMP NOUNSTKH-2,X
+;!WHILE <LO>
+                INC NOUNSTKL-2,X
+                TAY
+                LDA (ACC),Y
+                LDY NOUNSTKL,X
+                CPY P2
+;!  IF <HS>
+                LDY #ErrMsg18 ;"STR OVFL"
+                BNE HE16F ;=>always
+;!  ENDIF
+                STA (AUX),Y
+                INC NOUNSTKL,X
+;!UNTIL <CS>
+                LDY NOUNSTKL,X
+                TXA
+                STA (AUX),Y
+                JMP HF223
+;>
+
+HE1BC
+                LDA NOUNSTKL+1,X
+                STA AUX
+                SEC
+                SBC #2
+                STA P2
+                LDA NOUNSTKH+1,X
+                STA AUX+1
+                SBC #0
+                STA P2+1
+                LDY #0
+                LDA (P2),Y
+                CLC
+                SBC AUX
+                STA P2
+                RTS
+;*
+
+; tkn $39 =
+;   string logic op
+;   IF A$ = "CAT" THEN END
+
+HE1D7 ;V
+                LDA NOUNSTKL+3,X
+                STA ACC
+                LDA NOUNSTKH+3,X
+                STA ACC+1
+                LDA NOUNSTKL+1,X
+                STA AUX
+                LDA NOUNSTKH+1,X
+                STA AUX+1
+                INX
+                INX
+                INX
+                LDY #0
+                STY NOUNSTKH,X
+                STY NOUNSTKC,X
+                INY
+                STY NOUNSTKL,X
+;!LOOP
+                LDA HIMEM+1,X
+                CMP NOUNSTKH-3,X
+                PHP
+                PHA
+                LDA NOUNSTKL-1,X
+                CMP NOUNSTKH-1,X
+;!  IF <HS>
+                PLA
+                PLP
+;!    IF <CC>
+HE203
+                LSR NOUNSTKL,X
+;!    ENDIF
+                RTS
+
+;!  ENDIF
+                TAY
+                LDA (ACC),Y
+                STA P2
+                PLA
+                TAY
+                PLP
+                BCS HE203 ;=>EXIT LOOP
+                LDA (AUX),Y
+                CMP P2
+                BNE HE203 ;=>EXIT LOOP
+                INC NOUNSTKL-1,X
+                INC HIMEM+1,X
+;!UNTIL <LO>
+; always
+
+; tkn $3A #
+;   string logic op
+;   IF A$ # "CAT" THEN END
+
+HE21C ;VO
+                JSR HE1D7
+                JMP NOT
+;>
+
+; tkn $14 *
+;   num math op
+;   A = 27 * 2
+
+MULT ;V
+                JSR HE254
+;!LOOP
+                ASL ACC
+                ROL ACC+1 ;add partial product if C flag set
+;!  IF <CS>
+                ADDW P3;AUX;P3
+;!  ENDIF
+                DEY
+                BEQ HE244 ;=>EXIT LOOP
+                ASL P3
+                ROL P3+1
+;!UNTIL <MI>
+                JMP HE77E
+;>
+
+HE244
+                LDA P3
+                JSR HE708
+                LDA P3+1
+                STA NOUNSTKC,X
+                ASL P2+1
+                BCC HE279 ;=>RTS
+                JMP NEGATE
+;>
+
+HE254
+                LDA #$55
+                STA P2+1
+                JSR HE25B
+HE25B
+                MOVW ACC;AUX
+                JSR GET16BIT
+                STY P3 ;P3 := 0
+                STY P3+1
+                LDA ACC+1
+;!IF <MI>
+                DEX
+                ASL P2+1
+                JSR NEGATE
+                JSR GET16BIT
+;!ENDIF
+                LDY #$10
+HE279
+                RTS
+;*
+
+; tkn $1F MOD
+;   num op
+;   IF X MOD 13 THEN END
+
+MOD ;V
+                JSR HEE6C
+                BEQ HE244 ;=>always
+
+                DB $FF ;Z
+
+HE280
+                INC PROMPT ;change '>' to '?'
+                LDY #0
+                JSR GETCMD
+                DEC PROMPT ;change '?' to '>'
+                RTS
+;*
+
+; tkn $3D SCRN(
+;   PRINT SCRN(X,Y)
+
+SCRN ;VO
+                JSR GETBYTE
+                LSR ;Areg := Areg/2
+                PHP ;stash carry (lsb)
+                JSR GBASCALC
+                JSR GETBYTE
+                TAY
+                LDA (GBAS),Y ;get screen byte
+                PLP ;retrieve carry
+;!IF <CS>
+                LSR ;odd, upper half
+                LSR
+                LSR
+                LSR
+;!ENDIF
+                AND #$0F ;Areg := color number
+                LDY #0
+                JSR HE708
+                STY NOUNSTKC,X
+                DEY
+                STY PRFLAG ;PRFLAG := $FF
+
+; tkn $3E ,
+;   PRINT SCRN(X,Y)
+
+COMMA_SCRN ;VO
+                RTS
+;*
+
+                DB $FF,$FF,$FF,$FF ;Z
+
+                JSR HEFD3 ;old 4K cold start ;Z
+
+; Warm start
+
+WARM ;main compile/execute code
+                JSR CROUT ;emit blank line
+HE2B6
+                LSR RUNFLAG ;not running
+                LDA #">"
+                JSR SetPrompt ;set and print prompt char
+                LDY #0
+                STY LEADZR ;no leading zeros for AUTOLN
+                BIT AUTOFLAG ;AUTO?
+; if AUTOLN active
+;!IF <MI>
+                LDX AUTOLN ;yes, print line number
+                LDA AUTOLN+1
+                JSR PRDEC
+                LDA #BLANK+$80 ;and a blank
+                JSR COUT
+;!ENDIF
+                LDX #$FF ;init Sreg
+                TXS
+                JSR GETCMD
+                STY TOKNDX
+                TXA
+                STA TXTNDX
+                LDX #$20
+                JSR HE491
+                LDA TXTNDX ;PX := TXTNDX+$0200+C flag
+                ADC #LO $0200
+                STA PX
+                LDA #0
+                TAX
+                ADC #>$0200
+                STA PX+1
+                LDA (PX,X)
+                AND #$F0
+                CMP #"0"
+;!IF <NE>
+                JMP HE883
+;!ENDIF
+                LDY #2 ;move two bytes
+;!LOOP
+                LDA (PX),Y
+                STA ACC-1,Y
+                DEY
+;!UNTIL <EQ>
+                JSR HE38A
+                LDA TOKNDX
+                SBC TXTNDX
+                CMP #$04
+                BEQ HE2B6 ;=>
+                STA (PX),Y
+                LDA PP ;P2 := PP-(PX),Y
+                SBC (PX),Y
+                STA P2
+                LDA PP+1
+                SBC #0
+                STA P2+1
+                CMPW P2;PV
+                BCC MEMFULL ;=>P2 <LT> PV
+;!LOOP
+                LDA PP ;P3 := PP-(PX),Y
+                SBC (PX),Y
+                STA P3
+                LDA PP+1
+                SBC #0
+                STA P3+1
+                LDA (PP),Y
+                STA (P3),Y
+                INCW PP
+                CMPW P1;PP
+;!UNTIL <LO>
+;!LOOP
+                LDA P2,X
+                STA PP,X
+                DEX
+;!UNTIL <MI>
+                LDA (PX),Y
+                TAY
+;!LOOP
+                DEY
+                LDA (PX),Y
+                STA (P3),Y
+                TYA
+;!UNTIL <EQ>
+                BIT AUTOFLAG ;auto line?
+;!IF <MI>
+; yes
+;!  LOOP
+                LDA AUTOLN+1,X ;AUTOLN := AUTOLN+AUTOINC
+                ADC AUTOINC+1,X
+                STA AUTOLN+1,X
+                INX
+;!  UNTIL <NE>
+;!ENDIF
+                BPL HE3E5 ;=>always
+
+                DB $00,$00,$00,$00 ;Z
+
+MEMFULL
+                LDY #ErrMsg03 ;"MEM FULL"
+                BNE ERRMESS ;=>always
+
+; tkn $0A ,
+;   DEL 0,10
+
+COMMA_DEL ;VO
+                JSR GET16BIT
+                MOVW P1;P3
+                JSR HE575
+                MOVW P1;P2
+                BNE HE395 ;=>always?
+
+; tkn $09 DEL
+
+DEL ;VO
+                JSR GET16BIT
+HE38A
+                JSR HE56D
+                MOVW P3;P1
+HE395
+                LDY #0
+; memory move: P3<PP.P2 backwards
+;!LOOP
+                CMPW PP;P2
+                BCS HE3B7 ;=>PP <HS> P2
+                DECW P2
+                DECW P3
+                LDA (P2),Y
+                STA (P3),Y
+;!UNTIL <HS>
+; always
+
+HE3B7
+                MOVW P3;PP
+                RTS
+;*
+
+;!LOOP
+                JSR COUT ;print error message
+                INY
+ERRORMESS ;print error message
+                LDA ErrorMsgs,Y ;routine entry point
+;!UNTIL <PL>
+                ORA #$80
+                JMP COUT
+;>
+
+GETCMD
+                TYA
+                TAX
+                JSR NXTCHAR ;
+                TXA
+                TAY
+                LDA #"_" ;underline problem?
+                STA IN,Y
+                LDX #$FF
+                RTS
+;*
+
+                RTS ;Z
+;*
+
+HE3DE
+                LDY #ErrMsg01 ;"TOO LONG"
+ERRMESS ;print error message and goto mainline
+                JSR PRINTERR
+;$E3E3 DOS 3.3 chains here when processing errors
+                BIT RUNFLAG
+HE3E5
+;!IF <PL>
+                JMP HE2B6
+;!ENDIF
+                JMP HEB9A
+;>
+
+HE3ED
+                ROL
+                ADC #$A0
+                CMP IN,X
+                BNE HE448 ;=>
+                LDA (SYNPAG),Y
+                ASL
+;!IF <PL>
+                DEY
+                LDA (SYNPAG),Y
+                BMI HE428 ;=>
+                INY
+;!ENDIF
+                STX TXTNDX
+                TYA
+                PHA
+                LDX #0
+                LDA (SYNPAG,X)
+                TAX
+;!LOOP
+                LSR
+                EOR #$40
+                ORA (SYNPAG),Y
+                CMP #$C0
+;!  IF <HS>
+                INX
+;!  ENDIF
+                INY
+;!UNTIL <EQ>
+                PLA
+                TAY
+                TXA
+                JMP HF2F8
+;>
+
+HE41C
+                INC TOKNDX
+                LDX TOKNDX
+                BEQ HE3DE ;=>"TOO LONG"
+                STA IN,X
+HE425
+                RTS
+;*
+
+HE426
+                LDX TXTNDX
+HE428
+                LDA #BLANK+$80
+;!LOOP
+                INX
+                CMP IN,X
+;!UNTIL <LO>
+                LDA (SYNPAG),Y
+                AND #$3F
+                LSR
+                BNE HE3ED ;=>
+                LDA IN,X
+;!IF <CC>
+                ADC #$3F
+                CMP #$1A
+                BCC HE4B1 ;=LO>
+;!ENDIF
+                ADC #$4F
+                CMP #$0A
+                BCC HE4B1 ;=LO>
+HE448
+                LDX SYNSTKDX
+;!LOOP
+                INY
+                LDA (SYNPAG),Y
+                AND #$E0
+                CMP #$20
+                BEQ HE4CD ;=>
+                LDA TXTNDXSTK,X
+                STA TXTNDX
+                LDA TOKNDXSTK,X
+                STA TOKNDX
+;!  LOOP
+                DEY
+                LDA (SYNPAG),Y
+                ASL ;dbl
+;!  UNTIL <MI>
+                DEY
+                BCS HE49C ;=>
+                ASL ;dbl
+                BMI HE49C ;=>
+                LDY SYNSTKH,X
+                STY SYNPAG+1
+                LDY SYNSTKL,X
+                INX
+;!UNTIL <MI>
+HE470
+                BEQ HE425 ;=>RTS
+                CMP #$7E
+                BCS HE498 ;=HS>
+                DEX
+;!IF <MI>
+                LDY #ErrMsg01 ;"TOO LONG"
+; BUG FIX: ABOVE LINE SHOULD BE
+;   LDY #ErrMsg04 ;"TOO MANY PARENS"
+; REF: CALL-APPLE  MAR 1983  P.114
+                BPL HE4A6 ;=>always
+;!ENDIF
+                STY SYNSTKL,X
+                LDY SYNPAG+1
+                STY SYNSTKH,X
+                LDY TXTNDX
+                STY TXTNDXSTK,X
+                LDY TOKNDX
+                STY TOKNDXSTK,X
+                AND #$1F
+                TAY
+                LDA SYNTABLNDX,Y
+HE491
+                ASL ;dbl
+                TAY
+                LDA #>SYNTABL/2
+                ROL
+                STA SYNPAG+1
+HE498
+;!IF <EQ>
+                INY
+;!ENDIF
+                INY
+HE49C
+                STX SYNSTKDX
+                LDA (SYNPAG),Y
+                BMI HE426 ;=>
+;!IF <EQ>
+                LDY #ErrMsg02 ;"SYNTAX"
+HE4A6
+                JMP ERRMESS
+;!ENDIF
+                CMP #$03
+                BCS HE470 ;=HS>
+                LSR ;half
+                LDX TXTNDX
+                INX
+HE4B1
+                LDA IN,X
+                BCC HE4BA ;=>
+                CMP #DQT+$80
+                BEQ HE4C4 ;=>
+HE4BA
+                CMP #"_" ;underline problem?
+                BEQ HE4C4 ;=>
+                STX TXTNDX
+HE4C0
+;!LOOP
+                JSR HE41C
+                INY
+HE4C4
+                DEY
+                LDX SYNSTKDX
+;!  LOOP
+                LDA (SYNPAG),Y
+                DEY
+                ASL
+                BPL HE49C ;=>
+HE4CD
+                LDY SYNSTKH,X
+                STY SYNPAG+1
+                LDY SYNSTKL,X
+                INX
+                LDA (SYNPAG),Y
+                AND #%10011111
+;!  UNTIL <EQ>
+                STA PCON
+                STA PCON+1
+                TYA
+                PHA
+                STX SYNSTKDX
+                LDY TOKNDXSTK-1,X
+                STY LEADBL
+                CLC
+;!  LOOP
+                LDA #$0A
+                STA CHAR
+                LDX #0
+                INY
+                LDA IN,Y
+                AND #$0F
+;!    LOOP
+                ADC PCON
+                PHA
+                TXA
+                ADC PCON+1
+                BMI HE517 ;=>
+                TAX
+                PLA
+                DEC CHAR
+;!    UNTIL <EQ>
+                STA PCON
+                STX PCON+1
+                CPY TOKNDX
+;!  UNTIL <EQ>
+                LDY LEADBL
+                INY
+                STY TOKNDX
+                JSR HE41C
+                PLA
+                TAY
+                LDA PCON+1
+;!UNTIL <CC>
+HE517
+                LDY #ErrMsg00 ;">32767"
+                BPL HE4A6 ;=>always
+
+;-----------------------------
+; Name      PRDEC
+; Purpose   Print a 16-bit number in decimal.
+; Input     Areg = high byte
+;           Xreg = low byte
+; Output
+; Uses
+; Calls
+; Note
+
+PRDEC
+                STA PCON+1
+                STX PCON
+                LDX #4
+                STX LEADBL
+;!LOOP
+                LDA #"0"
+                STA CHAR
+;!  LOOP
+                LDA PCON
+                CMP NUMLOW,X
+                LDA PCON+1
+                SBC NUMHI,X
+;!  WHILE <HS>
+                STA PCON+1
+                LDA PCON
+                SBC NUMLOW,X
+                STA PCON
+                INC CHAR
+;!  UNTIL <EQ>
+;GETDIG
+                LDA CHAR
+                INX
+                DEX
+                BEQ PRDEC5 ;=>
+                CMP #"0"
+;!  IF <NE>
+                STA LEADBL
+;!  ENDIF
+; if LEADBL is <MI> or LEADZR <NE> #0
+                BIT LEADBL
+                BMI PRDEC5 ;=>
+                LDA LEADZR
+                BEQ PRDEC6 ;=>
+; then
+PRDEC5 ;PRINT
+                JSR COUT
+                BIT AUTOFLAG ;auto line?
+;!  IF <MI>
+                STA IN,Y
+                INY
+;!  ENDIF
+PRDEC6 ;NXTX
+                DEX
+;!UNTIL <MI>
+                RTS
+;*
+
+NUMLOW
+                DB 1
+                DB 10
+                DB 100
+                DB 1000
+                DB 10000
+
+NUMHI
+                DB 1/$0100
+                DB 10/$0100
+                DB 100/$0100
+                DB 1000/$0100
+                DB 10000/$0100
+
+HE56D
+                MOVW PP;P3
+HE575
+                INX
+HE576
+;!LOOP
+;   MOVW P3;P2
+                LDA P3+1 ;P2 := P3
+                STA P2+1
+                LDA P3
+                STA P2
+;   CMPW P2;HIMEM
+                CMP HIMEM ;is P2 <HS> HIMEM?
+                LDA P2+1
+                SBC HIMEM+1
+;!WHILE <LO>
+                LDY #1
+                LDA (P2),Y
+                SBC ACC
+                INY
+                LDA (P2),Y
+                SBC ACC+1
+;!WHILE <LO>
+                LDY #0
+                LDA P3 ;P3 := P3.W + (P2).B
+                ADC (P2),Y
+                STA P3
+;!  IF <CS>
+                INC P3+1
+                CLC
+;!  ENDIF
+                INY
+                LDA ACC ;is ACC+1 <HS> (P2),Y ?
+                SBC (P2),Y
+                INY
+                LDA ACC+1
+                SBC (P2),Y
+;!UNTIL <LO>
+                RTS
+;*
+
+; tkn $0B NEW
+;   turn off AUTO
+;   remove program
+;   fall into CLR
+
+NEW ;V
+                LSR AUTOFLAG ;manual
+                MOVW HIMEM;PP
+
+; tkn $0C CLR
+;   remove variables
+;   remove FOR loops and GOSUBs
+
+CLR ;V
+                MOVW LOMEM;PV
+                LDA #0
+                STA FORNDX ;no FORs
+                STA GOSUBNDX ;no GOSUBs
+                STA SYNPAG
+                LDA #0 ;Z
+                STA $1D ;Z
+                RTS
+;*
+
+                LDA SRCH ;Z
+HE5CE
+                JMP MEMFULL
+;>
+
+;!LOOP
+;!  LOOP
+                LDY #$FF
+HE5D3
+                STY XSAVE
+;!    LOOP
+                INY
+                LDA (PX),Y
+;!      IF <PL>
+                CMP #$40
+                BNE HE646 ;=>EXIT LOOP
+                STA XSAVE
+;!      ENDIF
+                CMP (SRCH),Y
+;!    UNTIL <NE>
+;!    LOOP
+                LDA (SRCH),Y
+HE5E6
+                INY
+                LSR
+;!    UNTIL <EQ>
+                LDA (SRCH),Y
+                PHA
+                INY
+                LDA (SRCH),Y
+                TAY
+                PLA
+HE5F2
+                STA SRCH
+                STY SRCH+1
+                CMP PV
+;!  UNTIL <EQ>
+                CPY PV+1
+;!UNTIL <EQ>
+                LDY #0
+;!LOOP
+;!  LOOP
+                INY
+                LDA (PX),Y
+;!  UNTIL <PL>
+                EOR #$40
+;!UNTIL <NE>
+                TYA
+                ADC #$04
+                PHA
+                ADC SRCH
+                TAY
+                LDA SRCH+1
+                ADC #0
+                PHA
+                CPY PP
+                SBC PP+1
+                BCS HE5CE ;=HS>"MEM FULL" error
+                STY PV
+                PLA
+                STA PV+1
+                PLA
+                TAY
+                LDA #0
+                DEY
+                STA (SRCH),Y
+                DEY
+                STA (SRCH),Y
+                DEY
+                LDA PV+1
+                STA (SRCH),Y
+                DEY
+                LDA PV
+                STA (SRCH),Y
+                DEY
+                LDA #0
+;!LOOP
+                STA (SRCH),Y
+                DEY
+                BMI HE5D3 ;=>
+                LDA (PX),Y
+;!UNTIL <EQ>
+HE640
+                LDA LOMEM
+                LDY LOMEM+1
+                BNE HE5F2 ;=>always
+
+HE646
+                LDA (SRCH),Y
+                CMP #$40
+                BCS HE5E6 ;=HS>
+                STA NOUNSTKC-1,X
+                TYA
+                ADC #$03
+                PHA
+                ADC SRCH
+                JSR HE70A
+;!LOOP
+                JSR GETVERB
+                DEY
+;!UNTIL <EQ>
+                TYA
+                ADC SRCH+1
+                STA NOUNSTKH,X
+                PLA
+                BIT XSAVE
+                BMI HE684 ;=>
+                TAY
+                LDA #0
+                JSR HE70A
+                STA NOUNSTKH,X
+;!LOOP
+                LDA (SRCH),Y
+                BPL HE682 ;=>EXIT LOOP
+                INC NOUNSTKH,X
+                INY
+;!UNTIL <EQ>
+; always
+
+                DB 9 ;Z
+
+HE679
+                LDA #0
+                STA IFFLAG ;pos
+                STA CRFLAG ;pos
+                LDX #$20
+HE681
+                PHA
+HE682
+                LDY #0
+HE684
+                LDA (PX),Y
+;!LOOP
+                BPL HE6A0 ;=>EXIT LOOP
+                ASL
+                BMI HE640 ;=>
+                JSR GETVERB
+                JSR HE708
+                JSR GETVERB
+                STA NOUNSTKC,X
+HE696
+                BIT IFFLAG
+;!  IF <MI>
+                DEX
+;!  ENDIF
+HE69B
+                JSR GETVERB
+;!UNTIL <CC>
+HE6A0
+                CMP #$28
+;!IF <EQ>
+                LDA PX
+                JSR HE70A
+                LDA PX+1
+                STA NOUNSTKH,X
+                BIT IFFLAG
+                BMI HE6BC ;=>
+                LDA #$01
+                JSR HE70A
+                LDA #0
+                STA NOUNSTKH,X
+;!  LOOP
+                INC NOUNSTKH,X
+HE6BC
+                JSR GETVERB
+;!  UNTIL <PL>
+                BCS HE696 ;=>
+;!ENDIF
+                BIT IFFLAG
+;!IF <MI>
+                CMP #$04
+                BCS HE69B ;=HS>
+                LSR IFFLAG ;pos
+;!ENDIF
+                TAY
+                STA VERBNOW
+                LDA HE980,Y
+                AND #%01010101 ;even bits only
+                ASL
+                STA PRFLAG ;temp
+HE6D8
+                PLA
+                TAY
+                LDA HE980,Y
+                AND #%10101010 ;odd bits only
+                CMP PRFLAG
+;!IF <LO>
+                TYA
+                PHA
+                JSR HF3EB
+                LDA VERBNOW
+                BCC HE681 ;=LT> always
+;!ENDIF
+
+; BRANCH: get high/low then JSR
+
+                LDA VERBADRL,Y
+                STA ACC
+                LDA VERBADRH,Y
+                STA ACC+1
+                JSR HE6FC
+                JMP HE6D8
+;>
+
+HE6FC
+                JMP (ACC)
+;>
+
+GETVERB ;get next verb to use
+                INCW PX
+                LDA (PX),Y
+                RTS
+;*
+
+HE708
+                STY NOUNSTKH-1,X
+HE70A
+                DEX
+;!IF <PL>
+                STA NOUNSTKL,X
+                RTS
+;!ENDIF
+
+                LDY #$66 ;"PPED AT" ;Z?
+HE712
+                JMP ERRMESS
+;>
+
+;---------
+; Output    Yreg := 0
+
+GET16BIT ;get a 16 bit value
+                LDY #0
+                LDA NOUNSTKL,X
+                STA ACC
+                LDA NOUNSTKC,X
+                STA ACC+1
+                LDA NOUNSTKH,X
+;!IF <NE>
+                STA ACC+1
+                LDA (ACC),Y ;ACC := (ACC),Y
+                PHA ;save low byte
+                INY ;Yreg := 1
+                LDA (ACC),Y
+                STA ACC+1
+                PLA ;restore low byte
+                STA ACC
+                DEY ;Yreg := 0
+;!ENDIF
+                INX
+                RTS
+;*
+
+; tkn $16 =
+;   num var logic op
+;   IF X = 13 THEN END
+
+HE733 ;VO
+                JSR HE74A
+
+; tkn $37 NOT
+;   numeric
+;   IF NOT X THEN END
+
+NOT ;V
+                JSR GET16BIT
+                TYA ;Areg := 0
+                JSR HE708
+                STA NOUNSTKC,X
+                CMP ACC
+;!IF <EQ>
+                CMP ACC+1
+;!  IF <EQ>
+                INC NOUNSTKL,X
+;!  ENDIF
+;!ENDIF
+                RTS
+;*
+
+; tkn $17 #
+;   num var logic op
+;   IF X # 13 THEN END
+
+; tkn $1B <>
+;   num var logic op
+;   IF X <> 13 THEN END
+
+HE74A ;V
+                JSR SUBTRACT
+                JSR SGN
+
+; tkn $31 ABS
+
+ABS ;VO
+                JSR GET16BIT
+                BIT ACC+1
+                BMI HE772 ;=>
+HE757
+                DEX
+HE758
+                RTS
+;*
+
+; tkn $30 SGN
+
+SGN ;V
+                JSR GET16BIT
+                LDA ACC+1 ;is ACC zero?
+;!IF <EQ>
+                LDA ACC
+                BEQ HE757 ;=>yes
+;!ENDIF
+                LDA #$FF
+                JSR HE708
+                STA NOUNSTKC,X
+                BIT ACC+1
+                BMI HE758 ;=>RTS
+
+; tkn $36 -
+;   unary sign of number
+;   X = -5
+
+NEGATE ;V
+                JSR GET16BIT
+HE772
+                TYA ;Areg := 0
+                SEC
+                SBC ACC
+                JSR HE708
+                TYA
+                SBC ACC+1
+                BVC HE7A1 ;=>
+HE77E
+                LDY #ErrMsg00 ;">32767"
+                BPL HE712 ;=>always
+
+; tkn $13 -
+;   num op
+;   X=27-2
+
+SUBTRACT ;V
+                JSR NEGATE ;negate, then add
+
+; tkn $12 +
+;   num op
+;   X=27+2
+
+ADDITION ;VO
+                JSR GET16BIT
+                MOVW ACC;AUX
+                JSR GET16BIT
+HE793
+                CLC
+                LDA ACC
+                ADC AUX
+                JSR HE708
+                LDA ACC+1
+                ADC AUX+1
+                BVS HE77E ;=>
+HE7A1
+                STA NOUNSTKC,X
+
+; tkn $35 +
+;   unary sign of number
+;   X = +5
+
+POSITIVE ;VO
+                RTS
+;*
+
+; tkn $50 TAB
+
+TAB ;VO
+                JSR GETBYTE
+                TAY
+;!IF <EQ>
+                JMP HEECB ;range error?
+;!ENDIF
+                DEY
+HE7AE
+                JMP HF3F4
+;>
+
+; comma tab to next tab posn (every 8 spaces)
+
+HE7B1
+                LDA CH ;get horiz posn
+                ORA #$07 ;set bits 0-2
+                TAY
+                INY ;incr, is it zero?
+HE7B7 ;Z
+                BNE HE7AE ;=>no, adjust CH
+                INY ;yes, go to next tab posn
+                BNE HE7B1 ;=>always
+                BCS HE7B7 ;=>;Z
+                RTS ;Z
+;*
+
+                DB 0,0 ;Z
+
+; tkn $49 ,
+;   num print follows
+;   PRINT A$,X
+
+HE7C1 ;VO
+                JSR HE7B1
+
+; tkn $46 ;
+;   num print follows
+;   PRINT A$ ; X
+
+; tkn $62 PRINT
+;   num value
+;   PRINT 123: PRINT X: PRINT ASC(A$)
+
+PRNTNUM ;VO branch
+                JSR GET16BIT
+HE7C7
+                LDA ACC+1 ;is it positive?
+;!IF <MI>
+                LDA #"-" ;no, print minus sign
+                JSR COUT
+                JSR HE772
+                BVC PRNTNUM ;=>always
+;!ENDIF
+                DEY ;Yreg := $FF
+                STY CRFLAG ;CRFLAG := $FF
+                STX ACC+1 ;save Xreg
+                LDX ACC
+                JSR PRDEC
+                LDX ACC+1 ;restore Xreg
+                RTS
+;*
+
+; tkn $0D AUTO
+
+AUTO ;VO
+                JSR GET16BIT
+                MOVW ACC;AUTOLN
+                DEY
+                STY AUTOFLAG ;AUTOFLAG := $FF
+                INY
+                LDA #10 ;default increment
+HE7F3
+                STA AUTOINC
+                STY AUTOINC+1
+                RTS
+;*
+
+; tkn $0E ,
+;   AUTO 10,20
+
+COMMA_AUTO ;VO
+                JSR GET16BIT
+                LDA ACC
+                LDY ACC+1
+                BPL HE7F3 ;=>always
+
+; tkn $56 =
+;   FOR X = 5 TO 10
+
+; tkn $71 =
+;   num - non-conditional
+;   X = 5
+
+HE801 ;V
+                JSR GET16BIT
+                LDA NOUNSTKL,X
+                STA AUX
+                LDA NOUNSTKH,X
+                STA AUX+1
+                LDA ACC
+                STA (AUX),Y
+                INY
+                LDA ACC+1
+                JMP HF207
+;>
+
+; tkn $25 THEN
+;   IF X = 3 THEN Y = 5
+
+; tkn $5E LET
+
+LET ;VO
+                RTS
+;*
+
+; tkn $00
+;   internal begin-of-line
+
+BEGIN_LINE ;VO
+                PLA
+                PLA
+
+; tkn $03 :
+;   statement separation
+;   X = 5: A$ = "HELLO"
+
+COLON ;VO
+                BIT CRFLAG
+                BPL HE822 ;=>RTS
+
+; tkn $63 PRINT
+;   dummy print
+;   PRINT: PRINT
+
+PRINT_CR ;VO
+                JSR CROUT
+
+; tkn $47 ;
+;   end of print statement
+;   PRINT A$;
+
+HE820 ;VO
+                LSR CRFLAG ;pos
+HE822
+                RTS
+;*
+
+; tkn $22 (
+;   string DIM
+;   DIM A$(X)
+
+; tkn $34 (
+;   num DIM
+;   DIM X(5)
+
+; tkn $38 (
+;   logic statements and num operations
+;   IF C AND (A=14 OR B=12) THEN X=(27+3)/13
+
+; tkn $3F (
+;   used after PEEK, RND, SGN, ABS, and PDL
+
+HE823 ;V
+                LDY #$FF
+                STY PRFLAG ;PRFLAG := $FF
+
+; tkn $72 )
+;   the only right parenthesis token
+
+RIGHT_PAREN ;VO
+                RTS
+;*
+
+; tkn $60 IF
+
+IF ;VO
+                JSR HEFCD
+;!IF <NE>
+                LDA #$25 ;THEN token?
+                STA VERBNOW
+                DEY
+                STY IFFLAG
+;!ENDIF
+                INX
+                RTS
+;*
+
+; RUN without CLR
+;   DOS 3.3 chains here to run a program
+
+RUNWARM
+                LDA PP
+                LDY PP+1
+                BNE HE896 ;=>always
+
+; tkn $5C GOSUB
+
+GOSUB ;VO
+                LDY #ErrMsg08 ;"16 GOSUBS"
+                LDA GOSUBNDX
+                CMP #16 ;sixteen GOSUBs?
+                BCS HE8A2 ;=HS> yes, error
+                TAY
+                INC GOSUBNDX
+
+                LDA PX
+                STA STK_00,Y
+                LDA PX+1
+                STA STK_10,Y
+
+                LDA PR
+                STA STK_20,Y
+                LDA PR+1
+                STA STK_30,Y
+
+; tkn $24 THEN
+;   followed by a line number
+;   IF X=3 THEN 10
+
+; tkn $5F GOTO
+
+GOTO ;V
+                JSR GET16BIT
+                JSR HE56D
+;!IF <CS>
+                LDY #ErrMsg07 ;"BAD BRANCH"
+                BNE HE8A2 ;=>always
+;!ENDIF
+                LDA P2
+                LDY P2+1
+
+; main loop for running Integer BASIC programs
+
+;!LOOP
+;!  LOOP
+                STA PR
+                STY PR+1
+                CLC
+                ADC #$03
+;!    IF <CS>
+                INY
+;!    ENDIF
+GETNEXT ;fetch next statement from text source
+                LDX #$FF
+                STX RUNFLAG ;neg
+                TXS
+                STA PX
+                STY PX+1
+                JSR HF02E ;test for ctrl-C & TRACE mode
+                LDY #0
+HE883
+                JSR HE679 ;execute statement
+                BIT RUNFLAG
+                BPL ENDX ;=>
+                CLC
+                LDY #0
+                LDA PR
+                ADC (PR),Y
+                LDY PR+1
+;!    IF <CS>
+                INY
+;!    ENDIF
+HE896
+                CMP HIMEM
+;!  UNTIL <EQ>
+                CPY HIMEM+1
+;!UNTIL <EQ>
+                LDY #ErrMsg06 ;"NO END"
+                LSR RUNFLAG ;pos
+HE8A2
+                JMP ERRMESS
+;>
+
+; tkn $5B RETURN
+
+RETURN ;V
+                LDY #ErrMsg09 ;"BAD RETURN"
+                LDA GOSUBNDX
+                BEQ HE8A2 ;=>
+                DEC GOSUBNDX
+                TAY
+                LDA STK_20-1,Y
+                STA PR
+                LDA STK_30-1,Y
+                STA PR+1
+                LDX: STK_00-1,Y
+                LDA STK_10-1,Y
+HE8BE
+                TAY
+                TXA
+                JMP GETNEXT
+;>
+
+STOPPED_AT
+                LDY #ErrMsg12 ;"STOPPED AT "
+                JSR ERRORMESS
+                LDY #1
+                LDA (PR),Y
+                TAX
+                INY
+                LDA (PR),Y
+                JSR PRDEC
+
+; tkn $51 END
+
+ENDX ;V
+                JMP WARM
+;>
+
+;!LOOP
+;!  LOOP
+                DEC FORNDX
+
+; tkn $59 NEXT
+
+; tkn $5A ,
+;   NEXT X,Y
+
+NEXT ;VO
+                LDY #ErrMsg11 ;"BAD NEXT"
+                LDA FORNDX
+HE8DC
+                BEQ HE8A2 ;=>no more FORs
+                TAY
+                LDA NOUNSTKL,X
+                CMP STK_40-1,Y
+;!  UNTIL <EQ>
+                LDA NOUNSTKH,X
+                CMP STK_50-1,Y
+;!UNTIL <EQ>
+
+                LDA STK_60-1,Y
+                STA AUX
+                LDA STK_70-1,Y
+                STA AUX+1
+
+                JSR GET16BIT
+                DEX
+                JSR HE793
+                JSR HE801
+                DEX
+                LDY FORNDX
+                LDA STK_D0-1,Y
+                STA NOUNSTKC-1,X
+                LDA STK_C0-1,Y
+                LDY #0
+                JSR HE708
+                JSR SUBTRACT
+                JSR SGN
+                JSR GET16BIT
+                LDY FORNDX
+                LDA ACC
+;!IF <NE>
+                EOR STK_70-1,Y
+                BPL HE937 ;=>
+;!ENDIF
+
+                LDA STK_80-1,Y
+                STA PR
+                LDA STK_90-1,Y
+                STA PR+1
+
+                LDX STK_A0-1,Y
+                LDA STK_B0-1,Y
+                BNE HE8BE ;=>
+HE937
+                DEC FORNDX
+                RTS
+;*
+
+; tkn $55 FOR
+
+FOR ;VO
+                LDY #ErrMsg10 ;"16 FORS"
+                LDA FORNDX
+                CMP #16 ;sixteen FORs?
+                BEQ HE8DC ;=>yes, error
+                INC FORNDX
+                TAY
+                LDA NOUNSTKL,X
+                STA STK_40,Y
+                LDA NOUNSTKH,X
+                JMP HF288
+;>
+
+                RTS ;Z
+;*
+
+; tkn $57 TO
+
+TO ;VO
+                JSR GET16BIT
+                LDY FORNDX
+
+                LDA ACC
+                STA STK_C0-1,Y
+                LDA ACC+1
+                STA STK_D0-1,Y
+
+                LDA #<$0001
+                STA STK_60-1,Y
+                LDA #>$0001
+HE966
+                STA STK_70-1,Y
+
+                LDA PR
+                STA STK_80-1,Y
+                LDA PR+1
+                STA STK_90-1,Y
+
+                LDA PX
+                STA STK_A0-1,Y
+                LDA PX+1
+                STA STK_B0-1,Y
+                RTS
+;*
+
+                DB $20,$15 ;Z
+
+
+                PUT TABLE1
+HE980
+                DB $00,$00,$00,$AB,$03,$03,$03,$03
+                DB $03,$03,$03,$03,$03,$03,$03,$03
+                DB $03,$03,$3F,$3F,$C0,$C0,$3C,$3C
+                DB $3C,$3C,$3C,$3C,$3C,$30,$0F,$C0
+                DB $C3,$FF,$55,$00,$AB,$AB,$03,$03
+                DB $FF,$FF,$55,$FF,$FF,$55,$CF,$CF
+                DB $CF,$CF,$CF,$FF,$55,$C6,$C6,$C6
+                DB $55,$F0,$F0,$CF,$CF,$55,$01,$55
+                DB $FF,$FF,$55,$03,$03,$03,$03,$03
+                DB $03,$03,$03,$03,$03,$03,$03,$03
+                DB $03,$03,$03,$03,$03,$03,$03,$03
+                DB $03,$03,$03,$03,$03,$00,$AB,$03
+                DB $57,$03,$03,$03,$03,$07,$03,$03
+                DB $03,$03,$03,$03,$03,$03,$03,$03
+                DB $03,$03,$AA,$FF,$03,$03,$03,$03
+                DB $03,$03,$03,$03,$03,$03,$03,$03
+
+; token address tables (verb dispatch tables)
+
+VERBADRL
+                DB LO BEGIN_LINE,LO $FFFF,LO $FFFF,LO COLON
+                DB LO LOAD,LO SAVE,LO CON,LO RUNNUM
+                DB LO RUN,LO DEL,LO COMMA_DEL,LO NEW
+                DB LO CLR,LO AUTO,LO COMMA_AUTO,LO MAN
+                DB LO VHIMEM,LO VLOMEM,LO ADDITION,LO SUBTRACT
+                DB LO MULT,LO DIVIDE,LO HE733,LO HE74A
+                DB LO HF25B,LO HF24E,LO HF253,LO HE74A
+                DB LO HF249,LO VAND,LO VOR,LO MOD
+                DB LO EXP,LO $FFFF,LO HE823,LO COMMA_SUBSTR
+                DB LO GOTO,LO LET,LO HEFB6,LO HEBCB
+                DB LO $FFFF,LO $FFFF,LO PAREN_SUBSTR,LO $FFFF
+                DB LO $FFFF,LO HEF24,LO PEEK,LO RND
+                DB LO SGN,LO ABS,LO PDL,LO $FFFF
+                DB LO HE823,LO POSITIVE,LO NEGATE,LO NOT
+                DB LO HE823,LO HE1D7,LO HE21C,LO LEN
+                DB LO ASC,LO SCRN,LO COMMA_SCRN,LO HE823
+                DB LO $FFFF,LO $FFFF,LO HE121,LO DIMSTR
+                DB LO DIMNUM,LO PRNTSTR,LO PRNTNUM,LO HE820
+                DB LO HEE00,LO HE7C1,LO HF3BA,LO SETTXT
+                DB LO SETGR,LO CALL,LO DIMSTR,LO DIMNUM
+                DB LO TAB,LO ENDX,LO HEFB6,LO INPUT_PROMPT
+                DB LO HEBAA,LO FOR,LO HE801,LO TO
+                DB LO STEP,LO NEXT,LO NEXT,LO RETURN
+                DB LO GOSUB,LO $FFFF,LO LET,LO GOTO
+                DB LO IF,LO PRNTSTR,LO PRNTNUM,LO PRINT_CR
+                DB LO POKE,LO GETVAL255,LO COLOR,LO GETVAL255
+                DB LO COMMA_PLOT,LO GETVAL255,LO COMMA_HLIN,LO AT_HLIN
+                DB LO GETVAL255,LO COMMA_VLIN,LO AT_VLIN,LO IVTAB
+                DB LO HE18C,LO HE801,LO RIGHT_PAREN,LO $FFFF
+                DB LO LISTNUM,LO COMMA_LIST,LO LISTX,LO POP
+                DB LO NODSP_STR,LO NODSP_NUM,LO NOTRACE,LO DSP_NUM
+                DB LO DSP_STR,LO TRACE,LO PRSLOT,LO INSLOT
+
+VERBADRH
+                DB HI BEGIN_LINE,HI $FFFF,HI $FFFF,HI COLON
+                DB HI LOAD,HI SAVE,HI CON,HI RUNNUM
+                DB HI RUN,HI DEL,HI COMMA_DEL,HI NEW
+                DB HI CLR,HI AUTO,HI COMMA_AUTO,HI MAN
+                DB HI VHIMEM,HI VLOMEM,HI ADDITION,HI SUBTRACT
+                DB HI MULT,HI DIVIDE,HI HE733,HI HE74A
+                DB HI HF25B,HI HF24E,HI HF253,HI HE74A
+                DB HI HF249,HI VAND,HI VOR,HI MOD
+                DB HI EXP,HI $FFFF,HI HE823,HI COMMA_SUBSTR
+                DB HI GOTO,HI LET,HI HEFB6,HI HEBCB
+                DB HI $FFFF,HI $FFFF,HI PAREN_SUBSTR,HI $FFFF
+                DB HI $FFFF,HI HEF24,HI PEEK,HI RND
+                DB HI SGN,HI ABS,HI PDL,HI $FFFF
+                DB HI HE823,HI POSITIVE,HI NEGATE,HI NOT
+                DB HI HE823,HI HE1D7,HI HE21C,HI LEN
+                DB HI ASC,HI SCRN,HI COMMA_SCRN,HI HE823
+                DB HI $FFFF,HI $FFFF,HI HE121,HI DIMSTR
+                DB HI DIMNUM,HI PRNTSTR,HI PRNTNUM,HI HE820
+                DB HI HEE00,HI HE7C1,HI HF3BA,HI SETTXT
+                DB HI SETGR,HI CALL,HI DIMSTR,HI DIMNUM
+                DB HI TAB,HI ENDX,HI HEFB6,HI INPUT_PROMPT
+                DB HI HEBAA,HI FOR,HI HE801,HI TO
+                DB HI STEP,HI NEXT,HI NEXT,HI RETURN
+                DB HI GOSUB,HI $FFFF,HI LET,HI GOTO
+                DB HI IF,HI PRNTSTR,HI PRNTNUM,HI PRINT_CR
+                DB HI POKE,HI GETVAL255,HI COLOR,HI GETVAL255
+                DB HI COMMA_PLOT,HI GETVAL255,HI COMMA_HLIN,HI AT_HLIN
+                DB HI GETVAL255,HI COMMA_VLIN,HI AT_VLIN,HI IVTAB
+                DB HI HE18C,HI HE801,HI RIGHT_PAREN,HI $FFFF
+                DB HI LISTNUM,HI COMMA_LIST,HI LISTX,HI POP
+                DB HI NODSP_STR,HI NODSP_NUM,HI NOTRACE,HI DSP_NUM
+                DB HI DSP_STR,HI TRACE,HI PRSLOT,HI INSLOT
+
+ErrorMsgs
+
+ErrMsg00 = *-ErrorMsgs+$8100 ;00
+                DB ">32767"
+
+ErrMsg01 = *-ErrorMsgs+$8100 ;06
+                DB "TOO LONG"
+
+ErrMsg02 = *-ErrorMsgs+$8100 ;0E
+                DB "SYNTAX"
+
+ErrMsg03 = *-ErrorMsgs+$8100 ;14
+                DB "MEM FULL"
+
+ErrMsg04 = *-ErrorMsgs+$8100 ;1C
+                DB "TOO MANY PARENS"
+
+ErrMsg05 = *-ErrorMsgs+$8100 ;2B
+                DB "STRING"
+
+ErrMsg06 = *-ErrorMsgs+$8100 ;31
+                DB "NO END"
+
+ErrMsg07 = *-ErrorMsgs+$8100 ;37
+                DB "BAD BRANCH"
+
+ErrMsg08 = *-ErrorMsgs+$8100 ;41
+                DB "16 GOSUBS"
+
+ErrMsg09 = *-ErrorMsgs+$8100 ;4A
+                DB "BAD RETURN"
+
+ErrMsg10 = *-ErrorMsgs+$8100 ;54
+                DB "16 FORS"
+
+ErrMsg11 = *-ErrorMsgs+$8100 ;5B
+                DB "BAD NEXT"
+
+ErrMsg12 = *-ErrorMsgs+$8100 ;63
+                DB "STOPPED AT "
+
+
+ErrMsg13 = *-ErrorMsgs+$8100 ;6E
+                DB "*** "
+
+ErrMsg14 = *-ErrorMsgs+$8100 ;72
+                DB " ERR"
+                DB  CR
+
+ErrMsg15 = *-ErrorMsgs+$8100 ;77
+                DB ">255"
+
+ErrMsg16 = *-ErrorMsgs+$8100 ;7B
+                DB "RANGE"
+
+ErrMsg17 = *-ErrorMsgs+$8100 ;80
+                DB "DIM"
+
+ErrMsg18 = *-ErrorMsgs+$8100 ;83
+                DB "STR OVFL"
+
+                DB "\" ;8B
+                DB  CR
+
+ErrMsg20 = *-ErrorMsgs+$8100 ;8D
+                DB "RETYPE LINE"
+                DB  CR+$80
+
+ErrMsg21 = *-ErrorMsgs+$8100 ;99
+                DB '?'
+
+                PUT PART2
+
+;continue run w/o deleting vars?
+
+HEB9A
+                LSR RUNFLAG ;pos
+;!IF <CS>
+                JMP STOPPED_AT
+;!ENDIF
+                LDX ACC+1
+                TXS
+                LDX ACC
+                LDY #ErrMsg20 ;"RETYPE LINE",CR,"?"
+                BNE HEBAC ;=>always
+
+; tkn $54 INPUT
+;   num with no prompt
+;   INPUT X
+
+HEBAA ;VO branch
+                LDY #ErrMsg21 ;'?' for INPUT
+HEBAC
+                JSR ERRORMESS
+                STX ACC
+                TSX
+                STX ACC+1
+                JSR HF366
+                STY TOKNDX
+                LDA #$FF
+                STA TXTNDX
+                ASL
+                STA RUNFLAG ;neg
+                LDX #$20
+                LDA #$15
+                JSR HE491
+                INC RUNFLAG
+                LDX ACC
+
+; tkn $27 ,
+;   num inputs
+;   INPUT "QUANTITY",Q
+
+HEBCB ;VO
+                LDY TXTNDX
+                ASL
+;!LOOP
+                STA ACC
+                INY
+                LDA IN,Y
+                CMP #$80
+                BEQ HEBAA ;=>end of input?
+                EOR #"0"
+                CMP #10
+;!UNTIL <LO>
+                INY
+                INY
+                STY TXTNDX
+                LDA IN,Y
+                PHA
+                LDA IN-1,Y
+                LDY #0
+                JSR HE708
+                PLA
+                STA NOUNSTKC,X
+                LDA ACC
+                CMP #$33
+;!IF <EQ>
+                JSR NEGATE
+;!ENDIF
+                JMP HE801
+;>
+
+
+
+                DB $FF,$FF,$FF ;Z
+
+                PUT TABLE2
+; token/syntax table
+
+SYNTABL
+                DB $50
+
+                DB $20,$4F,$C0 ;Z
+                DB "T"+32,"A"-32 ;Z
+                DB "D"+32,"O"-32,"M"-32 ;Z
+                DB "R"+32,"O"-32 ;Z
+                DB "D"+32,"N"-32,"A"-32 ;Z
+                DB "P"+32,"E"-32,"T"-32,"S"-32 ;Z
+                DB "O"+32,"T"-32 ;Z
+                DB "N"+32,"E"-32,"H"-32,"T"-32 ;Z
+
+                DB $5C,$80,$00,$40
+                DB $60,$8D,$60,$8B,$7F,$1D,$20,$7E
+                DB $8C,$33,$00,$00,$60,$03,$BF,$12
+
+                DB $47,"#"-32,"N"-32,"I"-32 ;IN#
+                DB $67,"#"-32,"R"-32,"P"-32 ;PR#
+                DB "E"+32,"C"-32,"A"-32,"R"-32,"T"-32 ;TRACE
+                DB $79,"P"-32,"S"-32,"D"-32 ;DSP
+                DB $69,"P"-32,"S"-32,"D"-32 ;DSP
+                DB "E"+32,"C"-32,"A"-32,"R"-32,"T"-32,"O"-32,"N"-32 ;NOTRACE
+                DB $79,"P"-32,"S"-32,"D"-32,"O"-32,"N"-32 ;NODSP
+                DB $69,"P"-32,"S"-32,"D"-32,"O"-32,"N"-32 ;NODSP
+                DB "P"+32,"O"-32,"P"-32 ;POP
+                DB "T"+32,"S"-32,"I"-32,"L"-32 ;LIST
+                DB $60,","-32 ;
+                DB $20,"T"-32,"S"-32,"I"-32,"L"-32 ;LIST
+                DB 0
+                DB $40,$89
+                DB ")"+32 ;
+                DB $47,"="-32 ;
+                DB $17,$68,"="-32 ;
+                DB $0A,$58,$7B,$67,"B"-32,"A"-32,"T"-32,"V"-32 ;VTAB
+                DB $67,"T"-32,"A"-32 ;AT
+                DB $07,","-32 ;
+                DB $07,"N"-32,"I"-32,"L"-32,"V"-32 ;VLIN
+                DB $67,"T"-32,"A"-32 ;AT
+                DB $07,","-32 ;
+                DB $07,"N"-32,"I"-32,"L"-32,"H"-32 ;HLIN
+                DB $67,","-32 ;
+                DB $07,"T"-32,"O"-32,"L"-32,"P"-32 ;PLOT
+                DB $67,"="-32,"R"-32,"O"-32,"L"-32,"O"-32,"C"-32 ;COLOR=
+                DB $67,","-32 ;
+                DB $07,"E"-32,"K"-32,"O"-32,"P"-32 ;POKE
+                DB "T"+32,"N"-32,"I"-32,"R"-32,"P"-32 ;PRINT
+                DB $7F,$0E,$27,"T"-32,"N"-32,"I"-32,"R"-32,"P"-32 ;PRINT
+                DB $7F,$0E,$28,"T"-32,"N"-32,"I"-32,"R"-32,"P"-32 ;PRINT
+                DB $64,$07,"F"-32,"I"-32 ;IF
+                DB $67,"O"-32,"T"-32,"O"-32,"G"-32 ;GOTO
+                DB $78,"T"-32,"E"-32,"L"-32 ;LET
+                DB $6B,$7F,$02,"M"-32,"E"-32,"R"-32 ;REM
+                DB $67,"B"-32,"U"-32,"S"-32,"O"-32,"G"-32 ;GOSUB
+                DB "N"+32,"R"-32,"U"-32,"T"-32,"E"-32,"R"-32 ;RETURN
+                DB $7E,","-32 ;
+                DB $39,"T"-32,"X"-32,"E"-32,"N"-32 ;NEXT
+                DB $67,"P"-32,"E"-32,"T"-32,"S"-32 ;STEP
+                DB $27,"O"-32,"T"-32 ;TO
+                DB $07,"="-32 ;
+                DB $19,"R"-32,"O"-32,"F"-32 ;FOR
+                DB $7F,$05,$37,"T"-32,"U"-32,"P"-32,"N"-32,"I"-32 ;INPUT
+                DB $7F,$05,$28,"T"-32,"U"-32,"P"-32,"N"-32,"I"-32 ;INPUT
+                DB $7F,$05,$2A,"T"-32,"U"-32,"P"-32,"N"-32,"I"-32 ;INPUT
+                DB "D"+32,"N"-32,"E"-32 ;END (tkn $51)
+
+SYNTABL2
+                DB 0
+                DB $47,"B"-32,"A"-32,"T"-32 ;TAB (tkn $50)
+                DB $7F,$0D,$30,"M"-32,"I"-32,"D"-32 ;DIM
+                DB $7F,$0D,$23,"M"-32,"I"-32,"D"-32 ;DIM
+                DB $67,"L"-32,"L"-32,"A"-32,"C"-32 ;CALL
+                DB "R"+32,"G"-32 ;GR
+                DB "T"+32,"X"-32,"E"-32,"T"-32 ;TEXT
+                DB 0 ;above are statements
+                DB $4D,","+32 ;
+                DB $67,","-32 ;
+                DB $68,","-32 ;
+                DB ";"+32 ;
+                DB $67,";"-32 ;
+                DB $68,";"-32 ;
+                DB $50,","-32 ;
+                DB $63,","-32 ;
+                DB $7F,$01,$51,$07,"("-32 ;
+                DB $29,$84
+                DB $80,"$"+32 ;
+                DB $19,$57,$71,$07,"("-32 ;
+                DB $14,$71,$07,","-32 ;
+                DB $07,"("-32,"N"-32,"R"-32,"C"-32,"S"-32 ;SCRN(
+                DB $71,$08,"("-32,"C"-32,"S"-32,"A"-32 ;ASC(
+                DB $71,$08,"("-32,"N"-32,"E"-32,"L"-32 ;LEN(
+                DB $68,"#"-32 ;
+                DB $08,$68,"="-32 ;
+                DB $08,$71,$07,"("-32 ;
+                DB $60,$75,"T"-32,"O"-32,"N"-32 ;NOT
+                DB $75,"-"-32 ;
+                DB $75,"+"-32 ;
+                DB $51,$07,"("-32,$19 ;
+                DB "X"-32,"D"-32,"N"-32,"R"-32
+                DB "L"+32,"D"-32,"P"-32 ;PDL
+                DB "S"+32,"B"-32,"A"-32 ;ABS
+                DB "N"+32,"G"-32,"S"-32 ;SGN
+                DB "D"+32,"N"-32,"R"-32 ;RND
+                DB "K"+32,"E"-32,"E"-32,"P"-32 ;PEEK
+                DB $51,$07,"("-32 ;
+                DB $39,$81,$C1,$4F,$7F,$0F,$2F
+                DB 0 ;above are functions
+                DB $51,$06,"("-32 ;
+                DB $29,"""+32 ;open quote
+                DB $0C,"""-32 ;close quote
+                DB $57,","-32 ;
+                DB $6A,","-32 ;
+                DB $42,"N"-32,"E"-32,"H"-32,"T"-32 ;THEN
+                DB $60,"N"-32,"E"-32,"H"-32,"T"-32 ;THEN
+                DB $4F,$7E,$1E,$35,","-32 ;
+                DB $27,$51,$07,"("-32 ;
+                DB $09,"+"-32
+                DB "^"+32 ;exponent
+                DB "D"+32,"O"-32,"M"-32 ;MOD
+                DB "R"+32,"O"-32 ;OR
+                DB "D"+32,"N"-32,"A"-32 ;AND
+                DB "<"+32 ;less than
+                DB ">"+32,"<"-32 ;not equal
+                DB "="+32,"<"-32 ;less or equal
+                DB ">"+32 ;greater than
+                DB "="+32,">"-32 ;greater or equal
+                DB "#"+32 ;not equal
+                DB "="+32 ;equal
+                DB "/"+32 ;divide
+                DB "*"+32 ;multiply
+                DB "-"+32 ;subtract
+                DB "+"+32 ;add
+                DB 0 ;above 4 are num ops
+                DB $47,":"-32,"M"-32,"E"-32,"M"-32,"O"-32,"L"-32 ;LOMEM:
+                DB $67,":"-32,"M"-32,"E"-32,"M"-32,"I"-32,"H"-32 ;HIMEM:
+                DB "N"+32,"A"-32,"M"-32 ;MAN
+                DB $60,","-32 ;comma for AUTO
+                DB $20,"O"-32,"T"-32,"U"-32,"A"-32 ;AUTO
+                DB "R"+32,"L"-32,"C"-32 ;CLR
+                DB "W"+32,"E"-32,"N"-32 ;NEW
+                DB $60,","-32 ;comma for DEL
+                DB $20,"L"-32,"E"-32,"D"-32 ;DEL
+                DB "N"+32,"U"-32,"R"-32 ;RUN
+                DB $60,"N"-32,"U"-32,"R"-32 ;RUN
+                DB "N"+32,"O"-32,"C"-32 ;CON
+                DB "E"+32,"V"-32,"A"-32,"S"-32 ;SAVE
+                DB "D"+32,"A"-32,"O"-32,"L"-32 ;LOAD
+;above are commands
+                DB $7A,$7E,$9A,$22,$20
+                DB $00,$60,$03,$BF,$60,$03,$BF,$1F
+
+
+                PUT PART3
+; tkn $48 ,
+;   string prints
+;   PRINT T,A$
+
+HEE00 ;VO
+                JSR HE7B1
+
+; tkn $45 ;
+;   string prints
+;   PRINT anytype ; string
+
+; tkn $61 PRINT
+;   string var or literal
+;   PRINT A$: PRINT "HELLO"
+
+PRNTSTR ;V
+                INX
+                INX
+                LDA NOUNSTKL-1,X
+                STA AUX
+                LDA NOUNSTKH-1,X
+                STA AUX+1
+                LDY NOUNSTKL-2,X
+HEE0F ;*!LOOP
+                TYA
+                CMP NOUNSTKH-2,X
+                BCS HEE1D ;=HS>exit loop
+                LDA (AUX),Y
+                JSR COUT
+                INY
+                JMP HEE0F ;*!loop always
+HEE1D
+                LDA #$FF
+                STA CRFLAG ;CRFLAG := $FF
+                RTS
+;*
+
+; tkn $3B LEN(
+
+LEN ;VO
+                INX
+                LDA #0
+                STA NOUNSTKH,X
+                STA NOUNSTKC,X
+                LDA NOUNSTKH-1,X
+                SEC
+                SBC NOUNSTKL-1,X
+                STA NOUNSTKL,X
+                JMP HE823
+;>
+
+                DB $FF ;Z
+
+GETBYTE
+                JSR GET16BIT
+                LDA ACC+1
+                BNE HI255ERR ;=>">255" error
+                LDA ACC
+                RTS
+;*
+
+; tkn $68 ,
+;   PLOT 20,15
+
+COMMA_PLOT ;VO
+                JSR GETBYTE
+                LDY TXTNDX
+                CMP #48
+                BCS RANGERR ;=HS>
+                CPY #40
+                BCS RANGERR ;=HS>
+                JMP PLOT
+;>
+
+; tkn $66 COLOR=
+
+COLOR ;VO
+                JSR GETBYTE
+                JMP SETCOL
+;>
+
+; tkn $0F MAN
+
+MAN
+                LSR AUTOFLAG ;manual
+                RTS
+;*
+
+; tkn $6F VTAB
+
+IVTAB ;VO
+                JSR HF3B3
+                CMP #24
+                BCS RANGERR ;=HS>
+                STA CV
+                JMP VTAB
+;>
+
+HI255ERR
+                LDY #ErrMsg15 ;">255"
+HEE65
+                JMP ERRMESS
+;>
+
+RANGERR
+                LDY #ErrMsg16 ;"RANGE"
+                BNE HEE65 ;=>always
+
+; divide routine
+
+HEE6C
+                JSR HE254
+                LDA AUX ;is AUX zero?
+;!IF <EQ>
+                LDA AUX+1
+;!  IF <EQ>
+                JMP HE77E ;yes, ">32767" error
+;!  ENDIF
+;!ENDIF
+;!LOOP
+                ASL ACC
+                ROL ACC+1
+                ROL P3
+                ROL P3+1
+                CMPW P3;AUX
+;!  IF <HS>
+                STA P3+1 ;P3 := P3-AUX
+                LDA P3
+                SBC AUX
+                STA P3
+                INC ACC
+;!  ENDIF
+                DEY
+;!UNTIL <EQ>
+                RTS
+;*
+
+                DB $FF,$FF,$FF,$FF,$FF,$FF ;Z
+
+; tkn $4D CALL
+
+CALL ;VO
+                JSR GET16BIT
+                JMP (ACC)
+;>
+
+; tkn $6A ,
+;   HLIN 10,20 AT 30
+
+COMMA_HLIN ;VO
+                JSR GETBYTE
+                CMP TXTNDX
+                BCC RANGERR ;=LO>
+                STA H2
+                RTS
+;*
+
+; tkn $6B AT
+;   HLIN 10,20 AT 30
+
+AT_HLIN ;VO
+                JSR GETBYTE
+                CMP #48
+                BCS RANGERR ;=HS>
+                LDY TXTNDX
+                JMP HLINE
+;>
+
+; tkn $6D ,
+;   VLIN 10,20 AT 30
+
+COMMA_VLIN ;VO
+                JSR GETBYTE
+                CMP TXTNDX
+                BCC RANGERR ;=LO>
+                STA V2
+                RTS
+;*
+
+; tkn $6E AT
+;   VLIN 10,20 AT 30
+
+AT_VLIN ;VO
+                JSR GETBYTE
+                CMP #40
+HEECB
+                BCS RANGERR ;=HS>
+                TAY
+                LDA TXTNDX
+                JMP VLINE
+;>
+
+PRINTERR
+                TYA
+                TAX
+                LDY #ErrMsg13 ;"*** "
+                JSR ERRORMESS
+                TXA
+                TAY
+                JSR ERRORMESS
+                LDY #ErrMsg14 ;" ERR"
+                JMP PRTERR
+;>
+
+HEEE4
+                JSR HF23F
+;!LOOP
+                ASL ACC
+                ROL ACC+1
+;!UNTIL <PL>
+                BCS HEECB ;=>"RANGE" error
+;!IF <EQ>
+                CMP ACC
+                BCS HEECB ;=HS>"RANGE" error
+;!ENDIF
+                RTS
+;*
+
+; tkn $2E PEEK
+;   uses tkn $3F (
+
+PEEK ;VO
+                JSR GET16BIT
+                LDA (ACC),Y
+                STY NOUNSTKC-1,X
+                JMP HE708
+;>
+
+; tkn $65 ,
+;   POKE 20000,5
+
+; tkn $67 PLOT
+
+; tkn $69 HLIN
+
+; tkn $6C VLIN
+
+GETVAL255 ;VO
+                JSR GETBYTE
+                LDA ACC
+                STA TXTNDX
+                RTS
+;*
+
+; tkn $64 POKE
+
+POKE ;VO
+                JSR GET16BIT
+                LDA TXTNDX
+                STA (ACC),Y
+                RTS
+;*
+
+; tkn $15 /
+;   num op.  uses $38 (
+;   A = 27 / 2
+
+DIVIDE ;VO
+                JSR HEE6C
+                MOVW ACC;P3
+                JMP HE244
+;>
+
+; tkn $44 ,
+;   next var in DIM is num
+;   DIM X(5),A(5)
+
+; tkn $4F DIM
+;   num var.  uses tkn $22 (
+;   DIM A(5)
+
+DIMNUM ;VO
+                JSR HEEE4
+                JMP HE134
+;>
+
+; tkn $2D (
+;   var array
+;   X(12)
+
+HEF24 ;VO
+                JSR HEEE4
+                LDY NOUNSTKH,X
+                LDA NOUNSTKL,X
+                ADC #$FE
+;!IF <CC>
+                DEY
+;!ENDIF
+                STA AUX
+                STY AUX+1
+                CLC
+                ADC ACC
+                STA NOUNSTKL,X
+                TYA
+                ADC ACC+1
+                STA NOUNSTKH,X
+                LDY #0
+                LDA NOUNSTKL,X
+                CMP (AUX),Y
+                INY
+                LDA NOUNSTKH,X
+                SBC (AUX),Y
+                BCS HEECB ;=HS>"RANGE" error
+                JMP HE823
+;>
+
+; tkn $2F RND
+;   uses tkn $3F (
+
+RND ;VO
+                JSR GET16BIT
+                LDA RNDL
+                JSR HE708
+                LDA RNDH
+;!IF <EQ>
+                CMP RNDL
+                ADC #0
+;!ENDIF
+                AND #$7F
+                STA RNDH
+                STA NOUNSTKC,X
+                LDY #$11
+;!LOOP
+                LDA RNDH
+                ASL
+                CLC
+                ADC #$40
+                ASL
+                ROL RNDL
+                ROL RNDH
+                DEY
+;!UNTIL <EQ>
+                LDA ACC
+                JSR HE708
+                LDA ACC+1
+                STA NOUNSTKC,X
+                JMP MOD
+;>
+
+                JSR GET16BIT ;Z
+                LDY ACC ;is ACC <LO> LOMEM?
+                CPY LOMEM
+                LDA ACC+1
+                SBC LOMEM+1
+                BCC HEFAB ;=LO>yes
+                STY HIMEM ;HIMEM := ACC
+                LDA ACC+1
+                STA HIMEM+1
+HEF93 ;Z
+                JMP NEW
+;>
+
+                JSR GET16BIT ;Z
+                LDY ACC ;is ACC <HS> LOMEM?
+                CPY HIMEM
+                LDA ACC+1
+                SBC HIMEM+1
+                BCS HEFAB ;=HS>yes
+                STY LOMEM ;LOMEM := ACC
+                LDA ACC+1
+                STA LOMEM+1
+                BCC HEF93 ;=LO>always
+
+HEFAB ;Z
+                JMP HEECB ;range error?
+;>
+
+                DB $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF ;Z
+
+; tkn $26 ,
+;   string inputs
+;   INPUT "WHO",W$
+
+; tkn $52 INPUT
+;   string with no prompt
+;   INPUT S$
+
+HEFB6 ;VO
+                JSR INPUTSTR
+                JMP HEFBF
+;>
+
+; tkn $53 INPUT
+;   string or num with prompt
+;   INPUT "WHO",W$: INPUT "QUANTITY",Q
+
+INPUT_PROMPT ;VO
+                JSR PRNTSTR
+HEFBF
+                LDA #$FF
+                STA TXTNDX
+                LDA #$80
+                STA IN
+                RTS
+;*
+
+HEFC9
+                JSR NOT
+                INX
+HEFCD
+                JSR NOT
+                LDA NOUNSTKL,X
+                RTS
+;*
+
+; old 4K cold start
+
+HEFD3 ;Z
+                LDA #0
+                STA LOMEM ;LOMEM := $0800
+                STA HIMEM ;HIMEM := $1000
+                LDA #>$0800
+                STA LOMEM+1
+                LDA #>$1000
+                STA HIMEM+1
+                JMP NEW
+;>
+
+HEFE4
+                CMP NOUNSTKH,X
+;!IF <EQ>
+                CLC
+;!ENDIF
+                JMP HE102
+;>
+
+; tkn $08 RUN
+;   run from first line of program
+
+RUN ;VO
+                JSR CLR
+                JMP RUNWARM
+;>
+
+; tkn $07 RUN
+;   RUN 100
+
+RUNNUM ;VO
+                JSR CLR
+                JMP GOTO
+;>
+
+HEFF8
+                CPX #$80
+;!IF <EQ>
+                DEY
+;!ENDIF
+                JMP HE00C
+;>
+
+; Cold start
+;   set LOMEM, find HIMEM
+;   fall into NEW
+
+COLD
+                LDY #LO $0800
+                STY NOUNSTKC
+                STY LOMEM ;LOMEM := $0800
+                STY HIMEM ;HIMEM := $0800
+                LDA #>$0800
+                STA LOMEM+1
+                STA HIMEM+1
+;!LOOP
+                INC HIMEM+1 ;find top of RAM
+                LDA (HIMEM),Y
+                EOR #$FF
+                STA (HIMEM),Y
+                CMP (HIMEM),Y
+;!WHILE <EQ>
+                EOR #$FF
+                STA (HIMEM),Y
+                CMP (HIMEM),Y
+;!UNTIL <NE>
+                JMP NEW
+;>
+
+HF025
+                JMP HF179
+;>
+
+                JSR HF032 ;Z
+                JMP HE8BE ;Z
+;>
+
+HF02E
+                LDX PX
+                LDA PX+1
+HF032 ;Z
+                LDY KBD ;get keypress
+                CPY #ETX+$80 ;is it ctrl-C?
+                BNE HF025 ;=>no
+                BIT KBDSTRB ;yes, clear keypress
+                STX NOUNSTKL
+                STA NOUNSTKL+1
+                MOVW PR;NOUNSTKH
+                JMP STOPPED_AT
+;>
+
+                DB $FF,$FF ;Z
+
+; tkn $10 HIMEM:
+
+VHIMEM ;VO
+                JSR GET16BIT
+                STX XSAVE
+                LDX #0-2
+                SEC
+
+;   MOVW ACC;P2
+;   SUBW HIMEM;ACC;AUX
+
+;!LOOP
+                LDA ACC+2,X
+                STA P2+2,X
+                LDA HIMEM+2,X
+                SBC ACC+2,X
+                STA AUX+2,X
+                INX
+;!UNTIL <EQ>
+                BCC HF0AF ;=>
+                DEX ;Xreg := $FF
+
+;   MOVW PP;P3
+;   SUBW PP;AUX;P2
+
+;!LOOP
+                LDA PP+1,X
+                STA P3+1,X
+                SBC AUX+1,X
+                STA P2+1,X
+                INX
+;!UNTIL <NE>
+;!IF <HS>
+                CMPW PV;P2
+                BCC HF08F ;=>PV <LO> P2
+;!ENDIF
+HF07C
+                JMP MEMFULL
+;>
+
+;!LOOP
+                LDA (P3),Y
+                STA (P2),Y
+                INCW P2
+                INCW P3
+HF08F
+                CMPW P3;HIMEM
+;!UNTIL <HS>
+HF099
+                LDX #0-2
+
+;   MOVW P2;HIMEM
+;   SUBW PP;AUX;PP
+
+;!LOOP
+                LDA P2+2,X
+                STA HIMEM+2,X
+                LDA PP+2,X
+                SBC AUX+2,X
+                STA PP+2,X
+                INX
+;!UNTIL <EQ>
+                LDX XSAVE
+                RTS
+;*
+
+;!LOOP
+                LDA (HIMEM),Y
+                STA (ACC),Y
+HF0AF
+                DECW ACC
+                DECW HIMEM
+                CMP PP ;is PP <LO> HIMEM?
+                LDA HIMEM+1
+                SBC PP+1
+;!UNTIL <HS>
+                BCS HF099 ;=HS> always
+
+; tkn $11 LOMEM:
+
+VLOMEM ;VO
+                JSR GET16BIT
+                LDY ACC ;is ACC <HS> PP?
+                CPY #PP
+; BUG FIX: ABOVE LINE SHOULD BE
+;   CPY PP
+; REF: NONE.  FOUND BY INSPECTION.
+                LDA ACC+1
+                SBC PP+1
+HF0D4
+                BCS HF07C ;=HS> yes, MEM FULL error
+                STY LOMEM ;LOMEM := ACC
+                LDA ACC+1
+                STA LOMEM+1
+                JMP CLR
+;>
+
+; tkn $04 LOAD
+
+LOAD ;VO
+                STX XSAVE
+                JSR SETHDR
+                JSR READ
+                LDX #$FF
+                SEC
+;!LOOP
+                LDA HIMEM+1,X ;AUX := HIMEM-ACC
+                SBC ACC+1,X
+                STA AUX+1,X
+                INX
+;!UNTIL <NE>
+                BCC HF07C ;=LO>MEM FULL error
+                CMPW PV;AUX
+                BCS HF0D4 ;=>PV <HS> AUX, MEM FULL error
+                LDA ACC ;is ACC zero?
+;!IF <EQ>
+                LDA ACC+1
+                BEQ HF118 ;=>yes
+;!ENDIF
+                MOVW AUX;PP
+                JSR SETPRG
+                JSR READ
+HF115
+                LDX XSAVE
+                RTS
+;*
+
+HF118
+                JSR BELL
+                JMP HF115
+;>
+
+SETHDR
+                LDY #$CE
+                STY A1 ;A1 := $00CE
+                INY
+                STY A2 ;A2 := $00CD
+                LDY #0
+                STY A1+1
+                STY A2+1
+                RTS
+;*
+
+SETPRG
+;!LOOP
+                LDA PP,X
+                STA A1,X
+                LDY HIMEM,X
+                STY A2,X
+                DEX
+;!UNTIL <MI>
+                DECW A2
+                RTS
+;*
+
+                STX XSAVE ;Z
+
+; tkn $05 SAVE
+
+SAVE ;VO
+                SEC ;ACC := HIMEM-PP
+                LDX #0-1
+;!LOOP
+                LDA HIMEM+1,X
+                SBC PP+1,X
+                STA ACC+1,X
+                INX
+;!UNTIL <NE>
+                JSR SETHDR
+                JSR WRITE
+                LDX #$01
+                JSR SETPRG
+                LDA #$1A
+                JSR WRITE0
+                LDX XSAVE
+                RTS
+;*
+
+PRTERR
+                JSR ERRORMESS
+                JMP BELL
+;>
+
+; tkn $77 POP
+
+POP ;VO
+                LDA GOSUBNDX
+;!IF <EQ>
+                JMP RETURN ;force error
+;!ENDIF
+                DEC GOSUBNDX
+                RTS
+;*
+
+; tkn $7D TRACE
+
+TRACE ;VO
+                LDA #$FF
+                STA NOUNSTKC
+                RTS
+;*
+
+; tkn $7A NOTRACE
+
+NOTRACE ;VO
+                LSR NOUNSTKC ;clear bit 7
+                RTS
+;*
+
+HF179
+                BIT NOUNSTKC ;trace mode?
+;!IF <MI>
+HF17D
+;yes, print line number
+                LDA #"#"
+                JSR COUT
+                LDY #1
+                LDA (PR),Y
+                TAX
+                INY
+                LDA (PR),Y
+                JSR PRDEC
+                LDA #BLANK+$80
+                JMP COUT
+;>
+                LDA PR ;Z
+                LDY PR+1 ;Z
+;!ENDIF
+                RTS
+;*
+
+
+
+SYNTABLNDX ;indices into SYNTABL
+                DB $C1,$00,$7F,$D1,$CC,$C7,$CF,$CE
+                DB $C5,$9A,$98,$8D,$96,$95,$93,$BF
+                DB $B2,$32,$12,$0F,$BC,$B0,$AC,$BE
+                DB $35,$0C,$61,$30,$10,$0B,$DD,$FB
+
+
+
+HF1B7
+                LDY #0
+                JSR HE7C7
+                LDA #BLANK+$80
+                JMP COUT
+;>
+
+                DB $00,$00,$00,$00,$00,$00,$00,$00 ;Z
+
+HF1C9
+                LDY LOMEM
+                LDA LOMEM+1
+;!LOOP
+                PHA
+                CPY AUX ;is LOMEM <HS> AUX?
+                SBC AUX+1
+                BCS HF1F0 ;=HS> yes, exit repeat
+                PLA
+                STY SRCH ;SRCH := LOMEM
+                STA SRCH+1
+                LDY #$FF
+;!  LOOP
+;!    LOOP
+                INY
+                LDA (SRCH),Y
+;!    UNTIL <PL>
+                CMP #$40
+;!  UNTIL <NE>
+                INY
+                INY
+                LDA (SRCH),Y
+                PHA
+                DEY
+                LDA (SRCH),Y
+                TAY
+                PLA
+;!UNTIL <EQ>
+HF1F0
+                PLA
+                LDY #0
+;!LOOP
+                LDA (SRCH),Y
+                BMI HF1FC ;=>
+                LSR
+                BEQ HF202 ;=>
+                LDA #"$"
+HF1FC
+                JSR COUT
+                INY
+;!UNTIL <EQ>
+HF202
+                LDA #"="
+                JMP COUT
+;>
+
+HF207
+                STA (AUX),Y
+                INX
+                LDA NOUNSTKC-1,X
+                BEQ HF23E ;=>RTS
+                JMP HF3D5
+;>
+
+                DB $A0 ;Z
+
+HF212
+;!IF <PL>
+                LDA PR
+                LDY PR+1
+                JSR HF17D
+;!ENDIF
+                JSR HF1C9
+                LDX XSAVE
+                JMP HF1B7
+;>
+
+HF223
+                INX
+                INX
+                LDA NOUNSTKC-1,X
+                BEQ HF248 ;=>RTS
+                JMP HF3E0
+;>
+
+HF22C
+;!IF <PL>
+                LDA PR
+                LDY PR+1
+                JSR HF17D
+;!ENDIF
+                JSR HF1C9
+                LDX XSAVE
+                JMP HF409
+;>
+
+                INX ;Z
+HF23E
+                RTS
+;*
+
+HF23F
+                JSR GET16BIT
+                INCW ACC
+HF248
+                RTS
+;*
+
+; tkn $1C <
+;   IF X < 13 THEN END
+
+HF249 ;V
+                JSR HF25B
+                BNE HF263 ;=>NOT
+
+; tkn $19 >
+;   IF X > 13 THEN END
+
+HF24E ;VO
+                JSR HF253
+                BNE HF263 ;=>NOT
+
+; tkn $1A <=
+;   IF X <= 13 THEN END
+
+HF253 ;V
+                JSR SUBTRACT
+                JSR NEGATE
+                BVC HF25E ;=>
+
+; tkn $18 >=
+;   IF X >= 13 THEN END
+
+HF25B ;V
+                JSR SUBTRACT
+HF25E
+                JSR SGN
+                LSR NOUNSTKL,X
+HF263
+                JMP NOT
+;>
+
+; tkn $1D AND
+
+VAND ;VO
+                JSR HEFC9
+                ORA NOUNSTKL-1,X
+                BPL HF272 ;=>always?
+
+; tkn $1E OR
+
+VOR ;VO
+                JSR HEFC9
+                AND NOUNSTKL-1,X
+HF272
+                STA NOUNSTKL,X
+                BPL HF263 ;=>NOT
+                JMP HEFC9
+;>
+
+; tkn $58 STEP
+
+STEP ;VO
+                JSR GET16BIT
+                LDY FORNDX
+                LDA ACC
+                STA STK_60-1,Y
+                LDA ACC+1
+                JMP HE966
+;>
+
+HF288
+                STA STK_50,Y
+;!LOOP
+;!  LOOP
+                DEY
+                BMI HF2DF ;=>RTS
+                LDA STK_40,Y
+                CMP NOUNSTKL,X
+;!  UNTIL <EQ>
+                LDA STK_50,Y
+                CMP NOUNSTKH,X
+;!UNTIL <EQ>
+                DEC FORNDX
+;!LOOP
+                LDA STK_40+1,Y
+                STA STK_40,Y
+                LDA STK_50+1,Y
+                STA STK_50,Y
+                LDA STK_C0+1,Y
+                STA STK_C0,Y
+                LDA STK_D0+1,Y
+                STA STK_D0,Y
+                LDA STK_60+1,Y
+                STA STK_60,Y
+                LDA STK_70+1,Y
+                STA STK_70,Y
+                LDA STK_80+1,Y
+                STA STK_80,Y
+                LDA STK_90+1,Y
+                STA STK_90,Y
+                LDA STK_A0+1,Y
+                STA STK_A0,Y
+                LDA STK_A0+1,Y
+                STA STK_A0,Y
+; BUG FIX: ABOVE TWO LINES SHOULD BE
+;   LDA STK_B0+1,Y
+;   STA STK_B0,Y
+; REF: CHANGED IN DISK VERSION
+                INY
+                CPY FORNDX
+;!UNTIL <HS>
+HF2DF
+                RTS
+;*
+
+; tkn $78 NODSP
+;   string var
+
+NODSP_STR ;VO
+                INX
+
+; tkn $79 NODSP
+;   num var
+
+NODSP_NUM ;VO
+                LDA #0
+HF2E3
+                PHA
+                LDA NOUNSTKL,X
+                SEC
+                SBC #$03
+                STA ACC
+                LDA NOUNSTKH,X
+                SBC #0
+                STA ACC+1
+                PLA
+                LDY #0
+                STA (ACC),Y
+                INX
+                RTS
+;*
+
+HF2F8
+                CMP #$85
+;!IF <LO>
+                JMP HE4C0
+;!ENDIF
+                LDY #$02
+                JMP HE448
+;>
+
+; tkn $7B DSP
+;   string var
+
+DSP_NUM ;VO
+                INX
+
+; tkn $7C DSP
+;   num var
+
+DSP_STR ;VO
+                LDA #$01
+                BNE HF2E3 ;=>always
+
+                INX ;Z
+
+; tkn $06 CON
+
+CON ;VO
+                MOVW NOUNSTKH;PR
+                LDA NOUNSTKL
+                LDY NOUNSTKL+1
+                JMP GETNEXT
+;>
+
+                LDA #$01 ;Z
+                BNE HF2E3 ;=>always
+
+; tkn $3C ASC(
+
+ASC ;VO
+                LDA NOUNSTKL,X
+                CMP NOUNSTKH,X
+;!IF <HS>
+                JMP RANGERR
+;!ENDIF
+                TAY
+                LDA NOUNSTKL+1,X
+                STA ACC
+                LDA NOUNSTKH+1,X
+                STA ACC+1
+                LDA (ACC),Y
+                LDY #0
+                INX
+                INX
+                JSR HE708
+                JMP HF404
+;>
+
+; tkn $32 PDL
+
+PDL ;VO
+                JSR GETBYTE
+                STX XSAVE
+                AND #$03
+                TAX
+                JSR PREAD
+                LDX XSAVE
+                TYA
+                LDY #0
+                JSR HE708
+                STY NOUNSTKC,X
+                RTS
+;*
+
+RDKEY
+                JSR NXTCHAR
+HF354
+                TXA
+                PHA
+;!LOOP
+                LDA IN,X
+                CMP #ETX+$80 ;is it ctrl-C?
+;!  IF <EQ>
+                JMP BASIC2
+;!  ENDIF
+                DEX
+;!UNTIL <MI>
+                PLA
+                TAX
+                RTS
+;*
+
+HF366
+                JSR HE280
+                TYA
+                TAX
+                JSR HF354
+                TXA
+                TAY
+                RTS
+;*
+
+; tkn $20 ^
+
+EXP ;VO
+                JSR GET16BIT
+                LDA ACC+1
+;!IF <MI>
+                TYA ;Areg := 0
+                DEX
+                JSR HE708
+                STY NOUNSTKC,X
+HF37F
+                RTS
+;!ENDIF
+                STA SRCH+1 ;SRCH := ACC
+                LDA ACC
+                STA SRCH
+                JSR GET16BIT
+                MOVW ACC;SRCH2
+                LDA #$01
+                JSR HE708
+                STY NOUNSTKC,X
+HF398 ;*!LOOP
+                LDA SRCH ;SRCH := SRCH-1
+;!IF <EQ>
+                DEC SRCH+1 ;is SRCH negative?
+                BMI HF37F ;=>yes, RTS
+;!ENDIF
+                DEC SRCH
+                LDA SRCH2
+                LDY #0
+                JSR HE708
+                LDA SRCH2+1
+                STA NOUNSTKC,X
+                JSR MULT
+                JMP HF398 ;*!loop forever
+;>
+
+HF3B3
+                JSR GETBYTE
+                CLC ;Areg := Areg-1
+                ADC #$FF
+HF3B9
+                RTS
+;*
+
+; tkn $4A ,
+;   end of PRINT statement
+;   PRINT A$,
+
+HF3BA ;VO
+                JSR HE7B1
+                LSR CRFLAG ;pos
+                RTS
+;*
+
+                STX RUNFLAG ;Z
+                TXS
+                JSR HF02E
+                JMP HE883
+;>
+
+; tkn $7E PR#
+
+PRSLOT ;VO
+                JSR GETBYTE
+                STX XSAVE
+                JSR OUTPORT
+                LDX XSAVE
+                RTS
+;*
+
+                DB $FE ;Z
+
+HF3D5
+                BIT RUNFLAG
+                BPL HF3B9 ;=>RTS
+                STX XSAVE
+                BIT NOUNSTKC
+                JMP HF212
+;>
+
+HF3E0
+                BIT RUNFLAG
+                BPL HF3B9 ;=>RTS
+                STX XSAVE
+                BIT NOUNSTKC
+                JMP HF22C
+;>
+
+HF3EB
+                LDY #0
+                JMP GETVERB
+;>
+
+;!LOOP
+                TAY
+                JSR CROUT
+HF3F4
+                TYA
+                SEC
+                SBC WNDWDTH
+;!UNTIL <LO>
+                STY CH
+                RTS
+;*
+
+                DB $00,$00,$00 ;Z
+                DB $FF,$FF,$FF,$FF ;Z
+
+HF404
+                STY NOUNSTKC,X
+                JMP HE823
+;>
+
+HF409
+                LDY #0
+                BEQ HF411 ;=>always
+;!LOOP
+                JSR COUT
+                INY
+HF411
+                LDA (AUX),Y
+;!UNTIL <PL>
+                LDA #$FF
+                STA CRFLAG ;CRFLAG := $FF
+                RTS
+;*
+
+; tkn $7F IN#
+
+INSLOT ;VO
+                JSR GETBYTE
+                STX XSAVE
+                JSR INPORT
+                LDX XSAVE
+                RTS

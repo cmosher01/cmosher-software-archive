@@ -45,6 +45,11 @@ GETNUM   EQU   $FFA7
 TOSUB    EQU   $FFBE
 ZMODE    EQU   $FFC7
 CHRTBL   EQU   $FFCC
+
+
+
+
+
          ORG   $F500
 REL      SBC   #$81       ;IS FMT COMPATIBLE
          LSR   A          ;WITH RELATIVE MODE?
@@ -203,5 +208,10 @@ GETNSP   LDA   IN,Y
          CMP   #$A0       ;GET NEXT NON BLANK CHAR
          BEQ   GETNSP
          RTS
+
+
+
+
+
          ORG   $F666
 MINIASM  JMP   RESETZ
