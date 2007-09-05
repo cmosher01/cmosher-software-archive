@@ -16,9 +16,9 @@
                                 ; by defining the corresponding label:
                                 ;
                                 ; version       release date   label
-                                ; DOS 3.0       1978-06        DOS30 (not yet implemented)
+                                ; DOS 3.0       1978-06-29     DOS30 (not yet implemented)
                                 ; DOS 3.1       1978-07-20     DOS31
-                                ; DOS 3.2       1979-06-01     DOS32
+                                ; DOS 3.2       1979-02-16     DOS32
                                 ; DOS 3.2.1     1979-07-31     DOS321 (not yet implemented)
                                 ; DOS 3.3 (0)   1980-08-25     DOS33_1980
                                 ; DOS 3.3 (1)   1983-01-01     DOS33_1983
@@ -6418,12 +6418,12 @@ DOIMAGE         JSR PRPWRDOS    ; GET READY TO WRITE DOS IMAGE.
                                 ; THE FMDRIVER ROUTINE ($A6A8).
                 IF DOS31
 PRPWRDOS        LDA SUBCODFM
-                STA   IBBUFP+1
-                LDA   #0
-                STA   IBBUFP
-                LDA   VOLWA
-                EOR   #$FF
-                STA   IBVOL
+                STA IBBUFP+1
+                LDA #0
+                STA IBBUFP
+                LDA VOLWA
+                EOR #$FF
+                STA IBVOL
                 RTS
                 ENDIF
 
