@@ -1,0 +1,256 @@
+0	BRK i 
+1	ORA (zp,x) 
+2	
+3	
+4	
+5	ORA zp 
+6	ASL zp 
+7	
+8	PHP i 
+9	ORA # 
+10	ASL A 
+11	
+12	
+13	ORA a 
+14	ASL a 
+15	
+16	BPL r 
+17	ORA (zp),y 
+18	
+19	
+20	
+21	ORA zp,x 
+22	ASL zp,x 
+23	
+24	CLC i 
+25	ORA a,y 
+26	
+27	
+28	
+29	ORA a,x 
+30	ASL a,x 
+31	
+32	JSR a 
+33	AND (zp,x) 
+34	
+35	
+36	BIT zp 
+37	AND zp 
+38	ROL zp 
+39	
+40	PLP i 
+41	AND # 
+42	ROL A 
+43	
+44	BIT a 
+45	AND a 
+46	ROL a 
+47	
+48	BMI r 
+49	AND (zp),y 
+50	
+51	
+52	
+53	AND zp,x 
+54	ROL zp,x 
+55	
+56	SEC i 
+57	AND a,y 
+58	
+59	
+60	
+61	AND a,x 
+62	ROL a,x 
+63	
+64	RTI i 
+65	EOR (zp,x) 
+66	
+67	
+68	
+69	EOR zp 
+70	LSR zp 
+71	
+72	PHA i 
+73	EOR # 
+74	LSR A 
+75	
+76	JMP a 
+77	EOR a 
+78	LSR a 
+79	
+80	BVC r 
+81	EOR (zp),y 
+82	
+83	
+84	
+85	EOR zp,x 
+86	LSR zp,x 
+87	
+88	CLI i 
+89	EOR a,y 
+90	
+91	
+92	
+93	EOR a,x 
+94	LSR a,x 
+95	
+96	RTS i 
+97	ADC (zp,x) 
+98	
+99	
+100	
+101	ADC zp 
+102	ROR zp 
+103	
+104	PLA i 
+105	ADC # 
+106	ROR A 
+107	
+108	JMP (a) 
+109	ADC a 
+110	ROR a 
+111	
+112	BVS r 
+113	ADC (zp),y 
+114	
+115	
+116	
+117	ADC zp,x 
+118	ROR zp,x 
+119	
+120	SEI i 
+121	ADC a,y 
+122	
+123	
+124	JMP (a,x) 
+125	ADC a,x 
+126	ROR a,x 
+127	
+128	
+129	STA (zp,x) 
+130	
+131	
+132	STY zp 
+133	STA zp 
+134	STX zp 
+135	
+136	DEY i 
+137	BIT # 
+138	TXA i 
+139	
+140	STY a 
+141	STA a 
+142	STX a 
+143	
+144	BCC r 
+145	STA (zp),y 
+146	
+147	
+148	STY zp,x 
+149	STA zp,x 
+150	STX zp,y 
+151	
+152	TYA i 
+153	STA a,y 
+154	TXS i 
+155	
+156	
+157	STA a,x 
+158	
+159	
+160	LDY # 
+161	LDA (zp,x) 
+162	LDX # 
+163	
+164	LDY zp 
+165	LDA zp 
+166	LDX zp 
+167	
+168	TAY i 
+169	LDA # 
+170	TAX i 
+171	
+172	LDY a 
+173	LDA a 
+174	LDX a 
+175	
+176	BCS r 
+177	LDA (zp),y 
+178	
+179	
+180	LDY zp,x 
+181	LDA zp,x 
+182	LDX zp,y 
+183	
+184	CLV i 
+185	LDA a,y 
+186	TSX i 
+187	
+188	LDY a,x 
+189	LDA a,x 
+190	LDX a,y 
+191	
+192	CPY # 
+193	CMP (zp,x) 
+194	
+195	
+196	CPY zp 
+197	CMP zp 
+198	DEC zp 
+199	
+200	INY i 
+201	CMP # 
+202	DEX i 
+203	
+204	CPY a 
+205	CMP a 
+206	DEC a 
+207	
+208	BNE r 
+209	CMP (zp),y 
+210	
+211	
+212	
+213	CMP zp,x 
+214	DEC zp,x 
+215	
+216	CLD i 
+217	CMP a,y 
+218	
+219	
+220	
+221	CMP a,x 
+222	DEC a,x 
+223	
+224	CPX # 
+225	SBC (zp,x) 
+226	
+227	
+228	CPX zp 
+229	SBC zp 
+230	INC zp 
+231	
+232	INX i 
+233	SBC # 
+234	NOP i 
+235	
+236	CPX a 
+237	SBC a 
+238	INC a 
+239	
+240	BEQ r 
+241	SBC (zp),y 
+242	
+243	
+244	
+245	SBC zp,x 
+246	INC zp,x 
+247	
+248	SED i 
+249	SBC a,y 
+250	
+251	
+252	
+253	SBC a,x 
+254	INC a,x 
+255	

@@ -1,0 +1,255 @@
+BRK i 	00
+ORA (zp,x) 	01
+
+
+
+ORA zp 	05
+ASL zp 	06
+
+PHP i 	08
+ORA # 	09
+ASL A 	0A
+
+
+ORA a 	0D
+ASL a 	0E
+
+BPL r 	10
+ORA (zp),y 	11
+
+
+
+ORA zp,x 	15
+ASL zp,x 	16
+
+CLC i 	18
+ORA a,y 	19
+
+
+
+ORA a,x 	1D
+ASL a,x 	1E
+
+JSR a 	20
+AND (zp,x) 	21
+
+
+BIT zp 	24
+AND zp 	25
+ROL zp 	26
+
+PLP i 	28
+AND # 	29
+ROL A 	2A
+
+BIT a 	2C
+AND a 	2D
+ROL a 	2E
+
+BMI r 	30
+AND (zp),y 	31
+
+
+
+AND zp,x 	35
+ROL zp,x 	36
+
+SEC i 	38
+AND a,y 	39
+
+
+
+AND a,x 	3D
+ROL a,x 	3E
+
+RTI i 	40
+EOR (zp,x) 	41
+
+
+
+EOR zp 	45
+LSR zp 	46
+
+PHA i 	48
+EOR # 	49
+LSR A 	4A
+
+JMP a 	4C
+EOR a 	4D
+LSR a 	4E
+
+BVC r 	50
+EOR (zp),y 	51
+
+
+
+EOR zp,x 	55
+LSR zp,x 	56
+
+CLI i 	58
+EOR a,y 	59
+
+
+
+EOR a,x 	5D
+LSR a,x 	5E
+
+RTS i 	60
+ADC (zp,x) 	61
+
+
+
+ADC zp 	65
+ROR zp 	66
+
+PLA i 	68
+ADC # 	69
+ROR A 	6A
+
+JMP (a) 	6C
+ADC a 	6D
+ROR a 	6E
+
+BVS r 	70
+ADC (zp),y 	71
+
+
+
+ADC zp,x 	75
+ROR zp,x 	76
+
+SEI i 	78
+ADC a,y 	79
+
+
+JMP (a,x) 	7C
+ADC a,x 	7D
+ROR a,x 	7E
+
+
+STA (zp,x) 	81
+
+
+STY zp 	84
+STA zp 	85
+STX zp 	86
+
+DEY i 	88
+BIT # 	89
+TXA i 	8A
+
+STY a 	8C
+STA a 	8D
+STX a 	8E
+
+BCC r 	90
+STA (zp),y 	91
+
+
+STY zp,x 	94
+STA zp,x 	95
+STX zp,y 	96
+
+TYA i 	98
+STA a,y 	99
+TXS i 	9A
+
+
+STA a,x 	9D
+
+
+LDY # 	A0
+LDA (zp,x) 	A1
+LDX # 	A2
+
+LDY zp 	A4
+LDA zp 	A5
+LDX zp 	A6
+
+TAY i 	A8
+LDA # 	A9
+TAX i 	AA
+
+LDY a 	AC
+LDA a 	AD
+LDX a 	AE
+
+BCS r 	B0
+LDA (zp),y 	B1
+
+
+LDY zp,x 	B4
+LDA zp,x 	B5
+LDX zp,y 	B6
+
+CLV i 	B8
+LDA a,y 	B9
+TSX i 	BA
+
+LDY a,x 	BC
+LDA a,x 	BD
+LDX a,y 	BE
+
+CPY # 	C0
+CMP (zp,x) 	C1
+
+
+CPY zp 	C4
+CMP zp 	C5
+DEC zp 	C6
+
+INY i 	C8
+CMP # 	C9
+DEX i 	CA
+
+CPY a 	CC
+CMP a 	CD
+DEC a 	CE
+
+BNE r 	D0
+CMP (zp),y 	D1
+
+
+
+CMP zp,x 	D5
+DEC zp,x 	D6
+
+CLD i 	D8
+CMP a,y 	D9
+
+
+
+CMP a,x 	DD
+DEC a,x 	DE
+
+CPX # 	E0
+SBC (zp,x) 	E1
+
+
+CPX zp 	E4
+SBC zp 	E5
+INC zp 	E6
+
+INX i 	E8
+SBC # 	E9
+NOP i 	EA
+
+CPX a 	EC
+SBC a 	ED
+INC a 	EE
+
+BEQ r 	F0
+SBC (zp),y 	F1
+
+
+
+SBC zp,x 	F5
+INC zp,x 	F6
+
+SED i 	F8
+SBC a,y 	F9
+
+
+
+SBC a,x 	FD
+INC a,x 	FE

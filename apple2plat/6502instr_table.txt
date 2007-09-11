@@ -1,0 +1,46 @@
+IMD     #$xx
+REL     $xx,PC (8-bit signed displacement, relative to PC)
+0PG     $xx
+0PX     $xx,X
+0PY     $xx,Y
+ABS     $xxxx
+ABX     $xxxx,X
+ABY     $xxxx,Y
+IND     ($xxxx)
+NDX     ($xx,X)
+NDY     ($xx),Y
+
+        |xxx000xx|xxx100xx|xxx001xx|xxx101xx|xxx010xx|xxx110xx|xxx011xx|xxx111xx
+--------+--------+--------+--------+--------+--------+--------+--------+--------
+000xxx00|BRK IMD |BPL REL |        |        |PHP     |CLC     |        |        
+001xxx00|JSR ABS |BMI REL |BIT 0PG |        |PLP     |SEC     |BIT ABS |        
+010xxx00|RTI     |BVC REL |        |        |PHA     |CLI     |JMP ABS |        
+011xxx00|RTS     |BVS REL |        |        |PLA     |SEI     |JMP IND |        
+100xxx00|        |BCC REL |STY 0PG |STY 0PX |DEY     |TYA     |STY ABS |        
+101xxx00|LDY IMD |BCS REL |LDY 0PG |LDY 0PX |TAY     |CLV     |LDY ABS |LDY ABX 
+110xxx00|CPY IMD |BNE REL |CPY 0PG |        |INY     |CLD     |CPY ABS |        
+111xxx00|CPX IMD |BEQ REL |CPX 0PG |        |INX     |SED     |CPX ABS |        
+000xxx01|ORA NDX |ORA NDY |ORA 0PG |ORA 0PX |ORA IMD |ORA ABY |ORA ABS |ORA ABX 
+001xxx01|AND NDX |AND NDY |AND 0PG |AND 0PX |AND IMD |AND ABY |AND ABS |AND ABX 
+010xxx01|EOR NDX |EOR NDY |EOR 0PG |EOR 0PX |EOR IMD |EOR ABY |EOR ABS |EOR ABX 
+011xxx01|ADC NDX |ADC NDY |ADC 0PG |ADC 0PX |ADC IMD |ADC ABY |ADC ABS |ADC ABX 
+100xxx01|STA NDX |STA NDY |STA 0PG |STA 0PX |        |STA ABY |STA ABS |STA ABX 
+101xxx01|LDA NDX |LDA NDY |LDA 0PG |LDA 0PX |LDA IMD |LDA ABY |LDA ABS |LDA ABX 
+110xxx01|CMP NDX |CMP NDY |CMP 0PG |CMP 0PX |CMP IMD |CMP ABY |CMP ABS |CMP ABX 
+111xxx01|SBC NDX |SBC NDY |SBC 0PG |SBC 0PX |SBC IMD |SBC ABY |SBC ABS |SBC ABX 
+000xxx10|        |        |ASL 0PG |ASL 0PX |ASL A   |        |ASL ABS |ASL ABX 
+001xxx10|        |        |ROL 0PG |ROL 0PX |ROL A   |        |ROL ABS |ROL ABX 
+010xxx10|        |        |LSR 0PG |LSR 0PX |LSR A   |        |LSR ABS |LSR ABX 
+011xxx10|        |        |ROR 0PG |ROR 0PX |ROR A   |        |ROR ABS |ROR ABX 
+100xxx10|        |        |STX 0PG |STX 0PY |TXA     |TXS     |STX ABS |        
+101xxx10|LDX IMD |        |LDX 0PG |LDX 0PY |TAX     |TSX     |LDX ABS |LDX ABY 
+110xxx10|        |        |DEC 0PG |DEC 0PX |DEX     |        |DEC ABS |DEC ABX 
+111xxx10|        |        |INC 0PG |INC 0PX |NOP     |        |INC ABS |INC ABX 
+000xxx11|        |        |        |        |        |        |        |        
+001xxx11|        |        |        |        |        |        |        |        
+010xxx11|        |        |        |        |        |        |        |        
+011xxx11|        |        |        |        |        |        |        |        
+100xxx11|        |        |        |        |        |        |        |        
+101xxx11|        |        |        |        |        |        |        |        
+110xxx11|        |        |        |        |        |        |        |        
+111xxx11|        |        |        |        |        |        |        |        
