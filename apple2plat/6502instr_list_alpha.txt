@@ -70,7 +70,6 @@ INC zp,x 	F6
 INX i 	E8
 INY i 	C8
 JMP (a) 	6C
-JMP (a,x) 	7C
 JMP a 	4C
 JSR a 	20
 LDA # 	A9
