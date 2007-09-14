@@ -73,8 +73,10 @@ public class Video extends JPanel implements Clock.Timed
 
 //	private static final int XSIZE = 7*VideoAddressing.VISIBLE_BYTES_PER_ROW;
 //	private static final int YSIZE = VideoAddressing.VISIBLE_ROWS_PER_FIELD;
-	private static final int XSIZE = VISIBLE_BITS_PER_BYTE*VideoAddressing.BYTES_PER_ROW;
-	private static final int YSIZE = VideoAddressing.NTSC_LINES_PER_FIELD;
+//	private static final int XSIZE = VISIBLE_BITS_PER_BYTE*VideoAddressing.BYTES_PER_ROW;
+//	private static final int YSIZE = VideoAddressing.NTSC_LINES_PER_FIELD;
+	private static final int XSIZE = VISIBLE_BITS_PER_BYTE*VideoAddressing.VISIBLE_BYTES_PER_ROW;
+	private static final int YSIZE = VideoAddressing.VISIBLE_ROWS_PER_FIELD;
 
 	private final int pixels[] = new int[YSIZE * XSIZE];
 	private final ImageProducer memImgSrc = new MemoryImageSource(XSIZE,YSIZE,cmodel,pixels,0,XSIZE);
@@ -295,6 +297,10 @@ public class Video extends JPanel implements Clock.Timed
 			return;
 		}
 		Graphics gr = getGraphics();
+		if (gr == null)
+		{
+			return;
+		}
 		vImg.flush();
 		gr.drawImage(vImg,0,0,this);
 	}
@@ -325,8 +331,16 @@ public class Video extends JPanel implements Clock.Timed
 	private void plotByteGr(int t, int d, Graphics g)
 	{
 		d >>= 1; // TODO high-order bit half-dot shift
-		int x = (t % VideoAddressing.BYTES_PER_ROW) * VISIBLE_BITS_PER_BYTE;
+		int x = (t % VideoAddressing.BYTES_PER_ROW - (VideoAddressing.BYTES_PER_ROW-VideoAddressing.VISIBLE_BYTES_PER_ROW)) * VISIBLE_BITS_PER_BYTE;
+		if (x < 0)
+		{
+			return;
+		}
 		int y = (t / VideoAddressing.BYTES_PER_ROW);
+		if (y > VideoAddressing.VISIBLE_ROWS_PER_FIELD)
+		{
+			return;
+		}
 //		System.out.println(""+pt+": plot 7 pixels at "+x+","+y);
 		boolean prevOn = g.getColor().equals(Color.GREEN);
 		for (int i = 0; i < VISIBLE_BITS_PER_BYTE; ++i)

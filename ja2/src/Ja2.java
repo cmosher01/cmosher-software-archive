@@ -3,7 +3,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,15 +70,28 @@ public final class Ja2 implements Runnable
 
     private void tryRun() throws IOException
     {
-        final Memory memory = new Memory();
+    	final Keyboard keyboard = new Keyboard();
+
+    	final DiskDrive drive = new DiskDrive();
+    	drive.load(0,new File("C:\\apple2\\research\\dos\\3.1\\DOS33_SystemMaster_1986.nib"));
+    	final StepperMotor arm = new StepperMotor();
+    	final DiskInterface disk = new DiskInterface(drive,arm);
+
+        final Memory memory = new Memory(keyboard,disk);
         for (int addr = 0; addr < 0x10000; ++addr)
         {
-        	memory.write(addr,0xA0);
+        	memory.write(addr,0);
         }
+        final InputStream romImage = new FileInputStream(new File("c:/apple2/rom_images/210apple2plus.rom"));
+        memory.load(0xB000,romImage);
+		final InputStream diskromImage = getClass().getResourceAsStream("disk2rom.bin");
+        memory.load(0xC600,diskromImage);
 
     	final Video video = new Video(memory);
 
     	final CPU6502 cpu = new CPU6502(memory);
+
+    	final FnKeyHandler fn = new FnKeyHandler(cpu);
 
         // create the main frame window for the application
         this.framer.init(
@@ -97,9 +113,15 @@ public final class Ja2 implements Runnable
 	    	},
 	    	video);
 
-    	final List<Clock.Timed> rTimed = new ArrayList<Clock.Timed>();
+        video.addKeyListener(keyboard);
+        video.addKeyListener(fn);
+		video.setFocusTraversalKeysEnabled(false);
+		video.requestFocus();
+
+        final List<Clock.Timed> rTimed = new ArrayList<Clock.Timed>();
     	rTimed.add(cpu);
     	rTimed.add(video);
+    	rTimed.add(drive);
     	this.clock = new Clock(rTimed);
     	this.clock.run();
 	}

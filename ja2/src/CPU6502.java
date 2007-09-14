@@ -10,11 +10,11 @@ public class CPU6502 implements Clock.Timed
 	private int address;
 	private int data;
 
-	private int a;
-	private int x;
-	private int y;
-	private int pc;
-	private int s = 0x100;
+	private volatile int a;
+	private volatile int x;
+	private volatile int y;
+	private volatile int pc;
+	private volatile int s;
 
 	private boolean n;
 	private boolean v;
@@ -37,17 +37,10 @@ public class CPU6502 implements Clock.Timed
 	private int offset;
 	private boolean branch;
 	private int sc;
+	private boolean wc;
 
-    private boolean IRQ;
-    private boolean NMI;
-
-    private byte btmp;
-    private int opL;
-    private int opH;
-    private int ptr;
-    private int ptrH;
-    private int ptrL;
-    private int tmp;
+    private volatile boolean IRQ;
+    private volatile boolean NMI;
 
     private Memory memory;
 
@@ -55,11 +48,36 @@ public class CPU6502 implements Clock.Timed
 	CPU6502(final Memory memory)
 	{
 		this.memory = memory;
+		reset();
 	}
 
 	public void tick()
 	{
-		testtick();
+		realtick();
+	}
+
+	private void checkSane()
+	{
+		if ((a & 0xFFFFFF00) != 0)
+		{
+			throw new IllegalStateException();
+		}
+		if ((x & 0xFFFFFF00) != 0)
+		{
+			throw new IllegalStateException();
+		}
+		if ((y & 0xFFFFFF00) != 0)
+		{
+			throw new IllegalStateException();
+		}
+		if ((s & 0xFFFFFF00) != 0)
+		{
+			throw new IllegalStateException();
+		}
+		if ((data & 0xFFFFFF00) != 0)
+		{
+			throw new IllegalStateException();
+		}
 	}
 
 	public void testtick()
@@ -79,9 +97,22 @@ public class CPU6502 implements Clock.Timed
 	{
 		if (this.t == 0)
 		{
+//			System.out.print(Integer.toHexString(this.pc));
+//			System.out.print(" a:");
+//			System.out.print(Integer.toHexString(this.a));
+//			System.out.print(" x:");
+//			System.out.print(Integer.toHexString(this.x));
+//			System.out.print(" y:");
+//			System.out.print(Integer.toHexString(this.y));
+//			System.out.println();
+			if (this.pc == 0xf8aa)
+			{
+				System.out.println("*************************************************************");
+			}
 			this.address = this.pc++;
 			read();
 			this.opcode = this.data;
+			//System.out.println("PC: "+Integer.toHexString(this.pc-1)+" ("+Integer.toHexString(this.opcode)+")");
 			++this.t;
 		}
 		else
@@ -92,7 +123,7 @@ public class CPU6502 implements Clock.Timed
 
 	private void subseq()
 	{
-		switch (addressing(this.opcode))
+		switch (addressing())
 		{
 			case SINGLE:
 				switch (this.t)
@@ -168,11 +199,13 @@ public class CPU6502 implements Clock.Timed
 					break;
 					case 3:
 						this.address += this.x;
+						this.address &= 0xFF;
 						read();
 						this.adl = this.data;
 					break;
 					case 4:
 						++this.address;
+						this.address &= 0xFF;
 						read();
 						this.adh = this.data;
 					break;
@@ -200,18 +233,21 @@ public class CPU6502 implements Clock.Timed
 					case 3:
 						setIndex();
 						this.bal += this.idx;
-						//this.bah += this.c; // TODO
+						this.wc = (this.bal >= 0x100);
+						if (this.wc)
+						{
+							this.bal -= 0x100;
+						}
 						this.address = ba();
 						read();
-						if (this.bal < 0x80)
+						if (!this.wc)
 						{
 							execute();
 							done();
 						}
 					break;
 					case 4:
-						if (!this.c)
-							++this.bah;
+						++this.bah;
 						this.address = ba();
 						read();
 						execute();
@@ -235,6 +271,7 @@ public class CPU6502 implements Clock.Timed
 					case 3:
 						setIndex();
 						this.bal += this.idx;
+						this.bal &= 0xFF; // doesn't leave page zero
 						this.address = ba();
 						read();
 						execute();
@@ -257,24 +294,28 @@ public class CPU6502 implements Clock.Timed
 					break;
 					case 3:
 						++this.address;
+						this.address &= 0xFF; // doesn't leave page zero
 						read();
 						this.bah = this.data;
 					break;
 					case 4:
 						setIndex();
 						this.bal += this.idx;
-						//this.bah += this.c; // TODO
+						this.wc = (this.bal >= 0x100);
+						if (this.wc)
+						{
+							this.bal -= 0x100;
+						}
 						this.address = ba();
 						read();
-						if (this.bal < 0x80)
+						if (!this.wc)
 						{
 							execute();
 							done();
 						}
 					break;
 					case 5:
-						if (!this.c)
-							++this.bah;
+						++this.bah;
 						this.address = ba();
 						read();
 						execute();
@@ -330,15 +371,18 @@ public class CPU6502 implements Clock.Timed
 					break;
 					case 2:
 						this.address = this.bal;
+						this.address &= 0xFF;
 						read(); // discard
 					break;
 					case 3:
 						this.address += this.x;
+						this.address &= 0xFF;
 						read();
 						this.adl = this.data;
 					break;
 					case 4:
 						++this.address;
+						this.address &= 0xFF;
 						read();
 						this.adh = this.data;
 						execute();
@@ -365,10 +409,9 @@ public class CPU6502 implements Clock.Timed
 					break;
 					case 3:
 						setIndex();
-						this.bal += this.idx;
-						//this.bah += this.c; // TODO
 						this.address = ba();
-						read(); // discard
+						this.address += this.idx;
+						read(); // discard (assume this is the right address, manual is ambiguous)
 						execute();
 					break;
 					case 4:
@@ -394,6 +437,7 @@ public class CPU6502 implements Clock.Timed
 					case 3:
 						setIndex();
 						this.bal += this.idx;
+						this.bal &= 0xFF; // doesn't leave page zero
 						this.address = ba();
 						write();
 						done();
@@ -415,18 +459,17 @@ public class CPU6502 implements Clock.Timed
 					break;
 					case 3:
 						++this.address;
+						this.address &= 0xFF;
 						read();
 						this.bah = this.data;
 					break;
 					case 4:
-						setIndex();
-						this.bal += this.idx;
-						//this.bah += this.c; // TODO
 						this.address = ba();
+						this.address += this.y;
 						read(); // discard
+						execute();
 					break;
 					case 5:
-						execute();
 						write();
 						done();
 					break;
@@ -497,7 +540,8 @@ public class CPU6502 implements Clock.Timed
 					break;
 					case 3:
 						setIndex();
-						this.bal += this.idx;
+						this.bal += this.idx; // doesn't leave page zero
+						this.bal &= 0xFF;
 						this.address = ba();
 						read();
 					break;
@@ -526,9 +570,8 @@ public class CPU6502 implements Clock.Timed
 					break;
 					case 3:
 						setIndex();
-						this.bal += this.idx;
-						// this.bah += this.c; // TODO
 						this.address = ba();
+						this.address += this.idx;
 						read(); // discard
 					break;
 					case 4:
@@ -708,10 +751,9 @@ public class CPU6502 implements Clock.Timed
 						this.address = ia();
 						read();
 						this.adl = this.data;
-						++this.ial; // ???
 					break;
 					case 4:
-						this.address = ia();
+						++this.address; // can leave the page
 						read();
 						this.adh = this.data;
 						this.pc = ad();
@@ -733,7 +775,18 @@ public class CPU6502 implements Clock.Timed
 					case 3:
 						this.address = spPull();
 						read();
-						execute();
+						this.adl = this.data;
+					break;
+					case 4:
+						this.address = spPull();
+						read();
+						this.adh = this.data;
+					break;
+					case 5:
+						this.pc = ad();
+						this.address = this.pc;
+						read(); // discard
+						++this.pc;
 						done();
 					break;
 				}
@@ -778,13 +831,14 @@ public class CPU6502 implements Clock.Timed
 					break;
 					case 3:
 						int hi = pch() + this.sc;
-						this.pc = (hi << 8) | (this.pc & 0xFF);
+						this.pc = (hi << 8) | pcl();
 						read();
 						done();
 					break;
 				}
 			break;
 		}
+		checkSane();
 		++this.t;
 	}
 
@@ -806,27 +860,46 @@ public class CPU6502 implements Clock.Timed
 	private int spPush()
 	{
 		final int sp = sp();
-		--this.s;
-		if (this.s < 0)
-		{
-			this.s += 0x100;
-		}
+		this.s--;
+		this.s &= 0xFF;
 		return sp;
 	}
 
 	private int spPull()
 	{
 		++this.s;
-		if (this.s >= 0x100)
-		{
-			this.s -= 0x100;
-		}
+		this.s &= 0xFF;
 		return sp();
 	}
 
 	private void setIndex()
 	{
-		// TODO
+		this.idx = getIndex();
+	}
+
+	private int getIndex()
+	{
+		int aaa = (this.opcode & 0xE0) >> 5;
+		int bbb = (this.opcode & 0x1C) >> 2;
+		int  cc = (this.opcode & 0x03);
+		if (bbb == 0)
+		{
+			return this.x;
+		}
+		if (bbb == 4 || bbb == 6)
+		{
+			return this.y;
+		}
+		if (bbb == 5 || bbb == 7)
+		{
+			if (cc == 2 && (aaa == 4 || aaa == 5))
+			{
+				return this.y;
+			}
+			return this.x;
+		}
+		assert false : "not an index instruction";
+		return 0;
 	}
 
 	private int ad()
@@ -854,17 +927,9 @@ public class CPU6502 implements Clock.Timed
 		this.t = -1;
 	}
 
-	private void execute()
+	private Addressing addressing()
 	{
-		switch (this.opcode)
-		{
-			// TODO
-		}
-	}
-
-	private Addressing addressing(int op)
-	{
-		return Addressing.SINGLE; // TODO
+		return AddressingModeCalculator.getMode(this.opcode);
 	}
 
 	private void read()
@@ -902,9 +967,11 @@ public class CPU6502 implements Clock.Timed
 
 
 
+	// TODO fix interrupt routines
+	// TODO fix startup cycles (see prog manual)
+	// TODO fix reset
 
-
-	private void handleInterrupts() throws InterruptedException
+	private void handleInterrupts()
 	{
 		if (!i && IRQ)
 		{
@@ -916,7 +983,7 @@ public class CPU6502 implements Clock.Timed
 		}
 	}
 
-    public void reset() throws InterruptedException
+    public void reset()
     {
         i = true;
         s = 0xFF;
@@ -933,11 +1000,10 @@ public class CPU6502 implements Clock.Timed
         NMI = true;
     }
 
-	private void executeOpcode() throws InterruptedException
+	private void execute()
     {
-        final int opcode = memory.read(pc++);        
-
-        switch (opcode)
+		// TODO undocumented instructions not yet implemented
+        switch (this.opcode)
         {
         case 0:
             Imm();
@@ -991,8 +1057,7 @@ public class CPU6502 implements Clock.Timed
             break;
 
         case 11:
-            Imm();
-            AND();
+            Unoff(); // FIXED
             break;
 
         case 12:
@@ -1137,8 +1202,7 @@ public class CPU6502 implements Clock.Timed
             break;
 
         case 43:
-            Imm();
-            AND();
+            Unoff();
             break;
 
         case 44:
@@ -2021,8 +2085,7 @@ public class CPU6502 implements Clock.Timed
             break;
 
         case 235:
-            Imm();
-            SBC();
+            Unoff(); // FIXED
             break;
 
         case 236:
@@ -2118,52 +2181,53 @@ public class CPU6502 implements Clock.Timed
         }
     }
 
-    private void setStatusRegisterByte(int p)
+    private void setStatusRegisterByte(final int p)
     {
-        n = ((p & 0x80) != 0);
-        v = ((p & 0x40) != 0);
-        m = ((p & 0x20) != 0);
-        b = ((p & 0x10) != 0);
-        d = ((p & 0x08) != 0);
-        i = ((p & 0x04) != 0);
-        z = ((p & 0x02) != 0);
-        c = ((p & 0x01) != 0);
+    	this.n = ((p & 0x80) != 0);
+    	this.v = ((p & 0x40) != 0);
+    	this.m = ((p & 0x20) != 0);
+    	this.b = ((p & 0x10) != 0);
+    	this.d = ((p & 0x08) != 0);
+    	this.i = ((p & 0x04) != 0);
+    	this.z = ((p & 0x02) != 0);
+    	this.c = ((p & 0x01) != 0);
     }
 
-    private void setStatusRegisterNZ(byte val)
+    private void setStatusRegisterNZ(final int val)
     {
-        n = val < 0;
-        z = val == 0;
+    	final byte byt = (byte)val;
+        this.n = byt < 0;
+        this.z = byt == 0;
     }
 
-    private void setFlagCarry(int val)
+    private void setFlagCarry(final int val)
     {
-        c = (val & 0x100) != 0;
+    	this.c = (val & 0x100) != 0;
     }
 
-    private void setFlagBorrow(int val)
+    private void setFlagBorrow(final int val)
     {
-        c = (val & 0x100) == 0;
+    	this.c = (val & 0x100) == 0;
     }
 
     private int getStatusRegisterByte()
     {
         int p = 0;
-        if(n)
+        if (this.n)
             p |= 0x80;
-        if(v)
+        if (this.v)
             p |= 0x40;
-        if(m)
+        if (this.m)
             p |= 0x20;
-        if(b)
+        if (this.b)
             p |= 0x10;
-        if(d)
+        if (this.d)
             p |= 0x08;
-        if(i)
+        if (this.i)
             p |= 0x04;
-        if(z)
+        if (this.z)
             p |= 0x02;
-        if(c)
+        if (this.c)
             p |= 0x01;
         return p;
     }
@@ -2174,492 +2238,517 @@ public class CPU6502 implements Clock.Timed
 
     private void Imm()
     {
-        opcode = pc++;
+//        opcode = pc++;
     }
 
-    private void Zero() throws InterruptedException
+    private void Zero()
     {
-        opcode = memory.read(pc++);
+//        opcode = memory.read(pc++);
     }
 
-    private void ZeroX() throws InterruptedException
+    private void ZeroX()
     {
-        opcode = memory.read(pc++) + x & 0xff;
+//        opcode = memory.read(pc++) + x & 0xff;
     }
 
-    private void ZeroY() throws InterruptedException
+    private void ZeroY()
     {
-        opcode = memory.read(pc++) + y & 0xff;
+//        opcode = memory.read(pc++) + y & 0xff;
     }
 
-    private void Abs() throws InterruptedException
+    private void Abs()
     {
-        opcode = memReadAbsolute(pc);
-        pc += 2;
+//        opcode = memReadAbsolute(pc);
+//        pc += 2;
     }
 
-    private void AbsX() throws InterruptedException
+    private void AbsX()
     {
-        opL = memory.read(pc++) + x;
-        opH = memory.read(pc++) << 8;
-        opcode = opH + opL;
+//        opL = memory.read(pc++) + x;
+//        opH = memory.read(pc++) << 8;
+//        opcode = opH + opL;
     }
 
-    private void AbsY() throws InterruptedException
+    private void AbsY()
     {
-        opL = memory.read(pc++) + y;
-        opH = memory.read(pc++) << 8;
-        opcode = opH + opL;
+//        opL = memory.read(pc++) + y;
+//        opH = memory.read(pc++) << 8;
+//        opcode = opH + opL;
     }
 
-    private void Ind() throws InterruptedException
+    private void Ind()
     {
-        ptrL = memory.read(pc++);
-        ptrH = memory.read(pc++) << 8;
-        opcode = memory.read(ptrH + ptrL);
-        ptrL = ptrL + 1 & 0xff;
-        opcode += memory.read(ptrH + ptrL) << 8;
+//        ptrL = memory.read(pc++);
+//        ptrH = memory.read(pc++) << 8;
+//        opcode = memory.read(ptrH + ptrL);
+//        ptrL = ptrL + 1 & 0xff;
+//        opcode += memory.read(ptrH + ptrL) << 8;
     }
 
-    private void IndZeroX() throws InterruptedException
+    private void IndZeroX()
     {
-        ptr = x + memory.read(pc++);
-        opcode = memory.read(ptr);
-        opcode += memory.read(ptr + 1 & 0xff) << 8;
+//        ptr = x + memory.read(pc++);
+//        opcode = memory.read(ptr);
+//        opcode += memory.read(ptr + 1 & 0xff) << 8;
     }
 
-    private void IndZeroY() throws InterruptedException
+    private void IndZeroY()
     {
-        ptr = memory.read(pc++);
-        opL = memory.read(ptr) + y;
-        opH = (memory.read(ptr + 1) & 0xff) << 8;
-        opcode = opH + opL;
+//        ptr = memory.read(pc++);
+//        opL = memory.read(ptr) + y;
+//        opH = (memory.read(ptr + 1) & 0xff) << 8;
+//        opcode = opH + opL;
     }
 
-    private void Rel() throws InterruptedException
+    private void Rel()
     {
-        opcode = memory.read(pc++);
-        if(opcode >= 128)
-            opcode = -(256 - opcode);
-        opcode = opcode + pc & 0xffff;
+//        opcode = memory.read(pc++);
+//        if(opcode >= 128)
+//            opcode = -(256 - opcode);
+//        opcode = opcode + pc & 0xffff;
     }
 
-    private void WAbsX() throws InterruptedException
+    private void WAbsX()
     {
-        opL = memory.read(pc++) + x;
-        opH = memory.read(pc++) << 8;
-        opcode = opH + opL;
+//        opL = memory.read(pc++) + x;
+//        opH = memory.read(pc++) << 8;
+//        opcode = opH + opL;
     }
 
-    private void WAbsY() throws InterruptedException
+    private void WAbsY()
     {
-        opL = memory.read(pc++) + y;
-        opH = memory.read(pc++) << 8;
-        opcode = opH + opL;
+//        opL = memory.read(pc++) + y;
+//        opH = memory.read(pc++) << 8;
+//        opcode = opH + opL;
     }
 
-    private void WIndZeroY() throws InterruptedException
+    private void WIndZeroY()
     {
-        ptr = memory.read(pc++);
-        opL = memory.read(ptr) + y;
-        opH = memory.read(ptr + 1 & 0xff) << 8;
-        opcode = opH + opL;
+//        ptr = memory.read(pc++);
+//        opL = memory.read(ptr) + y;
+//        opH = memory.read(ptr + 1 & 0xff) << 8;
+//        opcode = opH + opL;
     }
 
-    private void LDA() throws InterruptedException
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void LDA()
     {
-        a = memory.read(opcode);
-        setStatusRegisterNZ((byte)a);
+        this.a = this.data;
+        this.a &= 0xFF;
+        setStatusRegisterNZ(this.a);
+//        System.out.print("LDA ["+Integer.toHexString(this.address)+"] "+Integer.toHexString(this.a));
+        if (this.address == 0xc0ec && this.a >= 0x80)
+        {
+        	if (this.a == 0xd5)
+        	{
+            	//System.out.print("<------------------------------ "+Integer.toHexString(this.a));
+        		//System.out.println("      ===========================================");
+        	}
+//        	else
+//            	System.out.println();
+        }
+//        else
+//        	System.out.println();
     }
 
-    private void LDX() throws InterruptedException
+    private void LDX()
     {
-        x = memory.read(opcode);
-        setStatusRegisterNZ((byte)x);
+        this.x = this.data;
+        this.x &= 0xFF;
+        setStatusRegisterNZ(this.x);
     }
 
-    private void LDY() throws InterruptedException
+    private void LDY()
     {
-        y = memory.read(opcode);
-        setStatusRegisterNZ((byte)y);
+        this.y = this.data;
+        this.y &= 0xFF;
+        setStatusRegisterNZ(this.y);
     }
 
     private void STA()
     {
-        memory.write(opcode, a & 0xff);
+        this.data = this.a;
     }
 
     private void STX()
     {
-        memory.write(opcode, x & 0xff);
+        this.data = this.x;
     }
 
     private void STY()
     {
-        memory.write(opcode, y & 0xff);
+        this.data = this.y;
     }
 
-    private void ADC() throws InterruptedException
+    private void ADC()
     {
-        int Op1 = a;
-        int Op2 = memory.read(opcode);
-        if(d)
+        int Op1 = this.a;
+        int Op2 = this.data;
+        if (this.d)
         {
-            z = (Op1 + Op2 + (c ? 1 : 0) & 0xff) == 0;
-            tmp = (Op1 & 0xf) + (Op2 & 0xf) + (c ? 1 : 0);
+        	this.z = (Op1 + Op2 + (this.c ? 1 : 0) & 0xff) == 0;
+            int tmp = (Op1 & 0xf) + (Op2 & 0xf) + (this.c ? 1 : 0);
             tmp = tmp >= 10 ? tmp + 6 : tmp;
-            a = tmp;
+            this.a = tmp;
             tmp = (Op1 & 0xf0) + (Op2 & 0xf0) + (tmp & 0xf0);
-            n = (byte)tmp < 0;
-            v = ((Op1 ^ tmp) & ~(Op1 ^ Op2) & 0x80) != 0;
-            tmp = a & 0xf | (tmp >= 160 ? tmp + 96 : tmp);
-            c = tmp >= 256;
-            a = tmp & 0xff;
-        } else
+            this.n = (byte)tmp < 0;
+            this.v = ((Op1 ^ tmp) & ~(Op1 ^ Op2) & 0x80) != 0;
+            tmp = this.a & 0xf | (tmp >= 160 ? tmp + 96 : tmp);
+            this.c = tmp >= 256;
+            this.a = tmp & 0xff;
+        }
+        else
         {
-            tmp = Op1 + Op2 + (c ? 1 : 0);
-            a = tmp & 0xff;
-            v = ((Op1 ^ a) & ~(Op1 ^ Op2) & 0x80) != 0;
+            int tmp = Op1 + Op2 + (this.c ? 1 : 0);
+            this.a = tmp & 0xff;
+            this.v = ((Op1 ^ this.a) & ~(Op1 ^ Op2) & 0x80) != 0;
             setFlagCarry(tmp);
-            setStatusRegisterNZ((byte)a);
+            setStatusRegisterNZ(this.a);
         }
     }
 
-    private void SBC() throws InterruptedException
+    private void SBC()
     {
-        int Op1 = a;
-        int Op2 = memory.read(opcode);
-        if(d)
+        int Op1 = this.a;
+        int Op2 = this.data;
+        if (this.d)
         {
-            tmp = (Op1 & 0xf) - (Op2 & 0xf) - (c ? 0 : 1);
+            int tmp = (Op1 & 0xf) - (Op2 & 0xf) - (this.c ? 0 : 1);
             tmp = (tmp & 0x10) != 0 ? tmp - 6 : tmp;
-            a = tmp;
-            tmp = (Op1 & 0xf0) - (Op2 & 0xf0) - (a & 0x10);
-            a = a & 0xf | ((tmp & 0x100) != 0 ? tmp - 96 : tmp);
-            tmp = Op1 - Op2 - (c ? 0 : 1);
+            this.a = tmp;
+            tmp = (Op1 & 0xf0) - (Op2 & 0xf0) - (this.a & 0x10);
+            this.a = this.a & 0xf | ((tmp & 0x100) != 0 ? tmp - 96 : tmp);
+            tmp = Op1 - Op2 - (this.c ? 0 : 1);
             setFlagBorrow(tmp);
-            setStatusRegisterNZ((byte)tmp);
-        } else
+            setStatusRegisterNZ(tmp);
+        }
+        else
         {
-            tmp = Op1 - Op2 - (c ? 0 : 1);
-            a = tmp & 0xff;
-            v = ((Op1 ^ Op2) & (Op1 ^ a) & 0x80) != 0;
+            int tmp = Op1 - Op2 - (this.c ? 0 : 1);
+            this.a = tmp & 0xff;
+            this.v = ((Op1 ^ Op2) & (Op1 ^ this.a) & 0x80) != 0;
             setFlagBorrow(tmp);
-            setStatusRegisterNZ((byte)a);
+            setStatusRegisterNZ(this.a);
         }
     }
 
-    private void CMP() throws InterruptedException
+    private void CMP()
     {
-        tmp = a - memory.read(opcode);
+        final int tmp = this.a - this.data;
         setFlagBorrow(tmp);
-        setStatusRegisterNZ((byte)tmp);
+        setStatusRegisterNZ(tmp);
     }
 
-    private void CPX() throws InterruptedException
+    private void CPX()
     {
-        tmp = x - memory.read(opcode);
+        final int tmp = this.x - this.data;
         setFlagBorrow(tmp);
-        setStatusRegisterNZ((byte)tmp);
+        setStatusRegisterNZ(tmp);
     }
 
-    private void CPY() throws InterruptedException
+    private void CPY()
     {
-        tmp = y - memory.read(opcode);
+        final int tmp = this.y - this.data;
         setFlagBorrow(tmp);
-        setStatusRegisterNZ((byte)tmp);
+        setStatusRegisterNZ(tmp);
     }
 
-    private void AND() throws InterruptedException
+    private void AND()
     {
-        a &= memory.read(opcode) & 0xff;
-        setStatusRegisterNZ((byte)a);
+        this.a &= this.data;
+        setStatusRegisterNZ(this.a);
     }
 
-    private void ORA() throws InterruptedException
+    private void ORA()
     {
-        a |= memory.read(opcode) & 0xff;
-        setStatusRegisterNZ((byte)a);
+        this.a |= this.data;
+        setStatusRegisterNZ(this.a);
     }
 
-    private void EOR() throws InterruptedException
+    private void EOR()
     {
-        a ^= memory.read(opcode) & 0xff;
-        setStatusRegisterNZ((byte)a);
+        this.a ^= this.data;
+        setStatusRegisterNZ(this.a);
     }
 
-    private void ASL() throws InterruptedException
+    private void ASL()
     {
-        btmp = (byte)(memory.read(opcode) & 0xff);
-        memory.write(opcode, btmp);
-        c = btmp < 0;
+        byte btmp = (byte)this.data;
+        this.c = (btmp & 0x80) != 0;
         btmp <<= 1;
         setStatusRegisterNZ(btmp);
-        memory.write(opcode, btmp & 0xff);
+        this.data = btmp;
+        this.data &= 0xFF;
     }
 
     private void ASL_A()
     {
-        tmp = a << 1;
-        a = tmp & 0xff;
+        final int tmp = this.a << 1;
+        this.a = (byte)tmp;
+        this.a &= 0xFF;
         setFlagCarry(tmp);
-        setStatusRegisterNZ((byte)a);
+        setStatusRegisterNZ(this.a);
     }
 
-    private void LSR() throws InterruptedException
+    private void LSR()
     {
-        btmp = (byte)(memory.read(opcode) & 0xff);
-        c = (btmp & 1) != 0;
-        btmp = (byte)((btmp & 0xff) >> 1);
+        byte btmp = (byte)this.data;
+        this.c = (btmp & 0x01) != 0;
+        btmp >>>= 1;
         setStatusRegisterNZ(btmp);
-        memory.write(opcode, btmp & 0xff);
+        this.data = btmp;
+        this.data &= 0xFF;
     }
 
     private void LSR_A()
     {
-        c = (a & 1) != 0;
-        a >>= 1;
-        setStatusRegisterNZ((byte)a);
+        this.c = (this.a & 0x01) != 0;
+        this.a >>>= 1;
+        setStatusRegisterNZ(this.a);
     }
 
-    private void ROL() throws InterruptedException
+    private void ROL()
     {
-        btmp = (byte)(memory.read(opcode) & 0xff);
-        boolean newCarry = btmp < 0;
-        btmp = (byte)((btmp & 0xff) << 1 | (c ? 1 : 0));
-        c = newCarry;
+        byte btmp = (byte)this.data;
+        final boolean newCarry = (btmp < 0);
+        btmp = (byte)((btmp << 1) | (this.c ? 0x01 : 0));
+        this.c = newCarry;
         setStatusRegisterNZ(btmp);
-        memory.write(opcode, btmp & 0xff);
+        this.data = btmp;
+        this.data &= 0xFF;
     }
 
     private void ROL_A()
     {
-        tmp = a << 1 | (c ? 1 : 0);
-        a = tmp & 0xff;
+        final int tmp = (this.a << 1) | (this.c ? 0x01 : 0);
+        this.a = (byte)tmp;
+        this.a &= 0xFF;
         setFlagCarry(tmp);
-        setStatusRegisterNZ((byte)a);
+        setStatusRegisterNZ(this.a);
     }
 
-    private void ROR() throws InterruptedException
+    private void ROR()
     {
-        btmp = (byte)(memory.read(opcode) & 0xff);
-        boolean newCarry = (btmp & 1) != 0;
-        btmp = (byte)((btmp & 0xff) >> 1 | (c ? 0x80 : 0));
-        c = newCarry;
+        byte btmp = (byte)this.data;
+        final boolean newCarry = (btmp & 0x01) != 0;
+        btmp = (byte)((btmp >> 1) | (this.c ? 0x80 : 0));
+        this.c = newCarry;
         setStatusRegisterNZ(btmp);
-        memory.write(opcode, btmp & 0xff);
+        this.data = btmp;
+        this.data &= 0xFF;
     }
 
     private void ROR_A()
     {
-        tmp = a | (c ? 0x100 : 0);
-        c = (a & 1) != 0;
-        a = tmp >> 1;
-        setStatusRegisterNZ((byte)a);
+        this.c = (this.a & 0x01) != 0;
+        this.a = (this.a | (this.c ? 0x100 : 0)) >> 1;
+        this.a &= 0xFF;
+        setStatusRegisterNZ(this.a);
     }
 
-    private void INC() throws InterruptedException
+    private void INC()
     {
-        btmp = (byte)(memory.read(opcode) & 0xff);
-        memory.write(opcode, btmp);
-        btmp++;
-        setStatusRegisterNZ(btmp);
-        memory.write(opcode, btmp & 0xff);
+        ++this.data;
+        this.data &= 0xFF;
+        setStatusRegisterNZ(this.data);
     }
 
-    private void DEC() throws InterruptedException
+    private void DEC()
     {
-        btmp = (byte)(memory.read(opcode) & 0xff);
-        memory.write(opcode, btmp);
-        btmp--;
-        setStatusRegisterNZ(btmp);
-        memory.write(opcode, btmp & 0xff);
+        --this.data;
+        this.data &= 0xFF;
+        setStatusRegisterNZ(this.data);
     }
 
     private void INX()
     {
-        x = x + 1 & 0xff;
-        setStatusRegisterNZ((byte)x);
+        ++this.x;
+        this.x &= 0xFF;
+        setStatusRegisterNZ(this.x);
     }
 
     private void INY()
     {
-        y = y + 1 & 0xff;
-        setStatusRegisterNZ((byte)y);
+        ++this.y;
+        this.y &= 0xFF;
+        setStatusRegisterNZ(this.y);
     }
 
     private void DEX()
     {
-        x = x - 1 & 0xff;
-        setStatusRegisterNZ((byte)x);
+        --this.x;
+        this.x &= 0xFF;
+        setStatusRegisterNZ(this.x);
     }
 
     private void DEY()
     {
-        y = y - 1 & 0xff;
-        setStatusRegisterNZ((byte)y);
+        --this.y;
+        this.y &= 0xFF;
+        setStatusRegisterNZ(this.y);
     }
 
-    private void BIT() throws InterruptedException
+    private void BIT()
     {
-        btmp = (byte)(memory.read(opcode) & 0xff);
-        v = (btmp & 0x40) != 0;
-        n = btmp < 0;
-        z = (btmp & a) == 0;
+        final byte btmp = (byte)this.data;
+        this.v = (btmp & 0x40) != 0;
+        this.n = (btmp & 0x80) != 0;
+        this.z = (btmp & this.a) == 0;
     }
 
     private void PHA()
     {
-        memory.write(256 + s, a & 0xff);
-        s = (s - 1) & 0xff;
+    	this.data = this.a;
     }
 
     private void PHP()
     {
-        final int p = getStatusRegisterByte();
-        memory.write(256 + s, p & 0xff);
-        s = (s - 1) & 0xff;
+    	this.data = getStatusRegisterByte();
     }
 
-    private void PLA() throws InterruptedException
+    private void PLA()
     {
-        memory.read(s + 256);
-        s = (s + 1) & 0xff;
-        a = memory.read(s + 256) & 0xff;
-        setStatusRegisterNZ((byte)a);
+    	this.a = this.data;
+        setStatusRegisterNZ(this.a);
     }
 
-    private void PLP() throws InterruptedException
+    private void PLP()
     {
-        memory.read(s + 256);
-        s = (s + 1) & 0xff;
-        final int p = memory.read(s + 256) & 0xff;
-        setStatusRegisterByte(p);
+    	setStatusRegisterByte(this.data);
     }
 
-    private void BRK() throws InterruptedException
+    private void BRK()
     {
-        memory.read(opcode);
-        pushProgramCounter();
-        PHP();
-        //I = true;
-        b = true;
-        pc = memReadAbsolute(0xFFFE);
+//        memory.read(opcode);
+//        pushProgramCounter();
+//        PHP();
+//        //I = true;
+//        b = true;
+//        pc = memReadAbsolute(0xFFFE);
     }
 
-    private void RTI() throws InterruptedException
+    private void RTI()
     {
-        memory.read(s + 256);
-        PLP();
-        popProgramCounter();
+//        memory.read(s + 256);
+//        PLP();
+//        popProgramCounter();
     }
 
     private void JMP()
     {
-        pc = opcode;
+//        pc = opcode;
     }
 
-    private void RTS() throws InterruptedException
+    private void RTS()
     {
-        memory.read(s + 256);
-        popProgramCounter();
-        memory.read(pc++);
+//        memory.read(s + 256);
+//        popProgramCounter();
+//        memory.read(pc++);
     }
 
-    private void JSR() throws InterruptedException
+    private void JSR()
     {
-        opL = memory.read(pc++) & 0xff;
-        memory.read(s + 256);
-        pushProgramCounter();
-        pc = opL + ((memory.read(pc) & 0xff) << 8);
+//        opL = memory.read(pc++) & 0xff;
+//        memory.read(s + 256);
+//        pushProgramCounter();
+//        pc = opL + ((memory.read(pc) & 0xff) << 8);
     }
 
-    private void branch()
-    {
-        pc = opcode;
-    }
+//    private void branch()
+//    {
+//        pc = opcode;
+//    }
 
     private void BNE()
     {
-        if(!z)
-            branch();
+    	this.branch = !this.z;
     }
 
     private void BEQ()
     {
-        if(z)
-            branch();
+    	this.branch = this.z;
     }
 
     private void BVC()
     {
-        if(!v)
-            branch();
+    	this.branch = !this.v;
     }
 
     private void BVS()
     {
-        if(v)
-            branch();
+    	this.branch = this.v;
     }
 
     private void BCC()
     {
-        if(!c)
-            branch();
+    	this.branch = !this.c;
     }
 
     private void BCS()
     {
-        if(c)
-            branch();
+    	this.branch = this.c;
     }
 
     private void BPL()
     {
-        if(!n)
-            branch();
+    	this.branch = !this.n;
     }
 
     private void BMI()
     {
-        if(n)
-            branch();
+    	this.branch = this.n;
     }
 
     private void TAX()
     {
-        x = a;
-        setStatusRegisterNZ((byte)a);
+        this.x = this.a;
+        setStatusRegisterNZ(this.x);
     }
 
     private void TXA()
     {
-        a = x;
-        setStatusRegisterNZ((byte)a);
+        this.a = this.x;
+        setStatusRegisterNZ(this.a);
     }
 
     private void TAY()
     {
-        y = a;
-        setStatusRegisterNZ((byte)a);
+        this.y = this.a;
+        setStatusRegisterNZ(this.y);
     }
 
     private void TYA()
     {
-        a = y;
-        setStatusRegisterNZ((byte)a);
+        this.a = this.y;
+        setStatusRegisterNZ(this.a);
     }
 
     private void TXS()
     {
-        s = x;
+        this.s = this.x;
+        //setStatusRegisterNZ(this.s); // ???
     }
 
     private void TSX()
     {
-        x = s;
-        setStatusRegisterNZ((byte)x);
+        this.x = this.s;
+        setStatusRegisterNZ(this.x);
     }
 
     private void CLC()
@@ -2711,12 +2800,12 @@ public class CPU6502 implements Clock.Timed
 
     private void Unoff2()
     {
-        pc++;
+//        pc++;
     }
 
     private void Unoff3()
     {
-        pc += 2;
+//        pc += 2;
     }
 
     private void Hang()
@@ -2724,7 +2813,7 @@ public class CPU6502 implements Clock.Timed
         pc--;
     }
 
-    private void handleIRQ() throws InterruptedException
+    private void handleIRQ()
     {
         pushProgramCounter();
         memory.write(256 + s, (byte)(getStatusRegisterByte() & 0xffffffef));
@@ -2733,7 +2822,7 @@ public class CPU6502 implements Clock.Timed
         pc = memReadAbsolute(0xFFFE);
     }
 
-    private void handleNMI() throws InterruptedException
+    private void handleNMI()
     {
         pushProgramCounter();
         memory.write(256 + s, (byte)(getStatusRegisterByte() & 0xffffffef));
@@ -2743,7 +2832,7 @@ public class CPU6502 implements Clock.Timed
         pc = memReadAbsolute(0xFFFA);
     }
 
-    private int memReadAbsolute(int adr) throws InterruptedException
+    private int memReadAbsolute(int adr)
     {
         return memory.read(adr) | (memory.read(adr + 1) & 0xff) << 8;
     }
@@ -2756,7 +2845,7 @@ public class CPU6502 implements Clock.Timed
         s = (s - 1) & 0xff;
     }
 
-    private void popProgramCounter() throws InterruptedException
+    private void popProgramCounter()
     {
         s = (s + 1) & 0xff;
         pc = memory.read(s + 256) & 0xff;
