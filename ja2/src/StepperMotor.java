@@ -56,7 +56,7 @@ public class StepperMotor
 			throw new IllegalStateException();
 		}
 
-		int oldPos = StepperMotor.mapMagPos[this.mags]; // 0 - 7
+		final int oldPos = StepperMotor.mapMagPos[this.mags]; // 0 - 7
 
 		final int mask = 1 << magnet;
 		if (on)
@@ -74,7 +74,6 @@ public class StepperMotor
 		}
 
 		final int d = calcDeltaPos(oldPos,newPos);
-		oldPos = newPos;
 
 		this.quarterTrack += d;
 		constrainTrack();
