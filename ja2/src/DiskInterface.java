@@ -3,28 +3,27 @@
  */
 public class DiskInterface
 {
-	private final DiskDrive disk;
+	private final DiskDriveSimple disk;
 	private final StepperMotor arm;
 
-	private boolean load; // Q6
-	private boolean write; // Q7
+	private boolean write;
 
 	/**
 	 * @param disk
 	 * @param motor
 	 */
-	public DiskInterface(final DiskDrive disk, final StepperMotor arm)
+	public DiskInterface(final DiskDriveSimple disk, final StepperMotor arm)
 	{
 		this.disk = disk;
 		this.arm = arm;
 	}
 
-	public int io(final int addr, final byte data)
+	public byte io(final int addr, final byte data)
 	{
-		final int q = (addr & 0x000F) >> 1;
-		final boolean on = (addr & 1) != 0;
+		final int q = (addr & 0x000E) >> 1;
+		final boolean on = (addr & 0x0001) != 0;
 
-		int ret = this.disk.get();
+		byte ret = -1;
 		switch (q)
 		{
 			case 0:
@@ -38,31 +37,30 @@ public class DiskInterface
 				this.disk.setMotorOn(on);
 			break;
 			case 5:
-				this.disk.setDrive(on ? 1 : 0);
+				this.disk.setDrive2(on);
 			break;
 			case 6:
-				this.load = on;
-				if (this.load && this.write && this.disk.isMotorOn() && !this.disk.isWriteProtected())
+				if (on && this.write)
 				{
 					this.disk.set(data);
+				}
+				else if (!(on || this.write))
+				{
+					ret = this.disk.get();
 				}
 			break;
 			case 7:
 				this.write = on;
-				this.disk.setReadWriteMode(on);
-				if (this.load && this.disk.isMotorOn())
+				if (this.disk.isWriteProtected())
 				{
-					if (this.disk.isWriteProtected())
-					{
-						ret |= 0x80;
-					}
-					else
-					{
-						ret &= 0x7F;
-					}
+					ret |= 0x80;
+				}
+				else
+				{
+					ret &= 0x7F;
 				}
 			break;
 		}
-		return ret & 0xFF;
+		return ret;
 	}
 }

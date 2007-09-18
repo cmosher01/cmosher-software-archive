@@ -11,7 +11,7 @@ public class DiskDrive implements Clock.Timed
 	private int t;
 	private int track;
 	private int dr; // 0 = drive 1; 1 = drive 2
-	private volatile byte latch;
+	private byte latch;
 	private boolean writing;
 	private boolean motorOn;
 
@@ -21,6 +21,10 @@ public class DiskDrive implements Clock.Timed
 		{
 			this.disk[i] = new Disk2();
 		}
+	}
+	public void stopped()
+	{
+		
 	}
 	public void tick()
 	{
@@ -36,7 +40,9 @@ public class DiskDrive implements Clock.Timed
 			boolean outofsynch = false;
 			if (this.writing)
 			{
-				this.disk[this.dr].put(this.track,this.latch & 0x80);
+				final int bittowrite = (this.latch & 0x80) >> 7;
+				this.disk[this.dr].put(this.track,bittowrite);
+				System.out.println("DISK: writing "+bittowrite+" @"+Integer.toHexString(this.disk[this.dr].bit));
 				this.latch <<= 1;
 			}
 			else
@@ -44,18 +50,20 @@ public class DiskDrive implements Clock.Timed
 				if (this.latch < 0)
 				{
 					outofsynch = true;
-					//System.out.println("DISK: waiting for CPU...");
+//					System.out.println("DISK: waiting for CPU...");
 				}
 				else
 				{
 					this.latch <<= 1;
 					this.latch |= this.disk[this.dr].get(this.track);
-					//System.out.println("DISK: READ: latch set to ---> "+Integer.toHexString(((int)latch)&0xFF)+"    "+Integer.toBinaryString(((int)latch)&0xFF));
+//					System.out.println("DISK: READ: latch set to ---> "+Integer.toHexString(((int)latch)&0xFF)+"    "+Integer.toBinaryString(((int)latch)&0xFF));
 				}
 			}
 
 			if (!outofsynch)
-			this.disk[this.dr].rotate();
+			{
+				this.disk[this.dr].rotate();
+			}
 
 			this.t = 0;
 		}
@@ -63,11 +71,18 @@ public class DiskDrive implements Clock.Timed
 
 	public byte get()
 	{
+		return get(true);
+	}
+
+	public byte get(boolean clearIfValid)
+	{
 		final byte ret = this.latch;
-		if (ret < 0)
+		if (ret < 0 && clearIfValid)
 		{
 			//System.out.println("DISK: READ: reading negative latch: "+Integer.toHexString(((int)ret)&0xFF));
 			this.latch = 0;
+			if (this.writing)
+				System.out.println("CLEARING DISK LATCH WHILE WRITING");
 		}
 		return ret;
 	}
@@ -75,14 +90,15 @@ public class DiskDrive implements Clock.Timed
 	public void set(final byte value)
 	{
 		this.latch = value;
+		System.out.println("SETTING DISK LATCH TO "+Integer.toHexString(value));
 	}
 
 	public void setReadWriteMode(final boolean writing)
 	{
 		if (writing)
-			System.out.println("DISK: setting write mode");
+			System.out.println("DISK: write-mode");
 		else
-			System.out.println("DISK: setting read mode");
+			System.out.println("DISK: read-mode");
 		this.writing = writing;
 	}
 
@@ -97,7 +113,7 @@ public class DiskDrive implements Clock.Timed
 		{
 			throw new IllegalStateException();
 		}
-		System.out.println("DISK: setting drive number "+drive);
+		System.out.println("DISK: drive "+drive);
 		this.dr = drive;
 	}
 
@@ -127,7 +143,7 @@ public class DiskDrive implements Clock.Timed
 
 	public void setTrack(final int t)
 	{
-		System.out.println("DISK: set track "+t);
+//		System.out.println("DISK: track "+t);
 		this.track = t;
 	}
 }

@@ -17,7 +17,7 @@ public class Disk2
 	private BitSet[] bits = new BitSet[TRACKS_PER_DISK];
 	private boolean writable;
 	private boolean loaded;
-	private volatile int bit;
+	int bit;
 
 	public Disk2()
 	{
@@ -44,7 +44,7 @@ public class Disk2
 			}
 		}
 		disk.close();
-		System.out.println("Loaded up to track "+track+", bit "+bit);
+//		System.out.println("Loaded up to track "+track+", bit "+bit);
 //		showBits(this.bits[0].get(0,0x200));
 		this.writable = f.canWrite();
 		this.loaded = true;
@@ -103,6 +103,7 @@ public class Disk2
 		++this.bit;
 		if (this.bit >= BITS_PER_TRACK)
 		{
+			System.out.println("Disk completed one rotation ----------------");
 			this.bit = 0;
 		}
 	}

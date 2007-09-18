@@ -70,22 +70,27 @@ public final class Ja2 implements Runnable
 
     private void tryRun() throws IOException
     {
-    	final Keyboard keyboard = new Keyboard();
-
-    	final DiskDrive drive = new DiskDrive();
-    	drive.load(0,new File("C:\\apple2\\research\\dos\\3.1\\DOS33_SystemMaster_1986.nib"));
+    	DiskBytes disk1 = new DiskBytes();
+//    	disk1.load(new File("C:\\apple2\\research\\dos\\3.1\\hyperdos_restored.nib"));
+    	disk1.load(new File("C:\\apple2\\research\\dos\\3.1\\DOS33_SystemMaster_1986_patched_nodelay.nib"));
+//    	disk1.load(new File("C:\\apple2\\research\\dos\\3.1\\copy2plus40.nib"));
+//    	disk1.load(new File("C:\\apple2\\research\\dos\\3.1\\bloxap.nib"));
+    	DiskBytes disk2 = new DiskBytes();
+    	final DiskDriveSimple drive = new DiskDriveSimple(new DiskBytes[] {disk1,disk2});
     	final StepperMotor arm = new StepperMotor();
     	final DiskInterface disk = new DiskInterface(drive,arm);
 
+    	final Keyboard keyboard = new Keyboard();
+
         final Memory memory = new Memory(keyboard,disk);
-        for (int addr = 0; addr < 0x10000; ++addr)
-        {
-        	memory.write(addr,0);
-        }
-        final InputStream romImage = new FileInputStream(new File("c:/apple2/rom_images/210apple2plus.rom"));
+
+//        final InputStream romImage = new FileInputStream(new File("c:/apple2/rom_images/200apple2.rom")); // D000
+        final InputStream romImage = new FileInputStream(new File("c:/apple2/rom_images/210apple2plus.rom")); // B000
         memory.load(0xB000,romImage);
-		final InputStream diskromImage = getClass().getResourceAsStream("disk2rom.bin");
+
+        final InputStream diskromImage = getClass().getResourceAsStream("disk2rom.bin");
         memory.load(0xC600,diskromImage);
+        diskromImage.close();
 
     	final Video video = new Video(memory);
 
@@ -119,9 +124,9 @@ public final class Ja2 implements Runnable
 		video.requestFocus();
 
         final List<Clock.Timed> rTimed = new ArrayList<Clock.Timed>();
-    	rTimed.add(cpu);
     	rTimed.add(video);
-    	rTimed.add(drive);
+    	//rTimed.add(drive);
+    	rTimed.add(cpu);
     	this.clock = new Clock(rTimed);
     	this.clock.run();
 	}

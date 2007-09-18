@@ -775,6 +775,14 @@ public class AddressingModeCalculator
 
         case 0xFF:
             return Unoff();
+
+
+        case 0x80000001:
+        	return Addressing.NMI;
+        case 0x80000002:
+        	return Addressing.RESET;
+        case 0x80000003:
+        	return Addressing.IRQ;
         }
         return Addressing.SINGLE;
     }

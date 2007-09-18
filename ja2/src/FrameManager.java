@@ -33,7 +33,8 @@ public class FrameManager implements Closeable
 
         this.frame.setTitle("Apple ][");
 
-        this.frame.setJMenuBar(factoryMenuBar.createMenuBar());
+        this.frame.setResizable(false);
+//        this.frame.setJMenuBar(factoryMenuBar.createMenuBar());
 
         // Create and set up the content pane.
         this.frame.setContentPane(video);
@@ -50,7 +51,8 @@ public class FrameManager implements Closeable
     {
 		try
 		{
-			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+//			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		}
 		catch (final Throwable e)
 		{

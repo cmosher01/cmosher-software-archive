@@ -1,29 +1,38 @@
-import java.util.Random;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.Map.Entry;
 
 /*
  * Created on Aug 1, 2007
  */
 public class CPU6502 implements Clock.Timed
 {
-	private static final int BRK_VECTOR = 0xFFFE;
+	private static final int MEMORY_LIM = 0x10000;
+	private static final int IRQ_VECTOR = MEMORY_LIM-2; // or BRK
+	private static final int RESET_VECTOR = IRQ_VECTOR-2; // or power-on
+	private static final int NMI_VECTOR = RESET_VECTOR-2;
 
 	private int address;
 	private int data;
 
-	private volatile int a;
-	private volatile int x;
-	private volatile int y;
-	private volatile int pc;
-	private volatile int s;
+	protected int a;
+	protected int x;
+	protected int y;
+	protected int pc;
+	protected int s;
 
-	private boolean n;
-	private boolean v;
-	private boolean m;
-	private boolean b;
-	private boolean d;
-	private boolean i;
-	private boolean z;
-	private boolean c;
+	protected boolean n;
+	protected boolean v;
+	private boolean m = true;
+	protected boolean b;
+	protected boolean d;
+	protected boolean i;
+	protected boolean z;
+	protected boolean c;
 
 	private int t; // clock cycle within instruction
 	private int opcode;
@@ -41,6 +50,7 @@ public class CPU6502 implements Clock.Timed
 
     private volatile boolean IRQ;
     private volatile boolean NMI;
+    private volatile boolean reset;
 
     private Memory memory;
 
@@ -51,73 +61,103 @@ public class CPU6502 implements Clock.Timed
 		reset();
 	}
 
+    public void reset()
+    {
+//        this.i = true;
+//        this.pc = memReadAbsolute(RESET_VECTOR);
+//
+//        this.s = 0xFF; // real CPU doesn't do this ???
+    	this.reset = true;
+    }
+
+    public void IRQ()
+    {
+        this.IRQ = true;
+    }
+
+    public void NMI()
+    {
+        this.NMI = true;
+    }
+
+	public void step()
+	{
+		do
+		{
+			tick();
+		}
+		while (this.t > 0);
+	}
+
+	public void stopped()
+	{
+//		dumpTrace();
+	}
+
 	public void tick()
-	{
-		realtick();
-	}
-
-	private void checkSane()
-	{
-		if ((a & 0xFFFFFF00) != 0)
-		{
-			throw new IllegalStateException();
-		}
-		if ((x & 0xFFFFFF00) != 0)
-		{
-			throw new IllegalStateException();
-		}
-		if ((y & 0xFFFFFF00) != 0)
-		{
-			throw new IllegalStateException();
-		}
-		if ((s & 0xFFFFFF00) != 0)
-		{
-			throw new IllegalStateException();
-		}
-		if ((data & 0xFFFFFF00) != 0)
-		{
-			throw new IllegalStateException();
-		}
-	}
-
-	public void testtick()
-	{
-		++this.t;
-		if (this.t >= 1000)
-		{
-			this.t = 0;
-			Random rnd = new Random();
-			int c = rnd.nextInt(0x100);
-			int a = rnd.nextInt(0x400);
-			this.memory.write(0x400+a,c);
-		}
-	}
-
-	public void realtick()
 	{
 		if (this.t == 0)
 		{
-//			System.out.print(Integer.toHexString(this.pc));
-//			System.out.print(" a:");
-//			System.out.print(Integer.toHexString(this.a));
-//			System.out.print(" x:");
-//			System.out.print(Integer.toHexString(this.x));
-//			System.out.print(" y:");
-//			System.out.print(Integer.toHexString(this.y));
-//			System.out.println();
-			if (this.pc == 0xf8aa)
+//			trace();
+			if (this.reset || this.IRQ || this.NMI)
 			{
-				System.out.println("*************************************************************");
+				this.address = getInterruptAddress();
+				read();
+				this.opcode = getInterruptPseudoOpCode();
+				++this.t;
 			}
-			this.address = this.pc++;
-			read();
-			this.opcode = this.data;
-			//System.out.println("PC: "+Integer.toHexString(this.pc-1)+" ("+Integer.toHexString(this.opcode)+")");
-			++this.t;
+			else
+			{
+				this.address = this.pc++;
+				read();
+				this.opcode = this.data;
+				++this.t;
+			}
 		}
 		else
 		{
 			subseq();
+//			checkSane();
+			++this.t;
+		}
+	}
+
+	private Map<Integer,Integer> mapCoverageCount = new HashMap<Integer,Integer>();
+	private void trace()
+	{
+		if (!this.mapCoverageCount.containsKey(this.pc))
+		{
+			this.mapCoverageCount.put(this.pc,0);
+		}
+		int c = this.mapCoverageCount.get(this.pc);
+		++c;
+		this.mapCoverageCount.put(this.pc,c);
+	}
+
+	private static class CompareValues implements Comparator<Entry<Integer,Integer>>
+	{
+		public int compare(Entry<Integer,Integer> e1, Entry<Integer,Integer> e2)
+		{
+			if (e1.getValue() < e2.getValue())
+			{
+				return -1;
+			}
+			if (e2.getValue() < e1.getValue())
+			{
+				return +1;
+			}
+			return 0;
+		}
+		
+	}
+
+	public void dumpTrace()
+	{
+		final SortedSet<Entry<Integer,Integer>> trace = new TreeSet<Entry<Integer,Integer>>(Collections.<Entry<Integer,Integer>>reverseOrder(new CompareValues()));
+		trace.addAll(this.mapCoverageCount.entrySet());
+		for (final Map.Entry<Integer,Integer> e : trace)
+		{
+			System.out.println(HexUtil.word(e.getKey())+": "+e.getValue());
 		}
 	}
 
@@ -411,7 +451,7 @@ public class CPU6502 implements Clock.Timed
 						setIndex();
 						this.address = ba();
 						this.address += this.idx;
-						read(); // discard (assume this is the right address, manual is ambiguous)
+						//read(); // discard (assume this is the right address, manual is ambiguous) (it's messing up disk writing, so I'm omitting it)
 						execute();
 					break;
 					case 4:
@@ -670,16 +710,17 @@ public class CPU6502 implements Clock.Timed
 					break;
 					case 4:
 						this.address = spPush();
+						this.b = true;
 						this.data = getStatusRegisterByte();
 						write();
 					break;
 					case 5:
-						this.address = BRK_VECTOR;
+						this.address = IRQ_VECTOR;
 						read();
 						this.adl = this.data;
 					break;
 					case 6:
-						this.address = BRK_VECTOR+1;
+						this.address = IRQ_VECTOR+1;
 						read();
 						this.adh = this.data;
 						this.pc = ad();
@@ -837,9 +878,92 @@ public class CPU6502 implements Clock.Timed
 					break;
 				}
 			break;
+
+
+
+
+
+
+			case RESET:
+				switch (this.t)
+				{
+					// this.pc = NMI_VECTOR;
+					case 1:
+						++this.address;
+						read(); // discard
+					break;
+					case 2:
+				        this.s = 0xFF; // real CPU doesn't do this ???
+						this.address = spPush();
+						this.data = pch();
+						read(); // discard
+					break;
+					case 3:
+						this.address = spPush();
+						this.data = pcl();
+						read(); // discard
+					break;
+					case 4:
+						this.address = spPush();
+						this.i = true;
+						this.data = getStatusRegisterByte();
+						read(); // discard
+					break;
+					case 5:
+						++this.address; // RESET_VECTOR
+						read();
+						this.adl = this.data;
+					break;
+					case 6:
+						++this.address;
+						read();
+						this.adh = this.data;
+						this.pc = ad();
+						done();
+					break;
+				}
+			break;
+			case IRQ:
+				// this.pc = RESET_VECTOR
+				switch (this.t)
+				{
+					case 1:
+						++this.address;
+						read(); // discard
+					break;
+					case 2:
+				        this.s = 0xFF; // real CPU doesn't do this ???
+						this.address = spPush();
+						this.data = pch();
+						read(); // discard
+					break;
+					case 3:
+						this.address = spPush();
+						this.data = pcl();
+						read(); // discard
+					break;
+					case 4:
+						this.address = spPush();
+						this.i = true;
+						this.b = false; // ???
+						this.data = getStatusRegisterByte();
+						read(); // discard
+					break;
+					case 5:
+						++this.address; // IRQ_VECTOR
+						read();
+						this.adl = this.data;
+					break;
+					case 6:
+						++this.address;
+						read();
+						this.adh = this.data;
+						this.pc = ad();
+						done();
+					break;
+				}
+			break;
 		}
-		checkSane();
-		++this.t;
 	}
 
 	private int pch()
@@ -879,20 +1003,20 @@ public class CPU6502 implements Clock.Timed
 
 	private int getIndex()
 	{
-		int aaa = (this.opcode & 0xE0) >> 5;
-		int bbb = (this.opcode & 0x1C) >> 2;
-		int  cc = (this.opcode & 0x03);
-		if (bbb == 0)
+		int a = (this.opcode & 0xE0) >> 5;
+		int b = (this.opcode & 0x1C) >> 2;
+		int c = (this.opcode & 0x03);
+		if (b == 0)
 		{
 			return this.x;
 		}
-		if (bbb == 4 || bbb == 6)
+		if (b == 4 || b == 6)
 		{
 			return this.y;
 		}
-		if (bbb == 5 || bbb == 7)
+		if (b == 5 || b == 7)
 		{
-			if (cc == 2 && (aaa == 4 || aaa == 5))
+			if (c == 2 && (a == 4 || a == 5))
 			{
 				return this.y;
 			}
@@ -935,11 +1059,12 @@ public class CPU6502 implements Clock.Timed
 	private void read()
 	{
 		this.data = this.memory.read(this.address);
+		this.data &= 0xFF;
 	}
 
 	private void write()
 	{
-		this.memory.write(this.address,this.data);
+		this.memory.write(this.address,(byte)this.data);
 	}
 
 
@@ -973,1219 +1098,803 @@ public class CPU6502 implements Clock.Timed
 
 	private void handleInterrupts()
 	{
-		if (!i && IRQ)
+		if (this.reset)
 		{
-		    handleIRQ();
+			this.address = RESET_VECTOR-2;
 		}
-		if (NMI)
+		if (!this.i && this.IRQ)
 		{
-		    handleNMI();
+			this.address = IRQ_VECTOR-2;
+		}
+		if (this.NMI)
+		{
+			this.address = NMI_VECTOR-2;
 		}
 	}
-
-    public void reset()
-    {
-        i = true;
-        s = 0xFF;
-        pc = memReadAbsolute(0xFFFC);
-    }
-
-    public void IRQ(boolean state)
-    {
-        IRQ = state;
-    }
-
-    public void NMI()
-    {
-        NMI = true;
-    }
 
 	private void execute()
     {
 		// TODO undocumented instructions not yet implemented
         switch (this.opcode)
-        {
-        case 0:
-            Imm();
-            BRK();
-            break;
-
-        case 1:
-            IndZeroX();
-            ORA();
-            break;
-
-        case 2:
-            Hang();
-            break;
-
-        case 3:
-            Unoff();
-            break;
-
-        case 4:
-            Unoff2();
-            break;
-
-        case 5:
-            Zero();
-            ORA();
-            break;
-
-        case 6:
-            Zero();
-            ASL();
-            break;
-
-        case 7:
-            Unoff();
-            break;
-
-        case 8:
-            Imp();
-            PHP();
-            break;
-
-        case 9:
-            Imm();
-            ORA();
-            break;
-
-        case 10:
-            Imp();
-            ASL_A();
-            break;
-
-        case 11:
-            Unoff(); // FIXED
-            break;
-
-        case 12:
-            Unoff3();
-            break;
-
-        case 13:
-            Abs();
-            ORA();
-            break;
-
-        case 14:
-            Abs();
-            ASL();
-            break;
-
-        case 15:
-            Unoff();
-            break;
-
-        case 16:
-            Rel();
-            BPL();
-            break;
-
-        case 17:
-            IndZeroY();
-            ORA();
-            break;
-
-        case 18:
-            Hang();
-            break;
-
-        case 19:
-            Unoff();
-            break;
-
-        case 20:
-            Unoff2();
-            break;
-
-        case 21:
-            ZeroX();
-            ORA();
-            break;
-
-        case 22:
-            ZeroX();
-            ASL();
-            break;
-
-        case 23:
-            Unoff();
-            break;
-
-        case 24:
-            Imp();
-            CLC();
-            break;
-
-        case 25:
-            AbsY();
-            ORA();
-            break;
-
-        case 26:
-            Unoff1();
-            break;
-
-        case 27:
-            Unoff();
-            break;
-
-        case 28:
-            Unoff3();
-            break;
-
-        case 29:
-            AbsX();
-            ORA();
-            break;
-
-        case 30:
-            WAbsX();
-            ASL();
-            break;
-
-        case 31:
-            Unoff();
-            break;
-
-        case 32:
-            JSR();
-            break;
-
-        case 33:
-            IndZeroX();
-            AND();
-            break;
-
-        case 34:
-            Hang();
-            break;
-
-        case 35:
-            Unoff();
-            break;
-
-        case 36:
-            Zero();
-            BIT();
-            break;
-
-        case 37:
-            Zero();
-            AND();
-            break;
-
-        case 38:
-            Zero();
-            ROL();
-            break;
-
-        case 39:
-            Unoff();
-            break;
-
-        case 40:
-            Imp();
-            PLP();
-            break;
-
-        case 41:
-            Imm();
-            AND();
-            break;
-
-        case 42:
-            Imp();
-            ROL_A();
-            break;
-
-        case 43:
-            Unoff();
-            break;
-
-        case 44:
-            Abs();
-            BIT();
-            break;
-
-        case 45:
-            Abs();
-            AND();
-            break;
-
-        case 46:
-            Abs();
-            ROL();
-            break;
-
-        case 47:
-            Unoff();
-            break;
-
-        case 48:
-            Rel();
-            BMI();
-            break;
-
-        case 49:
-            IndZeroY();
-            AND();
-            break;
-
-        case 50:
-            Hang();
-            break;
-
-        case 51:
-            Unoff();
-            break;
-
-        case 52:
-            Unoff2();
-            break;
-
-        case 53:
-            ZeroX();
-            AND();
-            break;
-
-        case 54:
-            ZeroX();
-            ROL();
-            break;
-
-        case 55:
-            Unoff();
-            break;
-
-        case 56:
-            Imp();
-            SEC();
-            break;
-
-        case 57:
-            AbsY();
-            AND();
-            break;
-
-        case 58:
-            Unoff1();
-            break;
-
-        case 59:
-            Unoff();
-            break;
-
-        case 60:
-            Unoff3();
-            break;
-
-        case 61:
-            AbsX();
-            AND();
-            break;
-
-        case 62:
-            WAbsX();
-            ROL();
-            break;
-
-        case 63:
-            Unoff();
-            break;
-
-        case 64:
-            Imp();
-            RTI();
-            break;
-
-        case 65:
-            IndZeroX();
-            EOR();
-            break;
-
-        case 66:
-            Hang();
-            break;
-
-        case 67:
-            Unoff();
-            break;
-
-        case 68:
-            Unoff2();
-            break;
-
-        case 69:
-            Zero();
-            EOR();
-            break;
-
-        case 70:
-            Zero();
-            LSR();
-            break;
-
-        case 71:
-            Unoff();
-            break;
-
-        case 72:
-            Imp();
-            PHA();
-            break;
-
-        case 73:
-            Imm();
-            EOR();
-            break;
-
-        case 74:
-            Imp();
-            LSR_A();
-            break;
-
-        case 75:
-            Unoff();
-            break;
-
-        case 76:
-            Abs();
-            JMP();
-            break;
-
-        case 77:
-            Abs();
-            EOR();
-            break;
-
-        case 78:
-            Abs();
-            LSR();
-            break;
-
-        case 79:
-            Unoff();
-            break;
-
-        case 80:
-            Rel();
-            BVC();
-            break;
-
-        case 81:
-            IndZeroY();
-            EOR();
-            break;
-
-        case 82:
-            Hang();
-            break;
-
-        case 83:
-            Unoff();
-            break;
-
-        case 84:
-            Unoff2();
-            break;
-
-        case 85:
-            ZeroX();
-            EOR();
-            break;
-
-        case 86:
-            ZeroX();
-            LSR();
-            break;
-
-        case 87:
-            Unoff();
-            break;
-
-        case 88:
-            Imp();
-            CLI();
-            break;
-
-        case 89:
-            AbsY();
-            EOR();
-            break;
-
-        case 90:
-            Unoff1();
-            break;
-
-        case 91:
-            Unoff();
-            break;
-
-        case 92:
-            Unoff3();
-            break;
-
-        case 93:
-            AbsX();
-            EOR();
-            break;
-
-        case 94:
-            WAbsX();
-            LSR();
-            break;
-
-        case 95:
-            Unoff();
-            break;
-
-        case 96:
-            Imp();
-            RTS();
-            break;
-
-        case 97:
-            IndZeroX();
-            ADC();
-            break;
-
-        case 98:
-            Hang();
-            break;
-
-        case 99:
-            Unoff();
-            break;
-
-        case 100:
-            Unoff2();
-            break;
-
-        case 101:
-            Zero();
-            ADC();
-            break;
-
-        case 102:
-            Zero();
-            ROR();
-            break;
-
-        case 103:
-            Unoff();
-            break;
-
-        case 104:
-            Imp();
-            PLA();
-            break;
-
-        case 105:
-            Imm();
-            ADC();
-            break;
-
-        case 106:
-            Imp();
-            ROR_A();
-            break;
-
-        case 107:
-            Unoff();
-            break;
-
-        case 108:
-            Ind();
-            JMP();
-            break;
-
-        case 109:
-            Abs();
-            ADC();
-            break;
-
-        case 110:
-            Abs();
-            ROR();
-            break;
-
-        case 111:
-            Unoff();
-            break;
-
-        case 112:
-            Rel();
-            BVS();
-            break;
-
-        case 113:
-            IndZeroY();
-            ADC();
-            break;
-
-        case 114:
-            Hang();
-            break;
-
-        case 115:
-            Unoff();
-            break;
-
-        case 116:
-            Unoff2();
-            break;
-
-        case 117:
-            ZeroX();
-            ADC();
-            break;
-
-        case 118:
-            ZeroX();
-            ROR();
-            break;
-
-        case 119:
-            Unoff();
-            break;
-
-        case 120:
-            Imp();
-            SEI();
-            break;
-
-        case 121:
-            AbsY();
-            ADC();
-            break;
-
-        case 122:
-            Unoff1();
-            break;
-
-        case 123:
-            Unoff();
-            break;
-
-        case 124:
-            Unoff3();
-            break;
-
-        case 125:
-            AbsX();
-            ADC();
-            break;
-
-        case 126:
-            WAbsX();
-            ROR();
-            break;
-
-        case 127:
-            Unoff();
-            break;
-
-        case 128:
-            Unoff2();
-            break;
-
-        case 129:
-            IndZeroX();
-            STA();
-            break;
-
-        case 130:
-            Unoff2();
-            break;
-
-        case 131:
-            Unoff();
-            break;
-
-        case 132:
-            Zero();
-            STY();
-            break;
-
-        case 133:
-            Zero();
-            STA();
-            break;
-
-        case 134:
-            Zero();
-            STX();
-            break;
-
-        case 135:
-            Unoff();
-            break;
-
-        case 136:
-            Imp();
-            DEY();
-            break;
-
-        case 137:
-            Unoff2();
-            break;
-
-        case 138:
-            Imp();
-            TXA();
-            break;
-
-        case 139:
-            Unoff();
-            break;
-
-        case 140:
-            Abs();
-            STY();
-            break;
-
-        case 141:
-            Abs();
-            STA();
-            break;
-
-        case 142:
-            Abs();
-            STX();
-            break;
-
-        case 143:
-            Unoff();
-            break;
-
-        case 144:
-            Rel();
-            BCC();
-            break;
-
-        case 145:
-            WIndZeroY();
-            STA();
-            break;
-
-        case 146:
-            Hang();
-            break;
-
-        case 147:
-            Unoff();
-            break;
-
-        case 148:
-            ZeroX();
-            STY();
-            break;
-
-        case 149:
-            ZeroX();
-            STA();
-            break;
-
-        case 150:
-            ZeroY();
-            STX();
-            break;
-
-        case 151:
-            Unoff();
-            break;
-
-        case 152:
-            Imp();
-            TYA();
-            break;
-
-        case 153:
-            WAbsY();
-            STA();
-            break;
-
-        case 154:
-            Imp();
-            TXS();
-            break;
-
-        case 155:
-            Unoff();
-            break;
-
-        case 156:
-            Unoff();
-            break;
-
-        case 157:
-            WAbsX();
-            STA();
-            break;
-
-        case 158:
-            Unoff();
-            break;
-
-        case 159:
-            Unoff();
-            break;
-
-        case 160:
-            Imm();
-            LDY();
-            break;
-
-        case 161:
-            IndZeroX();
-            LDA();
-            break;
-
-        case 162:
-            Imm();
-            LDX();
-            break;
-
-        case 163:
-            Unoff();
-            break;
-
-        case 164:
-            Zero();
-            LDY();
-            break;
-
-        case 165:
-            Zero();
-            LDA();
-            break;
-
-        case 166:
-            Zero();
-            LDX();
-            break;
-
-        case 167:
-            Unoff();
-            break;
-
-        case 168:
-            Imp();
-            TAY();
-            break;
-
-        case 169:
-            Imm();
-            LDA();
-            break;
-
-        case 170:
-            Imp();
-            TAX();
-            break;
-
-        case 171:
-            Unoff();
-            break;
-
-        case 172:
-            Abs();
-            LDY();
-            break;
-
-        case 173:
-            Abs();
-            LDA();
-            break;
-
-        case 174:
-            Abs();
-            LDX();
-            break;
-
-        case 175:
-            Unoff();
-            break;
-
-        case 176:
-            Rel();
-            BCS();
-            break;
-
-        case 177:
-            IndZeroY();
-            LDA();
-            break;
-
-        case 178:
-            Hang();
-            break;
-
-        case 179:
-            Unoff();
-            break;
-
-        case 180:
-            ZeroX();
-            LDY();
-            break;
-
-        case 181:
-            ZeroX();
-            LDA();
-            break;
-
-        case 182:
-            ZeroY();
-            LDX();
-            break;
-
-        case 183:
-            Unoff();
-            break;
-
-        case 184:
-            Imp();
-            CLV();
-            break;
-
-        case 185:
-            AbsY();
-            LDA();
-            break;
-
-        case 186:
-            Imp();
-            TSX();
-            break;
-
-        case 187:
-            Unoff();
-            break;
-
-        case 188:
-            AbsX();
-            LDY();
-            break;
-
-        case 189:
-            AbsX();
-            LDA();
-            break;
-
-        case 190:
-            AbsY();
-            LDX();
-            break;
-
-        case 191:
-            Unoff();
-            break;
-
-        case 192:
-            Imm();
-            CPY();
-            break;
-
-        case 193:
-            IndZeroX();
-            CMP();
-            break;
-
-        case 194:
-            Unoff2();
-            break;
-
-        case 195:
-            Unoff();
-            break;
-
-        case 196:
-            Zero();
-            CPY();
-            break;
-
-        case 197:
-            Zero();
-            CMP();
-            break;
-
-        case 198:
-            Zero();
-            DEC();
-            break;
-
-        case 199:
-            Unoff();
-            break;
-
-        case 200:
-            Imp();
-            INY();
-            break;
-
-        case 201:
-            Imm();
-            CMP();
-            break;
-
-        case 202:
-            Imp();
-            DEX();
-            break;
-
-        case 203:
-            Unoff();
-            break;
-
-        case 204:
-            Abs();
-            CPY();
-            break;
-
-        case 205:
-            Abs();
-            CMP();
-            break;
-
-        case 206:
-            Abs();
-            DEC();
-            break;
-
-        case 207:
-            Unoff();
-            break;
-
-        case 208:
-            Rel();
-            BNE();
-            break;
-
-        case 209:
-            IndZeroY();
-            CMP();
-            break;
-
-        case 210:
-            Hang();
-            break;
-
-        case 211:
-            Unoff();
-            break;
-
-        case 212:
-            Unoff2();
-            break;
-
-        case 213:
-            ZeroX();
-            CMP();
-            break;
-
-        case 214:
-            ZeroX();
-            DEC();
-            break;
-
-        case 215:
-            Unoff();
-            break;
-
-        case 216:
-            Imp();
-            CLD();
-            break;
-
-        case 217:
-            AbsY();
-            CMP();
-            break;
-
-        case 218:
-            Unoff1();
-            break;
-
-        case 219:
-            Unoff();
-            break;
-
-        case 220:
-            Unoff3();
-            break;
-
-        case 221:
-            AbsX();
-            CMP();
-            break;
-
-        case 222:
-            WAbsX();
-            DEC();
-            break;
-
-        case 223:
-            Unoff();
-            break;
-
-        case 224:
-            Imm();
-            CPX();
-            break;
-
-        case 225:
-            IndZeroX();
-            SBC();
-            break;
-
-        case 226:
-            Unoff2();
-            break;
-
-        case 227:
-            Unoff();
-            break;
-
-        case 228:
-            Zero();
-            CPX();
-            break;
-
-        case 229:
-            Zero();
-            SBC();
-            break;
-
-        case 230:
-            Zero();
-            INC();
-            break;
-
-        case 231:
-            Unoff();
-            break;
-
-        case 232:
-            Imp();
-            INX();
-            break;
-
-        case 233:
-            Imm();
-            SBC();
-            break;
-
-        case 234:
-            Imp();
-            NOP();
-            break;
-
-        case 235:
-            Unoff(); // FIXED
-            break;
-
-        case 236:
-            Abs();
-            CPX();
-            break;
-
-        case 237:
-            Abs();
-            SBC();
-            break;
-
-        case 238:
-            Abs();
-            INC();
-            break;
-
-        case 239:
-            Unoff();
-            break;
-
-        case 240:
-            Rel();
-            BEQ();
-            break;
-
-        case 241:
-            IndZeroY();
-            SBC();
-            break;
-
-        case 242:
-            Hang();
-            break;
-
-        case 243:
-            Unoff();
-            break;
-
-        case 244:
-            Unoff2();
-            break;
-
-        case 245:
-            ZeroX();
-            SBC();
-            break;
-
-        case 246:
-            ZeroX();
-            INC();
-            break;
-
-        case 247:
-            Unoff();
-            break;
-
-        case 248:
-            Imp();
-            SED();
-            break;
-
-        case 249:
-            AbsY();
-            SBC();
-            break;
-
-        case 250:
-            Unoff1();
-            break;
-
-        case 251:
-            Unoff();
-            break;
-
-        case 252:
-            Unoff3();
-            break;
-
-        case 253:
-            AbsX();
-            SBC();
-            break;
-
-        case 254:
-            WAbsX();
-            INC();
-            break;
-
-        case 255:
-            Unoff();
-            break;
-        }
+		{
+			case 0:
+				BRK();
+			break;
+			case 1:
+				ORA();
+			break;
+			case 2:
+				Hang();
+			break;
+			case 3:
+				Unoff();
+			break;
+			case 4:
+				Unoff2();
+			break;
+			case 5:
+				ORA();
+			break;
+			case 6:
+				ASL();
+			break;
+			case 7:
+				Unoff();
+			break;
+			case 8:
+				PHP();
+			break;
+			case 9:
+				ORA();
+			break;
+			case 10:
+				ASL_A();
+			break;
+			case 11:
+				Unoff(); // FIXED
+			break;
+			case 12:
+				Unoff3();
+			break;
+			case 13:
+				ORA();
+			break;
+			case 14:
+				ASL();
+			break;
+			case 15:
+				Unoff();
+			break;
+			case 16:
+				BPL();
+			break;
+			case 17:
+				ORA();
+			break;
+			case 18:
+				Hang();
+			break;
+			case 19:
+				Unoff();
+			break;
+			case 20:
+				Unoff2();
+			break;
+			case 21:
+				ORA();
+			break;
+			case 22:
+				ASL();
+			break;
+			case 23:
+				Unoff();
+			break;
+			case 24:
+				CLC();
+			break;
+			case 25:
+				ORA();
+			break;
+			case 26:
+				Unoff1();
+			break;
+			case 27:
+				Unoff();
+			break;
+			case 28:
+				Unoff3();
+			break;
+			case 29:
+				ORA();
+			break;
+			case 30:
+				ASL();
+			break;
+			case 31:
+				Unoff();
+			break;
+			case 32:
+				JSR();
+			break;
+			case 33:
+				AND();
+			break;
+			case 34:
+				Hang();
+			break;
+			case 35:
+				Unoff();
+			break;
+			case 36:
+				BIT();
+			break;
+			case 37:
+				AND();
+			break;
+			case 38:
+				ROL();
+			break;
+			case 39:
+				Unoff();
+			break;
+			case 40:
+				PLP();
+			break;
+			case 41:
+				AND();
+			break;
+			case 42:
+				ROL_A();
+			break;
+			case 43:
+				Unoff();
+			break;
+			case 44:
+				BIT();
+			break;
+			case 45:
+				AND();
+			break;
+			case 46:
+				ROL();
+			break;
+			case 47:
+				Unoff();
+			break;
+			case 48:
+				BMI();
+			break;
+			case 49:
+				AND();
+			break;
+			case 50:
+				Hang();
+			break;
+			case 51:
+				Unoff();
+			break;
+			case 52:
+				Unoff2();
+			break;
+			case 53:
+				AND();
+			break;
+			case 54:
+				ROL();
+			break;
+			case 55:
+				Unoff();
+			break;
+			case 56:
+				SEC();
+			break;
+			case 57:
+				AND();
+			break;
+			case 58:
+				Unoff1();
+			break;
+			case 59:
+				Unoff();
+			break;
+			case 60:
+				Unoff3();
+			break;
+			case 61:
+				AND();
+			break;
+			case 62:
+				ROL();
+			break;
+			case 63:
+				Unoff();
+			break;
+			case 64:
+				RTI();
+			break;
+			case 65:
+				EOR();
+			break;
+			case 66:
+				Hang();
+			break;
+			case 67:
+				Unoff();
+			break;
+			case 68:
+				Unoff2();
+			break;
+			case 69:
+				EOR();
+			break;
+			case 70:
+				LSR();
+			break;
+			case 71:
+				Unoff();
+			break;
+			case 72:
+				PHA();
+			break;
+			case 73:
+				EOR();
+			break;
+			case 74:
+				LSR_A();
+			break;
+			case 75:
+				Unoff();
+			break;
+			case 76:
+				JMP();
+			break;
+			case 77:
+				EOR();
+			break;
+			case 78:
+				LSR();
+			break;
+			case 79:
+				Unoff();
+			break;
+			case 80:
+				BVC();
+			break;
+			case 81:
+				EOR();
+			break;
+			case 82:
+				Hang();
+			break;
+			case 83:
+				Unoff();
+			break;
+			case 84:
+				Unoff2();
+			break;
+			case 85:
+				EOR();
+			break;
+			case 86:
+				LSR();
+			break;
+			case 87:
+				Unoff();
+			break;
+			case 88:
+				CLI();
+			break;
+			case 89:
+				EOR();
+			break;
+			case 90:
+				Unoff1();
+			break;
+			case 91:
+				Unoff();
+			break;
+			case 92:
+				Unoff3();
+			break;
+			case 93:
+				EOR();
+			break;
+			case 94:
+				LSR();
+			break;
+			case 95:
+				Unoff();
+			break;
+			case 96:
+				RTS();
+			break;
+			case 97:
+				ADC();
+			break;
+			case 98:
+				Hang();
+			break;
+			case 99:
+				Unoff();
+			break;
+			case 100:
+				Unoff2();
+			break;
+			case 101:
+				ADC();
+			break;
+			case 102:
+				ROR();
+			break;
+			case 103:
+				Unoff();
+			break;
+			case 104:
+				PLA();
+			break;
+			case 105:
+				ADC();
+			break;
+			case 106:
+				ROR_A();
+			break;
+			case 107:
+				Unoff();
+			break;
+			case 108:
+				JMP();
+			break;
+			case 109:
+				ADC();
+			break;
+			case 110:
+				ROR();
+			break;
+			case 111:
+				Unoff();
+			break;
+			case 112:
+				BVS();
+			break;
+			case 113:
+				ADC();
+			break;
+			case 114:
+				Hang();
+			break;
+			case 115:
+				Unoff();
+			break;
+			case 116:
+				Unoff2();
+			break;
+			case 117:
+				ADC();
+			break;
+			case 118:
+				ROR();
+			break;
+			case 119:
+				Unoff();
+			break;
+			case 120:
+				SEI();
+			break;
+			case 121:
+				ADC();
+			break;
+			case 122:
+				Unoff1();
+			break;
+			case 123:
+				Unoff();
+			break;
+			case 124:
+				Unoff3();
+			break;
+			case 125:
+				ADC();
+			break;
+			case 126:
+				ROR();
+			break;
+			case 127:
+				Unoff();
+			break;
+			case 128:
+				Unoff2();
+			break;
+			case 129:
+				STA();
+			break;
+			case 130:
+				Unoff2();
+			break;
+			case 131:
+				Unoff();
+			break;
+			case 132:
+				STY();
+			break;
+			case 133:
+				STA();
+			break;
+			case 134:
+				STX();
+			break;
+			case 135:
+				Unoff();
+			break;
+			case 136:
+				DEY();
+			break;
+			case 137:
+				Unoff2();
+			break;
+			case 138:
+				TXA();
+			break;
+			case 139:
+				Unoff();
+			break;
+			case 140:
+				STY();
+			break;
+			case 141:
+				STA();
+			break;
+			case 142:
+				STX();
+			break;
+			case 143:
+				Unoff();
+			break;
+			case 144:
+				BCC();
+			break;
+			case 145:
+				STA();
+			break;
+			case 146:
+				Hang();
+			break;
+			case 147:
+				Unoff();
+			break;
+			case 148:
+				STY();
+			break;
+			case 149:
+				STA();
+			break;
+			case 150:
+				STX();
+			break;
+			case 151:
+				Unoff();
+			break;
+			case 152:
+				TYA();
+			break;
+			case 153:
+				STA();
+			break;
+			case 154:
+				TXS();
+			break;
+			case 155:
+				Unoff();
+			break;
+			case 156:
+				Unoff();
+			break;
+			case 157:
+				STA();
+			break;
+			case 158:
+				Unoff();
+			break;
+			case 159:
+				Unoff();
+			break;
+			case 160:
+				LDY();
+			break;
+			case 161:
+				LDA();
+			break;
+			case 162:
+				LDX();
+			break;
+			case 163:
+				Unoff();
+			break;
+			case 164:
+				LDY();
+			break;
+			case 165:
+				LDA();
+			break;
+			case 166:
+				LDX();
+			break;
+			case 167:
+				Unoff();
+			break;
+			case 168:
+				TAY();
+			break;
+			case 169:
+				LDA();
+			break;
+			case 170:
+				TAX();
+			break;
+			case 171:
+				Unoff();
+			break;
+			case 172:
+				LDY();
+			break;
+			case 173:
+				LDA();
+			break;
+			case 174:
+				LDX();
+			break;
+			case 175:
+				Unoff();
+			break;
+			case 176:
+				BCS();
+			break;
+			case 177:
+				LDA();
+			break;
+			case 178:
+				Hang();
+			break;
+			case 179:
+				Unoff();
+			break;
+			case 180:
+				LDY();
+			break;
+			case 181:
+				LDA();
+			break;
+			case 182:
+				LDX();
+			break;
+			case 183:
+				Unoff();
+			break;
+			case 184:
+				CLV();
+			break;
+			case 185:
+				LDA();
+			break;
+			case 186:
+				TSX();
+			break;
+			case 187:
+				Unoff();
+			break;
+			case 188:
+				LDY();
+			break;
+			case 189:
+				LDA();
+			break;
+			case 190:
+				LDX();
+			break;
+			case 191:
+				Unoff();
+			break;
+			case 192:
+				CPY();
+			break;
+			case 193:
+				CMP();
+			break;
+			case 194:
+				Unoff2();
+			break;
+			case 195:
+				Unoff();
+			break;
+			case 196:
+				CPY();
+			break;
+			case 197:
+				CMP();
+			break;
+			case 198:
+				DEC();
+			break;
+			case 199:
+				Unoff();
+			break;
+			case 200:
+				INY();
+			break;
+			case 201:
+				CMP();
+			break;
+			case 202:
+				DEX();
+			break;
+			case 203:
+				Unoff();
+			break;
+			case 204:
+				CPY();
+			break;
+			case 205:
+				CMP();
+			break;
+			case 206:
+				DEC();
+			break;
+			case 207:
+				Unoff();
+			break;
+			case 208:
+				BNE();
+			break;
+			case 209:
+				CMP();
+			break;
+			case 210:
+				Hang();
+			break;
+			case 211:
+				Unoff();
+			break;
+			case 212:
+				Unoff2();
+			break;
+			case 213:
+				CMP();
+			break;
+			case 214:
+				DEC();
+			break;
+			case 215:
+				Unoff();
+			break;
+			case 216:
+				CLD();
+			break;
+			case 217:
+				CMP();
+			break;
+			case 218:
+				Unoff1();
+			break;
+			case 219:
+				Unoff();
+			break;
+			case 220:
+				Unoff3();
+			break;
+			case 221:
+				CMP();
+			break;
+			case 222:
+				DEC();
+			break;
+			case 223:
+				Unoff();
+			break;
+			case 224:
+				CPX();
+			break;
+			case 225:
+				SBC();
+			break;
+			case 226:
+				Unoff2();
+			break;
+			case 227:
+				Unoff();
+			break;
+			case 228:
+				CPX();
+			break;
+			case 229:
+				SBC();
+			break;
+			case 230:
+				INC();
+			break;
+			case 231:
+				Unoff();
+			break;
+			case 232:
+				INX();
+			break;
+			case 233:
+				SBC();
+			break;
+			case 234:
+				NOP();
+			break;
+			case 235:
+				Unoff(); // FIXED
+			break;
+			case 236:
+				CPX();
+			break;
+			case 237:
+				SBC();
+			break;
+			case 238:
+				INC();
+			break;
+			case 239:
+				Unoff();
+			break;
+			case 240:
+				BEQ();
+			break;
+			case 241:
+				SBC();
+			break;
+			case 242:
+				Hang();
+			break;
+			case 243:
+				Unoff();
+			break;
+			case 244:
+				Unoff2();
+			break;
+			case 245:
+				SBC();
+			break;
+			case 246:
+				INC();
+			break;
+			case 247:
+				Unoff();
+			break;
+			case 248:
+				SED();
+			break;
+			case 249:
+				SBC();
+			break;
+			case 250:
+				Unoff1();
+			break;
+			case 251:
+				Unoff();
+			break;
+			case 252:
+				Unoff3();
+			break;
+			case 253:
+				SBC();
+			break;
+			case 254:
+				INC();
+			break;
+			case 255:
+				Unoff();
+			break;
+			default:
+				throw new IllegalStateException();
+		}
     }
 
     private void setStatusRegisterByte(final int p)
     {
     	this.n = ((p & 0x80) != 0);
     	this.v = ((p & 0x40) != 0);
-    	this.m = ((p & 0x20) != 0);
+//    	this.m = ((p & 0x20) != 0); can't clear this flag
     	this.b = ((p & 0x10) != 0);
     	this.d = ((p & 0x08) != 0);
     	this.i = ((p & 0x04) != 0);
@@ -2232,115 +1941,6 @@ public class CPU6502 implements Clock.Timed
         return p;
     }
 
-    private void Imp()
-    {
-    }
-
-    private void Imm()
-    {
-//        opcode = pc++;
-    }
-
-    private void Zero()
-    {
-//        opcode = memory.read(pc++);
-    }
-
-    private void ZeroX()
-    {
-//        opcode = memory.read(pc++) + x & 0xff;
-    }
-
-    private void ZeroY()
-    {
-//        opcode = memory.read(pc++) + y & 0xff;
-    }
-
-    private void Abs()
-    {
-//        opcode = memReadAbsolute(pc);
-//        pc += 2;
-    }
-
-    private void AbsX()
-    {
-//        opL = memory.read(pc++) + x;
-//        opH = memory.read(pc++) << 8;
-//        opcode = opH + opL;
-    }
-
-    private void AbsY()
-    {
-//        opL = memory.read(pc++) + y;
-//        opH = memory.read(pc++) << 8;
-//        opcode = opH + opL;
-    }
-
-    private void Ind()
-    {
-//        ptrL = memory.read(pc++);
-//        ptrH = memory.read(pc++) << 8;
-//        opcode = memory.read(ptrH + ptrL);
-//        ptrL = ptrL + 1 & 0xff;
-//        opcode += memory.read(ptrH + ptrL) << 8;
-    }
-
-    private void IndZeroX()
-    {
-//        ptr = x + memory.read(pc++);
-//        opcode = memory.read(ptr);
-//        opcode += memory.read(ptr + 1 & 0xff) << 8;
-    }
-
-    private void IndZeroY()
-    {
-//        ptr = memory.read(pc++);
-//        opL = memory.read(ptr) + y;
-//        opH = (memory.read(ptr + 1) & 0xff) << 8;
-//        opcode = opH + opL;
-    }
-
-    private void Rel()
-    {
-//        opcode = memory.read(pc++);
-//        if(opcode >= 128)
-//            opcode = -(256 - opcode);
-//        opcode = opcode + pc & 0xffff;
-    }
-
-    private void WAbsX()
-    {
-//        opL = memory.read(pc++) + x;
-//        opH = memory.read(pc++) << 8;
-//        opcode = opH + opL;
-    }
-
-    private void WAbsY()
-    {
-//        opL = memory.read(pc++) + y;
-//        opH = memory.read(pc++) << 8;
-//        opcode = opH + opL;
-    }
-
-    private void WIndZeroY()
-    {
-//        ptr = memory.read(pc++);
-//        opL = memory.read(ptr) + y;
-//        opH = memory.read(ptr + 1 & 0xff) << 8;
-//        opcode = opH + opL;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2352,19 +1952,6 @@ public class CPU6502 implements Clock.Timed
         this.a = this.data;
         this.a &= 0xFF;
         setStatusRegisterNZ(this.a);
-//        System.out.print("LDA ["+Integer.toHexString(this.address)+"] "+Integer.toHexString(this.a));
-        if (this.address == 0xc0ec && this.a >= 0x80)
-        {
-        	if (this.a == 0xd5)
-        	{
-            	//System.out.print("<------------------------------ "+Integer.toHexString(this.a));
-        		//System.out.println("      ===========================================");
-        	}
-//        	else
-//            	System.out.println();
-        }
-//        else
-//        	System.out.println();
     }
 
     private void LDX()
@@ -2394,58 +1981,6 @@ public class CPU6502 implements Clock.Timed
     private void STY()
     {
         this.data = this.y;
-    }
-
-    private void ADC()
-    {
-        int Op1 = this.a;
-        int Op2 = this.data;
-        if (this.d)
-        {
-        	this.z = (Op1 + Op2 + (this.c ? 1 : 0) & 0xff) == 0;
-            int tmp = (Op1 & 0xf) + (Op2 & 0xf) + (this.c ? 1 : 0);
-            tmp = tmp >= 10 ? tmp + 6 : tmp;
-            this.a = tmp;
-            tmp = (Op1 & 0xf0) + (Op2 & 0xf0) + (tmp & 0xf0);
-            this.n = (byte)tmp < 0;
-            this.v = ((Op1 ^ tmp) & ~(Op1 ^ Op2) & 0x80) != 0;
-            tmp = this.a & 0xf | (tmp >= 160 ? tmp + 96 : tmp);
-            this.c = tmp >= 256;
-            this.a = tmp & 0xff;
-        }
-        else
-        {
-            int tmp = Op1 + Op2 + (this.c ? 1 : 0);
-            this.a = tmp & 0xff;
-            this.v = ((Op1 ^ this.a) & ~(Op1 ^ Op2) & 0x80) != 0;
-            setFlagCarry(tmp);
-            setStatusRegisterNZ(this.a);
-        }
-    }
-
-    private void SBC()
-    {
-        int Op1 = this.a;
-        int Op2 = this.data;
-        if (this.d)
-        {
-            int tmp = (Op1 & 0xf) - (Op2 & 0xf) - (this.c ? 0 : 1);
-            tmp = (tmp & 0x10) != 0 ? tmp - 6 : tmp;
-            this.a = tmp;
-            tmp = (Op1 & 0xf0) - (Op2 & 0xf0) - (this.a & 0x10);
-            this.a = this.a & 0xf | ((tmp & 0x100) != 0 ? tmp - 96 : tmp);
-            tmp = Op1 - Op2 - (this.c ? 0 : 1);
-            setFlagBorrow(tmp);
-            setStatusRegisterNZ(tmp);
-        }
-        else
-        {
-            int tmp = Op1 - Op2 - (this.c ? 0 : 1);
-            this.a = tmp & 0xff;
-            this.v = ((Op1 ^ Op2) & (Op1 ^ this.a) & 0x80) != 0;
-            setFlagBorrow(tmp);
-            setStatusRegisterNZ(this.a);
-        }
     }
 
     private void CMP()
@@ -2487,80 +2022,171 @@ public class CPU6502 implements Clock.Timed
         setStatusRegisterNZ(this.a);
     }
 
+
+
+
+
+
     private void ASL()
     {
-        byte btmp = (byte)this.data;
-        this.c = (btmp & 0x80) != 0;
-        btmp <<= 1;
-        setStatusRegisterNZ(btmp);
-        this.data = btmp;
-        this.data &= 0xFF;
+    	this.data = shiftLeft(this.data);
     }
 
     private void ASL_A()
     {
-        final int tmp = this.a << 1;
-        this.a = (byte)tmp;
-        this.a &= 0xFF;
-        setFlagCarry(tmp);
-        setStatusRegisterNZ(this.a);
+    	this.a = shiftLeft(this.a);
     }
 
     private void LSR()
     {
-        byte btmp = (byte)this.data;
-        this.c = (btmp & 0x01) != 0;
-        btmp >>>= 1;
-        setStatusRegisterNZ(btmp);
-        this.data = btmp;
-        this.data &= 0xFF;
+        this.data = shiftRight(this.data);
     }
 
     private void LSR_A()
     {
-        this.c = (this.a & 0x01) != 0;
-        this.a >>>= 1;
-        setStatusRegisterNZ(this.a);
+        this.a = shiftRight(this.a);
     }
 
     private void ROL()
     {
-        byte btmp = (byte)this.data;
-        final boolean newCarry = (btmp < 0);
-        btmp = (byte)((btmp << 1) | (this.c ? 0x01 : 0));
-        this.c = newCarry;
-        setStatusRegisterNZ(btmp);
-        this.data = btmp;
-        this.data &= 0xFF;
+    	this.data = rotateLeft(this.data);
     }
 
     private void ROL_A()
     {
-        final int tmp = (this.a << 1) | (this.c ? 0x01 : 0);
-        this.a = (byte)tmp;
-        this.a &= 0xFF;
-        setFlagCarry(tmp);
-        setStatusRegisterNZ(this.a);
+    	this.a = rotateLeft(this.a);
     }
 
     private void ROR()
     {
-        byte btmp = (byte)this.data;
-        final boolean newCarry = (btmp & 0x01) != 0;
-        btmp = (byte)((btmp >> 1) | (this.c ? 0x80 : 0));
-        this.c = newCarry;
-        setStatusRegisterNZ(btmp);
-        this.data = btmp;
-        this.data &= 0xFF;
+    	this.data = rotateRight(this.data);
     }
 
     private void ROR_A()
     {
-        this.c = (this.a & 0x01) != 0;
-        this.a = (this.a | (this.c ? 0x100 : 0)) >> 1;
-        this.a &= 0xFF;
-        setStatusRegisterNZ(this.a);
+    	this.a = rotateRight(this.a);
     }
+
+    private int shiftLeft(int b)
+    {
+    	b &= 0xFF;
+        this.c = (b & 0x80) != 0;
+        b <<= 1;
+        b &= 0xFF;
+        setStatusRegisterNZ(b);
+        return b;
+    }
+
+    private int shiftRight(int b)
+    {
+    	b &= 0xFF;
+        this.c = (b & 0x01) != 0;
+        b >>= 1;
+    	b &= 0xFF;
+        setStatusRegisterNZ(b);
+        return b;
+    }
+
+    private int rotateLeft(int b)
+    {
+    	b &= 0xFF;
+
+    	final boolean newCarry = (b & 0x80) != 0;
+
+        b <<= 1;
+    	b &= 0xFF;
+
+    	if (this.c)
+    	{
+    		b |= 0x01;
+    	}
+
+    	this.c = newCarry;
+        setStatusRegisterNZ(b);
+
+        return b;
+    }
+
+    private int rotateRight(int b)
+    {
+    	b &= 0xFF;
+
+    	final boolean newCarry = (b & 0x01) != 0;
+
+        b >>= 1;
+    	b &= 0xFF;
+
+    	if (this.c)
+    	{
+    		b |= 0x80;
+    	}
+
+    	this.c = newCarry;
+        setStatusRegisterNZ(b);
+
+        return b;
+    }
+
+
+
+
+
+
+    private void ADC()
+    {
+        int Op1 = this.a;
+        int Op2 = this.data;
+        if (this.d)
+        {
+        	this.z = (Op1 + Op2 + (this.c ? 1 : 0) & 0xff) == 0;
+            int tmp = (Op1 & 0xf) + (Op2 & 0xf) + (this.c ? 1 : 0);
+            tmp = tmp >= 10 ? tmp + 6 : tmp;
+            this.a = tmp;
+            tmp = (Op1 & 0xf0) + (Op2 & 0xf0) + (tmp & 0xf0);
+            this.n = (byte)tmp < 0;
+            this.v = ((Op1 ^ tmp) & ~(Op1 ^ Op2) & 0x80) != 0;
+            tmp = this.a & 0xf | (tmp >= 160 ? tmp + 96 : tmp);
+            this.c = tmp >= 256;
+            this.a = tmp & 0xff;
+        }
+        else
+        {
+            int tmp = Op1 + Op2 + (this.c ? 1 : 0);
+            this.a = tmp & 0xff;
+            this.v = ((Op1 ^ this.a) & ~(Op1 ^ Op2) & 0x80) != 0;
+            setFlagCarry(tmp);
+            setStatusRegisterNZ(this.a);
+        }
+    }
+
+    private void SBC()
+    {
+        int Op1 = this.a;
+        int Op2 = this.data;
+        if (this.d)
+        {
+            int tmp = (Op1 & 0xf) - (Op2 & 0xf) - (this.c ? 0 : 1);
+            tmp = (tmp & 0x10) != 0 ? tmp - 6 : tmp;
+            this.a = tmp;
+            tmp = (Op1 & 0xf0) - (Op2 & 0xf0) - (this.a & 0x10);
+            this.a = this.a & 0xf | ((tmp & 0x100) != 0 ? tmp - 96 : tmp);
+            this.a &= 0xFF;
+            tmp = Op1 - Op2 - (this.c ? 0 : 1);
+            setFlagBorrow(tmp);
+            setStatusRegisterNZ(tmp);
+        }
+        else
+        {
+            int tmp = Op1 - Op2 - (this.c ? 0 : 1);
+            this.a = tmp & 0xff;
+            this.v = ((Op1 ^ Op2) & (Op1 ^ this.a) & 0x80) != 0;
+            setFlagBorrow(tmp);
+            setStatusRegisterNZ(this.a);
+        }
+    }
+
+
+
 
     private void INC()
     {
@@ -2635,45 +2261,23 @@ public class CPU6502 implements Clock.Timed
 
     private void BRK()
     {
-//        memory.read(opcode);
-//        pushProgramCounter();
-//        PHP();
-//        //I = true;
-//        b = true;
-//        pc = memReadAbsolute(0xFFFE);
     }
 
     private void RTI()
     {
-//        memory.read(s + 256);
-//        PLP();
-//        popProgramCounter();
     }
 
     private void JMP()
     {
-//        pc = opcode;
     }
 
     private void RTS()
     {
-//        memory.read(s + 256);
-//        popProgramCounter();
-//        memory.read(pc++);
     }
 
     private void JSR()
     {
-//        opL = memory.read(pc++) & 0xff;
-//        memory.read(s + 256);
-//        pushProgramCounter();
-//        pc = opL + ((memory.read(pc) & 0xff) << 8);
     }
-
-//    private void branch()
-//    {
-//        pc = opcode;
-//    }
 
     private void BNE()
     {
@@ -2742,7 +2346,7 @@ public class CPU6502 implements Clock.Timed
     private void TXS()
     {
         this.s = this.x;
-        //setStatusRegisterNZ(this.s); // ???
+        //setStatusRegisterNZ(this.s); // does NOT affect status register
     }
 
     private void TSX()
@@ -2800,12 +2404,12 @@ public class CPU6502 implements Clock.Timed
 
     private void Unoff2()
     {
-//        pc++;
+        pc++;
     }
 
     private void Unoff3()
     {
-//        pc += 2;
+        pc += 2;
     }
 
     private void Hang()
@@ -2819,7 +2423,8 @@ public class CPU6502 implements Clock.Timed
         memory.write(256 + s, (byte)(getStatusRegisterByte() & 0xffffffef));
         s = (s - 1) & 0xff;
         i = true;
-        pc = memReadAbsolute(0xFFFE);
+        IRQ = false;
+        pc = memReadAbsolute(IRQ_VECTOR);
     }
 
     private void handleNMI()
@@ -2829,7 +2434,7 @@ public class CPU6502 implements Clock.Timed
         s = (s - 1) & 0xff;
         i = true;
         NMI = false;
-        pc = memReadAbsolute(0xFFFA);
+        pc = memReadAbsolute(NMI_VECTOR);
     }
 
     private int memReadAbsolute(int adr)
@@ -2852,4 +2457,28 @@ public class CPU6502 implements Clock.Timed
         s = (s + 1) & 0xff;
         pc += (memory.read(s + 256) & 0xff) << 8;
     }
+
+	private void checkSane()
+	{
+		if ((a & 0xFFFFFF00) != 0)
+		{
+			throw new IllegalStateException();
+		}
+		if ((x & 0xFFFFFF00) != 0)
+		{
+			throw new IllegalStateException();
+		}
+		if ((y & 0xFFFFFF00) != 0)
+		{
+			throw new IllegalStateException();
+		}
+		if ((s & 0xFFFFFF00) != 0)
+		{
+			throw new IllegalStateException();
+		}
+		if ((data & 0xFFFFFF00) != 0)
+		{
+			throw new IllegalStateException();
+		}
+	}
 }

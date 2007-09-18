@@ -13,6 +13,7 @@ public class Clock
 	public interface Timed
 	{
 		void tick();
+		void stopped();
 	}
 
 	private final List<Timed> rTimed = new ArrayList<Timed>();
@@ -47,6 +48,10 @@ public class Clock
 			}
 		}
 		System.out.println("clock is stopping");
+		for (final Timed timed : this.rTimed)
+		{
+			timed.stopped();
+		}
 	}
 
 	public void shutdown()

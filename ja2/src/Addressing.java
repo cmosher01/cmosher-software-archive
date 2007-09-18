@@ -35,4 +35,7 @@ public enum Addressing
 	JMP_INDIRECT,
 	RTS,
 	BRANCH,
+	IRQ,
+	RESET,
+	NMI
 }

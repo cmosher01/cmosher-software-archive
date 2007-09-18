@@ -36,7 +36,7 @@ public class Video extends JPanel implements Clock.Timed
 	private int[] lutHiRes1 = VideoAddressing.buildLUT(0x4000,0x2000);
 	private int[][] lutHiRes = { lutHiRes0, lutHiRes1 };
 
-	private int[] char_rom;
+	private byte[] char_rom;
 
 	private static final int TEXT_CHAR_ROWS = 8;
 
@@ -105,16 +105,21 @@ public class Video extends JPanel implements Clock.Timed
 
 	private static final int EOF = -1;
 
-	private int[] readCharRom() throws IOException
+	public void stopped()
 	{
-		final int[] r = new int[0x800];
+		
+	}
+
+	private byte[] readCharRom() throws IOException
+	{
+		final byte[] r = new byte[0x800];
 		final InputStream rom = getClass().getResourceAsStream("charrom.bin");
 		int cc = 0;
 		for (int c = rom.read(); c != EOF; c = rom.read())
 		{
 			if (cc < r.length)
 			{
-				r[cc] = c >> 1;
+				r[cc] = (byte)((c >> 1) & 0x7F);
 			}
 			++cc;
 		}
@@ -146,13 +151,18 @@ public class Video extends JPanel implements Clock.Timed
 //		}
 		final int a = getAddr();
 
-		int d = memory.read(a);
-		memory.write(0xC051,d);
+		byte d = memory.read(a);
+//		memory.write(0xC051,d);
 //		if (d != 0)
 //			System.err.println("read from video ram "+d);
 
+		boolean inverse = false;
 		if (this.mode == VideoMode.TEXT)
 		{
+			if (d >= 0)
+			{
+				inverse = true;
+			}
 			d = getTextCharLine(d,(this.t / VideoAddressing.BYTES_PER_ROW) % TEXT_CHAR_ROWS);
 //			StringBuilder sb = new StringBuilder(8);
 //			bits((byte)d,sb);
@@ -165,11 +175,11 @@ public class Video extends JPanel implements Clock.Timed
 
 //			System.out.println();
 //			System.out.println();
-			plotByte(t,d);
+			plotByte(this.t,d,inverse);
 //		}
 
 		++this.t;
-		if (t == VideoAddressing.BYTES_PER_FIELD)
+		if (this.t == VideoAddressing.BYTES_PER_FIELD)
 		{
 //			try
 //			{
@@ -193,9 +203,9 @@ public class Video extends JPanel implements Clock.Timed
 		this.t %= VideoAddressing.BYTES_PER_FIELD;
 	}
 
-	private void invokePlotByte(int t, int d)
-	{
-		plotByte(t,d);
+//	private void invokePlotByte(int t, int d)
+//	{
+//		plotByte(t,d);
 //		try
 //		{
 //			SwingUtilities.invokeAndWait(new SwingPlotByte(t,d));
@@ -217,7 +227,7 @@ public class Video extends JPanel implements Clock.Timed
 //		{
 //			e.printStackTrace();
 //		}
-	}
+//	}
 
 	private int getAddr()
 	{
@@ -234,46 +244,46 @@ public class Video extends JPanel implements Clock.Timed
 		}
 	}
 
-	private class SwingPlotByte implements Runnable
-	{
-		volatile private int t;
-		volatile private int d;
-		public SwingPlotByte(int t, int d)
-		{
-			this.t = t;
-			this.d = d;
-		}
-		public void run()
-		{
-			plotByte(t,d);
-		}
-	}
-
-	private /*synchronized*/ void setPlot(int d)
-	{
-		this.plot_t = t;
-		this.plot_d = d;
-	}
-	private /*synchronized*/ int getPlotT() { return this.plot_t; }
-	private /*synchronized*/ int getPlotD() { return this.plot_d; }
-
-	@Override
-	protected void paintComponent(final Graphics g)
-	{
-		swing(g);
-	}
-
-	private void swing(final Graphics g)
-	{
-		if (g != null)
-		{
-			final Dimension size = getSize();
-//			System.err.println("drawing image "+size);
-//			g.drawImage(scrnimage,0,0,size.width,size.height,this);
-//			dumpImageAsText();
-//			getParent().repaint();
-		}
-	}
+//	private class SwingPlotByte implements Runnable
+//	{
+//		volatile private int t;
+//		volatile private int d;
+//		public SwingPlotByte(int t, int d)
+//		{
+//			this.t = t;
+//			this.d = d;
+//		}
+//		public void run()
+//		{
+//			plotByte(t,d);
+//		}
+//	}
+//
+//	private /*synchronized*/ void setPlot(int d)
+//	{
+//		this.plot_t = t;
+//		this.plot_d = d;
+//	}
+//	private /*synchronized*/ int getPlotT() { return this.plot_t; }
+//	private /*synchronized*/ int getPlotD() { return this.plot_d; }
+//
+//	@Override
+//	protected void paintComponent(final Graphics g)
+//	{
+//		swing(g);
+//	}
+//
+//	private void swing(final Graphics g)
+//	{
+//		if (g != null)
+//		{
+//			final Dimension size = getSize();
+////			System.err.println("drawing image "+size);
+////			g.drawImage(scrnimage,0,0,size.width,size.height,this);
+////			dumpImageAsText();
+////			getParent().repaint();
+//		}
+//	}
 
 	private void dumpImageAsText()
 	{
@@ -305,7 +315,7 @@ public class Video extends JPanel implements Clock.Timed
 		gr.drawImage(vImg,0,0,this);
 	}
 
-	void plotByte(int t, int d)
+	void plotByte(int t, byte d, boolean inverse)
 	{
 		if (vImg == null)
 		{
@@ -317,7 +327,7 @@ public class Video extends JPanel implements Clock.Timed
 //		int pt = getPlotT();
 //		Color orig = grimg.getColor();
 //		final int base = t*VISIBLE_BITS_PER_BYTE;
-		plotByteGr(t,d,grimg);
+		plotByteGr(t,d,grimg,inverse);
 //		grimg.setColor(orig);
 	}
 
@@ -328,7 +338,7 @@ public class Video extends JPanel implements Clock.Timed
 		grimg = vImg.getGraphics();
 	}
 
-	private void plotByteGr(int t, int d, Graphics g)
+	private void plotByteGr(int t, byte d, Graphics g, boolean inverse)
 	{
 		d >>= 1; // TODO high-order bit half-dot shift
 		int x = (t % VideoAddressing.BYTES_PER_ROW - (VideoAddressing.BYTES_PER_ROW-VideoAddressing.VISIBLE_BYTES_PER_ROW)) * VISIBLE_BITS_PER_BYTE;
@@ -348,25 +358,30 @@ public class Video extends JPanel implements Clock.Timed
 //			final int p = ((d & 0x80) != 0) ? PIXELON : PIXELOFF;
 //			pixels[base+y] = p;
 //			System.err.println("setting pixel @ "+(base+y)+" to "+p);
-			if ((d & 1) != 0)
+			boolean on = (d & 1) != 0;
+			if (inverse)
 			{
-				if (!prevOn)
-				{
+				on = !on;
+			}
+			if (on)
+			{
+//				if (!prevOn)
+//				{
 					g.setColor(Color.GREEN);
 					prevOn = true;
-				}
+//				}
 			}
 			else
 			{
-				if (prevOn)
-				{
+//				if (prevOn)
+//				{
 					g.setColor(Color.BLACK);
 					prevOn = false;
-				}
+//				}
 			}
 			g.drawLine(x,y,x,y);
 			++x;
-			d >>= 1;
+			d = (byte)((d & 0xFF) >>> 1);
 		}
 	}
 
@@ -379,7 +394,7 @@ public class Video extends JPanel implements Clock.Timed
 //		g.fillRect(x,y,DISPLAY_FACTOR,DISPLAY_FACTOR);
 	}
 
-	private int getTextCharLine(int d, int i)
+	private byte getTextCharLine(byte d, int i)
 	{
 		return char_rom[(d&0x7F)*TEXT_CHAR_ROWS+i];
 	}

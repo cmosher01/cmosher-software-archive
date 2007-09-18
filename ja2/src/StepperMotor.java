@@ -18,7 +18,9 @@ public class StepperMotor
 	private static final int TRACKS = 0x23;
 	private static final int QTRACKS = TRACKS << 2;
 
-	private int quarterTrack;
+	private int quarterTrack = 0x11 << 2; // start in the middle of the disk... why not?
+
+	private int pos; // 0 - 7
 
 	private char mags;
 
@@ -56,8 +58,6 @@ public class StepperMotor
 			throw new IllegalStateException();
 		}
 
-		final int oldPos = StepperMotor.mapMagPos[this.mags]; // 0 - 7
-
 		final int mask = 1 << magnet;
 		if (on)
 		{
@@ -68,15 +68,33 @@ public class StepperMotor
 			this.mags &= ~mask;
 		}
 		final int newPos = StepperMotor.mapMagPos[this.mags];
-		if (newPos < 0)
+		int d = 0;
+		if (newPos >= 0)
 		{
-			return; // no movement for undefined configurations
+			d = calcDeltaPos(this.pos,newPos);
+			this.pos = newPos;
+
+			this.quarterTrack += d;
+			constrainTrack();
 		}
 
-		final int d = calcDeltaPos(oldPos,newPos);
-
-		this.quarterTrack += d;
-		constrainTrack();
+		System.out.print(" ARM: magnet "+magnet+" "+(on?"on ":"off"));
+		System.out.print(" ["+
+			((mags&1)>0?"*":".")+
+			((mags&2)>0?"*":".")+
+			((mags&4)>0?"*":".")+
+			((mags&8)>0?"*":".")+
+			"]");
+		if (d != 0)
+		{
+			System.out.print(" track "+HexUtil.byt((byte)(this.quarterTrack >> 2)));
+			int fract = this.quarterTrack & 3;
+			if (fract != 0)
+			{
+				System.out.print(fract == 1 ? " +.25" : fract == 2 ? " +.5" : " +.75");
+			}
+		}
+		System.out.println();
 	}
 
 	private void constrainTrack()
@@ -85,7 +103,7 @@ public class StepperMotor
 		{
 			this.quarterTrack = 0;
 		}
-		if (QTRACKS <= this.quarterTrack)
+		else if (QTRACKS <= this.quarterTrack)
 		{
 			this.quarterTrack = QTRACKS-1;
 		}
