@@ -11,8 +11,8 @@ public class ShowBits
 	 */
 	public static void main(String[] args) throws IOException
 	{
-		final InputStream rom = new FileInputStream("C:\\aaaws44\\Pom1_KR\\bios\\apple1.vid");
-//		final InputStream rom = ShowBits.class.getResourceAsStream("charrom.bin");
+//		final InputStream rom = new FileInputStream("C:\\aaaws44\\Pom1_KR\\bios\\apple1.vid");
+		final InputStream rom = ShowBits.class.getResourceAsStream("charrom.bin");
 		int i = 0;
 		for (int c = rom.read(); c != -1; c = rom.read())
 		{

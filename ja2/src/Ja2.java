@@ -72,7 +72,7 @@ public final class Ja2 implements Runnable
     {
     	DiskBytes disk1 = new DiskBytes();
 //    	disk1.load(new File("C:\\apple2\\research\\dos\\3.1\\hyperdos_restored.nib"));
-    	disk1.load(new File("C:\\apple2\\research\\dos\\3.1\\DOS33_SystemMaster_1986_patched_nodelay.nib"));
+    	disk1.load(new File("src\\DOS33_SystemMaster_1986_patched_nodelay.nib"));
 //    	disk1.load(new File("C:\\apple2\\research\\dos\\3.1\\copy2plus40.nib"));
 //    	disk1.load(new File("C:\\apple2\\research\\dos\\3.1\\bloxap.nib"));
     	DiskBytes disk2 = new DiskBytes();
@@ -85,14 +85,24 @@ public final class Ja2 implements Runnable
         final Memory memory = new Memory(keyboard,disk);
 
 //        final InputStream romImage = new FileInputStream(new File("c:/apple2/rom_images/200apple2.rom")); // D000
-        final InputStream romImage = new FileInputStream(new File("c:/apple2/rom_images/210apple2plus.rom")); // B000
-        memory.load(0xB000,romImage);
+//        final InputStream romImage = new FileInputStream(new File("c:/apple2/rom_images/210apple2plus.rom")); // B000
+        final InputStream romImage = getClass().getResourceAsStream("apple2_d000.rom");
+        memory.load(0xD000,romImage);
+        romImage.close();
 
-        final InputStream diskromImage = getClass().getResourceAsStream("disk2rom.bin");
+        final InputStream diskromImage = getClass().getResourceAsStream("disk2_DOS33_c600_patched_nodelay.rom");
         memory.load(0xC600,diskromImage);
         diskromImage.close();
 
-    	final Video video = new Video(memory);
+//        final InputStream c200romImage = getClass().getResourceAsStream("unknown_from_2e_c200.rom");
+//        memory.load(0xc200,c200romImage);
+//        romImage.close();
+
+        final InputStream c100romImage = getClass().getResourceAsStream("apple2e_c100.rom");
+        memory.load(0xc100,c100romImage);
+        romImage.close();
+
+        final Video video = new Video(memory);
 
     	final CPU6502 cpu = new CPU6502(memory);
 

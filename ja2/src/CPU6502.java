@@ -99,27 +99,78 @@ public class CPU6502 implements Clock.Timed
 		if (this.t == 0)
 		{
 //			trace();
-			if (this.reset || this.IRQ || this.NMI)
-			{
-				this.address = getInterruptAddress();
-				read();
-				this.opcode = getInterruptPseudoOpCode();
-				++this.t;
-			}
-			else
-			{
-				this.address = this.pc++;
-				read();
-				this.opcode = this.data;
-				++this.t;
-			}
+			firstCycle();
 		}
 		else
 		{
-			subseq();
-//			checkSane();
-			++this.t;
+			subsequentCycle();
 		}
+//		checkSane();
+		++this.t;
+	}
+
+	private void firstCycle()
+	{
+		final boolean interrupt = isInterrupted();
+
+		if (interrupt)
+		{
+			this.pc = getInterruptAddress();
+		}
+
+		this.address = this.pc++;
+		read();
+
+		if (interrupt)
+		{
+			this.opcode = getInterruptPseudoOpCode();
+		}
+		else
+		{
+			this.opcode = this.data;
+		}
+	}
+
+	private boolean isInterrupted()
+	{
+		return
+			this.NMI ||
+			this.reset ||
+			(!this.i && this.IRQ);
+	}
+
+	private int getInterruptAddress()
+	{
+		if (this.NMI)
+		{
+			return NMI_VECTOR-2;
+		}
+		if (this.reset)
+		{
+			return RESET_VECTOR-2;
+		}
+		if (!this.i && this.IRQ)
+		{
+			return IRQ_VECTOR-2;
+		}
+		throw new IllegalStateException();
+	}
+
+	private int getInterruptPseudoOpCode()
+	{
+		if (this.NMI)
+		{
+			return 0x80000001;
+		}
+		if (this.reset)
+		{
+			return 0x80000002;
+		}
+		if (!this.i && this.IRQ)
+		{
+			return 0x80000003;
+		}
+		throw new IllegalStateException();
 	}
 
 	private Map<Integer,Integer> mapCoverageCount = new HashMap<Integer,Integer>();
@@ -161,7 +212,7 @@ public class CPU6502 implements Clock.Timed
 		}
 	}
 
-	private void subseq()
+	private void subsequentCycle()
 	{
 		switch (addressing())
 		{
@@ -887,9 +938,8 @@ public class CPU6502 implements Clock.Timed
 			case RESET:
 				switch (this.t)
 				{
-					// this.pc = NMI_VECTOR;
 					case 1:
-						++this.address;
+						this.address = this.pc++;
 						read(); // discard
 					break;
 					case 2:
@@ -910,47 +960,85 @@ public class CPU6502 implements Clock.Timed
 						read(); // discard
 					break;
 					case 5:
-						++this.address; // RESET_VECTOR
+						this.address = this.pc++;
 						read();
 						this.adl = this.data;
 					break;
 					case 6:
-						++this.address;
+						this.address = this.pc;
 						read();
 						this.adh = this.data;
 						this.pc = ad();
+						this.reset = false;
 						done();
 					break;
 				}
 			break;
 			case IRQ:
-				// this.pc = RESET_VECTOR
 				switch (this.t)
 				{
 					case 1:
-						++this.address;
+						this.address = this.pc;
 						read(); // discard
 					break;
 					case 2:
-				        this.s = 0xFF; // real CPU doesn't do this ???
 						this.address = spPush();
 						this.data = pch();
-						read(); // discard
+						write();
 					break;
 					case 3:
 						this.address = spPush();
-						this.data = pcl();
-						read(); // discard
+						this.data = pcl(); // ???
+						write();
 					break;
 					case 4:
 						this.address = spPush();
 						this.i = true;
 						this.b = false; // ???
 						this.data = getStatusRegisterByte();
-						read(); // discard
+						write();
 					break;
 					case 5:
-						++this.address; // IRQ_VECTOR
+						this.address = this.pc++;
+						read();
+						this.adl = this.data;
+					break;
+					case 6:
+						this.address = this.pc;
+						read();
+						this.adh = this.data;
+						this.pc = ad();
+						this.IRQ = false;
+						done();
+					break;
+				}
+			break;
+			case NMI:
+				switch (this.t)
+				{
+					case 1:
+						this.address = this.pc;
+						read(); // discard
+					break;
+					case 2:
+						this.address = spPush();
+						this.data = pch();
+						write();
+					break;
+					case 3:
+						this.address = spPush();
+						this.data = pcl();
+						write();
+					break;
+					case 4:
+						this.address = spPush();
+						this.i = true;
+						this.b = false; // ???
+						this.data = getStatusRegisterByte();
+						write();
+					break;
+					case 5:
+						++this.address;
 						read();
 						this.adl = this.data;
 					break;
@@ -959,6 +1047,7 @@ public class CPU6502 implements Clock.Timed
 						read();
 						this.adh = this.data;
 						this.pc = ad();
+						this.NMI = false;
 						done();
 					break;
 				}
@@ -1095,22 +1184,6 @@ public class CPU6502 implements Clock.Timed
 	// TODO fix interrupt routines
 	// TODO fix startup cycles (see prog manual)
 	// TODO fix reset
-
-	private void handleInterrupts()
-	{
-		if (this.reset)
-		{
-			this.address = RESET_VECTOR-2;
-		}
-		if (!this.i && this.IRQ)
-		{
-			this.address = IRQ_VECTOR-2;
-		}
-		if (this.NMI)
-		{
-			this.address = NMI_VECTOR-2;
-		}
-	}
 
 	private void execute()
     {
