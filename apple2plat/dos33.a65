@@ -22,8 +22,10 @@
                                 ; DOS 3.2.1     1979-07-31     DOS321 (not yet implemented)
                                 ; DOS 3.3 (0)   1980-08-25     DOS33_1980
                                 ; DOS 3.3 (1)   1983-01-01     DOS33_1983
-                                ; DOS 3.3 (2)   1986-03?       DOS33_1986
+                                ; DOS 3.3 (2)   1983-08-??     DOS33_1986
                                 ; Franklin Ace  ?              FRANKLIN
+                                ;
+                                ;
                                 ;
                                 ;
                                 ;
@@ -71,6 +73,38 @@
                                 ; With the newer DOS,  you get an APPEND patch (which turns out to introduce a new
                                 ; APPEND bug),  a few IIe display frills, and a DOS which is _much_ slower than the 1980
                                 ; DOS 3.3 patched for Prontodos.
+                                ;
+                                ; -----------------------------------------------------------
+                                ;
+                                ; From Apple Assembly Line, Vol. 3, Issue 12, Sept. 1983:
+                                ;
+                                ; Yet Another New Version of DOS 3.3 	Bob Sander-Cederlof
+                                ;
+                                ; In the July issue of AAL I outlined the changes Apple made to DOS 3.3 early this year. Today I received a new "Developer's System Master", with a cover letter claiming another correction to the APPEND routine. The letter binds developers to begin using the new version no later than November 1st.
+                                ;
+                                ; If you like APPEND, or would like to like it, you might want to make these patches in your own system master. I am going to assume you already have the "early 1983" version, either because you bought a //e or a disk drive this year, or you copied one from a friend, or you made the patches from my July article. Here are the new changes:
+                                ;
+                                ; "early 1983"                August, 1983
+                                ; ---------------------      -----------------------
+                                ; B683:4C 84 BA JMP $BA84    B683:4C B3 B6 JMP $B6B3
+                                ;
+                                ; $B6B3-B6CE:ALL ZEROES      B6B3:AD BD B5 LDA $B5BD
+                                ;                            B6B6:8D E6 B5 STA $B5E6
+                                ;                            B6B9:8D EA B5 STA $B5EA
+                                ;                            B6BC:AD BE B5 LDA $B5BE
+                                ;                            B6BF:8D E7 B5 STA $B5E7
+                                ;                            B6C2:8D EB B5 STA $B5EB
+                                ;                            B6C5:8D E4 B5 STA $B5E4
+                                ;                            B6C8:BA       TSX
+                                ;                            B6C9:8E 9B B3 STX $B39B
+                                ;                            B6CC:4C 7F B3 JMP $B37F
+                                ;
+                                ; $BA84-BA93:PATCH           BA84-BA93:ALL ZEROES
+                                ;
+                                ; What Apple has done is move the patch they had put at $BA84 down to $B6B3 and added four extra lines to that patch. I HOPE IT IS NOW CORRECT!
+                                ;
+                                ;
+                                ;
                                 ; -----------------------------------------------------------
                                 ;
                                 ;
@@ -5150,7 +5184,13 @@ CIOCUMUL        DS 1            ; MON/NOMON FLAG.
                                 ; C/I/O ARGUMENTS:
                                 ; C=$40, I=$20, O=$10, IO=$30,
                                 ; CO=$50, CI=$60, CIO=$70.
-NDX2CMD         DS 1            ; INDEX TO COMMAND.
+NDX2CMD                         ; INDEX TO COMMAND.
+                IF DOS31
+                DB  $20         ; NEEDED FOR MASTER.CREATE TO WORK
+                ELSE
+                DS  1
+                ENDIF
+
 LENADRBF        DS 2            ; 2-BYTE BUF USED 2 HOLD BLOAD ADR
                                 ; & LENGTH READ FROM DISK.
                                 ; (LEFT WITH LNGTH OF LAST BLOAD.)
@@ -5158,6 +5198,7 @@ NEXTCMD         DS 1            ; CODE FOR PENDING COMMAND.
 TEMPBYT         DS 1            ; TEMPORARY STORAGE AREA.
 NDX2OPTN        DS 1            ; INDEX TO OPTION (USED TO INDEX
                                 ; OPTNTXT, OPTNISSD & OPTNRNG).
+
 CUMLOPTN        DS 1            ; HOLDS CUMMULTIVE RECORD OF
                                 ; OPTIONS PARSED ON CMD LINE.
 
@@ -8006,8 +8047,13 @@ DSKVOLUM        DB " EMULOV KSID"
 
 VTOCBUFF        DS 1            ; UNUSED ($B3BB).
                                 ; REFERENCE FOR START OF TABLE.
-FIRDIRTK        DS 1            ; TRK# OF 1RST DIRECTORY SECTOR.
-FIRDIRSC        DS 1            ; SEC# OF 1RST DIRECTORY SECTOR.
+FIRDIRTK        DB $11          ; TRK# OF 1RST DIRECTORY SECTOR.
+FIRDIRSC                        ; SEC# OF 1RST DIRECTORY SECTOR.
+                IF DOS31 || DOS32
+                DB $0C
+                ELSE
+                DB $0F
+                ENDIF
 VERSION                         ; DOS VERSION RELEASE NUMBER.
                 IF DOS31
                 DB 1

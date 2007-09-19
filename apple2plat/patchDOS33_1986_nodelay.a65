@@ -1,0 +1,85 @@
+;patch DOS 3.3(1986) to remove delay loops:
+
+MTRTIME         EQU $46
+
+;T/S/B: values
+
+;------------------------------------------------------------------------
+
+
+;OLD
+;3a00 : a211             [ 2] DELAY           LDX #17
+;3a02 : ca               [ 2] DLY1            DEX
+;3a03 : d0fd             [ 3]                 BNE DLY1
+;3a05 : e646             [ 5]                 INC MTRTIME
+;3a07 : d002             [ 3]                 BNE DLY2
+;3a09 : e647             [ 5]                 INC MTRTIME+1
+;3a0b : 38               [ 2] DLY2            SEC
+;3a0c : e901             [ 2]                 SBC #1
+;3a0e : d0f0             [ 3]                 BNE DELAY
+;3a10 : 60               [ 6]                 RTS
+
+;NEW
+DELAY           LDX #0
+                LDA #0
+                STA MTRTIME
+                STA MTRTIME+1
+                RTS
+                NOP
+                NOP
+                NOP
+                NOP
+                NOP
+                NOP
+                NOP
+                NOP
+;0/4/00: 
+;0000 : a200             [ 2] DELAY           LDX #0
+;0002 : a900             [ 2]                 LDA #0
+;0004 : 8546             [ 3]                 STA MTRTIME
+;0006 : 8547             [ 3]                 STA MTRTIME+1
+;0008 : 60               [ 6]                 RTS
+;0009 : ea               [ 2]                 NOP
+;000a : ea               [ 2]                 NOP
+;000b : ea               [ 2]                 NOP
+;000c : ea               [ 2]                 NOP
+;000d : ea               [ 2]                 NOP
+;000e : ea               [ 2]                 NOP
+;000f : ea               [ 2]                 NOP
+;0010 : ea               [ 2]                 NOP
+
+
+;------------------------------------------------------------------------
+
+
+;OLD
+;3d9e : a012             [ 2] TIME1           LDY #18
+;3da0 : 88               [ 2] TIME2           DEY
+;3da1 : d0fd             [ 3]                 BNE TIME2
+;3da3 : e646             [ 5]                 INC MTRTIME
+;3da5 : d0f7             [ 3]                 BNE TIME1
+;3da7 : e647             [ 5]                 INC MTRTIME+1
+;3da9 : d0f3             [ 3]                 BNE TIME1
+
+;NEW
+TIME1           LDY #0
+                STY MTRTIME
+                STY MTRTIME+1
+                BEQ SKIP
+                NOP
+                NOP
+                NOP
+                NOP
+                NOP
+SKIP
+;0/7/9E:
+;0009 : a000             [ 2] TIME1           LDY #0
+;000b : 8446             [ 3]                 STY MTRTIME
+;000d : 8447             [ 3]                 STY MTRTIME+1
+;000f : f005             [ 3]                 BEQ SKIP
+;0011 : ea               [ 2]                 NOP
+;0012 : ea               [ 2]                 NOP
+;0013 : ea               [ 2]                 NOP
+;0014 : ea               [ 2]                 NOP
+;0015 : ea               [ 2]                 NOP
+;0016 :                       SKIP

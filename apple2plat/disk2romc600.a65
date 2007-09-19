@@ -1,0 +1,191 @@
+SECYNIBS        EQU   $56
+BOOT2PAGE       EQU   $08
+
+
+BUFPTR          EQU   $26
+SLOT            EQU   $2B
+ ; EQU $3C
+SECTOR          EQU   $3D
+A3L             EQU   $40
+TRACK           EQU   $41
+STACKBASE       EQU   $0100
+NIBBUF          EQU   $0300
+XLATE           EQU   NIBBUF+SECYNIBS
+BOOT2BASE       EQU   BOOT2PAGE << 8
+STEP0OFF        EQU   $C080
+STEP0ON         EQU   $C081
+MOTORON         EQU   $C089
+DRV0EN          EQU   $C08A
+Q6OFF           EQU   $C08C
+Q7OFF           EQU   $C08E
+MONRTS          EQU   $FF58
+
+                ORG   $C600
+
+                                ; build translation table
+                LDX   #$20
+                LDY   #$00
+                LDX   #$03
+LC606           STX   $3C
+                TXA
+                ASL   A
+                BIT   $3C
+                BEQ   LC61E
+                ORA   $3C
+                EOR   #$FF
+                AND   #$7E
+LC614           BCS   LC61E
+                LSR   A
+                BNE   LC614
+                TYA
+                STA   XLATE,X
+                INY
+LC61E           INX
+                BPL   LC606
+
+
+
+
+
+                JSR   MONRTS    ; calculate slot based on ROM code address
+                TSX
+                LDA   STACKBASE,X
+                ASL   A
+                ASL   A
+                ASL   A
+                ASL   A
+                STA   SLOT
+
+                TAX
+                LDA   Q7OFF,X   ; set drive to "read" mode
+                LDA   Q6OFF,X
+                LDA   DRV0EN,X  ; engage drive 0
+                LDA   MOTORON,X ; turn drive motor on
+
+
+
+
+
+                LDY   #$50      ; move arm to track 0
+LC63D           LDA   STEP0OFF,X
+                TYA
+                AND   #$03
+                ASL   A
+                ORA   SLOT
+                TAX
+                LDA   STEP0ON,X
+                LDA   #SECYNIBS
+                LDA   #$00
+                NOP
+                DEY
+                BPL   LC63D
+
+
+
+
+                                ; set params for READSECT
+                STA   BUFPTR
+                STA   SECTOR    ; SECTOR 0
+                STA   TRACK     ; TRACK 0
+                LDA   #BOOT2PAGE
+                STA   BUFPTR+1  ; buffer $800
+
+
+                                ; read SECTOR to (BUFPTR) buffer
+READSECT        CLC
+READSECT2       PHP
+
+                                ; look for D5 AA 96 (address) or D5 AA AD (data)
+LC65E           LDA   Q6OFF,X
+                BPL   LC65E
+LC663           EOR   #$D5
+                BNE   LC65E
+LC667           LDA   Q6OFF,X
+                BPL   LC667
+                CMP   #$AA
+                BNE   LC663
+                NOP
+LC671           LDA   Q6OFF,X
+                BPL   LC671
+                CMP   #$96
+                BEQ   ADDRHANDLER
+                PLP
+                BCC   READSECT
+                EOR   #$AD
+                BEQ   DATAHANDLER
+                BNE   READSECT
+
+
+
+
+                                ; get T/S number from address header
+ADDRHANDLER     LDY   #$03
+LC685           STA   A3L
+LC687           LDA   Q6OFF,X
+                BPL   LC687
+                ROL   A
+                STA   $3C
+LC68F           LDA   Q6OFF,X
+                BPL   LC68F
+                AND   $3C
+                DEY
+                BNE   LC685
+                PLP
+                CMP   SECTOR
+                BNE   READSECT  ; branch if not the sector we're looking for
+                LDA   A3L
+                CMP   TRACK
+                BNE   READSECT  ; branch if not the track we're looking for
+                BCS   READSECT2
+
+
+
+
+
+DATAHANDLER     LDY   #SECYNIBS ; read $56 nibblized bytes to $300
+LC6A8           STY   $3C
+LC6AA           LDY   Q6OFF,X
+                BPL   LC6AA
+                EOR   XLATE-0x80,Y
+                LDY   $3C
+                DEY
+                STA   NIBBUF,Y
+                BNE   LC6A8
+
+LC6BA           STY   $3C       ; read $100 nibblized bytes to (BUFPTR)
+LC6BC           LDY   Q6OFF,X
+                BPL   LC6BC
+                EOR   XLATE-0x80,Y
+                LDY   $3C
+                STA   (BUFPTR),Y
+                INY
+                BNE   LC6BA
+
+LC6CB           LDY   Q6OFF,X
+                BPL   LC6CB
+                EOR   XLATE-0x80,Y
+LC6D3           BNE   READSECT  ; branch if checksum is wrong
+
+
+
+                                ; denibblize into (BUFPTR)
+                LDY   #$00
+LC6D7           LDX   #SECYNIBS
+
+LC6D9           DEX
+                BMI   LC6D7
+                LDA   (BUFPTR),Y
+                LSR   NIBBUF,X
+                ROL   A
+                LSR   NIBBUF,X
+                ROL   A
+                STA   (BUFPTR),Y
+                INY
+                BNE   LC6D9
+                INC   BUFPTR+1
+                INC   SECTOR
+                LDA   SECTOR
+                CMP   BOOT2BASE
+                LDX   SLOT
+                BCC   LC6D3
+                JMP   BOOT2BASE+1

@@ -1,0 +1,727 @@
+; external addresses referenced:
+ ; EQU $00
+ ; EQU $01
+ ; EQU $02
+ ; EQU $03
+ ; EQU $04
+ ; EQU $05
+ ; EQU $06
+ ; EQU $07
+ ; EQU $08
+ ; EQU $09
+ ; EQU $0A
+ ; EQU $0B
+ ; EQU $0C
+ ; EQU $0D
+ ; EQU $10
+ ; EQU $20
+ ; EQU $22
+ ; EQU $25
+ ; EQU $26
+FRMTSLOT        EQU $27           ; SLOT * 16 USED TO INDEX DRIVE
+                                ; BASE ADDRESSES.
+ ; EQU $2A
+ ; EQU $2B
+ ; EQU $44
+ ; EQU $45
+ ; EQU $46
+ ; EQU $47
+ ; EQU $4C
+ ; EQU $0285
+LOCRPL          EQU $03E3              ; Locate RWTS parameter list
+PRESTRK         EQU $0478              ; CURRENT HALFTRACK NUMBER.
+                                       ; SAVE REG FOR WHOLE TRK# WANTED
+                                       ; WHEN HAVE TO GO RECALIBRATE.
+SLOTPG6         EQU $0678              ; SLOT*16 USED WHEN FORMATTING &
+                                       ; WRITING.
+ ; EQU $0910
+ ; EQU $093E
+ ; EQU $0941
+ ; EQU $0956
+ ; EQU $0966
+ ; EQU $09C7
+ ; EQU $09D8
+ ; EQU $0AD5
+ ; EQU $0BEA
+ ; EQU $0C22
+ ; EQU $0CFF
+ ; EQU $0D00
+ ; EQU $0D46
+ ; EQU $0D63
+ ; EQU $1C1C
+ ; EQU $1C1D
+ ; EQU $1D54
+ ; EQU $2000
+ ; EQU $201F
+ ; EQU $2C70
+ ; EQU $2E2D
+ ; EQU $302E
+ ; EQU $3B3A
+ ; EQU $3E3D
+ ; EQU $3F0D
+ ; EQU $410F
+ ; EQU $4F4E
+ ; EQU $521A
+ ; EQU $AAF9
+ ; EQU $AD66
+ ; EQU $AE3B
+ ; EQU $AF37
+ ; EQU $AF81
+ ; EQU $AF94
+ ; EQU $AFAE
+ ; EQU $B2D8
+ ; EQU $B2DC
+ ; EQU $B2EF
+ ; EQU $B2F5
+ ; EQU $B31F
+ ; EQU $B320
+ ; EQU $B324
+ ; EQU $B327
+ ; EQU $B3EF
+ ; EQU $B4F9
+ ; EQU $B505
+ ; EQU $B52D
+ ; EQU $BFBE
+DRVSM0 EQU $C080
+DRVSM1 EQU $C081
+DRVOFF EQU $C088
+DRVON EQU $C089
+DRVSL1 EQU $C08A
+DRVRD EQU $C08C
+DRVWR EQU $C08D
+DRVRDM EQU $C08E
+DRVWRM EQU $C08F
+WAIT EQU $FCA8
+COUT EQU $FDED
+ ; EQU $FFFE
+;**********************************************************
+                ORG   $0900
+
+L0900           SEC
+                LDA   DRVWR,X          ; check if disk is write-protected
+                LDA   DRVRDM,X
+                BMI   L0985            ; if it is, then exit
+
+                STX   FRMTSLOT
+                STX   SLOTPG6
+                LDA   $0D00
+                STA   $26
+                LDA   #$FF
+                STA   DRVWRM,X
+                ORA   DRVRD,X
+                PHA
+                PLA
+                NOP
+                LDY   #$0A
+L0920           ORA   $26
+                JSR   L098A
+                DEY
+                BNE   L0920
+
+                LDA   #$D5
+                JSR   L0989
+                LDA   #$AA
+                JSR   L0989
+                LDA   #$AD
+                JSR   L0989
+                TYA
+
+                LDY   #$9A
+                BNE   L093F
+L093C           LDA   $0D00,Y
+L093F           EOR   $0D00-1,Y
+                TAX
+                LDA   DSKNBTBL,X
+                LDX   FRMTSLOT
+                STA   DRVWR,X
+                LDA   DRVRD,X
+                DEY
+                BNE   L093C
+
+                LDA   $26
+                NOP
+L0954           EOR   L0C00,Y
+                TAX
+                LDA   DSKNBTBL,X
+                LDX   SLOTPG6
+                STA   DRVWR,X
+                LDA   DRVRD,X
+                LDA   L0C00,Y
+                INY
+                BNE   L0954
+                TAX
+                LDA   DSKNBTBL,X
+                LDX   FRMTSLOT
+                JSR   L098C
+
+                LDA   #$DE
+                JSR   L0989
+                LDA   #$AA
+                JSR   L0989
+                LDA   #$EB
+                JSR   L0989
+
+                LDA   DRVRDM,X
+L0985           LDA   DRVRD,X
+                RTS
+
+L0989           CLC
+L098A           PHA
+                PLA
+L098C           STA   DRVWR,X
+                ORA   DRVRD,X
+                RTS
+
+
+
+
+L0993           LDY   #$00
+L0995           DEY
+                BEQ   L09F9
+L0998           LDA   DRVRD,X
+                BPL   L0998
+L099D           EOR   #$D5
+                BNE   L0995
+                NOP
+L09A2           LDA   DRVRD,X
+                BPL   L09A2
+                CMP   #$AA
+                BNE   L099D
+                LDY   #$9A
+L09AD           LDA   DRVRD,X
+                BPL   L09AD
+                CMP   #$AD
+                BNE   L099D
+                LDA   #$00
+L09B8           DEY
+                STY   $26
+L09BB           LDY   DRVRD,X
+                BPL   L09BB
+                EOR   L0C00,Y
+                LDY   $26
+                STA   $0D00,Y
+                BNE   L09B8
+L09CA           STY   $26
+L09CC           LDY   DRVRD,X
+                BPL   L09CC
+                EOR   L0C00,Y
+                LDY   $26
+                STA   L0C00,Y
+                INY
+                BNE   L09CA
+L09DC           LDY   DRVRD,X
+                BPL   L09DC
+                CMP   L0C00,Y
+                BNE   L09F9
+L09E6           LDA   DRVRD,X
+                BPL   L09E6
+                CMP   #$DE
+                BNE   L09F9
+                NOP
+L09F0           LDA   DRVRD,X
+                BPL   L09F0
+                CMP   #$AA
+                BEQ   L0A55
+L09F9           SEC
+                RTS
+
+
+
+L09FB           LDY   #$FE
+L09FD           STY   $26
+L09FF           INY
+                BNE   L0A06
+                INC   $26
+                BEQ   L09F9
+L0A06           LDA   DRVRD,X
+                BPL   L0A06
+L0A0B           CMP   #$D5
+                BNE   L09FF
+                NOP
+L0A10           LDA   DRVRD,X
+                BPL   L0A10
+                CMP   #$AA
+                BNE   L0A0B
+                LDY   #$03
+L0A1B           LDA   DRVRD,X
+                BPL   L0A1B
+                CMP   #$B5
+                BNE   L0A0B
+                LDA   #$00
+L0A26           STA   FRMTSLOT
+L0A28           LDA   DRVRD,X
+                BPL   L0A28
+                ROL   A
+                STA   $26
+L0A30           LDA   DRVRD,X
+                BPL   L0A30
+                AND   $26
+                STA   $0005,Y
+                EOR   FRMTSLOT
+                DEY
+                BPL   L0A26
+                TAY
+                BNE   L09F9
+L0A42           LDA   DRVRD,X
+                BPL   L0A42
+                CMP   #$DE
+                BNE   L09F9
+                NOP
+L0A4C           LDA   DRVRD,X
+                BPL   L0A4C
+                CMP   #$AA
+                BNE   L09F9
+L0A55           CLC
+                RTS
+
+
+L0A57           STA   $2A
+                CMP   PRESTRK
+                BEQ   L0AB7
+                STX   $2B
+                LDA   #$00
+                STA   $26
+L0A64           LDA   PRESTRK
+                STA   FRMTSLOT
+                SEC
+                SBC   $2A
+                BEQ   L0AB0
+                BCS   L0A77
+                EOR   #$FF
+                INC   PRESTRK
+                BCC   L0A7C
+L0A77           ADC   #$FE
+                DEC   PRESTRK
+L0A7C           CMP   $26
+                BCC   L0A82
+                LDA   $26
+L0A82           CMP   #$0C
+                BCC   L0A88
+                LDA   #$0B
+L0A88           TAY
+                LDA   PRESTRK
+                AND   #$03
+                ASL   A
+                ORA   $2B
+                TAX
+                LDA   DRVSM1,X
+                LDA   L0AC9,Y
+                JSR   L0AB8
+                LDA   FRMTSLOT
+                AND   #$03
+                ASL   A
+                ORA   $2B
+                TAX
+                LDA   DRVSM0,X
+                LDA   $0AD5,Y
+                JSR   L0AB8
+                INC   $26
+                BNE   L0A64
+L0AB0           LDA   #$FF
+                JSR   L0AB8
+                LDX   $2B
+L0AB7           RTS
+
+L0AB8           LDX   #$11
+L0ABA           DEX
+                BNE   L0ABA
+                INC   $46
+                BNE   L0AC3
+                INC   $47
+L0AC3           SEC
+                SBC   #$01
+                BNE   L0AB8
+                RTS
+L0AC9
+                DB    $01,$30
+                DB    $28
+                DB    $24,$20
+                DB    $1E,$1D,$1C
+                DB    $1C,$1C,$1C
+                DB    $1C,$70,$2C
+                DB    $26,$22
+                DB    $1F
+                DB    $1E,$1D,$1C
+                DB    $1C,$1C,$1C
+                DB    $1C
+
+L0AE1           STX   $0D
+                LDA   #$AA
+                STA   $03
+                JSR   L0C71
+                JSR   L0D0D
+                LDX   $00
+                LDA   #$28
+                STA   $0B
+L0AF3           LDA   #$06
+                STA   $0C
+L0AF7           DEC   $0C
+                BEQ   L0B39
+                LDA   #$0D
+                STA   $02
+                LDY   #$FC
+L0B01           JSR   L09FD
+                BCS   L0AF7
+                LDY   $06
+                LDA   $0D00,Y
+                STA   $09D8
+                CLC
+                ADC   #$01
+                STA   $09C7
+                JSR   L0993
+                TYA
+                BCC   L0B1C
+                BNE   L0AF7
+L0B1C           LDY   $06
+                STA   $0010,Y
+                LDY   #$FD
+                DEC   $02
+                BNE   L0B01
+                JSR   L0D22
+                LDX   $01
+L0B2C           LDY   #$FF
+L0B2E           LDA   DRVWR,X
+                LDA   DRVRDM,X
+                BPL   L0B3C
+                LDA   DRVRD,X
+L0B39           JMP   L0C9B
+L0B3C           LDA   #$FF
+                STA   DRVWRM,X
+                ORA   DRVRD,X
+                BIT   $00
+L0B46           STA   DRVWR,X
+                ORA   DRVRD,X
+                DEY
+                BEQ   L0B59
+                JSR   L0C70
+                NOP
+                NOP
+                NOP
+                LDA   #$FF
+                BNE   L0B46
+L0B59           LDA   $00
+                LDA   #$D5
+                JSR   L0C66
+                LDA   #$AA
+                JSR   L0C67
+                LDA   #$B5
+                JSR   L0C67
+                LDA   $08
+                JSR   L0C55
+                LDA   $07
+                JSR   L0C55
+                LDA   $02
+                JSR   L0C55
+                LDA   $08
+                EOR   $07
+                EOR   $02
+                PHA
+                LSR   A
+                ORA   $03
+                STA   DRVWR,X
+                CMP   DRVRD,X
+                PLA
+                ORA   #$AA
+                JSR   L0C66
+                LDA   #$DE
+                JSR   L0C67
+                LDA   #$AA
+                JSR   L0C67
+                LDA   #$EB
+                JSR   L0C67
+                LDA   #$FF
+                JSR   L0C67
+                LDY   $02
+                LDA   $0D00,Y
+                STA   L0941
+                STA   L0956
+                STA   L0966
+                CLC
+                ADC   #$01
+                STA   L0910
+                STA   L093E
+                LDA   $0010,Y
+                BMI   L0BD9
+                LDY   #$D6
+L0BC1           LDA   #$FF
+                STA   DRVWR,X
+                ORA   DRVRD,X
+                BIT   $00
+                BIT   $00
+                JSR   L0C66
+                BIT   $00
+                PHA
+                PLA
+                DEY
+                BNE   L0BC1
+                BEQ   L0BDC
+L0BD9           JSR   L0900
+L0BDC           LDA   $02
+                CLC
+                ADC   #$0A
+                STA   $02
+                SBC   #$0C
+                BEQ   L0BF1
+                BCS   $0BEA
+                BIT   $0285
+                LDY   $0B
+                JMP   L0B2E
+L0BF1           STA   $02
+                LDA   DRVRDM,X
+                LDY   #$90
+L0BF8           DEY
+                BNE   L0BF8
+L0BFB           JSR   L09FB
+                BCS   L0C46
+L0C00           LDY   $06
+                CPY   $02
+                BNE   L0C46
+                JSR   L0993
+                TYA
+                BCC   L0C0E
+                BNE   L0C46
+L0C0E           LDY   $06
+                EOR   $0010,Y
+                BMI   L0C46
+                TYA
+                CLC
+                ADC   #$0A
+                STA   $02
+                SBC   #$0C
+                BEQ   L0C27
+                BCS   $0C22
+                BIT   $0285
+                CLC
+                BCC   L0BFB
+L0C27           LDA   $04
+                CMP   #$44
+                BCS   L0C9B
+                PHA
+                ADC   #$02
+                STA   $04
+                JSR   L0A57
+                JSR   L0D0D
+                LDX   $00
+                PLA
+                STA   PRESTRK
+                LDA   $04
+                JSR   L0A57
+                JMP   L0AF3
+L0C46           LDA   #$00
+                STA   $02
+                DEC   $0B
+                LDA   $0B
+                CMP   #$0C
+                BCC   L0C9B
+                JMP   L0B2C
+L0C55           PHA
+                LSR   A
+                ORA   $03
+                STA   DRVWR,X
+                CMP   DRVRD,X
+                PLA
+                BIT   $00
+                BIT   $00
+                ORA   #$AA
+L0C66           NOP
+L0C67           PHA
+                PLA
+                NOP
+                STA   DRVWR,X
+                CMP   DRVRD,X
+L0C70           RTS
+L0C71           LDX   $09
+                LDA   DRVSL1,X
+                LDX   $00
+                LDA   DRVON,X
+                LDA   #$A0
+                STA   PRESTRK
+                LDA   #$00
+                STA   $04
+                JSR   L0A57
+                LDX   $0A
+                LDA   DRVSL1,X
+                LDX   $01
+                LDA   DRVON,X
+                LDA   #$A0
+                STA   PRESTRK
+                LDA   #$00
+                JMP   L0A57
+L0C9B           LDX   $01
+                LDA   DRVOFF,X
+                LDX   $00
+                LDA   DRVOFF,X
+                LDX   $0D
+                RTS
+
+L0CA8           DB    $C0,$A6
+                DB    $0D,$00,$20
+                DB    $01,$02
+                DB    $03
+                DB    $21,$22
+                DB    $23
+                DB    $24,$25
+                DB    $04,$05
+                DB    $06,$26
+                DB    $27
+                DB    $07
+                DB    $08
+                DB    $28
+                DB    $09,$0A
+                DB    $0B
+                DB    $29,$2A
+                DB    $2B
+                DB    $2C,$2D,$2E
+                DB    $2F
+                DB    $30,$31
+                DB    $32,$33
+                DB    $34,$35
+                DB    $36,$37
+                DB    $38
+                DB    $39,$3A,$3B
+                DB    $3C,$3D,$3E
+                DB    $0C,$0D,$3F
+                DB    $40
+                DB    $0E,$0F,$41
+                DB    $10,$11
+                DB    $12,$42
+                DB    $43
+                DB    $44
+                DB    $45,$46
+                DB    $47
+                DB    $48
+                DB    $49,$4A
+                DB    $4B
+                DB    $13
+                DB    $14,$4C
+                DB    $15,$16
+                DB    $17
+                DB    $4D,$4E,$4F
+                DB    $50,$51
+                DB    $18
+                DB    $19,$1A,$52
+                DB    $53
+                DB    $1B
+                DB    $1C,$54,$1D
+                DB    $1E,$1F,$20
+                DB    $22
+                DB    $24,$26
+                DB    $28
+                DB    $2A
+                DB    $2C,$2E,$30
+                DB    $32,$34
+                DB    $36,$38
+
+L0D0D           LDX   $09
+                LDA   DRVSL1,X
+L0D12           CPX   $0A
+                BEQ   L0D1F
+                LDX   $00
+                CPX   $01
+                BNE   L0D1F
+                JSR   L0D2F
+L0D1F           LDX   $00
+                RTS
+L0D22           LDX   $0A
+                LDA   DRVSL1,X
+                LDX   $09
+                JSR   L0D12
+                LDX   $01
+                RTS
+L0D2F           LDY   #$05
+                LDA   #$00
+L0D33           JSR   WAIT
+                DEY
+                BNE   L0D33
+                RTS
+
+
+                                       ; Get latest slot and drive into $02,$03
+L0D3A           JSR   LOCRPL
+                STA   $01
+                STY   $00
+                LDY   #$0F
+                LDA   ($00),Y
+                STA   $02
+                INY
+                LDA   ($00),Y
+                STA   $03
+                RTS
+
+DSKNBTBL        DB $AB,$AD,$AE,$AF                
+                DB $B5,$B6,$B7,$BA,$BB,$BD,$BE,$BF
+                DB $D6,$D7,$DA,$DB,$DD,$DE,$DF    
+                DB $EA,$EB,$ED,$EE,$EF            
+                DB $F5,$F6,$F7,$FA,$FB,$FD,$FE,$FF
+
+L0D6D           SBC   $B2DC,Y
+                STA   $44
+                LDA   $45
+                SBC   #$00
+                STA   $45
+                PLA
+                ADC   #$00
+                PHA
+                JMP   $AD66
+                PLA
+                ORA   #$B0
+                JSR   COUT
+                DEY
+L0D86           BPL   $0D63
+                RTS
+                JSR   $AE3B
+                LDY   #$00
+                STY   $B4F9
+L0D91           LDA   ($42),Y
+                STA   $B505,Y
+                INY
+                CPY   #$2D
+                BNE   L0D91
+                CLC
+                RTS
+                JSR   $AE3B
+                LDY   #$00
+L0DA2           LDA   $B505,Y
+                STA   ($42),Y
+                INY
+                CPY   #$2D
+                BNE   L0DA2
+                RTS
+                JSR   $AAF9
+                LDA   #$04
+                JSR   $AF94
+                LDA   $B52D
+                EOR   #$FF
+                STA   $B2F5
+                LDA   #$11
+                STA   $B31F
+                LDA   #$01
+                STA   $B320
+                LDX   #$38
+                LDA   #$00
+L0DCB           STA   $B2EF,X
+                INX
+                BNE   L0DCB
+                LDX   #$0C
+L0DD3           CPX   #$8C
+                BEQ   L0DEB
+                LDY   #$03
+L0DD9           LDA   $B2D8,Y
+                STA   $B327,X
+                INX
+                DEY
+                BPL   L0DD9
+                CPX   #$44
+                BNE   L0DD3
+                LDX   #$48
+                BNE   L0DD3
+L0DEB           JSR   $AF37
+                LDX   #$00
+                TXA
+L0DF1           STA   $B3EF,X
+                INX
+                BNE   L0DF1
+                JSR   $AF81
+                LDA   #$11
+                LDY   $B324
+                DEY

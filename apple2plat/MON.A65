@@ -175,6 +175,11 @@ SCRN     LSR   A          ;READ SCREEN Y-COORD/2
          JSR   GBASCALC   ;CALC BASE ADDRESS
          LDA   (GBASL),Y  ;GET BYTE
          PLP              ;RESTORE LSB FROM CARRY
+
+
+
+
+
 SCRN2    BCC   RTMSKZ     ;IF EVEN, USE LO H
          LSR   A
          LSR   A
@@ -182,6 +187,9 @@ SCRN2    BCC   RTMSKZ     ;IF EVEN, USE LO H
          LSR   A
 RTMSKZ   AND   #$0F       ;MASK 4-BITS
          RTS
+
+
+
 INSDS1   LDX   PCL        ;PRINT PCL,H
          LDY   PCH
          JSR   PRYX2
@@ -206,7 +214,7 @@ GETFMT   TAX
          LDA   FMT2,X     ;INDEX INTO PRINT FORMAT TABLE
          STA   FORMAT     ;SAVE FOR ADR FIELD FORMATTING
          AND   #$03       ;MASK FOR 2-BIT LENGTH
-                          ; (P=1 BYTE, 1=2 BYTE, 2=3 BYTE)
+                          ; (0=1 BYTE, 1=2 BYTE, 2=3 BYTE)
          STA   LENGTH
          TYA              ;OPCODE
          AND   #$8F       ;MASK FOR 1XXX1010 TEST
@@ -226,7 +234,13 @@ MNNDX2   LSR   A          ;1) 1XXX1010->00101XXX
 MNNDX3   DEY
          BNE   MNNDX1
          RTS
+
+
+
          DB    $FF,$FF,$FF
+
+
+
 INSTDSP  JSR   INSDS1     ;GEN FMT, LEN BYTES
          PHA              ;SAVE MNEMONIC TABLE INDEX
 PRNTOP   LDA   (PCL),Y

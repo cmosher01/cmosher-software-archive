@@ -135,7 +135,7 @@ STA zp 	85
 STX zp 	86
 
 DEY i 	88
-BIT # 	89
+
 TXA i 	8A
 
 STY a 	8C

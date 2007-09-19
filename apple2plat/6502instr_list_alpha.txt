@@ -22,7 +22,6 @@ ASL zp,x 	16
 BCC r 	90
 BCS r 	B0
 BEQ r 	F0
-BIT # 	89
 BIT a 	2C
 BIT zp 	24
 BMI r 	30
