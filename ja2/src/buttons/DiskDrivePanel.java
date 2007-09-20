@@ -9,6 +9,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.LayoutManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -70,6 +72,20 @@ public class DiskDrivePanel extends JPanel
 		add(this.btnLoad);
 		sz = this.btnLoad.getPreferredSize();
 		this.btnLoad.setBounds(2,30,(int)sz.getWidth(),(int)sz.getHeight());
+		this.btnLoad.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if (file == null)
+				{
+					
+				}
+				else
+				{
+					
+				}
+			}
+		});
 
 		this.btnSave = new HiliteButton("save",30,12);
 		add(this.btnSave);
