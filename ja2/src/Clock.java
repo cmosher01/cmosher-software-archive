@@ -1,6 +1,4 @@
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /*
  * Created on Aug 1, 2007
@@ -9,6 +7,7 @@ public class Clock
 {
 	volatile boolean shutdown;
 	private Thread clth;
+	private final Timed[] rTimed;
 
 	public interface Timed
 	{
@@ -16,10 +15,10 @@ public class Clock
 		void stopped();
 	}
 
-	private final List<Timed> rTimed = new ArrayList<Timed>();
 	Clock(final Collection<Timed> rTimed)
 	{
-		this.rTimed.addAll(rTimed);
+		this.rTimed = new Timed[rTimed.size()];
+		rTimed.toArray(this.rTimed);
 	}
 
 	public void run()
@@ -42,9 +41,9 @@ public class Clock
 		System.out.println("clock is starting");
 		while (!this.shutdown)
 		{
-			for (final Timed timed : this.rTimed)
+			for (int i = 0; i < this.rTimed.length; ++i)
 			{
-				timed.tick();
+				this.rTimed[i].tick();
 			}
 		}
 		System.out.println("clock is stopping");

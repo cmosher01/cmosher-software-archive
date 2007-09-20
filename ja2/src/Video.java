@@ -365,19 +365,19 @@ public class Video extends JPanel implements Clock.Timed
 			}
 			if (on)
 			{
-//				if (!prevOn)
-//				{
+				if (!prevOn)
+				{
 					g.setColor(Color.GREEN);
 					prevOn = true;
-//				}
+				}
 			}
 			else
 			{
-//				if (prevOn)
-//				{
+				if (prevOn)
+				{
 					g.setColor(Color.BLACK);
 					prevOn = false;
-//				}
+				}
 			}
 			g.drawLine(x,y,x,y);
 			++x;

@@ -3,6 +3,7 @@
  */
 package buttons;
 
+import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.reflect.InvocationTargetException;
@@ -20,8 +21,6 @@ import javax.swing.WindowConstants;
 public class Buttons extends WindowAdapter implements Runnable
 {
 	private JFrame frame;
-    private Timer timer = new Timer();
-	private DiskDrivePanel panel;
 
 	/**
 	 * @param args
@@ -59,9 +58,8 @@ public class Buttons extends WindowAdapter implements Runnable
 
         // Create and set up the content pane.
         JPanel p = new JPanel();
-        //p.setBorder(BorderFactory.createLoweredBevelBorder());
-        this.panel = new DiskDrivePanel();
-        p.add(this.panel);
+        p.setPreferredSize(new Dimension(320,240));
+        p.add(new PowerButton(60,30));
         this.frame.setContentPane(p);
 
         // Set the window's size and position.
@@ -70,27 +68,10 @@ public class Buttons extends WindowAdapter implements Runnable
 
         // Display the window.
         this.frame.setVisible(true);
-
-//        this.timer.schedule(new TimerTask()
-//        {
-//        	private boolean on;
-//			@Override
-//			public void run()
-//			{
-//				on = !on;
-//				Buttons.this.panel.test(on);
-//			} },5000,5000);
-		}
-
-	private static class TestThread implements Runnable
-	{
-		public void run()
-		{
-		}
 	}
+
 	public void windowClosing(WindowEvent e)
 	{
 		this.frame.dispose();
 	}
-
 }
