@@ -78,7 +78,7 @@ public final class Ja2 implements Runnable
     	DiskBytes disk2 = new DiskBytes();
     	final DiskDriveSimple drive = new DiskDriveSimple(new DiskBytes[] {disk1,disk2});
     	final StepperMotor arm = new StepperMotor();
-    	final DiskInterface disk = new DiskInterface(drive,arm);
+    	final DiskInterface disk = new DiskInterface(drive,arm,this.framer);
 
     	final Keyboard keyboard = new Keyboard();
 
@@ -98,9 +98,9 @@ public final class Ja2 implements Runnable
 //        memory.load(0xc200,c200romImage);
 //        romImage.close();
 
-        final InputStream c100romImage = getClass().getResourceAsStream("apple2e_c100.rom");
-        memory.load(0xc100,c100romImage);
-        romImage.close();
+//        final InputStream c100romImage = getClass().getResourceAsStream("apple2e_c100.rom");
+//        memory.load(0xc100,c100romImage);
+//        romImage.close();
 
         final Video video = new Video(memory);
 

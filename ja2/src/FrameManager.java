@@ -1,16 +1,20 @@
 import java.awt.Font;
 import java.awt.event.WindowListener;
 import java.io.Closeable;
+import java.io.File;
 import java.util.Enumeration;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.FontUIResource;
+import buttons.DiskDrivePanel;
 
 public class FrameManager implements Closeable
 {
 	private JFrame frame;
+	private ContentPane contentPane;
 
 	public void init(final MenuBarFactory factoryMenuBar, final WindowListener listenerWindow, final Video video)
 	{
@@ -37,7 +41,8 @@ public class FrameManager implements Closeable
 //        this.frame.setJMenuBar(factoryMenuBar.createMenuBar());
 
         // Create and set up the content pane.
-        this.frame.setContentPane(video);
+        this.contentPane = new ContentPane(video);
+        this.frame.setContentPane(this.contentPane);
 
         // Set the window's size and position.
         this.frame.pack();
@@ -47,7 +52,12 @@ public class FrameManager implements Closeable
         this.frame.setVisible(true);
 	}
 
-    private static void setLookAndFeel()
+	public DiskDrivePanel getDrive(int drive)
+	{
+		return this.contentPane.getDrive(drive);
+	}
+
+	private static void setLookAndFeel()
     {
 		try
 		{
@@ -125,29 +135,29 @@ public class FrameManager implements Closeable
 		this.frame.repaint();
 	}
 
-//	public File getFileToOpen(final File initial) throws UserCancelled
-//	{
-//	    final JFileChooser chooser = new JFileChooser(initial);
-//	    final int actionType = chooser.showOpenDialog(this.frame);
-//	    if (actionType != JFileChooser.APPROVE_OPTION)
-//	    {
-//	    	throw new UserCancelled();
-//	    }
-//
-//		return chooser.getSelectedFile();
-//	}
-//
-//	public File getFileToSave(final File initial) throws UserCancelled
-//	{
-//	    final JFileChooser chooser = new JFileChooser(initial);
-//	    final int actionType = chooser.showSaveDialog(this.frame);
-//	    if (actionType != JFileChooser.APPROVE_OPTION)
-//	    {
-//	    	throw new UserCancelled();
-//	    }
-//
-//		return chooser.getSelectedFile();
-//	}
+	public File getFileToOpen(final File initial) throws UserCancelled
+	{
+	    final JFileChooser chooser = new JFileChooser(initial);
+	    final int actionType = chooser.showOpenDialog(this.frame);
+	    if (actionType != JFileChooser.APPROVE_OPTION)
+	    {
+	    	throw new UserCancelled();
+	    }
+
+		return chooser.getSelectedFile();
+	}
+
+	public File getFileToSave(final File initial) throws UserCancelled
+	{
+	    final JFileChooser chooser = new JFileChooser(initial);
+	    final int actionType = chooser.showSaveDialog(this.frame);
+	    if (actionType != JFileChooser.APPROVE_OPTION)
+	    {
+	    	throw new UserCancelled();
+	    }
+
+		return chooser.getSelectedFile();
+	}
 //
 //	public void showMessage(final String message)
 //	{

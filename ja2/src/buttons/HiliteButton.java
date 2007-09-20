@@ -28,6 +28,7 @@ public class HiliteButton extends JButton //implements ActionListener
 	public HiliteButton(String text, int width, int height)
 	{
 		super(text);
+		setOpaque(true);
 		enableEvents(AWTEvent.MOUSE_EVENT_MASK);
 		this.borderEnabled = BorderFactory.createLineBorder(Color.BLACK);
 		this.borderDisabled = BorderFactory.createLineBorder(Color.GRAY);
@@ -53,7 +54,7 @@ public class HiliteButton extends JButton //implements ActionListener
 		super.processMouseEvent(evt);
 	}
 
-	protected  void paintComponent(Graphics g)
+	protected void paintComponent(Graphics g)
 	{
         final Graphics2D g2d = (Graphics2D)g.create();
         if (isOpaque())

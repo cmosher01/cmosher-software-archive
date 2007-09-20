@@ -8,8 +8,10 @@ import java.awt.event.WindowEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -19,7 +21,7 @@ public class Buttons extends WindowAdapter implements Runnable
 {
 	private JFrame frame;
     private Timer timer = new Timer();
-	private ButtonPanel panel;
+	private DiskDrivePanel panel;
 
 	/**
 	 * @param args
@@ -56,8 +58,11 @@ public class Buttons extends WindowAdapter implements Runnable
         this.frame.setTitle("Button Test");
 
         // Create and set up the content pane.
-        this.panel = new ButtonPanel();
-        this.frame.setContentPane(panel);
+        JPanel p = new JPanel();
+        //p.setBorder(BorderFactory.createLoweredBevelBorder());
+        this.panel = new DiskDrivePanel();
+        p.add(this.panel);
+        this.frame.setContentPane(p);
 
         // Set the window's size and position.
         this.frame.pack();
@@ -66,15 +71,15 @@ public class Buttons extends WindowAdapter implements Runnable
         // Display the window.
         this.frame.setVisible(true);
 
-        this.timer.schedule(new TimerTask()
-        {
-        	private boolean on;
-			@Override
-			public void run()
-			{
-				on = !on;
-				Buttons.this.panel.test(on);
-			} },5000,5000);
+//        this.timer.schedule(new TimerTask()
+//        {
+//        	private boolean on;
+//			@Override
+//			public void run()
+//			{
+//				on = !on;
+//				Buttons.this.panel.test(on);
+//			} },5000,5000);
 		}
 
 	private static class TestThread implements Runnable

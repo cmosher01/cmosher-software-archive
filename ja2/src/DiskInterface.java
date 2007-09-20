@@ -5,17 +5,20 @@ public class DiskInterface
 {
 	private final DiskDriveSimple disk;
 	private final StepperMotor arm;
+	private final FrameManager framer;
 
 	private boolean write;
 
 	/**
 	 * @param disk
+	 * @param manager 
 	 * @param motor
 	 */
-	public DiskInterface(final DiskDriveSimple disk, final StepperMotor arm)
+	public DiskInterface(final DiskDriveSimple disk, final StepperMotor arm, FrameManager framer)
 	{
 		this.disk = disk;
 		this.arm = arm;
+		this.framer = framer;
 	}
 
 	public byte io(final int addr, final byte data)
@@ -32,12 +35,15 @@ public class DiskInterface
 			case 3:
 				this.arm.setMagnet(q,on);
 				this.disk.setTrack(this.arm.getTrack());
+				updatePanel();
 			break;
 			case 4:
 				this.disk.setMotorOn(on);
+				updatePanel();
 			break;
 			case 5:
 				this.disk.setDrive2(on);
+				updatePanel();
 			break;
 			case 6:
 				if (on && this.write)
@@ -62,5 +68,30 @@ public class DiskInterface
 			break;
 		}
 		return ret;
+	}
+
+	private void updatePanel()
+	{
+		this.framer.getDrive(this.disk.getDriveNumber()).setTrack(this.arm.getTrack());
+		if (this.disk.isMotorOn())
+		{
+			if (this.write)
+			{
+				this.framer.getDrive(this.disk.getDriveNumber()).setWriting(true);
+				this.framer.getDrive(this.disk.getDriveNumber()).setReading(false);
+			}
+			else
+			{
+				this.framer.getDrive(this.disk.getDriveNumber()).setWriting(false);
+				this.framer.getDrive(this.disk.getDriveNumber()).setReading(true);
+			}
+		}
+		else
+		{
+			this.framer.getDrive(this.disk.getDriveNumber()).setWriting(false);
+			this.framer.getDrive(this.disk.getDriveNumber()).setReading(false);
+		}
+		this.framer.getDrive(1-this.disk.getDriveNumber()).setWriting(false);
+		this.framer.getDrive(1-this.disk.getDriveNumber()).setReading(false);
 	}
 }

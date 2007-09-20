@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.Map.Entry;
+import other.HexUtil;
 
 /*
  * Created on Aug 1, 2007

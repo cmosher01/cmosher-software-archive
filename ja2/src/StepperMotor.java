@@ -1,3 +1,5 @@
+import other.HexUtil;
+
 /*
  * Created on Sep 12, 2007
  */

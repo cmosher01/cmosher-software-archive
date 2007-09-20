@@ -58,4 +58,14 @@ public class DiskDriveSimple
 	{
 		this.track = t;
 	}
+
+	public int getDriveNumber()
+	{
+		return this.dr;
+	}
+
+	public boolean isMotorOn()
+	{
+		return this.motorOn;
+	}
 }
