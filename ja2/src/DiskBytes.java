@@ -57,7 +57,7 @@ public class DiskBytes
 		}
 		if (!this.loaded)
 		{
-			return 0;
+			return -1;
 		}
 		final byte ret = this.bytes[track][this.byt];
 		nextByte();

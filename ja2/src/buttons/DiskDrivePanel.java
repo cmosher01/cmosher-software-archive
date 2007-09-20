@@ -107,6 +107,7 @@ public class DiskDrivePanel extends JPanel
 					DiskDrivePanel.this.labelFile.setText(DiskDrivePanel.this.file);
 					DiskDrivePanel.this.btnSave.setEnabled(DiskDrivePanel.this.modified);
 					DiskDrivePanel.this.btnLoad.setText(DiskDrivePanel.this.file == null ? "load" : "unload");
+					repaint();
 				}
 			});
 		}
@@ -118,7 +119,6 @@ public class DiskDrivePanel extends JPanel
 		{
 			e.printStackTrace();
 		}
-		repaint();
 	}
 
 	/**
@@ -145,6 +145,7 @@ public class DiskDrivePanel extends JPanel
 	public void setReading(boolean reading)
 	{
 		this.reading = reading;
+		this.ledRead.setOn(reading);
 		update();
 	}
 
@@ -163,6 +164,7 @@ public class DiskDrivePanel extends JPanel
 	public void setWriting(boolean writing)
 	{
 		this.writing = writing;
+		this.ledWrite.setOn(writing);
 		update();
 	}
 
