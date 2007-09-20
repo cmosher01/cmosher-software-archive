@@ -1,5 +1,8 @@
+package disk;
 import java.io.File;
 import java.io.IOException;
+import chipset.Clock;
+import chipset.Clock.Timed;
 
 /*
  * Created on Sep 12, 2007

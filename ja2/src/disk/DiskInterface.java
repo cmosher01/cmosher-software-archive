@@ -1,3 +1,6 @@
+package disk;
+import gui.FrameManager;
+
 /*
  * Created on Sep 12, 2007
  */

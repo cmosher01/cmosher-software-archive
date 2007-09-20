@@ -1,3 +1,4 @@
+package video;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -15,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import chipset.Clock;
+import chipset.Memory;
+import chipset.Clock.Timed;
 
 /*
  * Created on Aug 2, 2007

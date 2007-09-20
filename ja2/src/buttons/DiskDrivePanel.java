@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
+import disk.DiskBytes;
 import other.HexUtil;
 
 public class DiskDrivePanel extends JPanel
@@ -34,7 +35,7 @@ public class DiskDrivePanel extends JPanel
 	private LED ledRead;
 	private LED ledWrite;
 
-	public DiskDrivePanel()
+	public DiskDrivePanel(DiskBytes drive1, DiskBytes drive2)
 	{
 		setOpaque(true);
 		setPreferredSize(new Dimension(81,43));

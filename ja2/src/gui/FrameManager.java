@@ -1,3 +1,4 @@
+package gui;
 import java.awt.Font;
 import java.awt.event.WindowListener;
 import java.io.Closeable;
@@ -9,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.FontUIResource;
+import video.Video;
 import buttons.DiskDrivePanel;
 
 public class FrameManager implements Closeable
@@ -16,7 +18,7 @@ public class FrameManager implements Closeable
 	private JFrame frame;
 	private ContentPane contentPane;
 
-	public void init(final MenuBarFactory factoryMenuBar, final WindowListener listenerWindow, final Video video)
+	public void init(final WindowListener listenerWindow, final Video video)
 	{
 		setLookAndFeel();
 

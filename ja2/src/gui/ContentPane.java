@@ -1,7 +1,9 @@
+package gui;
 import java.awt.Dimension;
 import java.awt.Insets;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import video.Video;
 import buttons.DiskDrivePanel;
 
 /*

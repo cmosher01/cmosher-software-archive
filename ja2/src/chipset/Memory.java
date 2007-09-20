@@ -1,6 +1,9 @@
+package chipset;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import keyboard.Keyboard;
+import disk.DiskInterface;
 
 /*
  * Created on Aug 1, 2007

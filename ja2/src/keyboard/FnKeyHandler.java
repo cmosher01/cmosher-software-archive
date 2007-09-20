@@ -1,6 +1,8 @@
+package keyboard;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import chipset.CPU6502;
 
 /*
  * Created on Sep 12, 2007

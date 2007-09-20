@@ -1,3 +1,4 @@
+package video;
 
 
 public class VideoAddressing
