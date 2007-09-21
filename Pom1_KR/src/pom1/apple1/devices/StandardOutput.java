@@ -13,7 +13,14 @@ public class StandardOutput implements OutputDevice
 		}
 		else
 		{
-			System.out.write(c);
+			if (c < ' ' || '~' < c)
+			{
+				System.out.print("<x"+Integer.toHexString(c)+">");
+			}
+			else
+			{
+				System.out.write(c);
+			}
 		}
 		System.out.flush();
 	}
