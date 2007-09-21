@@ -57,7 +57,7 @@ public class CPU6502 implements Clock.Timed
     private Memory memory;
 
 
-	CPU6502(final Memory memory)
+	public CPU6502(final Memory memory)
 	{
 		this.memory = memory;
 		reset();
@@ -65,6 +65,9 @@ public class CPU6502 implements Clock.Timed
 
     public void reset()
     {
+    	// BEGIN Apple ][ specific:
+    	this.memory.read(0xC0E8); // turn off disk drive
+    	// END   Apple ][ specific.
 //        this.i = true;
 //        this.pc = memReadAbsolute(RESET_VECTOR);
 //
@@ -2490,47 +2493,6 @@ public class CPU6502 implements Clock.Timed
     private void Hang()
     {
         pc--;
-    }
-
-    private void handleIRQ()
-    {
-        pushProgramCounter();
-        memory.write(256 + s, (byte)(getStatusRegisterByte() & 0xffffffef));
-        s = (s - 1) & 0xff;
-        i = true;
-        IRQ = false;
-        pc = memReadAbsolute(IRQ_VECTOR);
-    }
-
-    private void handleNMI()
-    {
-        pushProgramCounter();
-        memory.write(256 + s, (byte)(getStatusRegisterByte() & 0xffffffef));
-        s = (s - 1) & 0xff;
-        i = true;
-        NMI = false;
-        pc = memReadAbsolute(NMI_VECTOR);
-    }
-
-    private int memReadAbsolute(int adr)
-    {
-        return memory.read(adr) | (memory.read(adr + 1) & 0xff) << 8;
-    }
-
-    private void pushProgramCounter()
-    {
-        memory.write(s + 256, (byte)(pc >> 8));
-        s = (s - 1) & 0xff;
-        memory.write(s + 256, (byte)pc);
-        s = (s - 1) & 0xff;
-    }
-
-    private void popProgramCounter()
-    {
-        s = (s + 1) & 0xff;
-        pc = memory.read(s + 256) & 0xff;
-        s = (s + 1) & 0xff;
-        pc += (memory.read(s + 256) & 0xff) << 8;
     }
 
 	private void checkSane()

@@ -7,9 +7,11 @@ import java.util.Enumeration;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.FontUIResource;
+import disk.DiskBytes;
 import video.Video;
 import buttons.DiskDrivePanel;
 
@@ -18,7 +20,7 @@ public class FrameManager implements Closeable
 	private JFrame frame;
 	private ContentPane contentPane;
 
-	public void init(final WindowListener listenerWindow, final Video video)
+	public void init(final WindowListener listenerWindow, final Video video, final DiskBytes drive1, final DiskBytes drive2)
 	{
 		setLookAndFeel();
 
@@ -43,7 +45,7 @@ public class FrameManager implements Closeable
 //        this.frame.setJMenuBar(factoryMenuBar.createMenuBar());
 
         // Create and set up the content pane.
-        this.contentPane = new ContentPane(video);
+        this.contentPane = new ContentPane(video,drive1,drive2,this);
         this.frame.setContentPane(this.contentPane);
 
         // Set the window's size and position.
@@ -56,6 +58,10 @@ public class FrameManager implements Closeable
 
 	public DiskDrivePanel getDrive(int drive)
 	{
+		if (this.contentPane == null)
+		{
+			return null;
+		}
 		return this.contentPane.getDrive(drive);
 	}
 
@@ -160,12 +166,12 @@ public class FrameManager implements Closeable
 
 		return chooser.getSelectedFile();
 	}
-//
-//	public void showMessage(final String message)
-//	{
-//		JOptionPane.showMessageDialog(this.frame,message);
-//	}
-//
+
+	public void showMessage(final String message)
+	{
+		JOptionPane.showMessageDialog(this.frame,message);
+	}
+
 //	public String getBoardStringFromUser() throws UserCancelled
 //	{
 //		NewBoardEntry entry = null;

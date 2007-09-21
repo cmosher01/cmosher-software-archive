@@ -83,7 +83,7 @@ public final class Ja2 implements Runnable
     {
     	DiskBytes disk1 = new DiskBytes();
 //    	disk1.load(new File("C:\\apple2\\research\\dos\\3.1\\hyperdos_restored.nib"));
-    	disk1.load(new File("src\\DOS33_SystemMaster_1986_patched_nodelay.nib"));
+//    	disk1.load(new File("src\\DOS33_SystemMaster_1986_patched_nodelay.nib"));
 //    	disk1.load(new File("C:\\apple2\\research\\dos\\3.1\\copy2plus40.nib"));
 //    	disk1.load(new File("C:\\apple2\\research\\dos\\3.1\\bloxap.nib"));
     	DiskBytes disk2 = new DiskBytes();
@@ -121,14 +121,6 @@ public final class Ja2 implements Runnable
 
         // create the main frame window for the application
         this.framer.init(
-        	new MenuBarFactory()
-	    	{
-				public JMenuBar createMenuBar()
-				{
-					return createAppMenuBar();
-				}
-	    	
-	    	},
 	    	new WindowAdapter()
 	    	{
 				@Override
@@ -137,7 +129,7 @@ public final class Ja2 implements Runnable
 					close();
 				}
 	    	},
-	    	video);
+	    	video,disk1,disk2);
 
         video.addKeyListener(keyboard);
         video.addKeyListener(fn);

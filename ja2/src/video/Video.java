@@ -93,7 +93,7 @@ public class Video extends JPanel implements Clock.Timed
 	/*Volatile*/Image vImg;
 	Graphics grimg;
 
-	Video(final Memory memory) throws IOException
+	public Video(final Memory memory) throws IOException
 	{
 //		System.err.println("size of screen: "+pixels.length);
 		this.memory = memory;
@@ -155,7 +155,7 @@ public class Video extends JPanel implements Clock.Timed
 //		}
 		final int a = getAddr();
 
-		byte d = memory.read(a);
+		int d = memory.read(a);
 //		memory.write(0xC051,d);
 //		if (d != 0)
 //			System.err.println("read from video ram "+d);
@@ -319,21 +319,16 @@ public class Video extends JPanel implements Clock.Timed
 		gr.drawImage(vImg,0,0,this);
 	}
 
-	void plotByte(int t, byte d, boolean inverse)
-	{
-		if (vImg == null)
-		{
-//			GraphicsConfiguration gc = getGraphicsConfiguration();
-			createOffscreenImage();
-		}
-
+//	void plotByte(int t, int d, boolean inverse)
+//	{
+//
 //		int d = getPlotD();
 //		int pt = getPlotT();
 //		Color orig = grimg.getColor();
 //		final int base = t*VISIBLE_BITS_PER_BYTE;
-		plotByteGr(t,d,grimg,inverse);
+//		plotByteGr(t,d,grimg,inverse);
 //		grimg.setColor(orig);
-	}
+//	}
 
 	private void createOffscreenImage()
 	{
@@ -342,8 +337,13 @@ public class Video extends JPanel implements Clock.Timed
 		grimg = vImg.getGraphics();
 	}
 
-	private void plotByteGr(int t, byte d, Graphics g, boolean inverse)
+	private void plotByte(int t, int d, boolean inverse)
 	{
+		if (vImg == null)
+		{
+//			GraphicsConfiguration gc = getGraphicsConfiguration();
+			createOffscreenImage();
+		}
 		d >>= 1; // TODO high-order bit half-dot shift
 		int x = (t % VideoAddressing.BYTES_PER_ROW - (VideoAddressing.BYTES_PER_ROW-VideoAddressing.VISIBLE_BYTES_PER_ROW)) * VISIBLE_BITS_PER_BYTE;
 		if (x < 0)
@@ -356,7 +356,7 @@ public class Video extends JPanel implements Clock.Timed
 			return;
 		}
 //		System.out.println(""+pt+": plot 7 pixels at "+x+","+y);
-		boolean prevOn = g.getColor().equals(Color.GREEN);
+		boolean prevOn = grimg.getColor().equals(Color.GREEN);
 		for (int i = 0; i < VISIBLE_BITS_PER_BYTE; ++i)
 		{
 //			final int p = ((d & 0x80) != 0) ? PIXELON : PIXELOFF;
@@ -371,7 +371,7 @@ public class Video extends JPanel implements Clock.Timed
 			{
 				if (!prevOn)
 				{
-					g.setColor(Color.GREEN);
+					grimg.setColor(Color.GREEN);
 					prevOn = true;
 				}
 			}
@@ -379,26 +379,17 @@ public class Video extends JPanel implements Clock.Timed
 			{
 				if (prevOn)
 				{
-					g.setColor(Color.BLACK);
+					grimg.setColor(Color.BLACK);
 					prevOn = false;
 				}
 			}
-			g.drawLine(x,y,x,y);
+			grimg.drawLine(x,y,x,y);
 			++x;
-			d = (byte)((d & 0xFF) >>> 1);
+			d >>= 1;
 		}
 	}
 
-	private void setColor(int d, Graphics g)
-	{
-	}
-
-	private void doFill(Graphics g, int x, int y)
-	{
-//		g.fillRect(x,y,DISPLAY_FACTOR,DISPLAY_FACTOR);
-	}
-
-	private byte getTextCharLine(byte d, int i)
+	private byte getTextCharLine(int d, int i)
 	{
 		return char_rom[(d&0x7F)*TEXT_CHAR_ROWS+i];
 	}

@@ -3,6 +3,8 @@
  */
 package buttons;
 
+import gui.FrameManager;
+import gui.UserCancelled;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -11,9 +13,12 @@ import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
@@ -22,11 +27,13 @@ import other.HexUtil;
 
 public class DiskDrivePanel extends JPanel
 {
+	private final FrameManager framer;
 	private volatile String file;
 	private volatile int track;
 	private volatile boolean modified;
 	private volatile boolean reading;
 	private volatile boolean writing;
+	private final DiskBytes drive;
 
 	private JLabel labelTrack;
 	private JLabel labelFile;
@@ -35,12 +42,16 @@ public class DiskDrivePanel extends JPanel
 	private LED ledRead;
 	private LED ledWrite;
 
-	public DiskDrivePanel(DiskBytes drive1, DiskBytes drive2)
+	public DiskDrivePanel(final DiskBytes drive, final FrameManager framer)
 	{
+		this.drive = drive;
+		this.framer = framer;
 		setOpaque(true);
 		setPreferredSize(new Dimension(81,43));
 //		setBorder(BorderFactory.createLoweredBevelBorder());
 		addNotify();
+
+		setFocusable(false);
 
 		setupControls();
 	}
@@ -54,20 +65,25 @@ public class DiskDrivePanel extends JPanel
 		add(this.labelTrack);
 		this.labelTrack.setBounds(2,2,35,16);
 		this.labelTrack.setFont(new Font("Arial",Font.PLAIN,10));
+		this.labelTrack.setFocusable(false);
 
 		this.ledRead = new LED("R",Color.GREEN,20,10);
 		add(this.ledRead);
 		Dimension sz = this.ledRead.getPreferredSize();
 		this.ledRead.setBounds(35,5,(int)sz.getWidth(),(int)sz.getHeight());
+		this.ledRead.setFocusable(false);
 
 		this.ledWrite = new LED("W",Color.RED,20,10);
 		add(this.ledWrite);
 		sz = this.ledWrite.getPreferredSize();
 		this.ledWrite.setBounds(60,5,(int)sz.getWidth(),(int)sz.getHeight());
+		this.ledWrite.setFocusable(false);
 
 		this.labelFile = new JLabel();
 		add(this.labelFile);
 		this.labelFile.setBounds(2,14,78,16);
+		this.labelFile.setFont(new Font("Arial",Font.PLAIN,10));
+		this.labelFile.setFocusable(false);
 
 		this.btnLoad = new HiliteButton("unload",42,12);
 		add(this.btnLoad);
@@ -77,40 +93,67 @@ public class DiskDrivePanel extends JPanel
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (file == null)
-				{
-					
-				}
-				else
-				{
-					
-				}
+				openFile();
 			}
 		});
+		this.btnLoad.setFocusable(false);
 
 		this.btnSave = new HiliteButton("save",30,12);
 		add(this.btnSave);
 		sz = this.btnSave.getPreferredSize();
 		this.btnSave.setBounds(50,30,(int)sz.getWidth(),(int)sz.getHeight());
+		this.btnSave.setFocusable(false);
 
 		//update();
+	}
+
+	private void openFile()
+	{
+		if (this.file == null)
+		{
+			try
+			{
+				final File f = this.framer.getFileToOpen(null);
+				this.drive.load(f);
+				this.file = f.getCanonicalFile().getName();
+				update();
+			}
+			catch (UserCancelled e1)
+			{
+				// user cancelled, so do nothing
+			}
+			catch (IOException e)
+			{
+				this.framer.showMessage(e.toString());
+				e.printStackTrace();
+			}
+		}
+		else
+		{
+			this.drive.unload();
+			this.file = null;
+			updateEvent();
+		}
 	}
 
 	public void update()
 	{
 		try
 		{
-			SwingUtilities.invokeAndWait(new Runnable()
+			if (SwingUtilities.isEventDispatchThread())
 			{
-				public void run()
+				updateEvent();
+			}
+			else
+			{
+				SwingUtilities.invokeAndWait(new Runnable()
 				{
-					DiskDrivePanel.this.labelTrack.setText("T$"+HexUtil.byt((byte)DiskDrivePanel.this.track));
-					DiskDrivePanel.this.labelFile.setText(DiskDrivePanel.this.file);
-					DiskDrivePanel.this.btnSave.setEnabled(DiskDrivePanel.this.modified);
-					DiskDrivePanel.this.btnLoad.setText(DiskDrivePanel.this.file == null ? "load" : "unload");
-					repaint();
-				}
-			});
+					public void run()
+					{
+						updateEvent();
+					}
+				});
+			}
 		}
 		catch (InterruptedException e)
 		{
@@ -122,15 +165,15 @@ public class DiskDrivePanel extends JPanel
 		}
 	}
 
-	/**
-	 * @param file the file to set
-	 */
-	public void setFile(String file)
+	public void updateEvent()
 	{
-		this.file = file;
-		update();
+		DiskDrivePanel.this.labelTrack.setText("T$"+HexUtil.byt((byte)DiskDrivePanel.this.track));
+		DiskDrivePanel.this.labelFile.setText(DiskDrivePanel.this.file);
+		DiskDrivePanel.this.btnSave.setEnabled(DiskDrivePanel.this.modified);
+		DiskDrivePanel.this.btnLoad.setText(DiskDrivePanel.this.file == null ? "load" : "unload");
+		repaint();
 	}
-
+	
 	/**
 	 * @param modified the modified to set
 	 */

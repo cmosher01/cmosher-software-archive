@@ -1,4 +1,5 @@
 package disk;
+import buttons.DiskDrivePanel;
 import gui.FrameManager;
 
 /*
@@ -75,7 +76,12 @@ public class DiskInterface
 
 	private void updatePanel()
 	{
-		this.framer.getDrive(this.disk.getDriveNumber()).setTrack(this.arm.getTrack());
+		DiskDrivePanel drive = this.framer.getDrive(this.disk.getDriveNumber());
+		if (drive == null)
+		{
+			return;
+		}
+		drive.setTrack(this.arm.getTrack());
 		if (this.disk.isMotorOn())
 		{
 			if (this.write)

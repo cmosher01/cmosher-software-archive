@@ -81,23 +81,23 @@ public class StepperMotor
 			constrainTrack();
 		}
 
-		System.out.print(" ARM: magnet "+magnet+" "+(on?"on ":"off"));
-		System.out.print(" ["+
-			((mags&1)>0?"*":".")+
-			((mags&2)>0?"*":".")+
-			((mags&4)>0?"*":".")+
-			((mags&8)>0?"*":".")+
-			"]");
-		if (d != 0)
-		{
-			System.out.print(" track "+HexUtil.byt((byte)(this.quarterTrack >> 2)));
-			int fract = this.quarterTrack & 3;
-			if (fract != 0)
-			{
-				System.out.print(fract == 1 ? " +.25" : fract == 2 ? " +.5" : " +.75");
-			}
-		}
-		System.out.println();
+//		System.out.print(" ARM: magnet "+magnet+" "+(on?"on ":"off"));
+//		System.out.print(" ["+
+//			((mags&1)>0?"*":".")+
+//			((mags&2)>0?"*":".")+
+//			((mags&4)>0?"*":".")+
+//			((mags&8)>0?"*":".")+
+//			"]");
+//		if (d != 0)
+//		{
+//			System.out.print(" track "+HexUtil.byt((byte)(this.quarterTrack >> 2)));
+//			int fract = this.quarterTrack & 3;
+//			if (fract != 0)
+//			{
+//				System.out.print(fract == 1 ? " +.25" : fract == 2 ? " +.5" : " +.75");
+//			}
+//		}
+//		System.out.println();
 	}
 
 	private void constrainTrack()

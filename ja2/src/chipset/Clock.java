@@ -16,7 +16,7 @@ public class Clock
 		void stopped();
 	}
 
-	Clock(final Collection<Timed> rTimed)
+	public Clock(final Collection<Timed> rTimed)
 	{
 		this.rTimed = new Timed[rTimed.size()];
 		rTimed.toArray(this.rTimed);
