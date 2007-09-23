@@ -11,7 +11,7 @@ import other.HexUtil;
 /*
  * Created on Aug 1, 2007
  */
-public class CPU6502 implements Clock.Timed
+public final class CPU6502 implements Clock.Timed
 {
 	private static final int MEMORY_LIM = 0x10000;
 	private static final int IRQ_VECTOR = MEMORY_LIM-2; // or BRK

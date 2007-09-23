@@ -116,7 +116,6 @@ public class DiskDrivePanel extends JPanel
 				final File f = this.framer.getFileToOpen(null);
 				this.drive.load(f);
 				this.file = f.getCanonicalFile().getName();
-				update();
 			}
 			catch (UserCancelled e1)
 			{
@@ -132,19 +131,19 @@ public class DiskDrivePanel extends JPanel
 		{
 			this.drive.unload();
 			this.file = null;
-			updateEvent();
 		}
+		updateEvent();
 	}
 
 	public void update()
 	{
 		try
 		{
-			if (SwingUtilities.isEventDispatchThread())
-			{
-				updateEvent();
-			}
-			else
+//			if (SwingUtilities.isEventDispatchThread())
+//			{
+//				updateEvent();
+//			}
+//			else
 			{
 				SwingUtilities.invokeAndWait(new Runnable()
 				{
@@ -165,9 +164,13 @@ public class DiskDrivePanel extends JPanel
 		}
 	}
 
+	private StringBuilder sb = new StringBuilder(4);
 	public void updateEvent()
 	{
-		DiskDrivePanel.this.labelTrack.setText("T$"+HexUtil.byt((byte)DiskDrivePanel.this.track));
+		sb.setLength(0);
+		sb.append("T$");
+		sb.append(HexUtil.byt((byte)DiskDrivePanel.this.track));
+		DiskDrivePanel.this.labelTrack.setText(sb.toString());
 		DiskDrivePanel.this.labelFile.setText(DiskDrivePanel.this.file);
 		DiskDrivePanel.this.btnSave.setEnabled(DiskDrivePanel.this.modified);
 		DiskDrivePanel.this.btnLoad.setText(DiskDrivePanel.this.file == null ? "load" : "unload");
