@@ -139,11 +139,11 @@ public class DiskDrivePanel extends JPanel
 	{
 		try
 		{
-//			if (SwingUtilities.isEventDispatchThread())
-//			{
-//				updateEvent();
-//			}
-//			else
+			if (SwingUtilities.isEventDispatchThread())
+			{
+				updateEvent();
+			}
+			else
 			{
 				SwingUtilities.invokeAndWait(new Runnable()
 				{

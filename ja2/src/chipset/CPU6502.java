@@ -1187,6 +1187,558 @@ public final class CPU6502 implements Clock.Timed
 
 
 
+
+    private void setStatusRegisterByte(final int p)
+    {
+    	this.n = ((p & 0x80) != 0);
+    	this.v = ((p & 0x40) != 0);
+//    	this.m = ((p & 0x20) != 0); can't clear this flag
+    	this.b = ((p & 0x10) != 0);
+    	this.d = ((p & 0x08) != 0);
+    	this.i = ((p & 0x04) != 0);
+    	this.z = ((p & 0x02) != 0);
+    	this.c = ((p & 0x01) != 0);
+    }
+
+    private void setStatusRegisterNZ(final int val)
+    {
+    	final byte byt = (byte)val;
+        this.n = byt < 0;
+        this.z = byt == 0;
+    }
+
+    private void setFlagCarry(final int val)
+    {
+    	this.c = (val & 0x100) != 0;
+    }
+
+    private void setFlagBorrow(final int val)
+    {
+    	this.c = (val & 0x100) == 0;
+    }
+
+    private int getStatusRegisterByte()
+    {
+        int p = 0;
+        if (this.n)
+            p |= 0x80;
+        if (this.v)
+            p |= 0x40;
+        if (this.m)
+            p |= 0x20;
+        if (this.b)
+            p |= 0x10;
+        if (this.d)
+            p |= 0x08;
+        if (this.i)
+            p |= 0x04;
+        if (this.z)
+            p |= 0x02;
+        if (this.c)
+            p |= 0x01;
+        return p;
+    }
+
+
+
+
+
+
+
+    private void LDA()
+    {
+        this.a = this.data;
+        this.a &= 0xFF;
+        setStatusRegisterNZ(this.a);
+    }
+
+    private void LDX()
+    {
+        this.x = this.data;
+        this.x &= 0xFF;
+        setStatusRegisterNZ(this.x);
+    }
+
+    private void LDY()
+    {
+        this.y = this.data;
+        this.y &= 0xFF;
+        setStatusRegisterNZ(this.y);
+    }
+
+    private void STA()
+    {
+        this.data = this.a;
+    }
+
+    private void STX()
+    {
+        this.data = this.x;
+    }
+
+    private void STY()
+    {
+        this.data = this.y;
+    }
+
+    private void CMP()
+    {
+        final int tmp = this.a - this.data;
+        setFlagBorrow(tmp);
+        setStatusRegisterNZ(tmp);
+    }
+
+    private void CPX()
+    {
+        final int tmp = this.x - this.data;
+        setFlagBorrow(tmp);
+        setStatusRegisterNZ(tmp);
+    }
+
+    private void CPY()
+    {
+        final int tmp = this.y - this.data;
+        setFlagBorrow(tmp);
+        setStatusRegisterNZ(tmp);
+    }
+
+    private void AND()
+    {
+        this.a &= this.data;
+        setStatusRegisterNZ(this.a);
+    }
+
+    private void ORA()
+    {
+        this.a |= this.data;
+        setStatusRegisterNZ(this.a);
+    }
+
+    private void EOR()
+    {
+        this.a ^= this.data;
+        setStatusRegisterNZ(this.a);
+    }
+
+
+
+
+
+
+    private void ASL()
+    {
+    	this.data = shiftLeft(this.data);
+    }
+
+    private void ASL_A()
+    {
+    	this.a = shiftLeft(this.a);
+    }
+
+    private void LSR()
+    {
+        this.data = shiftRight(this.data);
+    }
+
+    private void LSR_A()
+    {
+        this.a = shiftRight(this.a);
+    }
+
+    private void ROL()
+    {
+    	this.data = rotateLeft(this.data);
+    }
+
+    private void ROL_A()
+    {
+    	this.a = rotateLeft(this.a);
+    }
+
+    private void ROR()
+    {
+    	this.data = rotateRight(this.data);
+    }
+
+    private void ROR_A()
+    {
+    	this.a = rotateRight(this.a);
+    }
+
+    private int shiftLeft(int byt)
+    {
+    	byt &= 0xFF;
+        this.c = (byt & 0x80) != 0;
+        byt <<= 1;
+        byt &= 0xFF;
+        setStatusRegisterNZ(byt);
+        return byt;
+    }
+
+    private int shiftRight(int byt)
+    {
+    	byt &= 0xFF;
+        this.c = (byt & 0x01) != 0;
+        byt >>= 1;
+    	byt &= 0xFF;
+        setStatusRegisterNZ(byt);
+        return byt;
+    }
+
+    private int rotateLeft(int byt)
+    {
+    	byt &= 0xFF;
+
+    	final boolean newCarry = (byt & 0x80) != 0;
+
+        byt <<= 1;
+    	byt &= 0xFF;
+
+    	if (this.c)
+    	{
+    		byt |= 0x01;
+    	}
+
+    	this.c = newCarry;
+        setStatusRegisterNZ(byt);
+
+        return byt;
+    }
+
+    private int rotateRight(int byt)
+    {
+    	byt &= 0xFF;
+
+    	final boolean newCarry = (byt & 0x01) != 0;
+
+        byt >>= 1;
+    	byt &= 0xFF;
+
+    	if (this.c)
+    	{
+    		byt |= 0x80;
+    	}
+
+    	this.c = newCarry;
+        setStatusRegisterNZ(byt);
+
+        return byt;
+    }
+
+
+
+
+
+
+    private void ADC()
+    {
+        int Op1 = this.a;
+        int Op2 = this.data;
+        if (this.d)
+        {
+        	this.z = (Op1 + Op2 + (this.c ? 1 : 0) & 0xff) == 0;
+            int tmp = (Op1 & 0xf) + (Op2 & 0xf) + (this.c ? 1 : 0);
+            tmp = tmp >= 10 ? tmp + 6 : tmp;
+            this.a = tmp;
+            tmp = (Op1 & 0xf0) + (Op2 & 0xf0) + (tmp & 0xf0);
+            this.n = (byte)tmp < 0;
+            this.v = ((Op1 ^ tmp) & ~(Op1 ^ Op2) & 0x80) != 0;
+            tmp = this.a & 0xf | (tmp >= 160 ? tmp + 96 : tmp);
+            this.c = tmp >= 256;
+            this.a = tmp & 0xff;
+        }
+        else
+        {
+            int tmp = Op1 + Op2 + (this.c ? 1 : 0);
+            this.a = tmp & 0xff;
+            this.v = ((Op1 ^ this.a) & ~(Op1 ^ Op2) & 0x80) != 0;
+            setFlagCarry(tmp);
+            setStatusRegisterNZ(this.a);
+        }
+    }
+
+    private void SBC()
+    {
+        int Op1 = this.a;
+        int Op2 = this.data;
+        if (this.d)
+        {
+            int tmp = (Op1 & 0xf) - (Op2 & 0xf) - (this.c ? 0 : 1);
+            tmp = (tmp & 0x10) != 0 ? tmp - 6 : tmp;
+            this.a = tmp;
+            tmp = (Op1 & 0xf0) - (Op2 & 0xf0) - (this.a & 0x10);
+            this.a = this.a & 0xf | ((tmp & 0x100) != 0 ? tmp - 96 : tmp);
+            this.a &= 0xFF;
+            tmp = Op1 - Op2 - (this.c ? 0 : 1);
+            setFlagBorrow(tmp);
+            setStatusRegisterNZ(tmp);
+        }
+        else
+        {
+            int tmp = Op1 - Op2 - (this.c ? 0 : 1);
+            this.a = tmp & 0xff;
+            this.v = ((Op1 ^ Op2) & (Op1 ^ this.a) & 0x80) != 0;
+            setFlagBorrow(tmp);
+            setStatusRegisterNZ(this.a);
+        }
+    }
+
+
+
+
+    private void INC()
+    {
+        ++this.data;
+        this.data &= 0xFF;
+        setStatusRegisterNZ(this.data);
+    }
+
+    private void DEC()
+    {
+        --this.data;
+        this.data &= 0xFF;
+        setStatusRegisterNZ(this.data);
+    }
+
+    private void INX()
+    {
+        ++this.x;
+        this.x &= 0xFF;
+        setStatusRegisterNZ(this.x);
+    }
+
+    private void INY()
+    {
+        ++this.y;
+        this.y &= 0xFF;
+        setStatusRegisterNZ(this.y);
+    }
+
+    private void DEX()
+    {
+        --this.x;
+        this.x &= 0xFF;
+        setStatusRegisterNZ(this.x);
+    }
+
+    private void DEY()
+    {
+        --this.y;
+        this.y &= 0xFF;
+        setStatusRegisterNZ(this.y);
+    }
+
+    private void BIT()
+    {
+        final byte btmp = (byte)this.data;
+        this.v = (btmp & 0x40) != 0;
+        this.n = (btmp & 0x80) != 0;
+        this.z = (btmp & this.a) == 0;
+    }
+
+    private void PHA()
+    {
+    	this.data = this.a;
+    }
+
+    private void PHP()
+    {
+    	this.data = getStatusRegisterByte();
+    }
+
+    private void PLA()
+    {
+    	this.a = this.data;
+        setStatusRegisterNZ(this.a);
+    }
+
+    private void PLP()
+    {
+    	setStatusRegisterByte(this.data);
+    }
+
+    private void BRK()
+    {
+    }
+
+    private void RTI()
+    {
+    }
+
+    private void JMP()
+    {
+    }
+
+    private void RTS()
+    {
+    }
+
+    private void JSR()
+    {
+    }
+
+    private void BNE()
+    {
+    	this.branch = !this.z;
+    }
+
+    private void BEQ()
+    {
+    	this.branch = this.z;
+    }
+
+    private void BVC()
+    {
+    	this.branch = !this.v;
+    }
+
+    private void BVS()
+    {
+    	this.branch = this.v;
+    }
+
+    private void BCC()
+    {
+    	this.branch = !this.c;
+    }
+
+    private void BCS()
+    {
+    	this.branch = this.c;
+    }
+
+    private void BPL()
+    {
+    	this.branch = !this.n;
+    }
+
+    private void BMI()
+    {
+    	this.branch = this.n;
+    }
+
+    private void TAX()
+    {
+        this.x = this.a;
+        setStatusRegisterNZ(this.x);
+    }
+
+    private void TXA()
+    {
+        this.a = this.x;
+        setStatusRegisterNZ(this.a);
+    }
+
+    private void TAY()
+    {
+        this.y = this.a;
+        setStatusRegisterNZ(this.y);
+    }
+
+    private void TYA()
+    {
+        this.a = this.y;
+        setStatusRegisterNZ(this.a);
+    }
+
+    private void TXS()
+    {
+        this.s = this.x;
+        //setStatusRegisterNZ(this.s); // does NOT affect status register
+    }
+
+    private void TSX()
+    {
+        this.x = this.s;
+        setStatusRegisterNZ(this.x);
+    }
+
+    private void CLC()
+    {
+    	this.c = false;
+    }
+
+    private void SEC()
+    {
+    	this.c = true;
+    }
+
+    private void CLI()
+    {
+    	this.i = false;
+    }
+
+    private void SEI()
+    {
+    	this.i = true;
+    }
+
+    private void CLV()
+    {
+    	this.v = false;
+    }
+
+    private void CLD()
+    {
+    	this.d = false;
+    }
+
+    private void SED()
+    {
+    	this.d = true;
+    }
+
+    private void NOP()
+    {
+    	// NO OPERATION!
+    }
+
+    private void Unoff()
+    {
+    }
+
+    private void Unoff1()
+    {
+    }
+
+    private void Unoff2()
+    {
+    	this.pc++;
+    }
+
+    private void Unoff3()
+    {
+    	this.pc += 2;
+    }
+
+    private void Hang()
+    {
+    	this.pc--;
+    }
+
+	private void checkSane()
+	{
+		if ((a & 0xFFFFFF00) != 0)
+		{
+			throw new IllegalStateException();
+		}
+		if ((x & 0xFFFFFF00) != 0)
+		{
+			throw new IllegalStateException();
+		}
+		if ((y & 0xFFFFFF00) != 0)
+		{
+			throw new IllegalStateException();
+		}
+		if ((s & 0xFFFFFF00) != 0)
+		{
+			throw new IllegalStateException();
+		}
+		if ((data & 0xFFFFFF00) != 0)
+		{
+			throw new IllegalStateException();
+		}
+	}
 	private void execute()
     {
 		// TODO undocumented instructions not yet implemented
@@ -1964,556 +2516,4 @@ public final class CPU6502 implements Clock.Timed
 				throw new IllegalStateException();
 		}
     }
-
-    private void setStatusRegisterByte(final int p)
-    {
-    	this.n = ((p & 0x80) != 0);
-    	this.v = ((p & 0x40) != 0);
-//    	this.m = ((p & 0x20) != 0); can't clear this flag
-    	this.b = ((p & 0x10) != 0);
-    	this.d = ((p & 0x08) != 0);
-    	this.i = ((p & 0x04) != 0);
-    	this.z = ((p & 0x02) != 0);
-    	this.c = ((p & 0x01) != 0);
-    }
-
-    private void setStatusRegisterNZ(final int val)
-    {
-    	final byte byt = (byte)val;
-        this.n = byt < 0;
-        this.z = byt == 0;
-    }
-
-    private void setFlagCarry(final int val)
-    {
-    	this.c = (val & 0x100) != 0;
-    }
-
-    private void setFlagBorrow(final int val)
-    {
-    	this.c = (val & 0x100) == 0;
-    }
-
-    private int getStatusRegisterByte()
-    {
-        int p = 0;
-        if (this.n)
-            p |= 0x80;
-        if (this.v)
-            p |= 0x40;
-        if (this.m)
-            p |= 0x20;
-        if (this.b)
-            p |= 0x10;
-        if (this.d)
-            p |= 0x08;
-        if (this.i)
-            p |= 0x04;
-        if (this.z)
-            p |= 0x02;
-        if (this.c)
-            p |= 0x01;
-        return p;
-    }
-
-
-
-
-
-
-
-    private void LDA()
-    {
-        this.a = this.data;
-        this.a &= 0xFF;
-        setStatusRegisterNZ(this.a);
-    }
-
-    private void LDX()
-    {
-        this.x = this.data;
-        this.x &= 0xFF;
-        setStatusRegisterNZ(this.x);
-    }
-
-    private void LDY()
-    {
-        this.y = this.data;
-        this.y &= 0xFF;
-        setStatusRegisterNZ(this.y);
-    }
-
-    private void STA()
-    {
-        this.data = this.a;
-    }
-
-    private void STX()
-    {
-        this.data = this.x;
-    }
-
-    private void STY()
-    {
-        this.data = this.y;
-    }
-
-    private void CMP()
-    {
-        final int tmp = this.a - this.data;
-        setFlagBorrow(tmp);
-        setStatusRegisterNZ(tmp);
-    }
-
-    private void CPX()
-    {
-        final int tmp = this.x - this.data;
-        setFlagBorrow(tmp);
-        setStatusRegisterNZ(tmp);
-    }
-
-    private void CPY()
-    {
-        final int tmp = this.y - this.data;
-        setFlagBorrow(tmp);
-        setStatusRegisterNZ(tmp);
-    }
-
-    private void AND()
-    {
-        this.a &= this.data;
-        setStatusRegisterNZ(this.a);
-    }
-
-    private void ORA()
-    {
-        this.a |= this.data;
-        setStatusRegisterNZ(this.a);
-    }
-
-    private void EOR()
-    {
-        this.a ^= this.data;
-        setStatusRegisterNZ(this.a);
-    }
-
-
-
-
-
-
-    private void ASL()
-    {
-    	this.data = shiftLeft(this.data);
-    }
-
-    private void ASL_A()
-    {
-    	this.a = shiftLeft(this.a);
-    }
-
-    private void LSR()
-    {
-        this.data = shiftRight(this.data);
-    }
-
-    private void LSR_A()
-    {
-        this.a = shiftRight(this.a);
-    }
-
-    private void ROL()
-    {
-    	this.data = rotateLeft(this.data);
-    }
-
-    private void ROL_A()
-    {
-    	this.a = rotateLeft(this.a);
-    }
-
-    private void ROR()
-    {
-    	this.data = rotateRight(this.data);
-    }
-
-    private void ROR_A()
-    {
-    	this.a = rotateRight(this.a);
-    }
-
-    private int shiftLeft(int byt)
-    {
-    	byt &= 0xFF;
-        this.c = (byt & 0x80) != 0;
-        byt <<= 1;
-        byt &= 0xFF;
-        setStatusRegisterNZ(byt);
-        return byt;
-    }
-
-    private int shiftRight(int byt)
-    {
-    	byt &= 0xFF;
-        this.c = (byt & 0x01) != 0;
-        byt >>= 1;
-    	byt &= 0xFF;
-        setStatusRegisterNZ(byt);
-        return byt;
-    }
-
-    private int rotateLeft(int byt)
-    {
-    	byt &= 0xFF;
-
-    	final boolean newCarry = (byt & 0x80) != 0;
-
-        byt <<= 1;
-    	byt &= 0xFF;
-
-    	if (this.c)
-    	{
-    		byt |= 0x01;
-    	}
-
-    	this.c = newCarry;
-        setStatusRegisterNZ(byt);
-
-        return byt;
-    }
-
-    private int rotateRight(int byt)
-    {
-    	byt &= 0xFF;
-
-    	final boolean newCarry = (byt & 0x01) != 0;
-
-        byt >>= 1;
-    	byt &= 0xFF;
-
-    	if (this.c)
-    	{
-    		byt |= 0x80;
-    	}
-
-    	this.c = newCarry;
-        setStatusRegisterNZ(byt);
-
-        return byt;
-    }
-
-
-
-
-
-
-    private void ADC()
-    {
-        int Op1 = this.a;
-        int Op2 = this.data;
-        if (this.d)
-        {
-        	this.z = (Op1 + Op2 + (this.c ? 1 : 0) & 0xff) == 0;
-            int tmp = (Op1 & 0xf) + (Op2 & 0xf) + (this.c ? 1 : 0);
-            tmp = tmp >= 10 ? tmp + 6 : tmp;
-            this.a = tmp;
-            tmp = (Op1 & 0xf0) + (Op2 & 0xf0) + (tmp & 0xf0);
-            this.n = (byte)tmp < 0;
-            this.v = ((Op1 ^ tmp) & ~(Op1 ^ Op2) & 0x80) != 0;
-            tmp = this.a & 0xf | (tmp >= 160 ? tmp + 96 : tmp);
-            this.c = tmp >= 256;
-            this.a = tmp & 0xff;
-        }
-        else
-        {
-            int tmp = Op1 + Op2 + (this.c ? 1 : 0);
-            this.a = tmp & 0xff;
-            this.v = ((Op1 ^ this.a) & ~(Op1 ^ Op2) & 0x80) != 0;
-            setFlagCarry(tmp);
-            setStatusRegisterNZ(this.a);
-        }
-    }
-
-    private void SBC()
-    {
-        int Op1 = this.a;
-        int Op2 = this.data;
-        if (this.d)
-        {
-            int tmp = (Op1 & 0xf) - (Op2 & 0xf) - (this.c ? 0 : 1);
-            tmp = (tmp & 0x10) != 0 ? tmp - 6 : tmp;
-            this.a = tmp;
-            tmp = (Op1 & 0xf0) - (Op2 & 0xf0) - (this.a & 0x10);
-            this.a = this.a & 0xf | ((tmp & 0x100) != 0 ? tmp - 96 : tmp);
-            this.a &= 0xFF;
-            tmp = Op1 - Op2 - (this.c ? 0 : 1);
-            setFlagBorrow(tmp);
-            setStatusRegisterNZ(tmp);
-        }
-        else
-        {
-            int tmp = Op1 - Op2 - (this.c ? 0 : 1);
-            this.a = tmp & 0xff;
-            this.v = ((Op1 ^ Op2) & (Op1 ^ this.a) & 0x80) != 0;
-            setFlagBorrow(tmp);
-            setStatusRegisterNZ(this.a);
-        }
-    }
-
-
-
-
-    private void INC()
-    {
-        ++this.data;
-        this.data &= 0xFF;
-        setStatusRegisterNZ(this.data);
-    }
-
-    private void DEC()
-    {
-        --this.data;
-        this.data &= 0xFF;
-        setStatusRegisterNZ(this.data);
-    }
-
-    private void INX()
-    {
-        ++this.x;
-        this.x &= 0xFF;
-        setStatusRegisterNZ(this.x);
-    }
-
-    private void INY()
-    {
-        ++this.y;
-        this.y &= 0xFF;
-        setStatusRegisterNZ(this.y);
-    }
-
-    private void DEX()
-    {
-        --this.x;
-        this.x &= 0xFF;
-        setStatusRegisterNZ(this.x);
-    }
-
-    private void DEY()
-    {
-        --this.y;
-        this.y &= 0xFF;
-        setStatusRegisterNZ(this.y);
-    }
-
-    private void BIT()
-    {
-        final byte btmp = (byte)this.data;
-        this.v = (btmp & 0x40) != 0;
-        this.n = (btmp & 0x80) != 0;
-        this.z = (btmp & this.a) == 0;
-    }
-
-    private void PHA()
-    {
-    	this.data = this.a;
-    }
-
-    private void PHP()
-    {
-    	this.data = getStatusRegisterByte();
-    }
-
-    private void PLA()
-    {
-    	this.a = this.data;
-        setStatusRegisterNZ(this.a);
-    }
-
-    private void PLP()
-    {
-    	setStatusRegisterByte(this.data);
-    }
-
-    private void BRK()
-    {
-    }
-
-    private void RTI()
-    {
-    }
-
-    private void JMP()
-    {
-    }
-
-    private void RTS()
-    {
-    }
-
-    private void JSR()
-    {
-    }
-
-    private void BNE()
-    {
-    	this.branch = !this.z;
-    }
-
-    private void BEQ()
-    {
-    	this.branch = this.z;
-    }
-
-    private void BVC()
-    {
-    	this.branch = !this.v;
-    }
-
-    private void BVS()
-    {
-    	this.branch = this.v;
-    }
-
-    private void BCC()
-    {
-    	this.branch = !this.c;
-    }
-
-    private void BCS()
-    {
-    	this.branch = this.c;
-    }
-
-    private void BPL()
-    {
-    	this.branch = !this.n;
-    }
-
-    private void BMI()
-    {
-    	this.branch = this.n;
-    }
-
-    private void TAX()
-    {
-        this.x = this.a;
-        setStatusRegisterNZ(this.x);
-    }
-
-    private void TXA()
-    {
-        this.a = this.x;
-        setStatusRegisterNZ(this.a);
-    }
-
-    private void TAY()
-    {
-        this.y = this.a;
-        setStatusRegisterNZ(this.y);
-    }
-
-    private void TYA()
-    {
-        this.a = this.y;
-        setStatusRegisterNZ(this.a);
-    }
-
-    private void TXS()
-    {
-        this.s = this.x;
-        //setStatusRegisterNZ(this.s); // does NOT affect status register
-    }
-
-    private void TSX()
-    {
-        this.x = this.s;
-        setStatusRegisterNZ(this.x);
-    }
-
-    private void CLC()
-    {
-    	this.c = false;
-    }
-
-    private void SEC()
-    {
-    	this.c = true;
-    }
-
-    private void CLI()
-    {
-    	this.i = false;
-    }
-
-    private void SEI()
-    {
-    	this.i = true;
-    }
-
-    private void CLV()
-    {
-    	this.v = false;
-    }
-
-    private void CLD()
-    {
-    	this.d = false;
-    }
-
-    private void SED()
-    {
-    	this.d = true;
-    }
-
-    private void NOP()
-    {
-    	// NO OPERATION!
-    }
-
-    private void Unoff()
-    {
-    }
-
-    private void Unoff1()
-    {
-    }
-
-    private void Unoff2()
-    {
-    	this.pc++;
-    }
-
-    private void Unoff3()
-    {
-    	this.pc += 2;
-    }
-
-    private void Hang()
-    {
-    	this.pc--;
-    }
-
-	private void checkSane()
-	{
-		if ((a & 0xFFFFFF00) != 0)
-		{
-			throw new IllegalStateException();
-		}
-		if ((x & 0xFFFFFF00) != 0)
-		{
-			throw new IllegalStateException();
-		}
-		if ((y & 0xFFFFFF00) != 0)
-		{
-			throw new IllegalStateException();
-		}
-		if ((s & 0xFFFFFF00) != 0)
-		{
-			throw new IllegalStateException();
-		}
-		if ((data & 0xFFFFFF00) != 0)
-		{
-			throw new IllegalStateException();
-		}
-	}
 }
