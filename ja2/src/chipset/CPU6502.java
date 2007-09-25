@@ -29,7 +29,7 @@ public final class CPU6502 implements Clock.Timed
 
 	protected boolean n;
 	protected boolean v;
-	private boolean m = true;
+	private final boolean m = true;
 	protected boolean b;
 	protected boolean d;
 	protected boolean i;
@@ -1097,20 +1097,21 @@ public final class CPU6502 implements Clock.Timed
 
 	private int getIndex()
 	{
-		int a = (this.opcode & 0xE0) >> 5;
-		int b = (this.opcode & 0x1C) >> 2;
-		int c = (this.opcode & 0x03);
-		if (b == 0)
+		// opcode: aaabbbcc
+		int aaa = (this.opcode & 0xE0) >> 5;
+		int bbb = (this.opcode & 0x1C) >> 2;
+		int cc = (this.opcode & 0x03);
+		if (bbb == 0)
 		{
 			return this.x;
 		}
-		if (b == 4 || b == 6)
+		if (bbb == 4 || bbb == 6)
 		{
 			return this.y;
 		}
-		if (b == 5 || b == 7)
+		if (bbb == 5 || bbb == 7)
 		{
-			if (c == 2 && (a == 4 || a == 5))
+			if (cc == 2 && (aaa == 4 || aaa == 5))
 			{
 				return this.y;
 			}
@@ -1185,10 +1186,6 @@ public final class CPU6502 implements Clock.Timed
 
 
 
-
-	// TODO fix interrupt routines
-	// TODO fix startup cycles (see prog manual)
-	// TODO fix reset
 
 	private void execute()
     {
@@ -2145,64 +2142,64 @@ public final class CPU6502 implements Clock.Timed
     	this.a = rotateRight(this.a);
     }
 
-    private int shiftLeft(int b)
+    private int shiftLeft(int byt)
     {
-    	b &= 0xFF;
-        this.c = (b & 0x80) != 0;
-        b <<= 1;
-        b &= 0xFF;
-        setStatusRegisterNZ(b);
-        return b;
+    	byt &= 0xFF;
+        this.c = (byt & 0x80) != 0;
+        byt <<= 1;
+        byt &= 0xFF;
+        setStatusRegisterNZ(byt);
+        return byt;
     }
 
-    private int shiftRight(int b)
+    private int shiftRight(int byt)
     {
-    	b &= 0xFF;
-        this.c = (b & 0x01) != 0;
-        b >>= 1;
-    	b &= 0xFF;
-        setStatusRegisterNZ(b);
-        return b;
+    	byt &= 0xFF;
+        this.c = (byt & 0x01) != 0;
+        byt >>= 1;
+    	byt &= 0xFF;
+        setStatusRegisterNZ(byt);
+        return byt;
     }
 
-    private int rotateLeft(int b)
+    private int rotateLeft(int byt)
     {
-    	b &= 0xFF;
+    	byt &= 0xFF;
 
-    	final boolean newCarry = (b & 0x80) != 0;
+    	final boolean newCarry = (byt & 0x80) != 0;
 
-        b <<= 1;
-    	b &= 0xFF;
+        byt <<= 1;
+    	byt &= 0xFF;
 
     	if (this.c)
     	{
-    		b |= 0x01;
+    		byt |= 0x01;
     	}
 
     	this.c = newCarry;
-        setStatusRegisterNZ(b);
+        setStatusRegisterNZ(byt);
 
-        return b;
+        return byt;
     }
 
-    private int rotateRight(int b)
+    private int rotateRight(int byt)
     {
-    	b &= 0xFF;
+    	byt &= 0xFF;
 
-    	final boolean newCarry = (b & 0x01) != 0;
+    	final boolean newCarry = (byt & 0x01) != 0;
 
-        b >>= 1;
-    	b &= 0xFF;
+        byt >>= 1;
+    	byt &= 0xFF;
 
     	if (this.c)
     	{
-    		b |= 0x80;
+    		byt |= 0x80;
     	}
 
     	this.c = newCarry;
-        setStatusRegisterNZ(b);
+        setStatusRegisterNZ(byt);
 
-        return b;
+        return byt;
     }
 
 
@@ -2435,41 +2432,42 @@ public final class CPU6502 implements Clock.Timed
 
     private void CLC()
     {
-        c = false;
+    	this.c = false;
     }
 
     private void SEC()
     {
-        c = true;
+    	this.c = true;
     }
 
     private void CLI()
     {
-        i = false;
+    	this.i = false;
     }
 
     private void SEI()
     {
-        i = true;
+    	this.i = true;
     }
 
     private void CLV()
     {
-        v = false;
+    	this.v = false;
     }
 
     private void CLD()
     {
-        d = false;
+    	this.d = false;
     }
 
     private void SED()
     {
-        d = true;
+    	this.d = true;
     }
 
     private void NOP()
     {
+    	// NO OPERATION!
     }
 
     private void Unoff()
@@ -2482,17 +2480,17 @@ public final class CPU6502 implements Clock.Timed
 
     private void Unoff2()
     {
-        pc++;
+    	this.pc++;
     }
 
     private void Unoff3()
     {
-        pc += 2;
+    	this.pc += 2;
     }
 
     private void Hang()
     {
-        pc--;
+    	this.pc--;
     }
 
 	private void checkSane()

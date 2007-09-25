@@ -207,6 +207,15 @@ public class Video extends JPanel implements Clock.Timed
 		this.t %= VideoAddressing.BYTES_PER_FIELD;
 	}
 
+	/**
+	 * @param g
+	 */
+	@Override
+	public void paint(Graphics g)
+	{
+//		super.paint(g);
+	}
+
 //	private void invokePlotByte(int t, int d)
 //	{
 //		plotByte(t,d);
