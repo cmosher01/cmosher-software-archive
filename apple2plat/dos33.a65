@@ -10562,7 +10562,7 @@ L3DF0           LDY   #$03
                 LDA   #$20
                 BNE   L3DE1
 L3E06           LDY   #$05
-                LDA   $2D
+                LDA   SECDSK
 L3E0A           CMP   (PTR2IOB),Y
                 BEQ   L3E17
                 DEC   READCNTR
@@ -10575,6 +10575,7 @@ L3E17           PLP
                 PHP
                 BCS   L3DA8
                 PLP
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                 JSR   POSTNB16
                 LDX   SLOTPG5
 L3E27           CLC
@@ -10598,12 +10599,17 @@ L3E3B           PHA
                 JSR   L3E4C
                 LSR   PRESTRK
                 RTS
+
 L3E4C           STA   TRKDSK
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                 LDA   MAG0FF,X
                 LDA   MAG1FF,X
                 LDA   MAG2FF,X
                 LDA   MAG3FF,X
-                JSR   L3E7B
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                JSR   SLOTX2Y
                 LDA   PRESTRK,Y
                 BIT   $35
                 BMI   L3E67
@@ -10616,19 +10622,25 @@ L3E67           STA   PRESTRK
                 BPL   L3E78
 L3E75           STA   PRESTRK,Y
 L3E78           JMP   SEEKABS
-L3E7B           TXA
+
+
+
+SLOTX2Y         TXA
                 LSR   A
                 LSR   A
                 LSR   A
                 LSR   A
                 TAY
                 RTS
+
+
+
 L3E82           PHA
                 LDY   #$02
                 LDA   (PTR2IOB),Y
                 ROR   A
                 ROR   $35
-                JSR   L3E7B
+                JSR   SLOTX2Y
                 PLA
                 ASL   A
                 BIT   $35
@@ -10637,6 +10649,10 @@ L3E82           PHA
                 BPL   L3E9B
 L3E98           STA   PRESTRK,Y
 L3E9B           RTS
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
 L3E9C           LDA   #$80
                 STA   PRESTRK
                 LDA   #$00
@@ -10761,7 +10777,7 @@ L3F80           PHA
                 BNE   L3F80
                 JSR   RDADDR
                 BCS   L3F94
-                LDA   $2D
+                LDA   SECDSK
                 BEQ   L3F9E
 L3F94           LDY   $47
                 DEY
