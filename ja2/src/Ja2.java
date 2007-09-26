@@ -97,8 +97,8 @@ public final class Ja2 implements Runnable
 
 //        final InputStream romImage = new FileInputStream(new File("c:/apple2/rom_images/200apple2.rom")); // D000
 //        final InputStream romImage = new FileInputStream(new File("c:/apple2/rom_images/210apple2plus.rom")); // B000
-        final InputStream romImage = getClass().getResourceAsStream("apple2_d000.rom");
-        memory.load(0xD000,romImage);
+        final InputStream romImage = getClass().getResourceAsStream("apple2_e000.rom");
+        memory.load(0xE000,romImage);
         romImage.close();
 
         final InputStream diskromImage = getClass().getResourceAsStream("disk2_DOS33_c600_patched_nodelay.rom");
