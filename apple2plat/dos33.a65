@@ -25,7 +25,10 @@
                                 ; DOS 3.3 (2)   1983-08-??     DOS33_1986
                                 ; Franklin Ace  ?              FRANKLIN
                                 ;
+                                ; (any version) ----------     NODELAY
                                 ;
+                                ; NODELAY will remove the drive delay routines; this DOS can
+                                ; be used in emulators (only) to speed up disk access.
                                 ;
                                 ;
                                 ;
@@ -80,9 +83,15 @@
                                 ;
                                 ; Yet Another New Version of DOS 3.3 	Bob Sander-Cederlof
                                 ;
-                                ; In the July issue of AAL I outlined the changes Apple made to DOS 3.3 early this year. Today I received a new "Developer's System Master", with a cover letter claiming another correction to the APPEND routine. The letter binds developers to begin using the new version no later than November 1st.
+                                ; In the July issue of AAL I outlined the changes Apple made to DOS 3.3 early this year.
+                                ; Today I received a new "Developer's System Master", with a cover letter claiming another
+                                ; correction to the APPEND routine. The letter binds developers to begin using the new
+                                ; version no later than November 1st.
                                 ;
-                                ; If you like APPEND, or would like to like it, you might want to make these patches in your own system master. I am going to assume you already have the "early 1983" version, either because you bought a //e or a disk drive this year, or you copied one from a friend, or you made the patches from my July article. Here are the new changes:
+                                ; If you like APPEND, or would like to like it, you might want to make these patches in
+                                ; your own system master. I am going to assume you already have the "early 1983" version,
+                                ; either because you bought a //e or a disk drive this year, or you copied one from a friend,
+                                ; or you made the patches from my July article. Here are the new changes:
                                 ;
                                 ; "early 1983"                August, 1983
                                 ; ---------------------      -----------------------
@@ -101,7 +110,8 @@
                                 ;
                                 ; $BA84-BA93:PATCH           BA84-BA93:ALL ZEROES
                                 ;
-                                ; What Apple has done is move the patch they had put at $BA84 down to $B6B3 and added four extra lines to that patch. I HOPE IT IS NOW CORRECT!
+                                ; What Apple has done is move the patch they had put at $BA84 down to $B6B3 and added four
+                                ; extra lines to that patch. I HOPE IT IS NOW CORRECT!
                                 ;
                                 ;
                                 ;
@@ -223,15 +233,24 @@ HOLDAA          = $3E           ; - HOLDS  A CONSTANT ($AA) FOR
                                 ; CREATING ODD-EVEN ENCODED BYTS
                                 ; ASSOC WITH THE ADDR FIELD.
 
-FRMTSEC         = $3F           ; HOLDS # OF SEC TO BE FORMATTED &
-                                ; ALSO ACTS AS CNTR FOR # OF SECS
-                                ; VERIFIED WHEN CHECKING TRK JUST
-                                ; FORMATTED.
+
+                IF DOS31 || DOS32
+FRMTVOL         = $2F           ; VOL # TO WRITE WHEN FORMATTING.
+FRMTKCTR        = $41           ; TRK# TO WRITE/READ WHEN FORMAT-
+                                ; TING/VERIFYING.
+FRMTSEC         = $4B           ; HOLDS # OF SEC TO BE FORMATTED
+ENC44MASK       = $4A           ; HOLDS 10101010 MASK FOR 4 & 4 ENCODING
+                ELSE
 FRMTVOL         = $41           ; VOL # TO WRITE WHEN FORMATTING.
 FRMTKCTR        = $44           ; TRK# TO WRITE/READ WHEN FORMAT-
                                 ; TING/VERIFYING. ALSO ACTS AS A
                                 ; CNTR OF THE # OF TRKS FORMATTED/
                                 ; VERIFIED.
+FRMTSEC         = $3F           ; HOLDS # OF SEC TO BE FORMATTED &
+                                ; ALSO ACTS AS CNTR FOR # OF SECS
+                                ; VERIFIED WHEN CHECKING TRK JUST
+                                ; FORMATTED.
+                ENDIF
 
 A3L             = $40           ; MULTIPURPOSE REG & PTR ($40,$41)
 A3H             = $41
@@ -9998,8 +10017,23 @@ ARRIVED         RTS
                                 ; MAIN DELAY ROUTINE IN DOS.
                                 ; AMT OF DELAY = 100*(A) MICROSECS.
                                 ; ==================================
-
-DELAY           LDX #17
+DELAY
+		IF NODELAY
+                                ; PATCH TO REMOVE DELAY ROUTINE (FOR USE IN EMULATORS ONLY!)
+                LDX #0
+                LDA #0
+                STA MTRTIME
+                STA MTRTIME+1
+                RTS
+                NOP
+                NOP
+                NOP
+                NOP
+                NOP
+                NOP
+                NOP
+                ELSE
+                LDX #17
 DLY1            DEX
                 BNE DLY1
                 INC MTRTIME
@@ -10008,6 +10042,7 @@ DLY1            DEX
 DLY2            SEC
                 SBC #1
                 BNE DELAY
+		ENDIF
                 RTS
 
 
@@ -10363,7 +10398,7 @@ WRBYTE1         PHA             ; (3 CYC)
                 NOP             ; (2 CYC)
                 NOP             ; (2 CYC)
                 NOP             ; (2 CYC)
-                ORA #$AA        ; (2 CYC)
+                ORA #%10101010  ; (2 CYC)
 WRBYTE2         NOP             ; (2 CYC)
 WRBYTE3         NOP             ; (2 CYC)
                 PHA             ; (3 CYC)
@@ -10422,426 +10457,25 @@ FRANK1          RTS
                                 ; =================================
 
 RWTS
-                IF DOS31 || DOS32
-
-
-
-; TODO
-
-
-
-                STY   PTR2IOB
-                STA   PTR2IOB+1
-                LDY   #$01
-                LDA   (PTR2IOB),Y
-                TAX
-                STY   RSEEKCNT
-                LDY   #$0F
-                CMP   (PTR2IOB),Y
-                BEQ   L3D2D
-                TXA
-                PHA
-                LDA   (PTR2IOB),Y
-                TAX
-                PLA
-                PHA
-                STA   (PTR2IOB),Y
-                LDA   Q7L,X
-L3D1E           LDY   #$08
-                LDA   Q6L,X
-L3D23           CMP   Q6L,X
-                BNE   L3D1E
-                DEY
-                BNE   L3D23
-                PLA
-                TAX
-L3D2D           LDA   Q7L,X
-                LDA   Q6L,X
-                LDA   Q6L,X
-                PHA
-                PLA
-                STX   SLOTPG5
-                CMP   Q6L,X
-                PHP
-                LDA   MTRON,X
-                LDY   #$06
-L3D44           LDA   (PTR2IOB),Y
-                STA   $0036,Y
-                INY
-                CPY   #$0A
-                BNE   L3D44
-                LDY   #$02
-                LDA   (PTR2IOB),Y
-                LDY   #$10
-                CMP   (PTR2IOB),Y
-                BEQ   L3D5E
-                STA   (PTR2IOB),Y
-                PLP
-                LDY   #$00
-                PHP
-L3D5E           ROR   A
-                LDA   SELDRV1,X
-                BCS   L3D67
-                LDA   SELDRV2,X
-L3D67           ROR   DRVZPG
-                LDY   #$02
-                LDA   (PTR2DCT),Y
-                STA   $46
-                INY
-                LDA   (PTR2DCT),Y
-                STA   $47
-                INY
-                LDA   (PTR2IOB),Y
-                JSR   L3E3B
-                PLP
-                BNE   L3D8A
-L3D7D           LDY   #$12
-L3D7F           DEY
-                BNE   L3D7F
-                INC   $46
-                BNE   L3D7D
-                INC   $47
-                BNE   L3D7D
-L3D8A           LDY   #$0C
-                LDA   (PTR2IOB),Y
-                BEQ   L3DE5
-                CMP   #$04
-                BEQ   L3DE7
-                ROR   A
-                PHP
-                BCS   L3D9B
-                JSR   PRENIBL
-L3D9B           LDY   #$30
-                STY   READCNTR
-L3DA0           LDX   SLOTPG5
-                JSR   RDADDR
-                BCC   L3DC7
-L3DA8           DEC   READCNTR
-                BPL   L3DA0
-                LDA   PRESTRK
-                PHA
-                LDA   #$60
-                JSR   L3E82
-                DEC   RSEEKCNT
-                BNE   L3DDE
-                LDA   #$00
-                JSR   L3E3B
-                PLA
-L3DC1           JSR   L3E3B
-                JMP   L3D9B
-L3DC7           LDY   TRKDSK
-                CPY   PRESTRK
-                BEQ   L3DF0
-                LDA   PRESTRK
-                PHA
-                TYA
-                JSR   L3E82
-                PLA
-                DEC   READCNTR
-                BPL   L3DC1
-                BMI   L3DA8
-L3DDE           PLA
-                LDA   #$40
-L3DE1           PLP
-                JMP   L3E29
-L3DE5           BEQ   L3E27
-L3DE7           LDY   #$03
-                LDA   (PTR2IOB),Y
-                STA   VOLDSK
-                JMP   L3E9C
-L3DF0           LDY   #$03
-                LDA   (PTR2IOB),Y
-                PHA
-                LDA   VOLDSK
-                LDY   #$0E
-                STA   (PTR2IOB),Y
-                PLA
-                BEQ   L3E06
-                CMP   VOLDSK
-                BEQ   L3E06
-                LDA   #$20
-                BNE   L3DE1
-L3E06           LDY   #$05
-                LDA   SECDSK
-L3E0A           CMP   (PTR2IOB),Y
-                BEQ   L3E17
-                DEC   READCNTR
-                BPL   L3DA0
-                LDA   #$80
-                BNE   L3DE1
-L3E17           PLP
-                BCC   L3E32
-                JSR   READATA
-                PHP
-                BCS   L3DA8
-                PLP
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                JSR   POSTNB16
-                LDX   SLOTPG5
-L3E27           CLC
-                DB $24 ; BIT to hide following SEC
-L3E29           SEC
-                LDY   #$0D
-                STA   (PTR2IOB),Y
-                LDA   MTROFF,X
-                RTS
-L3E32           JSR   WRITESEC
-                BCC   L3E27
-                LDA   #$10
-                BCS   L3E27+2
-L3E3B           PHA
-                LDY   #$01
-                LDA   (PTR2DCT),Y
-                ROR   A
-                PLA
-                BCC   L3E4C
-                ASL   A
-                JSR   L3E4C
-                LSR   PRESTRK
-                RTS
-
-L3E4C           STA   TRKDSK
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                LDA   MAG0FF,X
-                LDA   MAG1FF,X
-                LDA   MAG2FF,X
-                LDA   MAG3FF,X
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                JSR   SLOTX2Y
-                LDA   PRESTRK,Y
-                BIT   $35
-                BMI   L3E67
-                LDA   RSEEKCNT,Y
-L3E67           STA   PRESTRK
-                LDA   TRKDSK
-                BIT   $35
-                BMI   L3E75
-                STA   RSEEKCNT,Y
-                BPL   L3E78
-L3E75           STA   PRESTRK,Y
-L3E78           JMP   SEEKABS
-
-
-
-SLOTX2Y         TXA
-                LSR   A
-                LSR   A
-                LSR   A
-                LSR   A
-                TAY
-                RTS
-
-
-
-L3E82           PHA
-                LDY   #$02
-                LDA   (PTR2IOB),Y
-                ROR   A
-                ROR   $35
-                JSR   SLOTX2Y
-                PLA
-                ASL   A
-                BIT   $35
-                BMI   L3E98
-                STA   RSEEKCNT,Y
-                BPL   L3E9B
-L3E98           STA   PRESTRK,Y
-L3E9B           RTS
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-L3E9C           LDA   #$80
-                STA   PRESTRK
-                LDA   #$00
-                STA   $41
-                JSR   SEEKABS
-                LDA   #$AA
-                STA   $4A
-                LDY   #$50
-L3EAE           STY   $47
-                LDA   #HOLDPRES
-                STA   $4B
-                LDA   Q6H,X
-                LDA   Q7L,X
-                LDA   #$FF
-                STA   Q7H,X
-                CMP   Q6L,X
-                BIT   $00
-L3EC4           DEY
-                BEQ   L3ED6
-                PHA
-                PLA
-                NOP
-L3ECA           PHA
-                PLA
-                NOP
-                NOP
-                STA   Q6H,X
-                CMP   Q6L,X
-                BCS   L3EC4
-L3ED6           DEC   $4B
-                BNE   L3ECA
-                LDY   $47
-                NOP
-                NOP
-                BNE   L3EE6
-L3EE0           PHA
-                PLA
-                PHA
-                PLA
-                CMP   ($00,X)
-L3EE6           NOP
-L3EE7           STA   Q6H,X
-                CMP   Q6L,X
-                DEY
-                BNE   L3EE0
-                LDA   #$D5
-                JSR   L3FCA
-                LDA   #$AA
-                JSR   L3FCB
-                LDA   #$B5
-                JSR   L3FCB
-                LDA   VOLDSK
-                JSR   L3FBB
-                LDA   $41
-                JSR   L3FBB
-                LDA   $4B
-                JSR   L3FBB
-                LDA   VOLDSK
-                EOR   $41
-                EOR   $4B
-                PHA
-                LSR   A
-                ORA   $4A
-                STA   Q6H,X
-                CMP   Q6L,X
-                PLA
-                ORA   #$AA
-                JSR   L3FCA
-                LDA   #$DE
-                JSR   L3FCB
-                LDA   #$AA
-                JSR   L3FCB
-                LDA   #$EB
-                JSR   L3FCB
-                LDA   #$FF
-                JSR   L3FCB
-                LDY   #$02
-                STY   $46
-                LDY   #$AD
-                BNE   L3F46
-L3F40           DEY
-                BEQ   L3F50
-                PHA
-                PLA
-                NOP
-L3F46           PHA
-                PLA
-                STA   Q6H,X
-                CMP   Q6L,X
-                BCS   L3F40
-L3F50           DEC   $46
-                BNE   L3F46
-                LDY   $47
-                CLC
-                BIT   $00
-                STA   Q6H,X
-                LDA   Q6L,X
-                LDA   $4B
-                ADC   #$0A
-                STA   $4B
-                SBC   #$0C
-                BEQ   L3F73
-                BCS   L3F6B+1
-L3F6B           BIT   $4B85
-                LDA   #$FF
-                JMP   L3EE7
-L3F73           PHA
-                PLA
-                LDY   $47
-                LDA   Q6H,X
-                LDA   Q7L,X
-                BMI   L3FB3
-                DEY
-L3F80           PHA
-                PLA
-                NOP
-                NOP
-                BIT   $00
-                PHA
-                PLA
-                DEY
-                BNE   L3F80
-                JSR   RDADDR
-                BCS   L3F94
-                LDA   SECDSK
-                BEQ   L3F9E
-L3F94           LDY   $47
-                DEY
-                CPY   #$10
-                BCC   L3FB3
-                JMP   L3EAE
-L3F9E           INC   $41
-                LDA   $41
-                CMP   #$23
-                BCS   L3FB8
-                ASL   A
-                JSR   SEEKABS
-                LDY   $47
-                INY
-                INY
-                STY   $47
-                JMP   L3EAE
-L3FB3           LDA   #$40
-                JMP   L3E29
-L3FB8           JMP   L3E27
-L3FBB           PHA
-                LSR   A
-                ORA   $4A
-                STA   Q6H,X
-                CMP   Q6L,X
-                PLA
-                CMP   ($00,X)
-                ORA   #$AA
-L3FCA           NOP
-L3FCB           PHA
-                PLA
-                NOP
-                STA   Q6H,X
-                CMP   Q6L,X
-                RTS
-L3FD5           INX
-                BEQ   L3FD9
-                RTS
-L3FD9
-                IF DOS31
-                JMP   CLOSZERO
-                DS    36
-                ELSE
-                JMP   CMDPOSN
-                ENDIF
-
-
-
-
-                ELSE
-
 
 
 
                 STY PTR2IOB     ; SET UP A Z-PG PTR 2 RWTS'S IOB.
                 STA PTR2IOB+1
+                IF !DOS31 && !DOS32
                 LDY #2          ; INITIALIZE CNTR FOR MAXIMUM
                 STY RECLBCNT    ; NUMBER OF RECALIBRATION TRIES.
                 LDY #4          ; INITIALIZE COUNTER FOR MAXIMUM
                 STY RSEEKCNT    ; # OF RE-SEEKS BTW'N RECALIBS.
+                ENDIF
                 LDY #1          ; (Y) = INDEX TO RWTS'S IOB.
                 LDA (PTR2IOB),Y ; GET SLOT*16 FROM IOB IN (X), SO
                 TAX             ; CAN USE IT TO INDEX BASE ADRS
                                 ; FOR DRIVE FUNCTIONS.
+
+                IF DOS31 || DOS32
+                STY RSEEKCNT    ; # OF RE-SEEKS BTW'N RECALIBS.
+                ENDIF
 
                                 ; CHK IF WANTED SLOT*16 = LAST SLOT*16?
 
@@ -10889,18 +10523,25 @@ CHKCHNG         CMP Q6L,X       ; READ AGAIN & CMP TO LAST READ.
 
 SAMESLOT        LDA Q7L,X       ; SET READ MODE.
                 LDA Q6L,X       ; STROBE LATCH TO READ.
+                IF !DOS31 && !DOS32
                 LDY #8          ; SET CNTR FOR 8 CHKS IF NEEDED.
+                ENDIF
 STRBAGN         LDA Q6L,X       ; STROBE LATCH AGAIN.
                 PHA             ; DELAY 14 MACHINE CYCLES.
                 PLA
+                IF !DOS31 && !DOS32
                 PHA
                 PLA
+                ENDIF
                 STX SLOTPG5     ; SAVE SLOT*16 WANTED IN PAGE5.
                 CMP Q6L,X       ; HAS DATA CHANGED YET?
+
+                IF !DOS31 && !DOS32
                 BNE DONETEST    ; YES - DATA CHANGED, SO SPINNING.
                 DEY             ; NO - NO CHANGE, SEE IF CHKD
                                 ; ENOUGH TIMES YET.
                 BNE STRBAGN     ; CHK AT LEAST 8 TIMES.
+                ENDIF
 DONETEST        PHP             ; SAVE TEST RESULTS ON STK SO CAN
                                 ; LATER CHK IF NEED EXTRA DELAY
                                 ; OR NOT.
@@ -10937,9 +10578,11 @@ MOVPTRS         LDA (PTR2IOB),Y ; GET PTRS FROM RWTS'S IOB.
 
                                 ; CHECK DRIVE STATUS.
 
+                IF !DOS31 && !DOS32
                 LDY #3          ; SAVE HI BYTE OF MOTOR-ON-TIME
                 LDA (PTR2DCT),Y ; COUNT IN Z-PAGE.
                 STA MTRTIME+1
+                ENDIF
                 LDY #2          ; GET DRIVE # WANTED.
                 LDA (PTR2IOB),Y
                 LDY #16         ; SET (Y) = INDEX 2 LAST-USED DRV.
@@ -10954,7 +10597,9 @@ MOVPTRS         LDA (PTR2IOB),Y ; GET PTRS FROM RWTS'S IOB.
                                 ; NOT ORIGINALLY SPINNING.
                 PHP             ; PUSH UPDATED STATUS BACK ON STK.
 SAMEDRV         ROR A           ; PUT LOW BIT OF DRV WNTED IN (C).
+                IF !DOS31 && !DOS32
                 BCC USEDRV2     ; BRANCH IF WANT DRIVE 2.
+                ENDIF
                 LDA SELDRV1,X   ; ROUTE POWER TO SELECT DRIVE 1.
                 BCS USEDRV1     ; ALWAYS.
 
@@ -10963,6 +10608,15 @@ USEDRV1         ROR DRVZPG      ; PUT SIGN BIT FOR WHICH DRIVE
                                 ; USING IN Z-PAGE:  NEG = DRIVE1.
                                 ; POS = DRIVE2.
 
+                IF DOS31 || DOS32
+                LDY   #$02
+                LDA   (PTR2DCT),Y
+                STA   MTRTIME
+                INY
+                LDA   (PTR2DCT),Y
+                STA   MTRTIME+1
+                INY
+                ELSE
                                 ; CHK TO SEE IF A SPECIFIC DRIVE
                                 ; WANTED IN SPECIFIC SLOT WANTED
                                 ; WAS ORIGINALLY ON OR NOT.
@@ -10994,6 +10648,8 @@ WAIT4MTR        JSR DELAY       ; STALL.
                 BNE WAIT4MTR    ; GO STALL SOME MORE.
                 LDX SLOTPG5     ; RESTORE (X) = SLOT*16.
 WASON           LDY #4          ; GET TRK WANTED.
+                ENDIF
+
                 LDA (PTR2IOB),Y
                 JSR SEEKTRK     ; GO MOVE ARM TO CORRECT TRK.
 
@@ -11002,11 +10658,14 @@ WASON           LDY #4          ; GET TRK WANTED.
 
                 PLP             ; GET EARLIER RESULT OF MOTOR TEST
                 BNE BEGINCMD    ; BRANCH IF DRV WAS ORIGINALLY ON.
+
+                IF !DOS31 && !DOS32
                 LDY MTRTIME+1   ; MOTOR WASN'T ORIGNALLY ON.
                                 ; HOWEVER, WE HAVE SINCE TURNED IT
                                 ; ON.  NOW CHECK IF IT HAS BEEN ON
                                 ; LONG ENOUGH.
                 BPL BEGINCMD    ; YES -NO NEED TO WAIT ANY LONGER.
+                ENDIF
 
                                 ; ALTHOUGH MOTOR IS TURNED ON, IT
                                 ; HASN'T BEEN ON LONG ENOUGH TO DO
@@ -11016,13 +10675,28 @@ WASON           LDY #4          ; GET TRK WANTED.
                                 ; COUNT IS 0).  (PART OF TIME WAS
                                 ; TAKEN UP TO SEEK TRACK.)
 
-TIME1           LDY #18
+TIME1
+		IF NODELAY
+                                ; PATCH TO REMOVE DELAY ROUTINE (FOR USE IN EMULATORS ONLY!)
+                LDY #0
+                STY MTRTIME
+                STY MTRTIME+1
+                BEQ TIME2
+                NOP
+                NOP
+                NOP
+                NOP
+                NOP
+TIME2
+		ELSE
+                LDY #18
 TIME2           DEY
                 BNE TIME2
                 INC MTRTIME
                 BNE TIME1
                 INC MTRTIME+1
                 BNE TIME1
+                ENDIF
 
 
                                 ; =================================
@@ -11094,10 +10768,15 @@ DORECALB        LDA PRESTRK     ; SAVE TRK WANTED ON STK.
                                 ; STOP = FAMILIAR DISK CLATTER.)
                 JSR SETTRK      ; GO SELECT DRV & PUT TRK WANTED
                                 ; IN MEM LOCATION SPECIFIC 2 DRV.
+                IF DOS31 || DOS32
+                DEC RSEEKCNT
+                BNE DRVERR
+                ELSE
                 DEC RECLBCNT    ; REDUCE RECALIBRATION COUNTER.
                 BEQ DRVERR      ; ERROR -EXHAUSTED RECALIBRATIONS.
                 LDA #4          ; INDICATE 4 CHANCES TO RESEEK TRK
                 STA RSEEKCNT    ; BETWEEN RECALIBRATIONS.
+                ENDIF
                 LDA #0          ; SEEK TRACK 0.
                 JSR SEEKTRK     ; GO MOVE ARM TO TRK 0.
                 PLA             ; GET TRK WANTED FROM STK.
@@ -11121,10 +10800,16 @@ RDRIGHT         LDY TRKDSK      ; (Y) = TRK# FOUND IN HEADER.
                 JSR SETTRK      ; GO SELECT DRV & PUT TRK WANTED N
                                 ; MEMORY LOCATION SPECIFIC TO DRV.
                 PLA             ; GET TRK WANTED BACK OFF STACK.
+                IF DOS31 || DOS32
+                DEC READCNTR
+                BPL RESEEK
+                BMI REDUCERD
+                ELSE
                 DEC RSEEKCNT    ; ALLOW 4 ATTEMPTS TO FIND CORRECT
                                 ; TRK BETWEEN RECALIBRATIONS.
                 BNE RESEEK      ; MORE ATTEMPTS LEFT TO FIND TRK.
                 BEQ DORECALB
+                ENDIF
 
 
                                 ; ---------------------------------
@@ -11149,13 +10834,22 @@ WASEEK          BEQ RWTSEXIT    ; IF CMD WAS SEEK, THEN GO EXIT
                                 ; RWTS COMMAND WAS FORMAT ($04).
                                 ; ---------------------------------
 
-FORMDSK         JMP FORMAT      ; GO DO THE FORMAT.
+FORMDSK
+                IF DOS31 || DOS32
+                LDY #$03
+                LDA (PTR2IOB),Y
+                STA VOLDSK
+                ENDIF
+
+                JMP FORMAT      ; GO DO THE FORMAT.
 
 
                                 ; ---------------------------------
                                 ; FOUND CORRECT TRK FOR RWTS'S
                                 ; READ OR WRITE COMMANDS.
                                 ; ---------------------------------
+
+
 
 RTTRK           LDY #3          ; GET VOL WANTED FROM IOB.
                 LDA (PTR2IOB),Y
@@ -11177,11 +10871,23 @@ RTTRK           LDY #3          ; GET VOL WANTED FROM IOB.
                                 ; IF THE SECTOR IS ALSO CORRECT.
 
 CRCTVOL         LDY #5          ; GET LOGICAL SECTOR # WANTED.
+                IF DOS31 || DOS32
+                LDA SECDSK
+L3E0A           CMP (PTR2IOB),Y
+                BEQ CRCTSEC
+                DEC READCNTR
+                BPL SETXSLT
+                LDA #$80
+                BNE TOERRWTS
+CRCTSEC
+                ELSE
                 LDA (PTR2IOB),Y
                 TAY             ; SET (Y) = LOGICAL SECTOR# WANTED.
                 LDA PHYSECTR,Y  ; (A) = PHYSICAL SECTOR # WANTED.
                 CMP SECDSK      ; PHYS SEC WANTED=PHYS SEC FOUND?
                 BNE REDUCERD    ; NO - GO TRY AGAIN.
+                ENDIF
+
                 PLP             ; GET TYPE OF OPERATION FROM STK:
                                 ; (C)=0=WRITE, (C)=1=READ.
                 BCC WRITE       ; BRANCH IF RWTS OPCODE WAS WRITE.
@@ -11205,8 +10911,10 @@ CRCTVOL         LDY #5          ; GET LOGICAL SECTOR # WANTED.
 
                                 ; POSTNIBBLE DATA & SHUT DOWN.
 
+                IF !DOS31 && !DOS32
                 LDX #0
                 STX PROSCRTH
+                ENDIF
                 JSR POSTNB16    ; CONVERT 6- & 2-ENCODED BYTES IN
                                 ; RWTS BUFS TO NORMAL MEMORY BYTES
                                 ; (USUALLY PLACED IN DOS DATA
@@ -11312,7 +11020,17 @@ SEEKTRK         PHA             ; SAVE # OF TRK WANTED ON STK.
                                 ; BELOW THAT REFER TO HALFTRACKS
                                 ; TO REFER TO FULLTRACKS INSTEAD.)
 
-SEEKIT          STA DESTRK      ; (A) = HALFTRACK# WANTED.
+SEEKIT
+                IF DOS31 || DOS32
+                STA TRKDSK
+                LDA MAG0FF,X    ; TURN OFF ALL 4 STEPPER MAGNETS
+                LDA MAG1FF,X
+                LDA MAG2FF,X
+                LDA MAG3FF,X
+                ELSE
+                STA DESTRK      ; (A) = HALFTRACK# WANTED.
+                ENDIF
+
                 JSR SLOTX2Y     ; CONVERT (X)=SLOT*16-->(Y)=SLOT.
                 LDA TRK4DRV1,Y  ; PRES HALFTRK # ASSOC WITH DRV1.
                 BIT DRVZPG      ; CONTAINS:  NEG=DRV1, POS=DRV2.
@@ -11325,8 +11043,11 @@ SETPRSTK        STA PRESTRK     ; SAVE PRESENT HALFTRK#.
                                 ; TO SEEK AS PRESENT HALFTRK FOR
                                 ; NEXT TIME AROUND.  (PUT HALFTRK
                                 ; INFO IN SLOT-DEPENDENT LOCATIONS.)
-
+                IF DOS31 || DOS32
+                LDA TRKDSK
+                ELSE
                 LDA DESTRK      ; HALFTRK WANTED.
+                ENDIF
                 BIT DRVZPG      ; CHK WHICH DRIVE WE'RE USING.
                 BMI DRV1USG     ; BRANCH IF USING DRIVE 1.
                 STA TRK4DRV2,Y  ; USING DRIVE2 -STORE HALFTRK INFO
@@ -11376,13 +11097,264 @@ STORDRV1        STA TRK4DRV1,Y  ; SAVE HALFTRK # WANTED 4 DRIVE1.
 RTNSETRK        RTS
 
 
+FORMAT
+                IF DOS31 || DOS32
+
+
+                LDA   #$80      ; PRETEND WE'RE ON TRACK 128
+                STA   PRESTRK
+                LDA   #$00
+                STA   FRMTKCTR
+                JSR   SEEKABS   ; AND SEEK TO TRACK 0
+
+                LDA   #%10101010 ; SET UP 4 & 4 ENCODING MASK
+                STA   ENC44MASK
+
+                LDY   #$50
+L3EAE           STY   MTRTIME+1
+                LDA   #$27
+                STA   $4B
+
+                LDA   Q6H,X     ; INITIALIZE DRIVE FOR WRITING
+                LDA   Q7L,X
+                LDA   #$FF      ; (A) = SYNC BYTE.
+                STA   Q7H,X     ; SET WRITE MODE.
+                CMP   Q6L,X
+                BIT   $00
+
+L3EC4           DEY
+                BEQ   L3ED6
+                PHA
+                PLA
+                NOP
+
+WRTSYNC         PHA
+                PLA
+                NOP
+                NOP
+                STA   Q6H,X
+                CMP   Q6L,X     ; WRITE BYTE.
+                BCS   L3EC4
+
+L3ED6           DEC   $4B
+                BNE   WRTSYNC
+
+                LDY   MTRTIME+1
+                NOP
+                NOP
+                BNE   L3EE6
+
+WRTSYNC2        PHA
+                PLA
+                PHA
+                PLA
+                CMP   ($00,X)
+L3EE6           NOP
+L3EE7           STA   Q6H,X
+                CMP   Q6L,X     ; WRITE BYTE.
+                DEY
+                BNE   WRTSYNC2
+
+                                ; WRITE ADDRESS PROLOGUE.
+                                ; ("D5 AA B5", 32-CYCLE BYTES.)
+
+                LDA   #$D5
+                JSR   WRBYTE2
+                LDA   #$AA
+                JSR   WRBYTE3
+                LDA   #$B5
+                JSR   WRBYTE3
+
+                                ; WRITE VOL, TRK & SECTOR AS
+                                ; ODD/EVEN ENCODED BYTES.
+                                ; (32 CYCLES BETWEEN BYTES.)
+
+                LDA   FRMTVOL
+                JSR   WRBYTE1
+                LDA   FRMTKCTR
+                JSR   WRBYTE1
+                LDA   FRMTSEC
+                JSR   WRBYTE1
+
+                                ; CALCULATE ADDRESS CHECKSUM.
+
+                LDA   FRMTVOL
+                EOR   FRMTKCTR
+                EOR   FRMTSEC
+                PHA             ; SAVE CKSUM ON STK (3 CYC).
+
+                                ; ODD ENCODE THE ADDRESS CHECKSUM.
+
+                LSR   A
+                ORA   ENC44MASK
+                STA   Q6H,X
+                CMP   Q6L,X     ; WRITE BYTE
+
+                                ; EVEN ENCODE THE ADDRESS CHECKSUM.
+
+                PLA
+                ORA   #%10101010
+                JSR   WRBYTE2
+
+                                ; WRITE ADDRESS EPILOGUE.
+                                ; ("DE AA EB", 32-CYCLE BYTES.)
+
+                LDA   #$DE
+                JSR   WRBYTE3
+                LDA   #$AA
+                JSR   WRBYTE3
+                LDA   #$EB
+                JSR   WRBYTE3
+
+                LDA   #$FF      ; SYNCH BYTE
+                JSR   WRBYTE3
+
+                LDY   #$02
+                STY   MTRTIME
+                LDY   #$AD
+                BNE   L3F46
+L3F40           DEY
+                BEQ   L3F50
+                PHA
+                PLA
+                NOP
+L3F46           PHA
+                PLA
+                STA   Q6H,X
+                CMP   Q6L,X
+                BCS   L3F40
+L3F50           DEC   MTRTIME
+                BNE   L3F46
+                LDY   MTRTIME+1
+                CLC
+                BIT   $00
+                STA   Q6H,X
+                LDA   Q6L,X
+                LDA   FRMTSEC
+                ADC   #$0A
+                STA   FRMTSEC
+                SBC   #$0C
+                BEQ   L3F73
+                BCS   L3F6C
+                DB    $2C       ; BIT to hide the following STA FRMTSEC
+L3F6C           STA   FRMTSEC
+                LDA   #$FF
+                JMP   L3EE7
+L3F73           PHA
+                PLA
+                LDY   MTRTIME+1
+                LDA   Q6H,X
+                LDA   Q7L,X
+                BMI   L3FB3
+                DEY
+L3F80           PHA
+                PLA
+                NOP
+                NOP
+                BIT   $00
+                PHA
+                PLA
+                DEY
+                BNE   L3F80
+
+                JSR   RDADDR
+                BCS   L3F94
+                LDA   SECDSK
+                BEQ   L3F9E
+L3F94           LDY   MTRTIME+1
+                DEY
+                CPY   #$10
+                BCC   L3FB3
+                JMP   L3EAE
+
+L3F9E           INC   FRMTKCTR
+                LDA   FRMTKCTR
+                CMP   #$23
+                BCS   L3FB8
+                ASL   A
+                JSR   SEEKABS
+                LDY   MTRTIME+1
+                INY
+                INY
+                STY   MTRTIME+1
+                JMP   L3EAE
+L3FB3           LDA   #$40
+                JMP   RWTSERR
+L3FB8           JMP   RWTSEXIT
+
+
+                                ; =================================
+                                ; WRITE DOUBLE AND SINGLE BYTE
+                                ; SUBR'TNS WITH DIFFERENT DELAYS.
+                                ; =================================
+
+                                ; NOTE:  A "JSR" INSTRUCTION
+                                ; REQUIRES 6 CYCLES.  THEREFORE
+                                ; 6 CYCLES + ANY OTHER OVERHEAD
+                                ; SHOULD BE ADDED TO THE SUBRTNS
+                                ; GIVEN BELOW IN ORDER TO ARRIVE
+                                ; AT A 32-CYCLE COUNT BETWEEN @
+                                ; BYTE WRITTEN.
+
+                                ; NOTE: TIMINGS FOR DOS 3.1 AND 3.2 (HERE)
+                                ; ARE SLIGHTLY DIFFERENT FROM THE CORRESPONDING
+                                ; ROUTINES IN 3.3.
+
+WRBYTE1         PHA             ; (3 CYC)
+
+                                ; CALC & WRITE ODD-ENCODED BYTE.
+
+                LSR   A         ; (2 CYC)
+                ORA   ENC44MASK       ; (2 CYC)
+                STA   Q6H,X     ; (5 CYC)
+                CMP   Q6L,X     ; (4 CYC)
+
+                                ; CALC & WRITE EVEN-ENCODED BYTE.
+
+                PLA             ; (4 CYC)
+                CMP   ($00,X)   ; (2 CYC)
+
+                ORA   #%10101010 ; (2 CYC)
+
+WRBYTE2         NOP             ; (2 CYC)
+WRBYTE3         PHA             ; (3 CYC)
+                PLA             ; (4 CYC)
+                NOP             ; (2 CYC)
+                STA   Q6H,X     ; (5 CYC)
+                CMP   Q6L,X     ; (4 CYC) WRITE
+                RTS             ; (6 CYC LEFT OVER AFTER WRITE)
+
+
+L3FD5           INX
+                BEQ   L3FD9
+                RTS
+L3FD9
+                IF DOS31
+                JMP   CLOSZERO
+                DS    36
+                ELSE
+                IF DOS32
+                JMP   CMDPOSN
+                ENDIF
+                ENDIF
+                
+
+
+
+
+                ELSE
+
+
+
+
+
                                 ; =================================
                                 ; RWTS'S FORMAT COMMAND.
                                 ; =================================
 
                                 ; INITIALIZE ZERO-PAGE LOCATIONS.
 
-FORMAT          LDY #3          ; GET VOL FRM IOB, STORE IN Z-PAGE.
+                LDY #3          ; GET VOL FRM IOB, STORE IN Z-PAGE.
                 LDA (PTR2IOB),Y
                 STA FRMTVOL
                 LDA #$AA        ; STORE "AA" AS CONSTANT IN Z-PAGE.
@@ -11768,7 +11740,18 @@ CLOBCARD        JSR SETVID      ; SIMULATE A "PR#0" STATEMENT.
                 DS 3
                 ENDIF
 
+
+
+
+
+
                 ENDIF
+
+
+
+
+
+
 
                 IF !DOS31
                                 ; ===================================
