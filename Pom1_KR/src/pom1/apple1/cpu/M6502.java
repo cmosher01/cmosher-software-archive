@@ -59,8 +59,8 @@ public class M6502
 				runFetchExecuteCycle();
 			}
     	},"M6502");
-        this.runner.start();
 		this.stop.set(false);
+        this.runner.start();
     }
 
     public synchronized void stop()
@@ -1200,8 +1200,7 @@ public class M6502
             break;
 
         case 235:
-            Imm();
-            SBC();
+            Unoff(); // fixed!
             break;
 
         case 236:

@@ -35,6 +35,7 @@ import pom1.apple1.devices.Keyboard;
 import pom1.apple1.devices.Screen;
 import pom1.apple1.devices.StandardInput;
 import pom1.apple1.devices.StandardOutput;
+import pom1.apple1.devices.TextScreen;
 
 public class GUI extends WindowAdapter implements WindowListener, ActionListener
 {
@@ -251,6 +252,7 @@ public class GUI extends WindowAdapter implements WindowListener, ActionListener
 
 	private void initApple1() throws IOException
 	{
+//		screen = new TextScreen();
 		screen = new Screen();
 		keyboard = new Keyboard();
 

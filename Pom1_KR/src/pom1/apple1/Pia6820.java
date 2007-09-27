@@ -54,6 +54,7 @@ public class Pia6820
 	public void writeDsp(int dsp)
 	{
 		dsp &= 0x7F;
+		System.out.print((char)dsp);
 		this.out.putCharacter(dsp);
 		this.dsp = dsp;
 	}

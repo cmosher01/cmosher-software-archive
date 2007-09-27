@@ -5,8 +5,11 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.image.CropImageFilter;
+import java.awt.image.FilteredImageSource;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -128,7 +131,19 @@ public class Screen extends JPanel implements OutputDevice
 //			//newLine();
 //			indexY--;
 			maxy++;
-			addLine();
+			try
+			{
+				SwingUtilities.invokeAndWait(addline);
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+			catch (InvocationTargetException e)
+			{
+				e.printStackTrace();
+			}
+//			addLine();
 		}
 		gr = offScrImg.getGraphics();
 		drawCharacCurr(gr,1);
@@ -153,7 +168,19 @@ public class Screen extends JPanel implements OutputDevice
 			repaint();
 		}
 	};
-//	public void update(Graphics gc)
+
+	private final Runnable addline = new Runnable()
+	{
+		public void run()
+		{
+			addLine();
+		}
+	};
+
+	//private Image croppedImage;
+	private volatile int curYChars = Y_CHARS;
+
+	//	public void update(Graphics gc)
 //	{
 //		if (offScrImg == null)
 //			offScrImg = createVolatileImage(X_CHARS * X_PIX * pixelSize,Y_CHARS * Y_PIX * pixelSize);
@@ -173,32 +200,40 @@ public class Screen extends JPanel implements OutputDevice
 		super.paintComponent(gc);
 		if (!ready.get())
 		{
-			offScrImg = createVolatileImage(X_CHARS * X_PIX * pixelSize,Y_CHARS * Y_PIX * pixelSize);
+			offScrImg = createVolatileImage(X_CHARS * X_PIX * pixelSize, 512 * Y_CHARS * Y_PIX * pixelSize);
 			createCharImages();
 			Graphics g = offScrImg.getGraphics();
 			g.setColor(Color.black);
-			g.fillRect(0,0,X_CHARS * X_PIX * pixelSize,Y_CHARS * Y_PIX * pixelSize);
+			g.fillRect(0,0,offScrImg.getWidth(this), offScrImg.getHeight(this));
 			g.dispose();
+			//createCroppedImage();
 			ready.set(true);
 		}
 		gc.drawImage(offScrImg,0,0,this);
 	}
 
+	private void createCroppedImage()
+	{
+		//croppedImage = createImage(new FilteredImageSource(offScrImg.getSource(), new CropImageFilter(0, 0, X_CHARS * X_PIX * pixelSize, curYChars * Y_PIX * pixelSize)));
+	}
+
 	private void addLine()
 	{
-		Image img = createVolatileImage(offScrImg.getWidth(this), offScrImg.getHeight(this) + Y_PIX * pixelSize);
-		Graphics gc = img.getGraphics();
-		gc.drawImage(offScrImg,0,0,this);
-		gc.setColor(Color.black);
-		gc.fillRect(
-			0, offScrImg.getHeight(this),
-			X_CHARS * X_PIX * pixelSize, Y_PIX * pixelSize);
-		gc.dispose();
-		offScrImg.flush();
-		offScrImg = img;
-		setPreferredSize(new Dimension(offScrImg.getWidth(this), offScrImg.getHeight(this)));
+		++curYChars;
+		//createCroppedImage();
+//		Image img = createVolatileImage(offScrImg.getWidth(this), offScrImg.getHeight(this) + Y_PIX * pixelSize);
+//		Graphics gc = img.getGraphics();
+//		gc.drawImage(offScrImg,0,0,this);
+//		gc.setColor(Color.black);
+//		gc.fillRect(
+//			0, offScrImg.getHeight(this),
+//			X_CHARS * X_PIX * pixelSize, Y_PIX * pixelSize);
+//		gc.dispose();
+//		offScrImg.flush();
+//		offScrImg = img;
+		setPreferredSize(new Dimension(offScrImg.getWidth(this), curYChars * Y_PIX * pixelSize));
 		revalidate();
-		scrollRectToVisible(new Rectangle(0,offScrImg.getHeight(this),1,1));
+		scrollRectToVisible(new Rectangle(0,curYChars * Y_PIX * pixelSize,1,1));
 	}
 
 	private void createCharImages()
