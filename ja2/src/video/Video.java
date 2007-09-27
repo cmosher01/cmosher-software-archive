@@ -196,7 +196,7 @@ public class Video extends JPanel implements Clock.Timed
 	}
 
     static final int BLACK = Color.BLACK.getRGB();
-    static final int GREEN = Color.GREEN.getRGB();
+    static final int GREEN = Color.WHITE.getRGB();
 
     private void plotByte(int tt, int d, boolean inverse)
 	{
