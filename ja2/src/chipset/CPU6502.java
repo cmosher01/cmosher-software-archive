@@ -178,44 +178,44 @@ public final class CPU6502 implements Clock.Timed
 		throw new IllegalStateException();
 	}
 
-	private Map<Integer,Integer> mapCoverageCount = new HashMap<Integer,Integer>();
-	private void trace()
-	{
-		if (!this.mapCoverageCount.containsKey(this.pc))
-		{
-			this.mapCoverageCount.put(this.pc,0);
-		}
-		int c = this.mapCoverageCount.get(this.pc);
-		++c;
-		this.mapCoverageCount.put(this.pc,c);
-	}
-
-	private static class CompareValues implements Comparator<Entry<Integer,Integer>>
-	{
-		public int compare(Entry<Integer,Integer> e1, Entry<Integer,Integer> e2)
-		{
-			if (e1.getValue() < e2.getValue())
-			{
-				return -1;
-			}
-			if (e2.getValue() < e1.getValue())
-			{
-				return +1;
-			}
-			return 0;
-		}
-		
-	}
-
-	public void dumpTrace()
-	{
-		final SortedSet<Entry<Integer,Integer>> trace = new TreeSet<Entry<Integer,Integer>>(Collections.<Entry<Integer,Integer>>reverseOrder(new CompareValues()));
-		trace.addAll(this.mapCoverageCount.entrySet());
-		for (final Map.Entry<Integer,Integer> e : trace)
-		{
-			System.out.println(HexUtil.word(e.getKey())+": "+e.getValue());
-		}
-	}
+//	private Map<Integer,Integer> mapCoverageCount = new HashMap<Integer,Integer>();
+//	private void trace()
+//	{
+//		if (!this.mapCoverageCount.containsKey(this.pc))
+//		{
+//			this.mapCoverageCount.put(this.pc,0);
+//		}
+//		int c = this.mapCoverageCount.get(this.pc);
+//		++c;
+//		this.mapCoverageCount.put(this.pc,c);
+//	}
+//
+//	private static class CompareValues implements Comparator<Entry<Integer,Integer>>
+//	{
+//		public int compare(Entry<Integer,Integer> e1, Entry<Integer,Integer> e2)
+//		{
+//			if (e1.getValue() < e2.getValue())
+//			{
+//				return -1;
+//			}
+//			if (e2.getValue() < e1.getValue())
+//			{
+//				return +1;
+//			}
+//			return 0;
+//		}
+//		
+//	}
+//
+//	public void dumpTrace()
+//	{
+//		final SortedSet<Entry<Integer,Integer>> trace = new TreeSet<Entry<Integer,Integer>>(Collections.<Entry<Integer,Integer>>reverseOrder(new CompareValues()));
+//		trace.addAll(this.mapCoverageCount.entrySet());
+//		for (final Map.Entry<Integer,Integer> e : trace)
+//		{
+//			System.out.println(HexUtil.word(e.getKey())+": "+e.getValue());
+//		}
+//	}
 
 	private void subsequentCycle()
 	{
@@ -1247,22 +1247,19 @@ public final class CPU6502 implements Clock.Timed
 
     private void LDA()
     {
-        this.a = this.data;
-        this.a &= 0xFF;
+        this.a = this.data & 0xFF;
         setStatusRegisterNZ(this.a);
     }
 
     private void LDX()
     {
-        this.x = this.data;
-        this.x &= 0xFF;
+        this.x = this.data & 0xFF;
         setStatusRegisterNZ(this.x);
     }
 
     private void LDY()
     {
-        this.y = this.data;
-        this.y &= 0xFF;
+        this.y = this.data & 0xFF;
         setStatusRegisterNZ(this.y);
     }
 

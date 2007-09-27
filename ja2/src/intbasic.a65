@@ -1,0 +1,2396 @@
+;
+; Apple Integer BASIC
+; (from Apple ][ ROM @ $E000-$F242)
+;
+; Written by Steve Wozniak
+;
+; Disassembled by Chris Mosher (using cc65)
+;
+;
+;
+	.INCLUDE "CMAP2.A65"
+
+CR              := $0D | %10000000
+
+WNDWDTH         := $0021
+CH              := $0024
+CV              := $0025
+GBAS            := $0026
+H2              := $002C
+V2              := $002D
+PROMPT          := $0033
+A1              := $003C
+A2              := $003E
+LOMEM           := $004A
+HIMEM           := $004C
+RND             := $004E
+NOUNSTKL        := $0050
+SYNSTKH         := $0058
+NOUNSTKH        := $0078
+SYNSTKL         := $0080
+NOUNSTKC        := $00A0
+TXTNDXSTK       := $00A8
+TXTNDX          := $00C8
+LEADBL          := $00C9
+PP              := $00CA
+PV              := $00CC
+ACC             := $00CE
+SRCH            := $00D0
+TOKNDXSTK       := $00D1
+SRCH2           := $00D2
+IFFLAG          := $00D4
+CRFLAG          := $00D5
+VERBNOW         := $00D6
+PRFLAG          := $00D7
+XSAVE           := $00D8
+RUNFLAG         := $00D9
+AUX             := $00DA
+PR              := $00DC
+PN              := $00DE
+PX              := $00E0
+P1              := $00E2
+P2              := $00E4
+P3              := $00E6
+TOKNDX          := $00F1
+PCON            := $00F2
+AUTOINC         := $00F4
+AUTOLN          := $00F6
+AUTOFLAG        := $00F8
+CHAR            := $00F9
+LEADZR          := $00FA
+FORNDX          := $00FB
+GOSUBNDX        := $00FC
+SYNSTKDX        := $00FD
+SYNPAG          := $00FE
+
+STACK           := $0100
+
+IN              := $0200
+
+KBD             := $C000
+KBDSTRB         := $C010
+
+PLOT            := $F800
+HLINE           := $F819
+VLINE           := $F828
+GBASCALC        := $F847
+SETCOL          := $F864
+PREAD           := $FB1E
+SETTXT          := $FB39
+SETGR           := $FB40
+VTAB            := $FC22
+NXTCHAR         := $FD75
+CROUT           := $FD8E
+COUT            := $FDED
+INPORT          := $FE8B
+OUTPORT         := $FE95
+WRITE           := $FECD
+WRITE0          := $FECF
+READ            := $FEFD
+BELL            := $FF3A
+
+
+
+BASIC:  JSR     COLD
+BASIC2: JMP     WARM
+LE006:  STA     PROMPT
+        JMP     COUT
+        RTS
+LE00C:  TXA
+        AND     #$20
+        BEQ     LE034
+LE011:  LDA     #$A0
+        STA     P2
+        JMP     COUT
+LE018:  LDA     #$20
+LE01A:  CMP     CH
+        BCS     LE02A
+        LDA     #$8D
+        LDY     #$07
+LE022:  JSR     COUT
+        LDA     #$A0
+        DEY
+        BNE     LE022
+LE02A:  LDY     #$00
+        LDA     (P1),Y
+        INC     P1
+        BNE     LE034
+        INC     P1+1
+LE034:  RTS
+COMMA_LIST:
+        JSR     LE715
+        JSR     LE576
+LE03B:  LDA     P1
+        CMP     P3
+        LDA     P1+1
+        SBC     P3+1
+        BCS     LE034
+        JSR     UNPACK
+        JMP     LE03B
+LISTCMD:LDA     PP
+        STA     P1
+        LDA     PP+1
+        STA     P1+1
+        LDA     HIMEM
+        STA     P3
+        LDA     HIMEM+1
+        STA     P3+1
+        BNE     LE03B
+LISTNUM:JSR     LE715
+        JSR     LE56D
+        LDA     P2
+        STA     P1
+        LDA     P2+1
+        STA     P1+1
+        BCS     LE034
+UNPACK: STX     XSAVE
+        LDA     #$A0
+        STA     LEADZR
+        JSR     LE02A
+        TYA
+LE077:  STA     P2
+        JSR     LE02A
+        TAX
+        JSR     LE02A
+        JSR     LE51B
+LE083:  JSR     LE018
+        STY     LEADZR
+        TAX
+        BPL     LE0A3
+        ASL     A
+        BPL     LE077
+        LDA     P2
+        BNE     LE095
+        JSR     LE011
+LE095:  TXA
+LE096:  JSR     COUT
+LE099:  LDA     #$25
+        JSR     LE01A
+        TAX
+        BMI     LE096
+        STA     P2
+LE0A3:  CMP     #$01
+        BNE     LE0AC
+        LDX     XSAVE
+        JMP     CROUT
+LE0AC:  PHA
+        STY     ACC
+        LDX     #$ED
+        STX     ACC+1
+        CMP     #$51
+        BCC     LE0BB
+        DEC     ACC+1
+        SBC     #$50
+LE0BB:  PHA
+        LDA     (ACC),Y
+LE0BE:  TAX
+        DEY
+        LDA     (ACC),Y
+        BPL     LE0BE
+        CPX     #$C0
+        BCS     LE0CC
+        CPX     #$00
+        BMI     LE0BE
+LE0CC:  TAX
+        PLA
+        SBC     #$01
+        BNE     LE0BB
+        BIT     P2
+        BMI     LE0D9
+        JSR     LEFF8
+LE0D9:  LDA     (ACC),Y
+        BPL     LE0ED
+        TAX
+        AND     #$3F
+        STA     P2
+        CLC
+        ADC     #$A0
+        JSR     COUT
+        DEY
+        CPX     #$C0
+        BCC     LE0D9
+LE0ED:  JSR     LE00C
+        PLA
+        CMP     #$5D
+        BEQ     LE099
+        CMP     #$28
+        BNE     LE083
+        BEQ     LE099
+PAREN_SUBSTR:
+        JSR     LE118
+        STA     NOUNSTKL,X
+        CMP     NOUNSTKH,X
+LE102:  BCC     LE115
+LE104:  LDY     #$2B
+LE106:  JMP     LE3E0
+COMMA_SUBSTR:
+        JSR     GETBYTE
+        CMP     NOUNSTKL,X
+        BCC     LE104
+        JSR     LEFE4
+        STA     NOUNSTKH,X
+LE115:  JMP     HE823
+LE118:  JSR     GETBYTE
+        BEQ     LE104
+        SEC
+        SBC     #$01
+        RTS
+HE121:  JSR     LE118
+        STA     NOUNSTKL,X
+        CLC
+        SBC     NOUNSTKH,X
+        JMP     LE102
+LE12C:  LDY     #$14
+        BNE     LE106
+DIMSTR: JSR     LE118
+        INX
+LE134:  LDA     NOUNSTKL,X
+        STA     AUX
+        ADC     ACC
+        PHA
+        TAY
+        LDA     NOUNSTKH,X
+        STA     AUX+1
+        ADC     ACC+1
+        PHA
+        CPY     PP
+        SBC     PP+1
+        BCS     LE12C
+        LDA     AUX
+        ADC     #$FE
+        STA     AUX
+        LDA     #$FF
+        TAY
+        ADC     AUX+1
+        STA     AUX+1
+LE156:  INY
+        LDA     (AUX),Y
+        CMP     PV,Y
+        BNE     DIMERR
+        TYA
+        BEQ     LE156
+LE161:  PLA
+        STA     (AUX),Y
+        STA     PV,Y
+        DEY
+        BPL     LE161
+        INX
+        RTS
+        NOP
+DIMERR: LDY     #$80
+LE16F:  BNE     LE106
+INPUTSTR:
+        LDA     #$00
+        JSR     LE70A
+        LDY     #$02
+        STY     NOUNSTKH,X
+        JSR     LE70A
+        STX     XSAVE
+        TAX
+        INC     PROMPT
+        JSR     LF351
+        DEC     PROMPT
+        TXA
+        LDX     XSAVE
+        STA     NOUNSTKH,X
+HE18C:  LDA     NOUNSTKL+1,X
+        STA     ACC
+        LDA     NOUNSTKH+1,X
+        STA     ACC+1
+        INX
+        INX
+        JSR     LE1BC
+LE199:  LDA     RND,X
+        CMP     $76,X
+        BCS     LE1B4
+        INC     RND,X
+        TAY
+        LDA     (ACC),Y
+        LDY     NOUNSTKL,X
+        CPY     P2
+        BCC     LE1AE
+        LDY     #$83
+        BNE     LE16F
+LE1AE:  STA     (AUX),Y
+        INC     NOUNSTKL,X
+        BCC     LE199
+LE1B4:  LDY     NOUNSTKL,X
+        TXA
+        STA     (AUX),Y
+        JMP     LF223
+LE1BC:  LDA     NOUNSTKL+1,X
+        STA     AUX
+        SEC
+        SBC     #$02
+        STA     P2
+        LDA     NOUNSTKH+1,X
+        STA     AUX+1
+        SBC     #$00
+        STA     P2+1
+        LDY     #$00
+        LDA     (P2),Y
+        CLC
+        SBC     AUX
+        STA     P2
+        RTS
+HE1D7:  LDA     NOUNSTKL+3,X
+        STA     ACC
+        LDA     NOUNSTKH+3,X
+        STA     ACC+1
+        LDA     NOUNSTKL+1,X
+        STA     AUX
+        LDA     NOUNSTKH+1,X
+        STA     AUX+1
+        INX
+        INX
+        INX
+        LDY     #$00
+        STY     NOUNSTKH,X
+        STY     NOUNSTKC,X
+        INY
+        STY     NOUNSTKL,X
+LE1F3:  LDA     HIMEM+1,X
+        CMP     $75,X
+        PHP
+        PHA
+        LDA     RND+1,X
+        CMP     $77,X
+        BCC     LE206
+        PLA
+        PLP
+        BCS     LE205
+LE203:  LSR     NOUNSTKL,X
+LE205:  RTS
+LE206:  TAY
+        LDA     (ACC),Y
+        STA     P2
+        PLA
+        TAY
+        PLP
+        BCS     LE203
+        LDA     (AUX),Y
+        CMP     P2
+        BNE     LE203
+        INC     RND+1,X
+        INC     HIMEM+1,X
+        BCS     LE1F3
+HE21C:  JSR     HE1D7
+        JMP     NOT
+MULT:   JSR     LE254
+LE225:  ASL     ACC
+        ROL     ACC+1
+        BCC     LE238
+        CLC
+        LDA     P3
+        ADC     AUX
+        STA     P3
+        LDA     P3+1
+        ADC     AUX+1
+        STA     P3+1
+LE238:  DEY
+        BEQ     LE244
+        ASL     P3
+        ROL     P3+1
+        BPL     LE225
+        JMP     LE77E
+LE244:  LDA     P3
+        JSR     LE708
+        LDA     P3+1
+        STA     NOUNSTKC,X
+        ASL     P2+1
+        BCC     LE279
+        JMP     NEGATE
+LE254:  LDA     #$55
+        STA     P2+1
+        JSR     LE25B
+LE25B:  LDA     ACC
+        STA     AUX
+        LDA     ACC+1
+        STA     AUX+1
+        JSR     LE715
+        STY     P3
+        STY     P3+1
+        LDA     ACC+1
+        BPL     LE277
+        DEX
+        ASL     P2+1
+        JSR     NEGATE
+        JSR     LE715
+LE277:  LDY     #$10
+LE279:  RTS
+MOD:    JSR     LEE6C
+        BEQ     LE244
+        .BYTE   $FF
+LE280:  INC     PROMPT
+        LDY     #$00
+        JSR     LE3CE
+        DEC     PROMPT
+        RTS
+SCRN:   JSR     GETBYTE
+        LSR     A
+        PHP
+        JSR     GBASCALC
+        JSR     GETBYTE
+        TAY
+        LDA     (GBAS),Y
+        PLP
+        BCC     LE29F
+        LSR     A
+        LSR     A
+        LSR     A
+        LSR     A
+LE29F:  AND     #$0F
+        LDY     #$00
+        JSR     LE708
+        STY     NOUNSTKC,X
+        DEY
+        STY     PRFLAG
+COMMA_SCRN:
+        RTS
+        .BYTE   $FF
+        .BYTE   $FF
+        .BYTE   $FF
+        .BYTE   $FF
+        JSR     OLDCOLD
+WARM:   JSR     CROUT
+LE2B6:  LSR     RUNFLAG
+        LDA     #$BE
+        JSR     LE006
+        LDY     #$00
+        STY     LEADZR
+        BIT     AUTOFLAG
+        BPL     LE2D1
+        LDX     AUTOLN
+        LDA     AUTOLN+1
+        JSR     LE51B
+        LDA     #$A0
+        JSR     COUT
+LE2D1:  LDX     #$FF
+        TXS
+        JSR     LE3CE
+        STY     TOKNDX
+        TXA
+        STA     TXTNDX
+        LDX     #$20
+        JSR     LE491
+        LDA     TXTNDX
+        ADC     #$00
+        STA     PX
+        LDA     #$00
+        TAX
+        ADC     #$02
+        STA     PX+1
+        LDA     (PX,X)
+        AND     #$F0
+        CMP     #$B0
+        BEQ     LE2F9
+        JMP     LE883
+LE2F9:  LDY     #$02
+LE2FB:  LDA     (PX),Y
+        STA     PV+1,Y
+        DEY
+        BNE     LE2FB
+        JSR     LE38A
+        LDA     TOKNDX
+        SBC     TXTNDX
+        CMP     #$04
+        BEQ     LE2B6
+        STA     (PX),Y
+        LDA     PP
+        SBC     (PX),Y
+        STA     P2
+        LDA     PP+1
+        SBC     #$00
+        STA     P2+1
+        LDA     P2
+        CMP     PV
+        LDA     P2+1
+        SBC     PV+1
+        BCC     LE36B
+LE326:  LDA     PP
+        SBC     (PX),Y
+        STA     P3
+        LDA     PP+1
+        SBC     #$00
+        STA     P3+1
+        LDA     (PP),Y
+        STA     (P3),Y
+        INC     PP
+        BNE     LE33C
+        INC     PP+1
+LE33C:  LDA     P1
+        CMP     PP
+        LDA     P1+1
+        SBC     PP+1
+        BCS     LE326
+LE346:  LDA     P2,X
+        STA     PP,X
+        DEX
+        BPL     LE346
+        LDA     (PX),Y
+        TAY
+LE350:  DEY
+        LDA     (PX),Y
+        STA     (P3),Y
+        TYA
+        BNE     LE350
+        BIT     AUTOFLAG
+        BPL     LE365
+LE35C:  LDA     AUTOLN+1,X
+        ADC     AUTOINC+1,X
+        STA     AUTOLN+1,X
+        INX
+        BEQ     LE35C
+LE365:  BPL     LE3E5
+        BRK
+        BRK
+        BRK
+        BRK
+LE36B:  LDY     #$14
+        BNE     LE3E0
+COMMA_DEL:
+        JSR     LE715
+        LDA     P1
+        STA     P3
+        LDA     P1+1
+        STA     P3+1
+        JSR     LE575
+        LDA     P1
+        STA     P2
+        LDA     P1+1
+        STA     P2+1
+        BNE     LE395
+DEL:    JSR     LE715
+LE38A:  JSR     LE56D
+        LDA     P3
+        STA     P1
+        LDA     P3+1
+        STA     P1+1
+LE395:  LDY     #$00
+LE397:  LDA     PP
+        CMP     P2
+        LDA     PP+1
+        SBC     P2+1
+        BCS     LE3B7
+        LDA     P2
+        BNE     LE3A7
+        DEC     P2+1
+LE3A7:  DEC     P2
+        LDA     P3
+        BNE     LE3AF
+        DEC     P3+1
+LE3AF:  DEC     P3
+        LDA     (P2),Y
+        STA     (P3),Y
+        BCC     LE397
+LE3B7:  LDA     P3
+        STA     PP
+        LDA     P3+1
+        STA     PP+1
+        RTS
+LE3C0:  JSR     COUT
+        INY
+LE3C4:  LDA     ERRMSGTBL,Y
+        BMI     LE3C0
+        ORA     #$80
+        JMP     COUT
+LE3CE:  TYA
+        TAX
+        JSR     NXTCHAR
+        TXA
+        TAY
+        LDA     #$DF
+        STA     IN,Y
+        LDX     #$FF
+        RTS
+        RTS
+LE3DE:  LDY     #$06
+LE3E0:  JSR     LEED3
+        BIT     RUNFLAG
+LE3E5:  BMI     LE3EA
+        JMP     LE2B6
+LE3EA:  JMP     LEB9A
+LE3ED:  ROL     A
+        ADC     #$A0
+        CMP     IN,X
+        BNE     LE448
+        LDA     (SYNPAG),Y
+        ASL     A
+        BMI     LE400
+        DEY
+        LDA     (SYNPAG),Y
+        BMI     LE428
+        INY
+LE400:  STX     TXTNDX
+        TYA
+        PHA
+        LDX     #$00
+        LDA     (SYNPAG,X)
+        TAX
+LE409:  LSR     A
+        EOR     #$40
+        ORA     (SYNPAG),Y
+        CMP     #$C0
+        BCC     LE413
+        INX
+LE413:  INY
+        BNE     LE409
+        PLA
+        TAY
+        TXA
+        JMP     LF2F8
+LE41C:  INC     TOKNDX
+        LDX     TOKNDX
+        BEQ     LE3DE
+        STA     IN,X
+LE425:  RTS
+LE426:  LDX     TXTNDX
+LE428:  LDA     #$A0
+LE42A:  INX
+        CMP     IN,X
+        BCS     LE42A
+        LDA     (SYNPAG),Y
+        AND     #$3F
+        LSR     A
+        BNE     LE3ED
+        LDA     IN,X
+        BCS     LE442
+        ADC     #$3F
+        CMP     #$1A
+        BCC     LE4B1
+LE442:  ADC     #$4F
+        CMP     #$0A
+        BCC     LE4B1
+LE448:  LDX     SYNSTKDX
+LE44A:  INY
+        LDA     (SYNPAG),Y
+        AND     #$E0
+        CMP     #$20
+        BEQ     LE4CD
+        LDA     TXTNDXSTK,X
+        STA     TXTNDX
+        LDA     TOKNDXSTK,X
+        STA     TOKNDX
+LE45B:  DEY
+        LDA     (SYNPAG),Y
+        ASL     A
+        BPL     LE45B
+        DEY
+        BCS     LE49C
+        ASL     A
+        BMI     LE49C
+        LDY     SYNSTKH,X
+        STY     SYNPAG+1
+        LDY     SYNSTKL,X
+        INX
+        BPL     LE44A
+LE470:  BEQ     LE425
+        CMP     #$7E
+        BCS     LE498
+        DEX
+        BPL     LE47D
+        LDY     #$06
+        BPL     LE4A6
+LE47D:  STY     SYNSTKL,X
+        LDY     SYNPAG+1
+        STY     SYNSTKH,X
+        LDY     TXTNDX
+        STY     TXTNDXSTK,X
+        LDY     TOKNDX
+        STY     TOKNDXSTK,X
+        AND     #$1F
+        TAY
+        LDA     SYNTABLNDX,Y
+LE491:  ASL     A
+        TAY
+        LDA     #$76
+        ROL     A
+        STA     SYNPAG+1
+LE498:  BNE     LE49B
+        INY
+LE49B:  INY
+LE49C:  STX     SYNSTKDX
+        LDA     (SYNPAG),Y
+        BMI     LE426
+        BNE     LE4A9
+        LDY     #$0E
+LE4A6:  JMP     LE3E0
+LE4A9:  CMP     #$03
+        BCS     LE470
+        LSR     A
+        LDX     TXTNDX
+        INX
+LE4B1:  LDA     IN,X
+        BCC     LE4BA
+        CMP     #$A2
+        BEQ     LE4C4
+LE4BA:  CMP     #$DF
+        BEQ     LE4C4
+        STX     TXTNDX
+LE4C0:  JSR     LE41C
+        INY
+LE4C4:  DEY
+        LDX     SYNSTKDX
+LE4C7:  LDA     (SYNPAG),Y
+        DEY
+        ASL     A
+        BPL     LE49C
+LE4CD:  LDY     SYNSTKH,X
+        STY     SYNPAG+1
+        LDY     SYNSTKL,X
+        INX
+        LDA     (SYNPAG),Y
+        AND     #$9F
+        BNE     LE4C7
+        STA     PCON
+        STA     PCON+1
+        TYA
+        PHA
+        STX     SYNSTKDX
+        LDY     SRCH,X
+        STY     LEADBL
+        CLC
+LE4E7:  LDA     #$0A
+        STA     CHAR
+        LDX     #$00
+        INY
+        LDA     IN,Y
+        AND     #$0F
+LE4F3:  ADC     PCON
+        PHA
+        TXA
+        ADC     PCON+1
+        BMI     LE517
+        TAX
+        PLA
+        DEC     CHAR
+        BNE     LE4F3
+        STA     PCON
+        STX     PCON+1
+        CPY     TOKNDX
+        BNE     LE4E7
+        LDY     LEADBL
+        INY
+        STY     TOKNDX
+        JSR     LE41C
+        PLA
+        TAY
+        LDA     PCON+1
+        BCS     LE4C0
+LE517:  LDY     #$00
+        BPL     LE4A6
+LE51B:  STA     PCON+1
+        STX     PCON
+        LDX     #$04
+        STX     LEADBL
+LE523:  LDA     #$B0
+        STA     CHAR
+LE527:  LDA     PCON
+        CMP     NUMLOW,X
+        LDA     PCON+1
+        SBC     NUMHI,X
+        BCC     LE540
+        STA     PCON+1
+        LDA     PCON
+        SBC     NUMLOW,X
+        STA     PCON
+        INC     CHAR
+        BNE     LE527
+LE540:  LDA     CHAR
+        INX
+        DEX
+        BEQ     LE554
+        CMP     #$B0
+        BEQ     LE54C
+        STA     LEADBL
+LE54C:  BIT     LEADBL
+        BMI     LE554
+        LDA     LEADZR
+        BEQ     LE55F
+LE554:  JSR     COUT
+        BIT     AUTOFLAG
+        BPL     LE55F
+        STA     IN,Y
+        INY
+LE55F:  DEX
+        BPL     LE523
+        RTS
+NUMLOW:
+        .BYTE   <1
+        .BYTE   <10
+        .BYTE   <100
+        .BYTE   <1000
+        .BYTE   <10000
+
+NUMHI:
+        .BYTE   >1
+        .BYTE   >10
+        .BYTE   >100
+        .BYTE   >1000
+        .BYTE   >10000
+
+LE56D:  LDA     PP
+        STA     P3
+        LDA     PP+1
+        STA     P3+1
+LE575:  INX
+LE576:  LDA     P3+1
+        STA     P2+1
+        LDA     P3
+        STA     P2
+        CMP     HIMEM
+        LDA     P2+1
+        SBC     HIMEM+1
+        BCS     LE5AC
+        LDY     #$01
+        LDA     (P2),Y
+        SBC     ACC
+        INY
+        LDA     (P2),Y
+        SBC     ACC+1
+        BCS     LE5AC
+        LDY     #$00
+        LDA     P3
+        ADC     (P2),Y
+        STA     P3
+        BCC     LE5A0
+        INC     P3+1
+        CLC
+LE5A0:  INY
+        LDA     ACC
+        SBC     (P2),Y
+        INY
+        LDA     ACC+1
+        SBC     (P2),Y
+        BCS     LE576
+LE5AC:  RTS
+NEW:    LSR     AUTOFLAG
+        LDA     HIMEM
+        STA     PP
+        LDA     HIMEM+1
+        STA     PP+1
+CLR:    LDA     LOMEM
+        STA     PV
+        LDA     LOMEM+1
+        STA     PV+1
+        LDA     #$00
+        STA     FORNDX
+        STA     GOSUBNDX
+        STA     SYNPAG
+        LDA     #$00
+        STA     $1D
+        RTS
+        LDA     SRCH
+LE5CE:  JMP     LE36B
+LE5D1:  LDY     #$FF
+LE5D3:  STY     XSAVE
+LE5D5:  INY
+        LDA     (PX),Y
+        BMI     LE5E0
+        CMP     #$40
+        BNE     LE646
+        STA     XSAVE
+LE5E0:  CMP     (SRCH),Y
+        BEQ     LE5D5
+LE5E4:  LDA     (SRCH),Y
+LE5E6:  INY
+        LSR     A
+        BNE     LE5E4
+        LDA     (SRCH),Y
+        PHA
+        INY
+        LDA     (SRCH),Y
+        TAY
+        PLA
+LE5F2:  STA     SRCH
+        STY     TOKNDXSTK
+        CMP     PV
+        BNE     LE5D1
+        CPY     PV+1
+        BNE     LE5D1
+        LDY     #$00
+LE600:  INY
+        LDA     (PX),Y
+        BMI     LE600
+        EOR     #$40
+        BEQ     LE600
+        TYA
+        ADC     #$04
+        PHA
+        ADC     SRCH
+        TAY
+        LDA     TOKNDXSTK
+        ADC     #$00
+        PHA
+        CPY     PP
+        SBC     PP+1
+        BCS     LE5CE
+        STY     PV
+        PLA
+        STA     PV+1
+        PLA
+        TAY
+        LDA     #$00
+        DEY
+        STA     (SRCH),Y
+        DEY
+        STA     (SRCH),Y
+        DEY
+        LDA     PV+1
+        STA     (SRCH),Y
+        DEY
+        LDA     PV
+        STA     (SRCH),Y
+        DEY
+        LDA     #$00
+LE637:  STA     (SRCH),Y
+        DEY
+        BMI     LE5D3
+        LDA     (PX),Y
+        BNE     LE637
+LE640:  LDA     LOMEM
+        LDY     LOMEM+1
+        BNE     LE5F2
+LE646:  LDA     (SRCH),Y
+        CMP     #$40
+        BCS     LE5E6
+        STA     SYNSTKL+31,X
+        TYA
+        ADC     #$03
+        PHA
+        ADC     SRCH
+        JSR     LE70A
+LE657:  JSR     LE6FF
+        DEY
+        BNE     LE657
+        TYA
+        ADC     TOKNDXSTK
+        STA     NOUNSTKH,X
+        PLA
+        BIT     XSAVE
+        BMI     LE684
+        TAY
+        LDA     #$00
+        JSR     LE70A
+        STA     NOUNSTKH,X
+LE66F:  LDA     (SRCH),Y
+        BPL     LE682
+        INC     NOUNSTKH,X
+        INY
+        BNE     LE66F
+        .BYTE   $09
+LE679:  LDA     #$00
+        STA     IFFLAG
+        STA     CRFLAG
+        LDX     #$20
+LE681:  PHA
+LE682:  LDY     #$00
+LE684:  LDA     (PX),Y
+LE686:  BPL     LE6A0
+        ASL     A
+        BMI     LE640
+        JSR     LE6FF
+        JSR     LE708
+        JSR     LE6FF
+        STA     NOUNSTKC,X
+LE696:  BIT     IFFLAG
+        BPL     LE69B
+        DEX
+LE69B:  JSR     LE6FF
+        BCS     LE686
+LE6A0:  CMP     #$28
+        BNE     LE6C3
+        LDA     PX
+        JSR     LE70A
+        LDA     PX+1
+        STA     NOUNSTKH,X
+        BIT     IFFLAG
+        BMI     LE6BC
+        LDA     #$01
+        JSR     LE70A
+        LDA     #$00
+        STA     NOUNSTKH,X
+LE6BA:  INC     NOUNSTKH,X
+LE6BC:  JSR     LE6FF
+        BMI     LE6BA
+        BCS     LE696
+LE6C3:  BIT     IFFLAG
+        BPL     LE6CD
+        CMP     #$04
+        BCS     LE69B
+        LSR     IFFLAG
+LE6CD:  TAY
+        STA     VERBNOW
+        LDA     LE980,Y
+        AND     #$55
+        ASL     A
+        STA     PRFLAG
+LE6D8:  PLA
+        TAY
+        LDA     LE980,Y
+        AND     #$AA
+        CMP     PRFLAG
+        BCS     LE6EC
+        TYA
+        PHA
+        JSR     LF3EB
+        LDA     VERBNOW
+        BCC     LE681
+LE6EC:  LDA     VERBADRL,Y
+        STA     ACC
+        LDA     VERBADRH,Y
+        STA     ACC+1
+        JSR     LE6FC
+        JMP     LE6D8
+LE6FC:  JMP     (ACC)
+LE6FF:  INC     PX
+        BNE     LE705
+        INC     PX+1
+LE705:  LDA     (PX),Y
+        RTS
+LE708:  STY     $77,X
+LE70A:  DEX
+        BMI     LE710
+        STA     NOUNSTKL,X
+        RTS
+LE710:  LDY     #$66
+LE712:  JMP     LE3E0
+LE715:  LDY     #$00
+        LDA     NOUNSTKL,X
+        STA     ACC
+        LDA     NOUNSTKC,X
+        STA     ACC+1
+        LDA     NOUNSTKH,X
+        BEQ     LE731
+        STA     ACC+1
+        LDA     (ACC),Y
+        PHA
+        INY
+        LDA     (ACC),Y
+        STA     ACC+1
+        PLA
+        STA     ACC
+        DEY
+LE731:  INX
+        RTS
+HE733:  JSR     HE74A
+NOT:    JSR     LE715
+        TYA
+        JSR     LE708
+        STA     NOUNSTKC,X
+        CMP     ACC
+        BNE     LE749
+        CMP     ACC+1
+        BNE     LE749
+        INC     NOUNSTKL,X
+LE749:  RTS
+HE74A:  JSR     SUBTRACT
+        JSR     SGN
+ABS:    JSR     LE715
+        BIT     ACC+1
+        BMI     LE772
+LE757:  DEX
+LE758:  RTS
+SGN:    JSR     LE715
+        LDA     ACC+1
+        BNE     LE764
+        LDA     ACC
+        BEQ     LE757
+LE764:  LDA     #$FF
+        JSR     LE708
+        STA     NOUNSTKC,X
+        BIT     ACC+1
+        BMI     LE758
+NEGATE: JSR     LE715
+LE772:  TYA
+        SEC
+        SBC     ACC
+        JSR     LE708
+        TYA
+        SBC     ACC+1
+        BVC     LE7A1
+LE77E:  LDY     #$00
+        BPL     LE712
+SUBTRACT:
+        JSR     NEGATE
+ADDITION:
+        JSR     LE715
+        LDA     ACC
+        STA     AUX
+        LDA     ACC+1
+        STA     AUX+1
+        JSR     LE715
+LE793:  CLC
+        LDA     ACC
+        ADC     AUX
+        JSR     LE708
+        LDA     ACC+1
+        ADC     AUX+1
+        BVS     LE77E
+LE7A1:  STA     NOUNSTKC,X
+POSITIVE:
+        RTS
+TAB:    JSR     GETBYTE
+        TAY
+        BNE     LE7AD
+        JMP     LEECB
+LE7AD:  DEY
+LE7AE:  JMP     LF3F4
+LE7B1:  LDA     CH
+        ORA     #$07
+        TAY
+        INY
+LE7B7:  BNE     LE7AE
+        INY
+        BNE     LE7B1
+        BCS     LE7B7
+        RTS
+        BRK
+        BRK
+HE7C1:  JSR     LE7B1
+PRNTNUM:JSR     LE715
+LE7C7:  LDA     ACC+1
+        BPL     LE7D5
+        LDA     #$AD
+        JSR     COUT
+        JSR     LE772
+        BVC     PRNTNUM
+LE7D5:  DEY
+        STY     CRFLAG
+        STX     ACC+1
+        LDX     ACC
+        JSR     LE51B
+        LDX     ACC+1
+        RTS
+AUTO:   JSR     LE715
+        LDA     ACC
+        STA     AUTOLN
+        LDA     ACC+1
+        STA     AUTOLN+1
+        DEY
+        STY     AUTOFLAG
+        INY
+        LDA     #$0A
+LE7F3:  STA     AUTOINC
+        STY     AUTOINC+1
+        RTS
+COMMA_AUTO:
+        JSR     LE715
+        LDA     ACC
+        LDY     ACC+1
+        BPL     LE7F3
+HE801:  JSR     LE715
+        LDA     NOUNSTKL,X
+        STA     AUX
+        LDA     NOUNSTKH,X
+        STA     AUX+1
+        LDA     ACC
+        STA     (AUX),Y
+        INY
+        LDA     ACC+1
+        JMP     LF207
+LET:    RTS
+BEGIN_LINE:
+        PLA
+        PLA
+COLON:  BIT     CRFLAG
+        BPL     LE822
+PRINT_CR:
+        JSR     CROUT
+HE820:  LSR     CRFLAG
+LE822:  RTS
+HE823:  LDY     #$FF
+        STY     PRFLAG
+RIGHT_PAREN:
+        RTS
+IF:     JSR     LEFCD
+        BEQ     LE834
+        LDA     #$25
+        STA     VERBNOW
+        DEY
+        STY     IFFLAG
+LE834:  INX
+        RTS
+LE836:  LDA     PP
+        LDY     PP+1
+        BNE     LE896
+GOSUB:  LDY     #$41
+        LDA     GOSUBNDX
+        CMP     #$10
+        BCS     LE8A2
+        TAY
+        INC     GOSUBNDX
+        LDA     PX
+        STA     STACK,Y
+        LDA     PX+1
+        STA     STACK+16,Y
+        LDA     PR
+        STA     STACK+32,Y
+        LDA     PR+1
+        STA     STACK+48,Y
+GOTO:   JSR     LE715
+        JSR     LE56D
+        BCC     LE867
+        LDY     #$37
+        BNE     LE8A2
+LE867:  LDA     P2
+        LDY     P2+1
+LE86B:  STA     PR
+        STY     PR+1
+        CLC
+        ADC     #$03
+        BCC     LE875
+        INY
+LE875:  LDX     #$FF
+        STX     RUNFLAG
+        TXS
+        STA     PX
+        STY     PX+1
+        JSR     LF02E
+        LDY     #$00
+LE883:  JSR     LE679
+        BIT     RUNFLAG
+        BPL     END
+        CLC
+        LDY     #$00
+        LDA     PR
+        ADC     (PR),Y
+        LDY     PR+1
+        BCC     LE896
+        INY
+LE896:  CMP     HIMEM
+        BNE     LE86B
+        CPY     HIMEM+1
+        BNE     LE86B
+        LDY     #$31
+        LSR     RUNFLAG
+LE8A2:  JMP     LE3E0
+RETURN: LDY     #$4A
+        LDA     GOSUBNDX
+        BEQ     LE8A2
+        DEC     GOSUBNDX
+        TAY
+        LDA     STACK+31,Y
+        STA     PR
+        LDA     STACK+47,Y
+        STA     PR+1
+        LDX     A:SYNPAG+1,Y
+        LDA     STACK+15,Y
+LE8BE:  TAY
+        TXA
+        JMP     LE875
+LE8C3:  LDY     #$63
+        JSR     LE3C4
+        LDY     #$01
+        LDA     (PR),Y
+        TAX
+        INY
+        LDA     (PR),Y
+        JSR     LE51B
+END:    JMP     WARM
+LE8D6:  DEC     FORNDX
+NEXT:   LDY     #$5B
+        LDA     FORNDX
+LE8DC:  BEQ     LE8A2
+        TAY
+        LDA     NOUNSTKL,X
+        CMP     STACK+63,Y
+        BNE     LE8D6
+        LDA     NOUNSTKH,X
+        CMP     STACK+79,Y
+        BNE     LE8D6
+        LDA     STACK+95,Y
+        STA     AUX
+        LDA     STACK+111,Y
+        STA     AUX+1
+        JSR     LE715
+        DEX
+        JSR     LE793
+        JSR     HE801
+        DEX
+        LDY     FORNDX
+        LDA     STACK+207,Y
+        STA     SYNSTKL+31,X
+        LDA     STACK+191,Y
+        LDY     #$00
+        JSR     LE708
+        JSR     SUBTRACT
+        JSR     SGN
+        JSR     LE715
+        LDY     FORNDX
+        LDA     ACC
+        BEQ     LE925
+        EOR     STACK+111,Y
+        BPL     LE937
+LE925:  LDA     STACK+127,Y
+        STA     PR
+        LDA     STACK+143,Y
+        STA     PR+1
+        LDX     STACK+159,Y
+        LDA     STACK+175,Y
+        BNE     LE8BE
+LE937:  DEC     FORNDX
+        RTS
+FOR:    LDY     #$54
+        LDA     FORNDX
+        CMP     #$10
+        BEQ     LE8DC
+        INC     FORNDX
+        TAY
+        LDA     NOUNSTKL,X
+        STA     STACK+64,Y
+        LDA     NOUNSTKH,X
+        JMP     LF288
+        RTS
+TO:     JSR     LE715
+        LDY     FORNDX
+        LDA     ACC
+        STA     STACK+191,Y
+        LDA     ACC+1
+        STA     STACK+207,Y
+        LDA     #$01
+        STA     STACK+95,Y
+        LDA     #$00
+LE966:  STA     STACK+111,Y
+        LDA     PR
+        STA     STACK+127,Y
+        LDA     PR+1
+        STA     STACK+143,Y
+        LDA     PX
+        STA     STACK+159,Y
+        LDA     PX+1
+        STA     STACK+175,Y
+        RTS
+        .BYTE   $20,$15
+LE980:  .BYTE   $00,$00,$00,$AB,$03,$03,$03,$03
+        .BYTE   $03,$03,$03,$03,$03,$03,$03,$03
+        .BYTE   $03,$03,$3F,$3F,$C0,$C0,$3C,$3C
+        .BYTE   $3C,$3C,$3C,$3C,$3C,$30,$0F,$C0
+        .BYTE   $C3,$FF,$55,$00,$AB,$AB,$03,$03
+        .BYTE   $FF,$FF,$55,$FF,$FF,$55,$CF,$CF
+        .BYTE   $CF,$CF,$CF,$FF,$55,$C6,$C6,$C6
+        .BYTE   $55,$F0,$F0,$CF,$CF,$55,$01,$55
+        .BYTE   $FF,$FF,$55,$03,$03,$03,$03,$03
+        .BYTE   $03,$03,$03,$03,$03,$03,$03,$03
+        .BYTE   $03,$03,$03,$03,$03,$03,$03,$03
+        .BYTE   $03,$03,$03,$03,$03,$00,$AB,$03
+        .BYTE   $57,$03,$03,$03,$03,$07,$03,$03
+        .BYTE   $03,$03,$03,$03,$03,$03,$03,$03
+        .BYTE   $03,$03,$AA,$FF,$03,$03,$03,$03
+        .BYTE   $03,$03,$03,$03,$03,$03,$03,$03
+VERBADRL:
+	.BYTE   <BEGIN_LINE,<$FFFF,<$FFFF,<COLON
+	.BYTE   <LOAD,<SAVE,<CON,<RUNNUM
+	.BYTE   <RUN,<DEL,<COMMA_DEL,<NEW
+	.BYTE   <CLR,<AUTO,<COMMA_AUTO,<MAN
+	.BYTE   <VHIMEM,<VLOMEM,<ADDITION,<SUBTRACT
+	.BYTE   <MULT,<DIVIDE,<HE733,<HE74A
+	.BYTE   <HF25B,<HF24E,<HF253,<HE74A
+	.BYTE   <HF249,<VAND,<VOR,<MOD
+	.BYTE   <EXP,<$FFFF,<HE823,<COMMA_SUBSTR
+	.BYTE   <GOTO,<LET,<HEFB6,<HEBCB
+	.BYTE   <$FFFF,<$FFFF,<PAREN_SUBSTR,<$FFFF
+	.BYTE   <$FFFF,<HEF24,<PEEK,<RNDCMD
+	.BYTE   <SGN,<ABS,<PDL,<$FFFF
+	.BYTE   <HE823,<POSITIVE,<NEGATE,<NOT
+	.BYTE   <HE823,<HE1D7,<HE21C,<LEN
+	.BYTE   <ASC,<SCRN,<COMMA_SCRN,<HE823
+	.BYTE   <$FFFF,<$FFFF,<HE121,<DIMSTR
+	.BYTE   <DIMNUM,<PRNTSTR,<PRNTNUM,<HE820
+	.BYTE   <HEE00,<HE7C1,<HF3BA,<SETTXT
+	.BYTE   <SETGR,<CALL,<DIMSTR,<DIMNUM
+	.BYTE   <TAB,<END,<HEFB6,<INPUT_PROMPT
+	.BYTE   <HEBAA,<FOR,<HE801,<TO
+	.BYTE   <STEP,<NEXT,<NEXT,<RETURN
+	.BYTE   <GOSUB,<$FFFF,<LET,<GOTO
+	.BYTE   <IF,<PRNTSTR,<PRNTNUM,<PRINT_CR
+	.BYTE   <POKE,<GETVAL255,<COLOR,<GETVAL255
+	.BYTE   <COMMA_PLOT,<GETVAL255,<COMMA_HLIN,<AT_HLIN
+	.BYTE   <GETVAL255,<COMMA_VLIN,<AT_VLIN,<IVTAB
+	.BYTE   <HE18C,<HE801,<RIGHT_PAREN,<$FFFF
+	.BYTE   <LISTNUM,<COMMA_LIST,<LISTCMD,<POP
+	.BYTE   <NODSP_STR,<NODSP_NUM,<NOTRACE,<DSP_NUM
+	.BYTE   <DSP_STR,<TRACE,<PRSLOT,<INSLOT
+
+VERBADRH:
+	.BYTE   >BEGIN_LINE,>$FFFF,>$FFFF,>COLON
+	.BYTE   >LOAD,>SAVE,>CON,>RUNNUM
+	.BYTE   >RUN,>DEL,>COMMA_DEL,>NEW
+	.BYTE   >CLR,>AUTO,>COMMA_AUTO,>MAN
+	.BYTE   >VHIMEM,>VLOMEM,>ADDITION,>SUBTRACT
+	.BYTE   >MULT,>DIVIDE,>HE733,>HE74A
+	.BYTE   >HF25B,>HF24E,>HF253,>HE74A
+	.BYTE   >HF249,>VAND,>VOR,>MOD
+	.BYTE   >EXP,>$FFFF,>HE823,>COMMA_SUBSTR
+	.BYTE   >GOTO,>LET,>HEFB6,>HEBCB
+	.BYTE   >$FFFF,>$FFFF,>PAREN_SUBSTR,>$FFFF
+	.BYTE   >$FFFF,>HEF24,>PEEK,>RNDCMD
+	.BYTE   >SGN,>ABS,>PDL,>$FFFF
+	.BYTE   >HE823,>POSITIVE,>NEGATE,>NOT
+	.BYTE   >HE823,>HE1D7,>HE21C,>LEN
+	.BYTE   >ASC,>SCRN,>COMMA_SCRN,>HE823
+	.BYTE   >$FFFF,>$FFFF,>HE121,>DIMSTR
+	.BYTE   >DIMNUM,>PRNTSTR,>PRNTNUM,>HE820
+	.BYTE   >HEE00,>HE7C1,>HF3BA,>SETTXT
+	.BYTE   >SETGR,>CALL,>DIMSTR,>DIMNUM
+	.BYTE   >TAB,>END,>HEFB6,>INPUT_PROMPT
+	.BYTE   >HEBAA,>FOR,>HE801,>TO
+	.BYTE   >STEP,>NEXT,>NEXT,>RETURN
+	.BYTE   >GOSUB,>$FFFF,>LET,>GOTO
+	.BYTE   >IF,>PRNTSTR,>PRNTNUM,>PRINT_CR
+	.BYTE   >POKE,>GETVAL255,>COLOR,>GETVAL255
+	.BYTE   >COMMA_PLOT,>GETVAL255,>COMMA_HLIN,>AT_HLIN
+	.BYTE   >GETVAL255,>COMMA_VLIN,>AT_VLIN,>IVTAB
+	.BYTE   >HE18C,>HE801,>RIGHT_PAREN,>$FFFF
+	.BYTE   >LISTNUM,>COMMA_LIST,>LISTCMD,>POP
+	.BYTE   >NODSP_STR,>NODSP_NUM,>NOTRACE,>DSP_NUM
+	.BYTE   >DSP_STR,>TRACE,>PRSLOT,>INSLOT
+
+
+ERRMSGTBL:
+
+        .DEFINE LOASC(C) C & %01111111
+
+ERRMSG00 = *-ERRMSGTBL+$8100
+	.BYTE   ">3276",LOASC('7')
+
+ERRMSG01 = *-ERRMSGTBL+$8100
+	.BYTE   "TOO LON",LOASC('G')
+
+ERRMSG02 = *-ERRMSGTBL+$8100
+	.BYTE   "SYNTA",LOASC('X')
+
+ERRMSG03 = *-ERRMSGTBL+$8100
+	.BYTE   "MEM FUL",LOASC('L')
+
+ERRMSG04 = *-ERRMSGTBL+$8100
+	.BYTE   "TOO MANY PAREN",LOASC('S')
+
+ERRMSG05 = *-ERRMSGTBL+$8100
+	.BYTE   "STRIN",LOASC('G')
+
+ERRMSG06 = *-ERRMSGTBL+$8100
+	.BYTE   "NO EN",LOASC('D')
+
+ERRMSG07 = *-ERRMSGTBL+$8100
+	.BYTE   "BAD BRANC",LOASC('H')
+
+ERRMSG08 = *-ERRMSGTBL+$8100
+	.BYTE   "16 GOSUB",LOASC('S')
+
+ERRMSG09 = *-ERRMSGTBL+$8100
+	.BYTE   "BAD RETUR",LOASC('N')
+
+ERRMSG10 = *-ERRMSGTBL+$8100
+	.BYTE   "16 FOR",LOASC('S')
+
+ERRMSG11 = *-ERRMSGTBL+$8100
+	.BYTE   "BAD NEX",LOASC('T')
+
+ERRMSG12 = *-ERRMSGTBL+$8100
+	.BYTE   "STOPPED AT",LOASC(' ')
+
+ERRMSG13 = *-ERRMSGTBL+$8100
+	.BYTE   "***",LOASC(' ')
+
+ERRMSG14 = *-ERRMSGTBL+$8100
+	.BYTE   " ERR",LOASC(CR)
+
+ERRMSG15 = *-ERRMSGTBL+$8100
+	.BYTE   ">25",LOASC('5')
+
+ERRMSG16 = *-ERRMSGTBL+$8100
+	.BYTE   "RANG",LOASC('E')
+
+ERRMSG17 = *-ERRMSGTBL+$8100
+	.BYTE   "DI",LOASC('M')
+
+ERRMSG18 = *-ERRMSGTBL+$8100
+	.BYTE   "STR OVF",LOASC('L')
+
+	.BYTE   "\",LOASC(CR)
+
+ERRMSG20 = *-ERRMSGTBL+$8100
+	.BYTE   "RETYPE LINE",CR,LOASC('?')
+
+LEB9A:  LSR     RUNFLAG
+        BCC     LEBA1
+        JMP     LE8C3
+LEBA1:  LDX     ACC+1
+        TXS
+        LDX     ACC
+        LDY     #$8D
+        BNE     LEBAC
+HEBAA:  LDY     #$99
+LEBAC:  JSR     LE3C4
+        STX     ACC
+        TSX
+        STX     ACC+1
+        JSR     LF366
+        STY     TOKNDX
+        LDA     #$FF
+        STA     TXTNDX
+        ASL     A
+        STA     RUNFLAG
+        LDX     #$20
+        LDA     #$15
+        JSR     LE491
+        INC     RUNFLAG
+        LDX     ACC
+HEBCB:  LDY     TXTNDX
+        ASL     A
+LEBCE:  STA     ACC
+        INY
+        LDA     IN,Y
+        CMP     #$80
+        BEQ     HEBAA
+        EOR     #$B0
+        CMP     #$0A
+        BCS     LEBCE
+        INY
+        INY
+        STY     TXTNDX
+        LDA     IN,Y
+        PHA
+        LDA     STACK+255,Y
+        LDY     #$00
+        JSR     LE708
+        PLA
+        STA     NOUNSTKC,X
+        LDA     ACC
+        CMP     #$33
+        BNE     LEBFA
+        JSR     NEGATE
+LEBFA:  JMP     HE801
+        .BYTE   $FF,$FF,$FF,$50,$20,$4F,$C0,$F4
+        .BYTE   $A1,$E4,$AF,$AD,$F2,$AF,$E4,$AE
+        .BYTE   $A1,$F0,$A5,$B4,$B3,$EF,$B4,$EE
+        .BYTE   $A5,$A8,$B4,$5C,$80,$00,$40,$60
+        .BYTE   $8D,$60,$8B,$7F,$1D,$20,$7E,$8C
+        .BYTE   $33,$00,$00,$60,$03,$BF,$12,$47
+        .BYTE   $83,$AE,$A9,$67,$83,$B2,$B0,$E5
+        .BYTE   $A3,$A1,$B2,$B4,$79,$B0,$B3,$A4
+        .BYTE   $69,$B0,$B3,$A4,$E5,$A3,$A1,$B2
+        .BYTE   $B4,$AF,$AE,$79,$B0,$B3,$A4,$AF
+        .BYTE   $AE,$69,$B0,$B3,$A4,$AF,$AE,$F0
+        .BYTE   $AF,$B0,$F4,$B3,$A9,$AC,$60,$8C
+        .BYTE   $20,$B4,$B3,$A9,$AC,$00,$40,$89
+        .BYTE   $C9,$47,$9D,$17,$68,$9D,$0A,$58
+        .BYTE   $7B,$67,$A2,$A1,$B4,$B6,$67,$B4
+        .BYTE   $A1,$07,$8C,$07,$AE,$A9,$AC,$B6
+        .BYTE   $67,$B4,$A1,$07,$8C,$07,$AE,$A9
+        .BYTE   $AC,$A8,$67,$8C,$07,$B4,$AF,$AC
+        .BYTE   $B0,$67,$9D,$B2,$AF,$AC,$AF,$A3
+        .BYTE   $67,$8C,$07,$A5,$AB,$AF,$B0,$F4
+        .BYTE   $AE,$A9,$B2,$B0,$7F,$0E,$27,$B4
+        .BYTE   $AE,$A9,$B2,$B0,$7F,$0E,$28,$B4
+        .BYTE   $AE,$A9,$B2,$B0,$64,$07,$A6,$A9
+        .BYTE   $67,$AF,$B4,$AF,$A7,$78,$B4,$A5
+        .BYTE   $AC,$6B,$7F,$02,$AD,$A5,$B2,$67
+        .BYTE   $A2,$B5,$B3,$AF,$A7,$EE,$B2,$B5
+        .BYTE   $B4,$A5,$B2,$7E,$8C,$39,$B4,$B8
+        .BYTE   $A5,$AE,$67,$B0,$A5,$B4,$B3,$27
+        .BYTE   $AF,$B4,$07,$9D,$19,$B2,$AF,$A6
+        .BYTE   $7F,$05,$37,$B4,$B5,$B0,$AE,$A9
+        .BYTE   $7F,$05,$28,$B4,$B5,$B0,$AE,$A9
+        .BYTE   $7F,$05,$2A,$B4,$B5,$B0,$AE,$A9
+        .BYTE   $E4,$AE,$A5,$00,$47,$A2,$A1,$B4
+        .BYTE   $7F,$0D,$30,$AD,$A9,$A4,$7F,$0D
+        .BYTE   $23,$AD,$A9,$A4,$67,$AC,$AC,$A1
+        .BYTE   $A3,$F2,$A7,$F4,$B8,$A5,$B4,$00
+        .BYTE   $4D,$CC,$67,$8C,$68,$8C,$DB,$67
+        .BYTE   $9B,$68,$9B,$50,$8C,$63,$8C,$7F
+        .BYTE   $01,$51,$07,$88,$29,$84,$80,$C4
+        .BYTE   $19,$57,$71,$07,$88,$14,$71,$07
+        .BYTE   $8C,$07,$88,$AE,$B2,$A3,$B3,$71
+        .BYTE   $08,$88,$A3,$B3,$A1,$71,$08,$88
+        .BYTE   $AE,$A5,$AC,$68,$83,$08,$68,$9D
+        .BYTE   $08,$71,$07,$88,$60,$75,$B4,$AF
+        .BYTE   $AE,$75,$8D,$75,$8B,$51,$07,$88
+        .BYTE   $19,$B8,$A4,$AE,$B2,$EC,$A4,$B0
+        .BYTE   $F3,$A2,$A1,$EE,$A7,$B3,$E4,$AE
+        .BYTE   $B2,$EB,$A5,$A5,$B0,$51,$07,$88
+        .BYTE   $39,$81,$C1,$4F,$7F,$0F,$2F,$00
+        .BYTE   $51,$06,$88,$29,$C2,$0C,$82,$57
+        .BYTE   $8C,$6A,$8C,$42,$AE,$A5,$A8,$B4
+        .BYTE   $60,$AE,$A5,$A8,$B4,$4F,$7E,$1E
+        .BYTE   $35,$8C,$27,$51,$07,$88,$09,$8B
+        .BYTE   $FE,$E4,$AF,$AD,$F2,$AF,$E4,$AE
+        .BYTE   $A1,$DC,$DE,$9C,$DD,$9C,$DE,$DD
+        .BYTE   $9E,$C3,$DD,$CF,$CA,$CD,$CB,$00
+        .BYTE   $47,$9A,$AD,$A5,$AD,$AF,$AC,$67
+        .BYTE   $9A,$AD,$A5,$AD,$A9,$A8,$EE,$A1
+        .BYTE   $AD,$60,$8C,$20,$AF,$B4,$B5,$A1
+        .BYTE   $F2,$AC,$A3,$F7,$A5,$AE,$60,$8C
+        .BYTE   $20,$AC,$A5,$A4,$EE,$B5,$B2,$60
+        .BYTE   $AE,$B5,$B2,$EE,$AF,$A3,$E5,$B6
+        .BYTE   $A1,$B3,$E4,$A1,$AF,$AC,$7A,$7E
+        .BYTE   $9A,$22,$20,$00,$60,$03,$BF,$60
+        .BYTE   $03,$BF,$1F
+HEE00:  JSR     LE7B1
+PRNTSTR:INX
+        INX
+        LDA     RND+1,X
+        STA     AUX
+        LDA     $77,X
+        STA     AUX+1
+        LDY     RND,X
+LEE0F:  TYA
+        CMP     $76,X
+        BCS     LEE1D
+        LDA     (AUX),Y
+        JSR     COUT
+        INY
+        JMP     LEE0F
+LEE1D:  LDA     #$FF
+        STA     CRFLAG
+        RTS
+LEN:    INX
+        LDA     #$00
+        STA     NOUNSTKH,X
+        STA     NOUNSTKC,X
+        LDA     $77,X
+        SEC
+        SBC     RND+1,X
+        STA     NOUNSTKL,X
+        JMP     HE823
+        .BYTE   $FF
+GETBYTE:JSR     LE715
+        LDA     ACC+1
+        BNE     LEE63
+        LDA     ACC
+        RTS
+COMMA_PLOT:
+        JSR     GETBYTE
+        LDY     TXTNDX
+        CMP     #$30
+        BCS     LEE68
+        CPY     #$28
+        BCS     LEE68
+        JMP     PLOT
+COLOR:  JSR     GETBYTE
+        JMP     SETCOL
+MAN:    LSR     AUTOFLAG
+        RTS
+IVTAB:  JSR     LF3B3
+        CMP     #$18
+        BCS     LEE68
+        STA     CV
+        JMP     VTAB
+LEE63:  LDY     #$77
+LEE65:  JMP     LE3E0
+LEE68:  LDY     #$7B
+        BNE     LEE65
+LEE6C:  JSR     LE254
+        LDA     AUX
+        BNE     LEE7A
+        LDA     AUX+1
+        BNE     LEE7A
+        JMP     LE77E
+LEE7A:  ASL     ACC
+        ROL     ACC+1
+        ROL     P3
+        ROL     P3+1
+        LDA     P3
+        CMP     AUX
+        LDA     P3+1
+        SBC     AUX+1
+        BCC     LEE96
+        STA     P3+1
+        LDA     P3
+        SBC     AUX
+        STA     P3
+        INC     ACC
+LEE96:  DEY
+        BNE     LEE7A
+        RTS
+        .BYTE   $FF
+        .BYTE   $FF
+        .BYTE   $FF
+        .BYTE   $FF
+        .BYTE   $FF
+        .BYTE   $FF
+CALL:   JSR     LE715
+        JMP     (ACC)
+COMMA_HLIN:
+        JSR     GETBYTE
+        CMP     TXTNDX
+        BCC     LEE68
+        STA     H2
+        RTS
+AT_HLIN:JSR     GETBYTE
+        CMP     #$30
+        BCS     LEE68
+        LDY     TXTNDX
+        JMP     HLINE
+COMMA_VLIN:
+        JSR     GETBYTE
+        CMP     TXTNDX
+        BCC     LEE68
+        STA     V2
+        RTS
+AT_VLIN:JSR     GETBYTE
+        CMP     #$28
+LEECB:  BCS     LEE68
+        TAY
+        LDA     TXTNDX
+        JMP     VLINE
+LEED3:  TYA
+        TAX
+        LDY     #$6E
+        JSR     LE3C4
+        TXA
+        TAY
+        JSR     LE3C4
+        LDY     #$72
+        JMP     LF161
+LEEE4:  JSR     LF23F
+LEEE7:  ASL     ACC
+        ROL     ACC+1
+        BMI     LEEE7
+        BCS     LEECB
+        BNE     LEEF5
+        CMP     ACC
+        BCS     LEECB
+LEEF5:  RTS
+PEEK:   JSR     LE715
+        LDA     (ACC),Y
+        STY     SYNSTKL+31,X
+        JMP     LE708
+GETVAL255:
+        JSR     GETBYTE
+        LDA     ACC
+        STA     TXTNDX
+        RTS
+POKE:   JSR     LE715
+        LDA     TXTNDX
+        STA     (ACC),Y
+        RTS
+DIVIDE: JSR     LEE6C
+        LDA     ACC
+        STA     P3
+        LDA     ACC+1
+        STA     P3+1
+        JMP     LE244
+DIMNUM: JSR     LEEE4
+        JMP     LE134
+HEF24:  JSR     LEEE4
+        LDY     NOUNSTKH,X
+        LDA     NOUNSTKL,X
+        ADC     #$FE
+        BCS     LEF30
+        DEY
+LEF30:  STA     AUX
+        STY     AUX+1
+        CLC
+        ADC     ACC
+        STA     NOUNSTKL,X
+        TYA
+        ADC     ACC+1
+        STA     NOUNSTKH,X
+        LDY     #$00
+        LDA     NOUNSTKL,X
+        CMP     (AUX),Y
+        INY
+        LDA     NOUNSTKH,X
+        SBC     (AUX),Y
+        BCS     LEECB
+        JMP     HE823
+RNDCMD: JSR     LE715
+        LDA     RND
+        JSR     LE708
+        LDA     RND+1
+        BNE     LEF5E
+        CMP     RND
+        ADC     #$00
+LEF5E:  AND     #$7F
+        STA     RND+1
+        STA     NOUNSTKC,X
+        LDY     #$11
+LEF66:  LDA     RND+1
+        ASL     A
+        CLC
+        ADC     #$40
+        ASL     A
+        ROL     RND
+        ROL     RND+1
+        DEY
+        BNE     LEF66
+        LDA     ACC
+        JSR     LE708
+        LDA     ACC+1
+        STA     NOUNSTKC,X
+        JMP     MOD
+        JSR     LE715
+        LDY     ACC
+        CPY     LOMEM
+        LDA     ACC+1
+        SBC     LOMEM+1
+        BCC     LEFAB
+        STY     HIMEM
+        LDA     ACC+1
+        STA     HIMEM+1
+LEF93:  JMP     NEW
+        JSR     LE715
+        LDY     ACC
+        CPY     HIMEM
+        LDA     ACC+1
+        SBC     HIMEM+1
+        BCS     LEFAB
+        STY     LOMEM
+        LDA     ACC+1
+        STA     LOMEM+1
+        BCC     LEF93
+LEFAB:  JMP     LEECB
+        .BYTE   $FF
+        .BYTE   $FF
+        .BYTE   $FF
+        .BYTE   $FF
+        .BYTE   $FF
+        .BYTE   $FF
+        .BYTE   $FF
+        .BYTE   $FF
+HEFB6:  JSR     INPUTSTR
+        JMP     LEFBF
+INPUT_PROMPT:
+        JSR     PRNTSTR
+LEFBF:  LDA     #$FF
+        STA     TXTNDX
+        LDA     #$80
+        STA     IN
+        RTS
+LEFC9:  JSR     NOT
+        INX
+LEFCD:  JSR     NOT
+        LDA     NOUNSTKL,X
+        RTS
+OLDCOLD:LDA     #$00
+        STA     LOMEM
+        STA     HIMEM
+        LDA     #$08
+        STA     LOMEM+1
+        LDA     #$10
+        STA     HIMEM+1
+        JMP     NEW
+LEFE4:  CMP     NOUNSTKH,X
+        BNE     LEFE9
+        CLC
+LEFE9:  JMP     LE102
+RUN:    JSR     CLR
+        JMP     LE836
+RUNNUM: JSR     CLR
+        JMP     GOTO
+LEFF8:  CPX     #$80
+        BNE     LEFFD
+        DEY
+LEFFD:  JMP     LE00C
+COLD:   LDY     #$00
+        STY     NOUNSTKC
+        STY     LOMEM
+        STY     HIMEM
+        LDA     #$08
+        STA     LOMEM+1
+        STA     HIMEM+1
+LF00E:  INC     HIMEM+1
+        LDA     (HIMEM),Y
+        EOR     #$FF
+        STA     (HIMEM),Y
+        CMP     (HIMEM),Y
+        BNE     LF022
+        EOR     #$FF
+        STA     (HIMEM),Y
+        CMP     (HIMEM),Y
+        BEQ     LF00E
+LF022:  JMP     NEW
+LF025:  JMP     LF179
+        JSR     LF032
+        JMP     LE8BE
+LF02E:  LDX     PX
+        LDA     PX+1
+LF032:  LDY     KBD
+        CPY     #$83
+        BNE     LF025
+        BIT     KBDSTRB
+        STX     NOUNSTKL
+        STA     NOUNSTKL+1
+        LDA     PR
+        STA     NOUNSTKH
+        LDA     PR+1
+        STA     NOUNSTKH+1
+        JMP     LE8C3
+        .BYTE   $FF
+        .BYTE   $FF
+VHIMEM: JSR     LE715
+        STX     XSAVE
+        LDX     #$FE
+        SEC
+LF055:  LDA     SRCH,X
+        STA     P3,X
+        LDA     RND,X
+        SBC     SRCH,X
+        STA     PR,X
+        INX
+        BNE     LF055
+        BCC     LF0AF
+        DEX
+LF065:  LDA     PP+1,X
+        STA     P3+1,X
+        SBC     AUX+1,X
+        STA     P2+1,X
+        INX
+        BEQ     LF065
+        BCC     LF07C
+        LDA     PV
+        CMP     P2
+        LDA     PV+1
+        SBC     P2+1
+        BCC     LF08F
+LF07C:  JMP     LE36B
+LF07F:  LDA     (P3),Y
+        STA     (P2),Y
+        INC     P2
+        BNE     LF089
+        INC     P2+1
+LF089:  INC     P3
+        BNE     LF08F
+        INC     P3+1
+LF08F:  LDA     P3
+        CMP     HIMEM
+        LDA     P3+1
+        SBC     HIMEM+1
+        BCC     LF07F
+LF099:  LDX     #$FE
+LF09B:  LDA     P3,X
+        STA     RND,X
+        LDA     PV,X
+        SBC     PR,X
+        STA     PV,X
+        INX
+        BNE     LF09B
+        LDX     XSAVE
+        RTS
+LF0AB:  LDA     (HIMEM),Y
+        STA     (ACC),Y
+LF0AF:  LDA     ACC
+        BNE     LF0B5
+        DEC     ACC+1
+LF0B5:  DEC     ACC
+        LDA     HIMEM
+        BNE     LF0BD
+        DEC     HIMEM+1
+LF0BD:  DEC     HIMEM
+        CMP     PP
+        LDA     HIMEM+1
+        SBC     PP+1
+        BCC     LF0AB
+        BCS     LF099
+VLOMEM: JSR     LE715
+        LDY     ACC
+        CPY     #$CA
+        LDA     ACC+1
+        SBC     PP+1
+LF0D4:  BCS     LF07C
+        STY     LOMEM
+        LDA     ACC+1
+        STA     LOMEM+1
+        JMP     CLR
+LOAD:   STX     XSAVE
+        JSR     LF11E
+        JSR     READ
+        LDX     #$FF
+        SEC
+LF0EA:  LDA     HIMEM+1,X
+        SBC     ACC+1,X
+        STA     AUX+1,X
+        INX
+        BEQ     LF0EA
+        BCC     LF07C
+        LDA     PV
+        CMP     AUX
+        LDA     PV+1
+        SBC     AUX+1
+        BCS     LF0D4
+        LDA     ACC
+        BNE     LF107
+        LDA     ACC+1
+        BEQ     LF118
+LF107:  LDA     AUX
+        STA     PP
+        LDA     AUX+1
+        STA     PP+1
+        JSR     LF12C
+        JSR     READ
+LF115:  LDX     XSAVE
+        RTS
+LF118:  JSR     BELL
+        JMP     LF115
+LF11E:  LDY     #$CE
+        STY     A1
+        INY
+        STY     A2
+        LDY     #$00
+        STY     $3D
+        STY     $3F
+        RTS
+LF12C:  LDA     PP,X
+        STA     A1,X
+        LDY     HIMEM,X
+        STY     A2,X
+        DEX
+        BPL     LF12C
+        LDA     A2
+        BNE     LF13D
+        DEC     $3F
+LF13D:  DEC     A2
+        RTS
+        STX     XSAVE
+SAVE:   SEC
+        LDX     #$FF
+LF145:  LDA     HIMEM+1,X
+        SBC     PP+1,X
+        STA     ACC+1,X
+        INX
+        BEQ     LF145
+        JSR     LF11E
+        JSR     WRITE
+        LDX     #$01
+        JSR     LF12C
+        LDA     #$1A
+        JSR     WRITE0
+        LDX     XSAVE
+        RTS
+LF161:  JSR     LE3C4
+        JMP     BELL
+POP:    LDA     GOSUBNDX
+        BNE     LF16E
+        JMP     RETURN
+LF16E:  DEC     GOSUBNDX
+        RTS
+TRACE:  LDA     #$FF
+        STA     NOUNSTKC
+        RTS
+NOTRACE:LSR     NOUNSTKC
+        RTS
+LF179:  BIT     NOUNSTKC
+        BPL     LF196
+LF17D:  LDA     #$A3
+        JSR     COUT
+        LDY     #$01
+        LDA     (PR),Y
+        TAX
+        INY
+        LDA     (PR),Y
+        JSR     LE51B
+        LDA     #$A0
+        JMP     COUT
+        LDA     PR
+        LDY     PR+1
+LF196:  RTS
+SYNTABLNDX:
+        .BYTE   $C1,$00,$7F,$D1,$CC,$C7,$CF,$CE
+        .BYTE   $C5,$9A,$98,$8D,$96,$95,$93,$BF
+        .BYTE   $B2,$32,$12,$0F,$BC,$B0,$AC,$BE
+        .BYTE   $35,$0C,$61,$30,$10,$0B,$DD,$FB
+LF1B7:  LDY     #$00
+        JSR     LE7C7
+        LDA     #$A0
+        JMP     COUT
+        .BYTE   $00,$00,$00,$00,$00,$00,$00,$00
+LF1C9:  LDY     LOMEM
+        LDA     LOMEM+1
+LF1CD:  PHA
+        CPY     AUX
+        SBC     AUX+1
+        BCS     LF1F0
+        PLA
+        STY     SRCH
+        STA     TOKNDXSTK
+        LDY     #$FF
+LF1DB:  INY
+        LDA     (SRCH),Y
+        BMI     LF1DB
+        CMP     #$40
+        BEQ     LF1DB
+        INY
+        INY
+        LDA     (SRCH),Y
+        PHA
+        DEY
+        LDA     (SRCH),Y
+        TAY
+        PLA
+        BNE     LF1CD
+LF1F0:  PLA
+        LDY     #$00
+LF1F3:  LDA     (SRCH),Y
+        BMI     LF1FC
+        LSR     A
+        BEQ     LF202
+        LDA     #$A4
+LF1FC:  JSR     COUT
+        INY
+        BNE     LF1F3
+LF202:  LDA     #$BD
+        JMP     COUT
+LF207:  STA     (AUX),Y
+        INX
+        LDA     SYNSTKL+31,X
+        BEQ     LF23E
+        JMP     LF3D5
+        .BYTE   $A0
+LF212:  BMI     LF21B
+        LDA     PR
+        LDY     PR+1
+        JSR     LF17D
+LF21B:  JSR     LF1C9
+        LDX     XSAVE
+        JMP     LF1B7
+LF223:  INX
+        INX
+        LDA     SYNSTKL+31,X
+        BEQ     LF248
+        JMP     LF3E0
+LF22C:  BMI     LF235
+        LDA     PR
+        LDY     PR+1
+        JSR     LF17D
+LF235:  JSR     LF1C9
+        LDX     XSAVE
+        JMP     LF409
+        INX
+LF23E:  RTS
+LF23F:  JSR     LE715
+        INC     ACC
+        BNE     LF248
+        INC     ACC+1
+LF248:  RTS
+HF249:  JSR     HF25B
+        BNE     LF263
+HF24E:  JSR     HF253
+        BNE     LF263
+HF253:  JSR     SUBTRACT
+        JSR     NEGATE
+        BVC     LF25E
+HF25B:  JSR     SUBTRACT
+LF25E:  JSR     SGN
+        LSR     NOUNSTKL,X
+LF263:  JMP     NOT
+VAND:   JSR     LEFC9
+        ORA     RND+1,X
+        BPL     LF272
+VOR:    JSR     LEFC9
+        AND     RND+1,X
+LF272:  STA     NOUNSTKL,X
+        BPL     LF263
+        JMP     LEFC9
+STEP:   JSR     LE715
+        LDY     FORNDX
+        LDA     ACC
+        STA     STACK+95,Y
+        LDA     ACC+1
+        JMP     LE966
+LF288:  STA     STACK+80,Y
+LF28B:  DEY
+        BMI     LF2DF
+        LDA     STACK+64,Y
+        CMP     NOUNSTKL,X
+        BNE     LF28B
+        LDA     STACK+80,Y
+        CMP     NOUNSTKH,X
+        BNE     LF28B
+        DEC     FORNDX
+LF29E:  LDA     STACK+65,Y
+        STA     STACK+64,Y
+        LDA     STACK+81,Y
+        STA     STACK+80,Y
+        LDA     STACK+193,Y
+        STA     STACK+192,Y
+        LDA     STACK+209,Y
+        STA     STACK+208,Y
+        LDA     STACK+97,Y
+        STA     STACK+96,Y
+        LDA     STACK+113,Y
+        STA     STACK+112,Y
+        LDA     STACK+129,Y
+        STA     STACK+128,Y
+        LDA     STACK+145,Y
+        STA     STACK+144,Y
+        LDA     STACK+161,Y
+        STA     STACK+160,Y
+        LDA     STACK+161,Y
+        STA     STACK+160,Y
+        INY
+        CPY     FORNDX
+        BCC     LF29E
+LF2DF:  RTS
+NODSP_STR:
+        INX
+NODSP_NUM:
+        LDA     #$00
+LF2E3:  PHA
+        LDA     NOUNSTKL,X
+        SEC
+        SBC     #$03
+        STA     ACC
+        LDA     NOUNSTKH,X
+        SBC     #$00
+        STA     ACC+1
+        PLA
+        LDY     #$00
+        STA     (ACC),Y
+        INX
+        RTS
+LF2F8:  CMP     #$85
+        BCS     LF2FF
+        JMP     LE4C0
+LF2FF:  LDY     #$02
+        JMP     LE448
+DSP_NUM:INX
+DSP_STR:LDA     #$01
+        BNE     LF2E3
+        INX
+CON:    LDA     NOUNSTKH
+        STA     PR
+        LDA     NOUNSTKH+1
+        STA     PR+1
+        LDA     NOUNSTKL
+        LDY     NOUNSTKL+1
+        JMP     LE875
+        LDA     #$01
+        BNE     LF2E3
+ASC:    LDA     NOUNSTKL,X
+        CMP     NOUNSTKH,X
+        BCC     LF326
+        JMP     LEE68
+LF326:  TAY
+        LDA     NOUNSTKL+1,X
+        STA     ACC
+        LDA     NOUNSTKH+1,X
+        STA     ACC+1
+        LDA     (ACC),Y
+        LDY     #$00
+        INX
+        INX
+        JSR     LE708
+        JMP     LF404
+PDL:    JSR     GETBYTE
+        STX     XSAVE
+        AND     #$03
+        TAX
+        JSR     PREAD
+        LDX     XSAVE
+        TYA
+        LDY     #$00
+        JSR     LE708
+        STY     NOUNSTKC,X
+        RTS
+LF351:  JSR     NXTCHAR
+LF354:  TXA
+        PHA
+LF356:  LDA     IN,X
+        CMP     #$83
+        BNE     LF360
+        JMP     BASIC2
+LF360:  DEX
+        BPL     LF356
+        PLA
+        TAX
+        RTS
+LF366:  JSR     LE280
+        TYA
+        TAX
+        JSR     LF354
+        TXA
+        TAY
+        RTS
+EXP:    JSR     LE715
+        LDA     ACC+1
+        BPL     LF380
+        TYA
+        DEX
+        JSR     LE708
+        STY     NOUNSTKC,X
+LF37F:  RTS
+LF380:  STA     TOKNDXSTK
+        LDA     ACC
+        STA     SRCH
+        JSR     LE715
+        LDA     ACC
+        STA     SRCH2
+        LDA     ACC+1
+        STA     SRCH2+1
+        LDA     #$01
+        JSR     LE708
+        STY     NOUNSTKC,X
+LF398:  LDA     SRCH
+        BNE     LF3A0
+        DEC     TOKNDXSTK
+        BMI     LF37F
+LF3A0:  DEC     SRCH
+        LDA     SRCH2
+        LDY     #$00
+        JSR     LE708
+        LDA     SRCH2+1
+        STA     NOUNSTKC,X
+        JSR     MULT
+        JMP     LF398
+LF3B3:  JSR     GETBYTE
+        CLC
+        ADC     #$FF
+LF3B9:  RTS
+HF3BA:  JSR     LE7B1
+        LSR     CRFLAG
+        RTS
+        STX     RUNFLAG
+        TXS
+        JSR     LF02E
+        JMP     LE883
+PRSLOT: JSR     GETBYTE
+        STX     XSAVE
+        JSR     OUTPORT
+        LDX     XSAVE
+        RTS
+        .BYTE   $FE
+LF3D5:  BIT     RUNFLAG
+        BPL     LF3B9
+        STX     XSAVE
+        BIT     NOUNSTKC
+        JMP     LF212
+LF3E0:  BIT     RUNFLAG
+        BPL     LF3B9
+        STX     XSAVE
+        BIT     NOUNSTKC
+        JMP     LF22C
+LF3EB:  LDY     #$00
+        JMP     LE6FF
+LF3F0:  TAY
+        JSR     CROUT
+LF3F4:  TYA
+        SEC
+        SBC     WNDWDTH
+        BCS     LF3F0
+        STY     CH
+        RTS
+        BRK
+        BRK
+        BRK
+        .BYTE   $FF
+        .BYTE   $FF
+        .BYTE   $FF
+        .BYTE   $FF
+LF404:  STY     NOUNSTKC,X
+        JMP     HE823
+LF409:  LDY     #$00
+        BEQ     LF411
+LF40D:  JSR     COUT
+        INY
+LF411:  LDA     (AUX),Y
+        BMI     LF40D
+        LDA     #$FF
+        STA     CRFLAG
+        RTS
+INSLOT: JSR     GETBYTE
+        STX     XSAVE
+        JSR     INPORT
+        LDX     XSAVE
+        RTS

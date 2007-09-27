@@ -1,0 +1,9 @@
+MEMORY
+{
+	INTROM: start = $E000, size = $1800, file = "intbasic.exe";
+}
+
+SEGMENTS
+{
+	CODE: load = INTROM, type = ro;
+}
