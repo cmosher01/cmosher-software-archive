@@ -1,6 +1,6 @@
 MEMORY
 {
-	A2ROM: start=$E000, size=$1800, file="A2.ROM";
+	A2ROM: start=$E000, size=$1800, file="bin\A2.ROM";
 }
 
 SEGMENTS
