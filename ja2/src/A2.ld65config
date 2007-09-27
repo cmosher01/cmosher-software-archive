@@ -1,0 +1,22 @@
+MEMORY
+{
+	A2ROM: start=$E000, size=$1800, file="A2.ROM";
+}
+
+SEGMENTS
+{
+	CODE: load=A2ROM, type=RO;
+}
+
+#
+# E000.E424 INTBASIC Integer BASIC
+# F425.F4FB FP1      Floating-point routines
+# F4FC.F4FF FP1      unused
+# F500.F63C MINIASM1 Mini-assembler
+# F63D.F65D FP2      Floating-point routines
+# F65E.F665 FP2      unused
+# F666.F668 MINIASM2 Mini-assembler entry-point
+# F669.F688 F669     Get-slot-number routine
+# F689.F7FC SWEET16  Sweet-16 processor
+# F7FD.F7FF SWEET16  unused
+#
