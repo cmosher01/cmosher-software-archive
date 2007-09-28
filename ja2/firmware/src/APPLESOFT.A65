@@ -4,7 +4,7 @@
                                                     ; disassembled by (unknown)
                                                     ; fixed by Chris Mosher
                                                     ; 
-                                                    ; Intended for the cc65 Assembler (da65)
+                                                    ; for the cc65.org Assembler (ca65)
                                                     ; --------------------------------
                     .EXPORT BASIC
                     .EXPORT BASIC2
