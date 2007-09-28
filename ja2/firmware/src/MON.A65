@@ -1,109 +1,124 @@
-***************************
-*                         *
-*        APPLE II         *
-*     SYSTEM MONITOR      *
-*                         *
-*    COPYRIGHT 1977 BY    *
-*   APPLE COMPUTER, INC.  *
-*                         *
-*   ALL RIGHTS RESERVED   *
-*                         *
-*       S. WOZNIAK        *
-*        A. BAUM          *
-*                         *
-***************************
-                          ; TITLE "APPLE II SYSTEM MONITOR"
-LOC0     EQU   $00
-LOC1     EQU   $01
-WNDLFT   EQU   $20
-WNDWDTH  EQU   $21
-WNDTOP   EQU   $22
-WNDBTM   EQU   $23
-CH       EQU   $24
-CV       EQU   $25
-GBASL    EQU   $26
-GBASH    EQU   $27
-BASL     EQU   $28
-BASH     EQU   $29
-BAS2L    EQU   $2A
-BAS2H    EQU   $2B
-H2       EQU   $2C
-LMNEM    EQU   $2C
-RTNL     EQU   $2C
-V2       EQU   $2D
-RMNEM    EQU   $2D
-RTNH     EQU   $2D
-MASK     EQU   $2E
-CHKSUM   EQU   $2E
-FORMAT   EQU   $2E
-LASTIN   EQU   $2F
-LENGTH   EQU   $2F
-SIGN     EQU   $2F
-COLOR    EQU   $30
-MODE     EQU   $31
-INVFLG   EQU   $32
-PROMPT   EQU   $33
-YSAV     EQU   $34
-YSAV1    EQU   $35
-CSWL     EQU   $36
-CSWH     EQU   $37
-KSWL     EQU   $38
-KSWH     EQU   $39
-PCL      EQU   $3A
-PCH      EQU   $3B
-XQT      EQU   $3C
-A1L      EQU   $3C
-A1H      EQU   $3D
-A2L      EQU   $3E
-A2H      EQU   $3F
-A3L      EQU   $40
-A3H      EQU   $41
-A4L      EQU   $42
-A4H      EQU   $43
-A5L      EQU   $44
-A5H      EQU   $45
-ACC      EQU   $45
-XREG     EQU   $46
-YREG     EQU   $47
-STATUS   EQU   $48
-SPNT     EQU   $49
-RNDL     EQU   $4E
-RNDH     EQU   $4F
-ACL      EQU   $50
-ACH      EQU   $51
-XTNDL    EQU   $52
-XTNDH    EQU   $53
-AUXL     EQU   $54
-AUXH     EQU   $55
-PICK     EQU   $95
-IN       EQU   $0200
-USRADR   EQU   $03F8
-NMI      EQU   $03FB
-IRQLOC   EQU   $03FE
-IOADR    EQU   $C000
-KBD      EQU   $C000
-KBDSTRB  EQU   $C010
-TAPEOUT  EQU   $C020
-SPKR     EQU   $C030
-TXTCLR   EQU   $C050
-TXTSET   EQU   $C051
-MIXCLR   EQU   $C052
-MIXSET   EQU   $C053
-LOWSCR   EQU   $C054
-HISCR    EQU   $C055
-LORES    EQU   $C056
-HIRES    EQU   $C057
-TAPEIN   EQU   $C060
-PADDL0   EQU   $C064
-PTRIG    EQU   $C070
-BASIC    EQU   $E000
-BASIC2   EQU   $E003
+                          ; ***************************
+                          ; *                         *
+                          ; *        APPLE II         *
+                          ; *     SYSTEM MONITOR      *
+                          ; *                         *
+                          ; *    COPYRIGHT 1977 BY    *
+                          ; *   APPLE COMPUTER, INC.  *
+                          ; *                         *
+                          ; *   ALL RIGHTS RESERVED   *
+                          ; *                         *
+                          ; *       S. WOZNIAK        *
+                          ; *        A. BAUM          *
+                          ; *                         *
+                          ; ***************************
+
+         .FEATURE LABELS_WITHOUT_COLONS
+         .INCLUDE "CMAP2.A65"
+
+LOC0     =     $00
+LOC1     =     $01
+WNDLFT   =     $20
+WNDWDTH  =     $21
+WNDTOP   =     $22
+WNDBTM   =     $23
+CH       =     $24
+CV       =     $25
+GBASL    =     $26
+GBASH    =     $27
+BASL     =     $28
+BASH     =     $29
+BAS2L    =     $2A
+BAS2H    =     $2B
+H2       =     $2C
+LMNEM    =     $2C
+RTNL     =     $2C
+V2       =     $2D
+RMNEM    =     $2D
+RTNH     =     $2D
+MASK     =     $2E
+CHKSUM   =     $2E
+FORMAT   =     $2E
+LASTIN   =     $2F
+LENGTH   =     $2F
+SIGN     =     $2F
+COLOR    =     $30
+MODE     =     $31
+INVFLG   =     $32
+PROMPT   =     $33
+YSAV     =     $34
+YSAV1    =     $35
+CSWL     =     $36
+CSWH     =     $37
+KSWL     =     $38
+KSWH     =     $39
+PCL      =     $3A
+PCH      =     $3B
+XQT      =     $3C
+A1L      =     $3C
+A1H      =     $3D
+A2L      =     $3E
+A2H      =     $3F
+A3L      =     $40
+A3H      =     $41
+A4L      =     $42
+A4H      =     $43
+A5L      =     $44
+A5H      =     $45
+ACC      =     $45
+XREG     =     $46
+YREG     =     $47
+STATUS   =     $48
+SPNT     =     $49
+RNDL     =     $4E
+RNDH     =     $4F
+ACL      =     $50
+ACH      =     $51
+XTNDL    =     $52
+XTNDH    =     $53
+AUXL     =     $54
+AUXH     =     $55
+PICK     =     $95
+
+IN       =     $0200
+
+USRADR   =     $03F8
+NMI      =     $03FB
+IRQLOC   =     $03FE
+
+IOADR    =     $C000
+KBD      =     $C000
+KBDSTRB  =     $C010
+TAPEOUT  =     $C020
+SPKR     =     $C030
+TXTCLR   =     $C050
+TXTSET   =     $C051
+MIXCLR   =     $C052
+MIXSET   =     $C053
+LOWSCR   =     $C054
+HISCR    =     $C055
+LORES    =     $C056
+HIRES    =     $C057
+TAPEIN   =     $C060
+PADDL0   =     $C064
+PTRIG    =     $C070
+
+BASIC    =     $E000
+BASIC2   =     $E003
+
+                          ; ASCII
+CTRL_B   =     $02|%10000000
+CTRL_C   =     $03|%10000000
+CTRL_E   =     $05|%10000000
+CTRL_K   =     $0B|%10000000
+CRHI     =     $0D|%10000000
+CTRL_P   =     $10|%10000000
+CTRL_Y   =     $19|%10000000
+SPHI     =     ' '
 
 
 
 
-
-         ORG   $F800      ;ROM START ADDRESS
 PLOT     LSR   A          ;Y-COORD/2
          PHP              ;SAVE LSB IN CARRY
          JSR   GBASCALC   ;CALC BASE ADR IN GBASL,H
@@ -237,7 +252,7 @@ MNNDX3   DEY
 
 
 
-         DB    $FF,$FF,$FF
+         .BYTE $FF,$FF,$FF
 
 
 
@@ -266,7 +281,7 @@ PRMN2    ASL   RMNEM      ;SHIFT 5 BITS OF
          ROL   A          ;    (CLEARS CARRY)
          DEY
          BNE   PRMN2
-         ADC   #$BF       ;ADD "?" OFFSET
+         ADC   #'?'       ;ADD "?" OFFSET
          JSR   COUT       ;OUTPUT A CHAR OF MNEM
          DEX
          BNE   PRMN1
@@ -302,7 +317,7 @@ PRNTAX   JSR   PRBYTE     ;OUTPUT TARGET ADR
 PRNTX    TXA              ;  OF BRANCH AND RETURN
          JMP   PRBYTE
 PRBLNK   LDX   #$03       ;BLANK COUNT
-PRBL2    LDA   #$A0       ;LOAD A SPACE
+PRBL2    LDA   #' '       ;LOAD A SPACE
 PRBL3    JSR   COUT       ;OUTPUT A BLANK
          DEX
          BNE   PRBL2      ;LOOP UNTIL COUNT=0
@@ -317,116 +332,96 @@ PCADJ4   ADC   PCL
          BCC   RTS2       ;PCL+LENGTH(OR DISPL)+1 TO A
          INY              ;  CARRY INTO Y (PCH)
 RTS2     RTS
-* FMT1 BYTES:    XXXXXXY0 INSTRS
-* IF Y=0         THEN LEFT HALF BYTE
-* IF Y=1         THEN RIGHT HALF BYTE
-*                   (X=INDEX)
-FMT1     DB    $04,$20,$54,$30,$0D
+                          ; * FMT1 BYTES:    XXXXXXY0 INSTRS
+                          ; * IF Y=0         THEN LEFT HALF BYTE
+                          ; * IF Y=1         THEN RIGHT HALF BYTE
+                          ; *                   (X=INDEX)
+FMT1     .BYTE $04,$20,$54,$30,$0D
+         .BYTE $80,$04,$90,$03,$22
+         .BYTE $54,$33,$0D,$80,$04
+         .BYTE $90,$04,$20,$54,$33
+         .BYTE $0D,$80,$04,$90,$04
+         .BYTE $20,$54,$3B,$0D,$80
+         .BYTE $04,$90,$00,$22,$44
+         .BYTE $33,$0D,$C8,$44,$00
+         .BYTE $11,$22,$44,$33,$0D
+         .BYTE $C8,$44,$A9,$01,$22
+         .BYTE $44,$33,$0D,$80,$04
+         .BYTE $90,$01,$22,$44,$33
+         .BYTE $0D,$80,$04,$90
+         .BYTE $26,$31,$87,$9A ;$ZZXXXY01 INSTR'S
 
-         DB    $80,$04,$90,$03,$22
-
-         DB    $54,$33,$0D,$80,$04
-
-         DB    $90,$04,$20,$54,$33
-
-         DB    $0D,$80,$04,$90,$04
-
-         DB    $20,$54,$3B,$0D,$80
-
-         DB    $04,$90,$00,$22,$44
-
-         DB    $33,$0D,$C8,$44,$00
-
-         DB    $11,$22,$44,$33,$0D
-
-         DB    $C8,$44,$A9,$01,$22
-
-         DB    $44,$33,$0D,$80,$04
-
-         DB    $90,$01,$22,$44,$33
-
-         DB    $0D,$80,$04,$90
-
-         DB    $26,$31,$87,$9A ;$ZZXXXY01 INSTR'S
-
-FMT2     DB    $00        ;ERR
-         DB    $21        ;IMM
-         DB    $81        ;Z-PAGE
-         DB    $82        ;ABS
-         DB    $00        ;IMPLIED
-         DB    $00        ;ACCUMULATOR
-         DB    $59        ;(ZPAG,X)
-         DB    $4D        ;(ZPAG),Y
-         DB    $91        ;ZPAG,X
-         DB    $92        ;ABS,X
-         DB    $86        ;ABS,Y
-         DB    $4A        ;(ABS)
-         DB    $85        ;ZPAG,Y
-         DB    $9D        ;RELATIVE
+FMT2     .BYTE $00        ;ERR
+         .BYTE $21        ;IMM
+         .BYTE $81        ;Z-PAGE
+         .BYTE $82        ;ABS
+         .BYTE $00        ;IMPLIED
+         .BYTE $00        ;ACCUMULATOR
+         .BYTE $59        ;(ZPAG,X)
+         .BYTE $4D        ;(ZPAG),Y
+         .BYTE $91        ;ZPAG,X
+         .BYTE $92        ;ABS,X
+         .BYTE $86        ;ABS,Y
+         .BYTE $4A        ;(ABS)
+         .BYTE $85        ;ZPAG,Y
+         .BYTE $9D        ;RELATIVE
 CHAR1
-         CMAP     " ",160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191
-         CMAP     "@",192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223
-         CMAP     "`",224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255
-         DB    ",),#($"
-         CMAP
+         .BYTE ",),#($"
 
-CHAR2    DB    $D9,$00,$D8,$A4,$A4,$00
+CHAR2    .ASCIIZ "Y"
+         .ASCIIZ "X$$"
 
-*CHAR2: "Y",0,"X$$",0
-* MNEML IS OF FORM:
-*  (A) XXXXX000
-*  (B) XXXYY100
-*  (C) 1XXX1010
-*  (D) XXXYYY10
-*  (E) XXXYYY01
-*      (X=INDEX)
-MNEML    DB    $1C,$8A,$1C,$23,$5D,$8B
 
-         DB    $1B,$A1,$9D,$8A,$1D,$23
 
-         DB    $9D,$8B,$1D,$A1,$00,$29
+                          ; * MNEML IS OF FORM:
+                          ; *  (A) XXXXX000
+                          ; *  (B) XXXYY100
+                          ; *  (C) 1XXX1010
+                          ; *  (D) XXXYYY10
+                          ; *  (E) XXXYYY01
+                          ; *      (X=INDEX)
+MNEML    .BYTE $1C,$8A,$1C,$23,$5D,$8B
+         .BYTE $1B,$A1,$9D,$8A,$1D,$23
+         .BYTE $9D,$8B,$1D,$A1,$00,$29
+         .BYTE $19,$AE,$69,$A8,$19,$23
+         .BYTE $24,$53,$1B,$23,$24,$53
+         .BYTE $19,$A1    ;(A) FORMAT ABOVE
 
-         DB    $19,$AE,$69,$A8,$19,$23
+         .BYTE $00,$1A,$5B,$5B,$A5,$69
+         .BYTE $24,$24    ;(B) FORMAT
 
-         DB    $24,$53,$1B,$23,$24,$53
+         .BYTE $AE,$AE,$A8,$AD,$29,$00
+         .BYTE $7C,$00    ;(C) FORMAT
 
-         DB    $19,$A1    ;(A) FORMAT ABOVE
-         DB    $00,$1A,$5B,$5B,$A5,$69
+         .BYTE $15,$9C,$6D,$9C,$A5,$69
+         .BYTE $29,$53    ;(D) FORMAT
 
-         DB    $24,$24    ;(B) FORMAT
-         DB    $AE,$AE,$A8,$AD,$29,$00
+         .BYTE $84,$13,$34,$11,$A5,$69
+         .BYTE $23,$A0    ;(E) FORMAT
 
-         DB    $7C,$00    ;(C) FORMAT
-         DB    $15,$9C,$6D,$9C,$A5,$69
+MNEMR    .BYTE $D8,$62,$5A,$48,$26,$62
+         .BYTE $94,$88,$54,$44,$C8,$54
+         .BYTE $68,$44,$E8,$94,$00,$B4
+         .BYTE $08,$84,$74,$B4,$28,$6E
+         .BYTE $74,$F4,$CC,$4A,$72,$F2
+         .BYTE $A4,$8A    ;(A) FORMAT
 
-         DB    $29,$53    ;(D) FORMAT
-         DB    $84,$13,$34,$11,$A5,$69
+         .BYTE $00,$AA,$A2,$A2,$74,$74
+         .BYTE $74,$72    ;(B) FORMAT
 
-         DB    $23,$A0    ;(E) FORMAT
-MNEMR    DB    $D8,$62,$5A,$48,$26,$62
+         .BYTE $44,$68,$B2,$32,$B2,$00
+         .BYTE $22,$00    ;(C) FORMAT
 
-         DB    $94,$88,$54,$44,$C8,$54
+         .BYTE $1A,$1A,$26,$26,$72,$72
+         .BYTE $88,$C8    ;(D) FORMAT
 
-         DB    $68,$44,$E8,$94,$00,$B4
+         .BYTE $C4,$CA,$26,$48,$44,$44
+         .BYTE $A2,$C8    ;(E) FORMAT
 
-         DB    $08,$84,$74,$B4,$28,$6E
+         .BYTE $FF,$FF,$FF
 
-         DB    $74,$F4,$CC,$4A,$72,$F2
 
-         DB    $A4,$8A    ;(A) FORMAT
-         DB    $00,$AA,$A2,$A2,$74,$74
 
-         DB    $74,$72    ;(B) FORMAT
-         DB    $44,$68,$B2,$32,$B2,$00
-
-         DB    $22,$00    ;(C) FORMAT
-         DB    $1A,$1A,$26,$26,$72,$72
-
-         DB    $88,$C8    ;(D) FORMAT
-         DB    $C4,$CA,$26,$48,$44,$44
-
-         DB    $A2,$C8    ;(E) FORMAT
-         DB    $FF,$FF,$FF
 STEP     JSR   INSTDSP    ;DISASSEMBLE ONE INST
          PLA              ;  AT (PCL,H)
          STA   RTNL       ;ADJUST TO USER
@@ -510,16 +505,16 @@ RTNJMP   LDA   RTNH
          LDA   RTNL
          PHA
 REGDSP   JSR   CROUT      ;DISPLAY USER REG
-RGDSP1   LDA   #ACC       ;  CONTENTS WITH
+RGDSP1   LDA   #<ACC       ;  CONTENTS WITH
          STA   A3L        ;  LABELS
-         LDA   #ACC/256
+         LDA   #>ACC
          STA   A3H
          LDX   #$FB
-RDSP1    LDA   #$A0
+RDSP1    LDA   #' '
          JSR   COUT
          LDA   RTBL-$FB,X
          JSR   COUT
-         LDA   #$BD
+         LDA   #'='
          JSR   COUT
          LDA   ACC+5,X
          JSR   PRBYTE
@@ -541,11 +536,11 @@ INITBL   NOP
          NOP              ;DUMMY FILL FOR
          JMP   NBRNCH     ;  XEQ AREA
          JMP   BRANCH
-RTBL     DB    $C1
-         DB    $D8
-         DB    $D9
-         DB    $D0
-         DB    $D3
+RTBL     .BYTE $C1
+         .BYTE $D8
+         .BYTE $D9
+         .BYTE $D0
+         .BYTE $D3
 PREAD    LDA   PTRIG      ;TRIGGER PADDLES
          LDY   #$00       ;INIT COUNT
          NOP              ;COMPENSATE FOR 1ST COUNT
@@ -590,8 +585,8 @@ MUL3     LDA   XTNDL+2,X  ;ADD MPLCND (AUX)
          INX
          BNE   MUL3
 MUL4     LDX   #$03
-MUL5     DB    $76
-         DB    $50
+MUL5     .BYTE $76
+         .BYTE $50
          DEX
          BPL   MUL5
          DEY
@@ -850,7 +845,7 @@ NOTCR    LDA   INVFLG
          JSR   BELL       ;  YES, SOUND BELL
 NOTCR1   INX              ;ADVANCE INPUT INDEX
          BNE   NXTCHAR
-CANCEL   LDA   #$DC       ;BACKSLASH AFTER CANCELLED LINE
+CANCEL   LDA   #'\'       ;BACKSLASH AFTER CANCELLED LINE
          JSR   COUT
 GETLNZ   JSR   CROUT      ;OUTPUT CR
 GETLN    LDA   PROMPT
@@ -877,7 +872,7 @@ PRA1     LDY   A1H        ;PRINT CR,A1 IN HEX
 PRYX2    JSR   CROUT
          JSR   PRNTYX
          LDY   #$00
-         LDA   #$AD       ;PRINT '-'
+         LDA   #'-'       ;PRINT '-'
          JMP   COUT
 XAM8     LDA   A1L
          ORA   #$07       ;SET TO FINISH AT
@@ -888,7 +883,7 @@ MODSCHK  LDA   A1L
          AND   #$07
          BNE   DATAOUT
 XAM      JSR   PRA1
-DATAOUT  LDA   #$A0
+DATAOUT  LDA   #' '
          JSR   COUT       ;OUTPUT BLANK
          LDA   (A1L),Y
          JSR   PRBYTE     ;OUTPUT BYTE IN HEX
@@ -904,7 +899,7 @@ XAMPM    LSR   A          ;DETERMINE IF MON
          EOR   #$FF       ;SUB: FORM 2'S COMPLEMENT
 ADD      ADC   A1L
          PHA
-         LDA   #$BD
+         LDA   #'='
          JSR   COUT       ;PRINT '=', THEN RESULT
          PLA
 PRBYTE   PHA              ;PRINT BYTE AS 2 HEX
@@ -914,13 +909,13 @@ PRBYTE   PHA              ;PRINT BYTE AS 2 HEX
          LSR   A
          JSR   PRHEXZ
          PLA
-PRHEX    AND   #$0F       ;PRINT HEX DIG IN A-REG
-PRHEXZ   ORA   #$B0       ;  LSB'S
-         CMP   #$BA
+PRHEX    AND   #%00001111 ;PRINT HEX DIG IN A-REG
+PRHEXZ   ORA   #'0'       ;  LSB'S
+         CMP   #'9'+1
          BCC   COUT
          ADC   #$06
 COUT     JMP   (CSWL)     ;VECTOR TO USER OUTPUT ROUTINE
-COUT1    CMP   #$A0
+COUT1    CMP   #' '
          BCC   COUTZ      ;DON'T OUTPUT CTRL'S INVERSE
          AND   INVFLG     ;MASK WITH INVERSE FLAG
 COUTZ    STY   YSAV1      ;SAV Y-REG
@@ -964,13 +959,13 @@ VFY      LDA   (A1L),Y    ;VERIFY (A1 TO A2) WITH
          JSR   PRA1
          LDA   (A1L),Y
          JSR   PRBYTE
-         LDA   #$A0
+         LDA   #' '
          JSR   COUT
-         LDA   #$A8
+         LDA   #'('
          JSR   COUT
          LDA   (A4L),Y
          JSR   PRBYTE
-         LDA   #$A9
+         LDA   #')'
          JSR   COUT
 VFYOK    JSR   NXTA4
          BCC   VFY
@@ -1002,19 +997,19 @@ SETIFLG  STY   INVFLG
 SETKBD   LDA   #$00       ;SIMULATE PORT #0 INPUT
 INPORT   STA   A2L        ;  SPECIFIED (KEYIN ROUTINE)
 INPRT    LDX   #KSWL
-         LDY   #LO KEYIN
+         LDY   #<KEYIN
          BNE   IOPRT
 SETVID   LDA   #$00       ;SIMULATE PORT #0 OUTPUT
 OUTPORT  STA   A2L        ;  SPECIFIED (COUT1 ROUTINE)
 OUTPRT   LDX   #CSWL
-         LDY   #LO COUT1
+         LDY   #<COUT1
 IOPRT    LDA   A2L        ;SET RAM IN/OUT VECTORS
          AND   #$0F
          BEQ   IOPRT1
-         ORA   #IOADR/256
+         ORA   #>IOADR
          LDY   #$00
          BEQ   IOPRT2
-IOPRT1   LDA   #COUT1/256
+IOPRT1   LDA   #>COUT1
 IOPRT2   STY   LOC0,X
          STA   LOC1,X
          RTS
@@ -1074,9 +1069,9 @@ RD3      JSR   RDBYTE     ;READ A BYTE
          JSR   RDBYTE     ;READ CHKSUM BYTE
          CMP   CHKSUM
          BEQ   BELL       ;GOOD, SOUND BELL AND RETURN
-PRERR    LDA   #$C5
+PRERR    LDA   #'E'
          JSR   COUT       ;PRINT "ERR", THEN BELL
-         LDA   #$D2
+         LDA   #'R'
          JSR   COUT
          JSR   COUT
 BELL     LDA   #$87       ;OUTPUT BELL AND RETURN
@@ -1148,7 +1143,7 @@ NXTCHR   LDA   IN,Y       ;GET CHAR
          CMP   #$FA
          BCS   DIG
          RTS
-TOSUB    LDA   #GO/256    ;PUSH HIGH-ORDER
+TOSUB    LDA   #>GO       ;PUSH HIGH-ORDER
          PHA              ;  SUBR ADR ON STK
          LDA   SUBTBL,Y   ;PUSH LOW-ORDER
          PHA              ;  SUBR ADR ON STK
@@ -1156,55 +1151,63 @@ TOSUB    LDA   #GO/256    ;PUSH HIGH-ORDER
 ZMODE    LDY   #$00       ;CLR MODE, OLD MODE
          STY   MODE       ;  TO A-REG
          RTS              ; GO TO SUBR VIA RTS
-CHRTBL   DB    $BC        ;F("CTRL-C")
-         DB    $B2        ;F("CTRL-Y")
-         DB    $BE        ;F("CTRL-E")
-         DB    $ED        ;F("T")
-         DB    $EF        ;F("V")
-         DB    $C4        ;F("CTRL-K")
-         DB    $EC        ;F("S")
-         DB    $A9        ;F("CTRL-P")
-         DB    $BB        ;F("CTRL-B")
-         DB    $A6        ;F("-")
-         DB    $A4        ;F("+")
-         DB    $06        ;F("M") (F=EX-OR $B0+$89)
-         DB    $95        ;F("<")
-         DB    $07        ;F("N")
-         DB    $02        ;F("I")
-         DB    $05        ;F("L")
-         DB    $F0        ;F("W")
-         DB    $00        ;F("G")
-         DB    $EB        ;F("R")
-         DB    $93        ;F(":")
-         DB    $A7        ;F(".")
-         DB    $C6        ;F("CR")
-         DB    $99        ;F(BLANK)
-SUBTBL   DB    LO BASCONT-1
-         DB    LO USR-1
-         DB    LO REGZ-1
-         DB    LO TRACE-1
-         DB    LO VFY-1
-         DB    LO INPRT-1
-         DB    LO STEPZ-1
-         DB    LO OUTPRT-1
-         DB    LO XBASIC-1
-         DB    LO SETMODE-1
-         DB    LO SETMODE-1
-         DB    LO MOVE-1
-         DB    LO LT-1
-         DB    LO SETNORM-1
-         DB    LO SETINV-1
-         DB    LO LIST1-1
-         DB    LO WRITE-1
-         DB    LO GO-1
-         DB    LO READ-1
-         DB    LO SETMODE-1
-         DB    LO SETMODE-1
-         DB    LO CRMON-1
-         DB    LO BLANK-1
-         DB    LO NMI        ;NMI VECTOR
-         DB    HI NMI
-         DB    LO RESET      ;RESET VECTOR
-         DB    HI RESET
-         DB    LO IRQ        ;IRQ VECTOR
-         DB    HI IRQ
+
+
+
+
+         .DEFINE F(CHR) <(CHR^$B0+$89)
+
+CHRTBL   .BYTE F(CTRL_C)
+         .BYTE F(CTRL_Y)
+         .BYTE F(CTRL_E)
+         .BYTE F('T')
+         .BYTE F('V')
+         .BYTE F(CTRL_K)
+         .BYTE F('S')
+         .BYTE F(CTRL_P)
+         .BYTE F(CTRL_B)
+         .BYTE F('-')
+         .BYTE F('+')
+         .BYTE F('M')
+         .BYTE F('<')
+         .BYTE F('N')
+         .BYTE F('I')
+         .BYTE F('L')
+         .BYTE F('W')
+         .BYTE F('G')
+         .BYTE F('R')
+         .BYTE F(':')
+         .BYTE F('.')
+         .BYTE F(CRHI)
+         .BYTE F(SPHI)
+
+SUBTBL   .BYTE <BASCONT-1
+         .BYTE <USR-1
+         .BYTE <REGZ-1
+         .BYTE <TRACE-1
+         .BYTE <VFY-1
+         .BYTE <INPRT-1
+         .BYTE <STEPZ-1
+         .BYTE <OUTPRT-1
+         .BYTE <XBASIC-1
+         .BYTE <SETMODE-1
+         .BYTE <SETMODE-1
+         .BYTE <MOVE-1
+         .BYTE <LT-1
+         .BYTE <SETNORM-1
+         .BYTE <SETINV-1
+         .BYTE <LIST1-1
+         .BYTE <WRITE-1
+         .BYTE <GO-1
+         .BYTE <READ-1
+         .BYTE <SETMODE-1
+         .BYTE <SETMODE-1
+         .BYTE <CRMON-1
+         .BYTE <BLANK-1
+
+M6502VEC .BYTE <NMI        ;NMI VECTOR
+         .BYTE >NMI
+         .BYTE <RESET      ;RESET VECTOR
+         .BYTE >RESET
+         .BYTE <IRQ        ;IRQ VECTOR
+         .BYTE >IRQ
