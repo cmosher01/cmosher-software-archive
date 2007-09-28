@@ -28,8 +28,9 @@
                     .EXPORT BASIC
                     .EXPORT BASIC2
 
-                    .FEATURE LABELS_WITHOUT_COLONS
+                    .FEATURE LABELS_WITHOUT_COLONS, LEADING_DOT_IN_IDENTIFIERS
                     .LOCALCHAR '?'
+                    .INCLUDE "ASCIIHL.A65"
 
                                                     ; --------------------------------
                                                     ; ZERO PAGE LOCATIONS:
@@ -351,170 +352,167 @@ M_REL               .BYTE P_REL
                                                     ; --------------------------------
                                                     ; TOKEN NAME TABLE
                                                     ; --------------------------------
-.MACRO              TOK STR, CHR
-                    .BYTE STR
-                    .BYTE CHR | %10000000
-.ENDMACRO
+                                                    ;
 
-TOKEN_NAME_TABLE    TOK "EN", 'D'                   ; $80...128
-                    TOK "FO", 'R'                   ; $81...129
-                    TOK "NEX", 'T'                  ; $82...130
-                    TOK "DAT", 'A'                  ; $83...131
-                    TOK "INPU", 'T'                 ; $84...132
-                    TOK "DE", 'L'                   ; $85...133
-                    TOK "DI", 'M'                   ; $86...134
-                    TOK "REA", 'D'                  ; $87...135
-                    TOK "G", 'R'                    ; $88...136
-                    TOK "TEX", 'T'                  ; $89...137
-                    TOK "PR", '#'                   ; $8A...138
-                    TOK "IN", '#'                   ; $8B...139
-                    TOK "CAL", 'L'                  ; $8C...140
-                    TOK "PLO", 'T'                  ; $8D...141
-                    TOK "HLI", 'N'                  ; $8E...142
-                    TOK "VLI", 'N'                  ; $8F...143
-                    TOK "HGR", '2'                  ; $90...144
-                    TOK "HG", 'R'                   ; $91...145
-                    TOK "HCOLOR", '='               ; $92...146
-                    TOK "HPLO", 'T'                 ; $93...147
-                    TOK "DRA", 'W'                  ; $94...148
-                    TOK "XDRA", 'W'                 ; $95...149
-                    TOK "HTA", 'B'                  ; $96...150
-                    TOK "HOM", 'E'                  ; $97...151
-                    TOK "ROT", '='                  ; $98...152
-                    TOK "SCALE", '='                ; $99...153
-                    TOK "SHLOA", 'D'                ; $9A...154
-                    TOK "TRAC", 'E'                 ; $9B...155
-                    TOK "NOTRAC", 'E'               ; $9C...156
-                    TOK "NORMA", 'L'                ; $9D...157
-                    TOK "INVERS", 'E'               ; $9E...158
-                    TOK "FLAS", 'H'                 ; $9F...159
-                    TOK "COLOR", '='                ; $A0...160
-                    TOK "PO", 'P'                   ; $A1...161
-                    TOK "VTA", 'B'                  ; $A2...162
-                    TOK "HIMEM", ':'                ; $A3...163
-                    TOK "LOMEM", ':'                ; $A4...164
-                    TOK "ONER", 'R'                 ; $A5...165
-                    TOK "RESUM", 'E'                ; $A6...166
-                    TOK "RECAL", 'L'                ; $A7...167
-                    TOK "STOR", 'E'                 ; $A8...168
-                    TOK "SPEED", '='                ; $A9...169
-                    TOK "LE", 'T'                   ; $AA...170
-                    TOK "GOT", 'O'                  ; $AB...171
-                    TOK "RU", 'N'                   ; $AC...172
-                    TOK "I", 'F'                    ; $AD...173
-                    TOK "RESTOR", 'E'               ; $AE...174
-                    TOK "",'&'                      ; $AF...175
-                    TOK "GOSU", 'B'                 ; $B0...176
-                    TOK "RETUR", 'N'                ; $B1...177
-                    TOK "RE", 'M'                   ; $B2...178
-                    TOK "STO", 'P'                  ; $B3...179
-                    TOK "O", 'N'                    ; $B4...180
-                    TOK "WAI", 'T'                  ; $B5...181
-                    TOK "LOA", 'D'                  ; $B6...182
-                    TOK "SAV", 'E'                  ; $B7...183
-                    TOK "DE", 'F'                   ; $B8...184
-                    TOK "POK", 'E'                  ; $B9...185
-                    TOK "PRIN", 'T'                 ; $BA...186
-                    TOK "CON", 'T'                  ; $BB...187
-                    TOK "LIS", 'T'                  ; $BC...188
-                    TOK "CLEA", 'R'                 ; $BD...189
-                    TOK "GE", 'T'                   ; $BE...190
-                    TOK "NE", 'W'                   ; $BF...191
-                    TOK "TAB", '('                  ; $C0...192
-                    TOK "T", 'O'                    ; $C1...193
-                    TOK "F", 'N'                    ; $C2...194
-                    TOK "SPC", '('                  ; $C3...195
-                    TOK "THE", 'N'                  ; $C4...196
-                    TOK "A", 'T'                    ; $C5...197
-                    TOK "NO", 'T'                   ; $C6...198
-                    TOK "STE", 'P'                  ; $C7...199
-                    TOK "",'+'                      ; $C8...200
-                    TOK "",'-'                      ; $C9...201
-                    TOK "",'*'                      ; $CA...202
-                    TOK "",'/'                      ; $CB...203
-                    TOK "",'^'                      ; $CC...204
-                    TOK "AN", 'D'                   ; $CD...205
-                    TOK "O", 'R'                    ; $CE...206
-                    TOK "",'>'                      ; $CF...207
-                    TOK "",'='                      ; $D0...208
-                    TOK "",'<'                      ; $D1...209
-                    TOK "SG", 'N'                   ; $D2...210
-                    TOK "IN", 'T'                   ; $D3...211
-                    TOK "AB", 'S'                   ; $D4...212
-                    TOK "US", 'R'                   ; $D5...213
-                    TOK "FR", 'E'                   ; $D6...214
-                    TOK "SCRN", '('                 ; $D7...215
-                    TOK "PD", 'L'                   ; $D8...216
-                    TOK "PO", 'S'                   ; $D9...217
-                    TOK "SQ", 'R'                   ; $DA...218
-                    TOK "RN", 'D'                   ; $DB...219
-                    TOK "LO", 'G'                   ; $DC...220
-                    TOK "EX", 'P'                   ; $DD...221
-                    TOK "CO", 'S'                   ; $DE...222
-                    TOK "SI", 'N'                   ; $DF...223
-                    TOK "TA", 'N'                   ; $E0...224
-                    TOK "AT", 'N'                   ; $E1...225
-                    TOK "PEE", 'K'                  ; $E2...226
-                    TOK "LE", 'N'                   ; $E3...227
-                    TOK "STR", '$'                  ; $E4...228
-                    TOK "VA", 'L'                   ; $E5...229
-                    TOK "AS", 'C'                   ; $E6...230
-                    TOK "CHR", '$'                  ; $E7...231
-                    TOK "LEFT", '$'                 ; $E8...232
-                    TOK "RIGHT", '$'                ; $E9...233
-                    TOK "MID", '$'                  ; $EA...234
+TOKEN_NAME_TABLE    .ASCIIH "END"                   ; $80...128
+                    .ASCIIH "FOR"                   ; $81...129
+                    .ASCIIH "NEXT"                  ; $82...130
+                    .ASCIIH "DATA"                  ; $83...131
+                    .ASCIIH "INPUT"                 ; $84...132
+                    .ASCIIH "DEL"                   ; $85...133
+                    .ASCIIH "DIM"                   ; $86...134
+                    .ASCIIH "READ"                  ; $87...135
+                    .ASCIIH "GR"                    ; $88...136
+                    .ASCIIH "TEXT"                  ; $89...137
+                    .ASCIIH "PR#"                   ; $8A...138
+                    .ASCIIH "IN#"                   ; $8B...139
+                    .ASCIIH "CALL"                  ; $8C...140
+                    .ASCIIH "PLOT"                  ; $8D...141
+                    .ASCIIH "HLIN"                  ; $8E...142
+                    .ASCIIH "VLIN"                  ; $8F...143
+                    .ASCIIH "HGR2"                  ; $90...144
+                    .ASCIIH "HGR"                   ; $91...145
+                    .ASCIIH "HCOLOR="               ; $92...146
+                    .ASCIIH "HPLOT"                 ; $93...147
+                    .ASCIIH "DRAW"                  ; $94...148
+                    .ASCIIH "XDRAW"                 ; $95...149
+                    .ASCIIH "HTAB"                  ; $96...150
+                    .ASCIIH "HOME"                  ; $97...151
+                    .ASCIIH "ROT="                  ; $98...152
+                    .ASCIIH "SCALE="                ; $99...153
+                    .ASCIIH "SHLOAD"                ; $9A...154
+                    .ASCIIH "TRACE"                 ; $9B...155
+                    .ASCIIH "NOTRACE"               ; $9C...156
+                    .ASCIIH "NORMAL"                ; $9D...157
+                    .ASCIIH "INVERSE"               ; $9E...158
+                    .ASCIIH "FLASH"                 ; $9F...159
+                    .ASCIIH "COLOR="                ; $A0...160
+                    .ASCIIH "POP"                   ; $A1...161
+                    .ASCIIH "VTAB"                  ; $A2...162
+                    .ASCIIH "HIMEM:"                ; $A3...163
+                    .ASCIIH "LOMEM:"                ; $A4...164
+                    .ASCIIH "ONERR"                 ; $A5...165
+                    .ASCIIH "RESUME"                ; $A6...166
+                    .ASCIIH "RECALL"                ; $A7...167
+                    .ASCIIH "STORE"                 ; $A8...168
+                    .ASCIIH "SPEED="                ; $A9...169
+                    .ASCIIH "LET"                   ; $AA...170
+                    .ASCIIH "GOTO"                  ; $AB...171
+                    .ASCIIH "RUN"                   ; $AC...172
+                    .ASCIIH "IF"                    ; $AD...173
+                    .ASCIIH "RESTORE"               ; $AE...174
+                    .ASCIIH "&"                     ; $AF...175
+                    .ASCIIH "GOSUB"                 ; $B0...176
+                    .ASCIIH "RETURN"                ; $B1...177
+                    .ASCIIH "REM"                   ; $B2...178
+                    .ASCIIH "STOP"                  ; $B3...179
+                    .ASCIIH "ON"                    ; $B4...180
+                    .ASCIIH "WAIT"                  ; $B5...181
+                    .ASCIIH "LOAD"                  ; $B6...182
+                    .ASCIIH "SAVE"                  ; $B7...183
+                    .ASCIIH "DEF"                   ; $B8...184
+                    .ASCIIH "POKE"                  ; $B9...185
+                    .ASCIIH "PRINT"                 ; $BA...186
+                    .ASCIIH "CONT"                  ; $BB...187
+                    .ASCIIH "LIST"                  ; $BC...188
+                    .ASCIIH "CLEAR"                 ; $BD...189
+                    .ASCIIH "GET"                   ; $BE...190
+                    .ASCIIH "NEW"                   ; $BF...191
+                    .ASCIIH "TAB("                  ; $C0...192
+                    .ASCIIH "TO"                    ; $C1...193
+                    .ASCIIH "FN"                    ; $C2...194
+                    .ASCIIH "SPC("                  ; $C3...195
+                    .ASCIIH "THEN"                  ; $C4...196
+                    .ASCIIH "AT"                    ; $C5...197
+                    .ASCIIH "NOT"                   ; $C6...198
+                    .ASCIIH "STEP"                  ; $C7...199
+                    .ASCIIH "+"                     ; $C8...200
+                    .ASCIIH "-"                     ; $C9...201
+                    .ASCIIH "*"                     ; $CA...202
+                    .ASCIIH "/"                     ; $CB...203
+                    .ASCIIH "^"                     ; $CC...204
+                    .ASCIIH "AND"                   ; $CD...205
+                    .ASCIIH "OR"                    ; $CE...206
+                    .ASCIIH ">"                     ; $CF...207
+                    .ASCIIH "="                     ; $D0...208
+                    .ASCIIH "<"                     ; $D1...209
+                    .ASCIIH "SGN"                   ; $D2...210
+                    .ASCIIH "INT"                   ; $D3...211
+                    .ASCIIH "ABS"                   ; $D4...212
+                    .ASCIIH "USR"                   ; $D5...213
+                    .ASCIIH "FRE"                   ; $D6...214
+                    .ASCIIH "SCRN("                 ; $D7...215
+                    .ASCIIH "PDL"                   ; $D8...216
+                    .ASCIIH "POS"                   ; $D9...217
+                    .ASCIIH "SQR"                   ; $DA...218
+                    .ASCIIH "RND"                   ; $DB...219
+                    .ASCIIH "LOG"                   ; $DC...220
+                    .ASCIIH "EXP"                   ; $DD...221
+                    .ASCIIH "COS"                   ; $DE...222
+                    .ASCIIH "SIN"                   ; $DF...223
+                    .ASCIIH "TAN"                   ; $E0...224
+                    .ASCIIH "ATN"                   ; $E1...225
+                    .ASCIIH "PEEK"                  ; $E2...226
+                    .ASCIIH "LEN"                   ; $E3...227
+                    .ASCIIH "STR$"                  ; $E4...228
+                    .ASCIIH "VAL"                   ; $E5...229
+                    .ASCIIH "ASC"                   ; $E6...230
+                    .ASCIIH "CHR$"                  ; $E7...231
+                    .ASCIIH "LEFT$"                 ; $E8...232
+                    .ASCIIH "RIGHT$"                ; $E9...233
+                    .ASCIIH "MID$"                  ; $EA...234
 
-                    .BYTE 00                        ; END OF TOKEN NAME TABLE
+                    .BYTE 0                         ; END OF TOKEN NAME TABLE
                                                     ; --------------------------------
                                                     ; --------------------------------
                                                     ; ERROR MESSAGES
                                                     ; --------------------------------
 ERROR_MESSAGES
 ERR_NOFOR           = *-ERROR_MESSAGES
-                    TOK "NEXT WITHOUT FO",'R'
+                    .ASCIIH "NEXT WITHOUT FOR"
 ERR_SYNTAX          = *-ERROR_MESSAGES
-                    TOK "SYNTA",'X'
+                    .ASCIIH "SYNTAX"
 ERR_NOGOSUB         = *-ERROR_MESSAGES
-                    TOK "RETURN WITHOUT GOSU",'B'
+                    .ASCIIH "RETURN WITHOUT GOSUB"
 ERR_NODATA          = *-ERROR_MESSAGES
-                    TOK "OUT OF DAT",'A'
+                    .ASCIIH "OUT OF DATA"
 ERR_ILLQTY          = *-ERROR_MESSAGES
-                    TOK "ILLEGAL QUANTIT",'Y'
+                    .ASCIIH "ILLEGAL QUANTITY"
 ERR_OVERFLOW        = *-ERROR_MESSAGES
-                    TOK "OVERFLO",'W'
+                    .ASCIIH "OVERFLOW"
 ERR_MEMFULL         = *-ERROR_MESSAGES
-                    TOK "OUT OF MEMOR",'Y'
+                    .ASCIIH "OUT OF MEMORY"
 ERR_UNDEFSTAT       = *-ERROR_MESSAGES
-                    TOK "UNDEF'D STATEMEN",'T'
+                    .ASCIIH "UNDEF'D STATEMENT"
 ERR_BADSUBS         = *-ERROR_MESSAGES
-                    TOK "BAD SUBSCRIP",'T'
+                    .ASCIIH "BAD SUBSCRIPT"
 ERR_REDIMD          = *-ERROR_MESSAGES
-                    TOK "REDIM'D ARRA",'Y'
+                    .ASCIIH "REDIM'D ARRAY"
 ERR_ZERODIV         = *-ERROR_MESSAGES
-                    TOK "DIVISION BY ZER",'O'
+                    .ASCIIH "DIVISION BY ZERO"
 ERR_ILLDIR          = *-ERROR_MESSAGES
-                    TOK "ILLEGAL DIREC",'T'
+                    .ASCIIH "ILLEGAL DIRECT"
 ERR_BADTYPE         = *-ERROR_MESSAGES
-                    TOK "TYPE MISMATC",'H'
+                    .ASCIIH "TYPE MISMATCH"
 ERR_STRLONG         = *-ERROR_MESSAGES
-                    TOK "STRING TOO LON",'G'
+                    .ASCIIH "STRING TOO LONG"
 ERR_FRMCPX          = *-ERROR_MESSAGES
-                    TOK "FORMULA TOO COMPLE",'X'
+                    .ASCIIH "FORMULA TOO COMPLEX"
 ERR_CANTCONT        = *-ERROR_MESSAGES
-                    TOK "CAN'T CONTINU",'E'
+                    .ASCIIH "CAN'T CONTINUE"
 ERR_UNDEFFUNC       = *-ERROR_MESSAGES
-                    TOK "UNDEF'D FUNCTIO",'N'
+                    .ASCIIH "UNDEF'D FUNCTION"
                                                     ; --------------------------------
 
 QT_ERROR            .BYTE " ERROR"
-                    .BYTE 07,00
+                    .BYTE $07,0
 
 QT_IN               .BYTE " IN "
-                    .BYTE 00
+                    .BYTE 0
 
 QT_BREAK            .BYTE $0D
                     .BYTE "BREAK"
-                    .BYTE 07,00
+                    .BYTE $07,0
                                                     ; --------------------------------
                                                     ; CALLED BY "NEXT" AND "FOR" TO SCAN THROUGH
                                                     ; THE STACK FOR A FRAME WITH THE SAME VARIABLE.
@@ -2082,10 +2080,10 @@ INPDONE
 ?2                  RTS
                                                     ; --------------------------------
 ERR_EXTRA           .BYTE "?EXTRA IGNORED"
-                    .BYTE $0D,00
+                    .BYTE $0D,0
 
 ERR_REENTRY         .BYTE "?REENTER"
-                    .BYTE $0D,00
+                    .BYTE $0D,0
                                                     ; --------------------------------
                                                     ; --------------------------------
                                                     ; "NEXT" STATEMENT
@@ -5558,8 +5556,8 @@ POLY_SIN            .BYTE 5                         ; POWER OF POLYNOMIAL
                                                     ; --------------------------------
                                                     ; <<< NEXT TEN BYTES ARE NEVER REFERENCED >>>
                                                     ; --------------------------------
-                    .BYTE $A6,$D3,$C1,$C8,$D4,$C8,$D5,$C4,$CE,$CA
-                                                    ; HIASCII "&SAHTHUDNJ"
+
+                    .HASCII "&SAHTHUDNJ"
                                                     ; --------------------------------
                                                     ; "ATN" FUNCTION
                                                     ; --------------------------------
@@ -6708,7 +6706,15 @@ RTS_23              RTS
                                                     ; --------------------------------
 
 
-COLORTBL            .BYTE $00,$2A,$55,$7F,$80,$AA,$D5,$FF
+COLORTBL            .BYTE %00000000
+                    .BYTE %00101010
+                    .BYTE %01010101
+                    .BYTE %01111111
+                    .BYTE %00000000 | %10000000
+                    .BYTE %00101010 | %10000000
+                    .BYTE %01010101 | %10000000
+                    .BYTE %01111111 | %10000000
+
                                                     ; --------------------------------
                                                     ; "HPLOT" STATEMENT
                                                     ; 
@@ -6881,5 +6887,4 @@ HTAB                JSR GETBYT
 ?2                  STA MON_CH
                     RTS
                                                     ; --------------------------------
-                    .BYTE $CB,$D2,$D7
-                                                    ; HIASCII  "KRW"   ;SOMEONE'S INITIALS?
+                    .HASCII "KRW"                   ; UNKNOWN

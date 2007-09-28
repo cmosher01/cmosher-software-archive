@@ -8,86 +8,88 @@
 ;
 ;
 ;
-	.INCLUDE "CMAP2.A65"
+        .FEATURE LABELS_WITHOUT_COLONS, LEADING_DOT_IN_IDENTIFIERS
+        .INCLUDE "CMAP2.A65"
+        .INCLUDE "ASCIIHL.A65"
 
-CR              =  $0D | %10000000
+CR        =       $0D | %10000000
 
-WNDWDTH         =  $21
-CH              =  $24
-CV              =  $25
-GBAS            =  $26
-H2              =  $2C
-V2              =  $2D
-PROMPT          =  $33
-A1              =  $3C
-A2              =  $3E
-LOMEM           =  $4A
-HIMEM           =  $4C
-RND             =  $4E
-NOUNSTKL        =  $50
-SYNSTKH         =  $58
-NOUNSTKH        =  $78
-SYNSTKL         =  $80
-NOUNSTKC        =  $A0
-TXTNDXSTK       =  $A8
-TXTNDX          =  $C8
-LEADBL          =  $C9
-PP              =  $CA
-PV              =  $CC
-ACC             =  $CE
-SRCH            =  $D0
-TOKNDXSTK       =  $D1
-SRCH2           =  $D2
-IFFLAG          =  $D4
-CRFLAG          =  $D5
-VERBNOW         =  $D6
-PRFLAG          =  $D7
-XSAVE           =  $D8
-RUNFLAG         =  $D9
-AUX             =  $DA
-PR              =  $DC
-PN              =  $DE
-PX              =  $E0
-P1              =  $E2
-P2              =  $E4
-P3              =  $E6
-TOKNDX          =  $F1
-PCON            =  $F2
-AUTOINC         =  $F4
-AUTOLN          =  $F6
-AUTOFLAG        =  $F8
-CHAR            =  $F9
-LEADZR          =  $FA
-FORNDX          =  $FB
-GOSUBNDX        =  $FC
-SYNSTKDX        =  $FD
-SYNPAG          =  $FE
-
-STACK           =  $0100
-
-IN              =  $0200
-
-KBD             =  $C000
-KBDSTRB         =  $C010
-
-PLOT            =  $F800
-HLINE           =  $F819
-VLINE           =  $F828
-GBASCALC        =  $F847
-SETCOL          =  $F864
-PREAD           =  $FB1E
-SETTXT          =  $FB39
-SETGR           =  $FB40
-VTAB            =  $FC22
-NXTCHAR         =  $FD75
-CROUT           =  $FD8E
-COUT            =  $FDED
-INPORT          =  $FE8B
-OUTPORT         =  $FE95
-WRITE           =  $FECD
-WRITE0          =  $FECF
-READ            =  $FEFD
-BELL            =  $FF3A
+WNDWDTH   =       $21
+CH        =       $24
+CV        =       $25
+GBAS      =       $26
+H2        =       $2C
+V2        =       $2D
+PROMPT    =       $33
+A1        =       $3C
+A2        =       $3E
+LOMEM     =       $4A
+HIMEM     =       $4C
+RND       =       $4E
+NOUNSTKL  =       $50
+SYNSTKH   =       $58
+NOUNSTKH  =       $78
+SYNSTKL   =       $80
+NOUNSTKC  =       $A0
+TXTNDXSTK =       $A8
+TXTNDX    =       $C8
+LEADBL    =       $C9
+PP        =       $CA
+PV        =       $CC
+ACC       =       $CE
+SRCH      =       $D0
+TOKNDXSTK =       $D1
+SRCH2     =       $D2
+IFFLAG    =       $D4
+CRFLAG    =       $D5
+VERBNOW   =       $D6
+PRFLAG    =       $D7
+XSAVE     =       $D8
+RUNFLAG   =       $D9
+AUX       =       $DA
+PR        =       $DC
+PN        =       $DE
+PX        =       $E0
+P1        =       $E2
+P2        =       $E4
+P3        =       $E6
+TOKNDX    =       $F1
+PCON      =       $F2
+AUTOINC   =       $F4
+AUTOLN    =       $F6
+AUTOFLAG  =       $F8
+CHAR      =       $F9
+LEADZR    =       $FA
+FORNDX    =       $FB
+GOSUBNDX  =       $FC
+SYNSTKDX  =       $FD
+SYNPAG    =       $FE
+                  
+STACK     =       $0100
+                  
+IN        =       $0200
+                  
+KBD       =       $C000
+KBDSTRB   =       $C010
+                  
+PLOT      =       $F800
+HLINE     =       $F819
+VLINE     =       $F828
+GBASCALC  =       $F847
+SETCOL    =       $F864
+PREAD     =       $FB1E
+SETTXT    =       $FB39
+SETGR     =       $FB40
+VTAB      =       $FC22
+NXTCHAR   =       $FD75
+CROUT     =       $FD8E
+COUT      =       $FDED
+INPORT    =       $FE8B
+OUTPORT   =       $FE95
+WRITE     =       $FECD
+WRITE0    =       $FECF
+READ      =       $FEFD
+BELL      =       $FF3A
 
 
 
@@ -1453,70 +1455,68 @@ VERBADRH:
 
 ERRMSGTBL:
 
-        .DEFINE LOASC(C) C & %01111111
-
 ERRMSG00 = *-ERRMSGTBL
-	    .BYTE   ">3276",LOASC('7')
+	    .ASCIIL ">32767"
 
 ERRMSG01 = *-ERRMSGTBL
-	    .BYTE   "TOO LON",LOASC('G')
+	    .ASCIIL "TOO LONG"
 
 ERRMSG02 = *-ERRMSGTBL
-	    .BYTE   "SYNTA",LOASC('X')
+	    .ASCIIL "SYNTAX"
 
 ERRMSG03 = *-ERRMSGTBL
-	    .BYTE   "MEM FUL",LOASC('L')
+	    .ASCIIL "MEM FULL"
 
 ERRMSG04 = *-ERRMSGTBL
-	    .BYTE   "TOO MANY PAREN",LOASC('S')
+	    .ASCIIL "TOO MANY PARENS"
 
 ERRMSG05 = *-ERRMSGTBL
-	    .BYTE   "STRIN",LOASC('G')
+	    .ASCIIL "STRING"
 
 ERRMSG06 = *-ERRMSGTBL
-	    .BYTE   "NO EN",LOASC('D')
+	    .ASCIIL "NO END"
 
 ERRMSG07 = *-ERRMSGTBL
-	    .BYTE   "BAD BRANC",LOASC('H')
+	    .ASCIIL "BAD BRANCH"
 
 ERRMSG08 = *-ERRMSGTBL
-	    .BYTE   "16 GOSUB",LOASC('S')
+	    .ASCIIL "16 GOSUBS"
 
 ERRMSG09 = *-ERRMSGTBL
-	    .BYTE   "BAD RETUR",LOASC('N')
+	    .ASCIIL "BAD RETURN"
 
 ERRMSG10 = *-ERRMSGTBL
-	    .BYTE   "16 FOR",LOASC('S')
+	    .ASCIIL "16 FORS"
 
 ERRMSG11 = *-ERRMSGTBL
-	    .BYTE   "BAD NEX",LOASC('T')
+	    .ASCIIL "BAD NEXT"
 
 ERRMSG12 = *-ERRMSGTBL
-	    .BYTE   "STOPPED AT",LOASC(' ')
+	    .ASCIIL "STOPPED AT "
 
 ERRMSG13 = *-ERRMSGTBL
-	    .BYTE   "***",LOASC(' ')
+	    .ASCIIL "*** "
 
 ERRMSG14 = *-ERRMSGTBL
-	    .BYTE   " ERR",LOASC(CR)
+	    .BYTE " ERR",.LOCHR(CR)
 
 ERRMSG15 = *-ERRMSGTBL
-	    .BYTE   ">25",LOASC('5')
+	    .ASCIIL ">255"
 
 ERRMSG16 = *-ERRMSGTBL
-	    .BYTE   "RANG",LOASC('E')
+	    .ASCIIL "RANGE"
 
 ERRMSG17 = *-ERRMSGTBL
-	    .BYTE   "DI",LOASC('M')
+	    .ASCIIL "DIM"
 
 ERRMSG18 = *-ERRMSGTBL
-	    .BYTE   "STR OVF",LOASC('L')
+	    .ASCIIL "STR OVFL"
 
 ERRMSG19 = *-ERRMSGTBL
-	    .BYTE   "\",LOASC(CR)
+	    .BYTE "\",.LOCHR(CR)
 
 ERRMSG20 = *-ERRMSGTBL
-	    .BYTE   "RETYPE LINE",CR,LOASC('?')
+	    .BYTE "RETYPE LINE",CR,.LOCHR('?')
 
 LEB9A:  LSR     RUNFLAG
         BCC     LEBA1
