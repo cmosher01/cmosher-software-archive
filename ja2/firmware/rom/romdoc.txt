@@ -1,12 +1,24 @@
+Apple I
+-------
+apple1_e000.rom
+	E000.EFFF
+	Integer BASIC (V1) (no bug fix)
+
+apple1_ff00.rom
+	FF00.FFFF
+	Monitor (V1)
+
+
+
 Apple ][
 --------
 apple2_e000.rom
 	E000-F7FF
-	Integer BASIC (no bug fixes), Mini-assembler, Sweet-16, etc.
+	Integer BASIC (V2) (no bug fixes), Mini-assembler, Sweet-16, etc.
 
 apple2_f800.rom
 	F800-FFFF
-	Monitor (V1)
+	Monitor (V2.0)
 
 progaid1_d000.rom
 	D000-D7FF
@@ -22,7 +34,7 @@ apple2p_d000.rom
 
 apple2p_f800.rom
 	F800-FFFF
-	Monitor (V2)
+	Monitor (V2.1)
 
 
 
@@ -34,7 +46,7 @@ apple2e_d000.rom
 
 apple2e_f800.rom
 	F800-FFFF
-	Monitor (V3)
+	Monitor (V2.2)
 
 apple2e_c100.rom
 	C100-CFFF
