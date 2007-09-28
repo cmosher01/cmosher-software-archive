@@ -18,7 +18,7 @@ Apple ][ plus
 -------------
 apple2p_d000.rom
 	D000-F7FF
-	Applesoft BASIC (V1)
+	Applesoft BASIC (V2.0)
 
 apple2p_f800.rom
 	F800-FFFF
@@ -26,11 +26,11 @@ apple2p_f800.rom
 
 
 
-Apple //e
+Apple //e (enhanced?)
 ---------
 apple2e_d000.rom
 	D000-F7FF
-	Applesoft BASIC (V2)
+	Applesoft BASIC (V2.1)
 
 apple2e_f800.rom
 	F800-FFFF
