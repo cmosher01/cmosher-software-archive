@@ -1,10 +1,29 @@
                                                     ; --------------------------------
-                                                    ; Applesoft BASIC
-                                                    ; written by Microsoft
-                                                    ; disassembled by (unknown)
-                                                    ; fixed by Chris Mosher
+                                                    ;
+                                                    ; Applesoft BASIC, V2
+                                                    ;
+                                                    ; Written by Marc McDonald and Randy Wigginton.
+                                                    ;
+                                                    ; Original copyright 1976 by Microsoft,
+                                                    ; 1977 by Apple Computer.
+                                                    ;
+                                                    ; Disassembled by (unknown).
+                                                    ; Fixed by Chris Mosher.
                                                     ; 
-                                                    ; for the cc65.org Assembler (ca65)
+                                                    ; For the cc65.org Assembler (ca65)
+                                                    ;
+                                                    ; Applesoft BASIC was first written by
+                                                    ; Marc McDonald, the first employee of Microsoft,
+                                                    ; in mid-1976. That version was bought by Apple
+                                                    ; and released (on casette) in Nov. 1977.
+                                                    ;
+                                                    ; Version 2 was written by Randy Wigginton and
+                                                    ; others at Apple in spring 1978. This version
+                                                    ; was released in several different forms. The
+                                                    ; one reproduced by this source assembly file is
+                                                    ; the main-board ROM form, which appeared in the
+                                                    ; Apple ][ plus ROM at $D000-$F7FF.
+                                                    ;
                                                     ; --------------------------------
                     .EXPORT BASIC
                     .EXPORT BASIC2
