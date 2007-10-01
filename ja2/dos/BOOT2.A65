@@ -19,6 +19,7 @@
                 .EXPORT WRDOSIMG
                 .IF VERSION < 320
                 .EXPORT BOOT2
+                .EXPORT VERFY
                 .ELSE
                 .IF VERSION = 320
                 .EXPORT BOOT2
@@ -74,7 +75,7 @@ BOOT2           STX IBSLOT      ; (X) = SLOT*16 WANTED.
                 STA IOBPDN      ; DRIVES TO BE DRIVE#1.
                 STA IBDRVN
                 LDA NMPG2RD     ; SET NUMBER OF PAGES TO READ.
-                STA BT2PGCTR    ; COUNTER 4 NUMBER OF PGS 2 READ.
+                STA BT2PGCTR    ; COUNTER FOR NUMBER OF PGS TO READ.
 
                 .IF VERSION < 330
                 LDA #0
@@ -130,7 +131,7 @@ BOOT2           STX IBSLOT      ; (X) = SLOT*16 WANTED.
 
 BK2BOOT2        JSR SETKBD      ; SIMULATE "IN#0" STATEMENT.
                                 ; (THAT IS, SELECT KEYBOARD.)
-TODOSCLD2       JMP DOSRELOC    ; JUMP IN2 DOS'S COLDSTART ROUTINE
+TODOSCLD2       JMP DOSRELOC    ; JUMP INTO DOS'S COLDSTART ROUTINE
                                 ; (AT $9DE4) TO BUILD THE DOS BUFS
                                 ; AND THE PAGE-3 VECTOR TABLE AND
                                 ; THEN RUN THE "HELLO" PROGRAM.
@@ -139,7 +140,7 @@ TODOSCLD2       JMP DOSRELOC    ; JUMP IN2 DOS'S COLDSTART ROUTINE
                                 ; * DREAM.  FOR INSTANCE, YOU CAN
                                 ; * CHANGE THE JUMP TO POINT TO
                                 ; * YOUR OWN PASSWORD OR TIME-
-                                ; * BOMB PRGM THAT YOU HAVE
+                                ; * BOMB PROGRAM THAT YOU HAVE
                                 ; * DEVIOUSLY IMBEDDED IN AN
                                 ; * UNUSED SECTION OF DOS.
                                 ; *******************************
@@ -246,15 +247,15 @@ TOCLOSE         JMP   CMDCLOSE
                 STA IMG8FD+1    ; START OF BOOT1 (#$B6).
                 CLC             ; CALC HI BYTE ADR OF TRK00/SEC09
                 ADC #9          ; (#$B6 + #$09 = #$BF).
-                STA IBBUFP+1    ; SET BUF 2 SEND INFO 2 PAGE #$BF.
+                STA IBBUFP+1    ; SET BUF TO SEND INFO TO PAGE #$BF.
                 LDA #10         ; DESIGNATE 10 PAGES TO WRITE.
                 STA BT2PGCTR    ; (#$BFFF - #$B600).
                 SEC
                 SBC #1
-                STA IMG8FF      ; SIGNIFY THAT THERE ARE 9 PAGES 2
+                STA IMG8FF      ; SIGNIFY THAT THERE ARE 9 PAGES TO
                                 ; BE READ WHEN BOOT1 IS EXECUTED.
                 STA IBSECT      ; START WRITING WITH TRK00/SEC09.
-                JSR RWPAGES     ; WRITE TRK00/SEC09 2 TRK00/SEC00.
+                JSR RWPAGES     ; WRITE TRK00/SEC09 TO TRK00/SEC00.
                 RTS
 
                 .RES 6            ; UNUSED.
@@ -264,10 +265,10 @@ TOCLOSE         JMP   CMDCLOSE
                                 ; =================================
 
 RWPAGES         LDA ADROFIOB+1  ; INIT (A)/(Y) WITH HI/LOW BYTS OF
-                LDY ADROFIOB    ; ADR OF RWTS'S IOB 4 NTRY 2 RWTS.
-                JSR ENTERWTS    ; ENTER IN2 RWTS 2 READ/WRITE SEC.
-                LDY IBSECT      ; GET # OF SEC JUST RD OR WRITTEN
-                DEY             ; VAL 4 NXT SEC 2 READ/WRITE (WHEN
+                LDY ADROFIOB    ; ADR OF RWTS'S IOB FOR ENTRY TO RWTS.
+                JSR ENTERWTS    ; ENTER INTO RWTS TO READ/WRITE SEC.
+                LDY IBSECT      ; GET # OF SEC JUST READ OR WRITTEN
+                DEY             ; VAL FOR NEXT SEC TO READ/WRITE (WHEN
                                 ; EXECUTING BOOT1, #$09 --> #$FF).
                 BPL SAMETRK     ; BRANCH TO USE THE SAME TRACK.
 
@@ -283,7 +284,7 @@ RWPAGES         LDA ADROFIOB+1  ; INIT (A)/(Y) WITH HI/LOW BYTS OF
 
 SAMETRK         STY IBSECT      ; STORE NUMBER OF SEC WANTED.
                 DEC IBBUFP+1    ; REDUCE BUFFER'S PAGE ADR.
-                DEC BT2PGCTR    ; REDUCE CNTR 4 # OF SECS 2 READ.
+                DEC BT2PGCTR    ; REDUCE COUNTER FOR # OF SECS TO READ.
                 BNE RWPAGES     ; MORE SECS TO READ.
                 RTS
 
@@ -312,11 +313,11 @@ ENTERWTS        PHP             ; SAVE STATUS ON STK.
                                 ; PREVENT ANY FURTHER MASKABLE
                                 ; INTERRUPTS WHEN DOING REAL-TIME
                                 ; PROGRAMMING.
-                JSR RWTS        ; ENTER RWTS PROPER 2 DO OPERAT'N:
+                JSR RWTS        ; ENTER RWTS PROPER TO DO OPERATION:
                                 ; $00=SEEK, $01=READ,
                                 ; $02=WRITE, $03=FORMAT.
                 BCS ERRENTER    ; OPERATION WAS NOT SUCCESSFUL.
-                                ; NVR TAKEN IF JUST SEEKING CAUSE
+                                ; NVR TAKEN IF JUST SEEKING BECAUSE
                                 ; NO ERROR SIGNALLING ROUTINES ARE
                                 ; ASSOCIATED WITH THAT OPERATION.
                 PLP             ; THROW STATUS OFF STACK.
@@ -370,7 +371,7 @@ ZCURBUF1        STA (A4L),Y
 
                 .RES 1          ; UNUSED ($B7DF).
 NMPG2RD         .BYTE $1B       ; # OF PAGES TO READ (#27).
-BT2PGCTR        .RES 1          ; # OF PAGES LEFT 2 READ (VARIES).
+BT2PGCTR        .RES 1          ; # OF PAGES LEFT TO READ (VARIES).
 BT1RSTSC        .BYTE $0A       ; FIRST SEC # IN STAGE (#10).
 BT1STPAG        .BYTE >MASTERDOS ; BASE PAGE TO READ INTO?
 
@@ -390,27 +391,27 @@ BTSTAGE                         ; ADR OF START OF IMAGE OF BOOT1.
                                 ; ($B7E8 - $B7FA)
                                 ; =================================
 
-IBTYPE          .BYTE $01          ; TABLE TYPE (SHOULD BE $01).
-IBSLOT          .RES 1            ; SLOT WANTED * 16.
-IBDRVN          .RES 1            ; DRIVE WANTED ($01 OR $02).
-IBVOL           .RES 1            ; VOL WANTED ($00 GOOD FOR ALL).
-IBTRK           .RES 1            ; TRK WANTED.
-IBSECT          .RES 1            ; LOGICAL SEC WANTED.
-IBDCTP          .ADDR DEVTPC       ; PTS 2 DEVICE CHARACTERISTIC TBL.
+IBTYPE          .BYTE $01       ; TABLE TYPE (SHOULD BE $01).
+IBSLOT          .RES 1          ; SLOT WANTED * 16.
+IBDRVN          .RES 1          ; DRIVE WANTED ($01 OR $02).
+IBVOL           .RES 1          ; VOL WANTED ($00 GOOD FOR ALL).
+IBTRK           .RES 1          ; TRK WANTED.
+IBSECT          .RES 1          ; LOGICAL SEC WANTED.
+IBDCTP          .ADDR DEVTPC    ; PTS TO DEVICE CHARACTERISTIC TBL.
                                 ; (NORMALLY, $B7FB).
-IBBUFP          .RES 2            ; PTS 2 RWTS'S I/O BUFFER.
-IBSECSZ         .ADDR $100         ; SEC SIZ IN BYTS (LOW/HI FORMAT). ; mosher ??? .RES 2 ???
-IBCMD           .RES 1            ; RWTS COMMAND CODE:
+IBBUFP          .RES 2          ; PTS TO RWTS'S I/O BUFFER.
+IBSECSZ         .ADDR $100      ; SEC SIZ IN BYTS (LOW/HI FORMAT). ; mosher ??? .RES 2 ???
+IBCMD           .RES 1          ; RWTS COMMAND CODE:
                                 ; $00=SEEK, $01=READ,
                                 ; $02=WRITE, $04=FORMAT.
-IBSTAT          .RES 1            ; ERROR CODE:
+IBSTAT          .RES 1          ; ERROR CODE:
                                 ; $00=NO ERRS, $10=WRIT PROT,
                                 ; $20=VOL MISMTCH, $40=I/O(DRV)ERR
                                 ; $80=READ ERR.
-IBSMOD          .RES 1            ; VOLUME FOUND.
-IOBPSN          .RES 1            ; SLOT*16 OF LAST ACCESS (FOUND).
-IOBPDN          .RES 1            ; DRIVE # OF LAST ACCESS (FOUND).
-                .RES 2            ; UNUSED ($B7F9-$B7FA).
+IBSMOD          .RES 1          ; VOLUME FOUND.
+IOBPSN          .RES 1          ; SLOT*16 OF LAST ACCESS (FOUND).
+IOBPDN          .RES 1          ; DRIVE # OF LAST ACCESS (FOUND).
+                .RES 2          ; UNUSED ($B7F9-$B7FA).
 
 
                                 ; =================================
@@ -418,10 +419,10 @@ IOBPDN          .RES 1            ; DRIVE # OF LAST ACCESS (FOUND).
                                 ; ($B7FB - $B7FF)
                                 ; =================================
 
-DEVTPC          .BYTE $00          ; DEVICE TYPE.
-PPTC            .BYTE $01          ; PHASES/TRK. (EVEN VAL = 1PHASE,
+DEVTPC          .BYTE $00       ; DEVICE TYPE.
+PPTC            .BYTE $01       ; PHASES/TRK. (EVEN VAL = 1PHASE,
                                 ; ODD VAL = 2PHASE.)  THEREFORE,
                                 ; $01=2 PHASE (WHICH TRANSLATES TO
-                                ; 2 ARM MOVEMENTS PER TRACK).
-MONTC           .BYTE $EF,$D8      ; MOTOR-ON-TIME COUNT.
-                .RES 1            ; UNUSED ($B7FF).
+                                ; TO ARM MOVEMENTS PER TRACK).
+MONTC           .BYTE $EF,$D8   ; MOTOR-ON-TIME COUNT.
+                .RES 1          ; UNUSED ($B7FF).

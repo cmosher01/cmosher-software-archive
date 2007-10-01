@@ -1,6 +1,4 @@
                 .FEATURE LABELS_WITHOUT_COLONS, LEADING_DOT_IN_IDENTIFIERS
-                .INCLUDE "CMAP2.A65"
-                .INCLUDE "ASCIIHL.A65"
 
                 .IFDEF FRANKLIN
 VERSION         = 330
@@ -111,7 +109,7 @@ A4H             = $43
 A5L             = $44           ; MULTIPURPOSE REG & PTR ($44,$45)
 A5H             = $45
 
-SYNCNTR         = $45           ; # OF SYNC BYTES 2 WRT BTWN SECS
+SYNCNTR         = $45           ; # OF SYNC BYTES TO WRT BTWN SECS
                                 ; & DELAY CNTR TO LET SOME SYNCS
                                 ; PASS BY READ HEAD WHEN VERIFYING
                                 ; A TRK JUST FORMATTED.
@@ -125,7 +123,7 @@ MTRTIME         = $46           ; MOTOR-ON-TIME COUNT ($46,$47).
 PTR2IOB         = $48           ; PTR ($48,49) TO RWTS'S INPUT/
                                 ; OUTPUT BLOCK (IOB).
 STATUS          = $48           ; STATUS REGISTER SAVE AREA.
-LOMEM           = $4A           ; PTR ($4A,$4B) 2 START OF INTEGER
+LOMEM           = $4A           ; PTR ($4A,$4B) TO START OF INTEGER
                                 ; BASIC'S VARIABLE TABLE.
 HIMEM           = $4C           ; PTR ($4C,$4D) TO END OF INTEGER
                                 ; BASIC PRGM.
@@ -152,10 +150,10 @@ MEMSIZ          = $73           ; PTR ($73,$74) TO HIGHEST MEMORY
                                 ; BYTE OF THE DOS BUFFER REGION.
 CURLIN          = $75           ; CURRENT APPLESOFT PROGRAM LINE
                                 ; NUMBER ( $75,$76).  USED BY DOS
-                                ; 2 DETERMINE IF BASIC IS RUNNING.
+                                ; TO DETERMINE IF BASIC IS RUNNING.
                                 ; (CURLIN+1 CONTAINS AN $FF WHEN
                                 ; COMPUTER IS IN THE IMMED MODE.)
-PRGEND          = $AF           ; PTR ($AF,$B0) 2 END OF APPLESOFT
+PRGEND          = $AF           ; PTR ($AF,$B0) TO END OF APPLESOFT
                                 ; PRGM (PLUS 1) IF FP CMD WAS USED
                                 ; OR TO END OF PRGM (PLUS 2) IF A
                                 ; NEW CMD WAS USED.
@@ -167,7 +165,7 @@ PROTFLG         = $D6           ; PRGM PROTECTION FLAG.
                                 ; IF PROTECTION FLAG IS ON (NEG),
                                 ; ALL APPLESOFT CMDS CAUSE A RUN &
                                 ; DOS'S SAVE CMD CAUSE A PHONY
-                                ; PROGRAM-TOO-LARGE ERROR MSG 2 BE
+                                ; PROGRAM-TOO-LARGE ERROR MSG TO BE
                                 ; GENERATED.
 ERRFLG          = $D8           ; ON-ERROR FLAG.  EQUALS $80 IF
                                 ; ON-ERR IS ACTIVE.
@@ -215,7 +213,7 @@ RSEEKCNT        = $4F8          ; CNTR FOR # OF RE-SEEKS ALLOWED
                                 ; BETWEEN RECALIBRATIONS (4 --> 1,
                                 ; DO RECALIBRATION WHEN CNTR = 0.)
 
-READCNTR        = $578          ; CNTR FOR # OF ATTEMPTS ALLOWED 2
+READCNTR        = $578          ; CNTR FOR # OF ATTEMPTS ALLOWED TO
                                 ; GET A GOOD ADDR OR DATA READ.
 SLOTPG5         = $5F8          ; SLOT*16 USED WHEN DOS WAS BOOTED
 
@@ -232,7 +230,7 @@ RECLBCNT        = $6F8          ; CNTR FOR # OF RECALIBRATIONS
                                 ; --------------------------------
 CLRFPRAM        = $E65          ; ENTRY POINT TO CLEAR VARIABLES
                                 ; FROM A RAM-BASED APPLESOFT PRGM.
-RUNFPRAM        = $FD4          ; ENTRY POINT 2 EXECUTE RAM-BASED
+RUNFPRAM        = $FD4          ; ENTRY POINT TO EXECUTE RAM-BASED
                                 ; APPLESOFT PRGM.
 
 
@@ -340,7 +338,7 @@ MONRTS          = $FF58         ; AN RTS INSTRUC LOC'D IN MONITOR
                                 ; STACK WITH THE ADDR OF THE "JSR"
                                 ; SO THEY CAN FIND OUT THE PRGM'S
                                 ; PRESENT LOCATION.
-MON             = $FF65         ; NORM ENTRY ROUTE 2 MONITOR ROM.
+MON             = $FF65         ; NORM ENTRY ROUTE TO MONITOR ROM.
                                 ; ("CALL -151" GOES HERE.)
 
 
@@ -351,4 +349,10 @@ MON             = $FF65         ; NORM ENTRY ROUTE 2 MONITOR ROM.
                                 ; ASCII VALUES (WITH HIGH-BIT SET)
 BEL             = $07|%10000000 ; bell
 CR              = $0D|%10000000 ; carriage-return
-SP              = ' '           ; space
+
+
+
+
+
+TRKPERDSK       = $23           ; Number of tracks per disk
+CATTRK          = TRKPERDIS/2   ; Catalog track is in middle of disk

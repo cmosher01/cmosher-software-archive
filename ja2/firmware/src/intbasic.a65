@@ -83,7 +83,9 @@ SETGR     =       $FB40
 VTAB      =       $FC22
 NXTCHAR   =       $FD75
 CROUT     =       $FD8E
+.IF VERSION > 1
 COUT      =       $FDED
+.ENDIF
 INPORT    =       $FE8B
 OUTPORT   =       $FE95
 WRITE     =       $FECD
@@ -93,11 +95,25 @@ BELL      =       $FF3A
 
 
 
-BASIC:  JSR     COLD
-BASIC2: JMP     WARM
+BASIC:
+        .IF VERSION = 1
+        JMP     OLDENT
+        .ELSE
+        JSR     COLD
+        JMP     WARM
+        .ENDIF
+
+BASIC2:
+        .IF VERSION = 1
+LE003:  LDA     $D011
+        BPL     LE003
+        LDA     $D010
+        .ELSE
 LE006:  STA     PROMPT
         JMP     COUT
+        .ENDIF
         RTS
+
 LE00C:  TXA
         AND     #$20
         BEQ     LE034
@@ -287,6 +303,16 @@ INPUTSTR:
         LDY     #$02
         STY     NOUNSTKH,X
         JSR     LE70A
+        .IF VERSION = 1
+        LDA     #$BF
+        JSR     COUT
+        LDY     #$00
+        JSR     LE29E
+        STY     $78,X
+        NOP
+        NOP
+        NOP
+        .ELSE
         STX     XSAVE
         TAX
         INC     PROMPT
@@ -295,6 +321,7 @@ INPUTSTR:
         TXA
         LDX     XSAVE
         STA     NOUNSTKH,X
+        .ENDIF
 HE18C:  LDA     NOUNSTKL+1,X
         STA     ACC
         LDA     NOUNSTKH+1,X
@@ -319,7 +346,13 @@ LE1AE:  STA     (AUX),Y
 LE1B4:  LDY     NOUNSTKL,X
         TXA
         STA     (AUX),Y
+        .IF VERSION = 1
+        INX
+        INX
+        RTS
+        .ELSE
         JMP     LF223
+        .ENDIF
 LE1BC:  LDA     NOUNSTKL+1,X
         STA     AUX
         SEC
@@ -423,7 +456,43 @@ LE279:  RTS
 MOD:    JSR     LEE6C
         BEQ     LE244
         .BYTE   $FF
-LE280:  INC     PROMPT
+
+
+LE280:
+        .IF VERSION = 1
+        CMP     #$84
+        BNE     LE286
+        LSR     $F8
+LE286:  CMP     #$DF
+        BEQ     LE29B
+        CMP     #$9B
+        BEQ     LE294
+        STA     $0200,Y
+        INY
+        BPL     LE29E
+LE294:  LDY     #$8B
+        JSR     LE3C4
+LE299:  LDY     #$01
+LE29B:  DEY
+        BMI     LE294
+LE29E:  JSR     LE003
+        NOP
+        NOP
+        JSR     COUT
+        CMP     #$8D
+        BNE     LE280
+        LDA     #$DF
+        STA     $0200,Y
+        RTS
+OLDENT: JSR     OLDCOLD
+WARM:   JSR     COUT;WRONG
+LE2B6:  .BYTE   $46
+LE2B7:  CMP     $BEA9,Y
+        JSR     COUT
+
+        .ELSE
+
+        INC     PROMPT
         LDY     #$00
         JSR     LE3CE
         DEC     PROMPT
@@ -440,7 +509,7 @@ SCRN:   JSR     GETBYTE
         LSR     A
         LSR     A
         LSR     A
-        LSR     A
+LE29E:  LSR     A ; TODO FIX
 LE29F:  AND     #$0F
         LDY     #$00
         JSR     LE708
@@ -458,6 +527,8 @@ WARM:   JSR     CROUT
 LE2B6:  LSR     RUNFLAG
         LDA     #$BE
         JSR     LE006
+        .ENDIF
+
         LDY     #$00
         STY     LEADZR
         BIT     AUTOFLAG
@@ -469,7 +540,11 @@ LE2B6:  LSR     RUNFLAG
         JSR     COUT
 LE2D1:  LDX     #$FF
         TXS
+        .IF VERSION = 1
+        JSR     LE29E
+        .ELSE
         JSR     LE3CE
+        .ENDIF
         STY     TOKNDX
         TXA
         STA     TXTNDX
@@ -594,6 +669,23 @@ LE3C0:  JSR     COUT
         INY
 LE3C4:  LDA     ERRMSGTBL,Y
         BMI     LE3C0
+
+
+
+        .IF VERSION = 1
+
+COUT:   CMP     #$8D
+        BNE     LE3D3
+LE3CD:  LDA     #$00
+        STA     $24
+        LDA     #$8D
+LE3D3:  INC     $24
+LE3D5:  BIT     $D012
+        BMI     LE3D5
+        STA     $D012
+
+        .ELSE
+
         ORA     #$80
         JMP     COUT
 LE3CE:  TYA
@@ -605,6 +697,11 @@ LE3CE:  TYA
         STA     IN,Y
         LDX     #$FF
         RTS
+
+        .ENDIF
+
+
+
         RTS
 LE3DE:  LDY     #$06
 LE3E0:  JSR     LEED3
@@ -640,7 +737,11 @@ LE413:  INY
         PLA
         TAY
         TXA
+        .IF VERSION = 1
+        JMP     LE4C0
+        .ELSE
         JMP     LF2F8
+        .ENDIF
 LE41C:  INC     TOKNDX
         LDX     TOKNDX
         BEQ     LE3DE
@@ -886,8 +987,108 @@ CLR:    LDA     LOMEM
         LDA     #$00
         STA     $1D
         RTS
-        LDA     SRCH
+LE5CC:  LDA     SRCH
+
+        .IF VERSION = 1
+        ADC     #$05
+        STA     $D2
+        LDA     $D1
+        ADC     #$00
+        STA     $D3
+        LDA     $D2
+        CMP     $CA
+        LDA     $D3
+        SBC     $CB
+        BCC     LE5E5
+        .ENDIF
+
 LE5CE:  JMP     LE36B
+
+
+
+        .IF VERSION = 1
+LE5E5:  LDA     $CE
+        STA     ($D0),Y
+        LDA     $CF
+        INY
+        STA     ($D0),Y
+        LDA     $D2
+        INY
+        STA     ($D0),Y
+        LDA     $D3
+        INY
+        STA     ($D0),Y
+        LDA     #$00
+        INY
+        STA     ($D0),Y
+        INY
+        STA     ($D0),Y
+        LDA     $D2
+        STA     $CC
+        LDA     $D3
+        STA     $CD
+        LDA     $D0
+        BCC     LE64F
+LE60C:  STA     $CE
+        STY     $CF
+        JSR     LE6FF
+        BMI     LE623
+        CMP     #$40
+        BEQ     LE623
+        JMP     LE628
+        ASL     $C9
+        EOR     #$D0
+        .BYTE   $07
+        LDA     #$49
+LE623:  STA     $CF
+        JSR     LE6FF
+LE628:  LDA     $4B
+        STA     $D1
+        LDA     $4A
+LE62E:  STA     $D0
+        CMP     $CC
+        LDA     $D1
+        SBC     $CD
+        BCS     LE5CC
+        LDA     ($D0),Y
+        INY
+        CMP     $CE
+        BNE     LE645
+        LDA     ($D0),Y
+        CMP     $CF
+        BEQ     LE653
+LE645:  INY
+        LDA     ($D0),Y
+        PHA
+        INY
+        LDA     ($D0),Y
+        STA     $D1
+        PLA
+LE64F:  LDY     #$00
+        BEQ     LE62E
+LE653:  LDA     $D0
+        ADC     #$03
+        JSR     LE70A
+        LDA     $D1
+        ADC     #$00
+        STA     $78,X
+        LDA     $CF
+        CMP     #$40
+        BNE     LE682
+        DEY
+        TYA
+        JSR     LE70A
+        DEY
+        STY     $78,X
+        LDY     #$03
+LE670:  INC     $78,X
+        INY
+        LDA     ($D0),Y
+        BMI     LE670
+        BPL     LE682
+
+        .ELSE
+
 LE5D1:  LDY     #$FF
 LE5D3:  STY     XSAVE
 LE5D5:  INY
@@ -985,6 +1186,9 @@ LE66F:  LDA     (SRCH),Y
         INY
         BNE     LE66F
         .BYTE   $09
+
+        .ENDIF
+
 LE679:  LDA     #$00
         STA     IFFLAG
         STA     CRFLAG
@@ -994,7 +1198,11 @@ LE682:  LDY     #$00
 LE684:  LDA     (PX),Y
 LE686:  BPL     LE6A0
         ASL     A
+        .IF VERSION = 1
+        BMI     LE60C
+        .ELSE
         BMI     LE640
+        .ENDIF
         JSR     LE6FF
         JSR     LE708
         JSR     LE6FF
@@ -1039,7 +1247,11 @@ LE6D8:  PLA
         BCS     LE6EC
         TYA
         PHA
+        .IF VERSION = 1
+        JSR     LE6FF
+        .ELSE
         JSR     LF3EB
+        .ENDIF
         LDA     VERBNOW
         BCC     LE681
 LE6EC:  LDA     VERBADRL,Y
@@ -1137,22 +1349,45 @@ LE7A1:  STA     NOUNSTKC,X
 POSITIVE:
         RTS
 TAB:    JSR     GETBYTE
+
+        .IF VERSION = 1
+        LDY     $CE
+        BEQ     LE7B0
+        DEY
+        LDA     $CF
+        BEQ     LE7BC
+LE7B0:  RTS
+        .ELSE
         TAY
         BNE     LE7AD
         JMP     LEECB
 LE7AD:  DEY
 LE7AE:  JMP     LF3F4
+        .ENDIF
+
 LE7B1:  LDA     CH
         ORA     #$07
         TAY
         INY
-LE7B7:  BNE     LE7AE
+LE7B7:  .IF VERSION = 1
+        LDA     #$A0
+        JSR     COUT
+LE7BC:  CPY     $24
+        .ELSE
+        BNE     LE7AE
         INY
         BNE     LE7B1
+        .ENDIF
         BCS     LE7B7
         RTS
+
+        .IF VERSION > 1
         BRK
         BRK
+        .ENDIF
+
+
+
 HE7C1:  JSR     LE7B1
 PRNTNUM:JSR     LE715
 LE7C7:  LDA     ACC+1
@@ -1194,7 +1429,12 @@ HE801:  JSR     LE715
         STA     (AUX),Y
         INY
         LDA     ACC+1
+        .IF VERSION = 1
+        STA     ($DA),Y
+        INX
+        .ELSE
         JMP     LF207
+        .ENDIF
 LET:    RTS
 BEGIN_LINE:
         PLA
@@ -1243,6 +1483,10 @@ LE867:  LDA     P2
         LDY     P2+1
 LE86B:  STA     PR
         STY     PR+1
+        .IF VERSION = 1
+        BIT     $D011
+        BMI     LE8C3
+        .ENDIF
         CLC
         ADC     #$03
         BCC     LE875
@@ -1252,8 +1496,10 @@ LE875:  LDX     #$FF
         TXS
         STA     PX
         STY     PX+1
+        .IF VERSION > 1
         JSR     LF02E
         LDY     #$00
+        .ENDIF
 LE883:  JSR     LE679
         BIT     RUNFLAG
         BPL     END
@@ -1346,7 +1592,11 @@ FOR:    LDY     #$54
         LDA     NOUNSTKL,X
         STA     STACK+64,Y
         LDA     NOUNSTKH,X
+        .IF VERSION = 1
+        STA     $0128,Y
+        .ELSE
         JMP     LF288
+        .ENDIF
         RTS
 TO:     JSR     LE715
         LDY     FORNDX
@@ -1367,7 +1617,17 @@ LE966:  STA     STACK+111,Y
         LDA     PX+1
         STA     STACK+175,Y
         RTS
+        .IF VERSION = 1
+        JSR     LE715
+        LDY     $FB
+        LDA     $CE
+        STA     $012F,Y
+        LDA     $CF
+        JMP     LE966
+        .RES 11
+        .ELSE
         .BYTE   $20,$15
+        .ENDIF
 LE980:  .BYTE   $00,$00,$00,$AB,$03,$03,$03,$03
         .BYTE   $03,$03,$03,$03,$03,$03,$03,$03
         .BYTE   $03,$03,$3F,$3F,$C0,$C0,$3C,$3C
@@ -1385,6 +1645,9 @@ LE980:  .BYTE   $00,$00,$00,$AB,$03,$03,$03,$03
         .BYTE   $03,$03,$AA,$FF,$03,$03,$03,$03
         .BYTE   $03,$03,$03,$03,$03,$03,$03,$03
 VERBADRL:
+             .IF VERSION = 1
+             .RES $E8
+             .ELSE
 	    .BYTE   <BEGIN_LINE,<$FFFF,<$FFFF,<COLON
 	    .BYTE   <LOAD,<SAVE,<CON,<RUNNUM
 	    .BYTE   <RUN,<DEL,<COMMA_DEL,<NEW
@@ -1417,8 +1680,9 @@ VERBADRL:
 	    .BYTE   <LISTNUM,<COMMA_LIST,<LISTCMD,<POP
 	    .BYTE   <NODSP_STR,<NODSP_NUM,<NOTRACE,<DSP_NUM
 	    .BYTE   <DSP_STR,<TRACE,<PRSLOT,<INSLOT
-
+	    .ENDIF
 VERBADRH:
+             .IF VERSION > 1
 	    .BYTE   >BEGIN_LINE,>$FFFF,>$FFFF,>COLON
 	    .BYTE   >LOAD,>SAVE,>CON,>RUNNUM
 	    .BYTE   >RUN,>DEL,>COMMA_DEL,>NEW
@@ -1451,6 +1715,7 @@ VERBADRH:
 	    .BYTE   >LISTNUM,>COMMA_LIST,>LISTCMD,>POP
 	    .BYTE   >NODSP_STR,>NODSP_NUM,>NOTRACE,>DSP_NUM
 	    .BYTE   >DSP_STR,>TRACE,>PRSLOT,>INSLOT
+            .ENDIF
 
 
 ERRMSGTBL:
@@ -1531,12 +1796,23 @@ LEBAC:  JSR     LE3C4
         STX     ACC
         TSX
         STX     ACC+1
+
+        .IF VERSION = 1
+        LDY     #$FE
+        STY     $D9
+        INY
+        STY     $C8
+        JSR     LE299
+        STY     $F1
+        .ELSE
         JSR     LF366
         STY     TOKNDX
         LDA     #$FF
         STA     TXTNDX
         ASL     A
         STA     RUNFLAG
+        .ENDIF
+
         LDX     #$20
         LDA     #$15
         JSR     LE491
@@ -1547,7 +1823,11 @@ HEBCB:  LDY     TXTNDX
 LEBCE:  STA     ACC
         INY
         LDA     IN,Y
+        .IF VERSION = 1
+        CMP     #$74
+        .ELSE
         CMP     #$80
+        .ENDIF
         BEQ     HEBAA
         EOR     #$B0
         CMP     #$0A
@@ -1567,6 +1847,13 @@ LEBCE:  STA     ACC
         BNE     LEBFA
         JSR     NEGATE
 LEBFA:  JMP     HE801
+.IF VERSION = 1
+SYNTABLNDX:;TODO FIX
+        .BYTE   $C1,$00,$7F,$D1,$CC,$C7,$CF,$CE
+        .BYTE   $C5,$9A,$98,$8D,$96,$95,$93,$BF
+        .BYTE   $B2,$32,$12,$0F,$BC,$B0,$AC,$BE
+        .BYTE   $35,$0C,$61,$30,$10,$0B,$DD,$FB
+.ENDIF
         .BYTE   $FF,$FF,$FF,$50,$20,$4F,$C0,$F4
         .BYTE   $A1,$E4,$AF,$AD,$F2,$AF,$E4,$AE
         .BYTE   $A1,$F0,$A5,$B4,$B3,$EF,$B4,$EE
@@ -1672,8 +1959,28 @@ COMMA_PLOT:
         BCS     LEE68
         CPY     #$28
         BCS     LEE68
+        .IF VERSION = 1
+        RTS
+        NOP
+        NOP
+        .ELSE
         JMP     PLOT
+        .ENDIF
 COLOR:  JSR     GETBYTE
+        .IF VERSION = 1
+        RTS
+        NOP
+LEE53:  TXA
+        LDX     #$01
+LEE56:  LDY     $CE,X
+        STY     $4C,X
+        LDY     $48,X
+        STY     $CA,X
+        DEX
+        BEQ     LEE56
+        TAX
+        RTS
+        .ELSE
         JMP     SETCOL
 MAN:    LSR     AUTOFLAG
         RTS
@@ -1682,6 +1989,7 @@ IVTAB:  JSR     LF3B3
         BCS     LEE68
         STA     CV
         JMP     VTAB
+        .ENDIF
 LEE63:  LDY     #$77
 LEE65:  JMP     LE3E0
 LEE68:  LDY     #$7B
@@ -1748,8 +2056,18 @@ LEED3:  TYA
         TAY
         JSR     LE3C4
         LDY     #$72
+        .IF VERSION = 1
+        JMP     LE3C4
+        .ELSE
         JMP     LF161
-LEEE4:  JSR     LF23F
+        .ENDIF
+LEEE4:
+        .IF VERSION = 1
+        JSR     LE715
+        .ELSE
+        JSR     LF23F
+        .ENDIF
+
 LEEE7:  ASL     ACC
         ROL     ACC+1
         BMI     LEEE7
@@ -1762,15 +2080,31 @@ PEEK:   JSR     LE715
         LDA     (ACC),Y
         STY     SYNSTKL+31,X
         JMP     LE708
+
 GETVAL255:
         JSR     GETBYTE
         LDA     ACC
+
+        .IF VERSION = 1
+        PHA
+        .ELSE
         STA     TXTNDX
         RTS
+        .ENDIF
+
 POKE:   JSR     LE715
+        .IF VERSION = 1
+        PLA
+        .ELSE
         LDA     TXTNDX
+        .ENDIF
         STA     (ACC),Y
         RTS
+
+        .IF VERSION = 1
+        .BYTE $FF,$FF,$FF
+        .ENDIF
+
 DIVIDE: JSR     LEE6C
         LDA     ACC
         STA     P3
@@ -1845,8 +2179,22 @@ LEF93:  JMP     NEW
         STY     LOMEM
         LDA     ACC+1
         STA     LOMEM+1
+
+        .IF VERSION = 1
+        JMP     CLR
+        .ELSE
         BCC     LEF93
+        .ENDIF
+
 LEFAB:  JMP     LEECB
+
+        .IF VERSION = 1
+        NOP
+        NOP
+        NOP
+        NOP
+        JSR     LEFC9
+        .ELSE
         .BYTE   $FF
         .BYTE   $FF
         .BYTE   $FF
@@ -1855,13 +2203,18 @@ LEFAB:  JMP     LEECB
         .BYTE   $FF
         .BYTE   $FF
         .BYTE   $FF
+        .ENDIF
 HEFB6:  JSR     INPUTSTR
         JMP     LEFBF
 INPUT_PROMPT:
         JSR     PRNTSTR
 LEFBF:  LDA     #$FF
         STA     TXTNDX
+        .IF VERSION = 1
+        LDA     #$74
+        .ELSE
         LDA     #$80
+        .ENDIF
         STA     IN
         RTS
 LEFC9:  JSR     NOT
@@ -1889,6 +2242,9 @@ LEFF8:  CPX     #$80
         BNE     LEFFD
         DEY
 LEFFD:  JMP     LE00C
+
+
+        .IF VERSION > 1
 COLD:   LDY     #$00
         STY     NOUNSTKC
         STY     LOMEM
@@ -2408,3 +2764,5 @@ INSLOT: JSR     GETBYTE
         JSR     INPORT
         LDX     XSAVE
         RTS
+
+        .ENDIF

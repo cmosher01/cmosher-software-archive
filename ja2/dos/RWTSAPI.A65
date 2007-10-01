@@ -2,13 +2,15 @@
 
                 .EXPORT DOSLIM
                 .EXPORT RWTS
+                .IF VERSION < 330
+                .EXPORT L3E0A
+                .EXPORT L3FD5
+                .ENDIF
                 .IF VERSION >= 320
                 .EXPORT FULLPTCH
                 .EXPORT RESTATIN
                 .EXPORT ZEROPTCH
-                .IF VERSION < 330
-                .EXPORT L3E0A
-                .ELSE
+                .IF VERSION >= 330
                 .EXPORT SECFLGS
                 .EXPORT CLOBCARD
                 .ENDIF
@@ -58,7 +60,7 @@ RWTS
 
 
 
-                STY PTR2IOB     ; SET UP A Z-PG PTR 2 RWTS'S IOB.
+                STY PTR2IOB     ; SET UP A Z-PG PTR TO RWTS'S IOB.
                 STA PTR2IOB+1
                 .IF VERSION >= 330
                 LDY #2          ; INITIALIZE CNTR FOR MAXIMUM
@@ -77,7 +79,7 @@ RWTS
 
                                 ; CHK IF WANTED SLOT*16 = LAST SLOT*16?
 
-                LDY #15         ; INDEX 4 VAL OF LAST SLOT USED.
+                LDY #15         ; INDEX FOR VAL OF LAST SLOT USED.
                 CMP (PTR2IOB),Y ; WANTED*16 VS LAST*16.
                 BEQ SAMESLOT    ; SLOT WANTED=SLOT LAST ACCESSED.
 
@@ -88,7 +90,7 @@ RWTS
                 TXA             ; SAVE SLOT*16 WANTED ON STK.
                 PHA
                 LDA (PTR2IOB),Y ; GET OLD SLOT*16 BACK.
-                TAX             ; PUT IT IN (X) 2 INDEX BASE ADRS.
+                TAX             ; PUT IT IN (X) TO INDEX BASE ADRS.
                 PLA             ; PUT SLOT*16 WANTED IN (A) AND
                 PHA             ; KEEP IT SAVED ON STK.
                 STA (PTR2IOB),Y ; UPDATE LAST-USED SLOT*16 FOR
@@ -100,7 +102,7 @@ RWTS
                                 ; FOR IT TO STOP.
 
                 LDA Q7L,X       ; PREP LATCH FOR INPUT.
-CKSPIN          LDY #8          ; SET CNTR 2 INSURE AT LEAST 8 CKS
+CKSPIN          LDY #8          ; SET CNTR TO INSURE AT LEAST 8 CKS
                 LDA Q6L,X       ; STROBE LATCH TO READ.
 CHKCHNG         CMP Q6L,X       ; READ AGAIN & CMP TO LAST READ.
                 BNE CKSPIN      ; DATA CHANGED, SO STILL SPINNING.
@@ -170,7 +172,7 @@ DONETEST        PHP             ; SAVE TEST RESULTS ON STK SO CAN
                 LDY #6
 MOVPTRS         LDA (PTR2IOB),Y ; GET PTRS FROM RWTS'S IOB.
                 STA PTR2DCT-6,Y ; PUT THEM IN Z-PAGE.  (":" USED
-                INY             ; 2 FORCE A 3-BYTE ZERO-PAGE ADR.)
+                INY             ; TO FORCE A 3-BYTE ZERO-PAGE ADR.)
                 CPY #10         ; 4 BYTES TO COPY (6 TO 9).
                 BNE MOVPTRS
 
@@ -183,7 +185,7 @@ MOVPTRS         LDA (PTR2IOB),Y ; GET PTRS FROM RWTS'S IOB.
                 .ENDIF
                 LDY #2          ; GET DRIVE # WANTED.
                 LDA (PTR2IOB),Y
-                LDY #16         ; SET (Y) = INDEX 2 LAST-USED DRV.
+                LDY #16         ; SET (Y) = INDEX TO LAST-USED DRV.
                 CMP (PTR2IOB),Y ; DRV# WANTED VS DRV# LAST USED.
                 BEQ SAMEDRV
                 STA (PTR2IOB),Y ; DESIGNATE DRV# WANTED AS LAST-
@@ -220,7 +222,7 @@ USEDRV1         ROR DRVZPG      ; PUT SIGN BIT FOR WHICH DRIVE
                                 ; WAS ORIGINALLY ON OR NOT.
 
                 PLP             ; GET PREVIOUS TEST RESULT.
-                PHP             ; PUT IT BACK ON STK 4 LATER USE.
+                PHP             ; PUT IT BACK ON STK FOR LATER USE.
                 BNE WASON       ; ORIG DRV IN ORIG SLOT WAS ON.
 
                                 ; SPECIFIC DRIVE WANTED IN SPECIFIC
@@ -230,14 +232,14 @@ USEDRV1         ROR DRVZPG      ; PUT SIGN BIT FOR WHICH DRIVE
                                 ; CURRENT FLOW THAT OCCURS WHEN
                                 ; MOTOR IS TURNED ON.  (THAT IS,
                                 ; GIVE LINE/CAPACITOR TIME TO BLEED
-                                ; DOWN CAUSE MOTOR ON/OFF SWITCH
+                                ; DOWN BECAUSE MOTOR ON/OFF SWITCH
                                 ; REQUIRES MORE CURRENT THAN THE
                                 ; STEPPER MOTOR.)
                                 ;
                                 ; (AMOUNT OF DELAY IS NOT CONSTANT
-                                ; CAUSE IT DEPENDS ON WHAT IS IN
+                                ; BECAUSE IT DEPENDS ON WHAT IS IN
                                 ; ACCUMULATOR & WE DON'T KNOW
-                                ; CAUSE WE WERE JUST ACCESSING
+                                ; BECAUSE WE WERE JUST ACCESSING
                                 ; HARDWARE.)
 
                 LDY #7
@@ -356,7 +358,7 @@ SETXSLT         LDX SLOTPG5     ; SET (X)=SLOT*16.
 REDUCERD        DEC READCNTR    ; REDUCE READ COUNT.
                 BPL SETXSLT     ; TRY AGAIN.
 
-                                ; DO A RECALIBRATION CAUSE WE HAVE
+                                ; DO A RECALIBRATION BECAUSE WE HAVE
                                 ; EXHAUSTED ALL ATTEMPTS TO GET A
                                 ; GOOD READ.
 
@@ -367,7 +369,7 @@ DORECALB        LDA PRESTRK     ; SAVE TRK WANTED ON STK.
                                 ; (REPEATEDLY BANGING HEAD AGAINST
                                 ; STOP = FAMILIAR DISK CLATTER.)
                 JSR SETTRK      ; GO SELECT DRV & PUT TRK WANTED
-                                ; IN MEM LOCATION SPECIFIC 2 DRV.
+                                ; IN MEM LOCATION SPECIFIC TO DRV.
                 .IF VERSION < 330
                 DEC RSEEKCNT
                 BNE DRVERR
@@ -391,7 +393,7 @@ RDRIGHT         LDY TRKDSK      ; (Y) = TRK# FOUND IN HEADER.
                 BEQ RTTRK       ; YES - SEEEKED TO CORRECT TRK.
 
                                 ; BAD SEEK (OR ELSE SOME KIND
-                                ; OF PROTECTION SCHEME) CAUSE
+                                ; OF PROTECTION SCHEME) BECAUSE
                                 ; TRK WANTED < > TRK FOUND.
 
                 LDA PRESTRK     ; SAVE TRK WANTED ON STK.
@@ -427,7 +429,7 @@ TOERRWTS        PLP
                                 ; ---------------------------------
 
 WASEEK          BEQ RWTSEXIT    ; IF CMD WAS SEEK, THEN GO EXIT
-                                ; RWTS CAUSE JUST COMPLETED MOVE.
+                                ; RWTS BECAUSE JUST COMPLETED MOVE.
 
 
                                 ; ---------------------------------
@@ -498,12 +500,12 @@ CRCTSEC
                 PHP             ; SAVE STATUS OF READ ON STACK JUST
                                 ; IN CASE WE NEED TO RE-READ.
                 BCS REDUCERD    ; BAD READ - GO TRY AGAIN.  LEAVE
-                                ; SET (C) ON STK 2 DENOTE READING.
+                                ; SET (C) ON STK TO DENOTE READING.
                                 ; (WE PREVIOUSLY PULLED THE SAVED
                                 ; STATUS OFF THE STK.  THERE4, WE
                                 ; BETTER PUT A SET (C) BACK ON STK
-                                ; CAUSE WE ARE READING AND WE ARE
-                                ; ABOUT 2 BRANCH BACK 2 A ROUTINE
+                                ; BECAUSE WE ARE READING AND WE ARE
+                                ; ABOUT TO BRANCH BACK TO A ROUTINE
                                 ; THAT EXPECTS THE READ (C=1) OR
                                 ; WRITE (C=0) FLAG ON THE STACK.
                 PLP             ; GOOD READ -NOT BRANCHING BACK SO
@@ -542,7 +544,7 @@ CRCTSEC
                                 ; DENOTED (CARRY SET).
 
 RWTSEXIT        CLC             ; (C)=0, SIGNL SUCCESSFUL OPERAT'N
-                .BYTE $24          ; "BIT $38" 2 IGNORE "SEC" INSTRUC
+                .BYTE $24          ; "BIT $38" TO IGNORE "SEC" INSTRUC
 RWTSERR         SEC             ; (C)=1, SIGNL UNSUCCESSFUL OPER'N
                 LDY #13         ; STORE RETURN CODE IN IOB.
                 STA (PTR2IOB),Y
@@ -584,7 +586,7 @@ SEEKTRK         PHA             ; SAVE # OF TRK WANTED ON STK.
                                 ; USING A TWO-PHASE DRIVE.
 
                 ASL A           ; 2*TRK# WANTED=1/2TRACK# WANTED.
-                JSR SEEKIT      ; MOVE THE DISK ARM 2 DESIRED TRK.
+                JSR SEEKIT      ; MOVE THE DISK ARM TO DESIRED TRK.
                 LSR PRESTRK     ; CONVERT HALFTRACK VALUE BACK TO
                 RTS             ; WHOLE TRACK VALUE.
 
@@ -693,7 +695,7 @@ SETTRK          PHA             ; SAVE PRESENT TRK # ON STK.
                 BMI STORDRV1    ; BRANCH IF USING DRIVE 1.
                 STA TRK4DRV2,Y  ; SAV HALFTRK # WANTED FOR DRIVE2.
                 BPL RTNSETRK    ; ALWAYS.
-STORDRV1        STA TRK4DRV1,Y  ; SAVE HALFTRK # WANTED 4 DRIVE1.
+STORDRV1        STA TRK4DRV1,Y  ; SAVE HALFTRK # WANTED FOR DRIVE1.
 RTNSETRK        RTS
 
 
@@ -869,7 +871,7 @@ L3F94           LDY   MTRTIME+1
 
 L3F9E           INC   FRMTKCTR
                 LDA   FRMTKCTR
-                CMP   #$23
+                CMP   #TRKPERDSK
                 BCS   L3FB8
                 ASL   A
                 JSR   SEEKABS
@@ -1039,7 +1041,7 @@ RDAGAIN         SEC             ; DEFAULT (C)=1 TO SIGNAL ERROR.
                 BCS RDAGAIN     ; LAST CHANCE BOMBED OUT!!!
                 INC FRMTKCTR    ; KICK UP TRK COUNTER.
                 LDA FRMTKCTR    ; SET (A) FOR NEXT TRK COUNT.
-                CMP #$23        ; DONE ALL TRACKS YET (#0 TO #34)?
+                CMP #TRKPERDSK  ; DONE ALL TRACKS YET (#0 TO #34)?
                 BCC FRMNXTRK    ; NO - GO FORMAT THE NEXT TRACK.
                 CLC             ; SIGNAL FINISHED ALL TRACKS.
                 BCC DONEFRMT    ; ALWAYS - ONLY GOOD EXIT.
@@ -1067,7 +1069,7 @@ DONEFRMT        LDA MTROFF,X    ; TURN THE MOTOR OFF, XIT WITH (C)
 
 
                                 ; ------------------------------------
-                                ; SUBROUTINE 2 FORMAT A SPECIFIC TRK.
+                                ; SUBROUTINE TO FORMAT A SPECIFIC TRK.
                                 ; ------------------------------------
 
                                 ; SECTORS ARE WRITTEN IN ASCENDING
@@ -1150,7 +1152,7 @@ BYPSYNCS        JSR VRFYRTN     ; (12 CYC)
                                 ; WILL EVENTUALLY HAVE TO REFORMAT
                                 ; THE TRACK.)
 
-                JSR RDADDR      ; READ ADR OF 1RST SEC ENCOUNTERED
+                JSR RDADDR      ; READ ADR OF 1ST SEC ENCOUNTERED
                 BCS REREADDR    ; BAD READ, TRY AGAIN.
                 LDA SECDSK      ; WAS SEC READ = SEC00?
                 BEQ RDNXTDAT    ; YES - GO READ NEXT DATA SEC.
@@ -1158,7 +1160,7 @@ BYPSYNCS        JSR VRFYRTN     ; (12 CYC)
                                 ; DIDN'T FIND SECTOR $00 WHEN EXPECTED!!!!
 
                                 ; DRIVE MUST BE FASTER THAN ANTICIPATED
-                                ; CAUSE SEC $0F OVERLAID TOO MUCH OF
+                                ; BECAUSE SEC $0F OVERLAID TOO MUCH OF
                                 ; THE LONG SYNC GAP (GAP1) THAT WAS
                                 ; ORIGINALLY WRITTEN BEFORE SEC $00.
                                 ; WE WILL EVENTUALLY HAVE TO REFORMAT
@@ -1191,10 +1193,10 @@ BYPSYNCS        JSR VRFYRTN     ; (12 CYC)
                 STA SYNCNTR
                 CMP #5          ; DO WE HAVE AT LEAST 5 SYNCS?
                 BCS REREADDR    ; YES.
-                SEC             ; NO - SIGNAL ERROR CAUSE NEED AT
+                SEC             ; NO - SIGNAL ERROR BECAUSE NEED AT
                 RTS             ; LEAST 5 SYNCS.  DRIVE IS SO FAST
                                 ; ===             ;THAT IT IS USELESS.  WE CAN'T
-                                ; EVEN COMPENSATE 4 IT BY REDUCING
+                                ; EVEN COMPENSATE FOR IT BY REDUCING
                                 ; THE NUMBER OF GAP-3 SYNCS.
 
                                 ; READ THE SEC ADDR & DATA PROPER.
@@ -1274,7 +1276,7 @@ CKSECMAP        LDY SECDSK      ; USE # OF SEC FOUND AS INDEX TO
                                 ; REDUCE THE SIZE OF GAP3.
 
                 DEC SYNCNTR     ; GAP > = 16 SYNCS LONG, SO CAN
-                DEC SYNCNTR     ; AFFORD 2 REDUCE IT BY 2 IN ORDER
+                DEC SYNCNTR     ; AFFORD TO REDUCE IT BY 2 IN ORDER
 NOTRK0          CLC             ; TO ACCOMMODATE A TIGHTER TRACK.
                 RTS             ; EXIT CLENALY.
 

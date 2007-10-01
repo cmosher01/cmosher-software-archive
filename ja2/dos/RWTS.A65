@@ -143,7 +143,7 @@ PRENIB1         LDA   (PTR2BUF),Y
                 LDY #2
 PRENIB1         DEY
                 LDA (PTR2BUF),Y ; GET BYTE FROM "DATA" BUFFER.
-                LSR A           ; PUT ITS LWR 2 BITS IN2 RWTSBUF1.
+                LSR A           ; PUT ITS LWR 2 BITS INTO RWTSBUF1.
                 ROL RWTSBUF2,X
                 LSR A
                 ROL RWTSBUF2,X
@@ -191,7 +191,7 @@ WRITESEC        SEC             ; (C)=1, ASSUME WRITE PROTECTED
                 STX FRMTSLOT    ; SAVE SLOT*16 IN PAGES 0 & 6.
                 STX SLOTPG6
                 .ENDIF
-                LDA RWTSBUF2    ; GET 1RST 2-ENCODED BYTE AND SAVE
+                LDA RWTSBUF2    ; GET 1ST 2-ENCODED BYTE AND SAVE
                 STA HOLDNIBL    ; IT FOR LATER USE.
 
                                 ; WRITE 5-SYNC GAP BETWEEN ADDRESS
@@ -401,7 +401,7 @@ PRODATAD        LDA Q6L,X       ; READ NEXT BYTE IN DATA PROLOGUE.
                 CMP #$AD        ; WAS IT AN "AD"?
                 BNE VERSD5      ; NO - GO RESTART SEQUENCE.
 
-                                ; READ 1RST 86 BYTES OF DATA INTO
+                                ; READ 1ST 86 BYTES OF DATA INTO
                                 ; RWTSBUF2 ($BC55 --> $BC00).
                                 ;
                                 ; USE DISK BYTE AS INDEX TO THE
@@ -470,10 +470,10 @@ RDCHECK         LDY Q6L,X       ; GET DATA CHECKSUM BYTE FROM DSK.
                                 ; IN ORDER TO DEFEAT DATA CHECKSUM
                                 ; AND IGNORE THE DATA EPILOGUE.
 
-                                ; READ 1RST TWO BYTES (ONLY) OF
+                                ; READ 1ST TWO BYTES (ONLY) OF
                                 ; DATA EPILOGUE ("DE AA EB").
 
-EPIRDDE         LDA Q6L,X       ; READ 1RST BYTE OF DATA EPILOGUE.
+EPIRDDE         LDA Q6L,X       ; READ 1ST BYTE OF DATA EPILOGUE.
                 BPL EPIRDDE     ; WAIT FOR FULL BYTE.
                 CMP #$DE        ; IS IT A "DE"?
                 BNE ERRTN       ; NO - GOT AN ERROR.
@@ -483,7 +483,7 @@ EPIRDAA         LDA Q6L,X       ; READ 2ND BYTE OF DATA EPILOGUE.
                 CMP #$AA        ; IS IT AN "AA"?
                 BEQ GOODRTN     ; YES - GOT A GOOD READ.
 ERRTN           SEC             ; SIGNAL BAD READ.
-                RTS             ; HACKERS OFTEN CHANGE THE "SEC" 2
+                RTS             ; HACKERS OFTEN CHANGE THE "SEC" TO
                                 ; "CLC" TO DEFEAT ERROR CHECKING.
 
 
@@ -526,7 +526,7 @@ TRYAA           LDA Q6L,X
                 BPL TRYAA       ; WAIT FOR FULL BYTE.
                 CMP #$AA        ; WAS IT "AA"?
                 BNE VERSUSD5    ; NO - RETRY SEQUENCE.
-                LDY #3          ; SET (Y) 4 LATER READING OF VOL,
+                LDY #3          ; SET (Y) FOR LATER READING OF VOL,
                                 ; TRK, SEC & CHKSUM INFO FROM THE
                                 ; ADRRESS FIELD.
 TRY96           LDA Q6L,X
@@ -567,14 +567,14 @@ RDHDR           LDA Q6L,X       ; GET EVEN-CODED BYTE.
                 TAY             ; PUT CHECKSUM FOUND IN (Y).
                 BNE ERRTN       ; IF CHKSUM FOUND < > 0 THEN ERR.
                                 ; HACKERS OFTEN CHANGE THESE TWO
-                                ; BYTES 2 "CLC" AND "RTS" INSTRUCS
-                                ; IN ORDER 2 DEFEAT THE ADR CHKSUM
+                                ; BYTES TO "CLC" AND "RTS" INSTRUCS
+                                ; IN ORDER TO DEFEAT THE ADR CHKSUM
                                 ; AND IGNORE THE ADR EPILOGUE.
 
-                                ; READ 1RST 2 BYTES (ONLY) OF
+                                ; READ 1ST 2 BYTES (ONLY) OF
                                 ; ADDRESS EPILOGUE ("DE AA EB").
 
-TRYEPIDE        LDA Q6L,X       ; GET 1RST BYTE.
+TRYEPIDE        LDA Q6L,X       ; GET 1ST BYTE.
                 BPL TRYEPIDE    ; WAIT FOR A FULL BYTE.
                 CMP #$DE        ; WAS IT A "DE"?
                 BNE ERRTN       ; NO - TRY AGAIN.
@@ -667,7 +667,7 @@ SEEKABS
                 .IF VERSION < 330
                 STX SLT16ZPG    ; SAVE SLOT*16 IN ZERO PAGE.
                 .ENDIF
-                LDA #0          ; INIT COUNTER 4 # OF TRKS MOVED.
+                LDA #0          ; INIT COUNTER FOR # OF TRKS MOVED.
                 STA STPSDONE
 
                                 ; SAVE CURRENT HALFTRK POS'N AND CALC #
@@ -679,7 +679,7 @@ SAVCURTK        LDA PRESTRK     ; SAVE CURRENT HALFTRK POSITON.
                 SBC DESTRK
                 BEQ ATDESTN     ; AT DESTINATION SO GO SHUTDOWN.
                 BCS MOVDOWN     ; PRES 1/2TRK > DESTINATION 1/2TRK
-                                ; SO WANT 2 MOVE 2 LOWER 1/2TRK#.
+                                ; SO WANT TO MOVE TO LOWER 1/2TRK#.
 
                                 ; WANT TO MOVE TO HIGHER HALFTRK#.
                                 ; (PRESTRK - DESTRK = NEG RESULT.)
@@ -694,8 +694,8 @@ SAVCURTK        LDA PRESTRK     ; SAVE CURRENT HALFTRK POSITON.
 
 MOVDOWN         ADC #$FE        ; SIMULATE A SUBTRATION OF 1.
                                 ; ACTUALLY ADDING MINUS 1 (#$FF)
-                                ; CAUSE (C)=1.  WANT (A) TO EQUAL
-                                ; 1 LESS THAN # OF HALFTRKS 2 MOV.
+                                ; BECAUSE (C)=1.  WANT (A) TO EQUAL
+                                ; 1 LESS THAN # OF HALFTRKS TO MOV.
                 DEC PRESTRK     ; MOVING DOWN, REDUCE PRES HALFTRK
                                 ; NUMBER FOR NEXT TIME AROUND.
 
@@ -715,7 +715,7 @@ MOVDOWN         ADC #$FE        ; SIMULATE A SUBTRATION OF 1.
                                 ; START POS'N.
 
 CKDLYNDX        CMP STPSDONE    ; COMPARE # OF HALFTRKS ALREADY
-                                ; MOVED VS # HALFTRKS NEED 2 MOVE.
+                                ; MOVED VS # HALFTRKS NEED TO MOVE.
                 BCC CLSR2ND     ; CLOSER TO DEST'N THAN START.
 
                                 ; CLOSER TO START.
@@ -756,15 +756,15 @@ ARRIVED         RTS
                 BCS TURNON      ; WE ARE AT OR BEYOND 12 STEPS FRM
                                 ; START OR DEST'N POS'N SO USE OLD
                                 ; INDEX TO ACCESS DELAY TABLE.
-                TAY             ; USE PRES DISTANCE 2 INDEX TABLE.
+                TAY             ; USE PRES DISTANCE TO INDEX TABLE.
 TURNON          SEC             ; (C)=1 SO GET ODD INDEX TO BASE
                                 ; ADR SO MAGNET WILL BE TURNED ON.
                 JSR ONOROFF     ; TURN MAGNET ON TO SUCK STEPPER
-                                ; MOTOR 2 CORRECT HALFTRACK POS'N.
+                                ; MOTOR TO CORRECT HALFTRACK POS'N.
                 LDA ONTABLE,Y   ; GET TIME TO LEAVE MAGNET ON.
                 JSR DELAY       ; DELAY TO GIVE DRIVE TIME TO ACT
                                 ; BEFORE MAGNET TURNED OFF AGAIN
-                                ; CAUSE COMPUTER IS TOO FAST FOR
+                                ; BECAUSE COMPUTER IS TOO FAST FOR
                                 ; PERIPHERAL & WANT SMOOTH MOV'T.
                 LDA HOLDPRES    ; (A) = LAST HALFTRK POS'N.
                 CLC             ; CLR (C) SO INDEX WILL COME OUT
@@ -791,7 +791,7 @@ ATDESTN         JSR DELAY       ; WAIT ON PERIPHERAL AGAIN.
                                 ; TURN LAST-USED MAGNET OFF SO EXIT
                                 ; WITH ALL PHASES (IE.MAGNETS) OFF.
                                 ; NOTE:  THIS IS VERY IMPORTANT
-                                ; CAUSE MAG1ON IS WIRED INTO THE
+                                ; BECAUSE MAG1ON IS WIRED INTO THE
                                 ; WRITE-PROTECT SWITCH!!!
 
                 CLC             ; CLR (C) SO NDX WILL COME OUT AS
@@ -802,13 +802,13 @@ ATDESTN         JSR DELAY       ; WAIT ON PERIPHERAL AGAIN.
                                 ; TURN MAGNET ON OR OFF.
                                 ; ---------------------------------
 
-ONOROFF         LDA PRESTRK     ; USE HALFTRK POS'N 2 INDEX MAGNET
+ONOROFF         LDA PRESTRK     ; USE HALFTRK POS'N TO INDEX MAGNET
 ENTRYOFF        AND #%00000011  ; ONLY KEEP LWR 2 BITS OF HALFTRK#
                                 ; BECAUSE ONLY 4 MAGNETS (0,1,2,3)
                 ROL A           ; MULTIPLY HALFTRK * 2 & ADD (C).
                                 ; IF (C)=0, RESULT EVEN, MAG OFF
                                 ; IF (C)=1, RESULT ODD, MAGNET ON.
-                ORA SLT16ZPG    ; MERGE INDEX 2 MAGNET WITH SLOT#.
+                ORA SLT16ZPG    ; MERGE INDEX TO MAGNET WITH SLOT#.
                 TAX             ; USE (X) TO INDEX MAGNET ON/OFF.
                 LDA MAG0FF,X    ; USE MAGNET-0-OFF AS BASE ADR.
                 LDX SLT16ZPG    ; RESTORE (X) = SLOT*16.
@@ -898,6 +898,18 @@ DSKNBTBL        .BYTE $96,$97,$9A,$9B,$9D,$9E,$9F
                 .ENDIF
 
 
+
+
+
+
+
+
+
+
+
+
+
+
                                 ; =================================
                                 ; CHECK IF USING APPEND CMD.
                                 ; (RECENT PATCH, $BA69-$BA75)
@@ -927,6 +939,9 @@ CONTCLOB        LDA #$FF        ; SET MODE FLAG FOR CARD.
                 JMP INIT        ; SIMULATE A TEXT STATEMENT.
 
 
+
+
+
                 .IF VERSION = 332
                                 ; =================================
                                 ; FREE SPACE
@@ -942,7 +957,10 @@ CMPATCH         LDA RECNMBFM
                 JMP GOODFMXT
                 .ENDIF
 
-CMPATCHLIM      .RES  2
+
+
+
+                .RES  2
 
                 .ELSEIF VERSION = 330
                 .BYTE $B3, $B3, $A0, $E0, $B3, $C3, $C5, $B3, $A0, $E0, $B3, $C3, $C5
@@ -1230,6 +1248,7 @@ FREE1
                                 ;       (well... this routine AND the patch to call this routine)
                                 ; Since Franklin Ace had lower case letters, this routine
                                 ; will upcase any commands the user types in before sending to DOS.
+                .INCLUDE "CMAP2.A65"
 FRANK           LDA BUF200,X
                 CMP #'a'
                 BCC FRANK1

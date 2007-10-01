@@ -4,6 +4,9 @@
                 .EXPORT BOOT1
                 .EXPORT IMG8FD
                 .EXPORT IMG8FF
+                .IF VERSION < 320
+                .EXPORT L1B28SR
+                .ENDIF
                 .IF VERSION > 320
                 .EXPORT APNDPTCH
                 .EXPORT APPNDFLG
@@ -46,6 +49,7 @@
                                 ; IMAGE OF BOOT1 ($B600-$B6FF)
                                 ; =================================
 
+                                ; (for DOS 3.3 only:)
                                 ; - STORED ON TRK0/SEC0.
                                 ; - READ IN AT $800-$8FF BY DISK CONTROLLER ROM (BOOT0).
                                 ; - EXECUTION BEGINS AT $0801 & USES THE CONTROLLER'S READ-
@@ -53,57 +57,27 @@
                                 ; CARD) TO READ IN TRK0/SEC9 DOWN TO TRK0/SEC1 (THAT IS,
                                 ; $BFFF ----> $B600).
 
-                                ; NOTE:  IN ORDER TO GENERATE AN ACCURATE SYMBOL TABLE THAT
-                                ; CAN BE APPLIED TO BOTH THE FORMATTED AND LINEAR DIS-
-                                ; ASSEMBLIES, AND BECAUSE DIFFERENT ASSEMBLERS VARY IN
-                                ; THEIR ABILITIES TO ACCEPT CERTAIN OBJECT VALUES OR RE-ORG
-                                ; DURING ASSEMBLY, THE FOLLOWING SPECIAL LABEL SYSTEM HAS
-                                ; BEEN CREATED:
-                                ;
-                                ; IMAGE LBL,ADR    EXECUTION LBL,ADR  ;COMMENTS
-                                ; ---------------  -----------------  --------------------
-                                ; SEC2RDB6, $B600  SEC2RDB08, $800    ;DEFINES # OF SECS 2 BE READ IN BY BOOT0
-                                ; BT1EXCB6, $B601  BT1EXC08 , $801    ;START BT1 EXECUTION BOOT0 JMPS TO HERE.
-                                ; SKPRELB6, $B61F  SKPREL08 , $81F    ;TARGET LBL 4 BRNCH.
-                                ; PRP4B2B6, $B639  PRP4B208 , $839    ;TARGET LBL 4 BRNCH.
-                                ; IMG8FD  , $B6FD  BT1LDADR , $8FD    ;BOOT1 LOAD ADDRESS.
-                                ;                                     ;VARIES FROM $B600 TO
-                                ;                                     ;$BF00.  EVENTUALLY
-                                ;                                     ;PTS 2 START BOOT2 ($B700).
-                                ; IMG8FF  , $B6FF  BT1PG2RD , $8FF    ;CONTAINS # OF SECS
-                                ;                                     ;TO READ IN WHEN
-                                ;                                     ;EXECUTING BOOT1.
-                                ;                                     ;ALSO DOUBLES AS
-                                ;                                     ;LOGICAL SEC #.
-                                ;                                     ;VARIES FROM:
-                                ;                                     ;$09 --> $00 --> $FF.
-                                ;
-                                ; AS INDICATED ABOVE, SEC2RD08 ($800) DEFINES # OF SECS
-                                ; TO BE READ IN BY BOOT0.  THIS VALUE IS NORMALLY $01
-                                ; (MEANING READ ONLY SEC0 OF TRK0).  HOWEVER, YOU CAN ZAP
-                                ; TRK0/SEC0/OFFSET0 WITH A LARGER VALUE ($01 TO $10) TO
-                                ; READ IN MORE SECS FROM TRK0.  ALSO NOTE THAT MOST
-                                ; REFERENCES SAY THAT SEC2RD08 NORMALLY CONTAINS A "$00"
-                                ; (RATHER THAN A "$01").  BECAUSE THE TEST AT $CS56 USES
-                                ; THE CARRY, EITHER VAL WILL CAUSE ONLY 1 SEC TO BE READ IN
-                                ; HOWEVER, "$01" IS THE VALUE USED BY DOS.  (CONFUSION MAY
-                                ; STEM FROM THE FACT THAT APPLESOFT LATER STORES A $00 IN
-                                ; $800.)
-
-BOOT1
+BOOT1                           ; IMAGE OF SEC2RD08.  DENOTES # OF
+                                ; SECS TO BE READ FROM TRK0 DURING
+                                ; BOOT0.
                 .IF VERSION < 320
                 .BYTE 0
                 .ELSE
-                .BYTE 1            ; IMAGE OF SEC2RD08.  DENOTES # OF
-                                ; SECS TO BE READ FROM TRK0 DURING
-                                ; BOOT0.
+                .BYTE 1
                 .ENDIF
 
 
 
 
+
+
                 .IF VERSION < 320
-                .RES 11
+
+
+
+
+
+                .RES $0B
                                 ; upon entry, A3 --> first byte of highest RAM page (e.g., $BF00)
 L1B28SR
                 LDA   A3H
@@ -133,14 +107,34 @@ L1B4D           PLA
                 RTS
 
                 .RES $195
-                .ELSE
-                .IF VERSION = 320
+
+
+
+
+
+                .ELSEIF VERSION = 320
+
+
+
+
+
                 .RES $FC
+
+
+
+
+
                 .ELSE
+
+
+                                ; Disk ][ controller ROM (usually at $C600)
+                                ; starts execution here after loading into $800
+
+
 
 BT1EXCB6        LDA PT2BTBUF+1  ; IMAGE OF BT1EXC08. GET NEXT PAGE
                                 ; TO BE READ IN.
-                CMP #$09        ; IS IT PAGE 9 (IE. 1RST PAGE READ
+                CMP #$09        ; IS IT PAGE 9 (IE. 1ST PAGE READ
                                 ; BY BOOT1)?
                 BNE SKPRELB6    ; NO - ALREADY USED BY BOOT1 TO
                                 ; READ PAGE9, SO SKIP POINTER
@@ -185,19 +179,19 @@ BT1EXCB6        LDA PT2BTBUF+1  ; IMAGE OF BT1EXC08. GET NEXT PAGE
                 STA BT1LDADR+1  ; (A) = $BF ON 48K SLAVE.
 
                                 ; DETERMINE # OF PAGES (SECS) LEFT
-                                ; 2 READ, PHYSICAL SECTOR# & TARGET
+                                ; TO READ, PHYSICAL SECTOR# & TARGET
                                 ; ADDRESS.  THEN, GO READ IN THE
                                 ; NEXT SECTOR.
 
 SKPRELB6        LDX BT1PG2RD    ; IMAGE OF SKRPREL08 ($81F).
-                                ; (X)=PAGES LEFT 2 READ (MINUS 1).
+                                ; (X)=PAGES LEFT TO READ (MINUS 1).
                                 ; (ALSO DOUBLES AS LOGICAL SEC#.
                                 ; VARIES FROM $09-->$FF).
                 BMI PRP4B2B6    ; WHEN (X) = #$FF, THEN WE HAVE
                                 ; READ ALL THE SECS IN, SO GO XIT.
                 LDA PHYSECP8-$2E00,X
-                                ; EQUIVALENT 2 "LDA $84D,X".
-                                ; CONVERT LOGICAL SEC# 2 PHYS SEC#
+                                ; EQUIVALENT TO "LDA $84D,X".
+                                ; CONVERT LOGICAL SEC# TO PHYS SEC#
                 STA BOOTSEC     ; STORE PHYSICAL SEC# IN PAGE0.
                 DEC BT1PG2RD    ; REDUCE PAGES (SECS) LEFT TO READ
                                 ; FOR NEXT TIME AROUND.
@@ -235,7 +229,7 @@ PRP4B2B6        INC BT1LDADR+1  ; IMAGE OF PR4B208 ($839).
 
                                 ; ------ GO TO BOOT2 ------
 
-                JMP (BT1LDADR)  ; JMP 2 BOOT2 ($B700 ON 48K SLAVE)
+                JMP (BT1LDADR)  ; JMP TO BOOT2 ($B700 ON 48K SLAVE)
 
 
                                 ; =================================
@@ -244,24 +238,21 @@ PRP4B2B6        INC BT1LDADR+1  ; IMAGE OF PR4B208 ($839).
                                 ; - AN IMAGE OF THIS TABLE IS
                                 ; HOUSED AT $84D DURING THE BOOT.
                                 ; =================================
+PHYSECP8        ;LOGICAL: $00,$01,$02,$03,$04,$05,$06,$07,$08,$09,$0A,$0B,$0C,$0D,$0E,$0F
+                .BYTE     $00,$0D,$0B,$09,$07,$05,$03,$01,$0E,$0C,$0A,$08,$06,$04,$02,$0F
 
-                                ; CORRESPONDING LOGICAL SECTOR #
-PHYSECP8        .BYTE $00          ; $00
-                .BYTE $0D          ; $01
-                .BYTE $0B          ; $02
-                .BYTE $09          ; $03
-                .BYTE $07          ; $04
-                .BYTE $05          ; $05
-                .BYTE $03          ; $06
-                .BYTE $01          ; $07
-                .BYTE $0E          ; $08
-                .BYTE $0C          ; $09
-                .BYTE $0A          ; $0A
-                .BYTE $08          ; $0B
-                .BYTE $06          ; $0C
-                .BYTE $04          ; $0D
-                .BYTE $02          ; $0E
-                .BYTE $0F          ; $0F
+
+
+
+
+
+
+
+
+
+
+
+
 
                                 ; =================================
                                 ; OTHER ERROR PATCH.
@@ -272,7 +263,7 @@ PHYSECP8        .BYTE $00          ; $00
                                 ; - ALSO CONTAINS THE APPEND FLAG.
                                 ; =================================
 
-APPNDFLG        .BYTE $00          ; APPEND FLAG.
+APPNDFLG        .BYTE $00       ; APPEND FLAG.
 
                                 ; ERROR WAS DEADLY, SO BETTER
                                 ; RELEASE THE FILE'S BUFFER AND
@@ -281,10 +272,10 @@ APPNDFLG        .BYTE $00          ; APPEND FLAG.
 OTHRERR         JSR GETBUFF     ; LOCATE BUFFER BELONGING TO THE
                                 ; FILE. (PUT ADR IN A3L/H PTR.)
                 BCS TOERRMSG    ; NO BUFFER WAS ASSIGNED, SO NO
-                                ; NEED 2 RELEASE THE FILE'S BUF OR
+                                ; NEED TO RELEASE THE FILE'S BUF OR
                                 ; TURN OFF THE APPEND FLAG.
                 LDA #0          ; ZERO OUT THE APPEND FLAG & SET
-                TAY             ; (Y) TO NDEX THE 1RST BYTE OF THE
+                TAY             ; (Y) TO NDEX THE 1ST BYTE OF THE
                 STA APPNDFLG    ; DOS NAME BUFFER.
                 STA (A3L),Y     ; RELEASE FILE'S DOS BUFFER.
 TOERRMSG        LDA RTNCODFM    ; GET ERROR CODE TO INDEX ERR MSG.
@@ -317,7 +308,7 @@ CKAPFLG         LDA APPNDFLG    ; IS APPEND FLAG ON?
                 INC RECNMBFM    ; YES -SO INCREMENT THE FILE MGR'S
                 BNE CLRAPFLG    ; VERSION OF THE RECORD # BECAUSE
                 INC RECNMBFM+1  ; RECNMBFM IS POINTING AT THE LAST
-                                ; VALID DATA BYTE AND WE WANT IT 2
+                                ; VALID DATA BYTE AND WE WANT IT TO
                                 ; POINT AT THE NEXT POTENTIAL
                                 ; RECORD NUMBER.  (P.S.  REMEMBER
                                 ; THAT RECNMBFM LAGS RECNMBWA BY
@@ -441,7 +432,7 @@ RSETPTRS        LDA RECNMBFM    ; RECONCILE RECORD NUMBER VERSIONS
                                 ; EXIT ROUTE FOR FMEXIT.)
                 JMP GOODFMXT    ; EXIT THE APPEND CMD VIA FMEXIT
                                 ; ROUTINE. EXECUTION ACTUALLY RTNS
-                                ; 2 AFTRCMD ($A17D) LOCATED IN THE
+                                ; TO AFTRCMD ($A17D) LOCATED IN THE
                                 ; CMD PARSING AND PROCESSING
                                 ; ROUTINES.
                 .ELSE
@@ -465,6 +456,7 @@ RSETPTRS        LDA RECNMBFM    ; RECONCILE RECORD NUMBER VERSIONS
                                 ; - DO A HOME & THEN PRINT "B01-00"
                                 ; - CONSIDER TO BE FREE SPACE.
 
+                .INCLUDE "CMAP2.A65"
                 JSR HOME
                 LDA #'B'
                 JSR COUT
@@ -487,7 +479,21 @@ RSETPTRS        LDA RECNMBFM    ; RECONCILE RECORD NUMBER VERSIONS
                 .RES 21           ; ($B6E8-$B6FC.)
 
                 .ENDIF
-                .ENDIF
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                                 ; =================================
                                 ; STORAGE FOR BOOT1.
@@ -501,7 +507,7 @@ BT1LDADR        = IMG8FD-(BOOT1-$800)
                 .IF VERSION < 320
                 .ADDR BOOT2-$F8
                 .ELSE
-                .ADDR BOOT1        ; VARIES FROM $B600-$BF00 ON 48K (Chris Mosher: was hardcoded $B600)
+                .ADDR BOOT1     ; VARIES FROM $B600-$BF00 ON 48K
                                 ; SLAVE.  (EVENTUALLY POINTS TO THE
                                 ; START OF BOOT2 AT $B700.  IMAGE
                                 ; OF BT1LDADR AT $8FD.)
@@ -511,7 +517,7 @@ BT1PG2RD        = IMG8FF-(BOOT1-$800)
                 .IF VERSION < 330
                 .BYTE $48
                 .ELSE
-                .BYTE 9            ; .RES 1 ;CONTAINS # OF PAGES TO READ WHEN (Chris Mosher .RES 1 to .BYTE 9)
+                .BYTE $09       ; .RES 1 ;CONTAINS # OF PAGES TO READ WHEN
                                 ; EXECUTING BOOT1.  ALSO DOUBLES AS
                                 ; LOGICAL SEC#.  INITIALLY = $01.
                                 ; VARIES FROM:$09 --> $00 --> $FF.
