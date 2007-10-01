@@ -1,0 +1,9 @@
+MEMORY
+{
+	DOS: start=$1B00, size=$2500, file="DOS.BIN";
+}
+
+SEGMENTS
+{
+	CODE: load=DOS, type=RW;
+}

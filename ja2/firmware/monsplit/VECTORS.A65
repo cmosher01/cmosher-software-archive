@@ -1,0 +1,17 @@
+         .FEATURE LABELS_WITHOUT_COLONS
+
+         .EXPORT M6502VEC
+
+         ;MONITOR
+         .IMPORT RESET
+         ;DEBUG
+         .IMPORT IRQ
+
+         .INCLUDE "SYMBOLS.A65"
+
+M6502VEC .BYTE <NMI        ;NMI VECTOR
+         .BYTE >NMI
+         .BYTE <RESET      ;RESET VECTOR
+         .BYTE >RESET
+         .BYTE <IRQ        ;IRQ VECTOR
+         .BYTE >IRQ

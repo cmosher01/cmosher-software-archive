@@ -1,5 +1,5 @@
-SET CC65DIR=C:\CC65\BIN
+SET CC65DIR=C:\apple2\windows_programs\assemblers\cc65\bin
 
-CALL BUILD\ASM APPLESOFT
+CALL BUILD\ASM MON
 
-%CC65DIR%\ld65 -v -C build\A2P.ld65config work\APPLESOFT.OBJ
+%CC65DIR%\ld65 -v -C build\MON.ld65config work\MON.OBJ

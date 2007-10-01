@@ -1,0 +1,161 @@
+         .FEATURE LABELS_WITHOUT_COLONS
+
+         ;VECTORS
+         .EXPORT IRQ
+         ;MONITOR
+         .EXPORT STEP
+         .EXPORT REGDSP
+
+         ;MONITOR
+         .IMPORT SAVE
+         .IMPORT PRBYTE
+         .IMPORT COUT
+         .IMPORT CROUT
+         .IMPORT MON
+         .IMPORT SAV1
+         .IMPORT RESTORE
+         ;DISASM
+         .IMPORT PCADJ2
+         .IMPORT PCADJ3
+         .IMPORT INSDS1
+         .IMPORT INSTDSP
+
+         .INCLUDE "SYMBOLS.A65"
+         .INCLUDE "CMAP2.A65"
+;-----------------------------------------------------------------------
+;
+; DEBUGGER
+;
+; Handles stepping, register display, IRQ, BRK.
+;
+;-----------------------------------------------------------------------
+
+
+
+
+
+STEP     JSR   INSTDSP    ;DISASSEMBLE ONE INST
+         PLA              ;  AT (PCL,H)
+         STA   RTNL       ;ADJUST TO USER
+         PLA              ;  STACK. SAVE
+         STA   RTNH       ;  RTN ADR.
+         LDX   #$08
+XQINIT   LDA   INITBL-1,X ;INIT XEQ AREA
+         STA   XQT,X
+         DEX
+         BNE   XQINIT
+         LDA   (PCL,X)    ;USER OPCODE BYTE
+         BEQ   XBRK       ;SPECIAL IF BREAK
+         LDY   LENGTH     ;LEN FROM DISASSEMBLY
+         CMP   #$20
+         BEQ   XJSR       ;HANDLE JSR, RTS, JMP,
+         CMP   #$60       ;  JMP (), RTI SPECIAL
+         BEQ   XRTS
+         CMP   #$4C
+         BEQ   XJMP
+         CMP   #$6C
+         BEQ   XJMPAT
+         CMP   #$40
+         BEQ   XRTI
+         AND   #$1F
+         EOR   #$14
+         CMP   #$04       ;COPY USER INST TO XEQ AREA
+         BEQ   XQ2        ;  WITH TRAILING NOPS
+XQ1      LDA   (PCL),Y    ;CHANGE REL BRANCH
+XQ2      STA   XQT,Y      ;  DISP TO 4 FOR
+         DEY              ;  JMP TO BRANCH OR
+         BPL   XQ1        ;  NBRANCH FROM XEQ.
+         JSR   RESTORE    ;RESTORE USER REG CONTENTS.
+         JMP   XQT        ;XEQ USER OP FROM RAM
+
+IRQ      STA   ACC        ;  (RETURN TO NBRANCH)
+         PLA
+         PHA              ;**IRQ HANDLER
+         ASL   A
+         ASL   A
+         ASL   A
+         BMI   BREAK      ;TEST FOR BREAK
+         JMP   (IRQLOC)   ;USER ROUTINE VECTOR IN RAM
+
+BREAK    PLP
+         JSR   SAV1       ;SAVE REG'S ON BREAK
+         PLA              ;  INCLUDING PC
+         STA   PCL
+         PLA
+         STA   PCH
+XBRK     JSR   INSDS1     ;PRINT USER PC.
+         JSR   RGDSP1     ;  AND REG'S
+         JMP   MON        ;GO TO MONITOR
+
+XRTI     CLC
+         PLA              ;SIMULATE RTI BY EXPECTING
+         STA   STATUS     ;  STATUS FROM STACK, THEN RTS
+XRTS     PLA              ;RTS SIMULATION
+         STA   PCL        ;  EXTRACT PC FROM STACK
+         PLA              ;  AND UPDATE PC BY 1 (LEN=0)
+PCINC2   STA   PCH
+PCINC3   LDA   LENGTH     ;UPDATE PC BY LEN
+         JSR   PCADJ3
+         STY   PCH
+         CLC
+         BCC   NEWPCL
+XJSR     CLC
+         JSR   PCADJ2     ;UPDATE PC AND PUSH
+         TAX              ;  ONTO STACK FOR
+         TYA              ;  JSR SIMULATE
+         PHA
+         TXA
+         PHA
+         LDY   #$02
+XJMP     CLC
+XJMPAT   LDA   (PCL),Y
+         TAX              ;LOAD PC FOR JMP,
+         DEY              ;  (JMP) SIMULATE.
+         LDA   (PCL),Y
+         STX   PCH
+NEWPCL   STA   PCL
+         BCS   XJMP
+RTNJMP   LDA   RTNH
+         PHA
+         LDA   RTNL
+         PHA
+
+REGDSP   JSR   CROUT      ;DISPLAY USER REG
+RGDSP1   LDA   #<ACC      ;  CONTENTS WITH
+         STA   A3L        ;  LABELS
+         LDA   #>ACC
+         STA   A3H
+         LDX   #$FB
+RDSP1    LDA   #' '
+         JSR   COUT
+         LDA   RTBL-$FB,X
+         JSR   COUT
+         LDA   #'='
+         JSR   COUT
+         LDA   ACC+5,X
+         JSR   PRBYTE
+         INX
+         BMI   RDSP1
+         RTS
+
+BRANCH   CLC              ;BRANCH TAKEN,
+         LDY   #$01       ;  ADD LEN+2 TO PC
+         LDA   (PCL),Y
+         JSR   PCADJ3
+         STA   PCL
+         TYA
+         SEC
+         BCS   PCINC2
+
+NBRNCH   JSR   SAVE       ;NORMAL RETURN AFTER
+         SEC              ;  XEQ USER OF
+         BCS   PCINC3     ;GO UPDATE PC
+
+
+
+INITBL   NOP
+         NOP              ;DUMMY FILL FOR
+         JMP   NBRNCH     ;  XEQ AREA
+         JMP   BRANCH
+
+RTBL     .BYTE "AXYPS"

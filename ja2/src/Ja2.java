@@ -25,6 +25,8 @@ import disk.DiskBytes;
 import disk.DiskDriveSimple;
 import disk.DiskInterface;
 import disk.StepperMotor;
+import disk.TapeDriveMemory;
+import disk.TapeInterface;
 
 /*
  * Created on Aug 31, 2004
@@ -93,7 +95,9 @@ public final class Ja2 implements Runnable
 
     	final Keyboard keyboard = new Keyboard();
 
-        final Memory memory = new Memory(keyboard,disk);
+    	final TapeDriveMemory tape = new TapeDriveMemory();
+    	final TapeInterface tapedrive = new TapeInterface(tape);
+        final Memory memory = new Memory(keyboard,disk,tapedrive);
 
 //        final InputStream romImage = new FileInputStream(new File("c:/apple2/rom_images/200apple2.rom")); // D000
 //        final InputStream romImage = new FileInputStream(new File("c:/apple2/rom_images/210apple2plus.rom")); // B000
@@ -156,6 +160,7 @@ public final class Ja2 implements Runnable
     	rTimed.add(video);
     	//rTimed.add(drive);
     	rTimed.add(cpu);
+    	rTimed.add(tapedrive);
     	this.clock = new Clock(rTimed);
     	this.clock.run();
 	}

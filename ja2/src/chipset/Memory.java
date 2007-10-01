@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import keyboard.Keyboard;
 import disk.DiskInterface;
+import disk.TapeInterface;
 
 /*
  * Created on Aug 1, 2007
@@ -13,14 +14,16 @@ public class Memory
 	private byte[] ram = new byte[0x10000];
 	private final Keyboard keyboard;
 	private final DiskInterface disk;
+	private final TapeInterface tape;
 
 	/**
 	 * @param keyboard
 	 */
-	public Memory(final Keyboard keyboard, final DiskInterface disk)
+	public Memory(final Keyboard keyboard, final DiskInterface disk, final TapeInterface tape)
 	{
 		this.keyboard = keyboard;
 		this.disk = disk;
+		this.tape = tape;
 		clear();
 	}
 
@@ -44,6 +47,10 @@ public class Memory
 			this.keyboard.clear();
 			return this.keyboard.get();
 		}
+		if (address == 0xC020 || address == 0xC060)
+		{
+			return this.tape.io(address,(byte)0);
+		}
 		if (0xC0E0 <= address && address < 0xC0F0)
 		{
 			return this.disk.io(address,(byte)0);
@@ -64,6 +71,10 @@ public class Memory
 		{
 			this.keyboard.clear();
 			return;
+		}
+		if (address == 0xC020 || address == 0xC060)
+		{
+			this.tape.io(address,data);
 		}
 		if (0xC0E0 <= address && address < 0xC0F0)
 		{
