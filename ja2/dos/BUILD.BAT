@@ -1,6 +1,6 @@
-SET CC65DIR=C:\apple2\windows_programs\assemblers\cc65\bin
+SET CC65DIR=C:\cc65\bin
 
-SET VERS=310
+SET VERS=332
 CALL ASM RELOC %VERS%
 CALL ASM MAIN %VERS%
 CALL ASM FILEMGR %VERS%
