@@ -190,7 +190,11 @@ LE099:  LDA     #$25
 LE0A3:  CMP     #$01
         BNE     LE0AC
         LDX     XSAVE
+        .IF VERSION = 1
+        JMP     LE3CD
+        .ELSE
         JMP     CROUT
+        .ENDIF
 LE0AC:  PHA
         STY     ACC
         LDX     #$ED
@@ -485,7 +489,7 @@ LE29E:  JSR     LE003
         STA     $0200,Y
         RTS
 OLDENT: JSR     OLDCOLD
-WARM:   JSR     COUT;WRONG
+WARM:   JSR     LE3CD
 LE2B6:  .BYTE   $46
 LE2B7:  CMP     $BEA9,Y
         JSR     COUT
@@ -727,7 +731,11 @@ LE400:  STX     TXTNDX
         LDA     (SYNPAG,X)
         TAX
 LE409:  LSR     A
+        .IF VERSION = 1
+        EOR     #$48 ; IS THIS A BUG?
+        .ELSE
         EOR     #$40
+        .ENDIF
         ORA     (SYNPAG),Y
         CMP     #$C0
         BCC     LE413
@@ -1348,7 +1356,13 @@ LE793:  CLC
 LE7A1:  STA     NOUNSTKC,X
 POSITIVE:
         RTS
-TAB:    JSR     GETBYTE
+
+TAB:
+        .IF VERSION = 1
+        JSR     LE715
+        .ELSE
+        JSR     GETBYTE
+        .ENDIF
 
         .IF VERSION = 1
         LDY     $CE
@@ -1442,7 +1456,11 @@ BEGIN_LINE:
 COLON:  BIT     CRFLAG
         BPL     LE822
 PRINT_CR:
+        .IF VERSION = 1
+        JSR     LE3CD
+        .ELSE
         JSR     CROUT
+        .ENDIF
 HE820:  LSR     CRFLAG
 LE822:  RTS
 HE823:  LDY     #$FF
@@ -1462,18 +1480,23 @@ LE836:  LDA     PP
         BNE     LE896
 GOSUB:  LDY     #$41
         LDA     GOSUBNDX
-        CMP     #$10
+        .IF VERSION = 1
+MAXGOSUB = $08
+        .ELSE
+MAXGOSUB = $10
+        .ENDIF
+        CMP     #MAXGOSUB
         BCS     LE8A2
         TAY
         INC     GOSUBNDX
         LDA     PX
         STA     STACK,Y
         LDA     PX+1
-        STA     STACK+16,Y
+        STA     STACK+(1*MAXGOSUB),Y
         LDA     PR
-        STA     STACK+32,Y
+        STA     STACK+(2*MAXGOSUB),Y
         LDA     PR+1
-        STA     STACK+48,Y
+        STA     STACK+(3*MAXGOSUB),Y
 GOTO:   JSR     LE715
         JSR     LE56D
         BCC     LE867
@@ -1502,7 +1525,7 @@ LE875:  LDX     #$FF
         .ENDIF
 LE883:  JSR     LE679
         BIT     RUNFLAG
-        BPL     END
+        BPL     ENDCMD
         CLC
         LDY     #$00
         LDA     PR
@@ -1539,7 +1562,7 @@ LE8C3:  LDY     #$63
         INY
         LDA     (PR),Y
         JSR     LE51B
-END:    JMP     WARM
+ENDCMD: JMP     WARM
 LE8D6:  DEC     FORNDX
 NEXT:   LDY     #$5B
         LDA     FORNDX
@@ -1585,12 +1608,17 @@ LE937:  DEC     FORNDX
         RTS
 FOR:    LDY     #$54
         LDA     FORNDX
-        CMP     #$10
+        .IF VERSION = 1
+MAXFOR = $08
+        .ELSE
+MAXFOR = $10
+        .ENDIF
+        CMP     #MAXFOR
         BEQ     LE8DC
         INC     FORNDX
         TAY
         LDA     NOUNSTKL,X
-        STA     STACK+64,Y
+        STA     STACK+(4*MAXFOR),Y
         LDA     NOUNSTKH,X
         .IF VERSION = 1
         STA     $0128,Y
@@ -1601,21 +1629,21 @@ FOR:    LDY     #$54
 TO:     JSR     LE715
         LDY     FORNDX
         LDA     ACC
-        STA     STACK+191,Y
+        STA     STACK+($C*MAXFOR)-1,Y
         LDA     ACC+1
-        STA     STACK+207,Y
+        STA     STACK+($D*MAXFOR)-1,Y
         LDA     #$01
-        STA     STACK+95,Y
+        STA     STACK+($6*MAXFOR)-1,Y
         LDA     #$00
-LE966:  STA     STACK+111,Y
+LE966:  STA     STACK+($7*MAXFOR)-1,Y
         LDA     PR
-        STA     STACK+127,Y
+        STA     STACK+($8*MAXFOR)-1,Y
         LDA     PR+1
-        STA     STACK+143,Y
+        STA     STACK+($9*MAXFOR)-1,Y
         LDA     PX
-        STA     STACK+159,Y
+        STA     STACK+($A*MAXFOR)-1,Y
         LDA     PX+1
-        STA     STACK+175,Y
+        STA     STACK+($B*MAXFOR)-1,Y
         RTS
         .IF VERSION = 1
         JSR     LE715
@@ -1632,90 +1660,114 @@ LE980:  .BYTE   $00,$00,$00,$AB,$03,$03,$03,$03
         .BYTE   $03,$03,$03,$03,$03,$03,$03,$03
         .BYTE   $03,$03,$3F,$3F,$C0,$C0,$3C,$3C
         .BYTE   $3C,$3C,$3C,$3C,$3C,$30,$0F,$C0
-        .BYTE   $C3,$FF,$55,$00,$AB,$AB,$03,$03
+        .IF VERSION = 1
+        .BYTE   $CC
+        .ELSE
+        .BYTE   $C3
+        .ENDIF
+        .BYTE   $FF,$55,$00,$AB,$AB,$03,$03
         .BYTE   $FF,$FF,$55,$FF,$FF,$55,$CF,$CF
-        .BYTE   $CF,$CF,$CF,$FF,$55,$C6,$C6,$C6
-        .BYTE   $55,$F0,$F0,$CF,$CF,$55,$01,$55
+        .BYTE   $CF,$CF,$CF,$FF,$55
+        .IF VERSION = 1
+        .BYTE   $C3,$C3,$C3
+        .ELSE
+        .BYTE   $C6,$C6,$C6
+        .ENDIF
+        .BYTE   $55,$F0,$F0,$CF
+        .IF VERSION = 1
+        .BYTE   $56,$56,$56
+        .ELSE
+        .BYTE   $CF,$55,$01
+        .ENDIF
+        .BYTE   $55
         .BYTE   $FF,$FF,$55,$03,$03,$03,$03,$03
-        .BYTE   $03,$03,$03,$03,$03,$03,$03,$03
+        .BYTE   $03,$03,$03
+        .IF VERSION = 1
+        .BYTE   $FF,$FF,$FF
+        .ELSE
+        .BYTE   $03,$03,$03
+        .ENDIF
+        .BYTE   $03,$03
         .BYTE   $03,$03,$03,$03,$03,$03,$03,$03
         .BYTE   $03,$03,$03,$03,$03,$00,$AB,$03
         .BYTE   $57,$03,$03,$03,$03,$07,$03,$03
         .BYTE   $03,$03,$03,$03,$03,$03,$03,$03
-        .BYTE   $03,$03,$AA,$FF,$03,$03,$03,$03
+        .BYTE   $03,$03,$AA,$FF
+        .IF VERSION = 1
+        .BYTE   $FF,$FF,$FF,$FF
+        .ELSE
+        .BYTE   $03,$03,$03,$03
         .BYTE   $03,$03,$03,$03,$03,$03,$03,$03
+        .ENDIF
+
+
+
+.IF VERSION = 1
+POPCMD = $FFFF
+IVTAB = $FFFF
+AT_VLIN = $FFFF
+COMMA_VLIN = $FFFF
+AT_HLIN = $FFFF
+COMMA_HLIN = $FFFF
+STEP = $FFFF
+HF3BA = $FFFF
+COMMA_SCRN = $FFFF
+SCRN = $FFFF
+ASC = $FFFF
+PDL = $FFFF
+EXP = $FFFF
+VOR = $FFFF
+VAND = $FFFF
+HF249 = $FFFF
+HF253 = $FFFF
+HF24E = $FFFF
+HF25B = $FFFF
+VLOMEM = $FFFF
+VHIMEM = $FFFF
+MAN = $FFFF
+CON = $FFFF
+SAVE = $FFFF
+LOAD = $FFFF
+.ENDIF
+
+
+.MACRO .LHSPLITHI ARG
+
+.IF .TCOUNT(ARG) >= 1
+ .BYTE > .LEFT(1,{ARG})
+ .LHSPLITHI .RIGHT(.TCOUNT({ARG})-1,{ARG})
+.ENDIF
+
+.ENDMACRO
+
+.MACRO .LHSPLITLO ARG
+
+.IF .TCOUNT(ARG) >= 1
+ .BYTE < .LEFT(1,{ARG})
+ .LHSPLITLO .RIGHT(.TCOUNT({ARG})-1,{ARG})
+.ENDIF
+
+.ENDMACRO
+
+
+.MACRO .LHSPLIT ARG
 VERBADRL:
-             .IF VERSION = 1
-             .RES $E8
-             .ELSE
-	    .BYTE   <BEGIN_LINE,<$FFFF,<$FFFF,<COLON
-	    .BYTE   <LOAD,<SAVE,<CON,<RUNNUM
-	    .BYTE   <RUN,<DEL,<COMMA_DEL,<NEW
-	    .BYTE   <CLR,<AUTO,<COMMA_AUTO,<MAN
-	    .BYTE   <VHIMEM,<VLOMEM,<ADDITION,<SUBTRACT
-	    .BYTE   <MULT,<DIVIDE,<HE733,<HE74A
-	    .BYTE   <HF25B,<HF24E,<HF253,<HE74A
-	    .BYTE   <HF249,<VAND,<VOR,<MOD
-	    .BYTE   <EXP,<$FFFF,<HE823,<COMMA_SUBSTR
-	    .BYTE   <GOTO,<LET,<HEFB6,<HEBCB
-	    .BYTE   <$FFFF,<$FFFF,<PAREN_SUBSTR,<$FFFF
-	    .BYTE   <$FFFF,<HEF24,<PEEK,<RNDCMD
-	    .BYTE   <SGN,<ABS,<PDL,<$FFFF
-	    .BYTE   <HE823,<POSITIVE,<NEGATE,<NOT
-	    .BYTE   <HE823,<HE1D7,<HE21C,<LEN
-	    .BYTE   <ASC,<SCRN,<COMMA_SCRN,<HE823
-	    .BYTE   <$FFFF,<$FFFF,<HE121,<DIMSTR
-	    .BYTE   <DIMNUM,<PRNTSTR,<PRNTNUM,<HE820
-	    .BYTE   <HEE00,<HE7C1,<HF3BA,<SETTXT
-	    .BYTE   <SETGR,<CALL,<DIMSTR,<DIMNUM
-	    .BYTE   <TAB,<END,<HEFB6,<INPUT_PROMPT
-	    .BYTE   <HEBAA,<FOR,<HE801,<TO
-	    .BYTE   <STEP,<NEXT,<NEXT,<RETURN
-	    .BYTE   <GOSUB,<$FFFF,<LET,<GOTO
-	    .BYTE   <IF,<PRNTSTR,<PRNTNUM,<PRINT_CR
-	    .BYTE   <POKE,<GETVAL255,<COLOR,<GETVAL255
-	    .BYTE   <COMMA_PLOT,<GETVAL255,<COMMA_HLIN,<AT_HLIN
-	    .BYTE   <GETVAL255,<COMMA_VLIN,<AT_VLIN,<IVTAB
-	    .BYTE   <HE18C,<HE801,<RIGHT_PAREN,<$FFFF
-	    .BYTE   <LISTNUM,<COMMA_LIST,<LISTCMD,<POP
-	    .BYTE   <NODSP_STR,<NODSP_NUM,<NOTRACE,<DSP_NUM
-	    .BYTE   <DSP_STR,<TRACE,<PRSLOT,<INSLOT
-	    .ENDIF
+ .LHSPLITLO {ARG}
 VERBADRH:
-             .IF VERSION > 1
-	    .BYTE   >BEGIN_LINE,>$FFFF,>$FFFF,>COLON
-	    .BYTE   >LOAD,>SAVE,>CON,>RUNNUM
-	    .BYTE   >RUN,>DEL,>COMMA_DEL,>NEW
-	    .BYTE   >CLR,>AUTO,>COMMA_AUTO,>MAN
-	    .BYTE   >VHIMEM,>VLOMEM,>ADDITION,>SUBTRACT
-	    .BYTE   >MULT,>DIVIDE,>HE733,>HE74A
-	    .BYTE   >HF25B,>HF24E,>HF253,>HE74A
-	    .BYTE   >HF249,>VAND,>VOR,>MOD
-	    .BYTE   >EXP,>$FFFF,>HE823,>COMMA_SUBSTR
-	    .BYTE   >GOTO,>LET,>HEFB6,>HEBCB
-	    .BYTE   >$FFFF,>$FFFF,>PAREN_SUBSTR,>$FFFF
-	    .BYTE   >$FFFF,>HEF24,>PEEK,>RNDCMD
-	    .BYTE   >SGN,>ABS,>PDL,>$FFFF
-	    .BYTE   >HE823,>POSITIVE,>NEGATE,>NOT
-	    .BYTE   >HE823,>HE1D7,>HE21C,>LEN
-	    .BYTE   >ASC,>SCRN,>COMMA_SCRN,>HE823
-	    .BYTE   >$FFFF,>$FFFF,>HE121,>DIMSTR
-	    .BYTE   >DIMNUM,>PRNTSTR,>PRNTNUM,>HE820
-	    .BYTE   >HEE00,>HE7C1,>HF3BA,>SETTXT
-	    .BYTE   >SETGR,>CALL,>DIMSTR,>DIMNUM
-	    .BYTE   >TAB,>END,>HEFB6,>INPUT_PROMPT
-	    .BYTE   >HEBAA,>FOR,>HE801,>TO
-	    .BYTE   >STEP,>NEXT,>NEXT,>RETURN
-	    .BYTE   >GOSUB,>$FFFF,>LET,>GOTO
-	    .BYTE   >IF,>PRNTSTR,>PRNTNUM,>PRINT_CR
-	    .BYTE   >POKE,>GETVAL255,>COLOR,>GETVAL255
-	    .BYTE   >COMMA_PLOT,>GETVAL255,>COMMA_HLIN,>AT_HLIN
-	    .BYTE   >GETVAL255,>COMMA_VLIN,>AT_VLIN,>IVTAB
-	    .BYTE   >HE18C,>HE801,>RIGHT_PAREN,>$FFFF
-	    .BYTE   >LISTNUM,>COMMA_LIST,>LISTCMD,>POP
-	    .BYTE   >NODSP_STR,>NODSP_NUM,>NOTRACE,>DSP_NUM
-	    .BYTE   >DSP_STR,>TRACE,>PRSLOT,>INSLOT
-            .ENDIF
+ .LHSPLITHI {ARG}
+.ENDMACRO
+
+
+.IF VERSION = 1
+ .LHSPLIT {BEGIN_LINE $FFFF $FFFF COLON LOAD SAVE CON RUNNUM RUN DEL COMMA_DEL NEW CLR AUTO COMMA_AUTO MAN VHIMEM VLOMEM ADDITION SUBTRACT MULT DIVIDE HE733 HE74A HF25B HF24E HF253 HE74A HF249 VAND VOR MOD EXP $FFFF HE823 COMMA_SUBSTR GOTO LET HEFB6 HEBCB $FFFF $FFFF PAREN_SUBSTR $FFFF $FFFF HEF24 PEEK RNDCMD SGN ABS PDL $FFFF HE823 POSITIVE NEGATE NOT HE823 HE1D7 HE21C LEN ASC SCRN COMMA_SCRN HE823 $FFFF $FFFF HE121 DIMSTR DIMNUM PRNTSTR PRNTNUM HE820 HEE00 HE7C1 HF3BA SETTXT SETGR CALL DIMSTR DIMNUM TAB ENDCMD HEFB6 INPUT_PROMPT HEBAA FOR HE801 TO STEP NEXT NEXT RETURN GOSUB $FFFF LET GOTO IF PRNTSTR PRNTNUM PRINT_CR POKE GETVAL255 COLOR GETVAL255 COMMA_PLOT GETVAL255 LEEA6 LEEB0 GETVAL255 LEEBC LEEC6 $EE57 HE18C HE801 RIGHT_PAREN $FFFF $FFFF $FFFF $FFFF POPCMD}
+.ELSE
+ .LHSPLIT {BEGIN_LINE $FFFF $FFFF COLON LOAD SAVE CON RUNNUM RUN DEL COMMA_DEL NEW CLR AUTO COMMA_AUTO MAN VHIMEM VLOMEM ADDITION SUBTRACT MULT DIVIDE HE733 HE74A HF25B HF24E HF253 HE74A HF249 VAND VOR MOD EXP $FFFF HE823 COMMA_SUBSTR GOTO LET HEFB6 HEBCB $FFFF $FFFF PAREN_SUBSTR $FFFF $FFFF HEF24 PEEK RNDCMD SGN ABS PDL $FFFF HE823 POSITIVE NEGATE NOT HE823 HE1D7 HE21C LEN ASC SCRN COMMA_SCRN HE823 $FFFF $FFFF HE121 DIMSTR DIMNUM PRNTSTR PRNTNUM HE820 HEE00 HE7C1 HF3BA SETTXT SETGR CALL DIMSTR DIMNUM TAB ENDCMD HEFB6 INPUT_PROMPT HEBAA FOR HE801 TO STEP NEXT NEXT RETURN GOSUB $FFFF LET GOTO IF PRNTSTR PRNTNUM PRINT_CR POKE GETVAL255 COLOR GETVAL255 COMMA_PLOT GETVAL255 COMMA_HLIN AT_HLIN GETVAL255 COMMA_VLIN AT_VLIN IVTAB HE18C HE801 RIGHT_PAREN $FFFF LISTNUM COMMA_LIST LISTCMD POPCMD NODSP_STR NODSP_NUM NOTRACE DSP_NUM DSP_STR TRACE PRSLOT INSLOT}
+.ENDIF
+
+
+
+
+
 
 
 ERRMSGTBL:
@@ -1745,13 +1797,21 @@ ERRMSG07 = *-ERRMSGTBL
 	    .ASCIIL "BAD BRANCH"
 
 ERRMSG08 = *-ERRMSGTBL
+            .IF VERSION = 1
+            .ASCIIL ">8 GOSUBS"
+            .ELSE
 	    .ASCIIL "16 GOSUBS"
+	    .ENDIF
 
 ERRMSG09 = *-ERRMSGTBL
 	    .ASCIIL "BAD RETURN"
 
 ERRMSG10 = *-ERRMSGTBL
+            .IF VERSION = 1
+            .ASCIIL ">8 FORS"
+            .ELSE
 	    .ASCIIL "16 FORS"
+	    .ENDIF
 
 ERRMSG11 = *-ERRMSGTBL
 	    .ASCIIL "BAD NEXT"
@@ -1814,7 +1874,11 @@ LEBAC:  JSR     LE3C4
         .ENDIF
 
         LDX     #$20
+        .IF VERSION = 1
+        LDA     #$30
+        .ELSE
         LDA     #$15
+        .ENDIF
         JSR     LE491
         INC     RUNFLAG
         LDX     ACC
@@ -1843,22 +1907,39 @@ LEBCE:  STA     ACC
         PLA
         STA     NOUNSTKC,X
         LDA     ACC
+        .IF VERSION = 1
+        CMP     #$C7
+        .ELSE
         CMP     #$33
+        .ENDIF
         BNE     LEBFA
         JSR     NEGATE
 LEBFA:  JMP     HE801
-.IF VERSION = 1
-SYNTABLNDX:;TODO FIX
-        .BYTE   $C1,$00,$7F,$D1,$CC,$C7,$CF,$CE
-        .BYTE   $C5,$9A,$98,$8D,$96,$95,$93,$BF
-        .BYTE   $B2,$32,$12,$0F,$BC,$B0,$AC,$BE
-        .BYTE   $35,$0C,$61,$30,$10,$0B,$DD,$FB
-.ENDIF
-        .BYTE   $FF,$FF,$FF,$50,$20,$4F,$C0,$F4
+        .BYTE   $FF,$FF,$FF,$50,$20
+
+        .IF VERSION = 1
+        .BYTE   $13,$EC,$D0
+        .BYTE   $15,$20,$0B,$EC,$D0,$10,$20,$82
+        .BYTE   $E7,$20,$6F,$E7,$50,$03,$20,$82
+        .BYTE   $E7,$20,$59,$E7,$56,$50,$4C,$36
+        .BYTE   $E7,$FF,$FF
+SYNTABLNDX:
+        .BYTE   $C1,$FF,$7F,$D1,$CC
+        .BYTE   $C7,$CF,$CE,$C5,$9A,$98,$8B,$96
+        .BYTE   $95,$93,$BF,$B2,$32,$2D,$2B,$BC
+        .BYTE   $B0,$AC,$BE,$35,$8E,$61,$FF,$FF
+        .BYTE   $FF,$DD,$FB,$20,$C9,$EF,$15,$4F
+        .BYTE   $10,$05,$20,$C9,$EF,$35,$4F,$95
+        .BYTE   $50,$10,$CB,$4C,$C9,$EF,$40,$60
+        .BYTE   $8D,$60,$8B,$00,$7E,$8C,$33,$00
+        .BYTE   $00,$60,$03,$BF,$12
+        .ELSE
+        .BYTE   $4F,$C0,$F4
         .BYTE   $A1,$E4,$AF,$AD,$F2,$AF,$E4,$AE
         .BYTE   $A1,$F0,$A5,$B4,$B3,$EF,$B4,$EE
         .BYTE   $A5,$A8,$B4,$5C,$80,$00,$40,$60
-        .BYTE   $8D,$60,$8B,$7F,$1D,$20,$7E,$8C
+        .BYTE   $8D,$60,$8B
+        .BYTE   $7F,$1D,$20,$7E,$8C
         .BYTE   $33,$00,$00,$60,$03,$BF,$12,$47
         .BYTE   $83,$AE,$A9,$67,$83,$B2,$B0,$E5
         .BYTE   $A3,$A1,$B2,$B4,$79,$B0,$B3,$A4
@@ -1866,10 +1947,22 @@ SYNTABLNDX:;TODO FIX
         .BYTE   $B4,$AF,$AE,$79,$B0,$B3,$A4,$AF
         .BYTE   $AE,$69,$B0,$B3,$A4,$AF,$AE,$F0
         .BYTE   $AF,$B0,$F4,$B3,$A9,$AC,$60,$8C
-        .BYTE   $20,$B4,$B3,$A9,$AC,$00,$40,$89
-        .BYTE   $C9,$47,$9D,$17,$68,$9D,$0A,$58
+        .BYTE   $20,$B4,$B3,$A9,$AC
+        .ENDIF
+
+        .BYTE   $00,$40,$89
+        .BYTE   $C9,$47,$9D,$17,$68,$9D,$0A
+
+        .IF VERSION = 1
+        .BYTE   $00
+        .BYTE   $40,$60,$8D,$60,$8B,$00,$7E,$8C
+        .BYTE   $3C,$00,$00,$60,$03,$BF,$1B,$4B
+        .ELSE
+        .BYTE   $58
         .BYTE   $7B,$67,$A2,$A1,$B4,$B6,$67,$B4
         .BYTE   $A1,$07,$8C,$07,$AE,$A9,$AC,$B6
+        .ENDIF
+
         .BYTE   $67,$B4,$A1,$07,$8C,$07,$AE,$A9
         .BYTE   $AC,$A8,$67,$8C,$07,$B4,$AF,$AC
         .BYTE   $B0,$67,$9D,$B2,$AF,$AC,$AF,$A3
@@ -1878,7 +1971,15 @@ SYNTABLNDX:;TODO FIX
         .BYTE   $AE,$A9,$B2,$B0,$7F,$0E,$28,$B4
         .BYTE   $AE,$A9,$B2,$B0,$64,$07,$A6,$A9
         .BYTE   $67,$AF,$B4,$AF,$A7,$78,$B4,$A5
-        .BYTE   $AC,$6B,$7F,$02,$AD,$A5,$B2,$67
+        .BYTE   $AC
+
+        .IF VERSION = 1
+        .BYTE   $78
+        .ELSE
+        .BYTE   $6B
+        .ENDIF
+
+        .BYTE   $7F,$02,$AD,$A5,$B2,$67
         .BYTE   $A2,$B5,$B3,$AF,$A7,$EE,$B2,$B5
         .BYTE   $B4,$A5,$B2,$7E,$8C,$39,$B4,$B8
         .BYTE   $A5,$AE,$67,$B0,$A5,$B4,$B3,$27
@@ -2025,6 +2126,29 @@ LEE96:  DEY
         .BYTE   $FF
 CALL:   JSR     LE715
         JMP     (ACC)
+
+        .IF VERSION = 1
+
+LEEA6:  LDA     HIMEM
+        BNE     LEEAC
+        DEC     HIMEM+1
+LEEAC:  DEC     HIMEM
+        LDA     $48
+LEEB0:  BNE     LEEB4
+        DEC     $49
+LEEB4:  DEC     $48
+LEEB6:  LDY     #0
+        LDA     (HIMEM),Y
+        STA     ($48),Y
+LEEBC:  LDA     PP
+        CMP     HIMEM
+        LDA     PP+1
+        SBC     HIMEM+1
+        BCC     LEEA6
+LEEC6:  JMP     LEE53
+
+        .ELSE
+
 COMMA_HLIN:
         JSR     GETBYTE
         CMP     TXTNDX
@@ -2043,11 +2167,20 @@ COMMA_VLIN:
         STA     V2
         RTS
 AT_VLIN:JSR     GETBYTE
+
+        .ENDIF
+
         CMP     #$28
 LEECB:  BCS     LEE68
         TAY
         LDA     TXTNDX
+        .IF VERSION = 1
+        RTS
+        NOP
+        NOP
+        .ELSE
         JMP     VLINE
+        .ENDIF
 LEED3:  TYA
         TAX
         LDY     #$6E
@@ -2162,19 +2295,49 @@ LEF66:  LDA     RND+1
         JMP     MOD
         JSR     LE715
         LDY     ACC
+        .IF VERSION = 1
+        CPY     HIMEM
+        .ELSE
         CPY     LOMEM
+        .ENDIF
         LDA     ACC+1
+        .IF VERSION = 1
+        SBC     HIMEM+1
+        .ELSE
         SBC     LOMEM+1
+        .ENDIF
         BCC     LEFAB
+        .IF VERSION = 1
+        STY     $48
+        .ELSE
         STY     HIMEM
+        .ENDIF
         LDA     ACC+1
+        .IF VERSION = 1
+        STA     $49
+        .ELSE
         STA     HIMEM+1
-LEF93:  JMP     NEW
+        .ENDIF
+
+LEF93:
+        .IF VERSION = 1
+        JMP     LEEB6
+        .ELSE
+        JMP     NEW
+        .ENDIF
         JSR     LE715
         LDY     ACC
+        .IF VERSION = 1
+        CPY     $CA
+        .ELSE
         CPY     HIMEM
+        .ENDIF
         LDA     ACC+1
+        .IF VERSION = 1
+        SBC     $CB
+        .ELSE
         SBC     HIMEM+1
+        .ENDIF
         BCS     LEFAB
         STY     LOMEM
         LDA     ACC+1
@@ -2426,7 +2589,7 @@ LF145:  LDA     HIMEM+1,X
         RTS
 LF161:  JSR     LE3C4
         JMP     BELL
-POP:    LDA     GOSUBNDX
+POPCMD: LDA     GOSUBNDX
         BNE     LF16E
         JMP     RETURN
 LF16E:  DEC     GOSUBNDX
