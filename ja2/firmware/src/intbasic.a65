@@ -2052,8 +2052,8 @@ LEC4C:  STA     NOUNSTKL,X
 
 SYNTABL:
         .BYTE   $40,$60,$8D,$60,$8B
-        .BYTE   $00,$7E
-        .BYTE   $8C,$33,$00,$00,$60,$03,$BF,$12
+        .BYTE   $00
+        .BYTE   $7E,$8C,$33,$00,$00,$60,$03,$BF,$12
 
 
 
@@ -2073,9 +2073,11 @@ SYNTABL:
         .BASCMD "THEN"
 
         .BYTE   $5C,$80,$00
-        .BYTE   $40,$60,$8D,$60,$8B
-        .BYTE   $7F,$1D,$20,$7E
-        .BYTE   $8C,$33,$00,$00,$60,$03,$BF,$12
+        .BASCMD "-",$40,$60
+        .BASCMD "+",$60
+        .BYTE   $7F,$1D,$20
+        .BASCMD ",",$7E
+        .BYTE   $33,$00,$00,$60,$03,$BF,$12
 
         .BASCMD "IN#",$47
         .BASCMD "PR#",$67
@@ -2104,13 +2106,22 @@ SYNTABL:
 
         .IF VERSION = 1
         .BYTE   $00
-        .BYTE   $40,$60,$8D,$60,$8B,$00,$7E,$8C
+
+        .BASCMD "-",$40,$60
+        .BASCMD "+",$60
+        .BYTE   $00
+
+        .BASCMD ",",$7E
+
         .BYTE   $3C,$00,$00,$60,$03,$BF,$1B,$4B
+
         .ELSE
+
         .BASCMD "VTAB",$58,$7B,$67
         .BASCMD "AT",$67
         .BASCMD ",",$07
         .BASCMD "VLIN",$07
+
         .ENDIF
 
         .BASCMD "AT",$67
@@ -2179,7 +2190,7 @@ SYNTABL2:
         .BASCMD ",",$50
         .BASCMD ",",$63
         .BASCMD "(",$7F,$01,$51,$07
-        .BYTE $29,$84,$80
+        .BASCMD " $",$29
         .BASCMD "$"
 
         .IF VERSION = 1
@@ -2230,8 +2241,9 @@ SYNTABL2:
         .BASCMD "RND"
         .BASCMD "PEEK"
         .BASCMD "(",$51,$07
-
-        .BYTE $39,$81,$C1,$4F,$7F,$0F,$2F
+        .BASCMD "!",$39
+        .BASCMD "!"
+        .BYTE $4F,$7F,$0F,$2F
         .BYTE 0
 
         .BYTE $51
@@ -2239,9 +2251,8 @@ SYNTABL2:
 
         .BYTE   $29
 
-        .BYTE   $C2     ;.BASCMD """
-        .BYTE   $0C,$82 ;.BASCMD """,$0C
-
+        .BYTE   $C2     ;.BASCMD "\""
+        .BYTE   $0C,$82 ;.BASCMD "\"",$0C
         .BASCMD ",",$57
         .BASCMD ",",$6A
         .BASCMD "THEN",$42
@@ -2300,8 +2311,9 @@ SYNTABL2:
         .BASCMD "LOAD"
         .ENDIF
 
-        .BYTE   $7A,$7E
-        .BYTE   $9A,$22,$20,$00,$60,$03,$BF,$60
+        .BASCMD ":",$7A,$7E
+
+        .BYTE   $22,$20,$00,$60,$03,$BF,$60
         .BYTE   $03,$BF,$1F
 
 HEE00:  JSR     LE7B1

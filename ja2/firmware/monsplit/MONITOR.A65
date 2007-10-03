@@ -10,6 +10,11 @@
          .EXPORT RESTORE
          .EXPORT SAV1
          .EXPORT SAVE
+         .IF VERSION >= 2
+         .EXPORT SETNORM
+         .EXPORT SETVID
+         .EXPORT SETKBD
+         .ENDIF
 
          ;KEYIN
          .IMPORT GETLNZ
@@ -251,9 +256,21 @@ GO       JSR   A1PC       ;ADR TO PC IF SPEC'D
 
 REGZ     JMP   REGDSP     ;TO REG DISPLAY
 
-TRACE    DEC   YSAV
+TRACE
+         .IF VERSION < 2
+         DEC   YSAV
 STEPZ    JSR   A1PC       ;ADR TO PC IF SPEC'D
          JMP   STEP       ;TAKE ONE STEP
+         .ELSE
+         RTS
+         NOP
+         RTS
+STEPZ    NOP
+         NOP
+         NOP
+         NOP
+         NOP
+         .ENDIF
 
 USR      JMP   USRADR     ;TO USR SUBR AT USRADR
 
@@ -421,10 +438,18 @@ ZMODE    LDY   #$00       ;CLR MODE, OLD MODE
 CHRTBL   .BYTE F(CTRL_C)
          .BYTE F(CTRL_Y)
          .BYTE F(CTRL_E)
+         .IF VERSION < 2
          .BYTE F('T')
+         .ELSE
+         .BYTE F(CTRL_Y)
+         .ENDIF
          .BYTE F('V')
          .BYTE F(CTRL_K)
+         .IF VERSION < 2
          .BYTE F('S')
+         .ELSE
+         .BYTE F(CTRL_Y)
+         .ENDIF
          .BYTE F(CTRL_P)
          .BYTE F(CTRL_B)
          .BYTE F('-')

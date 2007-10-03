@@ -256,5 +256,3 @@ MNEMR    .BYTE $D8,$62,$5A,$48,$26,$62
 
          .BYTE $C4,$CA,$26,$48,$44,$44
          .BYTE $A2,$C8    ;(E) FORMAT
-
-         .BYTE $FF,$FF,$FF

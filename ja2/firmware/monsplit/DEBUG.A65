@@ -1,12 +1,17 @@
          .FEATURE LABELS_WITHOUT_COLONS
 
          ;VECTORS
+         .IF VERSION < 2
          .EXPORT IRQ
          ;MONITOR
          .EXPORT STEP
+         .ELSE
+         .EXPORT RESET2
+         .ENDIF
          .EXPORT REGDSP
 
          ;MONITOR
+         .IMPORT BELL
          .IMPORT SAVE
          .IMPORT PRBYTE
          .IMPORT COUT
@@ -14,14 +19,27 @@
          .IMPORT MON
          .IMPORT SAV1
          .IMPORT RESTORE
+         .IF VERSION >= 2
+         .IMPORT SETNORM
+         .IMPORT SETVID
+         .IMPORT SETKBD
+         .ENDIF
          ;DISASM
          .IMPORT PCADJ2
          .IMPORT PCADJ3
          .IMPORT INSDS1
          .IMPORT INSTDSP
+         ;DISPLAY1
+         .IF VERSION >= 2
+         .IMPORT INIT
+         .ENDIF
 
          .INCLUDE "SYMBOLS.A65"
          .INCLUDE "CMAP2.A65"
+
+
+BASIC    =     $E000
+
 ;-----------------------------------------------------------------------
 ;
 ; DEBUGGER
@@ -31,8 +49,9 @@
 ;-----------------------------------------------------------------------
 
 
+         .IF VERSION < 2
 
-
+         .BYTE $FF,$FF,$FF
 
 STEP     JSR   INSTDSP    ;DISASSEMBLE ONE INST
          PLA              ;  AT (PCL,H)
@@ -120,6 +139,86 @@ RTNJMP   LDA   RTNH
          LDA   RTNL
          PHA
 
+
+         .ELSE
+
+         STA   $45
+         PLA
+         PHA
+         ASL   A
+         ASL   A
+         ASL   A
+         BMI   LFA4C
+         JMP   (IRQLOC)
+
+LFA4C    PLP
+         JSR   SAV1
+         PLA
+         STA   PCL
+         PLA
+         STA   PCH
+         JMP   ($03F0)
+         JSR   INSDS1
+         JSR   RGDSP1
+         JMP   MON
+
+RESET2   CLD
+         JSR   SETNORM
+         JSR   INIT
+         JSR   SETVID
+         JSR   SETKBD
+         LDA   $C058
+         LDA   $C05A
+         LDA   $C05D
+         LDA   $C05F
+         LDA   $CFFF
+         BIT   $C010
+         CLD
+         JSR   BELL
+         LDA   $03F3
+         EOR   #%10100101
+         CMP   $03F4
+         BNE   LFAA6
+         LDA   $03F2
+         BNE   LFAA3
+         LDA   #$E0
+         CMP   $03F3
+         BNE   LFAA3
+LFA9B    LDY   #$03
+         STY   $03F2
+         JMP   BASIC
+
+LFAA3    JMP   ($03F2)
+LFAA6    JSR   LFB60
+         LDX   #$05
+LFAAB    LDA   RTBL,X
+         STA   $03EF,X
+         DEX
+         BNE   LFAAB
+         LDA   #$C8
+         STX   $00
+         STA   $01
+LFABA    LDY   #$07
+         DEC   $01
+         LDA   $01
+         CMP   #$C0
+         BEQ   LFA9B
+         STA   $07F8
+LFAC7    LDA   ($00),Y
+         CMP   LFB01,Y
+         BNE   LFABA
+         DEY
+         DEY
+         BPL   LFAC7
+         JMP   ($0000)
+         NOP
+         NOP
+         .ENDIF
+
+
+
+
+
 REGDSP   JSR   CROUT      ;DISPLAY USER REG
 RGDSP1   LDA   #<ACC      ;  CONTENTS WITH
          STA   A3L        ;  LABELS
@@ -136,8 +235,9 @@ RDSP1    LDA   #' '
          JSR   PRBYTE
          INX
          BMI   RDSP1
-         RTS
+RTBL     RTS
 
+         .IF VERSION < 2
 BRANCH   CLC              ;BRANCH TAKEN,
          LDY   #$01       ;  ADD LEN+2 TO PC
          LDA   (PCL),Y
@@ -159,3 +259,8 @@ INITBL   NOP
          JMP   BRANCH
 
 RTBL     .BYTE "AXYPS"
+         .ELSE
+         .BYTE $59,$FA,$00,$E0,$45,$20,$FF,$00,$FF,$03,$FF,$3C,$C1,$D0,$D0,$CC
+         .BYTE $C5,$A0,$DD,$DB,$C4,$C2,$C1,$FF,$C3,$FF,$FF,$FF,$C1,$D8,$D9,$D0
+         .BYTE $D3
+         .ENDIF
