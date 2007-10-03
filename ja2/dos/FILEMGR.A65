@@ -418,7 +418,7 @@ ZEROWRKA        STA FMWKAREA,X  ; PUT $00 BYTE IN WORK AREA.
                 ASL A
                 TAX             ; SET (X) = SLOT*16.
                 STX SLOT16WA
-                LDA #$11        ; NORMAL CAT TRK = #17.
+                LDA #CATTRK     ; NORMAL CAT TRK = #17.
                 STA TRKWA
                 RTS
 
@@ -1145,7 +1145,7 @@ FNINIT          JSR ZWRKAREA    ; INIT THE FM WRK AREA (NON-CHAIN)
                 LDA VOLWA       ; COMPLEMENTED VOL# (FRM WRK AREA)
                 EOR #$FF        ; UNCOMPL. IT & PUT VOL# IN VTOC.
                 STA VOLUSED
-                LDA #$11        ; USE TRK # 17 FOR CATALOG TRK.
+                LDA #CATTRK     ; USE TRK # 17 FOR CATALOG TRK.
                 STA NXTRKUSE    ; SET CAT TRK AS NXT TRK TO ALLOC.
                                 ; (NXTRKUSE IS LOCATED IN VTOC.)
                 LDA #1          ; ALLOCATION DIRECTION = FORWARD.
@@ -1184,7 +1184,7 @@ FREEIT          LDA FRETKMSK,Y  ; FREE MOST TRKMAPS.  (STARTING
                                 ; LOADING FROM END OF FRETKMSK:
                                 ; "00 00 FF FF".
                 BPL FREEIT      ; (4BYTES/TRKMAP & 4BYTS/FRETKMSK)
-                CPX #$11*4      ; OFFSET TO START OF TRKMAP17
+                CPX #4*CATTRK   ; OFFSET TO START OF TRKMAP17
                                 ; (IE. CATALOG TRACK).
                 BNE FREETRK     ; HAVE WE FREED TRKS 3 TO 16 YET?
                                 ; IF NOT - BRANCH.
@@ -1201,7 +1201,7 @@ CLRDIREC        STA DIRECBUF,X
                 INX
                 BNE CLRDIREC
                 JSR PT2DIRBF    ; DESIGNATE DIR SEC BUF AS I/O BUF
-                LDA #$11        ; (A) = # OF CAT TRK.
+                LDA #CATTRK     ; (A) = # OF CAT TRK.
                 LDY SECPERTK    ; # OF SECS/TRK = 16.
                 DEY
                 DEY
@@ -2360,7 +2360,7 @@ CKIFFULL        LDA TRK0YET
 
 SRCH4TRK        STA DRECTION    ; SET THE SEARCH DIRECTION.
                 CLC             ; BEGIN THE SEARCH ONE TRACK AWAY
-                ADC #$11        ; FROM THE CATALOG TRK.
+                ADC #CATTRK     ; FROM THE CATALOG TRK.
 
                                 ; CHECK TRK'S TRKMAP FOR FREE SECS.
 
@@ -2828,7 +2828,7 @@ DSKVOLUM        .REVERSE "DISK VOLUME "
 
 VTOCBUFF        .RES 1          ; UNUSED ($B3BB).
                                 ; REFERENCE FOR START OF TABLE.
-FIRDIRTK        .BYTE $11       ; TRK# OF 1ST DIRECTORY SECTOR.
+FIRDIRTK        .BYTE CATTRK    ; TRK# OF 1ST DIRECTORY SECTOR.
 FIRDIRSC                        ; SEC# OF 1ST DIRECTORY SECTOR.
                 .IF VERSION < 330
                 .BYTE $0C

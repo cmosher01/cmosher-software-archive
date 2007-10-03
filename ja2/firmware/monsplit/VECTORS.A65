@@ -9,9 +9,6 @@
 
          .INCLUDE "SYMBOLS.A65"
 
-M6502VEC .BYTE <NMI        ;NMI VECTOR
-         .BYTE >NMI
-         .BYTE <RESET      ;RESET VECTOR
-         .BYTE >RESET
-         .BYTE <IRQ        ;IRQ VECTOR
-         .BYTE >IRQ
+M6502VEC .ADDR NMI        ;NMI VECTOR
+         .ADDR RESET      ;RESET VECTOR
+         .ADDR IRQ        ;IRQ VECTOR

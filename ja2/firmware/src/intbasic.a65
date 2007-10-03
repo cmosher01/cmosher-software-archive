@@ -1,18 +1,64 @@
 ;
-; Apple Integer BASIC
-; (from Apple ][ ROM @ $E000-$F242)
+; Game BASIC
+; (later named: Apple BASIC)
+; (later named: Integer BASIC)
 ;
-; Written by Steve Wozniak
+; Originally written by Steve Wozniak in 1975.
 ;
 ; Disassembled by Chris Mosher (using cc65)
+; from the Apple I and Apple ][ ROMs @ $E000.
+;
+; Intended for the www.cc65.org assembler.
 ;
 ;
 ;
+; This assembler source file will build an exact
+; binary image of the Apple I or Apple ][ ROM version
+; of "Integer BASIC".
+;
+; Define VERSION as 1 or 2 to specify which version to build.
+; Apple I : VERSION=1
+; Apple ][: VERSION=2
+;
+;
+;
+; For example to build the Apple ][ version:
+;
+;    ca65 -t apple2 -D VERSION=2 -o intbasic.obj intbasic.a65
+;
+; And link it with a command such as:
+;
+;    ld65 -C intbasic.cfg intbasic.obj
+;
+; where intbasic.cfg contains:
+;
+;    MEMORY { E000ROM: start=$E000, size=$2000, file="E000.ROM"; }
+;    SEGMENTS { CODE: load=E000ROM, type=RO; }
+;
+; The resulting E000.ROM file will contain the built image.
+;
+;
+;
+; There are also 3 known bugs (in the Apple ][ version,
+; but only 1 in the Apple I version). To build a version
+; with these bugs FIXED, define BUGFIX. For example, to
+; build the Apple ][ version with known bugs fixed:
+;
+;    ca65 -t apple2 -D VERSION=2 -D BUGFIX intbasic.a65
+;
+
+
+
         .FEATURE LABELS_WITHOUT_COLONS, LEADING_DOT_IN_IDENTIFIERS
         .INCLUDE "CMAP2.A65"
         .INCLUDE "ASCIIHL.A65"
 
+
+
+CTRL_C    =       $03 | %10000000
 CR        =       $0D | %10000000
+
+
 
 WNDWDTH   =       $21
 CH        =       $24
@@ -64,14 +110,27 @@ FORNDX    =       $FB
 GOSUBNDX  =       $FC
 SYNSTKDX  =       $FD
 SYNPAG    =       $FE
-                  
+
 STACK     =       $0100
-                  
+
 IN        =       $0200
-                  
+
+.IF VERSION = 1
+
+; Apple I's PIA registers
+; for keyboard input and
+; screen output
+KBD       =       $D010
+KBDCR     =       $D011
+DSP       =       $D012
+
+.ELSE
+
+; Apple ]['s keyboard input
 KBD       =       $C000
 KBDSTRB   =       $C010
-                  
+
+; Apple ][ Monitor ROM routines
 PLOT      =       $F800
 HLINE     =       $F819
 VLINE     =       $F828
@@ -83,15 +142,27 @@ SETGR     =       $FB40
 VTAB      =       $FC22
 NXTCHAR   =       $FD75
 CROUT     =       $FD8E
-.IF VERSION > 1
 COUT      =       $FDED
-.ENDIF
 INPORT    =       $FE8B
 OUTPORT   =       $FE95
 WRITE     =       $FECD
 WRITE0    =       $FECF
 READ      =       $FEFD
 BELL      =       $FF3A
+
+.ENDIF
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -100,19 +171,27 @@ BASIC:
         JMP     OLDENT
         .ELSE
         JSR     COLD
-        JMP     WARM
+BASIC2: JMP     WARM
         .ENDIF
 
-BASIC2:
+
+
         .IF VERSION = 1
-LE003:  LDA     $D011
-        BPL     LE003
-        LDA     $D010
+READKEY:
+        LDA     KBDCR
+        BPL     READKEY
+        LDA     KBD
+
         .ELSE
-LE006:  STA     PROMPT
+
+DOPROMPT:
+        STA     PROMPT
         JMP     COUT
         .ENDIF
+
         RTS
+
+
 
 LE00C:  TXA
         AND     #$20
@@ -136,7 +215,7 @@ LE02A:  LDY     #$00
         INC     P1+1
 LE034:  RTS
 COMMA_LIST:
-        JSR     LE715
+        JSR     GET16BIT
         JSR     LE576
 LE03B:  LDA     P1
         CMP     P3
@@ -154,7 +233,7 @@ LISTCMD:LDA     PP
         LDA     HIMEM+1
         STA     P3+1
         BNE     LE03B
-LISTNUM:JSR     LE715
+LISTNUM:JSR     GET16BIT
         JSR     LE56D
         LDA     P2
         STA     P1
@@ -319,9 +398,9 @@ INPUTSTR:
         .ELSE
         STX     XSAVE
         TAX
-        INC     PROMPT
+        INC     PROMPT ; PROMPT FROM > TO ?
         JSR     LF351
-        DEC     PROMPT
+        DEC     PROMPT ; PROMPT FROM ? TO >
         TXA
         LDX     XSAVE
         STA     NOUNSTKH,X
@@ -446,7 +525,7 @@ LE25B:  LDA     ACC
         STA     AUX
         LDA     ACC+1
         STA     AUX+1
-        JSR     LE715
+        JSR     GET16BIT
         STY     P3
         STY     P3+1
         LDA     ACC+1
@@ -454,7 +533,7 @@ LE25B:  LDA     ACC
         DEX
         ASL     P2+1
         JSR     NEGATE
-        JSR     LE715
+        JSR     GET16BIT
 LE277:  LDY     #$10
 LE279:  RTS
 MOD:    JSR     LEE6C
@@ -475,11 +554,11 @@ LE286:  CMP     #$DF
         INY
         BPL     LE29E
 LE294:  LDY     #ERRMSG19
-        JSR     LE3C4
+        JSR     ERRMSG
 LE299:  LDY     #$01
 LE29B:  DEY
         BMI     LE294
-LE29E:  JSR     LE003
+LE29E:  JSR     READKEY
         NOP
         NOP
         JSR     COUT
@@ -529,8 +608,8 @@ COMMA_SCRN:
         JSR     OLDCOLD
 WARM:   JSR     CROUT
 LE2B6:  LSR     RUNFLAG
-        LDA     #$BE
-        JSR     LE006
+        LDA     #'>' ; THE PROMPT
+        JSR     DOPROMPT
         .ENDIF
 
         LDY     #$00
@@ -630,7 +709,7 @@ LE365:  BPL     LE3E5
 LE36B:  LDY     #$14
         BNE     LE3E0
 COMMA_DEL:
-        JSR     LE715
+        JSR     GET16BIT
         LDA     P1
         STA     P3
         LDA     P1+1
@@ -641,7 +720,7 @@ COMMA_DEL:
         LDA     P1+1
         STA     P2+1
         BNE     LE395
-DEL:    JSR     LE715
+DEL:    JSR     GET16BIT
 LE38A:  JSR     LE56D
         LDA     P3
         STA     P1
@@ -672,7 +751,7 @@ LE3B7:  LDA     P3
 
 LE3C0:  JSR     COUT
         INY
-LE3C4:  LDA     ERRMSGTBL,Y
+ERRMSG: LDA     ERRMSGTBL,Y
         BMI     LE3C0
 
 
@@ -685,9 +764,9 @@ LE3CD:  LDA     #$00
         STA     $24
         LDA     #CR
 LE3D3:  INC     $24
-LE3D5:  BIT     $D012
+LE3D5:  BIT     DSP
         BMI     LE3D5
-        STA     $D012
+        STA     DSP
 
         .ELSE
 
@@ -733,9 +812,9 @@ LE400:  STX     TXTNDX
         TAX
 LE409:  LSR     A
         .IF VERSION = 1
-        EOR     #$48 ; IS THIS A BUG?
+        EOR     #%01001000
         .ELSE
-        EOR     #$40
+        EOR     #%01000000
         .ENDIF
         ORA     (SYNPAG),Y
         CMP     #$C0
@@ -1040,7 +1119,7 @@ LE5E5:  LDA     $CE
         BCC     LE64F
 LE60C:  STA     $CE
         STY     $CF
-        JSR     LE6FF
+        JSR     GETVERB
         BMI     LE623
         CMP     #$40
         BEQ     LE623
@@ -1050,7 +1129,7 @@ LE60C:  STA     $CE
         .BYTE   $07
         LDA     #$49
 LE623:  STA     $CF
-        JSR     LE6FF
+        JSR     GETVERB
 LE628:  LDA     $4B
         STA     $D1
         LDA     $4A
@@ -1176,7 +1255,7 @@ LE646:  LDA     (SRCH),Y
         PHA
         ADC     SRCH
         JSR     LE70A
-LE657:  JSR     LE6FF
+LE657:  JSR     GETVERB
         DEY
         BNE     LE657
         TYA
@@ -1212,14 +1291,14 @@ LE686:  BPL     LE6A0
         .ELSE
         BMI     LE640
         .ENDIF
-        JSR     LE6FF
+        JSR     GETVERB
         JSR     LE708
-        JSR     LE6FF
+        JSR     GETVERB
         STA     NOUNSTKC,X
 LE696:  BIT     IFFLAG
         BPL     LE69B
         DEX
-LE69B:  JSR     LE6FF
+LE69B:  JSR     GETVERB
         BCS     LE686
 LE6A0:  CMP     #$28
         BNE     LE6C3
@@ -1234,7 +1313,7 @@ LE6A0:  CMP     #$28
         LDA     #$00
         STA     NOUNSTKH,X
 LE6BA:  INC     NOUNSTKH,X
-LE6BC:  JSR     LE6FF
+LE6BC:  JSR     GETVERB
         BMI     LE6BA
         BCS     LE696
 LE6C3:  BIT     IFFLAG
@@ -1245,19 +1324,19 @@ LE6C3:  BIT     IFFLAG
 LE6CD:  TAY
         STA     VERBNOW
         LDA     LE980,Y
-        AND     #$55
+        AND     #%01010101
         ASL     A
         STA     PRFLAG
 LE6D8:  PLA
         TAY
         LDA     LE980,Y
-        AND     #$AA
+        AND     #%10101010
         CMP     PRFLAG
         BCS     LE6EC
         TYA
         PHA
         .IF VERSION = 1
-        JSR     LE6FF
+        JSR     GETVERB
         .ELSE
         JSR     LF3EB
         .ENDIF
@@ -1270,7 +1349,9 @@ LE6EC:  LDA     VERBADRL,Y
         JSR     LE6FC
         JMP     LE6D8
 LE6FC:  JMP     (ACC)
-LE6FF:  INC     PX
+
+GETVERB:
+        INC     PX
         BNE     LE705
         INC     PX+1
 LE705:  LDA     (PX),Y
@@ -1282,7 +1363,9 @@ LE70A:  DEX
         RTS
 LE710:  LDY     #$66
 LE712:  JMP     LE3E0
-LE715:  LDY     #$00
+
+GET16BIT: ;get a 16-bit value
+        LDY     #$00
         LDA     NOUNSTKL,X
         STA     ACC
         LDA     NOUNSTKC,X
@@ -1300,8 +1383,9 @@ LE715:  LDY     #$00
         DEY
 LE731:  INX
         RTS
+
 HE733:  JSR     HE74A
-NOT:    JSR     LE715
+NOT:    JSR     GET16BIT
         TYA
         JSR     LE708
         STA     NOUNSTKC,X
@@ -1313,12 +1397,12 @@ NOT:    JSR     LE715
 LE749:  RTS
 HE74A:  JSR     SUBTRACT
         JSR     SGN
-ABS:    JSR     LE715
+ABS:    JSR     GET16BIT
         BIT     ACC+1
         BMI     LE772
 LE757:  DEX
 LE758:  RTS
-SGN:    JSR     LE715
+SGN:    JSR     GET16BIT
         LDA     ACC+1
         BNE     LE764
         LDA     ACC
@@ -1328,7 +1412,7 @@ LE764:  LDA     #$FF
         STA     NOUNSTKC,X
         BIT     ACC+1
         BMI     LE758
-NEGATE: JSR     LE715
+NEGATE: JSR     GET16BIT
 LE772:  TYA
         SEC
         SBC     ACC
@@ -1341,12 +1425,12 @@ LE77E:  LDY     #$00
 SUBTRACT:
         JSR     NEGATE
 ADDITION:
-        JSR     LE715
+        JSR     GET16BIT
         LDA     ACC
         STA     AUX
         LDA     ACC+1
         STA     AUX+1
-        JSR     LE715
+        JSR     GET16BIT
 LE793:  CLC
         LDA     ACC
         ADC     AUX
@@ -1360,7 +1444,7 @@ POSITIVE:
 
 TAB:
         .IF VERSION = 1
-        JSR     LE715
+        JSR     GET16BIT
         .ELSE
         JSR     GETBYTE
         .ENDIF
@@ -1404,7 +1488,7 @@ LE7BC:  CPY     $24
 
 
 HE7C1:  JSR     LE7B1
-PRNTNUM:JSR     LE715
+PRNTNUM:JSR     GET16BIT
 LE7C7:  LDA     ACC+1
         BPL     LE7D5
         LDA     #$AD
@@ -1418,7 +1502,7 @@ LE7D5:  DEY
         JSR     LE51B
         LDX     ACC+1
         RTS
-AUTO:   JSR     LE715
+AUTO:   JSR     GET16BIT
         LDA     ACC
         STA     AUTOLN
         LDA     ACC+1
@@ -1431,11 +1515,11 @@ LE7F3:  STA     AUTOINC
         STY     AUTOINC+1
         RTS
 COMMA_AUTO:
-        JSR     LE715
+        JSR     GET16BIT
         LDA     ACC
         LDY     ACC+1
         BPL     LE7F3
-HE801:  JSR     LE715
+HE801:  JSR     GET16BIT
         LDA     NOUNSTKL,X
         STA     AUX
         LDA     NOUNSTKH,X
@@ -1498,7 +1582,7 @@ MAXGOSUB = $10
         STA     STACK+(2*MAXGOSUB),Y
         LDA     PR+1
         STA     STACK+(3*MAXGOSUB),Y
-GOTO:   JSR     LE715
+GOTO:   JSR     GET16BIT
         JSR     LE56D
         BCC     LE867
         LDY     #$37
@@ -1508,7 +1592,7 @@ LE867:  LDA     P2
 LE86B:  STA     PR
         STY     PR+1
         .IF VERSION = 1
-        BIT     $D011
+        BIT     KBDCR
         BMI     LE8C3
         .ENDIF
         CLC
@@ -1560,7 +1644,7 @@ LE8BE:  TAY
         TXA
         JMP     LE875
 LE8C3:  LDY     #ERRMSG12
-        JSR     LE3C4
+        JSR     ERRMSG
         LDY     #$01
         LDA     (PR),Y
         TAX
@@ -1583,7 +1667,7 @@ LE8DC:  BEQ     LE8A2
         STA     AUX
         LDA     STACK+($7*MAXFOR)-1,Y
         STA     AUX+1
-        JSR     LE715
+        JSR     GET16BIT
         DEX
         JSR     LE793
         JSR     HE801
@@ -1596,7 +1680,7 @@ LE8DC:  BEQ     LE8A2
         JSR     LE708
         JSR     SUBTRACT
         JSR     SGN
-        JSR     LE715
+        JSR     GET16BIT
         LDY     FORNDX
         LDA     ACC
         BEQ     LE925
@@ -1631,7 +1715,7 @@ MAXFOR = $10
         JMP     LF288
         .ENDIF
         RTS
-TO:     JSR     LE715
+TO:     JSR     GET16BIT
         LDY     FORNDX
         LDA     ACC
         STA     STACK+($C*MAXFOR)-1,Y
@@ -1651,7 +1735,7 @@ LE966:  STA     STACK+($7*MAXFOR)-1,Y
         STA     STACK+($B*MAXFOR)-1,Y
         RTS
         .IF VERSION = 1
-LE97E:  JSR     LE715
+LE97E:  JSR     GET16BIT
         LDY     $FB
         LDA     $CE
         STA     $012F,Y
@@ -1739,7 +1823,7 @@ VERBADRH:
 .IF VERSION = 1
 .LHSPLIT {BEGIN_LINE $FFFF $FFFF COLON LISTNUM COMMA_LIST LISTCMD RUNNUM RUN DEL COMMA_DEL NEW CLR AUTO COMMA_AUTO LEE54 LEF80 LEF96 ADDITION SUBTRACT MULT DIVIDE HE733 HE74A LEC13 LEC06 LEC0B HE74A LEC01 VAND VOR MOD $0000 $FFFF HE823 COMMA_SUBSTR GOTO LET HEFB6 HEBCB $FFFF $FFFF PAREN_SUBSTR $FFFF $FFFF HEF24 PEEK RNDCMD SGN ABS $0000 $FFFF HE823 POSITIVE NEGATE NOT HE823 HE1D7 HE21C LEN LEEC2 LEEAE LEEBA HE823 $FFFF $FFFF HE121 DIMSTR DIMNUM PRNTSTR PRNTNUM HE820 HEE00 HE7C1 $FFFF $FFFF $FFFF CALLCMD DIMSTR DIMNUM TAB ENDCMD HEFB6 INPUT_PROMPT HEBAA FOR HE801 TO LE97E NEXT NEXT RETURN GOSUB $FFFF LET GOTO IF PRNTSTR PRNTNUM PRINT_CR GETVAL255 LEF0C COLOR GETVAL255 COMMA_PLOT GETVAL255 LEEA6 LEEB0 GETVAL255 LEEBC LEEC6 $EE57 HE18C HE801 RIGHT_PAREN $FFFF $FFFF $FFFF $FFFF $FFFF}
 .ELSE
-.LHSPLIT {BEGIN_LINE $FFFF $FFFF COLON LOAD SAVE CON RUNNUM RUN DEL COMMA_DEL NEW CLR AUTO COMMA_AUTO MAN VHIMEM VLOMEM ADDITION SUBTRACT MULT DIVIDE HE733 HE74A HF25B HF24E HF253 HE74A HF249 VAND VOR MOD EXP $FFFF HE823 COMMA_SUBSTR GOTO LET HEFB6 HEBCB $FFFF $FFFF PAREN_SUBSTR $FFFF $FFFF HEF24 PEEK RNDCMD SGN ABS PDL $FFFF HE823 POSITIVE NEGATE NOT HE823 HE1D7 HE21C LEN ASC SCRN COMMA_SCRN HE823 $FFFF $FFFF HE121 DIMSTR DIMNUM PRNTSTR PRNTNUM HE820 HEE00 HE7C1 HF3BA SETTXT SETGR CALLCMD DIMSTR DIMNUM TAB ENDCMD HEFB6 INPUT_PROMPT HEBAA FOR HE801 TO STEP NEXT NEXT RETURN GOSUB $FFFF LET GOTO IF PRNTSTR PRNTNUM PRINT_CR POKE GETVAL255 COLOR GETVAL255 COMMA_PLOT GETVAL255 COMMA_HLIN AT_HLIN GETVAL255 COMMA_VLIN AT_VLIN IVTAB HE18C HE801 RIGHT_PAREN $FFFF LISTNUM COMMA_LIST LISTCMD POPCMD NODSP_STR NODSP_NUM NOTRACE DSP_NUM DSP_STR TRACE PRSLOT INSLOT}
+.LHSPLIT {BEGIN_LINE $FFFF $FFFF COLON LOAD SAVE CON RUNNUM RUN DEL COMMA_DEL NEW CLR AUTO COMMA_AUTO MAN VHIMEM VLOMEM ADDITION SUBTRACT MULT DIVIDE HE733 HE74A HF25B HF24E HF253 HE74A HF249 VAND VOR MOD EXP $FFFF HE823 COMMA_SUBSTR GOTO LET HEFB6   HEBCB $FFFF $FFFF PAREN_SUBSTR $FFFF $FFFF HEF24 PEEK RNDCMD SGN ABS PDL $FFFF HE823 POSITIVE NEGATE NOT HE823 HE1D7 HE21C LEN ASC SCRN COMMA_SCRN HE823 $FFFF $FFFF HE121 DIMSTR DIMNUM PRNTSTR PRNTNUM HE820 HEE00 HE7C1 HF3BA SETTXT SETGR CALLCMD DIMSTR DIMNUM TAB ENDCMD HEFB6 INPUT_PROMPT HEBAA FOR HE801 TO STEP NEXT NEXT RETURN GOSUB $FFFF LET GOTO IF PRNTSTR PRNTNUM PRINT_CR POKE GETVAL255 COLOR GETVAL255 COMMA_PLOT GETVAL255 COMMA_HLIN AT_HLIN GETVAL255 COMMA_VLIN AT_VLIN IVTAB HE18C HE801 RIGHT_PAREN $FFFF LISTNUM COMMA_LIST LISTCMD POPCMD NODSP_STR NODSP_NUM NOTRACE DSP_NUM DSP_STR TRACE PRSLOT INSLOT}
 .ENDIF
 
 
@@ -1751,77 +1835,77 @@ VERBADRH:
 ERRMSGTBL:
 
 ERRMSG00 = *-ERRMSGTBL
-	    .ASCIIL ">32767"
+            .ASCIIL ">32767"
 
 ERRMSG01 = *-ERRMSGTBL
-	    .ASCIIL "TOO LONG"
+            .ASCIIL "TOO LONG"
 
 ERRMSG02 = *-ERRMSGTBL
-	    .ASCIIL "SYNTAX"
+            .ASCIIL "SYNTAX"
 
 ERRMSG03 = *-ERRMSGTBL
-	    .ASCIIL "MEM FULL"
+            .ASCIIL "MEM FULL"
 
 ERRMSG04 = *-ERRMSGTBL
-	    .ASCIIL "TOO MANY PARENS"
+            .ASCIIL "TOO MANY PARENS"
 
 ERRMSG05 = *-ERRMSGTBL
-	    .ASCIIL "STRING"
+            .ASCIIL "STRING"
 
 ERRMSG06 = *-ERRMSGTBL
-	    .ASCIIL "NO END"
+            .ASCIIL "NO END"
 
 ERRMSG07 = *-ERRMSGTBL
-	    .ASCIIL "BAD BRANCH"
+            .ASCIIL "BAD BRANCH"
 
 ERRMSG08 = *-ERRMSGTBL
             .IF VERSION = 1
             .ASCIIL ">8 GOSUBS"
             .ELSE
-	    .ASCIIL "16 GOSUBS"
-	    .ENDIF
+            .ASCIIL "16 GOSUBS"
+            .ENDIF
 
 ERRMSG09 = *-ERRMSGTBL
-	    .ASCIIL "BAD RETURN"
+            .ASCIIL "BAD RETURN"
 
 ERRMSG10 = *-ERRMSGTBL
             .IF VERSION = 1
             .ASCIIL ">8 FORS"
             .ELSE
-	    .ASCIIL "16 FORS"
-	    .ENDIF
+            .ASCIIL "16 FORS"
+            .ENDIF
 
 ERRMSG11 = *-ERRMSGTBL
-	    .ASCIIL "BAD NEXT"
+            .ASCIIL "BAD NEXT"
 
 ERRMSG12 = *-ERRMSGTBL
-	    .ASCIIL "STOPPED AT "
+            .ASCIIL "STOPPED AT "
 
 ERRMSG13 = *-ERRMSGTBL
-	    .ASCIIL "*** "
+            .ASCIIL "*** "
 
 ERRMSG14 = *-ERRMSGTBL
-	    .BYTE " ERR",.LOCHR(CR)
+            .BYTE " ERR",.LOCHR(CR)
 
 ERRMSG15 = *-ERRMSGTBL
-	    .ASCIIL ">255"
+            .ASCIIL ">255"
 
 ERRMSG16 = *-ERRMSGTBL
-	    .ASCIIL "RANGE"
+            .ASCIIL "RANGE"
 
 ERRMSG17 = *-ERRMSGTBL
-	    .ASCIIL "DIM"
+            .ASCIIL "DIM"
 
 ERRMSG18 = *-ERRMSGTBL
-	    .ASCIIL "STR OVFL"
+            .ASCIIL "STR OVFL"
 
 ERRMSG19 = *-ERRMSGTBL
-	    .BYTE "\",.LOCHR(CR)
+            .BYTE "\",.LOCHR(CR)
 
 ERRMSG20 = *-ERRMSGTBL
-	    .BYTE "RETYPE LINE",CR ; ALSO INCL. NEXT ?
+            .BYTE "RETYPE LINE",CR ; ALSO INCL. NEXT ?
 ERRMSG21 = *-ERRMSGTBL
-	    .BYTE .LOCHR('?')
+            .BYTE .LOCHR('?')
 
 LEB9A:  LSR     RUNFLAG
         BCC     LEBA1
@@ -1832,7 +1916,7 @@ LEBA1:  LDX     ACC+1
         LDY     #CR
         BNE     LEBAC
 HEBAA:  LDY     #ERRMSG21
-LEBAC:  JSR     LE3C4
+LEBAC:  JSR     ERRMSG
         STX     ACC
         TSX
         STX     ACC+1
@@ -2146,7 +2230,7 @@ SYNTABL2:
         .BASCMD "RND"
         .BASCMD "PEEK"
         .BASCMD "(",$51,$07
-        
+
         .BYTE $39,$81,$C1,$4F,$7F,$0F,$2F
         .BYTE 0
 
@@ -2194,12 +2278,11 @@ SYNTABL2:
 
         .BASCMD ",",$60
         .BASCMD "AUTO",$20
+        .BASCMD "CLR"
 
         .IF VERSION = 1
-        .BASCMD "CLR"
         .BASCMD "SCR"
         .ELSE
-        .BASCMD "NEW"
         .BASCMD "NEW"
         .ENDIF
 
@@ -2249,7 +2332,7 @@ LEN:    INX
         STA     NOUNSTKL,X
         JMP     HE823
         .BYTE   $FF
-GETBYTE:JSR     LE715
+GETBYTE:JSR     GET16BIT
         LDA     ACC+1
         BNE     LEE63
         LDA     ACC
@@ -2325,7 +2408,7 @@ LEE96:  DEY
         .BYTE   $FF
         .BYTE   $FF
         .BYTE   $FF
-CALLCMD:   JSR     LE715
+CALLCMD:   JSR     GET16BIT
         JMP     (ACC)
 
         .IF VERSION = 1
@@ -2385,19 +2468,19 @@ LEECB:  BCS     LEE68
 LEED3:  TYA
         TAX
         LDY     #ERRMSG13
-        JSR     LE3C4
+        JSR     ERRMSG
         TXA
         TAY
-        JSR     LE3C4
+        JSR     ERRMSG
         LDY     #$72
         .IF VERSION = 1
-        JMP     LE3C4
+        JMP     ERRMSG
         .ELSE
         JMP     LF161
         .ENDIF
 LEEE4:
         .IF VERSION = 1
-        JSR     LE715
+        JSR     GET16BIT
         .ELSE
         JSR     LF23F
         .ENDIF
@@ -2410,7 +2493,7 @@ LEEE7:  ASL     ACC
         CMP     ACC
         BCS     LEECB
 LEEF5:  RTS
-PEEK:   JSR     LE715
+PEEK:   JSR     GET16BIT
         LDA     (ACC),Y
         STY     SYNSTKL+31,X
         JMP     LE708
@@ -2426,7 +2509,7 @@ GETVAL255:
         RTS
         .ENDIF
 
-POKE:   JSR     LE715
+POKE:   JSR     GET16BIT
         .IF VERSION = 1
         PLA
         .ELSE
@@ -2469,7 +2552,7 @@ LEF30:  STA     AUX
         SBC     (AUX),Y
         BCS     LEECB
         JMP     HE823
-RNDCMD: JSR     LE715
+RNDCMD: JSR     GET16BIT
         LDA     RND
         JSR     LE708
         LDA     RND+1
@@ -2494,7 +2577,7 @@ LEF66:  LDA     RND+1
         LDA     ACC+1
         STA     NOUNSTKC,X
         JMP     MOD
-LEF80:  JSR     LE715
+LEF80:  JSR     GET16BIT
         LDY     ACC
         .IF VERSION = 1
         CPY     HIMEM
@@ -2526,7 +2609,7 @@ LEF93:
         .ELSE
         JMP     NEW
         .ENDIF
-LEF96:  JSR     LE715
+LEF96:  JSR     GET16BIT
         LDY     ACC
         .IF VERSION = 1
         CPY     $CA
@@ -2633,7 +2716,7 @@ LF025:  JMP     LF179
 LF02E:  LDX     PX
         LDA     PX+1
 LF032:  LDY     KBD
-        CPY     #$83
+        CPY     #CTRL_C
         BNE     LF025
         BIT     KBDSTRB
         STX     NOUNSTKL
@@ -2645,7 +2728,7 @@ LF032:  LDY     KBD
         JMP     LE8C3
         .BYTE   $FF
         .BYTE   $FF
-VHIMEM: JSR     LE715
+VHIMEM: JSR     GET16BIT
         STX     XSAVE
         LDX     #$FE
         SEC
@@ -2709,7 +2792,7 @@ LF0BD:  DEC     HIMEM
         SBC     PP+1
         BCC     LF0AB
         BCS     LF099
-VLOMEM: JSR     LE715
+VLOMEM: JSR     GET16BIT
         LDY     ACC
         .IFDEF BUGFIX
         CPY     PP
@@ -2788,7 +2871,7 @@ LF145:  LDA     HIMEM+1,X
         JSR     WRITE0
         LDX     XSAVE
         RTS
-LF161:  JSR     LE3C4
+LF161:  JSR     ERRMSG
         JMP     BELL
 POPCMD: LDA     GOSUBNDX
         BNE     LF16E
@@ -2890,7 +2973,7 @@ LF235:  JSR     LF1C9
         JMP     LF409
         INX
 LF23E:  RTS
-LF23F:  JSR     LE715
+LF23F:  JSR     GET16BIT
         INC     ACC
         BNE     LF248
         INC     ACC+1
@@ -2914,7 +2997,7 @@ VOR:    JSR     LEFC9
 LF272:  STA     NOUNSTKL,X
         BPL     LF263
         JMP     LEFC9
-STEP:   JSR     LE715
+STEP:   JSR     GET16BIT
         LDY     FORNDX
         LDA     ACC
         STA     STACK+95,Y
@@ -3024,7 +3107,7 @@ LF351:  JSR     NXTCHAR
 LF354:  TXA
         PHA
 LF356:  LDA     IN,X
-        CMP     #$83
+        CMP     #CTRL_C
         BNE     LF360
         JMP     BASIC2
 LF360:  DEX
@@ -3039,7 +3122,7 @@ LF366:  JSR     LE280
         TXA
         TAY
         RTS
-EXP:    JSR     LE715
+EXP:    JSR     GET16BIT
         LDA     ACC+1
         BPL     LF380
         TYA
@@ -3050,7 +3133,7 @@ LF37F:  RTS
 LF380:  STA     TOKNDXSTK
         LDA     ACC
         STA     SRCH
-        JSR     LE715
+        JSR     GET16BIT
         LDA     ACC
         STA     SRCH2
         LDA     ACC+1
@@ -3098,7 +3181,7 @@ LF3E0:  BIT     RUNFLAG
         BIT     NOUNSTKC
         JMP     LF22C
 LF3EB:  LDY     #$00
-        JMP     LE6FF
+        JMP     GETVERB
 LF3F0:  TAY
         JSR     CROUT
 LF3F4:  TYA

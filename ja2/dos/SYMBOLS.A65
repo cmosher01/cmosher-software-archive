@@ -355,4 +355,4 @@ CR              = $0D|%10000000 ; carriage-return
 
 
 TRKPERDSK       = $23           ; Number of tracks per disk
-CATTRK          = TRKPERDIS/2   ; Catalog track is in middle of disk
+CATTRK          = TRKPERDSK/2   ; Catalog track is in middle of disk
