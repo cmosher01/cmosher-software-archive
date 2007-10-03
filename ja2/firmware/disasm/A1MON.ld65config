@@ -1,0 +1,2 @@
+MEMORY { FF00ROM: start=$FF00, size=$100, file="FF00.ROM"; }
+SEGMENTS { CODE: load=FF00ROM, type=RO; }
