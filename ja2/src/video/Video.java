@@ -131,20 +131,13 @@ public class Video extends JPanel implements Clock.Timed
 
 		if (this.t >= VideoAddressing.BYTES_PER_FIELD)
 		{
-			try
+			SwingUtilities.invokeLater(new Runnable()
 			{
-				SwingUtilities.invokeAndWait(new Runnable()
+				public void run()
 				{
-					public void run()
-					{
-						plotScreen();
-					}
-				});
-			}
-			catch (Throwable e)
-			{
-				throw new IllegalStateException(e);
-			}
+					plotScreen();
+				}
+			});
 			this.t = 0;
 		}
 	}
@@ -196,7 +189,7 @@ public class Video extends JPanel implements Clock.Timed
 	}
 
     static final int BLACK = Color.BLACK.getRGB();
-    static final int GREEN = Color.WHITE.getRGB();
+    static final int GREEN = Color.GREEN.getRGB();
 
     private void plotByte(int tt, int d, boolean inverse)
 	{
