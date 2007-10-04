@@ -1,5 +1,11 @@
          .FEATURE LABELS_WITHOUT_COLONS
          .INCLUDE "SYMBOLS.A65"
+
+
+
+         .IF VERSION < 2
+
+
 ;-----------------------------------------------------------------------
 ;
 ; MATH ROUTINES
@@ -72,3 +78,84 @@ MD3      LDA   LOC1,X     ;X SPECIFIES AC OR AUX
          STA   LOC1,X
          INC   SIGN
 MDRTS    RTS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         .ELSE
+         .EXPORT LFB60
+         .EXPORT LFB78
+         .EXPORT LFBA5
+
+         .IMPORT LFB08
+         .IMPORT ESC1
+         .IMPORT VIDOUT
+         .IMPORT CR
+         .IMPORT HOME
+         .IMPORT RDKEY
+
+LFB60   JSR     HOME
+        LDY     #$08
+LFB65   LDA     LFB08,Y
+        STA     $040E,Y
+        DEY
+        BNE     LFB65
+        RTS
+        LDA     $03F3
+        EOR     #$A5
+        STA     $03F4
+        RTS
+LFB78   CMP     #$8D
+        BNE     LFB94
+        LDY     $C000
+        BPL     LFB94
+        CPY     #$93
+        BNE     LFB94
+        BIT     $C010
+LFB88   LDY     $C000
+        BPL     LFB88
+        CPY     #$83
+        BEQ     LFB94
+        BIT     $C010
+LFB94   JMP     VIDOUT
+LFB97   SEC
+        JMP     ESC1
+LFB9B   TAY
+        LDA     $FA48,Y ; TODO
+        JSR     LFB97
+        JSR     RDKEY
+LFBA5   CMP     #$CE
+        BCS     LFB97
+        CMP     #$C9
+        BCC     LFB97
+        CMP     #$CC
+        BEQ     LFB97
+        BNE     LFB9B
+        NOP
+        NOP
+        NOP
+        NOP
+        NOP
+        NOP
+        NOP
+        NOP
+        NOP
+        NOP
+        NOP
+        NOP
+        NOP
+        NOP
+        .ENDIF

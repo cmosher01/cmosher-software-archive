@@ -14,6 +14,7 @@
          .EXPORT SETNORM
          .EXPORT SETVID
          .EXPORT SETKBD
+         .EXPORT COUT1
          .ENDIF
 
          ;KEYIN
@@ -22,7 +23,11 @@
          ;DISPLAY2
          .IMPORT NXTA1
          .IMPORT NXTA4
+         .IF VERSION >= 2
+         .IMPORT LFB78
+         .ELSE
          .IMPORT VIDOUT
+         .ENDIF
          ;DISPLAY1
          .IMPORT INIT
          ;CASETTE
@@ -136,7 +141,11 @@ COUT1    CMP   #' '
          AND   INVFLG     ;MASK WITH INVERSE FLAG
 COUTZ    STY   YSAV1      ;SAV Y-REG
          PHA              ;SAV A-REG
+         .IF VERSION >= 2
+         JSR   LFB78
+         .ELSE
          JSR   VIDOUT     ;OUTPUT A-REG AS ASCII
+         .ENDIF
          PLA              ;RESTORE A-REG
          LDY   YSAV1      ;  AND Y-REG
          RTS              ;  THEN RETURN

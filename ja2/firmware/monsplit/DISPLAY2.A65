@@ -9,6 +9,9 @@
          ;KEYIN
          .EXPORT ESC1
          .EXPORT CLREOL
+         .IF VERSION >= 2
+         .EXPORT HOME
+         .ENDIF
 
 
          .INCLUDE "SYMBOLS.A65"

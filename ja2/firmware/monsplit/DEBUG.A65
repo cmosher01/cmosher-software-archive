@@ -7,6 +7,7 @@
          .EXPORT STEP
          .ELSE
          .EXPORT RESET2
+         .EXPORT LFB08
          .ENDIF
          .EXPORT REGDSP
 
@@ -23,6 +24,7 @@
          .IMPORT SETNORM
          .IMPORT SETVID
          .IMPORT SETKBD
+         .IMPORT LFB60
          .ENDIF
          ;DISASM
          .IMPORT PCADJ2
@@ -191,7 +193,7 @@ LFA9B    LDY   #$03
 LFAA3    JMP   ($03F2)
 LFAA6    JSR   LFB60
          LDX   #$05
-LFAAB    LDA   RTBL,X
+LFAAB    LDA   LFAFC,X
          STA   $03EF,X
          DEX
          BNE   LFAAB
@@ -217,8 +219,6 @@ LFAC7    LDA   ($00),Y
 
 
 
-
-
 REGDSP   JSR   CROUT      ;DISPLAY USER REG
 RGDSP1   LDA   #<ACC      ;  CONTENTS WITH
          STA   A3L        ;  LABELS
@@ -235,7 +235,7 @@ RDSP1    LDA   #' '
          JSR   PRBYTE
          INX
          BMI   RDSP1
-RTBL     RTS
+LFAFC    RTS
 
          .IF VERSION < 2
 BRANCH   CLC              ;BRANCH TAKEN,
@@ -258,9 +258,15 @@ INITBL   NOP
          JMP   NBRNCH     ;  XEQ AREA
          JMP   BRANCH
 
-RTBL     .BYTE "AXYPS"
          .ELSE
-         .BYTE $59,$FA,$00,$E0,$45,$20,$FF,$00,$FF,$03,$FF,$3C,$C1,$D0,$D0,$CC
-         .BYTE $C5,$A0,$DD,$DB,$C4,$C2,$C1,$FF,$C3,$FF,$FF,$FF,$C1,$D8,$D9,$D0
-         .BYTE $D3
+         .BYTE $59,$FA,$00,$E0
+LFB01    .BYTE $45,$20,$FF,$00,$FF,$03,$FF
+LFB08    .BYTE $3C
+         .BYTE "APPLE ]["
+         .BYTE "DBA"
+         .BYTE $FF
+         .BYTE "C"
+         .BYTE $FF,$FF,$FF
          .ENDIF
+
+RTBL     .BYTE "AXYPS"

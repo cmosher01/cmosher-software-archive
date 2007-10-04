@@ -5,10 +5,19 @@
          ;MONITOR
          .IMPORT RESET
          ;DEBUG
+         .IF VERSION < 2
          .IMPORT IRQ
+         .ELSE
+         .IMPORT RESET2
+         .ENDIF
 
          .INCLUDE "SYMBOLS.A65"
 
 M6502VEC .ADDR NMI        ;NMI VECTOR
+         .IF VERSION < 2
          .ADDR RESET      ;RESET VECTOR
          .ADDR IRQ        ;IRQ VECTOR
+         .ELSE
+         .ADDR RESET2
+         .ADDR RESET
+         .ENDIF
