@@ -1,6 +1,6 @@
 MEMORY
 {
-	DOS: start=$1B00, size=$2500, file="DOS.BIN";
+	DOS: start=$1B00, size=$2500, file="dos";
 }
 
 SEGMENTS
