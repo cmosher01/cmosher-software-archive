@@ -1,15 +1,15 @@
-                .INCLUDE "SYMBOLS.A65"
-                .INCLUDE "CMAP2.A65"
-                .INCLUDE "ASCIIHL.A65"
+                .INCLUDE "symbols.s65"
+                .INCLUDE "asciihl.s65"
+                .INCLUDE "hascmap.s65"
 
                 .IF VERSION < 320
                 .EXPORT CLOSZERO
                 .EXPORT HNDLCMD1
+                .EXPORT TONOTFND
                 .ENDIF
 
                 .IF VERSION < 330
                 .EXPORT OUTHNDTB
-                .EXPORT TONOTFND
                 .ENDIF
 
                 .IF VERSION >= 320

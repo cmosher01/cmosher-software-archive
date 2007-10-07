@@ -1,4 +1,4 @@
-                .INCLUDE "SYMBOLS.A65"
+                .INCLUDE "symbols.s65"
 
                 .EXPORT DOSLIM
                 .EXPORT RWTS

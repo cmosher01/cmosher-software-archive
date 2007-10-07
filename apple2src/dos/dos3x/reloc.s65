@@ -1,5 +1,5 @@
-                .INCLUDE "SYMBOLS.A65"
-                .INCLUDE "ZPABSMAC.A65"
+                .INCLUDE "symbols.s65"
+                .INCLUDE "zpabs.s65"
 
 
                 .EXPORT DOSNMBF1

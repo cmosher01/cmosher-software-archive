@@ -1,4 +1,4 @@
-                .INCLUDE "SYMBOLS.A65"
+                .INCLUDE "symbols.s65"
 
                 .EXPORT DELAY
                 .EXPORT FREE1
@@ -1248,7 +1248,7 @@ FREE1
                                 ;       (well... this routine AND the patch to call this routine)
                                 ; Since Franklin Ace had lower case letters, this routine
                                 ; will upcase any commands the user types in before sending to DOS.
-                .INCLUDE "CMAP2.A65"
+                .INCLUDE "hascmap.s65"
 FRANK           LDA BUF200,X
                 CMP #'a'
                 BCC FRANK1

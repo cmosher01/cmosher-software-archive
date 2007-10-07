@@ -1,4 +1,4 @@
-                .INCLUDE "SYMBOLS.A65"
+                .INCLUDE "symbols.s65"
 
 
                 .EXPORT BOOT1
@@ -457,7 +457,7 @@ RSETPTRS        LDA RECNMBFM    ; RECONCILE RECORD NUMBER VERSIONS
                                 ; - DO A HOME & THEN PRINT "B01-00"
                                 ; - CONSIDER TO BE FREE SPACE.
 
-                .INCLUDE "CMAP2.A65"
+                .INCLUDE "hascmap.s65"
                 JSR HOME
                 LDA #'B'
                 JSR COUT
