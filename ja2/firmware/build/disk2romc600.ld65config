@@ -1,9 +1,0 @@
-MEMORY
-{
-	SLOT6ROM: start=$C600, size=$0100, file="bin\SLOT6.ROM";
-}
-
-SEGMENTS
-{
-	CODE: load=SLOT6ROM, type=RO;
-}
