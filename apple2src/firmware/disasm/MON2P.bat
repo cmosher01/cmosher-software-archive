@@ -1,0 +1,3 @@
+SET CC65DIR=C:\CC65\BIN
+
+%CC65DIR%\da65 -v -i MON2P.da65info

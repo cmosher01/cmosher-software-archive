@@ -1,0 +1,9 @@
+MEMORY
+{
+	MONROM: start=$F800, size=$0800, file="MON.ROM";
+}
+
+SEGMENTS
+{
+	CODE: load=MONROM, type=RO;
+}

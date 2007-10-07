@@ -1,0 +1,8 @@
+GLOBAL
+{
+	OUTPUTNAME "MON2P.da65disasm";
+	INPUTNAME "../rom/apple2P_F800.rom";
+	STARTADDR $F800;
+	PAGELENGTH 0;
+	CPU "6502";
+};

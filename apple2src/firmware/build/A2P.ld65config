@@ -1,0 +1,9 @@
+MEMORY
+{
+	A2PROM: start=$D000, size=$2800, file="bin\A2P.ROM";
+}
+
+SEGMENTS
+{
+	CODE: load=A2PROM, type=RO;
+}

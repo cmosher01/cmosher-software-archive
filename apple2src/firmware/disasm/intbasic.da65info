@@ -1,0 +1,8 @@
+GLOBAL
+{
+	OUTPUTNAME "intbasic.da65disasm";
+	INPUTNAME "../rom/apple1_e000.rom";
+	STARTADDR $E000;
+	PAGELENGTH 0;
+	CPU "6502";
+};
