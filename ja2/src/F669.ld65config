@@ -1,9 +1,0 @@
-MEMORY
-{
-	F669ROM: start = $F669, size = $20, file = "F669.exe";
-}
-
-SEGMENTS
-{
-	CODE: load = F669ROM, type = ro;
-}
