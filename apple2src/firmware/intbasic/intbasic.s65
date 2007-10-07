@@ -50,8 +50,8 @@
 
 
         .FEATURE LABELS_WITHOUT_COLONS, LEADING_DOT_IN_IDENTIFIERS
-        .INCLUDE "CMAP2.A65"
-        .INCLUDE "ASCIIHL.A65"
+        .INCLUDE "asciihl.s65"
+        .INCLUDE "hascmap.s65"
 
 
 
