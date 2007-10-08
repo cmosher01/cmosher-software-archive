@@ -87,7 +87,7 @@ LC63D           LDA   STEPOFFBASE,X
                 ORA   SLOT
                 TAX
                 LDA   STEPONBASE,X
-                LDA   #SECYNIBS
+                LDA   #$56
                 .IFDEF NODELAY
                 LDA   #0
                 NOP
