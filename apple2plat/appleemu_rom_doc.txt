@@ -1,0 +1,15 @@
+A2EPLS.ROM        apple2e_c100.rom(missing c500; few other bytes)+apple2p_d000.rom(last byte changed)+apple2e_f800.rom(with NOPs for unused)
+A2EPLS12.ROM      apple2p_d000.rom(last byte changed)+apple2e_f800.rom(with NOPs for unused)
+A2EPLS4.ROM       apple2e_c100.rom(missing c500; few other bytes)
+
+APL2E.ROM         (unknown C100-CFFF)+apple2p_d000.rom(last byte changed)+(unknown monitor ROM)
+APL2E12K.ROM      apple2p_d000.rom(last byte changed)+(unknown monitor ROM)
+APL2E4K.ROM       (unknown C100-CFFF)
+
+APL2PLUS.ROM      apple2p_d000.rom+apple2p_f800.rom
+
+APPLE.ROM         (same as APL2PLUS.ROM)
+APPLE2.ROM        disk2_16sect+disk2_16sect+apple2p_d000.rom+apple2p_f800.rom
+APPLE2C.ROM       //c ?
+APPLE2E.ROM       (unknown C200)+disk2_16sect+apple2e_d000.rom+apple2e_f800.rom+apple2e_c100.rom+apple2e_d000.rom+apple2e_f800.rom
+APPLE2O.ROM       progaid1_d000_unknownpatch.rom+apple2p_d000(D800-DFFF)+apple2_e000.rom+apple2_f800.rom
