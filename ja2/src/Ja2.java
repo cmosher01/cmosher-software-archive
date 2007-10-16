@@ -102,11 +102,11 @@ public final class Ja2 implements Runnable
 //        final InputStream romImage = new FileInputStream(new File("c:/apple2/rom_images/200apple2.rom")); // D000
 //        final InputStream romImage = new FileInputStream(new File("c:/apple2/rom_images/210apple2plus.rom")); // B000
 //        final InputStream romImage = getClass().getResourceAsStream("apple2_e000.rom");
-        final InputStream romImage = new FileInputStream(new File("firmware/rom/apple2_e000.rom"));
+        final InputStream romImage = new FileInputStream(new File("C:\\eclipse_organize\\postsvn_workspace\\apple2src\\firmware/rom/apple2_e000.rom"));
         memory.load(0xE000,romImage);
         romImage.close();
 
-        final InputStream monromImage = new FileInputStream(new File("firmware/rom/apple2_f800.rom"));
+        final InputStream monromImage = new FileInputStream(new File("C:\\eclipse_organize\\postsvn_workspace\\apple2src\\firmware/rom/apple2_f800.rom"));
         memory.load(0xF800,monromImage);
         monromImage.close();
 
@@ -121,7 +121,9 @@ public final class Ja2 implements Runnable
 
 
 //        final InputStream diskromImage = getClass().getResourceAsStream("disk2_DOS33_c600_patched_nodelay.rom");
-        final InputStream diskromImage = new FileInputStream(new File("firmware/rom/disk2_DOS33_c600_patched_nodelay.rom"));
+//        final InputStream diskromImage = new FileInputStream(new File("firmware/rom/disk2_DOS33_c600_patched_nodelay.rom"));
+        final InputStream diskromImage = new FileInputStream(new File("C:\\eclipse_organize\\postsvn_workspace\\apple2src\\firmware\\other\\disk2rom13sectc600"));
+//        final InputStream diskromImage = new FileInputStream(new File("C:\\TEMP\\DISK2DISASM\\disk2rom13sectc600.bin"));
         memory.load(0xC600,diskromImage);
         diskromImage.close();
 
@@ -163,6 +165,7 @@ public final class Ja2 implements Runnable
     	rTimed.add(tapedrive);
     	this.clock = new Clock(rTimed);
     	this.clock.run();
+    	disk.updatePanel();
 	}
 
     private JMenuBar createAppMenuBar()

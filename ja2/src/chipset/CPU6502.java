@@ -52,7 +52,7 @@ public final class CPU6502 implements Clock.Timed
 
     private volatile boolean IRQ;
     private volatile boolean NMI;
-    private volatile boolean reset;
+    protected volatile boolean reset;
 
     private Memory memory;
 
@@ -104,6 +104,10 @@ public final class CPU6502 implements Clock.Timed
 		if (this.t == 0)
 		{
 //			trace();
+			if (this.pc == 0xc6d2)
+			{
+				System.out.println(this.pc);
+			}
 			firstCycle();
 		}
 		else
@@ -395,8 +399,7 @@ public final class CPU6502 implements Clock.Timed
 						this.bah = this.data;
 					break;
 					case 4:
-						setIndex();
-						this.bal += this.idx;
+						this.bal += this.y;
 						this.wc = (this.bal >= 0x100);
 						if (this.wc)
 						{
@@ -635,8 +638,7 @@ public final class CPU6502 implements Clock.Timed
 						read(); // discard
 					break;
 					case 3:
-						setIndex();
-						this.bal += this.idx; // doesn't leave page zero
+						this.bal += this.x; // doesn't leave page zero
 						this.bal &= 0xFF;
 						this.address = ba();
 						read();
@@ -665,9 +667,8 @@ public final class CPU6502 implements Clock.Timed
 						this.bah = this.data;
 					break;
 					case 3:
-						setIndex();
 						this.address = ba();
-						this.address += this.idx;
+						this.address += this.x;
 						read(); // discard
 					break;
 					case 4:

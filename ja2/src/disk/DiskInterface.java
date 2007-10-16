@@ -74,7 +74,7 @@ public class DiskInterface
 		return ret;
 	}
 
-	private void updatePanel()
+	public void updatePanel()
 	{
 		DiskDrivePanel drive = this.framer.getDrive(this.disk.getDriveNumber());
 		if (drive == null)

@@ -53,6 +53,7 @@ public class Memory
 		}
 		if (0xC0E0 <= address && address < 0xC0F0)
 		{
+			if (this.disk == null) return 0;
 			return this.disk.io(address,(byte)0);
 		}
 

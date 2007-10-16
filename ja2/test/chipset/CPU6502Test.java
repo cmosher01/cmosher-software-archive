@@ -15,6 +15,7 @@ public class CPU6502Test extends TestCase
 	{
 		this.memory = new Memory(null,null,null);
 		this.cpu = new CPU6502(this.memory);
+		this.cpu.reset = false;
 	}
 
 	protected void tearDown() throws Exception
@@ -23,7 +24,7 @@ public class CPU6502Test extends TestCase
 
 	public void wr(final int addr, final int data)
 	{
-		wr(addr,(byte)data);
+		this.memory.write(addr,(byte)data);
 	}
 
 	public void test_INTERNAL_INDIRECT_X()
@@ -129,5 +130,38 @@ public class CPU6502Test extends TestCase
 		assertFalse(this.cpu.c);
 		assertFalse(this.cpu.n);
 		assertFalse(this.cpu.z);
+	}
+
+	public void test_CMP()
+	{
+		// CMP #3
+		wr(0x80,0xc9);
+		wr(0x81,3);
+
+		this.cpu.a = 2;
+
+		this.cpu.pc = 0x80;
+		this.cpu.step();
+		assertFalse(this.cpu.c);
+
+		this.cpu.a = 4;
+
+		this.cpu.pc = 0x80;
+		this.cpu.step();
+		assertTrue(this.cpu.c);
+
+		// CMP #$FF
+		wr(0x81,0xff);
+		this.cpu.a = 0;
+		this.cpu.pc = 0x80;
+		this.cpu.step();
+		assertFalse(this.cpu.c);
+
+		// CMP #1
+		wr(0x81,1);
+		this.cpu.a = 0;
+		this.cpu.pc = 0x80;
+		this.cpu.step();
+		assertFalse(this.cpu.c);
 	}
 }
