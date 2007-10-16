@@ -60,9 +60,7 @@
 BOOT1                           ; IMAGE OF SEC2RD08.  DENOTES # OF
                                 ; SECS TO BE READ FROM TRK0 DURING
                                 ; BOOT0.
-                .IF VERSION < 320
-                .BYTE 0
-                .ELSE
+                .IF VERSION > 320
                 .BYTE 1
                 .ENDIF
 
@@ -74,10 +72,7 @@ BOOT1                           ; IMAGE OF SEC2RD08.  DENOTES # OF
                 .IF VERSION < 320
 
 
-
-
-
-                .RES $0B
+                .RES $0C
                                 ; upon entry, A3 --> first byte of highest RAM page (e.g., $BF00)
 L1B28SR
                 LDA   A3H
@@ -106,25 +101,136 @@ L1B4D           PLA
                 LDY A3H
                 RTS
 
-                .RES $195
+                .RES $98
+
+                .ENDIF
 
 
 
+                .IF VERSION <= 320
+                                ; track 0 sector 0 starts here
+                                ; (note that 13-sector disks have different
+                                ; nibble encoding for track 0 sector 0 than
+                                ; the normal 5 & 3 encoding on the rest of
+                                ; the disk
+                                ; The old Disk ][ ROMs read this into
+                                ; $300-$3FF and JMP $301
+                .BYTE $99
+
+DISK2READ       =     $C65D
+BUF1            =     $0800
+BUF2            =     BUF1+$0100
+
+L0301           LDA   $0800,Y
+                ASL
+                ASL
+                ASL
+                STA   $0800,Y
+                INY
+                BNE   L0301
+
+                LDX   SLT16ZPG
+                LDA   #$09
+                STA   $27
+                LDA   $03CC
+                STA   $41
+                STY   $40
+                TXA
+                LSR
+                LSR
+                LSR
+                LSR
+                ORA   #$C0
+                STA   PTR2RDSC+1
+                LDA   #<DISK2READ
+                STA   PTR2RDSC
+
+L0327           JSR   L0343
+                JSR   NIB
+                LDA   $3D
+                EOR   $03FF
+                BEQ   L033A
+                INC   $41
+                INC   $3D
+                BNE   L0327
+
+L033A           STA   PTR2RDSC
+                LDA   $03CC
+                STA   PTR2RDSC+1
+                INC   PTR2RDSC+1
+
+L0343           JMP   (PTR2RDSC)
 
 
-                .ELSEIF VERSION = 320
+
+NIB             LDX   #$32
+                LDY   #$00
+L034A           LDA   BUF1,X
+                LSR
+                LSR
+                LSR
+                STA   $3C
+                LSR
+                STA   $2A
+                LSR
+                ORA   BUF2,X
+                STA   ($40),Y
+                INY
+                LDA   BUF1+$33,X
+                LSR
+                LSR
+                LSR
+                LSR
+                ROL   $3C
+                LSR
+                ROL   $2A
+                ORA   BUF2+$33,X
+                STA   ($40),Y
+                INY
+                LDA   BUF1+$66,X
+                LSR
+                LSR
+                LSR
+                LSR
+                ROL   $3C
+                LSR
+                ROL   $2A
+                ORA   BUF2+$66,X
+                STA   ($40),Y
+                INY
+                LDA   $2A
+                AND   #$07
+                ORA   BUF2+$99,X
+                STA   ($40),Y
+                INY
+                LDA   $3C
+                AND   #$07
+                ORA   BUF2+$CC,X
+                STA   ($40),Y
+                INY
+                DEX
+                BPL   L034A
+                LDA   BUF1+$99
+                LSR
+                LSR
+                LSR
+                ORA   BUF2+$FF
+                STA   ($40),Y
+                LDX   SLT16ZPG
+                RTS
+
+                .RES $27,$FF
+                .BYTE $36
+                .RES $32,$FF
 
 
-
-
-
-                .RES $FC
 
 
 
 
 
                 .ELSE
+
 
 
                                 ; Disk ][ controller ROM (usually at $C600)
@@ -505,9 +611,7 @@ RSETPTRS        LDA RECNMBFM    ; RECONCILE RECORD NUMBER VERSIONS
 
 IMG8FD
 BT1LDADR        = IMG8FD-(BOOT1-$800)
-                .IF VERSION < 320
-                .ADDR BOOT2-$F8
-                .ELSE
+                .IF VERSION > 320
                 .ADDR BOOT1     ; VARIES FROM $B600-$BF00 ON 48K
                                 ; SLAVE.  (EVENTUALLY POINTS TO THE
                                 ; START OF BOOT2 AT $B700.  IMAGE
@@ -515,12 +619,8 @@ BT1LDADR        = IMG8FD-(BOOT1-$800)
                 .ENDIF
 IMG8FF
 BT1PG2RD        = IMG8FF-(BOOT1-$800)
-                .IF VERSION < 330
-                .BYTE $48
-                .ELSE
                 .BYTE $09       ; .RES 1 ;CONTAINS # OF PAGES TO READ WHEN
                                 ; EXECUTING BOOT1.  ALSO DOUBLES AS
                                 ; LOGICAL SEC#.  INITIALLY = $01.
                                 ; VARIES FROM:$09 --> $00 --> $FF.
                                 ; (IMAGE OF BT1PG2RD AT $8FF.)
-                .ENDIF

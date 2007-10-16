@@ -9,7 +9,7 @@ TMP     =       $3C
 SECTOR  =       $3D
 
 STACKBASE =     $0100
-
+READBUF =       $0300
 XLATE   =       $0800
 
 SWITCHBASE      =     $C080
@@ -129,26 +129,25 @@ LC63E   LDA     STEPOFFBASE,X
 
 
 
-        LDA     #$03
-        STA     $27
-        LDA     #$00
+        LDA     #>READBUF
+        STA     BUFPTR+1
+        LDA     #<READBUF
         STA     BUFPTR
-        lda #1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         STA     SECTOR
 
 
 READ    CLC
 READ2   PHP
-LC65F   LDA     $C08C,X
+LC65F   LDA     Q6OFF,X
         BPL     LC65F
 LC664   EOR     #$D5
         BNE     LC65F
-LC668   LDA     $C08C,X
+LC668   LDA     Q6OFF,X
         BPL     LC668
         CMP     #$AA
         BNE     LC664
         NOP
-LC672   LDA     $C08C,X
+LC672   LDA     Q6OFF,X
         BPL     LC672
         CMP     #$B5
         BEQ     ADDRH
@@ -166,11 +165,11 @@ LC672   LDA     $C08C,X
 
 ADDRH   LDY     #$03
         STY     $2A
-LC688   LDA     $C08C,X
+LC688   LDA     Q6OFF,X
         BPL     LC688
         ROL     A
         STA     TMP
-LC690   LDA     $C08C,X
+LC690   LDA     Q6OFF,X
         BPL     LC690
         AND     TMP
         DEY
@@ -187,19 +186,22 @@ LC690   LDA     $C08C,X
 
 ;read first $9A bytes of nibblized data
 ;into $800-$899, backwards
+;but each byte is xor'd with prev
 DATAH   LDY     #$9A
 LC6A3   STY     TMP
-LC6A5   LDY     $C08C,X
+LC6A5   LDY     Q6OFF,X
         BPL     LC6A5
         EOR     XLATE,Y
         LDY     TMP
         DEY
-        STA     (BUFPTR),Y ;;;;;;;;;;;;;;;;;;STA     XLATE,Y
+        STA     XLATE,Y
         BNE     LC6A3
 
 ;read remaining $100 bytes of nibblized data
+;into $300-$3FF
+;but each byte is xor'd with prev
 LC6B5   STY     TMP
-LC6B7   LDY     $C08C,X
+LC6B7   LDY     Q6OFF,X
         BPL     LC6B7
         EOR     XLATE,Y
         LDY     TMP
@@ -208,7 +210,7 @@ LC6B7   LDY     $C08C,X
         BNE     LC6B5
 
 ;read checksum and verify
-LC6C6   LDY     $C08C,X
+LC6C6   LDY     Q6OFF,X
         BPL     LC6C6
         EOR     XLATE,Y
         BNE     READ
@@ -226,9 +228,9 @@ DENIB   TAY
 LC6D2   LDX     #$00
 LC6D4   LDA     XLATE,Y
         LSR     A
-        ROL     $03CC,X
+        ROL     READBUF+$CC,X
         LSR     A
-        ROL     $0399,X
+        ROL     READBUF+$99,X
         STA     TMP
         LDA     (BUFPTR),Y
         ASL     A
@@ -242,10 +244,9 @@ LC6D4   LDA     XLATE,Y
         BNE     LC6D4
         DEC     $2A
         BNE     LC6D2
-        CPY     $0300
-        brk;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        CPY     READBUF
         BNE     ERROR
-        JMP     $0301
-ERROR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  JMP     PRERR
+        JMP     READBUF+1
+ERROR   JMP     PRERR
 
-;;        .BYTE   $FF
+        .BYTE   $FF
