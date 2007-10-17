@@ -295,70 +295,61 @@ public class DosMasterToImage
     	}
     }
 
-    private static void make13SectNibAllZerosDOS31Order() throws IOException
-	{
-		int[] rs = new int[0xD];
-    	int s = 0;
-    	for (int i = 0; i < 0xD; ++i)
-    	{
-    		rs[i] = s;
-    		s += 0xA;
-    		s %= 0xD;
-    	}
-    	make13SectNibAllZeros(rs);
-	}
-
-	public static void make13SectNibAllZerosIncOrder() throws IOException
-    {
-		int[] rs = new int[0xD];
-    	for (int i = 0; i < 0xD; ++i)
-    	{
-    		rs[i] = i;
-    	}
-    	make13SectNibAllZeros(rs);
-    }
-
-	public static void make13SectNibAllZeros(int[] sectormap) throws IOException
-    {
-        final BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File("zero.d13.nib")));
-        for (int track = 0; track < 0x23; ++track)
-        {
-        	nout(0x30,0xFF,out);
-        	for (int sector = 0; sector < 0x0D; ++sector)
-        	{
-        		sectout(0xFE,track,sectormap[sector],out);
-        	}
-        	nout(0x240,0xFF,out);
-        }
-        out.flush();
-        out.close();
-    }
-
-	private static void sectout(int volume, int track, int sector, OutputStream out) throws IOException
-	{
-    	out.write(0xD5);
-    	out.write(0xAA);
-    	out.write(0xB5);
-    	wordout(enc44(volume),out);
-    	wordout(enc44(track),out);
-    	wordout(enc44(sector),out);
-    	wordout(enc44(volume ^ track ^ sector),out);
-    	out.write(0xDE);
-    	out.write(0xAA);
-    	out.write(0xEB);
-
-    	nout(0x6,0xFF,out);
-
-    	out.write(0xD5);
-    	out.write(0xAA);
-    	out.write(0xAD);
-    	nout(0x19B,0xAB,out);
-    	out.write(0xDE);
-    	out.write(0xAA);
-    	out.write(0xEB);
-
-    	nout(0x1B,0xFF,out);
-	}
+//    private static void make13SectNibAllZerosDOS31Order() throws IOException
+//	{
+//		int[] rs = new int[0xD];
+//    	int s = 0;
+//    	for (int i = 0; i < 0xD; ++i)
+//    	{
+//    		rs[i] = s;
+//    		s += 0xA;
+//    		s %= 0xD;
+//    	}
+//    	make13SectNibAllZeros(rs);
+//	}
+//
+//	public static void make13SectNibAllZerosIncOrder() throws IOException
+//    {
+//		int[] rs = new int[0xD];
+//    	for (int i = 0; i < 0xD; ++i)
+//    	{
+//    		rs[i] = i;
+//    	}
+//    	make13SectNibAllZeros(rs);
+//    }
+//
+//	public static void make13SectNibAllZeros(int[] sectormap) throws IOException
+//    {
+//        final BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File("zero.d13.nib")));
+//        for (int track = 0; track < 0x23; ++track)
+//        {
+//        	nout(0x30,0xFF,out);
+//        	for (int sector = 0; sector < 0x0D; ++sector)
+//        	{
+//        		sectout(0xFE,track,sectormap[sector],out);
+//        	}
+//        	nout(0x240,0xFF,out);
+//        }
+//        out.flush();
+//        out.close();
+//    }
+//
+//	private static void sectout(int volume, int track, int sector, OutputStream out) throws IOException
+//	{
+//    	addr13out(volume,track,sector,out);
+//
+//    	nout(0x6,0xFF,out);
+//
+//    	out.write(0xD5);
+//    	out.write(0xAA);
+//    	out.write(0xAD);
+//    	nout(0x19B,0xAB,out);
+//    	out.write(0xDE);
+//    	out.write(0xAA);
+//    	out.write(0xEB);
+//
+//    	nout(0x1B,0xFF,out);
+//	}
 
 	private static void wordout(int word, OutputStream out) throws IOException
 	{
@@ -424,27 +415,21 @@ public class DosMasterToImage
         inDisk.close();
     }
 
-    public static void cvt13toNib(String[] args) throws IOException
+    public static void cvt13toNib(final String[] args) throws IOException
     {
         if (args.length != 2)
         {
             throw new IllegalArgumentException("Usage: java DosMasterToImage in-d13-image out-nib-image");
         }
-        final BufferedInputStream in = new BufferedInputStream(new FileInputStream(new File(args[0])));
-        final BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File(args[1])));
 
-        final int[][][] d13 = new int[0x23][13][0x100];
-        for (int t = 0; t < 0x23; ++t)
-        {
-        	for (int s = 0; s < 13; ++s)
-        	{
-        		for (int b = 0; b < 0x100; ++b)
-        		{
-	        		d13[t][s][b] = in.read();
-        		}
-        	}
-        }
+        final int[][][] d13 = read13disk(args[0]);
 
+        write13nib(args[1],d13);
+    }
+
+	private static void write13nib(final String outf, final int[][][] d13) throws FileNotFoundException, IOException
+	{
+		final BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File(outf)));
         for (int track = 0; track < 0x23; ++track)
         {
         	nout(0x30,0xFF,out);
@@ -458,29 +443,44 @@ public class DosMasterToImage
 
         out.flush();
         out.close();
-        in.close();
-    }
+	}
 
-	private static void sect13out(int[] data, int volume, int track, int sector, OutputStream out) throws IOException
+	private static int[][][] read13disk(final String inf) throws FileNotFoundException, IOException
 	{
-    	out.write(0xD5);
-    	out.write(0xAA);
-    	out.write(0xB5);
-    	wordout(enc44(volume),out);
-    	wordout(enc44(track),out);
-    	wordout(enc44(sector),out);
-    	wordout(enc44(volume ^ track ^ sector),out);
-    	out.write(0xDE);
-    	out.write(0xAA);
-    	out.write(0xEB);
+        final int[][][] d13 = new int[0x23][13][0x100];
+		final BufferedInputStream in = new BufferedInputStream(new FileInputStream(new File(inf)));
+        for (int t = 0; t < 0x23; ++t)
+        {
+        	for (int s = 0; s < 13; ++s)
+        	{
+        		for (int b = 0; b < 0x100; ++b)
+        		{
+	        		d13[t][s][b] = in.read();
+        		}
+        	}
+        }
+        in.close();
+		return d13;
+	}
+
+	private static void sect13out(final int[] data, final int volume, final int track, final int sector, final OutputStream out) throws IOException
+	{
+    	addr13out(volume,track,sector,out);
 
     	nout(0x6,0xFF,out);
 
-    	out.write(0xD5);
+    	data13out(data,track,sector,out);
+
+    	nout(0x1B,0xFF,out);
+	}
+
+	private static void data13out(final int[] data, final int track, final int sector, final OutputStream out) throws IOException
+	{
+		out.write(0xD5);
     	out.write(0xAA);
     	out.write(0xAD);
 
-    	int[] nib;
+    	final int[] nib;
     	if (track == 0 && sector == 0)
     	{
     		nib = Nibblizer.encode_5and3_alternate(data);
@@ -494,11 +494,25 @@ public class DosMasterToImage
     	out.write(0xDE);
     	out.write(0xAA);
     	out.write(0xEB);
-
-    	nout(0x1B,0xFF,out);
 	}
 
-	private static void arrayout(int[] nib, OutputStream out) throws IOException
+	private static void addr13out(final int volume, final int track, final int sector, final OutputStream out) throws IOException
+	{
+		out.write(0xD5);
+    	out.write(0xAA);
+    	out.write(0xB5);
+
+    	wordout(enc44(volume),out);
+    	wordout(enc44(track),out);
+    	wordout(enc44(sector),out);
+    	wordout(enc44(volume ^ track ^ sector),out);
+
+    	out.write(0xDE);
+    	out.write(0xAA);
+    	out.write(0xEB);
+	}
+
+	private static void arrayout(final int[] nib, final OutputStream out) throws IOException
 	{
 		for (int i = 0; i < nib.length; ++i)
 		{
