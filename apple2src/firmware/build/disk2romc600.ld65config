@@ -1,6 +1,6 @@
 MEMORY
 {
-	SLOT6ROM: start=$C600, size=$0100, file="bin\SLOT6.ROM";
+	SLOT6ROM: start=$C600, size=$0100, file="disk2.rom";
 }
 
 SEGMENTS
