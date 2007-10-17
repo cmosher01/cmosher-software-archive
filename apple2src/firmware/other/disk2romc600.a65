@@ -2,8 +2,12 @@
                 .EXPORT DISK2
 
 
-
+                .IF VERSION = 13
+SECYNIBS        =     $9A
+                .ELSE
 SECYNIBS        =     $56
+                .ENDIF
+
 BOOT1PAGE       =     $08
 
 
@@ -12,12 +16,20 @@ BUFPTR          =     $26
 SLOT            =     $2B
 TMP             =     $3C
 SECTOR          =     $3D
+                .IF VERSION = 13
+A3L             =     $2A
+                .ELSE
 A3L             =     $40
+                .ENDIF
 TRACK           =     $41
 
 STACKBASE       =     $0100
-NIBBUF          =     $0300
-XLATE           =     NIBBUF+SECYNIBS
+READBUF         =     $0300
+                .IF VERSION = 13
+XLATE           =     $0880
+                .ELSE
+XLATE           =     READBUF+SECYNIBS
+                .ENDIF
 BOOT2BASE       =     BOOT1PAGE << 8
 
 SWITCHBASE      =     $C080
@@ -29,6 +41,7 @@ Q6OFF           =     SWITCHBASE+$C
 Q7OFF           =     SWITCHBASE+$E
 
 WAIT            =     $FCA8
+PRERR           =     $FF2D
 MONRTS          =     $FF58
 
 
@@ -36,7 +49,28 @@ MONRTS          =     $FF58
                                 ; build translation table
 DISK2           LDX   #$20
                 LDY   #0
-                LDX   #$03
+
+                .IF VERSION = 13
+
+LC604           LDA   #$03
+                STA   TMP
+                CLC
+                DEY
+                TYA
+LC60B           BIT   TMP
+                BEQ   LC604
+                ROL   TMP
+                BCC   LC60B
+                CPY   #$D5 ; $D5 is reserved to indicate header
+                BEQ   LC604
+                DEX
+                TXA
+                STA   XLATE-$80,Y
+                BNE   LC604
+
+                .ELSE
+
+LC604           LDX   #$03
 LC606           STX   TMP
                 TXA
                 ASL   A
@@ -54,6 +88,8 @@ LC614           BCS   LC61E
 LC61E           INX
                 BPL   LC606
 
+                .ENDIF
+
 
 
 
@@ -61,6 +97,9 @@ LC61E           INX
                 JSR   MONRTS    ; calculate slot based on ROM code address
                 TSX
                 LDA   STACKBASE,X
+                .IF VERSION = 13
+                PHA
+                .ENDIF
                 ASL   A
                 ASL   A
                 ASL   A
@@ -70,6 +109,10 @@ LC61E           INX
 
 
                 TAX
+                .IF VERSION = 13
+                LDA   #<(DENIB-1)
+                PHA
+                .ENDIF
                 LDA   Q7OFF,X   ; set drive to "read" mode
                 LDA   Q6OFF,X
                 LDA   DRV0EN,X  ; engage drive 0
@@ -101,11 +144,19 @@ LC63D           LDA   STEPOFFBASE,X
 
 
                                 ; set params for READSECT
+                .IF VERSION = 13
+                LDA   #>READBUF
+                STA   BUFPTR+1
+                LDA   #<READBUF
+                STA   BUFPTR
+                STA   SECTOR
+                .ELSE
                 STA   BUFPTR
                 STA   SECTOR    ; SECTOR 0
                 STA   TRACK     ; TRACK 0
                 LDA   #BOOT1PAGE
                 STA   BUFPTR+1  ; buffer $800
+                .ENDIF
 
 
                                 ; read SECTOR to (BUFPTR) buffer
@@ -124,7 +175,11 @@ LC667           LDA   Q6OFF,X
                 NOP
 LC671           LDA   Q6OFF,X
                 BPL   LC671
+                .IF VERSION = 13
+                CMP   #$B5
+                .ELSE
                 CMP   #$96
+                .ENDIF
                 BEQ   ADDRHANDLER
                 PLP
                 BCC   READSECT
@@ -137,7 +192,11 @@ LC671           LDA   Q6OFF,X
 
                                 ; get T/S number from address header
 ADDRHANDLER     LDY   #3
+                .IF VERSION = 13
+                STY   A3L
+                .ELSE
 LC685           STA   A3L
+                .ENDIF
 LC687           LDA   Q6OFF,X
                 BPL   LC687
                 ROL   A
@@ -146,13 +205,19 @@ LC68F           LDA   Q6OFF,X
                 BPL   LC68F
                 AND   TMP
                 DEY
+                .IF VERSION = 13
+                BNE   LC687
+                .ELSE
                 BNE   LC685
+                .ENDIF
                 PLP
                 CMP   SECTOR
                 BNE   READSECT  ; branch if not the sector we're looking for
+                .IF VERSION > 13
                 LDA   A3L
                 CMP   TRACK
                 BNE   READSECT  ; branch if not the track we're looking for
+                .ENDIF
                 BCS   READSECT2
 
 
@@ -166,7 +231,11 @@ LC6AA           LDY   Q6OFF,X
                 EOR   XLATE-$80,Y
                 LDY   TMP
                 DEY
-                STA   NIBBUF,Y
+                .IF VERSION = 13
+                STA   XLATE-$80,Y
+                .ELSE
+                STA   READBUF,Y
+                .ENDIF
                 BNE   LC6A8
 
 LC6BA           STY   TMP       ; read $100 nibblized bytes to (BUFPTR)
@@ -183,7 +252,38 @@ LC6CB           LDY   Q6OFF,X
                 EOR   XLATE-$80,Y
 LC6D3           BNE   READSECT  ; branch if checksum is wrong
 
+                .IF VERSION = 13
 
+                RTS
+
+DENIB           TAY
+LC6D2           LDX   #$00
+LC6D4           LDA   XLATE-$80,Y
+                LSR   A
+                ROL   READBUF+$CC,X
+                LSR   A
+                ROL   READBUF+$99,X
+                STA   TMP
+                LDA   (BUFPTR),Y
+                ASL   A
+                ASL   A
+                ASL   A
+                ORA   TMP
+                STA   (BUFPTR),Y
+                INY
+                INX
+                CPX   #$33
+                BNE   LC6D4
+                DEC   $2A
+                BNE   LC6D2
+                CPY   READBUF
+                BNE   ERROR
+                JMP   READBUF+1
+ERROR           JMP   PRERR
+
+                .BYTE   $FF
+
+                .ELSE
 
                                 ; denibblize into (BUFPTR)
                 LDY   #0
@@ -192,9 +292,9 @@ LC6D7           LDX   #SECYNIBS
 LC6D9           DEX
                 BMI   LC6D7
                 LDA   (BUFPTR),Y
-                LSR   NIBBUF,X
+                LSR   READBUF,X
                 ROL   A
-                LSR   NIBBUF,X
+                LSR   READBUF,X
                 ROL   A
                 STA   (BUFPTR),Y
                 INY
@@ -206,3 +306,5 @@ LC6D9           DEX
                 LDX   SLOT
                 BCC   LC6D3
                 JMP   BOOT2BASE+1
+
+                .ENDIF
