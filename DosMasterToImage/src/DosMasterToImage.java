@@ -1,9 +1,14 @@
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 /*
  * Created on Nov 2, 2004
@@ -143,7 +148,12 @@ public class DosMasterToImage
             0x00D42, 0x0194F, 0x019B7, 0x0225D, 0x0225E, 0x02297, 0x024FF, 0x000CF, 0x000FF, 0x0018D, 0x00192, 0x001DF, 0x001FF,
             0x003FD, 0x003FF, 0x00484, 0x00495, 0x00500, 0x00655, 0x006DF, 0x006FF, 0x009A8, 0x009B7};
 
-    /**
+    public DosMasterToImage(InputStream stream)
+	{
+    	mFile = stream;
+	}
+
+	/**
      * @param args
      * @throws IOException
      */
@@ -226,7 +236,140 @@ public class DosMasterToImage
         }
     }
 
+    public static void extractDos(String[] args) throws IOException
+    {
+        if (args.length != 2)
+        {
+            throw new IllegalArgumentException("Usage: java DosMasterToImage in-disk-image out-dos-obj");
+        }
+        BufferedInputStream in = new BufferedInputStream(new FileInputStream(new File(args[0])));
+        BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File(args[1])));
+        
+        final int dos[] = new int[0x4000-0x1B00];
+
+        for (int a = 0x3600; a < 0x4000; ++a)
+        {
+        	final int byt = in.read();
+        	dos[a-0x1B00] = byt;
+        }
+
+        for (int a = 0x1B00; a < 0x3600; ++a)
+        {
+        	final int byt = in.read();
+        	dos[a-0x1B00] = byt;
+        }
+
+        in.close();
+
+        for (int a = 0x1B00; a < 0x4000; ++a)
+        {
+        	final int byt = dos[a-0x1B00];
+        	out.write(byt);
+        }
+        out.flush();
+        out.close();
+    }
+
     public static void main(String[] args) throws IOException
+    {
+//    	make13SectNibAllZeros();
+//    	makeBlank13SectDisk();
+//    	make13SectNibAllZerosDOS31Order();
+    	buildDosDiskImage(args);
+//    	makeBlankNibbleDisk();
+//    	extractDos(args);
+//    	makeBinaryApple2Entry(args);
+    }
+
+    private static void make13SectNibAllZerosDOS31Order() throws IOException
+	{
+		int[] rs = new int[0xD];
+    	int s = 0;
+    	for (int i = 0; i < 0xD; ++i)
+    	{
+    		rs[i] = s;
+    		s += 0xA;
+    		s %= 0xD;
+    	}
+    	make13SectNibAllZeros(rs);
+	}
+
+	public static void make13SectNibAllZerosIncOrder() throws IOException
+    {
+		int[] rs = new int[0xD];
+    	for (int i = 0; i < 0xD; ++i)
+    	{
+    		rs[i] = i;
+    	}
+    	make13SectNibAllZeros(rs);
+    }
+
+	public static void make13SectNibAllZeros(int[] sectormap) throws IOException
+    {
+        final BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File("zero.d13.nib")));
+        for (int track = 0; track < 0x23; ++track)
+        {
+        	nout(0x30,0xFF,out);
+        	for (int sector = 0; sector < 0x0D; ++sector)
+        	{
+        		sectout(0xFE,track,sectormap[sector],out);
+        	}
+        	nout(0x240,0xFF,out);
+        }
+        out.flush();
+        out.close();
+    }
+
+	private static void sectout(int volume, int track, int sector, OutputStream out) throws IOException
+	{
+    	out.write(0xD5);
+    	out.write(0xAA);
+    	out.write(0xB5);
+    	wordout(enc44(volume),out);
+    	wordout(enc44(track),out);
+    	wordout(enc44(sector),out);
+    	wordout(enc44(volume ^ track ^ sector),out);
+    	out.write(0xDE);
+    	out.write(0xAA);
+    	out.write(0xEB);
+
+    	nout(0x6,0xFF,out);
+
+    	out.write(0xD5);
+    	out.write(0xAA);
+    	out.write(0xAD);
+    	nout(0x19B,0xAB,out);
+    	out.write(0xDE);
+    	out.write(0xAA);
+    	out.write(0xEB);
+
+    	nout(0x1B,0xFF,out);
+	}
+
+	private static void wordout(int word, OutputStream out) throws IOException
+	{
+		out.write(word);
+		out.write(word >> 8);
+	}
+
+	private static void nout(int n, int byt, OutputStream out) throws IOException
+	{
+    	for (int i = 0; i < n; ++i)
+    	{
+	    	out.write(byt);
+    	}
+	}
+
+    public static int enc44(int byt)
+    {
+    	// input byt: HGFEDCBA
+    	// output: 1G1E1C1A1H1F1D1B
+    	assert (0 <= byt && byt < 0x100);
+    	return ((byt >> 1) | 0xAA) | ((byt | 0xAA) << 8);
+    }
+
+    public static void buildDosDiskImage(String[] args) throws IOException
+
     {
         if (args.length != 3)
         {
@@ -262,9 +405,42 @@ public class DosMasterToImage
         	out.write(byt);
         	
         }
+        out.flush();
         out.close();
         inDisk.close();
     }
+    private static void makeBlankNibbleDisk() throws IOException
+	{
+        BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File("zero.nib")));
+        for (int i = 0; i < 0x1a00*0x23; ++i)
+        {
+        	out.write(0);
+        }
+        out.flush();
+        out.close();
+	}
+
+    private static void makeBlank13SectDisk() throws IOException
+	{
+        BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File("zero.d13")));
+        for (int i = 0; i < 0x100*0x0D*0x23; ++i)
+        {
+        	out.write(0);
+        }
+        out.flush();
+        out.close();
+	}
+
+    private static void makeBinaryApple2Entry(final String... args) throws IOException
+    {
+    	DosMasterToImage d = new DosMasterToImage(new BufferedInputStream(new FileInputStream(new File(args[0]))));
+    	// reads in a binary image and outputs text that could be pasted into apple 2
+//        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(args[1]))));
+        d.dump();
+//        out.flush();
+//        out.close();
+    }
+
     /**
      * Clear a master image.
      * @param args
@@ -430,7 +606,89 @@ public class DosMasterToImage
 
 
 
+    // stolen from Dump:
+    private final static int BPL = 8;
+    private InputStream mFile;
+    private final int[] mLine = new int[BPL];
+    private int cLine;
 
+    private static final int END_OF_FILE = -1;
+
+    public void dump() throws IOException
+    {
+        readLine();
+        int base = 0x1B00;
+        while (cLine > 0)
+        {
+            StringBuffer sb = new StringBuffer(8+2+(16*3)+16);
+            toHex(base,4,sb);
+            sb.append(": ");
+            for (int i = 0; i < BPL; ++i)
+            {
+                if (i < cLine)
+                {
+                    toHex(mLine[i],2,sb);
+                    sb.append(" ");
+                }
+//                else
+//                {
+//                    sb.append("   ");
+//                }
+            }
+//            for (int i = 0; i < BPL; ++i)
+//            {
+//                if (i < cLine)
+//                {
+//                    toChar(mLine[i],sb);
+//                }
+//                else
+//                {
+//                    sb.append(" ");
+//                }
+//            }
+            System.out.println(sb);
+            base += BPL;
+            readLine();
+        }
+    }
+
+    protected void toChar(int c, StringBuffer sb)
+    {
+        c &= 0x7f;
+        if (c==0x00 || c==0x7f)
+            c = ' ';
+        else if (c < ' ')
+            c |= 0x40;
+        sb.append((char)c);
+    }
+
+    protected void readLine() throws IOException
+    {
+        for (cLine = 0; cLine < BPL; ++cLine)
+        {
+            int c = mFile.read();
+            if (c == END_OF_FILE)
+                break;
+
+            assert 0x00 <= c && c <= 0xFF : "bad byte value: "+c;
+
+            mLine[cLine] = c;
+        }
+    }
+
+    protected void toHex(int i, int minLen, StringBuffer s)
+    {
+        String hex = Integer.toHexString(i);
+        hex = hex.toUpperCase();
+        rep('0',minLen-hex.length(),s);
+        s.append(hex);
+    }
+
+    protected void rep(char c, int len, StringBuffer s)
+    {
+        for (int i = 0; i < len; ++i)
+            s.append(c);
+    }
 
 
 
