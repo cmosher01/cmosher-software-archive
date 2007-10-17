@@ -275,10 +275,24 @@ public class DosMasterToImage
 //    	make13SectNibAllZeros();
 //    	makeBlank13SectDisk();
 //    	make13SectNibAllZerosDOS31Order();
-    	buildDosDiskImage(args);
+//    	buildDosDiskImage(args);
 //    	makeBlankNibbleDisk();
 //    	extractDos(args);
 //    	makeBinaryApple2Entry(args);
+    	cvt13toNib(args);
+    }
+
+    private static final int[] sector13map = new int[13];
+    private static final int sector13skew = 0xA;
+    static
+    {
+    	int s = 0;
+    	for (int i = 0; i < sector13map.length; ++i)
+    	{
+    		sector13map[i] = s;
+    		s += sector13skew;
+    		s %= sector13map.length;
+    	}
     }
 
     private static void make13SectNibAllZerosDOS31Order() throws IOException
@@ -409,7 +423,90 @@ public class DosMasterToImage
         out.close();
         inDisk.close();
     }
-    private static void makeBlankNibbleDisk() throws IOException
+
+    public static void cvt13toNib(String[] args) throws IOException
+    {
+        if (args.length != 2)
+        {
+            throw new IllegalArgumentException("Usage: java DosMasterToImage in-d13-image out-nib-image");
+        }
+        final BufferedInputStream in = new BufferedInputStream(new FileInputStream(new File(args[0])));
+        final BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File(args[1])));
+
+        final int[][][] d13 = new int[0x23][13][0x100];
+        for (int t = 0; t < 0x23; ++t)
+        {
+        	for (int s = 0; s < 13; ++s)
+        	{
+        		for (int b = 0; b < 0x100; ++b)
+        		{
+	        		d13[t][s][b] = in.read();
+        		}
+        	}
+        }
+
+        for (int track = 0; track < 0x23; ++track)
+        {
+        	nout(0x30,0xFF,out);
+        	for (int sector = 0; sector < sector13map.length; ++sector)
+        	{
+        		final int sectorn = sector13map[sector];
+        		sect13out(d13[track][sectorn],0xFE,track,sectorn,out);
+        	}
+        	nout(0x240,0xFF,out);
+        }
+
+        out.flush();
+        out.close();
+        in.close();
+    }
+
+	private static void sect13out(int[] data, int volume, int track, int sector, OutputStream out) throws IOException
+	{
+    	out.write(0xD5);
+    	out.write(0xAA);
+    	out.write(0xB5);
+    	wordout(enc44(volume),out);
+    	wordout(enc44(track),out);
+    	wordout(enc44(sector),out);
+    	wordout(enc44(volume ^ track ^ sector),out);
+    	out.write(0xDE);
+    	out.write(0xAA);
+    	out.write(0xEB);
+
+    	nout(0x6,0xFF,out);
+
+    	out.write(0xD5);
+    	out.write(0xAA);
+    	out.write(0xAD);
+
+    	int[] nib;
+    	if (track == 0 && sector == 0)
+    	{
+    		nib = Nibblizer.encode_5and3_alternate(data);
+    	}
+    	else
+    	{
+    		nib = Nibblizer.encode_5and3(data);
+    	}
+    	arrayout(nib,out);
+
+    	out.write(0xDE);
+    	out.write(0xAA);
+    	out.write(0xEB);
+
+    	nout(0x1B,0xFF,out);
+	}
+
+	private static void arrayout(int[] nib, OutputStream out) throws IOException
+	{
+		for (int i = 0; i < nib.length; ++i)
+		{
+			out.write(nib[i]);
+		}
+	}
+
+	private static void makeBlankNibbleDisk() throws IOException
 	{
         BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File("zero.nib")));
         for (int i = 0; i < 0x1a00*0x23; ++i)
