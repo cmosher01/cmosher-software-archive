@@ -97,6 +97,7 @@ public class Nibblizer
 		}
 	}
 
+	// Based on code by Andy McFadden, from CiderPress
 	public static int[] encode_5and3(int[] data)
 	{
 		final int[] buffer = new int[0x100+BUF2_SIZ+1];
@@ -111,17 +112,20 @@ public class Nibblizer
 	    int sctBuf = 0;
 	    for (int i = 0; i < top.length-1; i += 5)
 	    {
-	        int three1 = data[sctBuf++];
-	        int three2 = data[sctBuf++];
-	        int three3 = data[sctBuf++];
-	        int three4 = data[sctBuf++];
-	        int three5 = data[sctBuf++];
+	    	final int three1 = data[sctBuf++];
+			top[chunk+0*GRP] = three1 >> 3;
 
-	        top[chunk+0*GRP] = three1 >> 3;
-	        top[chunk+1*GRP] = three2 >> 3;
-	        top[chunk+2*GRP] = three3 >> 3;
-	        top[chunk+3*GRP] = three4 >> 3;
-	        top[chunk+4*GRP] = three5 >> 3;
+	    	final int three2 = data[sctBuf++];
+			top[chunk+1*GRP] = three2 >> 3;
+
+			final int three3 = data[sctBuf++];
+			top[chunk+2*GRP] = three3 >> 3;
+
+			final int three4 = data[sctBuf++];
+			top[chunk+3*GRP] = three4 >> 3;
+
+			final int three5 = data[sctBuf++];
+			top[chunk+4*GRP] = three5 >> 3;
 
 	        thr[chunk+0*GRP] = (three1 & 0x07) << 2 | (three4 & 0x04) >> 1 | (three5 & 0x04) >> 2;
 	        thr[chunk+1*GRP] = (three2 & 0x07) << 2 | (three4 & 0x02)      | (three5 & 0x02) >> 1;
@@ -144,14 +148,12 @@ public class Nibblizer
 	    int idx = 0;
 	    for (int i = thr.length-1; i >= 0; --i)
 	    {
-	        assert(thr[i] < xlate.length);
 	        buffer[idx++] = xlate[thr[i] ^ chksum];
 	        chksum = thr[i];
 	    }
 
 	    for (int i = 0; i < top.length; ++i)
 	    {
-	        assert(top[i] < xlate.length);
 	        buffer[idx++] = xlate[top[i] ^ chksum];
 	        chksum = top[i];
 	    }
@@ -169,8 +171,6 @@ public class Nibblizer
     	{
     		throw new IllegalArgumentException("invalid byte: "+byte_value);
     	}
-    	final int lo = (byte_value >> 1) | 0xAA;
-    	final int hi =  byte_value       | 0xAA;
-    	return (hi << 8) | lo;
+    	return (byte_value << 8) | (byte_value >> 1) | 0xAAAA;
     }
 }
