@@ -70,4 +70,25 @@ public class NibblizerTest extends TestCase
 			assertEquals(exp[i],enc[i]);
 		}
 	}
+
+	public void test_encode_4and4()
+	{
+		assertEquals(0xAAAA,Nibblizer.encode_4and4(0x00));
+		assertEquals(0xABAA,Nibblizer.encode_4and4(0x01));
+		assertEquals(0xAAAB,Nibblizer.encode_4and4(0x02));
+		assertEquals(0xABAB,Nibblizer.encode_4and4(0x03));
+		assertEquals(0xAEAA,Nibblizer.encode_4and4(0x04));
+		assertEquals(0xAFAA,Nibblizer.encode_4and4(0x05));
+		assertEquals(0xAEAB,Nibblizer.encode_4and4(0x06));
+		assertEquals(0xAFAB,Nibblizer.encode_4and4(0x07));
+		assertEquals(0xAAAE,Nibblizer.encode_4and4(0x08));
+		assertEquals(0xABAE,Nibblizer.encode_4and4(0x09));
+		assertEquals(0xAAAF,Nibblizer.encode_4and4(0x0A));
+		assertEquals(0xABAF,Nibblizer.encode_4and4(0x0B));
+		assertEquals(0xAEAE,Nibblizer.encode_4and4(0x0C));
+		assertEquals(0xAFAE,Nibblizer.encode_4and4(0x0D));
+		assertEquals(0xAEAF,Nibblizer.encode_4and4(0x0E));
+		assertEquals(0xAFAF,Nibblizer.encode_4and4(0x0F));
+		assertEquals(0xFEFF,Nibblizer.encode_4and4(0xFE));
+	}
 }
