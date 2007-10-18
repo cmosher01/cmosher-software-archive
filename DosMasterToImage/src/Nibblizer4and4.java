@@ -1,5 +1,5 @@
 /*
- * Created on Oct 18, 2007
+ * Created on 2007-10-18
  */
 public class Nibblizer4and4
 {

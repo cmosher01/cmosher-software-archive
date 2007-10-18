@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 /*
  * Created on 2007-10-15
  */
@@ -7,6 +5,7 @@ public class Nibblizer5and3
 {
     private static final int GRP = 0x33;
 
+    private static final int BUF1_SIZ = 0x0100;
     private static final int BUF2_SIZ = 3*GRP+1;
 
     private static final int[] xlate = new int[]
@@ -20,7 +19,7 @@ public class Nibblizer5and3
 
     public static int[] encode_alt(final int[] data)
 	{
-		final int[] enc = new int[0x100+BUF2_SIZ+1];
+		final int[] enc = new int[BUF1_SIZ+BUF2_SIZ+1];
 
 		buildBuf(data,enc);
 		flipBuf2(enc);
@@ -100,12 +99,12 @@ public class Nibblizer5and3
 	}
 
 	// Based on code by Andy McFadden, from CiderPress
-	public static int[] encode(int[] data)
+	public static int[] encode(final int[] data)
 	{
-		final int[] buffer = new int[0x100+BUF2_SIZ+1];
+		final int[] buffer = new int[BUF1_SIZ+BUF2_SIZ+1];
 
-	    final int[] top = new int[5*GRP+1];
-	    final int[] thr = new int[3*GRP+1];
+	    final int[] top = new int[BUF1_SIZ];
+	    final int[] thr = new int[BUF2_SIZ];
 
 	    /*
 		 * Split the bytes into sections.

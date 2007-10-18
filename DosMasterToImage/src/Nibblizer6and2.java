@@ -1,13 +1,14 @@
 import java.util.Arrays;
 
 /*
- * Created on Oct 18, 2007
+ * Created on 2007-10-18
  */
 public class Nibblizer6and2
 {
 	private static final int GRP = 0x56;
 
-    private static final int BUF2_SIZ = 0x9A;
+    private static final int BUF1_SIZ = 0x0100;
+    private static final int BUF2_SIZ = GRP;
 
     private static final int[] xlate = new int[]
 	{
@@ -21,36 +22,23 @@ public class Nibblizer6and2
 	};
 
 	// Based on code by Andy McFadden, from CiderPress
-	public static int[] encode_6and2(int[] data)
+	public static int[] encode(final int[] data)
 	{
-		final int[] buffer = new int[0x100 + BUF2_SIZ + 1];
+		final int[] buffer = new int[BUF1_SIZ+BUF2_SIZ+1];
 
-		final int[] top = new int[0x100];
-		final int[] two = new int[GRP];
+		final int[] top = new int[BUF1_SIZ];
+		final int[] two = new int[BUF2_SIZ];
 
-		Arrays.fill(two,0);
-
-		for (int i = 0, twoPosn = GRP-1, twoShift = 0; i < 256; i++)
-		{
-			int val = data[i];
-			top[i] = val >> 2;
-			two[twoPosn] |= ((val & 0x01) << 1 | (val & 0x02) >> 1) << twoShift;
-			if (twoPosn == 0)
-			{
-				twoPosn = GRP;
-				twoShift += 2;
-			}
-			twoPosn--;
-		}
+		buildBuffers(data,top,two);
 
 		int chksum = 0;
 		int idx = 0;
-		for (int i = GRP-1; i >= 0; i--)
+		for (int i = two.length-1; i >= 0; --i)
 		{
 			buffer[idx++] = xlate[two[i] ^ chksum];
 			chksum = two[i];
 		}
-		for (int i = 0; i < 256; i++)
+		for (int i = 0; i < top.length; ++i)
 		{
 			buffer[idx++] = xlate[top[i] ^ chksum];
 			chksum = top[i];
@@ -59,5 +47,25 @@ public class Nibblizer6and2
 		buffer[idx++] = xlate[chksum];
 
 		return buffer;
+	}
+
+	private static void buildBuffers(final int[] data, final int[] top, final int[] two)
+	{
+		Arrays.fill(two,0);
+
+		int twoPosn = GRP-1;
+		int twoShift = 0;
+		for (int i = 0; i < BUF1_SIZ; ++i)
+		{
+			final int val = data[i];
+			top[i] = val >> 2;
+			two[twoPosn] |= ((val & 0x01) << 1 | (val & 0x02) >> 1) << twoShift;
+			if (twoPosn <= 0)
+			{
+				twoPosn = GRP;
+				twoShift += 2;
+			}
+			twoPosn--;
+		}
 	}
 }
