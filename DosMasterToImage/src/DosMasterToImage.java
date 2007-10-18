@@ -282,7 +282,7 @@ public class DosMasterToImage
     	cvt13toNib(args);
     }
 
-    private static final int[] sector13map = new int[13];
+	private static final int[] sector13map = new int[13];
     private static final int sector13skew = 0xA;
     static
     {
@@ -351,21 +351,7 @@ public class DosMasterToImage
 //    	nout(0x1B,0xFF,out);
 //	}
 
-	private static void wordout(int word, OutputStream out) throws IOException
-	{
-		out.write(word);
-		out.write(word >> 8);
-	}
-
-	private static void nout(int n, int byt, OutputStream out) throws IOException
-	{
-    	for (int i = 0; i < n; ++i)
-    	{
-	    	out.write(byt);
-    	}
-	}
-
-    public static int enc44(int byt)
+	public static int enc44(int byt)
     {
     	// input byt: HGFEDCBA
     	// output: 1G1E1C1A1H1F1D1B
@@ -432,13 +418,13 @@ public class DosMasterToImage
 		final BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File(outf)));
         for (int track = 0; track < 0x23; ++track)
         {
-        	nout(0x30,0xFF,out);
+        	Util.nout(0x30,0xFF,out);
         	for (int sector = 0; sector < sector13map.length; ++sector)
         	{
         		final int sectorn = sector13map[sector];
         		sect13out(d13[track][sectorn],0xFE,track,sectorn,out);
         	}
-        	nout(0x240,0xFF,out);
+        	Util.nout(0x240,0xFF,out);
         }
 
         out.flush();
@@ -467,11 +453,11 @@ public class DosMasterToImage
 	{
     	addr13out(volume,track,sector,out);
 
-    	nout(0x6,0xFF,out);
+    	Util.nout(0x6,0xFF,out);
 
     	data13out(data,track,sector,out);
 
-    	nout(0x1B,0xFF,out);
+    	Util.nout(0x1B,0xFF,out);
 	}
 
 	private static void data13out(final int[] data, final int track, final int sector, final OutputStream out) throws IOException
@@ -502,10 +488,10 @@ public class DosMasterToImage
     	out.write(0xAA);
     	out.write(0xB5);
 
-    	wordout(enc44(volume),out);
-    	wordout(enc44(track),out);
-    	wordout(enc44(sector),out);
-    	wordout(enc44(volume ^ track ^ sector),out);
+    	Util.wordout(enc44(volume),out);
+    	Util.wordout(enc44(track),out);
+    	Util.wordout(enc44(sector),out);
+    	Util.wordout(enc44(volume ^ track ^ sector),out);
 
     	out.write(0xDE);
     	out.write(0xAA);
