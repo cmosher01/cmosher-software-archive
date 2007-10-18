@@ -115,11 +115,12 @@ L1B4D           PLA
                                 ; the disk
                                 ; The old Disk ][ ROMs read this into
                                 ; $300-$3FF and JMP $301
-                .BYTE $99
+BOOT1LOAD       .BYTE $99
 
 DISK2READ       =     $C65D
 BUF1            =     $0800
 BUF2            =     BUF1+$0100
+BOOT1RUN        =     $0300
 
 L0301           LDA   $0800,Y
                 ASL
@@ -145,8 +146,8 @@ L0301           LDA   $0800,Y
                 LDA   #<DISK2READ
                 STA   PTR2RDSC
 
-L0327           JSR   L0343
-                JSR   NIB
+L0327           JSR   BOOT1RUN+L0343-BOOT1LOAD
+                JSR   BOOT1RUN+NIB-BOOT1LOAD
                 LDA   $3D
                 EOR   $03FF
                 BEQ   L033A
@@ -609,14 +610,18 @@ RSETPTRS        LDA RECNMBFM    ; RECONCILE RECORD NUMBER VERSIONS
                                 ; =================================
 
 
+                .IF VERSION < 330
+IMG8FD          = *-2
+                .ELSE
 IMG8FD
-BT1LDADR        = IMG8FD-(BOOT1-$800)
-                .IF VERSION > 320
                 .ADDR BOOT1     ; VARIES FROM $B600-$BF00 ON 48K
                                 ; SLAVE.  (EVENTUALLY POINTS TO THE
                                 ; START OF BOOT2 AT $B700.  IMAGE
                                 ; OF BT1LDADR AT $8FD.)
                 .ENDIF
+BT1LDADR        = IMG8FD-(BOOT1-$800)
+
+
 IMG8FF
 BT1PG2RD        = IMG8FF-(BOOT1-$800)
                 .BYTE $09       ; .RES 1 ;CONTAINS # OF PAGES TO READ WHEN
