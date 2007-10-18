@@ -57,10 +57,9 @@ public class dd
 		if (constant < 0)
 		{
 			final BufferedInputStream in = new BufferedInputStream(new FileInputStream(FileDescriptor.in));
-	        long skipped = 0;
-	        while (skipped < skip)
+	        while (skip > 0)
 	        {
-	            skipped += in.skip(skip-skipped);
+	            skip -= in.skip(skip);
 	        }
 			for (int i = in.read(); i >= 0 && count > 0; i = in.read())
 			{
