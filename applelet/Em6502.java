@@ -50,7 +50,7 @@ public abstract class Em6502
  */
    public abstract void writeMemory512(int address, int value);
 
-/** Increments the clock by a given number of cycles -- can be overriden */
+/** Increments the clock by a given number of cycles -- can be overridden */
    final void tick(int cycles)
    {
       clock += cycles;
