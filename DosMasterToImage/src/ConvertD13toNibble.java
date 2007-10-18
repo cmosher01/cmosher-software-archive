@@ -147,10 +147,10 @@ public class ConvertD13toNibble
     	out.write(0xAA);
     	out.write(0xB5);
 
-    	Util.wordout(Nibblizer.encode_4and4(volume),out);
-    	Util.wordout(Nibblizer.encode_4and4(track),out);
-    	Util.wordout(Nibblizer.encode_4and4(sector),out);
-    	Util.wordout(Nibblizer.encode_4and4(volume ^ track ^ sector),out);
+    	Util.wordout(Nibblizer4and4.encode(volume),out);
+    	Util.wordout(Nibblizer4and4.encode(track),out);
+    	Util.wordout(Nibblizer4and4.encode(sector),out);
+    	Util.wordout(Nibblizer4and4.encode(volume ^ track ^ sector),out);
 
     	out.write(0xDE);
     	out.write(0xAA);
@@ -166,11 +166,11 @@ public class ConvertD13toNibble
     	final int[] nib;
     	if (alternateEncoding)
     	{
-    		nib = Nibblizer.encode_5and3_alternate(data);
+    		nib = Nibblizer5and3.encode_alt(data);
     	}
     	else
     	{
-    		nib = Nibblizer.encode_5and3(data);
+    		nib = Nibblizer5and3.encode(data);
     	}
     	Util.arrayout(nib,out);
 

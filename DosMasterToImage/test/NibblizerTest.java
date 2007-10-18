@@ -27,7 +27,7 @@ public class NibblizerTest extends TestCase
 		}
 		in.close();
 
-		final int[] enc = Nibblizer.encode_5and3_alternate(data);
+		final int[] enc = Nibblizer5and3.encode_alt(data);
 
 		final int[] exp = new int[411];
 		final BufferedInputStream innib = new BufferedInputStream(this.getClass().getResourceAsStream("13sect_t0s0.nib"));
@@ -54,7 +54,7 @@ public class NibblizerTest extends TestCase
 		}
 		in.close();
 
-		final int[] enc = Nibblizer.encode_5and3(data);
+		final int[] enc = Nibblizer5and3.encode(data);
 
 		final int[] exp = new int[411];
 		final BufferedInputStream innib = new BufferedInputStream(this.getClass().getResourceAsStream("13sect_t0s1.nib"));
@@ -73,22 +73,22 @@ public class NibblizerTest extends TestCase
 
 	public void test_encode_4and4()
 	{
-		assertEquals(0xAAAA,Nibblizer.encode_4and4(0x00));
-		assertEquals(0xABAA,Nibblizer.encode_4and4(0x01));
-		assertEquals(0xAAAB,Nibblizer.encode_4and4(0x02));
-		assertEquals(0xABAB,Nibblizer.encode_4and4(0x03));
-		assertEquals(0xAEAA,Nibblizer.encode_4and4(0x04));
-		assertEquals(0xAFAA,Nibblizer.encode_4and4(0x05));
-		assertEquals(0xAEAB,Nibblizer.encode_4and4(0x06));
-		assertEquals(0xAFAB,Nibblizer.encode_4and4(0x07));
-		assertEquals(0xAAAE,Nibblizer.encode_4and4(0x08));
-		assertEquals(0xABAE,Nibblizer.encode_4and4(0x09));
-		assertEquals(0xAAAF,Nibblizer.encode_4and4(0x0A));
-		assertEquals(0xABAF,Nibblizer.encode_4and4(0x0B));
-		assertEquals(0xAEAE,Nibblizer.encode_4and4(0x0C));
-		assertEquals(0xAFAE,Nibblizer.encode_4and4(0x0D));
-		assertEquals(0xAEAF,Nibblizer.encode_4and4(0x0E));
-		assertEquals(0xAFAF,Nibblizer.encode_4and4(0x0F));
-		assertEquals(0xFEFF,Nibblizer.encode_4and4(0xFE));
+		assertEquals(0xAAAA,Nibblizer4and4.encode(0x00));
+		assertEquals(0xABAA,Nibblizer4and4.encode(0x01));
+		assertEquals(0xAAAB,Nibblizer4and4.encode(0x02));
+		assertEquals(0xABAB,Nibblizer4and4.encode(0x03));
+		assertEquals(0xAEAA,Nibblizer4and4.encode(0x04));
+		assertEquals(0xAFAA,Nibblizer4and4.encode(0x05));
+		assertEquals(0xAEAB,Nibblizer4and4.encode(0x06));
+		assertEquals(0xAFAB,Nibblizer4and4.encode(0x07));
+		assertEquals(0xAAAE,Nibblizer4and4.encode(0x08));
+		assertEquals(0xABAE,Nibblizer4and4.encode(0x09));
+		assertEquals(0xAAAF,Nibblizer4and4.encode(0x0A));
+		assertEquals(0xABAF,Nibblizer4and4.encode(0x0B));
+		assertEquals(0xAEAE,Nibblizer4and4.encode(0x0C));
+		assertEquals(0xAFAE,Nibblizer4and4.encode(0x0D));
+		assertEquals(0xAEAF,Nibblizer4and4.encode(0x0E));
+		assertEquals(0xAFAF,Nibblizer4and4.encode(0x0F));
+		assertEquals(0xFEFF,Nibblizer4and4.encode(0xFE));
 	}
 }
