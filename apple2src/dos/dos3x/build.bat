@@ -69,11 +69,23 @@ JAVA -cp %A2CDT% CreateCatalog --version=%VERS% >>dos.d13
 JAVA -cp %A2CDT% dd --count=0xDD00 --const=0 >>dos.d13
 
 JAVA -cp %A2CDT% ConvertD13toNibble <dos.d13 >dos.nib
+
 GOTO :DONEDISK
 
+
+
 :DOS33
-REM NOT YET IMPLEMENTED
+JAVA -cp %A2CDT% dd --skip=0x1B00 <dos >dos.do
+JAVA -cp %A2CDT% dd --count=0x1B00 <dos >>dos.do
+JAVA -cp %A2CDT% dd --count=0xEB00 --const=0 >>dos.do
+JAVA -cp %A2CDT% CreateCatalog --version=%VERS% >>dos.do
+JAVA -cp %A2CDT% dd --count=0x11000 --const=0 >>dos.do
+
+JAVA -cp %A2CDT% ConvertD16toNibble <dos.do >dos.nib
+
 GOTO :DONEDISK
+
+
 
 :DONEDISK
 
@@ -91,7 +103,7 @@ SETLOCAL
 
 COPY /Y %SRCDIR%\%~1.s65 .
 
-%CC65DIR%\ca65 -v -l -t apple2 -I %SRCDIR% -I %INCDIR% -o %~1.o65 -D VERSION=%~2 %~1.s65
+%CC65DIR%\ca65 -v -l -t apple2 -I %SRCDIR% -I %INCDIR% -o %~1.o65 -D VERSION=%~2 -D NODELAY %~1.s65
 SET /A ERR=%ERRORLEVEL%
 
 DEL /F /Q %~1.s65
