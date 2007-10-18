@@ -166,12 +166,8 @@ public class CreateCatalog
 	private static void parseArg(final String arg)
 	{
 		final StringTokenizer tok = new StringTokenizer(arg,"=");
-		if (!tok.hasMoreTokens())
-		{
-			throw new IllegalArgumentException(arg);
-		}
-		final String opt = tok.nextToken();
-		final String val = nextTok(tok);
+		final String opt = Util.nextTok(tok);
+		final String val = Util.nextTok(tok);
 
 		if (opt.equals("used"))
 		{
@@ -199,26 +195,17 @@ public class CreateCatalog
 		}
 	}
 
-	private static String nextTok(final StringTokenizer tok)
-	{
-		if (!tok.hasMoreTokens())
-		{
-			return "";
-		}
-		return tok.nextToken();
-	}
-
 	private static void help()
 	{
-		System.err.println("usage: java CreateCatalog [OPTIONS]");
-		System.err.println("");
+		System.err.println("usage:");
+		System.err.println("    java CreateCatalog [OPTIONS]");
 		System.err.println("OPTIONS:");
-		System.err.println("--help       show this help");
-		System.err.println("--track=N    use track N (default: 0x11)");
-		System.err.println("--used=N     mark N sectors (from beginning of disk) as used (default: 0x25)");
-		System.err.println("             (for DOS disks use 0x25, 0x27, or 0x30");
-		System.err.println("--version=N  for DOS version N (300,310,320,321,330,331,332) (default: 332)");
-		System.err.println("--volume=N   disk volume (default: 0xFE)");
+		System.err.println("    --help       show this help");
+		System.err.println("    --track=N    use track N (default: 0x11)");
+		System.err.println("    --used=N     mark N sectors (from beginning of disk) as used (default: 0x25)");
+		System.err.println("                 (for DOS disks use 0x25, 0x27, or 0x30");
+		System.err.println("    --version=N  for DOS version N (300,310,320,321,330,331,332) (default: 332)");
+		System.err.println("    --volume=N   disk volume (default: 0xFE)");
 		runProgram = false;
 	}
 }

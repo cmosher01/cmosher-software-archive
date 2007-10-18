@@ -83,16 +83,8 @@ public class dd
 	private static void parseArg(final String arg)
 	{
 		final StringTokenizer tok = new StringTokenizer(arg,"=");
-		if (!tok.hasMoreTokens())
-		{
-			throw new IllegalArgumentException(arg);
-		}
-		final String opt = tok.nextToken();
-		if (!tok.hasMoreTokens())
-		{
-			throw new IllegalArgumentException(arg);
-		}
-		final String val = tok.nextToken();
+		final String opt = Util.nextTok(tok);
+		final String val = Util.nextTok(tok);
 
 		if (opt.equals("count"))
 		{
@@ -118,13 +110,13 @@ public class dd
 
 	private static void help()
 	{
-		System.err.println("usage: java dd [OPTIONS]");
-		System.err.println("");
+		System.err.println("usage:");
+		System.err.println("    java dd [OPTIONS]");
 		System.err.println("OPTIONS:");
-		System.err.println("--const=N  use N as the input value");
-		System.err.println("--count=N  write only N bytes from input");
-		System.err.println("--help     show this help");
-		System.err.println("--skip=N   skip N bytes of input");
+		System.err.println("    --const=N  use N as the input value; don't read stdin");
+		System.err.println("    --count=N  write a maximum of N bytes");
+		System.err.println("    --help     show this help");
+		System.err.println("    --skip=N   skip the first N bytes from stdin");
 		runProgram = false;
 	}
 }

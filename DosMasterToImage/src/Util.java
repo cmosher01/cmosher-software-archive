@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.StringTokenizer;
 
 /*
  * Created on Oct 17, 2007
@@ -22,5 +23,13 @@ public final class Util
 		}
 	}
 
-	
+	public static String nextTok(final StringTokenizer tok)
+	{
+		if (!tok.hasMoreTokens())
+		{
+			return "";
+		}
+		return tok.nextToken();
+	}
+
 }
