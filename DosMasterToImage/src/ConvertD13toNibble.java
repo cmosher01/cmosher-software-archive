@@ -2,7 +2,6 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -17,7 +16,11 @@ public class ConvertD13toNibble
 	private static int volume = 0xFE;
 	private static boolean skew = true;
 
-	private static final int[] sector13map = new int[13];
+	private static final int TPD = 0x23; // tracks per disk
+	private static final int SPT = 13; // sectors per track
+	private static final int BPS = 0x0100; // bytes per sector
+
+	private static final int[] sector13map = new int[SPT];
     private static final int sector13skew = 0xA;
     static
     {
@@ -73,34 +76,48 @@ public class ConvertD13toNibble
 
 
 
-	private static int[][][] read13disk() throws FileNotFoundException, IOException
+	private static int[][][] read13disk() throws IOException
 	{
-        final int[][][] d13 = new int[0x23][13][0x100];
-		final BufferedInputStream in = new BufferedInputStream(new FileInputStream(FileDescriptor.in));
-        for (int t = 0; t < 0x23; ++t)
+        final int[][][] d13 = new int[TPD][SPT][BPS];
+
+        final BufferedInputStream in = new BufferedInputStream(new FileInputStream(FileDescriptor.in));
+
+		for (int t = 0; t < TPD; ++t)
         {
-        	for (int s = 0; s < 13; ++s)
+        	for (int s = 0; s < SPT; ++s)
         	{
-        		for (int b = 0; b < 0x100; ++b)
+        		for (int b = 0; b < BPS; ++b)
         		{
 	        		d13[t][s][b] = in.read();
+	        		if (d13[t][s][b] == -1)
+	        		{
+	        			throw new IOException("input file had less than 0x1C700 bytes.");
+	        		}
         		}
         	}
         }
+
+		int eof = in.read();
+		if (eof != -1)
+		{
+			throw new IOException("input file had more than 0x1C700 bytes.");
+		}
         in.close();
-		return d13;
+
+        return d13;
 	}
 
-	private static void write13nib(final int[][][] d13) throws FileNotFoundException, IOException
+	private static void write13nib(final int[][][] d13) throws IOException
 	{
 		final BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(FileDescriptor.out));
-        for (int track = 0; track < 0x23; ++track)
+
+		for (int t = 0; t < TPD; ++t)
         {
         	Util.nout(0x30,0xFF,out);
-        	for (int sector = 0; sector < sector13map.length; ++sector)
+        	for (int s = 0; s < SPT; ++s)
         	{
-        		final int sectorn = skew ? sector13map[sector] : sector;
-        		sect13out(d13[track][sectorn],track,sectorn,out);
+        		final int sk = skew ? sector13map[s] : s;
+        		sect13out(d13[t][sk],t,sk,out);
         	}
         	Util.nout(0x240,0xFF,out);
         }
