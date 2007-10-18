@@ -122,7 +122,7 @@ public final class Ja2 implements Runnable
 
 //        final InputStream diskromImage = getClass().getResourceAsStream("disk2_DOS33_c600_patched_nodelay.rom");
 //        final InputStream diskromImage = new FileInputStream(new File("firmware/rom/disk2_DOS33_c600_patched_nodelay.rom"));
-        final InputStream diskromImage = new FileInputStream(new File("C:\\eclipse_organize\\postsvn_workspace\\apple2src\\firmware\\other\\disk2rom13sectc600"));
+        final InputStream diskromImage = new FileInputStream(new File("C:\\eclipse_organize\\postsvn_workspace\\apple2src\\firmware\\rom\\disk2_13sect_c600.rom"));
 //        final InputStream diskromImage = new FileInputStream(new File("C:\\TEMP\\DISK2DISASM\\disk2rom13sectc600.bin"));
         memory.load(0xC600,diskromImage);
         diskromImage.close();
