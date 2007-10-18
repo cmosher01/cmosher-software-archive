@@ -3,11 +3,13 @@ import java.io.OutputStream;
 import java.util.StringTokenizer;
 
 /*
- * Created on Oct 17, 2007
+ * Created on 2007-10-17
  */
 public final class Util
 {
 	private Util() { throw new IllegalStateException(); }
+
+
 
 	public static void wordout(int word, OutputStream out) throws IOException
 	{
@@ -31,6 +33,8 @@ public final class Util
 		}
 	}
 
+
+
 	public static String nextTok(final StringTokenizer tok)
 	{
 		if (!tok.hasMoreTokens())
@@ -39,5 +43,4 @@ public final class Util
 		}
 		return tok.nextToken();
 	}
-
 }

@@ -8,7 +8,7 @@ import java.io.OutputStream;
 import java.util.StringTokenizer;
 
 /*
- * Created on Oct 18, 2007
+ * Created on 2007-10-18
  */
 public class ConvertD13toNibble
 {

@@ -1,5 +1,5 @@
 /*
- * Created on Oct 15, 2007
+ * Created on 2007-10-15
  */
 public class Nibblizer
 {

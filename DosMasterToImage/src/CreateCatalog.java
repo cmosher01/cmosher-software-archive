@@ -1,14 +1,11 @@
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.StringTokenizer;
 
 /*
- * Created on Oct 17, 2007
+ * Created on 2007-10-17
  */
 public class CreateCatalog
 {
