@@ -17,6 +17,33 @@ public class NibblizerTest extends TestCase
 		super.tearDown();
 	}
 
+	public void test_encode_6and2() throws IOException
+	{
+		final int[] data = new int[256];
+		final BufferedInputStream in = new BufferedInputStream(this.getClass().getResourceAsStream("dos33t0s0.bin"));
+		for (int i = 0; i < data.length; ++i)
+		{
+			data[i] = in.read();
+		}
+		in.close();
+
+		final int[] enc = Nibblizer6and2.encode(data);
+
+		final int[] exp = new int[343];
+		final BufferedInputStream innib = new BufferedInputStream(this.getClass().getResourceAsStream("16sect_t0s0.nib"));
+		for (int i = 0; i < exp.length; ++i)
+		{
+			exp[i] = innib.read();
+		}
+		innib.close();
+
+		assertEquals(exp.length,enc.length);
+		for (int i = 0; i < exp.length; ++i)
+		{
+			assertEquals(exp[i],enc[i]);
+		}
+	}
+
 	public void test_encode_5and3_alternate() throws IOException
 	{
 		final int[] data = new int[256];

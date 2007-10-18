@@ -21,6 +21,10 @@ public class ConvertD16toNibble
 	private static final int SPT = 16; // sectors per track
 	private static final int BPS = 0x0100; // bytes per sector
 
+	private static final int[] sector16map = new int[]
+    {
+		0x0, 0x7, 0xE, 0x6, 0xD, 0x5, 0xC, 0x4, 0xB, 0x3, 0xA, 0x2, 0x9, 0x1, 0x8, 0xF
+    };
 
 
 
@@ -105,9 +109,9 @@ public class ConvertD16toNibble
         	Util.nout(0x30,0xFF,out);
         	for (int s = 0; s < SPT; ++s)
         	{
-        		sect16out(d16[t][s],t,s,out);
+        		sect16out(d16[t][sector16map[s]],t,s,out);
         	}
-        	Util.nout(0x240,0xFF,out);
+        	Util.nout(0x110,0xFF,out);
         }
 
         out.flush();
