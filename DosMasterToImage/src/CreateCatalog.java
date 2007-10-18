@@ -12,7 +12,6 @@ import java.util.StringTokenizer;
  */
 public class CreateCatalog
 {
-	private static boolean parseOptions = true;
 	private static boolean runProgram = true;
 	private static int used = 0x25;
 	private static int track = 0x11;
@@ -25,9 +24,22 @@ public class CreateCatalog
 	 */
 	public static void main(String[] args) throws IOException
 	{
+		try
+		{
+			run(args);
+		}
+		catch (final IllegalArgumentException badarg)
+		{
+			System.err.println("Invalid argument. Use --help for help.");
+			throw badarg;
+		}
+	}
+
+	private static void run(final String... args) throws IOException
+	{
 		for (final String arg : args)
 		{
-			if (parseOptions && arg.startsWith("--"))
+			if (arg.startsWith("--"))
 			{
 				parseArg(arg.substring(2));
 			}
@@ -153,22 +165,13 @@ public class CreateCatalog
 
 	private static void parseArg(final String arg)
 	{
-		if (arg.isEmpty())
-		{
-			parseOptions = false;
-			return;
-		}
 		final StringTokenizer tok = new StringTokenizer(arg,"=");
 		if (!tok.hasMoreTokens())
 		{
 			throw new IllegalArgumentException(arg);
 		}
 		final String opt = tok.nextToken();
-		if (!tok.hasMoreTokens())
-		{
-			throw new IllegalArgumentException(arg);
-		}
-		final String val = tok.nextToken();
+		final String val = nextTok(tok);
 
 		if (opt.equals("used"))
 		{
@@ -190,6 +193,19 @@ public class CreateCatalog
 		{
 			help();
 		}
+		else
+		{
+			throw new IllegalArgumentException(arg);
+		}
+	}
+
+	private static String nextTok(final StringTokenizer tok)
+	{
+		if (!tok.hasMoreTokens())
+		{
+			return "";
+		}
+		return tok.nextToken();
 	}
 
 	private static void help()
@@ -197,6 +213,7 @@ public class CreateCatalog
 		System.err.println("usage: java CreateCatalog [OPTIONS]");
 		System.err.println("");
 		System.err.println("OPTIONS:");
+		System.err.println("--help       show this help");
 		System.err.println("--track=N    use track N (default: 0x11)");
 		System.err.println("--used=N     mark N sectors (from beginning of disk) as used (default: 0x25)");
 		System.err.println("             (for DOS disks use 0x25, 0x27, or 0x30");

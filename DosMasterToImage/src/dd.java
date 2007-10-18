@@ -14,11 +14,10 @@ import java.util.StringTokenizer;
  */
 public class dd
 {
-	private static boolean parseOptions = true;
+	private static boolean runProgram = true;
 	private static long count = Long.MAX_VALUE;
 	private static long skip = 0;
 	private static int constant = -1;
-	private static boolean runProgram = true;
 
 	/**
 	 * @param args
@@ -26,28 +25,15 @@ public class dd
 	 */
 	public static void main(final String... args) throws IOException
 	{
-		String infile = "";
-		String outfile = "";
 		for (final String arg : args)
 		{
-			if (parseOptions && arg.startsWith("--"))
+			if (arg.startsWith("--"))
 			{
 				parseArg(arg.substring(2));
 			}
 			else
 			{
-				if (infile.isEmpty())
-				{
-					infile = arg;
-				}
-				else if (outfile.isEmpty())
-				{
-					outfile = arg;
-				}
-				else
-				{
-					throw new IllegalArgumentException(arg);
-				}
+				throw new IllegalArgumentException(arg);
 			}
 		}
 		if (!runProgram)
@@ -55,56 +41,12 @@ public class dd
 			return;
 		}
 
-		final InputStream instream;
+
+		final BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(FileDescriptor.out));
+
 		if (constant < 0)
 		{
-			if (infile.isEmpty())
-			{
-				instream = new FileInputStream(FileDescriptor.in);
-			}
-			else
-			{
-				instream = new FileInputStream(new File(infile));
-			}
-		}
-		else
-		{
-			instream = null;
-		}
-
-		final OutputStream outstream;
-		if (constant < 0)
-		{
-			if (outfile.isEmpty())
-			{
-				outstream = new FileOutputStream(FileDescriptor.out);
-			}
-			else
-			{
-				outstream = new FileOutputStream(new File(outfile));
-			}
-		}
-		else
-		{
-			if (infile.isEmpty())
-			{
-				outstream = new FileOutputStream(FileDescriptor.out);
-			}
-			else
-			{
-				outstream = new FileOutputStream(new File(infile));
-			}
-		}
-
-		final BufferedInputStream in = new BufferedInputStream(instream);
-		final BufferedOutputStream out = new BufferedOutputStream(outstream);
-
-		if (instream != null)
-		{
-			if (constant >= 0)
-			{
-				throw new IllegalArgumentException("cannot specify both --const and an input file");
-			}
+			final BufferedInputStream in = new BufferedInputStream(new FileInputStream(FileDescriptor.in));
 	        long skipped = 0;
 	        while (skipped < skip)
 	        {
@@ -115,6 +57,7 @@ public class dd
 				out.write(i);
 				--count;
 			}
+			in.close();
 		}
 		else
 		{
@@ -132,18 +75,13 @@ public class dd
 				--count;
 			}
 		}
+
 		out.flush();
 		out.close();
-		in.close();
 	}
 
 	private static void parseArg(final String arg)
 	{
-		if (arg.isEmpty())
-		{
-			parseOptions = false;
-			return;
-		}
 		final StringTokenizer tok = new StringTokenizer(arg,"=");
 		if (!tok.hasMoreTokens())
 		{
@@ -172,11 +110,15 @@ public class dd
 		{
 			help();
 		}
+		else
+		{
+			throw new IllegalArgumentException(arg);
+		}
 	}
 
 	private static void help()
 	{
-		System.err.println("usage: java dd [OPTIONS] [INFILE] [OUTFILE]");
+		System.err.println("usage: java dd [OPTIONS]");
 		System.err.println("");
 		System.err.println("OPTIONS:");
 		System.err.println("--const=N  use N as the input value");
