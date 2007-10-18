@@ -13,13 +13,14 @@ public class ShowBits
 	public static void main(String[] args) throws IOException
 	{
 //		final InputStream rom = new FileInputStream("C:\\aaaws44\\Pom1_KR\\bios\\apple1.vid");
-		final InputStream rom = ShowBits.class.getResourceAsStream("charrom.bin");
+		final InputStream rom = ShowBits.class.getResourceAsStream("../video/charrom.bin");
+//		final InputStream rom = new FileInputStream("C:\\aaaws44\\apple2plat\\roms\\3410036.bin");
 		int i = 0;
 		for (int c = rom.read(); c != -1; c = rom.read())
 		{
 			final StringBuilder sb = new StringBuilder(8);
 			bits((byte)c,sb);
-			System.out.println(/*""+(i/8)+": "+Integer.toHexString(c)+": "+*/sb.toString());
+			System.out.println(""+Integer.toHexString(i/8)+": "/*+Integer.toHexString(c)+": "*/+sb.toString());
 			++i;
 		}
 		rom.close();
