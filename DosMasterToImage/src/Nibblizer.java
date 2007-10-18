@@ -160,4 +160,17 @@ public class Nibblizer
 
 	    return buffer;
 	}
+
+	public static int encode_4and4(final int byte_value)
+    {
+    	// input byte:  hgfedcba
+    	// output word: 1g1e1c1a1h1f1d1b
+    	if (!(0 <= byte_value && byte_value < 0x100))
+    	{
+    		throw new IllegalArgumentException("invalid byte: "+byte_value);
+    	}
+    	final int lo = (byte_value >> 1) | 0xAA;
+    	final int hi =  byte_value       | 0xAA;
+    	return (hi << 8) | lo;
+    }
 }

@@ -23,6 +23,14 @@ public final class Util
 		}
 	}
 
+	public static void arrayout(final int[] r, final OutputStream out) throws IOException
+	{
+		for (int i = 0; i < r.length; ++i)
+		{
+			out.write(r[i]);
+		}
+	}
+
 	public static String nextTok(final StringTokenizer tok)
 	{
 		if (!tok.hasMoreTokens())

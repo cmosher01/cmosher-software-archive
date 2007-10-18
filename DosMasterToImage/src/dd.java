@@ -25,6 +25,19 @@ public class dd
 	 */
 	public static void main(final String... args) throws IOException
 	{
+		try
+		{
+			run(args);
+		}
+		catch (final IllegalArgumentException badarg)
+		{
+			System.err.println("Invalid argument. Use --help for help.");
+			throw badarg;
+		}
+	}
+
+	private static void run(final String... args) throws IOException
+	{
 		for (final String arg : args)
 		{
 			if (arg.startsWith("--"))
