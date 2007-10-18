@@ -5,78 +5,59 @@ import java.util.Arrays;
  */
 public class Nibblizer6and2
 {
-	/* static */ unsigned char DiskImg::kDiskBytes62[64] = {
-	    0x96, 0x97, 0x9a, 0x9b, 0x9d, 0x9e, 0x9f, 0xa6,
-	    0xa7, 0xab, 0xac, 0xad, 0xae, 0xaf, 0xb2, 0xb3,
-	    0xb4, 0xb5, 0xb6, 0xb7, 0xb9, 0xba, 0xbb, 0xbc,
-	    0xbd, 0xbe, 0xbf, 0xcb, 0xcd, 0xce, 0xcf, 0xd3,
-	    0xd6, 0xd7, 0xd9, 0xda, 0xdb, 0xdc, 0xdd, 0xde,
-	    0xdf, 0xe5, 0xe6, 0xe7, 0xe9, 0xea, 0xeb, 0xec,
-	    0xed, 0xee, 0xef, 0xf2, 0xf3, 0xf4, 0xf5, 0xf6,
-	    0xf7, 0xf9, 0xfa, 0xfb, 0xfc, 0xfd, 0xfe, 0xff
+	private static final int GRP = 0x56;
+
+    private static final int BUF2_SIZ = 0x9A;
+
+    private static final int[] xlate = new int[]
+	{
+								0x96, 0x97,       0x9A, 0x9B,       0x9D, 0x9E, 0x9F,
+								0xA6, 0xA7,     /*0xAA*/0xAB, 0xAC, 0xAD, 0xAE, 0xAF,
+		0xB2, 0xB3, 0xB4, 0xB5, 0xB6, 0xB7, 0xB9, 0xBA, 0xBB, 0xBC, 0xBD, 0xBE, 0xBF,
+														0xCB,       0xCD, 0xCE, 0xCF,
+		      0xD3,     /*0xD5*/0xD6, 0xD7, 0xD9, 0xDA, 0xDB, 0xDC, 0xDD, 0xDE, 0xDF,
+		                  0xE5, 0xE6, 0xE7, 0xE9, 0xEA, 0xEB, 0xEC, 0xED, 0xEE, 0xEF,
+		0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF9, 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF
 	};
-	/*
-	 * void DiskImg::EncodeNibble62(const CircularBufferAccess& buffer, int idx,
-	 * const unsigned char* sctBuf, const NibbleDescr* pNibbleDescr) const {
-	 * unsigned char top[256]; unsigned char twos[kChunkSize62]; int twoPosn,
-	 * twoShift; int i;
-	 * 
-	 * memset(twos, 0, sizeof(twos));
-	 * 
-	 * twoShift = 0; for (i = 0, twoPosn = kChunkSize62-1; i < 256; i++) {
-	 * unsigned int val = sctBuf[i]; top[i] = val >> 2; twos[twoPosn] |= ((val &
-	 * 0x01) << 1 | (val & 0x02) >> 1) << twoShift;
-	 * 
-	 * if (twoPosn == 0) { twoPosn = kChunkSize62; twoShift += 2; } twoPosn--; }
-	 * 
-	 * int chksum = pNibbleDescr->dataChecksumSeed; for (i = kChunkSize62-1; i >=
-	 * 0; i--) { assert(twos[i] < sizeof(kDiskBytes62)); buffer[idx++] =
-	 * kDiskBytes62[twos[i] ^ chksum]; chksum = twos[i]; }
-	 * 
-	 * for (i = 0; i < 256; i++) { assert(top[i] < sizeof(kDiskBytes62));
-	 * buffer[idx++] = kDiskBytes62[top[i] ^ chksum]; chksum = top[i]; }
-	 * 
-	 * //printf("Enc checksum value is 0x%02x\n", chksum); buffer[idx++] =
-	 * kDiskBytes62[chksum]; }
-	 */
-		// Based on code by Andy McFadden, from CiderPress
-		public static int[] encode_6and2(int[] data)
+
+	// Based on code by Andy McFadden, from CiderPress
+	public static int[] encode_6and2(int[] data)
+	{
+		final int[] buffer = new int[0x100 + BUF2_SIZ + 1];
+
+		final int[] top = new int[0x100];
+		final int[] two = new int[GRP];
+
+		Arrays.fill(two,0);
+
+		for (int i = 0, twoPosn = GRP-1, twoShift = 0; i < 256; i++)
 		{
-			final int[] buffer = new int[0x100+BUF2_SIZ+1]; // TODO size???
-			
-		    final int[] top = new int[256];
-		    final int[] twos = new int[GRP62];
-	
-		    Arrays.fill(twos,0);
-	
-		    int twoShift = 0;
-		    for (int i = 0, twoPosn = GRP62-1; i < 256; i++) {
-		        int val = sctBuf[i];
-		        top[i] = val >> 2;
-		        twos[twoPosn] |= ((val & 0x01) << 1 | (val & 0x02) >> 1) << twoShift;
-	
-		        if (twoPosn == 0) {
-		            twoPosn = GRP62;
-		            twoShift += 2;
-		        }
-		        twoPosn--;
-		    }
-	
-		    int chksum = 0;
-		    int idx = 0;
-		    for (int i = GRP62-1; i >= 0; i--) {
-		        assert(twos[i] < sizeof(kDiskBytes62));
-		        buffer[idx++] = kDiskBytes62[twos[i] ^ chksum];
-		        chksum = twos[i];
-		    }
-	
-		    for (int i = 0; i < 256; i++) {
-		        assert(top[i] < sizeof(kDiskBytes62));
-		        buffer[idx++] = kDiskBytes62[top[i] ^ chksum];
-		        chksum = top[i];
-		    }
-	
-		    // printf("Enc checksum value is 0x%02x\n", chksum);
-		    buffer[idx++] = kDiskBytes62[chksum];
+			int val = data[i];
+			top[i] = val >> 2;
+			two[twoPosn] |= ((val & 0x01) << 1 | (val & 0x02) >> 1) << twoShift;
+			if (twoPosn == 0)
+			{
+				twoPosn = GRP;
+				twoShift += 2;
+			}
+			twoPosn--;
 		}
+
+		int chksum = 0;
+		int idx = 0;
+		for (int i = GRP-1; i >= 0; i--)
+		{
+			buffer[idx++] = xlate[two[i] ^ chksum];
+			chksum = two[i];
+		}
+		for (int i = 0; i < 256; i++)
+		{
+			buffer[idx++] = xlate[top[i] ^ chksum];
+			chksum = top[i];
+		}
+
+		buffer[idx++] = xlate[chksum];
+
+		return buffer;
+	}
 }

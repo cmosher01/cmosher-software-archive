@@ -5,10 +5,9 @@ import java.util.Arrays;
  */
 public class Nibblizer5and3
 {
-    private static final int GRP53 = 0x33;
-    private static final int GRP62 = 0x56;
+    private static final int GRP = 0x33;
 
-    private static final int BUF2_SIZ = 3*GRP53+1;
+    private static final int BUF2_SIZ = 3*GRP+1;
 
     private static final int[] xlate = new int[]
     {
@@ -35,40 +34,40 @@ public class Nibblizer5and3
 	{
 		int base = 0;
 
-		for (int i = 0; i < GRP53; ++i)
+		for (int i = 0; i < GRP; ++i)
 		{
 			enc[base+i]  = (data[base+i] & 0x07) << 2;
-			enc[base+i] |= (data[3*GRP53+i] & 0x04) >> 1;
-			enc[base+i] |= (data[4*GRP53+i] & 0x04) >> 2;
+			enc[base+i] |= (data[3*GRP+i] & 0x04) >> 1;
+			enc[base+i] |= (data[4*GRP+i] & 0x04) >> 2;
 		}
-		base += GRP53;
+		base += GRP;
 
-		for (int i = 0; i < GRP53; ++i)
+		for (int i = 0; i < GRP; ++i)
 		{
 			enc[base+i]  = (data[base+i] & 0x07) << 2;
-			enc[base+i] |= (data[3*GRP53+i] & 0x02);
-			enc[base+i] |= (data[4*GRP53+i] & 0x02) >> 1;
+			enc[base+i] |= (data[3*GRP+i] & 0x02);
+			enc[base+i] |= (data[4*GRP+i] & 0x02) >> 1;
 		}
-		base += GRP53;
+		base += GRP;
 
-		for (int i = 0; i < GRP53; ++i)
+		for (int i = 0; i < GRP; ++i)
 		{
 			enc[base+i]  = (data[base+i] & 0x07) << 2;
-			enc[base+i] |= (data[3*GRP53+i] & 0x01) << 1;
-			enc[base+i] |= (data[4*GRP53+i] & 0x01);
+			enc[base+i] |= (data[3*GRP+i] & 0x01) << 1;
+			enc[base+i] |= (data[4*GRP+i] & 0x01);
 		}
-		base += GRP53;
+		base += GRP;
 
 		enc[base] = 0;
 		++base;
 
-		for (int i = 0; i < 5*GRP53; ++i)
+		for (int i = 0; i < 5*GRP; ++i)
 		{
 			enc[base+i] = data[i] >> 3;
 		}
-		base += 5*GRP53;
+		base += 5*GRP;
 
-		enc[base] = data[5*GRP53] & 0x1F; // throw out high 3 bits
+		enc[base] = data[5*GRP] & 0x1F; // throw out high 3 bits
 	}
 
 	private static void flipBuf2(final int[] enc)
@@ -105,34 +104,34 @@ public class Nibblizer5and3
 	{
 		final int[] buffer = new int[0x100+BUF2_SIZ+1];
 
-	    final int[] top = new int[5*GRP53+1];
-	    final int[] thr = new int[3*GRP53+1];
+	    final int[] top = new int[5*GRP+1];
+	    final int[] thr = new int[3*GRP+1];
 
 	    /*
 		 * Split the bytes into sections.
 		 */
-	    int chunk = GRP53-1;
+	    int chunk = GRP-1;
 	    int sctBuf = 0;
 	    for (int i = 0; i < top.length-1; i += 5)
 	    {
 	    	final int three1 = data[sctBuf++];
-			top[chunk+0*GRP53] = three1 >> 3;
+			top[chunk+0*GRP] = three1 >> 3;
 
 	    	final int three2 = data[sctBuf++];
-			top[chunk+1*GRP53] = three2 >> 3;
+			top[chunk+1*GRP] = three2 >> 3;
 
 			final int three3 = data[sctBuf++];
-			top[chunk+2*GRP53] = three3 >> 3;
+			top[chunk+2*GRP] = three3 >> 3;
 
 			final int three4 = data[sctBuf++];
-			top[chunk+3*GRP53] = three4 >> 3;
+			top[chunk+3*GRP] = three4 >> 3;
 
 			final int three5 = data[sctBuf++];
-			top[chunk+4*GRP53] = three5 >> 3;
+			top[chunk+4*GRP] = three5 >> 3;
 
-	        thr[chunk+0*GRP53] = (three1 & 0x07) << 2 | (three4 & 0x04) >> 1 | (three5 & 0x04) >> 2;
-	        thr[chunk+1*GRP53] = (three2 & 0x07) << 2 | (three4 & 0x02)      | (three5 & 0x02) >> 1;
-	        thr[chunk+2*GRP53] = (three3 & 0x07) << 2 | (three4 & 0x01) << 1 | (three5 & 0x01);
+	        thr[chunk+0*GRP] = (three1 & 0x07) << 2 | (three4 & 0x04) >> 1 | (three5 & 0x04) >> 2;
+	        thr[chunk+1*GRP] = (three2 & 0x07) << 2 | (three4 & 0x02)      | (three5 & 0x02) >> 1;
+	        thr[chunk+2*GRP] = (three3 & 0x07) << 2 | (three4 & 0x01) << 1 | (three5 & 0x01);
 
 	        --chunk;
 	    }
@@ -141,8 +140,8 @@ public class Nibblizer5and3
 		 * Handle the last byte.
 		 */
 	    int val = data[sctBuf++];
-	    top[5*GRP53] = val >> 3;
-	    thr[3*GRP53] = val & 0x07;
+	    top[5*GRP] = val >> 3;
+	    thr[3*GRP] = val & 0x07;
 
 	    /*
 		 * Write the bytes.
