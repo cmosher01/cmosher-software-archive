@@ -84,7 +84,7 @@ public class ConvertD16toNibble
 	        		d16[t][s][b] = in.read();
 	        		if (d16[t][s][b] == -1)
 	        		{
-	        			throw new IOException("input file had less than 0x1C700 bytes.");
+	        			throw new IOException("input file had less than 0x23000 bytes.");
 	        		}
         		}
         	}
@@ -93,7 +93,7 @@ public class ConvertD16toNibble
 		int eof = in.read();
 		if (eof != -1)
 		{
-			throw new IOException("input file had more than 0x1C700 bytes.");
+			throw new IOException("input file had more than 0x23000 bytes.");
 		}
         in.close();
 
