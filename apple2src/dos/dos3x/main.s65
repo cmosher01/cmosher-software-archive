@@ -15,7 +15,7 @@
                 .IF VERSION >= 320
                 .EXPORT NDX2CMD
                 .EXPORT CMDPOSN
-                .IF VERSION > 320
+                .IF VERSION >= 330
                 .EXPORT BK2FMDRV
                 .IF VERSION = 330
                 .EXPORT BK2APND
@@ -78,7 +78,7 @@
                 .IMPORT RESTATIN
                 .IMPORT ZEROPTCH
                 .IMPORT ENTERWTS
-                .IF VERSION > 320
+                .IF VERSION > 321
                 .IMPORT APNDPTCH
                 .IMPORT OTHRERR
                 .IMPORT CKAPFLG
@@ -3427,7 +3427,7 @@ FMDRIVER        JSR FILEMGR     ; CALL FM MANAGER TO DO FUNCTION.
 AFTRFUNC        BCC FMDRVRTN    ; (C) = 0 = NO ERRORS.
                 .ENDIF
 
-                .IF VERSION = 320
+                .IF VERSION = 320 || VERSION = 321
                 JSR GETBUFF
                 BCS AFTRFUNC2
                 LDA #0
@@ -3442,7 +3442,7 @@ AFTRFUNC2
                 BNE FMDRVRTN2
 
                 .ELSE
-                .IF VERSION = 320
+                .IF VERSION < 330
                 BNE ERRHNDLR
                 .ELSE
                 BEQ TOAPPTCH    ; YES -NOT HANDLED LIKE OTHER ERRS

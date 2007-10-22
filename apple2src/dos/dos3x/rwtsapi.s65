@@ -2,9 +2,14 @@
 
                 .EXPORT DOSLIM
                 .EXPORT RWTS
-                .IF VERSION < 330
-                .EXPORT L3E0A
+                .IF VERSION < 320
                 .EXPORT L3FD5
+                .ENDIF
+                .IF VERSION = 321
+                .EXPORT RTTRK
+                .ENDIF
+                .IF VERSION < 321
+                .EXPORT L3E0A
                 .ENDIF
                 .IF VERSION >= 320
                 .EXPORT FULLPTCH
@@ -30,10 +35,10 @@
                 .IMPORT PRENIBL
                 .IMPORT DELAY
 
-		.IF VERSION < 320
-		.IMPORT CLOSZERO
-		.ELSE
-                .IF VERSION = 320
+                .IF VERSION < 320
+                 .IMPORT CLOSZERO
+                .ELSE
+                .IF VERSION = 320 || VERSION = 321
                 .IMPORT CMDPOSN
                 .ENDIF
                 .IMPORT BADFMXIT
@@ -62,7 +67,7 @@ RWTS
 
                 STY PTR2IOB     ; SET UP A Z-PG PTR TO RWTS'S IOB.
                 STA PTR2IOB+1
-                .IF VERSION >= 330
+                .IF VERSION >= 321
                 LDY #2          ; INITIALIZE CNTR FOR MAXIMUM
                 STY RECLBCNT    ; NUMBER OF RECALIBRATION TRIES.
                 LDY #4          ; INITIALIZE COUNTER FOR MAXIMUM
@@ -73,7 +78,7 @@ RWTS
                 TAX             ; CAN USE IT TO INDEX BASE ADRS
                                 ; FOR DRIVE FUNCTIONS.
 
-                .IF VERSION < 330
+                .IF VERSION < 321
                 STY RSEEKCNT    ; # OF RE-SEEKS BTW'N RECALIBS.
                 .ENDIF
 
@@ -178,7 +183,7 @@ MOVPTRS         LDA (PTR2IOB),Y ; GET PTRS FROM RWTS'S IOB.
 
                                 ; CHECK DRIVE STATUS.
 
-                .IF VERSION >= 330
+                .IF VERSION >= 321
                 LDY #3          ; SAVE HI BYTE OF MOTOR-ON-TIME
                 LDA (PTR2DCT),Y ; COUNT IN Z-PAGE.
                 STA MTRTIME+1
@@ -197,7 +202,7 @@ MOVPTRS         LDA (PTR2IOB),Y ; GET PTRS FROM RWTS'S IOB.
                                 ; NOT ORIGINALLY SPINNING.
                 PHP             ; PUSH UPDATED STATUS BACK ON STK.
 SAMEDRV         ROR A           ; PUT LOW BIT OF DRV WNTED IN (C).
-                .IF VERSION >= 330
+                .IF VERSION >= 321
                 BCC USEDRV2     ; BRANCH IF WANT DRIVE 2.
                 .ENDIF
                 LDA SELDRV1,X   ; ROUTE POWER TO SELECT DRIVE 1.
@@ -208,7 +213,7 @@ USEDRV1         ROR DRVZPG      ; PUT SIGN BIT FOR WHICH DRIVE
                                 ; USING IN Z-PAGE:  NEG = DRIVE1.
                                 ; POS = DRIVE2.
 
-                .IF VERSION < 330
+                .IF VERSION < 321
                 LDY   #$02
                 LDA   (PTR2DCT),Y
                 STA   MTRTIME
@@ -370,7 +375,7 @@ DORECALB        LDA PRESTRK     ; SAVE TRK WANTED ON STK.
                                 ; STOP = FAMILIAR DISK CLATTER.)
                 JSR SETTRK      ; GO SELECT DRV & PUT TRK WANTED
                                 ; IN MEM LOCATION SPECIFIC TO DRV.
-                .IF VERSION < 330
+                .IF VERSION < 321
                 DEC RSEEKCNT
                 BNE DRVERR
                 .ELSE
@@ -402,7 +407,7 @@ RDRIGHT         LDY TRKDSK      ; (Y) = TRK# FOUND IN HEADER.
                 JSR SETTRK      ; GO SELECT DRV & PUT TRK WANTED N
                                 ; MEMORY LOCATION SPECIFIC TO DRV.
                 PLA             ; GET TRK WANTED BACK OFF STACK.
-                .IF VERSION < 330
+                .IF VERSION < 321
                 DEC READCNTR
                 BPL RESEEK
                 BMI REDUCERD
@@ -476,11 +481,15 @@ CRCTVOL         LDY #5          ; GET LOGICAL SECTOR # WANTED.
                 .IF VERSION < 330
                 LDA SECDSK
 L3E0A           CMP (PTR2IOB),Y
+                .IF VERSION = 321
+                BNE REDUCERD    ; NO - GO TRY AGAIN.
+                .ELSE
                 BEQ CRCTSEC
                 DEC READCNTR
                 BPL SETXSLT
                 LDA #$80
                 BNE TOERRWTS
+                .ENDIF
 CRCTSEC
                 .ELSE
                 LDA (PTR2IOB),Y
@@ -623,12 +632,14 @@ SEEKTRK         PHA             ; SAVE # OF TRK WANTED ON STK.
                                 ; TO REFER TO FULLTRACKS INSTEAD.)
 
 SEEKIT
-                .IF VERSION < 330
+                .IF VERSION <= 321
                 STA TRKDSK
+                .IF VERSION <321
                 LDA MAG0FF,X    ; TURN OFF ALL 4 STEPPER MAGNETS
                 LDA MAG1FF,X
                 LDA MAG2FF,X
                 LDA MAG3FF,X
+                .ENDIF
                 .ELSE
                 STA DESTRK      ; (A) = HALFTRACK# WANTED.
                 .ENDIF
@@ -851,9 +862,14 @@ L3F73           PHA
                 DEY
 L3F80           PHA
                 PLA
+                .IF VERSION = 321
+                PHA
+                PLA
+                .ELSE
                 NOP
                 NOP
                 BIT   $00
+                .ENDIF
                 PHA
                 PLA
                 DEY
@@ -926,15 +942,18 @@ WRBYTE3         PHA             ; (3 CYC)
                 CMP   Q6L,X     ; (4 CYC) WRITE
                 RTS             ; (6 CYC LEFT OVER AFTER WRITE)
 
-
+                .IF VERSION = 321
+                .BYTE 1
+                .ELSE
 L3FD5           INX
                 BEQ   L3FD9
+                .ENDIF
                 RTS
 L3FD9
                 .IF VERSION < 320
                 JMP   CLOSZERO
                 .RES    36
-                .ELSEIF VERSION = 320
+                .ELSEIF VERSION = 320 || VERSION = 321
                 JMP   CMDPOSN
                 .ENDIF
 

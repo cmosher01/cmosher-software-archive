@@ -21,7 +21,7 @@
                 .EXPORT BOOT2
                 .EXPORT VERFY
                 .ELSE
-                .IF VERSION = 320
+                .IF VERSION < 330
                 .EXPORT BOOT2
                 .ENDIF
                 .EXPORT ENTERWTS
@@ -224,7 +224,7 @@ TOCLOSE         JMP   CMDCLOSE
 
                 .IF VERSION >= 320
 
-                .IF VERSION > 320
+                .IF VERSION > 321
                 LDA BTSTAGE+1   ; CALC # OF PAGES TO WRITE:
                 SEC             ; (#$B6 - #$9D = #$19 OR #25.)
                 SBC IBBUFP+1

@@ -11,8 +11,11 @@
                 .EXPORT SEEKABS
                 .EXPORT WRITESEC
 
-                .IF VERSION < 330
+                .IF VERSION < 321
                 .IMPORT L3E0A
+                .ENDIF
+                .IF VERSION = 321
+                .IMPORT RTTRK
                 .ENDIF
 
                 .IF VERSION >= 330
@@ -658,13 +661,13 @@ POSTNIB1        LDA   RWTSBUF2,X
                                 ; HOLDPRES = PREVIOUS HALFTRK.
 
 SEEKABS
-                .IF VERSION >= 330
+                .IF VERSION >= 321
                 STX SLT16ZPG    ; SAVE SLOT*16 IN ZERO PAGE.
                 .ENDIF
                 STA DESTRK      ; SAVE DESTINATION HALFTRK#.
                 CMP PRESTRK     ; DESTINATION 1/2TRK=PRES 1/2TRK?
                 BEQ ARRIVED     ; YES-WE'RE ALREADY THERE, SO XIT.
-                .IF VERSION < 330
+                .IF VERSION < 321
                 STX SLT16ZPG    ; SAVE SLOT*16 IN ZERO PAGE.
                 .ENDIF
                 LDA #0          ; INIT COUNTER FOR # OF TRKS MOVED.
@@ -726,7 +729,7 @@ CKDLYNDX        CMP STPSDONE    ; COMPARE # OF HALFTRKS ALREADY
 
 CLSR2ND         CMP #12         ; ARE WE WITHIN 12 STEPS OF START
                                 ; OR DESTINATION POS'N?
-                .IF VERSION < 330
+                .IF VERSION < 321
                 BCC   L3A4F
                 LDA   #$0B
 L3A4F           TAY
@@ -881,6 +884,9 @@ ONTABLE         .BYTE $01,$30,$28,$24,$20,$1E,$1D,$1C,$1C,$1C,$1C,$1C
 
 OFFTABLE        .BYTE $70,$2C,$26,$22,$1F,$1E,$1D,$1C,$1C,$1C,$1C,$1C
 
+                .IF VERSION = 321
+                .BYTE $1C,$1C,$1C,$1C
+                .ENDIF
 
                                 ; =================================
                                 ; TABLE OF DISK BYTES.
@@ -1076,7 +1082,11 @@ DSKNBTBL        .BYTE $AB,$AD,$AE,$AF
                 LDY SECDSK
                 LDA PHYSECTR13,Y
                 LDY #5
+                .IF VERSION = 321
+                JMP RTTRK+1 ; ??? BUG?
+                .ELSE
                 JMP L3E0A
+                .ENDIF
 FREE1
                 .RES 6
 

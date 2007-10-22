@@ -7,7 +7,7 @@
                 .IF VERSION < 320
                 .EXPORT L1B28SR
                 .ENDIF
-                .IF VERSION > 320
+                .IF VERSION > 321
                 .EXPORT APNDPTCH
                 .EXPORT APPNDFLG
                 .EXPORT CKAPFLG
@@ -19,7 +19,7 @@
                 .IMPORT BOOT2
                 .ENDIF
 
-                .IF VERSION > 320
+                .IF VERSION > 321
                 .IMPORT BK2FMDRV
                 .IMPORT RECLENFM
                 .IMPORT CMDVERFY
@@ -60,7 +60,7 @@
 BOOT1                           ; IMAGE OF SEC2RD08.  DENOTES # OF
                                 ; SECS TO BE READ FROM TRK0 DURING
                                 ; BOOT0.
-                .IF VERSION > 320
+                .IF VERSION > 321
                 .BYTE 1
                 .ENDIF
 
@@ -107,7 +107,7 @@ L1B4D           PLA
 
 
 
-                .IF VERSION <= 320
+                .IF VERSION <= 321
                                 ; track 0 sector 0 starts here
                                 ; (note that 13-sector disks have different
                                 ; nibble encoding for track 0 sector 0 than

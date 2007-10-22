@@ -306,8 +306,10 @@ FIXCODTBL       .ADDR    DOSCOLD
                 .ENDIF
                 .ENDIF
                 .ADDR    PRENIBL
-                .IF VERSION < 330
+                .IF VERSION < 321
                 .ADDR    ONTABLE-1
+                .ELSEIF VERSION < 330
+                .ADDR    ONTABLE+3
                 .ELSE
                 .ADDR    ONTABLE
                 .ENDIF
