@@ -203,12 +203,11 @@ TOWRMVEC        .ADDR BASICWRM  ; ADR OF BASIC'S WARM START ROUT'N
 
                 .IF VERSION >= 320
 RLOCNTRY
-                .IF VERSION < 330
-                .RES 2
-                .ELSE
-                .ADDR SETLINKS
-                                ; ADR OF ROUT'N THAT ENABLES BASIC
+                .IF VERSION = 330
+                .ADDR SETLINKS  ; ADR OF ROUT'N THAT ENABLES BASIC
                                 ; PRGMS TO BE RELOCATABLE.
+                .ELSE
+                .RES 2
                 .ENDIF
 
                 .ENDIF
