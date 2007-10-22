@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /*
  * Created on 2007-10-15
  */
@@ -17,11 +19,21 @@ public class Nibblizer5and3
         0xF5, 0xF6, 0xF7, 0xFA, 0xFB, 0xFD, 0xFE, 0xFF,
     };
 
+    private static final int[] ulate = new int[0x100];
+    static
+    {
+    	Arrays.fill(ulate,0xFF);
+    	for (int i = 0; i < xlate.length; ++i)
+    	{
+    		ulate[xlate[i]] = i;
+     	}
+    }
+
     public static int[] encode_alt(final int[] data)
 	{
 		final int[] enc = new int[BUF1_SIZ+BUF2_SIZ+1];
 
-		buildBuf(data,enc);
+		nibblize(data,enc);
 		flipBuf2(enc);
 		xorBuf(enc);
 		xlateBuf(enc);
@@ -29,7 +41,7 @@ public class Nibblizer5and3
 		return enc;
 	}
 
-	private static void buildBuf(final int[] data, final int[] enc)
+	private static void nibblize(final int[] data, final int[] enc)
 	{
 		int base = 0;
 
@@ -97,6 +109,80 @@ public class Nibblizer5and3
 			enc[i] = xlate[enc[i]];
 		}
 	}
+	
+    public static int[] decode_alt(final int[] enc)
+    {
+    	final int[] data = new int[BUF1_SIZ];
+
+    	final int[] buf = new int[enc.length];
+    	System.arraycopy(enc,0,buf,0,enc.length);
+
+    	ulateBuf(buf);
+		unxorBuf(buf);
+		flipBuf2(buf);
+		denibblize(buf,data);
+
+    	return data;
+    }
+
+	private static void ulateBuf(final int[] enc)
+	{
+		for (int i = 0; i < enc.length; ++i)
+		{
+			enc[i] = ulate[enc[i]];
+		}
+	}
+
+	private static void unxorBuf(final int[] enc)
+	{
+		enc[0] = 0;
+		for (int i = 0; i < enc.length-1; ++i)
+		{
+			enc[i] = enc[i+1] ^ enc[i];
+		}
+	}
+	
+	private static void denibblize(final int[] buf, final int[] data)
+	{
+		int base = 0;
+
+		for (int i = 0; i < GRP; ++i)
+		{
+//			data[base+i]  = (data[base+i] & 0x07) << 2;
+//			data[base+i] |= (data[3*GRP+i] & 0x04) >> 1;
+//			data[base+i] |= (data[4*GRP+i] & 0x04) >> 2;
+		}
+		base += GRP;
+
+		for (int i = 0; i < GRP; ++i)
+		{
+//			data[base+i]  = (data[base+i] & 0x07) << 2;
+//			data[base+i] |= (data[3*GRP+i] & 0x02);
+//			data[base+i] |= (data[4*GRP+i] & 0x02) >> 1;
+		}
+		base += GRP;
+
+		for (int i = 0; i < GRP; ++i)
+		{
+//			data[base+i]  = (data[base+i] & 0x07) << 2;
+//			data[base+i] |= (data[3*GRP+i] & 0x01) << 1;
+//			data[base+i] |= (data[4*GRP+i] & 0x01);
+		}
+		base += GRP;
+//
+//		data[base] = 0;
+//		++base;
+//
+//		for (int i = 0; i < 5*GRP; ++i)
+//		{
+//			data[base+i] = data[i] >> 3;
+//		}
+		base += 5*GRP;
+
+		data[5*GRP] = buf[base];
+	}
+
+
 
 	// Based on code by Andy McFadden, from CiderPress
 	public static int[] encode(final int[] data)
@@ -109,36 +195,33 @@ public class Nibblizer5and3
 	    /*
 		 * Split the bytes into sections.
 		 */
-	    int chunk = GRP-1;
-	    int sctBuf = 0;
-	    for (int i = 0; i < top.length-1; i += 5)
+	    int idata = 0;
+	    for (int i = GRP-1; i >= 0; --i)
 	    {
-	    	final int three1 = data[sctBuf++];
-			top[chunk+0*GRP] = three1 >> 3;
+	    	final int three1 = data[idata++];
+			top[i+0*GRP] = three1 >> 3;
 
-	    	final int three2 = data[sctBuf++];
-			top[chunk+1*GRP] = three2 >> 3;
+	    	final int three2 = data[idata++];
+			top[i+1*GRP] = three2 >> 3;
 
-			final int three3 = data[sctBuf++];
-			top[chunk+2*GRP] = three3 >> 3;
+			final int three3 = data[idata++];
+			top[i+2*GRP] = three3 >> 3;
 
-			final int three4 = data[sctBuf++];
-			top[chunk+3*GRP] = three4 >> 3;
+			final int three4 = data[idata++];
+			top[i+3*GRP] = three4 >> 3;
 
-			final int three5 = data[sctBuf++];
-			top[chunk+4*GRP] = three5 >> 3;
+			final int three5 = data[idata++];
+			top[i+4*GRP] = three5 >> 3;
 
-	        thr[chunk+0*GRP] = (three1 & 0x07) << 2 | (three4 & 0x04) >> 1 | (three5 & 0x04) >> 2;
-	        thr[chunk+1*GRP] = (three2 & 0x07) << 2 | (three4 & 0x02)      | (three5 & 0x02) >> 1;
-	        thr[chunk+2*GRP] = (three3 & 0x07) << 2 | (three4 & 0x01) << 1 | (three5 & 0x01);
-
-	        --chunk;
+	        thr[i+0*GRP] = (three1 & 0x07) << 2 | (three4 & 0x04) >> 1 | (three5 & 0x04) >> 2;
+	        thr[i+1*GRP] = (three2 & 0x07) << 2 | (three4 & 0x02)      | (three5 & 0x02) >> 1;
+	        thr[i+2*GRP] = (three3 & 0x07) << 2 | (three4 & 0x01) << 1 | (three5 & 0x01);
 	    }
 
 	    /*
 		 * Handle the last byte.
 		 */
-	    int val = data[sctBuf++];
+	    int val = data[idata++];
 	    top[5*GRP] = val >> 3;
 	    thr[3*GRP] = val & 0x07;
 
@@ -162,5 +245,84 @@ public class Nibblizer5and3
 	    buffer[idx++] = xlate[chksum];
 
 	    return buffer;
+	}
+
+	private static int unxlate(int b)
+	{
+        final int decodedVal = ulate[b];
+        if (decodedVal == 0xFF)
+        {
+           	throw new IllegalArgumentException("Invalid nibble value: "+decodedVal);
+        }
+        return decodedVal;
+	}
+
+	public static int[] decode(final int[] enc) throws CorruptDataException
+	{
+		final int[] data = new int[BUF1_SIZ];
+
+		final int[] top = new int[BUF1_SIZ];
+	    final int[] thr = new int[BUF2_SIZ];
+	    int chksum = 0;
+
+	    /*
+	     * Pull the 410 bytes out, convert them from disk bytes to 5-bit
+	     * values, and arrange them into a DOS-like pair of buffers.
+	     */
+	    int idx = 0;
+	    for (int i = thr.length-1; i >= 0; --i)
+	    {
+	        final int val = unxlate(enc[idx++]);
+	        chksum ^= val;
+	        thr[i] = chksum;
+	    }
+
+	    for (int i = 0; i < top.length; ++i)
+	    {
+	        final int val = unxlate(enc[idx++]);
+	        chksum ^= val;
+	        top[i] = chksum << 3;
+	    }
+
+	    /*
+	     * Grab the 411th byte (the checksum byte) and see if we did this
+	     * right.
+	     */
+        final int val = unxlate(enc[idx++]);
+	    chksum ^= val;
+
+	    if (chksum != 0)
+	    {
+	    	throw new CorruptDataException(top);
+	    }
+
+	    /*
+	     * Convert this pile of stuff into 256 data bytes.
+	     */
+
+	    int idata = 0;
+	    for (int i = GRP-1; i >= 0; --i)
+	    {
+	        int three1, three2, three3, three4, three5;
+
+	        three1 = thr[0*GRP+i];
+	        three2 = thr[1*GRP+i];
+	        three3 = thr[2*GRP+i];
+	        three4 = (three1 & 0x02) << 1 | (three2 & 0x02)      | (three3 & 0x02) >> 1;
+	        three5 = (three1 & 0x01) << 2 | (three2 & 0x01) << 1 | (three3 & 0x01);
+
+	        data[idata++] = top[0*GRP+i] | ((three1 >> 2) & 0x07);
+	        data[idata++] = top[1*GRP+i] | ((three2 >> 2) & 0x07);
+	        data[idata++] = top[2*GRP+i] | ((three3 >> 2) & 0x07);
+	        data[idata++] = top[3*GRP+i] | (three4 & 0x07);
+	        data[idata++] = top[4*GRP+i] | (three5 & 0x07);
+	    }
+
+	    /*
+	     * Convert the very last byte, which is handled specially.
+	     */
+	    data[idata] = top[5*GRP] | (thr[3*GRP] & 0x07);
+
+	    return data;
 	}
 }

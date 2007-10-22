@@ -44,6 +44,35 @@ public class NibblizerTest extends TestCase
 		}
 	}
 
+	public void test_decode_6and2() throws IOException, CorruptDataException
+	{
+		final int[] enc = new int[343];
+		final BufferedInputStream innib = new BufferedInputStream(this.getClass().getResourceAsStream("16sect_t0s0.nib"));
+		for (int i = 0; i < enc.length; ++i)
+		{
+			enc[i] = innib.read();
+		}
+		innib.close();
+
+		final int[] data = Nibblizer6and2.decode(enc);
+
+		final int[] exp = new int[256];
+		final BufferedInputStream in = new BufferedInputStream(this.getClass().getResourceAsStream("dos33t0s0.bin"));
+		for (int i = 0; i < exp.length; ++i)
+		{
+			exp[i] = in.read();
+		}
+		in.close();
+
+
+
+		assertEquals(exp.length,data.length);
+		for (int i = 0; i < data.length; ++i)
+		{
+			assertEquals(exp[i],data[i]);
+		}
+	}
+
 	public void test_encode_5and3_alternate() throws IOException
 	{
 		final int[] data = new int[256];
@@ -68,6 +97,34 @@ public class NibblizerTest extends TestCase
 		for (int i = 0; i < exp.length; ++i)
 		{
 			assertEquals(exp[i],enc[i]);
+		}
+	}
+
+	public void test_decode_5and3_alternate() throws IOException
+	{
+		final int[] enc = new int[411];
+		final BufferedInputStream innib = new BufferedInputStream(this.getClass().getResourceAsStream("13sect_t0s0.nib"));
+		for (int i = 0; i < enc.length; ++i)
+		{
+			enc[i] = innib.read();
+		}
+		innib.close();
+
+		final int[] data = Nibblizer5and3.decode_alt(enc);
+
+		final int[] exp = new int[256];
+		final BufferedInputStream in = new BufferedInputStream(this.getClass().getResourceAsStream("dos31t0s0.bin"));
+		for (int i = 0; i < exp.length; ++i)
+		{
+			exp[i] = in.read();
+		}
+		in.close();
+
+
+		assertEquals(exp.length,data.length);
+		for (int i = 0; i < data.length; ++i)
+		{
+			assertEquals(exp[i],data[i]);
 		}
 	}
 
@@ -98,6 +155,35 @@ public class NibblizerTest extends TestCase
 		}
 	}
 
+	public void test_decode_5and3() throws IOException, CorruptDataException
+	{
+		final int[] enc = new int[411];
+		final BufferedInputStream innib = new BufferedInputStream(this.getClass().getResourceAsStream("13sect_t0s1.nib"));
+		for (int i = 0; i < enc.length; ++i)
+		{
+			enc[i] = innib.read();
+		}
+		innib.close();
+
+		final int[] data = Nibblizer5and3.decode(enc);
+
+		final int[] exp = new int[256];
+		final BufferedInputStream in = new BufferedInputStream(this.getClass().getResourceAsStream("dos31t0s1.bin"));
+		for (int i = 0; i < exp.length; ++i)
+		{
+			exp[i] = in.read();
+		}
+		in.close();
+
+
+
+		assertEquals(exp.length,data.length);
+		for (int i = 0; i < exp.length; ++i)
+		{
+			assertEquals(exp[i],data[i]);
+		}
+	}
+
 	public void test_encode_4and4()
 	{
 		assertEquals(0xAAAA,Nibblizer4and4.encode(0x00));
@@ -117,5 +203,26 @@ public class NibblizerTest extends TestCase
 		assertEquals(0xAEAF,Nibblizer4and4.encode(0x0E));
 		assertEquals(0xAFAF,Nibblizer4and4.encode(0x0F));
 		assertEquals(0xFEFF,Nibblizer4and4.encode(0xFE));
+	}
+
+	public void test_decode_4and4()
+	{
+		assertEquals(0x00,Nibblizer4and4.decode(0xAAAA));
+		assertEquals(0x01,Nibblizer4and4.decode(0xABAA));
+		assertEquals(0x02,Nibblizer4and4.decode(0xAAAB));
+		assertEquals(0x03,Nibblizer4and4.decode(0xABAB));
+		assertEquals(0x04,Nibblizer4and4.decode(0xAEAA));
+		assertEquals(0x05,Nibblizer4and4.decode(0xAFAA));
+		assertEquals(0x06,Nibblizer4and4.decode(0xAEAB));
+		assertEquals(0x07,Nibblizer4and4.decode(0xAFAB));
+		assertEquals(0x08,Nibblizer4and4.decode(0xAAAE));
+		assertEquals(0x09,Nibblizer4and4.decode(0xABAE));
+		assertEquals(0x0A,Nibblizer4and4.decode(0xAAAF));
+		assertEquals(0x0B,Nibblizer4and4.decode(0xABAF));
+		assertEquals(0x0C,Nibblizer4and4.decode(0xAEAE));
+		assertEquals(0x0D,Nibblizer4and4.decode(0xAFAE));
+		assertEquals(0x0E,Nibblizer4and4.decode(0xAEAF));
+		assertEquals(0x0F,Nibblizer4and4.decode(0xAFAF));
+		assertEquals(0xFE,Nibblizer4and4.decode(0xFEFF));
 	}
 }

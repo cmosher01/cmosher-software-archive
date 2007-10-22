@@ -21,7 +21,17 @@ public class Nibblizer6and2
 		0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF9, 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF
 	};
 
-	// Based on code by Andy McFadden, from CiderPress
+    private static final int[] ulate = new int[0x100];
+    static
+    {
+    	Arrays.fill(ulate,0xFF);
+    	for (int i = 0; i < xlate.length; ++i)
+    	{
+    		ulate[xlate[i]] = i;
+     	}
+    }
+
+    // Based on code by Andy McFadden, from CiderPress
 	public static int[] encode(final int[] data)
 	{
 		final int[] buffer = new int[BUF1_SIZ+BUF2_SIZ+1];
@@ -53,7 +63,7 @@ public class Nibblizer6and2
 	{
 		Arrays.fill(two,0);
 
-		int twoPosn = GRP-1;
+		int twoPosn = BUF2_SIZ-1;
 		int twoShift = 0;
 		for (int i = 0; i < BUF1_SIZ; ++i)
 		{
@@ -62,10 +72,68 @@ public class Nibblizer6and2
 			two[twoPosn] |= ((val & 0x01) << 1 | (val & 0x02) >> 1) << twoShift;
 			if (twoPosn <= 0)
 			{
-				twoPosn = GRP;
+				twoPosn = BUF2_SIZ;
 				twoShift += 2;
 			}
-			twoPosn--;
+			--twoPosn;
 		}
+	}
+
+	public static int[] decode(final int[] enc) throws CorruptDataException
+	{
+		final int[] data = new int[BUF1_SIZ];
+
+	    final int[] two = new int[3*GRP];
+	    int chksum = 0;
+
+	    /*
+	     * Pull the 342 bytes out, convert them from disk bytes to 6-bit
+	     * values, and arrange them into a DOS-like pair of buffers.
+	     */
+	    int idx = 0;
+	    for (int i = 0; i < GRP; ++i)
+	    {
+	        final int decodedVal = ulate[enc[idx++]];
+	        if (decodedVal == 0xFF)
+	        {
+	        	throw new IllegalArgumentException("Invalid nibble value: "+decodedVal);
+	        }
+
+	        chksum ^= decodedVal;
+	        two[i+0*GRP] = ((chksum & 0x01) << 1) | ((chksum & 0x02) >> 1);
+	        two[i+1*GRP] = ((chksum & 0x04) >> 1) | ((chksum & 0x08) >> 3);
+	        two[i+2*GRP] = ((chksum & 0x10) >> 3) | ((chksum & 0x20) >> 5);
+	    }
+
+	    for (int i = 0; i < 256; ++i)
+	    {
+	        final int decodedVal = ulate[enc[idx++]];
+	        if (decodedVal == 0xFF)
+	        {
+	        	throw new IllegalArgumentException("Invalid nibble value: "+decodedVal);
+	        }
+
+	        chksum ^= decodedVal;
+	        data[i] = (chksum << 2) | two[i];
+	    }
+
+	    /*
+	     * Grab the 343rd byte (the checksum byte) and see if we did this
+	     * right.
+	     */
+	    final int decodedVal = ulate[enc[idx++]];
+        if (decodedVal == 0xFF)
+        {
+        	throw new IllegalArgumentException("Invalid nibble value: "+decodedVal);
+        }
+
+	    chksum ^= decodedVal;
+
+	    if (chksum != 0)
+	    {
+	    	throw new CorruptDataException(data);
+	    }
+
+		return data;
 	}
 }
