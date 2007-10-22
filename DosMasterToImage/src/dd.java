@@ -105,7 +105,7 @@ public class dd
 		}
 		else if (opt.equals("const"))
 		{
-			constant = Byte.decode(val);
+			constant = Integer.decode(val);
 		}
 		else if (opt.equals("help"))
 		{
