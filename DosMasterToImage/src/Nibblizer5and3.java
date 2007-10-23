@@ -98,7 +98,7 @@ public class Nibblizer5and3
 		enc[enc.length-1] = 0;
 		for (int i = enc.length-1; i > 0; --i)
 		{
-			enc[i] = enc[i-1] ^ enc[i];
+			enc[i] ^= enc[i-1];
 		}
 	}
 
@@ -135,51 +135,45 @@ public class Nibblizer5and3
 
 	private static void unxorBuf(final int[] enc)
 	{
-		enc[0] = 0;
-		for (int i = 0; i < enc.length-1; ++i)
+		for (int i = 1; i < enc.length; ++i)
 		{
-			enc[i] = enc[i+1] ^ enc[i];
+			enc[i] ^= enc[i-1];
 		}
 	}
 	
 	private static void denibblize(final int[] buf, final int[] data)
 	{
+		int bufbase = 3*GRP+1;
+
+		for (int i = 0; i < 5*GRP; ++i)
+		{
+			data[i] = buf[bufbase+i] << 3;
+		}
+		data[5*GRP] = buf[bufbase+5*GRP];
+
 		int base = 0;
-
 		for (int i = 0; i < GRP; ++i)
 		{
-//			data[base+i]  = (data[base+i] & 0x07) << 2;
-//			data[base+i] |= (data[3*GRP+i] & 0x04) >> 1;
-//			data[base+i] |= (data[4*GRP+i] & 0x04) >> 2;
+			data[base+i] |= buf[base+i] >> 2;
+			data[3*GRP+i] |= (buf[base+i] & 0x02) << 1;
+			data[4*GRP+i] |= (buf[base+i] & 0x01) << 2;
 		}
 		base += GRP;
 
 		for (int i = 0; i < GRP; ++i)
 		{
-//			data[base+i]  = (data[base+i] & 0x07) << 2;
-//			data[base+i] |= (data[3*GRP+i] & 0x02);
-//			data[base+i] |= (data[4*GRP+i] & 0x02) >> 1;
+			data[base+i] |= buf[base+i] >> 2;
+			data[3*GRP+i] |= (buf[base+i] & 0x02);
+			data[4*GRP+i] |= (buf[base+i] & 0x01) << 1;
 		}
 		base += GRP;
 
 		for (int i = 0; i < GRP; ++i)
 		{
-//			data[base+i]  = (data[base+i] & 0x07) << 2;
-//			data[base+i] |= (data[3*GRP+i] & 0x01) << 1;
-//			data[base+i] |= (data[4*GRP+i] & 0x01);
+			data[base+i] |= buf[base+i] >> 2;
+			data[3*GRP+i] |= (buf[base+i] & 0x02) >> 1;
+			data[4*GRP+i] |= (buf[base+i] & 0x01);
 		}
-		base += GRP;
-//
-//		data[base] = 0;
-//		++base;
-//
-//		for (int i = 0; i < 5*GRP; ++i)
-//		{
-//			data[base+i] = data[i] >> 3;
-//		}
-		base += 5*GRP;
-
-		data[5*GRP] = buf[base];
 	}
 
 
@@ -303,18 +297,19 @@ public class Nibblizer5and3
 	    int idata = 0;
 	    for (int i = GRP-1; i >= 0; --i)
 	    {
-	        int three1, three2, three3, three4, three5;
-
-	        three1 = thr[0*GRP+i];
-	        three2 = thr[1*GRP+i];
-	        three3 = thr[2*GRP+i];
-	        three4 = (three1 & 0x02) << 1 | (three2 & 0x02)      | (three3 & 0x02) >> 1;
-	        three5 = (three1 & 0x01) << 2 | (three2 & 0x01) << 1 | (three3 & 0x01);
-
+	        final int three1 = thr[0*GRP+i];
 	        data[idata++] = top[0*GRP+i] | ((three1 >> 2) & 0x07);
+
+	        final int three2 = thr[1*GRP+i];
 	        data[idata++] = top[1*GRP+i] | ((three2 >> 2) & 0x07);
+
+	        final int three3 = thr[2*GRP+i];
 	        data[idata++] = top[2*GRP+i] | ((three3 >> 2) & 0x07);
+
+	        final int three4 = (three1 & 0x02) << 1 | (three2 & 0x02)      | (three3 & 0x02) >> 1;
 	        data[idata++] = top[3*GRP+i] | (three4 & 0x07);
+
+	        final int three5 = (three1 & 0x01) << 2 | (three2 & 0x01) << 1 | (three3 & 0x01);
 	        data[idata++] = top[4*GRP+i] | (three5 & 0x07);
 	    }
 

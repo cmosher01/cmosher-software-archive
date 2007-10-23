@@ -124,7 +124,7 @@ public class NibblizerTest extends TestCase
 		assertEquals(exp.length,data.length);
 		for (int i = 0; i < data.length; ++i)
 		{
-			assertEquals(exp[i],data[i]);
+			assertEquals("at index "+i,exp[i],data[i]);
 		}
 	}
 
