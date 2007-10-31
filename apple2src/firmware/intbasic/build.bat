@@ -8,13 +8,12 @@ SET SRCDIR=%SRCDIR:~0,-1%
 SET INCDIR=%ROOTDIR%\lib\macros
 
 
-
 SET VERS=%1
 
 CALL :ASM intbasic %VERS%
 IF ERRORLEVEL 1 GOTO :EOF
 
-%CC65DIR%\ld65 -v -C %SRCDIR%\intbasic.ld65config -m inbasic.map intbasic.o65
+%CC65DIR%\ld65 -v -C %SRCDIR%\intbasic.cfg -m intbasic.map intbasic.o65
 IF ERRORLEVEL 1 GOTO :EOF
 
 
