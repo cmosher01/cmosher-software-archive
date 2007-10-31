@@ -64,5 +64,56 @@ CD ..
 
 
 
+MKDIR apple2plus
+CD apple2plus
+
+CALL %ROOTDIR%\firmware\applesoft\build
+IF ERRORLEVEL 1 GOTO :EOF
+
+RENAME applesoft     apple2plus_A$D000_L$2800_applesoft
+RENAME applesoft.map apple2plus_A$D000_L$2800_applesoft.map
+
+CALL %ROOTDIR%\firmware\monitor\build 2
+IF ERRORLEVEL 1 GOTO :EOF
+
+RENAME monitor     apple2plus_A$F800_L$0800_monitor
+RENAME monitor.map apple2plus_A$F800_L$0800_monitor.map
+
+CD ..
+
+
+
+
+
+MKDIR disk2_13sector
+CD disk2_13sector
+
+CALL %ROOTDIR%\firmware\disk2\build 13
+IF ERRORLEVEL 1 GOTO :EOF
+
+RENAME slot6     disk2_A$C600_L$0100_13sector
+RENAME slot6.map disk2_A$C600_L$0100_13sector.map
+
+CD ..
+
+
+
+
+
+MKDIR disk2_16sector
+CD disk2_16sector
+
+CALL %ROOTDIR%\firmware\disk2\build 16
+IF ERRORLEVEL 1 GOTO :EOF
+
+RENAME slot6     disk2_A$C600_L$0100_16sector
+RENAME slot6.map disk2_A$C600_L$0100_16sector.map
+
+CD ..
+
+
+
+
+
 ENDLOCAL
 GOTO :EOF
