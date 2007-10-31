@@ -11,7 +11,7 @@
          ;LORES
          .IMPORT CLRTOP
 
-         .INCLUDE "SYMBOLS.A65"
+         .INCLUDE "symbols.s65"
 
 ;-----------------------------------------------------------------------
 ;

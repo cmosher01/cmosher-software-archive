@@ -1,5 +1,5 @@
                 .FEATURE LABELS_WITHOUT_COLONS, LEADING_DOT_IN_IDENTIFIERS
-                .INCLUDE "CMAP2.A65"
+                .INCLUDE "hascmap.s65"
 
                                 ;6502 HEX MONITOR LISTING
                                 ;

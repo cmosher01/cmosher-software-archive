@@ -20,8 +20,8 @@
          .IMPORT BELL
          .IMPORT COUT
 
-         .INCLUDE "SYMBOLS.A65"
-         .INCLUDE "CMAP2.A65"
+         .INCLUDE "symbols.s65"
+         .INCLUDE "hascmap.s65"
 
 KBD      =     $C000
 KBDSTRB  =     $C010

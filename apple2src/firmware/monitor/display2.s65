@@ -14,8 +14,8 @@
          .ENDIF
 
 
-         .INCLUDE "SYMBOLS.A65"
-         .INCLUDE "CMAP2.A65"
+         .INCLUDE "symbols.s65"
+         .INCLUDE "hascmap.s65"
 
 ASCBEL = $07 | %10000000
 ASCBS  = $08 | %10000000

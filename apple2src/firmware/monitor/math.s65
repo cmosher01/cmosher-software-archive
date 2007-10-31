@@ -1,5 +1,5 @@
          .FEATURE LABELS_WITHOUT_COLONS
-         .INCLUDE "SYMBOLS.A65"
+         .INCLUDE "symbols.s65"
 
 
 

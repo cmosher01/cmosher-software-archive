@@ -7,7 +7,7 @@
          .EXPORT RD2BIT
          .EXPORT RDBIT
 
-         .INCLUDE "SYMBOLS.A65"
+         .INCLUDE "symbols.s65"
 
 TAPEOUT  =     $C020
 TAPEIN   =     $C060

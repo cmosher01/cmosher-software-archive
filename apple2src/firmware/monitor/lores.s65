@@ -3,7 +3,7 @@
          .EXPORT CLRTOP
          .EXPORT SCRN2
 
-         .INCLUDE "SYMBOLS.A65"
+         .INCLUDE "symbols.s65"
 
 LORESHEIGHT = TEXTHEIGHT*2
 
