@@ -13,7 +13,7 @@ SET VERS=%1
 CALL :ASM intbasic %VERS%
 IF ERRORLEVEL 1 GOTO :EOF
 
-%CC65DIR%\ld65 -v -C %SRCDIR%\intbasic.cfg -m intbasic.map intbasic.o65
+"%CC65DIR%\ld65" -v -C "%SRCDIR%\intbasic.cfg" -m intbasic.map intbasic.o65
 IF ERRORLEVEL 1 GOTO :EOF
 
 
@@ -30,9 +30,9 @@ GOTO :EOF
 :ASM
 SETLOCAL
 
-COPY /Y %SRCDIR%\%~1.s65 .
+COPY /Y "%SRCDIR%\%~1.s65" .
 
-%CC65DIR%\ca65 -v -l -t apple2 -I %SRCDIR% -I %INCDIR% -o %~1.o65 -D VERSION=%~2 -D BUGFIX %~1.s65
+"%CC65DIR%\ca65" -v -l -t apple2 -I "%SRCDIR%" -I "%INCDIR%" -o %~1.o65 -D VERSION=%~2 -D BUGFIX %~1.s65
 SET /A ERR=%ERRORLEVEL%
 
 DEL /F /Q %~1.s65

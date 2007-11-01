@@ -19,7 +19,7 @@ IF %VERS% GTR 0 GOTO :APPLE2
 
 CALL :ASM apple1mon 0
 
-%CC65DIR%\ld65 -v -C %SRCDIR%\apple1mon.cfg -m monitor.map apple1mon.o65
+"%CC65DIR%\ld65" -v -C "%SRCDIR%\apple1mon.cfg" -m monitor.map apple1mon.o65
 IF ERRORLEVEL 1 GOTO :EOF
 
 GOTO :DONE
@@ -39,7 +39,7 @@ CALL :ASM cassette %VERS%
 CALL :ASM keyin %VERS%
 CALL :ASM monitor %VERS%
 CALL :ASM vectors %VERS%
-%CC65DIR%\ld65 -v -C %SRCDIR%\monitor.cfg -m monitor.map lores.o65 disasm.o65 debug.o65 paddles.o65 display1.o65 math.o65 display2.o65 cassette.o65 keyin.o65 monitor.o65 vectors.o65
+"%CC65DIR%\ld65" -v -C "%SRCDIR%\monitor.cfg" -m monitor.map lores.o65 disasm.o65 debug.o65 paddles.o65 display1.o65 math.o65 display2.o65 cassette.o65 keyin.o65 monitor.o65 vectors.o65
 GOTO :DONE
 
 
@@ -59,9 +59,9 @@ GOTO :EOF
 :ASM
 SETLOCAL
 
-COPY /Y %SRCDIR%\%~1.s65 .
+COPY /Y "%SRCDIR%\%~1.s65" .
 
-%CC65DIR%\ca65 -v -l -t apple2 -I %SRCDIR% -I %INCDIR% -o %~1.o65 -D VERSION=%~2 %~1.s65
+"%CC65DIR%\ca65" -v -l -t apple2 -I "%SRCDIR%" -I "%INCDIR%" -o %~1.o65 -D VERSION=%~2 %~1.s65
 SET /A ERR=%ERRORLEVEL%
 
 DEL /F /Q %~1.s65

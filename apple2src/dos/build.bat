@@ -9,10 +9,10 @@ CD dos
 
 
 
-CALL %ROOTDIR%\dos\dos3x\build
+CALL "%ROOTDIR%\dos\dos3x\build"
 IF ERRORLEVEL 1 GOTO:EOF
 
-REM CALL %ROOTDIR%\dos\prodos\build
+REM CALL "%ROOTDIR%\dos\prodos\build"
 REM IF ERRORLEVEL 1 GOTO:EOF
 
 
