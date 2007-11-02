@@ -73,7 +73,7 @@ IF ERRORLEVEL 1 GOTO :EOF
 RENAME applesoft     apple2plus_A$D000_L$2800_applesoft
 RENAME applesoft.map apple2plus_A$D000_L$2800_applesoft.map
 
-CALL "%ROOTDIR%\firmware\monitor\build 2"
+CALL "%ROOTDIR%\firmware\monitor\build" 2
 IF ERRORLEVEL 1 GOTO :EOF
 
 RENAME monitor     apple2plus_A$F800_L$0800_monitor

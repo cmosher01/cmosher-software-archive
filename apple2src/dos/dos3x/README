@@ -16,10 +16,9 @@ This file can build any of the following versions of Apple ][ DOS,
 by defining the corresponding label:
 
 version       release date   define VERSION as:
-DOS 3.0       1978-06-29     300 (not yet implemented)
 DOS 3.1       1978-07-20     310
 DOS 3.2       1979-02-16     320
-DOS 3.2.1     1979-07-31     321 (not yet implemented)
+DOS 3.2.1     1979-07-31     321
 DOS 3.3 (0)   1980-08-25     330
 DOS 3.3 (1)   1983-01-01     331
 DOS 3.3 (2)   1983-08-??     332
@@ -162,7 +161,7 @@ From the first part, values in hex:
 1983: $BA
 1986: $B6
 
-According to the above list, then, this source code
+According to the above list, then, the original source code
 would be for the last version, shown as "latest" or "1986".
 This is consistent with the fact that I found a disk
 image documented as being the "last" version of DOS 3.3,
