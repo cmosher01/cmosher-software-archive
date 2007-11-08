@@ -95,18 +95,19 @@ public final class Ja2 implements Runnable
 
     	final Keyboard keyboard = new Keyboard();
 
-    	final TapeDriveMemory tape = new TapeDriveMemory();
-    	final TapeInterface tapedrive = new TapeInterface(tape);
-        final Memory memory = new Memory(keyboard,disk,tapedrive);
+//    	final TapeDriveMemory tape = new TapeDriveMemory();
+//    	final TapeInterface tapedrive = new TapeInterface(tape);
+        final Memory memory = new Memory(keyboard,disk,null); // TODO will crash if access cassette tape
 
 //        final InputStream romImage = new FileInputStream(new File("c:/apple2/rom_images/200apple2.rom")); // D000
 //        final InputStream romImage = new FileInputStream(new File("c:/apple2/rom_images/210apple2plus.rom")); // B000
 //        final InputStream romImage = getClass().getResourceAsStream("apple2_e000.rom");
-        final InputStream romImage = new FileInputStream(new File("C:\\eclipse_organize\\postsvn_workspace\\apple2src\\firmware/rom/apple2_e000.rom"));
-        memory.load(0xE000,romImage);
+//        final InputStream romImage = new FileInputStream(new File("C:\\eclipse_organize\\postsvn_workspace\\apple2src\\firmware/rom/apple2_e000.rom"));
+        final InputStream romImage = new FileInputStream(new File("C:\\eclipse_organize\\postsvn_workspace\\apple2src\\firmware/rom/apple2p_d000.rom"));
+        memory.load(0xD000,romImage);
         romImage.close();
 
-        final InputStream monromImage = new FileInputStream(new File("C:\\eclipse_organize\\postsvn_workspace\\apple2src\\firmware/rom/apple2_f800.rom"));
+        final InputStream monromImage = new FileInputStream(new File("C:\\eclipse_organize\\postsvn_workspace\\apple2src\\firmware/rom/apple2p_f800.rom"));
         memory.load(0xF800,monromImage);
         monromImage.close();
 
@@ -122,7 +123,7 @@ public final class Ja2 implements Runnable
 
 //        final InputStream diskromImage = getClass().getResourceAsStream("disk2_DOS33_c600_patched_nodelay.rom");
 //        final InputStream diskromImage = new FileInputStream(new File("firmware/rom/disk2_DOS33_c600_patched_nodelay.rom"));
-        final InputStream diskromImage = new FileInputStream(new File("C:\\eclipse_organize\\postsvn_workspace\\apple2src\\firmware\\rom\\disk2_13sect_c600.rom"));
+        final InputStream diskromImage = new FileInputStream(new File("C:\\eclipse_organize\\postsvn_workspace\\apple2src\\build\\firmware\\disk2_16sector\\disk2_A$C600_L$0100_16sector"));
 //        final InputStream diskromImage = new FileInputStream(new File("C:\\TEMP\\DISK2DISASM\\disk2rom13sectc600.bin"));
         memory.load(0xC600,diskromImage);
         diskromImage.close();
@@ -162,7 +163,7 @@ public final class Ja2 implements Runnable
     	rTimed.add(video);
     	//rTimed.add(drive);
     	rTimed.add(cpu);
-    	rTimed.add(tapedrive);
+    	//rTimed.add(tapedrive);
     	this.clock = new Clock(rTimed);
     	this.clock.run();
     	disk.updatePanel();

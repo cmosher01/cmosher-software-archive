@@ -133,6 +133,7 @@ public class DiskDrivePanel extends JPanel
 			this.file = null;
 		}
 		updateEvent();
+		this.btnLoad.mouseExited();
 	}
 
 	public void update()

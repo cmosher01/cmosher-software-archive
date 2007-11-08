@@ -2,25 +2,14 @@ package video;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.GraphicsConfiguration;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
 import java.awt.image.DataBuffer;
-import java.awt.image.ImageProducer;
-import java.awt.image.IndexColorModel;
-import java.awt.image.MemoryImageSource;
-import java.awt.image.VolatileImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import chipset.Clock;
 import chipset.Memory;
-import chipset.Clock.Timed;
 
 /*
  * Created on Aug 2, 2007
@@ -57,6 +46,9 @@ public class Video extends JPanel implements Clock.Timed
 	private static final int VISIBLE_X_OFFSET = VideoAddressing.BYTES_PER_ROW-VideoAddressing.VISIBLE_BYTES_PER_ROW;
 
 	BufferedImage screenImage;
+	DataBuffer buf;
+
+
 
 	public Video(final Memory memory) throws IOException
 	{
@@ -76,16 +68,16 @@ public class Video extends JPanel implements Clock.Timed
 		
 	}
 
-	private byte[] readCharRom() throws IOException
+	private static byte[] readCharRom() throws IOException
 	{
 		final byte[] r = new byte[0x800];
-		final InputStream rom = getClass().getResourceAsStream("charrom.bin");
+		final InputStream rom = Video.class.getResourceAsStream("3410036.BIN");
 		int cc = 0;
 		for (int c = rom.read(); c != EOF; c = rom.read())
 		{
 			if (cc < r.length)
 			{
-				r[cc] = (byte)((c >> 1) & 0x7F);
+				r[cc] = (byte)c;
 			}
 			++cc;
 		}
@@ -123,7 +115,9 @@ public class Video extends JPanel implements Clock.Timed
 			{
 				inverse = true;
 			}
-			d = getTextCharLine(d,(this.t / VideoAddressing.BYTES_PER_ROW) & 0x07);
+//			d = getTextCharLine(d,(this.t / VideoAddressing.BYTES_PER_ROW) & 0x07);
+//			return char_rom[((d&0x7F)<<3)+i];
+			d = char_rom[((d&0x7F)<<3)+((this.t / VideoAddressing.BYTES_PER_ROW) & 0x07)];
 		}
 		plotByte(this.t,d,inverse);
 
@@ -178,7 +172,7 @@ public class Video extends JPanel implements Clock.Timed
 		{
 			return;
 		}
-		screenImage.flush();
+		//screenImage.flush();
 		gr.drawImage(screenImage,0,0,this);
 	}
 
@@ -186,6 +180,7 @@ public class Video extends JPanel implements Clock.Timed
 	{
 		final Dimension size = getSize();
 		screenImage = new BufferedImage(size.width,size.height,BufferedImage.TYPE_INT_RGB);
+		buf = screenImage.getRaster().getDataBuffer();
 	}
 
     static final int BLACK = Color.BLACK.getRGB();
@@ -197,7 +192,6 @@ public class Video extends JPanel implements Clock.Timed
 		{
 			createOffscreenImage();
 		}
-		d >>= 1; // TODO high-order bit half-dot shift
 		int x = tt % VideoAddressing.BYTES_PER_ROW - VISIBLE_X_OFFSET;
 		if (x < 0)
 		{
@@ -211,14 +205,29 @@ public class Video extends JPanel implements Clock.Timed
 		}
 
 
-		DataBuffer buf = screenImage.getRaster().getDataBuffer();
-        int yOffset = y*VideoAddressing.VISIBLE_BYTES_PER_ROW*VISIBLE_BITS_PER_BYTE+x;
-		for (int i = 0; i < VISIBLE_BITS_PER_BYTE; ++i)
-		{
-			boolean on = (d & 1) != 0;
-            buf.setElem(yOffset++, on==inverse ? BLACK : GREEN);
-			d >>= 1;
-		}
+		y *= XSIZE;
+		y += x;
+        if (inverse)
+        {
+	        buf.setElem(0, y++, ((d & 0x40) != 0) ? BLACK : GREEN);
+	        buf.setElem(0, y++, ((d & 0x20) != 0) ? BLACK : GREEN);
+	        buf.setElem(0, y++, ((d & 0x10) != 0) ? BLACK : GREEN);
+	        buf.setElem(0, y++, ((d & 0x08) != 0) ? BLACK : GREEN);
+	        buf.setElem(0, y++, ((d & 0x04) != 0) ? BLACK : GREEN);
+	        buf.setElem(0, y++, ((d & 0x02) != 0) ? BLACK : GREEN);
+	        buf.setElem(0, y++, ((d & 0x01) != 0) ? BLACK : GREEN);
+        }
+        else
+        {
+	        buf.setElem(0, y++, ((d & 0x40) != 0) ? GREEN : BLACK);
+	        buf.setElem(0, y++, ((d & 0x20) != 0) ? GREEN : BLACK);
+	        buf.setElem(0, y++, ((d & 0x10) != 0) ? GREEN : BLACK);
+	        buf.setElem(0, y++, ((d & 0x08) != 0) ? GREEN : BLACK);
+	        buf.setElem(0, y++, ((d & 0x04) != 0) ? GREEN : BLACK);
+	        buf.setElem(0, y++, ((d & 0x02) != 0) ? GREEN : BLACK);
+	        buf.setElem(0, y++, ((d & 0x01) != 0) ? GREEN : BLACK);
+        }
+		// TODO high-order bit half-dot shift
 	}
 
 	private byte getTextCharLine(int d, int i)

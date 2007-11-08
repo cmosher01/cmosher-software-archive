@@ -35,9 +35,9 @@ public class Keyboard extends KeyAdapter implements KeyListener
 			case '\n':
 				key = '\r';
 			break;
-			case '\b':
-				key = 0x7F;
-			break;
+//			case '\b':
+//				key = 0x7F;
+//			break;
 		}
 		if (key >= 0x80) // ignore non-ASCII keypresses
 		{

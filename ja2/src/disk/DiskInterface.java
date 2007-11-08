@@ -69,6 +69,7 @@ public class DiskInterface
 				{
 					ret &= 0x7F;
 				}
+				updatePanel();
 			break;
 		}
 		return ret;

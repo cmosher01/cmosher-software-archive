@@ -41,17 +41,27 @@ public class HiliteButton extends JButton //implements ActionListener
 		switch (evt.getID())
 		{
 			case MouseEvent.MOUSE_ENTERED:
-				this.mouseOver = true;
-				repaint();
-				setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				mouseEntered();
 			break;
 			case MouseEvent.MOUSE_EXITED:
-				this.mouseOver = false;
-				repaint();
-				setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				mouseExited();
 			break;
 		}
 		super.processMouseEvent(evt);
+	}
+
+	public void mouseExited()
+	{
+		this.mouseOver = false;
+		repaint();
+		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+	}
+
+	public void mouseEntered()
+	{
+		this.mouseOver = true;
+		repaint();
+		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	}
 
 	protected void paintComponent(Graphics g)
