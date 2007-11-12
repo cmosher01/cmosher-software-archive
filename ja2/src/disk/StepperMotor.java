@@ -25,7 +25,7 @@ public class StepperMotor
 
 	private int pos; // 0 - 7
 
-	private char mags;
+	private int mags;
 
 	private static int[] mapMagPos = {-1,0,2,1,4,-1,3,2,6,7,-1,0,5,6,4,-1};
 	/*
