@@ -2,6 +2,7 @@ package chipset;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import video.Video;
 import keyboard.Keyboard;
 import disk.DiskInterface;
 import disk.TapeInterface;
@@ -13,15 +14,17 @@ public class Memory
 {
 	private byte[] ram = new byte[0x10000];
 	private final Keyboard keyboard;
+	private final Video video;
 	private final DiskInterface disk;
 	private final TapeInterface tape;
 
 	/**
 	 * @param keyboard
 	 */
-	public Memory(final Keyboard keyboard, final DiskInterface disk, final TapeInterface tape)
+	public Memory(final Keyboard keyboard, final Video video, final DiskInterface disk, final TapeInterface tape)
 	{
 		this.keyboard = keyboard;
+		this.video = video;
 		this.disk = disk;
 		this.tape = tape;
 		clear();
@@ -49,7 +52,12 @@ public class Memory
 		}
 		if (address == 0xC020 || address == 0xC060)
 		{
+			if (this.tape == null) return 0;
 			return this.tape.io(address,(byte)0);
+		}
+		if (0xC050 <= address && address < 0xC058)
+		{
+			return this.video.io(address,(byte)0);
 		}
 		if (0xC0E0 <= address && address < 0xC0F0)
 		{
@@ -57,7 +65,6 @@ public class Memory
 			return this.disk.io(address,(byte)0);
 		}
 
-//		System.out.println("r $"+Integer.toHexString(address));
 		return this.ram[address];
 	}
 
@@ -87,7 +94,6 @@ public class Memory
 			return;
 		}
 
-//		System.out.println("w $"+Integer.toHexString(address));
 		this.ram[address] = data;
 	}
 

@@ -16,20 +16,22 @@ import chipset.Memory;
  */
 public class Video extends JPanel implements Clock.Timed
 {
-	private final Memory memory;
+	private Memory memory;
 
-	private VideoMode mode = VideoMode.TEXT;
-	private int page = 0;
+	private boolean swText;
+	private boolean swMixed;
+	private boolean swPage2;
+	private boolean swHiRes;
 
 	private int t;
 
 	private int[] lutText0 = VideoAddressing.buildLUT(0x0400,0x0400);
 	private int[] lutText1 = VideoAddressing.buildLUT(0x0800,0x0800);
-	private int[][] lutText = { lutText0, lutText1 };
-	private int[][] lutLoRes = { lutText0, lutText1 };
+	private int[][] lutText = { this.lutText0, this.lutText1 };
+	private int[][] lutLoRes = { this.lutText0, this.lutText1 };
 	private int[] lutHiRes0 = VideoAddressing.buildLUT(0x2000,0x2000);
 	private int[] lutHiRes1 = VideoAddressing.buildLUT(0x4000,0x2000);
-	private int[][] lutHiRes = { lutHiRes0, lutHiRes1 };
+	private int[][] lutHiRes = { this.lutHiRes0, this.lutHiRes1 };
 
 	private byte[] char_rom;
 
@@ -38,9 +40,6 @@ public class Video extends JPanel implements Clock.Timed
 
 	private static final int VISIBLE_BITS_PER_BYTE = 7;
 
-//	private static final int XSIZE = VISIBLE_BITS_PER_BYTE*VideoAddressing.BYTES_PER_ROW;
-//	private static final int YSIZE = VideoAddressing.NTSC_LINES_PER_FIELD;
-//	private static final int VISIBLE_X_OFFSET = 0;
 	private static final int XSIZE = VISIBLE_BITS_PER_BYTE*VideoAddressing.VISIBLE_BYTES_PER_ROW;
 	private static final int YSIZE = VideoAddressing.VISIBLE_ROWS_PER_FIELD;
 	private static final int VISIBLE_X_OFFSET = VideoAddressing.BYTES_PER_ROW-VideoAddressing.VISIBLE_BYTES_PER_ROW;
@@ -50,10 +49,8 @@ public class Video extends JPanel implements Clock.Timed
 
 
 
-	public Video(final Memory memory) throws IOException
+	public Video() throws IOException
 	{
-		this.memory = memory;
-
 		setOpaque(true);
 		setPreferredSize(new Dimension(XSIZE,YSIZE));
 		addNotify();
@@ -77,7 +74,7 @@ public class Video extends JPanel implements Clock.Timed
 		{
 			if (cc < r.length)
 			{
-				r[cc] = (byte)c;
+				r[cc] = xlateCharRom((byte)c);
 			}
 			++cc;
 		}
@@ -89,35 +86,48 @@ public class Video extends JPanel implements Clock.Timed
 		return r;
 	}
 
-	/**
-	 * 
-	 * @param mode VideoMode
-	 * @param page 0 or 1
-	 */
-	public void setMode(final VideoMode mode, final int page)
+	private static byte xlateCharRom(byte b)
 	{
-		this.mode = mode;
-		this.page = page;
+		byte r = 0;
+		for (int i = 0; i < 7; ++i)
+		{
+			r <<= 1;
+			if ((b & 1) != 0)
+				r |= 1;
+			b >>= 1;
+		}
+		return r;
+	}
 
+	public byte io(final int addr, final byte b)
+	{
+		final int sw = (addr & 0x0007) >> 1;
+		final boolean on = (addr & 0x0001) != 0;
+		switch (sw)
+		{
+			case 0: this.swText = on; break;
+			case 1: this.swMixed = on; break;
+			case 2: this.swPage2 = on; break;
+			case 3: this.swHiRes = on; break;
+		}
+		return 0;
 	}
 
 	public void tick()
 	{
 		final int a = getAddr();
 
-		int d = memory.read(a);
-		memory.write(0xC051,(byte)d); // floating bus
+		int d = this.memory.read(a);
+		this.memory.write(0xC051,(byte)d); // floating bus
 
 		boolean inverse = false;
-		if (this.mode == VideoMode.TEXT)
+		if (this.swText)
 		{
 			if (d >= 0)
 			{
 				inverse = true;
 			}
-//			d = getTextCharLine(d,(this.t / VideoAddressing.BYTES_PER_ROW) & 0x07);
-//			return char_rom[((d&0x7F)<<3)+i];
-			d = char_rom[((d&0x7F)<<3)+((this.t / VideoAddressing.BYTES_PER_ROW) & 0x07)];
+			d = this.char_rom[((d&0x7F)<<3)+((this.t / VideoAddressing.BYTES_PER_ROW) & 0x07)];
 		}
 		plotByte(this.t,d,inverse);
 
@@ -148,22 +158,27 @@ public class Video extends JPanel implements Clock.Timed
 
 	private int getAddr()
 	{
-		switch (this.mode)
+		int addr;
+		final int page = this.swPage2 ? 1 : 0;
+		if (this.swText)
 		{
-			case TEXT:
-				return lutText[page][t];
-			case LORES:
-				return lutLoRes[page][t];
-			case HIRES:
-				return lutHiRes[page][t];
-			default:
-				throw new IllegalStateException();
+			addr = this.lutText[page][this.t];
 		}
+		else if (this.swHiRes)
+		{
+			addr = this.lutHiRes[page][this.t];
+		}
+		else
+		{
+			addr = this.lutLoRes[page][this.t];
+		}
+		// TODO mixed text/graphics
+		return addr;
 	}
 
 	void plotScreen()
 	{
-		if (screenImage == null)
+		if (this.screenImage == null)
 		{
 			return;
 		}
@@ -173,14 +188,14 @@ public class Video extends JPanel implements Clock.Timed
 			return;
 		}
 		//screenImage.flush();
-		gr.drawImage(screenImage,0,0,this);
+		gr.drawImage(this.screenImage,0,0,this);
 	}
 
 	private void createOffscreenImage()
 	{
 		final Dimension size = getSize();
-		screenImage = new BufferedImage(size.width,size.height,BufferedImage.TYPE_INT_RGB);
-		buf = screenImage.getRaster().getDataBuffer();
+		this.screenImage = new BufferedImage(size.width,size.height,BufferedImage.TYPE_INT_RGB);
+		this.buf = this.screenImage.getRaster().getDataBuffer();
 	}
 
     static final int BLACK = Color.BLACK.getRGB();
@@ -188,7 +203,7 @@ public class Video extends JPanel implements Clock.Timed
 
     private void plotByte(int tt, int d, boolean inverse)
 	{
-		if (screenImage == null)
+		if (this.screenImage == null)
 		{
 			createOffscreenImage();
 		}
@@ -209,29 +224,34 @@ public class Video extends JPanel implements Clock.Timed
 		y += x;
         if (inverse)
         {
-	        buf.setElem(0, y++, ((d & 0x40) != 0) ? BLACK : GREEN);
-	        buf.setElem(0, y++, ((d & 0x20) != 0) ? BLACK : GREEN);
-	        buf.setElem(0, y++, ((d & 0x10) != 0) ? BLACK : GREEN);
-	        buf.setElem(0, y++, ((d & 0x08) != 0) ? BLACK : GREEN);
-	        buf.setElem(0, y++, ((d & 0x04) != 0) ? BLACK : GREEN);
-	        buf.setElem(0, y++, ((d & 0x02) != 0) ? BLACK : GREEN);
-	        buf.setElem(0, y++, ((d & 0x01) != 0) ? BLACK : GREEN);
+        	this.buf.setElem(0, y++, ((d & 0x01) != 0) ? BLACK : GREEN);
+        	this.buf.setElem(0, y++, ((d & 0x02) != 0) ? BLACK : GREEN);
+        	this.buf.setElem(0, y++, ((d & 0x04) != 0) ? BLACK : GREEN);
+        	this.buf.setElem(0, y++, ((d & 0x08) != 0) ? BLACK : GREEN);
+        	this.buf.setElem(0, y++, ((d & 0x10) != 0) ? BLACK : GREEN);
+        	this.buf.setElem(0, y++, ((d & 0x20) != 0) ? BLACK : GREEN);
+        	this.buf.setElem(0, y++, ((d & 0x40) != 0) ? BLACK : GREEN);
         }
         else
         {
-	        buf.setElem(0, y++, ((d & 0x40) != 0) ? GREEN : BLACK);
-	        buf.setElem(0, y++, ((d & 0x20) != 0) ? GREEN : BLACK);
-	        buf.setElem(0, y++, ((d & 0x10) != 0) ? GREEN : BLACK);
-	        buf.setElem(0, y++, ((d & 0x08) != 0) ? GREEN : BLACK);
-	        buf.setElem(0, y++, ((d & 0x04) != 0) ? GREEN : BLACK);
-	        buf.setElem(0, y++, ((d & 0x02) != 0) ? GREEN : BLACK);
-	        buf.setElem(0, y++, ((d & 0x01) != 0) ? GREEN : BLACK);
+        	this.buf.setElem(0, y++, ((d & 0x01) != 0) ? GREEN : BLACK);
+        	this.buf.setElem(0, y++, ((d & 0x02) != 0) ? GREEN : BLACK);
+        	this.buf.setElem(0, y++, ((d & 0x04) != 0) ? GREEN : BLACK);
+        	this.buf.setElem(0, y++, ((d & 0x08) != 0) ? GREEN : BLACK);
+        	this.buf.setElem(0, y++, ((d & 0x10) != 0) ? GREEN : BLACK);
+        	this.buf.setElem(0, y++, ((d & 0x20) != 0) ? GREEN : BLACK);
+        	this.buf.setElem(0, y++, ((d & 0x40) != 0) ? GREEN : BLACK);
         }
 		// TODO high-order bit half-dot shift
 	}
 
 	private byte getTextCharLine(int d, int i)
 	{
-		return char_rom[((d&0x7F)<<3)+i];
+		return this.char_rom[((d&0x7F)<<3)+i];
+	}
+
+	public void setMemory(final Memory memory)
+	{
+		this.memory = memory;
 	}
 }

@@ -97,7 +97,10 @@ public final class Ja2 implements Runnable
 
 //    	final TapeDriveMemory tape = new TapeDriveMemory();
 //    	final TapeInterface tapedrive = new TapeInterface(tape);
-        final Memory memory = new Memory(keyboard,disk,null); // TODO will crash if access cassette tape
+        final Video video = new Video();
+
+        final Memory memory = new Memory(keyboard,video,disk,null); // TODO will crash if access cassette tape
+        video.setMemory(memory);
 
 //        final InputStream romImage = new FileInputStream(new File("c:/apple2/rom_images/200apple2.rom")); // D000
 //        final InputStream romImage = new FileInputStream(new File("c:/apple2/rom_images/210apple2plus.rom")); // B000
@@ -135,8 +138,6 @@ public final class Ja2 implements Runnable
 //        final InputStream c100romImage = getClass().getResourceAsStream("apple2e_c100.rom");
 //        memory.load(0xc100,c100romImage);
 //        romImage.close();
-
-        final Video video = new Video(memory);
 
     	final CPU6502 cpu = new CPU6502(memory);
 
