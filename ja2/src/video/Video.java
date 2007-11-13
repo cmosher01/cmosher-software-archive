@@ -118,7 +118,8 @@ public class Video extends JPanel implements Clock.Timed
 		final int a = getAddr();
 
 		int d = this.memory.read(a);
-		this.memory.write(0xC051,(byte)d); // floating bus
+		this.memory.set(0xC050,(byte)d); // floating bus
+//		this.memory.write(0xC051,(byte)d); // floating bus
 
 		boolean inverse = false;
 		if (this.swText)

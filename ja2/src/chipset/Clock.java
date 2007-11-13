@@ -42,23 +42,23 @@ public class Clock
 
 	private void runth()
 	{
-		System.out.println("clock is starting");
 		while (!this.shutdown)
 		{
 			for (int i = 0; i < this.rTimed.length; ++i)
 			{
 				this.rTimed[i].tick();
 			}
-			++times;
-			if (times >= 102273)
+//			if (graphics && !driveMotor)
+//			{
+			++this.times;
+			if (this.times >= 102273)
 			{
-				times = 0;
+				this.times = 0;
 				final long thistime = System.currentTimeMillis();
 				final long actual = thistime-this.lasttime;
-//				System.out.println(thistime-this.lasttime);
 				this.lasttime = thistime;
 				final long delta = 100-actual;
-				if (delta >= 2)
+				if (false)//(delta >= 2)
 				{
 					try
 					{
@@ -70,8 +70,8 @@ public class Clock
 					}
 				}
 			}
+//			}
 		}
-		System.out.println("clock is stopping");
 		for (final Timed timed : this.rTimed)
 		{
 			timed.stopped();

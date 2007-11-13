@@ -56,7 +56,7 @@ public class VideoAddressing
 		n -= q*8;
 		final int base = 0x400*n+0x80*q+VISIBLE_BYTES_PER_ROW*s;
 
-		final int half_page = (base >> 7) << 7;
+		final int half_page = base & 0xFF80;
 
 		int a = base+(c%BYTES_PER_ROW)-BLANKED_BYTES_PER_ROW;
 		if (a < half_page)
