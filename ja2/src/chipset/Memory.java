@@ -97,11 +97,6 @@ public class Memory
 		this.ram[address] = data;
 	}
 
-	public void set(final int address, final byte data)
-	{
-		this.ram[address] = data;
-	}
-
 	public void load(int base, final InputStream in) throws IOException
 	{
 		if (base < 0 || this.ram.length <= base)

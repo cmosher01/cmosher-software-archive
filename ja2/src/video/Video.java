@@ -25,6 +25,8 @@ public class Video extends JPanel implements Clock.Timed
 
 	private int t;
 
+	private int data;
+
 	private int[] lutText0 = VideoAddressing.buildLUT(0x0400,0x0400);
 	private int[] lutText1 = VideoAddressing.buildLUT(0x0800,0x0800);
 	private int[][] lutText = { this.lutText0, this.lutText1 };
@@ -105,22 +107,25 @@ public class Video extends JPanel implements Clock.Timed
 		final boolean on = (addr & 0x0001) != 0;
 		switch (sw)
 		{
-			case 0: this.swText = on; break;
-			case 1: this.swMixed = on; break;
-			case 2: this.swPage2 = on; break;
-			case 3: this.swHiRes = on; break;
+			case 0:
+				this.swText = on; break;
+			case 1:
+				this.swMixed = on; break;
+			case 2:
+				this.swPage2 = on; break;
+			case 3:
+				this.swHiRes = on; break;
 		}
-		return 0;
+		return (byte)this.data;
 	}
 
 	public void tick()
 	{
 		final int a = getAddr();
 
-		int d = this.memory.read(a);
-		this.memory.set(0xC050,(byte)d); // floating bus
-//		this.memory.write(0xC051,(byte)d); // floating bus
+		this.data = this.memory.read(a);
 
+		int d = this.data;
 		boolean inverse = false;
 		if (this.swText)
 		{
