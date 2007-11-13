@@ -12,7 +12,7 @@ import disk.TapeInterface;
  */
 public class Memory
 {
-	private byte[] ram = new byte[0x10000];
+	private byte[] ram = new byte[CPU6502.MEMORY_LIM];
 	private final Keyboard keyboard;
 	private final Video video;
 	private final DiskInterface disk;
@@ -37,64 +37,110 @@ public class Memory
 
 	public byte read(final int address)
 	{
-		if (address < 0 || this.ram.length <= address)
+		if (address < 0 || CPU6502.MEMORY_LIM <= address)
 		{
 			throw new IllegalStateException();
 		}
-		if (address == 0xC000)
+		if (0xC000 <= address && address < 0xC100)
 		{
-			return this.keyboard.get();
+			return readSwitch(address);
 		}
-		if (address == 0xC010)
+		return this.ram[address];
+	}
+
+	private byte readSwitch(int address)
+	{
+		address &= 0x00FF;
+
+		if (address < 0x80)
 		{
-			this.keyboard.clear();
-			return this.keyboard.get();
-		}
-		if (address == 0xC020 || address == 0xC060)
-		{
-			if (this.tape == null) return 0;
-			return this.tape.io(address,(byte)0);
-		}
-		if (0xC050 <= address && address < 0xC058)
-		{
-			return this.video.io(address,(byte)0);
-		}
-		if (0xC0E0 <= address && address < 0xC0F0)
-		{
-			if (this.disk == null) return 0;
-			return this.disk.io(address,(byte)0);
+			if (address == 0x00)
+			{
+				return this.keyboard.get();
+			}
+			if (address == 0x10)
+			{
+				this.keyboard.clear();
+				return this.keyboard.get();
+			}
+			if (address == 0x20 || address == 0x60)
+			{
+				if (this.tape == null)
+				{
+					return -1;
+				}
+				return this.tape.io(address,(byte)0);
+			}
+			if (0x50 <= address && address < 0x58)
+			{
+				return this.video.io(address,(byte)0);
+			}
+			return -1;
 		}
 
-		return this.ram[address];
+		// slot I/O switches
+		address &= 0x7F;
+		final int slot = address >> 4;
+
+		if (slot == 6)
+		{
+			if (this.disk == null)
+			{
+				return -1;
+			}
+			return this.disk.io(address,(byte)0);
+		}
+		return -1;
 	}
 
 	public void write(final int address, final byte data)
 	{
-		if (address < 0 || this.ram.length <= address)
+		if (address < 0 || CPU6502.MEMORY_LIM <= address)
 		{
 			throw new IllegalStateException();
 		}
-
-		if (address == 0xC010)
+		if (0xC000 <= address && address < 0xC100)
 		{
-			this.keyboard.clear();
+			writeSwitch(address,data);
 			return;
 		}
-		if (address == 0xC020 || address == 0xC060)
-		{
-			this.tape.io(address,data);
-		}
-		if (0xC0E0 <= address && address < 0xC0F0)
-		{
-			this.disk.io(address,data);
-		}
-
-		if (0xC000 <= address) // ROM
+		if (0xC100 <= address) // ROM
 		{
 			return;
 		}
 
 		this.ram[address] = data;
+	}
+
+	private void writeSwitch(int address, byte data)
+	{
+		address &= 0x00FF;
+
+		if (address < 0x80)
+		{
+			if (address == 0x10)
+			{
+				this.keyboard.clear();
+				return;
+			}
+			if (address == 0x20 || address == 0x60)
+			{
+				this.tape.io(address,data);
+			}
+			if (0x50 <= address && address < 0x58)
+			{
+				this.video.io(address,data);
+			}
+		}
+
+		// slot I/O switches
+		address &= 0x7F;
+		final int slot = address >> 4;
+
+		if (slot == 6)
+		{
+			this.disk.io(address,data);
+		}
 	}
 
 	public void load(int base, final InputStream in) throws IOException

@@ -75,6 +75,13 @@ public class DiskInterface
 		return ret;
 	}
 
+	public void reset()
+	{
+		this.disk.setMotorOn(false);
+		this.disk.setDrive2(false);
+		updatePanel();
+	}
+
 	public void updatePanel()
 	{
 		DiskDrivePanel drive = this.framer.getDrive(this.disk.getDriveNumber());

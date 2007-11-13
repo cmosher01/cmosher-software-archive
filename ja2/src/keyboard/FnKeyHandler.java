@@ -3,6 +3,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import chipset.CPU6502;
+import disk.DiskInterface;
 
 /*
  * Created on Sep 12, 2007
@@ -10,13 +11,15 @@ import chipset.CPU6502;
 public class FnKeyHandler extends KeyAdapter implements KeyListener
 {
 	private final CPU6502 cpu;
+	private final DiskInterface disk;
 
 	/**
 	 * @param cpu
 	 */
-	public FnKeyHandler(final CPU6502 cpu)
+	public FnKeyHandler(final CPU6502 cpu, final DiskInterface disk)
 	{
 		this.cpu = cpu;
+		this.disk = disk;
 	}
 
 	/**
@@ -30,6 +33,7 @@ public class FnKeyHandler extends KeyAdapter implements KeyListener
 		if (key == KeyEvent.VK_PAUSE)
 		{
 			cpu.reset();
+			disk.reset();
 		}
 	}
 }

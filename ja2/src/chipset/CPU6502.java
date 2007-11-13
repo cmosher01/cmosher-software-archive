@@ -1,19 +1,11 @@
 package chipset;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.Map.Entry;
-import other.HexUtil;
 
 /*
  * Created on Aug 1, 2007
  */
 public final class CPU6502 implements Clock.Timed
 {
-	static final int MEMORY_LIM = 0x10000;
+	public static final int MEMORY_LIM = 1 << 0x10;
 	static final int IRQ_VECTOR = MEMORY_LIM-2; // or BRK
 	static final int RESET_VECTOR = IRQ_VECTOR-2; // or power-on
 	static final int NMI_VECTOR = RESET_VECTOR-2;
@@ -65,10 +57,6 @@ public final class CPU6502 implements Clock.Timed
 
     public void reset()
     {
-    	// BEGIN Apple ][ specific:
-    	this.memory.read(0xC0E8); // turn off disk drive
-    	// END   Apple ][ specific.
-
     	this.reset = true;
     }
 
@@ -105,7 +93,6 @@ public final class CPU6502 implements Clock.Timed
 		{
 			subsequentCycle();
 		}
-//		checkSane();
 		++this.t;
 	}
 
@@ -518,7 +505,7 @@ public final class CPU6502 implements Clock.Timed
 						setIndex();
 						address = ba();
 						address += idx;
-						//read(); // discard (assume this is the right address, manual is ambiguous) (it's messing up disk writing, so I'm omitting it)
+						//read(); // discard (assume this is the right address, manual is ambiguous)
 						execute();
 					break;
 					case 4:
@@ -1162,7 +1149,7 @@ public final class CPU6502 implements Clock.Timed
 
 	int pch()
 	{
-		return (this.pc & 0xFF00) >> 8;
+		return (this.pc >> 8) & 0xFF;
 	}
 
 	int pcl()
@@ -1248,8 +1235,7 @@ public final class CPU6502 implements Clock.Timed
 
 	void read()
 	{
-		this.data = this.memory.read(this.address);
-		this.data &= 0xFF;
+		this.data = this.memory.read(this.address) & 0xFF;
 	}
 
 	void write()
@@ -1808,29 +1794,6 @@ public final class CPU6502 implements Clock.Timed
     	this.pc--;
     }
 
-	void checkSane()
-	{
-		if ((a & 0xFFFFFF00) != 0)
-		{
-			throw new IllegalStateException();
-		}
-		if ((x & 0xFFFFFF00) != 0)
-		{
-			throw new IllegalStateException();
-		}
-		if ((y & 0xFFFFFF00) != 0)
-		{
-			throw new IllegalStateException();
-		}
-		if ((s & 0xFFFFFF00) != 0)
-		{
-			throw new IllegalStateException();
-		}
-		if ((data & 0xFFFFFF00) != 0)
-		{
-			throw new IllegalStateException();
-		}
-	}
 	void execute()
     {
 		// TODO undocumented instructions not yet implemented
