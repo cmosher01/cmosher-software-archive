@@ -3,7 +3,7 @@ package chipset;
 /*
  * Created on Aug 1, 2007
  */
-public final class CPU6502 implements Clock.Timed
+public final class CPU6502
 {
 	public static final int MEMORY_LIM = 1 << 0x10;
 	static final int IRQ_VECTOR = MEMORY_LIM-2; // or BRK
@@ -42,8 +42,8 @@ public final class CPU6502 implements Clock.Timed
 	int sc;
 	boolean wc;
 
-    volatile boolean IRQ;
-    volatile boolean NMI;
+    /*volatile*/ boolean IRQ;
+    /*volatile*/ boolean NMI;
     volatile boolean reset;
 
     Memory memory;
@@ -98,7 +98,7 @@ public final class CPU6502 implements Clock.Timed
 
 	void firstCycle()
 	{
-		final boolean interrupt = isInterrupted();
+		final boolean interrupt = this.NMI || this.reset || (!this.i && this.IRQ);
 
 		if (interrupt)
 		{
@@ -116,14 +116,6 @@ public final class CPU6502 implements Clock.Timed
 		{
 			this.opcode = this.data;
 		}
-	}
-
-	boolean isInterrupted()
-	{
-		return
-			this.NMI ||
-			this.reset ||
-			(!this.i && this.IRQ);
 	}
 
 	int getInterruptAddress()
@@ -1142,8 +1134,8 @@ public final class CPU6502 implements Clock.Timed
 
 	void subsequentCycle()
 	{
-		final Addressing mode = AddressingModeCalculator.getMode(this.opcode);
-		final Addr addr = addrs[mode.ordinal()];
+		final int mode = AddressingModeCalculator.getMode(this.opcode);
+		final Addr addr = addrs[mode];
 		addr.addr(this.t);
 	}
 

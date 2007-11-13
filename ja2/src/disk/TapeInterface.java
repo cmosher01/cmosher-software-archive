@@ -3,9 +3,7 @@
  */
 package disk;
 
-import chipset.Clock;
-
-public class TapeInterface implements Clock.Timed
+public class TapeInterface
 {
 	private final TapeDriveMemory tape;
 	private int t;

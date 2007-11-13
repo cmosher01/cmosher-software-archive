@@ -156,12 +156,7 @@ public final class Ja2
 		video.setFocusTraversalKeysEnabled(false);
 		video.requestFocus();
 
-        final List<Clock.Timed> rTimed = new ArrayList<Clock.Timed>();
-    	rTimed.add(video);
-    	rTimed.add(cpu);
-    	//rTimed.add(tapedrive);
-
-    	this.clock = new Clock(rTimed);
+    	this.clock = new Clock(cpu,video,drive);
 
         parseConfig(memory);
 

@@ -1,13 +1,12 @@
 package disk;
+
 import java.io.File;
 import java.io.IOException;
-import chipset.Clock;
-import chipset.Clock.Timed;
 
 /*
  * Created on Sep 12, 2007
  */
-public class DiskDrive implements Clock.Timed
+public class DiskDrive
 {
 	private static final int DRIVES = 2;
 	private Disk2[] disk = new Disk2[DRIVES];

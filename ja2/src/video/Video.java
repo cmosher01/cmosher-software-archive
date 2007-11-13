@@ -8,13 +8,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import chipset.Clock;
 import chipset.Memory;
 
 /*
  * Created on Aug 2, 2007
  */
-public class Video extends JPanel implements Clock.Timed
+public class Video extends JPanel
 {
 	private Memory memory;
 

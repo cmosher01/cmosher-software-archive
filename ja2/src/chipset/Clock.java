@@ -1,5 +1,7 @@
 package chipset;
-import java.util.Collection;
+
+import disk.DiskDriveSimple;
+import video.Video;
 
 /*
  * Created on Aug 1, 2007
@@ -7,22 +9,20 @@ import java.util.Collection;
 public class Clock
 {
 	volatile boolean shutdown;
+	private final CPU6502 cpu;
+	private final Video video;
+	private final DiskDriveSimple diskDrive;
+
 	private Thread clth;
-	private final Timed[] rTimed;
 
 	private long lasttime = System.currentTimeMillis();
 	private long times;
 
-	public interface Timed
+	public Clock(final CPU6502 cpu, final Video video, final DiskDriveSimple diskDrive)
 	{
-		void tick();
-		void stopped();
-	}
-
-	public Clock(final Collection<Timed> rTimed)
-	{
-		this.rTimed = new Timed[rTimed.size()];
-		rTimed.toArray(this.rTimed);
+		this.cpu = cpu;
+		this.video = video;
+		this.diskDrive = diskDrive;
 	}
 
 	public void run()
@@ -44,38 +44,35 @@ public class Clock
 	{
 		while (!this.shutdown)
 		{
-			for (int i = 0; i < this.rTimed.length; ++i)
-			{
-				this.rTimed[i].tick();
-			}
+			cpu.tick();
+			video.tick();
+
 //			if (graphics && !driveMotor)
 //			{
-			++this.times;
-			if (this.times >= 102273)
-			{
-				this.times = 0;
-				final long thistime = System.currentTimeMillis();
-				final long actual = thistime-this.lasttime;
-				this.lasttime = thistime;
-				final long delta = 100-actual;
-				if (false)//(delta >= 2)
-				{
-					try
-					{
-						Thread.sleep(delta);
-					}
-					catch (InterruptedException e)
-					{
-						this.shutdown = true;
-					}
-				}
-			}
+//			++this.times;
+//			if (this.times >= 102273)
+//			{
+//				this.times = 0;
+//				final long thistime = System.currentTimeMillis();
+//				final long actual = thistime-this.lasttime;
+//				this.lasttime = thistime;
+//				final long delta = 100-actual;
+//				if (false)//(delta >= 2)
+//				{
+//					try
+//					{
+//						Thread.sleep(delta);
+//					}
+//					catch (InterruptedException e)
+//					{
+//						this.shutdown = true;
+//					}
+//				}
+//			}
 //			}
 		}
-		for (final Timed timed : this.rTimed)
-		{
-			timed.stopped();
-		}
+		cpu.stopped();
+		video.stopped();
 	}
 
 	public void shutdown()

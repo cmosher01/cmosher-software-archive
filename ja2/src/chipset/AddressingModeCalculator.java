@@ -4,13 +4,13 @@ package chipset;
  */
 public class AddressingModeCalculator
 {
-	public static Addressing getMode(final int opcode)
+	public static int getMode(final int opcode)
     {
 		return modes[opcode];
 		// TODO undocumented instructions not yet implemented
 	}
 
-	private static final Addressing[] modes = new Addressing[]
+	private static final int[] modes = new int[]
   	{
 		Addressing.MISC_BREAK,
 		Addressing.INTERNAL_INDIRECT_X,
