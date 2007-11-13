@@ -68,10 +68,7 @@ public final class CPU6502 implements Clock.Timed
     	// BEGIN Apple ][ specific:
     	this.memory.read(0xC0E8); // turn off disk drive
     	// END   Apple ][ specific.
-//        this.i = true;
-//        this.pc = memReadAbsolute(RESET_VECTOR);
-//
-//        this.s = 0xFF; // real CPU doesn't do this ???
+
     	this.reset = true;
     }
 
@@ -96,14 +93,12 @@ public final class CPU6502 implements Clock.Timed
 
 	public void stopped()
 	{
-//		dumpTrace();
 	}
 
 	public void tick()
 	{
 		if (this.t == 0)
 		{
-//			trace();
 			firstCycle();
 		}
 		else
@@ -1785,10 +1780,10 @@ public final class CPU6502 implements Clock.Timed
     	this.d = true;
     }
 
-    void NOP()
-    {
-    	// NO OPERATION!
-    }
+//    void NOP()
+//    {
+//    	// NO OPERATION!
+//    }
 
     void Unoff()
     {
@@ -3721,7 +3716,7 @@ public final class CPU6502 implements Clock.Timed
 		{
 			public void exec()
 			{
-				NOP();
+				//NOP();
 			}
 		}
 		,

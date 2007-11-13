@@ -4,13 +4,18 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -40,11 +45,13 @@ import disk.TapeInterface;
  * 
  * @author Chris Mosher
  */
-public final class Ja2 implements Runnable
+public final class Ja2
 {
 	private final FrameManager framer = new FrameManager();
 
 	Clock clock;
+
+	private String config = "ja2.cfg";
 
 	private Ja2()
     {
@@ -56,24 +63,24 @@ public final class Ja2 implements Runnable
      * @throws IOException 
      * @throws ApplicationAborting
      */
-    public static void main(String[] args) throws IOException, InterruptedException, InvocationTargetException
+    public static void main(final String... args) throws IOException, InterruptedException, InvocationTargetException
     {
     	SwingUtilities.invokeAndWait(new Runnable()
     	{
 			public void run()
 			{
-		    	final Runnable program = new Ja2();
-		    	program.run();
+		    	final Ja2 program = new Ja2();
+		    	program.run(args);
 			}
     	}
     	);
     }
 
-    public void run()
+    public void run(final String... args)
 	{
     	try
 		{
-			tryRun();
+			tryRun(args);
 		}
 		catch (final Throwable e)
 		{
@@ -81,55 +88,44 @@ public final class Ja2 implements Runnable
 		}
 	}
 
-    private void tryRun() throws IOException
+    private void tryRun(final String... args) throws IOException
     {
-    	DiskBytes disk1 = new DiskBytes();
-//    	disk1.load(new File("C:\\apple2\\research\\dos\\3.1\\hyperdos_restored.nib"));
-//    	disk1.load(new File("src\\DOS33_SystemMaster_1986_patched_nodelay.nib"));
-//    	disk1.load(new File("C:\\apple2\\research\\dos\\3.1\\copy2plus40.nib"));
-//    	disk1.load(new File("C:\\apple2\\research\\dos\\3.1\\bloxap.nib"));
-    	DiskBytes disk2 = new DiskBytes();
+    	parseArgs();
+
+    	final Keyboard keyboard = new Keyboard();
+
+
+
+    	final DiskBytes disk1 = new DiskBytes();
+    	final DiskBytes disk2 = new DiskBytes();
     	final DiskDriveSimple drive = new DiskDriveSimple(new DiskBytes[] {disk1,disk2});
     	final StepperMotor arm = new StepperMotor();
     	final DiskInterface disk = new DiskInterface(drive,arm,this.framer);
 
-    	final Keyboard keyboard = new Keyboard();
+
 
 //    	final TapeDriveMemory tape = new TapeDriveMemory();
 //    	final TapeInterface tapedrive = new TapeInterface(tape);
-        final Video video = new Video();
 
-        final Memory memory = new Memory(keyboard,video,disk,null); // TODO will crash if access cassette tape
+
+
+    	final Video video = new Video();
+
+        final Memory memory = new Memory(keyboard,video,disk,null);
         video.setMemory(memory);
 
-//        final InputStream romImage = new FileInputStream(new File("c:/apple2/rom_images/200apple2.rom")); // D000
-//        final InputStream romImage = new FileInputStream(new File("c:/apple2/rom_images/210apple2plus.rom")); // B000
-//        final InputStream romImage = getClass().getResourceAsStream("apple2_e000.rom");
-//        final InputStream romImage = new FileInputStream(new File("C:\\eclipse_organize\\postsvn_workspace\\apple2src\\firmware/rom/apple2_e000.rom"));
-        final InputStream romImage = new FileInputStream(new File("C:\\eclipse_organize\\postsvn_workspace\\apple2src\\firmware/rom/apple2p_d000.rom"));
-        memory.load(0xD000,romImage);
-        romImage.close();
 
-        final InputStream monromImage = new FileInputStream(new File("C:\\eclipse_organize\\postsvn_workspace\\apple2src\\firmware/rom/apple2p_f800.rom"));
-        memory.load(0xF800,monromImage);
-        monromImage.close();
-
-//        final InputStream romImage = new FileInputStream(new File("firmware/rom/apple2p_d000.rom"));
+//        final InputStream romImage = new FileInputStream(new File("C:\\eclipse_organize\\postsvn_workspace\\apple2src\\firmware/rom/apple2p_d000.rom"));
 //        memory.load(0xD000,romImage);
 //        romImage.close();
 //
-//        final InputStream monromImage = new FileInputStream(new File("firmware/rom/apple2p_f800.rom"));
+//        final InputStream monromImage = new FileInputStream(new File("C:\\eclipse_organize\\postsvn_workspace\\apple2src\\firmware/rom/apple2p_f800.rom"));
 //        memory.load(0xF800,monromImage);
 //        monromImage.close();
-
-
-
-//        final InputStream diskromImage = getClass().getResourceAsStream("disk2_DOS33_c600_patched_nodelay.rom");
-//        final InputStream diskromImage = new FileInputStream(new File("firmware/rom/disk2_DOS33_c600_patched_nodelay.rom"));
-        final InputStream diskromImage = new FileInputStream(new File("C:\\eclipse_organize\\postsvn_workspace\\apple2src\\build\\firmware\\disk2_16sector\\disk2_A$C600_L$0100_16sector"));
-//        final InputStream diskromImage = new FileInputStream(new File("C:\\TEMP\\DISK2DISASM\\disk2rom13sectc600.bin"));
-        memory.load(0xC600,diskromImage);
-        diskromImage.close();
+//
+//        final InputStream diskromImage = new FileInputStream(new File("C:\\eclipse_organize\\postsvn_workspace\\apple2src\\build\\firmware\\disk2_16sector\\disk2_A$C600_L$0100_16sector"));
+//        memory.load(0xC600,diskromImage);
+//        diskromImage.close();
 
 //        final InputStream c200romImage = getClass().getResourceAsStream("unknown_from_2e_c200.rom");
 //        memory.load(0xc200,c200romImage);
@@ -162,15 +158,75 @@ public final class Ja2 implements Runnable
 
         final List<Clock.Timed> rTimed = new ArrayList<Clock.Timed>();
     	rTimed.add(video);
-    	//rTimed.add(drive);
     	rTimed.add(cpu);
     	//rTimed.add(tapedrive);
+
     	this.clock = new Clock(rTimed);
-    	this.clock.run();
+
+        parseConfig(memory);
+
+        this.clock.run();
     	disk.updatePanel();
 	}
 
-    private JMenuBar createAppMenuBar()
+    private void parseArgs(final String... args)
+	{
+		for (final String arg : args)
+		{
+			if (arg.startsWith("--"))
+			{
+				parseArg(arg.substring(2));
+			}
+			else
+			{
+				throw new IllegalArgumentException(arg);
+			}
+		}
+	}
+
+	private void parseArg(final String arg)
+	{
+		final StringTokenizer tok = new StringTokenizer(arg,"=");
+		final String opt = nextTok(tok);
+		final String val = nextTok(tok);
+
+		if (opt.equals("config"))
+		{
+			this.config = val;
+		}
+		else
+		{
+			throw new IllegalArgumentException(arg);
+		}
+	}
+
+	private static final Pattern patIMPORT = Pattern.compile("import\\s+(.+)\\s+(.+)");
+	private void parseConfig(Memory memory) throws IOException
+	{
+    	final BufferedReader cfg = new BufferedReader(new InputStreamReader(new FileInputStream(this.config)));
+    	for (String s = cfg.readLine(); s != null; s = cfg.readLine())
+    	{
+    		int comment = s.indexOf('#');
+    		if (comment >= 0)
+    		{
+    			s = s.substring(0,comment);
+    		}
+    		s = s.trim();
+    		final Matcher matcher;
+    		if ((matcher = patIMPORT.matcher(s)).matches())
+    		{
+    			final int addr = Integer.decode(matcher.group(1));
+    			final String mem = matcher.group(2);
+
+    			final InputStream image = new FileInputStream(new File(mem));
+    	        memory.load(addr,image);
+    	        image.close();
+    		}
+    	}
+    	cfg.close();
+	}
+
+	private JMenuBar createAppMenuBar()
 	{
 		final JMenuBar menubar = new JMenuBar();
         appendMenus(menubar);
@@ -205,5 +261,14 @@ public final class Ja2 implements Runnable
 	{
 		this.clock.shutdown();
 		this.framer.close(); // this exits the app
+	}
+
+	private static String nextTok(final StringTokenizer tok)
+	{
+		if (!tok.hasMoreTokens())
+		{
+			return "";
+		}
+		return tok.nextToken();
 	}
 }

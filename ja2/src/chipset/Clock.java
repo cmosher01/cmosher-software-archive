@@ -10,6 +10,9 @@ public class Clock
 	private Thread clth;
 	private final Timed[] rTimed;
 
+	private long lasttime = System.currentTimeMillis();
+	private long times;
+
 	public interface Timed
 	{
 		void tick();
@@ -45,6 +48,27 @@ public class Clock
 			for (int i = 0; i < this.rTimed.length; ++i)
 			{
 				this.rTimed[i].tick();
+			}
+			++times;
+			if (times >= 102273)
+			{
+				times = 0;
+				final long thistime = System.currentTimeMillis();
+				final long actual = thistime-this.lasttime;
+//				System.out.println(thistime-this.lasttime);
+				this.lasttime = thistime;
+				final long delta = 100-actual;
+				if (delta >= 2)
+				{
+					try
+					{
+						Thread.sleep(delta);
+					}
+					catch (InterruptedException e)
+					{
+						this.shutdown = true;
+					}
+				}
 			}
 		}
 		System.out.println("clock is stopping");

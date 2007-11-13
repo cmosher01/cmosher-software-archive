@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /*
  * Created on Sep 16, 2007
@@ -17,8 +18,9 @@ public class DiskBytes
 	private byte[][] bytes = new byte[TRACKS_PER_DISK][BYTES_PER_TRACK];
 
 	private boolean writable;
-	private boolean loaded;
+	final AtomicBoolean loaded = new AtomicBoolean();
 	private int byt;
+	private int waitTimes;
 
 	public DiskBytes()
 	{
@@ -40,14 +42,22 @@ public class DiskBytes
 		}
 		disk.close();
 		this.writable = f.canWrite();
-		this.loaded = true;
+		synchronized (this.loaded)
+		{
+			this.loaded.set(true);
+			this.loaded.notifyAll();
+		}
 	}
 
 	public void unload()
 	{
 		this.byt = 0;
 		this.writable = true;
-		this.loaded = false;
+		synchronized (this.loaded)
+		{
+			this.loaded.set(false);
+			this.loaded.notifyAll();
+		}
 	}
 
 	public byte get(final int track)
@@ -56,9 +66,29 @@ public class DiskBytes
 		{
 			throw new IllegalStateException();
 		}
-		if (!this.loaded)
+		synchronized (this.loaded)
 		{
-			return -1;
+			if (!this.loaded.get())
+			{
+				++this.waitTimes;
+				if (this.waitTimes >= 0x100)
+				{
+					this.waitTimes = 0;
+					try
+					{
+						this.loaded.wait(100);
+					}
+					catch (InterruptedException e)
+					{
+						e.printStackTrace();
+						Thread.currentThread().interrupt();
+					}
+				}
+			}
+			if (!this.loaded.get())
+			{
+				return -1;
+			}
 		}
 		final byte ret = this.bytes[track][this.byt];
 		nextByte();
@@ -72,7 +102,7 @@ public class DiskBytes
 		{
 			throw new IllegalStateException();
 		}
-		if (!this.writable || !this.loaded)
+		if (!this.writable || !this.loaded.get())
 		{
 			return;
 		}

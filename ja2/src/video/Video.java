@@ -74,7 +74,7 @@ public class Video extends JPanel implements Clock.Timed
 		{
 			if (cc < r.length)
 			{
-				r[cc] = xlateCharRom((byte)c);
+				r[cc] = xlateCharRom(c);
 			}
 			++cc;
 		}
@@ -86,7 +86,7 @@ public class Video extends JPanel implements Clock.Timed
 		return r;
 	}
 
-	private static byte xlateCharRom(byte b)
+	private static byte xlateCharRom(int b)
 	{
 		byte r = 0;
 		for (int i = 0; i < 7; ++i)
@@ -187,7 +187,6 @@ public class Video extends JPanel implements Clock.Timed
 		{
 			return;
 		}
-		//screenImage.flush();
 		gr.drawImage(this.screenImage,0,0,this);
 	}
 
