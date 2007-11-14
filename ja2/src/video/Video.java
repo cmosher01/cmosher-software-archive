@@ -17,7 +17,7 @@ public class Video extends JPanel
 {
 	private Memory memory;
 
-	private boolean swText;
+	private boolean swText = true;
 	private boolean swMixed;
 	private boolean swPage2;
 	private boolean swHiRes;
@@ -107,21 +107,29 @@ public class Video extends JPanel
 		switch (sw)
 		{
 			case 0:
+				if (this.swText != on)
+					System.err.println("turning "+(on?"on":"off")+" swText");
 				this.swText = on; break;
 			case 1:
+				if (this.swMixed != on)
+					System.err.println("turning "+(on?"on":"off")+" swMixed");
 				this.swMixed = on; break;
 			case 2:
+				if (this.swPage2 != on)
+					System.err.println("turning "+(on?"on":"off")+" swPage2");
 				this.swPage2 = on; break;
 			case 3:
+				if (this.swHiRes != on)
+					System.err.println("turning "+(on?"on":"off")+" swHiRes");
 				this.swHiRes = on; break;
 		}
 		return (byte)this.data;
 	}
 
+private boolean trace;
 	public void tick()
 	{
 		final int a = getAddr();
-
 		this.data = this.memory.read(a);
 
 		int d = this.data;
