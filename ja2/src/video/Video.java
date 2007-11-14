@@ -102,7 +102,7 @@ public class Video extends JPanel
 
 	public byte io(final int addr, final byte b)
 	{
-		final int sw = (addr & 0x0007) >> 1;
+		final int sw = (addr & 0x000E) >> 1;
 		final boolean on = (addr & 0x0001) != 0;
 		switch (sw)
 		{
