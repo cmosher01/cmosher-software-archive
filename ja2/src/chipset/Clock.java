@@ -40,39 +40,39 @@ public class Clock
 		}
 	}
 
-	private void runth()
+	void runth()
 	{
 		while (!this.shutdown)
 		{
-			cpu.tick();
-			video.tick();
+			this.cpu.tick();
+			this.video.tick();
 
-//			if (graphics && !driveMotor)
-//			{
-//			++this.times;
-//			if (this.times >= 102273)
-//			{
-//				this.times = 0;
-//				final long thistime = System.currentTimeMillis();
-//				final long actual = thistime-this.lasttime;
-//				this.lasttime = thistime;
-//				final long delta = 100-actual;
-//				if (false)//(delta >= 2)
-//				{
-//					try
-//					{
-//						Thread.sleep(delta);
-//					}
-//					catch (InterruptedException e)
-//					{
-//						this.shutdown = true;
-//					}
-//				}
-//			}
-//			}
+			if (!this.video.isText() && !this.diskDrive.isMotorOn())
+			{
+				++this.times;
+				if (this.times >= 102273)
+				{
+					this.times = 0;
+					final long thistime = System.currentTimeMillis();
+					final long actual = thistime-this.lasttime;
+					this.lasttime = thistime;
+					final long delta = 100-actual;
+					if (delta >= 2)
+					{
+						try
+						{
+							Thread.sleep(delta);
+						}
+						catch (InterruptedException e)
+						{
+							this.shutdown = true;
+						}
+					}
+				}
+			}
 		}
-		cpu.stopped();
-		video.stopped();
+		this.cpu.stopped();
+		this.video.stopped();
 	}
 
 	public void shutdown()

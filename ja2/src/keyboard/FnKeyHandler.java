@@ -35,5 +35,9 @@ public class FnKeyHandler extends KeyAdapter implements KeyListener
 			cpu.reset();
 			disk.reset();
 		}
+		else if (key == KeyEvent.VK_INSERT)
+		{
+			
+		}
 	}
 }

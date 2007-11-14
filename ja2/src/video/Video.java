@@ -27,7 +27,7 @@ public class Video extends JPanel
 	private int data;
 
 	private int[] lutText0 = VideoAddressing.buildLUT(0x0400,0x0400);
-	private int[] lutText1 = VideoAddressing.buildLUT(0x0800,0x0800);
+	private int[] lutText1 = VideoAddressing.buildLUT(0x0800,0x0400);
 	private int[][] lutText = { this.lutText0, this.lutText1 };
 	private int[][] lutLoRes = { this.lutText0, this.lutText1 };
 	private int[] lutHiRes0 = VideoAddressing.buildLUT(0x2000,0x2000);
@@ -126,7 +126,7 @@ public class Video extends JPanel
 
 		int d = this.data;
 		boolean inverse = false;
-		if (this.swText)
+		if (this.swText || (this.swMixed && this.t >= 10400))
 		{
 			if (d >= 0)
 			{
@@ -165,7 +165,7 @@ public class Video extends JPanel
 	{
 		int addr;
 		final int page = this.swPage2 ? 1 : 0;
-		if (this.swText)
+		if (this.swText || (this.swMixed && this.t >= 10400))
 		{
 			addr = this.lutText[page][this.t];
 		}
@@ -205,6 +205,12 @@ public class Video extends JPanel
     static final int BLACK = Color.BLACK.getRGB();
     static final int GREEN = Color.GREEN.getRGB();
 
+    static final int loresColors[] =
+    {
+    	0x000000,0xD00030,0x000080,0xFF00FF,0x008000,0x808080,0x0000FF,0x60A0FF,
+    	0x805000,0xFF8000,0xC0C0C0,0xFF9080,0x00FF00,0xFFFF00,0x40FF90,0xFFFFFF
+    };
+
     private void plotByte(int tt, int d, boolean inverse)
 	{
 		if (this.screenImage == null)
@@ -218,6 +224,7 @@ public class Video extends JPanel
 		}
 		x *= VISIBLE_BITS_PER_BYTE;
 		int y = tt / VideoAddressing.BYTES_PER_ROW;
+		final int oy = y;
 		if (y >= VideoAddressing.VISIBLE_ROWS_PER_FIELD)
 		{
 			return;
@@ -226,7 +233,24 @@ public class Video extends JPanel
 
 		y *= XSIZE;
 		y += x;
-        if (inverse)
+		if (!this.swText && !this.swHiRes && !(this.swMixed && this.t >= 10400))
+		{
+			final int i;
+			if (((oy >> 2) & 1) != 0)
+				i = (d >> 4) & 0xF;
+			else
+				i = d & 0xF;
+			final int color = loresColors[i];
+        	this.buf.setElem(0, y++, color);
+        	this.buf.setElem(0, y++, color);
+        	this.buf.setElem(0, y++, color);
+        	this.buf.setElem(0, y++, color);
+        	this.buf.setElem(0, y++, color);
+        	this.buf.setElem(0, y++, color);
+        	this.buf.setElem(0, y++, color);
+
+		}
+		else if (inverse)
         {
         	this.buf.setElem(0, y++, ((d & 0x01) != 0) ? BLACK : GREEN);
         	this.buf.setElem(0, y++, ((d & 0x02) != 0) ? BLACK : GREEN);
@@ -257,5 +281,10 @@ public class Video extends JPanel
 	public void setMemory(final Memory memory)
 	{
 		this.memory = memory;
+	}
+
+	public boolean isText()
+	{
+		return this.swText;
 	}
 }

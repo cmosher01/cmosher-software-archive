@@ -102,9 +102,9 @@ public class Memory
 		if (0xC000 <= address && address < 0xC100)
 		{
 			writeSwitch(address,data);
-			return;
 		}
-		if (0xC100 <= address) // ROM
+
+		if ((address >> 14) == 3) // ROM
 		{
 			return;
 		}
