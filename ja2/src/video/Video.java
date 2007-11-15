@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import other.HexUtil;
 import chipset.Memory;
 
 /*
@@ -107,26 +108,17 @@ public class Video extends JPanel
 		switch (sw)
 		{
 			case 0:
-				if (this.swText != on)
-					System.err.println("turning "+(on?"on":"off")+" swText");
 				this.swText = on; break;
 			case 1:
-				if (this.swMixed != on)
-					System.err.println("turning "+(on?"on":"off")+" swMixed");
 				this.swMixed = on; break;
 			case 2:
-				if (this.swPage2 != on)
-					System.err.println("turning "+(on?"on":"off")+" swPage2");
 				this.swPage2 = on; break;
 			case 3:
-				if (this.swHiRes != on)
-					System.err.println("turning "+(on?"on":"off")+" swHiRes");
 				this.swHiRes = on; break;
 		}
-		return (byte)this.data;
+		return (byte)this.data; // emulates "floating bus"
 	}
 
-private boolean trace;
 	public void tick()
 	{
 		final int a = getAddr();

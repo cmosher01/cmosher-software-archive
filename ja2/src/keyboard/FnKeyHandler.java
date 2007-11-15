@@ -2,6 +2,7 @@ package keyboard;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 import chipset.CPU6502;
 import disk.DiskInterface;
 
@@ -38,6 +39,17 @@ public class FnKeyHandler extends KeyAdapter implements KeyListener
 		else if (key == KeyEvent.VK_INSERT)
 		{
 			
+		}
+		else if (key == KeyEvent.VK_F12)
+		{
+			try
+			{
+				this.cpu.dump();
+			}
+			catch (IOException e1)
+			{
+				e1.printStackTrace();
+			}
 		}
 	}
 }

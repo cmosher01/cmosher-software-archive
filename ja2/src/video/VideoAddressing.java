@@ -1,5 +1,7 @@
 package video;
 
+import other.HexUtil;
+
 
 public class VideoAddressing
 {
@@ -64,5 +66,20 @@ public class VideoAddressing
 			a += 0x80;
 		}
 		return a;
+	}
+
+	public static void main(final String... args)
+	{
+		final int[] lut = buildLUT(0x400,0x400);
+		int t = 0;
+		for (int y = 0; y < NTSC_LINES_PER_FIELD; ++y)
+		{
+			for (int x = 0; x < BYTES_PER_ROW; ++x)
+			{
+				System.out.print(HexUtil.word(lut[t++]));
+				System.out.print(",");
+			}
+			System.out.println();
+		}
 	}
 }

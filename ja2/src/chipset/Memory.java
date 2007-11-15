@@ -1,6 +1,10 @@
 package chipset;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Arrays;
 import video.Video;
 import keyboard.Keyboard;
@@ -37,68 +41,88 @@ public class Memory
 
 	public byte read(final int address)
 	{
-		if (address < 0 || CPU6502.MEMORY_LIM <= address)
-		{
-			throw new IllegalStateException();
-		}
+//		if (address < 0 || CPU6502.MEMORY_LIM <= address)
+//		{
+//			throw new IllegalStateException();
+//		}
 		if (0xC000 <= address && address < 0xC100)
 		{
 			return readSwitch(address);
 		}
+
 		return this.ram[address];
 	}
 
 	private byte readSwitch(int address)
 	{
+		byte r = -1;
+
 		address &= 0x00FF;
 
 		if (address < 0x80)
 		{
-			if (address == 0x00)
+			final int seg = address >> 4;
+			final int sw = address & 0x0F;
+			if (seg == 0x0)
 			{
-				return this.keyboard.get();
+				r = this.keyboard.get();
 			}
-			if (address == 0x10)
+			else if (seg == 0x1)
 			{
 				this.keyboard.clear();
-				return this.keyboard.get();
+				r = this.keyboard.get();
 			}
-			if (address == 0x20 || address == 0x60)
+			else if (seg == 0x2 || seg == 0x6)
 			{
-				if (this.tape == null)
+				if (this.tape != null)
 				{
-					return -1;
+					r = this.tape.io(address,(byte)0);
 				}
-				return this.tape.io(address,(byte)0);
 			}
-			if (0x50 <= address && address < 0x58)
+			else if (seg == 0x3)
 			{
-				return this.video.io(address,(byte)0);
+				// TODO: toggle speaker
 			}
-			return -1;
+			else if (seg == 0x4)
+			{
+				// TODO: game I/O
+			}
+			else if (seg == 0x5)
+			{
+				if (sw < 0x8)
+					r = this.video.io(address,(byte)0);
+//				else
+					// TODO
+			}
+			if (seg == 0x7)
+			{
+				// TODO: paddles
+			}
 		}
-
-		// slot I/O switches
-		address &= 0x7F;
-		final int slot = address >> 4;
-
-		if (slot == 6)
+		else
 		{
-			if (this.disk == null)
+			// slot I/O switches
+			address &= 0x7F;
+			final int slot = address >> 4;
+	
+			if (slot == 0x6)
 			{
-				return -1;
+				if (this.disk != null)
+				{
+					r = this.disk.io(address,(byte)0);
+				}
 			}
-			return this.disk.io(address,(byte)0);
 		}
-		return -1;
+
+		return r;
 	}
 
 	public void write(final int address, final byte data)
 	{
-		if (address < 0 || CPU6502.MEMORY_LIM <= address)
-		{
-			throw new IllegalStateException();
-		}
+//		if (address < 0 || CPU6502.MEMORY_LIM <= address)
+//		{
+//			throw new IllegalStateException();
+//		}
 		if (0xC000 <= address && address < 0xC100)
 		{
 			writeSwitch(address,data);
@@ -118,28 +142,45 @@ public class Memory
 
 		if (address < 0x80)
 		{
-			if (address == 0x10)
+			final int seg = address >> 4;
+			final int sw = address & 0x0F;
+
+			if (seg == 0x0)
+			{
+				// nothing?
+			}
+			else if (seg == 0x1)
 			{
 				this.keyboard.clear();
-				return;
 			}
-			if (address == 0x20 || address == 0x60)
+			else if (seg == 0x2 || seg == 0x6)
 			{
-				this.tape.io(address,data);
+				if (this.tape != null)
+				{
+					this.tape.io(address,data);
+				}
 			}
-			if (0x50 <= address && address < 0x58)
+			else if (seg == 0x5)
 			{
-				this.video.io(address,data);
+				if (sw < 0x8)
+					this.video.io(address,data);
+//				else
+					// TODO
 			}
 		}
-
-		// slot I/O switches
-		address &= 0x7F;
-		final int slot = address >> 4;
-
-		if (slot == 6)
+		else
 		{
-			this.disk.io(address,data);
+			// slot I/O switches
+			address &= 0x7F;
+			final int slot = address >> 4;
+	
+			if (slot == 0x6)
+			{
+				if (this.disk != null)
+				{
+					this.disk.io(address,data);
+				}
+			}
 		}
 	}
 
@@ -153,5 +194,15 @@ public class Memory
 		{
 			this.ram[base++] = (byte)byt;
 		}
+	}
+
+	public void dump() throws IOException
+	{
+		final OutputStream fil = new BufferedOutputStream(new FileOutputStream(new File("dump.bin")));
+		for (int i = 0; i < this.ram.length; ++i)
+		{
+			fil.write(this.ram[i]);
+		}
+		fil.close();
 	}
 }
