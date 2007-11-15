@@ -1,5 +1,5 @@
 package disk;
-import other.HexUtil;
+import util.HexUtil;
 
 /*
  * Created on Sep 12, 2007

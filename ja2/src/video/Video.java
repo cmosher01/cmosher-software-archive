@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import other.HexUtil;
+import util.HexUtil;
 import chipset.Memory;
 
 /*

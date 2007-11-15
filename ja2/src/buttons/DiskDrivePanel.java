@@ -23,7 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import disk.DiskBytes;
-import other.HexUtil;
+import util.HexUtil;
 
 public class DiskDrivePanel extends JPanel
 {

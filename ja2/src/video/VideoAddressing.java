@@ -1,6 +1,6 @@
 package video;
 
-import other.HexUtil;
+import util.HexUtil;
 
 
 public class VideoAddressing
