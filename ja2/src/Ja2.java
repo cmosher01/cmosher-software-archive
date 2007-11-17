@@ -23,6 +23,7 @@ import javax.swing.SwingUtilities;
 import chipset.CPU6502;
 import chipset.Clock;
 import chipset.Memory;
+import keyboard.ClipboardHandler;
 import keyboard.FnKeyHandler;
 import keyboard.Keyboard;
 import video.Video;
@@ -93,6 +94,7 @@ public final class Ja2
     	parseArgs();
 
     	final Keyboard keyboard = new Keyboard();
+    	final ClipboardHandler clip = new ClipboardHandler(keyboard);
 
 
 
@@ -137,7 +139,7 @@ public final class Ja2
 
     	final CPU6502 cpu = new CPU6502(memory);
 
-    	final FnKeyHandler fn = new FnKeyHandler(cpu,disk);
+    	final FnKeyHandler fn = new FnKeyHandler(cpu,disk,clip);
 
         // create the main frame window for the application
         this.framer.init(

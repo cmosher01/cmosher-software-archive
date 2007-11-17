@@ -13,14 +13,16 @@ public class FnKeyHandler extends KeyAdapter implements KeyListener
 {
 	private final CPU6502 cpu;
 	private final DiskInterface disk;
+	private final ClipboardHandler clip;
 
 	/**
 	 * @param cpu
 	 */
-	public FnKeyHandler(final CPU6502 cpu, final DiskInterface disk)
+	public FnKeyHandler(final CPU6502 cpu, final DiskInterface disk, final ClipboardHandler clip)
 	{
 		this.cpu = cpu;
 		this.disk = disk;
+		this.clip = clip;
 	}
 
 	/**
@@ -38,9 +40,9 @@ public class FnKeyHandler extends KeyAdapter implements KeyListener
 		}
 		else if (key == KeyEvent.VK_INSERT)
 		{
-			
+			this.clip.paste();
 		}
-		else if (key == KeyEvent.VK_F12)
+		else if (key == KeyEvent.VK_PRINTSCREEN)
 		{
 			try
 			{

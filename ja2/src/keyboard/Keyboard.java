@@ -1,9 +1,13 @@
 package keyboard;
-import java.awt.Event;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+
 
 /*
  * Created on Sep 12, 2007
@@ -15,52 +19,64 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Keyboard extends KeyAdapter implements KeyListener
 {
-//	volatile int latch;
-
-	private AtomicInteger latch = new AtomicInteger();
+	private final Object lock = new Object();
+	private int latch;
+	private final BlockingQueue<Integer> qKeys = new LinkedBlockingQueue<Integer>();
 
 	private long lastGet = System.currentTimeMillis();
 	private long cGet;
+	private final AtomicBoolean hyper = new AtomicBoolean();
+
 
 	/**
 	 * @param e
 	 */
 	@Override
-	public void keyTyped(KeyEvent e)
+	public void keyTyped(final KeyEvent e)
 	{
-		char key = e.getKeyChar();
-//		System.out.println("raw keypress: "+Integer.toHexString(key));
-		switch (key)
-		{
-			case '\n':
-				key = '\r';
-			break;
-//			case '\b':
-//				key = 0x7F;
-//			break;
-		}
-		if (key >= 0x80) // ignore non-ASCII keypresses
+		final char chr = e.getKeyChar();
+
+//		System.out.println("keyTyped: "+HexUtil.word(chr));
+		// handle CR and LF in keyPressed, because Java doesn't
+		// handle ^M right
+		if (chr == '\n' || chr == '\r')
 		{
 			return;
 		}
 
-		press(key);
+		// ignore non-ASCII keypresses
+		if (chr >= 0x80)
+		{
+			return;
+		}
+
+		press(chr);
 	}
 
-	private void press(final int key)
+	public void press(final int key)
 	{
-		synchronized (this.latch)
+		this.qKeys.add((key | 0x80) & 0xFF);
+		synchronized (this.lock)
 		{
-			this.latch.set((key & 0xFF) | 0x80);
-			this.latch.notifyAll();
+			this.lock.notifyAll();
 		}
 	}
 
-	public void keyPressed(KeyEvent e)
+	@Override
+	public void keyPressed(final KeyEvent e)
 	{
-//		System.out.println("raw key down: "+Integer.toHexString(e.getKeyCode()));
 		final int key = e.getKeyCode();
-		if (key == KeyEvent.VK_LEFT)
+		final char chr = e.getKeyChar();
+
+		if (key == KeyEvent.VK_ENTER)
+		{
+			press('\r');
+		}
+		else if (chr == '\n' || chr == '\r')
+		{
+			press(chr);
+		}
+		else if (key == KeyEvent.VK_LEFT)
 		{
 			press(8);
 		}
@@ -76,29 +92,56 @@ public class Keyboard extends KeyAdapter implements KeyListener
 		{
 			press(10);
 		}
+		else if (key == KeyEvent.VK_F12)
+		{
+			this.qKeys.clear();
+			clear();
+		}
+		else if (key == KeyEvent.VK_F11)
+		{
+			this.hyper.set(!this.hyper.get());
+		}
 	}
+
+
+
+
+
 
 	public byte get()
 	{
 		waitIfTooFast();
-		synchronized (this.latch)
+		synchronized (this.lock)
 		{
-			return (byte)this.latch.get();
+			if (this.latch >= 0x80)
+			{
+				return (byte)this.latch;
+			}
+			final Integer k = this.qKeys.peek();
+			if (k != null)
+			{
+				this.qKeys.remove();
+				this.latch = k;
+			}
+			return (byte)this.latch;
 		}
 	}
 
 	public void clear()
 	{
-		synchronized (this.latch)
+		synchronized (this.lock)
 		{
-			int tmp = this.latch.get();
-			tmp &= 0x7F;
-			this.latch.set(tmp);
+			this.latch &= 0x7F;
 		}
 	}
 
 	private void waitIfTooFast()
 	{
+		if (this.hyper.get())
+		{
+			return;
+		}
+
 		++this.cGet;
 		if (this.cGet >= 0x100)
 		{
@@ -107,15 +150,14 @@ public class Keyboard extends KeyAdapter implements KeyListener
 				// Check every 256 gets to see if they are
 				// happening too fact (within one second).
 				// If so, wait for a keypress (but only up to 100 ms).
-				synchronized (this.latch)
+				synchronized (this.lock)
 				{
 					try
 					{
-						this.latch.wait(100);
+						this.lock.wait(100);
 					}
 					catch (InterruptedException e)
 					{
-						e.printStackTrace();
 						Thread.currentThread().interrupt();
 					}
 				}

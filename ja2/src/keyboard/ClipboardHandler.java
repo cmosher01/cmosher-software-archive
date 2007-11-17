@@ -1,4 +1,4 @@
-package pom1.gui;
+package keyboard;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -6,7 +6,8 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
-import pom1.apple1.devices.Keyboard;
+
+
 
 public class ClipboardHandler
 {
@@ -22,8 +23,12 @@ public class ClipboardHandler
 		final String data = getClipboardContents();
 		for (int i = 0; i < data.length(); ++i)
 		{
-			final char c = data.charAt(i);
-			this.keyboard.keyTyped(c);
+			char c = data.charAt(i);
+			if (c == '\n')
+			{
+				c = '\r';
+			}
+			this.keyboard.press(c);
 		}
 	}
 
