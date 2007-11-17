@@ -1,9 +1,12 @@
 package disk;
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /*
@@ -17,8 +20,8 @@ public class DiskBytes
 
 	private byte[][] bytes = new byte[TRACKS_PER_DISK][BYTES_PER_TRACK];
 
-	private boolean writable;
-	final AtomicBoolean loaded = new AtomicBoolean();
+	private final AtomicBoolean loaded = new AtomicBoolean();
+	private final AtomicBoolean writable = new AtomicBoolean();
 	private int byt;
 	private int waitTimes;
 
@@ -30,7 +33,6 @@ public class DiskBytes
 	public void load(final File f) throws IOException
 	{
 		final InputStream disk = new BufferedInputStream(new FileInputStream(f));
-		System.out.println("Loading "+f.getCanonicalPath());
 		int itrack = 0;
 		for (int b1 = disk.read(); b1 != EOF && itrack < TRACKS_PER_DISK; b1 = disk.read())
 		{
@@ -41,7 +43,10 @@ public class DiskBytes
 			}
 		}
 		disk.close();
-		this.writable = f.canWrite();
+		synchronized (this.writable)
+		{
+			this.writable.set(f.canWrite());
+		}
 		synchronized (this.loaded)
 		{
 			this.loaded.set(true);
@@ -49,10 +54,38 @@ public class DiskBytes
 		}
 	}
 
+	private boolean isLoaded()
+	{
+		synchronized (this.loaded)
+		{
+			return this.loaded.get();
+		}
+	}
+	public void save(final File f) throws IOException
+	{
+		if (isWriteProtected() || !isLoaded())
+		{
+			return;
+		}
+		final OutputStream out = new BufferedOutputStream(new FileOutputStream(f),TRACKS_PER_DISK*BYTES_PER_TRACK);
+		for (int itrack = 0; itrack < TRACKS_PER_DISK; ++itrack)
+		{
+			for (int ibyte = 0; ibyte < BYTES_PER_TRACK; ++ibyte)
+			{
+				out.write(this.bytes[itrack][ibyte]);
+			}
+		}
+		out.flush();
+		out.close();
+	}
+
 	public void unload()
 	{
 		this.byt = 0;
-		this.writable = true;
+		synchronized (this.writable)
+		{
+			this.writable.set(true);
+		}
 		synchronized (this.loaded)
 		{
 			this.loaded.set(false);
@@ -92,7 +125,6 @@ public class DiskBytes
 		}
 		final byte ret = this.bytes[track][this.byt];
 		nextByte();
-		//System.out.println("DISK: getting bit "+Integer.toHexString(this.bit)+": "+ret);
 		return ret;
 	}
 
@@ -102,11 +134,10 @@ public class DiskBytes
 		{
 			throw new IllegalStateException();
 		}
-		if (!this.writable || !this.loaded.get())
+		if (isWriteProtected() || !isLoaded())
 		{
 			return;
 		}
-//		System.out.println("DISK: writing byte "+Integer.toHexString((value&0xFF))+" @"+Integer.toHexString(this.byt));
 		this.bytes[track][this.byt] = value;
 		nextByte();
 	}
@@ -117,7 +148,6 @@ public class DiskBytes
 		final boolean nextTrack = this.byt >= BYTES_PER_TRACK;
 		if (nextTrack)
 		{
-//			System.out.println("Disk completed one rotation ----------------");
 			this.byt = 0;
 		}
 		return nextTrack;
@@ -125,6 +155,9 @@ public class DiskBytes
 
 	public boolean isWriteProtected()
 	{
-		return !this.writable;
+		synchronized (this.writable)
+		{
+			return !this.writable.get();
+		}
 	}
 }

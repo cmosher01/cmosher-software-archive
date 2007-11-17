@@ -1,4 +1,5 @@
 package disk;
+
 import buttons.DiskDrivePanel;
 import gui.FrameManager;
 
@@ -89,6 +90,7 @@ public class DiskInterface
 		{
 			return;
 		}
+		this.framer.getDrive(this.disk.getDriveNumber()).setModified(true); // always allow saves
 		drive.setTrack(this.arm.getTrack());
 		if (this.disk.isMotorOn())
 		{
@@ -110,5 +112,8 @@ public class DiskInterface
 		}
 		this.framer.getDrive(1-this.disk.getDriveNumber()).setWriting(false);
 		this.framer.getDrive(1-this.disk.getDriveNumber()).setReading(false);
+
+		this.framer.getDrive(this.disk.getDriveNumber()).updateIf();
+		this.framer.getDrive(1-this.disk.getDriveNumber()).updateIf();
 	}
 }

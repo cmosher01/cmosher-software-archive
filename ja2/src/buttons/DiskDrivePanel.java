@@ -8,27 +8,22 @@ import gui.UserCancelled;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Insets;
-import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
-import disk.DiskBytes;
 import util.HexUtil;
+import disk.DiskBytes;
 
 public class DiskDrivePanel extends JPanel
 {
 	private final FrameManager framer;
-	private volatile String file;
+	private volatile File file;
+	private volatile String fileName = "";
 	private volatile int track;
 	private volatile boolean modified;
 	private volatile boolean reading;
@@ -41,6 +36,8 @@ public class DiskDrivePanel extends JPanel
 	private HiliteButton btnSave;
 	private LED ledRead;
 	private LED ledWrite;
+
+	private volatile boolean upd;
 
 	public DiskDrivePanel(final DiskBytes drive, final FrameManager framer)
 	{
@@ -102,9 +99,37 @@ public class DiskDrivePanel extends JPanel
 		add(this.btnSave);
 		sz = this.btnSave.getPreferredSize();
 		this.btnSave.setBounds(50,30,(int)sz.getWidth(),(int)sz.getHeight());
+		this.btnSave.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				saveFile();
+			}
+		});
 		this.btnSave.setFocusable(false);
 
-		//update();
+		this.upd = true;
+		updateIf();
+	}
+
+	private void saveFile()
+	{
+		if (this.file == null)
+		{
+			return;
+		}
+		try
+		{
+			this.drive.save(this.file);
+		}
+		catch (IOException e)
+		{
+			this.framer.showMessage(e.toString());
+			e.printStackTrace();
+		}
+		this.modified = false;
+		updateEvent();
+		this.btnSave.mouseExited();
 	}
 
 	private void openFile()
@@ -113,9 +138,10 @@ public class DiskDrivePanel extends JPanel
 		{
 			try
 			{
-				final File f = this.framer.getFileToOpen(null);
-				this.drive.load(f);
-				this.file = f.getCanonicalFile().getName();
+				this.file = this.framer.getFileToOpen(null);
+				this.file = this.file.getCanonicalFile();
+				this.fileName = this.file.getName();
+				this.drive.load(this.file);
 			}
 			catch (UserCancelled e1)
 			{
@@ -131,13 +157,19 @@ public class DiskDrivePanel extends JPanel
 		{
 			this.drive.unload();
 			this.file = null;
+			this.fileName = "";
 		}
+		this.modified = false;
 		updateEvent();
 		this.btnLoad.mouseExited();
 	}
 
-	public void update()
+	public void updateIf()
 	{
+		if (!this.upd)
+		{
+			return;
+		}
 		try
 		{
 			if (SwingUtilities.isEventDispatchThread())
@@ -166,16 +198,17 @@ public class DiskDrivePanel extends JPanel
 	}
 
 	private StringBuilder sb = new StringBuilder(4);
-	public void updateEvent()
+	private void updateEvent()
 	{
 		sb.setLength(0);
 		sb.append("T$");
-		sb.append(HexUtil.byt((byte)DiskDrivePanel.this.track));
-		DiskDrivePanel.this.labelTrack.setText(sb.toString());
-		DiskDrivePanel.this.labelFile.setText(DiskDrivePanel.this.file);
-		DiskDrivePanel.this.btnSave.setEnabled(DiskDrivePanel.this.modified);
-		DiskDrivePanel.this.btnLoad.setText(DiskDrivePanel.this.file == null ? "load" : "unload");
+		sb.append(HexUtil.byt((byte)this.track));
+		this.labelTrack.setText(sb.toString());
+		this.labelFile.setText(this.fileName);
+		this.btnSave.setEnabled(this.modified);
+		this.btnLoad.setText(this.file == null ? "load" : "unload");
 		repaint();
+		this.upd = false;
 	}
 	
 	/**
@@ -183,8 +216,11 @@ public class DiskDrivePanel extends JPanel
 	 */
 	public void setModified(boolean modified)
 	{
-		this.modified = modified;
-		update();
+		if (this.modified != modified)
+		{
+			this.modified = modified;
+			this.upd = true;
+		}
 	}
 
 	/**
@@ -192,9 +228,12 @@ public class DiskDrivePanel extends JPanel
 	 */
 	public void setReading(boolean reading)
 	{
-		this.reading = reading;
-		this.ledRead.setOn(reading);
-		update();
+		if (this.reading != reading)
+		{
+			this.reading = reading;
+			this.ledRead.setOn(reading);
+			this.upd = true;
+		}
 	}
 
 	/**
@@ -202,8 +241,11 @@ public class DiskDrivePanel extends JPanel
 	 */
 	public void setTrack(int track)
 	{
-		this.track = track;
-		update();
+		if (this.track != track)
+		{
+			this.track = track;
+			this.upd = true;
+		}
 	}
 
 	/**
@@ -211,9 +253,12 @@ public class DiskDrivePanel extends JPanel
 	 */
 	public void setWriting(boolean writing)
 	{
-		this.writing = writing;
-		this.ledWrite.setOn(writing);
-		update();
+		if (this.writing != writing)
+		{
+			this.writing = writing;
+			this.ledWrite.setOn(writing);
+			this.upd = true;
+		}
 	}
 
 }
