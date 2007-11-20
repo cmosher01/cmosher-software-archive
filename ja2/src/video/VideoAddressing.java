@@ -1,5 +1,6 @@
 package video;
 
+import chipset.Clock;
 import util.HexUtil;
 
 
@@ -10,10 +11,7 @@ public class VideoAddressing
 	private static final int NTSC_FIELDS_PER_SECOND = 60;
 	private static final int NTSC_COLOR_FIELD_EVERY = 1000;
 
-	private static final int CRYSTAL_HZ = divideRoundUp(315000000,22);
-	private static final int CPU_CYCLES_PER_CRYSTAL_CYCLES = 14;
-	private static final int CPU_HZ = divideRoundUp(CRYSTAL_HZ,CPU_CYCLES_PER_CRYSTAL_CYCLES);
-	private static final int APPLE_BYTES = (NTSC_COLOR_FIELD_EVERY+1)*CPU_HZ;
+	private static final int APPLE_BYTES = (NTSC_COLOR_FIELD_EVERY+1)*Clock.CPU_HZ;
 	private static final int LINES = NTSC_FIELDS_PER_SECOND*NTSC_COLOR_FIELD_EVERY*NTSC_LINES_PER_FIELD;
 	public static final int BYTES_PER_ROW = APPLE_BYTES/LINES;
 
@@ -36,11 +34,6 @@ public class VideoAddressing
 			lut[t] = base + (calc(t) % len);
 		}
 		return lut;
-	}
-
-	private static int divideRoundUp(final int dividend, final int divisor)
-	{
-		return (dividend+divisor-1)/divisor;
 	}
 
 	private static int calc(final int t)

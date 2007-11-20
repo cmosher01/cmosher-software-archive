@@ -28,23 +28,22 @@ public class Keyboard extends KeyAdapter implements KeyListener
 	private final AtomicBoolean hyper = new AtomicBoolean();
 
 
-	/**
-	 * @param e
-	 */
 	@Override
 	public void keyTyped(final KeyEvent e)
 	{
 		final char chr = e.getKeyChar();
 
-//		System.out.println("keyTyped: "+HexUtil.word(chr));
-		// handle CR and LF in keyPressed, because Java doesn't
-		// handle ^M right
+		/*
+		 * We need to handle CR and LF in keyPressed instead
+		 * of here, otherwise Control-M sends us Control-J,
+		 * and that's not the Apple Way.
+		 */
 		if (chr == '\n' || chr == '\r')
 		{
 			return;
 		}
 
-		// ignore non-ASCII keypresses
+		// ignore any nonASCII key-presses
 		if (chr >= 0x80)
 		{
 			return;
@@ -147,9 +146,12 @@ public class Keyboard extends KeyAdapter implements KeyListener
 		{
 			if (System.currentTimeMillis() - this.lastGet <= 1000)
 			{
-				// Check every 256 gets to see if they are
-				// happening too fact (within one second).
-				// If so, wait for a keypress (but only up to 50 ms).
+				/*
+				 * Check every 256 gets to see if they are
+				 * happening too fact (within one second).
+				 * If so, *wait* for a key-press (but only up
+				 * to 50 milliseconds).
+				 */
 				synchronized (this.lock)
 				{
 					try
