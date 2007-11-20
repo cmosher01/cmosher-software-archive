@@ -70,7 +70,7 @@ public class VideoAddressing
 
 	public static void main(final String... args)
 	{
-		final int[] lut = buildLUT(0x400,0x400);
+		final int[] lut = buildLUT(0x2000,0x2000);
 		int t = 0;
 		for (int y = 0; y < NTSC_LINES_PER_FIELD; ++y)
 		{

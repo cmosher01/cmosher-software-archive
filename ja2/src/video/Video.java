@@ -4,8 +4,10 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import util.HexUtil;
@@ -24,6 +26,8 @@ public class Video extends JPanel
 	private boolean swHiRes;
 
 	private int t;
+	private int f;
+	private boolean flash;
 
 	private int data;
 
@@ -48,6 +52,7 @@ public class Video extends JPanel
 
 	BufferedImage screenImage;
 	DataBuffer buf;
+
 
 
 
@@ -119,6 +124,11 @@ public class Video extends JPanel
 		return (byte)this.data; // emulates "floating bus"
 	}
 
+	private static final int FLASH_PERIOD = VideoAddressing.BYTES_PER_FIELD/2;
+	private static final int FLASH_ON = FLASH_PERIOD/2;
+
+	private static final int FLASH_HALFPERIOD = 4;
+
 	public void tick()
 	{
 		final int a = getAddr();
@@ -130,7 +140,14 @@ public class Video extends JPanel
 		{
 			if (d >= 0)
 			{
-				inverse = true;
+				if ((d >> 6) == 1)
+				{
+					inverse = this.flash;
+				}
+				else
+				{
+					inverse = true;
+				}
 			}
 			d = this.char_rom[((d&0x7F)<<3)+((this.t / VideoAddressing.BYTES_PER_ROW) & 0x07)];
 		}
@@ -148,6 +165,12 @@ public class Video extends JPanel
 				}
 			});
 			this.t = 0;
+			++this.f;
+			if (this.f >= FLASH_HALFPERIOD)
+			{
+				this.f = 0;
+				this.flash = ! this.flash;
+			}
 		}
 	}
 
@@ -177,7 +200,6 @@ public class Video extends JPanel
 		{
 			addr = this.lutLoRes[page][this.t];
 		}
-		// TODO mixed text/graphics
 		return addr;
 	}
 
@@ -235,6 +257,7 @@ public class Video extends JPanel
 		y += x;
 		if (!this.swText && !this.swHiRes && !(this.swMixed && this.t >= 10400))
 		{
+			// lo-res
 			final int i;
 			if (((oy >> 2) & 1) != 0)
 				i = (d >> 4) & 0xF;
@@ -252,6 +275,7 @@ public class Video extends JPanel
 		}
 		else if (inverse)
         {
+			// inverse text
         	this.buf.setElem(0, y++, ((d & 0x01) != 0) ? BLACK : GREEN);
         	this.buf.setElem(0, y++, ((d & 0x02) != 0) ? BLACK : GREEN);
         	this.buf.setElem(0, y++, ((d & 0x04) != 0) ? BLACK : GREEN);
@@ -262,6 +286,7 @@ public class Video extends JPanel
         }
         else
         {
+        	// normal text and hi-res
         	this.buf.setElem(0, y++, ((d & 0x01) != 0) ? GREEN : BLACK);
         	this.buf.setElem(0, y++, ((d & 0x02) != 0) ? GREEN : BLACK);
         	this.buf.setElem(0, y++, ((d & 0x04) != 0) ? GREEN : BLACK);
@@ -270,12 +295,8 @@ public class Video extends JPanel
         	this.buf.setElem(0, y++, ((d & 0x20) != 0) ? GREEN : BLACK);
         	this.buf.setElem(0, y++, ((d & 0x40) != 0) ? GREEN : BLACK);
         }
-		// TODO high-order bit half-dot shift
-	}
-
-	private byte getTextCharLine(int d, int i)
-	{
-		return this.char_rom[((d&0x7F)<<3)+i];
+		// TODO high-order bit half-dot shift and hi-res colors
+		// TODO flashing text
 	}
 
 	public void setMemory(final Memory memory)
@@ -286,5 +307,10 @@ public class Video extends JPanel
 	public boolean isText()
 	{
 		return this.swText;
+	}
+
+	public void dump() throws IOException
+	{
+		ImageIO.write(this.screenImage,"PNG",new File("dump.png"));
 	}
 }

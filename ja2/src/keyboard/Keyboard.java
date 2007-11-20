@@ -149,12 +149,12 @@ public class Keyboard extends KeyAdapter implements KeyListener
 			{
 				// Check every 256 gets to see if they are
 				// happening too fact (within one second).
-				// If so, wait for a keypress (but only up to 100 ms).
+				// If so, wait for a keypress (but only up to 50 ms).
 				synchronized (this.lock)
 				{
 					try
 					{
-						this.lock.wait(100);
+						this.lock.wait(50);
 					}
 					catch (InterruptedException e)
 					{

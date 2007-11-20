@@ -139,7 +139,7 @@ public final class Ja2
 
     	final CPU6502 cpu = new CPU6502(memory);
 
-    	final FnKeyHandler fn = new FnKeyHandler(cpu,disk,clip);
+    	final FnKeyHandler fn = new FnKeyHandler(cpu,disk,clip,video);
 
         // create the main frame window for the application
         this.framer.init(
