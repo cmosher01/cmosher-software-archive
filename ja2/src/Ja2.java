@@ -200,10 +200,10 @@ public final class Ja2
 
 	public void close()
 	{
+		this.framer.close(); // this exits the app
 		if (this.clock != null)
 		{
 			this.clock.shutdown();
 		}
-		this.framer.close(); // this exits the app
 	}
 }

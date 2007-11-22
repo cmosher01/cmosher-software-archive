@@ -1,6 +1,8 @@
 package gui;
 import java.awt.Dimension;
 import java.awt.Insets;
+import java.io.File;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import disk.DiskBytes;
@@ -61,5 +63,18 @@ public class ContentPane extends JPanel
 			return this.diskDrive2;
 		}
 		throw new IllegalStateException();
+	}
+
+	public void acceptDroppedFiles(final List<File> files)
+	{
+		// take first two files and ignore the rest
+		if (files.size() > 0)
+		{
+			this.diskDrive1.drop(files.get(0));
+		}
+		if (files.size() > 1)
+		{
+			this.diskDrive2.drop(files.get(1));
+		}
 	}
 }

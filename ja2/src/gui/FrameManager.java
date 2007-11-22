@@ -1,9 +1,22 @@
 package gui;
 import java.awt.Font;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetAdapter;
+import java.awt.dnd.DropTargetDragEvent;
+import java.awt.dnd.DropTargetDropEvent;
+import java.awt.dnd.DropTargetEvent;
+import java.awt.dnd.DropTargetListener;
 import java.awt.event.WindowListener;
 import java.io.Closeable;
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -48,6 +61,38 @@ public class FrameManager implements Closeable
         this.contentPane = new ContentPane(video,drive1,drive2,this);
         this.frame.setContentPane(this.contentPane);
 
+        DropTarget drop = new DropTarget(this.frame,new DropTargetAdapter()
+        {
+			public void drop(final DropTargetDropEvent evt)
+			{
+                final Transferable tr = evt.getTransferable();
+                if (tr.isDataFlavorSupported(DataFlavor.javaFileListFlavor))
+                {
+                    evt.acceptDrop(DnDConstants.ACTION_COPY);
+
+                    final List<File> files = getFileList(tr);
+
+                    evt.getDropTargetContext().dropComplete(true);
+
+                    FrameManager.this.contentPane.acceptDroppedFiles(files);
+                    FrameManager.this.frame.toFront();
+                }
+			}
+
+			private List<File> getFileList(final Transferable tr)
+			{
+				List<File> fileList = new ArrayList<File>();
+				try
+				{
+					fileList = (List<File>)tr.getTransferData(DataFlavor.javaFileListFlavor);
+				}
+				catch (final Throwable e)
+				{
+					e.printStackTrace();
+				}
+				return fileList;
+			}
+        });
         // Set the window's size and position.
         this.frame.pack();
         this.frame.setLocationRelativeTo(null);

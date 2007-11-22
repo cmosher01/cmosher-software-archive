@@ -261,4 +261,23 @@ public class DiskDrivePanel extends JPanel
 		}
 	}
 
+	public void drop(final File file)
+	{
+		if (this.file != null)
+		{
+			this.drive.unload();
+			this.file = null;
+			this.fileName = "";
+		}
+		this.file = file;
+		this.fileName = this.file.getName();
+		try
+		{
+			this.drive.load(this.file);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
 }
