@@ -12,6 +12,8 @@ import java.awt.image.DataBuffer;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -334,8 +336,10 @@ public class Video extends JPanel
 		return this.swText;
 	}
 
+	final SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 	public void dump() throws IOException
 	{
-		ImageIO.write(this.screenImage,"PNG",new File("dump.png"));
+		final String name = "dump"+fmt.format(new Date())+".png";
+		ImageIO.write(this.screenImage,"PNG",new File(name));
 	}
 }

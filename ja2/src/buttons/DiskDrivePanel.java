@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -44,8 +45,8 @@ public class DiskDrivePanel extends JPanel
 		this.drive = drive;
 		this.framer = framer;
 		setOpaque(true);
-		setPreferredSize(new Dimension(81,43));
-//		setBorder(BorderFactory.createLoweredBevelBorder());
+		setPreferredSize(new Dimension(84,45));
+		setBorder(BorderFactory.createLoweredBevelBorder());
 		addNotify();
 
 		setFocusable(false);
@@ -60,7 +61,7 @@ public class DiskDrivePanel extends JPanel
 		this.setBackground(Color.WHITE);
 		this.labelTrack = new JLabel();
 		add(this.labelTrack);
-		this.labelTrack.setBounds(2,2,35,16);
+		this.labelTrack.setBounds(4,2,35,16);
 		this.labelTrack.setFont(new Font("Arial",Font.PLAIN,10));
 		this.labelTrack.setFocusable(false);
 
@@ -85,7 +86,7 @@ public class DiskDrivePanel extends JPanel
 		this.btnLoad = new HiliteButton("unload",42,12);
 		add(this.btnLoad);
 		sz = this.btnLoad.getPreferredSize();
-		this.btnLoad.setBounds(2,30,(int)sz.getWidth(),(int)sz.getHeight());
+		this.btnLoad.setBounds(4,30,(int)sz.getWidth(),(int)sz.getHeight());
 		this.btnLoad.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)

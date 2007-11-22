@@ -5,7 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import video.Video;
 import keyboard.Keyboard;
 import disk.DiskInterface;
@@ -261,9 +263,11 @@ public class Memory
 		}
 	}
 
+	final SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 	public void dump() throws IOException
 	{
-		final OutputStream fil = new BufferedOutputStream(new FileOutputStream(new File("dump.bin")));
+		final String name = "dump"+fmt.format(new Date())+".bin";
+		final OutputStream fil = new BufferedOutputStream(new FileOutputStream(new File(name)));
 		for (int i = 0; i < this.ram.length; ++i)
 		{
 			fil.write(this.ram[i]);
