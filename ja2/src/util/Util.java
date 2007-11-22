@@ -3,6 +3,8 @@
  */
 package util;
 
+import java.util.StringTokenizer;
+
 public final class Util
 {
 	private Util() { throw new IllegalStateException(); }
@@ -15,5 +17,14 @@ public final class Util
 	public static int divideRoundUp(final int dividend, final int divisor)
 	{
 		return (dividend+divisor-1)/divisor;
+	}
+
+	public static String nextTok(final StringTokenizer tok)
+	{
+		if (!tok.hasMoreTokens())
+		{
+			return "";
+		}
+		return tok.nextToken();
 	}
 }

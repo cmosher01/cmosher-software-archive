@@ -27,6 +27,7 @@ public class Keyboard extends KeyAdapter implements KeyListener
 	private long cGet;
 	private final AtomicBoolean hyper = new AtomicBoolean();
 
+	private volatile boolean paddleButtonDown;
 
 	@Override
 	public void keyTyped(final KeyEvent e)
@@ -100,6 +101,10 @@ public class Keyboard extends KeyAdapter implements KeyListener
 		{
 			this.hyper.set(!this.hyper.get());
 		}
+		else if (key == KeyEvent.VK_F8)
+		{
+			this.paddleButtonDown = true;
+		}
 	}
 
 
@@ -167,5 +172,23 @@ public class Keyboard extends KeyAdapter implements KeyListener
 			this.cGet = 0;
 		}
 		this.lastGet = System.currentTimeMillis();
+	}
+
+	/**
+	 * @param e
+	 */
+	@Override
+	public void keyReleased(KeyEvent e)
+	{
+		final int key = e.getKeyCode();
+		if (key == KeyEvent.VK_F8)
+		{
+			this.paddleButtonDown = false;
+		}
+	}
+
+	public boolean isPaddleButtonDown()
+	{
+		return this.paddleButtonDown;
 	}
 }

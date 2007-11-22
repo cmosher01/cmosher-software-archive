@@ -62,6 +62,7 @@ public class Clock
 			/*
 			 * If we are displaying graphics and the disk drive is not on,
 			 * then try to slow down to real Apple ][ speed (1022727 Hz).
+			 * (The theory is that this will allow games to run at real speed.)
 			 * Otherwise, just run a fast as possible (except for slowing
 			 * down while waiting for a key-press; see Keyboard.waitIfTooFast).
 			 */

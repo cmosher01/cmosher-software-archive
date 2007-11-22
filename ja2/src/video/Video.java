@@ -1,7 +1,12 @@
 package video;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.PointerInfo;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.io.File;
@@ -28,6 +33,8 @@ public class Video extends JPanel
 	private int t;
 	private int f;
 	private boolean flash;
+
+	private int tpdl;
 
 	private int data;
 
@@ -154,6 +161,7 @@ public class Video extends JPanel
 		plotByte(this.t,d,inverse);
 
 		++this.t;
+		--this.tpdl;
 
 		if (this.t >= VideoAddressing.BYTES_PER_FIELD)
 		{
@@ -182,6 +190,23 @@ public class Video extends JPanel
 	{
 		// we don't need to paint anything; we just let the
 		// emulated screen refresh do it's thing
+	}
+
+	public void startPaddleTimer()
+	{
+		final PointerInfo mouse = MouseInfo.getPointerInfo();
+		final Point loc = mouse.getLocation();
+		final double p = loc.getX();
+		final Container top = this.getTopLevelAncestor();
+		final Rectangle rect = top.getBounds();
+		final double pMin = rect.getMinX();
+		final double pMax = rect.getMaxX();
+		this.tpdl = (int)Math.round(Math.rint((p-pMin)/(pMax-pMin)*2805));
+	}
+
+	public boolean paddleTimedOut()
+	{
+		return this.tpdl <= 0;
 	}
 
 	private int getAddr()

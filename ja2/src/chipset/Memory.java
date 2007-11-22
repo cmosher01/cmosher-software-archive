@@ -9,7 +9,8 @@ import java.util.Arrays;
 import video.Video;
 import keyboard.Keyboard;
 import disk.DiskInterface;
-import disk.TapeInterface;
+
+
 
 /*
  * Created on Aug 1, 2007
@@ -20,17 +21,17 @@ public class Memory
 	private final Keyboard keyboard;
 	private final Video video;
 	private final DiskInterface disk;
-	private final TapeInterface tape;
+	private int slot2latch;
+	private boolean inHasCRs;
 
 	/**
 	 * @param keyboard
 	 */
-	public Memory(final Keyboard keyboard, final Video video, final DiskInterface disk, final TapeInterface tape)
+	public Memory(final Keyboard keyboard, final Video video, final DiskInterface disk)
 	{
 		this.keyboard = keyboard;
 		this.video = video;
 		this.disk = disk;
-		this.tape = tape;
 		clear();
 	}
 
@@ -72,12 +73,9 @@ public class Memory
 				this.keyboard.clear();
 				r = this.keyboard.get();
 			}
-			else if (seg == 0x2 || seg == 0x6)
+			else if (seg == 0x2)
 			{
-				if (this.tape != null)
-				{
-					r = this.tape.io(address,(byte)0);
-				}
+				// ignore cassette output
 			}
 			else if (seg == 0x3)
 			{
@@ -85,18 +83,39 @@ public class Memory
 			}
 			else if (seg == 0x4)
 			{
-				// TODO: game I/O
+				// ignore utility strobe
 			}
 			else if (seg == 0x5)
 			{
 				if (sw < 0x8)
+				{
 					r = this.video.io(address,(byte)0);
-//				else
-					// TODO
+				}
+				else
+				{
+					// ignore annunciator outputs
+				}
 			}
-			if (seg == 0x7)
+			else if (seg == 0x6)
 			{
-				// TODO: paddles
+				int sw2 = sw & 0x7;
+				if (sw2 == 0)
+				{
+					// ignore cassette input
+				}
+				else if (sw2 < 4)
+				{
+					r = this.keyboard.isPaddleButtonDown() ? (byte)0x80 : 0;
+				}
+				else
+				{
+//					sw2 &= 3;
+					r = this.video.paddleTimedOut() ? 0 : (byte)0x80;
+				}
+			}
+			else if (seg == 0x7)
+			{
+				this.video.startPaddleTimer();
 			}
 		}
 		else
@@ -110,6 +129,50 @@ public class Memory
 				if (this.disk != null)
 				{
 					r = this.disk.io(address,(byte)0);
+				}
+			}
+			else if (slot == 0x2)
+			{
+				// IN#2 reads from standard in
+				final int sw = address & 0x0F;
+				if (sw == 0)
+				{
+					if (this.slot2latch >= 0x80)
+					{
+						r = (byte)this.slot2latch;
+					}
+					else
+					{
+						try
+						{
+							int c = System.in.read();
+							if (c == '\r')
+							{
+								this.inHasCRs = true;
+							}
+							while (c == '\n')
+							{
+								if (this.inHasCRs)
+								{
+									c = System.in.read();
+								}
+								else
+								{
+									c = '\r';
+								}
+							}
+							r = (byte)(c | 0x80);
+						}
+						catch (IOException e)
+						{
+							e.printStackTrace();
+						}
+					}
+				}
+				else if (sw == 1)
+				{
+					this.slot2latch &= 0x7F;
+					r = (byte)this.slot2latch;
 				}
 			}
 		}
@@ -145,28 +208,16 @@ public class Memory
 			final int seg = address >> 4;
 			final int sw = address & 0x0F;
 
-			if (seg == 0x0)
-			{
-				// nothing?
-			}
-			else if (seg == 0x1)
+			if (seg == 0x1)
 			{
 				this.keyboard.clear();
-			}
-			else if (seg == 0x2 || seg == 0x6)
-			{
-				if (this.tape != null)
-				{
-					this.tape.io(address,data);
-				}
 			}
 			else if (seg == 0x5)
 			{
 				if (sw < 0x8)
 					this.video.io(address,data);
-//				else
-					// TODO
 			}
+			// ignore all other switch writes
 		}
 		else
 		{
@@ -180,6 +231,20 @@ public class Memory
 				{
 					this.disk.io(address,data);
 				}
+			}
+			else if (slot == 0x1)
+			{
+				// PR#1 writes to standard out
+				final char c = (char)(data&0x7F);
+				if (c == '\r')
+				{
+					System.out.println();
+				}
+				else
+				{
+					System.out.print(c);
+				}
+				System.out.flush();
 			}
 		}
 	}

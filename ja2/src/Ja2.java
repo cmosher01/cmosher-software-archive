@@ -1,7 +1,4 @@
 import gui.FrameManager;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
@@ -11,28 +8,22 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.SwingUtilities;
-import chipset.CPU6502;
-import chipset.Clock;
-import chipset.Memory;
 import keyboard.ClipboardHandler;
 import keyboard.FnKeyHandler;
 import keyboard.Keyboard;
+import util.Util;
 import video.Video;
+import chipset.CPU6502;
+import chipset.Clock;
+import chipset.Memory;
 import disk.DiskBytes;
 import disk.DiskDriveSimple;
 import disk.DiskInterface;
 import disk.StepperMotor;
-import disk.TapeDriveMemory;
-import disk.TapeInterface;
 
 /*
  * Created on Aug 31, 2004
@@ -50,7 +41,7 @@ public final class Ja2
 {
 	private final FrameManager framer = new FrameManager();
 
-	Clock clock;
+	private Clock clock;
 
 	private String config = "ja2.cfg";
 
@@ -106,36 +97,11 @@ public final class Ja2
 
 
 
-//    	final TapeDriveMemory tape = new TapeDriveMemory();
-//    	final TapeInterface tapedrive = new TapeInterface(tape);
-
-
-
     	final Video video = new Video();
 
-        final Memory memory = new Memory(keyboard,video,disk,null);
+        final Memory memory = new Memory(keyboard,video,disk);
         video.setMemory(memory);
 
-
-//        final InputStream romImage = new FileInputStream(new File("C:\\eclipse_organize\\postsvn_workspace\\apple2src\\firmware/rom/apple2p_d000.rom"));
-//        memory.load(0xD000,romImage);
-//        romImage.close();
-//
-//        final InputStream monromImage = new FileInputStream(new File("C:\\eclipse_organize\\postsvn_workspace\\apple2src\\firmware/rom/apple2p_f800.rom"));
-//        memory.load(0xF800,monromImage);
-//        monromImage.close();
-//
-//        final InputStream diskromImage = new FileInputStream(new File("C:\\eclipse_organize\\postsvn_workspace\\apple2src\\build\\firmware\\disk2_16sector\\disk2_A$C600_L$0100_16sector"));
-//        memory.load(0xC600,diskromImage);
-//        diskromImage.close();
-
-//        final InputStream c200romImage = getClass().getResourceAsStream("unknown_from_2e_c200.rom");
-//        memory.load(0xc200,c200romImage);
-//        romImage.close();
-
-//        final InputStream c100romImage = getClass().getResourceAsStream("apple2e_c100.rom");
-//        memory.load(0xc100,c100romImage);
-//        romImage.close();
 
     	final CPU6502 cpu = new CPU6502(memory);
 
@@ -184,8 +150,8 @@ public final class Ja2
 	private void parseArg(final String arg)
 	{
 		final StringTokenizer tok = new StringTokenizer(arg,"=");
-		final String opt = nextTok(tok);
-		final String val = nextTok(tok);
+		final String opt = Util.nextTok(tok);
+		final String val = Util.nextTok(tok);
 
 		if (opt.equals("config"))
 		{
@@ -209,6 +175,11 @@ public final class Ja2
     			s = s.substring(0,comment);
     		}
     		s = s.trim();
+    		if (s.isEmpty())
+    		{
+    			continue;
+    		}
+
     		final Matcher matcher;
     		if ((matcher = patIMPORT.matcher(s)).matches())
     		{
@@ -219,53 +190,20 @@ public final class Ja2
     	        memory.load(addr,image);
     	        image.close();
     		}
+    		else
+    		{
+    			throw new IllegalArgumentException("Error in config file: "+s);
+    		}
     	}
     	cfg.close();
 	}
 
-	private JMenuBar createAppMenuBar()
-	{
-		final JMenuBar menubar = new JMenuBar();
-        appendMenus(menubar);
-        return menubar;
-	}
-
-	private void appendMenus(final JMenuBar bar)
-	{
-		final JMenu menuFile = new JMenu("File");
-		menuFile.setMnemonic(KeyEvent.VK_F);
-
-		appendMenuItems(menuFile);
-
-		bar.add(menuFile);
-	}
-
-	private void appendMenuItems(final JMenu menu)
-	{
-		final JMenuItem itemFileExit = new JMenuItem("Exit");
-		itemFileExit.setMnemonic(KeyEvent.VK_X);
-		itemFileExit.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(final ActionEvent e)
-			{
-				close();
-			}
-		});
-		menu.add(itemFileExit);
-	}
-
 	public void close()
 	{
-		this.clock.shutdown();
-		this.framer.close(); // this exits the app
-	}
-
-	private static String nextTok(final StringTokenizer tok)
-	{
-		if (!tok.hasMoreTokens())
+		if (this.clock != null)
 		{
-			return "";
+			this.clock.shutdown();
 		}
-		return tok.nextToken();
+		this.framer.close(); // this exits the app
 	}
 }
