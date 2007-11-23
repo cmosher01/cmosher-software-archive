@@ -1,11 +1,13 @@
 package gui;
 import java.awt.Dimension;
 import java.awt.Insets;
+import java.awt.dnd.DropTargetListener;
 import java.io.File;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import disk.DiskBytes;
+import disk.DiskInterface;
 import video.Video;
 import buttons.DiskDrivePanel;
 
@@ -19,16 +21,16 @@ public class ContentPane extends JPanel
 	private DiskDrivePanel diskDrive2;
 	
 
-	public ContentPane(final Video video, final DiskBytes drive1, final DiskBytes drive2, final FrameManager framer)
+	public ContentPane(final Video video, final DiskBytes drive1, final DiskBytes drive2, final FrameManager framer, final DiskInterface diskInterface)
 	{
 		this.video = video;
 		setOpaque(true);
 		addNotify();
 
-		setUp(drive1,drive2,framer);
+		setUp(drive1,drive2,framer,diskInterface);
 	}
 
-	private void setUp(final DiskBytes drive1, final DiskBytes drive2, final FrameManager framer)
+	private void setUp(final DiskBytes drive1, final DiskBytes drive2, final FrameManager framer, final DiskInterface diskInterface)
 	{
 		setLayout(null);
 		//setBackground(Color.BLACK);
@@ -40,12 +42,12 @@ public class ContentPane extends JPanel
 		Insets insets = getInsets();
 		this.video.setBounds(insets.left,insets.top,szVideo.width,szVideo.height);
 
-		this.diskDrive1 = new DiskDrivePanel(drive1,framer);
+		this.diskDrive1 = new DiskDrivePanel(drive1,framer,diskInterface);
 		add(this.diskDrive1);
 		Dimension szDisk = this.diskDrive1.getPreferredSize();
 		this.diskDrive1.setBounds(insets.left,szVideo.height+2,(int)szDisk.getWidth(),(int)szDisk.getHeight());
 
-		this.diskDrive2 = new DiskDrivePanel(drive2,framer);
+		this.diskDrive2 = new DiskDrivePanel(drive2,framer,diskInterface);
 		add(this.diskDrive2);
 		this.diskDrive2.setBounds(insets.left+(int)szDisk.getWidth()+3,szVideo.height+2,(int)szDisk.getWidth(),(int)szDisk.getHeight());
 
@@ -65,16 +67,8 @@ public class ContentPane extends JPanel
 		throw new IllegalStateException();
 	}
 
-	public void acceptDroppedFiles(final List<File> files)
+	public DropTargetListener getFirstDrivePanelDropListener()
 	{
-		// take first two files and ignore the rest
-		if (files.size() > 0)
-		{
-			this.diskDrive1.drop(files.get(0));
-		}
-		if (files.size() > 1)
-		{
-			this.diskDrive2.drop(files.get(1));
-		}
+		return this.diskDrive1.getDropListener();
 	}
 }

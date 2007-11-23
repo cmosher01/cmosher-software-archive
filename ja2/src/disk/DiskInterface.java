@@ -90,30 +90,32 @@ public class DiskInterface
 		{
 			return;
 		}
-		this.framer.getDrive(this.disk.getDriveNumber()).setModified(true); // always allow saves
+		DiskDrivePanel driveOther = this.framer.getDrive(1-this.disk.getDriveNumber());
+		drive.setModified(true); // always allow saves
 		drive.setTrack(this.arm.getTrack());
+		drive.setWriteProtected(this.disk.isWriteProtected());
 		if (this.disk.isMotorOn())
 		{
 			if (this.write)
 			{
-				this.framer.getDrive(this.disk.getDriveNumber()).setWriting(true);
-				this.framer.getDrive(this.disk.getDriveNumber()).setReading(false);
+				drive.setWriting(true);
+				drive.setReading(false);
 			}
 			else
 			{
-				this.framer.getDrive(this.disk.getDriveNumber()).setWriting(false);
-				this.framer.getDrive(this.disk.getDriveNumber()).setReading(true);
+				drive.setWriting(false);
+				drive.setReading(true);
 			}
 		}
 		else
 		{
-			this.framer.getDrive(this.disk.getDriveNumber()).setWriting(false);
-			this.framer.getDrive(this.disk.getDriveNumber()).setReading(false);
+			drive.setWriting(false);
+			drive.setReading(false);
 		}
-		this.framer.getDrive(1-this.disk.getDriveNumber()).setWriting(false);
-		this.framer.getDrive(1-this.disk.getDriveNumber()).setReading(false);
+		driveOther.setWriting(false);
+		driveOther.setReading(false);
 
-		this.framer.getDrive(this.disk.getDriveNumber()).updateIf();
-		this.framer.getDrive(1-this.disk.getDriveNumber()).updateIf();
+		drive.updateIf();
+		driveOther.updateIf();
 	}
 }

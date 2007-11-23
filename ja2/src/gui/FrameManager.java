@@ -25,6 +25,7 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.FontUIResource;
 import disk.DiskBytes;
+import disk.DiskInterface;
 import video.Video;
 import buttons.DiskDrivePanel;
 
@@ -33,7 +34,7 @@ public class FrameManager implements Closeable
 	private JFrame frame;
 	private ContentPane contentPane;
 
-	public void init(final WindowListener listenerWindow, final Video video, final DiskBytes drive1, final DiskBytes drive2)
+	public void init(final WindowListener listenerWindow, final Video video, final DiskBytes drive1, final DiskBytes drive2, final DiskInterface diskInterface)
 	{
 		setLookAndFeel();
 
@@ -58,41 +59,11 @@ public class FrameManager implements Closeable
 //        this.frame.setJMenuBar(factoryMenuBar.createMenuBar());
 
         // Create and set up the content pane.
-        this.contentPane = new ContentPane(video,drive1,drive2,this);
+        this.contentPane = new ContentPane(video,drive1,drive2,this,diskInterface);
         this.frame.setContentPane(this.contentPane);
 
-        DropTarget drop = new DropTarget(this.frame,new DropTargetAdapter()
-        {
-			public void drop(final DropTargetDropEvent evt)
-			{
-                final Transferable tr = evt.getTransferable();
-                if (tr.isDataFlavorSupported(DataFlavor.javaFileListFlavor))
-                {
-                    evt.acceptDrop(DnDConstants.ACTION_COPY);
+        new DropTarget(this.frame,this.contentPane.getFirstDrivePanelDropListener());
 
-                    final List<File> files = getFileList(tr);
-
-                    evt.getDropTargetContext().dropComplete(true);
-
-                    FrameManager.this.contentPane.acceptDroppedFiles(files);
-                    FrameManager.this.frame.toFront();
-                }
-			}
-
-			private List<File> getFileList(final Transferable tr)
-			{
-				List<File> fileList = new ArrayList<File>();
-				try
-				{
-					fileList = (List<File>)tr.getTransferData(DataFlavor.javaFileListFlavor);
-				}
-				catch (final Throwable e)
-				{
-					e.printStackTrace();
-				}
-				return fileList;
-			}
-        });
         // Set the window's size and position.
         this.frame.pack();
         this.frame.setLocationRelativeTo(null);
@@ -243,5 +214,10 @@ public class FrameManager implements Closeable
 	public void close()
 	{
 		this.frame.dispose();
+	}
+
+	public void toFront()
+	{
+		this.frame.toFront();
 	}
 }

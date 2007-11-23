@@ -89,8 +89,8 @@ public final class Ja2
 
 
 
-    	final DiskBytes disk1 = new DiskBytes();
-    	final DiskBytes disk2 = new DiskBytes();
+    	final DiskBytes disk1 = new DiskBytes(this.framer);
+    	final DiskBytes disk2 = new DiskBytes(this.framer);
     	final DiskDriveSimple drive = new DiskDriveSimple(new DiskBytes[] {disk1,disk2});
     	final StepperMotor arm = new StepperMotor();
     	final DiskInterface disk = new DiskInterface(drive,arm,this.framer);
@@ -117,7 +117,7 @@ public final class Ja2
 					close();
 				}
 	    	},
-	    	video,disk1,disk2);
+	    	video,disk1,disk2,disk);
 
         video.addKeyListener(keyboard);
         video.addKeyListener(fn);

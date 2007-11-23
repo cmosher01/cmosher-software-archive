@@ -8,27 +8,39 @@ import gui.UserCancelled;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetAdapter;
+import java.awt.dnd.DropTargetDropEvent;
+import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import util.HexUtil;
 import disk.DiskBytes;
+import disk.DiskInterface;
 
 public class DiskDrivePanel extends JPanel
 {
 	private final FrameManager framer;
+	private final DiskInterface diskInterface;
 	private volatile File file;
 	private volatile String fileName = "";
 	private volatile int track;
 	private volatile boolean modified;
 	private volatile boolean reading;
 	private volatile boolean writing;
+	private volatile boolean writeProtected;
 	private final DiskBytes drive;
 
 	private JLabel labelTrack;
@@ -40,10 +52,11 @@ public class DiskDrivePanel extends JPanel
 
 	private volatile boolean upd;
 
-	public DiskDrivePanel(final DiskBytes drive, final FrameManager framer)
+	public DiskDrivePanel(final DiskBytes drive, final FrameManager framer, final DiskInterface diskInterface)
 	{
 		this.drive = drive;
 		this.framer = framer;
+		this.diskInterface = diskInterface;
 		setOpaque(true);
 		setPreferredSize(new Dimension(84,45));
 		setBorder(BorderFactory.createLoweredBevelBorder());
@@ -109,12 +122,55 @@ public class DiskDrivePanel extends JPanel
 		});
 		this.btnSave.setFocusable(false);
 
+		setUpDrop();
+
 		this.upd = true;
 		updateIf();
 	}
 
+	private void setUpDrop()
+	{
+		this.dropListener = new DropTargetAdapter()
+        {
+			public void drop(final DropTargetDropEvent evt)
+			{
+                final Transferable tr = evt.getTransferable();
+                if (tr.isDataFlavorSupported(DataFlavor.javaFileListFlavor))
+                {
+                    evt.acceptDrop(DnDConstants.ACTION_COPY);
+
+                    final List<File> files = getFileList(tr);
+
+                    evt.getDropTargetContext().dropComplete(true);
+
+                    if (files.size() > 0)
+                    {
+                    	openDroppedFile(files.get(0));
+                    }
+                    DiskDrivePanel.this.framer.toFront();
+                }
+			}
+
+			private List<File> getFileList(final Transferable tr)
+			{
+				List<File> fileList = new ArrayList<File>();
+				try
+				{
+					fileList = (List<File>)tr.getTransferData(DataFlavor.javaFileListFlavor);
+				}
+				catch (final Throwable e)
+				{
+					e.printStackTrace();
+				}
+				return fileList;
+			}
+        };
+
+        new DropTarget(this,this.dropListener);
+    }
 	private void saveFile()
 	{
+		this.upd = true;
 		if (this.file == null)
 		{
 			return;
@@ -122,19 +178,20 @@ public class DiskDrivePanel extends JPanel
 		try
 		{
 			this.drive.save(this.file);
+			this.modified = false;
 		}
 		catch (IOException e)
 		{
-			this.framer.showMessage(e.toString());
+			this.framer.showMessage(e.getMessage());
 			e.printStackTrace();
 		}
-		this.modified = false;
-		updateEvent();
+		this.diskInterface.updatePanel();
 		this.btnSave.mouseExited();
 	}
 
 	private void openFile()
 	{
+		this.upd = true;
 		if (this.file == null)
 		{
 			try
@@ -143,6 +200,7 @@ public class DiskDrivePanel extends JPanel
 				this.file = this.file.getCanonicalFile();
 				this.fileName = this.file.getName();
 				this.drive.load(this.file);
+				this.modified = false;
 			}
 			catch (UserCancelled e1)
 			{
@@ -150,7 +208,7 @@ public class DiskDrivePanel extends JPanel
 			}
 			catch (IOException e)
 			{
-				this.framer.showMessage(e.toString());
+				this.framer.showMessage(e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -160,8 +218,7 @@ public class DiskDrivePanel extends JPanel
 			this.file = null;
 			this.fileName = "";
 		}
-		this.modified = false;
-		updateEvent();
+		this.diskInterface.updatePanel();
 		this.btnLoad.mouseExited();
 	}
 
@@ -199,14 +256,17 @@ public class DiskDrivePanel extends JPanel
 	}
 
 	private StringBuilder sb = new StringBuilder(4);
+	private DropTargetListener dropListener;
+
 	private void updateEvent()
 	{
-		sb.setLength(0);
-		sb.append("T$");
-		sb.append(HexUtil.byt((byte)this.track));
-		this.labelTrack.setText(sb.toString());
+		this.sb.setLength(0);
+		this.sb.append("T$");
+		this.sb.append(HexUtil.byt((byte)this.track));
+		this.labelTrack.setText(this.sb.toString());
 		this.labelFile.setText(this.fileName);
-		this.btnSave.setEnabled(this.modified);
+		this.btnSave.setVisible(!this.writeProtected);
+		this.btnSave.setEnabled(!this.writeProtected && this.modified);
 		this.btnLoad.setText(this.file == null ? "load" : "unload");
 		repaint();
 		this.upd = false;
@@ -262,23 +322,42 @@ public class DiskDrivePanel extends JPanel
 		}
 	}
 
-	public void drop(final File file)
+	private void openDroppedFile(final File file)
 	{
+		this.upd = true;
 		if (this.file != null)
 		{
 			this.drive.unload();
 			this.file = null;
 			this.fileName = "";
+			this.modified = false;
 		}
-		this.file = file;
-		this.fileName = this.file.getName();
 		try
 		{
-			this.drive.load(this.file);
+			this.drive.load(file);
+			this.file = file;
+			this.fileName = this.file.getName();
+			this.modified = false;
 		}
 		catch (IOException e)
 		{
+			this.framer.showMessage(e.getMessage());
 			e.printStackTrace();
 		}
+		this.diskInterface.updatePanel();
+	}
+
+	public void setWriteProtected(boolean writeProtected)
+	{
+		if (this.writeProtected != writeProtected)
+		{
+			this.writeProtected = writeProtected;
+			this.upd = true;
+		}
+	}
+
+	public DropTargetListener getDropListener()
+	{
+		return this.dropListener;
 	}
 }
