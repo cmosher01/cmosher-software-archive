@@ -1,5 +1,8 @@
 package gui;
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -11,10 +14,12 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.awt.event.WindowListener;
+import java.awt.image.MemoryImageSource;
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import javax.swing.JDialog;
@@ -51,7 +56,7 @@ public class FrameManager implements Closeable
         this.frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         this.frame.addWindowListener(listenerWindow);
 
-//        this.frame.setIconImage(getFrameIcon());
+        this.frame.setIconImage(getFrameIcon());
 
         this.frame.setTitle("Apple ][");
 
@@ -122,35 +127,37 @@ public class FrameManager implements Closeable
 		}
 	}
 
-//    private Image getFrameIcon()
-//    {
-//        final int w = 100;
-//        final int h = 100;
-//        final int pix[] = new int[w * h];
-//
-//        final int colorLine = Color.ORANGE.getRGB();
-//        final int colorBack = Color.WHITE.getRGB();
-//        int index = 0;
-//        for (int y = 0; y < h; y++)
-//        {
-//    		final boolean yLine = /*(y < 8) ||*/ (29 < y && y < 37) || (62 < y && y < 70) /*|| (92 < y)*/;
-//            for (int x = 0; x < w; x++)
-//            {
-//        		final boolean xLine = /*(x < 8) ||*/ (29 < x && x < 37) || (62 < x && x < 70) /*|| (92 < x)*/;
-//            	int color;
-//        		if (xLine || yLine)
-//            	{
-//            		color = colorLine;
-//            	}
-//        		else
-//        		{
-//        			color = colorBack;
-//        		}
-//                pix[index++] = color;
-//            }
-//        }
-//        return Toolkit.getDefaultToolkit().createImage(new MemoryImageSource(w,h,pix,0,w));
-//    }
+    private Image getFrameIcon()
+    {
+        final int w = 10;
+        final int h = 11;
+        final int pix[] = new int[w * h];
+
+        final int colorLine = Color.GREEN.getRGB();
+        final int colorBack = Color.BLACK.getRGB();
+        Arrays.fill(pix,colorBack);
+        for (int x = 0; x < 4; ++x)
+        {
+        	pix[x+20] = colorLine;
+        	pix[x+26] = colorLine;
+        	pix[x+80] = colorLine;
+        	pix[x+86] = colorLine;
+        }
+        for (int x = 0; x < 2; ++x)
+        {
+        	pix[x+32] = colorLine;
+        	pix[x+36] = colorLine;
+        	pix[x+42] = colorLine;
+        	pix[x+46] = colorLine;
+        	pix[x+52] = colorLine;
+        	pix[x+56] = colorLine;
+        	pix[x+62] = colorLine;
+        	pix[x+66] = colorLine;
+        	pix[x+72] = colorLine;
+        	pix[x+76] = colorLine;
+        }
+        return Toolkit.getDefaultToolkit().createImage(new MemoryImageSource(w,h,pix,0,w));
+    }
 
 
 
@@ -187,29 +194,6 @@ public class FrameManager implements Closeable
 	{
 		JOptionPane.showMessageDialog(this.frame,message);
 	}
-
-//	public String getBoardStringFromUser() throws UserCancelled
-//	{
-//		NewBoardEntry entry = null;
-//		try
-//		{
-//			entry = new NewBoardEntry(this.frame);
-//			return entry.ask();
-//		}
-//		finally
-//		{
-//			if (entry != null)
-//			{
-//				entry.dispose();
-//			}
-//		}
-//	}
-//
-//	public boolean askOK(final String message)
-//	{
-//		final int choice = JOptionPane.showConfirmDialog(this.frame,message,"Confirm",JOptionPane.OK_CANCEL_OPTION);
-//		return choice == JOptionPane.OK_OPTION;
-//	}
 
 	public void close()
 	{
