@@ -1,6 +1,4 @@
 package disk;
-import java.io.File;
-import java.io.IOException;
 
 /*
  * Created on Sep 16, 2007

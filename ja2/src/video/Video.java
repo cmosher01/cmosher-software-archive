@@ -17,7 +17,6 @@ import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import util.HexUtil;
 import chipset.Memory;
 
 /*
@@ -132,9 +131,6 @@ public class Video extends JPanel
 		}
 		return (byte)this.data; // emulates "floating bus"
 	}
-
-	private static final int FLASH_PERIOD = VideoAddressing.BYTES_PER_FIELD/2;
-	private static final int FLASH_ON = FLASH_PERIOD/2;
 
 	private static final int FLASH_HALFPERIOD = 4;
 
@@ -339,7 +335,7 @@ public class Video extends JPanel
 	final SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 	public void dump() throws IOException
 	{
-		final String name = "dump"+fmt.format(new Date())+".png";
+		final String name = "dump"+this.fmt.format(new Date())+".png";
 		ImageIO.write(this.screenImage,"PNG",new File(name));
 	}
 }

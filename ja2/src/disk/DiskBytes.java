@@ -35,7 +35,6 @@ public class DiskBytes
 
 	public void load(final File f) throws IOException
 	{
-		boolean bad;
 		if (f.length() != TRACKS_PER_DISK*BYTES_PER_TRACK)
 		{
 			showBadDisk();

@@ -266,7 +266,7 @@ public class Memory
 	final SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 	public void dump() throws IOException
 	{
-		final String name = "dump"+fmt.format(new Date())+".bin";
+		final String name = "dump"+this.fmt.format(new Date())+".bin";
 		final OutputStream fil = new BufferedOutputStream(new FileOutputStream(new File(name)));
 		for (int i = 0; i < this.ram.length; ++i)
 		{

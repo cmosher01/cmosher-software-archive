@@ -50,12 +50,7 @@ public final class Ja2
     	// only instantiated by main
     }
 
-	/**
-     * @param args
-     * @throws IOException 
-     * @throws ApplicationAborting
-     */
-    public static void main(final String... args) throws IOException, InterruptedException, InvocationTargetException
+    public static void main(final String... args) throws InterruptedException, InvocationTargetException
     {
     	SwingUtilities.invokeAndWait(new Runnable()
     	{
@@ -82,7 +77,7 @@ public final class Ja2
 
     private void tryRun(final String... args) throws IOException
     {
-    	parseArgs();
+    	parseArgs(args);
 
     	final Keyboard keyboard = new Keyboard();
     	final ClipboardHandler clip = new ClipboardHandler(keyboard);

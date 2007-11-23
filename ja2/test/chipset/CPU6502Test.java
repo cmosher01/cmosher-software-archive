@@ -11,6 +11,7 @@ public class CPU6502Test extends TestCase
 	private CPU6502 cpu;
 	private Memory memory;
 	
+	@Override
 	protected void setUp() throws Exception
 	{
 		this.memory = new Memory(null,null,null);
@@ -18,6 +19,7 @@ public class CPU6502Test extends TestCase
 		this.cpu.reset = false;
 	}
 
+	@Override
 	protected void tearDown() throws Exception
 	{
 	}

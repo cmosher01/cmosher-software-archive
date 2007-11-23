@@ -36,6 +36,7 @@ public class HiliteButton extends JButton //implements ActionListener
 		this.setPreferredSize(new Dimension(width,height));
 	}
 
+	@Override
 	public void processMouseEvent(MouseEvent evt)
 	{
 		switch (evt.getID())
@@ -64,6 +65,7 @@ public class HiliteButton extends JButton //implements ActionListener
 		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	}
 
+	@Override
 	protected void paintComponent(Graphics g)
 	{
         final Graphics2D g2d = (Graphics2D)g.create();

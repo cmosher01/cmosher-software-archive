@@ -2,14 +2,12 @@ package gui;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.dnd.DropTargetListener;
-import java.io.File;
-import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import disk.DiskBytes;
-import disk.DiskInterface;
 import video.Video;
 import buttons.DiskDrivePanel;
+import disk.DiskBytes;
+import disk.DiskInterface;
 
 /*
  * Created on Sep 19, 2007

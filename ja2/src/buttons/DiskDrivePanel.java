@@ -258,7 +258,7 @@ public class DiskDrivePanel extends JPanel
 	private StringBuilder sb = new StringBuilder(4);
 	private DropTargetListener dropListener;
 
-	private void updateEvent()
+	void updateEvent()
 	{
 		this.sb.setLength(0);
 		this.sb.append("T$");
@@ -322,7 +322,7 @@ public class DiskDrivePanel extends JPanel
 		}
 	}
 
-	private void openDroppedFile(final File file)
+	private void openDroppedFile(final File f)
 	{
 		this.upd = true;
 		if (this.file != null)
@@ -334,8 +334,8 @@ public class DiskDrivePanel extends JPanel
 		}
 		try
 		{
-			this.drive.load(file);
-			this.file = file;
+			this.drive.load(f);
+			this.file = f;
 			this.fileName = this.file.getName();
 			this.modified = false;
 		}
