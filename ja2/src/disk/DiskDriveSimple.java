@@ -41,15 +41,10 @@ public class DiskDriveSimple
 	public void setDrive2(final boolean drive2)
 	{
 		this.dr = drive2 ? 1 : 0;
-//		System.out.println("DISK: drive "+this.dr);
 	}
 
 	public void setMotorOn(final boolean on)
 	{
-//		if (on)
-//			System.out.println("DISK: drive on");
-//		else
-//			System.out.println("DISK: drive off");
 		this.motorOn = on;
 	}
 
