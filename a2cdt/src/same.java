@@ -19,7 +19,7 @@ public class same
 			throw new IllegalArgumentException("usage: java same file1 file2");
 		}
 		final BufferedInputStream in1 = new BufferedInputStream(new FileInputStream(new File(args[0])));
-		final BufferedInputStream in2 = new BufferedInputStream(new FileInputStream(new File(args[0])));
+		final BufferedInputStream in2 = new BufferedInputStream(new FileInputStream(new File(args[1])));
 
 		if (!same(in1,in2))
 		{
