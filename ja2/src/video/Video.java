@@ -1,12 +1,8 @@
 package video;
+
+import gui.Screen;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.PointerInfo;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.io.File;
@@ -15,14 +11,12 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import chipset.Memory;
 
 /*
  * Created on Aug 2, 2007
  */
-public class Video extends JPanel
+public class Video
 {
 	private Memory memory;
 
@@ -54,29 +48,32 @@ public class Video extends JPanel
 
 	private static final int XSIZE = VISIBLE_BITS_PER_BYTE*VideoAddressing.VISIBLE_BYTES_PER_ROW;
 	private static final int YSIZE = VideoAddressing.VISIBLE_ROWS_PER_FIELD;
+	public static final Dimension SIZE = new Dimension(XSIZE,YSIZE);
 	private static final int VISIBLE_X_OFFSET = VideoAddressing.BYTES_PER_ROW-VideoAddressing.VISIBLE_BYTES_PER_ROW;
+
+	private static final int MIXED_TEXT_LINES = 4;
+	private static final int ROWS_PER_TEXT_LINE = 8;
+	private static final int MIXED_TEXT_CYCLE = (VideoAddressing.VISIBLE_ROWS_PER_FIELD-(MIXED_TEXT_LINES*ROWS_PER_TEXT_LINE))*VideoAddressing.BYTES_PER_ROW;
 
 	BufferedImage screenImage;
 	DataBuffer buf;
 
+	private final Screen screen;
 
 
 
-	public Video() throws IOException
+
+	public Video(final Screen screen) throws IOException
 	{
-		setOpaque(true);
-		setPreferredSize(new Dimension(XSIZE,YSIZE));
-		addNotify();
-
+		this.screen = screen;
 		this.char_rom = readCharRom();
 	}
 
-	private static final int EOF = -1;
-
 	public void stopped()
 	{
-		
 	}
+
+	private static final int EOF = -1;
 
 	private static byte[] readCharRom() throws IOException
 	{
@@ -139,7 +136,7 @@ public class Video extends JPanel
 
 		int d = this.data;
 		boolean inverse = false;
-		if (this.swText || (this.swMixed && this.t >= 10400))
+		if (this.swText || (this.swMixed && this.t >= MIXED_TEXT_CYCLE))
 		{
 			if (d >= 0)
 			{
@@ -160,13 +157,10 @@ public class Video extends JPanel
 
 		if (this.t >= VideoAddressing.BYTES_PER_FIELD)
 		{
-			SwingUtilities.invokeLater(new Runnable()
+			if (this.screen != null)
 			{
-				public void run()
-				{
-					plotScreen();
-				}
-			});
+				this.screen.plot(this.screenImage);
+			}
 			this.t = 0;
 			++this.f;
 			if (this.f >= FLASH_HALFPERIOD)
@@ -177,21 +171,11 @@ public class Video extends JPanel
 		}
 	}
 
-	/**
-	 * @param g
-	 */
-	@Override
-	public void paint(Graphics g)
-	{
-		// we don't need to paint anything; we just let the
-		// emulated screen refresh do it's thing
-	}
-
 	private int getAddr()
 	{
 		int addr;
 		final int page = this.swPage2 ? 1 : 0;
-		if (this.swText || (this.swMixed && this.t >= 10400))
+		if (this.swText || (this.swMixed && this.t >= MIXED_TEXT_CYCLE))
 		{
 			addr = this.lutText[page][this.t];
 		}
@@ -206,24 +190,9 @@ public class Video extends JPanel
 		return addr;
 	}
 
-	void plotScreen()
-	{
-		if (this.screenImage == null)
-		{
-			return;
-		}
-		Graphics gr = getGraphics();
-		if (gr == null)
-		{
-			return;
-		}
-		gr.drawImage(this.screenImage,0,0,this);
-	}
-
 	private void createOffscreenImage()
 	{
-		final Dimension size = getSize();
-		this.screenImage = new BufferedImage(size.width,size.height,BufferedImage.TYPE_INT_RGB);
+		this.screenImage = new BufferedImage(SIZE.width,SIZE.height,BufferedImage.TYPE_INT_RGB);
 		this.buf = this.screenImage.getRaster().getDataBuffer();
 	}
 
@@ -258,7 +227,7 @@ public class Video extends JPanel
 
 		y *= XSIZE;
 		y += x;
-		if (!this.swText && !this.swHiRes && !(this.swMixed && this.t >= 10400))
+		if (!this.swText && !this.swHiRes && !(this.swMixed && this.t >= MIXED_TEXT_CYCLE))
 		{
 			// lo-res
 			final int i;
@@ -299,7 +268,6 @@ public class Video extends JPanel
         	this.buf.setElem(0, y++, ((d & 0x40) != 0) ? GREEN : BLACK);
         }
 		// TODO high-order bit half-dot shift and hi-res colors
-		// TODO flashing text
 	}
 
 	public void setMemory(final Memory memory)

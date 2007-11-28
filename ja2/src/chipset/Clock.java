@@ -1,5 +1,6 @@
 package chipset;
 
+import keyboard.Keyboard;
 import keyboard.Paddles;
 import disk.DiskDriveSimple;
 import util.Util;
@@ -24,13 +25,15 @@ public class Clock
 
 	private long msPrev = System.currentTimeMillis();
 	private long times;
+	private final Keyboard keyboard;
 
-	public Clock(final CPU6502 cpu, final Video video, final DiskDriveSimple diskDrive, final Paddles paddles)
+	public Clock(final CPU6502 cpu, final Video video, final DiskDriveSimple diskDrive, final Paddles paddles, final Keyboard keyboard)
 	{
 		this.cpu = cpu;
 		this.video = video;
 		this.diskDrive = diskDrive;
 		this.paddles = paddles;
+		this.keyboard = keyboard;
 	}
 
 	public void run()
@@ -70,7 +73,7 @@ public class Clock
 			 * Otherwise, just run a fast as possible (except for slowing
 			 * down while waiting for a key-press; see Keyboard.waitIfTooFast).
 			 */
-			if (!this.video.isText() && !this.diskDrive.isMotorOn())
+			if (!this.video.isText() && !this.diskDrive.isMotorOn() && !this.keyboard.isHyperSpeed())
 			{
 				/*
 				 * Check every 100 milliseconds to see how far

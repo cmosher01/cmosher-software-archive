@@ -1,4 +1,5 @@
 import gui.FrameManager;
+import gui.Screen;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
@@ -92,8 +93,8 @@ public final class Ja2
     	final DiskInterface disk = new DiskInterface(drive,arm,this.framer);
 
 
-
-    	final Video video = new Video();
+    	final Screen screen = new Screen();
+    	final Video video = new Video(screen);
 
     	final Paddles paddles = new Paddles(4);
         final Memory memory = new Memory(keyboard,video,disk,paddles);
@@ -114,21 +115,21 @@ public final class Ja2
 					close();
 				}
 	    	},
-	    	video,disk1,disk2,disk);
+	    	screen,disk1,disk2,disk);
 
-        video.addKeyListener(keyboard);
-        video.addKeyListener(fn);
-		video.setFocusTraversalKeysEnabled(false);
-		video.requestFocus();
+        screen.addKeyListener(keyboard);
+        screen.addKeyListener(fn);
+        screen.setFocusTraversalKeysEnabled(false);
+        screen.requestFocus();
 
-    	this.clock = new Clock(cpu,video,drive,paddles);
+    	this.clock = new Clock(cpu,video,drive,paddles,keyboard);
 
         parseConfig(memory);
 
         this.clock.run();
     	disk.updatePanel();
 
-    	paddles.setTop(video.getTopLevelAncestor());
+    	paddles.setTop(screen.getTopLevelAncestor());
     }
 
     private void parseArgs(final String... args)

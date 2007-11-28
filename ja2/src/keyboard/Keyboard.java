@@ -27,10 +27,9 @@ public class Keyboard extends KeyAdapter implements KeyListener
 	private long cGet;
 	private final AtomicBoolean hyper = new AtomicBoolean();
 
-	private volatile boolean[] paddleButtonDown = new boolean[3];
+	private volatile boolean[] paddleButtonDown = new boolean[4];
 
-	private long lastUpTime;
-	private char lastUpChar = 'a';
+
 
 	@Override
 	public void keyTyped(final KeyEvent e)
@@ -150,6 +149,11 @@ public class Keyboard extends KeyAdapter implements KeyListener
 		}
 	}
 
+	public boolean isHyperSpeed()
+	{
+		return this.hyper.get();
+	}
+
 	private void waitIfTooFast()
 	{
 		if (this.hyper.get())
@@ -208,10 +212,6 @@ public class Keyboard extends KeyAdapter implements KeyListener
 
 	public boolean isPaddleButtonDown(final int paddle)
 	{
-		if (paddle>=3)
-		{
-			return false;
-		}
 		return this.paddleButtonDown[paddle];
 	}
 }

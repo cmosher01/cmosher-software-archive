@@ -17,7 +17,6 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.FontUIResource;
-import video.Video;
 import buttons.DiskDrivePanel;
 import disk.DiskBytes;
 import disk.DiskInterface;
@@ -27,7 +26,7 @@ public class FrameManager implements Closeable
 	private JFrame frame;
 	private ContentPane contentPane;
 
-	public void init(final WindowListener listenerWindow, final Video video, final DiskBytes drive1, final DiskBytes drive2, final DiskInterface diskInterface)
+	public void init(final WindowListener listenerWindow, final Screen screen, final DiskBytes drive1, final DiskBytes drive2, final DiskInterface diskInterface)
 	{
 		setLookAndFeel();
 
@@ -52,7 +51,7 @@ public class FrameManager implements Closeable
 //        this.frame.setJMenuBar(factoryMenuBar.createMenuBar());
 
         // Create and set up the content pane.
-        this.contentPane = new ContentPane(video,drive1,drive2,this,diskInterface);
+        this.contentPane = new ContentPane(screen,drive1,drive2,this,diskInterface);
         this.frame.setContentPane(this.contentPane);
 
         new DropTarget(this.frame,this.contentPane.getFirstDrivePanelDropListener());

@@ -1,10 +1,10 @@
 package gui;
+
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.dnd.DropTargetListener;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import video.Video;
 import buttons.DiskDrivePanel;
 import disk.DiskBytes;
 import disk.DiskInterface;
@@ -14,14 +14,14 @@ import disk.DiskInterface;
  */
 public class ContentPane extends JPanel
 {
-	private Video video;
+	private Screen screen;
 	private DiskDrivePanel diskDrive1;
 	private DiskDrivePanel diskDrive2;
 	
 
-	public ContentPane(final Video video, final DiskBytes drive1, final DiskBytes drive2, final FrameManager framer, final DiskInterface diskInterface)
+	public ContentPane(final Screen screen, final DiskBytes drive1, final DiskBytes drive2, final FrameManager framer, final DiskInterface diskInterface)
 	{
-		this.video = video;
+		this.screen = screen;
 		setOpaque(true);
 		addNotify();
 
@@ -35,10 +35,10 @@ public class ContentPane extends JPanel
 
 		setBorder(BorderFactory.createLoweredBevelBorder());
 
-		add(this.video);
-		Dimension szVideo = this.video.getPreferredSize();
+		add(this.screen);
+		Dimension szVideo = this.screen.getPreferredSize();
 		Insets insets = getInsets();
-		this.video.setBounds(insets.left,insets.top,szVideo.width,szVideo.height);
+		this.screen.setBounds(insets.left,insets.top,szVideo.width,szVideo.height);
 
 		this.diskDrive1 = new DiskDrivePanel(drive1,framer,diskInterface);
 		add(this.diskDrive1);
