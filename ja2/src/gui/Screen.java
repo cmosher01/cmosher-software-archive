@@ -6,6 +6,7 @@ package gui;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.lang.reflect.InvocationTargetException;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import video.Video;
@@ -21,13 +22,24 @@ public class Screen extends JPanel
 
 	public void plot(final Image image)
 	{
-		SwingUtilities.invokeLater(new Runnable()
+		try
 		{
-			public void run()
+			SwingUtilities.invokeAndWait(new Runnable()
 			{
-				plotScreen(image);
-			}
-		});
+				public void run()
+				{
+					plotScreen(image);
+				}
+			});
+		}
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+		catch (InvocationTargetException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	private Graphics graphics;
