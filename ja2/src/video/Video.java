@@ -35,8 +35,6 @@ public class Video extends JPanel
 	private int f;
 	private boolean flash;
 
-	private int tpdl;
-
 	private int data;
 
 	private int[] lutText0 = VideoAddressing.buildLUT(0x0400,0x0400);
@@ -159,7 +157,6 @@ public class Video extends JPanel
 		plotByte(this.t,d,inverse);
 
 		++this.t;
-		--this.tpdl;
 
 		if (this.t >= VideoAddressing.BYTES_PER_FIELD)
 		{
@@ -188,23 +185,6 @@ public class Video extends JPanel
 	{
 		// we don't need to paint anything; we just let the
 		// emulated screen refresh do it's thing
-	}
-
-	public void startPaddleTimer()
-	{
-		final PointerInfo mouse = MouseInfo.getPointerInfo();
-		final Point loc = mouse.getLocation();
-		final double p = loc.getX();
-		final Container top = this.getTopLevelAncestor();
-		final Rectangle rect = top.getBounds();
-		final double pMin = rect.getMinX();
-		final double pMax = rect.getMaxX();
-		this.tpdl = (int)Math.round(Math.rint((p-pMin)/(pMax-pMin)*2805));
-	}
-
-	public boolean paddleTimedOut()
-	{
-		return this.tpdl <= 0;
 	}
 
 	private int getAddr()

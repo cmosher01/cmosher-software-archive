@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Date;
 import video.Video;
 import keyboard.Keyboard;
+import keyboard.Paddles;
 import disk.DiskInterface;
 
 
@@ -23,17 +24,19 @@ public class Memory
 	private final Keyboard keyboard;
 	private final Video video;
 	private final DiskInterface disk;
+	private final Paddles paddles;
 	private int slot2latch;
 	private boolean inHasCRs;
 
 	/**
 	 * @param keyboard
 	 */
-	public Memory(final Keyboard keyboard, final Video video, final DiskInterface disk)
+	public Memory(final Keyboard keyboard, final Video video, final DiskInterface disk, final Paddles paddles)
 	{
 		this.keyboard = keyboard;
 		this.video = video;
 		this.disk = disk;
+		this.paddles = paddles;
 		clear();
 	}
 
@@ -107,17 +110,17 @@ public class Memory
 				}
 				else if (sw2 < 4)
 				{
-					r = this.keyboard.isPaddleButtonDown() ? (byte)0x80 : 0;
+					r = this.keyboard.isPaddleButtonDown(sw2) ? (byte)0x80 : 0;
 				}
 				else
 				{
-//					sw2 &= 3;
-					r = this.video.paddleTimedOut() ? 0 : (byte)0x80;
+					sw2 &= 3;
+					r = this.paddles.paddleTimedOut(sw2) ? 0 : (byte)0x80;
 				}
 			}
 			else if (seg == 0x7)
 			{
-				this.video.startPaddleTimer();
+				this.paddles.startPaddleTimers();
 			}
 		}
 		else

@@ -15,6 +15,7 @@ import javax.swing.SwingUtilities;
 import keyboard.ClipboardHandler;
 import keyboard.FnKeyHandler;
 import keyboard.Keyboard;
+import keyboard.Paddles;
 import util.Util;
 import video.Video;
 import chipset.CPU6502;
@@ -94,7 +95,8 @@ public final class Ja2
 
     	final Video video = new Video();
 
-        final Memory memory = new Memory(keyboard,video,disk);
+    	final Paddles paddles = new Paddles(4);
+        final Memory memory = new Memory(keyboard,video,disk,paddles);
         video.setMemory(memory);
 
 
@@ -119,13 +121,15 @@ public final class Ja2
 		video.setFocusTraversalKeysEnabled(false);
 		video.requestFocus();
 
-    	this.clock = new Clock(cpu,video,drive);
+    	this.clock = new Clock(cpu,video,drive,paddles);
 
         parseConfig(memory);
 
         this.clock.run();
     	disk.updatePanel();
-	}
+
+    	paddles.setTop(video.getTopLevelAncestor());
+    }
 
     private void parseArgs(final String... args)
 	{

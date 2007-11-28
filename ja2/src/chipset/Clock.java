@@ -1,5 +1,6 @@
 package chipset;
 
+import keyboard.Paddles;
 import disk.DiskDriveSimple;
 import util.Util;
 import video.Video;
@@ -17,17 +18,19 @@ public class Clock
 	private final CPU6502 cpu;
 	private final Video video;
 	private final DiskDriveSimple diskDrive;
+	private final Paddles paddles;
 
 	private Thread clth;
 
 	private long msPrev = System.currentTimeMillis();
 	private long times;
 
-	public Clock(final CPU6502 cpu, final Video video, final DiskDriveSimple diskDrive)
+	public Clock(final CPU6502 cpu, final Video video, final DiskDriveSimple diskDrive, final Paddles paddles)
 	{
 		this.cpu = cpu;
 		this.video = video;
 		this.diskDrive = diskDrive;
+		this.paddles = paddles;
 	}
 
 	public void run()
@@ -58,6 +61,7 @@ public class Clock
 			 */
 			this.cpu.tick();
 			this.video.tick();
+			this.paddles.tick();
 
 			/*
 			 * If we are displaying graphics and the disk drive is not on,
