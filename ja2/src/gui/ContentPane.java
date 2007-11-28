@@ -1,11 +1,11 @@
 package gui;
 
+import gui.buttons.DiskDrivePanel;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.dnd.DropTargetListener;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import buttons.DiskDrivePanel;
 import disk.DiskBytes;
 import disk.DiskInterface;
 

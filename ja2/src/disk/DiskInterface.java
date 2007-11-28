@@ -1,7 +1,7 @@
 package disk;
 
-import buttons.DiskDrivePanel;
 import gui.FrameManager;
+import gui.buttons.DiskDrivePanel;
 
 /*
  * Created on Sep 12, 2007

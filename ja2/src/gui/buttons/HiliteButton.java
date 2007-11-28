@@ -1,7 +1,7 @@
 /*
  * Created on Sep 18, 2007
  */
-package buttons;
+package gui.buttons;
 
 import java.awt.AWTEvent;
 import java.awt.Color;

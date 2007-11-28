@@ -1,4 +1,5 @@
 package gui;
+import gui.buttons.DiskDrivePanel;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -17,7 +18,6 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.FontUIResource;
-import buttons.DiskDrivePanel;
 import disk.DiskBytes;
 import disk.DiskInterface;
 

@@ -1,7 +1,7 @@
 /*
  * Created on Sep 18, 2007
  */
-package buttons;
+package gui.buttons;
 
 import gui.FrameManager;
 import gui.UserCancelled;

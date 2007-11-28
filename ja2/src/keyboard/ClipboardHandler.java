@@ -42,6 +42,10 @@ public class ClipboardHandler
 			try
 			{
 				data = (String)contents.getTransferData(DataFlavor.stringFlavor);
+				if (data == null)
+				{
+					data = "";
+				}
 			}
 			catch (UnsupportedFlavorException ex)
 			{
