@@ -12,6 +12,7 @@ public class StandardIn implements Card
 
 	private int latch;
 	private boolean gotCR;
+	private boolean gotEOF;
 
 	public byte io(final int addr, final byte data)
 	{
@@ -27,7 +28,11 @@ public class StandardIn implements Card
 			{
 				try
 				{
-					if (System.in.available() > 0)
+					if (this.gotEOF)
+					{
+						r = EOF;
+					}
+					else if (System.in.available() > 0)
 					{
 						int c = System.in.read();
 						if (c == '\r')
@@ -47,6 +52,8 @@ public class StandardIn implements Card
 						}
 						else if (c == EOF)
 						{
+							this.gotEOF = true;
+							r = EOF;
 							// if GUI, pass back 0xFF
 							// TODO if CLI, exit the application
 						}
