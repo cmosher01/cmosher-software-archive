@@ -17,7 +17,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.border.Border;
 
-public class HiliteButton extends JButton //implements ActionListener
+class HiliteButton extends JButton //implements ActionListener
 {
 	private boolean mouseOver;
 	private Border borderEnabled;

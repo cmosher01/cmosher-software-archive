@@ -150,23 +150,32 @@ public class Memory
 					{
 						try
 						{
-							int c = System.in.read();
-							if (c == '\r')
+							if (System.in.available() > 0)
 							{
-								this.inHasCRs = true;
-							}
-							while (c == '\n')
-							{
-								if (this.inHasCRs)
+								int c = System.in.read();
+								if (c == '\r')
 								{
-									c = System.in.read();
+									this.inHasCRs = true;
+									r = (byte)(c | 0x80);
+								}
+								else if (c == '\n' && this.inHasCRs)
+								{
+									r = (byte)this.slot2latch;
+								}
+								else if (c == '\n')
+								{
+									c = '\r';
+									r = (byte)(c | 0x80);
 								}
 								else
 								{
-									c = '\r';
+									r = (byte)(c | 0x80);
 								}
 							}
-							r = (byte)(c | 0x80);
+							else
+							{
+								r = (byte)this.slot2latch;
+							}
 						}
 						catch (IOException e)
 						{

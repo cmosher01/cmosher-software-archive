@@ -12,7 +12,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JLabel;
 
-public class LED extends JLabel
+class LED extends JLabel
 {
 	private final Color color;
 	private volatile boolean on;

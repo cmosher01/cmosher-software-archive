@@ -3,7 +3,6 @@
  */
 package gui.buttons;
 
-import gui.ContentPane;
 import gui.FrameManager;
 import gui.UserCancelled;
 import java.awt.Color;
@@ -29,7 +28,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import util.HexUtil;
 import disk.DiskBytes;
-import disk.DiskInterface;
 
 public class DiskDrivePanel extends JPanel
 {

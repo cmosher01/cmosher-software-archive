@@ -13,7 +13,7 @@ import disk.DiskInterface;
 /*
  * Created on Sep 19, 2007
  */
-public class ContentPane extends JPanel
+class ContentPane extends JPanel
 {
 	private final Screen screen;
 	private final DiskInterface disk;
@@ -80,18 +80,18 @@ public class ContentPane extends JPanel
 
 	public void updateDrives()
 	{
-		final DiskDrivePanel drive = getDrive(disk.getCurrentDriveNumber());
+		final DiskDrivePanel drive = getDrive(this.disk.getCurrentDriveNumber());
 		if (drive == null)
 		{
 			return;
 		}
 
 		drive.setModified(true); // always allow saves
-		drive.setTrack(disk.getTrack());
-		drive.setWriteProtected(disk.isWriteProtected());
-		if (disk.isMotorOn())
+		drive.setTrack(this.disk.getTrack());
+		drive.setWriteProtected(this.disk.isWriteProtected());
+		if (this.disk.isMotorOn())
 		{
-			if (disk.isWriting())
+			if (this.disk.isWriting())
 			{
 				drive.setWriting(true);
 				drive.setReading(false);
@@ -109,7 +109,7 @@ public class ContentPane extends JPanel
 		}
 		drive.updateIf();
 
-		final DiskDrivePanel driveOther = getDrive(disk.getOtherDriveNumber());
+		final DiskDrivePanel driveOther = getDrive(this.disk.getOtherDriveNumber());
 		if (driveOther == null)
 		{
 			return;

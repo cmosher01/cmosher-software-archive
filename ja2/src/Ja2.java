@@ -93,18 +93,8 @@ public final class Ja2
     	final DiskInterface disk = new DiskInterface(drive,arm,this.framer);
 
 
-    	final Video video = new Video(this.framer);
-
-    	final Paddles paddles = new Paddles(4);
-        final Memory memory = new Memory(keyboard,video,disk,paddles);
-        video.setMemory(memory);
-
-
-    	final CPU6502 cpu = new CPU6502(memory);
-
-    	final FnKeyHandler fn = new FnKeyHandler(cpu,disk,clip,video);
-
     	final Screen screen = new Screen();
+
         // create the main frame window for the application
         this.framer.init(
 	    	new WindowAdapter()
@@ -117,7 +107,17 @@ public final class Ja2
 	    	},
 	    	screen,disk1,disk2,disk);
 
-        screen.addKeyListener(keyboard);
+    	final Paddles paddles = new Paddles(4,screen.getTopLevelAncestor());
+    	final Video video = new Video(this.framer);
+        final Memory memory = new Memory(keyboard,video,disk,paddles);
+        video.setMemory(memory);
+
+
+    	final CPU6502 cpu = new CPU6502(memory);
+
+    	final FnKeyHandler fn = new FnKeyHandler(cpu,disk,clip,video);
+
+    	screen.addKeyListener(keyboard);
         screen.addKeyListener(fn);
         screen.setFocusTraversalKeysEnabled(false);
         screen.requestFocus();
@@ -128,8 +128,6 @@ public final class Ja2
 
         this.clock.run();
         this.framer.updateDrives();
-
-    	paddles.setTop(screen.getTopLevelAncestor());
     }
 
     private void parseArgs(final String... args)

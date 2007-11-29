@@ -14,11 +14,16 @@ public class Paddles
 	private static final int PADDLE_CYCLES = 2805;
 
 	private final int[] rTick;
-	private Container top;
+	private final Container top;
 
-	public Paddles(final int cPaddle)
+	public Paddles(final int cPaddle, final Container top)
 	{
 		this.rTick = new int[cPaddle];
+		if (top == null)
+		{
+			throw new IllegalStateException("Top level container is null.");
+		}
+		this.top = top;
 	}
 
 	public void tick()
@@ -55,10 +60,5 @@ public class Paddles
 	public boolean paddleTimedOut(final int iPaddle)
 	{
 		return this.rTick[iPaddle] <= 0;
-	}
-
-	public void setTop(Container top)
-	{
-		this.top = top;
 	}
 }
