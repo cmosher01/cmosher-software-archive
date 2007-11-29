@@ -1,11 +1,12 @@
 package disk;
 
+import chipset.Card;
 import gui.GUI;
 
 /*
  * Created on Sep 12, 2007
  */
-public class DiskInterface
+public class DiskInterface implements Card
 {
 	private final DiskDriveSimple disk;
 	private final StepperMotor arm;

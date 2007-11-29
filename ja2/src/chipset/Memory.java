@@ -8,6 +8,8 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import stdio.StandardIn;
+import stdio.StandardOut;
 import video.Video;
 import keyboard.Keyboard;
 import keyboard.Paddles;
@@ -21,22 +23,35 @@ import disk.DiskInterface;
 public class Memory
 {
 	private byte[] ram = new byte[CPU6502.MEMORY_LIM];
+
 	private final Keyboard keyboard;
 	private final Video video;
-	private final DiskInterface disk;
 	private final Paddles paddles;
-	private int slot2latch;
-	private boolean inHasCRs;
+
+	private final Card[] slot = new Card[8];
 
 	/**
 	 * @param keyboard
 	 */
-	public Memory(final Keyboard keyboard, final Video video, final DiskInterface disk, final Paddles paddles)
+	public Memory(final Keyboard keyboard, final Video video, final Card disk, final Paddles paddles)
 	{
 		this.keyboard = keyboard;
 		this.video = video;
-		this.disk = disk;
 		this.paddles = paddles;
+
+		for (int s = 0; s < this.slot.length; ++s)
+		{
+			this.slot[s] = new EmptySlot();
+		}
+
+		slot[1] = new StandardOut();
+		slot[2] = new StandardIn();
+
+		if (disk != null)
+		{
+			this.slot[6] = disk;
+		}
+
 		clear();
 	}
 
@@ -67,32 +82,32 @@ public class Memory
 
 		if (address < 0x80)
 		{
-			final int seg = address >> 4;
-			final int sw = address & 0x0F;
-			if (seg == 0x0)
+			final int islot = (address & 0xF0) >> 4;
+			final int iswch = (address & 0x0F);
+			if (islot == 0x0)
 			{
 				r = this.keyboard.get();
 			}
-			else if (seg == 0x1)
+			else if (islot == 0x1)
 			{
 				this.keyboard.clear();
 				r = this.keyboard.get();
 			}
-			else if (seg == 0x2)
+			else if (islot == 0x2)
 			{
 				// ignore cassette output
 			}
-			else if (seg == 0x3)
+			else if (islot == 0x3)
 			{
 				// TODO: toggle speaker
 			}
-			else if (seg == 0x4)
+			else if (islot == 0x4)
 			{
 				// ignore utility strobe
 			}
-			else if (seg == 0x5)
+			else if (islot == 0x5)
 			{
-				if (sw < 0x8)
+				if (iswch < 0x8)
 				{
 					r = this.video.io(address,(byte)0);
 				}
@@ -101,9 +116,9 @@ public class Memory
 					// ignore annunciator outputs
 				}
 			}
-			else if (seg == 0x6)
+			else if (islot == 0x6)
 			{
-				int sw2 = sw & 0x7;
+				int sw2 = iswch & 0x7;
 				if (sw2 == 0)
 				{
 					// ignore cassette input
@@ -118,7 +133,7 @@ public class Memory
 					r = this.paddles.paddleTimedOut(sw2) ? 0 : (byte)0x80;
 				}
 			}
-			else if (seg == 0x7)
+			else if (islot == 0x7)
 			{
 				this.paddles.startPaddleTimers();
 			}
@@ -127,68 +142,9 @@ public class Memory
 		{
 			// slot I/O switches
 			address &= 0x7F;
-			final int slot = address >> 4;
-	
-			if (slot == 0x6)
-			{
-				if (this.disk != null)
-				{
-					r = this.disk.io(address,(byte)0);
-				}
-			}
-			else if (slot == 0x2)
-			{
-				// IN#2 reads from standard in
-				final int sw = address & 0x0F;
-				if (sw == 0)
-				{
-					if (this.slot2latch >= 0x80)
-					{
-						r = (byte)this.slot2latch;
-					}
-					else
-					{
-						try
-						{
-							if (System.in.available() > 0)
-							{
-								int c = System.in.read();
-								if (c == '\r')
-								{
-									this.inHasCRs = true;
-									r = (byte)(c | 0x80);
-								}
-								else if (c == '\n' && this.inHasCRs)
-								{
-									r = (byte)this.slot2latch;
-								}
-								else if (c == '\n')
-								{
-									c = '\r';
-									r = (byte)(c | 0x80);
-								}
-								else
-								{
-									r = (byte)(c | 0x80);
-								}
-							}
-							else
-							{
-								r = (byte)this.slot2latch;
-							}
-						}
-						catch (IOException e)
-						{
-							e.printStackTrace();
-						}
-					}
-				}
-				else if (sw == 1)
-				{
-					this.slot2latch &= 0x7F;
-					r = (byte)this.slot2latch;
-				}
-			}
+			final int islot = (address & 0xF0) >> 4;
+			final int iswch = (address & 0x0F);
+			r = this.slot[islot].io(iswch,(byte)0);
 		}
 
 		return r;
@@ -219,16 +175,16 @@ public class Memory
 
 		if (address < 0x80)
 		{
-			final int seg = address >> 4;
-			final int sw = address & 0x0F;
+			final int islot = (address & 0xF0) >> 4;
+			final int iswch = (address & 0x0F);
 
-			if (seg == 0x1)
+			if (islot == 0x1)
 			{
 				this.keyboard.clear();
 			}
-			else if (seg == 0x5)
+			else if (islot == 0x5)
 			{
-				if (sw < 0x8)
+				if (iswch < 0x8)
 					this.video.io(address,data);
 			}
 			// ignore all other switch writes
@@ -237,29 +193,9 @@ public class Memory
 		{
 			// slot I/O switches
 			address &= 0x7F;
-			final int slot = address >> 4;
-	
-			if (slot == 0x6)
-			{
-				if (this.disk != null)
-				{
-					this.disk.io(address,data);
-				}
-			}
-			else if (slot == 0x1)
-			{
-				// PR#1 writes to standard out
-				final char c = (char)(data&0x7F);
-				if (c == '\r')
-				{
-					System.out.println();
-				}
-				else
-				{
-					System.out.print(c);
-				}
-				System.out.flush();
-			}
+			final int islot = (address & 0xF0) >> 4;
+			final int iswch = (address & 0x0F);
+			this.slot[islot].io(iswch,data);
 		}
 	}
 
