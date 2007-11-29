@@ -1,4 +1,5 @@
 package chipset;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -13,7 +14,7 @@ import stdio.StandardOut;
 import video.Video;
 import keyboard.Keyboard;
 import keyboard.Paddles;
-import disk.DiskInterface;
+
 
 
 
@@ -44,8 +45,8 @@ public class Memory
 			this.slot[s] = new EmptySlot();
 		}
 
-		slot[1] = new StandardOut();
-		slot[2] = new StandardIn();
+		this.slot[1] = new StandardOut();
+		this.slot[2] = new StandardIn();
 
 		if (disk != null)
 		{

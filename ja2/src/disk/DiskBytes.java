@@ -65,11 +65,6 @@ public class DiskBytes
 		}
 	}
 
-	private void showBadDisk()
-	{
-		
-	}
-
 	private boolean isLoaded()
 	{
 		synchronized (this.loaded)

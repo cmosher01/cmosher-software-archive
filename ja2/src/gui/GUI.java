@@ -4,7 +4,6 @@
 package gui;
 
 import java.awt.Image;
-import disk.DiskInterface;
 
 public interface GUI
 {
