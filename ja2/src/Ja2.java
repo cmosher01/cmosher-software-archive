@@ -79,7 +79,7 @@ public final class Ja2
 		}
 	}
 
-    private void tryRun(final String... args) throws IOException, InvalidMemoryLoad
+    private void tryRun(final String... args)
     {
     	parseArgs(args);
 
@@ -128,7 +128,15 @@ public final class Ja2
 
 
 
-    	parseConfig(memory);
+    	try
+		{
+			parseConfig(memory);
+		}
+		catch (final Exception e)
+		{
+			e.printStackTrace();
+			this.framer.showMessage(e.getMessage());
+		}
 
 
 
@@ -205,10 +213,21 @@ public final class Ja2
 	public void close()
 	{
 		// TODO check for unsaved changes to disks before exiting application
-		this.framer.close(); // this exits the app
-		if (this.clock != null)
+
+		// use another thread (a daemon one) to avoid any deadlocks
+		// (for example, if this method is called on the dispatch thread)
+		final Thread th = new Thread(new Runnable()
 		{
-			this.clock.shutdown();
-		}
+			public void run()
+			{
+				framer.close(); // this exits the app
+				if (clock != null)
+				{
+					clock.shutdown();
+				}
+			}
+		});
+		th.setDaemon(true);
+		th.start();
 	}
 }

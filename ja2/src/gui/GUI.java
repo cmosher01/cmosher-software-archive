@@ -9,4 +9,5 @@ public interface GUI
 {
 	void updateScreen(Image image);
 	void updateDrives();
+	void showMessage(String message);
 }

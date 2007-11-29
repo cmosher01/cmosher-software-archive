@@ -180,8 +180,8 @@ public class DiskDrivePanel extends JPanel
 		}
 		catch (IOException e)
 		{
-			this.framer.showMessage(e.getMessage());
 			e.printStackTrace();
+			this.framer.showMessage(e.getMessage());
 		}
 		this.framer.updateDrives();
 		this.btnSave.mouseExited();
@@ -206,8 +206,8 @@ public class DiskDrivePanel extends JPanel
 			}
 			catch (final Exception e)
 			{
-				this.framer.showMessage(e.getMessage());
 				e.printStackTrace();
+				this.framer.showMessage(e.getMessage());
 			}
 		}
 		else
@@ -342,8 +342,8 @@ public class DiskDrivePanel extends JPanel
 		}
 		catch (final Exception e)
 		{
-			this.framer.showMessage(e.getMessage());
 			e.printStackTrace();
+			this.framer.showMessage(e.getMessage());
 		}
 		this.framer.updateDrives();
 	}

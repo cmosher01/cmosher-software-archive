@@ -22,10 +22,12 @@ public class Video
 
 	private boolean swText = true;
 	private boolean swMixed;
-	private boolean swPage2;
+	private int swPage2;
 	private boolean swHiRes;
 
-	private int t;
+	// somewhat arbitrary starting point for scanning... helps starting
+	// an Apple ][ plus with a clean screen
+	private int t = VideoAddressing.BYTES_PER_FIELD-12*VideoAddressing.BYTES_PER_ROW;
 	private int f;
 	private boolean flash;
 
@@ -34,12 +36,11 @@ public class Video
 	private int[] lutText0 = VideoAddressing.buildLUT(0x0400,0x0400);
 	private int[] lutText1 = VideoAddressing.buildLUT(0x0800,0x0400);
 	private int[][] lutText = { this.lutText0, this.lutText1 };
-	private int[][] lutLoRes = { this.lutText0, this.lutText1 };
 	private int[] lutHiRes0 = VideoAddressing.buildLUT(0x2000,0x2000);
 	private int[] lutHiRes1 = VideoAddressing.buildLUT(0x4000,0x2000);
 	private int[][] lutHiRes = { this.lutHiRes0, this.lutHiRes1 };
 
-	private byte[] char_rom;
+	private final byte[] char_rom = new byte[0x800];
 
 
 
@@ -63,12 +64,20 @@ public class Video
 
 
 
-	public Video(final GUI gui, final Memory memory) throws IOException
+	public Video(final GUI gui, final Memory memory)
 	{
 		this.gui = gui;
 		this.memory = memory;
 
-		this.char_rom = readCharRom();
+		try
+		{
+			readCharRom();
+		}
+		catch (final Exception e)
+		{
+			e.printStackTrace();
+			this.gui.showMessage(e.getMessage());
+		}
 	}
 
 	public void stopped()
@@ -77,25 +86,24 @@ public class Video
 
 	private static final int EOF = -1;
 
-	private static byte[] readCharRom() throws IOException
+	private void readCharRom() throws IOException
 	{
-		final byte[] r = new byte[0x800];
 		final InputStream rom = Video.class.getResourceAsStream("3410036.BIN");
 		int cc = 0;
 		for (int c = rom.read(); c != EOF; c = rom.read())
 		{
-			if (cc < r.length)
+			if (cc < this.char_rom.length)
 			{
-				r[cc] = xlateCharRom(c);
+				this.char_rom[cc] = xlateCharRom(c);
 			}
 			++cc;
 		}
 		rom.close();
 		if (cc != 0x800)
 		{
-			throw new IllegalStateException();
+			this.gui.showMessage("Text-character-ROM file 3410036.BIN is invalid: length is "+
+				cc+" but should be 2048. Text may not be displayed correctly.");
 		}
-		return r;
 	}
 
 	private static byte xlateCharRom(int b)
@@ -122,7 +130,7 @@ public class Video
 			case 1:
 				this.swMixed = on; break;
 			case 2:
-				this.swPage2 = on; break;
+				this.swPage2 = on ? 1 : 0; break;
 			case 3:
 				this.swHiRes = on; break;
 		}
@@ -172,21 +180,12 @@ public class Video
 
 	private int getAddr()
 	{
-		int addr;
-		final int page = this.swPage2 ? 1 : 0;
-		if (this.swText || (this.swMixed && this.t >= MIXED_TEXT_CYCLE))
+		if (this.swHiRes)
 		{
-			addr = this.lutText[page][this.t];
+			return this.lutHiRes[this.swPage2][this.t];
 		}
-		else if (this.swHiRes)
-		{
-			addr = this.lutHiRes[page][this.t];
-		}
-		else
-		{
-			addr = this.lutLoRes[page][this.t];
-		}
-		return addr;
+
+		return this.lutText[this.swPage2][this.t];
 	}
 
 	private void createOffscreenImage()
@@ -235,36 +234,29 @@ public class Video
 			else
 				i = d & 0xF;
 			final int color = loresColors[i];
-        	this.buf.setElem(0, y++, color);
-        	this.buf.setElem(0, y++, color);
-        	this.buf.setElem(0, y++, color);
-        	this.buf.setElem(0, y++, color);
-        	this.buf.setElem(0, y++, color);
-        	this.buf.setElem(0, y++, color);
-        	this.buf.setElem(0, y++, color);
+        	this.buf.setElem(y++, color);
+        	this.buf.setElem(y++, color);
+        	this.buf.setElem(y++, color);
+        	this.buf.setElem(y++, color);
+        	this.buf.setElem(y++, color);
+        	this.buf.setElem(y++, color);
+        	this.buf.setElem(y++, color);
 
 		}
-		else if (inverse)
+		else
         {
-			// inverse text
-        	this.buf.setElem(0, y++, ((d & 0x01) != 0) ? BLACK : GREEN);
-        	this.buf.setElem(0, y++, ((d & 0x02) != 0) ? BLACK : GREEN);
-        	this.buf.setElem(0, y++, ((d & 0x04) != 0) ? BLACK : GREEN);
-        	this.buf.setElem(0, y++, ((d & 0x08) != 0) ? BLACK : GREEN);
-        	this.buf.setElem(0, y++, ((d & 0x10) != 0) ? BLACK : GREEN);
-        	this.buf.setElem(0, y++, ((d & 0x20) != 0) ? BLACK : GREEN);
-        	this.buf.setElem(0, y++, ((d & 0x40) != 0) ? BLACK : GREEN);
-        }
-        else
-        {
-        	// normal text and hi-res
-        	this.buf.setElem(0, y++, ((d & 0x01) != 0) ? GREEN : BLACK);
-        	this.buf.setElem(0, y++, ((d & 0x02) != 0) ? GREEN : BLACK);
-        	this.buf.setElem(0, y++, ((d & 0x04) != 0) ? GREEN : BLACK);
-        	this.buf.setElem(0, y++, ((d & 0x08) != 0) ? GREEN : BLACK);
-        	this.buf.setElem(0, y++, ((d & 0x10) != 0) ? GREEN : BLACK);
-        	this.buf.setElem(0, y++, ((d & 0x20) != 0) ? GREEN : BLACK);
-        	this.buf.setElem(0, y++, ((d & 0x40) != 0) ? GREEN : BLACK);
+			// text and hi-res
+			if (inverse)
+			{
+				d = ~d;
+			}
+        	this.buf.setElem(y++, ((d & 0x01) != 0) ? GREEN : BLACK);
+        	this.buf.setElem(y++, ((d & 0x02) != 0) ? GREEN : BLACK);
+        	this.buf.setElem(y++, ((d & 0x04) != 0) ? GREEN : BLACK);
+        	this.buf.setElem(y++, ((d & 0x08) != 0) ? GREEN : BLACK);
+        	this.buf.setElem(y++, ((d & 0x10) != 0) ? GREEN : BLACK);
+        	this.buf.setElem(y++, ((d & 0x20) != 0) ? GREEN : BLACK);
+        	this.buf.setElem(y++, ((d & 0x40) != 0) ? GREEN : BLACK);
         }
 		// TODO high-order bit half-dot shift and hi-res colors
 	}
