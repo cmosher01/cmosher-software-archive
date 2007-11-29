@@ -5,6 +5,7 @@ import java.awt.event.KeyListener;
 import java.io.IOException;
 import video.Video;
 import chipset.CPU6502;
+import chipset.Memory;
 import disk.DiskInterface;
 
 /*
@@ -16,17 +17,19 @@ public class FnKeyHandler extends KeyAdapter implements KeyListener
 	private final DiskInterface disk;
 	private final ClipboardHandler clip;
 	private final Video video;
+	private final Memory memory;
 
 	/**
 	 * @param cpu
 	 * @param video 
 	 */
-	public FnKeyHandler(final CPU6502 cpu, final DiskInterface disk, final ClipboardHandler clip, final Video video)
+	public FnKeyHandler(final CPU6502 cpu, final DiskInterface disk, final ClipboardHandler clip, final Video video, final Memory memory)
 	{
 		this.cpu = cpu;
 		this.disk = disk;
 		this.clip = clip;
 		this.video = video;
+		this.memory = memory;
 	}
 
 	/**
@@ -60,7 +63,7 @@ public class FnKeyHandler extends KeyAdapter implements KeyListener
 		{
 			try
 			{
-				this.cpu.dump();
+				this.memory.dump();
 			}
 			catch (IOException e1)
 			{

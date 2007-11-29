@@ -18,7 +18,7 @@ import chipset.Memory;
  */
 public class Video
 {
-	private Memory memory;
+	private final Memory memory;
 
 	private boolean swText = true;
 	private boolean swMixed;
@@ -63,9 +63,11 @@ public class Video
 
 
 
-	public Video(final GUI gui) throws IOException
+	public Video(final GUI gui, final Memory memory) throws IOException
 	{
 		this.gui = gui;
+		this.memory = memory;
+
 		this.char_rom = readCharRom();
 	}
 
@@ -265,11 +267,6 @@ public class Video
         	this.buf.setElem(0, y++, ((d & 0x40) != 0) ? GREEN : BLACK);
         }
 		// TODO high-order bit half-dot shift and hi-res colors
-	}
-
-	public void setMemory(final Memory memory)
-	{
-		this.memory = memory;
 	}
 
 	public boolean isText()

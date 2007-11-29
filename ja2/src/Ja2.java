@@ -19,8 +19,10 @@ import keyboard.Keyboard;
 import keyboard.Paddles;
 import util.Util;
 import video.Video;
+import chipset.AddressBus;
 import chipset.CPU6502;
 import chipset.Clock;
+import chipset.InvalidMemoryLoad;
 import chipset.Memory;
 import disk.DiskBytes;
 import disk.DiskDriveSimple;
@@ -77,12 +79,10 @@ public final class Ja2
 		}
 	}
 
-    private void tryRun(final String... args) throws IOException
+    private void tryRun(final String... args) throws IOException, InvalidMemoryLoad
     {
     	parseArgs(args);
 
-    	final Keyboard keyboard = new Keyboard();
-    	final ClipboardHandler clip = new ClipboardHandler(keyboard);
 
 
 
@@ -107,15 +107,17 @@ public final class Ja2
 	    	},
 	    	screen,disk1,disk2,disk);
 
+    	final Keyboard keyboard = new Keyboard();
+    	final ClipboardHandler clip = new ClipboardHandler(keyboard);
     	final Paddles paddles = new Paddles(4,screen.getTopLevelAncestor());
-    	final Video video = new Video(this.framer);
-        final Memory memory = new Memory(keyboard,video,disk,paddles);
-        video.setMemory(memory);
+        final Memory memory = new Memory();
+    	final Video video = new Video(this.framer,memory);
+        final AddressBus addressBus = new AddressBus(memory,keyboard,video,paddles,disk);
 
 
-    	final CPU6502 cpu = new CPU6502(memory);
+    	final CPU6502 cpu = new CPU6502(addressBus);
 
-    	final FnKeyHandler fn = new FnKeyHandler(cpu,disk,clip,video);
+    	final FnKeyHandler fn = new FnKeyHandler(cpu,disk,clip,video,memory);
 
     	screen.addKeyListener(keyboard);
         screen.addKeyListener(fn);
@@ -124,9 +126,13 @@ public final class Ja2
 
     	this.clock = new Clock(cpu,video,drive,paddles,keyboard);
 
-        parseConfig(memory);
 
-        this.clock.run();
+
+    	parseConfig(memory);
+
+
+
+    	this.clock.run();
         this.framer.updateDrives();
     }
 
@@ -162,7 +168,7 @@ public final class Ja2
 	}
 
 	private static final Pattern patIMPORT = Pattern.compile("import\\s+(.+)\\s+(.+)");
-	private void parseConfig(Memory memory) throws IOException
+	private void parseConfig(Memory memory) throws IOException, InvalidMemoryLoad
 	{
     	final BufferedReader cfg = new BufferedReader(new InputStreamReader(new FileInputStream(this.config)));
     	for (String s = cfg.readLine(); s != null; s = cfg.readLine())
@@ -198,6 +204,7 @@ public final class Ja2
 
 	public void close()
 	{
+		// TODO check for unsaved changes to disks before exiting application
 		this.framer.close(); // this exits the app
 		if (this.clock != null)
 		{

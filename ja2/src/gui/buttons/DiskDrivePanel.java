@@ -32,6 +32,7 @@ import disk.DiskBytes;
 public class DiskDrivePanel extends JPanel
 {
 	private final FrameManager framer;
+	private volatile boolean current;
 	private volatile File file;
 	private volatile String fileName = "";
 	private volatile int track;
@@ -261,6 +262,9 @@ public class DiskDrivePanel extends JPanel
 		this.sb.append("T$");
 		this.sb.append(HexUtil.byt((byte)this.track));
 		this.labelTrack.setText(this.sb.toString());
+		this.labelTrack.setVisible(this.current);
+		this.ledRead.setVisible(this.current);
+		this.ledWrite.setVisible(this.current);
 		this.labelFile.setText(this.fileName);
 		this.btnSave.setVisible(!this.writeProtected);
 		this.btnSave.setEnabled(!this.writeProtected && this.modified);
@@ -356,5 +360,14 @@ public class DiskDrivePanel extends JPanel
 	public DropTargetListener getDropListener()
 	{
 		return this.dropListener;
+	}
+
+	public void setCurrent(boolean current)
+	{
+		if (this.current != current)
+		{
+			this.current = current;
+			this.upd = true;
+		}
 	}
 }

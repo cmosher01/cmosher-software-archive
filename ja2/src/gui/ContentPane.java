@@ -86,7 +86,8 @@ class ContentPane extends JPanel
 			return;
 		}
 
-		drive.setModified(true); // always allow saves
+		drive.setCurrent(true);
+		drive.setModified(true); // TODO always allow saves
 		drive.setTrack(this.disk.getTrack());
 		drive.setWriteProtected(this.disk.isWriteProtected());
 		if (this.disk.isMotorOn())
@@ -114,8 +115,11 @@ class ContentPane extends JPanel
 		{
 			return;
 		}
+		drive.setCurrent(false);
 		driveOther.setWriting(false);
 		driveOther.setReading(false);
+
+		driveOther.setModified(true); // TODO always allow saves
 
 		driveOther.updateIf();
 	}

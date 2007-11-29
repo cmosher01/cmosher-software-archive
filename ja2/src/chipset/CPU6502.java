@@ -48,12 +48,12 @@ public final class CPU6502
     /*volatile*/ boolean NMI;
     volatile boolean reset;
 
-    Memory memory;
+    AddressBus addressBus;
 
 
-	public CPU6502(final Memory memory)
+	public CPU6502(final AddressBus addressBus)
 	{
-		this.memory = memory;
+		this.addressBus = addressBus;
 		reset();
 	}
 
@@ -1229,12 +1229,12 @@ public final class CPU6502
 
 	void read()
 	{
-		this.data = this.memory.read(this.address) & 0xFF;
+		this.data = this.addressBus.read(this.address) & 0xFF;
 	}
 
 	void write()
 	{
-		this.memory.write(this.address,(byte)this.data);
+		this.addressBus.write(this.address,(byte)this.data);
 	}
 
 
@@ -3845,10 +3845,4 @@ public final class CPU6502
 			}
 		}
 	};
-
-
-	public void dump() throws IOException
-	{
-		this.memory.dump();
-	}
 }
