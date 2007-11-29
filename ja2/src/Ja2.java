@@ -86,15 +86,14 @@ public final class Ja2
 
 
 
-    	final DiskBytes disk1 = new DiskBytes(this.framer);
-    	final DiskBytes disk2 = new DiskBytes(this.framer);
+    	final DiskBytes disk1 = new DiskBytes();
+    	final DiskBytes disk2 = new DiskBytes();
     	final DiskDriveSimple drive = new DiskDriveSimple(new DiskBytes[] {disk1,disk2});
     	final StepperMotor arm = new StepperMotor();
     	final DiskInterface disk = new DiskInterface(drive,arm,this.framer);
 
 
-    	final Screen screen = new Screen();
-    	final Video video = new Video(screen);
+    	final Video video = new Video(this.framer);
 
     	final Paddles paddles = new Paddles(4);
         final Memory memory = new Memory(keyboard,video,disk,paddles);
@@ -105,6 +104,7 @@ public final class Ja2
 
     	final FnKeyHandler fn = new FnKeyHandler(cpu,disk,clip,video);
 
+    	final Screen screen = new Screen();
         // create the main frame window for the application
         this.framer.init(
 	    	new WindowAdapter()
@@ -127,7 +127,7 @@ public final class Ja2
         parseConfig(memory);
 
         this.clock.run();
-    	disk.updatePanel();
+        this.framer.updateDrives();
 
     	paddles.setTop(screen.getTopLevelAncestor());
     }

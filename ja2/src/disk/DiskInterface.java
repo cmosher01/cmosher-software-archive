@@ -1,7 +1,6 @@
 package disk;
 
-import gui.FrameManager;
-import gui.buttons.DiskDrivePanel;
+import gui.GUI;
 
 /*
  * Created on Sep 12, 2007
@@ -10,7 +9,7 @@ public class DiskInterface
 {
 	private final DiskDriveSimple disk;
 	private final StepperMotor arm;
-	private final FrameManager framer;
+	private final GUI gui;
 
 	private boolean write;
 
@@ -19,11 +18,11 @@ public class DiskInterface
 	 * @param manager 
 	 * @param motor
 	 */
-	public DiskInterface(final DiskDriveSimple disk, final StepperMotor arm, FrameManager framer)
+	public DiskInterface(final DiskDriveSimple disk, final StepperMotor arm, final GUI gui)
 	{
 		this.disk = disk;
 		this.arm = arm;
-		this.framer = framer;
+		this.gui = gui;
 	}
 
 	public byte io(final int addr, final byte data)
@@ -83,39 +82,38 @@ public class DiskInterface
 		updatePanel();
 	}
 
-	public void updatePanel()
+	private void updatePanel()
 	{
-		DiskDrivePanel drive = this.framer.getDrive(this.disk.getDriveNumber());
-		if (drive == null)
-		{
-			return;
-		}
-		DiskDrivePanel driveOther = this.framer.getDrive(1-this.disk.getDriveNumber());
-		drive.setModified(true); // always allow saves
-		drive.setTrack(this.arm.getTrack());
-		drive.setWriteProtected(this.disk.isWriteProtected());
-		if (this.disk.isMotorOn())
-		{
-			if (this.write)
-			{
-				drive.setWriting(true);
-				drive.setReading(false);
-			}
-			else
-			{
-				drive.setWriting(false);
-				drive.setReading(true);
-			}
-		}
-		else
-		{
-			drive.setWriting(false);
-			drive.setReading(false);
-		}
-		driveOther.setWriting(false);
-		driveOther.setReading(false);
+		this.gui.updateDrives();
+	}
 
-		drive.updateIf();
-		driveOther.updateIf();
+	public int getCurrentDriveNumber()
+	{
+		return this.disk.getDriveNumber();
+	}
+
+	public int getOtherDriveNumber()
+	{
+		return 1-this.disk.getDriveNumber();
+	}
+
+	public int getTrack()
+	{
+		return this.arm.getTrack();
+	}
+
+	public boolean isWriteProtected()
+	{
+		return this.disk.isWriteProtected();
+	}
+
+	public boolean isMotorOn()
+	{
+		return this.disk.isMotorOn();
+	}
+
+	public boolean isWriting()
+	{
+		return this.write;
 	}
 }

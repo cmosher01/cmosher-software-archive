@@ -3,6 +3,7 @@
  */
 package gui.buttons;
 
+import gui.ContentPane;
 import gui.FrameManager;
 import gui.UserCancelled;
 import java.awt.Color;
@@ -33,7 +34,6 @@ import disk.DiskInterface;
 public class DiskDrivePanel extends JPanel
 {
 	private final FrameManager framer;
-	private final DiskInterface diskInterface;
 	private volatile File file;
 	private volatile String fileName = "";
 	private volatile int track;
@@ -52,11 +52,10 @@ public class DiskDrivePanel extends JPanel
 
 	private volatile boolean upd;
 
-	public DiskDrivePanel(final DiskBytes drive, final FrameManager framer, final DiskInterface diskInterface)
+	public DiskDrivePanel(final DiskBytes drive, final FrameManager framer)
 	{
 		this.drive = drive;
 		this.framer = framer;
-		this.diskInterface = diskInterface;
 		setOpaque(true);
 		setPreferredSize(new Dimension(84,45));
 		setBorder(BorderFactory.createLoweredBevelBorder());
@@ -185,7 +184,7 @@ public class DiskDrivePanel extends JPanel
 			this.framer.showMessage(e.getMessage());
 			e.printStackTrace();
 		}
-		this.diskInterface.updatePanel();
+		this.framer.updateDrives();
 		this.btnSave.mouseExited();
 	}
 
@@ -202,11 +201,11 @@ public class DiskDrivePanel extends JPanel
 				this.drive.load(this.file);
 				this.modified = false;
 			}
-			catch (UserCancelled e1)
+			catch (final UserCancelled e1)
 			{
 				// user cancelled, so do nothing
 			}
-			catch (IOException e)
+			catch (final Exception e)
 			{
 				this.framer.showMessage(e.getMessage());
 				e.printStackTrace();
@@ -218,7 +217,7 @@ public class DiskDrivePanel extends JPanel
 			this.file = null;
 			this.fileName = "";
 		}
-		this.diskInterface.updatePanel();
+		this.framer.updateDrives();
 		this.btnLoad.mouseExited();
 	}
 
@@ -339,12 +338,12 @@ public class DiskDrivePanel extends JPanel
 			this.fileName = this.file.getName();
 			this.modified = false;
 		}
-		catch (IOException e)
+		catch (final Exception e)
 		{
 			this.framer.showMessage(e.getMessage());
 			e.printStackTrace();
 		}
-		this.diskInterface.updatePanel();
+		this.framer.updateDrives();
 	}
 
 	public void setWriteProtected(boolean writeProtected)

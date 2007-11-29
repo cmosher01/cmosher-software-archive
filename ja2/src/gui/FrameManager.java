@@ -21,7 +21,7 @@ import javax.swing.plaf.FontUIResource;
 import disk.DiskBytes;
 import disk.DiskInterface;
 
-public class FrameManager implements Closeable
+public class FrameManager implements GUI, Closeable
 {
 	private JFrame frame;
 	private ContentPane contentPane;
@@ -62,15 +62,6 @@ public class FrameManager implements Closeable
 
         // Display the window.
         this.frame.setVisible(true);
-	}
-
-	public DiskDrivePanel getDrive(int drive)
-	{
-		if (this.contentPane == null)
-		{
-			return null;
-		}
-		return this.contentPane.getDrive(drive);
 	}
 
 	private static void setLookAndFeel()
@@ -190,5 +181,25 @@ public class FrameManager implements Closeable
 	public void toFront()
 	{
 		this.frame.toFront();
+	}
+
+
+
+	public void updateDrives()
+	{
+		if (this.contentPane == null)
+		{
+			return;
+		}
+		this.contentPane.updateDrives();
+	}
+
+	public void updateScreen(Image image)
+	{
+		if (this.contentPane == null)
+		{
+			return;
+		}
+		this.contentPane.updateScreen(image);
 	}
 }

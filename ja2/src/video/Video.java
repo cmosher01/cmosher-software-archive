@@ -1,6 +1,6 @@
 package video;
 
-import gui.Screen;
+import gui.GUI;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
@@ -58,14 +58,14 @@ public class Video
 	BufferedImage screenImage;
 	DataBuffer buf;
 
-	private final Screen screen;
+	private final GUI gui;
 
 
 
 
-	public Video(final Screen screen) throws IOException
+	public Video(final GUI gui) throws IOException
 	{
-		this.screen = screen;
+		this.gui = gui;
 		this.char_rom = readCharRom();
 	}
 
@@ -157,10 +157,7 @@ public class Video
 
 		if (this.t >= VideoAddressing.BYTES_PER_FIELD)
 		{
-			if (this.screen != null)
-			{
-				this.screen.plot(this.screenImage);
-			}
+			this.gui.updateScreen(this.screenImage);
 			this.t = 0;
 			++this.f;
 			if (this.f >= FLASH_HALFPERIOD)

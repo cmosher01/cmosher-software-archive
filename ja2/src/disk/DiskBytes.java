@@ -1,5 +1,5 @@
 package disk;
-import gui.FrameManager;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -25,20 +25,17 @@ public class DiskBytes
 	private final AtomicBoolean writable = new AtomicBoolean();
 	private int byt;
 	private int waitTimes;
-	private final FrameManager framer;
 
-	public DiskBytes(final FrameManager framer)
+	public DiskBytes()
 	{
-		this.framer = framer;
 		unload();
 	}
 
-	public void load(final File f) throws IOException
+	public void load(final File f) throws IOException, InvalidDiskImage
 	{
 		if (f.length() != TRACKS_PER_DISK*BYTES_PER_TRACK)
 		{
-			showBadDisk();
-			return;
+			throw new InvalidDiskImage();
 		}
 		byte[][] rb = new byte[TRACKS_PER_DISK][BYTES_PER_TRACK];
 		final InputStream disk = new BufferedInputStream(new FileInputStream(f));
@@ -47,8 +44,7 @@ public class DiskBytes
 		{
 			if (b1 < 0x96)
 			{
-				showBadDisk();
-				return;
+				throw new InvalidDiskImage();
 			}
 			rb[itrack][this.byt] = (byte)b1;
 			if (nextByte())
@@ -71,7 +67,7 @@ public class DiskBytes
 
 	private void showBadDisk()
 	{
-		this.framer.showMessage("That does not appear to be a valid nibble disk image. This emulator only accepts NIBBLE images.");
+		
 	}
 
 	private boolean isLoaded()
