@@ -8,7 +8,6 @@ import java.awt.dnd.DropTargetListener;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import disk.DiskBytes;
-import disk.DiskInterface;
 import disk.DiskState;
 
 /*
