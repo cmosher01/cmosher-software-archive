@@ -1,4 +1,5 @@
-package chipset;
+package chipset.cpu;
+import chipset.AddressBus;
 import chipset.Memory;
 import chipset.cpu.CPU6502;
 import junit.framework.TestCase;
