@@ -1,4 +1,4 @@
-package chipset;
+package chipset.cpu;
 /*
  * Created on Sep 11, 2007
  */

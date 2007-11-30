@@ -1,5 +1,6 @@
 package chipset;
 
+import chipset.cpu.CPU6502;
 import keyboard.Keyboard;
 import keyboard.Paddles;
 import disk.DiskDriveSimple;

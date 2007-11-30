@@ -1,7 +1,7 @@
 /*
  * Created on Nov 7, 2007
  */
-package chipset;
+package chipset.cpu;
 
 public interface Addr
 {

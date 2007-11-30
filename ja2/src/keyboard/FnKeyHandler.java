@@ -4,8 +4,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 import video.Video;
-import chipset.CPU6502;
 import chipset.Memory;
+import chipset.cpu.CPU6502;
 import disk.DiskInterface;
 
 /*

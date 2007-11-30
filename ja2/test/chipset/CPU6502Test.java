@@ -1,6 +1,6 @@
 package chipset;
-import chipset.CPU6502;
 import chipset.Memory;
+import chipset.cpu.CPU6502;
 import junit.framework.TestCase;
 
 /*

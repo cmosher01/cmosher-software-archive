@@ -1,4 +1,6 @@
-package chipset;
+package chipset.cpu;
+
+import chipset.AddressBus;
 
 /*
  * Created on Aug 1, 2007
