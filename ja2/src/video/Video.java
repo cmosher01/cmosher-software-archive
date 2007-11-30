@@ -37,8 +37,8 @@ public class Video
 
 	private byte dataByte;
 
-	private final BufferedImage screenImage = new BufferedImage(SIZE.width,SIZE.height,BufferedImage.TYPE_INT_RGB);
-	private final DataBuffer buf = this.screenImage.getRaster().getDataBuffer();
+	private final BufferedImage screenImage;
+	private final DataBuffer buf;
 
 
 
@@ -82,10 +82,12 @@ public class Video
 
 
 
-	public Video(final GUI gui, final Memory memory)
+	public Video(final GUI gui, final Memory memory, final BufferedImage screenImage)
 	{
 		this.gui = gui;
 		this.memory = memory;
+		this.screenImage = screenImage;
+		this.buf = this.screenImage.getRaster().getDataBuffer();
 
 		try
 		{

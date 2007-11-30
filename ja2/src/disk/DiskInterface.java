@@ -8,21 +8,17 @@ import gui.GUI;
  */
 public class DiskInterface implements Card
 {
-	private final DiskDriveSimple disk;
-	private final StepperMotor arm;
+	private final DiskState state;
 	private final GUI gui;
-
-	private boolean write;
 
 	/**
 	 * @param disk
 	 * @param manager 
 	 * @param motor
 	 */
-	public DiskInterface(final DiskDriveSimple disk, final StepperMotor arm, final GUI gui)
+	public DiskInterface(final DiskState state, final GUI gui)
 	{
-		this.disk = disk;
-		this.arm = arm;
+		this.state = state;
 		this.gui = gui;
 	}
 
@@ -38,31 +34,31 @@ public class DiskInterface implements Card
 			case 1:
 			case 2:
 			case 3:
-				this.arm.setMagnet(q,on);
-				this.disk.setTrack(this.arm.getTrack());
+				this.state.arm.setMagnet(q,on);
+				this.state.disk.setTrack(this.state.arm.getTrack());
 				updatePanel();
 			break;
 			case 4:
-				this.disk.setMotorOn(on);
+				this.state.disk.setMotorOn(on);
 				updatePanel();
 			break;
 			case 5:
-				this.disk.setDrive2(on);
+				this.state.disk.setDrive2(on);
 				updatePanel();
 			break;
 			case 6:
-				if (on && this.write)
+				if (on && this.state.write)
 				{
-					this.disk.set(data);
+					this.state.disk.set(data);
 				}
-				else if (!(on || this.write))
+				else if (!(on || this.state.write))
 				{
-					ret = this.disk.get();
+					ret = this.state.disk.get();
 				}
 			break;
 			case 7:
-				this.write = on;
-				if (this.disk.isWriteProtected())
+				this.state.write = on;
+				if (this.state.disk.isWriteProtected())
 				{
 					ret |= 0x80;
 				}
@@ -78,43 +74,13 @@ public class DiskInterface implements Card
 
 	public void reset()
 	{
-		this.disk.setMotorOn(false);
-		this.disk.setDrive2(false);
+		this.state.disk.setMotorOn(false);
+		this.state.disk.setDrive2(false);
 		updatePanel();
 	}
 
 	private void updatePanel()
 	{
 		this.gui.updateDrives();
-	}
-
-	public int getCurrentDriveNumber()
-	{
-		return this.disk.getDriveNumber();
-	}
-
-	public int getOtherDriveNumber()
-	{
-		return 1-this.disk.getDriveNumber();
-	}
-
-	public int getTrack()
-	{
-		return this.arm.getTrack();
-	}
-
-	public boolean isWriteProtected()
-	{
-		return this.disk.isWriteProtected();
-	}
-
-	public boolean isMotorOn()
-	{
-		return this.disk.isMotorOn();
-	}
-
-	public boolean isWriting()
-	{
-		return this.write;
 	}
 }

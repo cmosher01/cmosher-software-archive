@@ -53,7 +53,7 @@ public class StepperMotor
 	1111 ?  F
 	*/
 
-	public void setMagnet(final int magnet, final boolean on)
+	void setMagnet(final int magnet, final boolean on)
 	{
 		if (magnet < 0 || 4 <= magnet)
 		{

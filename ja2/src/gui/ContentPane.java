@@ -9,6 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import disk.DiskBytes;
 import disk.DiskInterface;
+import disk.DiskState;
 
 /*
  * Created on Sep 19, 2007
@@ -16,12 +17,12 @@ import disk.DiskInterface;
 class ContentPane extends JPanel
 {
 	private final Screen screen;
-	private final DiskInterface disk;
+	private final DiskState disk;
 	private DiskDrivePanel diskDrive1;
 	private DiskDrivePanel diskDrive2;
 	
 
-	public ContentPane(final Screen screen, final DiskBytes drive1, final DiskBytes drive2, final FrameManager framer, final DiskInterface disk)
+	public ContentPane(final Screen screen, final DiskBytes drive1, final DiskBytes drive2, final FrameManager framer, final DiskState disk)
 	{
 		this.screen = screen;
 		this.disk = disk;

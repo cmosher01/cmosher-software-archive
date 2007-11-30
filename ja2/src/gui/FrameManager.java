@@ -19,7 +19,7 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.FontUIResource;
 import disk.DiskBytes;
-import disk.DiskInterface;
+import disk.DiskState;
 
 public class FrameManager implements GUI, Closeable
 {
@@ -27,7 +27,7 @@ public class FrameManager implements GUI, Closeable
 	private final ContentPane contentPane;
 	private final Image videoImage;
 
-	public FrameManager(final WindowListener listenerWindow, final Screen screen, final DiskBytes drive1, final DiskBytes drive2, final DiskInterface diskInterface, final Image videoImage)
+	public FrameManager(final WindowListener listenerWindow, final Screen screen, final DiskBytes drive1, final DiskBytes drive2, final DiskState diskState, final Image videoImage)
 	{
 		this.videoImage = videoImage;
 
@@ -54,7 +54,7 @@ public class FrameManager implements GUI, Closeable
 //        this.frame.setJMenuBar(factoryMenuBar.createMenuBar());
 
         // Create and set up the content pane.
-        this.contentPane = new ContentPane(screen,drive1,drive2,this,diskInterface);
+        this.contentPane = new ContentPane(screen,drive1,drive2,this,diskState);
         this.frame.setContentPane(this.contentPane);
 
         new DropTarget(this.frame,this.contentPane.getFirstDrivePanelDropListener());

@@ -24,7 +24,7 @@ public class DiskDriveSimple
 		return this.disk[this.dr].get(this.track);
 	}
 
-	public void set(final byte value)
+	void set(final byte value)
 	{
 		if (!this.motorOn || this.isWriteProtected())
 		{
@@ -38,22 +38,22 @@ public class DiskDriveSimple
 		return this.disk[this.dr].isWriteProtected();
 	}
 
-	public void setDrive2(final boolean drive2)
+	void setDrive2(final boolean drive2)
 	{
 		this.dr = drive2 ? 1 : 0;
 	}
 
-	public void setMotorOn(final boolean on)
+	void setMotorOn(final boolean on)
 	{
 		this.motorOn = on;
 	}
 
-	public void setTrack(final int t)
+	void setTrack(final int t)
 	{
 		this.track = t;
 	}
 
-	public int getDriveNumber()
+	int getDriveNumber()
 	{
 		return this.dr;
 	}

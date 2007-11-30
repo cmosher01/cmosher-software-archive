@@ -2,6 +2,7 @@ import gui.FrameManager;
 import gui.Screen;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,6 +28,7 @@ import chipset.Memory;
 import disk.DiskBytes;
 import disk.DiskDriveSimple;
 import disk.DiskInterface;
+import disk.DiskState;
 import disk.StepperMotor;
 
 /*
@@ -93,17 +95,14 @@ public final class Ja2
     	final DiskBytes disk2 = new DiskBytes();
     	final DiskDriveSimple drive = new DiskDriveSimple(new DiskBytes[] {disk1,disk2});
     	final StepperMotor arm = new StepperMotor();
-    	final DiskInterface disk = new DiskInterface(drive,arm,this.framer);
+    	final DiskState diskState = new DiskState(drive,arm);
 
 
     	final Screen screen = new Screen();
 
-    	final Keyboard keyboard = new Keyboard();
-    	final ClipboardHandler clip = new ClipboardHandler(keyboard);
-        final Memory memory = new Memory();
-    	final Video video = new Video(this.framer,memory);
+    	final BufferedImage screenImage = new BufferedImage(Video.SIZE.width,Video.SIZE.height,BufferedImage.TYPE_INT_RGB);
 
-        this.framer = new FrameManager(
+    	this.framer = new FrameManager(
 	    	new WindowAdapter()
 	    	{
 				@Override
@@ -112,8 +111,14 @@ public final class Ja2
 					close();
 				}
 	    	},
-	    	screen,disk1,disk2,disk,video.getImage());
+	    	screen,disk1,disk2,diskState,screenImage);
 
+    	final Keyboard keyboard = new Keyboard();
+    	final ClipboardHandler clip = new ClipboardHandler(keyboard);
+        final Memory memory = new Memory();
+
+    	final DiskInterface disk = new DiskInterface(diskState,this.framer);
+        final Video video = new Video(this.framer,memory,screenImage);
     	final Paddles paddles = new Paddles(4,screen.getTopLevelAncestor());
         final AddressBus addressBus = new AddressBus(memory,keyboard,video,paddles,disk);
 
