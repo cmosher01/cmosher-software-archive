@@ -26,7 +26,7 @@ public class VideoAddressing
 	private static final int RESET_ROWS = NTSC_LINES_PER_FIELD-SCANNABLE_ROWS;
 	private static final int RESET_BYTES = RESET_ROWS*BYTES_PER_ROW;
 
-	public static int[] buildLUT(final int base, final int len)
+	static int[] buildLUT(final int base, final int len)
 	{
 		final int[] lut = new int[BYTES_PER_FIELD];
 		for (int t = 0; t < lut.length; ++t)

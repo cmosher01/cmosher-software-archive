@@ -3,7 +3,6 @@ package video;
 import gui.GUI;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.io.File;
@@ -295,10 +294,5 @@ public class Video
 	{
 		final String name = "dump"+this.fmt.format(new Date())+".png";
 		ImageIO.write(this.screenImage,"PNG",new File(name));
-	}
-
-	public Image getImage()
-	{
-		return this.screenImage;
 	}
 }

@@ -3,7 +3,6 @@
  */
 package keyboard;
 
-import java.awt.Container;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.PointerInfo;
@@ -14,16 +13,10 @@ public class Paddles
 	private static final int PADDLE_CYCLES = 2805;
 
 	private final int[] rTick;
-	private final Container top;
 
-	public Paddles(final int cPaddle, final Container top)
+	public Paddles(final int cPaddle)
 	{
 		this.rTick = new int[cPaddle];
-		if (top == null)
-		{
-			throw new IllegalStateException("Top level container is null.");
-		}
-		this.top = top;
 	}
 
 	public void tick()
@@ -36,13 +29,20 @@ public class Paddles
 
 	public void startPaddleTimers()
 	{
-		if (this.top == null)
+		try
 		{
-			return;
+			tryStartPaddleTimers();
 		}
-		final Rectangle rect = this.top.getBounds();
-		final PointerInfo mouse = MouseInfo.getPointerInfo();
+		catch (final Throwable t)
+		{
+			t.printStackTrace();
+		}
+	}
 
+	private void tryStartPaddleTimers()
+	{
+		final PointerInfo mouse = MouseInfo.getPointerInfo();
+		final Rectangle rect = mouse.getDevice().getDefaultConfiguration().getBounds();
 		final Point loc = mouse.getLocation();
 
 		double p = loc.getX();
