@@ -36,15 +36,15 @@ public class DiskInterface implements Card
 			case 3:
 				this.state.arm.setMagnet(q,on);
 				this.state.disk.setTrack(this.state.arm.getTrack());
-				updatePanel();
+				this.gui.updateDrives();
 			break;
 			case 4:
 				this.state.disk.setMotorOn(on);
-				updatePanel();
+				this.gui.updateDrives();
 			break;
 			case 5:
 				this.state.disk.setDrive2(on);
-				updatePanel();
+				this.gui.updateDrives();
 			break;
 			case 6:
 				if (on && this.state.write)
@@ -55,6 +55,7 @@ public class DiskInterface implements Card
 				{
 					ret = this.state.disk.get();
 				}
+//				this.gui.updateDrives(); TODO
 			break;
 			case 7:
 				this.state.write = on;
@@ -66,7 +67,7 @@ public class DiskInterface implements Card
 				{
 					ret &= 0x7F;
 				}
-				updatePanel();
+				this.gui.updateDrives();
 			break;
 		}
 		return ret;
@@ -76,11 +77,6 @@ public class DiskInterface implements Card
 	{
 		this.state.disk.setMotorOn(false);
 		this.state.disk.setDrive2(false);
-		updatePanel();
-	}
-
-	private void updatePanel()
-	{
 		this.gui.updateDrives();
 	}
 }

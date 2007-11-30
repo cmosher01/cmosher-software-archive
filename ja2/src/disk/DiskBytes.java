@@ -139,7 +139,7 @@ public class DiskBytes
 		return ret;
 	}
 
-	public void put(final int track, final byte value)
+	void put(final int track, final byte value)
 	{
 		if (track < 0 || TRACKS_PER_DISK <= track)
 		{
@@ -153,7 +153,7 @@ public class DiskBytes
 		nextByte();
 	}
 
-	public boolean nextByte()
+	private boolean nextByte()
 	{
 		++this.byt;
 		final boolean nextTrack = this.byt >= BYTES_PER_TRACK;
