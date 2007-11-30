@@ -149,6 +149,7 @@ public class DiskDrivePanel extends JPanel
                 }
 			}
 
+			@SuppressWarnings("unchecked") /* DataFlavor.javaFileListFlavor always results in List<File> */
 			private List<File> getFileList(final Transferable tr)
 			{
 				List<File> fileList = new ArrayList<File>();
