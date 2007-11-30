@@ -43,17 +43,6 @@ import disk.StepperMotor;
  */
 public final class Ja2
 {
-	private final FrameManager framer = new FrameManager();
-
-	private Clock clock;
-
-	private String config = "ja2.cfg";
-
-	private Ja2()
-    {
-    	// only instantiated by main
-    }
-
     public static void main(final String... args) throws InterruptedException, InvocationTargetException
     {
     	SwingUtilities.invokeAndWait(new Runnable()
@@ -65,6 +54,20 @@ public final class Ja2
 			}
     	}
     	);
+    }
+
+
+
+    FrameManager framer;
+	Clock clock;
+
+	private String config = "ja2.cfg";
+
+
+
+	Ja2()
+    {
+    	// only instantiated by main
     }
 
     public void run(final String... args)
@@ -100,12 +103,11 @@ public final class Ja2
         final Memory memory = new Memory();
     	final Video video = new Video(this.framer,memory);
 
-    	// create the main frame window for the application
-        this.framer.init(
+        this.framer = new FrameManager(
 	    	new WindowAdapter()
 	    	{
 				@Override
-				public void windowClosing(final WindowEvent e)
+				public void windowClosing(@SuppressWarnings("unused") final WindowEvent e)
 				{
 					close();
 				}
@@ -221,10 +223,10 @@ public final class Ja2
 		{
 			public void run()
 			{
-				framer.close(); // this exits the app
-				if (clock != null)
+				Ja2.this.framer.close(); // this exits the app
+				if (Ja2.this.clock != null)
 				{
-					clock.shutdown();
+					Ja2.this.clock.shutdown();
 				}
 			}
 		});

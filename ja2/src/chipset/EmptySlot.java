@@ -5,7 +5,7 @@ package chipset;
 
 public class EmptySlot implements Card
 {
-	public byte io(final int address, final byte data)
+	public byte io(@SuppressWarnings("unused") final int address, final byte data)
 	{
 		return data;
 	}

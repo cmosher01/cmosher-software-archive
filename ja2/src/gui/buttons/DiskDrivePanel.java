@@ -31,7 +31,7 @@ import disk.DiskBytes;
 
 public class DiskDrivePanel extends JPanel
 {
-	private final FrameManager framer;
+	final FrameManager framer;
 	private volatile boolean current;
 	private volatile File file;
 	private volatile String fileName = "";
@@ -100,7 +100,7 @@ public class DiskDrivePanel extends JPanel
 		this.btnLoad.setBounds(4,30,(int)sz.getWidth(),(int)sz.getHeight());
 		this.btnLoad.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(ActionEvent e)
+			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e)
 			{
 				openFile();
 			}
@@ -113,7 +113,7 @@ public class DiskDrivePanel extends JPanel
 		this.btnSave.setBounds(50,30,(int)sz.getWidth(),(int)sz.getHeight());
 		this.btnSave.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(ActionEvent e)
+			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e)
 			{
 				saveFile();
 			}
@@ -166,7 +166,8 @@ public class DiskDrivePanel extends JPanel
 
         new DropTarget(this,this.dropListener);
     }
-	private void saveFile()
+
+	void saveFile()
 	{
 		this.upd = true;
 		if (this.file == null)
@@ -187,7 +188,7 @@ public class DiskDrivePanel extends JPanel
 		this.btnSave.mouseExited();
 	}
 
-	private void openFile()
+	void openFile()
 	{
 		this.upd = true;
 		if (this.file == null)
@@ -323,7 +324,7 @@ public class DiskDrivePanel extends JPanel
 		}
 	}
 
-	private void openDroppedFile(final File f)
+	void openDroppedFile(final File f)
 	{
 		this.upd = true;
 		if (this.file != null)

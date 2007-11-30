@@ -23,11 +23,11 @@ import disk.DiskInterface;
 
 public class FrameManager implements GUI, Closeable
 {
-	private JFrame frame;
-	private ContentPane contentPane;
-	private Image videoImage;
+	private final JFrame frame;
+	private final ContentPane contentPane;
+	private final Image videoImage;
 
-	public void init(final WindowListener listenerWindow, final Screen screen, final DiskBytes drive1, final DiskBytes drive2, final DiskInterface diskInterface, final Image videoImage)
+	public FrameManager(final WindowListener listenerWindow, final Screen screen, final DiskBytes drive1, final DiskBytes drive2, final DiskInterface diskInterface, final Image videoImage)
 	{
 		this.videoImage = videoImage;
 

@@ -14,7 +14,7 @@ public class StandardIn implements Card
 	private boolean gotCR;
 	private boolean gotEOF;
 
-	public byte io(final int addr, final byte data)
+	public byte io(final int addr, @SuppressWarnings("unused") final byte data)
 	{
 		byte r = -1;
 		final int sw = addr & 0x0F;

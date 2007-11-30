@@ -7,7 +7,7 @@ import chipset.Card;
 
 public class StandardOut implements Card
 {
-	public byte io(final int addr, final byte data)
+	public byte io(@SuppressWarnings("unused") final int addr, final byte data)
 	{
 		final char c = (char)(data&0x7F);
 		if (c == '\r')

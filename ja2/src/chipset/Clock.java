@@ -53,7 +53,7 @@ public class Clock
 
 	private static final int CHECK_EVERY = Util.divideRound(CPU_HZ,10);
 
-	private void runth()
+	void runth()
 	{
 		while (!this.shutdown)
 		{
