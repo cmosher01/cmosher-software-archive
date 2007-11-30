@@ -1,7 +1,5 @@
 package chipset;
 
-import java.io.IOException;
-
 /*
  * Created on Aug 1, 2007
  */
@@ -72,17 +70,13 @@ public final class CPU6502
         this.NMI = true;
     }
 
-	public void step()
+	void step()
 	{
 		do
 		{
 			tick();
 		}
 		while (this.t > 0);
-	}
-
-	public void stopped()
-	{
 	}
 
 	public void tick()
@@ -717,7 +711,7 @@ public final class CPU6502
 						execute();
 					break;
 					case 2:
-						address = spPush();
+						address = push();
 						write();
 						done();
 					break;
@@ -740,7 +734,7 @@ public final class CPU6502
 						read(); // discard
 					break;
 					case 3:
-						address = spPull();
+						address = pull();
 						read();
 						execute();
 						done();
@@ -761,13 +755,13 @@ public final class CPU6502
 						adl = data;
 					break;
 					case 2:
-						address = spPush();
+						address = push();
 						read(); // discard
 					break;
 					case 3:
 						data = pch();
 						write();
-						address = spPush();
+						address = push();
 					break;
 					case 4:
 						data = pcl();
@@ -795,17 +789,17 @@ public final class CPU6502
 						read(); // discard
 					break;
 					case 2:
-						address = spPush();
+						address = push();
 						data = pch();
 						write();
 					break;
 					case 3:
-						address = spPush();
+						address = push();
 						data = pcl();
 						write();
 					break;
 					case 4:
-						address = spPush();
+						address = push();
 						b = true;
 						data = getStatusRegisterByte();
 						write();
@@ -841,17 +835,17 @@ public final class CPU6502
 						read(); // discard
 					break;
 					case 3:
-						address = spPull();
+						address = pull();
 						read();
 						setStatusRegisterByte(data);
 					break;
 					case 4:
-						address = spPull();
+						address = pull();
 						read();
 						adl = data;
 					break;
 					case 5:
-						address = spPull();
+						address = pull();
 						read();
 						adh = data;
 						pc = ad();
@@ -930,12 +924,12 @@ public final class CPU6502
 						read(); // discard
 					break;
 					case 3:
-						address = spPull();
+						address = pull();
 						read();
 						adl = data;
 					break;
 					case 4:
-						address = spPull();
+						address = pull();
 						read();
 						adh = data;
 					break;
@@ -1012,17 +1006,17 @@ public final class CPU6502
 						read(); // discard
 					break;
 					case 2:
-						address = spPush();
+						address = push();
 						data = pch();
 						write();
 					break;
 					case 3:
-						address = spPush();
+						address = push();
 						data = pcl(); // ???
 						write();
 					break;
 					case 4:
-						address = spPush();
+						address = push();
 						i = true;
 						b = false; // ???
 						data = getStatusRegisterByte();
@@ -1057,17 +1051,17 @@ public final class CPU6502
 					break;
 					case 2:
 				        s = 0xFF; // real CPU doesn't do this ???
-						address = spPush();
+						address = push();
 						data = pch();
 						read(); // discard
 					break;
 					case 3:
-						address = spPush();
+						address = push();
 						data = pcl();
 						read(); // discard
 					break;
 					case 4:
-						address = spPush();
+						address = push();
 						i = true;
 						data = getStatusRegisterByte();
 						read(); // discard
@@ -1100,17 +1094,17 @@ public final class CPU6502
 						read(); // discard
 					break;
 					case 2:
-						address = spPush();
+						address = push();
 						data = pch();
 						write();
 					break;
 					case 3:
-						address = spPush();
+						address = push();
 						data = pcl();
 						write();
 					break;
 					case 4:
-						address = spPush();
+						address = push();
 						i = true;
 						b = false; // ???
 	  					data = getStatusRegisterByte();
@@ -1156,15 +1150,15 @@ public final class CPU6502
 		return 0x100+this.s;
 	}
 
-	int spPush()
+	int push()
 	{
 		final int sp = sp();
-		this.s--;
+		--this.s;
 		this.s &= 0xFF;
 		return sp;
 	}
 
-	int spPull()
+	int pull()
 	{
 		++this.s;
 		this.s &= 0xFF;
@@ -1284,12 +1278,12 @@ public final class CPU6502
 
     void setFlagCarry(final int val)
     {
-    	this.c = val >= 0x100;//(val & 0x100) != 0;
+    	this.c = val >= 0x100;
     }
 
     void setFlagBorrow(final int val)
     {
-    	this.c = 0 <= val && val < 0x100;//(val & 0x100) == 0;
+    	this.c = 0 <= val && val < 0x100;
     }
 
     int getStatusRegisterByte()

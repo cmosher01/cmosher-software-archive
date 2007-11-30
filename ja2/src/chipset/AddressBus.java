@@ -41,12 +41,18 @@ public class AddressBus
 
 	public byte read(final int address)
 	{
+		final byte r;
+
 		if ((address >> 8) == 0xC0)
 		{
-			return readSwitch(address & 0x00FF);
+			r = readSwitch(address & 0x00FF);
+		}
+		else
+		{
+			r = this.memory.read(address);
 		}
 
-		return this.memory.read(address);
+		return r;
 	}
 
 	public void write(final int address, final byte data)
@@ -55,8 +61,10 @@ public class AddressBus
 		{
 			writeSwitch(address & 0x00FF,data);
 		}
-
-		this.memory.write(address,data);
+		else
+		{
+			this.memory.write(address,data);
+		}
 	}
 
 
@@ -136,6 +144,7 @@ public class AddressBus
 			else if (islot == 0x7)
 			{
 				this.paddles.startPaddleTimers();
+				r = (byte)0x80;
 			}
 		}
 		else

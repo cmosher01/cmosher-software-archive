@@ -25,9 +25,12 @@ public class FrameManager implements GUI, Closeable
 {
 	private JFrame frame;
 	private ContentPane contentPane;
+	private Image videoImage;
 
-	public void init(final WindowListener listenerWindow, final Screen screen, final DiskBytes drive1, final DiskBytes drive2, final DiskInterface diskInterface)
+	public void init(final WindowListener listenerWindow, final Screen screen, final DiskBytes drive1, final DiskBytes drive2, final DiskInterface diskInterface, final Image videoImage)
 	{
+		this.videoImage = videoImage;
+
 		setLookAndFeel();
 
 		setDecorated();
@@ -194,12 +197,12 @@ public class FrameManager implements GUI, Closeable
 		this.contentPane.updateDrives();
 	}
 
-	public void updateScreen(Image image)
+	public void updateScreen()
 	{
 		if (this.contentPane == null)
 		{
 			return;
 		}
-		this.contentPane.updateScreen(image);
+		this.contentPane.updateScreen(this.videoImage);
 	}
 }

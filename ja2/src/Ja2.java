@@ -95,7 +95,12 @@ public final class Ja2
 
     	final Screen screen = new Screen();
 
-        // create the main frame window for the application
+    	final Keyboard keyboard = new Keyboard();
+    	final ClipboardHandler clip = new ClipboardHandler(keyboard);
+        final Memory memory = new Memory();
+    	final Video video = new Video(this.framer,memory);
+
+    	// create the main frame window for the application
         this.framer.init(
 	    	new WindowAdapter()
 	    	{
@@ -105,13 +110,9 @@ public final class Ja2
 					close();
 				}
 	    	},
-	    	screen,disk1,disk2,disk);
+	    	screen,disk1,disk2,disk,video.getImage());
 
-    	final Keyboard keyboard = new Keyboard();
-    	final ClipboardHandler clip = new ClipboardHandler(keyboard);
     	final Paddles paddles = new Paddles(4,screen.getTopLevelAncestor());
-        final Memory memory = new Memory();
-    	final Video video = new Video(this.framer,memory);
         final AddressBus addressBus = new AddressBus(memory,keyboard,video,paddles,disk);
 
 

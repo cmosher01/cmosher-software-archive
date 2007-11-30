@@ -3,11 +3,9 @@
  */
 package gui;
 
-import java.awt.Image;
-
 public interface GUI
 {
-	void updateScreen(Image image);
+	void updateScreen();
 	void updateDrives();
 	void showMessage(String message);
 }

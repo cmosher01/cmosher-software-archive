@@ -53,7 +53,7 @@ public class Clock
 
 	private static final int CHECK_EVERY = Util.divideRound(CPU_HZ,10);
 
-	void runth()
+	private void runth()
 	{
 		while (!this.shutdown)
 		{
@@ -61,6 +61,7 @@ public class Clock
 			 * One normal clock cycle. Let the CPU do one cycle of its
 			 * calculation, then let the video display do one cycle's
 			 * worth of scanning/displaying (one byte).
+			 * Tick down the paddles, too.
 			 */
 			this.cpu.tick();
 			this.video.tick();
@@ -101,8 +102,6 @@ public class Clock
 				}
 			}
 		}
-		this.cpu.stopped();
-		this.video.stopped();
 	}
 
 	public void shutdown()
@@ -118,6 +117,7 @@ public class Clock
 			{
 				e.printStackTrace();
 			}
+			this.clth = null;
 		}
 	}
 }
