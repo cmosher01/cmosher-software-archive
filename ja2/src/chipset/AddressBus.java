@@ -12,7 +12,7 @@ import video.Video;
 /*
  * Created on Aug 1, 2007
  */
-public class AddressBus
+public class AddressBus implements chipset.cpu.AddressBus
 {
 	private final Memory memory;
 	private final Keyboard keyboard;
