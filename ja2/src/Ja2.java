@@ -10,6 +10,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,12 +22,17 @@ import keyboard.ClipboardHandler;
 import keyboard.FnKeyHandler;
 import keyboard.Keyboard;
 import keyboard.Paddles;
+import stdio.StandardIn;
+import stdio.StandardOut;
 import util.Util;
 import video.Video;
 import chipset.AddressBus;
+import chipset.Card;
 import chipset.Clock;
+import chipset.EmptySlot;
 import chipset.InvalidMemoryLoad;
 import chipset.Memory;
+import chipset.Slots;
 import chipset.cpu.CPU6502;
 import disk.DiskBytes;
 import disk.DiskDriveSimple;
@@ -120,7 +129,19 @@ public final class Ja2
     	final DiskInterface disk = new DiskInterface(diskState,this.framer);
         final Video video = new Video(this.framer,memory,screenImage);
     	final Paddles paddles = new Paddles();
-        final AddressBus addressBus = new AddressBus(memory,keyboard,video,paddles,disk);
+    	final List<Card> cards = Arrays.<Card>asList(new Card[]
+		{
+	    	/* 0 */ new EmptySlot(),
+	    	/* 1 */ new StandardOut(),
+	    	/* 2 */ new StandardIn(),
+	    	/* 3 */ new EmptySlot(),
+	    	/* 4 */ new EmptySlot(),
+	    	/* 5 */ new EmptySlot(),
+	    	/* 6 */ disk,
+	    	/* 7 */ new EmptySlot()
+		});
+    	final Slots slots = new Slots(cards);
+        final AddressBus addressBus = new AddressBus(memory,keyboard,video,paddles,slots);
 
 
     	final CPU6502 cpu = new CPU6502(addressBus);

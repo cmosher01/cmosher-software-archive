@@ -2,8 +2,6 @@ package chipset;
 
 import keyboard.Keyboard;
 import keyboard.Paddles;
-import stdio.StandardIn;
-import stdio.StandardOut;
 import video.Video;
 
 
@@ -18,25 +16,19 @@ public class AddressBus implements chipset.cpu.AddressBus
 	private final Keyboard keyboard;
 	private final Video video;
 	private final Paddles paddles;
+	private final Slots slots;
 
-	private final Card[] slot = new Card[8];
 
-	/**
-	 * @param keyboard
-	 */
-	public AddressBus(final Memory memory, final Keyboard keyboard, final Video video, final Paddles paddles, final Card disk)
+
+
+
+	public AddressBus(final Memory memory, final Keyboard keyboard, final Video video, final Paddles paddles, final Slots slots)
 	{
 		this.memory = memory;
 		this.keyboard = keyboard;
 		this.video = video;
 		this.paddles = paddles;
-
-		fillInDefaultSlots();
-
-		if (disk != null)
-		{
-			this.slot[6] = disk;
-		}
+		this.slots = slots;
 	}
 
 	public byte read(final int address)
@@ -72,17 +64,6 @@ public class AddressBus implements chipset.cpu.AddressBus
 
 
 
-
-	private void fillInDefaultSlots()
-	{
-		for (int s = 0; s < this.slot.length; ++s)
-		{
-			this.slot[s] = new EmptySlot();
-		}
-
-		this.slot[1] = new StandardOut();
-		this.slot[2] = new StandardIn();
-	}
 
 	private byte readSwitch(int address)
 	{
@@ -153,7 +134,7 @@ public class AddressBus implements chipset.cpu.AddressBus
 			address &= 0x7F;
 			final int islot = (address & 0xF0) >> 4;
 			final int iswch = (address & 0x0F);
-			r = this.slot[islot].io(iswch,(byte)0);
+			r = this.slots.io(islot,iswch,(byte)0);
 		}
 
 		return r;
@@ -183,7 +164,7 @@ public class AddressBus implements chipset.cpu.AddressBus
 			address &= 0x7F;
 			final int islot = (address & 0xF0) >> 4;
 			final int iswch = (address & 0x0F);
-			this.slot[islot].io(iswch,data);
+			this.slots.io(islot,iswch,data);
 		}
 	}
 }
