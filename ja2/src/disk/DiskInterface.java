@@ -1,7 +1,7 @@
 package disk;
 
 import chipset.Card;
-import gui.GUI;
+import gui.UI;
 
 /*
  * Created on Sep 12, 2007
@@ -9,17 +9,17 @@ import gui.GUI;
 public class DiskInterface implements Card
 {
 	private final DiskState state;
-	private final GUI gui;
+	private final UI ui;
 
 	/**
 	 * @param disk
 	 * @param manager 
 	 * @param motor
 	 */
-	public DiskInterface(final DiskState state, final GUI gui)
+	public DiskInterface(final DiskState state, final UI ui)
 	{
 		this.state = state;
-		this.gui = gui;
+		this.ui = ui;
 	}
 
 	public byte io(final int addr, final byte data)
@@ -36,15 +36,15 @@ public class DiskInterface implements Card
 			case 3:
 				this.state.arm.setMagnet(q,on);
 				this.state.disk.setTrack(this.state.arm.getTrack());
-				this.gui.updateDrives();
+				this.ui.updateDrives();
 			break;
 			case 4:
 				this.state.disk.setMotorOn(on);
-				this.gui.updateDrives();
+				this.ui.updateDrives();
 			break;
 			case 5:
 				this.state.disk.setDrive2(on);
-				this.gui.updateDrives();
+				this.ui.updateDrives();
 			break;
 			case 6:
 				if (on && this.state.write)
@@ -67,7 +67,7 @@ public class DiskInterface implements Card
 				{
 					ret &= 0x7F;
 				}
-				this.gui.updateDrives();
+				this.ui.updateDrives();
 			break;
 		}
 		return ret;
@@ -77,6 +77,6 @@ public class DiskInterface implements Card
 	{
 		this.state.disk.setMotorOn(false);
 		this.state.disk.setDrive2(false);
-		this.gui.updateDrives();
+		this.ui.updateDrives();
 	}
 }

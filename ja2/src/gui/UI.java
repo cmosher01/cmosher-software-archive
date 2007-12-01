@@ -3,7 +3,7 @@
  */
 package gui;
 
-public interface GUI
+public interface UI
 {
 	void updateScreen();
 	void updateDrives();

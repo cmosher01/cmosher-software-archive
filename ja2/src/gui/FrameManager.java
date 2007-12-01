@@ -21,7 +21,7 @@ import javax.swing.plaf.FontUIResource;
 import disk.DiskBytes;
 import disk.DiskState;
 
-public class FrameManager implements GUI, Closeable
+public class FrameManager implements UI, Closeable
 {
 	private final JFrame frame;
 	private final ContentPane contentPane;

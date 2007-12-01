@@ -1,6 +1,6 @@
 package video;
 
-import gui.GUI;
+import gui.UI;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
@@ -18,7 +18,7 @@ import chipset.Memory;
  */
 public class Video
 {
-	private final GUI gui;
+	private final UI ui;
 	private final Memory memory;
 
 	private final byte[] char_rom = new byte[0x800];
@@ -81,9 +81,9 @@ public class Video
 
 
 
-	public Video(final GUI gui, final Memory memory, final BufferedImage screenImage)
+	public Video(final UI ui, final Memory memory, final BufferedImage screenImage)
 	{
-		this.gui = gui;
+		this.ui = ui;
 		this.memory = memory;
 		this.screenImage = screenImage;
 		this.buf = this.screenImage.getRaster().getDataBuffer();
@@ -95,7 +95,7 @@ public class Video
 		catch (final Exception e)
 		{
 			e.printStackTrace();
-			this.gui.showMessage(e.getMessage());
+			this.ui.showMessage(e.getMessage());
 		}
 
 		setCurrentLookupTable();
@@ -176,7 +176,7 @@ public class Video
 
 		if (this.t >= VideoAddressing.BYTES_PER_FIELD)
 		{
-			this.gui.updateScreen();
+			this.ui.updateScreen();
 			updateFlashingState();
 			this.t = 0;
 		}
