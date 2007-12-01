@@ -21,7 +21,7 @@ class ContentPane extends JPanel
 	private DiskDrivePanel diskDrive2;
 	
 
-	public ContentPane(final Screen screen, final DiskBytes drive1, final DiskBytes drive2, final FrameManager framer, final DiskState disk)
+	public ContentPane(final Screen screen, final DiskBytes drive1, final DiskBytes drive2, final GUI framer, final DiskState disk)
 	{
 		this.screen = screen;
 		this.disk = disk;
@@ -31,7 +31,7 @@ class ContentPane extends JPanel
 		setUp(drive1,drive2,framer);
 	}
 
-	private void setUp(final DiskBytes drive1, final DiskBytes drive2, final FrameManager framer)
+	private void setUp(final DiskBytes drive1, final DiskBytes drive2, final GUI framer)
 	{
 		setLayout(null);
 		//setBackground(Color.BLACK);

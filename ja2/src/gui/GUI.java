@@ -7,7 +7,6 @@ import java.awt.Toolkit;
 import java.awt.dnd.DropTarget;
 import java.awt.event.WindowListener;
 import java.awt.image.MemoryImageSource;
-import java.io.Closeable;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -21,13 +20,13 @@ import javax.swing.plaf.FontUIResource;
 import disk.DiskBytes;
 import disk.DiskState;
 
-public class FrameManager implements UI, Closeable
+public class GUI implements UI
 {
 	private final JFrame frame;
 	private final ContentPane contentPane;
 	private final Image videoImage;
 
-	public FrameManager(final WindowListener listenerWindow, final Screen screen, final DiskBytes drive1, final DiskBytes drive2, final DiskState diskState, final Image videoImage)
+	public GUI(final WindowListener listenerWindow, final Screen screen, final DiskBytes drive1, final DiskBytes drive2, final DiskState diskState, final Image videoImage)
 	{
 		this.videoImage = videoImage;
 
@@ -204,5 +203,10 @@ public class FrameManager implements UI, Closeable
 			return;
 		}
 		this.contentPane.updateScreen(this.videoImage);
+	}
+
+	public boolean isClosedOnStdInEOF()
+	{
+		return false;
 	}
 }

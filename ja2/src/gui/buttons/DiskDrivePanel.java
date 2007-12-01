@@ -3,7 +3,7 @@
  */
 package gui.buttons;
 
-import gui.FrameManager;
+import gui.GUI;
 import gui.UserCancelled;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -31,7 +31,7 @@ import disk.DiskBytes;
 
 public class DiskDrivePanel extends JPanel
 {
-	final FrameManager framer;
+	final GUI framer;
 	private volatile boolean current;
 	private volatile int track;
 	private volatile boolean modified;
@@ -49,7 +49,7 @@ public class DiskDrivePanel extends JPanel
 
 	private volatile boolean upd;
 
-	public DiskDrivePanel(final DiskBytes drive, final FrameManager framer)
+	public DiskDrivePanel(final DiskBytes drive, final GUI framer)
 	{
 		this.drive = drive;
 		this.framer = framer;

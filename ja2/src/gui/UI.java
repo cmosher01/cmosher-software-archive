@@ -8,4 +8,6 @@ public interface UI
 	void updateScreen();
 	void updateDrives();
 	void showMessage(String message);
+	void close();
+	boolean isClosedOnStdInEOF();
 }

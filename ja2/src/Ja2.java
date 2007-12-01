@@ -1,4 +1,4 @@
-import gui.FrameManager;
+import gui.GUI;
 import gui.Screen;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -70,7 +70,7 @@ public final class Ja2
 
 
 
-    FrameManager framer;
+    GUI framer;
 	Clock clock;
 
 	private String config = "ja2.cfg";
@@ -112,7 +112,7 @@ public final class Ja2
 
     	final Screen screen = new Screen();
 
-    	this.framer = new FrameManager(
+    	this.framer = new GUI(
 	    	new WindowAdapter()
 	    	{
 				@Override
