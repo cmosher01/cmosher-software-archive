@@ -98,9 +98,9 @@ public final class Ja2
     	final DiskState diskState = new DiskState(drive,arm);
 
 
-    	final Screen screen = new Screen();
-
     	final BufferedImage screenImage = new BufferedImage(Video.SIZE.width,Video.SIZE.height,BufferedImage.TYPE_INT_RGB);
+
+    	final Screen screen = new Screen();
 
     	this.framer = new FrameManager(
 	    	new WindowAdapter()
@@ -119,7 +119,7 @@ public final class Ja2
 
     	final DiskInterface disk = new DiskInterface(diskState,this.framer);
         final Video video = new Video(this.framer,memory,screenImage);
-    	final Paddles paddles = new Paddles(4,screen.getTopLevelAncestor());
+    	final Paddles paddles = new Paddles();
         final AddressBus addressBus = new AddressBus(memory,keyboard,video,paddles,disk);
 
 
