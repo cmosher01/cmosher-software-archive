@@ -45,8 +45,8 @@ public class Paddles
 	{
 		setPdls();
 
-		this.rTick[0] = this.pdls.height;
-		this.rTick[1] = this.pdls.width;
+		this.rTick[0] = this.pdls.width;
+		this.rTick[1] = this.pdls.height;
 	}
 
 	private void setPdls()

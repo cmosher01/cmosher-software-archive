@@ -33,8 +33,6 @@ public class DiskDrivePanel extends JPanel
 {
 	final FrameManager framer;
 	private volatile boolean current;
-	private volatile File file;
-	private volatile String fileName = "";
 	private volatile int track;
 	private volatile boolean modified;
 	private volatile boolean reading;
@@ -171,13 +169,9 @@ public class DiskDrivePanel extends JPanel
 	void saveFile()
 	{
 		this.upd = true;
-		if (this.file == null)
-		{
-			return;
-		}
 		try
 		{
-			this.drive.save(this.file);
+			this.drive.save();
 			this.modified = false;
 		}
 		catch (IOException e)
@@ -191,16 +185,18 @@ public class DiskDrivePanel extends JPanel
 
 	void openFile()
 	{
+		// TODO better error handling/recovery for opening disk files
 		this.upd = true;
-		if (this.file == null)
+		if (this.drive.isLoaded())
+		{
+			this.drive.unload();
+		}
+		else
 		{
 			try
 			{
-				this.file = this.framer.getFileToOpen(null);
-				this.file = this.file.getCanonicalFile();
-				this.fileName = this.file.getName();
-				this.drive.load(this.file);
-				this.modified = false;
+				final File file = this.framer.getFileToOpen(null);
+				this.drive.load(file);
 			}
 			catch (final UserCancelled e1)
 			{
@@ -212,12 +208,7 @@ public class DiskDrivePanel extends JPanel
 				this.framer.showMessage(e.getMessage());
 			}
 		}
-		else
-		{
-			this.drive.unload();
-			this.file = null;
-			this.fileName = "";
-		}
+		this.modified = false;
 		this.framer.updateDrives();
 		this.btnLoad.mouseExited();
 	}
@@ -267,10 +258,10 @@ public class DiskDrivePanel extends JPanel
 		this.labelTrack.setVisible(this.current);
 		this.ledRead.setVisible(this.current);
 		this.ledWrite.setVisible(this.current);
-		this.labelFile.setText(this.fileName);
+		this.labelFile.setText(this.drive.getFileName());
 		this.btnSave.setVisible(!this.writeProtected);
 		this.btnSave.setEnabled(!this.writeProtected && this.modified);
-		this.btnLoad.setText(this.file == null ? "load" : "unload");
+		this.btnLoad.setText(this.drive.isLoaded() ? "unload" : "load");
 		repaint();
 		this.upd = false;
 	}
@@ -328,18 +319,13 @@ public class DiskDrivePanel extends JPanel
 	void openDroppedFile(final File f)
 	{
 		this.upd = true;
-		if (this.file != null)
+		if (this.drive.isLoaded())
 		{
 			this.drive.unload();
-			this.file = null;
-			this.fileName = "";
-			this.modified = false;
 		}
 		try
 		{
 			this.drive.load(f);
-			this.file = f;
-			this.fileName = this.file.getName();
 			this.modified = false;
 		}
 		catch (final Exception e)

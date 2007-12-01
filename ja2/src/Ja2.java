@@ -38,6 +38,7 @@ import disk.DiskBytes;
 import disk.DiskDriveSimple;
 import disk.DiskInterface;
 import disk.DiskState;
+import disk.InvalidDiskImage;
 import disk.StepperMotor;
 
 /*
@@ -159,7 +160,7 @@ public final class Ja2
 
     	try
 		{
-			parseConfig(memory);
+			parseConfig(memory,disk1,disk2);
 		}
 		catch (final Exception e)
 		{
@@ -204,8 +205,9 @@ public final class Ja2
 		}
 	}
 
-	private static final Pattern patIMPORT = Pattern.compile("import\\s+(.+)\\s+(.+)");
-	private void parseConfig(Memory memory) throws IOException, InvalidMemoryLoad
+	private static final Pattern patIMPORT = Pattern.compile("import\\s+(.+?)\\s+(.+?)");
+	private static final Pattern patLOAD = Pattern.compile("load\\s+(.+?)\\s+(.+?)");
+	private void parseConfig(final Memory memory, final DiskBytes disk1, final DiskBytes disk2) throws IOException, InvalidMemoryLoad, InvalidDiskImage
 	{
     	final BufferedReader cfg = new BufferedReader(new InputStreamReader(new FileInputStream(this.config)));
     	for (String s = cfg.readLine(); s != null; s = cfg.readLine())
@@ -221,7 +223,7 @@ public final class Ja2
     			continue;
     		}
 
-    		final Matcher matcher;
+    		Matcher matcher;
     		if ((matcher = patIMPORT.matcher(s)).matches())
     		{
     			final int addr = Integer.decode(matcher.group(1));
@@ -230,6 +232,26 @@ public final class Ja2
     			final InputStream image = new FileInputStream(new File(mem));
     	        memory.load(addr,image);
     	        image.close();
+    		}
+    		else if ((matcher = patLOAD.matcher(s)).matches())
+    		{
+    			final int drive = Integer.decode(matcher.group(1));
+
+    			final String nib = matcher.group(2);
+    			final File fnib = new File(nib);
+
+    			if (drive == 1)
+    			{
+    				disk1.load(fnib);
+    			}
+    			else if (drive == 2)
+    			{
+    				disk2.load(fnib);
+    			}
+    			else
+    			{
+        			throw new IllegalArgumentException("Error in config file: "+s);
+    			}
     		}
     		else
     		{
@@ -249,7 +271,10 @@ public final class Ja2
 		{
 			public void run()
 			{
-				Ja2.this.framer.close(); // this exits the app
+				if (Ja2.this.framer != null)
+				{
+					Ja2.this.framer.close(); // this exits the app
+				}
 				if (Ja2.this.clock != null)
 				{
 					Ja2.this.clock.shutdown();

@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,8 +22,10 @@ public class DiskBytes
 
 	private byte[][] bytes;
 
-	private final AtomicBoolean loaded = new AtomicBoolean();
+	private volatile File file;
+	private volatile String fileName;
 	private final AtomicBoolean writable = new AtomicBoolean();
+	private final AtomicBoolean loaded = new AtomicBoolean();
 	private int byt;
 	private int waitTimes;
 
@@ -31,11 +34,20 @@ public class DiskBytes
 		unload();
 	}
 
-	public void load(final File f) throws IOException, InvalidDiskImage
+	public void load(File f) throws IOException, InvalidDiskImage
 	{
+		if (isLoaded())
+		{
+			unload();
+		}
+		f = f.getCanonicalFile();
+		if (!f.exists())
+		{
+			throw new FileNotFoundException("Can't find file: "+f.getPath());
+		}
 		if (f.length() != TRACKS_PER_DISK*BYTES_PER_TRACK)
 		{
-			throw new InvalidDiskImage();
+			throw new InvalidDiskImage(f.getName());
 		}
 		byte[][] rb = new byte[TRACKS_PER_DISK][BYTES_PER_TRACK];
 		final InputStream disk = new BufferedInputStream(new FileInputStream(f));
@@ -44,7 +56,7 @@ public class DiskBytes
 		{
 			if (b1 < 0x96)
 			{
-				throw new InvalidDiskImage();
+				throw new InvalidDiskImage(f.getName());
 			}
 			rb[itrack][this.byt] = (byte)b1;
 			if (nextByte())
@@ -53,6 +65,9 @@ public class DiskBytes
 			}
 		}
 		disk.close();
+
+		this.file = f;
+		this.fileName = this.file.getName();
 		this.bytes = rb;
 		synchronized (this.writable)
 		{
@@ -65,20 +80,25 @@ public class DiskBytes
 		}
 	}
 
-	private boolean isLoaded()
+	public String getFileName()
+	{
+		return this.fileName;
+	}
+
+	public boolean isLoaded()
 	{
 		synchronized (this.loaded)
 		{
 			return this.loaded.get();
 		}
 	}
-	public void save(final File f) throws IOException
+	public void save() throws IOException
 	{
 		if (isWriteProtected() || !isLoaded())
 		{
 			return;
 		}
-		final OutputStream out = new BufferedOutputStream(new FileOutputStream(f),TRACKS_PER_DISK*BYTES_PER_TRACK);
+		final OutputStream out = new BufferedOutputStream(new FileOutputStream(this.file),TRACKS_PER_DISK*BYTES_PER_TRACK);
 		for (int itrack = 0; itrack < TRACKS_PER_DISK; ++itrack)
 		{
 			for (int ibyte = 0; ibyte < BYTES_PER_TRACK; ++ibyte)
@@ -102,6 +122,8 @@ public class DiskBytes
 			this.loaded.set(false);
 			this.loaded.notifyAll();
 		}
+		this.file = null;
+		this.fileName = "";
 	}
 
 	public byte get(final int track)
@@ -120,7 +142,7 @@ public class DiskBytes
 					this.waitTimes = 0;
 					try
 					{
-						this.loaded.wait(100);
+						this.loaded.wait(20);
 					}
 					catch (InterruptedException e)
 					{

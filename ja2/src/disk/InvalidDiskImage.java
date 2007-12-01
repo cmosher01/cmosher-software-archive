@@ -5,21 +5,21 @@ package disk;
 
 public class InvalidDiskImage extends Exception
 {
-	private static final String MSG = "That does not appear to be a valid nibble disk image. This emulator only accepts NIBBLE images.";
+	private static final String MSG = " does not appear to be a valid nibble disk image. This emulator only accepts NIBBLE images.";
 
 	/**
 	 * 
 	 */
-	public InvalidDiskImage()
+	public InvalidDiskImage(final String filename)
 	{
-		super(MSG);
+		super(filename+MSG);
 	}
 
 	/**
 	 * @param cause
 	 */
-	public InvalidDiskImage(Throwable cause)
+	public InvalidDiskImage(final String filename, final Throwable cause)
 	{
-		super(MSG,cause);
+		super(filename+MSG,cause);
 	}
 }
