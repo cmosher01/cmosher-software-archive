@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *
  * @author Chris Mosher
  */
-public class Keyboard extends KeyAdapter implements KeyListener
+public class Keyboard extends KeyAdapter implements KeyListener, KeyboardInterface
 {
 	private final Object lock = new Object();
 	private int latch;

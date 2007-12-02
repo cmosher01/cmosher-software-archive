@@ -5,9 +5,12 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.dnd.DropTarget;
-import java.awt.event.WindowListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.MemoryImageSource;
+import java.io.Closeable;
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Enumeration;
 import javax.swing.JDialog;
@@ -26,7 +29,7 @@ public class GUI implements UI
 	private final ContentPane contentPane;
 	private final Image videoImage;
 
-	public GUI(final WindowListener listenerWindow, final Screen screen, final DiskBytes drive1, final DiskBytes drive2, final DiskState diskState, final Image videoImage)
+	public GUI(final Closeable app, final Screen screen, final DiskBytes drive1, final DiskBytes drive2, final DiskState diskState, final Image videoImage)
 	{
 		this.videoImage = videoImage;
 
@@ -43,7 +46,35 @@ public class GUI implements UI
         // that's passed in by the caller (who is responsible for calling
         // our close method if he determines it is OK to terminate the app)
         this.frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        this.frame.addWindowListener(listenerWindow);
+        this.frame.addWindowListener(new WindowAdapter()
+    	{
+			@Override
+			public void windowClosing(@SuppressWarnings("unused") final WindowEvent e)
+			{
+				/*
+				 * When the user closes the main frame, we exit the application.
+				 * To do this, we dispose the frame (which ends the event dispatch
+				 * thread), then we tell the app to close itself.
+				 */
+				final Thread th = new Thread(new Runnable()
+				{
+					public void run()
+					{
+						frame.dispose();
+					}
+				});
+				th.setDaemon(true);
+				th.start();
+				try
+				{
+					app.close();
+				}
+				catch (final IOException e1)
+				{
+					e1.printStackTrace();
+				}
+			}
+    	});
 
         this.frame.setIconImage(getFrameIcon());
 
@@ -175,11 +206,6 @@ public class GUI implements UI
 		JOptionPane.showMessageDialog(this.frame,message);
 	}
 
-	public void close()
-	{
-		this.frame.dispose();
-	}
-
 	public void toFront()
 	{
 		this.frame.toFront();
@@ -205,8 +231,8 @@ public class GUI implements UI
 		this.contentPane.updateScreen(this.videoImage);
 	}
 
-	public boolean isClosedOnStdInEOF()
+	public void handleStdInEOF()
 	{
-		return false;
+		// do nothing
 	}
 }

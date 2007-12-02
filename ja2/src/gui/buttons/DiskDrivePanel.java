@@ -31,7 +31,7 @@ import disk.DiskBytes;
 
 public class DiskDrivePanel extends JPanel
 {
-	final GUI framer;
+	final GUI gui;
 	private volatile boolean current;
 	private volatile int track;
 	private volatile boolean modified;
@@ -49,10 +49,10 @@ public class DiskDrivePanel extends JPanel
 
 	private volatile boolean upd;
 
-	public DiskDrivePanel(final DiskBytes drive, final GUI framer)
+	public DiskDrivePanel(final DiskBytes drive, final GUI gui)
 	{
 		this.drive = drive;
-		this.framer = framer;
+		this.gui = gui;
 		setOpaque(true);
 		setPreferredSize(new Dimension(84,45));
 		setBorder(BorderFactory.createLoweredBevelBorder());
@@ -143,7 +143,7 @@ public class DiskDrivePanel extends JPanel
                     {
                     	openDroppedFile(files.get(0));
                     }
-                    DiskDrivePanel.this.framer.toFront();
+                    DiskDrivePanel.this.gui.toFront();
                 }
 			}
 
@@ -177,9 +177,9 @@ public class DiskDrivePanel extends JPanel
 		catch (IOException e)
 		{
 			e.printStackTrace();
-			this.framer.showMessage(e.getMessage());
+			this.gui.showMessage(e.getMessage());
 		}
-		this.framer.updateDrives();
+		this.gui.updateDrives();
 		this.btnSave.mouseExited();
 	}
 
@@ -195,7 +195,7 @@ public class DiskDrivePanel extends JPanel
 		{
 			try
 			{
-				final File file = this.framer.getFileToOpen(null);
+				final File file = this.gui.getFileToOpen(null);
 				this.drive.load(file);
 			}
 			catch (final UserCancelled e1)
@@ -205,11 +205,11 @@ public class DiskDrivePanel extends JPanel
 			catch (final Exception e)
 			{
 				e.printStackTrace();
-				this.framer.showMessage(e.getMessage());
+				this.gui.showMessage(e.getMessage());
 			}
 		}
 		this.modified = false;
-		this.framer.updateDrives();
+		this.gui.updateDrives();
 		this.btnLoad.mouseExited();
 	}
 
@@ -331,9 +331,9 @@ public class DiskDrivePanel extends JPanel
 		catch (final Exception e)
 		{
 			e.printStackTrace();
-			this.framer.showMessage(e.getMessage());
+			this.gui.showMessage(e.getMessage());
 		}
-		this.framer.updateDrives();
+		this.gui.updateDrives();
 	}
 
 	public void setWriteProtected(boolean writeProtected)

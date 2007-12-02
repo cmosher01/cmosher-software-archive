@@ -1,26 +1,21 @@
 import gui.GUI;
 import gui.Screen;
+import gui.UI;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.Closeable;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.swing.SwingUtilities;
+import cli.CLI;
 import keyboard.ClipboardHandler;
 import keyboard.FnKeyHandler;
 import keyboard.Keyboard;
+import keyboard.KeyboardInterface;
+import keyboard.NullKeyboard;
 import keyboard.Paddles;
 import stdio.StandardIn;
 import stdio.StandardOut;
@@ -30,7 +25,6 @@ import chipset.AddressBus;
 import chipset.Card;
 import chipset.Clock;
 import chipset.EmptySlot;
-import chipset.InvalidMemoryLoad;
 import chipset.Memory;
 import chipset.Slots;
 import chipset.cpu.CPU6502;
@@ -38,7 +32,6 @@ import disk.DiskBytes;
 import disk.DiskDriveSimple;
 import disk.DiskInterface;
 import disk.DiskState;
-import disk.InvalidDiskImage;
 import disk.StepperMotor;
 
 /*
@@ -53,7 +46,7 @@ import disk.StepperMotor;
  * 
  * @author Chris Mosher
  */
-public final class Ja2
+public final class Ja2 implements Closeable
 {
     public static void main(final String... args) throws InterruptedException, InvocationTargetException
     {
@@ -70,7 +63,7 @@ public final class Ja2
 
 
 
-    GUI framer;
+    UI ui;
 	Clock clock;
 
 	private String config = "ja2.cfg";
@@ -112,29 +105,18 @@ public final class Ja2
 
     	final Screen screen = new Screen();
 
-    	this.framer = new GUI(
-	    	new WindowAdapter()
-	    	{
-				@Override
-				public void windowClosing(@SuppressWarnings("unused") final WindowEvent e)
-				{
-					close();
-				}
-	    	},
-	    	screen,disk1,disk2,diskState,screenImage);
+    	this.ui = new GUI(this,screen,disk1,disk2,diskState,screenImage);
 
-    	final Keyboard keyboard = new Keyboard();
-    	final ClipboardHandler clip = new ClipboardHandler(keyboard);
         final Memory memory = new Memory();
 
-    	final DiskInterface disk = new DiskInterface(diskState,this.framer);
-        final Video video = new Video(this.framer,memory,screenImage);
+    	final DiskInterface disk = new DiskInterface(diskState,this.ui);
+        final Video video = new Video(this.ui,memory,screenImage);
     	final Paddles paddles = new Paddles();
     	final List<Card> cards = Arrays.<Card>asList(new Card[]
 		{
 	    	/* 0 */ new EmptySlot(),
 	    	/* 1 */ new StandardOut(),
-	    	/* 2 */ new StandardIn(),
+	    	/* 2 */ new StandardIn(this.ui),
 	    	/* 3 */ new EmptySlot(),
 	    	/* 4 */ new EmptySlot(),
 	    	/* 5 */ new EmptySlot(),
@@ -142,11 +124,13 @@ public final class Ja2
 	    	/* 7 */ new EmptySlot()
 		});
     	final Slots slots = new Slots(cards);
+    	final Keyboard keyboard = new Keyboard();
         final AddressBus addressBus = new AddressBus(memory,keyboard,video,paddles,slots);
 
 
     	final CPU6502 cpu = new CPU6502(addressBus);
 
+    	final ClipboardHandler clip = new ClipboardHandler(keyboard);
     	final FnKeyHandler fn = new FnKeyHandler(cpu,disk,clip,video,memory);
 
     	screen.addKeyListener(keyboard);
@@ -166,13 +150,76 @@ public final class Ja2
 		catch (final Exception e)
 		{
 			e.printStackTrace();
-			this.framer.showMessage(e.getMessage());
+			this.ui.showMessage(e.getMessage());
 		}
 
 
 
     	this.clock.run();
-        this.framer.updateDrives();
+        this.ui.updateDrives();
+    }
+
+    private void tryRunCLI(final String... args)
+    {
+    	parseArgs(args);
+
+
+
+
+    	final DiskBytes disk1 = new DiskBytes();
+    	final DiskBytes disk2 = new DiskBytes();
+    	final DiskDriveSimple drive = new DiskDriveSimple(new DiskBytes[] {disk1,disk2});
+    	final StepperMotor arm = new StepperMotor();
+    	final DiskState diskState = new DiskState(drive,arm);
+
+
+    	final BufferedImage screenImage = new BufferedImage(Video.SIZE.width,Video.SIZE.height,BufferedImage.TYPE_INT_RGB);
+
+    	this.ui = new CLI(this);
+
+        final Memory memory = new Memory();
+
+    	final DiskInterface disk = new DiskInterface(diskState,this.ui);
+        final Video video = new Video(this.ui,memory,screenImage);
+    	final Paddles paddles = new Paddles();
+    	final List<Card> cards = Arrays.<Card>asList(new Card[]
+		{
+	    	/* 0 */ new EmptySlot(),
+	    	/* 1 */ new StandardOut(),
+	    	/* 2 */ new StandardIn(this.ui),
+	    	/* 3 */ new EmptySlot(),
+	    	/* 4 */ new EmptySlot(),
+	    	/* 5 */ new EmptySlot(),
+	    	/* 6 */ disk,
+	    	/* 7 */ new EmptySlot()
+		});
+    	final Slots slots = new Slots(cards);
+    	final KeyboardInterface keyboard = new NullKeyboard();
+        final AddressBus addressBus = new AddressBus(memory,keyboard,video,paddles,slots);
+
+
+    	final CPU6502 cpu = new CPU6502(addressBus);
+
+
+    	this.clock = new Clock(cpu,video,drive,paddles,keyboard);
+
+
+
+    	try
+		{
+    		Config cfg = new Config(this.config);
+			cfg.parseConfig(memory,disk1,disk2);
+		}
+		catch (final Exception e)
+		{
+			e.printStackTrace();
+			this.ui.showMessage(e.getMessage());
+		}
+
+
+
+    	this.clock.run();
+        this.ui.updateDrives();
     }
 
     private void parseArgs(final String... args)
@@ -217,10 +264,6 @@ public final class Ja2
 		{
 			public void run()
 			{
-				if (Ja2.this.framer != null)
-				{
-					Ja2.this.framer.close(); // this exits the app
-				}
 				if (Ja2.this.clock != null)
 				{
 					Ja2.this.clock.shutdown();

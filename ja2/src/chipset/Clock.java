@@ -1,7 +1,7 @@
 package chipset;
 
 import chipset.cpu.CPU6502;
-import keyboard.Keyboard;
+import keyboard.KeyboardInterface;
 import keyboard.Paddles;
 import disk.DiskDriveSimple;
 import util.Util;
@@ -26,9 +26,9 @@ public class Clock
 
 	private long msPrev = System.currentTimeMillis();
 	private long times;
-	private final Keyboard keyboard;
+	private final KeyboardInterface keyboard;
 
-	public Clock(final CPU6502 cpu, final Video video, final DiskDriveSimple diskDrive, final Paddles paddles, final Keyboard keyboard)
+	public Clock(final CPU6502 cpu, final Video video, final DiskDriveSimple diskDrive, final Paddles paddles, final KeyboardInterface keyboard)
 	{
 		this.cpu = cpu;
 		this.video = video;

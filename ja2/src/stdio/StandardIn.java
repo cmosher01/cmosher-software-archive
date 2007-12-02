@@ -3,82 +3,63 @@
  */
 package stdio;
 
-import java.io.IOException;
+import gui.UI;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import chipset.Card;
 
 public class StandardIn implements Card
 {
 	private static final int EOF = -1;
 
-	private int latch;
-	private boolean gotCR;
+	private final UI ui;
+	private final BlockingQueue<Integer> qKeys = new LinkedBlockingQueue<Integer>();
+	private StandardInProducer in;
+
+	private byte latch;
 	private boolean gotEOF;
+
+
+	public StandardIn(final UI ui)
+	{
+		this.ui = ui;
+	}
 
 	public byte io(final int addr, @SuppressWarnings("unused") final byte data)
 	{
-		byte r = -1;
+		if (this.in == null)
+		{
+			this.in = new StandardInProducer(this.qKeys);
+		}
 		final int sw = addr & 0x0F;
 		if (sw == 0)
 		{
-			if (this.latch >= 0x80)
+			if (this.latch >= 0)
 			{
-				r = (byte)this.latch;
-			}
-			else
-			{
-				try
+				if (this.gotEOF)
 				{
-					if (this.gotEOF)
+					this.latch = -1;
+				}
+				else
+				{
+					final Integer k = this.qKeys.peek();
+					if (k != null)
 					{
-						r = EOF;
-					}
-					else if (System.in.available() > 0)
-					{
-						int c = System.in.read();
-						if (c == '\r')
-						{
-							this.gotCR = true;
-							r = (byte)(c | 0x80);
-						}
-						else if (c == '\n' && this.gotCR)
-						{
-							this.gotCR = false;
-							r = (byte)this.latch;
-						}
-						else if (c == '\n')
-						{
-							c = '\r';
-							r = (byte)(c | 0x80);
-						}
-						else if (c == EOF)
+						this.qKeys.remove();
+						this.latch = k.byteValue();
+						if (this.latch == EOF)
 						{
 							this.gotEOF = true;
-							r = EOF;
-							// if GUI, pass back 0xFF
-							// TODO if CLI, exit the application
-						}
-						else
-						{
-							this.gotCR = false;
-							r = (byte)(c | 0x80);
+							this.ui.handleStdInEOF();
 						}
 					}
-					else
-					{
-						r = (byte)this.latch;
-					}
-				}
-				catch (IOException e)
-				{
-					e.printStackTrace();
 				}
 			}
 		}
 		else if (sw == 1)
 		{
 			this.latch &= 0x7F;
-			r = (byte)this.latch;
 		}
-		return r;
+		return this.latch;
 	}
 }

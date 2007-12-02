@@ -21,17 +21,17 @@ class ContentPane extends JPanel
 	private DiskDrivePanel diskDrive2;
 	
 
-	public ContentPane(final Screen screen, final DiskBytes drive1, final DiskBytes drive2, final GUI framer, final DiskState disk)
+	public ContentPane(final Screen screen, final DiskBytes drive1, final DiskBytes drive2, final GUI gui, final DiskState disk)
 	{
 		this.screen = screen;
 		this.disk = disk;
 		setOpaque(true);
 		addNotify();
 
-		setUp(drive1,drive2,framer);
+		setUp(drive1,drive2,gui);
 	}
 
-	private void setUp(final DiskBytes drive1, final DiskBytes drive2, final GUI framer)
+	private void setUp(final DiskBytes drive1, final DiskBytes drive2, final GUI gui)
 	{
 		setLayout(null);
 		//setBackground(Color.BLACK);
@@ -43,12 +43,12 @@ class ContentPane extends JPanel
 		Insets insets = getInsets();
 		this.screen.setBounds(insets.left,insets.top,szVideo.width,szVideo.height);
 
-		this.diskDrive1 = new DiskDrivePanel(drive1,framer);
+		this.diskDrive1 = new DiskDrivePanel(drive1,gui);
 		add(this.diskDrive1);
 		Dimension szDisk = this.diskDrive1.getPreferredSize();
 		this.diskDrive1.setBounds(insets.left,szVideo.height+2,(int)szDisk.getWidth(),(int)szDisk.getHeight());
 
-		this.diskDrive2 = new DiskDrivePanel(drive2,framer);
+		this.diskDrive2 = new DiskDrivePanel(drive2,gui);
 		add(this.diskDrive2);
 		this.diskDrive2.setBounds(insets.left+(int)szDisk.getWidth()+3,szVideo.height+2,(int)szDisk.getWidth(),(int)szDisk.getHeight());
 
