@@ -1,6 +1,7 @@
 package chipset;
 
 import keyboard.KeyboardInterface;
+import keyboard.PaddleButtons;
 import keyboard.Paddles;
 import video.Video;
 
@@ -17,18 +18,20 @@ public class AddressBus implements chipset.cpu.AddressBus
 	private final Video video;
 	private final Paddles paddles;
 	private final Slots slots;
+	private final PaddleButtons paddleButtons;
 
 
 
 
 
-	public AddressBus(final Memory memory, final KeyboardInterface keyboard, final Video video, final Paddles paddles, final Slots slots)
+	public AddressBus(final Memory memory, final KeyboardInterface keyboard, final Video video, final Paddles paddles, final Slots slots, final PaddleButtons paddleButtons)
 	{
 		this.memory = memory;
 		this.keyboard = keyboard;
 		this.video = video;
 		this.paddles = paddles;
 		this.slots = slots;
+		this.paddleButtons = paddleButtons;
 	}
 
 	public byte read(final int address)
@@ -114,17 +117,17 @@ public class AddressBus implements chipset.cpu.AddressBus
 				}
 				else if (sw2 < 4)
 				{
-					r = this.keyboard.isPaddleButtonDown(sw2) ? (byte)0x80 : 0;
+					r = this.paddleButtons.isDown(sw2) ? (byte)0x80 : 0;
 				}
 				else
 				{
 					sw2 &= 3;
-					r = this.paddles.paddleTimedOut(sw2) ? 0 : (byte)0x80;
+					r = this.paddles.isTimedOut(sw2) ? 0 : (byte)0x80;
 				}
 			}
 			else if (islot == 0x7)
 			{
-				this.paddles.startPaddleTimers();
+				this.paddles.startTimers();
 				r = (byte)0x80;
 			}
 		}

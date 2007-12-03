@@ -9,4 +9,6 @@ public interface UI
 	void updateDrives();
 	void showMessage(String message);
 	void handleStdInEOF();
+	boolean isHyper();
+	void setHyper(boolean isHyper);
 }

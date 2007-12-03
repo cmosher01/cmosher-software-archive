@@ -5,30 +5,47 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
+import java.util.concurrent.BlockingQueue;
 
 
 
-public class ClipboardHandler
+public class ClipboardProducer extends KeyAdapter implements KeyListener
 {
-	private final Keyboard keyboard;
+	private static final int CR = '\r';
+	private static final int LF = '\n';
 
-	public ClipboardHandler(Keyboard keyboard)
+	private final BlockingQueue<Integer> q;
+
+	public ClipboardProducer(final BlockingQueue<Integer> q)
 	{
-		this.keyboard = keyboard;
+		this.q = q;
 	}
 
-	public void paste()
+	@Override
+	public void keyPressed(KeyEvent e)
+	{
+		final int key = e.getKeyCode();
+		if (key == KeyEvent.VK_INSERT)
+		{
+			paste();
+		}
+	}
+
+	private void paste()
 	{
 		final String data = getClipboardContents();
 		for (int i = 0; i < data.length(); ++i)
 		{
 			char c = data.charAt(i);
-			if (c == '\n')
+			if (c == LF)
 			{
-				c = '\r';
+				c = CR;
 			}
-			this.keyboard.press(c);
+			put(c);
 		}
 	}
 
@@ -57,5 +74,24 @@ public class ClipboardHandler
 			}
 		}
 		return data;
+	}
+
+	void put(final int c)
+	{
+		try
+		{
+			if (c < 0x80)
+			{
+				synchronized (this.q)
+				{
+					this.q.put(c | 0x80);
+					this.q.notify();
+				}
+			}
+		}
+		catch (InterruptedException e)
+		{
+			Thread.currentThread().interrupt();
+		}
 	}
 }

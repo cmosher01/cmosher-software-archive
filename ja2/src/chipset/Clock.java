@@ -1,7 +1,7 @@
 package chipset;
 
+import gui.UI;
 import chipset.cpu.CPU6502;
-import keyboard.KeyboardInterface;
 import keyboard.Paddles;
 import disk.DiskDriveSimple;
 import util.Util;
@@ -26,15 +26,15 @@ public class Clock
 
 	private long msPrev = System.currentTimeMillis();
 	private long times;
-	private final KeyboardInterface keyboard;
+	private final UI ui;
 
-	public Clock(final CPU6502 cpu, final Video video, final DiskDriveSimple diskDrive, final Paddles paddles, final KeyboardInterface keyboard)
+	public Clock(final CPU6502 cpu, final Video video, final DiskDriveSimple diskDrive, final Paddles paddles, final UI ui)
 	{
 		this.cpu = cpu;
 		this.video = video;
 		this.diskDrive = diskDrive;
 		this.paddles = paddles;
-		this.keyboard = keyboard;
+		this.ui = ui;
 	}
 
 	public void run()
@@ -48,6 +48,7 @@ public class Clock
 			    	runth();
 				}
 			});
+			this.clth.setName("Apple ][ thread");
 			this.clth.start();
 		}
 	}
@@ -75,7 +76,7 @@ public class Clock
 			 * Otherwise, just run a fast as possible (except for slowing
 			 * down while waiting for a key-press; see Keyboard.waitIfTooFast).
 			 */
-			if (!this.video.isText() && !this.diskDrive.isMotorOn() && !this.keyboard.isHyperSpeed())
+			if (!this.video.isText() && !this.diskDrive.isMotorOn() && !this.ui.isHyper())
 			{
 				/*
 				 * Check every 100 milliseconds to see how far

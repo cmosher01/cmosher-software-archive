@@ -15,7 +15,7 @@ public class FnKeyHandler extends KeyAdapter implements KeyListener
 {
 	private final CPU6502 cpu;
 	private final DiskInterface disk;
-	private final ClipboardHandler clip;
+//	private final ClipboardHandler clip;
 	private final Video video;
 	private final Memory memory;
 
@@ -23,11 +23,11 @@ public class FnKeyHandler extends KeyAdapter implements KeyListener
 	 * @param cpu
 	 * @param video 
 	 */
-	public FnKeyHandler(final CPU6502 cpu, final DiskInterface disk, final ClipboardHandler clip, final Video video, final Memory memory)
+	public FnKeyHandler(final CPU6502 cpu, final DiskInterface disk,/* final ClipboardHandler clip,*/ final Video video, final Memory memory)
 	{
 		this.cpu = cpu;
 		this.disk = disk;
-		this.clip = clip;
+//		this.clip = clip;
 		this.video = video;
 		this.memory = memory;
 	}
@@ -44,10 +44,10 @@ public class FnKeyHandler extends KeyAdapter implements KeyListener
 			this.cpu.reset();
 			this.disk.reset();
 		}
-		else if (key == KeyEvent.VK_INSERT)
-		{
-			this.clip.paste();
-		}
+//		else if (key == KeyEvent.VK_INSERT)
+//		{
+//			this.clip.paste();
+//		}
 		else if (key == KeyEvent.VK_F9)
 		{
 			try

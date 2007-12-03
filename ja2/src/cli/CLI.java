@@ -42,4 +42,14 @@ public class CLI implements UI
 			e.printStackTrace();
 		}
 	}
+
+	public boolean isHyper()
+	{
+		return true;
+	}
+
+	public void setHyper(boolean isHyper)
+	{
+		// don't need to do anything
+	}
 }

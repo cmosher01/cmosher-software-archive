@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -28,6 +29,8 @@ public class GUI implements UI
 	private final JFrame frame;
 	private final ContentPane contentPane;
 	private final Image videoImage;
+
+	private final AtomicBoolean hyper = new AtomicBoolean();
 
 	public GUI(final Closeable app, final Screen screen, final DiskBytes drive1, final DiskBytes drive2, final DiskState diskState, final Image videoImage)
 	{
@@ -234,5 +237,15 @@ public class GUI implements UI
 	public void handleStdInEOF()
 	{
 		// do nothing
+	}
+
+	public boolean isHyper()
+	{
+		return this.hyper.get();
+	}
+
+	public void setHyper(boolean isHyper)
+	{
+			this.hyper.set(isHyper);
 	}
 }

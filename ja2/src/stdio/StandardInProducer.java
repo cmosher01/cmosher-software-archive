@@ -109,6 +109,9 @@ public class StandardInProducer
 
 	void put(final int c) throws InterruptedException
 	{
-		this.q.put(c | 0x80);
+		if (c < 0x80)
+		{
+			this.q.put(c | 0x80);
+		}
 	}
 }

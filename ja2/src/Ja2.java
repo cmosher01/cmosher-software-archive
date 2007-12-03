@@ -7,13 +7,18 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import javax.swing.SwingUtilities;
 import cli.CLI;
-import keyboard.ClipboardHandler;
+import keyboard.ClipboardProducer;
 import keyboard.FnKeyHandler;
+import keyboard.HyperKeyHandler;
 import keyboard.Keyboard;
 import keyboard.KeyboardInterface;
+import keyboard.KeyboardProducer;
 import keyboard.NullKeyboard;
+import keyboard.PaddleButtons;
 import keyboard.Paddles;
 import stdio.StandardIn;
 import stdio.StandardOut;
@@ -103,15 +108,21 @@ public final class Ja2 implements Closeable
 
     	final Screen screen;
         final UI ui;
+    	final KeyboardInterface keyboard;
+    	final BlockingQueue<Integer> keypresses;
     	if (this.gui)
     	{
 	    	screen = new Screen();
 	    	ui = new GUI(this,screen,disk1,disk2,diskState,screenImage);
+	    	keypresses = new LinkedBlockingQueue<Integer>();
+    		keyboard = new Keyboard(keypresses,ui);
     	}
     	else
     	{
     		screen = null;
         	ui = new CLI(this);
+        	keypresses = null;
+    		keyboard = new NullKeyboard();
     	}
 
         final Memory memory = new Memory();
@@ -131,32 +142,28 @@ public final class Ja2 implements Closeable
 	    	/* 7 */ new EmptySlot()
 		});
     	final Slots slots = new Slots(cards);
-    	final KeyboardInterface keyboard;
-    	if (this.gui)
-    	{
-    		keyboard = new Keyboard();
-    	}
-    	else
-    	{
-    		keyboard = new NullKeyboard();
-    	}
-        final AddressBus addressBus = new AddressBus(memory,keyboard,video,paddles,slots);
+    	final PaddleButtons pdlbtns = new PaddleButtons();
+        final AddressBus addressBus = new AddressBus(memory,keyboard,video,paddles,slots,pdlbtns);
 
 
     	final CPU6502 cpu = new CPU6502(addressBus);
 
+    	this.clock = new Clock(cpu,video,drive,paddles,ui);
+
     	if (this.gui)
     	{
-	    	final ClipboardHandler clip = new ClipboardHandler((Keyboard)keyboard);
-	    	final FnKeyHandler fn = new FnKeyHandler(cpu,disk,clip,video,memory);
-	
-	    	screen.addKeyListener((Keyboard)keyboard);
+    		final KeyboardProducer keyprod = new KeyboardProducer(keypresses);
+	    	screen.addKeyListener(keyprod);
+	    	final ClipboardProducer clip = new ClipboardProducer(keypresses);
+	    	screen.addKeyListener(clip);
+    		final HyperKeyHandler hyper = new HyperKeyHandler(ui);
+	    	screen.addKeyListener(hyper);
+	    	final FnKeyHandler fn = new FnKeyHandler(cpu,disk,video,memory);
 	        screen.addKeyListener(fn);
+	        screen.addKeyListener(pdlbtns);
 	        screen.setFocusTraversalKeysEnabled(false);
 	        screen.requestFocus();
     	}
-
-    	this.clock = new Clock(cpu,video,drive,paddles,keyboard);
 
 
 

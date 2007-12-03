@@ -7,6 +7,4 @@ public interface KeyboardInterface
 {
 	byte get();
 	void clear();
-	boolean isHyperSpeed();
-	boolean isPaddleButtonDown(int paddle);
 }

@@ -3,7 +3,6 @@
  */
 package keyboard;
 
-import java.awt.Dimension;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.PointerInfo;
@@ -14,7 +13,6 @@ public class Paddles
 	private static final int PADDLE_COUNT = 2;
 	private static final int PADDLE_CYCLES = 2805;
 
-	private final Dimension pdls = new Dimension();
 	private final int[] rTick;
 
 	public Paddles()
@@ -29,7 +27,7 @@ public class Paddles
 		--this.rTick[1];
 	}
 
-	public void startPaddleTimers()
+	public void startTimers()
 	{
 		try
 		{
@@ -42,14 +40,6 @@ public class Paddles
 	}
 
 	private void tryStartPaddleTimers()
-	{
-		setPdls();
-
-		this.rTick[0] = this.pdls.width;
-		this.rTick[1] = this.pdls.height;
-	}
-
-	private void setPdls()
 	{
 		final PointerInfo mouse = MouseInfo.getPointerInfo();
 		final Rectangle rect = mouse.getDevice().getDefaultConfiguration().getBounds();
@@ -66,15 +56,16 @@ public class Paddles
 		p = pMin+pMax-p;
 		final int y = (int)Math.round(Math.rint((p-pMin)/(pMax-pMin)*PADDLE_CYCLES));
 
-		this.pdls.setSize(x,y);
+		this.rTick[0] = x;
+		this.rTick[1] = y;
 	}
 
-	public boolean paddleTimedOut(final int iPaddle)
+	public boolean isTimedOut(final int paddle)
 	{
-		if (PADDLE_COUNT <= iPaddle)
+		if (paddle < 0 || PADDLE_COUNT <= paddle)
 		{
 			return false;
 		}
-		return this.rTick[iPaddle] <= 0;
+		return this.rTick[paddle] <= 0;
 	}
 }
