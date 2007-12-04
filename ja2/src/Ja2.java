@@ -51,7 +51,11 @@ import disk.StepperMotor;
  */
 public final class Ja2 implements Closeable
 {
-    public static void main(final String... args) throws InterruptedException, InvocationTargetException
+    private static final boolean NOTIFY_ON_PUT = true;
+
+
+
+	public static void main(final String... args) throws InterruptedException, InvocationTargetException
     {
 		Thread.currentThread().setName("Ja2-main");
     	SwingUtilities.invokeAndWait(new Runnable()
@@ -115,7 +119,7 @@ public final class Ja2 implements Closeable
     	{
 	    	screen = new Screen();
 	    	ui = new GUI(this,screen,disk1,disk2,diskState,screenImage);
-	    	keypresses = new KeypressQueue();
+	    	keypresses = new KeypressQueue(NOTIFY_ON_PUT);
     		keyboard = new Keyboard(keypresses,ui);
     	}
     	else

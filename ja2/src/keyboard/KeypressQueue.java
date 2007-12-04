@@ -12,6 +12,18 @@ public class KeypressQueue
 
 	private final BlockingQueue<Byte> q = new LinkedBlockingQueue<Byte>();
 
+	private final boolean notifyOnPut;
+
+	public KeypressQueue()
+	{
+		this(false);
+	}
+
+	public KeypressQueue(final boolean notifyOnPut)
+	{
+		this.notifyOnPut = notifyOnPut;
+	}
+
 	public void put(final byte c)
 	{
 		if (c < 0)
@@ -28,10 +40,13 @@ public class KeypressQueue
 	{
 		try
 		{
-			synchronized (this.q)
+			this.q.put(b);
+			if (this.notifyOnPut)
 			{
-				this.q.put(b);
-				this.q.notifyAll();
+				synchronized (this)
+				{
+					notifyAll();
+				}
 			}
 		}
 		catch (InterruptedException e)

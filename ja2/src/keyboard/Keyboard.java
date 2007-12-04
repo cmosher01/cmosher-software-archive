@@ -39,14 +39,11 @@ public class Keyboard implements KeyboardInterface
 		waitIfTooFast();
 		if (this.latch >= 0)
 		{
-			synchronized (this.keys)
+			final Byte k = this.keys.peek();
+			if (k != null)
 			{
-				final Byte k = this.keys.peek();
-				if (k != null)
-				{
-					this.keys.remove();
-					this.latch = k.byteValue();
-				}
+				this.keys.remove();
+				this.latch = k.byteValue();
 			}
 		}
 		return this.latch;
