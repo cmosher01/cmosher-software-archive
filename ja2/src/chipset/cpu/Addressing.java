@@ -7,7 +7,7 @@ package chipset.cpu;
  *
  * @author Chris Mosher
  */
-public class Addressing
+class Addressing
 {
 	public static final int SINGLE                 = 0;
 	public static final int INTERNAL_IMMEDIATE     = 1;

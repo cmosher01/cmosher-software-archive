@@ -2,7 +2,7 @@ package chipset.cpu;
 /*
  * Created on Sep 11, 2007
  */
-public class AddressingModeCalculator
+class AddressingModeCalculator
 {
 	public static int getMode(final int opcode)
     {

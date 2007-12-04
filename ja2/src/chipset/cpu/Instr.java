@@ -3,7 +3,7 @@
  */
 package chipset.cpu;
 
-public interface Instr
+interface Instr
 {
 	void exec();
 }

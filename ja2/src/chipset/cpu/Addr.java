@@ -3,7 +3,7 @@
  */
 package chipset.cpu;
 
-public interface Addr
+interface Addr
 {
 	void addr(int cycle);
 }
