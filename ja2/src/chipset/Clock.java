@@ -48,7 +48,7 @@ public class Clock
 			    	runth();
 				}
 			});
-			this.clth.setName("Apple ][ thread");
+			this.clth.setName("Ja2-Clock");
 			this.clth.start();
 		}
 	}

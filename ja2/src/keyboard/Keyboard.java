@@ -16,7 +16,7 @@ import java.util.concurrent.BlockingQueue;
 public class Keyboard implements KeyboardInterface
 {
 	private byte latch;
-	private final BlockingQueue<Integer> q;
+	private final KeypressQueue keys;
 	private final UI ui;
 
 	private long lastGet = System.currentTimeMillis();
@@ -24,9 +24,9 @@ public class Keyboard implements KeyboardInterface
 
 
 
-	public Keyboard(final BlockingQueue<Integer> q, final UI ui)
+	public Keyboard(final KeypressQueue keys, final UI ui)
 	{
-		this.q = q;
+		this.keys = keys;
 		this.ui = ui;
 	}
 
@@ -40,12 +40,12 @@ public class Keyboard implements KeyboardInterface
 		waitIfTooFast();
 		if (this.latch >= 0)
 		{
-			synchronized (this.q)
+			synchronized (this.keys)
 			{
-				final Integer k = this.q.peek();
+				final Byte k = this.keys.peek();
 				if (k != null)
 				{
-					this.q.remove();
+					this.keys.remove();
 					this.latch = k.byteValue();
 				}
 			}
@@ -71,11 +71,11 @@ public class Keyboard implements KeyboardInterface
 				 * If so, *wait* for a key-press (but only up
 				 * to 50 milliseconds).
 				 */
-				synchronized (this.q)
+				synchronized (this.keys)
 				{
 					try
 					{
-						this.q.wait(50);
+						this.keys.wait(50);
 					}
 					catch (InterruptedException e)
 					{

@@ -8,6 +8,7 @@ import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
+import keyboard.KeypressQueue;
 
 public class StandardInProducer
 {
@@ -15,13 +16,14 @@ public class StandardInProducer
 	private static final int LF = '\n';
 	private static final int EOF = -1;
 
-	private final BlockingQueue<Integer> q;
+	private final KeypressQueue keys;
 	private final InputStream in;
 	private final Thread th;
+	private boolean started;
 
-	public StandardInProducer(final BlockingQueue<Integer> q)
+	public StandardInProducer(final KeypressQueue keys)
 	{
-		this.q = q;
+		this.keys = keys;
 		this.in = new FileInputStream(FileDescriptor.in);
 		this.th = new Thread(new Runnable()
 		{
@@ -30,7 +32,17 @@ public class StandardInProducer
 				readInput();
 			}
 		});
+		this.th.setName("Ja2-StandardInProducer");
 		this.th.setDaemon(true);
+	}
+
+	public void start()
+	{
+		if (this.started)
+		{
+			return;
+		}
+		this.started = true;
 		this.th.start();
 	}
 
@@ -48,7 +60,7 @@ public class StandardInProducer
 
 	private static enum state_t { START, GOT_CR, GOT_LF, GOT_EOF };
 
-	void tryReadInput() throws IOException, InterruptedException
+	private void tryReadInput() throws IOException, InterruptedException
 	{
 		/*
 		 * Continuously read characters from standard in
@@ -66,7 +78,7 @@ public class StandardInProducer
 			if (c == EOF)
 			{
 				state = state_t.GOT_EOF;
-				put(c);
+				this.keys.putEOF();
 			}
 			else
 			{
@@ -81,13 +93,13 @@ public class StandardInProducer
 						state = state_t.GOT_LF;
 						c = CR;
 					}
-					put(c);
+					this.keys.put(c);
 				}
 				else if (state == state_t.GOT_CR)
 				{
 					if (c != LF)
 					{
-						put(c);
+						this.keys.put(c);
 					}
 					state = state_t.START;
 				}
@@ -99,7 +111,7 @@ public class StandardInProducer
 						{
 							c = CR;
 						}
-						put(c);
+						this.keys.put(c);
 					}
 					state = state_t.START;
 				}
@@ -107,11 +119,8 @@ public class StandardInProducer
 		}
 	}
 
-	void put(final int c) throws InterruptedException
+	public KeypressQueue getKeys()
 	{
-		if (c < 0x80)
-		{
-			this.q.put(c | 0x80);
-		}
+		return this.keys;
 	}
 }

@@ -18,11 +18,11 @@ public class ClipboardProducer extends KeyAdapter implements KeyListener
 	private static final int CR = '\r';
 	private static final int LF = '\n';
 
-	private final BlockingQueue<Integer> q;
+	private final KeypressQueue keys;
 
-	public ClipboardProducer(final BlockingQueue<Integer> q)
+	public ClipboardProducer(final KeypressQueue keys)
 	{
-		this.q = q;
+		this.keys = keys;
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class ClipboardProducer extends KeyAdapter implements KeyListener
 			{
 				c = CR;
 			}
-			put(c);
+			this.keys.put(c);
 		}
 	}
 
@@ -74,24 +74,5 @@ public class ClipboardProducer extends KeyAdapter implements KeyListener
 			}
 		}
 		return data;
-	}
-
-	void put(final int c)
-	{
-		try
-		{
-			if (c < 0x80)
-			{
-				synchronized (this.q)
-				{
-					this.q.put(c | 0x80);
-					this.q.notify();
-				}
-			}
-		}
-		catch (InterruptedException e)
-		{
-			Thread.currentThread().interrupt();
-		}
 	}
 }

@@ -11,11 +11,11 @@ import java.util.concurrent.BlockingQueue;
 public class KeyboardProducer extends KeyAdapter implements KeyListener
 {
 	private static final int CR = '\r';
-	private final BlockingQueue<Integer> q;
+	private final KeypressQueue keys;
 
-	public KeyboardProducer(final BlockingQueue<Integer> q)
+	public KeyboardProducer(final KeypressQueue keys)
 	{
-		this.q = q;
+		this.keys = keys;
 	}
 
 	@Override
@@ -26,50 +26,31 @@ public class KeyboardProducer extends KeyAdapter implements KeyListener
 
 		if (key == KeyEvent.VK_ENTER)
 		{
-			put(CR);
+			this.keys.put(CR);
 		}
 		else if (key == KeyEvent.VK_LEFT)
 		{
-			put(8);
+			this.keys.put(8);
 		}
 		else if (key == KeyEvent.VK_RIGHT)
 		{
-			put(21);
+			this.keys.put(21);
 		}
 		else if (key == KeyEvent.VK_UP)
 		{
-			put(11);
+			this.keys.put(11);
 		}
 		else if (key == KeyEvent.VK_DOWN)
 		{
-			put(10);
+			this.keys.put(10);
 		}
 		else if (key == KeyEvent.VK_F12)
 		{
-			this.q.clear();
+			this.keys.clear();
 		}
 		else
 		{
-			put(chr);
-		}
-	}
-
-	void put(final int c)
-	{
-		try
-		{
-			if (c < 0x80)
-			{
-				synchronized (this.q)
-				{
-					this.q.put(c | 0x80);
-					this.q.notify();
-				}
-			}
-		}
-		catch (final InterruptedException ex)
-		{
-			Thread.currentThread().interrupt();
+			this.keys.put(chr);
 		}
 	}
 }

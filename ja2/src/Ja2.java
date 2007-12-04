@@ -17,10 +17,12 @@ import keyboard.HyperKeyHandler;
 import keyboard.Keyboard;
 import keyboard.KeyboardInterface;
 import keyboard.KeyboardProducer;
+import keyboard.KeypressQueue;
 import keyboard.NullKeyboard;
 import keyboard.PaddleButtons;
 import keyboard.Paddles;
 import stdio.StandardIn;
+import stdio.StandardInProducer;
 import stdio.StandardOut;
 import util.Util;
 import video.Video;
@@ -53,6 +55,7 @@ public final class Ja2 implements Closeable
 {
     public static void main(final String... args) throws InterruptedException, InvocationTargetException
     {
+		Thread.currentThread().setName("Ja2-main");
     	SwingUtilities.invokeAndWait(new Runnable()
     	{
 			public void run()
@@ -109,12 +112,12 @@ public final class Ja2 implements Closeable
     	final Screen screen;
         final UI ui;
     	final KeyboardInterface keyboard;
-    	final BlockingQueue<Integer> keypresses;
+    	final KeypressQueue keypresses;
     	if (this.gui)
     	{
 	    	screen = new Screen();
 	    	ui = new GUI(this,screen,disk1,disk2,diskState,screenImage);
-	    	keypresses = new LinkedBlockingQueue<Integer>();
+	    	keypresses = new KeypressQueue();
     		keyboard = new Keyboard(keypresses,ui);
     	}
     	else
@@ -130,11 +133,13 @@ public final class Ja2 implements Closeable
     	final DiskInterface disk = new DiskInterface(diskState,ui);
         final Video video = new Video(ui,memory,screenImage);
     	final Paddles paddles = new Paddles();
+    	final KeypressQueue stdinkeys = new KeypressQueue();
+    	final StandardInProducer stdinprod = new StandardInProducer(stdinkeys);
     	final List<Card> cards = Arrays.<Card>asList(new Card[]
 		{
 	    	/* 0 */ new EmptySlot(),
 	    	/* 1 */ new StandardOut(),
-	    	/* 2 */ new StandardIn(ui),
+	    	/* 2 */ new StandardIn(ui,stdinprod),
 	    	/* 3 */ new EmptySlot(),
 	    	/* 4 */ new EmptySlot(),
 	    	/* 5 */ new EmptySlot(),

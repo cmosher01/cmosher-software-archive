@@ -6,6 +6,7 @@ package stdio;
 import gui.UI;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import keyboard.KeypressQueue;
 import chipset.Card;
 
 public class StandardIn implements Card
@@ -13,24 +14,20 @@ public class StandardIn implements Card
 	private static final int EOF = -1;
 
 	private final UI ui;
-	private final BlockingQueue<Integer> qKeys = new LinkedBlockingQueue<Integer>();
-	private StandardInProducer in;
+	private final StandardInProducer stdinprod;
 
 	private byte latch;
 	private boolean gotEOF;
 
 
-	public StandardIn(final UI ui)
+	public StandardIn(final UI ui, final StandardInProducer stdinprod)
 	{
 		this.ui = ui;
+		this.stdinprod = stdinprod;
 	}
 
 	public byte io(final int addr, @SuppressWarnings("unused") final byte data)
 	{
-		if (this.in == null)
-		{
-			this.in = new StandardInProducer(this.qKeys);
-		}
 		final int sw = addr & 0x0F;
 		if (sw == 0)
 		{
@@ -42,10 +39,11 @@ public class StandardIn implements Card
 				}
 				else
 				{
-					final Integer k = this.qKeys.peek();
+					this.stdinprod.start();
+					final Byte k = this.stdinprod.getKeys().peek();
 					if (k != null)
 					{
-						this.qKeys.remove();
+						this.stdinprod.getKeys().remove();
 						this.latch = k.byteValue();
 						if (this.latch == EOF)
 						{
