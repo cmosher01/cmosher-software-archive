@@ -1,7 +1,7 @@
 /*
  * Created on Nov 27, 2007
  */
-package keyboard;
+package paddle;
 
 import java.awt.MouseInfo;
 import java.awt.Point;

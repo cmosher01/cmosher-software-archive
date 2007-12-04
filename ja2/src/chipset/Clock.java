@@ -1,8 +1,8 @@
 package chipset;
 
+import paddle.Paddles;
 import gui.UI;
 import chipset.cpu.CPU6502;
-import keyboard.Paddles;
 import disk.DiskDriveSimple;
 import util.Util;
 import video.Video;

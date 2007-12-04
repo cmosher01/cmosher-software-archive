@@ -1,7 +1,7 @@
 /*
  * Created on Dec 2, 2007
  */
-package keyboard;
+package paddle;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;

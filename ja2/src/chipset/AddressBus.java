@@ -1,8 +1,8 @@
 package chipset;
 
+import paddle.PaddleButtons;
+import paddle.Paddles;
 import keyboard.KeyboardInterface;
-import keyboard.PaddleButtons;
-import keyboard.Paddles;
 import video.Video;
 
 
