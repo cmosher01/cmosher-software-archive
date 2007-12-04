@@ -17,7 +17,6 @@ public class PaddleButtons extends KeyAdapter implements KeyListener
 	public void keyPressed(final KeyEvent e)
 	{
 		final int key = e.getKeyCode();
-		final char chr = e.getKeyChar();
 
 		if (key == KeyEvent.VK_F6)
 		{

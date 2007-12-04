@@ -158,11 +158,11 @@ public class Video
 	{
 		if (this.swHiRes)
 		{
-			currentLookupTable = this.lutHiRes[this.swPage2];
+			this.currentLookupTable = this.lutHiRes[this.swPage2];
 		}
 		else
 		{
-			currentLookupTable = this.lutText[this.swPage2];
+			this.currentLookupTable = this.lutText[this.swPage2];
 		}
 	}
 

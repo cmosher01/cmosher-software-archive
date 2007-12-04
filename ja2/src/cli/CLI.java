@@ -48,7 +48,7 @@ public class CLI implements UI
 		return true;
 	}
 
-	public void setHyper(boolean isHyper)
+	public void setHyper(@SuppressWarnings("unused") boolean isHyper)
 	{
 		// don't need to do anything
 	}

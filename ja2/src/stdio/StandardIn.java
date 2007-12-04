@@ -4,9 +4,6 @@
 package stdio;
 
 import gui.UI;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-import keyboard.KeypressQueue;
 import chipset.Card;
 
 public class StandardIn implements Card

@@ -3,11 +3,10 @@
  */
 package stdio;
 
-import java.io.InputStream;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.concurrent.BlockingQueue;
+import java.io.InputStream;
 import keyboard.KeypressQueue;
 
 public class StandardInProducer
@@ -58,9 +57,9 @@ public class StandardInProducer
 		}
 	}
 
-	private static enum state_t { START, GOT_CR, GOT_LF, GOT_EOF };
+	private static enum state_t { START, GOT_CR, GOT_LF, GOT_EOF }
 
-	private void tryReadInput() throws IOException, InterruptedException
+	private void tryReadInput() throws IOException
 	{
 		/*
 		 * Continuously read characters from standard in
