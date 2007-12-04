@@ -146,7 +146,7 @@ public final class Ja2 implements Closeable
 		});
     	final Slots slots = new Slots(cards);
     	final PaddleButtons pdlbtns = new PaddleButtons();
-        final AddressBus addressBus = new AddressBus(memory,keyboard,video,paddles,slots,pdlbtns);
+        final AddressBus addressBus = new AddressBus(memory,keyboard,video,paddles,pdlbtns,slots);
 
 
     	final CPU6502 cpu = new CPU6502(addressBus);

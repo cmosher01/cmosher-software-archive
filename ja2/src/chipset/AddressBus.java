@@ -24,7 +24,7 @@ public class AddressBus implements chipset.cpu.AddressBus
 
 
 
-	public AddressBus(final Memory memory, final KeyboardInterface keyboard, final Video video, final Paddles paddles, final Slots slots, final PaddleButtons paddleButtons)
+	public AddressBus(final Memory memory, final KeyboardInterface keyboard, final Video video, final Paddles paddles, final PaddleButtons paddleButtons, final Slots slots)
 	{
 		this.memory = memory;
 		this.keyboard = keyboard;
