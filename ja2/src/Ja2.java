@@ -243,6 +243,7 @@ public final class Ja2 implements Closeable
 				}
 			}
 		});
+		th.setName("Ja2-close-shutdown clock");
 		th.setDaemon(true);
 		th.start();
 	}
