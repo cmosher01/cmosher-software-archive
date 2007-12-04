@@ -69,10 +69,7 @@ public class DiskBytes
 		this.file = f;
 		this.fileName = this.file.getName();
 		this.bytes = rb;
-		synchronized (this.writable)
-		{
-			this.writable.set(f.canWrite());
-		}
+		this.writable.set(f.canWrite());
 		synchronized (this.loaded)
 		{
 			this.loaded.set(true);
@@ -113,10 +110,7 @@ public class DiskBytes
 	public void unload()
 	{
 		this.byt = 0;
-		synchronized (this.writable)
-		{
-			this.writable.set(true);
-		}
+		this.writable.set(true);
 		synchronized (this.loaded)
 		{
 			this.loaded.set(false);
@@ -188,9 +182,6 @@ public class DiskBytes
 
 	public boolean isWriteProtected()
 	{
-		synchronized (this.writable)
-		{
-			return !this.writable.get();
-		}
+		return !this.writable.get();
 	}
 }
