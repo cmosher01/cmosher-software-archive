@@ -1,6 +1,6 @@
 package chipset;
 
-import paddle.Paddles;
+import paddle.PaddlesInterface;
 import gui.UI;
 import chipset.cpu.CPU6502;
 import disk.DiskDriveSimple;
@@ -20,7 +20,7 @@ public class Clock
 	private final CPU6502 cpu;
 	private final Video video;
 	private final DiskDriveSimple diskDrive;
-	private final Paddles paddles;
+	private final PaddlesInterface paddles;
 
 	private Thread clth;
 
@@ -28,7 +28,7 @@ public class Clock
 	private long times;
 	private final UI ui;
 
-	public Clock(final CPU6502 cpu, final Video video, final DiskDriveSimple diskDrive, final Paddles paddles, final UI ui)
+	public Clock(final CPU6502 cpu, final Video video, final DiskDriveSimple diskDrive, final PaddlesInterface paddles, final UI ui)
 	{
 		this.cpu = cpu;
 		this.video = video;
@@ -48,7 +48,7 @@ public class Clock
 			    	runth();
 				}
 			});
-			this.clth.setName("Ja2-Clock");
+			this.clth.setName("Apple-Clock");
 			this.clth.start();
 		}
 	}

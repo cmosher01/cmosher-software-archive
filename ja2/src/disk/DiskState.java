@@ -36,6 +36,16 @@ public class DiskState
 		return this.disk.isWriteProtected();
 	}
 
+	public boolean isModified()
+	{
+		return this.disk.isModified();
+	}
+
+	public boolean isModifiedOther()
+	{
+		return this.disk.isModifiedOther();
+	}
+
 	public boolean isMotorOn()
 	{
 		return this.disk.isMotorOn();

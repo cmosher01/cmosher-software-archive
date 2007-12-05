@@ -1,15 +1,19 @@
 import gui.GUI;
 import gui.Screen;
 import gui.UI;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.awt.image.IndexColorModel;
 import java.io.Closeable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 import javax.swing.SwingUtilities;
+import paddle.PaddleBtnInterface;
 import paddle.PaddleButtons;
 import paddle.Paddles;
+import paddle.PaddlesInterface;
 import keyboard.ClipboardProducer;
 import keyboard.FnKeyHandler;
 import keyboard.HyperKeyHandler;
@@ -75,6 +79,7 @@ public final class Ja2 implements Closeable
 	Clock clock;
 
 	private String config = "ja2.cfg";
+	private Apple apple;
 
 
 
@@ -95,6 +100,46 @@ public final class Ja2 implements Closeable
 		}
 	}
 
+    private void tryRunTest(final String... args)
+    {
+    	parseArgs(args);
+
+//    	final DiskBytes disk1 = new DiskBytes();
+//    	final DiskBytes disk2 = new DiskBytes();
+//    	final BufferedImage screenImage = new BufferedImage(Video.SIZE.width,Video.SIZE.height,BufferedImage.TYPE_INT_RGB);
+//    	final Screen screen = new Screen();
+//        final UI ui = new GUI(this,screen,disk1,disk2,diskState,screenImage);
+//    	final KeypressQueue keypresses = new KeypressQueue(NOTIFY_ON_PUT);
+//    	final KeypressQueue stdinkeys = new KeypressQueue();
+//    	final PaddlesInterface paddles = new Paddles();
+//    	final PaddleBtnInterface pdlbtns = new PaddleButtons();
+//    	this.apple = new Apple(ui,screenImage,keypresses,stdinkeys,paddles,pdlbtns,new DiskBytes[] {disk1,disk2});
+//		final KeyboardProducer keyprod = new KeyboardProducer(keypresses);
+//    	screen.addKeyListener(keyprod);
+//    	final ClipboardProducer clip = new ClipboardProducer(keypresses);
+//    	screen.addKeyListener(clip);
+//		final HyperKeyHandler hyper = new HyperKeyHandler(ui);
+//    	screen.addKeyListener(hyper);
+//    	final FnKeyHandler fn = new FnKeyHandler(this.apple);//cpu,video,memory);
+//        screen.addKeyListener(fn);
+//        screen.addKeyListener((PaddleButtons)pdlbtns);
+//        screen.setFocusTraversalKeysEnabled(false);
+//        screen.requestFocus();
+//    	try
+//		{
+//    		Config cfg = new Config(this.config);
+//			cfg.parseConfig(this.apple/*memory*/,disk1,disk2);
+//		}
+//		catch (final Exception e)
+//		{
+//			e.printStackTrace();
+//			ui.showMessage(e.getMessage());
+//		}
+//        ui.updateDrives();
+//
+//        this.apple.start();
+    }
+
     private void tryRun(final String... args)
     {
     	parseArgs(args);
@@ -113,35 +158,33 @@ public final class Ja2 implements Closeable
 
     	final Screen screen;
         final UI ui;
-    	final KeyboardInterface keyboard;
-    	final KeypressQueue keypresses;
     	if (this.gui)
     	{
 	    	screen = new Screen();
 	    	ui = new GUI(this,screen,disk1,disk2,diskState,screenImage);
-	    	keypresses = new KeypressQueue(NOTIFY_ON_PUT);
-    		keyboard = new Keyboard(keypresses,ui);
     	}
     	else
     	{
     		screen = null;
         	ui = new CLI(this);
-        	keypresses = null;
-    		keyboard = new NullKeyboard();
     	}
+
+    	final KeypressQueue keypresses = new KeypressQueue(NOTIFY_ON_PUT);
+
+    	final KeyboardInterface keyboard = new Keyboard(keypresses,ui);
 
         final Memory memory = new Memory();
 
     	final DiskInterface disk = new DiskInterface(diskState,ui);
         final Video video = new Video(ui,memory,screenImage);
-    	final Paddles paddles = new Paddles();
+    	final PaddlesInterface paddles = new Paddles();
     	final KeypressQueue stdinkeys = new KeypressQueue();
     	final StandardInProducer stdinprod = new StandardInProducer(stdinkeys);
     	final List<Card> cards = Arrays.<Card>asList(new Card[]
 		{
 	    	/* 0 */ new EmptySlot(),
 	    	/* 1 */ new StandardOut(),
-	    	/* 2 */ new StandardIn(ui,stdinprod),
+	    	/* 2 */ new StandardIn(ui,stdinkeys),
 	    	/* 3 */ new EmptySlot(),
 	    	/* 4 */ new EmptySlot(),
 	    	/* 5 */ new EmptySlot(),
@@ -165,7 +208,7 @@ public final class Ja2 implements Closeable
 	    	screen.addKeyListener(clip);
     		final HyperKeyHandler hyper = new HyperKeyHandler(ui);
 	    	screen.addKeyListener(hyper);
-	    	final FnKeyHandler fn = new FnKeyHandler(cpu,disk,video,memory);
+	    	final FnKeyHandler fn = new FnKeyHandler(cpu,video,memory);
 	        screen.addKeyListener(fn);
 	        screen.addKeyListener(pdlbtns);
 	        screen.setFocusTraversalKeysEnabled(false);

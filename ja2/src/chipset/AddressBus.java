@@ -1,7 +1,7 @@
 package chipset;
 
-import paddle.PaddleButtons;
-import paddle.Paddles;
+import paddle.PaddleBtnInterface;
+import paddle.PaddlesInterface;
 import keyboard.KeyboardInterface;
 import video.Video;
 
@@ -16,15 +16,15 @@ public class AddressBus implements chipset.cpu.AddressBus
 	private final Memory memory;
 	private final KeyboardInterface keyboard;
 	private final Video video;
-	private final Paddles paddles;
+	private final PaddlesInterface paddles;
 	private final Slots slots;
-	private final PaddleButtons paddleButtons;
+	private final PaddleBtnInterface paddleButtons;
 
 
 
 
 
-	public AddressBus(final Memory memory, final KeyboardInterface keyboard, final Video video, final Paddles paddles, final PaddleButtons paddleButtons, final Slots slots)
+	public AddressBus(final Memory memory, final KeyboardInterface keyboard, final Video video, final PaddlesInterface paddles, final PaddleBtnInterface paddleButtons, final Slots slots)
 	{
 		this.memory = memory;
 		this.keyboard = keyboard;
@@ -60,6 +60,11 @@ public class AddressBus implements chipset.cpu.AddressBus
 		{
 			this.memory.write(address,data);
 		}
+	}
+
+	public void reset()
+	{
+		this.slots.reset();
 	}
 
 

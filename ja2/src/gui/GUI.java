@@ -54,6 +54,15 @@ public class GUI implements UI
 			@Override
 			public void windowClosing(@SuppressWarnings("unused") final WindowEvent e)
 			{
+				try
+				{
+					verifyLoseUnsaveChanges();
+				}
+				catch (UserCancelled e2)
+				{
+					return;
+				}
+
 				/*
 				 * When the user closes the main frame, we exit the application.
 				 * To do this, we dispose the frame (which ends the event dispatch
@@ -99,6 +108,17 @@ public class GUI implements UI
 
         // Display the window.
         this.frame.setVisible(true);
+	}
+
+	public void verifyLoseUnsaveChanges() throws UserCancelled
+	{
+		if (this.contentPane.hasUnsavedChanges())
+		{
+			if (!askOK("There are unsaved disk changes that will be LOST. Is it OK to DISCARD all disk changes?"))
+			{
+				throw new UserCancelled();
+			}
+		}
 	}
 
 	private static void setLookAndFeel()
@@ -208,6 +228,12 @@ public class GUI implements UI
 	public void showMessage(final String message)
 	{
 		JOptionPane.showMessageDialog(this.frame,message);
+	}
+
+	public boolean askOK(final String message)
+	{
+		final int choice = JOptionPane.showConfirmDialog(this.frame,message,"Confirm",JOptionPane.OK_CANCEL_OPTION);
+		return choice == JOptionPane.OK_OPTION;
 	}
 
 	public void toFront()

@@ -16,14 +16,11 @@ public class StandardInProducer
 	private static final int EOF = -1;
 
 	private final KeypressQueue keys;
-	private final InputStream in;
 	private final Thread th;
-	private boolean started;
 
 	public StandardInProducer(final KeypressQueue keys)
 	{
 		this.keys = keys;
-		this.in = new FileInputStream(FileDescriptor.in);
 		this.th = new Thread(new Runnable()
 		{
 			public void run()
@@ -33,15 +30,6 @@ public class StandardInProducer
 		});
 		this.th.setName("Ja2-StandardInProducer");
 		this.th.setDaemon(true);
-	}
-
-	public void start()
-	{
-		if (this.started)
-		{
-			return;
-		}
-		this.started = true;
 		this.th.start();
 	}
 
@@ -61,6 +49,19 @@ public class StandardInProducer
 
 	private void tryReadInput() throws IOException
 	{
+		final InputStream in = new FileInputStream(FileDescriptor.in);
+		while (in.available() == 0)
+		{
+			try
+			{
+				Thread.sleep(250);
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
 		/*
 		 * Continuously read characters from standard in
 		 * and put them onto the queue.
@@ -73,7 +74,7 @@ public class StandardInProducer
 
 		while (state != state_t.GOT_EOF)
 		{
-			int c = this.in.read();
+			int c = in.read();
 			if (c == EOF)
 			{
 				state = state_t.GOT_EOF;

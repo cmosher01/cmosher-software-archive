@@ -38,6 +38,16 @@ public class DiskDriveSimple
 		return this.disk[this.dr].isWriteProtected();
 	}
 
+	public boolean isModified()
+	{
+		return this.disk[this.dr].isModified();
+	}
+
+	public boolean isModifiedOther()
+	{
+		return this.disk[1-this.dr].isModified();
+	}
+
 	void setDrive2(final boolean drive2)
 	{
 		this.dr = drive2 ? 1 : 0;

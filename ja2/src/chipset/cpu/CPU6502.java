@@ -58,6 +58,7 @@ public final class CPU6502
     public void reset()
     {
     	this.reset = true;
+    	this.addressBus.reset();
     }
 
     public void IRQ()

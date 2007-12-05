@@ -8,7 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class PaddleButtons extends KeyAdapter implements KeyListener
+public class PaddleButtons extends KeyAdapter implements PaddleBtnInterface, KeyListener
 {
 	private static final int PADDLE_COUNT = 4;
 	private AtomicBoolean[] button = new AtomicBoolean[PADDLE_COUNT];

@@ -6,4 +6,5 @@ package chipset;
 public interface Card
 {
 	byte io(int address, byte data);
+	void reset();
 }

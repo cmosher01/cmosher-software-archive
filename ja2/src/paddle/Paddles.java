@@ -8,7 +8,7 @@ import java.awt.Point;
 import java.awt.PointerInfo;
 import java.awt.Rectangle;
 
-public class Paddles
+public class Paddles implements PaddlesInterface
 {
 	private static final int PADDLE_COUNT = 2;
 	private static final int PADDLE_CYCLES = 2805;

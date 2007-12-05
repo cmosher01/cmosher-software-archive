@@ -87,7 +87,7 @@ class ContentPane extends JPanel
 		}
 
 		drive.setCurrent(true);
-		drive.setModified(true); // TODO always allow saves
+		drive.setModified(this.disk.isModified());
 		drive.setTrack(this.disk.getTrack());
 		drive.setWriteProtected(this.disk.isWriteProtected());
 		if (this.disk.isMotorOn())
@@ -115,12 +115,17 @@ class ContentPane extends JPanel
 		{
 			return;
 		}
-		drive.setCurrent(false);
+		driveOther.setCurrent(false);
 		driveOther.setWriting(false);
 		driveOther.setReading(false);
 
-		driveOther.setModified(true); // TODO always allow saves
+		driveOther.setModified(this.disk.isModifiedOther());
 
 		driveOther.updateIf();
+	}
+
+	public boolean hasUnsavedChanges()
+	{
+		return this.disk.isModified() || this.disk.isModifiedOther();
 	}
 }

@@ -3,6 +3,7 @@
  */
 package stdio;
 
+import keyboard.KeypressQueue;
 import gui.UI;
 import chipset.Card;
 
@@ -11,16 +12,16 @@ public class StandardIn implements Card
 	private static final int EOF = -1;
 
 	private final UI ui;
-	private final StandardInProducer stdinprod;
+	private final KeypressQueue stdinkeys;
 
 	private byte latch;
 	private boolean gotEOF;
 
 
-	public StandardIn(final UI ui, final StandardInProducer stdinprod)
+	public StandardIn(final UI ui, final KeypressQueue stdinkeys)
 	{
 		this.ui = ui;
-		this.stdinprod = stdinprod;
+		this.stdinkeys = stdinkeys;
 	}
 
 	public byte io(final int addr, @SuppressWarnings("unused") final byte data)
@@ -36,11 +37,10 @@ public class StandardIn implements Card
 				}
 				else
 				{
-					this.stdinprod.start();
-					final Byte k = this.stdinprod.getKeys().peek();
+					final Byte k = this.stdinkeys.peek();
 					if (k != null)
 					{
-						this.stdinprod.getKeys().remove();
+						this.stdinkeys.remove();
 						this.latch = k.byteValue();
 						if (this.latch == EOF)
 						{
@@ -56,5 +56,10 @@ public class StandardIn implements Card
 			this.latch &= 0x7F;
 		}
 		return this.latch;
+	}
+
+	public void reset()
+	{
+		// ???
 	}
 }

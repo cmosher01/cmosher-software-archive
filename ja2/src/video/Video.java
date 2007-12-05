@@ -262,7 +262,6 @@ public class Video
         	this.buf.setElem(y++, ((d & 0x10) != 0) ? GREEN : BLACK);
         	this.buf.setElem(y++, ((d & 0x20) != 0) ? GREEN : BLACK);
         	this.buf.setElem(y++, ((d & 0x40) != 0) ? GREEN : BLACK);
-
 		}
 		else
         {

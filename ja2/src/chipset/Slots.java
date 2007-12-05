@@ -20,4 +20,12 @@ public class Slots
 	{
 		return this.slots.get(islot).io(iswch,b);
 	}
+
+	public void reset()
+	{
+		for (final Card card: this.slots)
+		{
+			card.reset();
+		}
+	}
 }

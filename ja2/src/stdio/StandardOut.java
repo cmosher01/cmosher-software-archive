@@ -22,4 +22,9 @@ public class StandardOut implements Card
 
 		return (byte)c;
 	}
+
+	public void reset()
+	{
+		// nothing to do
+	}
 }

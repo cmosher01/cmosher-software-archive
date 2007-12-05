@@ -6,6 +6,7 @@ package cli;
 import java.io.Closeable;
 import java.io.IOException;
 import gui.UI;
+import gui.UserCancelled;
 
 public class CLI implements UI
 {
@@ -51,5 +52,10 @@ public class CLI implements UI
 	public void setHyper(@SuppressWarnings("unused") boolean isHyper)
 	{
 		// don't need to do anything
+	}
+
+	public void verifyLoseUnsaveChanges() throws UserCancelled
+	{
+		// OK to discard any unsaved disk changes
 	}
 }

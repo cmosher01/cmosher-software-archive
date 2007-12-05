@@ -26,6 +26,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import org.omg.CORBA.UserException;
 import util.HexUtil;
 import disk.DiskBytes;
 
@@ -172,7 +173,6 @@ public class DiskDrivePanel extends JPanel
 		try
 		{
 			this.drive.save();
-			this.modified = false;
 		}
 		catch (IOException e)
 		{
@@ -189,7 +189,18 @@ public class DiskDrivePanel extends JPanel
 		this.upd = true;
 		if (this.drive.isLoaded())
 		{
-			this.drive.unload();
+			try
+			{
+				if (this.drive.isModified())
+				{
+					this.gui.verifyLoseUnsaveChanges();
+				}
+				this.drive.unload();
+			}
+			catch (final UserCancelled e)
+			{
+				// OK, user cancelled, so don't unload the disk
+			}
 		}
 		else
 		{
@@ -208,7 +219,6 @@ public class DiskDrivePanel extends JPanel
 				this.gui.showMessage(e.getMessage());
 			}
 		}
-		this.modified = false;
 		this.gui.updateDrives();
 		this.btnLoad.mouseExited();
 	}
@@ -326,7 +336,6 @@ public class DiskDrivePanel extends JPanel
 		try
 		{
 			this.drive.load(f);
-			this.modified = false;
 		}
 		catch (final Exception e)
 		{

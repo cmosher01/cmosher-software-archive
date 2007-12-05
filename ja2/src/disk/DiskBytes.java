@@ -28,6 +28,7 @@ public class DiskBytes
 	private final AtomicBoolean loaded = new AtomicBoolean();
 	private int byt;
 	private int waitTimes;
+	private final AtomicBoolean modified = new AtomicBoolean();
 
 	public DiskBytes()
 	{
@@ -75,6 +76,7 @@ public class DiskBytes
 			this.loaded.set(true);
 			this.loaded.notifyAll();
 		}
+		this.modified.set(false);
 	}
 
 	public String getFileName()
@@ -105,6 +107,7 @@ public class DiskBytes
 		}
 		out.flush();
 		out.close();
+		this.modified.set(false);
 	}
 
 	public void unload()
@@ -118,6 +121,7 @@ public class DiskBytes
 		}
 		this.file = null;
 		this.fileName = "";
+		this.modified.set(false);
 	}
 
 	public byte get(final int track)
@@ -166,6 +170,7 @@ public class DiskBytes
 			return;
 		}
 		this.bytes[track][this.byt] = value;
+		this.modified.set(true);
 		nextByte();
 	}
 
@@ -183,5 +188,13 @@ public class DiskBytes
 	public boolean isWriteProtected()
 	{
 		return !this.writable.get();
+	}
+
+	/**
+	 * @return the modified
+	 */
+	public boolean isModified()
+	{
+		return this.modified.get();
 	}
 }

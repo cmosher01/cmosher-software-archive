@@ -11,4 +11,5 @@ public interface UI
 	void handleStdInEOF();
 	boolean isHyper();
 	void setHyper(boolean isHyper);
+	void verifyLoseUnsaveChanges() throws UserCancelled;
 }

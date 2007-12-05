@@ -50,12 +50,12 @@ public class DiskInterface implements Card
 				if (on && this.state.write)
 				{
 					this.state.disk.set(data);
+					this.ui.updateDrives();
 				}
 				else if (!(on || this.state.write))
 				{
 					ret = this.state.disk.get();
 				}
-//				this.gui.updateDrives(); TODO
 			break;
 			case 7:
 				this.state.write = on;
