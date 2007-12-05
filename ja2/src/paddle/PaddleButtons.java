@@ -13,6 +13,14 @@ public class PaddleButtons extends KeyAdapter implements PaddleBtnInterface, Key
 	private static final int PADDLE_COUNT = 4;
 	private AtomicBoolean[] button = new AtomicBoolean[PADDLE_COUNT];
 
+	public PaddleButtons()
+	{
+		for (int i = 0; i < this.button.length; ++i)
+		{
+			this.button[i] = new AtomicBoolean();
+		}
+	}
+
 	@Override
 	public void keyPressed(final KeyEvent e)
 	{
