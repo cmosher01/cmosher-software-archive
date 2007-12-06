@@ -51,10 +51,6 @@ public class Memory
 
 	public void load(int base, final InputStream in) throws InvalidMemoryLoad
 	{
-		if (base < 0 || this.ram.length <= base)
-		{
-			throw new InvalidMemoryLoad("Invalid base address: "+Integer.toHexString(base));
-		}
 		try
 		{
 			for (int byt = in.read(); byt != -1 && base < this.ram.length; byt = in.read())

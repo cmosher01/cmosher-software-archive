@@ -75,8 +75,6 @@ public class Video
     	0x805000,0xFF8000,0xC0C0C0,0xFF9080,0x00FF00,0xFFFF00,0x40FF90,0xFFFFFF
     };
 
-    final SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-
 
 
 
@@ -221,33 +219,33 @@ public class Video
 
     private void plotDataByte()
 	{
-		int d = this.dataByte & 0xFF;
-		if (isDisplayingText())
-		{
-			final boolean inverse = inverseChar(d);
-			d = this.char_rom[(d << 3) + ((this.t / VideoAddressing.BYTES_PER_ROW) & 0x07)];
-			if (inverse)
-			{
-				d = ~d;
-			}
-		}
-
 		int x = this.t % VideoAddressing.BYTES_PER_ROW;
 		if (x < VISIBLE_X_OFFSET)
 		{
 			return;
 		}
 
-		x -= VISIBLE_X_OFFSET;
-		x *= VISIBLE_BITS_PER_BYTE;
-
 		int y = this.t / VideoAddressing.BYTES_PER_ROW;
+		final int oy = y;
 		if (y >= VideoAddressing.VISIBLE_ROWS_PER_FIELD)
 		{
 			return;
 		}
 
-		final int oy = y;
+		int d = this.dataByte & 0xFF;
+		if (isDisplayingText())
+		{
+			final boolean inverse = inverseChar(d);
+			d = this.char_rom[(d << 3) | (y & 0x07)];
+			if (inverse)
+			{
+				d = ~d;
+			}
+		}
+
+		x -= VISIBLE_X_OFFSET;
+		x *= VISIBLE_BITS_PER_BYTE;
+
 		y *= XSIZE;
 		y += x;
 
@@ -287,11 +285,5 @@ public class Video
 	public boolean isText()
 	{
 		return this.swText;
-	}
-
-	public void dump() throws IOException
-	{
-		final String name = "dump"+this.fmt.format(new Date())+".png";
-		ImageIO.write(this.screenImage,"PNG",new File(name));
 	}
 }

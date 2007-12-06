@@ -200,7 +200,7 @@ public final class Ja2 implements Closeable
 
     	this.clock = new Clock(cpu,video,drive,paddles,ui);
 
-    	if (this.gui)
+    	if (screen != null)
     	{
     		final KeyboardProducer keyprod = new KeyboardProducer(keypresses);
 	    	screen.addKeyListener(keyprod);
@@ -208,7 +208,7 @@ public final class Ja2 implements Closeable
 	    	screen.addKeyListener(clip);
     		final HyperKeyHandler hyper = new HyperKeyHandler(ui);
 	    	screen.addKeyListener(hyper);
-	    	final FnKeyHandler fn = new FnKeyHandler(cpu,video,memory);
+	    	final FnKeyHandler fn = new FnKeyHandler(cpu,screenImage,memory);
 	        screen.addKeyListener(fn);
 	        screen.addKeyListener(pdlbtns);
 	        screen.setFocusTraversalKeysEnabled(false);
@@ -219,7 +219,7 @@ public final class Ja2 implements Closeable
 
     	try
 		{
-    		Config cfg = new Config(this.config);
+    		final Config cfg = new Config(this.config);
 			cfg.parseConfig(memory,disk1,disk2);
 		}
 		catch (final Exception e)
@@ -276,8 +276,6 @@ public final class Ja2 implements Closeable
 
 	public void close()
 	{
-		// TODO check for unsaved changes to disks before exiting application (only in GUI mode)
-
 		// use another thread (a daemon one) to avoid any deadlocks
 		// (for example, if this method is called on the dispatch thread)
 		final Thread th = new Thread(new Runnable()

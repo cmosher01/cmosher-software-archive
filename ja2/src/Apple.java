@@ -69,8 +69,6 @@ public class Apple
 
 	public void stop()
 	{
-		// TODO check for unsaved changes to disks before exiting application (only in GUI mode)
-
 		// use another thread (a daemon one) to avoid any deadlocks
 		// (for example, if this method is called on the dispatch thread)
 		final Thread th = new Thread(new Runnable()

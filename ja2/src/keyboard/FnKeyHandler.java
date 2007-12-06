@@ -2,11 +2,14 @@ package keyboard;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
-import video.Video;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.imageio.ImageIO;
 import chipset.Memory;
 import chipset.cpu.CPU6502;
-import disk.DiskInterface;
 
 /*
  * Created on Sep 12, 2007
@@ -14,17 +17,19 @@ import disk.DiskInterface;
 public class FnKeyHandler extends KeyAdapter implements KeyListener
 {
 	private final CPU6502 cpu;
-	private final Video video;
+	private final BufferedImage screenImage;
 	private final Memory memory;
+
+    final SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 
 	/**
 	 * @param cpu
-	 * @param video 
+	 * @param screenImage 
 	 */
-	public FnKeyHandler(final CPU6502 cpu, final Video video, final Memory memory)
+	public FnKeyHandler(final CPU6502 cpu, final BufferedImage screenImage, final Memory memory)
 	{
 		this.cpu = cpu;
-		this.video = video;
+		this.screenImage = screenImage;
 		this.memory = memory;
 	}
 
@@ -43,7 +48,8 @@ public class FnKeyHandler extends KeyAdapter implements KeyListener
 		{
 			try
 			{
-				this.video.dump();
+				final String name = "dump"+this.fmt.format(new Date())+".png";
+				ImageIO.write(this.screenImage,"PNG",new File(name));
 			}
 			catch (IOException e1)
 			{
