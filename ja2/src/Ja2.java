@@ -120,7 +120,7 @@ public final class Ja2 implements Closeable
 //    	screen.addKeyListener(clip);
 //		final HyperKeyHandler hyper = new HyperKeyHandler(ui);
 //    	screen.addKeyListener(hyper);
-//    	final FnKeyHandler fn = new FnKeyHandler(this.apple);//cpu,video,memory);
+//    	final FnKeyHandler fn = new FnKeyHandler(this.apple,screenImage,memory);//cpu,video,memory);
 //        screen.addKeyListener(fn);
 //        screen.addKeyListener((PaddleButtons)pdlbtns);
 //        screen.setFocusTraversalKeysEnabled(false);
@@ -136,8 +136,8 @@ public final class Ja2 implements Closeable
 //			ui.showMessage(e.getMessage());
 //		}
 //        ui.updateDrives();
-//
-//        this.apple.start();
+
+        this.apple.start();
     }
 
     private void tryRun(final String... args)

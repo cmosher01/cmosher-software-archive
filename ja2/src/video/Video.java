@@ -34,6 +34,7 @@ public class Video
 	private int f;
 	private boolean flash;
 
+	private byte prevDataByte;
 	private byte dataByte;
 
 	private final BufferedImage screenImage;
@@ -64,15 +65,34 @@ public class Video
 	private int[] lutHiRes0 = VideoAddressing.buildLUT(0x2000,0x2000);
 	private int[] lutHiRes1 = VideoAddressing.buildLUT(0x4000,0x2000);
 	private int[][] lutHiRes = { this.lutHiRes0, this.lutHiRes1 };
-	private int[] currentLookupTable;
 
     static final int BLACK = Color.BLACK.getRGB();
+    static final int WHITE = Color.WHITE.getRGB();
     static final int GREEN = Color.GREEN.getRGB();
 
-    static final int loresColors[] =
+    private static final int HIRES_MAGENTA = 0xFF00FF;
+	private static final int HIRES_GREEN   = 0x00FF00;
+	private static final int HIRES_BLUE    = 0x0080FF;
+	private static final int HIRES_ORANGE  = 0xFF8000;
+
+	static final int loresColors[] =
     {
-    	0x000000,0xD00030,0x000080,0xFF00FF,0x008000,0x808080,0x0000FF,0x60A0FF,
-    	0x805000,0xFF8000,0xC0C0C0,0xFF9080,0x00FF00,0xFFFF00,0x40FF90,0xFFFFFF
+    	Color.BLACK.getRGB(),
+    	0xD00030,
+    	0x000080,
+    	HIRES_MAGENTA, //Color.MAGENTA.getRGB(),
+    	0x008000,
+    	0x555555,
+    	HIRES_BLUE, //Color.BLUE.getRGB(),
+    	0x60A0FF,
+    	0x805000,
+    	HIRES_ORANGE, //0xFF8000,
+    	0xAAAAAA,
+    	0xFF9080,
+    	HIRES_GREEN, //Color.GREEN.getRGB(),
+    	Color.YELLOW.getRGB(),
+    	0x40FF90,
+    	Color.WHITE.getRGB(),
     };
 
 
@@ -95,8 +115,6 @@ public class Video
 			e.printStackTrace();
 			this.ui.showMessage(e.getMessage());
 		}
-
-		setCurrentLookupTable();
 	}
 
 	private void readCharRom() throws IOException
@@ -148,26 +166,12 @@ public class Video
 			case 3:
 				this.swHiRes = on; break;
 		}
-		setCurrentLookupTable();
 		return this.dataByte; // emulates "floating bus"
-	}
-
-	private void setCurrentLookupTable()
-	{
-		if (this.swHiRes)
-		{
-			this.currentLookupTable = this.lutHiRes[this.swPage2];
-		}
-		else
-		{
-			this.currentLookupTable = this.lutText[this.swPage2];
-		}
 	}
 
 	public void tick()
 	{
-		this.dataByte = this.memory.read(this.currentLookupTable[this.t]);
-
+		setDataByte();
 		plotDataByte();
 
 		++this.t;
@@ -178,6 +182,22 @@ public class Video
 			updateFlashingState();
 			this.t = 0;
 		}
+	}
+
+	private void setDataByte()
+	{
+		this.prevDataByte = this.dataByte;
+
+		final int[] lookupTable;
+		if (isDisplayingText() || !this.swHiRes)
+		{
+			lookupTable = this.lutText[this.swPage2];
+		}
+		else
+		{
+			lookupTable = this.lutHiRes[this.swPage2];
+		}
+		this.dataByte = this.memory.read(lookupTable[this.t]);
 	}
 
 	private void updateFlashingState()
@@ -220,6 +240,7 @@ public class Video
     private void plotDataByte()
 	{
 		int x = this.t % VideoAddressing.BYTES_PER_ROW;
+		final int ox = x;
 		if (x < VISIBLE_X_OFFSET)
 		{
 			return;
@@ -245,44 +266,97 @@ public class Video
 
 		x -= VISIBLE_X_OFFSET;
 		x *= VISIBLE_BITS_PER_BYTE;
-
 		y *= XSIZE;
-		y += x;
+		x += y;
 
-		if (isDisplayingText() || this.swHiRes)
+		if (isDisplayingText())
 		{
-			// text and hi-res
-			// unrolled loop for speed
-        	this.buf.setElem(y++, ((d & 0x01) != 0) ? GREEN : BLACK);
-        	this.buf.setElem(y++, ((d & 0x02) != 0) ? GREEN : BLACK);
-        	this.buf.setElem(y++, ((d & 0x04) != 0) ? GREEN : BLACK);
-        	this.buf.setElem(y++, ((d & 0x08) != 0) ? GREEN : BLACK);
-        	this.buf.setElem(y++, ((d & 0x10) != 0) ? GREEN : BLACK);
-        	this.buf.setElem(y++, ((d & 0x20) != 0) ? GREEN : BLACK);
-        	this.buf.setElem(y++, ((d & 0x40) != 0) ? GREEN : BLACK);
+        	plotByteAsText(x,d);
+		}
+		else if (this.swHiRes)
+		{
+			plotByteAsHiRes(x,ox,d);
 		}
 		else
         {
-			// lo-res
-			final int i;
-			if (((oy >> 2) & 1) != 0)
-				i = (d >> 4) & 0xF;
-			else
-				i = d & 0xF;
-			final int color = loresColors[i];
-			// unrolled loop for speed
-        	this.buf.setElem(y++, color);
-        	this.buf.setElem(y++, color);
-        	this.buf.setElem(y++, color);
-        	this.buf.setElem(y++, color);
-        	this.buf.setElem(y++, color);
-        	this.buf.setElem(y++, color);
-        	this.buf.setElem(y++, color);
+			plotByteAsLoRes(x,oy,d);
         }
-		// TODO high-order bit half-dot shift and hi-res colors
 	}
 
-	public boolean isText()
+	private void plotByteAsText(int x, int d)
+	{
+		this.buf.setElem(x++, ((d & 0x01) != 0) ? GREEN : BLACK);
+		this.buf.setElem(x++, ((d & 0x02) != 0) ? GREEN : BLACK);
+		this.buf.setElem(x++, ((d & 0x04) != 0) ? GREEN : BLACK);
+		this.buf.setElem(x++, ((d & 0x08) != 0) ? GREEN : BLACK);
+		this.buf.setElem(x++, ((d & 0x10) != 0) ? GREEN : BLACK);
+		this.buf.setElem(x++, ((d & 0x20) != 0) ? GREEN : BLACK);
+		this.buf.setElem(x++, ((d & 0x40) != 0) ? GREEN : BLACK);
+	}
+
+	private void plotByteAsLoRes(int x, final int oy, int d)
+	{
+		final int i;
+		if (((oy >> 2) & 1) != 0)
+			i = (d >> 4) & 0xF;
+		else
+			i = d & 0xF;
+		final int color = loresColors[i];
+
+		this.buf.setElem(x++, color);
+		this.buf.setElem(x++, color);
+		this.buf.setElem(x++, color);
+		this.buf.setElem(x++, color);
+		this.buf.setElem(x++, color);
+		this.buf.setElem(x++, color);
+		this.buf.setElem(x++, color);
+	}
+
+	private void plotByteAsHiRes(int x, int ox, int d)
+	{
+		final boolean odd   = (x & 0x01) != 0;
+		final boolean shift = (d & 0x80) != 0;
+		final int c0, c1;
+		if (odd)
+		{
+			if (shift)
+			{
+				c0 = HIRES_BLUE; c1 = HIRES_ORANGE;
+			}
+			else
+			{
+				c0 = HIRES_MAGENTA; c1 = HIRES_GREEN;
+			}
+		}
+		else
+		{
+			if (shift)
+			{
+				c0 = HIRES_ORANGE; c1 = HIRES_BLUE;
+			}
+			else
+			{
+				c0 = HIRES_GREEN; c1 = HIRES_MAGENTA;
+			}
+		}
+		if (VISIBLE_X_OFFSET < ox)
+			setHiRes(x-1, this.prevDataByte & 0x20, this.prevDataByte & 0x40, d & 0x01, c0);
+		setHiRes(x++, VISIBLE_X_OFFSET < ox ? this.prevDataByte & 0x40 : 0, d & 0x01, d & 0x02, c1);
+		setHiRes(x++, d & 0x01, d & 0x02, d & 0x04, c0);
+		setHiRes(x++, d & 0x02, d & 0x04, d & 0x08, c1);
+		setHiRes(x++, d & 0x04, d & 0x08, d & 0x10, c0);
+		setHiRes(x++, d & 0x08, d & 0x10, d & 0x20, c1);
+		setHiRes(x++, d & 0x10, d & 0x20, d & 0x40, c0);
+		if (ox == VideoAddressing.BYTES_PER_ROW-1)
+			setHiRes(x++, d & 0x20, d & 0x40, 0, c1);
+	}
+
+    private void setHiRes(int x, int leftBit, int bit, int rightBit, int color)
+    {
+    	this.buf.setElem(x, (bit == 0) ? BLACK : (leftBit == 0 && rightBit == 0) ? color : WHITE);
+    }
+
+    public boolean isText()
 	{
 		return this.swText;
 	}
