@@ -1,16 +1,11 @@
 package video;
 
 import gui.UI;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import javax.imageio.ImageIO;
 import chipset.Memory;
 
 /*
@@ -59,41 +54,9 @@ public class Video
 
 	private static final int FLASH_HALFPERIOD = 4;
 
-	private int[] lutText0 = VideoAddressing.buildLUT(0x0400,0x0400);
-	private int[] lutText1 = VideoAddressing.buildLUT(0x0800,0x0400);
-	private int[][] lutText = { this.lutText0, this.lutText1 };
-	private int[] lutHiRes0 = VideoAddressing.buildLUT(0x2000,0x2000);
-	private int[] lutHiRes1 = VideoAddressing.buildLUT(0x4000,0x2000);
-	private int[][] lutHiRes = { this.lutHiRes0, this.lutHiRes1 };
+	private int[][] lutText = { VideoAddressing.buildLUT(0x0400,0x0400), VideoAddressing.buildLUT(0x0800,0x0400) };
+	private int[][] lutHiGr = { VideoAddressing.buildLUT(0x2000,0x2000), VideoAddressing.buildLUT(0x4000,0x2000) };
 
-    static final int BLACK = Color.BLACK.getRGB();
-    static final int WHITE = Color.WHITE.getRGB();
-    static final int GREEN = Color.GREEN.getRGB();
-
-    private static final int HIRES_MAGENTA = 0xFF00FF;
-	private static final int HIRES_GREEN   = 0x00FF00;
-	private static final int HIRES_BLUE    = 0x0080FF;
-	private static final int HIRES_ORANGE  = 0xFF8000;
-
-	static final int loresColors[] =
-    {
-    	Color.BLACK.getRGB(),
-    	0xD00030,
-    	0x000080,
-    	HIRES_MAGENTA, //Color.MAGENTA.getRGB(),
-    	0x008000,
-    	0x555555,
-    	HIRES_BLUE, //Color.BLUE.getRGB(),
-    	0x60A0FF,
-    	0x805000,
-    	HIRES_ORANGE, //0xFF8000,
-    	0xAAAAAA,
-    	0xFF9080,
-    	HIRES_GREEN, //Color.GREEN.getRGB(),
-    	Color.YELLOW.getRGB(),
-    	0x40FF90,
-    	Color.WHITE.getRGB(),
-    };
 
 
 
@@ -195,7 +158,7 @@ public class Video
 		}
 		else
 		{
-			lookupTable = this.lutHiRes[this.swPage2];
+			lookupTable = this.lutHiGr[this.swPage2];
 		}
 		this.dataByte = this.memory.read(lookupTable[this.t]);
 	}
@@ -262,6 +225,8 @@ public class Video
 			{
 				d = ~d;
 			}
+			d &= 0x7F;
+			this.prevDataByte &= 0x3F;
 		}
 
 		x -= VISIBLE_X_OFFSET;
@@ -271,6 +236,7 @@ public class Video
 
 		if (isDisplayingText())
 		{
+//			plotByteAsHiRes(x,ox,d); // use this instead to simulate lack of a "color killer"
         	plotByteAsText(x,d);
 		}
 		else if (this.swHiRes)
@@ -285,13 +251,13 @@ public class Video
 
 	private void plotByteAsText(int x, int d)
 	{
-		this.buf.setElem(x++, ((d & 0x01) != 0) ? GREEN : BLACK);
-		this.buf.setElem(x++, ((d & 0x02) != 0) ? GREEN : BLACK);
-		this.buf.setElem(x++, ((d & 0x04) != 0) ? GREEN : BLACK);
-		this.buf.setElem(x++, ((d & 0x08) != 0) ? GREEN : BLACK);
-		this.buf.setElem(x++, ((d & 0x10) != 0) ? GREEN : BLACK);
-		this.buf.setElem(x++, ((d & 0x20) != 0) ? GREEN : BLACK);
-		this.buf.setElem(x++, ((d & 0x40) != 0) ? GREEN : BLACK);
+		this.buf.setElem(x++, ((d & 0x01) != 0) ? A2Colors.HIRES_GREEN : A2Colors.BLACK);
+		this.buf.setElem(x++, ((d & 0x02) != 0) ? A2Colors.HIRES_GREEN : A2Colors.BLACK);
+		this.buf.setElem(x++, ((d & 0x04) != 0) ? A2Colors.HIRES_GREEN : A2Colors.BLACK);
+		this.buf.setElem(x++, ((d & 0x08) != 0) ? A2Colors.HIRES_GREEN : A2Colors.BLACK);
+		this.buf.setElem(x++, ((d & 0x10) != 0) ? A2Colors.HIRES_GREEN : A2Colors.BLACK);
+		this.buf.setElem(x++, ((d & 0x20) != 0) ? A2Colors.HIRES_GREEN : A2Colors.BLACK);
+		this.buf.setElem(x++, ((d & 0x40) != 0) ? A2Colors.HIRES_GREEN : A2Colors.BLACK);
 	}
 
 	private void plotByteAsLoRes(int x, final int oy, int d)
@@ -301,7 +267,7 @@ public class Video
 			i = (d >> 4) & 0xF;
 		else
 			i = d & 0xF;
-		final int color = loresColors[i];
+		final int color = A2Colors.COLOR[i];
 
 		this.buf.setElem(x++, color);
 		this.buf.setElem(x++, color);
@@ -314,46 +280,37 @@ public class Video
 
 	private void plotByteAsHiRes(int x, int ox, int d)
 	{
-		final boolean odd   = (x & 0x01) != 0;
-		final boolean shift = (d & 0x80) != 0;
-		final int c0, c1;
-		if (odd)
+		int color0, color1;
+		if ((d & 0x80) != 0)
 		{
-			if (shift)
-			{
-				c0 = HIRES_BLUE; c1 = HIRES_ORANGE;
-			}
-			else
-			{
-				c0 = HIRES_MAGENTA; c1 = HIRES_GREEN;
-			}
+			color0 = A2Colors.HIRES_ORANGE;
+			color1 = A2Colors.HIRES_BLUE;
 		}
 		else
 		{
-			if (shift)
-			{
-				c0 = HIRES_ORANGE; c1 = HIRES_BLUE;
-			}
-			else
-			{
-				c0 = HIRES_GREEN; c1 = HIRES_MAGENTA;
-			}
+			color0 = A2Colors.HIRES_GREEN;
+			color1 = A2Colors.HIRES_VIOLET;
 		}
+		if ((x & 0x01) != 0)
+		{
+			int tmp = color0; color0 = color1; color1 = tmp;
+		}
+
 		if (VISIBLE_X_OFFSET < ox)
-			setHiRes(x-1, this.prevDataByte & 0x20, this.prevDataByte & 0x40, d & 0x01, c0);
-		setHiRes(x++, VISIBLE_X_OFFSET < ox ? this.prevDataByte & 0x40 : 0, d & 0x01, d & 0x02, c1);
-		setHiRes(x++, d & 0x01, d & 0x02, d & 0x04, c0);
-		setHiRes(x++, d & 0x02, d & 0x04, d & 0x08, c1);
-		setHiRes(x++, d & 0x04, d & 0x08, d & 0x10, c0);
-		setHiRes(x++, d & 0x08, d & 0x10, d & 0x20, c1);
-		setHiRes(x++, d & 0x10, d & 0x20, d & 0x40, c0);
+			setHiRes(x-1, this.prevDataByte & 0x20, this.prevDataByte & 0x40, d & 0x01, color0);
+		setHiRes(x++, VISIBLE_X_OFFSET < ox ? this.prevDataByte & 0x40 : 0, d & 0x01, d & 0x02, color1);
+		setHiRes(x++, d & 0x01, d & 0x02, d & 0x04, color0);
+		setHiRes(x++, d & 0x02, d & 0x04, d & 0x08, color1);
+		setHiRes(x++, d & 0x04, d & 0x08, d & 0x10, color0);
+		setHiRes(x++, d & 0x08, d & 0x10, d & 0x20, color1);
+		setHiRes(x++, d & 0x10, d & 0x20, d & 0x40, color0);
 		if (ox == VideoAddressing.BYTES_PER_ROW-1)
-			setHiRes(x++, d & 0x20, d & 0x40, 0, c1);
+			setHiRes(x++, d & 0x20, d & 0x40, 0, color1);
 	}
 
     private void setHiRes(int x, int leftBit, int bit, int rightBit, int color)
     {
-    	this.buf.setElem(x, (bit == 0) ? BLACK : (leftBit == 0 && rightBit == 0) ? color : WHITE);
+    	this.buf.setElem(x, (bit == 0) ? A2Colors.BLACK : (leftBit == 0 && rightBit == 0) ? color : A2Colors.WHITE);
     }
 
     public boolean isText()
