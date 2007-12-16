@@ -251,13 +251,13 @@ public class Video
 
 	private void plotByteAsText(int x, int d)
 	{
-		this.buf.setElem(x++, ((d & 0x01) != 0) ? A2Colors.HIRES_GREEN : A2Colors.BLACK);
-		this.buf.setElem(x++, ((d & 0x02) != 0) ? A2Colors.HIRES_GREEN : A2Colors.BLACK);
-		this.buf.setElem(x++, ((d & 0x04) != 0) ? A2Colors.HIRES_GREEN : A2Colors.BLACK);
-		this.buf.setElem(x++, ((d & 0x08) != 0) ? A2Colors.HIRES_GREEN : A2Colors.BLACK);
-		this.buf.setElem(x++, ((d & 0x10) != 0) ? A2Colors.HIRES_GREEN : A2Colors.BLACK);
-		this.buf.setElem(x++, ((d & 0x20) != 0) ? A2Colors.HIRES_GREEN : A2Colors.BLACK);
-		this.buf.setElem(x++, ((d & 0x40) != 0) ? A2Colors.HIRES_GREEN : A2Colors.BLACK);
+		this.buf.setElem(x++, ((d & 0x01) != 0) ? A2ColorsObserved.HIRES_GREEN : A2ColorsObserved.BLACK);
+		this.buf.setElem(x++, ((d & 0x02) != 0) ? A2ColorsObserved.HIRES_GREEN : A2ColorsObserved.BLACK);
+		this.buf.setElem(x++, ((d & 0x04) != 0) ? A2ColorsObserved.HIRES_GREEN : A2ColorsObserved.BLACK);
+		this.buf.setElem(x++, ((d & 0x08) != 0) ? A2ColorsObserved.HIRES_GREEN : A2ColorsObserved.BLACK);
+		this.buf.setElem(x++, ((d & 0x10) != 0) ? A2ColorsObserved.HIRES_GREEN : A2ColorsObserved.BLACK);
+		this.buf.setElem(x++, ((d & 0x20) != 0) ? A2ColorsObserved.HIRES_GREEN : A2ColorsObserved.BLACK);
+		this.buf.setElem(x++, ((d & 0x40) != 0) ? A2ColorsObserved.HIRES_GREEN : A2ColorsObserved.BLACK);
 	}
 
 	private void plotByteAsLoRes(int x, final int oy, int d)
@@ -267,7 +267,7 @@ public class Video
 			i = (d >> 4) & 0xF;
 		else
 			i = d & 0xF;
-		final int color = A2Colors.COLOR[i];
+		final int color = A2ColorsObserved.COLOR[i];
 
 		this.buf.setElem(x++, color);
 		this.buf.setElem(x++, color);
@@ -283,13 +283,13 @@ public class Video
 		int color0, color1;
 		if ((d & 0x80) != 0)
 		{
-			color0 = A2Colors.HIRES_ORANGE;
-			color1 = A2Colors.HIRES_BLUE;
+			color0 = A2ColorsObserved.HIRES_ORANGE;
+			color1 = A2ColorsObserved.HIRES_BLUE;
 		}
 		else
 		{
-			color0 = A2Colors.HIRES_GREEN;
-			color1 = A2Colors.HIRES_VIOLET;
+			color0 = A2ColorsObserved.HIRES_GREEN;
+			color1 = A2ColorsObserved.HIRES_VIOLET;
 		}
 		if ((x & 0x01) != 0)
 		{
@@ -310,7 +310,7 @@ public class Video
 
     private void setHiRes(int x, int leftBit, int bit, int rightBit, int color)
     {
-    	this.buf.setElem(x, (bit == 0) ? A2Colors.BLACK : (leftBit == 0 && rightBit == 0) ? color : A2Colors.WHITE);
+    	this.buf.setElem(x, (bit == 0) ? A2ColorsObserved.BLACK : (leftBit == 0 && rightBit == 0) ? color : A2ColorsObserved.WHITE);
     }
 
     public boolean isText()

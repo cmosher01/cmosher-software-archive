@@ -50,7 +50,7 @@ B 1011 1101  |            /\     |  |      348     3    25 100    FFBFCC    LIGH
                                                                             
                                                                             
              +HI-->     +--------+                                          
-3 0011 1100  |          |   /\   |         303     2   100 100    FF00F2    HIRES VIOLET     VIOLET
+3 0011 1100  |          |   /\   |         303     2   100 100    FF00F2    HIRES VIOLET     VIOLET, PURPLE
              +LO-->     +        +------                                    
                                                                             
                                                                             
@@ -80,7 +80,7 @@ E 1110 0111  |           |  |     /\       168     3   100  75    00BF99    LIGH
                                                                             
                                                                             
              +HI-->     -+      +-------                                    
-C 1100 0011  |           |      |   /\     123     2   100  75    00BF0A    HIRES GREEN      BRIGHT GREEN
+C 1100 0011  |           |      |   /\     123     2   100  75    00BF0A    HIRES GREEN      BRIGHT GREEN, LIGHT GREEN
              +LO-->      +------+                                           
                                                                             
                                                                             
@@ -171,7 +171,7 @@ F 1111 1111  |                             N/A     4     0 100    FFFFFF    WHIT
 	// Test program to print out the RGB values
 	public static void main(final String... args)
 	{
-		for (int i = 0; i < pos.length; ++i)
+		for (int i = 0; i < COLOR.length; ++i)
 		{
 			System.out.println(Integer.toHexString(COLOR[i]));
 		}
