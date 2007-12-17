@@ -5,7 +5,9 @@ package gui;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.geom.AffineTransform;
 import java.lang.reflect.InvocationTargetException;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -13,10 +15,18 @@ import video.Video;
 
 public class Screen extends JPanel
 {
+	private static final int FACTOR = 1;
+
+	private Graphics2D graphics;
+	private AffineTransform affine = new AffineTransform();
+	{
+		affine.scale(FACTOR,FACTOR);
+	}
+
 	public Screen()
 	{
 		setOpaque(true);
-		setPreferredSize(new Dimension(Video.SIZE.width,Video.SIZE.height));
+		setPreferredSize(new Dimension(Video.SIZE.width*FACTOR,Video.SIZE.height*FACTOR));
 		addNotify();
 	}
 
@@ -42,12 +52,11 @@ public class Screen extends JPanel
 		}
 	}
 
-	private Graphics graphics;
 	protected void plotScreen(final Image image)
 	{
 		if (this.graphics == null)
 		{
-			this.graphics = getGraphics();
+			this.graphics = (Graphics2D)getGraphics();
 			if (this.graphics == null)
 			{
 				return;
@@ -59,7 +68,7 @@ public class Screen extends JPanel
 			return;
 		}
 
-		this.graphics.drawImage(image,0,0,this);
+		this.graphics.drawImage(image,this.affine,this);
 	}
 
 	/**

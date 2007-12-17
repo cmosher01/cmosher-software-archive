@@ -1,0 +1,15 @@
+F1
+F2  cycle thru text color modes
+F3  toggle tv/monitor emulation
+F4  cycle thru hi-res color modes
+F5
+F6  paddle 0 button
+F7  paddle 1 button
+F8  paddle 2 button
+F9  screen capture
+F10 memory dump
+F11 toggle hyper mode
+F12 clear type-ahead buffer
+
+INSERT       paste text from clipboard
+PAUSE/BREAK  reset

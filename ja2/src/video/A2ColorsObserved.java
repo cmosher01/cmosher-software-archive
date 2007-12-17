@@ -17,8 +17,10 @@ public class A2ColorsObserved
 These HSV were read from an image captured
 from my Apple //c, through Pansonic PV-GS400 camcorder,
 converted using AviSynth ConvertToRGB24(matrix="PC.601")
-Exported to PNG with ImageWriter, then checked in GIMP
-for HSV. THe actual values (average) read are in this table:
+Exported to PNG with ImageWriter, then used GIMP to
+change the levels so WHITE was 0,0,100 HSV, and BLACK
+was 0,0,0 HSV. Then read the actual HSV values of the
+other colors and put the nominal values in this table:
 354  98  66 magenta
 344  59 100 pink
 300  99 100 purple

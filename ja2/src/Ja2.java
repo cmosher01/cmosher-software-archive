@@ -22,6 +22,7 @@ import keyboard.KeyboardInterface;
 import keyboard.KeyboardProducer;
 import keyboard.KeypressQueue;
 import keyboard.NullKeyboard;
+import keyboard.VideoKeyHandler;
 import stdio.StandardIn;
 import stdio.StandardInProducer;
 import stdio.StandardOut;
@@ -210,6 +211,8 @@ public final class Ja2 implements Closeable
 	    	screen.addKeyListener(hyper);
 	    	final FnKeyHandler fn = new FnKeyHandler(cpu,screenImage,memory);
 	        screen.addKeyListener(fn);
+	        final VideoKeyHandler vid = new VideoKeyHandler(video);
+	        screen.addKeyListener(vid);
 	        screen.addKeyListener(pdlbtns);
 	        screen.setFocusTraversalKeysEnabled(false);
 	        screen.requestFocus();

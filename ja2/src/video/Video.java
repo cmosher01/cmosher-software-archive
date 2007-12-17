@@ -4,7 +4,6 @@ import gui.UI;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
-import java.beans.ConstructorProperties;
 import java.io.IOException;
 import java.io.InputStream;
 import chipset.Memory;
@@ -30,7 +29,7 @@ public class Video
 	private int f;
 	private boolean flash;
 
-	private byte prevDataByte;
+	private int prevPlotByte;
 	private byte dataByte;
 
 	private final BufferedImage screenImage;
@@ -57,6 +56,8 @@ public class Video
 
 	private int[][] lutText = { VideoAddressing.buildLUT(0x0400,0x0400), VideoAddressing.buildLUT(0x0800,0x0400) };
 	private int[][] lutHiGr = { VideoAddressing.buildLUT(0x2000,0x2000), VideoAddressing.buildLUT(0x4000,0x2000) };
+	private boolean tv = true;
+	private int colorMap;
 
 
 
@@ -150,8 +151,6 @@ public class Video
 
 	private void setDataByte()
 	{
-		this.prevDataByte = this.dataByte;
-
 		final int[] lookupTable;
 		if (isDisplayingText() || !this.swHiRes)
 		{
@@ -226,7 +225,6 @@ public class Video
 			{
 				d = ~d;
 			}
-			this.prevDataByte = 0;
 		}
 
 		x -= VISIBLE_X_OFFSET;
@@ -234,12 +232,7 @@ public class Video
 		y *= XSIZE;
 		x += y;
 
-		if (isDisplayingText())
-		{
-//			plotByteAsHiRes(x,ox,d); // use this instead to simulate lack of a "color killer"
-        	plotByteAsText(x,d);
-		}
-		else if (this.swHiRes)
+		if (isDisplayingText() || this.swHiRes)
 		{
 			plotByteAsHiRes(x,ox,d);
 		}
@@ -247,28 +240,48 @@ public class Video
         {
 			plotByteAsLoRes(x,oy,d);
         }
-	}
 
-	private void plotByteAsText(int x, int d)
-	{
-		int c = A2ColorsObserved.HIRES_ORANGE;
-		this.buf.setElem(x++, ((d & 0x01) != 0) ? c : A2ColorsObserved.BLACK);
-		this.buf.setElem(x++, ((d & 0x02) != 0) ? c : A2ColorsObserved.BLACK);
-		this.buf.setElem(x++, ((d & 0x04) != 0) ? c : A2ColorsObserved.BLACK);
-		this.buf.setElem(x++, ((d & 0x08) != 0) ? c : A2ColorsObserved.BLACK);
-		this.buf.setElem(x++, ((d & 0x10) != 0) ? c : A2ColorsObserved.BLACK);
-		this.buf.setElem(x++, ((d & 0x20) != 0) ? c : A2ColorsObserved.BLACK);
-		this.buf.setElem(x++, ((d & 0x40) != 0) ? c : A2ColorsObserved.BLACK);
+		this.prevPlotByte = d & 0xFF;
 	}
 
 	private void plotByteAsLoRes(int x, final int oy, int d)
 	{
 		final int i;
-		if (((oy >> 2) & 1) != 0)
+		if ((oy & 4) != 0)
 			i = (d >> 4) & 0xF;
 		else
 			i = d & 0xF;
-		final int color = A2ColorsObserved.COLOR[i];
+		final int color;
+		if (this.colorMap == 0)
+		{
+			color = A2ColorsObserved.COLOR[i];
+		}
+		else if (this.colorMap == 1)
+		{
+			color = A2Colors.COLOR[i];
+		}
+		else
+		{
+			if (i == 0)
+			{
+				color = A2ColorsObserved.BLACK;
+			}
+			else
+			{
+				if (this.colorMap == 3)
+				{
+					color = A2Colors.HIRES_GREEN;
+				}
+				else if (this.colorMap == 4)
+				{
+					color = A2Colors.HIRES_ORANGE;
+				}
+				else
+				{
+					color = A2Colors.WHITE;
+				}
+			}
+		}
 
 		this.buf.setElem(x++, color);
 		this.buf.setElem(x++, color);
@@ -282,40 +295,84 @@ public class Video
 	private void plotByteAsHiRes(int x, int ox, int d)
 	{
 		int color0, color1;
-		if ((d & 0x80) != 0)
+		if (this.colorMap == 2)
 		{
-			color0 = A2ColorsObserved.HIRES_ORANGE;
-			color1 = A2ColorsObserved.HIRES_BLUE;
+			color0 = color1 = A2Colors.WHITE;
+		}
+		else if (this.colorMap == 3)
+		{
+			color0 = color1 = A2Colors.HIRES_GREEN;
+		}
+		else if (this.colorMap == 4)
+		{
+			color0 = color1 = A2Colors.HIRES_ORANGE;
 		}
 		else
 		{
-			color0 = A2ColorsObserved.HIRES_GREEN;
-			color1 = A2ColorsObserved.HIRES_VIOLET;
-		}
-		if ((x & 0x01) != 0)
-		{
-			int tmp = color0; color0 = color1; color1 = tmp;
+			if ((d & 0x80) != 0)
+			{
+				if (this.colorMap == 0)
+				{
+					color0 = A2ColorsObserved.HIRES_ORANGE;
+					color1 = A2ColorsObserved.HIRES_BLUE;
+				}
+				else
+				{
+					color0 = A2Colors.HIRES_ORANGE;
+					color1 = A2Colors.HIRES_BLUE;
+				}
+			}
+			else
+			{
+				if (this.colorMap == 0)
+				{
+					color0 = A2ColorsObserved.HIRES_GREEN;
+					color1 = A2ColorsObserved.HIRES_VIOLET;
+				}
+				else
+				{
+					color0 = A2Colors.HIRES_GREEN;
+					color1 = A2Colors.HIRES_VIOLET;
+				}
+			}
+			if ((x & 0x01) != 0)
+			{
+				int tmp = color0; color0 = color1; color1 = tmp;
+			}
 		}
 
-		if (VISIBLE_X_OFFSET < ox)
-			setHiRes(x-1, this.prevDataByte & 0x10, this.prevDataByte & 0x20, this.prevDataByte & 0x40, d & 0x01, color0, color1);
-		setHiRes(x++, VISIBLE_X_OFFSET < ox ? this.prevDataByte & 0x20 : 0, VISIBLE_X_OFFSET < ox ? this.prevDataByte & 0x40 : 0, d & 0x01, d & 0x02, color1, color0);
-		setHiRes(x++, VISIBLE_X_OFFSET < ox ? this.prevDataByte & 0x40 : 0, d & 0x01, d & 0x02, d & 0x04, color0, color1);
+		if (ox <= VISIBLE_X_OFFSET)
+		{
+			this.prevPlotByte = 0;
+		}
+		else
+		{
+			setHiRes(x-1, this.prevPlotByte & 0x10, this.prevPlotByte & 0x20, this.prevPlotByte & 0x40, d & 0x01, color0, color1);
+		}
+		setHiRes(x++, this.prevPlotByte & 0x20, this.prevPlotByte & 0x40, d & 0x01, d & 0x02, color1, color0);
+		setHiRes(x++, this.prevPlotByte & 0x40, d & 0x01, d & 0x02, d & 0x04, color0, color1);
 		setHiRes(x++, d & 0x01, d & 0x02, d & 0x04, d & 0x08, color1, color0);
 		setHiRes(x++, d & 0x02, d & 0x04, d & 0x08, d & 0x10, color0, color1);
 		setHiRes(x++, d & 0x04, d & 0x08, d & 0x10, d & 0x20, color1, color0);
 		setHiRes(x++, d & 0x08, d & 0x10, d & 0x20, d & 0x40, color0, color1);
 		if (ox == VideoAddressing.BYTES_PER_ROW-1)
+		{
 			setHiRes(x++, d & 0x10, d & 0x20, d & 0x40, 0, color1, color0);
+		}
 	}
 
     private void setHiRes(int x, int nextLeftBit, int leftBit, int bit, int rightBit, int color, int compl)
     {
-//    	this.buf.setElem(x, (bit == 0) ? (leftBit == 0 ? A2ColorsObserved.BLACK : nextLeftBit == 1 ? A2ColorsObserved.WHITE : compl) : (leftBit == 0 && rightBit == 0) ? color : A2ColorsObserved.WHITE);
-    	int c;
-    	if (bit == 0)
+    	final int c = calcHiResColor(nextLeftBit,leftBit,bit,rightBit,color,compl);
+    	this.buf.setElem(x,c);
+    }
+
+	private int calcHiResColor(int nextLeftBit, int leftBit, int bit, int rightBit, int color, int compl)
+	{
+		int c;
+		if (bit == 0)
     	{
-    		if (leftBit == 0)
+    		if (leftBit == 0 || isDisplayingText() || !this.tv)
     		{
     			c = A2ColorsObserved.BLACK;
     		}
@@ -327,7 +384,18 @@ public class Video
     			}
     			else
     			{
-    				c = A2ColorsObserved.WHITE;
+    				if (this.colorMap == 3)
+    				{
+    					c = A2Colors.HIRES_GREEN;
+    				}
+    				else if (this.colorMap == 4)
+    				{
+    					c = A2Colors.HIRES_ORANGE;
+    				}
+    	    		else
+    				{
+    					c = A2Colors.WHITE;
+    				}
     			}
     		}
     	}
@@ -339,15 +407,36 @@ public class Video
     		}
     		else
     		{
-    			c = A2ColorsObserved.WHITE;
+				if (this.colorMap == 3)
+				{
+					c = A2Colors.HIRES_GREEN;
+				}
+				else if (this.colorMap == 4)
+				{
+					c = A2Colors.HIRES_ORANGE;
+				}
+	    		else
+				{
+					c = A2Colors.WHITE;
+				}
     		}
     	}
-//    	this.buf.setElem(x, (bit == 0) ? A2ColorsObserved.BLACK : (leftBit == 0 && rightBit == 0) ? color : A2ColorsObserved.WHITE);
-    	this.buf.setElem(x,c & 0x00ffffff);
-    }
+		return c;
+	}
 
     public boolean isText()
 	{
 		return this.swText;
+	}
+
+	public void toggleHiResMode()
+	{
+		this.tv = !this.tv;
+	}
+
+	public void toggleColorMap()
+	{
+		++this.colorMap;
+		this.colorMap %= 5;
 	}
 }
