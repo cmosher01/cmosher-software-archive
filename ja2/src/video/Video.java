@@ -4,6 +4,7 @@ import gui.UI;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
+import java.beans.ConstructorProperties;
 import java.io.IOException;
 import java.io.InputStream;
 import chipset.Memory;
@@ -225,8 +226,7 @@ public class Video
 			{
 				d = ~d;
 			}
-			d &= 0x7F;
-			this.prevDataByte &= 0x3F;
+			this.prevDataByte = 0;
 		}
 
 		x -= VISIBLE_X_OFFSET;
@@ -251,13 +251,14 @@ public class Video
 
 	private void plotByteAsText(int x, int d)
 	{
-		this.buf.setElem(x++, ((d & 0x01) != 0) ? A2ColorsObserved.HIRES_GREEN : A2ColorsObserved.BLACK);
-		this.buf.setElem(x++, ((d & 0x02) != 0) ? A2ColorsObserved.HIRES_GREEN : A2ColorsObserved.BLACK);
-		this.buf.setElem(x++, ((d & 0x04) != 0) ? A2ColorsObserved.HIRES_GREEN : A2ColorsObserved.BLACK);
-		this.buf.setElem(x++, ((d & 0x08) != 0) ? A2ColorsObserved.HIRES_GREEN : A2ColorsObserved.BLACK);
-		this.buf.setElem(x++, ((d & 0x10) != 0) ? A2ColorsObserved.HIRES_GREEN : A2ColorsObserved.BLACK);
-		this.buf.setElem(x++, ((d & 0x20) != 0) ? A2ColorsObserved.HIRES_GREEN : A2ColorsObserved.BLACK);
-		this.buf.setElem(x++, ((d & 0x40) != 0) ? A2ColorsObserved.HIRES_GREEN : A2ColorsObserved.BLACK);
+		int c = A2ColorsObserved.HIRES_ORANGE;
+		this.buf.setElem(x++, ((d & 0x01) != 0) ? c : A2ColorsObserved.BLACK);
+		this.buf.setElem(x++, ((d & 0x02) != 0) ? c : A2ColorsObserved.BLACK);
+		this.buf.setElem(x++, ((d & 0x04) != 0) ? c : A2ColorsObserved.BLACK);
+		this.buf.setElem(x++, ((d & 0x08) != 0) ? c : A2ColorsObserved.BLACK);
+		this.buf.setElem(x++, ((d & 0x10) != 0) ? c : A2ColorsObserved.BLACK);
+		this.buf.setElem(x++, ((d & 0x20) != 0) ? c : A2ColorsObserved.BLACK);
+		this.buf.setElem(x++, ((d & 0x40) != 0) ? c : A2ColorsObserved.BLACK);
 	}
 
 	private void plotByteAsLoRes(int x, final int oy, int d)
@@ -297,20 +298,52 @@ public class Video
 		}
 
 		if (VISIBLE_X_OFFSET < ox)
-			setHiRes(x-1, this.prevDataByte & 0x20, this.prevDataByte & 0x40, d & 0x01, color0);
-		setHiRes(x++, VISIBLE_X_OFFSET < ox ? this.prevDataByte & 0x40 : 0, d & 0x01, d & 0x02, color1);
-		setHiRes(x++, d & 0x01, d & 0x02, d & 0x04, color0);
-		setHiRes(x++, d & 0x02, d & 0x04, d & 0x08, color1);
-		setHiRes(x++, d & 0x04, d & 0x08, d & 0x10, color0);
-		setHiRes(x++, d & 0x08, d & 0x10, d & 0x20, color1);
-		setHiRes(x++, d & 0x10, d & 0x20, d & 0x40, color0);
+			setHiRes(x-1, this.prevDataByte & 0x10, this.prevDataByte & 0x20, this.prevDataByte & 0x40, d & 0x01, color0, color1);
+		setHiRes(x++, VISIBLE_X_OFFSET < ox ? this.prevDataByte & 0x20 : 0, VISIBLE_X_OFFSET < ox ? this.prevDataByte & 0x40 : 0, d & 0x01, d & 0x02, color1, color0);
+		setHiRes(x++, VISIBLE_X_OFFSET < ox ? this.prevDataByte & 0x40 : 0, d & 0x01, d & 0x02, d & 0x04, color0, color1);
+		setHiRes(x++, d & 0x01, d & 0x02, d & 0x04, d & 0x08, color1, color0);
+		setHiRes(x++, d & 0x02, d & 0x04, d & 0x08, d & 0x10, color0, color1);
+		setHiRes(x++, d & 0x04, d & 0x08, d & 0x10, d & 0x20, color1, color0);
+		setHiRes(x++, d & 0x08, d & 0x10, d & 0x20, d & 0x40, color0, color1);
 		if (ox == VideoAddressing.BYTES_PER_ROW-1)
-			setHiRes(x++, d & 0x20, d & 0x40, 0, color1);
+			setHiRes(x++, d & 0x10, d & 0x20, d & 0x40, 0, color1, color0);
 	}
 
-    private void setHiRes(int x, int leftBit, int bit, int rightBit, int color)
+    private void setHiRes(int x, int nextLeftBit, int leftBit, int bit, int rightBit, int color, int compl)
     {
-    	this.buf.setElem(x, (bit == 0) ? A2ColorsObserved.BLACK : (leftBit == 0 && rightBit == 0) ? color : A2ColorsObserved.WHITE);
+//    	this.buf.setElem(x, (bit == 0) ? (leftBit == 0 ? A2ColorsObserved.BLACK : nextLeftBit == 1 ? A2ColorsObserved.WHITE : compl) : (leftBit == 0 && rightBit == 0) ? color : A2ColorsObserved.WHITE);
+    	int c;
+    	if (bit == 0)
+    	{
+    		if (leftBit == 0)
+    		{
+    			c = A2ColorsObserved.BLACK;
+    		}
+    		else
+    		{
+    			if (nextLeftBit == 0)
+    			{
+    				c = compl;
+    			}
+    			else
+    			{
+    				c = A2ColorsObserved.WHITE;
+    			}
+    		}
+    	}
+    	else
+    	{
+    		if (leftBit == 0 && rightBit == 0)
+    		{
+    			c = color;
+    		}
+    		else
+    		{
+    			c = A2ColorsObserved.WHITE;
+    		}
+    	}
+//    	this.buf.setElem(x, (bit == 0) ? A2ColorsObserved.BLACK : (leftBit == 0 && rightBit == 0) ? color : A2ColorsObserved.WHITE);
+    	this.buf.setElem(x,c & 0x00ffffff);
     }
 
     public boolean isText()
