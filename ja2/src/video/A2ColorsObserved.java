@@ -34,9 +34,9 @@ other colors and put the nominal values in this table:
  80 100  95 yellow
  28 100  91 orange
 n/a   0  41 grey
-n/a   1  41 grey
+n/a   1  41 grey (tweaked to 0 sat)
 n/a   0 100 white
-n/a   0   1 black
+n/a   0   1 black (tweaked to 0 val)
 
 */
 
@@ -49,9 +49,9 @@ n/a   0   1 black
 	// COLOR CIRCLE POSITION (above center of crest in SIGNAL WAVEFORM)
 	private static final int[] hue = { 354, 344, 300, 256, 276, 212, 169, 170, 120,  99,  80,  23,  -1,  -1,  -1,  -1 };
 	// SAT:
-	private static final int[] sat = {  98,  59,  99,  98,  55,  99, 100,  92, 100, 100, 100, 100,   0,   1,   0,   0 };
+	private static final int[] sat = {  98,  59,  99,  98,  55,  99, 100,  92, 100, 100, 100, 100,   0,   0,   0,   0 };
 	// VAL:
-	private static final int[] val = {  66, 100, 100,  99, 100, 100,  41,  98,  93,  40,  95,  91,  41,  41, 100,   1 };
+	private static final int[] val = {  66, 100, 100,  99, 100, 100,  41,  98,  93,  40,  95,  91,  41,  41, 100,   0 };
 	// RRGGBB:
 	public static final int[] COLOR = new int[clr.length];
 	static
@@ -61,26 +61,6 @@ n/a   0   1 black
 			COLOR[clr[i]] = Color.HSBtoRGB(hue[i]/360f,sat[i]/100f,val[i]/100f);
 		}
 	}
-
-
-
-	// REF_NAME defined as R,G,B values:
-	public static final int BLACK            = COLOR[0x0];
-	public static final int DARK_MAGENTA     = COLOR[0x1];
-	public static final int DARK_BLUE        = COLOR[0x2];
-	public static final int HIRES_VIOLET     = COLOR[0x3];
-	public static final int DARK_BLUE_GREEN  = COLOR[0x4];
-	public static final int GREY             = COLOR[0x5];
-	public static final int HIRES_BLUE       = COLOR[0x6];
-	public static final int LIGHT_BLUE       = COLOR[0x7];
-	public static final int DARK_BROWN       = COLOR[0x8];
-	public static final int HIRES_ORANGE     = COLOR[0x9];
-//	public static final int GREY             = COLOR[0xA];
-	public static final int LIGHT_MAGENTA    = COLOR[0xB];
-	public static final int HIRES_GREEN      = COLOR[0xC];
-	public static final int LIGHT_BROWN      = COLOR[0xD];
-	public static final int LIGHT_BLUE_GREEN = COLOR[0xE];
-	public static final int WHITE            = COLOR[0xF];
 
 
 

@@ -160,26 +160,6 @@ F 1111 1111  |                             N/A     4     0 100    WHITE         
 
 
 
-	// REF_NAME defined as R,G,B values:
-	public static final int BLACK            = COLOR[0x0];
-	public static final int DARK_MAGENTA     = COLOR[0x1];
-	public static final int DARK_BLUE        = COLOR[0x2];
-	public static final int HIRES_VIOLET     = COLOR[0x3];
-	public static final int DARK_BLUE_GREEN  = COLOR[0x4];
-	public static final int GREY             = COLOR[0x5];
-	public static final int HIRES_BLUE       = COLOR[0x6];
-	public static final int LIGHT_BLUE       = COLOR[0x7];
-	public static final int DARK_BROWN       = COLOR[0x8];
-	public static final int HIRES_ORANGE     = COLOR[0x9];
-//	public static final int GREY             = COLOR[0xA];
-	public static final int LIGHT_MAGENTA    = COLOR[0xB];
-	public static final int HIRES_GREEN      = COLOR[0xC];
-	public static final int LIGHT_BROWN      = COLOR[0xD];
-	public static final int LIGHT_BLUE_GREEN = COLOR[0xE];
-	public static final int WHITE            = COLOR[0xF];
-
-
-
 	// Test program to print out the RGB values
 	public static void main(final String... args)
 	{

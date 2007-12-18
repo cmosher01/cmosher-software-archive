@@ -58,6 +58,7 @@ public class Video
 	private int[][] lutHiGr = { VideoAddressing.buildLUT(0x2000,0x2000), VideoAddressing.buildLUT(0x4000,0x2000) };
 	private boolean tv = true;
 	private int colorMap;
+	private boolean killColor = true;
 
 
 
@@ -251,36 +252,35 @@ public class Video
 			i = (d >> 4) & 0xF;
 		else
 			i = d & 0xF;
-		final int color;
+		final int color, black;
 		if (this.colorMap == 0)
 		{
 			color = A2ColorsObserved.COLOR[i];
+			black = A2ColorsObserved.COLOR[A2ColorIndex.BLACK.ordinal()];
 		}
 		else if (this.colorMap == 1)
 		{
 			color = A2Colors.COLOR[i];
+			black = A2Colors.COLOR[A2ColorIndex.BLACK.ordinal()];
+		}
+		else if (this.colorMap == 2)
+		{
+			color = A2Monochrome.WHITE[i];
+			black = A2Monochrome.WHITE[A2ColorIndex.BLACK.ordinal()];
+		}
+		else if (this.colorMap == 3)
+		{
+			color = A2Monochrome.GREEN[i];
+			black = A2Monochrome.GREEN[A2ColorIndex.BLACK.ordinal()];
+		}
+		else if (this.colorMap == 4)
+		{
+			color = A2Monochrome.ORANGE[i];
+			black = A2Monochrome.ORANGE[A2ColorIndex.BLACK.ordinal()];
 		}
 		else
 		{
-			if (i == 0)
-			{
-				color = A2ColorsObserved.BLACK;
-			}
-			else
-			{
-				if (this.colorMap == 3)
-				{
-					color = A2Colors.HIRES_GREEN;
-				}
-				else if (this.colorMap == 4)
-				{
-					color = A2Colors.HIRES_ORANGE;
-				}
-				else
-				{
-					color = A2Colors.WHITE;
-				}
-			}
+			throw new IllegalStateException("Invalid colorMap value.");
 		}
 
 		this.buf.setElem(x++, color);
@@ -294,51 +294,61 @@ public class Video
 
 	private void plotByteAsHiRes(int x, int ox, int d)
 	{
-		int color0, color1;
-		if (this.colorMap == 2)
+		int color0, color1, black, white;
+		int index0, index1;
+		if ((d & 0x80) != 0)
 		{
-			color0 = color1 = A2Colors.WHITE;
-		}
-		else if (this.colorMap == 3)
-		{
-			color0 = color1 = A2Colors.HIRES_GREEN;
-		}
-		else if (this.colorMap == 4)
-		{
-			color0 = color1 = A2Colors.HIRES_ORANGE;
+			index0 = A2ColorIndex.HIRES_ORANGE.ordinal();
+			index1 = A2ColorIndex.HIRES_BLUE.ordinal();
 		}
 		else
 		{
-			if ((d & 0x80) != 0)
-			{
-				if (this.colorMap == 0)
-				{
-					color0 = A2ColorsObserved.HIRES_ORANGE;
-					color1 = A2ColorsObserved.HIRES_BLUE;
-				}
-				else
-				{
-					color0 = A2Colors.HIRES_ORANGE;
-					color1 = A2Colors.HIRES_BLUE;
-				}
-			}
-			else
-			{
-				if (this.colorMap == 0)
-				{
-					color0 = A2ColorsObserved.HIRES_GREEN;
-					color1 = A2ColorsObserved.HIRES_VIOLET;
-				}
-				else
-				{
-					color0 = A2Colors.HIRES_GREEN;
-					color1 = A2Colors.HIRES_VIOLET;
-				}
-			}
-			if ((x & 0x01) != 0)
-			{
-				int tmp = color0; color0 = color1; color1 = tmp;
-			}
+			index0 = A2ColorIndex.HIRES_GREEN.ordinal();
+			index1 = A2ColorIndex.HIRES_VIOLET.ordinal();
+		}
+		if ((x & 0x01) != 0)
+		{
+			int tmp = index0; index0 = index1; index1 = tmp;
+		}
+
+		if (this.colorMap == 0)
+		{
+			color0 = A2ColorsObserved.COLOR[index0];
+			color1 = A2ColorsObserved.COLOR[index1];
+			black = A2ColorsObserved.COLOR[A2ColorIndex.BLACK.ordinal()];
+			white = A2ColorsObserved.COLOR[A2ColorIndex.WHITE.ordinal()];
+		}
+		else if (this.colorMap == 1)
+		{
+			color0 = A2Colors.COLOR[index0];
+			color1 = A2Colors.COLOR[index1];
+			black = A2Colors.COLOR[A2ColorIndex.BLACK.ordinal()];
+			white = A2Colors.COLOR[A2ColorIndex.WHITE.ordinal()];
+		}
+		else if (this.colorMap == 2)
+		{
+			color0 = A2Monochrome.WHITE[index0];
+			color1 = A2Monochrome.WHITE[index1];
+			black = A2Monochrome.WHITE[A2ColorIndex.BLACK.ordinal()];
+			white = A2Monochrome.WHITE[A2ColorIndex.WHITE.ordinal()];
+		}
+		else if (this.colorMap == 3)
+		{
+			color0 = A2Monochrome.GREEN[index0];
+			color1 = A2Monochrome.GREEN[index1];
+			black = A2Monochrome.GREEN[A2ColorIndex.BLACK.ordinal()];
+			white = A2Monochrome.GREEN[A2ColorIndex.WHITE.ordinal()];
+		}
+		else if (this.colorMap == 4)
+		{
+			color0 = A2Monochrome.ORANGE[index0];
+			color1 = A2Monochrome.ORANGE[index1];
+			black = A2Monochrome.ORANGE[A2ColorIndex.BLACK.ordinal()];
+			white = A2Monochrome.ORANGE[A2ColorIndex.WHITE.ordinal()];
+		}
+		else
+		{
+			throw new IllegalStateException("Invalid colorMap value.");
 		}
 
 		if (ox <= VISIBLE_X_OFFSET)
@@ -347,78 +357,53 @@ public class Video
 		}
 		else
 		{
-			setHiRes(x-1, this.prevPlotByte & 0x10, this.prevPlotByte & 0x20, this.prevPlotByte & 0x40, d & 0x01, color0, color1);
+			setHiRes(x-1, this.prevPlotByte & 0x10, this.prevPlotByte & 0x20, this.prevPlotByte & 0x40, d & 0x01, color0, color1, black, white);
 		}
-		setHiRes(x++, this.prevPlotByte & 0x20, this.prevPlotByte & 0x40, d & 0x01, d & 0x02, color1, color0);
-		setHiRes(x++, this.prevPlotByte & 0x40, d & 0x01, d & 0x02, d & 0x04, color0, color1);
-		setHiRes(x++, d & 0x01, d & 0x02, d & 0x04, d & 0x08, color1, color0);
-		setHiRes(x++, d & 0x02, d & 0x04, d & 0x08, d & 0x10, color0, color1);
-		setHiRes(x++, d & 0x04, d & 0x08, d & 0x10, d & 0x20, color1, color0);
-		setHiRes(x++, d & 0x08, d & 0x10, d & 0x20, d & 0x40, color0, color1);
+		setHiRes(x++, this.prevPlotByte & 0x20, this.prevPlotByte & 0x40, d & 0x01, d & 0x02, color1, color0, black, white);
+		setHiRes(x++, this.prevPlotByte & 0x40, d & 0x01, d & 0x02, d & 0x04, color0, color1, black, white);
+		setHiRes(x++, d & 0x01, d & 0x02, d & 0x04, d & 0x08, color1, color0, black, white);
+		setHiRes(x++, d & 0x02, d & 0x04, d & 0x08, d & 0x10, color0, color1, black, white);
+		setHiRes(x++, d & 0x04, d & 0x08, d & 0x10, d & 0x20, color1, color0, black, white);
+		setHiRes(x++, d & 0x08, d & 0x10, d & 0x20, d & 0x40, color0, color1, black, white);
 		if (ox == VideoAddressing.BYTES_PER_ROW-1)
 		{
-			setHiRes(x++, d & 0x10, d & 0x20, d & 0x40, 0, color1, color0);
+			setHiRes(x++, d & 0x10, d & 0x20, d & 0x40, 0, color1, color0, black, white);
 		}
 	}
 
-    private void setHiRes(int x, int nextLeftBit, int leftBit, int bit, int rightBit, int color, int compl)
+    private void setHiRes(int x, int nextLeftBit, int leftBit, int bit, int rightBit, int color, int compl, int black, int white)
     {
-    	final int c = calcHiResColor(nextLeftBit,leftBit,bit,rightBit,color,compl);
+    	final int c = calcHiResColor(nextLeftBit,leftBit,bit,rightBit,color,compl,black,white);
     	this.buf.setElem(x,c);
     }
 
-	private int calcHiResColor(int nextLeftBit, int leftBit, int bit, int rightBit, int color, int compl)
+	private int calcHiResColor(int nextLeftBit, int leftBit, int bit, int rightBit, int color, int compl, int black, int white)
 	{
 		int c;
 		if (bit == 0)
     	{
-    		if (leftBit == 0 || isDisplayingText() || !this.tv)
+    		if (leftBit == 0 || rightBit == 0 || isDisplayingText() || !this.tv)
     		{
-    			c = A2ColorsObserved.BLACK;
+    			c = black;
     		}
-    		else
-    		{
-    			if (nextLeftBit == 0)
-    			{
-    				c = compl;
-    			}
-    			else
-    			{
-    				if (this.colorMap == 3)
-    				{
-    					c = A2Colors.HIRES_GREEN;
-    				}
-    				else if (this.colorMap == 4)
-    				{
-    					c = A2Colors.HIRES_ORANGE;
-    				}
-    	    		else
-    				{
-    					c = A2Colors.WHITE;
-    				}
-    			}
+    		else if (nextLeftBit == 0)
+			{
+				c = compl;
+			}
+			else
+			{
+    			c = white;
     		}
     	}
     	else
     	{
-    		if (leftBit == 0 && rightBit == 0)
+    		if (leftBit == 0 && rightBit == 0 && !(this.killColor && isDisplayingText()))
     		{
     			c = color;
     		}
     		else
     		{
-				if (this.colorMap == 3)
-				{
-					c = A2Colors.HIRES_GREEN;
-				}
-				else if (this.colorMap == 4)
-				{
-					c = A2Colors.HIRES_ORANGE;
-				}
-	    		else
-				{
-					c = A2Colors.WHITE;
-				}
+    			c = white;
     		}
     	}
 		return c;
@@ -438,5 +423,10 @@ public class Video
 	{
 		++this.colorMap;
 		this.colorMap %= 5;
+	}
+
+	public void toggleColorKiller()
+	{
+		this.killColor = !this.killColor;
 	}
 }
