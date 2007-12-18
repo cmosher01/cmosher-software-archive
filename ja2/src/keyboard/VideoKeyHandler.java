@@ -31,15 +31,11 @@ public class VideoKeyHandler extends KeyAdapter implements KeyListener
 	public void keyPressed(KeyEvent e)
 	{
 		final int key = e.getKeyCode();
-		if (key == KeyEvent.VK_F2)
+		if (key == KeyEvent.VK_F4)
 		{
 			this.video.toggleColorKiller();
 		}
-		else if (key == KeyEvent.VK_F3)
-		{
-			this.video.toggleHiResMode();
-		}
-		else if (key == KeyEvent.VK_F4)
+		else if (key == KeyEvent.VK_F5)
 		{
 			this.video.toggleColorMap();
 		}

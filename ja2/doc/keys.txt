@@ -1,8 +1,8 @@
 F1
-F2  cycle thru text color modes
-F3  toggle tv/monitor emulation
-F4  cycle thru hi-res color modes
-F5
+F2
+F3
+F4  toggle color killer (never/on text screen)
+F5  toggle color map (observed/theoretical)
 F6  paddle 0 button
 F7  paddle 1 button
 F8  paddle 2 button
