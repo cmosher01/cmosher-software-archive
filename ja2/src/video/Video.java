@@ -86,7 +86,7 @@ public class Video
 	{
 		final InputStream rom = Video.class.getResourceAsStream("3410036.BIN");
 		int cc = 0;
-		for (int c = rom.read(); c >= EOF; c = rom.read())
+		for (int c = rom.read(); c != EOF; c = rom.read())
 		{
 			if (cc < this.char_rom.length)
 			{
