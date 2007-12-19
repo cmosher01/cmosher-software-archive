@@ -36,7 +36,7 @@ public class Video
 	private final DataBuffer buf;
 
 	private boolean killColor = true;
-	private boolean observedColors;
+	private boolean observedColors = true;
 
 
 
