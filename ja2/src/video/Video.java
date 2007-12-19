@@ -216,7 +216,7 @@ public class Video
 			return;
 		}
 
-		int d = this.dataByte;
+		int d = this.dataByte & 0xFF;
 		if (isDisplayingText())
 		{
 			final boolean inverse = inverseChar(d);
