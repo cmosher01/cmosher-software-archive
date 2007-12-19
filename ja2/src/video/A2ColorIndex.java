@@ -3,7 +3,7 @@
  */
 package video;
 
-public enum A2ColorIndex
+enum A2ColorIndex
 {
 	BLACK,
 	DARK_MAGENTA,

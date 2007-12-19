@@ -6,11 +6,11 @@ package video;
 import java.awt.Color;
 
 /**
- * Defines Apple ][ colors.
+ * Defines Apple ][ colors, as computed by theory.
  *
  * @author Chris Mosher
  */
-public class A2Colors
+class A2Colors
 {
 /*
 
@@ -31,9 +31,9 @@ Note: I don't know how SAT and VAL are computed; the numbers here are from
 actual readings (see A2ColorsObserved) but are rounded to nearest multiple of 25,
 except dark magenta whose value is moved up to 100 (which seems to be consistent
 with the dark-light pattern of the other colors). So the colors with a 2 in column W
-are 100, 100, while the colors with 1 are dark versions of the corresponding colors
-with 3; the relation between W 1->3 for (SAT,VAL) is assumed to be either
-(100,100)->(50,100) or (100,50)->(100,100).
+are assumed to be (SAT,VAL)==(100,100). The colors with W 1 are just dark versions
+of the corresponding colors with W 3; the relation between W 1->3 for (SAT,VAL) is
+assumed to be either (100,100)->(50,100) or (100,50)->(100,100).
 
 
 
@@ -137,7 +137,7 @@ F 1111 1111  |                             N/A     4     0 100    WHITE         
 	// Columns from table above:
 
 	// N:
-	static final int[] clr = { 0x1, 0xB, 0x3, 0x2, 0x7, 0x6, 0x4, 0xE, 0xC, 0x8, 0xD, 0x9, 0x5, 0xA, 0xF, 0x0 };
+	private static final int[] clr = { 0x1, 0xB, 0x3, 0x2, 0x7, 0x6, 0x4, 0xE, 0xC, 0x8, 0xD, 0x9, 0x5, 0xA, 0xF, 0x0 };
 	// COLOR CIRCLE POSITION (above center of crest in SIGNAL WAVEFORM):
 	private static final int[] pos = {   7,   7,   6,   5,   5,   4,   3,   3,   2,   1,   1,   0,  -1,  -1,  -1,  -1 };
 	// SAT:
@@ -157,16 +157,4 @@ F 1111 1111  |                             N/A     4     0 100    WHITE         
 	{
 		return 33 /*degrees*/   +   ( pos[ipos] * 45 /*degrees*/ );
 	}
-
-
-
-	// Test program to print out the RGB values
-	public static void main(final String... args)
-	{
-		for (int i = 0; i < COLOR.length; ++i)
-		{
-			System.out.println(Integer.toHexString(COLOR[i]));
-		}
-	}
-
 }

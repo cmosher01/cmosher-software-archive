@@ -1,10 +1,10 @@
 package video;
 
 import chipset.Clock;
-import util.HexUtil;
 
 
-public class VideoAddressing
+
+class VideoAddressing
 {
 	private static final int NTSC_LINES_PER_FRAME = 3*5*5*7;
 	public static final int NTSC_LINES_PER_FIELD = NTSC_LINES_PER_FRAME/2;
@@ -45,11 +45,11 @@ public class VideoAddressing
 		}
 
 		int n = c / BYTES_PER_ROW;
-		final int s = (n/0x40);
-		n -= s*0x40;
-		final int q = (n/8);
-		n -= q*8;
-		final int base = 0x400*n+0x80*q+VISIBLE_BYTES_PER_ROW*s;
+		final int s = (n >> 6);
+		n -= s << 6;
+		final int q = (n >> 3);
+		n -= q << 3;
+		final int base = (n<<10) + (q<<7) + VISIBLE_BYTES_PER_ROW*s;
 
 		final int half_page = base & 0xFF80;
 
@@ -59,20 +59,5 @@ public class VideoAddressing
 			a += 0x80;
 		}
 		return a;
-	}
-
-	public static void main(final String... args)
-	{
-		final int[] lut = buildLUT(0x2000,0x2000);
-		int t = 0;
-		for (int y = 0; y < NTSC_LINES_PER_FIELD; ++y)
-		{
-			for (int x = 0; x < BYTES_PER_ROW; ++x)
-			{
-				System.out.print(HexUtil.word(lut[t++]));
-				System.out.print(",");
-			}
-			System.out.println();
-		}
 	}
 }

@@ -6,11 +6,12 @@ package video;
 import java.awt.Color;
 
 /**
- * Defines Apple ][ colors.
+ * Defines Apple ][ colors, as captured and measured
+ * from my Apple //c.
  *
  * @author Chris Mosher
  */
-public class A2ColorsObserved
+class A2ColorsObserved
 {
 /*
 
@@ -61,16 +62,4 @@ n/a   0   1 black (tweaked to 0 val)
 			COLOR[clr[i]] = Color.HSBtoRGB(hue[i]/360f,sat[i]/100f,val[i]/100f);
 		}
 	}
-
-
-
-	// Test program to print out the RGB values
-	public static void main(final String... args)
-	{
-		for (int i = 0; i < COLOR.length; ++i)
-		{
-			System.out.println(Integer.toHexString(COLOR[i]));
-		}
-	}
-
 }
