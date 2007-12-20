@@ -43,9 +43,9 @@ class VideoAddressing
 		 * total horizontal line period = -------------- * -------- * ------------- * --------------------   =   ( -- + -- ) microseconds per line
 		 *                                60*1000 fields   1 frame    3*5*5*7 lines   1 second                          90
 		 *
-		 *                                                             10   81
-		 * horizontal blanking period = 10.9 microseconds per line = ( -- + -- ) microseconds per line
-		 *                                                                  90
+		 *                                                                                    10   81
+		 * horizontal blanking period = (1.5+4.7+.6+2.5+1.6) = 10.9 microseconds per line = ( -- + -- ) microseconds per line
+		 *                                                                                         90
 		 *
 		 * visible line period = total horizontal line period minus horizontal blanking period =
 		 * 
