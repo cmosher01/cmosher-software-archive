@@ -17,9 +17,9 @@ class VideoAddressing
 
 	public static final int BYTES_PER_FIELD = BYTES_PER_ROW*NTSC_LINES_PER_FIELD;
 
-	public static final int VISIBLE_BYTES_PER_ROW = 40;
+	public static final int VISIBLE_BYTES_PER_ROW = calculateVisibleCharactersPerRow();
 	private static final int BLANKED_BYTES_PER_ROW = BYTES_PER_ROW-VISIBLE_BYTES_PER_ROW;
-	public static final int VISIBLE_ROWS_PER_FIELD = 192;
+	public static final int VISIBLE_ROWS_PER_FIELD = calculateVisibleRows();
 	private static final int VISIBLE_BYTES_PER_FIELD = BYTES_PER_ROW*VISIBLE_ROWS_PER_FIELD;
 	private static final int SCANNABLE_ROWS = 0x100;
 	private static final int SCANNABLE_BYTES = SCANNABLE_ROWS*BYTES_PER_ROW;
@@ -34,6 +34,41 @@ class VideoAddressing
 			lut[t] = base + (calc(t) % len);
 		}
 		return lut;
+	}
+
+	private static int calculateVisibleCharactersPerRow()
+	{
+		/*
+		 *                                1000+1 seconds   2 fields   1 frame         1000000 microseconds         63   50
+		 * total horizontal line period = -------------- * -------- * ------------- * --------------------   =   ( -- + -- ) microseconds per line
+		 *                                60*1000 fields   1 frame    3*5*5*7 lines   1 second                          90
+		 *
+		 *                                                             10   81
+		 * horizontal blanking period = 10.9 microseconds per line = ( -- + -- ) microseconds per line
+		 *                                                                  90
+		 *
+		 * visible line period = total horizontal line period minus horizontal blanking period =
+		 * 
+		 * 52   59
+		 * -- + -- microseconds per line
+		 *      90
+		 *
+		 *
+		 * To avoid the over-scan area, the Apple ][ uses only the middle 75% of the visible line, or 4739/120 microseconds
+		 * 
+		 * Apple ][ uses half the clock rate, or 315/44 MHz, to oscillate the video signal.
+		 * 
+		 * The result is 315/44 MHz * 4739/120 microseconds/line, rounded down, = 282 full pixel spots across the screen.
+		 * The Apple ][ displays 7 bits per byte hi-res or lo-res, (or 7 pixel-wide characters for text mode), so that
+		 * gives 282/7, which rounds down to 40 bytes per line.
+		 */
+		return ((int)Math.rint(((double)(NTSC_COLOR_FIELD_EVERY+1)/(NTSC_FIELDS_PER_SECOND*NTSC_COLOR_FIELD_EVERY)*2/(3*5*5*7)*1000000 - (1.5+4.7+.6+2.5+1.6)) *
+			.75 *
+			(Clock.CRYSTAL_HZ/2))) / 1000000 / 7;
+	}
+	private static int calculateVisibleRows()
+	{
+		return ((int)Math.rint(486*.8))/2/8*8;
 	}
 
 	private static int calc(final int t)

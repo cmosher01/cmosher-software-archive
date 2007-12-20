@@ -12,7 +12,7 @@ import video.Video;
  */
 public class Clock
 {
-	private static final int CRYSTAL_HZ = Util.divideRoundUp(315000000,22);
+	public static final int CRYSTAL_HZ = Util.divideRoundUp(315000000,22);
 	private static final int CPU_CYCLES_PER_CRYSTAL_CYCLES = 14;
 	public static final int CPU_HZ = Util.divideRoundUp(CRYSTAL_HZ,CPU_CYCLES_PER_CRYSTAL_CYCLES);
 
