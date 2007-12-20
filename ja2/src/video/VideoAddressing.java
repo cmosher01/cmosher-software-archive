@@ -7,7 +7,7 @@ import chipset.Clock;
 class VideoAddressing
 {
 	private static final int NTSC_LINES_PER_FRAME = 3*5*5*7;
-	public static final int NTSC_LINES_PER_FIELD = NTSC_LINES_PER_FRAME/2;
+	static final int NTSC_LINES_PER_FIELD = NTSC_LINES_PER_FRAME/2;
 	private static final int NTSC_FIELDS_PER_SECOND = 60;
 	private static final int NTSC_COLOR_FIELD_EVERY = 1000;
 
@@ -17,14 +17,20 @@ class VideoAddressing
 
 	public static final int BYTES_PER_FIELD = BYTES_PER_ROW*NTSC_LINES_PER_FIELD;
 
+	public static final int VISIBLE_BITS_PER_BYTE = 7;
+	private static final int VISIBLE_LINES_PER_CHARACTER = 8;
+
 	public static final int VISIBLE_BYTES_PER_ROW = calculateVisibleCharactersPerRow();
-	private static final int BLANKED_BYTES_PER_ROW = BYTES_PER_ROW-VISIBLE_BYTES_PER_ROW;
 	public static final int VISIBLE_ROWS_PER_FIELD = calculateVisibleRows();
+
+	private static final int BLANKED_BYTES_PER_ROW = BYTES_PER_ROW-VISIBLE_BYTES_PER_ROW;
 	private static final int VISIBLE_BYTES_PER_FIELD = BYTES_PER_ROW*VISIBLE_ROWS_PER_FIELD;
 	private static final int SCANNABLE_ROWS = 0x100;
 	private static final int SCANNABLE_BYTES = SCANNABLE_ROWS*BYTES_PER_ROW;
 	private static final int RESET_ROWS = NTSC_LINES_PER_FIELD-SCANNABLE_ROWS;
 	private static final int RESET_BYTES = RESET_ROWS*BYTES_PER_ROW;
+
+	private static final int MEGA = 1000000;
 
 	static int[] buildLUT(final int base, final int len)
 	{
@@ -62,13 +68,20 @@ class VideoAddressing
 		 * The Apple ][ displays 7 bits per byte hi-res or lo-res, (or 7 pixel-wide characters for text mode), so that
 		 * gives 282/7, which rounds down to 40 bytes per line.
 		 */
-		return ((int)Math.rint(((double)(NTSC_COLOR_FIELD_EVERY+1)/(NTSC_FIELDS_PER_SECOND*NTSC_COLOR_FIELD_EVERY)*2/(3*5*5*7)*1000000 - (1.5+4.7+.6+2.5+1.6)) *
+		return ((int)Math.rint(((double)(NTSC_COLOR_FIELD_EVERY+1)/(NTSC_FIELDS_PER_SECOND*NTSC_COLOR_FIELD_EVERY)*2/(NTSC_LINES_PER_FRAME)*MEGA - (1.5+4.7+.6+2.5+1.6)) *
 			.75 *
-			(Clock.CRYSTAL_HZ/2))) / 1000000 / 7;
+			(Clock.CRYSTAL_HZ/2))) / MEGA / VISIBLE_BITS_PER_BYTE;
 	}
 	private static int calculateVisibleRows()
 	{
-		return ((int)Math.rint(486*.8))/2/8*8;
+		/*
+		 * NTSC total lines per frame (525) minus unusable lines (19 plus 20) = 486 usable lines
+		 * To avoid the over-scan area, use the middle 80% of the vertical lines, giving 388 (rounded down) clearly visible lines
+		 * Apple ][ uses only half the vertical resolution because it doesn't interlace, giving 194.
+		 * Text characters are 8 pixels tall, so 194/8 rounded down gives 24 text lines.
+		 * Multiply by 8 to give 192 lines total.
+		 */
+		return ((int)Math.rint((NTSC_LINES_PER_FRAME-(20+19))*.8))/2/VISIBLE_LINES_PER_CHARACTER*VISIBLE_LINES_PER_CHARACTER;
 	}
 
 	private static int calc(final int t)

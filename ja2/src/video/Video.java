@@ -43,9 +43,7 @@ public class Video
 
     private static final int EOF = -1;
 
-	private static final int VISIBLE_BITS_PER_BYTE = 7;
-
-	private static final int XSIZE = VISIBLE_BITS_PER_BYTE*VideoAddressing.VISIBLE_BYTES_PER_ROW;
+	private static final int XSIZE = VideoAddressing.VISIBLE_BITS_PER_BYTE*VideoAddressing.VISIBLE_BYTES_PER_ROW;
 	private static final int YSIZE = VideoAddressing.VISIBLE_ROWS_PER_FIELD;
 	public static final Dimension SIZE = new Dimension(XSIZE,YSIZE);
 	private static final int VISIBLE_X_OFFSET = VideoAddressing.BYTES_PER_ROW-VideoAddressing.VISIBLE_BYTES_PER_ROW;
@@ -229,7 +227,7 @@ public class Video
 		d &= 0xFF;
 
 		x -= VISIBLE_X_OFFSET;
-		x *= VISIBLE_BITS_PER_BYTE;
+		x *= VideoAddressing.VISIBLE_BITS_PER_BYTE;
 		y *= XSIZE;
 		x += y;
 
