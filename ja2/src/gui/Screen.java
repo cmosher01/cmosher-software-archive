@@ -15,7 +15,7 @@ import video.Video;
 
 public class Screen extends JPanel
 {
-	private static final int FACTOR = 2;
+	private static final int FACTOR = 1;
 
 	private Graphics2D graphics;
 	private AffineTransform affine = new AffineTransform();

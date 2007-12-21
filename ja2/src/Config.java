@@ -50,7 +50,7 @@ class Config
     			final String mem = matcher.group(2);
 
     			final InputStream image = new FileInputStream(new File(mem));
-    	        memory.load(addr,image);
+    	        memory.load(addr-0xD000,image);
     	        image.close();
     		}
     		else if ((matcher = patLOAD.matcher(s)).matches())

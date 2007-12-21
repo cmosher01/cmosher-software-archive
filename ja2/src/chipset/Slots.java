@@ -28,4 +28,22 @@ public class Slots
 			card.reset();
 		}
 	}
+
+	public byte readRom(final int islot, final int addr)
+	{
+		return this.slots.get(islot).readRom(addr);
+	}
+
+	public byte readSeventhRom(int addr)
+	{
+		final byte[] rb = new byte[1];
+		rb[0] = -1;
+
+		for (final Card card : this.slots)
+		{
+			card.readSeventhRom(addr,rb);
+		}
+
+		return rb[0];
+	}
 }

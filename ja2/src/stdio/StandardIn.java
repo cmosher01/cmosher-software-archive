@@ -7,7 +7,7 @@ import keyboard.KeypressQueue;
 import gui.UI;
 import chipset.Card;
 
-public class StandardIn implements Card
+public class StandardIn extends Card
 {
 	private static final int EOF = -1;
 
@@ -22,6 +22,8 @@ public class StandardIn implements Card
 	{
 		this.ui = ui;
 		this.stdinkeys = stdinkeys;
+
+		this.seventhRom.write(0,(byte)2);
 	}
 
 	public byte io(final int addr, @SuppressWarnings("unused") final byte data)
@@ -56,10 +58,5 @@ public class StandardIn implements Card
 			this.latch &= 0x7F;
 		}
 		return this.latch;
-	}
-
-	public void reset()
-	{
-		// ???
 	}
 }

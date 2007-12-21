@@ -13,7 +13,8 @@ import video.Video;
  */
 public class AddressBus implements chipset.cpu.AddressBus
 {
-	private final Memory memory;
+	private final Memory ram;
+	private final Memory rom;
 	private final KeyboardInterface keyboard;
 	private final Video video;
 	private final PaddlesInterface paddles;
@@ -24,9 +25,10 @@ public class AddressBus implements chipset.cpu.AddressBus
 
 
 
-	public AddressBus(final Memory memory, final KeyboardInterface keyboard, final Video video, final PaddlesInterface paddles, final PaddleBtnInterface paddleButtons, final Slots slots)
+	public AddressBus(final Memory ram, final Memory rom, final KeyboardInterface keyboard, final Video video, final PaddlesInterface paddles, final PaddleBtnInterface paddleButtons, final Slots slots)
 	{
-		this.memory = memory;
+		this.ram = ram;
+		this.rom = rom;
 		this.keyboard = keyboard;
 		this.video = video;
 		this.paddles = paddles;
@@ -38,13 +40,34 @@ public class AddressBus implements chipset.cpu.AddressBus
 	{
 		final byte r;
 
-		if ((address >> 8) == 0xC0)
+		if ((address >> 14 == 3)) // >= $C000
 		{
-			r = readSwitch(address & 0x00FF);
+			if ((address >> 12) == 0xC)
+			{
+				// 11007sssxxxxxxxx
+				final boolean seventh = (address & 0xF800) == 0xC800;
+				final int slot = (address >> 8) & 7;
+				if (seventh)
+				{
+					r = this.slots.readSeventhRom(address & 0x07FF);
+				}
+				else if (slot == 0)
+				{
+					r = readSwitch(address & 0x00FF);
+				}
+				else
+				{
+					r = this.slots.readRom(slot,address & 0x00FF);
+				}
+			}
+			else
+			{
+				r = this.rom.read(address - 0xD000);
+			}
 		}
-		else
+		else // < $C000
 		{
-			r = this.memory.read(address);
+			r = this.ram.read(address);
 		}
 
 		return r;
@@ -58,7 +81,7 @@ public class AddressBus implements chipset.cpu.AddressBus
 		}
 		else
 		{
-			this.memory.write(address,data);
+			this.ram.write(address,data);
 		}
 	}
 

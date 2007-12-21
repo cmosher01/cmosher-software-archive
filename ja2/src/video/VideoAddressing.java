@@ -37,7 +37,29 @@ class VideoAddressing
 		final int[] lut = new int[BYTES_PER_FIELD];
 		for (int t = 0; t < lut.length; ++t)
 		{
-			lut[t] = base + (calc(t) % len);
+			final int col = t % BYTES_PER_ROW;
+			final int row = t / BYTES_PER_ROW;
+			int off = 0;
+			if (col < BLANKED_BYTES_PER_ROW)
+			{
+				// HBL
+				if (base < 0x1000)
+				{
+					off += 0x1000;
+				}
+				if (col == 0)
+				{
+					off += 1;
+				}
+			}
+
+			lut[t] = base + (calc(t) % len) + off;
+
+			if (row >= VISIBLE_ROWS_PER_FIELD)
+			{
+				// VBL
+				lut[t] -= 8; // TODO must do mod 128 subtraction here
+			}
 		}
 		return lut;
 	}

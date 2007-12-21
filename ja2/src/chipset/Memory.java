@@ -9,7 +9,6 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
-import chipset.cpu.CPU6502;
 
 
 
@@ -19,13 +18,14 @@ import chipset.cpu.CPU6502;
  */
 public class Memory
 {
-	private final byte[] ram = new byte[CPU6502.MEMORY_LIM];
+	private final byte[] ram;
 
 	/**
 	 * @param keyboard
 	 */
-	public Memory()
+	public Memory(final int bytes)
 	{
+		ram = new byte[bytes];
 		clear();
 	}
 
@@ -41,11 +41,6 @@ public class Memory
 
 	public void write(final int address, final byte data)
 	{
-		if ((address >> 14) == 3) // ROM
-		{
-			return;
-		}
-
 		this.ram[address] = data;
 	}
 

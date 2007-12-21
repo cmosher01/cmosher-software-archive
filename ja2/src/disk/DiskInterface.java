@@ -1,12 +1,13 @@
 package disk;
 
 import chipset.Card;
+import chipset.Memory;
 import gui.UI;
 
 /*
  * Created on Sep 12, 2007
  */
-public class DiskInterface implements Card
+public class DiskInterface extends Card
 {
 	private final DiskState state;
 	private final UI ui;

@@ -103,6 +103,8 @@ public final class CPU6502
 		}
 
 		this.address = this.pc++;
+		this.pc &= 0xFFFF;
+
 		read();
 
 		if (interrupt)

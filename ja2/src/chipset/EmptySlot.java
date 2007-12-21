@@ -3,16 +3,11 @@
  */
 package chipset;
 
-public class EmptySlot implements Card
+public class EmptySlot extends Card
 {
-	public byte io(@SuppressWarnings("unused") final int address, final byte data)
+	@Override
+	public byte io(int address, byte data)
 	{
-		// this really does nothing useful
 		return data;
-	}
-
-	public void reset()
-	{
-		// do nothing
 	}
 }

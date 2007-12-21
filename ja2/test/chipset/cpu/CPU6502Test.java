@@ -15,8 +15,8 @@ public class CPU6502Test extends TestCase
 	@Override
 	protected void setUp() throws Exception
 	{
-		this.memory = new Memory();
-		this.cpu = new CPU6502(new AddressBus(memory,null,null,null,null,null));
+		this.memory = new Memory(0xC000);
+		this.cpu = new CPU6502(new AddressBus(memory,null,null,null,null,null,null));
 		this.cpu.reset = false;
 	}
 

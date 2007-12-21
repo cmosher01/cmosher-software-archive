@@ -4,7 +4,11 @@ import gui.UI;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.IndexColorModel;
+import java.io.BufferedInputStream;
 import java.io.Closeable;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +36,7 @@ import chipset.AddressBus;
 import chipset.Card;
 import chipset.Clock;
 import chipset.EmptySlot;
+import chipset.InvalidMemoryLoad;
 import chipset.Memory;
 import chipset.Slots;
 import chipset.cpu.CPU6502;
@@ -80,7 +85,6 @@ public final class Ja2 implements Closeable
 	Clock clock;
 
 	private String config = "ja2.cfg";
-	private Apple apple;
 
 
 
@@ -101,47 +105,7 @@ public final class Ja2 implements Closeable
 		}
 	}
 
-    private void tryRunTest(final String... args)
-    {
-    	parseArgs(args);
-
-//    	final DiskBytes disk1 = new DiskBytes();
-//    	final DiskBytes disk2 = new DiskBytes();
-//    	final BufferedImage screenImage = new BufferedImage(Video.SIZE.width,Video.SIZE.height,BufferedImage.TYPE_INT_RGB);
-//    	final Screen screen = new Screen();
-//        final UI ui = new GUI(this,screen,disk1,disk2,diskState,screenImage);
-//    	final KeypressQueue keypresses = new KeypressQueue(NOTIFY_ON_PUT);
-//    	final KeypressQueue stdinkeys = new KeypressQueue();
-//    	final PaddlesInterface paddles = new Paddles();
-//    	final PaddleBtnInterface pdlbtns = new PaddleButtons();
-//    	this.apple = new Apple(ui,screenImage,keypresses,stdinkeys,paddles,pdlbtns,new DiskBytes[] {disk1,disk2});
-//		final KeyboardProducer keyprod = new KeyboardProducer(keypresses);
-//    	screen.addKeyListener(keyprod);
-//    	final ClipboardProducer clip = new ClipboardProducer(keypresses);
-//    	screen.addKeyListener(clip);
-//		final HyperKeyHandler hyper = new HyperKeyHandler(ui);
-//    	screen.addKeyListener(hyper);
-//    	final FnKeyHandler fn = new FnKeyHandler(this.apple,screenImage,memory);//cpu,video,memory);
-//        screen.addKeyListener(fn);
-//        screen.addKeyListener((PaddleButtons)pdlbtns);
-//        screen.setFocusTraversalKeysEnabled(false);
-//        screen.requestFocus();
-//    	try
-//		{
-//    		Config cfg = new Config(this.config);
-//			cfg.parseConfig(this.apple/*memory*/,disk1,disk2);
-//		}
-//		catch (final Exception e)
-//		{
-//			e.printStackTrace();
-//			ui.showMessage(e.getMessage());
-//		}
-//        ui.updateDrives();
-
-        this.apple.start();
-    }
-
-    private void tryRun(final String... args)
+    private void tryRun(final String... args) throws FileNotFoundException, InvalidMemoryLoad
     {
     	parseArgs(args);
 
@@ -174,18 +138,24 @@ public final class Ja2 implements Closeable
 
     	final KeyboardInterface keyboard = new Keyboard(keypresses,ui);
 
-        final Memory memory = new Memory();
+    	final Memory ram = new Memory(0xC000);
+    	final Memory rom = new Memory(0x10000-0xD000);
 
     	final DiskInterface disk = new DiskInterface(diskState,ui);
-        final Video video = new Video(ui,memory,screenImage);
+    	disk.loadRom(new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/disk2_16sector/disk2_A$C600_L$0100_16sector"))));
+        final Video video = new Video(ui,ram,screenImage);
     	final PaddlesInterface paddles = new Paddles();
     	final KeypressQueue stdinkeys = new KeypressQueue();
     	final StandardInProducer stdinprod = new StandardInProducer(stdinkeys);
+    	final StandardOut stdout = new StandardOut();
+    	stdout.loadRom(new BufferedInputStream(new FileInputStream(new File("c100.rom"))));
+    	final StandardIn stdin = new StandardIn(ui,stdinkeys);
+    	stdin.loadRom(new BufferedInputStream(new FileInputStream(new File("c200.rom"))));
     	final List<Card> cards = Arrays.<Card>asList(new Card[]
 		{
 	    	/* 0 */ new EmptySlot(),
-	    	/* 1 */ new StandardOut(),
-	    	/* 2 */ new StandardIn(ui,stdinkeys),
+	    	/* 1 */ stdout,
+	    	/* 2 */ stdin,
 	    	/* 3 */ new EmptySlot(),
 	    	/* 4 */ new EmptySlot(),
 	    	/* 5 */ new EmptySlot(),
@@ -194,7 +164,7 @@ public final class Ja2 implements Closeable
 		});
     	final Slots slots = new Slots(cards);
     	final PaddleButtons pdlbtns = new PaddleButtons();
-        final AddressBus addressBus = new AddressBus(memory,keyboard,video,paddles,pdlbtns,slots);
+        final AddressBus addressBus = new AddressBus(ram,rom,keyboard,video,paddles,pdlbtns,slots);
 
 
     	final CPU6502 cpu = new CPU6502(addressBus);
@@ -209,7 +179,7 @@ public final class Ja2 implements Closeable
 	    	screen.addKeyListener(clip);
     		final HyperKeyHandler hyper = new HyperKeyHandler(ui);
 	    	screen.addKeyListener(hyper);
-	    	final FnKeyHandler fn = new FnKeyHandler(cpu,screenImage,memory);
+	    	final FnKeyHandler fn = new FnKeyHandler(cpu,screenImage,ram);
 	        screen.addKeyListener(fn);
 	        final VideoKeyHandler vid = new VideoKeyHandler(video);
 	        screen.addKeyListener(vid);
@@ -223,7 +193,7 @@ public final class Ja2 implements Closeable
     	try
 		{
     		final Config cfg = new Config(this.config);
-			cfg.parseConfig(memory,disk1,disk2);
+			cfg.parseConfig(rom,disk1,disk2);
 		}
 		catch (final Exception e)
 		{
