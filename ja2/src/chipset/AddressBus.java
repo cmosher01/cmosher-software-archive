@@ -75,11 +75,20 @@ public class AddressBus implements chipset.cpu.AddressBus
 
 	public void write(final int address, final byte data)
 	{
-		if ((address >> 8) == 0xC0)
+		if ((address >> 14 == 3)) // >= $C000
 		{
-			writeSwitch(address & 0x00FF,data);
+			if ((address >> 12) == 0xC)
+			{
+				// 11007sssxxxxxxxx
+				final boolean seventh = (address & 0xF800) == 0xC800;
+				final int slot = (address >> 8) & 7;
+				if (!seventh && slot == 0)
+				{
+					writeSwitch(address & 0x00FF, data);
+				}
+			}
 		}
-		else
+		else // < $C000
 		{
 			this.ram.write(address,data);
 		}

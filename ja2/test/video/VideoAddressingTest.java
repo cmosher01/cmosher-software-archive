@@ -4,6 +4,9 @@
 package video;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import util.HexUtil;
 import util.Util;
@@ -67,8 +70,29 @@ public class VideoAddressingTest extends TestCase
 		}
 	}
 
-	public static void main(final String... args)
+	public static void main(final String... args) throws IOException
 	{
-		dumpAsText(0x400,0x400);
+		dumpToFile(0x0400,0x0400,"t1.bin");
+		dumpToFile(0x0800,0x0400,"t2.bin");
+		dumpToFile(0x2000,0x2000,"h1.bin");
+		dumpToFile(0x4000,0x2000,"h2.bin");
+	}
+
+	private static void dumpToFile(int base, int len, String file) throws IOException
+	{
+		BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File(file)));
+		int[] lut = VideoAddressing.buildLUT(base,len);
+		int t = 0;
+		for (int y = 0; y < VideoAddressing.NTSC_LINES_PER_FIELD; ++y)
+		{
+			for (int x = 0; x < VideoAddressing.BYTES_PER_ROW; ++x)
+			{
+				out.write(lut[t]);
+				out.write(lut[t]>>8);
+				++t;
+			}
+		}
+		out.flush();
+		out.close();
 	}
 }
