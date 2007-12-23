@@ -107,7 +107,7 @@ public class AddressBus implements chipset.cpu.AddressBus
 
 	private byte readSwitch(int address)
 	{
-		byte r = -1;
+		byte r = this.video.getDataBus();
 
 		if (address < 0x80)
 		{
@@ -120,7 +120,6 @@ public class AddressBus implements chipset.cpu.AddressBus
 			else if (islot == 0x1)
 			{
 				this.keyboard.clear();
-				r = this.keyboard.get();
 			}
 			else if (islot == 0x2)
 			{
@@ -138,7 +137,7 @@ public class AddressBus implements chipset.cpu.AddressBus
 			{
 				if (iswch < 0x8)
 				{
-					r = this.video.io(address,(byte)0);
+					r = this.video.io(address,r);
 				}
 				else
 				{
@@ -154,18 +153,32 @@ public class AddressBus implements chipset.cpu.AddressBus
 				}
 				else if (sw2 < 4)
 				{
-					r = this.paddleButtons.isDown(sw2) ? (byte)0x80 : 0;
+					if (this.paddleButtons.isDown(sw2))
+					{
+						r = (byte)(r | 0x80);
+					}
+					else
+					{
+						r = (byte)(r & 0x7F);
+					}
 				}
 				else
 				{
 					sw2 &= 3;
-					r = this.paddles.isTimedOut(sw2) ? 0 : (byte)0x80;
+					if (this.paddles.isTimedOut(sw2))
+					{
+						r = (byte)(r & 0x7F);
+					}
+					else
+					{
+						r = (byte)(r | 0x80);
+					}
 				}
 			}
 			else if (islot == 0x7)
 			{
 				this.paddles.startTimers();
-				r = (byte)0x80;
+				r = (byte)(r | 0x80);
 			}
 		}
 		else
@@ -174,7 +187,7 @@ public class AddressBus implements chipset.cpu.AddressBus
 			address &= 0x7F;
 			final int islot = (address & 0xF0) >> 4;
 			final int iswch = (address & 0x0F);
-			r = this.slots.io(islot,iswch,(byte)0);
+			r = this.slots.io(islot,iswch,r);
 		}
 
 		return r;

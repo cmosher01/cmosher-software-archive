@@ -114,7 +114,12 @@ public class Video
 		return r;
 	}
 
-	public byte io(final int addr, @SuppressWarnings("unused") final byte b)
+	public byte getDataBus()
+	{
+		return this.dataByte; // emulate floating data bus
+	}
+
+	public byte io(final int addr, final byte b)
 	{
 		final int sw = (addr & 0x000E) >> 1;
 		final boolean on = (addr & 0x0001) != 0;
@@ -129,7 +134,7 @@ public class Video
 			case 3:
 				this.swHiRes = on; break;
 		}
-		return this.dataByte; // emulates "floating bus"
+		return b;
 	}
 
 	private void dumpSwitches()

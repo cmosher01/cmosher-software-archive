@@ -20,9 +20,8 @@ public abstract class Card
 
 
 
-	public abstract byte io(int address, byte data);
-
-	protected byte doIO(int address, byte data)
+	// override
+	public byte io(int address, byte data)
 	{
 		return data;
 	}

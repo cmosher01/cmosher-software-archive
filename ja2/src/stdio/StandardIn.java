@@ -22,8 +22,6 @@ public class StandardIn extends Card
 	{
 		this.ui = ui;
 		this.stdinkeys = stdinkeys;
-
-		this.seventhRom.write(0,(byte)2);
 	}
 
 	public byte io(final int addr, @SuppressWarnings("unused") final byte data)

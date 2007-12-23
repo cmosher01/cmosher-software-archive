@@ -3,6 +3,7 @@
  */
 package keyboard;
 
+import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -22,6 +23,7 @@ public class KeyboardProducer extends KeyAdapter implements KeyListener
 	{
 		final int key = e.getKeyCode();
 		final char chr = e.getKeyChar();
+		final int mod = e.getModifiersEx();
 
 		if (key == KeyEvent.VK_ENTER)
 		{
@@ -47,7 +49,15 @@ public class KeyboardProducer extends KeyAdapter implements KeyListener
 		{
 			this.keys.clear();
 		}
-		else
+		else if ('a' <= chr && chr <= 'z')
+		{
+			this.keys.put(chr-0x20);
+		}
+		else if (chr == '@' && (mod & InputEvent.SHIFT_DOWN_MASK) != 0 && (mod & InputEvent.CTRL_DOWN_MASK) != 0 )
+		{
+				this.keys.put(0);
+		}
+		else if (0 <= chr && chr < 0x80)
 		{
 			this.keys.put(chr);
 		}

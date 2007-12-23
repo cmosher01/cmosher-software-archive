@@ -34,9 +34,9 @@ public class Slots
 		return this.slots.get(islot).readRom(addr);
 	}
 
+	private final byte[] rb = new byte[1];
 	public byte readSeventhRom(int addr)
 	{
-		final byte[] rb = new byte[1];
 		rb[0] = -1;
 
 		for (final Card card : this.slots)

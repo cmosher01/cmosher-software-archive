@@ -56,8 +56,10 @@ public class Paddles implements PaddlesInterface
 		p = pMin+pMax-p;
 		final int y = (int)Math.round(Math.rint((p-pMin)/(pMax-pMin)*PADDLE_CYCLES));
 
-		this.rTick[0] = x;
-		this.rTick[1] = y;
+		if (isTimedOut(0))
+			this.rTick[0] = x;
+		if (isTimedOut(1))
+			this.rTick[1] = y;
 	}
 
 	public boolean isTimedOut(final int paddle)
