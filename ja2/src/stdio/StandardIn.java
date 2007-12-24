@@ -24,7 +24,8 @@ public class StandardIn extends Card
 		this.stdinkeys = stdinkeys;
 	}
 
-	public byte io(final int addr, @SuppressWarnings("unused") final byte data)
+	@Override
+	public byte io(final int addr, @SuppressWarnings("unused") final byte data, @SuppressWarnings("unused") final boolean writing)
 	{
 		final int sw = addr & 0x0F;
 		if (sw == 0)

@@ -16,9 +16,9 @@ public class Slots
 		this.slots = new ArrayList<Card>(cards);
 	}
 
-	public byte io(final int islot, final int iswch, final byte b)
+	public byte io(final int islot, final int iswch, final byte b, boolean writing)
 	{
-		return this.slots.get(islot).io(iswch,b);
+		return this.slots.get(islot).io(iswch,b,writing);
 	}
 
 	public void reset()
@@ -37,13 +37,37 @@ public class Slots
 	private final byte[] rb = new byte[1];
 	public byte readSeventhRom(int addr)
 	{
-		rb[0] = -1;
+		this.rb[0] = -1;
 
 		for (final Card card : this.slots)
 		{
-			card.readSeventhRom(addr,rb);
+			card.readSeventhRom(addr,this.rb);
 		}
 
-		return rb[0];
+		return this.rb[0];
+	}
+
+	public byte ioBankRom(final int addr, byte data, boolean write)
+	{
+		this.rb[0] = data;
+
+		for (final Card card : this.slots)
+		{
+			card.ioBankRom(addr,this.rb,write);
+		}
+
+		return this.rb[0];
+	}
+
+	public boolean inhibitMotherboardRom()
+	{
+		for (final Card card: this.slots)
+		{
+			if (card.inhibitMotherboardRom())
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 }

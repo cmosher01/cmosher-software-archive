@@ -23,7 +23,8 @@ public class DiskInterface extends Card
 		this.ui = ui;
 	}
 
-	public byte io(final int addr, final byte data)
+	@Override
+	public byte io(final int addr, final byte data, final boolean writing)
 	{
 		final int q = (addr & 0x000E) >> 1;
 		final boolean on = (addr & 0x0001) != 0;

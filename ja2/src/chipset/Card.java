@@ -21,7 +21,7 @@ public abstract class Card
 
 
 	// override
-	public byte io(int address, byte data)
+	public byte io(int address, byte data, boolean writing)
 	{
 		return data;
 	}
@@ -54,5 +54,18 @@ public abstract class Card
 	public void loadSeventhRom(final InputStream file) throws InvalidMemoryLoad
 	{
 		this.seventhRom.load(0,file);
+	}
+
+
+
+	public boolean inhibitMotherboardRom()
+	{
+		return false;
+	}
+
+
+
+	public void ioBankRom(int addr, byte[] rb, boolean write)
+	{
 	}
 }

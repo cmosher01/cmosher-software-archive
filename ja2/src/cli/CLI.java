@@ -27,6 +27,11 @@ public class CLI implements UI
 		// nothing to update
 	}
 
+	public void updateDrives(boolean force)
+	{
+		// nothing to update
+	}
+
 	public void updateScreen()
 	{
 		// nothing to update

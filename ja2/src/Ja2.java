@@ -32,6 +32,8 @@ import stdio.StandardInProducer;
 import stdio.StandardOut;
 import util.Util;
 import video.Video;
+import cards.FirmwareCard;
+import cards.LanguageCard;
 import chipset.AddressBus;
 import chipset.Card;
 import chipset.Clock;
@@ -151,14 +153,18 @@ public final class Ja2 implements Closeable
     	stdout.loadRom(new BufferedInputStream(new FileInputStream(new File("c100.rom"))));
     	final StandardIn stdin = new StandardIn(ui,stdinkeys);
     	stdin.loadRom(new BufferedInputStream(new FileInputStream(new File("c200.rom"))));
+    	final FirmwareCard firmware = new FirmwareCard();
+    	firmware.loadBankRom(0,new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/apple2plus/apple2plus_A$D000_L$2800_applesoft"))));
+    	firmware.loadBankRom(0x2800,new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/apple2plus/apple2plus_A$F800_L$0800_monitor"))));
+    	final LanguageCard language = new LanguageCard();
     	final List<Card> cards = Arrays.<Card>asList(new Card[]
 		{
-	    	/* 0 */ new EmptySlot(),
+	    	/* 0 */ language,
 	    	/* 1 */ stdout,
 	    	/* 2 */ stdin,
 	    	/* 3 */ new EmptySlot(),
 	    	/* 4 */ new EmptySlot(),
-	    	/* 5 */ new EmptySlot(),
+	    	/* 5 */ firmware,
 	    	/* 6 */ disk,
 	    	/* 7 */ new EmptySlot()
 		});
@@ -204,7 +210,7 @@ public final class Ja2 implements Closeable
 
 
     	this.clock.run();
-        ui.updateDrives();
+        ui.updateDrives(true);
     }
 
     private void parseArgs(final String... args)

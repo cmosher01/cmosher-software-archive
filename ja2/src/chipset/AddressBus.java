@@ -38,7 +38,7 @@ public class AddressBus implements chipset.cpu.AddressBus
 
 	public byte read(final int address)
 	{
-		final byte r;
+		byte r = this.video.getDataBus();
 
 		if ((address >> 14 == 3)) // >= $C000
 		{
@@ -53,7 +53,7 @@ public class AddressBus implements chipset.cpu.AddressBus
 				}
 				else if (slot == 0)
 				{
-					r = readSwitch(address & 0x00FF);
+					r = readSwitch(address & 0x00FF,r);
 				}
 				else
 				{
@@ -62,7 +62,11 @@ public class AddressBus implements chipset.cpu.AddressBus
 			}
 			else
 			{
-				r = this.rom.read(address - 0xD000);
+				r = this.slots.ioBankRom(address - 0xD000,r,false);
+				if (!this.slots.inhibitMotherboardRom())
+				{
+					r = this.rom.read(address - 0xD000);
+				}
 			}
 		}
 		else // < $C000
@@ -87,6 +91,10 @@ public class AddressBus implements chipset.cpu.AddressBus
 					writeSwitch(address & 0x00FF, data);
 				}
 			}
+			else
+			{
+				this.slots.ioBankRom(address - 0xD000,data,true);
+			}
 		}
 		else // < $C000
 		{
@@ -105,10 +113,8 @@ public class AddressBus implements chipset.cpu.AddressBus
 
 
 
-	private byte readSwitch(int address)
+	private byte readSwitch(int address, byte r)
 	{
-		byte r = this.video.getDataBus();
-
 		if (address < 0x80)
 		{
 			final int islot = (address & 0xF0) >> 4;
@@ -187,7 +193,7 @@ public class AddressBus implements chipset.cpu.AddressBus
 			address &= 0x7F;
 			final int islot = (address & 0xF0) >> 4;
 			final int iswch = (address & 0x0F);
-			r = this.slots.io(islot,iswch,r);
+			r = this.slots.io(islot,iswch,r,false);
 		}
 
 		return r;
@@ -217,7 +223,7 @@ public class AddressBus implements chipset.cpu.AddressBus
 			address &= 0x7F;
 			final int islot = (address & 0xF0) >> 4;
 			final int iswch = (address & 0x0F);
-			this.slots.io(islot,iswch,data);
+			this.slots.io(islot,iswch,data,true);
 		}
 	}
 }

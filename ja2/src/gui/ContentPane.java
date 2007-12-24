@@ -78,7 +78,7 @@ class ContentPane extends JPanel
 		this.screen.plot(image);
 	}
 
-	public void updateDrives()
+	public void updateDrives(boolean force)
 	{
 		final DiskDrivePanel drive = getDrive(this.disk.getCurrentDriveNumber());
 		if (drive == null)
@@ -108,7 +108,7 @@ class ContentPane extends JPanel
 			drive.setWriting(false);
 			drive.setReading(false);
 		}
-		drive.updateIf();
+		drive.updateIf(force);
 
 		final DiskDrivePanel driveOther = getDrive(this.disk.getOtherDriveNumber());
 		if (driveOther == null)
@@ -121,7 +121,7 @@ class ContentPane extends JPanel
 
 		driveOther.setModified(this.disk.isModifiedOther());
 
-		driveOther.updateIf();
+		driveOther.updateIf(force);
 	}
 
 	public boolean hasUnsavedChanges()

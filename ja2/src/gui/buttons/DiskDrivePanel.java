@@ -225,7 +225,12 @@ public class DiskDrivePanel extends JPanel
 
 	public void updateIf()
 	{
-		if (!this.upd)
+		updateIf(false);
+	}
+
+	public void updateIf(boolean force)
+	{
+		if (!this.upd && !force)
 		{
 			return;
 		}

@@ -7,6 +7,7 @@ public interface UI
 {
 	void updateScreen();
 	void updateDrives();
+	void updateDrives(boolean force);
 	void showMessage(String message);
 	void handleStdInEOF();
 	boolean isHyper();
