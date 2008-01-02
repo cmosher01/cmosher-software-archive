@@ -108,7 +108,7 @@ public final class Ja2 implements Closeable
 		}
 	}
 
-    private void tryRun(final String... args) throws FileNotFoundException, InvalidMemoryLoad
+    private void tryRun(final String... args)
     {
     	parseArgs(args);
 
