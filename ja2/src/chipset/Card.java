@@ -46,14 +46,14 @@ public abstract class Card
 		}
 	}
 
-	public void loadRom(final InputStream file) throws InvalidMemoryLoad
+	public void loadRom(final int base, final InputStream file) throws InvalidMemoryLoad
 	{
-		this.rom.load(0,file);
+		this.rom.load(base,file);
 	}
 
-	public void loadSeventhRom(final InputStream file) throws InvalidMemoryLoad
+	public void loadSeventhRom(final int base, final InputStream file) throws InvalidMemoryLoad
 	{
-		this.seventhRom.load(0,file);
+		this.seventhRom.load(base,file);
 	}
 
 
@@ -66,6 +66,12 @@ public abstract class Card
 
 
 	public void ioBankRom(int addr, byte[] rb, boolean write)
+	{
+	}
+
+
+
+	public void loadBankRom(final int base, InputStream file) throws InvalidMemoryLoad
 	{
 	}
 }

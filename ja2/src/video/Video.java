@@ -16,7 +16,7 @@ public class Video
 	private final UI ui;
 	private final Memory memory;
 
-	private final byte[] char_rom = new byte[0x800];
+	private final byte[] char_rom = new byte[0x200];
 
 	private boolean swText = true;
 	private boolean swMixed;
@@ -82,7 +82,7 @@ public class Video
 
 	private void readCharRom() throws IOException
 	{
-		final InputStream rom = Video.class.getResourceAsStream("3410036.BIN");
+		final InputStream rom = Video.class.getResourceAsStream("GI2513.ROM");
 		int cc = 0;
 		for (int c = rom.read(); c != EOF; c = rom.read())
 		{
@@ -93,10 +93,10 @@ public class Video
 			++cc;
 		}
 		rom.close();
-		if (cc != 0x800)
+		if (cc != 0x200)
 		{
-			throw new IOException("Text-character-ROM file 3410036.BIN is invalid: length is "+
-				cc+" but should be 2048. Text may not be displayed correctly.");
+			throw new IOException("Text-character-ROM file GI2513.ROM is invalid: length is "+
+				cc+" but should be 512. Text may not be displayed correctly.");
 		}
 	}
 
@@ -236,7 +236,7 @@ public class Video
 		if (isDisplayingText())
 		{
 			final boolean inverse = inverseChar(d);
-			d = this.char_rom[(d << 3) | (y & 0x07)];
+			d = this.char_rom[((d & 0x3F) << 3) | (y & 0x07)];
 			if (inverse)
 			{
 				d = ~d;

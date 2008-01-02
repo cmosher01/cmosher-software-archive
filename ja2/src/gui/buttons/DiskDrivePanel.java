@@ -336,7 +336,18 @@ public class DiskDrivePanel extends JPanel
 		this.upd = true;
 		if (this.drive.isLoaded())
 		{
-			this.drive.unload();
+			try
+			{
+				if (this.drive.isModified())
+				{
+					this.gui.verifyLoseUnsaveChanges();
+				}
+				this.drive.unload();
+			}
+			catch (final UserCancelled e)
+			{
+				// OK, user cancelled, so don't unload the disk
+			}
 		}
 		try
 		{

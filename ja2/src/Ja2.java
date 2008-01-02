@@ -140,32 +140,37 @@ public final class Ja2 implements Closeable
 
     	final KeyboardInterface keyboard = new Keyboard(keypresses,ui);
 
-    	final Memory ram = new Memory(0xC000);
-    	final Memory rom = new Memory(0x10000-0xD000);
+    	final Memory ram = new Memory(0xC000); // $0000 to $BFFF
+    	final Memory rom = new Memory(0x10000-0xD000); // $D000 to $FFFF
 
-    	final DiskInterface disk = new DiskInterface(diskState,ui);
-    	disk.loadRom(new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/disk2_16sector/disk2_A$C600_L$0100_16sector"))));
         final Video video = new Video(ui,ram,screenImage);
     	final PaddlesInterface paddles = new Paddles();
+
+    	final Card stdout = new StandardOut();
+    	stdout.loadRom(0,new BufferedInputStream(new FileInputStream(new File("c100.rom"))));
     	final KeypressQueue stdinkeys = new KeypressQueue();
     	final StandardInProducer stdinprod = new StandardInProducer(stdinkeys);
-    	final StandardOut stdout = new StandardOut();
-    	stdout.loadRom(new BufferedInputStream(new FileInputStream(new File("c100.rom"))));
-    	final StandardIn stdin = new StandardIn(ui,stdinkeys);
-    	stdin.loadRom(new BufferedInputStream(new FileInputStream(new File("c200.rom"))));
-    	final FirmwareCard firmware = new FirmwareCard();
-    	firmware.loadBankRom(0,new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/apple2plus/apple2plus_A$D000_L$2800_applesoft"))));
-    	firmware.loadBankRom(0x2800,new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/apple2plus/apple2plus_A$F800_L$0800_monitor"))));
-    	final LanguageCard language = new LanguageCard();
+    	final Card stdin = new StandardIn(ui,stdinkeys);
+    	stdin.loadRom(0,new BufferedInputStream(new FileInputStream(new File("c200.rom"))));
+    	final Card disk = new DiskInterface(diskState,ui);
+    	disk.loadRom(0,new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/disk2_16sector/disk2_A$C600_L$0100_16sector"))));
+//    	final FirmwareCard firmware = new FirmwareCard();
+//    	firmware.loadBankRom(0,new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/apple2plus/apple2plus_A$D000_L$2800_applesoft"))));
+//    	firmware.loadBankRom(0x2800,new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/apple2plus/apple2plus_A$F800_L$0800_monitor"))));
+    	final Card firmware = new FirmwareCard();
+    	firmware.loadBankRom(0x1000,new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/apple2/apple2_A$E000_L$1425_intbasic"))));
+    	firmware.loadBankRom(0x2425,new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/apple2/apple2_A$F425_L$03DB_other"))));
+    	firmware.loadBankRom(0x2800,new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/apple2/apple2_A$F800_L$0800_monitor"))));
+    	final Card language = new LanguageCard();
     	final List<Card> cards = Arrays.<Card>asList(new Card[]
 		{
-	    	/* 0 */ language,
-	    	/* 1 */ stdout,
-	    	/* 2 */ stdin,
+	    	/* 0 */ language, /*firmware,*/ /*new EmptySlot(),*/
+	    	/* 1 */ stdout, /*new EmptySlot(),*/
+	    	/* 2 */ stdin, /*new EmptySlot(),*/
 	    	/* 3 */ new EmptySlot(),
 	    	/* 4 */ new EmptySlot(),
-	    	/* 5 */ firmware,
-	    	/* 6 */ disk,
+	    	/* 5 */ firmware, /*new EmptySlot(),*/
+	    	/* 6 */ disk, /*new EmptySlot(),*/
 	    	/* 7 */ new EmptySlot()
 		});
     	final Slots slots = new Slots(cards);

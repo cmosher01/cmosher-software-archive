@@ -33,6 +33,7 @@ public class FirmwareCard extends Card
 		return data;
 	}
 
+	@Override
 	public void loadBankRom(final int base, final InputStream file) throws InvalidMemoryLoad
 	{
 		this.bankRom.load(base,file);
