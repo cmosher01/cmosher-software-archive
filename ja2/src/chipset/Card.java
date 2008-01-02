@@ -73,5 +73,6 @@ public abstract class Card
 
 	public void loadBankRom(final int base, InputStream file) throws InvalidMemoryLoad
 	{
+		throw new InvalidMemoryLoad("This card has no $D000 ROM");
 	}
 }

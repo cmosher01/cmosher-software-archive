@@ -4,6 +4,7 @@ import paddle.PaddlesInterface;
 import gui.UI;
 import chipset.cpu.CPU6502;
 import disk.DiskDriveSimple;
+import disk.DiskState;
 import util.Util;
 import video.Video;
 
@@ -19,7 +20,7 @@ public class Clock
 	volatile boolean shutdown;
 	private final CPU6502 cpu;
 	private final Video video;
-	private final DiskDriveSimple diskDrive;
+	private final DiskState diskState;
 	private final PaddlesInterface paddles;
 
 	private Thread clth;
@@ -28,11 +29,11 @@ public class Clock
 	private long times;
 	private final UI ui;
 
-	public Clock(final CPU6502 cpu, final Video video, final DiskDriveSimple diskDrive, final PaddlesInterface paddles, final UI ui)
+	public Clock(final CPU6502 cpu, final Video video, final DiskState diskState, final PaddlesInterface paddles, final UI ui)
 	{
 		this.cpu = cpu;
 		this.video = video;
-		this.diskDrive = diskDrive;
+		this.diskState = diskState;
 		this.paddles = paddles;
 		this.ui = ui;
 	}
@@ -76,7 +77,7 @@ public class Clock
 			 * Otherwise, just run a fast as possible (except for slowing
 			 * down while waiting for a key-press; see Keyboard.waitIfTooFast).
 			 */
-			if (!this.video.isText() && !this.diskDrive.isMotorOn() && !this.ui.isHyper())
+			if (!this.video.isText() && !this.diskState.isMotorOn() && !this.ui.isHyper())
 			{
 				/*
 				 * Check every 100 milliseconds to see how far

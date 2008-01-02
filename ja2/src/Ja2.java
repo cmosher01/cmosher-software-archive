@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -113,12 +114,12 @@ public final class Ja2 implements Closeable
 
 
 
-
     	final DiskBytes disk1 = new DiskBytes();
     	final DiskBytes disk2 = new DiskBytes();
     	final DiskDriveSimple drive = new DiskDriveSimple(new DiskBytes[] {disk1,disk2});
     	final StepperMotor arm = new StepperMotor();
     	final DiskState diskState = new DiskState(drive,arm);
+
 
 
     	final BufferedImage screenImage = new BufferedImage(Video.SIZE.width,Video.SIZE.height,BufferedImage.TYPE_INT_RGB);
@@ -136,51 +137,52 @@ public final class Ja2 implements Closeable
         	ui = new CLI(this);
     	}
 
-    	final KeypressQueue keypresses = new KeypressQueue(NOTIFY_ON_PUT);
+
+
+//    	RAM @ $0000 thru $BFFF
+    	final Memory ram = new Memory(0xC000);
+//    	ROM @ $D000 thru $FFFF
+    	final Memory rom = new Memory(0x10000-0xD000);
+
+
+
+    	final List<Card> cards = new ArrayList<Card>(8);
+    	try
+		{
+    		final Config cfg = new Config(this.config);
+			cfg.parseConfig(rom,cards,diskState,disk1,disk2,ui);
+		}
+		catch (final Exception e)
+		{
+			e.printStackTrace();
+			ui.showMessage(e.getMessage());
+		}
+
+
+
+		final KeypressQueue keypresses = new KeypressQueue(NOTIFY_ON_PUT);
 
     	final KeyboardInterface keyboard = new Keyboard(keypresses,ui);
-
-    	final Memory ram = new Memory(0xC000); // $0000 to $BFFF
-    	final Memory rom = new Memory(0x10000-0xD000); // $D000 to $FFFF
 
         final Video video = new Video(ui,ram,screenImage);
     	final PaddlesInterface paddles = new Paddles();
 
-    	final Card stdout = new StandardOut();
-    	stdout.loadRom(0,new BufferedInputStream(new FileInputStream(new File("c100.rom"))));
-    	final KeypressQueue stdinkeys = new KeypressQueue();
-    	final StandardInProducer stdinprod = new StandardInProducer(stdinkeys);
-    	final Card stdin = new StandardIn(ui,stdinkeys);
-    	stdin.loadRom(0,new BufferedInputStream(new FileInputStream(new File("c200.rom"))));
-    	final Card disk = new DiskInterface(diskState,ui);
-    	disk.loadRom(0,new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/disk2_16sector/disk2_A$C600_L$0100_16sector"))));
-//    	final FirmwareCard firmware = new FirmwareCard();
-//    	firmware.loadBankRom(0,new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/apple2plus/apple2plus_A$D000_L$2800_applesoft"))));
-//    	firmware.loadBankRom(0x2800,new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/apple2plus/apple2plus_A$F800_L$0800_monitor"))));
-    	final Card firmware = new FirmwareCard();
-    	firmware.loadBankRom(0x1000,new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/apple2/apple2_A$E000_L$1425_intbasic"))));
-    	firmware.loadBankRom(0x2425,new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/apple2/apple2_A$F425_L$03DB_other"))));
-    	firmware.loadBankRom(0x2800,new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/apple2/apple2_A$F800_L$0800_monitor"))));
-    	final Card language = new LanguageCard();
-    	final List<Card> cards = Arrays.<Card>asList(new Card[]
-		{
-	    	/* 0 */ language, /*firmware,*/ /*new EmptySlot(),*/
-	    	/* 1 */ stdout, /*new EmptySlot(),*/
-	    	/* 2 */ stdin, /*new EmptySlot(),*/
-	    	/* 3 */ new EmptySlot(),
-	    	/* 4 */ new EmptySlot(),
-	    	/* 5 */ firmware, /*new EmptySlot(),*/
-	    	/* 6 */ disk, /*new EmptySlot(),*/
-	    	/* 7 */ new EmptySlot()
-		});
     	final Slots slots = new Slots(cards);
     	final PaddleButtons pdlbtns = new PaddleButtons();
-        final AddressBus addressBus = new AddressBus(ram,rom,keyboard,video,paddles,pdlbtns,slots);
+
+
+
+    	final AddressBus addressBus = new AddressBus(ram,rom,keyboard,video,paddles,pdlbtns,slots);
+
 
 
     	final CPU6502 cpu = new CPU6502(addressBus);
 
-    	this.clock = new Clock(cpu,video,drive,paddles,ui);
+
+
+    	this.clock = new Clock(cpu,video,diskState,paddles,ui);
+
+
 
     	if (screen != null)
     	{
@@ -201,16 +203,6 @@ public final class Ja2 implements Closeable
 
 
 
-    	try
-		{
-    		final Config cfg = new Config(this.config);
-			cfg.parseConfig(rom,disk1,disk2);
-		}
-		catch (final Exception e)
-		{
-			e.printStackTrace();
-			ui.showMessage(e.getMessage());
-		}
 
 
 
