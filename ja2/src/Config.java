@@ -3,11 +3,9 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -256,42 +254,4 @@ class Config
 
 		cards.set(slot,card);
 	}
-
-	private List<Card> getCards(final DiskState diskState, final UI ui) throws InvalidMemoryLoad, FileNotFoundException
-	{
-		final Card stdout = new StandardOut();
-    	stdout.loadRom(0,new BufferedInputStream(new FileInputStream(new File("c100.rom"))));
-
-    	final KeypressQueue stdinkeys = new KeypressQueue();
-    	final StandardInProducer stdinprod = new StandardInProducer(stdinkeys);
-    	final Card stdin = new StandardIn(ui,stdinkeys);
-    	stdin.loadRom(0,new BufferedInputStream(new FileInputStream(new File("c200.rom"))));
-
-    	final Card disk = new DiskInterface(diskState,ui);
-    	disk.loadRom(0,new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/disk2_16sector/disk2_A$C600_L$0100_16sector"))));
-
-    	//    	final FirmwareCard firmware = new FirmwareCard();
-//    	firmware.loadBankRom(0,new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/apple2plus/apple2plus_A$D000_L$2800_applesoft"))));
-//    	firmware.loadBankRom(0x2800,new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/apple2plus/apple2plus_A$F800_L$0800_monitor"))));
-    	final Card firmware = new FirmwareCard();
-    	firmware.loadBankRom(0x1000,new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/apple2/apple2_A$E000_L$1425_intbasic"))));
-    	firmware.loadBankRom(0x2425,new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/apple2/apple2_A$F425_L$03DB_other"))));
-    	firmware.loadBankRom(0x2800,new BufferedInputStream(new FileInputStream(new File("../apple2src/build/firmware/apple2/apple2_A$F800_L$0800_monitor"))));
-
-    	final Card language = new LanguageCard();
-
-    	final List<Card> cards = Arrays.<Card>asList(new Card[]
-		{
-	    	/* 0 */ language, /*firmware,*/ /*new EmptySlot(),*/
-	    	/* 1 */ stdout, /*new EmptySlot(),*/
-	    	/* 2 */ stdin, /*new EmptySlot(),*/
-	    	/* 3 */ new EmptySlot(),
-	    	/* 4 */ new EmptySlot(),
-	    	/* 5 */ firmware, /*new EmptySlot(),*/
-	    	/* 6 */ disk, /*new EmptySlot(),*/
-	    	/* 7 */ new EmptySlot()
-		});
-		return cards;
-	}
-
 }
