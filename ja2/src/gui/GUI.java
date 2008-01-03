@@ -67,7 +67,7 @@ public class GUI implements UI
 				{
 					public void run()
 					{
-						frame.dispose();
+						GUI.this.frame.dispose();
 					}
 				});
 				th.setName("Ja2-GUI-dispose frame");

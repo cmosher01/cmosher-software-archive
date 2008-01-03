@@ -42,7 +42,7 @@ public abstract class Card
 		}
 		else if (this.activeSeventhRom)
 		{
-			rb[0] = seventhRom.read(address);
+			rb[0] = this.seventhRom.read(address);
 		}
 	}
 

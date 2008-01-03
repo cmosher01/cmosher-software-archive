@@ -25,7 +25,7 @@ public class Memory
 	 */
 	public Memory(final int bytes)
 	{
-		ram = new byte[bytes];
+		this.ram = new byte[bytes];
 		clear();
 	}
 
