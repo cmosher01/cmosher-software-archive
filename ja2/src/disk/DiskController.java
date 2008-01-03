@@ -1,13 +1,12 @@
 package disk;
 
 import chipset.Card;
-import chipset.Memory;
 import gui.UI;
 
 /*
  * Created on Sep 12, 2007
  */
-public class DiskInterface extends Card
+public class DiskController extends Card
 {
 	private final DiskState state;
 	private final UI ui;
@@ -17,7 +16,7 @@ public class DiskInterface extends Card
 	 * @param manager 
 	 * @param motor
 	 */
-	public DiskInterface(final DiskState state, final UI ui)
+	public DiskController(final DiskState state, final UI ui)
 	{
 		this.state = state;
 		this.ui = ui;
@@ -75,6 +74,7 @@ public class DiskInterface extends Card
 		return ret;
 	}
 
+	@Override
 	public void reset()
 	{
 		this.state.disk.setMotorOn(false);

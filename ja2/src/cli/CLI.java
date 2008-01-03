@@ -59,7 +59,7 @@ public class CLI implements UI
 		// don't need to do anything
 	}
 
-	public void verifyLoseUnsaveChanges() throws UserCancelled
+	public void verifyLoseUnsaveChanges()
 	{
 		// OK to discard any unsaved disk changes
 	}

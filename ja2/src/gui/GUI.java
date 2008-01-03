@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.dnd.DropTarget;
@@ -12,7 +11,6 @@ import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -20,7 +18,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
-import javax.swing.plaf.FontUIResource;
 import disk.DiskBytes;
 import disk.DiskState;
 

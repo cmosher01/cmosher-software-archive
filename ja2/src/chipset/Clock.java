@@ -3,7 +3,6 @@ package chipset;
 import paddle.PaddlesInterface;
 import gui.UI;
 import chipset.cpu.CPU6502;
-import disk.DiskDriveSimple;
 import disk.DiskState;
 import util.Util;
 import video.Video;

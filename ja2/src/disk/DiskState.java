@@ -5,7 +5,7 @@ package disk;
 
 public class DiskState
 {
-	/* accessed only by DiskInterface */
+	/* accessed only by DiskController */
 	final DiskDriveSimple disk;
 	final StepperMotor arm;
 	boolean write;

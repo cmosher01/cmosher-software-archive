@@ -20,7 +20,7 @@ import chipset.EmptySlot;
 import chipset.InvalidMemoryLoad;
 import chipset.Memory;
 import disk.DiskBytes;
-import disk.DiskInterface;
+import disk.DiskController;
 import disk.DiskState;
 import disk.InvalidDiskImage;
 
@@ -69,7 +69,7 @@ class Config
 		int nStdIn = 0;
 		for (Card card : cards)
 		{
-			if (card instanceof DiskInterface)
+			if (card instanceof DiskController)
 			{
 				++nDisk;
 			}
@@ -212,7 +212,7 @@ class Config
 			throw new IllegalArgumentException("Error in config file: invalid slot number: "+slot);
 		}
 		final Card card = cards.get(slot);
-		if (!(card instanceof DiskInterface))
+		if (!(card instanceof DiskController))
 		{
 			throw new IllegalArgumentException("Error in config file: the card in slot "+slot+" is not a disk card");
 		}
@@ -235,7 +235,7 @@ class Config
 		}
 		else if (cardType.equalsIgnoreCase("disk"))
 		{
-	    	card = new DiskInterface(diskState,ui);
+	    	card = new DiskController(diskState,ui);
 		}
 		else if (cardType.equalsIgnoreCase("stdout"))
 		{
