@@ -40,8 +40,6 @@ public class GUI implements UI
 
 		setDecorated();
 
-		setDefaultFont();
-
 		// Create the window.
         this.frame = new JFrame();
 
@@ -141,26 +139,6 @@ public class GUI implements UI
         JFrame.setDefaultLookAndFeelDecorated(true);
         JDialog.setDefaultLookAndFeelDecorated(true);
     }
-
-    private static void setDefaultFont()
-	{
-		/*
-		 * Use Java's platform independent font, Lucida Sans, plain, at 12 points,
-		 * as the default for every Swing component.
-		 */
-
-		final FontUIResource font = new FontUIResource("Lucida Sans",Font.PLAIN,12);
-
-		final Enumeration<Object> iterKeys = UIManager.getDefaults().keys();
-    	while (iterKeys.hasMoreElements())
-		{
-    		final Object key = iterKeys.nextElement();
-			if (UIManager.get(key) instanceof FontUIResource)
-			{
-				UIManager.put(key,font);
-			}
-		}
-	}
 
     private Image getFrameIcon()
     {

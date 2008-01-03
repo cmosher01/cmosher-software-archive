@@ -34,7 +34,6 @@ class ContentPane extends JPanel
 	private void setUp(final DiskBytes drive1, final DiskBytes drive2, final GUI gui)
 	{
 		setLayout(null);
-		//setBackground(Color.BLACK);
 
 		setBorder(BorderFactory.createLoweredBevelBorder());
 
@@ -80,48 +79,48 @@ class ContentPane extends JPanel
 
 	public void updateDrives(boolean force)
 	{
-		final DiskDrivePanel drive = getDrive(this.disk.getCurrentDriveNumber());
-		if (drive == null)
+		final DiskDrivePanel drivePanelCurrent = getDrive(this.disk.getCurrentDriveNumber());
+		if (drivePanelCurrent == null)
 		{
 			return;
 		}
 
-		drive.setCurrent(true);
-		drive.setModified(this.disk.isModified());
-		drive.setTrack(this.disk.getTrack());
-		drive.setWriteProtected(this.disk.isWriteProtected());
+		drivePanelCurrent.setCurrent(true);
+		drivePanelCurrent.setModified(this.disk.isModified());
+		drivePanelCurrent.setTrack(this.disk.getTrack());
+		drivePanelCurrent.setWriteProtected(this.disk.isWriteProtected());
 		if (this.disk.isMotorOn())
 		{
 			if (this.disk.isWriting())
 			{
-				drive.setWriting(true);
-				drive.setReading(false);
+				drivePanelCurrent.setWriting(true);
+				drivePanelCurrent.setReading(false);
 			}
 			else
 			{
-				drive.setWriting(false);
-				drive.setReading(true);
+				drivePanelCurrent.setWriting(false);
+				drivePanelCurrent.setReading(true);
 			}
 		}
 		else
 		{
-			drive.setWriting(false);
-			drive.setReading(false);
+			drivePanelCurrent.setWriting(false);
+			drivePanelCurrent.setReading(false);
 		}
-		drive.updateIf(force);
+		drivePanelCurrent.updateIf(force);
 
-		final DiskDrivePanel driveOther = getDrive(this.disk.getOtherDriveNumber());
-		if (driveOther == null)
+		final DiskDrivePanel drivePanelOther = getDrive(this.disk.getOtherDriveNumber());
+		if (drivePanelOther == null)
 		{
 			return;
 		}
-		driveOther.setCurrent(false);
-		driveOther.setWriting(false);
-		driveOther.setReading(false);
+		drivePanelOther.setCurrent(false);
+		drivePanelOther.setWriting(false);
+		drivePanelOther.setReading(false);
 
-		driveOther.setModified(this.disk.isModifiedOther());
+		drivePanelOther.setModified(this.disk.isModifiedOther());
 
-		driveOther.updateIf(force);
+		drivePanelOther.updateIf(force);
 	}
 
 	public boolean hasUnsavedChanges()
