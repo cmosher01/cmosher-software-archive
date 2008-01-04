@@ -20,6 +20,7 @@ import chipset.Card;
 import chipset.EmptySlot;
 import chipset.InvalidMemoryLoad;
 import chipset.Memory;
+import chipset.Slots;
 import disk.DiskBytes;
 import disk.DiskController;
 import disk.DiskDriveSimple;
@@ -30,9 +31,9 @@ import disk.StepperMotor;
 /*
  * Created on Dec 1, 2007
  */
-class Config
+public class Config
 {
-	private static final int SLOTS = 8;
+	public static final int SLOTS = 8;
 
 	private String filename;
 
@@ -41,10 +42,9 @@ class Config
 		this.filename = filename;
 	}
 
-	public void parseConfig(final Memory memory, final List<Card> cards, final UI ui)
+	public void parseConfig(final Memory memory, final Slots slots, final UI ui)
 		throws IOException, InvalidMemoryLoad, InvalidDiskImage
 	{
-		cards.addAll(Collections.<Card>nCopies(SLOTS,new EmptySlot()));
 
 		final BufferedReader cfg = new BufferedReader(new InputStreamReader(new FileInputStream(new File(this.filename))));
 
@@ -57,26 +57,21 @@ class Config
     		}
     		line = line.trim();
 
-    		parseLine(line,memory,cards,ui);
+    		parseLine(line,memory,slots,ui);
     	}
 
     	cfg.close();
 
-    	verifyUniqueCards(cards);
+    	verifyUniqueCards(slots);
 	}
 
-	private void verifyUniqueCards(final List<Card> cards)
+	private void verifyUniqueCards(final Slots cards)
 	{
-		int nDisk = 0;
 		int nStdOut = 0;
 		int nStdIn = 0;
 		for (Card card : cards)
 		{
-			if (card instanceof DiskController)
-			{
-				++nDisk;
-			}
-			else if (card instanceof StandardOut)
+			if (card instanceof StandardOut)
 			{
 				++nStdOut;
 			}
@@ -84,10 +79,6 @@ class Config
 			{
 				++nStdIn;
 			}
-		}
-		if (nDisk > 1)
-		{
-			throw new IllegalArgumentException("Error in config file: only one disk card is supported.");
 		}
 		if (nStdOut > 1)
 		{
@@ -99,7 +90,7 @@ class Config
 		}
 	}
 
-	private void parseLine(final String line, final Memory memory, final List<Card> cards, final UI ui)
+	private void parseLine(final String line, final Memory memory, final Slots slots, final UI ui)
 		throws InvalidMemoryLoad, IOException, InvalidDiskImage
 	{
 		if (line.isEmpty())
@@ -119,7 +110,7 @@ class Config
 			if (!tok.hasMoreTokens()) throw new IllegalArgumentException("Error in config file: "+line);
 			final String sCardType = tok.nextToken();
 
-			insertCard(sCardType,slot,cards,ui);
+			insertCard(sCardType,slot,slots,ui);
 		}
 		else if (cmd.equalsIgnoreCase("import"))
 		{
@@ -162,7 +153,7 @@ class Config
 				{
 					throw new IllegalArgumentException("Error in config file: invalid slot number: "+slot);
 				}
-				final Card card = cards.get(slot);
+				final Card card = slots.get(slot);
 				if (romtype.equalsIgnoreCase("rom"))
 			    	card.loadRom(base,rom);
 				else if (romtype.equalsIgnoreCase("rom7"))
@@ -188,7 +179,7 @@ class Config
 			final String nib = tok.nextToken("\0").trim(); // rest of line
 			final File fnib = new File(nib);
 
-			verifyDiskCard(cards,slot);
+			verifyDiskCard(slots,slot);
 			if (drive == 1)
 			{
 				disk1.load(fnib);
@@ -208,7 +199,7 @@ class Config
 		}
 	}
 
-	private void verifyDiskCard(List<Card> cards, int slot)
+	private void verifyDiskCard(Slots cards, int slot)
 	{
 		if (slot < 0 || SLOTS <= slot)
 		{
@@ -221,7 +212,7 @@ class Config
 		}
 	}
 
-	private void insertCard(final String cardType, final int slot, final List<Card> cards, final UI ui)
+	private void insertCard(final String cardType, final int slot, final Slots slots, final UI ui)
 	{
 		if (slot < 0 || SLOTS <= slot)
 		{
@@ -260,6 +251,6 @@ class Config
 			throw new IllegalArgumentException("Error in config file: unknown card type: "+cardType);
 		}
 
-		cards.set(slot,card);
+		slots.set(slot,card);
 	}
 }

@@ -110,7 +110,7 @@ public final class Ja2 implements Closeable
     	if (this.gui)
     	{
 	    	screen = new Screen();
-	    	ui = new GUI(this,screen,cards,screenImage);
+	    	ui = new GUI(this,screen,slots,screenImage);
     	}
     	else
     	{
@@ -130,7 +130,7 @@ public final class Ja2 implements Closeable
     	try
 		{
     		final Config cfg = new Config(this.config);
-			cfg.parseConfig(rom,cards,ui);
+			cfg.parseConfig(rom,slots,ui);
 		}
 		catch (final Exception e)
 		{
@@ -159,7 +159,7 @@ public final class Ja2 implements Closeable
 
 
 
-    	final Throttle throttle = new Throttle(video,cards,ui);
+    	final Throttle throttle = new Throttle(video,slots,ui);
 
     	this.clock = new Clock(cpu,video,paddles,throttle);
 

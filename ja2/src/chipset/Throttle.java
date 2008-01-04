@@ -3,27 +3,29 @@
  */
 package chipset;
 
-import java.util.List;
+
+
 import gui.UI;
-import disk.DiskState;
 import util.Util;
 import video.Video;
+
+
 
 public class Throttle
 {
 	private static final int CHECK_EVERY = Util.divideRound(Clock.CPU_HZ,10);
 
 	private final Video video;
-	private final List<Card> cards;
+	private final Slots slots;
 	private final UI ui;
 
 	private long msPrev = System.currentTimeMillis();
 	private long times;
 
-	public Throttle(final Video video, final List<Card> cards, final UI ui)
+	public Throttle(final Video video, final Slots slots, final UI ui)
 	{
 		this.video = video;
-		this.cards = cards;
+		this.slots = slots;
 		this.ui = ui;
 	}
 
@@ -36,7 +38,7 @@ public class Throttle
 		 * Otherwise, just run a fast as possible (except for slowing
 		 * down while waiting for a key-press; see Keyboard.waitIfTooFast).
 		 */
-		if (!this.video.isText() && !this.cards.isAnyDiskDriveMotorOn() && !this.ui.isHyper())
+		if (!this.video.isText() && !this.slots.isAnyDiskDriveMotorOn() && !this.ui.isHyper())
 		{
 			/*
 			 * Check every 100 milliseconds to see how far

@@ -5,26 +5,28 @@ package chipset;
 
 import config.Config;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
-public class Slots
+public class Slots implements Iterable<Card>
 {
-	private final List<Card> slots;
+	private final List<Card> cards = new ArrayList<Card>(Config.SLOTS);
+
 
 	public Slots()
 	{
-		this.slots = new ArrayList<Card>(Config.SLOTS);
+		cards.addAll(Collections.<Card>nCopies(Config.SLOTS,new EmptySlot()));
 	}
 
 	public byte io(final int islot, final int iswch, final byte b, boolean writing)
 	{
-		return this.slots.get(islot).io(iswch,b,writing);
+		return this.cards.get(islot).io(iswch,b,writing);
 	}
 
 	public void reset()
 	{
-		for (final Card card: this.slots)
+		for (final Card card: this.cards)
 		{
 			card.reset();
 		}
@@ -32,7 +34,7 @@ public class Slots
 
 	public byte readRom(final int islot, final int addr)
 	{
-		return this.slots.get(islot).readRom(addr);
+		return this.cards.get(islot).readRom(addr);
 	}
 
 	private final byte[] rb = new byte[1];
@@ -40,7 +42,7 @@ public class Slots
 	{
 		this.rb[0] = -1;
 
-		for (final Card card : this.slots)
+		for (final Card card : this.cards)
 		{
 			card.readSeventhRom(addr,this.rb);
 		}
@@ -52,7 +54,7 @@ public class Slots
 	{
 		this.rb[0] = data;
 
-		for (final Card card : this.slots)
+		for (final Card card : this.cards)
 		{
 			card.ioBankRom(addr,this.rb,write);
 		}
@@ -62,7 +64,7 @@ public class Slots
 
 	public boolean inhibitMotherboardRom()
 	{
-		for (final Card card: this.slots)
+		for (final Card card: this.cards)
 		{
 			if (card.inhibitMotherboardRom())
 			{
@@ -70,5 +72,24 @@ public class Slots
 			}
 		}
 		return false;
+	}
+
+	public void set(final int slot, final Card card)
+	{
+		this.cards.set(slot,card);
+	}
+
+	public Card get(final int slot)
+	{
+		return this.cards.get(slot);
+	}
+
+	public Iterator<Card> iterator()
+	{
+		return this.cards.iterator();
+	}
+
+	public boolean isAnyDiskDriveMotorOn()
+	{
 	}
 }

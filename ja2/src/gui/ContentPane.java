@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import chipset.Card;
+import chipset.Slots;
 import disk.DiskBytes;
 import disk.DiskState;
 
@@ -18,15 +19,15 @@ import disk.DiskState;
 class ContentPane extends JPanel
 {
 	private final Screen screen;
-	private final List<Card> cards;
+	private final Slots slots;
 	private DiskDrivePanel diskDrive1;
 	private DiskDrivePanel diskDrive2;
 	
 
-	public ContentPane(final Screen screen, final List<Card> cards, final GUI gui)
+	public ContentPane(final Screen screen, final Slots slots, final GUI gui)
 	{
 		this.screen = screen;
-		this.cards = cards;
+		this.slots = slots;
 		setOpaque(true);
 		addNotify();
 

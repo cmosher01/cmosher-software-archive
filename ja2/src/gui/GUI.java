@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import chipset.Card;
+import chipset.Slots;
 import disk.DiskBytes;
 import disk.DiskState;
 
@@ -32,7 +33,7 @@ public class GUI implements UI
 
 	private final AtomicBoolean hyper = new AtomicBoolean();
 
-	public GUI(final Closeable app, final Screen screen, final List<Card> cards, final Image videoImage)
+	public GUI(final Closeable app, final Screen screen, final Slots slots, final Image videoImage)
 	{
 		this.videoImage = videoImage;
 
@@ -95,7 +96,7 @@ public class GUI implements UI
 //        this.frame.setJMenuBar(factoryMenuBar.createMenuBar());
 
         // Create and set up the content pane.
-        this.contentPane = new ContentPane(screen,cards,this);
+        this.contentPane = new ContentPane(screen,slots,this);
         this.frame.setContentPane(this.contentPane);
 
         new DropTarget(this.frame,this.contentPane.getFirstDrivePanelDropListener());
