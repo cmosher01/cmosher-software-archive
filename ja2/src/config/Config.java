@@ -1,3 +1,4 @@
+package config;
 import gui.UI;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;

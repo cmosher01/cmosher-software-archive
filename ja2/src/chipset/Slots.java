@@ -3,6 +3,7 @@
  */
 package chipset;
 
+import config.Config;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -11,9 +12,9 @@ public class Slots
 {
 	private final List<Card> slots;
 
-	public Slots(final Collection<Card> cards)
+	public Slots()
 	{
-		this.slots = new ArrayList<Card>(cards);
+		this.slots = new ArrayList<Card>(Config.SLOTS);
 	}
 
 	public byte io(final int islot, final int iswch, final byte b, boolean writing)

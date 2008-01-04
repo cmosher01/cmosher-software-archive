@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 import javax.swing.SwingUtilities;
+import config.Config;
 import keyboard.ClipboardProducer;
 import keyboard.FnKeyHandler;
 import keyboard.HyperKeyHandler;
@@ -102,7 +103,7 @@ public final class Ja2 implements Closeable
 
     	final BufferedImage screenImage = new BufferedImage(Video.SIZE.width,Video.SIZE.height,BufferedImage.TYPE_INT_RGB);
 
-    	final List<Card> cards = new ArrayList<Card>(8);
+    	final Slots slots = new Slots();
 
     	final Screen screen;
         final UI ui;
@@ -146,7 +147,6 @@ public final class Ja2 implements Closeable
         final Video video = new Video(ui,ram,screenImage);
     	final PaddlesInterface paddles = new Paddles();
 
-    	final Slots slots = new Slots(cards);
     	final PaddleButtons pdlbtns = new PaddleButtons();
 
 
