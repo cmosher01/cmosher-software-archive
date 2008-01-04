@@ -27,11 +27,11 @@ public class DiskDriveControllerPanel extends JPanel
 		this.diskDrive1 = new DiskDrivePanel(this.controller.getDiskBytes(0),this.gui);
 		add(this.diskDrive1);
 		Dimension szDisk = this.diskDrive1.getPreferredSize();
-		this.diskDrive1.setBounds(0,2,(int)szDisk.getWidth(),(int)szDisk.getHeight());
+		this.diskDrive1.setBounds(0,0,(int)szDisk.getWidth(),(int)szDisk.getHeight());
 
 		this.diskDrive2 = new DiskDrivePanel(this.controller.getDiskBytes(1),this.gui);
 		add(this.diskDrive2);
-		this.diskDrive2.setBounds((int)szDisk.getWidth()+3,2,(int)szDisk.getWidth(),(int)szDisk.getHeight());
+		this.diskDrive2.setBounds((int)szDisk.getWidth()+3,0,(int)szDisk.getWidth(),(int)szDisk.getHeight());
 	}
 
 	public void updateDrives(boolean force)
