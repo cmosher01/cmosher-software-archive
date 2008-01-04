@@ -21,8 +21,10 @@ import chipset.InvalidMemoryLoad;
 import chipset.Memory;
 import disk.DiskBytes;
 import disk.DiskController;
+import disk.DiskDriveSimple;
 import disk.DiskState;
 import disk.InvalidDiskImage;
+import disk.StepperMotor;
 
 /*
  * Created on Dec 1, 2007
@@ -38,7 +40,7 @@ class Config
 		this.filename = filename;
 	}
 
-	public void parseConfig(final Memory memory, final List<Card> cards, final DiskState diskState, final DiskBytes disk1, final DiskBytes disk2, final UI ui)
+	public void parseConfig(final Memory memory, final List<Card> cards, final UI ui)
 		throws IOException, InvalidMemoryLoad, InvalidDiskImage
 	{
 		cards.addAll(Collections.<Card>nCopies(SLOTS,new EmptySlot()));
@@ -54,7 +56,7 @@ class Config
     		}
     		line = line.trim();
 
-    		parseLine(line,memory,cards,diskState,disk1,disk2,ui);
+    		parseLine(line,memory,cards,ui);
     	}
 
     	cfg.close();
@@ -96,7 +98,7 @@ class Config
 		}
 	}
 
-	private void parseLine(final String line, final Memory memory, final List<Card> cards, final DiskState diskState, final DiskBytes disk1, final DiskBytes disk2, final UI ui)
+	private void parseLine(final String line, final Memory memory, final List<Card> cards, final UI ui)
 		throws InvalidMemoryLoad, IOException, InvalidDiskImage
 	{
 		if (line.isEmpty())
@@ -116,7 +118,7 @@ class Config
 			if (!tok.hasMoreTokens()) throw new IllegalArgumentException("Error in config file: "+line);
 			final String sCardType = tok.nextToken();
 
-			insertCard(sCardType,slot,cards,diskState,ui);
+			insertCard(sCardType,slot,cards,ui);
 		}
 		else if (cmd.equalsIgnoreCase("import"))
 		{
@@ -218,7 +220,7 @@ class Config
 		}
 	}
 
-	private void insertCard(final String cardType, final int slot, final List<Card> cards, final DiskState diskState, final UI ui)
+	private void insertCard(final String cardType, final int slot, final List<Card> cards, final UI ui)
 	{
 		if (slot < 0 || SLOTS <= slot)
 		{
@@ -235,6 +237,11 @@ class Config
 		}
 		else if (cardType.equalsIgnoreCase("disk"))
 		{
+	    	final DiskBytes disk1 = new DiskBytes();
+	    	final DiskBytes disk2 = new DiskBytes();
+	    	final DiskDriveSimple drive = new DiskDriveSimple(new DiskBytes[] {disk1,disk2});
+	    	final StepperMotor arm = new StepperMotor();
+	    	final DiskState diskState = new DiskState(drive,arm);
 	    	card = new DiskController(diskState,ui);
 		}
 		else if (cardType.equalsIgnoreCase("stdout"))

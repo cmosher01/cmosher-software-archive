@@ -5,8 +5,10 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.dnd.DropTargetListener;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import chipset.Card;
 import disk.DiskBytes;
 import disk.DiskState;
 
@@ -16,22 +18,22 @@ import disk.DiskState;
 class ContentPane extends JPanel
 {
 	private final Screen screen;
-	private final DiskState disk;
+	private final List<Card> cards;
 	private DiskDrivePanel diskDrive1;
 	private DiskDrivePanel diskDrive2;
 	
 
-	public ContentPane(final Screen screen, final DiskBytes drive1, final DiskBytes drive2, final GUI gui, final DiskState disk)
+	public ContentPane(final Screen screen, final List<Card> cards, final GUI gui)
 	{
 		this.screen = screen;
-		this.disk = disk;
+		this.cards = cards;
 		setOpaque(true);
 		addNotify();
 
-		setUp(drive1,drive2,gui);
+		setUp(gui);
 	}
 
-	private void setUp(final DiskBytes drive1, final DiskBytes drive2, final GUI gui)
+	private void setUp(final GUI gui)
 	{
 		setLayout(null);
 

@@ -1,11 +1,11 @@
 package chipset;
 
 import paddle.PaddlesInterface;
-import gui.UI;
 import chipset.cpu.CPU6502;
-import disk.DiskState;
 import util.Util;
 import video.Video;
+
+
 
 /*
  * Created on Aug 1, 2007
@@ -13,49 +13,52 @@ import video.Video;
 public class Clock
 {
 	public static final int CRYSTAL_HZ = Util.divideRoundUp(315000000,22);
-	private static final int CPU_CYCLES_PER_CRYSTAL_CYCLES = 14;
+	private static final int CPU_CYCLES_PER_CRYSTAL_CYCLES = 14; // TODO account for the elongated CPU cycle
 	public static final int CPU_HZ = Util.divideRoundUp(CRYSTAL_HZ,CPU_CYCLES_PER_CRYSTAL_CYCLES);
 
-	volatile boolean shutdown;
 	private final CPU6502 cpu;
 	private final Video video;
-	private final DiskState diskState;
 	private final PaddlesInterface paddles;
 
-	private Thread clth;
+	private volatile boolean shutdown;
+	private Thread thread;
 
-	private long msPrev = System.currentTimeMillis();
-	private long times;
-	private final UI ui;
+	private final Throttle throttle;
 
-	public Clock(final CPU6502 cpu, final Video video, final DiskState diskState, final PaddlesInterface paddles, final UI ui)
+
+
+	public Clock(final CPU6502 cpu, final Video video, final PaddlesInterface paddles, final Throttle throttle)
 	{
 		this.cpu = cpu;
 		this.video = video;
-		this.diskState = diskState;
 		this.paddles = paddles;
-		this.ui = ui;
+		this.throttle = throttle;
 	}
 
 	public void run()
 	{
-		if (this.clth == null)
+		if (this.thread == null)
 		{
-			this.clth = new Thread(new Runnable()
+			this.thread = new Thread(new Runnable()
 			{
 				public void run()
 				{
-			    	runth();
+					try
+					{
+				    	runth();
+					}
+					catch (final Throwable e)
+					{
+						e.printStackTrace();
+					}
 				}
 			});
-			this.clth.setName("Apple-Clock");
-			this.clth.start();
+			this.thread.setName("Apple-Clock");
+			this.thread.start();
 		}
 	}
 
-	private static final int CHECK_EVERY = Util.divideRound(CPU_HZ,10);
-
-	void runth()
+	private void runth()
 	{
 		while (!this.shutdown)
 		{
@@ -69,57 +72,24 @@ public class Clock
 			this.video.tick();
 			this.paddles.tick();
 
-			/*
-			 * If we are displaying graphics and the disk drive is not on,
-			 * then try to slow down to real Apple ][ speed (1022727 Hz).
-			 * (The theory is that this will allow games to run at real speed.)
-			 * Otherwise, just run a fast as possible (except for slowing
-			 * down while waiting for a key-press; see Keyboard.waitIfTooFast).
-			 */
-			if (!this.video.isText() && !this.diskState.isMotorOn() && !this.ui.isHyper())
-			{
-				/*
-				 * Check every 100 milliseconds to see how far
-				 * ahead we are, and sleep by the difference.
-				 */
-				++this.times;
-				if (this.times >= CHECK_EVERY)
-				{
-					this.times = 0;
-					final long msNow = System.currentTimeMillis();
-					final long msActual = msNow-this.msPrev;
-					this.msPrev = msNow;
-					final long msDelta = 100-msActual;
-					if (msDelta >= 2)
-					{
-						try
-						{
-							Thread.sleep(msDelta);
-						}
-						catch (InterruptedException e)
-						{
-							this.shutdown = true;
-						}
-					}
-				}
-			}
+			this.throttle.throttle();
 		}
 	}
 
 	public void shutdown()
 	{
 		this.shutdown = true;
-		if (this.clth != null)
+		if (this.thread != null)
 		{
 			try
 			{
-				this.clth.join();
+				this.thread.join();
 			}
 			catch (InterruptedException e)
 			{
 				e.printStackTrace();
 			}
-			this.clth = null;
+			this.thread = null;
 		}
 	}
 }

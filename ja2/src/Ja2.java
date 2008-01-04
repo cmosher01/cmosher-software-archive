@@ -26,6 +26,7 @@ import chipset.Card;
 import chipset.Clock;
 import chipset.Memory;
 import chipset.Slots;
+import chipset.Throttle;
 import chipset.cpu.CPU6502;
 import cli.CLI;
 import disk.DiskBytes;
@@ -97,22 +98,18 @@ public final class Ja2 implements Closeable
 
 
 
-    	final DiskBytes disk1 = new DiskBytes();
-    	final DiskBytes disk2 = new DiskBytes();
-    	final DiskDriveSimple drive = new DiskDriveSimple(new DiskBytes[] {disk1,disk2});
-    	final StepperMotor arm = new StepperMotor();
-    	final DiskState diskState = new DiskState(drive,arm);
-
 
 
     	final BufferedImage screenImage = new BufferedImage(Video.SIZE.width,Video.SIZE.height,BufferedImage.TYPE_INT_RGB);
+
+    	final List<Card> cards = new ArrayList<Card>(8);
 
     	final Screen screen;
         final UI ui;
     	if (this.gui)
     	{
 	    	screen = new Screen();
-	    	ui = new GUI(this,screen,disk1,disk2,diskState,screenImage);
+	    	ui = new GUI(this,screen,cards,screenImage);
     	}
     	else
     	{
@@ -129,11 +126,10 @@ public final class Ja2 implements Closeable
 
 
 
-    	final List<Card> cards = new ArrayList<Card>(8);
     	try
 		{
     		final Config cfg = new Config(this.config);
-			cfg.parseConfig(rom,cards,diskState,disk1,disk2,ui);
+			cfg.parseConfig(rom,cards,ui);
 		}
 		catch (final Exception e)
 		{
@@ -163,7 +159,9 @@ public final class Ja2 implements Closeable
 
 
 
-    	this.clock = new Clock(cpu,video,diskState,paddles,ui);
+    	final Throttle throttle = new Throttle(video,cards,ui);
+
+    	this.clock = new Clock(cpu,video,paddles,throttle);
 
 
 

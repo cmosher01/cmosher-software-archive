@@ -26,7 +26,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import org.omg.CORBA.UserException;
 import util.HexUtil;
 import disk.DiskBytes;
 

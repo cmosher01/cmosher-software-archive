@@ -6,11 +6,13 @@ import java.awt.Toolkit;
 import java.awt.dnd.DropTarget;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.awt.image.MemoryImageSource;
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -18,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
+import chipset.Card;
 import disk.DiskBytes;
 import disk.DiskState;
 
@@ -29,7 +32,7 @@ public class GUI implements UI
 
 	private final AtomicBoolean hyper = new AtomicBoolean();
 
-	public GUI(final Closeable app, final Screen screen, final DiskBytes drive1, final DiskBytes drive2, final DiskState diskState, final Image videoImage)
+	public GUI(final Closeable app, final Screen screen, final List<Card> cards, final Image videoImage)
 	{
 		this.videoImage = videoImage;
 
@@ -92,7 +95,7 @@ public class GUI implements UI
 //        this.frame.setJMenuBar(factoryMenuBar.createMenuBar());
 
         // Create and set up the content pane.
-        this.contentPane = new ContentPane(screen,drive1,drive2,this,diskState);
+        this.contentPane = new ContentPane(screen,cards,this);
         this.frame.setContentPane(this.contentPane);
 
         new DropTarget(this.frame,this.contentPane.getFirstDrivePanelDropListener());
