@@ -4,11 +4,13 @@
 package gui;
 
 import gui.buttons.DiskDrivePanel;
-import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.dnd.DropTargetListener;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import disk.DiskController;
 
-public class DiskDriveControllerPanel extends JPanel
+public final class DiskDriveControllerPanel extends JPanel
 {
 	final DiskController controller;
 	final GUI gui;
@@ -20,18 +22,28 @@ public class DiskDriveControllerPanel extends JPanel
 	{
 		this.controller = controller;
 		this.gui = gui;
+
+		setOpaque(true);
+		addNotify();
+		setFocusable(false);
+
+		setUp();
 	}
 
 	private void setUp()
 	{
-		this.diskDrive1 = new DiskDrivePanel(this.controller.getDiskBytes(0),this.gui);
-		add(this.diskDrive1);
-		Dimension szDisk = this.diskDrive1.getPreferredSize();
-		this.diskDrive1.setBounds(0,0,(int)szDisk.getWidth(),(int)szDisk.getHeight());
+		setLayout(new FlowLayout());
 
-		this.diskDrive2 = new DiskDrivePanel(this.controller.getDiskBytes(1),this.gui);
+		this.diskDrive1 = new DiskDrivePanel(this,this.controller.getDiskBytes(0),this.gui);
+		add(this.diskDrive1);
+
+		this.diskDrive2 = new DiskDrivePanel(this,this.controller.getDiskBytes(1),this.gui);
 		add(this.diskDrive2);
-		this.diskDrive2.setBounds((int)szDisk.getWidth()+3,0,(int)szDisk.getWidth(),(int)szDisk.getHeight());
+	}
+
+	public void updateDrives()
+	{
+		updateDrives(false);
 	}
 
 	public void updateDrives(boolean force)
@@ -91,5 +103,10 @@ public class DiskDriveControllerPanel extends JPanel
 			return this.diskDrive2;
 		}
 		throw new IllegalStateException();
+	}
+
+	public DropTargetListener getDropListener()
+	{
+		return this.diskDrive1.getDropListener();
 	}
 }

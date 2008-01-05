@@ -23,4 +23,13 @@ public class StandardOut extends Card
 
 		return data;
 	}
+
+	/**
+	 * @return
+	 */
+	@Override
+	public String getTypeName()
+	{
+		return "PR#1 writes to standard-out";
+	}
 }

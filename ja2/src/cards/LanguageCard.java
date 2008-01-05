@@ -89,4 +89,13 @@ public class LanguageCard extends Card
 			}
 		}
 	}
+
+	/**
+	 * @return
+	 */
+	@Override
+	public String getTypeName()
+	{
+		return "language card";
+	}
 }

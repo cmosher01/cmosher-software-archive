@@ -3,6 +3,7 @@
  */
 package gui.buttons;
 
+import gui.DiskDriveControllerPanel;
 import gui.GUI;
 import gui.UserCancelled;
 import java.awt.Color;
@@ -38,6 +39,7 @@ public class DiskDrivePanel extends JPanel
 	private volatile boolean reading;
 	private volatile boolean writing;
 	private volatile boolean writeProtected;
+	private final DiskDriveControllerPanel controller;
 	private final DiskBytes drive;
 
 	private JLabel labelTrack;
@@ -49,8 +51,9 @@ public class DiskDrivePanel extends JPanel
 
 	private volatile boolean upd;
 
-	public DiskDrivePanel(final DiskBytes drive, final GUI gui)
+	public DiskDrivePanel(final DiskDriveControllerPanel controller, final DiskBytes drive, final GUI gui)
 	{
+		this.controller = controller;
 		this.drive = drive;
 		this.gui = gui;
 		setOpaque(true);
@@ -178,7 +181,7 @@ public class DiskDrivePanel extends JPanel
 			e.printStackTrace();
 			this.gui.showMessage(e.getMessage());
 		}
-		this.gui.updateDrives();
+		this.controller.updateDrives();
 		this.btnSave.mouseExited();
 	}
 
@@ -218,7 +221,7 @@ public class DiskDrivePanel extends JPanel
 				this.gui.showMessage(e.getMessage());
 			}
 		}
-		this.gui.updateDrives();
+		this.controller.updateDrives();
 		this.btnLoad.mouseExited();
 	}
 
@@ -357,7 +360,7 @@ public class DiskDrivePanel extends JPanel
 			e.printStackTrace();
 			this.gui.showMessage(e.getMessage());
 		}
-		this.gui.updateDrives();
+		this.controller.updateDrives();
 	}
 
 	public void setWriteProtected(boolean writeProtected)

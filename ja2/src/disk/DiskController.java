@@ -1,8 +1,12 @@
 package disk;
 
+import java.awt.dnd.DropTargetListener;
 import java.io.File;
 import java.io.IOException;
+import javax.swing.JPanel;
 import chipset.Card;
+import gui.DiskDriveControllerPanel;
+import gui.GUI;
 import gui.UI;
 
 /*
@@ -10,23 +14,13 @@ import gui.UI;
  */
 public class DiskController extends Card
 {
-	private final DiskState state;
-	private final UI ui;
+	private final DiskBytes disk1 = new DiskBytes();
+	private final DiskBytes disk2 = new DiskBytes();
+	private final DiskDriveSimple drive = new DiskDriveSimple(new DiskBytes[] {disk1,disk2});
+	private final StepperMotor arm = new StepperMotor();
+	private final DiskState state = new DiskState(drive,arm);
 
-	/**
-	 * @param disk
-	 * @param manager 
-	 * @param motor
-	 */
-	public DiskController(final UI ui)
-	{
-    	final DiskBytes disk1 = new DiskBytes();
-    	final DiskBytes disk2 = new DiskBytes();
-    	final DiskDriveSimple drive = new DiskDriveSimple(new DiskBytes[] {disk1,disk2});
-    	final StepperMotor arm = new StepperMotor();
-    	this.state = new DiskState(drive,arm);
-		this.ui = ui;
-	}
+	private DiskDriveControllerPanel panel;
 
 	@Override
 	public byte io(final int addr, final byte data, final boolean writing)
@@ -43,21 +37,21 @@ public class DiskController extends Card
 			case 3:
 				this.state.arm.setMagnet(q,on);
 				this.state.disk.setTrack(this.state.arm.getTrack());
-				this.ui.updateDrives();
+				this.panel.updateDrives();
 			break;
 			case 4:
 				this.state.disk.setMotorOn(on);
-				this.ui.updateDrives();
+				this.panel.updateDrives();
 			break;
 			case 5:
 				this.state.disk.setDrive2(on);
-				this.ui.updateDrives();
+				this.panel.updateDrives();
 			break;
 			case 6:
 				if (on && this.state.write)
 				{
 					this.state.disk.set(data);
-					this.ui.updateDrives();
+					this.panel.updateDrives();
 				}
 				else if (!(on || this.state.write))
 				{
@@ -74,7 +68,7 @@ public class DiskController extends Card
 				{
 					ret &= 0x7F;
 				}
-				this.ui.updateDrives();
+				this.panel.updateDrives();
 			break;
 		}
 		return ret;
@@ -85,7 +79,7 @@ public class DiskController extends Card
 	{
 		this.state.disk.setMotorOn(false);
 		this.state.disk.setDrive2(false);
-		this.ui.updateDrives();
+		this.panel.updateDrives();
 	}
 
 	public void loadDisk(int drive, File fnib) throws IOException, InvalidDiskImage
@@ -97,4 +91,35 @@ public class DiskController extends Card
 	{
 		return this.state.isMotorOn();
 	}
+
+	/**
+	 * @param gui
+	 * @return
+	 */
+	@Override
+	public JPanel getPanel(GUI gui)
+	{
+		if (this.panel == null)
+		{
+			this.panel = new DiskDriveControllerPanel(this,gui);
+		}
+		return this.panel;
+	}
+
+	/**
+	 * @return
+	 */
+	@Override
+	public DropTargetListener getDropListener()
+	{
+		return this.panel.getDropListener();
+	}
+
+	public DiskBytes getDiskBytes(int disk)
+	{
+		if (disk == 0)
+			return this.disk1;
+		return this.disk2;
+	}
+
 }

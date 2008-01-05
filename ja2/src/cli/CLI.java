@@ -22,16 +22,6 @@ public class CLI implements UI
 		System.err.println(message);
 	}
 
-	public void updateDrives()
-	{
-		// nothing to update
-	}
-
-	public void updateDrives(boolean force)
-	{
-		// nothing to update
-	}
-
 	public void updateScreen()
 	{
 		// nothing to update

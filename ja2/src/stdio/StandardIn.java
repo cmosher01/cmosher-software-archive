@@ -58,4 +58,13 @@ public class StandardIn extends Card
 		}
 		return this.latch;
 	}
+
+	/**
+	 * @return
+	 */
+	@Override
+	public String getTypeName()
+	{
+		return "IN#2 reads from standard-in";
+	}
 }

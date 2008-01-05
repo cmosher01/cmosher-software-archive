@@ -15,16 +15,14 @@ import video.Video;
 
 public class Screen extends JPanel
 {
-	private static final int FACTOR = 1;
+	private static final int FACTOR = 2;
 
 	private Graphics2D graphics;
 	private AffineTransform affine = new AffineTransform();
-	{
-		affine.scale(FACTOR,FACTOR);
-	}
 
 	public Screen()
 	{
+		this.affine.scale(FACTOR,FACTOR);
 		setOpaque(true);
 		setPreferredSize(new Dimension(Video.SIZE.width*FACTOR,Video.SIZE.height*FACTOR));
 		addNotify();

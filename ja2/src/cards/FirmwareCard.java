@@ -69,4 +69,15 @@ public class FirmwareCard extends Card
 			}
 		}
 	}
+
+
+
+	/**
+	 * @return
+	 */
+	@Override
+	public String getTypeName()
+	{
+		return "firmware card";
+	}
 }

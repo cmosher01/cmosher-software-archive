@@ -5,4 +5,13 @@ package chipset;
 
 public class EmptySlot extends Card
 {
+
+	/**
+	 * @return
+	 */
+	@Override
+	public String getTypeName()
+	{
+		return "[empty slot]";
+	}
 }

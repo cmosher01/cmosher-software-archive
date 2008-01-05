@@ -3,6 +3,7 @@ import gui.Screen;
 import gui.UI;
 import java.awt.image.BufferedImage;
 import java.io.Closeable;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ import video.Video;
 import chipset.AddressBus;
 import chipset.Card;
 import chipset.Clock;
+import chipset.InvalidMemoryLoad;
 import chipset.Memory;
 import chipset.Slots;
 import chipset.Throttle;
@@ -33,6 +35,7 @@ import cli.CLI;
 import disk.DiskBytes;
 import disk.DiskDriveSimple;
 import disk.DiskState;
+import disk.InvalidDiskImage;
 import disk.StepperMotor;
 
 /*
@@ -93,7 +96,7 @@ public final class Ja2 implements Closeable
 		}
 	}
 
-    private void tryRun(final String... args)
+    private void tryRun(final String... args) throws IOException, InvalidMemoryLoad, InvalidDiskImage
     {
     	parseArgs(args);
 
@@ -101,11 +104,30 @@ public final class Ja2 implements Closeable
 
 
 
-    	final BufferedImage screenImage = new BufferedImage(Video.SIZE.width,Video.SIZE.height,BufferedImage.TYPE_INT_RGB);
+//    	RAM @ $0000 thru $BFFF
+    	final Memory ram = new Memory(0xC000);
+//    	ROM @ $D000 thru $FFFF
+    	final Memory rom = new Memory(0x10000-0xD000);
 
     	final Slots slots = new Slots();
 
-    	final Screen screen;
+//    	try
+//		{
+    		final Config cfg = new Config(this.config);
+			cfg.parseConfig(rom,slots);
+//		}
+//		catch (final Exception e)
+//		{
+//			e.printStackTrace();
+//			return;
+//			ui.showMessage(e.getMessage());
+//		}
+
+
+
+		final BufferedImage screenImage = new BufferedImage(Video.SIZE.width,Video.SIZE.height,BufferedImage.TYPE_INT_RGB);
+
+		final Screen screen;
         final UI ui;
     	if (this.gui)
     	{
@@ -120,23 +142,9 @@ public final class Ja2 implements Closeable
 
 
 
-//    	RAM @ $0000 thru $BFFF
-    	final Memory ram = new Memory(0xC000);
-//    	ROM @ $D000 thru $FFFF
-    	final Memory rom = new Memory(0x10000-0xD000);
 
 
 
-    	try
-		{
-    		final Config cfg = new Config(this.config);
-			cfg.parseConfig(rom,slots,ui);
-		}
-		catch (final Exception e)
-		{
-			e.printStackTrace();
-			ui.showMessage(e.getMessage());
-		}
 
 
 
@@ -188,7 +196,7 @@ public final class Ja2 implements Closeable
 
 
     	this.clock.run();
-        ui.updateDrives(true);
+        // TODO ui.updateDrives(true);
     }
 
     private void parseArgs(final String... args)

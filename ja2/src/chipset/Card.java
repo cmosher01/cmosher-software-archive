@@ -3,7 +3,11 @@
  */
 package chipset;
 
+import gui.GUI;
+import java.awt.dnd.DropTargetListener;
 import java.io.InputStream;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public abstract class Card
 {
@@ -74,5 +78,26 @@ public abstract class Card
 	public void loadBankRom(final int base, InputStream file) throws InvalidMemoryLoad
 	{
 		throw new InvalidMemoryLoad("This card has no $D000 ROM");
+	}
+
+
+
+	public JPanel getPanel(final GUI gui)
+	{
+		return new DefaultCardPanel(getTypeName());
+	}
+
+
+
+	public String getTypeName()
+	{
+		return this.getClass().getSimpleName();
+	}
+
+
+
+	public DropTargetListener getDropListener()
+	{
+		return null;
 	}
 }

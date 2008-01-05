@@ -222,20 +222,6 @@ public class GUI implements UI
 
 
 
-	public void updateDrives()
-	{
-		updateDrives(false);
-	}
-
-	public void updateDrives(boolean force)
-	{
-		if (this.contentPane == null)
-		{
-			return;
-		}
-		this.contentPane.updateDrives(force);
-	}
-
 	public void updateScreen()
 	{
 		if (this.contentPane == null)
