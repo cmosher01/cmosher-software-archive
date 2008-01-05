@@ -3,7 +3,6 @@
  */
 package gui;
 
-import gui.buttons.DiskDrivePanel;
 import java.awt.FlowLayout;
 import java.awt.dnd.DropTargetListener;
 import javax.swing.BorderFactory;

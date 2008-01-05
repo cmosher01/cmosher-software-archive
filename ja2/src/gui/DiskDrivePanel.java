@@ -1,11 +1,10 @@
 /*
  * Created on Sep 18, 2007
  */
-package gui.buttons;
+package gui;
 
-import gui.DiskDriveControllerPanel;
-import gui.GUI;
-import gui.UserCancelled;
+import gui.buttons.HiliteButton;
+import gui.buttons.LED;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;

@@ -111,17 +111,10 @@ public final class Ja2 implements Closeable
 
     	final Slots slots = new Slots();
 
-//    	try
-//		{
-    		final Config cfg = new Config(this.config);
-			cfg.parseConfig(rom,slots);
-//		}
-//		catch (final Exception e)
-//		{
-//			e.printStackTrace();
-//			return;
-//			ui.showMessage(e.getMessage());
-//		}
+
+
+    	final Config cfg = new Config(this.config);
+		cfg.parseConfig(rom,slots);
 
 
 
