@@ -95,6 +95,18 @@ public class Slots implements Iterable<Card>
 
 	public boolean isAnyDiskDriveMotorOn()
 	{
+		for (final Card card: this.cards)
+		{
+			if (card instanceof DiskController)
+			{
+				final DiskController disk = (DiskController)card;
+				if (disk.isMotorOn())
+				{
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public void loadDisk(int slot, int drive, File fnib) throws IOException, InvalidDiskImage

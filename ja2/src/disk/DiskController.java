@@ -92,4 +92,9 @@ public class DiskController extends Card
 	{
 		this.state.loadDisk(drive,fnib);
 	}
+
+	public boolean isMotorOn()
+	{
+		return this.state.isMotorOn();
+	}
 }
