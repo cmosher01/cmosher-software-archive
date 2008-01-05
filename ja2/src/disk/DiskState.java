@@ -3,6 +3,9 @@
  */
 package disk;
 
+import java.io.File;
+import java.io.IOException;
+
 public class DiskState
 {
 	/* accessed only by DiskController */
@@ -54,5 +57,10 @@ public class DiskState
 	public boolean isWriting()
 	{
 		return this.write;
+	}
+
+	public void loadDisk(int drive, File fnib) throws IOException, InvalidDiskImage
+	{
+		this.disk.loadDisk(drive,fnib);
 	}
 }

@@ -1,5 +1,7 @@
 package disk;
 
+import java.io.File;
+import java.io.IOException;
 import chipset.Card;
 import gui.UI;
 
@@ -16,9 +18,13 @@ public class DiskController extends Card
 	 * @param manager 
 	 * @param motor
 	 */
-	public DiskController(final DiskState state, final UI ui)
+	public DiskController(final UI ui)
 	{
-		this.state = state;
+    	final DiskBytes disk1 = new DiskBytes();
+    	final DiskBytes disk2 = new DiskBytes();
+    	final DiskDriveSimple drive = new DiskDriveSimple(new DiskBytes[] {disk1,disk2});
+    	final StepperMotor arm = new StepperMotor();
+    	this.state = new DiskState(drive,arm);
 		this.ui = ui;
 	}
 
@@ -80,5 +86,10 @@ public class DiskController extends Card
 		this.state.disk.setMotorOn(false);
 		this.state.disk.setDrive2(false);
 		this.ui.updateDrives();
+	}
+
+	public void loadDisk(int drive, File fnib) throws IOException, InvalidDiskImage
+	{
+		this.state.loadDisk(drive,fnib);
 	}
 }

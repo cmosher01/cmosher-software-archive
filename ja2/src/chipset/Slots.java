@@ -4,10 +4,14 @@
 package chipset;
 
 import config.Config;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import disk.DiskController;
+import disk.InvalidDiskImage;
 
 public class Slots implements Iterable<Card>
 {
@@ -91,5 +95,16 @@ public class Slots implements Iterable<Card>
 
 	public boolean isAnyDiskDriveMotorOn()
 	{
+	}
+
+	public void loadDisk(int slot, int drive, File fnib) throws IOException, InvalidDiskImage
+	{
+		final Card card = this.cards.get(slot);
+		if (!(card instanceof DiskController))
+		{
+			throw new IllegalArgumentException("Card in slot "+slot+" is not a disk controller card.");
+		}
+		final DiskController controller = (DiskController)card;
+		controller.loadDisk(drive,fnib);
 	}
 }

@@ -7,8 +7,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Collections;
-import java.util.List;
 import java.util.StringTokenizer;
 import keyboard.KeypressQueue;
 import stdio.StandardIn;
@@ -17,7 +15,6 @@ import stdio.StandardOut;
 import cards.FirmwareCard;
 import cards.LanguageCard;
 import chipset.Card;
-import chipset.EmptySlot;
 import chipset.InvalidMemoryLoad;
 import chipset.Memory;
 import chipset.Slots;
@@ -179,19 +176,7 @@ public class Config
 			final String nib = tok.nextToken("\0").trim(); // rest of line
 			final File fnib = new File(nib);
 
-			verifyDiskCard(slots,slot);
-			if (drive == 1)
-			{
-				disk1.load(fnib);
-			}
-			else if (drive == 2)
-			{
-				disk2.load(fnib);
-			}
-			else
-			{
-				if (!tok.hasMoreTokens()) throw new IllegalArgumentException("Error in config file: invalid drive number "+drive);
-			}
+			loadDisk(slots,slot,drive,fnib);
 		}
 		else
 		{
@@ -199,17 +184,13 @@ public class Config
 		}
 	}
 
-	private void verifyDiskCard(Slots cards, int slot)
+	private void loadDisk(final Slots slots, final int slot, int drive, final File fnib) throws IOException, InvalidDiskImage
 	{
-		if (slot < 0 || SLOTS <= slot)
+		if (drive < 1 || 2 < drive)
 		{
-			throw new IllegalArgumentException("Error in config file: invalid slot number: "+slot);
+			throw new IllegalArgumentException("Error in config file: invalid drive number "+drive);
 		}
-		final Card card = cards.get(slot);
-		if (!(card instanceof DiskController))
-		{
-			throw new IllegalArgumentException("Error in config file: the card in slot "+slot+" is not a disk card");
-		}
+		slots.loadDisk(slot,drive-1,fnib);
 	}
 
 	private void insertCard(final String cardType, final int slot, final Slots slots, final UI ui)
@@ -229,12 +210,7 @@ public class Config
 		}
 		else if (cardType.equalsIgnoreCase("disk"))
 		{
-	    	final DiskBytes disk1 = new DiskBytes();
-	    	final DiskBytes disk2 = new DiskBytes();
-	    	final DiskDriveSimple drive = new DiskDriveSimple(new DiskBytes[] {disk1,disk2});
-	    	final StepperMotor arm = new StepperMotor();
-	    	final DiskState diskState = new DiskState(drive,arm);
-	    	card = new DiskController(diskState,ui);
+	    	card = new DiskController(ui);
 		}
 		else if (cardType.equalsIgnoreCase("stdout"))
 		{

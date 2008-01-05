@@ -1,5 +1,8 @@
 package disk;
 
+import java.io.File;
+import java.io.IOException;
+
 /*
  * Created on Sep 16, 2007
  */
@@ -71,5 +74,10 @@ public class DiskDriveSimple
 	public boolean isMotorOn()
 	{
 		return this.motorOn;
+	}
+
+	public void loadDisk(int drive, File fnib) throws IOException, InvalidDiskImage
+	{
+		this.disk[drive].load(fnib);
 	}
 }
