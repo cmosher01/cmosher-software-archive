@@ -6,14 +6,14 @@ import java.io.IOException;
 /*
  * Created on Sep 16, 2007
  */
-class DiskDriveSimple
+class Drive
 {
 	private final DiskBytes disk;
 	private final StepperMotor arm;
 
 
 
-	public DiskDriveSimple(final DiskBytes disk, final StepperMotor arm)
+	public Drive(final DiskBytes disk, final StepperMotor arm)
 	{
 		this.disk = disk;
 		this.arm = arm;

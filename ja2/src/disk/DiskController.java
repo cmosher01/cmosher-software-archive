@@ -13,10 +13,10 @@ import gui.GUI;
  */
 public class DiskController extends Card
 {
-	private final DiskDriveSimple drive1;
-	private final DiskDriveSimple drive2;
+	private final Drive drive1;
+	private final Drive drive2;
 
-	private volatile DiskDriveSimple currentDrive;
+	private volatile Drive currentDrive;
 
 	private volatile boolean write;
 	private volatile boolean motorOn;
@@ -27,8 +27,8 @@ public class DiskController extends Card
 
 	public DiskController()
 	{
-		this.drive1 = new DiskDriveSimple(new DiskBytes(),new StepperMotor());
-		this.drive2 = new DiskDriveSimple(new DiskBytes(),new StepperMotor());
+		this.drive1 = new Drive(new DiskBytes(),new StepperMotor());
+		this.drive2 = new Drive(new DiskBytes(),new StepperMotor());
 	}
 
 	@Override
@@ -109,7 +109,7 @@ public class DiskController extends Card
 		this.panel.updateDrives();
 	}
 
-	private DiskDriveSimple getDrive(final int drive)
+	private Drive getDrive(final int drive)
 	{
 		return (drive == 0) ? this.drive1 : this.drive2;
 	}
@@ -192,7 +192,7 @@ public class DiskController extends Card
 		return 1-getCurrentDriveNumber();
 	}
 
-	private DiskDriveSimple getOtherDrive()
+	private Drive getOtherDrive()
 	{
 		return (this.currentDrive == this.drive1) ? this.drive2 : this.drive1;
 	}
