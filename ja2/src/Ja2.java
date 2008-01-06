@@ -66,8 +66,8 @@ public final class Ja2 implements Closeable
 
 
 
-    boolean gui = true;
-	Clock clock;
+    private boolean gui = true;
+	private Clock clock;
 
 	private String config = "ja2.cfg";
 
@@ -192,7 +192,6 @@ public final class Ja2 implements Closeable
 
 
     	this.clock.run();
-        // TODO ui.updateDrives(true);
     }
 
     private void parseArgs(final String... args)

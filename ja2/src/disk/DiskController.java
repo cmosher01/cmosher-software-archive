@@ -13,8 +13,13 @@ import gui.GUI;
  */
 public class DiskController extends Card
 {
-	private final DiskState state;
+	private final DiskDriveSimple drive1;
+	private final DiskDriveSimple drive2;
 
+	private volatile DiskDriveSimple currentDrive;
+
+	private volatile boolean write;
+	private volatile boolean motorOn;
 
 
 	private DiskDriveControllerPanel panel;
@@ -24,13 +29,11 @@ public class DiskController extends Card
 	{
 		final DiskBytes disk1 = new DiskBytes();
 		final StepperMotor arm1 = new StepperMotor();
-		final DiskDriveSimple drive1 = new DiskDriveSimple(disk1,arm1);
+		this.drive1 = new DiskDriveSimple(disk1,arm1);
 
 		final DiskBytes disk2 = new DiskBytes();
 		final StepperMotor arm2 = new StepperMotor();
-		final DiskDriveSimple drive2 = new DiskDriveSimple(disk2,arm2);
-
-		this.state = new DiskState(drive1,drive2);
+		this.drive2 = new DiskDriveSimple(disk2,arm2);
 	}
 
 	@Override
@@ -46,31 +49,33 @@ public class DiskController extends Card
 			case 1:
 			case 2:
 			case 3:
-				this.state.setMagnet(q,on);
+				this.currentDrive.setMagnet(q,on);
 				this.panel.updateDrives();
 			break;
 			case 4:
-				this.state.setMotorOn(on);
+				this.motorOn = on;
 				this.panel.updateDrives();
 			break;
 			case 5:
-				this.state.setDrive2(on);
+				this.currentDrive = (on ? this.drive2 : this.drive1);
+
 				this.panel.updateDrives();
 			break;
 			case 6:
-				if (on && this.state.write)
+				if (on && this.write)
 				{
-					this.state.set(data);
+					set(data);
 					this.panel.updateDrives();
 				}
-				else if (!(on || this.state.write))
+				else if (!(on || this.write))
 				{
-					ret = this.state.get();
+					ret = get();
 				}
 			break;
 			case 7:
-				this.state.write = on;
-				if (this.state.isWriteProtected())
+				this.write = on;
+				this.panel.updateDrives();
+				if (this.currentDrive.isWriteProtected())
 				{
 					ret |= 0x80;
 				}
@@ -78,28 +83,50 @@ public class DiskController extends Card
 				{
 					ret &= 0x7F;
 				}
-				this.panel.updateDrives();
 			break;
 		}
 		return ret;
 	}
 
+	private void set(final byte data)
+	{
+		if (!this.motorOn)
+		{
+			return;
+		}
+		this.currentDrive.set(data);
+	}
+
+	private byte get()
+	{
+		if (!this.motorOn)
+		{
+			return -1;
+		}
+		return this.currentDrive.get();
+	}
+
 	@Override
 	public void reset()
 	{
-		this.state.setMotorOn(false);
-		this.state.setDrive2(false);
+		this.motorOn = false;
+		this.currentDrive = this.drive1;
 		this.panel.updateDrives();
+	}
+
+	private DiskDriveSimple getDrive(final int drive)
+	{
+		return (drive == 0) ? this.drive1 : this.drive2;
 	}
 
 	public void loadDisk(int drive, File fnib) throws IOException, InvalidDiskImage
 	{
-		this.state.loadDisk(drive,fnib);
+		this.getDrive(drive).loadDisk(fnib);
 	}
 
 	public boolean isMotorOn()
 	{
-		return this.state.isMotorOn();
+		return this.motorOn;
 	}
 
 	/**
@@ -127,46 +154,51 @@ public class DiskController extends Card
 
 	public DiskBytes getDiskBytes(int disk)
 	{
-		return this.state.getDiskBytes(disk);
+		return this.getDrive(disk).getDiskBytes();
 	}
 
 	public int getTrack()
 	{
-		return this.state.getTrack();
+		return this.currentDrive.getTrack();
 	}
 
 	public boolean isWriting()
 	{
-		return this.state.write;
-	}
-
-	public int getCurrentDriveNumber()
-	{
-		return this.state.getCurrentDriveNumber();
+		return this.write;
 	}
 
 	public boolean isModified()
 	{
-		return this.state.isModified();
+		return this.currentDrive.isModified();
 	}
 
 	public boolean isModifiedOther()
 	{
-		return this.state.isModifiedOther();
-	}
-
-	public int getOtherDriveNumber()
-	{
-		return this.state.getOtherDriveNumber();
+		return getOtherDrive().isModified();
 	}
 
 	public boolean isWriteProtected()
 	{
-		return this.state.isWriteProtected();
+		return this.currentDrive.isWriteProtected();
 	}
 
 	public boolean isDirty()
 	{
 		return isModified() || isModifiedOther();
+	}
+
+	public int getCurrentDriveNumber()
+	{
+		return this.currentDrive == this.drive1 ? 0 : 1;
+	}
+
+	public int getOtherDriveNumber()
+	{
+		return 1-getCurrentDriveNumber();
+	}
+
+	private DiskDriveSimple getOtherDrive()
+	{
+		return (this.currentDrive == this.drive1) ? this.drive2 : this.drive1;
 	}
 }
