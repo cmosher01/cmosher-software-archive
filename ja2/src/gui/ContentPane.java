@@ -72,7 +72,6 @@ class ContentPane extends JPanel
 
 	public boolean hasUnsavedChanges()
 	{
-		// TODO this isn't checking the right thing (sometimes need to check both drives, other times only one)
-		return this.disk.isModified() || this.disk.isModifiedOther();
+		return this.slots.isAnyDiskDirty();
 	}
 }

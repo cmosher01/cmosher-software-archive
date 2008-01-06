@@ -194,7 +194,7 @@ public class DiskDrivePanel extends JPanel
 			{
 				if (this.drive.isModified())
 				{
-					this.gui.verifyLoseUnsaveChanges();
+					this.gui.askLoseUnsavedChanges();
 				}
 				this.drive.unload();
 			}
@@ -341,7 +341,7 @@ public class DiskDrivePanel extends JPanel
 			{
 				if (this.drive.isModified())
 				{
-					this.gui.verifyLoseUnsaveChanges();
+					this.gui.askLoseUnsavedChanges();
 				}
 				this.drive.unload();
 			}

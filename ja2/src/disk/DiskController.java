@@ -122,4 +122,44 @@ public class DiskController extends Card
 		return this.disk2;
 	}
 
+	public boolean isDirty()
+	{
+		return this.disk1.isModified() || this.disk2.isModified();
+	}
+
+	public int getTrack()
+	{
+		return this.arm.getTrack();
+	}
+
+	public boolean isWriting()
+	{
+		return this.state.write;
+	}
+
+	public int getCurrentDriveNumber()
+	{
+		return this.state.getCurrentDriveNumber();
+	}
+
+	public boolean isModified()
+	{
+		return this.state.isModified();
+	}
+
+
+	public boolean isModifiedOther()
+	{
+		return this.state.isModifiedOther();
+	}
+
+	public int getOtherDriveNumber()
+	{
+		return this.state.getOtherDriveNumber();
+	}
+
+	public boolean isWriteProtected()
+	{
+		return this.state.isWriteProtected();
+	}
 }

@@ -39,7 +39,7 @@ public class Config
 		this.filename = filename;
 	}
 
-	public void parseConfig(final Memory memory, final Slots slots)
+	public void parseConfig(final Memory memory, final Slots slots, final StandardIn.EOFHandler eofHandler)
 		throws IOException, InvalidMemoryLoad, InvalidDiskImage
 	{
 
@@ -54,7 +54,7 @@ public class Config
     		}
     		line = line.trim();
 
-    		parseLine(line,memory,slots);
+    		parseLine(line,memory,slots,eofHandler);
     	}
 
     	cfg.close();
@@ -87,7 +87,7 @@ public class Config
 		}
 	}
 
-	private void parseLine(final String line, final Memory memory, final Slots slots)
+	private void parseLine(final String line, final Memory memory, final Slots slots, final StandardIn.EOFHandler eofHandler)
 		throws InvalidMemoryLoad, IOException, InvalidDiskImage
 	{
 		if (line.isEmpty())
@@ -107,7 +107,7 @@ public class Config
 			if (!tok.hasMoreTokens()) throw new IllegalArgumentException("Error in config file: "+line);
 			final String sCardType = tok.nextToken();
 
-			insertCard(sCardType,slot,slots);
+			insertCard(sCardType,slot,slots,eofHandler);
 		}
 		else if (cmd.equalsIgnoreCase("import"))
 		{
@@ -193,7 +193,7 @@ public class Config
 		slots.loadDisk(slot,drive-1,fnib);
 	}
 
-	private void insertCard(final String cardType, final int slot, final Slots slots)
+	private void insertCard(final String cardType, final int slot, final Slots slots, final StandardIn.EOFHandler eofHandler)
 	{
 		if (slot < 0 || SLOTS <= slot)
 		{
@@ -220,7 +220,7 @@ public class Config
 		{
 	    	final KeypressQueue stdinkeys = new KeypressQueue();
 	    	final StandardInProducer stdinprod = new StandardInProducer(stdinkeys);
-	    	card = new StandardIn(null,stdinkeys); // TODO StadardIn needs ui
+	    	card = new StandardIn(eofHandler,stdinkeys); // TODO StadardIn needs ui
 		}
 		else
 		{

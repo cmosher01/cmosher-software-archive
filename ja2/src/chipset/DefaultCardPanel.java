@@ -15,6 +15,7 @@ public class DefaultCardPanel extends JPanel
 		setOpaque(true);
 		addNotify();
 		setFocusable(false);
-		add(new JLabel(name),BorderLayout.CENTER);
+		final JLabel label = new JLabel(name);
+		add(label,BorderLayout.CENTER);
 	}
 }

@@ -5,11 +5,8 @@ import java.awt.image.BufferedImage;
 import java.io.Closeable;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 import javax.swing.SwingUtilities;
-import config.Config;
 import keyboard.ClipboardProducer;
 import keyboard.FnKeyHandler;
 import keyboard.HyperKeyHandler;
@@ -21,10 +18,10 @@ import keyboard.VideoKeyHandler;
 import paddle.PaddleButtons;
 import paddle.Paddles;
 import paddle.PaddlesInterface;
+import stdio.StandardIn;
 import util.Util;
 import video.Video;
 import chipset.AddressBus;
-import chipset.Card;
 import chipset.Clock;
 import chipset.InvalidMemoryLoad;
 import chipset.Memory;
@@ -32,11 +29,8 @@ import chipset.Slots;
 import chipset.Throttle;
 import chipset.cpu.CPU6502;
 import cli.CLI;
-import disk.DiskBytes;
-import disk.DiskDriveSimple;
-import disk.DiskState;
+import config.Config;
 import disk.InvalidDiskImage;
-import disk.StepperMotor;
 
 /*
  * Created on Aug 31, 2004
@@ -114,7 +108,16 @@ public final class Ja2 implements Closeable
 
 
     	final Config cfg = new Config(this.config);
-		cfg.parseConfig(rom,slots);
+		cfg.parseConfig(rom,slots,new StandardIn.EOFHandler()
+		{
+			public void handleEOF()
+			{
+				if (!Ja2.this.gui)
+				{
+					close();
+				}
+			}
+		});
 
 
 
@@ -130,7 +133,7 @@ public final class Ja2 implements Closeable
     	else
     	{
     		screen = null;
-        	ui = new CLI(this);
+        	ui = new CLI();
     	}
 
 

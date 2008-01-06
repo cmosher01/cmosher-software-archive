@@ -6,7 +6,6 @@ package chipset;
 import gui.GUI;
 import java.awt.dnd.DropTargetListener;
 import java.io.InputStream;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public abstract class Card

@@ -9,18 +9,23 @@ import chipset.Card;
 
 public class StandardIn extends Card
 {
+	public interface EOFHandler
+	{
+		void handleEOF();
+	}
+
 	private static final int EOF = -1;
 
-	private final UI ui;
+	private final EOFHandler eofHandler;
 	private final KeypressQueue stdinkeys;
 
 	private byte latch;
 	private boolean gotEOF;
 
 
-	public StandardIn(final UI ui, final KeypressQueue stdinkeys)
+	public StandardIn(final EOFHandler eofHandler, final KeypressQueue stdinkeys)
 	{
-		this.ui = ui;
+		this.eofHandler = eofHandler;
 		this.stdinkeys = stdinkeys;
 	}
 
@@ -46,7 +51,7 @@ public class StandardIn extends Card
 						if (this.latch == EOF)
 						{
 							this.gotEOF = true;
-							this.ui.handleStdInEOF();
+							this.eofHandler.handleEOF();
 						}
 					}
 				}

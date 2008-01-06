@@ -119,4 +119,20 @@ public class Slots implements Iterable<Card>
 		final DiskController controller = (DiskController)card;
 		controller.loadDisk(drive,fnib);
 	}
+
+	public boolean isAnyDiskDirty()
+	{
+		for (final Card card: this.cards)
+		{
+			if (card instanceof DiskController)
+			{
+				final DiskController disk = (DiskController)card;
+				if (disk.isDirty())
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }

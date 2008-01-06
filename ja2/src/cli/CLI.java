@@ -10,13 +10,6 @@ import gui.UserCancelled;
 
 public class CLI implements UI
 {
-	final Closeable app;
-
-	public CLI(final Closeable app)
-	{
-		this.app = app;
-	}
-
 	public void showMessage(String message)
 	{
 		System.err.println(message);
@@ -25,18 +18,6 @@ public class CLI implements UI
 	public void updateScreen()
 	{
 		// nothing to update
-	}
-
-	public void handleStdInEOF()
-	{
-		try
-		{
-			this.app.close();
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
 	}
 
 	public boolean isHyper()
@@ -50,6 +31,11 @@ public class CLI implements UI
 	}
 
 	public void verifyLoseUnsaveChanges()
+	{
+		// OK to discard any unsaved disk changes
+	}
+
+	public void askLoseUnsavedChanges() throws UserCancelled
 	{
 		// OK to discard any unsaved disk changes
 	}

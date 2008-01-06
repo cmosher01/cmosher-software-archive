@@ -113,10 +113,15 @@ public class GUI implements UI
 	{
 		if (this.contentPane.hasUnsavedChanges())
 		{
-			if (!askOK("There are unsaved disk changes that will be LOST. Is it OK to DISCARD all disk changes?"))
-			{
-				throw new UserCancelled();
-			}
+			askLoseUnsavedChanges();
+		}
+	}
+
+	public void askLoseUnsavedChanges() throws UserCancelled
+	{
+		if (!askOK("There are unsaved disk changes that will be LOST. Is it OK to DISCARD all disk changes?"))
+		{
+			throw new UserCancelled();
 		}
 	}
 
@@ -229,11 +234,6 @@ public class GUI implements UI
 			return;
 		}
 		this.contentPane.updateScreen(this.videoImage);
-	}
-
-	public void handleStdInEOF()
-	{
-		// do nothing
 	}
 
 	public boolean isHyper()
