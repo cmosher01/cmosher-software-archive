@@ -3,8 +3,15 @@
  */
 package chipset;
 
+import gui.GUI;
+import javax.swing.JPanel;
+
 public class EmptySlot extends Card
 {
+	public JPanel getPanel(final GUI gui)
+	{
+		return null;
+	}
 
 	/**
 	 * @return
