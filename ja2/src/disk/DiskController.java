@@ -7,20 +7,31 @@ import javax.swing.JPanel;
 import chipset.Card;
 import gui.DiskDriveControllerPanel;
 import gui.GUI;
-import gui.UI;
 
 /*
  * Created on Sep 12, 2007
  */
 public class DiskController extends Card
 {
-	private final DiskBytes disk1 = new DiskBytes();
-	private final DiskBytes disk2 = new DiskBytes();
-	private final DiskDriveSimple drive = new DiskDriveSimple(new DiskBytes[] {disk1,disk2});
-	private final StepperMotor arm = new StepperMotor();
-	private final DiskState state = new DiskState(drive,arm);
+	private final DiskState state;
+
+
 
 	private DiskDriveControllerPanel panel;
+
+
+	public DiskController()
+	{
+		final DiskBytes disk1 = new DiskBytes();
+		final StepperMotor arm1 = new StepperMotor();
+		final DiskDriveSimple drive1 = new DiskDriveSimple(disk1,arm1);
+
+		final DiskBytes disk2 = new DiskBytes();
+		final StepperMotor arm2 = new StepperMotor();
+		final DiskDriveSimple drive2 = new DiskDriveSimple(disk2,arm2);
+
+		this.state = new DiskState(drive1,drive2);
+	}
 
 	@Override
 	public byte io(final int addr, final byte data, final boolean writing)
@@ -35,32 +46,31 @@ public class DiskController extends Card
 			case 1:
 			case 2:
 			case 3:
-				this.state.arm.setMagnet(q,on);
-				this.state.disk.setTrack(this.state.arm.getTrack());
+				this.state.setMagnet(q,on);
 				this.panel.updateDrives();
 			break;
 			case 4:
-				this.state.disk.setMotorOn(on);
+				this.state.setMotorOn(on);
 				this.panel.updateDrives();
 			break;
 			case 5:
-				this.state.disk.setDrive2(on);
+				this.state.setDrive2(on);
 				this.panel.updateDrives();
 			break;
 			case 6:
 				if (on && this.state.write)
 				{
-					this.state.disk.set(data);
+					this.state.set(data);
 					this.panel.updateDrives();
 				}
 				else if (!(on || this.state.write))
 				{
-					ret = this.state.disk.get();
+					ret = this.state.get();
 				}
 			break;
 			case 7:
 				this.state.write = on;
-				if (this.state.disk.isWriteProtected())
+				if (this.state.isWriteProtected())
 				{
 					ret |= 0x80;
 				}
@@ -77,8 +87,8 @@ public class DiskController extends Card
 	@Override
 	public void reset()
 	{
-		this.state.disk.setMotorOn(false);
-		this.state.disk.setDrive2(false);
+		this.state.setMotorOn(false);
+		this.state.setDrive2(false);
 		this.panel.updateDrives();
 	}
 
@@ -117,19 +127,12 @@ public class DiskController extends Card
 
 	public DiskBytes getDiskBytes(int disk)
 	{
-		if (disk == 0)
-			return this.disk1;
-		return this.disk2;
-	}
-
-	public boolean isDirty()
-	{
-		return this.disk1.isModified() || this.disk2.isModified();
+		return this.state.getDiskBytes(disk);
 	}
 
 	public int getTrack()
 	{
-		return this.arm.getTrack();
+		return this.state.getTrack();
 	}
 
 	public boolean isWriting()
@@ -147,7 +150,6 @@ public class DiskController extends Card
 		return this.state.isModified();
 	}
 
-
 	public boolean isModifiedOther()
 	{
 		return this.state.isModifiedOther();
@@ -161,5 +163,10 @@ public class DiskController extends Card
 	public boolean isWriteProtected()
 	{
 		return this.state.isWriteProtected();
+	}
+
+	public boolean isDirty()
+	{
+		return isModified() || isModifiedOther();
 	}
 }

@@ -6,13 +6,11 @@ import java.awt.Toolkit;
 import java.awt.dnd.DropTarget;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
 import java.awt.image.MemoryImageSource;
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -20,10 +18,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
-import chipset.Card;
 import chipset.Slots;
-import disk.DiskBytes;
-import disk.DiskState;
+
+
 
 public class GUI implements UI
 {

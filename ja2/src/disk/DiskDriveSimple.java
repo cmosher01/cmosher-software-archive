@@ -6,78 +6,64 @@ import java.io.IOException;
 /*
  * Created on Sep 16, 2007
  */
-public class DiskDriveSimple
+class DiskDriveSimple
 {
-	private DiskBytes[] disk;
-	private int track;
-	private int dr; // 0 = drive 1; 1 = drive 2
-	private boolean motorOn;
+	private final DiskBytes disk;
+	private final StepperMotor arm;
 
-	public DiskDriveSimple(final DiskBytes[] disk)
+
+
+	public DiskDriveSimple(final DiskBytes disk, final StepperMotor arm)
 	{
 		this.disk = disk;
+		this.arm = arm;
 	}
 
-	public byte get()
-	{
-		if (!this.motorOn)
-		{
-			return -1;
-		}
-		return this.disk[this.dr].get(this.track);
-	}
 
-	void set(final byte value)
+
+	public void loadDisk(final File fnib) throws IOException, InvalidDiskImage
 	{
-		if (!this.motorOn || this.isWriteProtected())
-		{
-			return;
-		}
-		this.disk[this.dr].put(this.track,value);
+		this.disk.load(fnib);
 	}
 
 	public boolean isWriteProtected()
 	{
-		return this.disk[this.dr].isWriteProtected();
+		return this.disk.isWriteProtected();
 	}
 
 	public boolean isModified()
 	{
-		return this.disk[this.dr].isModified();
+		return this.disk.isModified();
 	}
 
-	public boolean isModifiedOther()
+
+
+	public void setMagnet(int q, boolean on)
 	{
-		return this.disk[1-this.dr].isModified();
+		this.arm.setMagnet(q,on);
 	}
 
-	void setDrive2(final boolean drive2)
+	public int getTrack()
 	{
-		this.dr = drive2 ? 1 : 0;
+		return this.arm.getTrack();
 	}
 
-	void setMotorOn(final boolean on)
+
+
+	public byte get()
 	{
-		this.motorOn = on;
+		return this.disk.get(this.arm.getTrack());
 	}
 
-	void setTrack(final int t)
+	void set(final byte value)
 	{
-		this.track = t;
+		this.disk.put(this.arm.getTrack(),value);
 	}
 
-	int getDriveNumber()
-	{
-		return this.dr;
-	}
 
-	public boolean isMotorOn()
-	{
-		return this.motorOn;
-	}
 
-	public void loadDisk(int drive, File fnib) throws IOException, InvalidDiskImage
+	DiskBytes getDiskBytes()
 	{
-		this.disk[drive].load(fnib);
+		return this.disk;
 	}
 }

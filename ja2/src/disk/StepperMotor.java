@@ -15,7 +15,7 @@ package disk;
  *
  * @author Chris Mosher
  */
-public class StepperMotor
+class StepperMotor
 {
 	private static final int TRACKS = 0x23;
 	private static final int QTRACKS = TRACKS << 2;

@@ -18,12 +18,8 @@ import chipset.Card;
 import chipset.InvalidMemoryLoad;
 import chipset.Memory;
 import chipset.Slots;
-import disk.DiskBytes;
 import disk.DiskController;
-import disk.DiskDriveSimple;
-import disk.DiskState;
 import disk.InvalidDiskImage;
-import disk.StepperMotor;
 
 /*
  * Created on Dec 1, 2007

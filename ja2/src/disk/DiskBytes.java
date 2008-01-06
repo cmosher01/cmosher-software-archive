@@ -26,7 +26,7 @@ public class DiskBytes
 	private volatile String fileName;
 	private final AtomicBoolean writable = new AtomicBoolean();
 	private final AtomicBoolean loaded = new AtomicBoolean();
-	private int byt;
+	private int byt; // represents rotational position of disk
 	private int waitTimes;
 	private final AtomicBoolean modified = new AtomicBoolean();
 
