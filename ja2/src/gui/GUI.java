@@ -11,7 +11,6 @@ import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -27,8 +26,6 @@ public class GUI implements UI
 	private final JFrame frame;
 	private final ContentPane contentPane;
 	private final Image videoImage;
-
-	private final AtomicBoolean hyper = new AtomicBoolean();
 
 	public GUI(final Closeable app, final Screen screen, final Slots slots, final Image videoImage)
 	{
@@ -231,15 +228,5 @@ public class GUI implements UI
 			return;
 		}
 		this.contentPane.updateScreen(this.videoImage);
-	}
-
-	public boolean isHyper()
-	{
-		return this.hyper.get();
-	}
-
-	public void setHyper(boolean isHyper)
-	{
-			this.hyper.set(isHyper);
 	}
 }

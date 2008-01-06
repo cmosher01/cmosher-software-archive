@@ -3,25 +3,25 @@
  */
 package keyboard;
 
-import gui.UI;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import chipset.Throttle;
 
 /*
  * Created on Sep 12, 2007
  */
 public class HyperKeyHandler extends KeyAdapter implements KeyListener
 {
-	private final UI ui;
+	private final Throttle throttle;
 
 	/**
 	 * @param cpu
 	 * @param video 
 	 */
-	public HyperKeyHandler(final UI ui)
+	public HyperKeyHandler(final Throttle throttle)
 	{
-		this.ui = ui;
+		this.throttle = throttle;
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class HyperKeyHandler extends KeyAdapter implements KeyListener
 		final int key = e.getKeyCode();
 		if (key == KeyEvent.VK_F11)
 		{
-			this.ui.setHyper(!this.ui.isHyper());
+			this.throttle.toggleHyper();
 		}
 	}
 }

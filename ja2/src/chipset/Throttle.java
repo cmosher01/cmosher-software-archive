@@ -5,7 +5,6 @@ package chipset;
 
 
 
-import gui.UI;
 import util.Util;
 import video.Video;
 
@@ -17,16 +16,15 @@ public class Throttle
 
 	private final Video video;
 	private final Slots slots;
-	private final UI ui;
+	private boolean hyper;
 
 	private long msPrev = System.currentTimeMillis();
 	private long times;
 
-	public Throttle(final Video video, final Slots slots, final UI ui)
+	public Throttle(final Video video, final Slots slots)
 	{
 		this.video = video;
 		this.slots = slots;
-		this.ui = ui;
 	}
 
 	public void throttle()
@@ -38,7 +36,7 @@ public class Throttle
 		 * Otherwise, just run a fast as possible (except for slowing
 		 * down while waiting for a key-press; see Keyboard.waitIfTooFast).
 		 */
-		if (!this.video.isText() && !this.slots.isAnyDiskDriveMotorOn() && !this.ui.isHyper())
+		if (!this.video.isText() && !this.slots.isAnyDiskDriveMotorOn() && !this.hyper)
 		{
 			/*
 			 * Check every 100 milliseconds to see how far
@@ -65,5 +63,19 @@ public class Throttle
 				}
 			}
 		}
+	}
+	public boolean isHyper()
+	{
+		return this.hyper;
+	}
+
+	public void setHyper(boolean isHyper)
+	{
+			this.hyper = isHyper;
+	}
+
+	public void toggleHyper()
+	{
+		this.hyper = !this.hyper;
 	}
 }

@@ -17,16 +17,6 @@ public class CLI implements UI
 		// nothing to update
 	}
 
-	public boolean isHyper()
-	{
-		return true;
-	}
-
-	public void setHyper(@SuppressWarnings("unused") boolean isHyper)
-	{
-		// don't need to do anything
-	}
-
 	public void verifyLoseUnsaveChanges()
 	{
 		// OK to discard any unsaved disk changes

@@ -15,6 +15,7 @@ import keyboard.KeyboardInterface;
 import keyboard.KeyboardProducer;
 import keyboard.KeypressQueue;
 import keyboard.VideoKeyHandler;
+import paddle.PaddleButtonStates;
 import paddle.PaddleButtons;
 import paddle.Paddles;
 import paddle.PaddlesInterface;
@@ -143,19 +144,21 @@ public final class Ja2 implements Closeable
 
 
 
+        final Video video = new Video(ui,ram,screenImage);
+
+    	final Throttle throttle = new Throttle(video,slots);
 
 		final KeypressQueue keypresses = new KeypressQueue(NOTIFY_ON_PUT);
 
-    	final KeyboardInterface keyboard = new Keyboard(keypresses,ui);
+    	final KeyboardInterface keyboard = new Keyboard(keypresses,throttle);
 
-        final Video video = new Video(ui,ram,screenImage);
     	final PaddlesInterface paddles = new Paddles();
 
-    	final PaddleButtons pdlbtns = new PaddleButtons();
+    	final PaddleButtonStates paddleButtonStates = new PaddleButtonStates();
 
 
 
-    	final AddressBus addressBus = new AddressBus(ram,rom,keyboard,video,paddles,pdlbtns,slots);
+    	final AddressBus addressBus = new AddressBus(ram,rom,keyboard,video,paddles,paddleButtonStates,slots);
 
 
 
@@ -163,25 +166,19 @@ public final class Ja2 implements Closeable
 
 
 
-    	final Throttle throttle = new Throttle(video,slots,ui);
-
     	this.clock = new Clock(cpu,video,paddles,throttle);
 
 
 
     	if (screen != null)
     	{
-    		final KeyboardProducer keyprod = new KeyboardProducer(keypresses);
-	    	screen.addKeyListener(keyprod);
-	    	final ClipboardProducer clip = new ClipboardProducer(keypresses);
-	    	screen.addKeyListener(clip);
-    		final HyperKeyHandler hyper = new HyperKeyHandler(ui);
-	    	screen.addKeyListener(hyper);
-	    	final FnKeyHandler fn = new FnKeyHandler(cpu,screenImage,ram);
-	        screen.addKeyListener(fn);
-	        final VideoKeyHandler vid = new VideoKeyHandler(video);
-	        screen.addKeyListener(vid);
-	        screen.addKeyListener(pdlbtns);
+	    	screen.addKeyListener(new KeyboardProducer(keypresses));
+	    	screen.addKeyListener(new ClipboardProducer(keypresses));
+	    	screen.addKeyListener(new HyperKeyHandler(throttle));
+	        screen.addKeyListener(new FnKeyHandler(cpu,screenImage,ram));
+	        screen.addKeyListener(new VideoKeyHandler(video));
+	        screen.addKeyListener(new PaddleButtons(paddleButtonStates));
+
 	        screen.setFocusTraversalKeysEnabled(false);
 	        screen.requestFocus();
     	}

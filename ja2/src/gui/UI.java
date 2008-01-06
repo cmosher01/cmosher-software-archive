@@ -9,9 +9,6 @@ public interface UI
 
 	void showMessage(String message);
 
-	boolean isHyper();
-	void setHyper(boolean isHyper);
-
 	void verifyLoseUnsaveChanges() throws UserCancelled;
 	void askLoseUnsavedChanges() throws UserCancelled;
 }

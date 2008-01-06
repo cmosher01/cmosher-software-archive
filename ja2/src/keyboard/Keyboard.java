@@ -1,6 +1,8 @@
 package keyboard;
 
-import gui.UI;
+
+
+import chipset.Throttle;
 
 
 
@@ -16,17 +18,17 @@ public class Keyboard implements KeyboardInterface
 {
 	private byte latch;
 	private final KeypressQueue keys;
-	private final UI ui;
+	private final Throttle throttle;
 
 	private long lastGet = System.currentTimeMillis();
 	private long cGet;
 
 
 
-	public Keyboard(final KeypressQueue keys, final UI ui)
+	public Keyboard(final KeypressQueue keys, final Throttle throttle)
 	{
 		this.keys = keys;
-		this.ui = ui;
+		this.throttle = throttle;
 	}
 
 	public void clear()
@@ -51,7 +53,7 @@ public class Keyboard implements KeyboardInterface
 
 	private void waitIfTooFast()
 	{
-		if (this.ui.isHyper())
+		if (this.throttle.isHyper())
 		{
 			return;
 		}

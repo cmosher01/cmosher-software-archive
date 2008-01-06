@@ -6,19 +6,14 @@ package paddle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.concurrent.atomic.AtomicBoolean;
 
-public class PaddleButtons extends KeyAdapter implements PaddleBtnInterface, KeyListener
+public class PaddleButtons extends KeyAdapter implements KeyListener
 {
-	private static final int PADDLE_COUNT = 4;
-	private AtomicBoolean[] button = new AtomicBoolean[PADDLE_COUNT];
+	private final PaddleButtonStates states;
 
-	public PaddleButtons()
+	public PaddleButtons(final PaddleButtonStates states)
 	{
-		for (int i = 0; i < this.button.length; ++i)
-		{
-			this.button[i] = new AtomicBoolean();
-		}
+		this.states = states;
 	}
 
 	@Override
@@ -28,15 +23,15 @@ public class PaddleButtons extends KeyAdapter implements PaddleBtnInterface, Key
 
 		if (key == KeyEvent.VK_F6)
 		{
-			this.button[0].set(true);
+			this.states.setButton(0,true);
 		}
 		else if (key == KeyEvent.VK_F7)
 		{
-			this.button[1].set(true);
+			this.states.setButton(1,true);
 		}
 		else if (key == KeyEvent.VK_F8)
 		{
-			this.button[2].set(true);
+			this.states.setButton(2,true);
 		}
 	}
 
@@ -46,24 +41,15 @@ public class PaddleButtons extends KeyAdapter implements PaddleBtnInterface, Key
 		final int key = e.getKeyCode();
 		if (key == KeyEvent.VK_F6)
 		{
-			this.button[0].set(false);
+			this.states.setButton(0,false);
 		}
 		else if (key == KeyEvent.VK_F7)
 		{
-			this.button[1].set(false);
+			this.states.setButton(1,false);
 		}
 		else if (key == KeyEvent.VK_F8)
 		{
-			this.button[2].set(false);
+			this.states.setButton(2,false);
 		}
-	}
-
-	public boolean isDown(final int paddle)
-	{
-		if (paddle < 0 || PADDLE_COUNT <= paddle)
-		{
-			return false;
-		}
-		return this.button[paddle].get();
 	}
 }
