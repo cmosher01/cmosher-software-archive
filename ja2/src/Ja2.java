@@ -21,6 +21,7 @@ import paddle.Paddles;
 import paddle.PaddlesInterface;
 import stdio.StandardIn;
 import util.Util;
+import video.ScreenImage;
 import video.Video;
 import chipset.AddressBus;
 import chipset.TimingGenerator;
@@ -122,7 +123,7 @@ public final class Ja2 implements Closeable
 
 
 
-		final BufferedImage screenImage = new BufferedImage(Video.SIZE.width,Video.SIZE.height,BufferedImage.TYPE_INT_RGB);
+		final ScreenImage screenImage = new ScreenImage();
 
 		final Screen screen;
         final UI ui;
