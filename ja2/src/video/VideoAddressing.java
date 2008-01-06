@@ -1,6 +1,6 @@
 package video;
 
-import chipset.Clock;
+import chipset.TimingGenerator;
 
 
 
@@ -11,7 +11,7 @@ class VideoAddressing
 	private static final int NTSC_FIELDS_PER_SECOND = 60;
 	private static final int NTSC_COLOR_FIELD_EVERY = 1000;
 
-	private static final int APPLE_BYTES = (NTSC_COLOR_FIELD_EVERY+1)*Clock.CPU_HZ;
+	private static final int APPLE_BYTES = (NTSC_COLOR_FIELD_EVERY+1)*TimingGenerator.CPU_HZ;
 	private static final int LINES = NTSC_FIELDS_PER_SECOND*NTSC_COLOR_FIELD_EVERY*NTSC_LINES_PER_FIELD;
 	public static final int BYTES_PER_ROW = APPLE_BYTES/LINES;
 
@@ -98,7 +98,7 @@ class VideoAddressing
 		 */
 		return ((int)Math.rint(((double)(NTSC_COLOR_FIELD_EVERY+1)/(NTSC_FIELDS_PER_SECOND*NTSC_COLOR_FIELD_EVERY)*2/(NTSC_LINES_PER_FRAME)*MEGA - (1.5+4.7+.6+2.5+1.6)) *
 			.75 *
-			(Clock.CRYSTAL_HZ/2))) / MEGA / VISIBLE_BITS_PER_BYTE;
+			(TimingGenerator.CRYSTAL_HZ/2))) / MEGA / VISIBLE_BITS_PER_BYTE;
 	}
 	private static int calculateVisibleRows()
 	{

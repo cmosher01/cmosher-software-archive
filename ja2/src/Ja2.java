@@ -23,7 +23,7 @@ import stdio.StandardIn;
 import util.Util;
 import video.Video;
 import chipset.AddressBus;
-import chipset.Clock;
+import chipset.TimingGenerator;
 import chipset.InvalidMemoryLoad;
 import chipset.Memory;
 import chipset.Slots;
@@ -68,7 +68,7 @@ public final class Ja2 implements Closeable
 
 
     private boolean gui = true;
-	private Clock clock;
+	private TimingGenerator clock;
 
 	private String config = "ja2.cfg";
 
@@ -166,7 +166,7 @@ public final class Ja2 implements Closeable
 
 
 
-    	this.clock = new Clock(cpu,video,paddles,throttle);
+    	this.clock = new TimingGenerator(cpu,video,paddles,throttle);
 
 
 

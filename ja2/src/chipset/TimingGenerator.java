@@ -10,7 +10,7 @@ import video.Video;
 /*
  * Created on Aug 1, 2007
  */
-public class Clock
+public class TimingGenerator
 {
 	public static final int CRYSTAL_HZ = Util.divideRoundUp(315000000,22);
 	private static final int CPU_CYCLES_PER_CRYSTAL_CYCLES = 14; // TODO account for the elongated CPU cycle
@@ -27,7 +27,7 @@ public class Clock
 
 
 
-	public Clock(final CPU6502 cpu, final Video video, final PaddlesInterface paddles, final Throttle throttle)
+	public TimingGenerator(final CPU6502 cpu, final Video video, final PaddlesInterface paddles, final Throttle throttle)
 	{
 		this.cpu = cpu;
 		this.video = video;
@@ -53,7 +53,7 @@ public class Clock
 					}
 				}
 			});
-			this.thread.setName("Apple-Clock");
+			this.thread.setName("Ja2-TimingGenerator");
 			this.thread.start();
 		}
 	}
