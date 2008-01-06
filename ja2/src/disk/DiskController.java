@@ -27,13 +27,8 @@ public class DiskController extends Card
 
 	public DiskController()
 	{
-		final DiskBytes disk1 = new DiskBytes();
-		final StepperMotor arm1 = new StepperMotor();
-		this.drive1 = new DiskDriveSimple(disk1,arm1);
-
-		final DiskBytes disk2 = new DiskBytes();
-		final StepperMotor arm2 = new StepperMotor();
-		this.drive2 = new DiskDriveSimple(disk2,arm2);
+		this.drive1 = new DiskDriveSimple(new DiskBytes(),new StepperMotor());
+		this.drive2 = new DiskDriveSimple(new DiskBytes(),new StepperMotor());
 	}
 
 	@Override
