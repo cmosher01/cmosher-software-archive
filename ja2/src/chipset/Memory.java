@@ -29,6 +29,11 @@ public class Memory
 		clear();
 	}
 
+	public int size()
+	{
+		return this.ram.length;
+	}
+
 	public void clear()
 	{
 		Arrays.fill(this.ram,(byte)0);
@@ -57,17 +62,5 @@ public class Memory
 		{
 			throw new InvalidMemoryLoad(e);
 		}
-	}
-
-	final SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-	public void dump() throws IOException
-	{
-		final String name = "dump"+this.fmt.format(new Date())+".bin";
-		final OutputStream fil = new BufferedOutputStream(new FileOutputStream(new File(name)));
-		for (int i = 0; i < this.ram.length; ++i)
-		{
-			fil.write(this.ram[i]);
-		}
-		fil.close();
 	}
 }
