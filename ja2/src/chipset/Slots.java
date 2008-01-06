@@ -20,7 +20,7 @@ public class Slots implements Iterable<Card>
 
 	public Slots()
 	{
-		cards.addAll(Collections.<Card>nCopies(Config.SLOTS,new EmptySlot()));
+		this.cards.addAll(Collections.<Card>nCopies(Config.SLOTS,new EmptySlot()));
 	}
 
 	public byte io(final int islot, final int iswch, final byte b, boolean writing)

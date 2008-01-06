@@ -5,7 +5,6 @@ package gui;
 
 import java.awt.FlowLayout;
 import java.awt.dnd.DropTargetListener;
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import disk.DiskController;
 

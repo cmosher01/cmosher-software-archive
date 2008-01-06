@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import util.HexUtil;
-import util.Util;
 import junit.framework.TestCase;
 
 

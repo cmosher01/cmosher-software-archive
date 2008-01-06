@@ -3,10 +3,7 @@
  */
 package cli;
 
-import java.io.Closeable;
-import java.io.IOException;
 import gui.UI;
-import gui.UserCancelled;
 
 public class CLI implements UI
 {
@@ -35,7 +32,7 @@ public class CLI implements UI
 		// OK to discard any unsaved disk changes
 	}
 
-	public void askLoseUnsavedChanges() throws UserCancelled
+	public void askLoseUnsavedChanges()
 	{
 		// OK to discard any unsaved disk changes
 	}
