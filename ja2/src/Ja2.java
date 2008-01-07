@@ -1,7 +1,6 @@
 import gui.GUI;
 import gui.Screen;
 import gui.UI;
-import java.awt.image.BufferedImage;
 import java.io.Closeable;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;

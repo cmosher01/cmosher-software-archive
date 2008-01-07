@@ -99,19 +99,6 @@ public class Video
 		return b;
 	}
 
-	private void dumpSwitches()
-	{
-		final StringBuilder sb = new StringBuilder();
-		sb.append(this.swText ? "TEXT" : "GRPH");
-		sb.append("-");
-		sb.append(this.swMixed ? "MIXD" : "FULL");
-		sb.append("-");
-		sb.append(this.swPage2==0 ? "PAG1" : "PAG2");
-		sb.append("-");
-		sb.append(this.swHiRes ? "HIRS" : "LORS");
-		System.err.println(sb);
-	}
-
 	public void tick()
 	{
 		setDataByte();

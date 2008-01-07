@@ -215,8 +215,8 @@ public class Config
 		else if (cardType.equalsIgnoreCase("stdin"))
 		{
 	    	final KeypressQueue stdinkeys = new KeypressQueue();
-	    	final StandardInProducer stdinprod = new StandardInProducer(stdinkeys);
-	    	card = new StandardIn(eofHandler,stdinkeys); // TODO StadardIn needs ui
+	    	new StandardInProducer(stdinkeys);
+	    	card = new StandardIn(eofHandler,stdinkeys);
 		}
 		else
 		{
