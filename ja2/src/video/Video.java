@@ -4,8 +4,6 @@ import gui.UI;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
-import java.io.IOException;
-import java.io.InputStream;
 import chipset.Memory;
 
 /*
@@ -16,7 +14,7 @@ public class Video
 	private final UI ui;
 	private final Memory memory;
 
-	private final byte[] char_rom = new byte[0x200];
+	private final TextCharacters charRom = new TextCharacters();
 
 	private boolean swText = true;
 	private boolean swMixed;
@@ -40,8 +38,6 @@ public class Video
 
 
 
-
-    private static final int EOF = -1;
 
 	private static final int XSIZE = VideoAddressing.VISIBLE_BITS_PER_BYTE*VideoAddressing.VISIBLE_BYTES_PER_ROW;
 	private static final int YSIZE = VideoAddressing.VISIBLE_ROWS_PER_FIELD;
@@ -71,47 +67,13 @@ public class Video
 
 		try
 		{
-			readCharRom();
+			this.charRom.readCharRom();
 		}
 		catch (final Exception e)
 		{
 			e.printStackTrace();
 			this.ui.showMessage(e.getMessage());
 		}
-	}
-
-	private void readCharRom() throws IOException
-	{
-		final InputStream rom = Video.class.getResourceAsStream("GI2513.ROM");
-		int cc = 0;
-		for (int c = rom.read(); c != EOF; c = rom.read())
-		{
-			if (cc < this.char_rom.length)
-			{
-				this.char_rom[cc] = xlateCharRom(c);
-			}
-			++cc;
-		}
-		rom.close();
-		if (cc != 0x200)
-		{
-			throw new IOException("Text-character-ROM file GI2513.ROM is invalid: length is "+
-				cc+" but should be 512. Text may not be displayed correctly.");
-		}
-	}
-
-	private static byte xlateCharRom(int b)
-	{
-		// xlateCharRom(abcdefgh) == 0hgfedcb
-		byte r = 0;
-		for (int i = 0; i < 7; ++i)
-		{
-			r <<= 1;
-			if ((b & 1) != 0)
-				r |= 1;
-			b >>= 1;
-		}
-		return r;
 	}
 
 	public byte getDataBus()
@@ -236,7 +198,7 @@ public class Video
 		if (isDisplayingText())
 		{
 			final boolean inverse = inverseChar(d);
-			d = this.char_rom[((d & 0x3F) << 3) | (y & 0x07)];
+			d = this.charRom.get(((d & 0x3F) << 3) | (y & 0x07));
 			if (inverse)
 			{
 				d = ~d;
