@@ -25,12 +25,9 @@ public class GUI implements UI
 {
 	private final JFrame frame;
 	private final ContentPane contentPane;
-	private final Image videoImage;
 
-	public GUI(final Closeable app, final Screen screen, final Slots slots, final Image videoImage)
+	public GUI(final Closeable app, final Screen screen, final Slots slots)
 	{
-		this.videoImage = videoImage;
-
 		setLookAndFeel();
 
 		setDecorated();
@@ -227,6 +224,6 @@ public class GUI implements UI
 		{
 			return;
 		}
-		this.contentPane.updateScreen(this.videoImage);
+		this.contentPane.updateScreen();
 	}
 }

@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Image;
 import java.awt.dnd.DropTargetListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -65,9 +64,9 @@ class ContentPane extends JPanel
 		return this.dropTarget;
 	}
 
-	public void updateScreen(final Image image)
+	public void updateScreen()
 	{
-		this.screen.plot(image);
+		this.screen.plot();
 	}
 
 	public boolean hasUnsavedChanges()

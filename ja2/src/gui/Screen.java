@@ -17,18 +17,21 @@ public class Screen extends JPanel
 {
 	private static final int FACTOR = 2;
 
-	private Graphics2D graphics;
-	private AffineTransform affine = new AffineTransform();
+	private final Image image;
+	private final AffineTransform affine = new AffineTransform();
 
-	public Screen()
+	private Graphics2D graphics;
+
+	public Screen(final Image image)
 	{
+		this.image = image;
 		this.affine.scale(FACTOR,FACTOR);
 		setOpaque(true);
 		setPreferredSize(new Dimension(Video.SIZE.width*FACTOR,Video.SIZE.height*FACTOR));
 		addNotify();
 	}
 
-	public void plot(final Image image)
+	public void plot()
 	{
 		try
 		{
@@ -36,7 +39,7 @@ public class Screen extends JPanel
 			{
 				public void run()
 				{
-					plotScreen(image);
+					plotScreen();
 				}
 			});
 		}
@@ -50,7 +53,7 @@ public class Screen extends JPanel
 		}
 	}
 
-	protected void plotScreen(final Image image)
+	protected void plotScreen()
 	{
 		if (this.graphics == null)
 		{
@@ -61,12 +64,7 @@ public class Screen extends JPanel
 			}
 		}
 
-		if (image == null)
-		{
-			return;
-		}
-
-		this.graphics.drawImage(image,this.affine,this);
+		this.graphics.drawImage(this.image,this.affine,this);
 	}
 
 	/**

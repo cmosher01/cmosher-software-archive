@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import util.Util;
 
-public class TextCharacters
+class TextCharacters
 {
     public static final int SIZE = 0x200;
 

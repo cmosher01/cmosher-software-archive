@@ -128,8 +128,8 @@ public final class Ja2 implements Closeable
         final UI ui;
     	if (this.gui)
     	{
-	    	screen = new Screen();
-	    	ui = new GUI(this,screen,slots,screenImage);
+	    	screen = new Screen(screenImage);
+	    	ui = new GUI(this,screen,slots);
     	}
     	else
     	{
