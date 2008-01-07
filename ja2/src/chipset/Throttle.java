@@ -12,7 +12,7 @@ import video.Video;
 
 public class Throttle
 {
-	private static final int CHECK_EVERY = Util.divideRound(TimingGenerator.CPU_HZ,10);
+	private static final int CHECK_EVERY = Util.divideRound(TimingGenerator.AVG_CPU_HZ,10);
 
 	private final Video video;
 	private final Slots slots;
