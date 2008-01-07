@@ -3,6 +3,7 @@
  */
 package stdio;
 
+import util.Util;
 import keyboard.KeypressQueue;
 import chipset.Card;
 
@@ -12,8 +13,6 @@ public class StandardIn extends Card
 	{
 		void handleEOF();
 	}
-
-	private static final int EOF = -1;
 
 	private final EOFHandler eofHandler;
 	private final KeypressQueue stdinkeys;
@@ -47,7 +46,7 @@ public class StandardIn extends Card
 					{
 						this.stdinkeys.remove();
 						this.latch = k.byteValue();
-						if (this.latch == EOF)
+						if (this.latch == (byte)Util.EOF)
 						{
 							this.gotEOF = true;
 							this.eofHandler.handleEOF();

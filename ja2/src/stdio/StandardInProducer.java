@@ -7,13 +7,13 @@ import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import util.Util;
 import keyboard.KeypressQueue;
 
 public class StandardInProducer
 {
 	private static final int CR = '\r';
 	private static final int LF = '\n';
-	private static final int EOF = -1;
 
 	private final KeypressQueue keys;
 	private final Thread th;
@@ -75,7 +75,7 @@ public class StandardInProducer
 		while (state != state_t.GOT_EOF)
 		{
 			int c = in.read();
-			if (c == EOF)
+			if (c == Util.EOF)
 			{
 				state = state_t.GOT_EOF;
 				this.keys.putEOF();

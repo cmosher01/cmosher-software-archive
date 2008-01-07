@@ -8,6 +8,8 @@ import java.io.IOException;
  */
 class Drive
 {
+	public static final int TRACKS_PER_DISK = 0x23;
+
 	private final DiskBytes disk;
 	private final StepperMotor arm;
 
@@ -55,14 +57,14 @@ class Drive
 		return this.disk.get(this.arm.getTrack());
 	}
 
-	void set(final byte value)
+	public void set(final byte value)
 	{
 		this.disk.put(this.arm.getTrack(),value);
 	}
 
 
 
-	DiskBytes getDiskBytes()
+	public DiskBytes getDiskBytes()
 	{
 		return this.disk;
 	}

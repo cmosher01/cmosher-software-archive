@@ -10,15 +10,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.concurrent.atomic.AtomicBoolean;
+import util.Util;
 
 /*
  * Created on Sep 16, 2007
  */
 public class DiskBytes
 {
-	private static final int EOF = -1;
 	private static final int BYTES_PER_TRACK = 0x1A00;
-	private static final int TRACKS_PER_DISK = 0x23;
 
 	private byte[][] bytes;
 
@@ -46,14 +45,14 @@ public class DiskBytes
 		{
 			throw new FileNotFoundException("Can't find file: "+f.getPath());
 		}
-		if (f.length() != TRACKS_PER_DISK*BYTES_PER_TRACK)
+		if (f.length() != Drive.TRACKS_PER_DISK*BYTES_PER_TRACK)
 		{
 			throw new InvalidDiskImage(f.getName());
 		}
-		byte[][] rb = new byte[TRACKS_PER_DISK][BYTES_PER_TRACK];
+		byte[][] rb = new byte[Drive.TRACKS_PER_DISK][BYTES_PER_TRACK];
 		final InputStream disk = new BufferedInputStream(new FileInputStream(f));
 		int itrack = 0;
-		for (int b1 = disk.read(); b1 != EOF && itrack < TRACKS_PER_DISK; b1 = disk.read())
+		for (int b1 = disk.read(); b1 != Util.EOF && itrack < Drive.TRACKS_PER_DISK; b1 = disk.read())
 		{
 			if (b1 < 0x96)
 			{
@@ -97,8 +96,8 @@ public class DiskBytes
 		{
 			return;
 		}
-		final OutputStream out = new BufferedOutputStream(new FileOutputStream(this.file),TRACKS_PER_DISK*BYTES_PER_TRACK);
-		for (int itrack = 0; itrack < TRACKS_PER_DISK; ++itrack)
+		final OutputStream out = new BufferedOutputStream(new FileOutputStream(this.file),Drive.TRACKS_PER_DISK*BYTES_PER_TRACK);
+		for (int itrack = 0; itrack < Drive.TRACKS_PER_DISK; ++itrack)
 		{
 			for (int ibyte = 0; ibyte < BYTES_PER_TRACK; ++ibyte)
 			{
@@ -126,7 +125,7 @@ public class DiskBytes
 
 	public byte get(final int track)
 	{
-		if (track < 0 || TRACKS_PER_DISK <= track)
+		if (track < 0 || Drive.TRACKS_PER_DISK <= track)
 		{
 			throw new IllegalStateException();
 		}
@@ -161,7 +160,7 @@ public class DiskBytes
 
 	void put(final int track, final byte value)
 	{
-		if (track < 0 || TRACKS_PER_DISK <= track)
+		if (track < 0 || Drive.TRACKS_PER_DISK <= track)
 		{
 			throw new IllegalStateException();
 		}

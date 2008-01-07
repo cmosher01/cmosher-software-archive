@@ -5,11 +5,10 @@ package video;
 
 import java.io.IOException;
 import java.io.InputStream;
+import util.Util;
 
 public class TextCharacters
 {
-    private static final int EOF = -1;
-
     public static final int SIZE = 0x200;
 
     private final byte[] char_rom = new byte[SIZE];
@@ -18,7 +17,7 @@ public class TextCharacters
 	{
 		final InputStream rom = Video.class.getResourceAsStream("GI2513.ROM");
 		int cc = 0;
-		for (int c = rom.read(); c != EOF; c = rom.read())
+		for (int c = rom.read(); c != Util.EOF; c = rom.read())
 		{
 			if (cc < this.char_rom.length)
 			{

@@ -7,6 +7,8 @@ import java.util.StringTokenizer;
 
 public final class Util
 {
+	public static final int EOF = -1;
+
 	private Util() { throw new IllegalStateException(); }
 
 	public static int divideRound(final int dividend, final int divisor)

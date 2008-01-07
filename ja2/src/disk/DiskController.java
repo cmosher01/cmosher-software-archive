@@ -13,8 +13,8 @@ import gui.GUI;
  */
 public class DiskController extends Card
 {
-	private final Drive drive1;
-	private final Drive drive2;
+	private final Drive drive1 = new Drive(new DiskBytes(),new StepperMotor());
+	private final Drive drive2 = new Drive(new DiskBytes(),new StepperMotor());
 
 	private volatile Drive currentDrive;
 
@@ -25,19 +25,13 @@ public class DiskController extends Card
 	private DiskDriveControllerPanel panel;
 
 
-	public DiskController()
-	{
-		this.drive1 = new Drive(new DiskBytes(),new StepperMotor());
-		this.drive2 = new Drive(new DiskBytes(),new StepperMotor());
-	}
 
 	@Override
-	public byte io(final int addr, final byte data, final boolean writing)
+	public byte io(final int addr, byte data, final boolean writing)
 	{
 		final int q = (addr & 0x000E) >> 1;
 		final boolean on = (addr & 0x0001) != 0;
 
-		byte ret = -1;
 		switch (q)
 		{
 			case 0:
@@ -64,7 +58,7 @@ public class DiskController extends Card
 				}
 				else if (!(on || this.write))
 				{
-					ret = get();
+					data = get();
 				}
 			break;
 			case 7:
@@ -72,15 +66,15 @@ public class DiskController extends Card
 				this.panel.updateDrives();
 				if (this.currentDrive.isWriteProtected())
 				{
-					ret |= 0x80;
+					data |= 0x80;
 				}
 				else
 				{
-					ret &= 0x7F;
+					data &= 0x7F;
 				}
 			break;
 		}
-		return ret;
+		return data;
 	}
 
 	private void set(final byte data)

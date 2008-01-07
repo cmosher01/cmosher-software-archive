@@ -17,8 +17,7 @@ package disk;
  */
 class StepperMotor
 {
-	private static final int TRACKS = 0x23;
-	private static final int QTRACKS = TRACKS << 2;
+	private static final int QTRACKS = Drive.TRACKS_PER_DISK << 2;
 
 	private int quarterTrack = 0x11 << 2; // start in the middle of the disk... why not?
 

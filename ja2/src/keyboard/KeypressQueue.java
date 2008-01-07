@@ -5,11 +5,10 @@ package keyboard;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import util.Util;
 
 public class KeypressQueue
 {
-	private static final byte EOF = -1;
-
 	private final BlockingQueue<Byte> q = new LinkedBlockingQueue<Byte>();
 
 	private final boolean notifyOnPut;
@@ -62,7 +61,7 @@ public class KeypressQueue
 
 	public void putEOF()
 	{
-		putRaw(EOF);
+		putRaw((byte)Util.EOF);
 	}
 
 	public Byte peek()
