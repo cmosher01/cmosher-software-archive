@@ -173,7 +173,7 @@ public final class Ja2 implements Closeable
 
     	if (screen != null)
     	{
-	    	screen.addKeyListener(new KeyboardProducer(keypresses));
+	    	screen.addKeyListener(new KeyboardProducer(keypresses,keyboard));
 	    	screen.addKeyListener(new ClipboardProducer(keypresses));
 	    	screen.addKeyListener(new HyperKeyHandler(throttle));
 	        screen.addKeyListener(new FnKeyHandler(cpu,screenImage,ram));

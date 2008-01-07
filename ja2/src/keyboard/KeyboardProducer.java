@@ -12,10 +12,12 @@ public class KeyboardProducer extends KeyAdapter implements KeyListener
 {
 	private static final int CR = '\r';
 	private final KeypressQueue keys;
+	private final KeyboardInterface kbd;
 
-	public KeyboardProducer(final KeypressQueue keys)
+	public KeyboardProducer(final KeypressQueue keys, final KeyboardInterface kbd)
 	{
 		this.keys = keys;
+		this.kbd = kbd;
 	}
 
 	@Override
@@ -47,7 +49,7 @@ public class KeyboardProducer extends KeyAdapter implements KeyListener
 		}
 		else if (key == KeyEvent.VK_F12)
 		{
-			this.keys.clear();
+			this.kbd.setLossless(!this.kbd.isLossless());
 		}
 		else if ('a' <= chr && chr <= 'z')
 		{

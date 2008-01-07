@@ -7,4 +7,6 @@ public interface KeyboardInterface
 {
 	byte get();
 	void clear();
+	boolean isLossless();
+	void setLossless(boolean lossless);
 }

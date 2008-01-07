@@ -16,9 +16,11 @@ import chipset.Throttle;
  */
 public class Keyboard implements KeyboardInterface
 {
-	private byte latch;
 	private final KeypressQueue keys;
 	private final Throttle throttle;
+	private boolean lossless = true;
+
+	private byte latch;
 
 	private long lastGet = System.currentTimeMillis();
 	private long cGet;
@@ -39,7 +41,7 @@ public class Keyboard implements KeyboardInterface
 	public byte get()
 	{
 		waitIfTooFast();
-		if (this.latch >= 0)
+		if (!this.lossless || this.latch >= 0)
 		{
 			final Byte k = this.keys.peek();
 			if (k != null)
@@ -84,5 +86,15 @@ public class Keyboard implements KeyboardInterface
 			this.cGet = 0;
 		}
 		this.lastGet = System.currentTimeMillis();
+	}
+
+	public void setLossless(final boolean lossless)
+	{
+		this.lossless = lossless;
+	}
+
+	public boolean isLossless()
+	{
+		return this.lossless;
 	}
 }
