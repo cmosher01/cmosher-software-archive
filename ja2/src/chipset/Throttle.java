@@ -6,7 +6,7 @@ package chipset;
 
 
 import util.Util;
-import video.Video;
+import video.VideoMode;
 
 
 
@@ -14,14 +14,14 @@ public class Throttle
 {
 	private static final int CHECK_EVERY = Util.divideRound(TimingGenerator.AVG_CPU_HZ,10);
 
-	private final Video video;
+	private final VideoMode video;
 	private final Slots slots;
 	private boolean hyper;
 
 	private long msPrev = System.currentTimeMillis();
 	private long times;
 
-	public Throttle(final Video video, final Slots slots)
+	public Throttle(final VideoMode video, final Slots slots)
 	{
 		this.video = video;
 		this.slots = slots;
@@ -55,6 +55,7 @@ public class Throttle
 					try
 					{
 						Thread.sleep(msDelta);
+						this.msPrev = System.currentTimeMillis();
 					}
 					catch (InterruptedException e)
 					{

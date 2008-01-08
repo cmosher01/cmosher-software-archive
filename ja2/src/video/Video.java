@@ -4,6 +4,7 @@ import gui.UI;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
+import chipset.AddressBus;
 import chipset.Memory;
 
 /*
@@ -11,15 +12,13 @@ import chipset.Memory;
  */
 public class Video
 {
+	private final VideoMode mode;
 	private final UI ui;
-	private final Memory memory;
+	private final AddressBus addressBus;
+	private final BufferedImage screenImage;
+	private final DataBuffer buf;
 
 	private final TextCharacters charRom = new TextCharacters();
-
-	private boolean swText = true;
-	private boolean swMixed;
-	private int swPage2;
-	private boolean swHiRes;
 
 	// somewhat arbitrary starting point for scanning... helps start
 	// an Apple ][ plus with a clean screen
@@ -30,8 +29,6 @@ public class Video
 	private int prevPlotByte;
 	private byte dataByte;
 
-	private final BufferedImage screenImage;
-	private final DataBuffer buf;
 
 	private boolean killColor = true;
 	private boolean observedColors = true;
@@ -48,7 +45,7 @@ public class Video
 	private static final int ROWS_PER_TEXT_LINE = 8;
 	private static final int MIXED_TEXT_CYCLE = (VideoAddressing.VISIBLE_ROWS_PER_FIELD-(MIXED_TEXT_LINES*ROWS_PER_TEXT_LINE))*VideoAddressing.BYTES_PER_ROW;
 
-	private static final int FLASH_HALFPERIOD = 4;
+	private static final int FLASH_HALFPERIOD = 1;
 
 	private int[][] lutText = { VideoAddressing.buildLUT(0x0400,0x0400), VideoAddressing.buildLUT(0x0800,0x0400) };
 	private int[][] lutHiGr = { VideoAddressing.buildLUT(0x2000,0x2000), VideoAddressing.buildLUT(0x4000,0x2000) };
@@ -58,10 +55,11 @@ public class Video
 
 
 
-	public Video(final UI ui, final Memory memory, final BufferedImage screenImage)
+	public Video(final VideoMode mode, final UI ui, final AddressBus addressBus, final BufferedImage screenImage)
 	{
+		this.mode = mode;
 		this.ui = ui;
-		this.memory = memory;
+		this.addressBus = addressBus;
 		this.screenImage = screenImage;
 		this.buf = this.screenImage.getRaster().getDataBuffer();
 
@@ -79,24 +77,6 @@ public class Video
 	public byte getDataBus()
 	{
 		return this.dataByte; // emulate floating data bus
-	}
-
-	public byte io(final int addr, final byte b)
-	{
-		final int sw = (addr & 0x000E) >> 1;
-		final boolean on = (addr & 0x0001) != 0;
-		switch (sw)
-		{
-			case 0:
-				this.swText = on; break;
-			case 1:
-				this.swMixed = on; break;
-			case 2:
-				this.swPage2 = on ? 1 : 0; break;
-			case 3:
-				this.swHiRes = on; break;
-		}
-		return b;
 	}
 
 	public void tick()
@@ -117,15 +97,15 @@ public class Video
 	private void setDataByte()
 	{
 		final int[] lookupTable;
-		if (isDisplayingText() || !this.swHiRes)
+		if (isDisplayingText() || !this.mode.isHiRes())
 		{
-			lookupTable = this.lutText[this.swPage2];
+			lookupTable = this.lutText[this.mode.getPage()];
 		}
 		else
 		{
-			lookupTable = this.lutHiGr[this.swPage2];
+			lookupTable = this.lutHiGr[this.mode.getPage()];
 		}
-		this.dataByte = this.memory.read(lookupTable[this.t]);
+		this.dataByte = this.addressBus.read(lookupTable[this.t]);
 	}
 
 	private void updateFlashingState()
@@ -141,7 +121,7 @@ public class Video
 
 	private boolean isDisplayingText()
 	{
-		return this.swText || (this.swMixed && this.t >= MIXED_TEXT_CYCLE);
+		return this.mode.isText() || (this.mode.isMixed() && this.t >= MIXED_TEXT_CYCLE);
 	}
 
 	private boolean inverseChar(final int d)
@@ -198,7 +178,7 @@ public class Video
 		y *= XSIZE;
 		x += y;
 
-		if (isDisplayingText() || this.swHiRes)
+		if (isDisplayingText() || this.mode.isHiRes())
 		{
 			plotByteAsHiRes(x,ox,d);
 		}
@@ -316,7 +296,7 @@ public class Video
     	}
     	else
     	{
-    		if (leftBit == 0 && rightBit == 0 && !(this.killColor && this.swText))
+    		if (leftBit == 0 && rightBit == 0 && !(this.killColor && this.mode.isText()))
     		{
     			c = color;
     		}
@@ -326,11 +306,6 @@ public class Video
     		}
     	}
 		return c;
-	}
-
-    public boolean isText()
-	{
-		return this.swText;
 	}
 
 	public void toggleColorMap()

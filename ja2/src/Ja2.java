@@ -22,6 +22,7 @@ import stdio.StandardIn;
 import util.Util;
 import video.ScreenImage;
 import video.Video;
+import video.VideoMode;
 import chipset.AddressBus;
 import chipset.TimingGenerator;
 import chipset.InvalidMemoryLoad;
@@ -144,9 +145,10 @@ public final class Ja2 implements Closeable
 
 
 
-        final Video video = new Video(ui,ram,screenImage);
+    	
+    	final VideoMode videoMode = new VideoMode();
 
-    	final Throttle throttle = new Throttle(video,slots);
+    	final Throttle throttle = new Throttle(videoMode,slots);
 
 		final KeypressQueue keypresses = new KeypressQueue(NOTIFY_ON_PUT);
 
@@ -158,7 +160,11 @@ public final class Ja2 implements Closeable
 
 
 
-    	final AddressBus addressBus = new AddressBus(ram,rom,keyboard,video,paddles,paddleButtonStates,slots);
+    	final AddressBus addressBus = new AddressBus(ram,rom,keyboard,videoMode,paddles,paddleButtonStates,slots);
+
+
+
+    	final Video video = new Video(videoMode,ui,addressBus,screenImage);
 
 
 

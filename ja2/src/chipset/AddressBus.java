@@ -3,7 +3,7 @@ package chipset;
 import paddle.PaddleBtnInterface;
 import paddle.PaddlesInterface;
 import keyboard.KeyboardInterface;
-import video.Video;
+import video.VideoMode;
 
 
 
@@ -16,16 +16,16 @@ public class AddressBus implements chipset.cpu.AddressBus
 	private final Memory ram;
 	private final Memory rom;
 	private final KeyboardInterface keyboard;
-	private final Video video;
+	private final VideoMode video;
 	private final PaddlesInterface paddles;
 	private final Slots slots;
 	private final PaddleBtnInterface paddleButtons;
 
+	private byte data; // this emulates the (floating) data bus
 
 
 
-
-	public AddressBus(final Memory ram, final Memory rom, final KeyboardInterface keyboard, final Video video, final PaddlesInterface paddles, final PaddleBtnInterface paddleButtons, final Slots slots)
+	public AddressBus(final Memory ram, final Memory rom, final KeyboardInterface keyboard, final VideoMode video, final PaddlesInterface paddles, final PaddleBtnInterface paddleButtons, final Slots slots)
 	{
 		this.ram = ram;
 		this.rom = rom;
@@ -38,8 +38,6 @@ public class AddressBus implements chipset.cpu.AddressBus
 
 	public byte read(final int address)
 	{
-		byte data = this.video.getDataBus();
-
 		if ((address >> 14 == 3)) // >= $C000
 		{
 			if ((address >> 12) == 0xC)
@@ -49,36 +47,38 @@ public class AddressBus implements chipset.cpu.AddressBus
 				final int slot = (address >> 8) & 7;
 				if (seventh)
 				{
-					data = this.slots.readSeventhRom(address & 0x07FF);
+					this.data = this.slots.readSeventhRom(address & 0x07FF);
 				}
 				else if (slot == 0)
 				{
-					data = readSwitch(address & 0x00FF,data);
+					this.data = readSwitch(address & 0x00FF);
 				}
 				else
 				{
-					data = this.slots.readRom(slot,address & 0x00FF);
+					this.data = this.slots.readRom(slot,address & 0x00FF);
 				}
 			}
 			else
 			{
-				data = this.slots.ioBankRom(address - 0xD000,data,false);
+				this.data = this.slots.ioBankRom(address - 0xD000,this.data,false);
 				if (!this.slots.inhibitMotherboardRom())
 				{
-					data = this.rom.read(address - 0xD000);
+					this.data = this.rom.read(address - 0xD000);
 				}
 			}
 		}
 		else // < $C000
 		{
-			data = this.ram.read(address);
+			this.data = this.ram.read(address);
 		}
 
-		return data;
+		return this.data;
 	}
 
-	public void write(final int address, final byte data)
+	public void write(final int address, final byte d)
 	{
+		this.data = d;
+
 		if ((address >> 14 == 3)) // >= $C000
 		{
 			if ((address >> 12) == 0xC)
@@ -88,17 +88,17 @@ public class AddressBus implements chipset.cpu.AddressBus
 				final int slot = (address >> 8) & 7;
 				if (!seventh && slot == 0)
 				{
-					writeSwitch(address & 0x00FF, data);
+					writeSwitch(address & 0x00FF);
 				}
 			}
 			else
 			{
-				this.slots.ioBankRom(address - 0xD000,data,true);
+				this.slots.ioBankRom(address - 0xD000,this.data,true);
 			}
 		}
 		else // < $C000
 		{
-			this.ram.write(address,data);
+			this.ram.write(address,this.data);
 		}
 	}
 
@@ -113,7 +113,7 @@ public class AddressBus implements chipset.cpu.AddressBus
 
 
 
-	private byte readSwitch(int address, byte data)
+	private byte readSwitch(int address)
 	{
 		if (address < 0x80)
 		{
@@ -121,7 +121,7 @@ public class AddressBus implements chipset.cpu.AddressBus
 			final int iswch = (address & 0x0F);
 			if (islot == 0x0)
 			{
-				data = this.keyboard.get();
+				this.data = this.keyboard.get();
 			}
 			else if (islot == 0x1)
 			{
@@ -143,7 +143,7 @@ public class AddressBus implements chipset.cpu.AddressBus
 			{
 				if (iswch < 0x8)
 				{
-					data = this.video.io(address,data);
+					this.data = this.video.io(address,this.data);
 				}
 				else
 				{
@@ -159,32 +159,18 @@ public class AddressBus implements chipset.cpu.AddressBus
 				}
 				else if (sw2 < 4)
 				{
-					if (this.paddleButtons.isDown(sw2))
-					{
-						data = (byte)(data | 0x80);
-					}
-					else
-					{
-						data = (byte)(data & 0x7F);
-					}
+					setD7(this.paddleButtons.isDown(sw2));
 				}
 				else
 				{
 					sw2 &= 3;
-					if (this.paddles.isTimedOut(sw2))
-					{
-						data = (byte)(data & 0x7F);
-					}
-					else
-					{
-						data = (byte)(data | 0x80);
-					}
+					setD7(!this.paddles.isTimedOut(sw2));
 				}
 			}
 			else if (islot == 0x7)
 			{
 				this.paddles.startTimers();
-				data = (byte)(data | 0x80);
+				setD7(true);
 			}
 		}
 		else
@@ -193,13 +179,25 @@ public class AddressBus implements chipset.cpu.AddressBus
 			address &= 0x7F;
 			final int islot = (address & 0xF0) >> 4;
 			final int iswch = (address & 0x0F);
-			data = this.slots.io(islot,iswch,data,false);
+			this.data = this.slots.io(islot,iswch,this.data,false);
 		}
 
-		return data;
+		return this.data;
 	}
 
-	private void writeSwitch(int address, byte data)
+	private void setD7(final boolean set)
+	{
+		if (set)
+		{
+			this.data = (byte)(this.data | 0x80);
+		}
+		else
+		{
+			this.data = (byte)(this.data & 0x7F);
+		}
+	}
+
+	private void writeSwitch(int address)
 	{
 		if (address < 0x80)
 		{
@@ -213,7 +211,7 @@ public class AddressBus implements chipset.cpu.AddressBus
 			else if (islot == 0x5)
 			{
 				if (iswch < 0x8)
-					this.video.io(address,data);
+					this.video.io(address,this.data);
 			}
 			// ignore all other switch writes
 		}
@@ -223,7 +221,7 @@ public class AddressBus implements chipset.cpu.AddressBus
 			address &= 0x7F;
 			final int islot = (address & 0xF0) >> 4;
 			final int iswch = (address & 0x0F);
-			this.slots.io(islot,iswch,data,true);
+			this.slots.io(islot,iswch,this.data,true);
 		}
 	}
 }

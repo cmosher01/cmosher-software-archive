@@ -30,7 +30,7 @@ public class KeypressQueue
 			return;
 		}
 
-		final byte b = (byte)((c & 0x0000007F) | 0x00000080);
+		final byte b = (byte)((c & 0x7F) | 0x80);
 
 		putRaw(b);
 	}
