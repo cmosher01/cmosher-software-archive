@@ -32,7 +32,6 @@ public class Video
 	private final VideoMode mode;
 	private final UI ui;
 	private final AddressBus addressBus;
-	private final BufferedImage screenImage;
 	private final DataBuffer buf;
 
 	private final TextCharacters charRom = new TextCharacters();
@@ -59,8 +58,7 @@ public class Video
 		this.mode = mode;
 		this.ui = ui;
 		this.addressBus = addressBus;
-		this.screenImage = screenImage;
-		this.buf = this.screenImage.getRaster().getDataBuffer();
+		this.buf = screenImage.getRaster().getDataBuffer();
 
 		try
 		{
