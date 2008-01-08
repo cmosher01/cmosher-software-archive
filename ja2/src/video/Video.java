@@ -5,36 +5,16 @@ import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import chipset.AddressBus;
-import chipset.Memory;
+
+
 
 /*
  * Created on Aug 2, 2007
  */
 public class Video
 {
-	private final VideoMode mode;
-	private final UI ui;
-	private final AddressBus addressBus;
-	private final BufferedImage screenImage;
-	private final DataBuffer buf;
-
-	private final TextCharacters charRom = new TextCharacters();
-
-	// somewhat arbitrary starting point for scanning... helps start
-	// an Apple ][ plus with a clean screen
-	private int t = VideoAddressing.BYTES_PER_FIELD-12*VideoAddressing.BYTES_PER_ROW;
-	private int f;
-	private boolean flash;
-
-	private int prevPlotByte;
-	private byte dataByte;
-
-
-	private boolean killColor = true;
-	private boolean observedColors = true;
-
-
-
+	private static final int[][] lutText = { VideoAddressing.buildLUT(0x0400,0x0400), VideoAddressing.buildLUT(0x0800,0x0400) };
+	private static final int[][] lutHiGr = { VideoAddressing.buildLUT(0x2000,0x2000), VideoAddressing.buildLUT(0x4000,0x2000) };
 
 	private static final int XSIZE = VideoAddressing.VISIBLE_BITS_PER_BYTE*VideoAddressing.VISIBLE_BYTES_PER_ROW;
 	private static final int YSIZE = VideoAddressing.VISIBLE_ROWS_PER_FIELD;
@@ -45,11 +25,30 @@ public class Video
 	private static final int ROWS_PER_TEXT_LINE = 8;
 	private static final int MIXED_TEXT_CYCLE = (VideoAddressing.VISIBLE_ROWS_PER_FIELD-(MIXED_TEXT_LINES*ROWS_PER_TEXT_LINE))*VideoAddressing.BYTES_PER_ROW;
 
-	private static final int FLASH_HALFPERIOD = 1;
 
-	private int[][] lutText = { VideoAddressing.buildLUT(0x0400,0x0400), VideoAddressing.buildLUT(0x0800,0x0400) };
-	private int[][] lutHiGr = { VideoAddressing.buildLUT(0x2000,0x2000), VideoAddressing.buildLUT(0x4000,0x2000) };
 
+
+
+	private final VideoMode mode;
+	private final UI ui;
+	private final AddressBus addressBus;
+	private final BufferedImage screenImage;
+	private final DataBuffer buf;
+
+	private final TextCharacters charRom = new TextCharacters();
+
+
+
+	// somewhat arbitrary starting point for scanning... helps start
+	// an Apple ][ plus with a clean screen
+	private int t = VideoAddressing.BYTES_PER_FIELD-12*VideoAddressing.BYTES_PER_ROW;
+
+	private boolean flash;
+
+	private int prevPlotByte;
+
+	private boolean killColor = true;
+	private boolean observedColors = true;
 
 
 
@@ -74,27 +73,22 @@ public class Video
 		}
 	}
 
-	public byte getDataBus()
-	{
-		return this.dataByte; // emulate floating data bus
-	}
-
 	public void tick()
 	{
-		setDataByte();
-		plotDataByte();
+		final byte data = getDataByte();
+		plotDataByte(data);
 
 		++this.t;
 
 		if (this.t >= VideoAddressing.BYTES_PER_FIELD)
 		{
 			this.ui.updateScreen();
-			updateFlashingState();
+			this.flash = !this.flash;
 			this.t = 0;
 		}
 	}
 
-	private void setDataByte()
+	private byte getDataByte()
 	{
 		final int[] lookupTable;
 		if (isDisplayingText() || !this.mode.isHiRes())
@@ -105,18 +99,7 @@ public class Video
 		{
 			lookupTable = this.lutHiGr[this.mode.getPage()];
 		}
-		this.dataByte = this.addressBus.read(lookupTable[this.t]);
-	}
-
-	private void updateFlashingState()
-	{
-		++this.f;
-
-		if (this.f >= FLASH_HALFPERIOD)
-		{
-			this.f = 0;
-			this.flash = ! this.flash;
-		}
+		return this.addressBus.read(lookupTable[this.t]);
 	}
 
 	private boolean isDisplayingText()
@@ -145,7 +128,7 @@ public class Video
 		return inverse;
 	}
 
-    private void plotDataByte()
+    private void plotDataByte(final byte data)
 	{
 		int x = this.t % VideoAddressing.BYTES_PER_ROW;
 		final int ox = x;
@@ -161,7 +144,7 @@ public class Video
 			return;
 		}
 
-		int d = this.dataByte & 0xFF;
+		int d = data & 0xFF;
 		if (isDisplayingText())
 		{
 			final boolean inverse = inverseChar(d);
@@ -272,13 +255,7 @@ public class Video
 
     private void setHiRes(int x, int nextLeftBit, int leftBit, int bit, int rightBit, int color, int compl, int black, int white)
     {
-    	final int c = calcHiResColor(nextLeftBit,leftBit,bit,rightBit,color,compl,black,white);
-    	this.buf.setElem(x,c);
-    }
-
-	private int calcHiResColor(int nextLeftBit, int leftBit, int bit, int rightBit, int color, int compl, int black, int white)
-	{
-		int c;
+		final int c;
 		if (bit == 0)
     	{
     		if (leftBit == 0 || rightBit == 0 || isDisplayingText())
@@ -305,8 +282,8 @@ public class Video
     			c = white;
     		}
     	}
-		return c;
-	}
+    	this.buf.setElem(x,c);
+    }
 
 	public void toggleColorMap()
 	{
