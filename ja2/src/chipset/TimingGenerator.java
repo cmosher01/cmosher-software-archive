@@ -2,6 +2,7 @@ package chipset;
 
 import paddle.PaddlesInterface;
 import chipset.cpu.CPU6502;
+import speaker.SpeakerClicker;
 import util.Util;
 import video.Video;
 
@@ -25,15 +26,17 @@ public class TimingGenerator
 	private volatile boolean shutdown;
 	private Thread thread;
 
+	private final SpeakerClicker speaker;
 	private final Throttle throttle;
 
 
 
-	public TimingGenerator(final CPU6502 cpu, final Video video, final PaddlesInterface paddles, final Throttle throttle)
+	public TimingGenerator(final CPU6502 cpu, final Video video, final PaddlesInterface paddles, final SpeakerClicker speaker, final Throttle throttle)
 	{
 		this.cpu = cpu;
 		this.video = video;
 		this.paddles = paddles;
+		this.speaker = speaker;
 		this.throttle = throttle;
 	}
 
@@ -73,6 +76,7 @@ public class TimingGenerator
 			this.cpu.tick();
 			this.video.tick();
 			this.paddles.tick();
+			this.speaker.tick();
 
 			this.throttle.throttle();
 		}

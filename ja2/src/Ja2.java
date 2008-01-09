@@ -18,6 +18,7 @@ import paddle.PaddleButtonStates;
 import paddle.PaddleButtons;
 import paddle.Paddles;
 import paddle.PaddlesInterface;
+import speaker.SpeakerClicker;
 import stdio.StandardIn;
 import util.Util;
 import video.ScreenImage;
@@ -158,9 +159,11 @@ public final class Ja2 implements Closeable
 
     	final PaddleButtonStates paddleButtonStates = new PaddleButtonStates();
 
+    	final SpeakerClicker speaker = new SpeakerClicker();
 
 
-    	final AddressBus addressBus = new AddressBus(ram,rom,keyboard,videoMode,paddles,paddleButtonStates,slots);
+
+    	final AddressBus addressBus = new AddressBus(ram,rom,keyboard,videoMode,paddles,paddleButtonStates,speaker,slots);
 
 
 
@@ -172,7 +175,7 @@ public final class Ja2 implements Closeable
 
 
 
-    	this.clock = new TimingGenerator(cpu,video,paddles,throttle);
+    	this.clock = new TimingGenerator(cpu,video,paddles,speaker,throttle);
 
 
 

@@ -2,6 +2,7 @@ package chipset;
 
 import paddle.PaddleBtnInterface;
 import paddle.PaddlesInterface;
+import speaker.SpeakerClicker;
 import keyboard.KeyboardInterface;
 import video.VideoMode;
 
@@ -18,6 +19,7 @@ public class AddressBus implements chipset.cpu.AddressBus
 	private final KeyboardInterface keyboard;
 	private final VideoMode video;
 	private final PaddlesInterface paddles;
+	private final SpeakerClicker speaker;
 	private final Slots slots;
 	private final PaddleBtnInterface paddleButtons;
 
@@ -25,7 +27,7 @@ public class AddressBus implements chipset.cpu.AddressBus
 
 
 
-	public AddressBus(final Memory ram, final Memory rom, final KeyboardInterface keyboard, final VideoMode video, final PaddlesInterface paddles, final PaddleBtnInterface paddleButtons, final Slots slots)
+	public AddressBus(final Memory ram, final Memory rom, final KeyboardInterface keyboard, final VideoMode video, final PaddlesInterface paddles, final PaddleBtnInterface paddleButtons, final SpeakerClicker speaker, final Slots slots)
 	{
 		this.ram = ram;
 		this.rom = rom;
@@ -34,6 +36,7 @@ public class AddressBus implements chipset.cpu.AddressBus
 		this.paddles = paddles;
 		this.slots = slots;
 		this.paddleButtons = paddleButtons;
+		this.speaker = speaker;
 	}
 
 	public byte read(final int address)
@@ -133,7 +136,7 @@ public class AddressBus implements chipset.cpu.AddressBus
 			}
 			else if (islot == 0x3)
 			{
-				// TODO: toggle speaker
+				this.speaker.click();
 			}
 			else if (islot == 0x4)
 			{
