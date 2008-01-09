@@ -22,9 +22,10 @@ public class Paddles implements PaddlesInterface
 
 	public void tick()
 	{
-		// loop unrolled for speed
-		--this.rTick[0];
-		--this.rTick[1];
+		if (this.rTick[0] > 0)
+			--this.rTick[0];
+		if (this.rTick[1] > 0)
+			--this.rTick[1];
 	}
 
 	public void startTimers()

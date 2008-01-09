@@ -7,7 +7,7 @@ import gui.UI;
 
 public class CLI implements UI
 {
-	public void showMessage(String message)
+	public void showMessage(final String message)
 	{
 		System.err.println(message);
 	}

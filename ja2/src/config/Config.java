@@ -180,7 +180,7 @@ public class Config
 		}
 	}
 
-	private void loadDisk(final Slots slots, final int slot, int drive, final File fnib) throws IOException, InvalidDiskImage
+	private void loadDisk(final Slots slots, final int slot, final int drive, final File fnib) throws IOException, InvalidDiskImage
 	{
 		if (drive < 1 || 2 < drive)
 		{
