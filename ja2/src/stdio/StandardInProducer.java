@@ -23,6 +23,7 @@ public class StandardInProducer
 		this.keys = keys;
 		this.th = new Thread(new Runnable()
 		{
+			@SuppressWarnings("synthetic-access")
 			public void run()
 			{
 				readInput();
@@ -33,7 +34,7 @@ public class StandardInProducer
 		this.th.start();
 	}
 
-	void readInput()
+	private void readInput()
 	{
 		try
 		{
@@ -117,10 +118,5 @@ public class StandardInProducer
 				}
 			}
 		}
-	}
-
-	public KeypressQueue getKeys()
-	{
-		return this.keys;
 	}
 }

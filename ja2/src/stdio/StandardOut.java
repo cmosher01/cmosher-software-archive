@@ -30,6 +30,6 @@ public class StandardOut extends Card
 	@Override
 	public String getTypeName()
 	{
-		return "PR#1 writes to standard-out";
+		return "writes to standard output";
 	}
 }

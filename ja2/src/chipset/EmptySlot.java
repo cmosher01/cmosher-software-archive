@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 public class EmptySlot extends Card
 {
-	public JPanel getPanel(final GUI gui)
+	public JPanel getPanel(@SuppressWarnings("unused") final GUI gui)
 	{
 		return null;
 	}

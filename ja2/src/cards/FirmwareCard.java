@@ -26,7 +26,7 @@ public class FirmwareCard extends Card
 
 
 	@Override
-	public byte io(int address, byte data, final boolean writing)
+	public byte io(final int address, final byte data, @SuppressWarnings("unused") final boolean writing)
 	{
 		this.inhibitBankRom = (address & 1) == 0;
 		this.inhibitF8Rom = (address & 2) != 0;
@@ -49,7 +49,7 @@ public class FirmwareCard extends Card
 
 
 	@Override
-	public void ioBankRom(int addr, byte[] rb, boolean write)
+	public void ioBankRom(final int addr, final byte[] rb, @SuppressWarnings("unused") final boolean write)
 	{
 		this.inhibit = false;
 		if (0 <= addr && addr < 0x2800)

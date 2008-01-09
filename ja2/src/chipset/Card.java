@@ -24,20 +24,20 @@ public abstract class Card
 
 
 	// override
-	public byte io(int address, byte data, boolean writing)
+	public byte io(@SuppressWarnings("unused") final int address, final byte data, @SuppressWarnings("unused") final boolean writing)
 	{
 		return data;
 	}
 
 
 
-	public byte readRom(int address)
+	public byte readRom(final int address)
 	{
 		this.activeSeventhRom = true;
 		return this.rom.read(address);
 	}
 
-	public void readSeventhRom(int address, byte[] rb)
+	public void readSeventhRom(final int address, final byte[] rb)
 	{
 		if (address == 0x7FF)
 		{
@@ -68,20 +68,20 @@ public abstract class Card
 
 
 
-	public void ioBankRom(int addr, byte[] rb, boolean write)
+	public void ioBankRom(@SuppressWarnings("unused") final int addr, @SuppressWarnings("unused") final byte[] rb, @SuppressWarnings("unused") final boolean write)
 	{
 	}
 
 
 
-	public void loadBankRom(final int base, InputStream file) throws InvalidMemoryLoad
+	public void loadBankRom(@SuppressWarnings("unused") final int base, @SuppressWarnings("unused") final InputStream file) throws InvalidMemoryLoad
 	{
 		throw new InvalidMemoryLoad("This card has no $D000 ROM");
 	}
 
 
 
-	public JPanel getPanel(final GUI gui)
+	public JPanel getPanel(@SuppressWarnings("unused") final GUI gui)
 	{
 		return new DefaultCardPanel(getTypeName());
 	}

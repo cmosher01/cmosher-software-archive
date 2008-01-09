@@ -66,7 +66,7 @@ public class SpeakerClicker
 		th.start();
 	}
 
-	private void feed()
+	void feed()
 	{
 		while (true)
 		{
@@ -83,7 +83,7 @@ public class SpeakerClicker
 				}
 				f = this.feed;
 			}
-			if (true)
+			if (f)
 			{
 				if (this.click)
 				{
@@ -105,14 +105,14 @@ public class SpeakerClicker
 //					else
 //						this.line.stop();
 					this.sound = false;
-					System.out.print("sound: ");
-					for (int i = 0; i < this.pcm.length; i++)
-					{
-						byte b = this.pcm[i];
-						System.out.print(b);
-						System.out.print(" ");
-					}
-					System.out.println();
+//					System.out.print("sound: ");
+//					for (int i = 0; i < this.pcm.length; i++)
+//					{
+//						byte b = this.pcm[i];
+//						System.out.print(b);
+//						System.out.print(" ");
+//					}
+//					System.out.println();
 					this.p = 0;
 				}
 				synchronized (this.lock)
@@ -151,7 +151,7 @@ public class SpeakerClicker
 	public void click()
 	{
 		this.click = true;
-		System.out.println("click");
+//		System.out.println("click");
 //		while (this.clip == null)
 //		{
 //			System.err.println("cannot unmute speaker");

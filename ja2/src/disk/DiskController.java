@@ -27,7 +27,7 @@ public class DiskController extends Card
 
 
 	@Override
-	public byte io(final int addr, byte data, final boolean writing)
+	public byte io(final int addr, byte data, @SuppressWarnings("unused") final boolean writing)
 	{
 		final int q = (addr & 0x000E) >> 1;
 		final boolean on = (addr & 0x0001) != 0;
@@ -123,7 +123,7 @@ public class DiskController extends Card
 	 * @return
 	 */
 	@Override
-	public JPanel getPanel(GUI gui)
+	public JPanel getPanel(final GUI gui)
 	{
 		if (this.panel == null)
 		{

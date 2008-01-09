@@ -68,6 +68,6 @@ public class StandardIn extends Card
 	@Override
 	public String getTypeName()
 	{
-		return "IN#2 reads from standard-in";
+		return "reads from standard input";
 	}
 }

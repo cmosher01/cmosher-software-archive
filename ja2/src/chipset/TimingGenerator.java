@@ -46,6 +46,7 @@ public class TimingGenerator
 		{
 			this.thread = new Thread(new Runnable()
 			{
+				@SuppressWarnings("synthetic-access")
 				public void run()
 				{
 					try

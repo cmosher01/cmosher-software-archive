@@ -60,6 +60,7 @@ public class GUI implements UI
 				 */
 				final Thread th = new Thread(new Runnable()
 				{
+					@SuppressWarnings("synthetic-access")
 					public void run()
 					{
 						GUI.this.frame.dispose();
@@ -143,7 +144,7 @@ public class GUI implements UI
         final int h = 11;
         final int pix[] = new int[w * h];
 
-        final int colorLine = Color.GREEN.getRGB();
+        final int colorLine = Color.WHITE.getRGB();
         final int colorBack = Color.BLACK.getRGB();
         Arrays.fill(pix,colorBack);
         for (int x = 0; x < 4; ++x)

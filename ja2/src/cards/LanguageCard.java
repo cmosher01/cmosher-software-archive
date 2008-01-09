@@ -28,7 +28,7 @@ public class LanguageCard extends Card
 	}
 
 	@Override
-	public byte io(int address, byte data, final boolean writing)
+	public byte io(final int address, final byte data, final boolean writing)
 	{
 		if ((address & 1) != 0 && !writing)
 		{
@@ -62,7 +62,7 @@ public class LanguageCard extends Card
 	}
 
 	@Override
-	public void ioBankRom(int addr, byte[] rb, boolean writing)
+	public void ioBankRom(final int addr, final byte[] rb, final boolean writing)
 	{
 		this.inhibit = false;
 		if (this.readEnable && !writing)

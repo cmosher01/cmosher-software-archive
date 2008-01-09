@@ -109,6 +109,7 @@ public final class Ja2 implements Closeable
     	final Config cfg = new Config(this.config);
 		cfg.parseConfig(rom,slots,new StandardIn.EOFHandler()
 		{
+			@SuppressWarnings("synthetic-access")
 			public void handleEOF()
 			{
 				if (!Ja2.this.gui)
@@ -242,6 +243,7 @@ public final class Ja2 implements Closeable
 		// (for example, if this method is called on the dispatch thread)
 		final Thread th = new Thread(new Runnable()
 		{
+			@SuppressWarnings("synthetic-access")
 			public void run()
 			{
 				if (Ja2.this.clock != null)
