@@ -3,37 +3,57 @@
  */
 package video;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import util.Util;
 
 class TextCharacters
 {
-    public static final int SIZE = 0x200;
+	private static final String FILENAME = "GI2513.ROM";
+    private static final int SIZE = 0x200;
 
-    private final byte[] char_rom = new byte[SIZE];
+    private final byte[] rows = new byte[SIZE];
 
-	public void readCharRom() throws IOException
+	public int read() throws IOException
 	{
-		final InputStream rom = Video.class.getResourceAsStream("GI2513.ROM");
+		InputStream rom = null;
 		int cc = 0;
-		for (int c = rom.read(); c != Util.EOF; c = rom.read())
+		try
 		{
-			if (cc < this.char_rom.length)
+			rom = Video.class.getResourceAsStream(FILENAME);
+			if (rom == null)
 			{
-				this.char_rom[cc] = xlateCharRom(c);
+				throw new FileNotFoundException(FILENAME);
 			}
-			++cc;
+			for (int c = rom.read(); c != Util.EOF; c = rom.read())
+			{
+				if (cc < SIZE)
+				{
+					this.rows[cc] = translateRow(c);
+				}
+				++cc;
+			}
 		}
-		rom.close();
-		if (cc != SIZE)
+		finally
 		{
-			throw new IOException("Text-character-ROM file GI2513.ROM is invalid: length is "+
-				cc+" but should be "+SIZE+". Text may not be displayed correctly.");
+			if (rom != null)
+			{
+				try
+				{
+					rom.close();
+				}
+				catch (final Throwable ignore)
+				{
+					ignore.printStackTrace();
+				}
+			}
 		}
+
+		return cc-SIZE;
 	}
 
-	private static byte xlateCharRom(int b)
+	private static byte translateRow(int b)
 	{
 		// xlateCharRom(abcdefgh) == 0hgfedcb
 		byte r = 0;
@@ -47,9 +67,13 @@ class TextCharacters
 		return r;
 	}
 
-	public int get(final int iChar)
+	public int get(final int iRow)
 	{
-		return this.char_rom[iChar];
-	}
+		if (iRow < 0 || SIZE <= iRow)
+		{
+			return 0;
+		}
 
+		return this.rows[iRow];
+	}
 }

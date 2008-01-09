@@ -4,6 +4,7 @@ import gui.UI;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
+import java.io.IOException;
 import chipset.AddressBus;
 
 
@@ -53,21 +54,33 @@ public class Video
 
 
 
-	public Video(final VideoMode mode, final UI ui, final AddressBus addressBus, final BufferedImage screenImage)
+	public Video(final VideoMode mode, final UI ui, final AddressBus addressBus, final BufferedImage screenImage) throws IOException
 	{
 		this.mode = mode;
 		this.ui = ui;
 		this.addressBus = addressBus;
 		this.buf = screenImage.getRaster().getDataBuffer();
 
-		try
+		readCharacterRom();
+	}
+
+	private void readCharacterRom() throws IOException
+	{
+		int off = this.charRom.read();
+		if (off != 0)
 		{
-			this.charRom.readCharRom();
-		}
-		catch (final Exception e)
-		{
-			e.printStackTrace();
-			this.ui.showMessage(e.getMessage());
+			final String big;
+			if (off > 0)
+			{
+				big = "big";
+			}
+			else
+			{
+				big = "small";
+				off = -off;
+			}
+			this.ui.showMessage("Text-character-ROM file GI2513.ROM is invalid: the file is "+
+				off+" bytes too "+big+". Text may not be displayed correctly.");
 		}
 	}
 

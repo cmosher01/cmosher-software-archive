@@ -8,6 +8,7 @@ import java.util.StringTokenizer;
 public final class Util
 {
 	public static final int EOF = -1;
+	public static final byte bEOF = -1;
 
 	private Util() { throw new IllegalStateException(); }
 

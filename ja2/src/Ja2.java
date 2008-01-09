@@ -49,10 +49,6 @@ import disk.InvalidDiskImage;
  */
 public final class Ja2 implements Closeable
 {
-    private static final boolean NOTIFY_ON_PUT = true;
-
-
-
 	public static void main(final String... args) throws InterruptedException, InvocationTargetException
     {
 		Thread.currentThread().setName("Ja2-main");
@@ -151,7 +147,7 @@ public final class Ja2 implements Closeable
 
     	final Throttle throttle = new Throttle(videoMode,slots);
 
-		final KeypressQueue keypresses = new KeypressQueue(NOTIFY_ON_PUT);
+		final KeypressQueue keypresses = new KeypressQueue();
 
     	final KeyboardInterface keyboard = new Keyboard(keypresses,throttle);
 

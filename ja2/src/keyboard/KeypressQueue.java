@@ -11,17 +11,7 @@ public class KeypressQueue
 {
 	private final BlockingQueue<Byte> q = new LinkedBlockingQueue<Byte>();
 
-	private final boolean notifyOnPut;
 
-	public KeypressQueue()
-	{
-		this(false);
-	}
-
-	public KeypressQueue(final boolean notifyOnPut)
-	{
-		this.notifyOnPut = notifyOnPut;
-	}
 
 	public void put(final byte c)
 	{
@@ -35,25 +25,6 @@ public class KeypressQueue
 		putRaw(b);
 	}
 
-	private void putRaw(final byte b)
-	{
-		try
-		{
-			this.q.put(b);
-			if (this.notifyOnPut)
-			{
-				synchronized (this)
-				{
-					notifyAll();
-				}
-			}
-		}
-		catch (InterruptedException e)
-		{
-			Thread.currentThread().interrupt();
-		}
-	}
-
 	public void put(final int c)
 	{
 		put((byte)c);
@@ -61,8 +32,10 @@ public class KeypressQueue
 
 	public void putEOF()
 	{
-		putRaw((byte)Util.EOF);
+		putRaw(Util.bEOF);
 	}
+
+
 
 	public Byte peek()
 	{
@@ -77,5 +50,23 @@ public class KeypressQueue
 	public void clear()
 	{
 		this.q.clear();
+	}
+
+
+
+	private void putRaw(final byte b)
+	{
+		try
+		{
+			this.q.put(b);
+			synchronized (this)
+			{
+				notifyAll();
+			}
+		}
+		catch (InterruptedException e)
+		{
+			Thread.currentThread().interrupt();
+		}
 	}
 }

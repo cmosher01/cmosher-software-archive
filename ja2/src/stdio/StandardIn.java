@@ -46,7 +46,7 @@ public class StandardIn extends Card
 					{
 						this.stdinkeys.remove();
 						this.latch = k.byteValue();
-						if (this.latch == (byte)Util.EOF)
+						if (this.latch == Util.bEOF)
 						{
 							this.gotEOF = true;
 							this.eofHandler.handleEOF();
