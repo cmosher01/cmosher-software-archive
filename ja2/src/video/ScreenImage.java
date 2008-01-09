@@ -9,6 +9,6 @@ public class ScreenImage extends BufferedImage
 {
 	public ScreenImage()
 	{
-		super(Video.SIZE.width,Video.SIZE.height,BufferedImage.TYPE_INT_RGB);
+		super(Video.XSIZE,Video.YSIZE,BufferedImage.TYPE_INT_RGB);
 	}
 }

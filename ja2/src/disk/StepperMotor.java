@@ -1,5 +1,7 @@
 package disk;
 
+import util.Util;
+
 /*
  * Created on Sep 12, 2007
  */
@@ -19,7 +21,7 @@ class StepperMotor
 {
 	private static final int QTRACKS = Drive.TRACKS_PER_DISK << 2;
 
-	private int quarterTrack = 0x11 << 2; // start in the middle of the disk... why not?
+	private int quarterTrack = QTRACKS >> 1; // start in the middle of the disk... just for fun
 
 	private int pos; // 0 - 7
 
@@ -76,7 +78,7 @@ class StepperMotor
 			this.pos = newPos;
 
 			this.quarterTrack += d;
-			constrainTrack();
+			this.quarterTrack = Util.constrain(0,this.quarterTrack,QTRACKS);
 		}
 
 //		System.out.print(" ARM: magnet "+magnet+" "+(on?"on ":"off"));
@@ -96,18 +98,6 @@ class StepperMotor
 //			}
 //		}
 //		System.out.println();
-	}
-
-	private void constrainTrack()
-	{
-		if (this.quarterTrack < 0)
-		{
-			this.quarterTrack = 0;
-		}
-		else if (QTRACKS <= this.quarterTrack)
-		{
-			this.quarterTrack = QTRACKS-1;
-		}
 	}
 
 	private static int calcDeltaPos(final int cur, final int next)

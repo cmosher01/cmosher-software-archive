@@ -1,7 +1,7 @@
 F1
 F2
 F3
-F4  toggle color killer (never/on text screen)
+F4  toggle color killer (off/text)
 F5  toggle color map (observed/theoretical)
 F6  paddle 0 button
 F7  paddle 1 button
@@ -9,7 +9,7 @@ F8  paddle 2 button
 F9  screen capture
 F10 memory dump
 F11 toggle hyper mode
-F12 clear type-ahead buffer
+F12 toggle type-ahead buffering
 
 INSERT       paste text from clipboard
 PAUSE/BREAK  reset

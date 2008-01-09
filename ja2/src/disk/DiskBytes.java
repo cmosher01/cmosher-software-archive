@@ -129,17 +129,17 @@ public class DiskBytes
 		{
 			throw new IllegalStateException();
 		}
-		synchronized (this.loaded)
+		if (!isLoaded())
 		{
-			if (!this.loaded.get())
+			++this.waitTimes;
+			if (this.waitTimes >= 0x100)
 			{
-				++this.waitTimes;
-				if (this.waitTimes >= 0x100)
+				this.waitTimes = 0;
+				synchronized (this.loaded)
 				{
-					this.waitTimes = 0;
 					try
 					{
-						this.loaded.wait(20);
+						this.loaded.wait(50);
 					}
 					catch (InterruptedException e)
 					{
@@ -148,7 +148,7 @@ public class DiskBytes
 					}
 				}
 			}
-			if (!this.loaded.get())
+			if (!isLoaded())
 			{
 				return -1;
 			}

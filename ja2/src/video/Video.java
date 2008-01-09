@@ -1,7 +1,6 @@
 package video;
 
 import gui.UI;
-import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.io.IOException;
@@ -17,9 +16,9 @@ public class Video
 	private static final int[][] textAddrTables = { VideoAddressing.buildLUT(0x0400,0x0400), VideoAddressing.buildLUT(0x0800,0x0400) };
 	private static final int[][] hiresAddrTables = { VideoAddressing.buildLUT(0x2000,0x2000), VideoAddressing.buildLUT(0x4000,0x2000) };
 
-	private static final int XSIZE = VideoAddressing.VISIBLE_BITS_PER_BYTE*VideoAddressing.VISIBLE_BYTES_PER_ROW;
-	private static final int YSIZE = VideoAddressing.VISIBLE_ROWS_PER_FIELD;
-	public static final Dimension SIZE = new Dimension(XSIZE,YSIZE);
+	public static final int XSIZE = VideoAddressing.VISIBLE_BITS_PER_BYTE*VideoAddressing.VISIBLE_BYTES_PER_ROW;
+	public static final int YSIZE = VideoAddressing.VISIBLE_ROWS_PER_FIELD;
+
 	private static final int VISIBLE_X_OFFSET = VideoAddressing.BYTES_PER_ROW-VideoAddressing.VISIBLE_BYTES_PER_ROW;
 
 

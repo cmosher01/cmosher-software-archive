@@ -30,4 +30,28 @@ public final class Util
 		}
 		return tok.nextToken();
 	}
+
+	public static int mod(int x, final int m)
+	{
+		x %= m;
+		if (x < 0)
+		{
+			x += m;
+		}
+		return x;
+	}
+
+	public static int constrain(final int min, int x, final int lim)
+	{
+		if (x < min)
+		{
+			x = min;
+		}
+		else if (lim <= x)
+		{
+			x = lim-1;
+		}
+
+		return x;
+	}
 }

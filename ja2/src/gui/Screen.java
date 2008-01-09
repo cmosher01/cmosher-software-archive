@@ -11,7 +11,8 @@ import java.awt.geom.AffineTransform;
 import java.lang.reflect.InvocationTargetException;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import video.Video;
+
+
 
 public class Screen extends JPanel
 {
@@ -27,7 +28,7 @@ public class Screen extends JPanel
 		this.image = image;
 		this.affine.scale(FACTOR,FACTOR);
 		setOpaque(true);
-		setPreferredSize(new Dimension(Video.SIZE.width*FACTOR,Video.SIZE.height*FACTOR));
+		setPreferredSize(new Dimension(this.image.getWidth(this)*FACTOR,this.image.getHeight(this)*FACTOR));
 		addNotify();
 	}
 
