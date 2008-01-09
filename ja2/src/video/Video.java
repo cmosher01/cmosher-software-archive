@@ -14,17 +14,14 @@ import chipset.AddressBus;
  */
 public class Video
 {
-	private static final int[][] lutText = { VideoAddressing.buildLUT(0x0400,0x0400), VideoAddressing.buildLUT(0x0800,0x0400) };
-	private static final int[][] lutHiGr = { VideoAddressing.buildLUT(0x2000,0x2000), VideoAddressing.buildLUT(0x4000,0x2000) };
+	private static final int[][] textAddrTables = { VideoAddressing.buildLUT(0x0400,0x0400), VideoAddressing.buildLUT(0x0800,0x0400) };
+	private static final int[][] hiresAddrTables = { VideoAddressing.buildLUT(0x2000,0x2000), VideoAddressing.buildLUT(0x4000,0x2000) };
 
 	private static final int XSIZE = VideoAddressing.VISIBLE_BITS_PER_BYTE*VideoAddressing.VISIBLE_BYTES_PER_ROW;
 	private static final int YSIZE = VideoAddressing.VISIBLE_ROWS_PER_FIELD;
 	public static final Dimension SIZE = new Dimension(XSIZE,YSIZE);
 	private static final int VISIBLE_X_OFFSET = VideoAddressing.BYTES_PER_ROW-VideoAddressing.VISIBLE_BYTES_PER_ROW;
 
-	private static final int MIXED_TEXT_LINES = 4;
-	private static final int ROWS_PER_TEXT_LINE = 8;
-	private static final int MIXED_TEXT_CYCLE = (VideoAddressing.VISIBLE_ROWS_PER_FIELD-(MIXED_TEXT_LINES*ROWS_PER_TEXT_LINE))*VideoAddressing.BYTES_PER_ROW;
 
 
 
@@ -35,7 +32,7 @@ public class Video
 	private final AddressBus addressBus;
 	private final DataBuffer buf;
 
-	private final TextCharacters charRom = new TextCharacters();
+	private final TextCharacters textRows = new TextCharacters();
 
 
 
@@ -66,7 +63,7 @@ public class Video
 
 	private void readCharacterRom() throws IOException
 	{
-		int off = this.charRom.read();
+		int off = this.textRows.read();
 		if (off != 0)
 		{
 			final String big;
@@ -101,21 +98,50 @@ public class Video
 
 	private byte getDataByte()
 	{
-		final int[] lookupTable;
-		if (isDisplayingText() || !this.mode.isHiRes())
+		final int[][] addrTables;
+		if (this.mode.isDisplayingText(this.t) || !this.mode.isHiRes())
 		{
-			lookupTable = this.lutText[this.mode.getPage()];
+			addrTables = Video.textAddrTables;
 		}
 		else
 		{
-			lookupTable = this.lutHiGr[this.mode.getPage()];
+			addrTables = Video.hiresAddrTables;
 		}
-		return this.addressBus.read(lookupTable[this.t]);
+		return this.addressBus.read(addrTables[this.mode.getPage()][this.t]);
 	}
 
-	private boolean isDisplayingText()
+    private void plotDataByte(final byte data)
 	{
-		return this.mode.isText() || (this.mode.isMixed() && this.t >= MIXED_TEXT_CYCLE);
+		final int x = this.t % VideoAddressing.BYTES_PER_ROW;
+		if (x < VISIBLE_X_OFFSET)
+		{
+			return;
+		}
+
+		final int y = this.t / VideoAddressing.BYTES_PER_ROW;
+		if (y >= VideoAddressing.VISIBLE_ROWS_PER_FIELD)
+		{
+			return;
+		}
+
+		final int rowToPlot = getRowToPlot(data,y);
+		plotRow(rowToPlot,x,y);
+	}
+
+	private int getRowToPlot(int d, final int y)
+	{
+		if (this.mode.isDisplayingText(this.t))
+		{
+			d &= 0xFF;
+			final boolean inverse = inverseChar(d);
+			d = this.textRows.get(((d & 0x3F) << 3) | (y & 0x07));
+			if (inverse)
+			{
+				d = ~d;
+			}
+		}
+
+		return d & 0xFF;
 	}
 
 	private boolean inverseChar(final int d)
@@ -139,52 +165,29 @@ public class Video
 		return inverse;
 	}
 
-    private void plotDataByte(final byte data)
+	private void plotRow(final int rowToPlot, int x, int y)
 	{
-		int x = this.t % VideoAddressing.BYTES_PER_ROW;
 		final int ox = x;
-		if (x < VISIBLE_X_OFFSET)
-		{
-			return;
-		}
-
-		int y = this.t / VideoAddressing.BYTES_PER_ROW;
 		final int oy = y;
-		if (y >= VideoAddressing.VISIBLE_ROWS_PER_FIELD)
-		{
-			return;
-		}
-
-		int d = data & 0xFF;
-		if (isDisplayingText())
-		{
-			final boolean inverse = inverseChar(d);
-			d = this.charRom.get(((d & 0x3F) << 3) | (y & 0x07));
-			if (inverse)
-			{
-				d = ~d;
-			}
-		}
-		d &= 0xFF;
 
 		x -= VISIBLE_X_OFFSET;
 		x *= VideoAddressing.VISIBLE_BITS_PER_BYTE;
 		y *= XSIZE;
 		x += y;
 
-		if (isDisplayingText() || this.mode.isHiRes())
+		if (this.mode.isDisplayingText(this.t) || this.mode.isHiRes())
 		{
-			plotByteAsHiRes(x,ox,d);
+			plotByteAsHiRes(x,ox,rowToPlot);
 		}
 		else
         {
-			plotByteAsLoRes(x,oy,d);
+			plotByteAsLoRes(x,oy,rowToPlot);
         }
 
-		this.prevPlotByte = d;
+		this.prevPlotByte = rowToPlot;
 	}
 
-	private void plotByteAsLoRes(int x, final int oy, int d)
+	private void plotByteAsLoRes(int x, final int oy, final int d)
 	{
 		final int icolor;
 		if ((oy & 4) != 0)
@@ -204,7 +207,7 @@ public class Video
 			this.buf.setElem(x,color);
 	}
 
-	private void plotByteAsHiRes(int x, int ox, int d)
+	private void plotByteAsHiRes(int x, final int ox, final int d)
 	{
 		int icolor, icompl;
 		if ((d & 0x80) != 0)
@@ -246,30 +249,21 @@ public class Video
 		setHiRes(x++, d & 0x08, d & 0x10, d & 0x20, d & 0x40, color, compl, black, white);
 		if (ox == VideoAddressing.BYTES_PER_ROW-1)
 		{
-			setHiRes(x++, d & 0x10, d & 0x20, d & 0x40, 0, compl, color, black, white);
+			setHiRes(x, d & 0x10, d & 0x20, d & 0x40, 0, compl, color, black, white);
 		}
 	}
 
 	private int[] getCurrentColorMap()
 	{
-		final int[] colormap;
-		if (this.observedColors)
-		{
-			colormap = A2ColorsObserved.COLOR;
-		}
-		else
-		{
-			colormap = A2Colors.COLOR;
-		}
-		return colormap;
+		return this.observedColors ? A2ColorsObserved.COLOR : A2Colors.COLOR;
 	}
 
-    private void setHiRes(int x, int nextLeftBit, int leftBit, int bit, int rightBit, int color, int compl, int black, int white)
+    private void setHiRes(final int x, final int nextLeftBit, final int leftBit, final int bit, final int rightBit, final int color, final int compl, final int black, final int white)
     {
 		final int c;
 		if (bit == 0)
     	{
-    		if (leftBit == 0 || rightBit == 0 || isDisplayingText())
+    		if (leftBit == 0 || rightBit == 0 || this.mode.isDisplayingText(this.t))
     		{
     			c = black;
     		}

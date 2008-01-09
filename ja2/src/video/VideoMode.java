@@ -5,6 +5,12 @@ package video;
 
 public class VideoMode
 {
+	private static final int MIXED_TEXT_LINES = 4;
+	private static final int ROWS_PER_TEXT_LINE = 8;
+	private static final int MIXED_TEXT_CYCLE = (VideoAddressing.VISIBLE_ROWS_PER_FIELD-(MIXED_TEXT_LINES*ROWS_PER_TEXT_LINE))*VideoAddressing.BYTES_PER_ROW;
+
+
+
 	private boolean swText = true;
 	private boolean swMixed;
 	private int swPage2;
@@ -50,5 +56,10 @@ public class VideoMode
 	public int getPage()
 	{
 		return this.swPage2;
+	}
+
+	public boolean isDisplayingText(final int atTickInField)
+	{
+		return this.swText || (this.swMixed && atTickInField >= MIXED_TEXT_CYCLE);
 	}
 }
