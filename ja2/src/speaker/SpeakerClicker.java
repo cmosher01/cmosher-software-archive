@@ -110,7 +110,7 @@ public class SpeakerClicker
 				{
 					try
 					{
-						this.click.wait(this.running ? 1000: 0);
+						this.click.wait(this.running ? 500: 0);
 					}
 					catch (InterruptedException e)
 					{

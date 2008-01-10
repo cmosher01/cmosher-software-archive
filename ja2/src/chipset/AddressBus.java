@@ -120,8 +120,8 @@ public class AddressBus implements chipset.cpu.AddressBus
 	{
 		if (address < 0x80)
 		{
-			final int islot = (address & 0xF0) >> 4;
-			final int iswch = (address & 0x0F);
+			final int islot = (address >> 4) & 0xF;
+			final int iswch = (address & 0xF);
 			if (islot == 0x0)
 			{
 				this.data = this.keyboard.get();
@@ -180,8 +180,8 @@ public class AddressBus implements chipset.cpu.AddressBus
 		{
 			// slot I/O switches
 			address &= 0x7F;
-			final int islot = (address & 0xF0) >> 4;
-			final int iswch = (address & 0x0F);
+			final int islot = (address >> 4) & 0xF;
+			final int iswch = (address & 0xF);
 			this.data = this.slots.io(islot,iswch,this.data,false);
 		}
 
@@ -204,8 +204,8 @@ public class AddressBus implements chipset.cpu.AddressBus
 	{
 		if (address < 0x80)
 		{
-			final int islot = (address & 0xF0) >> 4;
-			final int iswch = (address & 0x0F);
+			final int islot = (address >> 4) & 0xF;
+			final int iswch = (address & 0xF);
 
 			if (islot == 0x1)
 			{
@@ -222,8 +222,8 @@ public class AddressBus implements chipset.cpu.AddressBus
 		{
 			// slot I/O switches
 			address &= 0x7F;
-			final int islot = (address & 0xF0) >> 4;
-			final int iswch = (address & 0x0F);
+			final int islot = (address >> 4) & 0xF;
+			final int iswch = (address & 0xF);
 			this.slots.io(islot,iswch,this.data,true);
 		}
 	}
