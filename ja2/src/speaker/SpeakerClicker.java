@@ -104,12 +104,13 @@ public class SpeakerClicker
 			}
 
 			final int deltaSamples = (int)(Math.rint(Math.round(SAMPLES_PER_TICK*deltaTicks))+.0001);
-			if (deltaSamples < this.pcm.length-164)
+
+			if (deltaSamples < this.pcm.length)
 			{
 				this.pcm[deltaSamples-1] = this.pos ? (byte)120 : (byte)-120;
 				this.pcm[deltaSamples] = this.pos ? (byte)120 : (byte)-120;
 
-				this.line.write(this.pcm,0,deltaSamples+1);
+				this.line.write(this.pcm,0,deltaSamples);
 
 				this.pcm[deltaSamples-1] = 0;
 				this.pcm[deltaSamples] = 0;
