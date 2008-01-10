@@ -1,46 +1,78 @@
 package speaker;
-import java.util.Arrays;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
+import chipset.TimingGenerator;
 
 /*
  * Created on Jan 8, 2008
  */
 public class SpeakerClicker
 {
-	private static final double SAMPLES_PER_TICK = 44100.0/1020484.0;
+	private static final int SAMPLES_PER_SECOND = 44100;
+	private static final double SAMPLES_PER_TICK = (double)SAMPLES_PER_SECOND/(double)TimingGenerator.AVG_CPU_HZ;
 
 
 	private volatile int t;
 
 	private volatile SourceDataLine line;
-	private volatile byte[] pcm = new byte[44100];
+	private volatile byte[] pcm = new byte[SAMPLES_PER_SECOND];
 
 	private AtomicInteger click = new AtomicInteger();
 	private int prevClick;
 	private boolean pos;
+	private AtomicBoolean started = new AtomicBoolean();
 
 
 
 	public SpeakerClicker()
 	{
-		try
+		Thread th = new Thread(new Runnable()
 		{
-			init();
-		}
-		catch (LineUnavailableException e)
+			public void run()
+			{
+				try
+				{
+					feed();
+				}
+				catch (LineUnavailableException e)
+				{
+					e.printStackTrace();
+					synchronized (SpeakerClicker.this.started)
+					{
+						SpeakerClicker.this.started.set(true);
+						SpeakerClicker.this.started.notifyAll();
+					}
+				}
+			}
+		});
+		th.setDaemon(true);
+		th.setName("Ja2-SpeakerClicker");
+		th.start();
+		synchronized (this.started)
 		{
-			e.printStackTrace();
+			while (!this.started.get())
+			{
+				try
+				{
+					this.started.wait();
+				}
+				catch (InterruptedException e)
+				{
+					Thread.currentThread().interrupt();
+				}
+			}
 		}
 	}
 
-	private void init() throws LineUnavailableException
+	void feed() throws LineUnavailableException
 	{
-		final AudioFormat fmt = new AudioFormat(44100,8,1,true,false);
+		final AudioFormat fmt = new AudioFormat(SAMPLES_PER_SECOND,Byte.SIZE,1,true,false);
 		final DataLine.Info info = new DataLine.Info(SourceDataLine.class,fmt);
 		if (!AudioSystem.isLineSupported(info))
 		{
@@ -49,33 +81,21 @@ public class SpeakerClicker
 
 		this.line = (SourceDataLine)AudioSystem.getLine(info);
 
-		this.line.open(fmt,44100);
+		this.line.open(fmt,SAMPLES_PER_SECOND);
 		this.line.start();
-
-		Thread th = new Thread(new Runnable()
+		try
 		{
-			public void run()
-			{
-				feed();
-			}
-		});
-		th.setDaemon(true);
-		th.start();
-	}
-
-	void feed()
-	{
-		while (this.line == null)
+			Thread.sleep(100);
+		}
+		catch (InterruptedException e1)
 		{
-			System.err.println("waiting for speaker to initialize");
-			try
-			{
-				Thread.sleep(10);
-			}
-			catch (InterruptedException e)
-			{
-				Thread.currentThread().interrupt();
-			}
+			e1.printStackTrace();
+		}
+
+		synchronized (this.started)
+		{
+			this.started.set(true);
+			this.started.notifyAll();
 		}
 		while (true)
 		{
@@ -87,13 +107,21 @@ public class SpeakerClicker
 				{
 					try
 					{
-						this.click.wait();
+						this.click.wait(1000);
 					}
 					catch (InterruptedException e)
 					{
 						Thread.currentThread().interrupt();
 					}
 					cl = this.click.get();
+					if (cl == 0)
+					{
+						this.line.stop();
+					}
+					else
+					{
+						this.line.start();
+					}
 				}
 			}
 			final int deltaTicks = cl - this.prevClick;
@@ -107,8 +135,8 @@ public class SpeakerClicker
 
 			if (deltaSamples < this.pcm.length)
 			{
-				this.pcm[deltaSamples-1] = this.pos ? (byte)120 : (byte)-120;
-				this.pcm[deltaSamples] = this.pos ? (byte)120 : (byte)-120;
+				this.pcm[deltaSamples-1] = this.pos ? (byte)126 : (byte)-126;
+				this.pcm[deltaSamples] = this.pos ? (byte)126 : (byte)-126;
 
 				this.line.write(this.pcm,0,deltaSamples);
 
