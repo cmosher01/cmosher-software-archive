@@ -16,6 +16,7 @@ public class SpeakerClicker
 {
 	private static final int SAMPLES_PER_SECOND = 44100;
 	private static final double SAMPLES_PER_TICK = (double)SAMPLES_PER_SECOND/(double)TimingGenerator.AVG_CPU_HZ;
+	private static final byte AMPLITUDE = 126;
 
 
 	private volatile int t;
@@ -27,6 +28,7 @@ public class SpeakerClicker
 	private int prevClick;
 	private boolean pos;
 	private AtomicBoolean started = new AtomicBoolean();
+	private boolean running;
 
 
 
@@ -83,6 +85,7 @@ public class SpeakerClicker
 
 		this.line.open(fmt,SAMPLES_PER_SECOND);
 		this.line.start();
+		this.running = true;
 		try
 		{
 			Thread.sleep(100);
@@ -107,20 +110,22 @@ public class SpeakerClicker
 				{
 					try
 					{
-						this.click.wait(1000);
+						this.click.wait(this.running ? 1000: 0);
 					}
 					catch (InterruptedException e)
 					{
 						Thread.currentThread().interrupt();
 					}
 					cl = this.click.get();
-					if (cl == 0)
+					if (cl == 0 && this.running)
 					{
 						this.line.stop();
+						this.running = false;
 					}
-					else
+					else if (cl != 0 && !this.running)
 					{
 						this.line.start();
+						this.running = true;
 					}
 				}
 			}
@@ -133,10 +138,10 @@ public class SpeakerClicker
 
 			final int deltaSamples = (int)(Math.rint(Math.round(SAMPLES_PER_TICK*deltaTicks))+.0001);
 
-			if (deltaSamples < this.pcm.length)
+			if (0 < deltaSamples && deltaSamples < this.pcm.length)
 			{
-				this.pcm[deltaSamples-1] = this.pos ? (byte)126 : (byte)-126;
-				this.pcm[deltaSamples] = this.pos ? (byte)126 : (byte)-126;
+				this.pcm[deltaSamples-1] = this.pos ? AMPLITUDE : -AMPLITUDE;
+				this.pcm[deltaSamples] = this.pos ? AMPLITUDE : -AMPLITUDE;
 
 				this.line.write(this.pcm,0,deltaSamples);
 
@@ -160,5 +165,9 @@ public class SpeakerClicker
 	public void tick()
 	{
 		++this.t;
+		if (this.t > 0x70000000)
+		{
+			this.t = 0;
+		}
 	}
 }
