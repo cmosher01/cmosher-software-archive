@@ -67,7 +67,7 @@ public class Keyboard implements KeyboardInterface
 			{
 				/*
 				 * Check every 256 gets to see if they are
-				 * happening too fact (within one second).
+				 * happening too fast (within one second).
 				 * If so, *wait* for a key-press (but only up
 				 * to 50 milliseconds).
 				 */

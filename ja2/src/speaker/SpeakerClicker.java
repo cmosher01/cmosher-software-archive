@@ -1,4 +1,6 @@
 package speaker;
+import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
@@ -10,27 +12,22 @@ import javax.sound.sampled.SourceDataLine;
  */
 public class SpeakerClicker
 {
-	private final Object lock = new Object();
+	private static final double SAMPLES_PER_TICK = 44100.0/1020484.0;
 
 
 	private volatile int t;
 
-	private volatile byte[] pcm = new byte[44];
-	private int p;
-
-	private volatile boolean click;
 	private volatile SourceDataLine line;
+	private volatile byte[] pcm = new byte[44100];
+
+	private AtomicInteger click = new AtomicInteger();
+	private int prevClick;
+	private boolean pos;
 
 
-	private volatile boolean feed;
-
-
-	private boolean sound;
 
 	public SpeakerClicker()
 	{
-//		this.pcm[0] = 0;
-//		this.pcm[1] = 0x5F;
 		try
 		{
 			init();
@@ -43,7 +40,7 @@ public class SpeakerClicker
 
 	private void init() throws LineUnavailableException
 	{
-		final AudioFormat fmt = new AudioFormat(44100,8,1,false,false);
+		final AudioFormat fmt = new AudioFormat(44100,8,1,true,false);
 		final DataLine.Info info = new DataLine.Info(SourceDataLine.class,fmt);
 		if (!AudioSystem.isLineSupported(info))
 		{
@@ -52,7 +49,7 @@ public class SpeakerClicker
 
 		this.line = (SourceDataLine)AudioSystem.getLine(info);
 
-		this.line.open(fmt,44); // 10 ms buffer
+		this.line.open(fmt,44100);
 		this.line.start();
 
 		Thread th = new Thread(new Runnable()
@@ -68,62 +65,6 @@ public class SpeakerClicker
 
 	void feed()
 	{
-		while (true)
-		{
-			boolean f = false;
-			synchronized (this.lock)
-			{
-				try
-				{
-					this.lock.wait();
-				}
-				catch (InterruptedException e)
-				{
-					e.printStackTrace();
-				}
-				f = this.feed;
-			}
-			if (f)
-			{
-				if (this.click)
-				{
-					this.pcm[this.p++] = 0x5F;
-					this.sound = true;
-					this.click = false;
-				}
-				else
-				{
-					this.pcm[this.p++] = 0;
-				}
-				if (this.p >= this.pcm.length)
-				{
-					if (this.sound)
-					{
-						this.line.write(this.pcm,0,this.pcm.length);
-//						this.line.start();
-					}
-//					else
-//						this.line.stop();
-					this.sound = false;
-//					System.out.print("sound: ");
-//					for (int i = 0; i < this.pcm.length; i++)
-//					{
-//						byte b = this.pcm[i];
-//						System.out.print(b);
-//						System.out.print(" ");
-//					}
-//					System.out.println();
-					this.p = 0;
-				}
-				synchronized (this.lock)
-				{
-					this.feed = false;
-				}
-			}
-		}
-	}
-	public void tick()
-	{
 		while (this.line == null)
 		{
 			System.err.println("waiting for speaker to initialize");
@@ -136,94 +77,59 @@ public class SpeakerClicker
 				Thread.currentThread().interrupt();
 			}
 		}
-		++this.t;
-		if (this.t >= 23)
+		while (true)
 		{
-			synchronized (this.lock)
+			int cl;
+			synchronized (this.click)
 			{
-				this.feed = true;
-				this.lock.notifyAll();
+				cl = this.click.get();
+				while (cl == 0)
+				{
+					try
+					{
+						this.click.wait();
+					}
+					catch (InterruptedException e)
+					{
+						Thread.currentThread().interrupt();
+					}
+					cl = this.click.get();
+				}
 			}
-			this.t = 0;
+			final int deltaTicks = cl - this.prevClick;
+			this.prevClick = cl;
+			synchronized (this.click)
+			{
+				this.click.set(0);
+			}
+
+			final int deltaSamples = (int)(Math.rint(Math.round(SAMPLES_PER_TICK*deltaTicks))+.0001);
+			if (deltaSamples < this.pcm.length-164)
+			{
+				this.pcm[deltaSamples-1] = this.pos ? (byte)120 : (byte)-120;
+				this.pcm[deltaSamples] = this.pos ? (byte)120 : (byte)-120;
+
+				this.line.write(this.pcm,0,deltaSamples+1);
+
+				this.pcm[deltaSamples-1] = 0;
+				this.pcm[deltaSamples] = 0;
+	
+				this.pos = !this.pos;
+			}
 		}
 	}
 
 	public void click()
 	{
-		this.click = true;
-//		System.out.println("click");
-//		while (this.clip == null)
-//		{
-//			System.err.println("cannot unmute speaker");
-//			try
-//			{
-//				Thread.sleep(5);
-//			}
-//			catch (InterruptedException e)
-//			{
-//				Thread.currentThread().interrupt();
-//			}
-//		}
-//		this.clip.setMicrosecondPosition(0);
-//		this.clip.start();
-//		this.mute.setValue(false);
-//		for (double i = 0; i < 100000.0; ++i)
-//		{
-//			double x = i*i;
-//			double y = x*2;
-//			x = y/2;
-//		}
-//		this.mute.setValue(true);
-//		if (this.clip == null)
-//		{
-//			return;
-//		}
-//
-//		synchronized (this.lock)
-//		{
-//			this.started = false;
-//			this.stopped = false;
-//		}
-//
-//
-//		this.clip.setMicrosecondPosition(0);
-//		this.clip.start();
-//return;
-//		synchronized (this.lock)
-//		{
-//			while (!(this.started && this.stopped))
-//			{
-//				try
-//				{
-//					this.lock.wait();
-//				}
-//				catch (InterruptedException e)
-//				{
-//					Thread.currentThread().interrupt();
-//				}
-//			}
-//		}
+		synchronized (this.click)
+		{
+			this.click.set(this.t);
+			this.click.notifyAll();
+		}
 	}
 
-//	private void update(final LineEvent event)
-//	{
-//		final LineEvent.Type evt = event.getType();
-//		
-//		if (evt.equals(LineEvent.Type.START))
-//		{
-//			synchronized (this.lock)
-//			{
-//				this.started = true;
-//				this.lock.notifyAll();
-//			}
-//		}
-//		else if (evt.equals(LineEvent.Type.STOP))
-//		{
-//			synchronized (this.lock)
-//			{
-//				this.stopped = true;
-//				this.lock.notifyAll();
-//			}
-//		}
-//	}
+	public void tick()
+	{
+		++this.t;
+	}
 }
