@@ -3,6 +3,8 @@
  */
 package chipset;
 
+import cards.Card;
+import cards.EmptySlot;
 import cards.disk.DiskController;
 import cards.disk.InvalidDiskImage;
 import config.Config;

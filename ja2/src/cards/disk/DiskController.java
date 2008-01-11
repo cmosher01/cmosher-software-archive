@@ -4,7 +4,7 @@ import java.awt.dnd.DropTargetListener;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JPanel;
-import chipset.Card;
+import cards.Card;
 import gui.DiskDriveControllerPanel;
 import gui.GUI;
 

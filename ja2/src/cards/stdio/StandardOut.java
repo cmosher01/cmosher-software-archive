@@ -3,7 +3,7 @@
  */
 package cards.stdio;
 
-import chipset.Card;
+import cards.Card;
 
 public class StandardOut extends Card
 {

@@ -5,7 +5,7 @@ package cards.stdio;
 
 import util.Util;
 import keyboard.KeypressQueue;
-import chipset.Card;
+import cards.Card;
 
 public class StandardIn extends Card
 {

@@ -1,7 +1,7 @@
 /*
  * Created on Nov 28, 2007
  */
-package chipset;
+package cards;
 
 import gui.GUI;
 import javax.swing.JPanel;

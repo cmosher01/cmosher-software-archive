@@ -3,7 +3,7 @@
  */
 package cards.memory;
 
-import chipset.Card;
+import cards.Card;
 import chipset.Memory;
 
 public class LanguageCard extends Card

@@ -4,7 +4,7 @@
 package cards.memory;
 
 import java.io.InputStream;
-import chipset.Card;
+import cards.Card;
 import chipset.InvalidMemoryLoad;
 import chipset.Memory;
 

@@ -1,13 +1,15 @@
 /*
  * Created on Nov 28, 2007
  */
-package chipset;
+package cards;
 
 import gui.DefaultCardPanel;
 import gui.GUI;
 import java.awt.dnd.DropTargetListener;
 import java.io.InputStream;
 import javax.swing.JPanel;
+import chipset.InvalidMemoryLoad;
+import chipset.Memory;
 
 public abstract class Card
 {
