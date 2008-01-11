@@ -111,17 +111,6 @@ public class Slots implements Iterable<Card>
 		return false;
 	}
 
-	public void loadDisk(int slot, int drive, File fnib) throws IOException, InvalidDiskImage
-	{
-		final Card card = this.cards.get(slot);
-		if (!(card instanceof DiskController))
-		{
-			throw new IllegalArgumentException("Card in slot "+slot+" is not a disk controller card.");
-		}
-		final DiskController controller = (DiskController)card;
-		controller.loadDisk(drive,fnib);
-	}
-
 	public boolean isAnyDiskDirty()
 	{
 		for (final Card card: this.cards)

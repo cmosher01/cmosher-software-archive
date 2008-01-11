@@ -186,7 +186,13 @@ public class Config
 		{
 			throw new IllegalArgumentException("Error in config file: invalid drive number "+drive);
 		}
-		slots.loadDisk(slot,drive-1,fnib);
+		final Card card = slots.get(slot);
+		if (!(card instanceof DiskController))
+		{
+			throw new IllegalArgumentException("Card in slot "+slot+" is not a disk controller card.");
+		}
+		final DiskController controller = (DiskController)card;
+		controller.loadDisk(drive-1,fnib);
 	}
 
 	private void insertCard(final String cardType, final int slot, final Slots slots, final StandardIn.EOFHandler eofHandler)
