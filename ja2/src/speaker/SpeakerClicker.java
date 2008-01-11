@@ -36,6 +36,7 @@ public class SpeakerClicker
 	{
 		Thread th = new Thread(new Runnable()
 		{
+			@SuppressWarnings("synthetic-access")
 			public void run()
 			{
 				try
