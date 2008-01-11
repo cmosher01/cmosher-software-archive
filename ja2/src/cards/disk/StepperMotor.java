@@ -1,4 +1,4 @@
-package disk;
+package cards.disk;
 
 import util.Util;
 

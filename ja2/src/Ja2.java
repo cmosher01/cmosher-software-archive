@@ -24,6 +24,7 @@ import util.Util;
 import video.ScreenImage;
 import video.Video;
 import video.VideoMode;
+import cards.disk.InvalidDiskImage;
 import chipset.AddressBus;
 import chipset.TimingGenerator;
 import chipset.InvalidMemoryLoad;
@@ -33,7 +34,6 @@ import chipset.Throttle;
 import chipset.cpu.CPU6502;
 import cli.CLI;
 import config.Config;
-import disk.InvalidDiskImage;
 
 /*
  * Created on Aug 31, 2004

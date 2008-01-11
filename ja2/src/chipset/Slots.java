@@ -3,6 +3,8 @@
  */
 package chipset;
 
+import cards.disk.DiskController;
+import cards.disk.InvalidDiskImage;
 import config.Config;
 import java.io.File;
 import java.io.IOException;
@@ -10,8 +12,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import disk.DiskController;
-import disk.InvalidDiskImage;
 
 public class Slots implements Iterable<Card>
 {

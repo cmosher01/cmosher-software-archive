@@ -1,4 +1,4 @@
-package disk;
+package cards.disk;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

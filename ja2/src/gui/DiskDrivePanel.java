@@ -26,8 +26,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import cards.disk.DiskBytes;
 import util.HexUtil;
-import disk.DiskBytes;
 
 public class DiskDrivePanel extends JPanel
 {

@@ -6,7 +6,7 @@ package gui;
 import java.awt.FlowLayout;
 import java.awt.dnd.DropTargetListener;
 import javax.swing.JPanel;
-import disk.DiskController;
+import cards.disk.DiskController;
 
 public final class DiskDriveControllerPanel extends JPanel
 {

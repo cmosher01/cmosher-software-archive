@@ -1,7 +1,7 @@
 /*
  * Created on Nov 28, 2007
  */
-package disk;
+package cards.disk;
 
 public class InvalidDiskImage extends Exception
 {

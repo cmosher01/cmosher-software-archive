@@ -12,14 +12,14 @@ import keyboard.KeypressQueue;
 import stdio.StandardIn;
 import stdio.StandardInProducer;
 import stdio.StandardOut;
+import cards.disk.DiskController;
+import cards.disk.InvalidDiskImage;
 import cards.memory.FirmwareCard;
 import cards.memory.LanguageCard;
 import chipset.Card;
 import chipset.InvalidMemoryLoad;
 import chipset.Memory;
 import chipset.Slots;
-import disk.DiskController;
-import disk.InvalidDiskImage;
 
 /*
  * Created on Dec 1, 2007

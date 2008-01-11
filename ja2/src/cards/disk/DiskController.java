@@ -1,4 +1,4 @@
-package disk;
+package cards.disk;
 
 import java.awt.dnd.DropTargetListener;
 import java.io.File;
