@@ -1,7 +1,7 @@
 /*
  * Created on Dec 1, 2007
  */
-package stdio;
+package cards.stdio;
 
 import java.io.FileDescriptor;
 import java.io.FileInputStream;

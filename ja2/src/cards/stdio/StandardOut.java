@@ -1,7 +1,7 @@
 /*
  * Created on Nov 28, 2007
  */
-package stdio;
+package cards.stdio;
 
 import chipset.Card;
 
