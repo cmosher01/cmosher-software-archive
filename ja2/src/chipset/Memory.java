@@ -2,6 +2,7 @@ package chipset;
 
 import java.io.InputStream;
 import java.util.Arrays;
+import util.Util;
 
 
 
@@ -11,44 +12,44 @@ import java.util.Arrays;
  */
 public class Memory
 {
-	private final byte[] ram;
+	private final byte[] bytes;
 
 	/**
 	 * @param keyboard
 	 */
 	public Memory(final int bytes)
 	{
-		this.ram = new byte[bytes];
-		clear();
+		this.bytes = new byte[bytes];
+		fillWithInitialValues();
 	}
 
 	public int size()
 	{
-		return this.ram.length;
+		return this.bytes.length;
 	}
 
-	public void clear()
+	public void fillWithInitialValues()
 	{
-		Arrays.fill(this.ram,(byte)0);
+		Arrays.fill(this.bytes,(byte)0);
 	}
 
 	public byte read(final int address)
 	{
-		return this.ram[address];
+		return this.bytes[address];
 	}
 
 	public void write(final int address, final byte data)
 	{
-		this.ram[address] = data;
+		this.bytes[address] = data;
 	}
 
 	public void load(int base, final InputStream in) throws InvalidMemoryLoad
 	{
 		try
 		{
-			for (int byt = in.read(); byt != -1 && base < this.ram.length; byt = in.read())
+			for (int byt = in.read(); byt != Util.EOF && base < this.bytes.length; byt = in.read())
 			{
-				this.ram[base++] = (byte)byt;
+				this.bytes[base++] = (byte)byt;
 			}
 		}
 		catch (final Throwable e)
