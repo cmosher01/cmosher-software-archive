@@ -3,6 +3,7 @@
  */
 package chipset;
 
+import gui.DefaultCardPanel;
 import gui.GUI;
 import java.awt.dnd.DropTargetListener;
 import java.io.InputStream;

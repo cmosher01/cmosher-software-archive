@@ -1,7 +1,7 @@
 /*
  * Created on Jan 4, 2008
  */
-package chipset;
+package gui;
 
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
