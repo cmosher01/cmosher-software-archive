@@ -29,7 +29,7 @@ public class StandardInProducer
 				readInput();
 			}
 		});
-		this.th.setName("Ja2-StandardInProducer");
+		this.th.setName("User-StandardInProducer");
 		this.th.setDaemon(true);
 		this.th.start();
 	}

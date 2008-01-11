@@ -26,8 +26,6 @@ import chipset.Slots;
  */
 public class Config
 {
-	public static final int SLOTS = 8;
-
 	private String filename;
 
 	public Config(final String filename)
@@ -142,7 +140,7 @@ public class Config
 			}
 			else
 			{
-				if (SLOTS <= slot)
+				if (Slots.SLOTS <= slot)
 				{
 					throw new IllegalArgumentException("Error in config file: invalid slot number: "+slot);
 				}
@@ -197,7 +195,7 @@ public class Config
 
 	private void insertCard(final String cardType, final int slot, final Slots slots, final StandardIn.EOFHandler eofHandler)
 	{
-		if (slot < 0 || SLOTS <= slot)
+		if (slot < 0 || Slots.SLOTS <= slot)
 		{
 			throw new IllegalArgumentException("Error in config file: invalid slot number: "+slot);
 		}

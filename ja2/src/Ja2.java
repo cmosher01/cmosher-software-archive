@@ -51,7 +51,7 @@ public final class Ja2 implements Closeable
 {
 	public static void main(final String... args) throws InterruptedException, InvocationTargetException
     {
-		Thread.currentThread().setName("Ja2-main");
+		Thread.currentThread().setName("User-main");
     	SwingUtilities.invokeAndWait(new Runnable()
     	{
 			public void run()
@@ -181,7 +181,7 @@ public final class Ja2 implements Closeable
 	    	screen.addKeyListener(new KeyboardProducer(keypresses,keyboard));
 	    	screen.addKeyListener(new ClipboardProducer(keypresses));
 	    	screen.addKeyListener(new HyperKeyHandler(throttle));
-	        screen.addKeyListener(new FnKeyHandler(cpu,screenImage,ram));
+	        screen.addKeyListener(new FnKeyHandler(cpu,screenImage,ram,throttle));
 	        screen.addKeyListener(new VideoKeyHandler(video));
 	        screen.addKeyListener(new PaddleButtons(paddleButtonStates));
 

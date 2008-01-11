@@ -66,7 +66,7 @@ public class GUI implements UI
 						GUI.this.frame.dispose();
 					}
 				});
-				th.setName("Ja2-GUI-dispose frame");
+				th.setName("User-GUI-dispose frame");
 				th.setDaemon(true);
 				th.start();
 				try

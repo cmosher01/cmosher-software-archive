@@ -3,26 +3,24 @@
  */
 package chipset;
 
-import cards.Card;
-import cards.EmptySlot;
-import cards.disk.DiskController;
-import cards.disk.InvalidDiskImage;
-import config.Config;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import cards.Card;
+import cards.EmptySlot;
+import cards.disk.DiskController;
 
 public class Slots implements Iterable<Card>
 {
-	private final List<Card> cards = new ArrayList<Card>(Config.SLOTS);
+	public static final int SLOTS = 8;
+
+	private final List<Card> cards = new ArrayList<Card>(SLOTS);
 
 
 	public Slots()
 	{
-		this.cards.addAll(Collections.<Card>nCopies(Config.SLOTS,new EmptySlot()));
+		this.cards.addAll(Collections.<Card>nCopies(SLOTS,new EmptySlot()));
 	}
 
 	public byte io(final int islot, final int iswch, final byte b, boolean writing)

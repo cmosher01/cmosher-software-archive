@@ -55,7 +55,7 @@ public class SpeakerClicker
 			}
 		});
 		th.setDaemon(true);
-		th.setName("Ja2-SpeakerClicker");
+		th.setName("User-SpeakerClicker");
 		th.start();
 		synchronized (this.started)
 		{

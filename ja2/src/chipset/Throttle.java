@@ -5,6 +5,7 @@ package chipset;
 
 
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import util.Util;
 import video.VideoMode;
 
@@ -12,11 +13,14 @@ import video.VideoMode;
 
 public class Throttle
 {
-	private static final int CHECK_EVERY = Util.divideRound(TimingGenerator.AVG_CPU_HZ,10);
+	private static final int CHECK_EVERY_FRACT = 10;
+	private static final int CHECK_EVERY_CYCLE = Util.divideRound(TimingGenerator.AVG_CPU_HZ,CHECK_EVERY_FRACT);
+	private static final int EXPECTED_MS = 1000/CHECK_EVERY_FRACT;
 
 	private final VideoMode video;
 	private final Slots slots;
-	private boolean hyper;
+	private volatile boolean hyper;
+	private AtomicBoolean suspend = new AtomicBoolean();
 
 	private long msPrev = System.currentTimeMillis();
 	private long times;
@@ -27,7 +31,13 @@ public class Throttle
 		this.slots = slots;
 	}
 
-	public void throttle()
+	public void tick()
+	{
+		suspendIfNecessary();
+		throttleIfNecessary();
+	}
+
+	private void throttleIfNecessary()
 	{
 		/*
 		 * If we are displaying graphics and the disk drive is not on,
@@ -43,28 +53,51 @@ public class Throttle
 			 * ahead we are, and sleep by the difference.
 			 */
 			++this.times;
-			if (this.times >= CHECK_EVERY)
+			if (this.times >= CHECK_EVERY_CYCLE)
 			{
 				this.times = 0;
 				final long msNow = System.currentTimeMillis();
 				final long msActual = msNow-this.msPrev;
-				this.msPrev = msNow;
-				final long msDelta = 100-msActual;
-				if (msDelta >= 2)
+				final long msDelta = EXPECTED_MS-msActual;
+				sleep(msDelta);
+				this.msPrev = System.currentTimeMillis();
+			}
+		}
+	}
+
+	private static void sleep(final long msDelta)
+	{
+		if (msDelta >= 2)
+		{
+			try
+			{
+				Thread.sleep(msDelta);
+			}
+			catch (InterruptedException e)
+			{
+				Thread.currentThread().interrupt();
+			}
+		}
+	}
+
+	private void suspendIfNecessary()
+	{
+		synchronized (this.suspend)
+		{
+			while (this.suspend.get())
+			{
+				try
 				{
-					try
-					{
-						Thread.sleep(msDelta);
-						this.msPrev = System.currentTimeMillis();
-					}
-					catch (InterruptedException e)
-					{
-						Thread.currentThread().interrupt();
-					}
+					this.suspend.wait();
+				}
+				catch (InterruptedException e)
+				{
+					Thread.currentThread().interrupt();
 				}
 			}
 		}
 	}
+
 	public boolean isHyper()
 	{
 		return this.hyper;
@@ -78,5 +111,14 @@ public class Throttle
 	public void toggleHyper()
 	{
 		this.hyper = !this.hyper;
+	}
+
+	public void toggleSuspend()
+	{
+		synchronized (this.suspend)
+		{
+			this.suspend.set(!this.suspend.get());
+			this.suspend.notifyAll();
+		}
 	}
 }

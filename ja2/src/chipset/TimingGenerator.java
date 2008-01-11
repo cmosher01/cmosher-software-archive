@@ -1,5 +1,6 @@
 package chipset;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import paddle.PaddlesInterface;
 import chipset.cpu.CPU6502;
 import speaker.SpeakerClicker;
@@ -23,8 +24,22 @@ public class TimingGenerator
 	private final Video video;
 	private final PaddlesInterface paddles;
 
-	private volatile boolean shutdown;
-	private Thread thread;
+	private final AtomicBoolean shutdown = new AtomicBoolean();
+	private final Thread thread = new Thread(new Runnable()
+	{
+		@SuppressWarnings("synthetic-access")
+		public void run()
+		{
+			try
+			{
+		    	threadProcedure();
+			}
+			catch (final Throwable e)
+			{
+				e.printStackTrace();
+			}
+		}
+	});
 
 	private final SpeakerClicker speaker;
 	private final Throttle throttle;
@@ -42,61 +57,49 @@ public class TimingGenerator
 
 	public void run()
 	{
-		if (this.thread == null)
+		this.thread.setName("User-TimingGenerator");
+		this.thread.start();
+	}
+
+	private void threadProcedure()
+	{
+		while (!isShuttingDown())
 		{
-			this.thread = new Thread(new Runnable()
-			{
-				@SuppressWarnings("synthetic-access")
-				public void run()
-				{
-					try
-					{
-				    	runth();
-					}
-					catch (final Throwable e)
-					{
-						e.printStackTrace();
-					}
-				}
-			});
-			this.thread.setName("Ja2-TimingGenerator");
-			this.thread.start();
+			tick();
 		}
 	}
 
-	private void runth()
+	private boolean isShuttingDown()
 	{
-		while (!this.shutdown)
+		synchronized (this.shutdown)
 		{
-			/*
-			 * One normal clock cycle. Let the CPU do one cycle of its
-			 * calculation, then let the video display do one cycle's
-			 * worth of scanning/displaying (one byte).
-			 * Tick down the paddles, too.
-			 */
-			this.cpu.tick();
-			this.video.tick();
-			this.paddles.tick();
-			this.speaker.tick();
-
-			this.throttle.throttle();
+			return this.shutdown.get();
 		}
+	}
+
+	private void tick()
+	{
+		this.cpu.tick();
+		this.video.tick();
+		this.paddles.tick();
+		this.speaker.tick();
+		this.throttle.tick();
 	}
 
 	public void shutdown()
 	{
-		this.shutdown = true;
-		if (this.thread != null)
+		synchronized (this.shutdown)
 		{
-			try
-			{
-				this.thread.join();
-			}
-			catch (InterruptedException e)
-			{
-				e.printStackTrace();
-			}
-			this.thread = null;
+			this.shutdown.set(true);
+		}
+
+		try
+		{
+			this.thread.join();
+		}
+		catch (InterruptedException e)
+		{
+			Thread.currentThread().interrupt();
 		}
 	}
 }
