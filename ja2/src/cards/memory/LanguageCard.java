@@ -1,7 +1,7 @@
 /*
  * Created on Dec 23, 2007
  */
-package cards;
+package cards.memory;
 
 import chipset.Card;
 import chipset.Memory;
