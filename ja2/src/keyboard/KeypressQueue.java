@@ -13,21 +13,18 @@ public class KeypressQueue
 
 
 
-	public void put(final byte c)
+	public void put(final int c)
 	{
-		if (c < 0)
+		final byte asByte = (byte)c;
+
+		if (asByte < 0)
 		{
 			return;
 		}
 
-		final byte b = (byte)((c & 0x7F) | 0x80);
+		final byte b = (byte)(asByte | 0x80);
 
 		putRaw(b);
-	}
-
-	public void put(final int c)
-	{
-		put((byte)c);
 	}
 
 	public void putEOF()
