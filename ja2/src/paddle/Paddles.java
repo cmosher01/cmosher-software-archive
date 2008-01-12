@@ -7,11 +7,15 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.PointerInfo;
 import java.awt.Rectangle;
+import chipset.TimingGenerator;
 
 public class Paddles implements PaddlesInterface
 {
-	private static final int PADDLE_COUNT = 2;
+	private static final int PADDLE_COUNT = 4;
 	private static final int PADDLE_CYCLES = 2805;
+
+	private static final int REALTIME_1MS_CYCLES = TimingGenerator.CPU_HZ/1000;
+	private static final int REALTIME_100US_CYCLES = 90;
 
 	private final int[] rTick;
 
@@ -22,10 +26,11 @@ public class Paddles implements PaddlesInterface
 
 	public void tick()
 	{
-		if (this.rTick[0] > 0)
-			--this.rTick[0];
-		if (this.rTick[1] > 0)
-			--this.rTick[1];
+		for (int paddle = 0; paddle < PADDLE_COUNT; ++paddle)
+		{
+			if (this.rTick[paddle] > 0)
+				--this.rTick[paddle];
+		}
 	}
 
 	public void startTimers()
@@ -61,6 +66,11 @@ public class Paddles implements PaddlesInterface
 			this.rTick[0] = x;
 		if (isTimedOut(1))
 			this.rTick[1] = y;
+
+		if (isTimedOut(2))
+			this.rTick[2] = REALTIME_1MS_CYCLES;
+		if (isTimedOut(3))
+			this.rTick[3] = REALTIME_100US_CYCLES;
 	}
 
 	public boolean isTimedOut(final int paddle)
