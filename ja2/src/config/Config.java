@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import keyboard.KeypressQueue;
 import cards.Card;
+import cards.ClockCard;
 import cards.disk.DiskController;
 import cards.disk.InvalidDiskImage;
 import cards.memory.FirmwareCard;
@@ -211,6 +212,10 @@ public class Config
 		else if (cardType.equalsIgnoreCase("disk"))
 		{
 	    	card = new DiskController();
+		}
+		else if (cardType.equalsIgnoreCase("clock"))
+		{
+	    	card = new ClockCard();
 		}
 		else if (cardType.equalsIgnoreCase("stdout"))
 		{

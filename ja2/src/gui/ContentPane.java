@@ -45,13 +45,10 @@ class ContentPane extends JPanel
 			{
 				cardPanel.setBorder(BorderFactory.createTitledBorder("slot "+slot));
 				add(cardPanel);
-				if (drop == null)
+				final DropTargetListener dropCard = card.getDropListener();
+				if (dropCard != null)
 				{
-					final DropTargetListener dropCard = card.getDropListener();
-					if (dropCard != null)
-					{
-						drop = dropCard;
-					}
+					drop = dropCard;
 				}
 			}
 			++slot;
