@@ -59,7 +59,6 @@ public class Paddles implements PaddlesInterface
 		p = loc.getY();
 		pMin = rect.getMinY();
 		pMax = rect.getMaxY()/2;
-		p = pMin+pMax-p;
 		final int y = (int)Math.round(Math.rint((p-pMin)/(pMax-pMin)*PADDLE_CYCLES));
 
 		if (isTimedOut(0))
