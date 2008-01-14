@@ -4,6 +4,7 @@ import java.awt.dnd.DropTargetListener;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JPanel;
+import chipset.Throttle;
 import cards.Card;
 import gui.DiskDriveControllerPanel;
 import gui.GUI;
@@ -13,8 +14,8 @@ import gui.GUI;
  */
 public class DiskController extends Card
 {
-	private final Drive drive1 = new Drive(new DiskBytes(),new StepperMotor());
-	private final Drive drive2 = new Drive(new DiskBytes(),new StepperMotor());
+	private final Drive drive1;
+	private final Drive drive2;
 
 	private volatile Drive currentDrive;
 
@@ -25,6 +26,12 @@ public class DiskController extends Card
 	private DiskDriveControllerPanel panel;
 
 
+
+	public DiskController(final Throttle throttle)
+	{
+		this.drive1 = new Drive(new DiskBytes(throttle),new StepperMotor());
+		this.drive2 = new Drive(new DiskBytes(throttle),new StepperMotor());
+	}
 
 	@Override
 	public byte io(final int addr, byte data, @SuppressWarnings("unused") final boolean writing)

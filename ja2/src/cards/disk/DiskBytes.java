@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.concurrent.atomic.AtomicBoolean;
+import chipset.Throttle;
 import util.Util;
 
 /*
@@ -18,6 +19,8 @@ import util.Util;
 public class DiskBytes
 {
 	private static final int BYTES_PER_TRACK = 0x1A00;
+
+	private final Throttle throttle;
 
 	private byte[][] bytes;
 
@@ -29,8 +32,9 @@ public class DiskBytes
 	private int waitTimes;
 	private final AtomicBoolean modified = new AtomicBoolean();
 
-	public DiskBytes()
+	public DiskBytes(final Throttle throttle)
 	{
+		this.throttle = throttle;
 		unload();
 	}
 
@@ -131,23 +135,7 @@ public class DiskBytes
 		}
 		if (!isLoaded())
 		{
-			++this.waitTimes;
-			if (this.waitTimes >= 0x100)
-			{
-				this.waitTimes = 0;
-				synchronized (this.loaded)
-				{
-					try
-					{
-						this.loaded.wait(50);
-					}
-					catch (InterruptedException e)
-					{
-						e.printStackTrace();
-						Thread.currentThread().interrupt();
-					}
-				}
-			}
+			waitIfTooFast();
 			if (!isLoaded())
 			{
 				return -1;
@@ -156,6 +144,31 @@ public class DiskBytes
 		final byte ret = this.bytes[track][this.byt];
 		nextByte();
 		return ret;
+	}
+
+	private void waitIfTooFast()
+	{
+		if (this.throttle.isHyper())
+		{
+			return;
+		}
+
+		++this.waitTimes;
+		if (this.waitTimes >= 0x100)
+		{
+			synchronized (this.loaded)
+			{
+				try
+				{
+					this.loaded.wait(50);
+				}
+				catch (InterruptedException e)
+				{
+					Thread.currentThread().interrupt();
+				}
+			}
+			this.waitTimes = 0;
+		}
 	}
 
 	void put(final int track, final byte value)

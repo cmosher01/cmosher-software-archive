@@ -21,17 +21,20 @@ import cards.stdio.StandardOut;
 import chipset.InvalidMemoryLoad;
 import chipset.Memory;
 import chipset.Slots;
+import chipset.Throttle;
 
 /*
  * Created on Dec 1, 2007
  */
 public class Config
 {
-	private String filename;
+	private final String filename;
+	private final Throttle throttle;
 
-	public Config(final String filename)
+	public Config(final String filename, final Throttle throttle)
 	{
 		this.filename = filename;
+		this.throttle = throttle;
 	}
 
 	public void parseConfig(final Memory memory, final Slots slots, final StandardIn.EOFHandler eofHandler)
@@ -213,7 +216,7 @@ public class Config
 		}
 		else if (cardType.equalsIgnoreCase("disk"))
 		{
-	    	card = new DiskController();
+	    	card = new DiskController(this.throttle);
 		}
 		else if (cardType.equalsIgnoreCase("clock"))
 		{

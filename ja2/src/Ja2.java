@@ -104,9 +104,11 @@ public final class Ja2 implements Closeable
 
     	final Slots slots = new Slots();
 
+    	final Throttle throttle = new Throttle();
 
 
-    	final Config cfg = new Config(this.config);
+
+    	final Config cfg = new Config(this.config,throttle);
 		cfg.parseConfig(rom,slots,new StandardIn.EOFHandler()
 		{
 			@SuppressWarnings("synthetic-access")
@@ -145,8 +147,6 @@ public final class Ja2 implements Closeable
 
     	
     	final VideoMode videoMode = new VideoMode();
-
-    	final Throttle throttle = new Throttle(videoMode,slots);
 
 		final KeypressQueue keypresses = new KeypressQueue();
 
