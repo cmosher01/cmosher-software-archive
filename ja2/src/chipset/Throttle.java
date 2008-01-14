@@ -25,6 +25,9 @@ public class Throttle
 	private long msPrev = System.currentTimeMillis();
 	private long times;
 
+	private long then;
+	private long t;
+
 	public Throttle(final VideoMode video, final Slots slots)
 	{
 		this.video = video;
@@ -33,8 +36,23 @@ public class Throttle
 
 	public void tick()
 	{
+//		checkSpeed();
 		suspendIfNecessary();
 		throttleIfNecessary();
+	}
+
+	private void checkSpeed()
+	{
+		++this.t;
+		final long now = System.currentTimeMillis();
+		final long deltaMS = now - this.then;
+		if (deltaMS >= 10000)
+		{
+			final double Hz = this.t/(deltaMS/1000.0);
+			System.out.println(""+(long)Hz+" Hz");
+			this.then = System.currentTimeMillis();
+			this.t = 0;
+		}
 	}
 
 	private void throttleIfNecessary()
@@ -46,7 +64,7 @@ public class Throttle
 		 * Otherwise, just run a fast as possible (except for slowing
 		 * down while waiting for a key-press; see Keyboard.waitIfTooFast).
 		 */
-		if (!this.video.isText() && !this.slots.isAnyDiskDriveMotorOn() && !this.hyper)
+//		if (!this.video.isText() && !this.slots.isAnyDiskDriveMotorOn() && !this.hyper)
 		{
 			/*
 			 * Check every 100 milliseconds to see how far
@@ -69,6 +87,7 @@ public class Throttle
 	{
 		if (msDelta >= 2)
 		{
+			System.out.println("s "+msDelta);
 			try
 			{
 				Thread.sleep(msDelta);
