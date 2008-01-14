@@ -152,6 +152,8 @@ public class Config
 			    	card.loadSeventhRom(base,rom);
 				else if (romtype.equalsIgnoreCase("rombank"))
 			    	card.loadBankRom(base,rom);
+				else
+					throw new IllegalArgumentException("Error in config file: invalid rom (must be rom, rom7, or rombank): "+romtype);
 			}
 			rom.close();
 		}
