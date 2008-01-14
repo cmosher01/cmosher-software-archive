@@ -65,7 +65,11 @@ public class TimingGenerator
 	{
 		while (!isShuttingDown())
 		{
-			tick();
+			this.cpu.tick();
+			this.video.tick();
+			this.paddles.tick();
+			this.speaker.tick();
+			this.throttle.tick();
 		}
 	}
 
@@ -75,15 +79,6 @@ public class TimingGenerator
 		{
 			return this.shutdown.get();
 		}
-	}
-
-	private void tick()
-	{
-		this.cpu.tick();
-		this.video.tick();
-		this.paddles.tick();
-		this.speaker.tick();
-		this.throttle.tick();
 	}
 
 	public void shutdown()
