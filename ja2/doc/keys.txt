@@ -12,4 +12,5 @@ F11 toggle hyper mode
 F12 toggle type-ahead buffering
 
 INSERT       paste text from clipboard
+SCROLL LOCK  toggle pause/play emulator
 PAUSE/BREAK  reset
