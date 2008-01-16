@@ -46,6 +46,7 @@ public class ClockCard extends Card
 	private void getTime()
 	{
 		cal.setTime(new Date());
+
 		final int month = cal.get(Calendar.MONTH)+1;
 		final int weekday = cal.get(Calendar.DAY_OF_WEEK)-1;
 		final int day = cal.get(Calendar.DAY_OF_MONTH);
@@ -60,7 +61,7 @@ public class ClockCard extends Card
 
 		Formatter fmt = new Formatter();
 		// mo,da,dt,hr,mn
-		fmt.format("%02d,%02d,%02d,%02d,%02d,%02d,%03d,%04d,%d08d,%01d\r",month,weekday,day,hour,minute,second,millis,year,zonemillis,(dst ? 1 : 0));
+		fmt.format("%02d,%02d,%02d,%02d,%02d,%02d,%03d,%04d,%+08d,%01d\r",month,weekday,day,hour,minute,second,millis,year,zonemillis,(dst ? 1 : 0));
 		this.time = fmt.toString();
 	}
 

@@ -1,4 +1,4 @@
-SET CC65_HOME=C:\cc65
+SET CC65_HOME=C:\apple2\windows_programs\assemblers\cc65
 
 
 
