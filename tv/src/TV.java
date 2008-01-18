@@ -44,42 +44,44 @@ public class TV
 	{
 		for (int lineno = 0; lineno < ANALOGTV.V; ++lineno)
 		{
-			int i = ANALOGTV.SYNC_START;
-			if (3 <= lineno && lineno < 7)
 			{
-				while (i < ANALOGTV.BP_START)
+				int i = ANALOGTV.SYNC_START;
+				if (3 <= lineno && lineno < 7)
 				{
-					input.signal[lineno][i++] = ANALOGTV.BLANK_LEVEL;
+					while (i < ANALOGTV.BP_START)
+					{
+						input.signal[lineno][i++] = ANALOGTV.BLANK_LEVEL;
+					}
+					while (i < ANALOGTV.H)
+					{
+						input.signal[lineno][i++] = ANALOGTV.SYNC_LEVEL;
+					}
+				}
+				else
+				{
+					while (i < ANALOGTV.BP_START)
+					{
+						input.signal[lineno][i++] = ANALOGTV.SYNC_LEVEL;
+					}
+					while (i < ANALOGTV.PIC_START)
+					{
+						input.signal[lineno][i++] = ANALOGTV.BLANK_LEVEL;
+					}
+					while (i < ANALOGTV.FP_START)
+					{
+						input.signal[lineno][i++] = ANALOGTV.BLACK_LEVEL;
+					}
 				}
 				while (i < ANALOGTV.H)
 				{
-					input.signal[lineno][i++] = ANALOGTV.SYNC_LEVEL;
-				}
-			}
-			else
-			{
-				while (i < ANALOGTV.BP_START)
-				{
-					input.signal[lineno][i++] = ANALOGTV.SYNC_LEVEL;
-				}
-				while (i < ANALOGTV.PIC_START)
-				{
 					input.signal[lineno][i++] = ANALOGTV.BLANK_LEVEL;
 				}
-				while (i < ANALOGTV.FP_START)
-				{
-					input.signal[lineno][i++] = ANALOGTV.BLACK_LEVEL;
-				}
-			}
-			while (i < ANALOGTV.H)
-			{
-				input.signal[lineno][i++] = ANALOGTV.BLANK_LEVEL;
 			}
 			/* 9 cycles of colorburst */
-			for (int i2 = ANALOGTV.CB_START; i2 < ANALOGTV.CB_START + 36; i2 += 4)
+			for (int i = ANALOGTV.CB_START; i < ANALOGTV.CB_START + 36; i += 4)
 			{
-				input.signal[lineno][i2 + 1] += ANALOGTV.CB_LEVEL;
-				input.signal[lineno][i2 + 3] -= ANALOGTV.CB_LEVEL;
+				input.signal[lineno][i + 1] += ANALOGTV.CB_LEVEL;
+				input.signal[lineno][i + 3] -= ANALOGTV.CB_LEVEL;
 			}
 		}
 	}
@@ -170,8 +172,8 @@ public class TV
 		colormode = (cb_i * cb_i + cb_q * cb_q) > 2.8;
 		if (colormode)
 		{
-			double tint_i = -Math.cos((103 + it.color_control) * 3.1415926 / 180);
-			double tint_q = Math.sin((103 + it.color_control) * 3.1415926 / 180);
+			double tint_i = -Math.cos((103 + it.color_control) * Math.PI / 180);
+			double tint_q = Math.sin((103 + it.color_control) * Math.PI / 180);
 			multiq2[0] = (cb_i * tint_i - cb_q * tint_q) * it.color_control;
 			multiq2[1] = (cb_q * tint_i + cb_i * tint_q) * it.color_control;
 			multiq2[2] = -multiq2[0];
