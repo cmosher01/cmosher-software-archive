@@ -60,7 +60,7 @@ public class analogtv_
 	int[] red_values = new int[ANALOGTV.CV_MAX];
 	int[] green_values = new int[ANALOGTV.CV_MAX];
 	int[] blue_values = new int[ANALOGTV.CV_MAX];
-	analogtv_yiq[] yiq = new analogtv_yiq[ANALOGTV.PIC_LEN + 10];
+	analogtv_yiq[] yiq = new analogtv_yiq[ANALOGTV.SIGNAL_LEN];//[ANALOGTV.PIC_LEN + 10];
 	int[] colors = new int[256];
 	int cmap_y_levels;
 	int cmap_i_levels;
@@ -72,7 +72,7 @@ public class analogtv_
 	double[][] line_cb_phase = new double[ANALOGTV.V][4];
 	int channel_change_cycles;
 	double rx_signal_level;
-	double[] rx_signal = new double[ANALOGTV.SIGNAL_LEN + 2 * ANALOGTV.H];
+	double[] rx_signal = new double[ANALOGTV.SIGNAL_LEN];
 
 	public analogtv_()
 	{

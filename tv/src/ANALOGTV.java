@@ -42,7 +42,7 @@ public class ANALOGTV
 	public static final int WHITE_LEVEL=100;
 	public static final int GRAY50_LEVEL=55;
 	public static final int GRAY30_LEVEL=35;
-	public static final int BLACK_LEVEL=10;
+	public static final int BLACK_LEVEL=7;
 	public static final int BLANK_LEVEL=0;
 	public static final int SYNC_LEVEL=-40;
 	public static final int CB_LEVEL=20;

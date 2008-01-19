@@ -1,30 +1,97 @@
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
+import java.io.Closeable;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.atomic.AtomicBoolean;
+import javax.swing.SwingUtilities;
 
 /*
  * Created on Jan 18, 2008
  */
-public class TV
+public class TV implements Closeable
 {
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args)
+	private static TV thistv;
+	public static void main(final String... args) throws InterruptedException, InvocationTargetException
 	{
-		  analogtv_input tvin = new analogtv_input();
-		  analogtv_setup_sync(tvin);
+		Thread.currentThread().setName("User-main");
+		SwingUtilities.invokeAndWait(new Runnable()
+		{
+			public void run()
+			{
+				thistv = new TV();
+				program();
+			}
+		});
+		synchronized (thistv.shutdown)
+		{
+			while (!thistv.shutdown.get())
+			{
+				try
+				{
+					thistv.shutdown.wait();
+				}
+				catch (InterruptedException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
-		  dump_signal_row(tvin.signal[0]);
+	private static void program()
+	{
+		BufferedImage image = new BufferedImage(ANALOGTV.H,ANALOGTV.V * 2,BufferedImage.TYPE_INT_RGB);
+		GUI gui = new GUI(thistv,image);
 
-		  analogtv_ tv = new analogtv_();
-		  analogtv_configure(tv);
+		analogtv_input tvin = new analogtv_input();
+		analogtv_setup_sync(tvin);
 
-		  analogtv_reception rcp = new analogtv_reception();
-		  rcp.input = tvin;
-		  analogtv_add_signal(tv,rcp);
+//		draw_signal(tvin.signal,image);
 
-		  BufferedImage image = new BufferedImage(ANALOGTV.H, ANALOGTV.V*2, BufferedImage.TYPE_INT_RGB);
-		  analogtv_draw(tv,image);
+		analogtv_ tv = new analogtv_();
+		analogtv_configure(tv);
+		analogtv_reception rcp = new analogtv_reception();
+		rcp.input = tvin;
+		analogtv_add_signal(tv,rcp);
+
+//		draw_signal(tv.rx_signal,image);
+
+		analogtv_test_draw(tv,image);
+//		analogtv_draw(tv,image);
+
+		//gui.plot();
+
+	}
+
+	private static void draw_signal(double[] rx_signal, BufferedImage image)
+	{
+		byte[] rb = new byte[rx_signal.length];
+		int i = 0;
+		for (final double sig: rx_signal)
+		{
+			rb[i++] = (byte)(int)Math.rint((sig*255/480));
+		}
+		draw_signal(rb,image);
+	}
+
+	private static void draw_signal(byte[] signal, BufferedImage image)
+	{
+		DataBuffer imageBuf = image.getRaster().getDataBuffer();
+		int pi = 0;
+		for (int i = 0; i < signal.length; ++i)
+		{
+			final int ire = signal[i]-ANALOGTV.SYNC_LEVEL;
+			final int val = (int)Math.rint(ire*255.0/(ANALOGTV.WHITE_LEVEL-ANALOGTV.SYNC_LEVEL));
+			final int rgb = (val << 16) | (val << 8) | (val);
+			imageBuf.setElem(pi,rgb);
+			++pi;
+			if (pi % ANALOGTV.H == 0)
+			{
+				pi += ANALOGTV.H;
+			}
+		}
 	}
 
 	private static double puramp(analogtv_ it, double tc, double start, double over)
@@ -50,39 +117,71 @@ public class TV
 				{
 					while (i < ANALOGTV.BP_START)
 					{
-						input.signal[lineno][i++] = ANALOGTV.BLANK_LEVEL;
+						input.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.BLANK_LEVEL;
 					}
 					while (i < ANALOGTV.H)
 					{
-						input.signal[lineno][i++] = ANALOGTV.SYNC_LEVEL;
+						input.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.SYNC_LEVEL;
 					}
 				}
 				else
 				{
 					while (i < ANALOGTV.BP_START)
 					{
-						input.signal[lineno][i++] = ANALOGTV.SYNC_LEVEL;
+						input.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.SYNC_LEVEL;
 					}
 					while (i < ANALOGTV.PIC_START)
 					{
-						input.signal[lineno][i++] = ANALOGTV.BLANK_LEVEL;
+						input.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.BLANK_LEVEL;
 					}
 					while (i < ANALOGTV.FP_START)
 					{
-						input.signal[lineno][i++] = ANALOGTV.BLACK_LEVEL;
+						input.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.BLACK_LEVEL;
 					}
 				}
 				while (i < ANALOGTV.H)
 				{
-					input.signal[lineno][i++] = ANALOGTV.BLANK_LEVEL;
+					input.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.BLANK_LEVEL;
 				}
 			}
 			/* 9 cycles of colorburst */
 			for (int i = ANALOGTV.CB_START; i < ANALOGTV.CB_START + 36; i += 4)
 			{
-				input.signal[lineno][i + 1] += ANALOGTV.CB_LEVEL;
-				input.signal[lineno][i + 3] -= ANALOGTV.CB_LEVEL;
+				input.signal[lineno * ANALOGTV.H + i + 1] += ANALOGTV.CB_LEVEL;
+				input.signal[lineno * ANALOGTV.H + i + 3] -= ANALOGTV.CB_LEVEL;
 			}
+
+			// TEST:
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 300] = 100;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 301] = 100;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 302] = 100;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 303] = 100;
+
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 49] = 80;
+
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 58] = 80;
+
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 67] = 80;
+
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 76] = 80;
+
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 86] = 40;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 87] = 40;
+
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 95] = 40;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 96] = 40;
+
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 104] = 40;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 105] = 40;
+
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 113] = 40;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 114] = 40;
+
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 122] = 40;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 123] = 40;
+
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 131] = 20;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 132] = -20;
 		}
 	}
 
@@ -108,7 +207,6 @@ public class TV
 			}
 		}
 		cur_vsync = (cur_vsync + i + ANALOGTV.V) % ANALOGTV.V;
-
 		int cur_hsync = it.cur_hsync;
 		int lineno;
 		for (lineno = 0; lineno < ANALOGTV.V; lineno++)
@@ -151,20 +249,23 @@ public class TV
 		}
 		it.cur_hsync = cur_hsync;
 		it.cur_vsync = cur_vsync;
-//		System.out.println("synch (v,h): "+cur_vsync+","+cur_hsync);
+		// System.out.println("synch (v,h): "+cur_vsync+","+cur_hsync);
 	}
 
 	private static final int MAXDELAY = 32;
 
+	private static int xxx;
 	private static void analogtv_ntsc_to_yiq(analogtv_ it, int lineno, int isignal, int start, int end)
 	{
+		//System.out.println(""+xxx+" ntsc_to_yiq: "+lineno+","+isignal+","+start+","+end);
+		++xxx;
 		int i;
 		// double *sp;
 		final int phasecorr = 0;// ????????(signal-it.rx_signal)&3;
 		boolean colormode;
 		double agclevel = it.agclevel;
-		double brightadd = it.brightness_control * 100.0 - ANALOGTV.BLACK_LEVEL;
-		double[] delay = new double[MAXDELAY + ANALOGTV.PIC_LEN];
+		double brightadd = ANALOGTV.BLACK_LEVEL;/*-ANALOGTV.SYNC_LEVEL+1;*///it.brightness_control * 100.0 - ANALOGTV.BLACK_LEVEL;
+		double[] delay = new double[2*MAXDELAY + ANALOGTV.H];
 		// double *dp;
 		double[] multiq2 = new double[4];
 		double cb_i = (it.line_cb_phase[lineno][(2 + phasecorr) & 3] - it.line_cb_phase[lineno][(0 + phasecorr) & 3]) / 16.0;
@@ -178,9 +279,10 @@ public class TV
 			multiq2[1] = (cb_q * tint_i + cb_i * tint_q) * it.color_control;
 			multiq2[2] = -multiq2[0];
 			multiq2[3] = -multiq2[1];
+//			System.out.println("multi: "+multiq2[0]+","+multiq2[1]+","+multiq2[2]+","+multiq2[3]);
 		}
 		// dp = delay+ANALOGTV.PIC_LEN-MAXDELAY;
-		int idp = ANALOGTV.PIC_LEN - MAXDELAY;
+		int idp = ANALOGTV.H + MAXDELAY;
 		for (i = 0; i < 24; i++)
 		{
 			delay[idp + i] = 0.0;
@@ -189,14 +291,23 @@ public class TV
 		int isp;
 		for (i = start, iyiq = start, isp = start; i < end; i++, idp--, iyiq++, isp++)
 		{
+			if (idp < 0 || idp >= 2*MAXDELAY + ANALOGTV.H)
+				System.err.println("err");
 			delay[idp + 0] = it.rx_signal[isignal + isp + 0] * 0.0469904257251935 * agclevel;
-			delay[idp + 8] = (+1.0 * (delay[idp + 6] + delay[idp + 0]) + 4.0 * (delay[idp + 5] + delay[idp + 1]) + 7.0 * (delay[idp + 4] + delay[idp + 2]) + 8.0 * (delay[idp + 3]) - 0.0176648
-				* delay[idp + 12] - 0.4860288 * delay[idp + 10]);
+			delay[idp + 8] = (
+				+ 1.0 * (delay[idp + 6] + delay[idp + 0])
+				+ 4.0 * (delay[idp + 5] + delay[idp + 1])
+				+ 7.0 * (delay[idp + 4] + delay[idp + 2])
+				+ 8.0 * (delay[idp + 3])
+				- 0.0176648 * delay[idp + 12]
+				- 0.4860288 * delay[idp + 10]);
 			it.yiq[iyiq].y = delay[idp + 8] + brightadd;
+//			System.out.printf("%6.1f  ",it.yiq[iyiq].y);
 		}
+		System.out.println();
 		if (colormode)
 		{
-			idp = ANALOGTV.PIC_LEN - MAXDELAY;
+			idp = ANALOGTV.H + MAXDELAY;
 			for (i = 0; i < 27; i++)
 			{
 				delay[idp + i] = 0.0;
@@ -205,11 +316,20 @@ public class TV
 			{
 				// const double sig(*sp);
 				delay[idp + 0] = it.rx_signal[isignal + isp] * multiq2[i & 3] * 0.0833333333333;
-				it.yiq[iyiq].i = delay[idp + 8] = (+1.0 * (delay[idp + 5] + delay[idp + 0]) + 3.0 * (delay[idp + 4] + delay[idp + 1]) + 4.0 * (delay[idp + 3] + delay[idp + 2]) - 0.3333333333 * delay[idp + 10]);
+				it.yiq[iyiq].i = delay[idp + 8] = (
+					+ 1.0 * (delay[idp + 5] + delay[idp + 0])
+					+ 3.0 * (delay[idp + 4] + delay[idp + 1])
+					+ 4.0 * (delay[idp + 3] + delay[idp + 2])
+					- 0.3333333333 * delay[idp + 10]);
 				delay[idp + 16] = it.rx_signal[isignal + isp] * multiq2[(i + 3) & 3] * 0.0833333333333;
-				it.yiq[iyiq].q = delay[idp + 24] = (+1.0 * (delay[idp + 16 + 5] + delay[idp + 16 + 0]) + 3.0 * (delay[idp + 16 + 4] + delay[idp + 16 + 1]) + 4.0
-					* (delay[idp + 16 + 3] + delay[idp + 16 + 2]) - 0.3333333333 * delay[idp + 24 + 2]);
+				it.yiq[iyiq].q = delay[idp + 24] = (
+					+ 1.0 * (delay[idp + 16 + 5] + delay[idp + 16 + 0])
+					+ 3.0 * (delay[idp + 16 + 4] + delay[idp + 16 + 1])
+					+ 4.0 * (delay[idp + 16 + 3] + delay[idp + 16 + 2])
+					- 0.3333333333 * delay[idp + 24 + 2]);
+//				dumpiq(it.yiq[iyiq].i,it.yiq[iyiq].q);
 			}
+//			System.out.println();
 		}
 		else
 		{
@@ -220,21 +340,21 @@ public class TV
 		}
 	}
 
-	private static void dump_signal_row(byte signal[])
+	private static void dumpiq(double i, double q)
 	{
-		for (int i = 0; i < ANALOGTV.H; ++i)
-		{
-			System.out.print("" + Integer.toString(signal[i]));
-			System.out.print(",");
-		}
-		System.out.println();
+		int ii = (int)Math.rint(i);
+		int iq = (int)Math.rint(q);
+		System.out.print(""+ii+" "+iq+"   ");
 	}
 
 	private static class levelclass
 	{
 		int index;
 		double value;
-		public levelclass(){}
+
+		public levelclass()
+		{
+		}
 	}
 
 	private static final int MAX_LINEHEIGHT = 12;
@@ -289,7 +409,6 @@ public class TV
 		{
 			hlim = (int)Math.rint(Math.floor(wlim / min_ratio));
 		}
-
 		int height_diff = ((hlim + ANALOGTV.VISLINES / 2) % ANALOGTV.VISLINES) - ANALOGTV.VISLINES / 2;
 		if (height_diff != 0 && Math.abs(height_diff) < hlim * height_snap)
 		{
@@ -317,6 +436,7 @@ public class TV
 
 	private static void analogtv_setup_levels(analogtv_ it, double avgheight)
 	{
+//		System.out.println("setup_levels: "+avgheight);
 		int i, height;
 		for (height = 0; height < avgheight + 2.0 && height <= MAX_LINEHEIGHT; height++)
 		{
@@ -346,14 +466,13 @@ public class TV
 
 	private static void analogtv_blast_imagerow(analogtv_ it, double[] rgb, int ytop, int ybot, final DataBuffer imageBuf)
 	{
-		System.out.println("ytop,bot:"+ytop+","+ybot);
 		// float *rpf;
 		// char *level_copyfrom[3];
 		// for (i=0; i<3; i++) level_copyfrom[i]=NULL;
 		for (int y = ytop; y < ybot; y++)
 		{
-//			int level = leveltable[ybot - ytop][y - ytop].index;
-			double levelmult = 1.0;//leveltable[ybot - ytop][y - ytop].value;
+			// int level = leveltable[ybot - ytop][y - ytop].index;
+			double levelmult = 1.0;// leveltable[ybot - ytop][y - ytop].value;
 			// char *rowdata = 0;//it.image.data + y*it.image.bytes_per_line;
 			// if (level_copyfrom[level])
 			// {
@@ -363,6 +482,7 @@ public class TV
 			// else
 			// {
 			// level_copyfrom[level] = rowdata;
+			//System.out.println("y:" + y + ":   " + y*rgb.length/3+" to "+((y+1)*(rgb.length/3)));
 			for (int x = 0, rpf = 0; rpf < rgb.length; x++, rpf += 3)
 			{
 				int ntscri = (int)Math.rint(Math.floor(rgb[rpf + 0] * levelmult));
@@ -374,25 +494,58 @@ public class TV
 					ntscgi = ANALOGTV.CV_MAX - 1;
 				if (ntscbi >= ANALOGTV.CV_MAX)
 					ntscbi = ANALOGTV.CV_MAX - 1;
-
 				final int rgbval = (ntscri << 16) | (ntscgi << 8) | (ntscbi);
-				//imageBuf.setElem(y*rgb.length+x,rgbval);
-				//imageBuf.setElem(y*rgb.length+x+1,rgbval);
-//				for (int j = 0; j < it.xrepl; j++) // 2 times
-//				{
-//					System.out.print("("+ntscri+","+ntscgi+","+ntscbi+")");
-					// std::cout << "(" << ntscri << "," << ntscgi << "," <<
-					// ntscbi << ") ";
-					// XPutPixel(it.image, x*xrepl + j, y, it.red_values[ntscri]
-					// | it.green_values[ntscgi] | it.blue_values[ntscbi]);
-//				}
+				if (y*(rgb.length/3)+x > ANALOGTV.SIGNAL_LEN) break;
+				imageBuf.setElem(y*(rgb.length/3)+x,rgbval);
+				// imageBuf.setElem(y*rgb.length+x+1,rgbval);
+				// for (int j = 0; j < it.xrepl; j++) // 2 times
+				// {
+				// System.out.print("("+ntscri+","+ntscgi+","+ntscbi+")");
+				// std::cout << "(" << ntscri << "," << ntscgi << "," <<
+				// ntscbi << ") ";
+				// XPutPixel(it.image, x*xrepl + j, y, it.red_values[ntscri]
+				// | it.green_values[ntscgi] | it.blue_values[ntscbi]);
+				// }
 			}
 			// }
 		}
-//		System.out.println();
+		// System.out.println();
 		// std::cout << std::endl;
 	}
 
+	private static void analogtv_test_draw(analogtv_ it, final BufferedImage image)
+	{
+		final DataBuffer imageBuf = image.getRaster().getDataBuffer();
+		analogtv_sync(it);
+		analogtv_setup_levels(it,2.0);
+		int pi = 0;
+		for (int lineno = 0; lineno < ANALOGTV.V; ++lineno)
+		{
+			final int isignal = lineno * ANALOGTV.H;//((lineno + it.cur_vsync + ANALOGTV.V) % ANALOGTV.V) * ANALOGTV.H + it.line_hsync[lineno];
+			analogtv_ntsc_to_yiq(it,lineno,isignal,0,ANALOGTV.H);
+			for (int colno = 0; colno < ANALOGTV.H; ++colno)
+			{
+				final analogtv_yiq yiq = it.yiq[colno];
+				if (yiq.y < 0) yiq.y = 0;
+				double r = yiq.y + 0.948 * yiq.i + 0.624 * yiq.q;
+				double g = yiq.y - 0.276 * yiq.i - 0.639 * yiq.q;
+				double b = yiq.y - 1.105 * yiq.i + 1.729 * yiq.q;
+//				System.out.printf("(%6.1f,%6.1f,%6.1f) ",r,g,b);
+				final int ir = (int)Math.rint(r*255/140);
+				final int ig = (int)Math.rint(g*255/140);
+				final int ib = (int)Math.rint(b*255/140);
+				final int rgb = ((ir << 16) | (ig << 8) | (ib)) & 0xFFFFFF;
+				imageBuf.setElem(pi,rgb);
+				//imageBuf.setElem(pi+ANALOGTV.H,rgb);
+				++pi;
+				if (pi % ANALOGTV.H == 0)
+				{
+					pi += ANALOGTV.H;
+				}
+			}
+//			System.out.println();
+		}
+	}
 	private static void analogtv_draw(analogtv_ it, final BufferedImage image)
 	{
 		final DataBuffer imageBuf = image.getRaster().getDataBuffer();
@@ -415,17 +568,19 @@ public class TV
 				ybot = it.useheight;
 			if (ybot > ytop + MAX_LINEHEIGHT)
 				ybot = ytop + MAX_LINEHEIGHT;
-
 			final double viswidth = ANALOGTV.PIC_LEN * 0.79;
 			final double middle = ANALOGTV.PIC_LEN / 2;
 			final int scanstart_i = (int)Math.rint(Math.floor((middle - viswidth * 0.5) * 65536.0));
+//			System.out.println("scanstart_i: "+Integer.toHexString(scanstart_i)+": "+(middle - viswidth * 0.5));
 			final int scanend_i = (ANALOGTV.PIC_LEN - 1) * 65536;
 			final int isignal = ((lineno + it.cur_vsync + ANALOGTV.V) % ANALOGTV.V) * ANALOGTV.H + it.line_hsync[lineno];
-			//System.out.println("scan: "+(scanstart_i>>16)+"-"+(scanend_i>>16));
+			// System.out.println("scan:
+			// "+(scanstart_i>>16)+"-"+(scanend_i>>16));
 			analogtv_ntsc_to_yiq(it,lineno,isignal,(scanstart_i >> 16) - 10,(scanend_i >> 16) + 10);
-
 			final double scanwidth = it.width_control * puramp(it,0.5,0.3,1.0);
+//			System.out.println(scanwidth);
 			final int pixrate = (int)Math.rint(Math.floor(viswidth * 65536.0 * 1.0 / it.subwidth / scanwidth));
+//			System.out.println(pixrate);
 			int scw = (int)Math.rint(Math.floor(it.subwidth * scanwidth));
 			if (scw > it.subwidth)
 				scw = it.usewidth;
@@ -433,7 +588,6 @@ public class TV
 			final int scr = it.subwidth / 2 + scw / 2;
 			final int rgb_start = scl * 3;
 			final int rgb_end = scr * 3;
-
 			int rrp = rgb_start;
 			int i = scanstart_i;
 			while (i < 0 && rrp != rgb_end)
@@ -442,7 +596,6 @@ public class TV
 				i += pixrate;
 				rrp += 3;
 			}
-
 			final double pixbright = it.contrast_control * puramp(it,1.0,0.0,1.0) / (0.5 + 0.5 * puheight) * 1024.0 / 100.0;
 			while (i < scanend_i && rrp != rgb_end)
 			{
@@ -464,7 +617,7 @@ public class TV
 				raw_rgb[rrp + 0] = r;
 				raw_rgb[rrp + 1] = g;
 				raw_rgb[rrp + 2] = b;
-//				System.out.print("("+r+","+g+","+b+")");
+				// System.out.print("("+r+","+g+","+b+")");
 				i += pixrate;
 				rrp += 3;
 			}
@@ -477,47 +630,70 @@ public class TV
 		}
 	}
 
-
-
 	private static void analogtv_add_signal(analogtv_ it, analogtv_reception rec)
 	{
-//		int ec = it.channel_change_cycles;
-//		System.arraycopy(rec.input.signal,0,rec.input.signal,ANALOGTV.V,ANALOGTV.H); // ???
-//		if (ec != 0)
-//		{
-//			int irxs = 0;
-//			int isv = 0;
-//			int ish = 0;
-//			while (irxs < ANALOGTV.SIGNAL_LEN && ec > 0)
-//			{
-//				it.rx_signal[irxs] += rec.input.signal[isv][ish] * rec.level;
-//				++irxs;
-//				++ish;
-//				if (ish >= ANALOGTV.H)
-//				{
-//					ish = 0;
-//					++isv;
-//				}
-//				if (isv >= ANALOGTV.V)
-//				{
-//					isv = 0;
-//				}
-//				--ec;
-//			}
-//		}
-//		int isv = 0;
-//		int ish = 0;
-//		for (int ps = 0; ps < it.rx_signal.length; ps += 4)
-//		{
-//			double sig0 = rec.input.signal[isv][ish + 0];
-//			double sig1 = rec.input.signal[isv][ish + 1];
-//			double sig2 = rec.input.signal[isv][ish + 2];
-//			double sig3 = rec.input.signal[isv][ish + 3];
-//			it.rx_signal[ps + 0] += (sig0 + sig2 * rec.hfloss) * rec.level;
-//			it.rx_signal[ps + 1] += (sig1 + sig3 * rec.hfloss) * rec.level;
-//			it.rx_signal[ps + 2] += (sig2 + sig0 * rec.hfloss) * rec.level;
-//			it.rx_signal[ps + 3] += (sig3 + sig1 * rec.hfloss) * rec.level;
-//			ish += 4;
+		// int ec = it.channel_change_cycles;
+		// System.arraycopy(rec.input.signal,0,rec.input.signal,ANALOGTV.V,ANALOGTV.H);
+		// // ???
+		// if (ec != 0)
+		// {
+		// int irxs = 0;
+		// int isv = 0;
+		// int ish = 0;
+		// while (irxs < ANALOGTV.SIGNAL_LEN && ec > 0)
+		// {
+		// it.rx_signal[irxs] += rec.input.signal[isv][ish] * rec.level;
+		// ++irxs;
+		// ++ish;
+		// if (ish >= ANALOGTV.H)
+		// {
+		// ish = 0;
+		// ++isv;
+		// }
+		// if (isv >= ANALOGTV.V)
+		// {
+		// isv = 0;
+		// }
+		// --ec;
+		// }
+		// }
+		// int isv = 0;
+		// int ish = 0;
+		// for (int ps = 0; ps < it.rx_signal.length; ps += 4)
+		// {
+		// double sig0 = rec.input.signal[isv][ish + 0];
+		// double sig1 = rec.input.signal[isv][ish + 1];
+		// double sig2 = rec.input.signal[isv][ish + 2];
+		// double sig3 = rec.input.signal[isv][ish + 3];
+		// it.rx_signal[ps + 0] += (sig0 + sig2 * rec.hfloss) * rec.level;
+		// it.rx_signal[ps + 1] += (sig1 + sig3 * rec.hfloss) * rec.level;
+		// it.rx_signal[ps + 2] += (sig2 + sig0 * rec.hfloss) * rec.level;
+		// it.rx_signal[ps + 3] += (sig3 + sig1 * rec.hfloss) * rec.level;
+		// ish += 4;
+		// if (ish >= ANALOGTV.H)
+		// {
+		// ish = 0;
+		// ++isv;
+		// }
+		// if (isv >= ANALOGTV.V)
+		// {
+		// isv = 0;
+		// }
+		// }
+		// for (final double sig : it.rx_signal)
+		// {
+		// if (sig < -0.000001 || 0.000001 < sig)
+		// System.out.println(""+sig);
+		// }
+		// it.rx_signal_level = Math.sqrt(it.rx_signal_level *
+		// it.rx_signal_level + rec.level * rec.level);
+		// it.channel_change_cycles = 0;
+		int isv = 0;
+		int ish = 0;
+		for (int ps = 0; ps < it.rx_signal.length; ++ps)
+		{
+			it.rx_signal[ps] = rec.input.signal[ps];
+//			++ish;
 //			if (ish >= ANALOGTV.H)
 //			{
 //				ish = 0;
@@ -525,33 +701,20 @@ public class TV
 //			}
 //			if (isv >= ANALOGTV.V)
 //			{
-//				isv = 0;
+//				break;
+//				// System.err.println("isv >= ANALOGTV.V isv: "+isv);
+//				//				isv = 0;
 //			}
-//		}
-//		for (final double sig : it.rx_signal)
-//		{
-//			if (sig < -0.000001 || 0.000001 < sig)
-//				System.out.println(""+sig);
-//		}
-//		it.rx_signal_level = Math.sqrt(it.rx_signal_level * it.rx_signal_level + rec.level * rec.level);
-//		it.channel_change_cycles = 0;
-		int isv = 0;
-		int ish = 0;
-		for (int ps = 0; ps < it.rx_signal.length; ++ps)
+		}
+	}
+
+	public AtomicBoolean shutdown = new AtomicBoolean();
+	public void close() throws IOException
+	{
+		synchronized (this.shutdown)
 		{
-			it.rx_signal[ps] = rec.input.signal[isv][ish];
-			++ish;
-			if (ish >= ANALOGTV.H)
-			{
-				ish = 0;
-				++isv;
-			}
-			if (isv >= ANALOGTV.V)
-			{
-				break;
-//				System.err.println("isv >= ANALOGTV.V    isv: "+isv);
-//				isv = 0;
-			}
+			this.shutdown.set(true);
+			this.shutdown.notifyAll();
 		}
 	}
 }
