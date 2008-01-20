@@ -79,10 +79,7 @@ public class GUI
         // Display the window.
         this.frame.setVisible(true);
 	}
-	public void plot()
-	{
-		this.contentPane.plot();
-	}
+
 	private static void setLookAndFeel()
     {
 		try
