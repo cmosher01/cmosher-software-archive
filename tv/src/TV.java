@@ -52,7 +52,7 @@ public class TV implements Closeable
 
 		analogtv_ tv = new analogtv_();
 
-		analogtv_configure(tv);
+//		analogtv_configure(tv);
 		analogtv_setup_sync(tv);
 
 //		dump_signal(tvin.signal);
@@ -294,7 +294,7 @@ public class TV implements Closeable
 //				}
 
 //				System.out.print("lineno "+lineno+" cb_phase:");
-				for (int i = ANALOGTV.CB_START + 8; i < ANALOGTV.CB_START + 36 - 8; ++i)
+				for (int i = ANALOGTV.CB_START + 8; i < ANALOGTV.CB_END - 8; ++i)
 				{
 //					it.cb_phase[i & 3] = it.cb_phase[i & 3] * (1.0 - cbfc) + it.rx_signal[isp + i] * it.agclevel * cbfc;
 					it.cb_phase[i & 3] = it.signal[isp + i] * it.agclevel;
@@ -442,66 +442,66 @@ public class TV implements Closeable
 		}
 	}
 
-	private static void analogtv_configure(analogtv_ it)
-	{
-		/*
-		 * If the window is very small, don't let the image we draw get lower
-		 * than the actual TV resolution (266x200.)
-		 * 
-		 * If the aspect ratio of the window is within 20% of a 4:3 ratio, then
-		 * scale the image to exactly fill the window.
-		 * 
-		 * Otherwise, center the image either horizontally or vertically,
-		 * padding on the left+right, or top+bottom, but not both.
-		 * 
-		 * If it's very close (2.5%) to a multiple of VISLINES, make it exact
-		 * For example, it maps 1024 => 1000.
-		 */
-		double percent = 0.20;
-		double min_ratio = 4.0 / 3.0 * (1 - percent);
-		double max_ratio = 4.0 / 3.0 * (1 + percent);
-		double height_snap = 0.025;
-		int hlim = ANALOGTV.V * 2;// ???it.xgwa.height;
-		int wlim = ANALOGTV.H;// ???it.xgwa.width;
-		final double ratio = wlim / (double)hlim;
-		if (wlim < 266 || hlim < 200)
-		{
-			wlim = 266;
-			hlim = 200;
-		}
-		else if (ratio > min_ratio && ratio < max_ratio)
-		{
-		}
-		else if (ratio > max_ratio)
-		{
-			wlim = (int)Math.rint(Math.floor(hlim * max_ratio));
-		}
-		else
-		/* ratio < min_ratio */
-		{
-			hlim = (int)Math.rint(Math.floor(wlim / min_ratio));
-		}
-		int height_diff = 0;//((hlim + ANALOGTV.VISLINES / 2) % ANALOGTV.VISLINES) - ANALOGTV.VISLINES / 2;
-		if (height_diff != 0 && Math.abs(height_diff) < hlim * height_snap)
-		{
-			hlim -= height_diff;
-		}
-		/* Most times this doesn't change */
-		if (wlim != it.usewidth || hlim != it.useheight)
-		{
-			it.usewidth = wlim;
-			it.useheight = hlim;
-			it.xrepl = 1 + it.usewidth / 640;
-			if (it.xrepl > 2)
-				it.xrepl = 2;
-			it.subwidth = it.usewidth / it.xrepl;
-			// analogtv_free_image(it);
-			// analogtv_alloc_image(it);
-		}
-		it.screen_xo = (ANALOGTV.V * 2/* ???it.xgwa.width */- it.usewidth) / 2;
-		it.screen_yo = (ANALOGTV.H/* ???it.xgwa.height */- it.useheight) / 2;
-		it.need_clear = 1;
-	}
+//	private static void analogtv_configure(analogtv_ it)
+//	{
+//		/*
+//		 * If the window is very small, don't let the image we draw get lower
+//		 * than the actual TV resolution (266x200.)
+//		 * 
+//		 * If the aspect ratio of the window is within 20% of a 4:3 ratio, then
+//		 * scale the image to exactly fill the window.
+//		 * 
+//		 * Otherwise, center the image either horizontally or vertically,
+//		 * padding on the left+right, or top+bottom, but not both.
+//		 * 
+//		 * If it's very close (2.5%) to a multiple of VISLINES, make it exact
+//		 * For example, it maps 1024 => 1000.
+//		 */
+//		double percent = 0.20;
+//		double min_ratio = 4.0 / 3.0 * (1 - percent);
+//		double max_ratio = 4.0 / 3.0 * (1 + percent);
+//		double height_snap = 0.025;
+//		int hlim = ANALOGTV.V * 2;// ???it.xgwa.height;
+//		int wlim = ANALOGTV.H;// ???it.xgwa.width;
+//		final double ratio = wlim / (double)hlim;
+//		if (wlim < 266 || hlim < 200)
+//		{
+//			wlim = 266;
+//			hlim = 200;
+//		}
+//		else if (ratio > min_ratio && ratio < max_ratio)
+//		{
+//		}
+//		else if (ratio > max_ratio)
+//		{
+//			wlim = (int)Math.rint(Math.floor(hlim * max_ratio));
+//		}
+//		else
+//		/* ratio < min_ratio */
+//		{
+//			hlim = (int)Math.rint(Math.floor(wlim / min_ratio));
+//		}
+//		int height_diff = 0;//((hlim + ANALOGTV.VISLINES / 2) % ANALOGTV.VISLINES) - ANALOGTV.VISLINES / 2;
+//		if (height_diff != 0 && Math.abs(height_diff) < hlim * height_snap)
+//		{
+//			hlim -= height_diff;
+//		}
+//		/* Most times this doesn't change */
+//		if (wlim != it.usewidth || hlim != it.useheight)
+//		{
+//			it.usewidth = wlim;
+//			it.useheight = hlim;
+//			it.xrepl = 1 + it.usewidth / 640;
+//			if (it.xrepl > 2)
+//				it.xrepl = 2;
+//			it.subwidth = it.usewidth / it.xrepl;
+//			// analogtv_free_image(it);
+//			// analogtv_alloc_image(it);
+//		}
+//		it.screen_xo = (ANALOGTV.V * 2/* ???it.xgwa.width */- it.usewidth) / 2;
+//		it.screen_yo = (ANALOGTV.H/* ???it.xgwa.height */- it.useheight) / 2;
+//		it.need_clear = 1;
+//	}
 
 	private static double[] levelfac =
 	{ -7.5, 5.5, 24.5 };
