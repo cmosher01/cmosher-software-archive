@@ -6,94 +6,22 @@ import java.awt.image.DataBuffer;
  */
 public class AnalogTV
 {
-	private int n_colors;
-	private int interlace;
-	private int interlace_counter;
-	private double agclevel;
-	/* If you change these, call analogtv_set_demod */
-	private double tint_control, color_control, brightness_control, contrast_control;
-	private double height_control, width_control, squish_control;
-	private double horiz_desync;
-	private double squeezebottom;
-	private double powerup;
-	/* internal cache */
-	private int blur_mult;
-	/* For fast display, set fakeit_top, fakeit_bot to
-	 the scanlines (0..ANALOGTV_V) that can be preserved on screen.
-	 fakeit_scroll is the number of scan lines to scroll it up,
-	 or 0 to not scroll at all. It will DTRT if asked to scroll from
-	 an offscreen region.
-	 */
-	private int fakeit_top;
-	private int fakeit_bot;
-	private int fakeit_scroll;
-	private int redraw_all;
-	private int use_shm, use_cmap, use_color;
-	private int bilevel_signal;
-	private int visdepth, visclass, visbits;
-	private int red_invprec, red_shift, red_mask;
-	private int green_invprec, green_shift, green_mask;
-	private int blue_invprec, blue_shift, blue_mask;
-	//	  Colormap colormap;
-	private int usewidth, useheight, xrepl, subwidth;
-	//	  XImage *image; /* usewidth * useheight */
-	//	  GC gc;
-	private int screen_xo, screen_yo; /* centers image in window */
-	//	  void (*event_handler)(Display *dpy, XEvent *event);
-	//	  int (*key_handler)(Display *dpy, XEvent *event,void *key_data);
-	//	  void *key_data;
-	private int flutter_horiz_desync;
-	private int flutter_tint;
-	//	  struct timeval last_display_time;
-	private int need_clear;
-	/* Add hash (in the radio sense, not the programming sense.) These
-	 are the small white streaks that appear in quasi-regular patterns
-	 all over the screen when someone is running the vacuum cleaner or
-	 the blender. We also set shrinkpulse for one period which
-	 squishes the image horizontally to simulate the temporary line
-	 voltate drop when someone turns on a big motor */
-	private double hashnoise_rpm;
-	private int hashnoise_counter;
-	private int[] hashnoise_times = new int[AppleNTSC.V];
-	private int[] hashnoise_signal = new int[AppleNTSC.V];
-	private int hashnoise_on;
-	private int hashnoise_enable;
-	private int shrinkpulse;
-	private double[] crtload = new double[AppleNTSC.V];
-	//	int[] red_values = new int[AppleNTSC.CV_MAX];
-	//	int[] green_values = new int[AppleNTSC.CV_MAX];
-	//	int[] blue_values = new int[AppleNTSC.CV_MAX];
+	private double agclevel = 1;
+	private double color_control = .6;
 	private analogtv_yiq[] yiq = new analogtv_yiq[AppleNTSC.SIGNAL_LEN];//[AppleNTSC.PIC_LEN + 10];
-	private int[] colors = new int[256];
-	private int cmap_y_levels;
-	private int cmap_i_levels;
-	private int cmap_q_levels;
-	private int cur_hsync;
-	private int[] line_hsync = new int[AppleNTSC.V];
-	private int cur_vsync;
 	private double[] cb_phase = new double[4];
 	private double[][] line_cb_phase = new double[AppleNTSC.V][4];
-	private int channel_change_cycles;
-	private double rx_signal_level;
 	private double[] signal = new double[AppleNTSC.SIGNAL_LEN];
 
 	public AnalogTV()
 	{
-		this.tint_control = 5.0;
-		this.color_control = 60.0 / 100.0;
-		this.brightness_control = 3.0 / 100.0;
-		this.contrast_control = 50.0 / 100.0;
-		this.height_control = 1.0;
-		this.width_control = 1.0;
-		this.powerup = 1000.0;
-		this.agclevel = 1.0;
 		for (int i = 0; i < this.yiq.length; ++i)
 		{
 			this.yiq[i] = new analogtv_yiq();
 		}
 	}
 
-	private void dump_signal()
+	public void dump_signal()
 	{
 		int pi = 0;
 		for (int i = 0; i < this.signal.length; ++i)
@@ -108,7 +36,7 @@ public class AnalogTV
 		}
 	}
 
-	private void draw_signal(BufferedImage image)
+	public void draw_signal(BufferedImage image)
 	{
 		DataBuffer imageBuf = image.getRaster().getDataBuffer();
 		int pi = 0;
@@ -256,7 +184,6 @@ public class AnalogTV
 		int i;
 		final int phasecorr = 0; // ???
 		boolean colormode;
-		double agclevel = this.agclevel;
 		double brightadd = AppleNTSC.BLACK_LEVEL;/*-AppleNTSC.SYNC_LEVEL+1;*///this.brightness_control * 100.0 - AppleNTSC.BLACK_LEVEL;
 		double[] delay = new double[2 * MAXDELAY + AppleNTSC.H];
 		double[] multiq2 = new double[4];
@@ -285,7 +212,7 @@ public class AnalogTV
 		int isp;
 		for (i = start, iyiq = start, isp = start; i < end; i++, idp--, iyiq++, isp++)
 		{
-			delay[idp + 0] = this.signal[isignal + isp + 0] * 0.0469904257251935 * agclevel;
+			delay[idp + 0] = this.signal[isignal + isp + 0] * 0.0469904257251935 * this.agclevel;
 			delay[idp + 8] = (+1.0 * (delay[idp + 6] + delay[idp + 0]) + 4.0 * (delay[idp + 5] + delay[idp + 1]) + 7.0 * (delay[idp + 4] + delay[idp + 2]) + 8.0 * (delay[idp + 3]) - 0.0176648
 				* delay[idp + 12] - 0.4860288 * delay[idp + 10]);
 			this.yiq[iyiq].y = delay[idp + 8] + brightadd;
