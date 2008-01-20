@@ -69,16 +69,16 @@ public class TV implements Closeable
 
 	}
 
-	private static void draw_signal(double[] rx_signal, BufferedImage image)
-	{
-		byte[] rb = new byte[rx_signal.length];
-		int i = 0;
-		for (final double sig: rx_signal)
-		{
-			rb[i++] = (byte)(int)Math.rint((sig*255/480));
-		}
-		draw_signal(rb,image);
-	}
+//	private static void draw_signal(double[] rx_signal, BufferedImage image)
+//	{
+//		byte[] rb = new byte[rx_signal.length];
+//		int i = 0;
+//		for (final double sig: rx_signal)
+//		{
+//			rb[i++] = (byte)(int)Math.rint((sig*255/480));
+//		}
+//		draw_signal(rb,image);
+//	}
 
 	private static void dump_signal(byte[] signal)
 	{
@@ -95,13 +95,13 @@ public class TV implements Closeable
 		}
 	}
 
-	private static void draw_signal(byte[] signal, BufferedImage image)
+	private static void draw_signal(double[] signal, BufferedImage image)
 	{
 		DataBuffer imageBuf = image.getRaster().getDataBuffer();
 		int pi = 0;
 		for (int i = 0; i < signal.length; ++i)
 		{
-			final int ire = signal[i]-ANALOGTV.SYNC_LEVEL;
+			final int ire = (int)Math.rint(signal[i])-ANALOGTV.SYNC_LEVEL;
 			final int val = (int)Math.rint(ire*255.0/(ANALOGTV.WHITE_LEVEL-ANALOGTV.SYNC_LEVEL));
 			final int rgb = (val << 16) | (val << 8) | (val);
 			imageBuf.setElem(pi,rgb);
