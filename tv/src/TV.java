@@ -42,12 +42,19 @@ public class TV implements Closeable
 
 	private static void program()
 	{
+		System.out.println("SYNC_START: "+ANALOGTV.SYNC_START);
+		System.out.println("  BP_START: "+ANALOGTV.BP_START);
+		System.out.println("  CB_START: "+ANALOGTV.CB_START);
+		System.out.println(" PIC_START: "+ANALOGTV.PIC_START);
+		System.out.println("  FP_START: "+ANALOGTV.FP_START);
+
 		BufferedImage image = new BufferedImage(ANALOGTV.H,ANALOGTV.V * 2,BufferedImage.TYPE_INT_RGB);
 		GUI gui = new GUI(thistv,image);
 
 		analogtv_input tvin = new analogtv_input();
 		analogtv_setup_sync(tvin);
 
+//		dump_signal(tvin.signal);
 //		draw_signal(tvin.signal,image);
 
 		analogtv_ tv = new analogtv_();
@@ -74,6 +81,21 @@ public class TV implements Closeable
 			rb[i++] = (byte)(int)Math.rint((sig*255/480));
 		}
 		draw_signal(rb,image);
+	}
+
+	private static void dump_signal(byte[] signal)
+	{
+		int pi = 0;
+		for (int i = 0; i < signal.length; ++i)
+		{
+			System.out.printf(" %+4d",signal[i]);
+			++pi;
+			if (pi >= ANALOGTV.H)
+			{
+				System.out.println();
+				pi  = 0;
+			}
+		}
 	}
 
 	private static void draw_signal(byte[] signal, BufferedImage image)
@@ -111,51 +133,63 @@ public class TV implements Closeable
 	{
 		for (int lineno = 0; lineno < ANALOGTV.V; ++lineno)
 		{
+			int i = ANALOGTV.SYNC_START;
+			if (lineno < 70)
 			{
-				int i = ANALOGTV.SYNC_START;
-				if (3 <= lineno && lineno < 7)
+				while (i < ANALOGTV.BP_START)
 				{
-					while (i < ANALOGTV.BP_START)
-					{
-						input.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.BLANK_LEVEL;
-					}
-					while (i < ANALOGTV.H)
-					{
-						input.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.SYNC_LEVEL;
-					}
+					input.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.BLANK_LEVEL;
 				}
-				else
+				while (i < ANALOGTV.H)
 				{
-					while (i < ANALOGTV.BP_START)
-					{
-						input.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.SYNC_LEVEL;
-					}
-					while (i < ANALOGTV.PIC_START)
-					{
-						input.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.BLANK_LEVEL;
-					}
-					while (i < ANALOGTV.FP_START)
-					{
-						input.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.BLACK_LEVEL;
-					}
+					input.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.SYNC_LEVEL;
+				}
+			}
+			else
+			{
+				while (i < ANALOGTV.BP_START)
+				{
+					input.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.SYNC_LEVEL;
+				}
+				while (i < ANALOGTV.PIC_START)
+				{
+					input.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.BLANK_LEVEL;
+				}
+				while (i < ANALOGTV.FP_START)
+				{
+					input.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.BLACK_LEVEL;
 				}
 				while (i < ANALOGTV.H)
 				{
 					input.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.BLANK_LEVEL;
 				}
+				for (int icb = ANALOGTV.CB_START; icb < ANALOGTV.CB_END; icb += 4)
+				{
+					input.signal[lineno * ANALOGTV.H + icb + 1] = ANALOGTV.CB_LEVEL;
+					input.signal[lineno * ANALOGTV.H + icb + 3] = -ANALOGTV.CB_LEVEL;
+				}
+				// only for Rev. 0 boards:
+				input.signal[lineno * ANALOGTV.H + ANALOGTV.SPIKE] = -ANALOGTV.CB_LEVEL;
 			}
-			/* 9 cycles of colorburst */
-			for (int i = ANALOGTV.CB_START; i < ANALOGTV.CB_START + 36; i += 4)
-			{
-				input.signal[lineno * ANALOGTV.H + i + 1] += ANALOGTV.CB_LEVEL;
-				input.signal[lineno * ANALOGTV.H + i + 3] -= ANALOGTV.CB_LEVEL;
-			}
-
+			if (lineno != 70 && lineno != 261) continue;
 			// TEST:
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START] = 80;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+1] = 80;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+2] = 80;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+3] = 80;
+
 			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 300] = 100;
 			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 301] = 100;
 			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 302] = 100;
 			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 303] = 100;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 304] = 100;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 305] = 100;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 306] = 100;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 307] = 100;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 308] = 100;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 309] = 100;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 310] = 100;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 311] = 100;
 
 			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 49] = 80;
 
@@ -182,6 +216,16 @@ public class TV implements Closeable
 
 			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 131] = 20;
 			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 132] = -20;
+
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 500] = 100;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 502] = 100;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 504] = 100;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 506] = 100;
+
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 558] = 80;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 559] = 80;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 560] = 80;
+			input.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START+ 561] = 80;
 		}
 	}
 
@@ -189,9 +233,9 @@ public class TV implements Closeable
 
 	private static void analogtv_sync(analogtv_ it)
 	{
-		int i;
 		int cur_vsync = it.cur_vsync;
-		for (i = -32; i < 32; i++)
+		int vsync_line = 0;
+		for (int i = -32; i < 32; i++)
 		{
 			int xlineno = (cur_vsync + i + ANALOGTV.V) % ANALOGTV.V;
 			double filt = 0.0;
@@ -201,51 +245,81 @@ public class TV implements Closeable
 			}
 			filt *= it.agclevel;
 			final double osc = (double)(ANALOGTV.V + i) / (double)ANALOGTV.V;
+			//System.out.println("i "+i+", filt "+filt+", filt*.0002+1.05 "+(filt*.0002+1.05)+", osc "+osc);
 			if (osc >= 1.05 + 0.0002 * filt)
 			{
+				vsync_line = i;
 				break;
 			}
 		}
-		cur_vsync = (cur_vsync + i + ANALOGTV.V) % ANALOGTV.V;
+		cur_vsync = (cur_vsync + vsync_line + ANALOGTV.V) % ANALOGTV.V;
+//		System.out.println("cur_vsync: "+cur_vsync);
+
+
+
 		int cur_hsync = it.cur_hsync;
-		int lineno;
-		for (lineno = 0; lineno < ANALOGTV.V; lineno++)
+		for (int lineno = 0; lineno < ANALOGTV.V; lineno++)
 		{
-			if (lineno > 5 && lineno < ANALOGTV.V - 3)
+//			if (lineno > 0)//7)//5 && lineno < ANALOGTV.V - 3)
+//			{
+//				/* ignore vsync interval */
+//				final int spi = ((lineno + cur_vsync + ANALOGTV.V) % ANALOGTV.V) * ANALOGTV.H + cur_hsync;
+//				int hsync_line = 0;
+//				for (int i = -8; i < 8; i++)
+//				{
+//					final double osc = (double)(ANALOGTV.H + i) / (double)ANALOGTV.H;
+//					final double filt = (it.rx_signal[spi + i - 3] + it.rx_signal[spi + i - 2] + it.rx_signal[spi + i - 1] + it.rx_signal[spi + i]) * it.agclevel;
+//					if (osc >= 1.005 + 0.0001 * filt)
+//					{
+//						hsync_line = i;
+//						break;
+//					}
+//				}
+//				cur_hsync = (cur_hsync + hsync_line + ANALOGTV.H) % ANALOGTV.H;
+//			}
+//			it.line_hsync[lineno] = (cur_hsync + ANALOGTV.PIC_START + ANALOGTV.H) % ANALOGTV.H;
+			it.line_hsync[lineno] = ANALOGTV.PIC_START;
+//			System.out.println("lineno "+lineno+", hsync "+it.line_hsync[lineno]);
+
+//			if (lineno > 15)
 			{
-				/* ignore vsync interval */
-				final int spi = ((lineno + cur_vsync + ANALOGTV.V) % ANALOGTV.V) * ANALOGTV.H + cur_hsync;
-				for (i = -8; i < 8; i++)
+				final int isp = lineno * ANALOGTV.H ;//+ (cur_hsync & ~3);
+
+//				if (true)
+//				{
+//					// dump signal:
+//					System.out.print("lineno "+lineno+" cb_phase:");
+//					for (int i = ANALOGTV.CB_START + 8; i < ANALOGTV.CB_START + 36 - 8; ++i)
+//					{
+//						System.out.printf(" %+6.2f",(it.rx_signal[isp + i] * it.agclevel * cbfc));
+//					}
+//					System.out.println();
+//				}
+
+//				System.out.print("lineno "+lineno+" cb_phase:");
+				for (int i = ANALOGTV.CB_START + 8; i < ANALOGTV.CB_START + 36 - 8; ++i)
 				{
-					final double osc = (double)(ANALOGTV.H + i) / (double)ANALOGTV.H;
-					final double filt = (it.rx_signal[spi + i - 3] + it.rx_signal[spi + i - 2] + it.rx_signal[spi + i - 1] + it.rx_signal[spi + i]) * it.agclevel;
-					if (osc >= 1.005 + 0.0001 * filt)
-					{
-						break;
-					}
+//					it.cb_phase[i & 3] = it.cb_phase[i & 3] * (1.0 - cbfc) + it.rx_signal[isp + i] * it.agclevel * cbfc;
+					it.cb_phase[i & 3] = it.rx_signal[isp + i] * it.agclevel;
+//					System.out.printf(" %+6.2f",it.cb_phase[i & 3]);
 				}
-				cur_hsync = (cur_hsync + i + ANALOGTV.H) % ANALOGTV.H;
+//				System.out.println();
+//				System.out.println();
 			}
-			it.line_hsync[lineno] = (cur_hsync + ANALOGTV.PIC_START + ANALOGTV.H) % ANALOGTV.H;
-			if (lineno > 15)
-			{
-				final int isp = lineno * ANALOGTV.H + (cur_hsync & ~3);
-				for (i = ANALOGTV.CB_START + 8; i < ANALOGTV.CB_START + 36 - 8; ++i)
-				{
-					it.cb_phase[i & 3] = it.cb_phase[i & 3] * (1.0 - cbfc) + it.rx_signal[isp + i] * it.agclevel * cbfc;
-				}
-			}
-			double tot = 0.1;
-			double cbgain;
-			for (i = 0; i < 4; i++)
+//			double cbgain = 1;
+			double tot = .1;
+			for (int i = 0; i < 4; i++)
 			{
 				tot += it.cb_phase[i] * it.cb_phase[i];
 			}
-			cbgain = 32.0 / Math.sqrt(tot);
-			for (i = 0; i < 4; i++)
+			final double cbgain = 32.0 / Math.sqrt(tot);
+//			System.out.print("lineno "+lineno+" cb_phase:");
+			for (int i = 0; i < 4; i++)
 			{
 				it.line_cb_phase[lineno][i] = it.cb_phase[i] * cbgain;
+//				System.out.print(" "+it.cb_phase[i]);
 			}
+//			System.out.println();
 		}
 		it.cur_hsync = cur_hsync;
 		it.cur_vsync = cur_vsync;
@@ -270,7 +344,10 @@ public class TV implements Closeable
 		double[] multiq2 = new double[4];
 		double cb_i = (it.line_cb_phase[lineno][(2 + phasecorr) & 3] - it.line_cb_phase[lineno][(0 + phasecorr) & 3]) / 16.0;
 		double cb_q = (it.line_cb_phase[lineno][(3 + phasecorr) & 3] - it.line_cb_phase[lineno][(1 + phasecorr) & 3]) / 16.0;
+		if (lineno == 8 || lineno == 100)
+		System.out.println(""+lineno+" "+cb_i+","+cb_q);
 		colormode = (cb_i * cb_i + cb_q * cb_q) > 2.8;
+//		System.out.println(""+lineno+" "+colormode);
 		if (colormode)
 		{
 			double tint_i = -Math.cos((103 + it.color_control) * Math.PI / 180);
@@ -291,8 +368,6 @@ public class TV implements Closeable
 		int isp;
 		for (i = start, iyiq = start, isp = start; i < end; i++, idp--, iyiq++, isp++)
 		{
-			if (idp < 0 || idp >= 2*MAXDELAY + ANALOGTV.H)
-				System.err.println("err");
 			delay[idp + 0] = it.rx_signal[isignal + isp + 0] * 0.0469904257251935 * agclevel;
 			delay[idp + 8] = (
 				+ 1.0 * (delay[idp + 6] + delay[idp + 0])
@@ -304,7 +379,7 @@ public class TV implements Closeable
 			it.yiq[iyiq].y = delay[idp + 8] + brightadd;
 //			System.out.printf("%6.1f  ",it.yiq[iyiq].y);
 		}
-		System.out.println();
+//		System.out.println();
 		if (colormode)
 		{
 			idp = ANALOGTV.H + MAXDELAY;
@@ -409,7 +484,7 @@ public class TV implements Closeable
 		{
 			hlim = (int)Math.rint(Math.floor(wlim / min_ratio));
 		}
-		int height_diff = ((hlim + ANALOGTV.VISLINES / 2) % ANALOGTV.VISLINES) - ANALOGTV.VISLINES / 2;
+		int height_diff = 0;//((hlim + ANALOGTV.VISLINES / 2) % ANALOGTV.VISLINES) - ANALOGTV.VISLINES / 2;
 		if (height_diff != 0 && Math.abs(height_diff) < hlim * height_snap)
 		{
 			hlim -= height_diff;
@@ -464,54 +539,54 @@ public class TV implements Closeable
 		}
 	}
 
-	private static void analogtv_blast_imagerow(analogtv_ it, double[] rgb, int ytop, int ybot, final DataBuffer imageBuf)
-	{
-		// float *rpf;
-		// char *level_copyfrom[3];
-		// for (i=0; i<3; i++) level_copyfrom[i]=NULL;
-		for (int y = ytop; y < ybot; y++)
-		{
-			// int level = leveltable[ybot - ytop][y - ytop].index;
-			double levelmult = 1.0;// leveltable[ybot - ytop][y - ytop].value;
-			// char *rowdata = 0;//it.image.data + y*it.image.bytes_per_line;
-			// if (level_copyfrom[level])
-			// {
-			// memcpy(rowdata, level_copyfrom[level],
-			// 65*14);//???it.image.bytes_per_line);
-			// }
-			// else
-			// {
-			// level_copyfrom[level] = rowdata;
-			//System.out.println("y:" + y + ":   " + y*rgb.length/3+" to "+((y+1)*(rgb.length/3)));
-			for (int x = 0, rpf = 0; rpf < rgb.length; x++, rpf += 3)
-			{
-				int ntscri = (int)Math.rint(Math.floor(rgb[rpf + 0] * levelmult));
-				int ntscgi = (int)Math.rint(Math.floor(rgb[rpf + 1] * levelmult));
-				int ntscbi = (int)Math.rint(Math.floor(rgb[rpf + 2] * levelmult));
-				if (ntscri >= ANALOGTV.CV_MAX)
-					ntscri = ANALOGTV.CV_MAX - 1;
-				if (ntscgi >= ANALOGTV.CV_MAX)
-					ntscgi = ANALOGTV.CV_MAX - 1;
-				if (ntscbi >= ANALOGTV.CV_MAX)
-					ntscbi = ANALOGTV.CV_MAX - 1;
-				final int rgbval = (ntscri << 16) | (ntscgi << 8) | (ntscbi);
-				if (y*(rgb.length/3)+x > ANALOGTV.SIGNAL_LEN) break;
-				imageBuf.setElem(y*(rgb.length/3)+x,rgbval);
-				// imageBuf.setElem(y*rgb.length+x+1,rgbval);
-				// for (int j = 0; j < it.xrepl; j++) // 2 times
-				// {
-				// System.out.print("("+ntscri+","+ntscgi+","+ntscbi+")");
-				// std::cout << "(" << ntscri << "," << ntscgi << "," <<
-				// ntscbi << ") ";
-				// XPutPixel(it.image, x*xrepl + j, y, it.red_values[ntscri]
-				// | it.green_values[ntscgi] | it.blue_values[ntscbi]);
-				// }
-			}
-			// }
-		}
-		// System.out.println();
-		// std::cout << std::endl;
-	}
+//	private static void analogtv_blast_imagerow(analogtv_ it, double[] rgb, int ytop, int ybot, final DataBuffer imageBuf)
+//	{
+//		// float *rpf;
+//		// char *level_copyfrom[3];
+//		// for (i=0; i<3; i++) level_copyfrom[i]=NULL;
+//		for (int y = ytop; y < ybot; y++)
+//		{
+//			// int level = leveltable[ybot - ytop][y - ytop].index;
+//			double levelmult = 1.0;// leveltable[ybot - ytop][y - ytop].value;
+//			// char *rowdata = 0;//it.image.data + y*it.image.bytes_per_line;
+//			// if (level_copyfrom[level])
+//			// {
+//			// memcpy(rowdata, level_copyfrom[level],
+//			// 65*14);//???it.image.bytes_per_line);
+//			// }
+//			// else
+//			// {
+//			// level_copyfrom[level] = rowdata;
+//			//System.out.println("y:" + y + ":   " + y*rgb.length/3+" to "+((y+1)*(rgb.length/3)));
+//			for (int x = 0, rpf = 0; rpf < rgb.length; x++, rpf += 3)
+//			{
+//				int ntscri = (int)Math.rint(Math.floor(rgb[rpf + 0] * levelmult));
+//				int ntscgi = (int)Math.rint(Math.floor(rgb[rpf + 1] * levelmult));
+//				int ntscbi = (int)Math.rint(Math.floor(rgb[rpf + 2] * levelmult));
+//				if (ntscri >= ANALOGTV.CV_MAX)
+//					ntscri = ANALOGTV.CV_MAX - 1;
+//				if (ntscgi >= ANALOGTV.CV_MAX)
+//					ntscgi = ANALOGTV.CV_MAX - 1;
+//				if (ntscbi >= ANALOGTV.CV_MAX)
+//					ntscbi = ANALOGTV.CV_MAX - 1;
+//				final int rgbval = (ntscri << 16) | (ntscgi << 8) | (ntscbi);
+//				if (y*(rgb.length/3)+x > ANALOGTV.SIGNAL_LEN) break;
+//				imageBuf.setElem(y*(rgb.length/3)+x,rgbval);
+//				// imageBuf.setElem(y*rgb.length+x+1,rgbval);
+//				// for (int j = 0; j < it.xrepl; j++) // 2 times
+//				// {
+//				// System.out.print("("+ntscri+","+ntscgi+","+ntscbi+")");
+//				// std::cout << "(" << ntscri << "," << ntscgi << "," <<
+//				// ntscbi << ") ";
+//				// XPutPixel(it.image, x*xrepl + j, y, it.red_values[ntscri]
+//				// | it.green_values[ntscgi] | it.blue_values[ntscbi]);
+//				// }
+//			}
+//			// }
+//		}
+//		// System.out.println();
+//		// std::cout << std::endl;
+//	}
 
 	private static void analogtv_test_draw(analogtv_ it, final BufferedImage image)
 	{
@@ -536,7 +611,7 @@ public class TV implements Closeable
 				final int ib = (int)Math.rint(b*255/140);
 				final int rgb = ((ir << 16) | (ig << 8) | (ib)) & 0xFFFFFF;
 				imageBuf.setElem(pi,rgb);
-				//imageBuf.setElem(pi+ANALOGTV.H,rgb);
+				imageBuf.setElem(pi+ANALOGTV.H,rgb);
 				++pi;
 				if (pi % ANALOGTV.H == 0)
 				{
@@ -546,89 +621,89 @@ public class TV implements Closeable
 //			System.out.println();
 		}
 	}
-	private static void analogtv_draw(analogtv_ it, final BufferedImage image)
-	{
-		final DataBuffer imageBuf = image.getRaster().getDataBuffer();
-		double[] raw_rgb = new double[it.subwidth * 3];
-		analogtv_sync(it);
-		double puheight = puramp(it,2.0,1.0,1.3) * it.height_control * (1.125 - 0.125 * puramp(it,2.0,2.0,1.1));
-		analogtv_setup_levels(it,puheight * it.useheight / ANALOGTV.VISLINES);
-		for (int lineno = ANALOGTV.TOP; lineno < ANALOGTV.BOT; lineno++)
-		{
-			final int slineno = lineno - ANALOGTV.TOP;
-			int ytop = (int)((slineno * it.useheight / ANALOGTV.VISLINES - it.useheight / 2) * puheight) + it.useheight / 2;
-			int ybot = (int)(((slineno + 1) * it.useheight / ANALOGTV.VISLINES - it.useheight / 2) * puheight) + it.useheight / 2;
-			if (ytop == ybot)
-				continue;
-			if (ybot < 0 || ytop > it.useheight)
-				continue;
-			if (ytop < 0)
-				ytop = 0;
-			if (ybot > it.useheight)
-				ybot = it.useheight;
-			if (ybot > ytop + MAX_LINEHEIGHT)
-				ybot = ytop + MAX_LINEHEIGHT;
-			final double viswidth = ANALOGTV.PIC_LEN * 0.79;
-			final double middle = ANALOGTV.PIC_LEN / 2;
-			final int scanstart_i = (int)Math.rint(Math.floor((middle - viswidth * 0.5) * 65536.0));
-//			System.out.println("scanstart_i: "+Integer.toHexString(scanstart_i)+": "+(middle - viswidth * 0.5));
-			final int scanend_i = (ANALOGTV.PIC_LEN - 1) * 65536;
-			final int isignal = ((lineno + it.cur_vsync + ANALOGTV.V) % ANALOGTV.V) * ANALOGTV.H + it.line_hsync[lineno];
-			// System.out.println("scan:
-			// "+(scanstart_i>>16)+"-"+(scanend_i>>16));
-			analogtv_ntsc_to_yiq(it,lineno,isignal,(scanstart_i >> 16) - 10,(scanend_i >> 16) + 10);
-			final double scanwidth = it.width_control * puramp(it,0.5,0.3,1.0);
-//			System.out.println(scanwidth);
-			final int pixrate = (int)Math.rint(Math.floor(viswidth * 65536.0 * 1.0 / it.subwidth / scanwidth));
-//			System.out.println(pixrate);
-			int scw = (int)Math.rint(Math.floor(it.subwidth * scanwidth));
-			if (scw > it.subwidth)
-				scw = it.usewidth;
-			final int scl = it.subwidth / 2 - scw / 2;
-			final int scr = it.subwidth / 2 + scw / 2;
-			final int rgb_start = scl * 3;
-			final int rgb_end = scr * 3;
-			int rrp = rgb_start;
-			int i = scanstart_i;
-			while (i < 0 && rrp != rgb_end)
-			{
-				raw_rgb[rrp + 0] = raw_rgb[rrp + 1] = raw_rgb[rrp + 2] = 0.0;
-				i += pixrate;
-				rrp += 3;
-			}
-			final double pixbright = it.contrast_control * puramp(it,1.0,0.0,1.0) / (0.5 + 0.5 * puheight) * 1024.0 / 100.0;
-			while (i < scanend_i && rrp != rgb_end)
-			{
-				final double pixfrac = (i & 0xffff) / 65536.0;
-				final double invpixfrac = 1.0 - pixfrac;
-				final int pati = i >> 16;
-				final double interpy = (it.yiq[pati].y * invpixfrac + it.yiq[pati + 1].y * pixfrac);
-				final double interpi = (it.yiq[pati].i * invpixfrac + it.yiq[pati + 1].i * pixfrac);
-				final double interpq = (it.yiq[pati].q * invpixfrac + it.yiq[pati + 1].q * pixfrac);
-				double r = (interpy + 0.948 * interpi + 0.624 * interpq) * pixbright;
-				double g = (interpy - 0.276 * interpi - 0.639 * interpq) * pixbright;
-				double b = (interpy - 1.105 * interpi + 1.729 * interpq) * pixbright;
-				if (r < 0.0)
-					r = 0.0;
-				if (g < 0.0)
-					g = 0.0;
-				if (b < 0.0)
-					b = 0.0;
-				raw_rgb[rrp + 0] = r;
-				raw_rgb[rrp + 1] = g;
-				raw_rgb[rrp + 2] = b;
-				// System.out.print("("+r+","+g+","+b+")");
-				i += pixrate;
-				rrp += 3;
-			}
-			while (rrp != rgb_end)
-			{
-				raw_rgb[rrp + 0] = raw_rgb[rrp + 1] = raw_rgb[rrp + 2] = 0.0;
-				rrp += 3;
-			}
-			analogtv_blast_imagerow(it,raw_rgb,ytop,ybot,imageBuf);
-		}
-	}
+//	private static void analogtv_draw(analogtv_ it, final BufferedImage image)
+//	{
+//		final DataBuffer imageBuf = image.getRaster().getDataBuffer();
+//		double[] raw_rgb = new double[it.subwidth * 3];
+//		analogtv_sync(it);
+//		double puheight = puramp(it,2.0,1.0,1.3) * it.height_control * (1.125 - 0.125 * puramp(it,2.0,2.0,1.1));
+//		analogtv_setup_levels(it,puheight * it.useheight / ANALOGTV.VISLINES);
+//		for (int lineno = ANALOGTV.TOP; lineno < ANALOGTV.BOT; lineno++)
+//		{
+//			final int slineno = lineno - ANALOGTV.TOP;
+//			int ytop = (int)((slineno * it.useheight / ANALOGTV.VISLINES - it.useheight / 2) * puheight) + it.useheight / 2;
+//			int ybot = (int)(((slineno + 1) * it.useheight / ANALOGTV.VISLINES - it.useheight / 2) * puheight) + it.useheight / 2;
+//			if (ytop == ybot)
+//				continue;
+//			if (ybot < 0 || ytop > it.useheight)
+//				continue;
+//			if (ytop < 0)
+//				ytop = 0;
+//			if (ybot > it.useheight)
+//				ybot = it.useheight;
+//			if (ybot > ytop + MAX_LINEHEIGHT)
+//				ybot = ytop + MAX_LINEHEIGHT;
+//			final double viswidth = ANALOGTV.PIC_LEN * 0.79;
+//			final double middle = ANALOGTV.PIC_LEN / 2;
+//			final int scanstart_i = (int)Math.rint(Math.floor((middle - viswidth * 0.5) * 65536.0));
+////			System.out.println("scanstart_i: "+Integer.toHexString(scanstart_i)+": "+(middle - viswidth * 0.5));
+//			final int scanend_i = (ANALOGTV.PIC_LEN - 1) * 65536;
+//			final int isignal = ((lineno + it.cur_vsync + ANALOGTV.V) % ANALOGTV.V) * ANALOGTV.H + it.line_hsync[lineno];
+//			// System.out.println("scan:
+//			// "+(scanstart_i>>16)+"-"+(scanend_i>>16));
+//			analogtv_ntsc_to_yiq(it,lineno,isignal,(scanstart_i >> 16) - 10,(scanend_i >> 16) + 10);
+//			final double scanwidth = it.width_control * puramp(it,0.5,0.3,1.0);
+////			System.out.println(scanwidth);
+//			final int pixrate = (int)Math.rint(Math.floor(viswidth * 65536.0 * 1.0 / it.subwidth / scanwidth));
+////			System.out.println(pixrate);
+//			int scw = (int)Math.rint(Math.floor(it.subwidth * scanwidth));
+//			if (scw > it.subwidth)
+//				scw = it.usewidth;
+//			final int scl = it.subwidth / 2 - scw / 2;
+//			final int scr = it.subwidth / 2 + scw / 2;
+//			final int rgb_start = scl * 3;
+//			final int rgb_end = scr * 3;
+//			int rrp = rgb_start;
+//			int i = scanstart_i;
+//			while (i < 0 && rrp != rgb_end)
+//			{
+//				raw_rgb[rrp + 0] = raw_rgb[rrp + 1] = raw_rgb[rrp + 2] = 0.0;
+//				i += pixrate;
+//				rrp += 3;
+//			}
+//			final double pixbright = it.contrast_control * puramp(it,1.0,0.0,1.0) / (0.5 + 0.5 * puheight) * 1024.0 / 100.0;
+//			while (i < scanend_i && rrp != rgb_end)
+//			{
+//				final double pixfrac = (i & 0xffff) / 65536.0;
+//				final double invpixfrac = 1.0 - pixfrac;
+//				final int pati = i >> 16;
+//				final double interpy = (it.yiq[pati].y * invpixfrac + it.yiq[pati + 1].y * pixfrac);
+//				final double interpi = (it.yiq[pati].i * invpixfrac + it.yiq[pati + 1].i * pixfrac);
+//				final double interpq = (it.yiq[pati].q * invpixfrac + it.yiq[pati + 1].q * pixfrac);
+//				double r = (interpy + 0.948 * interpi + 0.624 * interpq) * pixbright;
+//				double g = (interpy - 0.276 * interpi - 0.639 * interpq) * pixbright;
+//				double b = (interpy - 1.105 * interpi + 1.729 * interpq) * pixbright;
+//				if (r < 0.0)
+//					r = 0.0;
+//				if (g < 0.0)
+//					g = 0.0;
+//				if (b < 0.0)
+//					b = 0.0;
+//				raw_rgb[rrp + 0] = r;
+//				raw_rgb[rrp + 1] = g;
+//				raw_rgb[rrp + 2] = b;
+//				// System.out.print("("+r+","+g+","+b+")");
+//				i += pixrate;
+//				rrp += 3;
+//			}
+//			while (rrp != rgb_end)
+//			{
+//				raw_rgb[rrp + 0] = raw_rgb[rrp + 1] = raw_rgb[rrp + 2] = 0.0;
+//				rrp += 3;
+//			}
+//			analogtv_blast_imagerow(it,raw_rgb,ytop,ybot,imageBuf);
+//		}
+//	}
 
 	private static void analogtv_add_signal(analogtv_ it, analogtv_reception rec)
 	{

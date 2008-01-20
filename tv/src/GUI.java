@@ -63,7 +63,7 @@ public class GUI
 
 //        this.frame.setIconImage(getFrameIcon());
 
-        this.frame.setTitle("Apple ][");
+        this.frame.setTitle("NTSC");
 
         this.frame.setResizable(false);
 //        this.frame.setJMenuBar(factoryMenuBar.createMenuBar());

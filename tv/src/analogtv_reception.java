@@ -9,8 +9,8 @@ public class analogtv_reception
   public double multipath;
   public double freqerr;
 
-  public double[] ghostfir = new double [ANALOGTV.GHOSTFIR_LEN];
-  public double[] ghostfir2 = new double [ANALOGTV.GHOSTFIR_LEN];
+//  public double[] ghostfir = new double [ANALOGTV.GHOSTFIR_LEN];
+//  public double[] ghostfir2 = new double [ANALOGTV.GHOSTFIR_LEN];
 
   public double hfloss;
   public double hfloss2;

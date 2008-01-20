@@ -57,9 +57,9 @@ public class analogtv_
 	int hashnoise_enable;
 	int shrinkpulse;
 	double[] crtload = new double[ANALOGTV.V];
-	int[] red_values = new int[ANALOGTV.CV_MAX];
-	int[] green_values = new int[ANALOGTV.CV_MAX];
-	int[] blue_values = new int[ANALOGTV.CV_MAX];
+//	int[] red_values = new int[ANALOGTV.CV_MAX];
+//	int[] green_values = new int[ANALOGTV.CV_MAX];
+//	int[] blue_values = new int[ANALOGTV.CV_MAX];
 	analogtv_yiq[] yiq = new analogtv_yiq[ANALOGTV.SIGNAL_LEN];//[ANALOGTV.PIC_LEN + 10];
 	int[] colors = new int[256];
 	int cmap_y_levels;
@@ -77,8 +77,8 @@ public class analogtv_
 	public analogtv_()
 	{
 		this.tint_control = 5.0;
-		this.color_control = 70.0 / 100.0;
-		this.brightness_control = 2.0 / 100.0;
+		this.color_control = 60.0 / 100.0;
+		this.brightness_control = 3.0 / 100.0;
 		this.contrast_control = 50.0 / 100.0;
 		this.height_control = 1.0;
 		this.width_control = 1.0;
@@ -89,48 +89,48 @@ public class analogtv_
 			this.yiq[i] = new analogtv_yiq();
 		}
 
-		this.red_mask = 0xf800;//this.xgwa.visual->red_mask;
-		this.green_mask = 0x07e0;//this.xgwa.visual->green_mask;
-		this.blue_mask = 0x001f;//this.xgwa.visual->blue_mask;
-		this.red_shift = this.red_invprec = -1;
-		this.green_shift = this.green_invprec = -1;
-		this.blue_shift = this.blue_invprec = -1;
-		/* Is there a standard way to do this? Does this handle all cases? */
-		int shift, prec;
-		for (shift = 0; shift < 32; shift++)
-		{
-			for (prec = 1; prec < 16 && prec < 40 - shift; prec++)
-			{
-				long mask = (0xffffL >> (16 - prec)) << shift;
-				if (this.red_shift < 0 && mask == this.red_mask)
-				{
-					this.red_shift = shift;
-					this.red_invprec = 16 - prec;
-				}
-				if (this.green_shift < 0 && mask == this.green_mask)
-				{
-					this.green_shift = shift;
-					this.green_invprec = 16 - prec;
-				}
-				if (this.blue_shift < 0 && mask == this.blue_mask)
-				{
-					this.blue_shift = shift;
-					this.blue_invprec = 16 - prec;
-				}
-			}
-		}
-		if (this.red_shift < 0 || this.green_shift < 0 || this.blue_shift < 0)
-		{
-			throw new IllegalStateException("Can't figure out color space");
-		}
-		for (int i = 0; i < ANALOGTV.CV_MAX; i++)
-		{
-			int intensity = (int)Math.rint(Math.floor(Math.pow(i / 256.0,0.8) * 65535.0)); /* gamma correction */
-			if (intensity > 65535)
-				intensity = 65535;
-			this.red_values[i] = ((intensity >> this.red_invprec) << this.red_shift);
-			this.green_values[i] = ((intensity >> this.green_invprec) << this.green_shift);
-			this.blue_values[i] = ((intensity >> this.blue_invprec) << this.blue_shift);
-		}
+//		this.red_mask = 0xf800;//this.xgwa.visual->red_mask;
+//		this.green_mask = 0x07e0;//this.xgwa.visual->green_mask;
+//		this.blue_mask = 0x001f;//this.xgwa.visual->blue_mask;
+//		this.red_shift = this.red_invprec = -1;
+//		this.green_shift = this.green_invprec = -1;
+//		this.blue_shift = this.blue_invprec = -1;
+//		/* Is there a standard way to do this? Does this handle all cases? */
+//		int shift, prec;
+//		for (shift = 0; shift < 32; shift++)
+//		{
+//			for (prec = 1; prec < 16 && prec < 40 - shift; prec++)
+//			{
+//				long mask = (0xffffL >> (16 - prec)) << shift;
+//				if (this.red_shift < 0 && mask == this.red_mask)
+//				{
+//					this.red_shift = shift;
+//					this.red_invprec = 16 - prec;
+//				}
+//				if (this.green_shift < 0 && mask == this.green_mask)
+//				{
+//					this.green_shift = shift;
+//					this.green_invprec = 16 - prec;
+//				}
+//				if (this.blue_shift < 0 && mask == this.blue_mask)
+//				{
+//					this.blue_shift = shift;
+//					this.blue_invprec = 16 - prec;
+//				}
+//			}
+//		}
+//		if (this.red_shift < 0 || this.green_shift < 0 || this.blue_shift < 0)
+//		{
+//			throw new IllegalStateException("Can't figure out color space");
+//		}
+//		for (int i = 0; i < ANALOGTV.CV_MAX; i++)
+//		{
+//			int intensity = (int)Math.rint(Math.floor(Math.pow(i / 256.0,0.8) * 65535.0)); /* gamma correction */
+//			if (intensity > 65535)
+//				intensity = 65535;
+//			this.red_values[i] = ((intensity >> this.red_invprec) << this.red_shift);
+//			this.green_values[i] = ((intensity >> this.green_invprec) << this.green_shift);
+//			this.blue_values[i] = ((intensity >> this.blue_invprec) << this.blue_shift);
+//		}
 	}
 }
