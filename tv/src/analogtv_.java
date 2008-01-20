@@ -72,7 +72,7 @@ public class analogtv_
 	double[][] line_cb_phase = new double[ANALOGTV.V][4];
 	int channel_change_cycles;
 	double rx_signal_level;
-	double[] rx_signal = new double[ANALOGTV.SIGNAL_LEN];
+	double[] signal = new double[ANALOGTV.SIGNAL_LEN];
 
 	public analogtv_()
 	{

@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.io.Closeable;
@@ -51,17 +50,15 @@ public class TV implements Closeable
 		BufferedImage image = new BufferedImage(ANALOGTV.H,ANALOGTV.V * 2,BufferedImage.TYPE_INT_RGB);
 		GUI gui = new GUI(thistv,image);
 
-		analogtv_input tvin = new analogtv_input();
-		analogtv_setup_sync(tvin);
+		analogtv_ tv = new analogtv_();
+
+		analogtv_configure(tv);
+		analogtv_setup_sync(tv);
 
 //		dump_signal(tvin.signal);
 //		draw_signal(tvin.signal,image);
 
-		analogtv_ tv = new analogtv_();
-		analogtv_configure(tv);
-		analogtv_reception rcp = new analogtv_reception();
-		rcp.input = tvin;
-		analogtv_add_signal(tv,rcp);
+//		analogtv_reception rcp = new analogtv_reception();
 
 //		draw_signal(tv.rx_signal,image);
 
@@ -129,7 +126,7 @@ public class TV implements Closeable
 		return ret * ret;
 	}
 
-	private static void analogtv_setup_sync(analogtv_input input)
+	private static void analogtv_setup_sync(analogtv_ input)
 	{
 		for (int lineno = 0; lineno < ANALOGTV.V; ++lineno)
 		{
@@ -241,7 +238,7 @@ public class TV implements Closeable
 			double filt = 0.0;
 			for (int j = 0; j < ANALOGTV.H; j += ANALOGTV.H / 16)
 			{
-				filt += it.rx_signal[xlineno * ANALOGTV.H + j];
+				filt += it.signal[xlineno * ANALOGTV.H + j];
 			}
 			filt *= it.agclevel;
 			final double osc = (double)(ANALOGTV.V + i) / (double)ANALOGTV.V;
@@ -300,7 +297,7 @@ public class TV implements Closeable
 				for (int i = ANALOGTV.CB_START + 8; i < ANALOGTV.CB_START + 36 - 8; ++i)
 				{
 //					it.cb_phase[i & 3] = it.cb_phase[i & 3] * (1.0 - cbfc) + it.rx_signal[isp + i] * it.agclevel * cbfc;
-					it.cb_phase[i & 3] = it.rx_signal[isp + i] * it.agclevel;
+					it.cb_phase[i & 3] = it.signal[isp + i] * it.agclevel;
 //					System.out.printf(" %+6.2f",it.cb_phase[i & 3]);
 				}
 //				System.out.println();
@@ -368,7 +365,7 @@ public class TV implements Closeable
 		int isp;
 		for (i = start, iyiq = start, isp = start; i < end; i++, idp--, iyiq++, isp++)
 		{
-			delay[idp + 0] = it.rx_signal[isignal + isp + 0] * 0.0469904257251935 * agclevel;
+			delay[idp + 0] = it.signal[isignal + isp + 0] * 0.0469904257251935 * agclevel;
 			delay[idp + 8] = (
 				+ 1.0 * (delay[idp + 6] + delay[idp + 0])
 				+ 4.0 * (delay[idp + 5] + delay[idp + 1])
@@ -390,13 +387,13 @@ public class TV implements Closeable
 			for (i = start, iyiq = start, isp = start; i < end; i++, idp--, iyiq++, isp++)
 			{
 				// const double sig(*sp);
-				delay[idp + 0] = it.rx_signal[isignal + isp] * multiq2[i & 3] * 0.0833333333333;
+				delay[idp + 0] = it.signal[isignal + isp] * multiq2[i & 3] * 0.0833333333333;
 				it.yiq[iyiq].i = delay[idp + 8] = (
 					+ 1.0 * (delay[idp + 5] + delay[idp + 0])
 					+ 3.0 * (delay[idp + 4] + delay[idp + 1])
 					+ 4.0 * (delay[idp + 3] + delay[idp + 2])
 					- 0.3333333333 * delay[idp + 10]);
-				delay[idp + 16] = it.rx_signal[isignal + isp] * multiq2[(i + 3) & 3] * 0.0833333333333;
+				delay[idp + 16] = it.signal[isignal + isp] * multiq2[(i + 3) & 3] * 0.0833333333333;
 				it.yiq[iyiq].q = delay[idp + 24] = (
 					+ 1.0 * (delay[idp + 16 + 5] + delay[idp + 16 + 0])
 					+ 3.0 * (delay[idp + 16 + 4] + delay[idp + 16 + 1])
@@ -705,8 +702,8 @@ public class TV implements Closeable
 //		}
 //	}
 
-	private static void analogtv_add_signal(analogtv_ it, analogtv_reception rec)
-	{
+//	private static void analogtv_add_signal(analogtv_ it, analogtv_reception rec)
+//	{
 		// int ec = it.channel_change_cycles;
 		// System.arraycopy(rec.input.signal,0,rec.input.signal,ANALOGTV.V,ANALOGTV.H);
 		// // ???
@@ -763,11 +760,11 @@ public class TV implements Closeable
 		// it.rx_signal_level = Math.sqrt(it.rx_signal_level *
 		// it.rx_signal_level + rec.level * rec.level);
 		// it.channel_change_cycles = 0;
-		int isv = 0;
-		int ish = 0;
-		for (int ps = 0; ps < it.rx_signal.length; ++ps)
-		{
-			it.rx_signal[ps] = rec.input.signal[ps];
+//		int isv = 0;
+//		int ish = 0;
+//		for (int ps = 0; ps < it.signal.length; ++ps)
+//		{
+//			it.signal[ps] = rec.input.signal[ps];
 //			++ish;
 //			if (ish >= ANALOGTV.H)
 //			{
@@ -780,8 +777,8 @@ public class TV implements Closeable
 //				// System.err.println("isv >= ANALOGTV.V isv: "+isv);
 //				//				isv = 0;
 //			}
-		}
-	}
+//		}
+//	}
 
 	public AtomicBoolean shutdown = new AtomicBoolean();
 	public void close() throws IOException
