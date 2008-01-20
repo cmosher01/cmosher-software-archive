@@ -1,11 +1,10 @@
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /*
  * Created on Jan 18, 2008
  */
-public class analogtv_
+public class AnalogTV
 {
 	private int n_colors;
 	private int interlace;
@@ -55,30 +54,30 @@ public class analogtv_
 	 voltate drop when someone turns on a big motor */
 	private double hashnoise_rpm;
 	private int hashnoise_counter;
-	private int[] hashnoise_times = new int[ANALOGTV.V];
-	private int[] hashnoise_signal = new int[ANALOGTV.V];
+	private int[] hashnoise_times = new int[AppleNTSC.V];
+	private int[] hashnoise_signal = new int[AppleNTSC.V];
 	private int hashnoise_on;
 	private int hashnoise_enable;
 	private int shrinkpulse;
-	private double[] crtload = new double[ANALOGTV.V];
-	//	int[] red_values = new int[ANALOGTV.CV_MAX];
-	//	int[] green_values = new int[ANALOGTV.CV_MAX];
-	//	int[] blue_values = new int[ANALOGTV.CV_MAX];
-	private analogtv_yiq[] yiq = new analogtv_yiq[ANALOGTV.SIGNAL_LEN];//[ANALOGTV.PIC_LEN + 10];
+	private double[] crtload = new double[AppleNTSC.V];
+	//	int[] red_values = new int[AppleNTSC.CV_MAX];
+	//	int[] green_values = new int[AppleNTSC.CV_MAX];
+	//	int[] blue_values = new int[AppleNTSC.CV_MAX];
+	private analogtv_yiq[] yiq = new analogtv_yiq[AppleNTSC.SIGNAL_LEN];//[AppleNTSC.PIC_LEN + 10];
 	private int[] colors = new int[256];
 	private int cmap_y_levels;
 	private int cmap_i_levels;
 	private int cmap_q_levels;
 	private int cur_hsync;
-	private int[] line_hsync = new int[ANALOGTV.V];
+	private int[] line_hsync = new int[AppleNTSC.V];
 	private int cur_vsync;
 	private double[] cb_phase = new double[4];
-	private double[][] line_cb_phase = new double[ANALOGTV.V][4];
+	private double[][] line_cb_phase = new double[AppleNTSC.V][4];
 	private int channel_change_cycles;
 	private double rx_signal_level;
-	private double[] signal = new double[ANALOGTV.SIGNAL_LEN];
+	private double[] signal = new double[AppleNTSC.SIGNAL_LEN];
 
-	public analogtv_()
+	public AnalogTV()
 	{
 		this.tint_control = 5.0;
 		this.color_control = 60.0 / 100.0;
@@ -101,7 +100,7 @@ public class analogtv_
 		{
 			System.out.printf(" %+4d",this.signal[i]);
 			++pi;
-			if (pi >= ANALOGTV.H)
+			if (pi >= AppleNTSC.H)
 			{
 				System.out.println();
 				pi = 0;
@@ -115,120 +114,120 @@ public class analogtv_
 		int pi = 0;
 		for (int i = 0; i < this.signal.length; ++i)
 		{
-			final int ire = (int)Math.rint(this.signal[i]) - ANALOGTV.SYNC_LEVEL;
-			final int val = (int)Math.rint(ire * 255.0 / (ANALOGTV.WHITE_LEVEL - ANALOGTV.SYNC_LEVEL));
+			final int ire = (int)Math.rint(this.signal[i]) - AppleNTSC.SYNC_LEVEL;
+			final int val = (int)Math.rint(ire * 255.0 / (AppleNTSC.WHITE_LEVEL - AppleNTSC.SYNC_LEVEL));
 			final int rgb = (val << 16) | (val << 8) | (val);
 			imageBuf.setElem(pi,rgb);
 			++pi;
-			if (pi % ANALOGTV.H == 0)
+			if (pi % AppleNTSC.H == 0)
 			{
-				pi += ANALOGTV.H;
+				pi += AppleNTSC.H;
 			}
 		}
 	}
 
 	public void analogtv_setup_sync()
 	{
-		for (int lineno = 0; lineno < ANALOGTV.V; ++lineno)
+		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
 		{
-			int i = ANALOGTV.SYNC_START;
+			int i = AppleNTSC.SYNC_START;
 			if (lineno < 70)
 			{
-				while (i < ANALOGTV.BP_START)
+				while (i < AppleNTSC.BP_START)
 				{
-					this.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.BLANK_LEVEL;
+					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.BLANK_LEVEL;
 				}
-				while (i < ANALOGTV.H)
+				while (i < AppleNTSC.H)
 				{
-					this.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.SYNC_LEVEL;
+					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.SYNC_LEVEL;
 				}
 			}
 			else
 			{
-				while (i < ANALOGTV.BP_START)
+				while (i < AppleNTSC.BP_START)
 				{
-					this.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.SYNC_LEVEL;
+					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.SYNC_LEVEL;
 				}
-				while (i < ANALOGTV.PIC_START)
+				while (i < AppleNTSC.PIC_START)
 				{
-					this.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.BLANK_LEVEL;
+					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.BLANK_LEVEL;
 				}
-				while (i < ANALOGTV.FP_START)
+				while (i < AppleNTSC.FP_START)
 				{
-					this.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.BLACK_LEVEL;
+					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.BLACK_LEVEL;
 				}
-				while (i < ANALOGTV.H)
+				while (i < AppleNTSC.H)
 				{
-					this.signal[lineno * ANALOGTV.H + i++] = ANALOGTV.BLANK_LEVEL;
+					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.BLANK_LEVEL;
 				}
-				for (int icb = ANALOGTV.CB_START; icb < ANALOGTV.CB_END; icb += 4)
+				for (int icb = AppleNTSC.CB_START; icb < AppleNTSC.CB_END; icb += 4)
 				{
-					this.signal[lineno * ANALOGTV.H + icb + 1] = ANALOGTV.CB_LEVEL;
-					this.signal[lineno * ANALOGTV.H + icb + 3] = -ANALOGTV.CB_LEVEL;
+					this.signal[lineno * AppleNTSC.H + icb + 1] = AppleNTSC.CB_LEVEL;
+					this.signal[lineno * AppleNTSC.H + icb + 3] = -AppleNTSC.CB_LEVEL;
 				}
 				// only for Rev. 0 boards:
-				this.signal[lineno * ANALOGTV.H + ANALOGTV.SPIKE] = -ANALOGTV.CB_LEVEL;
+				this.signal[lineno * AppleNTSC.H + AppleNTSC.SPIKE] = -AppleNTSC.CB_LEVEL;
 			}
 			if (lineno != 70 && lineno != 261)
 				continue;
 			// TEST:
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START] = 80;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 1] = 80;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 2] = 80;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 3] = 80;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 300] = 100;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 301] = 100;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 302] = 100;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 303] = 100;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 304] = 100;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 305] = 100;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 306] = 100;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 307] = 100;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 308] = 100;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 309] = 100;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 310] = 100;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 311] = 100;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 49] = 80;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 58] = 80;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 67] = 80;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 76] = 80;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 86] = 40;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 87] = 40;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 95] = 40;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 96] = 40;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 104] = 40;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 105] = 40;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 113] = 40;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 114] = 40;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 122] = 40;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 123] = 40;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 131] = 20;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 132] = -20;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 500] = 100;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 502] = 100;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 504] = 100;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 506] = 100;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 558] = 80;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 559] = 80;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 560] = 80;
-			this.signal[lineno * ANALOGTV.H + ANALOGTV.PIC_START + 561] = 80;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START] = 80;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 1] = 80;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 2] = 80;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 3] = 80;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 300] = 100;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 301] = 100;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 302] = 100;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 303] = 100;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 304] = 100;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 305] = 100;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 306] = 100;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 307] = 100;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 308] = 100;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 309] = 100;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 310] = 100;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 311] = 100;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 49] = 80;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 58] = 80;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 67] = 80;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 76] = 80;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 86] = 40;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 87] = 40;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 95] = 40;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 96] = 40;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 104] = 40;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 105] = 40;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 113] = 40;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 114] = 40;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 122] = 40;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 123] = 40;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 131] = 20;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 132] = -20;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 500] = 100;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 502] = 100;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 504] = 100;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 506] = 100;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 558] = 80;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 559] = 80;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 560] = 80;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 561] = 80;
 		}
 	}
 
 	public void analogtv_read_color_info()
 	{
-		for (int lineno = 0; lineno < ANALOGTV.V; ++lineno)
+		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
 		{
-			final int isp = lineno * ANALOGTV.H;//+ (cur_hsync & ~3);
+			final int isp = lineno * AppleNTSC.H;//+ (cur_hsync & ~3);
 			//				// dump signal:
 			//				System.out.print("lineno "+lineno+" cb_phase:");
-			//				for (int i = ANALOGTV.CB_START + 8; i < ANALOGTV.CB_START + 36 - 8; ++i)
+			//				for (int i = AppleNTSC.CB_START + 8; i < AppleNTSC.CB_START + 36 - 8; ++i)
 			//				{
 			//					System.out.printf(" %+6.2f",(this.signal[isp + i] * this.agclevel * cbfc));
 			//				}
 			//				System.out.println();
 			//					System.out.print("lineno "+lineno+" cb_phase:");
-			for (int i = ANALOGTV.CB_START + 8; i < ANALOGTV.CB_END - 8; ++i)
+			for (int i = AppleNTSC.CB_START + 8; i < AppleNTSC.CB_END - 8; ++i)
 			{
 				this.cb_phase[i & 3] = this.signal[isp + i] * this.agclevel;
 				//					System.out.printf(" %+6.2f",this.cb_phase[i & 3]);
@@ -258,8 +257,8 @@ public class analogtv_
 		final int phasecorr = 0; // ???
 		boolean colormode;
 		double agclevel = this.agclevel;
-		double brightadd = ANALOGTV.BLACK_LEVEL;/*-ANALOGTV.SYNC_LEVEL+1;*///this.brightness_control * 100.0 - ANALOGTV.BLACK_LEVEL;
-		double[] delay = new double[2 * MAXDELAY + ANALOGTV.H];
+		double brightadd = AppleNTSC.BLACK_LEVEL;/*-AppleNTSC.SYNC_LEVEL+1;*///this.brightness_control * 100.0 - AppleNTSC.BLACK_LEVEL;
+		double[] delay = new double[2 * MAXDELAY + AppleNTSC.H];
 		double[] multiq2 = new double[4];
 		double cb_i = (this.line_cb_phase[lineno][(2 + phasecorr) & 3] - this.line_cb_phase[lineno][(0 + phasecorr) & 3]) / 16.0;
 		double cb_q = (this.line_cb_phase[lineno][(3 + phasecorr) & 3] - this.line_cb_phase[lineno][(1 + phasecorr) & 3]) / 16.0;
@@ -277,7 +276,7 @@ public class analogtv_
 			multiq2[3] = -multiq2[1];
 			//				System.out.println("multi: "+multiq2[0]+","+multiq2[1]+","+multiq2[2]+","+multiq2[3]);
 		}
-		int idp = ANALOGTV.H + MAXDELAY;
+		int idp = AppleNTSC.H + MAXDELAY;
 		for (i = 0; i < 24; i++)
 		{
 			delay[idp + i] = 0.0;
@@ -295,7 +294,7 @@ public class analogtv_
 		//			System.out.println();
 		if (colormode)
 		{
-			idp = ANALOGTV.H + MAXDELAY;
+			idp = AppleNTSC.H + MAXDELAY;
 			for (i = 0; i < 27; i++)
 			{
 				delay[idp + i] = 0.0;
@@ -324,11 +323,11 @@ public class analogtv_
 	{
 		final DataBuffer imageBuf = image.getRaster().getDataBuffer();
 		int pi = 0;
-		for (int lineno = 0; lineno < ANALOGTV.V; ++lineno)
+		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
 		{
-			final int isignal = lineno * ANALOGTV.H;//((lineno + this.cur_vsync + ANALOGTV.V) % ANALOGTV.V) * ANALOGTV.H + this.line_hsync[lineno];
-			analogtv_ntsc_to_yiq(lineno,isignal,0,ANALOGTV.H);
-			for (int colno = 0; colno < ANALOGTV.H; ++colno)
+			final int isignal = lineno * AppleNTSC.H;//((lineno + this.cur_vsync + AppleNTSC.V) % AppleNTSC.V) * AppleNTSC.H + this.line_hsync[lineno];
+			analogtv_ntsc_to_yiq(lineno,isignal,0,AppleNTSC.H);
+			for (int colno = 0; colno < AppleNTSC.H; ++colno)
 			{
 				final analogtv_yiq yiql = this.yiq[colno];
 				if (yiql.y < 0)
@@ -342,11 +341,11 @@ public class analogtv_
 				final int ib = (int)Math.rint(b * 255 / 140);
 				final int rgb = ((ir << 16) | (ig << 8) | (ib)) & 0xFFFFFF;
 				imageBuf.setElem(pi,rgb);
-				imageBuf.setElem(pi + ANALOGTV.H,rgb);
+				imageBuf.setElem(pi + AppleNTSC.H,rgb);
 				++pi;
-				if (pi % ANALOGTV.H == 0)
+				if (pi % AppleNTSC.H == 0)
 				{
-					pi += ANALOGTV.H;
+					pi += AppleNTSC.H;
 				}
 			}
 			//				System.out.println();

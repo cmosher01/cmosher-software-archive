@@ -1,7 +1,5 @@
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBuffer;
 import java.io.Closeable;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.SwingUtilities;
@@ -41,16 +39,16 @@ public class TV implements Closeable
 
 	private static void program()
 	{
-		System.out.println("SYNC_START: "+ANALOGTV.SYNC_START);
-		System.out.println("  BP_START: "+ANALOGTV.BP_START);
-		System.out.println("  CB_START: "+ANALOGTV.CB_START);
-		System.out.println(" PIC_START: "+ANALOGTV.PIC_START);
-		System.out.println("  FP_START: "+ANALOGTV.FP_START);
+		System.out.println("SYNC_START: "+AppleNTSC.SYNC_START);
+		System.out.println("  BP_START: "+AppleNTSC.BP_START);
+		System.out.println("  CB_START: "+AppleNTSC.CB_START);
+		System.out.println(" PIC_START: "+AppleNTSC.PIC_START);
+		System.out.println("  FP_START: "+AppleNTSC.FP_START);
 
-		BufferedImage image = new BufferedImage(ANALOGTV.H,ANALOGTV.V * 2,BufferedImage.TYPE_INT_RGB);
+		BufferedImage image = new BufferedImage(AppleNTSC.H,AppleNTSC.V * 2,BufferedImage.TYPE_INT_RGB);
 		GUI gui = new GUI(thistv,image);
 
-		analogtv_ tv = new analogtv_();
+		AnalogTV tv = new AnalogTV();
 
 		tv.analogtv_setup_sync();
 		tv.analogtv_read_color_info();
