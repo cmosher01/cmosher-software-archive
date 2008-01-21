@@ -459,38 +459,25 @@ public class AnalogTV
 			iq_factor[3] = -iq_factor[1];
 		}
 
+
+
+		// filter out Y, I, and Q from the input signal
+
 		final analogtv_yiq[] yiq = new analogtv_yiq[AppleNTSC.H];
 
-		// calculate luma (Y)
+		final Lowpass_3_58_MHz filterY = new Lowpass_3_58_MHz();
+		final Lowpass_1_5_MHz filterI = new Lowpass_1_5_MHz();
+		final Lowpass_1_5_MHz filterQ = new Lowpass_1_5_MHz();
+		for (int i = start; i < end; ++i)
 		{
-			final double[] delay = new double[2 * MAXDELAY + AppleNTSC.H];
-			int idp = AppleNTSC.H + MAXDELAY;
-			for (int i = start; i < end; ++i, --idp)
+			yiq[i] = new analogtv_yiq();
+			yiq[i].y = filterY.transition(this.signal[isignal + i] * this.agclevel);
+			if (colormode)
 			{
-				delay[idp + 0] = this.signal[isignal + i] * LUMA_FACTOR * this.agclevel;
-				delay[idp + 8] = (+1.0 * (delay[idp + 6] + delay[idp + 0]) + 4.0 * (delay[idp + 5] + delay[idp + 1]) + 7.0 * (delay[idp + 4] + delay[idp + 2]) + 8.0 * (delay[idp + 3]) - 0.0176648 * delay[idp + 12] - 0.4860288 * delay[idp + 10]);
-				yiq[i] = new analogtv_yiq();
-				yiq[i].y = delay[idp + 8] + AppleNTSC.BLACK_LEVEL;
+				yiq[i].i = filterI.transition(this.signal[isignal + i] * iq_factor[(i + 0) & 3]);
+				yiq[i].q = filterQ.transition(this.signal[isignal + i] * iq_factor[(i + 3) & 3]);
 			}
-		}
-
-		// calculate chroma (I, Q)
-		if (colormode)
-		{
-			final double[] delay = new double[2 * MAXDELAY + AppleNTSC.H];
-			int idp = AppleNTSC.H + MAXDELAY;
-			for (int i = start; i < end; ++i, --idp)
-			{
-				delay[idp + 00] = this.signal[isignal + i] * iq_factor[(i + 0) & 3] * CHROMA_FACTOR;
-				yiq[i].i = delay[idp + 8] = (+1.0 * (delay[idp + 5] + delay[idp + 0]) + 3.0 * (delay[idp + 4] + delay[idp + 1]) + 4.0 * (delay[idp + 3] + delay[idp + 2]) - 0.3333333333 * delay[idp + 10]);
-
-				delay[idp + 16] = this.signal[isignal + i] * iq_factor[(i + 3) & 3] * CHROMA_FACTOR;
-				yiq[i].q = delay[idp + 24] = (+1.0 * (delay[idp + 16 + 5] + delay[idp + 16 + 0]) + 3.0 * (delay[idp + 16 + 4] + delay[idp + 16 + 1]) + 4.0 * (delay[idp + 16 + 3] + delay[idp + 16 + 2]) - 0.3333333333 * delay[idp + 24 + 2]);
-			}
-		}
-		else // black & white
-		{
-			for (int i = start; i < end; ++i)
+			else
 			{
 				yiq[i].i = yiq[i].q = 0.0;
 			}
