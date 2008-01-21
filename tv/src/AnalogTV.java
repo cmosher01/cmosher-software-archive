@@ -87,10 +87,10 @@ public class AnalogTV
 //				}
 				for (int icb = AppleNTSC.CB_START; icb < AppleNTSC.CB_END; icb += 4)
 				{
+					this.signal[lineno * AppleNTSC.H + icb + 0] = AppleNTSC.CB_LEVEL/2;
 					this.signal[lineno * AppleNTSC.H + icb + 1] = AppleNTSC.CB_LEVEL/2;
-					this.signal[lineno * AppleNTSC.H + icb + 2] = AppleNTSC.CB_LEVEL/2;
+					this.signal[lineno * AppleNTSC.H + icb + 2] = -AppleNTSC.CB_LEVEL/2;
 					this.signal[lineno * AppleNTSC.H + icb + 3] = -AppleNTSC.CB_LEVEL/2;
-					this.signal[lineno * AppleNTSC.H + icb + 4] = -AppleNTSC.CB_LEVEL/2;
 				}
 				// only for Rev. 0 boards:
 				this.signal[lineno * AppleNTSC.H + AppleNTSC.SPIKE] = -AppleNTSC.CB_LEVEL;
@@ -415,81 +415,6 @@ public class AnalogTV
 		}
 	}
 	
-	private double[] get_cb_phase(int lineno)
-	{
-		final double[] phase = new double[4];
-		final int isp = lineno * AppleNTSC.H;
-		for (int i = AppleNTSC.CB_START + 8; i < AppleNTSC.CB_END - 8; ++i) // TODO double-check get_cb_phase (i thought something might be funny about this)
-		{
-			phase[i & 3] = this.signal[isp + i] * this.agclevel;
-		}
-		double tot = .1;
-		for (int i = 0; i < 4; ++i)
-		{
-			tot += phase[i] * phase[i];
-		}
-		final double cbgain = 32.0 / Math.sqrt(tot);
-		for (int i = 0; i < 4; i++)
-		{
-			phase[i] *= cbgain;
-		}
-		return phase;
-	}
-
-	private static final double COLOR_THRESH = 2.8;
-	private static final double COLOR_BASE = 103;
-
-	private double[] get_iq_factor(final double[] cb_phase)
-	{
-		final double cb_i = (cb_phase[2] - cb_phase[0]) / 16;
-		final double cb_q = (cb_phase[3] - cb_phase[1]) / 16;
-		if (cb_i*cb_i + cb_q*cb_q < COLOR_THRESH)
-		{
-			return null;
-		}
-
-		final double[] iq_factor = new double[4];
-
-		final double tint_i = -Math.cos((COLOR_BASE + this.color_control) * Math.PI / 180);
-		final double tint_q = +Math.sin((COLOR_BASE + this.color_control) * Math.PI / 180);
-		iq_factor[0] = (cb_i * tint_i - cb_q * tint_q) * this.color_control;
-		iq_factor[2] = -iq_factor[0];
-		iq_factor[1] = (cb_q * tint_i + cb_i * tint_q) * this.color_control;
-		iq_factor[3] = -iq_factor[1];
-
-		return iq_factor;
-	}
-
-	private analogtv_yiq[] ntsc_to_yiq(final int isignal, final double[] iq_factor)
-	{
-		final analogtv_yiq[] yiq = new analogtv_yiq[AppleNTSC.H];
-
-		final Lowpass_3_58_MHz filterY = new Lowpass_3_58_MHz();
-		final Lowpass_1_5_MHz filterI = new Lowpass_1_5_MHz();
-		final Lowpass_1_5_MHz filterQ = new Lowpass_1_5_MHz();
-		for (int off = 0; off < AppleNTSC.H; ++off)
-		{
-			final double y = filterY.transition(this.signal[isignal + off] * this.agclevel);
-
-			final double i;
-			final double q;
-			if (iq_factor != null)
-			{
-				i = filterI.transition(this.signal[isignal + off] * iq_factor[(off + 0) & 3]);
-				q = filterQ.transition(this.signal[isignal + off] * iq_factor[(off + 3) & 3]);
-			}
-			else
-			{
-				i = 0;
-				q = 0;
-			}
-
-			yiq[off] = new analogtv_yiq(y,i,q);
-		}
-
-		return yiq;
-	}
-
 	public void test_draw(final BufferedImage image)
 	{
 		final DataBuffer imageBuf = image.getRaster().getDataBuffer();
@@ -513,6 +438,72 @@ public class AnalogTV
 				}
 			}
 		}
+	}
+
+	private static final double PH = 127.0/128.0;
+	private double[] get_cb_phase(int lineno)
+	{
+		final double[] phase = new double[4];
+		final int isp = lineno * AppleNTSC.H;
+		for (int i = AppleNTSC.CB_START + 16; i < AppleNTSC.CB_END - 16; ++i)
+		{
+			phase[i & 3] *= PH;
+			phase[i & 3] += this.signal[isp + i] * this.agclevel;
+		}
+		double tot = .1;
+		for (int i = 0; i < 4; ++i)
+		{
+			tot += phase[i] * phase[i];
+		}
+		final double cbgain = 32.0 / Math.sqrt(tot);
+		for (int i = 0; i < 4; i++)
+		{
+			phase[i] *= cbgain;
+		}
+		return phase;
+	}
+
+	private static final double COLOR_THRESH = 2.8;
+	private static final double COLOR_BASE = 103;
+
+	private double[] get_iq_factor(final double[] cb_phase)
+	{
+		final double cb_i = (cb_phase[2] - cb_phase[0]) / 16;
+		final double cb_q = (cb_phase[3] - cb_phase[1]) / 16;
+		if (cb_i*cb_i + cb_q*cb_q < COLOR_THRESH)
+		{
+			return new double[4];
+		}
+
+		final double[] iq_factor = new double[4];
+
+		final double tint_i = -Math.cos((COLOR_BASE + this.color_control) * Math.PI / 180);
+		final double tint_q = +Math.sin((COLOR_BASE + this.color_control) * Math.PI / 180);
+		iq_factor[0] = (cb_i * tint_i - cb_q * tint_q) * this.color_control;
+		iq_factor[2] = -iq_factor[0];
+		iq_factor[1] = (cb_q * tint_i + cb_i * tint_q) * this.color_control;
+		iq_factor[3] = -iq_factor[1];
+
+		return iq_factor;
+	}
+
+	private analogtv_yiq[] ntsc_to_yiq(final int isignal, final double[] iq_factor)
+	{
+		final analogtv_yiq[] yiq = new analogtv_yiq[AppleNTSC.H];
+
+		final Lowpass_3_58_MHz filterY = new Lowpass_3_58_MHz();
+		final Lowpass_1_5_MHz filterI = new Lowpass_1_5_MHz();
+		final Lowpass_1_5_MHz filterQ = new Lowpass_1_5_MHz();
+		for (int off = 0; off < AppleNTSC.H; ++off)
+		{
+			final double y = filterY.transition(this.signal[isignal + off] * this.agclevel) /* to show blacker-than-black levels: + 40*/;
+			final double i = filterI.transition(this.signal[isignal + off] * iq_factor[(off + 0) & 3]);
+			final double q = filterQ.transition(this.signal[isignal + off] * iq_factor[(off + 3) & 3]);
+
+			yiq[off] = new analogtv_yiq(y,i,q);
+		}
+
+		return yiq;
 	}
 
 	private static int yiq2rgb(final analogtv_yiq yiq)
