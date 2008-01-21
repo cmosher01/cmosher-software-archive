@@ -467,19 +467,24 @@ public class AnalogTV
 		final Lowpass_3_58_MHz filterY = new Lowpass_3_58_MHz();
 		final Lowpass_1_5_MHz filterI = new Lowpass_1_5_MHz();
 		final Lowpass_1_5_MHz filterQ = new Lowpass_1_5_MHz();
-		for (int i = 0; i < AppleNTSC.H; ++i)
+		for (int off = 0; off < AppleNTSC.H; ++off)
 		{
-			yiq[i] = new analogtv_yiq();
-			yiq[i].y = filterY.transition(this.signal[isignal + i] * this.agclevel);
+			final double y = filterY.transition(this.signal[isignal + off] * this.agclevel);
+
+			final double i;
+			final double q;
 			if (iq_factor != null)
 			{
-				yiq[i].i = filterI.transition(this.signal[isignal + i] * iq_factor[(i + 0) & 3]);
-				yiq[i].q = filterQ.transition(this.signal[isignal + i] * iq_factor[(i + 3) & 3]);
+				i = filterI.transition(this.signal[isignal + off] * iq_factor[(off + 0) & 3]);
+				q = filterQ.transition(this.signal[isignal + off] * iq_factor[(off + 3) & 3]);
 			}
 			else
 			{
-				yiq[i].i = yiq[i].q = 0.0;
+				i = 0;
+				q = 0;
 			}
+
+			yiq[off] = new analogtv_yiq(y,i,q);
 		}
 
 		return yiq;
@@ -516,12 +521,9 @@ public class AnalogTV
 
 	private static int yiq2rgb(final analogtv_yiq yiq)
 	{
-		if (yiq.y < 0)
-			yiq.y = 0;
-
-		final double r = yiq.y + 0.956 * yiq.i + 0.621 * yiq.q;
-		final double g = yiq.y - 0.272 * yiq.i - 0.647 * yiq.q;
-		final double b = yiq.y - 1.105 * yiq.i + 1.702 * yiq.q;
+		final double r = yiq.getY() + 0.956 * yiq.getI() + 0.621 * yiq.getQ();
+		final double g = yiq.getY() - 0.272 * yiq.getI() - 0.647 * yiq.getQ();
+		final double b = yiq.getY() - 1.105 * yiq.getI() + 1.702 * yiq.getQ();
 
 		int ir = (int)Math.rint(r * FACTOR_RED);
 		ir = clamp(0,ir,256);
