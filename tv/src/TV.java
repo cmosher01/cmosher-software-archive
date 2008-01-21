@@ -53,7 +53,7 @@ public class TV implements Closeable
 		tv.write_sync_signal();
 
 //		tv.write_apple_color_test();
-		tv.write_play_signal2();
+		tv.write_play_signal4();
 
 //		dump_signal(in.signal);
 //		draw_signal(in.signal,image);

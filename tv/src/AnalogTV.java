@@ -295,6 +295,50 @@ public class AnalogTV
 
 			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 455] = 50;
 			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 456] = 50;
+
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 500] = 100;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 501] = 100;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 502] = 100;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 503] = 100;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 504] = 100;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 505] = 100;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 506] = 100;
+
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 550] = 50;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 551] = 50;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 552] = 50;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 553] = 50;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 554] = 50;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 555] = 50;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 556] = 50;
+		}
+	}
+
+	public void write_play_signal5()
+	{
+		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
+		{
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 100] = 50;
+
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 201] = 50;
+
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 302] = 50;
+
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 403] = 50;
+
+
+
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 152] = 25;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 153] = 25;
+
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 253] = 25;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 254] = 25;
+
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 354] = 25;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 355] = 25;
+
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 455] = 25;
+			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 456] = 25;
 		}
 	}
 
@@ -371,7 +415,7 @@ public class AnalogTV
 		}
 	}
 	
-	public double[] get_cb_phase(int lineno)
+	private double[] get_cb_phase(int lineno)
 	{
 		final double[] phase = new double[4];
 		final int isp = lineno * AppleNTSC.H;
