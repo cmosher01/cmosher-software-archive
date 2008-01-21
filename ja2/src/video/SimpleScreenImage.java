@@ -5,9 +5,9 @@ package video;
 
 import java.awt.image.BufferedImage;
 
-public class ScreenImage extends BufferedImage
+public class SimpleScreenImage extends BufferedImage
 {
-	public ScreenImage()
+	public SimpleScreenImage()
 	{
 		super(Video.XSIZE,Video.YSIZE,BufferedImage.TYPE_INT_RGB);
 	}

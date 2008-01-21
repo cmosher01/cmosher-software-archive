@@ -26,7 +26,7 @@ public class Video
 	 * Note: on the real Apple ][, text flashing rate is not really controlled by the system timing generator,
 	 * but rather by a separate 2 Hz 555 timing chip driven by a simple capacitor.
 	 */
-	private static final int FLASH_HALF_PERIOD = TimingGenerator.AVG_CPU_HZ/2/2; // 2 Hz period = 4 Hz half-period
+	private static final int FLASH_HALF_PERIOD = TimingGenerator.AVG_CPU_HZ/4; // 2 Hz period = 4 Hz half-period
 
 
 
@@ -37,6 +37,7 @@ public class Video
 	private final UI ui;
 	private final AddressBus addressBus;
 	private final DataBuffer buf;
+	private final PictureGenerator picgen;
 
 	private final TextCharacters textRows = new TextCharacters();
 
@@ -58,12 +59,13 @@ public class Video
 
 
 
-	public Video(final VideoMode mode, final UI ui, final AddressBus addressBus, final BufferedImage screenImage) throws IOException
+	public Video(final VideoMode mode, final UI ui, final AddressBus addressBus, final BufferedImage screenImage, final PictureGenerator picgen) throws IOException
 	{
 		this.mode = mode;
 		this.ui = ui;
 		this.addressBus = addressBus;
 		this.buf = screenImage.getRaster().getDataBuffer();
+		this.picgen = picgen;
 
 		readCharacterRom();
 	}

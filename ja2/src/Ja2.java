@@ -20,7 +20,8 @@ import paddle.Paddles;
 import paddle.PaddlesInterface;
 import speaker.SpeakerClicker;
 import util.Util;
-import video.ScreenImage;
+import video.SimpleScreenImage;
+import video.TelevisionScreenImage;
 import video.Video;
 import video.VideoMode;
 import cards.disk.InvalidDiskImage;
@@ -123,7 +124,7 @@ public final class Ja2 implements Closeable
 
 
 
-		final ScreenImage screenImage = new ScreenImage();
+		final TelevisionScreenImage screenImage = new TelevisionScreenImage();
 
 		final Screen screen;
         final UI ui;
