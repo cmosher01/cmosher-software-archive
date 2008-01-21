@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.io.IOException;
 import chipset.AddressBus;
+import chipset.TimingGenerator;
 
 
 
@@ -20,6 +21,12 @@ public class Video
 	public static final int YSIZE = VideoAddressing.VISIBLE_ROWS_PER_FIELD;
 
 	private static final int VISIBLE_X_OFFSET = VideoAddressing.BYTES_PER_ROW-VideoAddressing.VISIBLE_BYTES_PER_ROW;
+
+	/*
+	 * Note: on the real Apple ][, text flashing rate is not really controlled by the system timing generator,
+	 * but rather by a separate 2 Hz 555 timing chip driven by a simple capacitor.
+	 */
+	private static final int FLASH_HALF_PERIOD = TimingGenerator.AVG_CPU_HZ/2/2; // 2 Hz period = 4 Hz half-period
 
 
 
@@ -40,6 +47,7 @@ public class Video
 	private int t = VideoAddressing.BYTES_PER_FIELD-12*VideoAddressing.BYTES_PER_ROW;
 
 	private boolean flash;
+	private int cflash;
 
 	private int prevPlotByte;
 
@@ -85,13 +93,24 @@ public class Video
 		final byte data = getDataByte();
 		plotDataByte(data);
 
+		updateFlash();
+
 		++this.t;
 
 		if (this.t >= VideoAddressing.BYTES_PER_FIELD)
 		{
 			this.ui.updateScreen();
-			this.flash = !this.flash;
 			this.t = 0;
+		}
+	}
+
+	private void updateFlash()
+	{
+		++this.cflash;
+		if (this.cflash >= FLASH_HALF_PERIOD)
+		{
+			this.flash = !this.flash;
+			this.cflash = 0;
 		}
 	}
 
