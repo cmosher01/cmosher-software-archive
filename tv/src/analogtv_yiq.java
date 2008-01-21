@@ -9,9 +9,9 @@ public class analogtv_yiq
 
 	public analogtv_yiq(final double y, final double i, final double q)
 	{
-		this.y = y < 0 ? 0 : y;
-		this.i = i < 0 ? 0 : i;
-		this.q = q < 0 ? 0 : q;
+		this.y = y;
+		this.i = i;
+		this.q = q;
 	}
 
 	public double getI()

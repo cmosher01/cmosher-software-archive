@@ -419,7 +419,7 @@ public class AnalogTV
 	{
 		final double[] phase = new double[4];
 		final int isp = lineno * AppleNTSC.H;
-		for (int i = AppleNTSC.CB_START + 8; i < AppleNTSC.CB_END - 8; ++i)
+		for (int i = AppleNTSC.CB_START + 8; i < AppleNTSC.CB_END - 8; ++i) // TODO double-check get_cb_phase (i thought something might be funny about this)
 		{
 			phase[i & 3] = this.signal[isp + i] * this.agclevel;
 		}
@@ -515,27 +515,23 @@ public class AnalogTV
 		}
 	}
 
-	private static final double FACTOR_RED   = 256.0/140.0;
-	private static final double FACTOR_GREEN = 256.0/140.0;
-	private static final double FACTOR_BLUE  = 256.0/140.0;
-
 	private static int yiq2rgb(final analogtv_yiq yiq)
 	{
 		final double r = yiq.getY() + 0.956 * yiq.getI() + 0.621 * yiq.getQ();
 		final double g = yiq.getY() - 0.272 * yiq.getI() - 0.647 * yiq.getQ();
 		final double b = yiq.getY() - 1.105 * yiq.getI() + 1.702 * yiq.getQ();
 
-		int ir = (int)Math.rint(r * FACTOR_RED);
-		ir = clamp(0,ir,256);
-		int ig = (int)Math.rint(g * FACTOR_GREEN);
-		ig = clamp(0,ig,256);
-		int ib = (int)Math.rint(b * FACTOR_BLUE);
-		ib = clamp(0,ib,256);
-
 		return
-			((ir & 0xFF) << 16)| 
-			((ig & 0xFF) <<  8)| 
-			((ib & 0xFF) <<  0);
+			(calc_color(r) << 16)| 
+			(calc_color(g) <<  8)| 
+			(calc_color(b) <<  0);
+	}
+
+	private static int calc_color(final double color)
+	{
+		int x = (int)Math.rint(color * 0x100 / AppleNTSC.LEVEL_RANGE);
+		x = clamp(0,x,0x100);
+		return x & 0xFF;
 	}
 
 	private static int clamp(int min, int x, int lim)

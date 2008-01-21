@@ -30,5 +30,8 @@ public class AppleNTSC
 	public static final int BLACK_LEVEL=7;
 	public static final int BLANK_LEVEL=0;
 	public static final int SYNC_LEVEL=-40;
+
+	public static final int LEVEL_RANGE = WHITE_LEVEL-SYNC_LEVEL;
+
 	public static final int CB_LEVEL=20; // +/- 20 from 0
 }
