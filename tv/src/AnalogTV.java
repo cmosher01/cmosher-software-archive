@@ -436,43 +436,42 @@ public class AnalogTV
 		return phase;
 	}
 
-	private static final int MAXDELAY = 32;
 	private static final double COLOR_THRESH = 2.8;
 	private static final double COLOR_BASE = 103;
-	private static final double CHROMA_FACTOR = 1/12.0;
-	private static final double LUMA_FACTOR = 0.0469904257251935; // ??? where does this come from?
 
-	private analogtv_yiq[] ntsc_to_yiq(final int lineno, final int isignal, final int start, final int end, final double[] cb_phase)
+	private double[] get_iq_factor(final double[] cb_phase)
 	{
 		final double cb_i = (cb_phase[2] - cb_phase[0]) / 16;
 		final double cb_q = (cb_phase[3] - cb_phase[1]) / 16;
-		final boolean colormode = (COLOR_THRESH <= cb_i*cb_i + cb_q*cb_q);
-
-		final double[] iq_factor = new double[4];
-		if (colormode)
+		if (cb_i*cb_i + cb_q*cb_q < COLOR_THRESH)
 		{
-			final double tint_i = -Math.cos((COLOR_BASE + this.color_control) * Math.PI / 180);
-			final double tint_q = +Math.sin((COLOR_BASE + this.color_control) * Math.PI / 180);
-			iq_factor[0] = (cb_i * tint_i - cb_q * tint_q) * this.color_control;
-			iq_factor[2] = -iq_factor[0];
-			iq_factor[1] = (cb_q * tint_i + cb_i * tint_q) * this.color_control;
-			iq_factor[3] = -iq_factor[1];
+			return null;
 		}
 
+		final double[] iq_factor = new double[4];
 
+		final double tint_i = -Math.cos((COLOR_BASE + this.color_control) * Math.PI / 180);
+		final double tint_q = +Math.sin((COLOR_BASE + this.color_control) * Math.PI / 180);
+		iq_factor[0] = (cb_i * tint_i - cb_q * tint_q) * this.color_control;
+		iq_factor[2] = -iq_factor[0];
+		iq_factor[1] = (cb_q * tint_i + cb_i * tint_q) * this.color_control;
+		iq_factor[3] = -iq_factor[1];
 
-		// filter out Y, I, and Q from the input signal
+		return iq_factor;
+	}
 
+	private analogtv_yiq[] ntsc_to_yiq(final int isignal, final double[] iq_factor)
+	{
 		final analogtv_yiq[] yiq = new analogtv_yiq[AppleNTSC.H];
 
 		final Lowpass_3_58_MHz filterY = new Lowpass_3_58_MHz();
 		final Lowpass_1_5_MHz filterI = new Lowpass_1_5_MHz();
 		final Lowpass_1_5_MHz filterQ = new Lowpass_1_5_MHz();
-		for (int i = start; i < end; ++i)
+		for (int i = 0; i < AppleNTSC.H; ++i)
 		{
 			yiq[i] = new analogtv_yiq();
 			yiq[i].y = filterY.transition(this.signal[isignal + i] * this.agclevel);
-			if (colormode)
+			if (iq_factor != null)
 			{
 				yiq[i].i = filterI.transition(this.signal[isignal + i] * iq_factor[(i + 0) & 3]);
 				yiq[i].q = filterQ.transition(this.signal[isignal + i] * iq_factor[(i + 3) & 3]);
@@ -494,7 +493,8 @@ public class AnalogTV
 		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
 		{
 			final double[] cb_phase = get_cb_phase(lineno);
-			final analogtv_yiq[] yiq = ntsc_to_yiq(lineno,lineno * AppleNTSC.H,0,AppleNTSC.H,cb_phase);
+			final double[] iq_factor = get_iq_factor(cb_phase);
+			final analogtv_yiq[] yiq = ntsc_to_yiq(lineno * AppleNTSC.H,iq_factor);
 			for (int colno = 0; colno < AppleNTSC.H; ++colno)
 			{
 				final int rgb = yiq2rgb(yiq[colno]);
