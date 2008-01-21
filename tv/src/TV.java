@@ -50,13 +50,15 @@ public class TV implements Closeable
 
 		AnalogTV tv = new AnalogTV();
 
-		tv.analogtv_setup_sync();
-		tv.analogtv_read_color_info();
+		tv.write_sync_signal();
+
+//		tv.write_apple_color_test();
+		tv.write_play_signal2();
 
 //		dump_signal(in.signal);
 //		draw_signal(in.signal,image);
 
-		tv.analogtv_test_draw(image);
+		tv.test_draw(image);
 	}
 
 	private final AtomicBoolean shutdown = new AtomicBoolean();
