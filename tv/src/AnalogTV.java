@@ -50,8 +50,8 @@ public class AnalogTV
 	{
 		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
 		{
-			int i = AppleNTSC.SYNC_START;
-			if (lineno < 70)
+			int i = AppleNTSC.FP_START;
+			if (lineno < AppleNTSC.SYNC_LINES)
 			{
 				while (i < AppleNTSC.BP_START)
 				{
@@ -64,6 +64,10 @@ public class AnalogTV
 			}
 			else
 			{
+				while (i < AppleNTSC.SYNC_START)
+				{
+					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.BLANK_LEVEL;
+				}
 				while (i < AppleNTSC.BP_START)
 				{
 					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.SYNC_LEVEL;
@@ -72,14 +76,12 @@ public class AnalogTV
 				{
 					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.BLANK_LEVEL;
 				}
-				while (i < AppleNTSC.FP_START)
+				while (i < AppleNTSC.H)
 				{
 					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.BLACK_LEVEL;
 				}
-				while (i < AppleNTSC.H)
-				{
-					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.BLANK_LEVEL;
-				}
+
+				// add in the color burst
 //				for (int icb = AppleNTSC.CB_START; icb < AppleNTSC.CB_END; icb += 4)
 //				{
 //					this.signal[lineno * AppleNTSC.H + icb + 1] = AppleNTSC.CB_LEVEL;
@@ -92,7 +94,9 @@ public class AnalogTV
 					this.signal[lineno * AppleNTSC.H + icb + 2] = -AppleNTSC.CB_LEVEL/2;
 					this.signal[lineno * AppleNTSC.H + icb + 3] = -AppleNTSC.CB_LEVEL/2;
 				}
-				// only for Rev. 0 boards:
+
+				// add unwanted spike on back porch
+				// (only for Rev. 0 boards)
 				this.signal[lineno * AppleNTSC.H + AppleNTSC.SPIKE] = -AppleNTSC.CB_LEVEL;
 			}
 		}
@@ -496,7 +500,7 @@ public class AnalogTV
 		final Lowpass_1_5_MHz filterQ = new Lowpass_1_5_MHz();
 		for (int off = 0; off < AppleNTSC.H; ++off)
 		{
-			final double y = filterY.transition(this.signal[isignal + off] * this.agclevel) /* to show blacker-than-black levels: + 40*/;
+			final double y = filterY.transition(this.signal[isignal + off] * this.agclevel); // + 40; // to show blacker-than-black levels
 			final double i = filterI.transition(this.signal[isignal + off] * iq_factor[(off + 0) & 3]);
 			final double q = filterQ.transition(this.signal[isignal + off] * iq_factor[(off + 3) & 3]);
 

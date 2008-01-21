@@ -39,11 +39,11 @@ public class TV implements Closeable
 
 	private static void program()
 	{
+		System.out.println("  FP_START: "+AppleNTSC.FP_START);
 		System.out.println("SYNC_START: "+AppleNTSC.SYNC_START);
 		System.out.println("  BP_START: "+AppleNTSC.BP_START);
 		System.out.println("  CB_START: "+AppleNTSC.CB_START);
 		System.out.println(" PIC_START: "+AppleNTSC.PIC_START);
-		System.out.println("  FP_START: "+AppleNTSC.FP_START);
 
 		BufferedImage image = new BufferedImage(AppleNTSC.H,AppleNTSC.V * 2,BufferedImage.TYPE_INT_RGB);
 		GUI gui = new GUI(thistv,image);
