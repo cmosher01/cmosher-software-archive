@@ -64,7 +64,7 @@ public class PictureGenerator
 
 	private void shiftText()
 	{
-		this.latchText = this.latchText >> 1;
+		this.latchText >>= 1;
 	}
 
 	private boolean getTextBit()
