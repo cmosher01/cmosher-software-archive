@@ -122,11 +122,13 @@ public class PictureGenerator
 		}
 		else
 		{
-//			if (this.mode.isHiRes() && this.d7 && this.hpos==0) // hi-res half-pixel shift
-//			{
-//				this.tv.skip();
-//			}
-			for (int cycle = 0; cycle < cycles; ++cycle)
+			int base = 0;
+			if (this.mode.isHiRes() && this.d7) // hi-res half-pixel shift
+			{
+				this.tv.write_signal(AppleNTSC.BLANK_LEVEL);
+				++base;
+			}
+			for (int cycle = base; cycle < cycles; ++cycle)
 			{
 				if (this.mode.isDisplayingText(this.t))
 				{
