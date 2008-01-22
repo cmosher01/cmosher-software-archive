@@ -7,8 +7,6 @@ public class AppleNTSC
 {
 	/* Apple doesn't do interlace, and has 262 total lines per field */
 	public static final int V = 262;
-	// 70 blanked lines during VBL
-	public static final int SYNC_LINES = 70;
 
 	/*
 	 * HBL takes 25 normal CPU cycles (14 clock cycles each).

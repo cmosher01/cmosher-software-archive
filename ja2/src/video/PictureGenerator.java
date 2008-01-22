@@ -13,6 +13,7 @@ public class PictureGenerator
 	private final BufferedImage image;
 
 	private int latchGraphics;
+	private boolean d7;
 	private int latchText;
 	private int hpos;
 	private int line;
@@ -86,6 +87,7 @@ public class PictureGenerator
 	public void loadGraphics(final int value)
 	{
 		this.latchGraphics = value & 0xFF;
+		this.d7 = ((this.latchGraphics >> 7) & 1) != 0;
 	}
 
 	public void loadText(final int value)
@@ -99,26 +101,31 @@ public class PictureGenerator
 		this.line = 0;
 	}
 
-	public void tick()
+	public void tick(int y)
 	{
 		int cycles = TimingGenerator.CRYSTAL_CYCLES_PER_CPU_CYCLE;
 		if (this.hpos == TimingGenerator.HORIZ_CYCLES-1)
 		{
 			cycles += TimingGenerator.EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE;
+			// TODO: fix hi-res half-pixel shift logic
+//			if (this.mode.isHiRes() && this.d7) // hi-res half-pixel shift
+//			{
+//				--cycles; // cut off shifted pixel at right edge of screen
+//			}
 		}
-		if (line < 70 || hpos < 25)
+		if (line > VideoAddressing.VISIBLE_ROWS_PER_FIELD || hpos < Video.VISIBLE_X_OFFSET)
 		{
-			if (hpos==0) System.out.println("skipping "+cycles+" at line "+line+" ----------------------------------");
-			System.out.print(" "+hpos);
 			for (int cycle = 0; cycle < cycles; ++cycle)
 			{
 				this.tv.skip();
 			}
 		}
 		else
-//		if (hpos < 25) return;
-//		if (line < 70) return;
 		{
+//			if (this.mode.isHiRes() && this.d7 && this.hpos==0) // hi-res half-pixel shift
+//			{
+//				this.tv.skip();
+//			}
 			for (int cycle = 0; cycle < cycles; ++cycle)
 			{
 				if (this.mode.isDisplayingText(this.t))
@@ -130,10 +137,20 @@ public class PictureGenerator
 						shiftText();
 					}
 				}
-				// TODO: graphics generation
+				else if (this.mode.isHiRes())
+				{
+					final boolean bit = getHiResBit();
+					this.tv.write_signal(bit ? AppleNTSC.WHITE_LEVEL : AppleNTSC.BLANK_LEVEL);
+					if ((cycle & 1) != 0) // @ 7MHz
+					{
+						shiftHiRes();
+					}
+				}
 				else
 				{
-					this.tv.skip();
+					final boolean bit = getLoResBit((this.t & 1) == (this.line & 1),(y & 4) != 0);
+					this.tv.write_signal(bit ? AppleNTSC.WHITE_LEVEL : AppleNTSC.BLANK_LEVEL);
+					shiftLoRes();
 				}
 			}
 		}

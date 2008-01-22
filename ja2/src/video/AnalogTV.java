@@ -89,18 +89,7 @@ public class AnalogTV
 		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
 		{
 			int i = AppleNTSC.FP_START;
-			if (lineno < AppleNTSC.SYNC_LINES)
-			{
-				while (i < AppleNTSC.BP_START)
-				{
-					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.BLANK_LEVEL;
-				}
-				while (i < AppleNTSC.H)
-				{
-					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.SYNC_LEVEL;
-				}
-			}
-			else
+			if (lineno < VideoAddressing.VISIBLE_ROWS_PER_FIELD)
 			{
 				while (i < AppleNTSC.SYNC_START)
 				{
@@ -136,6 +125,17 @@ public class AnalogTV
 				// add unwanted spike on back porch
 				// (only for Rev. 0 boards)
 				this.signal[lineno * AppleNTSC.H + AppleNTSC.SPIKE] = -AppleNTSC.CB_LEVEL;
+			}
+			else
+			{
+				while (i < AppleNTSC.BP_START)
+				{
+					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.BLANK_LEVEL;
+				}
+				while (i < AppleNTSC.H)
+				{
+					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.SYNC_LEVEL;
+				}
 			}
 		}
 

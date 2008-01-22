@@ -20,7 +20,7 @@ public class Video
 	public static final int XSIZE = VideoAddressing.VISIBLE_BITS_PER_BYTE*VideoAddressing.VISIBLE_BYTES_PER_ROW;
 	public static final int YSIZE = VideoAddressing.VISIBLE_ROWS_PER_FIELD;
 
-	private static final int VISIBLE_X_OFFSET = VideoAddressing.BYTES_PER_ROW-VideoAddressing.VISIBLE_BYTES_PER_ROW;
+	public static final int VISIBLE_X_OFFSET = VideoAddressing.BYTES_PER_ROW-VideoAddressing.VISIBLE_BYTES_PER_ROW;
 
 	/*
 	 * Note: on the real Apple ][, text flashing rate is not really controlled by the system timing generator,
@@ -96,7 +96,7 @@ public class Video
 		final byte data = getDataByte();
 		plotDataByte(data);
 
-		this.picgen.tick();
+		this.picgen.tick(this.t / VideoAddressing.BYTES_PER_ROW);
 
 		updateFlash();
 
@@ -136,17 +136,17 @@ public class Video
 
     private void plotDataByte(final byte data)
 	{
-//		final int x = this.t % VideoAddressing.BYTES_PER_ROW;
-//		if (x < VISIBLE_X_OFFSET)
-//		{
-//			return;
-//		}
-//
+		final int x = this.t % VideoAddressing.BYTES_PER_ROW;
+		if (x < VISIBLE_X_OFFSET)
+		{
+			return;
+		}
+
 		final int y = this.t / VideoAddressing.BYTES_PER_ROW;
-//		if (y >= VideoAddressing.VISIBLE_ROWS_PER_FIELD)
-//		{
-//			return;
-//		}
+		if (y >= VideoAddressing.VISIBLE_ROWS_PER_FIELD)
+		{
+			return;
+		}
 
 		final int rowToPlot = getRowToPlot(data,y);
 		if (this.mode.isDisplayingText(this.t))
