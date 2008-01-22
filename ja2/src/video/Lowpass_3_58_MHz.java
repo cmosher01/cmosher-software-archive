@@ -3,7 +3,7 @@ package video;
 /*
  * Created on Jan 21, 2008
  */
-public class Lowpass_3_58_MHz
+public final class Lowpass_3_58_MHz
 {
 	/* Digital filter designed by mkfilter/mkshape/gencode   A.J. Fisher
 	   Command line: /www/usr/fisher/helpers/mkfilter -Bu -Lp -o 4 -a 2.5000000000e-01 0.0000000000e+00 -Z 2.5000000000e-01 -l
@@ -35,7 +35,7 @@ public class Lowpass_3_58_MHz
 	private final double[] xv = new double[NZEROS + 1];
 	private final double[] yv = new double[NPOLES + 1];
 
-	public double transition(final double next_input_value)
+	public int transition(final int next_input_value)
 	{
 		xv[0] = xv[1];
 		xv[1] = xv[2];
@@ -51,8 +51,13 @@ public class Lowpass_3_58_MHz
 		yv[3] = yv[4];
 		yv[4] = yv[5];
 		yv[5] = yv[6];
-        yv[6] = (xv[0] + xv[6]) + 4 * (xv[1] + xv[5]) + 7 * (xv[2] + xv[4]) + 8 * xv[3] + (-0.0000000000 * yv[0]) + (-0.0000000000 * yv[1]) + (-0.0176648009 * yv[2]) + (-0.0000000000 * yv[3]) + (-0.4860288221 * yv[4]) + (-0.0000000000 * yv[5]);
 
-        return yv[6];
+		mult();
+
+        return (int)yv[6];
+	}
+	private void mult()
+	{
+        yv[6] = (xv[0] + xv[6]) + 4.0 * (xv[1] + xv[5]) + 7.0 * (xv[2] + xv[4]) + 8.0 * xv[3] + (-0.0176648009 * yv[2]) + + (-0.4860288221 * yv[4]);
 	}
 }

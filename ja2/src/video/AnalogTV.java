@@ -2,17 +2,25 @@ package video;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /*
  * Created on Jan 18, 2008
  */
 public class AnalogTV
 {
-	private double[] signal = new double[AppleNTSC.SIGNAL_LEN];
+	private int[] signal = new int[AppleNTSC.SIGNAL_LEN];
 
-	private double agclevel = 1;
-	private double color_control = 1;
+//	private double agclevel = 1;
+//	private double color_control = 1;
 
 	private int isig;
 
@@ -20,30 +28,54 @@ public class AnalogTV
 
 	private static class analogtv_yiq
 	{
-		private final double y;
-		private final double i;
-		private final double q;
+		private final int y;
+		private final int i;
+		private final int q;
+		private final int hash;
 
-		public analogtv_yiq(final double y, final double i, final double q)
+		public analogtv_yiq(final int y, final int i, final int q)
 		{
 			this.y = y;
 			this.i = i;
 			this.q = q;
+			this.hash = getHash();
 		}
 
-		public double getI()
+		private int getHash()
+		{
+			return 7 + 31*this.y + 31*this.i + 31*this.q;
+		}
+
+		public int getI()
 		{
 			return this.i;
 		}
 
-		public double getQ()
+		public int getQ()
 		{
 			return this.q;
 		}
 
-		public double getY()
+		public int getY()
 		{
 			return this.y;
+		}
+
+		@Override
+		public int hashCode()
+		{
+			return this.hash;
+		}
+
+		@Override
+		public boolean equals(final Object obj)
+		{
+			if (!(obj instanceof analogtv_yiq))
+			{
+				return false;
+			}
+			final analogtv_yiq that = (analogtv_yiq)obj;
+			return this.y==that.y && this.i==that.i && this.q==that.q;
 		}
 	}
 
@@ -142,7 +174,7 @@ public class AnalogTV
 		this.isig = 0;
 	}
 
-	public void write_signal(final double level)
+	public void write_signal(final int level)
 	{
 		if (this.isig >= AppleNTSC.SIGNAL_LEN)
 		{
@@ -482,11 +514,12 @@ public class AnalogTV
 		final DataBuffer imageBuf = image.getRaster().getDataBuffer();
 
 		int pi = 0;
+		final analogtv_yiq[] yiq = new analogtv_yiq[AppleNTSC.H];
 		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
 		{
-			final double[] cb_phase = get_cb_phase(lineno);
-			final double[] iq_factor = get_iq_factor(cb_phase);
-			final analogtv_yiq[] yiq = ntsc_to_yiq(lineno * AppleNTSC.H,iq_factor);
+			final CB cb = get_cb(lineno);
+			final IQ iq_factor = get_iq_factor(cb);
+			ntsc_to_yiq(lineno * AppleNTSC.H,iq_factor,yiq);
 			for (int colno = 0; colno < AppleNTSC.H; ++colno)
 			{
 				final int rgb = yiq2rgb(yiq[colno]);
@@ -502,15 +535,87 @@ public class AnalogTV
 		}
 	}
 
+	private static class IQ
+	{
+		private final double[] iq = new double[4];
+		public IQ(){}
+		public IQ(final double[] iq)
+		{
+			if (iq.length != this.iq.length)
+			{
+				throw new IllegalArgumentException();
+			}
+			System.arraycopy(iq,0,this.iq,0,this.iq.length);
+		}
+		public double get(int i) { return this.iq[i]; }
+	}
+	private static final Map<CB,IQ> cacheCB = new HashMap<CB,IQ>(2,1);
+
+	private static final int CB_EXTRA = 32;
+	private static class CB
+	{
+		private final int[] cb = new int[AppleNTSC.CB_END-AppleNTSC.CB_START-CB_EXTRA];
+		private final int hash;
+
+		public CB(final int[] cb)
+		{
+			if (cb.length != this.cb.length)
+			{
+				throw new IllegalArgumentException();
+			}
+			System.arraycopy(cb,0,this.cb,0,this.cb.length);
+			this.hash = getHash();
+		}
+		public int get(int i) { return this.cb[i]; }
+		public int hashCode()
+		{
+			return this.hash;
+		}
+
+		private int getHash()
+		{
+			int h = 7;
+			for (final int x: this.cb)
+			{
+				h *= 31;
+				h += x;
+			}
+			return h;
+		}
+		public boolean equals(final Object obj)
+		{
+			if (!(obj instanceof CB))
+			{
+				return false;
+			}
+			final CB that = (CB)obj;
+			if (this.cb.length != that.cb.length)
+			{
+				return false;
+			}
+			for (int i = 0; i < this.cb.length; ++i)
+			{
+				if (this.cb[i] != that.cb[i])
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+		public int length()
+		{
+			return this.cb.length;
+		}
+	}
+
 	private static final double PH = 127.0/128.0;
-	private double[] get_cb_phase(int lineno)
+	private double[] get_cb_phase(CB cb)
 	{
 		final double[] phase = new double[4];
-		final int isp = lineno * AppleNTSC.H;
-		for (int i = AppleNTSC.CB_START + 16; i < AppleNTSC.CB_END - 16; ++i)
+		for (int i = 0; i < cb.length(); ++i)
 		{
 			phase[i & 3] *= PH;
-			phase[i & 3] += this.signal[isp + i] * this.agclevel;
+			phase[i & 3] += cb.get(i);
 		}
 		double tot = .1;
 		for (int i = 0; i < 4; ++i)
@@ -525,59 +630,103 @@ public class AnalogTV
 		return phase;
 	}
 
-	private static final double COLOR_THRESH = 2.8;
-	private static final double COLOR_BASE = 103;
-
-	private double[] get_iq_factor(final double[] cb_phase)
+	private final int[] rcb = new int[AppleNTSC.CB_END-AppleNTSC.CB_START-CB_EXTRA];
+	private CB get_cb(int lineno)
 	{
+		final int isp = lineno * AppleNTSC.H;
+		for (int i = AppleNTSC.CB_START + CB_EXTRA/2; i < AppleNTSC.CB_END - CB_EXTRA/2; ++i)
+		{
+			this.rcb[i-(AppleNTSC.CB_START + CB_EXTRA/2)] = (int)Math.rint(this.signal[isp + i]);
+		}
+		return new CB(this.rcb);
+	}
+
+	private static final double COLOR_THRESH = 2.8;
+	private static final double COLOR_BASE = 104;
+
+	private IQ get_iq_factor(final CB cb)
+	{
+		if (cacheCB.containsKey(cb))
+		{
+			return cacheCB.get(cb);
+		}
+		final double[] cb_phase = get_cb_phase(cb);
 		final double cb_i = (cb_phase[2] - cb_phase[0]) / 16;
 		final double cb_q = (cb_phase[3] - cb_phase[1]) / 16;
 		if (cb_i*cb_i + cb_q*cb_q < COLOR_THRESH)
 		{
-			return new double[4];
+			return new IQ();
 		}
 
 		final double[] iq_factor = new double[4];
 
-		final double tint_i = -Math.cos((COLOR_BASE + this.color_control) * Math.PI / 180);
-		final double tint_q = +Math.sin((COLOR_BASE + this.color_control) * Math.PI / 180);
-		iq_factor[0] = (cb_i * tint_i - cb_q * tint_q) * this.color_control;
+		final double tint_i = -Math.cos((COLOR_BASE) * Math.PI / 180);
+		final double tint_q = +Math.sin((COLOR_BASE) * Math.PI / 180);
+		iq_factor[0] = (cb_i * tint_i - cb_q * tint_q);
 		iq_factor[2] = -iq_factor[0];
-		iq_factor[1] = (cb_q * tint_i + cb_i * tint_q) * this.color_control;
+		iq_factor[1] = (cb_q * tint_i + cb_i * tint_q);
 		iq_factor[3] = -iq_factor[1];
 
-		return iq_factor;
+		final IQ iq = new IQ(iq_factor);
+		cacheCB.put(cb,iq);
+		return iq;
 	}
 
-	private analogtv_yiq[] ntsc_to_yiq(final int isignal, final double[] iq_factor)
-	{
-		final analogtv_yiq[] yiq = new analogtv_yiq[AppleNTSC.H];
+	private final SortedSet<Integer> catalog = new TreeSet<Integer>();
 
+	private void ntsc_to_yiq(final int isignal, final IQ iq_factor, final analogtv_yiq[] yiq)
+	{
 		final Lowpass_3_58_MHz filterY = new Lowpass_3_58_MHz();
 		final Lowpass_1_5_MHz filterI = new Lowpass_1_5_MHz();
 		final Lowpass_1_5_MHz filterQ = new Lowpass_1_5_MHz();
 		for (int off = 0; off < AppleNTSC.H; ++off)
 		{
-			final double y = filterY.transition(this.signal[isignal + off] * this.agclevel); // + 40; // to show blacker-than-black levels
-			final double i = filterI.transition(this.signal[isignal + off] * iq_factor[(off + 0) & 3]);
-			final double q = filterQ.transition(this.signal[isignal + off] * iq_factor[(off + 3) & 3]);
+			final int sig = this.signal[isignal + off];
+			final int y = filterY.transition(sig); // + 40; // to show blacker-than-black levels
+			final int i;
+			final int q;
+			if (y < -2)
+			{
+				i = 0;
+				q = 0;
+			}
+			else
+			{
+				i = (int)(filterI.transition(sig * iq_factor.get(off & 3)));
+				q = (int)(filterQ.transition(sig * iq_factor.get((off + 3) & 3)));
+			}
 
 			yiq[off] = new analogtv_yiq(y,i,q);
 		}
-
-		return yiq;
 	}
 
+	public void dumpYs()
+	{
+		for (final Integer y : this.catalog)
+		{
+			System.out.println(y);
+		}
+	}
+
+	private static Map<analogtv_yiq,Integer> mapYIQtoRGB = new HashMap<analogtv_yiq,Integer>(1024,1);
 	private static int yiq2rgb(final analogtv_yiq yiq)
 	{
+		if (mapYIQtoRGB.containsKey(yiq))
+		{
+			return mapYIQtoRGB.get(yiq);
+		}
 		final double r = yiq.getY() + 0.956 * yiq.getI() + 0.621 * yiq.getQ();
 		final double g = yiq.getY() - 0.272 * yiq.getI() - 0.647 * yiq.getQ();
 		final double b = yiq.getY() - 1.105 * yiq.getI() + 1.702 * yiq.getQ();
 
-		return
+		final int rgb =
 			(calc_color(r) << 16)| 
 			(calc_color(g) <<  8)| 
 			(calc_color(b) <<  0);
+
+		mapYIQtoRGB.put(yiq,rgb);
+
+		return rgb;
 	}
 
 	private static int calc_color(final double color)

@@ -46,22 +46,22 @@ public class DiskController extends Card
 			case 2:
 			case 3:
 				this.currentDrive.setMagnet(q,on);
-				this.panel.updateDrives();
+				update();
 			break;
 			case 4:
 				this.motorOn = on;
-				this.panel.updateDrives();
+				update();
 			break;
 			case 5:
 				this.currentDrive = (on ? this.drive2 : this.drive1);
 
-				this.panel.updateDrives();
+				update();
 			break;
 			case 6:
 				if (on && this.write)
 				{
 					set(data);
-					this.panel.updateDrives();
+					update();
 				}
 				else if (!(on || this.write))
 				{
@@ -70,7 +70,7 @@ public class DiskController extends Card
 			break;
 			case 7:
 				this.write = on;
-				this.panel.updateDrives();
+				update();
 				if (this.currentDrive.isWriteProtected())
 				{
 					data |= 0x80;
@@ -107,9 +107,17 @@ public class DiskController extends Card
 	{
 		this.motorOn = false;
 		this.currentDrive = this.drive1;
-		this.panel.updateDrives();
+		update();
 	}
 
+	private void update()
+	{
+		if (this.panel == null)
+		{
+			return;
+		}
+		this.panel.updateDrives();
+	}
 	private Drive getDrive(final int drive)
 	{
 		return (drive == 0) ? this.drive1 : this.drive2;

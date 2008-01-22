@@ -183,12 +183,14 @@ public final class Ja2 implements Closeable
 
     	if (screen != null)
     	{
+	        screen.addKeyListener(new TestKeyHandler(tv));
 	    	screen.addKeyListener(new KeyboardProducer(keypresses,keyboard));
 	    	screen.addKeyListener(new ClipboardProducer(keypresses));
 	    	screen.addKeyListener(new HyperKeyHandler(throttle));
 	        screen.addKeyListener(new FnKeyHandler(cpu,screenImage,ram,throttle));
 	        screen.addKeyListener(new VideoKeyHandler(video));
 	        screen.addKeyListener(new PaddleButtons(paddleButtonStates));
+
 
 	        screen.setFocusTraversalKeysEnabled(false);
 	        screen.requestFocus();
