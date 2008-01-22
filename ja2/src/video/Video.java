@@ -45,7 +45,7 @@ public class Video
 
 	// somewhat arbitrary starting point for scanning... helps start
 	// an Apple ][ plus with a clean screen
-	private int t = VideoAddressing.BYTES_PER_FIELD-12*VideoAddressing.BYTES_PER_ROW;
+	private int t = 0;//VideoAddressing.BYTES_PER_FIELD-12*VideoAddressing.BYTES_PER_ROW;
 
 	private boolean flash;
 	private int cflash;
@@ -66,6 +66,7 @@ public class Video
 		this.addressBus = addressBus;
 		this.buf = screenImage.getRaster().getDataBuffer();
 		this.picgen = picgen;
+		this.picgen.resetFrame();
 
 		readCharacterRom();
 	}
@@ -95,6 +96,8 @@ public class Video
 		final byte data = getDataByte();
 		plotDataByte(data);
 
+		this.picgen.tick();
+
 		updateFlash();
 
 		++this.t;
@@ -103,6 +106,7 @@ public class Video
 		{
 			this.ui.updateScreen();
 			this.t = 0;
+			this.picgen.resetFrame();
 		}
 	}
 
@@ -132,20 +136,24 @@ public class Video
 
     private void plotDataByte(final byte data)
 	{
-		final int x = this.t % VideoAddressing.BYTES_PER_ROW;
-		if (x < VISIBLE_X_OFFSET)
-		{
-			return;
-		}
-
+//		final int x = this.t % VideoAddressing.BYTES_PER_ROW;
+//		if (x < VISIBLE_X_OFFSET)
+//		{
+//			return;
+//		}
+//
 		final int y = this.t / VideoAddressing.BYTES_PER_ROW;
-		if (y >= VideoAddressing.VISIBLE_ROWS_PER_FIELD)
-		{
-			return;
-		}
+//		if (y >= VideoAddressing.VISIBLE_ROWS_PER_FIELD)
+//		{
+//			return;
+//		}
 
 		final int rowToPlot = getRowToPlot(data,y);
-		plotRow(rowToPlot,x,y);
+		if (this.mode.isDisplayingText(this.t))
+			this.picgen.loadText(rowToPlot);
+		else
+			this.picgen.loadGraphics(rowToPlot);
+//		plotRow(rowToPlot,x,y);
 	}
 
 	private int getRowToPlot(int d, final int y)

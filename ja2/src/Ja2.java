@@ -20,6 +20,8 @@ import paddle.Paddles;
 import paddle.PaddlesInterface;
 import speaker.SpeakerClicker;
 import util.Util;
+import video.AnalogTV;
+import video.PictureGenerator;
 import video.SimpleScreenImage;
 import video.TelevisionScreenImage;
 import video.Video;
@@ -165,7 +167,9 @@ public final class Ja2 implements Closeable
 
 
 
-    	final Video video = new Video(videoMode,ui,addressBus,screenImage);
+    	final AnalogTV tv = new AnalogTV();
+    	final PictureGenerator picgen = new PictureGenerator(tv,videoMode,screenImage);
+    	final Video video = new Video(videoMode,ui,addressBus,screenImage,picgen);
 
 
 

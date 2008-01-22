@@ -15,9 +15,11 @@ import video.Video;
 public class TimingGenerator
 {
 	public static final int CRYSTAL_HZ = Util.divideRoundUp(315000000,22);
-	private static final int CRYSTAL_CYCLES_PER_CPU_CYCLE = 14;
+	public static final int CRYSTAL_CYCLES_PER_CPU_CYCLE = 14;
+	public static final int EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE = 2;
 
-	public static final int AVG_CPU_HZ = (int)Math.rint(Math.round(((double)315000000*65)/(22*(CRYSTAL_CYCLES_PER_CPU_CYCLE*65+2))));
+	public static final int HORIZ_CYCLES = 65;
+	public static final int AVG_CPU_HZ = (int)Math.rint(Math.round(((double)315000000*HORIZ_CYCLES)/(22*(CRYSTAL_CYCLES_PER_CPU_CYCLE*HORIZ_CYCLES+EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE))));
 	public static final int CPU_HZ = Util.divideRoundUp(CRYSTAL_HZ,CRYSTAL_CYCLES_PER_CPU_CYCLE);
 
 	private final CPU6502 cpu;

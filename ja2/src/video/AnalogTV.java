@@ -2,6 +2,7 @@ package video;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
+import java.util.Arrays;
 
 /*
  * Created on Jan 18, 2008
@@ -12,6 +13,8 @@ public class AnalogTV
 
 	private double agclevel = 1;
 	private double color_control = 1;
+
+	private int isig;
 
 
 
@@ -81,6 +84,8 @@ public class AnalogTV
 
 	public void write_sync_signal()
 	{
+		Arrays.fill(this.signal,0);
+
 		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
 		{
 			int i = AppleNTSC.FP_START;
@@ -133,6 +138,26 @@ public class AnalogTV
 				this.signal[lineno * AppleNTSC.H + AppleNTSC.SPIKE] = -AppleNTSC.CB_LEVEL;
 			}
 		}
+
+		this.isig = 0;
+	}
+
+	public void write_signal(final double level)
+	{
+		if (this.isig >= AppleNTSC.SIGNAL_LEN)
+		{
+			throw new IllegalStateException("At end of screen; must re-synch before writing any more signal");
+		}
+		this.signal[this.isig++] = level;
+	}
+
+	public void skip()
+	{
+		if (this.isig >= AppleNTSC.SIGNAL_LEN)
+		{
+			throw new IllegalStateException("At end of screen; must re-synch before writing any more signal");
+		}
+		++this.isig;
 	}
 
 	public void write_play_signal1()
