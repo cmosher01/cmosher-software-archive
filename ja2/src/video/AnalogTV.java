@@ -192,6 +192,11 @@ public class AnalogTV
 		++this.isig;
 	}
 
+	public void skip(int s)
+	{
+		this.isig += s;
+	}
+
 	public void write_play_signal1()
 	{
 		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)

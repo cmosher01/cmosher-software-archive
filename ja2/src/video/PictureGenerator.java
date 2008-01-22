@@ -115,10 +115,7 @@ public class PictureGenerator
 		}
 		if (line > VideoAddressing.VISIBLE_ROWS_PER_FIELD || hpos < Video.VISIBLE_X_OFFSET)
 		{
-			for (int cycle = 0; cycle < cycles; ++cycle)
-			{
-				this.tv.skip();
-			}
+			this.tv.skip(cycles);
 		}
 		else
 		{
