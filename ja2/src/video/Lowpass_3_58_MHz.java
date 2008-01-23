@@ -29,11 +29,71 @@ public final class Lowpass_3_58_MHz
 	  }
 	*/
 
+//	private static final int NZEROS = 6;
+//	private static final int NPOLES = 6;
+//	private static final double GAIN = 2.128093084e+01;
+//	private final double[] xv = new double[NZEROS + 1];
+//	private final double[] yv = new double[NPOLES + 1];
+//
+//	public int transition(final int next_input_value)
+//	{
+//		xv[0] = xv[1];
+//		xv[1] = xv[2];
+//		xv[2] = xv[3];
+//		xv[3] = xv[4];
+//		xv[4] = xv[5];
+//		xv[5] = xv[6];
+//		xv[6] = next_input_value / GAIN;
+//
+//		yv[0] = yv[1];
+//		yv[1] = yv[2];
+//		yv[2] = yv[3];
+//		yv[3] = yv[4];
+//		yv[4] = yv[5];
+//		yv[5] = yv[6];
+//
+//		mult();
+//
+//        return (int)yv[6];
+//	}
+//	private void mult()
+//	{
+//        yv[6] = (xv[0] + xv[6]) + 4.0 * (xv[1] + xv[5]) + 7.0 * (xv[2] + xv[4]) + 8.0 * xv[3] + (-0.0176648009 * yv[2]) + + (-0.4860288221 * yv[4]);
+//	}
+//	private static final int NZEROS = 3;
+//	private static final int NPOLES = 3;
+//	private static final int GAIN = 6;
+//	private static final int[] xv = new int[NZEROS + 1];
+//	private static final int[] yv = new int[NPOLES + 1];
+//
+	public Lowpass_3_58_MHz()
+	{
+		xv[0] = xv[1] = xv[2] = xv[3] = yv[0] = yv[1] = yv[2] = yv[3] = 0;
+	}
+//	public int transition(final int next_input_value)
+//	{
+//		xv[0] = xv[1];
+//		xv[1] = xv[2];
+//		xv[2] = xv[3];
+//		xv[3] = next_input_value / GAIN;
+//
+//		yv[0] = yv[1];
+//		yv[1] = yv[2];
+//		yv[2] = yv[3];
+//
+//		mult();
+//
+//        return (int)yv[3];
+//	}
+//	private void mult()
+//	{
+//        yv[3] = xv[0] + xv[3] + 3 * (xv[1] + xv[2]) + yv[1]/3;
+//	}
 	private static final int NZEROS = 6;
 	private static final int NPOLES = 6;
-	private static final double GAIN = 2.128093084e+01;
-	private final double[] xv = new double[NZEROS + 1];
-	private final double[] yv = new double[NPOLES + 1];
+	private static final int GAIN = 21;
+	private static final int[] xv = new int[NZEROS + 1];
+	private static final int[] yv = new int[NPOLES + 1];
 
 	public int transition(final int next_input_value)
 	{
@@ -54,10 +114,10 @@ public final class Lowpass_3_58_MHz
 
 		mult();
 
-        return (int)yv[6];
+        return yv[6];
 	}
 	private void mult()
 	{
-        yv[6] = (xv[0] + xv[6]) + 4.0 * (xv[1] + xv[5]) + 7.0 * (xv[2] + xv[4]) + 8.0 * xv[3] + (-0.0176648009 * yv[2]) + + (-0.4860288221 * yv[4]);
+        yv[6] = (xv[0] + xv[6]) + 4 * (xv[1] + xv[5]) + 7 * (xv[2] + xv[4]) + 8 * xv[3] - yv[2]/56 - yv[4]/2;
 	}
 }

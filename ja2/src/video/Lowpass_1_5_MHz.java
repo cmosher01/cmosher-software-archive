@@ -51,4 +51,34 @@ public final class Lowpass_1_5_MHz
 
 		return yv[5];
 	}
+//	private static final int NZEROS = 3;
+//	private static final int NPOLES = 3;
+//	private static final double GAIN = 4.233191562e+01;
+//	private static final double[] xv = new double[NZEROS + 1];
+//	private static final double[] yv = new double[NPOLES + 1];
+//
+//	public Lowpass_1_5_MHz()
+//	{
+//		xv[0] = xv[1] = xv[2] = xv[3] = yv[0] = yv[1] = yv[2] = yv[3] = 0;
+//	}
+//	public double transition(final double next_input_value)
+//	{
+//		xv[0] = xv[1];
+//		xv[1] = xv[2];
+//		xv[2] = xv[3];
+//		xv[3] = next_input_value / GAIN;
+//
+//		yv[0] = yv[1];
+//		yv[1] = yv[2];
+//		yv[2] = yv[3];
+//
+//		multi();
+//
+//		return yv[3];
+//	}
+//	void multi()
+//	{
+//		yv[3] = (xv[0] + xv[3]) + 3.0 * (xv[1] + xv[2]) + 0.2394738529 * yv[0] - 1.0542133395 * yv[1] + 1.6257567797 * yv[2];
+////		yv[3] = (xv[0] + xv[3]) + 3 * (xv[1] + xv[2]) + yv[0]/4 -  yv[1] + yv[2]*3/2;
+//	}
 }

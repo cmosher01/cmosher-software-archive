@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import com.surveysampling.hash.SimpleHashAssocArray;
+import com.surveysampling.hash.SimpleHashAssocArray.KeyNotFoundException;
+import com.surveysampling.hash.SimpleHashAssocArray.NullKeyException;
+import com.surveysampling.hash.SimpleHashAssocArray.NullValueException;
 
 /*
  * Created on Jan 18, 2008
@@ -43,7 +47,7 @@ public class AnalogTV
 
 		private int getHash()
 		{
-			return 7 + 31*this.y + 31*this.i + 31*this.q;
+			return ((this.q+140)<<16) | ((this.i+140)<<8) | (this.y+140);
 		}
 
 		public int getI()
@@ -83,18 +87,23 @@ public class AnalogTV
 
 	public void dump_signal()
 	{
-		int pi = 0;
-		for (int i = 0; i < this.signal.length; ++i)
+//		int pi = 0;
+//		for (int i = 0; i < this.signal.length; ++i)
+//		{
+//			System.out.print(pi==AppleNTSC.PIC_START ? "|" : " ");
+//			System.out.printf("%+4d",this.signal[i]);
+//			++pi;
+//			if (pi >= AppleNTSC.H)
+//			{
+//				System.out.println();
+//				pi = 0;
+//			}
+//		}
+		final ArrayList<Integer> rSize = new ArrayList<Integer>(mapYIQtoRGB.getBucketCount());
+		mapYIQtoRGB.getBucketSizes(rSize);
+		for (Integer s: rSize)
 		{
-			System.out.print(pi==AppleNTSC.PIC_START ? "|" : " ");
-			System.out.printf("%+4d",this.signal[i]);
-			++pi;
-			if (pi >= AppleNTSC.H)
-			{
-				System.out.println();
-				pi = 0;
-				return;
-			}
+			System.out.println("bucket size: "+s);
 		}
 	}
 
@@ -715,12 +724,19 @@ public class AnalogTV
 		}
 	}
 
-	private static Map<analogtv_yiq,Integer> mapYIQtoRGB = new HashMap<analogtv_yiq,Integer>(1024,1);
+	private static SimpleHashAssocArray<analogtv_yiq,Integer> mapYIQtoRGB = new SimpleHashAssocArray<analogtv_yiq,Integer>(1013);
 	private static int yiq2rgb(final analogtv_yiq yiq)
 	{
 		if (mapYIQtoRGB.containsKey(yiq))
 		{
-			return mapYIQtoRGB.get(yiq);
+			try
+			{
+				return mapYIQtoRGB.get(yiq);
+			}
+			catch (KeyNotFoundException e)
+			{
+				throw new IllegalStateException(e);
+			}
 		}
 		final double r = yiq.getY() + 0.956 * yiq.getI() + 0.621 * yiq.getQ();
 		final double g = yiq.getY() - 0.272 * yiq.getI() - 0.647 * yiq.getQ();
@@ -731,7 +747,15 @@ public class AnalogTV
 			(calc_color(g) <<  8)| 
 			(calc_color(b) <<  0);
 
-		mapYIQtoRGB.put(yiq,rgb);
+		try
+		{
+//			System.out.printf("y,i,q,h,b: %+5d,%+5d,%+5d,%8x, %4d\n",yiq.y,yiq.i,yiq.q,yiq.hash,yiq.hash%1013);
+			mapYIQtoRGB.put(yiq,rgb);
+		}
+		catch (Throwable e)
+		{
+			throw new IllegalStateException(e);
+		}
 
 		return rgb;
 	}
