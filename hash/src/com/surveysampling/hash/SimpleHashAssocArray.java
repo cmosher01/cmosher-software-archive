@@ -196,10 +196,10 @@ public class SimpleHashAssocArray<K,V>
      */
     public final class KeyValuePair
     {
-        private final K key;
-        private V value;
+        final K key;
+        V value;
 
-        private KeyValuePair(final K key, final V value)
+        KeyValuePair(final K key, final V value)
         {
             this.key = key;
             this.value = value;
