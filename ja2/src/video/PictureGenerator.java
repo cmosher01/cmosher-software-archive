@@ -17,7 +17,6 @@ public class PictureGenerator
 	private int latchText;
 	private int hpos;
 	private int line;
-	private int t;
 
 	public PictureGenerator(final AnalogTV tv, final VideoMode mode, final BufferedImage image)
 	{
@@ -87,7 +86,7 @@ public class PictureGenerator
 	public void loadGraphics(final int value)
 	{
 		this.latchGraphics = value & 0xFF;
-		this.d7 = ((this.latchGraphics >> 7) & 1) != 0;
+		this.d7 = (this.latchGraphics & 0x80) != 0;
 	}
 
 	public void loadText(final int value)
@@ -101,7 +100,8 @@ public class PictureGenerator
 		this.line = 0;
 	}
 
-	public void tick(int y)
+	private boolean lasthires;
+	public void tick(int t)
 	{
 		int cycles = TimingGenerator.CRYSTAL_CYCLES_PER_CPU_CYCLE;
 		if (this.hpos == TimingGenerator.HORIZ_CYCLES-1)
@@ -113,46 +113,54 @@ public class PictureGenerator
 //				--cycles; // cut off shifted pixel at right edge of screen
 //			}
 		}
-		if (line > VideoAddressing.VISIBLE_ROWS_PER_FIELD || hpos < Video.VISIBLE_X_OFFSET)
+		final boolean plot = !(line >= VideoAddressing.VISIBLE_ROWS_PER_FIELD || hpos < Video.VISIBLE_X_OFFSET);
+		int base = 0;
+		if (this.mode.isHiRes() && !this.mode.isDisplayingText(t) && this.d7) // hi-res half-pixel shift
 		{
-			this.tv.skip(cycles);
+			if (plot)
+				this.tv.write_signal(lasthires ? AppleNTSC.WHITE_LEVEL : AppleNTSC.BLANK_LEVEL);
+			else
+				this.tv.skip();
+			--cycles;
 		}
-		else
+		for (int cycle = base; cycle < cycles; ++cycle)
 		{
-			int base = 0;
-			if (this.mode.isHiRes() && this.d7) // hi-res half-pixel shift
+			if (this.mode.isDisplayingText(t))
 			{
-				this.tv.write_signal(AppleNTSC.BLANK_LEVEL);
-				++base;
-			}
-			for (int cycle = base; cycle < cycles; ++cycle)
-			{
-				if (this.mode.isDisplayingText(this.t))
-				{
-					final boolean bit = getTextBit();
+				final boolean bit = getTextBit();
+				if (plot)
 					this.tv.write_signal(bit ? AppleNTSC.WHITE_LEVEL : AppleNTSC.BLANK_LEVEL);
-					if ((cycle & 1) != 0) // @ 7MHz
-					{
-						shiftText();
-					}
-				}
-				else if (this.mode.isHiRes())
-				{
-					final boolean bit = getHiResBit();
-					this.tv.write_signal(bit ? AppleNTSC.WHITE_LEVEL : AppleNTSC.BLANK_LEVEL);
-					if ((cycle & 1) != 0) // @ 7MHz
-					{
-						shiftHiRes();
-					}
-				}
 				else
+					this.tv.skip();
+				if ((cycle & 1) != 0) // @ 7MHz
 				{
-					final boolean bit = getLoResBit((this.t & 1) == (this.line & 1),(y & 4) != 0);
-					this.tv.write_signal(bit ? AppleNTSC.WHITE_LEVEL : AppleNTSC.BLANK_LEVEL);
-					shiftLoRes();
+					shiftText();
 				}
 			}
+			else if (this.mode.isHiRes())
+			{
+				final boolean bit = getHiResBit();
+				if (plot)
+					this.tv.write_signal(bit ? AppleNTSC.WHITE_LEVEL : AppleNTSC.BLANK_LEVEL);
+				else
+					this.tv.skip();
+				if ((cycle & 1) != 0) // @ 7MHz
+				{
+					shiftHiRes();
+				}
+			}
+			else
+			{
+				final int y = t / VideoAddressing.BYTES_PER_ROW;
+				final boolean bit = getLoResBit((t & 1) == (this.line & 1),(y & 4) != 0);
+				if (plot)
+					this.tv.write_signal(bit ? AppleNTSC.WHITE_LEVEL : AppleNTSC.BLANK_LEVEL);
+				else
+					this.tv.skip();
+				shiftLoRes();
+			}
 		}
+		lasthires = getHiResBit();
 
 		++this.hpos;
 		if (this.hpos >= TimingGenerator.HORIZ_CYCLES)
@@ -160,12 +168,9 @@ public class PictureGenerator
 			this.hpos = 0;
 			++this.line;
 		}
-
-		++this.t;
-		if (this.t >= 17030)
-		{
-			this.tv.test_draw(this.image);
-			this.t = 0;
-		}
+	}
+	public void draw()
+	{
+		this.tv.test_draw(this.image);
 	}
 }

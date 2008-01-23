@@ -96,7 +96,7 @@ public class Video
 		final byte data = getDataByte();
 		plotDataByte(data);
 
-		this.picgen.tick(this.t / VideoAddressing.BYTES_PER_ROW);
+		this.picgen.tick(this.t);
 
 		updateFlash();
 
@@ -104,6 +104,7 @@ public class Video
 
 		if (this.t >= VideoAddressing.BYTES_PER_FIELD)
 		{
+			this.picgen.draw();
 			this.ui.updateScreen();
 			this.t = 0;
 			this.picgen.resetFrame();
@@ -139,13 +140,13 @@ public class Video
 		final int x = this.t % VideoAddressing.BYTES_PER_ROW;
 		if (x < VISIBLE_X_OFFSET)
 		{
-			return;
+			//return;
 		}
 
 		final int y = this.t / VideoAddressing.BYTES_PER_ROW;
 		if (y >= VideoAddressing.VISIBLE_ROWS_PER_FIELD)
 		{
-			return;
+			//return;
 		}
 
 		final int rowToPlot = getRowToPlot(data,y);

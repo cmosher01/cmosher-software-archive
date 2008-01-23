@@ -17,7 +17,7 @@ public class TestKeyHandler implements KeyListener
 		final int key = e.getKeyCode();
 		if (key == KeyEvent.VK_F2)
 		{
-			tv.dumpYs();
+			tv.dump_signal();
 			try
 			{
 				Thread.sleep(10000);

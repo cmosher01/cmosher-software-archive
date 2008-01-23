@@ -86,12 +86,14 @@ public class AnalogTV
 		int pi = 0;
 		for (int i = 0; i < this.signal.length; ++i)
 		{
-			System.out.printf(" %+4d",this.signal[i]);
+			System.out.print(pi==AppleNTSC.PIC_START ? "|" : " ");
+			System.out.printf("%+4d",this.signal[i]);
 			++pi;
 			if (pi >= AppleNTSC.H)
 			{
 				System.out.println();
 				pi = 0;
+				return;
 			}
 		}
 	}
@@ -137,21 +139,21 @@ public class AnalogTV
 				}
 				while (i < AppleNTSC.H)
 				{
-					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.BLACK_LEVEL;
+					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.BLANK_LEVEL;//AppleNTSC.BLACK_LEVEL;
 				}
 
 				// add in the color burst
 //				for (int icb = AppleNTSC.CB_START; icb < AppleNTSC.CB_END; icb += 4)
 //				{
-//					this.signal[lineno * AppleNTSC.H + icb + 1] = AppleNTSC.CB_LEVEL;
-//					this.signal[lineno * AppleNTSC.H + icb + 3] = -AppleNTSC.CB_LEVEL;
+//					this.signal[lineno * AppleNTSC.H + icb + 1] = -AppleNTSC.CB_LEVEL;
+//					this.signal[lineno * AppleNTSC.H + icb + 3] = AppleNTSC.CB_LEVEL;
 //				}
 				for (int icb = AppleNTSC.CB_START; icb < AppleNTSC.CB_END; icb += 4)
 				{
-					this.signal[lineno * AppleNTSC.H + icb + 0] = AppleNTSC.CB_LEVEL/2;
-					this.signal[lineno * AppleNTSC.H + icb + 1] = AppleNTSC.CB_LEVEL/2;
-					this.signal[lineno * AppleNTSC.H + icb + 2] = -AppleNTSC.CB_LEVEL/2;
-					this.signal[lineno * AppleNTSC.H + icb + 3] = -AppleNTSC.CB_LEVEL/2;
+					this.signal[lineno * AppleNTSC.H + icb + 0] = -AppleNTSC.CB_LEVEL/2;
+					this.signal[lineno * AppleNTSC.H + icb + 1] = -AppleNTSC.CB_LEVEL/2;
+					this.signal[lineno * AppleNTSC.H + icb + 2] = AppleNTSC.CB_LEVEL/2;
+					this.signal[lineno * AppleNTSC.H + icb + 3] = AppleNTSC.CB_LEVEL/2;
 				}
 
 				// add unwanted spike on back porch

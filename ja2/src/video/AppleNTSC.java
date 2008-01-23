@@ -22,7 +22,7 @@ public class AppleNTSC
 	public static final int BP_START = SYNC_START+112;
 	public static final int CB_START = BP_START+0;
 	public static final int CB_END = CB_START+56;
-	public static final int SPIKE = CB_END+42;
+	public static final int SPIKE = CB_END+34;
 	public static final int PIC_START = CB_END+56;
 
 	/* AnalogTV.signal is in IRE units, as defined below: */
