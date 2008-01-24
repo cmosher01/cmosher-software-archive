@@ -31,6 +31,7 @@ public class DiskController extends Card
 	{
 		this.drive1 = new Drive(new DiskBytes(throttle),new StepperMotor());
 		this.drive2 = new Drive(new DiskBytes(throttle),new StepperMotor());
+		this.currentDrive = this.drive1;
 	}
 
 	@Override

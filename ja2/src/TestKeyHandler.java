@@ -18,14 +18,6 @@ public class TestKeyHandler implements KeyListener
 		if (key == KeyEvent.VK_F2)
 		{
 			tv.dump_signal();
-			try
-			{
-				Thread.sleep(10000);
-			}
-			catch (InterruptedException e1)
-			{
-				e1.printStackTrace();
-			}
 		}
 	}
 

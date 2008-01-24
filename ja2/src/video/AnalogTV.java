@@ -530,7 +530,8 @@ public class AnalogTV
 		final DataBuffer imageBuf = image.getRaster().getDataBuffer();
 
 		int pi = 0;
-		final analogtv_yiq[] yiq = new analogtv_yiq[AppleNTSC.H];
+//		final analogtv_yiq[] yiq = new analogtv_yiq[AppleNTSC.H];
+		final int[] yiq = new int[AppleNTSC.H];
 		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
 		{
 			final CB cb = get_cb(lineno);
@@ -652,7 +653,7 @@ public class AnalogTV
 		final int isp = lineno * AppleNTSC.H;
 		for (int i = AppleNTSC.CB_START + CB_EXTRA/2; i < AppleNTSC.CB_END - CB_EXTRA/2; ++i)
 		{
-			this.rcb[i-(AppleNTSC.CB_START + CB_EXTRA/2)] = (int)Math.rint(this.signal[isp + i]);
+			this.rcb[i-(AppleNTSC.CB_START + CB_EXTRA/2)] = this.signal[isp + i];
 		}
 		return new CB(this.rcb);
 	}
@@ -673,6 +674,7 @@ public class AnalogTV
 		{
 			return new IQ();
 		}
+//		System.out.printf("%+8.2f,%+8.2f,%+8.2f,%+8.2f\n",cb_phase[0],cb_phase[1],cb_phase[2],cb_phase[3]);
 
 		final double[] iq_factor = new double[4];
 
@@ -683,6 +685,7 @@ public class AnalogTV
 		iq_factor[1] = (cb_q * tint_i + cb_i * tint_q);
 		iq_factor[3] = -iq_factor[1];
 
+//		System.out.printf("%+8.2f,%+8.2f,%+8.2f,%+8.2f\n",iq_factor[0],iq_factor[1],iq_factor[2],iq_factor[3]);
 		final IQ iq = new IQ(iq_factor);
 		cacheCB.put(cb,iq);
 		return iq;
@@ -690,7 +693,8 @@ public class AnalogTV
 
 	private final SortedSet<Integer> catalog = new TreeSet<Integer>();
 
-	private void ntsc_to_yiq(final int isignal, final IQ iq_factor, final analogtv_yiq[] yiq)
+//	private void ntsc_to_yiq(final int isignal, final IQ iq_factor, final analogtv_yiq[] yiq)
+	private void ntsc_to_yiq(final int isignal, final IQ iq_factor, final int[] yiq)
 	{
 		final Lowpass_3_58_MHz filterY = new Lowpass_3_58_MHz();
 		final Lowpass_1_5_MHz filterI = new Lowpass_1_5_MHz();
@@ -712,7 +716,8 @@ public class AnalogTV
 				q = (int)(filterQ.transition(sig * iq_factor.get((off + 3) & 3)));
 			}
 
-			yiq[off] = new analogtv_yiq(y,i,q);
+//			yiq[off] = new analogtv_yiq(y,i,q);
+			yiq[off] = (((q+140)&0xff) << 16) | (((i+140)&0xff) << 8) | ((y+140)&0xff);
 		}
 	}
 
@@ -724,8 +729,10 @@ public class AnalogTV
 		}
 	}
 
-	private static SimpleHashAssocArray<analogtv_yiq,Integer> mapYIQtoRGB = new SimpleHashAssocArray<analogtv_yiq,Integer>(1013);
-	private static int yiq2rgb(final analogtv_yiq yiq)
+//	private static SimpleHashAssocArray<analogtv_yiq,Integer> mapYIQtoRGB = new SimpleHashAssocArray<analogtv_yiq,Integer>(1013);
+	private static SimpleHashAssocArray<Integer,Integer> mapYIQtoRGB = new SimpleHashAssocArray<Integer,Integer>(1013);
+//	private static int yiq2rgb(final analogtv_yiq yiq)
+	private static int yiq2rgb(final int yiq)
 	{
 		if (mapYIQtoRGB.containsKey(yiq))
 		{
@@ -738,9 +745,16 @@ public class AnalogTV
 				throw new IllegalStateException(e);
 			}
 		}
-		final double r = yiq.getY() + 0.956 * yiq.getI() + 0.621 * yiq.getQ();
-		final double g = yiq.getY() - 0.272 * yiq.getI() - 0.647 * yiq.getQ();
-		final double b = yiq.getY() - 1.105 * yiq.getI() + 1.702 * yiq.getQ();
+//		double r = yiq.getY() + 0.956 * yiq.getI() + 0.621 * yiq.getQ();
+//		double g = yiq.getY() - 0.272 * yiq.getI() - 0.647 * yiq.getQ();
+//		double b = yiq.getY() - 1.105 * yiq.getI() + 1.702 * yiq.getQ();
+		double r = ((yiq&0xFF)-140) + 0.956 * (((yiq>>8)&0xFF)-140) + 0.621 * (((yiq>>16)&0xFF)-140);
+		double g = ((yiq&0xFF)-140) - 0.272 * (((yiq>>8)&0xFF)-140) - 0.647 * (((yiq>>16)&0xFF)-140);
+		double b = ((yiq&0xFF)-140) - 1.105 * (((yiq>>8)&0xFF)-140) + 1.702 * (((yiq>>16)&0xFF)-140);
+
+		r *= 1.3;
+		g *= 1.3;
+		b *= 1.3;
 
 		final int rgb =
 			(calc_color(r) << 16)| 
@@ -762,7 +776,7 @@ public class AnalogTV
 
 	private static int calc_color(final double color)
 	{
-		int x = (int)Math.rint(color * 0x100 / AppleNTSC.LEVEL_RANGE);
+		int x = (int)(color * 0x100 / AppleNTSC.LEVEL_RANGE + .5);
 		x = clamp(0,x,0x100);
 		return x & 0xFF;
 	}
