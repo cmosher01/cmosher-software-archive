@@ -26,7 +26,7 @@ public class AnalogTV
 //	private double agclevel = 1;
 //	private double color_control = 1;
 
-	private int isig;
+	int isig;
 
 
 
