@@ -99,12 +99,12 @@ public class AnalogTV
 //				pi = 0;
 //			}
 //		}
-		final ArrayList<Integer> rSize = new ArrayList<Integer>(mapYIQtoRGB.getBucketCount());
-		mapYIQtoRGB.getBucketSizes(rSize);
-		for (Integer s: rSize)
-		{
-			System.out.println("bucket size: "+s);
-		}
+//		final ArrayList<Integer> rSize = new ArrayList<Integer>(mapYIQtoRGB.getBucketCount());
+//		mapYIQtoRGB.getBucketSizes(rSize);
+//		for (Integer s: rSize)
+//		{
+//			System.out.println("bucket size: "+s);
+//		}
 	}
 
 	public void draw_signal(BufferedImage image)
@@ -730,21 +730,20 @@ public class AnalogTV
 	}
 
 //	private static SimpleHashAssocArray<analogtv_yiq,Integer> mapYIQtoRGB = new SimpleHashAssocArray<analogtv_yiq,Integer>(1013);
-	private static SimpleHashAssocArray<Integer,Integer> mapYIQtoRGB = new SimpleHashAssocArray<Integer,Integer>(1013);
 //	private static int yiq2rgb(final analogtv_yiq yiq)
 	private static int yiq2rgb(final int yiq)
 	{
-		if (mapYIQtoRGB.containsKey(yiq))
-		{
-			try
-			{
-				return mapYIQtoRGB.get(yiq);
-			}
-			catch (KeyNotFoundException e)
-			{
-				throw new IllegalStateException(e);
-			}
-		}
+//		if (mapYIQtoRGB.containsKey(yiq))
+//		{
+//			try
+//			{
+//				return mapYIQtoRGB.get(yiq);
+//			}
+//			catch (KeyNotFoundException e)
+//			{
+//				throw new IllegalStateException(e);
+//			}
+//		}
 //		double r = yiq.getY() + 0.956 * yiq.getI() + 0.621 * yiq.getQ();
 //		double g = yiq.getY() - 0.272 * yiq.getI() - 0.647 * yiq.getQ();
 //		double b = yiq.getY() - 1.105 * yiq.getI() + 1.702 * yiq.getQ();
@@ -761,15 +760,15 @@ public class AnalogTV
 			(calc_color(g) <<  8)| 
 			(calc_color(b) <<  0);
 
-		try
-		{
+//		try
+//		{
 //			System.out.printf("y,i,q,h,b: %+5d,%+5d,%+5d,%8x, %4d\n",yiq.y,yiq.i,yiq.q,yiq.hash,yiq.hash%1013);
-			mapYIQtoRGB.put(yiq,rgb);
-		}
-		catch (Throwable e)
-		{
-			throw new IllegalStateException(e);
-		}
+//			mapYIQtoRGB.put(yiq,rgb);
+//		}
+//		catch (Throwable e)
+//		{
+//			throw new IllegalStateException(e);
+//		}
 
 		return rgb;
 	}
