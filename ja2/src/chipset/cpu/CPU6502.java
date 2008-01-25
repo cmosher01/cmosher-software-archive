@@ -48,15 +48,16 @@ public final class CPU6502
 
     AddressBus addressBus;
 
+    boolean started;
 
 	public CPU6502(final AddressBus addressBus)
 	{
 		this.addressBus = addressBus;
-		reset();
 	}
 
     public void reset()
     {
+    	this.started = true;
     	this.reset = true;
     	this.addressBus.reset();
     }
@@ -82,6 +83,10 @@ public final class CPU6502
 
 	public void tick()
 	{
+		if (!this.started)
+		{
+			return;
+		}
 		if (this.t == 0)
 		{
 			firstCycle();

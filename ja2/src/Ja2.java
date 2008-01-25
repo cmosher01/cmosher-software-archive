@@ -202,6 +202,8 @@ public final class Ja2 implements Closeable
 
 
     	this.clock.run();
+    	// if rev > 0,
+    	//cpu.reset();
     }
 
     private void parseArgs(final String... args)

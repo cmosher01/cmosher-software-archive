@@ -11,7 +11,7 @@ public class VideoMode
 
 
 
-	private boolean swText = true;
+	private boolean swText;
 	private boolean swMixed;
 	private int swPage2;
 	private boolean swHiRes;
