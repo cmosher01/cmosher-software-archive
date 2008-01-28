@@ -216,13 +216,27 @@ public class AnalogTV
 			}
 			else
 			{
-				while (i < AppleNTSC.BP_START)
+				if (224 <= lineno && lineno < 240)
 				{
-					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.BLANK_LEVEL;
+					while (i < AppleNTSC.H)
+					{
+						this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.SYNC_LEVEL;
+					}
 				}
-				while (i < AppleNTSC.H)
+				else
 				{
-					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.SYNC_LEVEL;
+					while (i < AppleNTSC.SYNC_START)
+					{
+						this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.BLANK_LEVEL;
+					}
+					while (i < AppleNTSC.BP_START)
+					{
+						this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.SYNC_LEVEL;
+					}
+					while (i < AppleNTSC.H)
+					{
+						this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.BLANK_LEVEL;
+					}
 				}
 			}
 		}
