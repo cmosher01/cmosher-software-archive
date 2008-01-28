@@ -107,14 +107,9 @@ public class PictureGenerator
 		if (this.hpos == TimingGenerator.HORIZ_CYCLES-1)
 		{
 			cycles += TimingGenerator.EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE;
-			// TODO: fix hi-res half-pixel shift logic
-//			if (this.mode.isHiRes() && this.d7) // hi-res half-pixel shift
-//			{
-//				--cycles; // cut off shifted pixel at right edge of screen
-//			}
 		}
 		final boolean plot = !(line >= VideoAddressing.VISIBLE_ROWS_PER_FIELD || hpos < Video.VISIBLE_X_OFFSET);
-		int base = 0;
+		int xtra = 0;
 		if (this.mode.isHiRes() && !this.mode.isDisplayingText(t) && this.d7) // hi-res half-pixel shift
 		{
 			if (plot)
@@ -122,13 +117,15 @@ public class PictureGenerator
 			else
 				this.tv.skip();
 			--cycles;
+			xtra = 1;
 		}
-		for (int cycle = base; cycle < cycles; ++cycle)
+		for (int cycle = 0; cycle < cycles; ++cycle)
 		{
+			lasthires = getHiResBit();
 			if (this.mode.isDisplayingText(t))
 			{
 				final boolean bit = getTextBit();
-				if (plot)
+				if (plot & cycle < (TimingGenerator.CRYSTAL_CYCLES_PER_CPU_CYCLE-xtra))
 					this.tv.write_signal(bit ? AppleNTSC.WHITE_LEVEL : AppleNTSC.BLANK_LEVEL);
 				else
 					this.tv.skip();
@@ -140,7 +137,7 @@ public class PictureGenerator
 			else if (this.mode.isHiRes())
 			{
 				final boolean bit = getHiResBit();
-				if (plot)
+				if (plot & cycle < (TimingGenerator.CRYSTAL_CYCLES_PER_CPU_CYCLE-xtra))
 					this.tv.write_signal(bit ? AppleNTSC.WHITE_LEVEL : AppleNTSC.BLANK_LEVEL);
 				else
 					this.tv.skip();
@@ -153,14 +150,13 @@ public class PictureGenerator
 			{
 				final int y = t / VideoAddressing.BYTES_PER_ROW;
 				final boolean bit = getLoResBit((t & 1) == (this.line & 1),(y & 4) != 0);
-				if (plot)
+				if (plot & cycle < (TimingGenerator.CRYSTAL_CYCLES_PER_CPU_CYCLE-xtra))
 					this.tv.write_signal(bit ? AppleNTSC.WHITE_LEVEL : AppleNTSC.BLANK_LEVEL);
 				else
 					this.tv.skip();
 				shiftLoRes();
 			}
 		}
-		lasthires = getHiResBit();
 
 		++this.hpos;
 		if (this.hpos >= TimingGenerator.HORIZ_CYCLES)
@@ -171,6 +167,7 @@ public class PictureGenerator
 	}
 	public void draw()
 	{
-		this.tv.test_draw(this.image);
+//		this.tv.test_draw(this.image);
+		this.tv.draw_signal(this.image);
 	}
 }

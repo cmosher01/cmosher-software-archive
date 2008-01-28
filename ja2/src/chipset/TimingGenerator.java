@@ -26,22 +26,8 @@ public class TimingGenerator
 	private final Video video;
 	private final PaddlesInterface paddles;
 
-	private final AtomicBoolean shutdown = new AtomicBoolean();
-	private final Thread thread = new Thread(new Runnable()
-	{
-		@SuppressWarnings("synthetic-access")
-		public void run()
-		{
-			try
-			{
-		    	threadProcedure();
-			}
-			catch (final Throwable e)
-			{
-				e.printStackTrace();
-			}
-		}
-	});
+	private final AtomicBoolean shutdown = new AtomicBoolean(true);
+	private Thread thread;
 
 	private final SpeakerClicker speaker;
 	private final Throttle throttle;
@@ -59,6 +45,29 @@ public class TimingGenerator
 
 	public void run()
 	{
+		if (this.thread != null)
+		{
+			throw new IllegalStateException();
+		}
+		synchronized (this.shutdown)
+		{
+			this.shutdown.set(false);
+		}
+		this.thread = new Thread(new Runnable()
+		{
+			@SuppressWarnings("synthetic-access")
+			public void run()
+			{
+				try
+				{
+			    	threadProcedure();
+				}
+				catch (final Throwable e)
+				{
+					e.printStackTrace();
+				}
+			}
+		});
 		this.thread.setName("User-TimingGenerator");
 		this.thread.start();
 	}
@@ -82,9 +91,17 @@ public class TimingGenerator
 			return this.shutdown.get();
 		}
 	}
+	public boolean isRunning()
+	{
+		return this.thread != null;
+	}
 
 	public void shutdown()
 	{
+		if (this.thread == null)
+		{
+			throw new IllegalStateException();
+		}
 		synchronized (this.shutdown)
 		{
 			this.shutdown.set(true);
@@ -93,6 +110,7 @@ public class TimingGenerator
 		try
 		{
 			this.thread.join();
+			this.thread = null;
 		}
 		catch (InterruptedException e)
 		{

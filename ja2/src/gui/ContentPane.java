@@ -13,14 +13,16 @@ import chipset.Slots;
 class ContentPane extends JPanel
 {
 	private final Screen screen;
+	private final ComputerControlPanel compControls;
 	private final Slots slots;
 	private final DropTargetListener dropTarget;
 
 
 
-	public ContentPane(final Screen screen, final Slots slots, final GUI gui)
+	public ContentPane(final Screen screen, final ComputerControlPanel compControls, final Slots slots, final GUI gui)
 	{
 		this.screen = screen;
+		this.compControls = compControls;
 		this.slots = slots;
 		setOpaque(true);
 		addNotify();
@@ -35,6 +37,8 @@ class ContentPane extends JPanel
 		setBorder(BorderFactory.createLoweredBevelBorder());
 
 		add(this.screen);
+
+		add(this.compControls);
 
 		DropTargetListener drop = null;
 		int slot = 0;

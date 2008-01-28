@@ -84,27 +84,71 @@ public class AnalogTV
 	}
 
 
-
-	public void dump_signal()
+	public void dump()
 	{
-//		int pi = 0;
-//		for (int i = 0; i < this.signal.length; ++i)
-//		{
-//			System.out.print(pi==AppleNTSC.PIC_START ? "|" : " ");
-//			System.out.printf("%+4d",this.signal[i]);
-//			++pi;
-//			if (pi >= AppleNTSC.H)
-//			{
-//				System.out.println();
-//				pi = 0;
-//			}
-//		}
+		dump_yiq();
+//		dump_signal();
+	}
+	private void dump_signal()
+	{
+		int pi = 0;
+		for (int i = 0; i < this.signal.length; ++i)
+		{
+			if (pi==0)
+				System.out.printf("%2d: ",i/AppleNTSC.H/8);
+			System.out.print(pi==AppleNTSC.PIC_START ? "|" : " ");
+			System.out.printf("%+4d",this.signal[i]);
+			++pi;
+			if (pi >= AppleNTSC.H)
+			{
+				System.out.println();
+				pi = 0;
+			}
+		}
 //		final ArrayList<Integer> rSize = new ArrayList<Integer>(mapYIQtoRGB.getBucketCount());
 //		mapYIQtoRGB.getBucketSizes(rSize);
 //		for (Integer s: rSize)
 //		{
 //			System.out.println("bucket size: "+s);
 //		}
+	}
+
+	private void dump_yiq()
+	{
+		int pi = 0;
+//		final analogtv_yiq[] yiq = new analogtv_yiq[AppleNTSC.H];
+		final int[] yiq = new int[AppleNTSC.H];
+		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
+		{
+			final CB cb = get_cb(lineno);
+			final IQ iq_factor = get_iq_factor(cb);
+			ntsc_to_yiq(lineno * AppleNTSC.H,iq_factor,yiq);
+			if (pi==0)
+				System.out.printf("%2d: ",lineno/8);
+			for (int colno = 0; colno < AppleNTSC.H; ++colno)
+			{
+				System.out.print(pi==AppleNTSC.PIC_START ? "|" : " ");
+				final int sig = this.signal[lineno*AppleNTSC.H+colno];
+				System.out.printf("%+4d",sig);
+				final int yiqv = yiq[colno];
+				int y = (yiqv&0xFF)-140;
+				int i = ((yiqv>>8)&0xFF)-140;
+				int q = ((yiqv>>16)&0xFF)-140;
+				System.out.printf("(%+3d,%+3d,%+3d) ",y,i,q);
+				final int rgb = yiq2rgb(yiq[colno]);
+				final int r = (rgb >> 16) & 0xff;
+				final int g = (rgb >> 8) & 0xff;
+				final int b = (rgb ) & 0xff;
+				System.out.printf("(%3d,%3d,%3d)",r,g,b);
+
+				++pi;
+				if (pi >= AppleNTSC.H)
+				{
+					System.out.println();
+					pi = 0;
+				}
+			}
+		}
 	}
 
 	public void draw_signal(BufferedImage image)
@@ -117,6 +161,7 @@ public class AnalogTV
 			final int val = (int)Math.rint(ire * 255.0 / (AppleNTSC.WHITE_LEVEL - AppleNTSC.SYNC_LEVEL));
 			final int rgb = (val << 16) | (val << 8) | (val);
 			imageBuf.setElem(pi,rgb);
+			imageBuf.setElem(pi+AppleNTSC.H,rgb);
 			++pi;
 			if (pi % AppleNTSC.H == 0)
 			{
@@ -712,8 +757,8 @@ public class AnalogTV
 			}
 			else
 			{
-				i = (int)(filterI.transition(sig * iq_factor.get(off & 3)));
-				q = (int)(filterQ.transition(sig * iq_factor.get((off + 3) & 3)));
+				i = (int)(filterI.transition((int)(sig * iq_factor.get(off & 3))));
+				q = (int)(filterQ.transition((int)(sig * iq_factor.get((off + 3) & 3))));
 			}
 
 //			yiq[off] = new analogtv_yiq(y,i,q);

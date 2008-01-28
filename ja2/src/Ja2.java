@@ -1,3 +1,4 @@
+import gui.ComputerControlPanel;
 import gui.GUI;
 import gui.Screen;
 import gui.UI;
@@ -22,10 +23,12 @@ import speaker.SpeakerClicker;
 import util.Util;
 import video.AnalogTV;
 import video.PictureGenerator;
+import video.SimplePictureGenerator;
 import video.SimpleScreenImage;
 import video.TelevisionScreenImage;
 import video.Video;
 import video.VideoMode;
+import video.VideoStaticGenerator;
 import cards.disk.InvalidDiskImage;
 import cards.stdio.StandardIn;
 import chipset.AddressBus;
@@ -127,17 +130,21 @@ public final class Ja2 implements Closeable
 
 
 		final TelevisionScreenImage screenImage = new TelevisionScreenImage();
+//		final SimpleScreenImage screenImage = new SimpleScreenImage();
 
 		final Screen screen;
         final UI ui;
+    	final ComputerControlPanel compControls;
     	if (this.gui)
     	{
 	    	screen = new Screen(screenImage);
-	    	ui = new GUI(this,screen,slots);
+	    	compControls = new ComputerControlPanel();
+	    	ui = new GUI(this,screen,compControls,slots);
     	}
     	else
     	{
     		screen = null;
+        	compControls = null;
         	ui = new CLI();
     	}
 
@@ -169,6 +176,7 @@ public final class Ja2 implements Closeable
 
     	final AnalogTV tv = new AnalogTV();
     	final PictureGenerator picgen = new PictureGenerator(tv,videoMode,screenImage);
+//    	final SimplePictureGenerator picgen = new SimplePictureGenerator(videoMode,screenImage);
     	final Video video = new Video(videoMode,ui,addressBus,screenImage,picgen);
 
 
@@ -195,15 +203,11 @@ public final class Ja2 implements Closeable
 	        screen.setFocusTraversalKeysEnabled(false);
 	        screen.requestFocus();
     	}
-
-
-
-
-
-
-    	this.clock.run();
-    	// if rev > 0,
-    	//cpu.reset();
+//    	final VideoStaticGenerator vidStatic = new VideoStaticGenerator(tv,ui,screenImage);
+    	if (compControls != null)
+    	{
+    		compControls.setUpListeners(this.clock,cpu);
+    	}
     }
 
     private void parseArgs(final String... args)
@@ -257,7 +261,8 @@ public final class Ja2 implements Closeable
 			{
 				if (Ja2.this.clock != null)
 				{
-					Ja2.this.clock.shutdown();
+					if (Ja2.this.clock.isRunning())
+						Ja2.this.clock.shutdown();
 				}
 			}
 		});
