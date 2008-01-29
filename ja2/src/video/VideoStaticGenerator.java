@@ -4,14 +4,12 @@
 package video;
 
 import gui.UI;
-import java.awt.image.BufferedImage;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class VideoStaticGenerator
 {
-	private final AnalogTV tv;
-	private final BufferedImage image;
+	private final VideoDisplayDevice tv;
 
 	private Thread thread;
 	private final AtomicBoolean shutdown = new AtomicBoolean(true);
@@ -20,11 +18,11 @@ public class VideoStaticGenerator
 
 	/**
 	 * @param tv
+	 * @param ui 
 	 */
-	public VideoStaticGenerator(final AnalogTV tv, final UI ui, final BufferedImage image)
+	public VideoStaticGenerator(final VideoDisplayDevice tv, final UI ui)
 	{
 		this.tv = tv;
-		this.image = image;
 		this.ui = ui;
 	}
 
@@ -54,6 +52,7 @@ public class VideoStaticGenerator
 			}
 		});
 		this.thread.setName("User-VideoStaticGenerator");
+		this.thread.setDaemon(true);
 		this.thread.start();
 	}
 
@@ -69,13 +68,10 @@ public class VideoStaticGenerator
 
 	private void update()
 	{
-		this.tv.isig = 0;
 		for (int i = 0; i < AppleNTSC.H*AppleNTSC.V; ++i)
 		{
-			this.tv.write_signal(this.rand.nextInt(140)-40);
+			this.tv.putSignal(this.rand.nextInt(140)-40);
 		}
-//		this.tv.draw_signal(this.image);
-		this.tv.test_draw(this.image);
 	}
 
 	private int times;

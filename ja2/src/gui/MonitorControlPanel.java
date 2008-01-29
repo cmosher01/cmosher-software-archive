@@ -1,9 +1,8 @@
 /*
- * Created on Jan 26, 2008
+ * Created on Jan 28, 2008
  */
 package gui;
 
-import gui.buttons.PowerLight;
 import java.awt.ComponentOrientation;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -11,18 +10,13 @@ import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import video.VideoStaticGenerator;
-import chipset.TimingGenerator;
-import chipset.cpu.CPU6502;
+import video.VideoDisplayDevice;
 
-public class ComputerControlPanel extends JPanel
+public class MonitorControlPanel extends JPanel
 {
-	private final PowerLight powerLight = new PowerLight();
-	private TimingGenerator clock;
-	private CPU6502 cpu;
-	private VideoStaticGenerator vidStatic;
+	private VideoDisplayDevice display;
 
-	public ComputerControlPanel()
+	public MonitorControlPanel()
 	{
 		setLayout(new FlowLayout());
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
@@ -60,60 +54,29 @@ public class ComputerControlPanel extends JPanel
 			}
 	    });
 	    add(powerOff);
-
-
-
-	    add(this.powerLight);
 	}
 
 	private void powerOn()
 	{
-		if (clock.isRunning())
+		if (display.isOn())
 		{
 			return;
 		}
-		powerLight.turnOn(true);
-		powerLight.repaint();
-		Thread th = new Thread(new Runnable()
-		{
-			public void run()
-			{
-				vidStatic.shutdown();
-				clock.run();
-			}
-		});
-		th.setName("User-powerOn");
-		th.setDaemon(true);
-		th.start();
+		display.powerOn(true);
 	}
 
 	private void powerOff()
 	{
-		if (!clock.isRunning())
+		if (!display.isOn())
 		{
 			return;
 		}
-		powerLight.turnOn(false);
-		powerLight.repaint();
-		Thread th = new Thread(new Runnable()
-		{
-			public void run()
-			{
-				clock.shutdown();
-				vidStatic.run();
-			}
-		});
-		th.setName("User-powerOff");
-		th.setDaemon(true);
-		th.start();
+		display.powerOn(false); // TODO call from own thread
+		// TODO why does this not always blank the screen???
 	}
 
-	public void setUpListeners(TimingGenerator clock, CPU6502 cpu, VideoStaticGenerator vidStatic)
+	public void setUpListeners(VideoDisplayDevice display)
 	{
-		this.clock = clock;
-		this.cpu = cpu;
-		this.vidStatic = vidStatic;
-
-		this.vidStatic.run();
+		this.display = display;
 	}
 }

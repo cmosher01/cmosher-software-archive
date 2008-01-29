@@ -36,13 +36,20 @@ public class Screen extends JPanel
 	{
 		try
 		{
-			SwingUtilities.invokeAndWait(new Runnable()
+			if (SwingUtilities.isEventDispatchThread())
 			{
-				public void run()
+				plotScreen();
+			}
+			else
+			{
+				SwingUtilities.invokeAndWait(new Runnable()
 				{
-					plotScreen();
-				}
-			});
+					public void run()
+					{
+						plotScreen();
+					}
+				});
+			}
 		}
 		catch (InterruptedException e)
 		{

@@ -14,15 +14,17 @@ class ContentPane extends JPanel
 {
 	private final Screen screen;
 	private final ComputerControlPanel compControls;
+	private final MonitorControlPanel monitorControls;
 	private final Slots slots;
 	private final DropTargetListener dropTarget;
 
 
 
-	public ContentPane(final Screen screen, final ComputerControlPanel compControls, final Slots slots, final GUI gui)
+	public ContentPane(final Screen screen, final ComputerControlPanel compControls, final MonitorControlPanel monitorControls, final Slots slots, final GUI gui)
 	{
 		this.screen = screen;
 		this.compControls = compControls;
+		this.monitorControls = monitorControls;
 		this.slots = slots;
 		setOpaque(true);
 		addNotify();
@@ -38,6 +40,7 @@ class ContentPane extends JPanel
 
 		add(this.screen);
 
+		add(this.monitorControls);
 		add(this.compControls);
 
 		DropTargetListener drop = null;

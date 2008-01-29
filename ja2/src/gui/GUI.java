@@ -26,7 +26,7 @@ public class GUI implements UI
 	private final JFrame frame;
 	private final ContentPane contentPane;
 
-	public GUI(final Closeable app, final Screen screen, final ComputerControlPanel compControls, final Slots slots)
+	public GUI(final Closeable app, final Screen screen, final ComputerControlPanel compControls, final MonitorControlPanel monitorControls, final Slots slots)
 	{
 		setLookAndFeel();
 
@@ -88,7 +88,7 @@ public class GUI implements UI
 //        this.frame.setJMenuBar(factoryMenuBar.createMenuBar());
 
         // Create and set up the content pane.
-        this.contentPane = new ContentPane(screen,compControls,slots,this);
+        this.contentPane = new ContentPane(screen,compControls,monitorControls,slots,this);
         this.frame.setContentPane(this.contentPane);
 
         new DropTarget(this.frame,this.contentPane.getFirstDrivePanelDropListener());

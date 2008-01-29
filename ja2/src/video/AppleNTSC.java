@@ -27,7 +27,6 @@ public class AppleNTSC
 
 	/* AnalogTV.signal is in IRE units, as defined below: */
 	public static final int WHITE_LEVEL = 100;
-	public static final int BLACK_LEVEL = 7;
 	public static final int BLANK_LEVEL = 0;
 	public static final int SYNC_LEVEL = -40;
 

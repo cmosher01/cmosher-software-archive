@@ -105,7 +105,6 @@ public class Video
 
 		if (this.t >= VideoAddressing.BYTES_PER_FIELD)
 		{
-			this.picgen.draw();
 			this.ui.updateScreen();
 			this.t = 0;
 			this.picgen.resetFrame();

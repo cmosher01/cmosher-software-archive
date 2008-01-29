@@ -1,5 +1,6 @@
 import gui.ComputerControlPanel;
 import gui.GUI;
+import gui.MonitorControlPanel;
 import gui.Screen;
 import gui.UI;
 import java.io.Closeable;
@@ -103,8 +104,6 @@ public final class Ja2 implements Closeable
 
 
 
-//    	RAM @ $0000 thru $BFFF
-    	final Memory ram = new Memory(0xC000);
 //    	ROM @ $D000 thru $FFFF
     	final Memory rom = new Memory(0x10000-0xD000);
 
@@ -135,16 +134,19 @@ public final class Ja2 implements Closeable
 		final Screen screen;
         final UI ui;
     	final ComputerControlPanel compControls;
+    	final MonitorControlPanel monitorControls;
     	if (this.gui)
     	{
 	    	screen = new Screen(screenImage);
 	    	compControls = new ComputerControlPanel();
-	    	ui = new GUI(this,screen,compControls,slots);
+	    	monitorControls = new MonitorControlPanel();
+	    	ui = new GUI(this,screen,compControls,monitorControls,slots);
     	}
     	else
     	{
     		screen = null;
         	compControls = null;
+        	monitorControls = null;
         	ui = new CLI();
     	}
 
@@ -170,13 +172,16 @@ public final class Ja2 implements Closeable
 
 
 
+//    	RAM @ $0000 thru $BFFF
+    	final Memory ram = new Memory(0xC000);
+
     	final AddressBus addressBus = new AddressBus(ram,rom,keyboard,videoMode,paddles,paddleButtonStates,speaker,slots);
 
 
 
-    	final AnalogTV tv = new AnalogTV();
-    	final PictureGenerator picgen = new PictureGenerator(tv,videoMode,screenImage);
-//    	final SimplePictureGenerator picgen = new SimplePictureGenerator(videoMode,screenImage);
+    	final AnalogTV tv = new AnalogTV(screenImage);
+    	final PictureGenerator picgen = new PictureGenerator(tv,videoMode);
+//    	final SimplePictureGenerator picgen = new SimplePictureGenerator(videoMode);
     	final Video video = new Video(videoMode,ui,addressBus,screenImage,picgen);
 
 
@@ -203,10 +208,14 @@ public final class Ja2 implements Closeable
 	        screen.setFocusTraversalKeysEnabled(false);
 	        screen.requestFocus();
     	}
-//    	final VideoStaticGenerator vidStatic = new VideoStaticGenerator(tv,ui,screenImage);
+    	final VideoStaticGenerator vidStatic = new VideoStaticGenerator(tv,ui);
     	if (compControls != null)
     	{
-    		compControls.setUpListeners(this.clock,cpu);
+    		compControls.setUpListeners(this.clock,cpu,vidStatic);
+    	}
+    	if (monitorControls != null)
+    	{
+    		monitorControls.setUpListeners(tv);
     	}
     }
 

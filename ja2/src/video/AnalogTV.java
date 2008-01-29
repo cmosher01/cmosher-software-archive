@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicBoolean;
 import com.surveysampling.hash.SimpleHashAssocArray;
 import com.surveysampling.hash.SimpleHashAssocArray.KeyNotFoundException;
 import com.surveysampling.hash.SimpleHashAssocArray.NullKeyException;
@@ -19,9 +20,11 @@ import com.surveysampling.hash.SimpleHashAssocArray.NullValueException;
 /*
  * Created on Jan 18, 2008
  */
-public class AnalogTV
+public class AnalogTV implements VideoDisplayDevice
 {
-	private int[] signal = new int[AppleNTSC.SIGNAL_LEN];
+	private final AtomicBoolean on = new AtomicBoolean();
+	private final int[] signal = new int[AppleNTSC.SIGNAL_LEN];
+	private final DataBuffer imageBuf;
 
 //	private double agclevel = 1;
 //	private double color_control = 1;
@@ -30,90 +33,93 @@ public class AnalogTV
 
 
 
-	private static class analogtv_yiq
-	{
-		private final int y;
-		private final int i;
-		private final int q;
-		private final int hash;
+//	private static class analogtv_yiq
+//	{
+//		private final int y;
+//		private final int i;
+//		private final int q;
+//		private final int hash;
+//
+//		public analogtv_yiq(final int y, final int i, final int q)
+//		{
+//			this.y = y;
+//			this.i = i;
+//			this.q = q;
+//			this.hash = getHash();
+//		}
+//
+//		private int getHash()
+//		{
+//			return ((this.q+140)<<16) | ((this.i+140)<<8) | (this.y+140);
+//		}
+//
+//		public int getI()
+//		{
+//			return this.i;
+//		}
+//
+//		public int getQ()
+//		{
+//			return this.q;
+//		}
+//
+//		public int getY()
+//		{
+//			return this.y;
+//		}
+//
+//		@Override
+//		public int hashCode()
+//		{
+//			return this.hash;
+//		}
+//
+//		@Override
+//		public boolean equals(final Object obj)
+//		{
+//			if (!(obj instanceof analogtv_yiq))
+//			{
+//				return false;
+//			}
+//			final analogtv_yiq that = (analogtv_yiq)obj;
+//			return this.y==that.y && this.i==that.i && this.q==that.q;
+//		}
+//	}
 
-		public analogtv_yiq(final int y, final int i, final int q)
-		{
-			this.y = y;
-			this.i = i;
-			this.q = q;
-			this.hash = getHash();
-		}
 
-		private int getHash()
-		{
-			return ((this.q+140)<<16) | ((this.i+140)<<8) | (this.y+140);
-		}
-
-		public int getI()
-		{
-			return this.i;
-		}
-
-		public int getQ()
-		{
-			return this.q;
-		}
-
-		public int getY()
-		{
-			return this.y;
-		}
-
-		@Override
-		public int hashCode()
-		{
-			return this.hash;
-		}
-
-		@Override
-		public boolean equals(final Object obj)
-		{
-			if (!(obj instanceof analogtv_yiq))
-			{
-				return false;
-			}
-			final analogtv_yiq that = (analogtv_yiq)obj;
-			return this.y==that.y && this.i==that.i && this.q==that.q;
-		}
-	}
-
-
-	public void dump()
-	{
-		dump_yiq();
-//		dump_signal();
-	}
-	private void dump_signal()
-	{
-		int pi = 0;
-		for (int i = 0; i < this.signal.length; ++i)
-		{
-			if (pi==0)
-				System.out.printf("%2d: ",i/AppleNTSC.H/8);
-			System.out.print(pi==AppleNTSC.PIC_START ? "|" : " ");
-			System.out.printf("%+4d",this.signal[i]);
-			++pi;
-			if (pi >= AppleNTSC.H)
-			{
-				System.out.println();
-				pi = 0;
-			}
-		}
+//	private void dump_signal()
+//	{
+//		int pi = 0;
+//		for (int i = 0; i < this.signal.length; ++i)
+//		{
+//			if (pi==0)
+//				System.out.printf("%2d: ",i/AppleNTSC.H/8);
+//			System.out.print(pi==AppleNTSC.PIC_START ? "|" : " ");
+//			System.out.printf("%+4d",this.signal[i]);
+//			++pi;
+//			if (pi >= AppleNTSC.H)
+//			{
+//				System.out.println();
+//				pi = 0;
+//			}
+//		}
 //		final ArrayList<Integer> rSize = new ArrayList<Integer>(mapYIQtoRGB.getBucketCount());
 //		mapYIQtoRGB.getBucketSizes(rSize);
 //		for (Integer s: rSize)
 //		{
 //			System.out.println("bucket size: "+s);
 //		}
+//	}
+
+	/**
+	 * @param image
+	 */
+	public AnalogTV(final BufferedImage image)
+	{
+		this.imageBuf = image.getRaster().getDataBuffer();
 	}
 
-	private void dump_yiq()
+	private void dump()
 	{
 		int pi = 0;
 //		final analogtv_yiq[] yiq = new analogtv_yiq[AppleNTSC.H];
@@ -151,442 +157,25 @@ public class AnalogTV
 		}
 	}
 
-	public void draw_signal(BufferedImage image)
-	{
-		DataBuffer imageBuf = image.getRaster().getDataBuffer();
-		int pi = 0;
-		for (int i = 0; i < this.signal.length; ++i)
-		{
-			final int ire = (int)Math.rint(this.signal[i]) - AppleNTSC.SYNC_LEVEL;
-			final int val = (int)Math.rint(ire * 255.0 / (AppleNTSC.WHITE_LEVEL - AppleNTSC.SYNC_LEVEL));
-			final int rgb = (val << 16) | (val << 8) | (val);
-			imageBuf.setElem(pi,rgb);
-			imageBuf.setElem(pi+AppleNTSC.H,rgb);
-			++pi;
-			if (pi % AppleNTSC.H == 0)
-			{
-				pi += AppleNTSC.H;
-			}
-		}
-	}
-
-	public void write_sync_signal()
-	{
-		Arrays.fill(this.signal,0);
-
-		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
-		{
-			int i = AppleNTSC.FP_START;
-			if (lineno < VideoAddressing.VISIBLE_ROWS_PER_FIELD)
-			{
-				while (i < AppleNTSC.SYNC_START)
-				{
-					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.BLANK_LEVEL;
-				}
-				while (i < AppleNTSC.BP_START)
-				{
-					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.SYNC_LEVEL;
-				}
-				while (i < AppleNTSC.PIC_START)
-				{
-					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.BLANK_LEVEL;
-				}
-				while (i < AppleNTSC.H)
-				{
-					this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.BLANK_LEVEL;//AppleNTSC.BLACK_LEVEL;
-				}
-
-				// add in the color burst
-//				for (int icb = AppleNTSC.CB_START; icb < AppleNTSC.CB_END; icb += 4)
-//				{
-//					this.signal[lineno * AppleNTSC.H + icb + 1] = -AppleNTSC.CB_LEVEL;
-//					this.signal[lineno * AppleNTSC.H + icb + 3] = AppleNTSC.CB_LEVEL;
-//				}
-				for (int icb = AppleNTSC.CB_START; icb < AppleNTSC.CB_END; icb += 4)
-				{
-					this.signal[lineno * AppleNTSC.H + icb + 0] = -AppleNTSC.CB_LEVEL/2;
-					this.signal[lineno * AppleNTSC.H + icb + 1] = -AppleNTSC.CB_LEVEL/2;
-					this.signal[lineno * AppleNTSC.H + icb + 2] = AppleNTSC.CB_LEVEL/2;
-					this.signal[lineno * AppleNTSC.H + icb + 3] = AppleNTSC.CB_LEVEL/2;
-				}
-
-				// add unwanted spike on back porch
-				// (only for Rev. 0 boards)
-				this.signal[lineno * AppleNTSC.H + AppleNTSC.SPIKE] = -AppleNTSC.CB_LEVEL;
-			}
-			else
-			{
-				if (224 <= lineno && lineno < 240)
-				{
-					while (i < AppleNTSC.H)
-					{
-						this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.SYNC_LEVEL;
-					}
-				}
-				else
-				{
-					while (i < AppleNTSC.SYNC_START)
-					{
-						this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.BLANK_LEVEL;
-					}
-					while (i < AppleNTSC.BP_START)
-					{
-						this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.SYNC_LEVEL;
-					}
-					while (i < AppleNTSC.H)
-					{
-						this.signal[lineno * AppleNTSC.H + i++] = AppleNTSC.BLANK_LEVEL;
-					}
-				}
-			}
-		}
-
-		this.isig = 0;
-	}
-
-	public void write_signal(final int level)
+	public void putSignal(final int level)
 	{
 		if (this.isig >= AppleNTSC.SIGNAL_LEN)
 		{
 			throw new IllegalStateException("At end of screen; must re-synch before writing any more signal");
 		}
 		this.signal[this.isig++] = level;
-	}
-
-	public void skip()
-	{
-		if (this.isig >= AppleNTSC.SIGNAL_LEN)
+		if (this.isig == AppleNTSC.SIGNAL_LEN)
 		{
-			throw new IllegalStateException("At end of screen; must re-synch before writing any more signal");
-		}
-		++this.isig;
-	}
-
-	public void skip(int s)
-	{
-		this.isig += s;
-	}
-
-	public void write_play_signal1()
-	{
-		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
-		{
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START] = 80;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 1] = 80;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 2] = 80;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 3] = 80;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 49] = 80;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 58] = 80;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 67] = 80;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 76] = 80;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 86] = 40;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 87] = 40;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 95] = 40;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 96] = 40;
-
-
-
-			// purple
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 104] = 40;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 105] = 40;
-
-			// blue
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 113] = 40;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 114] = 40;
-
-			// green
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 122] = 40;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 123] = 40;
-
-			// ???
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 131] = 40;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 132] = 40;
-
-
-
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 140] = 20;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 142] = -20;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 149] = 20;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 151] = -20;
-			// orange
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 158] = 20;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 160] = -20;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 167] = 20;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 169] = -20;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 558] = 80;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 559] = 80;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 560] = 80;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 561] = 80;
+			if (isOn())
+			{
+				this.draw();
+			}
+			this.isig = 0;
 		}
 	}
 
-	public void write_play_signal2()
+	public void draw()
 	{
-		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
-		{
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 000] = 0;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 015] = 0;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 030] = 0;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 045] = 0;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 100] = 20;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 115] = 20;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 130] = 20;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 145] = 20;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 200] = 40;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 215] = 40;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 230] = 40;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 245] = 40;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 300] = 60;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 315] = 60;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 330] = 60;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 345] = 60;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 400] = 80;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 415] = 80;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 430] = 80;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 445] = 80;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 500] = 100;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 515] = 100;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 530] = 100;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 545] = 100;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 600] = 120;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 615] = 120;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 630] = 120;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 645] = 120;
-		}
-	}
-
-	public void write_play_signal3()
-	{
-		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
-		{
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 100] = 10;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 101] = 10;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 115] = 10;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 116] = 10;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 130] = 10;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 131] = 10;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 145] = 10;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 146] = 10;
-
-
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 200] = 25;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 201] = 25;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 215] = 25;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 216] = 25;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 230] = 25;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 231] = 25;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 245] = 25;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 246] = 25;
-
-
-			
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 300] = 30;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 301] = 30;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 315] = 30;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 316] = 30;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 330] = 30;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 331] = 30;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 345] = 30;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 346] = 30;
-
-
-			
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 400] = 40;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 401] = 40;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 415] = 40;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 416] = 40;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 430] = 40;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 431] = 40;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 445] = 40;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 446] = 40;
-
-
-			
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 500] = 50;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 501] = 50;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 515] = 50;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 516] = 50;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 530] = 50;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 531] = 50;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 545] = 50;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 546] = 50;
-		}
-	}
-
-	public void write_play_signal4()
-	{
-		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
-		{
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 100] = 100;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 201] = 100;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 302] = 100;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 403] = 100;
-
-
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 152] = 50;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 153] = 50;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 253] = 50;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 254] = 50;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 354] = 50;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 355] = 50;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 455] = 50;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 456] = 50;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 500] = 100;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 501] = 100;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 502] = 100;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 503] = 100;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 504] = 100;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 505] = 100;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 506] = 100;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 550] = 50;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 551] = 50;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 552] = 50;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 553] = 50;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 554] = 50;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 555] = 50;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 556] = 50;
-		}
-	}
-
-	public void write_play_signal5()
-	{
-		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
-		{
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 100] = 50;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 201] = 50;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 302] = 50;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 403] = 50;
-
-
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 152] = 25;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 153] = 25;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 253] = 25;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 254] = 25;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 354] = 25;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 355] = 25;
-
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 455] = 25;
-			this.signal[lineno * AppleNTSC.H + AppleNTSC.PIC_START + 456] = 25;
-		}
-	}
-
-	public void write_apple_color_test()
-	{
-		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
-		{
-			int i = AppleNTSC.PIC_START;
-			for (int bi = 0; bi < 35; bi += 4)
-			{
-				this.signal[lineno * AppleNTSC.H + i++] = 120;
-				this.signal[lineno * AppleNTSC.H + i++] = 0;
-				this.signal[lineno * AppleNTSC.H + i++] = 80;
-				this.signal[lineno * AppleNTSC.H + i++] = 0;
-			}
-			for (int bi = 0; bi < 35; bi += 4)
-			{
-				this.signal[lineno * AppleNTSC.H + i++] = 0;
-				this.signal[lineno * AppleNTSC.H + i++] = 120;
-				this.signal[lineno * AppleNTSC.H + i++] = 0;
-				this.signal[lineno * AppleNTSC.H + i++] = 80;
-			}
-			for (int bi = 0; bi < 35; bi += 4)
-			{
-				this.signal[lineno * AppleNTSC.H + i++] = 80;
-				this.signal[lineno * AppleNTSC.H + i++] = 0;
-				this.signal[lineno * AppleNTSC.H + i++] = 120;
-				this.signal[lineno * AppleNTSC.H + i++] = 0;
-			}
-			for (int bi = 0; bi < 35; bi += 4)
-			{
-				this.signal[lineno * AppleNTSC.H + i++] = 0;
-				this.signal[lineno * AppleNTSC.H + i++] = 80;
-				this.signal[lineno * AppleNTSC.H + i++] = 0;
-				this.signal[lineno * AppleNTSC.H + i++] = 120;
-			}
-		}
-	}
-	
-	public void write_modified_color_bars()
-	{
-		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
-		{
-			int i = AppleNTSC.PIC_START;
-			// white
-			for (int bi = 0; bi < 35; ++bi)
-			{
-				this.signal[lineno * AppleNTSC.H + i++] = 100;
-			}
-			// yellow
-			for (int bi = 0; bi < 35; bi += 4)
-			{
-				this.signal[lineno * AppleNTSC.H + i++] = 131;
-				this.signal[lineno * AppleNTSC.H + i++] = 48;
-				this.signal[lineno * AppleNTSC.H + i++] = 0;
-				this.signal[lineno * AppleNTSC.H + i++] = 0;
-			}
-			// cyan
-			for (int bi = 0; bi < 35; bi += 4)
-			{
-				this.signal[lineno * AppleNTSC.H + i++] = 13;
-				this.signal[lineno * AppleNTSC.H + i++] = 0;
-				this.signal[lineno * AppleNTSC.H + i++] = 131;
-				this.signal[lineno * AppleNTSC.H + i++] = 0;
-			}
-			// green
-			for (int bi = 0; bi < 35; bi += 4)
-			{
-				this.signal[lineno * AppleNTSC.H + i++] = 0;
-				this.signal[lineno * AppleNTSC.H + i++] = 7;
-				this.signal[lineno * AppleNTSC.H + i++] = 0;
-				this.signal[lineno * AppleNTSC.H + i++] = 116;
-			}
-		}
-	}
-	
-	public void test_draw(final BufferedImage image)
-	{
-		final DataBuffer imageBuf = image.getRaster().getDataBuffer();
 
 		int pi = 0;
 //		final analogtv_yiq[] yiq = new analogtv_yiq[AppleNTSC.H];
@@ -599,8 +188,8 @@ public class AnalogTV
 			for (int colno = 0; colno < AppleNTSC.H; ++colno)
 			{
 				final int rgb = yiq2rgb(yiq[colno]);
-				imageBuf.setElem(pi,rgb);
-				imageBuf.setElem(pi + AppleNTSC.H,rgb);
+				this.imageBuf.setElem(pi,rgb);
+				this.imageBuf.setElem(pi + AppleNTSC.H,rgb);
 
 				++pi;
 				if (pi % AppleNTSC.H == 0)
@@ -609,7 +198,32 @@ public class AnalogTV
 				}
 			}
 		}
+		// TODO updateScreen in UI here
 	}
+
+	public void draw_signal()
+	{
+		int pi = 0;
+		for (int i = 0; i < this.signal.length; ++i)
+		{
+			final int ire = (int)Math.rint(this.signal[i]) - AppleNTSC.SYNC_LEVEL;
+			final int val = (int)Math.rint(ire * 255.0 / (AppleNTSC.WHITE_LEVEL - AppleNTSC.SYNC_LEVEL));
+			final int rgb = (val << 16) | (val << 8) | (val);
+			this.imageBuf.setElem(pi,rgb);
+			this.imageBuf.setElem(pi+AppleNTSC.H,rgb);
+			++pi;
+			if (pi % AppleNTSC.H == 0)
+			{
+				pi += AppleNTSC.H;
+			}
+		}
+		// TODO updateScreen in UI here
+	}
+
+
+
+
+
 
 	private static class IQ
 	{
@@ -771,8 +385,8 @@ public class AnalogTV
 			}
 			else
 			{
-				i = (int)(filterI.transition((int)(sig * iq_factor.get(off & 3))));
-				q = (int)(filterQ.transition((int)(sig * iq_factor.get((off + 3) & 3))));
+				i = filterI.transition((int)(sig * iq_factor.get(off & 3)));
+				q = filterQ.transition((int)(sig * iq_factor.get((off + 3) & 3)));
 			}
 
 //			yiq[off] = new analogtv_yiq(y,i,q);
@@ -780,13 +394,13 @@ public class AnalogTV
 		}
 	}
 
-	public void dumpYs()
-	{
-		for (final Integer y : this.catalog)
-		{
-			System.out.println(y);
-		}
-	}
+//	public void dumpYs()
+//	{
+//		for (final Integer y : this.catalog)
+//		{
+//			System.out.println(y);
+//		}
+//	}
 
 //	private static SimpleHashAssocArray<analogtv_yiq,Integer> mapYIQtoRGB = new SimpleHashAssocArray<analogtv_yiq,Integer>(1013);
 //	private static int yiq2rgb(final analogtv_yiq yiq)
@@ -846,5 +460,31 @@ public class AnalogTV
 		if (lim <= x)
 			return lim-1;
 		return x;
+	}
+
+	public boolean isOn()
+	{
+		synchronized (this.on)
+		{
+			return this.on.get();
+		}
+	}
+
+	public void powerOn(final boolean on)
+	{
+		synchronized (this.on)
+		{
+			this.on.set(on);
+		}
+		if (!isOn())
+		{
+			drawBlankScreen();
+		}
+	}
+
+	private void drawBlankScreen()
+	{
+		for (int i = 0; i < AppleNTSC.SIGNAL_LEN*2; ++i)
+			this.imageBuf.setElem(i,0);
 	}
 }
