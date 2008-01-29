@@ -345,7 +345,9 @@ public class AnalogTV implements VideoDisplayDevice
 		final double cb_q = (cb_phase[3] - cb_phase[1]) / 16;
 		if (cb_i*cb_i + cb_q*cb_q < COLOR_THRESH)
 		{
-			return new IQ();
+			final IQ iq = new IQ();
+			cacheCB.put(cb,iq);
+			return iq;
 		}
 //		System.out.printf("%+8.2f,%+8.2f,%+8.2f,%+8.2f\n",cb_phase[0],cb_phase[1],cb_phase[2],cb_phase[3]);
 
