@@ -6,22 +6,21 @@ package keyboard;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import chipset.Throttle;
 
 /*
  * Created on Sep 12, 2007
  */
 public class HyperKeyHandler extends KeyAdapter implements KeyListener
 {
-	private final Throttle throttle;
+	private final HyperMode hyper;
 
 	/**
 	 * @param cpu
 	 * @param video 
 	 */
-	public HyperKeyHandler(final Throttle throttle)
+	public HyperKeyHandler(final HyperMode hyper)
 	{
-		this.throttle = throttle;
+		this.hyper = hyper;
 	}
 
 	/**
@@ -33,7 +32,7 @@ public class HyperKeyHandler extends KeyAdapter implements KeyListener
 		final int key = e.getKeyCode();
 		if (key == KeyEvent.VK_F11)
 		{
-			this.throttle.toggleHyper();
+			this.hyper.toggleHyper();
 		}
 	}
 }

@@ -4,7 +4,7 @@ import java.awt.dnd.DropTargetListener;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JPanel;
-import chipset.Throttle;
+import keyboard.HyperMode;
 import cards.Card;
 import gui.DiskDriveControllerPanel;
 import gui.GUI;
@@ -27,10 +27,10 @@ public class DiskController extends Card
 
 
 
-	public DiskController(final Throttle throttle)
+	public DiskController(final HyperMode hyper)
 	{
-		this.drive1 = new Drive(new DiskBytes(throttle),new StepperMotor());
-		this.drive2 = new Drive(new DiskBytes(throttle),new StepperMotor());
+		this.drive1 = new Drive(new DiskBytes(hyper),new StepperMotor());
+		this.drive2 = new Drive(new DiskBytes(hyper),new StepperMotor());
 		this.currentDrive = this.drive1;
 	}
 

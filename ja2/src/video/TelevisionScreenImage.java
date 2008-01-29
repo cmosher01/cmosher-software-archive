@@ -9,6 +9,6 @@ public class TelevisionScreenImage extends BufferedImage
 {
 	public TelevisionScreenImage()
 	{
-		super(AppleNTSC.H,AppleNTSC.V * 2,BufferedImage.TYPE_INT_RGB);
+		super(/*AppleNTSC.H,AppleNTSC.V * 2*/560,384,BufferedImage.TYPE_INT_RGB);
 	}
 }

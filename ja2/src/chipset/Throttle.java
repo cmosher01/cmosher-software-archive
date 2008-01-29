@@ -16,7 +16,6 @@ public class Throttle
 	private static final int CHECK_EVERY_CYCLE = Util.divideRound(TimingGenerator.AVG_CPU_HZ,CHECK_EVERY_FRACT);
 	private static final int EXPECTED_MS = 1000/CHECK_EVERY_FRACT;
 
-	private volatile boolean hyper;
 	private AtomicBoolean suspend = new AtomicBoolean();
 
 	private long msPrev = System.currentTimeMillis();
@@ -79,21 +78,6 @@ public class Throttle
 				}
 			}
 		}
-	}
-
-	public boolean isHyper()
-	{
-		return this.hyper;
-	}
-
-	public void setHyper(boolean isHyper)
-	{
-			this.hyper = isHyper;
-	}
-
-	public void toggleHyper()
-	{
-		this.hyper = !this.hyper;
 	}
 
 	public void toggleSuspend()

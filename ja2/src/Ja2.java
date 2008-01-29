@@ -11,6 +11,7 @@ import javax.swing.SwingUtilities;
 import keyboard.ClipboardProducer;
 import keyboard.FnKeyHandler;
 import keyboard.HyperKeyHandler;
+import keyboard.HyperMode;
 import keyboard.Keyboard;
 import keyboard.KeyboardInterface;
 import keyboard.KeyboardProducer;
@@ -24,8 +25,6 @@ import speaker.SpeakerClicker;
 import util.Util;
 import video.AnalogTV;
 import video.PictureGenerator;
-import video.SimplePictureGenerator;
-import video.SimpleScreenImage;
 import video.TelevisionScreenImage;
 import video.Video;
 import video.VideoMode;
@@ -109,11 +108,11 @@ public final class Ja2 implements Closeable
 
     	final Slots slots = new Slots();
 
-    	final Throttle throttle = new Throttle();
+    	final HyperMode hyper = new HyperMode();
 
 
 
-    	final Config cfg = new Config(this.config,throttle);
+    	final Config cfg = new Config(this.config,hyper);
 		cfg.parseConfig(rom,slots,new StandardIn.EOFHandler()
 		{
 			@SuppressWarnings("synthetic-access")
@@ -162,7 +161,7 @@ public final class Ja2 implements Closeable
 
 		final KeypressQueue keypresses = new KeypressQueue();
 
-    	final KeyboardInterface keyboard = new Keyboard(keypresses,throttle);
+    	final KeyboardInterface keyboard = new Keyboard(keypresses,hyper);
 
     	final PaddlesInterface paddles = new Paddles();
 
@@ -189,6 +188,7 @@ public final class Ja2 implements Closeable
     	final CPU6502 cpu = new CPU6502(addressBus);
 
 
+    	final Throttle throttle = new Throttle();
 
     	this.clock = new TimingGenerator(cpu,video,paddles,speaker,throttle);
 
@@ -199,7 +199,7 @@ public final class Ja2 implements Closeable
 	        screen.addKeyListener(new TestKeyHandler(tv));
 	    	screen.addKeyListener(new KeyboardProducer(keypresses,keyboard));
 	    	screen.addKeyListener(new ClipboardProducer(keypresses));
-	    	screen.addKeyListener(new HyperKeyHandler(throttle));
+	    	screen.addKeyListener(new HyperKeyHandler(hyper));
 	        screen.addKeyListener(new FnKeyHandler(cpu,screenImage,ram,throttle));
 	        screen.addKeyListener(new VideoKeyHandler(video));
 	        screen.addKeyListener(new PaddleButtons(paddleButtonStates));

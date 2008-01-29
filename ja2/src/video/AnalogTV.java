@@ -128,7 +128,7 @@ public class AnalogTV implements VideoDisplayDevice
 		{
 			final CB cb = get_cb(lineno);
 			final IQ iq_factor = get_iq_factor(cb);
-			ntsc_to_yiq(lineno * AppleNTSC.H,iq_factor,yiq);
+			ntsc_to_yiq(lineno*AppleNTSC.H,AppleNTSC.H,iq_factor,yiq);
 			if (pi==0)
 				System.out.printf("%2d: ",lineno/8);
 			for (int colno = 0; colno < AppleNTSC.H; ++colno)
@@ -168,7 +168,7 @@ public class AnalogTV implements VideoDisplayDevice
 		{
 			if (isOn())
 			{
-				this.draw();
+				this.draw_visible();
 			}
 			this.isig = 0;
 		}
@@ -184,7 +184,7 @@ public class AnalogTV implements VideoDisplayDevice
 		{
 			final CB cb = get_cb(lineno);
 			final IQ iq_factor = get_iq_factor(cb);
-			ntsc_to_yiq(lineno * AppleNTSC.H,iq_factor,yiq);
+			ntsc_to_yiq(lineno*AppleNTSC.H,AppleNTSC.H,iq_factor,yiq);
 			for (int colno = 0; colno < AppleNTSC.H; ++colno)
 			{
 				final int rgb = yiq2rgb(yiq[colno]);
@@ -220,6 +220,42 @@ public class AnalogTV implements VideoDisplayDevice
 		// TODO updateScreen in UI here
 	}
 
+	public void draw_visible_signal()
+	{
+		for (int row = 0; row < 192; ++row)
+		{
+			for (int col = 350; col < AppleNTSC.H-2; ++col)
+			{
+				final int is = row*AppleNTSC.H+col;
+				final int ire = this.signal[is];
+				final int val = (int)Math.rint(ire * 255.0 / AppleNTSC.WHITE_LEVEL);
+				final int rgb = (val << 16) | (val << 8) | (val);
+				final int ip = row*(AppleNTSC.H-2-350)*2+(col-350);
+				this.imageBuf.setElem(ip,rgb);
+				this.imageBuf.setElem(ip+(AppleNTSC.H-2-350),rgb);
+			}
+		}
+		// TODO updateScreen in UI here
+	}
+
+	public void draw_visible()
+	{
+		final int[] yiq = new int[AppleNTSC.H];
+		for (int row = 0; row < 192; ++row)
+		{
+			final CB cb = get_cb(row);
+			final IQ iq_factor = get_iq_factor(cb);
+			ntsc_to_yiq(row*AppleNTSC.H+350,AppleNTSC.H-2-350,iq_factor,yiq);
+			for (int col = 350; col < AppleNTSC.H-2; ++col)
+			{
+				final int rgb = yiq2rgb(yiq[col-350]);
+				final int ip = row*(AppleNTSC.H-2-350)*2+(col-350);
+				this.imageBuf.setElem(ip,rgb);
+				this.imageBuf.setElem(ip+(AppleNTSC.H-2-350),rgb);
+			}
+		}
+		// TODO updateScreen in UI here
+	}
 
 
 
@@ -369,12 +405,12 @@ public class AnalogTV implements VideoDisplayDevice
 	private final SortedSet<Integer> catalog = new TreeSet<Integer>();
 
 //	private void ntsc_to_yiq(final int isignal, final IQ iq_factor, final analogtv_yiq[] yiq)
-	private void ntsc_to_yiq(final int isignal, final IQ iq_factor, final int[] yiq)
+	private void ntsc_to_yiq(final int isignal, final int siglen, final IQ iq_factor, final int[] yiq)
 	{
 		final Lowpass_3_58_MHz filterY = new Lowpass_3_58_MHz();
 		final Lowpass_1_5_MHz filterI = new Lowpass_1_5_MHz();
 		final Lowpass_1_5_MHz filterQ = new Lowpass_1_5_MHz();
-		for (int off = 0; off < AppleNTSC.H; ++off)
+		for (int off = 0; off < siglen; ++off)
 		{
 			final int sig = this.signal[isignal + off];
 			final int y = filterY.transition(sig); // + 40; // to show blacker-than-black levels

@@ -20,7 +20,7 @@ public class MonitorControlPanel extends JPanel
 	{
 		setLayout(new FlowLayout());
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		setOpaque(true);
+		setOpaque(false);
 		addNotify();
 		setFocusable(false);
 
@@ -30,6 +30,7 @@ public class MonitorControlPanel extends JPanel
 
 	    final JRadioButton powerOn = new JRadioButton("ON");
 	    powerOn.setFocusable(false);
+	    powerOn.setOpaque(false);
 	    power.add(powerOn);
 	    powerOn.addActionListener(new ActionListener()
 	    {
@@ -45,6 +46,7 @@ public class MonitorControlPanel extends JPanel
 	    final JRadioButton powerOff = new JRadioButton("OFF");
 	    powerOff.setSelected(true);
 	    powerOff.setFocusable(false);
+	    powerOff.setOpaque(false);
 	    power.add(powerOff);
 	    powerOff.addActionListener(new ActionListener()
 	    {

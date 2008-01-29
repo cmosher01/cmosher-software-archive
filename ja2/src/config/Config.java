@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
+import keyboard.HyperMode;
 import keyboard.KeypressQueue;
 import cards.Card;
 import cards.ClockCard;
@@ -21,7 +22,6 @@ import cards.stdio.StandardOut;
 import chipset.InvalidMemoryLoad;
 import chipset.Memory;
 import chipset.Slots;
-import chipset.Throttle;
 
 /*
  * Created on Dec 1, 2007
@@ -29,12 +29,12 @@ import chipset.Throttle;
 public class Config
 {
 	private final String filename;
-	private final Throttle throttle;
+	private final HyperMode hyper;
 
-	public Config(final String filename, final Throttle throttle)
+	public Config(final String filename, final HyperMode hyper)
 	{
 		this.filename = filename;
-		this.throttle = throttle;
+		this.hyper = hyper;
 	}
 
 	public void parseConfig(final Memory memory, final Slots slots, final StandardIn.EOFHandler eofHandler)
@@ -216,7 +216,7 @@ public class Config
 		}
 		else if (cardType.equalsIgnoreCase("disk"))
 		{
-	    	card = new DiskController(this.throttle);
+	    	card = new DiskController(this.hyper);
 		}
 		else if (cardType.equalsIgnoreCase("clock"))
 		{

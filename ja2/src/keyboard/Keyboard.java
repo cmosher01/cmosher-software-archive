@@ -1,11 +1,5 @@
 package keyboard;
 
-
-
-import chipset.Throttle;
-
-
-
 /*
  * Created on Sep 12, 2007
  */
@@ -17,7 +11,7 @@ import chipset.Throttle;
 public class Keyboard implements KeyboardInterface
 {
 	private final KeypressQueue keys;
-	private final Throttle throttle;
+	private final HyperMode hyper;
 	private boolean lossless = true;
 
 	private byte latch;
@@ -27,10 +21,10 @@ public class Keyboard implements KeyboardInterface
 
 
 
-	public Keyboard(final KeypressQueue keys, final Throttle throttle)
+	public Keyboard(final KeypressQueue keys, final HyperMode hyper)
 	{
 		this.keys = keys;
-		this.throttle = throttle;
+		this.hyper = hyper;
 	}
 
 	public void clear()
@@ -55,7 +49,7 @@ public class Keyboard implements KeyboardInterface
 
 	private void waitIfTooFast()
 	{
-		if (this.throttle.isHyper())
+		if (this.hyper.isHyper())
 		{
 			return;
 		}

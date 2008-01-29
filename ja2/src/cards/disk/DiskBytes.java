@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.concurrent.atomic.AtomicBoolean;
-import chipset.Throttle;
+import keyboard.HyperMode;
 import util.Util;
 
 /*
@@ -20,7 +20,7 @@ public class DiskBytes
 {
 	private static final int BYTES_PER_TRACK = 0x1A00;
 
-	private final Throttle throttle;
+	private final HyperMode hyper;
 
 	private byte[][] bytes;
 
@@ -32,9 +32,9 @@ public class DiskBytes
 	private int waitTimes;
 	private final AtomicBoolean modified = new AtomicBoolean();
 
-	public DiskBytes(final Throttle throttle)
+	public DiskBytes(final HyperMode throttle)
 	{
-		this.throttle = throttle;
+		this.hyper = throttle;
 		unload();
 	}
 
@@ -148,7 +148,7 @@ public class DiskBytes
 
 	private void waitIfTooFast()
 	{
-		if (this.throttle.isHyper())
+		if (this.hyper.isHyper())
 		{
 			return;
 		}
