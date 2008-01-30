@@ -3,20 +3,9 @@ package video;
 import gui.UI;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicBoolean;
-import com.surveysampling.hash.SimpleHashAssocArray;
-import com.surveysampling.hash.SimpleHashAssocArray.KeyNotFoundException;
-import com.surveysampling.hash.SimpleHashAssocArray.NullKeyException;
-import com.surveysampling.hash.SimpleHashAssocArray.NullValueException;
 
 /*
  * Created on Jan 18, 2008
@@ -106,7 +95,7 @@ public class AnalogTV implements VideoDisplayDevice
 
 
 
-	public void draw()
+	private void draw()
 	{
 		int pi = 0;
 		final int[] yiq = new int[AppleNTSC.H];
@@ -131,7 +120,7 @@ public class AnalogTV implements VideoDisplayDevice
 		this.ui.updateScreen();
 	}
 
-	public void draw_signal()
+	private void draw_signal()
 	{
 		int pi = 0;
 		for (int i = 0; i < this.signal.length; ++i)
@@ -150,7 +139,7 @@ public class AnalogTV implements VideoDisplayDevice
 		this.ui.updateScreen();
 	}
 
-	public void draw_visible_signal()
+	private void draw_visible_signal()
 	{
 		for (int row = 0; row < 192; ++row)
 		{
@@ -168,7 +157,7 @@ public class AnalogTV implements VideoDisplayDevice
 		this.ui.updateScreen();
 	}
 
-	public void draw_visible()
+	private void draw_visible()
 	{
 		final int[] yiq = new int[AppleNTSC.H];
 		for (int row = 0; row < 192; ++row)
@@ -372,9 +361,9 @@ public class AnalogTV implements VideoDisplayDevice
 		double g = ((yiq&0xFF)-140) - 0.272 * (((yiq>>8)&0xFF)-140) - 0.647 * (((yiq>>16)&0xFF)-140);
 		double b = ((yiq&0xFF)-140) - 1.105 * (((yiq>>8)&0xFF)-140) + 1.702 * (((yiq>>16)&0xFF)-140);
 
-		r *= 1.3;
-		g *= 1.3;
-		b *= 1.3;
+//		r *= 1.3;
+//		g *= 1.3;
+//		b *= 1.3;
 
 		final int rgb =
 			(calc_color(r) << 16)| 
