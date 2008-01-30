@@ -178,10 +178,10 @@ public final class Ja2 implements Closeable
 
 
 
-    	final AnalogTV tv = new AnalogTV(screenImage);
+    	final AnalogTV tv = new AnalogTV(screenImage,ui);
     	final PictureGenerator picgen = new PictureGenerator(tv,videoMode);
 //    	final SimplePictureGenerator picgen = new SimplePictureGenerator(videoMode);
-    	final Video video = new Video(videoMode,ui,addressBus,screenImage,picgen);
+    	final Video video = new Video(videoMode,addressBus,picgen);
 
 
 

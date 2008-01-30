@@ -91,14 +91,15 @@ public class PictureGenerator
 		this.latchText = value & 0xFF;
 	}
 
-	public void resetFrame()
-	{
-		this.line = 0;
-	}
 
 	private boolean lasthires;
 	public void tick(final int t)
 	{
+		if (t==0)
+		{
+			this.line = 0;
+		}
+
 		int cycles = TimingGenerator.CRYSTAL_CYCLES_PER_CPU_CYCLE;
 		if (this.hpos == TimingGenerator.HORIZ_CYCLES-1)
 		{
@@ -160,6 +161,7 @@ public class PictureGenerator
 		return bit;
 	}
 
+	private static final int[] lutCB = { AppleNTSC.BLANK_LEVEL,-AppleNTSC.CB_LEVEL,AppleNTSC.BLANK_LEVEL,+AppleNTSC.CB_LEVEL };
 	private void writeVideoSignal(final boolean shift, final boolean showLastHiRes, final int firstBlankedCycle, final int cycle, final boolean bit)
 	{
 		if (shift && cycle==0)
@@ -173,7 +175,7 @@ public class PictureGenerator
 			{
 				if (AppleNTSC.CB_START <= hcycle && hcycle < AppleNTSC.CB_END)
 				{
-					final int cb = (((hcycle-AppleNTSC.CB_START)%4/2*2-1)*AppleNTSC.CB_LEVEL/2);
+					final int cb = lutCB[(hcycle-AppleNTSC.CB_START)%4];
 					this.tv.putSignal(cb);
 				}
 				else if (AppleNTSC.SYNC_START <= hcycle && hcycle < AppleNTSC.BP_START)

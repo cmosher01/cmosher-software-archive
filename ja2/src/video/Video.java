@@ -1,9 +1,8 @@
 package video;
 
-import gui.UI;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBuffer;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 import chipset.AddressBus;
 import chipset.TimingGenerator;
 
@@ -34,40 +33,27 @@ public class Video
 
 
 	private final VideoMode mode;
-	private final UI ui;
 	private final AddressBus addressBus;
-	private final DataBuffer buf;
 	private final PictureGenerator picgen;
-//	private final SimplePictureGenerator simplepicgen;
 
 	private final TextCharacters textRows = new TextCharacters();
 
 
 
-	// somewhat arbitrary starting point for scanning... helps start
-	// an Apple ][ plus with a clean screen
-	private int t = 0;//VideoAddressing.BYTES_PER_FIELD-12*VideoAddressing.BYTES_PER_ROW;
+	private int t;
 
 	private boolean flash;
 	private int cflash;
 
-	private boolean killColor = true;
-	private boolean observedColors = true;
 
 
 
 
-
-//	public Video(final VideoMode mode, final UI ui, final AddressBus addressBus, final BufferedImage screenImage, final SimplePictureGenerator picgen) throws IOException
-	public Video(final VideoMode mode, final UI ui, final AddressBus addressBus, final BufferedImage screenImage, final PictureGenerator picgen) throws IOException
+	public Video(final VideoMode mode, final AddressBus addressBus, final PictureGenerator picgen) throws IOException
 	{
 		this.mode = mode;
-		this.ui = ui;
 		this.addressBus = addressBus;
-		this.buf = screenImage.getRaster().getDataBuffer();
-//		this.simplepicgen = picgen;
 		this.picgen = picgen;
-		this.picgen.resetFrame();
 
 		readCharacterRom();
 	}
@@ -75,21 +61,22 @@ public class Video
 	private void readCharacterRom() throws IOException
 	{
 		int off = this.textRows.read();
-		if (off != 0)
-		{
-			final String big;
-			if (off > 0)
-			{
-				big = "big";
-			}
-			else
-			{
-				big = "small";
-				off = -off;
-			}
-			this.ui.showMessage("Text-character-ROM file GI2513.ROM is invalid: the file is "+
-				off+" bytes too "+big+". Text may not be displayed correctly.");
-		}
+		// TODO: move this code out of here (let read throw)
+//		if (off != 0)
+//		{
+//			final String big;
+//			if (off > 0)
+//			{
+//				big = "big";
+//			}
+//			else
+//			{
+//				big = "small";
+//				off = -off;
+//			}
+//			this.ui.showMessage("Text-character-ROM file GI2513.ROM is invalid: the file is "+
+//				off+" bytes too "+big+". Text may not be displayed correctly.");
+//		}
 	}
 
 	public void tick()
@@ -105,9 +92,7 @@ public class Video
 
 		if (this.t >= VideoAddressing.BYTES_PER_FIELD)
 		{
-			this.ui.updateScreen();
 			this.t = 0;
-			this.picgen.resetFrame();
 		}
 	}
 
@@ -137,35 +122,21 @@ public class Video
 
     private void plotDataByte(final byte data)
 	{
-		final int x = this.t % VideoAddressing.BYTES_PER_ROW;
-		if (x < VISIBLE_X_OFFSET)
-		{
-//			return;
-		}
-
-		final int y = this.t / VideoAddressing.BYTES_PER_ROW;
-		if (y >= VideoAddressing.VISIBLE_ROWS_PER_FIELD)
-		{
-//			return;
-		}
-
-		final int rowToPlot = getRowToPlot(data,y);
-
-
+		final int rowToPlot = getRowToPlot(data);
 
 		if (this.mode.isDisplayingText(this.t))
 			this.picgen.loadText(rowToPlot);
 		else
 			this.picgen.loadGraphics(rowToPlot);
-//		this.simplepicgen.plotRow(rowToPlot,x,y,t);
 	}
 
-	private int getRowToPlot(int d, final int y)
+	private int getRowToPlot(int d)
 	{
 		if (this.mode.isDisplayingText(this.t))
 		{
 			d &= 0xFF;
 			final boolean inverse = inverseChar(d);
+			final int y = this.t / VideoAddressing.BYTES_PER_ROW;
 			d = this.textRows.get(((d & 0x3F) << 3) | (y & 0x07));
 			if (inverse)
 			{
@@ -195,15 +166,5 @@ public class Video
 		}
 
 		return inverse;
-	}
-
-	public void toggleColorMap()
-	{
-		this.observedColors = !this.observedColors;
-	}
-
-	public void toggleColorKiller()
-	{
-		this.killColor = !this.killColor;
 	}
 }

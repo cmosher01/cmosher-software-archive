@@ -10,6 +10,10 @@ import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import video.AnalogTV;
 import video.VideoDisplayDevice;
 
 public class MonitorControlPanel extends JPanel

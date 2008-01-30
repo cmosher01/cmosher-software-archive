@@ -33,11 +33,11 @@ public class VideoKeyHandler extends KeyAdapter implements KeyListener
 		final int key = e.getKeyCode();
 		if (key == KeyEvent.VK_F4)
 		{
-			this.video.toggleColorKiller();
+//			this.video.toggleColorKiller();
 		}
 		else if (key == KeyEvent.VK_F5)
 		{
-			this.video.toggleColorMap();
+//			this.video.toggleColorMap();
 		}
 	}
 }

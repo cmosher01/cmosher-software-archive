@@ -1,5 +1,6 @@
 package video;
 
+import gui.UI;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.util.ArrayList;
@@ -22,107 +23,30 @@ import com.surveysampling.hash.SimpleHashAssocArray.NullValueException;
  */
 public class AnalogTV implements VideoDisplayDevice
 {
+	private final DataBuffer imageBuf;
+	private final UI ui;
+
 	private final AtomicBoolean on = new AtomicBoolean();
 	private final int[] signal = new int[AppleNTSC.SIGNAL_LEN];
-	private final DataBuffer imageBuf;
-
-//	private double agclevel = 1;
-//	private double color_control = 1;
-
 	int isig;
 
 
 
-//	private static class analogtv_yiq
-//	{
-//		private final int y;
-//		private final int i;
-//		private final int q;
-//		private final int hash;
-//
-//		public analogtv_yiq(final int y, final int i, final int q)
-//		{
-//			this.y = y;
-//			this.i = i;
-//			this.q = q;
-//			this.hash = getHash();
-//		}
-//
-//		private int getHash()
-//		{
-//			return ((this.q+140)<<16) | ((this.i+140)<<8) | (this.y+140);
-//		}
-//
-//		public int getI()
-//		{
-//			return this.i;
-//		}
-//
-//		public int getQ()
-//		{
-//			return this.q;
-//		}
-//
-//		public int getY()
-//		{
-//			return this.y;
-//		}
-//
-//		@Override
-//		public int hashCode()
-//		{
-//			return this.hash;
-//		}
-//
-//		@Override
-//		public boolean equals(final Object obj)
-//		{
-//			if (!(obj instanceof analogtv_yiq))
-//			{
-//				return false;
-//			}
-//			final analogtv_yiq that = (analogtv_yiq)obj;
-//			return this.y==that.y && this.i==that.i && this.q==that.q;
-//		}
-//	}
-
-
-//	private void dump_signal()
-//	{
-//		int pi = 0;
-//		for (int i = 0; i < this.signal.length; ++i)
-//		{
-//			if (pi==0)
-//				System.out.printf("%2d: ",i/AppleNTSC.H/8);
-//			System.out.print(pi==AppleNTSC.PIC_START ? "|" : " ");
-//			System.out.printf("%+4d",this.signal[i]);
-//			++pi;
-//			if (pi >= AppleNTSC.H)
-//			{
-//				System.out.println();
-//				pi = 0;
-//			}
-//		}
-//		final ArrayList<Integer> rSize = new ArrayList<Integer>(mapYIQtoRGB.getBucketCount());
-//		mapYIQtoRGB.getBucketSizes(rSize);
-//		for (Integer s: rSize)
-//		{
-//			System.out.println("bucket size: "+s);
-//		}
-//	}
-
 	/**
 	 * @param image
+	 * @param ui
 	 */
-	public AnalogTV(final BufferedImage image)
+	public AnalogTV(final BufferedImage image, final UI ui)
 	{
 		this.imageBuf = image.getRaster().getDataBuffer();
+		this.ui = ui;
 	}
 
-	private void dump()
+
+
+	public void dump()
 	{
 		int pi = 0;
-//		final analogtv_yiq[] yiq = new analogtv_yiq[AppleNTSC.H];
 		final int[] yiq = new int[AppleNTSC.H];
 		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
 		{
@@ -130,22 +54,22 @@ public class AnalogTV implements VideoDisplayDevice
 			final IQ iq_factor = get_iq_factor(cb);
 			ntsc_to_yiq(lineno*AppleNTSC.H,AppleNTSC.H,iq_factor,yiq);
 			if (pi==0)
-				System.out.printf("%2d: ",lineno/8);
+				System.out.printf("%3d:--------------------------------------------------------------------------\n",lineno);
 			for (int colno = 0; colno < AppleNTSC.H; ++colno)
 			{
 				System.out.print(pi==AppleNTSC.PIC_START ? "|" : " ");
 				final int sig = this.signal[lineno*AppleNTSC.H+colno];
-				System.out.printf("%+4d",sig);
+				System.out.printf(" %+04d",sig);
 				final int yiqv = yiq[colno];
 				int y = (yiqv&0xFF)-140;
 				int i = ((yiqv>>8)&0xFF)-140;
 				int q = ((yiqv>>16)&0xFF)-140;
-				System.out.printf("(%+3d,%+3d,%+3d) ",y,i,q);
+				System.out.printf("(%+03d,%+03d,%+03d)",y,i,q);
 				final int rgb = yiq2rgb(yiq[colno]);
 				final int r = (rgb >> 16) & 0xff;
 				final int g = (rgb >> 8) & 0xff;
 				final int b = (rgb ) & 0xff;
-				System.out.printf("(%3d,%3d,%3d)",r,g,b);
+				System.out.printf("[%03d,%03d,%03d]",r,g,b);
 
 				++pi;
 				if (pi >= AppleNTSC.H)
@@ -156,6 +80,8 @@ public class AnalogTV implements VideoDisplayDevice
 			}
 		}
 	}
+
+
 
 	public void putSignal(final int level)
 	{
@@ -174,11 +100,15 @@ public class AnalogTV implements VideoDisplayDevice
 		}
 	}
 
+
+
+
+
+
+
 	public void draw()
 	{
-
 		int pi = 0;
-//		final analogtv_yiq[] yiq = new analogtv_yiq[AppleNTSC.H];
 		final int[] yiq = new int[AppleNTSC.H];
 		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
 		{
@@ -198,7 +128,7 @@ public class AnalogTV implements VideoDisplayDevice
 				}
 			}
 		}
-		// TODO updateScreen in UI here
+		this.ui.updateScreen();
 	}
 
 	public void draw_signal()
@@ -217,7 +147,7 @@ public class AnalogTV implements VideoDisplayDevice
 				pi += AppleNTSC.H;
 			}
 		}
-		// TODO updateScreen in UI here
+		this.ui.updateScreen();
 	}
 
 	public void draw_visible_signal()
@@ -235,7 +165,7 @@ public class AnalogTV implements VideoDisplayDevice
 				this.imageBuf.setElem(ip+(AppleNTSC.H-2-350),rgb);
 			}
 		}
-		// TODO updateScreen in UI here
+		this.ui.updateScreen();
 	}
 
 	public void draw_visible()
@@ -254,8 +184,10 @@ public class AnalogTV implements VideoDisplayDevice
 				this.imageBuf.setElem(ip+(AppleNTSC.H-2-350),rgb);
 			}
 		}
-		// TODO updateScreen in UI here
+		this.ui.updateScreen();
 	}
+
+
 
 
 
@@ -275,7 +207,6 @@ public class AnalogTV implements VideoDisplayDevice
 		}
 		public double get(int i) { return this.iq[i]; }
 	}
-	private static final Map<CB,IQ> cacheCB = new HashMap<CB,IQ>(2,1);
 
 	private static final int CB_EXTRA = 32;
 	private static class CB
@@ -334,8 +265,11 @@ public class AnalogTV implements VideoDisplayDevice
 		}
 	}
 
+
+
+
 	private static final double PH = 127.0/128.0;
-	private double[] get_cb_phase(CB cb)
+	private double[] get_cb_phase(final CB cb)
 	{
 		final double[] phase = new double[4];
 		for (int i = 0; i < cb.length(); ++i)
@@ -367,8 +301,15 @@ public class AnalogTV implements VideoDisplayDevice
 		return new CB(this.rcb);
 	}
 
+
+	private static final Map<CB,IQ> cacheCB = new HashMap<CB,IQ>(2,1);
+
 	private static final double COLOR_THRESH = 2.8;
-	private static final double COLOR_BASE = 104;
+	private static final double IQ_OFFSET_DEGREES = -33;
+	private static final double TINT_I = -Math.cos(IQ_OFFSET_DEGREES * Math.PI / 180);
+	private static final double TINT_Q = +Math.sin(IQ_OFFSET_DEGREES * Math.PI / 180);
+
+	private static final IQ BLACK_AND_WHITE = new IQ();
 
 	private IQ get_iq_factor(final CB cb)
 	{
@@ -381,30 +322,24 @@ public class AnalogTV implements VideoDisplayDevice
 		final double cb_q = (cb_phase[3] - cb_phase[1]) / 16;
 		if (cb_i*cb_i + cb_q*cb_q < COLOR_THRESH)
 		{
-			final IQ iq = new IQ();
-			cacheCB.put(cb,iq);
-			return iq;
+			return BLACK_AND_WHITE;
 		}
 //		System.out.printf("%+8.2f,%+8.2f,%+8.2f,%+8.2f\n",cb_phase[0],cb_phase[1],cb_phase[2],cb_phase[3]);
 
 		final double[] iq_factor = new double[4];
 
-		final double tint_i = -Math.cos((COLOR_BASE) * Math.PI / 180);
-		final double tint_q = +Math.sin((COLOR_BASE) * Math.PI / 180);
-		iq_factor[0] = (cb_i * tint_i - cb_q * tint_q);
+		iq_factor[0] = cb_i * TINT_I - cb_q * TINT_Q;
 		iq_factor[2] = -iq_factor[0];
-		iq_factor[1] = (cb_q * tint_i + cb_i * tint_q);
+		iq_factor[1] = cb_q * TINT_I + cb_i * TINT_Q;
 		iq_factor[3] = -iq_factor[1];
 
 //		System.out.printf("%+8.2f,%+8.2f,%+8.2f,%+8.2f\n",iq_factor[0],iq_factor[1],iq_factor[2],iq_factor[3]);
 		final IQ iq = new IQ(iq_factor);
+//		System.out.println("adding to cb cache"); // TODO don't add to cache while displaying static
 		cacheCB.put(cb,iq);
 		return iq;
 	}
 
-	private final SortedSet<Integer> catalog = new TreeSet<Integer>();
-
-//	private void ntsc_to_yiq(final int isignal, final IQ iq_factor, final analogtv_yiq[] yiq)
 	private void ntsc_to_yiq(final int isignal, final int siglen, final IQ iq_factor, final int[] yiq)
 	{
 		final Lowpass_3_58_MHz filterY = new Lowpass_3_58_MHz();
@@ -427,37 +362,12 @@ public class AnalogTV implements VideoDisplayDevice
 				q = filterQ.transition((int)(sig * iq_factor.get((off + 3) & 3)));
 			}
 
-//			yiq[off] = new analogtv_yiq(y,i,q);
 			yiq[off] = (((q+140)&0xff) << 16) | (((i+140)&0xff) << 8) | ((y+140)&0xff);
 		}
 	}
 
-//	public void dumpYs()
-//	{
-//		for (final Integer y : this.catalog)
-//		{
-//			System.out.println(y);
-//		}
-//	}
-
-//	private static SimpleHashAssocArray<analogtv_yiq,Integer> mapYIQtoRGB = new SimpleHashAssocArray<analogtv_yiq,Integer>(1013);
-//	private static int yiq2rgb(final analogtv_yiq yiq)
 	private static int yiq2rgb(final int yiq)
 	{
-//		if (mapYIQtoRGB.containsKey(yiq))
-//		{
-//			try
-//			{
-//				return mapYIQtoRGB.get(yiq);
-//			}
-//			catch (KeyNotFoundException e)
-//			{
-//				throw new IllegalStateException(e);
-//			}
-//		}
-//		double r = yiq.getY() + 0.956 * yiq.getI() + 0.621 * yiq.getQ();
-//		double g = yiq.getY() - 0.272 * yiq.getI() - 0.647 * yiq.getQ();
-//		double b = yiq.getY() - 1.105 * yiq.getI() + 1.702 * yiq.getQ();
 		double r = ((yiq&0xFF)-140) + 0.956 * (((yiq>>8)&0xFF)-140) + 0.621 * (((yiq>>16)&0xFF)-140);
 		double g = ((yiq&0xFF)-140) - 0.272 * (((yiq>>8)&0xFF)-140) - 0.647 * (((yiq>>16)&0xFF)-140);
 		double b = ((yiq&0xFF)-140) - 1.105 * (((yiq>>8)&0xFF)-140) + 1.702 * (((yiq>>16)&0xFF)-140);
@@ -470,16 +380,6 @@ public class AnalogTV implements VideoDisplayDevice
 			(calc_color(r) << 16)| 
 			(calc_color(g) <<  8)| 
 			(calc_color(b) <<  0);
-
-//		try
-//		{
-//			System.out.printf("y,i,q,h,b: %+5d,%+5d,%+5d,%8x, %4d\n",yiq.y,yiq.i,yiq.q,yiq.hash,yiq.hash%1013);
-//			mapYIQtoRGB.put(yiq,rgb);
-//		}
-//		catch (Throwable e)
-//		{
-//			throw new IllegalStateException(e);
-//		}
 
 		return rgb;
 	}
