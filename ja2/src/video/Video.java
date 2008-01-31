@@ -80,9 +80,9 @@ public class Video
 	public void tick()
 	{
 		final byte data = getDataByte();
-		plotDataByte(data);
+		final int rowToPlot = getRowToPlot(data);
 
-		this.picgen.tick(this.t);
+		this.picgen.tick(this.t,rowToPlot);
 
 		updateFlash();
 
@@ -116,16 +116,6 @@ public class Video
 			addrTables = Video.hiresAddrTables;
 		}
 		return this.addressBus.read(addrTables[this.mode.getPage()][this.t]);
-	}
-
-    private void plotDataByte(final byte data)
-	{
-		final int rowToPlot = getRowToPlot(data);
-
-		if (this.mode.isDisplayingText(this.t))
-			this.picgen.loadText(rowToPlot);
-		else
-			this.picgen.loadGraphics(rowToPlot);
 	}
 
 	private int getRowToPlot(int d)

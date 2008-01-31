@@ -103,8 +103,13 @@ public class PictureGenerator
 
 
 	private boolean lasthires;
-	public void tick(final int t)
+	public void tick(final int t, final int rowToPlot)
 	{
+		if (this.mode.isDisplayingText(t))
+			loadText(rowToPlot);
+		else
+			loadGraphics(rowToPlot);
+
 		if (t==0)
 		{
 			this.line = 0;
