@@ -53,12 +53,12 @@ public class AnalogTV implements VideoDisplayDevice
 				int y = (yiqv&0xFF)-140;
 				int i = ((yiqv>>8)&0xFF)-140;
 				int q = ((yiqv>>16)&0xFF)-140;
-				System.out.printf("(%+03d,%+03d,%+03d)",y,i,q);
+				System.out.printf("(%+04d,%+04d,%+04d)",y,i,q);
 				final int rgb = yiq2rgb(yiq[colno]);
 				final int r = (rgb >> 16) & 0xff;
 				final int g = (rgb >> 8) & 0xff;
 				final int b = (rgb ) & 0xff;
-				System.out.printf("[%03d,%03d,%03d]",r,g,b);
+				System.out.printf("[%06X:%03d,%03d,%03d]",rgb,r,g,b);
 
 				++pi;
 				if (pi >= AppleNTSC.H)

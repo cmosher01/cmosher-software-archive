@@ -26,6 +26,7 @@ public class DiskController extends Card
 	private DiskDriveControllerPanel panel;
 
 
+	// TODO for a rev. 0 motherboard, the disk controller will auto reset the CPU
 
 	public DiskController(final HyperMode hyper)
 	{

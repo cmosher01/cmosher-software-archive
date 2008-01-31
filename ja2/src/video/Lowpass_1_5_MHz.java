@@ -5,32 +5,16 @@ package video;
  */
 public final class Lowpass_1_5_MHz
 {
-	private static final int NZEROS = 5;
-	private static final int NPOLES = 5;
-	private static final int GAIN = 98;
-	private final int[] xv = new int[NZEROS + 1];
-	private final int[] yv = new int[NPOLES + 1];
+	private int x0,x1,x2;
+	private int y0,y1,y2,y3,y4;
 
 	public int transition(final int next_input_value)
 	{
-		xv[0] = xv[1];
-		xv[1] = xv[2];
-		xv[2] = xv[3];
-		xv[3] = xv[4];
-		xv[4] = xv[5];
-		xv[5] = next_input_value / GAIN;
+		x0 = x1; x1 = x2;
+		x2 = next_input_value >> 3;
 
-		yv[0] = yv[1];
-		yv[1] = yv[2];
-		yv[2] = yv[3];
-		yv[3] = yv[4];
-		yv[4] = yv[5];
-		mult();
-		return yv[5];
-	}
-
-	private void mult()
-	{
-		yv[5] = (xv[0] + xv[5]) + 3 * (xv[1]+xv[4])  +((xv[2]+xv[3])<<2)    + (yv[2]>>2) - ((yv[3]*19)>>4)  +(yv[4]*7/4);
+		y0 = y1; y1 = y2; y2 = y3; y3 = y4;
+		y4 = x0+x2-y0/22+y1/3-y2+y3+(y3>>1);
+		return y4;
 	}
 }
