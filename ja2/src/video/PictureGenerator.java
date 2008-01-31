@@ -24,8 +24,13 @@ public class PictureGenerator
 
 	private void shiftLoRes()
 	{
-		// ABCDEFGH --> DABCHEFG
-
+		/*
+		 * +--------+ +--------+
+		 * |        | |        |
+		 * +->ABCD->+ +->EFGH->+
+		 * 
+		 * ABCDEFGH --> DABCHEFG
+		 */
 
 		int rot_bits = this.latchGraphics & 0x11;
 		// 000D000H
@@ -43,8 +48,13 @@ public class PictureGenerator
 
 	private void shiftHiRes()
 	{
-		// ABCDEFGH --> DABCDEFG
-
+		/*
+		 * +--------+
+		 * |        |
+		 * +->ABCD->+--->EFGH
+		 * 
+		 * ABCDEFGH --> DABCDEFG
+		 */
 
 		int rot_bits = this.latchGraphics & 0x10;
 		// 000D0000
@@ -60,7 +70,7 @@ public class PictureGenerator
 
 	private void shiftText()
 	{
-		this.latchText >>= 1;
+		this.latchText >>>= 1;
 	}
 
 	private boolean getTextBit()
