@@ -90,13 +90,13 @@ public class PictureGenerator
 		return ((nibble >> (odd ? 2 : 0)) & 1) != 0;
 	}
 
-	public void loadGraphics(final int value)
+	private void loadGraphics(final int value)
 	{
 		this.latchGraphics = value & 0xFF;
 		this.d7 = (this.latchGraphics & 0x80) != 0;
 	}
 
-	public void loadText(final int value)
+	private void loadText(final int value)
 	{
 		this.latchText = value & 0xFF;
 	}
