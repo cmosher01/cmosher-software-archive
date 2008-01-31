@@ -83,7 +83,7 @@ public class AnalogTV implements VideoDisplayDevice
 		{
 			if (isOn())
 			{
-				this.draw_visible();
+				this.draw_color_monitor();
 			}
 			this.isig = 0;
 		}
@@ -174,6 +174,58 @@ public class AnalogTV implements VideoDisplayDevice
 			}
 		}
 		this.ui.updateScreen();
+	}
+
+	private void draw_color_monitor()
+	{
+		final int[] rgb = new int[AppleNTSC.H];
+		for (int row = 0; row < 192; ++row)
+		{
+			ntsc_to_rgb_monitor(row*AppleNTSC.H+350,AppleNTSC.H-2-350,rgb);
+			for (int col = 350; col < AppleNTSC.H-2; ++col)
+			{
+				final int rgbv = rgb[col-350];
+				final int ip = row*(AppleNTSC.H-2-350)*2+(col-350);
+				this.imageBuf.setElem(ip,rgbv);
+				this.imageBuf.setElem(ip+(AppleNTSC.H-2-350),rgbv);
+			}
+		}
+		this.ui.updateScreen();
+	}
+
+
+
+
+
+
+
+	private void ntsc_to_rgb_monitor(final int isignal, final int siglen, int[] rgb)
+	{
+		int s0, s1, se;
+		s0 = s1 = isignal;
+		se = isignal+siglen;
+		while (s1 < se)
+		{
+			// no signal (black)
+			while (this.signal[s0] < 50 && s0<se) { rgb[s0-isignal] = 0; ++s0; }
+
+			// signal (white, grey, or color)
+			s1 = s0;
+			while (this.signal[s1] > 50 && s1<se) { ++s1; }
+			final int slen = s1-s0;
+			int c = 0;
+			if (slen >= 4)
+			{
+				c = 0xFFFFFF;
+			}
+			else
+			{
+				c = 0x00FF00;
+			}
+			for (int i = s0; i < s1; ++i)
+				rgb[i-isignal] = c | 0xFF000000;
+			s0 = s1;
+		}
 	}
 
 
