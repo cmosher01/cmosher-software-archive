@@ -35,39 +35,60 @@ public class AnalogTV implements VideoDisplayDevice
 
 	public void dump()
 	{
-		int pi = 0;
 		final int[] yiq = new int[AppleNTSC.H];
-		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
+		for (int row = 0; row < 192; ++row)
 		{
-			final CB cb = get_cb(lineno);
+			final CB cb = get_cb(row);
 			final IQ iq_factor = get_iq_factor(cb);
-			ntsc_to_yiq(lineno*AppleNTSC.H,AppleNTSC.H,iq_factor,yiq);
-			if (pi==0)
-				System.out.printf("%3d:--------------------------------------------------------------------------\n",lineno);
-			for (int colno = 0; colno < AppleNTSC.H; ++colno)
+			ntsc_to_yiq(row*AppleNTSC.H+350,AppleNTSC.H-2-350,iq_factor,yiq);
+			for (int col = 350; col < AppleNTSC.H-2; ++col)
 			{
-				System.out.print(pi==AppleNTSC.PIC_START ? "|" : " ");
-				final int sig = this.signal[lineno*AppleNTSC.H+colno];
+				final int sig = this.signal[row*AppleNTSC.H+col];
 				System.out.printf(" %+04d",sig);
-				final int yiqv = yiq[colno];
-				int y = (yiqv&0xFF)-140;
-				int i = ((yiqv>>8)&0xFF)-140;
-				int q = ((yiqv>>16)&0xFF)-140;
+				final int yiqv = yiq[col-350];
+				int y = (yiqv&0xFF)-IQINTOFF;
+				int i = ((yiqv>>8)&0xFF)-IQINTOFF;
+				int q = ((yiqv>>16)&0xFF)-IQINTOFF;
 				System.out.printf("(%+04d,%+04d,%+04d)",y,i,q);
-				final int rgb = yiq2rgb(yiq[colno]);
+
+				final int rgb = yiq2rgb(yiqv);
 				final int r = (rgb >> 16) & 0xff;
 				final int g = (rgb >> 8) & 0xff;
 				final int b = (rgb ) & 0xff;
 				System.out.printf("[%06X:%03d,%03d,%03d]",rgb,r,g,b);
-
-				++pi;
-				if (pi >= AppleNTSC.H)
-				{
-					System.out.println();
-					pi = 0;
-				}
 			}
+			System.out.println();
 		}
+
+//		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
+//		{
+//			final CB cb = get_cb(lineno);
+//			final IQ iq_factor = get_iq_factor(cb);
+//			ntsc_to_yiq(lineno*AppleNTSC.H,AppleNTSC.H,iq_factor,yiq);
+//			for (int colno = 0; colno < AppleNTSC.H; ++colno)
+//			{
+//				System.out.print(pi==AppleNTSC.PIC_START ? "|" : " ");
+//				final int sig = this.signal[lineno*AppleNTSC.H+colno];
+//				System.out.printf(" %+04d",sig);
+//				final int yiqv = yiq[colno];
+//				int y = (yiqv&0xFF)-IQINTOFF;
+//				int i = ((yiqv>>8)&0xFF)-IQINTOFF;
+//				int q = ((yiqv>>16)&0xFF)-IQINTOFF;
+//				System.out.printf("(%+04d,%+04d,%+04d)",y,i,q);
+//				final int rgb = yiq2rgb(yiq[colno]);
+//				final int r = (rgb >> 16) & 0xff;
+//				final int g = (rgb >> 8) & 0xff;
+//				final int b = (rgb ) & 0xff;
+//				System.out.printf("[%06X:%03d,%03d,%03d]",rgb,r,g,b);
+//
+//				++pi;
+//				if (pi >= AppleNTSC.H)
+//				{
+//					System.out.println();
+//					pi = 0;
+//				}
+//			}
+//		}
 	}
 
 
@@ -83,7 +104,7 @@ public class AnalogTV implements VideoDisplayDevice
 		{
 			if (isOn())
 			{
-				this.draw_color_monitor();
+				this.draw_visible();//color_monitor();
 			}
 			this.isig = 0;
 		}
@@ -198,6 +219,29 @@ public class AnalogTV implements VideoDisplayDevice
 
 
 
+	private static final int[] hirescolor =
+	{
+		A2Colors.COLOR[A2ColorIndex.HIRES_GREEN.ordinal()],
+		A2Colors.COLOR[A2ColorIndex.HIRES_ORANGE.ordinal()],
+		A2Colors.COLOR[A2ColorIndex.HIRES_VIOLET.ordinal()],
+		A2Colors.COLOR[A2ColorIndex.HIRES_BLUE.ordinal()],
+	};
+
+	private static final int[] loreslightcolor =
+	{
+		A2Colors.COLOR[A2ColorIndex.LIGHT_BROWN.ordinal()],
+		A2Colors.COLOR[A2ColorIndex.LIGHT_MAGENTA.ordinal()],
+		A2Colors.COLOR[A2ColorIndex.LIGHT_BLUE.ordinal()],
+		A2Colors.COLOR[A2ColorIndex.LIGHT_BLUE_GREEN.ordinal()],
+	};
+
+	private static final int[] loresdarkcolor =
+	{
+		A2Colors.COLOR[A2ColorIndex.DARK_BLUE_GREEN.ordinal()],
+		A2Colors.COLOR[A2ColorIndex.DARK_BROWN.ordinal()],
+		A2Colors.COLOR[A2ColorIndex.DARK_MAGENTA.ordinal()],
+		A2Colors.COLOR[A2ColorIndex.DARK_BLUE.ordinal()],
+	};
 
 	private void ntsc_to_rgb_monitor(final int isignal, final int siglen, int[] rgb)
 	{
@@ -218,10 +262,22 @@ public class AnalogTV implements VideoDisplayDevice
 			{
 				c = 0xFFFFFF;
 			}
-			else
+			else if (slen == 1)
 			{
-				c = 0x00FF00;
+				if (this.signal[s0-2] > 50 && this.signal[s0+2] > 50)
+					c = 0xFFFFFF;
+				else
+					c = loresdarkcolor[s0 % 4];
 			}
+			else if (slen == 2)
+			{
+				c = hirescolor[s0 % 4];
+			}
+			else if (slen == 3)
+			{
+				c = loreslightcolor[s0 % 4];
+			}
+
 			for (int i = s0; i < s1; ++i)
 				rgb[i-isignal] = c | 0xFF000000;
 			s0 = s1;
@@ -381,6 +437,7 @@ public class AnalogTV implements VideoDisplayDevice
 		return iq;
 	}
 
+	private static final int IQINTOFF = 130;
 	private void ntsc_to_yiq(final int isignal, final int siglen, final IQ iq_factor, final int[] yiq)
 	{
 		final Lowpass_3_58_MHz filterY = new Lowpass_3_58_MHz();
@@ -401,21 +458,21 @@ public class AnalogTV implements VideoDisplayDevice
 			{
 				i = filterI.transition((int)(sig * iq_factor.get(off & 3)));
 				q = filterQ.transition((int)(sig * iq_factor.get((off + 3) & 3)));
+				if (i > 125 || q > 125)
+				{
+					System.out.println("i "+i+" q "+q);
+				}
 			}
 
-			yiq[off] = (((q+140)&0xff) << 16) | (((i+140)&0xff) << 8) | ((y+140)&0xff);
+			yiq[off] = (((q+IQINTOFF)&0xff) << 16) | (((i+IQINTOFF)&0xff) << 8) | ((y+IQINTOFF)&0xff);
 		}
 	}
 
 	private static int yiq2rgb(final int yiq)
 	{
-		double r = ((yiq&0xFF)-140) + 0.956 * (((yiq>>8)&0xFF)-140) + 0.621 * (((yiq>>16)&0xFF)-140);
-		double g = ((yiq&0xFF)-140) - 0.272 * (((yiq>>8)&0xFF)-140) - 0.647 * (((yiq>>16)&0xFF)-140);
-		double b = ((yiq&0xFF)-140) - 1.105 * (((yiq>>8)&0xFF)-140) + 1.702 * (((yiq>>16)&0xFF)-140);
-
-//		r *= 1.3;
-//		g *= 1.3;
-//		b *= 1.3;
+		double r = ((yiq&0xFF)-IQINTOFF) + 0.956 * (((yiq>>8)&0xFF)-IQINTOFF) + 0.621 * (((yiq>>16)&0xFF)-IQINTOFF);
+		double g = ((yiq&0xFF)-IQINTOFF) - 0.272 * (((yiq>>8)&0xFF)-IQINTOFF) - 0.647 * (((yiq>>16)&0xFF)-IQINTOFF);
+		double b = ((yiq&0xFF)-IQINTOFF) - 1.105 * (((yiq>>8)&0xFF)-IQINTOFF) + 1.702 * (((yiq>>16)&0xFF)-IQINTOFF);
 
 		final int rgb =
 			(calc_color(r) << 16)| 
