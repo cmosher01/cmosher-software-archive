@@ -104,7 +104,7 @@ public class AnalogTV implements VideoDisplayDevice
 		{
 			if (isOn())
 			{
-				this.draw_new_color_tv();
+				this.draw_color_monitor();
 			}
 			this.isig = 0;
 		}
@@ -238,30 +238,31 @@ public class AnalogTV implements VideoDisplayDevice
 
 	private static final int[] hirescolor =
 	{
-		A2Colors.COLOR[A2ColorIndex.HIRES_GREEN.ordinal()],
-		A2Colors.COLOR[A2ColorIndex.HIRES_ORANGE.ordinal()],
-		A2Colors.COLOR[A2ColorIndex.HIRES_VIOLET.ordinal()],
-		A2Colors.COLOR[A2ColorIndex.HIRES_BLUE.ordinal()],
+		A2ColorsObserved.COLOR[A2ColorIndex.HIRES_GREEN.ordinal()],
+		A2ColorsObserved.COLOR[A2ColorIndex.HIRES_ORANGE.ordinal()],
+		A2ColorsObserved.COLOR[A2ColorIndex.HIRES_VIOLET.ordinal()],
+		A2ColorsObserved.COLOR[A2ColorIndex.HIRES_BLUE.ordinal()],
 	};
 
 	private static final int[] loreslightcolor =
 	{
-		A2Colors.COLOR[A2ColorIndex.LIGHT_BROWN.ordinal()],
-		A2Colors.COLOR[A2ColorIndex.LIGHT_MAGENTA.ordinal()],
-		A2Colors.COLOR[A2ColorIndex.LIGHT_BLUE.ordinal()],
-		A2Colors.COLOR[A2ColorIndex.LIGHT_BLUE_GREEN.ordinal()],
+		A2ColorsObserved.COLOR[A2ColorIndex.LIGHT_BROWN.ordinal()],
+		A2ColorsObserved.COLOR[A2ColorIndex.LIGHT_MAGENTA.ordinal()],
+		A2ColorsObserved.COLOR[A2ColorIndex.LIGHT_BLUE.ordinal()],
+		A2ColorsObserved.COLOR[A2ColorIndex.LIGHT_BLUE_GREEN.ordinal()],
 	};
 
 	private static final int[] loresdarkcolor =
 	{
-		A2Colors.COLOR[A2ColorIndex.DARK_BLUE_GREEN.ordinal()],
-		A2Colors.COLOR[A2ColorIndex.DARK_BROWN.ordinal()],
-		A2Colors.COLOR[A2ColorIndex.DARK_MAGENTA.ordinal()],
-		A2Colors.COLOR[A2ColorIndex.DARK_BLUE.ordinal()],
+		A2ColorsObserved.COLOR[A2ColorIndex.DARK_BLUE_GREEN.ordinal()],
+		A2ColorsObserved.COLOR[A2ColorIndex.DARK_BROWN.ordinal()],
+		A2ColorsObserved.COLOR[A2ColorIndex.DARK_MAGENTA.ordinal()],
+		A2ColorsObserved.COLOR[A2ColorIndex.DARK_BLUE.ordinal()],
 	};
 
 	private void ntsc_to_rgb_monitor(final int isignal, final int siglen, int[] rgb)
 	{
+		// TODO: check for color burst and act accordingly
 		int s0, s1, se;
 		s0 = s1 = isignal;
 		se = isignal+siglen;
@@ -303,24 +304,22 @@ public class AnalogTV implements VideoDisplayDevice
 
 	private void ntsc_to_rgb_newtv(final int isignal, final int siglen, int[] rgb)
 	{
-		int s0, s1, se;
-		s0 = s1 = isignal;
+		// TODO: check for color burst and act accordingly
+		int sp, s0, s1, se;
+		sp = s0 = s1 = isignal;
 		se = isignal+siglen;
 		int c = 0;
 		int slen = 0;
 		while (s1 < se)
 		{
-			// no signal (black)
-			int is = 0;
-			while (this.signal[s0] < 50 && s0<se)
+			// no signal; black...
+			sp = s0;
+			while (this.signal[s0] < 50 && s0<se) { rgb[s0-isignal] = 0; ++s0; }
+			// unless it's too short, then color it (but not white)
+			if (s0-sp < 4 && c != 0xFFFFFFFF)
 			{
-				if (slen > 4 && rgb[s0-isignal+1] < 50 && rgb[s0-isignal+2] < 50 && rgb[s0-isignal+3] < 50 && rgb[s0-isignal+4] < 50)
-					c = 0;
-				rgb[s0-isignal] = c;
-				if (is > 1)
-					c = 0;
-				++s0;
-				++is;
+				for (int i = sp; i < s0; ++i)
+					rgb[i-isignal] = c;
 			}
 
 			// signal (white, grey, or color)
@@ -334,7 +333,7 @@ public class AnalogTV implements VideoDisplayDevice
 			else if (slen == 1)
 			{
 				if (this.signal[s0-2] > 50 && this.signal[s0+2] > 50)
-					c = 0xFFFFFF;
+					c = 0x808080;
 				else
 					c = loresdarkcolor[s0 % 4];
 			}
@@ -347,8 +346,10 @@ public class AnalogTV implements VideoDisplayDevice
 				c = loreslightcolor[s0 % 4];
 			}
 
+			c |= 0xFF000000;
+
 			for (int i = s0; i < s1; ++i)
-				rgb[i-isignal] = c | 0xFF000000;
+				rgb[i-isignal] = c;
 			s0 = s1;
 		}
 	}
