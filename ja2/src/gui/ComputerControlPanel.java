@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import video.AnalogTV;
 import video.VideoStaticGenerator;
 import chipset.TimingGenerator;
 import chipset.cpu.CPU6502;
@@ -21,6 +22,7 @@ public class ComputerControlPanel extends JPanel
 	private TimingGenerator clock;
 	private CPU6502 cpu;
 	private VideoStaticGenerator vidStatic;
+	private AnalogTV tv;
 
 	public ComputerControlPanel()
 	{
@@ -81,6 +83,7 @@ public class ComputerControlPanel extends JPanel
 			public void run()
 			{
 				vidStatic.shutdown();
+				tv.restartSignal();
 				clock.run();
 			}
 		});
@@ -110,11 +113,12 @@ public class ComputerControlPanel extends JPanel
 		th.start();
 	}
 
-	public void setUpListeners(TimingGenerator clock, CPU6502 cpu, VideoStaticGenerator vidStatic)
+	public void setUpListeners(TimingGenerator clock, CPU6502 cpu, VideoStaticGenerator vidStatic, AnalogTV tv)
 	{
 		this.clock = clock;
 		this.cpu = cpu;
 		this.vidStatic = vidStatic;
+		this.tv = tv;
 
 		this.vidStatic.run();
 	}

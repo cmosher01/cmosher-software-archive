@@ -210,7 +210,7 @@ public final class Ja2 implements Closeable
     	final VideoStaticGenerator vidStatic = new VideoStaticGenerator(tv,throttle);
     	if (compControls != null)
     	{
-    		compControls.setUpListeners(this.clock,cpu,vidStatic);
+    		compControls.setUpListeners(this.clock,cpu,vidStatic,tv);
     	}
     	if (monitorControls != null)
     	{

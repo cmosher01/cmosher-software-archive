@@ -189,19 +189,27 @@ public class PictureGenerator
 		{
 			if (this.hpos < Video.VISIBLE_X_OFFSET) // HBL
 			{
+				final int cb;
 				if (AppleNTSC.CB_START <= hcycle && hcycle < AppleNTSC.CB_END)
 				{
-					final int cb = lutCB[(hcycle-AppleNTSC.CB_START)%4];
-					this.tv.putSignal(cb);
+					if (this.mode.isText()) // && rev > 0
+					{
+						cb = AppleNTSC.BLANK_LEVEL;
+					}
+					else
+					{
+						cb = lutCB[(hcycle-AppleNTSC.CB_START)%4];
+					}
 				}
 				else if (AppleNTSC.SYNC_START <= hcycle && hcycle < AppleNTSC.BP_START)
 				{
-					this.tv.putSignal(AppleNTSC.SYNC_LEVEL);
+					cb = AppleNTSC.SYNC_LEVEL;
 				}
 				else
 				{
-					this.tv.putSignal(AppleNTSC.BLANK_LEVEL);
+					cb = AppleNTSC.BLANK_LEVEL;
 				}
+				this.tv.putSignal(cb);
 			}
 			else
 			{
