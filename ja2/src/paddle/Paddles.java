@@ -8,13 +8,14 @@ import java.awt.Point;
 import java.awt.PointerInfo;
 import java.awt.Rectangle;
 import chipset.TimingGenerator;
+import chipset.TimingGeneratorAbstract;
 
 public class Paddles implements PaddlesInterface
 {
 	private static final int PADDLE_COUNT = 4;
 	private static final int PADDLE_CYCLES = 2805;
 
-	private static final int REALTIME_1MS_CYCLES = TimingGenerator.CPU_HZ/1000;
+	private static final int REALTIME_1MS_CYCLES = TimingGeneratorAbstract.CPU_HZ/1000;
 	private static final int REALTIME_100US_CYCLES = 90;
 
 	private final int[] rTick;

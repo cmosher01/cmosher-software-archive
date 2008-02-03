@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /*
@@ -92,6 +93,21 @@ public class AnalogTV implements VideoDisplayDevice
 	}
 
 
+	private final Random rand = new Random();
+	private boolean noise;
+	private volatile DisplayType type;
+
+	public void putAsDisconnectedVideoIn()
+	{
+		this.noise = true;
+		putSignal(this.rand.nextInt(140)-40);
+		this.noise = false;
+	}
+
+	public void restartSignal()
+	{
+		this.isig = 0;
+	}
 
 	public void putSignal(final int level)
 	{
@@ -104,7 +120,11 @@ public class AnalogTV implements VideoDisplayDevice
 		{
 			if (isOn())
 			{
-				this.draw_color_monitor();
+				this.drawCurrent();
+			}
+			else
+			{
+				this.drawBlank();
 			}
 			this.isig = 0;
 		}
@@ -116,60 +136,107 @@ public class AnalogTV implements VideoDisplayDevice
 
 
 
-	private void draw()
+	private void drawCurrent()
 	{
-		int pi = 0;
-		final int[] yiq = new int[AppleNTSC.H];
-		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
+		switch (this.type)
 		{
-			final CB cb = get_cb(lineno);
-			final IQ iq_factor = get_iq_factor(cb);
-			ntsc_to_yiq(lineno*AppleNTSC.H,AppleNTSC.H,iq_factor,yiq);
-			for (int colno = 0; colno < AppleNTSC.H; ++colno)
-			{
-				final int rgb = yiq2rgb(yiq[colno]);
-				this.imageBuf.setElem(pi,rgb);
-				this.imageBuf.setElem(pi + AppleNTSC.H,rgb);
+			case MONITOR_COLOR: drawMonitorColor(); break;
+			case MONITOR_WHITE: drawMonitorWhite(); break;
+			case MONITOR_GREEN: drawMonitorGreen(); break;
+			case MONITOR_ORANGE: drawMonitorOrange(); break;
+			case TV_OLD_COLOR: drawTVOldColor(); break;
+			case TV_OLD_BW: drawTVOldBW(); break;
+			case TV_NEW_COLOR: drawTVNewColor(); break;
+			case TV_NEW_BW: drawTVNewBW(); break;
+		}
+	}
 
-				++pi;
-				if (pi % AppleNTSC.H == 0)
-				{
-					pi += AppleNTSC.H;
-				}
+
+
+//	private void draw()
+//	{
+//		int pi = 0;
+//		final int[] yiq = new int[AppleNTSC.H];
+//		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
+//		{
+//			final CB cb = get_cb(lineno);
+//			final IQ iq_factor = get_iq_factor(cb);
+//			ntsc_to_yiq(lineno*AppleNTSC.H,AppleNTSC.H,iq_factor,yiq);
+//			for (int colno = 0; colno < AppleNTSC.H; ++colno)
+//			{
+//				final int rgb = yiq2rgb(yiq[colno]);
+//				this.imageBuf.setElem(pi,rgb);
+//				this.imageBuf.setElem(pi + AppleNTSC.H,rgb);
+//
+//				++pi;
+//				if (pi % AppleNTSC.H == 0)
+//				{
+//					pi += AppleNTSC.H;
+//				}
+//			}
+//		}
+//		this.ui.updateScreen();
+//	}
+//
+//	private void draw_signal()
+//	{
+//		int pi = 0;
+//		for (int i = 0; i < this.signal.length; ++i)
+//		{
+//			final int ire = (int)Math.rint(this.signal[i]) - AppleNTSC.SYNC_LEVEL;
+//			final int val = (int)Math.rint(ire * 255.0 / (AppleNTSC.WHITE_LEVEL - AppleNTSC.SYNC_LEVEL));
+//			final int rgb = (val << 16) | (val << 8) | (val);
+//			this.imageBuf.setElem(pi,rgb);
+//			this.imageBuf.setElem(pi+AppleNTSC.H,rgb);
+//			++pi;
+//			if (pi % AppleNTSC.H == 0)
+//			{
+//				pi += AppleNTSC.H;
+//			}
+//		}
+//		this.ui.updateScreen();
+//	}
+
+	private void drawMonitorColor()
+	{
+		final int[] rgb = new int[AppleNTSC.H];
+		for (int row = 0; row < 192; ++row)
+		{
+			ntsc_to_rgb_monitor(row*AppleNTSC.H+350,AppleNTSC.H-2-350,rgb);
+			for (int col = 350; col < AppleNTSC.H-2; ++col)
+			{
+				final int rgbv = rgb[col-350];
+				final int ip = row*(AppleNTSC.H-2-350)*2+(col-350);
+				this.imageBuf.setElem(ip,rgbv);
+				this.imageBuf.setElem(ip+(AppleNTSC.H-2-350),rgbv);
 			}
 		}
 		this.ui.updateScreen();
 	}
 
-	private void draw_signal()
+	private void drawMonitorWhite()
 	{
-		int pi = 0;
-		for (int i = 0; i < this.signal.length; ++i)
-		{
-			final int ire = (int)Math.rint(this.signal[i]) - AppleNTSC.SYNC_LEVEL;
-			final int val = (int)Math.rint(ire * 255.0 / (AppleNTSC.WHITE_LEVEL - AppleNTSC.SYNC_LEVEL));
-			final int rgb = (val << 16) | (val << 8) | (val);
-			this.imageBuf.setElem(pi,rgb);
-			this.imageBuf.setElem(pi+AppleNTSC.H,rgb);
-			++pi;
-			if (pi % AppleNTSC.H == 0)
-			{
-				pi += AppleNTSC.H;
-			}
-		}
-		this.ui.updateScreen();
+		drawMonitorMonochrome(0xFFFFFF);
 	}
 
-	private void draw_visible_signal()
+	private void drawMonitorGreen()
+	{
+		drawMonitorMonochrome(0x00FF0D);
+	}
+
+	private void drawMonitorOrange()
+	{
+		drawMonitorMonochrome(0xFF8C00);
+	}
+
+	private void drawMonitorMonochrome(final int color)
 	{
 		for (int row = 0; row < 192; ++row)
 		{
 			for (int col = 350; col < AppleNTSC.H-2; ++col)
 			{
 				final int is = row*AppleNTSC.H+col;
-				final int ire = this.signal[is];
-				final int val = (int)Math.rint(ire * 255.0 / AppleNTSC.WHITE_LEVEL);
-				final int rgb = (val << 16) | (val << 8) | (val);
+				final int rgb = this.signal[is] > 50 ? color : 0;
 				final int ip = row*(AppleNTSC.H-2-350)*2+(col-350);
 				this.imageBuf.setElem(ip,rgb);
 				this.imageBuf.setElem(ip+(AppleNTSC.H-2-350),rgb);
@@ -178,7 +245,7 @@ public class AnalogTV implements VideoDisplayDevice
 		this.ui.updateScreen();
 	}
 
-	private void draw_visible()
+	private void drawTVOldColor()
 	{
 		final int[] yiq = new int[AppleNTSC.H];
 		for (int row = 0; row < 192; ++row)
@@ -197,24 +264,24 @@ public class AnalogTV implements VideoDisplayDevice
 		this.ui.updateScreen();
 	}
 
-	private void draw_color_monitor()
+	private void drawTVOldBW()
 	{
-		final int[] rgb = new int[AppleNTSC.H];
+		final int[] yiq = new int[AppleNTSC.H];
 		for (int row = 0; row < 192; ++row)
 		{
-			ntsc_to_rgb_monitor(row*AppleNTSC.H+350,AppleNTSC.H-2-350,rgb);
+			ntsc_to_yiq(row*AppleNTSC.H+350,AppleNTSC.H-2-350,BLACK_AND_WHITE,yiq);
 			for (int col = 350; col < AppleNTSC.H-2; ++col)
 			{
-				final int rgbv = rgb[col-350];
+				final int rgb = yiq2rgb(yiq[col-350]);
 				final int ip = row*(AppleNTSC.H-2-350)*2+(col-350);
-				this.imageBuf.setElem(ip,rgbv);
-				this.imageBuf.setElem(ip+(AppleNTSC.H-2-350),rgbv);
+				this.imageBuf.setElem(ip,rgb);
+				this.imageBuf.setElem(ip+(AppleNTSC.H-2-350),rgb);
 			}
 		}
 		this.ui.updateScreen();
 	}
 
-	private void draw_new_color_tv()
+	private void drawTVNewColor()
 	{
 		final int[] rgb = new int[AppleNTSC.H];
 		for (int row = 0; row < 192; ++row)
@@ -231,6 +298,30 @@ public class AnalogTV implements VideoDisplayDevice
 		this.ui.updateScreen();
 	}
 
+	private void drawTVNewBW()
+	{
+		final int[] rgb = new int[AppleNTSC.H];
+		for (int row = 0; row < 192; ++row)
+		{
+			ntsc_to_rgb_newtv(row*AppleNTSC.H+350,AppleNTSC.H-2-350,rgb);
+			for (int col = 350; col < AppleNTSC.H-2; ++col)
+			{
+				final int rgbv = rgb[col-350];
+				final int bw = color2bw(rgbv);
+				final int ip = row*(AppleNTSC.H-2-350)*2+(col-350);
+				this.imageBuf.setElem(ip,bw);
+				this.imageBuf.setElem(ip+(AppleNTSC.H-2-350),bw);
+			}
+		}
+		this.ui.updateScreen();
+	}
+
+	private void drawBlank()
+	{
+		final int n = this.imageBuf.getSize();
+		for (int i = 0; i < n; ++i)
+			this.imageBuf.setElem(i,0);
+	}
 
 
 
@@ -295,6 +386,10 @@ public class AnalogTV implements VideoDisplayDevice
 			{
 				c = loreslightcolor[s0 % 4];
 			}
+			else
+			{
+				++s1;
+			}
 
 			for (int i = s0; i < s1; ++i)
 				rgb[i-isignal] = c | 0xFF000000;
@@ -345,6 +440,10 @@ public class AnalogTV implements VideoDisplayDevice
 			{
 				c = loreslightcolor[s0 % 4];
 			}
+			else
+			{
+				++s1;
+			}
 
 			c |= 0xFF000000;
 
@@ -391,6 +490,7 @@ public class AnalogTV implements VideoDisplayDevice
 			this.hash = getHash();
 		}
 		public int get(int i) { return this.cb[i]; }
+		@Override
 		public int hashCode()
 		{
 			return this.hash;
@@ -406,6 +506,7 @@ public class AnalogTV implements VideoDisplayDevice
 			}
 			return h;
 		}
+		@Override
 		public boolean equals(final Object obj)
 		{
 			if (!(obj instanceof CB))
@@ -502,8 +603,11 @@ public class AnalogTV implements VideoDisplayDevice
 
 //		System.out.printf("%+8.2f,%+8.2f,%+8.2f,%+8.2f\n",iq_factor[0],iq_factor[1],iq_factor[2],iq_factor[3]);
 		final IQ iq = new IQ(iq_factor);
-//		System.out.println("adding to cb cache"); // TODO don't add to cache while displaying static
-		cacheCB.put(cb,iq);
+		if (!this.noise)
+		{
+//			System.out.println("adding to cb cache");
+			cacheCB.put(cb,iq);
+		}
 		return iq;
 	}
 
@@ -552,6 +656,17 @@ public class AnalogTV implements VideoDisplayDevice
 		return rgb;
 	}
 
+	private static int color2bw(final int rgb)
+	{
+		final int y = rgb2y(rgb);
+		return y<<16 | y<<8 | y;
+	}
+
+	private static int rgb2y(final int rgb) // y in range 0-255
+	{
+		return (int)((0.299*((rgb>>16)&0xFF) + 0.587*((rgb>>8)&0xFF) + 0.114*(rgb&0xFF))/1.04);
+	}
+
 	private static int calc_color(final double color)
 	{
 		int x = (int)(color * 0x100 / AppleNTSC.LEVEL_RANGE + .5);
@@ -582,15 +697,12 @@ public class AnalogTV implements VideoDisplayDevice
 		{
 			this.on.set(on);
 		}
-		if (!isOn())
-		{
-			drawBlankScreen();
-		}
 	}
 
-	private void drawBlankScreen()
+
+
+	public void setType(DisplayType type)
 	{
-		for (int i = 0; i < AppleNTSC.SIGNAL_LEN*2; ++i)
-			this.imageBuf.setElem(i,0);
+		this.type = type;
 	}
 }

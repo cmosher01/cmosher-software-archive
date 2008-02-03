@@ -3,6 +3,7 @@ package video;
 import java.io.IOException;
 import chipset.AddressBus;
 import chipset.TimingGenerator;
+import chipset.TimingGeneratorAbstract;
 
 
 
@@ -23,7 +24,7 @@ public class Video
 	 * Note: on the real Apple ][, text flashing rate is not really controlled by the system timing generator,
 	 * but rather by a separate 2 Hz 555 timing chip driven by a simple capacitor.
 	 */
-	private static final int FLASH_HALF_PERIOD = TimingGenerator.AVG_CPU_HZ/4; // 2 Hz period = 4 Hz half-period
+	private static final int FLASH_HALF_PERIOD = TimingGeneratorAbstract.AVG_CPU_HZ/4; // 2 Hz period = 4 Hz half-period
 
 
 

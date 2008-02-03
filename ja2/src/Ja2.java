@@ -25,7 +25,7 @@ import speaker.SpeakerClicker;
 import util.Util;
 import video.AnalogTV;
 import video.PictureGenerator;
-import video.TelevisionScreenImage;
+import video.ScreenImage;
 import video.Video;
 import video.VideoMode;
 import video.VideoStaticGenerator;
@@ -127,8 +127,7 @@ public final class Ja2 implements Closeable
 
 
 
-		final TelevisionScreenImage screenImage = new TelevisionScreenImage();
-//		final SimpleScreenImage screenImage = new SimpleScreenImage();
+		final ScreenImage screenImage = new ScreenImage();
 
 		final Screen screen;
         final UI ui;
@@ -208,7 +207,7 @@ public final class Ja2 implements Closeable
 	        screen.setFocusTraversalKeysEnabled(false);
 	        screen.requestFocus();
     	}
-    	final VideoStaticGenerator vidStatic = new VideoStaticGenerator(tv,ui);
+    	final VideoStaticGenerator vidStatic = new VideoStaticGenerator(tv,throttle);
     	if (compControls != null)
     	{
     		compControls.setUpListeners(this.clock,cpu,vidStatic);

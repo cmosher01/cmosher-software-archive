@@ -27,19 +27,19 @@ public final class Lowpass_3_58_MHz
 
 	public int transition(final int next_input_value)
 	{
-		x0 = x1;
-		x1 = x2;
-		x2 = x3;
-		x3 = x4;
-		x4 = next_input_value / GAIN;
+		this.x0 = this.x1;
+		this.x1 = this.x2;
+		this.x2 = this.x3;
+		this.x3 = this.x4;
+		this.x4 = next_input_value / GAIN;
 
-		y0 = y1;
-		y1 = y2;
-		y2 = y3;
-		y3 = y4;
+		this.y0 = this.y1;
+		this.y1 = this.y2;
+		this.y2 = this.y3;
+		this.y3 = this.y4;
 
-		y4 = x0+x4+((x1+x2+x3)<<1)-y2/12-(y3>>2);
+		this.y4 = this.x0+this.x4+((this.x1+this.x2+this.x3)<<1)-this.y2/12-(this.y3>>2);
 
-        return y4;
+        return this.y4;
 	}
 }

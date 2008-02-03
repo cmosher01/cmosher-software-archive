@@ -43,7 +43,7 @@ public class Memory
 		putBytesUntilFull(b++,1);
 	}
 
-	private static class Done extends RuntimeException {}
+	private static final class Done extends RuntimeException {}
 	private int nextinit;
 
 	private void putBytesUntilFull(int bit, int pat)
@@ -113,7 +113,7 @@ public class Memory
 	private Random rand = new Random();
 	private void putn(final int c, boolean on, final int bit) throws Done
 	{
-		if (rand.nextInt(29) < 1)
+		if (this.rand.nextInt(29) < 1)
 			on = !on;
 		final int mask = 1 << bit;
 		for (int i = 0; i < c; ++i)

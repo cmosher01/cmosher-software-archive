@@ -8,5 +8,8 @@ public interface VideoDisplayDevice
 	void powerOn(boolean b);
 	boolean isOn();
 
+	void setType(DisplayType type);
+
 	void putSignal(int ire);
+	void putAsDisconnectedVideoIn();
 }

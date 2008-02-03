@@ -4,6 +4,7 @@
 package video;
 
 import chipset.TimingGenerator;
+import chipset.TimingGeneratorAbstract;
 
 public class PictureGenerator
 {
@@ -115,10 +116,10 @@ public class PictureGenerator
 			this.line = 0;
 		}
 
-		int cycles = TimingGenerator.CRYSTAL_CYCLES_PER_CPU_CYCLE;
-		if (this.hpos == TimingGenerator.HORIZ_CYCLES-1)
+		int cycles = TimingGeneratorAbstract.CRYSTAL_CYCLES_PER_CPU_CYCLE;
+		if (this.hpos == TimingGeneratorAbstract.HORIZ_CYCLES-1)
 		{
-			cycles += TimingGenerator.EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE;
+			cycles += TimingGeneratorAbstract.EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE;
 		}
 
 //		 hi-res half-pixel shift:
@@ -131,7 +132,7 @@ public class PictureGenerator
 			--cycles;
 			++xtra;
 		}
-		final int firstBlankedCycle = TimingGenerator.CRYSTAL_CYCLES_PER_CPU_CYCLE-xtra;
+		final int firstBlankedCycle = TimingGeneratorAbstract.CRYSTAL_CYCLES_PER_CPU_CYCLE-xtra;
 
 		for (int cycle = 0; cycle < cycles; ++cycle)
 		{
@@ -141,7 +142,7 @@ public class PictureGenerator
 		}
 
 		++this.hpos;
-		if (this.hpos >= TimingGenerator.HORIZ_CYCLES)
+		if (this.hpos >= TimingGeneratorAbstract.HORIZ_CYCLES)
 		{
 			this.hpos = 0;
 			++this.line;
@@ -183,7 +184,7 @@ public class PictureGenerator
 		{
 			this.tv.putSignal(showLastHiRes ? AppleNTSC.WHITE_LEVEL : AppleNTSC.BLANK_LEVEL);
 		}
-		final int hcycle = this.hpos*TimingGenerator.CRYSTAL_CYCLES_PER_CPU_CYCLE+cycle;
+		final int hcycle = this.hpos*TimingGeneratorAbstract.CRYSTAL_CYCLES_PER_CPU_CYCLE+cycle;
 		if (this.line < VideoAddressing.VISIBLE_ROWS_PER_FIELD)
 		{
 			if (this.hpos < Video.VISIBLE_X_OFFSET) // HBL

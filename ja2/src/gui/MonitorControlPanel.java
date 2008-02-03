@@ -10,10 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import video.AnalogTV;
+import video.DisplayType;
 import video.VideoDisplayDevice;
 
 public class MonitorControlPanel extends JPanel
@@ -60,6 +57,33 @@ public class MonitorControlPanel extends JPanel
 			}
 	    });
 	    add(powerOff);
+
+	    final ButtonGroup displayType = new ButtonGroup();
+	    initDisplayButton(displayType,"Color",DisplayType.MONITOR_COLOR,true);
+	    initDisplayButton(displayType,"White",DisplayType.MONITOR_WHITE,false);
+	    initDisplayButton(displayType,"Green",DisplayType.MONITOR_GREEN,false);
+	    initDisplayButton(displayType,"Orange",DisplayType.MONITOR_ORANGE,false);
+	    initDisplayButton(displayType,"Old Color",DisplayType.TV_OLD_COLOR,false);
+	    initDisplayButton(displayType,"Old B&W",DisplayType.TV_OLD_BW,false);
+	    initDisplayButton(displayType,"New Color",DisplayType.TV_NEW_COLOR,false);
+	    initDisplayButton(displayType,"New B&W",DisplayType.TV_NEW_BW,false);
+	}
+
+	private void initDisplayButton(final ButtonGroup displayType, String name, final DisplayType type, final boolean selected)
+	{
+		final JRadioButton displayTypeButton = new JRadioButton(name);
+		displayTypeButton.setSelected(selected);
+	    displayTypeButton.setFocusable(false);
+	    displayTypeButton.setOpaque(false);
+	    displayType.add(displayTypeButton);
+	    displayTypeButton.addActionListener(new ActionListener()
+	    {
+			public void actionPerformed(ActionEvent e)
+			{
+				display.setType(type);
+			}
+	    });
+	    add(displayTypeButton);
 	}
 
 	private void powerOn()
@@ -68,7 +92,16 @@ public class MonitorControlPanel extends JPanel
 		{
 			return;
 		}
-		display.powerOn(true);
+		Thread th = new Thread(new Runnable()
+		{
+			public void run()
+			{
+				display.powerOn(true);
+			}
+		});
+		th.setName("User-powerOn");
+		th.setDaemon(true);
+		th.start();
 	}
 
 	private void powerOff()
@@ -77,12 +110,22 @@ public class MonitorControlPanel extends JPanel
 		{
 			return;
 		}
-		display.powerOn(false); // TODO call from own thread
+		Thread th = new Thread(new Runnable()
+		{
+			public void run()
+			{
+				display.powerOn(false);
+			}
+		});
+		th.setName("User-powerOff");
+		th.setDaemon(true);
+		th.start();
 		// TODO why does this not always blank the screen???
 	}
 
 	public void setUpListeners(VideoDisplayDevice display)
 	{
 		this.display = display;
+	    display.setType(DisplayType.MONITOR_COLOR);
 	}
 }

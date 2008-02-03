@@ -10,11 +10,11 @@ public final class Lowpass_1_5_MHz
 
 	public int transition(final int next_input_value)
 	{
-		x0 = x1; x1 = x2;
-		x2 = next_input_value >> 3;
+		this.x0 = this.x1; this.x1 = this.x2;
+		this.x2 = next_input_value >> 3;
 
-		y0 = y1; y1 = y2; y2 = y3; y3 = y4;
-		y4 = x0+x2-y0/22+y1/3-y2+y3+(y3>>1);
-		return y4;
+		this.y0 = this.y1; this.y1 = this.y2; this.y2 = this.y3; this.y3 = this.y4;
+		this.y4 = this.x0+this.x2-this.y0/22+this.y1/3-this.y2+this.y3+(this.y3>>1);
+		return this.y4;
 	}
 }
