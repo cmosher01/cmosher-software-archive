@@ -21,6 +21,7 @@ public class Throttle
 	private long msPrev = System.currentTimeMillis();
 	private long times;
 
+	private volatile float speedRatio;
 
 
 	public void tick()
@@ -40,7 +41,8 @@ public class Throttle
 		{
 			final long msActual = System.currentTimeMillis()-this.msPrev;
 			final long msDelta = EXPECTED_MS-msActual;
-//			System.err.println("msDelta: "+msDelta);
+			this.speedRatio = (float)EXPECTED_MS/msActual;
+			System.err.println(this.speedRatio);
 			sleep(msDelta);
 
 			this.msPrev = System.currentTimeMillis();
@@ -89,5 +91,10 @@ public class Throttle
 			this.suspend.set(!this.suspend.get());
 			this.suspend.notifyAll();
 		}
+	}
+
+	public float getSpeedRatio()
+	{
+		return this.speedRatio;
 	}
 }
