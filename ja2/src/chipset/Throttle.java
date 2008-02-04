@@ -40,6 +40,7 @@ public class Throttle
 		{
 			final long msActual = System.currentTimeMillis()-this.msPrev;
 			final long msDelta = EXPECTED_MS-msActual;
+//			System.err.println("msDelta: "+msDelta);
 			sleep(msDelta);
 
 			this.msPrev = System.currentTimeMillis();
@@ -53,6 +54,7 @@ public class Throttle
 		{
 			try
 			{
+//				System.out.println("Sleeping "+msDelta);
 				Thread.sleep(msDelta);
 			}
 			catch (InterruptedException e)

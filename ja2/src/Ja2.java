@@ -26,6 +26,7 @@ import util.Util;
 import video.AnalogTV;
 import video.PictureGenerator;
 import video.ScreenImage;
+import video.TextCharacters;
 import video.Video;
 import video.VideoMode;
 import video.VideoStaticGenerator;
@@ -179,8 +180,10 @@ public final class Ja2 implements Closeable
 
     	final AnalogTV tv = new AnalogTV(screenImage,ui);
     	final PictureGenerator picgen = new PictureGenerator(tv,videoMode);
-//    	final SimplePictureGenerator picgen = new SimplePictureGenerator(videoMode);
-    	final Video video = new Video(videoMode,addressBus,picgen);
+
+    	final TextCharacters textRows = new TextCharacters();
+
+    	final Video video = new Video(videoMode,addressBus,picgen,textRows);
 
 
 

@@ -17,6 +17,8 @@ public class PictureGenerator
 	private int hpos;
 	private int line;
 
+	public static final int VISIBLE_X_OFFSET = VideoAddressing.BYTES_PER_ROW-VideoAddressing.VISIBLE_BYTES_PER_ROW;
+
 	public PictureGenerator(final VideoDisplayDevice tv, final VideoMode mode)
 	{
 		this.tv = tv;
@@ -123,7 +125,7 @@ public class PictureGenerator
 		}
 
 //		 hi-res half-pixel shift:
-		final boolean shift = this.mode.isHiRes() && !this.mode.isDisplayingText(t) && this.d7 && this.line < VideoAddressing.VISIBLE_ROWS_PER_FIELD && !(this.hpos < Video.VISIBLE_X_OFFSET);
+		final boolean shift = this.mode.isHiRes() && !this.mode.isDisplayingText(t) && this.d7 && this.line < VideoAddressing.VISIBLE_ROWS_PER_FIELD && !(this.hpos < VISIBLE_X_OFFSET);
 		final boolean showLastHiRes = shift && this.lasthires;
 
 		int xtra = 0;
@@ -134,9 +136,15 @@ public class PictureGenerator
 		}
 		final int firstBlankedCycle = TimingGeneratorAbstract.CRYSTAL_CYCLES_PER_CPU_CYCLE-xtra;
 
-		for (int cycle = 0; cycle < cycles; ++cycle)
+		for (int cycle = 0; cycle < cycles-1; ++cycle)
+		{
+			final boolean bit = shiftLatch(t,cycle);
+			writeVideoSignal(shift,showLastHiRes,firstBlankedCycle,cycle,bit);
+		}
+		// optimization: pull the last iteration of the loop out, so we don't getHiResBit every time
 		{
 			this.lasthires = getHiResBit(); // save it for the next plotted byte, just in case we need it
+			final int cycle = cycles-1;
 			final boolean bit = shiftLatch(t,cycle);
 			writeVideoSignal(shift,showLastHiRes,firstBlankedCycle,cycle,bit);
 		}
@@ -187,12 +195,12 @@ public class PictureGenerator
 		final int hcycle = this.hpos*TimingGeneratorAbstract.CRYSTAL_CYCLES_PER_CPU_CYCLE+cycle;
 		if (this.line < VideoAddressing.VISIBLE_ROWS_PER_FIELD)
 		{
-			if (this.hpos < Video.VISIBLE_X_OFFSET) // HBL
+			if (this.hpos < VISIBLE_X_OFFSET) // HBL
 			{
 				final int cb;
 				if (AppleNTSC.CB_START <= hcycle && hcycle < AppleNTSC.CB_END)
 				{
-					if (this.mode.isText()) // && rev > 0
+					if (this.mode.isText()) // TODO && rev > 0
 					{
 						cb = AppleNTSC.BLANK_LEVEL;
 					}

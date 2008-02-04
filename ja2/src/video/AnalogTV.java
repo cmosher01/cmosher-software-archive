@@ -91,16 +91,39 @@ public class AnalogTV implements VideoDisplayDevice
 //			}
 //		}
 	}
-
-
+/*
+	static CS_PURE long oscbnk_rand31(long seed)
+	{
+		uint64_t tmp1;
+		uint32_t tmp2;
+	
+		// x = (16807 * x) % 0x7FFFFFFF
+		tmp1 = (uint64_t) ((int32_t) seed * (int64_t) 16807);
+		tmp2 = (uint32_t) tmp1 & (uint32_t) 0x7FFFFFFF;
+		tmp2 += (uint32_t) (tmp1 >> 31);
+		if ((int32_t) tmp2 < (int32_t) 0)
+		tmp2 = (tmp2 + (uint32_t) 1) & (uint32_t) 0x7FFFFFFF;
+		return (long) tmp2;
+	}
+*/
 	private final Random rand = new Random();
 	private boolean noise;
 	private volatile DisplayType type;
 
+	private byte[] rbrand = new byte[1];
+	private int rrr = 1;
 	public void putAsDisconnectedVideoIn()
 	{
 		this.noise = true;
-		putSignal(this.rand.nextInt(140)-40);
+//		this.rand.nextBytes(this.rbrand);
+//		putSignal(this.rbrand[0]-28);
+//		putSignal(this.rand.nextInt(140)-40);
+		rrr *= 16807;
+		rrr %= 0x7FFFFFFF;
+		++rrr;
+//		rrr += 150889;
+//		rrr %= 714025;
+		putSignal((rrr>>>25)-27);
 		this.noise = false;
 	}
 
@@ -111,10 +134,10 @@ public class AnalogTV implements VideoDisplayDevice
 
 	public void putSignal(final int level)
 	{
-		if (this.isig >= AppleNTSC.SIGNAL_LEN)
-		{
-			throw new IllegalStateException("At end of screen; must re-synch before writing any more signal");
-		}
+//		if (this.isig >= AppleNTSC.SIGNAL_LEN)
+//		{
+//			throw new IllegalStateException("At end of screen; must re-synch before writing any more signal");
+//		}
 		this.signal[this.isig++] = level;
 		if (this.isig == AppleNTSC.SIGNAL_LEN)
 		{
@@ -144,8 +167,8 @@ public class AnalogTV implements VideoDisplayDevice
 			case MONITOR_WHITE: drawMonitorWhite(); break;
 			case MONITOR_GREEN: drawMonitorGreen(); break;
 			case MONITOR_ORANGE: drawMonitorOrange(); break;
-			case TV_OLD_COLOR: drawTVOldColor(); break;
-			case TV_OLD_BW: drawTVOldBW(); break;
+			case TV_OLD_COLOR: drawTVOld(); break;
+			case TV_OLD_BW: drawTVOld(); break;
 			case TV_NEW_COLOR: drawTVNew(); break;
 			case TV_NEW_BW: drawTVNew(); break;
 		}
@@ -256,34 +279,23 @@ public class AnalogTV implements VideoDisplayDevice
 		this.ui.updateScreen();
 	}
 
-	private void drawTVOldColor()
+	private void drawTVOld()
 	{
 		final int[] yiq = new int[AppleNTSC.H];
 		int ip = 0;
 		for (int row = 0; row < 192; ++row)
 		{
-			final CB cb = get_cb(row);
-			final IQ iq_factor = get_iq_factor(cb);
-			ntsc_to_yiq(row*AppleNTSC.H+350,AppleNTSC.H-2-350,iq_factor,yiq);
-			for (int col = 350; col < AppleNTSC.H-2; ++col)
+			final IQ iq_factor;
+			if (this.type == DisplayType.TV_OLD_COLOR)
 			{
-				final int rgb = yiq2rgb(yiq[col-350]);
-				this.imageBuf.setElem(ip,rgb);
-				this.imageBuf.setElem(ip+D_IP,rgb);
-				++ip;
+				final CB cb = get_cb(row);
+				iq_factor = get_iq_factor(cb);
 			}
-			ip += D_IP;
-		}
-		this.ui.updateScreen();
-	}
-
-	private void drawTVOldBW()
-	{
-		final int[] yiq = new int[AppleNTSC.H];
-		int ip = 0;
-		for (int row = 0; row < 192; ++row)
-		{
-			ntsc_to_yiq(row*AppleNTSC.H+350,AppleNTSC.H-2-350,BLACK_AND_WHITE,yiq);
+			else
+			{
+				iq_factor = BLACK_AND_WHITE;
+			}
+			ntsc_to_yiq(row*AppleNTSC.H+350,AppleNTSC.H-2-350,iq_factor,yiq);
 			for (int col = 350; col < AppleNTSC.H-2; ++col)
 			{
 				final int rgb = yiq2rgb(yiq[col-350]);
@@ -568,7 +580,7 @@ public class AnalogTV implements VideoDisplayDevice
 				else
 					tot += cb;
 			}
-			return tot > 5;
+			return 220 < tot && tot < 260;
 		}
 	}
 
@@ -650,10 +662,6 @@ public class AnalogTV implements VideoDisplayDevice
 			{
 				i = filterI.transition((int)(sig * iq_factor.get(off & 3)));
 				q = filterQ.transition((int)(sig * iq_factor.get((off + 3) & 3)));
-				if (i > 125 || q > 125)
-				{
-					System.out.println("i "+i+" q "+q);
-				}
 			}
 
 			yiq[off] = (((q+IQINTOFF)&0xff) << 16) | (((i+IQINTOFF)&0xff) << 8) | ((y+IQINTOFF)&0xff);

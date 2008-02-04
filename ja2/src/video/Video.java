@@ -15,11 +15,6 @@ public class Video
 	private static final int[][] textAddrTables = { VideoAddressing.buildLUT(0x0400,0x0400), VideoAddressing.buildLUT(0x0800,0x0400) };
 	private static final int[][] hiresAddrTables = { VideoAddressing.buildLUT(0x2000,0x2000), VideoAddressing.buildLUT(0x4000,0x2000) };
 
-	public static final int XSIZE = VideoAddressing.VISIBLE_BITS_PER_BYTE*VideoAddressing.VISIBLE_BYTES_PER_ROW;
-	public static final int YSIZE = VideoAddressing.VISIBLE_ROWS_PER_FIELD;
-
-	public static final int VISIBLE_X_OFFSET = VideoAddressing.BYTES_PER_ROW-VideoAddressing.VISIBLE_BYTES_PER_ROW;
-
 	/*
 	 * Note: on the real Apple ][, text flashing rate is not really controlled by the system timing generator,
 	 * but rather by a separate 2 Hz 555 timing chip driven by a simple capacitor.
@@ -35,7 +30,7 @@ public class Video
 	private final AddressBus addressBus;
 	private final PictureGenerator picgen;
 
-	private final TextCharacters textRows = new TextCharacters();
+	private final TextCharacters textRows;
 
 
 
@@ -48,34 +43,12 @@ public class Video
 
 
 
-	public Video(final VideoMode mode, final AddressBus addressBus, final PictureGenerator picgen) throws IOException
+	public Video(final VideoMode mode, final AddressBus addressBus, final PictureGenerator picgen, final TextCharacters textRows) throws IOException
 	{
 		this.mode = mode;
 		this.addressBus = addressBus;
 		this.picgen = picgen;
-
-		readCharacterRom();
-	}
-
-	private void readCharacterRom() throws IOException
-	{
-		int off = this.textRows.read();
-		// TODO: move this code out of here (let read throw)
-//		if (off != 0)
-//		{
-//			final String big;
-//			if (off > 0)
-//			{
-//				big = "big";
-//			}
-//			else
-//			{
-//				big = "small";
-//				off = -off;
-//			}
-//			this.ui.showMessage("Text-character-ROM file GI2513.ROM is invalid: the file is "+
-//				off+" bytes too "+big+". Text may not be displayed correctly.");
-//		}
+		this.textRows = textRows;
 	}
 
 	public void tick()

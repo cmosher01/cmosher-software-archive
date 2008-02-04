@@ -8,14 +8,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import util.Util;
 
-class TextCharacters
+public final class TextCharacters
 {
 	private static final String FILENAME = "GI2513.ROM";
     private static final int SIZE = 0x200;
 
     private final byte[] rows = new byte[SIZE];
 
-	public int read() throws IOException
+    public TextCharacters() throws IOException
+    {
+    	read();
+    }
+
+    private void read() throws IOException
 	{
 		InputStream rom = null;
 		int cc = 0;
@@ -50,7 +55,21 @@ class TextCharacters
 			}
 		}
 
-		return cc-SIZE;
+		int off = cc-SIZE;
+		if (off != 0)
+		{
+			final String big;
+			if (off > 0)
+			{
+				big = "big";
+			}
+			else
+			{
+				big = "small";
+				off = -off;
+			}
+			throw new IOException("Text-character-ROM file GI2513.ROM is invalid: the file is "+off+" bytes too "+big+".");
+		}
 	}
 
 	private static byte translateRow(int b)
@@ -60,8 +79,7 @@ class TextCharacters
 		for (int i = 0; i < 7; ++i)
 		{
 			r <<= 1;
-			if ((b & 1) != 0)
-				r |= 1;
+			r |= b & 1;
 			b >>= 1;
 		}
 		return r;
