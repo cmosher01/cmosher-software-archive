@@ -42,7 +42,7 @@ public class Video
 
 
 
-	public Video(final VideoMode mode, final AddressBus addressBus, final PictureGenerator picgen, final TextCharacters textRows) throws IOException
+	public Video(final VideoMode mode, final AddressBus addressBus, final PictureGenerator picgen, final TextCharacters textRows)
 	{
 		this.mode = mode;
 		this.addressBus = addressBus;

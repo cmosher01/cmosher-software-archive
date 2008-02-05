@@ -13,6 +13,8 @@ import util.Util;
  */
 public class Memory
 {
+	private static final byte CLEAR_VALUE = 0;
+
 	private final byte[] bytes;
 
 	/**
@@ -21,117 +23,11 @@ public class Memory
 	public Memory(final int bytes)
 	{
 		this.bytes = new byte[bytes];
-		fillWithInitialValues();
 	}
 
 	public int size()
 	{
 		return this.bytes.length;
-	}
-
-	public void fillWithInitialValues()
-	{
-		Arrays.fill(this.bytes,(byte)0);
-		int b = 0;
-		putBytesUntilFull(b++,1);
-		putBytesUntilFull(b++,2);
-		putBytesUntilFull(b++,1);
-		putBytesUntilFull(b++,2);
-		putBytesUntilFull(b++,1);
-		putBytesUntilFull(b++,2);
-		putBytesUntilFull(b++,2);
-		putBytesUntilFull(b++,1);
-	}
-
-	private static final class Done extends RuntimeException {}
-	private int nextinit;
-
-	private void putBytesUntilFull(int bit, int pat)
-	{
-		this.nextinit = 0;
-		try
-		{
-			while (true)
-			{
-				if (pat==1)
-					ramPattern1(bit);
-				else
-					ramPattern2(bit);
-			}
-		}
-		catch (final Done ignore)
-		{
-		}
-	}
-
-	private void ramPattern1(final int bit) throws Done
-	{
-		for (int k = 0; k < 2; ++k)
-		{
-			for (int j = 0; j < 8; ++j)
-			{
-				for (int i = 0; i < 0x10; ++i)
-				{
-					putn(4,false,bit);
-					putn(2,true,bit);
-					putn(2,false,bit);
-				}
-				for (int i = 0; i < 0x40; ++i)
-				{
-					putn(2,true,bit);
-					putn(2,false,bit);
-				}
-				for (int i = 0; i < 0x08; ++i)
-				{
-					putn(2,true,bit);
-					putn(1,false,bit);
-					putn(3,true,bit);
-					putn(2,false,bit);
-					putn(2,true,bit);
-					putn(2,false,bit);
-					putn(2,true,bit);
-					putn(2,false,bit);
-				}
-			}
-			for (int i = 0; i < 0x400; ++i)
-			{
-				putn(2,true,bit);
-				putn(2,false,bit);
-			}
-		}
-	}
-
-	private void ramPattern2(final int bit) throws Done
-	{
-		for (int i = 0; i < 0x40; ++i)
-		{
-			putn(0x80,true,bit);
-			putn(0x80,false,bit);
-		}
-	}
-
-	private Random rand = new Random();
-	private void putn(final int c, boolean on, final int bit) throws Done
-	{
-		if (this.rand.nextInt(29) < 1)
-			on = !on;
-		final int mask = 1 << bit;
-		for (int i = 0; i < c; ++i)
-		{
-			if (this.nextinit >= this.bytes.length)
-			{
-				throw new Done();
-			}
-			if (on)
-			{
-				this.bytes[this.nextinit] = (byte)(this.bytes[this.nextinit] | mask);
-			}
-			else
-			{
-				this.bytes[this.nextinit] = (byte)(this.bytes[this.nextinit] & ~mask);
-			}
-			++this.nextinit;
-		}
 	}
 
 	public byte read(final int address)
@@ -157,5 +53,10 @@ public class Memory
 		{
 			throw new InvalidMemoryLoad(e);
 		}
+	}
+
+	public void clear()
+	{
+		Arrays.fill(this.bytes,CLEAR_VALUE);
 	}
 }

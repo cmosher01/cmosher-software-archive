@@ -29,15 +29,13 @@ import chipset.Slots;
 public class Config
 {
 	private final String filename;
-	private final HyperMode hyper;
 
-	public Config(final String filename, final HyperMode hyper)
+	public Config(final String filename)
 	{
 		this.filename = filename;
-		this.hyper = hyper;
 	}
 
-	public void parseConfig(final Memory memory, final Slots slots, final StandardIn.EOFHandler eofHandler)
+	public void parseConfig(final Memory memory, final Slots slots, final HyperMode hyper, final StandardIn.EOFHandler eofHandler)
 		throws IOException, InvalidMemoryLoad, InvalidDiskImage
 	{
 
@@ -52,7 +50,7 @@ public class Config
     		}
     		line = line.trim();
 
-    		parseLine(line,memory,slots,eofHandler);
+    		parseLine(line,memory,slots,hyper,eofHandler);
     	}
 
     	cfg.close();
@@ -85,7 +83,7 @@ public class Config
 		}
 	}
 
-	private void parseLine(final String line, final Memory memory, final Slots slots, final StandardIn.EOFHandler eofHandler)
+	private void parseLine(final String line, final Memory memory, final Slots slots, final HyperMode hyper, final StandardIn.EOFHandler eofHandler)
 		throws InvalidMemoryLoad, IOException, InvalidDiskImage
 	{
 		if (line.isEmpty())
@@ -105,7 +103,7 @@ public class Config
 			if (!tok.hasMoreTokens()) throw new IllegalArgumentException("Error in config file: "+line);
 			final String sCardType = tok.nextToken();
 
-			insertCard(sCardType,slot,slots,eofHandler);
+			insertCard(sCardType,slot,slots,hyper,eofHandler);
 		}
 		else if (cmd.equalsIgnoreCase("import"))
 		{
@@ -199,7 +197,7 @@ public class Config
 		controller.loadDisk(drive-1,fnib);
 	}
 
-	private void insertCard(final String cardType, final int slot, final Slots slots, final StandardIn.EOFHandler eofHandler)
+	private void insertCard(final String cardType, final int slot, final Slots slots, final HyperMode hyper, final StandardIn.EOFHandler eofHandler)
 	{
 		if (slot < 0 || Slots.SLOTS <= slot)
 		{
@@ -216,7 +214,7 @@ public class Config
 		}
 		else if (cardType.equalsIgnoreCase("disk"))
 		{
-	    	card = new DiskController(this.hyper);
+	    	card = new DiskController(hyper);
 		}
 		else if (cardType.equalsIgnoreCase("clock"))
 		{

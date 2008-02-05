@@ -1,3 +1,4 @@
+import emu.Emulator;
 import gui.ComputerControlPanel;
 import gui.GUI;
 import gui.MonitorControlPanel;
@@ -55,7 +56,7 @@ import config.Config;
  * 
  * @author Chris Mosher
  */
-public final class Ja2 implements Closeable
+public final class Ja2
 {
 	public static void main(final String... args) throws InterruptedException, InvocationTargetException
     {
@@ -74,9 +75,9 @@ public final class Ja2 implements Closeable
 
 
     private boolean gui = true;
-	private TimingGenerator clock;
-
 	private String config = "ja2.cfg";
+
+	private Emulator emu;
 
 
 
@@ -101,77 +102,10 @@ public final class Ja2 implements Closeable
     {
     	parseArgs(args);
 
-    	final KeypressQueue keypresses = new KeypressQueue();
+    	final Config cfg = new Config(this.config);
 
-		final Apple2 apple2 = new Apple2(keypresses,tv);
-    	final Config cfg = new Config(this.config,hyper);
-		cfg.parseConfig(rom,slots,new StandardIn.EOFHandler()
-		{
-			@SuppressWarnings("synthetic-access")
-			public void handleEOF()
-			{
-				if (!Ja2.this.gui)
-				{
-					close();
-				}
-			}
-		});
-
-		final ScreenImage screenImage = new ScreenImage();
-
-		final Screen screen;
-        final UI ui;
-    	final ComputerControlPanel compControls;
-    	final MonitorControlPanel monitorControls;
-    	if (this.gui)
-    	{
-	    	screen = new Screen(screenImage);
-	    	compControls = new ComputerControlPanel();
-	    	monitorControls = new MonitorControlPanel();
-	    	ui = new GUI(this,screen,compControls,monitorControls,slots);
-    	}
-    	else
-    	{
-    		screen = null;
-        	compControls = null;
-        	monitorControls = null;
-        	ui = new CLI();
-    	}
-	   	final AnalogTV tv = new AnalogTV(screenImage,ui);
-
-    	final Throttle throttle = new Throttle();
-
-
-
-    	final VideoStaticGenerator vidStatic = new VideoStaticGenerator(tv);
-
-
-
-    	final TimingGenerator timer = new TimingGenerator(apple2,throttle);
-//    	final TimingGenerator timer = new TimingGenerator(videoStatic,throttle);
-
-    	if (screen != null)
-    	{
-	        screen.addKeyListener(new TestKeyHandler(tv));
-	    	screen.addKeyListener(new KeyboardProducer(keypresses,keyboard));
-	    	screen.addKeyListener(new ClipboardProducer(keypresses));
-	    	screen.addKeyListener(new HyperKeyHandler(hyper));
-	        screen.addKeyListener(new FnKeyHandler(cpu,screenImage,ram,throttle));
-	        screen.addKeyListener(new VideoKeyHandler(video));
-	        screen.addKeyListener(new PaddleButtons(paddleButtonStates));
-
-
-	        screen.setFocusTraversalKeysEnabled(false);
-	        screen.requestFocus();
-    	}
-    	if (compControls != null)
-    	{
-    		compControls.setUpListeners(this.clock,cpu,vidStatic,tv);
-    	}
-    	if (monitorControls != null)
-    	{
-    		monitorControls.setUpListeners(tv);
-    	}
+		this.emu = new Emulator(this.gui);
+		this.emu.config(cfg);
     }
 //    private void tryRunOrig(final String... args) throws IOException, InvalidMemoryLoad, InvalidDiskImage
 //    {
@@ -335,27 +269,5 @@ public final class Ja2 implements Closeable
 		{
 			throw new IllegalArgumentException(arg);
 		}
-	}
-
-
-	public void close()
-	{
-		// use another thread (a daemon one) to avoid any deadlocks
-		// (for example, if this method is called on the dispatch thread)
-		final Thread th = new Thread(new Runnable()
-		{
-			@SuppressWarnings("synthetic-access")
-			public void run()
-			{
-				if (Ja2.this.clock != null)
-				{
-					if (Ja2.this.clock.isRunning())
-						Ja2.this.clock.shutdown();
-				}
-			}
-		});
-		th.setName("Ja2-close-shutdown clock");
-		th.setDaemon(true);
-		th.start();
 	}
 }

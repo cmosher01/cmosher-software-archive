@@ -7,7 +7,7 @@ import chipset.TimingGenerator;
 
 public class PictureGenerator
 {
-	private final VideoDisplayDevice tv;
+	private VideoDisplayDevice tv;
 	private final VideoMode mode;
 
 	private int latchGraphics;
@@ -18,9 +18,8 @@ public class PictureGenerator
 
 	public static final int VISIBLE_X_OFFSET = VideoAddressing.BYTES_PER_ROW-VideoAddressing.VISIBLE_BYTES_PER_ROW;
 
-	public PictureGenerator(final VideoDisplayDevice tv, final VideoMode mode)
+	public PictureGenerator(final VideoMode mode)
 	{
-		this.tv = tv;
 		this.mode = mode;
 	}
 
@@ -187,6 +186,10 @@ public class PictureGenerator
 	private static final int[] lutCB = { AppleNTSC.BLANK_LEVEL,-AppleNTSC.CB_LEVEL,AppleNTSC.BLANK_LEVEL,+AppleNTSC.CB_LEVEL };
 	private void writeVideoSignal(final boolean shift, final boolean showLastHiRes, final int firstBlankedCycle, final int cycle, final boolean bit)
 	{
+		if (this.tv == null)
+		{
+			return;
+		}
 		if (shift && cycle==0)
 		{
 			this.tv.putSignal(showLastHiRes ? AppleNTSC.WHITE_LEVEL : AppleNTSC.BLANK_LEVEL);
@@ -236,5 +239,10 @@ public class PictureGenerator
 				this.tv.putSignal(hsync ? AppleNTSC.SYNC_LEVEL : AppleNTSC.BLANK_LEVEL);
 			}
 		}
+	}
+
+	public void setDisplay(VideoDisplayDevice display)
+	{
+		this.tv = display;
 	}
 }
