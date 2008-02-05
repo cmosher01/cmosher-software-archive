@@ -9,6 +9,7 @@ import java.awt.ComponentOrientation;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -78,7 +79,14 @@ public class ComputerControlPanel extends JPanel
 		{
 			public void run()
 			{
-				emu.powerOnComputer();
+				try
+				{
+					emu.powerOnComputer();
+				}
+				catch (IOException e)
+				{
+					e.printStackTrace();
+				}
 			}
 		});
 		th.setName("User-powerOn");

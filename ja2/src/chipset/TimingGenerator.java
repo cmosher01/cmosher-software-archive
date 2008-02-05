@@ -93,6 +93,7 @@ public class TimingGenerator
 			this.shutdown.set(true);
 		}
 
+		// TODO may need to do the join in it's own thread
 		try
 		{
 			this.thread.join();

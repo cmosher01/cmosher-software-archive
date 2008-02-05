@@ -1,8 +1,8 @@
 package keyboard;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.imageio.ImageIO;
+import video.ScreenImage;
 import chipset.Memory;
 import chipset.Throttle;
 import chipset.cpu.CPU6502;
@@ -21,7 +21,7 @@ import chipset.cpu.CPU6502;
 public class FnKeyHandler extends KeyAdapter implements KeyListener
 {
 	private final CPU6502 cpu;
-	private final BufferedImage screenImage;
+	private final ScreenImage screenImage;
 	private final Memory memory;
 	private final Throttle throttle;
 
@@ -32,7 +32,7 @@ public class FnKeyHandler extends KeyAdapter implements KeyListener
 	 * @param screenImage 
 	 * @param memory 
 	 */
-	public FnKeyHandler(final CPU6502 cpu, final BufferedImage screenImage, final Memory memory, final Throttle throttle)
+	public FnKeyHandler(final CPU6502 cpu, final ScreenImage screenImage, final Memory memory, final Throttle throttle)
 	{
 		this.cpu = cpu;
 		this.screenImage = screenImage;
@@ -60,7 +60,7 @@ public class FnKeyHandler extends KeyAdapter implements KeyListener
 			try
 			{
 				final String name = "dump"+this.fmt.format(new Date())+".png";
-				ImageIO.write(this.screenImage,"PNG",new File(name));
+				this.screenImage.dump("PNG",new File(name));
 			}
 			catch (IOException e1)
 			{

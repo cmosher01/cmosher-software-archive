@@ -4,7 +4,10 @@
 package emu;
 
 
+import java.io.Closeable;
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 import config.Config;
 import gui.ComputerControlPanel;
 import gui.GUI;
@@ -19,8 +22,9 @@ import keyboard.HyperKeyHandler;
 import keyboard.KeyboardProducer;
 import keyboard.KeypressQueue;
 import keyboard.VideoKeyHandler;
+import cards.disk.InvalidDiskImage;
 import cards.stdio.StandardIn;
-import chipset.Apple2;
+import chipset.InvalidMemoryLoad;
 import chipset.RAMInitializer;
 import chipset.Throttle;
 import chipset.TimingGenerator;
@@ -30,7 +34,7 @@ import video.ScreenImage;
 import video.VideoDisplayDevice;
 import video.VideoStaticGenerator;
 
-public class Emulator
+public class Emulator implements Closeable
 {
 	private final KeypressQueue keypresses = new KeypressQueue();
 	private final Throttle throttle = new Throttle();
@@ -40,9 +44,15 @@ public class Emulator
 	private VideoStaticGenerator videoStatic;
 	private VideoDisplayDevice display;
 
-	public Emulator(final boolean gui)
+	private final boolean gui;
+
+	public Emulator(final boolean gui) throws IOException
 	{
+		this.gui = gui;
+
+		this.apple2 = new Apple2(this.keypresses);
 		final ScreenImage screenImage = new ScreenImage();
+    	this.display = new AnalogTV(screenImage);
 
         final UI ui;
     	if (gui)
@@ -50,14 +60,22 @@ public class Emulator
     		final Screen screen = new Screen(screenImage);
 	    	final ComputerControlPanel compControls = new ComputerControlPanel(this);
 	    	final MonitorControlPanel monitorControls = new MonitorControlPanel(this);
-	    	ui = new GUI(this,screen,compControls,monitorControls,slots);
+	    	ui = new GUI(this,screen,compControls,monitorControls,this.apple2.slots);
 
-	    	screen.addKeyListener(new KeyboardProducer(keypresses,keyboard));
+	    	screenImage.addObserver(new Observer()
+			{
+				public void update(final Observable observableThatChagned, final Object typeOfChange)
+				{
+					screen.plot();
+				}
+			});
+
+	    	screen.addKeyListener(new KeyboardProducer(keypresses,this.apple2.keyboard));
 	    	screen.addKeyListener(new ClipboardProducer(keypresses));
-	    	screen.addKeyListener(new HyperKeyHandler(hyper));
-	        screen.addKeyListener(new FnKeyHandler(cpu,screenImage,ram,this.throttle));
-	        screen.addKeyListener(new VideoKeyHandler(video));
-	        screen.addKeyListener(new PaddleButtons(paddleButtonStates));
+	    	screen.addKeyListener(new HyperKeyHandler(this.apple2.hyper));
+	        screen.addKeyListener(new FnKeyHandler(this.apple2.cpu,screenImage,this.apple2.ram,this.throttle));
+	        screen.addKeyListener(new VideoKeyHandler(this.apple2.video));
+	        screen.addKeyListener(new PaddleButtons(this.apple2.paddleButtonStates));
 
 
 	        screen.setFocusTraversalKeysEnabled(false);
@@ -67,18 +85,26 @@ public class Emulator
     	{
         	ui = new CLI();
     	}
-
-    	this.display = new AnalogTV(screenImage,ui);
 	}
 
 	public void powerOnComputer() throws IOException
 	{
+		if (this.timer != null)
+		{
+			this.timer.shutdown();
+			this.timer = null;
+		}
 		this.apple2 = new Apple2(this.keypresses);
     	this.timer = new TimingGenerator(this.apple2,this.throttle);
 	}
 
 	public void powerOffComputer()
 	{
+		if (this.timer != null)
+		{
+			this.timer.shutdown();
+			this.timer = null;
+		}
     	this.videoStatic = new VideoStaticGenerator(this.display);
     	this.timer = new TimingGenerator(this.videoStatic,this.throttle);
 	}
@@ -106,11 +132,11 @@ public class Emulator
 			@SuppressWarnings("synthetic-access")
 			public void run()
 			{
-				if (clock != null)
-				{
-					if (clock.isRunning())
-						clock.shutdown();
-				}
+//				if (clock != null)
+//				{
+//					if (clock.isRunning())
+//						clock.shutdown();
+//				}
 			}
 		});
 		th.setName("Ja2-close-shutdown clock");
@@ -118,9 +144,9 @@ public class Emulator
 		th.start();
 	}
 
-	public void config(final Config cfg)
+	public void config(final Config cfg) throws IOException, InvalidMemoryLoad, InvalidDiskImage
 	{
-		cfg.parseConfig(rom,slots,hyper,new StandardIn.EOFHandler()
+		cfg.parseConfig(this.apple2.rom,this.apple2.slots,this.apple2.hyper,new StandardIn.EOFHandler()
 		{
 			@SuppressWarnings("synthetic-access")
 			public void handleEOF()

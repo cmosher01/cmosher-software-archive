@@ -13,8 +13,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class AnalogTV implements VideoDisplayDevice
 {
-	private final DataBuffer imageBuf;
-	private final UI ui;
+	private final ScreenImage image;
 
 	private final AtomicBoolean on = new AtomicBoolean();
 	private final int[] signal = new int[AppleNTSC.SIGNAL_LEN];
@@ -26,10 +25,9 @@ public class AnalogTV implements VideoDisplayDevice
 	 * @param image
 	 * @param ui
 	 */
-	public AnalogTV(final BufferedImage image, final UI ui)
+	public AnalogTV(final ScreenImage image)
 	{
-		this.imageBuf = image.getRaster().getDataBuffer();
-		this.ui = ui;
+		this.image = image;
 	}
 
 
@@ -188,8 +186,8 @@ public class AnalogTV implements VideoDisplayDevice
 //			for (int colno = 0; colno < AppleNTSC.H; ++colno)
 //			{
 //				final int rgb = yiq2rgb(yiq[colno]);
-//				this.imageBuf.setElem(pi,rgb);
-//				this.imageBuf.setElem(pi + AppleNTSC.H,rgb);
+//				this.image.setElem(pi,rgb);
+//				this.image.setElem(pi + AppleNTSC.H,rgb);
 //
 //				++pi;
 //				if (pi % AppleNTSC.H == 0)
@@ -198,7 +196,7 @@ public class AnalogTV implements VideoDisplayDevice
 //				}
 //			}
 //		}
-//		this.ui.updateScreen();
+//		this.image.notifyObservers();
 //	}
 //
 //	private void draw_signal()
@@ -209,15 +207,15 @@ public class AnalogTV implements VideoDisplayDevice
 //			final int ire = (int)Math.rint(this.signal[i]) - AppleNTSC.SYNC_LEVEL;
 //			final int val = (int)Math.rint(ire * 255.0 / (AppleNTSC.WHITE_LEVEL - AppleNTSC.SYNC_LEVEL));
 //			final int rgb = (val << 16) | (val << 8) | (val);
-//			this.imageBuf.setElem(pi,rgb);
-//			this.imageBuf.setElem(pi+AppleNTSC.H,rgb);
+//			this.image.setElem(pi,rgb);
+//			this.image.setElem(pi+AppleNTSC.H,rgb);
 //			++pi;
 //			if (pi % AppleNTSC.H == 0)
 //			{
 //				pi += AppleNTSC.H;
 //			}
 //		}
-//		this.ui.updateScreen();
+//		this.image.notifyObservers();
 //	}
 
 	private static final int D_IP = AppleNTSC.H-2-350;
@@ -237,13 +235,13 @@ public class AnalogTV implements VideoDisplayDevice
 				{
 					rgbv = 0xFFFFFF;
 				}
-				this.imageBuf.setElem(ip,rgbv);
-				this.imageBuf.setElem(ip+D_IP,rgbv); // display same pixel on next row
+				this.image.setElem(ip,rgbv);
+				this.image.setElem(ip+D_IP,rgbv); // display same pixel on next row
 				++ip;
 			}
 			ip += D_IP;
 		}
-		this.ui.updateScreen();
+		this.image.notifyObservers();
 	}
 
 	private void drawMonitorWhite()
@@ -270,13 +268,13 @@ public class AnalogTV implements VideoDisplayDevice
 			{
 				final int is = row*AppleNTSC.H+col;
 				final int rgb = this.signal[is] > 50 ? color : 0;
-				this.imageBuf.setElem(ip,rgb);
-				this.imageBuf.setElem(ip+D_IP,rgb);
+				this.image.setElem(ip,rgb);
+				this.image.setElem(ip+D_IP,rgb);
 				++ip;
 			}
 			ip += D_IP;
 		}
-		this.ui.updateScreen();
+		this.image.notifyObservers();
 	}
 
 	private void drawTVOld()
@@ -299,13 +297,13 @@ public class AnalogTV implements VideoDisplayDevice
 			for (int col = 350; col < AppleNTSC.H-2; ++col)
 			{
 				final int rgb = yiq2rgb(yiq[col-350]);
-				this.imageBuf.setElem(ip,rgb);
-				this.imageBuf.setElem(ip+D_IP,rgb);
+				this.image.setElem(ip,rgb);
+				this.image.setElem(ip+D_IP,rgb);
 				++ip;
 			}
 			ip += D_IP;
 		}
-		this.ui.updateScreen();
+		this.image.notifyObservers();
 	}
 
 	private void drawTVNew()
@@ -324,20 +322,18 @@ public class AnalogTV implements VideoDisplayDevice
 				{
 					rgbv = color2bw(rgbv);
 				}
-				this.imageBuf.setElem(ip,rgbv);
-				this.imageBuf.setElem(ip+D_IP,rgbv);
+				this.image.setElem(ip,rgbv);
+				this.image.setElem(ip+D_IP,rgbv);
 				++ip;
 			}
 			ip += D_IP;
 		}
-		this.ui.updateScreen();
+		this.image.notifyObservers();
 	}
 
 	private void drawBlank()
 	{
-		final int n = this.imageBuf.getSize();
-		for (int i = 0; i < n; ++i)
-			this.imageBuf.setElem(i,0);
+		this.image.setAllElem(0);
 	}
 
 

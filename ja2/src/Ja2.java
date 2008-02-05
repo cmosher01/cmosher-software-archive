@@ -1,3 +1,4 @@
+import emu.Apple2;
 import emu.Emulator;
 import gui.ComputerControlPanel;
 import gui.GUI;
@@ -34,7 +35,6 @@ import video.VideoStaticGenerator;
 import cards.disk.InvalidDiskImage;
 import cards.stdio.StandardIn;
 import chipset.AddressBus;
-import chipset.Apple2;
 import chipset.TimingGenerator;
 import chipset.InvalidMemoryLoad;
 import chipset.Memory;
