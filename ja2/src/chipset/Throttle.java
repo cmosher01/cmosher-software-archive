@@ -13,7 +13,7 @@ import util.Util;
 public class Throttle
 {
 	private static final int CHECK_EVERY_FRACT = 10;
-	private static final int CHECK_EVERY_CYCLE = Util.divideRound(TimingGeneratorAbstract.AVG_CPU_HZ,CHECK_EVERY_FRACT);
+	private static final int CHECK_EVERY_CYCLE = Util.divideRound(TimingGenerator.AVG_CPU_HZ,CHECK_EVERY_FRACT);
 	private static final int EXPECTED_MS = 1000/CHECK_EVERY_FRACT;
 
 	private AtomicBoolean suspend = new AtomicBoolean();

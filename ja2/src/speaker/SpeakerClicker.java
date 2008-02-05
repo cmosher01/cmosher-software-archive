@@ -8,7 +8,6 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import chipset.TimingGenerator;
-import chipset.TimingGeneratorAbstract;
 
 /*
  * Created on Jan 8, 2008
@@ -16,7 +15,7 @@ import chipset.TimingGeneratorAbstract;
 public class SpeakerClicker
 {
 	private static final int SAMPLES_PER_SECOND = 44100;
-	private static final double SAMPLES_PER_TICK = (double)SAMPLES_PER_SECOND/(double)TimingGeneratorAbstract.AVG_CPU_HZ;
+	private static final double SAMPLES_PER_TICK = (double)SAMPLES_PER_SECOND/(double)TimingGenerator.AVG_CPU_HZ;
 	private static final byte AMPLITUDE = 126;
 
 

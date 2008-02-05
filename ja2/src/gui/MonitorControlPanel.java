@@ -10,15 +10,18 @@ import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import emu.Emulator;
 import video.DisplayType;
 import video.VideoDisplayDevice;
 
 public class MonitorControlPanel extends JPanel
 {
-	private VideoDisplayDevice display;
+	private final Emulator emu;
 
-	public MonitorControlPanel()
+	public MonitorControlPanel(final Emulator emu)
 	{
+		this.emu = emu;
+
 		setLayout(new FlowLayout());
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		setOpaque(false);
@@ -72,7 +75,6 @@ public class MonitorControlPanel extends JPanel
 	private void initDisplayButton(final ButtonGroup displayType, String name, final DisplayType type, final boolean selected)
 	{
 		final JRadioButton displayTypeButton = new JRadioButton(name);
-		displayTypeButton.setSelected(selected);
 	    displayTypeButton.setFocusable(false);
 	    displayTypeButton.setOpaque(false);
 	    displayType.add(displayTypeButton);
@@ -80,23 +82,21 @@ public class MonitorControlPanel extends JPanel
 	    {
 			public void actionPerformed(ActionEvent e)
 			{
-				display.setType(type);
+				emu.setDisplayType(type);
 			}
 	    });
 	    add(displayTypeButton);
+
+	    displayTypeButton.setSelected(selected);
 	}
 
 	private void powerOn()
 	{
-		if (display.isOn())
-		{
-			return;
-		}
 		Thread th = new Thread(new Runnable()
 		{
 			public void run()
 			{
-				display.powerOn(true);
+				emu.powerOnMonitor();
 			}
 		});
 		th.setName("User-powerOn");
@@ -106,26 +106,16 @@ public class MonitorControlPanel extends JPanel
 
 	private void powerOff()
 	{
-		if (!display.isOn())
-		{
-			return;
-		}
 		Thread th = new Thread(new Runnable()
 		{
 			public void run()
 			{
-				display.powerOn(false);
+				emu.powerOffMonitor();
 			}
 		});
 		th.setName("User-powerOff");
 		th.setDaemon(true);
 		th.start();
 		// TODO why does this not always blank the screen???
-	}
-
-	public void setUpListeners(VideoDisplayDevice display)
-	{
-		this.display = display;
-	    display.setType(DisplayType.MONITOR_COLOR);
 	}
 }

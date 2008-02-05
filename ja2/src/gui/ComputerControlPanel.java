@@ -3,6 +3,7 @@
  */
 package gui;
 
+import emu.Emulator;
 import gui.buttons.PowerLight;
 import java.awt.ComponentOrientation;
 import java.awt.FlowLayout;
@@ -18,14 +19,13 @@ import chipset.cpu.CPU6502;
 
 public class ComputerControlPanel extends JPanel
 {
+	private final Emulator emu;
 	private final PowerLight powerLight = new PowerLight();
-	private TimingGenerator clock;
-	private CPU6502 cpu;
-	private VideoStaticGenerator vidStatic;
-	private AnalogTV tv;
 
-	public ComputerControlPanel()
+	public ComputerControlPanel(final Emulator emu)
 	{
+		this.emu = emu;
+
 		setLayout(new FlowLayout());
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		setOpaque(false);
@@ -52,7 +52,6 @@ public class ComputerControlPanel extends JPanel
 
 
 	    final JRadioButton powerOff = new JRadioButton("OFF");
-	    powerOff.setSelected(true);
 	    powerOff.setFocusable(false);
 	    powerOff.setOpaque(false);
 	    power.add(powerOff);
@@ -65,6 +64,7 @@ public class ComputerControlPanel extends JPanel
 	    });
 	    add(powerOff);
 
+	    powerOff.setSelected(true);
 
 
 	    add(this.powerLight);
@@ -72,19 +72,13 @@ public class ComputerControlPanel extends JPanel
 
 	private void powerOn()
 	{
-		if (clock.isRunning())
-		{
-			return;
-		}
 		powerLight.turnOn(true);
 		powerLight.repaint();
 		Thread th = new Thread(new Runnable()
 		{
 			public void run()
 			{
-				vidStatic.shutdown();
-				tv.restartSignal();
-				clock.run();
+				emu.powerOnComputer();
 			}
 		});
 		th.setName("User-powerOn");
@@ -94,32 +88,17 @@ public class ComputerControlPanel extends JPanel
 
 	private void powerOff()
 	{
-		if (!clock.isRunning())
-		{
-			return;
-		}
 		powerLight.turnOn(false);
 		powerLight.repaint();
 		Thread th = new Thread(new Runnable()
 		{
 			public void run()
 			{
-				clock.shutdown();
-				vidStatic.run();
+				emu.powerOffComputer();
 			}
 		});
 		th.setName("User-powerOff");
 		th.setDaemon(true);
 		th.start();
-	}
-
-	public void setUpListeners(TimingGenerator clock, CPU6502 cpu, VideoStaticGenerator vidStatic, AnalogTV tv)
-	{
-		this.clock = clock;
-		this.cpu = cpu;
-		this.vidStatic = vidStatic;
-		this.tv = tv;
-
-		this.vidStatic.run();
 	}
 }

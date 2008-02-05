@@ -3,13 +3,10 @@
  */
 package video;
 
-import gui.UI;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicBoolean;
-import chipset.Throttle;
-import chipset.TimingGeneratorAbstract;
+import chipset.Timable;
+import chipset.TimingGenerator;
 
-public class VideoStaticGenerator extends TimingGeneratorAbstract
+public class VideoStaticGenerator implements Timable
 {
 	private final VideoDisplayDevice tv;
 
@@ -18,16 +15,14 @@ public class VideoStaticGenerator extends TimingGeneratorAbstract
 	 * @param ui 
 	 * @param throttle 
 	 */
-	public VideoStaticGenerator(final VideoDisplayDevice tv, final Throttle throttle)
+	public VideoStaticGenerator(final VideoDisplayDevice tv)
 	{
-		super(throttle);
 		this.tv = tv;
 	}
 
-	@Override
-	protected void tick()
+	public void tick()
 	{
-		for (int i = 0; i < TimingGeneratorAbstract.CRYSTAL_CYCLES_PER_CPU_CYCLE; ++i)
+		for (int i = 0; i < TimingGenerator.CRYSTAL_CYCLES_PER_CPU_CYCLE; ++i)
 			this.tv.putAsDisconnectedVideoIn();
 	}
 }
