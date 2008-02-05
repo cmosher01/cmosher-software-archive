@@ -43,9 +43,9 @@ public class Apple2 implements Timable
 	final Video video;
 	final CPU6502 cpu;
 
-	public Apple2(final KeypressQueue keypresses) throws IOException
+	public Apple2(final KeypressQueue keypresses, final Slots slots) throws IOException
 	{
-		this.slots = new Slots();
+		this.slots = slots;
 		this.hyper = new HyperMode();
 		this.videoMode = new VideoMode();
 		this.keyboard = new Keyboard(keypresses,this.hyper);

@@ -4,87 +4,97 @@
 package emu;
 
 
+import java.awt.event.KeyListener;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
-import config.Config;
-import gui.ComputerControlPanel;
-import gui.GUI;
-import gui.MonitorControlPanel;
-import gui.Screen;
-import gui.UI;
-import paddle.PaddleButtons;
-import cli.CLI;
 import keyboard.ClipboardProducer;
 import keyboard.FnKeyHandler;
 import keyboard.HyperKeyHandler;
 import keyboard.KeyboardProducer;
 import keyboard.KeypressQueue;
 import keyboard.VideoKeyHandler;
-import cards.disk.InvalidDiskImage;
-import cards.stdio.StandardIn;
-import chipset.InvalidMemoryLoad;
-import chipset.RAMInitializer;
-import chipset.Throttle;
-import chipset.TimingGenerator;
+import paddle.PaddleButtons;
 import video.AnalogTV;
 import video.DisplayType;
 import video.ScreenImage;
 import video.VideoDisplayDevice;
 import video.VideoStaticGenerator;
+import cards.disk.InvalidDiskImage;
+import cards.stdio.StandardIn;
+import chipset.InvalidMemoryLoad;
+import chipset.Slots;
+import chipset.Throttle;
+import chipset.TimingGenerator;
+import config.Config;
+import gui.ComputerControlPanel;
+import gui.GUI;
+import gui.MonitorControlPanel;
+import gui.Screen;
 
 public class Emulator implements Closeable
 {
-	private final KeypressQueue keypresses = new KeypressQueue();
-	private final Throttle throttle = new Throttle();
-
+	private final KeypressQueue keypresses;
+	private final Throttle throttle;
 	private TimingGenerator timer;
+	private final Slots slots = new Slots();
 	private Apple2 apple2;
 	private VideoStaticGenerator videoStatic;
+	private final ScreenImage screenImage;
 	private VideoDisplayDevice display;
 
-	private final boolean gui;
+	private Screen screen;
 
-	public Emulator(final boolean gui) throws IOException
+
+
+	public Emulator() throws IOException
 	{
-		this.gui = gui;
-
-		this.apple2 = new Apple2(this.keypresses);
-		final ScreenImage screenImage = new ScreenImage();
+		this.keypresses = new KeypressQueue();
+		this.throttle = new Throttle();
+		this.apple2 = new Apple2(this.keypresses,this.slots);
+		this.screenImage = new ScreenImage();
     	this.display = new AnalogTV(screenImage);
+	}
 
-        final UI ui;
-    	if (gui)
-    	{
-    		final Screen screen = new Screen(screenImage);
-	    	final ComputerControlPanel compControls = new ComputerControlPanel(this);
-	    	final MonitorControlPanel monitorControls = new MonitorControlPanel(this);
-	    	ui = new GUI(this,screen,compControls,monitorControls,this.apple2.slots);
+	public void initGUI()
+	{
+		this.screen = new Screen(screenImage);
+    	final ComputerControlPanel compControls = new ComputerControlPanel(this);
+    	final MonitorControlPanel monitorControls = new MonitorControlPanel(this);
 
-	    	screenImage.addObserver(new Observer()
+    	new GUI(this,screen,compControls,monitorControls,this.slots);
+
+    	screenImage.addObserver(new Observer()
+		{
+    		@SuppressWarnings("unused")
+			public void update(final Observable observableThatChagned, final Object typeOfChange)
 			{
-				public void update(final Observable observableThatChagned, final Object typeOfChange)
-				{
-					screen.plot();
-				}
-			});
+				screen.plot();
+			}
+		});
 
-	    	screen.addKeyListener(new KeyboardProducer(keypresses,this.apple2.keyboard));
-	    	screen.addKeyListener(new ClipboardProducer(keypresses));
-	    	screen.addKeyListener(new HyperKeyHandler(this.apple2.hyper));
-	        screen.addKeyListener(new FnKeyHandler(this.apple2.cpu,screenImage,this.apple2.ram,this.throttle));
-	        screen.addKeyListener(new VideoKeyHandler(this.apple2.video));
-	        screen.addKeyListener(new PaddleButtons(this.apple2.paddleButtonStates));
+    	initKeyListeners();
 
 
-	        screen.setFocusTraversalKeysEnabled(false);
-	        screen.requestFocus();
-    	}
-    	else
-    	{
-        	ui = new CLI();
-    	}
+        screen.setFocusTraversalKeysEnabled(false);
+        screen.requestFocus();
+	}
+
+	private void initKeyListeners()
+	{
+		final KeyListener[] rkl = this.screen.getKeyListeners();
+		for (final KeyListener listener: rkl)
+		{
+			this.screen.removeKeyListener(listener);
+		}
+
+		this.screen.addKeyListener(new KeyboardProducer(keypresses,this.apple2.keyboard));
+		this.screen.addKeyListener(new ClipboardProducer(keypresses));
+		this.screen.addKeyListener(new HyperKeyHandler(this.apple2.hyper));
+		this.screen.addKeyListener(new FnKeyHandler(this.apple2.cpu,screenImage,this.apple2.ram,this.throttle));
+	    this.screen.addKeyListener(new VideoKeyHandler(this.apple2.video));
+	    this.screen.addKeyListener(new PaddleButtons(this.apple2.paddleButtonStates));
 	}
 
 	public void powerOnComputer() throws IOException
@@ -94,7 +104,8 @@ public class Emulator implements Closeable
 			this.timer.shutdown();
 			this.timer = null;
 		}
-		this.apple2 = new Apple2(this.keypresses);
+		this.apple2 = new Apple2(this.keypresses,this.slots);
+		initKeyListeners();
     	this.timer = new TimingGenerator(this.apple2,this.throttle);
 	}
 
@@ -144,18 +155,8 @@ public class Emulator implements Closeable
 		th.start();
 	}
 
-	public void config(final Config cfg) throws IOException, InvalidMemoryLoad, InvalidDiskImage
+	public void config(final Config cfg, final StandardIn.EOFHandler eof) throws IOException, InvalidMemoryLoad, InvalidDiskImage
 	{
-		cfg.parseConfig(this.apple2.rom,this.apple2.slots,this.apple2.hyper,new StandardIn.EOFHandler()
-		{
-			@SuppressWarnings("synthetic-access")
-			public void handleEOF()
-			{
-				if (!gui)
-				{
-					close();
-				}
-			}
-		});
+		cfg.parseConfig(this.apple2.rom,this.apple2.slots,this.apple2.hyper,eof);
 	}
 }

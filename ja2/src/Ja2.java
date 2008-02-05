@@ -104,8 +104,23 @@ public final class Ja2
 
     	final Config cfg = new Config(this.config);
 
-		this.emu = new Emulator(this.gui);
-		this.emu.config(cfg);
+		this.emu = new Emulator();
+		this.emu.config(cfg,new StandardIn.EOFHandler()
+		{
+			@SuppressWarnings("synthetic-access")
+			public void handleEOF()
+			{
+				if (!gui)
+				{
+					Ja2.this.emu.close();
+				}
+			}
+		});
+
+		if (gui)
+		{
+			this.emu.initGUI();
+		}
     }
 //    private void tryRunOrig(final String... args) throws IOException, InvalidMemoryLoad, InvalidDiskImage
 //    {
