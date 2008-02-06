@@ -524,25 +524,25 @@ public class AnalogTV implements VideoDisplayDevice
 		{
 			return this.cb.length;
 		}
-		private static final double PH = 127.0/128.0;
 		public double[] getPhase()
 		{
 			final double[] phase = new double[4];
 			for (int i = 0; i < length(); ++i)
 			{
-				phase[i & 3] *= PH;
 				phase[i & 3] += this.cb[i];
 			}
-			double tot = .1;
+			double tot = 0;
 			for (int i = 0; i < 4; ++i)
 			{
 				tot += phase[i] * phase[i];
 			}
-			final double cbgain = 32.0 / Math.sqrt(tot);
+			final double tsrt = Math.sqrt(tot);
 			for (int i = 0; i < 4; i++)
 			{
-				phase[i] *= cbgain;
+				phase[i] /= tsrt;
 			}
+			if (tot > 0)
+			System.out.printf("phase: %f,%f,%f,%f\n",phase[0],phase[1],phase[2],phase[3]);
 			return phase;
 		}
 		public boolean isColor()
@@ -550,11 +550,11 @@ public class AnalogTV implements VideoDisplayDevice
 			int tot = 0;
 			for (int i = 0; i < length(); ++i)
 			{
-				final int cb = this.cb[i];
-				if (cb < 0)
-					tot += -cb;
+				final int icb = this.cb[i];
+				if (icb < 0)
+					tot += -icb;
 				else
-					tot += cb;
+					tot += icb;
 			}
 			return 220 < tot && tot < 260;
 		}
@@ -578,7 +578,7 @@ public class AnalogTV implements VideoDisplayDevice
 
 	private static final Map<CB,IQ> cacheCB = new HashMap<CB,IQ>(2,1);
 
-	private static final double COLOR_THRESH = 2.8;
+	private static final double COLOR_THRESH = 1.4;
 	private static final double IQ_OFFSET_DEGREES = -33;
 	private static final double TINT_I = -Math.cos(IQ_OFFSET_DEGREES * Math.PI / 180);
 	private static final double TINT_Q = +Math.sin(IQ_OFFSET_DEGREES * Math.PI / 180);
@@ -592,8 +592,8 @@ public class AnalogTV implements VideoDisplayDevice
 			return cacheCB.get(cb);
 		}
 		final double[] cb_phase = cb.getPhase();
-		final double cb_i = (cb_phase[2] - cb_phase[0]) / 16;
-		final double cb_q = (cb_phase[3] - cb_phase[1]) / 16;
+		final double cb_i = (cb_phase[2]-cb_phase[0]);
+		final double cb_q = (cb_phase[3]-cb_phase[1]);
 		if (cb_i*cb_i + cb_q*cb_q < COLOR_THRESH)
 		{
 			return BLACK_AND_WHITE;
