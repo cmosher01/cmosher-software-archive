@@ -17,6 +17,8 @@ import video.VideoDisplayDevice;
 public class MonitorControlPanel extends JPanel
 {
 	private final Emulator emu;
+	private boolean powerState;
+	private DisplayType displayTypeState = DisplayType.MONITOR_COLOR;
 
 	public MonitorControlPanel(final Emulator emu)
 	{
@@ -48,7 +50,6 @@ public class MonitorControlPanel extends JPanel
 
 
 	    final JRadioButton powerOff = new JRadioButton("OFF");
-	    powerOff.setSelected(true);
 	    powerOff.setFocusable(false);
 	    powerOff.setOpaque(false);
 	    power.add(powerOff);
@@ -60,6 +61,8 @@ public class MonitorControlPanel extends JPanel
 			}
 	    });
 	    add(powerOff);
+
+	    powerOff.setSelected(true);
 
 	    final ButtonGroup displayType = new ButtonGroup();
 	    initDisplayButton(displayType,"Color",DisplayType.MONITOR_COLOR,true);
@@ -82,7 +85,12 @@ public class MonitorControlPanel extends JPanel
 	    {
 			public void actionPerformed(ActionEvent e)
 			{
+				if (type == displayTypeState)
+				{
+					return;
+				}
 				emu.setDisplayType(type);
+				displayTypeState = type;
 			}
 	    });
 	    add(displayTypeButton);
@@ -92,30 +100,40 @@ public class MonitorControlPanel extends JPanel
 
 	private void powerOn()
 	{
-		Thread th = new Thread(new Runnable()
+		if (this.powerState)
 		{
-			public void run()
-			{
+			return;
+		}
+//		Thread th = new Thread(new Runnable()
+//		{
+//			public void run()
+//			{
 				emu.powerOnMonitor();
-			}
-		});
-		th.setName("User-powerOn");
-		th.setDaemon(true);
-		th.start();
+				this.powerState = true;
+//			}
+//		});
+//		th.setName("User-powerOn");
+//		th.setDaemon(true);
+//		th.start();
 	}
 
 	private void powerOff()
 	{
-		Thread th = new Thread(new Runnable()
+		if (!this.powerState)
 		{
-			public void run()
-			{
+			return;
+		}
+//		Thread th = new Thread(new Runnable()
+//		{
+//			public void run()
+//			{
 				emu.powerOffMonitor();
-			}
-		});
-		th.setName("User-powerOff");
-		th.setDaemon(true);
-		th.start();
-		// TODO why does this not always blank the screen???
+				this.powerState = false;
+//			}
+//		});
+//		th.setName("User-powerOff");
+//		th.setDaemon(true);
+//		th.start();
+//		// TODO why does this not always blank the screen???
 	}
 }

@@ -43,9 +43,9 @@ public class Apple2 implements Timable
 	final Video video;
 	final CPU6502 cpu;
 
-	public Apple2(final KeypressQueue keypresses, final Slots slots) throws IOException
+	public Apple2(final KeypressQueue keypresses) throws IOException
 	{
-		this.slots = slots;
+		this.slots = new Slots();
 		this.hyper = new HyperMode();
 		this.videoMode = new VideoMode();
 		this.keyboard = new Keyboard(keypresses,this.hyper);
@@ -59,9 +59,6 @@ public class Apple2 implements Timable
 		this.textRows = new TextCharacters();
 		this.video = new Video(this.videoMode,this.addressBus,this.picgen,this.textRows);
 		this.cpu = new CPU6502(this.addressBus);
-
-		final RAMInitializer initRam = new RAMInitializer(this.ram);
-		initRam.init();
 	}
 
 	public void tick()
@@ -75,5 +72,22 @@ public class Apple2 implements Timable
 	public void setDisplay(final VideoDisplayDevice display)
 	{
 		this.picgen.setDisplay(display);
+	}
+
+	public void powerOn()
+	{
+		final RAMInitializer initRam = new RAMInitializer(this.ram);
+		initRam.init();
+
+		this.cpu.powerOn();
+		this.videoMode.powerOn();
+		this.video.powerOn();
+		this.picgen.powerOn();
+		// TODO clear up all other things for Apple ][ power-on
+	}
+
+	public void powerOff()
+	{
+		this.ram.clear();
 	}
 }

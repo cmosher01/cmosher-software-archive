@@ -62,4 +62,14 @@ public class VideoMode
 	{
 		return this.swText || (this.swMixed && atTickInField >= MIXED_TEXT_CYCLE);
 	}
+
+
+
+	public void powerOn()
+	{
+		this.swText = false;
+		this.swMixed = false;
+		this.swPage2 = 0;
+		this.swHiRes = false;;
+	}
 }

@@ -23,6 +23,12 @@ public class PictureGenerator
 		this.mode = mode;
 	}
 
+	public void powerOn()
+	{
+		this.hpos = 0;
+		this.line = 0;
+	}
+
 	private void shiftLoRes()
 	{
 		/*

@@ -35,14 +35,14 @@ import gui.Screen;
 
 public class Emulator implements Closeable
 {
-	private final KeypressQueue keypresses;
 	private final Throttle throttle;
-	private TimingGenerator timer;
-	private final Slots slots = new Slots();
-	private Apple2 apple2;
-	private VideoStaticGenerator videoStatic;
+	private final KeypressQueue keypresses;
+	private final Apple2 apple2;
+	private final VideoStaticGenerator videoStatic;
 	private final ScreenImage screenImage;
-	private VideoDisplayDevice display;
+	private final VideoDisplayDevice display;
+
+	private TimingGenerator timer;
 
 	private Screen screen;
 
@@ -50,49 +50,64 @@ public class Emulator implements Closeable
 
 	public Emulator() throws IOException
 	{
-		this.keypresses = new KeypressQueue();
 		this.throttle = new Throttle();
-		this.apple2 = new Apple2(this.keypresses,this.slots);
+
+		this.keypresses = new KeypressQueue();
+
+		this.apple2 = new Apple2(this.keypresses);
+
+		this.videoStatic = new VideoStaticGenerator();
+
 		this.screenImage = new ScreenImage();
-    	this.display = new AnalogTV(screenImage);
+    	this.display = new AnalogTV(this.screenImage);
 	}
 
 	public void initGUI()
 	{
-		this.screen = new Screen(screenImage);
+		this.screen = new Screen(this.screenImage);
     	final ComputerControlPanel compControls = new ComputerControlPanel(this);
     	final MonitorControlPanel monitorControls = new MonitorControlPanel(this);
 
-    	new GUI(this,screen,compControls,monitorControls,this.slots);
+    	new GUI(this,screen,compControls,monitorControls,this.apple2.slots);
 
-    	screenImage.addObserver(new Observer()
+    	this.screenImage.addObserver(new Observer()
 		{
     		@SuppressWarnings("unused")
 			public void update(final Observable observableThatChagned, final Object typeOfChange)
 			{
-				screen.plot();
+    			Emulator.this.screen.plot();
 			}
 		});
 
     	initKeyListeners();
 
 
-        screen.setFocusTraversalKeysEnabled(false);
-        screen.requestFocus();
+    	this.screen.setFocusTraversalKeysEnabled(false);
+    	this.screen.requestFocus();
+
+    	setDisplayType(DisplayType.MONITOR_COLOR);
+    	powerOffComputer();
+    	powerOffMonitor();
+		this.videoStatic.setDisplay(this.display);
+		this.apple2.setDisplay(this.display);
 	}
 
 	private void initKeyListeners()
 	{
+		if (this.screen == null)
+		{
+			return;
+		}
 		final KeyListener[] rkl = this.screen.getKeyListeners();
 		for (final KeyListener listener: rkl)
 		{
 			this.screen.removeKeyListener(listener);
 		}
 
-		this.screen.addKeyListener(new KeyboardProducer(keypresses,this.apple2.keyboard));
-		this.screen.addKeyListener(new ClipboardProducer(keypresses));
+		this.screen.addKeyListener(new KeyboardProducer(this.keypresses,this.apple2.keyboard));
+		this.screen.addKeyListener(new ClipboardProducer(this.keypresses));
 		this.screen.addKeyListener(new HyperKeyHandler(this.apple2.hyper));
-		this.screen.addKeyListener(new FnKeyHandler(this.apple2.cpu,screenImage,this.apple2.ram,this.throttle));
+		this.screen.addKeyListener(new FnKeyHandler(this.apple2.cpu,this.screenImage,this.apple2.ram,this.throttle));
 	    this.screen.addKeyListener(new VideoKeyHandler(this.apple2.video));
 	    this.screen.addKeyListener(new PaddleButtons(this.apple2.paddleButtonStates));
 	}
@@ -104,9 +119,11 @@ public class Emulator implements Closeable
 			this.timer.shutdown();
 			this.timer = null;
 		}
-		this.apple2 = new Apple2(this.keypresses,this.slots);
+    	this.display.restartSignal();
+		this.apple2.powerOn();
 		initKeyListeners();
     	this.timer = new TimingGenerator(this.apple2,this.throttle);
+    	this.timer.run();
 	}
 
 	public void powerOffComputer()
@@ -116,22 +133,24 @@ public class Emulator implements Closeable
 			this.timer.shutdown();
 			this.timer = null;
 		}
-    	this.videoStatic = new VideoStaticGenerator(this.display);
+		this.apple2.powerOff();
     	this.timer = new TimingGenerator(this.videoStatic,this.throttle);
+    	this.timer.run();
 	}
 
 	public void powerOnMonitor()
 	{
-		this.apple2.setDisplay(this.display);
+		this.display.powerOn(true);
 	}
 
 	public void powerOffMonitor()
 	{
-		this.apple2.setDisplay(null);
+		this.display.powerOn(false);
 	}
 
 	public void setDisplayType(DisplayType type)
 	{
+		this.display.setType(type);
 	}
 
 	public void close()
@@ -143,6 +162,11 @@ public class Emulator implements Closeable
 			@SuppressWarnings("synthetic-access")
 			public void run()
 			{
+				if (timer != null)
+				{
+					timer.shutdown();
+					timer = null;
+				}
 //				if (clock != null)
 //				{
 //					if (clock.isRunning())

@@ -50,6 +50,13 @@ public class Video
 		this.textRows = textRows;
 	}
 
+	public void powerOn()
+	{
+		this.t = 0;
+		this.flash = false;
+		this.cflash = 0;
+	}
+
 	public void tick()
 	{
 		final byte data = getDataByte();

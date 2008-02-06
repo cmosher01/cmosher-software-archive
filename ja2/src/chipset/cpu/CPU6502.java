@@ -5,10 +5,10 @@ package chipset.cpu;
  */
 public final class CPU6502
 {
-	public static final int MEMORY_LIM = 1 << 0x10;
-	static final int IRQ_VECTOR = MEMORY_LIM-2; // or BRK
-	static final int RESET_VECTOR = IRQ_VECTOR-2; // or power-on
-	static final int NMI_VECTOR = RESET_VECTOR-2;
+	private static final int MEMORY_LIM = 1 << 0x10;
+	private static final int IRQ_VECTOR = MEMORY_LIM-2; // or BRK
+	private static final int RESET_VECTOR = IRQ_VECTOR-2; // or power-on
+	private static final int NMI_VECTOR = RESET_VECTOR-2;
 
 	int address;
 	int data;
@@ -55,7 +55,16 @@ public final class CPU6502
 		this.addressBus = addressBus;
 	}
 
-    public void reset()
+	public void powerOn()
+	{
+		this.started = false;
+    	this.reset = false;
+    	this.IRQ = false;
+    	this.NMI = false;
+    	// TODO what else to initialize in CPU?
+	}
+
+	public void reset()
     {
     	this.started = true;
     	this.reset = true;

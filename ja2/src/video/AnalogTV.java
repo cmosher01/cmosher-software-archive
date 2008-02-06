@@ -334,6 +334,7 @@ public class AnalogTV implements VideoDisplayDevice
 	private void drawBlank()
 	{
 		this.image.setAllElem(0);
+		this.image.notifyObservers();
 	}
 
 
@@ -719,6 +720,7 @@ public class AnalogTV implements VideoDisplayDevice
 		{
 			this.on.set(on);
 		}
+		this.image.notifyObservers();
 	}
 
 

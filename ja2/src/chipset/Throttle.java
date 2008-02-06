@@ -42,7 +42,7 @@ public class Throttle
 			final long msActual = System.currentTimeMillis()-this.msPrev;
 			final long msDelta = EXPECTED_MS-msActual;
 			this.speedRatio = (float)EXPECTED_MS/msActual;
-			System.err.println(this.speedRatio);
+//			System.err.println(this.speedRatio);
 			sleep(msDelta);
 
 			this.msPrev = System.currentTimeMillis();
