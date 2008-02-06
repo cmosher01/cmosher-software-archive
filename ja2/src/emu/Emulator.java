@@ -116,7 +116,7 @@ public class Emulator implements Closeable
 	    this.screen.addKeyListener(new PaddleButtons(this.apple2.paddleButtonStates));
 	}
 
-	public void powerOnComputer() throws IOException
+	public void powerOnComputer()
 	{
 		if (this.timer != null)
 		{

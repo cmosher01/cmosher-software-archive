@@ -77,15 +77,7 @@ public class ComputerControlPanel extends JPanel
 		this.powerState = true;
 		this.powerLight.turnOn(true);
 		this.powerLight.repaint();
-		try
-		{
-			this.emu.powerOnComputer();
-		}
-		catch (IOException e)
-		{
-			// TODO handle I/O exception from reading text roms
-			e.printStackTrace();
-		}
+		this.emu.powerOnComputer();
 	}
 
 	private void powerOff()
