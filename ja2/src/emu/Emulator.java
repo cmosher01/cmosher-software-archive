@@ -24,7 +24,6 @@ import video.VideoStaticGenerator;
 import cards.disk.InvalidDiskImage;
 import cards.stdio.StandardIn;
 import chipset.InvalidMemoryLoad;
-import chipset.Slots;
 import chipset.Throttle;
 import chipset.TimingGenerator;
 import config.Config;
@@ -68,7 +67,7 @@ public class Emulator implements Closeable
     	final ComputerControlPanel compControls = new ComputerControlPanel(this);
     	final MonitorControlPanel monitorControls = new MonitorControlPanel(this);
 
-    	new GUI(this,screen,compControls,monitorControls,this.apple2.slots);
+    	new GUI(this,this.screen,compControls,monitorControls,this.apple2.slots);
 
     	this.screenImage.addObserver(new Observer()
 		{
@@ -90,6 +89,11 @@ public class Emulator implements Closeable
     	powerOffMonitor();
 		this.videoStatic.setDisplay(this.display);
 		this.apple2.setDisplay(this.display);
+	}
+
+	public void initCLI()
+	{
+		// TODO fix CLI
 	}
 
 	private void initKeyListeners()
@@ -133,6 +137,7 @@ public class Emulator implements Closeable
 			this.timer.shutdown();
 			this.timer = null;
 		}
+		// TODO ask if unsaved changes
 		this.apple2.powerOff();
     	this.timer = new TimingGenerator(this.videoStatic,this.throttle);
     	this.timer.run();
@@ -155,28 +160,11 @@ public class Emulator implements Closeable
 
 	public void close()
 	{
-		// use another thread (a daemon one) to avoid any deadlocks
-		// (for example, if this method is called on the dispatch thread)
-		final Thread th = new Thread(new Runnable()
+		if (timer != null)
 		{
-			@SuppressWarnings("synthetic-access")
-			public void run()
-			{
-				if (timer != null)
-				{
-					timer.shutdown();
-					timer = null;
-				}
-//				if (clock != null)
-//				{
-//					if (clock.isRunning())
-//						clock.shutdown();
-//				}
-			}
-		});
-		th.setName("Ja2-close-shutdown clock");
-		th.setDaemon(true);
-		th.start();
+			timer.shutdown();
+			timer = null;
+		}
 	}
 
 	public void config(final Config cfg, final StandardIn.EOFHandler eof) throws IOException, InvalidMemoryLoad, InvalidDiskImage

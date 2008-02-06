@@ -91,9 +91,9 @@ public class TimingGenerator
 		synchronized (this.shutdown)
 		{
 			this.shutdown.set(true);
+			this.thread.interrupt();
 		}
 
-		// TODO may need to do the join in it's own thread
 		try
 		{
 			this.thread.join();

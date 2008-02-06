@@ -89,39 +89,18 @@ public class AnalogTV implements VideoDisplayDevice
 //			}
 //		}
 	}
-/*
-	static CS_PURE long oscbnk_rand31(long seed)
-	{
-		uint64_t tmp1;
-		uint32_t tmp2;
-	
-		// x = (16807 * x) % 0x7FFFFFFF
-		tmp1 = (uint64_t) ((int32_t) seed * (int64_t) 16807);
-		tmp2 = (uint32_t) tmp1 & (uint32_t) 0x7FFFFFFF;
-		tmp2 += (uint32_t) (tmp1 >> 31);
-		if ((int32_t) tmp2 < (int32_t) 0)
-		tmp2 = (tmp2 + (uint32_t) 1) & (uint32_t) 0x7FFFFFFF;
-		return (long) tmp2;
-	}
-*/
-	private final Random rand = new Random();
+
 	private boolean noise;
 	private volatile DisplayType type;
 
-	private byte[] rbrand = new byte[1];
 	private int rrr = 1;
 	public void putAsDisconnectedVideoIn()
 	{
 		this.noise = true;
-//		this.rand.nextBytes(this.rbrand);
-//		putSignal(this.rbrand[0]-28);
-//		putSignal(this.rand.nextInt(140)-40);
-		rrr *= 16807;
-		rrr %= 0x7FFFFFFF;
-		++rrr;
-//		rrr += 150889;
-//		rrr %= 714025;
-		putSignal((rrr>>>25)-27);
+		this.rrr *= 16807;
+		this.rrr %= 0x7FFFFFFF;
+		++this.rrr;
+		putSignal((this.rrr>>>25)-27);
 		this.noise = false;
 	}
 

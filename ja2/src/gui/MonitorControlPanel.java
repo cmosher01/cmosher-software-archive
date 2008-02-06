@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import emu.Emulator;
 import video.DisplayType;
-import video.VideoDisplayDevice;
 
 public class MonitorControlPanel extends JPanel
 {
@@ -104,17 +103,8 @@ public class MonitorControlPanel extends JPanel
 		{
 			return;
 		}
-//		Thread th = new Thread(new Runnable()
-//		{
-//			public void run()
-//			{
-				emu.powerOnMonitor();
-				this.powerState = true;
-//			}
-//		});
-//		th.setName("User-powerOn");
-//		th.setDaemon(true);
-//		th.start();
+		this.emu.powerOnMonitor();
+		this.powerState = true;
 	}
 
 	private void powerOff()
@@ -123,17 +113,7 @@ public class MonitorControlPanel extends JPanel
 		{
 			return;
 		}
-//		Thread th = new Thread(new Runnable()
-//		{
-//			public void run()
-//			{
-				emu.powerOffMonitor();
-				this.powerState = false;
-//			}
-//		});
-//		th.setName("User-powerOff");
-//		th.setDaemon(true);
-//		th.start();
-//		// TODO why does this not always blank the screen???
+		this.emu.powerOffMonitor();
+		this.powerState = false;
 	}
 }

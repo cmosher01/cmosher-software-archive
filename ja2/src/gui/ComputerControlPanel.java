@@ -13,15 +13,12 @@ import java.io.IOException;
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import video.AnalogTV;
-import video.VideoStaticGenerator;
-import chipset.TimingGenerator;
-import chipset.cpu.CPU6502;
 
 public class ComputerControlPanel extends JPanel
 {
 	private final Emulator emu;
 	private final PowerLight powerLight = new PowerLight();
+	private boolean powerState;
 
 	public ComputerControlPanel(final Emulator emu)
 	{
@@ -73,40 +70,33 @@ public class ComputerControlPanel extends JPanel
 
 	private void powerOn()
 	{
-		powerLight.turnOn(true);
-		powerLight.repaint();
-		Thread th = new Thread(new Runnable()
+		if (this.powerState)
 		{
-			public void run()
-			{
-				try
-				{
-					emu.powerOnComputer();
-				}
-				catch (IOException e)
-				{
-					e.printStackTrace();
-				}
-			}
-		});
-		th.setName("User-powerOn");
-		th.setDaemon(true);
-		th.start();
+			return;
+		}
+		this.powerState = true;
+		this.powerLight.turnOn(true);
+		this.powerLight.repaint();
+		try
+		{
+			this.emu.powerOnComputer();
+		}
+		catch (IOException e)
+		{
+			// TODO handle I/O exception from reading text roms
+			e.printStackTrace();
+		}
 	}
 
 	private void powerOff()
 	{
-		powerLight.turnOn(false);
-		powerLight.repaint();
-		Thread th = new Thread(new Runnable()
+		if (!this.powerState)
 		{
-			public void run()
-			{
-				emu.powerOffComputer();
-			}
-		});
-		th.setName("User-powerOff");
-		th.setDaemon(true);
-		th.start();
+			return;
+		}
+		this.powerState = false;
+		this.powerLight.turnOn(false);
+		this.powerLight.repaint();
+		this.emu.powerOffComputer();
 	}
 }

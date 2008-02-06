@@ -53,7 +53,7 @@ public class Screen extends JPanel
 		}
 		catch (InterruptedException e)
 		{
-			e.printStackTrace();
+			Thread.currentThread().interrupt();
 		}
 		catch (InvocationTargetException e)
 		{
