@@ -88,6 +88,10 @@ public final class Ja2
 		{
 			this.emu.initGUI();
 		}
+		else
+		{
+			this.emu.initCLI();
+		}
     }
 
     private void parseArgs(final String... args)
