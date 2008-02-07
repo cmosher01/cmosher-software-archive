@@ -13,14 +13,16 @@ import java.awt.event.KeyListener;
 public class HyperKeyHandler extends KeyAdapter implements KeyListener
 {
 	private final HyperMode hyper;
+	private final KeyboardBufferMode buffered;
 
 	/**
 	 * @param cpu
 	 * @param video 
 	 */
-	public HyperKeyHandler(final HyperMode hyper)
+	public HyperKeyHandler(final HyperMode hyper, final KeyboardBufferMode buffered)
 	{
 		this.hyper = hyper;
+		this.buffered = buffered;
 	}
 
 	/**
@@ -33,6 +35,10 @@ public class HyperKeyHandler extends KeyAdapter implements KeyListener
 		if (key == KeyEvent.VK_F11)
 		{
 			this.hyper.toggleHyper();
+		}
+		else if (key == KeyEvent.VK_F12)
+		{
+			this.buffered.toggleBuffered();
 		}
 	}
 }

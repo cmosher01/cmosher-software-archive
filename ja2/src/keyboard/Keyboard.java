@@ -12,7 +12,7 @@ public class Keyboard implements KeyboardInterface
 {
 	private final KeypressQueue keys;
 	private final HyperMode hyper;
-	private boolean lossless = true;
+	private final KeyboardBufferMode buffered;
 
 	private byte latch;
 
@@ -21,10 +21,11 @@ public class Keyboard implements KeyboardInterface
 
 
 
-	public Keyboard(final KeypressQueue keys, final HyperMode hyper)
+	public Keyboard(final KeypressQueue keys, final HyperMode hyper, final KeyboardBufferMode buffered)
 	{
 		this.keys = keys;
 		this.hyper = hyper;
+		this.buffered = buffered;
 	}
 
 	public void clear()
@@ -35,7 +36,7 @@ public class Keyboard implements KeyboardInterface
 	public byte get()
 	{
 		waitIfTooFast();
-		if (!this.lossless || this.latch >= 0)
+		if (this.buffered.isBuffered() || this.latch >= 0)
 		{
 			final Byte k = this.keys.peek();
 			if (k != null)
@@ -80,15 +81,5 @@ public class Keyboard implements KeyboardInterface
 			this.cGet = 0;
 		}
 		this.lastGet = System.currentTimeMillis();
-	}
-
-	public void setLossless(final boolean lossless)
-	{
-		this.lossless = lossless;
-	}
-
-	public boolean isLossless()
-	{
-		return this.lossless;
 	}
 }

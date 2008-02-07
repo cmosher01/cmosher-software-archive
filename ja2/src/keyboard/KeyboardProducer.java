@@ -7,17 +7,17 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import emu.Apple2;
 
 public class KeyboardProducer extends KeyAdapter implements KeyListener
 {
 	private static final int CR = '\r';
-	private final KeypressQueue keys;
-	private final KeyboardInterface kbd;
 
-	public KeyboardProducer(final KeypressQueue keys, final KeyboardInterface kbd)
+	private final KeypressQueue keys;
+
+	public KeyboardProducer(final KeypressQueue keys)
 	{
 		this.keys = keys;
-		this.kbd = kbd;
 	}
 
 	@Override
@@ -46,10 +46,6 @@ public class KeyboardProducer extends KeyAdapter implements KeyListener
 		else if (key == KeyEvent.VK_DOWN)
 		{
 			this.keys.put(10);
-		}
-		else if (key == KeyEvent.VK_F12)
-		{
-			this.kbd.setLossless(!this.kbd.isLossless());
 		}
 		else if ('a' <= chr && chr <= 'z')
 		{

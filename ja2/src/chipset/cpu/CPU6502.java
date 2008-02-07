@@ -68,7 +68,6 @@ public final class CPU6502
     {
     	this.started = true;
     	this.reset = true;
-    	this.addressBus.reset();
     }
 
     public void IRQ()

@@ -14,27 +14,28 @@ import video.ScreenImage;
 import chipset.Memory;
 import chipset.Throttle;
 import chipset.cpu.CPU6502;
+import emu.Apple2;
 
 /*
  * Created on Sep 12, 2007
  */
 public class FnKeyHandler extends KeyAdapter implements KeyListener
 {
-	private final CPU6502 cpu;
+	private final Apple2 a2;
 	private final ScreenImage screenImage;
 	private final Memory memory;
 	private final Throttle throttle;
 
-    final SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+    private static final SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 
 	/**
 	 * @param cpu
 	 * @param screenImage 
 	 * @param memory 
 	 */
-	public FnKeyHandler(final CPU6502 cpu, final ScreenImage screenImage, final Memory memory, final Throttle throttle)
+	public FnKeyHandler(final Apple2 a2, final ScreenImage screenImage, final Memory memory, final Throttle throttle)
 	{
-		this.cpu = cpu;
+		this.a2 = a2;
 		this.screenImage = screenImage;
 		this.memory = memory;
 		this.throttle = throttle;
@@ -49,7 +50,7 @@ public class FnKeyHandler extends KeyAdapter implements KeyListener
 		final int key = e.getKeyCode();
 		if (key == KeyEvent.VK_PAUSE)
 		{
-			this.cpu.reset();
+			this.a2.reset();
 		}
 		else if (key == KeyEvent.VK_SCROLL_LOCK)
 		{

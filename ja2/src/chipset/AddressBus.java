@@ -14,6 +14,16 @@ import video.VideoMode;
  */
 public class AddressBus implements chipset.cpu.AddressBus
 {
+	public static final int MOTHERBOARD_RAM_BAS = 0x00000;
+	public static final int MOTHERBOARD_RAM_LIM = 0x0C000;
+	public static final int MOTHERBOARD_RAM_SIZ = MOTHERBOARD_RAM_LIM-MOTHERBOARD_RAM_BAS;
+
+	public static final int MOTHERBOARD_ROM_BAS = 0x0D000;
+	public static final int MOTHERBOARD_ROM_LIM = 0x10000;
+	public static final int MOTHERBOARD_ROM_SIZ = MOTHERBOARD_ROM_LIM-MOTHERBOARD_ROM_BAS;
+
+
+
 	private final Memory ram;
 	private final Memory rom;
 	private final KeyboardInterface keyboard;
@@ -105,10 +115,6 @@ public class AddressBus implements chipset.cpu.AddressBus
 		}
 	}
 
-	public void reset()
-	{
-		this.slots.reset();
-	}
 
 
 

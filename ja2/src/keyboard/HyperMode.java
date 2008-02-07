@@ -13,7 +13,7 @@ public class HyperMode
 
 	public synchronized void setHyper(boolean isHyper)
 	{
-			this.hyper = isHyper;
+		this.hyper = isHyper;
 	}
 
 	public synchronized void toggleHyper()

@@ -12,6 +12,8 @@ import java.util.Observer;
 import keyboard.ClipboardProducer;
 import keyboard.FnKeyHandler;
 import keyboard.HyperKeyHandler;
+import keyboard.HyperMode;
+import keyboard.KeyboardBufferMode;
 import keyboard.KeyboardProducer;
 import keyboard.KeypressQueue;
 import keyboard.VideoKeyHandler;
@@ -35,6 +37,8 @@ import gui.Screen;
 public class Emulator implements Closeable
 {
 	private final Throttle throttle;
+	private final HyperMode hyper;
+	private final KeyboardBufferMode buffered;
 	private final KeypressQueue keypresses;
 	private final Apple2 apple2;
 	private final VideoStaticGenerator videoStatic;
@@ -50,15 +54,17 @@ public class Emulator implements Closeable
 	public Emulator() throws IOException
 	{
 		this.throttle = new Throttle();
-
-		this.keypresses = new KeypressQueue();
-
-		this.apple2 = new Apple2(this.keypresses);
-
-		this.videoStatic = new VideoStaticGenerator();
+		this.hyper = new HyperMode();
+		this.buffered = new KeyboardBufferMode();
 
 		this.screenImage = new ScreenImage();
     	this.display = new AnalogTV(this.screenImage);
+
+    	this.keypresses = new KeypressQueue();
+
+		this.apple2 = new Apple2(this.keypresses,this.display,this.hyper,this.buffered);
+
+		this.videoStatic = new VideoStaticGenerator(this.display);
 	}
 
 	public void initGUI()
@@ -71,7 +77,7 @@ public class Emulator implements Closeable
 
     	this.screenImage.addObserver(new Observer()
 		{
-    		@SuppressWarnings("unused")
+    		@SuppressWarnings({ "unused", "synthetic-access" })
 			public void update(final Observable observableThatChagned, final Object typeOfChange)
 			{
     			Emulator.this.screen.plot();
@@ -87,8 +93,6 @@ public class Emulator implements Closeable
     	setDisplayType(DisplayType.MONITOR_COLOR);
     	powerOffComputer();
     	powerOffMonitor();
-		this.videoStatic.setDisplay(this.display);
-		this.apple2.setDisplay(this.display);
 	}
 
 	public void initCLI()
@@ -108,10 +112,10 @@ public class Emulator implements Closeable
 			this.screen.removeKeyListener(listener);
 		}
 
-		this.screen.addKeyListener(new KeyboardProducer(this.keypresses,this.apple2.keyboard));
+		this.screen.addKeyListener(new KeyboardProducer(this.keypresses));
 		this.screen.addKeyListener(new ClipboardProducer(this.keypresses));
-		this.screen.addKeyListener(new HyperKeyHandler(this.apple2.hyper));
-		this.screen.addKeyListener(new FnKeyHandler(this.apple2.cpu,this.screenImage,this.apple2.ram,this.throttle));
+		this.screen.addKeyListener(new HyperKeyHandler(this.hyper,this.buffered));
+		this.screen.addKeyListener(new FnKeyHandler(this.apple2,this.screenImage,this.apple2.ram,this.throttle));
 	    this.screen.addKeyListener(new VideoKeyHandler(this.apple2.video));
 	    this.screen.addKeyListener(new PaddleButtons(this.apple2.paddleButtonStates));
 	}
@@ -169,6 +173,6 @@ public class Emulator implements Closeable
 
 	public void config(final Config cfg, final StandardIn.EOFHandler eof) throws IOException, InvalidMemoryLoad, InvalidDiskImage
 	{
-		cfg.parseConfig(this.apple2.rom,this.apple2.slots,this.apple2.hyper,eof);
+		cfg.parseConfig(this.apple2.rom,this.apple2.slots,this.hyper,eof);
 	}
 }

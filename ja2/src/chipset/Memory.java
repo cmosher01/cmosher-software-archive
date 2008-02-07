@@ -2,7 +2,6 @@ package chipset;
 
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.Random;
 import util.Util;
 
 
@@ -58,5 +57,16 @@ public class Memory
 	public void clear()
 	{
 		Arrays.fill(this.bytes,CLEAR_VALUE);
+	}
+
+	public void powerOn()
+	{
+		final RAMInitializer initRam = new RAMInitializer(this);
+		initRam.init();
+	}
+
+	public void powerOff()
+	{
+		clear();
 	}
 }

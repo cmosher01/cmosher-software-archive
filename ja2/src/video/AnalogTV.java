@@ -346,7 +346,6 @@ public class AnalogTV implements VideoDisplayDevice
 
 	private void ntsc_to_rgb_monitor(final int isignal, final int siglen, int[] rgb)
 	{
-		// TODO: check for color burst and act accordingly
 		int s0, s1, se;
 		s0 = s1 = isignal;
 		se = isignal+siglen;
@@ -541,8 +540,8 @@ public class AnalogTV implements VideoDisplayDevice
 			{
 				phase[i] /= tsrt;
 			}
-			if (tot > 0)
-			System.out.printf("phase: %f,%f,%f,%f\n",phase[0],phase[1],phase[2],phase[3]);
+//			if (tot > 0)
+//			System.out.printf("phase: %f,%f,%f,%f\n",phase[0],phase[1],phase[2],phase[3]);
 			return phase;
 		}
 		public boolean isColor()
