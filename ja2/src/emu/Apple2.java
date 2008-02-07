@@ -26,31 +26,29 @@ import chipset.cpu.CPU6502;
  */
 public class Apple2 implements Timable
 {
+	final Memory ram;
 	final Memory rom;
 	final Slots slots;
 	private final VideoMode videoMode;
 	private final KeyboardInterface keyboard;
 	private final PaddlesInterface paddles;
-	final PaddleButtonStates paddleButtonStates;
 	private final SpeakerClicker speaker;
-	final Memory ram;
 	private final AddressBus addressBus;
 	private final PictureGenerator picgen;
 	private final TextCharacters textRows;
-	final Video video;
+	private final Video video;
 	private final CPU6502 cpu;
 
-	public Apple2(final KeypressQueue keypresses, final VideoDisplayDevice tv, final HyperMode hyper, final KeyboardBufferMode buffered) throws IOException
+	public Apple2(final KeypressQueue keypresses, final PaddleButtonStates paddleButtonStates, final VideoDisplayDevice tv, final HyperMode hyper, final KeyboardBufferMode buffered) throws IOException
 	{
 		this.slots = new Slots();
 		this.videoMode = new VideoMode();
 		this.keyboard = new Keyboard(keypresses,hyper,buffered);
 		this.paddles = new Paddles();
-		this.paddleButtonStates = new PaddleButtonStates();
 		this.speaker = new SpeakerClicker();
 		this.ram = new Memory(AddressBus.MOTHERBOARD_RAM_SIZ);
 		this.rom = new Memory(AddressBus.MOTHERBOARD_ROM_SIZ);
-		this.addressBus = new AddressBus(this.ram,this.rom,this.keyboard,this.videoMode,this.paddles,this.paddleButtonStates,this.speaker,this.slots);
+		this.addressBus = new AddressBus(this.ram,this.rom,this.keyboard,this.videoMode,this.paddles,paddleButtonStates,this.speaker,this.slots);
 		this.picgen = new PictureGenerator(this.videoMode,tv);
 		this.textRows = new TextCharacters();
 		this.video = new Video(this.videoMode,this.addressBus,this.picgen,this.textRows);

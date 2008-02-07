@@ -16,7 +16,7 @@ import keyboard.HyperMode;
 import keyboard.KeyboardBufferMode;
 import keyboard.KeyboardProducer;
 import keyboard.KeypressQueue;
-import keyboard.VideoKeyHandler;
+import paddle.PaddleButtonStates;
 import paddle.PaddleButtons;
 import video.AnalogTV;
 import video.DisplayType;
@@ -40,6 +40,7 @@ public class Emulator implements Closeable
 	private final HyperMode hyper;
 	private final KeyboardBufferMode buffered;
 	private final KeypressQueue keypresses;
+	private final PaddleButtonStates paddleButtonStates;
 	private final Apple2 apple2;
 	private final VideoStaticGenerator videoStatic;
 	private final ScreenImage screenImage;
@@ -62,7 +63,9 @@ public class Emulator implements Closeable
 
     	this.keypresses = new KeypressQueue();
 
-		this.apple2 = new Apple2(this.keypresses,this.display,this.hyper,this.buffered);
+    	this.paddleButtonStates = new PaddleButtonStates();
+
+    	this.apple2 = new Apple2(this.keypresses,this.paddleButtonStates,this.display,this.hyper,this.buffered);
 
 		this.videoStatic = new VideoStaticGenerator(this.display);
 	}
@@ -116,8 +119,7 @@ public class Emulator implements Closeable
 		this.screen.addKeyListener(new ClipboardProducer(this.keypresses));
 		this.screen.addKeyListener(new HyperKeyHandler(this.hyper,this.buffered));
 		this.screen.addKeyListener(new FnKeyHandler(this.apple2,this.screenImage,this.apple2.ram,this.throttle));
-	    this.screen.addKeyListener(new VideoKeyHandler(this.apple2.video));
-	    this.screen.addKeyListener(new PaddleButtons(this.apple2.paddleButtonStates));
+	    this.screen.addKeyListener(new PaddleButtons(this.paddleButtonStates));
 	}
 
 	public void powerOnComputer()
