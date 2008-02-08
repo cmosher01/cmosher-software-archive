@@ -10,8 +10,8 @@ import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import display.DisplayType;
 import emu.Emulator;
-import video.DisplayType;
 
 public class MonitorControlPanel extends JPanel
 {

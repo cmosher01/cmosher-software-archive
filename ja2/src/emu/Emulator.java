@@ -9,8 +9,6 @@ import keyboard.HyperMode;
 import keyboard.KeyboardBufferMode;
 import keyboard.KeypressQueue;
 import paddle.PaddleButtonStates;
-import video.AnalogTV;
-import video.DisplayType;
 import video.ScreenImage;
 import video.VideoDisplayDevice;
 import video.VideoStaticGenerator;
@@ -20,6 +18,8 @@ import chipset.InvalidMemoryLoad;
 import chipset.Throttle;
 import chipset.TimingGenerator;
 import config.Config;
+import display.AnalogTV;
+import display.DisplayType;
 
 public abstract class Emulator implements Closeable
 {

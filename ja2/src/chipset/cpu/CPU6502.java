@@ -166,7 +166,7 @@ public final class CPU6502
 
 	final Addr[] addrs = new Addr[]
 	{
-	  	new Addr()
+	  	new Addr() // SINGLE
 	  	{
 	  		public void addr(int cycle)
 	  		{
@@ -182,7 +182,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // INTERNAL_IMMEDIATE
 		{
 			public void addr(int cycle)
 			{
@@ -198,7 +198,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // INTERNAL_ZERO_PAGE
 		{
 			public void addr(int cycle)
 			{
@@ -220,7 +220,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // INTERNAL_ABSOLUTE
 		{
 			public void addr(int cycle)
 			{
@@ -246,7 +246,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // INTERNAL_INDIRECT_X
 		{
 			public void addr(int cycle)
 			{
@@ -283,7 +283,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // INTERNAL_ABSOLUTE_XY
 		{
 			public void addr(int cycle)
 			{
@@ -326,7 +326,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // INTERNAL_ZERO_PAGE_XY
 		{
 			public void addr(int cycle)
 			{
@@ -355,7 +355,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // INTERNAL_INDIRECT_Y
 		{
 			public void addr(int cycle)
 			{
@@ -403,7 +403,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // STORE_ZERO_PAGE
 		{
 			public void addr(int cycle)
 			{
@@ -425,7 +425,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // STORE_ABSOLUTE
 		{
 			public void addr(int cycle)
 			{
@@ -451,7 +451,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // STORE_INDIRECT_X
 		{
 			public void addr(int cycle)
 			{
@@ -489,7 +489,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // STORE_ABSOLUTE_XY
 		{
 			public void addr(int cycle)
 			{
@@ -509,7 +509,7 @@ public final class CPU6502
 						setIndex();
 						address = ba();
 						address += idx;
-						//read(); // discard (assume this is the right address, manual is ambiguous)
+						//TODO read(); // discard (assume this is the right address, manual is ambiguous)
 						execute();
 					break;
 					case 4:
@@ -520,7 +520,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // STORE_ZERO_PAGE_XY
 		{
 			public void addr(int cycle)
 			{
@@ -549,7 +549,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // STORE_INDIRECT_Y
 		{
 			public void addr(int cycle)
 			{
@@ -585,7 +585,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // RMW_ZERO_PAGE
 		{
 			public void addr(int cycle)
 			{
@@ -613,7 +613,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // RMW_ABSOLUTE
 		{
 			public void addr(int cycle)
 			{
@@ -645,7 +645,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // RMW_ZERO_PAGE_X
 		{
 			public void addr(int cycle)
 			{
@@ -679,7 +679,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // RMW_ABSOLUTE_X
 		{
 			public void addr(int cycle)
 			{
@@ -715,7 +715,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // MISC_PUSH
 		{
 			public void addr(int cycle)
 			{
@@ -735,7 +735,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // MISC_PULL
 		{
 			public void addr(int cycle)
 			{
@@ -759,7 +759,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // MISC_JSR
 		{
 			public void addr(int cycle)
 			{
@@ -794,7 +794,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // MISC_BREAK
 		{
 			public void addr(int cycle)
 			{
@@ -836,7 +836,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // MISC_RTI
 		{
 			public void addr(int cycle)
 			{
@@ -871,7 +871,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // JMP_ABSOLUTE
 		{
 			public void addr(int cycle)
 			{
@@ -893,7 +893,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // JMP_INDIRECT
 		{
 			public void addr(int cycle)
 			{
@@ -925,7 +925,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // RTS
 		{
 			public void addr(int cycle)
 			{
@@ -960,7 +960,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // BRANCH
 		{
 			public void addr(int cycle)
 			{
@@ -1011,7 +1011,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // IRQ
 		{
 			public void addr(int cycle)
 			{
@@ -1055,7 +1055,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // RESET
 		{
 			public void addr(int cycle)
 			{
@@ -1099,7 +1099,7 @@ public final class CPU6502
 			}
 		}
 		,
-		new Addr()
+		new Addr() // NMI
 		{
 			public void addr(int cycle)
 			{

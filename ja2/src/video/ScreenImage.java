@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
 import javax.imageio.ImageIO;
+import display.AppleNTSC;
 
 public class ScreenImage extends Observable
 {

@@ -4,8 +4,8 @@
 package emu;
 
 import java.io.IOException;
-import video.DisplayType;
 import cards.stdio.StandardIn;
+import display.DisplayType;
 
 public class CLIEmulator extends Emulator
 {

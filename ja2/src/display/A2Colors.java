@@ -1,7 +1,7 @@
 /*
  * Created on Dec 15, 2007
  */
-package video;
+package display;
 
 import java.awt.Color;
 

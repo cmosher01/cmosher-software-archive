@@ -3,6 +3,8 @@
  */
 package video;
 
+import display.A2Colors;
+
 public class DumpColors
 {
 	/**

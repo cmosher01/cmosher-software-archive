@@ -1,7 +1,7 @@
 /*
  * Created on Dec 17, 2007
  */
-package video;
+package display;
 
 enum A2ColorIndex
 {

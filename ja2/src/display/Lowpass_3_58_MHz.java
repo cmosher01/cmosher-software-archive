@@ -1,4 +1,4 @@
-package video;
+package display;
 
 /*
  * Created on Jan 21, 2008

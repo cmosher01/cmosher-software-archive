@@ -1,7 +1,7 @@
 /*
  * Created on Feb 2, 2008
  */
-package video;
+package display;
 
 public enum DisplayType
 {

@@ -3,6 +3,8 @@
  */
 package video;
 
+import display.DisplayType;
+
 public interface VideoDisplayDevice
 {
 	void powerOn(boolean b);

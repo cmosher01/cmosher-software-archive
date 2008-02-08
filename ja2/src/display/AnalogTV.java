@@ -1,4 +1,4 @@
-package video;
+package display;
 
 import gui.UI;
 import java.awt.image.BufferedImage;
@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
+import video.ScreenImage;
+import video.VideoDisplayDevice;
 
 /*
  * Created on Jan 18, 2008
