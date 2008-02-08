@@ -1,63 +1,88 @@
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.StringTokenizer;
 import javax.swing.SwingUtilities;
 import util.Util;
 import cards.disk.InvalidDiskImage;
-import cards.stdio.StandardIn;
 import chipset.InvalidMemoryLoad;
 import config.Config;
+import emu.CLIEmulator;
 import emu.Emulator;
+import emu.GUIEmulator;
 
 /*
- * Created on Aug 31, 2004
+ * Created on 2004-08-31
  */
 
 /**
  * Contains the "main" method (external entry point) for
  * the application. This class is in the default package
  * so that it can only be run from the command line, and
- * using the following format:
+ * using the following simple format:
  * <code>java Ja2 [arguments]</code>
  * 
  * @author Chris Mosher
  */
-public final class Ja2
+public final class Ja2 implements Runnable
 {
+	static
+	{
+		// set the main thread's name
+		Thread.currentThread().setName("User-main");
+	}
+
+	/**
+	 * Runs the emulator.
+	 * 
+	 * @param args array of command line arguments
+	 * @throws InterruptedException
+	 * @throws InvocationTargetException
+	 */
 	public static void main(final String... args) throws InterruptedException, InvocationTargetException
     {
-		Thread.currentThread().setName("User-main");
-    	SwingUtilities.invokeAndWait(new Runnable()
-    	{
-			@SuppressWarnings("synthetic-access")
-			public void run()
-			{
-		    	final Ja2 program = new Ja2();
-		    	program.run(args);
-			}
-    	}
-    	);
+		/*
+		 * Start Swing's event dispatch thread right away, and
+		 * run our program on it. The main thread will wait here
+		 * until we are sure the event dispatch thread is
+		 * running. The program's run method will set everything
+		 * up (while running on the event dispatch thread), and
+		 * then return. After that, invokeAndWait will return
+		 * to us, and we exit the main thread.
+		 */
+    	SwingUtilities.invokeAndWait(new Ja2(args));
     }
 
 
 
-    private boolean gui = true;
+	private final List<String> args;
+	private boolean gui = true;
 	private String config = "ja2.cfg";
 
-	private Emulator emu;
 
 
-
-	private Ja2()
+	/**
+	 * Initializes this emulator.
+	 * @param args command line arguments
+	 */
+	public Ja2(final String... args)
     {
-    	// only instantiated by main
+		// note: this runs on the main thread
+		this.args = Collections.<String>unmodifiableList(Arrays.<String>asList(args));
     }
 
-    public void run(final String... args)
+	/**
+	 * Runs the program. This method is called on the
+	 * event dispatch thread.
+	 *
+	 */
+    public void run()
 	{
     	try
 		{
-			tryRun(args);
+			tryRun();
 		}
 		catch (final Throwable e)
 		{
@@ -65,38 +90,21 @@ public final class Ja2
 		}
 	}
 
-    private void tryRun(final String... args) throws IOException, InvalidMemoryLoad, InvalidDiskImage
+    private void tryRun() throws IOException, InvalidMemoryLoad, InvalidDiskImage
     {
-    	parseArgs(args);
+    	parseArgs();
+
+    	final Emulator emu = this.gui ? new GUIEmulator() : new CLIEmulator();
 
     	final Config cfg = new Config(this.config);
+    	emu.config(cfg);
 
-		this.emu = new Emulator();
-		this.emu.config(cfg,new StandardIn.EOFHandler()
-		{
-			@SuppressWarnings("synthetic-access")
-			public void handleEOF()
-			{
-				if (!Ja2.this.gui)
-				{
-					Ja2.this.emu.close();
-				}
-			}
-		});
-
-		if (this.gui)
-		{
-			this.emu.initGUI();
-		}
-		else
-		{
-			this.emu.initCLI();
-		}
+    	emu.init();
     }
 
-    private void parseArgs(final String... args)
+    private void parseArgs()
 	{
-		for (final String arg : args)
+		for (final String arg : this.args)
 		{
 			if (arg.startsWith("--"))
 			{
