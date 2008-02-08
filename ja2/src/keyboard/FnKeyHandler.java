@@ -13,7 +13,6 @@ import java.util.Date;
 import video.ScreenImage;
 import chipset.Memory;
 import chipset.Throttle;
-import chipset.cpu.CPU6502;
 import emu.Apple2;
 
 /*
@@ -60,7 +59,7 @@ public class FnKeyHandler extends KeyAdapter implements KeyListener
 		{
 			try
 			{
-				final String name = "dump"+this.fmt.format(new Date())+".png";
+				final String name = "dump"+FnKeyHandler.fmt.format(new Date())+".png";
 				this.screenImage.dump("PNG",new File(name));
 			}
 			catch (IOException e1)
@@ -73,7 +72,7 @@ public class FnKeyHandler extends KeyAdapter implements KeyListener
 			try
 			{
 
-				final String name = "dump"+this.fmt.format(new Date())+".bin";
+				final String name = "dump"+FnKeyHandler.fmt.format(new Date())+".bin";
 				final OutputStream fil = new BufferedOutputStream(new FileOutputStream(new File(name)));
 				for (int i = 0; i < this.memory.size(); ++i)
 				{

@@ -10,18 +10,19 @@ import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import video.VideoDisplayDevice;
 import display.DisplayType;
 import emu.Emulator;
 
 public class MonitorControlPanel extends JPanel
 {
-	private final Emulator emu;
+	private final VideoDisplayDevice display;
 	private boolean powerState;
 	private DisplayType displayTypeState = DisplayType.MONITOR_COLOR;
 
-	public MonitorControlPanel(final Emulator emu)
+	public MonitorControlPanel(final VideoDisplayDevice display)
 	{
-		this.emu = emu;
+		this.display = display;
 
 		setLayout(new FlowLayout());
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
@@ -88,7 +89,7 @@ public class MonitorControlPanel extends JPanel
 				{
 					return;
 				}
-				emu.setDisplayType(type);
+				display.setType(type);
 				displayTypeState = type;
 			}
 	    });
@@ -103,7 +104,7 @@ public class MonitorControlPanel extends JPanel
 		{
 			return;
 		}
-		this.emu.powerOnMonitor();
+		this.display.powerOn(true);
 		this.powerState = true;
 	}
 
@@ -113,7 +114,7 @@ public class MonitorControlPanel extends JPanel
 		{
 			return;
 		}
-		this.emu.powerOffMonitor();
+		this.display.powerOn(false);
 		this.powerState = false;
 	}
 }

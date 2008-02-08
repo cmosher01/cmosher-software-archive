@@ -7,7 +7,6 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import emu.Apple2;
 
 public class KeyboardProducer extends KeyAdapter implements KeyListener
 {
@@ -53,7 +52,7 @@ public class KeyboardProducer extends KeyAdapter implements KeyListener
 		}
 		else if (chr == '@' && (mod & InputEvent.SHIFT_DOWN_MASK) != 0 && (mod & InputEvent.CTRL_DOWN_MASK) != 0 )
 		{
-				this.keys.put(0);
+			this.keys.put(0);
 		}
 		else if (0 <= chr && chr < 0x80)
 		{

@@ -27,11 +27,12 @@ public class GUIEmulator extends Emulator
 	{
 	}
 
+	@Override
 	public void init()
 	{
 		this.screen = new Screen(this.screenImage);
     	final ComputerControlPanel compControls = new ComputerControlPanel(this);
-    	final MonitorControlPanel monitorControls = new MonitorControlPanel(this);
+    	final MonitorControlPanel monitorControls = new MonitorControlPanel(this.display);
 
     	new GUI(this,this.screen,compControls,monitorControls,this.apple2.slots);
 
@@ -50,9 +51,9 @@ public class GUIEmulator extends Emulator
     	this.screen.setFocusTraversalKeysEnabled(false);
     	this.screen.requestFocus();
 
-    	setDisplayType(DisplayType.MONITOR_COLOR);
+		this.display.setType(DisplayType.MONITOR_COLOR);
     	powerOffComputer();
-    	powerOffMonitor();
+    	this.display.powerOn(false);
 	}
 
 	private void initKeyListeners()

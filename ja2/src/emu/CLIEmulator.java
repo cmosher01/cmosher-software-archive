@@ -28,8 +28,9 @@ public class CLIEmulator extends Emulator
 	@Override
 	public void init()
 	{
-    	setDisplayType(DisplayType.MONITOR_COLOR);
+		// TODO make display-type configurable for CLI
+		this.display.setType(DisplayType.MONITOR_COLOR);
     	powerOnComputer();
-    	powerOnMonitor();
+		this.display.powerOn(true);
 	}
 }

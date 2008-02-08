@@ -19,7 +19,6 @@ import chipset.Throttle;
 import chipset.TimingGenerator;
 import config.Config;
 import display.AnalogTV;
-import display.DisplayType;
 
 public abstract class Emulator implements Closeable
 {
@@ -31,7 +30,7 @@ public abstract class Emulator implements Closeable
 	protected final Apple2 apple2;
 	private final VideoStaticGenerator videoStatic;
 	protected final ScreenImage screenImage;
-	private final VideoDisplayDevice display;
+	protected final VideoDisplayDevice display;
 
 	private TimingGenerator timer;
 
@@ -82,21 +81,6 @@ public abstract class Emulator implements Closeable
 		this.apple2.powerOff();
     	this.timer = new TimingGenerator(this.videoStatic,this.throttle);
     	this.timer.run();
-	}
-
-	public void powerOnMonitor()
-	{
-		this.display.powerOn(true);
-	}
-
-	public void powerOffMonitor()
-	{
-		this.display.powerOn(false);
-	}
-
-	public void setDisplayType(DisplayType type)
-	{
-		this.display.setType(type);
 	}
 
 	public void close()
