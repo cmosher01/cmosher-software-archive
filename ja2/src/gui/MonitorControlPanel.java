@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import video.VideoDisplayDevice;
 import display.DisplayType;
-import emu.Emulator;
 
 public class MonitorControlPanel extends JPanel
 {
@@ -40,7 +39,8 @@ public class MonitorControlPanel extends JPanel
 	    power.add(powerOn);
 	    powerOn.addActionListener(new ActionListener()
 	    {
-			public void actionPerformed(ActionEvent e)
+			@SuppressWarnings("synthetic-access")
+			public void actionPerformed(@SuppressWarnings("unused") ActionEvent e)
 			{
 				powerOn();
 			}
@@ -55,7 +55,8 @@ public class MonitorControlPanel extends JPanel
 	    power.add(powerOff);
 	    powerOff.addActionListener(new ActionListener()
 	    {
-			public void actionPerformed(ActionEvent e)
+			@SuppressWarnings("synthetic-access")
+			public void actionPerformed(@SuppressWarnings("unused") ActionEvent e)
 			{
 				powerOff();
 			}
@@ -83,7 +84,8 @@ public class MonitorControlPanel extends JPanel
 	    displayType.add(displayTypeButton);
 	    displayTypeButton.addActionListener(new ActionListener()
 	    {
-			public void actionPerformed(ActionEvent e)
+			@SuppressWarnings("synthetic-access")
+			public void actionPerformed(@SuppressWarnings("unused") ActionEvent e)
 			{
 				if (type == displayTypeState)
 				{

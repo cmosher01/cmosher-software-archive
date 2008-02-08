@@ -1,11 +1,5 @@
 package video;
 
-import keyboard.ClipboardProducer;
-import keyboard.FnKeyHandler;
-import keyboard.HyperKeyHandler;
-import keyboard.KeyboardProducer;
-import keyboard.VideoKeyHandler;
-import paddle.PaddleButtons;
 import chipset.TimingGenerator;
 
 

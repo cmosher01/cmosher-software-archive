@@ -3,7 +3,6 @@
  */
 package gui.buttons;
 
-import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -11,7 +10,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
 public class PowerLight extends JButton
@@ -30,9 +28,9 @@ public class PowerLight extends JButton
 		this.setEnabled(false);
 	}
 
-	public void turnOn(final boolean on)
+	public void turnOn(final boolean powerOn)
 	{
-		this.on = on;
+		this.on = powerOn;
 	}
 
 	@Override

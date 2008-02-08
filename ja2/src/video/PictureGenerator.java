@@ -8,7 +8,7 @@ import display.AppleNTSC;
 
 public class PictureGenerator
 {
-	private final VideoDisplayDevice tv;
+	private final VideoDisplayDevice display;
 	private final VideoMode mode;
 
 	private int latchGraphics;
@@ -19,10 +19,10 @@ public class PictureGenerator
 
 	public static final int VISIBLE_X_OFFSET = VideoAddressing.BYTES_PER_ROW-VideoAddressing.VISIBLE_BYTES_PER_ROW;
 
-	public PictureGenerator(final VideoMode mode, final VideoDisplayDevice tv)
+	public PictureGenerator(final VideoMode mode, final VideoDisplayDevice display)
 	{
 		this.mode = mode;
-		this.tv = tv;
+		this.display = display;
 	}
 
 	public void powerOn()
@@ -34,9 +34,14 @@ public class PictureGenerator
 	private void shiftLoRes()
 	{
 		/*
-		 * +--------+ +--------+
-		 * |        | |        |
-		 * +->ABCD->+ +->EFGH->+
+		 * For byte ABCDEFGH in register, perform
+		 * the following 4-bit end-around shifts:
+		 * 
+		 * +---<----+   +---<----+
+		 * |        |   |        |
+		 * +->ABCD->+   +->EFGH->+
+		 * 
+		 * Therefore:
 		 * 
 		 * ABCDEFGH --> DABCHEFG
 		 */
@@ -58,9 +63,14 @@ public class PictureGenerator
 	private void shiftHiRes()
 	{
 		/*
-		 * +--------+
+		 * For byte ABCDEFGH in register, perform
+		 * the following shift:
+		 * 
+		 * +---<----+
 		 * |        |
-		 * +->ABCD->+--->EFGH
+		 * +->ABCD->+--->EFGH->
+		 * 
+		 * Therefore:
 		 * 
 		 * ABCDEFGH --> DABCDEFG
 		 */
@@ -196,7 +206,7 @@ public class PictureGenerator
 	{
 		if (shift && cycle==0)
 		{
-			this.tv.putSignal(showLastHiRes ? AppleNTSC.WHITE_LEVEL : AppleNTSC.BLANK_LEVEL);
+			this.display.putSignal(showLastHiRes ? AppleNTSC.WHITE_LEVEL : AppleNTSC.BLANK_LEVEL);
 		}
 
 		final int hcycle = this.hpos*TimingGenerator.CRYSTAL_CYCLES_PER_CPU_CYCLE+cycle;
@@ -223,7 +233,7 @@ public class PictureGenerator
 		{
 			sig = vbl(hcycle);
 		}
-		this.tv.putSignal(sig);
+		this.display.putSignal(sig);
 	}
 
 	private int vbl(final int hcycle)

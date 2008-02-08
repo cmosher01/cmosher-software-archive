@@ -8,19 +8,18 @@ import chipset.TimingGenerator;
 
 public class VideoStaticGenerator implements Timable
 {
-	private final Object lock = new Object();
-	private final VideoDisplayDevice tv;
+	private final VideoDisplayDevice display;
 
-	public VideoStaticGenerator(final VideoDisplayDevice tv)
+	public VideoStaticGenerator(final VideoDisplayDevice display)
 	{
-		this.tv = tv;
+		this.display = display;
 	}
 
 	public void tick()
 	{
 		for (int i = 0; i < TimingGenerator.CRYSTAL_CYCLES_PER_CPU_CYCLE; ++i)
 		{
-			this.tv.putAsDisconnectedVideoIn();
+			this.display.putAsDisconnectedVideoIn();
 		}
 	}
 }

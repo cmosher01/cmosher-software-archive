@@ -9,7 +9,6 @@ import java.awt.ComponentOrientation;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -40,7 +39,8 @@ public class ComputerControlPanel extends JPanel
 	    power.add(powerOn);
 	    powerOn.addActionListener(new ActionListener()
 	    {
-			public void actionPerformed(ActionEvent e)
+			@SuppressWarnings("synthetic-access")
+			public void actionPerformed(@SuppressWarnings("unused") ActionEvent e)
 			{
 				powerOn();
 			}
@@ -55,7 +55,8 @@ public class ComputerControlPanel extends JPanel
 	    power.add(powerOff);
 	    powerOff.addActionListener(new ActionListener()
 	    {
-			public void actionPerformed(ActionEvent e)
+			@SuppressWarnings("synthetic-access")
+			public void actionPerformed(@SuppressWarnings("unused") ActionEvent e)
 			{
 				powerOff();
 			}

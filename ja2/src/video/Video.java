@@ -1,6 +1,5 @@
 package video;
 
-import java.io.IOException;
 import chipset.AddressBus;
 import chipset.TimingGenerator;
 

@@ -70,6 +70,6 @@ public class VideoMode
 		this.swText = false;
 		this.swMixed = false;
 		this.swPage2 = 0;
-		this.swHiRes = false;;
+		this.swHiRes = false;
 	}
 }
