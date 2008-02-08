@@ -37,7 +37,7 @@ public class StandardIn extends Card
 			{
 				if (this.gotEOF)
 				{
-					this.latch = -1;
+					this.latch = Util.bEOF;
 				}
 				else
 				{

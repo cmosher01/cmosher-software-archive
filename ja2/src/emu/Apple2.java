@@ -71,6 +71,9 @@ public class Apple2 implements Timable
 		this.video.powerOn();
 		this.picgen.powerOn();
 		// TODO clear up all other things for Apple ][ power-on
+
+		// TODO if rev > 0
+		reset();
 	}
 
 	public void powerOff()

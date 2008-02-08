@@ -197,50 +197,77 @@ public class PictureGenerator
 		{
 			this.tv.putSignal(showLastHiRes ? AppleNTSC.WHITE_LEVEL : AppleNTSC.BLANK_LEVEL);
 		}
+
 		final int hcycle = this.hpos*TimingGenerator.CRYSTAL_CYCLES_PER_CPU_CYCLE+cycle;
+		final int sig;
 		if (this.line < VideoAddressing.VISIBLE_ROWS_PER_FIELD)
 		{
-			if (this.hpos < VISIBLE_X_OFFSET) // HBL
+			if (this.hpos < VISIBLE_X_OFFSET)
 			{
-				final int cb;
-				if (AppleNTSC.CB_START <= hcycle && hcycle < AppleNTSC.CB_END)
+				sig = hbl(hcycle);
+			}
+			else
+			{
+				if (bit && cycle < firstBlankedCycle)
 				{
-					if (this.mode.isText()) // TODO && rev > 0
-					{
-						cb = AppleNTSC.BLANK_LEVEL;
-					}
-					else
-					{
-						cb = lutCB[(hcycle-AppleNTSC.CB_START)%4];
-					}
-				}
-				else if (AppleNTSC.SYNC_START <= hcycle && hcycle < AppleNTSC.BP_START)
-				{
-					cb = AppleNTSC.SYNC_LEVEL;
+					sig = AppleNTSC.WHITE_LEVEL;
 				}
 				else
 				{
-					cb = AppleNTSC.BLANK_LEVEL;
+					sig = AppleNTSC.BLANK_LEVEL;
 				}
-				this.tv.putSignal(cb);
-			}
-			else
-			{
-				final boolean visible = cycle < firstBlankedCycle;
-				this.tv.putSignal(bit&visible ? AppleNTSC.WHITE_LEVEL : AppleNTSC.BLANK_LEVEL);
 			}
 		}
-		else // VBL
+		else
 		{
-			if (224 <= this.line && this.line < 240) // VSYNC
+			sig = vbl(hcycle);
+		}
+		this.tv.putSignal(sig);
+	}
+
+	private int vbl(final int hcycle)
+	{
+		final int sig;
+		if (224 <= this.line && this.line < 240) // VSYNC
+		{
+			sig = AppleNTSC.SYNC_LEVEL;
+		}
+		else
+		{
+			if (AppleNTSC.SYNC_START <= hcycle && hcycle < AppleNTSC.BP_START)
 			{
-				this.tv.putSignal(AppleNTSC.SYNC_LEVEL);
+				sig = AppleNTSC.SYNC_LEVEL;
 			}
 			else
 			{
-				final boolean hsync = AppleNTSC.SYNC_START <= hcycle && hcycle < AppleNTSC.BP_START;
-				this.tv.putSignal(hsync ? AppleNTSC.SYNC_LEVEL : AppleNTSC.BLANK_LEVEL);
+				sig = AppleNTSC.BLANK_LEVEL;
 			}
 		}
+		return sig;
+	}
+
+	private int hbl(final int hcycle)
+	{
+		final int cb;
+		if (AppleNTSC.CB_START <= hcycle && hcycle < AppleNTSC.CB_END)
+		{
+			if (this.mode.isText()) // TODO && rev > 0
+			{
+				cb = AppleNTSC.BLANK_LEVEL;
+			}
+			else
+			{
+				cb = lutCB[(hcycle-AppleNTSC.CB_START)%4];
+			}
+		}
+		else if (AppleNTSC.SYNC_START <= hcycle && hcycle < AppleNTSC.BP_START)
+		{
+			cb = AppleNTSC.SYNC_LEVEL;
+		}
+		else
+		{
+			cb = AppleNTSC.BLANK_LEVEL;
+		}
+		return cb;
 	}
 }

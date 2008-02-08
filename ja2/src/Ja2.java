@@ -1,13 +1,9 @@
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.StringTokenizer;
 import javax.swing.SwingUtilities;
-import util.Util;
 import cards.disk.InvalidDiskImage;
 import chipset.InvalidMemoryLoad;
+import config.CmdLineArgs;
 import config.Config;
 import emu.CLIEmulator;
 import emu.Emulator;
@@ -57,9 +53,7 @@ public final class Ja2 implements Runnable
 
 
 
-	private final List<String> args;
-	private boolean gui = true;
-	private String config = "ja2.cfg";
+	private final CmdLineArgs args;
 
 
 
@@ -70,7 +64,7 @@ public final class Ja2 implements Runnable
 	public Ja2(final String... args)
     {
 		// note: this runs on the main thread
-		this.args = Collections.<String>unmodifiableList(Arrays.<String>asList(args));
+		this.args = new CmdLineArgs(args);
     }
 
 	/**
@@ -92,52 +86,14 @@ public final class Ja2 implements Runnable
 
     private void tryRun() throws IOException, InvalidMemoryLoad, InvalidDiskImage
     {
-    	parseArgs();
+    	this.args.parse();
 
-    	final Emulator emu = this.gui ? new GUIEmulator() : new CLIEmulator();
+    	final Emulator emu = this.args.isGUI() ? new GUIEmulator() : new CLIEmulator();
 
-    	final Config cfg = new Config(this.config);
+    	final Config cfg = new Config(this.args.getConfig());
     	emu.config(cfg);
 
     	emu.init();
     }
 
-    private void parseArgs()
-	{
-		for (final String arg : this.args)
-		{
-			if (arg.startsWith("--"))
-			{
-				parseArg(arg.substring(2));
-			}
-			else
-			{
-				throw new IllegalArgumentException(arg);
-			}
-		}
-	}
-
-	private void parseArg(final String arg)
-	{
-		final StringTokenizer tok = new StringTokenizer(arg,"=");
-		final String opt = Util.nextTok(tok);
-		final String val = Util.nextTok(tok);
-
-		if (opt.equals("config"))
-		{
-			this.config = val;
-		}
-		else if (opt.equals("gui"))
-		{
-			this.gui = true;
-		}
-		else if (opt.equals("cli"))
-		{
-			this.gui = false;
-		}
-		else
-		{
-			throw new IllegalArgumentException(arg);
-		}
-	}
 }
