@@ -1,11 +1,7 @@
 package display;
 
-import gui.UI;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBuffer;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 import video.ScreenImage;
 import video.VideoDisplayDevice;
@@ -696,11 +692,11 @@ public class AnalogTV implements VideoDisplayDevice
 		}
 	}
 
-	public void powerOn(final boolean on)
+	public void powerOn(final boolean powerOn)
 	{
 		synchronized (this.on)
 		{
-			this.on.set(on);
+			this.on.set(powerOn);
 		}
 		this.image.notifyObservers();
 	}

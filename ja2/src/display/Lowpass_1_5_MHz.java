@@ -3,7 +3,7 @@ package display;
 /*
  * Created on Jan 21, 2008
  */
-public final class Lowpass_1_5_MHz
+final class Lowpass_1_5_MHz
 {
 	private int x0,x1,x2;
 	private int y0,y1,y2,y3,y4;

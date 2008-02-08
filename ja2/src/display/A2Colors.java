@@ -10,7 +10,7 @@ import java.awt.Color;
  *
  * @author Chris Mosher
  */
-public class A2Colors
+class A2Colors
 {
 /*
 
