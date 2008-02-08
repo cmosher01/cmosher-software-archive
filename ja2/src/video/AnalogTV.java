@@ -577,10 +577,12 @@ public class AnalogTV implements VideoDisplayDevice
 
 	private static final Map<CB,IQ> cacheCB = new HashMap<CB,IQ>(2,1);
 
+	private static final double IQ_OFFSET_DEGREES = 33;
+	private static final double IQ_OFFSET_RADIANS = IQ_OFFSET_DEGREES * Math.PI / 180;
+	private static final double TINT_I = -Math.cos(IQ_OFFSET_RADIANS);
+	private static final double TINT_Q = +Math.sin(IQ_OFFSET_RADIANS);
+
 	private static final double COLOR_THRESH = 1.4;
-	private static final double IQ_OFFSET_DEGREES = -33;
-	private static final double TINT_I = -Math.cos(IQ_OFFSET_DEGREES * Math.PI / 180);
-	private static final double TINT_Q = +Math.sin(IQ_OFFSET_DEGREES * Math.PI / 180);
 
 	private static final IQ BLACK_AND_WHITE = new IQ();
 
@@ -591,8 +593,8 @@ public class AnalogTV implements VideoDisplayDevice
 			return cacheCB.get(cb);
 		}
 		final double[] cb_phase = cb.getPhase();
-		final double cb_i = (cb_phase[2]-cb_phase[0]);
-		final double cb_q = (cb_phase[3]-cb_phase[1]);
+		final double cb_i = cb_phase[2]-cb_phase[0];
+		final double cb_q = cb_phase[3]-cb_phase[1];
 		if (cb_i*cb_i + cb_q*cb_q < COLOR_THRESH)
 		{
 			return BLACK_AND_WHITE;
@@ -601,9 +603,9 @@ public class AnalogTV implements VideoDisplayDevice
 
 		final double[] iq_factor = new double[4];
 
-		iq_factor[0] = cb_i * TINT_I - cb_q * TINT_Q;
+		iq_factor[0] = cb_i * TINT_I + cb_q * TINT_Q;
 		iq_factor[2] = -iq_factor[0];
-		iq_factor[1] = cb_q * TINT_I + cb_i * TINT_Q;
+		iq_factor[1] = cb_q * TINT_I - cb_i * TINT_Q;
 		iq_factor[3] = -iq_factor[1];
 
 //		System.out.printf("%+8.2f,%+8.2f,%+8.2f,%+8.2f\n",iq_factor[0],iq_factor[1],iq_factor[2],iq_factor[3]);
