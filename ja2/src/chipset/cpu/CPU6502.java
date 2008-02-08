@@ -1146,8 +1146,8 @@ public final class CPU6502
 
 	void subsequentCycle()
 	{
-		final int mode = AddressingModeCalculator.getMode(this.opcode);
-		final Addr addr = addrs[mode];
+		final AddressingMode mode = AddressingModeCalculator.getMode(this.opcode);
+		final Addr addr = addrs[mode.ordinal()];
 		addr.addr(this.t);
 	}
 
