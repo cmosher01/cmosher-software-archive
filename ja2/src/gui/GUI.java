@@ -21,7 +21,7 @@ import chipset.Slots;
 
 
 
-public class GUI implements UI
+public class GUI
 {
 	private final JFrame frame;
 	private final ContentPane contentPane;
@@ -215,16 +215,5 @@ public class GUI implements UI
 	public void toFront()
 	{
 		this.frame.toFront();
-	}
-
-
-
-	public void updateScreen()
-	{
-		if (this.contentPane == null)
-		{
-			return;
-		}
-		this.contentPane.updateScreen();
 	}
 }

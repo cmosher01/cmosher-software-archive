@@ -68,11 +68,6 @@ class ContentPane extends JPanel
 		return this.dropTarget;
 	}
 
-	public void updateScreen()
-	{
-		this.screen.plot();
-	}
-
 	public boolean hasUnsavedChanges()
 	{
 		return this.slots.isAnyDiskDirty();
