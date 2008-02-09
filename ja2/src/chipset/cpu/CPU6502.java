@@ -826,7 +826,7 @@ public final class CPU6502
 						adl = data;
 					break;
 					case 6:
-						address = IRQ_VECTOR+1;
+						++address;
 						read();
 						adh = data;
 						pc = ad();
