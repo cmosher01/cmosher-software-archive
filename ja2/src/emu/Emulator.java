@@ -63,7 +63,6 @@ public abstract class Emulator implements Closeable
 			this.timer.shutdown();
 			this.timer = null;
 		}
-    	this.display.restartSignal();
 		this.apple2.powerOn();
 
     	this.timer = new TimingGenerator(this.apple2,this.throttle);

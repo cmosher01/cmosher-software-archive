@@ -17,6 +17,7 @@ import keyboard.KeyboardInterface;
 import keyboard.KeypressQueue;
 import chipset.AddressBus;
 import chipset.Memory;
+import chipset.PowerUpReset;
 import chipset.Slots;
 import chipset.Timable;
 import chipset.cpu.CPU6502;
@@ -38,6 +39,7 @@ public class Apple2 implements Timable
 	private final TextCharacters textRows;
 	private final Video video;
 	private final CPU6502 cpu;
+	private final PowerUpReset powerUpReset;
 
 	public Apple2(final KeypressQueue keypresses, final PaddleButtonStates paddleButtonStates, final VideoDisplayDevice tv, final HyperMode hyper, final KeyboardBufferMode buffered) throws IOException
 	{
@@ -53,6 +55,7 @@ public class Apple2 implements Timable
 		this.textRows = new TextCharacters();
 		this.video = new Video(this.videoMode,this.addressBus,this.picgen,this.textRows);
 		this.cpu = new CPU6502(this.addressBus);
+		this.powerUpReset = new PowerUpReset(this);
 	}
 
 	public void tick()
@@ -61,6 +64,7 @@ public class Apple2 implements Timable
 		this.video.tick();
 		this.paddles.tick();
 		this.speaker.tick();
+		this.powerUpReset.tick();
 	}
 
 	public void powerOn()
@@ -70,10 +74,8 @@ public class Apple2 implements Timable
 		this.videoMode.powerOn();
 		this.video.powerOn();
 		this.picgen.powerOn();
+		this.powerUpReset.powerOn();
 		// TODO clear up all other things for Apple ][ power-on
-
-		// TODO if rev > 0
-		reset();
 	}
 
 	public void powerOff()

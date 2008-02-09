@@ -105,6 +105,7 @@ public class AnalogTV implements VideoDisplayDevice
 	public void restartSignal()
 	{
 		this.isig = 0;
+		this.image.notifyObservers();
 	}
 
 	public void putSignal(final int level)

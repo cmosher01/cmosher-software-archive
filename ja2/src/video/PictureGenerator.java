@@ -29,6 +29,7 @@ public class PictureGenerator
 	{
 		this.hpos = 0;
 		this.line = 0;
+    	this.display.restartSignal();
 	}
 
 	private void shiftLoRes()
