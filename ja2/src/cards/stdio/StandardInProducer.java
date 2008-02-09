@@ -59,7 +59,7 @@ public class StandardInProducer
 			}
 			catch (InterruptedException e)
 			{
-				e.printStackTrace();
+				Thread.currentThread().interrupt();
 			}
 		}
 

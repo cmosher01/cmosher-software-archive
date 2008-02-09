@@ -93,7 +93,7 @@ public class SpeakerClicker
 		}
 		catch (InterruptedException e1)
 		{
-			e1.printStackTrace();
+			Thread.currentThread().interrupt();
 		}
 
 		synchronized (this.started)

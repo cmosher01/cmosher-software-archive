@@ -509,7 +509,7 @@ public final class CPU6502
 						setIndex();
 						address = ba();
 						address += idx;
-						//TODO read(); // discard (assume this is the right address, manual is ambiguous)
+						read(); // discard (assume this is the right address, manual is ambiguous)
 						execute();
 					break;
 					case 4:

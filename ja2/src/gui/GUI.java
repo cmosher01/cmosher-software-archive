@@ -35,9 +35,6 @@ public class GUI
 		// Create the window.
         this.frame = new JFrame();
 
-        // If the user clicks the close box, we call the WindowListener
-        // that's passed in by the caller (who is responsible for calling
-        // our close method if he determines it is OK to terminate the app)
         this.frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         this.frame.addWindowListener(new WindowAdapter()
     	{
@@ -46,7 +43,7 @@ public class GUI
 			{
 				try
 				{
-					verifyLoseUnsaveChanges();
+					verifyLoseUnsavedChanges();
 				}
 				catch (UserCancelled e2)
 				{
@@ -101,7 +98,7 @@ public class GUI
         this.frame.setVisible(true);
 	}
 
-	public void verifyLoseUnsaveChanges() throws UserCancelled
+	public void verifyLoseUnsavedChanges() throws UserCancelled
 	{
 		if (this.contentPane.hasUnsavedChanges())
 		{

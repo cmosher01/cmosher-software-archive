@@ -223,17 +223,17 @@ public class AnalogTV implements VideoDisplayDevice
 
 	private void drawMonitorWhite()
 	{
-		drawMonitorMonochrome(0xFFFFFF);
+		drawMonitorMonochrome(A2ColorsObserved.COLOR[A2ColorIndex.WHITE.ordinal()]);
 	}
 
 	private void drawMonitorGreen()
 	{
-		drawMonitorMonochrome(0x00FF0D);
+		drawMonitorMonochrome(A2ColorsObserved.COLOR[A2ColorIndex.HIRES_GREEN.ordinal()]);
 	}
 
 	private void drawMonitorOrange()
 	{
-		drawMonitorMonochrome(0xFF8C00);
+		drawMonitorMonochrome(A2ColorsObserved.COLOR[A2ColorIndex.HIRES_ORANGE.ordinal()]);
 	}
 
 	private void drawMonitorMonochrome(final int color)
