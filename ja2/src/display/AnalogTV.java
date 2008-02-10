@@ -35,7 +35,7 @@ public class AnalogTV implements VideoDisplayDevice
 		final int[] yiq = new int[AppleNTSC.H];
 		for (int row = 0; row < 192; ++row)
 		{
-			final CB cb = get_cb(row);
+			final ColorReference cb = get_cb(row);
 			final IQ iq_factor = get_iq_factor(cb);
 			ntsc_to_yiq(row*AppleNTSC.H,AppleNTSC.H,iq_factor,yiq);
 			for (int col = 0; col < AppleNTSC.H; ++col)
@@ -59,7 +59,7 @@ public class AnalogTV implements VideoDisplayDevice
 
 //		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
 //		{
-//			final CB cb = get_cb(lineno);
+//			final ColorReference cb = get_cb(lineno);
 //			final IQ iq_factor = get_iq_factor(cb);
 //			ntsc_to_yiq(lineno*AppleNTSC.H,AppleNTSC.H,iq_factor,yiq);
 //			for (int colno = 0; colno < AppleNTSC.H; ++colno)
@@ -161,7 +161,7 @@ public class AnalogTV implements VideoDisplayDevice
 //		final int[] yiq = new int[AppleNTSC.H];
 //		for (int lineno = 0; lineno < AppleNTSC.V; ++lineno)
 //		{
-//			final CB cb = get_cb(lineno);
+//			final ColorReference cb = get_cb(lineno);
 //			final IQ iq_factor = get_iq_factor(cb);
 //			ntsc_to_yiq(lineno*AppleNTSC.H,AppleNTSC.H,iq_factor,yiq);
 //			for (int colno = 0; colno < AppleNTSC.H; ++colno)
@@ -206,7 +206,7 @@ public class AnalogTV implements VideoDisplayDevice
 		int ip = 0;
 		for (int row = 0; row < 192; ++row)
 		{
-			final CB cb = get_cb(row);
+			final ColorReference cb = get_cb(row);
 			final boolean removeColor = (this.type == DisplayType.TV_NEW_BW || !cb.isColor());
 			ntsc_to_rgb_monitor(row*AppleNTSC.H+350,D_IP,rgb);
 			for (int col = 350; col < AppleNTSC.H-2; ++col)
@@ -267,7 +267,7 @@ public class AnalogTV implements VideoDisplayDevice
 			final IQ iq_factor;
 			if (this.type == DisplayType.TV_OLD_COLOR)
 			{
-				final CB cb = get_cb(row);
+				final ColorReference cb = get_cb(row);
 				iq_factor = get_iq_factor(cb);
 			}
 			else
@@ -293,7 +293,7 @@ public class AnalogTV implements VideoDisplayDevice
 		int ip = 0;
 		for (int row = 0; row < 192; ++row)
 		{
-			final CB cb = get_cb(row);
+			final ColorReference cb = get_cb(row);
 			final boolean removeColor = (this.type == DisplayType.TV_NEW_BW || !cb.isColor());
 			ntsc_to_rgb_newtv(row*AppleNTSC.H+350,AppleNTSC.H-2-350,rgb);
 			for (int col = 350; col < AppleNTSC.H-2; ++col)
@@ -455,44 +455,45 @@ public class AnalogTV implements VideoDisplayDevice
 
 	private static class IQ
 	{
-		private final double[] iq = new double[4];
-		public IQ(){}
+		private final double[] iq;// = new double[4];
+		//public IQ(){}
 		public IQ(final double[] iq)
 		{
-			if (iq.length != this.iq.length)
-			{
-				throw new IllegalArgumentException();
-			}
-			System.arraycopy(iq,0,this.iq,0,this.iq.length);
+//			if (iq.length != this.iq.length)
+//			{
+//				throw new IllegalArgumentException();
+//			}
+//			System.arraycopy(iq,0,this.iq,0,this.iq.length);
+			this.iq = iq;
 		}
 		public double get(int i) { return this.iq[i]; }
 	}
 
 	static final int CB_EXTRA = 32;
-	private final int[] rcb = new int[AppleNTSC.CB_END-AppleNTSC.CB_START-CB_EXTRA];
-	private CB get_cb(int lineno)
+	private ColorReference get_cb(int lineno)
 	{
-		final int isp = lineno * AppleNTSC.H;
-		for (int i = AppleNTSC.CB_START + CB_EXTRA/2; i < AppleNTSC.CB_END - CB_EXTRA/2; ++i)
-		{
-			this.rcb[i-(AppleNTSC.CB_START + CB_EXTRA/2)] = this.signal[isp + i];
-		}
-		return new CB(this.rcb);
+//		final int[] rcb = new int[AppleNTSC.CB_END-AppleNTSC.CB_START-CB_EXTRA];
+//		final int isp = lineno * AppleNTSC.H;
+//		for (int i = AppleNTSC.CB_START + CB_EXTRA/2; i < AppleNTSC.CB_END - CB_EXTRA/2; ++i)
+//		{
+//			rcb[i-(AppleNTSC.CB_START + CB_EXTRA/2)] = this.signal[isp + i];
+//		}
+		return new ColorReference(this.signal,lineno * AppleNTSC.H+AppleNTSC.CB_START + CB_EXTRA/2);
 	}
 
 
-	private static final Map<CB,IQ> cacheCB = new HashMap<CB,IQ>(2,1);
+	private static final Map<ColorReference,IQ> cacheCB = new HashMap<ColorReference,IQ>(2,1);
 
 	private static final double IQ_OFFSET_DEGREES = 33;
-	private static final double IQ_OFFSET_RADIANS = IQ_OFFSET_DEGREES * Math.PI / 180;
-	private static final double TINT_I = -Math.cos(IQ_OFFSET_RADIANS);
-	private static final double TINT_Q = +Math.sin(IQ_OFFSET_RADIANS);
+	private static final double IQ_OFFSET_RADIANS = StrictMath.toRadians(IQ_OFFSET_DEGREES);
+	private static final double TINT_I = -StrictMath.cos(IQ_OFFSET_RADIANS);
+	private static final double TINT_Q = +StrictMath.sin(IQ_OFFSET_RADIANS);
 
 	static final double COLOR_THRESH = 1.4;
 
-	private static final IQ BLACK_AND_WHITE = new IQ();
+	private static final IQ BLACK_AND_WHITE = new IQ(new double[4]);
 
-	private IQ get_iq_factor(final CB cb)
+	private IQ get_iq_factor(final ColorReference cb)
 	{
 		if (cacheCB.containsKey(cb))
 		{
