@@ -4,6 +4,7 @@
 package video;
 
 import chipset.TimingGenerator;
+import chipset.cpu.CPU6502;
 import display.AppleNTSC;
 
 public class PictureGenerator
@@ -123,6 +124,7 @@ public class PictureGenerator
 
 
 	private boolean lasthires;
+
 	public void tick(final int t, final int rowToPlot)
 	{
 		if (this.mode.isDisplayingText(t))
@@ -142,7 +144,7 @@ public class PictureGenerator
 		}
 
 //		 hi-res half-pixel shift:
-		final boolean shift = this.mode.isHiRes() && !this.mode.isDisplayingText(t) && this.d7 && this.line < VideoAddressing.VISIBLE_ROWS_PER_FIELD && !(this.hpos < VISIBLE_X_OFFSET);
+		final boolean shift = this.mode.isHiRes() && !this.mode.isDisplayingText(t) && this.d7 && this.line < VideoAddressing.VISIBLE_ROWS_PER_FIELD && !(this.hpos < VISIBLE_X_OFFSET); // TODO && rev > 0
 		final boolean showLastHiRes = shift && this.lasthires;
 
 		int xtra = 0;
@@ -155,10 +157,16 @@ public class PictureGenerator
 
 		for (int cycle = 0; cycle < cycles-1; ++cycle)
 		{
+			/*
+			 * Note: the body of this loop is the most executed code
+			 * in the whole program. It should be able to execute at over
+			 * 14 million times per second to achieve authentic Apple ][ speed.
+			 * (Also note: right now, it doesn't achieve this.)
+			 */
 			final boolean bit = shiftLatch(t,cycle);
 			writeVideoSignal(shift,showLastHiRes,firstBlankedCycle,cycle,bit);
 		}
-		// optimization: pull the last iteration of the loop out, so we don't getHiResBit every time
+		// optimization: pull the last iteration out of the loop, so we don't getHiResBit every time
 		{
 			this.lasthires = getHiResBit(); // save it for the next plotted byte, just in case we need it
 			final int cycle = cycles-1;

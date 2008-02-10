@@ -68,6 +68,7 @@ public class Throttle
 
 	private void suspendIfNecessary()
 	{
+		// TODO need to wake up if user exits program
 		synchronized (this.suspend)
 		{
 			while (this.suspend.get())

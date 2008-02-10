@@ -11,6 +11,7 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import video.ScreenImage;
+import video.VideoDisplayDevice;
 import chipset.Memory;
 import chipset.Throttle;
 import emu.Apple2;
@@ -24,20 +25,22 @@ public class FnKeyHandler extends KeyAdapter implements KeyListener
 	private final ScreenImage screenImage;
 	private final Memory memory;
 	private final Throttle throttle;
-
+	private final VideoDisplayDevice device;
     private static final SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 
 	/**
 	 * @param cpu
 	 * @param screenImage 
 	 * @param memory 
+	 * @param device 
 	 */
-	public FnKeyHandler(final Apple2 a2, final ScreenImage screenImage, final Memory memory, final Throttle throttle)
+	public FnKeyHandler(final Apple2 a2, final ScreenImage screenImage, final Memory memory, final Throttle throttle, final VideoDisplayDevice device)
 	{
 		this.a2 = a2;
 		this.screenImage = screenImage;
 		this.memory = memory;
 		this.throttle = throttle;
+		this.device = device;
 	}
 
 	/**
@@ -84,6 +87,10 @@ public class FnKeyHandler extends KeyAdapter implements KeyListener
 			{
 				e1.printStackTrace();
 			}
+		}
+		else if (key == KeyEvent.VK_F2)
+		{
+			this.device.dump();
 		}
 	}
 }

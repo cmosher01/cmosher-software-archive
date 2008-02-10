@@ -71,7 +71,7 @@ public class GUIEmulator extends Emulator
 		this.screen.addKeyListener(new KeyboardProducer(this.keypresses));
 		this.screen.addKeyListener(new ClipboardProducer(this.keypresses));
 		this.screen.addKeyListener(new HyperKeyHandler(this.hyper,this.buffered));
-		this.screen.addKeyListener(new FnKeyHandler(this.apple2,this.screenImage,this.apple2.ram,this.throttle));
+		this.screen.addKeyListener(new FnKeyHandler(this.apple2,this.screenImage,this.apple2.ram,this.throttle,this.display));
 	    this.screen.addKeyListener(new PaddleButtons(this.paddleButtonStates));
 	}
 

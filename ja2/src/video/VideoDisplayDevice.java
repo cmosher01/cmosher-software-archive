@@ -15,4 +15,5 @@ public interface VideoDisplayDevice
 	void putSignal(int ire);
 	void putAsDisconnectedVideoIn();
 	void restartSignal();
+	void dump();
 }

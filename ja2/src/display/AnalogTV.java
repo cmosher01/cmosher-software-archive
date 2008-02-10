@@ -37,12 +37,12 @@ public class AnalogTV implements VideoDisplayDevice
 		{
 			final CB cb = get_cb(row);
 			final IQ iq_factor = get_iq_factor(cb);
-			ntsc_to_yiq(row*AppleNTSC.H+350,AppleNTSC.H-2-350,iq_factor,yiq);
-			for (int col = 350; col < AppleNTSC.H-2; ++col)
+			ntsc_to_yiq(row*AppleNTSC.H,AppleNTSC.H,iq_factor,yiq);
+			for (int col = 0; col < AppleNTSC.H; ++col)
 			{
 				final int sig = this.signal[row*AppleNTSC.H+col];
 				System.out.printf(" %+04d",sig);
-				final int yiqv = yiq[col-350];
+				final int yiqv = yiq[col];
 				int y = (yiqv&0xFF)-IQINTOFF;
 				int i = ((yiqv>>8)&0xFF)-IQINTOFF;
 				int q = ((yiqv>>16)&0xFF)-IQINTOFF;
@@ -95,10 +95,13 @@ public class AnalogTV implements VideoDisplayDevice
 	public void putAsDisconnectedVideoIn()
 	{
 		this.noise = true;
+
+		// this random sequence generator is faster than java.util.Random.
 		this.rrr *= 16807;
 		this.rrr %= 0x7FFFFFFF;
 		++this.rrr;
 		putSignal((this.rrr>>>25)-27);
+
 		this.noise = false;
 	}
 
@@ -465,103 +468,7 @@ public class AnalogTV implements VideoDisplayDevice
 		public double get(int i) { return this.iq[i]; }
 	}
 
-	private static final int CB_EXTRA = 32;
-	private static class CB
-	{
-		private final int[] cb = new int[AppleNTSC.CB_END-AppleNTSC.CB_START-CB_EXTRA];
-		private final int hash;
-
-		public CB(final int[] cb)
-		{
-			if (cb.length != this.cb.length)
-			{
-				throw new IllegalArgumentException();
-			}
-			System.arraycopy(cb,0,this.cb,0,this.cb.length);
-			this.hash = getHash();
-		}
-		public int get(int i) { return this.cb[i]; }
-		@Override
-		public int hashCode()
-		{
-			return this.hash;
-		}
-
-		private int getHash()
-		{
-			int h = 7;
-			for (final int x: this.cb)
-			{
-				h *= 31;
-				h += x;
-			}
-			return h;
-		}
-		@Override
-		public boolean equals(final Object obj)
-		{
-			if (!(obj instanceof CB))
-			{
-				return false;
-			}
-			final CB that = (CB)obj;
-			if (this.cb.length != that.cb.length)
-			{
-				return false;
-			}
-			for (int i = 0; i < this.cb.length; ++i)
-			{
-				if (this.cb[i] != that.cb[i])
-				{
-					return false;
-				}
-			}
-			return true;
-		}
-		private int length()
-		{
-			return this.cb.length;
-		}
-		public double[] getPhase()
-		{
-			final double[] phase = new double[4];
-			for (int i = 0; i < length(); ++i)
-			{
-				phase[i & 3] += this.cb[i];
-			}
-			double tot = 0;
-			for (int i = 0; i < 4; ++i)
-			{
-				tot += phase[i] * phase[i];
-			}
-			final double tsrt = Math.sqrt(tot);
-			for (int i = 0; i < 4; i++)
-			{
-				phase[i] /= tsrt;
-			}
-//			if (tot > 0)
-//			System.out.printf("phase: %f,%f,%f,%f\n",phase[0],phase[1],phase[2],phase[3]);
-			return phase;
-		}
-		public boolean isColor()
-		{
-			int tot = 0;
-			for (int i = 0; i < length(); ++i)
-			{
-				final int icb = this.cb[i];
-				if (icb < 0)
-					tot += -icb;
-				else
-					tot += icb;
-			}
-			return 220 < tot && tot < 260;
-		}
-	}
-
-
-
-
-
+	static final int CB_EXTRA = 32;
 	private final int[] rcb = new int[AppleNTSC.CB_END-AppleNTSC.CB_START-CB_EXTRA];
 	private CB get_cb(int lineno)
 	{
@@ -581,7 +488,7 @@ public class AnalogTV implements VideoDisplayDevice
 	private static final double TINT_I = -Math.cos(IQ_OFFSET_RADIANS);
 	private static final double TINT_Q = +Math.sin(IQ_OFFSET_RADIANS);
 
-	private static final double COLOR_THRESH = 1.4;
+	static final double COLOR_THRESH = 1.4;
 
 	private static final IQ BLACK_AND_WHITE = new IQ();
 
