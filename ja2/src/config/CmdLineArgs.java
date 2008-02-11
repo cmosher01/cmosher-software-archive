@@ -10,7 +10,6 @@ import util.Util;
  */
 public class CmdLineArgs
 {
-	private final Object lock = new Object();
 	private final List<String> args;
 
 	private boolean gui = true;
@@ -18,26 +17,21 @@ public class CmdLineArgs
 
 	public CmdLineArgs(final String... args)
 	{
-		synchronized (lock)
-		{
-			this.args = Collections.<String>unmodifiableList(Arrays.<String>asList(args));
-		}
+		this.args = Collections.<String>unmodifiableList(Arrays.<String>asList(args));
+		parse();
 	}
 
-	public void parse() throws IllegalArgumentException
+	private void parse() throws IllegalArgumentException
 	{
-		synchronized (lock)
+		for (final String arg : this.args)
 		{
-			for (final String arg : this.args)
+			if (arg.startsWith("--"))
 			{
-				if (arg.startsWith("--"))
-				{
-					parseArg(arg.substring(2));
-				}
-				else
-				{
-					throw new IllegalArgumentException(arg);
-				}
+				parseArg(arg.substring(2));
+			}
+			else
+			{
+				throw new IllegalArgumentException(arg);
 			}
 		}
 	}
@@ -68,17 +62,11 @@ public class CmdLineArgs
 
 	public String getConfig()
 	{
-		synchronized (lock)
-		{
-			return this.config;
-		}
+		return this.config;
 	}
 
 	public boolean isGUI()
 	{
-		synchronized (lock)
-		{
-			return this.gui;
-		}
+		return this.gui;
 	}
 }

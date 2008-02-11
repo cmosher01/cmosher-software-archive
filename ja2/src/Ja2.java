@@ -24,11 +24,7 @@ import emu.GUIEmulator;
  */
 public final class Ja2 implements Runnable
 {
-	static
-	{
-		// set the main thread's name
-		Thread.currentThread().setName("User-main");
-	}
+	private static String[] rarg;
 
 	/**
 	 * Runs the emulator.
@@ -39,6 +35,10 @@ public final class Ja2 implements Runnable
 	 */
 	public static void main(final String... args) throws InterruptedException, InvocationTargetException
     {
+		Thread.currentThread().setName("User-main");
+
+		Ja2.rarg = args;
+
 		/*
 		 * Start Swing's event dispatch thread right away, and
 		 * run our program on it. The main thread will wait here
@@ -48,24 +48,13 @@ public final class Ja2 implements Runnable
 		 * then return. After that, invokeAndWait will return
 		 * to us, and we exit the main thread.
 		 */
-    	SwingUtilities.invokeAndWait(new Ja2(args));
+    	SwingUtilities.invokeAndWait(new Ja2());
     }
 
 
 
-	private final CmdLineArgs args;
 
 
-
-	/**
-	 * Initializes this emulator.
-	 * @param args command line arguments
-	 */
-	public Ja2(final String... args)
-    {
-		// note: this runs on the main thread
-		this.args = new CmdLineArgs(args);
-    }
 
 	/**
 	 * Runs the program. This method is called on the
@@ -86,11 +75,11 @@ public final class Ja2 implements Runnable
 
     private void tryRun() throws IOException, InvalidMemoryLoad, InvalidDiskImage
     {
-    	this.args.parse();
+    	final CmdLineArgs cli = new CmdLineArgs(Ja2.rarg);
 
-    	final Emulator emu = this.args.isGUI() ? new GUIEmulator() : new CLIEmulator();
+    	final Emulator emu = cli.isGUI() ? new GUIEmulator() : new CLIEmulator();
 
-    	final Config cfg = new Config(this.args.getConfig());
+    	final Config cfg = new Config(cli.getConfig());
     	emu.config(cfg);
 
     	emu.init();
