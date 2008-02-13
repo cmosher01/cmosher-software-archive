@@ -17,51 +17,38 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "memory.h"
-#include <vector>
-#include <algorithm>
-#include <istream>
-#include "RAMInitializer.h"
+#ifndef VIDEOADDRESSING_H
+#define VIDEOADDRESSING_H
 
-const int Memory::CLEAR_VALUE(0);
-
-Memory::Memory(const size_t n):
-        bytes(n)
+class VideoAddressing
 {
-}
+public:
+	VideoAddressing();
+	static void buildLUT(const unsigned short base, const unsigned short len, unsigned short lut[]);
 
-size_t Memory::size() const
-{
-        return this->bytes.size();
-}
+	static const int NTSC_LINES_PER_FRAME;
+	static const int NTSC_LINES_PER_FIELD;
+	static const int NTSC_FIELDS_PER_SECOND;
+	static const int NTSC_COLOR_FIELD_EVERY;
+	
+	static const int APPLE_BYTES;
+	static const int LINES;
+	static const int BYTES_PER_ROW;
+	
+	static const int BYTES_PER_FIELD;
+	
+	static const int VISIBLE_BITS_PER_BYTE;
+	static const int VISIBLE_LINES_PER_CHARACTER;
+	
+	static const int VISIBLE_BYTES_PER_ROW;
+	static const int VISIBLE_ROWS_PER_FIELD;
+	
+	static const int BLANKED_BYTES_PER_ROW;
+	static const int VISIBLE_BYTES_PER_FIELD;
+	static const int SCANNABLE_ROWS;
+	static const int SCANNABLE_BYTES;
+	static const int RESET_ROWS;
+	static const int RESET_BYTES;
+};
 
-unsigned char Memory::read(const unsigned short address) const
-{
-        return this->bytes[address];
-}
-
-void Memory::write(const unsigned short address, const unsigned char data)
-{
-        this->bytes[address] = data;
-}
-
-void Memory::clear()
-{
-        std::fill(this->bytes.begin(),this->bytes.end(),CLEAR_VALUE);
-}
-
-void Memory::powerOn()
-{
-      RAMInitializer initRam(*this);
-      initRam.init();
-}
-
-void Memory::powerOff()
-{
-        clear();
-}
-
-void Memory::load(const unsigned short base, std::istream& in)
-{
-        in.read((char*)&this->bytes[base],this->bytes.size()-base);
-}
+#endif

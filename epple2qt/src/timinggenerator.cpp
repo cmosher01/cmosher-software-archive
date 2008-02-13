@@ -17,51 +17,16 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "memory.h"
-#include <vector>
-#include <algorithm>
-#include <istream>
-#include "RAMInitializer.h"
+#include "timinggenerator.h"
+#include "util.h"
 
-const int Memory::CLEAR_VALUE(0);
-
-Memory::Memory(const size_t n):
-        bytes(n)
+TimingGenerator::TimingGenerator()
 {
 }
+const int TimingGenerator::CRYSTAL_HZ(Util::divideRoundUp(315000000,22));
+const int TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE(14);
+const int TimingGenerator::EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE(2);
 
-size_t Memory::size() const
-{
-        return this->bytes.size();
-}
-
-unsigned char Memory::read(const unsigned short address) const
-{
-        return this->bytes[address];
-}
-
-void Memory::write(const unsigned short address, const unsigned char data)
-{
-        this->bytes[address] = data;
-}
-
-void Memory::clear()
-{
-        std::fill(this->bytes.begin(),this->bytes.end(),CLEAR_VALUE);
-}
-
-void Memory::powerOn()
-{
-      RAMInitializer initRam(*this);
-      initRam.init();
-}
-
-void Memory::powerOff()
-{
-        clear();
-}
-
-void Memory::load(const unsigned short base, std::istream& in)
-{
-        in.read((char*)&this->bytes[base],this->bytes.size()-base);
-}
+const int TimingGenerator::HORIZ_CYCLES(65);
+const int TimingGenerator::AVG_CPU_HZ((int)((double)315000000*TimingGenerator::HORIZ_CYCLES)/(22*(TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE*TimingGenerator::HORIZ_CYCLES+TimingGenerator::EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE)));
+const int TimingGenerator::CPU_HZ(Util::divideRoundUp(TimingGenerator::CRYSTAL_HZ,TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE));

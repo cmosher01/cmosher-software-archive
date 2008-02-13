@@ -17,51 +17,44 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "memory.h"
-#include <vector>
-#include <algorithm>
-#include <istream>
-#include "RAMInitializer.h"
+#ifndef ADDRESSBUS_H
+#define ADDRESSBUS_H
 
-const int Memory::CLEAR_VALUE(0);
+class Memory;
+class Keyboard;
+class VideoMode;
 
-Memory::Memory(const size_t n):
-        bytes(n)
+class AddressBus
 {
-}
+private:
+	Memory& ram;
+	Memory& rom;
+	Keyboard& kbd;
+	VideoMode& vid;
+	//PaddlesInterface paddles;
+	//SpeakerClicker speaker;
+	//Slots slots;
+	//PaddleBtnInterface paddleButtons;
 
-size_t Memory::size() const
-{
-        return this->bytes.size();
-}
+	unsigned char data; // this emulates the (floating) data bus
 
-unsigned char Memory::read(const unsigned short address) const
-{
-        return this->bytes[address];
-}
+public:
+	AddressBus(Memory& ram, Memory& rom, Keyboard& kbd, VideoMode& vid);
+	~AddressBus();
 
-void Memory::write(const unsigned short address, const unsigned char data)
-{
-        this->bytes[address] = data;
-}
+	unsigned char read(const unsigned short address);
+	void write(const unsigned short address, const unsigned char d);
+	unsigned char readSwitch(unsigned short address);
+	void setD7(const bool set);
+	void writeSwitch(unsigned short address);
 
-void Memory::clear()
-{
-        std::fill(this->bytes.begin(),this->bytes.end(),CLEAR_VALUE);
-}
+	static const int MOTHERBOARD_RAM_BAS;
+	static const int MOTHERBOARD_RAM_LIM;
+	static const int MOTHERBOARD_RAM_SIZ;
 
-void Memory::powerOn()
-{
-      RAMInitializer initRam(*this);
-      initRam.init();
-}
+	static const int MOTHERBOARD_ROM_BAS;
+	static const int MOTHERBOARD_ROM_LIM;
+	static const int MOTHERBOARD_ROM_SIZ;
+};
 
-void Memory::powerOff()
-{
-        clear();
-}
-
-void Memory::load(const unsigned short base, std::istream& in)
-{
-        in.read((char*)&this->bytes[base],this->bytes.size()-base);
-}
+#endif

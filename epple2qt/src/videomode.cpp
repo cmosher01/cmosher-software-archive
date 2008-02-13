@@ -17,51 +17,68 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "memory.h"
-#include <vector>
-#include <algorithm>
-#include <istream>
-#include "RAMInitializer.h"
+#include "videomode.h"
 
-const int Memory::CLEAR_VALUE(0);
-
-Memory::Memory(const size_t n):
-        bytes(n)
+VideoMode::VideoMode()
 {
 }
+const int VideoMode::MIXED_TEXT_LINES(4);
+const int VideoMode::ROWS_PER_TEXT_LINE(8);
+const int VideoMode::MIXED_TEXT_CYCLE(0);//TODO  = (VideoAddressing.VISIBLE_ROWS_PER_FIELD-(MIXED_TEXT_LINES*ROWS_PER_TEXT_LINE))*VideoAddressing.BYTES_PER_ROW;
 
-size_t Memory::size() const
+
+
+unsigned char VideoMode::io(const unsigned short addr, const unsigned char b)
 {
-        return this->bytes.size();
+	const int sw = (addr & 0xE) >> 1;
+	const bool on = addr & 0x1;
+	switch (sw)
+	{
+		case 0:
+			this->swText = on; break;
+		case 1:
+			this->swMixed = on; break;
+		case 2:
+			this->swPage2 = on ? 1 : 0; break;
+		case 3:
+			this->swHiRes = on; break;
+	}
+	return b;
 }
 
-unsigned char Memory::read(const unsigned short address) const
+
+
+bool VideoMode::isText()
 {
-        return this->bytes[address];
+	return this->swText;
 }
 
-void Memory::write(const unsigned short address, const unsigned char data)
+bool VideoMode::isHiRes()
 {
-        this->bytes[address] = data;
+	return this->swHiRes;
 }
 
-void Memory::clear()
+bool VideoMode::isMixed()
 {
-        std::fill(this->bytes.begin(),this->bytes.end(),CLEAR_VALUE);
+	return this->swMixed;
 }
 
-void Memory::powerOn()
+int VideoMode::getPage()
 {
-      RAMInitializer initRam(*this);
-      initRam.init();
+	return this->swPage2;
 }
 
-void Memory::powerOff()
+bool VideoMode::isDisplayingText(const int atTickInField)
 {
-        clear();
+	return this->swText || (this->swMixed && atTickInField >= MIXED_TEXT_CYCLE);
 }
 
-void Memory::load(const unsigned short base, std::istream& in)
+
+
+void VideoMode::powerOn()
 {
-        in.read((char*)&this->bytes[base],this->bytes.size()-base);
+	this->swText = false;
+	this->swMixed = false;
+	this->swPage2 = 0;
+	this->swHiRes = false;
 }

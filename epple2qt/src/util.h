@@ -17,51 +17,16 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "memory.h"
-#include <vector>
-#include <algorithm>
-#include <istream>
-#include "RAMInitializer.h"
+#ifndef UTIL_H
+#define UTIL_H
 
-const int Memory::CLEAR_VALUE(0);
-
-Memory::Memory(const size_t n):
-        bytes(n)
+class Util
 {
-}
+public:
+	static int divideRoundUp(const int num, const int denom)
+	{
+		return (num+denom-1)/denom;
+	}
+};
 
-size_t Memory::size() const
-{
-        return this->bytes.size();
-}
-
-unsigned char Memory::read(const unsigned short address) const
-{
-        return this->bytes[address];
-}
-
-void Memory::write(const unsigned short address, const unsigned char data)
-{
-        this->bytes[address] = data;
-}
-
-void Memory::clear()
-{
-        std::fill(this->bytes.begin(),this->bytes.end(),CLEAR_VALUE);
-}
-
-void Memory::powerOn()
-{
-      RAMInitializer initRam(*this);
-      initRam.init();
-}
-
-void Memory::powerOff()
-{
-        clear();
-}
-
-void Memory::load(const unsigned short base, std::istream& in)
-{
-        in.read((char*)&this->bytes[base],this->bytes.size()-base);
-}
+#endif

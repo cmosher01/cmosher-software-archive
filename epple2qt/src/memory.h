@@ -17,6 +17,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#ifndef MEMORY_H
+#define MEMORY_H
+
 #include <vector>
 #include <istream>
 
@@ -34,5 +37,7 @@ public:
         void clear();
         void powerOn();
         void powerOff();
-        void load(std::istream& in);
+        void load(const unsigned short base, std::istream& in);
 };
+
+#endif

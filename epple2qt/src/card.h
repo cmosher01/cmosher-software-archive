@@ -17,51 +17,32 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "memory.h"
-#include <vector>
-#include <algorithm>
+#ifndef CARD_H
+#define CARD_H
+
 #include <istream>
-#include "RAMInitializer.h"
+#include "memory.h"
 
-const int Memory::CLEAR_VALUE(0);
-
-Memory::Memory(const size_t n):
-        bytes(n)
+class Card
 {
-}
+private:
+	bool activeSeventhRom;
+protected:
+	Memory rom;
+	Memory seventhRom;
 
-size_t Memory::size() const
-{
-        return this->bytes.size();
-}
+public:
+	Card();
+	virtual ~Card();
+	virtual void reset();
+	virtual unsigned char io(const unsigned short address, const unsigned char data, const bool writing);
+	virtual unsigned char readRom(const unsigned short address);
+	virtual void readSeventhRom(const unsigned short address, unsigned char* const pb);
+	virtual void loadRom(const unsigned short base, std::istream& in);
+	virtual void loadSeventhRom(const unsigned short base, std::istream& in);
+	virtual bool inhibitMotherboardRom();
+	virtual void ioBankRom(const unsigned short addr, unsigned char* const pb, const bool write);
+	virtual void loadBankRom(const unsigned short base, std::istream& in);
+};
 
-unsigned char Memory::read(const unsigned short address) const
-{
-        return this->bytes[address];
-}
-
-void Memory::write(const unsigned short address, const unsigned char data)
-{
-        this->bytes[address] = data;
-}
-
-void Memory::clear()
-{
-        std::fill(this->bytes.begin(),this->bytes.end(),CLEAR_VALUE);
-}
-
-void Memory::powerOn()
-{
-      RAMInitializer initRam(*this);
-      initRam.init();
-}
-
-void Memory::powerOff()
-{
-        clear();
-}
-
-void Memory::load(const unsigned short base, std::istream& in)
-{
-        in.read((char*)&this->bytes[base],this->bytes.size()-base);
-}
+#endif

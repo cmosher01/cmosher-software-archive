@@ -17,6 +17,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#ifndef RAMINITIALIZER_H
+#define RAMINITIALIZER_H
+
 class Memory;
 #include <boost/random.hpp>
 
@@ -38,3 +41,5 @@ public:
 	RAMInitializer(Memory& mem);
 	void init();
 };
+
+#endif

@@ -5,11 +5,28 @@
 
 HEADERS += playqmake.h \
            memory.h \
-           RAMInitializer.h 
+           RAMInitializer.h \
+           Keyboard.h \
+           videomode.h \
+           videoaddressing.h \
+           timinggenerator.h \
+           util.h \
+           addressbus.h \
+           slots.h \
+           card.h \
+           emptyslot.h 
 SOURCES += playqmake.cpp \
            main.cpp \
            memory.cpp \
-           RAMInitializer.cpp 
+           RAMInitializer.cpp \
+           Keyboard.cpp \
+           videomode.cpp \
+           videoaddressing.cpp \
+           timinggenerator.cpp \
+           addressbus.cpp \
+           slots.cpp \
+           card.cpp \
+           emptyslot.cpp 
 TEMPLATE = app
 CONFIG += release \
 warn_on \
