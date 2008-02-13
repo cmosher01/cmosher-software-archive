@@ -4,7 +4,6 @@
 package video;
 
 import chipset.TimingGenerator;
-import chipset.cpu.CPU6502;
 import display.AppleNTSC;
 
 public class PictureGenerator

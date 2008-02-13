@@ -70,12 +70,12 @@ public class Apple2 implements Timable
 	public void powerOn()
 	{
 		this.ram.powerOn();
-		this.cpu.powerOn();
 		this.videoMode.powerOn();
 		this.video.powerOn();
 		this.picgen.powerOn();
 		this.powerUpReset.powerOn();
-		// TODO clear up all other things for Apple ][ power-on
+		// TODO clear up any other things for Apple ][ power-on?
+		this.cpu.powerOn();
 	}
 
 	public void powerOff()
@@ -85,7 +85,7 @@ public class Apple2 implements Timable
 
 	public void reset()
 	{
-		this.cpu.reset();
 		this.slots.reset();
+		this.cpu.reset();
 	}
 }
