@@ -20,12 +20,13 @@
 
 #include "RAMInitializer.h"
 #include "memory.h"
-//#include <ctime>
-//#include <cstdlib>
+#include <ctime>
+#include <cstdlib>
 
 RAMInitializer::RAMInitializer(Memory& mem):
 	ram(mem)
 {
+	srand(time(0));
 }
 
 void RAMInitializer::init()
@@ -114,7 +115,7 @@ void RAMInitializer::ramPattern2(const int bit) throw (done)
 
 void RAMInitializer::putn(const int c, bool on, const int bit) throw (done)
 {
-	if ((this->rand() >> 17) & 1)
+	if ((rand() >> 9) & 1)
 		on = !on;
 	const unsigned char mask(1 << bit);
 	for (int i = 0; i < c; ++i)

@@ -60,7 +60,7 @@ struct readSeventhRomCard
 
 unsigned char Slots::readSeventhRom(const unsigned short addr)
 {
-	unsigned char b(-1);
+	unsigned char b(0xFF);
 	std::for_each(this->cards.begin(),this->cards.end(),readSeventhRomCard(addr,&b));
 	return b;
 }
@@ -81,15 +81,18 @@ unsigned char Slots::ioBankRom(const unsigned short addr, const unsigned char da
 	return b;
 }
 
+struct inhibitMotherboardRomCard
+{
+	bool inhibit;
+	inhibitMotherboardRomCard():inhibit(false) {}
+	void operator() (Card* p) { if (p->inhibitMotherboardRom()) inhibit = true; }
+};
+
 bool Slots::inhibitMotherboardRom()
 {
-//TODO
-//		if (card.inhibitMotherboardRom())
-//		{
-//			return true;
-//		}
-//	}
-	return false;
+	inhibitMotherboardRomCard inh = inhibitMotherboardRomCard();
+	std::for_each(this->cards.begin(),this->cards.end(),inh);
+	return inh.inhibit;
 }
 
 void Slots::set(const int slot, Card* card)

@@ -21,7 +21,6 @@
 #define RAMINITIALIZER_H
 
 class Memory;
-#include <boost/random.hpp>
 
 class RAMInitializer
 {
@@ -30,7 +29,6 @@ private:
 
 	Memory& ram;
 	unsigned short nextinit;
-	boost::minstd_rand rand;
 
 	void putBytesUntilFull(int bit, int pat);
 	void ramPattern1(const int bit) throw (done);
