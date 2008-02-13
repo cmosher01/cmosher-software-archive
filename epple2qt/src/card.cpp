@@ -114,3 +114,8 @@ void Card::loadBankRom(const unsigned short base, std::istream& in)
 //{
 //	return null;
 //}
+
+bool Card::isDirty()
+{
+	return false;
+}

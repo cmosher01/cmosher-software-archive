@@ -44,6 +44,7 @@ public:
 	bool inhibitMotherboardRom();
 	void set(const int slot, Card* card);
 	Card* get(const int slot);
+	bool isDirty();
 };
 
 #endif

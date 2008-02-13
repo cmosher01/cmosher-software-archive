@@ -43,6 +43,7 @@ public:
 	virtual bool inhibitMotherboardRom();
 	virtual void ioBankRom(const unsigned short addr, unsigned char* const pb, const bool write);
 	virtual void loadBankRom(const unsigned short base, std::istream& in);
+	virtual bool isDirty();
 };
 
 #endif

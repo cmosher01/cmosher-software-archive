@@ -18,13 +18,16 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "videomode.h"
+#include "videoaddressing.h"
 
 VideoMode::VideoMode()
 {
 }
+
+
 const int VideoMode::MIXED_TEXT_LINES(4);
 const int VideoMode::ROWS_PER_TEXT_LINE(8);
-const int VideoMode::MIXED_TEXT_CYCLE(0);//TODO  = (VideoAddressing.VISIBLE_ROWS_PER_FIELD-(MIXED_TEXT_LINES*ROWS_PER_TEXT_LINE))*VideoAddressing.BYTES_PER_ROW;
+const int VideoMode::MIXED_TEXT_CYCLE((VideoAddressing::VISIBLE_ROWS_PER_FIELD-(VideoMode::MIXED_TEXT_LINES*VideoMode::ROWS_PER_TEXT_LINE))*VideoAddressing::BYTES_PER_ROW);
 
 
 

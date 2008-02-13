@@ -105,36 +105,32 @@ Card* Slots::get(const int slot)
 	return this->cards[slot];
 }
 
+
 /*
+struct isAnyDiskDriveMotorOnCard
+{
+	bool on;
+	isAnyDiskDriveMotorOnCard():on(false) {}
+	void operator() (Card* p) { if (p->isMotorOn()) on = true; }
+};
+
 bool isAnyDiskDriveMotorOn()
 {
-	for (const Card card: this->cards)
-	{
-		if (card instanceof DiskController)
-		{
-			const DiskController disk = (DiskController)card;
-			if (disk.isMotorOn())
-			{
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-bool isAnyDiskDirty()
-{
-	for (const Card card: this->cards)
-	{
-		if (card instanceof DiskController)
-		{
-			const DiskController disk = (DiskController)card;
-			if (disk.isDirty())
-			{
-				return true;
-			}
-		}
-	}
-	return false;
+	isAnyDiskDriveMotorOnCard on = isAnyDiskDriveMotorOnCard();
+	std::for_each(this->cards.begin(),this->cards.end(),inh);
+	return on.inhibit;
 }
 */
+struct isDirtyCard
+{
+	bool dirty;
+	isDirtyCard():dirty(false) {}
+	void operator() (Card* p) { if (p->isDirty()) dirty = true; }
+};
+
+bool Slots::isDirty()
+{
+	isDirtyCard dirty = isDirtyCard();
+	std::for_each(this->cards.begin(),this->cards.end(),dirty);
+	return dirty.dirty;
+}
