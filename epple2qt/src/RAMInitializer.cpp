@@ -71,18 +71,19 @@ void RAMInitializer::ramPattern1(const int bit) throw (done)
 	{
 		for (int j = 0; j < 8; ++j)
 		{
-			for (int i = 0; i < 0x10; ++i)
+			int i;
+			for (i = 0; i < 0x10; ++i)
 			{
 				putn(4,false,bit);
 				putn(2,true,bit);
 				putn(2,false,bit);
 			}
-			for (int i = 0; i < 0x40; ++i)
+			for (i = 0; i < 0x40; ++i)
 			{
 				putn(2,true,bit);
 				putn(2,false,bit);
 			}
-			for (int i = 0; i < 0x08; ++i)
+			for (i = 0; i < 0x08; ++i)
 			{
 				putn(2,true,bit);
 				putn(1,false,bit);

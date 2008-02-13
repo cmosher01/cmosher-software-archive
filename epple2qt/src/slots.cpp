@@ -18,11 +18,12 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "slots.h"
+#include <algorithm>
 
 const int Slots::SLOTS(8);
 
 Slots::Slots():
-	cards(SLOTS,&this->empty)
+	cards(SLOTS,&empty)
 {
 }
 
