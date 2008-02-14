@@ -14,7 +14,9 @@ HEADERS += playqmake.h \
            addressbus.h \
            slots.h \
            card.h \
-           emptyslot.h 
+           emptyslot.h \
+           addressingmode.h \
+           cpu.h 
 SOURCES += playqmake.cpp \
            main.cpp \
            memory.cpp \
@@ -26,7 +28,9 @@ SOURCES += playqmake.cpp \
            addressbus.cpp \
            slots.cpp \
            card.cpp \
-           emptyslot.cpp 
+           emptyslot.cpp \
+           addressingmode.cpp \
+           cpu.cpp 
 TEMPLATE = app
 CONFIG += release \
 warn_on \
