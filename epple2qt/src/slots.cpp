@@ -23,7 +23,8 @@
 const int Slots::SLOTS(8);
 
 Slots::Slots():
-	cards(SLOTS,&empty)
+	empty(),
+	cards(SLOTS,&this->empty)
 {
 }
 

@@ -27,8 +27,8 @@
 class Slots
 {
 private:
-	std::vector<Card*> cards;
 	EmptySlot empty;
+	std::vector<Card*> cards;
 
 public:
 	Slots();
