@@ -101,6 +101,10 @@ SOURCE=.\src\card.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\cpu.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\emptyslot.cpp
 # End Source File
 # Begin Source File
@@ -114,6 +118,10 @@ SOURCE=.\src\main.cpp
 # Begin Source File
 
 SOURCE=.\src\memory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\moc_playqmake.cpp
 # End Source File
 # Begin Source File
 
@@ -150,6 +158,10 @@ SOURCE=.\src\addressbus.h
 # Begin Source File
 
 SOURCE=.\src\card.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\cpu.h
 # End Source File
 # Begin Source File
 

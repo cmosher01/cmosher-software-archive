@@ -1568,12 +1568,12 @@ void CPU::done()
 
 unsigned char CPU::pch()
 {
-	return this->pc >> 8;
+	return (unsigned char)(this->pc >> 8);
 }
 
 unsigned char CPU::pcl()
 {
-	return this->pc;
+	return (unsigned char)(this->pc);
 }
 
 unsigned short CPU::sp()
@@ -1682,7 +1682,7 @@ void CPU::compare(const unsigned char r)
 {
     const signed short tmp = r - this->data;
 	setP(SMASK_C,0 <= tmp && tmp < 0x100);
-    setStatusRegisterNZ(tmp);
+    setStatusRegisterNZ((const signed char)tmp);
 }
 
 void CPU::CMP()
@@ -1728,7 +1728,7 @@ void CPU::ASL()
 	this->data = shiftLeft(this->data);
 }
 
-void CPU::CPU::ASL_A()
+void CPU::ASL_A()
 {
     this->a = shiftLeft(this->a);
 }
@@ -1781,7 +1781,7 @@ unsigned char CPU::shiftRight(unsigned char byt)
 
 unsigned char CPU::rotateLeft(unsigned char byt)
 {
-	const bool newCarry = (byt & 0x80) != 0;
+	const bool newCarry = (byt & 0x80);
 
     byt <<= 1;
 
@@ -1798,7 +1798,7 @@ unsigned char CPU::rotateLeft(unsigned char byt)
 
 unsigned char CPU::rotateRight(unsigned char byt)
 {
-	const bool newCarry = (byt & 0x01) != 0;
+	const bool newCarry = (byt & 0x01);
 
     byt >>= 1;
 
@@ -1968,7 +1968,7 @@ void CPU::JSR()
 
 void CPU::BNE()
 {
-	this->branch = !this->p & SMASK_Z;
+	this->branch = !(this->p & SMASK_Z);
 }
 
 void CPU::BEQ()
@@ -1978,7 +1978,7 @@ void CPU::BEQ()
 
 void CPU::BVC()
 {
-	this->branch = !this->p & SMASK_V;
+	this->branch = !(this->p & SMASK_V);
 }
 
 void CPU::BVS()
@@ -1988,7 +1988,7 @@ void CPU::BVS()
 
 void CPU::BCC()
 {
-	this->branch = !this->p & SMASK_C;
+	this->branch = !(this->p & SMASK_C);
 }
 
 void CPU::BCS()
@@ -1998,7 +1998,7 @@ void CPU::BCS()
 
 void CPU::BPL()
 {
-	this->branch = !this->p & SMASK_N;
+	this->branch = !(this->p & SMASK_N);
 }
 
 void CPU::BMI()
