@@ -34,12 +34,12 @@ private:
 	unsigned char idx;
 	signed char offset;
 	bool branch;
-	char sc;
+	signed char sc;
 	bool wc;
 
- 	bool IRQ;
-    bool NMI;
-    bool reset;
+ 	bool pendingIRQ;
+    bool pendingNMI;
+    bool pendingReset;
 
     bool started;
 
@@ -55,14 +55,17 @@ private:
 	unsigned short address;
 	unsigned char data;
 
-	unsigned char opcode;
+	unsigned short opcode;
 
-	char t;
+	signed char t;
 
 
 	static void (CPU::*addr[])();
 	static void (CPU::*exec[])();
 
+	void firstCycle();
+	int getInterruptAddress();
+	int getInterruptPseudoOpCode();
 	void subsequentCycle();
 
 	void read();
@@ -73,9 +76,8 @@ private:
 	unsigned char pch();
 	unsigned char pcl();
 	unsigned short sp();
-	unsigned char push();
-	unsigned char pull();
-	void setIndex();
+	unsigned short push();
+	unsigned short pull();
 	unsigned char getIndex();
 	unsigned short ad();
 	unsigned short ia();
@@ -83,12 +85,11 @@ private:
 	unsigned short combine(const unsigned char lo, const unsigned char hi);
 	void setP(const unsigned char mask, const unsigned char val);
 	void setStatusRegisterNZ(const unsigned char val);
-	void setFlagCarry(const short val);
-	void setFlagBorrow(const short val);
 	unsigned char shiftLeft(unsigned char byt);
 	unsigned char shiftRight(unsigned char byt);
 	unsigned char rotateLeft(unsigned char byt);
 	unsigned char rotateRight(unsigned char byt);
+	void compare(const unsigned char r);
 
 	void addr_SINGLE();
 	void addr_INTERNAL_IMMEDIATE();
@@ -117,9 +118,9 @@ private:
 	void addr_JMP_INDIRECT();
 	void addr_RTS();
 	void addr_BRANCH();
-	void addr_IRQ();
-	void addr_RESET();
 	void addr_NMI();
+	void addr_RESET();
+	void addr_IRQ();
 
 	void LDA();
 	void LDX();
@@ -190,6 +191,12 @@ private:
 public:
 	CPU(AddressBus& addressBus);
 	~CPU();
+
+	void powerOn();
+	void reset();
+	void IRQ();
+	void NMI();
+	void tick();
 };
 
 #endif

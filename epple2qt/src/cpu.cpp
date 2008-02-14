@@ -46,6 +46,103 @@ CPU::~CPU()
 }
 
 
+void CPU::powerOn()
+{
+	this->started = false;
+	this->pendingReset = false;
+	this->pendingIRQ = false;
+	this->pendingNMI = false;
+	// TODO what else to initialize in CPU?
+}
+
+void CPU::reset()
+{
+	this->started = true;
+	this->pendingReset = true;
+}
+
+void CPU::IRQ()
+{
+    this->pendingIRQ = true;
+}
+
+void CPU::NMI()
+{
+    this->pendingNMI = true;
+}
+
+void CPU::tick()
+{
+	if (!this->started)
+	{
+		return;
+	}
+	if (!this->t)
+	{
+		firstCycle();
+	}
+	else
+	{
+		subsequentCycle();
+	}
+	++this->t;
+}
+
+void CPU::firstCycle()
+{
+	const bool interrupt = this->pendingNMI || this->pendingReset || (!(this->p & SMASK_I) && this->pendingIRQ);
+
+	if (interrupt)
+	{
+		this->pc = getInterruptAddress();
+	}
+
+	this->address = this->pc++;
+
+	read();
+
+	if (interrupt)
+	{
+		this->opcode = getInterruptPseudoOpCode();
+	}
+	else
+	{
+		this->opcode = this->data;
+	}
+}
+
+int CPU::getInterruptAddress()
+{
+	if (this->pendingNMI)
+	{
+		return NMI_VECTOR-2;
+	}
+	if (this->pendingReset)
+	{
+		return RESET_VECTOR-2;
+	}
+	if (!(this->p & SMASK_I) && this->pendingIRQ)
+	{
+		return IRQ_VECTOR-2;
+	}
+}
+
+int CPU::getInterruptPseudoOpCode()
+{
+	if (this->pendingNMI)
+	{
+		return 0x100;
+	}
+	if (this->pendingReset)
+	{
+		return 0x101;
+	}
+	if (!(this->p & SMASK_I) && this->pendingIRQ)
+	{
+		return 0x102;
+	}
+}
+
 void (CPU::*(CPU::addr[]))() =
 {
 &CPU::addr_MISC_BREAK,
@@ -304,6 +401,9 @@ void (CPU::*(CPU::addr[]))() =
 &CPU::addr_INTERNAL_ABSOLUTE_XY,
 &CPU::addr_RMW_ABSOLUTE_X,
 &CPU::addr_SINGLE,
+&CPU::addr_NMI,
+&CPU::addr_RESET,
+&CPU::addr_IRQ,
 };
 
 void (CPU::*(CPU::exec[]))() =
@@ -689,7 +789,7 @@ void CPU::addr_INTERNAL_ABSOLUTE_XY()
 			bah = data;
 		break;
 		case 3:
-			setIndex();
+			idx = getIndex();
 			wc = ((unsigned short)bal + (unsigned short)idx) >= 0x100;
 			bal += idx;
 			address = ba();
@@ -725,7 +825,7 @@ void CPU::addr_INTERNAL_ZERO_PAGE_XY()
 			read(); // discard
 		break;
 		case 3:
-			setIndex();
+			idx = getIndex();
 			bal += idx; // doesn't leave page zero
 			address = ba();
 			read();
@@ -868,7 +968,7 @@ void CPU::addr_STORE_ABSOLUTE_XY()
 			bah = data;
 		break;
 		case 3:
-			setIndex();
+			idx = getIndex();
 			address = ba();
 			address += idx;
 			read(); // discard (assume this is the right address, manual is ambiguous)
@@ -897,7 +997,7 @@ void CPU::addr_STORE_ZERO_PAGE_XY()
 			execute();
 		break;
 		case 3:
-			setIndex();
+			idx = getIndex();
 			bal += idx; // doesn't leave page zero
 			address = ba();
 			write();
@@ -1322,7 +1422,7 @@ void CPU::addr_BRANCH()
 	}
 }
 
-void CPU::addr_IRQ()
+void CPU::addr_NMI()
 {
 	switch (this->t)
 	{
@@ -1337,7 +1437,7 @@ void CPU::addr_IRQ()
 		break;
 		case 3:
 			address = push();
-			data = pcl(); // ???
+			data = pcl();
 			write();
 		break;
 		case 4:
@@ -1348,16 +1448,16 @@ void CPU::addr_IRQ()
 			write();
 		break;
 		case 5:
-			address = pc++;
+			++address;
 			read();
 			adl = data;
 		break;
 		case 6:
-			address = pc;
+			++address;
 			read();
 			adh = data;
 			pc = ad();
-			IRQ = false;
+			pendingNMI = false;
 			done();
 		break;
 	}
@@ -1398,13 +1498,13 @@ void CPU::addr_RESET()
 			read();
 			adh = data;
 			pc = ad();
-			reset = false;
+			pendingReset = false;
 			done();
 		break;
 	}
 }
 
-void CPU::addr_NMI()
+void CPU::addr_IRQ()
 {
 	switch (this->t)
 	{
@@ -1419,7 +1519,7 @@ void CPU::addr_NMI()
 		break;
 		case 3:
 			address = push();
-			data = pcl();
+			data = pcl(); // ???
 			write();
 		break;
 		case 4:
@@ -1430,16 +1530,16 @@ void CPU::addr_NMI()
 			write();
 		break;
 		case 5:
-			++address;
+			address = pc++;
 			read();
 			adl = data;
 		break;
 		case 6:
-			++address;
+			address = pc;
 			read();
 			adh = data;
 			pc = ad();
-			NMI = false;
+			pendingIRQ = false;
 			done();
 		break;
 	}
@@ -1473,7 +1573,7 @@ unsigned char CPU::pch()
 
 unsigned char CPU::pcl()
 {
-	return this->pc & 0xFF;
+	return this->pc;
 }
 
 unsigned short CPU::sp()
@@ -1481,22 +1581,17 @@ unsigned short CPU::sp()
 	return 0x100+this->s;
 }
 
-unsigned char CPU::push()
+unsigned short CPU::push()
 {
-	const unsigned char psp = sp();
+	const unsigned short psp = sp();
 	--this->s;
 	return psp;
 }
 
-unsigned char CPU::pull()
+unsigned short CPU::pull()
 {
 	++this->s;
 	return sp();
-}
-
-void CPU::setIndex()
-{
-	this->idx = getIndex();
 }
 
 unsigned char CPU::getIndex()
@@ -1550,31 +1645,21 @@ void CPU::setStatusRegisterNZ(const unsigned char val)
 	setP(SMASK_Z,!val);
 }
 
-void CPU::setFlagCarry(const short val)
-{
-	setP(SMASK_C,val >= 0x100);
-}
-
-void CPU::setFlagBorrow(const short val)
-{
-	setP(SMASK_C,0 <= val && val < 0x100);
-}
-
 void CPU::LDA()
 {
-    this->a = this->data & 0xFF;
+    this->a = this->data;
     setStatusRegisterNZ(this->a);
 }
 
 void CPU::LDX()
 {
-    this->x = this->data & 0xFF;
+    this->x = this->data;
     setStatusRegisterNZ(this->x);
 }
 
 void CPU::LDY()
 {
-    this->y = this->data & 0xFF;
+    this->y = this->data;
     setStatusRegisterNZ(this->y);
 }
 
@@ -1593,25 +1678,26 @@ void CPU::STY()
     this->data = this->y;
 }
 
+void CPU::compare(const unsigned char r)
+{
+    const signed short tmp = r - this->data;
+	setP(SMASK_C,0 <= tmp && tmp < 0x100);
+    setStatusRegisterNZ(tmp);
+}
+
 void CPU::CMP()
 {
-    const int tmp = this->a - this->data;
-    setFlagBorrow(tmp);
-    setStatusRegisterNZ(tmp);
+	compare(this->a);
 }
 
 void CPU::CPX()
 {
-    const int tmp = this->x - this->data;
-    setFlagBorrow(tmp);
-    setStatusRegisterNZ(tmp);
+	compare(this->x);
 }
 
 void CPU::CPY()
 {
-    const int tmp = this->y - this->data;
-    setFlagBorrow(tmp);
-    setStatusRegisterNZ(tmp);
+	compare(this->y);
 }
 
 void CPU::AND()
@@ -1679,7 +1765,7 @@ void CPU::ROR_A()
 
 unsigned char CPU::shiftLeft(unsigned char byt)
 {
-	if (byt & 0x80) SEC(); else CLC();
+	setP(SMASK_C,byt & 0x80);
     byt <<= 1;
     setStatusRegisterNZ(byt);
     return byt;
@@ -1687,7 +1773,7 @@ unsigned char CPU::shiftLeft(unsigned char byt)
 
 unsigned char CPU::shiftRight(unsigned char byt)
 {
-	if (byt & 0x01) SEC(); else CLC();
+	setP(SMASK_C,byt & 0x01);
     byt >>= 1;
     setStatusRegisterNZ(byt);
     return byt;
@@ -1716,7 +1802,7 @@ unsigned char CPU::rotateRight(unsigned char byt)
 
     byt >>= 1;
 
-	if (this->s & SMASK_C)
+	if (this->p & SMASK_C)
 	{
 		byt |= 0x80;
 	}
@@ -1754,7 +1840,7 @@ void CPU::ADC()
         int tmp = Op1 + Op2 + !!(this->p & SMASK_C);
         this->a = tmp & 0xFF;
         setP(SMASK_V,((Op1 ^ this->a) & ~(Op1 ^ Op2) & 0x80));
-        setFlagCarry(tmp);
+		setP(SMASK_C,tmp >= 0x100);
         setStatusRegisterNZ(this->a);
     }
 }
@@ -1771,7 +1857,7 @@ void CPU::SBC()
         tmp = (Op1 & 0xf0) - (Op2 & 0xf0) - (this->a & 0x10);
         this->a = this->a & 0xf | ((tmp & 0x100) != 0 ? tmp - 96 : tmp);
         tmp = Op1 - Op2 - !(this->p & SMASK_C);
-        setFlagBorrow(tmp);
+		setP(SMASK_C,0 <= tmp && tmp < 0x100);
         setStatusRegisterNZ(tmp);
     }
     else
@@ -1779,7 +1865,7 @@ void CPU::SBC()
         int tmp = Op1 - Op2 - !(this->p & SMASK_C);
         this->a = tmp & 0xff;
         setP(SMASK_V,((Op1 ^ Op2) & (Op1 ^ this->a) & 0x80));
-        setFlagBorrow(tmp);
+		setP(SMASK_C,0 <= tmp && tmp < 0x100);
         setStatusRegisterNZ(this->a);
     }
 }
@@ -1947,6 +2033,7 @@ void CPU::TYA()
 void CPU::TXS()
 {
     this->s = this->x;
+    // TODO make sure this doesn't affect status register
 }
 
 void CPU::TSX()
@@ -1992,7 +2079,6 @@ void CPU::SED()
 
 void CPU::NOP()
 {
-	 // NO OPERATION!
 }
 
 void CPU::Unoff()
