@@ -17,53 +17,20 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#ifndef TEXTCHARACTERS_H
+#define TEXTCHARACTERS_H
 
+#include <vector>
 
-#include <qapplication.h>
-#include "playqmake.h"
-
-#include "memory.h"
-#include "Keyboard.h"
-#include "videomode.h"
-#include "slots.h"
-#include "addressbus.h"
-#include "cpu.h"
-#include "textcharacters.h"
-
-#include <iostream>
-#include <fstream>
-
-int main( int argc, char ** argv )
+class TextCharacters
 {
-/*
-    QApplication a( argc, argv );
-    playqmake * mw = new playqmake();
-    mw->setCaption( "playqmake" );
-    mw->show();
-    a.connect( &a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()) );
-    return a.exec();
-*/
-	TextCharacters txt;
-	unsigned char xxx = txt.get(0x41);
+private:
+        std::vector<unsigned char> rows;
 
-	Memory ram(0xC000);
-	Memory rom(0x3000);
-	KeypressQueue kq;
-	Keyboard kbd(kq);
-	VideoMode vid;
-	Slots slts;
-	AddressBus bus(ram,rom,kbd,vid,slts);
-	CPU cpu(bus);
+public:
+	TextCharacters();
+	~TextCharacters();
+	unsigned char get(unsigned char iRow);
+};
 
-	std::ifstream rom_in("/home/chris/apple2src/firmware/rom/apple2_f800.rom");
-	rom.load(0x2800,rom_in);
-
-	ram.powerOn();
-	vid.powerOn();
-	cpu.powerOn();
-	cpu.reset();
-	for (int i = 0; i < 1000; ++i)
-	{
-		cpu.tick();
-	}
-}
+#endif

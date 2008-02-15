@@ -110,6 +110,7 @@
       <prio>0</prio>
       <envvars/>
     </make>
+    <subclassing/>
   </kdevtrollproject>
   <workspace>
     <openfiles/>

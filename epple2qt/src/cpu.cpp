@@ -52,6 +52,7 @@ void CPU::powerOn()
 	this->pendingReset = false;
 	this->pendingIRQ = false;
 	this->pendingNMI = false;
+	this->p = SMASK_M;
 	// TODO what else to initialize in CPU?
 }
 
@@ -59,6 +60,7 @@ void CPU::reset()
 {
 	this->started = true;
 	this->pendingReset = true;
+	this->t = 0;
 }
 
 void CPU::IRQ()
@@ -1246,8 +1248,8 @@ void CPU::addr_MISC_BREAK()
 		break;
 		case 4:
 			address = push();
-			s |= SMASK_B;
-			data = s;
+			p |= SMASK_B;
+			data = p;
 			write();
 		break;
 		case 5:
@@ -1280,7 +1282,7 @@ void CPU::addr_MISC_RTI()
 		case 3:
 			address = pull();
 			read();
-			s = data; s |= SMASK_M;
+			p = data; p |= SMASK_M;
 		break;
 		case 4:
 			address = pull();
@@ -1442,9 +1444,9 @@ void CPU::addr_NMI()
 		break;
 		case 4:
 			address = push();
-			s |= SMASK_I;
-			s &= ~SMASK_B; // ???
-			data = s;
+			p |= SMASK_I;
+			p &= ~SMASK_B; // ???
+			data = p;
 			write();
 		break;
 		case 5:
@@ -1472,7 +1474,7 @@ void CPU::addr_RESET()
 			read(); // discard
 		break;
 		case 2:
-	        s = 0xFF; // real CPU doesn't do this ???
+			s = 0xFF; // real CPU doesn't do this ???
 			address = push();
 			data = pch();
 			read(); // discard
@@ -1484,8 +1486,8 @@ void CPU::addr_RESET()
 		break;
 		case 4:
 			address = push();
-			s |= SMASK_I;
-			data = s;
+			p |= SMASK_I;
+			data = p;
 			read(); // discard
 		break;
 		case 5:
@@ -1524,9 +1526,9 @@ void CPU::addr_IRQ()
 		break;
 		case 4:
 			address = push();
-			s |= SMASK_I;
-			s &= ~SMASK_B; // ???
-			data = s;
+			p |= SMASK_I;
+			p &= ~SMASK_B; // ???
+			data = p;
 			write();
 		break;
 		case 5:
@@ -1931,7 +1933,7 @@ void CPU::PHA()
 
 void CPU::PHP()
 {
-	this->data = s;
+	this->data = p;
 }
 
 void CPU::PLA()

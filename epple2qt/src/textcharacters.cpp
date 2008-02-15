@@ -17,53 +17,44 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-
-
-#include <qapplication.h>
-#include "playqmake.h"
-
-#include "memory.h"
-#include "Keyboard.h"
-#include "videomode.h"
-#include "slots.h"
-#include "addressbus.h"
-#include "cpu.h"
 #include "textcharacters.h"
 
-#include <iostream>
 #include <fstream>
+#include <algorithm>
 
-int main( int argc, char ** argv )
+static unsigned char translateRow(unsigned char b)
 {
-/*
-    QApplication a( argc, argv );
-    playqmake * mw = new playqmake();
-    mw->setCaption( "playqmake" );
-    mw->show();
-    a.connect( &a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()) );
-    return a.exec();
-*/
-	TextCharacters txt;
-	unsigned char xxx = txt.get(0x41);
-
-	Memory ram(0xC000);
-	Memory rom(0x3000);
-	KeypressQueue kq;
-	Keyboard kbd(kq);
-	VideoMode vid;
-	Slots slts;
-	AddressBus bus(ram,rom,kbd,vid,slts);
-	CPU cpu(bus);
-
-	std::ifstream rom_in("/home/chris/apple2src/firmware/rom/apple2_f800.rom");
-	rom.load(0x2800,rom_in);
-
-	ram.powerOn();
-	vid.powerOn();
-	cpu.powerOn();
-	cpu.reset();
-	for (int i = 0; i < 1000; ++i)
+	// translateRow(abcdefgh) == 0hgfedcb
+	unsigned char r(0);
+	for (int i(0); i < 7; ++i)
 	{
-		cpu.tick();
+		r <<= 1;
+		r |= b & 1;
+		b >>= 1;
 	}
+	return r;
+}
+
+TextCharacters::TextCharacters():
+	rows(0x200)
+{
+	std::ifstream is_rom("GI2513.ROM",std::ifstream::binary);
+	is_rom.read((char*)&this->rows.front(),this->rows.size());
+	is_rom.close();
+	std::transform(this->rows.begin(),this->rows.end(),this->rows.begin(),translateRow);
+}
+
+TextCharacters::~TextCharacters()
+{
+}
+
+unsigned char TextCharacters::get(unsigned char iRow)
+{
+// TODO
+//	if (iRow < 0 || SIZE <= iRow)
+//	{
+//		return 0;
+//	}
+
+	return this->rows[iRow];
 }

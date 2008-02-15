@@ -21,9 +21,10 @@
 #include "memory.h"
 #include "Keyboard.h"
 #include "videomode.h"
+#include "slots.h"
 
-AddressBus::AddressBus(Memory& ram, Memory& rom, Keyboard& kbd, VideoMode& vid):
-	ram(ram), rom(rom), kbd(kbd), vid(vid)
+AddressBus::AddressBus(Memory& ram, Memory& rom, Keyboard& kbd, VideoMode& vid, Slots& slts):
+	ram(ram), rom(rom), kbd(kbd), vid(vid), slts(slts)
 {
 }
 
@@ -37,13 +38,13 @@ AddressBus::~AddressBus()
 
 
 
-const int AddressBus::MOTHERBOARD_RAM_BAS = 0x00000;
-const int AddressBus::MOTHERBOARD_RAM_LIM = 0x0C000;
-const int AddressBus::MOTHERBOARD_RAM_SIZ = MOTHERBOARD_RAM_LIM-MOTHERBOARD_RAM_BAS;
+const int AddressBus::MOTHERBOARD_RAM_BAS(0x00000);
+const int AddressBus::MOTHERBOARD_RAM_LIM(0x0C000);
+const int AddressBus::MOTHERBOARD_RAM_SIZ(MOTHERBOARD_RAM_LIM-MOTHERBOARD_RAM_BAS);
 
-const int AddressBus::MOTHERBOARD_ROM_BAS = 0x0D000;
-const int AddressBus::MOTHERBOARD_ROM_LIM = 0x10000;
-const int AddressBus::MOTHERBOARD_ROM_SIZ = MOTHERBOARD_ROM_LIM-MOTHERBOARD_ROM_BAS;
+const int AddressBus::MOTHERBOARD_ROM_BAS(0x0D000);
+const int AddressBus::MOTHERBOARD_ROM_LIM(0x10000);
+const int AddressBus::MOTHERBOARD_ROM_SIZ(MOTHERBOARD_ROM_LIM-MOTHERBOARD_ROM_BAS);
 
 
 
@@ -58,7 +59,7 @@ unsigned char AddressBus::read(const unsigned short address)
 			const int slot = (address >> 8) & 7;
 			if (seventh)
 			{
-				//this->data = this->slots.readSeventhRom(address & 0x07FF);
+				this->data = this->slts.readSeventhRom(address & 0x07FF);
 			}
 			else if (slot == 0)
 			{
@@ -66,13 +67,13 @@ unsigned char AddressBus::read(const unsigned short address)
 			}
 			else
 			{
-				//this->data = this->slots.readRom(slot,address & 0x00FF);
+				this->data = this->slts.readRom(slot,address & 0x00FF);
 			}
 		}
 		else
 		{
-			//this->data = this->slots.ioBankRom(address - 0xD000,this->data,false);
-			//if (!this->slots.inhibitMotherboardRom())
+			this->data = this->slts.ioBankRom(address - 0xD000,this->data,false);
+			if (!this->slts.inhibitMotherboardRom())
 			{
 				this->data = this->rom.read(address - 0xD000);
 			}
@@ -104,7 +105,7 @@ void AddressBus::write(const unsigned short address, const unsigned char d)
 		}
 		else
 		{
-			//this->slots.ioBankRom(address - 0xD000,this->data,true);
+			this->slts.ioBankRom(address - 0xD000,this->data,true);
 		}
 	}
 	else // < $C000
@@ -186,7 +187,7 @@ unsigned char AddressBus::readSwitch(unsigned short address)
 		address &= 0x7F;
 		const int islot = (address >> 4) & 0xF;
 		const int iswch = (address & 0xF);
-		//this->data = this->slots.io(islot,iswch,this->data,false);
+		this->data = this->slts.io(islot,iswch,this->data,false);
 	}
 
 	return this->data;
@@ -228,6 +229,6 @@ void AddressBus::writeSwitch(unsigned short address)
 		address &= 0x7F;
 		const int islot = (address >> 4) & 0xF;
 		const int iswch = (address & 0xF);
-		//this->slots.io(islot,iswch,this->data,true);
+		this->slts.io(islot,iswch,this->data,true);
 	}
 }

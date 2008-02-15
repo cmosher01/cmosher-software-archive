@@ -37,14 +37,14 @@ unsigned char Slots::io(const int islot, const int iswch, const unsigned char b,
 	return this->cards[islot]->io(iswch,b,writing);
 }
 
-struct resetCard
+struct Slots_Card_reset
 {
 	void operator() (Card* p) { p->reset(); }
 };
 
 void Slots::reset()
 {
-	std::for_each(this->cards.begin(),this->cards.end(),resetCard());
+	std::for_each(this->cards.begin(),this->cards.end(),Slots_Card_reset());
 }
 
 unsigned char Slots::readRom(const int islot, const unsigned short addr)
@@ -52,47 +52,47 @@ unsigned char Slots::readRom(const int islot, const unsigned short addr)
 	return this->cards[islot]->readRom(addr);
 }
 
-struct readSeventhRomCard
+struct Slots_Card_readSeventhRom
 {
 	const unsigned short addr;
 	unsigned char* b;
-	readSeventhRomCard(const unsigned short addr, unsigned char* b):addr(addr),b(b){}
+	Slots_Card_readSeventhRom(const unsigned short addr, unsigned char* b):addr(addr),b(b){}
 	void operator() (Card* p) { p->readSeventhRom(this->addr,this->b); }
 };
 
 unsigned char Slots::readSeventhRom(const unsigned short addr)
 {
 	unsigned char b(0xFF);
-	std::for_each(this->cards.begin(),this->cards.end(),readSeventhRomCard(addr,&b));
+	std::for_each(this->cards.begin(),this->cards.end(),Slots_Card_readSeventhRom(addr,&b));
 	return b;
 }
 
-struct ioBankRomCard
+struct Slots_Card_ioBankRom
 {
 	const unsigned short addr;
 	unsigned char* b;
 	const bool write;
-	ioBankRomCard(const unsigned short addr, unsigned char* b, const bool write):addr(addr),b(b),write(write){}
+	Slots_Card_ioBankRom(const unsigned short addr, unsigned char* b, const bool write):addr(addr),b(b),write(write){}
 	void operator() (Card* p) { p->ioBankRom(this->addr,this->b,this->write); }
 };
 
 unsigned char Slots::ioBankRom(const unsigned short addr, const unsigned char data, const bool write)
 {
 	unsigned char b(data);
-	std::for_each(this->cards.begin(),this->cards.end(),ioBankRomCard(addr,&b,write));
+	std::for_each(this->cards.begin(),this->cards.end(),Slots_Card_ioBankRom(addr,&b,write));
 	return b;
 }
 
-struct inhibitMotherboardRomCard
+struct Slots_Card_inhibitMotherboardRom
 {
 	bool inhibit;
-	inhibitMotherboardRomCard():inhibit(false) {}
+	Slots_Card_inhibitMotherboardRom():inhibit(false) {}
 	void operator() (Card* p) { if (p->inhibitMotherboardRom()) inhibit = true; }
 };
 
 bool Slots::inhibitMotherboardRom()
 {
-	inhibitMotherboardRomCard inh = inhibitMotherboardRomCard();
+	Slots_Card_inhibitMotherboardRom inh = Slots_Card_inhibitMotherboardRom();
 	std::for_each(this->cards.begin(),this->cards.end(),inh);
 	return inh.inhibit;
 }
@@ -123,16 +123,16 @@ bool isAnyDiskDriveMotorOn()
 	return on.inhibit;
 }
 */
-struct isDirtyCard
+struct Slots_Card_isDirty
 {
 	bool dirty;
-	isDirtyCard():dirty(false) {}
+	Slots_Card_isDirty():dirty(false) {}
 	void operator() (Card* p) { if (p->isDirty()) dirty = true; }
 };
 
 bool Slots::isDirty()
 {
-	isDirtyCard dirty = isDirtyCard();
+	Slots_Card_isDirty dirty = Slots_Card_isDirty();
 	std::for_each(this->cards.begin(),this->cards.end(),dirty);
 	return dirty.dirty;
 }

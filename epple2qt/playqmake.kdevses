@@ -2,25 +2,32 @@
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
  <DocsAndViews NumberOfDocuments="5" >
-  <Doc0 NumberOfViews="1" URL="file:///home/chris/playqmake/src/RAMInitializer.h" >
-   <View0 Type="Source" />
+  <Doc0 NumberOfViews="1" URL="file:///home/chris/ja2/src/video/TextCharacters.java" >
+   <View0 line="96" Type="Source" />
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/chris/playqmake/src/RAMInitializer.cpp" >
-   <View0 Type="Source" />
+  <Doc1 NumberOfViews="1" URL="file:///home/chris/playqmake/src/textcharacters.h" >
+   <View0 line="36" Type="Source" />
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/chris/ja2/src/chipset/cpu/CPU6502.java" >
-   <View0 Type="Source" />
+  <Doc2 NumberOfViews="1" URL="file:///home/chris/playqmake/src/textcharacters.cpp" >
+   <View0 line="53" Type="Source" />
   </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:///home/chris/ja2/src/chipset/cpu/AddressingModeCalculator.java" >
-   <View0 Type="Source" />
+  <Doc3 NumberOfViews="1" URL="file:///home/chris/playqmake/src/memory.cpp" >
+   <View0 line="65" Type="Source" />
   </Doc3>
-  <Doc4 NumberOfViews="1" URL="file:///home/chris/playqmake/src/addressingmode.h" >
-   <View0 line="63" Type="Source" />
+  <Doc4 NumberOfViews="1" URL="file:///home/chris/playqmake/src/main.cpp" >
+   <View0 line="28" Type="Source" />
   </Doc4>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
-   <breakpointList/>
+   <breakpointList>
+    <breakpoint0 location="/home/chris/playqmake/src/main.cpp:65" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
+     <tracedExpressions/>
+    </breakpoint0>
+    <breakpoint1 location="/home/chris/playqmake/src/main.cpp:46" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
+     <tracedExpressions/>
+    </breakpoint1>
+   </breakpointList>
   </kdevdebugger>
   <kdevbookmarks>
    <bookmarks/>
