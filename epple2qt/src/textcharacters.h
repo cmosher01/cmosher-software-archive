@@ -25,12 +25,12 @@
 class TextCharacters
 {
 private:
-        std::vector<unsigned char> rows;
+	std::vector<unsigned char> rows;
 
 public:
 	TextCharacters();
 	~TextCharacters();
-	unsigned char get(unsigned char iRow);
+	unsigned char get(unsigned int iRow);
 };
 
 #endif

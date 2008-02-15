@@ -39,6 +39,7 @@ TextCharacters::TextCharacters():
 	rows(0x200)
 {
 	std::ifstream is_rom("GI2513.ROM",std::ifstream::binary);
+	// TODO check for errors
 	is_rom.read((char*)&this->rows.front(),this->rows.size());
 	is_rom.close();
 	std::transform(this->rows.begin(),this->rows.end(),this->rows.begin(),translateRow);
@@ -48,7 +49,7 @@ TextCharacters::~TextCharacters()
 {
 }
 
-unsigned char TextCharacters::get(unsigned char iRow)
+unsigned char TextCharacters::get(unsigned int iRow)
 {
 // TODO
 //	if (iRow < 0 || SIZE <= iRow)

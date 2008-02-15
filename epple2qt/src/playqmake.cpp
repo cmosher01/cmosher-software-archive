@@ -20,7 +20,7 @@
 
 
 #include "playqmake.h"
-
+/*
 #include <qimage.h>
 #include <qpixmap.h>
 #include <qtoolbar.h>
@@ -304,3 +304,4 @@ void playqmake::aboutQt()
 {
     QMessageBox::aboutQt( this, tr("Qt Application Example") );
 }
+*/

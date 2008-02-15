@@ -21,7 +21,7 @@
 
 #ifndef PLAYQMAKE_H
 #define PLAYQMAKE_H
-
+/*
 #include <qmainwindow.h>
 
 class QTextEdit;
@@ -54,5 +54,5 @@ private:
     QString filename;
 };
 
-
+*/
 #endif

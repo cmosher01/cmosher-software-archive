@@ -95,8 +95,9 @@ static int calc(const int t)
 	return a;
 }
 
-void VideoAddressing::buildLUT(const unsigned short base, const unsigned short len, unsigned short lut[])
+void VideoAddressing::buildLUT(const unsigned short base, const unsigned short len, std::vector<unsigned short>& lut)
 {
+	lut.resize(BYTES_PER_FIELD);
 	for (int t = 0; t < BYTES_PER_FIELD; ++t)
 	{
 		int off = (calc(t) % len);

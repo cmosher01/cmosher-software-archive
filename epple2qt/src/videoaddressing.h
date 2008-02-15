@@ -20,11 +20,13 @@
 #ifndef VIDEOADDRESSING_H
 #define VIDEOADDRESSING_H
 
+#include <vector>
+
 class VideoAddressing
 {
 public:
 	VideoAddressing();
-	static void buildLUT(const unsigned short base, const unsigned short len, unsigned short lut[]);
+	static void buildLUT(const unsigned short base, const unsigned short len, std::vector<unsigned short>& lut);
 
 	static const int NTSC_LINES_PER_FRAME;
 	static const int NTSC_LINES_PER_FIELD;

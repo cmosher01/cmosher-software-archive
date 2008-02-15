@@ -19,7 +19,7 @@
  ***************************************************************************/
 
 
-#include <qapplication.h>
+//#include <qapplication.h>
 #include "playqmake.h"
 
 #include "memory.h"
@@ -35,6 +35,7 @@
 
 int main( int argc, char ** argv )
 {
+	std::cout << "main" << std::endl;
 /*
     QApplication a( argc, argv );
     playqmake * mw = new playqmake();
@@ -66,4 +67,6 @@ int main( int argc, char ** argv )
 	{
 		cpu.tick();
 	}
+
+	return 0;
 }
