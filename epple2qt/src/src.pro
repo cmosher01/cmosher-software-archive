@@ -16,7 +16,18 @@ HEADERS += playqmake.h \
            card.h \
            emptyslot.h \
            cpu.h \
-           textcharacters.h 
+           textcharacters.h \
+           video.h \
+           picturegenerator.h \
+           applentsc.h \
+           videodisplaydevice.h \
+           displaytype.h \
+           lowpass_3_58_mhz.h \
+           lowpass_1_5_mhz.h \
+           a2colorindex.h \
+           a2colorsobserved.h \
+           analogtv.h \
+           screenimage.h 
 SOURCES += playqmake.cpp \
            main.cpp \
            memory.cpp \
@@ -30,7 +41,16 @@ SOURCES += playqmake.cpp \
            card.cpp \
            emptyslot.cpp \
            cpu.cpp \
-           textcharacters.cpp 
+           textcharacters.cpp \
+           video.cpp \
+           picturegenerator.cpp \
+           applentsc.cpp \
+           videodisplaydevice.cpp \
+           lowpass_3_58_mhz.cpp \
+           lowpass_1_5_mhz.cpp \
+           a2colorsobserved.cpp \
+           analogtv.cpp \
+           screenimage.cpp 
 TEMPLATE = app
 CONFIG += release \
 warn_on \

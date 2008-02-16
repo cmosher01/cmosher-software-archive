@@ -1,32 +1,23 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="5" >
-  <Doc0 NumberOfViews="1" URL="file:///home/chris/ja2/src/video/TextCharacters.java" >
-   <View0 line="96" Type="Source" />
+ <DocsAndViews NumberOfDocuments="3" >
+  <Doc0 NumberOfViews="1" URL="file:///home/chris/playqmake/src/video.h" >
+   <View0 line="19" Type="Source" />
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/chris/playqmake/src/textcharacters.h" >
-   <View0 line="36" Type="Source" />
+  <Doc1 NumberOfViews="1" URL="file:///home/chris/playqmake/src/video.cpp" >
+   <View0 line="25" Type="Source" />
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/chris/playqmake/src/textcharacters.cpp" >
-   <View0 line="53" Type="Source" />
+  <Doc2 NumberOfViews="1" URL="file:///home/chris/ja2/src/video/Video.java" >
+   <View0 line="20" Type="Source" />
   </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:///home/chris/playqmake/src/memory.cpp" >
-   <View0 line="65" Type="Source" />
-  </Doc3>
-  <Doc4 NumberOfViews="1" URL="file:///home/chris/playqmake/src/main.cpp" >
-   <View0 line="28" Type="Source" />
-  </Doc4>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
    <breakpointList>
-    <breakpoint0 location="/home/chris/playqmake/src/main.cpp:65" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
+    <breakpoint0 location="/home/chris/playqmake/src/main.cpp:46" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
      <tracedExpressions/>
     </breakpoint0>
-    <breakpoint1 location="/home/chris/playqmake/src/main.cpp:46" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
-     <tracedExpressions/>
-    </breakpoint1>
    </breakpointList>
   </kdevdebugger>
   <kdevbookmarks>

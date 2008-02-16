@@ -24,7 +24,7 @@ void Keyboard::clear()
 
 unsigned char Keyboard::get()
 {
-	if ((this->latch & 0x80) == 0)
+	if (!(this->latch & 0x80)) // TODO hyper and kdb buffer
 	{
 		if (!this->keys.empty())
 		{
