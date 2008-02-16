@@ -20,288 +20,167 @@
 
 
 #include "playqmake.h"
-/*
-#include <qimage.h>
-#include <qpixmap.h>
-#include <qtoolbar.h>
-#include <qtoolbutton.h>
-#include <qpopupmenu.h>
-#include <qmenubar.h>
-#include <qtextedit.h>
-#include <qfile.h>
-#include <qfiledialog.h>
-#include <qstatusbar.h>
-#include <qmessagebox.h>
-#include <qprinter.h>
-#include <qapplication.h>
-#include <qaccel.h>
-#include <qtextstream.h>
-#include <qpainter.h>
-#include <qpaintdevicemetrics.h>
-#include <qwhatsthis.h>
 
-#include "filesave.xpm"
-#include "fileopen.xpm"
-#include "fileprint.xpm"
+#include <QtGui>
 
-#include "memory.h"
+#include <math.h>
 
-playqmake::playqmake()
-    : QMainWindow( 0, "playqmake", WDestructiveClose )
-{
-	Memory mem(0x100);
-	mem.write(0x80,0x10);
-    printer = new QPrinter;
-    QPixmap openIcon, saveIcon, printIcon;
+ const double DefaultCenterX = -0.637011f;
+ const double DefaultCenterY = -0.0395159f;
+ const double DefaultScale = 0.00403897f;
 
-    QToolBar * fileTools = new QToolBar( this, "file operations" );
-    fileTools->setLabel( tr("File Operations") );
+ const double ZoomInFactor = 0.8f;
+ const double ZoomOutFactor = 1 / ZoomInFactor;
+ const int ScrollStep = 20;
 
-    openIcon = QPixmap( fileopen );
-    QToolButton * fileOpen
-	= new QToolButton( openIcon, tr("Open File"), QString::null,
-			   this, SLOT(choose()), fileTools, "open file" );
+ playqmake::playqmake(QWidget *parent)
+     : QWidget(parent)
+ {
+     centerX = DefaultCenterX;
+     centerY = DefaultCenterY;
+     pixmapScale = DefaultScale;
+     curScale = DefaultScale;
 
-    saveIcon = QPixmap( filesave );
-    QToolButton * fileSave
-	= new QToolButton( saveIcon, tr("Save File"), QString::null,
-			   this, SLOT(save()), fileTools, "save file" );
+     qRegisterMetaType<QImage>("QImage");
+     connect(&thread, SIGNAL(renderedImage(const QImage &, double)),
+             this, SLOT(updatePixmap(const QImage &, double)));
 
-    printIcon = QPixmap( fileprint );
-    QToolButton * filePrint
-	= new QToolButton( printIcon, tr("Print File"), QString::null,
-			   this, SLOT(print()), fileTools, "print file" );
+     setWindowTitle(tr("Mandelbrot"));
+     setCursor(Qt::CrossCursor);
+     resize(550, 400);
+ }
 
+ void playqmake::paintEvent(QPaintEvent * /* event */)
+ {
+     QPainter painter(this);
+     painter.fillRect(rect(), Qt::black);
 
-    (void)QWhatsThis::whatsThisButton( fileTools );
+     if (pixmap.isNull()) {
+         painter.setPen(Qt::white);
+         painter.drawText(rect(), Qt::AlignCenter,
+                          tr("Rendering initial image, please wait..."));
+         return;
+     }
 
-    QString fileOpenText = tr("<p><img source=\"fileopen\"> "
-	         "Click this button to open a <em>new file</em>. <br>"
-                 "You can also select the <b>Open</b> command "
-                 "from the <b>File</b> menu.</p>");
+     if (curScale == pixmapScale) {
+         painter.drawPixmap(pixmapOffset, pixmap);
+     } else {
+         double scaleFactor = pixmapScale / curScale;
+         int newWidth = int(pixmap.width() * scaleFactor);
+         int newHeight = int(pixmap.height() * scaleFactor);
+         int newX = pixmapOffset.x() + (pixmap.width() - newWidth) / 2;
+         int newY = pixmapOffset.y() + (pixmap.height() - newHeight) / 2;
 
-    QWhatsThis::add( fileOpen, fileOpenText );
+         painter.save();
+         painter.translate(newX, newY);
+         painter.scale(scaleFactor, scaleFactor);
+         QRectF exposed = painter.matrix().inverted().mapRect(rect()).adjusted(-1, -1, 1, 1);
+         painter.drawPixmap(exposed, pixmap, exposed);
+         painter.restore();
+     }
 
-    QMimeSourceFactory::defaultFactory()->setPixmap( "fileopen", openIcon );
+     QString text = tr("Use mouse wheel to zoom. "
+                       "Press and hold left mouse button to scroll.");
+     QFontMetrics metrics = painter.fontMetrics();
+     int textWidth = metrics.width(text);
 
-    QString fileSaveText = tr("<p>Click this button to save the file you "
-                 "are editing. You will be prompted for a file name.\n"
-                 "You can also select the <b>Save</b> command "
-                 "from the <b>File</b> menu.</p>");
+     painter.setPen(Qt::NoPen);
+     painter.setBrush(QColor(0, 0, 0, 127));
+     painter.drawRect((width() - textWidth) / 2 - 5, 0, textWidth + 10,
+                      metrics.lineSpacing() + 5);
+     painter.setPen(Qt::white);
+     painter.drawText((width() - textWidth) / 2,
+                      metrics.leading() + metrics.ascent(), text);
+ }
 
-    QWhatsThis::add( fileSave, fileSaveText );
+ void playqmake::resizeEvent(QResizeEvent * /* event */)
+ {
+     thread.render(centerX, centerY, curScale, size());
+ }
 
-    QString filePrintText = tr("Click this button to print the file you "
-                 "are editing.\n You can also select the Print "
-                 "command from the File menu.");
+ void playqmake::keyPressEvent(QKeyEvent *event)
+ {
+     switch (event->key()) {
+     case Qt::Key_Plus:
+         zoom(ZoomInFactor);
+         break;
+     case Qt::Key_Minus:
+         zoom(ZoomOutFactor);
+         break;
+     case Qt::Key_Left:
+         scroll(-ScrollStep, 0);
+         break;
+     case Qt::Key_Right:
+         scroll(+ScrollStep, 0);
+         break;
+     case Qt::Key_Down:
+         scroll(0, +ScrollStep);
+         break;
+     case Qt::Key_Up:
+         scroll(0, -ScrollStep);
+         break;
+     default:
+         QWidget::keyPressEvent(event);
+     }
+ }
 
-    QWhatsThis::add( filePrint, filePrintText );
+ void playqmake::wheelEvent(QWheelEvent *event)
+ {
+     int numDegrees = event->delta() / 8;
+     double numSteps = numDegrees / 15.0f;
+     zoom(pow(ZoomInFactor, numSteps));
+ }
 
+ void playqmake::mousePressEvent(QMouseEvent *event)
+ {
+     if (event->button() == Qt::LeftButton)
+         lastDragPos = event->pos();
+ }
 
-    QPopupMenu * file = new QPopupMenu( this );
-    menuBar()->insertItem( tr("&File"), file );
+ void playqmake::mouseMoveEvent(QMouseEvent *event)
+ {
+     if (event->buttons() & Qt::LeftButton) {
+         pixmapOffset += event->pos() - lastDragPos;
+         lastDragPos = event->pos();
+         update();
+     }
+ }
 
+ void playqmake::mouseReleaseEvent(QMouseEvent *event)
+ {
+     if (event->button() == Qt::LeftButton) {
+         pixmapOffset += event->pos() - lastDragPos;
+         lastDragPos = QPoint();
 
-    file->insertItem( tr("&New"), this, SLOT(newDoc()), CTRL+Key_N );
+         int deltaX = (width() - pixmap.width()) / 2 - pixmapOffset.x();
+         int deltaY = (height() - pixmap.height()) / 2 - pixmapOffset.y();
+         scroll(deltaX, deltaY);
+     }
+ }
 
-    int id;
-    id = file->insertItem( openIcon, tr("&Open..."),
-			   this, SLOT(choose()), CTRL+Key_O );
-    file->setWhatsThis( id, fileOpenText );
+ void playqmake::updatePixmap(const QImage &image, double scaleFactor)
+ {
+     if (!lastDragPos.isNull())
+         return;
 
-    id = file->insertItem( saveIcon, tr("&Save"),
-			   this, SLOT(save()), CTRL+Key_S );
-    file->setWhatsThis( id, fileSaveText );
+     pixmap = QPixmap::fromImage(image);
+     pixmapOffset = QPoint();
+     lastDragPos = QPoint();
+     pixmapScale = scaleFactor;
+     update();
+ }
 
-    id = file->insertItem( tr("Save &As..."), this, SLOT(saveAs()) );
-    file->setWhatsThis( id, fileSaveText );
+ void playqmake::zoom(double zoomFactor)
+ {
+     curScale *= zoomFactor;
+     update();
+     thread.render(centerX, centerY, curScale, size());
+ }
 
-    file->insertSeparator();
-
-    id = file->insertItem( printIcon, tr("&Print..."),
-			   this, SLOT(print()), CTRL+Key_P );
-    file->setWhatsThis( id, filePrintText );
-
-    file->insertSeparator();
-
-    file->insertItem( tr("&Close"), this, SLOT(close()), CTRL+Key_W );
-
-    file->insertItem( tr("&Quit"), qApp, SLOT( closeAllWindows() ), CTRL+Key_Q );
-
-    menuBar()->insertSeparator();
-
-    QPopupMenu * help = new QPopupMenu( this );
-    menuBar()->insertItem( tr("&Help"), help );
-
-    help->insertItem( tr("&About"), this, SLOT(about()), Key_F1 );
-    help->insertItem( tr("About &Qt"), this, SLOT(aboutQt()) );
-    help->insertSeparator();
-    help->insertItem( tr("What's &This"), this, SLOT(whatsThis()), SHIFT+Key_F1 );
-
-    e = new QTextEdit( this, "editor" );
-    e->setFocus();
-    setCentralWidget( e );
-    statusBar()->message( tr("Ready"), 2000 );
-
-    resize( 450, 600 );
-}
-
-
-playqmake::~playqmake()
-{
-    delete printer;
-}
-
-
-
-void playqmake::newDoc()
-{
-    playqmake *ed = new playqmake;
-    ed->setCaption(tr("Qt Example - Application"));
-    ed->show();
-}
-
-void playqmake::choose()
-{
-    QString fn = QFileDialog::getOpenFileName( QString::null, QString::null,
-					       this);
-    if ( !fn.isEmpty() )
-	load( fn );
-    else
-	statusBar()->message( tr("Loading aborted"), 2000 );
-}
-
-
-void playqmake::load( const QString &fileName )
-{
-    QFile f( fileName );
-    if ( !f.open( IO_ReadOnly ) )
-	return;
-
-    QTextStream ts( &f );
-    e->setText( ts.read() );
-    e->setModified( FALSE );
-    setCaption( fileName );
-    statusBar()->message( tr("Loaded document %1").arg(fileName), 2000 );
-}
-
-
-void playqmake::save()
-{
-    if ( filename.isEmpty() ) {
-	saveAs();
-	return;
-    }
-
-    QString text = e->text();
-    QFile f( filename );
-    if ( !f.open( IO_WriteOnly ) ) {
-	statusBar()->message( tr("Could not write to %1").arg(filename),
-			      2000 );
-	return;
-    }
-
-    QTextStream t( &f );
-    t << text;
-    f.close();
-
-    e->setModified( FALSE );
-
-    setCaption( filename );
-
-    statusBar()->message( tr( "File %1 saved" ).arg( filename ), 2000 );
-}
-
-
-void playqmake::saveAs()
-{
-    QString fn = QFileDialog::getSaveFileName( QString::null, QString::null,
-					       this );
-    if ( !fn.isEmpty() ) {
-	filename = fn;
-	save();
-    } else {
-	statusBar()->message( tr("Saving aborted"), 2000 );
-    }
-}
-
-
-void playqmake::print()
-{
-    // ###### Rewrite to use QSimpleRichText to print here as well
-    const int Margin = 10;
-    int pageNo = 1;
-
-    if ( printer->setup(this) ) {		// printer dialog
-	statusBar()->message( tr("Printing...") );
-	QPainter p;
-	if( !p.begin( printer ) )               // paint on printer
-	    return;
-
-	p.setFont( e->font() );
-	int yPos	= 0;			// y-position for each line
-	QFontMetrics fm = p.fontMetrics();
-	QPaintDeviceMetrics metrics( printer ); // need width/height
-						// of printer surface
-	for( int i = 0 ; i < e->lines() ; i++ ) {
-	    if ( Margin + yPos > metrics.height() - Margin ) {
-		QString msg( "Printing (page " );
-		msg += QString::number( ++pageNo );
-		msg += ")...";
-		statusBar()->message( msg );
-		printer->newPage();		// no more room on this page
-		yPos = 0;			// back to top of page
-	    }
-	    p.drawText( Margin, Margin + yPos,
-			metrics.width(), fm.lineSpacing(),
-			ExpandTabs | DontClip,
-			e->text( i ) );
-	    yPos = yPos + fm.lineSpacing();
-	}
-	p.end();				// send job to printer
-	statusBar()->message( tr("Printing completed"), 2000 );
-    } else {
-	statusBar()->message( tr("Printing aborted"), 2000 );
-    }
-}
-
-void playqmake::closeEvent( QCloseEvent* ce )
-{
-    if ( !e->isModified() ) {
-	ce->accept();
-	return;
-    }
-
-    switch( QMessageBox::information( this, tr("Qt Application Example"),
-				      tr("Do you want to save the changes"
-				      " to the document?"),
-				      tr("Yes"), tr("No"), tr("Cancel"),
-				      0, 1 ) ) {
-    case 0:
-	save();
-	ce->accept();
-	break;
-    case 1:
-	ce->accept();
-	break;
-    case 2:
-    default: // just for sanity
-	ce->ignore();
-	break;
-    }
-}
-
-
-void playqmake::about()
-{
-    QMessageBox::about( this, tr("Qt Application Example"),
-			tr("This example demonstrates simple use of "
-			"QMainWindow,\nQMenuBar and QToolBar."));
-}
-
-
-void playqmake::aboutQt()
-{
-    QMessageBox::aboutQt( this, tr("Qt Application Example") );
-}
-*/
+ void playqmake::scroll(int deltaX, int deltaY)
+ {
+     centerX += deltaX * curScale;
+     centerY += deltaY * curScale;
+     update();
+     thread.render(centerX, centerY, curScale, size());
+ }

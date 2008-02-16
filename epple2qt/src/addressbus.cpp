@@ -21,10 +21,13 @@
 #include "memory.h"
 #include "Keyboard.h"
 #include "videomode.h"
+#include "paddles.h"
+#include "paddlebuttonstates.h"
+#include "speakerclicker.h"
 #include "slots.h"
 
-AddressBus::AddressBus(Memory& ram, Memory& rom, Keyboard& kbd, VideoMode& vid, Slots& slts):
-	ram(ram), rom(rom), kbd(kbd), vid(vid), slts(slts)
+AddressBus::AddressBus(Memory& ram, Memory& rom, Keyboard& kbd, VideoMode& vid, Paddles& paddles, PaddleButtonStates& paddleButtonStates, SpeakerClicker& speaker, Slots& slts):
+	ram(ram), rom(rom), kbd(kbd), vid(vid), paddles(paddles), paddleButtonStates(paddleButtonStates), speaker(speaker), slts(slts)
 {
 }
 
@@ -141,7 +144,7 @@ unsigned char AddressBus::readSwitch(unsigned short address)
 		}
 		else if (islot == 0x3)
 		{
-			//this->speaker.click();
+			this->speaker.click();
 		}
 		else if (islot == 0x4)
 		{
@@ -167,17 +170,17 @@ unsigned char AddressBus::readSwitch(unsigned short address)
 			}
 			else if (sw2 < 4)
 			{
-				//setD7(this->paddleButtons.isDown(sw2));
+				setD7(this->paddleButtonStates.isDown(sw2));
 			}
 			else
 			{
 				sw2 &= 3;
-				//setD7(!this->paddles.isTimedOut(sw2));
+				setD7(!this->paddles.isTimedOut(sw2));
 			}
 		}
 		else if (islot == 0x7)
 		{
-			//this->paddles.startTimers();
+			this->paddles.startTimers();
 			setD7(true);
 		}
 	}

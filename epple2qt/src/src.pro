@@ -27,7 +27,8 @@ HEADERS += playqmake.h \
            a2colorindex.h \
            a2colorsobserved.h \
            analogtv.h \
-           screenimage.h 
+           screenimage.h \
+           renderthread.h 
 SOURCES += playqmake.cpp \
            main.cpp \
            memory.cpp \
@@ -50,7 +51,8 @@ SOURCES += playqmake.cpp \
            lowpass_1_5_mhz.cpp \
            a2colorsobserved.cpp \
            analogtv.cpp \
-           screenimage.cpp 
+           screenimage.cpp \
+           renderthread.cpp 
 TEMPLATE = app
 CONFIG += release \
 warn_on \

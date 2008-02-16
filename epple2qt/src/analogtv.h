@@ -26,7 +26,6 @@
 #include <vector>
 
 class ScreenImage;
-class QColor;
 class IQ;
 class CB;
 
@@ -58,12 +57,12 @@ private:
 	void drawMonitorWhite();
 	void drawMonitorGreen();
 	void drawMonitorOrange();
-	void drawMonitorMonochrome(const QColor& color);
+	void drawMonitorMonochrome(const unsigned int color);
 	void drawTVOld();
 	void drawTVNew();
 	void drawBlank();
-	void ntsc_to_rgb_monitor(const int isignal, const int siglen, int rgb[]);
-	void ntsc_to_rgb_newtv(const int isignal, const int siglen, int rgb[]);
+	void ntsc_to_rgb_monitor(const int isignal, const int siglen, unsigned int rgb[]);
+	void ntsc_to_rgb_newtv(const int isignal, const int siglen, unsigned int rgb[]);
 	CB get_cb(int lineno);
 	IQ get_iq_factor(const CB& cb);
 	void ntsc_to_yiq(const int isignal, const int siglen, const IQ& iq_factor, int yiq[]);

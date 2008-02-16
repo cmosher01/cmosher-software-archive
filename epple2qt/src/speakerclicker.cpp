@@ -17,26 +17,22 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef A2COLORSOBSERVED_H
-#define A2COLORSOBSERVED_H
+#include "speakerclicker.h"
 
-#include <QColor>
-
-class A2ColorsObserved
+SpeakerClicker::SpeakerClicker()
 {
-private:
-	A2ColorsObserved();
+}
 
-	static const unsigned int clr[0x10];
-	static const unsigned int map[0x10];
-	static const unsigned int hue[0x10];
-	static const unsigned int sat[0x10];
-	static const unsigned int val[0x10];
 
-	void initCOLOR();
+SpeakerClicker::~SpeakerClicker()
+{
+}
 
-public:
-	static const unsigned int COLOR[0x10];
-};
 
-#endif
+void SpeakerClicker::tick()
+{
+}
+
+void SpeakerClicker::click()
+{
+}

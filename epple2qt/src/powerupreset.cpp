@@ -17,26 +17,36 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef A2COLORSOBSERVED_H
-#define A2COLORSOBSERVED_H
+#include "powerupreset.h"
+#include "apple2.h"
+#include "timinggenerator.h"
 
-#include <QColor>
-
-class A2ColorsObserved
+PowerUpReset::PowerUpReset(Apple2& apple):
+	apple(apple)
 {
-private:
-	A2ColorsObserved();
+}
 
-	static const unsigned int clr[0x10];
-	static const unsigned int map[0x10];
-	static const unsigned int hue[0x10];
-	static const unsigned int sat[0x10];
-	static const unsigned int val[0x10];
 
-	void initCOLOR();
+PowerUpReset::~PowerUpReset()
+{
+}
 
-public:
-	static const unsigned int COLOR[0x10];
-};
 
-#endif
+void PowerUpReset::tick()
+{
+	if (this->pendingTicks > 0)
+	{
+		--this->pendingTicks;
+		if (this->pendingTicks == 0)
+		{
+			this->apple.reset();
+		}
+	}
+}
+
+void PowerUpReset::powerOn()
+{
+
+	// TODO if rev > 0
+	this->pendingTicks = (int)(TimingGenerator::AVG_CPU_HZ*.3); // U.A.II, p. 7-15
+}

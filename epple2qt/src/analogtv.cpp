@@ -25,8 +25,6 @@
 #include "lowpass_3_58_mhz.h"
 #include "lowpass_1_5_mhz.h"
 
-#include <QColor>
-
 #include <cmath>
 
 AnalogTV::AnalogTV(ScreenImage& image):
@@ -237,7 +235,7 @@ const int AnalogTV::D_IP(AppleNTSC::H-2-350);
 
 void AnalogTV::drawMonitorColor()
 {
-	int *rgb = new int[AppleNTSC::H];
+	unsigned int *rgb = new unsigned int[AppleNTSC::H];
 	int ip = 0;
 	for (int row = 0; row < 192; ++row)
 	{
@@ -276,7 +274,7 @@ void AnalogTV::drawMonitorOrange()
 	drawMonitorMonochrome(A2ColorsObserved::COLOR[HIRES_ORANGE]);
 }
 
-void AnalogTV::drawMonitorMonochrome(const QColor& color)
+void AnalogTV::drawMonitorMonochrome(const unsigned int color)
 {
 	int ip = 0;
 	for (int row = 0; row < 192; ++row)
@@ -284,7 +282,7 @@ void AnalogTV::drawMonitorMonochrome(const QColor& color)
 		for (int col = 350; col < AppleNTSC::H-2; ++col)
 		{
 			const int is = row*AppleNTSC::H+col;
-			const QColor& rgb = this->signal[is] > 50 ? color : A2ColorsObserved::COLOR[BLACK];
+			const unsigned int rgb = this->signal[is] > 50 ? color : A2ColorsObserved::COLOR[BLACK];
 			this->image.setElem(ip,rgb);
 			this->image.setElem(ip+D_IP,rgb);
 			++ip;
@@ -326,7 +324,7 @@ void AnalogTV::drawTVOld()
 
 void AnalogTV::drawTVNew()
 {
-	int *rgb = new int[AppleNTSC::H];
+	unsigned int *rgb = new unsigned int[AppleNTSC::H];
 	int ip = 0;
 	for (int row = 0; row < 192; ++row)
 	{
@@ -360,7 +358,7 @@ void AnalogTV::drawBlank()
 
 
 
-const QColor hirescolor[] =
+const unsigned int hirescolor[] =
 {
 	A2ColorsObserved::COLOR[HIRES_GREEN],
 	A2ColorsObserved::COLOR[HIRES_ORANGE],
@@ -368,7 +366,7 @@ const QColor hirescolor[] =
 	A2ColorsObserved::COLOR[HIRES_BLUE],
 };
 
-const QColor loreslightcolor[] =
+const unsigned int loreslightcolor[] =
 {
 	A2ColorsObserved::COLOR[LIGHT_BROWN],
 	A2ColorsObserved::COLOR[LIGHT_MAGENTA],
@@ -376,7 +374,7 @@ const QColor loreslightcolor[] =
 	A2ColorsObserved::COLOR[LIGHT_BLUE_GREEN],
 };
 
-const QColor loresdarkcolor[] =
+const unsigned int loresdarkcolor[] =
 {
 	A2ColorsObserved::COLOR[DARK_BLUE_GREEN],
 	A2ColorsObserved::COLOR[DARK_BROWN],
@@ -384,7 +382,7 @@ const QColor loresdarkcolor[] =
 	A2ColorsObserved::COLOR[DARK_BLUE],
 };
 
-void AnalogTV::ntsc_to_rgb_monitor(const int isignal, const int siglen, int rgb[])
+void AnalogTV::ntsc_to_rgb_monitor(const int isignal, const int siglen, unsigned int rgb[])
 {
 	int s0, s1, se;
 	s0 = s1 = isignal;
@@ -398,7 +396,7 @@ void AnalogTV::ntsc_to_rgb_monitor(const int isignal, const int siglen, int rgb[
 		s1 = s0;
 		while (this->signal[s1] > 50 && s1<se) { ++s1; }
 		const int slen = s1-s0;
-		QColor c;
+		unsigned int c = 0;
 		if (slen >= 4)
 		{
 			c = A2ColorsObserved::COLOR[WHITE];
@@ -424,17 +422,17 @@ void AnalogTV::ntsc_to_rgb_monitor(const int isignal, const int siglen, int rgb[
 		}
 
 		for (int i = s0; i < s1; ++i)
-			rgb[i-isignal] = c.rgb();
+			rgb[i-isignal] = c;
 		s0 = s1;
 	}
 }
 
-void AnalogTV::ntsc_to_rgb_newtv(const int isignal, const int siglen, int rgb[])
+void AnalogTV::ntsc_to_rgb_newtv(const int isignal, const int siglen, unsigned int rgb[])
 {
 	int sp, s0, s1, se;
 	sp = s0 = s1 = isignal;
 	se = isignal+siglen;
-	QColor c;
+	unsigned int c = 0;
 	while (s1 < se)
 	{
 		// no signal; black...
@@ -444,7 +442,7 @@ void AnalogTV::ntsc_to_rgb_newtv(const int isignal, const int siglen, int rgb[])
 		if (s0-sp < 4 && c != A2ColorsObserved::COLOR[WHITE])
 		{
 			for (int i = sp; i < s0; ++i)
-				rgb[i-isignal] = c.rgb();
+				rgb[i-isignal] = c;
 		}
 
 		// signal (white, grey, or color)
@@ -476,7 +474,7 @@ void AnalogTV::ntsc_to_rgb_newtv(const int isignal, const int siglen, int rgb[])
 		}
 
 		for (int i = s0; i < s1; ++i)
-			rgb[i-isignal] = c.rgb();
+			rgb[i-isignal] = c;
 		s0 = s1;
 	}
 }

@@ -17,26 +17,22 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef A2COLORSOBSERVED_H
-#define A2COLORSOBSERVED_H
+#ifndef PADDLEBUTTONSTATES_H
+#define PADDLEBUTTONSTATES_H
 
-#include <QColor>
+#include <vector>
 
-class A2ColorsObserved
+class PaddleButtonStates
 {
-private:
-	A2ColorsObserved();
+	static const int PADDLE_COUNT;
 
-	static const unsigned int clr[0x10];
-	static const unsigned int map[0x10];
-	static const unsigned int hue[0x10];
-	static const unsigned int sat[0x10];
-	static const unsigned int val[0x10];
-
-	void initCOLOR();
+	std::vector<bool> button;
 
 public:
-	static const unsigned int COLOR[0x10];
+	PaddleButtonStates();
+	~PaddleButtonStates();
+	void setButton(const int btn, const bool pressed);
+	bool isDown(const int paddle);
 };
 
 #endif

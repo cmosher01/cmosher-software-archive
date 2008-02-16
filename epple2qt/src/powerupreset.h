@@ -17,26 +17,22 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef A2COLORSOBSERVED_H
-#define A2COLORSOBSERVED_H
+#ifndef POWERUPRESET_H
+#define POWERUPRESET_H
 
-#include <QColor>
+class Apple2;
 
-class A2ColorsObserved
+class PowerUpReset
 {
 private:
-	A2ColorsObserved();
-
-	static const unsigned int clr[0x10];
-	static const unsigned int map[0x10];
-	static const unsigned int hue[0x10];
-	static const unsigned int sat[0x10];
-	static const unsigned int val[0x10];
-
-	void initCOLOR();
+	Apple2& apple;
+	int pendingTicks;
 
 public:
-	static const unsigned int COLOR[0x10];
+	PowerUpReset(Apple2& apple);
+	~PowerUpReset();
+	void powerOn();
+	void tick();
 };
 
 #endif

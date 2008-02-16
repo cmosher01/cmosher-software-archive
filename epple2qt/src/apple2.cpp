@@ -17,26 +17,67 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef A2COLORSOBSERVED_H
-#define A2COLORSOBSERVED_H
+#include "apple2.h"
+#include "slots.h"
+#include "videomode.h"
+#include "Keyboard.h"
+#include "addressbus.h"
+#include "memory.h"
+#include "picturegenerator.h"
+#include "textcharacters.h"
+#include "video.h"
+#include "cpu.h"
+#include "paddles.h"
+#include "paddlebuttonstates.h"
+#include "speakerclicker.h"
+#include "videodisplaydevice.h"
+#include "powerupreset.h"
 
-#include <QColor>
-
-class A2ColorsObserved
+Apple2::Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates, VideoDisplayDevice& tv):
+	kbd(keypresses),
+	ram(AddressBus::MOTHERBOARD_RAM_SIZ),
+	rom(AddressBus::MOTHERBOARD_ROM_SIZ),
+	addressBus(ram,rom,kbd,videoMode,paddles,paddleButtonStates,speaker,slts),
+	picgen(tv,videoMode),
+	video(videoMode,addressBus,picgen,textRows),
+	cpu(addressBus),
+	powerUpReset(*this)
 {
-private:
-	A2ColorsObserved();
+}
 
-	static const unsigned int clr[0x10];
-	static const unsigned int map[0x10];
-	static const unsigned int hue[0x10];
-	static const unsigned int sat[0x10];
-	static const unsigned int val[0x10];
 
-	void initCOLOR();
+Apple2::~Apple2()
+{
+}
 
-public:
-	static const unsigned int COLOR[0x10];
-};
 
-#endif
+void Apple2::tick()
+{
+	this->cpu.tick();
+	this->video.tick();
+	this->paddles.tick();
+	this->speaker.tick();
+	this->powerUpReset.tick();
+}
+
+void Apple2::powerOn()
+{
+	this->ram.powerOn();
+	this->cpu.powerOn();
+	this->videoMode.powerOn();
+	this->video.powerOn();
+	this->picgen.powerOn();
+	this->powerUpReset.powerOn();
+	// TODO clear up all other things for Apple ][ power-on
+}
+
+void Apple2::powerOff()
+{
+	this->ram.powerOff();
+}
+
+void Apple2::reset()
+{
+	this->cpu.reset();
+	this->slts.reset();
+}

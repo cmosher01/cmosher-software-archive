@@ -17,26 +17,46 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef A2COLORSOBSERVED_H
-#define A2COLORSOBSERVED_H
+#ifndef RENDERTHREAD_H
+#define RENDERTHREAD_H
+ #include <QMutex>
+ #include <QSize>
+ #include <QThread>
+ #include <QWaitCondition>
 
-#include <QColor>
+ class QImage;
 
-class A2ColorsObserved
-{
-private:
-	A2ColorsObserved();
+ class RenderThread : public QThread
+ {
+     Q_OBJECT
 
-	static const unsigned int clr[0x10];
-	static const unsigned int map[0x10];
-	static const unsigned int hue[0x10];
-	static const unsigned int sat[0x10];
-	static const unsigned int val[0x10];
+ public:
+     RenderThread(QObject *parent = 0);
+     ~RenderThread();
 
-	void initCOLOR();
+     void render(double centerX, double centerY, double scaleFactor,
+                 QSize resultSize);
 
-public:
-	static const unsigned int COLOR[0x10];
-};
+ signals:
+     void renderedImage(const QImage &image, double scaleFactor);
+
+ protected:
+     void run();
+
+ private:
+     uint rgbFromWaveLength(double wave);
+
+     QMutex mutex;
+     QWaitCondition condition;
+     double centerX;
+     double centerY;
+     double scaleFactor;
+     QSize resultSize;
+     bool restart;
+     bool abort;
+
+     enum { ColormapSize = 512 };
+     uint colormap[ColormapSize];
+ };
 
 #endif

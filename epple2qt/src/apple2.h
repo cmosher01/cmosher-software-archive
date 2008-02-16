@@ -17,26 +17,50 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef A2COLORSOBSERVED_H
-#define A2COLORSOBSERVED_H
+#ifndef APPLE2_H
+#define APPLE2_H
 
-#include <QColor>
+#include "slots.h"
+#include "videomode.h"
+#include "Keyboard.h"
+#include "addressbus.h"
+#include "memory.h"
+#include "picturegenerator.h"
+#include "textcharacters.h"
+#include "video.h"
+#include "cpu.h"
+#include "paddles.h"
+#include "paddlebuttonstates.h"
+#include "speakerclicker.h"
+#include "videodisplaydevice.h"
+#include "powerupreset.h"
 
-class A2ColorsObserved
+class Apple2
 {
-private:
-	A2ColorsObserved();
-
-	static const unsigned int clr[0x10];
-	static const unsigned int map[0x10];
-	static const unsigned int hue[0x10];
-	static const unsigned int sat[0x10];
-	static const unsigned int val[0x10];
-
-	void initCOLOR();
+	Slots slts;
+	VideoMode videoMode;
+	Keyboard kbd;
+	Paddles paddles;
+	SpeakerClicker speaker;
+	Memory ram;
+	Memory rom;
+	AddressBus addressBus;
+	PictureGenerator picgen;
+	TextCharacters textRows;
+	Video video;
+	CPU cpu;
+	PowerUpReset powerUpReset;
 
 public:
-	static const unsigned int COLOR[0x10];
+	Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates, VideoDisplayDevice& tv);
+	//, HyperMode& hyper, KeyboardBufferMode& buffered);
+	~Apple2();
+
+	void powerOn();
+	void powerOff();
+	void reset();
+
+	void tick();
 };
 
 #endif

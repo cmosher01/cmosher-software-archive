@@ -21,38 +21,43 @@
 
 #ifndef PLAYQMAKE_H
 #define PLAYQMAKE_H
-/*
-#include <qmainwindow.h>
 
-class QTextEdit;
+#include <QPixmap>
+#include <QWidget>
 
-class playqmake: public QMainWindow
+#include "renderthread.h"
+
+class playqmake : public QWidget
 {
-    Q_OBJECT
-
+	Q_OBJECT
+	
 public:
-    playqmake();
-    ~playqmake();
-
-protected:
-    void closeEvent( QCloseEvent* );
-
+	playqmake(QWidget *parent = 0);
+	
+	protected:
+	void paintEvent(QPaintEvent *event);
+	void resizeEvent(QResizeEvent *event);
+	void keyPressEvent(QKeyEvent *event);
+	void wheelEvent(QWheelEvent *event);
+	void mousePressEvent(QMouseEvent *event);
+	void mouseMoveEvent(QMouseEvent *event);
+	void mouseReleaseEvent(QMouseEvent *event);
+	
 private slots:
-    void newDoc();
-    void choose();
-    void load( const QString &fileName );
-    void save();
-    void saveAs();
-    void print();
-
-    void about();
-    void aboutQt();
-
+	void updatePixmap(const QImage &image, double scaleFactor);
+	
 private:
-    QPrinter *printer;
-    QTextEdit *e;
-    QString filename;
+	void zoom(double zoomFactor);
+	void scroll(int deltaX, int deltaY);
+	
+	RenderThread thread;
+	QPixmap pixmap;
+	QPoint pixmapOffset;
+	QPoint lastDragPos;
+	double centerX;
+	double centerY;
+	double pixmapScale;
+	double curScale;
 };
 
-*/
 #endif

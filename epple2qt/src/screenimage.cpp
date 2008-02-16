@@ -21,7 +21,6 @@
 #include "applentsc.h"
 #include "videoaddressing.h"
 
-#include <QColor>
 #include <QPoint>
 #include <QPainter>
 
@@ -43,11 +42,11 @@ void ScreenImage::notifyObservers()
 //	super.notifyObservers();
 }
 
-void ScreenImage::setElem(const unsigned int i, const QColor& val)
+void ScreenImage::setElem(const unsigned int i, const unsigned int val)
 {
 	const unsigned int x = i % WIDTH;
 	const unsigned int y = i / WIDTH;
-	this->image.setPixel(x,y,val.rgb());
+	this->image.setPixel(x,y,val);
 }
 
 void ScreenImage::blank()

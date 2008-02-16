@@ -19,7 +19,6 @@
  ***************************************************************************/
 
 
-//#include <qapplication.h>
 #include "playqmake.h"
 
 #include "memory.h"
@@ -33,17 +32,18 @@
 #include <iostream>
 #include <fstream>
 
+#include <QApplication>
+
 int main( int argc, char ** argv )
 {
 	std::cout << "main" << std::endl;
+
+	QApplication app(argc, argv);
+	playqmake widget;
+	widget.show();
+	return app.exec();
+
 /*
-    QApplication a( argc, argv );
-    playqmake * mw = new playqmake();
-    mw->setCaption( "playqmake" );
-    mw->show();
-    a.connect( &a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()) );
-    return a.exec();
-*/
 	TextCharacters txt;
 	unsigned char xxx = txt.get(0x41);
 
@@ -69,4 +69,5 @@ int main( int argc, char ** argv )
 	}
 
 	return 0;
+*/
 }

@@ -21,7 +21,6 @@
 #define SCREENIMAGE_H
 
 #include <QImage>
-class QColor;
 class QSize;
 class QPainter;
 
@@ -35,7 +34,7 @@ public:
 	~ScreenImage();
 
 	void notifyObservers();
-	void setElem(const unsigned int i, const QColor& color);
+	void setElem(const unsigned int i, const unsigned int val);
 	void blank();
 	QSize size();
 	const QImage& getImage();
