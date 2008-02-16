@@ -17,21 +17,22 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef VIDEOSTATICGENERATOR_H
+#define VIDEOSTATICGENERATOR_H
 
-class Util
+class VideoDisplayDevice;
+#include "timable.h"
+
+class VideoStaticGenerator : public Timable
 {
-public:
-	static int divideRoundUp(const int num, const int denom)
-	{
-		return (num+denom-1)/denom;
-	}
+private:
+	VideoDisplayDevice& display;
 
-	static int divideRound(const int dividend, const int divisor)
-	{
-		return (dividend+divisor/2)/divisor;
-	}
+public:
+	VideoStaticGenerator(VideoDisplayDevice& display);
+	~VideoStaticGenerator();
+
+	virtual void tick();
 };
 
 #endif

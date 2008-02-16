@@ -3,33 +3,104 @@
  *   chris@mosher.mine.nu   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
+ *   it under the terms of the GNU General License as published by  *
  *   the Free Software Foundation; either version 2 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  *   This program is distributed in the hope that it will be useful,       *
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
+ *   GNU General License for more details.                          *
  *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
+ *   You should have received a copy of the GNU General License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "timinggenerator.h"
 #include "util.h"
+#include "throttle.h"
+#include "timable.h"
 
-TimingGenerator::TimingGenerator()
+TimingGenerator::TimingGenerator(Timable& timable, Throttle& throttle):
+	timable(timable),
+	throttle(throttle)
 {
 }
-const int TimingGenerator::CRYSTAL_HZ(Util::divideRoundUp(315000000,22));
-const int TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE(14);
-const int TimingGenerator::EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE(2);
 
-const int TimingGenerator::HORIZ_CYCLES(65);
-const int TimingGenerator::AVG_CPU_HZ((int)((double)315000000*TimingGenerator::HORIZ_CYCLES)/(22*(TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE*TimingGenerator::HORIZ_CYCLES+TimingGenerator::EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE)));
-const int TimingGenerator::CPU_HZ(Util::divideRoundUp(TimingGenerator::CRYSTAL_HZ,TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE));
+const unsigned int TimingGenerator::CRYSTAL_HZ(Util::divideRoundUp(315000000,22));
+const unsigned int TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE(14);
+const unsigned int TimingGenerator::EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE(2);
+
+const unsigned int TimingGenerator::HORIZ_CYCLES(65);
+
+const unsigned int TimingGenerator::AVG_CPU_HZ((int)((double)315000000*TimingGenerator::HORIZ_CYCLES)/(22*(TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE*TimingGenerator::HORIZ_CYCLES+TimingGenerator::EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE)));
+
+const unsigned int TimingGenerator::CPU_HZ(Util::divideRoundUp(TimingGenerator::CRYSTAL_HZ,TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE));
+
+
+
+
+void TimingGenerator::run()
+{
+//	if (this->thread)
+//	{
+//		throw new IllegalStateException();
+//	}
+	this->shut = false;
+
+/*
+	this->thread = new Thread(new Runnable()
+	{
+		@SuppressWarnings("synthetic-access")
+		void run()
+		{
+			try
+			{
+			threadProcedure();
+			}
+			catch (final Throwable e)
+			{
+				e.printStackTrace();
+			}
+		}
+	});
+	this->thread.setName("User-TimingGenerator");
+	this->thread.start();
+*/
+}
+
+void TimingGenerator::threadProcedure()
+{
+	while (!isShuttingDown())
+	{
+		this->timable.tick();
+		this->throttle.tick();
+	}
+}
+
+bool TimingGenerator::isShuttingDown()
+{
+	return this->shut;
+}
+bool TimingGenerator::isRunning()
+{
+	return this->thread;
+}
+
+void TimingGenerator::shutdown()
+{
+//	if (!this->thread)
+//	{
+//		throw new IllegalStateException();
+//	}
+	this->shut = true;
+
+//	this->thread->join();
+	this->thread = 0;
+}
+
+
 
 
 // This is just an example of how to use Boost threads mutex and condition

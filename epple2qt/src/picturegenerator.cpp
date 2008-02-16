@@ -24,7 +24,7 @@
 #include "applentsc.h"
 #include "timinggenerator.h"
 
-const int PictureGenerator::VISIBLE_X_OFFSET(VideoAddressing::BYTES_PER_ROW-VideoAddressing::VISIBLE_BYTES_PER_ROW);
+const unsigned int PictureGenerator::VISIBLE_X_OFFSET(VideoAddressing::BYTES_PER_ROW-VideoAddressing::VISIBLE_BYTES_PER_ROW);
 
 PictureGenerator::PictureGenerator(VideoDisplayDevice& display, VideoMode& mode):
 	display(display), mode(mode)

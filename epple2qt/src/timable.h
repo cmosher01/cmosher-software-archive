@@ -17,21 +17,16 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef TIMABLE_H
+#define TIMABLE_H
 
-class Util
+class Timable
 {
 public:
-	static int divideRoundUp(const int num, const int denom)
-	{
-		return (num+denom-1)/denom;
-	}
+	Timable() {}
+	virtual ~Timable() {}
 
-	static int divideRound(const int dividend, const int divisor)
-	{
-		return (dividend+divisor/2)/divisor;
-	}
+	virtual void tick() = 0;
 };
 
 #endif

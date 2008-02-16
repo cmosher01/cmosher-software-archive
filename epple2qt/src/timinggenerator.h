@@ -20,17 +20,34 @@
 #ifndef TIMINGGENERATOR_H
 #define TIMINGGENERATOR_H
 
+class Timable;
+class Throttle;
+
 class TimingGenerator
 {
-public:
-	TimingGenerator();
-	static const int CRYSTAL_HZ;
-	static const int CRYSTAL_CYCLES_PER_CPU_CYCLE;
-	static const int EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE;
+private:
+	bool shut;
+	int thread; // TODO thread
 
-	static const int HORIZ_CYCLES;
-	static const int AVG_CPU_HZ;
-	static const int CPU_HZ;
+	Timable& timable;
+	Throttle& throttle;
+
+public:
+	TimingGenerator(Timable& timable, Throttle& throttle);
+
+	static const unsigned int CRYSTAL_HZ;
+	static const unsigned int CRYSTAL_CYCLES_PER_CPU_CYCLE;
+	static const unsigned int EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE;
+
+	static const unsigned int HORIZ_CYCLES;
+	static const unsigned int AVG_CPU_HZ;
+	static const unsigned int CPU_HZ;
+
+	void run();
+	void threadProcedure();
+	bool isShuttingDown();
+	bool isRunning();
+	void shutdown();
 };
 
 #endif

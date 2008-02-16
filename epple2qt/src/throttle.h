@@ -17,21 +17,31 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef THROTTLE_H
+#define THROTTLE_H
 
-class Util
+class Throttle
 {
-public:
-	static int divideRoundUp(const int num, const int denom)
-	{
-		return (num+denom-1)/denom;
-	}
+private:
+	static const int CHECK_EVERY_FRACT;
+	static const int CHECK_EVERY_CYCLE;
+	static const int EXPECTED_MS;
 
-	static int divideRound(const int dividend, const int divisor)
-	{
-		return (dividend+divisor/2)/divisor;
-	}
+	unsigned int msPrev;
+	unsigned int times;
+	bool suspend;
+	float speedRatio;
+
+public:
+	Throttle();
+	~Throttle();
+
+	void tick();
+	void throttleIfNecessary();
+	void sleep(const long msDelta);
+	void suspendIfNecessary();
+	void toggleSuspend();
+	float getSpeedRatio();
 };
 
 #endif

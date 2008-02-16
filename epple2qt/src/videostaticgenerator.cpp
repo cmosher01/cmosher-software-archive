@@ -17,21 +17,25 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef UTIL_H
-#define UTIL_H
+#include "videostaticgenerator.h"
+#include "videodisplaydevice.h"
+#include "timinggenerator.h"
 
-class Util
+VideoStaticGenerator::VideoStaticGenerator(VideoDisplayDevice& display):
+	display(display)
 {
-public:
-	static int divideRoundUp(const int num, const int denom)
-	{
-		return (num+denom-1)/denom;
-	}
+}
 
-	static int divideRound(const int dividend, const int divisor)
-	{
-		return (dividend+divisor/2)/divisor;
-	}
-};
 
-#endif
+VideoStaticGenerator::~VideoStaticGenerator()
+{
+}
+
+
+void VideoStaticGenerator::tick()
+{
+	for (int i = 0; i < TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE; ++i)
+	{
+		this->display.putAsDisconnectedVideoIn();
+	}
+}

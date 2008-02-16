@@ -17,21 +17,44 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef EMULATOR_H
+#define EMULATOR_H
 
-class Util
+#include "throttle.h"
+#include "Keyboard.h"
+#include "paddlebuttonstates.h"
+#include "apple2.h"
+#include "videostaticgenerator.h"
+#include "screenimage.h"
+#include "analogtv.h"
+class TimingGenerator;
+//class EOFHandler;
+
+class Emulator
 {
-public:
-	static int divideRoundUp(const int num, const int denom)
-	{
-		return (num+denom-1)/denom;
-	}
+private:
+	Throttle throttle;
+//	HyperMode hyper;
+//	KeyboardBufferMode buffered;
+	KeypressQueue keypresses;
+	PaddleButtonStates paddleButtonStates;
+	AnalogTV display;
+	Apple2 apple2;
+	VideoStaticGenerator videoStatic;
+	ScreenImage screenImage;
 
-	static int divideRound(const int dividend, const int divisor)
-	{
-		return (dividend+divisor/2)/divisor;
-	}
+	TimingGenerator* timer;
+
+public:
+	Emulator();
+	virtual ~Emulator();
+
+	virtual void init() = 0;
+//	virtual EOFHandler getStdInEOF() = 0;
+
+	void powerOnComputer();
+	void powerOffComputer();
+	void close();
 };
 
 #endif

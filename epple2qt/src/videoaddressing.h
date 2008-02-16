@@ -28,29 +28,29 @@ public:
 	VideoAddressing();
 	static void buildLUT(const unsigned short base, const unsigned short len, std::vector<unsigned short>& lut);
 
-	static const int NTSC_LINES_PER_FRAME;
-	static const int NTSC_LINES_PER_FIELD;
-	static const int NTSC_FIELDS_PER_SECOND;
-	static const int NTSC_COLOR_FIELD_EVERY;
+	static const unsigned int NTSC_LINES_PER_FRAME;
+	static const unsigned int NTSC_LINES_PER_FIELD;
+	static const unsigned int NTSC_FIELDS_PER_SECOND;
+	static const unsigned int NTSC_COLOR_FIELD_EVERY;
 	
-	static const int APPLE_BYTES;
-	static const int LINES;
-	static const int BYTES_PER_ROW;
+	static const unsigned int APPLE_BYTES;
+	static const unsigned int LINES;
+	static const unsigned int BYTES_PER_ROW;
 	
-	static const int BYTES_PER_FIELD;
+	static const unsigned int BYTES_PER_FIELD;
 	
-	static const int VISIBLE_BITS_PER_BYTE;
-	static const int VISIBLE_LINES_PER_CHARACTER;
+	static const unsigned int VISIBLE_BITS_PER_BYTE;
+	static const unsigned int VISIBLE_LINES_PER_CHARACTER;
 	
-	static const int VISIBLE_BYTES_PER_ROW;
-	static const int VISIBLE_ROWS_PER_FIELD;
+	static const unsigned int VISIBLE_BYTES_PER_ROW;
+	static const unsigned int VISIBLE_ROWS_PER_FIELD;
 	
-	static const int BLANKED_BYTES_PER_ROW;
-	static const int VISIBLE_BYTES_PER_FIELD;
-	static const int SCANNABLE_ROWS;
-	static const int SCANNABLE_BYTES;
-	static const int RESET_ROWS;
-	static const int RESET_BYTES;
+	static const unsigned int BLANKED_BYTES_PER_ROW;
+	static const unsigned int VISIBLE_BYTES_PER_FIELD;
+	static const unsigned int SCANNABLE_ROWS;
+	static const unsigned int SCANNABLE_BYTES;
+	static const unsigned int RESET_ROWS;
+	static const unsigned int RESET_BYTES;
 };
 
 #endif

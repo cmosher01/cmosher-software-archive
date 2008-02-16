@@ -22,7 +22,7 @@ private:
 
 	TextCharacters& textRows;
 
-	int t;
+	unsigned int t;
 
 	bool flash;
 	int cflash;

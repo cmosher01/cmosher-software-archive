@@ -20,6 +20,7 @@
 #ifndef APPLE2_H
 #define APPLE2_H
 
+#include "timable.h"
 #include "slots.h"
 #include "videomode.h"
 #include "Keyboard.h"
@@ -35,7 +36,7 @@
 #include "videodisplaydevice.h"
 #include "powerupreset.h"
 
-class Apple2
+class Apple2 : public Timable
 {
 	Slots slts;
 	VideoMode videoMode;
@@ -60,7 +61,7 @@ public:
 	void powerOff();
 	void reset();
 
-	void tick();
+	virtual void tick();
 };
 
 #endif

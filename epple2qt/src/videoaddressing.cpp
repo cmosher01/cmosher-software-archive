@@ -70,7 +70,7 @@ static int calculateVisibleRows()
 	return ((int)(VideoAddressing::NTSC_LINES_PER_FRAME-(20+19))*.8) / 2 / VideoAddressing::VISIBLE_LINES_PER_CHARACTER * VideoAddressing::VISIBLE_LINES_PER_CHARACTER;
 }
 
-static int calc(const int t)
+static int calc(const unsigned int t)
 {
 	int c = t % VideoAddressing::VISIBLE_BYTES_PER_FIELD;
 	if (t >= VideoAddressing::SCANNABLE_BYTES)
@@ -98,12 +98,12 @@ static int calc(const int t)
 void VideoAddressing::buildLUT(const unsigned short base, const unsigned short len, std::vector<unsigned short>& lut)
 {
 	lut.resize(BYTES_PER_FIELD);
-	for (int t = 0; t < BYTES_PER_FIELD; ++t)
+	for (unsigned int t = 0; t < BYTES_PER_FIELD; ++t)
 	{
-		int off = (calc(t) % len);
+		unsigned int off = (calc(t) % len);
 
-		const int col = t % BYTES_PER_ROW;
-		const int row = t / BYTES_PER_ROW;
+		const unsigned int col = t % BYTES_PER_ROW;
+		const unsigned int row = t / BYTES_PER_ROW;
 
 		if (col < BLANKED_BYTES_PER_ROW)
 		{
@@ -132,26 +132,26 @@ void VideoAddressing::buildLUT(const unsigned short base, const unsigned short l
 	}
 }
 
-const int VideoAddressing::NTSC_LINES_PER_FRAME(3*5*5*7);
-const int VideoAddressing::NTSC_LINES_PER_FIELD(NTSC_LINES_PER_FRAME/2);
-const int VideoAddressing::NTSC_FIELDS_PER_SECOND(60);
-const int VideoAddressing::NTSC_COLOR_FIELD_EVERY(1000);
+const unsigned int VideoAddressing::NTSC_LINES_PER_FRAME(3*5*5*7);
+const unsigned int VideoAddressing::NTSC_LINES_PER_FIELD(NTSC_LINES_PER_FRAME/2);
+const unsigned int VideoAddressing::NTSC_FIELDS_PER_SECOND(60);
+const unsigned int VideoAddressing::NTSC_COLOR_FIELD_EVERY(1000);
 
-const int VideoAddressing::APPLE_BYTES((NTSC_COLOR_FIELD_EVERY+1)*TimingGenerator::CPU_HZ);
-const int VideoAddressing::LINES(NTSC_FIELDS_PER_SECOND*NTSC_COLOR_FIELD_EVERY*NTSC_LINES_PER_FIELD);
-const int VideoAddressing::BYTES_PER_ROW(APPLE_BYTES/LINES);
+const unsigned int VideoAddressing::APPLE_BYTES((NTSC_COLOR_FIELD_EVERY+1)*TimingGenerator::CPU_HZ);
+const unsigned int VideoAddressing::LINES(NTSC_FIELDS_PER_SECOND*NTSC_COLOR_FIELD_EVERY*NTSC_LINES_PER_FIELD);
+const unsigned int VideoAddressing::BYTES_PER_ROW(APPLE_BYTES/LINES);
 
-const int VideoAddressing::BYTES_PER_FIELD(BYTES_PER_ROW*NTSC_LINES_PER_FIELD);
+const unsigned int VideoAddressing::BYTES_PER_FIELD(BYTES_PER_ROW*NTSC_LINES_PER_FIELD);
 
-const int VideoAddressing::VISIBLE_BITS_PER_BYTE(7);
-const int VideoAddressing::VISIBLE_LINES_PER_CHARACTER(8);
+const unsigned int VideoAddressing::VISIBLE_BITS_PER_BYTE(7);
+const unsigned int VideoAddressing::VISIBLE_LINES_PER_CHARACTER(8);
 
-const int VideoAddressing::VISIBLE_BYTES_PER_ROW(calculateVisibleCharactersPerRow());
-const int VideoAddressing::VISIBLE_ROWS_PER_FIELD(calculateVisibleRows());
+const unsigned int VideoAddressing::VISIBLE_BYTES_PER_ROW(calculateVisibleCharactersPerRow());
+const unsigned int VideoAddressing::VISIBLE_ROWS_PER_FIELD(calculateVisibleRows());
 
-const int VideoAddressing::BLANKED_BYTES_PER_ROW(BYTES_PER_ROW-VISIBLE_BYTES_PER_ROW);
-const int VideoAddressing::VISIBLE_BYTES_PER_FIELD(BYTES_PER_ROW*VISIBLE_ROWS_PER_FIELD);
-const int VideoAddressing::SCANNABLE_ROWS(0x100);
-const int VideoAddressing::SCANNABLE_BYTES(SCANNABLE_ROWS*BYTES_PER_ROW);
-const int VideoAddressing::RESET_ROWS(NTSC_LINES_PER_FIELD-SCANNABLE_ROWS);
-const int VideoAddressing::RESET_BYTES(RESET_ROWS*BYTES_PER_ROW);
+const unsigned int VideoAddressing::BLANKED_BYTES_PER_ROW(BYTES_PER_ROW-VISIBLE_BYTES_PER_ROW);
+const unsigned int VideoAddressing::VISIBLE_BYTES_PER_FIELD(BYTES_PER_ROW*VISIBLE_ROWS_PER_FIELD);
+const unsigned int VideoAddressing::SCANNABLE_ROWS(0x100);
+const unsigned int VideoAddressing::SCANNABLE_BYTES(SCANNABLE_ROWS*BYTES_PER_ROW);
+const unsigned int VideoAddressing::RESET_ROWS(NTSC_LINES_PER_FIELD-SCANNABLE_ROWS);
+const unsigned int VideoAddressing::RESET_BYTES(RESET_ROWS*BYTES_PER_ROW);

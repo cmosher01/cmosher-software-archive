@@ -50,7 +50,7 @@ private:
 	signed char hbl(const int hcycle);
 
 public:
-	static const int VISIBLE_X_OFFSET;
+	static const unsigned int VISIBLE_X_OFFSET;
 
 	PictureGenerator(VideoDisplayDevice& display, VideoMode& mode);
 	~PictureGenerator();
