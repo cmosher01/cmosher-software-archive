@@ -38,10 +38,12 @@ private:
 //	KeyboardBufferMode buffered;
 	KeypressQueue keypresses;
 	PaddleButtonStates paddleButtonStates;
+
+protected:
+	ScreenImage screenImage;
 	AnalogTV display;
 	Apple2 apple2;
 	VideoStaticGenerator videoStatic;
-	ScreenImage screenImage;
 
 	TimingGenerator* timer;
 

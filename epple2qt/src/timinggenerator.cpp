@@ -22,7 +22,8 @@
 #include "throttle.h"
 #include "timable.h"
 
-TimingGenerator::TimingGenerator(Timable& timable, Throttle& throttle):
+TimingGenerator::TimingGenerator(Timable& timable, Throttle& throttle, QObject *parent):
+	QThread(parent),
 	timable(timable),
 	throttle(throttle)
 {
@@ -41,13 +42,13 @@ const unsigned int TimingGenerator::CPU_HZ(Util::divideRoundUp(TimingGenerator::
 
 
 
-void TimingGenerator::run()
-{
+//void TimingGenerator::start()
+//{
 //	if (this->thread)
 //	{
 //		throw new IllegalStateException();
 //	}
-	this->shut = false;
+//	this->shut = false;
 
 /*
 	this->thread = new Thread(new Runnable()
@@ -68,9 +69,9 @@ void TimingGenerator::run()
 	this->thread.setName("User-TimingGenerator");
 	this->thread.start();
 */
-}
+//}
 
-void TimingGenerator::threadProcedure()
+void TimingGenerator::run()
 {
 	while (!isShuttingDown())
 	{
@@ -83,10 +84,11 @@ bool TimingGenerator::isShuttingDown()
 {
 	return this->shut;
 }
-bool TimingGenerator::isRunning()
-{
-	return this->thread;
-}
+
+//bool TimingGenerator::isRunning()
+//{
+//	return this->thread;
+//}
 
 void TimingGenerator::shutdown()
 {
@@ -97,7 +99,7 @@ void TimingGenerator::shutdown()
 	this->shut = true;
 
 //	this->thread->join();
-	this->thread = 0;
+//	this->thread = 0;
 }
 
 

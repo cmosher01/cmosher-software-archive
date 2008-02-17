@@ -27,7 +27,7 @@
 static const int WIDTH(AppleNTSC::H-AppleNTSC::PIC_START-2);
 
 ScreenImage::ScreenImage():
-	image(WIDTH,VideoAddressing::VISIBLE_ROWS_PER_FIELD*2,QImage::Format_RGB32)
+	QImage(WIDTH,VideoAddressing::VISIBLE_ROWS_PER_FIELD*2,QImage::Format_RGB32)
 {
 }
 
@@ -37,36 +37,24 @@ ScreenImage::~ScreenImage()
 
 void ScreenImage::notifyObservers()
 {
-	// TODO observer/observable
-//	setChanged();
-//	super.notifyObservers();
+	emit changed();
 }
 
 void ScreenImage::setElem(const unsigned int i, const unsigned int val)
 {
 	const unsigned int x = i % WIDTH;
 	const unsigned int y = i / WIDTH;
-	this->image.setPixel(x,y,val);
+	setPixel(x,y,val);
 }
 
 void ScreenImage::blank()
 {
-	this->image.fill(0);
+	fill(0);
 }
 
-QSize ScreenImage::size()
+void ScreenImage::drawOnto(QPainter& painter) const
 {
-	return this->image.size();
-}
-
-const QImage& ScreenImage::getImage()
-{
-	return this->image;
-}
-
-void ScreenImage::drawOnto(QPainter& painter)
-{
-	painter.drawImage(QPoint(),this->image);
+	painter.drawImage(QPoint(),*this);
 }
 
 // TODO dump PNG

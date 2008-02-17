@@ -17,39 +17,29 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef TIMINGGENERATOR_H
-#define TIMINGGENERATOR_H
+#ifndef SCREEN_H
+#define SCREEN_H
 
-#include <QThread>
-class Timable;
-class Throttle;
+#include <QWidget>
+class QPaintEvent;
 
-class TimingGenerator : public QThread
+class ScreenImage;
+
+class Screen : public QWidget
 {
 	Q_OBJECT
 
-private:
-	bool shut;
+	const ScreenImage& image;
 
-	Timable& timable;
-	Throttle& throttle;
+protected:
+	void paintEvent(QPaintEvent*) {}
 
 public:
-	TimingGenerator(Timable& timable, Throttle& throttle, QObject *parent = 0);
+	Screen(const ScreenImage& image, QWidget *parent = 0);
+	~Screen();
 
-	static const unsigned int CRYSTAL_HZ;
-	static const unsigned int CRYSTAL_CYCLES_PER_CPU_CYCLE;
-	static const unsigned int EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE;
-
-	static const unsigned int HORIZ_CYCLES;
-	static const unsigned int AVG_CPU_HZ;
-	static const unsigned int CPU_HZ;
-
-	void run();
-	void threadProcedure();
-	bool isShuttingDown();
-	bool isRunning();
-	void shutdown();
+public slots:
+	void plot();
 };
 
 #endif

@@ -34,7 +34,7 @@ VideoStaticGenerator::~VideoStaticGenerator()
 
 void VideoStaticGenerator::tick()
 {
-	for (int i = 0; i < TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE; ++i)
+	for (unsigned int i = 0; i < TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE; ++i)
 	{
 		this->display.putAsDisconnectedVideoIn();
 	}

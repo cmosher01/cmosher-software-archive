@@ -18,6 +18,9 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+#ifndef DISPLAYTYPE_H
+#define DISPLAYTYPE_H
+
 enum DisplayType
 {
 	MONITOR_COLOR,
@@ -29,3 +32,5 @@ enum DisplayType
 	TV_NEW_COLOR,
 	TV_NEW_BW,
 };
+
+#endif

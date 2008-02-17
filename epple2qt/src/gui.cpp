@@ -17,39 +17,17 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef TIMINGGENERATOR_H
-#define TIMINGGENERATOR_H
+#include "gui.h"
 
-#include <QThread>
-class Timable;
-class Throttle;
+#include "screen.h"
 
-class TimingGenerator : public QThread
+GUI::GUI(Screen& screen):
+	screen(screen)
 {
-	Q_OBJECT
+	screen.show();
+}
 
-private:
-	bool shut;
 
-	Timable& timable;
-	Throttle& throttle;
-
-public:
-	TimingGenerator(Timable& timable, Throttle& throttle, QObject *parent = 0);
-
-	static const unsigned int CRYSTAL_HZ;
-	static const unsigned int CRYSTAL_CYCLES_PER_CPU_CYCLE;
-	static const unsigned int EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE;
-
-	static const unsigned int HORIZ_CYCLES;
-	static const unsigned int AVG_CPU_HZ;
-	static const unsigned int CPU_HZ;
-
-	void run();
-	void threadProcedure();
-	bool isShuttingDown();
-	bool isRunning();
-	void shutdown();
-};
-
-#endif
+GUI::~GUI()
+{
+}

@@ -98,7 +98,7 @@ void Throttle::suspendIfNecessary()
 
 void Throttle::toggleSuspend()
 {
-	this->suspend - !this->suspend;
+	this->suspend = !this->suspend;
 //	this->suspend.notifyAll();
 }
 

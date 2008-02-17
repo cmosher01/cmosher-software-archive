@@ -1,47 +1,7 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="13" >
-  <Doc0 NumberOfViews="1" URL="file:///home/chris/playqmake/src/emulator.h" >
-   <View0 Type="Source" />
-  </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/chris/playqmake/src/emulator.cpp" >
-   <View0 Type="Source" />
-  </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/chris/playqmake/src/timinggenerator.h" >
-   <View0 Type="Source" />
-  </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:///home/chris/playqmake/src/timinggenerator.cpp" >
-   <View0 Type="Source" />
-  </Doc3>
-  <Doc4 NumberOfViews="1" URL="file:///home/chris/ja2/src/chipset/TimingGenerator.java" >
-   <View0 Type="Source" />
-  </Doc4>
-  <Doc5 NumberOfViews="1" URL="file:///home/chris/ja2/src/chipset/Timable.java" >
-   <View0 line="4" Type="Source" />
-  </Doc5>
-  <Doc6 NumberOfViews="1" URL="file:///home/chris/ja2/src/chipset/Throttle.java" >
-   <View0 line="99" Type="Source" />
-  </Doc6>
-  <Doc7 NumberOfViews="1" URL="file:///home/chris/playqmake/src/timable.h" >
-   <View0 line="32" Type="Source" />
-  </Doc7>
-  <Doc8 NumberOfViews="1" URL="file:///home/chris/playqmake/src/timable.cpp" >
-   <View0 line="20" Type="Source" />
-  </Doc8>
-  <Doc9 NumberOfViews="1" URL="file:///home/chris/playqmake/src/apple2.h" >
-   <View0 line="67" Type="Source" />
-  </Doc9>
-  <Doc10 NumberOfViews="1" URL="file:///home/chris/playqmake/src/throttle.cpp" >
-   <View0 line="106" Type="Source" />
-  </Doc10>
-  <Doc11 NumberOfViews="1" URL="file:///home/chris/playqmake/src/throttle.h" >
-   <View0 line="42" Type="Source" />
-  </Doc11>
-  <Doc12 NumberOfViews="1" URL="file:///home/chris/ja2/src/video/VideoStaticGenerator.java" >
-   <View0 line="8" Type="Source" />
-  </Doc12>
- </DocsAndViews>
+ <DocsAndViews NumberOfDocuments="0" />
  <pluginList>
   <kdevdebugger>
    <breakpointList>
@@ -51,7 +11,11 @@
    </breakpointList>
   </kdevdebugger>
   <kdevbookmarks>
-   <bookmarks/>
+   <bookmarks>
+    <bookmark url="/home/chris/playqmake/src/renderthread.cpp" >
+     <mark line="46" />
+    </bookmark>
+   </bookmarks>
   </kdevbookmarks>
   <kdevsubversion>
    <subversion recurseresolve="1" recurserelocate="1" recursemerge="1" recursecommit="1" base="" recursepropget="1" recurseswitch="1" recurseupdate="1" recursepropset="1" recursediff="1" recurserevert="1" forcemove="1" recursecheckout="1" forceremove="1" recurseadd="1" recurseproplist="1" forcemerge="1" />

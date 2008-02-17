@@ -20,14 +20,16 @@
 #ifndef SCREENIMAGE_H
 #define SCREENIMAGE_H
 
+#include <QObject>
 #include <QImage>
-class QSize;
 class QPainter;
 
-class ScreenImage
+class ScreenImage : public QObject, public QImage
 {
-private:
-	QImage image;
+	Q_OBJECT
+
+signals:
+	void changed();
 
 public:
 	ScreenImage();
@@ -36,9 +38,7 @@ public:
 	void notifyObservers();
 	void setElem(const unsigned int i, const unsigned int val);
 	void blank();
-	QSize size();
-	const QImage& getImage();
-	void drawOnto(QPainter& painter);
+	void drawOnto(QPainter& painter) const;
 };
 
 #endif

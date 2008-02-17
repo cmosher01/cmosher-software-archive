@@ -17,39 +17,22 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef TIMINGGENERATOR_H
-#define TIMINGGENERATOR_H
+#ifndef GUIEMULATOR_H
+#define GUIEMULATOR_H
 
-#include <QThread>
-class Timable;
-class Throttle;
+#include "emulator.h"
+#include "screen.h"
 
-class TimingGenerator : public QThread
+class GUIEmulator : public Emulator
 {
-	Q_OBJECT
-
 private:
-	bool shut;
-
-	Timable& timable;
-	Throttle& throttle;
+	Screen screen;
 
 public:
-	TimingGenerator(Timable& timable, Throttle& throttle, QObject *parent = 0);
-
-	static const unsigned int CRYSTAL_HZ;
-	static const unsigned int CRYSTAL_CYCLES_PER_CPU_CYCLE;
-	static const unsigned int EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE;
-
-	static const unsigned int HORIZ_CYCLES;
-	static const unsigned int AVG_CPU_HZ;
-	static const unsigned int CPU_HZ;
-
-	void run();
-	void threadProcedure();
-	bool isShuttingDown();
-	bool isRunning();
-	void shutdown();
+	GUIEmulator();
+	~GUIEmulator();
+	void init();
+	void initKeyListeners();
 };
 
 #endif
