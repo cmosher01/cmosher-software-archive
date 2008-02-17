@@ -39,7 +39,7 @@ private:
 	int isig;
 	bool noise;
 	DisplayType type;
-	unsigned long int rrr;
+	unsigned long long int rrr;
 
 	static int* rcb;
 

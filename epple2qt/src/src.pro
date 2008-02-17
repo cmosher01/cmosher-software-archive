@@ -54,7 +54,7 @@ SOURCES += playqmake.cpp \
            screenimage.cpp \
            renderthread.cpp 
 TEMPLATE = app
-CONFIG += release \
+CONFIG += debug \
 warn_on \
 thread \
 qt

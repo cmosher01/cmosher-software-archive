@@ -23,7 +23,8 @@
 Emulator::Emulator():
 	display(screenImage),
 	apple2(keypresses,paddleButtonStates,display/*,hyper,buffered*/),
-	videoStatic(display)
+	videoStatic(display),
+	timer(0)
 {
 }
 
@@ -43,7 +44,7 @@ void Emulator::powerOnComputer()
 	this->apple2.powerOn();
 
 	this->timer = new TimingGenerator(this->apple2,this->throttle);
-	this->timer->run();
+	this->timer->start();
 }
 
 void Emulator::powerOffComputer()
@@ -56,7 +57,7 @@ void Emulator::powerOffComputer()
 	// TODO ask if unsaved changes
 	this->apple2.powerOff();
 	this->timer = new TimingGenerator(this->videoStatic,this->throttle);
-	this->timer->run();
+	this->timer->start();
 }
 
 void Emulator::close()

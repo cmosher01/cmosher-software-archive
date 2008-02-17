@@ -137,7 +137,7 @@ const unsigned int VideoAddressing::NTSC_LINES_PER_FIELD(NTSC_LINES_PER_FRAME/2)
 const unsigned int VideoAddressing::NTSC_FIELDS_PER_SECOND(60);
 const unsigned int VideoAddressing::NTSC_COLOR_FIELD_EVERY(1000);
 
-const unsigned int VideoAddressing::APPLE_BYTES((NTSC_COLOR_FIELD_EVERY+1)*TimingGenerator::CPU_HZ);
+const unsigned int VideoAddressing::APPLE_BYTES((NTSC_COLOR_FIELD_EVERY+1)*1022728/*TODO TimingGenerator::CPU_HZ*/);
 const unsigned int VideoAddressing::LINES(NTSC_FIELDS_PER_SECOND*NTSC_COLOR_FIELD_EVERY*NTSC_LINES_PER_FIELD);
 const unsigned int VideoAddressing::BYTES_PER_ROW(APPLE_BYTES/LINES);
 

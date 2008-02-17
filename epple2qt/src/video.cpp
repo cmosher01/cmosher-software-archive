@@ -67,6 +67,7 @@ void Video::updateFlash()
 unsigned char Video::getDataByte()
 {
 	// TODO should fix the mixed-mode scanning during VBL (see U.A.][, p. 5-13)
+
 	std::vector<unsigned short>& lut = 
 	(this->mode.isDisplayingText(this->t) || !this->mode.isHiRes())
 	?

@@ -26,6 +26,8 @@
 #include "lowpass_1_5_mhz.h"
 
 #include <cmath>
+#include <ctime>
+#include <cstdlib>
 
 AnalogTV::AnalogTV(ScreenImage& image):
 	VideoDisplayDevice(),
@@ -33,6 +35,7 @@ AnalogTV::AnalogTV(ScreenImage& image):
 	signal(AppleNTSC::SIGNAL_LEN),
 	rrr(1)
 {
+	srand(time(0));
 }
 
 
@@ -55,10 +58,11 @@ void AnalogTV::powerOn(bool b)
 void AnalogTV::putAsDisconnectedVideoIn()
 {
 	this->noise = true;
-	this->rrr *= 16807;
-	this->rrr %= 0x7FFFFFFF;
-	++this->rrr;
-	putSignal((this->rrr>>25)-27);
+//	this->rrr *= 16807;
+//	this->rrr %= 0x7FFFFFFF;
+//	++this->rrr;
+//	const signed char v = this->rrr>>17;
+	putSignal((rand()>>7&0x7F)-27);
 	this->noise = false;
 }
 
@@ -381,12 +385,18 @@ const unsigned int loresdarkcolor[] =
 	A2ColorsObserved::COLOR[DARK_MAGENTA],
 	A2ColorsObserved::COLOR[DARK_BLUE],
 };
-
+#include <iostream>//TODO
 void AnalogTV::ntsc_to_rgb_monitor(const int isignal, const int siglen, unsigned int rgb[])
 {
 	int s0, s1, se;
 	s0 = s1 = isignal;
 	se = isignal+siglen;
+// TODO
+//	for (int sss = s1; sss < se; ++sss)
+//	{
+//		std::cout << (signed int)this->signal[sss] << " ";
+//	}
+		std::cout << std::endl;
 	while (s1 < se)
 	{
 		// no signal (black)

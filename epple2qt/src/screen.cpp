@@ -38,9 +38,13 @@ Screen::~Screen()
 {
 }
 
-
-void Screen::plot()
+void Screen::paintEvent(QPaintEvent*)
 {
 	QPainter painter(this);
 	this->image.drawOnto(painter);
+}
+
+void Screen::plot()
+{
+	repaint();
 }

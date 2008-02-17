@@ -34,13 +34,51 @@
 
 #include <QApplication>
 
+#include "guiemulator.h"
+#include "videoaddressing.h" //TODO
+#include "timinggenerator.h" //TODO
+
 int main( int argc, char ** argv )
 {
 	std::cout << "main" << std::endl;
 
+
+#define DUMP(x) std::cout << #x << ":    " << x << std::endl;
+
+DUMP(TimingGenerator::CRYSTAL_HZ)
+DUMP(TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE)
+DUMP(TimingGenerator::EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE)
+DUMP(TimingGenerator::HORIZ_CYCLES)
+DUMP(TimingGenerator::AVG_CPU_HZ)
+DUMP(TimingGenerator::CPU_HZ)
+
+DUMP(VideoAddressing::NTSC_LINES_PER_FRAME)
+DUMP(VideoAddressing::NTSC_LINES_PER_FIELD)
+DUMP(VideoAddressing::NTSC_FIELDS_PER_SECOND)
+DUMP(VideoAddressing::NTSC_COLOR_FIELD_EVERY)
+
+DUMP(VideoAddressing::APPLE_BYTES)
+DUMP(VideoAddressing::LINES)
+DUMP(VideoAddressing::BYTES_PER_ROW)
+
+DUMP(VideoAddressing::BYTES_PER_FIELD)
+
+DUMP(VideoAddressing::VISIBLE_BITS_PER_BYTE)
+DUMP(VideoAddressing::VISIBLE_LINES_PER_CHARACTER)
+
+DUMP(VideoAddressing::VISIBLE_BYTES_PER_ROW)
+DUMP(VideoAddressing::VISIBLE_ROWS_PER_FIELD)
+
+DUMP(VideoAddressing::BLANKED_BYTES_PER_ROW)
+DUMP(VideoAddressing::VISIBLE_BYTES_PER_FIELD)
+DUMP(VideoAddressing::SCANNABLE_ROWS)
+DUMP(VideoAddressing::SCANNABLE_BYTES)
+DUMP(VideoAddressing::RESET_ROWS)
+DUMP(VideoAddressing::RESET_BYTES)
+
 	QApplication app(argc, argv);
-	playqmake widget;
-	widget.show();
+	Emulator* emu = new GUIEmulator();
+	emu->init();
 	return app.exec();
 
 /*

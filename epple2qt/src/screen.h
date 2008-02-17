@@ -32,7 +32,7 @@ class Screen : public QWidget
 	const ScreenImage& image;
 
 protected:
-	void paintEvent(QPaintEvent*) {}
+	void paintEvent(QPaintEvent*);
 
 public:
 	Screen(const ScreenImage& image, QWidget *parent = 0);
