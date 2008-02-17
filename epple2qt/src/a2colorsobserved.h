@@ -20,23 +20,18 @@
 #ifndef A2COLORSOBSERVED_H
 #define A2COLORSOBSERVED_H
 
-#include <QColor>
+#include <vector>
 
 class A2ColorsObserved
 {
 private:
-	A2ColorsObserved();
-
-	static const unsigned int clr[0x10];
-	static const unsigned int map[0x10];
-	static const unsigned int hue[0x10];
-	static const unsigned int sat[0x10];
-	static const unsigned int val[0x10];
-
-	void initCOLOR();
+	std::vector<unsigned int> COLOR;
 
 public:
-	static const unsigned int COLOR[0x10];
+	A2ColorsObserved();
+	~A2ColorsObserved();
+
+	const std::vector<unsigned int>& c() { return this->COLOR; }
 };
 
 #endif

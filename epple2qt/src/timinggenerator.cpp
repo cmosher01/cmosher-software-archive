@@ -30,6 +30,7 @@ TimingGenerator::TimingGenerator(Timable& timable, Throttle& throttle, QObject *
 {
 }
 
+/*
 const unsigned int TimingGenerator::CRYSTAL_HZ(Util::divideRoundUp(315000000,22));
 const unsigned int TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE(14);
 const unsigned int TimingGenerator::EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE(2);
@@ -39,7 +40,7 @@ const unsigned int TimingGenerator::HORIZ_CYCLES(65);
 const unsigned int TimingGenerator::AVG_CPU_HZ((int)(((double)315000000*TimingGenerator::HORIZ_CYCLES)/(22*(TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE*TimingGenerator::HORIZ_CYCLES+TimingGenerator::EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE))));
 
 const unsigned int TimingGenerator::CPU_HZ(Util::divideRoundUp(TimingGenerator::CRYSTAL_HZ,TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE));
-
+*/
 
 
 

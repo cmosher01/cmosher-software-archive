@@ -22,8 +22,10 @@
 
 #include "videodisplaydevice.h"
 #include "applentsc.h"
+#include "a2colorsobserved.h"
 
 #include <vector>
+
 
 class ScreenImage;
 class IQ;
@@ -42,6 +44,11 @@ private:
 	unsigned long long int rrr;
 
 	static int* rcb;
+
+	A2ColorsObserved colors;
+	std::vector<unsigned int> hirescolor;
+	std::vector<unsigned int> loreslightcolor;
+	std::vector<unsigned int> loresdarkcolor;
 
 	static const int IQINTOFF;
 	static const double IQ_OFFSET_DEGREES;
@@ -73,7 +80,7 @@ private:
 	static int clamp(int min, int x, int lim);
 
 public:
-	static const int CB_EXTRA;
+	enum { CB_EXTRA = 32 };
 
 	AnalogTV(ScreenImage& image);
 	~AnalogTV();

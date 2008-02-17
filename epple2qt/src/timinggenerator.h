@@ -37,13 +37,12 @@ private:
 public:
 	TimingGenerator(Timable& timable, Throttle& throttle, QObject *parent = 0);
 
-	static const unsigned int CRYSTAL_HZ;
-	static const unsigned int CRYSTAL_CYCLES_PER_CPU_CYCLE;
-	static const unsigned int EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE;
-
-	static const unsigned int HORIZ_CYCLES;
-	static const unsigned int AVG_CPU_HZ;
-	static const unsigned int CPU_HZ;
+	enum { CRYSTAL_HZ = 14318182 };
+	enum { CRYSTAL_CYCLES_PER_CPU_CYCLE = 14 };
+	enum { EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE = 2 };
+	enum { HORIZ_CYCLES = 65 };
+	enum { AVG_CPU_HZ = 1020484 };
+	enum { CPU_HZ = 1022728 };
 
 	void run();
 	void threadProcedure();

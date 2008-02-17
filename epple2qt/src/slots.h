@@ -28,13 +28,12 @@ class Slots
 {
 private:
 	EmptySlot empty;
+	const int SLOTS;
 	std::vector<Card*> cards;
 
 public:
 	Slots();
 	~Slots();
-
-	static const int SLOTS;
 
 	unsigned char io(const int islot, const int iswch, const unsigned char b, const bool writing);
 	void reset();

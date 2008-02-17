@@ -1,11 +1,11 @@
 /***************************************************************************
- *   Copyright (C) 2008 by Chris Mosher,,,   *
+ *   Copyright  = C) 2008 by Chris Mosher,,,   *
  *   chris@mosher.mine.nu   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General License as published by  *
  *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
+ *    = at your option) any later version.                                   *
  *                                                                         *
  *   This program is distributed in the hope that it will be useful,       *
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
@@ -23,27 +23,31 @@
 class AppleNTSC
 {
 private:
-	AppleNTSC();
+	AppleNTSC() {}
 
 public:
-	static const int V;
-	static const int H;
+	enum { V = 262, H =  (25+40)*14+2 };
+	enum { SIGNAL_LEN = V*H };
 
-	static const int SIGNAL_LEN;
+	enum
+	{
+		FP_START = 0,
+		SYNC_START = FP_START+126,
+		BP_START = SYNC_START+112,
+		CB_START = BP_START+0,
+		CB_END = CB_START+56,
+		SPIKE = CB_END+34,
+		PIC_START = CB_END+56
+	};
 
-	static const int FP_START;
-	static const int SYNC_START;
-	static const int BP_START;
-	static const int CB_START;
-	static const int CB_END;
-	static const int SPIKE;
-	static const int PIC_START;
-
-	static const signed char WHITE_LEVEL;
-	static const signed char BLANK_LEVEL;
-	static const signed char SYNC_LEVEL;
-	static const unsigned char LEVEL_RANGE;
-	static const signed char CB_LEVEL;
+	enum
+	{
+		WHITE_LEVEL = 100,
+		BLANK_LEVEL = 0,
+		SYNC_LEVEL = -40,
+		CB_LEVEL = 20,
+		LEVEL_RANGE = WHITE_LEVEL-SYNC_LEVEL
+	};
 };
 
 #endif

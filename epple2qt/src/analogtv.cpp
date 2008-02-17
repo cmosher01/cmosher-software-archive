@@ -21,7 +21,6 @@
 #include "screenimage.h"
 #include "applentsc.h"
 #include "a2colorindex.h"
-#include "a2colorsobserved.h"
 #include "lowpass_3_58_mhz.h"
 #include "lowpass_1_5_mhz.h"
 
@@ -32,10 +31,28 @@
 AnalogTV::AnalogTV(ScreenImage& image):
 	VideoDisplayDevice(),
 	image(image),
+	on(false),
 	signal(AppleNTSC::SIGNAL_LEN),
+	isig(0),
+	noise(false),
 	rrr(1)
 {
 	srand(time(0));
+
+	hirescolor.push_back(HIRES_GREEN);
+	hirescolor.push_back(HIRES_ORANGE);
+	hirescolor.push_back(HIRES_VIOLET);
+	hirescolor.push_back(HIRES_BLUE);
+
+	loreslightcolor.push_back(LIGHT_BROWN);
+	loreslightcolor.push_back(LIGHT_MAGENTA);
+	loreslightcolor.push_back(LIGHT_BLUE);
+	loreslightcolor.push_back(LIGHT_BLUE_GREEN);
+
+	loresdarkcolor.push_back(DARK_BLUE_GREEN);
+	loresdarkcolor.push_back(DARK_BROWN);
+	loresdarkcolor.push_back(DARK_MAGENTA);
+	loresdarkcolor.push_back(DARK_BLUE);
 }
 
 
@@ -163,8 +180,6 @@ public:
 
 const IQ& AnalogTV::BLACK_AND_WHITE = IQ();
 
-const int AnalogTV::CB_EXTRA(32);
-
 class CB
 {
 public:
@@ -265,17 +280,17 @@ void AnalogTV::drawMonitorColor()
 
 void AnalogTV::drawMonitorWhite()
 {
-	drawMonitorMonochrome(A2ColorsObserved::COLOR[WHITE]);
+	drawMonitorMonochrome(colors.c()[WHITE]);
 }
 
 void AnalogTV::drawMonitorGreen()
 {
-	drawMonitorMonochrome(A2ColorsObserved::COLOR[HIRES_GREEN]);
+	drawMonitorMonochrome(colors.c()[HIRES_GREEN]);
 }
 
 void AnalogTV::drawMonitorOrange()
 {
-	drawMonitorMonochrome(A2ColorsObserved::COLOR[HIRES_ORANGE]);
+	drawMonitorMonochrome(colors.c()[HIRES_ORANGE]);
 }
 
 void AnalogTV::drawMonitorMonochrome(const unsigned int color)
@@ -286,7 +301,7 @@ void AnalogTV::drawMonitorMonochrome(const unsigned int color)
 		for (int col = 350; col < AppleNTSC::H-2; ++col)
 		{
 			const int is = row*AppleNTSC::H+col;
-			const unsigned int rgb = this->signal[is] > 50 ? color : A2ColorsObserved::COLOR[BLACK];
+			const unsigned int rgb = this->signal[is] > 50 ? color : colors.c()[BLACK];
 			this->image.setElem(ip,rgb);
 			this->image.setElem(ip+D_IP,rgb);
 			++ip;
@@ -362,29 +377,6 @@ void AnalogTV::drawBlank()
 
 
 
-const unsigned int hirescolor[] =
-{
-	A2ColorsObserved::COLOR[HIRES_GREEN],
-	A2ColorsObserved::COLOR[HIRES_ORANGE],
-	A2ColorsObserved::COLOR[HIRES_VIOLET],
-	A2ColorsObserved::COLOR[HIRES_BLUE],
-};
-
-const unsigned int loreslightcolor[] =
-{
-	A2ColorsObserved::COLOR[LIGHT_BROWN],
-	A2ColorsObserved::COLOR[LIGHT_MAGENTA],
-	A2ColorsObserved::COLOR[LIGHT_BLUE],
-	A2ColorsObserved::COLOR[LIGHT_BLUE_GREEN],
-};
-
-const unsigned int loresdarkcolor[] =
-{
-	A2ColorsObserved::COLOR[DARK_BLUE_GREEN],
-	A2ColorsObserved::COLOR[DARK_BROWN],
-	A2ColorsObserved::COLOR[DARK_MAGENTA],
-	A2ColorsObserved::COLOR[DARK_BLUE],
-};
 #include <iostream>//TODO
 void AnalogTV::ntsc_to_rgb_monitor(const int isignal, const int siglen, unsigned int rgb[])
 {
@@ -409,12 +401,12 @@ void AnalogTV::ntsc_to_rgb_monitor(const int isignal, const int siglen, unsigned
 		unsigned int c = 0;
 		if (slen >= 4)
 		{
-			c = A2ColorsObserved::COLOR[WHITE];
+			c = colors.c()[WHITE];
 		}
 		else if (slen == 1)
 		{
 			if (this->signal[s0-2] > 50 && this->signal[s0+2] > 50)
-				c = A2ColorsObserved::COLOR[WHITE];
+				c = colors.c()[WHITE];
 			else
 				c = loresdarkcolor[s0 % 4];
 		}
@@ -449,7 +441,7 @@ void AnalogTV::ntsc_to_rgb_newtv(const int isignal, const int siglen, unsigned i
 		sp = s0;
 		while (this->signal[s0] < 50 && s0<se) { rgb[s0-isignal] = 0; ++s0; }
 		// unless it's too short, then color it (but not white)
-		if (s0-sp < 4 && c != A2ColorsObserved::COLOR[WHITE])
+		if (s0-sp < 4 && c != colors.c()[WHITE])
 		{
 			for (int i = sp; i < s0; ++i)
 				rgb[i-isignal] = c;

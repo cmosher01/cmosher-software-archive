@@ -49,8 +49,9 @@ private:
 	signed char vbl(const int hcycle);
 	signed char hbl(const int hcycle);
 
+	const unsigned int VISIBLE_X_OFFSET;
+
 public:
-	static const unsigned int VISIBLE_X_OFFSET;
 
 	PictureGenerator(VideoDisplayDevice& display, VideoMode& mode);
 	~PictureGenerator();

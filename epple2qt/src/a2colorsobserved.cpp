@@ -19,32 +19,23 @@
  ***************************************************************************/
 #include "a2colorsobserved.h"
 
-A2ColorsObserved::A2ColorsObserved()
+#include <QColor>
+
+A2ColorsObserved::A2ColorsObserved():
+	COLOR(0x10)
 {
+//	const unsigned int clr[] = { 0x1, 0xB, 0x3, 0x2, 0x7, 0x6, 0x4, 0xE, 0xC, 0x8, 0xD, 0x9, 0x5, 0xA, 0xF, 0x0 };
+	const unsigned int map[] = { 0xF, 0x0, 0x3, 0x2, 0x6, 0xC, 0x5, 0x4, 0x9, 0xB, 0xD, 0x1, 0x8, 0xA, 0x7, 0xE };
+	const unsigned int hue[] = { 342, 342, 277, 233, 233, 213, 160, 160,  75,  33,  52,  24,   0,   0,   0,   0 };
+	const unsigned int sat[] = { 100,  50,  75, 100,  50, 100, 100, 100, 100, 100, 100, 100,   0,   0,   0,   0 };
+	const unsigned int val[] = {  67, 100, 100,  75, 100, 100,  33, 100,  75,  50, 100, 100,  50,  50, 100,   0 };
+
+	for (unsigned int i(0); i < COLOR.size(); ++i)
+	{
+		COLOR[i] = QColor::fromHsv(hue[map[i]],(int)(sat[map[i]]*(255.0/100.0)+.5),(int)(val[map[i]]/(255.0/100.0)+.5)).rgb();
+	}
 }
 
-const unsigned int A2ColorsObserved::clr[] = { 0x1, 0xB, 0x3, 0x2, 0x7, 0x6, 0x4, 0xE, 0xC, 0x8, 0xD, 0x9, 0x5, 0xA, 0xF, 0x0 };
-const unsigned int A2ColorsObserved::map[] = { 0xF, 0x0, 0x3, 0x2, 0x6, 0xC, 0x5, 0x4, 0x9, 0xB, 0xD, 0x1, 0x8, 0xA, 0x7, 0xE };
-const unsigned int A2ColorsObserved::hue[] = { 342, 342, 277, 233, 233, 213, 160, 160,  75,  33,  52,  24,   0,   0,   0,   0 };
-const unsigned int A2ColorsObserved::sat[] = { 100,  50,  75, 100,  50, 100, 100, 100, 100, 100, 100, 100,   0,   0,   0,   0 };
-const unsigned int A2ColorsObserved::val[] = {  67, 100, 100,  75, 100, 100,  33, 100,  75,  50, 100, 100,  50,  50, 100,   0 };
-
-const unsigned int A2ColorsObserved::COLOR[] =
+A2ColorsObserved::~A2ColorsObserved()
 {
-	QColor::fromHsv(hue[map[0x0]],(int)(sat[map[0x0]]*(255.0/100.0)+.5),(int)(val[map[0x0]]/(255.0/100.0)+.5)).rgb(),
-	QColor::fromHsv(hue[map[0x1]],(int)(sat[map[0x1]]*(255.0/100.0)+.5),(int)(val[map[0x1]]/(255.0/100.0)+.5)).rgb(),
-	QColor::fromHsv(hue[map[0x2]],(int)(sat[map[0x2]]*(255.0/100.0)+.5),(int)(val[map[0x2]]/(255.0/100.0)+.5)).rgb(),
-	QColor::fromHsv(hue[map[0x3]],(int)(sat[map[0x3]]*(255.0/100.0)+.5),(int)(val[map[0x3]]/(255.0/100.0)+.5)).rgb(),
-	QColor::fromHsv(hue[map[0x4]],(int)(sat[map[0x4]]*(255.0/100.0)+.5),(int)(val[map[0x4]]/(255.0/100.0)+.5)).rgb(),
-	QColor::fromHsv(hue[map[0x5]],(int)(sat[map[0x5]]*(255.0/100.0)+.5),(int)(val[map[0x5]]/(255.0/100.0)+.5)).rgb(),
-	QColor::fromHsv(hue[map[0x6]],(int)(sat[map[0x6]]*(255.0/100.0)+.5),(int)(val[map[0x6]]/(255.0/100.0)+.5)).rgb(),
-	QColor::fromHsv(hue[map[0x7]],(int)(sat[map[0x7]]*(255.0/100.0)+.5),(int)(val[map[0x7]]/(255.0/100.0)+.5)).rgb(),
-	QColor::fromHsv(hue[map[0x8]],(int)(sat[map[0x8]]*(255.0/100.0)+.5),(int)(val[map[0x8]]/(255.0/100.0)+.5)).rgb(),
-	QColor::fromHsv(hue[map[0x9]],(int)(sat[map[0x9]]*(255.0/100.0)+.5),(int)(val[map[0x9]]/(255.0/100.0)+.5)).rgb(),
-	QColor::fromHsv(hue[map[0xA]],(int)(sat[map[0xA]]*(255.0/100.0)+.5),(int)(val[map[0xA]]/(255.0/100.0)+.5)).rgb(),
-	QColor::fromHsv(hue[map[0xB]],(int)(sat[map[0xB]]*(255.0/100.0)+.5),(int)(val[map[0xB]]/(255.0/100.0)+.5)).rgb(),
-	QColor::fromHsv(hue[map[0xC]],(int)(sat[map[0xC]]*(255.0/100.0)+.5),(int)(val[map[0xC]]/(255.0/100.0)+.5)).rgb(),
-	QColor::fromHsv(hue[map[0xD]],(int)(sat[map[0xD]]*(255.0/100.0)+.5),(int)(val[map[0xD]]/(255.0/100.0)+.5)).rgb(),
-	QColor::fromHsv(hue[map[0xE]],(int)(sat[map[0xE]]*(255.0/100.0)+.5),(int)(val[map[0xE]]/(255.0/100.0)+.5)).rgb(),
-	QColor::fromHsv(hue[map[0xF]],(int)(sat[map[0xF]]*(255.0/100.0)+.5),(int)(val[map[0xF]]/(255.0/100.0)+.5)).rgb(),
-};
+}

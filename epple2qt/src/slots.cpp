@@ -20,10 +20,9 @@
 #include "slots.h"
 #include <algorithm>
 
-const int Slots::SLOTS(8);
-
 Slots::Slots():
 	empty(),
+	SLOTS(8),
 	cards(SLOTS,&this->empty)
 {
 }

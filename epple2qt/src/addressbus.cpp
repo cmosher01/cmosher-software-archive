@@ -41,13 +41,6 @@ AddressBus::~AddressBus()
 
 
 
-const int AddressBus::MOTHERBOARD_RAM_BAS(0x00000);
-const int AddressBus::MOTHERBOARD_RAM_LIM(0x0C000);
-const int AddressBus::MOTHERBOARD_RAM_SIZ(MOTHERBOARD_RAM_LIM-MOTHERBOARD_RAM_BAS);
-
-const int AddressBus::MOTHERBOARD_ROM_BAS(0x0D000);
-const int AddressBus::MOTHERBOARD_ROM_LIM(0x10000);
-const int AddressBus::MOTHERBOARD_ROM_SIZ(MOTHERBOARD_ROM_LIM-MOTHERBOARD_ROM_BAS);
 
 
 

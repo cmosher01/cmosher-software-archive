@@ -60,7 +60,7 @@ void GUIEmulator::init()
 //	this->screen.setFocusTraversalKeysEnabled(false);
 //	this->screen.requestFocus();
 
-	this->display.setType(TV_OLD_COLOR);//MONITOR_COLOR);
+	this->display.setType(MONITOR_COLOR);//TV_OLD_COLOR);
 //TODO	powerOffComputer();
 //	this->display.powerOn(false);
 	powerOnComputer();

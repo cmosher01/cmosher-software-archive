@@ -51,14 +51,12 @@ public:
 	unsigned char readSwitch(unsigned short address);
 	void setD7(const bool set);
 	void writeSwitch(unsigned short address);
-
-	static const int MOTHERBOARD_RAM_BAS;
-	static const int MOTHERBOARD_RAM_LIM;
-	static const int MOTHERBOARD_RAM_SIZ;
-
-	static const int MOTHERBOARD_ROM_BAS;
-	static const int MOTHERBOARD_ROM_LIM;
-	static const int MOTHERBOARD_ROM_SIZ;
+	enum { MOTHERBOARD_RAM_BAS = 0x00000 } ;
+	enum { MOTHERBOARD_RAM_LIM = 0x0C000 } ;
+	enum { MOTHERBOARD_RAM_SIZ = MOTHERBOARD_RAM_LIM-MOTHERBOARD_RAM_BAS };
+	enum { MOTHERBOARD_ROM_BAS = 0x0D000 } ;
+	enum { MOTHERBOARD_ROM_LIM = 0x10000 } ;
+	enum { MOTHERBOARD_ROM_SIZ = MOTHERBOARD_ROM_LIM-MOTHERBOARD_ROM_BAS } ;
 };
 
 #endif

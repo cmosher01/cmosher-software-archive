@@ -28,29 +28,29 @@ public:
 	VideoAddressing();
 	static void buildLUT(const unsigned short base, const unsigned short len, std::vector<unsigned short>& lut);
 
-	static const unsigned int NTSC_LINES_PER_FRAME;
-	static const unsigned int NTSC_LINES_PER_FIELD;
-	static const unsigned int NTSC_FIELDS_PER_SECOND;
-	static const unsigned int NTSC_COLOR_FIELD_EVERY;
-	
-	static const unsigned int APPLE_BYTES;
-	static const unsigned int LINES;
-	static const unsigned int BYTES_PER_ROW;
-	
-	static const unsigned int BYTES_PER_FIELD;
-	
-	static const unsigned int VISIBLE_BITS_PER_BYTE;
-	static const unsigned int VISIBLE_LINES_PER_CHARACTER;
-	
-	static const unsigned int VISIBLE_BYTES_PER_ROW;
-	static const unsigned int VISIBLE_ROWS_PER_FIELD;
-	
-	static const unsigned int BLANKED_BYTES_PER_ROW;
-	static const unsigned int VISIBLE_BYTES_PER_FIELD;
-	static const unsigned int SCANNABLE_ROWS;
-	static const unsigned int SCANNABLE_BYTES;
-	static const unsigned int RESET_ROWS;
-	static const unsigned int RESET_BYTES;
+	enum { NTSC_LINES_PER_FRAME = 525 };
+	enum { NTSC_LINES_PER_FIELD = 262 };
+	enum { NTSC_FIELDS_PER_SECOND = 60 };
+	enum { NTSC_COLOR_FIELD_EVERY = 1000 };
+
+	enum { APPLE_BYTES = 1023750728 };
+	enum { LINES = 15720000 };
+	enum { BYTES_PER_ROW = 65 };
+
+	enum { BYTES_PER_FIELD = 17030 };
+
+	enum { VISIBLE_BITS_PER_BYTE = 7 };
+	enum { VISIBLE_LINES_PER_CHARACTER = 8 };
+
+	enum { VISIBLE_BYTES_PER_ROW = 40 };
+	enum { VISIBLE_ROWS_PER_FIELD = 192 };
+
+	enum { BLANKED_BYTES_PER_ROW = 25 };
+	enum { VISIBLE_BYTES_PER_FIELD = 12480 };
+	enum { SCANNABLE_ROWS = 256 };
+	enum { SCANNABLE_BYTES = 16640 };
+	enum { RESET_ROWS = 6 };
+	enum { RESET_BYTES = 390 };
 };
 
 #endif
