@@ -6,7 +6,7 @@ TEMPLATE = app
 TARGET = 
 DEPENDPATH += . src
 INCLUDEPATH += . src
-CONFIG += debug
+#CONFIG += debug
 
 # Input
 HEADERS += src/a2colorindex.h \

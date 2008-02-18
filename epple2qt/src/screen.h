@@ -20,6 +20,8 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
+#include "Keyboard.h"
+
 #include <QWidget>
 class QPaintEvent;
 
@@ -30,6 +32,7 @@ class Screen : public QWidget
 	Q_OBJECT
 
 	const ScreenImage& image;
+	KeypressQueue* keys;
 
 protected:
 	void paintEvent(QPaintEvent*);
@@ -37,6 +40,9 @@ protected:
 public:
 	Screen(const ScreenImage& image, QWidget *parent = 0);
 	~Screen();
+
+	void setKeypressQueue(KeypressQueue& q);
+	void keyPressEvent(QKeyEvent *event);
 
 public slots:
 	void plot();

@@ -38,6 +38,52 @@ Screen::~Screen()
 {
 }
 
+void Screen::setKeypressQueue(KeypressQueue& q)
+{
+	this->keys = &q;
+}
+#include <iostream> //TODO remove
+void Screen::keyPressEvent(QKeyEvent *event)
+{
+	const int key(event->key());
+	const int chr(event->text().at(0).unicode());
+	std::cout << "keypress: " << std::hex << key << std::endl;
+
+	if (key == Qt::Key_Enter || key == Qt::Key_Return)
+	{
+		this->keys->push('\r');
+	}
+	else if (key == Qt::Key_Left)
+	{
+		this->keys->push(8);
+	}
+	else if (key == Qt::Key_Right)
+	{
+		this->keys->push(21);
+	}
+	else if (key == Qt::Key_Up)
+	{
+		this->keys->push(11);
+	}
+	else if (key == Qt::Key_Down)
+	{
+		this->keys->push(10);
+	}
+	// TODO ^@ --> NULL
+//		else if (chr == '@' && (mod & InputEvent.SHIFT_DOWN_MASK) != 0 && (mod & InputEvent.CTRL_DOWN_MASK) != 0 )
+//		{
+//			this.keys.put(0);
+//		}
+	else if (0 <= chr && chr < 0x80)
+	{
+		this->keys->push(chr);
+	}
+	else
+	{
+		QWidget::keyPressEvent(event);
+	}
+}
+
 void Screen::paintEvent(QPaintEvent*)
 {
 	QPainter painter(this);
@@ -46,5 +92,6 @@ void Screen::paintEvent(QPaintEvent*)
 
 void Screen::plot()
 {
-	repaint();
+//	repaint();
+	update();
 }

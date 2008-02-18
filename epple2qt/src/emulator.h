@@ -36,10 +36,10 @@ private:
 	Throttle throttle;
 //	HyperMode hyper;
 //	KeyboardBufferMode buffered;
-	KeypressQueue keypresses;
 	PaddleButtonStates paddleButtonStates;
 
 protected:
+	KeypressQueue keypresses;
 	ScreenImage screenImage;
 	AnalogTV display;
 	Apple2 apple2;

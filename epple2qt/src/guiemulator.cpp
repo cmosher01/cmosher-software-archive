@@ -69,6 +69,7 @@ void GUIEmulator::init()
 
 void GUIEmulator::initKeyListeners()
 {
+	this->screen.setKeypressQueue(this->keypresses);
 /*
 	this->screen.removeKeyListeners();
 

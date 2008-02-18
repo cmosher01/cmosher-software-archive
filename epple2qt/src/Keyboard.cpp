@@ -21,14 +21,15 @@ void Keyboard::clear()
 {
 	this->latch &= 0x7F;
 }
-
+#include <iostream>//TODO remove
 unsigned char Keyboard::get()
 {
 	if (!(this->latch & 0x80)) // TODO hyper and kdb buffer
 	{
 		if (!this->keys.empty())
 		{
-			this->latch = this->keys.front();
+			this->latch = this->keys.front() | 0x80;
+std::cout << "got key off queue: " << std::hex << (int)this->latch << std::endl;
 			this->keys.pop();
 		}
 	}
