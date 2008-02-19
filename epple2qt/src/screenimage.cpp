@@ -51,7 +51,11 @@ void ScreenImage::setElem(const unsigned int i, const unsigned int val)
 //	unsigned char* pc = (unsigned char*)this->img;
 //	(pc+i+i+i)[0]
 	unsigned int* pn = (unsigned int*)this->img;
-	pn[i] = val;
+	unsigned int f = 0;
+	f |= (val & 0xff) << 16;
+	f |= ((val >> 8) & 0xFF) << 8;
+	f |= ((val >> 16) & 0xFF);
+	pn[i] = f;
 
 //	this->img[y][x] = val;
 /*	this->img[y][x][0] = val >> 16 & 0xFF;

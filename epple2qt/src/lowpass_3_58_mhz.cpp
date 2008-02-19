@@ -18,14 +18,3 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "lowpass_3_58_mhz.h"
-
-Lowpass_3_58_MHz::Lowpass_3_58_MHz()
-{
-}
-
-
-Lowpass_3_58_MHz::~Lowpass_3_58_MHz()
-{
-}
-
-

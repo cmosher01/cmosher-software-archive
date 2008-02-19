@@ -23,8 +23,12 @@
 class Lowpass_1_5_MHz
 {
 public:
-	Lowpass_1_5_MHz();
-	~Lowpass_1_5_MHz();
+	Lowpass_1_5_MHz()
+	{
+		x[0] = x[1] = x[2] = 0;
+		y[0] = y[1] = y[2] = y[3] = y[4] = 0;
+	}
+	~Lowpass_1_5_MHz() { }
 
 	int x[3];
 	int y[5];

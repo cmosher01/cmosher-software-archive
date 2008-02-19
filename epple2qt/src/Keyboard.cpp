@@ -29,7 +29,7 @@ unsigned char Keyboard::get()
 		if (!this->keys.empty())
 		{
 			this->latch = this->keys.front() | 0x80;
-std::cout << "got key off queue: " << std::hex << (int)this->latch << std::endl;
+//std::cout << "processing keypress: " << std::hex << (int)this->latch << std::endl;
 			this->keys.pop();
 		}
 	}

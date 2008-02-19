@@ -86,7 +86,11 @@ public:
 	AnalogTV(ScreenImage& image);
 	~AnalogTV();
 	
-	bool isOn() const;
+	bool isOn() const
+	{
+		return this->on;
+	}
+
 	void powerOn(bool b);
 	void putAsDisconnectedVideoIn();
 	void restartSignal();

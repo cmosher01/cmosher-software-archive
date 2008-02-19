@@ -27,13 +27,16 @@
 class QPaintEvent;
 
 class ScreenImage;
+class Apple2;
 
 class Screen : public QGLWidget
 {
 	Q_OBJECT
 
 	const ScreenImage& image;
+	Apple2& apple2;
 	KeypressQueue* keys;
+	void pt(int key);
 
 protected:
 //	void paintEvent(QPaintEvent*);
@@ -42,7 +45,7 @@ protected:
 	void paintGL();
  
 public:
-	Screen(const ScreenImage& image, QWidget *parent = 0);
+	Screen(const ScreenImage& image, Apple2& apple2, QWidget *parent = 0);
 	~Screen();
 
 	void setKeypressQueue(KeypressQueue& q);

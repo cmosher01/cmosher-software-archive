@@ -23,7 +23,7 @@
 
 GUIEmulator::GUIEmulator():
 	Emulator(),
-	screen(screenImage)
+	screen(screenImage,apple2)
 {
 }
 
@@ -60,7 +60,7 @@ void GUIEmulator::init()
 //	this->screen.setFocusTraversalKeysEnabled(false);
 //	this->screen.requestFocus();
 
-	this->display.setType(MONITOR_COLOR);//TV_OLD_COLOR);
+	this->display.setType(MONITOR_COLOR);//TV_NEW_COLOR);//TV_OLD_COLOR);
 //TODO	powerOffComputer();
 //	this->display.powerOn(false);
 	powerOnComputer();

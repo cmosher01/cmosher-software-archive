@@ -119,13 +119,13 @@ bool inline PictureGenerator::getLoResBit(const bool odd, const bool vc)
 	return (nibble >> (odd ? 2 : 0)) & 1;
 }
 
-void PictureGenerator::loadGraphics(const unsigned char value)
+void inline PictureGenerator::loadGraphics(const unsigned char value)
 {
 	this->latchGraphics = value;
 	this->d7 = this->latchGraphics & 0x80;
 }
 
-void PictureGenerator::loadText(const int value)
+void inline PictureGenerator::loadText(const int value)
 {
 	this->latchText = value;
 }
@@ -133,7 +133,9 @@ void PictureGenerator::loadText(const int value)
 
 void PictureGenerator::tick(const int t, const unsigned char rowToPlot)
 {
-	if (this->mode.isDisplayingText(t))
+	const bool isText(this->mode.isDisplayingText(t));
+	const bool isHiRes(this->mode.isHiRes());
+	if (isText)
 		loadText(rowToPlot);
 	else
 		loadGraphics(rowToPlot);
@@ -150,7 +152,7 @@ void PictureGenerator::tick(const int t, const unsigned char rowToPlot)
 	}
 
 	//		 hi-res half-pixel shift:
-	const bool shift = this->mode.isHiRes() && !this->mode.isDisplayingText(t) && this->d7 && this->line < VideoAddressing::VISIBLE_ROWS_PER_FIELD && !(this->hpos < VISIBLE_X_OFFSET);
+	const bool shift = !isText && isHiRes && this->d7 && this->line < VideoAddressing::VISIBLE_ROWS_PER_FIELD && !(this->hpos < VISIBLE_X_OFFSET);
 	const bool showLastHiRes = shift && this->lasthires;
 
 	int xtra(0);
@@ -164,7 +166,7 @@ void PictureGenerator::tick(const int t, const unsigned char rowToPlot)
 	int hcycle(this->hpos*TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE);
 	for (int cycle(0); cycle < cycles-1; ++cycle)
 	{
-		const bool bit = shiftLatch(t,cycle);
+		const bool bit = shiftLatch(t,cycle,isText,isHiRes);
 		writeVideoSignal(shift,showLastHiRes,firstBlankedCycle,cycle,hcycle,bit);
 		++hcycle;
 	}
@@ -172,7 +174,7 @@ void PictureGenerator::tick(const int t, const unsigned char rowToPlot)
 	{
 		this->lasthires = getHiResBit(); // save it for the next plotted byte, just in case we need it
 		const int cycle = cycles-1;
-		const bool bit = shiftLatch(t,cycle);
+		const bool bit = shiftLatch(t,cycle,isText,isHiRes);
 		writeVideoSignal(shift,showLastHiRes,firstBlankedCycle,cycle,hcycle,bit);
 	}
 
@@ -184,10 +186,10 @@ void PictureGenerator::tick(const int t, const unsigned char rowToPlot)
 	}
 }
 
-bool inline PictureGenerator::shiftLatch(const int t, const int cycle)
+bool inline PictureGenerator::shiftLatch(const int t, const int cycle, const bool isText, const bool isHiRes)
 {
 	bool bit;
-	if (this->mode.isDisplayingText(t))
+	if (isText)
 	{
 		bit = getTextBit();
 		if (cycle & 1) // @ 7MHz
@@ -195,7 +197,7 @@ bool inline PictureGenerator::shiftLatch(const int t, const int cycle)
 			shiftText();
 		}
 	}
-	else if (this->mode.isHiRes())
+	else if (isHiRes)
 	{
 		bit = getHiResBit();
 		if (cycle & 1) // @ 7MHz

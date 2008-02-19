@@ -44,7 +44,7 @@ private:
 	bool getLoResBit(const bool odd, const bool vc);
 	void loadGraphics(const unsigned char value);
 	void loadText(const int value);
-	bool shiftLatch(const int t, const int cycle);
+	bool shiftLatch(const int t, const int cycle, const bool isText, const bool isHiRes);
 	void writeVideoSignal(const bool shift, const bool showLastHiRes, const int firstBlankedCycle, const int cycle, const int hcycle, const bool bit);
 	signed char vbl(const int hcycle);
 	signed char hbl(const int hcycle);

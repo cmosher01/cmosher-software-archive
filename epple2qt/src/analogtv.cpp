@@ -38,31 +38,25 @@ AnalogTV::AnalogTV(ScreenImage& image):
 {
 	srand(time(0));
 
-	hirescolor.push_back(HIRES_GREEN);
-	hirescolor.push_back(HIRES_ORANGE);
-	hirescolor.push_back(HIRES_VIOLET);
-	hirescolor.push_back(HIRES_BLUE);
+	hirescolor.push_back(colors.c()[HIRES_GREEN]);
+	hirescolor.push_back(colors.c()[HIRES_ORANGE]);
+	hirescolor.push_back(colors.c()[HIRES_VIOLET]);
+	hirescolor.push_back(colors.c()[HIRES_BLUE]);
 
-	loreslightcolor.push_back(LIGHT_BROWN);
-	loreslightcolor.push_back(LIGHT_MAGENTA);
-	loreslightcolor.push_back(LIGHT_BLUE);
-	loreslightcolor.push_back(LIGHT_BLUE_GREEN);
+	loreslightcolor.push_back(colors.c()[LIGHT_BROWN]);
+	loreslightcolor.push_back(colors.c()[LIGHT_MAGENTA]);
+	loreslightcolor.push_back(colors.c()[LIGHT_BLUE]);
+	loreslightcolor.push_back(colors.c()[LIGHT_BLUE_GREEN]);
 
-	loresdarkcolor.push_back(DARK_BLUE_GREEN);
-	loresdarkcolor.push_back(DARK_BROWN);
-	loresdarkcolor.push_back(DARK_MAGENTA);
-	loresdarkcolor.push_back(DARK_BLUE);
+	loresdarkcolor.push_back(colors.c()[DARK_BLUE_GREEN]);
+	loresdarkcolor.push_back(colors.c()[DARK_BROWN]);
+	loresdarkcolor.push_back(colors.c()[DARK_MAGENTA]);
+	loresdarkcolor.push_back(colors.c()[DARK_BLUE]);
 }
 
 
 AnalogTV::~AnalogTV()
 {
-}
-
-
-bool AnalogTV::isOn() const
-{
-	return this->on;
 }
 
 void AnalogTV::powerOn(bool b)
@@ -379,12 +373,12 @@ void AnalogTV::ntsc_to_rgb_monitor(const int isignal, const int siglen, unsigned
 		unsigned int c = 0;
 		if (slen >= 4)
 		{
-			c = colors.c()[WHITE];
+			c = 0xFFFFFF;
 		}
 		else if (slen == 1)
 		{
 			if (this->signal[s0-2] > 50 && this->signal[s0+2] > 50)
-				c = colors.c()[WHITE];
+				c = 0xFFFFFF;
 			else
 				c = loresdarkcolor[s0 % 4];
 		}
