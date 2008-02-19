@@ -114,6 +114,10 @@ SOURCE=.\src\diskbytes.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\diskcontroller.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\drive.cpp
 # End Source File
 # Begin Source File
@@ -279,6 +283,10 @@ SOURCE=.\src\cpu.h
 # Begin Source File
 
 SOURCE=.\src\diskbytes.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\diskcontroller.h
 # End Source File
 # Begin Source File
 
