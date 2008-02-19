@@ -30,21 +30,6 @@ Memory::Memory(const size_t n):
 {
 }
 
-size_t Memory::size() const
-{
-        return this->bytes.size();
-}
-
-unsigned char Memory::read(const unsigned short address) const
-{
-        return this->bytes[address];
-}
-
-void Memory::write(const unsigned short address, const unsigned char data)
-{
-        this->bytes[address] = data;
-}
-
 void Memory::clear()
 {
         std::fill(this->bytes.begin(),this->bytes.end(),CLEAR_VALUE);

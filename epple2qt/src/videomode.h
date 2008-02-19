@@ -20,12 +20,17 @@
 #ifndef VIDEOMODE_H
 #define VIDEOMODE_H
 
+#include "videoaddressing.h"
+
 class VideoMode
 {
 private:
-	static const int MIXED_TEXT_LINES;
-	static const int ROWS_PER_TEXT_LINE;
-	static const int MIXED_TEXT_CYCLE;
+	enum
+	{
+		MIXED_TEXT_LINES = 4,
+		ROWS_PER_TEXT_LINE = 8,
+		MIXED_TEXT_CYCLE = (VideoAddressing::VISIBLE_ROWS_PER_FIELD-(MIXED_TEXT_LINES*ROWS_PER_TEXT_LINE))*VideoAddressing::BYTES_PER_ROW
+	};
 
 	bool swText;
 	bool swMixed;
@@ -35,12 +40,13 @@ private:
 public:
 	VideoMode();
 	unsigned char io(const unsigned short addr, const unsigned char b);
-	bool isText();
-	bool isHiRes();
-	bool isMixed();
-	int getPage();
-	bool isDisplayingText(const int atTickInField);
 	void powerOn();
+
+	bool isText() const { return this->swText; }
+	bool isHiRes() const { return this->swHiRes; }
+	bool isMixed() const { return this->swMixed; }
+	int getPage() const { return this->swPage2; }
+	bool isDisplayingText(const int atTickInField) const { return this->swText || (this->swMixed && atTickInField >= MIXED_TEXT_CYCLE); }
 };
 
 #endif

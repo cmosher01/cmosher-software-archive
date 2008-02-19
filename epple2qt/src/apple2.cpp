@@ -30,13 +30,13 @@
 #include "paddles.h"
 #include "paddlebuttonstates.h"
 #include "speakerclicker.h"
-#include "videodisplaydevice.h"
+#include "analogtv.h"
 #include "powerupreset.h"
 
 #include <iostream>
 #include <fstream>
 
-Apple2::Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates, VideoDisplayDevice& tv):
+Apple2::Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates, AnalogTV& tv):
 	kbd(keypresses),
 	ram(AddressBus::MOTHERBOARD_RAM_SIZ),
 	rom(AddressBus::MOTHERBOARD_ROM_SIZ),
@@ -47,8 +47,10 @@ Apple2::Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates
 	powerUpReset(*this)
 {
 	// TODO remove loading of ROM (only for testing)
-	std::ifstream rom_in("/home/chris/apple2src/firmware/rom/apple2_f800.rom");
+	std::ifstream rom_in("/home/chris/apple2src/firmware/rom/apple2p_f800.rom");
 	rom.load(0x2800,rom_in);
+	std::ifstream rom_in2("/home/chris/apple2src/firmware/rom/apple2p_d000.rom");
+	rom.load(0x0000,rom_in2);
 }
 
 

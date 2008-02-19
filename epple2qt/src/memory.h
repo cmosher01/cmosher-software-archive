@@ -31,9 +31,21 @@ private:
 
 public:
         Memory(const size_t n);
-        size_t size() const;
-        unsigned char read(const unsigned short address) const;
-        void write(const unsigned short address, const unsigned char data);
+	size_t size() const
+	{
+		return this->bytes.size();
+	}
+	
+	unsigned char read(const unsigned short address) const
+	{
+		return this->bytes[address];
+	}
+	
+	void write(const unsigned short address, const unsigned char data)
+	{
+		this->bytes[address] = data;
+	}
+	
         void clear();
         void powerOn();
         void powerOff();

@@ -18,18 +18,10 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "videomode.h"
-#include "videoaddressing.h"
 
 VideoMode::VideoMode()
 {
 }
-
-
-const int VideoMode::MIXED_TEXT_LINES(4);
-const int VideoMode::ROWS_PER_TEXT_LINE(8);
-const int VideoMode::MIXED_TEXT_CYCLE((VideoAddressing::VISIBLE_ROWS_PER_FIELD-(VideoMode::MIXED_TEXT_LINES*VideoMode::ROWS_PER_TEXT_LINE))*VideoAddressing::BYTES_PER_ROW);
-
-
 
 unsigned char VideoMode::io(const unsigned short addr, const unsigned char b)
 {
@@ -48,35 +40,6 @@ unsigned char VideoMode::io(const unsigned short addr, const unsigned char b)
 	}
 	return b;
 }
-
-
-
-bool VideoMode::isText()
-{
-	return this->swText;
-}
-
-bool VideoMode::isHiRes()
-{
-	return this->swHiRes;
-}
-
-bool VideoMode::isMixed()
-{
-	return this->swMixed;
-}
-
-int VideoMode::getPage()
-{
-	return this->swPage2;
-}
-
-bool VideoMode::isDisplayingText(const int atTickInField)
-{
-	return this->swText || (this->swMixed && atTickInField >= MIXED_TEXT_CYCLE);
-}
-
-
 
 void VideoMode::powerOn()
 {

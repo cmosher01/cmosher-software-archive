@@ -21,15 +21,15 @@
 
 #include <QtGui>
 #include <QPainter>
+#include <GL/glu.h>
+
 #include "screenimage.h"
 
-#include "renderthread.h"
-
 Screen::Screen(const ScreenImage& image, QWidget *parent):
-	QWidget(parent),
+	QGLWidget(parent),
 	image(image)
 {
-	resize(this->image.size());
+//	resize(this->image.size());
 	connect(&this->image,SIGNAL(changed()),this,SLOT(plot()));
 }
 
@@ -84,14 +84,29 @@ void Screen::keyPressEvent(QKeyEvent *event)
 	}
 }
 
-void Screen::paintEvent(QPaintEvent*)
-{
-	QPainter painter(this);
-	this->image.drawOnto(painter);
-}
+// void Screen::paintEvent(QPaintEvent*)
+// {
+// 	QPainter painter(this);
+// 	this->image.drawOnto(painter);
+// }
 
 void Screen::plot()
 {
 //	repaint();
 	update();
+}
+
+void Screen::initializeGL()
+{
+	glClearColor (0.0, 0.0, 0.0, 0.0);
+	glShadeModel(GL_FLAT);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+}
+
+void Screen::paintGL(void)
+{
+	glRasterPos2f (-.85, .85);
+	glPixelZoom (1,-1);
+	glDrawPixels(ScreenImage::WIDTH, ScreenImage::HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, this->image.image());
+	glFlush ();
 }

@@ -22,9 +22,13 @@
 
 #include <QObject>
 #include <QImage>
-class QPainter;
+#include <QPixmap>
+#include <QPainter>
+#include <GL/glu.h>
 
-class ScreenImage : public QObject, public QImage
+#include "applentsc.h"
+#include "videoaddressing.h"
+class ScreenImage : public QObject//, public QImage//QPixmap
 {
 	Q_OBJECT
 
@@ -38,7 +42,17 @@ public:
 	void notifyObservers();
 	void setElem(const unsigned int i, const unsigned int val);
 	void blank();
-	void drawOnto(QPainter& painter) const;
+//	void drawOnto(QPainter& painter) const;
+	enum
+	{
+		HEIGHT = VideoAddressing::VISIBLE_ROWS_PER_FIELD*2,
+		WIDTH = AppleNTSC::H-AppleNTSC::PIC_START-2
+	};
+	const void* image() const { return this->img; }
+
+private:
+//	QPainter pain;
+	unsigned int img[HEIGHT][WIDTH];
 };
 
 #endif

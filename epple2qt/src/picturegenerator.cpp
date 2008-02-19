@@ -19,13 +19,13 @@
  ***************************************************************************/
 #include "picturegenerator.h"
 #include "videoaddressing.h"
-#include "videodisplaydevice.h"
+#include "analogtv.h"
 #include "videomode.h"
 #include "applentsc.h"
 #include "timinggenerator.h"
 
 
-PictureGenerator::PictureGenerator(VideoDisplayDevice& display, VideoMode& mode):
+PictureGenerator::PictureGenerator(AnalogTV& display, VideoMode& mode):
 	display(display), mode(mode),
 	VISIBLE_X_OFFSET(VideoAddressing::BYTES_PER_ROW-VideoAddressing::VISIBLE_BYTES_PER_ROW)
 {
@@ -44,7 +44,7 @@ void PictureGenerator::powerOn()
 	this->display.restartSignal();
 }
 
-void PictureGenerator::shiftLoRes()
+void inline PictureGenerator::shiftLoRes()
 {
 	/*
 	* For byte ABCDEFGH in register, perform
@@ -72,7 +72,7 @@ void PictureGenerator::shiftLoRes()
 	// DABCHEFG
 }
 
-void PictureGenerator::shiftHiRes()
+void inline PictureGenerator::shiftHiRes()
 {
 	/*
 	* For byte ABCDEFGH in register, perform
@@ -98,22 +98,22 @@ void PictureGenerator::shiftHiRes()
 	// DABCDEFG
 }
 
-void PictureGenerator::shiftText()
+void inline PictureGenerator::shiftText()
 {
 	this->latchText >>= 1;
 }
 
-bool PictureGenerator::getTextBit()
+bool inline PictureGenerator::getTextBit()
 {
 	return this->latchText & 1;
 }
 
-bool PictureGenerator::getHiResBit()
+bool inline PictureGenerator::getHiResBit()
 {
 	return this->latchGraphics & 1;
 }
 
-bool PictureGenerator::getLoResBit(const bool odd, const bool vc)
+bool inline PictureGenerator::getLoResBit(const bool odd, const bool vc)
 {
 	const int nibble = (this->latchGraphics >> (vc ? 4 : 0)) & 0x0F;
 	return (nibble >> (odd ? 2 : 0)) & 1;
@@ -161,17 +161,19 @@ void PictureGenerator::tick(const int t, const unsigned char rowToPlot)
 	}
 	const int firstBlankedCycle(TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE-xtra);
 
+	int hcycle(this->hpos*TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE);
 	for (int cycle(0); cycle < cycles-1; ++cycle)
 	{
 		const bool bit = shiftLatch(t,cycle);
-		writeVideoSignal(shift,showLastHiRes,firstBlankedCycle,cycle,bit);
+		writeVideoSignal(shift,showLastHiRes,firstBlankedCycle,cycle,hcycle,bit);
+		++hcycle;
 	}
 	// optimization: pull the last iteration of the loop out, so we don't getHiResBit every time
 	{
 		this->lasthires = getHiResBit(); // save it for the next plotted byte, just in case we need it
 		const int cycle = cycles-1;
 		const bool bit = shiftLatch(t,cycle);
-		writeVideoSignal(shift,showLastHiRes,firstBlankedCycle,cycle,bit);
+		writeVideoSignal(shift,showLastHiRes,firstBlankedCycle,cycle,hcycle,bit);
 	}
 
 	++this->hpos;
@@ -182,7 +184,7 @@ void PictureGenerator::tick(const int t, const unsigned char rowToPlot)
 	}
 }
 
-bool PictureGenerator::shiftLatch(const int t, const int cycle)
+bool inline PictureGenerator::shiftLatch(const int t, const int cycle)
 {
 	bool bit;
 	if (this->mode.isDisplayingText(t))
@@ -212,14 +214,13 @@ bool PictureGenerator::shiftLatch(const int t, const int cycle)
 
 static const signed char lutCB[] = { AppleNTSC::BLANK_LEVEL,-AppleNTSC::CB_LEVEL,AppleNTSC::BLANK_LEVEL,+AppleNTSC::CB_LEVEL };
 
-void PictureGenerator::writeVideoSignal(const bool shift, const bool showLastHiRes, const int firstBlankedCycle, const int cycle, const bool bit)
+void inline PictureGenerator::writeVideoSignal(const bool shift, const bool showLastHiRes, const int firstBlankedCycle, const int cycle, const int hcycle, const bool bit)
 {
 	if (shift && !cycle)
 	{
 		this->display.putSignal(showLastHiRes ? AppleNTSC::WHITE_LEVEL : AppleNTSC::BLANK_LEVEL);
 	}
 
-	const int hcycle(this->hpos*TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE+cycle);
 	signed char sig;
 	if (this->line < VideoAddressing::VISIBLE_ROWS_PER_FIELD)
 	{
@@ -246,7 +247,7 @@ void PictureGenerator::writeVideoSignal(const bool shift, const bool showLastHiR
 	this->display.putSignal(sig);
 }
 
-signed char PictureGenerator::vbl(const int hcycle)
+signed char inline PictureGenerator::vbl(const int hcycle)
 {
 	signed char sig;
 	if (224 <= this->line && this->line < 240) // VSYNC // TODO symbolize constants
@@ -267,7 +268,7 @@ signed char PictureGenerator::vbl(const int hcycle)
 	return sig;
 }
 
-signed char PictureGenerator::hbl(const int hcycle)
+signed char inline PictureGenerator::hbl(const int hcycle)
 {
 	signed char cb;
 	if (AppleNTSC::CB_START <= hcycle && hcycle < AppleNTSC::CB_END)

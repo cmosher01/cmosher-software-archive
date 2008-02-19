@@ -18,10 +18,10 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "videostaticgenerator.h"
-#include "videodisplaydevice.h"
+#include "analogtv.h"
 #include "timinggenerator.h"
 
-VideoStaticGenerator::VideoStaticGenerator(VideoDisplayDevice& display):
+VideoStaticGenerator::VideoStaticGenerator(AnalogTV& display):
 	display(display)
 {
 }

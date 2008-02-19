@@ -29,7 +29,6 @@
 #include <cstdlib>
 
 AnalogTV::AnalogTV(ScreenImage& image):
-	VideoDisplayDevice(),
 	image(image),
 	on(false),
 	signal(AppleNTSC::SIGNAL_LEN),
@@ -61,7 +60,7 @@ AnalogTV::~AnalogTV()
 }
 
 
-bool AnalogTV::isOn()
+bool AnalogTV::isOn() const
 {
 	return this->on;
 }
@@ -81,27 +80,6 @@ void AnalogTV::putAsDisconnectedVideoIn()
 //	const signed char v = this->rrr>>17;
 	putSignal((rand()>>7&0x7F)-27);
 	this->noise = false;
-}
-
-void AnalogTV::putSignal(const signed char ire)
-{
-//		if (this->isig >= AppleNTSC::SIGNAL_LEN)
-//		{
-//			throw new IllegalStateException("At end of screen; must re-synch before writing any more signal");
-//		}
-	this->signal[this->isig++] = ire;
-	if (this->isig == AppleNTSC::SIGNAL_LEN)
-	{
-		if (isOn())
-		{
-			this->drawCurrent();
-		}
-		else
-		{
-			this->drawBlank();
-		}
-		this->isig = 0;
-	}
 }
 
 void AnalogTV::restartSignal()

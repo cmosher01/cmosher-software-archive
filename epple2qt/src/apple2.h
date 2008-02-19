@@ -33,7 +33,7 @@
 #include "paddles.h"
 #include "paddlebuttonstates.h"
 #include "speakerclicker.h"
-#include "videodisplaydevice.h"
+#include "analogtv.h"
 #include "powerupreset.h"
 
 class Apple2 : public Timable
@@ -53,7 +53,7 @@ class Apple2 : public Timable
 	PowerUpReset powerUpReset;
 
 public:
-	Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates, VideoDisplayDevice& tv);
+	Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates, AnalogTV& tv);
 	//, HyperMode& hyper, KeyboardBufferMode& buffered);
 	~Apple2();
 

@@ -24,10 +24,9 @@
 #include <QPoint>
 #include <QPainter>
 
-static const int WIDTH(AppleNTSC::H-AppleNTSC::PIC_START-2);
-
-ScreenImage::ScreenImage():
-	QImage(WIDTH,VideoAddressing::VISIBLE_ROWS_PER_FIELD*2,QImage::Format_RGB32)
+ScreenImage::ScreenImage()//:
+//	QImage(WIDTH,VideoAddressing::VISIBLE_ROWS_PER_FIELD*2,QImage::Format_RGB32)
+//	QPixmap(WIDTH,VideoAddressing::VISIBLE_ROWS_PER_FIELD*2)
 {
 }
 
@@ -42,20 +41,36 @@ void ScreenImage::notifyObservers()
 
 void ScreenImage::setElem(const unsigned int i, const unsigned int val)
 {
-	const unsigned int x = i % WIDTH;
-	const unsigned int y = i / WIDTH;
-	setPixel(x,y,val);
+//	const unsigned int x = i % WIDTH;
+//	const unsigned int y = (i / WIDTH);
+//	setPixel(x,y,val);
+//	pain.begin(this);
+//	pain.setPen(QColor(val));
+//	pain.drawPoint(x,y);
+//	pain.end();
+//	unsigned char* pc = (unsigned char*)this->img;
+//	(pc+i+i+i)[0]
+	unsigned int* pn = (unsigned int*)this->img;
+	pn[i] = val;
+
+//	this->img[y][x] = val;
+/*	this->img[y][x][0] = val >> 16 & 0xFF;
+	this->img[y][x][1] = val >> 8 & 0xFF;
+	this->img[y][x][2] = val & 0xFF;
+	this->img[y][x][3] = 0xFF;*/
 }
 
 void ScreenImage::blank()
 {
-	fill(0);
+	memset(this->img,0,WIDTH*HEIGHT*4);
+//	fill(Qt::black);
 }
 
-void ScreenImage::drawOnto(QPainter& painter) const
-{
-	painter.drawImage(QPoint(),*this);
-}
+//void ScreenImage::drawOnto(QPainter& painter) const
+//{
+//	painter.drawImage(QPoint(),*this);
+//	painter.drawPixmap(0,0,*this);
+//}
 
 // TODO dump PNG
 //void ScreenImage::dump(const String type, const File file) throws IOException

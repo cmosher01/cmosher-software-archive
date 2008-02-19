@@ -20,16 +20,16 @@
 #ifndef VIDEOSTATICGENERATOR_H
 #define VIDEOSTATICGENERATOR_H
 
-class VideoDisplayDevice;
+class AnalogTV;
 #include "timable.h"
 
 class VideoStaticGenerator : public Timable
 {
 private:
-	VideoDisplayDevice& display;
+	AnalogTV& display;
 
 public:
-	VideoStaticGenerator(VideoDisplayDevice& display);
+	VideoStaticGenerator(AnalogTV& display);
 	~VideoStaticGenerator();
 
 	virtual void tick();

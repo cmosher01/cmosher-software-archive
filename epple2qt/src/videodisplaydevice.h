@@ -30,7 +30,7 @@ protected:
 
 public:
 	virtual void powerOn(bool b) = 0;
-	virtual bool isOn() = 0;
+	virtual bool isOn() const = 0;
 
 	virtual void setType(DisplayType type) = 0;
 

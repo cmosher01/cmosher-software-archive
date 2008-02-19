@@ -20,13 +20,13 @@
 #ifndef PICTUREGENERATOR_H
 #define PICTUREGENERATOR_H
 
-class VideoDisplayDevice;
+class AnalogTV;
 class VideoMode;
 
 class PictureGenerator
 {
 private:
-	VideoDisplayDevice& display;
+	AnalogTV& display;
 	VideoMode& mode;
 
 	unsigned char latchGraphics;
@@ -45,7 +45,7 @@ private:
 	void loadGraphics(const unsigned char value);
 	void loadText(const int value);
 	bool shiftLatch(const int t, const int cycle);
-	void writeVideoSignal(const bool shift, const bool showLastHiRes, const int firstBlankedCycle, const int cycle, const bool bit);
+	void writeVideoSignal(const bool shift, const bool showLastHiRes, const int firstBlankedCycle, const int cycle, const int hcycle, const bool bit);
 	signed char vbl(const int hcycle);
 	signed char hbl(const int hcycle);
 
@@ -53,7 +53,7 @@ private:
 
 public:
 
-	PictureGenerator(VideoDisplayDevice& display, VideoMode& mode);
+	PictureGenerator(AnalogTV& display, VideoMode& mode);
 	~PictureGenerator();
 
 	void powerOn();

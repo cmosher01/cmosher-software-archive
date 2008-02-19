@@ -23,11 +23,12 @@
 #include "Keyboard.h"
 
 #include <QWidget>
+#include <QtOpenGL/QGLWidget>
 class QPaintEvent;
 
 class ScreenImage;
 
-class Screen : public QWidget
+class Screen : public QGLWidget
 {
 	Q_OBJECT
 
@@ -35,8 +36,11 @@ class Screen : public QWidget
 	KeypressQueue* keys;
 
 protected:
-	void paintEvent(QPaintEvent*);
-
+//	void paintEvent(QPaintEvent*);
+	void initializeGL();
+//	void resizeGL(int w, int h);
+	void paintGL();
+ 
 public:
 	Screen(const ScreenImage& image, QWidget *parent = 0);
 	~Screen();

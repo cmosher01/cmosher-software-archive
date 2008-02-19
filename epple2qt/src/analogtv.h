@@ -20,7 +20,8 @@
 #ifndef ANALOGTV_H
 #define ANALOGTV_H
 
-#include "videodisplaydevice.h"
+#include "displaytype.h"
+#include "analogtv.h"
 #include "applentsc.h"
 #include "a2colorsobserved.h"
 
@@ -31,7 +32,7 @@ class ScreenImage;
 class IQ;
 class CB;
 
-class AnalogTV : public VideoDisplayDevice
+class AnalogTV
 {
 private:
 	ScreenImage& image;
@@ -85,12 +86,32 @@ public:
 	AnalogTV(ScreenImage& image);
 	~AnalogTV();
 	
-	virtual bool isOn();
-	virtual void powerOn(bool b);
-	virtual void putAsDisconnectedVideoIn();
-	virtual void putSignal(const signed char ire);
-	virtual void restartSignal();
-	virtual void setType(DisplayType type);
+	bool isOn() const;
+	void powerOn(bool b);
+	void putAsDisconnectedVideoIn();
+	void restartSignal();
+	void setType(DisplayType type);
+
+	void putSignal(const signed char ire)
+	{
+	//		if (this->isig >= AppleNTSC::SIGNAL_LEN)
+	//		{
+	//			throw new IllegalStateException("At end of screen; must re-synch before writing any more signal");
+	//		}
+		this->signal[this->isig++] = ire;
+		if (this->isig == AppleNTSC::SIGNAL_LEN)
+		{
+			if (isOn())
+			{
+				this->drawCurrent();
+			}
+			else
+			{
+				this->drawBlank();
+			}
+			this->isig = 0;
+		}
+	}
 };
 
 #endif
