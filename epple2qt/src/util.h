@@ -32,6 +32,28 @@ public:
 	{
 		return (dividend+divisor/2)/divisor;
 	}
+
+	template<typename T> static T mod(T x, const T m)
+	{
+		x %= m;
+		if (x < 0)
+		{
+			x += m;
+		}
+		return x;
+	}
+
+	template<typename T> static void constrain(const T& min, T& x, const T& lim)
+	{
+		if (x < min)
+		{
+			x = min;
+		}
+		else if (lim <= x)
+		{
+			x = lim-1;
+		}
+	}
 };
 
 #endif

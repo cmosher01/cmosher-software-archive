@@ -110,6 +110,14 @@ SOURCE=.\src\cpu.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\diskbytes.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\drive.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\emptyslot.cpp
 # End Source File
 # Begin Source File
@@ -194,6 +202,10 @@ SOURCE=.\src\speakerclicker.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\steppermotor.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\textcharacters.cpp
 # End Source File
 # Begin Source File
@@ -266,7 +278,15 @@ SOURCE=.\src\cpu.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\diskbytes.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\displaytype.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\drive.h
 # End Source File
 # Begin Source File
 
@@ -343,6 +363,10 @@ SOURCE=.\src\slots.h
 # Begin Source File
 
 SOURCE=.\src\speakerclicker.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\steppermotor.h
 # End Source File
 # Begin Source File
 

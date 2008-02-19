@@ -32,6 +32,7 @@
 #include "speakerclicker.h"
 #include "analogtv.h"
 #include "powerupreset.h"
+#include "diskcontroller.h"
 
 #include <iostream>
 #include <fstream>
@@ -57,13 +58,25 @@ Apple2::Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates
 		rom_in.close();
 	}
 	{
-		std::ifstream rom_in2("..\\apple2src\\firmware\\rom\\apple2p_d000.rom",std::ios::binary);
-		rom.load(0x0000,rom_in2);
-		if (!rom_in2.good())
+		std::ifstream rom_in("..\\apple2src\\firmware\\rom\\apple2p_d000.rom",std::ios::binary);
+		rom.load(0x0000,rom_in);
+		if (!rom_in.good())
 		{
 			std::cout << "ERROR reading ROM file apple2p_d000.rom" << std::endl;
 		}
-		rom_in2.close();
+		rom_in.close();
+	}
+	{
+		DiskController* disk = new DiskController();
+		this->slts.set(6,disk);
+		std::ifstream rom_in("..\\apple2src\\firmware\\rom\\disk2_16sect_c600_patched_nodelay.rom",std::ios::binary);
+		if (!rom_in.good())
+		{
+			std::cout << "ERROR reading ROM file disk2_16sect_c600_patched_nodelay.rom" << std::endl;
+		}
+		disk->loadRom(0,rom_in);
+		disk->loadDisk(0,"c:\\temp\\dos33.nib");
+		rom_in.close();
 	}
 }
 

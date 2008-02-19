@@ -10,8 +10,8 @@
 CC            = cl
 CXX           = cl
 DEFINES       = -DUNICODE -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT
-CFLAGS        = -nologo -Zm200 -Zi -MDd -W3 $(DEFINES)
-CXXFLAGS      = -nologo -Zm200 -Zi -MDd -GR -GX -W3 $(DEFINES)
+CFLAGS        = -Ob2gity -EHsc -Zm200 -Zi -MDd -W3 $(DEFINES)
+CXXFLAGS      = -Ob2gity -EHsc -Zm200 -Zi -MDd -W3 $(DEFINES)
 INCPATH       = -I"..\..\qt\4.3.3\include\QtCore" -I"..\..\qt\4.3.3\include\QtCore" -I"..\..\qt\4.3.3\include\QtGui" -I"..\..\qt\4.3.3\include\QtGui" -I"..\..\qt\4.3.3\include" -I"." -I"c:\qt\4.3.3\include\ActiveQt" -I"debug" -I"." -I"..\..\qt\4.3.3\mkspecs\default"
 LINK          = link
 LFLAGS        = /LIBPATH:"c:\qt\4.3.3\lib" /NOLOGO /DEBUG /SUBSYSTEM:windows
@@ -47,6 +47,9 @@ SOURCES       = src\a2colorsobserved.cpp \
 		src\applentsc.cpp \
 		src\card.cpp \
 		src\cpu.cpp \
+		src\diskbytes.cpp \
+		src\diskcontroller.cpp \
+		src\drive.cpp \
 		src\emptyslot.cpp \
 		src\emulator.cpp \
 		src\gui.cpp \
@@ -67,6 +70,7 @@ SOURCES       = src\a2colorsobserved.cpp \
 		src\screenimage.cpp \
 		src\slots.cpp \
 		src\speakerclicker.cpp \
+		src\steppermotor.cpp \
 		src\textcharacters.cpp \
 		src\throttle.cpp \
 		src\timable.cpp \
@@ -75,7 +79,8 @@ SOURCES       = src\a2colorsobserved.cpp \
 		src\videoaddressing.cpp \
 		src\videodisplaydevice.cpp \
 		src\videomode.cpp \
-		src\videostaticgenerator.cpp debug\moc_playqmake.cpp \
+		src\videostaticgenerator.cpp \
+		debug\moc_playqmake.cpp \
 		debug\moc_renderthread.cpp \
 		debug\moc_screen.cpp \
 		debug\moc_screenimage.cpp \
@@ -87,6 +92,9 @@ OBJECTS       = debug\a2colorsobserved.obj \
 		debug\applentsc.obj \
 		debug\card.obj \
 		debug\cpu.obj \
+		debug\diskbytes.obj \
+		debug\diskcontroller.obj \
+		debug\drive.obj \
 		debug\emptyslot.obj \
 		debug\emulator.obj \
 		debug\gui.obj \
@@ -107,6 +115,7 @@ OBJECTS       = debug\a2colorsobserved.obj \
 		debug\screenimage.obj \
 		debug\slots.obj \
 		debug\speakerclicker.obj \
+		debug\steppermotor.obj \
 		debug\textcharacters.obj \
 		debug\throttle.obj \
 		debug\timable.obj \

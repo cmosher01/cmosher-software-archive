@@ -47,6 +47,9 @@ SOURCES       = src\a2colorsobserved.cpp \
 		src\applentsc.cpp \
 		src\card.cpp \
 		src\cpu.cpp \
+		src\diskbytes.cpp \
+		src\diskcontroller.cpp \
+		src\drive.cpp \
 		src\emptyslot.cpp \
 		src\emulator.cpp \
 		src\gui.cpp \
@@ -67,6 +70,7 @@ SOURCES       = src\a2colorsobserved.cpp \
 		src\screenimage.cpp \
 		src\slots.cpp \
 		src\speakerclicker.cpp \
+		src\steppermotor.cpp \
 		src\textcharacters.cpp \
 		src\throttle.cpp \
 		src\timable.cpp \
@@ -87,6 +91,9 @@ OBJECTS       = release\a2colorsobserved.obj \
 		release\applentsc.obj \
 		release\card.obj \
 		release\cpu.obj \
+		release\diskbytes.obj \
+		release\diskcontroller.obj \
+		release\drive.obj \
 		release\emptyslot.obj \
 		release\emulator.obj \
 		release\gui.obj \
@@ -107,6 +114,7 @@ OBJECTS       = release\a2colorsobserved.obj \
 		release\screenimage.obj \
 		release\slots.obj \
 		release\speakerclicker.obj \
+		release\steppermotor.obj \
 		release\textcharacters.obj \
 		release\throttle.obj \
 		release\timable.obj \
