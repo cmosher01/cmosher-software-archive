@@ -8,7 +8,7 @@ import util.Util;
 /*
  * Created on Aug 1, 2007
  */
-public class TimingGenerator 
+public class TimingGenerator
 {
 	public static final int CRYSTAL_HZ = Util.divideRoundUp(315000000,22);
 	public static final int CRYSTAL_CYCLES_PER_CPU_CYCLE = 14;
