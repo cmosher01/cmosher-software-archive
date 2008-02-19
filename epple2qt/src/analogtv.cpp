@@ -537,7 +537,7 @@ void AnalogTV::ntsc_to_yiq(const int isignal, const int siglen, const IQ& iq_fac
 	}
 }
 
-int AnalogTV::yiq2rgb(const int yiq)
+int inline AnalogTV::yiq2rgb(const int yiq)
 {
 	double r = ((yiq&0xFF)-IQINTOFF) + 0.956 * (((yiq>>8)&0xFF)-IQINTOFF) + 0.621 * (((yiq>>16)&0xFF)-IQINTOFF);
 	double g = ((yiq&0xFF)-IQINTOFF) - 0.272 * (((yiq>>8)&0xFF)-IQINTOFF) - 0.647 * (((yiq>>16)&0xFF)-IQINTOFF);
@@ -551,25 +551,25 @@ int AnalogTV::yiq2rgb(const int yiq)
 	return rgb;
 }
 
-int AnalogTV::color2bw(const int rgb)
+int inline AnalogTV::color2bw(const int rgb)
 {
 	const int y = rgb2y(rgb);
 	return y<<16 | y<<8 | y;
 }
 
-int AnalogTV::rgb2y(const int rgb) // y in range 0-255
+int inline AnalogTV::rgb2y(const int rgb) // y in range 0-255
 {
 	return (int)((0.299*((rgb>>16)&0xFF) + 0.587*((rgb>>8)&0xFF) + 0.114*(rgb&0xFF))/1.04);
 }
 
-int AnalogTV::calc_color(const double color)
+int inline AnalogTV::calc_color(const double color)
 {
 	int x = (int)(color * 0x100 / AppleNTSC::LEVEL_RANGE + .5);
 	x = clamp(0,x,0x100);
 	return x & 0xFF;
 }
 
-int AnalogTV::clamp(int min, int x, int lim)
+int inline AnalogTV::clamp(int min, int x, int lim)
 {
 	if (x < min)
 		return min;
