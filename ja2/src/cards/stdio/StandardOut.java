@@ -10,6 +10,10 @@ public class StandardOut extends Card
 	@Override
 	public byte io(@SuppressWarnings("unused") final int addr, final byte data, @SuppressWarnings("unused") final boolean writing)
 	{
+		if (!writing)
+		{
+			return data;
+		}
 		final char c = (char)(data&0x7F);
 		if (c == '\r')
 		{
