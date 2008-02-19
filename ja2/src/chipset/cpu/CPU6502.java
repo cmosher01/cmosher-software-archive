@@ -61,6 +61,13 @@ public final class CPU6502
     	this.reset = false;
     	this.IRQ = false;
     	this.NMI = false;
+    	this.n = false;
+    	this.v = false;
+    	this.b = false;
+    	this.d = false;
+    	this.i = false;
+    	this.z = false;
+    	this.c = false;
     	// TODO what else to initialize in CPU?
 	}
 
@@ -68,6 +75,7 @@ public final class CPU6502
     {
     	this.started = true;
     	this.reset = true;
+    	this.t = 0;
     }
 
     public void IRQ()
