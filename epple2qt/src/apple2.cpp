@@ -47,10 +47,24 @@ Apple2::Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates
 	powerUpReset(*this)
 {
 	// TODO remove loading of ROM (only for testing)
-	std::ifstream rom_in("/home/chris/apple2src/firmware/rom/apple2p_f800.rom");
-	rom.load(0x2800,rom_in);
-	std::ifstream rom_in2("/home/chris/apple2src/firmware/rom/apple2p_d000.rom");
-	rom.load(0x0000,rom_in2);
+	{
+		std::ifstream rom_in("..\\apple2src\\firmware\\rom\\apple2p_f800.rom",std::ios::binary);
+		rom.load(0x2800,rom_in);
+		if (!rom_in.good())
+		{
+			std::cout << "ERROR reading ROM file apple2p_f800.rom" << std::endl;
+		}
+		rom_in.close();
+	}
+	{
+		std::ifstream rom_in2("..\\apple2src\\firmware\\rom\\apple2p_d000.rom",std::ios::binary);
+		rom.load(0x0000,rom_in2);
+		if (!rom_in2.good())
+		{
+			std::cout << "ERROR reading ROM file apple2p_d000.rom" << std::endl;
+		}
+		rom_in2.close();
+	}
 }
 
 

@@ -24,7 +24,6 @@
 #include <QImage>
 #include <QPixmap>
 #include <QPainter>
-#include <GL/glu.h>
 
 #include "applentsc.h"
 #include "videoaddressing.h"

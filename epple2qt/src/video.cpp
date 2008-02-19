@@ -1,6 +1,6 @@
 #include "video.h"
-#include "videoaddressing.h"
 #include "timinggenerator.h"
+#include "videoaddressing.h"
 #include "videomode.h"
 #include "addressbus.h"
 #include "picturegenerator.h"

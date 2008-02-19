@@ -39,7 +39,7 @@ CFG=epple2 - Win32 Debug
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release"
-# PROP Cmd_Line "\Qt\4.3.3\bin\qmake -project -recursive && \Qt\4.3.3\bin\qmake -recursive && nmake release"
+# PROP Cmd_Line "nmake release"
 # PROP Rebuild_Opt "/a"
 # PROP Target_File "epple2.exe"
 # PROP Bsc_Name "epple2.bsc"
@@ -58,7 +58,7 @@ CFG=epple2 - Win32 Debug
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "Debug"
 # PROP Intermediate_Dir "Debug"
-# PROP Cmd_Line "\Qt\4.3.3\bin\qmake -project -recursive && \Qt\4.3.3\bin\qmake -recursive && nmake debug"
+# PROP Cmd_Line "nmake debug"
 # PROP Rebuild_Opt "/a"
 # PROP Target_File "epple2.exe"
 # PROP Bsc_Name "epple2.bsc"
@@ -82,7 +82,23 @@ CFG=epple2 - Win32 Debug
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\src\a2colorsobserved.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\addressbus.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\analogtv.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\apple2.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\applentsc.cpp
 # End Source File
 # Begin Source File
 
@@ -98,7 +114,27 @@ SOURCE=.\src\emptyslot.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\emulator.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\gui.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\guiemulator.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\Keyboard.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\lowpass_1_5_mhz.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\lowpass_3_58_mhz.cpp
 # End Source File
 # Begin Source File
 
@@ -110,7 +146,27 @@ SOURCE=.\src\memory.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\moc_playqmake.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\paddlebuttonstates.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\paddles.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\picturegenerator.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\playqmake.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\powerupreset.cpp
 # End Source File
 # Begin Source File
 
@@ -118,11 +174,35 @@ SOURCE=.\src\RAMInitializer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\renderthread.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\screen.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\screenimage.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\slots.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\speakerclicker.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\textcharacters.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\throttle.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\timable.cpp
 # End Source File
 # Begin Source File
 
@@ -138,7 +218,15 @@ SOURCE=.\src\videoaddressing.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\videodisplaydevice.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\videomode.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\videostaticgenerator.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -146,7 +234,27 @@ SOURCE=.\src\videomode.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\src\a2colorindex.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\a2colorsobserved.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\addressbus.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\analogtv.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\apple2.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\applentsc.h
 # End Source File
 # Begin Source File
 
@@ -158,7 +266,23 @@ SOURCE=.\src\cpu.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\displaytype.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\emptyslot.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\emulator.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\gui.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\guiemulator.h
 # End Source File
 # Begin Source File
 
@@ -166,7 +290,27 @@ SOURCE=.\src\Keyboard.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\lowpass_1_5_mhz.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\lowpass_3_58_mhz.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\memory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\paddlebuttonstates.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\paddles.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\picturegenerator.h
 # End Source File
 # Begin Source File
 
@@ -174,7 +318,23 @@ SOURCE=.\src\playqmake.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\powerupreset.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\RAMInitializer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\renderthread.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\screen.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\screenimage.h
 # End Source File
 # Begin Source File
 
@@ -182,7 +342,19 @@ SOURCE=.\src\slots.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\speakerclicker.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\textcharacters.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\throttle.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\timable.h
 # End Source File
 # Begin Source File
 
@@ -202,7 +374,15 @@ SOURCE=.\src\videoaddressing.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\videodisplaydevice.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\videomode.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\videostaticgenerator.h
 # End Source File
 # End Group
 # End Target

@@ -33,7 +33,7 @@ Screen::Screen(const ScreenImage& image, Apple2& apple2, QWidget *parent):
 	image(image),
 	apple2(apple2)
 {
-//	resize(this->image.size());
+	resize(ScreenImage::WIDTH,ScreenImage::HEIGHT);
 	connect(&this->image,SIGNAL(changed()),this,SLOT(plot()));
 }
 
@@ -48,7 +48,7 @@ void Screen::setKeypressQueue(KeypressQueue& q)
 }
 
 
-#include <iostream> //TODO remove
+//#include <iostream> //TODO remove
 void inline Screen::pt(const int key)
 {
 //	std::cout << "sending keypress: " << std::hex << key << std::endl;
@@ -57,7 +57,8 @@ void inline Screen::pt(const int key)
 void Screen::keyPressEvent(QKeyEvent *event)
 {
 	const unsigned int key(event->key());
-	const unsigned int chr(event->text().at(0).unicode());
+	const QString text(event->text());
+	const unsigned int chr(text.length()>0 ? text.at(0).unicode() : 0);
 
 	if (key == Qt::Key_Enter || key == Qt::Key_Return)
 	{
@@ -112,15 +113,8 @@ void Screen::keyPressEvent(QKeyEvent *event)
 	}
 }
 
-// void Screen::paintEvent(QPaintEvent*)
-// {
-// 	QPainter painter(this);
-// 	this->image.drawOnto(painter);
-// }
-
 void Screen::plot()
 {
-//	repaint();
 	update();
 }
 
@@ -133,7 +127,8 @@ void Screen::initializeGL()
 
 void Screen::paintGL(void)
 {
-	glRasterPos2f (-.85, .85);
+	glRasterPos2f (-1.0F,0.065F); // TODO figure out what the args to glRasterPos2f mean
+
 	glPixelZoom (1,-1);
 	glDrawPixels(ScreenImage::WIDTH, ScreenImage::HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, this->image.image());
 	glFlush ();
