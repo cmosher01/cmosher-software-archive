@@ -127,7 +127,8 @@ void Screen::initializeGL()
 
 void Screen::paintGL(void)
 {
-	glRasterPos2f (-1.0F,0.065F); // TODO figure out what the args to glRasterPos2f mean
+//	glRasterPos2f (-1.0F,0.065F); // TODO figure out what the args to glRasterPos2f mean
+	glRasterPos2f (-1.0F,1.0F); // TODO figure out what the args to glRasterPos2f mean
 
 	glPixelZoom (1,-1);
 	glDrawPixels(ScreenImage::WIDTH, ScreenImage::HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, this->image.image());

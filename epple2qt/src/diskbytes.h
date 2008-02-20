@@ -29,12 +29,12 @@ public:
 	~DiskBytes();
 
 	void load(const std::string& filePath);
-	std::string DiskBytes::getFileName()
+	std::string getFileName()
 	{
 		return this->fileName;
 	}
 
-	bool DiskBytes::isLoaded()
+	bool isLoaded()
 	{
 		return this->loaded;
 }
@@ -43,12 +43,12 @@ public:
 	void unload();
 	unsigned char get(const int track);
 	void put(const unsigned char track, const unsigned char value);
-	bool DiskBytes::isWriteProtected()
+	bool isWriteProtected()
 	{
 		return !this->writable;
 	}
 
-	bool DiskBytes::isModified()
+	bool isModified()
 	{
 		return this->modified;
 	}

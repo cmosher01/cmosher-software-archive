@@ -36,7 +36,7 @@ mags ps magval
 1111 ?  F
 */
 #include "steppermotor.h"
-#include "Util.h"
+#include "util.h"
 
 StepperMotor::StepperMotor():
 	quarterTrack(QTRACKS >> 1), // start in the middle of the disk... just for fun
@@ -51,7 +51,7 @@ StepperMotor::~StepperMotor()
 
 signed char StepperMotor::mapMagPos[] = {-1,0,2,1,4,-1,3,2,6,7,-1,0,5,6,4,-1};
 
-
+#include <iostream> // TODO remove
 void StepperMotor::setMagnet(const unsigned char magnet, const bool on)
 {
 //	if (magnet < 0 || 4 <= magnet)
@@ -76,6 +76,28 @@ void StepperMotor::setMagnet(const unsigned char magnet, const bool on)
 		this->pos = newPos;
 
 		this->quarterTrack += d;
-		Util::constrain((unsigned char)0,this->quarterTrack,(unsigned char)QTRACKS);
+		if (this->quarterTrack & 0x80)
+			this->quarterTrack = 0;
+		else if (this->quarterTrack > (unsigned char)QTRACKS)
+			this->quarterTrack = (unsigned char)QTRACKS;
 	}
+/*
+	std::cout << " ARM: magnet " << (unsigned int)magnet << " " << (on ? "on " : "off" );
+	std::cout << " [" <<
+		((mags&1)?"*":".") <<
+		((mags&2)?"*":".") <<
+		((mags&4)?"*":".") <<
+		((mags&8)?"*":".") <<
+		"]";
+	if (d != 0)
+	{
+		std::cout << " track " << std::hex << (unsigned int)(this->quarterTrack >> 2);
+		int fract = this->quarterTrack & 3;
+		if (fract != 0)
+		{
+			std::cout << (fract == 1 ? " +.25" : fract == 2 ? " +.5" : " +.75");
+		}
+	}
+	std::cout << std::endl;
+*/
 }

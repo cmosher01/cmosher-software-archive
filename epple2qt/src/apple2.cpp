@@ -49,7 +49,8 @@ Apple2::Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates
 {
 	// TODO remove loading of ROM (only for testing)
 	{
-		std::ifstream rom_in("..\\apple2src\\firmware\\rom\\apple2p_f800.rom",std::ios::binary);
+//		std::ifstream rom_in("..\\apple2src\\firmware\\rom\\apple2p_f800.rom",std::ios::binary);
+		std::ifstream rom_in("../apple2src/firmware/rom/apple2p_f800.rom",std::ios::binary);
 		rom.load(0x2800,rom_in);
 		if (!rom_in.good())
 		{
@@ -58,7 +59,8 @@ Apple2::Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates
 		rom_in.close();
 	}
 	{
-		std::ifstream rom_in("..\\apple2src\\firmware\\rom\\apple2p_d000.rom",std::ios::binary);
+//		std::ifstream rom_in("..\\apple2src\\firmware\\rom\\apple2p_d000.rom",std::ios::binary);
+		std::ifstream rom_in("../apple2src/firmware/rom/apple2p_d000.rom",std::ios::binary);
 		rom.load(0x0000,rom_in);
 		if (!rom_in.good())
 		{
@@ -69,13 +71,15 @@ Apple2::Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates
 	{
 		DiskController* disk = new DiskController();
 		this->slts.set(6,disk);
-		std::ifstream rom_in("..\\apple2src\\firmware\\rom\\disk2_16sect_c600_patched_nodelay.rom",std::ios::binary);
+//		std::ifstream rom_in("..\\apple2src\\firmware\\rom\\disk2_16sect_c600_patched_nodelay.rom",std::ios::binary);
+		std::ifstream rom_in("../apple2src/firmware/rom/disk2_16sect_c600_patched_nodelay.rom",std::ios::binary);
 		if (!rom_in.good())
 		{
 			std::cout << "ERROR reading ROM file disk2_16sect_c600_patched_nodelay.rom" << std::endl;
 		}
 		disk->loadRom(0,rom_in);
-		disk->loadDisk(0,"c:\\temp\\dos33.nib");
+//		disk->loadDisk(0,"c:\\temp\\dos33.nib");
+		disk->loadDisk(0,"../splitvid.nib");
 		rom_in.close();
 	}
 }
