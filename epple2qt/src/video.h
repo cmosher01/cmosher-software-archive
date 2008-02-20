@@ -2,6 +2,7 @@
 #define VIDEO_H_
 
 #include <vector>
+#include "timinggenerator.h"
 
 class VideoMode;
 class AddressBus;
@@ -11,7 +12,16 @@ class TextCharacters;
 class Video
 {
 private:
-	static const int FLASH_HALF_PERIOD;
+	enum { TEXT_BASE_1 = 0x0400 };
+	enum { TEXT_BASE_2 = 0x0800 };
+	enum { TEXT_LEN = 0x0400 };
+	
+	enum { HRES_BASE_1 = 0x2000 };
+	enum { HRES_BASE_2 = 0x4000 };
+	enum { HRES_LEN = 0x2000 };
+	
+	
+	enum { FLASH_HALF_PERIOD = TimingGenerator::AVG_CPU_HZ/4 }; // 2 Hz period = 4 Hz half-period
 
 	std::vector<unsigned short> lutTEXT[2]; // [0] is page 1, [1] is page 2
 	std::vector<unsigned short> lutHRES[2]; // [0] is page 1, [1] is page 2

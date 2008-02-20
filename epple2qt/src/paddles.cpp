@@ -18,14 +18,6 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "paddles.h"
-#include "timinggenerator.h"
-
-
-const int Paddles::PADDLE_COUNT(4);
-const int Paddles::PADDLE_CYCLES(2805);
-
-const int Paddles::REALTIME_1MS_CYCLES(TimingGenerator::CPU_HZ/1000);
-const int Paddles::REALTIME_100US_CYCLES(90);
 
 
 

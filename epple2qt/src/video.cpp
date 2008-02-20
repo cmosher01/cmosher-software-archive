@@ -6,16 +6,6 @@
 #include "picturegenerator.h"
 #include "textcharacters.h"
 
-const unsigned short int TEXT_BASE_1(0x0400);
-const unsigned short int TEXT_BASE_2(0x0800);
-const unsigned short int TEXT_LEN(0x0400);
-
-const unsigned short int HRES_BASE_1(0x2000);
-const unsigned short int HRES_BASE_2(0x4000);
-const unsigned short int HRES_LEN(0x2000);
-
-
-const int Video::FLASH_HALF_PERIOD(TimingGenerator::AVG_CPU_HZ/4); // 2 Hz period = 4 Hz half-period
 
 Video::Video(VideoMode& mode, AddressBus& addressBus, PictureGenerator& picgen, TextCharacters& textRows):
 	mode(mode), addressBus(addressBus), picgen(picgen), textRows(textRows)

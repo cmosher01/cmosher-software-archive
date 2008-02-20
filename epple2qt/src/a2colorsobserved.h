@@ -32,6 +32,26 @@ public:
 	~A2ColorsObserved();
 
 	const std::vector<unsigned int>& c() { return this->COLOR; }
+
+	enum
+	{
+		BLACK,
+		DARK_MAGENTA,
+		DARK_BLUE,
+		HIRES_VIOLET,
+		DARK_BLUE_GREEN,
+		GREY,
+		HIRES_BLUE,
+		LIGHT_BLUE,
+		DARK_BROWN,
+		HIRES_ORANGE,
+		GREY_ALTERNATE,
+		LIGHT_MAGENTA,
+		HIRES_GREEN,
+		LIGHT_BROWN,
+		LIGHT_BLUE_GREEN,
+		WHITE,
+	};
 };
 
 #endif

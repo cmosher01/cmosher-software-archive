@@ -25,6 +25,11 @@ class AddressBus;
 class CPU
 {
 private:
+	enum { MEMORY_LIM = 1 << 0x10 };
+	enum { IRQ_VECTOR = MEMORY_LIM-2 }; // or BRK
+	enum { RESET_VECTOR = IRQ_VECTOR-2 }; // or power-on
+	enum { NMI_VECTOR = RESET_VECTOR-2 };
+
 	unsigned char adl;
 	unsigned char adh;
 	unsigned char bal;
@@ -37,11 +42,11 @@ private:
 	signed char sc;
 	bool wc;
 
- 	bool pendingIRQ;
-    bool pendingNMI;
-    bool pendingReset;
-
-    bool started;
+	bool pendingIRQ;
+	bool pendingNMI;
+	bool pendingReset;
+	
+	bool started;
 
 	unsigned char a;
 	unsigned char x;

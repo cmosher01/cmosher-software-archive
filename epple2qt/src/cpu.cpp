@@ -20,10 +20,6 @@
 #include "cpu.h"
 #include "addressbus.h"
 
-static const unsigned int MEMORY_LIM(1 << 0x10);
-static const unsigned short IRQ_VECTOR(MEMORY_LIM-2); // or BRK
-static const unsigned short RESET_VECTOR(IRQ_VECTOR-2); // or power-on
-static const unsigned short NMI_VECTOR(RESET_VECTOR-2);
 
 //s = NVMBDIZC
 const unsigned char SMASK_C(1<<0);

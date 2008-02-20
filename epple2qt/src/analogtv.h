@@ -58,7 +58,7 @@ private:
 	static const double TINT_Q;
 	static const double COLOR_THRESH;
 	static const IQ& BLACK_AND_WHITE;
-	static const int D_IP;
+	enum { D_IP = AppleNTSC::H-2-350 };
 
 	void drawCurrent();
 	void drawMonitorColor();

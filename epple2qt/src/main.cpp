@@ -19,7 +19,6 @@
  ***************************************************************************/
 
 
-#include "playqmake.h"
 #include "guiemulator.h"
 #include <QApplication>
 
