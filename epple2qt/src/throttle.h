@@ -23,9 +23,8 @@
 class Throttle
 {
 private:
-	static const int CHECK_EVERY_FRACT;
-	static const int CHECK_EVERY_CYCLE;
-	static const int EXPECTED_MS;
+	enum { CHECK_EVERY_CYCLE = 102048 }; // TODO check these
+	enum { EXPECTED_MS = 100 };
 
 	unsigned int msPrev;
 	unsigned int times;

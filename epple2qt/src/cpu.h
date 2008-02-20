@@ -51,8 +51,20 @@ private:
 	unsigned char a;
 	unsigned char x;
 	unsigned char y;
+
 	unsigned char s;
+
+	//p = NVMBDIZC
+	enum { PMASK_C = 1<<0 };
+	enum { PMASK_Z = 1<<1 };
+	enum { PMASK_I = 1<<2 };
+	enum { PMASK_D = 1<<3 };
+	enum { PMASK_B = 1<<4 };
+	enum { PMASK_M = 1<<5 };
+	enum { PMASK_V = 1<<6 };
+	enum { PMASK_N = 1<<7 };
 	unsigned char p;
+
 	unsigned short pc;
 
 	AddressBus& addressBus;

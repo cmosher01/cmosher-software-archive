@@ -23,9 +23,6 @@
 
 //TODO throttle
 
-const int CHECK_EVERY_FRACT(10);
-const int CHECK_EVERY_CYCLE(Util::divideRound(TimingGenerator::AVG_CPU_HZ,CHECK_EVERY_FRACT));
-const int EXPECTED_MS(1000/CHECK_EVERY_FRACT);
 
 Throttle::Throttle():
 	msPrev(0),
@@ -64,7 +61,7 @@ void Throttle::throttleIfNecessary()
 	*/
 }
 
-void Throttle::sleep(const long msDelta)
+void Throttle::sleep(const long /*msDelta*/)
 {
 /*
 	if (msDelta > 0)

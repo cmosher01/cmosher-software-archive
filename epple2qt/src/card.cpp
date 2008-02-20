@@ -39,7 +39,7 @@ void Card::reset()
 
 
 // override
-unsigned char Card::io(const unsigned short address, const unsigned char data, const bool writing)
+unsigned char Card::io(const unsigned short /*address*/, const unsigned char data, const bool /*writing*/)
 {
 	return data;
 }
@@ -83,13 +83,13 @@ bool Card::inhibitMotherboardRom()
 
 
 
-void Card::ioBankRom(const unsigned short addr, unsigned char* const pb, const bool write)
+void Card::ioBankRom(const unsigned short /*addr*/, unsigned char* const /*pb*/, const bool /*write*/)
 {
 }
 
 
 
-void Card::loadBankRom(const unsigned short base, std::istream& in)
+void Card::loadBankRom(const unsigned short /*base*/, std::istream& /*in*/)
 {
 //	throw InvalidMemoryLoad("This card has no $D000 ROM");
 }

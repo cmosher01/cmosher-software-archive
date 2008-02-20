@@ -35,6 +35,7 @@ private:
 	unsigned int hpos;
 	unsigned int line;
 	bool lasthires;
+	static const signed char lutCB[];
 
 	void shiftLoRes();
 	void shiftHiRes();

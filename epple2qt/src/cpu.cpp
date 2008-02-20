@@ -21,26 +21,15 @@
 #include "addressbus.h"
 
 
-//s = NVMBDIZC
-const unsigned char SMASK_C(1<<0);
-const unsigned char SMASK_Z(1<<1);
-const unsigned char SMASK_I(1<<2);
-const unsigned char SMASK_D(1<<3);
-const unsigned char SMASK_B(1<<4);
-const unsigned char SMASK_M(1<<5);
-const unsigned char SMASK_V(1<<6);
-const unsigned char SMASK_N(1<<7);
 
 CPU::CPU(AddressBus& addressBus):
 	addressBus(addressBus)
 {
 }
 
-
 CPU::~CPU()
 {
 }
-
 
 void CPU::powerOn()
 {
@@ -48,7 +37,7 @@ void CPU::powerOn()
 	this->pendingReset = false;
 	this->pendingIRQ = false;
 	this->pendingNMI = false;
-	this->p = SMASK_M;
+	this->p = PMASK_M;
 	// TODO what else to initialize in CPU?
 }
 
@@ -88,7 +77,7 @@ void CPU::tick()
 
 void CPU::firstCycle()
 {
-	const bool interrupt = this->pendingNMI || this->pendingReset || (!(this->p & SMASK_I) && this->pendingIRQ);
+	const bool interrupt = this->pendingNMI || this->pendingReset || (!(this->p & PMASK_I) && this->pendingIRQ);
 
 	if (interrupt)
 	{
@@ -119,10 +108,11 @@ int CPU::getInterruptAddress()
 	{
 		return RESET_VECTOR-2;
 	}
-	if (!(this->p & SMASK_I) && this->pendingIRQ)
+	if (!(this->p & PMASK_I) && this->pendingIRQ)
 	{
 		return IRQ_VECTOR-2;
 	}
+	return 0; // can't happen
 }
 
 int CPU::getInterruptPseudoOpCode()
@@ -135,10 +125,11 @@ int CPU::getInterruptPseudoOpCode()
 	{
 		return 0x101;
 	}
-	if (!(this->p & SMASK_I) && this->pendingIRQ)
+	if (!(this->p & PMASK_I) && this->pendingIRQ)
 	{
 		return 0x102;
 	}
+	return 0; // can't happen
 }
 
 void (CPU::*(CPU::addr[]))() =
@@ -1244,7 +1235,7 @@ void CPU::addr_MISC_BREAK()
 		break;
 		case 4:
 			address = push();
-			p |= SMASK_B;
+			p |= PMASK_B;
 			data = p;
 			write();
 		break;
@@ -1278,7 +1269,7 @@ void CPU::addr_MISC_RTI()
 		case 3:
 			address = pull();
 			read();
-			p = data; p |= SMASK_M;
+			p = data; p |= PMASK_M;
 		break;
 		case 4:
 			address = pull();
@@ -1440,8 +1431,8 @@ void CPU::addr_NMI()
 		break;
 		case 4:
 			address = push();
-			p |= SMASK_I;
-			p &= ~SMASK_B; // ???
+			p |= PMASK_I;
+			p &= ~PMASK_B; // ???
 			data = p;
 			write();
 		break;
@@ -1482,7 +1473,7 @@ void CPU::addr_RESET()
 		break;
 		case 4:
 			address = push();
-			p |= SMASK_I;
+			p |= PMASK_I;
 			data = p;
 			read(); // discard
 		break;
@@ -1522,8 +1513,8 @@ void CPU::addr_IRQ()
 		break;
 		case 4:
 			address = push();
-			p |= SMASK_I;
-			p &= ~SMASK_B; // ???
+			p |= PMASK_I;
+			p &= ~PMASK_B; // ???
 			data = p;
 			write();
 		break;
@@ -1639,8 +1630,8 @@ unsigned short CPU::combine(const unsigned char lo, const unsigned char hi)
 
 void CPU::setStatusRegisterNZ(const unsigned char val)
 {
-	setP(SMASK_N,val & 0x80);
-	setP(SMASK_Z,!val);
+	setP(PMASK_N,val & 0x80);
+	setP(PMASK_Z,!val);
 }
 
 void CPU::LDA()
@@ -1679,7 +1670,7 @@ void CPU::STY()
 void CPU::compare(const unsigned char r)
 {
     const signed short tmp = r - this->data;
-	setP(SMASK_C,0 <= tmp && tmp < 0x100);
+	setP(PMASK_C,0 <= tmp && tmp < 0x100);
     setStatusRegisterNZ((const signed char)tmp);
 }
 
@@ -1763,7 +1754,7 @@ void CPU::ROR_A()
 
 unsigned char CPU::shiftLeft(unsigned char byt)
 {
-	setP(SMASK_C,byt & 0x80);
+	setP(PMASK_C,byt & 0x80);
     byt <<= 1;
     setStatusRegisterNZ(byt);
     return byt;
@@ -1771,7 +1762,7 @@ unsigned char CPU::shiftLeft(unsigned char byt)
 
 unsigned char CPU::shiftRight(unsigned char byt)
 {
-	setP(SMASK_C,byt & 0x01);
+	setP(PMASK_C,byt & 0x01);
     byt >>= 1;
     setStatusRegisterNZ(byt);
     return byt;
@@ -1783,12 +1774,12 @@ unsigned char CPU::rotateLeft(unsigned char byt)
 
     byt <<= 1;
 
-	if (this->p & SMASK_C)
+	if (this->p & PMASK_C)
 	{
 		byt |= 0x01;
 	}
 
-	setP(SMASK_C,newCarry);
+	setP(PMASK_C,newCarry);
     setStatusRegisterNZ(byt);
 
     return byt;
@@ -1800,12 +1791,12 @@ unsigned char CPU::rotateRight(unsigned char byt)
 
     byt >>= 1;
 
-	if (this->p & SMASK_C)
+	if (this->p & PMASK_C)
 	{
 		byt |= 0x80;
 	}
 
-	setP(SMASK_C,newCarry);
+	setP(PMASK_C,newCarry);
     setStatusRegisterNZ(byt);
 
     return byt;
@@ -1820,25 +1811,25 @@ void CPU::ADC()
 {
     int Op1 = this->a;
     int Op2 = this->data;
-    if (this->p & SMASK_D)
+    if (this->p & PMASK_D)
     {
-    	setP(SMASK_Z,!(Op1 + Op2 + !!(this->p & SMASK_C) & 0xff));
-        int tmp = (Op1 & 0xf) + (Op2 & 0xf) + !!(this->p & SMASK_C);
+    	setP(PMASK_Z,!(Op1 + Op2 + !!(this->p & PMASK_C) & 0xff));
+        int tmp = (Op1 & 0xf) + (Op2 & 0xf) + !!(this->p & PMASK_C);
         tmp = tmp >= 10 ? tmp + 6 : tmp;
         this->a = tmp;
         tmp = (Op1 & 0xf0) + (Op2 & 0xf0) + (tmp & 0xf0);
-        setP(SMASK_N,tmp < 0);
-        setP(SMASK_V,((Op1 ^ tmp) & ~(Op1 ^ Op2) & 0x80));
+        setP(PMASK_N,tmp < 0);
+        setP(PMASK_V,((Op1 ^ tmp) & ~(Op1 ^ Op2) & 0x80));
         tmp = this->a & 0xf | (tmp >= 160 ? tmp + 96 : tmp);
-        setP(SMASK_C,tmp >= 0x100);
+        setP(PMASK_C,tmp >= 0x100);
         this->a = tmp & 0xff;
     }
     else
     {
-        int tmp = Op1 + Op2 + !!(this->p & SMASK_C);
+        int tmp = Op1 + Op2 + !!(this->p & PMASK_C);
         this->a = tmp & 0xFF;
-        setP(SMASK_V,((Op1 ^ this->a) & ~(Op1 ^ Op2) & 0x80));
-		setP(SMASK_C,tmp >= 0x100);
+        setP(PMASK_V,((Op1 ^ this->a) & ~(Op1 ^ Op2) & 0x80));
+		setP(PMASK_C,tmp >= 0x100);
         setStatusRegisterNZ(this->a);
     }
 }
@@ -1847,23 +1838,23 @@ void CPU::SBC()
 {
     int Op1 = this->a;
     int Op2 = this->data;
-    if (this->p & SMASK_D)
+    if (this->p & PMASK_D)
     {
-        int tmp = (Op1 & 0xf) - (Op2 & 0xf) - !(this->p & SMASK_C);
+        int tmp = (Op1 & 0xf) - (Op2 & 0xf) - !(this->p & PMASK_C);
         tmp = (tmp & 0x10) != 0 ? tmp - 6 : tmp;
         this->a = tmp;
         tmp = (Op1 & 0xf0) - (Op2 & 0xf0) - (this->a & 0x10);
         this->a = this->a & 0xf | ((tmp & 0x100) != 0 ? tmp - 96 : tmp);
-        tmp = Op1 - Op2 - !(this->p & SMASK_C);
-		setP(SMASK_C,0 <= tmp && tmp < 0x100);
+        tmp = Op1 - Op2 - !(this->p & PMASK_C);
+		setP(PMASK_C,0 <= tmp && tmp < 0x100);
         setStatusRegisterNZ(tmp);
     }
     else
     {
-        int tmp = Op1 - Op2 - !(this->p & SMASK_C);
+        int tmp = Op1 - Op2 - !(this->p & PMASK_C);
         this->a = tmp & 0xff;
-        setP(SMASK_V,((Op1 ^ Op2) & (Op1 ^ this->a) & 0x80));
-		setP(SMASK_C,0 <= tmp && tmp < 0x100);
+        setP(PMASK_V,((Op1 ^ Op2) & (Op1 ^ this->a) & 0x80));
+		setP(PMASK_C,0 <= tmp && tmp < 0x100);
         setStatusRegisterNZ(this->a);
     }
 }
@@ -1917,9 +1908,9 @@ void CPU::setP(const unsigned char mask, const unsigned char val)
 
 void CPU::BIT()
 {
-	setP(SMASK_V,this->data & 0x40);
-	setP(SMASK_N,this->data & 0x80);
-	setP(SMASK_Z,!(this->data & this->a));
+	setP(PMASK_V,this->data & 0x40);
+	setP(PMASK_N,this->data & 0x80);
+	setP(PMASK_Z,!(this->data & this->a));
 }
 
 void CPU::PHA()
@@ -1941,7 +1932,7 @@ void CPU::PLA()
 void CPU::PLP()
 {
 	this->p = this->data;
-	this->p |= SMASK_M;
+	this->p |= PMASK_M;
 }
 
 void CPU::BRK()
@@ -1966,42 +1957,42 @@ void CPU::JSR()
 
 void CPU::BNE()
 {
-	this->branch = !(this->p & SMASK_Z);
+	this->branch = !(this->p & PMASK_Z);
 }
 
 void CPU::BEQ()
 {
-	this->branch = this->p & SMASK_Z;
+	this->branch = this->p & PMASK_Z;
 }
 
 void CPU::BVC()
 {
-	this->branch = !(this->p & SMASK_V);
+	this->branch = !(this->p & PMASK_V);
 }
 
 void CPU::BVS()
 {
-	this->branch = this->p & SMASK_V;
+	this->branch = this->p & PMASK_V;
 }
 
 void CPU::BCC()
 {
-	this->branch = !(this->p & SMASK_C);
+	this->branch = !(this->p & PMASK_C);
 }
 
 void CPU::BCS()
 {
-	this->branch = this->p & SMASK_C;
+	this->branch = this->p & PMASK_C;
 }
 
 void CPU::BPL()
 {
-	this->branch = !(this->p & SMASK_N);
+	this->branch = !(this->p & PMASK_N);
 }
 
 void CPU::BMI()
 {
-	this->branch = this->p & SMASK_N;
+	this->branch = this->p & PMASK_N;
 }
 
 void CPU::TAX()
@@ -2042,37 +2033,37 @@ void CPU::TSX()
 
 void CPU::CLC()
 {
-	this->p &= ~SMASK_C;
+	this->p &= ~PMASK_C;
 }
 
 void CPU::SEC()
 {
-	this->p |= SMASK_C;
+	this->p |= PMASK_C;
 }
 
 void CPU::CLI()
 {
-	this->p &= ~SMASK_I;
+	this->p &= ~PMASK_I;
 }
 
 void CPU::SEI()
 {
-	this->p |= SMASK_I;
+	this->p |= PMASK_I;
 }
 
 void CPU::CLV()
 {
-	this->p &= ~SMASK_V;
+	this->p &= ~PMASK_V;
 }
 
 void CPU::CLD()
 {
-	this->p &= ~SMASK_D;
+	this->p &= ~PMASK_D;
 }
 
 void CPU::SED()
 {
-	this->p |= SMASK_D;
+	this->p |= PMASK_D;
 }
 
 void CPU::NOP()

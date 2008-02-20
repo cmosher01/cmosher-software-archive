@@ -214,7 +214,13 @@ bool inline PictureGenerator::shiftLatch(const int t, const int cycle, const boo
 	return bit;
 }
 
-static const signed char lutCB[] = { AppleNTSC::BLANK_LEVEL,-AppleNTSC::CB_LEVEL,AppleNTSC::BLANK_LEVEL,+AppleNTSC::CB_LEVEL };
+const signed char PictureGenerator::lutCB[] =
+{
+	 AppleNTSC::BLANK_LEVEL,
+	-AppleNTSC::CB_LEVEL,
+	 AppleNTSC::BLANK_LEVEL,
+	+AppleNTSC::CB_LEVEL
+};
 
 void inline PictureGenerator::writeVideoSignal(const bool shift, const bool showLastHiRes, const int firstBlankedCycle, const int cycle, const int hcycle, const bool bit)
 {

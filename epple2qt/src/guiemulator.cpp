@@ -20,6 +20,7 @@
 #include "guiemulator.h"
 
 #include "gui.h"
+#include "analogtv.h"
 
 GUIEmulator::GUIEmulator():
 	Emulator(),
@@ -60,7 +61,7 @@ void GUIEmulator::init()
 //	this->screen.setFocusTraversalKeysEnabled(false);
 //	this->screen.requestFocus();
 
-	this->display.setType(MONITOR_COLOR);//TV_NEW_COLOR);//TV_OLD_COLOR);
+	this->display.setType(AnalogTV::MONITOR_COLOR);//TV_NEW_COLOR);//TV_OLD_COLOR);
 //TODO	powerOffComputer();
 //	this->display.powerOn(false);
 	powerOnComputer();

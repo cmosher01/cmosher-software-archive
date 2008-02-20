@@ -20,7 +20,6 @@
 #ifndef ANALOGTV_H
 #define ANALOGTV_H
 
-#include "displaytype.h"
 #include "analogtv.h"
 #include "applentsc.h"
 #include "a2colorsobserved.h"
@@ -34,6 +33,19 @@ class CB;
 
 class AnalogTV
 {
+public:
+	enum DisplayType
+	{
+		MONITOR_COLOR,
+		MONITOR_WHITE,
+		MONITOR_GREEN,
+		MONITOR_ORANGE,
+		TV_OLD_COLOR,
+		TV_OLD_BW,
+		TV_NEW_COLOR,
+		TV_NEW_BW,
+	};
+
 private:
 	ScreenImage& image;
 
@@ -81,6 +93,7 @@ private:
 	static int clamp(int min, int x, int lim);
 
 public:
+
 	enum { CB_EXTRA = 32 };
 
 	AnalogTV(ScreenImage& image);

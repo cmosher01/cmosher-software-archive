@@ -11,7 +11,7 @@ DiskController::~DiskController()
 {
 }
 
-unsigned char DiskController::io(const unsigned short addr, const unsigned char d, const bool writing)
+unsigned char DiskController::io(const unsigned short addr, const unsigned char d, const bool /*writing*/)
 {
 	unsigned char data(d);
 	const unsigned char q = (addr & 0x000E) >> 1;

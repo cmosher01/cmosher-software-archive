@@ -20,7 +20,7 @@
 #ifndef VIDEODISPLAYDEVICE_H
 #define VIDEODISPLAYDEVICE_H
 
-#include "displaytype.h"
+class DisplayType;
 
 class VideoDisplayDevice
 {
