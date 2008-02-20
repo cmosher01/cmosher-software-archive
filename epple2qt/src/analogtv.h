@@ -51,7 +51,8 @@ private:
 
 	bool on;
 	std::vector<signed char> signal;
-	int isig;
+	std::vector<signed char>::iterator isig;
+	std::vector<signed char>::iterator siglim;
 	bool noise;
 	DisplayType type;
 	unsigned long /* TODO long*/ int rrr;
@@ -111,12 +112,7 @@ public:
 
 	void putSignal(const signed char ire)
 	{
-	//		if (this->isig >= AppleNTSC::SIGNAL_LEN)
-	//		{
-	//			throw new IllegalStateException("At end of screen; must re-synch before writing any more signal");
-	//		}
-		this->signal[this->isig++] = ire;
-		if (this->isig == AppleNTSC::SIGNAL_LEN)
+		if (this->isig == this->siglim)
 		{
 			if (isOn())
 			{
@@ -126,8 +122,10 @@ public:
 			{
 				this->drawBlank();
 			}
-			this->isig = 0;
+			this->isig = signal.begin();
 		}
+		*(this->isig) = ire;
+		++this->isig;
 	}
 };
 

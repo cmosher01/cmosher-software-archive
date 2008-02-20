@@ -31,7 +31,8 @@ AnalogTV::AnalogTV(ScreenImage& image):
 	image(image),
 	on(false),
 	signal(AppleNTSC::SIGNAL_LEN),
-	isig(0),
+	isig(signal.begin()),
+	siglim(signal.end()),
 	noise(false),
 	rrr(1)
 {
@@ -77,7 +78,7 @@ void AnalogTV::putAsDisconnectedVideoIn()
 
 void AnalogTV::restartSignal()
 {
-	this->isig = 0;
+	this->isig = signal.begin();
 	this->image.notifyObservers();
 }
 
