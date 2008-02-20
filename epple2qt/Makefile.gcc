@@ -174,25 +174,6 @@ all: $(TARGET)
 $(TARGET):  $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
-/usr/share/qt4/mkspecs/common/unix.conf:
-/usr/share/qt4/mkspecs/common/g++.conf:
-/usr/share/qt4/mkspecs/common/linux.conf:
-/usr/share/qt4/mkspecs/qconfig.pri:
-/usr/share/qt4/mkspecs/features/qt_functions.prf:
-/usr/share/qt4/mkspecs/features/qt_config.prf:
-/usr/share/qt4/mkspecs/features/exclusive_builds.prf:
-/usr/share/qt4/mkspecs/features/default_pre.prf:
-/usr/share/qt4/mkspecs/features/release.prf:
-/usr/share/qt4/mkspecs/features/default_post.prf:
-/usr/share/qt4/mkspecs/features/warn_on.prf:
-/usr/share/qt4/mkspecs/features/qt.prf:
-/usr/share/qt4/mkspecs/features/unix/thread.prf:
-/usr/share/qt4/mkspecs/features/moc.prf:
-/usr/share/qt4/mkspecs/features/resources.prf:
-/usr/share/qt4/mkspecs/features/uic.prf:
-qmake:  FORCE
-	@$(QMAKE) -unix -o Makefile playqmake.pro
-
 dist: 
 	@$(CHK_DIR_EXISTS) .tmp/playqmake1.0.0 || $(MKDIR) .tmp/playqmake1.0.0 
 	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/playqmake1.0.0/ && $(COPY_FILE) --parents src/a2colorsobserved.h src/addressbus.h src/analogtv.h src/apple2.h src/applentsc.h src/card.h src/cpu.h src/diskbytes.h src/diskcontroller.h src/drive.h src/emptyslot.h src/emulator.h src/gui.h src/guiemulator.h src/Keyboard.h src/lowpass_1_5_mhz.h src/lowpass_3_58_mhz.h src/memory.h src/paddlebuttonstates.h src/paddles.h src/picturegenerator.h src/powerupreset.h src/RAMInitializer.h src/screen.h src/screenimage.h src/slots.h src/speakerclicker.h src/steppermotor.h src/textcharacters.h src/throttle.h src/timable.h src/timinggenerator.h src/util.h src/video.h src/videoaddressing.h src/videodisplaydevice.h src/videomode.h src/videostaticgenerator.h .tmp/playqmake1.0.0/ && $(COPY_FILE) --parents src/a2colorsobserved.cpp src/addressbus.cpp src/analogtv.cpp src/apple2.cpp src/applentsc.cpp src/card.cpp src/cpu.cpp src/diskbytes.cpp src/diskcontroller.cpp src/drive.cpp src/emptyslot.cpp src/emulator.cpp src/gui.cpp src/guiemulator.cpp src/Keyboard.cpp src/lowpass_1_5_mhz.cpp src/lowpass_3_58_mhz.cpp src/main.cpp src/memory.cpp src/paddlebuttonstates.cpp src/paddles.cpp src/picturegenerator.cpp src/powerupreset.cpp src/RAMInitializer.cpp src/screen.cpp src/screenimage.cpp src/slots.cpp src/speakerclicker.cpp src/steppermotor.cpp src/textcharacters.cpp src/throttle.cpp src/timable.cpp src/timinggenerator.cpp src/video.cpp src/videoaddressing.cpp src/videodisplaydevice.cpp src/videomode.cpp src/videostaticgenerator.cpp .tmp/playqmake1.0.0/ && (cd `dirname .tmp/playqmake1.0.0` && $(TAR) playqmake1.0.0.tar playqmake1.0.0 && $(COMPRESS) playqmake1.0.0.tar) && $(MOVE) `dirname .tmp/playqmake1.0.0`/playqmake1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/playqmake1.0.0
