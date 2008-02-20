@@ -8,8 +8,7 @@ DEPENDPATH += . src
 INCLUDEPATH += . src
 
 # Input
-HEADERS += src/a2colorindex.h \
-           src/a2colorsobserved.h \
+HEADERS += src/a2colorsobserved.h \
            src/addressbus.h \
            src/analogtv.h \
            src/apple2.h \
@@ -18,7 +17,6 @@ HEADERS += src/a2colorindex.h \
            src/cpu.h \
            src/diskbytes.h \
            src/diskcontroller.h \
-           src/displaytype.h \
            src/drive.h \
            src/emptyslot.h \
            src/emulator.h \

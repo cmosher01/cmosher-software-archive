@@ -195,7 +195,7 @@ qmake:  FORCE
 
 dist: 
 	@$(CHK_DIR_EXISTS) .tmp/playqmake1.0.0 || $(MKDIR) .tmp/playqmake1.0.0 
-	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/playqmake1.0.0/ && $(COPY_FILE) --parents src/a2colorindex.h src/a2colorsobserved.h src/addressbus.h src/analogtv.h src/apple2.h src/applentsc.h src/card.h src/cpu.h src/diskbytes.h src/diskcontroller.h src/displaytype.h src/drive.h src/emptyslot.h src/emulator.h src/gui.h src/guiemulator.h src/Keyboard.h src/lowpass_1_5_mhz.h src/lowpass_3_58_mhz.h src/memory.h src/paddlebuttonstates.h src/paddles.h src/picturegenerator.h src/powerupreset.h src/RAMInitializer.h src/screen.h src/screenimage.h src/slots.h src/speakerclicker.h src/steppermotor.h src/textcharacters.h src/throttle.h src/timable.h src/timinggenerator.h src/util.h src/video.h src/videoaddressing.h src/videodisplaydevice.h src/videomode.h src/videostaticgenerator.h .tmp/playqmake1.0.0/ && $(COPY_FILE) --parents src/a2colorsobserved.cpp src/addressbus.cpp src/analogtv.cpp src/apple2.cpp src/applentsc.cpp src/card.cpp src/cpu.cpp src/diskbytes.cpp src/diskcontroller.cpp src/drive.cpp src/emptyslot.cpp src/emulator.cpp src/gui.cpp src/guiemulator.cpp src/Keyboard.cpp src/lowpass_1_5_mhz.cpp src/lowpass_3_58_mhz.cpp src/main.cpp src/memory.cpp src/paddlebuttonstates.cpp src/paddles.cpp src/picturegenerator.cpp src/powerupreset.cpp src/RAMInitializer.cpp src/screen.cpp src/screenimage.cpp src/slots.cpp src/speakerclicker.cpp src/steppermotor.cpp src/textcharacters.cpp src/throttle.cpp src/timable.cpp src/timinggenerator.cpp src/video.cpp src/videoaddressing.cpp src/videodisplaydevice.cpp src/videomode.cpp src/videostaticgenerator.cpp .tmp/playqmake1.0.0/ && (cd `dirname .tmp/playqmake1.0.0` && $(TAR) playqmake1.0.0.tar playqmake1.0.0 && $(COMPRESS) playqmake1.0.0.tar) && $(MOVE) `dirname .tmp/playqmake1.0.0`/playqmake1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/playqmake1.0.0
+	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/playqmake1.0.0/ && $(COPY_FILE) --parents src/a2colorsobserved.h src/addressbus.h src/analogtv.h src/apple2.h src/applentsc.h src/card.h src/cpu.h src/diskbytes.h src/diskcontroller.h src/drive.h src/emptyslot.h src/emulator.h src/gui.h src/guiemulator.h src/Keyboard.h src/lowpass_1_5_mhz.h src/lowpass_3_58_mhz.h src/memory.h src/paddlebuttonstates.h src/paddles.h src/picturegenerator.h src/powerupreset.h src/RAMInitializer.h src/screen.h src/screenimage.h src/slots.h src/speakerclicker.h src/steppermotor.h src/textcharacters.h src/throttle.h src/timable.h src/timinggenerator.h src/util.h src/video.h src/videoaddressing.h src/videodisplaydevice.h src/videomode.h src/videostaticgenerator.h .tmp/playqmake1.0.0/ && $(COPY_FILE) --parents src/a2colorsobserved.cpp src/addressbus.cpp src/analogtv.cpp src/apple2.cpp src/applentsc.cpp src/card.cpp src/cpu.cpp src/diskbytes.cpp src/diskcontroller.cpp src/drive.cpp src/emptyslot.cpp src/emulator.cpp src/gui.cpp src/guiemulator.cpp src/Keyboard.cpp src/lowpass_1_5_mhz.cpp src/lowpass_3_58_mhz.cpp src/main.cpp src/memory.cpp src/paddlebuttonstates.cpp src/paddles.cpp src/picturegenerator.cpp src/powerupreset.cpp src/RAMInitializer.cpp src/screen.cpp src/screenimage.cpp src/slots.cpp src/speakerclicker.cpp src/steppermotor.cpp src/textcharacters.cpp src/throttle.cpp src/timable.cpp src/timinggenerator.cpp src/video.cpp src/videoaddressing.cpp src/videodisplaydevice.cpp src/videomode.cpp src/videostaticgenerator.cpp .tmp/playqmake1.0.0/ && (cd `dirname .tmp/playqmake1.0.0` && $(TAR) playqmake1.0.0.tar playqmake1.0.0 && $(COMPRESS) playqmake1.0.0.tar) && $(MOVE) `dirname .tmp/playqmake1.0.0`/playqmake1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/playqmake1.0.0
 
 
 yaccclean:
@@ -267,12 +267,10 @@ addressbus.o: src/addressbus.cpp src/addressbus.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o addressbus.o src/addressbus.cpp
 
 analogtv.o: src/analogtv.cpp src/analogtv.h \
-		src/displaytype.h \
 		src/applentsc.h \
 		src/a2colorsobserved.h \
 		src/screenimage.h \
 		src/videoaddressing.h \
-		src/a2colorindex.h \
 		src/lowpass_3_58_mhz.h \
 		src/lowpass_1_5_mhz.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o analogtv.o src/analogtv.cpp
@@ -295,7 +293,6 @@ apple2.o: src/apple2.cpp src/apple2.h \
 		src/paddlebuttonstates.h \
 		src/speakerclicker.h \
 		src/analogtv.h \
-		src/displaytype.h \
 		src/applentsc.h \
 		src/a2colorsobserved.h \
 		src/powerupreset.h \
@@ -357,7 +354,6 @@ emulator.o: src/emulator.cpp src/emulator.h \
 		src/paddles.h \
 		src/speakerclicker.h \
 		src/analogtv.h \
-		src/displaytype.h \
 		src/applentsc.h \
 		src/a2colorsobserved.h \
 		src/powerupreset.h \
@@ -392,7 +388,6 @@ guiemulator.o: src/guiemulator.cpp src/guiemulator.h \
 		src/paddles.h \
 		src/speakerclicker.h \
 		src/analogtv.h \
-		src/displaytype.h \
 		src/applentsc.h \
 		src/a2colorsobserved.h \
 		src/powerupreset.h \
@@ -432,7 +427,6 @@ main.o: src/main.cpp src/guiemulator.h \
 		src/paddles.h \
 		src/speakerclicker.h \
 		src/analogtv.h \
-		src/displaytype.h \
 		src/applentsc.h \
 		src/a2colorsobserved.h \
 		src/powerupreset.h \
@@ -455,7 +449,6 @@ paddles.o: src/paddles.cpp src/paddles.h \
 picturegenerator.o: src/picturegenerator.cpp src/picturegenerator.h \
 		src/videoaddressing.h \
 		src/analogtv.h \
-		src/displaytype.h \
 		src/applentsc.h \
 		src/a2colorsobserved.h \
 		src/videomode.h \
@@ -481,7 +474,6 @@ powerupreset.o: src/powerupreset.cpp src/powerupreset.h \
 		src/paddlebuttonstates.h \
 		src/speakerclicker.h \
 		src/analogtv.h \
-		src/displaytype.h \
 		src/applentsc.h \
 		src/a2colorsobserved.h \
 		src/timinggenerator.h
@@ -512,7 +504,6 @@ screen.o: src/screen.cpp src/screen.h \
 		src/paddlebuttonstates.h \
 		src/speakerclicker.h \
 		src/analogtv.h \
-		src/displaytype.h \
 		src/a2colorsobserved.h \
 		src/powerupreset.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o screen.o src/screen.cpp
@@ -565,8 +556,7 @@ videoaddressing.o: src/videoaddressing.cpp src/timinggenerator.h \
 		src/videoaddressing.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o videoaddressing.o src/videoaddressing.cpp
 
-videodisplaydevice.o: src/videodisplaydevice.cpp src/videodisplaydevice.h \
-		src/displaytype.h
+videodisplaydevice.o: src/videodisplaydevice.cpp src/videodisplaydevice.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o videodisplaydevice.o src/videodisplaydevice.cpp
 
 videomode.o: src/videomode.cpp src/videomode.h \
@@ -576,7 +566,6 @@ videomode.o: src/videomode.cpp src/videomode.h \
 videostaticgenerator.o: src/videostaticgenerator.cpp src/videostaticgenerator.h \
 		src/timable.h \
 		src/analogtv.h \
-		src/displaytype.h \
 		src/applentsc.h \
 		src/a2colorsobserved.h \
 		src/timinggenerator.h
