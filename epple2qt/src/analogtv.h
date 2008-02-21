@@ -50,9 +50,9 @@ private:
 	ScreenImage& image;
 
 	bool on;
-	std::vector<signed char> signal;
-	std::vector<signed char>::iterator isig;
-	std::vector<signed char>::iterator siglim;
+//	std::vector<signed char> signal;
+//	std::vector<signed char>::iterator isig;
+//	std::vector<signed char>::iterator siglim;
 	bool noise;
 	DisplayType type;
 	unsigned long /* TODO long*/ int rrr;
@@ -73,7 +73,6 @@ private:
 	static const IQ& BLACK_AND_WHITE;
 	enum { D_IP = AppleNTSC::H-2-350 };
 
-	void drawCurrent();
 	void drawMonitorColor();
 	void drawMonitorWhite();
 	void drawMonitorGreen();
@@ -94,6 +93,8 @@ private:
 	static int clamp(int min, int x, int lim);
 
 public:
+	void drawCurrent();
+	signed char* signal;
 
 	enum { CB_EXTRA = 32 };
 
@@ -109,7 +110,7 @@ public:
 	void putAsDisconnectedVideoIn();
 	void restartSignal();
 	void setType(DisplayType type);
-
+/*
 	void putSignal(const signed char ire)
 	{
 		if (this->isig == this->siglim)
@@ -127,6 +128,7 @@ public:
 		*(this->isig) = ire;
 		++this->isig;
 	}
+*/
 };
 
 #endif

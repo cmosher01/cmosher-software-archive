@@ -32,7 +32,8 @@ A2ColorsObserved::A2ColorsObserved():
 
 	for (unsigned int i(0); i < COLOR.size(); ++i)
 	{
-		COLOR[i] = QColor::fromHsv(hue[map[i]],(int)(sat[map[i]]*(255.0/100.0)+.5),(int)(val[map[i]]*(255.0/100.0)+.5)).rgb();
+		const QColor c = QColor::fromHsv(hue[map[i]],(int)(sat[map[i]]*(255.0/100.0)+.5),(int)(val[map[i]]*(255.0/100.0)+.5));
+		COLOR[i] = (c.red()) | (c.green() << 8) | (c.blue() << 16);
 	}
 }
 

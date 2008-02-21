@@ -120,15 +120,15 @@ void Screen::plot()
 
 void Screen::initializeGL()
 {
-	glViewport(0, 0, ScreenImage::WIDTH, ScreenImage::HEIGHT);
+	glViewport(0, 0, ScreenImage::WIDTH+2, ScreenImage::HEIGHT+2);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity( );
-	gluOrtho2D(0, ScreenImage::WIDTH, 0, ScreenImage::HEIGHT);
+	gluOrtho2D(0, ScreenImage::WIDTH+2, 0, ScreenImage::HEIGHT+2);
 	glPixelZoom(1,-1);
 	glClearColor (0.0, 0.0, 0.0, 0.0);
 	glShadeModel(GL_FLAT);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glRasterPos2f(0,ScreenImage::HEIGHT);
+	glRasterPos2f(0,ScreenImage::HEIGHT+1);
 }
 
 void Screen::paintGL(void)

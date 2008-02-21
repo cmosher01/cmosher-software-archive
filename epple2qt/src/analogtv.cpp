@@ -30,9 +30,9 @@
 AnalogTV::AnalogTV(ScreenImage& image):
 	image(image),
 	on(false),
-	signal(AppleNTSC::SIGNAL_LEN),
-	isig(signal.begin()),
-	siglim(signal.end()),
+//	signal(AppleNTSC::SIGNAL_LEN),
+//	isig(signal.begin()),
+//	siglim(signal.end()),
 	noise(false),
 	rrr(1)
 {
@@ -72,16 +72,17 @@ void AnalogTV::putAsDisconnectedVideoIn()
 //	this->rrr %= 0x7FFFFFFF;
 //	++this->rrr;
 //	const signed char v = this->rrr>>17;
-	putSignal((rand()>>7&0x7F)-27);
+	//putSignal((rand()>>7&0x7F)-27); // TODO video static generation
 	this->noise = false;
 }
 
+/*
 void AnalogTV::restartSignal()
 {
 	this->isig = signal.begin();
 	this->image.notifyObservers();
 }
-
+*/
 void AnalogTV::setType(DisplayType type)
 {
 	this->type = type;
@@ -411,7 +412,7 @@ void AnalogTV::ntsc_to_rgb_newtv(const int isignal, const int siglen, unsigned i
 		sp = s0;
 		while (this->signal[s0] < 50 && s0<se) { rgb[s0-isignal] = 0; ++s0; }
 		// unless it's too short, then color it (but not white)
-		if (s0-sp < 4 && c != colors.c()[A2ColorsObserved::WHITE])
+		if (s0-sp < 4 && c != 0xFFFFFF)
 		{
 			for (int i = sp; i < s0; ++i)
 				rgb[i-isignal] = c;
@@ -542,9 +543,9 @@ int inline AnalogTV::yiq2rgb(const int yiq)
 	double b = ((yiq&0xFF)-IQINTOFF) - 1.105 * (((yiq>>8)&0xFF)-IQINTOFF) + 1.702 * (((yiq>>16)&0xFF)-IQINTOFF);
 
 	const int rgb =
-		(calc_color(r) << 16)| 
+		(calc_color(r) <<  0)| 
 		(calc_color(g) <<  8)| 
-		(calc_color(b) <<  0);
+		(calc_color(b) << 16);
 
 	return rgb;
 }
@@ -557,7 +558,7 @@ int inline AnalogTV::color2bw(const int rgb)
 
 int inline AnalogTV::rgb2y(const int rgb) // y in range 0-255
 {
-	return (int)((0.299*((rgb>>16)&0xFF) + 0.587*((rgb>>8)&0xFF) + 0.114*(rgb&0xFF))/1.04);
+	return (int)((0.299*(rgb&0xFF) + 0.587*((rgb>>8)&0xFF) + 0.114*((rgb>>16)&0xFF))/1.04);
 }
 
 int inline AnalogTV::calc_color(const double color)
