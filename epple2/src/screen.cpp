@@ -19,11 +19,13 @@
  ***************************************************************************/
 #include "screen.h"
 
-#include <QtGui>
-#include <QPainter>
+#include <QtGui/QPainter>
 #include <GL/glu.h>
-#include <QApplication>
-#include <QString>
+#include <QtGui/QApplication>
+#include <QtGui/QClipboard>
+#include <QtCore/QString>
+#include <QtGui/QWidget>
+#include <QtGui/QKeyEvent>
 
 #include "screenimage.h"
 #include "apple2.h"

@@ -20,9 +20,10 @@
 #ifndef TIMINGGENERATOR_H
 #define TIMINGGENERATOR_H
 
-#include <QThread>
+#include <QtCore/QThread>
 class Timable;
 class Throttle;
+class QObject;
 
 class TimingGenerator : public QThread
 {

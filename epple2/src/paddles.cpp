@@ -19,11 +19,11 @@
  ***************************************************************************/
 #include "paddles.h"
 
-#include <QCursor>
-#include <QApplication>
-#include <QDesktopWidget>
-#include <QPoint>
-#include <QRect>
+#include <QtGui/QCursor>
+#include <QtGui/QApplication>
+#include <QtGui/QDesktopWidget>
+#include <QtCore/QPoint>
+#include <QtCore/QRect>
 
 Paddles::Paddles():
 	rTick(PADDLE_COUNT)

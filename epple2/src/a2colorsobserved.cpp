@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "a2colorsobserved.h"
 
-#include <QColor>
+#include <QtGui/QColor>
 
 A2ColorsObserved::A2ColorsObserved():
 	COLOR(0x10)

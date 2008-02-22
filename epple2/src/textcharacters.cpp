@@ -38,7 +38,7 @@ static unsigned char translateRow(unsigned char b)
 TextCharacters::TextCharacters():
 	rows(0x200)
 {
-	std::ifstream is_rom("GI2513.ROM",std::ifstream::binary);
+	std::ifstream is_rom("/home/chris/epple2/src/GI2513.ROM",std::ifstream::binary);
 	// TODO check for errors
 	is_rom.read((char*)&this->rows.front(),this->rows.size());
 	is_rom.close();

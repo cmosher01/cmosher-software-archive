@@ -20,14 +20,11 @@
 #ifndef SCREENIMAGE_H
 #define SCREENIMAGE_H
 
-#include <QObject>
-#include <QImage>
-#include <QPixmap>
-#include <QPainter>
+#include <QtCore/QObject>
 
 #include "applentsc.h"
 #include "videoaddressing.h"
-class ScreenImage : public QObject//, public QImage//QPixmap
+class ScreenImage : public QObject
 {
 	Q_OBJECT
 
@@ -41,7 +38,6 @@ public:
 	void notifyObservers();
 	void setElem(const unsigned int i, const unsigned int val);
 	void blank();
-//	void drawOnto(QPainter& painter) const;
 	enum
 	{
 		HEIGHT = VideoAddressing::VISIBLE_ROWS_PER_FIELD*2,
@@ -50,7 +46,6 @@ public:
 	const void* image() const { return this->img; }
 
 private:
-//	QPainter pain;
 	unsigned int img[HEIGHT][WIDTH];
 };
 

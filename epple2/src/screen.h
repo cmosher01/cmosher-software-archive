@@ -22,12 +22,12 @@
 
 #include "keyboard.h"
 
-#include <QWidget>
 #include <QtOpenGL/QGLWidget>
-class QPaintEvent;
 
 class ScreenImage;
 class Apple2;
+class QKeyEvent;
+class QWidget;
 
 class Screen : public QGLWidget
 {
@@ -39,9 +39,7 @@ class Screen : public QGLWidget
 	void pt(int key);
 
 protected:
-//	void paintEvent(QPaintEvent*);
 	void initializeGL();
-//	void resizeGL(int w, int h);
 	void paintGL();
  
 public:

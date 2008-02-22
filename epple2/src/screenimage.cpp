@@ -18,15 +18,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "screenimage.h"
-#include "applentsc.h"
-#include "videoaddressing.h"
 
-#include <QPoint>
-#include <QPainter>
-
-ScreenImage::ScreenImage()//:
-//	QImage(WIDTH,VideoAddressing::VISIBLE_ROWS_PER_FIELD*2,QImage::Format_RGB32)
-//	QPixmap(WIDTH,VideoAddressing::VISIBLE_ROWS_PER_FIELD*2)
+ScreenImage::ScreenImage()
 {
 }
 
@@ -41,40 +34,14 @@ void ScreenImage::notifyObservers()
 
 void ScreenImage::setElem(const unsigned int i, const unsigned int val)
 {
-//	const unsigned int x = i % WIDTH;
-//	const unsigned int y = (i / WIDTH);
-//	setPixel(x,y,val);
-//	pain.begin(this);
-//	pain.setPen(QColor(val));
-//	pain.drawPoint(x,y);
-//	pain.end();
-//	unsigned char* pc = (unsigned char*)this->img;
-//	(pc+i+i+i)[0]
 	unsigned int* pn = (unsigned int*)this->img;
-//	unsigned int f = 0;
-//	f |= (val & 0xff) << 16;
-//	f |= ((val >> 8) & 0xFF) << 8;
-//	f |= ((val >> 16) & 0xFF);
 	pn[i] = val;
-
-//	this->img[y][x] = val;
-/*	this->img[y][x][0] = val >> 16 & 0xFF;
-	this->img[y][x][1] = val >> 8 & 0xFF;
-	this->img[y][x][2] = val & 0xFF;
-	this->img[y][x][3] = 0xFF;*/
 }
 
 void ScreenImage::blank()
 {
 	memset(this->img,0,WIDTH*HEIGHT*4);
-//	fill(Qt::black);
 }
-
-//void ScreenImage::drawOnto(QPainter& painter) const
-//{
-//	painter.drawImage(QPoint(),*this);
-//	painter.drawPixmap(0,0,*this);
-//}
 
 // TODO dump PNG
 //void ScreenImage::dump(const String type, const File file) throws IOException
