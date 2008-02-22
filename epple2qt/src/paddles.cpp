@@ -19,7 +19,11 @@
  ***************************************************************************/
 #include "paddles.h"
 
-
+#include <QCursor>
+#include <QApplication>
+#include <QDesktopWidget>
+#include <QPoint>
+#include <QRect>
 
 Paddles::Paddles():
 	rTick(PADDLE_COUNT)
@@ -55,22 +59,19 @@ void Paddles::startTimers()
 
 void Paddles::tryStartPaddleTimers()
 {
-/*
-	const PointerInfo mouse = MouseInfo.getPointerInfo();
-	const Rectangle rect = mouse.getDevice().getDefaultConfiguration().getBounds();
-	const Point loc = mouse.getLocation();
+	const QPoint loc = QCursor::pos();
+	const QRect rect = QApplication::desktop()->screenGeometry(loc);
 
-	double p = loc.getX();
-	double pMin = rect.getMinX();
-	double pMax = rect.getMaxX()/2;
-	const int x = (int)Math.round(Math.rint((p-pMin)/(pMax-pMin)*PADDLE_CYCLES));
+	double p = loc.x();
+	double pMin = rect.left();
+	double pMax = rect.right()/2;
+	const int x = (int)((p-pMin)/(pMax-pMin)*PADDLE_CYCLES+.5);
 
-	p = loc.getY();
-	pMin = rect.getMinY();
-	pMax = rect.getMaxY()/2;
-	const int y = (int)Math.round(Math.rint((p-pMin)/(pMax-pMin)*PADDLE_CYCLES));
-*/
-int x(0); int y(0); // TODO paddles
+	p = loc.y();
+	pMin = rect.top();
+	pMax = rect.bottom()/2;
+	const int y = (int)((p-pMin)/(pMax-pMin)*PADDLE_CYCLES+.5);
+
 	if (isTimedOut(0))
 		this->rTick[0] = x;
 	if (isTimedOut(1))

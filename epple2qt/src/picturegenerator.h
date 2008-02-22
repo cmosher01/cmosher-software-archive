@@ -19,7 +19,7 @@
  ***************************************************************************/
 #ifndef PICTUREGENERATOR_H
 #define PICTUREGENERATOR_H
-
+#include "applentsc.h"
 class AnalogTV;
 class VideoMode;
 
@@ -37,6 +37,10 @@ private:
 	bool lasthires;
 	static const signed char lutCB[];
 
+	signed char testsig[AppleNTSC::SIGNAL_LEN];
+	signed char* itestsig;
+	signed char* itestsiglim;
+
 	void shiftLoRes();
 	void shiftHiRes();
 	void shiftText();
@@ -46,7 +50,7 @@ private:
 	void loadGraphics(const unsigned char value);
 	void loadText(const int value);
 	bool shiftLatch(const int t, const int cycle, const bool isText, const bool isHiRes);
-	void writeVideoSignal(const bool shift, const bool showLastHiRes, const int firstBlankedCycle, const int cycle, const int hcycle, const bool bit, const bool lineVis, const bool hVis);
+	signed char* writeVideoSignal(const bool shift, const bool showLastHiRes, const int firstBlankedCycle, const int cycle, const int hcycle, const bool bit, const bool lineVis, const bool hVis, signed char* is);
 	signed char vbl(const int hcycle);
 	signed char hbl(const int hcycle);
 

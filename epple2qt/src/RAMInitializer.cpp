@@ -116,7 +116,7 @@ void RAMInitializer::ramPattern2(const int bit) throw (done)
 
 void RAMInitializer::putn(const int c, bool on, const int bit) throw (done)
 {
-	if ((rand() >> 9) & 1)
+	if (((rand() >> 9) & 0x1F) == 5)
 		on = !on;
 	const unsigned char mask(1 << bit);
 	for (int i = 0; i < c; ++i)

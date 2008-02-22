@@ -24,15 +24,11 @@
 #include "applentsc.h"
 #include "timinggenerator.h"
 
-static signed char testsig[AppleNTSC::SIGNAL_LEN]; // TODO testing
-static signed char* itestsig = testsig; // TODO testing
-static signed char* itestsiglim = testsig+AppleNTSC::SIGNAL_LEN; // TODO testing
-
 PictureGenerator::PictureGenerator(AnalogTV& display, VideoMode& mode):
-	display(display), mode(mode),
+	display(display), mode(mode), itestsig(testsig), itestsiglim(testsig+AppleNTSC::SIGNAL_LEN),
 	VISIBLE_X_OFFSET(VideoAddressing::BYTES_PER_ROW-VideoAddressing::VISIBLE_BYTES_PER_ROW)
 {
-	this->display.signal = testsig; // TODO testing
+	this->display.signal = testsig;
 }
 
 
@@ -140,6 +136,9 @@ void PictureGenerator::tick(const int t, const unsigned char rowToPlot)
 {
 	const bool isText(this->mode.isDisplayingText(t));
 	const bool isHiRes(this->mode.isHiRes());
+
+	signed char* is = this->itestsig;
+
 	if (isText)
 		loadText(rowToPlot);
 	else
@@ -174,7 +173,7 @@ void PictureGenerator::tick(const int t, const unsigned char rowToPlot)
 	for (int cycle(0); cycle < cycles-1; ++cycle)
 	{
 		const bool bit = shiftLatch(t,cycle,isText,isHiRes);
-		writeVideoSignal(shift,showLastHiRes,firstBlankedCycle,cycle,hcycle,bit,lineVis,hVis);
+		is = writeVideoSignal(shift,showLastHiRes,firstBlankedCycle,cycle,hcycle,bit,lineVis,hVis,is);
 		++hcycle;
 	}
 	// optimization: pull the last iteration of the loop out, so we don't getHiResBit every time
@@ -182,8 +181,10 @@ void PictureGenerator::tick(const int t, const unsigned char rowToPlot)
 		this->lasthires = getHiResBit(); // save it for the next plotted byte, just in case we need it
 		const int cycle = cycles-1;
 		const bool bit = shiftLatch(t,cycle,isText,isHiRes);
-		writeVideoSignal(shift,showLastHiRes,firstBlankedCycle,cycle,hcycle,bit,lineVis,hVis);
+		is = writeVideoSignal(shift,showLastHiRes,firstBlankedCycle,cycle,hcycle,bit,lineVis,hVis,is);
 	}
+
+	this->itestsig = is;
 
 	++this->hpos;
 	if (this->hpos >= TimingGenerator::HORIZ_CYCLES)
@@ -234,11 +235,11 @@ const signed char PictureGenerator::lutCB[] =
 	+AppleNTSC::CB_LEVEL
 };
 
-void inline PictureGenerator::writeVideoSignal(const bool shift, const bool showLastHiRes, const int firstBlankedCycle, const int cycle, const int hcycle, const bool bit, const bool lineVis, const bool hVis)
+inline signed char* PictureGenerator::writeVideoSignal(const bool shift, const bool showLastHiRes, const int firstBlankedCycle, const int cycle, const int hcycle, const bool bit, const bool lineVis, const bool hVis, signed char* is)
 {
 	if (shift && !cycle)
 	{
-		*itestsig++ = showLastHiRes ? AppleNTSC::WHITE_LEVEL : AppleNTSC::BLANK_LEVEL;
+		*is++ = showLastHiRes ? AppleNTSC::WHITE_LEVEL : AppleNTSC::BLANK_LEVEL;
 		// TODO this->display.putSignal(showLastHiRes ? AppleNTSC::WHITE_LEVEL : AppleNTSC::BLANK_LEVEL);
 	}
 
@@ -266,7 +267,8 @@ void inline PictureGenerator::writeVideoSignal(const bool shift, const bool show
 		sig = vbl(hcycle);
 	}
 	// TODO this->display.putSignal(sig);
-	*itestsig++ = sig;
+	*is++ = sig;
+	return is;
 }
 
 signed char inline PictureGenerator::vbl(const int hcycle)
