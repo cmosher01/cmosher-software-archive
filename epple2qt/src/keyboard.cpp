@@ -9,7 +9,7 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
-#include "Keyboard.h"
+#include "keyboard.h"
 //#include "KeypressQueue.h"
 
 Keyboard::Keyboard(KeypressQueue& q):

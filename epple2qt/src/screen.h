@@ -20,7 +20,7 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-#include "Keyboard.h"
+#include "keyboard.h"
 
 #include <QWidget>
 #include <QtOpenGL/QGLWidget>

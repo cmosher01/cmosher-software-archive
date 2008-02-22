@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "addressbus.h"
 #include "memory.h"
-#include "Keyboard.h"
+#include "keyboard.h"
 #include "videomode.h"
 #include "paddles.h"
 #include "paddlebuttonstates.h"

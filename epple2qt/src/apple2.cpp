@@ -20,7 +20,7 @@
 #include "apple2.h"
 #include "slots.h"
 #include "videomode.h"
-#include "Keyboard.h"
+#include "keyboard.h"
 #include "addressbus.h"
 #include "memory.h"
 #include "picturegenerator.h"

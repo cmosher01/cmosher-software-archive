@@ -21,7 +21,7 @@
 #define EMULATOR_H
 
 #include "throttle.h"
-#include "Keyboard.h"
+#include "keyboard.h"
 #include "paddlebuttonstates.h"
 #include "apple2.h"
 #include "videostaticgenerator.h"

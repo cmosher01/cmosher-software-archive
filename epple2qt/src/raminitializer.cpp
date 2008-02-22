@@ -18,7 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "RAMInitializer.h"
+#include "raminitializer.h"
 #include "memory.h"
 #include <ctime>
 #include <cstdlib>

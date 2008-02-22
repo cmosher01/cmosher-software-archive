@@ -21,7 +21,7 @@
 #include <vector>
 #include <algorithm>
 #include <istream>
-#include "RAMInitializer.h"
+#include "raminitializer.h"
 
 const int Memory::CLEAR_VALUE(0);
 
