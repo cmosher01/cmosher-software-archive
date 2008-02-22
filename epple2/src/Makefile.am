@@ -1,3 +1,0 @@
-INCLUDES = 
-METASOURCES = AUTO
-bin_PROGRAMS = epple2
