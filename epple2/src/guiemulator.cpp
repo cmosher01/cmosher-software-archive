@@ -20,11 +20,9 @@
 #include "guiemulator.h"
 
 #include "gui.h"
-#include "analogtv.h"
 
 GUIEmulator::GUIEmulator():
-	Emulator(),
-	screen(screenImage,apple2)
+	Emulator()
 {
 }
 
@@ -38,39 +36,25 @@ GUIEmulator::~GUIEmulator()
 
 void GUIEmulator::init()
 {
-//	ComputerControlPanel compControls(this);
-//	MonitorControlPanel monitorControls(this->display);
+	GUI* pgui = new GUI(this->screenImage,this->apple2,this->display,this->keypresses);
 
-//	GUI gui(this,this->screen,compControls,monitorControls,this->apple2.slts);
-	GUI gui(this->screen);
+//	initKeyListeners();
 
-/* TODO
-	this->screenImage.addObserver(new Observer()
-	{
-	@SuppressWarnings({ "unused", "synthetic-access" })
-		public void update(final Observable observableThatChagned, final Object typeOfChange)
-		{
-		GUIEmulator.this->screen.plot();
-		}
-	});
-*/
-
-	initKeyListeners();
 
 
 //	this->screen.setFocusTraversalKeysEnabled(false);
-//	this->screen.requestFocus();
 
 	this->display.setType(AnalogTV::MONITOR_COLOR);//TV_NEW_COLOR);//TV_OLD_COLOR);
-//TODO	powerOffComputer();
+
+	powerOffComputer();
 //	this->display.powerOn(false);
-	powerOnComputer();
-	this->display.powerOn(true);
+//	powerOnComputer();
+
+	pgui->show();
 }
 
 void GUIEmulator::initKeyListeners()
 {
-	this->screen.setKeypressQueue(this->keypresses);
 /*
 	this->screen.removeKeyListeners();
 

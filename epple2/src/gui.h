@@ -20,17 +20,25 @@
 #ifndef GUI_H
 #define GUI_H
 
-class Screen;
+#include "keyboard.h"
+#include <QtGui/QMainWindow>
+class QCloseEvent;
+class ScreenImage;
+class Apple2;
+class AnalogTV;
 
-class GUI
+class GUI : public QMainWindow
 {
+	Q_OBJECT
+
 private:
-	Screen& screen;
 
 public:
-	GUI(Screen& screen);
+	GUI(ScreenImage& screenImage, Apple2& apple2, AnalogTV& display, KeypressQueue& keys);
 	~GUI();
 
+protected:
+	void closeEvent(QCloseEvent* event);
 };
 
 #endif

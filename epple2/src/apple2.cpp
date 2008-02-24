@@ -33,6 +33,7 @@
 #include "analogtv.h"
 #include "powerupreset.h"
 #include "diskcontroller.h"
+#include "languagecard.h"
 
 #include <iostream>
 #include <fstream>
@@ -79,8 +80,31 @@ Apple2::Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates
 		}
 		disk->loadRom(0,rom_in);
 //		disk->loadDisk(0,"c:\\temp\\dos33.nib");
-		disk->loadDisk(0,"/home/chris/splitvid.nib");
+//		disk->loadDisk(0,"/home/chris/splitvid.nib");
+		disk->loadDisk(0,"/home/chris/LodeRunnerLevels.nib");
+
 		rom_in.close();
+	}
+	{
+		DiskController* disk = new DiskController();
+		this->slts.set(7,disk);
+//		std::ifstream rom_in("..\\apple2src\\firmware\\rom\\disk2_16sect_c600_patched_nodelay.rom",std::ios::binary);
+		std::ifstream rom_in("/home/chris/apple2src/firmware/rom/disk2_16sect_c600_patched_nodelay.rom",std::ios::binary);
+		if (!rom_in.good())
+		{
+			std::cout << "ERROR reading ROM file disk2_16sect_c600_patched_nodelay.rom" << std::endl;
+		}
+		disk->loadRom(0,rom_in);
+//		disk->loadDisk(0,"c:\\temp\\dos33.nib");
+//		disk->loadDisk(0,"/home/chris/splitvid.nib");
+		disk->loadDisk(0,"/home/chris/LudeRunner.nib");
+
+		rom_in.close();
+	}
+
+	{
+		LanguageCard* lang = new LanguageCard();
+		this->slts.set(0,lang);
 	}
 }
 

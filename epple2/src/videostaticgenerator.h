@@ -22,11 +22,16 @@
 
 class AnalogTV;
 #include "timable.h"
+#include "applentsc.h"
 
 class VideoStaticGenerator : public Timable
 {
 private:
 	AnalogTV& display;
+	signed char sig[AppleNTSC::SIGNAL_LEN];
+	signed char* isig;
+	signed char* isiglim;
+	unsigned int hpos;
 
 public:
 	VideoStaticGenerator(AnalogTV& display);

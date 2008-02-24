@@ -50,12 +50,8 @@ private:
 	ScreenImage& image;
 
 	bool on;
-//	std::vector<signed char> signal;
-//	std::vector<signed char>::iterator isig;
-//	std::vector<signed char>::iterator siglim;
 	bool noise;
 	DisplayType type;
-	unsigned long /* TODO long*/ int rrr;
 
 	static int* rcb;
 
@@ -107,28 +103,9 @@ public:
 	}
 
 	void powerOn(bool b);
-	void putAsDisconnectedVideoIn();
 	void restartSignal();
 	void setType(DisplayType type);
-/*
-	void putSignal(const signed char ire)
-	{
-		if (this->isig == this->siglim)
-		{
-			if (isOn())
-			{
-				this->drawCurrent();
-			}
-			else
-			{
-				this->drawBlank();
-			}
-			this->isig = signal.begin();
-		}
-		*(this->isig) = ire;
-		++this->isig;
-	}
-*/
+	void setNoise(bool noise) { this->noise = noise; }
 };
 
 #endif

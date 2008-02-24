@@ -30,13 +30,17 @@
 #include "screenimage.h"
 #include "apple2.h"
 
-Screen::Screen(const ScreenImage& image, Apple2& apple2, QWidget *parent):
+Screen::Screen(const ScreenImage& image, Apple2& apple2, KeypressQueue& keys, QWidget *parent):
 	QGLWidget(parent),
 	image(image),
-	apple2(apple2)
+	apple2(apple2),
+	keys(keys)
 {
 	resize(ScreenImage::WIDTH,ScreenImage::HEIGHT);
+	setMaximumSize(ScreenImage::WIDTH,ScreenImage::HEIGHT);
+	setMinimumSize(ScreenImage::WIDTH,ScreenImage::HEIGHT);
 	connect(&this->image,SIGNAL(changed()),this,SLOT(plot()));
+	show();
 }
 
 
@@ -44,17 +48,11 @@ Screen::~Screen()
 {
 }
 
-void Screen::setKeypressQueue(KeypressQueue& q)
-{
-	this->keys = &q;
-}
-
-
 //#include <iostream> //TODO remove
 void inline Screen::pt(const int key)
 {
 //	std::cout << "sending keypress: " << std::hex << key << std::endl;
-	this->keys->push(key);
+	this->keys.push(key);
 }
 void Screen::keyPressEvent(QKeyEvent *event)
 {

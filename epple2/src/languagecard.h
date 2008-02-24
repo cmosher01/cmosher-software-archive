@@ -20,15 +20,29 @@
 #ifndef LANGUAGECARD_H
 #define LANGUAGECARD_H
 
-/**
-	@author Chris Mosher,,, <chris@mosher.mine.nu>
-*/
-class LanguageCard{
+#include "card.h"
+#include "memory.h"
+#include <vector>
+
+class LanguageCard : public Card
+{
+private:
+	bool inhibit;
+	std::vector<Memory*> ramBank;
+	Memory ramTop;
+	unsigned char bank;
+	bool readEnable;
+	bool writeEnable;
+	unsigned char writeCount;
+
 public:
-    LanguageCard();
+	LanguageCard();
+	~LanguageCard();
 
-    ~LanguageCard();
-
+	virtual void reset() { /* does nothing */ }
+	virtual bool inhibitMotherboardRom() { return this->inhibit; }
+	virtual unsigned char io(const unsigned short address, const unsigned char data, const bool writing);
+	virtual void ioBankRom(const unsigned short addr, unsigned char* const pb, const bool write);
 };
 
 #endif

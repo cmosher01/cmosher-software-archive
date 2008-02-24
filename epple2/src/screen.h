@@ -28,6 +28,7 @@ class ScreenImage;
 class Apple2;
 class QKeyEvent;
 class QWidget;
+#include <iostream>
 
 class Screen : public QGLWidget
 {
@@ -35,18 +36,18 @@ class Screen : public QGLWidget
 
 	const ScreenImage& image;
 	Apple2& apple2;
-	KeypressQueue* keys;
+	KeypressQueue& keys;
 	void pt(int key);
 
 protected:
 	void initializeGL();
 	void paintGL();
+	void closeEvent(QCloseEvent* event) { std::cout << "screen closeEvent" << std::endl; }
  
 public:
-	Screen(const ScreenImage& image, Apple2& apple2, QWidget *parent = 0);
+	Screen(const ScreenImage& image, Apple2& apple2, KeypressQueue& keys, QWidget *parent = 0);
 	~Screen();
 
-	void setKeypressQueue(KeypressQueue& q);
 	void keyPressEvent(QKeyEvent *event);
 
 public slots:

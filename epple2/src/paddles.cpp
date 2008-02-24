@@ -59,7 +59,8 @@ void Paddles::startTimers()
 
 void Paddles::tryStartPaddleTimers()
 {
-	const QPoint loc = QCursor::pos();
+	// TODO reading mouse must be done on the MAIN thread
+	const QPoint loc;// = QCursor::pos();
 	const QRect rect = QApplication::desktop()->screenGeometry(loc);
 
 	double p = loc.x();

@@ -30,14 +30,8 @@
 AnalogTV::AnalogTV(ScreenImage& image):
 	image(image),
 	on(false),
-//	signal(AppleNTSC::SIGNAL_LEN),
-//	isig(signal.begin()),
-//	siglim(signal.end()),
-	noise(false),
-	rrr(1)
+	noise(false)
 {
-	srand(time(0));
-
 	hirescolor.push_back(colors.c()[A2ColorsObserved::HIRES_GREEN]);
 	hirescolor.push_back(colors.c()[A2ColorsObserved::HIRES_ORANGE]);
 	hirescolor.push_back(colors.c()[A2ColorsObserved::HIRES_VIOLET]);
@@ -65,24 +59,6 @@ void AnalogTV::powerOn(bool b)
 	this->image.notifyObservers();
 }
 
-void AnalogTV::putAsDisconnectedVideoIn()
-{
-	this->noise = true;
-//	this->rrr *= 16807;
-//	this->rrr %= 0x7FFFFFFF;
-//	++this->rrr;
-//	const signed char v = this->rrr>>17;
-	//putSignal((rand()>>7&0x7F)-27); // TODO video static generation
-	this->noise = false;
-}
-
-/*
-void AnalogTV::restartSignal()
-{
-	this->isig = signal.begin();
-	this->image.notifyObservers();
-}
-*/
 void AnalogTV::setType(DisplayType type)
 {
 	this->type = type;
@@ -170,6 +146,10 @@ public:
 	int length() const { return this->cb.size(); }
 	void getPhase(double phase[]) const
 	{
+		for (int i = 0; i < 4; ++i)
+		{
+			phase[i & 3] = 0;
+		}
 		for (int i = 0; i < length(); ++i)
 		{
 			phase[i & 3] += this->cb[i];
@@ -208,16 +188,23 @@ public:
 
 void AnalogTV::drawCurrent()
 {
-	switch (this->type)
+	if (this->on)
 	{
-		case MONITOR_COLOR: drawMonitorColor(); break;
-		case MONITOR_WHITE: drawMonitorWhite(); break;
-		case MONITOR_GREEN: drawMonitorGreen(); break;
-		case MONITOR_ORANGE: drawMonitorOrange(); break;
-		case TV_OLD_COLOR: drawTVOld(); break;
-		case TV_OLD_BW: drawTVOld(); break;
-		case TV_NEW_COLOR: drawTVNew(); break;
-		case TV_NEW_BW: drawTVNew(); break;
+		switch (this->type)
+		{
+			case MONITOR_COLOR: drawMonitorColor(); break;
+			case MONITOR_WHITE: drawMonitorWhite(); break;
+			case MONITOR_GREEN: drawMonitorGreen(); break;
+			case MONITOR_ORANGE: drawMonitorOrange(); break;
+			case TV_OLD_COLOR: drawTVOld(); break;
+			case TV_OLD_BW: drawTVOld(); break;
+			case TV_NEW_COLOR: drawTVNew(); break;
+			case TV_NEW_BW: drawTVNew(); break;
+		}
+	}
+	else
+	{
+		drawBlank();
 	}
 }
 

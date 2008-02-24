@@ -85,15 +85,13 @@ unsigned char Slots::ioBankRom(const unsigned short addr, const unsigned char da
 struct Slots_Card_inhibitMotherboardRom
 {
 	bool inhibit;
-	Slots_Card_inhibitMotherboardRom():inhibit(false) {}
-	void operator() (Card* p) { if (p->inhibitMotherboardRom()) inhibit = true; }
+	Slots_Card_inhibitMotherboardRom():inhibit(false) { }
+	void operator() (Card* p) { if (p->inhibitMotherboardRom()) { inhibit = true; }}
 };
 
 bool Slots::inhibitMotherboardRom()
 {
-	Slots_Card_inhibitMotherboardRom inh = Slots_Card_inhibitMotherboardRom();
-	std::for_each(this->cards.begin(),this->cards.end(),inh);
-	return inh.inhibit;
+	return std::for_each(this->cards.begin(),this->cards.end(),Slots_Card_inhibitMotherboardRom()).inhibit;
 }
 
 void Slots::set(const int slot, Card* card)
@@ -131,7 +129,5 @@ struct Slots_Card_isDirty
 
 bool Slots::isDirty()
 {
-	Slots_Card_isDirty dirty = Slots_Card_isDirty();
-	std::for_each(this->cards.begin(),this->cards.end(),dirty);
-	return dirty.dirty;
+	return std::for_each(this->cards.begin(),this->cards.end(),Slots_Card_isDirty()).dirty;
 }

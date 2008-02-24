@@ -14,6 +14,7 @@
 
 @SET_MAKE@
 
+
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
@@ -34,7 +35,8 @@ build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = epple2$(EXEEXT)
 subdir = src
-DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
+DIST_COMMON = $(noinst_HEADERS) $(srcdir)/Makefile.am \
+	$(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.in
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -46,7 +48,8 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
 am__objects_1 = screen.moc.$(OBJEXT) screenimage.moc.$(OBJEXT) \
-	timinggenerator.moc.$(OBJEXT)
+	timinggenerator.moc.$(OBJEXT) gui.moc.$(OBJEXT) \
+	monitorcontrolpanel.moc.$(OBJEXT) contentpane.moc.$(OBJEXT)
 am_epple2_OBJECTS = a2colorsobserved.$(OBJEXT) addressbus.$(OBJEXT) \
 	analogtv.$(OBJEXT) apple2.$(OBJEXT) applentsc.$(OBJEXT) \
 	card.$(OBJEXT) cpu.$(OBJEXT) diskbytes.$(OBJEXT) \
@@ -63,7 +66,8 @@ am_epple2_OBJECTS = a2colorsobserved.$(OBJEXT) addressbus.$(OBJEXT) \
 	throttle.$(OBJEXT) timable.$(OBJEXT) timinggenerator.$(OBJEXT) \
 	videoaddressing.$(OBJEXT) video.$(OBJEXT) \
 	videodisplaydevice.$(OBJEXT) videomode.$(OBJEXT) \
-	videostaticgenerator.$(OBJEXT) $(am__objects_1)
+	videostaticgenerator.$(OBJEXT) $(am__objects_1) \
+	monitorcontrolpanel.$(OBJEXT) contentpane.$(OBJEXT)
 epple2_OBJECTS = $(am_epple2_OBJECTS)
 epple2_DEPENDENCIES =
 DEFAULT_INCLUDES = -I. -I$(top_builddir)@am__isrc@
@@ -89,6 +93,7 @@ LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	$(LDFLAGS) -o $@
 SOURCES = $(epple2_SOURCES)
 DIST_SOURCES = $(epple2_SOURCES)
+HEADERS = $(noinst_HEADERS)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -200,28 +205,26 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 INCLUDES = -I/usr/include/qt4
 METASOURCES = AUTO
-epple2_MOC = screen.moc.cc screenimage.moc.cc timinggenerator.moc.cc
-epple2_SOURCES = a2colorsobserved.cpp a2colorsobserved.h addressbus.cpp\
-	addressbus.h analogtv.cpp analogtv.h apple2.cpp apple2.h applentsc.cpp\
-	applentsc.h card.cpp card.h cpu.cpp cpu.h diskbytes.cpp diskbytes.h\
-	diskcontroller.cpp diskcontroller.h drive.cpp drive.h emptyslot.cpp\
-	emptyslot.h emulator.cpp emulator.h firmwarecard.cpp firmwarecard.h\
-	gui.cpp guiemulator.cpp guiemulator.h gui.h keyboard.cpp keyboard.h\
-	languagecard.cpp languagecard.h lowpass_1_5_mhz.cpp lowpass_1_5_mhz.h\
-	lowpass_3_58_mhz.cpp lowpass_3_58_mhz.h main.cpp memory.cpp memory.h\
-	paddlebuttonstates.cpp paddlebuttonstates.h paddles.cpp paddles.h\
-	picturegenerator.cpp picturegenerator.h powerupreset.cpp powerupreset.h\
-	raminitializer.cpp raminitializer.h screen.cpp screen.h screenimage.cpp\
-	screenimage.h slots.cpp slots.h speakerclicker.cpp speakerclicker.h\
-	steppermotor.cpp steppermotor.h textcharacters.cpp textcharacters.h\
-	throttle.cpp throttle.h timable.cpp timable.h timinggenerator.cpp\
-	timinggenerator.h util.h videoaddressing.cpp videoaddressing.h video.cpp\
-	videodisplaydevice.cpp videodisplaydevice.h video.h videomode.cpp\
-	videomode.h videostaticgenerator.cpp videostaticgenerator.h\
-	$(epple2_MOC)
+epple2_MOC = screen.moc.cc screenimage.moc.cc timinggenerator.moc.cc gui.moc.cc monitorcontrolpanel.moc.cc contentpane.moc.cc
+epple2_SOURCES = a2colorsobserved.cpp a2colorsobserved.h \
+	addressbus.cpp	addressbus.h analogtv.cpp analogtv.h apple2.cpp apple2.h applentsc.cpp	applentsc.h \
+	card.cpp card.h cpu.cpp cpu.h diskbytes.cpp diskbytes.h	diskcontroller.cpp \
+	diskcontroller.h drive.cpp drive.h emptyslot.cpp	emptyslot.h emulator.cpp emulator.h \
+	firmwarecard.cpp firmwarecard.h	gui.cpp guiemulator.cpp guiemulator.h gui.h keyboard.cpp \
+	keyboard.h	languagecard.cpp languagecard.h lowpass_1_5_mhz.cpp \
+	lowpass_1_5_mhz.h	lowpass_3_58_mhz.cpp lowpass_3_58_mhz.h main.cpp memory.cpp memory.h	paddlebuttonstates.cpp \
+	paddlebuttonstates.h paddles.cpp paddles.h	picturegenerator.cpp picturegenerator.h \
+	powerupreset.cpp powerupreset.h	raminitializer.cpp raminitializer.h screen.cpp screen.h \
+	screenimage.cpp	screenimage.h slots.cpp slots.h speakerclicker.cpp speakerclicker.h	steppermotor.cpp \
+	steppermotor.h textcharacters.cpp textcharacters.h	throttle.cpp throttle.h timable.cpp \
+	timable.h timinggenerator.cpp	timinggenerator.h util.h videoaddressing.cpp \
+	videoaddressing.h video.cpp	videodisplaydevice.cpp videodisplaydevice.h video.h \
+	videomode.cpp	videomode.h videostaticgenerator.cpp videostaticgenerator.h	$(epple2_MOC) \
+	monitorcontrolpanel.cpp contentpane.cpp
 
 BUILT_SOURCES = $(epple2_MOC)
 epple2_LDADD = -lQtOpenGL -lGLU -lQtGui -lQtCore
+noinst_HEADERS = monitorcontrolpanel.h contentpane.h
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -300,6 +303,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/apple2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/applentsc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/card.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/contentpane.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/contentpane.moc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpu.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/diskbytes.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/diskcontroller.Po@am__quote@
@@ -308,6 +313,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/emulator.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/firmwarecard.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gui.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gui.moc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/guiemulator.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/keyboard.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/languagecard.Po@am__quote@
@@ -315,6 +321,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lowpass_3_58_mhz.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/memory.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/monitorcontrolpanel.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/monitorcontrolpanel.moc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/paddlebuttonstates.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/paddles.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/picturegenerator.Po@am__quote@
@@ -463,7 +471,7 @@ distdir: $(DISTFILES)
 check-am: all-am
 check: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) check-am
-all-am: Makefile $(PROGRAMS)
+all-am: Makefile $(PROGRAMS) $(HEADERS)
 installdirs:
 	for dir in "$(DESTDIR)$(bindir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \

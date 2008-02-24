@@ -19,15 +19,24 @@
  ***************************************************************************/
 #include "gui.h"
 
-#include "screen.h"
+#include "analogtv.h"
+#include "monitorcontrolpanel.h"
+#include "screenimage.h"
+#include "apple2.h"
+#include "contentpane.h"
 
-GUI::GUI(Screen& screen):
-	screen(screen)
+GUI::GUI(ScreenImage& screenImage, Apple2& apple2, AnalogTV& display, KeypressQueue& keys)
 {
-	screen.show();
+	ContentPane* pcontent = new ContentPane(screenImage,apple2,display,keys,this);
+	setCentralWidget(pcontent);
 }
 
 
 GUI::~GUI()
 {
+}
+#include <iostream>
+void GUI::closeEvent(QCloseEvent* event)
+{
+	std::cout << "GUI::closeEvent" << std::endl;
 }

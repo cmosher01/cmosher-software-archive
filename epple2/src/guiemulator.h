@@ -21,12 +21,10 @@
 #define GUIEMULATOR_H
 
 #include "emulator.h"
-#include "screen.h"
 
 class GUIEmulator : public Emulator
 {
 private:
-	Screen screen;
 
 public:
 	GUIEmulator();

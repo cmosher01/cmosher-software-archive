@@ -20,15 +20,49 @@
 #ifndef FIRMWARECARD_H
 #define FIRMWARECARD_H
 
-/**
-	@author Chris Mosher,,, <chris@mosher.mine.nu>
-*/
-class FirmwareCard{
+#include "card.h"
+#include "memory.h"
+
+class FirmwareCard : public Card
+{
+private:
+	bool inhibitBankRom;
+	bool inhibitF8Rom;
+	bool inhibit;
+	Memory bankRom;
+
 public:
-    FirmwareCard();
+	FirmwareCard();
+	~FirmwareCard();
 
-    ~FirmwareCard();
+	virtual void ioBankRom(const unsigned short addr, unsigned char* const pb, const bool write);
 
+	virtual void reset()
+	{
+		this->inhibitBankRom = false;
+		this->inhibitF8Rom = false;
+	}
+	
+	
+	
+	virtual unsigned char io(const unsigned short address, const unsigned char data, const bool writing)
+	{
+		this->inhibitBankRom = !(address & 1);
+		this->inhibitF8Rom = (address & 2);
+		return data;
+	}
+	
+	virtual void loadBankRom(const unsigned short base, std::istream& in)
+	{
+		this->bankRom.load(base,in);
+	}
+	
+	
+	
+	virtual bool inhibitMotherboardRom()
+	{
+		return this->inhibit;
+	}
 };
 
 #endif

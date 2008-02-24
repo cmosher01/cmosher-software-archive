@@ -18,8 +18,10 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "firmwarecard.h"
+#include "memory.h"
 
-FirmwareCard::FirmwareCard()
+FirmwareCard::FirmwareCard():
+	bankRom(0x10000-0xD000)
 {
 }
 
@@ -29,3 +31,35 @@ FirmwareCard::~FirmwareCard()
 }
 
 
+
+
+
+
+void FirmwareCard::ioBankRom(const unsigned short addr, unsigned char* const pb, const bool)
+{
+	this->inhibit = false;
+	if (addr < 0x2800)
+	{
+		if (this->inhibitBankRom)
+		{
+			*pb = this->bankRom.read(addr);
+			this->inhibit = true;
+		}
+	}
+	else if (0x2800 <= addr && addr < 0x3000)
+	{
+		if (this->inhibitF8Rom)
+		{
+			*pb = this->bankRom.read(addr);
+			this->inhibit = true;
+		}
+	}
+}
+
+
+/*
+public String getTypeName()
+{
+	return "firmware card";
+}
+*/
