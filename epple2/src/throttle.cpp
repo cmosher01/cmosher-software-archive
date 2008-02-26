@@ -50,9 +50,8 @@ void Throttle::throttleIfNecessary()
 	if (this->times >= CHECK_EVERY_CYCLE)
 	{
 		const clock_t ticksActual = clock()-this->ticksPrev;
-		// CLOCKS_PER_SEC/10 is how many ticks should have passed
-		const long ticksDelta = CLOCKS_PER_SEC/10-ticksActual;
-		this->speedRatio = (float)CLOCKS_PER_SEC/10/ticksActual;
+		const long ticksDelta = EXPECTED_TICKS-ticksActual;
+//		this->speedRatio = (float)ticksDelta/ticksActual;
 //		std::cout << speedRatio << std::endl;
 		sleep(ticksDelta);
 
@@ -65,9 +64,18 @@ void Throttle::sleep(const long ticksDelta)
 {
 	if (ticksDelta > 0)
 	{
-		this->sleepTime.tv_sec = ticksDelta/CLOCKS_PER_SEC;
-		this->sleepTime.tv_nsec = 0;//TODO fix nona sleep
+#ifdef _MSC_VER
+		clock_t ticksEnd = clock()+ticksDelta;
+		while (clock() < ticksEnd)
+		{
+			// just spin here
+		}
+#else
+		struct timespec sleepTime;
+		sleepTime.tv_sec = ticksDelta/CLOCKS_PER_SEC;
+		sleepTime.tv_nsec = ticksDelta*NANOS_PER_CLOCK;
 		nanosleep(&this->sleepTime,0);
+#endif
 	}
 }
 

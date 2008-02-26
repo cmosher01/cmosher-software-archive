@@ -25,14 +25,14 @@
 class Throttle
 {
 private:
-	enum { CHECK_EVERY_CYCLE = 102048 }; // TODO check these
-	enum { EXPECTED_MS = 100 };
+	enum { CHECK_EVERY_CYCLE = 102048 };
+	enum { EXPECTED_TICKS = CLOCKS_PER_SEC/10 };
+	enum { NANOS_PER_CLOCK = 1000000000/CLOCKS_PER_SEC };
 
 	clock_t ticksPrev;
 	unsigned int times;
 	bool suspend;
 	float speedRatio;
-	struct timespec sleepTime;
 
 public:
 	Throttle();
