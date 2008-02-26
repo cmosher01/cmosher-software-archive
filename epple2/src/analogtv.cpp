@@ -27,6 +27,8 @@
 #include <ctime>
 #include <cstdlib>
 
+
+
 AnalogTV::AnalogTV(ScreenImage& image):
 	image(image),
 	on(false),
@@ -160,6 +162,10 @@ public:
 			tot += phase[i] * phase[i];
 		}
 		const double tsrt = sqrt(tot);
+		if (tsrt < .0001)
+		{
+			return;
+		}
 		for (int i = 0; i < 4; i++)
 		{
 			phase[i] /= tsrt;
@@ -206,6 +212,7 @@ void AnalogTV::drawCurrent()
 	{
 		drawBlank();
 	}
+	this->image.notifyObservers();
 }
 
 
@@ -218,7 +225,7 @@ void AnalogTV::drawMonitorColor()
 	{
 		const CB cb = get_cb(row);
 		const bool removeColor = (this->type == TV_NEW_BW || !cb.isColor());
-		ntsc_to_rgb_monitor(row*AppleNTSC::H+350,D_IP,rgb);
+		ntsc_to_rgb_monitor(row*AppleNTSC::H+350,AppleNTSC::H-350,rgb);
 		for (int col = 350; col < AppleNTSC::H-2; ++col)
 		{
 			int rgbv = rgb[col-350];
@@ -232,7 +239,6 @@ void AnalogTV::drawMonitorColor()
 		}
 		ip += D_IP;
 	}
-	this->image.notifyObservers();
 	delete [] rgb;
 }
 
@@ -266,7 +272,6 @@ void AnalogTV::drawMonitorMonochrome(const unsigned int color)
 		}
 		ip += D_IP;
 	}
-	this->image.notifyObservers();
 }
 
 void AnalogTV::drawTVOld()
@@ -285,17 +290,16 @@ void AnalogTV::drawTVOld()
 		{
 			iq_factor = BLACK_AND_WHITE;
 		}
-		ntsc_to_yiq(row*AppleNTSC::H+350,AppleNTSC::H-2-350,iq_factor,yiq);
+		ntsc_to_yiq(row*AppleNTSC::H+350,AppleNTSC::H-350,iq_factor,yiq);
 		for (int col = 350; col < AppleNTSC::H-2; ++col)
 		{
-			const int rgb = yiq2rgb(yiq[col-350]);
+			const int rgb = yiq2rgb(yiq[col-348]); // shift display left 1 pixel
 			this->image.setElem(ip,rgb);
 			this->image.setElem(ip+D_IP,rgb);
 			++ip;
 		}
 		ip += D_IP;
 	}
-	this->image.notifyObservers();
 	delete [] yiq;
 }
 
@@ -307,7 +311,7 @@ void AnalogTV::drawTVNew()
 	{
 		const CB cb = get_cb(row);
 		const bool removeColor = (this->type == TV_NEW_BW || !cb.isColor());
-		ntsc_to_rgb_newtv(row*AppleNTSC::H+350,AppleNTSC::H-2-350,rgb);
+		ntsc_to_rgb_newtv(row*AppleNTSC::H+350,AppleNTSC::H-350,rgb);
 		for (int col = 350; col < AppleNTSC::H-2; ++col)
 		{
 			int rgbv = rgb[col-350];
@@ -321,21 +325,18 @@ void AnalogTV::drawTVNew()
 		}
 		ip += D_IP;
 	}
-	this->image.notifyObservers();
 	delete [] rgb;
 }
 
 void AnalogTV::drawBlank()
 {
 	this->image.blank();
-	this->image.notifyObservers();
 }
 
 
 
 
 
-#include <iostream>//TODO
 void AnalogTV::ntsc_to_rgb_monitor(const int isignal, const int siglen, unsigned int rgb[])
 {
 	int s0, s1, se;
@@ -399,10 +400,17 @@ void AnalogTV::ntsc_to_rgb_newtv(const int isignal, const int siglen, unsigned i
 		sp = s0;
 		while (this->signal[s0] < 50 && s0<se) { rgb[s0-isignal] = 0; ++s0; }
 		// unless it's too short, then color it (but not white)
-		if (s0-sp < 4 && c != 0xFFFFFF)
+		if (c != 0xFFFFFF)
 		{
-			for (int i = sp; i < s0; ++i)
-				rgb[i-isignal] = c;
+			if (s0-sp < 4)
+			{
+				for (int i = sp; i < s0; ++i)
+					rgb[i-isignal] = c;
+			}
+			else
+			{
+				rgb[sp-isignal] = c;
+			}
 		}
 
 		// signal (white, grey, or color)
@@ -475,6 +483,7 @@ IQ AnalogTV::get_iq_factor(const CB& cb)
 	cb.getPhase(cb_phase);
 	const double cb_i = cb_phase[2]-cb_phase[0];
 	const double cb_q = cb_phase[3]-cb_phase[1];
+
 	if (cb_i*cb_i + cb_q*cb_q < COLOR_THRESH)
 	{
 		return BLACK_AND_WHITE;

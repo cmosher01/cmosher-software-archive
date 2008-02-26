@@ -21,11 +21,9 @@
 #include "timinggenerator.h"
 #include "util.h"
 
-//TODO throttle
-
 
 Throttle::Throttle():
-	msPrev(0),
+	ticksPrev(clock()),
 	times(0),
 	suspend(false)
 {
@@ -41,41 +39,36 @@ void Throttle::tick()
 	suspendIfNecessary();
 	throttleIfNecessary();
 }
-
+#include <iostream>
 void Throttle::throttleIfNecessary()
 {
 	/*
-	* Check every 100 milliseconds to see how far
-	* ahead we are, and sleep by the difference.
+	 * Check every 100 milliseconds to see how far
+	 * ahead we are, and sleep by the difference.
+	 */
 	++this->times;
 	if (this->times >= CHECK_EVERY_CYCLE)
 	{
-		final long msActual = System.currentTimeMillis()-this->msPrev;
-		final long msDelta = EXPECTED_MS-msActual;
-		this->speedRatio = (float)EXPECTED_MS/msActual;
-		sleep(msDelta);
+		const clock_t ticksActual = clock()-this->ticksPrev;
+		// CLOCKS_PER_SEC/10 is how many ticks should have passed
+		const long ticksDelta = CLOCKS_PER_SEC/10-ticksActual;
+		this->speedRatio = (float)CLOCKS_PER_SEC/10/ticksActual;
+//		std::cout << speedRatio << std::endl;
+		sleep(ticksDelta);
 
-		this->msPrev = System.currentTimeMillis();
+		this->ticksPrev = clock();
 		this->times = 0;
 	}
-	*/
 }
 
-void Throttle::sleep(const long /*msDelta*/)
+void Throttle::sleep(const long ticksDelta)
 {
-/*
-	if (msDelta > 0)
+	if (ticksDelta > 0)
 	{
-		try
-		{
-			Thread.sleep(msDelta);
-		}
-		catch (InterruptedException e)
-		{
-			Thread.currentThread().interrupt();
-		}
+		this->sleepTime.tv_sec = ticksDelta/CLOCKS_PER_SEC;
+		this->sleepTime.tv_nsec = 0;//TODO fix nona sleep
+		nanosleep(&this->sleepTime,0);
 	}
-*/
 }
 
 void Throttle::suspendIfNecessary()

@@ -56,6 +56,8 @@ void Emulator::powerOffComputer()
 	}
 	// TODO ask if unsaved changes
 	this->apple2.powerOff();
+	this->videoStatic.powerOn();
+
 	this->timer = new TimingGenerator(this->videoStatic,this->throttle);
 	this->timer->start();
 }

@@ -38,6 +38,7 @@ public:
 	~VideoStaticGenerator();
 
 	virtual void tick();
+	void powerOn();
 };
 
 #endif

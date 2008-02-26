@@ -81,7 +81,7 @@ Apple2::Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates
 		disk->loadRom(0,rom_in);
 //		disk->loadDisk(0,"c:\\temp\\dos33.nib");
 //		disk->loadDisk(0,"/home/chris/splitvid.nib");
-		disk->loadDisk(0,"/home/chris/LodeRunnerLevels.nib");
+//		disk->loadDisk(0,"/home/chris/LodeRunnerLevels.nib");
 
 		rom_in.close();
 	}
@@ -96,8 +96,8 @@ Apple2::Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates
 		}
 		disk->loadRom(0,rom_in);
 //		disk->loadDisk(0,"c:\\temp\\dos33.nib");
-//		disk->loadDisk(0,"/home/chris/splitvid.nib");
-		disk->loadDisk(0,"/home/chris/LudeRunner.nib");
+		disk->loadDisk(0,"/home/chris/splitvid.nib");
+//		disk->loadDisk(0,"/home/chris/LudeRunner.nib");
 
 		rom_in.close();
 	}

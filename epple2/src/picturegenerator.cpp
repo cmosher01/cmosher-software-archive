@@ -28,7 +28,6 @@ PictureGenerator::PictureGenerator(AnalogTV& display, VideoMode& mode):
 	display(display), mode(mode), itestsig(testsig), itestsiglim(testsig+AppleNTSC::SIGNAL_LEN),
 	VISIBLE_X_OFFSET(VideoAddressing::BYTES_PER_ROW-VideoAddressing::VISIBLE_BYTES_PER_ROW)
 {
-	this->display.signal = testsig;
 }
 
 
@@ -41,7 +40,7 @@ void PictureGenerator::powerOn()
 {
 	this->hpos = 0;
 	this->line = 0;
-// TODO	this->display.restartSignal();
+	this->display.signal = testsig;
 	itestsig = testsig; // TODO testing
 }
 

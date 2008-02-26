@@ -20,16 +20,19 @@
 #ifndef THROTTLE_H
 #define THROTTLE_H
 
+#include <ctime>
+
 class Throttle
 {
 private:
 	enum { CHECK_EVERY_CYCLE = 102048 }; // TODO check these
 	enum { EXPECTED_MS = 100 };
 
-	unsigned int msPrev;
+	clock_t ticksPrev;
 	unsigned int times;
 	bool suspend;
 	float speedRatio;
+	struct timespec sleepTime;
 
 public:
 	Throttle();

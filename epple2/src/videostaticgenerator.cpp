@@ -65,3 +65,10 @@ void VideoStaticGenerator::tick()
 		}
 	}
 }
+
+void VideoStaticGenerator::powerOn()
+{
+	this->hpos = 0;
+	this->display.signal = sig;
+	isig = sig;
+}
