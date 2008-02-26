@@ -73,7 +73,7 @@ void Throttle::sleep(const long ticksDelta)
 #else
 		struct timespec sleepTime;
 		sleepTime.tv_sec = ticksDelta/CLOCKS_PER_SEC;
-		sleepTime.tv_nsec = ticksDelta*NANOS_PER_CLOCK;
+		sleepTime.tv_nsec = (ticksDelta%CLOCKS_PER_SEC)*NANOS_PER_CLOCK;
 		nanosleep(&this->sleepTime,0);
 #endif
 	}
