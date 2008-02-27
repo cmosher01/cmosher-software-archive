@@ -76,10 +76,10 @@ void StepperMotor::setMagnet(const unsigned char magnet, const bool on)
 		this->pos = newPos;
 
 		this->quarterTrack += d;
-		if (this->quarterTrack & 0x80)
+		if (this->quarterTrack < 0)
 			this->quarterTrack = 0;
-		else if (this->quarterTrack > (unsigned char)QTRACKS)
-			this->quarterTrack = (unsigned char)QTRACKS;
+		else if (this->quarterTrack > QTRACKS)
+			this->quarterTrack = QTRACKS;
 	}
 /*
 	std::cout << " ARM: magnet " << (unsigned int)magnet << " " << (on ? "on " : "off" );

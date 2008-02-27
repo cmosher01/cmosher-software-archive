@@ -64,9 +64,9 @@ MonitorControlPanel::MonitorControlPanel(AnalogTV& display, QWidget *parent):
 	initDisplayButton(displayTypeLayoutMon,"Green",AnalogTV::MONITOR_GREEN,false);
 	initDisplayButton(displayTypeLayoutMon,"Orange",AnalogTV::MONITOR_ORANGE,false);
 	initDisplayButton(displayTypeLayoutTV,"Old Color",AnalogTV::TV_OLD_COLOR,false);
-	initDisplayButton(displayTypeLayoutTV,"Old B&W",AnalogTV::TV_OLD_BW,false);
+	initDisplayButton(displayTypeLayoutTV,"Old B&&W",AnalogTV::TV_OLD_BW,false);
 	initDisplayButton(displayTypeLayoutTV,"New Color",AnalogTV::TV_NEW_COLOR,false);
-	initDisplayButton(displayTypeLayoutTV,"New B&W",AnalogTV::TV_NEW_BW,false);
+	initDisplayButton(displayTypeLayoutTV,"New B&&W",AnalogTV::TV_NEW_BW,false);
 
 	QVBoxLayout* displayTypeLayout = new QVBoxLayout();
 	displayTypeLayout->addLayout(displayTypeLayoutMon);

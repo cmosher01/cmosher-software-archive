@@ -7,7 +7,7 @@ private:
 	enum { TRACKS_PER_DISK = 0x23 };
 	enum { QTRACKS = TRACKS_PER_DISK << 2 };
 
-	unsigned char quarterTrack;
+	signed short quarterTrack;
 	signed char pos; // 0 - 7
 	unsigned char mags;
 
