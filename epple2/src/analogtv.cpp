@@ -342,12 +342,6 @@ void AnalogTV::ntsc_to_rgb_monitor(const int isignal, const int siglen, unsigned
 	int s0, s1, se;
 	s0 = s1 = isignal;
 	se = isignal+siglen;
-// TODO
-//	for (int sss = s1; sss < se; ++sss)
-//	{
-//		std::cout << (signed int)this->signal[sss] << " ";
-//	}
-//		std::cout << std::endl;
 	while (s1 < se)
 	{
 		// no signal (black)
