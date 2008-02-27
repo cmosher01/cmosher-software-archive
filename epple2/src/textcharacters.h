@@ -29,8 +29,11 @@ private:
 
 public:
 	TextCharacters();
-	~TextCharacters();
-	unsigned char get(unsigned int iRow);
+	~TextCharacters() {}
+	unsigned char get(unsigned int iRow)
+	{
+		return this->rows[iRow];
+	}
 };
 
 #endif

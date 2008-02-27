@@ -250,10 +250,6 @@ SOURCE=.\src\videoaddressing.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\videodisplaydevice.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\videomode.cpp
 # End Source File
 # Begin Source File
@@ -410,6 +406,10 @@ SOURCE=.\src\steppermotor.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\textcharacterimages.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\textcharacters.h
 # End Source File
 # Begin Source File
@@ -435,10 +435,6 @@ SOURCE=.\src\video.h
 # Begin Source File
 
 SOURCE=.\src\videoaddressing.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\videodisplaydevice.h
 # End Source File
 # Begin Source File
 

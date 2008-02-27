@@ -19,43 +19,30 @@
  ***************************************************************************/
 #include "textcharacters.h"
 
-#include <fstream>
-#include <algorithm>
-
-static unsigned char translateRow(unsigned char b)
-{
-	// translateRow(abcdefgh) == 0hgfedcb
-	unsigned char r(0);
-	for (int i(0); i < 7; ++i)
-	{
-		r <<= 1;
-		r |= b & 1;
-		b >>= 1;
-	}
-	return r;
-}
-
 TextCharacters::TextCharacters():
-	rows(0x200)
+	rows(0x40*8)
 {
-	std::ifstream is_rom("/home/chris/epple2/src/GI2513.ROM",std::ifstream::binary);
-	// TODO check for errors
-	is_rom.read((char*)&this->rows.front(),this->rows.size());
-	is_rom.close();
-	std::transform(this->rows.begin(),this->rows.end(),this->rows.begin(),translateRow);
-}
+	int r(0);
 
-TextCharacters::~TextCharacters()
-{
-}
+	const char *pi =
+#include "textcharacterimages.h"
+	;
 
-unsigned char TextCharacters::get(unsigned int iRow)
-{
-// TODO
-//	if (iRow < 0 || SIZE <= iRow)
-//	{
-//		return 0;
-//	}
+	for (int ch(0); ch < 0x40; ++ch)
+	{
 
-	return this->rows[iRow];
+		rows[r] = 0;
+		++r;
+		//	pi-> cdefg ---> 00gfedc0
+		for (int ln(1); ln < 8; ++ln)
+		{
+			for (int bt(0); bt < 5; ++bt)
+			{
+				rows[r] >>= 1;
+				if (*pi++=='@')
+					rows[r] |= 0x20;
+			}
+			++r;
+		}
+	}
 }

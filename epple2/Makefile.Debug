@@ -82,7 +82,6 @@ SOURCES       = src\a2colorsobserved.cpp \
 		src\timinggenerator.cpp \
 		src\video.cpp \
 		src\videoaddressing.cpp \
-		src\videodisplaydevice.cpp \
 		src\videomode.cpp \
 		src\videostaticgenerator.cpp debug\moc_contentpane.cpp \
 		debug\moc_gui.cpp \
@@ -129,7 +128,6 @@ OBJECTS       = debug\a2colorsobserved.obj \
 		debug\timinggenerator.obj \
 		debug\video.obj \
 		debug\videoaddressing.obj \
-		debug\videodisplaydevice.obj \
 		debug\videomode.obj \
 		debug\videostaticgenerator.obj \
 		debug\moc_contentpane.obj \
@@ -345,7 +343,6 @@ clean: compiler_clean
 	-$(DEL_FILE) debug\timinggenerator.obj
 	-$(DEL_FILE) debug\video.obj
 	-$(DEL_FILE) debug\videoaddressing.obj
-	-$(DEL_FILE) debug\videodisplaydevice.obj
 	-$(DEL_FILE) debug\videomode.obj
 	-$(DEL_FILE) debug\videostaticgenerator.obj
 	-$(DEL_FILE) debug\moc_contentpane.obj
@@ -737,7 +734,8 @@ debug\speakerclicker.obj: src\speakerclicker.cpp src\speakerclicker.h
 debug\steppermotor.obj: src\steppermotor.cpp src\steppermotor.h \
 		src\util.h
 
-debug\textcharacters.obj: src\textcharacters.cpp src\textcharacters.h
+debug\textcharacters.obj: src\textcharacters.cpp src\textcharacters.h \
+		src\textcharacterimages.h
 
 debug\throttle.obj: src\throttle.cpp src\throttle.h \
 		src\timinggenerator.h \
@@ -760,8 +758,6 @@ debug\video.obj: src\video.cpp src\video.h \
 
 debug\videoaddressing.obj: src\videoaddressing.cpp src\timinggenerator.h \
 		src\videoaddressing.h
-
-debug\videodisplaydevice.obj: src\videodisplaydevice.cpp src\videodisplaydevice.h
 
 debug\videomode.obj: src\videomode.cpp src\videomode.h \
 		src\videoaddressing.h
