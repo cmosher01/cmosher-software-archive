@@ -25,8 +25,8 @@
 class Throttle
 {
 private:
-	enum { CHECK_EVERY_CYCLE = 102048 };
-	enum { EXPECTED_TICKS = CLOCKS_PER_SEC/10 };
+	enum { CHECK_EVERY_CYCLE = 51024 };
+	enum { EXPECTED_TICKS = CLOCKS_PER_SEC/20 };
 	enum { NANOS_PER_CLOCK = 1000000000/CLOCKS_PER_SEC };
 
 	clock_t ticksPrev;
