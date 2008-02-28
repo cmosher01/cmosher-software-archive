@@ -24,6 +24,8 @@
 PowerLight::PowerLight(QWidget* parent):
 	QLabel(QString("POWER"),parent)
 {
+	setFocusPolicy(Qt::NoFocus);
+
 	setAlignment(Qt::AlignCenter);
 	setAutoFillBackground(true);
 
