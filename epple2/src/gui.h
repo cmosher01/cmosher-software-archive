@@ -25,6 +25,7 @@
 class QCloseEvent;
 class ScreenImage;
 class Apple2;
+class Emulator;
 class AnalogTV;
 
 class GUI : public QMainWindow
@@ -34,7 +35,7 @@ class GUI : public QMainWindow
 private:
 
 public:
-	GUI(ScreenImage& screenImage, Apple2& apple2, AnalogTV& display, KeypressQueue& keys);
+	GUI(ScreenImage& screenImage, Apple2& apple2, Emulator& emu, AnalogTV& display, KeypressQueue& keys);
 	~GUI();
 
 protected:

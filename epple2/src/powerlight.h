@@ -15,23 +15,21 @@
     You should have received a copy of the GNU General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef CONTENTPANE_H
-#define CONTENTPANE_H
+#ifndef POWERLIGHT_H
+#define POWERLIGHT_H
 
-#include "keyboard.h"
-#include <QtGui/QWidget>
-class ScreenImage;
-class Apple2;
-class Emulator;
-class AnalogTV;
+#include <QtGui/QLabel>
 
-class ContentPane : public QWidget
+/**
+	@author Chris Mosher <chris@mosher.mine.nu>
+*/
+class PowerLight : public QLabel
 {
-	Q_OBJECT
-
 public:
-	ContentPane(ScreenImage& screenImage, Apple2& apple2, AnalogTV& display, Emulator& emu, KeypressQueue& keys, QWidget* parent = 0);
-	~ContentPane();
+    PowerLight();
+
+    ~PowerLight();
+
 };
 
 #endif

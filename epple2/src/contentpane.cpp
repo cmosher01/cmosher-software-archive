@@ -18,22 +18,27 @@
 #include "contentpane.h"
 
 #include "analogtv.h"
+#include "computercontrolpanel.h"
 #include "monitorcontrolpanel.h"
 #include "screen.h"
 #include "screenimage.h"
 #include "apple2.h"
+#include "emulator.h"
 #include <QtGui/QVBoxLayout>
 
-ContentPane::ContentPane(ScreenImage& screenImage, Apple2& apple2, AnalogTV& display, KeypressQueue& keys, QWidget* parent):
+ContentPane::ContentPane(ScreenImage& screenImage, Apple2& apple2, AnalogTV& display, Emulator& emu, KeypressQueue& keys, QWidget* parent):
 	QWidget(parent)
 {
 	Screen* pscreen = new Screen(screenImage,apple2,keys,this);
 
 	MonitorControlPanel* monitorControls = new MonitorControlPanel(display,this);
 
+	ComputerControlPanel* computerControls = new ComputerControlPanel(emu,this);
+
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addWidget(pscreen);
 	layout->addWidget(monitorControls);
+	layout->addWidget(computerControls);
 
 	setLayout(layout);
 

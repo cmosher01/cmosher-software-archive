@@ -15,23 +15,27 @@
     You should have received a copy of the GNU General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef CONTENTPANE_H
-#define CONTENTPANE_H
+#ifndef COMPUTERCONTROLPANEL_H
+#define COMPUTERCONTROLPANEL_H
 
-#include "keyboard.h"
 #include <QtGui/QWidget>
-class ScreenImage;
-class Apple2;
 class Emulator;
-class AnalogTV;
 
-class ContentPane : public QWidget
+class ComputerControlPanel : public QWidget
 {
 	Q_OBJECT
 
+private:
+	Emulator& emu;
+	bool powerState;
+
+private slots:
+	void powerOn();
+	void powerOff();
+
 public:
-	ContentPane(ScreenImage& screenImage, Apple2& apple2, AnalogTV& display, Emulator& emu, KeypressQueue& keys, QWidget* parent = 0);
-	~ContentPane();
+	ComputerControlPanel(Emulator& emu, QWidget *parent);
+	~ComputerControlPanel();
 };
 
 #endif

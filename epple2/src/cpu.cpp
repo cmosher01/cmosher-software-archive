@@ -2022,13 +2022,16 @@ void CPU::TYA()
 void CPU::TXS()
 {
     this->s = this->x;
-    // TODO make sure this doesn't affect status register
+    // make sure this doesn't affect status register
+    // it doesn't
 }
 
 void CPU::TSX()
 {
     this->x = this->s;
     setStatusRegisterNZ(this->x);
+    // make sure this does affect status register
+    // it does
 }
 
 void CPU::CLC()

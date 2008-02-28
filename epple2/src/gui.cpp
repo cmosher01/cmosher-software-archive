@@ -23,11 +23,12 @@
 #include "monitorcontrolpanel.h"
 #include "screenimage.h"
 #include "apple2.h"
+#include "emulator.h"
 #include "contentpane.h"
 
-GUI::GUI(ScreenImage& screenImage, Apple2& apple2, AnalogTV& display, KeypressQueue& keys)
+GUI::GUI(ScreenImage& screenImage, Apple2& apple2, Emulator& emu, AnalogTV& display, KeypressQueue& keys)
 {
-	ContentPane* pcontent = new ContentPane(screenImage,apple2,display,keys,this);
+	ContentPane* pcontent = new ContentPane(screenImage,apple2,display,emu,keys,this);
 	setCentralWidget(pcontent);
 }
 
