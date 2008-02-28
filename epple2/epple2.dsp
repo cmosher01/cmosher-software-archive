@@ -174,10 +174,6 @@ SOURCE=.\src\memory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\moc_playqmake.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\monitorcontrolpanel.cpp
 # End Source File
 # Begin Source File
@@ -194,10 +190,6 @@ SOURCE=.\src\picturegenerator.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\playqmake.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\powerlight.cpp
 # End Source File
 # Begin Source File
@@ -207,10 +199,6 @@ SOURCE=.\src\powerupreset.cpp
 # Begin Source File
 
 SOURCE=.\src\raminitializer.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\renderthread.cpp
 # End Source File
 # Begin Source File
 
@@ -382,10 +370,6 @@ SOURCE=.\src\picturegenerator.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\playqmake.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\powerlight.h
 # End Source File
 # Begin Source File
@@ -395,10 +379,6 @@ SOURCE=.\src\powerupreset.h
 # Begin Source File
 
 SOURCE=.\src\raminitializer.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\renderthread.h
 # End Source File
 # Begin Source File
 
