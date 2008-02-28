@@ -36,11 +36,7 @@ Emulator::~Emulator()
 
 void Emulator::powerOnComputer()
 {
-	if (this->timer)
-	{
-		this->timer->shutdown();
-		this->timer = 0;
-	}
+	close();
 	this->apple2.powerOn();
 
 	this->timer = new TimingGenerator(this->apple2,this->throttle);
@@ -49,11 +45,8 @@ void Emulator::powerOnComputer()
 
 void Emulator::powerOffComputer()
 {
-	if (this->timer)
-	{
-		this->timer->shutdown();
-		this->timer = 0;
-	}
+	close();
+
 	// TODO ask if unsaved changes
 	this->apple2.powerOff();
 	this->videoStatic.powerOn();
