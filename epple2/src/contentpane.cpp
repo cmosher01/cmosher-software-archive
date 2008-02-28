@@ -22,14 +22,14 @@
 #include "monitorcontrolpanel.h"
 #include "screen.h"
 #include "screenimage.h"
-#include "apple2.h"
 #include "emulator.h"
 #include <QtGui/QVBoxLayout>
 
-ContentPane::ContentPane(ScreenImage& screenImage, Apple2& apple2, AnalogTV& display, Emulator& emu, KeypressQueue& keys, QWidget* parent):
+ContentPane::ContentPane(ScreenImage& screenImage, AnalogTV& display, Emulator& emu, QWidget* parent):
 	QWidget(parent)
 {
-	Screen* pscreen = new Screen(screenImage,apple2,keys,this);
+	setFocusPolicy(Qt::NoFocus);
+	Screen* pscreen = new Screen(screenImage,this);
 
 	MonitorControlPanel* monitorControls = new MonitorControlPanel(display,this);
 

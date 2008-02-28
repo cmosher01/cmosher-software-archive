@@ -21,21 +21,16 @@
 
 #include <QtGui/QPainter>
 #include <GL/glu.h>
-#include <QtGui/QApplication>
-#include <QtGui/QClipboard>
-#include <QtCore/QString>
 #include <QtGui/QWidget>
-#include <QtGui/QKeyEvent>
 
 #include "screenimage.h"
 #include "apple2.h"
 
-Screen::Screen(const ScreenImage& image, Apple2& apple2, KeypressQueue& keys, QWidget *parent):
+Screen::Screen(const ScreenImage& image, QWidget *parent):
 	QGLWidget(parent),
-	image(image),
-	apple2(apple2),
-	keys(keys)
+	image(image)
 {
+	setFocusPolicy(Qt::NoFocus);
 	resize(ScreenImage::WIDTH,ScreenImage::HEIGHT);
 	setMaximumSize(ScreenImage::WIDTH,ScreenImage::HEIGHT);
 	setMinimumSize(ScreenImage::WIDTH,ScreenImage::HEIGHT);
@@ -46,71 +41,6 @@ Screen::Screen(const ScreenImage& image, Apple2& apple2, KeypressQueue& keys, QW
 
 Screen::~Screen()
 {
-}
-
-//#include <iostream> //TODO remove
-void inline Screen::pt(const int key)
-{
-//	std::cout << "sending keypress: " << std::hex << key << std::endl;
-	this->keys.push(key);
-}
-void Screen::keyPressEvent(QKeyEvent *event)
-{
-	const unsigned int key(event->key());
-	const QString text(event->text());
-	const unsigned int chr(text.length()>0 ? text.at(0).unicode() : 0);
-
-	if (key == Qt::Key_Enter || key == Qt::Key_Return)
-	{
-		pt('\r');
-	}
-	else if (key == Qt::Key_Left)
-	{
-		pt(8);
-	}
-	else if (key == Qt::Key_Right)
-	{
-		pt(21);
-	}
-	else if (key == Qt::Key_Up)
-	{
-		pt(11);
-	}
-	else if (key == Qt::Key_Down)
-	{
-		pt(10);
-	}
-	// TODO ^@ --> NULL
-//		else if (chr == '@' && (mod & InputEvent.SHIFT_DOWN_MASK) != 0 && (mod & InputEvent.CTRL_DOWN_MASK) != 0 )
-//		{
-//			this.keys.put(0);
-//		}
-	else if (1 <= chr && chr < 0x80)
-	{
-		pt(chr);
-	}
-	else if (key == Qt::Key_Insert)
-	{
-		QString s = QApplication::clipboard()->text();
-		for (int i(0); i < s.length(); ++i)
-		{
-			unsigned int c = s.at(i).unicode();
-			if (c == 0x0A)
-			{
-				c = 0x0D;
-			}
-			pt(c);
-		}
-	}
-	else if (key == Qt::Key_Pause)
-	{
-		this->apple2.reset();
-	}
-	else
-	{
-//		std::cout << "ignoring keypress: " << std::hex << key << std::endl;
-		QWidget::keyPressEvent(event);
-	}
 }
 
 void Screen::plot()

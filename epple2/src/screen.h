@@ -35,9 +35,6 @@ class Screen : public QGLWidget
 	Q_OBJECT
 
 	const ScreenImage& image;
-	Apple2& apple2;
-	KeypressQueue& keys;
-	void pt(int key);
 
 protected:
 	void initializeGL();
@@ -45,10 +42,8 @@ protected:
 	void closeEvent(QCloseEvent* event) { std::cout << "screen closeEvent" << std::endl; }
  
 public:
-	Screen(const ScreenImage& image, Apple2& apple2, KeypressQueue& keys, QWidget *parent = 0);
+	Screen(const ScreenImage& image, QWidget *parent = 0);
 	~Screen();
-
-	void keyPressEvent(QKeyEvent *event);
 
 public slots:
 	void plot();

@@ -18,10 +18,8 @@
 #ifndef CONTENTPANE_H
 #define CONTENTPANE_H
 
-#include "keyboard.h"
 #include <QtGui/QWidget>
 class ScreenImage;
-class Apple2;
 class Emulator;
 class AnalogTV;
 
@@ -30,7 +28,7 @@ class ContentPane : public QWidget
 	Q_OBJECT
 
 public:
-	ContentPane(ScreenImage& screenImage, Apple2& apple2, AnalogTV& display, Emulator& emu, KeypressQueue& keys, QWidget* parent = 0);
+	ContentPane(ScreenImage& screenImage, AnalogTV& display, Emulator& emu, QWidget* parent = 0);
 	~ContentPane();
 };
 

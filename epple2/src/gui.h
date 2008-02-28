@@ -23,6 +23,7 @@
 #include "keyboard.h"
 #include <QtGui/QMainWindow>
 class QCloseEvent;
+class QKeyEvent;
 class ScreenImage;
 class Apple2;
 class Emulator;
@@ -33,6 +34,9 @@ class GUI : public QMainWindow
 	Q_OBJECT
 
 private:
+	Apple2& apple2;
+	KeypressQueue& keys;
+	void pt(const int key);
 
 public:
 	GUI(ScreenImage& screenImage, Apple2& apple2, Emulator& emu, AnalogTV& display, KeypressQueue& keys);
@@ -40,6 +44,7 @@ public:
 
 protected:
 	void closeEvent(QCloseEvent* event);
+	void keyPressEvent(QKeyEvent* event);
 };
 
 #endif
