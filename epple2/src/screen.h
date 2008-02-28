@@ -21,14 +21,11 @@
 #define SCREEN_H
 
 #include "keyboard.h"
-
+#include "screenimage.h"
 #include <QtOpenGL/QGLWidget>
-
-class ScreenImage;
-class Apple2;
-class QKeyEvent;
 class QWidget;
-#include <iostream>
+
+
 
 class Screen : public QGLWidget
 {
@@ -38,15 +35,14 @@ class Screen : public QGLWidget
 
 protected:
 	void initializeGL();
-	void paintGL();
-	void closeEvent(QCloseEvent* event) { std::cout << "screen closeEvent" << std::endl; }
+	void paintGL() { glDrawPixels(ScreenImage::WIDTH, ScreenImage::HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, this->image.image()); }
  
 public:
 	Screen(const ScreenImage& image, QWidget *parent = 0);
-	~Screen();
+	~Screen() { }
 
 public slots:
-	void plot();
+	void plot() { update(); }
 };
 
 #endif

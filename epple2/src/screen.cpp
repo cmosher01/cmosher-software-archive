@@ -23,7 +23,6 @@
 #include <GL/glu.h>
 #include <QtGui/QWidget>
 
-#include "screenimage.h"
 #include "apple2.h"
 
 Screen::Screen(const ScreenImage& image, QWidget *parent):
@@ -38,16 +37,6 @@ Screen::Screen(const ScreenImage& image, QWidget *parent):
 	show();
 }
 
-
-Screen::~Screen()
-{
-}
-
-void Screen::plot()
-{
-	update();
-}
-
 void Screen::initializeGL()
 {
 	glViewport(0, 0, ScreenImage::WIDTH+2, ScreenImage::HEIGHT+2);
@@ -59,9 +48,4 @@ void Screen::initializeGL()
 	glShadeModel(GL_FLAT);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glRasterPos2f(0,ScreenImage::HEIGHT+1);
-}
-
-void Screen::paintGL(void)
-{
-	glDrawPixels(ScreenImage::WIDTH, ScreenImage::HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, this->image.image());
 }

@@ -150,7 +150,7 @@ SOURCE=.\src\guiemulator.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\Keyboard.cpp
+SOURCE=.\src\keyboard.cpp
 # End Source File
 # Begin Source File
 
@@ -206,7 +206,7 @@ SOURCE=.\src\powerupreset.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\RAMInitializer.cpp
+SOURCE=.\src\raminitializer.cpp
 # End Source File
 # Begin Source File
 
@@ -346,7 +346,7 @@ SOURCE=.\src\guiemulator.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\Keyboard.h
+SOURCE=.\src\keyboard.h
 # End Source File
 # Begin Source File
 
@@ -394,7 +394,7 @@ SOURCE=.\src\powerupreset.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\RAMInitializer.h
+SOURCE=.\src\raminitializer.h
 # End Source File
 # Begin Source File
 
