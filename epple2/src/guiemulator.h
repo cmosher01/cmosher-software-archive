@@ -24,13 +24,11 @@
 
 class GUIEmulator : public Emulator
 {
-private:
-
 public:
 	GUIEmulator();
-	~GUIEmulator();
-	void init();
-	void initKeyListeners();
+	virtual ~GUIEmulator();
+
+	virtual void init();
 };
 
 #endif

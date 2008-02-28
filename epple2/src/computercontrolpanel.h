@@ -20,6 +20,7 @@
 
 #include <QtGui/QWidget>
 class Emulator;
+class PowerLight;
 
 class ComputerControlPanel : public QWidget
 {
@@ -28,13 +29,14 @@ class ComputerControlPanel : public QWidget
 private:
 	Emulator& emu;
 	bool powerState;
+	PowerLight* light;
 
 private slots:
 	void powerOn();
 	void powerOff();
 
 public:
-	ComputerControlPanel(Emulator& emu, QWidget *parent);
+	ComputerControlPanel(Emulator& emu, QWidget *parent = 0);
 	~ComputerControlPanel();
 };
 

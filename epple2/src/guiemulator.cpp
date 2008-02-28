@@ -38,32 +38,12 @@ void GUIEmulator::init()
 {
 	GUI* pgui = new GUI(this->screenImage,this->apple2,*this,this->display,this->keypresses);
 
-//	initKeyListeners();
+	powerOffComputer();
 
-
-
-//	this->screen.setFocusTraversalKeysEnabled(false);
-
-	this->display.setType(AnalogTV::MONITOR_COLOR);//TV_NEW_COLOR);//TV_OLD_COLOR);
-
-	powerOnComputer();
-//	powerOffComputer();
-//	this->display.powerOn(false);
+	this->display.setType(AnalogTV::MONITOR_COLOR);
+	this->display.powerOn(false);
 
 	pgui->show();
-}
-
-void GUIEmulator::initKeyListeners()
-{
-/*
-	this->screen.removeKeyListeners();
-
-	this->screen.addKeyListener(new KeyboardProducer(this->keypresses));
-	this->screen.addKeyListener(new ClipboardProducer(this->keypresses));
-	this->screen.addKeyListener(new HyperKeyHandler(this->hyper,this->buffered));
-	this->screen.addKeyListener(new FnKeyHandler(this->apple2,this->screenImage,this->apple2.ram,this->throttle));
-	this->screen.addKeyListener(new PaddleButtons(this->paddleButtonStates));
-*/
 }
 
 /*

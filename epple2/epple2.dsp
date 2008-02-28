@@ -106,6 +106,10 @@ SOURCE=.\src\card.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\computercontrolpanel.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\contentpane.cpp
 # End Source File
 # Begin Source File
@@ -191,6 +195,10 @@ SOURCE=.\src\picturegenerator.cpp
 # Begin Source File
 
 SOURCE=.\src\playqmake.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\powerlight.cpp
 # End Source File
 # Begin Source File
 
@@ -290,6 +298,10 @@ SOURCE=.\src\card.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\computercontrolpanel.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\contentpane.h
 # End Source File
 # Begin Source File
@@ -371,6 +383,10 @@ SOURCE=.\src\picturegenerator.h
 # Begin Source File
 
 SOURCE=.\src\playqmake.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\powerlight.h
 # End Source File
 # Begin Source File
 

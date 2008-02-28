@@ -18,6 +18,7 @@
 #include "computercontrolpanel.h"
 
 #include "emulator.h"
+#include "powerlight.h"
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QButtonGroup>
@@ -26,7 +27,8 @@
 
 ComputerControlPanel::ComputerControlPanel(Emulator& emu, QWidget *parent):
 	QWidget(parent),
-	emu(emu)
+	emu(emu),
+	powerState(false)
 {
 	setFocusPolicy(Qt::NoFocus);
 	QHBoxLayout* layout = new QHBoxLayout();
@@ -40,8 +42,6 @@ ComputerControlPanel::ComputerControlPanel(Emulator& emu, QWidget *parent):
 	connect(powerOn,SIGNAL(toggled(bool)),this,SLOT(powerOn()));
 	powerLayout->addWidget(powerOn);
 
-
-
 	QRadioButton* powerOff = new QRadioButton("OFF");
 	powerOff->setFocusPolicy(Qt::NoFocus);
 	power->addButton(powerOff);
@@ -50,7 +50,14 @@ ComputerControlPanel::ComputerControlPanel(Emulator& emu, QWidget *parent):
 
 	powerOff->setChecked(true);
 
+
+
+	this->light = new PowerLight();
+	this->light->turnOn(false);
+
+
 	layout->addLayout(powerLayout);
+	layout->addWidget(light);
 	setLayout(layout);
 }
 
@@ -64,6 +71,7 @@ void ComputerControlPanel::powerOn()
 	{
 		return;
 	}
+	this->light->turnOn(true);
 	this->emu.powerOnComputer();
 	this->powerState = true;
 }
@@ -74,6 +82,7 @@ void ComputerControlPanel::powerOff()
 	{
 		return;
 	}
+	this->light->turnOn(false);
 	this->emu.powerOffComputer();
 	this->powerState = false;
 }

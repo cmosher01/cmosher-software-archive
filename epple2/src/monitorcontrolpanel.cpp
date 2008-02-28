@@ -24,7 +24,9 @@
 
 MonitorControlPanel::MonitorControlPanel(AnalogTV& display, QWidget *parent):
 	QWidget(parent),
-	display(display)
+	display(display),
+	powerState(false),
+	displayTypeState(AnalogTV::MONITOR_COLOR)
 {
 	setFocusPolicy(Qt::NoFocus);
 	QHBoxLayout* layout = new QHBoxLayout();

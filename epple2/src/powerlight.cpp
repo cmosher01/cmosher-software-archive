@@ -17,14 +17,43 @@
 */
 #include "powerlight.h"
 
-PowerLight::PowerLight()
- : QLabel()
-{
-}
+#include <QtCore/QString>
+#include <QtGui/QPalette>
 
+
+PowerLight::PowerLight(QWidget* parent):
+	QLabel(QString("POWER"),parent)
+{
+	setAlignment(Qt::AlignCenter);
+	setAutoFillBackground(true);
+
+	QPalette palette;
+	palette.setColor(QPalette::Active,QPalette::Window,QColor(255,240,120));
+	palette.setColor(QPalette::Inactive,QPalette::Window,QColor(255,240,120));
+	palette.setColor(QPalette::Disabled,QPalette::Window,QColor(128,128,128));
+	palette.setColor(QPalette::Active,QPalette::WindowText,QColor(0,0,0));
+	palette.setColor(QPalette::Inactive,QPalette::WindowText,QColor(0,0,0));
+	palette.setColor(QPalette::Disabled,QPalette::WindowText,QColor(0,0,0));
+	palette.setColor(QPalette::Disabled,QPalette::Light,QColor(128,128,128));
+	palette.setColor(QPalette::Disabled,QPalette::Midlight,QColor(0,0,0));
+	palette.setColor(QPalette::Disabled,QPalette::Dark,QColor(0,0,0));
+	palette.setColor(QPalette::Disabled,QPalette::Mid,QColor(0,0,0));
+	palette.setColor(QPalette::Disabled,QPalette::Shadow,QColor(128,128,128));
+	setPalette(palette);
+
+	setMinimumSize(50,50);
+	setMaximumSize(50,50);
+
+	QFont font("Arial",7,QFont::Normal);
+	setFont(font);
+}
 
 PowerLight::~PowerLight()
 {
 }
 
-
+void PowerLight::turnOn(bool powerOn)
+{
+	setEnabled(powerOn);
+	update();
+}

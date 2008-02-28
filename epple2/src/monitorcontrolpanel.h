@@ -40,7 +40,7 @@ private slots:
 	void displayTypeChange();
 
 public:
-	MonitorControlPanel(AnalogTV& display, QWidget *parent);
+	MonitorControlPanel(AnalogTV& display, QWidget *parent = 0);
 	~MonitorControlPanel();
 };
 

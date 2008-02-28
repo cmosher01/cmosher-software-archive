@@ -20,16 +20,17 @@
 
 #include <QtGui/QLabel>
 
-/**
-	@author Chris Mosher <chris@mosher.mine.nu>
-*/
 class PowerLight : public QLabel
 {
+	Q_OBJECT
+
+private:
+
 public:
-    PowerLight();
+	PowerLight(QWidget * parent = 0);
+	~PowerLight();
 
-    ~PowerLight();
-
+	void turnOn(bool powerOn);
 };
 
 #endif
