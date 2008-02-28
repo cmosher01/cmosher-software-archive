@@ -36,11 +36,14 @@ PowerLight::PowerLight(QWidget* parent):
 	palette.setColor(QPalette::Active,QPalette::WindowText,QColor(0,0,0));
 	palette.setColor(QPalette::Inactive,QPalette::WindowText,QColor(0,0,0));
 	palette.setColor(QPalette::Disabled,QPalette::WindowText,QColor(0,0,0));
+	palette.setColor(QPalette::Active,QPalette::Text,QColor(0,0,0));
+	palette.setColor(QPalette::Inactive,QPalette::Text,QColor(0,0,0));
+	palette.setColor(QPalette::Disabled,QPalette::Text,QColor(0,0,0));
 	palette.setColor(QPalette::Disabled,QPalette::Light,QColor(128,128,128));
 	palette.setColor(QPalette::Disabled,QPalette::Midlight,QColor(0,0,0));
 	palette.setColor(QPalette::Disabled,QPalette::Dark,QColor(0,0,0));
 	palette.setColor(QPalette::Disabled,QPalette::Mid,QColor(0,0,0));
-	palette.setColor(QPalette::Disabled,QPalette::Shadow,QColor(128,128,128));
+	palette.setColor(QPalette::Disabled,QPalette::Shadow,QColor(0,0,0));
 	setPalette(palette);
 
 	setMinimumSize(50,50);
