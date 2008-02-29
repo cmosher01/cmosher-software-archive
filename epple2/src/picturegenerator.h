@@ -56,9 +56,11 @@ private:
 
 	const unsigned int VISIBLE_X_OFFSET;
 
+	const int& revision;
+
 public:
 
-	PictureGenerator(AnalogTV& display, VideoMode& mode);
+	PictureGenerator(AnalogTV& display, VideoMode& mode, const int& revision);
 	~PictureGenerator();
 
 	void powerOn();

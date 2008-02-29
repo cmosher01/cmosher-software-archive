@@ -67,5 +67,5 @@ void Emulator::close()
 
 void Emulator::config(Config& cfg)
 {
-	cfg.parse(this->apple2.rom,this->apple2.slts/*,this->hyper,getStdInEOF()*/);
+	cfg.parse(this->apple2.rom,this->apple2.slts/*,this->hyper,getStdInEOF()*/,this->apple2.revision);
 }

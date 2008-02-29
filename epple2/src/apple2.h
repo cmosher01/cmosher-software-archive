@@ -52,6 +52,7 @@ class Apple2 : public Timable
 	Video video;
 	CPU cpu;
 	PowerUpReset powerUpReset;
+	int revision;
 
 public:
 	Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates, AnalogTV& tv);

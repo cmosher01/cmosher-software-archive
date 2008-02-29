@@ -26,11 +26,11 @@
 class Memory
 {
 private:
-        std::vector<unsigned char> bytes;
+	std::vector<unsigned char> bytes;
 	static const int CLEAR_VALUE;
 
 public:
-        Memory(const size_t n);
+	Memory(const size_t n);
 	size_t size() const
 	{
 		return this->bytes.size();
@@ -46,10 +46,10 @@ public:
 		this->bytes[address] = data;
 	}
 	
-        void clear();
-        void powerOn();
-        void powerOff();
-        void load(const unsigned short base, std::istream& in);
+	void clear();
+	void powerOn();
+	void powerOff();
+	void load(const unsigned short base, std::istream& in);
 };
 
 #endif

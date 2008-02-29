@@ -46,7 +46,5 @@ void PowerUpReset::tick()
 
 void PowerUpReset::powerOn()
 {
-
-	// TODO if rev > 0
 	this->pendingTicks = (int)(TimingGenerator::AVG_CPU_HZ*.3); // U.A.II, p. 7-15
 }

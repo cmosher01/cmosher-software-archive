@@ -26,27 +26,27 @@
 const int Memory::CLEAR_VALUE(0);
 
 Memory::Memory(const size_t n):
-        bytes(n)
+	bytes(n)
 {
 }
 
 void Memory::clear()
 {
-        std::fill(this->bytes.begin(),this->bytes.end(),CLEAR_VALUE);
+	std::fill(this->bytes.begin(),this->bytes.end(),CLEAR_VALUE);
 }
 
 void Memory::powerOn()
 {
-      RAMInitializer initRam(*this);
-      initRam.init();
+	RAMInitializer initRam(*this);
+	initRam.init();
 }
 
 void Memory::powerOff()
 {
-        clear();
+	clear();
 }
 
 void Memory::load(const unsigned short base, std::istream& in)
 {
-        in.read((char*)&this->bytes[base],this->bytes.size()-base);
+	in.read((char*)&this->bytes[base],this->bytes.size()-base);
 }

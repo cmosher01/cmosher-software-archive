@@ -110,6 +110,10 @@ SOURCE=.\src\computercontrolpanel.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\config.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\contentpane.cpp
 # End Source File
 # Begin Source File
@@ -258,10 +262,6 @@ SOURCE=.\src\videostaticgenerator.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\src\a2colorindex.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\a2colorsobserved.h
 # End Source File
 # Begin Source File
@@ -287,6 +287,10 @@ SOURCE=.\src\card.h
 # Begin Source File
 
 SOURCE=.\src\computercontrolpanel.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\config.h
 # End Source File
 # Begin Source File
 

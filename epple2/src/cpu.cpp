@@ -50,12 +50,12 @@ void CPU::reset()
 
 void CPU::IRQ()
 {
-    this->pendingIRQ = true;
+	this->pendingIRQ = true;
 }
 
 void CPU::NMI()
 {
-    this->pendingNMI = true;
+	this->pendingNMI = true;
 }
 
 void CPU::tick()
@@ -1636,42 +1636,42 @@ void CPU::setStatusRegisterNZ(const unsigned char val)
 
 void CPU::LDA()
 {
-    this->a = this->data;
-    setStatusRegisterNZ(this->a);
+	this->a = this->data;
+	setStatusRegisterNZ(this->a);
 }
 
 void CPU::LDX()
 {
-    this->x = this->data;
-    setStatusRegisterNZ(this->x);
+	this->x = this->data;
+	setStatusRegisterNZ(this->x);
 }
 
 void CPU::LDY()
 {
-    this->y = this->data;
-    setStatusRegisterNZ(this->y);
+	this->y = this->data;
+	setStatusRegisterNZ(this->y);
 }
 
 void CPU::STA()
 {
-    this->data = this->a;
+	this->data = this->a;
 }
 
 void CPU::STX()
 {
-    this->data = this->x;
+	this->data = this->x;
 }
 
 void CPU::STY()
 {
-    this->data = this->y;
+	this->data = this->y;
 }
 
 void CPU::compare(const unsigned char r)
 {
-    const signed short tmp = r - this->data;
+	const signed short tmp = r - this->data;
 	setP(PMASK_C,0 <= tmp && tmp < 0x100);
-    setStatusRegisterNZ((const signed char)tmp);
+	setStatusRegisterNZ((const signed char)tmp);
 }
 
 void CPU::CMP()
@@ -1691,20 +1691,20 @@ void CPU::CPY()
 
 void CPU::AND()
 {
-    this->a &= this->data;
-    setStatusRegisterNZ(this->a);
+	this->a &= this->data;
+	setStatusRegisterNZ(this->a);
 }
 
 void CPU::ORA()
 {
-    this->a |= this->data;
-    setStatusRegisterNZ(this->a);
+	this->a |= this->data;
+	setStatusRegisterNZ(this->a);
 }
 
 void CPU::EOR()
 {
-    this->a ^= this->data;
-    setStatusRegisterNZ(this->a);
+	this->a ^= this->data;
+	setStatusRegisterNZ(this->a);
 }
 
 
@@ -1719,17 +1719,17 @@ void CPU::ASL()
 
 void CPU::ASL_A()
 {
-    this->a = shiftLeft(this->a);
+	this->a = shiftLeft(this->a);
 }
 
 void CPU::LSR()
 {
-    this->data = shiftRight(this->data);
+	this->data = shiftRight(this->data);
 }
 
 void CPU::LSR_A()
 {
-    this->a = shiftRight(this->a);
+	this->a = shiftRight(this->a);
 }
 
 void CPU::ROL()
@@ -1755,24 +1755,24 @@ void CPU::ROR_A()
 unsigned char CPU::shiftLeft(unsigned char byt)
 {
 	setP(PMASK_C,byt & 0x80);
-    byt <<= 1;
-    setStatusRegisterNZ(byt);
-    return byt;
+	byt <<= 1;
+	setStatusRegisterNZ(byt);
+	return byt;
 }
 
 unsigned char CPU::shiftRight(unsigned char byt)
 {
 	setP(PMASK_C,byt & 0x01);
-    byt >>= 1;
-    setStatusRegisterNZ(byt);
-    return byt;
+	byt >>= 1;
+	setStatusRegisterNZ(byt);
+	return byt;
 }
 
 unsigned char CPU::rotateLeft(unsigned char byt)
 {
 	const bool newCarry = (byt & 0x80);
 
-    byt <<= 1;
+	byt <<= 1;
 
 	if (this->p & PMASK_C)
 	{
@@ -1780,16 +1780,16 @@ unsigned char CPU::rotateLeft(unsigned char byt)
 	}
 
 	setP(PMASK_C,newCarry);
-    setStatusRegisterNZ(byt);
+	setStatusRegisterNZ(byt);
 
-    return byt;
+	return byt;
 }
 
 unsigned char CPU::rotateRight(unsigned char byt)
 {
 	const bool newCarry = (byt & 0x01);
 
-    byt >>= 1;
+	byt >>= 1;
 
 	if (this->p & PMASK_C)
 	{
@@ -1797,9 +1797,9 @@ unsigned char CPU::rotateRight(unsigned char byt)
 	}
 
 	setP(PMASK_C,newCarry);
-    setStatusRegisterNZ(byt);
+	setStatusRegisterNZ(byt);
 
-    return byt;
+	return byt;
 }
 
 
@@ -1809,54 +1809,54 @@ unsigned char CPU::rotateRight(unsigned char byt)
 
 void CPU::ADC()
 {
-    int Op1 = this->a;
-    int Op2 = this->data;
-    if (this->p & PMASK_D)
-    {
-    	setP(PMASK_Z,!(Op1 + Op2 + !!(this->p & PMASK_C) & 0xff));
-        int tmp = (Op1 & 0xf) + (Op2 & 0xf) + !!(this->p & PMASK_C);
-        tmp = tmp >= 10 ? tmp + 6 : tmp;
-        this->a = tmp;
-        tmp = (Op1 & 0xf0) + (Op2 & 0xf0) + (tmp & 0xf0);
-        setP(PMASK_N,tmp < 0);
-        setP(PMASK_V,((Op1 ^ tmp) & ~(Op1 ^ Op2) & 0x80));
-        tmp = this->a & 0xf | (tmp >= 160 ? tmp + 96 : tmp);
-        setP(PMASK_C,tmp >= 0x100);
-        this->a = tmp & 0xff;
-    }
-    else
-    {
-        int tmp = Op1 + Op2 + !!(this->p & PMASK_C);
-        this->a = tmp & 0xFF;
-        setP(PMASK_V,((Op1 ^ this->a) & ~(Op1 ^ Op2) & 0x80));
+	int Op1 = this->a;
+	int Op2 = this->data;
+	if (this->p & PMASK_D)
+	{
+		setP(PMASK_Z,!(Op1 + Op2 + !!(this->p & PMASK_C) & 0xff));
+		int tmp = (Op1 & 0xf) + (Op2 & 0xf) + !!(this->p & PMASK_C);
+		tmp = tmp >= 10 ? tmp + 6 : tmp;
+		this->a = tmp;
+		tmp = (Op1 & 0xf0) + (Op2 & 0xf0) + (tmp & 0xf0);
+		setP(PMASK_N,tmp < 0);
+		setP(PMASK_V,((Op1 ^ tmp) & ~(Op1 ^ Op2) & 0x80));
+		tmp = this->a & 0xf | (tmp >= 160 ? tmp + 96 : tmp);
 		setP(PMASK_C,tmp >= 0x100);
-        setStatusRegisterNZ(this->a);
-    }
+		this->a = tmp & 0xff;
+	}
+	else
+	{
+		int tmp = Op1 + Op2 + !!(this->p & PMASK_C);
+		this->a = tmp & 0xFF;
+		setP(PMASK_V,((Op1 ^ this->a) & ~(Op1 ^ Op2) & 0x80));
+		setP(PMASK_C,tmp >= 0x100);
+		setStatusRegisterNZ(this->a);
+	}
 }
 
 void CPU::SBC()
 {
-    int Op1 = this->a;
-    int Op2 = this->data;
-    if (this->p & PMASK_D)
-    {
-        int tmp = (Op1 & 0xf) - (Op2 & 0xf) - !(this->p & PMASK_C);
-        tmp = (tmp & 0x10) != 0 ? tmp - 6 : tmp;
-        this->a = tmp;
-        tmp = (Op1 & 0xf0) - (Op2 & 0xf0) - (this->a & 0x10);
-        this->a = this->a & 0xf | ((tmp & 0x100) != 0 ? tmp - 96 : tmp);
-        tmp = Op1 - Op2 - !(this->p & PMASK_C);
+	int Op1 = this->a;
+	int Op2 = this->data;
+	if (this->p & PMASK_D)
+	{
+		int tmp = (Op1 & 0xf) - (Op2 & 0xf) - !(this->p & PMASK_C);
+		tmp = (tmp & 0x10) != 0 ? tmp - 6 : tmp;
+		this->a = tmp;
+		tmp = (Op1 & 0xf0) - (Op2 & 0xf0) - (this->a & 0x10);
+		this->a = this->a & 0xf | ((tmp & 0x100) != 0 ? tmp - 96 : tmp);
+		tmp = Op1 - Op2 - !(this->p & PMASK_C);
 		setP(PMASK_C,0 <= tmp && tmp < 0x100);
-        setStatusRegisterNZ(tmp);
-    }
-    else
-    {
-        int tmp = Op1 - Op2 - !(this->p & PMASK_C);
-        this->a = tmp & 0xff;
-        setP(PMASK_V,((Op1 ^ Op2) & (Op1 ^ this->a) & 0x80));
+		setStatusRegisterNZ(tmp);
+	}
+	else
+	{
+		int tmp = Op1 - Op2 - !(this->p & PMASK_C);
+		this->a = tmp & 0xff;
+		setP(PMASK_V,((Op1 ^ Op2) & (Op1 ^ this->a) & 0x80));
 		setP(PMASK_C,0 <= tmp && tmp < 0x100);
-        setStatusRegisterNZ(this->a);
-    }
+		setStatusRegisterNZ(this->a);
+	}
 }
 
 
@@ -1864,38 +1864,38 @@ void CPU::SBC()
 
 void CPU::INC()
 {
-    ++this->data;
-    setStatusRegisterNZ(this->data);
+	++this->data;
+	setStatusRegisterNZ(this->data);
 }
 
 void CPU::DEC()
 {
-    --this->data;
-    setStatusRegisterNZ(this->data);
+	--this->data;
+	setStatusRegisterNZ(this->data);
 }
 
 void CPU::INX()
 {
-    ++this->x;
-    setStatusRegisterNZ(this->x);
+	++this->x;
+	setStatusRegisterNZ(this->x);
 }
 
 void CPU::INY()
 {
-    ++this->y;
-    setStatusRegisterNZ(this->y);
+	++this->y;
+	setStatusRegisterNZ(this->y);
 }
 
 void CPU::DEX()
 {
-    --this->x;
-    setStatusRegisterNZ(this->x);
+	--this->x;
+	setStatusRegisterNZ(this->x);
 }
 
 void CPU::DEY()
 {
-    --this->y;
-    setStatusRegisterNZ(this->y);
+	--this->y;
+	setStatusRegisterNZ(this->y);
 }
 
 void CPU::setP(const unsigned char mask, const unsigned char val)
@@ -1926,7 +1926,7 @@ void CPU::PHP()
 void CPU::PLA()
 {
 	this->a = this->data;
-    setStatusRegisterNZ(this->a);
+	setStatusRegisterNZ(this->a);
 }
 
 void CPU::PLP()
@@ -1997,41 +1997,41 @@ void CPU::BMI()
 
 void CPU::TAX()
 {
-    this->x = this->a;
-    setStatusRegisterNZ(this->x);
+	this->x = this->a;
+	setStatusRegisterNZ(this->x);
 }
 
 void CPU::TXA()
 {
-    this->a = this->x;
-    setStatusRegisterNZ(this->a);
+	this->a = this->x;
+	setStatusRegisterNZ(this->a);
 }
 
 void CPU::TAY()
 {
-    this->y = this->a;
-    setStatusRegisterNZ(this->y);
+	this->y = this->a;
+	setStatusRegisterNZ(this->y);
 }
 
 void CPU::TYA()
 {
-    this->a = this->y;
-    setStatusRegisterNZ(this->a);
+	this->a = this->y;
+	setStatusRegisterNZ(this->a);
 }
 
 void CPU::TXS()
 {
-    this->s = this->x;
-    // make sure this doesn't affect status register
-    // it doesn't
+	this->s = this->x;
+	// make sure this doesn't affect status register
+	// it doesn't
 }
 
 void CPU::TSX()
 {
-    this->x = this->s;
-    setStatusRegisterNZ(this->x);
-    // make sure this does affect status register
-    // it does
+	this->x = this->s;
+	setStatusRegisterNZ(this->x);
+	// make sure this does affect status register
+	// it does
 }
 
 void CPU::CLC()

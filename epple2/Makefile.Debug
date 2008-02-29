@@ -17,7 +17,7 @@ CFLAGS        = -Ob2gity -EHsc -Zm200 -Zi -MDd -W3 $(DEFINES)
 CXXFLAGS      = -Ob2gity -EHsc -Zm200 -Zi -MDd -W3 $(DEFINES)
 INCPATH       = -I"..\..\qt\4.3.3\include" -I"."
 LINK          = link
-LFLAGS        = /LIBPATH:"c:\qt\4.3.3\lib" /NOLOGO /DEBUG /SUBSYSTEM:windows
+LFLAGS        = /LIBPATH:"c:\qt\4.3.3\lib" /NOLOGO /DEBUG /SUBSYSTEM:console
 LIBS          = c:\qt\4.3.3\lib\qtmaind.lib c:\qt\4.3.3\lib\QtGuid4.lib c:\qt\4.3.3\lib\QtCored4.lib c:\qt\4.3.3\lib\QtOpenGLd4.lib OPENGL32.lib GLU32.lib GDI32.lib
 
 
@@ -52,6 +52,7 @@ SOURCES       = src\a2colorsobserved.cpp \
 		src\applentsc.cpp \
 		src\card.cpp \
 		src\computercontrolpanel.cpp \
+		src\config.cpp \
 		src\contentpane.cpp \
 		src\cpu.cpp \
 		src\diskbytes.cpp \
@@ -102,6 +103,7 @@ OBJECTS       = debug\a2colorsobserved.obj \
 		debug\applentsc.obj \
 		debug\card.obj \
 		debug\computercontrolpanel.obj \
+		debug\config.obj \
 		debug\contentpane.obj \
 		debug\cpu.obj \
 		debug\diskbytes.obj \
@@ -321,6 +323,7 @@ clean: compiler_clean
 	-$(DEL_FILE) debug\applentsc.obj
 	-$(DEL_FILE) debug\card.obj
 	-$(DEL_FILE) debug\computercontrolpanel.obj
+	-$(DEL_FILE) debug\config.obj
 	-$(DEL_FILE) debug\contentpane.obj
 	-$(DEL_FILE) debug\cpu.obj
 	-$(DEL_FILE) debug\diskbytes.obj
@@ -525,6 +528,13 @@ debug\computercontrolpanel.obj: src\computercontrolpanel.cpp src\computercontrol
 		src\videostaticgenerator.h \
 		src\screenimage.h \
 		src\powerlight.h
+
+debug\config.obj: src\config.cpp src\config.h \
+		src\memory.h \
+		src\slots.h \
+		src\diskcontroller.h \
+		src\languagecard.h \
+		src\firmwarecard.h
 
 debug\contentpane.obj: src\contentpane.cpp src\contentpane.h \
 		src\analogtv.h \

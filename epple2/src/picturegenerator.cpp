@@ -24,9 +24,10 @@
 #include "applentsc.h"
 #include "timinggenerator.h"
 
-PictureGenerator::PictureGenerator(AnalogTV& display, VideoMode& mode):
+PictureGenerator::PictureGenerator(AnalogTV& display, VideoMode& mode, const int& revision):
 	display(display), mode(mode), itestsig(testsig), itestsiglim(testsig+AppleNTSC::SIGNAL_LEN),
-	VISIBLE_X_OFFSET(VideoAddressing::BYTES_PER_ROW-VideoAddressing::VISIBLE_BYTES_PER_ROW)
+	VISIBLE_X_OFFSET(VideoAddressing::BYTES_PER_ROW-VideoAddressing::VISIBLE_BYTES_PER_ROW),
+	revision(revision)
 {
 }
 
@@ -155,7 +156,7 @@ void PictureGenerator::tick(const int t, const unsigned char rowToPlot)
 	}
 
 	//		 hi-res half-pixel shift:
-	const bool shift = !isText && isHiRes && this->d7 && this->line < VideoAddressing::VISIBLE_ROWS_PER_FIELD && !(this->hpos < VISIBLE_X_OFFSET);
+	const bool shift = !isText && isHiRes && this->d7 && this->line < VideoAddressing::VISIBLE_ROWS_PER_FIELD && !(this->hpos < VISIBLE_X_OFFSET) && this->revision > 0;
 	const bool showLastHiRes = shift && this->lasthires;
 
 	int xtra(0);
@@ -190,10 +191,10 @@ void PictureGenerator::tick(const int t, const unsigned char rowToPlot)
 	{
 		this->hpos = 0;
 		++this->line;
-		if (itestsig >= itestsiglim) // TODO testing
+		if (itestsig >= itestsiglim)
 		{
-			itestsig = testsig; // TODO testing
-			this->display.drawCurrent(); // TODO testing
+			itestsig = testsig;
+			this->display.drawCurrent();
 		}
 	}
 }
@@ -226,20 +227,11 @@ bool inline PictureGenerator::shiftLatch(const int t, const int cycle, const boo
 	return bit;
 }
 
-const signed char PictureGenerator::lutCB[] =
-{
-	 AppleNTSC::BLANK_LEVEL,
-	-AppleNTSC::CB_LEVEL,
-	 AppleNTSC::BLANK_LEVEL,
-	+AppleNTSC::CB_LEVEL
-};
-
 inline signed char* PictureGenerator::writeVideoSignal(const bool shift, const bool showLastHiRes, const int firstBlankedCycle, const int cycle, const int hcycle, const bool bit, const bool lineVis, const bool hVis, signed char* is)
 {
 	if (shift && !cycle)
 	{
 		*is++ = showLastHiRes ? AppleNTSC::WHITE_LEVEL : AppleNTSC::BLANK_LEVEL;
-		// TODO this->display.putSignal(showLastHiRes ? AppleNTSC::WHITE_LEVEL : AppleNTSC::BLANK_LEVEL);
 	}
 
 	signed char sig;
@@ -265,7 +257,6 @@ inline signed char* PictureGenerator::writeVideoSignal(const bool shift, const b
 	{
 		sig = vbl(hcycle);
 	}
-	// TODO this->display.putSignal(sig);
 	*is++ = sig;
 	return is;
 }
@@ -291,12 +282,20 @@ signed char inline PictureGenerator::vbl(const int hcycle)
 	return sig;
 }
 
+const signed char PictureGenerator::lutCB[] =
+{
+	 AppleNTSC::BLANK_LEVEL,
+	-AppleNTSC::CB_LEVEL,
+	 AppleNTSC::BLANK_LEVEL,
+	+AppleNTSC::CB_LEVEL
+};
+
 signed char inline PictureGenerator::hbl(const int hcycle)
 {
 	signed char cb;
 	if (AppleNTSC::CB_START <= hcycle && hcycle < AppleNTSC::CB_END)
 	{
-		if (this->mode.isText()) // TODO && rev > 0
+		if (this->mode.isText() && this->revision > 0)
 		{
 			cb = AppleNTSC::BLANK_LEVEL;
 		}

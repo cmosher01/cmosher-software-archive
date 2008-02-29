@@ -111,46 +111,46 @@ void TimingGenerator::shutdown()
 class buffer
 {
 private:
-  int buf[BUF_SIZE];
-  unsigned int p, g, size;
-  boost::mutex mutex;
-  boost::condition cond;
+	int buf[BUF_SIZE];
+	unsigned int p, g, size;
+	boost::mutex mutex;
+	boost::condition cond;
 
 public:
-  buffer() : p(0), g(0), size(0) { }
+	buffer() : p(0), g(0), size(0) { }
 
-  void put(const int m)
-  {
-    boost::mutex::scoped_lock lock(mutex);
+	void put(const int m)
+	{
+		boost::mutex::scoped_lock lock(mutex);
 
-    while (size >= BUF_SIZE)
-    {
-      cond.wait(lock);
-    }
+		while (size >= BUF_SIZE)
+		{
+			cond.wait(lock);
+		}
 
-    buf[p++] = m;
-    p %= BUF_SIZE;
+		buf[p++] = m;
+		p %= BUF_SIZE;
 
-    ++size;
-    cond.notify_all();
-  }
+		++size;
+		cond.notify_all();
+	}
 
-  int get()
-  {
-    boost::mutex::scoped_lock lock(mutex);
+	int get()
+	{
+		boost::mutex::scoped_lock lock(mutex);
 
-    while (size <= 0)
-    {
-      cond.wait(lock);
-    }
+		while (size <= 0)
+		{
+			cond.wait(lock);
+		}
 
-    const int i = buf[g++];
-    g %= BUF_SIZE;
+		const int i = buf[g++];
+		g %= BUF_SIZE;
 
-    --size;
-    cond.notify_all();
+		--size;
+		cond.notify_all();
 
-    return i;
-  }
+		return i;
+	}
 };
 */

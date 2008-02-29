@@ -66,12 +66,12 @@ void Card::readSeventhRom(const unsigned short address, unsigned char* const pb)
 
 void Card::loadRom(const unsigned short base, std::istream& in)
 {
-        this->rom.load(base,in);
+	this->rom.load(base,in);
 }
 
 void Card::loadSeventhRom(const unsigned short base, std::istream& in)
 {
-        this->seventhRom.load(base,in);
+	this->seventhRom.load(base,in);
 }
 
 
