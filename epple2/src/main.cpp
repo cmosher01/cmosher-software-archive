@@ -20,12 +20,18 @@
 
 
 #include "guiemulator.h"
+#include "config.h"
 #include <QtGui/QApplication>
 
 int main( int argc, char ** argv )
 {
 	QApplication app(argc, argv);
 	Emulator* emu = new GUIEmulator();
+
+    	Config cfg("/home/chris/epple2/epple2.conf");//this.args.getConfig());
+    	emu->config(cfg);
+
 	emu->init();
+
 	return app.exec();
 }

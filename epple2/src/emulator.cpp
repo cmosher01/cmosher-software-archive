@@ -18,6 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "emulator.h"
+#include "config.h"
 #include "timinggenerator.h"
 
 Emulator::Emulator():
@@ -64,8 +65,7 @@ void Emulator::close()
 	}
 }
 
-
-//void Emulator::config(final Config cfg) throws IOException, InvalidMemoryLoad, InvalidDiskImage
-//{
-//	cfg.parseConfig(this->apple2.rom,this->apple2.slts,this->hyper,getStdInEOF());
-//}
+void Emulator::config(Config& cfg)
+{
+	cfg.parse(this->apple2.rom,this->apple2.slts/*,this->hyper,getStdInEOF()*/);
+}

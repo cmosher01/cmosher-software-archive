@@ -18,11 +18,12 @@ epple2_SOURCES = a2colorsobserved.cpp a2colorsobserved.h addressbus.cpp \
 		throttle.h timable.cpp timable.h timinggenerator.cpp timinggenerator.h util.h \
 		videoaddressing.cpp videoaddressing.h video.cpp video.h videomode.cpp videomode.h \
 		videostaticgenerator.cpp videostaticgenerator.h $(epple2_MOC) monitorcontrolpanel.cpp \
-		contentpane.cpp textcharacterimages.h computercontrolpanel.cpp powerlight.cpp
+		contentpane.cpp textcharacterimages.h computercontrolpanel.cpp powerlight.cpp \
+	config.cpp
 BUILT_SOURCES = $(epple2_MOC)
 epple2_LDADD = -lQtOpenGL -lGLU -lQtGui -lQtCore
 
 %.moc.cc: %.h
 	$(MOC) -o $@ $<
 noinst_HEADERS = monitorcontrolpanel.h contentpane.h computercontrolpanel.h \
-	powerlight.h
+	powerlight.h config.h

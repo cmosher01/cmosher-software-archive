@@ -35,6 +35,7 @@
 #include "speakerclicker.h"
 #include "analogtv.h"
 #include "powerupreset.h"
+class Emulator;
 
 class Apple2 : public Timable
 {
@@ -43,8 +44,8 @@ class Apple2 : public Timable
 	Keyboard kbd;
 	Paddles paddles;
 	SpeakerClicker speaker;
-	Memory ram;
 	Memory rom;
+	Memory ram;
 	AddressBus addressBus;
 	PictureGenerator picgen;
 	TextCharacters textRows;
@@ -62,6 +63,8 @@ public:
 	void reset();
 
 	virtual void tick();
+
+	friend class Emulator;
 };
 
 #endif

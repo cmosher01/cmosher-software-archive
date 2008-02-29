@@ -29,6 +29,7 @@
 #include "analogtv.h"
 class TimingGenerator;
 //class EOFHandler;
+class Config;
 
 class Emulator
 {
@@ -51,12 +52,15 @@ public:
 	Emulator();
 	virtual ~Emulator();
 
+	void config(Config& cfg);
+
 	virtual void init() = 0;
 //	virtual EOFHandler getStdInEOF() = 0;
 
 	void powerOnComputer();
 	void powerOffComputer();
 	void close();
+
 };
 
 #endif
