@@ -25,14 +25,18 @@
 #include "apple2.h"
 #include "emulator.h"
 #include "contentpane.h"
+#include "hypermode.h"
+#include "keyboardbuffermode.h"
 #include <QtGui/QKeyEvent>
 #include <QtGui/QApplication>
 #include <QtGui/QClipboard>
 #include <QtCore/QString>
 
-GUI::GUI(ScreenImage& screenImage, Apple2& apple2, Emulator& emu, AnalogTV& display, KeypressQueue& keys):
+GUI::GUI(ScreenImage& screenImage, Apple2& apple2, Emulator& emu, AnalogTV& display, KeypressQueue& keys, HyperMode& hyper, KeyboardBufferMode& buffered):
 	apple2(apple2),
-	keys(keys)
+	keys(keys),
+	hyper(hyper),
+	buffered(buffered)
 {
 	ContentPane* pcontent = new ContentPane(screenImage,display,emu,this);
 	setCentralWidget(pcontent);
@@ -111,6 +115,15 @@ void GUI::keyPressEvent(QKeyEvent *event)
 	{
 		this->apple2.reset();
 	}
+	else if (key == Qt::Key_F11)
+	{
+		this->hyper.toggleHyper();
+	}
+	else if (key == Qt::Key_F12)
+	{
+		this->buffered.toggleBuffered();
+	}
+	// TODO other special keys
 	else
 	{
 		QWidget::keyPressEvent(event);

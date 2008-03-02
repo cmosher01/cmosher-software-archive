@@ -47,5 +47,5 @@ void Screen::initializeGL()
 	glClearColor (0.0, 0.0, 0.0, 0.0);
 	glShadeModel(GL_FLAT);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glRasterPos2f(0,ScreenImage::HEIGHT+1);
+	glRasterPos2f(0,ScreenImage::HEIGHT);
 }

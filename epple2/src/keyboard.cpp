@@ -10,10 +10,13 @@
 //
 //
 #include "keyboard.h"
-//#include "KeypressQueue.h"
+#include "hypermode.h"
+#include "keyboardbuffermode.h"
 
-Keyboard::Keyboard(KeypressQueue& q):
-	keys(q)
+Keyboard::Keyboard(KeypressQueue& q, HyperMode& hyper, KeyboardBufferMode& buffered):
+	keys(q),
+	hyper(hyper),
+	buffered(buffered)
 {
 }
 
@@ -21,15 +24,15 @@ void Keyboard::clear()
 {
 	this->latch &= 0x7F;
 }
-#include <iostream>//TODO remove
+
 unsigned char Keyboard::get()
 {
-	if (!(this->latch & 0x80)) // TODO hyper and kdb buffer
+	// TODO wait if too fast (can we do this in standard C++???)
+	if (!this->buffered.isBuffered() || !(this->latch & 0x80))
 	{
 		if (!this->keys.empty())
 		{
 			this->latch = this->keys.front() | 0x80;
-//std::cout << "processing keypress: " << std::hex << (int)this->latch << std::endl;
 			this->keys.pop();
 		}
 	}

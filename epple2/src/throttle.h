@@ -21,6 +21,7 @@
 #define THROTTLE_H
 
 #include <ctime>
+class HyperMode;
 
 class Throttle
 {
@@ -29,13 +30,15 @@ private:
 	enum { EXPECTED_TICKS = CLOCKS_PER_SEC/20 };
 	enum { NANOS_PER_CLOCK = 1000000000/CLOCKS_PER_SEC };
 
+	HyperMode& hyper;
+
 	clock_t ticksPrev;
 	unsigned int times;
 	bool suspend;
 	float speedRatio;
 
 public:
-	Throttle();
+	Throttle(HyperMode& hyper);
 	~Throttle();
 
 	void tick();

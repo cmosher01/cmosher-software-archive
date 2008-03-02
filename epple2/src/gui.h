@@ -26,6 +26,8 @@ class QCloseEvent;
 class QKeyEvent;
 class ScreenImage;
 class Apple2;
+class HyperMode;
+class KeyboardBufferMode;
 class Emulator;
 class AnalogTV;
 
@@ -36,10 +38,12 @@ class GUI : public QMainWindow
 private:
 	Apple2& apple2;
 	KeypressQueue& keys;
+	HyperMode& hyper;
+	KeyboardBufferMode& buffered;
 	void pt(const int key);
 
 public:
-	GUI(ScreenImage& screenImage, Apple2& apple2, Emulator& emu, AnalogTV& display, KeypressQueue& keys);
+	GUI(ScreenImage& screenImage, Apple2& apple2, Emulator& emu, AnalogTV& display, KeypressQueue& keys, HyperMode& hyper, KeyboardBufferMode& buffered);
 	~GUI();
 
 protected:

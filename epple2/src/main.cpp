@@ -29,7 +29,8 @@ int main( int argc, char ** argv )
 	QApplication app(argc, argv);
 	Emulator* emu = new GUIEmulator();
 
-	std::string config_file("./epple2.conf");
+//	std::string config_file("./epple2.conf");
+	std::string config_file("/home/chris/epple2/epple2.conf");
 	Config cfg(config_file);//this.args.getConfig());
 	emu->config(cfg);
 

@@ -23,9 +23,10 @@
 
 Emulator::Emulator():
 	display(screenImage),
-	apple2(keypresses,paddleButtonStates,display/*,hyper,buffered*/),
+	apple2(keypresses,paddleButtonStates,display,hyper,buffered),
 	videoStatic(display),
-	timer(0)
+	timer(0),
+	throttle(hyper)
 {
 }
 

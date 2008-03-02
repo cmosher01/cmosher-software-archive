@@ -58,7 +58,7 @@ unsigned char LanguageCard::io(const unsigned short address, const unsigned char
 	const int r = address & 3;
 	this->readEnable = (r==0 || r==3);
 
-	this->bank = !((address & 8) >> 3);
+	this->bank = !(address & 8);
 
 	return data;
 }

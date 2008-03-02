@@ -55,8 +55,7 @@ class Apple2 : public Timable
 	int revision;
 
 public:
-	Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates, AnalogTV& tv);
-	//, HyperMode& hyper, KeyboardBufferMode& buffered);
+	Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates, AnalogTV& tv, HyperMode& hyper, KeyboardBufferMode& buffered);
 	~Apple2();
 
 	void powerOn();

@@ -36,7 +36,7 @@ GUIEmulator::~GUIEmulator()
 
 void GUIEmulator::init()
 {
-	GUI* pgui = new GUI(this->screenImage,this->apple2,*this,this->display,this->keypresses);
+	GUI* pgui = new GUI(this->screenImage,this->apple2,*this,this->display,this->keypresses,this->hyper,this->buffered);
 
 	powerOffComputer();
 

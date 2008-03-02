@@ -27,6 +27,9 @@
 #include "videostaticgenerator.h"
 #include "screenimage.h"
 #include "analogtv.h"
+#include "keyboardbuffermode.h"
+#include "hypermode.h"
+
 class TimingGenerator;
 //class EOFHandler;
 class Config;
@@ -35,12 +38,12 @@ class Emulator
 {
 private:
 	Throttle throttle;
-//	HyperMode hyper;
-//	KeyboardBufferMode buffered;
 	PaddleButtonStates paddleButtonStates;
 
 protected:
 	KeypressQueue keypresses;
+	HyperMode hyper;
+	KeyboardBufferMode buffered;
 	ScreenImage screenImage;
 	AnalogTV display;
 	Apple2 apple2;
