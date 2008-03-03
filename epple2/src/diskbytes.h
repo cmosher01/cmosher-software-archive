@@ -10,7 +10,7 @@ private:
 	enum { TRACKS_PER_DISK = 0x23 };
 	enum { BYTES_PER_TRACK = 0x1A00 };
 
-//	HyperMode hyper;
+//	HyperMode& fhyper;
 
 	std::vector<unsigned char> bytes[TRACKS_PER_DISK];
 

@@ -23,13 +23,13 @@ class Keyboard
 {
 private:
 	KeypressQueue& keys;
-	HyperMode& hyper;
+	HyperMode& fhyper;
 	KeyboardBufferMode& buffered;
 
 	unsigned char latch;
 
 public:
-	Keyboard(KeypressQueue& q, HyperMode& hyper, KeyboardBufferMode& buffered);
+	Keyboard(KeypressQueue& q, HyperMode& fhyper, KeyboardBufferMode& buffered);
 	void clear();
 	unsigned char get();
 };

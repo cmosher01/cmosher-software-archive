@@ -13,9 +13,9 @@
 #include "hypermode.h"
 #include "keyboardbuffermode.h"
 
-Keyboard::Keyboard(KeypressQueue& q, HyperMode& hyper, KeyboardBufferMode& buffered):
+Keyboard::Keyboard(KeypressQueue& q, HyperMode& fhyper, KeyboardBufferMode& buffered):
 	keys(q),
-	hyper(hyper),
+	fhyper(fhyper),
 	buffered(buffered)
 {
 }

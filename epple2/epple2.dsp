@@ -154,7 +154,15 @@ SOURCE=.\src\guiemulator.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\hypermode.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\keyboard.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\keyboardbuffermode.cpp
 # End Source File
 # Begin Source File
 
@@ -338,7 +346,15 @@ SOURCE=.\src\guiemulator.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\hypermode.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\keyboard.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\keyboardbuffermode.h
 # End Source File
 # Begin Source File
 

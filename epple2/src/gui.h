@@ -38,12 +38,12 @@ class GUI : public QMainWindow
 private:
 	Apple2& apple2;
 	KeypressQueue& keys;
-	HyperMode& hyper;
+	HyperMode& fhyper;
 	KeyboardBufferMode& buffered;
 	void pt(const int key);
 
 public:
-	GUI(ScreenImage& screenImage, Apple2& apple2, Emulator& emu, AnalogTV& display, KeypressQueue& keys, HyperMode& hyper, KeyboardBufferMode& buffered);
+	GUI(ScreenImage& screenImage, Apple2& apple2, Emulator& emu, AnalogTV& display, KeypressQueue& keys, HyperMode& fhyper, KeyboardBufferMode& buffered);
 	~GUI();
 
 protected:

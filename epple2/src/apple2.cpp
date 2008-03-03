@@ -38,8 +38,8 @@
 #include <iostream>
 #include <fstream>
 
-Apple2::Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates, AnalogTV& tv, HyperMode& hyper, KeyboardBufferMode& buffered):
-	kbd(keypresses,hyper,buffered),
+Apple2::Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates, AnalogTV& tv, HyperMode& fhyper, KeyboardBufferMode& buffered):
+	kbd(keypresses,fhyper,buffered),
 	ram(AddressBus::MOTHERBOARD_RAM_SIZ),
 	rom(AddressBus::MOTHERBOARD_ROM_SIZ),
 	addressBus(ram,rom,kbd,videoMode,paddles,paddleButtonStates,speaker,slts),

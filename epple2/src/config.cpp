@@ -65,7 +65,7 @@ static void trim(std::string& str)
 	}
 }
 
-void Config::parse(Memory& memory, Slots& slts /*HyperMode hyper, StandardIn.EOFHandler eofHandler*/, int& revision)
+void Config::parse(Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EOFHandler eofHandler*/, int& revision)
 {
 	std::ifstream in(this->file_path.c_str());
 	if (!in.is_open())
@@ -81,7 +81,7 @@ void Config::parse(Memory& memory, Slots& slts /*HyperMode hyper, StandardIn.EOF
 		trim(line);
 		if (!line.empty())
 		{
-			parseLine(line,memory,slts/*,hyper,eofHandler*/,revision);
+			parseLine(line,memory,slts/*,fhyper,eofHandler*/,revision);
 		}
 		std::getline(in,line);
 	}
@@ -117,7 +117,7 @@ void verifyUniqueCards(const Slots& cards)
 }
 */
 
-void Config::parseLine(const std::string& line, Memory& memory, Slots& slts /*HyperMode hyper, StandardIn.EOFHandler eofHandler*/, int& revision)
+void Config::parseLine(const std::string& line, Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EOFHandler eofHandler*/, int& revision)
 {
 	std::istringstream tok(line);
 
@@ -129,7 +129,7 @@ void Config::parseLine(const std::string& line, Memory& memory, Slots& slts /*Hy
 		std::string sCardType;
 		tok >> slot >> sCardType;
 
-		insertCard(sCardType,slot,slts);//,hyper,eofHandler);
+		insertCard(sCardType,slot,slts);//,fhyper,eofHandler);
 	}
 	else if (cmd == "import")
 	{
@@ -231,7 +231,7 @@ void Config::loadDisk(Slots& slts, int slot, int drive, const std::string& fnib)
 	controller->loadDisk(drive-1,fnib);
 }
 
-void Config::insertCard(const std::string& cardType, int slot, Slots& slts/*, HyperMode hyper, StandardIn.EOFHandler eofHandler*/)
+void Config::insertCard(const std::string& cardType, int slot, Slots& slts/*, HyperMode fhyper, StandardIn.EOFHandler eofHandler*/)
 {
 	if (slot < 0 || 8 <= slot)
 	{
@@ -250,7 +250,7 @@ void Config::insertCard(const std::string& cardType, int slot, Slots& slts/*, Hy
 	}
 	else if (cardType == "disk")
 	{
-		card = new DiskController(/*hyper*/);
+		card = new DiskController(/*fhyper*/);
 	}
 	else if (cardType == "clock")
 	{

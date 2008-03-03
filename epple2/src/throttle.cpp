@@ -22,8 +22,8 @@
 #include "util.h"
 #include "hypermode.h"
 
-Throttle::Throttle(HyperMode& hyper):
-	hyper(hyper),
+Throttle::Throttle(HyperMode& fhyper):
+	fhyper(fhyper),
 	ticksPrev(clock()),
 	times(0),
 	suspend(false)
@@ -54,7 +54,7 @@ void Throttle::throttleIfNecessary()
 		const long ticksDelta = EXPECTED_TICKS-ticksActual;
 //		this->speedRatio = (float)ticksDelta/ticksActual;
 //		std::cout << speedRatio << std::endl;
-		if (!this->hyper.isHyper())
+		if (!this->fhyper.isHyper())
 			sleep(ticksDelta);
 
 		this->ticksPrev = clock();

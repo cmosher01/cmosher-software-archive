@@ -23,10 +23,10 @@
 
 Emulator::Emulator():
 	display(screenImage),
-	apple2(keypresses,paddleButtonStates,display,hyper,buffered),
+	apple2(keypresses,paddleButtonStates,display,fhyper,buffered),
 	videoStatic(display),
 	timer(0),
-	throttle(hyper)
+	throttle(fhyper)
 {
 }
 
@@ -68,5 +68,5 @@ void Emulator::close()
 
 void Emulator::config(Config& cfg)
 {
-	cfg.parse(this->apple2.rom,this->apple2.slts/*,this->hyper,getStdInEOF()*/,this->apple2.revision);
+	cfg.parse(this->apple2.rom,this->apple2.slts/*,this->fhyper,getStdInEOF()*/,this->apple2.revision);
 }

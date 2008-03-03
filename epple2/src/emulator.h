@@ -42,7 +42,7 @@ private:
 
 protected:
 	KeypressQueue keypresses;
-	HyperMode hyper;
+	HyperMode fhyper;
 	KeyboardBufferMode buffered;
 	ScreenImage screenImage;
 	AnalogTV display;

@@ -32,10 +32,10 @@
 #include <QtGui/QClipboard>
 #include <QtCore/QString>
 
-GUI::GUI(ScreenImage& screenImage, Apple2& apple2, Emulator& emu, AnalogTV& display, KeypressQueue& keys, HyperMode& hyper, KeyboardBufferMode& buffered):
+GUI::GUI(ScreenImage& screenImage, Apple2& apple2, Emulator& emu, AnalogTV& display, KeypressQueue& keys, HyperMode& fhyper, KeyboardBufferMode& buffered):
 	apple2(apple2),
 	keys(keys),
-	hyper(hyper),
+	fhyper(fhyper),
 	buffered(buffered)
 {
 	ContentPane* pcontent = new ContentPane(screenImage,display,emu,this);
@@ -117,7 +117,7 @@ void GUI::keyPressEvent(QKeyEvent *event)
 	}
 	else if (key == Qt::Key_F11)
 	{
-		this->hyper.toggleHyper();
+		this->fhyper.toggleHyper();
 	}
 	else if (key == Qt::Key_F12)
 	{

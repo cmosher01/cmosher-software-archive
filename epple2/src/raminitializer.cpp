@@ -59,7 +59,7 @@ void RAMInitializer::putBytesUntilFull(int bit, int pat)
 				ramPattern2(bit);
 		}
 	}
-	catch (const done& ignore)
+	catch (const done&)
 	{
 		// done filling this bit in RAM
 	}

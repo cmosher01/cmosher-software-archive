@@ -6,7 +6,7 @@
 #include <ostream>
 #include <fstream>
 
-DiskBytes::DiskBytes(/*TODO HyperMode& hyper*/)
+DiskBytes::DiskBytes(/*TODO HyperMode& fhyper*/)
 {
 	unload();
 }
@@ -87,7 +87,7 @@ unsigned char DiskBytes::get(const int track)
 /*
 void waitIfTooFast()
 {
-	if (this->hyper.isHyper())
+	if (this->fhyper.isHyper())
 	{
 		return;
 	}

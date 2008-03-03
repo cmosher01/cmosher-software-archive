@@ -27,15 +27,15 @@ class Config
 private:
 	const std::string& file_path;
 
-	void parseLine(const std::string& line, Memory& memory, Slots& slts /*HyperMode hyper, StandardIn.EOFHandler eofHandler*/, int& revision);
+	void parseLine(const std::string& line, Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EOFHandler eofHandler*/, int& revision);
 	void loadDisk(Slots& slts, int slot, int drive, const std::string& fnib);
-	void insertCard(const std::string& cardType, int slot, Slots& slts/*, HyperMode hyper, StandardIn.EOFHandler eofHandler*/);
+	void insertCard(const std::string& cardType, int slot, Slots& slts/*, HyperMode fhyper, StandardIn.EOFHandler eofHandler*/);
 
 public:
 	Config(const std::string& file_path);
 	~Config();
 
-	void parse(Memory& memory, Slots& slts /*HyperMode hyper, StandardIn.EOFHandler eofHandler*/, int& revision);
+	void parse(Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EOFHandler eofHandler*/, int& revision);
 };
 
 #endif
