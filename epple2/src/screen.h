@@ -40,9 +40,6 @@ protected:
 public:
 	Screen(const ScreenImage& image, QWidget *parent = 0);
 	~Screen() { }
-
-public slots:
-	void plot() { update(); }
 };
 
 #endif

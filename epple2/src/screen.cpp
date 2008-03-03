@@ -33,7 +33,7 @@ Screen::Screen(const ScreenImage& image, QWidget *parent):
 	resize(ScreenImage::WIDTH,ScreenImage::HEIGHT);
 	setMaximumSize(ScreenImage::WIDTH,ScreenImage::HEIGHT);
 	setMinimumSize(ScreenImage::WIDTH,ScreenImage::HEIGHT);
-	connect(&this->image,SIGNAL(changed()),this,SLOT(plot()));
+	connect(&this->image,SIGNAL(changed()),this,SLOT(updateGL()));
 	show();
 }
 

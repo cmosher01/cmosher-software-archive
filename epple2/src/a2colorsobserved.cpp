@@ -19,7 +19,62 @@
  ***************************************************************************/
 #include "a2colorsobserved.h"
 
-#include <QtGui/QColor>
+static unsigned char tobyt(float x)
+{
+	x *= 255.0f;
+	x += 0.5f;
+	int xi = (int)x;
+
+	if (xi < 0)
+		xi = 0;
+	else if (xi > 255)
+		xi = 255;
+
+	return (unsigned char)xi;
+}
+
+// 0 <= h < 360 degrees;   0 <= s,v <= 1
+static int HSVtoRGB(const int h, const float s, const float v)
+{
+	const float f = (h % 60) / 60.0;
+
+	float r, g, b;
+	switch (h / 60)
+	{
+		case 0:
+			r = v;
+			g = v * (1 - s * (1 - f));
+			b = v * (1 - s);
+		break;
+		case 1:
+			r = v * (1 - s * f);
+			g = v;
+			b = v * (1 - s);
+		break;
+		case 2:
+			r = v * (1 - s);
+			g = v;
+			b = v * (1 - s * (1 - f));
+		break;
+		case 3:
+			r = v * (1 - s);
+			g = v * (1 - s * f);
+			b = v;
+		break;
+		case 4:
+			r = v * (1 - s * (1 - f));
+			g = v * (1 - s);
+			b = v;
+		break;
+		case 5:
+			r = v;
+			g = v * (1 - s);
+			b = v * (1 - s * f);
+		break;
+	}
+
+	return (tobyt(b) << 16) | (tobyt(g) << 8) | (tobyt(r));
+}
 
 A2ColorsObserved::A2ColorsObserved():
 	COLOR(0x10)
@@ -32,9 +87,9 @@ A2ColorsObserved::A2ColorsObserved():
 
 	for (unsigned int i(0); i < COLOR.size(); ++i)
 	{
-		const QColor c = QColor::fromHsv(hue[map[i]],(int)(sat[map[i]]*(255.0/100.0)+.5),(int)(val[map[i]]*(255.0/100.0)+.5));
-		COLOR[i] = (c.red()) | (c.green() << 8) | (c.blue() << 16);
+		COLOR[i] = HSVtoRGB(hue[map[i]],sat[map[i]]/100.0f,val[map[i]]/100.0f);
 	}
+
 }
 
 A2ColorsObserved::~A2ColorsObserved()
