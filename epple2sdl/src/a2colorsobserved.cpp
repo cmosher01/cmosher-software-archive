@@ -71,7 +71,7 @@ static int HSVtoRGB(const int h, const float s, const float v)
 		break;
 	}
 
-	return (tobyt(b) << 16) | (tobyt(g) << 8) | (tobyt(r));
+	return (tobyt(r) << 16) | (tobyt(g) << 8) | (tobyt(b));
 }
 
 A2ColorsObserved::A2ColorsObserved():

@@ -41,7 +41,7 @@ void GUIEmulator::init()
 //	powerOffComputer();
 	powerOnComputer();
 
-	this->display.setType(AnalogTV::MONITOR_COLOR);
+	this->display.setType(AnalogTV::TV_OLD_COLOR);//MONITOR_COLOR);
 //	this->display.powerOn(false);
 	this->display.powerOn(true);
 

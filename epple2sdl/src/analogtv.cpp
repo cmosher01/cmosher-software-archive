@@ -234,7 +234,7 @@ void AnalogTV::drawMonitorColor()
 				rgbv = 0xFFFFFF;
 			}
 			this->image.setElem(ip,rgbv);
-			this->image.setElem(ip+D_IP,rgbv); // display same pixel on next row
+//			this->image.setElem(ip+D_IP,rgbv); // display same pixel on next row
 			++ip;
 		}
 		ip += D_IP;
@@ -267,7 +267,7 @@ void AnalogTV::drawMonitorMonochrome(const unsigned int color)
 			const int is = row*AppleNTSC::H+col;
 			const unsigned int rgb = this->signal[is] > 50 ? color : 0;
 			this->image.setElem(ip,rgb);
-			this->image.setElem(ip+D_IP,rgb);
+//			this->image.setElem(ip+D_IP,rgb);
 			++ip;
 		}
 		ip += D_IP;
@@ -295,7 +295,7 @@ void AnalogTV::drawTVOld()
 		{
 			const int rgb = yiq2rgb(yiq[col-348]); // shift display left 1 pixel
 			this->image.setElem(ip,rgb);
-			this->image.setElem(ip+D_IP,rgb);
+//			this->image.setElem(ip+D_IP,rgb);
 			++ip;
 		}
 		ip += D_IP;
@@ -320,7 +320,7 @@ void AnalogTV::drawTVNew()
 				rgbv = color2bw(rgbv);
 			}
 			this->image.setElem(ip,rgbv);
-			this->image.setElem(ip+D_IP,rgbv);
+//			this->image.setElem(ip+D_IP,rgbv);
 			++ip;
 		}
 		ip += D_IP;
@@ -528,14 +528,14 @@ void AnalogTV::ntsc_to_yiq(const int isignal, const int siglen, const IQ& iq_fac
 
 int inline AnalogTV::yiq2rgb(const int yiq)
 {
-	double r = ((yiq&0xFF)-IQINTOFF) + 0.956 * (((yiq>>8)&0xFF)-IQINTOFF) + 0.621 * (((yiq>>16)&0xFF)-IQINTOFF);
-	double g = ((yiq&0xFF)-IQINTOFF) - 0.272 * (((yiq>>8)&0xFF)-IQINTOFF) - 0.647 * (((yiq>>16)&0xFF)-IQINTOFF);
-	double b = ((yiq&0xFF)-IQINTOFF) - 1.105 * (((yiq>>8)&0xFF)-IQINTOFF) + 1.702 * (((yiq>>16)&0xFF)-IQINTOFF);
+	double r = (((yiq)&0xFF)-IQINTOFF) + 0.956 * (((yiq>>8)&0xFF)-IQINTOFF) + 0.621 * (((yiq>>16)&0xFF)-IQINTOFF);
+	double g = (((yiq)&0xFF)-IQINTOFF) - 0.272 * (((yiq>>8)&0xFF)-IQINTOFF) - 0.647 * (((yiq>>16)&0xFF)-IQINTOFF);
+	double b = (((yiq)&0xFF)-IQINTOFF) - 1.105 * (((yiq>>8)&0xFF)-IQINTOFF) + 1.702 * (((yiq>>16)&0xFF)-IQINTOFF);
 
 	const int rgb =
-		(calc_color(r) <<  0)| 
+		(calc_color(r) << 16)| 
 		(calc_color(g) <<  8)| 
-		(calc_color(b) << 16);
+		(calc_color(b) <<  0);
 
 	return rgb;
 }
@@ -548,7 +548,7 @@ int inline AnalogTV::color2bw(const int rgb)
 
 int inline AnalogTV::rgb2y(const int rgb) // y in range 0-255
 {
-	return (int)((0.299*(rgb&0xFF) + 0.587*((rgb>>8)&0xFF) + 0.114*((rgb>>16)&0xFF))/1.04);
+	return (int)((0.299*((rgb>>16)&0xFF) + 0.587*((rgb>>8)&0xFF) + 0.114*((rgb)&0xFF))/1.04);
 }
 
 int inline AnalogTV::calc_color(const double color)
