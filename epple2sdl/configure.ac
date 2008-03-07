@@ -1,0 +1,15 @@
+AC_INIT(configure.ac)
+
+AM_CONFIG_HEADER(config.h)
+AM_INIT_AUTOMAKE(epple2sdl, 0.1)
+
+AC_LANG_CPLUSPLUS
+AC_PROG_CXX
+AM_PROG_LIBTOOL
+
+AC_CHECK_LIB([SDL],[SDL_Init])
+
+AC_HEADER_STDC
+
+AC_CONFIG_FILES([Makefile] [src/Makefile])
+AC_OUTPUT
