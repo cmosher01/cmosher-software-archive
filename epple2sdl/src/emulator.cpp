@@ -64,9 +64,13 @@ void Emulator::init()
 {
 }
 
+#define CHECK_EVERY_CYCLE 51024
+#define EXPECTED_MS 50
+
 int Emulator::run()
 {
-	int skip = Throttle::CHECK_EVERY_CYCLE;
+	int skip = CHECK_EVERY_CYCLE;
+	Uint32 prev_ms = SDL_GetTicks();
 	while (!this->quit)
 	{
 		if (this->timable)
@@ -76,7 +80,7 @@ int Emulator::run()
 		--skip;
 		if (!skip)
 		{
-			skip = Throttle::CHECK_EVERY_CYCLE;
+			skip = CHECK_EVERY_CYCLE;
 			SDL_Event event;
 			while (SDL_PollEvent(&event))
 			{
@@ -90,7 +94,17 @@ int Emulator::run()
 				break;
 				}
 			}
-			this->throttle.tick();
+			if (!this->fhyper.isHyper())
+			{
+				int actual_ms = SDL_GetTicks()-prev_ms;
+				int dlta_ms = EXPECTED_MS-actual_ms;
+				if (2 <= dlta_ms && dlta_ms <= EXPECTED_MS) // sanity check
+				{
+					SDL_Delay(dlta_ms);
+				}
+	
+				prev_ms = SDL_GetTicks();
+			}
 		}
 	}
 	SDL_Quit();
