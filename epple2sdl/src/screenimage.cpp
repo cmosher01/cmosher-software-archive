@@ -19,8 +19,16 @@
  ***************************************************************************/
 #include "screenimage.h"
 
+#include <SDL/SDL.h>
+
 ScreenImage::ScreenImage()
 {
+	this->screen = SDL_SetVideoMode(WIDTH,HEIGHT,32,SDL_HWSURFACE|SDL_HWPALETTE);//|SDL_ANYFORMAT);//|SDL_FULLSCREEN);
+	if (this->screen == NULL)
+	{
+		printf("Unable to set video mode: %s\n",SDL_GetError());
+		throw 0; // TODO
+	};
 }
 
 ScreenImage::~ScreenImage()
@@ -29,18 +37,18 @@ ScreenImage::~ScreenImage()
 
 void ScreenImage::notifyObservers()
 {
-	emit changed();
+	SDL_UpdateRect(this->screen,0,0,WIDTH,HEIGHT);
 }
 
 void ScreenImage::setElem(const unsigned int i, const unsigned int val)
 {
-	unsigned int* pn = (unsigned int*)this->img;
+	unsigned int* pn = (unsigned int*)this->screen->pixels;
 	pn[i] = val;
 }
 
 void ScreenImage::blank()
 {
-	memset(this->img,0,WIDTH*HEIGHT*4);
+	// TODO memset(this->img,0,WIDTH*HEIGHT*4);
 }
 
 // TODO dump PNG

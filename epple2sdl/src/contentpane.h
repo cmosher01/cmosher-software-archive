@@ -18,17 +18,14 @@
 #ifndef CONTENTPANE_H
 #define CONTENTPANE_H
 
-#include <QtGui/QWidget>
 class ScreenImage;
 class Emulator;
 class AnalogTV;
 
-class ContentPane : public QWidget
+class ContentPane
 {
-	Q_OBJECT
-
 public:
-	ContentPane(ScreenImage& screenImage, AnalogTV& display, Emulator& emu, QWidget* parent = 0);
+	ContentPane(ScreenImage& screenImage, AnalogTV& display, Emulator& emu);
 	~ContentPane();
 };
 

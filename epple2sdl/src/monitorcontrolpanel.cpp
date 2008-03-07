@@ -16,18 +16,13 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #include "monitorcontrolpanel.h"
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QRadioButton>
-#include <QtGui/QLabel>
 
-MonitorControlPanel::MonitorControlPanel(AnalogTV& display, QWidget *parent):
-	QWidget(parent),
+MonitorControlPanel::MonitorControlPanel(AnalogTV& display):
 	display(display),
 	powerState(false),
 	displayTypeState(AnalogTV::MONITOR_COLOR)
 {
+/*
 	setFocusPolicy(Qt::NoFocus);
 	QHBoxLayout* layout = new QHBoxLayout();
 
@@ -77,6 +72,7 @@ MonitorControlPanel::MonitorControlPanel(AnalogTV& display, QWidget *parent):
 	layout->addLayout(powerLayout);
 	layout->addLayout(displayTypeLayout);
 	setLayout(layout);
+*/
 }
 
 
@@ -84,6 +80,7 @@ MonitorControlPanel::~MonitorControlPanel()
 {
 }
 
+/*
 void MonitorControlPanel::initDisplayButton(QHBoxLayout* displayTypeLayout, const char* name, const AnalogTV::DisplayType type, const bool selected)
 {
 	QRadioButton* displayTypeButton = new QRadioButton(name);
@@ -94,10 +91,11 @@ void MonitorControlPanel::initDisplayButton(QHBoxLayout* displayTypeLayout, cons
 
 	displayTypeButton->setChecked(selected);
 }
+*/
 
 void MonitorControlPanel::displayTypeChange()
 {
-	AnalogTV::DisplayType type = (AnalogTV::DisplayType)this->displayType->checkedId();
+	AnalogTV::DisplayType type = AnalogTV::MONITOR_COLOR;//TODO (AnalogTV::DisplayType)this->displayType->checkedId();
 	if (type == displayTypeState)
 	{
 		return;

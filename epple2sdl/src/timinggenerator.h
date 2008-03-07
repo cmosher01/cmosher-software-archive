@@ -20,15 +20,11 @@
 #ifndef TIMINGGENERATOR_H
 #define TIMINGGENERATOR_H
 
-#include <QtCore/QThread>
 class Timable;
 class Throttle;
-class QObject;
 
-class TimingGenerator : public QThread
+class TimingGenerator
 {
-	Q_OBJECT
-
 private:
 	bool shut;
 
@@ -36,7 +32,7 @@ private:
 	Throttle& throttle;
 
 public:
-	TimingGenerator(Timable& timable, Throttle& throttle, QObject *parent = 0);
+	TimingGenerator(Timable& timable, Throttle& throttle);
 
 	enum { CRYSTAL_HZ = 14318182 };
 	enum { CRYSTAL_CYCLES_PER_CPU_CYCLE = 14 };

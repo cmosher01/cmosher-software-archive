@@ -17,14 +17,11 @@
 */
 #include "powerlight.h"
 
-#include <QtCore/QString>
-#include <QtGui/QPalette>
-
-
-PowerLight::PowerLight(QWidget* parent):
-	QLabel(QString("POWER"),parent)
+PowerLight::PowerLight()
 {
-	setFocusPolicy(Qt::NoFocus);
+//	"POWER"
+/*
+ * 	setFocusPolicy(Qt::NoFocus);
 
 	setAlignment(Qt::AlignCenter);
 	setAutoFillBackground(true);
@@ -51,6 +48,7 @@ PowerLight::PowerLight(QWidget* parent):
 
 	QFont font("Arial",7,QFont::Normal);
 	setFont(font);
+*/
 }
 
 PowerLight::~PowerLight()
@@ -59,6 +57,6 @@ PowerLight::~PowerLight()
 
 void PowerLight::turnOn(bool powerOn)
 {
-	setEnabled(powerOn);
-	update();
+//	setEnabled(powerOn);
+//	update();
 }

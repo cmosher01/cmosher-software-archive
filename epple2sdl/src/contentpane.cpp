@@ -23,18 +23,17 @@
 #include "screen.h"
 #include "screenimage.h"
 #include "emulator.h"
-#include <QtGui/QVBoxLayout>
 
-ContentPane::ContentPane(ScreenImage& screenImage, AnalogTV& display, Emulator& emu, QWidget* parent):
-	QWidget(parent)
+ContentPane::ContentPane(ScreenImage& screenImage, AnalogTV& display, Emulator& emu)
 {
-	setFocusPolicy(Qt::NoFocus);
-	Screen* pscreen = new Screen(screenImage,this);
+//	setFocusPolicy(Qt::NoFocus);
+	Screen* pscreen = new Screen(screenImage);
 
-	MonitorControlPanel* monitorControls = new MonitorControlPanel(display,this);
+	MonitorControlPanel* monitorControls = new MonitorControlPanel(display);
 
-	ComputerControlPanel* computerControls = new ComputerControlPanel(emu,this);
+	ComputerControlPanel* computerControls = new ComputerControlPanel(emu);
 
+/*
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addWidget(pscreen);
 	layout->addWidget(monitorControls);
@@ -43,6 +42,7 @@ ContentPane::ContentPane(ScreenImage& screenImage, AnalogTV& display, Emulator& 
 	setLayout(layout);
 
 	pscreen->setFocus();
+*/
 }
 
 

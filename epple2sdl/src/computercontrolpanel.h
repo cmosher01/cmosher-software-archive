@@ -18,25 +18,22 @@
 #ifndef COMPUTERCONTROLPANEL_H
 #define COMPUTERCONTROLPANEL_H
 
-#include <QtGui/QWidget>
 class Emulator;
 class PowerLight;
 
-class ComputerControlPanel : public QWidget
+class ComputerControlPanel
 {
-	Q_OBJECT
-
 private:
 	Emulator& emu;
 	bool powerState;
 	PowerLight* light;
 
-private slots:
+private:
 	void powerOn();
 	void powerOff();
 
 public:
-	ComputerControlPanel(Emulator& emu, QWidget *parent = 0);
+	ComputerControlPanel(Emulator& emu);
 	~ComputerControlPanel();
 };
 

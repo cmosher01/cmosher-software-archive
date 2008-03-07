@@ -30,26 +30,30 @@
 #include "keyboardbuffermode.h"
 #include "hypermode.h"
 
-class TimingGenerator;
+class Timable;
 //class EOFHandler;
 class Config;
+class SDL_KeyboardEvent;
 
 class Emulator
 {
-private:
-	Throttle throttle;
-	PaddleButtonStates paddleButtonStates;
-
 protected:
+	PaddleButtonStates paddleButtonStates;
 	KeypressQueue keypresses;
+
 	HyperMode fhyper;
 	KeyboardBufferMode buffered;
+	Throttle throttle;
 	ScreenImage screenImage;
 	AnalogTV display;
-	Apple2 apple2;
 	VideoStaticGenerator videoStatic;
+	Apple2 apple2;
 
-	TimingGenerator* timer;
+	Timable* timable;
+
+	bool quit;
+
+	void dispatchKeypress(const SDL_KeyboardEvent& keyEvent);
 
 public:
 	Emulator();
@@ -57,13 +61,13 @@ public:
 
 	void config(Config& cfg);
 
-	virtual void init() = 0;
+	virtual void init();
 //	virtual EOFHandler getStdInEOF() = 0;
 
 	void powerOnComputer();
 	void powerOffComputer();
-	void close();
 
+	virtual int run();
 };
 
 #endif

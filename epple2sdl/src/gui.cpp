@@ -27,10 +27,6 @@
 #include "contentpane.h"
 #include "hypermode.h"
 #include "keyboardbuffermode.h"
-#include <QtGui/QKeyEvent>
-#include <QtGui/QApplication>
-#include <QtGui/QClipboard>
-#include <QtCore/QString>
 
 GUI::GUI(ScreenImage& screenImage, Apple2& apple2, Emulator& emu, AnalogTV& display, KeypressQueue& keys, HyperMode& fhyper, KeyboardBufferMode& buffered):
 	apple2(apple2),
@@ -38,19 +34,14 @@ GUI::GUI(ScreenImage& screenImage, Apple2& apple2, Emulator& emu, AnalogTV& disp
 	fhyper(fhyper),
 	buffered(buffered)
 {
-	ContentPane* pcontent = new ContentPane(screenImage,display,emu,this);
-	setCentralWidget(pcontent);
-	grabKeyboard();
+	ContentPane* pcontent = new ContentPane(screenImage,display,emu);
+//	setCentralWidget(pcontent);
+//	grabKeyboard();
 }
 
 
 GUI::~GUI()
 {
-}
-#include <iostream>
-void GUI::closeEvent(QCloseEvent* event)
-{
-	std::cout << "GUI::closeEvent" << std::endl;
 }
 
 void inline GUI::pt(const int key)
@@ -58,8 +49,9 @@ void inline GUI::pt(const int key)
 	this->keys.push(key);
 }
 
-void GUI::keyPressEvent(QKeyEvent *event)
+void GUI::keyPressEvent()
 {
+/*
 	const unsigned int key(event->key());
 	const QString text(event->text());
 	const unsigned int chr(text.length()>0 ? text.at(0).unicode() : 0);
@@ -128,4 +120,5 @@ void GUI::keyPressEvent(QKeyEvent *event)
 	{
 		QWidget::keyPressEvent(event);
 	}
+*/
 }

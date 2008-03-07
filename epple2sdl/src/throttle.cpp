@@ -37,8 +37,8 @@ Throttle::~Throttle()
 
 void Throttle::tick()
 {
-	suspendIfNecessary();
-	throttleIfNecessary();
+//	suspendIfNecessary();
+//	throttleIfNecessary();
 }
 #include <iostream>
 void Throttle::throttleIfNecessary()

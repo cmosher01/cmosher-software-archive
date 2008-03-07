@@ -18,12 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "paddles.h"
-
-#include <QtGui/QCursor>
-#include <QtGui/QApplication>
-#include <QtGui/QDesktopWidget>
-#include <QtCore/QPoint>
-#include <QtCore/QRect>
+#include <SDL/SDL.h>
 
 Paddles::Paddles():
 	rTick(PADDLE_COUNT)
@@ -59,19 +54,13 @@ void Paddles::startTimers()
 
 void Paddles::tryStartPaddleTimers()
 {
-	// TODO reading mouse must be done on the MAIN thread
-	const QPoint loc;// = QCursor::pos();
-	const QRect rect = QApplication::desktop()->screenGeometry(loc);
+	int x, y;
+	SDL_GetMouseState(&x,&y);
 
-	double p = loc.x();
-	double pMin = rect.left();
-	double pMax = rect.right()/2;
-	const int x = (int)((p-pMin)/(pMax-pMin)*PADDLE_CYCLES+.5);
-
-	p = loc.y();
-	pMin = rect.top();
-	pMax = rect.bottom()/2;
-	const int y = (int)((p-pMin)/(pMax-pMin)*PADDLE_CYCLES+.5);
+	double pMin = 0;
+	double pMax = 500;
+	x = (int)((x-pMin)/(pMax-pMin)*PADDLE_CYCLES+.5);
+	y = (int)((y-pMin)/(pMax-pMin)*PADDLE_CYCLES+.5);
 
 	if (isTimedOut(0))
 		this->rTick[0] = x;

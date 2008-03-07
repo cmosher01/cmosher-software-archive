@@ -21,8 +21,7 @@
 #include "throttle.h"
 #include "timable.h"
 
-TimingGenerator::TimingGenerator(Timable& timable, Throttle& throttle, QObject *parent):
-	QThread(parent),
+TimingGenerator::TimingGenerator(Timable& timable, Throttle& throttle):
 	shut(false),
 	timable(timable),
 	throttle(throttle)

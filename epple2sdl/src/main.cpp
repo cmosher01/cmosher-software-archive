@@ -21,20 +21,33 @@
 
 #include "guiemulator.h"
 #include "config.h"
-#include <QtGui/QApplication>
 #include <string>
+#include <SDL/SDL.h>
 
 int main( int argc, char ** argv )
 {
-	QApplication app(argc, argv);
-	Emulator* emu = new GUIEmulator();
+	if (SDL_Init(SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO) != 0)
+	{
+			printf("Unable to initialize SDL: %s\n",SDL_GetError());
+			throw 0; // TODO
+	}
+	else
+	{
+			printf("Initialized SDL\n");
+	}
+	SDL_EnableUNICODE(1);
 
-//	std::string config_file("./epple2.conf");
-	std::string config_file("/home/chris/epple2/epple2.conf");
+	Emulator* emu = new GUIEmulator();
+	printf("Created Emulator\n");
+
+	std::string config_file("./epple2.conf");
+//	std::string config_file("/home/chris/epple2/epple2.conf");
 	Config cfg(config_file);//this.args.getConfig());
+	printf("Opened config file\n");
 	emu->config(cfg);
+	printf("Processed config file\n");
 
 	emu->init();
 
-	return app.exec();
+	return emu->run();
 }

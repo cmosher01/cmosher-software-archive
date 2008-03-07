@@ -19,18 +19,13 @@
 
 #include "emulator.h"
 #include "powerlight.h"
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QRadioButton>
-#include <QtGui/QLabel>
 
-ComputerControlPanel::ComputerControlPanel(Emulator& emu, QWidget *parent):
-	QWidget(parent),
+ComputerControlPanel::ComputerControlPanel(Emulator& emu):
 	emu(emu),
 	powerState(false)
 {
-	setFocusPolicy(Qt::NoFocus);
+/*
+ 	setFocusPolicy(Qt::NoFocus);
 	QHBoxLayout* layout = new QHBoxLayout();
 
 	QVBoxLayout* powerLayout = new QVBoxLayout();
@@ -49,6 +44,7 @@ ComputerControlPanel::ComputerControlPanel(Emulator& emu, QWidget *parent):
 	powerLayout->addWidget(powerOff);
 
 	powerOff->setChecked(true);
+*/
 
 
 
@@ -56,9 +52,9 @@ ComputerControlPanel::ComputerControlPanel(Emulator& emu, QWidget *parent):
 	this->light->turnOn(false);
 
 
-	layout->addLayout(powerLayout);
-	layout->addWidget(light);
-	setLayout(layout);
+//	layout->addLayout(powerLayout);
+//	layout->addWidget(light);
+//	setLayout(layout);
 }
 
 ComputerControlPanel::~ComputerControlPanel()

@@ -19,24 +19,22 @@
  ***************************************************************************/
 #include "screen.h"
 
-#include <QtGui/QPainter>
-#include <GL/glu.h>
-#include <QtGui/QWidget>
-
 #include "apple2.h"
 
-Screen::Screen(const ScreenImage& image, QWidget *parent):
-	QGLWidget(parent),
+Screen::Screen(const ScreenImage& image):
 	image(image)
 {
-	setFocusPolicy(Qt::NoFocus);
+/*
+ 	setFocusPolicy(Qt::NoFocus);
 	resize(ScreenImage::WIDTH,ScreenImage::HEIGHT);
 	setMaximumSize(ScreenImage::WIDTH,ScreenImage::HEIGHT);
 	setMinimumSize(ScreenImage::WIDTH,ScreenImage::HEIGHT);
 	connect(&this->image,SIGNAL(changed()),this,SLOT(updateGL()));
 	show();
+*/
 }
 
+/*
 void Screen::initializeGL()
 {
 	glViewport(0, 0, ScreenImage::WIDTH+2, ScreenImage::HEIGHT+2);
@@ -49,3 +47,4 @@ void Screen::initializeGL()
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glRasterPos2f(0,ScreenImage::HEIGHT);
 }
+*/

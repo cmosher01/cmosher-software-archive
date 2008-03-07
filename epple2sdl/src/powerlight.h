@@ -18,16 +18,10 @@
 #ifndef POWERLIGHT_H
 #define POWERLIGHT_H
 
-#include <QtGui/QLabel>
-
-class PowerLight : public QLabel
+class PowerLight
 {
-	Q_OBJECT
-
-private:
-
 public:
-	PowerLight(QWidget * parent = 0);
+	PowerLight();
 	~PowerLight();
 
 	void turnOn(bool powerOn);

@@ -22,23 +22,17 @@
 
 #include "keyboard.h"
 #include "screenimage.h"
-#include <QtOpenGL/QGLWidget>
-class QWidget;
 
-
-
-class Screen : public QGLWidget
+class Screen
 {
-	Q_OBJECT
-
 	const ScreenImage& image;
 
 protected:
 	void initializeGL();
-	void paintGL() { glDrawPixels(ScreenImage::WIDTH, ScreenImage::HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, this->image.image()); }
+//	void paintGL() { glDrawPixels(ScreenImage::WIDTH, ScreenImage::HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, this->image.image()); }
  
 public:
-	Screen(const ScreenImage& image, QWidget *parent = 0);
+	Screen(const ScreenImage& image);
 	~Screen() { }
 };
 

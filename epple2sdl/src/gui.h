@@ -21,9 +21,6 @@
 #define GUI_H
 
 #include "keyboard.h"
-#include <QtGui/QMainWindow>
-class QCloseEvent;
-class QKeyEvent;
 class ScreenImage;
 class Apple2;
 class HyperMode;
@@ -31,10 +28,8 @@ class KeyboardBufferMode;
 class Emulator;
 class AnalogTV;
 
-class GUI : public QMainWindow
+class GUI
 {
-	Q_OBJECT
-
 private:
 	Apple2& apple2;
 	KeypressQueue& keys;
@@ -47,8 +42,7 @@ public:
 	~GUI();
 
 protected:
-	void closeEvent(QCloseEvent* event);
-	void keyPressEvent(QKeyEvent* event);
+	void keyPressEvent(/*TODO*/);
 };
 
 #endif

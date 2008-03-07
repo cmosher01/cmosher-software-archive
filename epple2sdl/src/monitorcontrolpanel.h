@@ -19,28 +19,22 @@
 #define MONITORCONTROLPANEL_H
 
 #include "analogtv.h"
-#include <QtGui/QWidget>
-class QButtonGroup;
-class QHBoxLayout;
 
-class MonitorControlPanel : public QWidget
+class MonitorControlPanel
 {
-	Q_OBJECT
-
 private:
 	AnalogTV& display;
 	bool powerState;
 	AnalogTV::DisplayType displayTypeState;
-	QButtonGroup* displayType;
-	void initDisplayButton(QHBoxLayout* displayTypeLayout, const char* name, const AnalogTV::DisplayType type, const bool selected);
+//	void initDisplayButton(QHBoxLayout* displayTypeLayout, const char* name, const AnalogTV::DisplayType type, const bool selected);
 
-private slots:
+private:
 	void powerOn();
 	void powerOff();
 	void displayTypeChange();
 
 public:
-	MonitorControlPanel(AnalogTV& display, QWidget *parent = 0);
+	MonitorControlPanel(AnalogTV& display);
 	~MonitorControlPanel();
 };
 

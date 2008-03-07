@@ -19,7 +19,9 @@
  ***************************************************************************/
 #include "paddlebuttonstates.h"
 
-const int PaddleButtonStates::PADDLE_COUNT(4);
+const int PaddleButtonStates::PADDLE_COUNT(2);
+
+#include <SDL/SDL.h>
 
 PaddleButtonStates::PaddleButtonStates():
 	button(PADDLE_COUNT)
@@ -41,5 +43,6 @@ bool PaddleButtonStates::isDown(const int paddle)
 	{
 		return false;
 	}
-	return this->button[paddle];
+	unsigned char btn = SDL_GetMouseState(0,0);
+	return paddle ? btn&SDL_BUTTON_RMASK : btn&SDL_BUTTON_LMASK;
 }

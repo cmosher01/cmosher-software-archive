@@ -20,17 +20,13 @@
 #ifndef SCREENIMAGE_H
 #define SCREENIMAGE_H
 
-#include <QtCore/QObject>
-
 #include "applentsc.h"
 #include "videoaddressing.h"
-class ScreenImage : public QObject
+
+class SDL_Surface;
+
+class ScreenImage
 {
-	Q_OBJECT
-
-signals:
-	void changed();
-
 public:
 	ScreenImage();
 	~ScreenImage();
@@ -43,10 +39,9 @@ public:
 		HEIGHT = VideoAddressing::VISIBLE_ROWS_PER_FIELD*2,
 		WIDTH = AppleNTSC::H-AppleNTSC::PIC_START-2
 	};
-	const void* image() const { return this->img; }
 
 private:
-	unsigned int img[HEIGHT][WIDTH];
+	SDL_Surface* screen;
 };
 
 #endif

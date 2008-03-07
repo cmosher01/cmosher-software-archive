@@ -70,13 +70,18 @@ void Config::parse(Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EO
 	std::ifstream in(this->file_path.c_str());
 	if (!in.is_open())
 	{
-		throw "Cannot open config file."; // TODO
+		printf("Cannot open config file.\n");
+		throw 0; // TODO
 	}
+	printf("Opened config file.\n");
 
+	printf("std::string line:\n");
 	std::string line;
+	printf("std::getline(in,line):\n");
 	std::getline(in,line);
 	while (!in.eof())
 	{
+		printf("Parsing config line: %s\n",line.c_str());
 		strip_comment(line);
 		trim(line);
 		if (!line.empty())
@@ -119,10 +124,12 @@ void verifyUniqueCards(const Slots& cards)
 
 void Config::parseLine(const std::string& line, Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EOFHandler eofHandler*/, int& revision)
 {
+	printf("begin Parsing config line: %d: %s\n",line.length(),line.c_str());
 	std::istringstream tok(line);
 
 	std::string cmd;
 	tok >> cmd;
+	printf("parsing config: %s\n",cmd.c_str());
 	if (cmd == "slot")
 	{
 		int slot;
