@@ -32,6 +32,8 @@ int main( int argc, char ** argv )
 			return 1;
 	}
 	SDL_EnableUNICODE(1);
+	SDL_ShowCursor(0);
+	SDL_EnableKeyRepeat(0,0);
 
 	Emulator* emu = new GUIEmulator();
 //	printf("Created Emulator\n");

@@ -282,12 +282,13 @@ signed char inline PictureGenerator::vbl(const int hcycle)
 	return sig;
 }
 
+
 const signed char PictureGenerator::lutCB[] =
 {
-	 AppleNTSC::BLANK_LEVEL,
-	-AppleNTSC::CB_LEVEL,
-	 AppleNTSC::BLANK_LEVEL,
-	+AppleNTSC::CB_LEVEL
+	+AppleNTSC::CB_LEVEL/2,
+	-AppleNTSC::CB_LEVEL/2,
+	-AppleNTSC::CB_LEVEL/2,
+	+AppleNTSC::CB_LEVEL/2,
 };
 
 signed char inline PictureGenerator::hbl(const int hcycle)

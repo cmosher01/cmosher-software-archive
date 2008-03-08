@@ -38,8 +38,8 @@ void GUIEmulator::init()
 {
 //	GUI* pgui = new GUI(this->screenImage,this->apple2,*this,this->display,this->keypresses,this->fhyper,this->buffered);
 
-//	powerOffComputer();
-	powerOnComputer();
+	powerOffComputer();
+//	powerOnComputer();
 
 	this->display.setType(AnalogTV::MONITOR_COLOR);//TV_NEW_COLOR);//TV_OLD_COLOR);//
 //	this->display.powerOn(false);

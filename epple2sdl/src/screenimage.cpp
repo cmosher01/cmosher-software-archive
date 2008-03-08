@@ -23,7 +23,7 @@
 
 ScreenImage::ScreenImage()
 {
-	this->screen = SDL_SetVideoMode(WIDTH,HEIGHT,32,SDL_HWSURFACE|SDL_HWPALETTE|SDL_FULLSCREEN);//|SDL_ANYFORMAT);//|SDL_FULLSCREEN);
+	this->screen = SDL_SetVideoMode(WIDTH,HEIGHT+8,32,SDL_HWSURFACE|SDL_HWPALETTE|SDL_FULLSCREEN);//|SDL_ANYFORMAT);//|SDL_FULLSCREEN);
 	if (this->screen == NULL)
 	{
 		printf("Unable to set video mode: %s\n",SDL_GetError());
