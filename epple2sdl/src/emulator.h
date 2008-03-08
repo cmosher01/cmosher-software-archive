@@ -66,6 +66,8 @@ public:
 
 	void powerOnComputer();
 	void powerOffComputer();
+	void toggleComputerPower();
+	void cycleDisplayType();
 
 	virtual int run();
 };

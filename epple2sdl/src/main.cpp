@@ -29,25 +29,25 @@ int main( int argc, char ** argv )
 	if (SDL_Init(SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO) != 0)
 	{
 			printf("Unable to initialize SDL: %s\n",SDL_GetError());
-			throw 0; // TODO
-	}
-	else
-	{
-			printf("Initialized SDL\n");
+			return 1;
 	}
 	SDL_EnableUNICODE(1);
 
 	Emulator* emu = new GUIEmulator();
-	printf("Created Emulator\n");
+//	printf("Created Emulator\n");
 
-	std::string config_file("./epple2.conf");
-//	std::string config_file("/home/chris/epple2/epple2.conf");
+//	std::string config_file("./epple2.conf");
+	std::string config_file("/home/chris/epple2sdl/epple2.conf");
 	Config cfg(config_file);//this.args.getConfig());
-	printf("Opened config file\n");
+//	printf("Opened config file\n");
 	emu->config(cfg);
-	printf("Processed config file\n");
+//	printf("Processed config file\n");
 
 	emu->init();
 
-	return emu->run();
+	const int ret = emu->run();
+
+	delete emu;
+
+	return ret;
 }

@@ -66,6 +66,10 @@ void AnalogTV::setType(DisplayType type)
 	this->type = type;
 }
 
+void AnalogTV::cycleType()
+{
+	this->type = (DisplayType)((((int)this->type)+1)%NUM_DISPLAY_TYPES);
+}
 
 
 

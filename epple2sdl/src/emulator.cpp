@@ -38,6 +38,13 @@ Emulator::~Emulator()
 {
 }
 
+void Emulator::toggleComputerPower()
+{
+	if (this->timable==&this->videoStatic)
+		powerOnComputer();
+	else
+		powerOffComputer();
+}
 
 void Emulator::powerOnComputer()
 {
@@ -118,7 +125,7 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 	SDLMod mod = keyEvent.keysym.mod;
 	unsigned char scancode = keyEvent.keysym.scancode;
 
-	printf("key: %d    sym: %d    mod: %04X    scn: %d\n",key,sym,mod,scancode);
+//	printf("key: %d    sym: %d    mod: %04X    scn: %d\n",key,sym,mod,scancode);
 
 	if (sym == SDLK_LEFT)
 	{
@@ -138,18 +145,31 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 	}
 	else if (sym == SDLK_PAUSE)
 	{
-		printf("    RESET\n");
+//		printf("    RESET\n");
 		this->apple2.reset();
 	}
 	else if (sym == SDLK_F11)
 	{
 		this->fhyper.toggleHyper();
-		printf("    hyper mode is now: %s\n",this->fhyper.isHyper()?"on":"off");
+//		printf("    hyper mode is now: %s\n",this->fhyper.isHyper()?"on":"off");
 	}
 	else if (sym == SDLK_F12)
 	{
 		this->buffered.toggleBuffered();
-		printf("    keyboard buffering is now: %s\n",this->buffered.isBuffered()?"on":"off");
+//		printf("    keyboard buffering is now: %s\n",this->buffered.isBuffered()?"on":"off");
+	}
+	else if (sym == SDLK_F1)
+	{
+		toggleComputerPower();
+	}
+	else if (sym == SDLK_F2)
+	{
+		this->display.cycleType();
+	}
+	else if (sym == SDLK_END)
+	{
+		this->quit = true;
+		return;
 	}
 
 	if ('a' <= key && key <= 'z')
@@ -168,6 +188,6 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 	}
 
 
-	printf("    sending to apple as ascii------------------------------>%02X (%02X)\n",key,key|0x80);
+//	printf("    sending to apple as ascii------------------------------>%02X (%02X)\n",key,key|0x80);
 	this->keypresses.push(key);
 }

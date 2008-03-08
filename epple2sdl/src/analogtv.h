@@ -44,6 +44,8 @@ public:
 		TV_OLD_BW,
 		TV_NEW_COLOR,
 		TV_NEW_BW,
+
+		NUM_DISPLAY_TYPES
 	};
 
 private:
@@ -105,6 +107,7 @@ public:
 	void powerOn(bool b);
 	void restartSignal();
 	void setType(DisplayType type);
+	void cycleType();
 	void setNoise(bool noise) { this->noise = noise; }
 };
 
