@@ -106,7 +106,7 @@ ScreenImage::~ScreenImage()
 
 void ScreenImage::notifyObservers()
 {
-	SDL_UpdateRect(this->screen,0,0,WIDTH,HEIGHT+POWERD);
+	SDL_UpdateRect(this->screen,0,0,640,480);
 }
 
 void ScreenImage::setElem(unsigned int i, const unsigned int val)
