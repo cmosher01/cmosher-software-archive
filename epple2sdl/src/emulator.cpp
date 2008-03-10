@@ -29,7 +29,9 @@ Emulator::Emulator():
 	videoStatic(display),
 	apple2(keypresses,paddleButtonStates,display,fhyper,buffered),
 	timable(0),
-	quit(false)
+	quit(false),
+	repeat(false),
+	keysDown(0)
 {
 }
 
@@ -49,6 +51,7 @@ void Emulator::toggleComputerPower()
 void Emulator::powerOnComputer()
 {
 	this->apple2.powerOn();
+	this->screenImage.drawPower(true);
 
 	this->timable = &this->apple2;
 }
@@ -57,6 +60,7 @@ void Emulator::powerOffComputer()
 {
 	// TODO ask if unsaved changes
 	this->apple2.powerOff();
+	this->screenImage.drawPower(false);
 	this->videoStatic.powerOn();
 
 	this->timable = &this->videoStatic;
@@ -74,6 +78,9 @@ void Emulator::init()
 #define CHECK_EVERY_CYCLE 51024
 #define EXPECTED_MS 50
 
+// U.A.2 p. 7-13: REPT key repeats at 10Hz
+#define CYCLES_PER_REPT 102048
+
 int Emulator::run()
 {
 	int skip = CHECK_EVERY_CYCLE;
@@ -83,6 +90,18 @@ int Emulator::run()
 		if (this->timable)
 		{
 			this->timable->tick();
+			if (this->repeat)
+			{
+				--this->rept;
+				if (this->rept <= 0)
+				{
+					this->rept = CYCLES_PER_REPT;
+					if (this->keysDown > 0)
+					{
+						this->keypresses.push(this->lastKeyDown);
+					}
+				}
+			}
 		}
 		--skip;
 		if (!skip)
@@ -99,15 +118,19 @@ int Emulator::run()
 				case SDL_KEYDOWN:
 					dispatchKeypress(event.key);
 				break;
+				case SDL_KEYUP:
+					dispatchKeyUp(event.key);
+				break;
 				}
 			}
 			if (!this->fhyper.isHyper())
 			{
 				int actual_ms = SDL_GetTicks()-prev_ms;
-				int dlta_ms = EXPECTED_MS-actual_ms;
-				if (2 <= dlta_ms && dlta_ms <= EXPECTED_MS) // sanity check
+				int delta_ms = EXPECTED_MS-actual_ms;
+				if (1 <= delta_ms && delta_ms <= EXPECTED_MS) // sanity check
 				{
-					SDL_Delay(dlta_ms);
+//					printf("sleeping %d ms\n",delta_ms);
+					SDL_Delay(delta_ms);
 				}
 	
 				prev_ms = SDL_GetTicks();
@@ -118,6 +141,25 @@ int Emulator::run()
 	return 0;
 }
 
+void Emulator::dispatchKeyUp(const SDL_KeyboardEvent& keyEvent)
+{
+	unsigned char key = (unsigned char)(keyEvent.keysym.unicode & 0x7F);
+	SDLKey sym = keyEvent.keysym.sym;
+	SDLMod mod = keyEvent.keysym.mod;
+	unsigned char scancode = keyEvent.keysym.scancode;
+//	printf("key UP: %d    sym: %d    mod: %04X    scn: %d\n",key,sym,mod,scancode);
+
+	if (sym < 0x7F || sym == SDLK_LEFT || sym == SDLK_RIGHT || sym == SDLK_UP || sym == SDLK_DOWN)
+	{
+		--this->keysDown;
+	}
+	else if (sym == SDLK_F10)
+	{
+		this->repeat = false;
+		this->rept = 0;
+	}
+}
+
 void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 {
 	unsigned char key = (unsigned char)(keyEvent.keysym.unicode & 0x7F);
@@ -125,7 +167,12 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 	SDLMod mod = keyEvent.keysym.mod;
 	unsigned char scancode = keyEvent.keysym.scancode;
 
-//	printf("key: %d    sym: %d    mod: %04X    scn: %d\n",key,sym,mod,scancode);
+//	printf("key DN: %d    sym: %d    mod: %04X    scn: %d\n",key,sym,mod,scancode);
+
+	if (sym < 0x7F || sym == SDLK_LEFT || sym == SDLK_RIGHT || sym == SDLK_UP || sym == SDLK_DOWN)
+	{
+		++this->keysDown;
+	}
 
 	if (sym == SDLK_LEFT)
 	{
@@ -147,24 +194,50 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 	{
 //		printf("    RESET\n");
 		this->apple2.reset();
+		return;
+	}
+	else if (sym == SDLK_INSERT)
+	{
+		std::string s = this->clip.getText();
+		for (int i = 0; i < s.length(); ++i)
+		{
+			key = s[i];
+			if (key == '\n')
+				key = '\r';
+			if ('a' <= key && key <= 'z')
+			{
+				key -= 32;
+			}
+			this->keypresses.push(key);
+		}
+		return;
+	}
+	else if (sym == SDLK_F10)
+	{
+		this->repeat = true;
+		this->rept = CYCLES_PER_REPT;
 	}
 	else if (sym == SDLK_F11)
 	{
 		this->fhyper.toggleHyper();
 //		printf("    hyper mode is now: %s\n",this->fhyper.isHyper()?"on":"off");
+		return;
 	}
 	else if (sym == SDLK_F12)
 	{
 		this->buffered.toggleBuffered();
 //		printf("    keyboard buffering is now: %s\n",this->buffered.isBuffered()?"on":"off");
+		return;
 	}
 	else if (sym == SDLK_F1)
 	{
 		toggleComputerPower();
+		return;
 	}
 	else if (sym == SDLK_F2)
 	{
 		this->display.cycleType();
+		return;
 	}
 	else if (sym == SDLK_END)
 	{
@@ -190,4 +263,5 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 
 //	printf("    sending to apple as ascii------------------------------>%02X (%02X)\n",key,key|0x80);
 	this->keypresses.push(key);
+	this->lastKeyDown = key;
 }

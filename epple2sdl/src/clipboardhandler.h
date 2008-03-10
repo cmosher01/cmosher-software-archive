@@ -17,66 +17,19 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef EMULATOR_H
-#define EMULATOR_H
+#ifndef CLIPBOARDHANDLER_H
+#define CLIPBOARDHANDLER_H
 
-#include "throttle.h"
-#include "keyboard.h"
-#include "paddlebuttonstates.h"
-#include "apple2.h"
-#include "videostaticgenerator.h"
-#include "screenimage.h"
-#include "analogtv.h"
-#include "keyboardbuffermode.h"
-#include "hypermode.h"
-#include "clipboardhandler.h"
+#include <string>
 
-class Timable;
-//class EOFHandler;
-class Config;
-class SDL_KeyboardEvent;
 
-class Emulator
+class ClipboardHandler
 {
-protected:
-	PaddleButtonStates paddleButtonStates;
-	KeypressQueue keypresses;
-
-	HyperMode fhyper;
-	KeyboardBufferMode buffered;
-	Throttle throttle;
-	ScreenImage screenImage;
-	AnalogTV display;
-	VideoStaticGenerator videoStatic;
-	Apple2 apple2;
-	ClipboardHandler clip;
-
-	Timable* timable;
-
-	bool quit;
-	bool repeat;
-	int keysDown;
-	int rept;
-	unsigned char lastKeyDown;
-
-	void dispatchKeypress(const SDL_KeyboardEvent& keyEvent);
-	void dispatchKeyUp(const SDL_KeyboardEvent& keyEvent);
-
 public:
-	Emulator();
-	virtual ~Emulator();
+	ClipboardHandler();
+	~ClipboardHandler();
 
-	void config(Config& cfg);
-
-	virtual void init();
-//	virtual EOFHandler getStdInEOF() = 0;
-
-	void powerOnComputer();
-	void powerOffComputer();
-	void toggleComputerPower();
-	void cycleDisplayType();
-
-	virtual int run();
+	std::string getText();
 };
 
 #endif

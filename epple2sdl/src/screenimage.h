@@ -31,6 +31,7 @@ public:
 	ScreenImage();
 	~ScreenImage();
 
+	void drawPower(bool on);
 	void notifyObservers();
 	void setElem(const unsigned int i, const unsigned int val);
 	void blank();

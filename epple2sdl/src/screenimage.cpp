@@ -21,14 +21,66 @@
 
 #include <SDL/SDL.h>
 
+static const char* power =
+"@@@@    @@@   @    @    @  @@@@@  @@@@@ "
+"@   @  @   @  @   @ @   @  @      @    @"
+"@   @  @   @  @   @ @   @  @      @    @"
+"@@@@   @   @   @ @   @ @   @@@@@  @@@@@ "
+"@      @   @   @ @   @ @   @      @  @  "
+"@      @   @   @ @   @ @   @      @   @ "
+"@       @@@     @     @    @@@@@  @    @";
+
+#define POWERD 56
+#define LABEL_Y 24
+#define ON_CLR 0xFFE050
+#define OFF_CLR 0x807870
+
+
 ScreenImage::ScreenImage()
 {
-	this->screen = SDL_SetVideoMode(WIDTH,HEIGHT+8,32,SDL_HWSURFACE|SDL_HWPALETTE|SDL_FULLSCREEN);//|SDL_ANYFORMAT);//|SDL_FULLSCREEN);
+	this->screen = SDL_SetVideoMode(WIDTH,HEIGHT+POWERD,32,SDL_HWSURFACE|SDL_HWPALETTE);//|SDL_FULLSCREEN);//|SDL_ANYFORMAT);//|SDL_FULLSCREEN);
 	if (this->screen == NULL)
 	{
 		printf("Unable to set video mode: %s\n",SDL_GetError());
 		throw 0; // TODO
 	};
+}
+
+void ScreenImage::drawPower(bool on)
+{
+	unsigned int* pn = (unsigned int*)this->screen->pixels;
+	pn += HEIGHT*(this->screen->pitch/4);
+	for (int r = 0; r < POWERD; ++r)
+	{
+		if (r < LABEL_Y || LABEL_Y+7 < r)
+		{
+			for (int c = 0; c < POWERD; ++c)
+			{
+				*pn++ = on ? ON_CLR : OFF_CLR;
+			}
+		}
+		else
+		{
+			for (int c = 0; c < 8; ++c)
+			{
+				*pn++ = on ? ON_CLR : OFF_CLR;
+			}
+			for (const char* ppow = power+(r-(LABEL_Y+1))*40; ppow < power+(r-LABEL_Y)*40; ++ppow)
+			{
+				if (*ppow == '@')
+					*pn++ = 0;
+				else
+					*pn++ = on ? ON_CLR : OFF_CLR;
+			}
+			for (int c = 0; c < 8; ++c)
+			{
+				*pn++ = on ? ON_CLR : OFF_CLR;
+			}
+		}
+		pn -= POWERD;
+		pn += this->screen->pitch/4;
+	}
+	SDL_UpdateRect(this->screen,0,HEIGHT,POWERD,HEIGHT+POWERD);
 }
 
 ScreenImage::~ScreenImage()
@@ -37,7 +89,7 @@ ScreenImage::~ScreenImage()
 
 void ScreenImage::notifyObservers()
 {
-	SDL_UpdateRect(this->screen,0,0,WIDTH,HEIGHT);
+	SDL_UpdateRect(this->screen,0,0,WIDTH,HEIGHT+POWERD);
 }
 
 void ScreenImage::setElem(const unsigned int i, const unsigned int val)
