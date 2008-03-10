@@ -239,6 +239,12 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 		this->display.cycleType();
 		return;
 	}
+	else if (sym == SDLK_F3)
+	{
+		this->screenImage.toggleFullScreen();
+		this->screenImage.drawPower(this->timable==&this->apple2);
+		return;
+	}
 	else if (sym == SDLK_END)
 	{
 		this->quit = true;

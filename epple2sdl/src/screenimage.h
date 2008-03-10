@@ -27,10 +27,16 @@ class SDL_Surface;
 
 class ScreenImage
 {
+private:
+	SDL_Surface* screen;
+	bool fullscreen;
+	void createScreen();
+
 public:
 	ScreenImage();
 	~ScreenImage();
 
+	void toggleFullScreen();
 	void drawPower(bool on);
 	void notifyObservers();
 	void setElem(const unsigned int i, const unsigned int val);
@@ -40,9 +46,6 @@ public:
 		HEIGHT = VideoAddressing::VISIBLE_ROWS_PER_FIELD*2,
 		WIDTH = AppleNTSC::H-AppleNTSC::PIC_START-2
 	};
-
-private:
-	SDL_Surface* screen;
 };
 
 #endif

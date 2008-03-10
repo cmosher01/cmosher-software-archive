@@ -36,14 +36,27 @@ static const char* power =
 #define OFF_CLR 0x807870
 
 
-ScreenImage::ScreenImage()
+ScreenImage::ScreenImage():
+	fullscreen(false)
 {
-	this->screen = SDL_SetVideoMode(WIDTH,HEIGHT+POWERD,32,SDL_HWSURFACE|SDL_HWPALETTE);//|SDL_FULLSCREEN);//|SDL_ANYFORMAT);//|SDL_FULLSCREEN);
+	createScreen();
+}
+
+void ScreenImage::toggleFullScreen()
+{
+	this->fullscreen = !this->fullscreen;
+	createScreen();
+}
+
+void ScreenImage::createScreen()
+{
+	this->screen = SDL_SetVideoMode(WIDTH,HEIGHT+POWERD,32,SDL_HWSURFACE|SDL_HWPALETTE|(this->fullscreen?SDL_FULLSCREEN:0));
 	if (this->screen == NULL)
 	{
 		printf("Unable to set video mode: %s\n",SDL_GetError());
 		throw 0; // TODO
 	};
+	notifyObservers();
 }
 
 void ScreenImage::drawPower(bool on)
