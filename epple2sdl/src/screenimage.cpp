@@ -22,17 +22,17 @@
 #include <SDL/SDL.h>
 
 static const char* power =
-"@@@@    @@@   @    @    @  @@@@@  @@@@@ "
-"@   @  @   @  @   @ @   @  @      @    @"
-"@   @  @   @  @   @ @   @  @      @    @"
-"@@@@   @   @   @ @   @ @   @@@@@  @@@@@ "
-"@      @   @   @ @   @ @   @      @  @  "
-"@      @   @   @ @   @ @   @      @   @ "
-"@       @@@     @     @    @@@@@  @    @";
+" @@@@    @@@   @    @    @  @@@@@  @@@@ "
+" @   @  @   @  @   @ @   @  @      @   @"
+" @   @  @   @  @   @ @   @  @      @   @"
+" @@@@   @   @   @ @   @ @   @@@@@  @@@@ "
+" @      @   @   @ @   @ @   @      @ @  "
+" @      @   @   @ @   @ @   @      @  @ "
+" @       @@@     @     @    @@@@@  @   @";
 
 #define POWERD 56
 #define LABEL_Y 24
-#define ON_CLR 0xFFE050
+#define ON_CLR 0xF0D050
 #define OFF_CLR 0x807870
 
 
@@ -50,7 +50,7 @@ void ScreenImage::toggleFullScreen()
 
 void ScreenImage::createScreen()
 {
-	this->screen = SDL_SetVideoMode(WIDTH,HEIGHT+POWERD,32,SDL_HWSURFACE|SDL_HWPALETTE|(this->fullscreen?SDL_FULLSCREEN:0));
+	this->screen = SDL_SetVideoMode(640,480,32,SDL_HWSURFACE|SDL_HWPALETTE|(this->fullscreen?SDL_FULLSCREEN:0));
 	if (this->screen == NULL)
 	{
 		printf("Unable to set video mode: %s\n",SDL_GetError());
@@ -62,7 +62,7 @@ void ScreenImage::createScreen()
 void ScreenImage::drawPower(bool on)
 {
 	unsigned int* pn = (unsigned int*)this->screen->pixels;
-	pn += HEIGHT*(this->screen->pitch/4);
+	pn += (HEIGHT+1)*(this->screen->pitch/4)+1;
 	for (int r = 0; r < POWERD; ++r)
 	{
 		if (r < LABEL_Y || LABEL_Y+7 < r)
@@ -80,7 +80,7 @@ void ScreenImage::drawPower(bool on)
 					*pn++ = on ? ON_CLR : OFF_CLR;
 				}
 			}
-			for (const char* ppow = power+(r-(LABEL_Y+1))*40; ppow < power+(r-LABEL_Y)*40; ++ppow)
+			for (const char* ppow = power+(r-(LABEL_Y))*40; ppow < power+(r-(LABEL_Y-1))*40; ++ppow)
 			{
 				if (*ppow == '@')
 					*pn++ = 0;
@@ -109,15 +109,17 @@ void ScreenImage::notifyObservers()
 	SDL_UpdateRect(this->screen,0,0,WIDTH,HEIGHT+POWERD);
 }
 
-void ScreenImage::setElem(const unsigned int i, const unsigned int val)
+void ScreenImage::setElem(unsigned int i, const unsigned int val)
 {
 	unsigned int* pn = (unsigned int*)this->screen->pixels;
+	if (this->screen->pitch/4 != WIDTH)
+	i += (i/WIDTH)*(this->screen->pitch/4-WIDTH);
 	pn[i] = val;
 }
 
 void ScreenImage::blank()
 {
-	// TODO memset(this->img,0,WIDTH*HEIGHT*4);
+	memset(this->screen->pixels,0,this->screen->pitch*HEIGHT);
 }
 
 // TODO dump PNG

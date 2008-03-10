@@ -245,6 +245,10 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 		this->screenImage.drawPower(this->timable==&this->apple2);
 		return;
 	}
+	else if (sym == SDLK_F4)
+	{
+		this->display.toggleBleedDown();
+	}
 	else if (sym == SDLK_END)
 	{
 		this->quit = true;

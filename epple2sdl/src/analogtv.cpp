@@ -32,7 +32,8 @@
 AnalogTV::AnalogTV(ScreenImage& image):
 	image(image),
 	on(false),
-	noise(false)
+	noise(false),
+	bleed_down(false)
 {
 	hirescolor.push_back(colors.c()[A2ColorsObserved::HIRES_GREEN]);
 	hirescolor.push_back(colors.c()[A2ColorsObserved::HIRES_ORANGE]);
@@ -71,6 +72,12 @@ void AnalogTV::cycleType()
 	this->type = (DisplayType)((((int)this->type)+1)%NUM_DISPLAY_TYPES);
 }
 
+void AnalogTV::toggleBleedDown()
+{
+	this->bleed_down = !this->bleed_down;
+	this->image.blank();
+	this->image.notifyObservers();
+}
 
 
 
@@ -244,7 +251,8 @@ void AnalogTV::drawMonitorColor()
 				rgbv = 0xFFFFFF;
 			}
 			this->image.setElem(ip,rgbv);
-//			this->image.setElem(ip+D_IP,rgbv); // display same pixel on next row
+			if (bleed_down)
+				this->image.setElem(ip+D_IP,rgbv); // display same pixel on next row
 			++ip;
 		}
 		ip += D_IP;
@@ -277,7 +285,8 @@ void AnalogTV::drawMonitorMonochrome(const unsigned int color)
 			const int is = row*AppleNTSC::H+col;
 			const unsigned int rgb = this->signal[is] > 50 ? color : 0;
 			this->image.setElem(ip,rgb);
-//			this->image.setElem(ip+D_IP,rgb);
+			if (bleed_down)
+				this->image.setElem(ip+D_IP,rgb);
 			++ip;
 		}
 		ip += D_IP;
@@ -305,7 +314,8 @@ void AnalogTV::drawTVOld()
 		{
 			const int rgb = yiq2rgb(yiq[col-348]); // shift display left 1 pixel
 			this->image.setElem(ip,rgb);
-//			this->image.setElem(ip+D_IP,rgb);
+			if (bleed_down)
+				this->image.setElem(ip+D_IP,rgb);
 			++ip;
 		}
 		ip += D_IP;
@@ -330,7 +340,8 @@ void AnalogTV::drawTVNew()
 				rgbv = color2bw(rgbv);
 			}
 			this->image.setElem(ip,rgbv);
-//			this->image.setElem(ip+D_IP,rgbv);
+			if (bleed_down)
+				this->image.setElem(ip+D_IP,rgbv);
 			++ip;
 		}
 		ip += D_IP;
