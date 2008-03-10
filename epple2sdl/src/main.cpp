@@ -38,8 +38,8 @@ int main( int argc, char ** argv )
 	Emulator* emu = new GUIEmulator();
 //	printf("Created Emulator\n");
 
-//	std::string config_file("./epple2.conf");
-	std::string config_file("/home/chris/epple2sdl/epple2.conf");
+	std::string config_file("./epple2.conf");
+//	std::string config_file("/home/chris/epple2sdl/epple2.conf");
 	Config cfg(config_file);//this.args.getConfig());
 //	printf("Opened config file\n");
 	emu->config(cfg);

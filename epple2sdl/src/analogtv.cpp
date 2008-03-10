@@ -152,18 +152,24 @@ public:
 	int length() const { return this->cb.size(); }
 	void getPhase(double phase[]) const
 	{
-		for (int i = 0; i < 4; ++i)
 		{
-			phase[i & 3] = 0;
+			for (int i = 0; i < 4; ++i)
+			{
+				phase[i & 3] = 0;
+			}
 		}
-		for (int i = 0; i < length(); ++i)
 		{
-			phase[i & 3] += this->cb[i];
+			for (int i = 0; i < length(); ++i)
+			{
+				phase[i & 3] += this->cb[i];
+			}
 		}
 		double tot = 0;
-		for (int i = 0; i < 4; ++i)
 		{
-			tot += phase[i] * phase[i];
+			for (int i = 0; i < 4; ++i)
+			{
+				tot += phase[i] * phase[i];
+			}
 		}
 		const double tsrt = sqrt(tot);
 		if (tsrt < .0001)

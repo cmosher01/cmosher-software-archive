@@ -23,7 +23,7 @@
 #include "applentsc.h"
 #include "videoaddressing.h"
 
-class SDL_Surface;
+struct SDL_Surface;
 
 class ScreenImage
 {

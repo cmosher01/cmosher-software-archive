@@ -34,7 +34,7 @@
 class Timable;
 //class EOFHandler;
 class Config;
-class SDL_KeyboardEvent;
+struct SDL_KeyboardEvent;
 
 class Emulator
 {

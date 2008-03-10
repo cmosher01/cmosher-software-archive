@@ -74,9 +74,11 @@ void ScreenImage::drawPower(bool on)
 		}
 		else
 		{
-			for (int c = 0; c < 8; ++c)
 			{
-				*pn++ = on ? ON_CLR : OFF_CLR;
+				for (int c = 0; c < 8; ++c)
+				{
+					*pn++ = on ? ON_CLR : OFF_CLR;
+				}
 			}
 			for (const char* ppow = power+(r-(LABEL_Y+1))*40; ppow < power+(r-LABEL_Y)*40; ++ppow)
 			{
@@ -85,9 +87,11 @@ void ScreenImage::drawPower(bool on)
 				else
 					*pn++ = on ? ON_CLR : OFF_CLR;
 			}
-			for (int c = 0; c < 8; ++c)
 			{
-				*pn++ = on ? ON_CLR : OFF_CLR;
+				for (int c = 0; c < 8; ++c)
+				{
+					*pn++ = on ? ON_CLR : OFF_CLR;
+				}
 			}
 		}
 		pn -= POWERD;

@@ -24,11 +24,12 @@
 
 // taken from: http://www.libsdl.org/projects/scrap (original author: Sam Lantinga)
 
+
 /* Determine what type of clipboard we are using */
-#if defined(__unix__) && !defined(__QNXNTO__)
-#define X11_SCRAP
-#elif defined(__WIN32__)
+#if defined(__WIN32__) || defined(__CYGWIN__)
 #define WIN_SCRAP
+#elif defined(__unix__)
+#define X11_SCRAP
 #else
 #error Unknown window manager for clipboard handling
 #endif /* scrap type */
@@ -225,4 +226,6 @@ std::string ClipboardHandler::getText()
 		CloseClipboard();
 	}
 #endif /* scrap type */
+
+	return ret;
 }

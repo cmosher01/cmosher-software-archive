@@ -21,8 +21,8 @@
 
 static unsigned char tobyt(float x)
 {
-	x *= 256.0;
-	x += 0.0001;
+	x *= 256.0f;
+	x += 0.0001f;
 	int xi = (int)x;
 
 	if (xi > 255)
