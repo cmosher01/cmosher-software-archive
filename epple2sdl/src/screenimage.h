@@ -22,6 +22,7 @@
 
 #include "applentsc.h"
 #include "videoaddressing.h"
+#include "analogtv.h"
 
 struct SDL_Surface;
 
@@ -30,6 +31,10 @@ class ScreenImage
 private:
 	SDL_Surface* screen;
 	bool fullscreen;
+	bool hyper;
+	bool buffer;
+	bool fillLines;
+	AnalogTV::DisplayType display;
 	void createScreen();
 
 public:
@@ -41,6 +46,19 @@ public:
 	void notifyObservers();
 	void setElem(const unsigned int i, const unsigned int val);
 	void blank();
+	void drawText(const std::string& text, int row, int col, int color = 0xFFFFFF, int bgcolor = 0);
+	void drawChar(const char ch, int row, int col, int color = 0xFFFFFF, int bgcolor = 0);
+	void drawLabels();
+	void drawSlots();
+	void drawFnKeys();
+	void toggleHyperLabel();
+	void toggleKdbBufferLabel();
+	void cycleDisplayLabel();
+	void toggleFillLinesLabel();
+	void invertText(int row, int begincol, int endcol);
+	void drawDisplayLabel();
+
+
 	enum
 	{
 		HEIGHT = VideoAddressing::VISIBLE_ROWS_PER_FIELD*2,

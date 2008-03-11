@@ -18,7 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "screenimage.h"
-
+#include <string>
 #include <SDL/SDL.h>
 
 static const char* power =
@@ -34,10 +34,17 @@ static const char* power =
 #define LABEL_Y 24
 #define ON_CLR 0xF0D050
 #define OFF_CLR 0x807870
+#define SCRW 640
+#define SCRH 480
 
+#include "font3x5.h"
 
 ScreenImage::ScreenImage():
-	fullscreen(false)
+	fullscreen(false),
+	hyper(false),
+	buffer(true),
+	fillLines(false),
+	display(AnalogTV::MONITOR_COLOR)
 {
 	createScreen();
 }
@@ -50,13 +57,164 @@ void ScreenImage::toggleFullScreen()
 
 void ScreenImage::createScreen()
 {
-	this->screen = SDL_SetVideoMode(640,480,32,SDL_HWSURFACE|SDL_HWPALETTE|(this->fullscreen?SDL_FULLSCREEN:0));
+	this->screen = SDL_SetVideoMode(SCRW,SCRH,32,SDL_HWSURFACE|SDL_HWPALETTE|(this->fullscreen?SDL_FULLSCREEN:0));
 	if (this->screen == NULL)
 	{
 		printf("Unable to set video mode: %s\n",SDL_GetError());
 		throw 0; // TODO
 	};
+	if (this->screen->pitch/4 != SCRW)
+	{
+		printf("Cannot set video screen pitch to 640 pixels (gets set to %d)\n",this->screen->pitch);
+		throw 0; // TODO
+	};
+	drawLabels();
 	notifyObservers();
+}
+
+void ScreenImage::drawLabels()
+{
+	drawText("EPPLE ][",0,152);
+	drawSlots();
+	drawFnKeys();
+}
+
+void ScreenImage::drawSlots()
+{
+	int r(65);
+	int c(17);
+	drawText("SLOTS:",r++,c);
+	drawText("0: ",r++,c);
+	drawText("1: ",r++,c);
+	drawText("2: ",r++,c);
+	drawText("3: ",r++,c);
+	drawText("4: ",r++,c);
+	drawText("5: ",r++,c);
+	drawText("6: ",r++,c);
+	drawText("7: ",r++,c);
+
+}
+static const char* displays[] =
+{
+	"COLOR MONITOR ",
+	"WHITE MONITOR ",
+	"GREEN MONITOR ",
+	"ORANGE MONITOR",
+	"OLD COLOR TV  ",
+	"OLD B & W TV  ",
+	"NEW COLOR TV  ",
+	"NEW B & W TV  ",
+};
+
+void ScreenImage::drawFnKeys()
+{
+	int r(76);
+	int c(1);
+	drawText(
+"                                FULLSCRN   SCAN-LINES                     KEYBOARD",r++,c);
+	drawText(
+"                XXXXXXXXXXXXXX  WINDOW     FILL-LINES      REPT    HYPER  BUFFER    RESET   QUIT!",r++,c);
+	drawText(
+"      F1              F2          F3          F4           F10      F11     F12     Break    End",r++,c);
+
+	if (this->fullscreen)
+		invertText(76,32,42); // FULLSCRN
+	else
+		invertText(77,32,40); // WINDOW
+
+	if (this->fillLines)
+		invertText(77,43,55); // FILL-LINES
+	else
+		invertText(76,43,55); // SCAN-LINES
+
+	if (this->hyper)
+		invertText(77,67,74); // HYPER
+
+	if (this->buffer)
+		invertText(77,74,82); // BUFFER
+
+	drawDisplayLabel();
+}
+
+void ScreenImage::toggleFillLinesLabel()
+{
+	this->fillLines = !this->fillLines;
+	invertText(76,43,55); // SCAN-LINES
+	invertText(77,43,55); // FILL-LINES
+}
+
+void ScreenImage::drawDisplayLabel()
+{
+	const char* label = displays[(int)(this->display)];
+	drawText(label,77,17);
+}
+
+void ScreenImage::cycleDisplayLabel()
+{
+	this->display = (AnalogTV::DisplayType)((((int)this->display)+1)%AnalogTV::NUM_DISPLAY_TYPES);
+	drawDisplayLabel();
+}
+
+void ScreenImage::toggleHyperLabel()
+{
+	this->hyper = !this->hyper;
+	invertText(77,67,74); // HYPER
+}
+
+void ScreenImage::toggleKdbBufferLabel()
+{
+	this->buffer = !this->buffer;
+	invertText(77,74,82); // BUFFER
+}
+
+void ScreenImage::invertText(int row, int begincol, int endcol)
+{
+	unsigned int* pn = (unsigned int*)this->screen->pixels;
+	pn += row*FONTH*SCRW+begincol*FONTW;
+	const int dc = (endcol-begincol)*FONTW;
+	for (int ir = 0; ir < FONTH; ++ir)
+	{
+		for (int ic = 0; ic < dc; ++ic)
+		{
+			*pn = ~*pn;
+			++pn;
+		}
+		pn -= dc;
+		pn += SCRW;
+	}
+}
+
+void ScreenImage::drawText(const std::string& text, int row, int col, int color, int bgcolor)
+{
+	for (std::string::const_iterator i = text.begin(); i != text.end(); ++i)
+	{
+		char c = (*i) & 0x7F;
+		if (0 <= c && c < 0x20)
+			c += 0x40;
+		drawChar(c,row,col++,color,bgcolor);
+	}
+}
+
+void ScreenImage::drawChar(const char ch, int row, int col, int color, int bgcolor)
+{
+	if (!(0 <= row  && row < SCRH/6 && 0 <= col && col < SCRW/4))
+	{
+		printf("bad text plotting (r %d, c %d): \"%c\"\n",row,col,ch);
+	}
+	unsigned int* pn = (unsigned int*)this->screen->pixels;
+	pn += row*FONTH*SCRW+col*FONTW;
+
+	const char* pt = font3x5+FONTH*FONTW*(ch-0x20);
+	for (int r = 0; r < FONTH; ++r)
+	{
+		for (int c = 0; c < FONTW; ++c)
+		{
+			*pn++ = *pt++ == '@' ? color : bgcolor;
+		}
+		pn -= FONTW;
+		pn += SCRW;
+	}
+	SDL_UpdateRect(this->screen,col*FONTW,row*FONTH,(col+1)*FONTW,(row+1)*FONTH);
 }
 
 void ScreenImage::drawPower(bool on)
@@ -65,7 +223,7 @@ void ScreenImage::drawPower(bool on)
 	pn += (HEIGHT+1)*(this->screen->pitch/4)+1;
 	for (int r = 0; r < POWERD; ++r)
 	{
-		if (r < LABEL_Y || LABEL_Y+7 < r)
+		if (r < LABEL_Y || LABEL_Y+7 <= r)
 		{
 			for (int c = 0; c < POWERD; ++c)
 			{
@@ -106,20 +264,23 @@ ScreenImage::~ScreenImage()
 
 void ScreenImage::notifyObservers()
 {
-	SDL_UpdateRect(this->screen,0,0,640,480);
+	SDL_UpdateRect(this->screen,0,0,SCRW,SCRH);
 }
 
 void ScreenImage::setElem(unsigned int i, const unsigned int val)
 {
 	unsigned int* pn = (unsigned int*)this->screen->pixels;
-	if (this->screen->pitch/4 != WIDTH)
-	i += (i/WIDTH)*(this->screen->pitch/4-WIDTH);
-	pn[i] = val;
+	i += (i/WIDTH)*(SCRW-WIDTH);
+	pn += i;
+	*pn = val;
 }
 
 void ScreenImage::blank()
 {
-	memset(this->screen->pixels,0,this->screen->pitch*HEIGHT);
+	for (int r = 0; r < HEIGHT; ++r)
+	{
+		memset((char*)(this->screen->pixels)+r*SCRW*4,0,WIDTH*4);
+	}
 }
 
 // TODO dump PNG

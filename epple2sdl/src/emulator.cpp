@@ -220,12 +220,14 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 	else if (sym == SDLK_F11)
 	{
 		this->fhyper.toggleHyper();
+		this->screenImage.toggleHyperLabel();
 //		printf("    hyper mode is now: %s\n",this->fhyper.isHyper()?"on":"off");
 		return;
 	}
 	else if (sym == SDLK_F12)
 	{
 		this->buffered.toggleBuffered();
+		this->screenImage.toggleKdbBufferLabel();
 //		printf("    keyboard buffering is now: %s\n",this->buffered.isBuffered()?"on":"off");
 		return;
 	}
@@ -237,6 +239,7 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 	else if (sym == SDLK_F2)
 	{
 		this->display.cycleType();
+		this->screenImage.cycleDisplayLabel();
 		return;
 	}
 	else if (sym == SDLK_F3)
@@ -248,6 +251,7 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 	else if (sym == SDLK_F4)
 	{
 		this->display.toggleBleedDown();
+		this->screenImage.toggleFillLinesLabel();
 	}
 	else if (sym == SDLK_END)
 	{
