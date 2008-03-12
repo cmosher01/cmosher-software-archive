@@ -23,9 +23,14 @@
 #include "config.h"
 #include <string>
 #include <SDL/SDL.h>
+#include <clocale>
+#include <iostream>
 
 int main( int argc, char ** argv )
 {
+	const char* act = ::setlocale(LC_ALL,"english_us");
+	std::cout << "locale: " << act << std::endl;
+
 	if (SDL_Init(SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO) != 0)
 	{
 			printf("Unable to initialize SDL: %s\n",SDL_GetError());
@@ -38,8 +43,8 @@ int main( int argc, char ** argv )
 	Emulator* emu = new GUIEmulator();
 //	printf("Created Emulator\n");
 
-//	std::string config_file("./epple2.conf");
-	std::string config_file("/home/chris/epple2sdl/epple2.conf");
+	std::string config_file("./epple2.conf");
+//	std::string config_file("/home/chris/epple2sdl/epple2.conf");
 	Config cfg(config_file);//this.args.getConfig());
 //	printf("Opened config file\n");
 	emu->config(cfg);
