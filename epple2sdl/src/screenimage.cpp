@@ -74,7 +74,7 @@ void ScreenImage::createScreen()
 
 void ScreenImage::drawLabels()
 {
-	drawText("EPPLE ][",0,152);
+	drawText("EPPLE ][",0,141);
 	drawSlots();
 	drawFnKeys();
 }
@@ -215,6 +215,13 @@ void ScreenImage::drawChar(const char ch, int row, int col, int color, int bgcol
 		pn += SCRW;
 	}
 	SDL_UpdateRect(this->screen,col*FONTW,row*FONTH,(col+1)*FONTW,(row+1)*FONTH);
+}
+
+void ScreenImage::displayHz(int hz)
+{
+	char s[20];
+	sprintf(s,"%4.2f MHz   ",hz/1e6);
+	drawText(s,3,141);
 }
 
 void ScreenImage::drawPower(bool on)

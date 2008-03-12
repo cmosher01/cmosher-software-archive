@@ -76,6 +76,7 @@ void Emulator::init()
 }
 
 #define CHECK_EVERY_CYCLE 51024
+#define CHECK_CYCLES_K 51024000
 #define EXPECTED_MS 50
 
 // U.A.2 p. 7-13: REPT key repeats at 10Hz
@@ -125,16 +126,16 @@ int Emulator::run()
 			}
 			if (!this->fhyper.isHyper())
 			{
-				int actual_ms = SDL_GetTicks()-prev_ms;
-				int delta_ms = EXPECTED_MS-actual_ms;
-				if (1 <= delta_ms && delta_ms <= EXPECTED_MS) // sanity check
+				const int actual_ms = SDL_GetTicks()-prev_ms;
+				const int delta_ms = EXPECTED_MS-actual_ms;
+				if (0 < delta_ms && delta_ms <= EXPECTED_MS)
 				{
-//					printf("sleeping %d ms\n",delta_ms);
 					SDL_Delay(delta_ms);
 				}
 	
-				prev_ms = SDL_GetTicks();
 			}
+			this->screenImage.displayHz(CHECK_CYCLES_K/(SDL_GetTicks()-prev_ms));
+			prev_ms = SDL_GetTicks();
 		}
 	}
 	SDL_Quit();
@@ -216,6 +217,7 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 	{
 		this->repeat = true;
 		this->rept = CYCLES_PER_REPT;
+		return;
 	}
 	else if (sym == SDLK_F11)
 	{
@@ -252,6 +254,7 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 	{
 		this->display.toggleBleedDown();
 		this->screenImage.toggleFillLinesLabel();
+		return;
 	}
 	else if (sym == SDLK_END)
 	{

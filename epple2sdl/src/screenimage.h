@@ -54,6 +54,7 @@ public:
 	void toggleHyperLabel();
 	void toggleKdbBufferLabel();
 	void cycleDisplayLabel();
+	void displayHz(int hz);
 	void toggleFillLinesLabel();
 	void invertText(int row, int begincol, int endcol);
 	void drawDisplayLabel();
