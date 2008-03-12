@@ -18,4 +18,3 @@ epple2_SOURCES = a2colorsobserved.cpp addressbus.cpp analogtv.cpp apple2.cpp \
 	standardinproducer.cpp standardout.cpp steppermotor.cpp textcharacters.cpp throttle.cpp \
 	timable.cpp timinggenerator.cpp video.cpp videoaddressing.cpp videomode.cpp \
 	videostaticgenerator.cpp
-noinst_HEADERS = clockcard.h
