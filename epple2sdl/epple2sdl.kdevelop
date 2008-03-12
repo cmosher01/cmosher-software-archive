@@ -14,8 +14,21 @@
     <projectname>epple2sdl</projectname>
   </general>
   <kdevautoproject>
-    <general/>
-    <run/>
+    <general>
+      <activetarget>src/epple2</activetarget>
+      <useconfiguration>default</useconfiguration>
+    </general>
+    <run>
+      <runarguments>
+        <epple2></epple2>
+      </runarguments>
+      <debugarguments>
+        <epple2></epple2>
+      </debugarguments>
+      <cwd>
+        <epple2>/home/chris/epple2sdl/./src</epple2>
+      </cwd>
+    </run>
     <configurations>
       <optimized>
         <builddir>optimized</builddir>
