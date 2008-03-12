@@ -117,6 +117,10 @@ SOURCE=.\src\clipboardhandler.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\clockcard.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\computercontrolpanel.cpp
 # End Source File
 # Begin Source File
@@ -241,6 +245,18 @@ SOURCE=.\src\speakerclicker.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\standardin.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\standardinproducer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\standardout.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\steppermotor.cpp
 # End Source File
 # Begin Source File
@@ -306,6 +322,10 @@ SOURCE=.\src\card.h
 # Begin Source File
 
 SOURCE=.\src\clipboardhandler.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\clockcard.h
 # End Source File
 # Begin Source File
 
@@ -426,6 +446,18 @@ SOURCE=.\src\slots.h
 # Begin Source File
 
 SOURCE=.\src\speakerclicker.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\standardin.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\standardinproducer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\src\standardout.h
 # End Source File
 # Begin Source File
 
