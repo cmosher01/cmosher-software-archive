@@ -43,10 +43,9 @@ static int readInput(void *voidkeys)
 
 	while (state != GOT_EOF)
 	{
-		char c;
-		const bool ok = std::cin.get(c);
+		char c = std::cin.get();
 		c &= 0x7F;
-		if (!ok)
+		if (!std::cin.good())
 		{
 			state = GOT_EOF;
 			keys->push(0xFF);
