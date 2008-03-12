@@ -17,31 +17,27 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "textcharacters.h"
+#ifndef CLOCKCARD_H
+#define CLOCKCARD_H
 
-TextCharacters::TextCharacters():
-	rows(0x40*8)
+#include "card.h"
+#include <string>
+
+class ClockCard : public Card
 {
-	int r(0);
+private:
+	unsigned char latch;
+	int pos;
+	char time[64];
+	size_t timelen;
 
-	const char *pi =
-#include "textcharacterimages.h"
-	;
+	void getTime();
 
-	for (int ch(0); ch < 0x40; ++ch)
-	{
+public:
+	ClockCard();
+	~ClockCard();
 
-		rows[r] = 0;
-		++r;
-		for (int ln(1); ln < 8; ++ln)
-		{
-			for (int bt(0); bt < 5; ++bt)
-			{
-				rows[r] >>= 1;
-				if (*pi++=='@')
-					rows[r] |= 0x20;
-			}
-			++r;
-		}
-	}
-}
+	virtual unsigned char io(const unsigned short address, const unsigned char data, const bool writing);
+};
+
+#endif

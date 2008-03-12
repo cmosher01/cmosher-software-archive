@@ -22,6 +22,9 @@
 #include "diskcontroller.h"
 #include "languagecard.h"
 #include "firmwarecard.h"
+#include "standardout.h"
+#include "standardin.h"
+#include "clockcard.h"
 
 #include <istream>
 #include <fstream>
@@ -73,15 +76,11 @@ void Config::parse(Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EO
 		printf("Cannot open config file.\n");
 		throw 0; // TODO
 	}
-	printf("Opened config file.\n");
 
-	printf("std::string line:\n");
 	std::string line;
-	printf("std::getline(in,line):\n");
 	std::getline(in,line);
 	while (!in.eof())
 	{
-		printf("Parsing config line: %s\n",line.c_str());
 		strip_comment(line);
 		trim(line);
 		if (!line.empty())
@@ -124,12 +123,10 @@ void verifyUniqueCards(const Slots& cards)
 
 void Config::parseLine(const std::string& line, Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EOFHandler eofHandler*/, int& revision)
 {
-	printf("begin Parsing config line: %d: %s\n",line.length(),line.c_str());
 	std::istringstream tok(line);
 
 	std::string cmd;
 	tok >> cmd;
-	printf("parsing config: %s\n",cmd.c_str());
 	if (cmd == "slot")
 	{
 		int slot;
@@ -261,17 +258,15 @@ void Config::insertCard(const std::string& cardType, int slot, Slots& slts/*, Hy
 	}
 	else if (cardType == "clock")
 	{
-//		card = new ClockCard();
+		card = new ClockCard();
 	}
 	else if (cardType == "stdout")
 	{
-//		card = new StandardOut();
+		card = new StandardOut();
 	}
 	else if (cardType == "stdin")
 	{
-//		final KeypressQueue stdinkeys = new KeypressQueue();
-//		new StandardInProducer(stdinkeys);
-//		card = new StandardIn(eofHandler,stdinkeys);
+		card = new StandardIn(/*eofHandler*/);
 	}
 	else
 	{

@@ -17,31 +17,19 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "textcharacters.h"
+#ifndef STANDARDOUT_H
+#define STANDARDOUT_H
 
-TextCharacters::TextCharacters():
-	rows(0x40*8)
+#include "card.h"
+
+class StandardOut : public Card
 {
-	int r(0);
 
-	const char *pi =
-#include "textcharacterimages.h"
-	;
+public:
+	StandardOut();
+	~StandardOut();
 
-	for (int ch(0); ch < 0x40; ++ch)
-	{
+	virtual unsigned char io(const unsigned short address, const unsigned char data, const bool writing);
+};
 
-		rows[r] = 0;
-		++r;
-		for (int ln(1); ln < 8; ++ln)
-		{
-			for (int bt(0); bt < 5; ++bt)
-			{
-				rows[r] >>= 1;
-				if (*pi++=='@')
-					rows[r] |= 0x20;
-			}
-			++r;
-		}
-	}
-}
+#endif

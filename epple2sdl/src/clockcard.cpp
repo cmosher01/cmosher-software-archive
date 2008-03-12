@@ -17,31 +17,57 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "textcharacters.h"
+#include "clockcard.h"
+#include <ctime>
 
-TextCharacters::TextCharacters():
-	rows(0x40*8)
+ClockCard::ClockCard():
+	latch(0),
+	pos(0)
 {
-	int r(0);
+}
 
-	const char *pi =
-#include "textcharacterimages.h"
-	;
 
-	for (int ch(0); ch < 0x40; ++ch)
+ClockCard::~ClockCard()
+{
+}
+
+
+
+unsigned char ClockCard::io(const unsigned short address, const unsigned char data, const bool writing)
+{
+	const int sw = address & 0x0F;
+	if (sw == 0)
 	{
-
-		rows[r] = 0;
-		++r;
-		for (int ln(1); ln < 8; ++ln)
+		if (!(this->latch & 0x80))
 		{
-			for (int bt(0); bt < 5; ++bt)
+			if (this->pos == 0)
 			{
-				rows[r] >>= 1;
-				if (*pi++=='@')
-					rows[r] |= 0x20;
+				getTime();
 			}
-			++r;
+			char c = this->time[this->pos];
+			this->latch = (unsigned char)(c | 0x80);
+			++this->pos;
+			if (this->pos >= this->timelen)
+			{
+				this->pos = 0;
+			}
 		}
 	}
+	else if (sw == 1)
+	{
+		this->latch &= 0x7F;
+	}
+	return this->latch;
+}
+
+// TODO DST?
+// TODO weekday should be 2 chars???
+#define TIMEFORMAT "%m,%w,%d,%H,%M,%S,000,%Y,%Z"
+
+void ClockCard::getTime()
+{
+	time_t now;
+	::time(&now);
+	struct tm* nowtm = ::localtime(&now);
+	this->timelen = ::strftime(this->time,sizeof(this->time),TIMEFORMAT,nowtm);
 }

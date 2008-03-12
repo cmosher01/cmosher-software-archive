@@ -17,31 +17,36 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "textcharacters.h"
+#include "standardout.h"
+#include <iostream>
 
-TextCharacters::TextCharacters():
-	rows(0x40*8)
+StandardOut::StandardOut()
 {
-	int r(0);
+}
 
-	const char *pi =
-#include "textcharacterimages.h"
-	;
 
-	for (int ch(0); ch < 0x40; ++ch)
+StandardOut::~StandardOut()
+{
+}
+
+
+unsigned char StandardOut::io(const unsigned short address, const unsigned char data, const bool writing)
+{
+	if (!writing)
 	{
-
-		rows[r] = 0;
-		++r;
-		for (int ln(1); ln < 8; ++ln)
-		{
-			for (int bt(0); bt < 5; ++bt)
-			{
-				rows[r] >>= 1;
-				if (*pi++=='@')
-					rows[r] |= 0x20;
-			}
-			++r;
-		}
+		return data;
 	}
+
+	const char c = (char)(data&0x7F);
+	if (c == '\r')
+	{
+		std::cout << std::endl;
+	}
+	else
+	{
+		std::cout << c;
+	}
+	std::cout << std::flush;
+
+	return data;
 }

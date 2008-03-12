@@ -17,31 +17,51 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "textcharacters.h"
+#include "standardin.h"
 
-TextCharacters::TextCharacters():
-	rows(0x40*8)
+StandardIn::StandardIn(): // TODO EOF handler
+	latch(0),
+	gotEOF(false)
 {
-	int r(0);
+}
 
-	const char *pi =
-#include "textcharacterimages.h"
-	;
 
-	for (int ch(0); ch < 0x40; ++ch)
+StandardIn::~StandardIn()
+{
+}
+
+
+
+
+unsigned char StandardIn::io(const unsigned short address, const unsigned char data, const bool writing)
+{
+	int sw = address & 0x0F;
+	if (sw == 0)
 	{
-
-		rows[r] = 0;
-		++r;
-		for (int ln(1); ln < 8; ++ln)
+		if (!(this->latch & 0x80))
 		{
-			for (int bt(0); bt < 5; ++bt)
+			if (this->gotEOF)
 			{
-				rows[r] >>= 1;
-				if (*pi++=='@')
-					rows[r] |= 0x20;
+				this->latch = 0xFF;
 			}
-			++r;
+			else
+			{
+				if (!this->producer.getKeys().empty())
+				{
+					this->latch = this->producer.getKeys().front() | 0x80;
+					this->producer.getKeys().pop();
+					if (this->latch == 0xFF)
+					{
+						this->gotEOF = true;
+						// TODO this->eofHandler.handleEOF();
+					}
+				}
+			}
 		}
 	}
+	else if (sw == 1)
+	{
+		this->latch &= 0x7F;
+	}
+	return this->latch;
 }
