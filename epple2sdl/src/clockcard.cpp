@@ -60,9 +60,7 @@ unsigned char ClockCard::io(const unsigned short address, const unsigned char da
 	return this->latch;
 }
 
-// TODO DST?
-// TODO weekday should be 2 chars???
-#define TIMEFORMAT "%m,%w,%d,%H,%M,%S,000,%Y,%Z"
+#define TIMEFORMAT "%m,0%w,%d,%H,%M,%S,000,%Y,%Z,D\r"
 
 void ClockCard::getTime()
 {
@@ -70,4 +68,5 @@ void ClockCard::getTime()
 	::time(&now);
 	struct tm* nowtm = ::localtime(&now);
 	this->timelen = ::strftime(this->time,sizeof(this->time),TIMEFORMAT,nowtm);
+	this->time[31] = nowtm->tm_isdst>0 ? '1' : '0';
 }
