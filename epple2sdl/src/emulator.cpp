@@ -132,9 +132,9 @@ int Emulator::run()
 			if (!this->fhyper.isHyper())
 			{
 				const int delta_ms = EXPECTED_MS-(SDL_GetTicks()-prev_ms);
-				if (2 <= delta_ms && delta_ms <= EXPECTED_MS)
+				if (0 < delta_ms && delta_ms <= EXPECTED_MS)
 				{
-					SDL_Delay(delta_ms-2); // shave off a little to account for this proc. time
+					SDL_Delay(delta_ms);
 				}
 	
 			}

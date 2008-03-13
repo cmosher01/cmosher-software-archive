@@ -23,7 +23,7 @@ AC_PROG_CXX
 
 
 # Checks for libraries.
-AC_CHECK_LIB([boost_filesystem],[_init])
+AC_CHECK_LIB([boost_filesystem],[_ZNK5boost10filesystem4pathltERKS1_])
 AC_CHECK_LIB([SDL],[SDL_Init])
 
 
