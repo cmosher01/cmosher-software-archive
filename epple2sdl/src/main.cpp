@@ -22,14 +22,34 @@
 #include "guiemulator.h"
 #include "config.h"
 #include <string>
+#include <vector>
 #include <SDL/SDL.h>
 #include <clocale>
 #include <iostream>
+#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/path.hpp>
 
 int main( int argc, char ** argv )
 {
-	const char* act = ::setlocale(LC_ALL,"english_us");
-	std::cout << "locale: " << act << std::endl;
+//	const char* act = ::setlocale(LC_ALL,"english_us");
+//	std::cout << "locale: " << act << std::endl;
+
+	boost::filesystem::path p(boost::filesystem::initial_path());
+//	boost::filesystem::path p("/");
+	boost::filesystem::directory_iterator end_iter;
+	std::vector<boost::filesystem::path> rp(boost::filesystem::directory_iterator(p), end_iter);
+//	for (boost::filesystem::directory_iterator dir_itr(p); dir_itr != end_iter; ++dir_itr)
+//	{
+//		std::cout << dir_itr->leaf() << std::endl;
+//	}
+
+	std::sort(rp.begin(),rp.end());
+	for (std::vector<boost::filesystem::path>::const_iterator ci(rp.begin()); ci != rp.end(); ++ci)
+	{
+		std::cout << (*ci).leaf() << std::endl;
+	}
+
+
 
 	if (SDL_Init(SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO) != 0)
 	{
@@ -43,8 +63,8 @@ int main( int argc, char ** argv )
 	Emulator* emu = new GUIEmulator();
 //	printf("Created Emulator\n");
 
-	std::string config_file("./epple2.conf");
-//	std::string config_file("/home/chris/epple2sdl/epple2.conf");
+//	std::string config_file("./epple2.conf");
+	std::string config_file("/home/chris/epple2sdl/epple2.conf");
 	Config cfg(config_file);//this.args.getConfig());
 //	printf("Opened config file\n");
 	emu->config(cfg);

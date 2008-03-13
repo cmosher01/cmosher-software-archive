@@ -68,5 +68,5 @@ void ClockCard::getTime()
 	::time(&now);
 	struct tm* nowtm = ::localtime(&now);
 	this->timelen = ::strftime(this->time,sizeof(this->time),TIMEFORMAT,nowtm);
-	this->time[31] = nowtm->tm_isdst>0 ? '1' : '0';
+	this->time[this->timelen-2] = nowtm->tm_isdst>0 ? '1' : '0';
 }

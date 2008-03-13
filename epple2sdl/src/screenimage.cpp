@@ -113,9 +113,9 @@ void ScreenImage::drawFnKeys()
 	drawText(
 "                                FULLSCRN   SCAN-LINES                     KEYBOARD",r++,c);
 	drawText(
-"                XXXXXXXXXXXXXX  WINDOW     FILL-LINES      REPT    HYPER  BUFFER    RESET   QUIT!",r++,c);
+"                XXXXXXXXXXXXXX  WINDOW     FILL-LINES      REPT    HYPER  BUFFER    RESET   PASTE     QUIT!",r++,c);
 	drawText(
-"      F1              F2          F3          F4           F10      F11     F12     Break    End",r++,c);
+"      F1              F2          F3          F4           F10      F11     F12     Break   Insert     End",r++,c);
 
 	if (this->fullscreen)
 		invertText(76,32,42); // FULLSCRN
@@ -221,6 +221,7 @@ void ScreenImage::displayHz(int hz)
 {
 	char s[20];
 	sprintf(s,"%4.2f MHz   ",hz/1e6);
+//	sprintf(s,"%d Hz       ",hz);
 	drawText(s,3,141);
 }
 

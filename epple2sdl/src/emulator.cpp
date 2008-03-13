@@ -82,10 +82,15 @@ void Emulator::init()
 // U.A.2 p. 7-13: REPT key repeats at 10Hz
 #define CYCLES_PER_REPT 102048
 
+enum { EXPECTED_TICKS = CLOCKS_PER_SEC/20 };
+enum { NANOS_PER_CLOCK = 1000000000/CLOCKS_PER_SEC };
+
+
 int Emulator::run()
 {
 	int skip = CHECK_EVERY_CYCLE;
 	Uint32 prev_ms = SDL_GetTicks();
+	clock_t ticksPrev = clock();
 	while (!this->quit)
 	{
 		if (this->timable)
@@ -126,11 +131,10 @@ int Emulator::run()
 			}
 			if (!this->fhyper.isHyper())
 			{
-				const int actual_ms = SDL_GetTicks()-prev_ms;
-				const int delta_ms = EXPECTED_MS-actual_ms;
-				if (0 < delta_ms && delta_ms <= EXPECTED_MS)
+				const int delta_ms = EXPECTED_MS-(SDL_GetTicks()-prev_ms);
+				if (2 <= delta_ms && delta_ms <= EXPECTED_MS)
 				{
-					SDL_Delay(delta_ms);
+					SDL_Delay(delta_ms-2); // shave off a little to account for this proc. time
 				}
 	
 			}
