@@ -23,6 +23,7 @@ AC_PROG_CXX
 
 
 # Checks for libraries.
+AC_CHECK_LIB([boost_filesystem],[_init])
 AC_CHECK_LIB([SDL],[SDL_Init])
 
 
@@ -38,7 +39,7 @@ AC_TYPE_SIZE_T
 # Checks for library functions.
 AC_HEADER_STDC
 AC_TYPE_SIGNAL
-AC_CHECK_FUNCS([memset sqrt])
+AC_CHECK_FUNCS([memset sqrt nanosleep])
 
 
 
