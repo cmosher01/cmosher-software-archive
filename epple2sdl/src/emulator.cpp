@@ -172,7 +172,7 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 	SDLMod mod = keyEvent.keysym.mod;
 	unsigned char scancode = keyEvent.keysym.scancode;
 
-//	printf("key DN: %d    sym: %d    mod: %04X    scn: %d\n",key,sym,mod,scancode);
+	printf("key DN: %d    sym: %d    mod: %04X    scn: %d\n",key,sym,mod,scancode);
 
 	if (sym < 0x7F || sym == SDLK_LEFT || sym == SDLK_RIGHT)
 	{
@@ -261,33 +261,33 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 		key -= 32;
 	}
 
-	if (((mod&KMOD_LSHIFT) || (mod&KMOD_RSHIFT)) && ((mod&KMOD_LCTRL) || (mod&KMOD_RCTRL)) && sym == '2')
+	if ((mod&KMOD_SHIFT) && (mod&KMOD_CTRL) && sym == '2')
 	{
 		// Ctrl-Shift-2 == Ctrl-@ == NUL == ASCII: 0
 		key = 0;
 	}
-	else if (((mod&KMOD_LCTRL) || (mod&KMOD_RCTRL)) && SDLK_KP0 <= sym && sym <= SDLK_KP9 && !(mod&KMOD_RSHIFT) && !(mod&KMOD_LSHIFT))
+	else if ((mod&KMOD_CTRL) && !(mod&KMOD_SHIFT) && SDLK_KP0 <= sym && sym <= SDLK_KP9)
 	{
 		key = sym-SDLK_KP0+'0';
 	}
-	else if (((mod&KMOD_LCTRL) || (mod&KMOD_RCTRL)) && (('2' <= sym && sym <= '8') || sym == '/' || sym == ' ') && !(mod&KMOD_RSHIFT) && !(mod&KMOD_LSHIFT))
+	else if ((mod&KMOD_CTRL) && !(mod&KMOD_SHIFT) && (('0' <= sym && sym <= '9') || sym == '/' || sym == ' '))
 	{
 		key = sym;
 	}
 	else if (sym == ']')
 	{
-		if ((mod&KMOD_LSHIFT) || (mod&KMOD_RSHIFT))
+		if (mod&KMOD_SHIFT)
 		{
 			// ignore '}' (shift ']')
 			return;
 		}
-		if ((mod&KMOD_LCTRL) || (mod&KMOD_RCTRL))
+		if (mod&KMOD_CTRL)
 		{
 			// Ctrl-] == ASCII: $1D
 			key = 29;
 		}
 	}
-	else if (key == 0 || sym == SDLK_TAB || sym == '`' || sym == '[' || sym == '\\' || sym == SDLK_DELETE)
+	else if (key == 0 || sym == SDLK_TAB || sym == SDLK_BACKQUOTE || sym == '[' || sym == '\\' || sym == SDLK_DELETE)
 	{
 		return;
 	}
