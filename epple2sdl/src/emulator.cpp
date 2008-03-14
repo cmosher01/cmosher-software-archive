@@ -154,7 +154,7 @@ void Emulator::dispatchKeyUp(const SDL_KeyboardEvent& keyEvent)
 	unsigned char scancode = keyEvent.keysym.scancode;
 //	printf("key UP: %d    sym: %d    mod: %04X    scn: %d\n",key,sym,mod,scancode);
 
-	if (sym < 0x7F || sym == SDLK_LEFT || sym == SDLK_RIGHT || sym == SDLK_UP || sym == SDLK_DOWN)
+	if (sym < 0x7F || sym == SDLK_LEFT || sym == SDLK_RIGHT)
 	{
 		--this->keysDown;
 	}
@@ -174,7 +174,7 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 
 //	printf("key DN: %d    sym: %d    mod: %04X    scn: %d\n",key,sym,mod,scancode);
 
-	if (sym < 0x7F || sym == SDLK_LEFT || sym == SDLK_RIGHT || sym == SDLK_UP || sym == SDLK_DOWN)
+	if (sym < 0x7F || sym == SDLK_LEFT || sym == SDLK_RIGHT)
 	{
 		++this->keysDown;
 	}
@@ -186,14 +186,6 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 	else if (sym == SDLK_RIGHT)
 	{
 		key = 21;
-	}
-	else if (sym == SDLK_UP)
-	{
-		key = 11;
-	}
-	else if (sym == SDLK_DOWN)
-	{
-		key = 10;
 	}
 	else if (sym == SDLK_PAUSE)
 	{
@@ -227,14 +219,12 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 	{
 		this->fhyper.toggleHyper();
 		this->screenImage.toggleHyperLabel();
-//		printf("    hyper mode is now: %s\n",this->fhyper.isHyper()?"on":"off");
 		return;
 	}
 	else if (sym == SDLK_F12)
 	{
 		this->buffered.toggleBuffered();
 		this->screenImage.toggleKdbBufferLabel();
-//		printf("    keyboard buffering is now: %s\n",this->buffered.isBuffered()?"on":"off");
 		return;
 	}
 	else if (sym == SDLK_F1)
@@ -276,7 +266,28 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 		// Ctrl-Shift-2 == Ctrl-@ == NUL == ASCII: 0
 		key = 0;
 	}
-	else if (key == 0)
+	else if (((mod&KMOD_LCTRL) || (mod&KMOD_RCTRL)) && SDLK_KP0 <= sym && sym <= SDLK_KP9 && !(mod&KMOD_RSHIFT) && !(mod&KMOD_LSHIFT))
+	{
+		key = sym-SDLK_KP0+'0';
+	}
+	else if (((mod&KMOD_LCTRL) || (mod&KMOD_RCTRL)) && (('2' <= sym && sym <= '8') || sym == '/' || sym == ' ') && !(mod&KMOD_RSHIFT) && !(mod&KMOD_LSHIFT))
+	{
+		key = sym;
+	}
+	else if (sym == ']')
+	{
+		if ((mod&KMOD_LSHIFT) || (mod&KMOD_RSHIFT))
+		{
+			// ignore '}' (shift ']')
+			return;
+		}
+		if ((mod&KMOD_LCTRL) || (mod&KMOD_RCTRL))
+		{
+			// Ctrl-] == ASCII: $1D
+			key = 29;
+		}
+	}
+	else if (key == 0 || sym == SDLK_TAB || sym == '`' || sym == '[' || sym == '\\' || sym == SDLK_DELETE)
 	{
 		return;
 	}
