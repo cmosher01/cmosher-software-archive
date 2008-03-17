@@ -31,7 +31,8 @@ Emulator::Emulator():
 	timable(0),
 	quit(false),
 	repeat(false),
-	keysDown(0)
+	keysDown(0),
+	command(false)
 {
 }
 
@@ -122,7 +123,10 @@ int Emulator::run()
 					this->quit = true;
 				break;
 				case SDL_KEYDOWN:
-					dispatchKeypress(event.key);
+					if (this->command)
+						cmdKey(event.key);
+					else
+						dispatchKeypress(event.key);
 				break;
 				case SDL_KEYUP:
 					dispatchKeyUp(event.key);
@@ -172,7 +176,7 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 	SDLMod mod = keyEvent.keysym.mod;
 	unsigned char scancode = keyEvent.keysym.scancode;
 
-	printf("key DN: %d    sym: %d    mod: %04X    scn: %d\n",key,sym,mod,scancode);
+//	printf("key DN: %d    sym: %d    mod: %04X    scn: %d\n",key,sym,mod,scancode);
 
 	if (sym < 0x7F || sym == SDLK_LEFT || sym == SDLK_RIGHT)
 	{
@@ -189,7 +193,6 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 	}
 	else if (sym == SDLK_PAUSE)
 	{
-//		printf("    RESET\n");
 		this->apple2.reset();
 		return;
 	}
@@ -250,6 +253,11 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 		this->screenImage.toggleFillLinesLabel();
 		return;
 	}
+	else if (sym == SDLK_F5)
+	{
+		this->command = true;
+		this->screenImage.enterCommandMode();
+	}
 	else if (sym == SDLK_END)
 	{
 		this->quit = true;
@@ -265,6 +273,11 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 	{
 		// Ctrl-Shift-2 == Ctrl-@ == NUL == ASCII: 0
 		key = 0;
+	}
+	else if ((mod&KMOD_SHIFT) && (mod&KMOD_CTRL) && sym == ' ')
+	{
+		// Ctrl-Shift-Space is the same as Space
+		key = ' ';
 	}
 	else if ((mod&KMOD_CTRL) && !(mod&KMOD_SHIFT) && SDLK_KP0 <= sym && sym <= SDLK_KP9)
 	{
@@ -296,4 +309,47 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 //	printf("    sending to apple as ascii------------------------------>%02X (%02X)\n",key,key|0x80);
 	this->keypresses.push(key);
 	this->lastKeyDown = key;
+}
+
+void Emulator::cmdKey(const SDL_KeyboardEvent& keyEvent)
+{
+	unsigned char key = (unsigned char)(keyEvent.keysym.unicode & 0x7F);
+	SDLKey sym = keyEvent.keysym.sym;
+	SDLMod mod = keyEvent.keysym.mod;
+	if (sym == SDLK_RETURN)
+	{
+		processCommand();
+	}
+	else if (sym == SDLK_ESCAPE)
+	{
+		cmdline.clear();
+		processCommand();
+	}
+	else if (sym == SDLK_BACKSPACE)
+	{
+		if (cmdline.length())
+		{
+			cmdline.erase(cmdline.end()-1);
+			this->screenImage.backspaceCommand();
+		}
+	}
+	else if (key)
+	{
+		cmdline.push_back(key);
+		this->screenImage.addkeyCommand(key);
+	}
+}
+
+void Emulator::processCommand()
+{
+	this->screenImage.exitCommandMode();
+	this->command = false;
+
+	if (cmdline.empty())
+	{
+		return;
+	}
+
+	Config::parseLine(cmdline,this->apple2.rom,this->apple2.slts,this->apple2.revision);
+	cmdline.clear();
 }

@@ -35,6 +35,7 @@ private:
 	bool buffer;
 	bool fillLines;
 	AnalogTV::DisplayType display;
+	unsigned int cmdpos;
 	void createScreen();
 
 public:
@@ -59,6 +60,10 @@ public:
 	void invertText(int row, int begincol, int endcol);
 	void drawDisplayLabel();
 
+	void enterCommandMode();
+	void exitCommandMode();
+	void addkeyCommand(unsigned char key);
+	void backspaceCommand();
 
 	enum
 	{

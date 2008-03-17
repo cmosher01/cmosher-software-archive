@@ -112,10 +112,10 @@ void waitIfTooFast()
 */
 void DiskBytes::put(const unsigned char track, const unsigned char value)
 {
-//	if (track < 0 || Drive.TRACKS_PER_DISK <= track)
-//	{
-//		throw new IllegalStateException();
-//	}
+	if (TRACKS_PER_DISK <= track)
+	{
+		throw 0;
+	}
 	if (isWriteProtected() || !isLoaded())
 	{
 		return;

@@ -22,20 +22,30 @@
 class Memory;
 class Slots;
 
+class ConfigException
+{
+public:
+	const std::string msg;
+	ConfigException(const std::string& msg) : msg(msg) {}
+};
+
 class Config
 {
 private:
 	const std::string& file_path;
 
-	void parseLine(const std::string& line, Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EOFHandler eofHandler*/, int& revision);
-	void loadDisk(Slots& slts, int slot, int drive, const std::string& fnib);
-	void insertCard(const std::string& cardType, int slot, Slots& slts/*, HyperMode fhyper, StandardIn.EOFHandler eofHandler*/);
+	static void loadDisk(Slots& slts, int slot, int drive, const std::string& fnib);
+	static void unloadDisk(Slots& slts, int slot, int drive);
+	static void saveDisk(Slots& slts, int slot, int drive);
+	static void insertCard(const std::string& cardType, int slot, Slots& slts/*, HyperMode fhyper, StandardIn.EOFHandler eofHandler*/);
+	static void tryParseLine(const std::string& line, Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EOFHandler eofHandler*/, int& revision);
 
 public:
 	Config(const std::string& file_path);
 	~Config();
 
 	void parse(Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EOFHandler eofHandler*/, int& revision);
+	static void parseLine(const std::string& line, Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EOFHandler eofHandler*/, int& revision);
 };
 
 #endif

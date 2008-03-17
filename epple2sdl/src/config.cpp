@@ -26,6 +26,7 @@
 #include "standardin.h"
 #include "clockcard.h"
 
+#include <iostream>
 #include <istream>
 #include <fstream>
 #include <sstream>
@@ -73,8 +74,8 @@ void Config::parse(Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EO
 	std::ifstream in(this->file_path.c_str());
 	if (!in.is_open())
 	{
-		printf("Cannot open config file.\n");
-		throw 0; // TODO
+		std::cerr << "Cannot open config file " << this->file_path.c_str() << std::endl;
+		return;
 	}
 
 	std::string line;
@@ -120,8 +121,19 @@ void verifyUniqueCards(const Slots& cards)
 	}
 }
 */
-
 void Config::parseLine(const std::string& line, Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EOFHandler eofHandler*/, int& revision)
+{
+	try
+	{
+		tryParseLine(line,memory,slts,revision);
+	}
+	catch (const ConfigException& err)
+	{
+		std::cerr << err.msg.c_str() << std::endl;
+	}
+}
+
+void Config::tryParseLine(const std::string& line, Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EOFHandler eofHandler*/, int& revision)
 {
 	std::istringstream tok(line);
 
@@ -147,7 +159,7 @@ void Config::parseLine(const std::string& line, Memory& memory, Slots& slts /*Hy
 		}
 		else if (sm != "motherboard")
 		{
-			throw 0;// TODO new IllegalArgumentException("Error in config file: "+line);
+			throw ConfigException("error at \""+sm+"\"; expected \"slot #\" or \"motherboard\"");
 		}
 
 		std::string romtype;
@@ -160,12 +172,16 @@ void Config::parseLine(const std::string& line, Memory& memory, Slots& slts /*Hy
 		std::getline(tok,file);
 		trim(file);
 		std::ifstream rom(file.c_str(),std::ios::binary);
+		if (!rom.is_open())
+		{
+			throw ConfigException("cannot open file "+file);
+		}
 
 		if (slot < 0) // motherboard
 		{
 			if (romtype != "rom")
 			{
-				throw 0;// TODO new IllegalArgumentException("Error in config file: "+line);
+				throw ConfigException("error at \""+romtype+"\"; expected \"rom\"");
 			}
 			memory.load(base,rom);
 		}
@@ -173,7 +189,7 @@ void Config::parseLine(const std::string& line, Memory& memory, Slots& slts /*Hy
 		{
 			if (8 <= slot)
 			{
-				throw 0;// TODO new IllegalArgumentException("Error in config file: invalid slot number: "+slot);
+				throw ConfigException("invalid slot number");
 			}
 			Card* card = slts.get(slot);
 			if (romtype == "rom")
@@ -183,16 +199,18 @@ void Config::parseLine(const std::string& line, Memory& memory, Slots& slts /*Hy
 			else if (romtype == "rombank")
 				card->loadBankRom(base,rom);
 			else
-				throw 0;// TODO new IllegalArgumentException("Error in config file: invalid rom (must be rom, rom7, or rombank): "+romtype);
+				throw ConfigException("error at \""+romtype+"\"; expected rom, rom7, or rombank");
 		}
 		rom.close();
 	}
-	else if (cmd == "load")
+	else if (cmd == "load" || cmd == "save" || cmd == "unload")
 	{
 		std::string slotk;
 		tok >> slotk;
 		if (slotk != "slot")
-			throw 0; // TODO
+		{
+			throw ConfigException("error at \""+slotk+"\"; expected \"slot\"");
+		}
 
 		int slot(-1);
 		tok >> slot;
@@ -200,15 +218,28 @@ void Config::parseLine(const std::string& line, Memory& memory, Slots& slts /*Hy
 		std::string drivek;
 		tok >> drivek;
 		if (drivek != "drive")
-			throw 0; // TODO
+		{
+			throw ConfigException("error at \""+drivek+"\"; expected \"drive\"");
+		}
+
 		int drive(-1);
 		tok >> drive;
 
-		std::string fnib;
-		std::getline(tok,fnib);
-		trim(fnib);
-
-		loadDisk(slts,slot,drive,fnib);
+		if (cmd == "load")
+		{
+			std::string fnib;
+			std::getline(tok,fnib);
+			trim(fnib);
+			loadDisk(slts,slot,drive,fnib);
+		}
+		else if (cmd == "unload")
+		{
+			unloadDisk(slts,slot,drive);
+		}
+		else if (cmd == "save")
+		{
+			saveDisk(slts,slot,drive);
+		}
 	}
 	else if (cmd == "revision")
 	{
@@ -216,7 +247,7 @@ void Config::parseLine(const std::string& line, Memory& memory, Slots& slts /*Hy
 	}
 	else
 	{
-		throw 1;//TODO new IllegalArgumentException("Error in config file: "+line);
+		throw ConfigException("Invalid command: "+cmd);
 	}
 }
 
@@ -224,8 +255,9 @@ void Config::loadDisk(Slots& slts, int slot, int drive, const std::string& fnib)
 {
 	if (drive < 1 || 2 < drive)
 	{
-		throw 0;// TODO new IllegalArgumentException("Error in config file: invalid drive number "+drive);
+		throw ConfigException("Invalid drive; must be 1 or 2");
 	}
+
 	Card* card = slts.get(slot);
 // TODO	if (!(card instanceof DiskController))
 //	{
@@ -235,11 +267,38 @@ void Config::loadDisk(Slots& slts, int slot, int drive, const std::string& fnib)
 	controller->loadDisk(drive-1,fnib);
 }
 
+void Config::unloadDisk(Slots& slts, int slot, int drive)
+{
+	if (drive < 1 || 2 < drive)
+	{
+		throw ConfigException("Invalid drive; must be 1 or 2");
+	}
+
+	Card* card = slts.get(slot);
+// TODO	if (!(card instanceof DiskController))
+//	{
+//		throw new IllegalArgumentException("Card in slot "+slot+" is not a disk controller card.");
+//	}
+	DiskController* controller = (DiskController*)card;
+	controller->unloadDisk(drive-1);
+}
+
+void Config::saveDisk(Slots& slts, int slot, int drive)
+{
+	if (drive < 1 || 2 < drive)
+	{
+		throw ConfigException("Invalid drive; must be 1 or 2");
+	}
+	Card* card = slts.get(slot);
+	DiskController* controller = (DiskController*)card;
+	controller->saveDisk(drive-1);
+}
+
 void Config::insertCard(const std::string& cardType, int slot, Slots& slts/*, HyperMode fhyper, StandardIn.EOFHandler eofHandler*/)
 {
 	if (slot < 0 || 8 <= slot)
 	{
-		throw 0;// TODO new IllegalArgumentException("Error in config file: invalid slot number: "+slot);
+		throw ConfigException("Invalid slot number");
 	}
 
 	Card* card;
@@ -270,7 +329,7 @@ void Config::insertCard(const std::string& cardType, int slot, Slots& slts/*, Hy
 	}
 	else
 	{
-		throw 0; // TODO new IllegalArgumentException("Error in config file: unknown card type: "+cardType);
+		throw ConfigException("Invalid card type: "+cardType);
 	}
 
 	slts.set(slot,card);

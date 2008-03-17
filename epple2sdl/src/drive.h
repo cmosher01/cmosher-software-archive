@@ -28,6 +28,16 @@ public:
 		this->disk.load(fnib);
 	}
 
+	void unloadDisk()
+	{
+		this->disk.unload();
+	}
+
+	void saveDisk()
+	{
+		this->disk.save();
+	}
+
 	bool isWriteProtected() const
 	{
 		return this->disk.isWriteProtected();

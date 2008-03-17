@@ -70,9 +70,10 @@ void StepperMotor::setMagnet(const unsigned char magnet, const bool on)
 	}
 
 	const char newPos = mapMagPos[this->mags];
+	char d;
 	if (newPos >= 0)
 	{
-		const char d = calcDeltaPos(this->pos,newPos);
+		d = calcDeltaPos(this->pos,newPos);
 		this->pos = newPos;
 
 		this->quarterTrack += d;

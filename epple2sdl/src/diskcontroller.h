@@ -95,6 +95,16 @@ public:
 		this->getDrive(drive).loadDisk(fnib);
 	}
 
+	void unloadDisk(unsigned char drive)
+	{
+		this->getDrive(drive).unloadDisk();
+	}
+
+	void saveDisk(unsigned char drive)
+	{
+		this->getDrive(drive).saveDisk();
+	}
+
 	bool isMotorOn()
 	{
 		return this->motorOn;

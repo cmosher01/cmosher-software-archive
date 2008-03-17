@@ -27,37 +27,9 @@
 #include <SDL/SDL.h>
 #include <clocale>
 #include <iostream>
-#include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/path.hpp>
 
-int main( int argc, char ** argv )
+int main(int argc, char* argv[])
 {
-//	const char* act = ::setlocale(LC_ALL,"english_us");
-//	std::cout << "locale: " << act << std::endl;
-
-//	boost::filesystem::path p(boost::filesystem::initial_path());
-	boost::filesystem::path p("/");
-//	boost::filesystem::directory_iterator begin_iter(p);
-	boost::filesystem::directory_iterator end_iter;
-	std::vector<std::string> rp;
-	for (boost::filesystem::directory_iterator dir_itr(p); dir_itr != end_iter; ++dir_itr)
-	{
-		rp.push_back(dir_itr->leaf());
-	}
-//	}
-//	for (boost::filesystem::directory_iterator dir_itr(p); dir_itr != end_iter; ++dir_itr)
-//	{
-//		std::cout << dir_itr->leaf() << std::endl;
-//	}
-
-	std::sort(rp.begin(),rp.end());
-	for (std::vector<std::string>::const_iterator ci(rp.begin()); ci != rp.end(); ++ci)
-	{
-		std::cout << *ci << std::endl;
-	}
-
-
-
 	if (SDL_Init(SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO) != 0)
 	{
 			printf("Unable to initialize SDL: %s\n",SDL_GetError());
@@ -68,14 +40,19 @@ int main( int argc, char ** argv )
 	SDL_EnableKeyRepeat(0,0);
 
 	Emulator* emu = new GUIEmulator();
-//	printf("Created Emulator\n");
 
-	std::string config_file("./epple2.conf");
-//	std::string config_file("/home/chris/epple2sdl/epple2.conf");
-	Config cfg(config_file);//this.args.getConfig());
-//	printf("Opened config file\n");
+	if (argc > 2)
+	{
+		std::cerr << "usage: epple2 [config-file]" << std::endl;
+		return 1;
+	}
+	std::string config_file("epple2.conf");
+	if (argc > 1)
+	{
+		config_file = argv[1];
+	}
+	Config cfg(config_file);
 	emu->config(cfg);
-//	printf("Processed config file\n");
 
 	emu->init();
 

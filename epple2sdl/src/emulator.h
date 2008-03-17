@@ -58,9 +58,13 @@ protected:
 	int keysDown;
 	int rept;
 	unsigned char lastKeyDown;
+	bool command;
+	std::string cmdline;
 
 	void dispatchKeypress(const SDL_KeyboardEvent& keyEvent);
 	void dispatchKeyUp(const SDL_KeyboardEvent& keyEvent);
+	void cmdKey(const SDL_KeyboardEvent& keyEvent);
+	void processCommand();
 
 public:
 	Emulator();

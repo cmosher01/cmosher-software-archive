@@ -296,3 +296,36 @@ void ScreenImage::blank()
 //{
 //	ImageIO.write(this->image,type,file);
 //}
+
+void ScreenImage::enterCommandMode()
+{
+	int r(76);
+	int c(1);
+	unsigned int* pn = (unsigned int*)this->screen->pixels;
+	pn += r*FONTH*SCRW+c*FONTW;
+
+	memset((char*)pn,0,SCRW*4*FONTH*3);
+
+	drawText("command: ",78,1);
+	this->cmdpos = 9;
+
+	notifyObservers();
+}
+
+void ScreenImage::exitCommandMode()
+{
+	drawFnKeys();
+	notifyObservers();
+}
+
+void ScreenImage::addkeyCommand(unsigned char key)
+{
+	++this->cmdpos;
+	drawChar((char)key,78,this->cmdpos);
+}
+
+void ScreenImage::backspaceCommand()
+{
+	drawChar(' ',78,this->cmdpos);
+	--this->cmdpos;
+}
