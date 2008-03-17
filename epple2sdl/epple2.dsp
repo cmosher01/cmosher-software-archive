@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /MD /W3 /GX /Zi /O2 /I "src" /I "\sdl\sdl-1.2.13\include" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
-# ADD CPP /MD /W3 /GX /Zi /O2 /I "src" /I "\sdl\sdl-1.2.13\include" /I "\boost_1_34_1" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FR /FD /c
+# ADD CPP /MD /W3 /GX /Zi /O2 /I "src" /I "\sdl\sdl-1.2.13\include" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FR /FD /c
 # SUBTRACT CPP /WX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib msvcrt.lib msvcprt.lib \sdl\sdl-1.2.13\lib\SDL.lib \sdl\sdl-1.2.13\lib\SDLmain.lib /nologo /subsystem:console /machine:I386 /nodefaultlib /force
-# ADD LINK32 msvcrt.lib msvcprt.lib kernel32.lib user32.lib gdi32.lib \sdl\sdl-1.2.13\lib\SDL.lib \sdl\sdl-1.2.13\lib\SDLmain.lib \boost_1_34_1\stage\lib\boost_filesystem-mgw34-mt-1_34_1.lib /nologo /subsystem:console /profile /machine:I386 /nodefaultlib /force
+# ADD LINK32 msvcrt.lib msvcprt.lib kernel32.lib user32.lib gdi32.lib \sdl\sdl-1.2.13\lib\SDL.lib \sdl\sdl-1.2.13\lib\SDLmain.lib /nologo /subsystem:console /profile /machine:I386 /nodefaultlib /force
 
 !ELSEIF  "$(CFG)" == "epple2 - Win32 Debug"
 
@@ -67,7 +67,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /MDd /W3 /GX /Zi /O2 /I "src" /I "\sdl\sdl-1.2.13\include" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /FR /FD /c
-# ADD CPP /MDd /W3 /GX /Zi /O2 /I "src" /I "\sdl\sdl-1.2.13\include" /I "\boost_1_34_1" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /FR /FD /c
+# ADD CPP /MDd /W3 /GX /Zi /O2 /I "src" /I "\sdl\sdl-1.2.13\include" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /FR /FD /c
 # SUBTRACT CPP /WX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -76,7 +76,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib msvcrtd.lib msvcprtd.lib \sdl\sdl-1.2.13\lib\SDL.lib \sdl\sdl-1.2.13\lib\SDLmain.lib /nologo /subsystem:console /debug /machine:I386 /nodefaultlib /force /pdbtype:sept
-# ADD LINK32 msvcrtd.lib msvcprtd.lib kernel32.lib user32.lib gdi32.lib \sdl\sdl-1.2.13\lib\SDL.lib \sdl\sdl-1.2.13\lib\SDLmain.lib \boost_1_34_1\stage\lib\boost_filesystem-mgw34-mt-d-1_34_1.dll /nologo /subsystem:console /profile /debug /machine:I386 /nodefaultlib /force
+# ADD LINK32 msvcrtd.lib msvcprtd.lib kernel32.lib user32.lib gdi32.lib \sdl\sdl-1.2.13\lib\SDL.lib \sdl\sdl-1.2.13\lib\SDLmain.lib /nologo /subsystem:console /profile /debug /machine:I386 /nodefaultlib /force
 
 !ENDIF 
 

@@ -322,7 +322,7 @@ void Emulator::cmdKey(const SDL_KeyboardEvent& keyEvent)
 	}
 	else if (sym == SDLK_ESCAPE)
 	{
-		cmdline.clear();
+		cmdline.erase(cmdline.begin(),cmdline.end());
 		processCommand();
 	}
 	else if (sym == SDLK_BACKSPACE)
@@ -335,7 +335,7 @@ void Emulator::cmdKey(const SDL_KeyboardEvent& keyEvent)
 	}
 	else if (key)
 	{
-		cmdline.push_back(key);
+		cmdline += key;
 		this->screenImage.addkeyCommand(key);
 	}
 }
@@ -351,5 +351,5 @@ void Emulator::processCommand()
 	}
 
 	Config::parseLine(cmdline,this->apple2.rom,this->apple2.slts,this->apple2.revision);
-	cmdline.clear();
+	cmdline.erase(cmdline.begin(),cmdline.end());
 }
