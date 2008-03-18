@@ -43,6 +43,7 @@ public:
 	virtual bool inhibitMotherboardRom() { return this->inhibit; }
 	virtual unsigned char io(const unsigned short address, const unsigned char data, const bool writing);
 	virtual void ioBankRom(const unsigned short addr, unsigned char* const pb, const bool write);
+	virtual std::string getName() { return "language"; }
 };
 
 #endif

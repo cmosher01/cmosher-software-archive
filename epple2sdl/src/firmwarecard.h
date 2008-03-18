@@ -63,6 +63,8 @@ public:
 	{
 		return this->inhibit;
 	}
+
+	virtual std::string getName() { return "firmware"; }
 };
 
 #endif

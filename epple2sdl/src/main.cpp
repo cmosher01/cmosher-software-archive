@@ -21,12 +21,13 @@
 
 #include "guiemulator.h"
 #include "config.h"
-#include <string>
-#include <vector>
-#include <algorithm>
+
 #include <SDL/SDL.h>
-#include <clocale>
+
+#include <string>
 #include <iostream>
+#include <ostream>
+#include <memory>
 
 int main(int argc, char* argv[])
 {
@@ -39,7 +40,7 @@ int main(int argc, char* argv[])
 	SDL_ShowCursor(0);
 	SDL_EnableKeyRepeat(0,0);
 
-	Emulator* emu = new GUIEmulator();
+	std::auto_ptr<Emulator> emu(new GUIEmulator());
 
 	if (argc > 2)
 	{
@@ -56,9 +57,5 @@ int main(int argc, char* argv[])
 
 	emu->init();
 
-	const int ret = emu->run();
-
-	delete emu;
-
-	return ret;
+	return emu->run();
 }

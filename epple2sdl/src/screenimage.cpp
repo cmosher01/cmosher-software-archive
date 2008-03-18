@@ -18,6 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "screenimage.h"
+#include "card.h"
 #include <string>
 #include <SDL/SDL.h>
 
@@ -228,7 +229,7 @@ void ScreenImage::displayHz(int hz)
 void ScreenImage::drawPower(bool on)
 {
 	unsigned int* pn = (unsigned int*)this->screen->pixels;
-	pn += (HEIGHT+1)*(this->screen->pitch/4)+1;
+	pn += (HEIGHT+5)*(this->screen->pitch/4)+5;
 	for (int r = 0; r < POWERD; ++r)
 	{
 		if (r < LABEL_Y || LABEL_Y+7 <= r)
@@ -328,4 +329,13 @@ void ScreenImage::backspaceCommand()
 {
 	drawChar(' ',78,this->cmdpos);
 	--this->cmdpos;
+}
+
+void ScreenImage::updateSlotName(const int slot, Card* card)
+{
+	int r(66+slot);
+	int c(20);
+	const std::string& name = card->getName();
+	drawText(std::string(80,' '),r,c);
+	drawText(name,r,c);
 }

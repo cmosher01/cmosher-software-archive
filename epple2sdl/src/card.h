@@ -20,8 +20,10 @@
 #ifndef CARD_H
 #define CARD_H
 
-#include <istream>
 #include "memory.h"
+
+#include <istream>
+#include <string>
 
 class Card
 {
@@ -44,6 +46,7 @@ public:
 	virtual void ioBankRom(const unsigned short addr, unsigned char* const pb, const bool write);
 	virtual void loadBankRom(const unsigned short base, std::istream& in);
 	virtual bool isDirty();
+	virtual std::string getName();
 };
 
 #endif

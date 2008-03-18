@@ -34,11 +34,13 @@
 #include "powerupreset.h"
 #include "diskcontroller.h"
 #include "languagecard.h"
+#include "screenimage.h"
 
 #include <iostream>
 #include <fstream>
 
-Apple2::Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates, AnalogTV& tv, HyperMode& fhyper, KeyboardBufferMode& buffered):
+Apple2::Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates, AnalogTV& tv, HyperMode& fhyper, KeyboardBufferMode& buffered, ScreenImage& gui):
+	slts(gui),
 	kbd(keypresses,fhyper,buffered),
 	ram(AddressBus::MOTHERBOARD_RAM_SIZ),
 	rom(AddressBus::MOTHERBOARD_ROM_SIZ),

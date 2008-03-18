@@ -154,4 +154,6 @@ public:
 	{
 		return 1-getCurrentDriveNumber();
 	}
+
+	virtual std::string getName() { return "disk]["; }
 };

@@ -103,10 +103,7 @@ void Card::loadBankRom(const unsigned short /*base*/, std::istream& /*in*/)
 
 
 
-//String getTypeName()
-//{
-//	return this.getClass().getSimpleName();
-//}
+std::string Card::getName() { return ""; }
 
 
 

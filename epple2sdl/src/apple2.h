@@ -36,6 +36,7 @@
 #include "analogtv.h"
 #include "powerupreset.h"
 class Emulator;
+class ScreenImage;
 
 class Apple2 : public Timable
 {
@@ -55,7 +56,7 @@ class Apple2 : public Timable
 	int revision;
 
 public:
-	Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates, AnalogTV& tv, HyperMode& fhyper, KeyboardBufferMode& buffered);
+	Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates, AnalogTV& tv, HyperMode& fhyper, KeyboardBufferMode& buffered, ScreenImage& gui);
 	~Apple2();
 
 	void powerOn();

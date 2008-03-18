@@ -24,14 +24,17 @@
 #include "card.h"
 #include "emptyslot.h"
 
+class ScreenImage;
+
 class Slots
 {
 private:
+	ScreenImage& gui;
 	EmptySlot empty;
 	std::vector<Card*> cards;
 
 public:
-	Slots();
+	Slots(ScreenImage& gui);
 	~Slots();
 
 	unsigned char io(const int islot, const int iswch, const unsigned char b, const bool writing);
@@ -44,6 +47,7 @@ public:
 	Card* get(const int slot);
 	void remove(const int slot);
 	bool isDirty();
+	void forceGuiUpdate();
 };
 
 #endif

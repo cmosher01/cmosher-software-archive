@@ -24,6 +24,7 @@
 #include "videoaddressing.h"
 #include "analogtv.h"
 
+class Card;
 struct SDL_Surface;
 
 class ScreenImage
@@ -59,6 +60,7 @@ public:
 	void toggleFillLinesLabel();
 	void invertText(int row, int begincol, int endcol);
 	void drawDisplayLabel();
+	void updateSlotName(const int slot, Card* card);
 
 	void enterCommandMode();
 	void exitCommandMode();

@@ -27,6 +27,8 @@ class EmptySlot : public Card
 public:
 	EmptySlot();
 	virtual ~EmptySlot();
+
+	virtual std::string getName() { return "empty"; }
 };
 
 #endif

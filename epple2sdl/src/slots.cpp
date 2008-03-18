@@ -18,12 +18,15 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "slots.h"
+#include "screenimage.h"
 #include <algorithm>
 
-Slots::Slots():
+Slots::Slots(ScreenImage& gui):
+	gui(gui),
 	empty(),
 	cards(8,&this->empty)
 {
+		forceGuiUpdate();
 }
 
 Slots::~Slots()
@@ -97,6 +100,7 @@ void Slots::set(const int slot, Card* card)
 {
 	remove(slot);
 	this->cards[slot] = card;
+	this->gui.updateSlotName(slot,this->cards[slot]);
 }
 
 void Slots::remove(const int slot)
@@ -105,6 +109,7 @@ void Slots::remove(const int slot)
 	{
 		delete this->cards[slot];
 		this->cards[slot] = &this->empty;
+		this->gui.updateSlotName(slot,this->cards[slot]);
 	}
 }
 
@@ -113,6 +118,12 @@ Card* Slots::get(const int slot)
 	return this->cards[slot];
 }
 
+
+void Slots::forceGuiUpdate()
+{
+	for (int slot(0); slot < 8; ++slot)
+		this->gui.updateSlotName(slot,this->cards[slot]);
+}
 
 /*
 struct isAnyDiskDriveMotorOnCard

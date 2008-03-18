@@ -18,12 +18,10 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_RANLIB
-AC_PROG_CXX
 
 
 
 # Checks for libraries.
-AC_CHECK_LIB([boost_filesystem],[_ZNK5boost10filesystem4pathltERKS1_])
 AC_CHECK_LIB([SDL],[SDL_Init])
 
 
@@ -39,7 +37,7 @@ AC_TYPE_SIZE_T
 # Checks for library functions.
 AC_HEADER_STDC
 AC_TYPE_SIGNAL
-AC_CHECK_FUNCS([memset sqrt nanosleep])
+AC_CHECK_FUNCS([memset sqrt])
 
 
 

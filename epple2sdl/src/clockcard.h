@@ -38,6 +38,7 @@ public:
 	~ClockCard();
 
 	virtual unsigned char io(const unsigned short address, const unsigned char data, const bool writing);
+	virtual std::string getName() { return "clock"; }
 };
 
 #endif
