@@ -32,7 +32,8 @@ Emulator::Emulator():
 	quit(false),
 	repeat(false),
 	keysDown(0),
-	command(false)
+	command(false),
+	pendingCommandExit(false)
 {
 }
 
@@ -129,7 +130,18 @@ int Emulator::run()
 						dispatchKeypress(event.key);
 				break;
 				case SDL_KEYUP:
-					dispatchKeyUp(event.key);
+					if (this->command)
+					{
+						if (this->pendingCommandExit)
+						{
+							this->command = false;
+							this->pendingCommandExit = false;
+						}
+					}
+					else
+					{
+						dispatchKeyUp(event.key);
+					}
 				break;
 				}
 			}
@@ -343,7 +355,7 @@ void Emulator::cmdKey(const SDL_KeyboardEvent& keyEvent)
 void Emulator::processCommand()
 {
 	this->screenImage.exitCommandMode();
-	this->command = false;
+	this->pendingCommandExit = true;
 
 	if (cmdline.empty())
 	{

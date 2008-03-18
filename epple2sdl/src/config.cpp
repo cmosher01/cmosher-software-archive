@@ -327,10 +327,17 @@ void Config::insertCard(const std::string& cardType, int slot, Slots& slts/*, Hy
 	{
 		card = new StandardIn(/*eofHandler*/);
 	}
+	else if (cardType == "empty")
+	{
+		card = 0;
+	}
 	else
 	{
 		throw ConfigException("Invalid card type: "+cardType);
 	}
 
-	slts.set(slot,card);
+	if (card)
+		slts.set(slot,card);
+	else
+		slts.remove(slot);
 }

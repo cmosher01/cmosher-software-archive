@@ -59,6 +59,7 @@ protected:
 	int rept;
 	unsigned char lastKeyDown;
 	bool command;
+	bool pendingCommandExit;
 	std::string cmdline;
 
 	void dispatchKeypress(const SDL_KeyboardEvent& keyEvent);

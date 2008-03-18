@@ -28,7 +28,6 @@ class Slots
 {
 private:
 	EmptySlot empty;
-	const int SLOTS;
 	std::vector<Card*> cards;
 
 public:
@@ -43,6 +42,7 @@ public:
 	bool inhibitMotherboardRom();
 	void set(const int slot, Card* card);
 	Card* get(const int slot);
+	void remove(const int slot);
 	bool isDirty();
 };
 

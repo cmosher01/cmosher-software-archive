@@ -22,8 +22,7 @@
 
 Slots::Slots():
 	empty(),
-	SLOTS(8),
-	cards(SLOTS,&this->empty)
+	cards(8,&this->empty)
 {
 }
 
@@ -96,7 +95,17 @@ bool Slots::inhibitMotherboardRom()
 
 void Slots::set(const int slot, Card* card)
 {
+	remove(slot);
 	this->cards[slot] = card;
+}
+
+void Slots::remove(const int slot)
+{
+	if (this->cards[slot] != &this->empty)
+	{
+		delete this->cards[slot];
+		this->cards[slot] = &this->empty;
+	}
 }
 
 Card* Slots::get(const int slot)
