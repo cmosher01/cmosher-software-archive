@@ -19,7 +19,6 @@
  ***************************************************************************/
 #include "screenimage.h"
 #include "card.h"
-#include <string>
 #include <SDL/SDL.h>
 
 static const char* power =
@@ -45,7 +44,8 @@ ScreenImage::ScreenImage():
 	hyper(false),
 	buffer(true),
 	fillLines(false),
-	display(AnalogTV::MONITOR_COLOR)
+	display(AnalogTV::MONITOR_COLOR),
+	slotnames(8)
 {
 	createScreen();
 }
@@ -85,16 +85,24 @@ void ScreenImage::drawSlots()
 	int r(65);
 	int c(17);
 	drawText("SLOTS:",r++,c);
-	drawText("0: ",r++,c);
-	drawText("1: ",r++,c);
-	drawText("2: ",r++,c);
-	drawText("3: ",r++,c);
-	drawText("4: ",r++,c);
-	drawText("5: ",r++,c);
-	drawText("6: ",r++,c);
-	drawText("7: ",r++,c);
-
+	drawText(std::string(100,' '),r,c);
+	drawText("0: "+this->slotnames[0],r++,c);
+	drawText(std::string(100,' '),r,c);
+	drawText("1: "+this->slotnames[1],r++,c);
+	drawText(std::string(100,' '),r,c);
+	drawText("2: "+this->slotnames[2],r++,c);
+	drawText(std::string(100,' '),r,c);
+	drawText("3: "+this->slotnames[3],r++,c);
+	drawText(std::string(100,' '),r,c);
+	drawText("4: "+this->slotnames[4],r++,c);
+	drawText(std::string(100,' '),r,c);
+	drawText("5: "+this->slotnames[5],r++,c);
+	drawText(std::string(100,' '),r,c);
+	drawText("6: "+this->slotnames[6],r++,c);
+	drawText(std::string(100,' '),r,c);
+	drawText("7: "+this->slotnames[7],r++,c);
 }
+
 static const char* displays[] =
 {
 	"COLOR MONITOR ",
@@ -336,6 +344,7 @@ void ScreenImage::updateSlotName(const int slot, Card* card)
 	int r(66+slot);
 	int c(20);
 	const std::string& name = card->getName();
+	this->slotnames[slot] = name;
 	drawText(std::string(80,' '),r,c);
 	drawText(name,r,c);
 }

@@ -23,6 +23,8 @@
 #include "applentsc.h"
 #include "videoaddressing.h"
 #include "analogtv.h"
+#include <vector>
+#include <string>
 
 class Card;
 struct SDL_Surface;
@@ -38,6 +40,7 @@ private:
 	AnalogTV::DisplayType display;
 	unsigned int cmdpos;
 	void createScreen();
+	std::vector<std::string> slotnames;
 
 public:
 	ScreenImage();
