@@ -40,7 +40,7 @@ public:
 	void setMagnet(const unsigned char magnet, const bool on);
 	unsigned char getTrack()
 	{
-		return this->quarterTrack >> 2;
+		return ((unsigned short)(this->quarterTrack)) >> 2;
 	}
 };
 

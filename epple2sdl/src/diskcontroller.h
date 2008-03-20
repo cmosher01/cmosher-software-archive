@@ -42,15 +42,6 @@ private:
 		return this->currentDrive->get();
 	}
 
-/*	void update()
-	{
-		if (this->panel == null)
-		{
-			return;
-		}
-		this->panel.updateDrives();
-	}
-*/
 	Drive& getDrive(const unsigned char drive)
 	{
 		return (drive == 0) ? this->drive1 : this->drive2;
@@ -61,20 +52,6 @@ private:
 		return (this->currentDrive == &this->drive1) ? this->drive2 : this->drive1;
 	}
 
-/*	public JPanel getPanel(const GUI gui)
-	{
-		if (this->panel == null)
-		{
-			this->panel = new DiskDriveControllerPanel(this,gui);
-		}
-		return this->panel;
-	}
-
-	public DropTargetListener getDropListener()
-	{
-		return this->panel.getDropListener();
-	}
-*/
 
 
 public:
@@ -87,7 +64,7 @@ public:
 	{
 		this->motorOn = false;
 		this->currentDrive = &this->drive1;
-//		update();
+//		TODO update();
 	}
 
 	void loadDisk(unsigned char drive, const std::string& fnib)

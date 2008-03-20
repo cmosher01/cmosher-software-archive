@@ -19,7 +19,6 @@
  ***************************************************************************/
 #include "emulator.h"
 #include "config.h"
-#include "timinggenerator.h"
 
 #include <SDL/SDL.h>
 

@@ -19,8 +19,6 @@
  ***************************************************************************/
 #include "guiemulator.h"
 
-#include "gui.h"
-
 GUIEmulator::GUIEmulator():
 	Emulator()
 {
@@ -36,21 +34,13 @@ GUIEmulator::~GUIEmulator()
 
 void GUIEmulator::init()
 {
-//	GUI* pgui = new GUI(this->screenImage,this->apple2,*this,this->display,this->keypresses,this->fhyper,this->buffered);
-
 	powerOffComputer();
-//	powerOnComputer();
-
-	this->display.setType(AnalogTV::MONITOR_COLOR);//TV_OLD_COLOR);//TV_NEW_COLOR);//
-//	this->display.powerOn(false);
+	this->display.setType(AnalogTV::MONITOR_COLOR);
 	this->display.powerOn(true);
-
-//	pgui->show();
 }
 
 /*
-	@Override
-	protected StandardIn.EOFHandler getStdInEOF()
+	TODO StandardIn.EOFHandler getStdInEOF()
 	{
 		return new StandardIn.EOFHandler()
 		{

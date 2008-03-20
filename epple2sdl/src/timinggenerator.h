@@ -20,32 +20,15 @@
 #ifndef TIMINGGENERATOR_H
 #define TIMINGGENERATOR_H
 
-class Timable;
-class Throttle;
-
 class TimingGenerator
 {
-private:
-	bool shut;
-
-	Timable& timable;
-	Throttle& throttle;
-
 public:
-	TimingGenerator(Timable& timable, Throttle& throttle);
-
 	enum { CRYSTAL_HZ = 14318182 };
 	enum { CRYSTAL_CYCLES_PER_CPU_CYCLE = 14 };
 	enum { EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE = 2 };
 	enum { HORIZ_CYCLES = 65 };
 	enum { AVG_CPU_HZ = 1020484 };
 	enum { CPU_HZ = 1022728 };
-
-	void run();
-	void threadProcedure();
-	bool isShuttingDown();
-	bool isRunning();
-	void shutdown();
 };
 
 #endif

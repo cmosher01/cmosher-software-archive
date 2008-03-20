@@ -91,26 +91,13 @@ void Card::ioBankRom(const unsigned short /*addr*/, unsigned char* const /*pb*/,
 
 void Card::loadBankRom(const unsigned short /*base*/, std::istream& /*in*/)
 {
-//	throw InvalidMemoryLoad("This card has no $D000 ROM");
+//	TODO throw InvalidMemoryLoad("This card has no $D000 ROM");
 }
 
-
-
-//JPanel getPanel(const GUI gui)
-//{
-//	return new DefaultCardPanel(getTypeName());
-//}
-
-
-
-std::string Card::getName() { return ""; }
-
-
-
-//DropTargetListener getDropListener()
-//{
-//	return null;
-//}
+std::string Card::getName()
+{
+	return "";
+}
 
 bool Card::isDirty()
 {

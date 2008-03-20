@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /MD /W3 /GX /Zi /O2 /I "src" /I "\sdl\sdl-1.2.13\include" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
-# ADD CPP /MD /W3 /GX /Zi /O2 /I "src" /I "\sdl\sdl-1.2.13\include" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FR /FD /c
+# ADD CPP /MD /W2 /GX /Zi /O2 /I "src" /I "\sdl\sdl-1.2.13\include" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FR /FD /c
 # SUBTRACT CPP /WX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -67,7 +67,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /MDd /W3 /GX /Zi /O2 /I "src" /I "\sdl\sdl-1.2.13\include" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /FR /FD /c
-# ADD CPP /MDd /W3 /GX /Zi /O2 /I "src" /I "\sdl\sdl-1.2.13\include" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /FR /FD /c
+# ADD CPP /MDd /W2 /GX /Zi /O2 /I "src" /I "\sdl\sdl-1.2.13\include" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /FR /FD /c
 # SUBTRACT CPP /WX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -158,10 +158,6 @@ SOURCE=.\src\emulator.cpp
 # Begin Source File
 
 SOURCE=.\src\firmwarecard.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\gui.cpp
 # End Source File
 # Begin Source File
 
@@ -366,10 +362,6 @@ SOURCE=.\src\emulator.h
 # Begin Source File
 
 SOURCE=.\src\firmwarecard.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\gui.h
 # End Source File
 # Begin Source File
 
