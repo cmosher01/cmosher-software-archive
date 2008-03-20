@@ -121,15 +121,7 @@ SOURCE=.\src\clockcard.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\computercontrolpanel.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\config.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\contentpane.cpp
 # End Source File
 # Begin Source File
 
@@ -197,10 +189,6 @@ SOURCE=.\src\memory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\monitorcontrolpanel.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\paddlebuttonstates.cpp
 # End Source File
 # Begin Source File
@@ -210,10 +198,6 @@ SOURCE=.\src\paddles.cpp
 # Begin Source File
 
 SOURCE=.\src\picturegenerator.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\powerlight.cpp
 # End Source File
 # Begin Source File
 
@@ -325,15 +309,7 @@ SOURCE=.\src\clockcard.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\computercontrolpanel.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\config.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\contentpane.h
 # End Source File
 # Begin Source File
 
@@ -397,10 +373,6 @@ SOURCE=.\src\memory.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\monitorcontrolpanel.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\paddlebuttonstates.h
 # End Source File
 # Begin Source File
@@ -410,10 +382,6 @@ SOURCE=.\src\paddles.h
 # Begin Source File
 
 SOURCE=.\src\picturegenerator.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\powerlight.h
 # End Source File
 # Begin Source File
 
