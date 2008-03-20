@@ -33,9 +33,10 @@ int main(int argc, char* argv[])
 {
 	if (SDL_Init(SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO) != 0)
 	{
-			printf("Unable to initialize SDL: %s\n",SDL_GetError());
-			return 1;
+		fprintf(stderr,"Unable to initialize SDL: %s\n",SDL_GetError());
+		return 1;
 	}
+
 	SDL_EnableUNICODE(1);
 	SDL_ShowCursor(0);
 	SDL_EnableKeyRepeat(0,0);
