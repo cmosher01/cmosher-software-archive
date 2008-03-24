@@ -29,8 +29,25 @@
 #include <ostream>
 #include <memory>
 
+int run(const std::string& config_file)
+{
+	Config cfg(config_file);
+	Emulator* emu = new GUIEmulator();
+	emu->config(cfg);
+	emu->init();
+	const int ret = emu->run();
+	delete emu;
+	return ret;
+}
+
 int main(int argc, char* argv[])
 {
+	if (argc > 2)
+	{
+		std::cerr << "usage: epple2 [config-file]" << std::endl;
+		return 1;
+	}
+
 	if (SDL_Init(SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO) != 0)
 	{
 		fprintf(stderr,"Unable to initialize SDL: %s\n",SDL_GetError());
@@ -41,22 +58,15 @@ int main(int argc, char* argv[])
 	SDL_ShowCursor(0);
 	SDL_EnableKeyRepeat(0,0);
 
-	std::auto_ptr<Emulator> emu(new GUIEmulator());
-
-	if (argc > 2)
-	{
-		std::cerr << "usage: epple2 [config-file]" << std::endl;
-		return 1;
-	}
 	std::string config_file("epple2.conf");
 	if (argc > 1)
 	{
 		config_file = argv[1];
 	}
-	Config cfg(config_file);
-	emu->config(cfg);
 
-	emu->init();
+	const int ret = run(config_file);
 
-	return emu->run();
+	SDL_Quit();
+
+	return ret;
 }

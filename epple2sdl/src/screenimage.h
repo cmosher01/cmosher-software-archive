@@ -70,6 +70,8 @@ public:
 	void addkeyCommand(unsigned char key);
 	void backspaceCommand();
 
+	void setDiskFile(int slot, int drive, const std::string& filename);
+
 	enum
 	{
 		HEIGHT = VideoAddressing::VISIBLE_ROWS_PER_FIELD*2,

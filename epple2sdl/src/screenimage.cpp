@@ -348,3 +348,31 @@ void ScreenImage::updateSlotName(const int slot, Card* card)
 	drawText(std::string(80,' '),r,c);
 	drawText(name,r,c);
 }
+
+/*
+1  2         3         4         5         6         7         8
+789012345678901234567890123456789012345678901234567890123456789012345678
+6: disk][  drive 1 *filename.nib T$FF RW   drive 2 *filename.nib T$FF RW
+*/
+void ScreenImage::setDiskFile(int slot, int drive, const std::string& filename)
+{
+	std::string f(filename);
+	size_t slash = f.find_last_of("/\\");
+	if (slash != std::string::npos)
+	{
+		f = f.substr(slash+1);
+	}
+	if (f.length() > 12)
+	{
+		f = f.substr(0,12);
+	}
+	int r(66+slot);
+	int c(37+32*drive);
+	drawText(f,r,c);
+	const int dlen = 12 - filename.length();
+	if (dlen > 0)
+	{
+		std::string d(dlen,' ');
+		drawText(d,r,c+f.length());
+	}
+}

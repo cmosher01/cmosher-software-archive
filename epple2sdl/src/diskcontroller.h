@@ -2,9 +2,13 @@
 #include "drive.h"
 #include <string>
 
+#include "screenimage.h"
+
 class DiskController : public Card
 {
 private:
+	ScreenImage& gui;
+	int slot;
 	DiskBytes diskBytes1;
 	StepperMotor arm1;
 	Drive drive1;
@@ -55,7 +59,7 @@ private:
 
 
 public:
-	DiskController();
+	DiskController(ScreenImage& gui, int slot);
 	~DiskController();
 
 	virtual unsigned char io(const unsigned short address, const unsigned char data, const bool writing);
@@ -70,11 +74,13 @@ public:
 	void loadDisk(unsigned char drive, const std::string& fnib)
 	{
 		this->getDrive(drive).loadDisk(fnib);
+		this->gui.setDiskFile(this->slot,drive,fnib);
 	}
 
 	void unloadDisk(unsigned char drive)
 	{
 		this->getDrive(drive).unloadDisk();
+		this->gui.setDiskFile(this->slot,drive,"");
 	}
 
 	void saveDisk(unsigned char drive)
@@ -132,5 +138,5 @@ public:
 		return 1-getCurrentDriveNumber();
 	}
 
-	virtual std::string getName() { return "disk]["; }
+	virtual std::string getName() { return "disk][  drive 1                         drive 2                      "; }
 };

@@ -1,6 +1,8 @@
 #include "diskcontroller.h"
 
-DiskController::DiskController():
+DiskController::DiskController(ScreenImage& gui, int slot):
+	slot(slot),
+	gui(gui),
 	drive1(diskBytes1,arm1),
 	drive2(diskBytes2,arm2),
 	currentDrive(&this->drive1)
@@ -32,7 +34,8 @@ unsigned char DiskController::io(const unsigned short addr, const unsigned char 
 		break;
 		case 5:
 			this->currentDrive = (on ? &this->drive2 : &this->drive1);
-//			update();
+			this->gui.clearCurrentDrive(slt,&getOtherDrive());
+			this->gui.setCurrentDrive(slt,this->currentDrive);
 		break;
 		case 6:
 			if (on && this->write && writing)

@@ -69,7 +69,7 @@ void Emulator::powerOffComputer()
 
 void Emulator::config(Config& cfg)
 {
-	cfg.parse(this->apple2.rom,this->apple2.slts/*,this->fhyper,getStdInEOF()*/,this->apple2.revision);
+	cfg.parse(this->apple2.rom,this->apple2.slts/*,this->fhyper,getStdInEOF()*/,this->apple2.revision,this->screenImage);
 }
 
 void Emulator::init()
@@ -157,7 +157,6 @@ int Emulator::run()
 			prev_ms = SDL_GetTicks();
 		}
 	}
-	SDL_Quit();
 	return 0;
 }
 
@@ -361,6 +360,6 @@ void Emulator::processCommand()
 		return;
 	}
 
-	Config::parseLine(cmdline,this->apple2.rom,this->apple2.slts,this->apple2.revision);
+	Config::parseLine(cmdline,this->apple2.rom,this->apple2.slts,this->apple2.revision,this->screenImage);
 	cmdline.erase(cmdline.begin(),cmdline.end());
 }

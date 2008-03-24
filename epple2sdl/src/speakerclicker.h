@@ -22,6 +22,10 @@
 
 class SpeakerClicker
 {
+private:
+	bool clicked;
+	int t;
+	bool positive;
 public:
 	SpeakerClicker();
 	~SpeakerClicker();
