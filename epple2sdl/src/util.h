@@ -54,6 +54,13 @@ public:
 			x = lim-1;
 		}
 	}
+
+	// 0x0 <= nib <= 0xF
+	// '0' <= ret <= 'F'
+	static char hexDigit(unsigned char nib)
+	{
+		return nib < 10 ? '0'+nib : 'A'+nib-10;
+	}
 };
 
 #endif

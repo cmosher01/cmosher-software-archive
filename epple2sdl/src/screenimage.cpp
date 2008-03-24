@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include "screenimage.h"
 #include "card.h"
+#include "util.h"
 #include <SDL/SDL.h>
 
 static const char* power =
@@ -374,5 +375,73 @@ void ScreenImage::setDiskFile(int slot, int drive, const std::string& filename)
 	{
 		std::string d(dlen,' ');
 		drawText(d,r,c+f.length());
+	}
+}
+
+void ScreenImage::clearCurrentDrive(int slot, int drive)
+{
+	int r(66+slot);
+	int c(50+32*drive);
+	drawText("       ",r,c);
+}
+
+void ScreenImage::setCurrentDrive(int slot, int drive, int track, bool on, bool writing, bool writeProtected)
+{
+	int r(66+slot);
+	int c(50+32*drive);
+	drawText("T$",r,c);
+	c += 2;
+	char nibh = Util::hexDigit((((unsigned char)track) >> 4) & 0xF);
+	drawChar(nibh,r,c++);
+	char nibl = Util::hexDigit((unsigned char)track & 0xF);
+	drawChar(nibl,r,c++);
+	++c;
+	if (on)
+	{
+		if (writing)
+		{
+			drawChar('R',r,c++);
+			drawChar(writeProtected ? 'X' : 'W',r,c,0,0xFF0000);
+		}
+		else
+		{
+			drawChar('R',r,c++,0,0x00FF00);
+			drawChar(writeProtected ? 'X' : 'W',r,c);
+		}
+	}
+	else
+	{
+		drawChar('R',r,c++);
+		drawChar(writeProtected ? 'X' : 'W',r,c);
+	}
+}
+
+void ScreenImage::setTrack(int slot, int drive, int track)
+{
+	int r(66+slot);
+	int c(52+32*drive);
+	char nibh = Util::hexDigit((((unsigned char)track) >> 4) & 0xF);
+	drawChar(nibh,r,c++);
+	char nibl = Util::hexDigit((unsigned char)track & 0xF);
+	drawChar(nibl,r,c++);
+}
+
+void ScreenImage::setIO(int slot, int drive, bool on, bool writing, bool writeProtected)
+{
+	int r(66+slot);
+	int c(55+32*drive);
+	if (on)
+	{
+		if (writing)
+			drawChar(writeProtected ? 'X' : 'W',r,++c,0,0xFF0000);
+		else
+			drawChar('R',r,c,0,0x00FF00);
+	}
+	else
+	{
+		if (writing)
+			drawChar(writeProtected ? 'X' : 'W',r,++c);
+		else
+			drawChar('R',r,c);
 	}
 }

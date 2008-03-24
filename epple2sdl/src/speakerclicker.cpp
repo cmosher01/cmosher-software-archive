@@ -56,17 +56,17 @@ void fillbuf(void *userdata, Uint8 *stream, int len)
 			--len;
 			locbuf.pop_front();
 		}
+		if (tot <= 0)
+		{
+			if (locbuf.size() >= 1024)
+				locbuf.clear();
+		}
+		else
+		{
+			if (locbuf.size() >= 65536);
+				locbuf.clear();
+		}
 		SDL_UnlockMutex(buflck);
-	}
-	if (tot <= 0)
-	{
-		if (locbuf.size() >= 1024)
-			locbuf.clear();
-	}
-	else
-	{
-		if (locbuf.size() >= 65536);
-			locbuf.clear();
 	}
 }
 

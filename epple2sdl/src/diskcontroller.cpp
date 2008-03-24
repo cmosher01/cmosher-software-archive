@@ -26,22 +26,22 @@ unsigned char DiskController::io(const unsigned short addr, const unsigned char 
 		case 2:
 		case 3:
 			this->currentDrive->setMagnet(q,on);
-//			update();
+			this->gui.setTrack(this->slot,getCurrentDriveNumber(),getTrack());
 		break;
 		case 4:
 			this->motorOn = on;
-//			update();
+			this->gui.setIO(this->slot,getCurrentDriveNumber(),on,isWriting(),isWriteProtected());
 		break;
 		case 5:
+			this->gui.clearCurrentDrive(this->slot,getCurrentDriveNumber());
 			this->currentDrive = (on ? &this->drive2 : &this->drive1);
-			this->gui.clearCurrentDrive(slt,&getOtherDrive());
-			this->gui.setCurrentDrive(slt,this->currentDrive);
+			this->gui.setCurrentDrive(this->slot,getCurrentDriveNumber(),getTrack(),this->motorOn,isWriting(),isWriteProtected());
 		break;
 		case 6:
 			if (on && this->write && writing)
 			{
 				set(data);
-//				update();
+				this->gui.setIO(this->slot,getCurrentDriveNumber(),this->motorOn,isWriting(),isWriteProtected());
 			}
 			else if (!(on || this->write))
 			{
@@ -50,7 +50,6 @@ unsigned char DiskController::io(const unsigned short addr, const unsigned char 
 		break;
 		case 7:
 			this->write = on;
-//			update();
 			if (this->currentDrive->isWriteProtected())
 			{
 				data |= 0x80;
