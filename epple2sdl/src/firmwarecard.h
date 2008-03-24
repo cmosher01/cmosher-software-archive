@@ -22,17 +22,20 @@
 
 #include "card.h"
 #include "memory.h"
+#include "screenimage.h"
 
 class FirmwareCard : public Card
 {
 private:
+	ScreenImage& gui;
+	int slot;
 	bool inhibitBankRom;
 	bool inhibitF8Rom;
 	bool inhibit;
 	Memory bankRom;
 
 public:
-	FirmwareCard();
+	FirmwareCard(ScreenImage& gui, int slot);
 	~FirmwareCard();
 
 	virtual void ioBankRom(const unsigned short addr, unsigned char* const pb, const bool write);
@@ -41,6 +44,7 @@ public:
 	{
 		this->inhibitBankRom = false;
 		this->inhibitF8Rom = false;
+		this->gui.setFirmCard(this->slot,this->inhibitBankRom,this->inhibitF8Rom);
 	}
 	
 	
@@ -49,6 +53,7 @@ public:
 	{
 		this->inhibitBankRom = !(address & 1);
 		this->inhibitF8Rom = (address & 2);
+		this->gui.setFirmCard(this->slot,this->inhibitBankRom,this->inhibitF8Rom);
 		return data;
 	}
 	

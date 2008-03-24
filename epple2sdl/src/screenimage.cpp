@@ -352,8 +352,8 @@ void ScreenImage::updateSlotName(const int slot, Card* card)
 
 /*
 1  2         3         4         5         6         7         8
-789012345678901234567890123456789012345678901234567890123456789012345678
-6: disk][  drive 1 *filename.nib T$FF RW   drive 2 *filename.nib T$FF RW
+789012345678901234567890123456789012345678901234567890123456789012345
+6: disk][  drive 1M*filename.nib T$FF      drive 2M*filename.nib T$FF
 */
 void ScreenImage::setDiskFile(int slot, int drive, const std::string& filename)
 {
@@ -423,4 +423,35 @@ void ScreenImage::setDirty(int slot, int drive, bool dirty)
 	int r(66+slot);
 	int c(36+32*drive);
 	drawChar(dirty?'*':' ',r,c);
+}
+
+/*
+1  2         3         4         5         6         7         8
+789012345678901234567890123456789012345678901234567890123456789012345678
+0: language RW B2
+*/
+void ScreenImage::setLangCard(int slot, bool readEnable, bool writeEnable, int bank)
+{
+	int r(66+slot);
+	int c(29);
+	drawChar(readEnable?'R':' ',r,c++);
+	drawChar(writeEnable?'W':' ',r,c++);
+	++c;
+	drawChar('B',r,c++);
+	drawChar(bank==0?'1':'2',r,c++);
+}
+
+/*
+1  2         3         4         5         6         7         8
+789012345678901234567890123456789012345678901234567890123456789012345678
+0: firmware D F8
+*/
+void ScreenImage::setFirmCard(int slot, bool bank, bool F8)
+{
+	int r(66+slot);
+	int c(29);
+	drawChar(bank?'D':' ',r,c++);
+	++c;
+	drawChar(F8?'F':' ',r,c++);
+	drawChar(F8?'8':' ',r,c++);
 }

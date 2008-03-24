@@ -20,7 +20,9 @@
 #include "firmwarecard.h"
 #include "memory.h"
 
-FirmwareCard::FirmwareCard():
+FirmwareCard::FirmwareCard(ScreenImage& gui, int slot):
+	gui(gui),
+	slot(slot),
 	bankRom(0x10000-0xD000)
 {
 }
@@ -55,11 +57,3 @@ void FirmwareCard::ioBankRom(const unsigned short addr, unsigned char* const pb,
 		}
 	}
 }
-
-
-/*
-public String getTypeName()
-{
-	return "firmware card";
-}
-*/

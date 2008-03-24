@@ -305,11 +305,11 @@ void Config::insertCard(const std::string& cardType, int slot, Slots& slts/*, Hy
 
 	if (cardType == "language")
 	{
-		card = new LanguageCard();
+		card = new LanguageCard(gui,slot);
 	}
 	else if (cardType == "firmware")
 	{
-		card = new FirmwareCard();
+		card = new FirmwareCard(gui,slot);
 	}
 	else if (cardType == "disk")
 	{

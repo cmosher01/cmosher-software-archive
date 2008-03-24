@@ -78,6 +78,9 @@ public:
 	void setIO(int slot, int drive, bool on);
 	void setDirty(int slot, int drive, bool dirty);
 
+	void setLangCard(int slot, bool readEnable, bool writeEnable, int bank);
+	void setFirmCard(int slot, bool bank, bool F8);
+
 	enum
 	{
 		HEIGHT = VideoAddressing::VISIBLE_ROWS_PER_FIELD*2,

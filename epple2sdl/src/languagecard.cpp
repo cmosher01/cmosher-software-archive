@@ -18,8 +18,11 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "languagecard.h"
+#include "screenimage.h"
 
-LanguageCard::LanguageCard():
+LanguageCard::LanguageCard(ScreenImage& gui, int slot):
+	gui(gui),
+	slot(slot),
 	ramTop(0x10000-0xE000),
 	readEnable(false),
 	writeEnable(true),
@@ -59,6 +62,8 @@ unsigned char LanguageCard::io(const unsigned short address, const unsigned char
 	this->readEnable = (r==0 || r==3);
 
 	this->bank = !(address & 8);
+
+	this->gui.setLangCard(this->slot,this->readEnable,this->writeEnable,this->bank);
 
 	return data;
 }
