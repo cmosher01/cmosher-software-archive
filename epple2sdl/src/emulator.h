@@ -20,7 +20,6 @@
 #ifndef EMULATOR_H
 #define EMULATOR_H
 
-#include "throttle.h"
 #include "keyboard.h"
 #include "paddlebuttonstates.h"
 #include "apple2.h"
@@ -44,7 +43,6 @@ protected:
 
 	HyperMode fhyper;
 	KeyboardBufferMode buffered;
-	Throttle throttle;
 	ScreenImage screenImage;
 	AnalogTV display;
 	VideoStaticGenerator videoStatic;

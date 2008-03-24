@@ -245,10 +245,6 @@ SOURCE=.\src\textcharacters.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\throttle.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\timable.cpp
 # End Source File
 # Begin Source File
@@ -430,10 +426,6 @@ SOURCE=.\src\textcharacterimages.h
 # Begin Source File
 
 SOURCE=.\src\textcharacters.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\throttle.h
 # End Source File
 # Begin Source File
 

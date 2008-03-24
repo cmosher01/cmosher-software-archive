@@ -22,8 +22,9 @@
 
 #include <SDL/SDL.h>
 
+#include <ctime>
+
 Emulator::Emulator():
-	throttle(fhyper),
 	display(screenImage),
 	videoStatic(display),
 	apple2(keypresses,paddleButtonStates,display,fhyper,buffered,screenImage),
