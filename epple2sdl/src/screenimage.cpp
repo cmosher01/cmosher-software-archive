@@ -381,39 +381,24 @@ void ScreenImage::setDiskFile(int slot, int drive, const std::string& filename)
 void ScreenImage::clearCurrentDrive(int slot, int drive)
 {
 	int r(66+slot);
-	int c(50+32*drive);
-	drawText("       ",r,c);
+	int c(35+32*drive);
+	drawChar(' ',r,c);
+	c += 15;
+	drawText("    ",r,c);
 }
 
-void ScreenImage::setCurrentDrive(int slot, int drive, int track, bool on, bool writing, bool writeProtected)
+void ScreenImage::setCurrentDrive(int slot, int drive, int track, bool on)
 {
 	int r(66+slot);
-	int c(50+32*drive);
+	int c(35+32*drive);
+	drawChar(' ',r,c,0xFFFFFF,on?0xFF0000:0);
+	c += 15;
 	drawText("T$",r,c);
 	c += 2;
 	char nibh = Util::hexDigit((((unsigned char)track) >> 4) & 0xF);
 	drawChar(nibh,r,c++);
 	char nibl = Util::hexDigit((unsigned char)track & 0xF);
 	drawChar(nibl,r,c++);
-	++c;
-	if (on)
-	{
-		if (writing)
-		{
-			drawChar('R',r,c++);
-			drawChar(writeProtected ? 'X' : 'W',r,c,0,0xFF0000);
-		}
-		else
-		{
-			drawChar('R',r,c++,0,0x00FF00);
-			drawChar(writeProtected ? 'X' : 'W',r,c);
-		}
-	}
-	else
-	{
-		drawChar('R',r,c++);
-		drawChar(writeProtected ? 'X' : 'W',r,c);
-	}
 }
 
 void ScreenImage::setTrack(int slot, int drive, int track)
@@ -426,22 +411,16 @@ void ScreenImage::setTrack(int slot, int drive, int track)
 	drawChar(nibl,r,c++);
 }
 
-void ScreenImage::setIO(int slot, int drive, bool on, bool writing, bool writeProtected)
+void ScreenImage::setIO(int slot, int drive, bool on)
 {
 	int r(66+slot);
-	int c(55+32*drive);
-	if (on)
-	{
-		if (writing)
-			drawChar(writeProtected ? 'X' : 'W',r,++c,0,0xFF0000);
-		else
-			drawChar('R',r,c,0,0x00FF00);
-	}
-	else
-	{
-		if (writing)
-			drawChar(writeProtected ? 'X' : 'W',r,++c);
-		else
-			drawChar('R',r,c);
-	}
+	int c(35+32*drive);
+	drawChar(' ',r,c,0xFFFFFF,on?0xFF0000:0);
+}
+
+void ScreenImage::setDirty(int slot, int drive, bool dirty)
+{
+	int r(66+slot);
+	int c(36+32*drive);
+	drawChar(dirty?'*':' ',r,c);
 }

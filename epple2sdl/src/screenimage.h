@@ -73,9 +73,10 @@ public:
 	void setDiskFile(int slot, int drive, const std::string& filename);
 
 	void clearCurrentDrive(int slt, int drv);
-	void setCurrentDrive(int slt, int drv, int track, bool on, bool writing, bool writeProtected);
+	void setCurrentDrive(int slt, int drv, int track, bool on);
 	void setTrack(int slot, int drive, int track);
-	void setIO(int slot, int drive, bool on, bool writing, bool writeProtected);
+	void setIO(int slot, int drive, bool on);
+	void setDirty(int slot, int drive, bool dirty);
 
 	enum
 	{

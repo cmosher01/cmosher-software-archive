@@ -75,17 +75,20 @@ public:
 	{
 		this->getDrive(drive).loadDisk(fnib);
 		this->gui.setDiskFile(this->slot,drive,fnib);
+		this->gui.setDirty(this->slot,getCurrentDriveNumber(),false);
 	}
 
 	void unloadDisk(unsigned char drive)
 	{
 		this->getDrive(drive).unloadDisk();
 		this->gui.setDiskFile(this->slot,drive,"");
+		this->gui.setDirty(this->slot,getCurrentDriveNumber(),false);
 	}
 
 	void saveDisk(unsigned char drive)
 	{
 		this->getDrive(drive).saveDisk();
+		this->gui.setDirty(this->slot,getCurrentDriveNumber(),false);
 	}
 
 	bool isMotorOn()
