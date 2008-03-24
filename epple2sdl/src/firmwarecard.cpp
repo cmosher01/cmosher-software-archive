@@ -23,6 +23,9 @@
 FirmwareCard::FirmwareCard(ScreenImage& gui, int slot):
 	gui(gui),
 	slot(slot),
+	inhibitBankRom(false),
+	inhibitF8Rom(false),
+	inhibit(false),
 	bankRom(0x10000-0xD000)
 {
 }
