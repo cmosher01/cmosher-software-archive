@@ -29,15 +29,15 @@
 #include <ostream>
 #include <memory>
 
-int run(const std::string& config_file)
+static int run(const std::string& config_file)
 {
 	Config cfg(config_file);
-	Emulator* emu = new GUIEmulator();
+
+	std::auto_ptr<Emulator> emu(new GUIEmulator());
+
 	emu->config(cfg);
 	emu->init();
-	const int ret = emu->run();
-	delete emu;
-	return ret;
+	return emu->run();
 }
 
 int main(int argc, char* argv[])

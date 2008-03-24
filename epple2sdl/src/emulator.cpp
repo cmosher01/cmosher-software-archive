@@ -83,9 +83,6 @@ void Emulator::init()
 // U.A.2 p. 7-13: REPT key repeats at 10Hz
 #define CYCLES_PER_REPT 102048
 
-enum { EXPECTED_TICKS = CLOCKS_PER_SEC/20 };
-enum { NANOS_PER_CLOCK = 1000000000/CLOCKS_PER_SEC };
-
 
 int Emulator::run()
 {
@@ -325,7 +322,6 @@ void Emulator::cmdKey(const SDL_KeyboardEvent& keyEvent)
 {
 	unsigned char key = (unsigned char)(keyEvent.keysym.unicode & 0x7F);
 	SDLKey sym = keyEvent.keysym.sym;
-	SDLMod mod = keyEvent.keysym.mod;
 	if (sym == SDLK_RETURN)
 	{
 		processCommand();
@@ -341,6 +337,24 @@ void Emulator::cmdKey(const SDL_KeyboardEvent& keyEvent)
 		{
 			cmdline.erase(cmdline.end()-1);
 			this->screenImage.backspaceCommand();
+		}
+	}
+	else if (sym == SDLK_INSERT)
+	{
+		std::string s = this->clip.getText();
+		for (int i = 0; i < s.length(); ++i)
+		{
+			key = s[i];
+			if (key == '\n' || key == '\r')
+			{
+				processCommand();
+				break;
+			}
+			else
+			{
+				cmdline += key;
+				this->screenImage.addkeyCommand(key);
+			}
 		}
 	}
 	else if (key)
