@@ -54,6 +54,7 @@ void Emulator::powerOnComputer()
 {
 	this->apple2.powerOn();
 	this->screenImage.drawPower(true);
+	this->display.setNoise(false);
 
 	this->timable = &this->apple2;
 }
@@ -63,6 +64,7 @@ void Emulator::powerOffComputer()
 	// TODO ask if unsaved changes
 	this->apple2.powerOff();
 	this->screenImage.drawPower(false);
+	this->display.setNoise(true);
 	this->videoStatic.powerOn();
 
 	this->timable = &this->videoStatic;

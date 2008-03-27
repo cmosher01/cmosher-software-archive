@@ -59,9 +59,7 @@ void VideoStaticGenerator::tick()
 		if (isig >= isiglim)
 		{
 			isig = sig;
-			this->display.setNoise(true);
 			this->display.drawCurrent();
-			this->display.setNoise(false);
 		}
 	}
 }

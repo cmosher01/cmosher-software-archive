@@ -23,6 +23,8 @@
 #include "lowpass_3_58_mhz.h"
 #include "lowpass_1_5_mhz.h"
 
+#include <map>
+
 #include <cmath>
 #include <ctime>
 #include <cstdlib>
@@ -200,6 +202,11 @@ public:
 				tot += icb;
 		}
 		return 220 < tot && tot < 260;
+	}
+
+	bool operator<(const CB& that) const
+	{
+		return this->cb < that.cb;
 	}
 };
 
@@ -480,6 +487,7 @@ CB AnalogTV::get_cb(int lineno)
 
 
 // TODO static const Map<CB,IQ> cacheCB = new HashMap<CB,IQ>(2,1);
+std::map<CB,IQ> cacheCB;
 
 const double AnalogTV::IQ_OFFSET_DEGREES = 33;
 const double AnalogTV::IQ_OFFSET_RADIANS = AnalogTV::IQ_OFFSET_DEGREES * 3.1415927 / 180;
@@ -490,10 +498,12 @@ const double AnalogTV::COLOR_THRESH(1.4);
 
 IQ AnalogTV::get_iq_factor(const CB& cb)
 {
-//	if (cacheCB.containsKey(cb))
-//	{
-//		return cacheCB.get(cb);
-//	}
+	std::map<CB,IQ>::iterator hit = cacheCB.find(cb);
+	if (hit != cacheCB.end())
+	{
+		return hit->second;
+	}
+
 	double cb_phase[4];
 	cb.getPhase(cb_phase);
 	const double cb_i = cb_phase[2]-cb_phase[0];
@@ -511,12 +521,12 @@ IQ AnalogTV::get_iq_factor(const CB& cb)
 	iq_factor[1] = cb_q * TINT_I - cb_i * TINT_Q;
 	iq_factor[3] = -iq_factor[1];
 
-//	const IQ iq = new IQ(iq_factor);
-//	if (!this->noise)
-//	{
-//		cacheCB.put(cb,iq);
-//	}
-	return IQ(iq_factor);
+	const IQ iq(iq_factor);
+	if (!this->noise)
+	{
+		cacheCB[cb] = iq;
+	}
+	return iq;
 }
 
 const int AnalogTV::IQINTOFF(130);
