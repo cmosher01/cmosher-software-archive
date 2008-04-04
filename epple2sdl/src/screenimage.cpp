@@ -94,9 +94,7 @@ void ScreenImage::drawSlots()
 
 void ScreenImage::drawSlot(int slot, int r, int c)
 {
-	char sltnum[2];
-	snprintf(sltnum,2,"%d",slot);
-	drawChar(sltnum[0],r,c++);
+	drawChar('0'+slot,r,c++);
 	drawChar(':',r,c++);
 	drawChar(' ',r,c++);
 	drawText(this->slotnames[slot],r,c);
@@ -385,7 +383,7 @@ void ScreenImage::setDiskFile(int slot, int drive, const std::string& filename)
 		drawText(d,r,c+f.length());
 	}
 	this->slotnames[slot].replace(c-20,12,12,' ');
-	this->slotnames[slot].replace(c-20,12,f);
+	this->slotnames[slot].replace(c-20,f.length(),f);
 }
 
 void ScreenImage::clearCurrentDrive(int slot, int drive)
