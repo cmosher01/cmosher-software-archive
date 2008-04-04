@@ -3051,10 +3051,9 @@ CMDFP           LDA #$4C        ; (A) = OPCODE FOR "JMP".
                                 ; FILE NAME BUFFER.
 
                 LDX #9          ; ONLY 9 CHARS IN NAME "APPLESOFT"
-CPYAPPLE        LDA RUNTRUPT,X  ; GET CHARS OF NAME.
-                STA PRIMFNBF-1,X
-                                ; STORE THEM IN PRIMARY NAME BUF
-                DEX             ; REDUCE COUNTER.
+CPYAPPLE        LDA APLSFTXT-1,X ; GET CHARS OF NAME.
+                STA PRIMFNBF-1,X ; STORE THEM IN PRIMARY NAME BUF
+                DEX              ; REDUCE COUNTER.
                 BNE CPYAPPLE    ; MORE CHARS TO COPY.
 
                 LDA #$C0        ; SET CONDNFLG TO DESIGNATE USING

@@ -1,8 +1,8 @@
          .FEATURE LABELS_WITHOUT_COLONS
 
          ;VECTORS
-         .IF VERSION < 2
          .EXPORT IRQ
+         .IF VERSION < 2
          ;MONITOR
          .EXPORT STEP
          .ELSE
@@ -144,16 +144,16 @@ RTNJMP   LDA   RTNH
 
          .ELSE
 
-         STA   $45
+IRQ      STA   ACC
          PLA
          PHA
          ASL   A
          ASL   A
          ASL   A
-         BMI   LFA4C
+         BMI   BREAK
          JMP   (IRQLOC)
 
-LFA4C    PLP
+BREAK    PLP
          JSR   SAV1
          PLA
          STA   PCL
