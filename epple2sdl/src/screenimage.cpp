@@ -86,22 +86,25 @@ void ScreenImage::drawSlots()
 	int r(65);
 	int c(17);
 	drawText("SLOTS:",r++,c);
-	drawText(std::string(100,' '),r,c);
-	drawText("0: "+this->slotnames[0],r++,c);
-	drawText(std::string(100,' '),r,c);
-	drawText("1: "+this->slotnames[1],r++,c);
-	drawText(std::string(100,' '),r,c);
-	drawText("2: "+this->slotnames[2],r++,c);
-	drawText(std::string(100,' '),r,c);
-	drawText("3: "+this->slotnames[3],r++,c);
-	drawText(std::string(100,' '),r,c);
-	drawText("4: "+this->slotnames[4],r++,c);
-	drawText(std::string(100,' '),r,c);
-	drawText("5: "+this->slotnames[5],r++,c);
-	drawText(std::string(100,' '),r,c);
-	drawText("6: "+this->slotnames[6],r++,c);
-	drawText(std::string(100,' '),r,c);
-	drawText("7: "+this->slotnames[7],r++,c);
+	for (int slot(0); slot < 8; ++slot)
+	{
+		drawSlot(slot,r++,c);
+	}
+}
+
+void ScreenImage::drawSlot(int slot, int r, int c)
+{
+	char sltnum[2];
+	snprintf(sltnum,2,"%d",slot);
+	drawChar(sltnum[0],r,c++);
+	drawChar(':',r,c++);
+	drawChar(' ',r,c++);
+	drawText(this->slotnames[slot],r,c);
+	const int len = this->slotnames[slot].length();
+	if (len < 100)
+	{
+		drawText(std::string(100-len,' '),r,c+len);
+	}
 }
 
 static const char* displays[] =
@@ -350,6 +353,11 @@ void ScreenImage::updateSlotName(const int slot, Card* card)
 	drawText(name,r,c);
 }
 
+void ScreenImage::removeCard(const int slot, Card* card /* empty */)
+{
+	updateSlotName(slot,card);
+}
+
 /*
 1  2         3         4         5         6         7         8
 789012345678901234567890123456789012345678901234567890123456789012345
@@ -376,6 +384,8 @@ void ScreenImage::setDiskFile(int slot, int drive, const std::string& filename)
 		std::string d(dlen,' ');
 		drawText(d,r,c+f.length());
 	}
+	this->slotnames[slot].replace(c-20,12,12,' ');
+	this->slotnames[slot].replace(c-20,12,f);
 }
 
 void ScreenImage::clearCurrentDrive(int slot, int drive)
@@ -383,8 +393,10 @@ void ScreenImage::clearCurrentDrive(int slot, int drive)
 	int r(66+slot);
 	int c(35+32*drive);
 	drawChar(' ',r,c);
+	this->slotnames[slot][c-20] = ' ';
 	c += 15;
 	drawText("    ",r,c);
+	this->slotnames[slot].replace(c-20,4,4,' ');
 }
 
 void ScreenImage::setCurrentDrive(int slot, int drive, int track, bool on)
@@ -393,12 +405,19 @@ void ScreenImage::setCurrentDrive(int slot, int drive, int track, bool on)
 	int c(35+32*drive);
 	drawChar(' ',r,c,0xFFFFFF,on?0xFF0000:0);
 	c += 15;
-	drawText("T$",r,c);
-	c += 2;
+	drawChar('T',r,c);
+	this->slotnames[slot][c-20] = 'T';
+	++c;
+	drawChar('$',r,c);
+	this->slotnames[slot][c-20] = '$';
+	++c;
 	char nibh = Util::hexDigit((((unsigned char)track) >> 4) & 0xF);
-	drawChar(nibh,r,c++);
+	drawChar(nibh,r,c);
+	this->slotnames[slot][c-20] = nibh;
+	++c;
 	char nibl = Util::hexDigit((unsigned char)track & 0xF);
-	drawChar(nibl,r,c++);
+	drawChar(nibl,r,c);
+	this->slotnames[slot][c-20] = nibl;
 }
 
 void ScreenImage::setTrack(int slot, int drive, int track)
@@ -406,9 +425,12 @@ void ScreenImage::setTrack(int slot, int drive, int track)
 	int r(66+slot);
 	int c(52+32*drive);
 	char nibh = Util::hexDigit((((unsigned char)track) >> 4) & 0xF);
-	drawChar(nibh,r,c++);
+	drawChar(nibh,r,c);
+	this->slotnames[slot][c-20] = nibh;
+	++c;
 	char nibl = Util::hexDigit((unsigned char)track & 0xF);
-	drawChar(nibl,r,c++);
+	drawChar(nibl,r,c);
+	this->slotnames[slot][c-20] = nibl;
 }
 
 void ScreenImage::setIO(int slot, int drive, bool on)
@@ -423,6 +445,7 @@ void ScreenImage::setDirty(int slot, int drive, bool dirty)
 	int r(66+slot);
 	int c(36+32*drive);
 	drawChar(dirty?'*':' ',r,c);
+	this->slotnames[slot][c-20] = dirty?'*':' ';
 }
 
 /*
@@ -434,11 +457,18 @@ void ScreenImage::setLangCard(int slot, bool readEnable, bool writeEnable, int b
 {
 	int r(66+slot);
 	int c(29);
-	drawChar(readEnable?'R':' ',r,c++);
-	drawChar(writeEnable?'W':' ',r,c++);
+	drawChar(readEnable?'R':' ',r,c);
+	this->slotnames[slot][c-20] = readEnable?'R':' ';
 	++c;
-	drawChar('B',r,c++);
-	drawChar(bank==0?'1':'2',r,c++);
+	drawChar(writeEnable?'W':' ',r,c);
+	this->slotnames[slot][c-20] = writeEnable?'W':' ';
+	++c;
+	++c;
+	drawChar('B',r,c);
+	this->slotnames[slot][c-20] = 'B';
+	++c;
+	drawChar(bank==0?'1':'2',r,c);
+	this->slotnames[slot][c-20] = bank==0?'1':'2';
 }
 
 /*
@@ -450,8 +480,13 @@ void ScreenImage::setFirmCard(int slot, bool bank, bool F8)
 {
 	int r(66+slot);
 	int c(29);
-	drawChar(bank?'D':' ',r,c++);
+	drawChar(bank?'D':' ',r,c);
+	this->slotnames[slot][c-20] = bank?'D':' ';
 	++c;
-	drawChar(F8?'F':' ',r,c++);
-	drawChar(F8?'8':' ',r,c++);
+	++c;
+	drawChar(F8?'F':' ',r,c);
+	this->slotnames[slot][c-20] = F8?'F':' ';
+	++c;
+	drawChar(F8?'8':' ',r,c);
+	this->slotnames[slot][c-20] = F8?'8':' ';
 }

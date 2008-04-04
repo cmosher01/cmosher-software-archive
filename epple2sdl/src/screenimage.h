@@ -55,6 +55,7 @@ public:
 	void drawChar(const char ch, int row, int col, int color = 0xFFFFFF, int bgcolor = 0);
 	void drawLabels();
 	void drawSlots();
+	void drawSlot(int slot, int r, int c);
 	void drawFnKeys();
 	void toggleHyperLabel();
 	void toggleKdbBufferLabel();
@@ -64,6 +65,7 @@ public:
 	void invertText(int row, int begincol, int endcol);
 	void drawDisplayLabel();
 	void updateSlotName(const int slot, Card* card);
+	void removeCard(const int slot, Card* card /* empty */);
 
 	void enterCommandMode();
 	void exitCommandMode();

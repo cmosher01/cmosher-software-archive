@@ -109,7 +109,7 @@ void Slots::remove(const int slot)
 	{
 		delete this->cards[slot];
 		this->cards[slot] = &this->empty;
-		this->gui.updateSlotName(slot,this->cards[slot]);
+		this->gui.removeCard(slot,this->cards[slot]);
 	}
 }
 
