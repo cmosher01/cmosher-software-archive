@@ -3,6 +3,9 @@
 #endif
 #include "getopt.h"
 #include <stdio.h>
+#ifdef HAVE_SETMODE
+#include <fcntl.h>
+#endif
 
 static int runProgram = 1;
 static int count = 1;
