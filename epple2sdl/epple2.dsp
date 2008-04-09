@@ -209,10 +209,6 @@ SOURCE=.\src\raminitializer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\screen.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\src\screenimage.cpp
 # End Source File
 # Begin Source File
@@ -386,10 +382,6 @@ SOURCE=.\src\powerupreset.h
 # Begin Source File
 
 SOURCE=.\src\raminitializer.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\screen.h
 # End Source File
 # Begin Source File
 
