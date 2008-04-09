@@ -15,6 +15,17 @@
     You should have received a copy of the GNU General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+
+/*
+    This class was highly inspired by Trevor Blackwell's Analog TV
+    module ("hack") of the XScreenSaver collection, therefore, portions
+    Copyright (C) 2003, 2004, by Trevor Blackwell <tlb@tlb.org>
+    (Thanks, Trevor!)
+    For this class, I removed the "interference" type processing, and
+    just took the raw color processing functionality. See the drawTVOld
+    method definition in this file for the analog TV processing.
+    I also added processing for the other ("new") TV, and various monitors.
+*/
 #include "analogtv.h"
 #include "screenimage.h"
 #include "applentsc.h"
