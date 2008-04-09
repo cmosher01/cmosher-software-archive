@@ -1,3 +1,20 @@
+/*
+    epple2
+    Copyright (C) 2008 by Chris Mosher <chris@mosher.mine.nu>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY, without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
 /**
  * Emulates the arm stepper motor in the Disk ][.
  * This implementation differs from the actual Disk ][ in
@@ -6,7 +23,7 @@
  * instantaneously, whereas the Disk ][ arm would actually
  * take some time to reach its new position (this would
  * cause a difference if the state of the magnets changed
- * during this interval). 
+ * during this interval).
  *
  * @author Chris Mosher
  */

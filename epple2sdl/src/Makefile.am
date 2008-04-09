@@ -14,7 +14,7 @@ epple2_SOURCES = a2colorsobserved.cpp addressbus.cpp analogtv.cpp apple2.cpp \
 	keyboard.cpp keyboardbuffermode.cpp languagecard.cpp lowpass_1_5_mhz.cpp \
 	lowpass_3_58_mhz.cpp main.cpp memory.cpp paddlebuttonstates.cpp \
 	paddles.cpp picturegenerator.cpp powerupreset.cpp raminitializer.cpp \
-	screen.cpp screenimage.cpp slots.cpp speakerclicker.cpp standardin.cpp \
+	screenimage.cpp slots.cpp speakerclicker.cpp standardin.cpp \
 	standardinproducer.cpp standardout.cpp steppermotor.cpp textcharacters.cpp \
 	timable.cpp timinggenerator.cpp video.cpp videoaddressing.cpp videomode.cpp \
 	videostaticgenerator.cpp

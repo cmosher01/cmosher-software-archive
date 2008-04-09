@@ -1,22 +1,20 @@
-/***************************************************************************
- *   Copyright (C) 2008 by Chris Mosher,,,   *
- *   chris@mosher.mine.nu   *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+/*
+    epple2
+    Copyright (C) 2008 by Chris Mosher <chris@mosher.mine.nu>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY, without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
 #include "analogtv.h"
 #include "screenimage.h"
 #include "applentsc.h"
@@ -486,7 +484,6 @@ CB AnalogTV::get_cb(int lineno)
 }
 
 
-// TODO static const Map<CB,IQ> cacheCB = new HashMap<CB,IQ>(2,1);
 std::map<CB,IQ> cacheCB;
 
 const double AnalogTV::IQ_OFFSET_DEGREES = 33;
@@ -509,7 +506,7 @@ IQ AnalogTV::get_iq_factor(const CB& cb)
 	const double cb_i = cb_phase[2]-cb_phase[0];
 	const double cb_q = cb_phase[3]-cb_phase[1];
 
-	if (cb_i*cb_i + cb_q*cb_q < COLOR_THRESH)
+	if ((cb_i*cb_i) + (cb_q*cb_q) < COLOR_THRESH)
 	{
 		return BLACK_AND_WHITE;
 	}
