@@ -40,9 +40,6 @@ private:
 	bool motorOn;
 
 
-	//DiskDriveControllerPanel panel;
-
-
 	// TODO for a rev. 0 motherboard, the disk controller will auto reset the CPU
 
 	void set(unsigned char data)
@@ -83,9 +80,13 @@ public:
 
 	void reset()
 	{
-		this->motorOn = false;
+		this->gui.setIO(this->slot,getCurrentDriveNumber(),false);
+		this->gui.clearCurrentDrive(this->slot,getCurrentDriveNumber());
+
 		this->currentDrive = &this->drive1;
-//		TODO update();
+		this->motorOn = false;
+
+		this->gui.setCurrentDrive(this->slot,getCurrentDriveNumber(),getTrack(),false);
 	}
 
 	void loadDisk(unsigned char drive, const std::string& fnib)

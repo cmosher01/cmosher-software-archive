@@ -75,7 +75,6 @@ void Apple2::powerOn()
 	this->video.powerOn();
 	this->picgen.powerOn();
 	this->powerUpReset.powerOn();
-	// TODO clear up all other things for Apple ][ power-on
 }
 
 void Apple2::powerOff()

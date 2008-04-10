@@ -57,6 +57,8 @@ mags ps magval
 
 StepperMotor::StepperMotor():
 	quarterTrack(QTRACKS >> 1), // start in the middle of the disk... just for fun
+// TODO if we want to be extremely accurate, we should save each arm's position on shutdown and restore on startup
+// (because in the real-life Apple ][, the arm stays in the same position when powered off).
 	pos(0),
 	mags(0)
 {
@@ -68,14 +70,8 @@ StepperMotor::~StepperMotor()
 
 signed char StepperMotor::mapMagPos[] = {-1,0,2,1,4,-1,3,2,6,7,-1,0,5,6,4,-1};
 
-#include <iostream> // TODO remove
 void StepperMotor::setMagnet(const unsigned char magnet, const bool on)
 {
-//	if (magnet < 0 || 4 <= magnet)
-//	{
-//		throw new IllegalStateException();
-//	}
-
 	const unsigned char mask = 1 << magnet;
 	if (on)
 	{

@@ -18,6 +18,7 @@
 #ifndef KEYBOARD_H
 #define KEYBOARD_H
 
+#include <SDL/SDL.h>
 #include <queue>
 
 typedef std::queue<unsigned char> KeypressQueue;
@@ -33,6 +34,10 @@ private:
 	KeyboardBufferMode& buffered;
 
 	unsigned char latch;
+	unsigned char cGet;
+	Uint32 lastGet;
+
+	void waitIfTooFast();
 
 public:
 	Keyboard(KeypressQueue& q, HyperMode& fhyper, KeyboardBufferMode& buffered);

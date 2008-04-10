@@ -16,6 +16,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #include "card.h"
+#include "config.h"
 
 Card::Card():
 	rom(0x0100),
@@ -29,14 +30,12 @@ Card::~Card()
 }
 
 
-// override
 void Card::reset()
 {
 }
 
 
 
-// override
 unsigned char Card::io(const unsigned short /*address*/, const unsigned char data, const bool /*writing*/)
 {
 	return data;
@@ -89,7 +88,7 @@ void Card::ioBankRom(const unsigned short /*addr*/, unsigned char* const /*pb*/,
 
 void Card::loadBankRom(const unsigned short /*base*/, std::istream& /*in*/)
 {
-//	TODO throw InvalidMemoryLoad("This card has no $D000 ROM");
+	throw ConfigException("This card has no $D000 ROM");
 }
 
 std::string Card::getName()

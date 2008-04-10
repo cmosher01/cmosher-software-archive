@@ -32,6 +32,8 @@
 #include <sstream>
 #include <string>
 
+unsigned char Config::disk_mask(0);
+
 Config::Config(const std::string& file_path):
 	file_path(file_path)
 {
@@ -92,35 +94,8 @@ void Config::parse(Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EO
 	}
 	in.close();
 
-//	verifyUniqueCards(slts);
+	// TODO: make sure there is no more than ONE stdin and/or ONE stdout card
 }
-
-/*
-void verifyUniqueCards(const Slots& cards)
-{
-	int nStdOut = 0;
-	int nStdIn = 0;
-	for (Card card : cards)
-	{
-		if (card instanceof StandardOut)
-		{
-			++nStdOut;
-		}
-		else if (card instanceof StandardIn)
-		{
-			++nStdIn;
-		}
-	}
-	if (nStdOut > 1)
-	{
-		throw new IllegalArgumentException("Error in config file: only one stdout card is supported.");
-	}
-	if (nStdIn > 1)
-	{
-		throw new IllegalArgumentException("Error in config file: only one stdin card is supported.");
-	}
-}
-*/
 void Config::parseLine(const std::string& line, Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EOFHandler eofHandler*/, int& revision, ScreenImage& gui)
 {
 	try
@@ -259,10 +234,12 @@ void Config::loadDisk(Slots& slts, int slot, int drive, const std::string& fnib)
 	}
 
 	Card* card = slts.get(slot);
-// TODO	if (!(card instanceof DiskController))
-//	{
-//		throw new IllegalArgumentException("Card in slot "+slot+" is not a disk controller card.");
-//	}
+	if (!(disk_mask & (1 << slot)))
+	{
+		std::cerr << "Slot " << slot << " doesn't have a disk controller card" << std::endl;
+		return;
+	}
+
 	DiskController* controller = (DiskController*)card;
 	controller->loadDisk(drive-1,fnib);
 }
@@ -275,10 +252,12 @@ void Config::unloadDisk(Slots& slts, int slot, int drive)
 	}
 
 	Card* card = slts.get(slot);
-// TODO	if (!(card instanceof DiskController))
-//	{
-//		throw new IllegalArgumentException("Card in slot "+slot+" is not a disk controller card.");
-//	}
+	if (!(disk_mask & (1 << slot)))
+	{
+		std::cerr << "Slot " << slot << " doesn't have a disk controller card" << std::endl;
+		return;
+	}
+
 	DiskController* controller = (DiskController*)card;
 	controller->unloadDisk(drive-1);
 }
@@ -303,6 +282,8 @@ void Config::insertCard(const std::string& cardType, int slot, Slots& slts/*, Hy
 
 	Card* card;
 
+	disk_mask &= ~(1 << slot);
+
 	if (cardType == "language")
 	{
 		card = new LanguageCard(gui,slot);
@@ -314,6 +295,7 @@ void Config::insertCard(const std::string& cardType, int slot, Slots& slts/*, Hy
 	else if (cardType == "disk")
 	{
 		card = new DiskController(gui,slot/*fhyper*/);
+		disk_mask |= (1 << slot);
 	}
 	else if (cardType == "clock")
 	{

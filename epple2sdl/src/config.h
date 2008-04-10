@@ -33,6 +33,7 @@ class Config
 {
 private:
 	const std::string& file_path;
+	static unsigned char disk_mask;
 
 	static void loadDisk(Slots& slts, int slot, int drive, const std::string& fnib);
 	static void unloadDisk(Slots& slts, int slot, int drive);

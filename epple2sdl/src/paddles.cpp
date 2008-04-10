@@ -17,6 +17,8 @@
 */
 #include "paddles.h"
 #include <SDL/SDL.h>
+#include <iostream>
+#include <ostream>
 
 Paddles::Paddles():
 	rTick(PADDLE_COUNT)
@@ -46,7 +48,7 @@ void Paddles::startTimers()
 	}
 	catch (...)
 	{
-		// TODO
+		std::cerr << "Warning: cannot start paddle timers; mouse will not function as paddles." << std::endl;
 	}
 }
 

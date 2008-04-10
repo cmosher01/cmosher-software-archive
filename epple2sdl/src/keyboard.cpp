@@ -22,7 +22,8 @@
 Keyboard::Keyboard(KeypressQueue& q, HyperMode& fhyper, KeyboardBufferMode& buffered):
 	keys(q),
 	fhyper(fhyper),
-	buffered(buffered)
+	buffered(buffered),
+	cGet(0)
 {
 }
 
@@ -33,7 +34,7 @@ void Keyboard::clear()
 
 unsigned char Keyboard::get()
 {
-	// TODO wait if too fast (can we do this in standard C++???)
+	waitIfTooFast();
 	if (!this->buffered.isBuffered() || !(this->latch & 0x80))
 	{
 		if (!this->keys.empty())
@@ -43,4 +44,30 @@ unsigned char Keyboard::get()
 		}
 	}
 	return this->latch;
+}
+
+void Keyboard::waitIfTooFast()
+{
+	if (this->fhyper.isHyper())
+	{
+		return;
+	}
+
+	++this->cGet;
+	if (!this->cGet)
+	{
+		if (SDL_GetTicks() - this->lastGet <= 1000)
+		{
+			/*
+			* Check every 256 gets to see if they are
+			* happening too fast (within one second).
+			* If so, it means we are probably just
+			* looping waiting for a keypress, so
+			* wait a millisecond (or so) just to
+			* prevent us from using 100% of CPU time.
+			*/
+			SDL_Delay(1);
+		}
+	}
+	this->lastGet = SDL_GetTicks();
 }

@@ -38,6 +38,8 @@ static const char* power =
 
 #include "font3x5.h"
 
+class ScreenException { };
+
 ScreenImage::ScreenImage():
 	fullscreen(false),
 	hyper(false),
@@ -61,12 +63,12 @@ void ScreenImage::createScreen()
 	if (this->screen == NULL)
 	{
 		printf("Unable to set video mode: %s\n",SDL_GetError());
-		throw 0; // TODO
+		throw ScreenException();
 	};
 	if (this->screen->pitch/4 != SCRW)
 	{
-		printf("Cannot set video screen pitch to 640 pixels (gets set to %d)\n",this->screen->pitch);
-		throw 0; // TODO
+		printf("Cannot set video screen pitch to 640*4 pixels (gets set to %d)\n",this->screen->pitch);
+		throw ScreenException();
 	};
 	drawLabels();
 	notifyObservers();
@@ -230,7 +232,6 @@ void ScreenImage::displayHz(int hz)
 {
 	char s[20];
 	sprintf(s,"%4.2f MHz   ",hz/1e6);
-//	sprintf(s,"%d Hz       ",hz);
 	drawText(s,3,141);
 }
 
@@ -299,12 +300,6 @@ void ScreenImage::blank()
 		memset((char*)(this->screen->pixels)+r*SCRW*4,0,WIDTH*4);
 	}
 }
-
-// TODO dump PNG
-//void ScreenImage::dump(const String type, const File file) throws IOException
-//{
-//	ImageIO.write(this->image,type,file);
-//}
 
 void ScreenImage::enterCommandMode()
 {

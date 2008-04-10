@@ -91,7 +91,7 @@ unsigned char Video::getRowToPlot(unsigned char d)
 	{
 		const bool inverse = inverseChar(d);
 		const int y = this->t / VideoAddressing::BYTES_PER_ROW;
-		d = this->textRows.get(((d & 0x3F) << 3) | (y & 0x07)); // TODO d << 3 ?
+		d = this->textRows.get(((d & 0x3F) << 3) | (y & 0x07));
 		if (inverse)
 		{
 			d = ~d & 0x7F;

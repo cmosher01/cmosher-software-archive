@@ -36,7 +36,6 @@ void CPU::powerOn()
 	this->pendingIRQ = false;
 	this->pendingNMI = false;
 	this->p = PMASK_M;
-	// TODO what else to initialize in CPU?
 }
 
 void CPU::reset()
@@ -2071,6 +2070,10 @@ void CPU::NOP()
 {
 }
 
+// TODO implement 6502 undocumented instructions
+// See:
+// "The 6502/65C02/65C816 Instruction Set Decoded," by Neil Parker, http://axis.llx.com/~nparker/a2/opcodes.html
+// "Extra Instructions Of The 65XX Series CPU," by Adam Vardy, http://www.ffd2.com/fridge/docs/6502-NMOS.extra.opcodes
 void CPU::Unoff()
 {
 }

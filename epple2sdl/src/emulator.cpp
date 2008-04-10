@@ -89,7 +89,6 @@ int Emulator::run()
 {
 	int skip = CHECK_EVERY_CYCLE;
 	Uint32 prev_ms = SDL_GetTicks();
-	clock_t ticksPrev = clock();
 	while (!this->quit)
 	{
 		if (this->timable)

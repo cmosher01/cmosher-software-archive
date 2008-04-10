@@ -39,8 +39,8 @@ void PictureGenerator::powerOn()
 {
 	this->hpos = 0;
 	this->line = 0;
-	this->display.signal = testsig;
-	itestsig = testsig; // TODO testing
+	this->display.signal = this->testsig;
+	this->itestsig = this->testsig;
 }
 
 void inline PictureGenerator::shiftLoRes()
@@ -129,7 +129,9 @@ void inline PictureGenerator::loadText(const int value)
 	this->latchText = value;
 }
 
-
+// TODO can we hand-optimize the main picture generator algorithm any more?
+// Note that the innermost loop (which calls writeVideoSignal) has to execute
+// at 14MHz, in order to maintain authentic Apple ][ speed.
 void PictureGenerator::tick(const int t, const unsigned char rowToPlot)
 {
 	const bool isText(this->mode.isDisplayingText(t));
@@ -189,9 +191,9 @@ void PictureGenerator::tick(const int t, const unsigned char rowToPlot)
 	{
 		this->hpos = 0;
 		++this->line;
-		if (itestsig >= itestsiglim)
+		if (this->itestsig >= this->itestsiglim)
 		{
-			itestsig = testsig;
+			this->itestsig = this->testsig;
 			this->display.drawCurrent();
 		}
 	}
@@ -259,6 +261,8 @@ inline signed char* PictureGenerator::writeVideoSignal(const bool shift, const b
 	return is;
 }
 
+// TODO Just to be extremely accurate, fix picture signal values during HBL and VBL
+// (note that they vary by motherboard revision... there is a whole section in U.A.2)
 signed char inline PictureGenerator::vbl(const int hcycle)
 {
 	signed char sig;
@@ -281,7 +285,16 @@ signed char inline PictureGenerator::vbl(const int hcycle)
 }
 
 
-const signed char PictureGenerator::lutCB[] = //{0,-20,0,20};
+// Set up the color burst signal.
+// TODO confirm that color burst signal phase is correct
+// Note, I believe this is the correct phase. The only other
+// possible configuration would be 0,-20,0,+20. Can anyone confirm
+// that +10,-10,-10,+10 gives the correct phase? By eye, it seems
+// +10,-10,-10,+10 makes brown look too green, but 0,-20,0,+20
+// makes hi-res blue look too light.
+// Note that this color burst signal only affects "old TV" mode;
+// the other color modes use A2ColorsObserved.
+const signed char PictureGenerator::lutCB[] =
 {
 	+AppleNTSC::CB_LEVEL/2,
 	-AppleNTSC::CB_LEVEL/2,

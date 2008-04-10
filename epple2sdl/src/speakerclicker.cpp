@@ -26,6 +26,7 @@ volatile bool done;
 SDL_cond* bufchg;
 SDL_mutex* buflck;
 
+// TODO figure out why sound is so choppy, and fix it
 void fillbuf(void *userdata, Uint8 *stream, int len)
 {
 	int tot(0);
@@ -117,8 +118,9 @@ SpeakerClicker::~SpeakerClicker()
 	SDL_LockMutex(buflck);
 	SDL_CondSignal(bufchg);
 	SDL_UnlockMutex(buflck);
-	// TODO delete cond and mutex (in ~SpeakerClicker or in fillbuf?)
 	SDL_CloseAudio();
+	SDL_DestroyCond(bufchg);
+	SDL_DestroyMutex(buflck);
 }
 
 /*
@@ -153,7 +155,6 @@ void SpeakerClicker::tick()
 		int amp;
 		if (this->clicked)
 		{
-			// TODO synchronize access to locbuf (test with LudeRunner.nib)
 			amp = this->positive ? AMP : -AMP;
 			this->positive = !this->positive;
 			this->clicked = false;

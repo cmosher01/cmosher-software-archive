@@ -23,7 +23,7 @@
 #include <ostream>
 #include <fstream>
 
-DiskBytes::DiskBytes(/*TODO HyperMode& fhyper*/)
+DiskBytes::DiskBytes()
 {
 	unload();
 }
@@ -39,24 +39,29 @@ void DiskBytes::load(const std::string& filePath)
 		unload();
 	}
 
+
+// TODO better I/O error handling during disk loading and saving
 	std::ifstream in(filePath.c_str(),std::ios::binary);
 	for (int t(0); t < TRACKS_PER_DISK; ++t)
 	{
 		this->bytes[t].resize(BYTES_PER_TRACK);
 		in.read((char*)&this->bytes[t][0],BYTES_PER_TRACK);
 	}
-	// TODO check file length on all bytes >= 0x96
-	// TODO check I/O errors
 	in.close();
 
 	this->filePath = filePath;
 
-	std::ofstream outf(filePath.c_str(),std::ios::binary|std::ios::app);
-	this->writable = outf.is_open();
-	outf.close();
+	checkForWriteProtection();
 
 	this->loaded = true;
 	this->modified = false;
+}
+
+void DiskBytes::checkForWriteProtection()
+{
+	std::ofstream outf(filePath.c_str(),std::ios::binary|std::ios::app);
+	this->writable = outf.is_open();
+	outf.close();
 }
 
 void DiskBytes::save()
@@ -85,48 +90,15 @@ void DiskBytes::unload()
 
 unsigned char DiskBytes::get(const int track)
 {
-//	if (track < 0 || Drive.TRACKS_PER_DISK <= track)
-//	{
-//		throw new IllegalStateException();
-//	}
 	if (!isLoaded())
 	{
-// TODO		waitIfTooFast();
-//		if (!isLoaded())
-//		{
-			return 0xFF;
-//		}
+		return 0xFF;
 	}
 	const unsigned char ret = this->bytes[track][this->byt];
 	nextByte();
 	return ret;
 }
-/*
-void waitIfTooFast()
-{
-	if (this->fhyper.isHyper())
-	{
-		return;
-	}
 
-	++this->waitTimes;
-	if (this->waitTimes >= 0x100)
-	{
-		synchronized (this->loaded)
-		{
-			try
-			{
-				this->loaded.wait(50);
-			}
-			catch (InterruptedException e)
-			{
-				Thread.currentThread().interrupt();
-			}
-		}
-		this->waitTimes = 0;
-	}
-}
-*/
 void DiskBytes::put(const unsigned char track, const unsigned char value)
 {
 	if (TRACKS_PER_DISK <= track)
@@ -144,11 +116,10 @@ void DiskBytes::put(const unsigned char track, const unsigned char value)
 
 void inline DiskBytes::nextByte()
 {
-	// emulates circular disk track
+	// emulatee circular disk track
 	++this->byt;
 	if (this->byt >= BYTES_PER_TRACK)
 	{
 		this->byt = 0;
 	}
 }
-
