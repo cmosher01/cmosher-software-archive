@@ -46,13 +46,14 @@ unsigned char StandardIn::io(const unsigned short address, const unsigned char d
 			{
 				if (!this->producer.getKeys().empty())
 				{
-					this->latch = this->producer.getKeys().front() | 0x80;
+					this->latch = this->producer.getKeys().front();
 					this->producer.getKeys().pop();
 					if (this->latch == 0xFF)
 					{
 						this->gotEOF = true;
 						// TODO this->eofHandler.handleEOF();
 					}
+					this->latch |= 0x80;
 				}
 			}
 		}

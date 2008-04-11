@@ -71,7 +71,7 @@ static void trim(std::string& str)
 	}
 }
 
-void Config::parse(Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EOFHandler eofHandler*/, int& revision, ScreenImage& gui)
+void Config::parse(Memory& memory, Slots& slts /*TODO StandardIn.EOFHandler eofHandler*/, int& revision, ScreenImage& gui)
 {
 	std::ifstream in(this->file_path.c_str());
 	if (!in.is_open())
@@ -88,7 +88,7 @@ void Config::parse(Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EO
 		trim(line);
 		if (!line.empty())
 		{
-			parseLine(line,memory,slts/*,fhyper,eofHandler*/,revision,gui);
+			parseLine(line,memory,slts/*TODO eofHandler*/,revision,gui);
 		}
 		std::getline(in,line);
 	}
@@ -96,11 +96,11 @@ void Config::parse(Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EO
 
 	// TODO: make sure there is no more than ONE stdin and/or ONE stdout card
 }
-void Config::parseLine(const std::string& line, Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EOFHandler eofHandler*/, int& revision, ScreenImage& gui)
+void Config::parseLine(const std::string& line, Memory& memory, Slots& slts /*TODO StandardIn.EOFHandler eofHandler*/, int& revision, ScreenImage& gui)
 {
 	try
 	{
-		tryParseLine(line,memory,slts,revision,gui);
+		tryParseLine(line,memory,slts,revision,gui/*TODO eofHandler*/);
 	}
 	catch (const ConfigException& err)
 	{
@@ -108,7 +108,7 @@ void Config::parseLine(const std::string& line, Memory& memory, Slots& slts /*Hy
 	}
 }
 
-void Config::tryParseLine(const std::string& line, Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EOFHandler eofHandler*/, int& revision, ScreenImage& gui)
+void Config::tryParseLine(const std::string& line, Memory& memory, Slots& slts /*TODO StandardIn.EOFHandler eofHandler*/, int& revision, ScreenImage& gui)
 {
 	std::istringstream tok(line);
 
@@ -120,7 +120,7 @@ void Config::tryParseLine(const std::string& line, Memory& memory, Slots& slts /
 		std::string sCardType;
 		tok >> slot >> sCardType;
 
-		insertCard(sCardType,slot,slts,gui);//,fhyper,eofHandler);
+		insertCard(sCardType,slot,slts,gui);//,TODO eofHandler);
 	}
 	else if (cmd == "import")
 	{
@@ -273,7 +273,7 @@ void Config::saveDisk(Slots& slts, int slot, int drive)
 	controller->saveDisk(drive-1);
 }
 
-void Config::insertCard(const std::string& cardType, int slot, Slots& slts/*, HyperMode fhyper, StandardIn.EOFHandler eofHandler*/, ScreenImage& gui)
+void Config::insertCard(const std::string& cardType, int slot, Slots& slts/*TODO StandardIn.EOFHandler eofHandler*/, ScreenImage& gui)
 {
 	if (slot < 0 || 8 <= slot)
 	{
@@ -294,7 +294,7 @@ void Config::insertCard(const std::string& cardType, int slot, Slots& slts/*, Hy
 	}
 	else if (cardType == "disk")
 	{
-		card = new DiskController(gui,slot/*fhyper*/);
+		card = new DiskController(gui,slot);
 		disk_mask |= (1 << slot);
 	}
 	else if (cardType == "clock")
@@ -307,7 +307,7 @@ void Config::insertCard(const std::string& cardType, int slot, Slots& slts/*, Hy
 	}
 	else if (cardType == "stdin")
 	{
-		card = new StandardIn(/*eofHandler*/);
+		card = new StandardIn(/*TODO eofHandler*/);
 	}
 	else if (cardType == "empty")
 	{

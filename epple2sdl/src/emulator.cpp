@@ -70,7 +70,7 @@ void Emulator::powerOffComputer()
 
 void Emulator::config(Config& cfg)
 {
-	cfg.parse(this->apple2.rom,this->apple2.slts/*,this->fhyper,getStdInEOF()*/,this->apple2.revision,this->screenImage);
+	cfg.parse(this->apple2.rom,this->apple2.slts/*TODO getStdInEOF()*/,this->apple2.revision,this->screenImage);
 }
 
 void Emulator::init()
@@ -269,6 +269,10 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 	{
 		this->quit = true;
 		return;
+	}
+	else if (sym == SDLK_PRINT)
+	{
+		this->screenImage.saveBMP();
 	}
 
 	if ('a' <= key && key <= 'z')

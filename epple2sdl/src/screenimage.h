@@ -81,6 +81,8 @@ public:
 	void setLangCard(int slot, bool readEnable, bool writeEnable, int bank);
 	void setFirmCard(int slot, bool bank, bool F8);
 
+	void saveBMP();
+
 	enum
 	{
 		HEIGHT = VideoAddressing::VISIBLE_ROWS_PER_FIELD*2,

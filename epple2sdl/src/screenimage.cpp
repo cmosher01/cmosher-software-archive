@@ -19,6 +19,7 @@
 #include "card.h"
 #include "util.h"
 #include <SDL/SDL.h>
+#include <ctime>
 
 static const char* power =
 " @@@@    @@@   @    @    @  @@@@@  @@@@ "
@@ -124,9 +125,9 @@ void ScreenImage::drawFnKeys()
 	drawText(
 "                                FULLSCRN   SCAN-LINES                     KEYBOARD",r++,c);
 	drawText(
-"                XXXXXXXXXXXXXX  WINDOW     FILL-LINES      REPT    HYPER  BUFFER    RESET   PASTE     QUIT!",r++,c);
+"                XXXXXXXXXXXXXX  WINDOW     FILL-LINES      REPT    HYPER   BUFFER   RESET    PASTE     SAVE BMP     QUIT!",r++,c);
 	drawText(
-"      F1              F2          F3          F4           F10      F11     F12     Break   Insert     End",r++,c);
+"      F1              F2          F3          F4           F10      F11     F12     Break    Insert    PrintScreen   End",r++,c);
 
 	if (this->fullscreen)
 		invertText(76,32,42); // FULLSCRN
@@ -480,4 +481,16 @@ void ScreenImage::setFirmCard(int slot, bool bank, bool F8)
 	++c;
 	drawChar(F8?'8':' ',r,c);
 	this->slotnames[slot][c-20] = F8?'8':' ';
+}
+
+#define TIMEFORMAT "ep2_%Y%m%d%H%M%S.bmp"
+
+void ScreenImage::saveBMP()
+{
+	time_t now;
+	::time(&now);
+	struct tm* nowtm = ::localtime(&now);
+	char time[64];
+	::strftime(time,sizeof(time),TIMEFORMAT,nowtm);
+	SDL_SaveBMP(this->screen,time);
 }
