@@ -38,15 +38,15 @@ private:
 	static void loadDisk(Slots& slts, int slot, int drive, const std::string& fnib);
 	static void unloadDisk(Slots& slts, int slot, int drive);
 	static void saveDisk(Slots& slts, int slot, int drive);
-	static void insertCard(const std::string& cardType, int slot, Slots& slts/*, HyperMode fhyper, StandardIn.EOFHandler eofHandler*/, ScreenImage& gui);
-	static void tryParseLine(const std::string& line, Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EOFHandler eofHandler*/, int& revision, ScreenImage& gui);
+	static void insertCard(const std::string& cardType, int slot, Slots& slts, ScreenImage& gui);
+	static void tryParseLine(const std::string& line, Memory& memory, Slots& slts, int& revision, ScreenImage& gui);
 
 public:
 	Config(const std::string& file_path);
 	~Config();
 
-	void parse(Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EOFHandler eofHandler*/, int& revision, ScreenImage& gui);
-	static void parseLine(const std::string& line, Memory& memory, Slots& slts /*HyperMode fhyper, StandardIn.EOFHandler eofHandler*/, int& revision, ScreenImage& gui);
+	void parse(Memory& memory, Slots& slts, int& revision, ScreenImage& gui);
+	static void parseLine(const std::string& line, Memory& memory, Slots& slts, int& revision, ScreenImage& gui);
 };
 
 #endif

@@ -59,7 +59,7 @@ void Emulator::powerOnComputer()
 
 void Emulator::powerOffComputer()
 {
-	// TODO ask if unsaved changes
+	// TODO Need to ask user if OK to lose any unsaved changes to disks
 	this->apple2.powerOff();
 	this->screenImage.drawPower(false);
 	this->display.setNoise(true);
@@ -70,11 +70,14 @@ void Emulator::powerOffComputer()
 
 void Emulator::config(Config& cfg)
 {
-	cfg.parse(this->apple2.rom,this->apple2.slts/*TODO getStdInEOF()*/,this->apple2.revision,this->screenImage);
+	cfg.parse(this->apple2.rom,this->apple2.slts,this->apple2.revision,this->screenImage);
 }
 
 void Emulator::init()
 {
+	powerOffComputer();
+	this->display.setType(AnalogTV::MONITOR_COLOR);
+	this->display.powerOn(true);
 }
 
 #define CHECK_EVERY_CYCLE 51024

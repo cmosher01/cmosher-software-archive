@@ -29,7 +29,6 @@
 #include "clipboardhandler.h"
 
 class Timable;
-//class EOFHandler;
 class Config;
 struct SDL_KeyboardEvent;
 
@@ -70,7 +69,6 @@ public:
 	void config(Config& cfg);
 
 	virtual void init();
-//	virtual EOFHandler getStdInEOF() = 0;
 
 	void powerOnComputer();
 	void powerOffComputer();

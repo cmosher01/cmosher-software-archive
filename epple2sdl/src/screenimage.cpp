@@ -143,7 +143,7 @@ void ScreenImage::drawFnKeys()
 		invertText(77,67,74); // HYPER
 
 	if (this->buffer)
-		invertText(77,74,82); // BUFFER
+		invertText(77,75,83); // BUFFER
 
 	drawDisplayLabel();
 }

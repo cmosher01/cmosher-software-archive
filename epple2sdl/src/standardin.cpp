@@ -17,7 +17,7 @@
 */
 #include "standardin.h"
 
-StandardIn::StandardIn(): // TODO EOF handler
+StandardIn::StandardIn():
 	latch(0),
 	gotEOF(false)
 {
@@ -51,7 +51,6 @@ unsigned char StandardIn::io(const unsigned short address, const unsigned char d
 					if (this->latch == 0xFF)
 					{
 						this->gotEOF = true;
-						// TODO this->eofHandler.handleEOF();
 					}
 					this->latch |= 0x80;
 				}

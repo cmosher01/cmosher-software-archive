@@ -15,11 +15,11 @@
     You should have received a copy of the GNU General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-#include "guiemulator.h"
-
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
+
+#include "emulator.h"
 
 #include <SDL/SDL.h>
 
@@ -32,10 +32,11 @@ static int run(const std::string& config_file)
 {
 	Config cfg(config_file);
 
-	std::auto_ptr<Emulator> emu(new GUIEmulator());
+	std::auto_ptr<Emulator> emu(new Emulator());
 
 	emu->config(cfg);
 	emu->init();
+
 	return emu->run();
 }
 

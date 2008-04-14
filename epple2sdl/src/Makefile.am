@@ -10,7 +10,7 @@ epple2_LDFLAGS=$(all_libraries)
 epple2_SOURCES = a2colorsobserved.cpp addressbus.cpp analogtv.cpp apple2.cpp \
 	applentsc.cpp card.cpp clipboardhandler.cpp clockcard.cpp \
 	config.cpp cpu.cpp diskbytes.cpp diskcontroller.cpp drive.cpp \
-	emptyslot.cpp emulator.cpp firmwarecard.cpp guiemulator.cpp hypermode.cpp \
+	emptyslot.cpp emulator.cpp firmwarecard.cpp hypermode.cpp \
 	keyboard.cpp keyboardbuffermode.cpp languagecard.cpp lowpass_1_5_mhz.cpp \
 	lowpass_3_58_mhz.cpp main.cpp memory.cpp paddlebuttonstates.cpp \
 	paddles.cpp picturegenerator.cpp powerupreset.cpp raminitializer.cpp \
