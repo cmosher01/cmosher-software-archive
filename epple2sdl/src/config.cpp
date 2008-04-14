@@ -233,6 +233,7 @@ void Config::loadDisk(Slots& slts, int slot, int drive, const std::string& fnib)
 		throw ConfigException("Invalid drive; must be 1 or 2");
 	}
 
+	// TODO if file doesn't exist, name still gets displayed, and there's no error message
 	Card* card = slts.get(slot);
 	if (!(disk_mask & (1 << slot)))
 	{
