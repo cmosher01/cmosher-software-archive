@@ -44,7 +44,7 @@ public:
 	DiskBytes();
 	~DiskBytes();
 
-	void load(const std::string& filePath);
+	bool load(const std::string& filePath);
 	std::string getFileName()
 	{
 		return this->fileName;
@@ -53,7 +53,7 @@ public:
 	bool isLoaded()
 	{
 		return this->loaded;
-}
+	}
 
 	void save();
 	void unload();

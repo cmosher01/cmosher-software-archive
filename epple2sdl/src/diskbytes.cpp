@@ -32,16 +32,20 @@ DiskBytes::~DiskBytes()
 {
 }
 
-void DiskBytes::load(const std::string& filePath)
+bool DiskBytes::load(const std::string& filePath)
 {
+
+
+// TODO better I/O error handling during disk loading and saving
+	std::ifstream in(filePath.c_str(),std::ios::binary|std::ios::in);
+	if (!in.is_open())
+	{
+		return false;
+	}
 	if (isLoaded())
 	{
 		unload();
 	}
-
-
-// TODO better I/O error handling during disk loading and saving
-	std::ifstream in(filePath.c_str(),std::ios::binary);
 	for (int t(0); t < TRACKS_PER_DISK; ++t)
 	{
 		this->bytes[t].resize(BYTES_PER_TRACK);
@@ -55,6 +59,8 @@ void DiskBytes::load(const std::string& filePath)
 
 	this->loaded = true;
 	this->modified = false;
+
+	return true;
 }
 
 void DiskBytes::checkForWriteProtection()

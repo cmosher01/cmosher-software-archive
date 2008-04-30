@@ -40,14 +40,18 @@ public:
 
 	~Drive() {}
 
-	void loadDisk(const std::string& fnib)
+	bool loadDisk(const std::string& fnib)
 	{
-		this->disk.load(fnib);
+		return this->disk.load(fnib);
 	}
 
 	void unloadDisk()
 	{
 		this->disk.unload();
+	}
+	bool isLoaded()
+	{
+		return this->disk.isLoaded();
 	}
 
 	void saveDisk()

@@ -176,7 +176,7 @@ void ScreenImage::toggleHyperLabel()
 void ScreenImage::toggleKdbBufferLabel()
 {
 	this->buffer = !this->buffer;
-	invertText(77,74,82); // BUFFER
+	invertText(77,75,83); // BUFFER
 }
 
 void ScreenImage::invertText(int row, int begincol, int endcol)
@@ -355,9 +355,27 @@ void ScreenImage::removeCard(const int slot, Card* card /* empty */)
 789012345678901234567890123456789012345678901234567890123456789012345
 6: disk][  drive 1M*filename.nib T$FF      drive 2M*filename.nib T$FF
 */
-void ScreenImage::setDiskFile(int slot, int drive, const std::string& filename)
+void ScreenImage::setDiskFile(int slot, int drive, const std::string& filepath)
 {
-	std::string f(filename);
+	std::string f = truncateFilePath(filepath);
+	int r(66+slot);
+	int c(37+32*drive);
+	drawText(f,r,c);
+
+	const int dlen = 12 - f.length();
+	if (dlen > 0)
+	{
+		std::string d(dlen,' ');
+		drawText(d,r,c+f.length());
+	}
+
+	this->slotnames[slot].replace(c-20,12,12,' ');
+	this->slotnames[slot].replace(c-20,f.length(),f);
+}
+
+std::string ScreenImage::truncateFilePath(const std::string& filepath)
+{
+	std::string f(filepath);
 	size_t slash = f.find_last_of("/\\");
 	if (slash != std::string::npos)
 	{
@@ -367,17 +385,7 @@ void ScreenImage::setDiskFile(int slot, int drive, const std::string& filename)
 	{
 		f = f.substr(0,12);
 	}
-	int r(66+slot);
-	int c(37+32*drive);
-	drawText(f,r,c);
-	const int dlen = 12 - filename.length();
-	if (dlen > 0)
-	{
-		std::string d(dlen,' ');
-		drawText(d,r,c+f.length());
-	}
-	this->slotnames[slot].replace(c-20,12,12,' ');
-	this->slotnames[slot].replace(c-20,f.length(),f);
+	return f;
 }
 
 void ScreenImage::clearCurrentDrive(int slot, int drive)

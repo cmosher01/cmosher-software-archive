@@ -40,6 +40,8 @@ private:
 	void createScreen();
 	std::vector<std::string> slotnames;
 
+	static std::string truncateFilePath(const std::string& filepath);
+
 public:
 	ScreenImage();
 	~ScreenImage();

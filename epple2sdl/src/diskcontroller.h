@@ -17,9 +17,9 @@
 */
 #include "card.h"
 #include "drive.h"
-#include <string>
-
 #include "screenimage.h"
+#include <string>
+#include <iostream>
 
 class DiskController : public Card
 {
@@ -91,7 +91,10 @@ public:
 
 	void loadDisk(unsigned char drive, const std::string& fnib)
 	{
-		this->getDrive(drive).loadDisk(fnib);
+		if (!this->getDrive(drive).loadDisk(fnib))
+		{
+			return;
+		}
 		this->gui.setDiskFile(this->slot,drive,fnib);
 		this->gui.setDirty(this->slot,getCurrentDriveNumber(),false);
 	}
