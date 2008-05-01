@@ -296,10 +296,10 @@ signed char inline PictureGenerator::vbl(const int hcycle)
 // the other color modes use A2ColorsObserved.
 const signed char PictureGenerator::lutCB[] =
 {
-	+AppleNTSC::CB_LEVEL/2,
-	-AppleNTSC::CB_LEVEL/2,
-	-AppleNTSC::CB_LEVEL/2,
-	+AppleNTSC::CB_LEVEL/2,
+	0,
+	-AppleNTSC::CB_LEVEL,
+	0,
+	+AppleNTSC::CB_LEVEL,
 };
 
 signed char inline PictureGenerator::hbl(const int hcycle)
