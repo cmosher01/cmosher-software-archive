@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT(src/apple2.cpp)
-AC_PREREQ(2.61)
+AC_PREREQ(2.59)
 
 AC_CONFIG_SRCDIR([config.h.in])
 
@@ -23,6 +23,7 @@ AC_PROG_RANLIB
 
 # Checks for libraries.
 AC_CHECK_LIB([SDL],[SDL_Init])
+AC_CHECK_LIB([X11],[XOpenDisplay])
 
 
 
