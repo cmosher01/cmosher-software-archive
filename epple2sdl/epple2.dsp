@@ -121,7 +121,7 @@ SOURCE=.\src\clockcard.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\config.cpp
+SOURCE=.\src\configep2.cpp
 # End Source File
 # Begin Source File
 
@@ -150,10 +150,6 @@ SOURCE=.\src\emulator.cpp
 # Begin Source File
 
 SOURCE=.\src\firmwarecard.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\guiemulator.cpp
 # End Source File
 # Begin Source File
 
@@ -301,7 +297,7 @@ SOURCE=.\src\clockcard.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\config.h
+SOURCE=.\src\configep2.h
 # End Source File
 # Begin Source File
 
@@ -330,10 +326,6 @@ SOURCE=.\src\emulator.h
 # Begin Source File
 
 SOURCE=.\src\firmwarecard.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\src\guiemulator.h
 # End Source File
 # Begin Source File
 

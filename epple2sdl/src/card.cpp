@@ -16,7 +16,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #include "card.h"
-#include "config.h"
+#include "configep2.h"
 
 Card::Card():
 	rom(0x0100),

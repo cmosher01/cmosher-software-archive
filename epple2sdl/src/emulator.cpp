@@ -16,7 +16,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #include "emulator.h"
-#include "config.h"
+#include "configep2.h"
 
 #include <SDL/SDL.h>
 

@@ -20,6 +20,7 @@
 #endif
 
 #include "emulator.h"
+#include "configep2.h"
 
 #include <SDL/SDL.h>
 
