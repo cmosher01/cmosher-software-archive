@@ -329,6 +329,10 @@ SOURCE=.\src\firmwarecard.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\src\font3x5.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\src\hypermode.h
 # End Source File
 # Begin Source File
