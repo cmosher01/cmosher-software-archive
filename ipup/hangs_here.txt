@@ -1,0 +1,98 @@
+0040379A   je          004037A0
+0040379C   cmp         al,22h
+0040379E   jne         00403792
+004037A0   cmp         byte ptr [esi],22h
+004037A3   jne         004037A9
+004037A5   inc         esi
+004037A6   mov         dword ptr [ebp-74h],esi
+004037A9   mov         al,byte ptr [esi]
+004037AB   cmp         al,bl
+004037AD   je          004037B3
+004037AF   cmp         al,20h
+004037B1   jbe         004037A5
+004037B3   mov         dword ptr [ebp-30h],ebx
+004037B6   lea         eax,[ebp-5Ch]
+004037B9   push        eax
+004037BA   call        dword ptr ds:[404020h]
+004037C0   test        byte ptr [ebp-30h],1
+004037C4   je          004037D7
+004037C6   movzx       eax,word ptr [ebp-2Ch]
+004037CA   jmp         004037DA
+004037CC   cmp         byte ptr [esi],20h
+004037CF   jbe         004037A9
+004037D1   inc         esi
+004037D2   mov         dword ptr [ebp-74h],esi
+004037D5   jmp         004037CC
+004037D7   push        0Ah
+004037D9   pop         eax
+004037DA   push        eax
+004037DB   push        esi
+004037DC   push        ebx
+004037DD   push        ebx
+004037DE   call        dword ptr ds:[404024h]
+004037E4   push        eax
+004037E5   call        00403848
+004037EA   mov         dword ptr [ebp-68h],eax
+004037ED   push        eax
+004037EE   call        dword ptr ds:[404160h]
+004037F4   mov         eax,dword ptr [ebp-14h]
+004037F7   mov         ecx,dword ptr [eax]
+004037F9   mov         ecx,dword ptr [ecx]
+004037FB   mov         dword ptr [ebp-78h],ecx
+004037FE   push        eax
+004037FF   push        ecx
+00403800   call        0040381A
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+00403805   pop         ecx
+00403806   pop         ecx
+00403807   ret
+00403808   mov         esp,dword ptr [ebp-18h]
+0040380B   push        dword ptr [ebp-78h]
+0040380E   call        dword ptr ds:[40416Ch]
+00403814   jmp         dword ptr ds:[404154h]
+0040381A   jmp         dword ptr ds:[404148h]
+00403820   jmp         dword ptr ds:[404130h]
+00403826   push        30000h
+0040382B   push        10000h
+00403830   call        00403842
+00403835   pop         ecx
+00403836   pop         ecx
+00403837   ret
+00403838   xor         eax,eax
+0040383A   ret
+0040383B   ret
+0040383C   jmp         dword ptr ds:[40413Ch]
+00403842   jmp         dword ptr ds:[404144h]
+00403848   push        dword ptr [esp+10h]
+0040384C   push        dword ptr [esp+10h]
+00403850   push        dword ptr [esp+10h]
+00403854   push        dword ptr [esp+10h]
+00403858   call        004038A0
+0040385D   ret         10h
+00403860   call        004038A6
+00403865   mov         ecx,dword ptr [esp+4]
+00403869   mov         edx,dword ptr [esp+8]
+0040386D   test        ecx,ecx
+0040386F   mov         byte ptr [eax+14h],cl
+00403872   mov         dword ptr [eax+1040h],edx
+00403878   jne         00403883
+0040387A   push        0FDh
+0040387C   call        dword ptr ds:[404170h]
+00403882   pop         ecx
+00403883   push        1
+00403885   pop         eax
+00403886   ret         8
+00403889   jmp         0040388E
+0040388E   push        600h
+00403893   push        0
+00403895   call        00403860
+0040389A   mov         [00405888],al
+0040389F   ret
+004038A0   jmp         dword ptr ds:[404120h]
+004038A6   jmp         dword ptr ds:[40411Ch]
+004038AC   int         3
+004038AD   int         3
+004038AE   int         3
+004038AF   int         3
+004038B0   lea         ecx,[ebp-14h]
+004038B3   jmp       
