@@ -1,0 +1,34 @@
+###############################################################################
+
+Project: "fixtext"=".\fixtext.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/FixText", UFAAAAAA
+    .
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+    begin source code control
+    "$/FixText", UFAAAAAA
+    .
+    end source code control
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+
