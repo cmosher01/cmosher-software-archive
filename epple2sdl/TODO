@@ -1,0 +1,14 @@
+diskcontroller.h:	// TODO for a rev. 0 motherboard, the disk controller will auto reset the CPU
+configep2.cpp:	// TODO: make sure there is no more than ONE stdin and/or ONE stdout card
+configep2.cpp:	// TODO if file doesn't exist, name still gets displayed, and there's no error message
+cpu.cpp:// TODO implement 6502 undocumented instructions
+diskbytes.cpp:// TODO better I/O error handling during disk loading and saving
+emulator.cpp:	// TODO Need to ask user if OK to lose any unsaved changes to disks
+picturegenerator.cpp:// TODO can we hand-optimize the main picture generator algorithm any more?
+picturegenerator.cpp:// TODO Just to be extremely accurate, fix picture signal values during HBL and VBL
+picturegenerator.cpp:	if (224 <= this->line && this->line < 240) // VSYNC // TODO symbolize constants
+picturegenerator.cpp:// TODO confirm that color burst signal phase is correct
+raminitializer.cpp:	// TODO make the types of RAM chips configurable
+speakerclicker.cpp:// TODO figure out why sound is so choppy, and fix it
+steppermotor.cpp:// TODO if we want to be extremely accurate, we should save each arm's position on shutdown and restore on startup
+video.cpp:	// TODO should fix the mixed-mode scanning during VBL (see U.A.][, p. 5-13)
