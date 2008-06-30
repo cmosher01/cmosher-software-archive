@@ -34,7 +34,6 @@ struct SDL_KeyboardEvent;
 
 class Emulator
 {
-protected:
 	PaddleButtonStates paddleButtonStates;
 	KeypressQueue keypresses;
 
