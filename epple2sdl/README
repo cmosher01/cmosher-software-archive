@@ -1,0 +1,7 @@
+The Emulated Apple ][ (epple2)
+
+See INSTALL for instructions on building and installing a
+normal distribution.
+
+Developers fetching from the repository directly should
+execute the bootstrap script first.
