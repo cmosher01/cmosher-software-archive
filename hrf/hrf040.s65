@@ -198,8 +198,6 @@ LEFT1          CMP  #$8A       ;Is it a line feed?
 LEGAL          LDA  STOREA1
 LEGAL1         STA  STOREA1
 LEGAL2         JSR  BLSTCHR1   ;Treat as printable character.
-;               LDA  WRITBSR1
-;               LDA  WRITBSR1
                BIT  BIND       ;Wast yon karacktre non printy?
                BMI  XIT        ;=> da
 RIGHT          INC  $24        ;Advance 1 screen pos.
@@ -578,7 +576,6 @@ BLSTCHR        JSR  IOSAVE
                                ;INTERNAL ENTRY PT.
 BLSTCHR1       LDA  INVERTO    ;\_
                PHA             ;/  Save text mode
-;               LDA  READBSR2   ;Allow use of D000 code
                LDX  #0
                LDY  CHARARG
                LDA  VECTBL,Y
@@ -949,7 +946,6 @@ SCRNCHR        JSR  IOSAVE
 
                                ;D000 relocated code
 FREMEM         BPL  MAZN
-;               STA  RAMRDON
 MAZN           AND  (SCANL),Y  ;Any defs in section?
                BEQ  NODEFS
                TXA
@@ -977,7 +973,6 @@ LAUQE          CMP  (SCANL),Y
                DEY
                BPL  LAUQE
 NODEFS         PLA
-;               STA  RAMRDOFF
                BPL  ABNORMAL
                JMP  NOTCHR     ;Char not in set
 ABNORMAL       JMP  RESORT     ;]- Let's try that search again
@@ -991,14 +986,12 @@ DEFD           TYA
                LDA  (CHRTBLBL),Y
                LDY  #$11
                ADC  (CHRTBLBL),Y ;Leap index
-;               STA  RAMRDOFF
                JMP  CONFIRM
 
 
 
 BLAST                          ;CHARACTER BLASTING NOOSE.
                BPL  GETBYT
-;               STA  RAMRDON
 GETBYT         LDA  (CHRTBLBL),Y ;Get character byte
                STY  SCANL      ;Save index/noose count
                LDY  $24        ;Address column
@@ -1015,7 +1008,6 @@ GETBYT         LDA  (CHRTBLBL),Y ;Get character byte
                EOR  ZPG1
                LDY  $24
                STA  (GRPHL),Y  ;Store bottom byte on screen
-;               STA  RAMRDOFF
                RTS
 
 
