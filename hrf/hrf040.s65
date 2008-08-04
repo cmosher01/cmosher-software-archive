@@ -17,6 +17,9 @@ INVFLG         =  $32
 VMODE          =  $4FB
 VFACTV         =  $67B
 
+KBD            =  $C000
+KBDSTRB        =  $C010
+
 TEXTOFF        =  $C050
 MIXEDOFF       =  $C052
 PAGE2OFF       =  $C054
@@ -206,15 +209,15 @@ RIGHT          INC  $24        ;Advance 1 screen pos.
                BCS  NOPAUSE    ;=> was endo screen
                RTS
                                ;  ---Carriage returne processing---
-CROUT2         LDY  $C000
+CROUT2         LDY  KBD
                CPY  #$93       ;Is it CTRL-S?
                BNE  NOPAUSE    ;=> no
-               BIT  $C010      ;Yes, turn off "key pressed" flag.
-PAUSELP        LDY  $C000      ; \_ and pause until any
+               BIT  KBDSTRB    ;Yes, turn off "key pressed" flag.
+PAUSELP        LDY  KBD        ; \_ and pause until any
                BPL  PAUSELP    ; /  key is pressed.
                CPY  #$83       ;Was it CTRL-C?
                BEQ  NOPAUSE    ;=> yes (don't turn off keypress flag)
-               BIT  $C010      ;STROBE THAT KEYBOARD FLAG!!
+               BIT  KBDSTRB    ;STROBE THAT KEYBOARD FLAG!!
 NOPAUSE        LDA  #0
                STA  $24
 LINEFEED       INC  $25
@@ -740,15 +743,15 @@ STDKEPRS       JSR  CELLREV    ;Reverse char bit pattern.
                BPL  KEYPRESS   ;=> no key pressed
                BMI  KEYPR1     ;Get around reversal
 KEYPR          JSR  CELLREV    ; (Normal)
-KEYPR1         LDA  $C000      ;Get key value
-               BIT  $C010      ;Turn off AKD flag
+KEYPR1         LDA  KBD        ;Get key value
+               BIT  KBDSTRB    ;Turn off AKD flag
                RTS
                                ;Delay/keyboard check subrtn.
 CYCLE          LDX  DLYLPCNT   ;Get outer loop delay val (default = 0)
 INKRND         INC  $4E
                BNE  CHKKBD
                INC  $4F
-CHKKBD         BIT  $C000      ;Key pressed?
+CHKKBD         BIT  KBD        ;Key pressed?
                BMI  OUTCYCL    ;=> yes
                LDA  DLYVAL     ;Get inner delay (default = $0F)
                JSR  WAIT       ;Call ROM delay subrtn
@@ -804,11 +807,11 @@ SETCHGE        SBC  #(FONTFUNC-FREFUNC)*2       ;Convert to direct chrset #
 ESCCUR         JMP  (ESCCURV)  ;Ditto
                                ;Standard escape cursor rtn.
 STDESCUR       JSR  EXCHCUR
-ESCKEY         BIT  $C000      ;Key pressed?
+ESCKEY         BIT  KBD        ;Key pressed?
                BPL  ESCKEY     ;=> no
                JSR  EXCHCUR    ;Yes, turn off Esc cursor
-               LDA  $C000      ;Get key val
-               BIT  $C010      ;Shut off AKD flag
+               LDA  KBD        ;Get key val
+               BIT  KBDSTRB    ;Shut off AKD flag
                RTS
                                ;Screen bytes exchange (for escape cursor)
 EXCHCUR        CLC
