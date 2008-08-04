@@ -1,73 +1,55 @@
-               ORG  $0800      ; Begin after last text storage loc.
-GRPHL          EQU  $6
-GRPHH          EQU  $7
-CHRTBLBL       EQU  $8
-CHRTBLBH       EQU  $9
-SCANL          EQU  $19
-SCANH          EQU  $1A
-BASL           EQU  $28
-BASH           EQU  $29
-ZPG1           EQU  $2A
-ZPG2           EQU  $2B
-INVFLG         EQU  $32
-VMODE          EQU  $4FB
-VFACTV         EQU  $67B
-FONTADDR       EQU  $1FB0
-WHEREMEM       EQU  $1FC4
-CHARARG        EQU  $1FC6
-ESCCURSR       EQU  $1FCA
-ESCCURV        EQU  $1FD2
-INVERTO        EQU  $1FD7
-UNDRSCR        EQU  $1FD8
-PAGE           EQU  $1FD9
-GTLNCHK        EQU  $1FDA
-BELVEC         EQU  $1FDE
-KEYPRVEC       EQU  $1FE0
-TBLIOVEC       EQU  $1FE2
-DLYVAL         EQU  $1FE6
-DLYLPCNT       EQU  $1FE7
-STROF80        EQU  $C000      ;80STOREOFF
-RAMRDOFF       EQU  $C002
-RAMRDON        EQU  $C003
-COL80OFF       EQU  $C00C      ;80COLOFF
-RDBANK2        EQU  $C011
-RDLCRAM        EQU  $C012
-TEXTOFF        EQU  $C050
-MIXEDOFF       EQU  $C052
-PAGE2OFF       EQU  $C054
-HIRESON        EQU  $C057
-READBSR2       EQU  $C080
-WRITBSR2       EQU  $C081
-WRITBSR1       EQU  $C089
-RDWRBSR2       EQU  $C083
-RDWRBSR1       EQU  $C08B
-SETREAD        EQU  $D000
-BLAST          EQU  $D04E
-BASCALC        EQU  $FBC1      ; BASCALC without adding left margin.
-VTABZ          EQU  $FC24
-WAIT           EQU  $FCA8
-SETINV         EQU  $FE80
-SETNORM        EQU  $FE84
-               JMP  BOOTUP0
-               ASC  " HRF.40 by MARQUE'"
-               HEX  3838
-               ASC  " systems "
-STOREA         DS   1          ;Storage for accum. contents
-STOREA1        DS   1          ;Storage for text moded result of above
-PS             DS   1          ;Printer/screen indicator.
-ESCFLG         DS   1          ;Escape code mode indicator (bit7 =1 = mode on)
-BIND           DS   1
-MEMWID         DS   1
-BOOTUP0        JSR  IOSAVE
-               LDA  WRITBSR2
-               LDA  WRITBSR2
-               LDX  #$75
-BNKCOD         LDA  FREMEM,X
-               STA  SETREAD,X
-               DEX
-               BPL  BNKCOD
-               BMI  ABOUT
-BOOTUP         JSR  IOSAVE
+                .FEATURE LABELS_WITHOUT_COLONS, LEADING_DOT_IN_IDENTIFIERS
+
+
+
+GRPHL          =  $6
+GRPHH          =  $7
+CHRTBLBL       =  $8
+CHRTBLBH       =  $9
+SCANL          =  $19
+SCANH          =  $1A
+BASL           =  $28
+BASH           =  $29
+ZPG1           =  $2A
+ZPG2           =  $2B
+INVFLG         =  $32
+
+VMODE          =  $4FB
+VFACTV         =  $67B
+
+TEXTOFF        =  $C050
+MIXEDOFF       =  $C052
+PAGE2OFF       =  $C054
+HIRESON        =  $C057
+
+BASCALC        =  $FBC1      ; BASCALC without adding left margin.
+VTABZ          =  $FC24
+WAIT           =  $FCA8
+SETINV         =  $FE80
+SETNORM        =  $FE84
+
+
+
+
+
+               JMP  ABOUT
+
+
+
+               .BYTE " HRF.40 by MARQUE'",$38,$38," systems "
+
+
+
+STOREA         .RES 1          ;Storage for accum. contents
+STOREA1        .RES 1          ;Storage for text moded result of above
+PS             .RES 1          ;Printer/screen indicator.
+ESCFLG         .RES 1          ;Escape code mode indicator (bit7 =1 = mode on)
+BIND           .RES 1
+MEMWID         .RES 1
+CASEMASK       .BYTE 0
+
+
+
 ABOUT          LDA  #$28       ; # of columns
                STA  $21
                LDA  #0         ; Left margin.
@@ -75,23 +57,20 @@ ABOUT          LDA  #$28       ; # of columns
                STA  $22        ; Top of screen.
                LDA  #$18       ; Bottom of screen.
                STA  $23
-               STA  STROF80
-               STA  COL80OFF
+
                LDA  TEXTOFF
                LDA  MIXEDOFF
                LDA  HIRESON
                LDA  PAGE2OFF
-               LDY  #$4F
-INITVEC        LDA  VECTBL,Y
-               STA  FONTADDR,Y ;Start of my global vector table
-               DEY
-               BPL  INITVEC
+
+
+
                LDA  VMODE
                AND  #$DF
                ORA  #8
                STA  VMODE
                JSR  EVFON
-               JSR  ESC@       ;CLEAR ZE SCREEN!
+               JSR  ESCAT      ;CLEAR ZE SCREEN!
                                ;Check & move start of BASIC prog. addr.
                LDA  $68
                CMP  #$40
@@ -117,29 +96,26 @@ HOOKUP         LDA  #$80
                STA  PS
                JSR  OUTDEV
                JMP  SWREST
-                               ;Save registers & bank switches.
+
+
+
+
+
+                               ;Save registers & bank switches. Not anymore.
 IOSAVE         STY  $35
                STX  $EB
                STA  STOREA
                STA  STOREA1
-               PLA
-               TAX
-               PLA
-               TAY
-               INX
-               BNE  NOHI
-               INY
-NOHI           STX  RETVECL
-               STY  RETVECH
-               BIT  RDBANK2
-               PHP
-               BIT  RDLCRAM
-               PHP
-               LDA  WRITBSR1
-               LDA  WRITBSR1
-               HEX  4C
-RETVECL        HEX  00
-RETVECH        HEX  00
+               RTS
+
+
+
+
+
+
+
+
+
                                ;Output entry point
 KOUT2          JSR  IOSAVE
                JSR  ENVIRON
@@ -155,23 +131,15 @@ ISCTRL         STA  STOREA1
                JSR  PROCESS
                JMP  IOREST
 ACTIV          JSR  VFPROC
+
 IOREST         LDA  STOREA
 XYREST         LDY  $35
                LDX  $EB
-SWREST         PLP
-               BPL  NOBANX
-               PLP
-               BPL  DX1
-               BIT  RDWRBSR2
-               BIT  RDWRBSR2
-               RTS
-DX1            BIT  RDWRBSR1
-               BIT  RDWRBSR1
-               RTS
-NOBANX         PLP
-               BIT  WRITBSR1   ;Engage ROM
-               BIT  WRITBSR1
-               RTS
+
+SWREST         RTS
+
+
+
                                ;PROCESS CONTROL CODES.
 PROCESS        BIT  ESCFLG     ;Escape mode on?
                BPL  CTLOOK     ;=> no
@@ -180,7 +148,7 @@ CTLOOK         TAX
                BPL  LEGAL2
                CMP  #$A0
                BCS  LEGAL2
-               LDX  #9         ;Global special ctrls
+               LDX  #FONTFUNC-FREFUNC         ;Global special ctrls
 DYCTRL         PHA
                LDA  VMODE
                AND  #$28
@@ -230,8 +198,8 @@ LEFT1          CMP  #$8A       ;Is it a line feed?
 LEGAL          LDA  STOREA1
 LEGAL1         STA  STOREA1
 LEGAL2         JSR  BLSTCHR1   ;Treat as printable character.
-               LDA  WRITBSR1
-               LDA  WRITBSR1
+;               LDA  WRITBSR1
+;               LDA  WRITBSR1
                BIT  BIND       ;Wast yon karacktre non printy?
                BMI  XIT        ;=> da
 RIGHT          INC  $24        ;Advance 1 screen pos.
@@ -312,6 +280,10 @@ SCOROFF        LDA  #0
 SCORON         LDA  #$7F
                STA  UNDRSCR
                RTS
+CAPSLCKTOG     LDA CASEMASK
+               EOR #$20
+               STA CASEMASK
+               RTS
                                ;Extra CTRL code rtns
 DNSCRL         LDA  $25
                PHA
@@ -339,7 +311,7 @@ ENTLN          LDA  BASH
                JMP  BLKLN
                                ;
 EVFON          CLC
-               HEX  24
+               .BYTE $24
 EVFOFF         SEC
                ROR  VFACTV
                RTS
@@ -420,12 +392,12 @@ INITSTRS       STA  HINSTRS1,Y ;-Store @ h.b. graphics STA
                BCS  INITSTRS   ;=> continue loop
 GETY           LDY  $21
                DEY
-COPY           HEX  B9         ;--LDA abs-addr,Y
-LINSTRS        HEX  FF         ; self modified l.b. operand.
-HINSTRS        HEX  FF         ; self modified h.b. operand.
-               HEX  99         ;--STA abs-addr,Y
-LINSTRS1       HEX  FF         ; self mod. l.b. operand.
-HINSTRS1       HEX  FF         ; self mod. h.b. operand.
+COPY           .BYTE $B9         ;--LDA abs-addr,Y
+LINSTRS        .BYTE $FF         ; self modified l.b. operand.
+HINSTRS        .BYTE $FF         ; self modified h.b. operand.
+               .BYTE $99         ;--STA abs-addr,Y
+LINSTRS1       .BYTE $FF         ; self mod. l.b. operand.
+HINSTRS1       .BYTE $FF         ; self mod. h.b. operand.
                                ; _____
                LDA  $FFFF,Y    ;      |
                STA  $FFFF,Y    ;      |
@@ -439,16 +411,16 @@ HINSTRS1       HEX  FF         ; self mod. h.b. operand.
                STA  $FFFF,Y    ;      |
                LDA  $FFFF,Y    ;      |
                STA  $FFFF,Y    ;      |
-               HEX  B9FF       ;      |
-HINSTRS2       HEX  FF         ;      |
+               .BYTE $B9,$FF       ;      |
+HINSTRS2       .BYTE $FF         ;      |
                STA  $FFFF,Y    ; _____|
                                ;
-               HEX  B9         ;--LDA abs-addr,Y for text
-LTEXT          HEX  FF         ; self mod. l.b. operand.
-HTEXT          HEX  FF         ; self mod. h.b. operand.
-               HEX  99         ;--STA abs-addr,Y fo' tex'
-LTEXT1         HEX  FF         ; We know, we know.
-HTEXT1         HEX  FF
+               .BYTE $B9         ;--LDA abs-addr,Y for text
+LTEXT          .BYTE $FF         ; self mod. l.b. operand.
+HTEXT          .BYTE $FF         ; self mod. h.b. operand.
+               .BYTE $99         ;--STA abs-addr,Y fo' tex'
+LTEXT1         .BYTE $FF         ; We know, we know.
+HTEXT1         .BYTE $FF
                DEY
                BPL  COPY
                LDY  $25        ;Git line #
@@ -559,9 +531,9 @@ CLEARSET       STA  SCANL
                LDY  $21
                DEY
 BLK            LDA  SCANL
-               HEX  99         ;--STA abs-addr,Y
-LGRSTA         HEX  FF         ;  l.b. operand
-HGRSTA         HEX  FF         ;  h.b. operand
+               .BYTE $99         ;--STA abs-addr,Y
+LGRSTA         .BYTE $FF         ;  l.b. operand
+HGRSTA         .BYTE $FF         ;  h.b. operand
                                ; ___
                STA  $FFFF,Y    ;    |
                STA  $FFFF,Y    ;    |
@@ -572,9 +544,9 @@ HGRSTA         HEX  FF         ;  h.b. operand
                STA  $FFFF,Y    ; ___|
                                ;
                LDA  SCANH      ;Inverse or normal space
-               HEX  99         ;--STA abs-addr,Y
-LTXSTA         HEX  FF         ;  l.b. operand
-HTXSTA         HEX  FF         ;  l.b. operand
+               .BYTE $99         ;--STA abs-addr,Y
+LTXSTA         .BYTE $FF         ;  l.b. operand
+HTXSTA         .BYTE $FF         ;  l.b. operand
                DEY
                BPL  BLK
                RTS
@@ -606,13 +578,13 @@ BLSTCHR        JSR  IOSAVE
                                ;INTERNAL ENTRY PT.
 BLSTCHR1       LDA  INVERTO    ;\_
                PHA             ;/  Save text mode
-               LDA  READBSR2   ;Allow use of D000 code
+;               LDA  READBSR2   ;Allow use of D000 code
                LDX  #0
                LDY  CHARARG
-               LDA  FONTADDR,Y
+               LDA  VECTBL,Y
                STA  CHRTBLBL
                STA  SCANL
-               LDA  FONTADDR+1,Y
+               LDA  VECTBL+1,Y
                STA  CHRTBLBH
                STA  SCANH
                TYA
@@ -638,7 +610,10 @@ MAXN           PHA
                TAX             ;Use as index
                LDA  BITMSK,X
                BIT  MEMWID
-               JMP  SETREAD    ;___
+               JMP  FREMEM     ;(was SETREAD)
+
+
+                               ;___
 CONFIRM        ADC  #$13       ;   |
                BCC  HINOT      ;   |
                CLC             ;   |
@@ -700,6 +675,16 @@ ENVIRON        LDA  BASH
                LDA  BASL
                STA  GRPHL
                RTS
+
+
+
+
+
+
+
+
+
+
                                ;INPUT ENTRY PT.
 CEYIN1         STA  (BASL),Y   ;Shut off possible cursor on text scr.
                JSR  IOSAVE
@@ -708,15 +693,20 @@ BUGIN          JSR  ENVIRON
                LDA  (BASL),Y   ; /  Get screen char
                STA  STOREA     ; & save it
                JSR  KEYPRESS   ;Get key value from keybored
-               STA  STOREA1    ;Save it
+               CMP  #$C1       ; A
+               BCC  SAMECASE   ; No, below alphabetic
+               CMP  #$DB       ; '[' (character beyond Z)
+               BCS  SAMECASE   ; No, beyond alphabetic
+               ORA  CASEMASK   ; Apply caps lock case mask
+SAMECASE       STA  STOREA1    ;Save it
                TSX
-               LDA  $108,X     ; \_
+               LDA  $106,X     ; \_
                CMP  GTLNCHK+1  ; /  h. b. GETLN?
                BNE  XKEYIN2
-               LDA  $107,X     ; \_
+               LDA  $105,X     ; \_
                CMP  GTLNCHK    ; /  l. b. GETLN?
                BNE  XKEYIN2
-               LDA  STOREA1
+               LDA  STOREA1    ;Recover the typed keypress
                CMP  #$95       ;CTRL-U?
                BNE  ESK        ;=> no
                JMP  IOREST     ;Exit loading accum from STOREA
@@ -728,16 +718,20 @@ UPWARD         CMP  #$8D       ;Carriage return?
                BNE  XKEYIN1    ;=> no
                JSR  ESCE       ;Yes, clear to end of line
                TSX             ;-\
-               LDA  GTLNCHK+3  ; | Get around
-               STA  $108,X     ; |-CLREOL call
-               LDA  GTLNCHK+2  ; | in ROM GETLN (efficiency)
-               STA  $107,X     ;-/
-               LDA  #$8D       ;CR
+               LDA  GTLNCHK+3  ; | Modify the return address on the stack to
+               STA  $106,X     ; |-return back into ROM GETLN past the CLREOL
+               LDA  GTLNCHK+2  ; | call (efficiency)
+               STA  $105,X     ;-/
+               LDA  #$8D
                LDX  $EB        ;\_
                STA  $200,X     ;/  Place in buffer
-XKEYIN1        JMP  XYREST
-XKEYIN2        LDA  STOREA1
-               BMI  XKEYIN1
+XKEYIN0        JMP  XYREST     ;_
+XKEYIN1        LDA  GTLNCHK+5  ; | Modify the return address on the stack to
+               STA  $106,X     ; |_return back into ROM GETLN past the
+               LDA  GTLNCHK+4  ; | uppercasing code (& still able to use X from
+               STA  $105,X     ;_| TSX before GETLN check above)
+XKEYIN2        LDA  STOREA1    ;Recover the typed keypress
+               BMI  XKEYIN0
                                ;Use keyboard input vector
 KEYPRESS       JMP  (KEYPRVEC) ;Dittoe
                                ;Main keyboard input routine
@@ -777,17 +771,19 @@ BYTREV         LDA  (GRPHL),Y
                JMP  SUB8K
                                ;Escape code processing subrtn
 NESTED         TXA
-               AND  #3         ;Shut off the 2 bit
+               AND  #3         ;Shut off the 2 bit: fold the arrow keys to the
+                               ;equivalent J,M,K,I cursor movement functions
                TAX
-               JSR  FREE
+               JSR  FREE       ;Uses only the first four movement functions,
+                               ;fall through to end up staying in Escape mode
                JSR  ENVIRON
 ESCHNDL        JSR  ESCCUR
-EXTESCH        LDX  #7
+EXTESCH        LDX  #FREFUNC-NESTFUNC-1
 ISNSTD         CMP  NESTFUNC,X ;Is it a nested function?
                BEQ  NESTED     ;=> yes
                DEX             ;End noose?
                BPL  ISNSTD     ;=> noape
-               LDX  #$11
+               LDX  #FUNCVEC-FREFUNC-1
 ISFREE         CMP  FREFUNC,X  ;Izzit yon 1 shot function?
                BEQ  FREE       ; brantch = yoape
                DEX             ;Cut noose loose?
@@ -795,7 +791,7 @@ ISFREE         CMP  FREFUNC,X  ;Izzit yon 1 shot function?
                RTS
 FREE           TXA
                ASL
-               CMP  #$12       ;Is it a character set #?
+               CMP  #(FONTFUNC-FREFUNC)*2       ;Is it a character set #?
                BCS  SETCHGE    ;=> yes
 SUBROUTE       TAX
                LDA  FUNCVEC+1,X
@@ -804,7 +800,7 @@ SUBROUTE       TAX
                PHA
                RTS
                                ;Fulfill keybouard request for charset
-SETCHGE        SBC  #$12       ;Convert to direct chrset #
+SETCHGE        SBC  #(FONTFUNC-FREFUNC)*2       ;Convert to direct chrset #
                STA  CHARARG    ;Change it
                RTS
                                ;Use vector for alternate Escape cursor
@@ -872,8 +868,8 @@ INITIO         LDA  (GRPHL),Y
                BNE  DOSXIT
                JMP  $3EA
                                ;Escape @ clear entire text window
-ESC@           LDA  $22
-               JSR  ESCF@
+ESCAT          LDA  $22
+               JSR  ESCFAT
                LDA  #0
                STA  $24
                LDA  $22
@@ -885,7 +881,7 @@ ESCF           JSR  ESCE
                INY
                TYA
                                ;Escape F, @ common subroutine
-ESCF@          CMP  $23        ;Line # below bottom of window?
+ESCFAT         CMP  $23        ;Line # below bottom of window?
                BCC  WIPEOUT
                JMP  CALCBAS
 WIPEOUT        STA  ZPG2
@@ -898,7 +894,7 @@ WIPEOUT        STA  ZPG2
                JSR  BLKLN      ;Clear the line (end of scroll rtn)
                INC  ZPG2
                LDA  ZPG2
-               BNE  ESCF@
+               BNE  ESCFAT
                                ;Escape E subroutine
 ESCE           LDA  $21
                SEC
@@ -920,8 +916,8 @@ ESCE           LDA  $21
                STA  $21
                RTS
                                ;External ESC@ interface handler
-EXTESC@        JSR  IOSAVE
-               JSR  ESC@
+EXTESCAT       JSR  IOSAVE
+               JSR  ESCAT
                JMP  SWREST
                                ;External char cell reverse interface handler
 EXTCELRV       JSR  IOSAVE
@@ -949,275 +945,11 @@ SCRNCHR        JSR  IOSAVE
                STX  BASL
                STY  BASH
                JMP  XYREST
-                               ;+++DATA TABLES+++
-EVFTBL         HEX  9C9F9D8B8C9697999A92                               ;Always available
-               HEX  959B988E8F90 ;EVF only
-BITMSK         HEX  01020408102040800102
-                               ;For Escape codes
-NESTFUNC       HEX  CACDCBC9888A958B ;J,M,K,I,<-,down,->,^
-FREFUNC        HEX  C2C3C1C4C5C6C0   ;B,C,A,D,E,F,@
-               HEX  A0DFB0B1B2B3B4B5 ;space,_,0,1,2,3,4,5
-               HEX  B6B7B8B9         ;6,7,8,9
-FUNCVEC        DFB  <LEFT-1
-               DFB  >LEFT-1
-               DFB  <LINEFEED-1
-               DFB  >LINEFEED-1
-               DFB  <RIGHT-1
-               DFB  >RIGHT-1
-               DFB  <UP-1
-               DFB  >UP-1
-               DFB  <ESCE-1
-               DFB  >ESCE-1
-               DFB  <ESCF-1
-               DFB  >ESCF-1
-               DFB  <ESC@-1
-               DFB  >ESC@-1
-               DFB  <SCOROFF-1
-               DFB  >SCOROFF-1
-               DFB  <SCORON-1
-               DFB  >SCORON-1
-                               ;Extra CTRL codes
-               DFB  <DNSCRL-1
-               DFB  >DNSCRL-1
-               DFB  <UPSCRL-1
-               DFB  >UPSCRL-1
-               DFB  <HOUSE-1
-               DFB  >HOUSE-1
-               DFB  <ENTLN-1
-               DFB  >ENTLN-1
-               DFB  <EVFON-1
-               DFB  >EVFON-1
-                               ;EVF only
-               DFB  <EVFOFF-1
-               DFB  >EVFOFF-1
-               DFB  <MAUSON-1
-               DFB  >MAUSON-1
-               DFB  <MAUSOFF-1
-               DFB  >MAUSOFF-1
-               DFB  <INVOFF-1
-               DFB  >INVOFF-1
-               DFB  <INVON-1
-               DFB  >INVON-1
-               DFB  <IKSKAPE-1
-               DFB  >IKSKAPE-1
-                               ;IMIDGE UV GLOWBALL VEKTIR TAYBULL
-VECTBL         DFB  <LATNTXT   ;\_
-               DFB  >LATNTXT   ;/  0
-               DFB  <LATNTXT   ;\_
-               DFB  >LATNTXT   ;/  1
-               DFB  <LATNTXT   ;\_
-               DFB  >LATNTXT   ;/  2
-               DFB  <LATNTXT   ;\_
-               DFB  >LATNTXT   ;/  3
-               DFB  <LATNTXT   ;\_
-               DFB  >LATNTXT   ;/  4
-               DFB  <LATNTXT   ;\_
-               DFB  >LATNTXT   ;/  5
-               DFB  <LATNTXT   ;\_
-               DFB  >LATNTXT   ;/  6
-               DFB  <LATNTXT   ;\_
-               DFB  >LATNTXT   ;/  7
-               DFB  <LATNTXT   ;\_
-               DFB  >LATNTXT   ;/  8
-               DFB  <LATNTXT   ;\_
-               DFB  >LATNTXT   ;/  9
-                               ;
-               HEX  0000       ;Wheremem
-                               ;
-               HEX  00         ;Chararg
-               DFB  <FREMEM
-               DFB  >FREMEM
-               HEX  00         ;ID
-                               ;
-               HEX  7F7BF977F377E76F ;Escape cursor
-                               ;
-               DFB  <STDESCUR  ; \_
-               DFB  >STDESCUR  ; /  Vector to standard escape input rtn.
-                               ;
-               JMP  EXTESC     ;External user interface -> esc code processing
-                               ;
-               HEX  00001C77FD8DFD ;Inv, _ Pg, GETLN ret addr, GETLN reentry
-               HEX  DDFB       ;Vector to BEL1
-                               ;
-               DFB  <STDKEPRS  ; \_
-               DFB  >STDKEPRS  ; /  Vector to standard keyboard input rtn.
-                               ;
-VECTOUT        DFB  <KOUT2     ; \_
-               DFB  >KOUT2     ; /  Image of system entry pt. for output
-                               ;
-               DFB  <CEYIN1    ; \_
-               DFB  >CEYIN1    ; /  Image of system entry pt. for input
-                               ;
-               HEX  0F00       ;Delay values for CYCLE subrtn. (STDKEPRS)
-               JMP  CYCLE
-               JMP  SCRNCHR
-               JMP  EXTCELRV
-               JMP  ENVIRON
-               JMP  BOOTUP
-               JMP  BLSTCHR
-               JMP  OUTDEV
-               JMP  EXTESC@
 
-* THE CHARACTER SET! *
 
-LATNTXT        HEX  07         ;Def type (ignored, 40/80 cols)
-               HEX  E4         ;Section bitmap
-               HEX  00000000   ;1st half \_
-               HEX  00204060   ;2nd half /  Sec base offsets
-               HEX  FFFF1FFF   ;1st half \_
-               HEX  FF1F1F1F   ;2nd half /  Sec indeces
-                               ;     Comparison table
-               HEX  4041424344454647
-               HEX  48494A4B4C4D4E4F
-               HEX  5051525354555657 ;Section 2
-               HEX  58595A5B5C5D5E5F
-                               ;
-               HEX  A0A1A2A3A4A5A6A7
-               HEX  A8A9AAABACADAEAF
-               HEX  B0B1B2B3B4B5B6B7 ;Section 5
-               HEX  B8B9BABBBCBDBEBF
-                               ;
-               HEX  C0C1C2C3C4C5C6C7
-               HEX  C8C9CACBCCCDCECF
-               HEX  D0D1D2D3D4D5D6D7 ;Section 6
-               HEX  D8D9DADBDCDDDEDF
-                               ;
-               HEX  E0E1E2E3E4E5E6E7
-               HEX  E8E9EAEBECEDEEEF
-               HEX  F0F1F2F3F4F5F6F7 ;Section 7
-               HEX  F8F9FAFBFCFDFEFF
-                               ;       DEFINITIONS
-               HEX  367E3F3F7F360810 ;@
-               HEX  364A212141360810 ;A
-               HEX  46361E0E06020000 ;B
-               HEX  7F2A14080814227F ;C
-               HEX  0004040A11204000 ;D
-               HEX  7F7B7B756C5F3F7F ;E
-               HEX  023F3079317E6070 ;F
-               HEX  70080C0700071800 ;G
-               HEX  000804027F020408 ;H
-               HEX  2A00000000000000 ;I
-               HEX  081C2A4908080808 ;J
-               HEX  08080808492A1C08 ;K
-               HEX  000000000000007F ;L
-               HEX  04067F4644404040 ;M
-               HEX  3F3F3F3F3F3F3F3F ;N
-               HEX  6F10181C7E1C1813 ;O
-               HEX  7B040C1C3F1C0C64 ;P
-               HEX  40481C3E7F084840 ;Q
-               HEX  4048087F3E1C4840 ;R
-               HEX  000000007F000000 ;S
-               HEX  7F01010101010101 ;T
-               HEX  000810207F201008 ;U
-               HEX  552A552A552A552A ;V
-               HEX  2A552A552A552A55 ;W
-               HEX  007F010101413E00 ;X
-               HEX  007F4040403F0000 ;Y
-               HEX  4040404040404040 ;Z
-               HEX  00081C3E7F3E1C08 ;[
-               HEX  7F0000000000007F ;\
-               HEX  0014147700771414 ;]
-               HEX  7F40404C4C40407F ;^
-               HEX  0101010101010101 ;_
-               HEX  0000000000000000 ;space
-               HEX  0008000808080808 ;!
-               HEX  0000000000141414 ;"
-               HEX  0014143E143E1414 ;#
-               HEX  00081E281C0A3C08 ;$
-               HEX  0032320408102626 ;%
-               HEX  002C122A040C1408 ;&
-               HEX  0000000000080808 ;'
-               HEX  0010080404040810 ;(
-               HEX  0004081010100804 ;)
-               HEX  00082A1C081C2A08 ;*
-               HEX  000008083E080800 ;+
-               HEX  0004080800000000 ;,
-               HEX  000000003E000000 ;-
-               HEX  0008000000000000 ;.
-               HEX  0000020408102000 ;/
-               HEX  001C22262A32221C ;0
-               HEX  001C080808080C08 ;1
-               HEX  003E02041820221C ;2
-               HEX  001C22201810203E ;3
-               HEX  0010103E12141810 ;4
-               HEX  001C2220201E023E ;5
-               HEX  001C22221E020438 ;6
-               HEX  000404040810203E ;7
-               HEX  001C22221C22221C ;8
-               HEX  000E10203C22221C ;9
-               HEX  0000000800080000 ;:
-               HEX  0004080800080000 ;;
-               HEX  0090888482848890 ;<
-               HEX  0000003E003E0000 ;=
-               HEX  0082848890888482 ;>
-               HEX  000800080810221C ;?
-               HEX  003C021A2A2A221C ;@
-               HEX  0022223E22221408 ;A
-               HEX  001E22221E22221E ;B
-               HEX  001C22020202221C ;C
-               HEX  001E22222222221E ;D
-               HEX  003E02020E02023E ;E
-               HEX  000202020E02023E ;F
-               HEX  003C22320202023C ;G
-               HEX  002222223E222222 ;H
-               HEX  001C08080808081C ;I
-               HEX  001C222020202020 ;J
-               HEX  0022120A060A1222 ;K
-               HEX  003E020202020202 ;L
-               HEX  002222222A2A3622 ;M
-               HEX  002222322A262222 ;N
-               HEX  001C22222222221C ;O
-               HEX  000202021E22221E ;P
-               HEX  002C122A2222221C ;Q
-               HEX  0022120A1E22221E ;R
-               HEX  001C22201C02221C ;S
-               HEX  000808080808083E ;T
-               HEX  001C222222222222 ;U
-               HEX  0008142222222222 ;V
-               HEX  0022362A2A222222 ;W
-               HEX  0022221408142222 ;X
-               HEX  0008080808142222 ;Y
-               HEX  003E02040810203E ;Z
-               HEX  003E06060606063E ;[
-               HEX  0000201008040200 ;\
-               HEX  003E30303030303E ;]
-               HEX  0000000000221408 ;^
-               HEX  7F00000000000000 ;_
-               HEX  0000000000080402 ;`
-               HEX  003C223C201C0000 ;a
-               HEX  001E2222221E0202 ;b
-               HEX  003C0202023C0000 ;c
-               HEX  003C2222223C2020 ;d
-               HEX  003C023E221C0000 ;e
-               HEX  000404040E042418 ;f
-               HEX  1C203C22221C0000 ;g
-               HEX  00222222221E0202 ;h
-               HEX  001C0808080C0008 ;i
-               HEX  0C12101010180010 ;j
-               HEX  00120A060A120202 ;k
-               HEX  001C08080808080C ;l
-               HEX  00222A2A2A360000 ;m
-               HEX  00222222221E0000 ;n
-               HEX  001C2222221C0000 ;o
-               HEX  02021E22221E0000 ;p
-               HEX  20203C22223C0000 ;q
-               HEX  00020202063A0000 ;r
-               HEX  001E201C023C0000 ;s
-               HEX  00182404041E0404 ;t
-               HEX  002C322222220000 ;u
-               HEX  0008142222220000 ;v
-               HEX  00362A2A22220000 ;w
-               HEX  0022140814220000 ;x
-               HEX  1C203C2222220000 ;y
-               HEX  003E0408103E0000 ;z
-               HEX  0030080806080830 ;{
-               HEX  0808080808080808 ;|
-               HEX  0006080830080806 ;}
-               HEX  0000000000102A04 ;~
-               HEX  002A142A142A142A ;
                                ;D000 relocated code
 FREMEM         BPL  MAZN
-               STA  RAMRDON
+;               STA  RAMRDON
 MAZN           AND  (SCANL),Y  ;Any defs in section?
                BEQ  NODEFS
                TXA
@@ -1245,7 +977,7 @@ LAUQE          CMP  (SCANL),Y
                DEY
                BPL  LAUQE
 NODEFS         PLA
-               STA  RAMRDOFF
+;               STA  RAMRDOFF
                BPL  ABNORMAL
                JMP  NOTCHR     ;Char not in set
 ABNORMAL       JMP  RESORT     ;]- Let's try that search again
@@ -1259,11 +991,14 @@ DEFD           TYA
                LDA  (CHRTBLBL),Y
                LDY  #$11
                ADC  (CHRTBLBL),Y ;Leap index
-               STA  RAMRDOFF
+;               STA  RAMRDOFF
                JMP  CONFIRM
-                               ;CHARACTER BLASTING NOOSE.
+
+
+
+BLAST                          ;CHARACTER BLASTING NOOSE.
                BPL  GETBYT
-               STA  RAMRDON
+;               STA  RAMRDON
 GETBYT         LDA  (CHRTBLBL),Y ;Get character byte
                STY  SCANL      ;Save index/noose count
                LDY  $24        ;Address column
@@ -1280,5 +1015,268 @@ GETBYT         LDA  (CHRTBLBL),Y ;Get character byte
                EOR  ZPG1
                LDY  $24
                STA  (GRPHL),Y  ;Store bottom byte on screen
-               STA  RAMRDOFF
+;               STA  RAMRDOFF
                RTS
+
+
+
+
+
+;* THE CHARACTER SET! *
+
+LATNTXT        .BYTE $07         ;Def type (ignored, 40/80 cols)
+               .BYTE $E4         ;Section bitmap
+               .BYTE $00,$00,$00,$00   ;1st half \_
+               .BYTE $00,$20,$40,$60   ;2nd half /  Sec base offsets
+               .BYTE $FF,$FF,$1F,$FF   ;1st half \_
+               .BYTE $FF,$1F,$1F,$1F   ;2nd half /  Sec indeces
+                               ;     Comparison table
+               .BYTE $40,$41,$42,$43,$44,$45,$46,$47
+               .BYTE $48,$49,$4A,$4B,$4C,$4D,$4E,$4F
+               .BYTE $50,$51,$52,$53,$54,$55,$56,$57 ;Section 2
+               .BYTE $58,$59,$5A,$5B,$5C,$5D,$5E,$5F
+                               ;
+               .BYTE $A0,$A1,$A2,$A3,$A4,$A5,$A6,$A7
+               .BYTE $A8,$A9,$AA,$AB,$AC,$AD,$AE,$AF
+               .BYTE $B0,$B1,$B2,$B3,$B4,$B5,$B6,$B7 ;Section 5
+               .BYTE $B8,$B9,$BA,$BB,$BC,$BD,$BE,$BF
+                               ;
+               .BYTE $C0,$C1,$C2,$C3,$C4,$C5,$C6,$C7
+               .BYTE $C8,$C9,$CA,$CB,$CC,$CD,$CE,$CF
+               .BYTE $D0,$D1,$D2,$D3,$D4,$D5,$D6,$D7 ;Section 6
+               .BYTE $D8,$D9,$DA,$DB,$DC,$DD,$DE,$DF
+                               ;
+               .BYTE $E0,$E1,$E2,$E3,$E4,$E5,$E6,$E7
+               .BYTE $E8,$E9,$EA,$EB,$EC,$ED,$EE,$EF
+               .BYTE $F0,$F1,$F2,$F3,$F4,$F5,$F6,$F7 ;Section 7
+               .BYTE $F8,$F9,$FA,$FB,$FC,$FD,$FE,$FF
+                               ;       DEFINITIONS
+               .BYTE $36,$7E,$3F,$3F,$7F,$36,$08,$10 ;@
+               .BYTE $36,$4A,$21,$21,$41,$36,$08,$10 ;A
+               .BYTE $46,$36,$1E,$0E,$06,$02,$00,$00 ;B
+               .BYTE $7F,$2A,$14,$08,$08,$14,$22,$7F ;C
+               .BYTE $00,$04,$04,$0A,$11,$20,$40,$00 ;D
+               .BYTE $7F,$7B,$7B,$75,$6C,$5F,$3F,$7F ;E
+               .BYTE $02,$3F,$30,$79,$31,$7E,$60,$70 ;F
+               .BYTE $70,$08,$0C,$07,$00,$07,$18,$00 ;G
+               .BYTE $00,$08,$04,$02,$7F,$02,$04,$08 ;H
+               .BYTE $2A,$00,$00,$00,$00,$00,$00,$00 ;I
+               .BYTE $08,$1C,$2A,$49,$08,$08,$08,$08 ;J
+               .BYTE $08,$08,$08,$08,$49,$2A,$1C,$08 ;K
+               .BYTE $00,$00,$00,$00,$00,$00,$00,$7F ;L
+               .BYTE $04,$06,$7F,$46,$44,$40,$40,$40 ;M
+               .BYTE $3F,$3F,$3F,$3F,$3F,$3F,$3F,$3F ;N
+               .BYTE $6F,$10,$18,$1C,$7E,$1C,$18,$13 ;O
+               .BYTE $7B,$04,$0C,$1C,$3F,$1C,$0C,$64 ;P
+               .BYTE $40,$48,$1C,$3E,$7F,$08,$48,$40 ;Q
+               .BYTE $40,$48,$08,$7F,$3E,$1C,$48,$40 ;R
+               .BYTE $00,$00,$00,$00,$7F,$00,$00,$00 ;S
+               .BYTE $7F,$01,$01,$01,$01,$01,$01,$01 ;T
+               .BYTE $00,$08,$10,$20,$7F,$20,$10,$08 ;U
+               .BYTE $55,$2A,$55,$2A,$55,$2A,$55,$2A ;V
+               .BYTE $2A,$55,$2A,$55,$2A,$55,$2A,$55 ;W
+               .BYTE $00,$7F,$01,$01,$01,$41,$3E,$00 ;X
+               .BYTE $00,$7F,$40,$40,$40,$3F,$00,$00 ;Y
+               .BYTE $40,$40,$40,$40,$40,$40,$40,$40 ;Z
+               .BYTE $00,$08,$1C,$3E,$7F,$3E,$1C,$08 ;[
+               .BYTE $7F,$00,$00,$00,$00,$00,$00,$7F ;\
+               .BYTE $00,$14,$14,$77,$00,$77,$14,$14 ;]
+               .BYTE $7F,$40,$40,$4C,$4C,$40,$40,$7F ;^
+               .BYTE $01,$01,$01,$01,$01,$01,$01,$01 ;_
+               .BYTE $00,$00,$00,$00,$00,$00,$00,$00 ;space
+               .BYTE $00,$08,$00,$08,$08,$08,$08,$08 ;!
+               .BYTE $00,$00,$00,$00,$00,$14,$14,$14 ;"
+               .BYTE $00,$14,$14,$3E,$14,$3E,$14,$14 ;#
+               .BYTE $00,$08,$1E,$28,$1C,$0A,$3C,$08 ;$
+               .BYTE $00,$32,$32,$04,$08,$10,$26,$26 ;%
+               .BYTE $00,$2C,$12,$2A,$04,$0C,$14,$08 ;&
+               .BYTE $00,$00,$00,$00,$00,$08,$08,$08 ;'
+               .BYTE $00,$10,$08,$04,$04,$04,$08,$10 ;(
+               .BYTE $00,$04,$08,$10,$10,$10,$08,$04 ;)
+               .BYTE $00,$08,$2A,$1C,$08,$1C,$2A,$08 ;*
+               .BYTE $00,$00,$08,$08,$3E,$08,$08,$00 ;+
+               .BYTE $00,$04,$08,$08,$00,$00,$00,$00 ;,
+               .BYTE $00,$00,$00,$00,$3E,$00,$00,$00 ;-
+               .BYTE $00,$08,$00,$00,$00,$00,$00,$00 ;.
+               .BYTE $00,$00,$02,$04,$08,$10,$20,$00 ;/
+               .BYTE $00,$1C,$22,$26,$2A,$32,$22,$1C ;0
+               .BYTE $00,$1C,$08,$08,$08,$08,$0C,$08 ;1
+               .BYTE $00,$3E,$02,$04,$18,$20,$22,$1C ;2
+               .BYTE $00,$1C,$22,$20,$18,$10,$20,$3E ;3
+               .BYTE $00,$10,$10,$3E,$12,$14,$18,$10 ;4
+               .BYTE $00,$1C,$22,$20,$20,$1E,$02,$3E ;5
+               .BYTE $00,$1C,$22,$22,$1E,$02,$04,$38 ;6
+               .BYTE $00,$04,$04,$04,$08,$10,$20,$3E ;7
+               .BYTE $00,$1C,$22,$22,$1C,$22,$22,$1C ;8
+               .BYTE $00,$0E,$10,$20,$3C,$22,$22,$1C ;9
+               .BYTE $00,$00,$00,$08,$00,$08,$00,$00 ;:
+               .BYTE $00,$04,$08,$08,$00,$08,$00,$00 ;;
+               .BYTE $00,$90,$88,$84,$82,$84,$88,$90 ;<
+               .BYTE $00,$00,$00,$3E,$00,$3E,$00,$00 ;=
+               .BYTE $00,$82,$84,$88,$90,$88,$84,$82 ;>
+               .BYTE $00,$08,$00,$08,$08,$10,$22,$1C ;?
+               .BYTE $00,$3C,$02,$1A,$2A,$2A,$22,$1C ;@
+               .BYTE $00,$22,$22,$3E,$22,$22,$14,$08 ;A
+               .BYTE $00,$1E,$22,$22,$1E,$22,$22,$1E ;B
+               .BYTE $00,$1C,$22,$02,$02,$02,$22,$1C ;C
+               .BYTE $00,$1E,$22,$22,$22,$22,$22,$1E ;D
+               .BYTE $00,$3E,$02,$02,$0E,$02,$02,$3E ;E
+               .BYTE $00,$02,$02,$02,$0E,$02,$02,$3E ;F
+               .BYTE $00,$3C,$22,$32,$02,$02,$02,$3C ;G
+               .BYTE $00,$22,$22,$22,$3E,$22,$22,$22 ;H
+               .BYTE $00,$1C,$08,$08,$08,$08,$08,$1C ;I
+               .BYTE $00,$1C,$22,$20,$20,$20,$20,$20 ;J
+               .BYTE $00,$22,$12,$0A,$06,$0A,$12,$22 ;K
+               .BYTE $00,$3E,$02,$02,$02,$02,$02,$02 ;L
+               .BYTE $00,$22,$22,$22,$2A,$2A,$36,$22 ;M
+               .BYTE $00,$22,$22,$32,$2A,$26,$22,$22 ;N
+               .BYTE $00,$1C,$22,$22,$22,$22,$22,$1C ;O
+               .BYTE $00,$02,$02,$02,$1E,$22,$22,$1E ;P
+               .BYTE $00,$2C,$12,$2A,$22,$22,$22,$1C ;Q
+               .BYTE $00,$22,$12,$0A,$1E,$22,$22,$1E ;R
+               .BYTE $00,$1C,$22,$20,$1C,$02,$22,$1C ;S
+               .BYTE $00,$08,$08,$08,$08,$08,$08,$3E ;T
+               .BYTE $00,$1C,$22,$22,$22,$22,$22,$22 ;U
+               .BYTE $00,$08,$14,$22,$22,$22,$22,$22 ;V
+               .BYTE $00,$22,$36,$2A,$2A,$22,$22,$22 ;W
+               .BYTE $00,$22,$22,$14,$08,$14,$22,$22 ;X
+               .BYTE $00,$08,$08,$08,$08,$14,$22,$22 ;Y
+               .BYTE $00,$3E,$02,$04,$08,$10,$20,$3E ;Z
+               .BYTE $00,$3E,$06,$06,$06,$06,$06,$3E ;[
+               .BYTE $00,$00,$20,$10,$08,$04,$02,$00 ;\
+               .BYTE $00,$3E,$30,$30,$30,$30,$30,$3E ;]
+               .BYTE $00,$00,$00,$00,$00,$22,$14,$08 ;^
+               .BYTE $7F,$00,$00,$00,$00,$00,$00,$00 ;_
+               .BYTE $00,$00,$00,$00,$00,$08,$04,$02 ;`
+               .BYTE $00,$3C,$22,$3C,$20,$1C,$00,$00 ;a
+               .BYTE $00,$1E,$22,$22,$22,$1E,$02,$02 ;b
+               .BYTE $00,$3C,$02,$02,$02,$3C,$00,$00 ;c
+               .BYTE $00,$3C,$22,$22,$22,$3C,$20,$20 ;d
+               .BYTE $00,$3C,$02,$3E,$22,$1C,$00,$00 ;e
+               .BYTE $00,$04,$04,$04,$0E,$04,$24,$18 ;f
+               .BYTE $1C,$20,$3C,$22,$22,$1C,$00,$00 ;g
+               .BYTE $00,$22,$22,$22,$22,$1E,$02,$02 ;h
+               .BYTE $00,$1C,$08,$08,$08,$0C,$00,$08 ;i
+               .BYTE $0C,$12,$10,$10,$10,$18,$00,$10 ;j
+               .BYTE $00,$12,$0A,$06,$0A,$12,$02,$02 ;k
+               .BYTE $00,$1C,$08,$08,$08,$08,$08,$0C ;l
+               .BYTE $00,$22,$2A,$2A,$2A,$36,$00,$00 ;m
+               .BYTE $00,$22,$22,$22,$22,$1E,$00,$00 ;n
+               .BYTE $00,$1C,$22,$22,$22,$1C,$00,$00 ;o
+               .BYTE $02,$02,$1E,$22,$22,$1E,$00,$00 ;p
+               .BYTE $20,$20,$3C,$22,$22,$3C,$00,$00 ;q
+               .BYTE $00,$02,$02,$02,$06,$3A,$00,$00 ;r
+               .BYTE $00,$1E,$20,$1C,$02,$3C,$00,$00 ;s
+               .BYTE $00,$18,$24,$04,$04,$1E,$04,$04 ;t
+               .BYTE $00,$2C,$32,$22,$22,$22,$00,$00 ;u
+               .BYTE $00,$08,$14,$22,$22,$22,$00,$00 ;v
+               .BYTE $00,$36,$2A,$2A,$22,$22,$00,$00 ;w
+               .BYTE $00,$22,$14,$08,$14,$22,$00,$00 ;x
+               .BYTE $1C,$20,$3C,$22,$22,$22,$00,$00 ;y
+               .BYTE $00,$3E,$04,$08,$10,$3E,$00,$00 ;z
+               .BYTE $00,$30,$08,$08,$06,$08,$08,$30 ;{
+               .BYTE $08,$08,$08,$08,$08,$08,$08,$08 ;|
+               .BYTE $00,$06,$08,$08,$30,$08,$08,$06 ;}
+               .BYTE $00,$00,$00,$00,$00,$10,$2A,$04 ;~
+               .BYTE $00,$2A,$14,$2A,$14,$2A,$14,$2A ;
+
+
+
+
+
+
+
+                               ;+++DATA TABLES+++
+EVFTBL         .BYTE $9C,$9F,$9D,$8B,$8C,$96,$97,$99,$9A,$92 ;Always available
+               .BYTE $95,$9B,$98,$8E,$8F,$90 ;EVF only
+BITMSK         .BYTE $01,$02,$04,$08,$10,$20,$40,$80,$01,$02
+                               ;For Escape codes
+NESTFUNC       .BYTE $CA,$CD,$CB,$C9,$88,$8A,$95,$8B ;J,M,K,I,<-,down,->,^
+FREFUNC        .BYTE $C2,$C3,$C1,$C4,$C5,$C6,$C0   ;B,C,A,D,E,F,@
+               .BYTE $A0,$AD,$CC  ;space,-,L
+FONTFUNC       .BYTE $B0,$B1,$B2,$B3,$B4,$B5   ;0,1,2,3,4,5
+               .BYTE $B6,$B7,$B8,$B9         ;6,7,8,9
+FUNCVEC        .ADDR LEFT-1
+               .ADDR LINEFEED-1
+               .ADDR RIGHT-1
+               .ADDR UP-1
+               .ADDR ESCE-1
+               .ADDR ESCF-1
+               .ADDR ESCAT-1
+               .ADDR SCOROFF-1
+               .ADDR SCORON-1
+               .ADDR CAPSLCKTOG-1
+                               ;Extra CTRL codes
+               .ADDR DNSCRL-1
+               .ADDR UPSCRL-1
+               .ADDR HOUSE-1
+               .ADDR ENTLN-1
+               .ADDR EVFON-1
+                               ;EVF only
+               .ADDR EVFOFF-1
+               .ADDR MAUSON-1
+               .ADDR MAUSOFF-1
+               .ADDR INVOFF-1
+               .ADDR INVON-1
+               .ADDR IKSKAPE-1
+
+
+
+                               ;IMIDGE UV GLOWBALL VEKTIR TAYBULL
+VECTBL         .ADDR LATNTXT   ; 0
+               .ADDR LATNTXT   ; 1
+               .ADDR LATNTXT   ; 2
+               .ADDR LATNTXT   ; 3
+               .ADDR LATNTXT   ; 4
+               .ADDR LATNTXT   ; 5
+               .ADDR LATNTXT   ; 6
+               .ADDR LATNTXT   ; 7
+               .ADDR LATNTXT   ; 8
+               .ADDR LATNTXT   ; 9
+
+
+
+WHEREMEM       .BYTE $00,$00
+
+CHARARG        .BYTE $00
+               .ADDR FREMEM
+               .BYTE $00       ; ID
+
+                               ; Escape cursor
+ESCCURSR       .BYTE $7F,$7B,$F9,$77,$F3,$77,$E7,$6F
+
+ESCCURV        .ADDR STDESCUR  ; Vector to standard escape input rtn.
+
+               JMP  EXTESC     ; External user interface -> esc code processing
+
+
+
+INVERTO        .BYTE $00       ; Inv
+UNDRSCR        .BYTE $00       ; _
+PAGE           .BYTE $1C       ; Pg
+GTLNCHK        .ADDR $FD77     ; GETLN ret addr
+	       .ADDR $FD8D     ; GETLN CR reentry
+               .ADDR $FD83     ; GETLN lowercase (all other chars) reentry
+BELVEC         .ADDR $FBDD     ; Vector to BEL1
+
+KEYPRVEC       .ADDR STDKEPRS  ; Vector to standard keyboard input rtn.
+
+TBLIOVEC
+VECTOUT        .ADDR KOUT2     ; Image of system entry pt. for output
+               .ADDR CEYIN1    ; Image of system entry pt. for input
+
+
+                               ; Delay values for CYCLE subrtn. (STDKEPRS)
+DLYVAL         .BYTE $0F
+DLYLPCNT       .BYTE $00
+
+
+
+               JMP  CYCLE
+               JMP  SCRNCHR
+               JMP  EXTCELRV
+               JMP  ENVIRON
+               JMP  ABOUT
+               JMP  BLSTCHR
+               JMP  OUTDEV
+               JMP  EXTESCAT
