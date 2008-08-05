@@ -39,14 +39,14 @@ private:
 	static void unloadDisk(Slots& slts, int slot, int drive);
 	static void saveDisk(Slots& slts, int slot, int drive);
 	static void insertCard(const std::string& cardType, int slot, Slots& slts, ScreenImage& gui);
-	static void tryParseLine(const std::string& line, Memory& memory, Slots& slts, int& revision, ScreenImage& gui);
+	static void tryParseLine(const std::string& line, Memory& ram, Memory& rom, Slots& slts, int& revision, ScreenImage& gui);
 
 public:
 	Config(const std::string& file_path);
 	~Config();
 
-	void parse(Memory& memory, Slots& slts, int& revision, ScreenImage& gui);
-	static void parseLine(const std::string& line, Memory& memory, Slots& slts, int& revision, ScreenImage& gui);
+	void parse(Memory& ram, Memory& rom, Slots& slts, int& revision, ScreenImage& gui);
+	static void parseLine(const std::string& line, Memory& ram, Memory& rom, Slots& slts, int& revision, ScreenImage& gui);
 };
 
 #endif

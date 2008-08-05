@@ -71,7 +71,7 @@ static void trim(std::string& str)
 	}
 }
 
-void Config::parse(Memory& memory, Slots& slts, int& revision, ScreenImage& gui)
+void Config::parse(Memory& ram, Memory& rom, Slots& slts, int& revision, ScreenImage& gui)
 {
 	std::ifstream in(this->file_path.c_str());
 	if (!in.is_open())
@@ -88,7 +88,7 @@ void Config::parse(Memory& memory, Slots& slts, int& revision, ScreenImage& gui)
 		trim(line);
 		if (!line.empty())
 		{
-			parseLine(line,memory,slts,revision,gui);
+			parseLine(line,ram,rom,slts,revision,gui);
 		}
 		std::getline(in,line);
 	}
@@ -96,11 +96,11 @@ void Config::parse(Memory& memory, Slots& slts, int& revision, ScreenImage& gui)
 
 	// TODO: make sure there is no more than ONE stdin and/or ONE stdout card
 }
-void Config::parseLine(const std::string& line, Memory& memory, Slots& slts, int& revision, ScreenImage& gui)
+void Config::parseLine(const std::string& line, Memory& ram, Memory& rom, Slots& slts, int& revision, ScreenImage& gui)
 {
 	try
 	{
-		tryParseLine(line,memory,slts,revision,gui);
+		tryParseLine(line,ram,rom,slts,revision,gui);
 	}
 	catch (const ConfigException& err)
 	{
@@ -108,7 +108,7 @@ void Config::parseLine(const std::string& line, Memory& memory, Slots& slts, int
 	}
 }
 
-void Config::tryParseLine(const std::string& line, Memory& memory, Slots& slts, int& revision, ScreenImage& gui)
+void Config::tryParseLine(const std::string& line, Memory& ram, Memory& rom, Slots& slts, int& revision, ScreenImage& gui)
 {
 	std::istringstream tok(line);
 
@@ -146,19 +146,26 @@ void Config::tryParseLine(const std::string& line, Memory& memory, Slots& slts, 
 		std::string file;
 		std::getline(tok,file);
 		trim(file);
-		std::ifstream rom(file.c_str(),std::ios::binary);
-		if (!rom.is_open())
+		std::ifstream memfile(file.c_str(),std::ios::binary);
+		if (!memfile.is_open())
 		{
 			throw ConfigException("cannot open file "+file);
 		}
 
 		if (slot < 0) // motherboard
 		{
-			if (romtype != "rom")
+			if (romtype == "rom")
 			{
-				throw ConfigException("error at \""+romtype+"\"; expected \"rom\"");
+				rom.load(base,memfile);
 			}
-			memory.load(base,rom);
+			else if (romtype == "ram")
+			{
+				ram.load(base,memfile);
+			}
+			else
+			{
+				throw ConfigException("error at \""+romtype+"\"; expected rom or ram");
+			}
 		}
 		else
 		{
@@ -168,15 +175,15 @@ void Config::tryParseLine(const std::string& line, Memory& memory, Slots& slts, 
 			}
 			Card* card = slts.get(slot);
 			if (romtype == "rom")
-				card->loadRom(base,rom);
+				card->loadRom(base,memfile);
 			else if (romtype == "rom7")
-				card->loadSeventhRom(base,rom);
+				card->loadSeventhRom(base,memfile);
 			else if (romtype == "rombank")
-				card->loadBankRom(base,rom);
+				card->loadBankRom(base,memfile);
 			else
 				throw ConfigException("error at \""+romtype+"\"; expected rom, rom7, or rombank");
 		}
-		rom.close();
+		memfile.close();
 	}
 	else if (cmd == "load" || cmd == "save" || cmd == "unload")
 	{

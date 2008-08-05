@@ -70,7 +70,7 @@ void Emulator::powerOffComputer()
 
 void Emulator::config(Config& cfg)
 {
-	cfg.parse(this->apple2.rom,this->apple2.slts,this->apple2.revision,this->screenImage);
+	cfg.parse(this->apple2.ram,this->apple2.rom,this->apple2.slts,this->apple2.revision,this->screenImage);
 }
 
 void Emulator::init()
@@ -381,6 +381,6 @@ void Emulator::processCommand()
 		return;
 	}
 
-	Config::parseLine(cmdline,this->apple2.rom,this->apple2.slts,this->apple2.revision,this->screenImage);
+	Config::parseLine(cmdline,this->apple2.ram,this->apple2.rom,this->apple2.slts,this->apple2.revision,this->screenImage);
 	cmdline.erase(cmdline.begin(),cmdline.end());
 }
