@@ -27,28 +27,6 @@ INVFLG         =    $32
 VMODE          =    $4FB
 VFACTV         =    $67B
 
-EORNYB         =    $1FAC
-EORNYB1        =    $1FAD
-MARWID         =    $1FAE
-INDEX          =    $1FAF
-FONTADDR       =    $1FB0
-WHEREMEM       =    $1FC4
-CHARARG        =    $1FC6
-ESCCURSR       =    $1FCA
-ORBIT          =    $1FCE
-ANDNYB         =    $1FCF
-ANDNYB1        =    $1FD0
-TXTNDX         =    $1FD1
-ESCCURV        =    $1FD2
-INVERTO        =    $1FD7
-UNDRSCR        =    $1FD8
-PAGE           =    $1FD9
-GTLNCHK        =    $1FDA
-BELVEC         =    $1FDE
-KEYPRVEC       =    $1FE0
-TBLIOVEC       =    $1FE2
-DLYVAL         =    $1FE6
-DLYLPCNT       =    $1FE7
 
 STROF80        =    $C000      ;80STOREOFF
 RAMRDOFF       =    $C002
@@ -126,7 +104,7 @@ ABOUT          LDA  #$46       ; # of columns
                LDA  PAGE2OFF
                LDY  #$4F
 INITVEC        LDA  VECTBL,Y
-               STA  FONTADDR,Y ;Start of my global vector table
+               STA  VECTBL,Y ;Start of my global vector table
                DEY
                BPL  INITVEC
                LDA  VMODE
@@ -1004,10 +982,10 @@ BLSTCHR1       LDA  INVERTO    ; \_
                LDA  READBSR2   ;Allow use of D000 code
                LDX  #0
                LDY  CHARARG
-               LDA  FONTADDR,Y
+               LDA  VECTBL,Y
                STA  CHRTBLBL
                STA  WORK
-               LDA  FONTADDR+1,Y
+               LDA  VECTBL+1,Y
                STA  CHRTBLBH
                STA  RMD
                TYA
@@ -1410,8 +1388,8 @@ ADD1K          LDA  GRPHH
                STA  GRPHH
                RTS
                                ;Switch to/from printer or screen program output
-OUTDEV         LDX  #<VECTOUT
-               LDY  #>VECTOUT
+OUTDEV         LDX  #<TBLIOVEC
+               LDY  #>TBLIOVEC
                LDA  PS
                BMI  TOSCRN     ;=> "Now printer, change to screen"
                LDX  #<TBLIOVEC
@@ -1824,7 +1802,15 @@ BITMSK         .BYTE $01,$02,$04,$08,$10,$20,$40,$80,$01,$02
 
 
 
+
+
+
+
                                ; IMIDGE UV GLOWBALL VEKTIR TAYBULL
+EORNYB         .RES 1
+EORNYB1        .RES 1
+MARWID         .RES 1
+INDEX          .RES 1
 VECTBL         .ADDR LATNTXT   ; 0
                .ADDR LATNTXT   ; 1
                .ADDR LATNTXT   ; 2
@@ -1836,28 +1822,40 @@ VECTBL         .ADDR LATNTXT   ; 0
                .ADDR LATNTXT   ; 8
                .ADDR LATNTXT   ; 9
                                ;
-               .BYTE $00,$00   ; Wheremem
-                               ;
-               .BYTE $00       ; Chararg
+WHEREMEM       .BYTE $00,$00   ; Wheremem
+
+CHARARG        .BYTE $00       ; Chararg
                .ADDR FREMEM
                .BYTE $02       ; ID
-                               ;
-               .BYTE $DF,$87,$F0,$FD,$00,$00,$00,$00 ;Escape cursor pattern
-                               ;
-               .ADDR STDESCUR  ; Vector to standard escape input rtn.
+
+ESCCURSR       .BYTE $DF,$87,$F0,$FD,$00,$00,$00,$00 ;Escape cursor pattern
+
+ORBIT          .RES 1
+ANDNYB         .RES 1
+ANDNYB1        .RES 1
+TXTNDX         .RES 1
+
+ESCCURV        .ADDR STDESCUR  ; Vector to standard escape input rtn.
                                ;
                JMP  EXTESC     ; External user interface -> esc code processing
                                ;
-               .BYTE $00,$00,$1C,$77,$FD,$8D,$FD ;Inv, _ Pg, GETLN ret addr, GETLN skip
-               .BYTE $DD,$FB   ; Vector to BEL1
+INVERTO        .BYTE $00       ; Inv
+UNDRSCR        .BYTE $00       ; Underscore
+PAGE           .BYTE $1C       ; Pg
+GTLNCHK        .ADDR $FD77,$FD8D ; GETLN ret addr, GETLN skip
+
+BELVEC         .ADDR $FBDD     ; Vector to BEL1
                                ;
-               .ADDR STDKEPRS  ; Vector to standard keyboard input rtn.
+KEYPRVEC       .ADDR STDKEPRS  ; Vector to standard keyboard input rtn.
                                ;
-VECTOUT        .ADDR KOUT2     ; Image of system entry pt. for output
+TBLIOVEC       .ADDR KOUT2     ; Image of system entry pt. for output
                                ;
                .ADDR CEYIN1    ; Image of system entry pt. for input
                                ;
-               .BYTE $0F,$00   ; Delay values for CYCLE subrtn. (STDKEPRS)
+                               ; Delay values for CYCLE subrtn. (STDKEPRS)
+DLYVAL         .BYTE $0F
+DLYLPCNT       .BYTE $00
+
                JMP  CYCLE
                JMP  SCRNCHR
                JMP  EXTCELRV
