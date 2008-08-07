@@ -1,6 +1,6 @@
 MEMORY
 {
-	HRF070: start=$2000-$0E58, size=$0E58, file="hrf070";
+	HRF070: start=$2000-$0E60, size=$0E60, file="hrf070";
 }
 
 SEGMENTS
