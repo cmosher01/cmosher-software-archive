@@ -1559,6 +1559,71 @@ SCRNCHR        JSR  IOSAVE
 
 
 
+FREMEM         BPL  MAYN
+               STA  RAMRDON
+MAYN           LDA  (WORK),Y
+               STA  ZPG2       ;Def type
+               STA  RAMRDOFF
+               JMP  GOTSIZ     ;Exit BSR
+               BPL  MAZN
+               STA  RAMRDON
+MAZN           AND  (WORK),Y   ;Any defs in section?
+               BEQ  NODEFS
+               TXA
+               TAY
+               INY
+               INY
+               LDA  (WORK),Y   ;Sec base offset
+               STA  ZPG1       ;Save it
+               CLC             ;---
+               ADC  #$12       ;   |
+               ADC  WORK       ;   |_
+               STA  WORK       ;   |  Address base of sec in comp tbl
+               BCC  SAMEPG     ;   |
+               INC  RMD        ;___|
+               CLC
+SAMEPG         TYA
+               ADC  #8
+               TAY
+               LDA  (CHRTBLBL),Y ;Get sec index
+               TAY
+               PLA
+               PHA
+LAUQE          CMP  (WORK),Y
+               BEQ  DEFD
+               DEY
+               BPL  LAUQE
+NODEFS         PLA
+               STA  RAMRDOFF
+               BPL  ABNORMAL
+               JMP  NOTCHR     ;Char not in set
+ABNORMAL       JMP  RESORT     ;-Let's try that search again
+                               ;SUCCESSFUL SEARCH
+DEFD           TYA
+               CLC
+               ADC  ZPG1       ;Char index
+               STA  ZPG1
+               PLA
+               LDY  #9
+               LDA  (CHRTBLBL),Y
+               LDY  #$11
+               ADC  (CHRTBLBL),Y ;Leap index
+               STA  RAMRDOFF
+               JMP  CONFIRM
+                               ;Work loading
+               BPL  AWKS
+               STA  RAMRDON
+AWKS           LDA  #0
+               CPX  #2
+               BEQ  EITHER
+LODE           LDA  (CHRTBLBL),Y
+EITHER         ORA  ZPG2
+               EOR  ZPG1
+               STA  WORK,Y
+               DEY
+               BPL  LODE
+               STA  RAMRDOFF
+               RTS
 
 
 
@@ -1566,94 +1631,9 @@ SCRNCHR        JSR  IOSAVE
 
 
 
-                               ;+++DATA TABLES+++
-                               ;For Escape codes
-NESTFUNC       .BYTE $CA,$CD,$CB,$C9,$88,$8A,$95,$8B ;J,M,K,I,<-,down,->,^
-FREFUNC        .BYTE $C2,$C3,$C1,$C4,$C5,$C6,$C0   ;B,C,A,D,E,F,@
-               .BYTE $A0,$DF,$B0,$B1,$B2,$B3,$B4,$B5 ;space,_,0,1,2,3
-               .BYTE $B6,$B7,$B8,$B9         ;6,7,8,9
-FUNCVEC        .ADDR LEFT-1
-               .ADDR LINEFEED-1
-               .ADDR RIGHT-1
-               .ADDR UP-1
-               .ADDR ESCE-1
-               .ADDR ESCF-1
-               .ADDR ESCAT-1
-               .ADDR SCOROFF-1
-               .ADDR SCORON-1
-                               ;Stuff for EVF ctrl codes
-               .ADDR DNSCRL-1
-               .ADDR UPSCRL-1
-               .ADDR HOUSE-1
-               .ADDR ENTLN-1
-               .ADDR EVFON-1
-                               ;For EVF only
-               .ADDR EVFOFF-1
-               .ADDR MAUSON-1
-               .ADDR MAUSOFF-1
-               .ADDR INVOFF-1
-               .ADDR INVON-1
-               .ADDR IKSKAPE-1
-
-                               ;Matching coades
-EVFTBL         .BYTE $9C,$9F,$9D,$8B,$8C,$96,$97,$99,$9A,$92 ;Used always
-               .BYTE $95,$9B,$98,$8E,$8F,$90 ;Last one is EVF's Escape (DLE)
-
-                               ;For ENVIRON
-ANDTBL         .BYTE $70,$0F,$61,$1F,$43,$3F,$07
-ORTBL          .BYTE $08,$01,$10,$02,$20,$04,$40
-ANDTBL1        .BYTE $7E,$7C,$78
-LDRSMSK        .BYTE $0F,$01,$1F,$03,$3F,$07,$1E,$3C
-LSRDMSK        .BYTE $70,$7E,$60,$7C,$40,$78,$61,$43
-BITMSK         .BYTE $01,$02,$04,$08,$10,$20,$40,$80,$01,$02
 
 
 
-
-
-
-                               ; IMIDGE UV GLOWBALL VEKTIR TAYBULL
-VECTBL         .ADDR LATNTXT   ; 0
-               .ADDR LATNTXT   ; 1
-               .ADDR LATNTXT   ; 2
-               .ADDR LATNTXT   ; 3
-               .ADDR LATNTXT   ; 4
-               .ADDR LATNTXT   ; 5
-               .ADDR LATNTXT   ; 6
-               .ADDR LATNTXT   ; 7
-               .ADDR LATNTXT   ; 8
-               .ADDR LATNTXT   ; 9
-                               ;
-               .BYTE $00,$00   ; Wheremem
-                               ;
-               .BYTE $00       ; Chararg
-               .ADDR FREMEM
-               .BYTE $02       ; ID
-                               ;
-               .BYTE $DF,$87,$F0,$FD,$00,$00,$00,$00 ;Escape cursor pattern
-                               ;
-               .ADDR STDESCUR  ; Vector to standard escape input rtn.
-                               ;
-               JMP  EXTESC     ; External user interface -> esc code processing
-                               ;
-               .BYTE $00,$00,$1C,$77,$FD,$8D,$FD ;Inv, _ Pg, GETLN ret addr, GETLN skip
-               .BYTE $DD,$FB   ; Vector to BEL1
-                               ;
-               .ADDR STDKEPRS  ; Vector to standard keyboard input rtn.
-                               ;
-VECTOUT        .ADDR KOUT2     ; Image of system entry pt. for output
-                               ;
-               .ADDR CEYIN1    ; Image of system entry pt. for input
-                               ;
-               .BYTE $0F,$00   ; Delay values for CYCLE subrtn. (STDKEPRS)
-               JMP  CYCLE
-               JMP  SCRNCHR
-               JMP  EXTCELRV
-               JMP  ENVIRON
-               JMP  BOOTUP
-               JMP  BLSTCHR
-               JMP  OUTDEV
-               JMP  EXTESCAT
 
 
 
@@ -1798,68 +1778,91 @@ LATNTXT        .BYTE $02         ;Def type (# bytes -1)
 
 
 
-FREMEM         BPL  MAYN
-               STA  RAMRDON
-MAYN           LDA  (WORK),Y
-               STA  ZPG2       ;Def type
-               STA  RAMRDOFF
-               JMP  GOTSIZ     ;Exit BSR
-               BPL  MAZN
-               STA  RAMRDON
-MAZN           AND  (WORK),Y   ;Any defs in section?
-               BEQ  NODEFS
-               TXA
-               TAY
-               INY
-               INY
-               LDA  (WORK),Y   ;Sec base offset
-               STA  ZPG1       ;Save it
-               CLC             ;---
-               ADC  #$12       ;   |
-               ADC  WORK       ;   |_
-               STA  WORK       ;   |  Address base of sec in comp tbl
-               BCC  SAMEPG     ;   |
-               INC  RMD        ;___|
-               CLC
-SAMEPG         TYA
-               ADC  #8
-               TAY
-               LDA  (CHRTBLBL),Y ;Get sec index
-               TAY
-               PLA
-               PHA
-LAUQE          CMP  (WORK),Y
-               BEQ  DEFD
-               DEY
-               BPL  LAUQE
-NODEFS         PLA
-               STA  RAMRDOFF
-               BPL  ABNORMAL
-               JMP  NOTCHR     ;Char not in set
-ABNORMAL       JMP  RESORT     ;-Let's try that search again
-                               ;SUCCESSFUL SEARCH
-DEFD           TYA
-               CLC
-               ADC  ZPG1       ;Char index
-               STA  ZPG1
-               PLA
-               LDY  #9
-               LDA  (CHRTBLBL),Y
-               LDY  #$11
-               ADC  (CHRTBLBL),Y ;Leap index
-               STA  RAMRDOFF
-               JMP  CONFIRM
-                               ;Work loading
-               BPL  AWKS
-               STA  RAMRDON
-AWKS           LDA  #0
-               CPX  #2
-               BEQ  EITHER
-LODE           LDA  (CHRTBLBL),Y
-EITHER         ORA  ZPG2
-               EOR  ZPG1
-               STA  WORK,Y
-               DEY
-               BPL  LODE
-               STA  RAMRDOFF
-               RTS
+                               ;+++DATA TABLES+++
+                               ;For Escape codes
+NESTFUNC       .BYTE $CA,$CD,$CB,$C9,$88,$8A,$95,$8B ;J,M,K,I,<-,down,->,^
+FREFUNC        .BYTE $C2,$C3,$C1,$C4,$C5,$C6,$C0   ;B,C,A,D,E,F,@
+               .BYTE $A0,$DF,$B0,$B1,$B2,$B3,$B4,$B5 ;space,_,0,1,2,3
+               .BYTE $B6,$B7,$B8,$B9         ;6,7,8,9
+FUNCVEC        .ADDR LEFT-1
+               .ADDR LINEFEED-1
+               .ADDR RIGHT-1
+               .ADDR UP-1
+               .ADDR ESCE-1
+               .ADDR ESCF-1
+               .ADDR ESCAT-1
+               .ADDR SCOROFF-1
+               .ADDR SCORON-1
+                               ;Stuff for EVF ctrl codes
+               .ADDR DNSCRL-1
+               .ADDR UPSCRL-1
+               .ADDR HOUSE-1
+               .ADDR ENTLN-1
+               .ADDR EVFON-1
+                               ;For EVF only
+               .ADDR EVFOFF-1
+               .ADDR MAUSON-1
+               .ADDR MAUSOFF-1
+               .ADDR INVOFF-1
+               .ADDR INVON-1
+               .ADDR IKSKAPE-1
+
+                               ;Matching coades
+EVFTBL         .BYTE $9C,$9F,$9D,$8B,$8C,$96,$97,$99,$9A,$92 ;Used always
+               .BYTE $95,$9B,$98,$8E,$8F,$90 ;Last one is EVF's Escape (DLE)
+
+                               ;For ENVIRON
+ANDTBL         .BYTE $70,$0F,$61,$1F,$43,$3F,$07
+ORTBL          .BYTE $08,$01,$10,$02,$20,$04,$40
+ANDTBL1        .BYTE $7E,$7C,$78
+LDRSMSK        .BYTE $0F,$01,$1F,$03,$3F,$07,$1E,$3C
+LSRDMSK        .BYTE $70,$7E,$60,$7C,$40,$78,$61,$43
+BITMSK         .BYTE $01,$02,$04,$08,$10,$20,$40,$80,$01,$02
+
+
+
+
+
+
+                               ; IMIDGE UV GLOWBALL VEKTIR TAYBULL
+VECTBL         .ADDR LATNTXT   ; 0
+               .ADDR LATNTXT   ; 1
+               .ADDR LATNTXT   ; 2
+               .ADDR LATNTXT   ; 3
+               .ADDR LATNTXT   ; 4
+               .ADDR LATNTXT   ; 5
+               .ADDR LATNTXT   ; 6
+               .ADDR LATNTXT   ; 7
+               .ADDR LATNTXT   ; 8
+               .ADDR LATNTXT   ; 9
+                               ;
+               .BYTE $00,$00   ; Wheremem
+                               ;
+               .BYTE $00       ; Chararg
+               .ADDR FREMEM
+               .BYTE $02       ; ID
+                               ;
+               .BYTE $DF,$87,$F0,$FD,$00,$00,$00,$00 ;Escape cursor pattern
+                               ;
+               .ADDR STDESCUR  ; Vector to standard escape input rtn.
+                               ;
+               JMP  EXTESC     ; External user interface -> esc code processing
+                               ;
+               .BYTE $00,$00,$1C,$77,$FD,$8D,$FD ;Inv, _ Pg, GETLN ret addr, GETLN skip
+               .BYTE $DD,$FB   ; Vector to BEL1
+                               ;
+               .ADDR STDKEPRS  ; Vector to standard keyboard input rtn.
+                               ;
+VECTOUT        .ADDR KOUT2     ; Image of system entry pt. for output
+                               ;
+               .ADDR CEYIN1    ; Image of system entry pt. for input
+                               ;
+               .BYTE $0F,$00   ; Delay values for CYCLE subrtn. (STDKEPRS)
+               JMP  CYCLE
+               JMP  SCRNCHR
+               JMP  EXTCELRV
+               JMP  ENVIRON
+               JMP  BOOTUP
+               JMP  BLSTCHR
+               JMP  OUTDEV
+               JMP  EXTESCAT
