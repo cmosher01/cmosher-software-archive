@@ -104,7 +104,7 @@ HOOKUP         LDA  #$80
 
 
 
-                               ;Save registers & bank switches. Not anymore.
+                               ;Save registers
 IOSAVE         STY  $35
                STX  $EB
                STA  STOREA
@@ -840,8 +840,8 @@ ADD1K          LDA  GRPHH
                STA  GRPHH
 DOSXIT         RTS
                                ;Switch to/from printer or screen program output
-OUTDEV         LDX  #<VECTOUT
-               LDY  #>VECTOUT
+OUTDEV         LDX  #<TBLIOVEC
+               LDY  #>TBLIOVEC
                LDA  PS
                BMI  TOSCRN     ;=> "Now printer, change to screen"
                LDX  #<TBLIOVEC
@@ -1256,8 +1256,7 @@ BELVEC         .ADDR $FBDD     ; Vector to BEL1
 
 KEYPRVEC       .ADDR STDKEPRS  ; Vector to standard keyboard input rtn.
 
-TBLIOVEC
-VECTOUT        .ADDR KOUT2     ; Image of system entry pt. for output
+TBLIOVEC       .ADDR KOUT2     ; Image of system entry pt. for output
                .ADDR CEYIN1    ; Image of system entry pt. for input
 
 
