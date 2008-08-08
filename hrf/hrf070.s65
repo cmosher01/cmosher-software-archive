@@ -28,25 +28,10 @@ VMODE          =    $4FB
 VFACTV         =    $67B
 
 
-STROF80        =    $C000      ;80STOREOFF
-RAMRDOFF       =    $C002
-RAMRDON        =    $C003
-COL80OFF       =    $C00C      ;80COLOFF
-RDBANK2        =    $C011
-RDLCRAM        =    $C012
 TEXTOFF        =    $C050
 MIXEDOFF       =    $C052
 PAGE2OFF       =    $C054
-READBSR2       =    $C080
-WRITBSR2       =    $C081
-WRITBSR1       =    $C089
-RDWRBSR2       =    $C083
-RDWRBSR1       =    $C08B
 HIRESON        =    $C057
-
-SETID          =    $D000
-SETREAD        =    $D00F
-LOAD           =    $D05D      ;Entry pt., load work locs.
 
 BASCALC        =    $FBC1      ; BASCALC without adding left margin.
 WAIT           =    $FCA8
@@ -57,11 +42,11 @@ SETNORM        =    $FE84
 
 
 
-               JMP  BOOTUP0
+               JMP  ABOUT
 
 
 
-               .BYTE " HRF.40 by MARQUE'",$38,$38," systems "
+               .BYTE " HRF.70 by MARQUE'",$38,$38," systems "
 
 
 
@@ -79,16 +64,7 @@ RBASL          .RES 1
 RBASH          .RES 1
 
 
-BOOTUP0        JSR  IOSAVE
-               LDA  WRITBSR2
-               LDA  WRITBSR2   ;Enable initialization
-               LDX  #$78
-TRANSBYT       LDA  FREMEM-1,X
-               STA  SETID-1,X
-               DEX
-               BNE  TRANSBYT
-               BEQ  ABOUT
-BOOTUP         JSR  IOSAVE
+
 ABOUT          LDA  #$46       ; # of columns
                STA  $21
                LDA  #0         ; Left margin.
@@ -96,17 +72,14 @@ ABOUT          LDA  #$46       ; # of columns
                STA  $22        ; Top of screen.
                LDA  #$18       ; Bottom of screen.
                STA  $23
-               STA  STROF80
-               STA  COL80OFF
+
                LDA  TEXTOFF
                LDA  MIXEDOFF
                LDA  HIRESON
                LDA  PAGE2OFF
-               LDY  #$4F
-INITVEC        LDA  VECTBL,Y
-               STA  VECTBL,Y ;Start of my global vector table
-               DEY
-               BPL  INITVEC
+
+
+
                LDA  VMODE
                AND  #$D7
                ORA  #8
@@ -137,7 +110,13 @@ STZ0           STA  $4000,X
 HOOKUP         LDA  #$80
                STA  PS
                JSR  OUTDEV
-               JMP  SWREST
+               JMP  RESTBAS
+
+
+
+
+
+
                                ;Save registers & bank switches.
 IOSAVE         CLD
                STY  $35
@@ -148,24 +127,15 @@ IOSAVE         CLD
                STA  RBASL
                LDA  BASH
                STA  RBASH
-               PLA
-               TAX
-               PLA
-               TAY
-               INX
-               BNE  NOHI
-               INY
-NOHI           STX  RETVECL
-               STY  RETVECH
-               BIT  RDBANK2
-               PHP
-               BIT  RDLCRAM
-               PHP
-               LDA  WRITBSR1
-               LDA  WRITBSR1
-               .BYTE $4C
-RETVECL        .BYTE $00
-RETVECH        .BYTE $00
+               RTS
+
+
+
+
+
+
+
+
                                ;Output entry point.
 KOUT2          JSR  IOSAVE
                JSR  ENVIRON
@@ -181,30 +151,24 @@ ISCTRL         STA  STOREA1
                JSR  PROCESS
                JMP  IOREST
 ACTIV          JSR  VFPROC
+
 IOREST         LDA  STOREA
 XYREST         JSR  RESTBAS
                LDY  $35
                LDX  $EB
-               JMP  SWITCHES
-SWREST         JSR  RESTBAS
-SWITCHES       PLP
-               BPL  NOBANX
-               PLP
-               BPL  DX1
-               BIT  RDWRBSR2
-               BIT  RDWRBSR2
                RTS
-DX1            BIT  RDWRBSR1
-               BIT  RDWRBSR1
-               RTS
-NOBANX         PLP
-               RTS
+
                                ;Restore $28.29 contents
 RESTBAS        LDX  RBASH
                STX  BASH
                LDX  RBASL
                STX  BASL
                RTS
+
+
+
+
+
                                ;PROCESS CONTROL CODES.
 PROCESS        BIT  ESCFLG     ;Escape mode on?
                BPL  CTLOOK     ;=> no
@@ -979,7 +943,6 @@ BLSTCHR        JSR  IOSAVE
                                ;INTERNAL ENTRY PT.
 BLSTCHR1       LDA  INVERTO    ; \_
                PHA             ; /  Save text mode
-               LDA  READBSR2   ;Allow use of D000 code
                LDX  #0
                LDY  CHARARG
                LDA  VECTBL,Y
@@ -1013,7 +976,7 @@ MAXN           PHA
                TAX             ;Use as indx
                LDA  BITMSK,X
                BIT  MEMWID
-               JMP  SETREAD    ;____
+               JMP  SETID      ;____
 CONFIRM        ADC  #$13       ;    |
                BCC  HINOT      ;    |
                CLC             ;    |
@@ -1084,8 +1047,6 @@ COUNT          DEX
                LDA  STOREA1
                LDY  TXTNDX
                STA  (XBASL),Y  ;Store char on text screen.
-               BIT  WRITBSR1
-               BIT  WRITBSR1
                PLA
                STA  INVERTO
                BIT  BIND       ;Exit to external?
@@ -1093,9 +1054,7 @@ COUNT          DEX
                RTS
 EXT            JMP  IOREST
                                ;     NON PRINTED CHARACTER EXIT
-NOTCHR         BIT  WRITBSR1
-               BIT  WRITBSR1
-               PLA
+NOTCHR         PLA
                STA  INVERTO
                BIT  BIND       ;Is BLSTCHR caller external?
                BPL  INTRNL     ;=> no, caller is internal.
@@ -1498,12 +1457,12 @@ ESCE           LDA  $25
                                ;External ESCAT interface handler
 EXTESCAT        JSR  IOSAVE
                JSR  ESCAT
-               JMP  SWREST
+               JMP  RESTBAS
                                ;External char cell reverse interface handler
 EXTCELRV       JSR  IOSAVE
                JSR  ENVIRON
                JSR  CELLREV
-               JMP  SWREST
+               JMP  RESTBAS
                                ;External escape code interface handler
 EXTESC         JSR  IOSAVE
                JSR  ENVIRON
@@ -1538,13 +1497,10 @@ SCRNCHR        JSR  IOSAVE
 
 
 FREMEM         BPL  MAYN
-               STA  RAMRDON
 MAYN           LDA  (WORK),Y
                STA  ZPG2       ;Def type
-               STA  RAMRDOFF
                JMP  GOTSIZ     ;Exit BSR
-               BPL  MAZN
-               STA  RAMRDON
+SETID          BPL  MAZN
 MAZN           AND  (WORK),Y   ;Any defs in section?
                BEQ  NODEFS
                TXA
@@ -1572,7 +1528,6 @@ LAUQE          CMP  (WORK),Y
                DEY
                BPL  LAUQE
 NODEFS         PLA
-               STA  RAMRDOFF
                BPL  ABNORMAL
                JMP  NOTCHR     ;Char not in set
 ABNORMAL       JMP  RESORT     ;-Let's try that search again
@@ -1586,11 +1541,9 @@ DEFD           TYA
                LDA  (CHRTBLBL),Y
                LDY  #$11
                ADC  (CHRTBLBL),Y ;Leap index
-               STA  RAMRDOFF
                JMP  CONFIRM
                                ;Work loading
-               BPL  AWKS
-               STA  RAMRDON
+LOAD           BPL  AWKS
 AWKS           LDA  #0
                CPX  #2
                BEQ  EITHER
@@ -1600,7 +1553,6 @@ EITHER         ORA  ZPG2
                STA  WORK,Y
                DEY
                BPL  LODE
-               STA  RAMRDOFF
                RTS
 
 
@@ -1860,7 +1812,7 @@ DLYLPCNT       .BYTE $00
                JMP  SCRNCHR
                JMP  EXTCELRV
                JMP  ENVIRON
-               JMP  BOOTUP
+               JMP  ABOUT
                JMP  BLSTCHR
                JMP  OUTDEV
                JMP  EXTESCAT
