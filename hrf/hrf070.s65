@@ -44,7 +44,7 @@ SETNORM        =    $FE84
 
 
 
-               JMP  ABOUT
+               JMP  BOOTUP
 
 
 
@@ -66,7 +66,7 @@ RBASL          .RES 1
 RBASH          .RES 1
 
 
-
+BOOTUP         JSR  IOSAVE
 ABOUT          LDA  #$46       ; # of columns
                STA  $21
                LDA  #0         ; Left margin.
@@ -1803,7 +1803,7 @@ DLYLPCNT       .BYTE $00
                JMP  SCRNCHR
                JMP  EXTCELRV
                JMP  ENVIRON
-               JMP  ABOUT
+               JMP  BOOTUP
                JMP  BLSTCHR
                JMP  OUTDEV
                JMP  EXTESCAT
