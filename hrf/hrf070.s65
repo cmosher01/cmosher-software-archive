@@ -1245,10 +1245,11 @@ NOSPLIT        LDA  (GRPHL),Y
                JMP  SUB8K
                                ;Escape code processing subrtn
 NESTED         TXA
-               AND  #3         ;Shut off the 2 bit
+               AND  #3         ;Shut off the 2 bit: fold the arrow keys to the
+                               ;equivalent J,M,K,I cursor movement functions
                TAX
-               JSR  FREE
-               JSR  ENVIRON
+               JSR  FREE       ;Uses only the first four movement functions,
+                               ;fall through to end up staying in Escape mode
 ESCHNDL        JSR  ESCCUR
 EXTESCH        LDX  #7
 ISNSTD         CMP  NESTFUNC,X ;Is it a nested function?
@@ -1559,24 +1560,6 @@ EITHER         ORA  ZPG2
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ;* THE CHARACTER SET! *
 
 LATNTXT        .BYTE $02         ;Def type (# bytes -1)
@@ -1723,13 +1706,13 @@ FUNCVEC        .ADDR LEFT-1
                .ADDR ESCAT-1
                .ADDR SCOROFF-1
                .ADDR SCORON-1
-                               ;Stuff for EVF ctrl codes
+                               ;Extra CTRL codes
                .ADDR DNSCRL-1
                .ADDR UPSCRL-1
                .ADDR HOUSE-1
                .ADDR ENTLN-1
                .ADDR EVFON-1
-                               ;For EVF only
+                               ;EVF only
                .ADDR EVFOFF-1
                .ADDR MAUSON-1
                .ADDR MAUSOFF-1
@@ -1773,14 +1756,17 @@ VECTBL         .ADDR LATNTXT   ; 0
                .ADDR LATNTXT   ; 7
                .ADDR LATNTXT   ; 8
                .ADDR LATNTXT   ; 9
-                               ;
-WHEREMEM       .BYTE $00,$00   ; Wheremem
 
-CHARARG        .BYTE $00       ; Chararg
+
+
+WHEREMEM       .BYTE $00,$00
+
+CHARARG        .BYTE $00
                .ADDR FREMEM
                .BYTE $02       ; ID
 
-ESCCURSR       .BYTE $DF,$87,$F0,$FD,$00,$00,$00,$00 ;Escape cursor pattern
+                               ; Escape cursor
+ESCCURSR       .BYTE $DF,$87,$F0,$FD,$00,$00,$00,$00
 
 ORBIT          .RES 1
 ANDNYB         .RES 1
@@ -1788,22 +1774,25 @@ ANDNYB1        .RES 1
 TXTNDX         .RES 1
 
 ESCCURV        .ADDR STDESCUR  ; Vector to standard escape input rtn.
-                               ;
-               JMP  EXTESC     ; External user interface -> esc code processing
-                               ;
-INVERTO        .BYTE $00       ; Inv
-UNDRSCR        .BYTE $00       ; Underscore
-PAGE           .BYTE $1C       ; Pg
-GTLNCHK        .ADDR $FD77,$FD8D ; GETLN ret addr, GETLN skip
 
+               JMP  EXTESC     ; External user interface -> esc code processing
+
+
+
+INVERTO        .BYTE $00       ; Inv
+UNDRSCR        .BYTE $00       ; _
+PAGE           .BYTE $1C       ; Pg
+GTLNCHK        .ADDR $FD77     ; GETLN ret addr
+               .ADDR $FD8D     ; GETLN cr REENTRY
+               .ADDR $FD83     ; GETLN lowercase (all other chars) reentry
 BELVEC         .ADDR $FBDD     ; Vector to BEL1
-                               ;
+
 KEYPRVEC       .ADDR STDKEPRS  ; Vector to standard keyboard input rtn.
-                               ;
+
 TBLIOVEC       .ADDR KOUT2     ; Image of system entry pt. for output
-                               ;
                .ADDR CEYIN1    ; Image of system entry pt. for input
-                               ;
+
+
                                ; Delay values for CYCLE subrtn. (STDKEPRS)
 DLYVAL         .BYTE $0F
 DLYLPCNT       .BYTE $00
