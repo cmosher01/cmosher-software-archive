@@ -11,13 +11,13 @@ GRPHL          =    $6
 GRPHH          =    $7
 CHRTBLBL       =    $8
 CHRTBLBH       =    $9
-RMS            =    $19        ;Right Margin Source mask
-RMD            =    $1A        ;Right Margin Destination mask
+SCANL          =    $19        ;Right Margin Source mask
+SCANH          =    $1A        ;Right Margin Destination mask
 LMS            =    $1B        ;Left Margin Source mask
 LMD            =    $1C        ;Left Margin Destination mask
 XBASL          =    $1D        ;Lo byte global 70,140 col. text base
 XBASH          =    $1E        ;Hi byte ""
-WORK           =    RMS        ; Scratchpad locations (WORK,X) for char. print
+WORK           =    SCANL      ; Scratchpad locations (WORK,X) for char. print
 BASL           =    $28
 BASH           =    $29
 ZPG1           =    $2A        ;Itchpad
@@ -27,6 +27,8 @@ INVFLG         =    $32
 VMODE          =    $4FB
 VFACTV         =    $67B
 
+KBD            =    $C000
+KBDSTRB        =    $C010
 
 TEXTOFF        =    $C050
 MIXEDOFF       =    $C052
@@ -104,9 +106,9 @@ ABOUT          LDA  #$46       ; # of columns
                LDA  #1
                STA  $67
                LSR
-STZ0           STA  $4000,X
+STORZ          STA  $4000,X
                DEX
-               BPL  STZ0
+               BPL  STORZ
 HOOKUP         LDA  #$80
                STA  PS
                JSR  OUTDEV
@@ -117,13 +119,13 @@ HOOKUP         LDA  #$80
 
 
 
-                               ;Save registers & bank switches.
+                               ;Save registers
 IOSAVE         CLD
                STY  $35
                STX  $EB
                STA  STOREA
                STA  STOREA1
-               LDA  BASL
+               LDA  BASL       ;Save BAS
                STA  RBASL
                LDA  BASH
                STA  RBASH
@@ -136,7 +138,7 @@ IOSAVE         CLD
 
 
 
-                               ;Output entry point.
+                               ;Output entry point
 KOUT2          JSR  IOSAVE
                JSR  ENVIRON
                CLC
@@ -178,12 +180,12 @@ CTLOOK         TAX
                CMP  #$A0
                BCC  KRTL
 LEGJMP         JMP  LEGAL2
-KRTL           LDX  #9         ;Global special ctrls
+KRTL           LDX  #FONTFUNC-FREFUNC         ;Global special ctrls
 DYCTRL         PHA
                LDA  VMODE
                AND  #$28
                EOR  #8
-               BNE  CTRL5      ;=>Ctrls disabled
+               BNE  CTRL5      ;=>Controls disabled
                PLA
 CTLMTCH        CMP  EVFTBL,X
                BEQ  EGZEK
@@ -250,15 +252,15 @@ RIGHT          INC  $24        ;Advance 1 screen pos.
                BCS  NOPAUSE    ;=> was endo screen
                RTS
                                ;  ---Carriage returne processing---
-CROUT2         LDY  $C000
+CROUT2         LDY  KBD
                CPY  #$93       ;Is it CTRL-S?
                BNE  NOPAUSE    ;=> no
-               BIT  $C010      ;Yes, turn off "key pressed" flag.
-PAUSELP        LDY  $C000      ; \_ and pause until any
+               BIT  KBDSTRB    ;Yes, turn off "key pressed" flag.
+PAUSELP        LDY  KBD        ; \_ and pause until any
                BPL  PAUSELP    ; /  key is pressed.
                CPY  #$83       ;Was it CTRL-C?
-               BEQ  NOPAUSE    ;=> yes, (don't turn off keypress flag)
-               BIT  $C010      ;STROBE THAT KEYBOARD FLAG!!
+               BEQ  NOPAUSE    ;=> yes (don't turn off keypress flag)
+               BIT  KBDSTRB    ;STROBE THAT KEYBOARD FLAG!!
 NOPAUSE        LDA  #0
                STA  $24
 LINEFEED       INC  $25
@@ -467,9 +469,9 @@ INITSTRS       LDA  CHRTBLBL
 GETY           LDY  INDEX
                BIT  MARWID     ;Do right margin operation?
                BVC  BYTCOP     ;=> no
-               LDA  RMS        ;    >>> RIGHT MARGINING <<<
+               LDA  SCANL      ;    >>> RIGHT MARGINING <<<
                STA  BASL
-               LDA  RMD
+               LDA  SCANH
                STA  BASH
                JSR  MARKOP
                DEY
@@ -676,9 +678,9 @@ CLEARSET       ROR  BIND
                LDY  INDEX
                BIT  MARWID
                BVC  BYTBLK     ;=> no right margining
-               LDA  RMD
+               LDA  SCANH
                STA  BASH
-               LDA  RMS        ;\_
+               LDA  SCANL      ;\_
                STA  BASL       ;/  In case of EVF inverse
                JSR  MARBLAQ
                DEY
@@ -791,7 +793,7 @@ SCRLINIT       LDA  BASL
                ADC  BASL       ;Get absolute loc. of R.M. col.
                JSR  INDECES
                TXA
-               STA  RMD        ;save subcol for right mar.
+               STA  SCANH      ;save subcol for right mar.
                LSR
                BCC  AD
                INC  INDEX
@@ -857,7 +859,7 @@ SPLIT          CLC
                STA  TXTNDX
                DEC  TXTNDX
                                ;Initialize margin flags/masks
-FIXMAR         LDA  RMD        ;RIGHT MARGIN
+FIXMAR         LDA  SCANH      ;RIGHT MARGIN
                CMP  #6
                BEQ  NOTRM      ;=> no R.M.
                TAX
@@ -871,9 +873,9 @@ FIXMAR         LDA  RMD        ;RIGHT MARGIN
                .BYTE $2C         ;(BIT)
 X6             LDX  #6
 SETMSK         LDA  LDRSMSK,X
-               STA  RMS
+               STA  SCANL
                LDA  LSRDMSK,X
-               STA  RMD
+               STA  SCANH
                SEC
                .BYTE $24         ;(BIT $18)
 NOTRM          CLC
@@ -932,7 +934,7 @@ INVSET         ORA  #$80
                LDY  CHRTBLBL
                STY  WORK
                LDY  CHRTBLBH
-               STY  RMD
+               STY  SCANH
                LDY  #1
                BNE  MAXN
                                ;PRINT A CHARACTER, EXTERNAL ENTRY PT.
@@ -950,7 +952,7 @@ BLSTCHR1       LDA  INVERTO    ; \_
                STA  WORK
                LDA  VECTBL+1,Y
                STA  CHRTBLBH
-               STA  RMD
+               STA  SCANH
                TYA
                LSR
                CMP  #8         ;Use 2nd bit map?
@@ -1210,15 +1212,15 @@ STDKEPRS       JSR  CELLREV    ;Reverse char bit pattern.
                BPL  KEYPRESS   ;=> no key pressed
                BMI  KEYPR1     ;Get around reversal
 KEYPR          JSR  CELLREV    ; (Normal)
-KEYPR1         LDA  $C000      ;Get key value
-               BIT  $C010      ;Turn off AKD flag
+KEYPR1         LDA  KBD        ;Get key value
+               BIT  KBDSTRB    ;Turn off AKD flag
                RTS
                                ;Delay/keyboard check subrtn.
 CYCLE          LDX  DLYLPCNT   ;Get outer loop delay val (default = 0)
 INKRND         INC  $4E
                BNE  CHKKBD
                INC  $4F
-CHKKBD         BIT  $C000      ;Key pressed?
+CHKKBD         BIT  KBD        ;Key pressed?
                BMI  OUTCYCL    ;=> yes
                LDA  DLYVAL     ;Get inner delay (default = $0F)
                JSR  WAIT       ;Call ROM delay subrtn
@@ -1250,13 +1252,14 @@ NESTED         TXA
                TAX
                JSR  FREE       ;Uses only the first four movement functions,
                                ;fall through to end up staying in Escape mode
+               JSR  ENVIRON
 ESCHNDL        JSR  ESCCUR
-EXTESCH        LDX  #7
+EXTESCH        LDX  #FREFUNC-NESTFUNC-1
 ISNSTD         CMP  NESTFUNC,X ;Is it a nested function?
                BEQ  NESTED     ;=> yes
                DEX             ;End noose?
                BPL  ISNSTD     ;=> noape
-               LDX  #$12
+               LDX  #FUNCVEC-FREFUNC-1
 ISFREE         CMP  FREFUNC,X  ;Izzit yon 1 shot function?
                BEQ  FREE       ; brantch = yoape
                DEX             ;Cut noose loose?
@@ -1264,7 +1267,7 @@ ISFREE         CMP  FREFUNC,X  ;Izzit yon 1 shot function?
                RTS
 FREE           TXA
                ASL
-               CMP  #$12       ;Is it a character set #?
+               CMP  #(FONTFUNC-FREFUNC)*2       ;Is it a character set #?
                BCS  SETCHGE    ;=> yes
 SUBROUTE       TAX
                LDA  FUNCVEC+1,X
@@ -1273,18 +1276,18 @@ SUBROUTE       TAX
                PHA
                RTS
                                ;Fulfill keybouard request for charset
-SETCHGE        SBC  #$12       ;Convert to direct chrset #
+SETCHGE        SBC  #(FONTFUNC-FREFUNC)*2       ;Convert to direct chrset #
                STA  CHARARG
                RTS             ;Change it
                                ;Use vector for alternate Escape cursor
 ESCCUR         JMP  (ESCCURV)  ;Ditto
                                ;Standard escape cursor rtn.
 STDESCUR       JSR  EXCHCUR
-ESCKEY         BIT  $C000      ;Key pressed?
+ESCKEY         BIT  KBD        ;Key pressed?
                BPL  ESCKEY     ;=> no
                JSR  EXCHCUR    ;Yes, turn off Esc cursor
-               LDA  $C000      ;Get key val
-               BIT  $C010      ;Shut off AKD flag
+               LDA  KBD        ;Get key val
+               BIT  KBDSTRB    ;Shut off AKD flag
                RTS
                                ;Screen bytes exchange (for escape cursor)
 EXCHCUR        LDA  #7
@@ -1477,14 +1480,14 @@ SCRNCHR        JSR  IOSAVE
                STA  ZPG1
                STY  ZPG2
                LDA  $25
-               STA  RMS
+               STA  SCANL
                LDA  $EB
                STA  $25
                LDA  $35        ;Requested Col.
                JSR  HZ1
                LDY  TXTNDX
                LDA  (XBASL),Y
-               LDX  RMS
+               LDX  SCANL
                STX  $25
                LDX  ZPG1
                LDY  ZPG2
@@ -1501,8 +1504,7 @@ FREMEM         BPL  MAYN
 MAYN           LDA  (WORK),Y
                STA  ZPG2       ;Def type
                JMP  GOTSIZ     ;Exit BSR
-SETID          BPL  MAZN
-MAZN           AND  (WORK),Y   ;Any defs in section?
+SETID          AND  (WORK),Y   ;Any defs in section?
                BEQ  NODEFS
                TXA
                TAY
@@ -1515,7 +1517,7 @@ MAZN           AND  (WORK),Y   ;Any defs in section?
                ADC  WORK       ;   |_
                STA  WORK       ;   |  Address base of sec in comp tbl
                BCC  SAMEPG     ;   |
-               INC  RMD        ;___|
+               INC  SCANH      ;___|
                CLC
 SAMEPG         TYA
                ADC  #8
@@ -1544,8 +1546,7 @@ DEFD           TYA
                ADC  (CHRTBLBL),Y ;Leap index
                JMP  CONFIRM
                                ;Work loading
-LOAD           BPL  AWKS
-AWKS           LDA  #0
+LOAD           LDA  #0
                CPX  #2
                BEQ  EITHER
 LODE           LDA  (CHRTBLBL),Y
@@ -1695,7 +1696,8 @@ LATNTXT        .BYTE $02         ;Def type (# bytes -1)
                                ;For Escape codes
 NESTFUNC       .BYTE $CA,$CD,$CB,$C9,$88,$8A,$95,$8B ;J,M,K,I,<-,down,->,^
 FREFUNC        .BYTE $C2,$C3,$C1,$C4,$C5,$C6,$C0   ;B,C,A,D,E,F,@
-               .BYTE $A0,$DF,$B0,$B1,$B2,$B3,$B4,$B5 ;space,_,0,1,2,3
+               .BYTE $A0,$DF  ;space,_
+FONTFUNC       .BYTE $B0,$B1,$B2,$B3,$B4,$B5   ;0,1,2,3
                .BYTE $B6,$B7,$B8,$B9         ;6,7,8,9
 FUNCVEC        .ADDR LEFT-1
                .ADDR LINEFEED-1
