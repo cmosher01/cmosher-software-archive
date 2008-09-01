@@ -18,8 +18,8 @@
 #include "diskcontroller.h"
 
 DiskController::DiskController(ScreenImage& gui, int slot):
-	slot(slot),
 	gui(gui),
+	slot(slot),
 	drive1(diskBytes1,arm1),
 	drive2(diskBytes2,arm2),
 	currentDrive(&this->drive1)

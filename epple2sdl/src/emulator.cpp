@@ -151,7 +151,7 @@ int Emulator::run()
 				{
 					SDL_Delay(delta_ms);
 				}
-	
+
 			}
 			this->screenImage.displayHz(CHECK_CYCLES_K/(SDL_GetTicks()-prev_ms));
 			prev_ms = SDL_GetTicks();
@@ -209,7 +209,7 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 	else if (sym == SDLK_INSERT)
 	{
 		std::string s = this->clip.getText();
-		for (int i = 0; i < s.length(); ++i)
+		for (unsigned int i = 0; i < s.length(); ++i)
 		{
 			key = s[i];
 			if (key == '\n')
@@ -349,7 +349,7 @@ void Emulator::cmdKey(const SDL_KeyboardEvent& keyEvent)
 	else if (sym == SDLK_INSERT)
 	{
 		std::string s = this->clip.getText();
-		for (int i = 0; i < s.length(); ++i)
+		for (unsigned int i = 0; i < s.length(); ++i)
 		{
 			key = s[i];
 			if (key == '\n' || key == '\r')

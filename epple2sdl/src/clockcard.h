@@ -25,7 +25,7 @@ class ClockCard : public Card
 {
 private:
 	unsigned char latch;
-	int pos;
+	unsigned int pos;
 	char time[64];
 	size_t timelen;
 

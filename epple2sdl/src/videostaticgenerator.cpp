@@ -40,7 +40,7 @@ VideoStaticGenerator::~VideoStaticGenerator()
 void VideoStaticGenerator::tick()
 {
 	signed char* is = this->isig;
-	int cycles = TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE;
+	unsigned int cycles = TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE;
 	if (this->hpos == TimingGenerator::HORIZ_CYCLES-1)
 	{
 		cycles += TimingGenerator::EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE;

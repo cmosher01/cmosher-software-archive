@@ -40,8 +40,8 @@
 Apple2::Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates, AnalogTV& tv, HyperMode& fhyper, KeyboardBufferMode& buffered, ScreenImage& gui):
 	slts(gui),
 	kbd(keypresses,fhyper,buffered),
-	ram(AddressBus::MOTHERBOARD_RAM_SIZ),
 	rom(AddressBus::MOTHERBOARD_ROM_SIZ),
+	ram(AddressBus::MOTHERBOARD_RAM_SIZ),
 	addressBus(ram,rom,kbd,videoMode,paddles,paddleButtonStates,speaker,slts),
 	picgen(tv,videoMode,this->revision),
 	video(videoMode,addressBus,picgen,textRows),

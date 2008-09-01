@@ -21,11 +21,11 @@
 LanguageCard::LanguageCard(ScreenImage& gui, int slot):
 	gui(gui),
 	slot(slot),
+	inhibit(false),
 	ramTop(0x10000-0xE000),
+	bank(1),
 	readEnable(false),
 	writeEnable(true),
-	bank(1),
-	inhibit(false),
 	writeCount(0)
 {
 	this->ramBank.push_back(new Memory(0xE000-0xD000));
