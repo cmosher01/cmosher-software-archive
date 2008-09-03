@@ -1,0 +1,749 @@
+0 HEAD
+1 SOUR GRO
+2 NAME Genealogy Research Organizer
+2 VERS 1.4
+2 CORP Christopher Alan Mosher
+3 ADDR 41 Brook Pine Drive
+4 CONT Shelton, CT 06484-5912
+1 GEDC
+2 VERS 5.5
+2 FORM LINEAGE-LINKED
+1 CHAR ASCII
+1 SUBM @M0@
+1 NOTE This tree contains the English descendants of John Moger, of Cucklingt
+2 CONC on, Somerset, England, through 2 generations.
+2 CONT
+2 CONT The name Moger was later changed to Mosher or Moshier.
+2 CONT
+2 CONT The most notable descendants are the two Hugh Mosher's that emigrate
+2 CONC d to the USA. One was known as "Hugh Mosher of Casco Bay, Maine." Hi
+2 CONC s father is often listed (in other genealogies) as John Moger/Mosher
+2 CONC , but this is incorrect. His real father was Hugh Moger (who was the s
+2 CONC on of John Moger). The error can be traced to the second edition of "D
+2 CONC escendants of Hugh Mosher and Rebecca Maxson Through Seven Generations
+2 CONC ," which contained this typo (on page viii). The "Errata and Addenda
+2 CONC " lists the correction.
+2 CONT
+2 CONT The other Hugh Mosher is known as "Hugh Mosher of Portsmouth, Rhode Is
+2 CONC land," or "Hugh Mosher of Dartmouth, Massachusetts," or even "Hugh Mos
+2 CONC her of Tiverton, Rhode Island." This is the Hugh Mosher that signed th
+2 CONC e first land deed of Westerly, Rhode Island on 29 June 1660. This Hugh
+2 CONC 's father was Nicholas Moger (son of John Moger). Note that another er
+2 CONC ror in the "Descendants of Hugh Mosher" book (on page 1) lists Nichola
+2 CONC s's father as Hugh Moger; again, the "Errata and Addenda" lists the co
+2 CONC rrection: Nicholas's father was John Moger.
+2 CONT
+0 @M0@ SUBM
+0 @I0@ INDI
+1 _XY 195 30
+1 NAME John /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE ABT 1546
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S0@
+3 QUAY 0
+1 DEAT
+2 DATE ABT JAN 1612
+2 PLAC Cucklington, Somerset, England
+1 BURI
+2 DATE 15 JAN 1612
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S3@
+3 QUAY 1
+3 PAGE p. viii
+1 FAMS @F0@
+1 FAMS @F1@
+0 @I1@ INDI
+1 _XY 314 30
+1 NAME Edith /Crosse/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE ABT 1555
+2 SOUR @S1@
+3 QUAY 0
+1 DEAT
+2 DATE ABT APR 1619
+2 PLAC Cucklington, Somerset, England
+1 BURI
+2 DATE 22 APR 1619
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S3@
+3 QUAY 1
+3 PAGE p. viii
+1 FAMS @F0@
+0 @I2@ INDI
+1 _XY 94 42
+1 NAME Denise /Browne/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX F
+1 FAMS @F1@
+0 @I3@ INDI
+1 _XY 30 155
+1 NAME Agnes /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX F
+1 CHR
+2 DATE 20 DEC 1568
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S2@
+3 QUAY 1
+3 PAGE p. vii
+1 BIRT
+2 DATE ABT DEC 1568
+1 FAMC @F1@
+0 @I4@ INDI
+1 _XY 120 155
+1 NAME Mary /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX F
+1 CHR
+2 DATE 29 SEP 1570
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S2@
+3 QUAY 1
+3 PAGE p. vii
+1 BIRT
+2 DATE ABT SEP 1570
+1 FAMC @F1@
+0 @I5@ INDI
+1 _XY 232 155
+1 NAME Edith /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX F
+1 CHR
+2 DATE 25 DEC 1581
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S2@
+3 QUAY 1
+3 PAGE p. vii
+1 BIRT
+2 DATE ABT DEC 1581
+2 PLAC Cucklington, Somerset, England
+1 FAMC @F0@
+0 @I6@ INDI
+1 _XY 329 155
+1 NAME John /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX M
+1 CHR
+2 DATE 27 OCT 1584
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S2@
+3 QUAY 1
+3 PAGE p. viii
+1 BIRT
+2 DATE ABT OCT 1584
+1 DEAT
+2 DATE 27 NOV 1584
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S2@
+3 QUAY 1
+3 PAGE p. viii
+1 FAMC @F0@
+0 @I7@ INDI
+1 _XY 418 155
+1 NAME Robert /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX M
+1 CHR
+2 DATE 21 SEP 1587
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S2@
+3 QUAY 1
+3 PAGE p. viii
+2 NOTE @T1@
+1 BIRT
+2 DATE ABT SEP 1587
+1 DEAT
+2 DATE BEF 4 FEB 1589
+2 PLAC Cucklington, Somerset, England
+1 FAMC @F0@
+0 @I8@ INDI
+1 _XY 522 155
+1 NAME Robert /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX M
+1 CHR
+2 DATE 4 FEB 1589
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S2@
+3 QUAY 1
+3 PAGE p. viii
+1 BIRT
+2 DATE ABT FEB 1589
+1 FAMC @F0@
+0 @I9@ INDI
+1 _XY 605 155
+1 NAME John /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX M
+1 CHR
+2 DATE 25 JUL 1590
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S2@
+3 QUAY 1
+3 PAGE p. viii
+1 BIRT
+2 DATE ABT JUL 1590
+1 FAMC @F0@
+0 @I10@ INDI
+1 _XY 567 209
+1 NAME Edith /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX F
+1 CHR
+2 DATE 22 APR 1595
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S2@
+3 QUAY 1
+3 PAGE p. viii
+1 BIRT
+2 DATE ABT APR 1595
+1 FAMC @F0@
+0 @I11@ INDI
+1 _XY 874 154
+1 NAME Nicholas /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX M
+1 CHR
+2 DATE 19 DEC 1596
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S2@
+3 QUAY 1
+3 PAGE p. viii
+1 BIRT
+2 DATE ABT DEC 1596
+2 PLAC Cucklington, Somerset, England
+1 IMMI
+2 DATE ABT 1658
+2 SOUR @S2@
+3 PAGE pp. viii-xi
+3 QUAY 0
+1 DEAT
+2 DATE ABT 1670
+2 NOTE @T4@
+1 FAMC @F0@
+1 FAMS @F2@
+0 @I12@ INDI
+1 _XY 477 209
+1 NAME Frances /Moger/
+2 SOUR @S2@
+3 PAGE p. viii
+3 QUAY 1
+3 DATA
+4 TEXT ffrauncis ["ff" in Parish Registers really just means "F", and I'm ass
+5 CONC uming the normal spelling of the (female) name Frances]
+1 SEX F
+1 BURI
+2 DATE 4 SEP 1605
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S2@
+3 QUAY 1
+3 PAGE p. viii
+1 DEAT
+2 DATE ABT SEP 1605
+2 PLAC Cucklington, Somerset, England
+1 EVEN
+2 TYPE note
+2 NOTE @T11@
+1 FAMC @F0@
+0 @I13@ INDI
+1 _XY 373 209
+1 NAME Tristram /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX M
+1 EVEN
+2 TYPE note
+2 NOTE @T0@
+1 FAMC @F0@
+0 @I14@ INDI
+1 _XY 990 154
+1 NAME Lydia /Maxson/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1612
+2 PLAC Somerset, England
+2 SOUR @S6@
+3 QUAY 0
+1 DEAT
+2 DATE 1680
+2 PLAC Tiverton, Washington, RI, USA
+2 SOUR @S6@
+3 QUAY 0
+1 IMMI
+2 DATE ABT 1658
+1 FAMS @F2@
+0 @I15@ INDI
+1 _XY 772 354
+1 NAME Hugh /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 12 JUN 1632
+2 SOUR @S0@
+3 QUAY 0
+2 PLAC Cucklington, Somerset, England
+1 DEAT
+2 DATE 3 NOV 1713
+2 PLAC Newport, Newport, RI, USA
+2 SOUR @S1@
+3 QUAY 0
+1 FAMC @F2@
+0 @I16@ INDI
+1 _XY 861 354
+1 NAME John /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1635
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S1@
+3 QUAY 0
+2 NOTE @T9@
+1 DEAT
+2 DATE 1656
+2 SOUR @S4@
+3 QUAY 1
+1 FAMC @F2@
+0 @I17@ INDI
+1 _XY 1181 354
+1 NAME Daniel /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE ABT 1642
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S0@
+3 QUAY 0
+2 NOTE @T6@
+1 DEAT
+2 DATE 1656
+2 SOUR @S4@
+3 QUAY 1
+1 FAMC @F2@
+0 @I18@ INDI
+1 _XY 1096 354
+1 NAME Mary /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE ABT 1641
+2 SOUR @S0@
+3 QUAY 0
+2 PLAC Cucklington, Somerset, England
+2 NOTE @T5@
+1 DEAT
+2 DATE 2 FEB 1718
+2 PLAC Westerly, Washington, RI, USA
+2 SOUR @S1@
+3 QUAY 0
+1 FAMC @F2@
+0 @I19@ INDI
+1 _XY 1259 354
+1 NAME James /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S0@
+3 QUAY 0
+2 DATE ABT 1643
+2 NOTE @T7@
+1 DEAT
+2 DATE 7 DEC 1713
+2 PLAC Boston, MA, USA
+2 SOUR @S1@
+3 QUAY 0
+1 FAMC @F2@
+0 @I20@ INDI
+1 _XY 1017 354
+1 NAME Joseph /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S0@
+3 QUAY 0
+2 DATE ABT 1640
+1 FAMC @F2@
+0 @I21@ INDI
+1 _XY 934 354
+1 NAME Nicholas /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S0@
+3 QUAY 0
+2 DATE ABT 1637
+2 NOTE @T8@
+1 FAMC @F2@
+0 @I22@ INDI
+1 _XY 274 209
+1 NAME Hugh /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE ABT 1583
+2 SOUR @S0@
+3 QUAY 0
+1 BURI
+2 DATE 23 JAN 1657
+2 PLAC Wincanton, Somerset, England
+2 SOUR @S2@
+3 QUAY 1
+3 PAGE p. viii
+1 DEAT
+2 DATE JAN 1657
+2 PLAC Wincanton, Somerset, England
+1 WILL
+2 DATE 9 JUL 1656
+2 SOUR @S2@
+3 PAGE p. viii
+3 QUAY 1
+2 PLAC Wincanton, Somerset, England
+1 PROB
+2 DATE 30 JUN 1657
+2 SOUR @S2@
+3 PAGE p. viii
+3 QUAY 1
+2 NOTE @T13@
+1 FAMC @F0@
+1 FAMS @F3@
+0 @I23@ INDI
+1 _XY 183 209
+1 NAME Margaret//
+2 SOUR @S0@
+3 QUAY 0
+1 SEX F
+1 BURI
+2 DATE 1 AUG 1658
+2 PLAC Wincanton, Somerset, England
+2 SOUR @S3@
+3 QUAY 1
+3 PAGE p. viii
+1 DEAT
+2 DATE ABT 30 JUL 1658
+2 PLAC Wincanton, Somerset, England
+1 BIRT
+2 DATE ABT 1584
+2 SOUR @S1@
+3 QUAY 0
+1 WILL
+2 DATE 22 JUL 1658
+2 SOUR @S2@
+3 PAGE p. xi
+3 QUAY 1
+1 PROB
+2 DATE 6 DEC 1658
+2 SOUR @S2@
+3 QUAY 1
+3 PAGE p. xi
+1 FAMS @F3@
+0 @I24@ INDI
+1 _XY 111 354
+1 NAME Edith /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX F
+1 CHR
+2 DATE 24 FEB 1610
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S0@
+3 QUAY 0
+1 BIRT
+2 DATE ABT FEB 1610
+1 FAMC @F3@
+0 @I25@ INDI
+1 _XY 196 354
+1 NAME Edith /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX F
+1 CHR
+2 DATE 10 APR 1611
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S3@
+3 QUAY 1
+3 PAGE p. viii
+1 BIRT
+2 DATE ABT APR 1611
+1 FAMC @F3@
+0 @I26@ INDI
+1 _XY 271 354
+1 NAME John /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX M
+1 CHR
+2 DATE 18 NOV 1613
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S3@
+3 QUAY 1
+3 PAGE p. viii
+1 BIRT
+2 DATE ABT NOV 1613
+1 BURI
+2 DATE 15 AUG 1670
+2 PLAC Wincanton, Somerset, England
+2 SOUR @S3@
+3 QUAY 1
+3 PAGE p. viii
+1 DEAT
+2 DATE ABT AUG 1670
+2 PLAC Wincanton, Somerset, England
+1 FAMC @F3@
+0 @I27@ INDI
+1 _XY 349 354
+1 NAME Mabel /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX F
+1 CHR
+2 DATE 11 FEB 1616
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S3@
+3 QUAY 1
+3 PAGE p. viii
+1 BIRT
+2 DATE ABT FEB 1616
+1 FAMC @F3@
+0 @I28@ INDI
+1 _XY 530 354
+1 NAME Mary /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX F
+1 CHR
+2 DATE 15 JUN 1621
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S3@
+3 QUAY 1
+3 PAGE p. viii
+1 BIRT
+2 DATE ABT JUN 1621
+1 DEAT
+2 DATE BEF 9 JUL 1656
+2 SOUR @S2@
+3 PAGE p. ix
+3 QUAY 1
+1 FAMC @F3@
+0 @I29@ INDI
+1 _XY 434 354
+1 NAME Dashwood /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX M
+1 CHR
+2 DATE 29 JUN 1619
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S3@
+3 QUAY 1
+3 PAGE p. viii
+1 BIRT
+2 DATE ABT JUN 1619
+1 BURI
+2 DATE 28 NOV 1619
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S3@
+3 QUAY 1
+3 PAGE p. viii
+1 DEAT
+2 DATE ABT NOV 1619
+1 FAMC @F3@
+0 @I30@ INDI
+1 _XY 30 354
+1 NAME Hugh /Moger/
+2 SOUR @S0@
+3 QUAY 0
+1 SEX M
+1 RESI
+2 PLAC Casco Bay, ME, USA
+2 DATE FROM JUL 1632 TO 26 SEP 1666
+1 BIRT
+2 DATE ABT MAR 1609
+1 CHR
+2 DATE 5 MAR 1609
+2 PLAC Cucklington, Somerset, England
+2 NOTE @T2@
+2 SOUR @S3@
+3 PAGE p. 1
+3 QUAY 1
+1 IMMI
+2 DATE FROM 5 APR 1632 TO 5 JUN 1632
+2 PLAC Boston, Suffolk, MA, USA
+2 SOUR @S4@
+3 QUAY 1
+3 DATA
+4 TEXT There is a listing in the book "Directory of the Ancestral Heads of Ne
+5 CONC w England Families that says a Hugh Mosher came to America in 1632, se
+5 CONC ttled at Salam, Mass. and then moved to RI in 1661. This is supporte
+5 CONC d by a note in "Banks Topographical Dictionary of 2885 English Emigran
+5 CONC ts to New England (1620-1650)" lists Hugh Mosier of Cucklington, Somer
+5 CONC setshire, England as Traveling to America in 1632 on the James and eve
+5 CONC ntually settling in RI.
+5 CONT
+5 CONT This is confirmed by a passenger list in Winthrop's Journal. The headi
+5 CONC ng of the list was:
+5 CONT
+5 CONT James, Captain Grant, Master. Sailed from london about the first wee
+5 CONC k of April - Arrived Boston June 5. She brought 12 Passengers 
+5 CONT The London Rolls Office supports this in a volume called "A Booke of E
+5 CONC ntrie for Pafsengers by ye comifsion, and Souldiers according to the S
+5 CONC tatuti pafsing beyond the Seas, begun at Chriftmas, 1631. and ending a
+5 CONC t Criftmas, 1632", which lists all the other passengers of the James
+5 CONC , including "Hugh Moier" under the heading: 
+5 CONT Aprilis, 1632.-The names of such Men women and children wch are to pas
+5 CONC se to New England to be resident there vppon a Plantacon, have tendre
+5 CONC d and taken the oath of allegeance according to ye Statute 
+5 CONT It should be noted that Winthrop's Journal listed "Casco Bay" - a tow
+5 CONC n in Maine - beside the name of Hugh Mosher.
+5 CONT
+2 NOTE @T12@
+1 PROB
+2 DATE 26 SEP 1666
+2 PLAC Casco Bay, ME, USA
+2 SOUR @S5@
+3 QUAY 0
+1 FAMC @F3@
+0 @F0@ FAM
+1 HUSB @I0@
+1 WIFE @I1@
+1 MARR
+2 DATE 16 OCT 1576
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S2@
+3 PAGE p. vii
+3 QUAY 1
+1 CHIL @I5@
+1 CHIL @I6@
+1 CHIL @I7@
+1 CHIL @I8@
+1 CHIL @I9@
+1 CHIL @I10@
+1 CHIL @I11@
+1 CHIL @I12@
+1 CHIL @I13@
+1 CHIL @I22@
+0 @F1@ FAM
+1 HUSB @I0@
+1 WIFE @I2@
+1 MARR
+2 DATE 8 SEP 1566
+2 PLAC Cucklington, Somerset, England
+2 SOUR @S2@
+3 QUAY 1
+3 PAGE vii
+1 CHIL @I3@
+1 CHIL @I4@
+0 @F2@ FAM
+1 HUSB @I11@
+1 WIFE @I14@
+1 MARR
+2 DATE ABT 1631
+2 NOTE @T10@
+2 PLAC Cucklington, Somerset, England
+1 CHIL @I15@
+1 CHIL @I16@
+1 CHIL @I17@
+1 CHIL @I18@
+1 CHIL @I21@
+1 CHIL @I19@
+1 CHIL @I20@
+0 @F3@ FAM
+1 HUSB @I22@
+1 WIFE @I23@
+1 CHIL @I24@
+1 CHIL @I25@
+1 CHIL @I26@
+1 CHIL @I27@
+1 CHIL @I28@
+1 CHIL @I29@
+1 CHIL @I30@
+1 MARR
+2 DATE ABT 1608
+2 NOTE @T3@
+0 @S0@ SOUR
+1 AUTH LDS
+1 TITL International Genealogical Index (IGI)
+1 PUBL http://www.familysearch.org
+0 @S1@ SOUR
+1 AUTH LDS
+1 TITL Ancestral File
+1 PUBL http://www.familysearch.org
+0 @S2@ SOUR
+1 AUTH Chamberlain, Mildred, and Clarenbach, Laura
+1 TITL Descendants of Hugh Mosher and Rebecca Maxson Through Seven Generation
+2 CONC s (revised edition)
+1 PUBL Clarenbach, Laura, Madison, WI, 1990
+0 @S3@ SOUR
+1 AUTH Clarenbach, Laura
+1 TITL Errata and Addenda [for Descendants of Hugh Mosher and Rebecca Maxso
+2 CONC n Through Seven Generations (revised edition)]
+1 PUBL Clarenbach, Laura, Madison, WI, c. 1990
+0 @S4@ SOUR
+1 AUTH Altenburg, Robert C.
+1 TITL Rob Altenburg's Genealogy Page: The Mosher (Moger) Family
+1 PUBL http://altenburgs.com/gene/mosher.htm
+0 @S5@ SOUR
+1 AUTH LDS
+1 TITL Pedigree Resource File
+1 PUBL http://www.familysearch.org
+0 @S6@ SOUR
+1 AUTH Kurtz, Alli
+1 TITL Kurtz, Eckles, Starkweather, Horr
+1 PUBL http://www.gencircles.com/users/akurtz/1/
+0 @T0@ NOTE there may be two Tristrams
+0 @T1@ NOTE "beinge St. Matthewes day"
+0 @T2@ NOTE IGI gives John and Edith as parents; but this doesn't make sense sinc
+1 CONC e there was another Hugh son of John and Edith that was alive at the t
+1 CONC ime of this Hugh's birth. I'm assuming this Hugh's parents are Hugh an
+1 CONC d Margaret.
+1 CONT Descendants of Hugh Mosher (p. viii) says, "Hugh Moger the sonne of Jo
+1 CONC hn Moger" but this is a misprint. The "Errata and Addenda" sheet for t
+1 CONC his book gives the correct sentence. "Hugh Moger the sonne of Hughe Mo
+1 CONC ger"
+0 @T3@ NOTE based on birth dates of children
+0 @T4@ NOTE just a guess
+0 @T5@ NOTE place is assumed
+0 @T6@ NOTE place is assumed
+0 @T7@ NOTE place is assumed
+0 @T8@ NOTE place is assumed
+0 @T9@ NOTE place is assumed
+0 @T10@ NOTE Based on birth dates of children. Place is a guess.
+0 @T11@ NOTE This person's name is often shown as "ffrauncis," beginning with two l
+1 CONC ower-case f's. This is incorrect; the source of the confusion is the s
+1 CONC tyle of writing the capital F in old English Parish records. The capit
+1 CONC al F is often written as "ff," but the actual letter is just a single
+1 CONC , capital F. Also, the female version of the name is (usually) correct
+1 CONC ly spelled with an e instead of an i: Frances rather than Francis.
+0 @T12@ NOTE on ship "James"
+0 @T13@ NOTE see Talbot v. Moger (in UK National Archives: C10/46/188)
+1 CONT
+0 TRLR

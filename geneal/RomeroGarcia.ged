@@ -1,0 +1,3181 @@
+0 HEAD
+1 SOUR GRO
+2 NAME Genealogy Research Organizer
+2 VERS 1.4
+2 CORP Christopher Alan Mosher
+3 ADDR 41 Brook Pine Drive
+4 CONT Shelton, CT 06484-5912
+1 GEDC
+2 VERS 5.5
+2 FORM LINEAGE-LINKED
+1 CHAR ASCII
+1 SUBM @M0@
+1 NOTE This tree contains the ancestors of Francisca Romero in Ecuador and Sp
+2 CONC ain, including Gabriel García Moreno, President of Ecuador.
+0 @M0@ SUBM
+0 @I0@ INDI
+1 _XY 465 1434
+1 NAME Francisca /Romero/
+2 SOUR @S0@
+1 SEX F
+1 BIRT
+2 DATE 25 SEP 1850
+2 PLAC Jipijapa, Manabi, Ecuador
+1 RESI
+2 DATE FROM 25 SEP 1850 TO 1901
+2 PLAC Jipijapa, Manabi, Ecuador
+1 FAMC @F0@
+0 @I1@ INDI
+1 _XY 376 1371
+1 NAME Manuel Ignacio /García Moreno/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+2 DATE 1796
+1 OCCU priest
+2 SOUR @S6@
+1 RESI
+2 DATE FROM 1796 TO 1830
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S0@
+3 QUAY 0
+2 NOTE @T7@
+1 RELI Catholic
+2 SOUR @S0@
+3 QUAY 1
+1 FAMS @F0@
+1 FAMC @F1@
+0 @I2@ INDI
+1 _XY 259 1364
+1 NAME Rosario /Romero/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX F
+1 DEAT
+2 DATE 1887
+2 PLAC Jipijapa, Manabi, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+2 NOTE @T5@
+1 OCCU servant
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+2 NOTE @T11@
+2 DATE FROM 1816 TO 1830
+1 BIRT
+2 DATE ABT 1815
+2 NOTE @T9@
+1 RESI
+2 DATE FROM 1816 TO 1830
+2 PLAC Guayaquil, Guayas, Ecuador
+2 NOTE @T10@
+1 RESI
+2 DATE FROM 1830 TO 1887
+2 PLAC Jipijapa, Manabi, Ecuador
+2 NOTE @T12@
+1 RELI Catholic
+2 SOUR @S0@
+3 QUAY 1
+1 FAMS @F0@
+0 @I3@ INDI
+1 _XY 796 1319
+1 NAME Gabriel /García Moreno/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 TITL 10th President of Ecuador
+2 DATE FROM 2 APR 1861 TO 30 AUG 1865
+2 PLAC Ecuador
+2 SOUR @S3@
+3 QUAY 1
+1 EVEN
+2 TYPE note
+2 NOTE @T0@
+1 BIRT
+2 DATE 24 DEC 1821
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S1@
+3 PAGE p. 150
+3 QUAY 1
+1 DEAT
+2 DATE 6 AUG 1875
+2 PLAC Presidential Palace, Quito, Pichincha, Ecuador
+2 SOUR @S1@
+3 PAGE p. 152
+3 QUAY 1
+1 EVEN
+2 TYPE note
+2 SOUR @S2@
+3 QUAY 1
+1 TITL 13th President of Ecuador
+2 DATE FROM 10 AUG 1869 TO 5 AUG 1875
+2 PLAC Ecuador
+2 SOUR @S3@
+3 QUAY 1
+1 TITL 13th President of Ecuador (next term)
+2 DATE FROM 6 AUG 1875 TO 6 AUG 1875
+2 PLAC Ecuador
+2 SOUR @S4@
+3 QUAY 1
+1 EVEN
+2 TYPE note
+2 NOTE @T1@
+1 FAMC @F1@
+0 @I4@ INDI
+1 _XY 30 1137
+1 NAME Gabriel /García Gómez/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 2 OCT 1766
+2 PLAC Villaverde del Monte, Soria, Spain
+2 SOUR @S0@
+3 QUAY 1
+1 DEAT
+2 DATE 1833
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 FAMS @F1@
+1 FAMC @F2@
+0 @I5@ INDI
+1 _XY 240 1131
+1 NAME Juana Mercedes /Moreno y Morán de Butrón/
+2 SOUR @S6@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1780
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 DEAT
+2 DATE 16 JUL 1871
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 FAMS @F1@
+1 FAMC @F8@
+0 @I6@ INDI
+1 _XY 147 1051
+1 NAME Diego /García Yanguas/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 PLAC Villaverde del Monte, Soria, Spain
+2 SOUR @S8@
+1 FAMS @F2@
+1 FAMC @F3@
+1 DEAT
+2 PLAC Villaverde del Monte, Soria, Spain
+2 SOUR @S0@
+3 QUAY 1
+0 @I7@ INDI
+1 _XY 302 1051
+1 NAME María /Gómez/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 PLAC Villaverde del Monte, Soria, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F2@
+1 FAMC @F4@
+1 DEAT
+2 PLAC Villaverde del Monte, Soria, Spain
+2 SOUR @S0@
+3 QUAY 1
+0 @I8@ INDI
+1 _XY 128 989
+1 NAME Juan /García Yanguas/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 PLAC Villaverde del Monte, Soria, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F3@
+1 DEAT
+2 PLAC Villaverde del Monte, Soria, Spain
+2 SOUR @S0@
+3 QUAY 1
+0 @I9@ INDI
+1 _XY 30 983
+1 NAME Josefa /Martínez/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 27 MAR 1652
+2 PLAC Villaverde del Monte, Soria, Spain
+2 SOUR @S0@
+3 QUAY 1
+1 FAMS @F3@
+1 FAMC @F5@
+1 DEAT
+2 PLAC Villaverde del Monte, Soria, Spain
+2 SOUR @S0@
+3 QUAY 1
+0 @I10@ INDI
+1 _XY 263 1012
+1 NAME Juan /Gómez/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 PLAC Villaverde del Monte, Soria, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F4@
+1 DEAT
+2 PLAC Villaverde del Monte, Soria, Spain
+2 SOUR @S0@
+3 QUAY 1
+0 @I11@ INDI
+1 _XY 348 1012
+1 NAME Cecilia /de la Orden/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 PLAC Villaverde del Monte, Soria, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F4@
+1 DEAT
+2 PLAC Villaverde del Monte, Soria, Spain
+2 SOUR @S0@
+3 QUAY 1
+0 @I12@ INDI
+1 _XY 153 934
+1 NAME Alonso /Martínez/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 FAMS @F5@
+1 BIRT
+2 PLAC Villaverde del Monte, Soria, Spain
+2 SOUR @S0@
+3 QUAY 1
+1 DEAT
+2 PLAC Villaverde del Monte, Soria, Spain
+2 SOUR @S0@
+3 QUAY 1
+0 @I13@ INDI
+1 _XY 42 934
+1 NAME Catalina /Escribano/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX F
+1 FAMS @F5@
+1 FAMC @F6@
+1 BIRT
+2 PLAC Villaverde del Monte, Soria, Spain
+2 SOUR @S0@
+3 QUAY 1
+1 DEAT
+2 PLAC Villaverde del Monte, Soria, Spain
+2 SOUR @S0@
+3 QUAY 1
+0 @I14@ INDI
+1 _XY 46 889
+1 SEX F
+1 FAMS @F6@
+1 FAMC @F7@
+0 @I15@ INDI
+1 _XY 49 845
+1 NAME Ana /de la Orden/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX F
+1 FAMS @F7@
+1 BIRT
+2 PLAC Villaverde del Monte, Soria, Spain
+2 SOUR @S0@
+3 QUAY 1
+1 DEAT
+2 PLAC Villaverde del Monte, Soria, Spain
+2 SOUR @S0@
+3 QUAY 1
+0 @I16@ INDI
+1 _XY 580 1002
+1 NAME Manuel Ignacio /Moreno y Sylva Santistevan/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 TITL Concejale de Guayaquil
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S5@
+3 QUAY 1
+2 NOTE @T2@
+1 BIRT
+2 DATE 1760
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F8@
+1 FAMC @F9@
+0 @I17@ INDI
+1 _XY 2445 1177
+1 NAME Manuela Antonia /Morán de Butrón y del Castillo/
+2 SOUR @S6@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 17 JUN 1757
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S6@
+3 QUAY 1
+1 FAMS @F8@
+1 FAMC @F10@
+0 @I18@ INDI
+1 _XY 660 896
+1 NAME José Ignacio /Moreno/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 PLAC Spain
+2 SOUR @S8@
+3 QUAY 0
+1 DEAT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F9@
+1 FAMS @F32@
+0 @I19@ INDI
+1 _XY 477 879
+1 NAME Ana Manuela /de Sylva Santistevan y Larralde/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 3 JAN 1717
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 BAPM
+2 DATE 12 JAN 1717
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 DEAT
+2 DATE 7 AUG 1804
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F9@
+1 FAMC @F33@
+0 @I20@ INDI
+1 _XY 152 1434
+1 NAME Pedro Alcántara /Romero/
+2 SOUR @S0@
+3 PAGE p. 12
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 PLAC Jipijapa, Manabi, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 FAMC @F0@
+0 @I21@ INDI
+1 _XY 285 1434
+1 NAME Ignacio /Romero/
+2 SOUR @S0@
+3 PAGE p. 12
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 PLAC Jipijapa, Manabi, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 FAMC @F0@
+0 @I22@ INDI
+1 _XY 375 1434
+1 NAME Tomás /Romero/
+2 SOUR @S0@
+3 PAGE p. 12
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 PLAC Jipijapa, Manabi, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 FAMC @F0@
+0 @I23@ INDI
+1 _XY 569 1434
+1 NAME Mercedes /Romero/
+2 SOUR @S0@
+3 PAGE p. 12
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 PLAC Jipijapa, Manabi, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 FAMC @F0@
+0 @I24@ INDI
+1 _XY 30 1274
+1 NAME Josefa Dominga /García Moreno/
+2 SOUR @S0@
+3 PAGE p. 17
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 22 APR 1798
+2 SOUR @S8@
+3 QUAY 0
+2 PLAC Guayaquil, Guayas, Ecuador
+1 DEAT
+2 DATE ABT 1845
+2 SOUR @S0@
+3 PAGE p. 17
+3 QUAY 1
+1 FAMC @F1@
+0 @I25@ INDI
+1 _XY 253 1319
+1 NAME Concepción /García Moreno/
+2 SOUR @S0@
+3 PAGE p. 17
+3 QUAY 1
+1 SEX F
+1 FAMC @F1@
+0 @I26@ INDI
+1 _XY 121 1319
+1 NAME Mercedes /García Moreno/
+2 SOUR @S0@
+3 PAGE p. 17
+3 QUAY 1
+1 SEX F
+1 FAMC @F1@
+0 @I27@ INDI
+1 _XY 461 1278
+1 NAME José /García Moreno/
+2 SOUR @S0@
+3 PAGE p. 17
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1808
+2 SOUR @S6@
+3 QUAY 1
+2 PLAC Guayaquil, Guayas, Ecuador
+1 FAMC @F1@
+0 @I28@ INDI
+1 _XY 703 1278
+1 NAME José Fernando /García Moreno/
+2 SOUR @S6@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1822
+2 SOUR @S6@
+3 QUAY 1
+2 PLAC Guayaquil, Guayas, Ecuador
+1 FAMC @F1@
+0 @I29@ INDI
+1 _XY 192 1272
+1 NAME Carmen /García Moreno/
+2 SOUR @S0@
+3 PAGE p. 17
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1800
+2 SOUR @S6@
+3 QUAY 1
+2 PLAC Guayaquil, Guayas, Ecuador
+1 FAMC @F1@
+0 @I30@ INDI
+1 _XY 581 1278
+1 NAME Miguel /García Moreno/
+2 SOUR @S0@
+3 PAGE p. 17
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1817
+2 SOUR @S6@
+3 QUAY 1
+2 PLAC Guayaquil, Guayas, Ecuador
+1 FAMC @F1@
+0 @I31@ INDI
+1 _XY 498 1317
+1 NAME Pedro Pablo /García Moreno/
+2 SOUR @S0@
+3 PAGE p. 17
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1824
+2 SOUR @S6@
+3 QUAY 1
+2 PLAC Guayaquil, Guayas, Ecuador
+1 FAMC @F1@
+0 @I32@ INDI
+1 _XY 635 1321
+1 NAME Fernando /García Moreno/
+2 SOUR @S0@
+3 PAGE p. 17
+3 QUAY 1
+1 SEX M
+1 FAMC @F1@
+0 @I33@ INDI
+1 _XY 323 1278
+1 NAME Rosario /García Moreno/
+2 SOUR @S0@
+3 PAGE p. 17
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1803
+2 SOUR @S6@
+3 QUAY 1
+2 PLAC Guayaquil, Guayas, Ecuador
+1 FAMC @F1@
+0 @I34@ INDI
+1 _XY 410 1148
+1 NAME Juan Pablo /Moreno y Morán de Butrón/
+2 SOUR @S6@
+3 QUAY 1
+1 SEX M
+1 FAMC @F8@
+0 @I35@ INDI
+1 _XY 749 1148
+1 NAME Petra /Moreno y Morán de Butrón/
+2 SOUR @S6@
+3 QUAY 1
+1 SEX F
+1 DEAT
+2 DATE 3 NOV 1852
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F8@
+0 @I36@ INDI
+1 _XY 573 1148
+1 NAME Miguel /Moreno y Morán de Butrón/
+2 SOUR @S6@
+3 QUAY 1
+1 SEX M
+1 FAMC @F8@
+0 @I37@ INDI
+1 _XY 2614 1071
+1 NAME Antonio /Morán de Butrón y Ozerín/
+2 SOUR @S6@
+3 QUAY 1
+1 SEX M
+1 TITL Capitán
+2 SOUR @S6@
+3 QUAY 1
+1 BIRT
+2 DATE 22 NOV 1712
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S6@
+3 QUAY 1
+1 FAMS @F10@
+1 FAMC @F11@
+0 @I38@ INDI
+1 _XY 1426 966
+1 NAME María Jacinta /del Castillo y Navarro Navarrete/
+2 SOUR @S6@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1713
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F10@
+1 FAMC @F35@
+0 @I39@ INDI
+1 _XY 2739 932
+1 NAME José /Morán de Butrón y Ramírez de Guzmán/
+2 SOUR @S6@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S7@
+3 QUAY 0
+2 DATE 1672
+1 TITL Capitán
+2 SOUR @S6@
+3 QUAY 1
+1 FAMS @F11@
+1 FAMC @F12@
+0 @I40@ INDI
+1 _XY 2571 943
+1 NAME María /Rodriguez de Ozerín/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 FAMS @F11@
+1 FAMS @F57@
+0 @I41@ INDI
+1 _XY 2809 1072
+1 NAME Francisca /Morán de Butrón y Ozerín/
+2 SOUR @S6@
+3 QUAY 1
+1 SEX F
+1 FAMC @F11@
+0 @I42@ INDI
+1 _XY 3325 726
+1 NAME Jacinto /Morán de Butrón y Rendón/
+2 SOUR @S6@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+2 DATE 1632
+1 TITL Capitán
+2 SOUR @S6@
+3 QUAY 1
+1 DEAT
+2 DATE 16 JUN 1699
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S7@
+3 QUAY 0
+1 FAMS @F12@
+1 FAMC @F13@
+0 @I43@ INDI
+1 _XY 2847 726
+1 NAME María /Ramírez de Guzmán y Mestanza/
+2 SOUR @S6@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1636
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F12@
+1 FAMC @F15@
+0 @I44@ INDI
+1 _XY 3590 433
+1 NAME Alonso /Morán de Butrón y Ponce de León/
+2 SOUR @S6@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+2 DATE 1598
+1 TITL Capitán
+2 SOUR @S6@
+3 QUAY 1
+1 OCCU Regidor Perpetuo, Procurador General del Cabildo
+2 DATE 1646
+2 SOUR @S6@
+3 QUAY 1
+2 NOTE @T3@
+1 OCCU Alcalde Ordinario
+2 DATE 1651
+2 SOUR @S6@
+3 QUAY 1
+2 NOTE @T4@
+1 DEAT
+2 DATE 10 MAY 1647
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F13@
+1 FAMC @F14@
+0 @I45@ INDI
+1 _XY 3791 433
+1 NAME Leonor /de Rendón Palomino y Guzmán/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1609
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 DEAT
+2 DATE 16 AUG 1666
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F13@
+0 @I46@ INDI
+1 _XY 3192 252
+1 NAME Andrés /Morán de Butrón Navarro Navarrete/
+2 SOUR @S9@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Logroño, Castilla, Spain
+2 SOUR @S8@
+3 QUAY 0
+2 DATE 1560
+1 TITL Notario del Santo Oficio de la Inquisición
+2 PLAC Logroño, Castilla, Spain
+2 SOUR @S6@
+3 QUAY 1
+1 TITL Corregidor y Justicia Mayor
+2 DATE 1617
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S6@
+3 QUAY 1
+1 TITL Teniente General de Corregidor
+2 DATE FROM 6 SEP 1638
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S6@
+3 QUAY 1
+1 DEAT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F14@
+1 FAMC @F16@
+0 @I47@ INDI
+1 _XY 3590 303
+1 NAME Jerónima /Ponce de León y Díaz Bravo/
+2 SOUR @S6@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 PLAC Carrión de los Condes, Palencia, Spain
+2 SOUR @S8@
+3 QUAY 0
+2 DATE 1578
+1 FAMS @F14@
+1 FAMC @F20@
+0 @I48@ INDI
+1 _XY 2922 933
+1 NAME Jacinto /Morán de Butrón y Ramírez de Guzmán/
+2 SOUR @S7@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1667
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S7@
+3 QUAY 0
+1 FAMC @F12@
+0 @I49@ INDI
+1 _XY 3092 933
+1 NAME Nicolás /Morán de Butrón y Ramírez de Guzmán/
+2 SOUR @S7@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1670
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S7@
+3 QUAY 0
+1 FAMC @F12@
+0 @I50@ INDI
+1 _XY 3280 931
+1 NAME Petronila /Morán de Butrón y Ramírez de Guzmán/
+2 SOUR @S7@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1673
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S7@
+3 QUAY 0
+1 FAMC @F12@
+0 @I51@ INDI
+1 _XY 2928 986
+1 NAME Mariana /Morán de Butrón y Ramírez de Guzmán/
+2 SOUR @S7@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1675
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S7@
+3 QUAY 0
+1 FAMC @F12@
+0 @I52@ INDI
+1 _XY 3100 983
+1 NAME Leonor /Morán de Butrón y Ramírez de Guzmán/
+2 SOUR @S7@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1676
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S7@
+3 QUAY 0
+1 FAMC @F12@
+0 @I53@ INDI
+1 _XY 3262 979
+1 NAME Martín /Morán de Butrón y Ramírez de Guzmán/
+2 SOUR @S7@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1677
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S7@
+3 QUAY 0
+1 FAMC @F12@
+0 @I54@ INDI
+1 _XY 3102 1034
+1 NAME Gabriel /Morán de Butrón y Ramírez de Guzmán/
+2 SOUR @S7@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1678
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S7@
+3 QUAY 0
+1 FAMC @F12@
+0 @I55@ INDI
+1 _XY 3273 1027
+1 NAME Jerónima /Morán de Butrón y Ramírez de Guzmán/
+2 SOUR @S7@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1688
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S7@
+3 QUAY 0
+1 DEAT
+2 DATE 1724
+2 SOUR @S7@
+3 QUAY 0
+1 FAMC @F12@
+0 @I56@ INDI
+1 _XY 2760 641
+1 NAME Martín /Ramírez de Guzmán y Carranza/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1594
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 DEAT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F15@
+1 FAMC @F23@
+0 @I57@ INDI
+1 _XY 2548 732
+1 NAME Diego /Ramírez de Guzmán y Mestanza/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1633
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F15@
+0 @I58@ INDI
+1 _XY 2689 731
+1 NAME Martín /Ramírez de Guzmán y Mestanza/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1634
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F15@
+0 @I59@ INDI
+1 _XY 3503 731
+1 NAME Alonson /Morán de Butrón y Rendón/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1626
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F13@
+0 @I60@ INDI
+1 _XY 3681 730
+1 NAME José /Morán de Butrón y Rendón/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1627
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F13@
+0 @I61@ INDI
+1 _XY 3447 776
+1 NAME Leonor /Morán de Butrón y Rendón/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1629
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F13@
+0 @I62@ INDI
+1 _XY 3622 774
+1 NAME Petronila /Morán de Butrón y Rendón/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1630
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F13@
+0 @I63@ INDI
+1 _XY 3760 776
+1 NAME Gabriel /Morán de Butrón y Rendón/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1633
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F13@
+0 @I64@ INDI
+1 _XY 3446 819
+1 NAME Andrés /Morán de Butrón y Rendón/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1634
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F13@
+0 @I65@ INDI
+1 _XY 3236 420
+1 NAME Andrés /Morán de Butrón y Ponce de León/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1599
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F14@
+0 @I66@ INDI
+1 _XY 3428 417
+1 NAME Agustín /Morán de Butrón y Ponce de León/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1600
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F14@
+0 @I67@ INDI
+1 _XY 3236 465
+1 NAME Nicolás /Morán de Butrón y Ponce de León/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1604
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F14@
+0 @I68@ INDI
+1 _XY 3422 463
+1 NAME José /Morán de Butrón y Ponce de León/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1601
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F14@
+0 @I69@ INDI
+1 _XY 3134 189
+1 NAME Alonson /Morán de Butrón/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1520
+2 PLAC Mezeta, Vizcaya, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F16@
+0 @I70@ INDI
+1 _XY 3308 186
+1 NAME Catalina /Navarro Navarrete y López de Salinas/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1537
+2 PLAC Mezeta, Vizcaya, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F16@
+1 FAMC @F17@
+0 @I71@ INDI
+1 _XY 2052 88
+1 NAME Antonio /Navarro Navarrete y Florencia/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1508
+2 PLAC Navarrete, Logroño, Castilla, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F17@
+1 FAMC @F18@
+0 @I72@ INDI
+1 _XY 2257 100
+1 NAME María /López de Salinas/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 FAMS @F17@
+0 @I73@ INDI
+1 _XY 3492 184
+1 NAME Antonio /Navarro Navarrete y López de Salinas/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1535
+2 PLAC Spain
+2 SOUR @S8@
+3 QUAY 0
+1 DEAT
+2 DATE 12 JUN 1604
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F17@
+0 @I74@ INDI
+1 _XY 2141 30
+1 NAME Antonio /Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1476
+2 PLAC Navarrete, Logroño, Castilla, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F18@
+0 @I75@ INDI
+1 _XY 1987 30
+1 NAME Catalina /Florencia/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE ABT 1486
+2 PLAC Viana, Navarra, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F18@
+1 FAMC @F19@
+0 @I76@ INDI
+1 _XY 1875 30
+1 NAME Juan /Florencia/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 FAMS @F19@
+0 @I77@ INDI
+1 _XY 1766 96
+1 NAME Diego /Navarro Navarrete y Florencia/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1505
+2 PLAC Navarrete, Logroño, Castilla, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F18@
+1 FAMS @F40@
+0 @I78@ INDI
+1 _XY 1909 89
+1 NAME Catalina /Navarro Navarrete y Florencia/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1506
+2 PLAC Navarrete, Logroño, Castilla, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F18@
+0 @I79@ INDI
+1 _XY 3704 200
+1 NAME Benito /Díaz Bravo/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Oliva, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F20@
+1 FAMC @F22@
+0 @I80@ INDI
+1 _XY 3835 200
+1 NAME María Isabel /Ponce de León/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Carrión de los Condes, Palencia, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F20@
+1 FAMC @F21@
+0 @I81@ INDI
+1 _XY 3755 303
+1 NAME Mariana /Ponce de León y Díaz Bravo/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1581
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 DEAT
+2 DATE ABT 1621
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F20@
+0 @I82@ INDI
+1 _XY 3911 312
+1 NAME Benito /Díaz Bravo/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F20@
+0 @I83@ INDI
+1 _XY 3778 159
+1 NAME Francisco /Gutierrez De Haro/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 FAMS @F21@
+0 @I84@ INDI
+1 _XY 3941 159
+1 NAME María /Ponce de León/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 FAMS @F21@
+0 @I85@ INDI
+1 _XY 3638 132
+1 NAME Alonso /Díaz Coronado/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Oliva, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F22@
+0 @I86@ INDI
+1 _XY 3771 133
+1 NAME Antonia /Rodriguez/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Oliva, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F22@
+0 @I87@ INDI
+1 _XY 3005 648
+1 NAME Jeronima /Mestanza/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 DEAT
+2 DATE 1644
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F15@
+1 FAMC @F31@
+0 @I88@ INDI
+1 _XY 2483 460
+1 NAME Martín Salazar /Ramírez de Guzmán/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1560
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F23@
+1 FAMC @F24@
+0 @I89@ INDI
+1 _XY 2743 462
+1 NAME Catalina /de Carranza y Contero/
+2 SOUR @S9@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1572
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F23@
+1 FAMS @F27@
+1 FAMC @F28@
+0 @I90@ INDI
+1 _XY 2459 643
+1 NAME Ursula /Ramírez de Guzmán y Carranza/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1596
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F23@
+0 @I91@ INDI
+1 _XY 2597 643
+1 NAME Baltasara /Ramírez de Guzmán y Carranza/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F23@
+0 @I92@ INDI
+1 _XY 2462 397
+1 NAME Martín /Ramírez de Guzmán/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F24@
+1 FAMC @F25@
+0 @I93@ INDI
+1 _XY 2624 397
+1 NAME María /Magallanes/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F24@
+0 @I94@ INDI
+1 _XY 2287 293
+1 NAME Rodrigo /Vargas Guzmán/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Valdemoro, Madrid, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F25@
+1 FAMC @F26@
+0 @I95@ INDI
+1 _XY 2321 384
+1 NAME Leonor /Guzmán Vargas/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 FAMC @F25@
+1 FAMS @F48@
+0 @I96@ INDI
+1 _XY 2433 293
+1 NAME Mariana /Robles Calderon/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Panama
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F25@
+0 @I97@ INDI
+1 _XY 2275 242
+1 NAME Martín /Salazar/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Valdemoro, Madrid, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F26@
+0 @I98@ INDI
+1 _XY 2392 236
+1 NAME Leonor /Guzmán/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Valdemoro, Madrid, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F26@
+0 @I99@ INDI
+1 _XY 2912 468
+1 NAME Martín /Porres/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 FAMS @F27@
+0 @I100@ INDI
+1 _XY 2698 523
+1 NAME Jacinta /Porres/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1606
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F27@
+0 @I101@ INDI
+1 _XY 2926 524
+1 NAME Catalina /Carranza/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1608
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F27@
+0 @I102@ INDI
+1 _XY 2783 526
+1 NAME Andrés /Contero de Porres/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1611
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F27@
+0 @I103@ INDI
+1 _XY 2766 337
+1 NAME Martín Alonso /Gonzalez de Carranza y Mendoza/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1531
+2 PLAC Madrid, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F28@
+1 FAMC @F29@
+0 @I104@ INDI
+1 _XY 2927 343
+1 NAME Ana /de Contero y Ponce/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1550
+2 PLAC Lima, Peru
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F28@
+1 FAMC @F30@
+0 @I105@ INDI
+1 _XY 2733 280
+1 NAME Juan /Sanchez de Carranza/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 FAMS @F29@
+0 @I106@ INDI
+1 _XY 2913 276
+1 NAME Andres /Contero/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Sonsote, Segovia, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 DEAT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F30@
+0 @I107@ INDI
+1 _XY 3025 276
+1 NAME Ana /Ponce/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 FAMS @F30@
+0 @I108@ INDI
+1 _XY 2896 418
+1 NAME Cristobal /de Carranza y Contero/
+2 SOUR @S9@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1574
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S9@
+3 QUAY 0
+1 FAMC @F28@
+0 @I109@ INDI
+1 _XY 2925 602
+1 NAME Francisco /Dominguez de Mestanza/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Puertollano, La Mancha, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F31@
+0 @I110@ INDI
+1 _XY 3123 602
+1 NAME María /Aller/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Puertollano, La Mancha, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F31@
+0 @I111@ INDI
+1 _XY 2645 1180
+1 NAME María Josefa Gabriela /Morán de Butrón y del Castillo/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 16 MAR 1740
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F10@
+0 @I112@ INDI
+1 _XY 2805 1177
+1 NAME María Isabel /Morán de Butrón y del Castillo/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 3 JUL 1743
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F10@
+0 @I113@ INDI
+1 _XY 2978 1176
+1 NAME José Gregorio /Morán de Butrón y del Castillo/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 16 NOV 1745
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F10@
+0 @I114@ INDI
+1 _XY 2632 1228
+1 NAME Mariano Joaquin /Morán de Butrón y del Castillo/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 19 FEB 1749
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F10@
+0 @I115@ INDI
+1 _XY 2816 1229
+1 NAME Manuel Jacinto /Morán de Butrón y del Castillo/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 23 FEB 1755
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F10@
+0 @I116@ INDI
+1 _XY 774 885
+1 NAME María /de la Concepción Gonzales/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1703
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 DEAT
+2 DATE 1752
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F32@
+0 @I117@ INDI
+1 _XY 2978 1231
+1 NAME Antonio /Morán de Butrón y del Castillo/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1759
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F10@
+0 @I118@ INDI
+1 _XY 664 1185
+1 NAME Manuel Ignacio /Moreno y Morán de Butrón/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 FAMC @F8@
+0 @I119@ INDI
+1 _XY 324 1194
+1 NAME José Ignacio /Moreno y Morán de Butrón/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 FAMC @F8@
+0 @I120@ INDI
+1 _XY 487 1185
+1 NAME María Dolores /Moreno y Morán de Butrón/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 DEAT
+2 DATE 16 AUG 1834
+2 PLAC Daule, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F8@
+0 @I121@ INDI
+1 _XY 371 823
+1 NAME Juan /de Sylva Santistevan/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Spain
+2 SOUR @S8@
+3 QUAY 0
+1 DEAT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F33@
+0 @I122@ INDI
+1 _XY 552 819
+1 NAME Magdalena /Larralde/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1692
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F33@
+1 FAMC @F34@
+0 @I123@ INDI
+1 _XY 303 919
+1 NAME Juan  /de Sylva Santistevan y Larralde/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1712
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F33@
+0 @I124@ INDI
+1 _XY 305 864
+1 NAME María Eugenia /de Sylva Santistevan y Larralde/
+2 SOUR @S8@
+3 QUAY 0
+1 BIRT
+2 DATE 1738
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 DEAT
+2 DATE 1 APR 1804
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F33@
+0 @I125@ INDI
+1 _XY 665 765
+1 NAME Antonio /Larralde/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Navarra, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 DEAT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F34@
+0 @I126@ INDI
+1 _XY 786 765
+1 NAME Catalina /Tello de Arana/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Baba, Los Rios, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 DEAT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F34@
+0 @I127@ INDI
+1 _XY 705 837
+1 NAME Isabel /Larralde/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F34@
+0 @I128@ INDI
+1 _XY 792 835
+1 NAME Farmin /Larralde/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1698
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F34@
+0 @I129@ INDI
+1 _XY 1115 895
+1 NAME Juan Francisco /del Castillo Gómez Sarmiento/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Burgos, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 DEAT
+2 DATE 30 SEP 1719
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F35@
+0 @I130@ INDI
+1 _XY 1299 895
+1 NAME Baltasara Jacinta /Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 DEAT
+2 DATE 24 MAR 1717
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F35@
+1 FAMC @F36@
+0 @I131@ INDI
+1 _XY 996 969
+1 NAME Juan /del Castillo y Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 6 JUN 1710
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F35@
+0 @I132@ INDI
+1 _XY 1136 969
+1 NAME María Manuela /del Castillo y Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 30 MAY 1711
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 DEAT
+2 DATE 1773
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F35@
+0 @I133@ INDI
+1 _XY 1280 969
+1 NAME Antonia /del Castillo y Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1719
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F35@
+0 @I134@ INDI
+1 _XY 1531 782
+1 NAME Juan /Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F36@
+1 FAMC @F37@
+0 @I135@ INDI
+1 _XY 2101 787
+1 NAME Jacinta /Gonzalez de Vera/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F36@
+1 FAMC @F52@
+0 @I136@ INDI
+1 _XY 1415 589
+1 NAME Juan Donata /Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F37@
+1 FAMC @F38@
+0 @I137@ INDI
+1 _XY 1767 599
+1 NAME Catalina /Cisneros de Mendoza/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F37@
+1 FAMC @F45@
+0 @I138@ INDI
+1 _XY 1418 513
+1 NAME Diego /Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F38@
+1 FAMC @F39@
+0 @I139@ INDI
+1 _XY 1584 513
+1 NAME Baltasara /Carranza/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Portoviejo, Manabi, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F38@
+1 FAMC @F44@
+0 @I140@ INDI
+1 _XY 1306 456
+1 NAME Diego /Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F39@
+1 FAMC @F40@
+1 FAMS @F41@
+0 @I141@ INDI
+1 _XY 1193 450
+1 NAME Leonor /del Castillo/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 DEAT
+2 DATE 18 SEP 1636
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F39@
+1 FAMC @F42@
+0 @I142@ INDI
+1 _XY 1598 107
+1 NAME Francisca /Gutierrez de Aguilar/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F40@
+0 @I143@ INDI
+1 _XY 1481 456
+1 NAME Angela /Castro/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 FAMS @F41@
+0 @I144@ INDI
+1 _XY 1110 362
+1 NAME Pedro /del Castillo y Perea/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC La Rioja, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 DEAT
+2 DATE 1697
+2 PLAC Baba, Los Rios, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F42@
+1 FAMS @F43@
+0 @I145@ INDI
+1 _XY 1262 368
+1 NAME Leonor /García de Herrera/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Burgos, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F42@
+0 @I146@ INDI
+1 _XY 949 367
+1 NAME Josefa Herrera /Campusano/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 FAMS @F43@
+0 @I147@ INDI
+1 _XY 1604 462
+1 NAME Juan /Carranza Valdivieso/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Panama
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F44@
+0 @I148@ INDI
+1 _XY 1740 462
+1 NAME Feliciana /Alvarado Villa Corte/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Portoviejo, Manabi, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F44@
+0 @I149@ INDI
+1 _XY 1683 557
+1 NAME Benito /Cisneros de Mendoza/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 FAMS @F45@
+1 FAMS @F51@
+0 @I150@ INDI
+1 _XY 1936 568
+1 NAME Josepfa /de la Pe/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 FAMS @F45@
+1 FAMC @F46@
+0 @I151@ INDI
+1 _XY 1876 515
+1 NAME Francisco /de la Pe/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 FAMS @F46@
+0 @I152@ INDI
+1 _XY 1981 519
+1 NAME Catalina /Castro Guzmán/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 FAMS @F46@
+1 FAMS @F47@
+1 FAMC @F48@
+0 @I153@ INDI
+1 _XY 2129 522
+1 NAME Bernabe /Lozano del Castillo/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 FAMS @F47@
+0 @I154@ INDI
+1 _XY 2190 385
+1 NAME Toribio /Castro Grijuela/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Iruz, Santander, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 DEAT
+2 DATE 22 MAR 1609
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F48@
+1 FAMC @F49@
+0 @I155@ INDI
+1 _XY 2057 320
+1 NAME Toribio /Castro/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Iruz, Toranzo, Santander, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F49@
+1 FAMC @F50@
+0 @I156@ INDI
+1 _XY 2160 321
+1 NAME Toribia /Grijuela/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Iruz, Toranzo, Santander, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F49@
+0 @I157@ INDI
+1 _XY 1981 262
+1 NAME Juan /Gutierrex de Castro/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Cudon, Santander, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F50@
+0 @I158@ INDI
+1 _XY 2125 264
+1 NAME María /Hernandez de la Calleja/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Cudon, Santander, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F50@
+0 @I159@ INDI
+1 _XY 1592 554
+1 NAME Bernarda /Arroyo/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F51@
+0 @I160@ INDI
+1 _XY 2078 744
+1 NAME Francisco /Vera/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1628
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F52@
+1 FAMC @F53@
+0 @I161@ INDI
+1 _XY 2188 748
+1 NAME Ana /Tobar Balpuerta/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F52@
+0 @I162@ INDI
+1 _XY 2001 703
+1 NAME Blas /Gonzalez de Vera/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1600
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F53@
+1 FAMC @F54@
+0 @I163@ INDI
+1 _XY 2124 702
+1 NAME Bernarda /Bohorquez/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1607
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F53@
+1 FAMC @F55@
+0 @I164@ INDI
+1 _XY 1885 664
+1 NAME Pedro /Gonzalez de Vera/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Logroño, Castilla, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F54@
+0 @I165@ INDI
+1 _XY 2020 664
+1 NAME Catalina /Gutierrex Monedero/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Logroño, Castilla, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F54@
+0 @I166@ INDI
+1 _XY 2083 636
+1 NAME Diego /Diaz Galban/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 FAMS @F55@
+0 @I167@ INDI
+1 _XY 2226 631
+1 NAME Catalina /Ruiz de Bohorquez/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1567
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F55@
+1 FAMC @F56@
+0 @I168@ INDI
+1 _XY 2189 589
+1 NAME Esteban /Bohorquez/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 DATE 1510
+2 PLAC Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMS @F56@
+0 @I169@ INDI
+1 _XY 2473 941
+1 NAME Fidel /del Castillo/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 FAMS @F57@
+0 @I170@ INDI
+1 _XY 30 1050
+1 NAME María /García Yanguas/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Villaverde del Monte, Soria, Spain
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F3@
+1 DEAT
+2 PLAC Villaverde del Monte, Soria, Spain
+2 SOUR @S0@
+3 QUAY 1
+0 @I171@ INDI
+1 _XY 1430 895
+1 NAME Sebastiána /Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 DEAT
+2 DATE 29 JUL 1739
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F36@
+0 @I172@ INDI
+1 _XY 1578 895
+1 NAME Alejandro /Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 DEAT
+2 DATE 17 FEB 1757
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F36@
+0 @I173@ INDI
+1 _XY 1714 894
+1 NAME Tomasa /Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 FAMC @F36@
+0 @I174@ INDI
+1 _XY 1697 932
+1 NAME Francisco Xavier /Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 FAMC @F36@
+0 @I175@ INDI
+1 _XY 1565 932
+1 NAME Catalina /Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 DEAT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F36@
+0 @I176@ INDI
+1 _XY 1392 781
+1 NAME Josefa /Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1660
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F37@
+0 @I177@ INDI
+1 _XY 1283 589
+1 NAME Diego /Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX M
+1 FAMC @F38@
+0 @I178@ INDI
+1 _XY 1414 612
+1 NAME Antonia /Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 FAMC @F38@
+0 @I179@ INDI
+1 _XY 1283 614
+1 NAME María /Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 DEAT
+2 DATE 29 JAN 1687
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F38@
+0 @I180@ INDI
+1 _XY 1433 642
+1 NAME Leonor /Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 FAMC @F38@
+0 @I181@ INDI
+1 _XY 1275 647
+1 NAME Feliciana /Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 FAMC @F38@
+0 @I182@ INDI
+1 _XY 1416 665
+1 NAME María Josefa /Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 FAMC @F38@
+0 @I183@ INDI
+1 _XY 1133 513
+1 NAME María Ana /Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 DEAT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F39@
+0 @I184@ INDI
+1 _XY 1270 512
+1 NAME Catalina /Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE 1601
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F39@
+0 @I185@ INDI
+1 _XY 1126 542
+1 NAME Leonor /Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F39@
+0 @I186@ INDI
+1 _XY 1276 546
+1 NAME Mariana /Navarro Navarrete/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F39@
+0 @I187@ INDI
+1 _XY 1094 452
+1 NAME María /del Castillo/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F42@
+0 @I188@ INDI
+1 _XY 1690 515
+1 NAME Catalina /Carranza/
+2 SOUR @S8@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 PLAC Portoviejo, Manabi, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 DEAT
+2 DATE 12 MAR 1668
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 FAMC @F44@
+0 @F0@ FAM
+1 CHIL @I0@
+1 HUSB @I1@
+1 WIFE @I2@
+1 CHIL @I20@
+1 CHIL @I21@
+1 CHIL @I22@
+1 CHIL @I23@
+1 EVEN
+2 DATE ABT 1830
+2 PLAC Guayaquil, Guayas, Ecuador
+2 TYPE partnered
+2 NOTE @T8@
+1 EVEN
+2 TYPE note
+2 NOTE @T13@
+0 @F1@ FAM
+1 CHIL @I1@
+1 CHIL @I3@
+1 HUSB @I4@
+1 WIFE @I5@
+1 MARR
+2 DATE 1797
+2 SOUR @S0@
+3 PAGE p. 17
+3 QUAY 1
+2 PLAC Guayaquil, Guayas, Ecuador
+1 CHIL @I24@
+1 CHIL @I25@
+1 CHIL @I26@
+1 CHIL @I27@
+1 CHIL @I28@
+1 CHIL @I29@
+1 CHIL @I30@
+1 CHIL @I31@
+1 CHIL @I32@
+1 CHIL @I33@
+0 @F2@ FAM
+1 CHIL @I4@
+1 HUSB @I6@
+1 WIFE @I7@
+0 @F3@ FAM
+1 CHIL @I6@
+1 HUSB @I8@
+1 WIFE @I9@
+1 CHIL @I170@
+0 @F4@ FAM
+1 CHIL @I7@
+1 HUSB @I10@
+1 WIFE @I11@
+0 @F5@ FAM
+1 CHIL @I9@
+1 HUSB @I12@
+1 WIFE @I13@
+0 @F6@ FAM
+1 CHIL @I13@
+1 WIFE @I14@
+0 @F7@ FAM
+1 CHIL @I14@
+1 WIFE @I15@
+0 @F8@ FAM
+1 CHIL @I5@
+1 HUSB @I16@
+1 WIFE @I17@
+1 CHIL @I34@
+1 CHIL @I35@
+1 CHIL @I36@
+1 MARR
+2 DATE 12 AUG 1799
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 CHIL @I118@
+1 CHIL @I119@
+1 CHIL @I120@
+0 @F9@ FAM
+1 CHIL @I16@
+1 HUSB @I18@
+1 WIFE @I19@
+1 MARR
+2 DATE 10 JUN 1753
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+0 @F10@ FAM
+1 CHIL @I17@
+1 HUSB @I37@
+1 WIFE @I38@
+1 CHIL @I111@
+1 CHIL @I112@
+1 CHIL @I113@
+1 CHIL @I114@
+1 CHIL @I115@
+1 CHIL @I117@
+1 MARR
+2 DATE 3 MAR 1737
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+0 @F11@ FAM
+1 CHIL @I37@
+1 HUSB @I39@
+1 WIFE @I40@
+1 CHIL @I41@
+1 MARR
+2 DATE 11 NOV 1707
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+0 @F12@ FAM
+1 CHIL @I39@
+1 HUSB @I42@
+1 WIFE @I43@
+1 MARR
+2 DATE 5 OCT 1666
+2 SOUR @S7@
+3 QUAY 0
+1 CHIL @I48@
+1 CHIL @I49@
+1 CHIL @I50@
+1 CHIL @I51@
+1 CHIL @I52@
+1 CHIL @I53@
+1 CHIL @I54@
+1 CHIL @I55@
+0 @F13@ FAM
+1 CHIL @I42@
+1 HUSB @I44@
+1 WIFE @I45@
+1 CHIL @I59@
+1 CHIL @I60@
+1 CHIL @I61@
+1 CHIL @I62@
+1 CHIL @I63@
+1 CHIL @I64@
+1 MARR
+2 DATE 1625
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+0 @F14@ FAM
+1 CHIL @I44@
+1 HUSB @I46@
+1 WIFE @I47@
+1 CHIL @I65@
+1 CHIL @I66@
+1 CHIL @I67@
+1 CHIL @I68@
+0 @F15@ FAM
+1 CHIL @I43@
+1 HUSB @I56@
+1 CHIL @I57@
+1 CHIL @I58@
+1 WIFE @I87@
+1 MARR
+2 DATE 1632
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+0 @F16@ FAM
+1 CHIL @I46@
+1 HUSB @I69@
+1 WIFE @I70@
+1 MARR
+2 DATE 1558
+2 PLAC Logroño, Castilla, Spain
+2 SOUR @S8@
+3 QUAY 0
+0 @F17@ FAM
+1 CHIL @I70@
+1 HUSB @I71@
+1 WIFE @I72@
+1 MARR
+2 DATE 1533
+2 SOUR @S8@
+3 QUAY 0
+1 CHIL @I73@
+0 @F18@ FAM
+1 CHIL @I71@
+1 HUSB @I74@
+1 WIFE @I75@
+1 MARR
+2 DATE 1504
+2 SOUR @S8@
+3 QUAY 0
+1 CHIL @I77@
+1 CHIL @I78@
+0 @F19@ FAM
+1 CHIL @I75@
+1 HUSB @I76@
+0 @F20@ FAM
+1 CHIL @I47@
+1 HUSB @I79@
+1 WIFE @I80@
+1 CHIL @I81@
+1 CHIL @I82@
+0 @F21@ FAM
+1 CHIL @I80@
+1 HUSB @I83@
+1 WIFE @I84@
+0 @F22@ FAM
+1 CHIL @I79@
+1 HUSB @I85@
+1 WIFE @I86@
+0 @F23@ FAM
+1 CHIL @I56@
+1 HUSB @I88@
+1 WIFE @I89@
+1 MARR
+2 DATE 1592
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 CHIL @I90@
+1 CHIL @I91@
+0 @F24@ FAM
+1 CHIL @I88@
+1 HUSB @I92@
+1 WIFE @I93@
+1 MARR
+2 DATE 1558
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+0 @F25@ FAM
+1 CHIL @I92@
+1 HUSB @I94@
+1 CHIL @I95@
+1 WIFE @I96@
+0 @F26@ FAM
+1 CHIL @I94@
+1 HUSB @I97@
+1 WIFE @I98@
+0 @F27@ FAM
+1 WIFE @I89@
+1 HUSB @I99@
+1 CHIL @I100@
+1 CHIL @I101@
+1 CHIL @I102@
+0 @F28@ FAM
+1 CHIL @I89@
+1 HUSB @I103@
+1 WIFE @I104@
+1 MARR
+2 DATE 15 JUL 1570
+2 PLAC Lima, Peru
+2 SOUR @S8@
+3 QUAY 0
+1 CHIL @I108@
+0 @F29@ FAM
+1 CHIL @I103@
+1 HUSB @I105@
+0 @F30@ FAM
+1 CHIL @I104@
+1 HUSB @I106@
+1 WIFE @I107@
+0 @F31@ FAM
+1 CHIL @I87@
+1 HUSB @I109@
+1 WIFE @I110@
+0 @F32@ FAM
+1 HUSB @I18@
+1 WIFE @I116@
+1 MARR
+2 DATE 1742
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+0 @F33@ FAM
+1 CHIL @I19@
+1 HUSB @I121@
+1 WIFE @I122@
+1 MARR
+2 DATE 20 MAY 1710
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+1 CHIL @I123@
+1 CHIL @I124@
+0 @F34@ FAM
+1 CHIL @I122@
+1 HUSB @I125@
+1 WIFE @I126@
+1 CHIL @I127@
+1 CHIL @I128@
+0 @F35@ FAM
+1 CHIL @I38@
+1 HUSB @I129@
+1 WIFE @I130@
+1 CHIL @I131@
+1 CHIL @I132@
+1 CHIL @I133@
+0 @F36@ FAM
+1 CHIL @I130@
+1 HUSB @I134@
+1 WIFE @I135@
+1 CHIL @I171@
+1 CHIL @I172@
+1 CHIL @I173@
+1 CHIL @I174@
+1 CHIL @I175@
+0 @F37@ FAM
+1 CHIL @I134@
+1 WIFE @I137@
+1 HUSB @I136@
+1 CHIL @I176@
+0 @F38@ FAM
+1 CHIL @I136@
+1 HUSB @I138@
+1 WIFE @I139@
+1 CHIL @I177@
+1 CHIL @I178@
+1 CHIL @I179@
+1 CHIL @I181@
+1 CHIL @I180@
+1 CHIL @I182@
+0 @F39@ FAM
+1 CHIL @I138@
+1 HUSB @I140@
+1 WIFE @I141@
+1 CHIL @I183@
+1 CHIL @I184@
+1 CHIL @I185@
+1 CHIL @I186@
+0 @F40@ FAM
+1 HUSB @I77@
+1 CHIL @I140@
+1 WIFE @I142@
+0 @F41@ FAM
+1 HUSB @I140@
+1 WIFE @I143@
+0 @F42@ FAM
+1 CHIL @I141@
+1 HUSB @I144@
+1 WIFE @I145@
+1 CHIL @I187@
+0 @F43@ FAM
+1 HUSB @I144@
+1 WIFE @I146@
+1 MARR
+2 DATE 15 JUN 1686
+2 PLAC Guayaquil, Guayas, Ecuador
+2 SOUR @S8@
+3 QUAY 0
+0 @F44@ FAM
+1 CHIL @I139@
+1 HUSB @I147@
+1 WIFE @I148@
+1 CHIL @I188@
+0 @F45@ FAM
+1 CHIL @I137@
+1 HUSB @I149@
+1 WIFE @I150@
+0 @F46@ FAM
+1 CHIL @I150@
+1 HUSB @I151@
+1 WIFE @I152@
+0 @F47@ FAM
+1 WIFE @I152@
+1 HUSB @I153@
+0 @F48@ FAM
+1 CHIL @I152@
+1 HUSB @I154@
+1 WIFE @I95@
+0 @F49@ FAM
+1 CHIL @I154@
+1 HUSB @I155@
+1 WIFE @I156@
+0 @F50@ FAM
+1 CHIL @I155@
+1 HUSB @I157@
+1 WIFE @I158@
+0 @F51@ FAM
+1 HUSB @I149@
+1 WIFE @I159@
+0 @F52@ FAM
+1 CHIL @I135@
+1 HUSB @I160@
+1 WIFE @I161@
+0 @F53@ FAM
+1 CHIL @I160@
+1 HUSB @I162@
+1 WIFE @I163@
+0 @F54@ FAM
+1 CHIL @I162@
+1 HUSB @I164@
+1 WIFE @I165@
+0 @F55@ FAM
+1 CHIL @I163@
+1 HUSB @I166@
+1 WIFE @I167@
+0 @F56@ FAM
+1 CHIL @I167@
+1 HUSB @I168@
+0 @F57@ FAM
+1 WIFE @I40@
+1 HUSB @I169@
+1 MARR
+2 DATE 1700
+2 PLAC Baba, Los Rios, Spain
+2 SOUR @S8@
+3 QUAY 0
+0 @S0@ SOUR
+1 AUTH Dudley, Joseph
+1 TITL Pazmino Lopez Family Research
+1 PUBL In posession of Chris Mosher
+0 @S1@ SOUR
+1 AUTH Ponce, Pilar
+1 TITL Gabriel Garcia Moreno
+1 PUBL Historia 16, Madrid, 1987
+0 @S2@ SOUR
+1 AUTH Catholic Encyclopedia
+1 TITL Gabriel García Moreno
+1 PUBL http://www.newadvent.org/cathen/06379b.htm
+1 TEXT Gabriel García Moreno
+2 CONT Ecuadorean patriot and statesman; b. at Guayaquil, 24 December, 1821
+2 CONC ; assassinated at Quito, 6 August, 1875. His father, Gabriel García Go
+2 CONC mez, a native of Villaverde, in Old Castile, had been engaged in comme
+2 CONC rce at Callao before removing to Guayaquil, where he married Dona Merc
+2 CONC edes Moreno, the mother of the future Ecuadorean martyr president. Gab
+2 CONC riel García Gomez died while his son was still young, and the boy's ed
+2 CONC ucation was left to the care of his mother, who appears to have bee
+2 CONC n a woman of unusual ability for her task; she was, moreover, fortunat
+2 CONC e in securing as her son's tutor Fray Jose Betancourt, the famous Merc
+2 CONC edarian, under whose tuition young García Moreno made rapid progress
+2 CONC . A great part of his father's fortune having been lost, it was not wi
+2 CONC thout some considerable sacrifices that the youth was able to attend t
+2 CONC he university course at Quito. These material obstacles once overcome
+2 CONC , he passed brilliantly through the schools, distancing all his contem
+2 CONC poraries, and on 26 October, 1844, received his degree in the facult
+2 CONC y of law (Doctor en Jurisprudencia) from the University of Quito. 
+2 CONT
+2 CONT In less than a year after his graduation young García Moreno had begu
+2 CONC n to take an active part in Ecuadorean politics, joining in the revolu
+2 CONC tionary movement which eventually replaced the Flores administration b
+2 CONC y that of Roca (1846). He soon distinguished himself as a political sa
+2 CONC tirist by contributions to "El Zurriago", but what more truly presage
+2 CONC d the achievements of his riper life was his good and useful work a
+2 CONC s a member of the municipal council of Quito. At the same time he wa
+2 CONC s studying legal practice, and on 30 March, 1848, was admitted advocat
+2 CONC e. Immediately after this the deposed Flores, supported by the Spanis
+2 CONC h government, made an attempt to regain the presidency of Ecuador; Gar
+2 CONC cía Moreno unhesitatingly came forward in support of the Roca administ
+2 CONC ration, and when that administration fell, in 1849, he entered upon hi
+2 CONC s first period of exile. After some months spent in Europe he returne
+2 CONC d to his native republic in the employ of a mercantile concern, and i
+2 CONC t was then that he took the first decisive step which marked him consp
+2 CONC icuously for the enmity of the anti-Catholics, or, as they preferred t
+2 CONC o call themselves, the Liberals. At Panama he had fallen in with a par
+2 CONC ty of Jesuits who had been expelled from the Republic of New Granada a
+2 CONC nd wished to find asylum in Ecuador. García Moreno constituted himsel
+2 CONC f the protector of these religious, and they sailed with him for Guaya
+2 CONC quil; but on the same vessel that carried the Jesuits and their champi
+2 CONC on, an envoy from New Granada also took passage for the express purpos
+2 CONC e of bringing diplomatic influence to bear with the dictator, Diego No
+2 CONC boa, to secure their exclusion from Ecuadorean territory. No sooner ha
+2 CONC d the vessel entered the harbour of Guayaquil than García Moreno, slip
+2 CONC ping into a shore boat, succeeded in landing some time before the Ne
+2 CONC w Granadan envoy; the necessary permission was acquired from the Ecuad
+2 CONC orean government, and the Jesuits obtained a foothold in that country
+2 CONC . How soon the report of this exploit spread among the anti-Catholic
+2 CONC s of South America was evidenced by the fact that within a year Jacob
+2 CONC o Sánchez, a New Granadan, had attacked García Moreno in the pamphle
+2 CONC t "Don Felix Frias en Paris y los Jesuitas en el Ecuador", to which Ga
+2 CONC rcía Moreno's reply was an able "Defensa de los Jesuitas". 
+2 CONT
+2 CONT In 1853 he began to publish "La Nación", a periodical which, accordin
+2 CONC g to its prospectus, was intended to combat the then existing tendenc
+2 CONC y of the government to exploit the masses for the material benefit o
+2 CONC f those who happened to be in power. At the same time García Moreno'
+2 CONC s programme aimed distinctly and professedly to defend the religion o
+2 CONC f the people. He was already known as a friend of the Jesuits; he no
+2 CONC w assumed the role of friend of the common people, to which he adhere
+2 CONC d sincerely and consistently to the day of his death. The Urbina facti
+2 CONC on, then in power, were quick to recognize the importance of "La Nació
+2 CONC n", which was suppressed before the appearance of its third number, an
+2 CONC d its proprietor was exiled, for the second time. Having been, meanwhi
+2 CONC le, elected senator by his native province of Guayaquil, he was preven
+2 CONC ted from taking his seat, on the ground that he had returned to Quit
+2 CONC o without a passport. After a sojourn at Paita, García Moreno once mor
+2 CONC e visited Europe. He was now thirty-three years of age, and his experi
+2 CONC ence of political life in Ecuador had deeply convinced him of his peop
+2 CONC le's need of enlightenment. It was undoubtedly with this conviction a
+2 CONC s his guide and incentive that he spent a year or more in Paris, foreg
+2 CONC oing every form of pleasure, a severe, indefatigable student not onl
+2 CONC y of political science, but also of the higher mathematics, of chemist
+2 CONC ry, and of the French public school system. On his return home, unde
+2 CONC r a general amnesty in 1850, he became rector of the central Universit
+2 CONC y of Quito; a position of which he availed himself to commence lecture
+2 CONC s of his own in physical science. Next year he was active in the senat
+2 CONC e in opposition to the Masonic party, which had gained control of th
+2 CONC e government, while at the same time he persistently and forcibly, tho
+2 CONC ugh unsuccessfully, struggled for the passage of a law establishin
+2 CONC g a system of public education modelled on that of France. In 1858 h
+2 CONC e once more established a paper, "La Union Naciónal", which became obn
+2 CONC oxious to the government by its fearless exposure of corruption and it
+2 CONC s opposition to the arbitrary employment of authority; and once mor
+2 CONC e a political crisis ensued. 
+2 CONT
+2 CONT García Moreno was on principle an advocate of orderly processes of gov
+2 CONC ernment, and that his professions in this regard were sincere his subs
+2 CONC equent career fairly demonstrated, but at this juncture he was oblige
+2 CONC d to realize that his country was in the grip of a corrupt oligarchy
+2 CONC , bent upon the suppression of the Church to which the whole mass of h
+2 CONC is fellow countrymen were devoted, and disposed to keep the masses i
+2 CONC n ignorance so as to sway them the more easily to its own ends. He had
+2 CONC , years before, attacked "the revolutionary industry", a phrase probab
+2 CONC ly first used by him, in the prospectus of "La Nación"; it now becam
+2 CONC e necessary for him to descend to revolutionary methods. Besides, th
+2 CONC e little Republic of Ecuador was at this time menaced by its more powe
+2 CONC rful neighbour on the south, Peru. García Moreno, if he was sure of op
+2 CONC position at the hands of the soi-disant Liberals, was also, by this ti
+2 CONC me, recognized by the masses as a leader loyal to both their common Fa
+2 CONC ith and their common country, and thus he was able to organize the rev
+2 CONC olution which made him head of a provisional government established a
+2 CONC t Quito. The republic was now divided, General Franco being at the hea
+2 CONC d of a rival government established at Guayaquil. In vain did García M
+2 CONC oreno offer to share his authority with his rival for the sake of nati
+2 CONC onal unity. As a defensive measure against the threat of Peruvian inva
+2 CONC sion, García Moreno entered into negotiations with the French envoy wi
+2 CONC th a view to securing the protection of France, a political mistake o
+2 CONC f which his enemies knew how to avail themselves to the utmost. He wa
+2 CONC s now obliged to assume the character of a military leader, for whic
+2 CONC h he possessed at least the qualifications of personal courage and dec
+2 CONC isive quickness of resolution. While García Moreno inflicted one defea
+2 CONC t after another upon the partisans of Franco, the latter, as represent
+2 CONC ing Ecuador, had concluded with Peru the treaty of Mapasingue. The peo
+2 CONC ple of Ecuador rose in indignation at the concessions made in this tre
+2 CONC aty, and Franco, even his own followers being alienated, was defeate
+2 CONC d at Babahoya (7 August, 1860) and again at Salado River, where he wa
+2 CONC s driven to take refuge on a Peruvian vessel. When his adversary had b
+2 CONC een forcibly driven from the country, García Moreno showed his magnani
+2 CONC mity in the proclamation in which he sought to heal as quickly as poss
+2 CONC ible the scars of this civil war: "The republic should regard itself a
+2 CONC s one family; the old demarcations of districts must be so obliterate
+2 CONC d as to render sectional ambitions impossible". In the reorganizatio
+2 CONC n of the Constituent Assembly, which was summoned to meet in January
+2 CONC , 1861, he insisted that the suffrage should not be territorial, but "
+2 CONC direct and universal, under the necessary guarantees of intelligence a
+2 CONC nd morality, and the number of representatives should correspond (prop
+2 CONC ortionally) to that of the electors represented". The Convention, whic
+2 CONC h met on 10 January, elected García Moreno president; he delivered hi
+2 CONC s inaugural address on the 2d of April following. Then began that seri
+2 CONC es of reforms among which were the restitution of the rights of the Ch
+2 CONC urch and a radical reconstruction of the fiscal system. In the immedia
+2 CONC te present he had to deal with the machinations of his old adversary U
+2 CONC rbina, who, from his retirement in Peru, kept up incessant intrigues w
+2 CONC ith the opposition at home, and still more with the governments of nei
+2 CONC ghbouring republics. García Moreno soon came to a sensible and honoura
+2 CONC ble understanding with the Peruvian government. 
+2 CONT
+2 CONT A violation of Ecuadorean territory by New Granada, though it led t
+2 CONC o a hostile collision in which García Moreno himself took part, had n
+2 CONC o serious consequences until the Arboledo administration gave place t
+2 CONC o that of General Mosquera, whose ambition it was to make New Granad
+2 CONC a the nucleus of a great "Colombian Confederation", in which Ecuador w
+2 CONC as to be included. Urbina was not above writing encouraging letters t
+2 CONC o the New Granadan or Colombian dictator who was scheming against th
+2 CONC e independence of Ecuador. An invitation to García Moreno to confer wi
+2 CONC th Mosquera elicited a very plain intimation that, so far as the natio
+2 CONC nal obliteration of Ecuador was concerned, there was nothing to confe
+2 CONC r about. But in the meantime the Republic of Ecuador had ratified a co
+2 CONC ncordat with Pope Pius IX (1862), and the discontent of the Regalist
+2 CONC a party at home with the provisions of that instrument gave Mosquera a
+2 CONC n excellent pretext for encroaching upon his neighbour's rights. The R
+2 CONC egalistas were, without knowing it, a kind of Erastians, who claimed t
+2 CONC he appointment to ecclesiastical benefices as an inalienable right o
+2 CONC f the civil power. The President of Ecuador was charged with "castin
+2 CONC g Colombia, manacled, at the feet of Rome"; Urbina issued "manifestos
+2 CONC " from Peru in the sense of "South America for the South Americans"; w
+2 CONC hile the proclamation of President Mosquera recited, with others whic
+2 CONC h seem to have been introduced merely for the sake of appearances, hi
+2 CONC s three really significant grounds of complaint against García Moreno
+2 CONC : that the latter had ratified the concordat; that he maintained a rep
+2 CONC resentative of the Holy See at Quito; that he had brought Jesuits int
+2 CONC o Ecuador. It may be remarked here, in passing, that if Mosquera had a
+2 CONC dded to this catalogue of offences those of insisting upon free primar
+2 CONC y education for the masses, upon strict auditing of the public account
+2 CONC s, and a considerable bona fide outlay upon roads and other public uti
+2 CONC lities, his proclamation might have served adequately as the indictmen
+2 CONC t upon which García Moreno was condemned and eventually put to death b
+2 CONC y those whom Pius IX ironically called "the valiant sectaries". 
+2 CONT
+2 CONT Mosquera was determined to have war, and all the efforts of the Ecuado
+2 CONC rean government were of no avail to prevent it. At the battle of Cuasp
+2 CONC ud all but two battalions of the forces of Ecuador fled ignominiously
+2 CONC . It is a matter for wonder, considering the grounds upon which he ha
+2 CONC d declared war, that Mosquera, in the Peace of Pinsaquí, which followe
+2 CONC d this victory, should have left the Concordat of 1862, the delegate A
+2 CONC postolic, and the Jesuits just as they were. In March,1863, García Mor
+2 CONC eno tendered his resignation to the National Assembly, who insisted up
+2 CONC on his remaining in office until the expiration of his term. Neverthel
+2 CONC ess he had to face, during the next two years, repeated seditions an
+2 CONC d filibustering raids. After sparing the lives of the leaders in one o
+2 CONC f these movements, though they had by all law and custom incurred th
+2 CONC e penalty of death, he was severely criticized for ordering the execut
+2 CONC ion of another such when it had become evident that an example was nec
+2 CONC essary for the peace of the republic. In a naval battle at Jambelí (2
+2 CONC 7 June, 1865) at which García Moreno was personally present, the defea
+2 CONC t of the Urbina forces was complete, and tranquillity reigned until th
+2 CONC e presidential term expired on the 27th of the following August. 
+2 CONT
+2 CONT In the following year began what may be considered as a connected seri
+2 CONC es of attempts which terminated, nine years later, in the assassinatio
+2 CONC n of García Moreno. The dispute between Spain and Peru over the Chinch
+2 CONC as Islands had led to a war in which, following García Moreno's advice
+2 CONC , his successor Jeronimo Carrión had cast in the lot of Ecuador with t
+2 CONC hat of the sister republic and its then ally, Chile. The ex-presiden
+2 CONC t was sent as minister plenipotentiary to Chile, with a commission t
+2 CONC o transact business with President Prado of Peru on his way. On his ar
+2 CONC rival at Lima an attempt was made to assassinate him, but it ended i
+2 CONC n the death of his assailant. His diplomatic mission resulted excellen
+2 CONC tly for the friendly relations between Ecuador and its neighbours; th
+2 CONC e sojourn at Santiago also inspired García Moreno with a high admirati
+2 CONC on for Chile, and he even made up his mind to attempt a change of th
+2 CONC e Ecuadorean constitution so as to make it more like that of Chile
+2 CONC , a project which he carried into effect in the National Convention o
+2 CONC f 1869. On his return to Ecuador he found himself a second time in th
+2 CONC e uncongenial position of leader of a revolution. To anticipate a plo
+2 CONC t which the Liberals, led by one of Urbina's relations, were known t
+2 CONC o be forming, the conservatives of Ecuador had risen, declared Carrió
+2 CONC n deposed, and made García Moreno head of the provisional government
+2 CONC . The justice of the grounds on which this extreme action was taken wa
+2 CONC s established by the attempt of Veintemilla, at Guayaquil, only two mo
+2 CONC nths later, in March, 1869. 
+2 CONT
+2 CONT Having been duly confirmed as president ad interim by the National Con
+2 CONC vention of May, 1869, García Moreno resumed his work for the enlighten
+2 CONC ment, as well as the religious well-being, of his people. It was in th
+2 CONC ese last years of his life that he did so much for the teaching of phy
+2 CONC sical sciences in the university by introducing there the German Fathe
+2 CONC rs of the Society of Jesus. The medical schools and hospitals of the c
+2 CONC apital benefited vastly by his intelligent and zealous efforts. In Sep
+2 CONC tember, 1870, the troops of Victor Emmanuel occupied Rome; and on 18 J
+2 CONC anuary, 1871, García Moreno, alone of all the rulers of the world, add
+2 CONC ressed a protest to the King of Italy on the spoliation of the Holy Se
+2 CONC e. The pope marked his appreciation of this outburst of loyalty by con
+2 CONC ferring on the President of Ecuador the decoration of the First Clas
+2 CONC s of the Order of Pius IX, with a Brief of commendation dated, 27 Marc
+2 CONC h, 1871. It was, on the other hand, notorious that certain lodges ha
+2 CONC d formally decreed the death of García Moreno, who, in a letter to th
+2 CONC e pope, used about this time the following almost prophetic words: "Wh
+2 CONC at riches for me, Most Holy Father, to be hated and calumniated for m
+2 CONC y love for our Divine Redeemer! What happiness if your benediction sho
+2 CONC uld obtain for me from Heaven the grace of shedding my blood for Him
+2 CONC , who being God, was willing to shed His blood for us upon the Cross!
+2 CONC " The object of numberless plots against his life, García Moreno pursu
+2 CONC ed his way with unruffled confidence in the future -- his own and hi
+2 CONC s country's. "The enemies of God and the Church can kill me", he onc
+2 CONC e said, "but God does not die" (Dios no muere). 
+2 CONT
+2 CONT He had been re-elected president, and would soon have entered upon ano
+2 CONC ther term of office, when, towards the end of July, 1875, the police o
+2 CONC f Quito were apprised that a party of assassins had begun to dog Garcí
+2 CONC a Moreno's footsteps. When, however, the chief of police warned the in
+2 CONC tended victim, the latter so discouraged all attempts to hedge him abo
+2 CONC ut with precautions, as to almost excuse the carelessness of his offic
+2 CONC ial guardians. It came out in evidence that within the fortnight prece
+2 CONC ding the finally successful attempt, the same assassins had at least t
+2 CONC wice been foiled by the president's failing to appear on occasions whe
+2 CONC n he had been expected. Finally, on the evening of 6 August, the assas
+2 CONC sins found their prey unprotected, leaving the house of some very dea
+2 CONC r friends; they followed him until he had reached the Treasury, and th
+2 CONC ere Faustino Rayo, the leader of the band, suddenly attacked him wit
+2 CONC h a machete, inflicting six or seven wounds, while the other three ass
+2 CONC isted in the work with their revolvers. On hearing of the death of Gar
+2 CONC cía Moreno, Pope Pius IX ordered a solemn Mass of Requiem to be celebr
+2 CONC ated in the Church of Santa Maria in Trastevere. The same sovereign po
+2 CONC ntiff erected to his memory, in the Collegio Pio-Latino, at Rome, a mo
+2 CONC nument on which García Moreno is designated: 
+2 CONT
+2 CONT Religionis integerrimus custos 
+2 CONT Auctor studiorum optimorum 
+2 CONT Obsequentissimus in Petri sedem 
+2 CONT Justitiae cultor; scelerum vindex. 
+2 CONT The materials for this article have been derived from a biography, no
+2 CONC w extremely rare, written by a personal friend and political associat
+2 CONC e of García Moreno, HERRERA, Apuntes sobre la Vida de García Moreno. S
+2 CONC ee also: BERTHES, García Moreno (Paris); Les Contemporains (Paris, s.d
+2 CONC .), I; MAXWELL-SCOTT, Gabriel García Moreno, Regenerator of Ecuador i
+2 CONC n St. Nicholas Series (London and New York, 1908). 
+2 CONT E. MACPHERSON 
+2 CONT Transcribed by Kenneth M. Caldwell 
+2 CONT Dedicated to Don Andres Moncayo de Cuenca 
+2 CONT
+2 CONT The Catholic Encyclopedia, Volume VI
+2 CONT Copyright © 1909 by Robert Appleton Company
+2 CONT Online Edition Copyright © 1999 by Kevin Knight
+2 CONT Nihil Obstat, September 1, 1909. Remy Lafort, Censor
+2 CONT Imprimatur. +John M. Farley, Archbishop of New York
+2 CONT
+0 @S3@ SOUR
+1 TITL Presidentes Constitucionales Del Ecuador
+1 PUBL http://www.explored.com.ec/ecuador/prescons.htm
+0 @S4@ SOUR
+1 TITL Dr. Gabriel García M.
+1 PUBL http://www.explored.com.ec/ecuador/garciam.htm
+0 @S5@ SOUR
+1 TITL History of Guayas
+1 PUBL http://www.guayas.gov.ec/htm/historia.htm
+0 @S6@ SOUR
+1 AUTH Alvarado-Dávila V., Mauricio
+1 TITL E-Mail message from Mauricio
+1 PUBL August 2002.
+0 @S7@ SOUR
+1 TITL Ancestral File
+1 PUBL http://www.familysearch.org
+0 @S8@ SOUR
+1 TITL Pedigree Resource File
+1 PUBL http://www.familysearch.org
+0 @S9@ SOUR
+1 TITL International Genealogical Index
+1 PUBL http://www.familysearch.org
+0 @T0@ NOTE See Robalio-Davila, Luis. Origenes del Ecuador de hoy: Garcia Moreno (
+1 CONC Talleres Graficos Nacionales, Quito, 1948) pp. 3-12. for biography (an
+1 CONC d lineage).
+0 @T1@ NOTE [Bibliography from Gale Research Company. Biography and Genealogy Mast
+1 CONC er Index. Detroit: Gale Research Co., 2000. (from ancestry.com)]
+1 CONT 413053
+1 CONT Garcia Moreno, Gabriel 1821-1875
+1 CONT Appleton's Cyclopaedia of American Biography. Six volumes. Edited by J
+1 CONC ames Grant Wilson and John Fiske. New York: D. Appleton & Co., 1888-18
+1 CONC 89. Reprint. Detroit: Gale Research, 1968. (ApCAB)
+1 CONT Biographical Dictionary of Latin American and Caribbean Political Lead
+1 CONC ers. Edited by Robert J. Alexander. New York: Greenwood Press, 1988. (
+1 CONC BiDLAmC)
+1 CONT Biography Index. A cumulative index to biographical material in book
+1 CONC s and magazines. Volume 2: August, 1949-August, 1952. New York: H.W. W
+1 CONC ilson Co., 1953. (BioIn 2)
+1 CONT Biography Index. A cumulative index to biographical material in book
+1 CONC s and magazines. Volume 3: September, 1952-August, 1955. New York: H.W
+1 CONC . Wilson Co., 1956. (BioIn 3)
+1 CONT Biography Index. A cumulative index to biographical material in book
+1 CONC s and magazines. Volume 7: September, 1964-August, 1967. New York: H.W
+1 CONC . Wilson Co., 1968. (BioIn 7)
+1 CONT Biography Index. A cumulative index to biographical material in book
+1 CONC s and magazines. Volume 11: September, 1976-August, 1979. New York: H.
+1 CONC W. Wilson Co., 1980. (BioIn 11)
+1 CONT Biography Index. A cumulative index to biographical material in book
+1 CONC s and magazines. Volume 16: September, 1988-August, 1990. New York: H.
+1 CONC W. Wilson Co., 1990. (BioIn 16)
+1 CONT Dictators and Tyrants. Absolute rulers and would-be rulers in world hi
+1 CONC story. By Alan Axelrod and Charles Phillips. New York: Facts on File
+1 CONC , 1995. (DicTyr)
+1 CONT Dictionary of Catholic Biography. By John J. Delaney and James Edwar
+1 CONC d Tobin. Garden City, NY: Doubleday & Co., 1961. (DcCathB)
+1 CONT Encyclopedia of Latin America. Edited by Helen Delpar. New York: McGra
+1 CONC w-Hill Book Co., 1974. (EncLatA)
+1 CONT Encyclopedia of World Biography. Second edition. Seventeen volumes. De
+1 CONC troit: Gale Research, 1998. First edition published as "The McGraw-Hil
+1 CONC l Encyclopedia of World Biography" with six supplement volumes publish
+1 CONC ed as "Encyclopedia of World Biography: 20th Century Supplement". (Enc
+1 CONC WB 98) Biography contains portrait.
+1 CONT The McGraw-Hill Encyclopedia of World Biography. New York: McGraw-Hil
+1 CONC l Book Co., 1973. Supplemental volumes published as "Encyclopedia of W
+1 CONC orld Biography: 20th Century Supplement." (McGEWB)
+1 CONT
+1 CONT Moreno, Gabriel Garcia 1821-1875
+1 CONT Biography Index. A cumulative index to biographical material in book
+1 CONC s and magazines. Volume 16: September, 1988-August, 1990. New York: H.
+1 CONC W. Wilson Co., 1990. (BioIn 16) 
+1 CONT
+0 @T2@ NOTE councilman of Guayaquil
+0 @T3@ NOTE Governor
+0 @T4@ NOTE Mayor
+0 @T5@ NOTE in the big town fire
+0 @T6@ NOTE date is just a guess
+0 @T7@ NOTE end date just a guess
+0 @T8@ NOTE date is just a guess
+0 @T9@ NOTE date is just a guess
+0 @T10@ NOTE dates are just guesses
+0 @T11@ NOTE Was a servant for the Garcia Moreno family before going to Jipijapa wi
+1 CONC th Manuel Ignacio. Dates are just guesses.
+0 @T12@ NOTE start date is just a guess
+0 @T13@ NOTE not married, because Manuel Ignacio was a Catholic priest
+0 TRLR

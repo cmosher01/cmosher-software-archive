@@ -1,0 +1,484 @@
+0 HEAD
+1 SOUR GRO
+2 NAME Genealogy Research Organizer
+2 VERS 1.4
+2 CORP Christopher Alan Mosher
+3 ADDR 41 Brook Pine Drive
+4 CONT Shelton, CT 06484-5912
+1 GEDC
+2 VERS 5.5
+2 FORM LINEAGE-LINKED
+1 CHAR ASCII
+1 SUBM @M0@
+1 NOTE This tree contains genealogy on the Pazmiño family of Quito, Ecuador
+2 CONC . Also these related families: Auz, López, Hurtado, Zambrano.
+0 @M0@ SUBM
+0 @I0@ INDI
+1 _XY 204 258
+1 NAME Felicísimo /López/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 FAMC @F0@
+1 FAMS @F6@
+1 BIRT
+2 DATE 6 AUG 1847
+1 DEAT
+2 DATE 15 DEC 1917
+0 @I1@ INDI
+1 _XY 435 226
+1 NAME Francisco Mariano /López/
+1 SEX M
+1 BIRT
+2 DATE 1841
+2 PLAC Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 DEAT
+2 DATE 1918
+2 PLAC Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 FAMC @F0@
+1 FAMS @F5@
+0 @I2@ INDI
+1 _XY 268 228
+1 NAME Nicolás /López/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 FAMC @F0@
+0 @I3@ INDI
+1 _XY 322 258
+1 NAME Joaquín /López/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 FAMC @F0@
+0 @I4@ INDI
+1 _XY 160 228
+1 NAME Carlos /López/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 FAMC @F0@
+0 @I5@ INDI
+1 _XY 398 95
+1 NAME Mariano /Auz/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 PLAC Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 OCCU priest
+2 PLAC Iglesia de la Merced [Church of Mercy], Calle Chile y Calle Cuenca, Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 RELI Catholic
+2 SOUR @S0@
+3 QUAY 1
+1 RESI
+2 PLAC Calle del Cebollar [Onion Patch Street], Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 FAMS @F0@
+1 FAMC @F1@
+1 FAMS @F10@
+1 TITL Comendador del Convento
+2 DATE FROM 1861 TO 1864
+2 PLAC Iglesia de la Merced [Church of Mercy], Calle Chile y Calle Cuenca, Quito, Pichincha, Ecuador
+2 SOUR @S1@
+3 PAGE p. 139
+3 QUAY 1
+1 EVEN
+2 DATE 21 APR 1872
+2 PLAC Cementerio de San Diego, Imbabura 119, Quito, Ecuador
+2 TYPE blessed
+2 SOUR @S2@
+3 QUAY 1
+0 @I6@ INDI
+1 _XY 265 95
+1 NAME Dolores /López/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 PLAC Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 RESI
+2 PLAC Calle del Cebollar [Onion Patch Street], Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 FAMS @F0@
+1 FAMC @F2@
+0 @I7@ INDI
+1 _XY 343 30
+1 NAME Valdospinos /[unknown]/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 PLAC Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 FAMS @F1@
+0 @I8@ INDI
+1 _XY 488 30
+1 NAME Juana /Auz/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 PLAC Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 FAMS @F1@
+0 @I9@ INDI
+1 _XY 157 95
+1 NAME Camila /López/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX F
+1 FAMC @F2@
+0 @I10@ INDI
+1 _XY 40 95
+1 NAME Pacífica /López/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX F
+1 FAMC @F2@
+0 @I11@ INDI
+1 _XY 93 127
+1 NAME Gregoria /López/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX F
+1 FAMC @F2@
+0 @I12@ INDI
+1 _XY 208 127
+1 NAME Rosario /López/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX F
+1 FAMC @F2@
+0 @I13@ INDI
+1 _XY 647 430
+1 NAME Víctor Manuel /Pazmiño/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 FAMC @F3@
+1 FAMS @F7@
+0 @I14@ INDI
+1 _XY 799 430
+1 NAME Diocelina /Pazmiño/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 PLAC Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 DEAT
+2 DATE 1943
+2 PLAC Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 FAMC @F3@
+0 @I15@ INDI
+1 _XY 925 430
+1 NAME Rosario /Pazmiño/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 PLAC Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 DEAT
+2 DATE 1957
+2 PLAC Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 FAMC @F3@
+0 @I16@ INDI
+1 _XY 760 233
+1 NAME José Manuel /Paz y Miño/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 PLAC Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 DEAT
+2 DATE 1871
+2 PLAC Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 FAMS @F3@
+1 FAMC @F4@
+0 @I17@ INDI
+1 _XY 926 233
+1 NAME Ramón /Paz y Miño/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 FAMC @F4@
+0 @I18@ INDI
+1 _XY 626 226
+1 NAME Amalia /Hurtado/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 PLAC Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+3 PAGE p. 25
+2 DATE ABT 1840
+1 DEAT
+2 DATE 1913
+2 PLAC Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 FAMS @F3@
+1 FAMS @F5@
+1 FAMC @F8@
+0 @I19@ INDI
+1 _XY 162 430
+1 NAME Lelia /López/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX F
+1 FAMC @F6@
+1 FAMS @F7@
+0 @I20@ INDI
+1 _XY 30 270
+1 NAME Francisca /Romero/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX F
+1 FAMS @F6@
+0 @I21@ INDI
+1 _XY 833 55
+1 NAME Joaquín Donoso /Baen/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 PLAC Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 FAMS @F9@
+0 @I22@ INDI
+1 _XY 696 49
+1 NAME Dolores /Zambrano/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX F
+1 DEAT
+2 DATE 1869
+2 SOUR @S0@
+3 PAGE p. 26
+3 QUAY 1
+1 BIRT
+2 PLAC Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 FAMS @F8@
+1 FAMS @F9@
+0 @I23@ INDI
+1 _XY 608 55
+1 NAME /Hurtado/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 RESI
+2 PLAC Los Ríos, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 FAMS @F8@
+0 @I24@ INDI
+1 _XY 371 366
+1 NAME Julia /López/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1878
+2 PLAC Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 DEAT
+2 DATE ABT 1880
+2 PLAC Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 FAMC @F5@
+0 @I25@ INDI
+1 _XY 455 366
+1 NAME Julio César /López/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 DEAT
+2 DATE 8 JUN 1896
+2 PLAC Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 BIRT
+2 DATE ABT 1879
+2 PLAC Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 FAMC @F5@
+0 @I26@ INDI
+1 _XY 575 366
+1 NAME Dolores Malvina /López/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 8 APR 1881
+2 PLAC Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 DEAT
+2 DATE 22 MAR 1977
+2 PLAC Quito, Pichincha, Ecuador
+2 SOUR @S0@
+3 QUAY 1
+1 FAMC @F5@
+0 @I27@ INDI
+1 _XY 731 136
+1 NAME Camila /Donoso/
+2 SOUR @S0@
+3 PAGE p. 25
+3 QUAY 1
+1 SEX F
+1 FAMC @F9@
+0 @I28@ INDI
+1 _XY 852 135
+1 NAME Modesto /Donoso/
+2 SOUR @S0@
+3 PAGE p. 25
+3 QUAY 1
+1 SEX M
+1 FAMC @F9@
+0 @I29@ INDI
+1 _XY 791 164
+1 NAME Teresa /Donoso/
+2 SOUR @S0@
+3 PAGE p. 25
+3 QUAY 1
+1 SEX F
+1 FAMC @F9@
+0 @I30@ INDI
+1 _XY 926 163
+1 NAME Adela /Donoso/
+2 SOUR @S0@
+3 PAGE p. 25
+3 QUAY 1
+1 SEX F
+1 FAMC @F9@
+0 @I31@ INDI
+1 _XY 61 30
+1 NAME Lorenzo /López/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 FAMS @F2@
+0 @I32@ INDI
+1 _XY 500 95
+1 NAME /Daste/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX F
+1 FAMS @F10@
+0 @I33@ INDI
+1 _XY 440 144
+1 NAME Rosario /Daste/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX F
+1 FAMC @F10@
+0 @F0@ FAM
+1 CHIL @I0@
+1 CHIL @I1@
+1 CHIL @I2@
+1 CHIL @I3@
+1 CHIL @I4@
+1 HUSB @I5@
+1 WIFE @I6@
+0 @F1@ FAM
+1 CHIL @I5@
+1 HUSB @I7@
+1 WIFE @I8@
+0 @F2@ FAM
+1 CHIL @I6@
+1 CHIL @I9@
+1 CHIL @I10@
+1 CHIL @I11@
+1 CHIL @I12@
+1 HUSB @I31@
+0 @F3@ FAM
+1 CHIL @I13@
+1 CHIL @I14@
+1 CHIL @I15@
+1 HUSB @I16@
+1 WIFE @I18@
+0 @F4@ FAM
+1 CHIL @I16@
+1 CHIL @I17@
+0 @F5@ FAM
+1 HUSB @I1@
+1 WIFE @I18@
+1 CHIL @I24@
+1 CHIL @I25@
+1 CHIL @I26@
+0 @F6@ FAM
+1 HUSB @I0@
+1 CHIL @I19@
+1 WIFE @I20@
+0 @F7@ FAM
+1 HUSB @I13@
+1 WIFE @I19@
+0 @F8@ FAM
+1 CHIL @I18@
+1 WIFE @I22@
+1 HUSB @I23@
+0 @F9@ FAM
+1 HUSB @I21@
+1 WIFE @I22@
+1 CHIL @I27@
+1 CHIL @I28@
+1 CHIL @I29@
+1 CHIL @I30@
+0 @F10@ FAM
+1 WIFE @I32@
+1 HUSB @I5@
+1 CHIL @I33@
+0 @S0@ SOUR
+1 AUTH Dudley, Joseph
+1 TITL Pazmiño López Family History
+1 PUBL In posession of Chris Mosher
+0 @S1@ SOUR
+1 AUTH Navarro, José Gabriel (1881-1965)
+1 TITL Contribuciones a la Historia del Arte en el Ecuador. Volumen II
+1 PUBL Alicante : Biblioteca Virtual Miguel de Cervantes, 2005 <http://www.ce
+2 CONC rvantesvirtual.com/FichaObra.html?portal=0&Ref=13516>
+0 @S2@ SOUR
+1 AUTH [anonymous]
+1 TITL El tradicional cementerio de San Diego
+1 PUBL http://www.terraecuador.net/revista%2038/cementerio%20san%20diego.htm
+1 TEXT  El cementerio de San Diego abrió sus puertas el 21 de abril de 1872
+2 CONC , con la bendición de fray Mariano Auz, de la Orden Mercedaria.
+2 CONT <br />
+2 CONT [San Diego Cemetery opened its doors on April 21, 1872, with the bened
+2 CONC icion of Friar Mariano Auz, of the Order of La Merced.]
+2 CONT
+0 TRLR
