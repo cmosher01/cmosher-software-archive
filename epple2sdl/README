@@ -1,7 +1,64 @@
-The Emulated Apple ][ (epple2)
+epple2, the Emulated aPPLE ][
 
 See INSTALL for instructions on building and installing a
 normal distribution.
+
+epple2 is an emulator of the Apple ][ and Apple ][ plus
+computers from Apple, Inc. It strives to faithfully simulate
+much of the internal workings of the original Apple ][,
+including the individual cycles of the 6502 CPU, and the
+NTSC video signal generation, including the "strange orange
+line", other color anomalies, and the "floating data bus."
+The CPU and video timings are synchronized, and the emulator
+is designed to run at the same speed as the original
+machine (if your computer is fast enough). It also emulates
+several different types of television screens and monitors
+for the display.
+
+It includes emulation of a Disk ][ controller card, a ROM
+firmware card, and a RAM "Language" card, as well as a
+simple clock card.
+
+epple2 is written in C++, and is designed to be buildable
+Windows (with Cygwin or Visual C++ 6.0) or Linux (gcc).
+
+The SDL library (http://www.libsdl.org) is the only dependency
+of epple2 (see below).
+
+
+
+RUNNING
+-------
+SDL:
+To run epple2, you need to have the SDL libraries installed.
+See http://www.libsdl.org for information on SDL.
+You'll need to download and install the "Runtime Libraries"
+for your platform (Win32 or Linux).
+
+ROM:
+With epple2 and SDL, you can run the emulator, but it won't
+do too much without the appropriate Apple ROM code. You can
+use ROM images from your own original Apple ][ (plus), or
+you can find some on the Internet (check the Asimov Apple
+repository).
+Alternatively, you can build the ROMs yourself from assembly
+language source files I've created; these are available in
+the apple2src project. (See that project for details).
+
+Disks:
+You will also probably want floppy disk images. Again, you can
+download some from the Internet, especially from Asimov. The
+epple2 only reads NIBBLE IMAGES. If you only have DOS images,
+you will need to comvert them to nibble images; you can use
+CiderPress (http://ciderpress.sourceforge.net) for this.
+
+BUILDING
+--------
+If you want to build epple2 from the source distribution,
+you'll need to have the SDL development libraries installed.
+See http://www.libsdl.org for information on SDL.
+You'll need to download and install the "Development Libraries"
+for your platform (Win32 or Linux).
 
 Developers fetching from the repository directly should
 execute the bootstrap script first.
