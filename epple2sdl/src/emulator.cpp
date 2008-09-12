@@ -168,7 +168,8 @@ void Emulator::dispatchKeyUp(const SDL_KeyboardEvent& keyEvent)
 	unsigned char scancode = keyEvent.keysym.scancode;
 //	printf("key UP: %d    sym: %d    mod: %04X    scn: %d\n",key,sym,mod,scancode);
 
-	if (sym < 0x7F || sym == SDLK_LEFT || sym == SDLK_RIGHT)
+	if ((sym < 0x7F || sym == SDLK_LEFT || sym == SDLK_RIGHT) &&
+		!(sym == SDLK_TAB || sym == SDLK_BACKQUOTE || sym == '[' || sym == '\\' || sym == SDLK_DELETE))
 	{
 		--this->keysDown;
 	}
@@ -188,7 +189,8 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 
 //	printf("key DN: %d    sym: %d    mod: %04X    scn: %d\n",key,sym,mod,scancode);
 
-	if (sym < 0x7F || sym == SDLK_LEFT || sym == SDLK_RIGHT)
+	if ((sym < 0x7F || sym == SDLK_LEFT || sym == SDLK_RIGHT) &&
+		!(sym == SDLK_TAB || sym == SDLK_BACKQUOTE || sym == '[' || sym == '\\' || sym == SDLK_DELETE))
 	{
 		++this->keysDown;
 	}
