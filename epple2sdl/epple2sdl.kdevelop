@@ -20,13 +20,13 @@
     </general>
     <run>
       <runarguments>
-        <epple2></epple2>
+        <epple2>/home/chris/epple2sdl/epple2.conf</epple2>
       </runarguments>
       <debugarguments>
-        <epple2></epple2>
+        <epple2/>
       </debugarguments>
       <cwd>
-        <epple2>/home/chris/epple2sdl/./src</epple2>
+        <epple2>/home/chris/epple2sdl</epple2>
       </cwd>
     </run>
     <configurations>
