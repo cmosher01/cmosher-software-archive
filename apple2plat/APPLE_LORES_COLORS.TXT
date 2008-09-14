@@ -1,0 +1,162 @@
+color        nibble     red    green     blue
+Black         0000        0        0        0   000000
+Magenta       0001      128       32       64   802040
+Dark Blue     0010        0       32      128   002080
+Light Purple  0011      128       64      192   8040C0
+Dark Green    0100        0       96       64   006040
+Grey          0101      128      128      128   808080
+Medium Blue   0110        0      128      192   0080C0
+Light Blue    0111      128      160      255   80A0FF
+Brown         1000      128       96        0   806000
+Orange        1001      255      128       64   FF8040
+Grey          1010      128      128      128   808080
+Pink          1011      255      160      192   FFA0C0
+Green         1100      128      192       64   80C040
+Yellow        1101      255      224      128   FFE080
+Blue/Green    1110      128      224      192   80E0C0
+White         1111      255      255      255   FFFFFF
+
+
+
+
+
+                             H   S     V
+Magenta       0001  802040 340  75    50
+Pink          1011  FFA0C0 340  37.3 100     (1-3)
+Light Purple  0011  8040C0 270  66.7  75.3
+Dark Blue     0010  002080 225 100    50
+Light Blue    0111  80A0FF 225  50   100
+Medium Blue   0110  0080C0 200 100    75.3
+Dark Green    0100  006040 160 100    37.8   (5-8)
+Blue/Green    1110  80E0C0 160  43    88
+Green         1100  80C040  90	66.7  75.3
+Brown         1000  806000  45 100    50
+Yellow        1101  FFE080
+Orange        1001  FF8040
+Grey          0101  808080
+Grey          1010  808080
+White         1111  FFFFFF
+Black         0000  000000
+
+
+
+
+
+             red grn blu
+ 0 black       0   0   0 000000
+ 1 red       227  30  96 E31E60
+ 2 dk blue    96  78 189 604EBD
+ 3 purple    255  68 253 FF44FD
+ 4 dk green    0 163  96 00A360
+ 5 gray      156 156 156 9C9C9C
+ 6 med blue   20 207 253 14CFFD
+ 7 lt blue   208 195 255 D0C3FF
+ 8 brown      96 114   3 607203
+ 9 orange    255 106  60 FF6A3C
+10 grey      156 156 156 9C9C9C
+11 pink      255 160 208 FFA0D0
+12 lt green   20 245  60 14F53C
+13 yellow    208 221 141 D0DD8D
+14 aqua      114 255 208 72FFD0
+15 white     255 255 255 FFFFFF
+
+
+http://www.lazilong.com/apple_II/a2pix/dgr1.htm
+http://www.yafla.com/dforbes/yaflaColor/ColorRGBHSL.aspx
+
+ 45 100 100 FFC000
+135 100 100 00FF40
+225 100 100 0040FF
+315 100 100 FF00C0
+
+
+
+
+actual readings captured from my //c:
+hue sat val color name
+n/a  12   6 black
+354  89  55 magenta
+255  91  82 dark blue
+291  95 100 purple
+168 100  36 dark green
+n/a   1  36 grey
+217  96 100 medium blue
+264  60 100 light blue
+ 93 100  35 brown
+ 30 100  74 orange
+n/a   1  36 grey
+348  64 100 pink
+120 100  75 light green
+ 78 100  77 yellow
+168  87  80 aqua
+n/a   1  80 white
+
+354  89  55 magenta
+348  64 100 pink
+291  95 100 purple
+255  91  82 dark blue
+264  60 100 light blue
+217  96 100 medium blue
+168 100  36 dark green
+168  87  80 aqua
+120 100  75 light green
+ 93 100  35 brown
+ 78 100  77 yellow
+ 30 100  74 orange
+n/a   1  36 grey
+n/a   1  36 grey
+n/a   1  80 white
+n/a  12   6 black
+
+after adjusting white and black to 100,100 and 0,0
+n/a   0   1 black
+354  98  66 magenta
+256  98  99 dark blue
+300  99 100 purple
+169 100  41 dark green
+n/a   0  41 grey
+212  99 100 medium blue
+276  55 100 light blue
+ 99 100  40 brown
+ 28 100  91 orange
+n/a   1  41 grey
+344  59 100 pink
+120 100  93 light green
+ 80 100  95 yellow
+170  92  98 aqua
+n/a   0 100 white
+
+354  98  66 magenta
+344  59 100 pink
+300  99 100 purple
+256  98  99 dark blue
+276  55 100 light blue
+212  99 100 medium blue
+169 100  41 dark green
+170  92  98 aqua
+120 100  93 light green
+ 99 100  40 brown
+ 80 100  95 yellow
+ 28 100  91 orange
+n/a   0  41 grey
+n/a   1  41 grey
+n/a   0 100 white
+n/a   0   1 black
+
+rounded sat and val:
+354 100  75 magenta
+344  50 100 pink
+300 100 100 purple
+256 100 100 dark blue
+276  50 100 light blue
+212 100 100 medium blue
+169 100  50 dark green
+170 100 100 aqua
+120 100 100 light green
+ 99 100  50 brown
+ 80 100 100 yellow
+ 28 100 100 orange
+n/a   0  50 grey
+n/a   1  50 grey
+n/a   0 100 white
+n/a   0   0 black
