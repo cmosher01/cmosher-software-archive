@@ -1,0 +1,22 @@
+6502 IN APPLE ][
+----------------
+A0-AF   ADDRESS BUS
+D0-D7   DATA BUS
+
+        OUTPUTS
+R/W'    READ/WRITE DATA
+PHASE 1  
+
+        INPUTS
+PHASE 0
+RESET'
+IRQ'
+
+        INPUTS (CONNECTED TO SLOTS ONLY)
+READY
+NMI'
+
+
+
+        NOT USED
+OVF'
