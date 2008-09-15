@@ -60,5 +60,54 @@ See http://www.libsdl.org for information on SDL.
 You'll need to download and install the "Development Libraries"
 for your platform (Win32 or Linux).
 
-Developers fetching from the repository directly should
+Developers fetching from the subversion directly should
 execute the bootstrap script first.
+
+
+
+PLATFORM-SPECIFIC BUILDING
+--------------------------
+
+Windows/Cygwin
+--------------
+Install Cygwin. You'll need the Base Cygwin packages, of course,
+as well as the following (under Devel):
+automake
+autoconf
+binutils
+gcc-g++
+make
+
+Install SDL. At http://www.libsdl.org/ find the download page.
+Download the "Development Libraries" for Win32, mingw, for example:
+SDL-devel-1.2.13-mingw32.tar.gz (Mingw32)
+And save it to your home directory (for cygwin).
+Untar the SDL archive to your home directory:
+$ cd
+$ tar xzvf SDL-devel-1.2.13-mingw32.tar.gz
+Then follow the instructions to install SDL, for example:
+$ cd SDL-1.2.13
+$ make native
+
+
+
+From the Cygwin bash prompt, go to your home directory and
+untar the epple2 source distribution tar file and cd to the
+epple2 directory. For example:
+$ cd
+$ tar xzvf epple2-1.0.tar.gz
+$ cd epple2
+
+NOTE: If you checked out epple2 from subversion, rather
+than downloading the distribution, you need to first run
+the bootstrap script:
+$ ./bootstrap
+
+
+
+Then build as follows:
+$ ./configure
+$ make
+$ make install
+
+Then follow the instruction above under "RUNNING" for ROM and disks.
