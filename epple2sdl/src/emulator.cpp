@@ -216,6 +216,7 @@ void Emulator::dispatchKeypress(const SDL_KeyboardEvent& keyEvent)
 		for (unsigned int i = 0; i < s.length(); ++i)
 		{
 			key = s[i];
+			// TODO fix pasting line-endings
 			if (key == '\n')
 				key = '\r';
 			if ('a' <= key && key <= 'z')
