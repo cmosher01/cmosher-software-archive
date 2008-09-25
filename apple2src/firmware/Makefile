@@ -98,3 +98,4 @@ monitor/apple2plus/%.s65: monitor/%.s65 monitor/symbols.s65
 clean:
 	find . -name "*.rom" | xargs rm -fv
 	find . -name "*.o65" | xargs rm -fv
+	rm -Rfv monitor/apple2 monitor/apple2plus disk2/13sector disk2/16sector
