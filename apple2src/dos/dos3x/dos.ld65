@@ -1,9 +1,2 @@
-MEMORY
-{
-	DOS: start=$1B00, size=$2500, file="dos";
-}
-
-SEGMENTS
-{
-	CODE: load=DOS, type=RW;
-}
+MEMORY { DOS: start=$1B00, size=$2500, file=%O; }
+SEGMENTS { CODE: load=DOS, type=RW; }
