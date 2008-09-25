@@ -1,0 +1,2 @@
+MEMORY { DISK2: start=0, size=$0100, file=%O; }
+SEGMENTS { CODE: load=DISK2, type=RO; }

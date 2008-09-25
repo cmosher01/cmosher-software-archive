@@ -1,0 +1,2 @@
+MEMORY { MONROM: start=$F800, size=$0800, file=%O; }
+SEGMENTS { CODE: load=MONROM, type=RO; }
