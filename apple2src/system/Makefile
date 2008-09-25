@@ -1,6 +1,11 @@
-# user must define INCDIR
+# Builds Apple ][ and Apple ][ plus system software, which
+# includes Monitor, Integer BASIC, misc. routines, and Applesoft BASIC.
 #
-# The only option for this build (which is not implemented) 
+# user must define INCDIR to directory with necessary include files
+#
+# The only option for this build (which is not yet implemented as an option)
+# is whether to build Integer BASIC original or with bug fixes
+#
 CA65 = ca65
 LD65 = ld65
 CP = cp
