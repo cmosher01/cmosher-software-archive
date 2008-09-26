@@ -288,8 +288,8 @@ signed char inline PictureGenerator::vbl(const int hcycle)
 // Set up the color burst signal.
 // TODO confirm that color burst signal phase is correct
 // Note, I believe this is the correct phase. The only other
-// possible configuration would be 0,-20,0,+20. Can anyone confirm
-// that +10,-10,-10,+10 gives the correct phase? By eye, it seems
+// possible configuration would be +10,-10,-10,+10. Can anyone confirm
+// that 0,-20,0,+20 gives the correct phase? By eye, it seems
 // +10,-10,-10,+10 makes brown look too green, but 0,-20,0,+20
 // makes hi-res blue look too light.
 // Note that this color burst signal only affects "old TV" mode;
