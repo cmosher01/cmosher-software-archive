@@ -60,7 +60,7 @@ applesoft/applesoft.ex65: applesoft/applesoft.o65 applesoft/applesoft.ld65
 
 
 
-MONITOR_MODS = lores disasm debug paddles display1 math display2 cassette keyin monitor vectors
+MONITOR_MODS = monitor lores disasm debug paddles display1 math display2 cassette keyin cmd vectors
 
 MONITOR2_OBJS = $(foreach mod,$(MONITOR_MODS),monitor/apple2/$(mod).o65)
 

@@ -81,7 +81,7 @@ subdirs: $(SUBDIRS)
 
 .PRECIOUS: %.d13 %.do
 
-MODS = reloc dos filemgr boot1 boot2 rwts rwtsapi
+MODS = dos reloc main filemgr boot1 boot2 rwts rwtsapi
 
 
 
