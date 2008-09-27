@@ -1,8 +1,5 @@
-CA65 = ca65
-LD65 = ld65
 CP = cp
-A2CDT_JAR = a2cdt.jar
-A2CDT = java -cp $(A2CDT_JAR)
+CDT = java -cp $(A2CDT)
 
 .s65.o65:
 	$(CA65) -v -t apple2 -o $@ -I $(<D) -I $(INCDIR) $(CA65DEFS) $<
@@ -11,24 +8,24 @@ A2CDT = java -cp $(A2CDT_JAR)
 	$(LD65) -v -C $(filter %.ld65,$^) -o $@ $(filter %.o65,$^)
 
 .ex65.d13:
-	$(A2CDT) dd --skip=0x1B00 <$< >$@
-	$(A2CDT) dd --count=0x1B00 <$< >>$@
-	$(A2CDT) dd --count=0xB800 --const=0 >>$@
-	$(A2CDT) CreateCatalog --version=$(VERSION) >>$@
-	$(A2CDT) dd --count=0xDD00 --const=0 >>$@
+	$(CDT) dd --skip=0x1B00 <$< >$@
+	$(CDT) dd --count=0x1B00 <$< >>$@
+	$(CDT) dd --count=0xB800 --const=0 >>$@
+	$(CDT) CreateCatalog --version=$(VERSION) >>$@
+	$(CDT) dd --count=0xDD00 --const=0 >>$@
 
 .d13.nib:
-	$(A2CDT) ConvertD13toNibble <$< >$@
+	$(CDT) ConvertD13toNibble <$< >$@
 
 .ex65.do:
-	$(A2CDT) dd --skip=0x1B00 <$< >$@
-	$(A2CDT) dd --count=0x1B00 <$< >>$@
-	$(A2CDT) dd --count=0xEB00 --const=0 >>$@
-	$(A2CDT) CreateCatalog --version=$(VERSION) >>$@
-	$(A2CDT) dd --count=0x11000 --const=0 >>$@
+	$(CDT) dd --skip=0x1B00 <$< >$@
+	$(CDT) dd --count=0x1B00 <$< >>$@
+	$(CDT) dd --count=0xEB00 --const=0 >>$@
+	$(CDT) CreateCatalog --version=$(VERSION) >>$@
+	$(CDT) dd --count=0x11000 --const=0 >>$@
 
 .do.nib:
-	$(A2CDT) ConvertD16toNibble <$< >$@
+	$(CDT) ConvertD16toNibble <$< >$@
 
 .SUFFIXES: .s65 .o65 .ld65 .ex65 .d13 .do .nib
 
