@@ -6,8 +6,6 @@
 # The only option for this build (which is not yet implemented as an option)
 # is whether to build Integer BASIC original or with bug fixes
 #
-CA65 = ca65
-LD65 = ld65
 CP = cp
 
 .SUFFIXES: .s65 .o65 .ld65 .ex65
@@ -37,6 +35,7 @@ all: \
 
 
 subdirs: $(SUBDIRS)
+	echo "$(VPATH)"
 	mkdir -p $^
 
 
