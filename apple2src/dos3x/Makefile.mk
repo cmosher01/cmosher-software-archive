@@ -187,13 +187,18 @@ install:
 	cp 13sector/software/dos320/dos.ex65 $(PREFIX)/lib/apple2/dos3x/13sector/software/dos320
 	mkdir -p $(PREFIX)/lib/apple2/dos3x/13sector/software/dos321
 	cp 13sector/software/dos321/dos.ex65 $(PREFIX)/lib/apple2/dos3x/13sector/software/dos321
+
 	mkdir -p $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos310
+	cp $(VPATH)/disks/README $(PREFIX)/lib/apple2/dos3x/13sector/disks
+	cp -R $(VPATH)/disks/dos310 $(PREFIX)/lib/apple2/dos3x/13sector/disks
 	cp 13sector/disks/dos310/clean310.d13 $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos310
 	cp 13sector/disks/dos310/clean310.nib $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos310
 	mkdir -p $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos320
+	cp -R $(VPATH)/disks/dos320 $(PREFIX)/lib/apple2/dos3x/13sector/disks
 	cp 13sector/disks/dos320/clean320.d13 $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos320
 	cp 13sector/disks/dos320/clean320.nib $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos320
 	mkdir -p $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos321
+	cp -R $(VPATH)/disks/dos321 $(PREFIX)/lib/apple2/dos3x/13sector/disks
 	cp 13sector/disks/dos321/clean321.d13 $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos321
 	cp 13sector/disks/dos321/clean321.nib $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos321
 
@@ -205,13 +210,18 @@ install:
 	cp 16sector/software/dos331/dos.ex65 $(PREFIX)/lib/apple2/dos3x/16sector/software/dos331
 	mkdir -p $(PREFIX)/lib/apple2/dos3x/16sector/software/dos332
 	cp 16sector/software/dos332/dos.ex65 $(PREFIX)/lib/apple2/dos3x/16sector/software/dos332
+
 	mkdir -p $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos330
+	cp $(VPATH)/disks/README $(PREFIX)/lib/apple2/dos3x/16sector/disks
+	cp -R $(VPATH)/disks/dos330 $(PREFIX)/lib/apple2/dos3x/16sector/disks
 	cp 16sector/disks/dos330/clean330.do $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos330
 	cp 16sector/disks/dos330/clean330.nib $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos330
 	mkdir -p $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos331
+	cp -R $(VPATH)/disks/dos331 $(PREFIX)/lib/apple2/dos3x/16sector/disks
 	cp 16sector/disks/dos331/clean331.do $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos331
 	cp 16sector/disks/dos331/clean331.nib $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos331
 	mkdir -p $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos332
+	cp -R $(VPATH)/disks/dos332 $(PREFIX)/lib/apple2/dos3x/16sector/disks
 	cp 16sector/disks/dos332/clean332.do $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos332
 	cp 16sector/disks/dos332/clean332.nib $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos332
 
