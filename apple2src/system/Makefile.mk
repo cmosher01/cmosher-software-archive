@@ -23,7 +23,7 @@ SUBDIRS = intbasic other applesoft monitor/apple2 monitor/apple2plus
 
 
 
-.PHONY: all subdirs clean $(SUBDIRS)
+.PHONY: all subdirs $(SUBDIRS) install clean
 
 
 
@@ -68,7 +68,7 @@ monitor/apple2/monitor.ex65: CA65DEFS = -D VERSION=1
 monitor/apple2/monitor.ex65: $(MONITOR2_OBJS) monitor/monitor.ld65
 
 monitor/apple2/%.s65: monitor/%.s65 monitor/symbols.s65
-	$(CP) $? $(@D)
+	cp $? $(@D)
 
 
 
@@ -78,7 +78,23 @@ monitor/apple2plus/monitor.ex65: CA65DEFS = -D VERSION=2
 monitor/apple2plus/monitor.ex65: $(MONITOR2P_OBJS) monitor/monitor.ld65
 
 monitor/apple2plus/%.s65: monitor/%.s65 monitor/symbols.s65
-	$(CP) $? $(@D)
+	cp $? $(@D)
+
+
+
+
+
+install:
+	mkdir -p $(PREFIX)/lib/apple2/system/monitor/apple2
+	cp monitor/apple2/monitor.ex65 $(PREFIX)/lib/apple2/system/monitor/apple2
+	mkdir -p $(PREFIX)/lib/apple2/system/monitor/apple2plus
+	cp monitor/apple2plus/monitor.ex65 $(PREFIX)/lib/apple2/system/monitor/apple2plus
+	mkdir -p $(PREFIX)/lib/apple2/system/intbasic
+	cp intbasic/intbasic.ex65 $(PREFIX)/lib/apple2/system/intbasic
+	mkdir -p $(PREFIX)/lib/apple2/system/other
+	cp other/other.ex65 $(PREFIX)/lib/apple2/system/other
+	mkdir -p $(PREFIX)/lib/apple2/system/applesoft
+	cp applesoft/applesoft.ex65 $(PREFIX)/lib/apple2/system/applesoft
 
 
 
