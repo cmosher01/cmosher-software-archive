@@ -4,10 +4,9 @@
 # user must define INCDIR to directory with necessary include files
 #
 # The only option for this build (which is not yet implemented as an option)
-# is whether to build Integer BASIC original or with bug fixes
+# is whether to build Integer BASIC original or with bug fixes. Currently,
+# it builds the original version without bug fixes.
 #
-CP = cp
-
 .SUFFIXES: .s65 .o65 .ld65 .ex65
 
 .s65.o65:
@@ -16,11 +15,15 @@ CP = cp
 .o65.ex65:
 	$(LD65) -v -C $(filter %.ld65,$^) -o $@ $(filter %.o65,$^)
 
+
+
+
+
 SUBDIRS = intbasic other applesoft monitor/apple2 monitor/apple2plus
 
+
+
 .PHONY: all subdirs clean $(SUBDIRS)
-
-
 
 
 
@@ -40,7 +43,7 @@ subdirs: $(SUBDIRS)
 
 
 
-intbasic/intbasic.ex65: CA65DEFS = -D VERSION=2 -D BUGFIX
+intbasic/intbasic.ex65: CA65DEFS = -D VERSION=2
 intbasic/intbasic.ex65: intbasic/intbasic.o65 intbasic/intbasic.ld65
 
 
