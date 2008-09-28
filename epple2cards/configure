@@ -121,7 +121,6 @@ cat <<EOF >./Makefile
 VPATH = $DIR
 CA65 = $CA65
 LD65 = $LD65
-INCDIR = $DIR/../include/macros
 PREFIX = $PREFIX
 include $DIR/Makefile.mk
 EOF
