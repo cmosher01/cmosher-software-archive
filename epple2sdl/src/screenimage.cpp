@@ -125,9 +125,9 @@ void ScreenImage::drawFnKeys()
 	drawText(
 "                                FULLSCRN   SCAN-LINES                     KEYBOARD",r++,c);
 	drawText(
-"                XXXXXXXXXXXXXX  WINDOW     FILL-LINES      REPT    HYPER   BUFFER   RESET    PASTE     SAVE BMP     QUIT!",r++,c);
+"                XXXXXXXXXXXXXX  WINDOW     FILL-LINES  CMD  REPT   HYPER   BUFFER   RESET    PASTE     SAVE BMP     QUIT!",r++,c);
 	drawText(
-"      F1              F2          F3          F4           F10      F11     F12     Break    Insert    PrintScreen   End",r++,c);
+"      F1              F2          F3          F4       F5   F10     F11     F12     Break    Insert    PrintScreen   End",r++,c);
 
 	if (this->fullscreen)
 		invertText(76,32,42); // FULLSCRN
