@@ -25,4 +25,4 @@ clean31sysmas_stock_rawdos.d13 & .nib
 	Fixed file sizes.
 	Note that the RAWDOS file on this disk is the stock RAWDOS file, so if you use
 	MASTER CREATE from this disk to create a new disk, that new disk will have the
-	stock DOS no it, not the clean built version.
+	stock DOS on it, not the clean built version.
