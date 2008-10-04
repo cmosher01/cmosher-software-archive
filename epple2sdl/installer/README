@@ -1,0 +1,6 @@
+To build the installer (for Windows) on Cygwin/Windows
+
+install WiX
+add WiX install directory to path
+cd to this directory
+make
