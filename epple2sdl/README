@@ -42,7 +42,7 @@ for your platform (Win32 or Linux).
 ROM:
 With epple2 and SDL, you can run the emulator, but it won't
 do too much without the appropriate Apple ROM code. You can
-use ROM images from your own original Apple ][ (plus), or
+use ROM images from your own original Apple ][ or ][ plus, or
 you can find some on the Internet (check the Asimov Apple
 repository).
 Alternatively, you can build the ROMs yourself from assembly
@@ -52,10 +52,10 @@ the apple2src project. (See that project for details).
 Disks:
 You will also probably want floppy disk images. Again, you can
 download some from the Internet, especially from Asimov. The
-epple2 only reads NIBBLE IMAGES. If you only have DOS images,
-you will need to comvert them to nibble images; you can use
-ConvertD16toNibble from my a2cdt (Apple ][ Command-Line
-Disk-Image Tools) project, or some other conversion program.
+epple2 only reads NIBBLE IMAGES. If you only have 16 sector
+images, you will need to comvert them to nibble images; you
+can use CiderPress (http://ciderpress.sourceforge.net).
+
 
 
 
