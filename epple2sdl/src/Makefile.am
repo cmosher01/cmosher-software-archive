@@ -17,4 +17,4 @@ epple2_SOURCES = a2colorsobserved.cpp addressbus.cpp analogtv.cpp apple2.cpp \
 	screenimage.cpp slots.cpp speakerclicker.cpp standardin.cpp \
 	standardinproducer.cpp standardout.cpp steppermotor.cpp textcharacters.cpp \
 	timable.cpp timinggenerator.cpp video.cpp videoaddressing.cpp videomode.cpp \
-	videostaticgenerator.cpp
+	videostaticgenerator.cpp SDL_win32_main.c

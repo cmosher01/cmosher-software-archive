@@ -22,7 +22,8 @@ firmware card, and a RAM "Language" card, as well as a
 simple clock card.
 
 epple2 is written in C++, and is designed to be buildable
-on Windows (with Cygwin or Visual C++ 6.0) or Linux (gcc).
+on Windows (with MSYS/MinGW or Visual C++ 2008, Express
+Edition) or Linux (gcc).
 
 The SDL library (http://www.libsdl.org) is the only dependency
 of epple2 (see below).
@@ -53,7 +54,7 @@ Disks:
 You will also probably want floppy disk images. Again, you can
 download some from the Internet, especially from Asimov. The
 epple2 only reads NIBBLE IMAGES. If you only have 16 sector
-images, you will need to comvert them to nibble images; you
+images, you will need to convert them to nibble images; you
 can use CiderPress (http://ciderpress.sourceforge.net).
 
 
@@ -73,29 +74,21 @@ for your platform (Win32 or Linux).
 Developers fetching directly from the repository instead of
 downloading the distribution will need to execute the bootstrap
 script before running ./configure or make.
-=======
-Developers fetching from the subversion directly should
-execute the bootstrap script first.
 
 
 
 PLATFORM-SPECIFIC BUILDING
 --------------------------
 
-Windows/Cygwin
+Windows/MSYS
 --------------
-Install Cygwin. You'll need the Base Cygwin packages, of course,
-as well as the following (under Devel):
-automake
-autoconf
-binutils
-gcc-g++
-make
+Install MSYS into C:\MSYS\1.0
+Install MinGW into C:\mingw
 
 Install SDL. At http://www.libsdl.org/ find the download page.
 Download the "Development Libraries" for Win32, mingw, for example:
 SDL-devel-1.2.13-mingw32.tar.gz (Mingw32)
-And save it to your home directory (for cygwin).
+And save it to your MSYS home directory.
 Untar the SDL archive to your home directory:
 $ cd
 $ tar xzvf SDL-devel-1.2.13-mingw32.tar.gz
@@ -105,22 +98,37 @@ $ make native
 
 
 
-From the Cygwin bash prompt, go to your home directory and
+Run MSYS, and at the bash prompt, go to your home directory and
 untar the epple2 source distribution tar file and cd to the
 epple2 directory. For example:
 $ cd
 $ tar xzvf epple2-1.0.tar.gz
-$ cd epple2
 
 NOTE: If you checked out epple2 from subversion, rather
 than downloading the distribution, you need to first run
-the bootstrap script:
+the bootstrap script. But first you'll need to install
+autoconf, automake, etc.
+$ cd
+$ cd epple2
 $ ./bootstrap
 
 
 
-Then build as follows:
-$ ./configure
+Then build as follows. I recommend doing a VPATH build, in
+which you build into a different directory that the source
+directory. To accomplish this, create a new directory for
+building, somewhere, such as:
+$ cd
+$ mkdir buildepple2
+$ cd buildepple2
+Then run configure from there. For the MSYS build to work,
+you need some extra parameters to the build, and you could
+also add some compiler options to optimize the build. For
+example (from the buildepple2 directory you just created):
+$ ~/epple2/configure --prefix= \
+CXXFLAGS="-I/usr/include -O4 -msse3" \
+CFLAGS="-I/usr/include" \
+LDFLAGS="-L/usr/lib -mconsole -mthreads -mno-cygwin"
 $ make
 $ make install
 

@@ -17,11 +17,20 @@
 					</Component>
 
 					<Component Id="ConfigFiles" Guid="73057afd-e28b-48b1-b428-6e2bf029b74d">
-						<File Id="Config" Name="epple2.cfg" DiskId="1" Source="..\conf\epple2.conf" Vital="yes" />
+						<File Id="Config"            Name="epple2.cfg"   LongName="epple2.conf"             DiskId="1" Source="$(sys.SOURCEFILEDIR)..\conf\epple2.conf" Vital="yes" />
+						<File Id="Config_rev0bare"   Name="epple2_1.cfg" LongName="epple2.conf.rev0bare"    DiskId="1" Source="$(sys.SOURCEFILEDIR)..\conf\epple2.conf.rev0bare" Vital="yes" />
+						<File Id="Config_a2bare"     Name="epple2_2.cfg" LongName="epple2.conf.a2bare"      DiskId="1" Source="$(sys.SOURCEFILEDIR)..\conf\epple2.conf.a2bare" Vital="yes" />
+						<File Id="Config_a2dos31"    Name="epple2_3.cfg" LongName="epple2.conf.a2dos31"     DiskId="1" Source="$(sys.SOURCEFILEDIR)..\conf\epple2.conf.a2dos31" Vital="yes" />
+						<File Id="Config_a2dos33"    Name="epple2_4.cfg" LongName="epple2.conf.a2dos33"     DiskId="1" Source="$(sys.SOURCEFILEDIR)..\conf\epple2.conf.a2dos33" Vital="yes" />
+						<File Id="Config_a2loaded"   Name="epple2_5.cfg" LongName="epple2.conf.a2loaded"    DiskId="1" Source="$(sys.SOURCEFILEDIR)..\conf\epple2.conf.a2loaded" Vital="yes" />
 					</Component>
 
 					<Component Id="SDL" Guid="d8e283c0-9af6-4275-8d66-45ca2a0e51ce">
-						<File Id="SDLDLL" Name="sdl.dll" DiskId="1" Source="c:\cygwin\bin\sdl.dll" />
+						<File Id="SDLDLL" Name="sdl.dll" DiskId="1" Source="$(var.SDLDIR)\SDL.dll" />
+					</Component>
+
+					<Component Id="MINGWM" Guid="d8e283c0-9af6-4275-8d66-45ca2a0e51ce">
+						<File Id="MINGWMDLL" Name="mingwm10.dll" DiskId="1" Source="$(var.MINGWMDIR)\mingwm10.dll" />
 					</Component>
 				</Directory>
 			</Directory>
@@ -37,6 +46,7 @@
 			<ComponentRef Id="MainExecutable" />
 			<ComponentRef Id="ConfigFiles" />
 			<ComponentRef Id="SDL" />
+			<ComponentRef Id="MINGWM" />
 		</Feature>
 	</Product>
 </Wix>
