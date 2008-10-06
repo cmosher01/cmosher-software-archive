@@ -1,0 +1,17 @@
+APPLE ][ Source Code
+
+This directory contains assembly language source code to
+build Apple ][ firmware and DOS 3.3 images.
+
+These sources are built using the cc65 assembler (http://www.cc65.org).
+
+Windows
+-------
+To build the apple sources under Windows, download and install cc65.
+
+Download and run cc65-2.12.0-1.exe (or the latest version).
+Leave the default installation directory: C:\Program Files\cc65
+You don't need all the supported platforms, so you should choose
+"Custom" installation, and uncheck all options except for
+"Apple ][ specific files"
+Choose to add cc65 to PATH, lib, and include.
