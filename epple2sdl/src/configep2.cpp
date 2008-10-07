@@ -73,16 +73,55 @@ static void trim(std::string& str)
 
 void Config::parse(Memory& ram, Memory& rom, Slots& slts, int& revision, ScreenImage& gui)
 {
-	std::ifstream in(this->file_path.c_str());
-	if (!in.is_open())
+	std::ifstream* pConfig;
+
+	std::string path(this->file_path);
+
+	if (!path.empty())
 	{
-		std::cerr << "Cannot open config file " << this->file_path.c_str() << std::endl;
+		pConfig = new std::ifstream(path.c_str());
+		if (!pConfig->is_open())
+		{
+			std::cerr << "Cannot open config file " << this->file_path.c_str() << std::endl;
+			return;
+		}
+	}
+	if (path.empty())
+	{
+		/*
+			On Windows, this would typically be
+			C:\Program Files\epple2\etc\epple2\epple2.conf
+			On Linux, this would typically be
+			/usr/local/etc/epple2/epple2.conf, or even
+			/usr/etc/epple2/epple2.conf, or
+			/etc/epple2/epple2.conf.
+			This should find it in most cases.
+		*/
+		path = "../etc/epple2/epple2.conf";
+		pConfig = new std::ifstream(path.c_str());
+		if (!pConfig->is_open())
+			path.clear();
+	}
+	if (path.empty())
+	{
+		/*
+			Last effort to find it (most likely will
+			only work on Linux).
+		*/
+		path = "/etc/epple2/epple2.conf";
+		pConfig = new std::ifstream(path.c_str());
+		if (!pConfig->is_open())
+			path.clear();
+	}
+	if (path.empty())
+	{
+		std::cerr << "Cannot open config file /etc/epple2/epple2.conf" << std::endl;
 		return;
 	}
 
 	std::string line;
-	std::getline(in,line);
-	while (!in.eof())
+	std::getline(*pConfig,line);
+	while (!pConfig->eof())
 	{
 		strip_comment(line);
 		trim(line);
@@ -90,9 +129,10 @@ void Config::parse(Memory& ram, Memory& rom, Slots& slts, int& revision, ScreenI
 		{
 			parseLine(line,ram,rom,slts,revision,gui);
 		}
-		std::getline(in,line);
+		std::getline(*pConfig,line);
 	}
-	in.close();
+	pConfig->close();
+	delete pConfig;
 
 	// TODO: make sure there is no more than ONE stdin and/or ONE stdout card
 }

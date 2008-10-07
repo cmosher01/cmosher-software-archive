@@ -8,5 +8,5 @@ SUFFIXES = .wxs .wixobj .msi
 
 all: epple2.msi
 
-epple2.wixobj: epple2.wxs
+epple2.wixobj: epple2.wxs ../src/epple2.exe
 	candle $< -out $@ -dSDLDIR=/bin -dMINGWMDIR=/mingw/bin

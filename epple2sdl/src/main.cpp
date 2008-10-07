@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
 	SDL_ShowCursor(0);
 	SDL_EnableKeyRepeat(0,0);
 
-	std::string config_file("epple2.conf");
+	std::string config_file;
 	if (argc > 1)
 	{
 		config_file = argv[1];
