@@ -3,7 +3,7 @@
 
     The WinMain function -- calls your program's main() function
 */
-
+#ifdef HAVE_WINDOWS_H
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -387,3 +387,4 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPSTR szCmdLine, int sw)
 	/* Hush little compiler, don't you cry... */
 	return 0;
 }
+#endif
