@@ -92,7 +92,7 @@ void Config::parse(Memory& ram, Memory& rom, Slots& slts, int& revision, ScreenI
 			On Windows, this would typically be
 			C:\Program Files\epple2\etc\epple2\epple2.conf
 			On Linux, this would typically be
-			/usr/local/etc/epple2/epple2.conf, or even
+			/usr/local/etc/epple2/epple2.conf, or
 			/usr/etc/epple2/epple2.conf, or
 			/etc/epple2/epple2.conf.
 			This should find it in most cases.
