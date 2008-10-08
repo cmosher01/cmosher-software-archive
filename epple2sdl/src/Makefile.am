@@ -7,6 +7,8 @@ bin_PROGRAMS=epple2
 AM_CPPFLAGS=$(all_includes)
 epple2_LDFLAGS=$(all_libraries)
 
+epple2_CPPFLAGS = $(AM_CPPFLAGS) -DETCDIR=\"$(sysconfdir)\"
+
 epple2_SOURCES = a2colorsobserved.cpp addressbus.cpp analogtv.cpp apple2.cpp \
 	applentsc.cpp card.cpp clipboardhandler.cpp clockcard.cpp \
 	configep2.cpp cpu.cpp diskbytes.cpp diskcontroller.cpp drive.cpp \

@@ -104,6 +104,13 @@ void Config::parse(Memory& ram, Memory& rom, Slots& slts, int& revision, ScreenI
 	}
 	if (path.empty())
 	{
+		path = ETCDIR "/epple2/epple2.conf";
+		pConfig = new std::ifstream(path.c_str());
+		if (!pConfig->is_open())
+			path.clear();
+	}
+	if (path.empty())
+	{
 		/*
 			Last effort to find it (most likely will
 			only work on Linux).
