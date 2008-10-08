@@ -3,6 +3,8 @@
 
     The WinMain function -- calls your program's main() function
 */
+#include "config.h"
+
 #ifdef HAVE_WINDOWS_H
 #include <stdio.h>
 #include <stdlib.h>
