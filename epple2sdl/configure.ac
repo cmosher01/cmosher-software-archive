@@ -20,7 +20,6 @@ AC_PROG_MAKE_SET
 AC_PROG_RANLIB
 
 
-
 # Checks for libraries.
 AC_CHECK_LIB([SDL],[SDL_Init])
 AC_CHECK_LIB([X11],[XOpenDisplay])
@@ -33,8 +32,8 @@ AC_C_CONST
 AC_C_INLINE
 AC_TYPE_SIZE_T
 AC_CHECK_HEADERS([windows.h])
-
-
+AC_CHECK_HEADER([windows.h],[WINDOWS=true].[WINDOWS=])
+AM_CONDITIONAL([HAVE_WINDOWS],test "$WINDOWS")
 
 # Checks for library functions.
 AC_HEADER_STDC
