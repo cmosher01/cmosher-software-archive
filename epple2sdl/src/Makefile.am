@@ -20,3 +20,13 @@ epple2_SOURCES = a2colorsobserved.cpp addressbus.cpp analogtv.cpp apple2.cpp \
 	standardinproducer.cpp standardout.cpp steppermotor.cpp textcharacters.cpp \
 	timable.cpp timinggenerator.cpp video.cpp videoaddressing.cpp videomode.cpp \
 	videostaticgenerator.cpp SDL_win32_main.c
+
+noinst_HEADERS = a2colorsobserved.h addressbus.h analogtv.h apple2.h applentsc.h \
+	card.h clipboardhandler.h clockcard.h configep2.h cpu.h diskbytes.h \
+	diskcontroller.h drive.h emptyslot.h emulator.h firmwarecard.h font3x5.h \
+	hypermode.h keyboardbuffermode.h keyboard.h languagecard.h lowpass_1_5_mhz.h \
+	lowpass_3_58_mhz.h memory.h paddlebuttonstates.h paddles.h picturegenerator.h \
+	powerupreset.h raminitializer.h screenimage.h slots.h speakerclicker.h \
+	standardin.h standardinproducer.h standardout.h steppermotor.h \
+	textcharacterimages.h textcharacters.h timable.h timinggenerator.h util.h \
+	videoaddressing.h video.h videomode.h videostaticgenerator.h
