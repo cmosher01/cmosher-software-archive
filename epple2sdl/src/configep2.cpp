@@ -89,21 +89,27 @@ void Config::parse(Memory& ram, Memory& rom, Slots& slts, int& revision, ScreenI
 	if (path.empty())
 	{
 		/*
-			On Windows, this would typically be
+			On Windows, the default directory will be
+			C:\Program Files\Epple2 if they start the
+			program from the Start Menu; therefore
+			etc/epple2/epple2.conf would be
 			C:\Program Files\epple2\etc\epple2\epple2.conf
-			On Linux, this would typically be
-			/usr/local/etc/epple2/epple2.conf, or
-			/usr/etc/epple2/epple2.conf, or
-			/etc/epple2/epple2.conf.
-			This should find it in most cases.
+			On Linux... the current directory could be
+			anything, so this probably won't find it (unless
+			the current directory is /).
 		*/
-		path = "../etc/epple2/epple2.conf";
+		path = "etc/epple2/epple2.conf";
 		pConfig = new std::ifstream(path.c_str());
 		if (!pConfig->is_open())
 			path.clear();
 	}
 	if (path.empty())
 	{
+		/*
+			This is primarily for Linux. If configured for
+			a PREFIX of "/usr/local", then this would be
+			/usr/local/etc/epple2/epple2.conf
+		*/
 		path = ETCDIR "/epple2/epple2.conf";
 		pConfig = new std::ifstream(path.c_str());
 		if (!pConfig->is_open())
