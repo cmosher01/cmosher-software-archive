@@ -1,4 +1,4 @@
-CDT = java -cp $(A2CDT)
+CDT = java -cp "$(A2CDT)"
 
 .s65.o65:
 	$(CA65) -v -t apple2 -o $@ -I $(<D) -I $(INCDIR) $(CA65DEFS) $<
