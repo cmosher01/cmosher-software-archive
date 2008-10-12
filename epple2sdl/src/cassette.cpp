@@ -113,6 +113,8 @@ void Cassette::rewind()
 	while (rd[id] == 65)
 		++id;
 	id -= 20;
+	if (id < 0 )
+		id = 0;
 }
 
 void Cassette::rewindFull()
