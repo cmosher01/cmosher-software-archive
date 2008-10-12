@@ -33,6 +33,7 @@
 #include "speakerclicker.h"
 #include "analogtv.h"
 #include "powerupreset.h"
+#include "cassette.h"
 class Emulator;
 class ScreenImage;
 
@@ -51,6 +52,7 @@ class Apple2 : public Timable
 	Video video;
 	CPU cpu;
 	PowerUpReset powerUpReset;
+	Cassette cassette;
 	int revision;
 
 public:

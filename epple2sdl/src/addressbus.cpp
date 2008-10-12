@@ -22,10 +22,11 @@
 #include "paddles.h"
 #include "paddlebuttonstates.h"
 #include "speakerclicker.h"
+#include "cassette.h"
 #include "slots.h"
 
-AddressBus::AddressBus(Memory& ram, Memory& rom, Keyboard& kbd, VideoMode& vid, Paddles& paddles, PaddleButtonStates& paddleButtonStates, SpeakerClicker& speaker, Slots& slts):
-	ram(ram), rom(rom), kbd(kbd), vid(vid), paddles(paddles), paddleButtonStates(paddleButtonStates), speaker(speaker), slts(slts)
+AddressBus::AddressBus(Memory& ram, Memory& rom, Keyboard& kbd, VideoMode& vid, Paddles& paddles, PaddleButtonStates& paddleButtonStates, SpeakerClicker& speaker, Cassette& cassette, Slots& slts):
+	ram(ram), rom(rom), kbd(kbd), vid(vid), paddles(paddles), paddleButtonStates(paddleButtonStates), speaker(speaker), cassette(cassette), slts(slts)
 {
 }
 
@@ -131,7 +132,7 @@ unsigned char AddressBus::readSwitch(unsigned short address)
 		}
 		else if (islot == 0x2)
 		{
-			// ignore cassette output
+			this->cassette.output();
 		}
 		else if (islot == 0x3)
 		{
@@ -157,7 +158,7 @@ unsigned char AddressBus::readSwitch(unsigned short address)
 			int sw2 = iswch & 0x7;
 			if (sw2 == 0)
 			{
-				// ignore cassette input
+				setD7(this->cassette.input());
 			}
 			else if (sw2 < 4)
 			{

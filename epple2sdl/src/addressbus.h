@@ -24,6 +24,7 @@ class VideoMode;
 class Paddles;
 class PaddleButtonStates;
 class SpeakerClicker;
+class Cassette;
 class Slots;
 
 class AddressBus
@@ -36,12 +37,13 @@ private:
 	Paddles& paddles;
 	PaddleButtonStates& paddleButtonStates;
 	SpeakerClicker& speaker;
+	Cassette& cassette;
 	Slots& slts;
 
 	unsigned char data; // this emulates the (floating) data bus
 
 public:
-	AddressBus(Memory& ram, Memory& rom, Keyboard& kbd, VideoMode& vid, Paddles& paddles, PaddleButtonStates& paddleButtonStates, SpeakerClicker& speaker, Slots& slts);
+	AddressBus(Memory& ram, Memory& rom, Keyboard& kbd, VideoMode& vid, Paddles& paddles, PaddleButtonStates& paddleButtonStates, SpeakerClicker& speaker, Cassette& cassette, Slots& slts);
 	~AddressBus();
 
 	unsigned char read(const unsigned short address);

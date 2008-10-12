@@ -42,7 +42,7 @@ Apple2::Apple2(KeypressQueue& keypresses, PaddleButtonStates& paddleButtonStates
 	kbd(keypresses,fhyper,buffered),
 	rom(AddressBus::MOTHERBOARD_ROM_SIZ),
 	ram(AddressBus::MOTHERBOARD_RAM_SIZ),
-	addressBus(ram,rom,kbd,videoMode,paddles,paddleButtonStates,speaker,slts),
+	addressBus(ram,rom,kbd,videoMode,paddles,paddleButtonStates,speaker,cassette,slts),
 	picgen(tv,videoMode,this->revision),
 	video(videoMode,addressBus,picgen,textRows),
 	cpu(addressBus),
@@ -62,6 +62,7 @@ void Apple2::tick()
 	this->video.tick();
 	this->paddles.tick();
 	this->speaker.tick();
+	this->cassette.tick();
 
 	if (this->revision > 0)
 		this->powerUpReset.tick();
