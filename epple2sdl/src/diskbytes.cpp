@@ -122,7 +122,7 @@ void DiskBytes::put(const unsigned char track, const unsigned char value)
 
 void inline DiskBytes::nextByte()
 {
-	// emulatee circular disk track
+	// emulates circular disk track
 	++this->byt;
 	if (this->byt >= BYTES_PER_TRACK)
 	{
