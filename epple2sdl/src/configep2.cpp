@@ -25,6 +25,7 @@
 #include "standardout.h"
 #include "standardin.h"
 #include "clockcard.h"
+#include "cassette.h"
 
 #include <iostream>
 #include <istream>
@@ -71,7 +72,7 @@ static void trim(std::string& str)
 	}
 }
 
-void Config::parse(Memory& ram, Memory& rom, Slots& slts, int& revision, ScreenImage& gui)
+void Config::parse(Memory& ram, Memory& rom, Slots& slts, int& revision, ScreenImage& gui, Cassette& cassette)
 {
 	std::ifstream* pConfig;
 
@@ -140,7 +141,7 @@ void Config::parse(Memory& ram, Memory& rom, Slots& slts, int& revision, ScreenI
 		trim(line);
 		if (!line.empty())
 		{
-			parseLine(line,ram,rom,slts,revision,gui);
+			parseLine(line,ram,rom,slts,revision,gui,cassette);
 		}
 		std::getline(*pConfig,line);
 	}
@@ -149,11 +150,11 @@ void Config::parse(Memory& ram, Memory& rom, Slots& slts, int& revision, ScreenI
 
 	// TODO: make sure there is no more than ONE stdin and/or ONE stdout card
 }
-void Config::parseLine(const std::string& line, Memory& ram, Memory& rom, Slots& slts, int& revision, ScreenImage& gui)
+void Config::parseLine(const std::string& line, Memory& ram, Memory& rom, Slots& slts, int& revision, ScreenImage& gui, Cassette& cassette)
 {
 	try
 	{
-		tryParseLine(line,ram,rom,slts,revision,gui);
+		tryParseLine(line,ram,rom,slts,revision,gui,cassette);
 	}
 	catch (const ConfigException& err)
 	{
@@ -161,7 +162,7 @@ void Config::parseLine(const std::string& line, Memory& ram, Memory& rom, Slots&
 	}
 }
 
-void Config::tryParseLine(const std::string& line, Memory& ram, Memory& rom, Slots& slts, int& revision, ScreenImage& gui)
+void Config::tryParseLine(const std::string& line, Memory& ram, Memory& rom, Slots& slts, int& revision, ScreenImage& gui, Cassette& cassette)
 {
 	std::istringstream tok(line);
 
@@ -279,6 +280,35 @@ void Config::tryParseLine(const std::string& line, Memory& ram, Memory& rom, Slo
 	else if (cmd == "revision")
 	{
 		tok >> std::hex >> revision;
+	}
+	else if (cmd == "cassette")
+	{
+		std::string cas;
+		tok >> cas;
+
+		if (cas == "rewind")
+		{
+			cassette.rewind();
+		}
+		else if (cas == "load")
+		{
+			std::string fcas;
+			std::getline(tok,fcas);
+			trim(fcas);
+			cassette.load(fcas);
+		}
+		else if (cas == "unload")
+		{
+			cassette.unload();
+		}
+		else if (cas == "save")
+		{
+			cassette.save();
+		}
+		else
+		{
+			throw ConfigException("error: unknown cassette command: "+cas);
+		}
 	}
 	else
 	{

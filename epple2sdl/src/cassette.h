@@ -18,21 +18,61 @@
 #ifndef CASSETTE_H
 #define CASSETTE_H
 
+#include <vector>
+#include <string>
+
 class Cassette
 {
 private:
 	unsigned int t;
-	unsigned int prevCassette;
+	unsigned int prevT;
+
+	unsigned int markT;
+	bool positive;
+
+	std::vector<unsigned char> half_cycles;
+
+	std::string fileName;
+	std::string filePath;
+	bool writable;
+	bool loaded;
+	unsigned int pos;
+	bool modified;
+
+	void checkForWriteProtection();
 
 	unsigned char getHalfCycleTime(); // in 10-microsecond units
 
 public:
 	Cassette();
 	~Cassette();
+
 	void tick();
 	void output();
 	bool input();
 	void rewind();
+	bool load(const std::string& filePath);
+	std::string getFileName()
+	{
+		return this->fileName;
+	}
+
+	bool isLoaded()
+	{
+		return this->loaded;
+	}
+
+	void save();
+	void unload();
+	bool isWriteProtected()
+	{
+		return !this->writable;
+	}
+
+	bool isModified()
+	{
+		return this->modified;
+	}
 };
 
 #endif

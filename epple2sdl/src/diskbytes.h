@@ -34,7 +34,6 @@ private:
 	bool writable;
 	bool loaded;
 	unsigned int byt; // represents rotational position of disk
-	unsigned int waitTimes;
 	bool modified;
 
 	void nextByte();

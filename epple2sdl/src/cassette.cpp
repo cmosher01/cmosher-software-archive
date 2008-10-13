@@ -35,21 +35,14 @@ which has the following meaning:
 |650 650 650 650 650|200 250|500 500|250 250|250 250|500 500|
 */
 
+#include <fstream>
+#include <iostream>
 #include "cassette.h"
-//#include <SDL/SDL.h>
-//#include <iostream>
-
-static int rd[65536];
-static int id(0);
-static int idLim(0);
-
-static bool pos(false);
-static int td;
-static bool reading(false);
 
 Cassette::Cassette():
-	t(0), prevCassette(0)
+	t(0), prevT(0), markT(0), positive(false)
 {
+	unload();
 }
 
 
@@ -60,26 +53,35 @@ Cassette::~Cassette()
 void Cassette::tick()
 {
 	++this->t;
-	--td;
+	// TODO: check for roll-over of tick-count in Cassette???
+	// if (this->t == 0)
 }
-
 
 void Cassette::output()
 {
-	if (reading)
+	if (isWriteProtected() || !isLoaded())
+	{
 		return;
+	}
+	if (this->half_cycles.size() <= this->pos)
+	{
+		this->half_cycles.push_back(getHalfCycleTime());
+		this->pos = this->half_cycles.size();
+		this->modified = true;
+	}
+	else
+	{
+		// TODO should we allow overwriting of cassestte tape data?
+		// If so, need to watch out because while reading Apple will
+		// be calling Cassette::output, too.
+	}
 
-	const unsigned int half_cycles_us = getHalfCycleTime();
-
-	rd[id++] = half_cycles_us;
-	idLim = id;
-
-	this->prevCassette = this->t;
+	this->prevT = this->t;
 }
 
 unsigned char Cassette::getHalfCycleTime() // in 10-microsecond units
 {
-	const unsigned int delta_cycles(this->t-this->prevCassette);
+	const unsigned int delta_cycles(this->t-this->prevT);
 	if (delta_cycles < 225)
 		return 20;
 	if (delta_cycles < 375)
@@ -91,33 +93,91 @@ unsigned char Cassette::getHalfCycleTime() // in 10-microsecond units
 
 bool Cassette::input()
 {
-	if (id < 0 || idLim <= id)
+	if (this->half_cycles.size() <= this->pos || !isLoaded())
 	{
-		rewind();
-		reading = true;
-		td = 0;
+		// there's nothing to read here
+		// (either no tape loaded, or we're past the end of data on the tape)
+		return !this->positive;
 	}
 
-	if (td <= 0)
+	if (this->markT <= this->t) // we've hit our mark
 	{
-		pos = !pos;
-		td = rd[++id]*10;
+		this->positive = !this->positive;
+		if (this->pos < this->half_cycles.size())
+		{
+			// set our next mark to be at the end of next half-cycle read from tape
+			this->markT = this->t+this->half_cycles[this->pos++]*10;
+		}
 	}
 
-	return pos;
+	return this->positive;
 }
 
 void Cassette::rewind()
 {
-	rewindFull();
-	while (rd[id] == 65)
-		++id;
-	id -= 20;
-	if (id < 0 )
-		id = 0;
+	this->pos = 0;
 }
 
-void Cassette::rewindFull()
+bool Cassette::load(const std::string& filePath)
 {
-	id = 0;
+//	TODO better I/O error handling during cassette loading and saving
+	std::ifstream in(filePath.c_str(),std::ios::binary|std::ios::in|std::ios::ate);
+	if (!in.is_open())
+	{
+		std::cerr << "Error loading " << filePath << std::endl;
+		return false;
+	}
+	if (isLoaded())
+	{
+		unload();
+	}
+
+	const std::ifstream::pos_type size = in.tellg();
+	if (size > 0)
+	{
+		this->half_cycles.resize(size);
+		in.seekg(0,std::ios::beg);
+		in.read((char*)&this->half_cycles[0],size);
+//		std::cerr << "Read " << size << " bytes from " << filePath << std::endl;
+	}
+	in.close();
+
+	this->filePath = filePath;
+
+	checkForWriteProtection();
+
+	this->loaded = true;
+	this->modified = false;
+
+	return true;
+}
+
+void Cassette::checkForWriteProtection()
+{
+	std::ofstream outf(filePath.c_str(),std::ios::binary|std::ios::app);
+	this->writable = outf.is_open();
+	outf.close();
+}
+
+void Cassette::save()
+{
+	if (isWriteProtected() || !isLoaded())
+	{
+		return;
+	}
+	std::ofstream out(filePath.c_str(),std::ios::binary);
+	out.write((char*)&this->half_cycles[0],this->half_cycles.size());
+	out.flush();
+	out.close();
+
+	this->modified = false;
+}
+
+void Cassette::unload()
+{
+	this->pos = 0;
+	this->writable = true;
+	this->loaded = false;
+	this->filePath = "";
+	this->modified = false;
 }
