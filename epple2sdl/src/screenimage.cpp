@@ -20,6 +20,7 @@
 #include "util.h"
 #include <SDL/SDL.h>
 #include <ctime>
+#include <sstream>
 
 static const char* power =
 " @@@@    @@@   @    @    @  @@@@@  @@@@ "
@@ -47,7 +48,8 @@ ScreenImage::ScreenImage():
 	buffer(true),
 	fillLines(false),
 	display(AnalogTV::MONITOR_COLOR),
-	slotnames(8)
+	slotnames(8),
+	cassettename(32,' ')
 {
 	createScreen();
 }
@@ -79,6 +81,7 @@ void ScreenImage::drawLabels()
 {
 	drawText("EPPLE ][",0,141);
 	drawSlots();
+	drawCassette();
 	drawFnKeys();
 }
 
@@ -103,6 +106,20 @@ void ScreenImage::drawSlot(int slot, int r, int c)
 	if (len < 100)
 	{
 		drawText(std::string(100-len,' '),r,c+len);
+	}
+}
+
+void ScreenImage::drawCassette()
+{
+	int r(65);
+	int c(85);
+	drawText("CASSETTE:",r,c);
+	c += 9;
+	drawText(this->cassettename,r,c);
+	const int len = this->cassettename.length();
+	if (len < 40)
+	{
+		drawText(std::string(40-len,' '),r,c+len);
 	}
 }
 
@@ -446,6 +463,41 @@ void ScreenImage::setDirty(int slot, int drive, bool dirty)
 	int c(36+32*drive);
 	drawChar(dirty?'*':' ',r,c);
 	this->slotnames[slot][c-20] = dirty?'*':' ';
+}
+
+void ScreenImage::setCassetteFile(const std::string& filepath)
+{
+	std::string f = truncateFilePath(filepath);
+	int r(65);
+	int c(85+11);
+	drawText(f,r,c);
+
+	const int dlen = 12 - f.length();
+	if (dlen > 0)
+	{
+		std::string d(dlen,' ');
+		drawText(d,r,c+f.length());
+	}
+
+	this->cassettename.replace(c-94,12,12,' ');
+	this->cassettename.replace(c-94,f.length(),f);
+}
+
+void ScreenImage::setCassetteDirty(bool dirty)
+{
+	int r(65);
+	int c(85+10);
+	drawChar(dirty?'*':' ',r,c);
+	this->cassettename[c-94] = dirty?'*':' ';
+}
+
+void ScreenImage::setCassettePos(int pos, int siz)
+{
+	int r(65);
+	int c(110);
+	std::ostringstream os;
+	os << pos << '/' << siz << "                             ";
+	drawText(os.str(),r,c);
 }
 
 /*

@@ -21,6 +21,8 @@
 #include <vector>
 #include <string>
 
+#include "screenimage.h"
+
 class Cassette
 {
 private:
@@ -39,12 +41,14 @@ private:
 	unsigned int pos;
 	bool modified;
 
+	ScreenImage& gui;
+
 	void checkForWriteProtection();
 
 	unsigned char getHalfCycleTime(); // in 10-microsecond units
 
 public:
-	Cassette();
+	Cassette(ScreenImage& gui);
 	~Cassette();
 
 	void tick();

@@ -39,8 +39,8 @@ which has the following meaning:
 #include <iostream>
 #include "cassette.h"
 
-Cassette::Cassette():
-	t(0), prevT(0), markT(0), positive(false)
+Cassette::Cassette(ScreenImage& gui):
+	gui(gui), t(0), prevT(0), markT(0), positive(false)
 {
 	unload();
 }
@@ -67,7 +67,9 @@ void Cassette::output()
 	{
 		this->half_cycles.push_back(getHalfCycleTime());
 		this->pos = this->half_cycles.size();
+		this->gui.setCassettePos(this->pos,this->half_cycles.size());
 		this->modified = true;
+		this->gui.setCassetteDirty(true);
 	}
 	else
 	{
@@ -93,11 +95,10 @@ unsigned char Cassette::getHalfCycleTime() // in 10-microsecond units
 
 bool Cassette::input()
 {
-	if (this->half_cycles.size() <= this->pos || !isLoaded())
+	if (!isLoaded())
 	{
-		// there's nothing to read here
-		// (either no tape loaded, or we're past the end of data on the tape)
-		return !this->positive;
+		// no tape loaded
+		return true;
 	}
 
 	if (this->markT <= this->t) // we've hit our mark
@@ -107,6 +108,7 @@ bool Cassette::input()
 		{
 			// set our next mark to be at the end of next half-cycle read from tape
 			this->markT = this->t+this->half_cycles[this->pos++]*10;
+			this->gui.setCassettePos(this->pos,this->half_cycles.size());
 		}
 	}
 
@@ -116,6 +118,7 @@ bool Cassette::input()
 void Cassette::rewind()
 {
 	this->pos = 0;
+	this->gui.setCassettePos(this->pos,this->half_cycles.size());
 }
 
 bool Cassette::load(const std::string& filePath)
@@ -149,6 +152,10 @@ bool Cassette::load(const std::string& filePath)
 	this->loaded = true;
 	this->modified = false;
 
+	this->gui.setCassetteFile(filePath);
+	this->gui.setCassetteDirty(false);
+	this->gui.setCassettePos(this->pos,size);
+
 	return true;
 }
 
@@ -171,6 +178,7 @@ void Cassette::save()
 	out.close();
 
 	this->modified = false;
+	this->gui.setCassetteDirty(false);
 }
 
 void Cassette::unload()
@@ -180,4 +188,8 @@ void Cassette::unload()
 	this->loaded = false;
 	this->filePath = "";
 	this->modified = false;
+	this->half_cycles.clear();
+	this->gui.setCassetteFile("");
+	this->gui.setCassetteDirty(false);
+	this->gui.setCassettePos(this->pos,this->half_cycles.size());
 }

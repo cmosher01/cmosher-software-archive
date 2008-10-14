@@ -39,9 +39,11 @@ private:
 	unsigned int cmdpos;
 	void createScreen();
 	std::vector<std::string> slotnames;
+	std::string cassettename;
 
 	static std::string truncateFilePath(const std::string& filepath);
 
+// TODO some of these methods should be private
 public:
 	ScreenImage();
 	~ScreenImage();
@@ -56,6 +58,7 @@ public:
 	void drawLabels();
 	void drawSlots();
 	void drawSlot(int slot, int r, int c);
+	void drawCassette();
 	void drawFnKeys();
 	void toggleHyperLabel();
 	void toggleKdbBufferLabel();
@@ -79,6 +82,10 @@ public:
 	void setTrack(int slot, int drive, int track);
 	void setIO(int slot, int drive, bool on);
 	void setDirty(int slot, int drive, bool dirty);
+
+	void setCassetteFile(const std::string& filepath);
+	void setCassetteDirty(bool dirty);
+	void setCassettePos(int pos, int siz);
 
 	void setLangCard(int slot, bool readEnable, bool writeEnable, int bank);
 	void setFirmCard(int slot, bool bank, bool F8);

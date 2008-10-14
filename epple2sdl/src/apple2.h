@@ -46,13 +46,13 @@ class Apple2 : public Timable
 	SpeakerClicker speaker;
 	Memory rom;
 	Memory ram;
+	Cassette cassette;
 	AddressBus addressBus;
 	PictureGenerator picgen;
 	TextCharacters textRows;
 	Video video;
 	CPU cpu;
 	PowerUpReset powerUpReset;
-	Cassette cassette;
 	int revision;
 
 public:
