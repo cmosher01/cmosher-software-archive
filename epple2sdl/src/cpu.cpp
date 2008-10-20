@@ -1806,6 +1806,10 @@ unsigned char CPU::rotateRight(unsigned char byt)
 
 void CPU::ADC()
 {
+	/*
+	This method based on ADC from the POM1 Apple 1 emulator.
+	Copyright (C) 2000, by Verhille Arnaud, GPLv2 license.
+	*/
 	int Op1 = this->a;
 	int Op2 = this->data;
 	if (this->p & PMASK_D)
@@ -1833,6 +1837,10 @@ void CPU::ADC()
 
 void CPU::SBC()
 {
+	/*
+	This method based on ADC from the POM1 Apple 1 emulator.
+	Copyright (C) 2000, by Verhille Arnaud, GPLv2 license.
+	*/
 	int Op1 = this->a;
 	int Op2 = this->data;
 	if (this->p & PMASK_D)
