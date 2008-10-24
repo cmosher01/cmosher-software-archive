@@ -36,7 +36,8 @@ public:
 	virtual ~Card();
 	virtual void reset();
 	virtual unsigned char io(const unsigned short address, const unsigned char data, const bool writing);
-	virtual unsigned char readRom(const unsigned short address);
+	virtual unsigned char readRom(const unsigned short address, const unsigned char data);
+	virtual bool hasSeventhRom() { return false; }
 	virtual void readSeventhRom(const unsigned short address, unsigned char* const pb);
 	virtual void loadRom(const unsigned short base, std::istream& in);
 	virtual void loadSeventhRom(const unsigned short base, std::istream& in);

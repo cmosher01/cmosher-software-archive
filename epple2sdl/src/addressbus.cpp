@@ -54,7 +54,7 @@ unsigned char AddressBus::read(const unsigned short address)
 			const int slot = (address >> 8) & 7;
 			if (seventh)
 			{
-				this->data = this->slts.readSeventhRom(address & 0x07FF);
+				this->data = this->slts.readSeventhRom(address & 0x07FF, this->data);
 			}
 			else if (slot == 0)
 			{
@@ -62,7 +62,7 @@ unsigned char AddressBus::read(const unsigned short address)
 			}
 			else
 			{
-				this->data = this->slts.readRom(slot,address & 0x00FF);
+				this->data = this->slts.readRom(slot,address & 0x00FF, this->data);
 			}
 		}
 		else

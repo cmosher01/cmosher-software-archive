@@ -37,9 +37,9 @@ public:
 
 	unsigned char io(const int islot, const int iswch, const unsigned char b, const bool writing);
 	void reset();
-	unsigned char readRom(const int islot, const unsigned short addr);
-	unsigned char readSeventhRom(const unsigned short addr);
-	unsigned char ioBankRom(const unsigned short  addr, const unsigned char data, const bool write);
+	unsigned char readRom(const int islot, const unsigned short addr, const unsigned char data);
+	unsigned char readSeventhRom(const unsigned short addr, const unsigned char data);
+	unsigned char ioBankRom(const unsigned short addr, const unsigned char data, const bool write);
 	bool inhibitMotherboardRom();
 	void set(const int slot, Card* card);
 	Card* get(const int slot);

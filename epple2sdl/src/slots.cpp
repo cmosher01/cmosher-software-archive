@@ -46,9 +46,9 @@ void Slots::reset()
 	std::for_each(this->cards.begin(),this->cards.end(),Slots_Card_reset());
 }
 
-unsigned char Slots::readRom(const int islot, const unsigned short addr)
+unsigned char Slots::readRom(const int islot, const unsigned short addr, const unsigned char data)
 {
-	return this->cards[islot]->readRom(addr);
+	return this->cards[islot]->readRom(addr,data);
 }
 
 struct Slots_Card_readSeventhRom
@@ -59,9 +59,9 @@ struct Slots_Card_readSeventhRom
 	void operator() (Card* p) { p->readSeventhRom(this->addr,this->b); }
 };
 
-unsigned char Slots::readSeventhRom(const unsigned short addr)
+unsigned char Slots::readSeventhRom(const unsigned short addr, const unsigned char data)
 {
-	unsigned char b(0xFF);
+	unsigned char b(data);
 	std::for_each(this->cards.begin(),this->cards.end(),Slots_Card_readSeventhRom(addr,&b));
 	return b;
 }

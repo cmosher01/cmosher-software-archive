@@ -43,7 +43,7 @@ unsigned char Card::io(const unsigned short /*address*/, const unsigned char dat
 
 
 
-unsigned char Card::readRom(const unsigned short address)
+unsigned char Card::readRom(const unsigned short address, const unsigned char data)
 {
 	this->activeSeventhRom = true;
 	return this->rom.read(address);
@@ -55,7 +55,7 @@ void Card::readSeventhRom(const unsigned short address, unsigned char* const pb)
 	{
 		this->activeSeventhRom = false;
 	}
-	else if (this->activeSeventhRom)
+	else if (this->activeSeventhRom && hasSeventhRom())
 	{
 		*pb = this->seventhRom.read(address);
 	}
