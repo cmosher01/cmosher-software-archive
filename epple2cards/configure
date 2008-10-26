@@ -47,36 +47,25 @@ VPATH=$(cd $VPATH; pwd)
 
 
 
-ARGS=$(getopt -o hp: -l help,prefix: -n "$0" -- "$@")
-eval set -- "$ARGS"
-
-
-
 PREFIX=/usr/local
 
-while true
+while getopts "hp:" OPT
 do
-	case "$1" in
-		-p|--prefix)
-			PREFIX=$2
-			shift 2
+	case "$OPT" in
+		p)
+			PREFIX=$OPTARG
 		;;
-		-h|--help)
+		h)
 			cat <<EOF
 usage:
 	./configure [OPTIONS]
 options:
-	-h, --help         display this message
-	-p, --prefix=PATH  installation prefix [/usr/local]
+	-h         display this message
+	-p PATH    installation prefix [/usr/local]
 EOF
 			exit 0
 		;;
-		--)
-			shift
-			break
-		;;
 		*)
-			echo "Internal error" >&2
 			exit 1
 		;;
 	esac
