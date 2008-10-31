@@ -11,7 +11,7 @@
 					<Directory Id="bindot" Name=".">
 					<Directory Id="bin" Name="bin">
 						<Component Id="MainExecutable" Guid="d3f60e2b-92e2-4a41-b83a-a38591c2e6c3">
-							<File Id="EPPLE2_EXE" Name="epple2.exe" DiskId="1" Source="..\src\epple2.exe" Vital="yes">
+							<File Id="EPPLE2_EXE" Name="epple2.exe" DiskId="1" Source="epple2.exe" Vital="yes">
 								<Shortcut Id="startmenuEpple2" Directory="ProgramMenuDir" Name="Epple2" WorkingDirectory="INSTALLDIR" />
 								<Shortcut Id="desktopEpple2" Directory="DesktopFolder" Name="Epple2" WorkingDirectory="INSTALLDIR" />
 							</File>

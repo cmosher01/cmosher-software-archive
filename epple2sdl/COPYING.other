@@ -10,9 +10,11 @@ TV module for xscreensaver. For those portions:
  * software for any purpose.  It is provided "as is" without express or
  * implied warranty.
  */
+Thanks, Trevor, for your code and your inspiration.
 
 
 
 The ADC and SBC instructions of the CPU class were based on those taken
 from Verhille Arnaud's POM1 Apple 1 emulator. For those portions:
 // Copyright (C) 2000, by Verhille Arnaud, GPLv2 license.
+Thanks, Verhille.
