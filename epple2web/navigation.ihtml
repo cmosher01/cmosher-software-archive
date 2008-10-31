@@ -1,0 +1,53 @@
+<div id="navigation">
+	<div id="mainnavigation">
+		<div id="sitename">
+			<a href="epple2.shtml"><img src="epple2logo.png"></a>
+		</div>
+		<ul>
+			<li>
+				<a href="screenshots.shtml">Screenshots</a>
+			</li>
+			<li>
+				<a href="download.shtml">Download</a>
+			</li>
+			<li>
+				<a href="usermanual.shtml">User Manual</a>
+			</li>
+			<li>
+				<a href="#">Development</a>
+			</li>
+		</ul>
+	</div>
+	<div class="latest">
+		<h3>
+			Tutorials
+		</h3>
+		<ul>
+			<li>
+				<a href="#">Configuration</a>
+			</li>
+			<li>
+				<a href="#">Function Keys</a>
+			</li>
+			<li>
+				<a href="building.shtml">Building</a>
+			</li>
+		</ul>
+	</div>
+	<div class="latest">
+		<h3>
+			Downloads
+		</h3>
+		<ul>
+			<li>
+				<a href="#">Source</a>
+			</li>
+			<li>
+				<a href="#">Windows Binary</a>
+			</li>
+			<li>
+				<a href="#">Linux Binary</a>
+			</li>
+		</ul>
+	</div>
+</div>

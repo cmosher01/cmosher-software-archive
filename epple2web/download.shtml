@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<!--#include virtual="head.ihtml" -->
+		<title>Epple ][ Download</title>
+	</head>
+	<body>
+		<div id="container">
+			<!--#include virtual="navigation.ihtml" -->
+			<div id="content">
+				<p>
+					All software downloadable from this page is licensed under
+					<a href="http://www.gnu.org/licenses/gpl-3.0-standalone.html">GPLv3</a>.
+				</p>
+				<p>
+					<a href="http://www.gnu.org/licenses/gpl-3.0-standalone.html">
+						<img src="gplv3logo.png" />
+					</a>
+				</p>				<h3>Epple ][</h3>
+				<h4>Source Download</h4>
+				<p>
+					<a href="epple2-1.0-src.tar.gz">epple2-1.0-src.tar.gz</a> (<a href="http://www.gnu.org/licenses/gpl-3.0-standalone.html">GPLv3</a> license.)
+				</p>
+				<h4>Binary Download&mdash;Windows</h4>
+				<p>
+					<a href="epple2-1.0.msi">epple2-1.0.msi</a> (<a href="http://www.gnu.org/licenses/gpl-3.0-standalone.html">GPLv3</a> license.)
+				</p>
+				<h3>Peripheral Cards</h3>
+				<p>
+					The Epple ][ emulator needs ROM images for any peripheral
+					cards used. If you are using the clock, the
+					standard output, or the standard input cards, you can
+					download the ROM code here, in either binary format
+					(ready to run) or source format (to assemble with the
+					<a href="http://www.cc65.org/">cc65 Assembler</a>).
+				</p>
+				<h4>Source Download</h4>
+				<p>
+					<a href="epple2cards-1.0-src.tar.gz">epple2cards-1.0-src.tar.gz</a> (<a href="http://www.gnu.org/licenses/gpl-3.0-standalone.html">GPLv3</a> license.)
+				</p>
+				<h4>Binary Download&mdash;Linux</h4>
+				<p>
+					<a href="epple2cards-1.0.tar.gz">epple2cards-1.0.tar.gz</a> (<a href="http://www.gnu.org/licenses/gpl-3.0-standalone.html">GPLv3</a> license.)
+				</p>
+				<h4>Binary Download&mdash;Windows</h4>
+				<p>
+					<a href="epple2cards-1.0.msi">epple2cards-1.0.msi</a> (<a href="http://www.gnu.org/licenses/gpl-3.0-standalone.html">GPLv3</a> license.)
+				</p>
+			</div>
+			<!--#include virtual="footer.ihtml" -->
+		</div>
+	</body>
+</html>
