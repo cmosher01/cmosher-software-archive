@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<!--#include virtual="head.ihtml" -->
-		<title>Epple ][</title>
+		<title>Epple ][ User Manual</title>
 	</head>
 	<body>
 		<div id="container">
@@ -19,6 +19,7 @@
 	<li><a href="cards.shtml">Peripheral Cards</a></li>
 	<li><a href="cassette.shtml">Cassette Tape</a></li>
 	<li><a href="paddles.shtml">Paddles</a></li>
+	<li><a href="speaker.shtml">Speaker</a></li>
 </ul>
 			</div>
 			<!--#include virtual="footer.ihtml" -->
