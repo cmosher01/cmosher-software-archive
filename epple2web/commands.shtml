@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<!--#include virtual="head.ihtml" -->
+		<title>Epple ][ Commands</title>
+	</head>
+	<body>
+		<div id="container">
+			<!--#include virtual="navigation.ihtml" -->
+			<div id="content">
+				<h3>Epple ][ Commands</h3>
+<ul>
+	<li><a href="#slot">slot</a></li>
+	<li><a href="#import">import</a></li>
+	<li><a href="#load">load</a></li>
+	<li><a href="#unload">unload</a></li>
+	<li><a href="#save">save</a></li>
+	<li><a href="#cassette">cassette</a></li>
+	<li><a href="#revision">revision</a></li>
+</ul>
+
+
+
+
+
+
+
+<hr/>
+<h4><a name="slot">slot</a></h4>
+<p>
+	The <code>slot</code> command inserts a card into a peripheral slot of the emulated Apple.
+</p>
+<p><code>slot <span class="param">slot</span> <span class="param">card</span></code></p>
+<table>
+	<tbody>
+		<tr><td><span class="param"><code>slot</code></span></td><td>Slot number, 0 through 7, to insert the card into.</td></tr>
+		<tr><td><span class="param"><code>card</code></span></td><td>The type of card to insert into the slot (see below).</td></tr>
+	</tbody>
+</table>
+<p>
+	The <code>slot</code> command inserts a card into a peripheral slot. For example:
+	<code><pre>slot 0 language</pre></code>
+	inserts a language card into slot zero. Use <code>empty</code> to remove a card:
+	<code><pre>slot 0 empty</pre></code>
+	Note that the emulated Apple should be powered off before
+	inserting or removing cards.
+</p>
+<p>The following card types are allowed:
+	<ul>
+		<li><code>language</code></li>
+		<li><code>firmware</code></li>
+		<li><code>disk</code></li>
+		<li><code>clock</code></li>
+		<li><code>stdout</code></li>
+		<li><code>stdin</code></li>
+		<li><code>empty</code></li>
+	</ul>
+</p>
+
+
+
+
+
+
+
+
+<hr/>
+<h4><a name="import">import</a></h4>
+<p>
+	The <code>import</code> command imports a binary image file into the emulated Apple's memory.
+</p>
+<p>
+	<code>import slot <span class="param">slot</span> { rom | rom7 | rombank } <span class="param">base</span>  <span class="param">file-path</span></code>
+<br />
+	<code>import motherboard { rom | ram } <span class="param">base</span>  <span class="param">file-path</span></code>
+</p>
+<p>
+<table>
+	<tbody>
+		<tr><td><span class="param"><code>slot</code></span></td><td>Slot number, 0 through 7, of peripheral card to import the binary image into.</td></tr>
+		<tr><td><span class="param"><code>base</code></span></td><td>Base address in hexadecimal within the given memory area at which to start loading the binary image.</td></tr>
+		<tr><td><span class="param"><code>file-path</code></span></td><td>Path of the binary image to import.</td></tr>
+	</tbody>
+</table>
+<p>
+	The <code>import</code> command 
+</p>
+
+
+
+
+
+
+<hr/>
+<h4><a name="load">load</a></h4>
+<p>
+	The <code>load</code> command load a (nibble) floppy disk image into one of the emulated disk drives.
+</p>
+<p>
+	<code>load slot <span class="param">slot</span> drive <span class="param">drive</span>  <span class="param">file-path</span></code>
+</p>
+<p>
+<table>
+	<tbody>
+		<tr><td><span class="param"><code>slot</code></span></td><td>Slot number, 0 through 7, of Disk ][ controller card to load the nibble image into.</td></tr>
+		<tr><td><span class="param"><code>drive</code></span></td><td>Drive number, 1 or 2, of the disk drive on the controller card to load the nibble image into.</td></tr>
+	</tbody>
+</table>
+<p>
+	The <code>load</code> command 
+</p>
+
+
+
+
+<hr/>
+<h4><a name="unload">unload</a></h4>
+<p>
+	The <code>unload</code> command removes a floppy disk image from one of the emulated disk drives.
+</p>
+<p>
+	<code>unload slot <span class="param">slot</span> drive <span class="param">drive</span></code>
+</p>
+<p>
+<table>
+	<tbody>
+		<tr><td><span class="param"><code>slot</code></span></td><td>Slot number, 0 through 7, of Disk ][ controller card to which the drive is attached.</td></tr>
+		<tr><td><span class="param"><code>drive</code></span></td><td>Drive number, 1 or 2, of the disk drive on the controller card to remove the floppy disk image from.</td></tr>
+	</tbody>
+</table>
+<p>
+	The <code>unload</code> command 
+</p>
+
+
+
+
+<hr/>
+<h4><a name="save">save</a></h4>
+<p>
+	The <code>save</code> command saves changes made on an emulated floppy disk back to the original image file.
+</p>
+<p>
+	<code>save slot <span class="param">slot</span> drive <span class="param">drive</span>  <span class="param">file-path</span></code>
+</p>
+<p>
+<table>
+	<tbody>
+		<tr><td><span class="param"><code>slot</code></span></td><td>Slot number, 0 through 7, of Disk ][ controller card to which the drive is attached.</td></tr>
+		<tr><td><span class="param"><code>drive</code></span></td><td>Drive number, 1 or 2, of the disk drive on the controller card to save.</td></tr>
+	</tbody>
+</table>
+<p>
+	The <code>save</code> command saves any changes that the emulated Apple ][ has made to the floppy
+	disk image. It is important to note that the emulator operates on the image only in memory, and does
+	not immediately write changes back to the real file. You need to issue the <code>save</code> command
+	in order to write changes back to the file. Note that the emulator will display a asterisk ("*")
+	next to the file-name of a disk image if it has any unsaved changes.
+</p>
+
+
+
+
+<hr/>
+<h4><a name="cassette">cassette</a></h4>
+<p>
+	The <code>cassette</code> command performs various operations of the emulated cassette tape.
+</p>
+<p>
+	<code>cassette load <span class="param">file-path</span></code>
+<br />
+	<code>cassette unload</code>
+<br />
+	<code>cassette rewind</code>
+<br />
+	<code>cassette save</code>
+</p>
+<p>
+<table>
+	<tbody>
+		<tr><td><span class="param"><code>file-path</code></span></td><td>File path of the (special format) cassette tape image file.</td></tr>
+	</tbody>
+</table>
+<p>
+	The <code>cassette</code> command allows the user to control the emulated cassette tape player.
+</p>
+
+
+
+
+
+<hr/>
+<h4><a name="revision">revision</a></h4>
+<p>
+	The <code>revision</code> command specifies which revision of Apple ][ motherboard to use.
+</p>
+<p>
+	<code>revision <span class="param">rev</span></code>
+</p>
+<p>
+<table>
+	<tbody>
+		<tr><td><span class="param"><code>rev</code></span></td><td>Revision number of the motherboard. Currently, only two values make any difference in behavior: 0 or 1.</td></tr>
+	</tbody>
+</table>
+<p>
+	The <code>revision</code> command 
+</p>
+
+
+
+
+			</div>
+			<!--#include virtual="footer.ihtml" -->
+		</div>
+	</body>
+</html>
