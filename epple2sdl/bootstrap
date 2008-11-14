@@ -3,4 +3,5 @@ if [ ! -e m4 ]
 then
         mkdir m4
 fi
+
 aclocal -I m4 && autoheader && automake --gnu --add-missing --copy && autoconf
