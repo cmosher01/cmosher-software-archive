@@ -67,10 +67,18 @@ void Paddles::tryStartPaddleTimers()
 	if (isTimedOut(1))
 		this->rTick[1] = y;
 
+	/*
+		Here we emulate having 4700 ohm across pins 7 and 1
+		of the game controller, and a 47Kohm resistor acros
+		pins 11 and 1, to give cheap real-time clocks at
+		paddles 2 and 3. Paddle 2 is the 100 microsecond reference,
+		and paddle 3 is the 1 millisecond reference. This is
+		described in U.A.2, p. 7-33.
+	*/
 	if (isTimedOut(2))
-		this->rTick[2] = REALTIME_1MS_CYCLES;
+		this->rTick[2] = REALTIME_100US_CYCLES;
 	if (isTimedOut(3))
-		this->rTick[3] = REALTIME_100US_CYCLES;
+		this->rTick[3] = REALTIME_1MS_CYCLES;
 }
 
 bool Paddles::isTimedOut(const int paddle)
