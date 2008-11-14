@@ -16,7 +16,7 @@
 					which is provided with the emulator in the clock.ex65 file.
 					For example, add this to your epple2.conf file:
 				</p>
-<p>					
+<p>
 <code><pre>slot 4 clock
 import slot 4 rom 0 /usr/lib/epple2/cards/clock.ex65</pre></code>
 </p>

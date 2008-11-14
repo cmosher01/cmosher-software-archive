@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<!--#include virtual="head.ihtml" -->
+		<title>Epple ][ Language Card</title>
+	</head>
+	<body>
+		<div id="container">
+			<!--#include virtual="navigation.ihtml" -->
+			<div id="content">
+				<h3>Language Card</h3>
+				<p>
+					The language card emulates an Apple 16K RAM card, commonly called a Language Card.
+					To use a language card, add this line to your epple2.conf file:
+				</p>
+				<p>
+					<code><pre>slot 0 language</pre></code>
+				</p>
+				<p>
+					Note that DOS and ProDOS will make use of a language card only if it is in slot zero.
+				</p>
+				<p>
+					The language card has RAM at addresses $E000 through $FFFF, as well as two banks of RAM
+					at addresses $D000 through $DFFF. A program switches between these RAMs and/or the
+					motherboard ROM by using the I/O switches at $C080 through $C08F.
+				</p>
+				<p>
+					The information area of the EPPLE ][ will show the current state of the
+					language card as follows:
+					<table>
+						<tbody>
+							<tr><td><code>R</code></td><td>Read from card RAM (vs. motherboard ROM)</td></tr>
+							<tr><td><code>W</code></td><td>Write to card RAM (vs. write-disabled)</td></tr>
+							<tr><td><code>B1</code></td><td>Use $D000 bank 1</td></tr>
+							<tr><td><code>B2</code></td><td>Use $D000 bank 2</td></tr>
+						</tbody>
+					</table>
+				</p>
+			</div>
+			<!--#include virtual="footer.ihtml" -->
+		</div>
+	</body>
+</html>
