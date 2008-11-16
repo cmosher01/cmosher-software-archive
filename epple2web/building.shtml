@@ -25,6 +25,40 @@
 
 
 				<h3>Linux</h3>
+				<h4>Set Up Build Environment</h4>
+				<p>
+					The exact steps for setting up the build environment will
+					differ from system to system. You will need to set up the following:
+					<ul>
+						<li>Standards-compliant C++ compiler, such as <b>g++</b> (from GNU)</li>
+						<li>X11 headers; look for <b>libX11-dev</b> or similar package</li>
+						<li>you may need X11 extensions; for Debian, <b>x11proto-xext-dev</b> worked for me</li>
+					</ul>
+				</p>
+				<p>
+					As a sanity check for g++, type this at the shell prompt:
+				</p>
+				<p>
+					<code>g++ --version</code>
+				</p>
+				<p>
+					As a sanity check for X11, make sure this file exists:
+				</p>
+				<p>
+					<code>/usr/include/X11/Xlib.h</code>
+				</p>
+				<p>
+					I had trouble with building SDL from sources without having
+					the X11 extensions installed, as shown in the above list. If
+					you are not building SDL form sources, you may not need
+					the X11 extensions.
+				</p>
+				<p>
+					As a sanity check for X11 extensions, make sure this file exists:
+				</p>
+				<p>
+					<code>/usr/include/X11/extensions/XShm.h</code>
+				</p>
 				<h4>Install SDL</h4>
 				<p>
 					You should check your distribution's package library to see if it has
@@ -50,7 +84,9 @@ $ tar xzvf SDL-1.2.13.tar.gz</pre></code>
 				</p>
 				<code><pre>
 $ cd SDL-1.2.13
-$ make native</pre></code>
+$ ./configure
+$ make
+$ sudo make install</pre></code>
 
 				<h4>Untar Epple ][ Source</h4>
 				<p>
@@ -77,7 +113,7 @@ $ cd buildepple2</pre></code>
 					Then run configure and make:
 				</p>
 				<code><pre>
-$ ~/epple2/configure
+$ ~/epple2-1.0/configure
 $ make
 $ sudo make install</pre></code>
 				<p>
