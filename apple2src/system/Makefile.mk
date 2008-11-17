@@ -136,8 +136,16 @@ dist:	\
 	other/other.s65 \
 	other/sweet16.s65 \
 	other/other.ld65
-	rm -fv $(DIST).tar.gz
-	rm -Rfv $(DIST)
-	mkdir -v $(DIST)
-	cp -v $^ $(DIST)
-	tar cvzf $(DIST).tar.gz $(DIST)
+	rm -Rf $(DIST)
+	mkdir $(DIST)
+	rm -f $(DIST)/tmp.tar
+	tar -cf $(DIST)/tmp.tar -T /dev/null
+	cd $(DIST) ; \
+	TARDIR=$$PWD ; \
+	cd $(VPATH) ; \
+	echo "$^" | tr " " "\n" | xargs -I @ find . -samefile @| tar -rf $$TARDIR/tmp.tar -T -
+	cd $(DIST) ; tar xf tmp.tar
+	rm $(DIST)/tmp.tar
+	rm -f $(DIST).tar.gz
+	tar czf $(DIST).tar.gz $(DIST)
+	rm -Rf $(DIST)
