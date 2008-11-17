@@ -125,7 +125,7 @@ CA65 = $CA65
 LD65 = $LD65
 JAVA = $JAVA
 A2CDT = $A2CDT
-INCDIR = $DIR/../include/macros
+INCDIR = $DIR/include/macros
 PREFIX = $PREFIX
 include $DIR/Makefile.mk
 EOF

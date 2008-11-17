@@ -179,57 +179,57 @@ OBJS_332 = $(foreach mod,$(MODS),16sector/software/dos332/$(mod).o65)
 
 
 install:
-	mkdir -p $(PREFIX)/lib/apple2/dos3x/13sector/controller
-	cp 13sector/controller/disk2.ex65 $(PREFIX)/lib/apple2/dos3x/13sector/controller
-	mkdir -p $(PREFIX)/lib/apple2/dos3x/13sector/software/dos310
-	cp 13sector/software/dos310/dos.ex65 $(PREFIX)/lib/apple2/dos3x/13sector/software/dos310
-	mkdir -p $(PREFIX)/lib/apple2/dos3x/13sector/software/dos320
-	cp 13sector/software/dos320/dos.ex65 $(PREFIX)/lib/apple2/dos3x/13sector/software/dos320
-	mkdir -p $(PREFIX)/lib/apple2/dos3x/13sector/software/dos321
-	cp 13sector/software/dos321/dos.ex65 $(PREFIX)/lib/apple2/dos3x/13sector/software/dos321
+	mkdir -p $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/controller
+	cp 13sector/controller/disk2.ex65 $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/controller
+	mkdir -p $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/software/dos310
+	cp 13sector/software/dos310/dos.ex65 $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/software/dos310
+	mkdir -p $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/software/dos320
+	cp 13sector/software/dos320/dos.ex65 $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/software/dos320
+	mkdir -p $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/software/dos321
+	cp 13sector/software/dos321/dos.ex65 $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/software/dos321
 
-	mkdir -p $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos310
-	cp $(VPATH)/disks/README $(PREFIX)/lib/apple2/dos3x/13sector/disks
-	cp $(VPATH)/disks/dos310/*.d13 $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos310
-	cp $(VPATH)/disks/dos310/*.nib $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos310
-	cp 13sector/disks/dos310/clean310.d13 $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos310
-	cp 13sector/disks/dos310/clean310.nib $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos310
-	mkdir -p $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos320
-	cp $(VPATH)/disks/dos320/*.d13 $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos320
-	cp $(VPATH)/disks/dos320/*.nib $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos320
-	cp 13sector/disks/dos320/clean320.d13 $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos320
-	cp 13sector/disks/dos320/clean320.nib $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos320
-	mkdir -p $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos321
-	cp $(VPATH)/disks/dos321/*.d13 $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos321
-	cp $(VPATH)/disks/dos321/*.nib $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos321
-	cp 13sector/disks/dos321/clean321.d13 $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos321
-	cp 13sector/disks/dos321/clean321.nib $(PREFIX)/lib/apple2/dos3x/13sector/disks/dos321
+	mkdir -p $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/disks/dos310
+	cp $(VPATH)/disks/README $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/disks
+	cp $(VPATH)/disks/dos310/*.d13 $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/disks/dos310
+	cp $(VPATH)/disks/dos310/*.nib $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/disks/dos310
+	cp 13sector/disks/dos310/clean310.d13 $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/disks/dos310
+	cp 13sector/disks/dos310/clean310.nib $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/disks/dos310
+	mkdir -p $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/disks/dos320
+	cp $(VPATH)/disks/dos320/*.d13 $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/disks/dos320
+	cp $(VPATH)/disks/dos320/*.nib $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/disks/dos320
+	cp 13sector/disks/dos320/clean320.d13 $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/disks/dos320
+	cp 13sector/disks/dos320/clean320.nib $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/disks/dos320
+	mkdir -p $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/disks/dos321
+	cp $(VPATH)/disks/dos321/*.d13 $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/disks/dos321
+	cp $(VPATH)/disks/dos321/*.nib $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/disks/dos321
+	cp 13sector/disks/dos321/clean321.d13 $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/disks/dos321
+	cp 13sector/disks/dos321/clean321.nib $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/13sector/disks/dos321
 
-	mkdir -p $(PREFIX)/lib/apple2/dos3x/16sector/controller
-	cp 16sector/controller/disk2.ex65 $(PREFIX)/lib/apple2/dos3x/16sector/controller
-	mkdir -p $(PREFIX)/lib/apple2/dos3x/16sector/software/dos330
-	cp 16sector/software/dos330/dos.ex65 $(PREFIX)/lib/apple2/dos3x/16sector/software/dos330
-	mkdir -p $(PREFIX)/lib/apple2/dos3x/16sector/software/dos331
-	cp 16sector/software/dos331/dos.ex65 $(PREFIX)/lib/apple2/dos3x/16sector/software/dos331
-	mkdir -p $(PREFIX)/lib/apple2/dos3x/16sector/software/dos332
-	cp 16sector/software/dos332/dos.ex65 $(PREFIX)/lib/apple2/dos3x/16sector/software/dos332
+	mkdir -p $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/controller
+	cp 16sector/controller/disk2.ex65 $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/controller
+	mkdir -p $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/software/dos330
+	cp 16sector/software/dos330/dos.ex65 $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/software/dos330
+	mkdir -p $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/software/dos331
+	cp 16sector/software/dos331/dos.ex65 $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/software/dos331
+	mkdir -p $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/software/dos332
+	cp 16sector/software/dos332/dos.ex65 $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/software/dos332
 
-	mkdir -p $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos330
-	cp $(VPATH)/disks/README $(PREFIX)/lib/apple2/dos3x/16sector/disks
-	cp $(VPATH)/disks/dos330/*.do $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos330
-	cp $(VPATH)/disks/dos330/*.nib $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos330
-	cp 16sector/disks/dos330/clean330.do $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos330
-	cp 16sector/disks/dos330/clean330.nib $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos330
-	mkdir -p $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos331
-	cp $(VPATH)/disks/dos331/*.do $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos331
-	cp $(VPATH)/disks/dos331/*.nib $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos331
-	cp 16sector/disks/dos331/clean331.do $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos331
-	cp 16sector/disks/dos331/clean331.nib $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos331
-	mkdir -p $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos332
-	cp $(VPATH)/disks/dos332/*.do $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos332
-	cp $(VPATH)/disks/dos332/*.nib $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos332
-	cp 16sector/disks/dos332/clean332.do $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos332
-	cp 16sector/disks/dos332/clean332.nib $(PREFIX)/lib/apple2/dos3x/16sector/disks/dos332
+	mkdir -p $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/disks/dos330
+	cp $(VPATH)/disks/README $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/disks
+	cp $(VPATH)/disks/dos330/*.do $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/disks/dos330
+	cp $(VPATH)/disks/dos330/*.nib $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/disks/dos330
+	cp 16sector/disks/dos330/clean330.do $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/disks/dos330
+	cp 16sector/disks/dos330/clean330.nib $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/disks/dos330
+	mkdir -p $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/disks/dos331
+	cp $(VPATH)/disks/dos331/*.do $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/disks/dos331
+	cp $(VPATH)/disks/dos331/*.nib $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/disks/dos331
+	cp 16sector/disks/dos331/clean331.do $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/disks/dos331
+	cp 16sector/disks/dos331/clean331.nib $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/disks/dos331
+	mkdir -p $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/disks/dos332
+	cp $(VPATH)/disks/dos332/*.do $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/disks/dos332
+	cp $(VPATH)/disks/dos332/*.nib $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/disks/dos332
+	cp 16sector/disks/dos332/clean332.do $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/disks/dos332
+	cp 16sector/disks/dos332/clean332.nib $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/disks/dos332
 
 
 
@@ -237,3 +237,104 @@ install:
 
 clean:
 	rm -Rfv $(SUBDIRS)
+
+
+
+DIST=apple2dos-1.0
+dist:	\
+	configure \
+	Makefile.mk \
+	software/boot2.s65
+	software/README
+	software/rwtsapi.s65
+	software/zpabs.s65
+	software/filemgr.s65
+	software/Makefile
+	software/reloc.s65
+	software/dos.s65
+	software/rwts.s65
+	software/main.s65
+	software/boot1.s65
+	software/symbols.s65
+	software/dos.ld65
+	include/macros/reverse.s65
+	include/macros/hascmap.s65
+	include/macros/asciihl.s65
+	controller/disk2.ld65
+	controller/disk2.s65
+	disks/README
+	disks/dos320/original32sysmaspls.nib
+	disks/dos320/clean32sysmaspls.nib
+	disks/dos320/README
+	disks/dos320/stock32init.d13
+	disks/dos320/original32sysmasstd.nib
+	disks/dos320/original32sysmasstd.d13
+	disks/dos320/clean32sysmaspls.d13
+	disks/dos320/original32sysmaspls.d13
+	disks/dos320/clean32sysmasstd.nib
+	disks/dos320/clean32sysmasstd.d13
+	disks/dos320/stock32mastercreated.d13
+	disks/dos320/stock32mastercreated.nib
+	disks/dos320/stock32init.nib
+	disks/dos330/stock330init.do
+	disks/dos330/README
+	disks/dos330/original330sysmas.nib
+	disks/dos330/clean330sysmas.nib
+	disks/dos330/stock330mastercreated.do
+	disks/dos330/stock330mastercreated.nib
+	disks/dos330/stock330init.nib
+	disks/dos330/original330sysmas.do
+	disks/dos330/clean330sysmas.do
+	disks/dos310/README
+	disks/dos310/stock31mastercreated.nib
+	disks/dos310/stock31mastercreated.d13
+	disks/dos310/original31sysmas.d13
+	disks/dos310/original31sysmas.nib
+	disks/dos310/clean31sysmas_stock_rawdos.nib
+	disks/dos310/stock31init.nib
+	disks/dos310/stock31init.d13
+	disks/dos310/clean31sysmas_stock_rawdos.d13
+	disks/dos332/README
+	disks/dos332/stock332init.do
+	disks/dos332/original332sysmas.do
+	disks/dos332/stock332mastercreated.do
+	disks/dos332/stock332mastercreated.nib
+	disks/dos332/clean332sysmas.nib
+	disks/dos332/clean332sysmas.do
+	disks/dos332/stock332init.nib
+	disks/dos332/original332sysmas.nib
+	disks/dos321/original321sysmaspls.d13
+	disks/dos321/stock321init.d13
+	disks/dos321/clean321sysmaspls.nib
+	disks/dos321/README
+	disks/dos321/clean321sysmasstd.nib
+	disks/dos321/clean321sysmasstd.d13
+	disks/dos321/original321sysmasstd.nib
+	disks/dos321/original321sysmaspls.nib
+	disks/dos321/stock321init.nib
+	disks/dos321/clean321sysmaspls.d13
+	disks/dos321/stock321mastercreated.nib
+	disks/dos321/original321sysmasstd.d13
+	disks/dos321/stock321mastercreated.d13
+	disks/dos331/stock331mastercreated.do
+	disks/dos331/README
+	disks/dos331/stock331init.do
+	disks/dos331/clean331sysmas.nib
+	disks/dos331/stock331init.nib
+	disks/dos331/stock331mastercreated.nib
+	disks/dos331/clean331sysmas.do
+	disks/dos331/original331sysmas.nib
+	disks/dos331/original331sysmas.do
+	rm -Rf $(DIST)
+	mkdir $(DIST)
+	rm -f $(DIST)/tmp.tar
+	tar -cf $(DIST)/tmp.tar -T /dev/null
+	cd $(DIST) ; \
+	TARDIR=$$PWD ; \
+	cd $(VPATH) ; \
+	echo "$^" | tr " " "\n" | xargs -I @ find . -samefile @| tar -rf $$TARDIR/tmp.tar -T -
+	cd $(DIST) ; tar xf tmp.tar
+	rm $(DIST)/tmp.tar
+	rm -f $(DIST).tar.gz
+	tar czf $(DIST).tar.gz $(DIST)
+	rm -Rf $(DIST)
