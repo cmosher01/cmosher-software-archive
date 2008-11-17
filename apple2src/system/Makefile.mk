@@ -108,7 +108,7 @@ clean:
 
 
 
-DIST=apple2src-1.0
+DIST=apple2sys-1.0
 dist:	\
 	configure \
 	Makefile.mk \
