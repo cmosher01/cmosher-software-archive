@@ -244,6 +244,7 @@ DIST=apple2dos-1.0
 dist:	\
 	configure \
 	Makefile.mk \
+	a2cdt.jar \
 	software/boot2.s65 \
 	software/README \
 	software/rwtsapi.s65 \
