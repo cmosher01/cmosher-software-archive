@@ -85,16 +85,16 @@ monitor/apple2plus/%.s65: monitor/%.s65 monitor/symbols.s65
 
 
 install:
-	mkdir -p $(PREFIX)/lib/apple2/system/monitor/apple2
-	cp monitor/apple2/monitor.ex65 $(PREFIX)/lib/apple2/system/monitor/apple2
-	mkdir -p $(PREFIX)/lib/apple2/system/monitor/apple2plus
-	cp monitor/apple2plus/monitor.ex65 $(PREFIX)/lib/apple2/system/monitor/apple2plus
-	mkdir -p $(PREFIX)/lib/apple2/system/intbasic
-	cp intbasic/intbasic.ex65 $(PREFIX)/lib/apple2/system/intbasic
-	mkdir -p $(PREFIX)/lib/apple2/system/other
-	cp other/other.ex65 $(PREFIX)/lib/apple2/system/other
-	mkdir -p $(PREFIX)/lib/apple2/system/applesoft
-	cp applesoft/applesoft.ex65 $(PREFIX)/lib/apple2/system/applesoft
+	mkdir -p $(DESTDIR)/$(PREFIX)/lib/apple2/system/monitor/apple2
+	cp monitor/apple2/monitor.ex65 $(DESTDIR)/$(PREFIX)/lib/apple2/system/monitor/apple2
+	mkdir -p $(DESTDIR)/$(PREFIX)/lib/apple2/system/monitor/apple2plus
+	cp monitor/apple2plus/monitor.ex65 $(DESTDIR)/$(PREFIX)/lib/apple2/system/monitor/apple2plus
+	mkdir -p $(DESTDIR)/$(PREFIX)/lib/apple2/system/intbasic
+	cp intbasic/intbasic.ex65 $(DESTDIR)/$(PREFIX)/lib/apple2/system/intbasic
+	mkdir -p $(DESTDIR)/$(PREFIX)/lib/apple2/system/other
+	cp other/other.ex65 $(DESTDIR)/$(PREFIX)/lib/apple2/system/other
+	mkdir -p $(DESTDIR)/$(PREFIX)/lib/apple2/system/applesoft
+	cp applesoft/applesoft.ex65 $(DESTDIR)/$(PREFIX)/lib/apple2/system/applesoft
 
 
 
@@ -137,7 +137,10 @@ dist:	\
 	other/miniasm2.s65 \
 	other/other.s65 \
 	other/sweet16.s65 \
-	other/other.ld65
+	other/other.ld65 \
+	include/macros/asciihl.s65 \
+	include/macros/hascmap.s65 \
+	include/macros/reverse.s65
 	rm -Rf $(DIST)
 	mkdir $(DIST)
 	rm -f $(DIST)/tmp.tar
