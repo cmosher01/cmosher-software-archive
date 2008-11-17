@@ -110,6 +110,8 @@ clean:
 
 DIST=apple2src-1.0
 dist:	\
+	configure \
+	Makefile.mk \
 	applesoft/applesoft.s65 \
 	applesoft/applesoft.ld65 \
 	intbasic/intbasic.s65 \
