@@ -104,3 +104,40 @@ clean:
 	find . -name "*.ex65" | xargs rm -fv
 	find . -name "*.o65" | xargs rm -fv
 	rm -Rfv monitor/apple2 monitor/apple2plus
+
+
+
+
+DIST=apple2src-1.0
+dist:	\
+	applesoft/applesoft.s65 \
+	applesoft/applesoft.ld65 \
+	intbasic/intbasic.s65 \
+	intbasic/intbasic.ld65 \
+	monitor/cassette.s65 \
+	monitor/cmd.s65 \
+	monitor/debug.s65 \
+	monitor/disasm.s65 \
+	monitor/display1.s65 \
+	monitor/display2.s65 \
+	monitor/keyin.s65 \
+	monitor/lores.s65 \
+	monitor/math.s65 \
+	monitor/monitor.s65 \
+	monitor/paddles.s65 \
+	monitor/symbols.s65 \
+	monitor/vectors.s65 \
+	monitor/monitor.ld65 \
+	other/f669.s65 \
+	other/fp1.s65 \
+	other/fp2.s65 \
+	other/miniasm1.s65 \
+	other/miniasm2.s65 \
+	other/other.s65 \
+	other/sweet16.s65 \
+	other/other.ld65
+	rm -fv $(DIST).tar.gz
+	rm -Rfv $(DIST)
+	mkdir -v $(DIST)
+	cp -v $^ $(DIST)
+	tar cvzf $(DIST).tar.gz $(DIST)
