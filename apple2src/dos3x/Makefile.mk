@@ -244,86 +244,86 @@ DIST=apple2dos-1.0
 dist:	\
 	configure \
 	Makefile.mk \
-	software/boot2.s65
-	software/README
-	software/rwtsapi.s65
-	software/zpabs.s65
-	software/filemgr.s65
-	software/Makefile
-	software/reloc.s65
-	software/dos.s65
-	software/rwts.s65
-	software/main.s65
-	software/boot1.s65
-	software/symbols.s65
-	software/dos.ld65
-	include/macros/reverse.s65
-	include/macros/hascmap.s65
-	include/macros/asciihl.s65
-	controller/disk2.ld65
-	controller/disk2.s65
-	disks/README
-	disks/dos320/original32sysmaspls.nib
-	disks/dos320/clean32sysmaspls.nib
-	disks/dos320/README
-	disks/dos320/stock32init.d13
-	disks/dos320/original32sysmasstd.nib
-	disks/dos320/original32sysmasstd.d13
-	disks/dos320/clean32sysmaspls.d13
-	disks/dos320/original32sysmaspls.d13
-	disks/dos320/clean32sysmasstd.nib
-	disks/dos320/clean32sysmasstd.d13
-	disks/dos320/stock32mastercreated.d13
-	disks/dos320/stock32mastercreated.nib
-	disks/dos320/stock32init.nib
-	disks/dos330/stock330init.do
-	disks/dos330/README
-	disks/dos330/original330sysmas.nib
-	disks/dos330/clean330sysmas.nib
-	disks/dos330/stock330mastercreated.do
-	disks/dos330/stock330mastercreated.nib
-	disks/dos330/stock330init.nib
-	disks/dos330/original330sysmas.do
-	disks/dos330/clean330sysmas.do
-	disks/dos310/README
-	disks/dos310/stock31mastercreated.nib
-	disks/dos310/stock31mastercreated.d13
-	disks/dos310/original31sysmas.d13
-	disks/dos310/original31sysmas.nib
-	disks/dos310/clean31sysmas_stock_rawdos.nib
-	disks/dos310/stock31init.nib
-	disks/dos310/stock31init.d13
-	disks/dos310/clean31sysmas_stock_rawdos.d13
-	disks/dos332/README
-	disks/dos332/stock332init.do
-	disks/dos332/original332sysmas.do
-	disks/dos332/stock332mastercreated.do
-	disks/dos332/stock332mastercreated.nib
-	disks/dos332/clean332sysmas.nib
-	disks/dos332/clean332sysmas.do
-	disks/dos332/stock332init.nib
-	disks/dos332/original332sysmas.nib
-	disks/dos321/original321sysmaspls.d13
-	disks/dos321/stock321init.d13
-	disks/dos321/clean321sysmaspls.nib
-	disks/dos321/README
-	disks/dos321/clean321sysmasstd.nib
-	disks/dos321/clean321sysmasstd.d13
-	disks/dos321/original321sysmasstd.nib
-	disks/dos321/original321sysmaspls.nib
-	disks/dos321/stock321init.nib
-	disks/dos321/clean321sysmaspls.d13
-	disks/dos321/stock321mastercreated.nib
-	disks/dos321/original321sysmasstd.d13
-	disks/dos321/stock321mastercreated.d13
-	disks/dos331/stock331mastercreated.do
-	disks/dos331/README
-	disks/dos331/stock331init.do
-	disks/dos331/clean331sysmas.nib
-	disks/dos331/stock331init.nib
-	disks/dos331/stock331mastercreated.nib
-	disks/dos331/clean331sysmas.do
-	disks/dos331/original331sysmas.nib
+	software/boot2.s65 \
+	software/README \
+	software/rwtsapi.s65 \
+	software/zpabs.s65 \
+	software/filemgr.s65 \
+	software/Makefile \
+	software/reloc.s65 \
+	software/dos.s65 \
+	software/rwts.s65 \
+	software/main.s65 \
+	software/boot1.s65 \
+	software/symbols.s65 \
+	software/dos.ld65 \
+	include/macros/reverse.s65 \
+	include/macros/hascmap.s65 \
+	include/macros/asciihl.s65 \
+	controller/disk2.ld65 \
+	controller/disk2.s65 \
+	disks/README \
+	disks/dos320/original32sysmaspls.nib \
+	disks/dos320/clean32sysmaspls.nib \
+	disks/dos320/README \
+	disks/dos320/stock32init.d13 \
+	disks/dos320/original32sysmasstd.nib \
+	disks/dos320/original32sysmasstd.d13 \
+	disks/dos320/clean32sysmaspls.d13 \
+	disks/dos320/original32sysmaspls.d13 \
+	disks/dos320/clean32sysmasstd.nib \
+	disks/dos320/clean32sysmasstd.d13 \
+	disks/dos320/stock32mastercreated.d13 \
+	disks/dos320/stock32mastercreated.nib \
+	disks/dos320/stock32init.nib \
+	disks/dos330/stock330init.do \
+	disks/dos330/README \
+	disks/dos330/original330sysmas.nib \
+	disks/dos330/clean330sysmas.nib \
+	disks/dos330/stock330mastercreated.do \
+	disks/dos330/stock330mastercreated.nib \
+	disks/dos330/stock330init.nib \
+	disks/dos330/original330sysmas.do \
+	disks/dos330/clean330sysmas.do \
+	disks/dos310/README \
+	disks/dos310/stock31mastercreated.nib \
+	disks/dos310/stock31mastercreated.d13 \
+	disks/dos310/original31sysmas.d13 \
+	disks/dos310/original31sysmas.nib \
+	disks/dos310/clean31sysmas_stock_rawdos.nib \
+	disks/dos310/stock31init.nib \
+	disks/dos310/stock31init.d13 \
+	disks/dos310/clean31sysmas_stock_rawdos.d13 \
+	disks/dos332/README \
+	disks/dos332/stock332init.do \
+	disks/dos332/original332sysmas.do \
+	disks/dos332/stock332mastercreated.do \
+	disks/dos332/stock332mastercreated.nib \
+	disks/dos332/clean332sysmas.nib \
+	disks/dos332/clean332sysmas.do \
+	disks/dos332/stock332init.nib \
+	disks/dos332/original332sysmas.nib \
+	disks/dos321/original321sysmaspls.d13 \
+	disks/dos321/stock321init.d13 \
+	disks/dos321/clean321sysmaspls.nib \
+	disks/dos321/README \
+	disks/dos321/clean321sysmasstd.nib \
+	disks/dos321/clean321sysmasstd.d13 \
+	disks/dos321/original321sysmasstd.nib \
+	disks/dos321/original321sysmaspls.nib \
+	disks/dos321/stock321init.nib \
+	disks/dos321/clean321sysmaspls.d13 \
+	disks/dos321/stock321mastercreated.nib \
+	disks/dos321/original321sysmasstd.d13 \
+	disks/dos321/stock321mastercreated.d13 \
+	disks/dos331/stock331mastercreated.do \
+	disks/dos331/README \
+	disks/dos331/stock331init.do \
+	disks/dos331/clean331sysmas.nib \
+	disks/dos331/stock331init.nib \
+	disks/dos331/stock331mastercreated.nib \
+	disks/dos331/clean331sysmas.do \
+	disks/dos331/original331sysmas.nib \
 	disks/dos331/original331sysmas.do
 	rm -Rf $(DIST)
 	mkdir $(DIST)
