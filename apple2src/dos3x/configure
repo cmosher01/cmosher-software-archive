@@ -103,7 +103,7 @@ then
 	exit 1;
 fi
 
-test "$A2CDT" || A2CDT=a2cdt.jar
+test "$A2CDT" || A2CDT=$DIR/a2cdt.jar
 
 if [ ! -r "$A2CDT" ]
 then
