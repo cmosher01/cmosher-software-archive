@@ -1,5 +1,10 @@
 # Builds Epple ][ card ROMs: stdout, stdin, clock
 
+NAME = epple2cards
+VERSION = 1.0
+
+DIST = $(NAME)-$(VERSION)
+
 .SUFFIXES:
 
 .SUFFIXES: .s65 .o65 .ld65 .ex65
@@ -25,13 +30,13 @@ clock.ex65: clock.o65 card.ld65
 
 
 
-DIST=epple2cards-1.0
 dist: card.ld65  clock.s65  configure  Makefile.mk  stdin.s65  stdout.s65
 	rm -fv $(DIST).tar.gz
 	rm -Rfv $(DIST)
 	mkdir -v $(DIST)
 	cp -v $^ $(DIST)
 	tar cvzf $(DIST).tar.gz $(DIST)
+	rm -Rf $(DIST)
 
 
 
@@ -65,3 +70,14 @@ mostlyclean: clean
 
 distclean: clean
 	rm -fv Makefile
+
+RPM = /usr/src/rpm
+TMP = /tmp/rpm
+
+ARCH = noarch
+
+package: $(NAME).spec
+	mkdir -p $(TMP)
+	cp $(NAME)-$(VERSION).tar.gz $(RPM)/SOURCES
+	rpmbuild -ba --clean --buildroot $(TMP) $<
+	fakeroot alien $(RPM)/RPMS/$(ARCH)/$(NAME)-$(VERSION)-1.$(ARCH).rpm
