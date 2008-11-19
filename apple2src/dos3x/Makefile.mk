@@ -245,7 +245,6 @@ clean:
 
 
 
-DIST=apple2dos-1.0
 dist:	\
 	configure \
 	Makefile.mk \
