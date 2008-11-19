@@ -1,5 +1,10 @@
 CDT = java -cp "$(A2CDT)"
 
+NAME = apple2dos
+VERSION = 1.0
+
+DIST = $(NAME)-$(VERSION)
+
 .s65.o65:
 	$(CA65) -v -t apple2 -o $@ -I $(<D) -I $(INCDIR) $(CA65DEFS) $<
 
@@ -339,3 +344,14 @@ dist:	\
 	rm -f $(DIST).tar.gz
 	tar czf $(DIST).tar.gz $(DIST)
 	rm -Rf $(DIST)
+
+RPM = /usr/src/rpm
+TMP = /tmp/rpm
+
+ARCH = noarch
+
+package: $(NAME).spec
+	mkdir -p $(TMP)
+	cp $(NAME)-$(VERSION).tar.gz $(RPM)/SOURCES
+	rpmbuild -ba --clean --buildroot $(TMP) --nodeps $<
+	fakeroot alien $(RPM)/RPMS/$(ARCH)/$(NAME)-$(VERSION)-1.$(ARCH).rpm

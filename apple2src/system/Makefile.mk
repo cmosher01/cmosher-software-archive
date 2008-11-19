@@ -7,6 +7,12 @@
 # is whether to build Integer BASIC original or with bug fixes. Currently,
 # it builds the original version without bug fixes.
 #
+
+NAME = apple2sys
+VERSION = 1.0
+
+DIST = $(NAME)-$(VERSION)
+
 .SUFFIXES: .s65 .o65 .ld65 .ex65
 
 .s65.o65:
@@ -154,3 +160,14 @@ dist:	\
 	rm -f $(DIST).tar.gz
 	tar czf $(DIST).tar.gz $(DIST)
 	rm -Rf $(DIST)
+
+RPM = /usr/src/rpm
+TMP = /tmp/rpm
+
+ARCH = noarch
+
+package: $(NAME).spec
+	mkdir -p $(TMP)
+	cp $(NAME)-$(VERSION).tar.gz $(RPM)/SOURCES
+	rpmbuild -ba --clean --buildroot $(TMP) --nodeps $<
+	fakeroot alien $(RPM)/RPMS/$(ARCH)/$(NAME)-$(VERSION)-1.$(ARCH).rpm
