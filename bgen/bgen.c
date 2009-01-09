@@ -11,13 +11,13 @@ static int runProgram = 1;
 static int count = 1;
 static int constant = 0;
 
-static const char* shortopts = "c:n:hv";
+static const char* shortopts = "c:n:hV";
 static const struct option longopts[] =
 {
 	{"const",1,0,'c'},
 	{"count",1,0,'n'},
 	{"help",0,0,'h'},
-	{"version" ,0,0,'v'}
+	{"version" ,0,0,'V'}
 };
 
 
@@ -42,7 +42,7 @@ static void help()
 	printf("  -n, --count=N  write N bytes; default 1\n");
 	printf("  -c, --const=C  write bytes of decimal value C (0-255); default 0\n");
 	printf("  -h, --help     show this help\n");
-	printf("  -v, --version  show program version information\n");
+	printf("  -V, --version  show program version information\n");
 }
 
 int main(int argc, char* argv[])
@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
 				help();
 				runProgram = 0;
 			break;
-			case 'v':
+			case 'V':
 				version();
 				runProgram = 0;
 			break;
