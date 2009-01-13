@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<!--#include virtual="head.ihtml" -->
+		<title>Apple ][ Library</title>
+	</head>
+	<body>
+		<div id="container">
+			<!--#include virtual="navigation.ihtml" -->
+			<div id="content">
+<h2>NOTICE: Warning Concerning Copyright Restrictions</h2>
+<p>
+The copyright law of the United States (title 17, United States 
+Code) governs the making of photocopies or other reproductions of 
+copyrighted material.
+</p>
+<p>
+Under certain conditions specified in the law, libraries and 
+archives are authorized to furnish a photocopy or other reproduction. 
+One of these specific conditions is that the photocopy or reproduction 
+is <b>not to be "used for any purpose other than private study, 
+scholarship, or research."</b> If a user makes a request for, or later 
+uses, a photocopy or reproduction for purposes in excess of "fair 
+use," that user may be liable for copyright infringement.
+</p>
+<p>
+This institution reserves the right to refuse to accept a copying 
+order if, in its judgment, fulfillment of the order would involve 
+violation of copyright law.
+</p>
+<h2></h2>
+			</div>
+			<!--#include virtual="footer.ihtml" -->
+		</div>
+	</body>
+</html>
