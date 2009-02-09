@@ -6,6 +6,8 @@ RPM = /usr/src/rpm
 TMP = /tmp/rpm
 ARCH = i386
 
+EXTRA_DIST = COPYING.sdl COPYING.other bootstrap
+
 package: $(NAME).spec
 	mkdir -p $(TMP)
 	cp $(NAME)-$(VERSION).tar.gz $(RPM)/SOURCES
