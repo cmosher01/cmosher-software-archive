@@ -6,7 +6,7 @@ RPM = /usr/src/rpm
 TMP = /tmp/rpm
 ARCH = i386
 
-EXTRA_DIST = COPYING.sdl COPYING.other bootstrap
+EXTRA_DIST = COPYING.sdl COPYING.other
 
 package: $(NAME).spec
 	mkdir -p $(TMP)
