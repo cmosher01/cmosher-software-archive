@@ -30,8 +30,4 @@ make DESTDIR=%{buildroot} install
 rm -Rf %{buildroot}/*
 
 %files
-%{_libdir}/apple2/system/intbasic/intbasic.ex65
-%{_libdir}/apple2/system/other/other.ex65
-%{_libdir}/apple2/system/applesoft/applesoft.ex65
-%{_libdir}/apple2/system/monitor/apple2/monitor.ex65
-%{_libdir}/apple2/system/monitor/apple2plus/monitor.ex65
+%dir %{_libdir}/apple2/system
