@@ -32,6 +32,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <stdexcept>
 
 unsigned char Config::disk_mask(0);
 
@@ -83,8 +84,9 @@ void Config::parse(Memory& ram, Memory& rom, Slots& slts, int& revision, ScreenI
 		pConfig = new std::ifstream(path.c_str());
 		if (!pConfig->is_open())
 		{
-			std::cerr << "Cannot open config file " << this->file_path.c_str() << std::endl;
-			return;
+			std::stringstream ss;
+			ss << "Cannot open config file " << this->file_path.c_str();
+			throw std::runtime_error(ss.str());
 		}
 	}
 	if (path.empty())

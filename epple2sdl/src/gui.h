@@ -15,44 +15,24 @@
     You should have received a copy of the GNU General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
+#ifndef GUI_H
+#define GUI_H
 
-#include "emulator.h"
-#include "configep2.h"
-#include "gui.h"
-
-#include <string>
-#include <memory>
 #include <stdexcept>
 
-static int run(const std::string& config_file)
+class GUI
 {
-	GUI gui;
+public:
+	GUI();
+	~GUI();
 
-	std::auto_ptr<Emulator> emu(new Emulator());
-
-	Config cfg(config_file);
-	emu->config(cfg);
-
-	emu->init();
-
-	return emu->run();
-}
-
-int main(int argc, char* argv[])
-{
-	if (argc > 2)
+	class NotInitException : public std::runtime_error
 	{
-		throw std::runtime_error("usage: epple2 [config-file]" );
-	}
+	public:
+		NotInitException();
+		virtual ~NotInitException() throw () {}
+	};
 
-	std::string config_file;
-	if (argc > 1)
-	{
-		config_file = argv[1];
-	}
+};
 
-	return run(config_file);
-}
+#endif

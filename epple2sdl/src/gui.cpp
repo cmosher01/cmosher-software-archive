@@ -19,40 +19,30 @@
 #include "config.h"
 #endif
 
-#include "emulator.h"
-#include "configep2.h"
 #include "gui.h"
+#include <SDL/SDL.h>
 
-#include <string>
-#include <memory>
-#include <stdexcept>
-
-static int run(const std::string& config_file)
+GUI::GUI()
 {
-	GUI gui;
+	const int result = SDL_Init(SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO);
 
-	std::auto_ptr<Emulator> emu(new Emulator());
+	if (result != 0)
+	{
+		throw GUI::NotInitException();
+	}
 
-	Config cfg(config_file);
-	emu->config(cfg);
-
-	emu->init();
-
-	return emu->run();
+	SDL_EnableUNICODE(1);
+	SDL_ShowCursor(0);
+	SDL_EnableKeyRepeat(0,0);
 }
 
-int main(int argc, char* argv[])
+GUI::~GUI()
 {
-	if (argc > 2)
-	{
-		throw std::runtime_error("usage: epple2 [config-file]" );
-	}
+	SDL_Quit();
+}
 
-	std::string config_file;
-	if (argc > 1)
-	{
-		config_file = argv[1];
-	}
-
-	return run(config_file);
+GUI::NotInitException::NotInitException() :
+	runtime_error("Unable to initialize SDL")
+{
+	SDL_GetError();
 }
