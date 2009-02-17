@@ -1,0 +1,2 @@
+MEMORY { F8ROM: start=$FECC, size=$0134, file=%O; }
+SEGMENTS { CODE: load=F8ROM, type=RO; }

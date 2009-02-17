@@ -1,0 +1,359 @@
+;    Epple ][ System Demo ROM
+;    Copyright (C) 2009 by Chris Mosher <chris@mosher.mine.nu>
+;
+;    This program is free software: you can redistribute it and/or modify
+;    it under the terms of the GNU General Public License as published by
+;    the Free Software Foundation, either version 3 of the License, or
+;    (at your option) any later version.
+;
+;    This program is distributed in the hope that it will be useful,
+;    but WITHOUT ANY WARRANTY, without even the implied warranty of
+;    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+;    GNU General Public License for more details.
+;
+;    You should have received a copy of the GNU General Public License
+;    along with this program. If not, see <http://www.gnu.org/licenses/>.
+;
+;
+;
+            .FEATURE LABELS_WITHOUT_COLONS
+
+            .INCLUDE "hascmap.s65"
+;
+;
+;
+; constants
+SCREENWID   = 40
+SCREENHGT   = 24
+PROMPT      = '%'
+;
+;
+;
+; ASCII (high it set)
+SPACE       = ' '
+;
+;
+;
+; zero page addresses
+TEXTROW     = $10 ; $11
+COL         = $12
+ROW         = $13
+
+TMP         = $FD
+TMPW        = $FE ; $FF
+;
+;
+;
+; I/O addresses
+READKEY     = $C000
+CLEARKEY    = $C010
+TEXTOFF     = $C050
+TEXTON      = $C051
+;
+;
+;
+; LINEADDR
+; Computes address of column 0 for text line
+; (0-23) given in A, into TEXTROW.
+; input:
+;  A        000edcba
+; output:
+;  TEXTROW  aeded000 000001cb
+;
+.PROC       LINEADDR
+            TAX
+            LDA #$04
+            STA TEXTROW+1
+            TXA
+            LSR
+            AND #$03
+            ORA TEXTROW+1
+            STA TEXTROW+1
+
+            BCC ZERO
+            LDA #$80
+            BNE STORELOW
+ZERO        LDA #$00
+STORELOW    STA TEXTROW
+            TXA
+            AND #$18
+            TAX
+            ORA TEXTROW
+            STA TEXTROW
+            TXA
+            ASL
+            ASL
+            ORA TEXTROW
+            STA TEXTROW
+            RTS
+.ENDPROC
+;
+;
+;
+; CHARADDR
+; Computes address of character at ROW,COL
+; for use as STA (TEXTROW),Y
+;
+.PROC       CHARADDR
+            LDA ROW
+            JSR LINEADDR
+            LDY COL
+            RTS
+.ENDPROC
+;
+;
+;
+; HOME
+; Moves cursor to top left.
+;
+.PROC       HOME
+            LDA #0
+            STA ROW
+            STA COL
+            RTS
+.ENDPROC
+;
+;
+;
+; ENDSCR
+; Moves cursor to bottom right.
+;
+.PROC       ENDSCR
+            LDA #SCREENHGT-1
+            STA ROW
+            LDA #SCREENWID-1
+            STA COL
+            RTS
+.ENDPROC
+;
+;
+;
+; SCROLL
+; Scrolls the entire screen up one line
+;
+.PROC       SCROLL
+
+            LDA #0
+            STA TMP ; row
+
+LOOPROW     LDA TMP
+            JSR LINEADDR
+            LDA TEXTROW
+            STA TMPW
+            LDA TEXTROW+1
+            STA TMPW+1
+            INC TMP
+            LDA TMP
+            JSR LINEADDR
+
+            LDY #SCREENWID-1
+LOOPCOL     LDA (TEXTROW),Y
+            STA (TMPW),Y
+            DEY
+            BPL LOOPCOL
+
+            LDA TMP
+            CMP #SCREENHGT-1
+            BNE LOOPROW
+
+
+
+            RTS
+.ENDPROC
+;
+;
+;
+; CLEARLINE
+; Clears line given by A
+.PROC       CLEARLINE
+            JSR LINEADDR
+            LDA #SPACE
+            LDY #SCREENWID-1
+LOOPCOL     STA (TEXTROW),Y
+            DEY
+            BPL LOOPCOL
+            RTS
+.ENDPROC
+;
+;
+;
+; PRCHAR
+; Prints a normal character in A at ROW, COL;
+; advances cursor; scrolls if necessary
+;
+.PROC       PRCHAR
+            PHA
+            JSR CHARADDR
+            PLA
+
+            STA (TEXTROW),Y
+
+            JSR ADVCUR
+            RTS
+.ENDPROC
+;
+;
+;
+; ADVCUR
+; Advances cursor one position; scrolls if necessary.
+;
+.PROC       ADVCUR
+            INC COL
+            LDA COL
+            CMP #SCREENWID
+            BNE OK
+
+            JSR PRCR
+            JSR PRLF
+
+OK          RTS
+.ENDPROC
+;
+;
+;
+; PRCR
+; Prints a carraige return (goes to start of same line)
+;
+.PROC       PRCR
+            LDA #0
+            STA COL
+            RTS
+.ENDPROC
+;
+;
+;
+; PRLF
+; Prints a line feed (goes down one line);
+; scrolls if necessary
+;
+.PROC       PRLF
+            INC ROW
+            LDA ROW
+            CMP #SCREENHGT
+            BNE OK
+
+            DEC ROW
+            JSR SCROLL
+            LDA #SCREENHGT-1
+            JSR CLEARLINE
+OK          RTS
+.ENDPROC
+;
+;
+;
+; PRBS
+; Prints a back-space (goes left one char)
+.PROC       PRBS
+            DEC COL
+            BPL OK
+            LDA #SCREENWID-1
+            STA COL
+            DEC ROW
+            BPL OK
+            INC ROW
+            LDA #0
+            STA COL
+OK          RTS
+.ENDPROC
+;
+;
+;
+; PRPROMPT
+; Prints the prompt character, followed by a
+; space.
+.PROC       PRPROMPT
+            LDA #PROMPT
+            JSR PRCHAR
+            LDA #SPACE
+            JSR PRCHAR
+            RTS
+.ENDPROC
+;
+;
+;
+; RDCHAR
+; Reads a character (waits for one) into A
+; (high bit will be set)
+;
+.PROC       RDCHAR
+            LDA CLEARKEY
+NOKEY       LDA READKEY
+            BPL NOKEY
+            RTS
+.ENDPROC
+;
+;
+;
+; WELCOME
+;
+.PROC       WELCOME
+            JSR PRSTR
+            .BYTE "EPPLE ][",0
+            JSR PRCR
+            JSR PRLF
+
+            JSR PRSTR
+            .BYTE "DEMO ROM",0
+            JSR PRCR
+            JSR PRLF
+
+            RTS
+.ENDPROC
+;
+;
+;
+; PRSTR
+; Prints a string (in code seg of caller)
+;
+.PROC       PRSTR
+            PLA
+            STA TMPW
+            PLA
+            STA TMPW+1
+
+LOOP        INC TMPW
+            BNE NOC
+            INC TMPW+1
+NOC         LDY #0
+            LDA (TMPW),Y
+            BEQ DONE
+            JSR PRCHAR
+            JMP LOOP
+DONE
+
+            LDA TMPW+1
+            PHA
+            LDA TMPW
+            PHA
+            RTS
+.ENDPROC
+;
+;
+;
+; RESET
+;
+.PROC       RESET
+            SEI
+            CLD
+            LDX #$FF
+            TXS
+
+            LDA TEXTON
+
+            JSR ENDSCR
+            JSR ADVCUR
+            JSR WELCOME
+
+            JSR PRPROMPT
+LOOP        JSR RDCHAR
+            JSR PRCHAR
+            JMP LOOP
+.ENDPROC
+;
+;
+;
+.PROC       VECTORS
+            .ADDR RESET
+            .ADDR RESET
+            .ADDR RESET
+.ENDPROC
