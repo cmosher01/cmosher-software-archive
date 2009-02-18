@@ -25,11 +25,13 @@
 ; constants
 SCREENWID   = 40
 SCREENHGT   = 24
-PROMPT      = '%'
+PROMPT      = '-'
 ;
 ;
 ;
 ; ASCII (high it set)
+BS          = $88
+CR          = $8D
 SPACE       = ' '
 ;
 ;
@@ -38,9 +40,14 @@ SPACE       = ' '
 TEXTROW     = $10 ; $11
 COL         = $12
 ROW         = $13
-
+INBUFC      = $14
 TMP         = $FD
 TMPW        = $FE ; $FF
+;
+;
+;
+; 
+INBUF       = $0200
 ;
 ;
 ;
@@ -49,6 +56,15 @@ READKEY     = $C000
 CLEARKEY    = $C010
 TEXTOFF     = $C050
 TEXTON      = $C051
+
+
+
+
+            JMP RESET
+
+
+
+
 ;
 ;
 ;
@@ -59,6 +75,8 @@ TEXTON      = $C051
 ;  A        000edcba
 ; output:
 ;  TEXTROW  aeded000 000001cb
+; scratch:
+;  X
 ;
 .PROC       LINEADDR
             TAX
@@ -93,6 +111,9 @@ STORELOW    STA TEXTROW
 ; CHARADDR
 ; Computes address of character at ROW,COL
 ; for use as STA (TEXTROW),Y
+; input: ROW, COL
+; output: TEXTROW, Y
+; scratch: A,X
 ;
 .PROC       CHARADDR
             LDA ROW
@@ -105,6 +126,8 @@ STORELOW    STA TEXTROW
 ;
 ; HOME
 ; Moves cursor to top left.
+; output: ROW, COL
+; scratch: A
 ;
 .PROC       HOME
             LDA #0
@@ -117,6 +140,8 @@ STORELOW    STA TEXTROW
 ;
 ; ENDSCR
 ; Moves cursor to bottom right.
+; output: ROW, COL
+; scratch: A
 ;
 .PROC       ENDSCR
             LDA #SCREENHGT-1
@@ -130,9 +155,9 @@ STORELOW    STA TEXTROW
 ;
 ; SCROLL
 ; Scrolls the entire screen up one line
+; scratch: A. Y, X, TMP, TMPW, TEXTROW
 ;
 .PROC       SCROLL
-
             LDA #0
             STA TMP ; row
 
@@ -156,8 +181,6 @@ LOOPCOL     LDA (TEXTROW),Y
             CMP #SCREENHGT-1
             BNE LOOPROW
 
-
-
             RTS
 .ENDPROC
 ;
@@ -165,6 +188,9 @@ LOOPCOL     LDA (TEXTROW),Y
 ;
 ; CLEARLINE
 ; Clears line given by A
+; input: A
+; scratch: X, Y, TEXTROW
+;
 .PROC       CLEARLINE
             JSR LINEADDR
             LDA #SPACE
@@ -264,8 +290,6 @@ OK          RTS
 .PROC       PRPROMPT
             LDA #PROMPT
             JSR PRCHAR
-            LDA #SPACE
-            JSR PRCHAR
             RTS
 .ENDPROC
 ;
@@ -288,15 +312,9 @@ NOKEY       LDA READKEY
 ;
 .PROC       WELCOME
             JSR PRSTR
-            .BYTE "EPPLE ][",0
+            .BYTE "EPPLE ][ DEMO ROM (GPLV3)  ? FOR HELP",0
             JSR PRCR
             JSR PRLF
-
-            JSR PRSTR
-            .BYTE "DEMO ROM",0
-            JSR PRCR
-            JSR PRLF
-
             RTS
 .ENDPROC
 ;
@@ -306,25 +324,26 @@ NOKEY       LDA READKEY
 ; Prints a string (in code seg of caller)
 ;
 .PROC       PRSTR
-            PLA
+LOOP        PLA
             STA TMPW
             PLA
             STA TMPW+1
-
-LOOP        INC TMPW
+            INC TMPW
             BNE NOC
             INC TMPW+1
 NOC         LDY #0
             LDA (TMPW),Y
+            TAY
+            LDA TMPW+1
+            PHA
+            LDA TMPW
+            PHA
+            TYA
             BEQ DONE
             JSR PRCHAR
             JMP LOOP
 DONE
 
-            LDA TMPW+1
-            PHA
-            LDA TMPW
-            PHA
             RTS
 .ENDPROC
 ;
@@ -340,14 +359,78 @@ DONE
 
             LDA TEXTON
 
+
             JSR ENDSCR
             JSR ADVCUR
             JSR WELCOME
 
+
+
+
+
+C_LOOP      LDA #0
+            STA INBUFC
             JSR PRPROMPT
-LOOP        JSR RDCHAR
+
+
+K_LOOP      JSR RDCHAR
+
+K_CR        CMP #CR
+			BNE K_BS
+            JSR COMMAND
+            JMP C_LOOP
+
+K_BS        CMP #BS
+            BNE K_CHAR
+            ; REMOVE LAST CHAR
+            DEC INBUFC
+            BPL K_BS_OK
+            INC INBUFC
+            JMP K_END
+K_BS_OK     JSR PRBS
+            LDA #SPACE
             JSR PRCHAR
-            JMP LOOP
+            JSR PRBS
+            JMP K_END
+
+K_CHAR      LDY INBUFC
+            STA INBUF,Y
+            INC INBUFC
+            BNE K_CHAR_OK
+            DEC INBUFC
+            JMP K_END
+K_CHAR_OK   JSR PRCHAR
+K_END
+
+            JMP K_LOOP
+.ENDPROC
+;
+;
+;
+; COMMAND
+;
+.PROC       COMMAND
+            JSR PRCR
+            JSR PRLF
+
+
+
+            LDY #0
+LOOP        CPY INBUFC
+            BEQ DONE
+            TYA
+            PHA
+            LDA INBUF,Y
+
+            JSR PRCHAR
+            PLA
+            TAY
+            INY
+            BNE LOOP
+DONE
+            JSR PRCR
+            JSR PRLF
+            RTS
 .ENDPROC
 ;
 ;

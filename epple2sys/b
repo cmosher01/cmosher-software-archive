@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+rm -f /tmp/e2s/e2system.ex65
+cat <<EOF >e2system.ld65
+MEMORY { F8ROM: start=\$1000, size=\$7fff, file=%O; }
+SEGMENTS { CODE: load=F8ROM, type=RO; }
+EOF
+make -C /tmp/e2s
+SIZ=`stat -c%s /tmp/e2s/e2system.ex65`
+echo size of rom code: $SIZ bytes
+rm -f /tmp/e2s/e2system.ex65
+ST=`dc -e "65536 $SIZ - p"`
+cat <<EOF >e2system.ld65
+MEMORY { F8ROM: start=$ST, size=$SIZ, file=%O; }
+SEGMENTS { CODE: load=F8ROM, type=RO; }
+EOF
+make -C /tmp/e2s
+ST=`dc -e "16 o $ST 53248 - p"`
+cat <<EOF >e2.conf
+import motherboard rom $ST /tmp/e2s/e2system.ex65
+EOF
+echo starting address: \$$ST
+epple2 e2.conf
