@@ -1,2 +1,2 @@
-MEMORY { F8ROM: start=65130, size=406, file=%O; }
+MEMORY { F8ROM: start=64522, size=1014, file=%O; }
 SEGMENTS { CODE: load=F8ROM, type=RO; }

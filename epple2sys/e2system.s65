@@ -41,6 +41,8 @@ TEXTROW     = $10 ; $11
 COL         = $12
 ROW         = $13
 INBUFC      = $14
+ADDR        = $16 ; $17
+ADDR2       = $18 ; $19
 TMP         = $FD
 TMPW        = $FE ; $FF
 ;
@@ -54,9 +56,8 @@ INBUF       = $0200
 ; I/O addresses
 READKEY     = $C000
 CLEARKEY    = $C010
-TEXTOFF     = $C050
 TEXTON      = $C051
-
+PAGE2OFF    = $C054
 
 
 
@@ -348,6 +349,65 @@ DONE
 .ENDPROC
 ;
 ;
+; CVTHEX
+; Parses hex character ('0'-'9' or 'A'-'F') in A
+; and shifts into low-order nibble of TMPW.
+; Undefined op if A contains something else.
+;
+.PROC       CVTHEX
+            CMP #'A'
+            BCC DIGIT
+            SBC #'A'-'9'-1
+DIGIT
+            AND #%00001111
+            ASL
+            ASL
+            ASL
+            ASL
+
+            ASL
+            ROL TMPW
+            ROL TMPW+1
+            ASL
+            ROL TMPW
+            ROL TMPW+1
+            ASL
+            ROL TMPW
+            ROL TMPW+1
+            ASL
+            ROL TMPW
+            ROL TMPW+1
+            RTS
+.ENDPROC
+;
+;
+; PRBYTE
+; Prints byte in A as hex
+;
+.PROC       PRBYTE
+            PHA
+                ; ABCDxxxx
+                ; 1011ABCD
+            LSR
+            LSR
+            LSR
+            LSR
+            ORA #%10110000
+            CMP #'9'+1
+            BCC DIGIT
+            ADC #'A'-'9'-2
+DIGIT       JSR PRCHAR
+            PLA
+            AND #%00001111
+            ORA #%10110000
+            CMP #'9'+1
+            BCC DIGIT2
+            ADC #'A'-'9'-2
+DIGIT2      JSR PRCHAR
+            RTS
+.ENDPROC
+;
+;
 ;
 ; RESET
 ;
@@ -358,6 +418,7 @@ DONE
             TXS
 
             LDA TEXTON
+            LDA PAGE2OFF
 
 
             JSR ENDSCR
@@ -382,26 +443,23 @@ K_CR        CMP #CR
 
 K_BS        CMP #BS
             BNE K_CHAR
-            ; REMOVE LAST CHAR
             DEC INBUFC
             BPL K_BS_OK
             INC INBUFC
-            JMP K_END
+            JMP K_LOOP
 K_BS_OK     JSR PRBS
             LDA #SPACE
             JSR PRCHAR
             JSR PRBS
-            JMP K_END
+            JMP K_LOOP
 
 K_CHAR      LDY INBUFC
             STA INBUF,Y
             INC INBUFC
             BNE K_CHAR_OK
             DEC INBUFC
-            JMP K_END
+            JMP K_LOOP
 K_CHAR_OK   JSR PRCHAR
-K_END
-
             JMP K_LOOP
 .ENDPROC
 ;
@@ -416,18 +474,184 @@ K_END
 
 
             LDY #0
-LOOP        CPY INBUFC
-            BEQ DONE
-            TYA
-            PHA
-            LDA INBUF,Y
+            CPY INBUFC
+            BNE PARS1
+            RTS
+PARS1       LDA INBUF,Y
 
+CMD_H       CMP #'?'
+            BEQ CMD_H_IMP
+            JMP CMD_D
+CMD_H_IMP
+            JSR PRSTR
+            .BYTE "COMMAND        ACTION",0
+            JSR PRCR
+            JSR PRLF
+
+            JSR PRSTR
+            .BYTE "-------------  ------------------------",0
+            JSR PRCR
+            JSR PRLF
+
+            JSR PRSTR
+            .BYTE "D XXXX [YYYY]  DUMP MEMORY XXXX TO YYYY",0
+            JSR PRCR
+            JSR PRLF
+
+            JSR PRSTR
+            .BYTE "R XXXX         RUN AT XXXX",0
+            JSR PRCR
+            JSR PRLF
+
+            JSR PRSTR
+            .BYTE "S XXXX YY      SET MEMORY XXXX TO YY",0
+            JSR PRCR
+            JSR PRLF
+
+            JSR PRSTR
+            .BYTE "?              SHOW HELP",0
+            JSR PRCR
+            JSR PRLF
+
+            JSR PRCR
+            JSR PRLF
+
+            JSR PRSTR
+            .BYTE "(ENTER ALL VALUES IN HEX)",0
+            JSR PRCR
+            JSR PRLF
+
+            RTS
+
+CMD_D       CMP #'D'
+            BEQ CMD_D_IMP
+            JMP CMD_R
+
+CMD_D_IMP   LDA #0
+            STA TMP
+
+CMD_D_ARGS  LDA #0
+            STA TMPW
+            STA TMPW+1
+
+            LDX #4
+CMD_D_SP    INY
+            CPY INBUFC
+            BNE CMD_D_1
+            LDA TMP
+            BNE CMD_D_RUN
+            RTS
+CMD_D_1     LDA INBUF,Y
+            CMP #SPACE
+            BEQ CMD_D_SP
+            JSR CVTHEX
+            DEX
+            BNE CMD_D_SP
+            LDA TMP
+            BNE CMD_D_RUN
+            INC TMP
+            LDA TMPW
+            STA ADDR
+            STA ADDR2
+            LDA TMPW+1
+            STA ADDR+1
+            STA ADDR2+1
+            JMP CMD_D_ARGS
+
+CMD_D_RUN   ; low ADDR, high TMPW
+            ; 0123: 01 23 45 67 89 AB CD EF<cr>
+            LDA TMPW
+            STA ADDR2
+            LDA TMPW+1
+            STA ADDR2+1
+
+CMD_D_ADR   LDA ADDR+1
+            JSR PRBYTE
+            LDA ADDR
+            JSR PRBYTE
+            LDA #':'
             JSR PRCHAR
-            PLA
-            TAY
-            INY
-            BNE LOOP
-DONE
+
+CMD_D_BYT   LDA #SPACE
+            JSR PRCHAR
+            LDY #0
+            LDA (ADDR),Y
+            JSR PRBYTE
+            INC ADDR
+            BNE CMD_D_NOOV
+            INC ADDR+1
+CMD_D_CKRO  LDA ADDR
+            BNE CMD_D_NOOV
+            LDA ADDR+1
+            BEQ CMD_D_END
+CMD_D_NOOV  LDA ADDR+1
+            CMP ADDR2+1
+            BNE CMD_D_NEXT
+            LDA ADDR
+            CMP ADDR2
+CMD_D_NEXT  BCC CMD_D_CR
+            BEQ CMD_D_CR
+CMD_D_END   JSR PRCR
+            JSR PRLF
+            RTS
+CMD_D_CR    LDA ADDR
+            AND #%00000111
+            BNE CMD_D_BYT
+            JSR PRCR
+            JSR PRLF
+            JMP CMD_D_ADR
+
+CMD_R       CMP #'R'
+            BNE CMD_S
+            LDX #4
+CMD_R_SP    INY
+            CPY INBUFC
+            BNE CMD_R_1
+            RTS
+CMD_R_1     LDA INBUF,Y
+            CMP #SPACE
+            BEQ CMD_R_SP
+            JSR CVTHEX
+            DEX
+            BNE CMD_R_SP
+            JMP (TMPW)
+
+CMD_S       CMP #'S'
+            BNE CMD_ERROR
+            LDX #4
+CMD_S_SP    INY
+            CPY INBUFC
+            BNE CMD_S_1
+            RTS
+CMD_S_1     LDA INBUF,Y
+            CMP #SPACE
+            BEQ CMD_S_SP
+            JSR CVTHEX
+            DEX
+            BNE CMD_S_SP
+            LDA TMPW
+            STA ADDR
+            LDA TMPW+1
+            STA ADDR+1
+
+            LDX #2
+CMD_S_SP2   INY
+            CPY INBUFC
+            BNE CMD_S_2
+            RTS
+CMD_S_2     LDA INBUF,Y
+            CMP #SPACE
+            BEQ CMD_S_SP2
+            JSR CVTHEX
+            DEX
+            BNE CMD_S_SP2
+            LDA TMPW
+            LDY #0
+            STA (ADDR),Y
+            RTS
+
+CMD_ERROR   JSR PRSTR
+            .BYTE "UNKNOWN COMMAND",0
             JSR PRCR
             JSR PRLF
             RTS
