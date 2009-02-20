@@ -1322,7 +1322,14 @@ void CPU::addr_JMP_INDIRECT()
 			adl = data;
 		break;
 		case 4:
-			++address; // can leave the page
+			/* Interactive (Rockwell Intl., 1960) , Issue 2, p. 12,
+			documents a bug where JMP absolute does NOT
+			leave the page. This causes problems for
+			example for JMP ($08FF), where high byte
+			is read from $800 instead of $900.
+			*/
+			++ial;  // emulate the bug here (don't touch iah)
+			address = ia();
 			read();
 			adh = data;
 			pc = ad();
