@@ -23,11 +23,11 @@ DIST = $(NAME)-$(VERSION)
 
 
 
-e2system.ex65: e2system.o65 e2system.ld65
+epple2sys.ex65: epple2sys.o65 epple2sys.ld65
 
 
 
-dist: e2system.ld65  e2system.s65  configure  Makefile.mk
+dist: epple2sys.ld65  epple2sys.s65  configure  Makefile.mk
 	rm -fv $(DIST).tar.gz
 	rm -Rfv $(DIST)
 	mkdir -v $(DIST)
@@ -39,12 +39,12 @@ dist: e2system.ld65  e2system.s65  configure  Makefile.mk
 
 install: all
 	mkdir -pv $(DESTDIR)$(PREFIX)/lib/epple2/system/
-	cp -v e2system.ex65 $(DESTDIR)$(PREFIX)/lib/epple2/system
+	cp -v epple2sys.ex65 $(DESTDIR)$(PREFIX)/lib/epple2/system
 
 
 
 uninstall:
-	rm -fv $(DESTDIR)$(PREFIX)/lib/epple2/system/e2system.ex65
+	rm -fv $(DESTDIR)$(PREFIX)/lib/epple2/system/epple2sys.ex65
 	rmdir -pv $(DESTDIR)$(PREFIX)/lib/epple2/system/
 
 

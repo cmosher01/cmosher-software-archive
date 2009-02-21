@@ -1,5 +1,5 @@
 Summary: EPPLE ][ System ROM
-Name: epple2system
+Name: epple2sys
 Version: 1.0
 Release: 1
 Source: %{name}-%{version}.tar.gz
