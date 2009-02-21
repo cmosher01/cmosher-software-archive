@@ -11,28 +11,40 @@
 				<div id="welcome">
 					<h3>Screenshots</h3>
 					<p>
-						<img src="dos330boot_s.png" /><br />
-						<a href="dos330boot.shtml">DOS 3.3 System Master boot</a>
+						<a href="dos330boot.shtml">
+							<img src="dos330boot_s.png" /><br />
+							DOS 3.3 System Master boot
+						</a>
 					</p>
 					<p>
-						<img src="dos310rev0_s.png" /><br />
-						<a href="dos310rev0.shtml">DOS 3.1 System Master on Revision 0 motherboard</a>
+						<a href="dos310rev0.shtml">
+							<img src="dos310rev0_s.png" /><br />
+							DOS 3.1 System Master on Revision 0 motherboard
+						</a>
 					</p>
 					<p>
-						<img src="prodos_s.png" /><br />
-						<a href="prodos.shtml">PRODOS 1.1.1 boot</a>
+						<a href="prodos.shtml">
+							<img src="prodos_s.png" /><br />
+							PRODOS 1.1.1 boot
+						</a>
 					</p>
 					<p>
-						<img src="applesplit_s.png" /><br />
-						<a href="applesplit.shtml">Video tricks from Bishop's Apple Split</a>
+						<a href="applesplit.shtml">
+							<img src="applesplit_s.png" /><br />
+							Video tricks from Bishop's Apple Split
+						</a>
 					</p>
 					<p>
-						<img src="pinkmystery_s.png" /><br />
-						<a href="pinkmystery.shtml">Mysterious Pink Line</a>
+						<a href="pinkmystery.shtml">
+							<img src="pinkmystery_s.png" /><br />
+							Mysterious Pink Line
+						</a>
 					</p>
 					<p>
-						<img src="splitcolors_s.png" /><br />
-						<a href="splitcolors.shtml">Split Screen HIRES/LORES colors</a>
+						<a href="splitcolors.shtml">
+							<img src="splitcolors_s.png" /><br />
+							Split Screen HIRES/LORES colors
+						</a>
 					</p>
 				</div>
 			</div>

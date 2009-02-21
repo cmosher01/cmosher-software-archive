@@ -9,20 +9,31 @@
 			<!--#include virtual="navigation.ihtml" -->
 			<div id="content">
 				<p>
-					All software downloadable from this page is licensed under
-					<a href="http://www.gnu.org/licenses/gpl-3.0-standalone.html">GPLv3</a>.
-				</p>
-				<p>
 					<a href="http://www.gnu.org/licenses/gpl-3.0-standalone.html">
 						<img src="gplv3logo.png" />
 					</a>
-				</p>				<h3>Epple ][</h3>
-				<h4>Source Download</h4>
+					All software downloadable from this page is licensed under
+					<a href="http://www.gnu.org/licenses/gpl-3.0-standalone.html">GPLv3</a>.
+				</p>
+				<h3>Epple ][</h3>
+				<h4>Source Code</h4>
 				<p>
+					<a href="epple2-1.0-src.tar.gz"><img src="make.png" /></a>
 					<a href="epple2-1.0-src.tar.gz">epple2-1.0-src.tar.gz</a>
 				</p>
-				<h4>Binary Download&mdash;Windows</h4>
+				<h4>Binary&mdash;Linux&mdash;Redhat RPM</h4>
 				<p>
+					<a href="epple2-1.0-1.i386.rpm"><img src="redhat.png" /></a>
+					<a href="epple2-1.0-1.i386.rpm">epple2-1.0-1.i386.rpm</a> (<code>rpm -i epple2-1.0-1.i386.rpm</code>)
+				</p>
+				<h4>Binary&mdash;Linux&mdash;Debian</h4>
+				<p>
+					<a href="epple2_1.0-2_i386.deb"><img src="debian.png" /></a>
+					<a href="epple2_1.0-2_i386.deb">epple2_1.0-2_i386.deb</a> (<code>dpkg -i epple2_1.0-2_i386.deb</code>)
+				</p>
+				<h4>Binary&mdash;Windows</h4>
+				<p>
+					<a href="epple2-1.0.msi"><img src="windows.gif" /></a>
 					<a href="epple2-1.0.msi">epple2-1.0.msi</a>
 				</p>
 				<h3>Peripheral Cards</h3>
@@ -33,21 +44,27 @@
 					download the ROM code here, in either binary format
 					(ready to run) or source format (to assemble with the
 					<a href="http://www.cc65.org/">cc65 Assembler</a>).
+					If you are not going to use the stdin, stdout, or clock
+					cards, then you do not need to download this.
 				</p>
-				<h4>Source Download</h4>
+				<h4>Source Code</h4>
 				<p>
+					<a href="epple2cards-1.0-src.tar.gz"><img src="make.png" /></a>
 					<a href="epple2cards-1.0-src.tar.gz">epple2cards-1.0-src.tar.gz</a>
 				</p>
-				<h4>Binary Download&mdash;Linux&mdash;Redhat RPM</h4>
+				<h4>Binary&mdash;Linux&mdash;Redhat RPM</h4>
 				<p>
+					<a href="epple2cards-1.0-1.noarch.rpm"><img src="redhat.png" /></a>
 					<a href="epple2cards-1.0-1.noarch.rpm">epple2cards-1.0-1.noarch.rpm</a> (<code>rpm -i epple2cards-1.0-1.noarch.rpm</code>)
 				</p>
-				<h4>Binary Download&mdash;Linux&mdash;Debian</h4>
+				<h4>Binary&mdash;Linux&mdash;Debian</h4>
 				<p>
+					<a href="epple2cards_1.0-2_all.deb"><img src="debian.png" /></a>
 					<a href="epple2cards_1.0-2_all.deb">epple2cards_1.0-2_all.deb</a> (<code>dpkg -i epple2cards_1.0-2_all.deb</code>)
 				</p>
-				<h4>Binary Download&mdash;Windows</h4>
+				<h4>Binary&mdash;Windows</h4>
 				<p>
+					<a href="epple2cards-1.0.msi"><img src="windows.gif" /></a>
 					<a href="epple2cards-1.0.msi">epple2cards-1.0.msi</a>
 				</p>
 			</div>

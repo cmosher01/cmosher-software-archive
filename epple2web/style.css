@@ -194,6 +194,11 @@ html>body #navigation li
 
 img
 {
+	vertical-align: middle;
+}
+
+img
+{
 	border: 0;
 }
 
