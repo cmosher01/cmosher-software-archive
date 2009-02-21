@@ -25,7 +25,7 @@
 ; constants
 SCREENWID   = 40
 SCREENHGT   = 24
-PROMPT      = '-'
+PROMPT      = '$'
 ;
 ;
 ;
@@ -37,23 +37,23 @@ SPACE       = ' '
 ;
 ;
 ; zero page addresses
-TEXTROW     = $10 ; $11
-COL         = $12
-ROW         = $13
-INBUFC      = $14
-ADDR        = $16 ; $17
-ADDR2       = $18 ; $19
-TMP         = $FD
-TMPW        = $FE ; $FF
+TMPW        = $00 ; $01
+ADDR        = $02 ; $03
+ADDR2       = $04 ; $05
+TEXTROW     = $06 ; $07
+TMP         = $08
+COL         = $09
+ROW         = $0A
+INBUFC      = $0B
 ;
 ;
 ;
-; 
+; page 2 (input buffer)
 INBUF       = $0200
 ;
 ;
 ;
-; I/O addresses
+; I/O addresses ($C0xx)
 READKEY     = $C000
 CLEARKEY    = $C010
 TEXTON      = $C051
@@ -61,11 +61,34 @@ PAGE2OFF    = $C054
 
 
 
-            JMP RESET
 
 
 
 
+;
+;
+;
+; RESET
+; Handles power-on or reset-button-press.
+; Initializes CPU, screen; displays welcome message;
+; invokes the shell.
+;
+.PROC       RESET
+            NOP
+            SEI
+            CLD
+            LDX #$FF
+            TXS
+
+            LDA TEXTON
+            LDA PAGE2OFF
+
+
+            JSR ENDSCR
+            JSR ADVCUR
+            JSR WELCOME
+            JMP SHELL
+.ENDPROC
 ;
 ;
 ;
@@ -204,9 +227,25 @@ LOOPCOL     STA (TEXTROW),Y
 ;
 ;
 ;
+; PRCURS
+; Prints the cursor (inverses char at ROL,COL)
+; input: ROW, COL
+; scratch: TEXTROW, Y, A, X
+;
+.PROC       PRCURS
+            JSR CHARADDR
+            LDA #$60
+            STA (TEXTROW),Y
+            RTS
+.ENDPROC
+;
+;
+;
 ; PRCHAR
 ; Prints a normal character in A at ROW, COL;
 ; advances cursor; scrolls if necessary
+; input: A, ROW, COL
+; scratch: TEXTROW, Y, X
 ;
 .PROC       PRCHAR
             PHA
@@ -240,6 +279,8 @@ OK          RTS
 ;
 ; PRCR
 ; Prints a carraige return (goes to start of same line)
+; output: COL
+; scratch: A
 ;
 .PROC       PRCR
             LDA #0
@@ -252,6 +293,9 @@ OK          RTS
 ; PRLF
 ; Prints a line feed (goes down one line);
 ; scrolls if necessary
+; input: ROW
+; output: ROW
+; scratch: A. Y, X, TMP, TMPW, TEXTROW
 ;
 .PROC       PRLF
             INC ROW
@@ -270,6 +314,10 @@ OK          RTS
 ;
 ; PRBS
 ; Prints a back-space (goes left one char)
+; input: COL, ROW
+; output: COL, ROW
+; scratch: A
+;
 .PROC       PRBS
             DEC COL
             BPL OK
@@ -286,11 +334,15 @@ OK          RTS
 ;
 ;
 ; PRPROMPT
-; Prints the prompt character, followed by a
-; space.
+; Prints the prompt character.
+; input: ROW, COL
+; scratch: A, TEXTROW, Y, X
+;
 .PROC       PRPROMPT
-            LDA #PROMPT
-            JSR PRCHAR
+;            LDA #PROMPT
+;            JSR PRCHAR
+            JSR PRSTR
+            .BYTE "E2>",0
             RTS
 .ENDPROC
 ;
@@ -409,35 +461,21 @@ DIGIT2      JSR PRCHAR
 ;
 ;
 ;
-; RESET
+; SHELL
 ;
-.PROC       RESET
-            SEI
-            CLD
-            LDX #$FF
-            TXS
-
-            LDA TEXTON
-            LDA PAGE2OFF
-
-
-            JSR ENDSCR
-            JSR ADVCUR
-            JSR WELCOME
-
-
-
-
-
+.PROC       SHELL
 C_LOOP      LDA #0
             STA INBUFC
             JSR PRPROMPT
 
 
-K_LOOP      JSR RDCHAR
+K_LOOP      JSR PRCURS
+            JSR RDCHAR
 
 K_CR        CMP #CR
-			BNE K_BS
+            BNE K_BS
+            LDA #SPACE
+            JSR PRCHAR
             JSR COMMAND
             JMP C_LOOP
 
@@ -450,6 +488,9 @@ K_BS        CMP #BS
 K_BS_OK     JSR PRBS
             LDA #SPACE
             JSR PRCHAR
+            LDA #SPACE
+            JSR PRCHAR
+            JSR PRBS
             JSR PRBS
             JMP K_LOOP
 
@@ -483,6 +524,9 @@ CMD_H       CMP #'?'
             BEQ CMD_H_IMP
             JMP CMD_D
 CMD_H_IMP
+            JSR PRCR
+            JSR PRLF
+
             JSR PRSTR
             .BYTE "COMMAND        ACTION",0
             JSR PRCR
@@ -513,11 +557,11 @@ CMD_H_IMP
             JSR PRCR
             JSR PRLF
 
+            JSR PRSTR
+            .BYTE "(ENTER ALL VALUES IN HEX)",0
             JSR PRCR
             JSR PRLF
 
-            JSR PRSTR
-            .BYTE "(ENTER ALL VALUES IN HEX)",0
             JSR PRCR
             JSR PRLF
 
@@ -558,9 +602,7 @@ CMD_D_1     LDA INBUF,Y
             STA ADDR2+1
             JMP CMD_D_ARGS
 
-CMD_D_RUN   ; low ADDR, high TMPW
-            ; 0123: 01 23 45 67 89 AB CD EF<cr>
-            LDA TMPW
+CMD_D_RUN   LDA TMPW
             STA ADDR2
             LDA TMPW+1
             STA ADDR2+1
@@ -617,8 +659,9 @@ CMD_R_1     LDA INBUF,Y
             JMP (TMPW)
 
 CMD_S       CMP #'S'
-            BNE CMD_ERROR
-            LDX #4
+            BEQ CMD_S_IMP
+            RTS
+CMD_S_IMP   LDX #4
 CMD_S_SP    INY
             CPY INBUFC
             BNE CMD_S_1
@@ -649,17 +692,13 @@ CMD_S_2     LDA INBUF,Y
             LDY #0
             STA (ADDR),Y
             RTS
-
-CMD_ERROR   JSR PRSTR
-            .BYTE "UNKNOWN COMMAND",0
-            JSR PRCR
-            JSR PRLF
-            RTS
 .ENDPROC
 ;
 ;
 ;
 .PROC       VECTORS
+            NOP
+            NOP
             .ADDR RESET
             .ADDR RESET
             .ADDR RESET
