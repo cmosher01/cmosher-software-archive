@@ -9,7 +9,7 @@
 
 
 
-# Integer BASIC and old Monitor ROMs
+# Applesoft BASIC and Autostart Monitor ROMs
 import motherboard rom 0000 /usr/lib/apple2/system/applesoft/applesoft.ex65
 import motherboard rom 2800 /usr/lib/apple2/system/monitor/apple2plus/monitor.ex65
 

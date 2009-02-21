@@ -13,14 +13,16 @@ EPPLE ][ is an emulator of Apple ][ and Apple ][ plus computers.
 %setup -q
 
 %build
-%configure
+cd ../../VPATH
+../BUILD/%{name}-%{version}/configure --prefix=%{_prefix}
 make
 
 %install
-%makeinstall
+cd ../../VPATH
+make install DESTDIR=%{buildroot}
 
 %clean
-rm -Rf %{buildroot}/*
+#rm -Rf %{buildroot}/*
 
 %files
 %{_bindir}/%{name}
