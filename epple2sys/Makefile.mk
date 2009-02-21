@@ -1,7 +1,7 @@
 # Builds Epple ][ System ROM code
 
-NAME = epple2sys
-VERSION = 1.0
+NAME := epple2sys
+VERSION := 1.0
 
 DIST = $(NAME)-$(VERSION)
 
@@ -19,7 +19,7 @@ DIST = $(NAME)-$(VERSION)
 
 
 
-.PHONY: all install clean
+.PHONY: all install uninstall clean mostlyclean distclean dist package
 
 
 
@@ -27,7 +27,7 @@ epple2sys.ex65: epple2sys.o65 epple2sys.ld65
 
 
 
-dist: epple2sys.ld65  epple2sys.s65  configure  Makefile.mk
+dist: epple2sys.ld65 epple2sys.s65 hascmap.s65 configure Makefile.mk
 	rm -fv $(DIST).tar.gz
 	rm -Rfv $(DIST)
 	mkdir -v $(DIST)
@@ -64,13 +64,14 @@ mostlyclean: clean
 distclean: clean
 	rm -fv Makefile
 
-RPM = /usr/src/rpm
-TMP = /tmp/rpm
+RPM := /usr/src/rpm
+TMP := /tmp/rpm
 
-ARCH = noarch
+ARCH := noarch
 
-package: $(NAME).spec
-	mkdir -p $(TMP)
+package: $(NAME).spec dist
 	cp $(NAME)-$(VERSION).tar.gz $(RPM)/SOURCES
-	rpmbuild -ba --clean --buildroot $(TMP) $<
+	mkdir -p $(TMP)
+	echo "%_prefix $(PREFIX)" >.rpmmacros
+	HOME=$(realpath .) rpmbuild -ba --clean --buildroot $(TMP) $<
 	fakeroot alien $(RPM)/RPMS/$(ARCH)/$(NAME)-$(VERSION)-1.$(ARCH).rpm

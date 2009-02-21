@@ -27,4 +27,4 @@ make DESTDIR=%{buildroot} install
 rm -Rf %{buildroot}/*
 
 %files
-%dir %{_libdir}/epple2/system
+%{_libdir}/epple2/system
