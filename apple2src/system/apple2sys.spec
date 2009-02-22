@@ -23,11 +23,7 @@ monitor.
 make
 
 %install
-rm -Rf %{buildroot}/*
 make DESTDIR=%{buildroot} install
 
-%clean
-rm -Rf %{buildroot}/*
-
 %files
-%dir %{_libdir}/apple2/system
+%{_libdir}/apple2/system
