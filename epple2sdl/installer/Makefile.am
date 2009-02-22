@@ -1,3 +1,5 @@
+EXTRA_DIST = epple2.wxs
+
 if HAVE_WINDOWS
 
 SUFFIXES = .wxs .wixobj .msi

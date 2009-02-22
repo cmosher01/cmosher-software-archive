@@ -6,7 +6,7 @@ VERSION = 1.0
 #TMP = /tmp/rpm
 ARCH = i386
 
-EXTRA_DIST = COPYING.sdl COPYING.other
+EXTRA_DIST = COPYING.sdl COPYING.other epple2.spec
 
 RPM := $(abspath rpm)
 
