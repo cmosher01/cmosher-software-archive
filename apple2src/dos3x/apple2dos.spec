@@ -22,11 +22,7 @@ a full set of disk images: slave disks, master disks, and System Master disks.
 make
 
 %install
-rm -Rf %{buildroot}/*
 make DESTDIR=%{buildroot} install
 
-%clean
-rm -Rf %{buildroot}/*
-
 %files
-%dir %{_libdir}/apple2/dos3x
+%{_libdir}/apple2/dos3x
