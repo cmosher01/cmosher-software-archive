@@ -255,7 +255,6 @@ dist:	\
 	software/rwtsapi.s65 \
 	software/zpabs.s65 \
 	software/filemgr.s65 \
-	software/Makefile \
 	software/reloc.s65 \
 	software/dos.s65 \
 	software/rwts.s65 \
