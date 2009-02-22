@@ -76,7 +76,7 @@ TMP = /tmp/rpm
 
 ARCH = noarch
 
-package: $(NAME).spec
+package: $(NAME).spec dist
 	mkdir -p $(TMP)
 	cp $(NAME)-$(VERSION).tar.gz $(RPM)/SOURCES
 	rpmbuild -ba --clean --buildroot $(TMP) $<
