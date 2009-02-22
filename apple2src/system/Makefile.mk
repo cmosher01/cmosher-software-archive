@@ -117,6 +117,7 @@ clean:
 dist:	\
 	configure \
 	Makefile.mk \
+	apple2sys.spec \
 	applesoft/applesoft.s65 \
 	applesoft/applesoft.ld65 \
 	intbasic/intbasic.s65 \
@@ -165,7 +166,7 @@ TMP = /tmp/rpm
 
 ARCH = noarch
 
-package: $(NAME).spec
+package: $(NAME).spec dist
 	mkdir -p $(TMP)
 	cp $(NAME)-$(VERSION).tar.gz $(RPM)/SOURCES
 	rpmbuild -ba --clean --buildroot $(TMP) --nodeps $<
