@@ -18,13 +18,7 @@ ROM for stdio, stdout, and clock cards, for the EPPLE ][ emulator.
 make
 
 %install
-rm -Rf %{buildroot}/*
 make DESTDIR=%{buildroot} install
 
-%clean
-rm -Rf %{buildroot}/*
-
 %files
-%{_libdir}/epple2/cards/clock.ex65
-%{_libdir}/epple2/cards/stdout.ex65
-%{_libdir}/epple2/cards/stdin.ex65
+%{_libdir}/epple2/cards
