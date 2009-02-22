@@ -50,7 +50,7 @@
 				<p>
 					I had trouble with building SDL from sources without having
 					the X11 extensions installed, as shown in the above list. If
-					you are not building SDL from sources, you may not need
+					you are not building SDL from sources (see below), you may not need
 					the X11 extensions.
 				</p>
 				<p>
