@@ -10,19 +10,19 @@ body
 
 a:link
 {
-	color: #2070ff;
-	text-decoration: underline;
+	color: #0000ff;
+	text-decoration: none;
 }
 
 a:visited
 {
-	color: #2070ff;
-	text-decoration: underline;
+	color: #0000ff;
+	text-decoration: none;
 }
 
 a:hover
 {
-	color: #2070ff;
+	color: #0000ff;
 	text-decoration: underline;
 }
 
