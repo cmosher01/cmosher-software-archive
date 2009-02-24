@@ -6,6 +6,8 @@ Source: %{name}-%{version}.tar.gz
 License: GPL
 Group: System/Emulators/Other
 BuildArch: noarch
+BuildPrereq: cc65
+BuildPrereq: cc65-apple2
 
 %description
 Demo free ROMs for EPPLE ][ emulator.
@@ -16,15 +18,13 @@ Just some free (GPLv3) ROM code to demo the emulator.
 %setup -q
 
 %build
-./configure -p %{_prefix}
+cd ../../VPATH
+../BUILD/%{name}-%{version}/configure -p %{_prefix}
 make
 
 %install
-rm -Rf %{buildroot}/*
+cd ../../VPATH
 make DESTDIR=%{buildroot} install
-
-%clean
-rm -Rf %{buildroot}/*
 
 %files
 %{_libdir}/epple2/system
