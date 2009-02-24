@@ -36,7 +36,8 @@ behavior is emulated, and the F10 key is used as the REPT key.
 <p>
 The Apple ][ had no keyboard buffer (actually, it had a buffer of one character).
 So if you typed several characters on the keyboard before the currently running
-program had a chance to read them, they would get lost. This behavior can be
+program had a chance to read them, they would get lost (only the final character
+typed would be remembered). This behavior can be
 toggled on or off in the EPPLE ][. By default, the EPPLE ][ will buffer up any
 characters you type and deliver them to the emulated machine when it asks for
 them. However, the Apple program must be written properly to allow this to work.

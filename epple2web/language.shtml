@@ -36,6 +36,31 @@
 						</tbody>
 					</table>
 				</p>
+				<p>
+					An overview of the I/O switches that control the language card
+					is provided by Jim Sather in "Understanding the Apple II,"
+					p. 5-30, Table 5.4, as follows:
+					<table border="1">
+						<thead>
+							<tr><th>BANK 2</th><th>BANK1</th><th colspan="2">ACTION</th></tr>
+						</thead>
+						<tbody>
+							<tr><td>C080</td><td>C088</td><td rowspan="2">WRTCOUNT = 0<sup>*</sup>, WRITE DISABLE</td><td rowspan="2">READ ENABLE</td></tr>
+							<tr><td>C084</td><td>C08C</td></tr>
+							<tr><td>RC081</td><td>RC089</td><td rowspan="2">WRTCOUNT = WRTCOUNT + 1<sup>*</sup></td><td rowspan="2">READ DISABLE</td></tr>
+							<tr><td>RC085</td><td>RC08D</td></tr>
+							<tr><td>WC081</td><td>WC089</td><td rowspan="2">WRTCOUNT = 0<sup>*</sup></td><td rowspan="2">READ DISABLE</td></tr>
+							<tr><td>WC085</td><td>WC08D</td></tr>
+							<tr><td>C082</td><td>C08A</td><td rowspan="2">WRTCOUNT = 0<sup>*</sup>, WRITE DISABLE</td><td rowspan="2">READ DISABLE</td></tr>
+							<tr><td>C086</td><td>C08E</td></tr>
+							<tr><td>RC083</td><td>RC08B</td><td rowspan="2">WRTCOUNT = WRTCOUNT + 1<sup>*</sup></td><td rowspan="2">READ ENABLE</td></tr>
+							<tr><td>RC087</td><td>RC08F</td></tr>
+							<tr><td>WC083</td><td>WC08B</td><td rowspan="2">WRTCOUNT = 0<sup>*</sup></td><td rowspan="2">READ ENABLE</td></tr>
+							<tr><td>WC087</td><td>WC08F</td></tr>
+						</tbody>
+					</table>
+					<sup>*</sup>Writing to expansion RAM is enabled when WRTCOUNT reaches 2.
+				</p>
 			</div>
 			<!--#include virtual="footer.ihtml" -->
 		</div>
