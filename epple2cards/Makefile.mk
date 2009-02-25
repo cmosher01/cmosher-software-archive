@@ -2,6 +2,7 @@
 
 NAME = epple2cards
 VERSION = 1.0
+ARCH = noarch
 
 DIST = $(NAME)-$(VERSION)
 
@@ -71,13 +72,13 @@ mostlyclean: clean
 distclean: clean
 	rm -fv Makefile
 
-RPM = /usr/src/rpm
-TMP = /tmp/rpm
-
-ARCH = noarch
+RPM = $(abspath rpm)
 
 package: $(NAME).spec dist
-	mkdir -p $(TMP)
+mkdir -p $(RPM)/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS,VPATH}
 	cp $(NAME)-$(VERSION).tar.gz $(RPM)/SOURCES
-	rpmbuild -ba --clean --buildroot $(TMP) $<
+	touch .rpmmacros
+	echo "%_prefix $(PREFIX)" >>$(RPM)/.rpmmacros
+	echo "%_topdir $(RPM)" >>$(RPM)/.rpmmacros
+	HOME=$(RPM) rpmbuild -ba --clean --nodeps --buildroot $(RPM)/BUILDROOT $<
 	fakeroot alien $(RPM)/RPMS/$(ARCH)/$(NAME)-$(VERSION)-1.$(ARCH).rpm

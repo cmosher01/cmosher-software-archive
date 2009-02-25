@@ -6,6 +6,8 @@ Source: %{name}-%{version}.tar.gz
 License: GPL
 Group: System/Emulators/Other
 BuildArch: noarch
+BuildPrereq: cc65
+BuildPrereq: cc65-apple2
 
 %description
 ROM for stdio, stdout, and clock cards, for the EPPLE ][ emulator.
@@ -14,10 +16,12 @@ ROM for stdio, stdout, and clock cards, for the EPPLE ][ emulator.
 %setup -q
 
 %build
-./configure -p %{_prefix}
+cd ../../VPATH
+../BUILD/%{name}-%{version}/configure -p %{_prefix}
 make
 
 %install
+cd ../../VPATH
 make DESTDIR=%{buildroot} install
 
 %files
