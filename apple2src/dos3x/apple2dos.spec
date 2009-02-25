@@ -18,10 +18,12 @@ a full set of disk images: slave disks, master disks, and System Master disks.
 %setup -q
 
 %build
-./configure -p %{_prefix}
+cd ../../VPATH
+../BUILD/%{name}-%{version}/configure -p %{_prefix}
 make
 
 %install
+cd ../../VPATH
 make DESTDIR=%{buildroot} install
 
 %files
