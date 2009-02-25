@@ -19,10 +19,12 @@ monitor.
 %setup -q
 
 %build
-./configure -p %{_prefix}
+cd ../../VPATH
+../BUILD/%{name}-%{version}/configure -p %{_prefix}
 make
 
 %install
+cd ../../VPATH
 make DESTDIR=%{buildroot} install
 
 %files
