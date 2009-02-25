@@ -31,8 +31,8 @@ order if, in its judgment, fulfillment of the order would involve
 violation of copyright law.
 </p>
 <p>
-By clicking any of the links below, you are effectively placing an order
-to reproduce these works, and agree to the restrictions outlined above.
+By clicking any of the links in the following list, you are effectively placing an order
+to reproduce that work, and agree to the restrictions outlined above.
 </p>
 <table border="1">
 	<thead>
@@ -40,8 +40,8 @@ to reproduce these works, and agree to the restrictions outlined above.
     </thead>
 	<tbody>
 		<tr><td><img src="make.png" /></td><td>(source)</td>
-			<td><a href="apple2sys-1.0-src.tar.gz">apple2sys-1.0-src.tar.gz</a></td>
-			<td><a href="apple2dos-1.0-src.tar.gz">apple2dos-1.0-src.tar.gz</a></td>
+			<td><a href="apple2sys-1.0.tar.gz">apple2sys-1.0.tar.gz</a></td>
+			<td><a href="apple2dos-1.0.tar.gz">apple2dos-1.0.tar.gz</a></td>
 		</tr>
 		<tr><td><img src="redhat.png" /></td><td>Redhat</td>
 			<td><a href="apple2sys-1.0-1.noarch.rpm">apple2sys-1.0-1.noarch.rpm</a></td>

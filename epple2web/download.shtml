@@ -22,9 +22,9 @@
 					</thead>
 					<tbody>
 						<tr><td><img src="make.png" /></td><td>(source)</td>
-							<td><a href="epple2-1.0-src.tar.gz">epple2-1.0-src.tar.gz</a></td>
-							<td><a href="epple2sys-1.0-src.tar.gz">epple2sys-1.0-src.tar.gz</a></td>
-							<td><a href="epple2cards-1.0-src.tar.gz">epple2cards-1.0-src.tar.gz</a></td>
+							<td><a href="epple2-1.0.tar.gz">epple2-1.0.tar.gz</a></td>
+							<td><a href="epple2sys-1.0.tar.gz">epple2sys-1.0.tar.gz</a></td>
+							<td><a href="epple2cards-1.0.tar.gz">epple2cards-1.0.tar.gz</a></td>
 						</tr>
 						<tr><td><img src="redhat.png" /></td><td>Redhat</td>
 							<td><a href="epple2-1.0-1.i386.rpm">epple2-1.0-1.i386.rpm</a></td>
@@ -55,8 +55,8 @@
 					<a href="cards.shtml">peripheral card</a> hardware.
 					Download the file for your platform (binary, ready to run), or source if you want to compile
 					it yourself (see <a href="building.shtml">Building</a>). For binary downloads, install the package
-					as appropriate: for Linux,<br />Redhat <code><pre>rpm -i epple2-1.0-1.i386.rpm</pre></code>
-					or Debian<code><pre>dpkg -i epple2_1.0-2_i386.deb</pre></code>
+					as appropriate: for Linux,<br />Redhat <code><pre>sudo rpm -i epple2-1.0-1.i386.rpm</pre></code>
+					or Debian<code><pre>sudo dpkg -i epple2_1.0-2_i386.deb</pre></code>
 					For Windows, allow the browser to run the <code>epple2-1.0.msi</code> file, or else save it and double-click it.
 				</p>
 				<h4>System ROMs&mdash;The Main System Firmware (Demo or Real)</h4>
@@ -86,13 +86,14 @@
 				<p>
 					If you are going to use the <span style="white-space: nowrap;">Disk ][</span>
 					Controller peripheral card (which you almost certainly will, if
-					you want to read any floppy disk images), you will need to have to original ROMs from
-					Apple (and of course the real Apple System ROMs, as noted in the previous section, not
-					the Demo System ROMs). No Demo of the Disk ROMs are provided here; you will need to
+					you want to read any floppy disk images), you will need to have to original ROMs from Apple.
+					No demo of the Disk ROMs are provided here; you will need to
 					use the original ROMs, which can be obtained from an original machine (by copying it
 					from $C600-$C6FF into a file on the PC), or from the <a href="a2library">Apple ][ Library</a>.
 					In any case, you must respect the terms of the copyright (owned by Apple); this page is not
 					intended to give you any legal advice.
+					(And, of course, you will need the real Apple System ROM, as noted in the previous section,
+					not the Demo System ROM)
 				</p>
 				<p>
 					If you are using the clock, the standard output, or the standard input
