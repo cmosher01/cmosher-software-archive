@@ -19,6 +19,7 @@
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_syswm.h>
+#include <limits.h>
 
 // taken from: http://www.libsdl.org/projects/scrap (original author: Sam Lantinga)
 
