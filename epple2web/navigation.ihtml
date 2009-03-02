@@ -14,39 +14,7 @@
 				<a href="usermanual.shtml">User Manual</a>
 			</li>
 			<li>
-				<a href="#">Development</a>
-			</li>
-		</ul>
-	</div>
-	<div class="latest">
-		<h3>
-			Tutorials
-		</h3>
-		<ul>
-			<li>
-				<a href="#">Configuration</a>
-			</li>
-			<li>
-				<a href="#">Function Keys</a>
-			</li>
-			<li>
-				<a href="building.shtml">Building</a>
-			</li>
-		</ul>
-	</div>
-	<div class="latest">
-		<h3>
-			Downloads
-		</h3>
-		<ul>
-			<li>
-				<a href="#">Source</a>
-			</li>
-			<li>
-				<a href="#">Windows Binary</a>
-			</li>
-			<li>
-				<a href="#">Linux Binary</a>
+				<a href="building.shtml">HOWTO Build</a>
 			</li>
 		</ul>
 	</div>

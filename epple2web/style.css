@@ -39,7 +39,7 @@ h3
 	font-size: 150%;
 	color: black;
 	margin: 0;
-	padding: 30px 0px 30px 0px;
+	padding: 15px 0px 10px 0px;
 	text-align: left;
 }
 
@@ -69,11 +69,13 @@ ul
 #navigation
 {
 	float: left;
-	border-right: 1px solid #cccccc;
-	border-bottom: 1px solid #cccccc;
+	border: 1px solid #cccccc;
 	background-color: #e0ffe0;
+	margin-top: 20px;
+	margin-left: 5px;
+	margin-bottom: 0px;
+	margin-right: 0px;
 	width: 20%;
-	margin: 0px;
 	padding: 0px;
 	font-family: Verdana,Arial,sans-serif;
 }
@@ -82,7 +84,7 @@ ul
 {
 	float: left;
 	width: 75%;
-	padding: 20px 0px 0px 20px;
+	padding: 5px 0px 0px 20px;
 }
 
 #footer
