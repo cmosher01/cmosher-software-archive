@@ -14,7 +14,6 @@
 								<Directory Id="lib_epple2_system" Name="system">
 									<Component Id="MainExecutable" Guid="1d149cdd-a2b0-4618-9ee2-d47608da4a99">
 										<File Id="EPPLE2SYS_EX65" LongName="epple2sys.ex65" Name="epple2sy.e65" DiskId="1" Source="epple2sys.ex65" Vital="yes" />
-										<RemoveFolder Id="ProgramMenuDir" On="uninstall" />
 									</Component>
 								</Directory>
 							</Directory>
