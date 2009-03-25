@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2003/01/wi">
+	<Product Name="EPPLE ][ Demo System ROM" Id="b7120951-f9f9-4246-8b2a-fa2f9e5cba40" Language="1033" Codepage="1252" Version="1.0.0" Manufacturer="Chris Mosher">
+		<Package Id="f128acd1-186f-44c1-a14d-46f7b8bf6043" Description="Demo ROMs for Epple ][" InstallerVersion="100" Languages="1033" Compressed="yes" />
+		<Media Id="1" Cabinet="Epple2sys.cab" EmbedCab="yes" DiskPrompt="Epple2sys.cab" />
+		<Property Id="DiskPrompt" Value="Epple ][ Demo System ROM Installation" />
+
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder" Name="PFiles">
+				<Directory Id="INSTALLDIR" Name="Epple2">
+					<Directory Id="libdot" Name=".">
+						<Directory Id="lib" Name="lib">
+							<Directory Id="lib_epple2" Name="epple2">
+								<Directory Id="lib_epple2_system" Name="system">
+									<Component Id="MainExecutable" Guid="1d149cdd-a2b0-4618-9ee2-d47608da4a99">
+										<File Id="EPPLE2SYS_EX65" LongName="epple2sys.ex65" Name="epple2sy.e65" DiskId="1" Source="epple2sys.ex65" Vital="yes" />
+										<RemoveFolder Id="ProgramMenuDir" On="uninstall" />
+									</Component>
+								</Directory>
+							</Directory>
+						</Directory>
+					</Directory>
+				</Directory>
+			</Directory>
+		</Directory>
+
+		<Feature Id="Complete" Level="1">
+			<ComponentRef Id="MainExecutable" />
+		</Feature>
+	</Product>
+</Wix>

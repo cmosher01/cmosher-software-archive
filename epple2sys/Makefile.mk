@@ -8,7 +8,9 @@ DIST = $(NAME)-$(VERSION)
 
 .SUFFIXES:
 
-.SUFFIXES: .s65 .o65 .ld65 .ex65
+.SUFFIXES: .s65 .o65 .ld65 .ex65 .wxs .wixobj .msi
+
+.PHONY: install uninstall clean mostlyclean distclean dist package
 
 .s65.o65:
 	$(CA65) -v -t apple2 -I $(dir $<) -o $@ $<
@@ -18,9 +20,19 @@ DIST = $(NAME)-$(VERSION)
 
 
 
+ifdef WINDOWS
 
+.wxs.wixobj:
+	$(CANDLE) $< -out $@
 
-.PHONY: all install uninstall clean mostlyclean distclean dist package
+.wixobj.msi:
+	$(LIGHT) $< -out $@
+
+epple2sys.msi: epple2sys.wixobj epple2sys.ex65
+
+epple2sys.wixobj: epple2sys.wxs
+
+endif
 
 
 
