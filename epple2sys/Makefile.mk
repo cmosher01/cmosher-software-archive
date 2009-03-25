@@ -34,7 +34,7 @@ epple2sys.wixobj: epple2sys.wxs
 
 endif
 
-
+all: epple2sys.ex65
 
 epple2sys.ex65: epple2sys.o65 epple2sys.ld65
 
@@ -44,8 +44,8 @@ dist: epple2sys.ld65 epple2sys.s65 hascmap.s65 configure Makefile.mk epple2sys.s
 	rm -fv $(DIST).tar.gz
 	rm -Rfv $(DIST)
 	mkdir -v $(DIST)
-	cp -v $^ $(DIST)
-	tar cvzf $(DIST).tar.gz $(DIST)
+	cd $(DIST) ; for F in $^ ; do ln -s $$F ; done
+	tar cvzhf $(DIST).tar.gz $(DIST)
 	rm -Rf $(DIST)
 
 
