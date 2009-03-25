@@ -1,9 +1,15 @@
 etcdir = $(sysconfdir)/epple2
 
-%.conf: %.conf.in
-	sed -e 's,$$(PREFIX),$(prefix)/,g' <$< >$@
+if HAVE_WINDOWS
+CONF_PREFIX =
+else
+CONF_PREFIX = $(prefix)/
+endif
 
-CONF_IN_FILES = $(notdir $(wildcard $(VPATH)/epple2.conf*))
+%.conf: %.conf.in
+	sed -e 's,$$(PREFIX),$(CONF_PREFIX),g' <$< >$@
+
+CONF_IN_FILES = $(notdir $(wildcard $(VPATH)/epple2*.conf.in))
 CONF_FILES = $(patsubst %.in,%,$(CONF_IN_FILES))
 etc_DATA = $(CONF_FILES)
 
