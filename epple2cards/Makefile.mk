@@ -8,7 +8,7 @@ DIST = $(NAME)-$(VERSION)
 
 .SUFFIXES:
 
-.SUFFIXES: .s65 .o65 .ld65 .ex65
+.SUFFIXES: .s65 .o65 .ld65 .ex65 .wxs .wixobj .msi
 
 .s65.o65:
 	$(CA65) -v -t apple2 -o $@ $<
@@ -21,6 +21,22 @@ DIST = $(NAME)-$(VERSION)
 
 
 .PHONY: all install clean
+
+
+
+ifdef WINDOWS
+
+.wxs.wixobj:
+	$(CANDLE) $< -out $@
+
+.wixobj.msi:
+	$(LIGHT) $< -out $@
+
+epple2cards.msi: epple2cards.wixobj stdout.ex65 stdin.ex65 clock.ex65
+
+epple2cards.wixobj: epple2cards.wxs
+
+endif
 
 
 
@@ -75,7 +91,7 @@ distclean: clean
 RPM = $(abspath rpm)
 
 package: $(NAME).spec dist
-mkdir -p $(RPM)/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS,VPATH}
+	mkdir -p $(RPM)/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS,VPATH}
 	cp $(NAME)-$(VERSION).tar.gz $(RPM)/SOURCES
 	touch .rpmmacros
 	echo "%_prefix $(PREFIX)" >>$(RPM)/.rpmmacros

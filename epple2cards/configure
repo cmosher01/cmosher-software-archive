@@ -81,7 +81,7 @@ if ! which "$CA65" >/dev/null 2>&1
 then
 	echo "Cannot find ca65 assembler (http://www.cc65.org)." >&2
 	echo "Install it, or set env var CA65 to point to it." >&2
-	exit 1;
+	exit 1
 fi
 
 
@@ -92,12 +92,30 @@ if ! which "$LD65" >/dev/null 2>&1
 then
 	echo "Cannot find ld65 linker (http://www.cc65.org)." >&2
 	echo "Install it, or set env var LD65 to point to it." >&2
-	exit 1;
+	exit 1
 fi
 
 
-
-
+unset WINDOWS
+# For Windows, check for presence of Wix
+if [[ "$OS" == [Ww][Ii][Nn]* ]]
+then
+	WINDOWS=1
+	test "$CANDLE" || CANDLE=candle
+	if ! which "$CANDLE" >/dev/null 2>&1
+	then
+		echo "Cannot find Wix "candle" program (http://wix.sourceforge.net)." >&2
+		echo "Install it, or set env var CANDLE to point to it." >&2
+		exit 1
+	fi
+	test "$LIGHT" || LIGHT=light
+	if ! which "$LIGHT" >/dev/null 2>&1
+	then
+		echo "Cannot find Wix "light" program (http://wix.sourceforge.net)." >&2
+		echo "Install it, or set env var LIGHT to point to it." >&2
+		exit 1
+	fi
+fi
 
 cat <<EOF >./Makefile
 #DO NOT EDIT
@@ -105,6 +123,9 @@ cat <<EOF >./Makefile
 VPATH = $VPATH
 CA65 = $CA65
 LD65 = $LD65
+CANDLE = $CANDLE
+LIGHT = $LIGHT
 PREFIX = $PREFIX
+WINDOWS = $WINDOWS
 include $VPATH/Makefile.mk
 EOF

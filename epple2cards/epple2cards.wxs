@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2003/01/wi">
+	<Product Name="EPPLE ][ Card ROMs" Id="cfed1c8a-b811-411b-b2cf-2e07ca79f7a4" Language="1033" Codepage="1252" Version="1.0.0" Manufacturer="Chris Mosher">
+		<Package Id="352ab31d-80a0-423e-8d10-202923ea9f75" Description="ROMs for Epple ][ peripheral cards (stdin, stdout, clock)" InstallerVersion="100" Languages="1033" Compressed="yes" />
+		<Media Id="1" Cabinet="Epple2cards.cab" EmbedCab="yes" DiskPrompt="Epple2cards.cab" />
+		<Property Id="DiskPrompt" Value="Epple ][ Card ROM Installation" />
+
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder" Name="PFiles">
+				<Directory Id="INSTALLDIR" Name="Epple2">
+					<Directory Id="libdot" Name=".">
+						<Directory Id="lib" Name="lib">
+							<Directory Id="lib_epple2" Name="epple2">
+								<Directory Id="lib_epple2_system" Name="cards">
+									<Component Id="MainExecutable" Guid="321ba40b-c464-4f8d-ba39-4683fe072036">
+										<File Id="STDIN_EX65"  LongName="stdin.ex65"  Name="stdin.e65"  DiskId="1" Source="stdin.ex65" Vital="yes" />
+										<File Id="STDOUT_EX65" LongName="stdout.ex65" Name="stdout.e65" DiskId="1" Source="stdout.ex65" Vital="yes" />
+										<File Id="CLOCK_EX65"  LongName="clock.ex65"  Name="clock.e65"  DiskId="1" Source="clock.ex65" Vital="yes" />
+									</Component>
+								</Directory>
+							</Directory>
+						</Directory>
+					</Directory>
+				</Directory>
+			</Directory>
+		</Directory>
+
+		<Feature Id="Complete" Level="1">
+			<ComponentRef Id="MainExecutable" />
+		</Feature>
+	</Product>
+</Wix>
