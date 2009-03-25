@@ -2,13 +2,19 @@
 <html>
 	<head>
 		<!--#include virtual="head.ihtml" -->
-		<title></title>
+		<title>Epple ][ Overview</title>
 	</head>
 	<body>
 		<div id="container">
 			<!--#include virtual="navigation.ihtml" -->
 			<div id="content">
-				<h3></h3>
+				<h3>Overview</h3>
+				<p>
+					Epple ][ (the Emulated Apple ][) is a free (as in GPLv3), cross-platform
+					(Windows, Linux) emulator of the "Apple ][" and "Apple ][ plus" computers
+					from Apple, Inc. It strives for accurate emulation of the original machines,
+					with some extra features added.
+				</p>
 				<p>
 				</p>
 			</div>

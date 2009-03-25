@@ -69,8 +69,8 @@
 					<span style="white-space: nowrap;">Apple ][</span>
 					or <span style="white-space: nowrap;">][ plus</span> machine, you
 					can copy the firmware from it ($D000-$FFFF) (into a file on your PC) and use it. Alternatively, you can download
-					the firmware images from the <a href="a2library">Apple ][ Library</a>. In any case, you must respect the terms
-					of the copyright (owned by Apple); this page is not intended to give you any legal advice.
+					the firmware images from the <a href="a2library.shtml">Apple ][ Library</a>. In any case, you must respect the terms
+					of the copyright (owned by Apple).
 				</p>
 				<p>
 					If you do not want to download the proprietary firmware, you can still use the emulator (albeit
@@ -89,11 +89,10 @@
 					you want to read any floppy disk images), you will need to have to original ROMs from Apple.
 					No demo of the Disk ROMs are provided here; you will need to
 					use the original ROMs, which can be obtained from an original machine (by copying it
-					from $C600-$C6FF into a file on the PC), or from the <a href="a2library">Apple ][ Library</a>.
-					In any case, you must respect the terms of the copyright (owned by Apple); this page is not
-					intended to give you any legal advice.
+					from $C600-$C6FF into a file on the PC), or from the <a href="a2library.shtml">Apple ][ Library</a>.
+					In any case, you must respect the terms of the copyright (owned by Apple).
 					(And, of course, you will need the real Apple System ROM, as noted in the previous section,
-					not the Demo System ROM)
+					not the Demo System ROM.)
 				</p>
 				<p>
 					If you are using the clock, the standard output, or the standard input

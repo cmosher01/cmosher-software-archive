@@ -115,7 +115,7 @@
 <hr/>
 <h4><a name="load">load</a></h4>
 <p>
-	The <code>load</code> command load a (nibble) floppy disk image into one of the emulated disk drives.
+	The <code>load</code> command loads a (nibble) floppy disk image into one of the emulated disk drives.
 </p>
 <p>
 	<code>load slot <span class="param">slot</span> drive <span class="param">drive</span>  <span class="param">file-path</span></code>
