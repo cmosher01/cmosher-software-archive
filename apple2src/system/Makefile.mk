@@ -39,7 +39,12 @@ ifdef WINDOWS
 	$(LIGHT) $< -out $@
 	cp $@ $(basename $@)-$(VERSION)$(suffix $@)
 
-apple2sys.msi: apple2sys.wixobj all
+apple2sys.msi: apple2sys.wixobj \
+	intbasic/intbasic.ex65 \
+	other/other.ex65 \
+	applesoft/applesoft.ex65 \
+	monitor/apple2/monitor.ex65 \
+	monitor/apple2plus/monitor.ex65
 
 apple2sys.wixobj: apple2sys.wxs
 
