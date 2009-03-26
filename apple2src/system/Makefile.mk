@@ -37,6 +37,7 @@ ifdef WINDOWS
 
 .wixobj.msi:
 	$(LIGHT) $< -out $@
+	cp $@ $(basename $@)-$(VERSION)$(suffix $@)
 
 apple2sys.msi: apple2sys.wixobj all
 

@@ -65,7 +65,8 @@ ifdef WINDOWS
 	VPATH=$(VPATH) $(CANDLE) $< -out $@
 
 .wixobj.msi:
-	VPATH=$(VPATH) $(LIGHT) $< -out $@
+	$(LIGHT) $< -out $@
+	cp $@ $(basename $@)-$(VERSION)$(suffix $@)
 
 apple2dos.msi: apple2dos.wixobj all
 
