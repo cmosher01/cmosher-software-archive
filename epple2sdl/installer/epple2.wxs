@@ -31,12 +31,12 @@
 					<Directory Id="etc" Name="etc">
 						<Directory Id="etc_epple2" Name="epple2">
 							<Component Id="ConfigFiles" Guid="73057afd-e28b-48b1-b428-6e2bf029b74d">
-								<File Id="Config"            Name="epple2.cfg"   LongName="epple2.conf"             DiskId="1" Source="$(sys.SOURCEFILEDIR)..\conf\epple2.conf" Vital="yes" />
-								<File Id="Config_rev0bare"   Name="epple2_1.cfg" LongName="epple2.conf.rev0bare"    DiskId="1" Source="$(sys.SOURCEFILEDIR)..\conf\epple2.conf.rev0bare" Vital="yes" />
-								<File Id="Config_a2bare"     Name="epple2_2.cfg" LongName="epple2.conf.a2bare"      DiskId="1" Source="$(sys.SOURCEFILEDIR)..\conf\epple2.conf.a2bare" Vital="yes" />
-								<File Id="Config_a2dos31"    Name="epple2_3.cfg" LongName="epple2.conf.a2dos31"     DiskId="1" Source="$(sys.SOURCEFILEDIR)..\conf\epple2.conf.a2dos31" Vital="yes" />
-								<File Id="Config_a2dos33"    Name="epple2_4.cfg" LongName="epple2.conf.a2dos33"     DiskId="1" Source="$(sys.SOURCEFILEDIR)..\conf\epple2.conf.a2dos33" Vital="yes" />
-								<File Id="Config_a2loaded"   Name="epple2_5.cfg" LongName="epple2.conf.a2loaded"    DiskId="1" Source="$(sys.SOURCEFILEDIR)..\conf\epple2.conf.a2loaded" Vital="yes" />
+								<File Id="Config"            Name="epple2.cfg"   LongName="epple2.conf"             DiskId="1" Source="..\conf\epple2.conf"          Vital="yes" />
+								<File Id="Config_rev0bare"   Name="epple2_1.cfg" LongName="epple2.rev0bare.conf"    DiskId="1" Source="..\conf\epple2.rev0bare.conf" Vital="yes" />
+								<File Id="Config_a2bare"     Name="epple2_2.cfg" LongName="epple2.a2bare.conf"      DiskId="1" Source="..\conf\epple2.a2bare.conf"   Vital="yes" />
+								<File Id="Config_a2dos31"    Name="epple2_3.cfg" LongName="epple2.a2dos31.conf"     DiskId="1" Source="..\conf\epple2.a2dos31.conf"  Vital="yes" />
+								<File Id="Config_a2dos33"    Name="epple2_4.cfg" LongName="epple2.a2dos33.conf"     DiskId="1" Source="..\conf\epple2.a2dos33.conf"  Vital="yes" />
+								<File Id="Config_a2loaded"   Name="epple2_5.cfg" LongName="epple2.a2loaded.conf"    DiskId="1" Source="..\conf\epple2.a2loaded.conf" Vital="yes" />
 							</Component>
 						</Directory>
 					</Directory>
