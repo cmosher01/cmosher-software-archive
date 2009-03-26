@@ -33,7 +33,7 @@ ifdef WINDOWS
 	$(LIGHT) $< -out $@
 	cp $@ $(basename $@)-$(VERSION)$(suffix $@)
 
-epple2cards.msi: epple2cards.wixobj all
+epple2cards.msi: epple2cards.wixobj stdout.ex65 stdin.ex65 clock.ex65
 
 epple2cards.wixobj: epple2cards.wxs
 
