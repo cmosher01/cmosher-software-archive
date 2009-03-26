@@ -27,6 +27,7 @@ ifdef WINDOWS
 
 .wixobj.msi:
 	$(LIGHT) $< -out $@
+	cp $@ $(basename $@)-$(VERSION)$(suffix $@)
 
 epple2sys.msi: epple2sys.wixobj epple2sys.ex65
 
