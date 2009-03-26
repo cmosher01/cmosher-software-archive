@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2003/01/wi">
+	<Product Name="APPLE ][ DOS 3.3" Id="a5e1852a-6899-4831-aacc-9a7dede39af6" Language="1033" Codepage="1252" Version="1.0.0" Manufacturer="Chris Mosher">
+		<Package Id="ceb241e7-bee0-4abb-acb4-f988850a2ef3" Description="Apple ][ DOS 3.x Entire Set" InstallerVersion="100" Languages="1033" Compressed="yes" />
+		<Media Id="1" Cabinet="Apple2dos.cab" EmbedCab="yes" DiskPrompt="Apple2dos.cab" />
+		<Property Id="DiskPrompt" Value="Apple ][ DOS 3.3 Installation" />
+
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder" Name="PFiles">
+				<Directory Id="INSTALLDIR" Name="Epple2">
+					<Directory Id="libdot" Name=".">
+
+
+
+      <Directory Id="directory0" Name="lib">
+        <Directory Id="directory1" Name="apple2">
+          <Directory Id="directory2" Name="dos3x">
+            <Directory Id="directory3" Name="13sector">
+              <Directory Id="directory4" Name="CONTRO_1" LongName="controller">
+                <Component Id="component0" DiskId="1" Guid="7224a089-86a2-425d-b47e-17ea4e86d26a">
+                  <File Id="file0" Name="DISK2_1.EX6" LongName="disk2.ex65" Source="13sector/controller/disk2.ex65" />
+                </Component>
+              </Directory>
+              <Directory Id="directory5" Name="disks">
+                <Component Id="component1" DiskId="1" Guid="96653bc3-e0d5-4e42-80fa-a0f38ecb10ec">
+                  <File Id="file1" Name="README" Source="$(env.VPATH)/disks/README" />
+                </Component>
+                <Directory Id="directory6" Name="dos310">
+                  <Component Id="component2" DiskId="1" Guid="f49a08bb-d414-4ab5-a870-e964653306b2">
+                    <File Id="file2" Name="clean310.d13" Source="13sector/disks/dos310/clean310.d13" />
+                    <File Id="file3" Name="clean310.nib" Source="13sector/disks/dos310/clean310.nib" />
+                    <File Id="file4" Name="CLEAN3_1.D13" LongName="clean31sysmas_stock_rawdos.d13" Source="$(env.VPATH)/disks/dos310/clean31sysmas_stock_rawdos.d13" />
+                    <File Id="file5" Name="CLEAN3_1.NIB" LongName="clean31sysmas_stock_rawdos.nib" Source="$(env.VPATH)/disks/dos310/clean31sysmas_stock_rawdos.nib" />
+                    <File Id="file6" Name="ORIGIN_1.D13" LongName="original31sysmas.d13" Source="$(env.VPATH)/disks/dos310/original31sysmas.d13" />
+                    <File Id="file7" Name="ORIGIN_1.NIB" LongName="original31sysmas.nib" Source="$(env.VPATH)/disks/dos310/original31sysmas.nib" />
+                    <File Id="file8" Name="STOCK3_1.D13" LongName="stock31init.d13" Source="$(env.VPATH)/disks/dos310/stock31init.d13" />
+                    <File Id="file9" Name="STOCK3_1.NIB" LongName="stock31init.nib" Source="$(env.VPATH)/disks/dos310/stock31init.nib" />
+                    <File Id="file10" Name="STOCK3_2.D13" LongName="stock31mastercreated.d13" Source="$(env.VPATH)/disks/dos310/stock31mastercreated.d13" />
+                    <File Id="file11" Name="STOCK3_2.NIB" LongName="stock31mastercreated.nib" Source="$(env.VPATH)/disks/dos310/stock31mastercreated.nib" />
+                  </Component>
+                </Directory>
+                <Directory Id="directory7" Name="dos320">
+                  <Component Id="component3" DiskId="1" Guid="d9b094ac-356b-46cd-885f-0aadbe4ce675">
+                    <File Id="file12" Name="clean320.d13" Source="13sector/disks/dos320/clean320.d13" />
+                    <File Id="file13" Name="clean320.nib" Source="13sector/disks/dos320/clean320.nib" />
+                    <File Id="file14" Name="CLEAN3_1.D13" LongName="clean32sysmaspls.d13" Source="$(env.VPATH)/disks/dos320/clean32sysmaspls.d13" />
+                    <File Id="file15" Name="CLEAN3_1.NIB" LongName="clean32sysmaspls.nib" Source="$(env.VPATH)/disks/dos320/clean32sysmaspls.nib" />
+                    <File Id="file16" Name="CLEAN3_2.D13" LongName="clean32sysmasstd.d13" Source="$(env.VPATH)/disks/dos320/clean32sysmasstd.d13" />
+                    <File Id="file17" Name="CLEAN3_2.NIB" LongName="clean32sysmasstd.nib" Source="$(env.VPATH)/disks/dos320/clean32sysmasstd.nib" />
+                    <File Id="file18" Name="ORIGIN_1.D13" LongName="original32sysmaspls.d13" Source="$(env.VPATH)/disks/dos320/original32sysmaspls.d13" />
+                    <File Id="file19" Name="ORIGIN_1.NIB" LongName="original32sysmaspls.nib" Source="$(env.VPATH)/disks/dos320/original32sysmaspls.nib" />
+                    <File Id="file20" Name="ORIGIN_2.D13" LongName="original32sysmasstd.d13" Source="$(env.VPATH)/disks/dos320/original32sysmasstd.d13" />
+                    <File Id="file21" Name="ORIGIN_2.NIB" LongName="original32sysmasstd.nib" Source="$(env.VPATH)/disks/dos320/original32sysmasstd.nib" />
+                    <File Id="file22" Name="STOCK3_1.D13" LongName="stock32init.d13" Source="$(env.VPATH)/disks/dos320/stock32init.d13" />
+                    <File Id="file23" Name="STOCK3_1.NIB" LongName="stock32init.nib" Source="$(env.VPATH)/disks/dos320/stock32init.nib" />
+                    <File Id="file24" Name="STOCK3_2.D13" LongName="stock32mastercreated.d13" Source="$(env.VPATH)/disks/dos320/stock32mastercreated.d13" />
+                    <File Id="file25" Name="STOCK3_2.NIB" LongName="stock32mastercreated.nib" Source="$(env.VPATH)/disks/dos320/stock32mastercreated.nib" />
+                  </Component>
+                </Directory>
+                <Directory Id="directory8" Name="dos321">
+                  <Component Id="component4" DiskId="1" Guid="36904969-232b-464b-b0a6-e602229c4d28">
+                    <File Id="file26" Name="clean321.d13" Source="13sector/disks/dos321/clean321.d13" />
+                    <File Id="file27" Name="clean321.nib" Source="13sector/disks/dos321/clean321.nib" />
+                    <File Id="file28" Name="CLEAN3_1.D13" LongName="clean321sysmaspls.d13" Source="$(env.VPATH)/disks/dos321/clean321sysmaspls.d13" />
+                    <File Id="file29" Name="CLEAN3_1.NIB" LongName="clean321sysmaspls.nib" Source="$(env.VPATH)/disks/dos321/clean321sysmaspls.nib" />
+                    <File Id="file30" Name="CLEAN3_2.D13" LongName="clean321sysmasstd.d13" Source="$(env.VPATH)/disks/dos321/clean321sysmasstd.d13" />
+                    <File Id="file31" Name="CLEAN3_2.NIB" LongName="clean321sysmasstd.nib" Source="$(env.VPATH)/disks/dos321/clean321sysmasstd.nib" />
+                    <File Id="file32" Name="ORIGIN_1.D13" LongName="original321sysmaspls.d13" Source="$(env.VPATH)/disks/dos321/original321sysmaspls.d13" />
+                    <File Id="file33" Name="ORIGIN_1.NIB" LongName="original321sysmaspls.nib" Source="$(env.VPATH)/disks/dos321/original321sysmaspls.nib" />
+                    <File Id="file34" Name="ORIGIN_2.D13" LongName="original321sysmasstd.d13" Source="$(env.VPATH)/disks/dos321/original321sysmasstd.d13" />
+                    <File Id="file35" Name="ORIGIN_2.NIB" LongName="original321sysmasstd.nib" Source="$(env.VPATH)/disks/dos321/original321sysmasstd.nib" />
+                    <File Id="file36" Name="STOCK3_1.D13" LongName="stock321init.d13" Source="$(env.VPATH)/disks/dos321/stock321init.d13" />
+                    <File Id="file37" Name="STOCK3_1.NIB" LongName="stock321init.nib" Source="$(env.VPATH)/disks/dos321/stock321init.nib" />
+                    <File Id="file38" Name="STOCK3_2.D13" LongName="stock321mastercreated.d13" Source="$(env.VPATH)/disks/dos321/stock321mastercreated.d13" />
+                    <File Id="file39" Name="STOCK3_2.NIB" LongName="stock321mastercreated.nib" Source="$(env.VPATH)/disks/dos321/stock321mastercreated.nib" />
+                  </Component>
+                </Directory>
+              </Directory>
+              <Directory Id="directory9" Name="software">
+                <Directory Id="directory10" Name="dos310">
+                  <Component Id="component5" DiskId="1" Guid="b2ed6850-bf29-4978-8061-774522d33b19">
+                    <File Id="file40" Name="DOS_1.EX6" LongName="dos.ex65" Source="13sector/software/dos310/dos.ex65" />
+                  </Component>
+                </Directory>
+                <Directory Id="directory11" Name="dos320">
+                  <Component Id="component6" DiskId="1" Guid="543ac14a-30a3-420c-bd73-5a8a4e733657">
+                    <File Id="file41" Name="DOS_1.EX6" LongName="dos.ex65" Source="13sector/software/dos320/dos.ex65" />
+                  </Component>
+                </Directory>
+                <Directory Id="directory12" Name="dos321">
+                  <Component Id="component7" DiskId="1" Guid="ecf71a4b-dc30-4a67-89c6-735db4f4c8e8">
+                    <File Id="file42" Name="DOS_1.EX6" LongName="dos.ex65" Source="13sector/software/dos321/dos.ex65" />
+                  </Component>
+                </Directory>
+              </Directory>
+            </Directory>
+            <Directory Id="directory13" Name="16sector">
+              <Directory Id="directory14" Name="CONTRO_1" LongName="controller">
+                <Component Id="component8" DiskId="1" Guid="efd8e179-55ee-4e94-9f9e-9b3d5065612f">
+                  <File Id="file43" Name="DISK2_1.EX6" LongName="disk2.ex65" Source="16sector/controller/disk2.ex65" />
+                </Component>
+              </Directory>
+              <Directory Id="directory15" Name="disks">
+                <Component Id="component9" DiskId="1" Guid="fc7fa64b-9a09-4e88-a700-afeeda106320">
+                  <File Id="file44" Name="README" Source="$(env.VPATH)/disks/README" />
+                </Component>
+                <Directory Id="directory16" Name="dos330">
+                  <Component Id="component10" DiskId="1" Guid="f5bcb6fa-39af-471c-bb85-72c3b3b852bc">
+                    <File Id="file45" Name="clean330.do" Source="16sector/disks/dos330/clean330.do" />
+                    <File Id="file46" Name="clean330.nib" Source="16sector/disks/dos330/clean330.nib" />
+                    <File Id="file47" Name="CLEAN3_1.DO" LongName="clean330sysmas.do" Source="$(env.VPATH)/disks/dos330/clean330sysmas.do" />
+                    <File Id="file48" Name="CLEAN3_1.NIB" LongName="clean330sysmas.nib" Source="$(env.VPATH)/disks/dos330/clean330sysmas.nib" />
+                    <File Id="file49" Name="ORIGIN_1.DO" LongName="original330sysmas.do" Source="$(env.VPATH)/disks/dos330/original330sysmas.do" />
+                    <File Id="file50" Name="ORIGIN_1.NIB" LongName="original330sysmas.nib" Source="$(env.VPATH)/disks/dos330/original330sysmas.nib" />
+                    <File Id="file51" Name="STOCK3_1.DO" LongName="stock330init.do" Source="$(env.VPATH)/disks/dos330/stock330init.do" />
+                    <File Id="file52" Name="STOCK3_1.NIB" LongName="stock330init.nib" Source="$(env.VPATH)/disks/dos330/stock330init.nib" />
+                    <File Id="file53" Name="STOCK3_2.DO" LongName="stock330mastercreated.do" Source="$(env.VPATH)/disks/dos330/stock330mastercreated.do" />
+                    <File Id="file54" Name="STOCK3_2.NIB" LongName="stock330mastercreated.nib" Source="$(env.VPATH)/disks/dos330/stock330mastercreated.nib" />
+                  </Component>
+                </Directory>
+                <Directory Id="directory17" Name="dos331">
+                  <Component Id="component11" DiskId="1" Guid="89a91301-aa9f-4780-a5ba-d65b163c94ec">
+                    <File Id="file55" Name="clean331.do" Source="16sector/disks/dos331/clean331.do" />
+                    <File Id="file56" Name="clean331.nib" Source="16sector/disks/dos331/clean331.nib" />
+                    <File Id="file57" Name="CLEAN3_1.DO" LongName="clean331sysmas.do" Source="$(env.VPATH)/disks/dos331/clean331sysmas.do" />
+                    <File Id="file58" Name="CLEAN3_1.NIB" LongName="clean331sysmas.nib" Source="$(env.VPATH)/disks/dos331/clean331sysmas.nib" />
+                    <File Id="file59" Name="ORIGIN_1.DO" LongName="original331sysmas.do" Source="$(env.VPATH)/disks/dos331/original331sysmas.do" />
+                    <File Id="file60" Name="ORIGIN_1.NIB" LongName="original331sysmas.nib" Source="$(env.VPATH)/disks/dos331/original331sysmas.nib" />
+                    <File Id="file61" Name="STOCK3_1.DO" LongName="stock331init.do" Source="$(env.VPATH)/disks/dos331/stock331init.do" />
+                    <File Id="file62" Name="STOCK3_1.NIB" LongName="stock331init.nib" Source="$(env.VPATH)/disks/dos331/stock331init.nib" />
+                    <File Id="file63" Name="STOCK3_2.DO" LongName="stock331mastercreated.do" Source="$(env.VPATH)/disks/dos331/stock331mastercreated.do" />
+                    <File Id="file64" Name="STOCK3_2.NIB" LongName="stock331mastercreated.nib" Source="$(env.VPATH)/disks/dos331/stock331mastercreated.nib" />
+                  </Component>
+                </Directory>
+                <Directory Id="directory18" Name="dos332">
+                  <Component Id="component12" DiskId="1" Guid="fb80e5ab-9009-4dad-bb9f-f446b17f1829">
+                    <File Id="file65" Name="clean332.do" Source="16sector/disks/dos332/clean332.do" />
+                    <File Id="file66" Name="clean332.nib" Source="16sector/disks/dos332/clean332.nib" />
+                    <File Id="file67" Name="CLEAN3_1.DO" LongName="clean332sysmas.do" Source="$(env.VPATH)/disks/dos332/clean332sysmas.do" />
+                    <File Id="file68" Name="CLEAN3_1.NIB" LongName="clean332sysmas.nib" Source="$(env.VPATH)/disks/dos332/clean332sysmas.nib" />
+                    <File Id="file69" Name="ORIGIN_1.DO" LongName="original332sysmas.do" Source="$(env.VPATH)/disks/dos332/original332sysmas.do" />
+                    <File Id="file70" Name="ORIGIN_1.NIB" LongName="original332sysmas.nib" Source="$(env.VPATH)/disks/dos332/original332sysmas.nib" />
+                    <File Id="file71" Name="STOCK3_1.DO" LongName="stock332init.do" Source="$(env.VPATH)/disks/dos332/stock332init.do" />
+                    <File Id="file72" Name="STOCK3_1.NIB" LongName="stock332init.nib" Source="$(env.VPATH)/disks/dos332/stock332init.nib" />
+                    <File Id="file73" Name="STOCK3_2.DO" LongName="stock332mastercreated.do" Source="$(env.VPATH)/disks/dos332/stock332mastercreated.do" />
+                    <File Id="file74" Name="STOCK3_2.NIB" LongName="stock332mastercreated.nib" Source="$(env.VPATH)/disks/dos332/stock332mastercreated.nib" />
+                  </Component>
+                </Directory>
+              </Directory>
+              <Directory Id="directory19" Name="software">
+                <Directory Id="directory20" Name="dos330">
+                  <Component Id="component13" DiskId="1" Guid="4e306733-f7db-4cf9-a54d-9af08e93137c">
+                    <File Id="file75" Name="DOS_1.EX6" LongName="dos.ex65" Source="16sector/software/dos330/dos.ex65" />
+                  </Component>
+                </Directory>
+                <Directory Id="directory21" Name="dos331">
+                  <Component Id="component14" DiskId="1" Guid="02ddbf2e-e6e0-406f-a670-6fde0221322c">
+                    <File Id="file76" Name="DOS_1.EX6" LongName="dos.ex65" Source="16sector/software/dos331/dos.ex65" />
+                  </Component>
+                </Directory>
+                <Directory Id="directory22" Name="dos332">
+                  <Component Id="component15" DiskId="1" Guid="6bfb1044-5749-4be1-a9ed-b166f4780c73">
+                    <File Id="file77" Name="DOS_1.EX6" LongName="dos.ex65" Source="16sector/software/dos332/dos.ex65" />
+                  </Component>
+                </Directory>
+              </Directory>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+
+					</Directory>
+				</Directory>
+			</Directory>
+		</Directory>
+		<Feature Id="Complete" Level="1">
+			<ComponentRef Id="component0" />
+			<ComponentRef Id="component1" />
+			<ComponentRef Id="component2" />
+			<ComponentRef Id="component3" />
+			<ComponentRef Id="component4" />
+			<ComponentRef Id="component5" />
+			<ComponentRef Id="component6" />
+			<ComponentRef Id="component7" />
+			<ComponentRef Id="component8" />
+			<ComponentRef Id="component9" />
+			<ComponentRef Id="component10" />
+			<ComponentRef Id="component11" />
+			<ComponentRef Id="component12" />
+			<ComponentRef Id="component13" />
+			<ComponentRef Id="component14" />
+			<ComponentRef Id="component15" />
+		</Feature>
+	</Product>
+</Wix>
+ 

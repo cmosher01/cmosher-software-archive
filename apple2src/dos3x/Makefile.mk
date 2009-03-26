@@ -32,7 +32,7 @@ DIST = $(NAME)-$(VERSION)
 .do.nib:
 	$(CDT) ConvertD16toNibble <$< >$@
 
-.SUFFIXES: .s65 .o65 .ld65 .ex65 .d13 .do .nib
+.SUFFIXES: .s65 .o65 .ld65 .ex65 .d13 .do .nib .wxs .wixobj .msi
 
 SUBDIRS = \
 	13sector \
@@ -59,6 +59,19 @@ SUBDIRS = \
 .PHONY: all subdirs $(SUBDIRS) install clean
 
 
+ifdef WINDOWS
+
+.wxs.wixobj:
+	VPATH=$(VPATH) $(CANDLE) $< -out $@
+
+.wixobj.msi:
+	VPATH=$(VPATH) $(LIGHT) $< -out $@
+
+apple2dos.msi: apple2dos.wixobj all
+
+apple2dos.wixobj: apple2dos.wxs
+
+endif
 
 
 
@@ -80,7 +93,7 @@ all: \
 	16sector/disks/dos332/clean332.nib
 
 
-
+# TODO: remove this bad subdirs thing
 subdirs: $(SUBDIRS)
 	mkdir -p $^
 
