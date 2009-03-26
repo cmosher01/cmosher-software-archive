@@ -185,8 +185,7 @@ $ ~/epple2/configure --prefix= \
 CXXFLAGS="-I/usr/include -O4 -msse3" \
 CFLAGS="-I/usr/include" \
 LDFLAGS="-L/usr/lib -mconsole -mthreads -mno-cygwin"
-$ make
-$ make install</pre></code>
+$ make</pre></code>
 				<p>
 					If all goes well, it will build without any errors.
 					The result of the build (on Windows platform) is
