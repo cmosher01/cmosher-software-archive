@@ -31,6 +31,7 @@ ifdef WINDOWS
 
 .wixobj.msi:
 	$(LIGHT) $< -out $@
+	cp $@ $(basename $@)-$(VERSION)$(suffix $@)
 
 epple2cards.msi: epple2cards.wixobj all
 
