@@ -11,7 +11,7 @@
 					<Directory Id="libdot" Name=".">
 						<Directory Id="lib" Name="lib">
 							<Directory Id="lib_epple2" Name="epple2">
-								<Directory Id="lib_epple2_system" Name="cards">
+								<Directory Id="lib_epple2_cards" Name="cards">
 									<Component Id="MainExecutable" Guid="321ba40b-c464-4f8d-ba39-4683fe072036">
 										<File Id="STDIN_EX65"  LongName="stdin.ex65"  Name="stdin.e65"  DiskId="1" Source="stdin.ex65" Vital="yes" />
 										<File Id="STDOUT_EX65" LongName="stdout.ex65" Name="stdout.e65" DiskId="1" Source="stdout.ex65" Vital="yes" />

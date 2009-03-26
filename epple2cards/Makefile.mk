@@ -32,7 +32,7 @@ ifdef WINDOWS
 .wixobj.msi:
 	$(LIGHT) $< -out $@
 
-epple2cards.msi: epple2cards.wixobj stdout.ex65 stdin.ex65 clock.ex65
+epple2cards.msi: epple2cards.wixobj all
 
 epple2cards.wixobj: epple2cards.wxs
 
