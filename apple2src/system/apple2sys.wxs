@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2003/01/wi">
+	<Product Name="APPLE ][ System ROMs" Id="a018915b-1da5-425a-a4e6-f9e3ebfa5950" Language="1033" Codepage="1252" Version="1.0.0" Manufacturer="Chris Mosher">
+		<Package Id="8eb3fc29-2029-42ce-a5d1-766791647584" Description="ROMs for Apple ][ systems" InstallerVersion="100" Languages="1033" Compressed="yes" />
+		<Media Id="1" Cabinet="Apple2sys.cab" EmbedCab="yes" DiskPrompt="Apple2sys.cab" />
+		<Property Id="DiskPrompt" Value="Apple ][ System ROM Installation" />
+
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder" Name="PFiles">
+				<Directory Id="INSTALLDIR" Name="Epple2">
+					<Directory Id="libdot" Name=".">
+						<Directory Id="lib" Name="lib">
+							<Directory Id="lib_apple2" Name="apple2">
+								<Directory Id="lib_apple2_system" Name="system">
+									<Directory Id="applesoft" LongName="applesoft" Name="applesft">
+										<Component Id="Applesoft" Guid="c342f657-5674-406a-88ac-8eb9cd9ed098">
+											<File Id="APPLESOFT_EX65"  LongName="applesoft.ex65"  Name="applesft.e65"  DiskId="1" Source="applesoft/applesoft.ex65" Vital="yes" />
+										</Component>
+									</Directory>
+									<Directory Id="intbasic" Name="intbasic">
+										<Component Id="IntBasic" Guid="ad6d7176-8a9e-464f-b69f-5399c82c6ff7">
+											<File Id="INTBASIC_EX65"  LongName="intbasic.ex65"  Name="intbasic.e65"  DiskId="1" Source="intbasic/intbasic.ex65" Vital="yes" />
+										</Component>
+									</Directory>
+									<Directory Id="other" Name="other">
+										<Component Id="Other" Guid="48355866-f2b0-4106-831d-5a6382246980">
+											<File Id="OTHER_EX65"  LongName="other.ex65"  Name="other.e65"  DiskId="1" Source="other/other.ex65" Vital="yes" />
+										</Component>
+									</Directory>
+									<Directory Id="monitor" Name="monitor">
+										<Directory Id="monitor_a2" Name="apple2">
+											<Component Id="MonitorA2" Guid="39e5b443-e7fd-4bf1-88ab-1168d4c0a627">
+												<File Id="MONA2_EX65"  LongName="monitor.ex65"  Name="monitor.e65"  DiskId="1" Source="monitor/apple2/monitor.ex65" Vital="yes" />
+											</Component>
+										</Directory>
+										<Directory Id="monitor_a2p" LongName="apple2plus" Name="apple2p">
+											<Component Id="MonitorA2P" Guid="c900addb-b7aa-4f4b-ab86-166bbe3bc2f6">
+												<File Id="MONA2P_EX65"  LongName="monitor.ex65"  Name="monitor.e65"  DiskId="1" Source="monitor/apple2plus/monitor.ex65" Vital="yes" />
+											</Component>
+										</Directory>
+									</Directory>
+								</Directory>
+							</Directory>
+						</Directory>
+					</Directory>
+				</Directory>
+			</Directory>
+		</Directory>
+
+		<Feature Id="Complete" Level="1">
+			<ComponentRef Id="Applesoft" />
+			<ComponentRef Id="IntBasic" />
+			<ComponentRef Id="Other" />
+			<ComponentRef Id="MonitorA2" />
+			<ComponentRef Id="MonitorA2P" />
+		</Feature>
+	</Product>
+</Wix>

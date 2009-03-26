@@ -14,28 +14,38 @@ ARCH = noarch
 
 DIST = $(NAME)-$(VERSION)
 
-.SUFFIXES: .s65 .o65 .ld65 .ex65
+.SUFFIXES: .s65 .o65 .ld65 .ex65 .wxs .wixobj .msi
 
 .s65.o65:
+	[[ -d $(@D) ]] || mkdir -p $(@D) && :
 	$(CA65) -v -t apple2 -o $@ -I $(<D) -I $(INCDIR) $(CA65DEFS) $<
 
 .o65.ex65:
+	[[ -d $(@D) ]] || mkdir -p $(@D) && :
 	$(LD65) -v -C $(filter %.ld65,$^) -o $@ $(filter %.o65,$^)
 
 
 
 
-
-SUBDIRS = intbasic other applesoft monitor/apple2 monitor/apple2plus
-
+.PHONY: all install clean
 
 
-.PHONY: all subdirs $(SUBDIRS) install clean
+ifdef WINDOWS
 
+.wxs.wixobj:
+	$(CANDLE) $< -out $@
+
+.wixobj.msi:
+	$(LIGHT) $< -out $@
+
+apple2sys.msi: apple2sys.wixobj all
+
+apple2sys.wixobj: apple2sys.wxs
+
+endif
 
 
 all: \
-	subdirs \
 	intbasic/intbasic.ex65 \
 	other/other.ex65 \
 	applesoft/applesoft.ex65 \
@@ -43,10 +53,6 @@ all: \
 	monitor/apple2plus/monitor.ex65
 
 
-
-subdirs: $(SUBDIRS)
-	echo "$(VPATH)"
-	mkdir -p $^
 
 
 
@@ -75,6 +81,7 @@ monitor/apple2/monitor.ex65: CA65DEFS = -D VERSION=1
 monitor/apple2/monitor.ex65: $(MONITOR2_OBJS) monitor/monitor.ld65
 
 monitor/apple2/%.s65: monitor/%.s65 monitor/symbols.s65
+	[[ -d $(@D) ]] || mkdir -p $(@D) && :
 	cp $? $(@D)
 
 
@@ -85,6 +92,7 @@ monitor/apple2plus/monitor.ex65: CA65DEFS = -D VERSION=2
 monitor/apple2plus/monitor.ex65: $(MONITOR2P_OBJS) monitor/monitor.ld65
 
 monitor/apple2plus/%.s65: monitor/%.s65 monitor/symbols.s65
+	[[ -d $(@D) ]] || mkdir -p $(@D) && :
 	cp $? $(@D)
 
 

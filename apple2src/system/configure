@@ -96,8 +96,26 @@ then
 fi
 
 
-
-
+unset WINDOWS
+# For Windows, check for presence of Wix
+if [[ "$OS" == [Ww][Ii][Nn]* ]]
+then
+	WINDOWS=1
+	test "$CANDLE" || CANDLE=candle
+	if ! which "$CANDLE" >/dev/null 2>&1
+	then
+		echo "Cannot find Wix "candle" program (http://wix.sourceforge.net)." >&2
+		echo "Install it, or set env var CANDLE to point to it." >&2
+		exit 1
+	fi
+	test "$LIGHT" || LIGHT=light
+	if ! which "$LIGHT" >/dev/null 2>&1
+	then
+		echo "Cannot find Wix "light" program (http://wix.sourceforge.net)." >&2
+		echo "Install it, or set env var LIGHT to point to it." >&2
+		exit 1
+	fi
+fi
 
 cat <<EOF >./Makefile
 #DO NOT EDIT
@@ -105,7 +123,10 @@ cat <<EOF >./Makefile
 VPATH = $DIR
 CA65 = $CA65
 LD65 = $LD65
+CANDLE = $CANDLE
+LIGHT = $LIGHT
 INCDIR = $DIR/include/macros
 PREFIX = $PREFIX
+WINDOWS = $WINDOWS
 include $DIR/Makefile.mk
 EOF
