@@ -52,8 +52,8 @@ dist: card.ld65  clock.s65  configure  Makefile.mk  stdin.s65  stdout.s65 epple2
 	rm -fv $(DIST).tar.gz
 	rm -Rfv $(DIST)
 	mkdir -v $(DIST)
-	cp -v $^ $(DIST)
-	tar cvzf $(DIST).tar.gz $(DIST)
+	cd $(DIST) ; for F in $^ ; do ln -s $$F ; done
+	tar cvzhf $(DIST).tar.gz $(DIST)
 	rm -Rf $(DIST)
 
 
