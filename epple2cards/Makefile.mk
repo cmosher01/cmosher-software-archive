@@ -48,7 +48,7 @@ clock.ex65: clock.o65 card.ld65
 
 
 
-dist: card.ld65  clock.s65  configure  Makefile.mk  stdin.s65  stdout.s65 epple2cards.spec
+dist: card.ld65  clock.s65  configure  Makefile.mk  stdin.s65  stdout.s65 epple2cards.spec epple2cards.wxs
 	rm -fv $(DIST).tar.gz
 	rm -Rfv $(DIST)
 	mkdir -v $(DIST)
