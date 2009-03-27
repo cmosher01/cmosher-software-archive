@@ -264,6 +264,7 @@ dist:	\
 	configure \
 	Makefile.mk \
 	apple2dos.spec \
+	apple2dos.wxs \
 	a2cdt.jar \
 	software/boot2.s65 \
 	software/README \
