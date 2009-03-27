@@ -41,7 +41,7 @@ epple2sys.ex65: epple2sys.o65 epple2sys.ld65
 
 
 
-dist: epple2sys.ld65 epple2sys.s65 hascmap.s65 configure Makefile.mk epple2sys.spec
+dist: epple2sys.ld65 epple2sys.s65 hascmap.s65 configure Makefile.mk epple2sys.spec epple2sys.wxs
 	rm -fv $(DIST).tar.gz
 	rm -Rfv $(DIST)
 	mkdir -v $(DIST)
