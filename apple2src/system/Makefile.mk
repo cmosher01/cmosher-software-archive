@@ -133,6 +133,7 @@ dist:	\
 	configure \
 	Makefile.mk \
 	apple2sys.spec \
+	apple2sys.wxs \
 	applesoft/applesoft.s65 \
 	applesoft/applesoft.ld65 \
 	intbasic/intbasic.s65 \
