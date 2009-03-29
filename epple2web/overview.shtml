@@ -10,8 +10,10 @@
 			<div id="content">
 				<h3>Overview</h3>
 				<p>
-					Epple ][ (the Emulated Apple ][) is a free (as in GPLv3), cross-platform
-					(Windows, Linux) emulator of the "Apple ][" and "Apple ][ plus" computers
+					<span style="white-space: nowrap;">Epple ][</span> (the Emulated Apple <span style="white-space: nowrap;">][</span>)
+					is a free (as in GPLv3), cross-platform
+					(Windows, Linux) emulator of the <span style="white-space: nowrap;">"Apple ]["</span> and
+					<span style="white-space: nowrap;">"Apple ][ plus"</span> computers
 					from Apple, Inc. It strives for accurate emulation of the original machines,
 					with some extra features added.
 				</p>

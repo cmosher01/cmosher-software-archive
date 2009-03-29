@@ -188,6 +188,10 @@ LDFLAGS="-L/usr/lib -mconsole -mthreads -mno-cygwin"
 $ make</pre></code>
 				<p>
 					If all goes well, it will build without any errors.
+					If you get errors about not finding SDL.h, make sure
+					SDL is installed, and make sure the configure command
+					is correct. (If you just run configure without the
+					options shown above, you will get this error at build time.)
 					The result of the build (on Windows platform) is
 					<ul><li><code>installer/epple2.msi</code></li></ul>
 					which is an installable file for Windows. To install

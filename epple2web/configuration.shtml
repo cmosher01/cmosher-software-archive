@@ -17,10 +17,12 @@
 				<h4>epple2.conf</h4>
 				<p>
 					The default configuration file for
-					the Epple ][ emulator is /etc/epple2/epple2.conf, or elsewhere depending
+					the Epple ][ emulator is:
+					<ul><li>/etc/epple2/epple2.conf</li></ul>
+					or elsewhere depending
 					on how the program is packaged for your Linux distribution. For Windows,
-					the file will be C:\Program Files\Epple2\etc\epple2\epple2.conf, or elsewhere
-					if you installed it into a different location.
+					the file will be:
+					<ul><li>C:\Program Files\Epple2\etc\epple2\epple2.conf</li></ul>
 				</p>
 				<p>
 					You can specify a different configuration file for the emulator to use by
@@ -41,7 +43,7 @@
 				<p>
 					Firmware, commonly called ROM images or ROMs, will need to be loaded
 					into the emulated ROM areas of the emulated Apple
-					in order for the emulated system to be able to "run" the Apple
+					in order for it to be able to "run" the Apple
 					as you know it. The firmware available is described on the
 					<a href="download.shtml">download</a> page. Once the firmware image
 					files are installed on your computer, you can use the <a href="commands.shtml#import">

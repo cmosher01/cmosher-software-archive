@@ -9,15 +9,15 @@
 			<!--#include virtual="navigation.ihtml" -->
 			<div id="content">
 				<h3>Epple ][ Commands</h3>
-<ul>
-	<li><a href="#slot">slot</a></li>
-	<li><a href="#import">import</a></li>
-	<li><a href="#load">load</a></li>
-	<li><a href="#unload">unload</a></li>
-	<li><a href="#save">save</a></li>
-	<li><a href="#cassette">cassette</a></li>
-	<li><a href="#revision">revision</a></li>
-</ul>
+<table border="1" cellspacing="0">
+	<tr><td><a href="#slot">slot</a></td><td>configure cards in slots</td></tr>
+	<tr><td><a href="#import">import</a></td><td>read file into memory</td></tr>
+	<tr><td><a href="#load">load</a></td><td>load floppy disk image</td></tr>
+	<tr><td><a href="#unload">unload</a></td><td>remove floppy disk</td></tr>
+	<tr><td><a href="#save">save</a></td><td>save floppy disk image</td></tr>
+	<tr><td><a href="#cassette">cassette</a></td><td>manage cassette tape interface</td></tr>
+	<tr><td><a href="#revision">revision</a></td><td>choose motherboard revision</td></tr>
+</table>
 
 
 
@@ -198,6 +198,8 @@
 	The <code>cassette</code> command performs various operations of the emulated cassette tape.
 </p>
 <p>
+	<code>cassette new <span class="param">file-path</span></code>
+<br />
 	<code>cassette load <span class="param">file-path</span></code>
 <br />
 	<code>cassette unload</code>
