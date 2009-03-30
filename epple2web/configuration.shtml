@@ -33,12 +33,6 @@
 					commands are documented on the <a href="commands.shtml">commands</a>
 					page. Comments begin with a "#" character and end at the end of the line.
 				</p>
-				<p>
-					The Epple ][ Emulator can actually be run without a configuration file at all.
-					In this case, you will be able to "power on" the Apple and see the low-resolution
-					graphics display showing random RAM data. The system will not run, because
-					there is no firmware loaded, but the emulator will otherwise be functional.
-				</p>
 				<h4>Firmware</h4>
 				<p>
 					Firmware, commonly called ROM images or ROMs, will need to be loaded
@@ -47,7 +41,7 @@
 					as you know it. The firmware available is described on the
 					<a href="download.shtml">download</a> page. Once the firmware image
 					files are installed on your computer, you can use the <a href="commands.shtml#import">
-					import</a> command to load the image into the emulator.
+					import</a> command in the configuration file to load the image files into the emulator.
 				</p>
 				<h4>Peripheral Cards</h4>
 				<p>
@@ -56,8 +50,8 @@
 					Disk ][ Controller card; you will need to insert one of these cards if you want
 					to be able to load floppy disk images into the emulated Apple. The various
 					types of cards available are described on the <a href="cards.shtml">peripheral
-					cards</a> page, and you will use the <a href="commands.shtml#slot">slot</a>
-					command to insert them into the Apple's slots.
+					cards</a> page. You can use the <a href="commands.shtml#slot">slot</a>
+					command in the configuration file to insert them into the Apple's slots.
 				</p>
 				<h4>Sample Configuration Files</h4>
 				<p>
@@ -66,6 +60,12 @@
 					You can use one of these files directly, by specifying its path as the argument
 					to the program, or as a starting point for you own configuration file. These sample files
 					are in the same location as the default epple2.conf file.
+				</p>
+				<p>
+					The Epple ][ Emulator can actually be run without a configuration file at all.
+					In this case, you will be able to "power on" the Apple and see the low-resolution
+					graphics display showing random RAM data. The system will not run, because
+					there is no firmware loaded, but the emulator will otherwise be functional.
 				</p>
 			</div>
 			<!--#include virtual="footer.ihtml" -->
