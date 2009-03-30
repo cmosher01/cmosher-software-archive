@@ -126,6 +126,13 @@ HELLO
 				<p>
 <code><pre>command: cassette save</pre></code>
 				</p>
+				<p>
+					We can now unload the file from the emulator (which is like ejecting
+					the tape from the cassette player).
+				</p>
+				<p>
+<code><pre>command: cassette unload</pre></code>
+				</p>
 				<h5>Loading from Tape</h5>
 				<p>
 					To load the saved program (from the previous section) into the Apple again,
