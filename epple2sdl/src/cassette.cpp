@@ -121,6 +121,20 @@ void Cassette::rewind()
 	this->gui.setCassettePos(this->pos,this->half_cycles.size());
 }
 
+bool Cassette::newFile(const std::string& filePath)
+{
+	std::ifstream in(filePath.c_str(),std::ios::binary|std::ios::in);
+	if (in.is_open())
+	{
+		in.close();
+		std::cerr << "Error creating file; file already exists: " << filePath << std::endl;
+		return false;
+	}
+	std::ofstream out(filePath.c_str(),std::ios::binary|std::ios::out);
+	out.close();
+	return load(filePath);
+}
+
 bool Cassette::load(const std::string& filePath)
 {
 //	TODO better I/O error handling during cassette loading and saving

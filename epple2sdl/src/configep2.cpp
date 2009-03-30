@@ -292,6 +292,13 @@ void Config::tryParseLine(const std::string& line, Memory& ram, Memory& rom, Slo
 		{
 			cassette.rewind();
 		}
+		else if (cas == "new")
+		{
+			std::string fcas;
+			std::getline(tok,fcas);
+			trim(fcas);
+			cassette.newFile(fcas);
+		}
 		else if (cas == "load")
 		{
 			std::string fcas;

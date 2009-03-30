@@ -55,6 +55,7 @@ public:
 	void output();
 	bool input();
 	void rewind();
+	bool newFile(const std::string& filePath);
 	bool load(const std::string& filePath);
 	std::string getFileName()
 	{
