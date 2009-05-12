@@ -9,7 +9,7 @@
 			<!--#include virtual="navigation.ihtml" -->
 			<div id="content">
 				<div id="welcome">
-					<h3>Welcome</h3>
+					<h3>EPPLE ][</h3>
 					<p>
 						This is the home site of the EPPLE ][, the Emulated Apple ][.
 					</p>
@@ -23,6 +23,11 @@
 						<a href="http://www.gnu.org/licenses/gpl-3.0-standalone.html">
 							<img src="gplv3logo.png" />
 						</a>
+					</p>
+					<p>
+						It is written in C++ and is designed with cross-platform
+						portability in mind. It relies on the
+						<a href="http://www.libsdl.org/">SDL</a> graphics library.
 					</p>
 				</div>
 				<div id="features">
