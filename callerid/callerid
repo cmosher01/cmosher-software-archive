@@ -1,0 +1,2 @@
+#!/bin/sh
+cat /dev/ttyS0 | grep "^80" | java -cp . Undump | java -cp . CallerID
