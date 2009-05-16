@@ -1,0 +1,2 @@
+groff -p simple.pic >simple.ps
+gv simple.ps
