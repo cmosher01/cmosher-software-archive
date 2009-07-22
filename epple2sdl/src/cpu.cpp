@@ -14,6 +14,9 @@
 
     You should have received a copy of the GNU General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+    Portions Copyright (C) 2000, by Verhille Arnaud, GPLv2 license. (See ADC, SBC below.)
 */
 #include "cpu.h"
 #include "addressbus.h"
@@ -1847,7 +1850,7 @@ void CPU::ADC()
 void CPU::SBC()
 {
 	/*
-	This method based on ADC from the POM1 Apple 1 emulator.
+	This method based on SBC from the POM1 Apple 1 emulator.
 	Copyright (C) 2000, by Verhille Arnaud, GPLv2 license.
 	*/
 	int Op1 = this->a;
