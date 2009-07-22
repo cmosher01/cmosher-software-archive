@@ -1322,8 +1322,10 @@ void CPU::addr_JMP_INDIRECT()
 			adl = data;
 		break;
 		case 4:
-			/* Interactive (Rockwell Intl., 1960) , Issue 2, p. 12,
-			documents a bug where JMP absolute does NOT
+			/* Interactive [newsletter] (Rockwell Intl., 1980), Issue 2,
+			currently available here:
+			http://www.6502.org/documents/publications/interactive/aim_interactive_2.pdf
+			on page 12, documents a bug where JMP absolute does NOT
 			leave the page. This causes problems for
 			example for JMP ($08FF), where high byte
 			is read from $800 instead of $900.
