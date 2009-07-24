@@ -21,12 +21,18 @@
 VideoAddressing::VideoAddressing()
 {
 }
+
+static const int RESET_BYTES(390);
+static const int BLANKED_BYTES_PER_ROW(25);
+static const int VISIBLE_BYTES_PER_FIELD(12480);
+static const int SCANNABLE_BYTES(16640);
+
 static int calc(const unsigned int t)
 {
-	int c = t % VideoAddressing::VISIBLE_BYTES_PER_FIELD;
-	if (t >= VideoAddressing::SCANNABLE_BYTES)
+	int c = t % VISIBLE_BYTES_PER_FIELD;
+	if (t >= SCANNABLE_BYTES)
 	{
-		c -= VideoAddressing::RESET_BYTES;
+		c -= RESET_BYTES;
 	}
 
 	int n = c / VideoAddressing::BYTES_PER_ROW;
@@ -38,7 +44,7 @@ static int calc(const unsigned int t)
 
 	const int half_page = base & 0xFF80;
 
-	int a = base+(c%VideoAddressing::BYTES_PER_ROW)-VideoAddressing::BLANKED_BYTES_PER_ROW;
+	int a = base+(c%VideoAddressing::BYTES_PER_ROW)-BLANKED_BYTES_PER_ROW;
 	if (a < half_page)
 	{
 		a += 0x80;

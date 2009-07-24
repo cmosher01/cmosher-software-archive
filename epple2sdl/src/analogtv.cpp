@@ -153,13 +153,15 @@ public:
 
 const IQ& AnalogTV::BLACK_AND_WHITE = IQ();
 
+static const int CB_EXTRA(32);
+
 class CB
 {
 public:
 	std::vector<int> cb;
 
 	CB(const int acb[]):
-		cb(AppleNTSC::CB_END-AppleNTSC::CB_START-AnalogTV::CB_EXTRA)
+		cb(AppleNTSC::CB_END-AppleNTSC::CB_START-CB_EXTRA)
 	{
 		for (std::vector<int>::size_type i(0); i < this->cb.size(); ++i)
 		{
@@ -249,6 +251,8 @@ void AnalogTV::drawCurrent()
 }
 
 
+
+static const int D_IP(AppleNTSC::H-2-350);
 
 void AnalogTV::drawMonitorColor()
 {

@@ -68,7 +68,6 @@ private:
 	static const double TINT_Q;
 	static const double COLOR_THRESH;
 	static const IQ& BLACK_AND_WHITE;
-	enum { D_IP = AppleNTSC::H-2-350 };
 
 	void drawMonitorColor();
 	void drawMonitorWhite();
@@ -92,8 +91,6 @@ private:
 public:
 	void drawCurrent();
 	signed char* signal;
-
-	enum { CB_EXTRA = 32 };
 
 	AnalogTV(ScreenImage& image);
 	~AnalogTV();

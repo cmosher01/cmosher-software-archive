@@ -26,29 +26,10 @@ public:
 	VideoAddressing();
 	static void buildLUT(const unsigned short base, const unsigned short len, std::vector<unsigned short>& lut);
 
-	enum { NTSC_LINES_PER_FRAME = 525 };
-	enum { NTSC_LINES_PER_FIELD = 262 };
-	enum { NTSC_FIELDS_PER_SECOND = 60 };
-	enum { NTSC_COLOR_FIELD_EVERY = 1000 };
-
-	enum { APPLE_BYTES = 1023750728 };
-	enum { LINES = 15720000 };
 	enum { BYTES_PER_ROW = 65 };
-
 	enum { BYTES_PER_FIELD = 17030 };
-
-	enum { VISIBLE_BITS_PER_BYTE = 7 };
-	enum { VISIBLE_LINES_PER_CHARACTER = 8 };
-
 	enum { VISIBLE_BYTES_PER_ROW = 40 };
 	enum { VISIBLE_ROWS_PER_FIELD = 192 };
-
-	enum { BLANKED_BYTES_PER_ROW = 25 };
-	enum { VISIBLE_BYTES_PER_FIELD = 12480 };
-	enum { SCANNABLE_ROWS = 256 };
-	enum { SCANNABLE_BYTES = 16640 };
-	enum { RESET_ROWS = 6 };
-	enum { RESET_BYTES = 390 };
 };
 
 #endif
