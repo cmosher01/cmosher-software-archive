@@ -92,10 +92,8 @@ void Emulator::init()
 #define CHECK_CYCLES_K 51024000
 #define EXPECTED_MS 50
 
-// U.A.2 p. 7-13: REPT key repeats at 10Hz. This is actually slightly faster
-#define CYCLES_PER_REPT 102048
-// 102271 == 10Hz
-// 68181 for 15Hz
+// U.A.2 p. 7-13: REPT key repeats at 10Hz.
+static const int CYCLES_PER_REPT(TimingGenerator::AVG_CPU_HZ/10);
 
 
 	// The core of this Apple
