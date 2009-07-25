@@ -22,6 +22,8 @@
 #include "gui.h"
 #include <SDL/SDL.h>
 
+	// Create, initialize, and cable together the UI objects to serve this
+	// program
 GUI::GUI()
 {
 	const int result = SDL_Init(SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO);
