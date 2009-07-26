@@ -23,20 +23,19 @@
 ;
 ;
 ; constants
-SCREENWID   = 40
-SCREENHGT   = 24
-PROMPT      = '$'
+SCREENWID   = 40 ; width of text screen
+SCREENHGT   = 24 ; height of text screen
 ;
 ;
 ;
-; ASCII (high it set)
+; ASCII values (high bit set)
 BS          = $88
 CR          = $8D
 SPACE       = ' '
 ;
 ;
 ;
-; zero page addresses
+; zero page addresses (our variables)
 TMPW        = $00 ; $01
 ADDR        = $02 ; $03
 ADDR2       = $04 ; $05
@@ -57,8 +56,9 @@ INBUF       = $0200
 READKEY     = $C000
 CLEARKEY    = $C010
 TEXTON      = $C051
+MIXEDOFF    = $C052
 PAGE2OFF    = $C054
-
+HIRESOFF    = $C056
 
 
 
@@ -81,8 +81,11 @@ PAGE2OFF    = $C054
             TXS
 
             LDA TEXTON
+            LDA MIXEDOFF
             LDA PAGE2OFF
+            LDA HIRESOFF
 
+            NOP
 
             JSR ENDSCR
             JSR ADVCUR
@@ -143,20 +146,6 @@ STORELOW    STA TEXTROW
             LDA ROW
             JSR LINEADDR
             LDY COL
-            RTS
-.ENDPROC
-;
-;
-;
-; HOME
-; Moves cursor to top left.
-; output: ROW, COL
-; scratch: A
-;
-.PROC       HOME
-            LDA #0
-            STA ROW
-            STA COL
             RTS
 .ENDPROC
 ;
@@ -339,8 +328,6 @@ OK          RTS
 ; scratch: A, TEXTROW, Y, X
 ;
 .PROC       PRPROMPT
-;            LDA #PROMPT
-;            JSR PRCHAR
             JSR PRSTR
             .BYTE "E2>",0
             RTS
