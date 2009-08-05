@@ -22,10 +22,13 @@
 #include "emulator.h"
 #include "configep2.h"
 #include "gui.h"
+#include "e2const.h"
 
 #include <string>
 #include <memory>
 #include <stdexcept>
+
+#include <iostream>
 
 static int run(const std::string& config_file)
 {
@@ -46,6 +49,13 @@ int main(int argc, char* argv[])
 	if (argc > 2)
 	{
 		throw std::runtime_error("usage: epple2 [config-file]" );
+	}
+
+	int x = E2Const::test();
+	if (x != -1)
+	{
+		std::cerr << x << std::endl;
+		throw std::runtime_error("bad constant in e2const.h" );
 	}
 
 	std::string config_file;
