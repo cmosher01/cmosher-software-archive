@@ -1,8 +1,26 @@
-#include <iostream>
-#include <ostream>
+/*
+    epple2
+    Copyright (C) 2008 by Chris Mosher <chris@mosher.mine.nu>
 
-namespace Epple2Constants
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY, without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+#ifndef E2CONST_H
+#define E2CONST_H
+
+class E2Const
 {
+public:
 	/*
 		The NTSC standard defines the field rate as 60 fields per second. The number 60
 		is based on the USA AC current frequency of 60 Hz. This, in turn, was based on the
@@ -37,7 +55,7 @@ namespace Epple2Constants
 		14318181.818181818... Hz rounds to 14318182 Hz
 		U.A.II, p.3-2
 	*/
-	static const int CRYSTAL_HZ = (int)((float)NTSC_FIELD_HZ * NTSC_LINES_PER_FRAME * NTSC_COLOR_MULTIPLE * NTSC_COLOR_DROP_FIELD / (NTSC_COLOR_DROP_FIELD+1));
+	static const int CRYSTAL_HZ = (int)(1.0*NTSC_FIELD_HZ * NTSC_LINES_PER_FRAME * NTSC_COLOR_MULTIPLE * NTSC_COLOR_DROP_FIELD / (NTSC_COLOR_DROP_FIELD+1));
 
 	/*
 		U.A.II, p. 3-3
@@ -50,14 +68,14 @@ namespace Epple2Constants
 	/*
 		65 bytes per row (64 normal CPU cycles plus one long CPU cycle)
 	*/
-	static const int BYTES_PER_ROW = (int)((NTSC_COLOR_DROP_FIELD+1)*(float)CRYSTAL_HZ/(NTSC_FIELD_HZ/2*NTSC_COLOR_DROP_FIELD*NTSC_LINES_PER_FRAME*CRYSTAL_CYCLES_PER_CPU_CYCLE));
+	static const int BYTES_PER_ROW = (int)((NTSC_COLOR_DROP_FIELD+1)*1.0*CRYSTAL_HZ/(NTSC_FIELD_HZ/2*NTSC_COLOR_DROP_FIELD*NTSC_LINES_PER_FRAME*CRYSTAL_CYCLES_PER_CPU_CYCLE));
 	static const int HORIZ_CYCLES = BYTES_PER_ROW;
 
 	/*
 		U.A.II, p. 3-2, "composite frequency... 1.0205 MHz"
 		Actually 1020484 Hz.
 	*/
-	static const int AVG_CPU_HZ = (int)(((float)CRYSTAL_HZ*HORIZ_CYCLES)/(CRYSTAL_CYCLES_PER_CPU_CYCLE*HORIZ_CYCLES+EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE));
+	static const int AVG_CPU_HZ = (int)((1.0*CRYSTAL_HZ*HORIZ_CYCLES)/(CRYSTAL_CYCLES_PER_CPU_CYCLE*HORIZ_CYCLES+EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE));
 
 	/*
 		A normal NTSC field is 262.5 lines (half of a full frame's 525 lines).
@@ -102,9 +120,7 @@ namespace Epple2Constants
 	 * The Apple ][ displays 7 bits per byte hi-res or lo-res, (or 7 pixel-wide characters for text mode), so that
 	 * gives 282/7, which rounds down to 40 bytes per line.
 	 */
-	static const float LINE_US = (float)(NTSC_COLOR_DROP_FIELD+1)/(NTSC_FIELD_HZ*NTSC_COLOR_DROP_FIELD)*2/NTSC_LINES_PER_FRAME*MEGA;
-	static const float HBL_US = 1.5+4.7+.6+2.5+1.6;
-	static const int VISIBLE_BYTES_PER_ROW = (int)(((LINE_US-HBL_US) * 3/4) * (CRYSTAL_HZ/2)) / MEGA / VISIBLE_BITS_PER_BYTE;
+	static const int VISIBLE_BYTES_PER_ROW = (int)((((1.0*(NTSC_COLOR_DROP_FIELD+1)/(NTSC_FIELD_HZ*NTSC_COLOR_DROP_FIELD)*2/NTSC_LINES_PER_FRAME*MEGA)-(1.5+4.7+.6+2.5+1.6)) * 3/4) * (CRYSTAL_HZ/2)) / MEGA / VISIBLE_BITS_PER_BYTE;
 
 	/*
 	 * NTSC total lines per frame (525) minus unusable lines (19 plus 20) = 486 usable lines
@@ -121,7 +137,20 @@ namespace Epple2Constants
 	static const int SCANNABLE_BYTES = SCANNABLE_ROWS*BYTES_PER_ROW;
 	static const int RESET_ROWS = NTSC_WHOLE_LINES_PER_FIELD-SCANNABLE_ROWS;
 	static const int RESET_BYTES = RESET_ROWS*BYTES_PER_ROW;
-}
+
+
+
+	static const int MIXED_TEXT_LINES = 4;
+	static const int ROWS_PER_TEXT_LINE = 8;
+	static const int MIXED_TEXT_CYCLE = (VISIBLE_ROWS_PER_FIELD-MIXED_TEXT_LINES*ROWS_PER_TEXT_LINE)*BYTES_PER_ROW;
+
+};
+
+//FOR TESTING:
+/*
+
+#include <iostream>
+#include <ostream>
 
 using namespace std;
 
@@ -145,3 +174,7 @@ int main(int argc, char* argv[])
 	P(SCANNABLE_BYTES); // 16640
 	return 0;
 }
+*/
+
+
+#endif

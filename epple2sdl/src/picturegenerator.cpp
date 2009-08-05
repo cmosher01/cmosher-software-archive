@@ -16,15 +16,14 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #include "picturegenerator.h"
-#include "videoaddressing.h"
 #include "analogtv.h"
 #include "videomode.h"
 #include "applentsc.h"
-#include "timinggenerator.h"
+#include "e2const.h"
 
 PictureGenerator::PictureGenerator(AnalogTV& display, VideoMode& mode, const int& revision):
 	display(display), mode(mode), itestsig(testsig), itestsiglim(testsig+AppleNTSC::SIGNAL_LEN),
-	VISIBLE_X_OFFSET(VideoAddressing::BYTES_PER_ROW-VideoAddressing::VISIBLE_BYTES_PER_ROW),
+	VISIBLE_X_OFFSET(E2Const::BYTES_PER_ROW-E2Const::VISIBLE_BYTES_PER_ROW),
 	revision(revision)
 {
 }
@@ -149,14 +148,14 @@ void PictureGenerator::tick(const int t, const unsigned char rowToPlot)
 		this->line = 0;
 	}
 
-	int cycles = TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE;
-	if (this->hpos == TimingGenerator::HORIZ_CYCLES-1)
+	int cycles = E2Const::CRYSTAL_CYCLES_PER_CPU_CYCLE;
+	if (this->hpos == E2Const::HORIZ_CYCLES-1)
 	{
-		cycles += TimingGenerator::EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE;
+		cycles += E2Const::EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE;
 	}
 
 	//		 hi-res half-pixel shift:
-	const bool shift = !isText && isHiRes && this->d7 && this->line < VideoAddressing::VISIBLE_ROWS_PER_FIELD && !(this->hpos < VISIBLE_X_OFFSET) && this->revision > 0;
+	const bool shift = !isText && isHiRes && this->d7 && this->line < E2Const::VISIBLE_ROWS_PER_FIELD && !(this->hpos < VISIBLE_X_OFFSET) && this->revision > 0;
 	const bool showLastHiRes = shift && this->lasthires;
 
 	int xtra(0);
@@ -165,10 +164,10 @@ void PictureGenerator::tick(const int t, const unsigned char rowToPlot)
 		--cycles;
 		++xtra;
 	}
-	const int firstBlankedCycle(TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE-xtra);
+	const int firstBlankedCycle(E2Const::CRYSTAL_CYCLES_PER_CPU_CYCLE-xtra);
 
-	int hcycle(this->hpos*TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE);
-	const bool lineVis(this->line < VideoAddressing::VISIBLE_ROWS_PER_FIELD);
+	int hcycle(this->hpos*E2Const::CRYSTAL_CYCLES_PER_CPU_CYCLE);
+	const bool lineVis(this->line < E2Const::VISIBLE_ROWS_PER_FIELD);
 	const bool hVis(this->hpos >= VISIBLE_X_OFFSET);
 	for (int cycle(0); cycle < cycles-1; ++cycle)
 	{
@@ -187,7 +186,7 @@ void PictureGenerator::tick(const int t, const unsigned char rowToPlot)
 	this->itestsig = is;
 
 	++this->hpos;
-	if (this->hpos >= TimingGenerator::HORIZ_CYCLES)
+	if (this->hpos >= E2Const::HORIZ_CYCLES)
 	{
 		this->hpos = 0;
 		++this->line;
@@ -220,7 +219,7 @@ bool inline PictureGenerator::shiftLatch(const int t, const int cycle, const boo
 	}
 	else // LO-RES
 	{
-		const int y = t / VideoAddressing::BYTES_PER_ROW;
+		const int y = t / E2Const::BYTES_PER_ROW;
 		bit = getLoResBit((t & 1) == (this->line & 1), y & 4);
 		shiftLoRes();
 	}

@@ -17,7 +17,7 @@
 */
 #include "videostaticgenerator.h"
 #include "analogtv.h"
-#include "timinggenerator.h"
+#include "e2const.h"
 #include <ctime>
 #include <cstdlib>
 
@@ -40,10 +40,10 @@ VideoStaticGenerator::~VideoStaticGenerator()
 void VideoStaticGenerator::tick()
 {
 	signed char* is = this->isig;
-	unsigned int cycles = TimingGenerator::CRYSTAL_CYCLES_PER_CPU_CYCLE;
-	if (this->hpos == TimingGenerator::HORIZ_CYCLES-1)
+	unsigned int cycles = E2Const::CRYSTAL_CYCLES_PER_CPU_CYCLE;
+	if (this->hpos == E2Const::HORIZ_CYCLES-1)
 	{
-		cycles += TimingGenerator::EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE;
+		cycles += E2Const::EXTRA_CRYSTAL_CYCLES_PER_CPU_LONG_CYCLE;
 	}
 	for (unsigned int i = 0; i < cycles; ++i)
 	{
@@ -51,7 +51,7 @@ void VideoStaticGenerator::tick()
 	}
 	this->isig = is;
 	++this->hpos;
-	if (this->hpos >= TimingGenerator::HORIZ_CYCLES)
+	if (this->hpos >= E2Const::HORIZ_CYCLES)
 	{
 		this->hpos = 0;
 		if (isig >= isiglim)

@@ -18,7 +18,6 @@
 #ifndef PADDLES_H
 #define PADDLES_H
 
-#include "timinggenerator.h"
 #include <vector>
 
 class Paddles
@@ -27,10 +26,7 @@ private:
 	std::vector<int> rTick;
 
 	enum { PADDLE_COUNT = 4 };
-	enum { PADDLE_CYCLES = 2805 };
-
-	enum { REALTIME_1MS_CYCLES = TimingGenerator::CPU_HZ/1000 };
-	enum { REALTIME_100US_CYCLES = 90 };
+	enum { PADDLE_CYCLES = 2805 }; // TODO: document where PADDLE_CYCLES==2805 came from
 
 	void tryStartPaddleTimers();
 

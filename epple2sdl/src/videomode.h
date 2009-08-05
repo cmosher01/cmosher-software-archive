@@ -19,17 +19,11 @@
 #define VIDEOMODE_H
 
 #include "videoaddressing.h"
+#include "e2const.h"
 
 class VideoMode
 {
 private:
-	enum
-	{
-		MIXED_TEXT_LINES = 4,
-		ROWS_PER_TEXT_LINE = 8,
-		MIXED_TEXT_CYCLE = (VideoAddressing::VISIBLE_ROWS_PER_FIELD-(MIXED_TEXT_LINES*ROWS_PER_TEXT_LINE))*VideoAddressing::BYTES_PER_ROW
-	};
-
 	bool swText;
 	bool swMixed;
 	int swPage2;
@@ -44,7 +38,7 @@ public:
 	bool isHiRes() const { return this->swHiRes; }
 	bool isMixed() const { return this->swMixed; }
 	int getPage() const { return this->swPage2; }
-	bool isDisplayingText(const int atTickInField) const { return this->swText || (this->swMixed && atTickInField >= MIXED_TEXT_CYCLE); }
+	bool isDisplayingText(const int atTickInField) const { return this->swText || (this->swMixed && atTickInField >= E2Const::MIXED_TEXT_CYCLE); }
 };
 
 #endif

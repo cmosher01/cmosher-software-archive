@@ -16,12 +16,15 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #include "video.h"
-#include "timinggenerator.h"
+#include "e2const.h"
 #include "videoaddressing.h"
 #include "videomode.h"
 #include "addressbus.h"
 #include "picturegenerator.h"
 #include "textcharacters.h"
+
+
+static const int FLASH_HALF_PERIOD = E2Const::AVG_CPU_HZ/4; // 2 Hz period = 4 Hz half-period
 
 
 Video::Video(VideoMode& mode, AddressBus& addressBus, PictureGenerator& picgen, TextCharacters& textRows):
@@ -55,7 +58,7 @@ void Video::tick()
 
 	++this->t;
 
-	if (this->t >= VideoAddressing::BYTES_PER_FIELD)
+	if (this->t >= E2Const::BYTES_PER_FIELD)
 	{
 		this->t = 0;
 	}
@@ -90,7 +93,7 @@ unsigned char Video::getRowToPlot(unsigned char d)
 	if (this->mode.isDisplayingText(this->t))
 	{
 		const bool inverse = inverseChar(d);
-		const int y = this->t / VideoAddressing::BYTES_PER_ROW;
+		const int y = this->t / E2Const::BYTES_PER_ROW;
 		d = this->textRows.get(((d & 0x3F) << 3) | (y & 0x07));
 		if (inverse)
 		{

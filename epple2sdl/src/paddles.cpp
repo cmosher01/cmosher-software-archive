@@ -15,10 +15,12 @@
     You should have received a copy of the GNU General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+#include "e2const.h"
 #include "paddles.h"
 #include <SDL/SDL.h>
 #include <iostream>
 #include <ostream>
+
 
 Paddles::Paddles():
 	rTick(PADDLE_COUNT)
@@ -76,9 +78,9 @@ void Paddles::tryStartPaddleTimers()
 		described in U.A.2, p. 7-33.
 	*/
 	if (isTimedOut(2))
-		this->rTick[2] = REALTIME_100US_CYCLES;
+		this->rTick[2] = E2Const::AVG_CPU_HZ/10000; // was 90, but why?
 	if (isTimedOut(3))
-		this->rTick[3] = REALTIME_1MS_CYCLES;
+		this->rTick[3] = E2Const::AVG_CPU_HZ/1000;
 }
 
 bool Paddles::isTimedOut(const int paddle)

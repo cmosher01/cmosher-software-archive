@@ -17,7 +17,7 @@
 */
 #include "powerupreset.h"
 #include "apple2.h"
-#include "timinggenerator.h"
+#include "e2const.h"
 
 PowerUpReset::PowerUpReset(Apple2& apple):
 	apple(apple)
@@ -44,5 +44,5 @@ void PowerUpReset::tick()
 
 void PowerUpReset::powerOn()
 {
-	this->pendingTicks = (int)(TimingGenerator::AVG_CPU_HZ*.3); // U.A.II, p. 7-15
+	this->pendingTicks = (int)(E2Const::AVG_CPU_HZ*.3); // U.A.II, p. 7-15
 }

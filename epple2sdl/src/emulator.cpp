@@ -17,6 +17,7 @@
 */
 #include "emulator.h"
 #include "configep2.h"
+#include "e2const.h"
 
 #include <SDL/SDL.h>
 
@@ -93,7 +94,7 @@ void Emulator::init()
 #define EXPECTED_MS 50
 
 // U.A.2 p. 7-13: REPT key repeats at 10Hz.
-static const int CYCLES_PER_REPT(TimingGenerator::AVG_CPU_HZ/10);
+static const int CYCLES_PER_REPT(E2Const::AVG_CPU_HZ/10);
 
 
 	// The core of this Apple

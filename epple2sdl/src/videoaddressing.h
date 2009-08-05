@@ -25,11 +25,6 @@ class VideoAddressing
 public:
 	VideoAddressing();
 	static void buildLUT(const unsigned short base, const unsigned short len, std::vector<unsigned short>& lut);
-
-	enum { BYTES_PER_ROW = 65 };
-	enum { BYTES_PER_FIELD = 17030 };
-	enum { VISIBLE_BYTES_PER_ROW = 40 };
-	enum { VISIBLE_ROWS_PER_FIELD = 192 };
 };
 
 #endif

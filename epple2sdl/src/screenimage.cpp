@@ -16,6 +16,8 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #include "screenimage.h"
+#include "e2const.h"
+#include "applentsc.h"
 #include "card.h"
 #include "util.h"
 #include <SDL/SDL.h>
@@ -37,6 +39,9 @@ static const char* power =
 #define OFF_CLR 0x807870
 #define SCRW 640
 #define SCRH 480
+
+static const int HEIGHT = E2Const::VISIBLE_ROWS_PER_FIELD*2;
+static const int WIDTH = AppleNTSC::H-AppleNTSC::PIC_START-2;
 
 #include "font3x5.h"
 

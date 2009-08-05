@@ -15,36 +15,31 @@
     You should have received a copy of the GNU General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-#include "timinggenerator.h"
 #include "videoaddressing.h"
+#include "e2const.h"
 
 VideoAddressing::VideoAddressing()
 {
 }
 
-static const int RESET_BYTES(390);
-static const int BLANKED_BYTES_PER_ROW(25);
-static const int VISIBLE_BYTES_PER_FIELD(12480);
-static const int SCANNABLE_BYTES(16640);
-
 static int calc(const unsigned int t)
 {
-	int c = t % VISIBLE_BYTES_PER_FIELD;
-	if (t >= SCANNABLE_BYTES)
+	int c = t % E2Const::VISIBLE_BYTES_PER_FIELD;
+	if (t >= E2Const::SCANNABLE_BYTES)
 	{
-		c -= RESET_BYTES;
+		c -= E2Const::RESET_BYTES;
 	}
 
-	int n = c / VideoAddressing::BYTES_PER_ROW;
+	int n = c / E2Const::BYTES_PER_ROW;
 	const int s = (n >> 6);
 	n -= s << 6;
 	const int q = (n >> 3);
 	n -= q << 3;
-	const int base = (n<<10) + (q<<7) + VideoAddressing::VISIBLE_BYTES_PER_ROW*s;
+	const int base = (n<<10) + (q<<7) + E2Const::VISIBLE_BYTES_PER_ROW*s;
 
 	const int half_page = base & 0xFF80;
 
-	int a = base+(c%VideoAddressing::BYTES_PER_ROW)-BLANKED_BYTES_PER_ROW;
+	int a = base+(c%E2Const::BYTES_PER_ROW)-E2Const::BLANKED_BYTES_PER_ROW;
 	if (a < half_page)
 	{
 		a += 0x80;
@@ -54,15 +49,15 @@ static int calc(const unsigned int t)
 
 void VideoAddressing::buildLUT(const unsigned short base, const unsigned short len, std::vector<unsigned short>& lut)
 {
-	lut.resize(BYTES_PER_FIELD);
-	for (unsigned int t = 0; t < BYTES_PER_FIELD; ++t)
+	lut.resize(E2Const::BYTES_PER_FIELD);
+	for (unsigned int t = 0; t < E2Const::BYTES_PER_FIELD; ++t)
 	{
 		unsigned int off = (calc(t) % len);
 
-		const unsigned int col = t % BYTES_PER_ROW;
-		const unsigned int row = t / BYTES_PER_ROW;
+		const unsigned int col = t % E2Const::BYTES_PER_ROW;
+		const unsigned int row = t / E2Const::BYTES_PER_ROW;
 
-		if (col < BLANKED_BYTES_PER_ROW)
+		if (col < E2Const::BLANKED_BYTES_PER_ROW)
 		{
 			// HBL
 			if (base < 0x1000)
@@ -75,7 +70,7 @@ void VideoAddressing::buildLUT(const unsigned short base, const unsigned short l
 			}
 		}
 
-		if (row >= VISIBLE_ROWS_PER_FIELD)
+		if (row >= E2Const::VISIBLE_ROWS_PER_FIELD)
 		{
 			// VBL
 			const int base2 = off & 0xFF80;

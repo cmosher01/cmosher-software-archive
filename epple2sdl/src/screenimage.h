@@ -18,8 +18,6 @@
 #ifndef SCREENIMAGE_H
 #define SCREENIMAGE_H
 
-#include "applentsc.h"
-#include "videoaddressing.h"
 #include "analogtv.h"
 #include <vector>
 #include <string>
@@ -91,12 +89,6 @@ public:
 	void setFirmCard(int slot, bool bank, bool F8);
 
 	void saveBMP();
-
-	enum
-	{
-		HEIGHT = VideoAddressing::VISIBLE_ROWS_PER_FIELD*2,
-		WIDTH = AppleNTSC::H-AppleNTSC::PIC_START-2
-	};
 };
 
 #endif
