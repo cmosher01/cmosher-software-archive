@@ -1,0 +1,1361 @@
+0 HEAD
+1 SOUR GRO
+2 NAME Genealogy Research Organizer
+2 VERS 1.4
+2 CORP Christopher Alan Mosher
+3 ADDR 41 Brook Pine Drive
+4 CONT Shelton, CT 06484-5912
+1 GEDC
+2 VERS 5.5
+2 FORM LINEAGE-LINKED
+1 CHAR ASCII
+1 SUBM @M0@
+0 @M0@ SUBM
+0 @I0@ INDI
+1 _XY 756 666
+1 NAME Barbara /Murray/
+2 SOUR @S0@
+3 QUAY 3
+1 SEX F
+1 FAMC @F0@
+0 @I1@ INDI
+1 _XY 682 588
+1 NAME Edward Lynch /Murray/
+2 SOUR @S0@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 16 APR 1906
+2 SOUR @S1@
+3 QUAY 1
+1 DEAT
+2 DATE 18 MAR 1988
+2 SOUR @S1@
+3 QUAY 1
+1 SSN 221-03-6804
+1 CENS
+2 DATE 15 APR 1910
+2 PLAC 938 17th Street, Wilmington, New Castle, DE, USA
+2 SOUR @S2@
+3 QUAY 3
+1 CENS
+2 DATE 1 JAN 1920
+2 PLAC Rehoboth Beach, Sussex, DE, USA
+2 SOUR @S22@
+3 QUAY 3
+1 FAMS @F0@
+1 FAMC @F1@
+0 @I2@ INDI
+1 _XY 441 481
+1 NAME George Malloy /Murray/
+2 SOUR @S7@
+3 QUAY 3
+1 SEX M
+1 OCCU blacksmith
+2 DATE 8 JUN 1902
+2 PLAC Lewes and Rehoboth Hundred, Sussex, DE, USA
+2 SOUR @S3@
+3 QUAY 2
+1 CENS
+2 DATE 15 APR 1910
+2 PLAC 938 17th Street, Wilmington, New Castle, DE, USA
+2 SOUR @S2@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1900
+2 PLAC Lewes and Rehoboth Hundred, Sussex, DE, USA
+2 SOUR @S4@
+3 QUAY 3
+1 BIRT
+2 DATE 5 SEP 1879
+2 PLAC Lewes, Sussex, DE, USA
+2 SOUR @S7@
+3 QUAY 1
+1 OCCU
+2 DATE ABT 1942
+2 PLAC Diamond Ice and Coal Company, 837 Market Street, Wilmington, New Castle, DE, USA
+2 SOUR @S7@
+3 QUAY 1
+1 RESI
+2 DATE ABT 1942
+2 PLAC 534 Vandever Avenue, Wilmington, New Castle, DE, USA
+2 SOUR @S7@
+3 QUAY 1
+1 CENS
+2 DATE 1 JAN 1920
+2 PLAC Rehoboth Beach, Sussex, DE, USA
+2 SOUR @S22@
+3 QUAY 3
+1 FAMS @F1@
+1 FAMC @F3@
+0 @I3@ INDI
+1 _XY 660 445
+1 NAME Fannie M. /Wilson/
+2 SOUR @S3@
+3 QUAY 0
+1 SEX F
+1 CENS
+2 DATE 14 APR 1910
+2 PLAC 938 17th Street, Wilmington, New Castle, DE, USA
+2 SOUR @S2@
+3 QUAY 3
+1 BIRT
+2 DATE OCT 1882
+2 PLAC DE, USA
+2 SOUR @S5@
+3 QUAY 1
+1 CENS
+2 DATE 1 JUN 1900
+2 PLAC Lewes, Lewes and Rehoboth Hundred, Sussex, DE, USA
+2 SOUR @S5@
+3 QUAY 3
+1 CENS
+2 DATE 1 JAN 1920
+2 PLAC Rehoboth Beach, Sussex, DE, USA
+2 SOUR @S22@
+3 QUAY 3
+1 FAMS @F1@
+1 FAMC @F2@
+0 @I4@ INDI
+1 _XY 856 171
+1 NAME Major E. /Wilson/
+2 SOUR @S3@
+3 QUAY 0
+1 SEX M
+1 BIRT
+2 PLAC Lewes and Rehoboth Hundred, Sussex, DE, USA
+2 SOUR @S3@
+3 QUAY 0
+2 DATE AUG 1839
+2 NOTE @T0@
+1 CENS
+2 DATE 1 JUN 1900
+2 SOUR @S5@
+3 QUAY 3
+2 PLAC Lewes, Lewes and Rehoboth Hundred, Sussex, DE, USA
+1 CENS
+2 DATE 1 JUN 1880
+2 PLAC Lewes and Rehoboth Hundred, Sussex, DE, USA
+2 SOUR @S11@
+3 QUAY 3
+1 BURI
+2 DATE ABT 1908
+2 PLAC Bethel Methodist Cemetery, Savannah Road, Lewes, Sussex, DE, USA
+2 SOUR @S12@
+3 QUAY 2
+1 DEAT
+2 DATE 1908
+2 PLAC DE, USA
+2 SOUR @S12@
+3 QUAY 1
+2 NOTE @T3@
+1 CENS
+2 DATE 1 JUN 1850
+2 PLAC Broadkill Hundred, Sussex, DE, USA
+2 SOUR @S17@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1860
+2 PLAC Milton, Broadkill Hundred, Sussex, DE, USA
+2 SOUR @S18@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1870
+2 PLAC Hollyville, Lewes and Rehoboth Hundred, Sussex, DE, USA
+2 SOUR @S19@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1840
+2 PLAC Broadkill Hundred, Sussex, DE, USA
+2 SOUR @S21@
+3 QUAY 2
+1 FAMS @F2@
+1 FAMC @F4@
+0 @I5@ INDI
+1 _XY 1091 30
+1 NAME John W. Abraham /Lankford/
+1 SEX M
+1 CENS
+2 DATE 1 JUN 1850
+2 PLAC Sussex, DE, USA
+2 SOUR @S14@
+3 QUAY 3
+1 BIRT
+2 DATE 1817
+2 PLAC MD, USA
+2 SOUR @S14@
+3 QUAY 1
+2 NOTE @T7@
+1 BURI
+2 DATE ABT 1883
+2 PLAC Bethel Methodist Cemetery, Savannah Road, Lewes, Sussex, DE, USA
+2 SOUR @S12@
+3 QUAY 3
+1 DEAT
+2 DATE 1883
+2 PLAC DE, USA
+2 SOUR @S12@
+3 QUAY 1
+1 CENS
+2 DATE 1 JUN 1860
+2 PLAC Williston, Caroline, MD, USA
+2 SOUR @S15@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1870
+2 PLAC Hollyville, Lewes and Rehoboth Hundred, Sussex, DE, USA
+2 SOUR @S16@
+3 QUAY 3
+1 FAMS @F4@
+0 @I6@ INDI
+1 _XY 479 590
+1 NAME Edna E. /Murray/
+2 SOUR @S2@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE ABT 1903
+2 PLAC DE, USA
+2 SOUR @S2@
+3 QUAY 1
+1 FAMC @F1@
+0 @I7@ INDI
+1 _XY 584 589
+1 NAME Dorris /Murray/
+2 SOUR @S2@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE ABT MAY 1909
+2 PLAC DE, USA
+2 SOUR @S2@
+3 QUAY 1
+1 FAMC @F1@
+0 @I8@ INDI
+1 _XY 147 175
+1 NAME Jackson B. /Murray/
+2 SOUR @S4@
+3 QUAY 1
+1 SEX M
+1 CENS
+2 DATE 1 JUN 1900
+2 PLAC Lewes and Rehoboth Hundred, Sussex, DE, USA
+2 SOUR @S4@
+3 QUAY 3
+1 BIRT
+2 DATE FEB 1830
+2 PLAC DE, USA
+2 SOUR @S4@
+3 QUAY 1
+1 CENS
+2 DATE 1 JUN 1880
+2 PLAC Lewes and Rehoboth Hundred, Sussex, DE, USA
+2 SOUR @S6@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1870
+2 PLAC Roxana, Baltimore Hundred, Sussex, DE, USA
+2 SOUR @S9@
+3 QUAY 3
+1 CENS
+2 DATE 15 APR 1910
+2 PLAC Sussex, DE, USA
+2 SOUR @S10@
+3 QUAY 3
+1 FAMS @F3@
+0 @I9@ INDI
+1 _XY 268 175
+1 NAME Sarah D. /Lynch/
+2 SOUR @S3@
+3 QUAY 1
+1 SEX F
+1 CENS
+2 DATE 1 JUN 1900
+2 PLAC Lewes and Rehoboth Hundred, Sussex, DE, USA
+2 SOUR @S4@
+3 QUAY 3
+1 BIRT
+2 DATE APR 1840
+2 PLAC DE, USA
+2 SOUR @S4@
+3 QUAY 1
+1 CENS
+2 DATE 1 JUN 1880
+2 PLAC Lewes and Rehoboth Hundred, Sussex, DE, USA
+2 SOUR @S6@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1870
+2 PLAC Roxana, Baltimore Hundred, Sussex, DE, USA
+2 SOUR @S9@
+3 QUAY 3
+1 CENS
+2 DATE 15 APR 1910
+2 PLAC Sussex, DE, USA
+2 SOUR @S10@
+3 QUAY 3
+1 FAMS @F3@
+0 @I10@ INDI
+1 _XY 124 365
+1 NAME Lewis /Murray/
+2 SOUR @S9@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1865
+2 PLAC DE, USA
+2 SOUR @S9@
+3 QUAY 1
+1 DEAT
+2 DATE BET 1 JUN 1870 AND 2 OCT 1872
+2 SOUR @S9@
+3 QUAY 0
+1 FAMC @F3@
+0 @I11@ INDI
+1 _XY 365 427
+1 NAME Wesley Wallis /Murray/
+2 SOUR @S7@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 28 SEP 1877
+2 PLAC Lewes, New Castle, DE, USA
+2 SOUR @S4@
+3 QUAY 1
+1 FAMC @F3@
+0 @I12@ INDI
+1 _XY 324 481
+1 NAME Allec /Murray/
+2 SOUR @S4@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE NOV 1888
+2 PLAC DE, USA
+2 SOUR @S4@
+3 QUAY 1
+1 FAMC @F3@
+0 @I13@ INDI
+1 _XY 32 429
+1 NAME Lizze H. /Murray/
+2 SOUR @S6@
+3 QUAY 0
+1 SEX F
+1 BIRT
+2 DATE ABT 1871
+2 PLAC DE, USA
+2 SOUR @S6@
+3 QUAY 0
+1 FAMC @F3@
+0 @I14@ INDI
+1 _XY 126 429
+1 NAME Lewis Evans /Murray/
+2 SOUR @S8@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 2 OCT 1872
+2 PLAC Lewes, Sussex, DE, USA
+2 SOUR @S8@
+3 QUAY 1
+1 FAMC @F3@
+0 @I15@ INDI
+1 _XY 238 429
+1 NAME John Penrose /Murray/
+1 SEX M
+1 BIRT
+2 DATE 2 JUN 1874
+2 PLAC DE, USA
+2 SOUR @S8@
+3 QUAY 1
+1 FAMC @F3@
+0 @I16@ INDI
+1 _XY 30 364
+1 NAME Edward /Murray/
+2 SOUR @S9@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1862
+2 PLAC DE, USA
+2 SOUR @S9@
+3 QUAY 1
+1 FAMC @F3@
+0 @I17@ INDI
+1 _XY 291 368
+1 NAME Severn P. /Murray/
+2 SOUR @S9@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1867
+2 PLAC DE, USA
+2 SOUR @S9@
+3 QUAY 1
+1 FAMC @F3@
+0 @I18@ INDI
+1 _XY 394 368
+1 NAME Effa I. D. /Murray/
+2 SOUR @S9@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1868
+2 PLAC DE, USA
+2 SOUR @S9@
+3 QUAY 1
+1 FAMC @F3@
+0 @I19@ INDI
+1 _XY 1080 171
+1 NAME Sarah A. /Lankford/
+2 SOUR @S13@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE APR 1850
+2 PLAC DE, USA
+2 SOUR @S11@
+3 QUAY 1
+2 NOTE @T5@
+1 BURI
+2 DATE ABT 1930
+2 PLAC Bethel Methodist Cemetery, Savannah Road, Lewes, Sussex, DE, USA
+2 SOUR @S12@
+3 QUAY 2
+1 DEAT
+2 DATE 1930
+2 PLAC DE, USA
+2 SOUR @S12@
+3 QUAY 1
+2 NOTE @T2@
+1 CENS
+2 DATE 1 JUN 1880
+2 PLAC Lewes and Rehoboth Hundred, Sussex, DE, USA
+2 SOUR @S11@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1900
+2 PLAC Lewes, Sussex, DE, USA
+2 SOUR @S5@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1850
+2 PLAC Sussex, DE, USA
+2 SOUR @S14@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1860
+2 PLAC Williston, Caroline, MD, USA
+2 SOUR @S15@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1870
+2 PLAC Hollyville, Lewes and Rehoboth Hundred, Sussex, DE, USA
+2 SOUR @S19@
+3 QUAY 3
+2 NOTE @T10@
+1 FAMS @F2@
+1 FAMC @F4@
+0 @I20@ INDI
+1 _XY 774 443
+1 NAME Benjamin /Wilson/
+2 SOUR @S11@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1872
+2 PLAC DE, USA
+2 SOUR @S11@
+3 QUAY 1
+1 FAMC @F2@
+0 @I21@ INDI
+1 _XY 863 441
+1 NAME Emma W. /Wilson/
+2 SOUR @S11@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1874
+2 PLAC DE, USA
+2 SOUR @S11@
+3 QUAY 1
+1 FAMC @F2@
+0 @I22@ INDI
+1 _XY 958 441
+1 NAME Lena A. /Wilson/
+2 SOUR @S11@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1877
+2 PLAC DE, USA
+2 SOUR @S11@
+3 QUAY 1
+1 FAMC @F2@
+0 @I23@ INDI
+1 _XY 1238 30
+1 NAME Mary A. /[unknown]/
+2 SOUR @S14@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1813
+2 PLAC MD, USA
+2 SOUR @S14@
+3 QUAY 1
+2 NOTE @T6@
+1 BURI
+2 DATE ABT 1882
+2 PLAC Bethel Methodist Cemetery, Savannah Road, Lewes, Sussex, DE, USA
+2 SOUR @S12@
+3 QUAY 3
+1 DEAT
+2 DATE 1882
+2 PLAC DE, USA
+2 SOUR @S12@
+3 QUAY 0
+1 CENS
+2 DATE 1 JUN 1860
+2 PLAC Williston, Caroline, MD, USA
+2 SOUR @S15@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1850
+2 PLAC Sussex, DE, USA
+2 SOUR @S14@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1870
+2 PLAC Hollyville, Lewes and Rehoboth Hundred, Sussex, DE, USA
+2 SOUR @S16@
+3 QUAY 3
+1 FAMS @F4@
+0 @I24@ INDI
+1 _XY 1082 130
+1 NAME Mary E. /Lankford/
+2 SOUR @S14@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1840
+2 PLAC MD, USA
+2 SOUR @S14@
+3 QUAY 1
+1 FAMC @F4@
+0 @I25@ INDI
+1 _XY 1175 130
+1 NAME Rebecca E. /Lankford/
+2 SOUR @S14@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1841
+2 PLAC MD, USA
+2 SOUR @S14@
+3 QUAY 1
+1 FAMC @F4@
+0 @I26@ INDI
+1 _XY 1277 130
+1 NAME William W. /Lankford/
+2 SOUR @S14@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1844
+2 PLAC MD, USA
+2 SOUR @S14@
+3 QUAY 1
+1 FAMC @F4@
+0 @I27@ INDI
+1 _XY 1185 171
+1 NAME Harriet /Lankford/
+2 SOUR @S16@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1852
+2 PLAC MD, USA
+2 SOUR @S15@
+3 QUAY 1
+2 NOTE @T8@
+1 FAMC @F4@
+0 @I28@ INDI
+1 _XY 1282 171
+1 NAME Amanda /Lankford/
+2 SOUR @S15@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1854
+2 PLAC MD, USA
+2 SOUR @S15@
+3 QUAY 1
+2 NOTE @T12@
+1 FAMC @F4@
+0 @I29@ INDI
+1 _XY 1088 223
+1 NAME John /Lankford/
+2 SOUR @S15@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1855
+2 PLAC MD, USA
+2 SOUR @S15@
+3 QUAY 1
+1 FAMC @F4@
+0 @I30@ INDI
+1 _XY 1183 223
+1 NAME Thomas /Lankford/
+2 SOUR @S15@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1858
+2 PLAC MD, USA
+2 SOUR @S15@
+3 QUAY 1
+1 FAMC @F4@
+0 @I31@ INDI
+1 _XY 1287 223
+1 NAME Ida C. /Lankford/
+2 SOUR @S16@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1861
+2 PLAC MD, USA
+2 SOUR @S16@
+3 QUAY 1
+1 FAMC @F4@
+0 @I32@ INDI
+1 _XY 1077 263
+1 NAME George H. /Lankford/
+2 SOUR @S16@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE FEB 1863
+2 PLAC MD, USA
+2 NOTE @T9@
+1 DEAT
+2 DATE 1923
+2 PLAC DE, USA
+2 SOUR @S12@
+3 QUAY 1
+1 FAMC @F4@
+0 @I33@ INDI
+1 _XY 666 40
+1 NAME Joseph /Wilson/
+2 SOUR @S17@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1803
+2 PLAC Sussex, DE, USA
+2 SOUR @S17@
+3 QUAY 1
+1 CENS
+2 DATE 1 JUN 1850
+2 PLAC Broadkill Hundred, Sussex, DE, USA
+2 SOUR @S17@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1860
+2 PLAC Milton, Broadkill Hundred, Sussex, DE, USA
+2 SOUR @S18@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1870
+2 PLAC Hollyville, Lewes and Rehoboth Hundred, Sussex, DE, USA
+2 SOUR @S19@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1880
+2 PLAC Lewes and Rehoboth Hundred, Sussex, DE, USA
+2 SOUR @S20@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1840
+2 PLAC Broadkill Hundred, Sussex, DE, USA
+2 SOUR @S21@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1830
+2 PLAC Broadkill Hundred, Sussex, DE, USA
+2 SOUR @S23@
+3 QUAY 3
+1 FAMS @F4@
+0 @I34@ INDI
+1 _XY 761 40
+1 NAME Margaret /Wilson/
+2 SOUR @S3@
+3 QUAY 2
+1 SEX F
+1 BIRT
+2 DATE ABT 1813
+2 PLAC Sussex, DE, USA
+2 SOUR @S17@
+3 QUAY 1
+1 CENS
+2 DATE 1 JUN 1850
+2 PLAC Broadkill Hundred, Sussex, DE, USA
+2 SOUR @S17@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1860
+2 PLAC Milton, Broadkill Hundred, Sussex, DE, USA
+2 SOUR @S18@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1870
+2 PLAC Hollyville, Lewes and Rehoboth Hundred, Sussex, DE, USA
+2 SOUR @S19@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1880
+2 PLAC Lewes and Rehoboth Hundred, Sussex, DE, USA
+2 SOUR @S20@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1840
+2 PLAC Broadkill Hundred, Sussex, DE, USA
+2 SOUR @S21@
+3 QUAY 2
+1 CENS
+2 DATE 1 JUN 1830
+2 PLAC Broadkill Hundred, Sussex, DE, USA
+2 SOUR @S23@
+3 QUAY 2
+1 FAMS @F4@
+0 @I35@ INDI
+1 _XY 576 171
+1 NAME Eli W. /Wilson/
+2 SOUR @S17@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1831
+2 PLAC Sussex, DE, USA
+2 SOUR @S17@
+3 QUAY 1
+1 FAMC @F4@
+0 @I36@ INDI
+1 _XY 654 171
+1 NAME Ebenezer /Wilson/
+2 SOUR @S17@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1833
+2 PLAC Sussex, DE, USA
+2 SOUR @S17@
+3 QUAY 1
+1 FAMC @F4@
+0 @I37@ INDI
+1 _XY 756 171
+1 NAME Mary A. /Wilson/
+2 SOUR @S17@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1835
+2 PLAC Sussex, DE, USA
+2 SOUR @S17@
+3 QUAY 1
+1 FAMC @F4@
+0 @I38@ INDI
+1 _XY 572 225
+1 NAME Peter S. /Wilson/
+2 SOUR @S17@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE AUG 1844
+2 PLAC Sussex, DE, USA
+2 SOUR @S17@
+3 QUAY 1
+2 NOTE @T11@
+1 FAMC @F4@
+0 @I39@ INDI
+1 _XY 658 225
+1 NAME Eliza J. /Wilson/
+2 SOUR @S17@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1842
+2 PLAC Sussex, DE, USA
+2 SOUR @S17@
+3 QUAY 1
+1 FAMC @F4@
+0 @I40@ INDI
+1 _XY 738 225
+1 NAME William Donovan /Wilson/
+2 SOUR @S17@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1844
+2 PLAC Sussex, DE, USA
+2 SOUR @S17@
+3 QUAY 1
+1 FAMC @F4@
+0 @I41@ INDI
+1 _XY 858 225
+1 NAME Mahala /Wilson/
+2 SOUR @S17@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1846
+2 PLAC Sussex, DE, USA
+2 SOUR @S17@
+3 QUAY 1
+1 FAMC @F4@
+0 @I42@ INDI
+1 _XY 571 276
+1 NAME Sarah E. /Wilson/
+2 SOUR @S17@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1849
+2 PLAC Sussex, DE, USA
+2 SOUR @S17@
+3 QUAY 1
+1 FAMC @F4@
+0 @I43@ INDI
+1 _XY 660 276
+1 NAME Louisa /Wilson/
+1 SEX F
+1 BIRT
+2 DATE ABT 1850
+2 PLAC DE, USA
+2 SOUR @S18@
+3 QUAY 1
+1 FAMC @F4@
+0 @I44@ INDI
+1 _XY 753 276
+1 NAME James V. /Wilson/
+2 SOUR @S19@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1856
+2 PLAC DE, USA
+2 SOUR @S18@
+3 QUAY 1
+1 FAMC @F4@
+0 @I45@ INDI
+1 _XY 861 587
+1 NAME Harel /Murray/
+2 SOUR @S22@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE OCT 1917
+2 PLAC DE, USA
+2 SOUR @S22@
+3 QUAY 1
+1 FAMC @F1@
+0 @F0@ FAM
+1 HUSB @I1@
+1 CHIL @I0@
+0 @F1@ FAM
+1 HUSB @I2@
+1 CHIL @I1@
+1 WIFE @I3@
+1 MARR
+2 DATE 8 JUN 1902
+2 PLAC Lewes, Sussex, DE, USA
+2 SOUR @S3@
+3 QUAY 3
+1 CHIL @I6@
+1 CHIL @I7@
+1 CHIL @I45@
+0 @F2@ FAM
+1 CHIL @I3@
+1 WIFE @I19@
+1 CHIL @I20@
+1 CHIL @I21@
+1 CHIL @I22@
+1 MARR
+2 DATE AFT 16 FEB 1870
+2 PLAC DE, USA
+2 SOUR @S13@
+3 QUAY 3
+1 HUSB @I4@
+0 @F3@ FAM
+1 HUSB @I8@
+1 CHIL @I2@
+1 WIFE @I9@
+1 CHIL @I10@
+1 CHIL @I11@
+1 CHIL @I12@
+1 MARR
+2 DATE 19 DEC 1860
+2 PLAC DE, USA
+2 SOUR @S3@
+3 QUAY 1
+2 NOTE @T1@
+1 CHIL @I13@
+1 CHIL @I14@
+1 CHIL @I15@
+1 CHIL @I16@
+1 CHIL @I17@
+1 CHIL @I18@
+0 @F4@ FAM
+1 CHIL @I19@
+1 HUSB @I5@
+1 WIFE @I23@
+1 CHIL @I24@
+1 CHIL @I25@
+1 CHIL @I26@
+1 CHIL @I27@
+1 CHIL @I28@
+1 CHIL @I29@
+1 CHIL @I30@
+1 CHIL @I31@
+1 CHIL @I32@
+0 @F5@ FAM
+1 HUSB @I33@
+1 CHIL @I4@
+1 WIFE @I34@
+1 CHIL @I35@
+1 CHIL @I36@
+1 CHIL @I37@
+1 CHIL @I38@
+1 CHIL @I39@
+1 CHIL @I40@
+1 CHIL @I41@
+1 CHIL @I42@
+1 CHIL @I43@
+1 CHIL @I44@
+1 MARR
+2 DATE 17 MAR 1829
+2 PLAC Broadkill Hundred, Sussex, DE, USA
+2 SOUR @S3@
+3 QUAY 3
+0 @S0@ SOUR
+1 AUTH Renz, Barbara Murray
+1 TITL Interview
+1 PUBL 2009
+0 @S1@ SOUR
+1 AUTH Social Security Administration
+1 TITL Social Security Death Index
+1 PUBL ancestry.com
+0 @S2@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1910, DE, New Castle, Wilmington, Ward 9, District 55
+1 PUBL p. 2 of 29
+1 TEXT <table border="1">
+2 CONT <tr><td>Murray</td><td>George M.</td><td>Head</td><td>M</td><td>W</td>
+2 CONC <td>30</td><td>M1</td><td>8</td><td>&nbsp;</td><td>&nbsp;</td><td>Dela
+2 CONC ware</td><td>Delaware</td><td>Delaware</td>
+2 CONT <tr><td>-</td><td>Fannie M.</td><td>Wife</td><td>F</td><td>W</td><td>2
+2 CONC 8</td><td>M1</td><td>8</td><td>3</td><td>3</td><td>Delaware</td><td>De
+2 CONC laware</td><td>Delaware</td>
+2 CONT <tr><td>-</td><td>Edna E.</td><td>daughter</td><td>F</td><td>W</td><td
+2 CONC >7</td><td>S</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Dela
+2 CONC ware</td><td>Delaware</td><td>Delaware</td>
+2 CONT <tr><td>-</td><td>Edward L.</td><td>son</td><td>M</td><td>W</td><td>3<
+2 CONC /td><td>S</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Delawar
+2 CONC e</td><td>Delaware</td><td>Delaware</td>
+2 CONT <tr><td>-</td><td>Dorris</td><td>daughter</td><td>F</td><td>W</td><td>
+2 CONC 11/12</td><td>S</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>D
+2 CONC elaware</td><td>Delaware</td><td>Delaware</td>
+2 CONT </table>
+2 CONT
+0 @S3@ SOUR
+1 AUTH Ancestry.com
+1 TITL Delaware Marriage Records, 1744-1912 [database on-line]
+1 PUBL Provo, UT, USA: The Genrations Network Inc., 2008
+1 TEXT [Original data: Public Archives Commission, Delaware Public Archives
+2 CONC . Marriage Records, 1744-1912. Dover, Delaware: Delaware Public Archiv
+2 CONC es. Record Group # RG 1325; Subgroup # 003; Series # 004.]
+2 CONT
+0 @S4@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1900, DE, Sussex, Lewis and Rehoboth, District 69
+1 PUBL pp. 1-2 of 34
+1 TEXT <table border="1">
+2 CONT <tr><td>Murray</td><td>Jackson</td><td>Head</td><td>W</td><td>M</td><t
+2 CONC d>Feb</td><td>1830</td><td>70</td><td>M</td><td>40</td><td>&nbsp;</td>
+2 CONC <td>&nbsp;</td><td>Delaware</td><td>Delaware</td><td>Delaware</td></tr
+2 CONC >
+2 CONT <tr><td>-</td><td>Sarah</td><td>Wife</td><td>W</td><td>F</td><td>Apr</
+2 CONC td><td>1840</td><td>60</td><td>M</td><td>40</td><td>10</td><td>6</td><
+2 CONC td>Delaware</td><td>Delaware</td><td>Delaware</td></tr>
+2 CONT <tr><td>Murray</td><td>Penrose</td><td>Son</td><td>W</td><td>M</td><td
+2 CONC >June</td><td>1877</td><td>22</td><td>S</td><td>&nbsp;</td><td>&nbsp;<
+2 CONC /td><td>&nbsp;</td><td>Delaware</td><td>Delaware</td><td>Delaware</td>
+2 CONC </tr>
+2 CONT <tr><td>-</td><td>Westley</td><td>Son</td><td>W</td><td>M</td><td>Sept
+2 CONC </td><td>1878</td><td>21</td><td>S</td><td>&nbsp;</td><td>&nbsp;</td><
+2 CONC td>&nbsp;</td><td>Delaware</td><td>Delaware</td><td>Delaware</td></tr>
+2 CONT <tr><td>-</td><td>George</td><td>Son</td><td>W</td><td>M</td><td>Sept<
+2 CONC /td><td>1881</td><td>18</td><td>S</td><td>&nbsp;</td><td>&nbsp;</td><t
+2 CONC d>&nbsp;</td><td>Delaware</td><td>Delaware</td><td>Delaware</td></tr>
+2 CONT <tr><td>-</td><td>Allec</td><td>Son</td><td>W</td><td>M</td><td>Nov</t
+2 CONC d><td>1888</td><td>11</td><td>S</td><td>&nbsp;</td><td>&nbsp;</td><td>
+2 CONC &nbsp;</td><td>Delaware</td><td>Delaware</td><td>Delaware</td></tr>
+2 CONT </table>
+2 CONT
+0 @S5@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1900, DE, Sussex, Lewis, District 97
+1 PUBL p. 40 of 55
+1 TEXT <table border="1">
+2 CONT <tr><td>Wilson</td><td>E. Major</td><td>Head</td><td>W</td><td>M</td><
+2 CONC td>Aug</td><td>1839</td><td>60</td><td>M</td><td>3</td><td>&nbsp;</td>
+2 CONC <td>&nbsp;</td><td>Delaware</td><td>Delaware</td><td>Delaware</td></tr
+2 CONC >
+2 CONT <tr><td>-</td><td>Sallie</td><td>Wife</td><td>W</td><td>F</td><td>Apri
+2 CONC l</td><td>1850</td><td>50</td><td>M</td><td>3</td><td>4</td><td>4</td>
+2 CONC <td>Maryland</td><td>Maryland</td><td>Maryland</td></tr>
+2 CONT <tr><td>-</td><td>M. Fannie</td><td>Daughter</td><td>W</td><td>F</td><
+2 CONC td>Oct</td><td>1882</td><td>17</td><td>s</td><td>&nbsp;</td><td>&nbsp;
+2 CONC </td><td>&nbsp;</td><td>Delaware</td><td>Delaware</td><td>Maryland</td
+2 CONC ></tr>
+2 CONT </table>
+2 CONT
+0 @S6@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1880, DE, Sussex, Lewes and Rehoboth, District 53
+1 PUBL p. 2 of 63
+1 TEXT <table border="1">
+2 CONT <tr><td>Murray</td><td>Jackson K.</td><td>W</td><td>M</td><td>45</td><
+2 CONC td>&nbsp;</td><td>" [Delaware]</td><td>" [Delaware]</td><td>" [Delawar
+2 CONC e]</td></tr>
+2 CONT <tr><td>"</td><td>Sarah C.</td><td>W</td><td>F</td><td>39</td><td>Wife
+2 CONC </td><td>" [Delaware]</td><td>" [Delaware]</td><td>" [Delaware]</td></
+2 CONC tr>
+2 CONT <tr><td>"</td><td>Lizzie H.</td><td>W</td><td>F</td><td>9</td><td>Daug
+2 CONC hter</td><td>" [Delaware]</td><td>" [Delaware]</td><td>" [Delaware]</t
+2 CONC d></tr>
+2 CONT <tr><td>"</td><td>Lewis P.</td><td>W</td><td>M</td><td>7</td><td>Son</
+2 CONC td><td>" [Delaware]</td><td>" [Delaware]</td><td>" [Delaware]</td></tr
+2 CONC >
+2 CONT <tr><td>"</td><td>John P.</td><td>W</td><td>M</td><td>6</td><td>"</td>
+2 CONC <td>" [Delaware]</td><td>" [Delaware]</td><td>" [Delaware]</td></tr>
+2 CONT <tr><td>"</td><td>Wesley</td><td>W</td><td>M</td><td>2</td><td>"</td><
+2 CONC td>" [Delaware]</td><td>" [Delaware]</td><td>" [Delaware]</td></tr>
+2 CONT <tr><td>"</td><td>George M.</td><td>W</td><td>M</td><td>9/12</td><td>"
+2 CONC </td><td>" [Delaware]</td><td>" [Delaware]</td><td>" [Delaware]</td></
+2 CONC tr>
+2 CONT </table>
+2 CONT
+0 @S7@ SOUR
+1 AUTH Ancestry.com
+1 TITL U.S. World War II Draft Registration Cards, 1942 [database on-line]
+1 PUBL Provo, UT, USA: The Generations Network, Inc., 2007
+1 TEXT [Original data: United States, Selective Service System. Selective Ser
+2 CONC vice Registration Cards, World War II: Fourth Registration. National A
+2 CONC rchives and Records Administration Branch locations: National Archive
+2 CONC s and Records Administration Region Branches.]
+2 CONT
+0 @S8@ SOUR
+1 AUTH Ancestry.com
+1 TITL World War I Draft Registration Cards, 1917-1918 [database on-line]
+1 PUBL Provo, UT, USA: The Generations Network, Inc., 2005
+1 TEXT [Original data: United States, Selective Service System. World War I S
+2 CONC elective Service System Draft Registration Cards, 1917-1918. Washingto
+2 CONC n, D.C.: National Archives and Records Administration. M1509, 4,582 ro
+2 CONC lls. Imaged from Family History Library microfilm.]
+0 @S9@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1870, DE, Sussex, Baltimore
+1 PUBL p. 20 of 85
+1 TEXT <table border="1">
+2 CONT <tr><td>Murray</td><td>Jackson B.</td><td>40</td><td>M</td><td>W</td><
+2 CONC td>Farmer</td><td>Delaware</td></tr>
+2 CONT <tr><td>-</td><td>Sarah D.</td><td>29</td><td>F</td><td>W</td><td>Keep
+2 CONC ing house</td><td>Delaware</td></tr>
+2 CONT <tr><td>-</td><td>Edward F.</td><td>8</td><td>M</td><td>W</td><td>&nbs
+2 CONC p;</td><td>Delaware</td></tr>
+2 CONT <tr><td>-</td><td>Lewis T.</td><td>5</td><td>M</td><td>W</td><td>&nbsp
+2 CONC ;</td><td>Delaware</td></tr>
+2 CONT <tr><td>-</td><td>Severn P.</td><td>3</td><td>M</td><td>W</td><td>&nbs
+2 CONC p;</td><td>Delaware</td></tr>
+2 CONT <tr><td>-</td><td>Effa I. D.</td><td>2</td><td>F</td><td>W</td><td>&nb
+2 CONC sp;</td><td>Delaware</td></tr>
+2 CONT </table>
+2 CONT
+0 @S10@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1910, DE, Sussex, Rep. District 10, District 125
+1 PUBL p. 23 of 33
+1 TEXT <table border="1">
+2 CONT <tr><td>Murray</td><td>Jackson</td><td>Head</td><td>M</td><td>W</td><t
+2 CONC d>80</td><td>M1</td><td>50</td><td>&nbsp;</td><td>&nbsp;</td><td>Delaw
+2 CONC are</td><td>Delaware</td><td>Delaware</td></tr>
+2 CONT <tr><td>-</td><td>Sary D.</td><td>Wife</td><td>F</td><td>W</td><td>69<
+2 CONC /td><td>M1</td><td>50</td><td>10</td><td>6</td><td>Delaware</td><td>De
+2 CONC laware</td><td>Delaware</td></tr>
+2 CONT </table>
+2 CONT
+0 @S11@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1880, DE, Sussex, Lewes and Rehoboth Hundred, District 53
+1 PUBL p. 57 of 63
+1 TEXT <table border="1">
+2 CONT <tr><td>Wilson</td><td>Major E.</td><td>W</td><td>M</td><td>39</td><td
+2 CONC >&nbsp;</td><td>Farmer</td><td>&quot; [Delaware]</td><td>&quot; [Delaw
+2 CONC are]</td><td>&quot; [Delaware]</td></tr>
+2 CONT <tr><td>&quot;</td><td>Sarah A.</td><td>W</td><td>F</td><td>30</td><td
+2 CONC >Wife</td><td>Housekeeper</td><td>&quot;</td><td>&quot;</td><td>&quot;
+2 CONC </td></tr>
+2 CONT <tr><td>&quot;</td><td>Banjamin</td><td>W</td><td>M</td><td>8</td><td>
+2 CONC Son</td><td>Home</td><td>&quot;</td><td>&quot;</td><td>&quot;</td></tr
+2 CONC >
+2 CONT <tr><td>&quot;</td><td>Emma W.</td><td>W</td><td>F</td><td>6</td><td>D
+2 CONC aughter</td><td>&quot;</td><td>&quot;</td><td>&quot;</td><td>&quot;</t
+2 CONC d></tr>
+2 CONT <tr><td>&quot;</td><td>Lena A.</td><td>W</td><td>F</td><td>3</td><td>&
+2 CONC quot;</td><td>&quot;</td><td>&quot;</td><td>&quot;</td><td>&quot;</td>
+2 CONC </tr>
+2 CONT <tr><td>Lankford</td><td>Thomas</td><td>W</td><td>M</td><td>21</td><td
+2 CONC >&nbsp;</td><td>Farm Hand</td><td>&quot;</td><td>&quot;</td><td>&quot;
+2 CONC </td></tr>
+2 CONT </table>
+2 CONT
+0 @S12@ SOUR
+1 AUTH Wilson, Ernest H.
+1 TITL Bethel Methodist Cemetery, Lewes, Sussex County, Delaware [partial lis
+2 CONC ting of burials]
+1 PUBL www.interment.net
+1 TEXT Lankford, John W, b. 1817, d. 1883, [EW]<br />
+2 CONT Lankford, Mary A, b. 1813, d. 1882?, [EW]<br />
+2 CONT Wilson, Major E, b. 1841, d. 1908, [EW]<br />
+2 CONT Wilson, Sarah A, b. 1850, d. 1930, w/o Major E., [EW]<br />
+2 CONT
+0 @S13@ SOUR
+1 AUTH Ancestry.com
+1 TITL Delaware Marriage Records, 1744-1912 [database on-line]
+1 PUBL Provo, UT, USA: The Generations Network, Inc., 2008
+1 TEXT [Original data: Public Archives Commission, Delaware Public Archives
+2 CONC . Marriage Records, 1744-1912. Dover, Delaware: Delaware Public Archiv
+2 CONC es. Record Group # RG 1325; Subgroup # 003; Series # 004.]
+0 @S14@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1850, DE, Sussex, Subdivision 11
+1 PUBL p. 54 of 204
+1 TEXT <table border="1">
+2 CONT <tr><td>John W.</td><td>Lankford</td><td>32</td><td>M</td><td>D[itt]
+2 CONC o [Farmer]</td><td>M.D.</td></tr>
+2 CONT <tr><td>Mary A.</td><td>&nbsp;</td><td>37</td><td>F</td><td>&nbsp;</td
+2 CONC ><td>&quot;</td></tr>
+2 CONT <tr><td>Mary E.</td><td>&nbsp;</td><td>10</td><td>F</td><td>&nbsp;</td
+2 CONC ><td>&quot;</td></tr>
+2 CONT <tr><td>Rebecca E.</td><td>&nbsp;</td><td>9</td><td>F</td><td>&nbsp;</
+2 CONC td><td>&quot;</td></tr>
+2 CONT <tr><td>W<sup>m</sup> W.</td><td>&nbsp;</td><td>6</td><td>M</td><td>&n
+2 CONC bsp;</td><td>&quot;</td></tr>
+2 CONT <tr><td>Sarah A.</td><td>&nbsp;</td><td>5/12</td><td>F</td><td>&nbsp;<
+2 CONC /td><td>Del</td></tr>
+2 CONT </table>
+2 CONT
+0 @S15@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1860, MD, Caroline, Not Stated
+1 PUBL p. 100 of 182
+1 TEXT <table border="1">
+2 CONT <tr><td>Abraham</td><td>Lankford</td><td>43</td><td>M</td><td>Farmer</
+2 CONC td><td>150</td><td>&quot; [Maryland]</td></tr>
+2 CONT <tr><td>Mary</td><td>d[itto]</td><td>41</td><td>F</td><td>&nbsp;</td><
+2 CONC td>&nbsp;</td><td>&quot;</td></tr>
+2 CONT <tr><td>Rebecca</td><td>d[itto]</td><td>17</td><td>F</td><td>&nbsp;</t
+2 CONC d><td>&nbsp;</td><td>&quot;</td></tr>
+2 CONT <tr><td>William</td><td>d[itto]</td><td>16</td><td>M</td><td>&nbsp;</t
+2 CONC d><td>&nbsp;</td><td>&quot;</td></tr>
+2 CONT <tr><td>Sarah</td><td>d[itto]</td><td>11</td><td>F</td><td>&nbsp;</td>
+2 CONC <td>&nbsp;</td><td>&quot;</td></tr>
+2 CONT <tr><td>Harriett</td><td>d[itto]</td><td>9</td><td>F</td><td>&nbsp;</t
+2 CONC d><td>&nbsp;</td><td>&quot;</td></tr>
+2 CONT <tr><td>Amanda</td><td>d[itto]</td><td>7</td><td>F</td><td>&nbsp;</td>
+2 CONC <td>&nbsp;</td><td>&quot;</td></tr>
+2 CONT <tr><td>John</td><td>d[itto]</td><td>5</td><td>M</td><td>&nbsp;</td><t
+2 CONC d>&nbsp;</td><td>&quot;</td></tr>
+2 CONT <tr><td>Thomas</td><td>d[itto]</td><td>2</td><td>M</td><td>&nbsp;</td>
+2 CONC <td>&nbsp;</td><td>&quot;</td></tr>
+2 CONT </table>
+2 CONT
+0 @S16@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1870, DE, Sussex, Lewes and Rehoboth Hundred
+1 PUBL p. 5 of 27
+1 TEXT <table border="1">
+2 CONT <tr><td>Lankford</td><td>J. W.</td><td>52</td><td>M</td><td>W</td><td>
+2 CONC [???] Farm</td><td>Mayrland [sic]</td></tr>
+2 CONT <tr><td>-</td><td>Mary A.</td><td>51</td><td>F</td><td>W</td><td>Hous
+2 CONC e Keepling</td><td>Mayrland [sic]</td></tr>
+2 CONT <tr><td>-</td><td>Harriet</td><td>17</td><td>F</td><td>W</td><td>at Ho
+2 CONC me</td><td>Mayrland [sic]</td></tr>
+2 CONT <tr><td>-</td><td>Amanda</td><td>14</td><td>F</td><td>W</td><td>at Hom
+2 CONC e</td><td>Mayrland [sic]</td></tr>
+2 CONT <tr><td>-</td><td>Thomas C.</td><td>11</td><td>M</td><td>W</td><td>a
+2 CONC t School</td><td>Mayrland [sic]</td></tr>
+2 CONT <tr><td>-</td><td>Ida C.</td><td>9</td><td>F</td><td>W</td><td>at Scho
+2 CONC ol</td><td>Mayrland [sic]</td></tr>
+2 CONT <tr><td>-</td><td>George H.</td><td>7</td><td>M</td><td>W</td><td>at S
+2 CONC chool</td><td>Mayrland [sic]</td></tr>
+2 CONT <tr><td>Walls</td><td>Thomas</td><td>19</td><td>M</td><td>W</td><td>Fa
+2 CONC rm Labor</td><td>Delaware</td></tr>
+2 CONT </table>
+2 CONT
+0 @S17@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1850, DE, Sussex, Broadkill Hundred
+1 PUBL p. 8 of 69
+1 TEXT <table border="1">
+2 CONT <tr><td>Joseph</td><td>Wilson</td><td>47</td><td>M</td><td>Farmer</td>
+2 CONC <td>&quot;&nbsp;&quot; [Sussex Co., Del.]</td></tr>
+2 CONT <tr><td>Margaret</td><td>&nbsp;</td><td>37</td><td>F</td><td>&nbsp;</t
+2 CONC d><td>&quot;&nbsp;&quot;</td></tr>
+2 CONT <tr><td>Eli W.</td><td>&nbsp;</td><td>19</td><td>M</td><td>&quot;</td>
+2 CONC <td>&quot;&nbsp;&quot;</td></tr>
+2 CONT <tr><td>Ebenezer</td><td>&nbsp;</td><td>17</td><td>M</td><td>&quot;</t
+2 CONC d><td>&quot;&nbsp;&quot;</td></tr>
+2 CONT <tr><td>Mary A.</td><td>&nbsp;</td><td>15</td><td>F</td><td>&nbsp;</td
+2 CONC ><td>&quot;&nbsp;&quot;</td></tr>
+2 CONT <tr><td>Major E.</td><td>&nbsp;</td><td>13</td><td>M</td><td>&nbsp;</t
+2 CONC d><td>&quot;&nbsp;&quot;</td></tr>
+2 CONT <tr><td>Peter S.</td><td>&nbsp;</td><td>9</td><td>M</td><td>&nbsp;</td
+2 CONC ><td>&quot;&nbsp;&quot;</td></tr>
+2 CONT <tr><td>Eliza J.</td><td>&nbsp;</td><td>8</td><td>F</td><td>&nbsp;</td
+2 CONC ><td>&quot;&nbsp;&quot;</td></tr>
+2 CONT <tr><td>William Donovan</td><td>&nbsp;</td><td>6</td><td>M</td><td>&nb
+2 CONC sp;</td><td>&quot;&nbsp;&quot;</td></tr>
+2 CONT <tr><td>Mahala</td><td>&nbsp;</td><td>4</td><td>F</td><td>&nbsp;</td><
+2 CONC td>&quot;&nbsp;&quot;</td></tr>
+2 CONT <tr><td>Sarah E.</td><td>&nbsp;</td><td>1</td><td>F</td><td>&nbsp;</td
+2 CONC ><td>&quot;&nbsp;&quot;</td></tr>
+2 CONT </table>
+2 CONT
+0 @S18@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1860, DE, Sussex, Broadkiln Hundred
+1 PUBL p. 63 of 73
+1 TEXT <table border="1">
+2 CONT <tr><td>Joseph</td><td>Wilson</td><td>Sr.</td><td>58</td><td>M</td><td
+2 CONC >Farm[er]</td><td>200</td><td>&quot; [Del.]</td></tr>
+2 CONT <tr><td>Maragret</td><td>&nbsp;</td><td>&nbsp;</td><td>40</td><td>F</t
+2 CONC d><td>&nbsp;</td><td>&nbsp;</td><td>&quot;</td></tr>
+2 CONT <tr><td>Magir</td><td>&nbsp;</td><td>&nbsp;</td><td>21</td><td>M</td><
+2 CONC td>Laborer</td><td>&nbsp;</td><td>&quot;</td></tr>
+2 CONT <tr><td>Peter</td><td>&nbsp;</td><td>&nbsp;</td><td>19</td><td>M</td><
+2 CONC td>D[itt]o</td><td>&nbsp;</td><td>&quot;</td></tr>
+2 CONT <tr><td>Eliza J.</td><td>&nbsp;</td><td>&nbsp;</td><td>17</td><td>F</t
+2 CONC d><td>&nbsp;</td><td>&nbsp;</td><td>&quot;</td></tr>
+2 CONT <tr><td>Mahala</td><td>&nbsp;</td><td>&nbsp;</td><td>15</td><td>F</td>
+2 CONC <td>&nbsp;</td><td>&nbsp;</td><td>&quot;</td></tr>
+2 CONT <tr><td>Sarah E.</td><td>&nbsp;</td><td>&nbsp;</td><td>12</td><td>F</t
+2 CONC d><td>&nbsp;</td><td>&nbsp;</td><td>&quot;</td></tr>
+2 CONT <tr><td>Leoicia</td><td>&nbsp;</td><td>&nbsp;</td><td>10</td><td>F</td
+2 CONC ><td>&nbsp;</td><td>&nbsp;</td><td>&quot;</td></tr>
+2 CONT <tr><td>James</td><td>&nbsp;</td><td>&nbsp;</td><td>4</td><td>M</td><t
+2 CONC d>&nbsp;</td><td>&nbsp;</td><td>&quot;</td></tr>
+2 CONT </table>
+2 CONT
+0 @S19@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1870, DE, Sussex, Lewes and Rehoboth Hundred
+1 PUBL p. 16 of 27
+1 TEXT <table border="1">
+2 CONT <tr><td>Wilson</td><td>Joseph</td><td>74</td><td>M</td><td>W</td><td>F
+2 CONC arm Labor</td><td>Delaware</td></tr>
+2 CONT <tr><td>-</td><td>Margaret</td><td>55</td><td>F</td><td>W</td><td>Keep
+2 CONC ing house</td><td>Delaware</td></tr>
+2 CONT <tr><td>-</td><td>James V.</td><td>15</td><td>M</td><td>W</td><td>at H
+2 CONC ome</td><td>Delaware</td></tr>
+2 CONT <tr><td>-</td><td>Louisa</td><td>20</td><td>F</td><td>W</td><td>at Hom
+2 CONC e</td><td>Delaware</td></tr>
+2 CONT <tr><td>-</td><td>William A.</td><td>4</td><td>M</td><td>W</td><td>a
+2 CONC t Home</td><td>Delaware</td></tr>
+2 CONT <tr><td>Wilson</td><td>Peter</td><td>31</td><td>M</td><td>W</td><td>Fa
+2 CONC rm Labor</td><td>Delaware</td></tr>
+2 CONT <tr><td>-</td><td>Frances A.</td><td>18</td><td>F</td><td>W</td><td>Ho
+2 CONC use Keeping</td><td>Delaware</td></tr>
+2 CONT <tr><td>-</td><td>Major</td><td>32</td><td>M</td><td>W</td><td>Laboer<
+2 CONC /td><td>Delaware</td></tr>
+2 CONT <tr><td>-</td><td>Sarah E.</td><td>21</td><td>F</td><td>W</td><td>Keep
+2 CONC ing house</td><td>Delaware</td></tr>
+2 CONT </table>
+2 CONT
+0 @S20@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1880, DE, Sussex, Lewes and Rehoboth Hundred
+1 PUBL p. 58 of 63
+1 TEXT <table border="1">
+2 CONT <tr><td>Wilson</td><td>Joseph</td><td>W</td><td>M</td><td>78</td><td>&
+2 CONC nbsp;</td><td>Laborer</td><td>&quot; [Delaware]</td><td>&quot; [Delawa
+2 CONC re]</td><td>&quot; [Delaware]</td></tr>
+2 CONT <tr><td>&quot;</td><td>Margaret</td><td>W</td><td>F</td><td>68</td><td
+2 CONC >Wife</td><td>House Keeper</td><td>&quot;</td><td>&quot;</td><td>&quot
+2 CONC ;</td></tr>
+2 CONT <tr><td>&quot;</td><td>James V.</td><td>W</td><td>M</td><td>23</td><td
+2 CONC >Son</td><td>Carpenter</td><td>&quot;</td><td>&quot;</td><td>&quot;</t
+2 CONC d></tr>
+2 CONT </table>
+2 CONT
+0 @S21@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1840, DE, Sussex, Broadkill Hundred
+1 PUBL p. 15 of 44
+1 TEXT <table border="1">
+2 CONT <tr><td>Joseph Wilson Jr.</td><td>[37]</td><td>30-39</td><td>m</td></t
+2 CONC r>
+2 CONT <tr><td>[Margaret]</td><td>[27]</td><td>20-29</td><td>f</td></tr>
+2 CONT <tr><td>[Eli]</td><td>[9]</td><td>5-9</td><td>m</td></tr>
+2 CONT <tr><td>[Ebenezer]</td><td>[7]</td><td>0-4</td><td>m</td></tr>
+2 CONT <tr><td>[Mary]</td><td>[5]</td><td>0-4</td><td>f</td></tr>
+2 CONT <tr><td>[Major]</td><td>[1]</td><td>0-4</td><td>m</td></tr>
+2 CONT </table>
+2 CONT
+0 @S22@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1920, DE, Sussex, Rehoboth Beach, District 203
+1 PUBL p. 11 of 29
+1 TEXT <table border="1">
+2 CONT <tr><td>Muray</td><td>George M.</td><td>head</td><td>M</td><td>40</td>
+2 CONC <td>Delaware</td></tr>
+2 CONT <tr><td>-</td><td>Fanie M.</td><td>Wife</td><td>F</td><td>37</td><td>D
+2 CONC elaware</td></tr>
+2 CONT <tr><td>-</td><td>Edna E.</td><td>Daughter</td><td>F</td><td>17</td><t
+2 CONC d>Delaware</td></tr>
+2 CONT <tr><td>-</td><td>Edward L.</td><td>Son</td><td>M</td><td>14</td><td>D
+2 CONC elaware</td></tr>
+2 CONT <tr><td>-</td><td>Doris</td><td>Daughter</td><td>M [sic]</td><td>11</t
+2 CONC d><td>Delaware</td></tr>
+2 CONT <tr><td>-</td><td>Harel W.</td><td>Son</td><td>M</td><td>2 [and] 3/12<
+2 CONC /td><td>Delaware</td></tr>
+2 CONT </table>
+2 CONT
+0 @S23@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1830, DE, Sussex, Broadkill
+1 PUBL p. 3 of 41
+1 TEXT <table border="1">
+2 CONT <tr><td>Joseph Wilson (of EO)</td><td>[27]</td><td>20-29</td><td>m</td
+2 CONC ></tr>
+2 CONT <tr><td>[Margaret Wilson]</td><td>[17]</td><td>15-19</td><td>f</td></t
+2 CONC r>
+2 CONT </table>
+2 CONT
+0 @T0@ NOTE date is from 1900 census
+0 @T1@ NOTE by Rev. Townsend
+0 @T2@ NOTE place is assumed
+0 @T3@ NOTE place is assumed
+0 @T4@ NOTE just a guess
+0 @T5@ NOTE date is from 1900 census
+0 @T6@ NOTE date is from gravestone
+0 @T7@ NOTE date is from gravestone
+0 @T8@ NOTE 9 in 1860 census; 17 in 1870 census
+0 @T9@ NOTE 1900 census
+0 @T10@ NOTE Is possibly Sarah, Major's SISTER, instead of Sarah his wife; I'm assu
+1 CONC ming it's his wife as he married in Feb. 1870, and Sarah Lankford is n
+1 CONC ot with her parents in 1870 census
+0 @T11@ NOTE date is from 1900 census
+0 @T12@ NOTE 7 in 1860 census; 14 in 1870 census
+0 TRLR

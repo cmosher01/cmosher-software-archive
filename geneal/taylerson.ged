@@ -1,0 +1,1545 @@
+0 HEAD
+1 SOUR GRO
+2 NAME Genealogy Research Organizer
+2 VERS 1.4
+2 CORP Christopher Alan Mosher
+3 ADDR 41 Brook Pine Drive
+4 CONT Shelton, CT 06484-5912
+1 GEDC
+2 VERS 5.5
+2 FORM LINEAGE-LINKED
+1 CHAR ASCII
+1 SUBM @M0@
+0 @M0@ SUBM
+0 @I0@ INDI
+1 _XY 335 106
+1 NAME Elizabeth /Taylorson/
+2 SOUR @S15@
+3 QUAY 0
+1 SEX F
+1 FAMC @F4@
+1 BIRT
+2 DATE ABT 1826
+2 PLAC Durham, England, UK
+2 SOUR @S15@
+3 QUAY 1
+0 @I1@ INDI
+1 _XY 431 106
+1 NAME Margaret /Taylorson/
+2 SOUR @S15@
+3 QUAY 1
+1 SEX F
+1 FAMC @F4@
+1 BIRT
+2 DATE ABT 1828
+2 PLAC Durham, England, UK
+2 SOUR @S15@
+3 QUAY 1
+0 @I2@ INDI
+1 _XY 530 106
+1 NAME Isabella /Taylorson/
+2 SOUR @S15@
+3 QUAY 1
+1 SEX F
+1 FAMC @F4@
+1 BIRT
+2 DATE ABT 1830
+2 PLAC Durham, England, UK
+2 SOUR @S15@
+3 QUAY 1
+0 @I3@ INDI
+1 _XY 332 145
+1 NAME Frances /Taylorson/
+2 SOUR @S15@
+3 QUAY 1
+1 SEX F
+1 FAMC @F4@
+1 BIRT
+2 DATE ABT 1832
+2 PLAC Durham, England, UK
+2 SOUR @S15@
+3 QUAY 1
+0 @I4@ INDI
+1 _XY 427 145
+1 NAME Esther Emma /Taylorson/
+2 SOUR @S14@
+3 QUAY 1
+1 SEX F
+1 FAMC @F4@
+1 BIRT
+2 DATE ABT 1834
+2 PLAC Durham, England, UK
+2 SOUR @S15@
+3 QUAY 1
+0 @I5@ INDI
+1 _XY 544 145
+1 NAME Mary Jane /Taylorson/
+2 SOUR @S13@
+3 QUAY 3
+1 SEX F
+1 FAMC @F4@
+1 BIRT
+2 DATE 2 OCT 1837
+2 PLAC Stockton, Durham, England, UK
+2 SOUR @S13@
+3 QUAY 3
+0 @I6@ INDI
+1 _XY 649 115
+1 NAME Robert /Taylorson/
+2 SOUR @S15@
+3 QUAY 1
+1 SEX M
+1 FAMC @F4@
+1 BIRT
+2 DATE 7 MAY 1839
+2 PLAC Stockton, Durham, England, UK
+2 SOUR @S12@
+3 QUAY 3
+1 DEAT
+2 DATE ABT 26 MAR 1920
+2 PLAC Steuben, NY, USA
+2 SOUR @S11@
+3 QUAY 1
+0 @I7@ INDI
+1 _XY 91 47
+1 NAME Jonathan /Taylorson/
+2 SOUR @S10@
+3 QUAY 1
+1 SEX M
+1 FAMS @F3@
+1 OCCU farmer
+2 SOUR @S10@
+3 QUAY 1
+0 @I8@ INDI
+1 _XY 792 36
+1 NAME Christina /McLean/
+2 SOUR @S9@
+3 QUAY 1
+1 SEX F
+1 FAMS @F2@
+1 CENS
+2 DATE 1 JUN 1860
+2 PLAC Painted Post, Erwin, Steuben, NY, USA
+2 SOUR @S8@
+3 QUAY 3
+1 BIRT
+2 DATE ABT 1822
+2 PLAC Cromarty, Ross and Cromarty, Highland, Scotland, UK
+2 SOUR @S9@
+3 QUAY 1
+2 NOTE @T13@
+1 CENS
+2 DATE 1 JUN 1870
+2 PLAC Painted Post, Erwin, Steuben, NY, USA
+2 SOUR @S7@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1880
+2 PLAC Painted Post, Erwin, Steuben, NY, USA
+2 SOUR @S6@
+3 QUAY 3
+0 @I9@ INDI
+1 _XY 754 106
+1 NAME Margaret /Taylorson/
+2 SOUR @S8@
+3 QUAY 1
+1 SEX F
+1 FAMC @F2@
+1 BIRT
+2 DATE ABT 1851
+2 PLAC NY, USA
+2 SOUR @S8@
+3 QUAY 1
+0 @I10@ INDI
+1 _XY 854 106
+1 NAME Christina /Taylorson/
+2 SOUR @S8@
+3 QUAY 1
+1 SEX F
+1 FAMC @F2@
+1 BIRT
+2 DATE ABT 1853
+2 PLAC NY, USA
+2 SOUR @S8@
+3 QUAY 1
+0 @I11@ INDI
+1 _XY 155 282
+1 NAME George Ord /Taylorson/
+1 SEX M
+1 FAMC @F1@
+1 BIRT
+2 DATE 5 JAN 1848
+2 PLAC Victoria Place, Hartlepool, Durham, England, UK
+2 SOUR @S5@
+3 QUAY 3
+1 DEAT
+2 DATE 1 APR 1923
+2 PLAC NY, USA
+2 SOUR @S11@
+3 QUAY 1
+0 @I12@ INDI
+1 _XY 262 281
+1 NAME William /Taylorson/
+2 SOUR @S24@
+3 QUAY 1
+1 SEX M
+1 FAMC @F1@
+1 BIRT
+2 DATE ABT APR 1850
+2 PLAC Painted Post, Steuben, NY, USA
+2 SOUR @S24@
+3 QUAY 0
+2 NOTE @T12@
+1 DEAT
+2 DATE ABT 1865
+2 PLAC Corning, Steuben, NY, USA
+2 NOTE @T11@
+0 @I13@ INDI
+1 _XY 261 328
+1 NAME Lavinia /Taylorson/
+2 SOUR @S23@
+3 QUAY 1
+1 SEX F
+1 FAMC @F1@
+1 BIRT
+2 DATE ABT 1854
+2 PLAC Steuben, NY, USA
+2 SOUR @S22@
+3 QUAY 0
+1 DEAT
+2 DATE ABT 10 NOV 1942
+2 PLAC Elmira, Chemung, NY, USA
+2 SOUR @S11@
+3 QUAY 1
+0 @I14@ INDI
+1 _XY 442 340
+1 NAME Harriet /Taylorson/
+2 SOUR @S21@
+3 QUAY 1
+1 SEX F
+1 FAMC @F1@
+1 BIRT
+2 DATE ABT 1863
+2 PLAC NY, USA
+2 SOUR @S23@
+3 QUAY 1
+0 @I15@ INDI
+1 _XY 692 30
+1 NAME Robert /Taylorson/
+2 SOUR @S14@
+3 QUAY 1
+1 SEX M
+1 FAMS @F4@
+1 FAMS @F2@
+1 BIRT
+2 DATE ABT 1796
+2 PLAC Durham, England, UK
+2 SOUR @S15@
+3 QUAY 1
+1 IMMI
+2 DATE 5 JUL 1849
+2 PLAC Manhattan, NY, USA
+2 SOUR @S14@
+3 QUAY 3
+2 NOTE @T10@
+1 CENS
+2 DATE 6 JUN 1841
+2 PLAC Brunswick Street, Stockton upon Tees, Durham, England, UK
+2 SOUR @S15@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1850
+2 PLAC Painted Post, Erwin, Steuben, NY, USA
+2 SOUR @S4@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1860
+2 PLAC Painted Post, Erwin, Steuben, NY, USA
+2 SOUR @S8@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1870
+2 PLAC Painted Post, Erwin, Steuben, NY, USA
+2 SOUR @S7@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1880
+2 PLAC Painted Post, Erwin, Steuben, NY, USA
+2 SOUR @S6@
+3 QUAY 3
+1 DEAT
+2 DATE 20 DEC 1889
+2 PLAC Painted Post, Erwin, Steuben, NY, USA
+2 SOUR @S9@
+3 QUAY 2
+1 RESI
+2 DATE FROM 1851 TO 20 DEC 1889
+2 PLAC Corner of Chemung Street and Charles Street, Painted Post, Erwin, Steuben, NY, USA
+2 SOUR @S9@
+3 QUAY 1
+0 @I16@ INDI
+1 _XY 156 327
+1 NAME Hannah S. /Taylorson/
+1 SEX F
+1 FAMS @F0@
+1 FAMC @F1@
+1 DEAT
+2 DATE 30 MAY 1897
+2 PLAC Hornby, Steuben, NY, USA
+2 SOUR @S3@
+3 QUAY 0
+2 NOTE @T9@
+1 BIRT
+2 DATE 30 MAR 1852
+2 PLAC Corning, Steuben, NY, USA
+2 SOUR @S2@
+3 QUAY 0
+1 BURI
+2 PLAC Central Valley Cemetery, Hornby, Steuben, NY, USA
+2 SOUR @S20@
+3 QUAY 2
+1 CENS
+2 DATE 1875
+2 PLAC Hornby, Steuben, NY, USA
+2 SOUR @S19@
+3 PAGE p. 1887
+3 QUAY 1
+3 DATA
+4 TEXT p. 15
+1 CENS
+2 DATE 1892
+2 PLAC Hornby, Steuben, NY, USA
+2 SOUR @S19@
+3 PAGE p. 1887
+3 QUAY 1
+3 DATA
+4 TEXT p. 4
+1 CENS
+2 DATE 1 JUN 1880
+2 PLAC Hornby, Steuben, NY, USA
+2 SOUR @S18@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1870
+2 PLAC Corning, Steuben, NY, USA
+2 SOUR @S23@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1860
+2 PLAC Corning, Steuben, NY, USA
+2 SOUR @S22@
+3 QUAY 3
+1 OCCU teacher
+2 DATE 1870
+2 SOUR @S23@
+3 QUAY 2
+0 @I17@ INDI
+1 _XY 149 106
+1 NAME Thomas /Taylorson/
+1 SEX M
+1 FAMS @F1@
+1 FAMC @F3@
+1 CENS
+2 DATE 1 JUN 1850
+2 PLAC Painted Post, Erwin, Steuben, NY, USA
+2 SOUR @S24@
+3 QUAY 3
+1 IMMI
+2 DATE 5 JUL 1849
+2 PLAC Manhattan, NY, USA
+2 SOUR @S14@
+3 QUAY 3
+2 NOTE @T8@
+1 BIRT
+2 DATE 21 FEB 1822
+2 PLAC England, UK
+2 SOUR @S17@
+3 QUAY 0
+2 NOTE @T7@
+1 DEAT
+2 DATE 16 JUN 1886
+2 SOUR @S17@
+3 QUAY 0
+1 BURI
+2 DATE ABT 19 JUN 1886
+2 PLAC Hope Cemetery, Corning, Steuben, NY, USA
+2 SOUR @S17@
+3 QUAY 1
+2 NOTE @T6@
+1 EVEN
+2 DATE 12 DEC 1861
+2 PLAC Corning, Steuben, NY, USA
+2 TYPE bought land
+2 SOUR @S16@
+3 PAGE v. 95, p. 46
+3 QUAY 3
+1 CENS
+2 DATE 1865
+2 PLAC Corning, Steuben, NY, USA
+2 SOUR @S19@
+3 PAGE p. 4177
+3 QUAY 1
+3 DATA
+4 TEXT p. 18
+1 CENS
+2 DATE 1 JUN 1870
+2 PLAC Corning, Steuben, NY, USA
+2 SOUR @S23@
+3 QUAY 3
+1 CENS
+2 DATE 1855
+2 PLAC Corning, Steuben, NY, USA
+2 SOUR @S19@
+3 PAGE p. 4188
+3 QUAY 1
+3 DATA
+4 TEXT p. 86
+1 CENS
+2 DATE 1 JUN 1860
+2 PLAC Corning, Steuben, NY, USA
+2 SOUR @S22@
+3 QUAY 3
+1 CENS
+2 DATE 1875
+2 PLAC Corning, Steuben, NY, USA
+2 SOUR @S19@
+3 PAGE p. 4188
+3 QUAY 1
+3 DATA
+4 TEXT p. 75
+1 CENS
+2 DATE 1 JUN 1880
+2 NOTE @T5@
+1 RESI
+2 DATE 14 AUG 1847
+2 PLAC North Street, Middlesbrough, Stockton upon Tees, Durham, England, UK
+2 SOUR @S10@
+3 QUAY 3
+1 CENS
+2 DATE 6 JUN 1841
+2 PLAC Castle Building, Stockton upon Tees, Durham, England, UK
+2 SOUR @S1@
+3 QUAY 3
+2 NOTE @T4@
+1 OCCU ran funeral home
+2 PLAC Corning, Steuben, NY, USA
+0 @I18@ INDI
+1 _XY 256 106
+1 NAME Ann /Taylorson/
+1 SEX F
+1 FAMS @F1@
+1 FAMC @F4@
+1 CENS
+2 DATE 1 JUN 1850
+2 PLAC Painted Post, Erwin, Steuben, NY, USA
+2 SOUR @S24@
+3 QUAY 3
+1 BIRT
+2 DATE 11 AUG 1824
+2 PLAC Durham, England, UK
+2 SOUR @S17@
+3 QUAY 0
+2 NOTE @T3@
+1 DEAT
+2 DATE 28 JAN 1873
+2 PLAC Corning, Steuben, NY, USA
+2 SOUR @S17@
+3 QUAY 1
+2 NOTE @T2@
+1 CENS
+2 DATE 1 JUN 1870
+2 PLAC Corning, Steuben, NY, USA
+2 SOUR @S23@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1860
+2 PLAC Corning, Steuben, NY, USA
+2 SOUR @S22@
+3 QUAY 3
+1 IMMI
+2 DATE 5 JUL 1849
+2 PLAC Manhattan, NY, USA
+2 SOUR @S14@
+3 QUAY 3
+2 NOTE @T1@
+1 CENS
+2 DATE 6 JUN 1841
+2 PLAC Brunswick Street, Stockton upon Tees, Durham, England, UK
+2 SOUR @S15@
+3 QUAY 3
+1 RESI
+2 DATE 14 AUG 1847
+2 PLAC North Street, Middlesbrough, Stockton upon Tees, Durham, England, UK
+2 SOUR @S10@
+3 QUAY 3
+0 @I19@ INDI
+1 _XY 353 340
+1 NAME Jessie /Taylorson/
+2 SOUR @S22@
+3 QUAY 1
+1 SEX M
+1 FAMC @F1@
+1 BIRT
+2 DATE ABT 1856
+2 PLAC Steuben, NY, USA
+2 SOUR @S22@
+3 QUAY 0
+0 @I20@ INDI
+1 _XY 601 30
+1 NAME Esther /Lister/
+2 SOUR @S12@
+3 QUAY 1
+1 SEX F
+1 FAMS @F4@
+1 BIRT
+2 DATE ABT 1800
+2 PLAC Durham, England, UK
+2 SOUR @S15@
+3 QUAY 1
+1 CENS
+2 DATE 6 JUN 1841
+2 PLAC Brunswick Street, Stockton upon Tees, Durham, England, UK
+2 SOUR @S15@
+3 QUAY 3
+1 DEAT
+2 DATE 17 MAY 1845
+2 PLAC Commercial Steet, Middlesbrough, Stockton upon Tees, Durham, England, UK
+2 SOUR @S0@
+3 QUAY 3
+0 @I21@ INDI
+1 _XY 30 339
+1 NAME Henry Francis /Harrison/
+1 SEX M
+1 FAMS @F0@
+0 @F0@ FAM
+1 WIFE @I16@
+1 MARR
+2 DATE 16 OCT 1872
+2 PLAC Corning, Steuben, NY, USA
+2 SOUR @S2@
+3 QUAY 0
+2 NOTE @T0@
+1 HUSB @I21@
+0 @F1@ FAM
+1 HUSB @I17@
+1 WIFE @I18@
+1 CHIL @I16@
+1 CHIL @I11@
+1 CHIL @I12@
+1 CHIL @I13@
+1 CHIL @I14@
+1 CHIL @I19@
+1 MARR
+2 DATE 14 AUG 1847
+2 PLAC Stockton upon Tees, Durham, England, UK
+2 SOUR @S10@
+3 QUAY 3
+0 @F2@ FAM
+1 HUSB @I15@
+1 WIFE @I8@
+1 CHIL @I9@
+1 CHIL @I10@
+1 MARR
+2 DATE 1850
+2 PLAC Steuben, NY, USA
+2 SOUR @S9@
+3 QUAY 1
+0 @F3@ FAM
+1 HUSB @I7@
+1 CHIL @I17@
+0 @F4@ FAM
+1 HUSB @I15@
+1 WIFE @I20@
+1 CHIL @I18@
+1 CHIL @I0@
+1 CHIL @I1@
+1 CHIL @I2@
+1 CHIL @I3@
+1 CHIL @I4@
+1 CHIL @I5@
+1 CHIL @I6@
+0 @S0@ SOUR
+1 AUTH General Register Office, England
+1 TITL Death certificate, Taylerson, Esther
+1 PUBL 1845 Q2, Stockton and Sedgefield district, vol. 24, p. 155
+1 TEXT <table border="1">
+2 CONT <thead>
+2 CONT <tr>
+2 CONT <th>Columns:-</th>
+2 CONT <th>1</th>
+2 CONT <th>2</th>
+2 CONT <th>3</th>
+2 CONT <th>4</th>
+2 CONT <th>5</th>
+2 CONT <th>6</th>
+2 CONT <th>7</th>
+2 CONT <th>8</th>
+2 CONT <th>9</th>
+2 CONT </tr>
+2 CONT <tr>
+2 CONT <th>No.</th>
+2 CONT <th>When and<br />where died</th>
+2 CONT <th>Name and Surname</th>
+2 CONT <th>Sex</th>
+2 CONT <th>Age</th>
+2 CONT <th>Occupation</th>
+2 CONT <th>Cause of death</th>
+2 CONT <th>Signature, description and<br />residence of informant</th>
+2 CONT <th>When<br />registered</th>
+2 CONT <th>Signature of<br />registrar</th>
+2 CONT </tr>
+2 CONT </thead>
+2 CONT <tbody>
+2 CONT <tr>
+2 CONT <td>443</td>
+2 CONT <td>Seventeenth<br />of May 1845<br />Commercial Steet<br />Middlesbro
+2 CONC ugh</td>
+2 CONT <td>Esther Taylerson</td>
+2 CONT <td>Female</td>
+2 CONT <td>46<br />years</td>
+2 CONT <td>Wife of<br />Robert Taylerson<br />Innkeeper</td>
+2 CONT <td>Cancerous affection<br />of the Breast<br />and Womb</td>
+2 CONT <td>Robert Taylerson<br />Present at the Death<br />Middlesbrough</td>
+2 CONT <td>Nineteenth<br />of May<br />1845</td>
+2 CONT <td>W<sup>m</sup>. Metcalfe<br />Snaith<br />Registrar</td>
+2 CONT </tr>
+2 CONT </tbody>
+2 CONT </table>
+2 CONT
+0 @S1@ SOUR
+1 AUTH UK National Archives
+1 TITL England Census, 1841, Durham, Stockton upon Tees, ED 1, image 3 of 8
+1 PUBL class HO107, piece 317, book 23, folio 6
+1 TEXT [page] <b>5</b>
+2 CONT <table border="1">
+2 CONT <thead>
+2 CONT <tr>
+2 CONT <th rowspan="2">PLACE</th>
+2 CONT <th colspan="2">HOUSES</th>
+2 CONT <th colspan="2" rowspan="2">NAMES<br />of each Person who abode therei
+2 CONC n<br /> the preceding Night.</th>
+2 CONT <th colspan="2">AGE<br />and<br />SEX</th>
+2 CONT <th rowspan="2">PROFESSION, TRADE,<br />EMPLOYMENT,<br />or of<br />IN
+2 CONC DEPENDENT MEANS.</th>
+2 CONT <th colspan="2">Where Born</th>
+2 CONT </tr>
+2 CONT <tr>
+2 CONT <th>Uninhabited<br />or Building</th>
+2 CONT <th>Inhabited</th>
+2 CONT <th>Males</th>
+2 CONT <th>Females</th>
+2 CONT <th>Whether Born<br />in same County</th>
+2 CONT <th>Whether Born in<br />Scotland, Ireland,<br />or Foreign Parts.</th
+2 CONC >
+2 CONT </tr>
+2 CONT </thead>
+2 CONT <tbody>
+2 CONT <tr><td>Castle Building</td><td>&nbsp;</td><td>1</td><td>Jane</td><td>
+2 CONC Allen</td><td>&nbsp;</td><td>70</td><td>&nbsp;</td><td>&nbsp;</td><td>
+2 CONC [check-mark]</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>George</td><td>d[
+2 CONC itt]o</td><td>35</td><td>&nbsp;</td><td>Schoolmaster</td><td>&nbsp;</t
+2 CONC d><td>[check-mark]</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Elizabeth</td><td
+2 CONC >d[itt]o</td><td>&nbsp;</td><td>8</td><td>&nbsp;</td><td>&nbsp;</td><t
+2 CONC d>[check-mark]</td></tr>
+2 CONT </tbody>
+2 CONT </table>
+2 CONT [page] <b>6</b> [folio] <b>6</b><br />
+2 CONT Parish or Township of <b>Stockton</b><br />
+2 CONT <table border="1">
+2 CONT <thead>
+2 CONT <tr>
+2 CONT <th rowspan="2">PLACE</th>
+2 CONT <th colspan="2">HOUSES</th>
+2 CONT <th colspan="2" rowspan="2">NAMES<br />of each Person who abode therei
+2 CONC n<br /> the preceding Night.</th>
+2 CONT <th colspan="2">AGE<br />and<br />SEX</th>
+2 CONT <th rowspan="2">PROFESSION, TRADE,<br />EMPLOYMENT,<br />or of<br />IN
+2 CONC DEPENDENT MEANS.</th>
+2 CONT <th colspan="2">Where Born</th>
+2 CONT </tr>
+2 CONT <tr>
+2 CONT <th>Uninhabited<br />or Building</th>
+2 CONT <th>Inhabited</th>
+2 CONT <th>Males</th>
+2 CONT <th>Females</th>
+2 CONT <th>Whether Born<br />in same County</th>
+2 CONT <th>Whether Born in<br />Scotland, Ireland,<br />or Foreign Parts.</th
+2 CONC >
+2 CONT </tr>
+2 CONT </thead>
+2 CONT <tbody>
+2 CONT <tr><td>Castle Building</td><td>&nbsp;</td><td>&nbsp;</td><td>Thomas</
+2 CONC td><td>Outrane</td><td>25</td><td>&nbsp;</td><td>Lathriver</td><td>no<
+2 CONC /td><td>[check-mark]</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Tho<sup>s</sup>.<
+2 CONC /td><td>Taylorson</td><td>15</td><td>&nbsp;</td><td>Cabinet maker</td>
+2 CONC <td>yes</td><td>&nbsp;</td></tr>
+2 CONT </tbody>
+2 CONT </table>
+2 CONT
+0 @S2@ SOUR
+1 AUTH Harrison, Alice
+1 TITL Applicant's Working Sheet, National Society, Daughters of the America
+2 CONC n Revolution
+1 PUBL In posession of Chris Mosher
+0 @S3@ SOUR
+1 TITL [Unknown newspaper, clipping]
+1 PUBL In posession of Chris Mosher, 1897
+1 TEXT DIED<br />
+2 CONT In Hornby, May 30th, 1897, Hannah, wife of Henry Harrison, aged 45 yea
+2 CONC rs.<br />
+2 CONT
+0 @S4@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1850, NY, Steuben, Painted Post
+1 PUBL M432.598, p. 3
+1 TEXT SCHEDULE I.--Free Inhabitants in the Town of Painted Post in the Count
+2 CONC y of Steuben State of New York enumerated by me, on the 29<sup>th</sup
+2 CONC > day of August 1850.<br />
+2 CONT [...]<br />
+2 CONT [Dwelling] 3<br />
+2 CONT [Family] 3<br />
+2 CONT <table border="1">
+2 CONT <tr><td>32</td><td>35</td><td>Robert</td><td>Talerson</td><td>50</td><
+2 CONC td>M.</td><td>Carpenter.</td><td>300</td><td>England</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>Robert</td><td>Talerson</td><td>
+2 CONC 4</td><td>M.</td><td>&nbsp;</td><td>&nbsp;</td><td>England</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>John</td><td>Coak</td><td>19</td
+2 CONC ><td>M.</td><td>Brick layer.</td><td>&nbsp;</td><td>England</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>Elizabeth</td><td>Davison</td><t
+2 CONC d>34</td><td>F.</td><td>&nbsp;</td><td>&nbsp;</td><td>England</td></tr
+2 CONC >
+2 CONT <tr><td>33</td><td>36</td><td>William</td><td>Davison</td><td>34</td><
+2 CONC td>M.</td><td>Brick layer</td><td>&nbsp;</td><td>England</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>Thomas</td><td>Davison</td><td>2
+2 CONC 5</td><td>M.</td><td>Brick layer.</td><td>&nbsp;</td><td>England</td><
+2 CONC /tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>James</td><td>Davison</td><td>21
+2 CONC </td><td>M.</td><td>Prentice</td><td>&nbsp;</td><td>England</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>Ellen</td><td>Carter</td><td>4</
+2 CONC td><td>F.</td><td>&nbsp</td><td>&nbsp;</td><td>England</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>William H</td><td>Davison</td><t
+2 CONC d>7/12</td><td>M.</td><td>&nbsp</td><td>&nbsp;</td><td>Pa</td></tr>
+2 CONT </table>
+2 CONT
+0 @S5@ SOUR
+1 AUTH General Register Office, England
+1 TITL Birth certificate, Taylorson, George Ord
+1 PUBL 1848 Q1, Stockton and Sedgefield district, vol. 24, p. 212
+1 TEXT <table border="1">
+2 CONT <thead>
+2 CONT <tr>
+2 CONT <th>Columns:-</th>
+2 CONT <th>1</th>
+2 CONT <th>2</th>
+2 CONT <th>3</th>
+2 CONT <th>4</th>
+2 CONT <th>5</th>
+2 CONT <th>6</th>
+2 CONT <th>7</th>
+2 CONT <th>8</th>
+2 CONT <th>9</th>
+2 CONT <th>10</th>
+2 CONT </tr>
+2 CONT <tr>
+2 CONT <th>No.</th>
+2 CONT <th>When and<br />where born</th>
+2 CONT <th>Name, if any</th>
+2 CONT <th>Sex</th>
+2 CONT <th>Name and surname<br />of father</th>
+2 CONT <th>Name, surname and<br />maiden surname<br />of mother</th>
+2 CONT <th>Occupation<br />of father</th>
+2 CONT <th>Signature, description and<br />residence of informant</th>
+2 CONT <th>When<br />registered</th>
+2 CONT <th>Signature of<br />registrar</th>
+2 CONT <th>Name entered<br />after registration</th>
+2 CONT </tr>
+2 CONT </thead>
+2 CONT <tbody>
+2 CONT <tr>
+2 CONT <td>77</td>
+2 CONT <td>Fifth<br />January<br />1848<br />Victoria Place<br />Hartlepool</
+2 CONC td>
+2 CONT <td>George<br />Ord</td>
+2 CONT <td>Boy</td>
+2 CONT <td>Thomas<br />Taylorson</td>
+2 CONT <td>Ann Taylerson<br />Formerly<br />Taylerson</td>
+2 CONT <td>Joiner</td>
+2 CONT <td>Ann Taylerson<br />Mother<br />Victoria Place<br />Hartlepool</td>
+2 CONT <td>Eleventh<br />Januanry<br />1848</td>
+2 CONT <td>Edward<br />Spence<br />Registrar</td>
+2 CONT <td>[blank]</td>
+2 CONT </tr>
+2 CONT </tbody>
+2 CONT </table>
+2 CONT
+0 @S6@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1880, NY, Stebuen, Erwin, ED173, image 37 of 41
+1 PUBL T9.933
+1 TEXT [AIS page] 219 A.<br />
+2 CONT Page No. 37<sup>th</sup><br />
+2 CONT Supervisor's Dist. No. 9<br />
+2 CONT Enumeration Dist. No. 173<br />
+2 CONT SCHEDULE 1.--Inhabitants in Erwin, in the County of Steuben, State o
+2 CONC f New York enumerated by me on the 24th day of June, 1880.<br />
+2 CONT Vil[age]. of Painted Post<br />
+2 CONT [...]<br />
+2 CONT [Dwelling] 356<br />
+2 CONT [Family] 374<br />
+2 CONT <table border="1">
+2 CONT <tr><td>[Surname</td><td>given name</td><td>race</td><td>gender</td><t
+2 CONC d>age</td><td>relation</td><td>sing</td><td>mard</td><td>wid</td><td>o
+2 CONC cc</td><td>born</td><td>father-born</td><td>mother-born]</td></tr>
+2 CONT <tr><td>Taylorson</td><td>Robert</td><td>W</td><td>M</td><td>82</td><t
+2 CONC d>&nbsp;</td><td>&nbsp;</td><td>1</td><td>&nbsp;</td><td>Carpenter</td
+2 CONC ><td>England</td><td>England</td><td>England</td></tr>
+2 CONT <tr><td>--</td><td>Christina</td><td>W</td><td>F</td><td>63</td><td>Wi
+2 CONC fe</td><td>&nbsp;</td><td>1</td><td>&nbsp;</td><td>Keeping House</td><
+2 CONC td>Scotland</td><td>Scotland</td><td>Scotland</td></tr>
+2 CONT </table>
+2 CONT
+0 @S7@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1870, NY, Steuben, Erwin, image 33 of 50
+1 PUBL M593.1095
+1 TEXT [AIS page] 158<br />
+2 CONT Page No. 33<br />
+2 CONT SCHEDULE 1.--Inhabitants in Erwin, in the County of Steuben, State o
+2 CONC f New York, enumerated by me on the 14<sup>th</sup> day of June, 1870.
+2 CONC <br />
+2 CONT Post Office: Painted Post<br />
+2 CONT [...]<br />
+2 CONT [Dwelling] 243<br />
+2 CONT [Family] 258<br />
+2 CONT <table border="1">
+2 CONT <tr><td>[last</td><td>first</td><td>age</td><td>gender</td><td>race</t
+2 CONC d><td>occupation</td><td>real$</td><td>pers$</td><td>birthplace]</td><
+2 CONC /tr>
+2 CONT <tr><td>Taylor</td><td>Robert</td><td>70</td><td>M</td><td>W</td><td>H
+2 CONC ouse Carpenter</td><td>800</td><td>200</td><td>England</td></tr>
+2 CONT <tr><td>--</td><td>Christina</td><td>50</td><td>F</td><td>W</td><td>Ke
+2 CONC eping house</td><td>&nbsp;</td><td>&nbsp;</td><td>Scotland</td></tr>
+2 CONT <tr><td>--</td><td>Margaret</td><td>18</td><td>F</td><td>W</td><td>Att
+2 CONC . Sch</td><td>&nbsp;</td><td>&nbsp;</td><td>New York</td></tr>
+2 CONT <tr><td>--</td><td>Christina</td><td>16</td><td>F</td><td>W</td><td>"<
+2 CONC /td><td>&nbsp;</td><td>&nbsp;</td><td>d[itt]o</td></tr>
+2 CONT </table>
+2 CONT
+0 @S8@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1860, NY, Steuben, Erwin, image 11 of 48
+1 PUBL M653.863
+1 TEXT [AIS page 303]<br />
+2 CONT Page No. 45<br />
+2 CONT SCHEDULE 1.--Free Inhabitants in Town of Corning in the County of Steu
+2 CONC ben State of New York enumerated by me , on the 7<sup>th</sup>. day o
+2 CONC f July 1860.<br />
+2 CONT Post Office Painted Post.<br />
+2 CONT [...]<br />
+2 CONT [Dwelling] 381<br />
+2 CONT [Family] 351<br />
+2 CONT <table border="1">
+2 CONT <tr><td>Robert</td><td>Tylerson</td><td>60</td><td>M</td><td>Carpenter
+2 CONC </td><td>[r$] 500</td><td>[p$] 200</td><td>England</td><td>&nbsp;</td>
+2 CONC </tr>
+2 CONT <tr><td>Christany</td><td>"</td><td>38</td><td>F</td><td>&nbsp;</td><t
+2 CONC d>&nbsp;</td><td>&nbsp;</td><td>Scotland</td><td>[attended school]</td
+2 CONC ></tr>
+2 CONT <tr><td>Margeret</td><td>"</td><td>9</td><td>F</td><td>&nbsp;</td><td>
+2 CONC &nbsp;</td><td>&nbsp;</td><td>N.Y</td><td>[attended school]</td></tr>
+2 CONT <tr><td>Christiany</td><td>"</td><td>7</td><td>F</td><td>&nbsp;</td><t
+2 CONC d>&nbsp;</td><td>&nbsp;</td><td>"</td><td>&nbsp;</td></tr>
+2 CONT </table>
+2 CONT
+0 @S9@ SOUR
+1 AUTH Corning [New York] Journal [newspaper]
+1 TITL Taylorson, Robert, obituary
+1 PUBL 1889-12-26, Corning, NY
+1 TEXT Robert Taylorson, an old resident of our village, died on Friday, Dec
+2 CONC . 20. He was born in Durham Co., England, in 1797. In the year 1849 h
+2 CONC e emigrated to this country, a widower, bringing with him three daught
+2 CONC ers and one son. He was a carpenter by trade and came directly to Pain
+2 CONC ted Post and began to work at his trade. In 1850 he married Miss Chris
+2 CONC tine McLean, of Cromarty, Scotland, and the following year built the h
+2 CONC ouse on the corner of Chemung and Charles streets, which he occupied u
+2 CONC ntil his death. His wife and her two daughters, Mrs. Margaret Tobias a
+2 CONC nd Mrs. Christine Chapman, survivie him. He was a good citizen, a kin
+2 CONC d neighbor, quiet and unassuming in his manners, sturdily honest and f
+2 CONC aithful to all his obligations.
+0 @S10@ SOUR
+1 AUTH General Register Office, England
+1 TITL Marriage certificate, Taylerson, Thomas, and Taylerson, Ann
+1 PUBL 1847 Q3, Stockton district, vol. 24, p. 241
+1 TEXT <p>
+2 CONT 1847. Marriage solemnized in the Register Office in the District of St
+2 CONC ockton and Sedgefield in the Counties of Durham and York
+2 CONT </p>
+2 CONT <table border="1">
+2 CONT <thead>
+2 CONT <tr><th>No.</th><th>When Married.</th><th colspan="2">Name and Surname
+2 CONC .</th><th>Age.</th><th>Condition.</th><th>Rank or Profession.</th><th>
+2 CONC Residence at the Time of Marriage.</th><th colspan="2">Father's Name a
+2 CONC nd Surname.</th><th>Rank or Profession of Father.</th></tr>
+2 CONT </thead>
+2 CONT <tbody>
+2 CONT <tr>
+2 CONT <td rowspan="2">71</td>
+2 CONT <td rowspan="2">Fourteenth<br />of August<br />1847</td>
+2 CONT <td>Thomas</td>
+2 CONT <td>Taylerson</td>
+2 CONT <td>of Full<br />Age</td>
+2 CONT <td>Bachelor</td>
+2 CONT <td>Joiner</td>
+2 CONT <td>North Street<br />Middlesbrough</td>
+2 CONT <td>Jonathan</td>
+2 CONT <td>Taylerson</td>
+2 CONT <td>Farmer</td>
+2 CONT </tr>
+2 CONT <tr>
+2 CONT <td>Ann</td>
+2 CONT <td>Taylerson</td>
+2 CONT <td>of Full<br />Age</td>
+2 CONT <td>Spinster</td>
+2 CONT <td>------</td>
+2 CONT <td>North Street<br />Middlesbrough</td>
+2 CONT <td>Robert</td>
+2 CONT <td>Taylerson</td>
+2 CONT <td>Joiner</td>
+2 CONT </tr>
+2 CONT </tbody>
+2 CONT </table>
+2 CONT <p>
+2 CONT Married in the Register Office before me,<br />W<sup>m</sup>. Metcalf
+2 CONC e Snaith<br />Registrar<br />William Best<br/>Superintendent Registrar
+2 CONT </p>
+2 CONT <table border="1">
+2 CONT <tbody>
+2 CONT <tr>
+2 CONT <td rowspan="2">This Marriage<br />was<br />solemnized<br />between us
+2 CONC ,</td>
+2 CONT <td>Tho<sup>s</sup>.</td><td>Taylerson</td>
+2 CONT <td rowspan="2">in the<br />Presence<br />of us,</td>
+2 CONT <td>Robert</td><td>Richet</td>
+2 CONT </tr>
+2 CONT <tr>
+2 CONT <td>Ann</td><td>Taylerson</td>
+2 CONT <td>Margt</td><td>Canham</td>
+2 CONT </tr>
+2 CONT </tbody>
+2 CONT </table>
+2 CONT
+0 @S11@ SOUR
+1 TITL Hope Cemetery Interment List
+1 PUBL http://www.paintedhills.org/STEUBEN/HopeCem/CorningHopeTitle.html
+1 TEXT <p>Park Ave. Corning</p>
+2 CONT <p>
+2 CONT List typed by volunteers: Alyce J. Clayson Moran, Tricia Clemens, Lyn
+2 CONC n Gilbert, Gayle Thomson, Bill Thompson and Paul Giometti
+2 CONT </p>
+2 CONT <p>
+2 CONT Copied from Cemetery Record book in possession of Paul Riesbeck, Super
+2 CONC tentant [sic] of the Cemeteries. The records start at 1890 and befor
+2 CONC e this date it is not know where the records are or if any was keep [s
+2 CONC ic]. Copied by Mrs. Paul (Susannah E>) Whitcomb, 10 Tuxill Avenue Corn
+2 CONC ing, New York. --During month of October 1969
+2 CONT </p>
+2 CONT <p>
+2 CONT TAYLERSON, Ann   , Born  1824 , Died  1873   
+2 CONT </p>
+2 CONT <p>
+2 CONT TAYLERSON, Charlotte E.   , Born  1842 , Died  1920   
+2 CONT </p>
+2 CONT <p>
+2 CONT TAYLERSON, George E.   , Born  1877 , Died  1936   
+2 CONT </p>
+2 CONT <p>
+2 CONT TAYLERSON, George O.   , Born  1848 , Died  1923   
+2 CONT </p>
+2 CONT <p>
+2 CONT TAYLERSON, Ida   , Born  1867 , Died  1938   
+2 CONT </p>
+2 CONT <p>
+2 CONT TAYLERSON, Mary M.   , Born  1855 , Died  1924   
+2 CONT </p>
+2 CONT <p>
+2 CONT TAYLERSON, Ray Edward   , Born  1870 , Died  1946   
+2 CONT </p>
+2 CONT <p>
+2 CONT TAYLERSON, Robert   , Born  1840 , Died  1920   
+2 CONT </p>
+2 CONT <p>
+2 CONT TAYLERSON, Thomas   , Born  1822 , Died  1886   
+2 CONT </p>
+2 CONT <p>
+2 CONT TAYLERSON, William   , Born  1850 , Died  1861    
+2 CONT </p>
+2 CONT <p>
+2 CONT TAYLORSON, Geo. O. Interment Date 2-3-Apr-1923 Age 75y2m27d Lot # 59
+2 CONC 1 Cause of Death Nyrital pleagentation Remarks Trans from Olean Pag
+2 CONC e # 206
+2 CONT </p>
+2 CONT <p>
+2 CONT TAYLORSON, George A. Interment Date Bet 9-Feb, 1936 & 8-Apr-1936 Age 5
+2 CONC 9 Lot # (Ashes) Cause of Death Heart disease Remarks Trans from Florid
+2 CONC a - Cremated Page # 284
+2 CONT </p>
+2 CONT <p>
+2 CONT TAYLORSON, Ida Interment Date 8-11 Sep 1938 Age 71 Lot # 776 Cause o
+2 CONC f Death Lobar pneumonia Remarks  Page # 301
+2 CONT </p>
+2 CONT <p>
+2 CONT TAYLORSON, Mary Malissa Interment Date 16-18 Jul 1924 Age 69y Lot # 59
+2 CONC 1 Cause of Death Acute myocarditis Remarks Trans from Olean Page # 213
+2 CONT </p>
+2 CONT <p>
+2 CONT TAYLORSON, Ray Edward Interment Date 26-29 Nov 1946 Age 76-0-12 Lo
+2 CONC t # 776 Cause of Death Cerebral Hemorrhage Remarks  Page # 347
+2 CONT </p>
+2 CONT <p>
+2 CONT TAYLORSON. Robert Interment Date 28-30-Mar-1920 Age 80 Lot # 776 Caus
+2 CONC e of Death Arlerioseteros Remarks  Page # 182
+2 CONT </p>
+2 CONT <p>
+2 CONT DODD, Lavinia Interment Date 12-14 Nov 1942 Age 88 Lot # 118 Cause o
+2 CONC f Death Cardiac decompensation Remarks trans from Elmira, N.Y. Pag
+2 CONC e # 323
+2 CONT </p>
+2 CONT
+0 @S12@ SOUR
+1 AUTH General Register Office, England
+1 TITL Birth certificate, Taylerson, Robert
+1 PUBL 1839 Q2, Stockton and Sedgefield district, vol. 24, p. 207
+1 TEXT <table border="1">
+2 CONT <thead>
+2 CONT <tr>
+2 CONT <th>Columns:-</th>
+2 CONT <th>1</th>
+2 CONT <th>2</th>
+2 CONT <th>3</th>
+2 CONT <th>4</th>
+2 CONT <th>5</th>
+2 CONT <th>6</th>
+2 CONT <th>7</th>
+2 CONT <th>8</th>
+2 CONT <th>9</th>
+2 CONT <th>10</th>
+2 CONT </tr>
+2 CONT <tr>
+2 CONT <th>No.</th>
+2 CONT <th>When and<br />where born</th>
+2 CONT <th>Name, if any</th>
+2 CONT <th>Sex</th>
+2 CONT <th>Name and surname<br />of father</th>
+2 CONT <th>Name, surname and<br />maiden surname<br />of mother</th>
+2 CONT <th>Occupation<br />of father</th>
+2 CONT <th>Signature, description and<br />residence of informant</th>
+2 CONT <th>When<br />registered</th>
+2 CONT <th>Signature of<br />registrar</th>
+2 CONT <th>Name entered<br />after registration</th>
+2 CONT </tr>
+2 CONT </thead>
+2 CONT <tbody>
+2 CONT <tr>
+2 CONT <td>245</td>
+2 CONT <td>Seventh<br />of May<br />1839,<br />Stockton</td>
+2 CONT <td>Robert</td>
+2 CONT <td>Boy</td>
+2 CONT <td>Robert<br />Taylerson</td>
+2 CONT <td>Esther Taylerson<br />formerly<br />Lister</td>
+2 CONT <td>Cabinet<br />maker</td>
+2 CONT <td>Esther Taylerson<br />Mother<br />Brunswick<br />Street Stockton</
+2 CONC td>
+2 CONT <td>Fifteenth<br />of June<br />1839</td>
+2 CONT <td>John Nesbit<br />Registrar</td>
+2 CONT <td>[blank]</td>
+2 CONT </tr>
+2 CONT </tbody>
+2 CONT </table>
+2 CONT
+0 @S13@ SOUR
+1 AUTH General Register Office, England
+1 TITL Birth certificate, Taylerson, Mary Jane
+1 PUBL 1837 Q4, Stockton on Tees district, vol. 24, p. 148
+1 TEXT <table border="1">
+2 CONT <thead>
+2 CONT <tr>
+2 CONT <th>Columns:-</th>
+2 CONT <th>1</th>
+2 CONT <th>2</th>
+2 CONT <th>3</th>
+2 CONT <th>4</th>
+2 CONT <th>5</th>
+2 CONT <th>6</th>
+2 CONT <th>7</th>
+2 CONT <th>8</th>
+2 CONT <th>9</th>
+2 CONT <th>10</th>
+2 CONT </tr>
+2 CONT <tr>
+2 CONT <th>No.</th>
+2 CONT <th>When and<br />where born</th>
+2 CONT <th>Name, if any</th>
+2 CONT <th>Sex</th>
+2 CONT <th>Name and surname<br />of father</th>
+2 CONT <th>Name, surname and<br />maiden surname<br />of mother</th>
+2 CONT <th>Occupation<br />of father</th>
+2 CONT <th>Signature, description and<br />residence of informant</th>
+2 CONT <th>When<br />registered</th>
+2 CONT <th>Signature of<br />registrar</th>
+2 CONT <th>Name entered<br />after registration</th>
+2 CONT </tr>
+2 CONT </thead>
+2 CONT <tbody>
+2 CONT <tr>
+2 CONT <td>89</td>
+2 CONT <td>2 October<br />Stockton</td>
+2 CONT <td>Mary Jane</td>
+2 CONT <td>Girl</td>
+2 CONT <td>Robert<br />Taylorson</td>
+2 CONT <td>Esther Taylorson<br />formerly<br />Lister</td>
+2 CONT <td>Joiner</td>
+2 CONT <td>Robert Taylorson<br />Father<br />Joiner<br />Brunswick Street</td
+2 CONC >
+2 CONT <td>16 October</td>
+2 CONT <td>John Nesbit<br />Registrar</td>
+2 CONT <td>[blank]</td>
+2 CONT </tr>
+2 CONT </tbody>
+2 CONT </table>
+2 CONT
+0 @S14@ SOUR
+1 TITL Irish to America, 1846-1865 Passenger and Immigration Lists
+1 PUBL Genealogy.com
+1 TEXT <table border="1">
+2 CONT <tr>
+2 CONT <th>Last Name</th>
+2 CONT <th>First Name</th>
+2 CONT <th>Age</th>
+2 CONT <th>Gender</th>
+2 CONT <th>Occupation</th>
+2 CONT <th>Last ResidenceBritain</th>
+2 CONT <th>Date of Arrival</th>
+2 CONT <th>Port of Debarkation</th>
+2 CONT <th>Final Destination</th>
+2 CONT <th>Ship's Name</th>
+2 CONT <th>Manifest ID Number</th>
+2 CONT <th>Port of Embarkation</th>
+2 CONT <th>Purpose for Travel</th>
+2 CONT <th>Mode of Travel</th>
+2 CONT </tr>
+2 CONT <tr>
+2 CONT <td>Taylerson</td>
+2 CONT <td>Robert</td>
+2 CONT <td>58</td>
+2 CONT <td>Male</td>
+2 CONT <td>Joiner</td>
+2 CONT <td>Great Britain</td>
+2 CONT <td>Jul. 5, 1849</td>
+2 CONT <td>New York</td>
+2 CONT <td>USA</td>
+2 CONT <td>Hermes</td>
+2 CONT <td>3817</td>
+2 CONT <td>Newcastle</td>
+2 CONT <td>Unknown</td>
+2 CONT <td>Unknown</td>
+2 CONT </tr>
+2 CONT <tr>
+2 CONT <td>Taylerson</td>
+2 CONT <td>Thomas</td>
+2 CONT <td>27</td>
+2 CONT <td>Male</td>
+2 CONT <td>Joiner</td>
+2 CONT <td>Great Britain</td>
+2 CONT <td>Jul. 5, 1849</td>
+2 CONT <td>New York</td>
+2 CONT <td>USA</td>
+2 CONT <td>Hermes</td>
+2 CONT <td>3817</td>
+2 CONT <td>Newcastle</td>
+2 CONT <td>Unknown</td>
+2 CONT <td>Unknown</td>
+2 CONT </tr>
+2 CONT <tr>
+2 CONT <td>Taylerson</td>
+2 CONT <td>Ann</td>
+2 CONT <td>25</td>
+2 CONT <td>Female</td>
+2 CONT <td>Wife</td>
+2 CONT <td>Great Britain</td>
+2 CONT <td>Jul. 5, 1849</td>
+2 CONT <td>New York</td>
+2 CONT <td>USA</td>
+2 CONT <td>Hermes</td>
+2 CONT <td>3817</td>
+2 CONT <td>Newcastle</td>
+2 CONT <td>Unknown</td>
+2 CONT <td>Unknown</td>
+2 CONT </tr>
+2 CONT <tr>
+2 CONT <td>Taylerson</td>
+2 CONT <td>Isabella</td>
+2 CONT <td>19</td>
+2 CONT <td>Female</td>
+2 CONT <td>None</td>
+2 CONT <td>Great Britain</td>
+2 CONT <td>Jul. 5, 1849</td>
+2 CONT <td>New York</td>
+2 CONT <td>USA</td>
+2 CONT <td>Hermes</td>
+2 CONT <td>3817</td>
+2 CONT <td>Newcastle</td>
+2 CONT <td>Unknown</td>
+2 CONT <td>Unknown</td>
+2 CONT </tr>
+2 CONT <tr>
+2 CONT <td>Taylerson</td>
+2 CONT <td>Frances</td>
+2 CONT <td>17</td>
+2 CONT <td>Female</td>
+2 CONT <td>None</td>
+2 CONT <td>Great Britain</td>
+2 CONT <td>Jul. 5, 1849</td>
+2 CONT <td>New York</td>
+2 CONT <td>USA</td>
+2 CONT <td>Hermes</td>
+2 CONT <td>3817</td>
+2 CONT <td>Newcastle</td>
+2 CONT <td>Unknown</td>
+2 CONT <td>Unknown</td>
+2 CONT </tr>
+2 CONT <tr>
+2 CONT <td>Taylerson</td>
+2 CONT <td>Esther Emma</td>
+2 CONT <td>15</td>
+2 CONT <td>Female</td>
+2 CONT <td>None</td>
+2 CONT <td>Great Britain</td>
+2 CONT <td>Jul. 5, 1849</td>
+2 CONT <td>New York</td>
+2 CONT <td>USA</td>
+2 CONT <td>Hermes</td>
+2 CONT <td>3817</td>
+2 CONT <td>Newcastle</td>
+2 CONT <td>Unknown</td>
+2 CONT <td>Unknown</td>
+2 CONT </tr>
+2 CONT <tr>
+2 CONT <td>Taylerson</td>
+2 CONT <td>Mary Ann</td>
+2 CONT <td>12</td>
+2 CONT <td>Female</td>
+2 CONT <td>None</td>
+2 CONT <td>Great Britain</td>
+2 CONT <td>Jul. 5, 1849</td>
+2 CONT <td>New York</td>
+2 CONT <td>USA</td>
+2 CONT <td>Hermes</td>
+2 CONT <td>3817</td>
+2 CONT <td>Newcastle</td>
+2 CONT <td>Unknown</td>
+2 CONT <td>Unknown</td>
+2 CONT </tr>
+2 CONT <tr>
+2 CONT <td>Taylerson</td>
+2 CONT <td>Robert</td>
+2 CONT <td>10</td>
+2 CONT <td>Male</td>
+2 CONT <td>None</td>
+2 CONT <td>Great Britain</td>
+2 CONT <td>Jul. 5, 1849</td>
+2 CONT <td>New York</td>
+2 CONT <td>USA</td>
+2 CONT <td>Hermes</td>
+2 CONT <td>3817</td>
+2 CONT <td>Newcastle</td>
+2 CONT <td>Unknown</td>
+2 CONT <td>Unknown</td>
+2 CONT </tr>
+2 CONT <tr>
+2 CONT <td>Taylerson</td>
+2 CONT <td>George</td>
+2 CONT <td>1</td>
+2 CONT <td>Male</td>
+2 CONT <td>Child</td>
+2 CONT <td>Great Britain</td>
+2 CONT <td>Jul. 5, 1849</td>
+2 CONT <td>New York</td>
+2 CONT <td>USA</td>
+2 CONT <td>Hermes</td>
+2 CONT <td>3817</td>
+2 CONT <td>Newcastle</td>
+2 CONT <td>Unknown</td>
+2 CONT <td>Unknown</td>
+2 CONT </tr>
+2 CONT </table>
+2 CONT
+0 @S15@ SOUR
+1 AUTH UK National Archives
+1 TITL England Census, 1841, Durham, Stockton upon Tees, ED 2, image 11 of 28
+1 PUBL class HO107, piece 317, book 23, folio 27
+1 TEXT [page] <b>22</b> [folio] <b>27</b><br />
+2 CONT Parish or Township of <b>Stockton</b><br />
+2 CONT <table border="1">
+2 CONT <thead>
+2 CONT <tr>
+2 CONT <th rowspan="2">PLACE</th>
+2 CONT <th colspan="2">HOUSES</th>
+2 CONT <th colspan="2" rowspan="2">NAMES<br />of each Person who abode therei
+2 CONC n<br /> the preceding Night.</th>
+2 CONT <th colspan="2">AGE<br />and<br />SEX</th>
+2 CONT <th rowspan="2">PROFESSION, TRADE,<br />EMPLOYMENT,<br />or of<br />IN
+2 CONC DEPENDENT MEANS.</th>
+2 CONT <th colspan="2">Where Born</th>
+2 CONT </tr>
+2 CONT <tr>
+2 CONT <th>Uninhabited<br />or Building</th>
+2 CONT <th>Inhabited</th>
+2 CONT <th>Males</th>
+2 CONT <th>Females</th>
+2 CONT <th>Whether Born<br />in same County</th>
+2 CONT <th>Whether Born in<br />Scotland, Ireland,<br />or Foreign Parts.</th
+2 CONC >
+2 CONT </tr>
+2 CONT </thead>
+2 CONT <tbody>
+2 CONT <tr><td>Brunswick&nbsp;S<sup>t</sup>.</td><td colspan="9">[...]</td></
+2 CONC tr>
+2 CONT <tr><td colspan="10">[...]</td></tr>
+2 CONT <tr><td>d[itt]o</td><td>&nbsp;</td><td>1</td><td>Rob<sup>t</sup>.</td>
+2 CONC <td>Taylorson</td><td>45</td><td>&nbsp;</td><td>Grocer</td><td>y</td><
+2 CONC td>&nbsp;</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Esther</td><td>d[
+2 CONC itt]o</td><td>&nbsp;</td><td>41</td><td>&nbsp;</td><td>y</td><td>&nbsp
+2 CONC ;</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Ann</td><td>d[itt
+2 CONC ]o</td><td>&nbsp;</td><td>17</td><td>&nbsp;</td><td>y</td><td>&nbsp;</
+2 CONC td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Eliz</td><td>d[it
+2 CONC t]o</td><td>&nbsp;</td><td>15</td><td>&nbsp;</td><td>y</td><td>&nbsp;<
+2 CONC /td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Marg<sup>t</sup>.
+2 CONC </td><td>d[itt]o</td><td>&nbsp;</td><td>13</td><td>&nbsp;</td><td>y</t
+2 CONC d><td>&nbsp;</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Isabella</td><td>
+2 CONC d[itt]o</td><td>&nbsp;</td><td>11</td><td>&nbsp;</td><td>y</td><td>&nb
+2 CONC sp;</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Frances</td><td>d
+2 CONC [itt]o</td><td>&nbsp;</td><td>9</td><td>&nbsp;</td><td>y</td><td>&nbsp
+2 CONC ;</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Esther</td><td>d[
+2 CONC itt]o</td><td>&nbsp;</td><td>7</td><td>&nbsp;</td><td>y</td><td>&nbsp;
+2 CONC </td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Mary</td><td>d[it
+2 CONC t]o</td><td>&nbsp;</td><td>4</td><td>&nbsp;</td><td>y</td><td>&nbsp;</
+2 CONC td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Rob<sup>t</sup>.<
+2 CONC /td><td>d[itt]o</td><td>2</td><td>&nbsp;</td><td>&nbsp</td><td>y</td><
+2 CONC td>&nbsp;</td></tr>
+2 CONT </tbody>
+2 CONT </table>
+2 CONT
+0 @S16@ SOUR
+1 TITL Deeds
+1 PUBL Steuben Co. Clerks Office, Bath, NY
+0 @S17@ SOUR
+1 TITL Cemetery Transcripts
+1 PUBL Steuben Co. Clerks Office, Bath, NY
+1 TEXT p. 25<br />
+2 CONT Corning: Hope<br />
+2 CONT (607)962-6187 Wm. Pattison, 2940 Gorton Rd., Corning, NY 14830<br />
+2 CONT Taylerson Thomas Feb 21, 1822 - June 16, 1886 64 yr 4 mo<br />
+2 CONT Ann his wife Aug 11, 1824 - Jan 28, 1873 48 yr 5 mo<br />
+2 CONT
+0 @S18@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1880, NY, Steuben Co.
+1 PUBL Hornby, Steuben, NY, 10 Jun 1880
+1 TEXT dwelling #117<br />
+2 CONT family #118<br />
+2 CONT [all white]<br />
+2 CONT <table border="1">
+2 CONT <tr><td>last</td><td>given</td><td>gen</td><td>age</td><td>rel</td><td
+2 CONC >s/m/w</td><td>occ</td><td>b</td><td>fb</td><td>mb</td></tr>
+2 CONT <tr><td>Harrison</td><td>Henry F</td><td>M</td><td>40</td><td>&nbsp;</
+2 CONC td><td>m</td><td>farming</td><td>NY</td><td>NY</td><td>NY</td></tr>
+2 CONT <tr><td>"</td><td>Hannah</td><td>F</td><td>28</td><td>wife</td><td>m</
+2 CONC td><td>keeping house</td><td>NY</td><td>England</td><td>England</td></
+2 CONC tr>
+2 CONT <tr><td>"</td><td>George E</td><td>M</td><td>6</td><td>son</td><td>s</
+2 CONC td><td>&nbsp;</td><td>NY</td><td>NY</td><td>NY</td></tr>
+2 CONT <tr><td>"</td><td>Mary E</td><td>F</td><td>71</td><td>mother</td><td>w
+2 CONC </td><td>at home</td><td>NY</td><td>NY</td><td>Conn</td></tr>
+2 CONT </table>
+2 CONT dwelling #118<br />
+2 CONT family #119<br />
+2 CONT <table border="1">
+2 CONT <tr><td>McLaughlin</td><td>William</td><td>M</td><td>52</td><td>&nbsp;
+2 CONC </td><td>m</td><td>farming</td><td>Ire</td><td>Ire</td><td>Ire</td></t
+2 CONC r>
+2 CONT <tr><td>"</td><td>Margaret</td><td>F</td><td>43</td><td>wife</td><td>m
+2 CONC </td><td>keeping house</td><td>NY</td><td>Ire</td><td>Ire</td></tr>
+2 CONT <tr><td>"</td><td>Charles</td><td>M</td><td>18</td><td>son</td><td>s</
+2 CONC td><td>labors on farm</td><td>NY</td><td>Ire</td><td>Ire</td></tr>
+2 CONT <tr><td>"</td><td>James</td><td>M</td><td>17</td><td>son</td><td>s</td
+2 CONC ><td>labors on farm</td><td>NY</td><td>Ire</td><td>Ire</td></tr>
+2 CONT <tr><td>"</td><td>George</td><td>M</td><td>16</td><td>son</td><td>s</t
+2 CONC d><td>labors on farm</td><td>NY</td><td>Ire</td><td>Ire</td></tr>
+2 CONT <tr><td>"</td><td>William</td><td>M</td><td>14</td><td>son</td><td>s</
+2 CONC td><td>labors on farm</td><td>NY</td><td>Ire</td><td>Ire</td></tr>
+2 CONT <tr><td>"</td><td>Daniel</td><td>M</td><td>12</td><td>son</td><td>s</t
+2 CONC d><td>labors on farm</td><td>NY</td><td>Ire</td><td>Ire</td></tr>
+2 CONT <tr><td>"</td><td>Thomas</td><td>M</td><td>10</td><td>son</td><td>s</t
+2 CONC d><td>labors on farm</td><td>NY</td><td>Ire</td><td>Ire</td></tr>
+2 CONT <tr><td>"</td><td>Mary Ann</td><td>F</td><td>9</td><td>dau</td><td>s</
+2 CONC td><td>&nbsp;</td><td>NY</td><td>NY</td><td>Ire</td></tr>
+2 CONT <tr><td>"</td><td>Hannah</td><td>F</td><td>8</td><td>dau</td><td>s</td
+2 CONC ><td>&nbsp;</td><td>NY</td><td>Ire</td><td>Ire</td></tr>
+2 CONT <tr><td>"</td><td>Francis</td><td>F</td><td>6</td><td>son</td><td>s</t
+2 CONC d><td>&nbsp;</td><td>NY</td><td>Ire</td><td>Ire</td></tr>
+2 CONT <tr><td>"</td><td>Catherine J.</td><td>F</td><td>4</td><td>dau</td><td
+2 CONC >s</td><td>&nbsp;</td><td>NY</td><td>Ire</td><td>Ire</td></tr>
+2 CONT </table>
+2 CONT
+0 @S19@ SOUR
+1 TITL Census Index
+1 PUBL Steuben Co. Clerks Office, Bath, NY
+0 @S20@ SOUR
+1 TITL Gravestone, Harrison, Henry F. and Taylorson, Hannah
+1 PUBL Central Valley Cemetery, Hornby, NY
+1 TEXT HARRISON HENRY F. 1840-1912<br />
+2 CONT HANNAH T. 1852-1897
+0 @S21@ SOUR
+1 TITL Abstract of Wills and Administrations
+1 PUBL Steuben Co. Clerks Office, Bath, NY
+1 TEXT case #5110<br />
+2 CONT George Harrison<br />
+2 CONT Hornby Twp.<br />
+2 CONT Death: Aug 8, 1850<br />
+2 CONT w: Mary Harrison<br />
+2 CONT s: Nelson, Henry, John<br />
+2 CONT d: Laurah [this should be Sarah], Emma<br />
+2 CONT case #1071<br />
+2 CONT Ann Taylorson<br />
+2 CONT Corning Twp.<br />
+2 CONT Death: Feb 1872<br />
+2 CONT h: Thomas Taylorson deceased<br />
+2 CONT d: Lavina Dodd, Hattie Edminster, Hannah Harrison<br />
+2 CONT s: George O.
+0 @S22@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1860, NY, Steuben, Corning
+1 PUBL M653.863, pp. 216-217
+1 TEXT [AIS page 216]<br />
+2 CONT Page No. 148<br />
+2 CONT SCHEDULE 1.--Free Inhabitants in Town of Corning in the County of Steu
+2 CONC ben State of New York enumerated by me , on the 30th day of July 1860.
+2 CONC <br />
+2 CONT Post Office Corning NY.<br />
+2 CONT [...]<br />
+2 CONT [Dwelling] 1121<br />
+2 CONT [Family] 1123<br />
+2 CONT <table border="1">
+2 CONT <tr><td>Thomas</td><td>Taylorson</td><td>38</td><td>M</td><td>Cabine
+2 CONC t Manuf[a]r</td><td>[r$] 1800</td><td>[p$] 1000</td><td>England</td></
+2 CONC tr>
+2 CONT </table>
+2 CONT [AIS page 217]<br />
+2 CONT Page No. 149<br />
+2 CONT SCHEDULE 1.--Free Inhabitants in Town of Corning in the County of Steu
+2 CONC ben State of New York enumerated by me , on the 30th day of July 1860.
+2 CONC <br />
+2 CONT Post Office Corning NY.<br />
+2 CONT <table border="1">
+2 CONT <tr><td>Ann</td><td>Taylorson</td><td>37</td><td>F</td><td>&nbsp;</td>
+2 CONC <td>&nbsp;</td><td>&nbsp;</td><td>England</td></tr>
+2 CONT <tr><td>George O</td><td>D[itt]o</td><td>12</td><td>M</td><td>&nbsp;</
+2 CONC td><td>&nbsp;</td><td>&nbsp;</td><td>D[itt]o</td></tr>
+2 CONT <tr><td>Wm</td><td>D[itt]o</td><td>10</td><td>M</td><td>&nbsp;</td><td
+2 CONC >&nbsp;</td><td>&nbsp;</td><td>Steuben Co</td></tr>
+2 CONT <tr><td>Hannah S.</td><td>D[itt]o</td><td>8</td><td>F</td><td>&nbsp;</
+2 CONC td><td>&nbsp;</td><td>&nbsp;</td><td>D[itt]o</td></tr>
+2 CONT <tr><td>Lavina</td><td>D[itt]o</td><td>6</td><td>F</td><td>&nbsp;</td>
+2 CONC <td>&nbsp;</td><td>&nbsp;</td><td>D[itt]o</td></tr>
+2 CONT <tr><td>Jessie</td><td>D[itt]o</td><td>4</td><td>M</td><td>&nbsp;</td>
+2 CONC <td>&nbsp;</td><td>&nbsp;</td><td>D[itt]o</td></tr>
+2 CONT </table>
+2 CONT
+0 @S23@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1870, NY, Steuben, Corning
+1 PUBL M593.1095, p. 49
+1 TEXT Page No. 27<br />
+2 CONT SCHEDULE 1,--Inhabitants in Corning, in the County of Steuben, State o
+2 CONC f New York, enumerated by me on the 9th day of July, 1870.<br />
+2 CONT Post Office: Corning New York<br />
+2 CONT [Dwelling] 230<br />
+2 CONT [Family] 241<br />
+2 CONT [all have: white; father was foreign born; and mother was foreign born
+2 CONC ]<br />
+2 CONT <table border="1">
+2 CONT <tr><td>Taylerson Thomas</td><td>48</td><td>M</td><td>Furniture Dealer
+2 CONC </td><td>7000</td><td>1000</td><td>England</td></tr>
+2 CONT <tr><td>-- Ann</td><td>48</td><td>F</td><td>Keeping House</td><td>&nbs
+2 CONC p;</td><td>&nbsp;</td><td>"</td></tr>
+2 CONT <tr><td>-- George</td><td>22</td><td>M</td><td>Fireman</td><td>&nbsp;<
+2 CONC /td><td>&nbsp;</td><td>" "</td></tr>
+2 CONT <tr><td>-- Hannah</td><td>18</td><td>F</td><td>Teacher</td><td>&nbsp;<
+2 CONC /td><td>&nbsp;</td><td>New York</td></tr>
+2 CONT <tr><td>-- Lavinia</td><td>16</td><td>F</td><td>&nbsp;</td><td>&nbsp;<
+2 CONC /td><td>&nbsp;</td><td>" "</td></tr>
+2 CONT <tr><td>-- Jesse</td><td>14</td><td>M</td><td>&nbsp;</td><td>&nbsp;</t
+2 CONC d><td>&nbsp;</td><td>" "</td></tr>
+2 CONT <tr><td>-- Hattie</td><td>7</td><td>F</td><td>&nbsp;</td><td>&nbsp;</t
+2 CONC d><td>&nbsp;</td><td>" "</td></tr>
+2 CONT </table>
+2 CONT
+0 @S24@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1850, NY, Steuben, Painted Post
+1 PUBL M432.598, p. 1
+1 TEXT SCHEDULE I.--Free Inhabitants in the Town of Painted Post in the Count
+2 CONC y of Steuben State of New York Enumerated by me, on the Twenty Sevent
+2 CONC h day of August 1850.<br />
+2 CONT [...]<br />
+2 CONT [Dwelling] 3<br />
+2 CONT [Family] 3<br />
+2 CONT <table border="1">
+2 CONT <tr><td>Thomas</td><td>Taylorson</td><td>28</td><td>M</td><td>Cabine
+2 CONC t Maker</td><td>England</td></tr>
+2 CONT <tr><td>Ann</td><td>Taylorson</td><td>26</td><td>F</td><td>&nbsp;</td>
+2 CONC <td>England</td></tr>
+2 CONT <tr><td>George O.</td><td>Taylorson</td><td>2</td><td>M</td><td>&nbsp;
+2 CONC </td><td>England</td></tr>
+2 CONT <tr><td>William</td><td>Taylorson</td><td>2/12</td><td>M</td><td>&nbsp
+2 CONC ;</td><td>N.Y.</td></tr>
+2 CONT </table>
+2 CONT
+0 @T0@ NOTE place from family interviews
+0 @T13@ NOTE date is from 1860 census
+0 @T12@ NOTE Steuben Co. is from 1860 census; Painted Post is assumed from place o
+1 CONC f residence in 1850 census (when he was two months old).
+0 @T11@ NOTE This is just a pure guess, based on the fact that he is in the 1860 ce
+1 CONC nsus, but not in the 1870 census.
+0 @T10@ NOTE On ship "Hermes."
+0 @T9@ NOTE Applicants Working Sheet DAR agrees
+1 CONT [need to check NY Vital Records: death certificate #22790]
+0 @T8@ NOTE On ship "Hermes." In 1849, there was an HMS Hermes (the sixth ship s
+1 CONC o named), an 830 ton paddle wheel sloop, launched in 1835, and was sol
+1 CONC d for breaking up in 1864. Is this the ship the Taylorsons immigrate
+1 CONC d on?
+0 @T7@ NOTE 1850 US Census gives England; 1841 England census gives age 15 (b. c
+1 CONC . 1826)
+1 CONT
+0 @T6@ NOTE date is just a guess based on death date
+0 @T5@ NOTE There is a Thomas "Tailerson" in Horsehaeads in 1880 census married t
+1 CONC o a Catharine; could this be him re-married?
+1 CONT
+0 @T4@ NOTE somewhere in the neighborhood of High Street and Park Row in Stockto
+1 CONC n upon Tees
+0 @T3@ NOTE place is from 1841 England census
+0 @T2@ NOTE Steuben Co. Abstract of Wills and Admins. gives Feb 1872
+0 @T1@ NOTE On ship "Hermes."
+0 TRLR

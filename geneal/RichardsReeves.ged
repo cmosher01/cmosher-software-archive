@@ -81,7 +81,7 @@
 2 PLAC Norwalk, Fairfield, CT, USA
 2 SOUR @S60@
 3 QUAY 1
-2 NOTE @T81@
+2 NOTE @T80@
 1 FAMS @F1@
 1 FAMC @F2@
 1 FAMS @F60@
@@ -114,7 +114,7 @@
 1 FAMS @F1@
 1 FAMC @F116@
 0 @I7@ INDI
-1 _XY 137 2258
+1 _XY 358 2265
 1 NAME Antoine Louis /Gregoire/
 2 SOUR @S84@
 3 QUAY 1
@@ -129,7 +129,7 @@
 2 PLAC Leeds, Northampton, Hampshire, MA, USA
 2 SOUR @S15@
 3 QUAY 1
-2 NOTE @T85@
+2 NOTE @T83@
 1 OCCU wood pattern maker
 2 DATE ABT 1930
 2 SOUR @S57@
@@ -145,7 +145,7 @@
 2 PLAC Waterbury, New Haven, CT, USA
 1 CENS
 2 DATE 1 JAN 1920
-2 NOTE @T87@
+2 NOTE @T85@
 2 PLAC [unknown]
 1 CENS
 2 DATE 1 JUN 1900
@@ -343,7 +343,7 @@
 2 PLAC Newark, Essex, NJ, USA
 2 SOUR @S82@
 3 QUAY 2
-2 NOTE @T86@
+2 NOTE @T84@
 1 FAMS @F4@
 1 FAMC @F7@
 0 @I14@ INDI
@@ -585,7 +585,7 @@
 2 PLAC MD, USA
 2 SOUR @S16@
 3 QUAY 1
-2 NOTE @T97@
+2 NOTE @T95@
 1 CENS
 2 DATE 1 JUN 1860
 2 PLAC Baltimore, Baltimore, MD, USA
@@ -3868,7 +3868,7 @@
 2 PLAC 64 Foster Street, New Bedford, Bristol, MA, USA
 2 SOUR @S96@
 3 QUAY 2
-2 NOTE @T89@
+2 NOTE @T87@
 1 FAMS @F46@
 1 FAMC @F125@
 0 @I168@ INDI
@@ -5621,7 +5621,7 @@
 2 PLAC Droylsden, Lancashire, England, UK
 2 SOUR @S100@
 3 QUAY 1
-2 NOTE @T90@
+2 NOTE @T88@
 1 CENS
 2 DATE 6 JUN 1841
 2 PLAC Fairfield Moravian Settlement, Droylsden, Lancashire, England, UK
@@ -8408,7 +8408,7 @@
 2 DATE ABT 1927
 2 SOUR @S86@
 3 QUAY 1
-2 NOTE @T82@
+2 NOTE @T81@
 1 FAMS @F116@
 0 @I494@ INDI
 1 _XY 1612 2426
@@ -8460,15 +8460,13 @@
 3 QUAY 1
 1 FAMC @F116@
 0 @I497@ INDI
-1 _XY 30 2258
-1 NAME Eva F. /Charon/
+1 _XY 217 2286
+1 NAME Eva F. /Sharon/
 1 SEX F
 1 BIRT
-2 DATE 8 MAY 1895
+2 DATE 8 MAR 1895
 2 PLAC CT, USA
-2 SOUR @S15@
-3 QUAY 1
-2 NOTE @T80@
+2 NOTE @T103@
 1 DSCR deaf and mute
 1 CENS
 2 DATE 1 APR 1930
@@ -8485,7 +8483,13 @@
 3 QUAY 1
 2 PLAC Norwalk, Fairfield, CT, USA
 2 NOTE @T63@
+1 CENS
+2 DATE 1 JUN 1900
+2 PLAC 1039 Hancock Avenue, Bridgeport, Fairfield, CT
+2 SOUR @S115@
+3 QUAY 3
 1 FAMS @F2@
+1 FAMC @F147@
 0 @I498@ INDI
 1 _XY 30 2421
 1 NAME Florence E. /Gregory/
@@ -8841,7 +8845,7 @@
 2 PLAC England, UK
 2 SOUR @S75@
 3 QUAY 1
-2 NOTE @T91@
+2 NOTE @T89@
 1 FAMC @F66@
 0 @I521@ INDI
 1 _XY 3878 1496
@@ -8864,16 +8868,13 @@
 1 FAMS @F60@
 0 @I523@ INDI
 1 _XY 321 2009
-1 NAME Louis /Gregoire/
+1 NAME Louis Elzéar /Gregoire/
 2 SOUR @S84@
 3 QUAY 1
 1 SEX M
 1 BIRT
-2 DATE OCT 1860
+2 DATE 13 OCT 1860
 2 PLAC Wotton, Wolfe, Quebec, Canada
-2 SOUR @S84@
-3 QUAY 1
-2 NOTE @T83@
 1 CENS
 2 DATE 1 JUN 1900
 2 PLAC 27 Armory Street, Northampton, Hampshire, MA, USA
@@ -8938,7 +8939,7 @@
 1 FAMS @F119@
 1 FAMC @F120@
 0 @I525@ INDI
-1 _XY 347 2215
+1 _XY 447 2214
 1 NAME David Napoleon /Gregoire/
 2 SOUR @S84@
 3 QUAY 1
@@ -8986,9 +8987,13 @@
 1 SEX F
 1 BIRT
 2 DATE APR 1896
-2 PLAC MA, USA
+2 PLAC Northampton, Hampshire, MA, USA
 2 SOUR @S84@
 3 QUAY 1
+1 DEAT
+2 DATE 10 MAY 1974
+2 PLAC St. Raphael's Hospital, New Haven, New Haven, CT, USA
+2 NOTE @T101@
 1 FAMC @F119@
 0 @I529@ INDI
 1 _XY 747 1964
@@ -9051,7 +9056,7 @@
 3 QUAY 1
 1 FAMC @F119@
 0 @I533@ INDI
-1 _XY 252 2236
+1 _XY 863 2320
 1 NAME [unknown] /Gregoire/
 2 SOUR @S84@
 3 QUAY 1
@@ -9065,7 +9070,7 @@
 3 QUAY 1
 1 FAMC @F119@
 0 @I534@ INDI
-1 _XY 471 2236
+1 _XY 957 2319
 1 NAME [unknown] /Gregoire/
 2 SOUR @S84@
 3 QUAY 1
@@ -9121,7 +9126,7 @@
 3 QUAY 1
 1 FAMC @F119@
 0 @I538@ INDI
-1 _XY 89 2202
+1 _XY 314 2212
 1 NAME Ora /Gregoire/
 2 SOUR @S87@
 3 QUAY 1
@@ -9147,7 +9152,7 @@
 2 PLAC Leeds, Northampton, Hampshire, MA, USA
 2 SOUR @S88@
 3 QUAY 1
-2 NOTE @T84@
+2 NOTE @T82@
 1 RESI
 2 PLAC Leeds, Northampton, Hampshire, MA, USA
 2 SOUR @S88@
@@ -9218,7 +9223,7 @@
 1 BIRT
 2 DATE 23 SEP 1865
 2 PLAC MA, USA
-2 NOTE @T88@
+2 NOTE @T86@
 1 BAPM
 2 PLAC Saint-Paul d' Abotsford, Quebec, Canada
 2 SOUR @S88@
@@ -9353,7 +9358,7 @@
 2 PLAC Curran, Prescott, Ontario, Canada
 2 SOUR @S105@
 3 QUAY 1
-2 NOTE @T101@
+2 NOTE @T99@
 1 IMMI
 2 DATE ABT 1883
 2 PLAC USA
@@ -9401,15 +9406,13 @@
 1 FAMS @F123@
 0 @I556@ INDI
 1 _XY 137 2046
-1 NAME Marie /Gregoire/
+1 NAME Maria /Gregoire/
 2 SOUR @S89@
 3 QUAY 1
 1 SEX F
 1 BIRT
-2 DATE SEP 1872
-2 PLAC Canada
-2 SOUR @S111@
-3 QUAY 1
+2 DATE 9 SEP 1873
+2 PLAC Wotton, Wolfe, Quebec, Canada
 1 FAMC @F123@
 0 @I557@ INDI
 1 _XY 106 2085
@@ -9499,7 +9502,7 @@
 2 PLAC England, UK
 2 SOUR @S23@
 3 QUAY 1
-2 NOTE @T92@
+2 NOTE @T90@
 1 FAMC @F66@
 0 @I564@ INDI
 1 _XY 2798 1386
@@ -9560,7 +9563,7 @@
 2 PLAC Droylsden, Lancashire, England, UK
 2 SOUR @S102@
 3 QUAY 1
-2 NOTE @T93@
+2 NOTE @T91@
 1 FAMC @F67@
 0 @I569@ INDI
 1 _XY 12623 2054
@@ -9822,9 +9825,14 @@
 1 DEAT
 2 DATE ABT 1845
 2 PLAC New Bedford, Bristol, MA, USA
-2 NOTE @T96@
+2 NOTE @T94@
 1 FAMS @F131@
 1 FAMC @F132@
+1 RESI
+2 DATE 12 OCT 1793
+2 PLAC Harwich, Barnstable, MA, USA
+2 SOUR @S116@
+3 QUAY 1
 0 @I588@ INDI
 1 _XY 13338 1908
 1 NAME Hannah /Clark/
@@ -9836,7 +9844,7 @@
 2 SOUR @S105@
 3 QUAY 0
 2 PLAC Harwich, Barnstable, MA, USA
-2 NOTE @T95@
+2 NOTE @T93@
 1 DEAT
 2 DATE 7 JAN 1842
 2 PLAC New Bedford, Bristol, MA, USA
@@ -9848,6 +9856,11 @@
 2 SOUR @S107@
 3 QUAY 1
 1 FAMS @F131@
+1 RESI
+2 DATE 12 OCT 1793
+2 PLAC Harwich, Barnstable, MA, USA
+2 SOUR @S116@
+3 QUAY 1
 0 @I589@ INDI
 1 _XY 13137 2110
 1 NAME Benjamin /Lewis/
@@ -10154,7 +10167,7 @@
 1 BIRT
 2 DATE FEB 1644
 2 PLAC Amiens, France
-2 NOTE @T100@
+2 NOTE @T98@
 1 FAMS @F137@
 0 @I610@ INDI
 1 _XY 325 1509
@@ -10305,6 +10318,111 @@
 2 SOUR @S105@
 3 QUAY 0
 1 FAMS @F146@
+0 @I621@ INDI
+1 _XY 113 2236
+1 NAME Martha /Sharon/
+1 SEX F
+1 DEAT
+2 DATE 7 DEC 1958
+2 PLAC Restmore Convalescent Hospital, Stratford, Fairfield, CT, USA
+2 NOTE @T102@
+1 BIRT
+2 PLAC Canada
+2 DATE FEB 1877
+2 SOUR @S115@
+3 QUAY 2
+1 FAMC @F147@
+0 @I622@ INDI
+1 _XY 32 2305
+1 NAME Katherine /Sharon/
+1 SEX F
+1 BIRT
+2 DATE MAY 1880
+2 PLAC MD, USA
+2 SOUR @S115@
+3 QUAY 1
+2 NOTE @T104@
+1 FAMC @F147@
+0 @I623@ INDI
+1 _XY 42 2149
+1 NAME Dominique /Sharon/
+2 SOUR @S115@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE MAY 1855
+2 PLAC Canada
+2 SOUR @S115@
+3 QUAY 1
+1 IMMI
+2 DATE 1874
+2 PLAC USA
+2 SOUR @S115@
+3 QUAY 0
+1 CENS
+2 DATE 1 JUN 1900
+2 SOUR @S115@
+3 QUAY 3
+2 PLAC 1039 Hancock Avenue, Bridgeport, Fairfield, CT
+1 FAMS @F147@
+0 @I624@ INDI
+1 _XY 151 2149
+1 NAME Mary /[unknown]/
+2 SOUR @S115@
+3 QUAY 2
+1 SEX F
+1 BIRT
+2 DATE DEC 1856
+2 PLAC Canada
+2 SOUR @S115@
+3 QUAY 1
+1 IMMI
+2 DATE 1864
+2 PLAC USA
+2 SOUR @S115@
+3 QUAY 0
+1 CENS
+2 DATE 1 JUN 1900
+2 PLAC 1039 Hancock Avenue, Bridgeport, Fairfield, CT
+2 SOUR @S115@
+3 QUAY 3
+1 FAMS @F147@
+0 @I625@ INDI
+1 _XY 31 2238
+1 NAME Frédéric /Sharon/
+2 SOUR @S115@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE FEB 1876
+2 PLAC Canada
+2 SOUR @S115@
+3 QUAY 1
+1 FAMC @F147@
+0 @I626@ INDI
+1 _XY 194 2237
+1 NAME Édouard /Sharon/
+2 SOUR @S115@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE DEC 1882
+2 PLAC CT, USA
+2 SOUR @S115@
+3 QUAY 1
+1 FAMC @F147@
+0 @I627@ INDI
+1 _XY 148 2286
+1 NAME Marc /Sharon/
+2 SOUR @S115@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE JAN 1887
+2 PLAC CT, USA
+2 SOUR @S115@
+3 QUAY 1
+1 FAMC @F147@
 0 @F0@ FAM
 1 HUSB @I2@
 1 WIFE @I3@
@@ -11316,7 +11434,7 @@
 1 CHIL @I545@
 1 MARR
 2 DATE ABT 1860
-2 NOTE @T99@
+2 NOTE @T97@
 0 @F121@ FAM
 1 WIFE @I540@
 1 HUSB @I539@
@@ -11337,7 +11455,7 @@
 1 CHIL @I547@
 1 MARR
 2 DATE ABT 1853
-2 NOTE @T98@
+2 NOTE @T96@
 0 @F123@ FAM
 1 HUSB @I554@
 1 CHIL @I523@
@@ -11361,7 +11479,7 @@
 2 SOUR @S114@
 3 QUAY 0
 2 PLAC St-Hyppolite De Wotton, Cantons De Lest, Quebec, Canada
-2 NOTE @T102@
+2 NOTE @T100@
 0 @F125@ FAM
 1 HUSB @I569@
 1 CHIL @I167@
@@ -11375,7 +11493,7 @@
 4 TEXT     * Married: 8 NOV 1784 in Book 4, Part 2, Page 149, Middleborough T
 5 CONC own Records, Plymouth County, Massachusetts, USA
 5 CONT     * Event: Justice of the Peace 8 NOV 1784 in Reverend Caleb Turner
-2 NOTE @T94@
+2 NOTE @T92@
 1 CHIL @I571@
 1 CHIL @I572@
 1 CHIL @I573@
@@ -11406,15 +11524,21 @@
 1 HUSB @I587@
 1 CHIL @I168@
 1 WIFE @I588@
-1 MARR
+1 MARC
 2 DATE 12 OCT 1793
 2 PLAC Harwich, Barnstable, MA, USA
-2 SOUR @S110@
+2 SOUR @S116@
 3 QUAY 1
 1 CHIL @I589@
 1 CHIL @I590@
 1 CHIL @I591@
 1 CHIL @I592@
+1 MARR
+2 DATE 7 NOV 1793
+2 PLAC Harwich, Barnstable, MA, USA
+2 SOUR @S116@
+3 QUAY 1
+2 NOTE @T105@
 0 @F132@ FAM
 1 CHIL @I593@
 1 CHIL @I587@
@@ -11471,6 +11595,19 @@
 0 @F146@ FAM
 1 HUSB @I620@
 1 CHIL @I619@
+0 @F147@ FAM
+1 CHIL @I621@
+1 CHIL @I497@
+1 CHIL @I622@
+1 HUSB @I623@
+1 WIFE @I624@
+1 MARR
+2 DATE ABT 1875
+2 SOUR @S115@
+3 QUAY 1
+1 CHIL @I625@
+1 CHIL @I626@
+1 CHIL @I627@
 0 @S0@ SOUR
 1 AUTH Paine, Penny
 1 TITL Interview
@@ -14548,6 +14685,44 @@
 2 CONT (8) Marie Dedulie Grégoire
 2 CONT (9) Louis-Gilbert Grégoire
 2 CONT (10) Damase Grégoire 
+0 @S115@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1900, CT, Fairfield, Bridgeport, ED 23
+1 PUBL p. 22 of 32
+0 @S116@ SOUR
+1 AUTH Brooks, Sidney
+1 TITL Town Records of Barnstable County, 1640-1920
+1 PUBL http://plymouthcolony.net/barnstable/vitalrecords/vrindex.html
+1 TEXT INTENTIONS
+2 CONT <table border="1">
+2 CONT <thead>
+2 CONT <tr><th colspan="2">HUSBAND</th><th>RESIDENCE</th><th colspan="2">WIFE
+2 CONC </th><th>RESIDENCE</th><th colspan="2">DATE</th><th>PAGE</th><th colsp
+2 CONC an="2">SOURCE</th></tr>
+2 CONT </thead>
+2 CONT <tbody>
+2 CONT <tr><td>Lewis</td><td>Benjamin</td><td>Yarmouth</td><td>Clark</td><td>
+2 CONC Hannah</td><td>Harwich</td><td>October 12</td><td>1793</td><td>186</td
+2 CONC ><td>2</td><td>357</td></tr>
+2 CONT </tbody>
+2 CONT </table>
+2 CONT MARRIAGES
+2 CONT <table border="1">
+2 CONT <thead>
+2 CONT <tr><th colspan="2">HUSBAND</th><th>RESIDENCE</th><th colspan="2">WIFE
+2 CONC </th><th>RESIDENCE</th><th colspan="2">DATE</th><th>PAGE</th><th colsp
+2 CONC an="2">SOURCE</th></tr>
+2 CONT </thead>
+2 CONT <tbody>
+2 CONT <tr><td>Lewis</td><td>Benjamin</td><td>&nbsp;</td><td>Clark</td><td>Ha
+2 CONC nnah</td><td>&nbsp;</td><td>November 7</td><td>1793</td><td>167</td><t
+2 CONC d>2</td><td>275</td></tr>
+2 CONT </tbody>
+2 CONT </table>
+2 CONT [PAGE is from Vital Records, Town of Harwich, Massachusetts, 1694-1850
+2 CONC ]<br />
+2 CONT [SOURCE is volume and page from original town records]
+2 CONT
 0 @T0@ NOTE in New York Stock Exchange
 0 @T1@ NOTE lived with the Mayor of Portsmouth
 0 @T2@ NOTE lived with Robert Watkins
@@ -14664,36 +14839,39 @@
 0 @T77@ NOTE next door to the Edwin Swindells
 0 @T78@ NOTE by Rev. Joseph E. Barry
 0 @T79@ NOTE place is from son William's birth certificate
-0 @T80@ NOTE place is from 1930 census; CT Death Index gives year as "08 May xxxYOB
-1 CONC 94"
-0 @T81@ NOTE I'm pretty sure this is the right Madeline Roach.
-0 @T82@ NOTE died when his son Joseph was around 10 years old
-0 @T83@ NOTE Place is from Mike Wood.
-0 @T84@ NOTE fell down stairs
-0 @T85@ NOTE Day of month is from Social Security Death Index. Month and year are f
+0 @T80@ NOTE I'm pretty sure this is the right Madeline Roach.
+0 @T81@ NOTE died when his son Joseph was around 10 years old
+0 @T82@ NOTE fell down stairs
+0 @T83@ NOTE Day of month is from Social Security Death Index. Month and year are f
 1 CONC rom 1900 census Month and date. Place is from WWI draft registration.
-0 @T86@ NOTE place is assumed
-0 @T87@ NOTE Not at 28 Second St. in Norwalk, or 864 Hancock Ave. in Bridgeport, i
+0 @T84@ NOTE place is assumed
+0 @T85@ NOTE Not at 28 Second St. in Norwalk, or 864 Hancock Ave. in Bridgeport, i
 1 CONC n 1920 census.
-0 @T88@ NOTE place is from 1880 census, date is from Mike Wood
-0 @T89@ NOTE not in 1849 or 1859 directories
+0 @T86@ NOTE place is from 1880 census, date is from Mike Wood
+0 @T87@ NOTE not in 1849 or 1859 directories
 1 CONT
-0 @T90@ NOTE 1841 census gives age 21 (so b. c. 1820).
-0 @T91@ NOTE (probably in USA)
-0 @T92@ NOTE (probably in USA)
-0 @T93@ NOTE Did elder sister Elizabeth die before this Eliza was born? Or is ther
+0 @T88@ NOTE 1841 census gives age 21 (so b. c. 1820).
+0 @T89@ NOTE (probably in USA)
+0 @T90@ NOTE (probably in USA)
+0 @T91@ NOTE Did elder sister Elizabeth die before this Eliza was born? Or is ther
 1 CONC e a big mistake in the census records, and ther is only one Eliza/Eliz
 1 CONC abeth child???
-0 @T94@ NOTE need to check original town records book 4, part 2, page 149
-0 @T95@ NOTE Harwich is just a guess, based on marriage place and that there were m
+0 @T92@ NOTE need to check original town records book 4, part 2, page 149
+0 @T93@ NOTE Harwich is just a guess, based on marriage place and that there were m
 1 CONC any Clarks in 1790 census in Harwich.
-0 @T96@ NOTE date is a guess based on finding him in 1840 census but missing in 185
+0 @T94@ NOTE date is a guess based on finding him in 1840 census but missing in 185
 1 CONC 0 census; place is a guess based upon location in 1840 census
-0 @T97@ NOTE Penny says he was Pennsylvania Dutch (Amish)
-0 @T98@ NOTE just a guess
-0 @T99@ NOTE just a guess
-0 @T100@ NOTE assumed from baptism
-0 @T101@ NOTE 1900 census (Manchester, NH) gives Oct. 1836
+0 @T95@ NOTE Penny says he was Pennsylvania Dutch (Amish)
+0 @T96@ NOTE just a guess
+0 @T97@ NOTE just a guess
+0 @T98@ NOTE assumed from baptism
+0 @T99@ NOTE 1900 census (Manchester, NH) gives Oct. 1836
 1 CONT
-0 @T102@ NOTE One World Tree has 9 May 1857. Place is from One World Tree.
+0 @T100@ NOTE One World Tree has 9 May 1857. Place is from One World Tree.
+0 @T101@ NOTE "Lillian V. Domblosky"
+0 @T102@ NOTE "Mrs. Robert Beatty"
+0 @T103@ NOTE US Census 1900 gives birth Mar 1895; SSDI gives birth 8 May 1895
+0 @T104@ NOTE "Kittie Donovan" might not be her
+0 @T105@ NOTE Need to check original town records to see if she is listed as "Mrs. H
+1 CONC annah Clark" or not.
 0 TRLR
