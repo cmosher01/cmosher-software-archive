@@ -489,7 +489,7 @@
 2 DATE FROM 1 SEP 1997
 2 SOUR @S393@
 3 QUAY 3
-2 NOTE @T1117@
+2 NOTE @T1116@
 1 OCCU clerk
 2 PLAC John Handey Associates, 5th Avenue, Manhattan, NY, USA
 2 NOTE @T714@
@@ -2230,7 +2230,7 @@
 2 TYPE published
 2 SOUR @S237@
 3 QUAY 1
-2 NOTE @T1122@
+2 NOTE @T1121@
 1 OCCU Minister of the Interior
 2 DATE FROM 1911 TO JAN 1912
 2 PLAC Ecuador
@@ -2262,7 +2262,7 @@
 1 FAMS @F11@
 1 FAMS @F182@
 0 @I28@ INDI
-1 _XY 7121 5843
+1 _XY 7120 5843
 1 NAME Francisca /Romero/
 1 SEX F
 1 DEAT
@@ -2332,7 +2332,7 @@
 2 DATE 1920
 2 PLAC 962 Lafayette Avenue, Bedford Stuyvesant, Brooklyn, NY, USA
 2 SOUR @S39@
-2 NOTE @T1126@
+2 NOTE @T1125@
 1 BURI
 2 DATE 11 AUG 1934
 2 PLAC Crypt 78, Aisle JJ, Cypress Hills Abbey, Cypress Hills Cemetery, Queens, NY, USA
@@ -2450,7 +2450,7 @@
 2 SOUR @S642@
 3 PAGE p. 21
 3 QUAY 1
-2 NOTE @T1129@
+2 NOTE @T1128@
 1 FAMS @F13@
 1 FAMC @F15@
 0 @I30@ INDI
@@ -2603,7 +2603,7 @@
 2 PLAC 272 South 5th Street, Williamsburg, Brooklyn, NY, USA
 2 SOUR @S65@
 3 QUAY 2
-2 NOTE @T1130@
+2 NOTE @T1129@
 1 CENS
 2 DATE 1 JUN 1860
 2 PLAC Williamsburg, Brooklyn, NY, USA
@@ -2623,7 +2623,7 @@
 2 PLAC Woodlawn Cemetery, Webster Avenue & East 233rd Street, Woodlawn, Bronx, NY, USA
 2 SOUR @S346@
 3 QUAY 2
-2 NOTE @T1125@
+2 NOTE @T1124@
 1 CENS
 2 DATE 1 JUN 1840
 2 PLAC Eastchester, Westchester, NY, USA
@@ -2641,7 +2641,7 @@
 2 SOUR @S641@
 3 PAGE p. 14
 3 QUAY 1
-2 NOTE @T1128@
+2 NOTE @T1127@
 1 RESI
 2 DATE 12 OCT 1886
 2 PLAC 272 South 5th Street, Williamsburg, Brooklyn, NY, USA
@@ -2677,7 +2677,7 @@
 2 SOUR @S636@
 3 QUAY 3
 2 PLAC 272 South 5th Street, Williamsburg, Brooklyn, NY, USA
-2 NOTE @T1116@
+2 NOTE @T1115@
 1 BURI
 2 DATE 25 OCT 1897
 2 PLAC Woodlawn Cemetery, Webster Avenue & East 233rd Street, Woodlawn, Bronx, NY, USA
@@ -2867,7 +2867,7 @@
 3 QUAY 1
 3 DATA
 4 TEXT country residence was Asbury, N.J.
-2 NOTE @T1135@
+2 NOTE @T1134@
 1 RESI
 2 DATE FROM 1826 TO 1836
 2 PLAC Morristown, Morris, NJ, USA
@@ -3638,7 +3638,7 @@
 1 FAMS @F24@
 1 FAMC @F25@
 0 @I53@ INDI
-1 _XY 7224 3703
+1 _XY 7223 3703
 1 NAME William /McLaughlin/
 1 SEX M
 1 BIRT
@@ -7237,7 +7237,7 @@
 2 PLAC Oneida Castle Cemetery, Oneida, Madison, NY, USA
 2 SOUR @S14@
 3 QUAY 1
-2 NOTE @T1132@
+2 NOTE @T1131@
 1 RESI
 2 DATE 3 JUL 1879
 2 PLAC Eaton, Madison, NY, USA
@@ -9994,7 +9994,7 @@
 2 PLAC Greenwich, Fairfield, CT, USA
 1 BURI
 2 PLAC Greenwich, Fairfield, CT, USA
-2 NOTE @T1123@
+2 NOTE @T1122@
 1 FAMS @F103@
 0 @I239@ INDI
 1 _XY 18801 148
@@ -18266,13 +18266,13 @@
 2 PLAC Morrisville, Eaton, Madison, NY, USA
 2 SOUR @S643@
 3 QUAY 2
-2 NOTE @T1131@
+2 NOTE @T1130@
 1 DEAT
 2 DATE 19 JAN 1894
 2 PLAC Oneida Castle, Oneida, Madison, NY, USA
 2 SOUR @S643@
 3 QUAY 1
-2 NOTE @T1133@
+2 NOTE @T1132@
 1 FAMC @F71@
 0 @I731@ INDI
 1 _XY 3164 3927
@@ -18289,7 +18289,7 @@
 2 DATE 29 APR 1891
 2 SOUR @S643@
 3 QUAY 1
-2 NOTE @T1134@
+2 NOTE @T1133@
 2 PLAC NY, USA
 1 FAMC @F71@
 0 @I732@ INDI
@@ -19163,7 +19163,7 @@
 1 BIRT
 2 DATE 9 JUL 1905
 2 PLAC Brooklyn, NY, USA
-2 NOTE @T1114@
+2 NOTE @T1113@
 1 DEAT
 2 DATE 21 AUG 1906
 2 PLAC Brooklyn, NY, USA
@@ -19312,7 +19312,7 @@
 2 PLAC Jipijapa, Manabi, Ecuador
 2 SOUR @S637@
 3 QUAY 2
-2 NOTE @T1120@
+2 NOTE @T1119@
 1 DEAT
 2 DATE 1897
 2 PLAC Guayaquil, Guayas, Ecuador
@@ -19323,7 +19323,7 @@
 2 PLAC Jipijapa, Manabi, Ecuador
 2 SOUR @S637@
 3 QUAY 3
-2 NOTE @T1119@
+2 NOTE @T1118@
 1 FAMC @F11@
 0 @I799@ INDI
 1 _XY 7456 5985
@@ -19336,7 +19336,7 @@
 2 PLAC Jipijapa, Manabi, Ecuador
 2 SOUR @S237@
 3 QUAY 1
-2 NOTE @T1118@
+2 NOTE @T1117@
 1 DEAT
 2 DATE 30 MAY 1965
 2 PLAC Quito, Pichincha, Ecuador
@@ -19347,7 +19347,7 @@
 2 PLAC San Lorenzo, Jipijapa, Manabi, Ecuador
 2 SOUR @S637@
 3 QUAY 3
-2 NOTE @T1121@
+2 NOTE @T1120@
 1 FAMC @F11@
 0 @I800@ INDI
 1 _XY 7615 5983
@@ -33615,7 +33615,7 @@
 2 PLAC Pelham, Westchester, NY, USA
 2 SOUR @S635@
 3 QUAY 3
-2 NOTE @T1115@
+2 NOTE @T1114@
 1 WILL
 2 DATE 24 FEB 1875
 2 PLAC Eastchester, Westchester, NY, USA
@@ -41093,11 +41093,17 @@
 2 SOUR @S634@
 3 QUAY 3
 1 DEAT
-2 DATE ABT 1890
+2 DATE 20 DEC 1889
 2 PLAC Painted Post, Erwin, Steuben, NY, USA
-2 NOTE @T1113@
+2 SOUR @S648@
+3 QUAY 2
 1 FAMS @F435@
 1 FAMS @F437@
+1 RESI
+2 DATE FROM 1851 TO 20 DEC 1889
+2 PLAC Corner of Chemung Street and Charles Street, Painted Post, Erwin, Steuben, NY, USA
+2 SOUR @S648@
+3 QUAY 1
 0 @I2181@ INDI
 1 _XY 10459 5426
 1 NAME John Council /Bryan/
@@ -43353,8 +43359,8 @@
 1 FAMS @F436@
 0 @I2331@ INDI
 1 _XY 9121 3727
-1 NAME Christina /[unknown]/
-2 SOUR @S634@
+1 NAME Christina /McLean/
+2 SOUR @S648@
 3 QUAY 1
 1 SEX F
 1 CENS
@@ -43364,9 +43370,10 @@
 3 QUAY 3
 1 BIRT
 2 DATE ABT 1822
-2 PLAC Scotland, UK
-2 SOUR @S632@
+2 PLAC Cromarty, Ross and Cromarty, Highland, Scotland, UK
+2 SOUR @S648@
 3 QUAY 1
+2 NOTE @T1137@
 1 CENS
 2 DATE 1 JUN 1870
 2 PLAC Painted Post, Erwin, Steuben, NY, USA
@@ -43603,7 +43610,7 @@
 3 QUAY 2
 3 PAGE p. 6
 2 PLAC 272 South 5th Street, Williamsburg, Brooklyn, NY, USA
-2 NOTE @T1127@
+2 NOTE @T1126@
 0 @F14@ FAM
 1 HUSB @I31@
 1 WIFE @I32@
@@ -43766,7 +43773,7 @@
 2 DATE 1 JAN 1861
 2 SOUR @S645@
 3 QUAY 3
-3 PAGE 9
+3 PAGE p. 9
 2 PLAC Saint Mary's of the Lake Catholic Church, 905 North Decatur Street, Watkins Glen, Schuyler, NY, USA
 1 CHIL @I599@
 1 CHIL @I600@
@@ -44421,7 +44428,7 @@
 2 SOUR @S105@
 3 QUAY 3
 2 PLAC Jesse Sands house, Hornby, Steuben, NY, USA
-2 NOTE @T1124@
+2 NOTE @T1123@
 1 CHIL @I294@
 0 @F77@ FAM
 1 HUSB @I187@
@@ -48023,9 +48030,10 @@
 1 WIFE @I2331@
 1 HUSB @I2180@
 1 MARR
-2 DATE ABT 1851
-2 NOTE @T1112@
+2 DATE 1850
 2 PLAC Steuben, NY, USA
+2 SOUR @S648@
+3 QUAY 1
 1 CHIL @I2332@
 1 CHIL @I2333@
 0 @F438@ FAM
@@ -61411,7 +61419,7 @@
 2 CONT <br/>
 2 CONT Omissis tribus denuntiationibus ex facultate a<br/>
 2 CONT cancellario accepta confinti in Matrimonio<br/>
-2 CONT Gulielimum filium Jacobi M<sup>c</sup>Laughlin at Honorae<br/>
+2 CONT Gulielimum filium Jacobi M<sup>c</sup>Laughlin et Honorae<br/>
 2 CONT Doherty et Margarettam filiam Georgii Doherty<br/>
 2 CONT Testos Juere Joanes Brown et Elizabeth M<sup>c</sup>Laughlin.<br/>
 2 CONT J. M<sup>c</sup>Kenna.
@@ -61451,6 +61459,21 @@
 2 CONT On Wednesday evening, November 22, by the Rev. Mr. Lewis, Mr. Elijah P
 2 CONC . Flandrau to Miss Mary Eliza, eldest daughter of Mr William Pettit, E
 2 CONC sq., all of this city.
+0 @S648@ SOUR
+1 AUTH Corning [New York] Journal [newspaper]
+1 TITL Taylorson, Robert, obituary
+1 PUBL 1889-12-26, Corning, NY
+1 TEXT Robert Taylorson, an old resident of our village, died on Friday, Dec
+2 CONC . 20. He was born in Durham Co., England, in 1797. In the year 1849 h
+2 CONC e emigrated to this country, a widower, bringing with him three daught
+2 CONC ers and one son. He was a carpenter by trade and came directly to Pain
+2 CONC ted Post and began to work at his trade. In 1850 he married Miss Chris
+2 CONC tine McLean, of Cromarty, Scotland, and the following year built the h
+2 CONC ouse on the corner of Chemung and Charles streets, which he occupied u
+2 CONC ntil his death. His wife and her two daughters, Mrs. Margaret Tobias a
+2 CONC nd Mrs. Christine Chapman, survivie him. He was a good citizen, a kin
+2 CONC d neighbor, quiet and unassuming in his manners, sturdily honest and f
+2 CONC aithful to all his obligations.
 0 @T0@ NOTE time: about 12:00 noon EST
 0 @T1@ NOTE time: 4:00 PM Eastern Time
 0 @T2@ NOTE time: 2:20 PM Eastern Time
@@ -63487,29 +63510,27 @@
 1 CONC d for breaking up in 1864. Is this the ship the Taylorsons immigrate
 1 CONC d on?
 0 @T1111@ NOTE based on birth date of child Margaret
-0 @T1113@ NOTE place is assumed from residence in 1880; date is just a guess (I'm sur
-1 CONC e he couldn't have lived long after age 90).
-0 @T1114@ NOTE from NYC birth index (cert #17495)
+0 @T1113@ NOTE from NYC birth index (cert #17495)
 1 CONT
-0 @T1115@ NOTE time: 15:30 EST, cause: Atheroma of Aorta
+0 @T1114@ NOTE time: 15:30 EST, cause: Atheroma of Aorta
 1 CONT
-0 @T1116@ NOTE about 10:00 AM, of Dementia Paralytica
-0 @T1117@ NOTE Labor Day 1997 first lived there. travelled between here and other hou
+0 @T1115@ NOTE about 10:00 AM, of Dementia Paralytica
+0 @T1116@ NOTE Labor Day 1997 first lived there. travelled between here and other hou
 1 CONC ses in PA.
 1 CONT 38d 47m 05s N lat, 75d 06m 14s W long
-0 @T1118@ NOTE Consistent with being 11 months old at baptism on April 10, 1883.
-0 @T1119@ NOTE godparents: Adolfo H. Campozano, and Rosario Romero
+0 @T1117@ NOTE Consistent with being 11 months old at baptism on April 10, 1883.
+0 @T1118@ NOTE godparents: Adolfo H. Campozano, and Rosario Romero
 1 CONT
-0 @T1120@ NOTE Pazmino Lopez Family History (Joseph Dudley) gives 1881
-0 @T1121@ NOTE godparents: Eloy Alfaro (future president of Ecuador) and Sebastiana G
+0 @T1119@ NOTE Pazmino Lopez Family History (Joseph Dudley) gives 1881
+0 @T1120@ NOTE godparents: Eloy Alfaro (future president of Ecuador) and Sebastiana G
 1 CONC utierrez
-0 @T1122@ NOTE Virutas [meaning Shavings in English]
+0 @T1121@ NOTE Virutas [meaning Shavings in English]
 1 CONT Title: Virutas, o Almanaque de pensamientos sinceros
 1 CONT Publication: New York, [s. n.], 1908.
 1 CONT
-0 @T1123@ NOTE "South Beach Ave Cemetery in Old Greenwich"
-0 @T1124@ NOTE by Charles Goodrich
-0 @T1125@ NOTE Spring Lake Plot, Section 9, Plot 317.
+0 @T1122@ NOTE "South Beach Ave Cemetery in Old Greenwich"
+0 @T1123@ NOTE by Charles Goodrich
+0 @T1124@ NOTE Spring Lake Plot, Section 9, Plot 317.
 1 CONT Plot is at extreme southeast corner of section 9.
 1 CONT Enter cemetery at East 233 Street and Webster Avenue entrance, procee
 1 CONC d straight on Central Avenue, take first right (hard right) onto Chape
@@ -63518,20 +63539,20 @@
 1 CONC t with only "FLANDREAU" on it, no other stones or names at all.
 1 CONT [Info from cemetery itself.]
 1 CONT
-0 @T1126@ NOTE Disosway Family Research says "Druggist 962 Lafayette Ave., Brooklyn"
-0 @T1127@ NOTE at night
-0 @T1128@ NOTE I'm assuming 1012 (just Lafayette Avenue is given in the newspaper).
-0 @T1129@ NOTE Newspaper gives corner Lafayette Avenue and Stuvesant Avenue; I assum
+0 @T1125@ NOTE Disosway Family Research says "Druggist 962 Lafayette Ave., Brooklyn"
+0 @T1126@ NOTE at night
+0 @T1127@ NOTE I'm assuming 1012 (just Lafayette Avenue is given in the newspaper).
+0 @T1128@ NOTE Newspaper gives corner Lafayette Avenue and Stuvesant Avenue; I assum
 1 CONC e this is 962 Lafayette Avenue.
-0 @T1130@ NOTE Start date is approximate.
-0 @T1131@ NOTE place is just a guess
-0 @T1132@ NOTE Pearl's note says burried on Sunday.
-0 @T1133@ NOTE at 7:30 AM EST, of pneumonia; place is assumed from residence of fathe
+0 @T1129@ NOTE Start date is approximate.
+0 @T1130@ NOTE place is just a guess
+0 @T1131@ NOTE Pearl's note says burried on Sunday.
+0 @T1132@ NOTE at 7:30 AM EST, of pneumonia; place is assumed from residence of fathe
 1 CONC r (and he was burried in Oneida Castle Cemetery)
-0 @T1134@ NOTE of inflammatory rheumatism, at 4:00 PM EST
-0 @T1135@ NOTE Not Asbury Park; this is Asbury Village, in Franklin Township, Warre
+0 @T1133@ NOTE of inflammatory rheumatism, at 4:00 PM EST
+0 @T1134@ NOTE Not Asbury Park; this is Asbury Village, in Franklin Township, Warre
 1 CONC n County.
-0 @T1112@ NOTE based on birth date of child Margaret, and residence in Painted Post
 0 @T1136@ NOTE eldest daughter of WIlliam Pettit (according to marriage record in Ne
 1 CONC w York Herald)
+0 @T1137@ NOTE date is from 1860 census
 0 TRLR
