@@ -12,84 +12,83 @@
 1 SUBM @M0@
 0 @M0@ SUBM
 0 @I0@ INDI
-1 _XY 335 106
+1 _XY 524 227
 1 NAME Elizabeth /Taylorson/
 2 SOUR @S15@
 3 QUAY 0
 1 SEX F
-1 FAMC @F4@
 1 BIRT
 2 DATE ABT 1826
 2 PLAC Durham, England, UK
 2 SOUR @S15@
 3 QUAY 1
+1 FAMC @F4@
 0 @I1@ INDI
-1 _XY 431 106
+1 _XY 620 227
 1 NAME Margaret /Taylorson/
 2 SOUR @S15@
 3 QUAY 1
 1 SEX F
-1 FAMC @F4@
 1 BIRT
 2 DATE ABT 1828
 2 PLAC Durham, England, UK
 2 SOUR @S15@
 3 QUAY 1
+1 FAMC @F4@
 0 @I2@ INDI
-1 _XY 530 106
+1 _XY 719 227
 1 NAME Isabella /Taylorson/
 2 SOUR @S15@
 3 QUAY 1
 1 SEX F
-1 FAMC @F4@
 1 BIRT
 2 DATE ABT 1830
 2 PLAC Durham, England, UK
 2 SOUR @S15@
 3 QUAY 1
+1 FAMC @F4@
 0 @I3@ INDI
-1 _XY 332 145
+1 _XY 521 266
 1 NAME Frances /Taylorson/
 2 SOUR @S15@
 3 QUAY 1
 1 SEX F
-1 FAMC @F4@
 1 BIRT
 2 DATE ABT 1832
 2 PLAC Durham, England, UK
 2 SOUR @S15@
 3 QUAY 1
+1 FAMC @F4@
 0 @I4@ INDI
-1 _XY 427 145
+1 _XY 616 266
 1 NAME Esther Emma /Taylorson/
 2 SOUR @S14@
 3 QUAY 1
 1 SEX F
-1 FAMC @F4@
 1 BIRT
 2 DATE ABT 1834
 2 PLAC Durham, England, UK
 2 SOUR @S15@
 3 QUAY 1
+1 FAMC @F4@
 0 @I5@ INDI
-1 _XY 544 145
+1 _XY 733 266
 1 NAME Mary Jane /Taylorson/
 2 SOUR @S13@
 3 QUAY 3
 1 SEX F
-1 FAMC @F4@
 1 BIRT
 2 DATE 2 OCT 1837
 2 PLAC Stockton, Durham, England, UK
 2 SOUR @S13@
 3 QUAY 3
+1 FAMC @F4@
 0 @I6@ INDI
-1 _XY 649 115
+1 _XY 838 236
 1 NAME Robert /Taylorson/
 2 SOUR @S15@
 3 QUAY 1
 1 SEX M
-1 FAMC @F4@
 1 BIRT
 2 DATE 7 MAY 1839
 2 PLAC Stockton, Durham, England, UK
@@ -100,34 +99,59 @@
 2 PLAC Steuben, NY, USA
 2 SOUR @S11@
 3 QUAY 1
+1 FAMC @F4@
 0 @I7@ INDI
-1 _XY 91 47
+1 _XY 286 122
 1 NAME Jonathan /Taylorson/
 2 SOUR @S10@
 3 QUAY 1
 1 SEX M
-1 FAMS @F3@
 1 OCCU farmer
 2 SOUR @S10@
 3 QUAY 1
+1 FAMS @F3@
+1 CENS
+2 DATE 6 JUN 1841
+2 PLAC Hart, Hartlepool, Durham, England, UK, USA
+2 SOUR @S27@
+3 QUAY 3
+1 BIRT
+2 DATE ABT 1790
+2 PLAC Sheraton, Durham, England, UK, USA
+2 SOUR @S28@
+3 QUAY 1
+1 CENS
+2 DATE 30 MAR 1851
+2 PLAC Northgate, Hartlepool, Hartlepool, Durham, England, UK
+2 SOUR @S28@
+3 QUAY 3
+2 NOTE @T15@
+1 CENS
+2 DATE 7 APR 1861
+2 PLAC Milbank Terrace, Throston, Hartlepool, Durham, England, UK
+2 SOUR @S29@
+3 QUAY 3
+1 DEAT
+2 DATE ABT MAY 1871
+2 PLAC Durham, England, UK
+2 NOTE @T18@
 0 @I8@ INDI
-1 _XY 792 36
+1 _XY 981 157
 1 NAME Christina /McLean/
 2 SOUR @S9@
 3 QUAY 1
 1 SEX F
-1 FAMS @F2@
 1 CENS
 2 DATE 1 JUN 1860
 2 PLAC Painted Post, Erwin, Steuben, NY, USA
 2 SOUR @S8@
 3 QUAY 3
 1 BIRT
-2 DATE ABT 1822
+2 DATE OCT 1820
 2 PLAC Cromarty, Ross and Cromarty, Highland, Scotland, UK
-2 SOUR @S9@
+2 SOUR @S25@
 3 QUAY 1
-2 NOTE @T13@
+2 NOTE @T1@
 1 CENS
 2 DATE 1 JUN 1870
 2 PLAC Painted Post, Erwin, Steuben, NY, USA
@@ -138,35 +162,35 @@
 2 PLAC Painted Post, Erwin, Steuben, NY, USA
 2 SOUR @S6@
 3 QUAY 3
+1 FAMS @F2@
 0 @I9@ INDI
-1 _XY 754 106
+1 _XY 943 227
 1 NAME Margaret /Taylorson/
 2 SOUR @S8@
 3 QUAY 1
 1 SEX F
-1 FAMC @F2@
 1 BIRT
-2 DATE ABT 1851
+2 DATE JUN 1851
 2 PLAC NY, USA
-2 SOUR @S8@
+2 SOUR @S25@
 3 QUAY 1
+1 FAMC @F2@
 0 @I10@ INDI
-1 _XY 854 106
+1 _XY 1043 227
 1 NAME Christina /Taylorson/
 2 SOUR @S8@
 3 QUAY 1
 1 SEX F
-1 FAMC @F2@
 1 BIRT
 2 DATE ABT 1853
 2 PLAC NY, USA
 2 SOUR @S8@
 3 QUAY 1
+1 FAMC @F2@
 0 @I11@ INDI
-1 _XY 155 282
+1 _XY 172 377
 1 NAME George Ord /Taylorson/
 1 SEX M
-1 FAMC @F1@
 1 BIRT
 2 DATE 5 JAN 1848
 2 PLAC Victoria Place, Hartlepool, Durham, England, UK
@@ -177,60 +201,60 @@
 2 PLAC NY, USA
 2 SOUR @S11@
 3 QUAY 1
+1 FAMC @F1@
 0 @I12@ INDI
-1 _XY 262 281
+1 _XY 279 376
 1 NAME William /Taylorson/
 2 SOUR @S24@
 3 QUAY 1
 1 SEX M
-1 FAMC @F1@
 1 BIRT
 2 DATE ABT APR 1850
 2 PLAC Painted Post, Steuben, NY, USA
 2 SOUR @S24@
 3 QUAY 0
-2 NOTE @T12@
+2 NOTE @T2@
 1 DEAT
 2 DATE ABT 1865
 2 PLAC Corning, Steuben, NY, USA
-2 NOTE @T11@
+2 NOTE @T3@
+1 FAMC @F1@
 0 @I13@ INDI
-1 _XY 261 328
+1 _XY 278 423
 1 NAME Lavinia /Taylorson/
 2 SOUR @S23@
 3 QUAY 1
 1 SEX F
-1 FAMC @F1@
 1 BIRT
-2 DATE ABT 1854
+2 DATE JAN 1854
 2 PLAC Steuben, NY, USA
-2 SOUR @S22@
-3 QUAY 0
+2 SOUR @S26@
+3 QUAY 1
+2 NOTE @T14@
 1 DEAT
 2 DATE ABT 10 NOV 1942
 2 PLAC Elmira, Chemung, NY, USA
 2 SOUR @S11@
 3 QUAY 1
+1 FAMC @F1@
 0 @I14@ INDI
-1 _XY 442 340
+1 _XY 459 435
 1 NAME Harriet /Taylorson/
 2 SOUR @S21@
 3 QUAY 1
 1 SEX F
-1 FAMC @F1@
 1 BIRT
 2 DATE ABT 1863
 2 PLAC NY, USA
 2 SOUR @S23@
 3 QUAY 1
+1 FAMC @F1@
 0 @I15@ INDI
-1 _XY 692 30
+1 _XY 881 151
 1 NAME Robert /Taylorson/
 2 SOUR @S14@
 3 QUAY 1
 1 SEX M
-1 FAMS @F4@
-1 FAMS @F2@
 1 BIRT
 2 DATE ABT 1796
 2 PLAC Durham, England, UK
@@ -241,7 +265,7 @@
 2 PLAC Manhattan, NY, USA
 2 SOUR @S14@
 3 QUAY 3
-2 NOTE @T10@
+2 NOTE @T4@
 1 CENS
 2 DATE 6 JUN 1841
 2 PLAC Brunswick Street, Stockton upon Tees, Durham, England, UK
@@ -277,18 +301,18 @@
 2 PLAC Corner of Chemung Street and Charles Street, Painted Post, Erwin, Steuben, NY, USA
 2 SOUR @S9@
 3 QUAY 1
+1 FAMS @F2@
+1 FAMS @F4@
 0 @I16@ INDI
-1 _XY 156 327
+1 _XY 173 422
 1 NAME Hannah S. /Taylorson/
 1 SEX F
-1 FAMS @F0@
-1 FAMC @F1@
 1 DEAT
 2 DATE 30 MAY 1897
 2 PLAC Hornby, Steuben, NY, USA
 2 SOUR @S3@
 3 QUAY 0
-2 NOTE @T9@
+2 NOTE @T5@
 1 BIRT
 2 DATE 30 MAR 1852
 2 PLAC Corning, Steuben, NY, USA
@@ -333,12 +357,12 @@
 2 DATE 1870
 2 SOUR @S23@
 3 QUAY 2
+1 FAMS @F0@
+1 FAMC @F1@
 0 @I17@ INDI
-1 _XY 149 106
+1 _XY 264 227
 1 NAME Thomas /Taylorson/
 1 SEX M
-1 FAMS @F1@
-1 FAMC @F3@
 1 CENS
 2 DATE 1 JUN 1850
 2 PLAC Painted Post, Erwin, Steuben, NY, USA
@@ -349,7 +373,7 @@
 2 PLAC Manhattan, NY, USA
 2 SOUR @S14@
 3 QUAY 3
-2 NOTE @T8@
+2 NOTE @T6@
 1 BIRT
 2 DATE 21 FEB 1822
 2 PLAC England, UK
@@ -365,7 +389,7 @@
 2 PLAC Hope Cemetery, Corning, Steuben, NY, USA
 2 SOUR @S17@
 3 QUAY 1
-2 NOTE @T6@
+2 NOTE @T8@
 1 EVEN
 2 DATE 12 DEC 1861
 2 PLAC Corning, Steuben, NY, USA
@@ -409,7 +433,7 @@
 4 TEXT p. 75
 1 CENS
 2 DATE 1 JUN 1880
-2 NOTE @T5@
+2 NOTE @T9@
 1 RESI
 2 DATE 14 AUG 1847
 2 PLAC North Street, Middlesbrough, Stockton upon Tees, Durham, England, UK
@@ -420,15 +444,15 @@
 2 PLAC Castle Building, Stockton upon Tees, Durham, England, UK
 2 SOUR @S1@
 3 QUAY 3
-2 NOTE @T4@
+2 NOTE @T10@
 1 OCCU ran funeral home
 2 PLAC Corning, Steuben, NY, USA
+1 FAMS @F1@
+1 FAMC @F3@
 0 @I18@ INDI
-1 _XY 256 106
+1 _XY 445 227
 1 NAME Ann /Taylorson/
 1 SEX F
-1 FAMS @F1@
-1 FAMC @F4@
 1 CENS
 2 DATE 1 JUN 1850
 2 PLAC Painted Post, Erwin, Steuben, NY, USA
@@ -439,13 +463,13 @@
 2 PLAC Durham, England, UK
 2 SOUR @S17@
 3 QUAY 0
-2 NOTE @T3@
+2 NOTE @T11@
 1 DEAT
 2 DATE 28 JAN 1873
 2 PLAC Corning, Steuben, NY, USA
 2 SOUR @S17@
 3 QUAY 1
-2 NOTE @T2@
+2 NOTE @T12@
 1 CENS
 2 DATE 1 JUN 1870
 2 PLAC Corning, Steuben, NY, USA
@@ -461,7 +485,7 @@
 2 PLAC Manhattan, NY, USA
 2 SOUR @S14@
 3 QUAY 3
-2 NOTE @T1@
+2 NOTE @T13@
 1 CENS
 2 DATE 6 JUN 1841
 2 PLAC Brunswick Street, Stockton upon Tees, Durham, England, UK
@@ -472,25 +496,26 @@
 2 PLAC North Street, Middlesbrough, Stockton upon Tees, Durham, England, UK
 2 SOUR @S10@
 3 QUAY 3
+1 FAMS @F1@
+1 FAMC @F4@
 0 @I19@ INDI
-1 _XY 353 340
+1 _XY 370 435
 1 NAME Jessie /Taylorson/
 2 SOUR @S22@
 3 QUAY 1
 1 SEX M
-1 FAMC @F1@
 1 BIRT
 2 DATE ABT 1856
 2 PLAC Steuben, NY, USA
 2 SOUR @S22@
 3 QUAY 0
+1 FAMC @F1@
 0 @I20@ INDI
-1 _XY 601 30
+1 _XY 790 151
 1 NAME Esther /Lister/
 2 SOUR @S12@
 3 QUAY 1
 1 SEX F
-1 FAMS @F4@
 1 BIRT
 2 DATE ABT 1800
 2 PLAC Durham, England, UK
@@ -506,11 +531,133 @@
 2 PLAC Commercial Steet, Middlesbrough, Stockton upon Tees, Durham, England, UK
 2 SOUR @S0@
 3 QUAY 3
+1 FAMS @F4@
 0 @I21@ INDI
-1 _XY 30 339
+1 _XY 47 434
 1 NAME Henry Francis /Harrison/
 1 SEX M
 1 FAMS @F0@
+0 @I22@ INDI
+1 _XY 83 122
+1 NAME Hannah /Ord/
+2 SOUR @S27@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1798
+2 PLAC Hart, Hartlepool, Durham, England, UK, USA
+2 SOUR @S28@
+3 QUAY 1
+1 CENS
+2 DATE 6 JUN 1841
+2 PLAC Hart, Hartlepool, Durham, England, UK, USA
+2 SOUR @S27@
+3 QUAY 3
+1 FAMS @F3@
+1 FAMC @F5@
+1 CENS
+2 DATE 7 APR 1861
+2 PLAC Milbank Terrace, Throston, Hartlepool, Durham, England, UK
+2 SOUR @S29@
+3 QUAY 3
+1 CENS
+2 DATE 30 MAR 1851
+2 PLAC Northgate, Hartlepool, Hartlepool, Durham, England, UK
+2 SOUR @S28@
+3 QUAY 3
+1 DEAT
+2 DATE ABT AUG 1868
+2 PLAC Hartlepool, Durham, England, UK
+2 NOTE @T19@
+0 @I23@ INDI
+1 _XY 31 227
+1 NAME Hannah /Taylorson/
+2 SOUR @S27@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1829
+2 PLAC Durham, England, UK, USA
+2 SOUR @S27@
+3 QUAY 1
+1 FAMC @F3@
+0 @I24@ INDI
+1 _XY 131 227
+1 NAME Jonathan /Taylorson/
+2 SOUR @S27@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1831
+2 PLAC Durham, England, UK, USA
+2 SOUR @S27@
+3 QUAY 1
+1 FAMC @F3@
+0 @I25@ INDI
+1 _XY 30 280
+1 NAME David /Taylorson/
+2 SOUR @S27@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1833
+2 PLAC Hart, Hartlepool, Durham, England, UK, USA
+2 SOUR @S28@
+3 QUAY 1
+1 FAMC @F3@
+0 @I26@ INDI
+1 _XY 121 280
+1 NAME John /Taylorson/
+2 SOUR @S15@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1836
+2 PLAC Hart, Hartlepool, Durham, England, UK, USA
+2 SOUR @S28@
+3 QUAY 1
+1 FAMC @F3@
+0 @I27@ INDI
+1 _XY 209 280
+1 NAME Frances Ann /Taylorson/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1838
+2 PLAC Hart, Hartlepool, Durham, England, UK, USA
+2 SOUR @S15@
+3 QUAY 1
+1 FAMC @F3@
+0 @I28@ INDI
+1 _XY 139 30
+1 NAME Ann /[unknown]/
+2 SOUR @S15@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1762
+2 PLAC Durham, England, UK, USA
+2 SOUR @S15@
+3 QUAY 1
+1 CENS
+2 DATE 6 JUN 1841
+2 SOUR @S15@
+3 QUAY 3
+2 PLAC Hart, Hartlepool, Durham, England, UK, USA
+1 FAMS @F5@
+1 DEAT
+2 DATE ABT 1846
+2 NOTE @T17@
+0 @I29@ INDI
+1 _XY 36 36
+1 NAME [unknown] /Ord/
+2 SOUR @S15@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1760
+1 FAMS @F5@
 0 @F0@ FAM
 1 WIFE @I16@
 1 MARR
@@ -547,6 +694,12 @@
 0 @F3@ FAM
 1 HUSB @I7@
 1 CHIL @I17@
+1 WIFE @I22@
+1 CHIL @I23@
+1 CHIL @I24@
+1 CHIL @I25@
+1 CHIL @I26@
+1 CHIL @I27@
 0 @F4@ FAM
 1 HUSB @I15@
 1 WIFE @I20@
@@ -558,6 +711,10 @@
 1 CHIL @I4@
 1 CHIL @I5@
 1 CHIL @I6@
+0 @F5@ FAM
+1 WIFE @I28@
+1 CHIL @I22@
+1 HUSB @I29@
 0 @S0@ SOUR
 1 AUTH General Register Office, England
 1 TITL Death certificate, Taylerson, Esther
@@ -1517,29 +1674,221 @@
 2 CONC ;</td><td>N.Y.</td></tr>
 2 CONT </table>
 2 CONT
+0 @S25@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1900, NY, Steuben, Erwin, District 82, p. 11 of 21
+1 PUBL 1900-06-06
+1 TEXT Steuben St.<br />
+2 CONT Tobais Margret June 1851 48 W[d]<br />
+2 CONT Taylerson Christein mother Oct 1820 79 Wd
+0 @S26@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1900, NY, Chemung, Elmina, Ward 9, District 29, p. 14 of 22
+1 PUBL 1900-06-11
+1 TEXT Dodd Labinia Jan. 1854 48
+0 @S27@ SOUR
+1 AUTH UK National Archives
+1 TITL England Census, 1841, Durham, Hart, Hartlepool, District 6a, p. 4 of 6
+1 PUBL class HO107, piece 315, book 17, folio 5, page 8
+1 TEXT [page] <b>8</b><br />
+2 CONT Township of Hart<br />
+2 CONT <table border="1">
+2 CONT <thead>
+2 CONT <tr>
+2 CONT <th rowspan="2">PLACE</th>
+2 CONT <th colspan="2">HOUSES</th>
+2 CONT <th colspan="2" rowspan="2">NAMES<br />of each Person who abode therei
+2 CONC n<br /> the preceding Night.</th>
+2 CONT <th colspan="2">AGE<br />and<br />SEX</th>
+2 CONT <th rowspan="2">PROFESSION, TRADE,<br />EMPLOYMENT,<br />or of<br />IN
+2 CONC DEPENDENT MEANS.</th>
+2 CONT <th colspan="2">Where Born</th>
+2 CONT </tr>
+2 CONT <tr>
+2 CONT <th>Uninhabited<br />or Building</th>
+2 CONT <th>Inhabited</th>
+2 CONT <th>Males</th>
+2 CONT <th>Females</th>
+2 CONT <th>Whether Born<br />in same County</th>
+2 CONT <th>Whether Born in<br />Scotland, Ireland,<br />or Foreign Parts.</th
+2 CONC >
+2 CONT </tr>
+2 CONT </thead>
+2 CONT <tbody>
+2 CONT <tr><td rowspan="9">Village</td><td>&nbsp;</td><td>1</td><td>Jonathan<
+2 CONC /td><td>Taylerson</td><td>50</td><td>&nbsp;</td><td>Ag. lab</td><td>ye
+2 CONC s</td><td>&nbsp;</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>Hannah</td><td>d[itt]o</td><td>&
+2 CONC nbsp;</td><td>44</td><td>&nbsp;</td><td>yes</td><td>&nbsp;</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>Hannah</td><td>d[itt]o Jun<sup>r
+2 CONC </sup></td><td>&nbsp;</td><td>12</td><td>&nbsp;</td><td>yes</td><td>&n
+2 CONC bsp;</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>Jonathan</td><td>d[itt]o d[itt]o
+2 CONC </td><td>10</td><td>&nbsp;</td><td>&nbsp;</td><td>yes</td><td>&nbsp;</
+2 CONC td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>David</td><td>d[itt]o</td><td>7<
+2 CONC /td><td>&nbsp;</td><td>&nbsp;</td><td>yes</td><td>&nbsp;</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>John</td><td>d[itt]o</td><td>4</
+2 CONC td><td>&nbsp;</td><td>&nbsp;</td><td>yes</td><td>&nbsp;</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>Frances</td><td>d[itt]o</td><td>
+2 CONC &nbsp;</td><td>2</td><td>&nbsp;</td><td>yes</td><td>&nbsp;</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>Ann</td><td>Ord</td><td>&nbsp;</
+2 CONC td><td>79</td><td>Ind</td><td>yes</td><td>&nbsp;</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>Isabella</td><td>Surtees</td><td
+2 CONC >&nbsp;</td><td>26</td><td>&nbsp;</td><td>yes</td><td>&nbsp;</td></tr>
+2 CONT </tbody>
+2 CONT </table>
+2 CONT
+0 @S28@ SOUR
+1 AUTH UK National Archives
+1 TITL England Census, 1851, Durham, Hartlepool, District 10f, p. 100 of 103
+1 PUBL class HO107, piece 2384, folio 421, page 16
+1 TEXT [page] <b>16</b> [folio] <b>421</b><br />
+2 CONT Parish of <b>Hartlepool</b><br />
+2 CONT Borough of <b>Hatlepool</b><br />
+2 CONT <table border="1">
+2 CONT <thead>
+2 CONT <tr>
+2 CONT <th rowspan="2">No. of<br />
+2 CONT House-<br />
+2 CONT holder's<br />
+2 CONT Schedule</th><br />
+2 CONT <th rowspan="2">Name of Street, Place, or<br />
+2 CONT Road, and Name or<br />
+2 CONT No. of House</th>
+2 CONT <th rowspan="2" colspan="2">Name and Surname of each Person<br />
+2 CONT who abode in the house,<br />
+2 CONT on the Night of the 30th March, 1851</th>
+2 CONT <th rowspan="2">Relation<br />
+2 CONT to<br />
+2 CONT Head of Family</th>
+2 CONT <th rowspan="2">Condition</th>
+2 CONT <th colspan="2">Age<br />of</th>
+2 CONT <th rowspan="2">Rank, Profession,<br />
+2 CONT or<br />
+2 CONT Occupation</th>
+2 CONT <th rowspan="2" colspan="2">Where Born</th>
+2 CONT <th rowspan="2">Whether<br />
+2 CONT Blind, or Deaf<br />
+2 CONT and-Dumb</th>
+2 CONT </tr>
+2 CONT <tr>
+2 CONT <th>Males</th>
+2 CONT <th>Females</th>
+2 CONT </tr>
+2 CONT </thead>
+2 CONT <tbody>
+2 CONT <tr><td>383</td><td>North Terrace</td><td>Jonathan</td><td>Taylerson</
+2 CONC td><td>Head</td><td>Mar.</td><td>61</td><td>&nbsp;</td><td>Railway Lab
+2 CONC ourer</td><td>D<sup>o</sup> [Durham]</td><td>Sheraton</td><td>&nbsp;</
+2 CONC td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>Hannah</td><td>D<sup>o</sup></td
+2 CONC ><td>Wife</td><td>Mar.</td><td>&nbsp;</td><td>52</td><td>&nbsp;</td><t
+2 CONC d>D<sup>o</sup></td><td>Hart</td><td>&nbsp;</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>David</td><td>D<sup>o</sup></td>
+2 CONC <td>Son</td><td>&nbsp;</td><td>17</td><td>&nbsp;</td><td>Engine Fitter
+2 CONC </td><td>D<sup>o</sup></td><td>D<sup>o</sup></td><td>&nbsp;</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>Frances Ann</td><td>D<sup>o</sup
+2 CONC ></td><td>Dau<sup>r</sup></td><td>&nbsp;</td><td>&nbsp;</td><td>12</td
+2 CONC ><td>&nbsp;</td><td>D<sup>o</sup></td><td>D<sup>o</sup></td><td>&nbsp;
+2 CONC </td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>John</td><td>D<sup>o</sup></td><
+2 CONC td>Son</td><td>&nbsp;</td><td>14</td><td>&nbsp;</td><td>Iron Monger (A
+2 CONC pp)</td><td>D<sup>o</sup></td><td>D<sup>o</sup></td><td>&nbsp;</td></t
+2 CONC r>
+2 CONT </tbody>
+2 CONT </table>
+2 CONT
+0 @S29@ SOUR
+1 AUTH UK National Archives
+1 TITL England Census, 1861, Durham, Throston, District 34, p. 28 of 31
+1 PUBL class RG9, piece 3704, folio 107, page 28
+1 TEXT Page <b>28</b><br />
+2 CONT The undermentioned Houses are situate within the Boundaries of the<b
+2 CONC r />
+2 CONT Township of <b>Throston</b><br />
+2 CONT Ecclesiastical District of <b>Holy Trinity</b><br />
+2 CONT <table border="1">
+2 CONT <thead>
+2 CONT <tr>
+2 CONT <th rowspan="2">No. of<br />
+2 CONT Schedule</th>
+2 CONT <th rowspan="2">Road, Street, &c.,<br />
+2 CONT and No. or Name of<br />
+2 CONT House</th>
+2 CONT <th colspan="2">HOUSES</th>
+2 CONT <th rowspan="2" colspan="2">Name and Surname of each<br />
+2 CONT Person</th>
+2 CONT <th rowspan="2">Relation<br />
+2 CONT to Head of<br />
+2 CONT Family</th>
+2 CONT <th rowspan="2">Condition</th>
+2 CONT <th colspan="2">Age<br />of</th>
+2 CONT <th rowspan="2">Rank, Profession, or Occupation</th>
+2 CONT <th rowspan="2" colspan="2">Where Born</th>
+2 CONT <th rowspan="2">Whether<br />
+2 CONT Blind, or Deaf<br />
+2 CONT and-Dumb</th>
+2 CONT </tr>
+2 CONT <tr>
+2 CONT <th>In-<br />habited</th>
+2 CONT <th>Unin-<br />habited<br />
+2 CONT (U.), or<br />
+2 CONT Building<br />
+2 CONT (B.)</th>
+2 CONT <th>Males</th>
+2 CONT <th>Females</th>
+2 CONT </tr>
+2 CONT </thead>
+2 CONT <tbody>
+2 CONT <tr><td>[...]</td><td>Milbank Terrace</td><td colspan="12">[...]</td><
+2 CONC /tr>
+2 CONT <tr><td colspan="14">[...]</td></tr>
+2 CONT <tr><td>136</td><td>10, D[itt]o.</td><td>1</td><td>&nbsp;</td><td>Jona
+2 CONC than</td><td>Taylerson</td><td>Head</td><td>Mar.</td><td>71</td><td>&n
+2 CONC bsp;</td><td>Watchman for Rai[?]g Co.</td><td>Durham,</td><td>Hart</td
+2 CONC ><td>&nbsp;</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Ha
+2 CONC nnah</td><td>D[itt]o.</td><td>Wife</td><td>Mar</td><td>&nbsp;</td><td>
+2 CONC 62</td><td>&nbsp;</td><td>D[itt]o.</td><td>D[itt]o.</td><td>&nbsp;</td
+2 CONC ></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Jo
+2 CONC hn</td><td>D[itt]o.</td><td>Son</td><td>Sin.</td><td>24</td><td>&nbsp;
+2 CONC </td><td>Joiner</td><td>D[itt]o.</td><td>D[itt]o.</td><td>&nbsp;</td><
+2 CONC /tr>
+2 CONT </tbody>
+2 CONT </table>
+2 CONT
 0 @T0@ NOTE place from family interviews
-0 @T13@ NOTE date is from 1860 census
-0 @T12@ NOTE Steuben Co. is from 1860 census; Painted Post is assumed from place o
+0 @T2@ NOTE Steuben Co. is from 1860 census; Painted Post is assumed from place o
 1 CONC f residence in 1850 census (when he was two months old).
-0 @T11@ NOTE This is just a pure guess, based on the fact that he is in the 1860 ce
+0 @T3@ NOTE This is just a pure guess, based on the fact that he is in the 1860 ce
 1 CONC nsus, but not in the 1870 census.
-0 @T10@ NOTE On ship "Hermes."
-0 @T9@ NOTE Applicants Working Sheet DAR agrees
+0 @T4@ NOTE On ship "Hermes."
+0 @T5@ NOTE Applicants Working Sheet DAR agrees
 1 CONT [need to check NY Vital Records: death certificate #22790]
-0 @T8@ NOTE On ship "Hermes." In 1849, there was an HMS Hermes (the sixth ship s
+0 @T6@ NOTE On ship "Hermes." In 1849, there was an HMS Hermes (the sixth ship s
 1 CONC o named), an 830 ton paddle wheel sloop, launched in 1835, and was sol
 1 CONC d for breaking up in 1864. Is this the ship the Taylorsons immigrate
 1 CONC d on?
 0 @T7@ NOTE 1850 US Census gives England; 1841 England census gives age 15 (b. c
 1 CONC . 1826)
 1 CONT
-0 @T6@ NOTE date is just a guess based on death date
-0 @T5@ NOTE There is a Thomas "Tailerson" in Horsehaeads in 1880 census married t
+0 @T8@ NOTE date is just a guess based on death date
+0 @T9@ NOTE There is a Thomas "Tailerson" in Horsehaeads in 1880 census married t
 1 CONC o a Catharine; could this be him re-married?
 1 CONT
-0 @T4@ NOTE somewhere in the neighborhood of High Street and Park Row in Stockto
+0 @T10@ NOTE somewhere in the neighborhood of High Street and Park Row in Stockto
 1 CONC n upon Tees
-0 @T3@ NOTE place is from 1841 England census
-0 @T2@ NOTE Steuben Co. Abstract of Wills and Admins. gives Feb 1872
-0 @T1@ NOTE On ship "Hermes."
+0 @T11@ NOTE place is from 1841 England census
+0 @T12@ NOTE Steuben Co. Abstract of Wills and Admins. gives Feb 1872
+0 @T13@ NOTE On ship "Hermes."
+0 @T1@ NOTE place is from husband's obituary
+0 @T14@ NOTE place is from 1860 census
+0 @T17@ NOTE just a guess
+0 @T15@ NOTE Assume "North Terrace" is Northgate. Later entry lists Wells St., whic
+1 CONC h is a short street off of Northgate.
+1 CONT
+0 @T18@ NOTE need to order death cert. from England
+0 @T19@ NOTE need to order death cert. from England
 0 TRLR
