@@ -79,7 +79,7 @@
 1 SEX F
 1 BIRT
 2 DATE 2 OCT 1837
-2 PLAC Stockton, Durham, England, UK
+2 PLAC Stockton upon Tees, Durham, England, UK
 2 SOUR @S13@
 3 QUAY 3
 1 FAMC @F4@
@@ -91,7 +91,7 @@
 1 SEX M
 1 BIRT
 2 DATE 7 MAY 1839
-2 PLAC Stockton, Durham, England, UK
+2 PLAC Stockton upon Tees, Durham, England, UK
 2 SOUR @S12@
 3 QUAY 3
 1 DEAT
@@ -109,15 +109,14 @@
 1 OCCU farmer
 2 SOUR @S10@
 3 QUAY 1
-1 FAMS @F3@
 1 CENS
 2 DATE 6 JUN 1841
-2 PLAC Hart, Hartlepool, Durham, England, UK, USA
+2 PLAC Hart, Hartlepool, Durham, England, UK
 2 SOUR @S27@
 3 QUAY 3
 1 BIRT
 2 DATE ABT 1790
-2 PLAC Sheraton, Durham, England, UK, USA
+2 PLAC Sheraton, Durham, England, UK
 2 SOUR @S28@
 3 QUAY 1
 1 CENS
@@ -125,7 +124,7 @@
 2 PLAC Northgate, Hartlepool, Hartlepool, Durham, England, UK
 2 SOUR @S28@
 3 QUAY 3
-2 NOTE @T15@
+2 NOTE @T16@
 1 CENS
 2 DATE 7 APR 1861
 2 PLAC Milbank Terrace, Throston, Hartlepool, Durham, England, UK
@@ -134,7 +133,8 @@
 1 DEAT
 2 DATE ABT MAY 1871
 2 PLAC Durham, England, UK
-2 NOTE @T18@
+2 NOTE @T17@
+1 FAMS @F3@
 0 @I8@ INDI
 1 _XY 981 157
 1 NAME Christina /McLean/
@@ -151,7 +151,7 @@
 2 PLAC Cromarty, Ross and Cromarty, Highland, Scotland, UK
 2 SOUR @S25@
 3 QUAY 1
-2 NOTE @T1@
+2 NOTE @T13@
 1 CENS
 2 DATE 1 JUN 1870
 2 PLAC Painted Post, Erwin, Steuben, NY, USA
@@ -213,11 +213,11 @@
 2 PLAC Painted Post, Steuben, NY, USA
 2 SOUR @S24@
 3 QUAY 0
-2 NOTE @T2@
+2 NOTE @T1@
 1 DEAT
 2 DATE ABT 1865
 2 PLAC Corning, Steuben, NY, USA
-2 NOTE @T3@
+2 NOTE @T2@
 1 FAMC @F1@
 0 @I13@ INDI
 1 _XY 278 423
@@ -265,7 +265,7 @@
 2 PLAC Manhattan, NY, USA
 2 SOUR @S14@
 3 QUAY 3
-2 NOTE @T4@
+2 NOTE @T3@
 1 CENS
 2 DATE 6 JUN 1841
 2 PLAC Brunswick Street, Stockton upon Tees, Durham, England, UK
@@ -312,7 +312,7 @@
 2 PLAC Hornby, Steuben, NY, USA
 2 SOUR @S3@
 3 QUAY 0
-2 NOTE @T5@
+2 NOTE @T4@
 1 BIRT
 2 DATE 30 MAR 1852
 2 PLAC Corning, Steuben, NY, USA
@@ -373,13 +373,13 @@
 2 PLAC Manhattan, NY, USA
 2 SOUR @S14@
 3 QUAY 3
-2 NOTE @T6@
+2 NOTE @T5@
 1 BIRT
 2 DATE 21 FEB 1822
 2 PLAC England, UK
 2 SOUR @S17@
 3 QUAY 0
-2 NOTE @T7@
+2 NOTE @T6@
 1 DEAT
 2 DATE 16 JUN 1886
 2 SOUR @S17@
@@ -389,7 +389,7 @@
 2 PLAC Hope Cemetery, Corning, Steuben, NY, USA
 2 SOUR @S17@
 3 QUAY 1
-2 NOTE @T8@
+2 NOTE @T7@
 1 EVEN
 2 DATE 12 DEC 1861
 2 PLAC Corning, Steuben, NY, USA
@@ -433,7 +433,7 @@
 4 TEXT p. 75
 1 CENS
 2 DATE 1 JUN 1880
-2 NOTE @T9@
+2 NOTE @T8@
 1 RESI
 2 DATE 14 AUG 1847
 2 PLAC North Street, Middlesbrough, Stockton upon Tees, Durham, England, UK
@@ -444,7 +444,7 @@
 2 PLAC Castle Building, Stockton upon Tees, Durham, England, UK
 2 SOUR @S1@
 3 QUAY 3
-2 NOTE @T10@
+2 NOTE @T9@
 1 OCCU ran funeral home
 2 PLAC Corning, Steuben, NY, USA
 1 FAMS @F1@
@@ -463,13 +463,13 @@
 2 PLAC Durham, England, UK
 2 SOUR @S17@
 3 QUAY 0
-2 NOTE @T11@
+2 NOTE @T10@
 1 DEAT
 2 DATE 28 JAN 1873
 2 PLAC Corning, Steuben, NY, USA
 2 SOUR @S17@
 3 QUAY 1
-2 NOTE @T12@
+2 NOTE @T11@
 1 CENS
 2 DATE 1 JUN 1870
 2 PLAC Corning, Steuben, NY, USA
@@ -485,7 +485,7 @@
 2 PLAC Manhattan, NY, USA
 2 SOUR @S14@
 3 QUAY 3
-2 NOTE @T13@
+2 NOTE @T12@
 1 CENS
 2 DATE 6 JUN 1841
 2 PLAC Brunswick Street, Stockton upon Tees, Durham, England, UK
@@ -545,16 +545,14 @@
 1 SEX F
 1 BIRT
 2 DATE ABT 1798
-2 PLAC Hart, Hartlepool, Durham, England, UK, USA
+2 PLAC Hart, Hartlepool, Durham, England, UK
 2 SOUR @S28@
 3 QUAY 1
 1 CENS
 2 DATE 6 JUN 1841
-2 PLAC Hart, Hartlepool, Durham, England, UK, USA
+2 PLAC Hart, Hartlepool, Durham, England, UK
 2 SOUR @S27@
 3 QUAY 3
-1 FAMS @F3@
-1 FAMC @F5@
 1 CENS
 2 DATE 7 APR 1861
 2 PLAC Milbank Terrace, Throston, Hartlepool, Durham, England, UK
@@ -568,7 +566,9 @@
 1 DEAT
 2 DATE ABT AUG 1868
 2 PLAC Hartlepool, Durham, England, UK
-2 NOTE @T19@
+2 NOTE @T18@
+1 FAMS @F3@
+1 FAMC @F5@
 0 @I23@ INDI
 1 _XY 31 227
 1 NAME Hannah /Taylorson/
@@ -577,7 +577,7 @@
 1 SEX F
 1 BIRT
 2 DATE ABT 1829
-2 PLAC Durham, England, UK, USA
+2 PLAC Durham, England, UK
 2 SOUR @S27@
 3 QUAY 1
 1 FAMC @F3@
@@ -589,7 +589,7 @@
 1 SEX M
 1 BIRT
 2 DATE ABT 1831
-2 PLAC Durham, England, UK, USA
+2 PLAC Durham, England, UK
 2 SOUR @S27@
 3 QUAY 1
 1 FAMC @F3@
@@ -601,7 +601,7 @@
 1 SEX M
 1 BIRT
 2 DATE ABT 1833
-2 PLAC Hart, Hartlepool, Durham, England, UK, USA
+2 PLAC Hart, Hartlepool, Durham, England, UK
 2 SOUR @S28@
 3 QUAY 1
 1 FAMC @F3@
@@ -613,7 +613,7 @@
 1 SEX M
 1 BIRT
 2 DATE ABT 1836
-2 PLAC Hart, Hartlepool, Durham, England, UK, USA
+2 PLAC Hart, Hartlepool, Durham, England, UK
 2 SOUR @S28@
 3 QUAY 1
 1 FAMC @F3@
@@ -625,7 +625,7 @@
 1 SEX F
 1 BIRT
 2 DATE ABT 1838
-2 PLAC Hart, Hartlepool, Durham, England, UK, USA
+2 PLAC Hart, Hartlepool, Durham, England, UK
 2 SOUR @S15@
 3 QUAY 1
 1 FAMC @F3@
@@ -637,18 +637,18 @@
 1 SEX F
 1 BIRT
 2 DATE ABT 1762
-2 PLAC Durham, England, UK, USA
+2 PLAC Durham, England, UK
 2 SOUR @S15@
 3 QUAY 1
 1 CENS
 2 DATE 6 JUN 1841
 2 SOUR @S15@
 3 QUAY 3
-2 PLAC Hart, Hartlepool, Durham, England, UK, USA
-1 FAMS @F5@
+2 PLAC Hart, Hartlepool, Durham, England, UK
 1 DEAT
 2 DATE ABT 1846
-2 NOTE @T17@
+2 NOTE @T15@
+1 FAMS @F5@
 0 @I29@ INDI
 1 _XY 36 36
 1 NAME [unknown] /Ord/
@@ -1860,35 +1860,35 @@
 2 CONT </table>
 2 CONT
 0 @T0@ NOTE place from family interviews
-0 @T2@ NOTE Steuben Co. is from 1860 census; Painted Post is assumed from place o
+0 @T1@ NOTE Steuben Co. is from 1860 census; Painted Post is assumed from place o
 1 CONC f residence in 1850 census (when he was two months old).
-0 @T3@ NOTE This is just a pure guess, based on the fact that he is in the 1860 ce
+0 @T2@ NOTE This is just a pure guess, based on the fact that he is in the 1860 ce
 1 CONC nsus, but not in the 1870 census.
-0 @T4@ NOTE On ship "Hermes."
-0 @T5@ NOTE Applicants Working Sheet DAR agrees
+0 @T3@ NOTE On ship "Hermes."
+0 @T4@ NOTE Applicants Working Sheet DAR agrees
 1 CONT [need to check NY Vital Records: death certificate #22790]
-0 @T6@ NOTE On ship "Hermes." In 1849, there was an HMS Hermes (the sixth ship s
+0 @T5@ NOTE On ship "Hermes." In 1849, there was an HMS Hermes (the sixth ship s
 1 CONC o named), an 830 ton paddle wheel sloop, launched in 1835, and was sol
 1 CONC d for breaking up in 1864. Is this the ship the Taylorsons immigrate
 1 CONC d on?
-0 @T7@ NOTE 1850 US Census gives England; 1841 England census gives age 15 (b. c
+0 @T6@ NOTE 1850 US Census gives England; 1841 England census gives age 15 (b. c
 1 CONC . 1826)
 1 CONT
-0 @T8@ NOTE date is just a guess based on death date
-0 @T9@ NOTE There is a Thomas "Tailerson" in Horsehaeads in 1880 census married t
+0 @T7@ NOTE date is just a guess based on death date
+0 @T8@ NOTE There is a Thomas "Tailerson" in Horsehaeads in 1880 census married t
 1 CONC o a Catharine; could this be him re-married?
 1 CONT
-0 @T10@ NOTE somewhere in the neighborhood of High Street and Park Row in Stockto
+0 @T9@ NOTE somewhere in the neighborhood of High Street and Park Row in Stockto
 1 CONC n upon Tees
-0 @T11@ NOTE place is from 1841 England census
-0 @T12@ NOTE Steuben Co. Abstract of Wills and Admins. gives Feb 1872
-0 @T13@ NOTE On ship "Hermes."
-0 @T1@ NOTE place is from husband's obituary
+0 @T10@ NOTE place is from 1841 England census
+0 @T11@ NOTE Steuben Co. Abstract of Wills and Admins. gives Feb 1872
+0 @T12@ NOTE On ship "Hermes."
+0 @T13@ NOTE place is from husband's obituary
 0 @T14@ NOTE place is from 1860 census
-0 @T17@ NOTE just a guess
-0 @T15@ NOTE Assume "North Terrace" is Northgate. Later entry lists Wells St., whic
+0 @T15@ NOTE just a guess
+0 @T16@ NOTE Assume "North Terrace" is Northgate. Later entry lists Wells St., whic
 1 CONC h is a short street off of Northgate.
 1 CONT
+0 @T17@ NOTE need to order death cert. from England
 0 @T18@ NOTE need to order death cert. from England
-0 @T19@ NOTE need to order death cert. from England
 0 TRLR
