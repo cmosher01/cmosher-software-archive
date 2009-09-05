@@ -12,67 +12,72 @@
 1 SUBM @M0@
 0 @M0@ SUBM
 0 @I0@ INDI
-1 _XY 524 227
+1 _XY 505 2115
 1 NAME Elizabeth /Taylorson/
 2 SOUR @S15@
 3 QUAY 0
 1 SEX F
 1 BIRT
-2 DATE ABT 1826
-2 PLAC Durham, England, UK
-2 SOUR @S15@
+2 DATE 16 JUL 1826
+2 PLAC Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
 3 QUAY 1
 1 FAMC @F4@
 0 @I1@ INDI
-1 _XY 620 227
+1 _XY 609 2115
 1 NAME Margaret /Taylorson/
 2 SOUR @S15@
 3 QUAY 1
 1 SEX F
 1 BIRT
-2 DATE ABT 1828
-2 PLAC Durham, England, UK
-2 SOUR @S15@
+2 DATE 3 APR 1828
+2 PLAC Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
 3 QUAY 1
 1 FAMC @F4@
+1 DEAT
+2 DATE 10 DEC 1898
+2 PLAC Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
 0 @I2@ INDI
-1 _XY 719 227
+1 _XY 719 2115
 1 NAME Isabella /Taylorson/
 2 SOUR @S15@
 3 QUAY 1
 1 SEX F
 1 BIRT
-2 DATE ABT 1830
-2 PLAC Durham, England, UK
-2 SOUR @S15@
+2 DATE 4 NOV 1829
+2 PLAC Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
 3 QUAY 1
 1 FAMC @F4@
 0 @I3@ INDI
-1 _XY 521 266
+1 _XY 454 2166
 1 NAME Frances /Taylorson/
 2 SOUR @S15@
 3 QUAY 1
 1 SEX F
 1 BIRT
-2 DATE ABT 1832
-2 PLAC Durham, England, UK
-2 SOUR @S15@
+2 DATE 16 AUG 1832
+2 PLAC Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
 3 QUAY 1
 1 FAMC @F4@
 0 @I4@ INDI
-1 _XY 616 266
+1 _XY 549 2166
 1 NAME Esther Emma /Taylorson/
 2 SOUR @S14@
 3 QUAY 1
 1 SEX F
 1 BIRT
-2 DATE ABT 1834
-2 PLAC Durham, England, UK
-2 SOUR @S15@
+2 DATE 6 JUL 1834
+2 PLAC Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
 3 QUAY 1
 1 FAMC @F4@
 0 @I5@ INDI
-1 _XY 733 266
+1 _XY 665 2166
 1 NAME Mary Jane /Taylorson/
 2 SOUR @S13@
 3 QUAY 3
@@ -84,7 +89,7 @@
 3 QUAY 3
 1 FAMC @F4@
 0 @I6@ INDI
-1 _XY 838 236
+1 _XY 768 2166
 1 NAME Robert /Taylorson/
 2 SOUR @S15@
 3 QUAY 1
@@ -101,8 +106,8 @@
 3 QUAY 1
 1 FAMC @F4@
 0 @I7@ INDI
-1 _XY 286 122
-1 NAME Jonathan /Taylorson/
+1 _XY 226 1927
+1 NAME Jonathan /Taylerson/
 2 SOUR @S10@
 3 QUAY 1
 1 SEX M
@@ -119,6 +124,7 @@
 2 PLAC Sheraton, Durham, England, UK
 2 SOUR @S28@
 3 QUAY 1
+2 NOTE @T19@
 1 CENS
 2 DATE 30 MAR 1851
 2 PLAC Northgate, Hartlepool, Hartlepool, Durham, England, UK
@@ -131,12 +137,15 @@
 2 SOUR @S29@
 3 QUAY 3
 1 DEAT
-2 DATE ABT MAY 1871
+2 DATE 14 JUN 1871
 2 PLAC Durham, England, UK
 2 NOTE @T17@
+2 SOUR @S30@
+3 QUAY 1
 1 FAMS @F3@
+1 FAMC @F6@
 0 @I8@ INDI
-1 _XY 981 157
+1 _XY 921 1961
 1 NAME Christina /McLean/
 2 SOUR @S9@
 3 QUAY 1
@@ -164,7 +173,7 @@
 3 QUAY 3
 1 FAMS @F2@
 0 @I9@ INDI
-1 _XY 943 227
+1 _XY 929 2115
 1 NAME Margaret /Taylorson/
 2 SOUR @S8@
 3 QUAY 1
@@ -176,7 +185,7 @@
 3 QUAY 1
 1 FAMC @F2@
 0 @I10@ INDI
-1 _XY 1043 227
+1 _XY 1029 2115
 1 NAME Christina /Taylorson/
 2 SOUR @S8@
 3 QUAY 1
@@ -188,7 +197,7 @@
 3 QUAY 1
 1 FAMC @F2@
 0 @I11@ INDI
-1 _XY 172 377
+1 _XY 165 2343
 1 NAME George Ord /Taylorson/
 1 SEX M
 1 BIRT
@@ -203,7 +212,7 @@
 3 QUAY 1
 1 FAMC @F1@
 0 @I12@ INDI
-1 _XY 279 376
+1 _XY 272 2343
 1 NAME William /Taylorson/
 2 SOUR @S24@
 3 QUAY 1
@@ -220,7 +229,7 @@
 2 NOTE @T2@
 1 FAMC @F1@
 0 @I13@ INDI
-1 _XY 278 423
+1 _XY 272 2400
 1 NAME Lavinia /Taylorson/
 2 SOUR @S23@
 3 QUAY 1
@@ -238,7 +247,7 @@
 3 QUAY 1
 1 FAMC @F1@
 0 @I14@ INDI
-1 _XY 459 435
+1 _XY 453 2400
 1 NAME Harriet /Taylorson/
 2 SOUR @S21@
 3 QUAY 1
@@ -250,16 +259,17 @@
 3 QUAY 1
 1 FAMC @F1@
 0 @I15@ INDI
-1 _XY 881 151
+1 _XY 821 1955
 1 NAME Robert /Taylorson/
 2 SOUR @S14@
 3 QUAY 1
 1 SEX M
 1 BIRT
 2 DATE ABT 1796
-2 PLAC Durham, England, UK
+2 PLAC Hart, Hartlepool, Durham, England, UK
 2 SOUR @S15@
 3 QUAY 1
+2 NOTE @T20@
 1 IMMI
 2 DATE 5 JUL 1849
 2 PLAC Manhattan, NY, USA
@@ -303,8 +313,9 @@
 3 QUAY 1
 1 FAMS @F2@
 1 FAMS @F4@
+1 FAMC @F17@
 0 @I16@ INDI
-1 _XY 173 422
+1 _XY 167 2400
 1 NAME Hannah S. /Taylorson/
 1 SEX F
 1 DEAT
@@ -360,8 +371,8 @@
 1 FAMS @F0@
 1 FAMC @F1@
 0 @I17@ INDI
-1 _XY 264 227
-1 NAME Thomas /Taylorson/
+1 _XY 232 2115
+1 NAME Thomas /Taylerson/
 1 SEX M
 1 CENS
 2 DATE 1 JUN 1850
@@ -450,7 +461,7 @@
 1 FAMS @F1@
 1 FAMC @F3@
 0 @I18@ INDI
-1 _XY 445 227
+1 _XY 418 2115
 1 NAME Ann /Taylorson/
 1 SEX F
 1 CENS
@@ -499,7 +510,7 @@
 1 FAMS @F1@
 1 FAMC @F4@
 0 @I19@ INDI
-1 _XY 370 435
+1 _XY 364 2400
 1 NAME Jessie /Taylorson/
 2 SOUR @S22@
 3 QUAY 1
@@ -511,16 +522,17 @@
 3 QUAY 0
 1 FAMC @F1@
 0 @I20@ INDI
-1 _XY 790 151
+1 _XY 730 1955
 1 NAME Esther /Lister/
 2 SOUR @S12@
 3 QUAY 1
 1 SEX F
 1 BIRT
 2 DATE ABT 1800
-2 PLAC Durham, England, UK
+2 PLAC Marton, Middlesbrough, North Yorkshire, England, UK
 2 SOUR @S15@
 3 QUAY 1
+2 NOTE @T21@
 1 CENS
 2 DATE 6 JUN 1841
 2 PLAC Brunswick Street, Stockton upon Tees, Durham, England, UK
@@ -533,12 +545,12 @@
 3 QUAY 3
 1 FAMS @F4@
 0 @I21@ INDI
-1 _XY 47 434
+1 _XY 30 2412
 1 NAME Henry Francis /Harrison/
 1 SEX M
 1 FAMS @F0@
 0 @I22@ INDI
-1 _XY 83 122
+1 _XY 83 1927
 1 NAME Hannah /Ord/
 2 SOUR @S27@
 3 QUAY 1
@@ -564,14 +576,16 @@
 2 SOUR @S28@
 3 QUAY 3
 1 DEAT
-2 DATE ABT AUG 1868
-2 PLAC Hartlepool, Durham, England, UK
+2 DATE 14 AUG 1868
+2 PLAC Hart, Hartlepool, Durham, England, UK
 2 NOTE @T18@
+2 SOUR @S30@
+3 QUAY 1
 1 FAMS @F3@
 1 FAMC @F5@
 0 @I23@ INDI
-1 _XY 31 227
-1 NAME Hannah /Taylorson/
+1 _XY 133 2163
+1 NAME Hannah /Taylerson/
 2 SOUR @S27@
 3 QUAY 1
 1 SEX F
@@ -582,8 +596,8 @@
 3 QUAY 1
 1 FAMC @F3@
 0 @I24@ INDI
-1 _XY 131 227
-1 NAME Jonathan /Taylorson/
+1 _XY 229 2163
+1 NAME Jonathan /Taylerson/
 2 SOUR @S27@
 3 QUAY 1
 1 SEX M
@@ -594,20 +608,23 @@
 3 QUAY 1
 1 FAMC @F3@
 0 @I25@ INDI
-1 _XY 30 280
-1 NAME David /Taylorson/
+1 _XY 47 2214
+1 NAME David /Taylerson/
 2 SOUR @S27@
 3 QUAY 1
 1 SEX M
 1 BIRT
-2 DATE ABT 1833
+2 DATE ABT 31 JUL 1833
 2 PLAC Hart, Hartlepool, Durham, England, UK
-2 SOUR @S28@
-3 QUAY 1
 1 FAMC @F3@
+1 BAPM
+2 DATE 1 AUG 1833
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
 0 @I26@ INDI
-1 _XY 121 280
-1 NAME John /Taylorson/
+1 _XY 238 2214
+1 NAME John /Taylerson/
 2 SOUR @S15@
 3 QUAY 1
 1 SEX M
@@ -617,9 +634,13 @@
 2 SOUR @S28@
 3 QUAY 1
 1 FAMC @F3@
+1 DEAT
+2 DATE 11 MAR 1865
+2 SOUR @S30@
+3 QUAY 1
 0 @I27@ INDI
-1 _XY 209 280
-1 NAME Frances Ann /Taylorson/
+1 _XY 33 2263
+1 NAME Frances Ann /Taylerson/
 2 SOUR @S28@
 3 QUAY 1
 1 SEX F
@@ -630,7 +651,7 @@
 3 QUAY 1
 1 FAMC @F3@
 0 @I28@ INDI
-1 _XY 139 30
+1 _XY 140 1860
 1 NAME Ann /[unknown]/
 2 SOUR @S15@
 3 QUAY 1
@@ -650,14 +671,1256 @@
 2 NOTE @T15@
 1 FAMS @F5@
 0 @I29@ INDI
-1 _XY 36 36
+1 _XY 37 1866
 1 NAME [unknown] /Ord/
-2 SOUR @S15@
-3 QUAY 1
 1 SEX M
 1 BIRT
 2 DATE ABT 1760
 1 FAMS @F5@
+0 @I30@ INDI
+1 _XY 36 2115
+1 NAME George Ord /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 11 FEB 1820
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F3@
+1 BAPM
+2 DATE 12 FEB 1820
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+0 @I31@ INDI
+1 _XY 44 2163
+1 NAME William /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 FAMC @F3@
+1 BIRT
+2 DATE ABT 1827
+2 PLAC Whitburn, South Tyneside, Tyne and Wear, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 DEAT
+2 DATE ABT 1876
+2 PLAC Faversham, Swale, Kent, England, UK
+2 SOUR @S30@
+3 QUAY 1
+0 @I32@ INDI
+1 _XY 135 2214
+1 NAME Jane /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 FAMC @F3@
+1 BIRT
+2 DATE ABT 11 AUG 1835
+2 PLAC Hart, Hartlepool, Durham, England, UK
+1 BAPM
+2 DATE 12 AUG 1835
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 DEAT
+2 DATE 27 JAN 1840
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+0 @I33@ INDI
+1 _XY 358 1664
+1 NAME David /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 4 APR 1758
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMS @F6@
+1 DEAT
+2 DATE 14 AUG 1834
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMS @F7@
+1 FAMC @F8@
+0 @I34@ INDI
+1 _XY 254 1629
+1 NAME Elizabeth /Coalpits/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1760
+2 PLAC Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMS @F7@
+0 @I35@ INDI
+1 _XY 253 1670
+1 NAME Ann /Robinson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1760
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMS @F6@
+0 @I36@ INDI
+1 _XY 332 1927
+1 BIRT
+2 DATE 1786
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 NAME Jane /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 FAMC @F6@
+0 @I37@ INDI
+1 _XY 506 1430
+1 NAME Robert /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 13 AUG 1723
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 DEAT
+2 DATE 12 OCT 1789
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMS @F8@
+1 FAMS @F9@
+1 FAMC @F10@
+0 @I38@ INDI
+1 _XY 233 1429
+1 NAME Ann /Dobson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1734
+2 PLAC Easington, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMS @F8@
+1 FAMC @F20@
+0 @I39@ INDI
+1 _XY 612 1430
+1 NAME Frances /Hull/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 11 NOV 1750
+2 PLAC Chester-le-Street, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 DEAT
+2 DATE 29 JUN 1834
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMS @F9@
+0 @I40@ INDI
+1 _XY 561 1136
+1 NAME David /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 15 JAN 1682
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMS @F10@
+1 FAMS @F11@
+1 FAMS @F12@
+1 FAMC @F13@
+0 @I41@ INDI
+1 _XY 820 1283
+1 NAME Ann /Walton/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BAPM
+2 DATE 22 NOV 1692
+2 PLAC Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 BIRT
+2 DATE ABT 21 NOV 1692
+2 PLAC Sedgefield, Durham, England, UK
+1 FAMS @F10@
+1 FAMC @F19@
+0 @I42@ INDI
+1 _XY 443 1192
+1 NAME Elizabeth /Walker/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1692
+2 PLAC Gainford upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 DEAT
+2 DATE 1718
+2 SOUR @S30@
+3 QUAY 1
+1 FAMS @F11@
+0 @I43@ INDI
+1 _XY 719 1089
+1 NAME Anne /Barker/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BAPM
+2 DATE 13 FEB 1700
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 BIRT
+2 DATE ABT 12 FEB 1700
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+1 FAMS @F12@
+0 @I44@ INDI
+1 _XY 491 811
+1 NAME John /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1633
+2 PLAC Longnewton, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMS @F13@
+1 FAMC @F14@
+0 @I45@ INDI
+1 _XY 590 811
+1 NAME Elizabeth /Harrison/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1635
+2 PLAC Bishop Auckland, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 0
+1 FAMS @F13@
+0 @I46@ INDI
+1 _XY 397 597
+1 NAME John /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1606
+2 PLAC Egglescliffe, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMS @F14@
+1 FAMC @F15@
+0 @I47@ INDI
+1 _XY 564 597
+1 NAME Cecily /Bales/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1605
+2 PLAC Elton, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMS @F14@
+1 FAMC @F18@
+0 @I48@ INDI
+1 _XY 211 316
+1 NAME Rowland /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1570
+2 PLAC North Yorkshire, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMS @F15@
+1 FAMC @F16@
+0 @I49@ INDI
+1 _XY 105 316
+1 NAME Elizabeth /Barwicke/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1570
+2 PLAC North Yorkshire, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMS @F15@
+0 @I50@ INDI
+1 _XY 262 36
+1 NAME John /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1540
+2 PLAC Stainton, Middlesbrough, North Yorkshire, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMS @F16@
+0 @I51@ INDI
+1 _XY 382 30
+1 NAME Agnes /[unknown]/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1540
+2 PLAC Aislaby, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 DEAT
+2 DATE 4 DEC 1587
+2 PLAC Aislaby, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMS @F16@
+0 @I52@ INDI
+1 _XY 545 1664
+1 NAME John /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 14 JAN 1761
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 DEAT
+2 DATE 6 NOV 1848
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMS @F17@
+1 FAMC @F8@
+0 @I53@ INDI
+1 _XY 653 1664
+1 NAME Elizabeth /Hardy/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1771
+2 PLAC Ayton Banks, Great Ayton, Middlesbrough, North Yorkshire, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 DEAT
+2 DATE 3 AUG 1834
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMS @F17@
+0 @I54@ INDI
+1 _XY 815 2115
+1 NAME Jane /Taylorson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 17 AUG 1831
+2 PLAC Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F4@
+0 @I55@ INDI
+1 _XY 519 1906
+1 NAME Margaret /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1799
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 DEAT
+2 DATE 22 JAN 1844
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F17@
+0 @I56@ INDI
+1 _XY 625 1906
+1 NAME Ann /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1801
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 DEAT
+2 DATE ABT 1883
+2 PLAC Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F17@
+0 @I57@ INDI
+1 _XY 712 1906
+1 NAME Mary /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 19 FEB 1802
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 DEAT
+2 DATE 29 MAR 1835
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F17@
+0 @I58@ INDI
+1 _XY 519 1955
+1 NAME Elizabeth /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1809
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 DEAT
+2 DATE 1814
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F17@
+0 @I59@ INDI
+1 _XY 623 1955
+1 NAME John /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1812
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F17@
+0 @I60@ INDI
+1 _XY 455 1664
+1 NAME Robert /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1759
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F8@
+1 DEAT
+2 DATE 27 JUN 1750
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+0 @I61@ INDI
+1 _XY 351 1717
+1 NAME Elizabeth /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1762
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F8@
+0 @I62@ INDI
+1 _XY 450 1717
+1 NAME Jonathan /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 19 APR 1763
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F8@
+1 DEAT
+2 DATE 22 JUN 1787
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+0 @I63@ INDI
+1 _XY 544 1717
+1 NAME Anne /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 24 JUN 1764
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F8@
+0 @I64@ INDI
+1 _XY 357 1770
+1 NAME Daniel /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 3 NOV 1765
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F8@
+0 @I65@ INDI
+1 _XY 454 1770
+1 NAME William /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 29 MAY 1767
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F8@
+0 @I66@ INDI
+1 _XY 544 1770
+1 NAME Anne /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 26 SEP 1768
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F8@
+0 @I67@ INDI
+1 _XY 544 1600
+1 NAME Joseph /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 4 JAN 1775
+2 SOUR @S30@
+3 QUAY 1
+2 PLAC Hart, Hartlepool, Durham, England, UK
+1 FAMC @F9@
+0 @I68@ INDI
+1 _XY 634 1600
+1 NAME Daniel /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 2 APR 1777
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F9@
+0 @I69@ INDI
+1 _XY 728 1595
+1 NAME Frances /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 31 DEC 1778
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 DEAT
+2 DATE 14 MAR 1847
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F9@
+0 @I70@ INDI
+1 _XY 818 1599
+1 NAME Jane /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 9 SEP 1780
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F9@
+0 @I71@ INDI
+1 _XY 901 1598
+1 NAME William /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 8 AUG 1783
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F9@
+0 @I72@ INDI
+1 _XY 992 1598
+1 NAME Mary /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 2 SEP 1786
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F9@
+0 @I73@ INDI
+1 _XY 247 1292
+1 NAME Elizabeth /Tayleron/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1 JAN 1711
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 DEAT
+2 DATE 13 JAN 1711
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F11@
+0 @I74@ INDI
+1 _XY 345 1292
+1 NAME John /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 5 JAN 1713
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 DEAT
+2 DATE 22 FEB 1713
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F11@
+0 @I75@ INDI
+1 _XY 441 1292
+1 NAME Isaac /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 5 APR 1714
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 DEAT
+2 DATE 14 JAN 1721
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F11@
+0 @I76@ INDI
+1 _XY 251 1342
+1 NAME David /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 12 JUL 1715
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F11@
+0 @I77@ INDI
+1 _XY 339 1342
+1 NAME Margaret /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 4 OCT 1716
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F11@
+0 @I78@ INDI
+1 _XY 445 1342
+1 NAME Ann /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1718
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F11@
+0 @I79@ INDI
+1 _XY 734 1158
+1 NAME Daniel /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 23 FEB 1721
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F12@
+0 @I80@ INDI
+1 _XY 569 1379
+1 NAME John /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 15 MAR 1725
+2 SOUR @S30@
+3 QUAY 1
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+1 DEAT
+2 DATE ABT 1728
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F10@
+0 @I81@ INDI
+1 _XY 666 1379
+1 NAME Mary /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 13 OCT 1726
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F10@
+0 @I82@ INDI
+1 _XY 748 1380
+1 NAME Ann /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 8 AUG 1728
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F10@
+0 @I83@ INDI
+1 _XY 829 1380
+1 NAME John /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 20 OCT 1729
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F10@
+0 @I84@ INDI
+1 _XY 276 1044
+1 NAME Anne /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 22 SEP 1668
+2 PLAC Elton, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F13@
+0 @I85@ INDI
+1 _XY 358 1043
+1 NAME Joseph /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 4 APR 1670
+2 PLAC Elton, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F13@
+0 @I86@ INDI
+1 _XY 447 1043
+1 NAME John /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 26 MAR 1671
+2 PLAC Elton, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F13@
+0 @I87@ INDI
+1 _XY 524 1042
+1 NAME Mary /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 26 MAR 1671
+2 PLAC Elton, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F13@
+0 @I88@ INDI
+1 _XY 277 1080
+1 NAME Isaac /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 21 JUN 1674
+2 PLAC Elton, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F13@
+0 @I89@ INDI
+1 _XY 360 1081
+1 NAME Jacob /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 22 AUG 1676
+2 PLAC Elton, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F13@
+0 @I90@ INDI
+1 _XY 447 1079
+1 NAME Abraham /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 19 AUG 1678
+2 PLAC Elton, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 DEAT
+2 DATE ABT 1683
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F13@
+0 @I91@ INDI
+1 _XY 243 1128
+1 NAME Abraham /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1 APR 1683
+2 PLAC Elton, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F13@
+1 DEAT
+2 DATE 18 SEP 1717
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+0 @I92@ INDI
+1 _XY 340 1127
+1 NAME Daniel /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 15 JAN 1685
+2 PLAC Elton, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F13@
+0 @I93@ INDI
+1 _XY 432 1128
+1 NAME Jonathan /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1688
+2 PLAC Norton, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F13@
+0 @I94@ INDI
+1 _XY 303 756
+1 NAME Mary /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1628
+2 PLAC Egglescliffe, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 DEAT
+2 DATE 1628
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F14@
+0 @I95@ INDI
+1 _XY 386 756
+1 NAME Rowland /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1629
+2 PLAC Egglescliffe, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F14@
+0 @I96@ INDI
+1 _XY 485 756
+1 NAME Mary /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1629
+2 PLAC Egglescliffe, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F14@
+0 @I97@ INDI
+1 _XY 287 813
+1 NAME Elizabeth /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1631
+2 PLAC Longnewton, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F14@
+0 @I98@ INDI
+1 _XY 385 810
+1 NAME William /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1632
+2 PLAC Longnewton, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 DEAT
+2 DATE ABT 1637
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F14@
+0 @I99@ INDI
+1 _XY 293 866
+1 NAME William /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1637
+2 PLAC Longnewton, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F14@
+0 @I100@ INDI
+1 _XY 387 867
+1 NAME Margaret /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1639
+2 PLAC Longnewton, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F14@
+0 @I101@ INDI
+1 _XY 488 866
+1 NAME Mary /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1641
+2 PLAC Elton, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F14@
+0 @I102@ INDI
+1 _XY 298 911
+1 NAME Cecily /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1644
+2 PLAC Elton, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F14@
+0 @I103@ INDI
+1 _XY 389 911
+1 NAME Ann /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1646
+2 PLAC Elton, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F14@
+0 @I104@ INDI
+1 _XY 109 598
+1 NAME Elizabeth /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1596
+2 PLAC Egglescliffe, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F15@
+0 @I105@ INDI
+1 _XY 209 598
+1 NAME Thomas /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1600
+2 PLAC Egglescliffe, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F15@
+0 @I106@ INDI
+1 _XY 301 597
+1 NAME Anthony /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1603
+2 PLAC Egglescliffe, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 DEAT
+2 DATE 23 SEP 1604
+2 PLAC Egglescliffe, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F15@
+0 @I107@ INDI
+1 _XY 323 316
+1 NAME Cuthbert /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1570
+2 PLAC Egglescliffe, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F16@
+0 @I108@ INDI
+1 _XY 434 315
+1 NAME William /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1570
+2 PLAC Egglescliffe, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F16@
+0 @I109@ INDI
+1 _XY 537 315
+1 NAME John /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BAPM
+2 DATE 26 JUN 1575
+2 SOUR @S30@
+3 QUAY 1
+1 BIRT
+2 DATE ABT 25 JUN 1575
+2 PLAC Stainton, Middlesbrough, North Yorkshire, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F16@
+0 @I110@ INDI
+1 _XY 633 315
+1 NAME Agnes /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BAPM
+2 DATE 24 JUN 1582
+2 SOUR @S30@
+3 QUAY 1
+1 BIRT
+2 DATE ABT 23 JUN 1582
+2 PLAC Stainton, Middlesbrough, North Yorkshire, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F16@
+0 @I111@ INDI
+1 _XY 525 535
+1 NAME Bartholomew /Bales/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1570
+2 PLAC Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMS @F18@
+0 @I112@ INDI
+1 _XY 892 1225
+1 NAME Robert /Walton/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1670
+2 PLAC Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMS @F19@
+0 @I113@ INDI
+1 _XY 36 1352
+1 NAME Robert /Dobson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1700
+2 PLAC Easington, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMS @F20@
+0 @I114@ INDI
+1 _XY 133 1352
+1 NAME Elizabeth /Wheldon/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1700
+2 PLAC Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMS @F20@
+0 @I115@ INDI
+1 _XY 35 1432
+1 NAME John /Dobson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 24 NOV 1728
+2 PLAC Easington, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F20@
+0 @I116@ INDI
+1 _XY 124 1432
+1 NAME Jane /Dobson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 17 MAR 1730
+2 PLAC Easington, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F20@
+0 @I117@ INDI
+1 _XY 30 1476
+1 NAME Thomas /Dobson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 5 OCT 1735
+2 PLAC Easington, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F20@
+0 @I118@ INDI
+1 _XY 121 1477
+1 NAME George /Dobson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 22 FEB 1737
+2 PLAC Easington, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F20@
+0 @I119@ INDI
+1 _XY 211 1478
+1 NAME Elizabeth /Dobson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 29 MAY 1739
+2 PLAC Easington, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F20@
+0 @I120@ INDI
+1 _XY 30 1516
+1 NAME William /Taylerson/
+2 SOUR @S30@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 10 FEB 1741
+2 PLAC Easington, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 FAMC @F20@
 0 @F0@ FAM
 1 WIFE @I16@
 1 MARR
@@ -700,6 +1963,9 @@
 1 CHIL @I25@
 1 CHIL @I26@
 1 CHIL @I27@
+1 CHIL @I30@
+1 CHIL @I31@
+1 CHIL @I32@
 0 @F4@ FAM
 1 HUSB @I15@
 1 WIFE @I20@
@@ -711,10 +1977,170 @@
 1 CHIL @I4@
 1 CHIL @I5@
 1 CHIL @I6@
+1 CHIL @I54@
+1 MARR
+2 DATE 11 OCT 1823
+2 PLAC Saint Thomas Stockton Parish Church, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
 0 @F5@ FAM
 1 WIFE @I28@
 1 CHIL @I22@
 1 HUSB @I29@
+0 @F6@ FAM
+1 HUSB @I33@
+1 CHIL @I7@
+1 WIFE @I35@
+1 MARR
+2 DATE 31 OCT 1787
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+1 CHIL @I36@
+0 @F7@ FAM
+1 WIFE @I34@
+1 HUSB @I33@
+0 @F8@ FAM
+1 HUSB @I37@
+1 CHIL @I33@
+1 WIFE @I38@
+1 CHIL @I52@
+1 CHIL @I60@
+1 CHIL @I61@
+1 CHIL @I62@
+1 CHIL @I63@
+1 CHIL @I64@
+1 CHIL @I65@
+1 CHIL @I66@
+0 @F9@ FAM
+1 WIFE @I39@
+1 HUSB @I37@
+1 CHIL @I67@
+1 CHIL @I68@
+1 CHIL @I69@
+1 CHIL @I70@
+1 CHIL @I71@
+1 CHIL @I72@
+1 MARR
+2 DATE 1774
+2 SOUR @S30@
+3 QUAY 1
+0 @F10@ FAM
+1 HUSB @I40@
+1 CHIL @I37@
+1 WIFE @I41@
+1 CHIL @I80@
+1 CHIL @I81@
+1 CHIL @I82@
+1 CHIL @I83@
+1 MARR
+2 DATE 1 MAY 1722
+2 PLAC Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+0 @F11@ FAM
+1 WIFE @I42@
+1 HUSB @I40@
+1 CHIL @I73@
+1 CHIL @I74@
+1 CHIL @I75@
+1 CHIL @I76@
+1 CHIL @I77@
+1 CHIL @I78@
+1 MARR
+2 DATE 27 NOV 1712
+2 PLAC Gainford upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+0 @F12@ FAM
+1 WIFE @I43@
+1 HUSB @I40@
+1 CHIL @I79@
+1 MARR
+2 DATE 17 APR 1720
+2 PLAC Aycliffe, Sedgefield, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+0 @F13@ FAM
+1 HUSB @I44@
+1 CHIL @I40@
+1 WIFE @I45@
+1 CHIL @I84@
+1 CHIL @I85@
+1 CHIL @I86@
+1 CHIL @I87@
+1 CHIL @I88@
+1 CHIL @I89@
+1 CHIL @I90@
+1 CHIL @I91@
+1 CHIL @I92@
+1 CHIL @I93@
+1 MARR
+2 DATE ABT 1667
+0 @F14@ FAM
+1 HUSB @I46@
+1 CHIL @I44@
+1 WIFE @I47@
+1 CHIL @I94@
+1 CHIL @I95@
+1 CHIL @I96@
+1 CHIL @I97@
+1 CHIL @I98@
+1 CHIL @I99@
+1 CHIL @I100@
+1 CHIL @I101@
+1 CHIL @I102@
+1 CHIL @I103@
+1 MARR
+2 DATE 10 JUN 1627
+2 PLAC Egglescliffe, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+0 @F15@ FAM
+1 HUSB @I48@
+1 CHIL @I46@
+1 WIFE @I49@
+1 CHIL @I104@
+1 CHIL @I105@
+1 CHIL @I106@
+1 MARR
+2 DATE 5 MAY 1594
+2 PLAC Egglescliffe, Stockton upon Tees, Durham, England, UK
+2 SOUR @S30@
+3 QUAY 1
+0 @F16@ FAM
+1 HUSB @I50@
+1 CHIL @I48@
+1 WIFE @I51@
+1 CHIL @I107@
+1 CHIL @I108@
+1 CHIL @I109@
+1 CHIL @I110@
+0 @F17@ FAM
+1 HUSB @I52@
+1 CHIL @I15@
+1 WIFE @I53@
+1 CHIL @I55@
+1 CHIL @I56@
+1 CHIL @I57@
+1 CHIL @I58@
+1 CHIL @I59@
+0 @F18@ FAM
+1 HUSB @I111@
+1 CHIL @I47@
+0 @F19@ FAM
+1 HUSB @I112@
+1 CHIL @I41@
+0 @F20@ FAM
+1 HUSB @I113@
+1 CHIL @I38@
+1 WIFE @I114@
+1 CHIL @I115@
+1 CHIL @I116@
+1 CHIL @I117@
+1 CHIL @I118@
+1 CHIL @I119@
+1 CHIL @I120@
 0 @S0@ SOUR
 1 AUTH General Register Office, England
 1 TITL Death certificate, Taylerson, Esther
@@ -1859,6 +3285,10 @@
 2 CONT </tbody>
 2 CONT </table>
 2 CONT
+0 @S30@ SOUR
+1 AUTH Sidgwick, Pamela
+1 TITL Denton Family Tree
+1 PUBL genesreunited.co.uk, 2009
 0 @T0@ NOTE place from family interviews
 0 @T1@ NOTE Steuben Co. is from 1860 census; Painted Post is assumed from place o
 1 CONC f residence in 1850 census (when he was two months old).
@@ -1889,6 +3319,9 @@
 0 @T16@ NOTE Assume "North Terrace" is Northgate. Later entry lists Wells St., whic
 1 CONC h is a short street off of Northgate.
 1 CONT
+0 @T19@ NOTE P. Sidgwick gives place as Monk Hesleden.
 0 @T17@ NOTE need to order death cert. from England
 0 @T18@ NOTE need to order death cert. from England
+0 @T20@ NOTE place is from P. Sidgwick
+0 @T21@ NOTE place is from P. Sidgwick
 0 TRLR
