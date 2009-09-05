@@ -1020,6 +1020,11 @@
 3 QUAY 1
 1 FAMS @F17@
 1 FAMC @F8@
+1 CENS
+2 DATE 6 JUN 1841
+2 PLAC Hart, Hartlepool, Durham, England, UK
+2 SOUR @S31@
+3 QUAY 3
 0 @I53@ INDI
 1 _XY 653 1664
 1 NAME Elizabeth /Hardy/
@@ -3289,6 +3294,52 @@
 1 AUTH Sidgwick, Pamela
 1 TITL Denton Family Tree
 1 PUBL genesreunited.co.uk, 2009
+0 @S31@ SOUR
+1 AUTH UK National Archives
+1 TITL England Census, 1841, Durham, Hart, Hartlepool, District 6a, p. 6 of 6
+1 PUBL class HO107, piece 315, book 17, folio 8, page 12
+1 TEXT [page] <b>12</b> [folio] <b>8</b><br />
+2 CONT Township of Hart<br />
+2 CONT <table border="1">
+2 CONT <thead>
+2 CONT <tr>
+2 CONT <th rowspan="2">PLACE</th>
+2 CONT <th colspan="2">HOUSES</th>
+2 CONT <th colspan="2" rowspan="2">NAMES<br />of each Person who abode therei
+2 CONC n<br /> the preceding Night.</th>
+2 CONT <th colspan="2">AGE<br />and<br />SEX</th>
+2 CONT <th rowspan="2">PROFESSION, TRADE,<br />EMPLOYMENT,<br />or of<br />IN
+2 CONC DEPENDENT MEANS.</th>
+2 CONT <th colspan="2">Where Born</th>
+2 CONT </tr>
+2 CONT <tr>
+2 CONT <th>Uninhabited<br />or Building</th>
+2 CONT <th>Inhabited</th>
+2 CONT <th>Males</th>
+2 CONT <th>Females</th>
+2 CONT <th>Whether Born<br />in same County</th>
+2 CONT <th>Whether Born in<br />Scotland, Ireland,<br />or Foreign Parts.</th
+2 CONC >
+2 CONT </tr>
+2 CONT </thead>
+2 CONT <tbody>
+2 CONT <tr><td rowspan="9">Village</td><td>&nbsp;</td><td>1</td><td>John</td>
+2 CONC <td>Garret</td><td>35</td><td>&nbsp;</td><td>Ag. lab.</td><td>yes</td>
+2 CONC <td>&nbsp;</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>John</td><td>d[itt]o Jun<sup>r</
+2 CONC sup>.</td><td>12</td><td>&nbsp;</td><td>&nbsp;</td><td>yes</td><td>&nb
+2 CONC sp;</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>Mary</td><td>d[itt]o</td><td>&nb
+2 CONC sp;</td><td>9</td><td>&nbsp;</td><td>yes</td><td>&nbsp;</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>John</td><td>Taylerson</td><td>8
+2 CONC 0</td><td>&nbsp;</td><td>Ag. lab.</td><td>yes</td><td>&nbsp;</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>Margaret</td><td>d[itt]o</td><td
+2 CONC >&nbsp;</td><td>40</td><td>&nbsp;</td><td>yes</td><td>&nbsp;</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>&nbsp;</td><td>Stephen</td><td>Beelman</td><td>
+2 CONC 5</td><td>&nbsp;</td><td>&nbsp;</td><td>yes</td><td>&nbsp;</td></tr>
+2 CONT </tbody>
+2 CONT </table>
+2 CONT
 0 @T0@ NOTE place from family interviews
 0 @T1@ NOTE Steuben Co. is from 1860 census; Painted Post is assumed from place o
 1 CONC f residence in 1850 census (when he was two months old).
