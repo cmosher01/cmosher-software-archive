@@ -193,13 +193,13 @@
 2 PLAC Fulton, Freedom, Bourbon, KS, USA
 2 SOUR @S26@
 3 QUAY 3
-1 FAMS @F1@
-1 FAMC @F5@
 1 CENS
 2 DATE 1 JAN 1905
 2 PLAC Radcliffe, Hardin, IA, USA
 2 SOUR @S28@
 3 QUAY 3
+1 FAMS @F1@
+1 FAMC @F5@
 0 @I7@ INDI
 1 _XY 372 157
 1 NAME John H. A. /Rapp/
@@ -279,8 +279,6 @@
 2 PLAC Oneida, Knox, IL, USA
 2 SOUR @S7@
 3 QUAY 3
-1 FAMS @F2@
-1 FAMC @F3@
 1 CENS
 2 DATE 1 JUN 1870
 2 PLAC Oneida, Knox, IL, USA
@@ -297,6 +295,8 @@
 2 PLAC 1578 Washington Street, Denver, Denver, CO, USA
 2 SOUR @S36@
 3 QUAY 3
+1 FAMS @F2@
+1 FAMC @F3@
 0 @I9@ INDI
 1 _XY 438 341
 1 NAME Herbert T. /Rapp/
@@ -365,7 +365,6 @@
 2 PLAC USA
 2 SOUR @S8@
 3 QUAY 1
-1 FAMS @F3@
 1 CENS
 2 DATE 1 JUN 1870
 2 PLAC Oneida, Knox, IL, USA
@@ -385,6 +384,7 @@
 2 DATE ABT 1925
 2 PLAC Oneida, Knox, IL, USA
 2 NOTE @T34@
+1 FAMS @F3@
 0 @I12@ INDI
 1 _XY 182 39
 1 NAME Mary /[unknown]/
@@ -411,7 +411,6 @@
 2 PLAC USA
 2 SOUR @S8@
 3 QUAY 1
-1 FAMS @F3@
 1 CENS
 2 DATE 1 JUN 1860
 2 PLAC Oneida, Knox, IL, USA
@@ -431,6 +430,7 @@
 2 DATE ABT 1915
 2 PLAC Oneida, Knox, IL, USA
 2 NOTE @T33@
+1 FAMS @F3@
 0 @I13@ INDI
 1 _XY 436 39
 1 NAME Wilhelm /Rapp/
@@ -667,9 +667,9 @@
 3 QUAY 1
 1 SEX F
 1 BIRT
-2 DATE ABT 1873
+2 DATE MAR 1873
 2 PLAC IL, USA
-2 SOUR @S7@
+2 SOUR @S6@
 3 QUAY 1
 1 FAMC @F3@
 0 @I25@ INDI
@@ -748,7 +748,6 @@
 2 PLAC Fulton, Freedom, Bourbon, KS, USA
 2 SOUR @S26@
 3 QUAY 3
-1 FAMS @F5@
 1 CENS
 2 DATE 1 JAN 1885
 2 PLAC Palo Alto, Jasper, IA, USA
@@ -759,8 +758,9 @@
 2 PLAC Radcliffe, Hardin, IA, USA
 2 SOUR @S28@
 3 QUAY 3
+1 FAMS @F5@
 0 @I29@ INDI
-1 _XY 921 187
+1 _XY 922 187
 1 NAME William /Webber/
 1 SEX M
 1 CENS
@@ -789,7 +789,6 @@
 2 PLAC Palo Alto, Jasper, IA, USA
 2 SOUR @S27@
 3 QUAY 3
-1 FAMS @F5@
 1 CENS
 2 DATE 1 JAN 1905
 2 PLAC Radcliffe, Hardin, IA, USA
@@ -800,6 +799,7 @@
 2 PLAC Lake Prairie, Marion, IA, USA
 2 SOUR @S31@
 3 QUAY 3
+1 FAMS @F5@
 1 FAMC @F6@
 0 @I30@ INDI
 1 _XY 785 284
@@ -813,7 +813,6 @@
 2 SOUR @S20@
 3 QUAY 1
 2 NOTE @T19@
-1 FAMC @F5@
 1 BURI
 2 DATE ABT 2 MAR 1951
 2 PLAC Masonic Cemetery, Des Moines, Polk, IA, USA
@@ -825,6 +824,7 @@
 2 SOUR @S30@
 3 QUAY 1
 2 NOTE @T26@
+1 FAMC @F5@
 0 @I31@ INDI
 1 _XY 887 284
 1 NAME George Ray /Webber/
@@ -836,7 +836,6 @@
 2 PLAC IA, USA
 2 SOUR @S20@
 3 QUAY 1
-1 FAMC @F5@
 1 DEAT
 2 DATE 19 APR 1944
 2 PLAC Sedan, Chautauqua, KS, USA
@@ -853,6 +852,7 @@
 2 PLAC Sedan, Chautauqua, KS, USA
 2 SOUR @S29@
 3 QUAY 1
+1 FAMC @F5@
 0 @I32@ INDI
 1 _XY 987 284
 1 NAME William A. /Webber/
@@ -865,7 +865,6 @@
 2 SOUR @S20@
 3 QUAY 1
 2 NOTE @T22@
-1 FAMC @F5@
 1 DEAT
 2 DATE 20 MAR 1956
 2 PLAC Chautauqua, KS, USA
@@ -878,6 +877,7 @@
 2 SOUR @S29@
 3 QUAY 1
 2 NOTE @T23@
+1 FAMC @F5@
 0 @I33@ INDI
 1 _XY 789 336
 1 NAME Nellie May /Webber/
@@ -901,7 +901,6 @@
 2 PLAC IA, USA
 2 SOUR @S20@
 3 QUAY 1
-1 FAMC @F5@
 1 DEAT
 2 DATE 1940
 2 PLAC KS, USA
@@ -913,6 +912,7 @@
 2 SOUR @S29@
 3 QUAY 1
 2 NOTE @T24@
+1 FAMC @F5@
 0 @I35@ INDI
 1 _XY 986 336
 1 NAME Alta Grace /Webber/
@@ -943,7 +943,7 @@
 3 QUAY 1
 2 NOTE @T27@
 1 RESI
-2 DATE FROM 1855
+2 DATE FROM 1855 TO 1857
 2 PLAC IA, USA
 2 SOUR @S31@
 3 QUAY 1
@@ -952,7 +952,6 @@
 2 PLAC Lake Prairie, Marion, IA, USA
 2 SOUR @S31@
 3 QUAY 3
-1 FAMS @F6@
 1 CENS
 2 DATE 1 JUN 1850
 2 PLAC Sandy, Tuscarawas, OH, USA
@@ -962,6 +961,7 @@
 2 DATE ABT 1857
 2 PLAC IA, USA
 2 NOTE @T30@
+1 FAMS @F6@
 0 @I37@ INDI
 1 _XY 881 30
 1 NAME Catharine /[unknown]/
@@ -978,7 +978,6 @@
 2 PLAC Lake Prairie, Marion, IA, USA
 2 SOUR @S31@
 3 QUAY 3
-1 FAMS @F6@
 1 CENS
 2 DATE 1 JUN 1850
 2 PLAC Sandy, Tuscarawas, OH, USA
@@ -988,6 +987,7 @@
 2 DATE ABT 1857
 2 PLAC IA, USA
 2 NOTE @T31@
+1 FAMS @F6@
 0 @I38@ INDI
 1 _XY 739 140
 1 NAME Narcissa /Webber/
