@@ -88,6 +88,11 @@
 3 QUAY 3
 1 FAMS @F1@
 1 FAMC @F3@
+1 RESI
+2 DATE ABT 1917
+2 PLAC Lewes, Sussex, DE, USA
+2 SOUR @S27@
+3 QUAY 3
 0 @I3@ INDI
 1 _XY 660 445
 1 NAME Fannie M. /Wilson/
@@ -170,16 +175,17 @@
 2 SOUR @S21@
 3 QUAY 2
 1 FAMS @F2@
-1 FAMC @F4@
+1 FAMC @F5@
 0 @I5@ INDI
 1 _XY 1091 30
-1 NAME John W. Abraham /Lankford/
+1 NAME John W. Abraham /Langford/
 1 SEX M
 1 CENS
 2 DATE 1 JUN 1850
 2 PLAC Sussex, DE, USA
 2 SOUR @S14@
 3 QUAY 3
+2 NOTE @T15@
 1 BIRT
 2 DATE 1817
 2 PLAC MD, USA
@@ -201,12 +207,26 @@
 2 PLAC Williston, Caroline, MD, USA
 2 SOUR @S15@
 3 QUAY 3
+2 NOTE @T17@
 1 CENS
 2 DATE 1 JUN 1870
 2 PLAC Hollyville, Lewes and Rehoboth Hundred, Sussex, DE, USA
 2 SOUR @S16@
 3 QUAY 3
 1 FAMS @F4@
+1 CENS
+2 DATE 1 JUN 1880
+2 PLAC Lewes and Rehoboth Hundred, Sussex, DE, USA
+2 SOUR @S24@
+3 QUAY 3
+1 CENS
+2 DATE 1 JUN 1840
+2 PLAC Vienna, Dorchester, MD, USA
+2 SOUR @S25@
+3 QUAY 3
+1 EVEN
+2 TYPE note
+2 NOTE @T16@
 0 @I6@ INDI
 1 _XY 479 590
 1 NAME Edna E. /Murray/
@@ -494,8 +514,8 @@
 1 FAMC @F2@
 0 @I23@ INDI
 1 _XY 1238 30
-1 NAME Mary A. /[unknown]/
-2 SOUR @S14@
+1 NAME Mary Ann /Bradley/
+2 SOUR @S26@
 3 QUAY 1
 1 SEX F
 1 BIRT
@@ -530,6 +550,16 @@
 2 SOUR @S16@
 3 QUAY 3
 1 FAMS @F4@
+1 CENS
+2 DATE 1 JUN 1880
+2 PLAC Lewes and Rehoboth Hundred, Sussex, DE, USA
+2 SOUR @S24@
+3 QUAY 1
+1 CENS
+2 DATE 1 JUN 1840
+2 PLAC Vienna, Dorchester, MD, USA
+2 SOUR @S25@
+3 QUAY 2
 0 @I24@ INDI
 1 _XY 1082 130
 1 NAME Mary E. /Lankford/
@@ -685,7 +715,7 @@
 2 PLAC Broadkill Hundred, Sussex, DE, USA
 2 SOUR @S23@
 3 QUAY 3
-1 FAMS @F4@
+1 FAMS @F5@
 0 @I34@ INDI
 1 _XY 761 40
 1 NAME Margaret /Wilson/
@@ -727,7 +757,7 @@
 2 PLAC Broadkill Hundred, Sussex, DE, USA
 2 SOUR @S23@
 3 QUAY 2
-1 FAMS @F4@
+1 FAMS @F5@
 0 @I35@ INDI
 1 _XY 576 171
 1 NAME Eli W. /Wilson/
@@ -739,7 +769,7 @@
 2 PLAC Sussex, DE, USA
 2 SOUR @S17@
 3 QUAY 1
-1 FAMC @F4@
+1 FAMC @F5@
 0 @I36@ INDI
 1 _XY 654 171
 1 NAME Ebenezer /Wilson/
@@ -751,7 +781,7 @@
 2 PLAC Sussex, DE, USA
 2 SOUR @S17@
 3 QUAY 1
-1 FAMC @F4@
+1 FAMC @F5@
 0 @I37@ INDI
 1 _XY 756 171
 1 NAME Mary A. /Wilson/
@@ -763,7 +793,7 @@
 2 PLAC Sussex, DE, USA
 2 SOUR @S17@
 3 QUAY 1
-1 FAMC @F4@
+1 FAMC @F5@
 0 @I38@ INDI
 1 _XY 572 225
 1 NAME Peter S. /Wilson/
@@ -776,7 +806,7 @@
 2 SOUR @S17@
 3 QUAY 1
 2 NOTE @T11@
-1 FAMC @F4@
+1 FAMC @F5@
 0 @I39@ INDI
 1 _XY 658 225
 1 NAME Eliza J. /Wilson/
@@ -788,7 +818,7 @@
 2 PLAC Sussex, DE, USA
 2 SOUR @S17@
 3 QUAY 1
-1 FAMC @F4@
+1 FAMC @F5@
 0 @I40@ INDI
 1 _XY 738 225
 1 NAME William Donovan /Wilson/
@@ -800,7 +830,7 @@
 2 PLAC Sussex, DE, USA
 2 SOUR @S17@
 3 QUAY 1
-1 FAMC @F4@
+1 FAMC @F5@
 0 @I41@ INDI
 1 _XY 858 225
 1 NAME Mahala /Wilson/
@@ -812,7 +842,7 @@
 2 PLAC Sussex, DE, USA
 2 SOUR @S17@
 3 QUAY 1
-1 FAMC @F4@
+1 FAMC @F5@
 0 @I42@ INDI
 1 _XY 571 276
 1 NAME Sarah E. /Wilson/
@@ -824,7 +854,7 @@
 2 PLAC Sussex, DE, USA
 2 SOUR @S17@
 3 QUAY 1
-1 FAMC @F4@
+1 FAMC @F5@
 0 @I43@ INDI
 1 _XY 660 276
 1 NAME Louisa /Wilson/
@@ -834,7 +864,7 @@
 2 PLAC DE, USA
 2 SOUR @S18@
 3 QUAY 1
-1 FAMC @F4@
+1 FAMC @F5@
 0 @I44@ INDI
 1 _XY 753 276
 1 NAME James V. /Wilson/
@@ -846,7 +876,7 @@
 2 PLAC DE, USA
 2 SOUR @S18@
 3 QUAY 1
-1 FAMC @F4@
+1 FAMC @F5@
 0 @I45@ INDI
 1 _XY 861 587
 1 NAME Harel /Murray/
@@ -918,6 +948,12 @@
 1 CHIL @I30@
 1 CHIL @I31@
 1 CHIL @I32@
+1 MARR
+2 DATE 14 JUL 1838
+2 PLAC Dorchester, MD, USA
+2 SOUR @S26@
+3 QUAY 1
+2 NOTE @T13@
 0 @F5@ FAM
 1 HUSB @I33@
 1 CHIL @I4@
@@ -1343,6 +1379,49 @@
 2 CONC r>
 2 CONT </table>
 2 CONT
+0 @S24@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1880. DE, Sussex, Lewes and Rehoboth, District 53
+1 PUBL p. 49 of 63
+1 TEXT <table border="1">
+2 CONT <tr><td>Lankford</td><td>John W.</td><td>W</td><td>M</td><td>72</td><t
+2 CONC d>&nbsp;</td><td>[married]</td><td>Farmer</td><td>&quot; [Delaware]</t
+2 CONC d><td>&quot; [Delaware]</td><td>&quot; [Delaware]</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>Mary A.</td><td>W</td><td>F</td><td>71</td><td>
+2 CONC Wife</td><td>[married]</td><td>House Keeper</td><td>&quot;</td><td>&qu
+2 CONC ot;</td><td>&quot;</td></tr>
+2 CONT <tr><td>&nbsp;</td><td>George H.</td><td>W</td><td>M</td><td>16</td><t
+2 CONC d>Son</td><td>[single]</td><td>Home</td><td>&quot;</td><td>&quot;</td>
+2 CONC <td>&quot;</td></tr>
+2 CONT </table>
+2 CONT
+0 @S25@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1840, MD, Dorchester, Vienna District
+1 PUBL p. 11 of 24
+1 TEXT Vienna District, Dorchaster County, Maryland
+2 CONT <table border="1">
+2 CONT <tr><td>Jno W.</td><td>Lankford</td><td>m</td><td>20-29</td><td>[23]</
+2 CONC td></tr>
+2 CONT <tr><td>[Mary Ann]</td><td>[Bradley]</td><td>f</td><td>20-29</td><td>[
+2 CONC 27]</td></tr>
+2 CONT <tr><td>[Mary E.]</td><td>[Lankford]</td><td>f</td><td>0-4</td><td>[0]
+2 CONC </td></tr>
+2 CONT </table>
+2 CONT
+0 @S26@ SOUR
+1 AUTH Dodd, Jordan, Liahona Research, comp
+1 TITL Maryland Marriages, 1655-1850 [database on-line]
+1 PUBL Provo, UT, USA: The Generations Network, Inc., 2004
+1 TEXT John Langford<br />
+2 CONT 14 Jul 1838<br />
+2 CONT Mary Ann Bradley<br />
+2 CONT County: Dorchester<br />
+2 CONT
+0 @S27@ SOUR
+1 AUTH Ancestry.com
+1 TITL World War I Draft Registration Cards, 1917-1918 [database on-line]
+1 PUBL Provo, UT, USA: The Generations Network, Inc., 2005
 0 @T0@ NOTE date is from 1900 census
 0 @T1@ NOTE by Rev. Townsend
 0 @T2@ NOTE place is assumed
@@ -1358,4 +1437,13 @@
 1 CONC ot with her parents in 1870 census
 0 @T11@ NOTE date is from 1900 census
 0 @T12@ NOTE 7 in 1860 census; 14 in 1870 census
+0 @T13@ NOTE need to check original record (FHL film 13929)
+0 @T15@ NOTE There is another John Lankford and wife Mary A., who are in Dorchester
+1 CONC , MD, in the 1850 census. They is John P. Langford and Mary Ann Briley
+1 CONC , who were married in Dorchester 16 Jan 1849. They are not to be confu
+1 CONC sed with this John and wife Mary Ann Bradley.
+1 CONT
+0 @T16@ NOTE last name also spelled Lankford
+0 @T17@ NOTE Why did he give the name Abraham Lankford instead of John Lankford? I
+1 CONC s it related to Abraham Lincoln running for president at the time?
 0 TRLR
