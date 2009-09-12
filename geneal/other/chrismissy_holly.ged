@@ -1,0 +1,170 @@
+0 HEAD
+1 SOUR GRO
+2 NAME Genealogy Research Organizer
+2 VERS 1.3
+2 CORP Christopher Alan Mosher
+3 ADDR 41 Brook Pine Drive
+4 CONT Shelton, CT 06484-5912
+1 GEDC
+2 VERS 5.5
+2 FORM LINEAGE-LINKED
+1 CHAR ASCII
+1 SUBM @M0@
+1 NOTE This file contains information about the events related to our secon
+2 CONC d child (the first child was aborted). It starts with the first day o
+2 CONC f Missy's last period before we started having unproteted sex in hope
+2 CONC s of becoming pregnant.
+0 @M0@ SUBM
+0 @I0@ INDI
+1 _XY 382 30
+1 NAME Michelle Lynn /Richards/
+1 SEX F
+1 FAMS @F0@
+0 @I1@ INDI
+1 _XY 241 30
+1 NAME Christopher Alan /Mosher/
+1 SEX M
+1 FAMS @F0@
+0 @I2@ INDI
+1 _XY 321 99
+1 NAME Holly Anne /Mosher/
+2 SOUR @S0@
+3 QUAY 3
+1 SEX F
+1 BIRT
+2 DATE 17 MAY 2002
+2 PLAC Room 309, Childbirth Center, Griffin Hospital, 130 Division Street, Derby, New Haven, CT, USA
+2 SOUR @S0@
+3 QUAY 3
+2 NOTE @T8@
+1 FAMC @F0@
+0 @F0@ FAM
+1 WIFE @I0@
+1 HUSB @I1@
+1 EVEN
+2 DATE 8 AUG 2001
+2 PLAC DE, USA
+2 TYPE first day of period
+2 SOUR @S0@
+3 QUAY 3
+1 EVEN
+2 DATE 8 AUG 2001
+2 PLAC 1 North Bay Court, Lewes, Sussex, DE, USA
+2 TYPE unprotected sex
+2 SOUR @S0@
+3 QUAY 3
+1 EVEN
+2 DATE 17 AUG 2001
+2 PLAC 41 Brook Pine Drive, Shelton, Fairfield, CT, USA
+2 TYPE unprotected sex
+2 SOUR @S0@
+3 QUAY 3
+1 EVEN
+2 DATE 19 AUG 2001
+2 PLAC 41 Brook Pine Drive, Shelton, Fairfield, CT, USA
+2 TYPE unprotected sex
+2 NOTE @T0@
+2 SOUR @S0@
+3 QUAY 3
+1 EVEN
+2 DATE 21 AUG 2001
+2 PLAC 41 Brook Pine Drive, Shelton, Fairfield, CT, USA
+2 TYPE unprotected sex
+2 SOUR @S0@
+3 QUAY 3
+1 EVEN
+2 DATE 23 AUG 2001
+2 TYPE ovulation
+2 NOTE @T7@
+2 SOUR @S0@
+3 QUAY 0
+2 PLAC 41 Brook Pine Drive, Shelton, Fairfield, CT, USA
+1 EVEN
+2 DATE 23 AUG 2001
+2 PLAC 41 Brook Pine Drive, Shelton, Fairfield, CT, USA
+2 TYPE unprotected sex
+2 SOUR @S0@
+3 QUAY 3
+1 EVEN
+2 DATE 26 AUG 2001
+2 PLAC 41 Brook Pine Drive, Shelton, Fairfield, CT, USA
+2 TYPE unprotected sex
+2 SOUR @S0@
+3 QUAY 3
+2 NOTE @T1@
+1 EVEN
+2 DATE 3 SEP 2001
+2 PLAC 41 Brook Pine Drive, Shelton, Fairfield, CT, USA
+2 TYPE unprotected sex
+2 SOUR @S0@
+3 QUAY 3
+2 NOTE @T2@
+1 EVEN
+2 DATE 5 SEP 2001
+2 PLAC 1 Post Road, Fairfield, Fairfield, CT, USA
+2 TYPE first day of period
+2 SOUR @S0@
+3 QUAY 2
+1 EVEN
+2 DATE 15 SEP 2001
+2 PLAC 41 Brook Pine Drive, Shelton, Fairfield, CT, USA
+2 TYPE unprotected sex
+2 SOUR @S0@
+3 QUAY 3
+2 NOTE @T3@
+1 EVEN
+2 DATE 16 SEP 2001
+2 PLAC 41 Brook Pine Drive, Shelton, Fairfield, CT, USA
+2 TYPE unprotected sex
+2 SOUR @S0@
+3 QUAY 3
+2 NOTE @T4@
+1 EVEN
+2 DATE 20 SEP 2001
+2 PLAC 41 Brook Pine Drive, Shelton, Fairfield, CT, USA
+2 TYPE unprotected sex
+2 SOUR @S0@
+3 QUAY 3
+2 NOTE @T5@
+1 EVEN
+2 DATE 30 SEP 2001
+2 PLAC 41 Brook Pine Drive, Shelton, Fairfield, CT, USA
+2 TYPE unprotected sex
+2 SOUR @S0@
+3 QUAY 3
+1 EVEN
+2 DATE 3 OCT 2001
+2 TYPE scheduled first day of period (didn't get)
+2 SOUR @S0@
+3 QUAY 3
+1 EVEN
+2 DATE ABT 18 SEP 2001
+2 TYPE ovulation
+2 NOTE @T6@
+2 PLAC 41 Brook Pine Drive, Shelton, Fairfield, CT, USA
+1 EVEN
+2 DATE 18 SEP 2001
+2 PLAC 41 Brook Pine Drive, Shelton, Fairfield, CT, USA
+2 TYPE unprotected sex
+2 SOUR @S0@
+3 QUAY 3
+1 CHIL @I2@
+0 @S0@ SOUR
+1 AUTH Mosher, Christopher Alan
+1 TITL Eyewitness
+0 @T0@ NOTE about 11:55 PM
+0 @T1@ NOTE morning
+0 @T2@ NOTE morning
+0 @T3@ NOTE morning
+0 @T4@ NOTE morning
+0 @T5@ NOTE This act may have conceived a child (or the previous act may have).
+0 @T6@ NOTE This is the most likely day of conception. Later tests of the fetus ar
+1 CONC e also consistent with this conception date. Note that the number of "
+1 CONC weeks" in the pregnancy as indicated by most medical professionals i
+1 CONC s counted from a starting date of the first day of the mother's last p
+1 CONC eriod, which is about two weeks before the mother ovulates. Therefore
+1 CONC , the actual date of conception is about two weeks after the date indi
+1 CONC cated by the medical records.
+0 @T7@ NOTE Missy think she may have ovulated on this date, but is not certain.
+0 @T8@ NOTE at 2:50 PM (born in Room 309, moved to Room 302 at 4:00 PM)
+0 TRLR
