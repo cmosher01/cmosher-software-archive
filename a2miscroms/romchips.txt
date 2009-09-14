@@ -1,0 +1,65 @@
+341-0001-00     Integer BASIC E0                                1978
+341-0002-00     Integer BASIC E8                                1978
+341-0003-00     Integer BASIC F0                                1978
+341-0004-00     Integer BASIC F8 (Old Monitor ROM)              1978
+341-0009        13 Sector drive controller P5 ROM
+341-0010        13 Sector drive controller P6 ROM
+341-0011-D0     Applesoft BASIC D0
+341-0012-D8     Applesoft BASIC D8
+341-0013-E0     Applesoft BASIC E0
+341-0014-E8     Applesoft BASIC E8
+341-0015-F0     Applesoft BASIC F0
+341-0016-00     Programmer's Aid #1                             1978
+341-0020-F8*    Applesoft BASIC F8 (Autostart Monitor ROM)
+341-0027        16 Sector drive controller P5 ROM
+341-0028        16 Sector drive controller P6 ROM
+342-0033-A      //c Monitor ROM $00                             1985
+341-0036        ][plus character ROM
+341-0065-A      Super Serial Card                               1983
+342-0077-B      IIGS ROM-01                                     1987
+341-0080-B      ProFile 5MB RW-Z8                               1981
+341-0112-B      Apple SCSI (non-HS) revision B firmware
+341-0112-A      Apple SCSI (non-HS) revision A firmware
+341-0124-A      IIGS Keyboard i8048
+342-0132        IIe (and //c) Keyboard ROM                      1982
+342-0132-D      //c Keyboard ROM USA                            1984
+342-0133-A      IIe Video (Char Gen) ROM                        1982
+342-0134-A      IIe EF ROM                                      1982
+342-0135-B      IIe EF ROM                                      1982
+342-0135-A      IIe CD ROM                                      1982
+341-0151-A      IIe Keyboard ROM deutsch/usa                    1982
+341-0161-A      IIe Video ROM deutsch/usa                       1982
+342-0161-A      IIe Video ROM deutsch/usa                       1982
+341-0175-H	    Lisa 2 Boot ROM Hi
+341-0175-F	    Lisa 2 Boot ROM Hi (old)
+341-0176-H	    Lisa 2 Boot ROM Lo
+341-0176-F	    Lisa 2 Boot ROM Lo (old)
+341-0193-A	    Lisa Parallel Interface Card
+341-0265-A      //c USA Char Gen                                1983
+342-0272-A      //c Monitor ROM $FF                             1983
+342-0275-A      //c, //e (enhanced) Char Gen deutsch            1983
+341-0281-D	    Lisa 2/10 Disk ROM 
+341-0288-A	    Widget-10 Controller (677-0108) Z8 Piggyback
+341-0289-D	    Widget-10 Controller
+341-0290-B	    Lisa 2/5 Disk ROM 
+342-0341-A	    Mac Plus ROM hi					                        1985
+342-0341-B	    Mac Plus ROM lo					                        1985
+341-0346	      Mac XL Boot ROM Lo
+341-0347	      Mac XL Boot ROM Hi
+342-0372-A      //e (enhanced) KB ROM deutsch/usa               1985
+341-0437-A      Apple SCSI (non-HS) revision C firmware
+341-0625-A      //c plus Monitor ROM                            1988
+341-0737        IIGS ROM  3 FC-FD                               1989
+341-0748        IIGS ROM  3 FE-FF                               1989
+341-8003-C		  Sun Mac XL Disk ROM for 800k drives (from Goodwill XL)
+341-8003-B      Sun Mac XL Disk ROM for 800k drives (from Sun XL)
+341-8003-A	    Sun Mac XL Disk ROM for 800k drives (from 2/5)
+341-8007	      Sun SCSI Card
+numbered 341-0014 or 341-0014-00 and have "E8" stamped
+suffixes (or having no suffix).
+
+
+In most cases, this also seems to apply to "-A", "-B"
+seems to vary radomly. For instance, an E8 ROM might be
+* Note: Use of "-00", "-DO", etc. suffixes (or no suffix)
+elsewhere on the ROM.
