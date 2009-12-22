@@ -81,7 +81,7 @@
 2 PLAC Norwalk, Fairfield, CT, USA
 2 SOUR @S60@
 3 QUAY 1
-2 NOTE @T80@
+2 NOTE @T79@
 1 FAMS @F1@
 1 FAMC @F2@
 1 FAMS @F60@
@@ -129,7 +129,7 @@
 2 PLAC Leeds, Northampton, Hampshire, MA, USA
 2 SOUR @S15@
 3 QUAY 1
-2 NOTE @T83@
+2 NOTE @T82@
 1 OCCU wood pattern maker
 2 DATE ABT 1930
 2 SOUR @S57@
@@ -145,7 +145,7 @@
 2 PLAC Waterbury, New Haven, CT, USA
 1 CENS
 2 DATE 1 JAN 1920
-2 NOTE @T85@
+2 NOTE @T84@
 2 PLAC [unknown]
 1 CENS
 2 DATE 1 JUN 1900
@@ -175,7 +175,7 @@
 2 PLAC Norwalk, Fairfield, CT, USA
 2 SOUR @S18@
 3 QUAY 1
-2 NOTE @T40@
+2 NOTE @T39@
 1 BURI
 2 PLAC Pine Hill Cemetery, Dover, Strafford, NH, USA
 2 SOUR @S11@
@@ -263,7 +263,7 @@
 2 SOUR @S15@
 3 QUAY 1
 2 PLAC Hackensack, Bergen, NJ, USA
-2 NOTE @T73@
+2 NOTE @T72@
 1 SSN 158-16-0793
 2 PLAC NJ, USA
 2 SOUR @S15@
@@ -280,7 +280,7 @@
 2 PLAC North Honshu Province, Japan
 2 SOUR @S63@
 3 QUAY 1
-2 NOTE @T71@
+2 NOTE @T70@
 1 BIRT
 2 DATE 30 MAY 1928
 2 SOUR @S63@
@@ -298,25 +298,25 @@
 2 PLAC 103 North Gilmor Street, Baltimore, Baltimore, MD, USA
 2 SOUR @S18@
 3 QUAY 1
-2 NOTE @T38@
+2 NOTE @T37@
 1 DEAT
 2 DATE 11 JUN 1950
 2 PLAC NJ, USA
 2 SOUR @S18@
 3 QUAY 1
-2 NOTE @T42@
+2 NOTE @T41@
 1 BURI
 2 DATE ABT 13 JUN 1950
 2 PLAC Woodlawn Cemetery, Bronx, NY, USA
 2 SOUR @S18@
 3 QUAY 1
-2 NOTE @T43@
+2 NOTE @T42@
 1 RESI
 2 DATE FROM 1917 TO 1921
 2 PLAC 454 4th Avenue, Newark, Essex, NJ, USA
 2 SOUR @S63@
 3 QUAY 3
-2 NOTE @T69@
+2 NOTE @T68@
 1 CENS
 2 DATE 1 JAN 1920
 2 PLAC 454 4th Avenue, Newark, Essex, NJ, USA
@@ -332,7 +332,7 @@
 2 PLAC Manhattan, NY, USA
 2 SOUR @S63@
 3 QUAY 1
-2 NOTE @T74@
+2 NOTE @T73@
 1 CENS
 2 DATE 1 APR 1930
 2 PLAC 44 Westervelt Place, Teaneck, Bergen, NJ, USA
@@ -343,7 +343,7 @@
 2 PLAC Newark, Essex, NJ, USA
 2 SOUR @S82@
 3 QUAY 2
-2 NOTE @T84@
+2 NOTE @T83@
 1 FAMS @F4@
 1 FAMC @F7@
 0 @I14@ INDI
@@ -357,13 +357,13 @@
 2 SOUR @S18@
 3 QUAY 1
 2 PLAC Rutherford, NJ, USA
-2 NOTE @T79@
+2 NOTE @T78@
 1 DEAT
 2 DATE 3 DEC 1961
 2 PLAC Saint Croix, Virgin Islands
 2 SOUR @S18@
 3 QUAY 1
-2 NOTE @T39@
+2 NOTE @T38@
 1 CENS
 2 DATE 1 JAN 1920
 2 PLAC 454 4th Avenue, Newark, Essex, NJ, USA
@@ -374,7 +374,7 @@
 2 PLAC Pinewood Place, West Englewood, Bergen, NJ, USA
 2 SOUR @S63@
 3 QUAY 0
-2 NOTE @T70@
+2 NOTE @T69@
 1 CENS
 2 DATE 1 APR 1930
 2 PLAC 44 Westervelt Place, Teaneck, Bergen, NJ, USA
@@ -476,7 +476,7 @@
 2 PLAC 26 6th Avenue, Manhattan, NY, USA
 2 SOUR @S75@
 3 QUAY 3
-2 NOTE @T77@
+2 NOTE @T76@
 1 OCCU silk hat manufacturer
 2 DATE 1 JUN 1880
 2 PLAC Manhattan, NY, USA
@@ -495,7 +495,7 @@
 2 PLAC Baltimore, Baltimore, MD, USA
 2 SOUR @S18@
 3 QUAY 1
-2 NOTE @T37@
+2 NOTE @T36@
 1 CENS
 2 DATE 1 JUN 1870
 2 PLAC Baltimore, Baltimore, MD, USA
@@ -506,7 +506,7 @@
 2 PLAC 750 West Pratt Street, Baltimore, Baltimore, MD, USA
 2 SOUR @S66@
 3 QUAY 3
-2 NOTE @T68@
+2 NOTE @T67@
 1 OCCU clerk
 2 DATE 1890
 2 PLAC 1416 West Pratt Street, Baltimore, Baltimore, MD, USA
@@ -553,7 +553,7 @@
 2 PLAC 296 Fayette Street, Baltimore, Baltimore, MD, USA
 2 SOUR @S65@
 3 QUAY 3
-2 NOTE @T66@
+2 NOTE @T65@
 1 CENS
 2 DATE 1 JAN 1920
 2 PLAC 327 North 7th Street, Newark, Essex, NJ, USA
@@ -573,7 +573,7 @@
 3 QUAY 1
 1 SEX M
 1 ADOP
-2 NOTE @T47@
+2 NOTE @T46@
 2 DATE ABT 1845
 1 CENS
 2 DATE 1 JUN 1870
@@ -585,13 +585,13 @@
 2 PLAC MD, USA
 2 SOUR @S16@
 3 QUAY 1
-2 NOTE @T95@
+2 NOTE @T94@
 1 CENS
 2 DATE 1 JUN 1860
 2 PLAC Baltimore, Baltimore, MD, USA
 2 SOUR @S33@
 3 QUAY 3
-2 NOTE @T45@
+2 NOTE @T44@
 1 OCCU railroad conductor
 2 DATE 1870
 2 PLAC MD, USA
@@ -601,10 +601,10 @@
 2 DATE 26 MAR 1880
 2 SOUR @S18@
 3 QUAY 1
-2 NOTE @T36@
+2 NOTE @T35@
 1 CENS
 2 DATE 1 JUN 1850
-2 NOTE @T46@
+2 NOTE @T45@
 2 PLAC Baltimore, Baltimore, MD, USA
 2 SOUR @S34@
 3 QUAY 3
@@ -634,7 +634,7 @@
 2 PLAC 750 West Pratt Street, Baltimore, Baltimore, MD, USA
 2 SOUR @S66@
 3 QUAY 3
-2 NOTE @T67@
+2 NOTE @T66@
 1 OCCU dressmaker
 2 DATE 1880
 2 PLAC Baltimore, Baltimore, MD, USA
@@ -719,7 +719,7 @@
 2 PLAC Baltimore, Baltimore, MD, USA
 2 SOUR @S21@
 3 QUAY 3
-2 NOTE @T41@
+2 NOTE @T40@
 1 CENS
 2 DATE 1 JUN 1860
 2 PLAC Baltimore, Baltimore, MD, USA
@@ -833,7 +833,7 @@
 2 PLAC Dover, Strafford, NH, USA
 2 SOUR @S44@
 3 QUAY 3
-2 NOTE @T53@
+2 NOTE @T52@
 1 CENS
 2 DATE 1 JUN 1900
 2 PLAC Dover, Strafford, NH, USA
@@ -1071,7 +1071,7 @@
 1 FAMS @F12@
 1 FAMC @F45@
 0 @I35@ INDI
-1 _XY 8296 2128
+1 _XY 8021 2164
 1 NAME Angeline /Horne/
 2 SOUR @S4@
 3 QUAY 1
@@ -1134,7 +1134,7 @@
 3 QUAY 1
 1 FAMC @F13@
 0 @I37@ INDI
-1 _XY 8390 2128
+1 _XY 8117 2111
 1 NAME Mary /Horne/
 2 SOUR @S3@
 3 QUAY 1
@@ -1220,7 +1220,7 @@
 1 CENS
 2 DATE 1 JUN 1840
 2 PLAC Dover, Strafford, NH, USA
-2 NOTE @T25@
+2 NOTE @T24@
 1 FAMS @F13@
 1 FAMS @F15@
 1 FAMC @F16@
@@ -1929,14 +1929,14 @@
 2 SOUR @S4@
 3 PAGE p. 31
 3 QUAY 1
-2 NOTE @T28@
+2 NOTE @T27@
 1 DEAT
 2 DATE 28 DEC 1776
 2 PLAC Alfred, York, ME, USA
 2 SOUR @S4@
 3 PAGE p. 31
 3 QUAY 1
-2 NOTE @T29@
+2 NOTE @T28@
 1 BURI
 2 PLAC Somersworth, Strafford, NH, USA
 2 SOUR @S4@
@@ -2024,7 +2024,7 @@
 2 PLAC Coventry, Worcester, MD, USA
 2 SOUR @S12@
 3 QUAY 0
-2 NOTE @T20@
+2 NOTE @T19@
 1 FAMS @F20@
 1 FAMC @F49@
 0 @I74@ INDI
@@ -2053,13 +2053,13 @@
 2 SOUR @S4@
 3 PAGE p. 30
 3 QUAY 1
-2 NOTE @T21@
+2 NOTE @T20@
 1 DEAT
 2 DATE ABT 26 NOV 1782
 2 PLAC Coventry, Worcester, MD, USA
 2 SOUR @S12@
 3 QUAY 0
-2 NOTE @T22@
+2 NOTE @T21@
 1 FAMC @F20@
 0 @I76@ INDI
 1 _XY 5161 1176
@@ -2074,7 +2074,7 @@
 3 PAGE p. 30
 3 QUAY 1
 2 DATE ABT 1719
-2 NOTE @T23@
+2 NOTE @T22@
 1 FAMC @F20@
 0 @I77@ INDI
 1 _XY 5236 1174
@@ -2178,7 +2178,7 @@
 2 SOUR @S4@
 3 PAGE p. 145
 3 QUAY 1
-2 NOTE @T33@
+2 NOTE @T32@
 1 FAMC @F22@
 0 @I84@ INDI
 1 _XY 6795 1647
@@ -2192,7 +2192,7 @@
 2 SOUR @S4@
 3 PAGE p. 145
 3 QUAY 1
-2 NOTE @T34@
+2 NOTE @T33@
 1 FAMC @F22@
 0 @I85@ INDI
 1 _XY 6891 1647
@@ -2284,7 +2284,7 @@
 2 SOUR @S4@
 3 PAGE p. 144
 3 QUAY 1
-2 NOTE @T27@
+2 NOTE @T26@
 1 BIRT
 2 DATE 7 DEC 1719
 2 PLAC Dover, Strafford, NH, USA
@@ -2430,7 +2430,7 @@
 2 SOUR @S4@
 3 PAGE p. 143
 3 QUAY 1
-2 NOTE @T26@
+2 NOTE @T25@
 1 IMMI
 2 DATE ABT 1710
 2 SOUR @S4@
@@ -2620,7 +2620,7 @@
 2 SOUR @S4@
 3 PAGE p. 139
 3 QUAY 1
-2 NOTE @T62@
+2 NOTE @T61@
 1 OCCU Constable
 2 PLAC Haverhill, Essex, MA, USA
 2 SOUR @S4@
@@ -2747,9 +2747,9 @@
 1 FAMC @F24@
 0 @I111@ INDI
 1 _XY 8683 2025
-1 NAME Sarah /Roberts/
-2 SOUR @S55@
-3 QUAY 0
+1 NAME Sarah Estes /Roberts/
+2 SOUR @S117@
+3 QUAY 1
 1 SEX F
 1 BIRT
 2 DATE 24 FEB 1795
@@ -2761,7 +2761,7 @@
 2 SOUR @S10@
 3 QUAY 0
 2 PLAC Dover, Strafford, NH, USA
-2 NOTE @T44@
+2 NOTE @T43@
 1 BURI
 2 PLAC Horne Cemetery, Dover, Strafford, NH, USA
 2 SOUR @S10@
@@ -2794,20 +2794,21 @@
 1 FAMS @F32@
 1 FAMC @F33@
 0 @I113@ INDI
-1 _XY 8636 1947
+1 _XY 8643 1948
 1 NAME Samuel L. /Roberts/
 2 SOUR @S5@
 3 PAGE p. 71
 3 QUAY 1
 1 SEX M
 1 BIRT
-2 DATE 1760
-2 SOUR @S9@
-3 QUAY 0
+2 DATE 12 NOV 1760
+2 SOUR @S117@
+3 QUAY 1
+2 PLAC Berwick, York, ME, USA
 1 DEAT
 2 DATE 1810
-2 SOUR @S9@
-3 QUAY 0
+2 SOUR @S117@
+3 QUAY 1
 1 FAMS @F32@
 1 FAMC @F38@
 1 FAMS @F42@
@@ -3265,7 +3266,7 @@
 2 SOUR @S5@
 3 PAGE p. 48
 3 QUAY 1
-2 NOTE @T60@
+2 NOTE @T59@
 1 FAMS @F35@
 1 FAMS @F104@
 0 @I136@ INDI
@@ -3305,7 +3306,7 @@
 2 SOUR @S5@
 3 PAGE p. 48
 3 QUAY 1
-2 NOTE @T61@
+2 NOTE @T60@
 1 FAMC @F35@
 0 @I139@ INDI
 1 _XY 9196 1603
@@ -3465,7 +3466,7 @@
 1 FAMS @F37@
 1 FAMC @F105@
 0 @I149@ INDI
-1 _XY 9709 1383
+1 _XY 9695 1383
 1 NAME Mary /Roberts/
 2 SOUR @S5@
 3 PAGE p. 55
@@ -3482,16 +3483,16 @@
 3 QUAY 0
 1 FAMS @F37@
 0 @I150@ INDI
-1 _XY 8297 2025
-1 NAME Nathan /Horne/
+1 _XY 8297 2024
+1 NAME Nathaniel /Horne/
 2 SOUR @S10@
 3 QUAY 0
 1 SEX M
 1 BIRT
-2 DATE 1790
-2 SOUR @S31@
-3 QUAY 0
-2 PLAC NH, USA
+2 DATE 6 JAN 1790
+2 SOUR @S117@
+3 QUAY 1
+2 PLAC Dover, Strafford, NH, USA
 1 DEAT
 2 DATE 1880
 2 SOUR @S10@
@@ -3512,8 +3513,9 @@
 2 SOUR @S32@
 3 QUAY 3
 1 FAMS @F14@
+1 FAMC @F151@
 0 @I151@ INDI
-1 _XY 8597 1874
+1 _XY 8600 1871
 1 NAME Benjamin /Roberts/
 2 SOUR @S9@
 3 QUAY 0
@@ -3530,7 +3532,7 @@
 1 FAMS @F38@
 1 FAMC @F39@
 0 @I152@ INDI
-1 _XY 8494 1872
+1 _XY 8509 1874
 1 NAME Stephen /Roberts/
 2 SOUR @S9@
 3 QUAY 0
@@ -3545,7 +3547,7 @@
 3 QUAY 0
 1 FAMC @F39@
 0 @I153@ INDI
-1 _XY 8518 1814
+1 _XY 8552 1793
 1 NAME Joseph /Roberts/
 2 SOUR @S9@
 3 QUAY 0
@@ -3604,7 +3606,7 @@
 3 QUAY 0
 1 FAMS @F41@
 0 @I156@ INDI
-1 _XY 8549 1953
+1 _XY 8556 1954
 1 SEX F
 1 FAMS @F42@
 0 @I157@ INDI
@@ -3868,7 +3870,7 @@
 2 PLAC 64 Foster Street, New Bedford, Bristol, MA, USA
 2 SOUR @S96@
 3 QUAY 2
-2 NOTE @T87@
+2 NOTE @T86@
 1 FAMS @F46@
 1 FAMC @F125@
 0 @I168@ INDI
@@ -3904,6 +3906,11 @@
 3 QUAY 3
 1 FAMS @F46@
 1 FAMC @F131@
+1 CENS
+2 DATE 4 AUG 1800
+2 PLAC Yarmouth, Barnstable, MA, USA
+2 SOUR @S120@
+3 QUAY 2
 0 @I169@ INDI
 1 _XY 1410 2588
 1 NAME Susan//
@@ -3928,7 +3935,7 @@
 1 FAMS @F48@
 1 FAMC @F51@
 0 @I171@ INDI
-1 _XY 8634 1828
+1 _XY 8680 1802
 1 NAME Elizabeth /Jones/
 2 SOUR @S13@
 3 QUAY 0
@@ -3959,7 +3966,7 @@
 2 PLAC Coventry, Worcester, MD, USA
 2 SOUR @S12@
 3 QUAY 0
-2 NOTE @T24@
+2 NOTE @T23@
 1 FAMC @F20@
 0 @I175@ INDI
 1 _XY 5076 976
@@ -4435,7 +4442,7 @@
 2 DATE 13 DEC 1701
 2 SOUR @S12@
 3 QUAY 0
-2 NOTE @T30@
+2 NOTE @T29@
 1 FAMC @F52@
 0 @I212@ INDI
 1 _XY 6116 512
@@ -4800,13 +4807,13 @@
 2 PLAC Hampton, Rockingham, NH, USA
 2 SOUR @S12@
 3 QUAY 0
-2 NOTE @T32@
+2 NOTE @T31@
 1 DEAT
 2 DATE 9 DEC 1659
 2 SOUR @S12@
 3 QUAY 0
 2 PLAC Hampton, Rockingham, NH, USA
-2 NOTE @T31@
+2 NOTE @T30@
 1 FAMC @F56@
 0 @I236@ INDI
 1 _XY 6925 283
@@ -5080,7 +5087,7 @@
 2 PLAC Dover, Strafford, NH, USA
 2 SOUR @S13@
 3 QUAY 0
-2 NOTE @T59@
+2 NOTE @T58@
 1 FAMC @F36@
 0 @I257@ INDI
 1 _XY 10596 1862
@@ -5134,7 +5141,7 @@
 2 PLAC Dover, Strafford, NH, USA
 2 SOUR @S12@
 3 QUAY 0
-2 NOTE @T35@
+2 NOTE @T34@
 1 DEAT
 2 DATE 20 APR 1793
 2 PLAC Dover, Strafford, NH, USA
@@ -5203,7 +5210,7 @@
 2 TYPE note
 2 SOUR @S63@
 3 QUAY 1
-2 NOTE @T72@
+2 NOTE @T71@
 1 FAMC @F8@
 0 @I265@ INDI
 1 _XY 1516 1145
@@ -5239,7 +5246,7 @@
 2 PLAC PA, USA
 2 SOUR @S73@
 3 QUAY 1
-2 NOTE @T75@
+2 NOTE @T74@
 1 CENS
 2 DATE 1 JUN 1850
 2 PLAC Baltimore, Baltimore, MD, USA
@@ -5268,7 +5275,7 @@
 2 SOUR @S12@
 3 QUAY 0
 2 PLAC MD, USA
-2 NOTE @T48@
+2 NOTE @T47@
 1 CENS
 2 DATE 1 JUN 1870
 2 PLAC Baltimore, Baltimore, MD, USA
@@ -5362,7 +5369,7 @@
 2 PLAC Baltimore, Baltimore, MD, USA
 2 SOUR @S12@
 3 QUAY 0
-2 NOTE @T58@
+2 NOTE @T57@
 1 DEAT
 2 DATE 30 AUG 1851
 2 SOUR @S12@
@@ -5547,7 +5554,7 @@
 2 PLAC 28 6th Avenue, Manhattan, NY, USA
 2 SOUR @S75@
 3 QUAY 3
-2 NOTE @T76@
+2 NOTE @T75@
 1 OCCU bookkeeper
 2 DATE 1 JUN 1880
 2 PLAC Manhattan, NY, USA
@@ -5621,7 +5628,7 @@
 2 PLAC Droylsden, Lancashire, England, UK
 2 SOUR @S100@
 3 QUAY 1
-2 NOTE @T88@
+2 NOTE @T87@
 1 CENS
 2 DATE 6 JUN 1841
 2 PLAC Fairfield Moravian Settlement, Droylsden, Lancashire, England, UK
@@ -6027,19 +6034,22 @@
 3 QUAY 1
 1 FAMC @F63@
 0 @I319@ INDI
-1 _XY 8484 2128
+1 _XY 8365 2164
 1 NAME Nathaniel /Horne/
 2 SOUR @S31@
 3 QUAY 1
 1 SEX M
 1 BIRT
-2 DATE ABT 1839
+2 DATE 1 JAN 1839
 2 PLAC NH, USA
-2 SOUR @S31@
+2 SOUR @S117@
 3 QUAY 1
+1 DEAT
+2 DATE FEB 1911
+2 SOUR @S117@
 1 FAMC @F14@
 0 @I320@ INDI
-1 _XY 8578 2127
+1 _XY 8022 2111
 1 NAME Samuel R. /Horne/
 2 SOUR @S31@
 3 QUAY 1
@@ -6051,7 +6061,7 @@
 3 QUAY 1
 1 FAMC @F14@
 0 @I321@ INDI
-1 _XY 8451 2183
+1 _XY 8187 2111
 1 NAME Giles /Horne/
 2 SOUR @S31@
 3 QUAY 1
@@ -6061,29 +6071,42 @@
 2 PLAC NH, USA
 2 SOUR @S31@
 3 QUAY 1
+1 DEAT
+2 DATE 12 JUN 1853
+2 SOUR @S117@
+3 QUAY 1
 1 FAMC @F14@
 0 @I322@ INDI
-1 _XY 8522 2183
+1 _XY 8110 2164
 1 NAME Stephen /Horne/
 2 SOUR @S31@
 3 QUAY 1
 1 SEX M
 1 BIRT
-2 DATE ABT 1831
-2 PLAC NH, USA
-2 SOUR @S31@
+2 DATE 30 JUN 1831
+2 PLAC Dover, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 10 NOV 1918
+2 PLAC Limerick, York, ME, USA
+2 SOUR @S117@
 3 QUAY 1
 1 FAMC @F14@
 0 @I323@ INDI
-1 _XY 8607 2184
-1 NAME Sarah J. /Horne/
-2 SOUR @S31@
+1 _XY 8273 2164
+1 NAME Sarah Jane /Horne/
+2 SOUR @S117@
 3 QUAY 1
 1 SEX F
 1 BIRT
-2 DATE ABT 1836
-2 PLAC NH, USA
-2 SOUR @S31@
+2 DATE MAR 1837
+2 PLAC Dover, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 15 JUN 1910
+2 SOUR @S117@
 3 QUAY 1
 1 FAMC @F14@
 0 @I324@ INDI
@@ -6587,13 +6610,13 @@
 5 CONT [...]
 5 CONT Humphrey Belt
 5 CONT
-2 NOTE @T49@
+2 NOTE @T48@
 1 OCCU indentured
 2 DATE FROM 29 SEP 1636 TO 15 MAR 1641
 2 PLAC Jamestown, VA, USA
 2 SOUR @S43@
 3 QUAY 1
-2 NOTE @T50@
+2 NOTE @T49@
 1 BIRT
 2 DATE ABT 1615
 2 PLAC England, UK
@@ -6631,7 +6654,7 @@
 2 PLAC Lower Norfolk, VA, USA
 2 SOUR @S43@
 3 QUAY 0
-2 NOTE @T52@
+2 NOTE @T51@
 1 FAMS @F80@
 0 @I363@ INDI
 1 _XY 1240 400
@@ -6654,7 +6677,7 @@
 1 BIRT
 2 DATE ABT 1647
 2 PLAC Lower Norkolk, VA, USA
-2 NOTE @T51@
+2 NOTE @T50@
 1 FAMC @F80@
 0 @I365@ INDI
 1 _XY 1500 400
@@ -6739,7 +6762,7 @@
 2 TYPE owned land
 2 SOUR @S47@
 3 QUAY 1
-2 NOTE @T54@
+2 NOTE @T53@
 1 EVEN
 2 PLAC Cales Harbor
 2 TYPE owned land
@@ -6855,7 +6878,7 @@
 2 TYPE sold land
 2 SOUR @S47@
 3 QUAY 1
-2 NOTE @T55@
+2 NOTE @T54@
 1 FAMS @F83@
 1 FAMC @F85@
 0 @I376@ INDI
@@ -6951,7 +6974,7 @@
 2 PLAC VA, USA
 2 SOUR @S47@
 3 QUAY 1
-2 NOTE @T56@
+2 NOTE @T55@
 1 DEAT
 2 DATE 1680
 2 PLAC Herring Creek, West River Hundred, Anne Arundel, MD, USA
@@ -6973,7 +6996,7 @@
 2 PLAC MD, USA
 2 SOUR @S47@
 3 QUAY 1
-2 NOTE @T57@
+2 NOTE @T56@
 1 FAMS @F85@
 0 @I385@ INDI
 1 _XY 2088 444
@@ -7959,7 +7982,7 @@
 3 QUAY 0
 1 FAMC @F101@
 0 @I461@ INDI
-1 _XY 10362 1534
+1 _XY 10393 1506
 1 NAME Israel /Hodgdon/
 2 SOUR @S51@
 3 QUAY 1
@@ -8078,11 +8101,21 @@
 1 SEX F
 1 FAMS @F105@
 0 @I471@ INDI
-1 _XY 9953 1532
+1 _XY 9992 1560
 1 NAME Thomas /Hanson/
 2 SOUR @S12@
 3 QUAY 0
 1 SEX M
+1 BIRT
+2 DATE 1643
+2 PLAC Dover, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 8 NOV 1711
+2 PLAC Dover, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
 1 FAMS @F112@
 0 @I472@ INDI
 1 _XY 10162 1636
@@ -8158,7 +8191,7 @@
 3 QUAY 0
 1 FAMC @F102@
 0 @I477@ INDI
-1 _XY 10265 1536
+1 _XY 10285 1502
 1 NAME Anne /Hodgdon/
 2 SOUR @S12@
 3 QUAY 0
@@ -8331,23 +8364,36 @@
 3 QUAY 0
 1 SEX M
 1 BIRT
-2 DATE 1681
-2 SOUR @S12@
-3 QUAY 0
+2 DATE 23 MAY 1681
+2 SOUR @S117@
+3 QUAY 1
+2 PLAC Dover, Strafford, NH, USA
 1 DEAT
 2 DATE 16 JUN 1727
 2 PLAC Lynn, Essex, MA, USA
 2 SOUR @S12@
 3 QUAY 0
+2 NOTE @T106@
 1 FAMS @F106@
 1 FAMC @F112@
 0 @I489@ INDI
-1 _XY 10117 1548
+1 _XY 10117 1574
 1 NAME John /Meader/
 2 SOUR @S12@
 3 QUAY 0
 1 SEX M
+1 BIRT
+2 DATE 1660
+2 PLAC Oyster River, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 2 NOV 1736
+2 PLAC Oyster River, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
 1 FAMS @F113@
+1 FAMC @F148@
 0 @I490@ INDI
 1 _XY 6951 418
 1 NAME Joseph /Hull/
@@ -8408,7 +8454,7 @@
 2 DATE ABT 1927
 2 SOUR @S86@
 3 QUAY 1
-2 NOTE @T81@
+2 NOTE @T80@
 1 FAMS @F116@
 0 @I494@ INDI
 1 _XY 1612 2426
@@ -8419,7 +8465,7 @@
 1 BIRT
 2 DATE BEF 1906
 2 PLAC Hungary
-2 NOTE @T65@
+2 NOTE @T64@
 1 DEAT
 2 DATE BEF 1917
 2 SOUR @S86@
@@ -8436,7 +8482,7 @@
 2 PLAC Hungary
 2 SOUR @S15@
 3 QUAY 1
-2 NOTE @T64@
+2 NOTE @T63@
 1 SSN 044-10-8154
 2 PLAC CT, USA
 2 SOUR @S15@
@@ -8466,7 +8512,7 @@
 1 BIRT
 2 DATE 8 MAR 1895
 2 PLAC CT, USA
-2 NOTE @T103@
+2 NOTE @T102@
 1 DSCR deaf and mute
 1 CENS
 2 DATE 1 APR 1930
@@ -8482,7 +8528,7 @@
 2 SOUR @S60@
 3 QUAY 1
 2 PLAC Norwalk, Fairfield, CT, USA
-2 NOTE @T63@
+2 NOTE @T62@
 1 CENS
 2 DATE 1 JUN 1900
 2 PLAC 1039 Hancock Avenue, Bridgeport, Fairfield, CT
@@ -8845,7 +8891,7 @@
 2 PLAC England, UK
 2 SOUR @S75@
 3 QUAY 1
-2 NOTE @T89@
+2 NOTE @T88@
 1 FAMC @F66@
 0 @I521@ INDI
 1 _XY 3878 1496
@@ -8993,7 +9039,7 @@
 1 DEAT
 2 DATE 10 MAY 1974
 2 PLAC St. Raphael's Hospital, New Haven, New Haven, CT, USA
-2 NOTE @T101@
+2 NOTE @T100@
 1 FAMC @F119@
 0 @I529@ INDI
 1 _XY 747 1964
@@ -9152,7 +9198,7 @@
 2 PLAC Leeds, Northampton, Hampshire, MA, USA
 2 SOUR @S88@
 3 QUAY 1
-2 NOTE @T82@
+2 NOTE @T81@
 1 RESI
 2 PLAC Leeds, Northampton, Hampshire, MA, USA
 2 SOUR @S88@
@@ -9223,7 +9269,7 @@
 1 BIRT
 2 DATE 23 SEP 1865
 2 PLAC MA, USA
-2 NOTE @T86@
+2 NOTE @T85@
 1 BAPM
 2 PLAC Saint-Paul d' Abotsford, Quebec, Canada
 2 SOUR @S88@
@@ -9358,7 +9404,7 @@
 2 PLAC Curran, Prescott, Ontario, Canada
 2 SOUR @S105@
 3 QUAY 1
-2 NOTE @T99@
+2 NOTE @T98@
 1 IMMI
 2 DATE ABT 1883
 2 PLAC USA
@@ -9502,7 +9548,7 @@
 2 PLAC England, UK
 2 SOUR @S23@
 3 QUAY 1
-2 NOTE @T90@
+2 NOTE @T89@
 1 FAMC @F66@
 0 @I564@ INDI
 1 _XY 2798 1386
@@ -9563,7 +9609,7 @@
 2 PLAC Droylsden, Lancashire, England, UK
 2 SOUR @S102@
 3 QUAY 1
-2 NOTE @T91@
+2 NOTE @T90@
 1 FAMC @F67@
 0 @I569@ INDI
 1 _XY 12623 2054
@@ -9825,7 +9871,7 @@
 1 DEAT
 2 DATE ABT 1845
 2 PLAC New Bedford, Bristol, MA, USA
-2 NOTE @T94@
+2 NOTE @T93@
 1 RESI
 2 DATE 12 OCT 1793
 2 PLAC Harwich, Barnstable, MA, USA
@@ -9833,6 +9879,21 @@
 3 QUAY 1
 1 FAMS @F131@
 1 FAMC @F132@
+1 CENS
+2 DATE 1 JUN 1830
+2 PLAC New Bedford, Bristol, MA, USA
+2 SOUR @S118@
+3 QUAY 2
+1 CENS
+2 DATE 2 AUG 1790
+2 PLAC Yarmouth, Barnstable, MA, USA
+2 SOUR @S119@
+3 QUAY 2
+1 CENS
+2 DATE 4 AUG 1800
+2 PLAC Yarmouth, Barnstable, MA, USA
+2 SOUR @S120@
+3 QUAY 3
 0 @I588@ INDI
 1 _XY 13338 1908
 1 NAME Hannah /Clark/
@@ -9844,7 +9905,7 @@
 2 SOUR @S105@
 3 QUAY 0
 2 PLAC Harwich, Barnstable, MA, USA
-2 NOTE @T93@
+2 NOTE @T92@
 1 DEAT
 2 DATE 7 JAN 1842
 2 PLAC New Bedford, Bristol, MA, USA
@@ -9861,6 +9922,11 @@
 2 SOUR @S116@
 3 QUAY 1
 1 FAMS @F131@
+1 CENS
+2 DATE 4 AUG 1800
+2 PLAC Yarmouth, Barnstable, MA, USA
+2 SOUR @S120@
+3 QUAY 2
 0 @I589@ INDI
 1 _XY 13137 2110
 1 NAME Benjamin /Lewis/
@@ -10016,7 +10082,7 @@
 3 QUAY 0
 1 FAMC @F132@
 0 @I601@ INDI
-1 _XY 13077 1767
+1 _XY 13077 1766
 1 NAME Benjamin /Lewis/
 2 SOUR @S14@
 3 QUAY 0
@@ -10037,6 +10103,11 @@
 2 SOUR @S108@
 3 QUAY 1
 1 FAMS @F132@
+1 CENS
+2 DATE 2 AUG 1790
+2 PLAC Yarmouth, Barnstable, MA, USA
+2 SOUR @S119@
+3 QUAY 3
 0 @I602@ INDI
 1 _XY 13196 1767
 1 NAME Sarah /Crowell/
@@ -10059,6 +10130,11 @@
 2 SOUR @S108@
 3 QUAY 1
 1 FAMS @F132@
+1 CENS
+2 DATE 2 AUG 1790
+2 PLAC Yarmouth, Barnstable, MA, USA
+2 SOUR @S119@
+3 QUAY 2
 0 @I603@ INDI
 1 _XY 217 2046
 1 NAME Mary /Gregoire/
@@ -10167,7 +10243,7 @@
 1 BIRT
 2 DATE FEB 1644
 2 PLAC Amiens, France
-2 NOTE @T98@
+2 NOTE @T97@
 1 FAMS @F137@
 0 @I610@ INDI
 1 _XY 325 1509
@@ -10325,7 +10401,7 @@
 1 DEAT
 2 DATE 7 DEC 1958
 2 PLAC Restmore Convalescent Hospital, Stratford, Fairfield, CT, USA
-2 NOTE @T102@
+2 NOTE @T101@
 1 BIRT
 2 PLAC Canada
 2 DATE FEB 1877
@@ -10341,7 +10417,7 @@
 2 PLAC MD, USA
 2 SOUR @S115@
 3 QUAY 1
-2 NOTE @T104@
+2 NOTE @T103@
 1 FAMC @F147@
 0 @I623@ INDI
 1 _XY 42 2149
@@ -10423,6 +10499,634 @@
 2 SOUR @S115@
 3 QUAY 1
 1 FAMC @F147@
+0 @I628@ INDI
+1 _XY 8272 2111
+1 NAME Susan /Horne/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1822
+2 PLAC Dover, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 1904
+2 PLAC Dover, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMC @F14@
+0 @I629@ INDI
+1 _XY 8343 2111
+1 NAME Lydia /Horne/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1823
+2 SOUR @S117@
+3 QUAY 1
+1 FAMC @F14@
+0 @I630@ INDI
+1 _XY 8188 2164
+1 NAME Elizabeth /Horne/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1833
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 1839
+2 SOUR @S117@
+3 QUAY 1
+1 FAMC @F14@
+0 @I631@ INDI
+1 _XY 10223 1575
+1 NAME Sarah /Follet/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1654
+2 PLAC Durham, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 1725
+2 PLAC Dover, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F113@
+0 @I632@ INDI
+1 _XY 10066 1470
+1 NAME John /Meader/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1625
+2 PLAC Dorset, England, UK
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 1715
+2 PLAC Durham, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F148@
+0 @I633@ INDI
+1 _XY 10166 1466
+1 NAME Abigail /Tuttle/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 4 NOV 1628
+2 PLAC Saint Albans, Hertfordshire, England, UK
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 4 APR 1674
+2 PLAC Ipswich, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F148@
+0 @I634@ INDI
+1 _XY 9898 1560
+1 NAME Mary /Kitchen/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 2 FEB 1648
+2 PLAC Salem, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 1710
+2 PLAC Dover, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F112@
+1 FAMC @F149@
+0 @I635@ INDI
+1 _XY 9850 1434
+1 NAME John /Kitchen/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1619
+2 PLAC Weymouth, Norfolk, England, UK
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 1675
+2 PLAC Salem, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F149@
+0 @I636@ INDI
+1 _XY 9941 1432
+1 NAME Elizabeth /Grafton/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1622
+2 PLAC Salem, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 1678
+2 PLAC Salem, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F149@
+1 FAMC @F150@
+0 @I637@ INDI
+1 _XY 9945 1334
+1 NAME Joseph /Grafton/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1596
+2 PLAC Southwold, Suffolk, England, UK
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 24 JUN 1682
+2 PLAC Salem, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F150@
+0 @I638@ INDI
+1 _XY 10048 1333
+1 NAME Mary /Moore/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1600
+2 PLAC Southwold, Suffolk, England, UK
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE NOV 1674
+2 PLAC Salem, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F150@
+0 @I639@ INDI
+1 _XY 10036 1419
+1 NAME Priscilla /Grafton/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1626
+2 PLAC Salem, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 1717
+2 PLAC Nantucket, Nantucket, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMC @F150@
+0 @I640@ INDI
+1 _XY 10122 1407
+1 NAME Nathaniel /Grafton/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 24 APR 1642
+2 PLAC Salem, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 11 FEB 1671
+2 PLAC Barbados
+2 SOUR @S117@
+3 QUAY 1
+1 FAMC @F150@
+0 @I641@ INDI
+1 _XY 9842 1567
+1 NAME Priscilla /Kitchen/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1647
+2 PLAC Salem, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 1721
+2 PLAC Kent, DE, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMC @F149@
+0 @I642@ INDI
+1 _XY 9961 1639
+1 NAME Thomas /Hanson/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1680
+2 PLAC Dover, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 13 JAN 1729
+2 PLAC Lynn, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMC @F112@
+0 @I643@ INDI
+1 _XY 9786 1751
+1 NAME Sarah Catherine /Hanson/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 13 NOV 1708
+2 PLAC Dover, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 7 MAY 1787
+2 PLAC Vaudreuil, Quebec, Canada
+2 SOUR @S117@
+3 QUAY 1
+1 FAMC @F106@
+0 @I644@ INDI
+1 _XY 9910 1750
+1 NAME Elizabeth /Hanson/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 13 NOV 1709
+2 PLAC Dover, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 1759
+2 PLAC Dover, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMC @F106@
+0 @I645@ INDI
+1 _XY 10001 1749
+1 NAME Isaac /Hanson/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 25 FEB 1714
+2 PLAC Dover, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 15 JAN 1758
+2 PLAC Dover, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMC @F106@
+0 @I646@ INDI
+1 _XY 10086 1748
+1 NAME Daniel /Hanson/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 26 MAR 1718
+2 PLAC Dover, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 21 OCT 1775
+2 PLAC Somersworth, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMC @F106@
+0 @I647@ INDI
+1 _XY 8097 1936
+1 NAME Nathaniel /Horne/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 12 JUN 1740
+2 PLAC Dover, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE MAR 1797
+2 PLAC Dover, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F151@
+0 @I648@ INDI
+1 _XY 8267 1941
+1 NAME Sarah M. /Gage/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1737
+2 PLAC Cocheco, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F151@
+1 FAMC @F152@
+0 @I649@ INDI
+1 _XY 8226 1872
+1 NAME John /Gage/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 7 APR 1702
+2 PLAC Beverly, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 25 JUN 1773
+2 PLAC Dover, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F152@
+1 FAMC @F153@
+0 @I650@ INDI
+1 _XY 8260 1780
+1 NAME Moses /Gage/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1668
+2 PLAC Beverly, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 30 JUN 1748
+2 PLAC Beverly, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F153@
+1 FAMC @F154@
+0 @I651@ INDI
+1 _XY 8124 1668
+1 NAME Thomas /Gage/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1620
+2 PLAC Yarmouth, Barnstable, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 17 JUL 1695
+2 PLAC Yarmouth, Barnstable, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F154@
+1 FAMC @F155@
+0 @I652@ INDI
+1 _XY 8100 1625
+1 NAME John /Gage/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 PLAC Ipswich, Suffolk, England, UK
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F155@
+0 @I653@ INDI
+1 _XY 8221 1670
+1 NAME Johanna /Knight/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1627
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 1695
+2 PLAC Lynn, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F154@
+1 FAMC @F156@
+0 @I654@ INDI
+1 _XY 8102 1528
+1 NAME William C. /Knoght/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1601
+2 PLAC Binfield, Berkshire, England, UK
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 5 JAN 1655
+2 PLAC Lynn, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F156@
+0 @I655@ INDI
+1 _XY 8221 1527
+1 NAME Elizabeth /Ballard/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 28 OCT 1632
+2 PLAC Southwell, Nottinghamshire, England, UK
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 12 JAN 1722
+2 PLAC Pawtucket, Providence, RI, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F156@
+0 @I656@ INDI
+1 _XY 8356 1778
+1 NAME Sarah /Dodge/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 16 FEB 1668
+2 PLAC Beverly, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 4 JUL 1703
+2 PLAC Beverly, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F153@
+1 FAMC @F157@
+0 @I657@ INDI
+1 _XY 8320 1672
+1 NAME John /Dodge/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1636
+2 PLAC Salem, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 14 JAN 1723
+2 PLAC Beverly, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F157@
+1 FAMC @F159@
+0 @I658@ INDI
+1 _XY 8416 1672
+1 NAME Sarah /Proctor/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1636
+2 PLAC Ipswich, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 28 NOV 1672
+2 PLAC Ipswich, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F157@
+1 FAMC @F158@
+0 @I659@ INDI
+1 _XY 8461 1550
+1 NAME John /Proctor/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1595
+2 PLAC London, England, UK
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 11 OCT 1672
+2 PLAC Ipswich, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F158@
+0 @I660@ INDI
+1 _XY 8563 1548
+1 NAME Martha /Harper/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1607
+2 PLAC London, England, UK
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 13 JUN 1659
+2 PLAC Ipswich, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F158@
+0 @I661@ INDI
+1 _XY 8267 1580
+1 NAME William /Dodge/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 1604
+2 PLAC East Coker, Somerset, England, UK
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 1686
+2 PLAC Beverly, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F159@
+0 @I662@ INDI
+1 _XY 8356 1580
+1 NAME Elizabeth /Haskell/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1612
+2 PLAC Somerset, England, UK
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 1642
+2 PLAC Beverly, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMS @F159@
+0 @I663@ INDI
+1 _XY 8319 1876
+1 NAME Elizabeth /Roberts/
+2 SOUR @S117@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 13 MAR 1697
+2 PLAC Dover, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 DEAT
+2 DATE 1731
+2 PLAC Beverly, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+1 FAMC @F39@
+1 FAMS @F152@
+1 FAMS @F160@
+0 @I664@ INDI
+1 _XY 8415 1875
+1 NAME Philip /Hubbard/
+2 SOUR @S105@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 9 NOV 1693
+2 PLAC Kittery, York, ME, USA
+2 SOUR @S105@
+3 QUAY 1
+1 DEAT
+2 DATE MAY 1723
+2 PLAC Berwick, York, ME, USA
+2 SOUR @S105@
+3 QUAY 1
+1 FAMS @F160@
+0 @I665@ INDI
+1 _XY 8720 1885
+1 NAME Mary /Heard/
+2 SOUR @S105@
+3 QUAY 1
+1 SEX F
+1 FAMS @F38@
 0 @F0@ FAM
 1 HUSB @I2@
 1 WIFE @I3@
@@ -10548,7 +11252,7 @@
 2 SOUR @S80@
 3 QUAY 3
 2 PLAC 277 Fremont Street, Boston, MA, USA
-2 NOTE @T78@
+2 NOTE @T77@
 0 @F13@ FAM
 1 CHIL @I25@
 1 WIFE @I35@
@@ -10569,12 +11273,16 @@
 2 DATE 1 MAY 1815
 2 SOUR @S10@
 3 QUAY 0
-2 NOTE @T19@
+2 NOTE @T105@
+2 PLAC Dover, Strafford, NH, USA
 1 CHIL @I319@
 1 CHIL @I320@
 1 CHIL @I321@
 1 CHIL @I322@
 1 CHIL @I323@
+1 CHIL @I628@
+1 CHIL @I629@
+1 CHIL @I630@
 0 @F15@ FAM
 1 HUSB @I38@
 1 WIFE @I39@
@@ -10753,9 +11461,9 @@
 1 WIFE @I125@
 1 MARR
 2 DATE 5 DEC 1744
-2 SOUR @S5@
-3 PAGE p. 70
+2 SOUR @S117@
 3 QUAY 1
+2 PLAC Dover, Strafford, NH, USA
 0 @F34@ FAM
 1 CHIL @I124@
 1 CHIL @I126@
@@ -10816,11 +11524,13 @@
 0 @F38@ FAM
 1 CHIL @I113@
 1 HUSB @I151@
+1 WIFE @I665@
 0 @F39@ FAM
 1 CHIL @I151@
 1 CHIL @I152@
 1 HUSB @I153@
 1 WIFE @I171@
+1 CHIL @I663@
 0 @F40@ FAM
 1 CHIL @I153@
 1 HUSB @I154@
@@ -11343,6 +12053,15 @@
 1 CHIL @I147@
 1 WIFE @I472@
 1 HUSB @I488@
+1 MARR
+2 DATE 23 JUL 1703
+2 PLAC Dover, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+1 CHIL @I643@
+1 CHIL @I644@
+1 CHIL @I645@
+1 CHIL @I646@
 0 @F107@ FAM
 1 CHIL @I461@
 1 CHIL @I477@
@@ -11372,9 +12091,12 @@
 0 @F112@ FAM
 1 HUSB @I471@
 1 CHIL @I488@
+1 WIFE @I634@
+1 CHIL @I642@
 0 @F113@ FAM
 1 CHIL @I472@
 1 HUSB @I489@
+1 WIFE @I631@
 0 @F114@ FAM
 1 HUSB @I490@
 1 WIFE @I491@
@@ -11434,7 +12156,7 @@
 1 CHIL @I545@
 1 MARR
 2 DATE ABT 1860
-2 NOTE @T97@
+2 NOTE @T96@
 0 @F121@ FAM
 1 WIFE @I540@
 1 HUSB @I539@
@@ -11455,7 +12177,7 @@
 1 CHIL @I547@
 1 MARR
 2 DATE ABT 1853
-2 NOTE @T96@
+2 NOTE @T95@
 0 @F123@ FAM
 1 HUSB @I554@
 1 CHIL @I523@
@@ -11479,7 +12201,7 @@
 2 SOUR @S114@
 3 QUAY 0
 2 PLAC St-Hyppolite De Wotton, Cantons De Lest, Quebec, Canada
-2 NOTE @T100@
+2 NOTE @T99@
 0 @F125@ FAM
 1 HUSB @I569@
 1 CHIL @I167@
@@ -11493,7 +12215,7 @@
 4 TEXT     * Married: 8 NOV 1784 in Book 4, Part 2, Page 149, Middleborough T
 5 CONC own Records, Plymouth County, Massachusetts, USA
 5 CONT     * Event: Justice of the Peace 8 NOV 1784 in Reverend Caleb Turner
-2 NOTE @T92@
+2 NOTE @T91@
 1 CHIL @I571@
 1 CHIL @I572@
 1 CHIL @I573@
@@ -11538,7 +12260,7 @@
 2 PLAC Harwich, Barnstable, MA, USA
 2 SOUR @S116@
 3 QUAY 1
-2 NOTE @T105@
+2 NOTE @T104@
 0 @F132@ FAM
 1 CHIL @I593@
 1 CHIL @I587@
@@ -11608,6 +12330,69 @@
 1 CHIL @I625@
 1 CHIL @I626@
 1 CHIL @I627@
+0 @F148@ FAM
+1 HUSB @I632@
+1 CHIL @I489@
+1 WIFE @I633@
+0 @F149@ FAM
+1 HUSB @I635@
+1 CHIL @I634@
+1 WIFE @I636@
+1 CHIL @I641@
+0 @F150@ FAM
+1 HUSB @I637@
+1 CHIL @I636@
+1 WIFE @I638@
+1 CHIL @I639@
+1 CHIL @I640@
+0 @F151@ FAM
+1 HUSB @I647@
+1 CHIL @I150@
+1 WIFE @I648@
+1 MARR
+2 DATE 1768
+2 PLAC Dover, Strafford, NH, USA
+2 SOUR @S117@
+3 QUAY 1
+0 @F152@ FAM
+1 HUSB @I649@
+1 CHIL @I648@
+1 WIFE @I663@
+0 @F153@ FAM
+1 HUSB @I650@
+1 CHIL @I649@
+1 WIFE @I656@
+0 @F154@ FAM
+1 HUSB @I651@
+1 CHIL @I650@
+1 WIFE @I653@
+1 MARR
+2 DATE 1643
+2 PLAC Lynn, Essex, MA, USA
+2 SOUR @S117@
+3 QUAY 1
+0 @F155@ FAM
+1 HUSB @I652@
+1 CHIL @I651@
+0 @F156@ FAM
+1 HUSB @I654@
+1 CHIL @I653@
+1 WIFE @I655@
+0 @F157@ FAM
+1 HUSB @I657@
+1 CHIL @I656@
+1 WIFE @I658@
+0 @F158@ FAM
+1 HUSB @I659@
+1 CHIL @I658@
+1 WIFE @I660@
+0 @F159@ FAM
+1 HUSB @I661@
+1 CHIL @I657@
+1 WIFE @I662@
+0 @F160@ FAM
+1 HUSB @I664@
+1 WIFE @I663@
 0 @S0@ SOUR
 1 AUTH Paine, Penny
 1 TITL Interview
@@ -14723,6 +15508,78 @@
 2 CONC ]<br />
 2 CONT [SOURCE is volume and page from original town records]
 2 CONT
+0 @S117@ SOUR
+1 AUTH McNeil, C. A.
+1 TITL McNeil Family Tree
+1 PUBL ancestry.com, Camcneil31
+0 @S118@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1830, MA, Bristol, New Bedford, p. 19 of 102
+1 PUBL ancestry.com
+1 TEXT <table border="1">
+2 CONT <tr><td>Benj<sup>n</sup></td><td>Lewis</td><td>m</td><td>40-49</td><td
+2 CONC >[58]</td></tr>
+2 CONT <tr><td>[Hannah]</td><td>[Clark]</td><td>f</td><td>50-59</td><td>[57]<
+2 CONC /td></tr>
+2 CONT <tr><td>[Benjamin]</td><td>[Lewis]</td><td>m</td><td>30-39</td><td>[36
+2 CONC ]</td></tr>
+2 CONT <tr><td>[unknown]</td><td>[Lewis?]</td><td>f</td><td>10-14</td><td>[b
+2 CONC . 1815-1820]</td></tr>
+2 CONT </table>
+2 CONT
+0 @S119@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1790, MA, Barnstable, Yarmouth, p. 3 of 5
+1 PUBL ancestry.com
+1 TEXT N<sup>o</sup>2.<br />
+2 CONT Yarmouth<br />
+2 CONT [... 8th record on page:]
+2 CONT <table border="1">
+2 CONT <tr><td>Benj<sup>n</sup></td><td>Lewis</td><td>m</td><td>16+</td><td>[
+2 CONC 53]</td></tr>
+2 CONT <tr><td>[Sarah]</td><td>[Crowell]</td><td>f</td><td>&nbsp;</td><td>[49
+2 CONC ]</td></tr>
+2 CONT <tr><td>[Priscilla]</td><td>[Lewis]</td><td>f</td><td>&nbsp;</td><td>[
+2 CONC 22]</td></tr>
+2 CONT <tr><td>[Elizabeth]</td><td>[Lewis]</td><td>f</td><td>&nbsp;</td><td>[
+2 CONC 20]</td></tr>
+2 CONT <tr><td>[Benjamin]</td><td>[Lewis]</td><td>m</td><td>16+</td><td>[18]<
+2 CONC /td></tr>
+2 CONT <tr><td>[Sarah]</td><td>[Lewis]</td><td>f</td><td>&nbsp;</td><td>[12]<
+2 CONC /td></tr>
+2 CONT <tr><td>[Lydia]</td><td>[Lewis]</td><td>f</td><td>&nbsp;</td><td>[9]</
+2 CONC td></tr>
+2 CONT <tr><td>[Ruth]</td><td>[Lewis]</td><td>f</td><td>&nbsp;</td><td>[7]</t
+2 CONC d></tr>
+2 CONT <tr><td>[Edward]</td><td>[Lewis]</td><td>m</td><td>0-15</td><td>[5]</t
+2 CONC d></tr>
+2 CONT <tr><td>[Nathan]</td><td>[Lewis]</td><td>m</td><td>0-15</td><td>[2]</t
+2 CONC d></tr>
+2 CONT <tr><td>[unknown]</td><td>[Lewis]</td><td>m</td><td>0-15</td><td>[b. 1
+2 CONC 775-1790]</td></tr>
+2 CONT </table>
+2 CONT
+0 @S120@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1800, MA, Barnstable, Yarmouth, p. 6 of 7
+1 PUBL ancestry.com
+1 TEXT <table border="1">
+2 CONT <tr><td>Benjamin</td><td>Lewis</td><td>m</td><td>26-44</td><td>[28]</t
+2 CONC d></tr>
+2 CONT <tr><td>[Hannah]</td><td>[Clark]</td><td>f</td><td>26-44</td><td>[c. 2
+2 CONC 7]</td></tr>
+2 CONT <tr><td>[unknown]</td><td>[Lewis?]</td><td>m</td><td>10-15</td><td>[b
+2 CONC . 1784-1790]</td></tr>
+2 CONT <tr><td>[Benjamin]</td><td>[Lewis]</td><td>m</td><td>0-9</td><td>[5]</
+2 CONC td></tr>
+2 CONT <tr><td>[unknown]</td><td>[Lewis?]</td><td>f</td><td>16-25</td><td>[b
+2 CONC . 1774-1784]</td></tr>
+2 CONT <tr><td>[Sarah]</td><td>[Lewis]</td><td>f</td><td>0-9</td><td>[3]</td>
+2 CONC </tr>
+2 CONT <tr><td>[Anna Clark]</td><td>[Lewis]</td><td>f</td><td>0-9</td><td>[1]
+2 CONC </td></tr>
+2 CONT </table>
+2 CONT
 0 @T0@ NOTE in New York Stock Exchange
 0 @T1@ NOTE lived with the Mayor of Portsmouth
 0 @T2@ NOTE lived with Robert Watkins
@@ -14743,47 +15600,46 @@
 0 @T16@ NOTE Jean Wright has 3 Aug 1889
 0 @T17@ NOTE Jean Wright has 27 Apr 1888
 0 @T18@ NOTE corner of Middle Road and Back Road
-0 @T19@ NOTE IGI gives marriage to Sally Roberts 10 Sep 1815 in Dover
-0 @T20@ NOTE source gives Somerset, is prob. Coventry
-0 @T21@ NOTE date from Ancestral File
-0 @T22@ NOTE source gives Somerset, is prob. Coventry
-0 @T23@ NOTE date from Ancestral File
-0 @T24@ NOTE source gives Somerset, is prob. Coventry
-0 @T25@ NOTE need to look up original census record p. 540
-0 @T26@ NOTE date is from Ancestral File
-0 @T27@ NOTE Ancestral Files has Sep 1800.
-0 @T28@ NOTE Ancerstral File has Dover
-0 @T29@ NOTE Ancestral File has Waterboro
-0 @T30@ NOTE Ancestral File has two different Sarah's; not sure if this is true
-0 @T31@ NOTE place is a guess
-0 @T32@ NOTE place is a guess. dates conflict with Hannah
-0 @T33@ NOTE conflicts with Sarah
-0 @T34@ NOTE conflicts with Ann
-0 @T35@ NOTE place give is Attleboro. MA, but is probably wrong
-0 @T36@ NOTE of appendicitis
-0 @T37@ NOTE place is assumed, only MD is given in 1870 census
-0 @T38@ NOTE date is from Interview with Penny Paine
-0 @T39@ NOTE of a heart attack
-0 @T40@ NOTE of a brain tumor. Place is from Silvey family research.
-0 @T41@ NOTE and 1860 census
-0 @T42@ NOTE of a heart attack. Penny Paine says Hoboken (I think).
-0 @T43@ NOTE date is just an estimate
-0 @T44@ NOTE place is assumed
-0 @T45@ NOTE Assume this is the right William Reeves. I searched all Reeves familie
+0 @T19@ NOTE source gives Somerset, is prob. Coventry
+0 @T20@ NOTE date from Ancestral File
+0 @T21@ NOTE source gives Somerset, is prob. Coventry
+0 @T22@ NOTE date from Ancestral File
+0 @T23@ NOTE source gives Somerset, is prob. Coventry
+0 @T24@ NOTE need to look up original census record p. 540
+0 @T25@ NOTE date is from Ancestral File
+0 @T26@ NOTE Ancestral Files has Sep 1800.
+0 @T27@ NOTE Ancerstral File has Dover
+0 @T28@ NOTE Ancestral File has Waterboro
+0 @T29@ NOTE Ancestral File has two different Sarah's; not sure if this is true
+0 @T30@ NOTE place is a guess
+0 @T31@ NOTE place is a guess. dates conflict with Hannah
+0 @T32@ NOTE conflicts with Sarah
+0 @T33@ NOTE conflicts with Ann
+0 @T34@ NOTE place give is Attleboro. MA, but is probably wrong
+0 @T35@ NOTE of appendicitis
+0 @T36@ NOTE place is assumed, only MD is given in 1870 census
+0 @T37@ NOTE date is from Interview with Penny Paine
+0 @T38@ NOTE of a heart attack
+0 @T39@ NOTE of a brain tumor. Place is from Silvey family research.
+0 @T40@ NOTE and 1860 census
+0 @T41@ NOTE of a heart attack. Penny Paine says Hoboken (I think).
+0 @T42@ NOTE date is just an estimate
+0 @T43@ NOTE place is assumed
+0 @T44@ NOTE Assume this is the right William Reeves. I searched all Reeves familie
 1 CONC s in Baltimore in the 1860 US Census, and this was the only family wit
 1 CONC h a William (and he is the right age).
-0 @T46@ NOTE Assume this is the right William Reeves. This family matches fairly we
+0 @T45@ NOTE Assume this is the right William Reeves. This family matches fairly we
 1 CONC ll with the 1860 Reeves family. William (adult) age 38 and 48 who i
 1 CONC s a blacksmith; William age 6 and 16; Cassandra is the same name in bo
 1 CONC th, but the ages don't match (Cassandra 38 would be 48 in 1860, but 18
 1 CONC 60 has an Ann aged 48 who is show as the head of household; very confu
 1 CONC sing).
-0 @T47@ NOTE By Reeves family, so changed last name to Reeves. Date is just a guess
+0 @T46@ NOTE By Reeves family, so changed last name to Reeves. Date is just a guess
 1 CONC .
-0 @T48@ NOTE also gives 11 Apr 1801
-0 @T49@ NOTE ship "America", Gravesend, London, England,(William Barker, Master); l
+0 @T47@ NOTE also gives 11 Apr 1801
+0 @T48@ NOTE ship "America", Gravesend, London, England,(William Barker, Master); l
 1 CONC anded Jamestown, VA, USA
-0 @T50@ NOTE to William Clarke
+0 @T49@ NOTE to William Clarke
 1 CONT The following from, " Cavaliers and Pioneers, Abstracts of Virginia La
 1 CONC nd Patents and Grants", Vol. ONE 1623-1666 by Nell Marion Nugent, pag
 1 CONC e 49:
@@ -14797,81 +15653,85 @@
 1 CONC , Symon Richardson, Lawrence Farbarne, Hump Bell [i.e., Humphrey Belt]
 1 CONC , Laur/ Jackson, Elizabeth Collins, Nicholas Browne, Samuel church."
 1 CONT
+0 @T50@ NOTE just a guess
 0 @T51@ NOTE just a guess
-0 @T52@ NOTE just a guess
-0 @T53@ NOTE Dover, Ward 4 (part of): Beginning at the junction of Locust and Silve
+0 @T52@ NOTE Dover, Ward 4 (part of): Beginning at the junction of Locust and Silve
 1 CONC r Streets, thence running south along Locust to Central Ave; thence al
 1 CONC ong Central Avenue to Durham Road to Durham line, thence southeasterl
 1 CONC y along Great Bay and easterly to Black Ri
-0 @T54@ NOTE 45 acres
-0 @T55@ NOTE 70 acres to John Stewart
-0 @T56@ NOTE or England
-0 @T57@ NOTE hired by William Piper
-0 @T58@ NOTE 1850 census puts year at about 1777
-0 @T59@ NOTE 37/8 ? or 36/7?  I'm assuming that the her birth date is coincidenta
+0 @T53@ NOTE 45 acres
+0 @T54@ NOTE 70 acres to John Stewart
+0 @T55@ NOTE or England
+0 @T56@ NOTE hired by William Piper
+0 @T57@ NOTE 1850 census puts year at about 1777
+0 @T58@ NOTE 37/8 ? or 36/7?  I'm assuming that the her birth date is coincidenta
 1 CONC l with her mother's death date.
-0 @T60@ NOTE "11th month"
-0 @T61@ NOTE "1690" probably means 1689/90
-0 @T62@ NOTE went back to England and returned to Haverhill, MA with his father an
+0 @T59@ NOTE "11th month"
+0 @T60@ NOTE "1690" probably means 1689/90
+0 @T61@ NOTE went back to England and returned to Haverhill, MA with his father an
 1 CONC d some siblings
-0 @T63@ NOTE "State File #04302"
+0 @T62@ NOTE "State File #04302"
 1 CONT
-0 @T64@ NOTE place is from 1920 census
-0 @T65@ NOTE he was the eldest child
-0 @T66@ NOTE servant in household of William F. Ward
+0 @T63@ NOTE place is from 1920 census
+0 @T64@ NOTE he was the eldest child
+0 @T65@ NOTE servant in household of William F. Ward
+0 @T66@ NOTE 750 is a guess, microfilm is illegible; boarder in household of Elija
+1 CONC h Burton
 0 @T67@ NOTE 750 is a guess, microfilm is illegible; boarder in household of Elija
 1 CONC h Burton
-0 @T68@ NOTE 750 is a guess, microfilm is illegible; boarder in household of Elija
-1 CONC h Burton
-0 @T69@ NOTE lived here prior 1917 as well
-0 @T70@ NOTE Boarded with friend Connie Mourad. I think this is where she lived aft
+0 @T68@ NOTE lived here prior 1917 as well
+0 @T69@ NOTE Boarded with friend Connie Mourad. I think this is where she lived aft
 1 CONC er her husband died in 1954.
-0 @T71@ NOTE Was a paratrooper in the US military. After WWII, was about to come ho
+0 @T70@ NOTE Was a paratrooper in the US military. After WWII, was about to come ho
 1 CONC me from Japan, asked to borrow a Jeep to go fishing; drove into rive
 1 CONC r and drowned.
-0 @T72@ NOTE tried to kill his mother with a knife
+0 @T71@ NOTE tried to kill his mother with a knife
 1 CONT
-0 @T73@ NOTE place is from Penny
-0 @T74@ NOTE owned hardware store
-0 @T75@ NOTE 1870 gives MD, others give PA
+0 @T72@ NOTE place is from Penny
+0 @T73@ NOTE owned hardware store
+0 @T74@ NOTE 1870 gives MD, others give PA
 1 CONT
-0 @T76@ NOTE next door to Louis Charles Philibert
-0 @T77@ NOTE next door to the Edwin Swindells
-0 @T78@ NOTE by Rev. Joseph E. Barry
-0 @T79@ NOTE place is from son William's birth certificate
-0 @T80@ NOTE I'm pretty sure this is the right Madeline Roach.
-0 @T81@ NOTE died when his son Joseph was around 10 years old
-0 @T82@ NOTE fell down stairs
-0 @T83@ NOTE Day of month is from Social Security Death Index. Month and year are f
+0 @T75@ NOTE next door to Louis Charles Philibert
+0 @T76@ NOTE next door to the Edwin Swindells
+0 @T77@ NOTE by Rev. Joseph E. Barry
+0 @T78@ NOTE place is from son William's birth certificate
+0 @T79@ NOTE I'm pretty sure this is the right Madeline Roach.
+0 @T80@ NOTE died when his son Joseph was around 10 years old
+0 @T81@ NOTE fell down stairs
+0 @T82@ NOTE Day of month is from Social Security Death Index. Month and year are f
 1 CONC rom 1900 census Month and date. Place is from WWI draft registration.
-0 @T84@ NOTE place is assumed
-0 @T85@ NOTE Not at 28 Second St. in Norwalk, or 864 Hancock Ave. in Bridgeport, i
+0 @T83@ NOTE place is assumed
+0 @T84@ NOTE Not at 28 Second St. in Norwalk, or 864 Hancock Ave. in Bridgeport, i
 1 CONC n 1920 census.
-0 @T86@ NOTE place is from 1880 census, date is from Mike Wood
-0 @T87@ NOTE not in 1849 or 1859 directories
+0 @T85@ NOTE place is from 1880 census, date is from Mike Wood
+0 @T86@ NOTE not in 1849 or 1859 directories
 1 CONT
-0 @T88@ NOTE 1841 census gives age 21 (so b. c. 1820).
+0 @T87@ NOTE 1841 census gives age 21 (so b. c. 1820).
+0 @T88@ NOTE (probably in USA)
 0 @T89@ NOTE (probably in USA)
-0 @T90@ NOTE (probably in USA)
-0 @T91@ NOTE Did elder sister Elizabeth die before this Eliza was born? Or is ther
+0 @T90@ NOTE Did elder sister Elizabeth die before this Eliza was born? Or is ther
 1 CONC e a big mistake in the census records, and ther is only one Eliza/Eliz
 1 CONC abeth child???
-0 @T92@ NOTE need to check original town records book 4, part 2, page 149
-0 @T93@ NOTE Harwich is just a guess, based on marriage place and that there were m
+0 @T91@ NOTE need to check original town records book 4, part 2, page 149
+0 @T92@ NOTE Harwich is just a guess, based on marriage place and that there were m
 1 CONC any Clarks in 1790 census in Harwich.
-0 @T94@ NOTE date is a guess based on finding him in 1840 census but missing in 185
+0 @T93@ NOTE date is a guess based on finding him in 1840 census but missing in 185
 1 CONC 0 census; place is a guess based upon location in 1840 census
-0 @T95@ NOTE Penny says he was Pennsylvania Dutch (Amish)
+0 @T94@ NOTE Penny says he was Pennsylvania Dutch (Amish)
+0 @T95@ NOTE just a guess
 0 @T96@ NOTE just a guess
-0 @T97@ NOTE just a guess
-0 @T98@ NOTE assumed from baptism
-0 @T99@ NOTE 1900 census (Manchester, NH) gives Oct. 1836
+0 @T97@ NOTE assumed from baptism
+0 @T98@ NOTE 1900 census (Manchester, NH) gives Oct. 1836
 1 CONT
-0 @T100@ NOTE One World Tree has 9 May 1857. Place is from One World Tree.
-0 @T101@ NOTE "Lillian V. Domblosky"
-0 @T102@ NOTE "Mrs. Robert Beatty"
-0 @T103@ NOTE US Census 1900 gives birth Mar 1895; SSDI gives birth 8 May 1895
-0 @T104@ NOTE "Kittie Donovan" might not be her
-0 @T105@ NOTE Need to check original town records to see if she is listed as "Mrs. H
+0 @T99@ NOTE One World Tree has 9 May 1857. Place is from One World Tree.
+0 @T100@ NOTE "Lillian V. Domblosky"
+0 @T101@ NOTE "Mrs. Robert Beatty"
+0 @T102@ NOTE US Census 1900 gives birth Mar 1895; SSDI gives birth 8 May 1895
+0 @T103@ NOTE "Kittie Donovan" might not be her
+0 @T104@ NOTE Need to check original town records to see if she is listed as "Mrs. H
 1 CONC annah Clark" or not.
+0 @T105@ NOTE IGI gives marriage to Sally Roberts 10 Sep 1815 in Dover.
+1 CONT McNeil gives May 1, 1815, Dover.
+1 CONT
+0 @T106@ NOTE McNeil gives Crown Point, Essex, NY
 0 TRLR

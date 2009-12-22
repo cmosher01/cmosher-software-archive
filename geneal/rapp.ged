@@ -509,9 +509,7 @@
 1 FAMC @F4@
 0 @I15@ INDI
 1 _XY 541 39
-1 NAME Clara /[unknown]/
-2 SOUR @S9@
-3 QUAY 1
+1 NAME Clara Teresa /von Baezko/
 1 SEX F
 1 CENS
 2 DATE 1 JUN 1880

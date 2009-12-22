@@ -334,7 +334,7 @@
 2 PLAC 4277 Lee Highway, Pulaski, Pulaski, VA, USA
 2 SOUR @S395@
 3 QUAY 3
-2 NOTE @T1037@
+2 NOTE @T1036@
 1 RESI
 2 DATE FROM AUG 1966 TO AUG 1967
 2 PLAC Cardinal Drive, Pulaski, Pulaski, VA, USA
@@ -345,7 +345,7 @@
 2 PLAC 100 Cambridge Drive, Wilmington, New Castle, DE, USA
 2 SOUR @S196@
 3 QUAY 3
-2 NOTE @T1092@
+2 NOTE @T1091@
 1 RESI
 2 DATE FROM DEC 1969 TO 1971
 2 PLAC 1303 Faulk Road, Wilmington, New Castle, DE, USA
@@ -455,7 +455,7 @@
 2 PLAC Midwood High School, 2839 Bedford Avenue, Flatbush, Brooklyn, NY, USA
 2 SOUR @S393@
 3 QUAY 3
-2 NOTE @T1101@
+2 NOTE @T1100@
 1 EDUC elementary school
 2 PLAC Glenwood Road School (Public School Number 152), 725 East 23rd Street, Flatbush, Brooklyn, NY, USA
 2 SOUR @S393@
@@ -466,7 +466,7 @@
 2 SOUR @S393@
 3 QUAY 3
 2 DATE FROM SEP 1950 TO SEP 1953
-2 NOTE @T1100@
+2 NOTE @T1099@
 1 SSN 088-32-3539
 2 SOUR @S393@
 1 RESI
@@ -489,7 +489,7 @@
 2 DATE FROM 1 SEP 1997
 2 SOUR @S393@
 3 QUAY 3
-2 NOTE @T1115@
+2 NOTE @T1114@
 1 OCCU clerk
 2 PLAC John Handey Associates, 5th Avenue, Manhattan, NY, USA
 2 NOTE @T714@
@@ -549,7 +549,7 @@
 2 PLAC Gary Bryde, Wilmington, DE, USA
 2 SOUR @S578@
 3 QUAY 3
-2 NOTE @T1034@
+2 NOTE @T1033@
 1 OCCU paralegal
 2 DATE FROM 1986 TO AUG 1988
 2 PLAC Woloshin and Tenenbaum, 3200 Concord Pike, Independence Mall, Brandywine, New Castle, DE, USA
@@ -1178,7 +1178,7 @@
 2 PLAC 216 South 4th Street, Williamsburg, Brooklyn, NY, USA
 2 SOUR @S594@
 3 QUAY 2
-2 NOTE @T1078@
+2 NOTE @T1077@
 1 OCCU Insurance Broker
 2 DATE 1920
 2 PLAC NY, USA
@@ -1192,7 +1192,7 @@
 2 DATE 24 OCT 1953
 2 PLAC Crypt 88, Aisle JJ, Cypress Hills Abbey, Cypress Hills Cemetery, Queens, NY, USA
 2 SOUR @S48@
-2 NOTE @T1094@
+2 NOTE @T1093@
 1 CENS
 2 DATE 1 JUN 1900
 2 PLAC 1012 Lafayette Avenue, Bedford Stuyvesant, Brooklyn, NY, USA
@@ -1208,7 +1208,7 @@
 2 DATE FROM 27 JUN 1931 TO 1936
 2 SOUR @S605@
 3 QUAY 1
-2 NOTE @T1085@
+2 NOTE @T1084@
 1 OCCU Insurance Broker
 2 DATE 16 DEC 1939
 2 PLAC 80 Maiden Lane, Manhattan, NY, USA
@@ -1225,14 +1225,14 @@
 2 SOUR @S605@
 3 QUAY 1
 2 DATE ABT 1905
-2 NOTE @T1076@
+2 NOTE @T1075@
 1 OCCU Insurance Broker
 2 PLAC Francis C. Carr and Company Incorporated, 80 Maiden Lane, Manhattan, NY, USA
 2 SOUR @S300@
 3 PAGE p. 3
 3 QUAY 2
 2 DATE FROM 1909 TO 1947
-2 NOTE @T1084@
+2 NOTE @T1083@
 1 RESI
 2 DATE FROM 1938 TO 21 OCT 1953
 2 PLAC 695 East 19th Street, Flatbush, Brooklyn, NY, USA
@@ -1277,15 +1277,15 @@
 1 RESI
 2 DATE FROM 26 JUL 1887 TO 1888
 2 PLAC 216 South 4th Street, Williamsburg, Brooklyn, NY, USA
-2 NOTE @T1079@
+2 NOTE @T1078@
 1 RESI
 2 DATE FROM 1888 TO 1889
 2 PLAC 161 Havemeyer Street, Williamsburg, Brooklyn, NY, USA
-2 NOTE @T1080@
+2 NOTE @T1079@
 1 RESI
 2 DATE 1890
 2 PLAC 238 South 4th Street, Williamsburg, Brooklyn, NY, USA
-2 NOTE @T1081@
+2 NOTE @T1080@
 1 RESI
 2 DATE 18 JUN 1931
 2 PLAC 21 East 21st Street, Brooklyn, NY, USA
@@ -1362,7 +1362,7 @@
 1 RESI
 2 DATE FROM 1918 TO 27 JUN 1931
 2 PLAC 2114 Glenwood Road, Flatbush, Brooklyn, NY, USA
-2 NOTE @T1077@
+2 NOTE @T1076@
 1 RESI
 2 DATE 1916
 2 PLAC 2205 Beverly Road, Prospect Park South, Brooklyn, NY, USA
@@ -1700,11 +1700,11 @@
 1 RESI
 2 DATE FROM 29 JUL 1908 TO AUG 1909
 2 PLAC Solsville, Madison, Madison, NY, USA
-2 NOTE @T1074@
+2 NOTE @T1073@
 1 RESI
 2 DATE FROM 1903 TO 29 JUL 1908
 2 PLAC Payne Street, Hamilton, Madison, NY, USA
-2 NOTE @T1069@
+2 NOTE @T1068@
 1 BURI
 2 PLAC Woodlawn Cemetery, Lebanon Street, Hamilton, Madison, NY, USA
 2 NOTE @T897@
@@ -1810,18 +1810,18 @@
 1 RESI
 2 DATE FROM 16 MAY 1882 TO 1886
 2 PLAC Morrisville, Eaton, Madison, NY, USA
-2 NOTE @T1064@
+2 NOTE @T1063@
 1 RESI
 2 DATE FROM 9 FEB 1894 TO 1897
 2 PLAC Siloam, Smithfield, Madison, NY, USA
-2 NOTE @T1071@
+2 NOTE @T1070@
 1 RESI
 2 DATE FROM 1897 TO 1903
 2 PLAC Madison, Madison, NY, USA
-2 NOTE @T1073@
+2 NOTE @T1072@
 1 RESI
 2 DATE FROM 1886 TO 9 FEB 1894
-2 NOTE @T1070@
+2 NOTE @T1069@
 2 PLAC Oneida Castle, Oneida, Madison, NY, USA
 1 FAMS @F10@
 1 FAMC @F71@
@@ -2230,7 +2230,7 @@
 2 TYPE published
 2 SOUR @S237@
 3 QUAY 1
-2 NOTE @T1120@
+2 NOTE @T1119@
 1 OCCU Minister of the Interior
 2 DATE FROM 1911 TO JAN 1912
 2 PLAC Ecuador
@@ -2321,7 +2321,7 @@
 2 PLAC Swedish Hospital, Rogers Avenue and Sterling Place, Crown Heights, Brooklyn, NY, USA
 2 SOUR @S34@
 3 QUAY 3
-2 NOTE @T1086@
+2 NOTE @T1085@
 1 BIRT
 2 DATE AUG 1859
 2 SOUR @S45@
@@ -2332,7 +2332,7 @@
 2 DATE 1920
 2 PLAC 962 Lafayette Avenue, Bedford Stuyvesant, Brooklyn, NY, USA
 2 SOUR @S39@
-2 NOTE @T1124@
+2 NOTE @T1123@
 1 BURI
 2 DATE 11 AUG 1934
 2 PLAC Crypt 78, Aisle JJ, Cypress Hills Abbey, Cypress Hills Cemetery, Queens, NY, USA
@@ -2395,7 +2395,7 @@
 3 QUAY 1
 1 CENS
 2 DATE 1 APR 1930
-2 NOTE @T1083@
+2 NOTE @T1082@
 2 PLAC 622 Jefferson Avenue, Bedford Stuyvesant, Brooklyn, NY, USA
 2 SOUR @S584@
 3 QUAY 3
@@ -2414,19 +2414,19 @@
 2 PLAC 892 Lafayette Avenue, Bedford Stuyvesant, Brooklyn, NY, USA
 2 SOUR @S594@
 3 QUAY 2
-2 NOTE @T1082@
+2 NOTE @T1081@
 1 RESI
 2 DATE AUG 1934
 2 PLAC 71 Martense Street, Prospect Lefferts Gardens, Brooklyn, NY, USA
 2 SOUR @S34@
 3 QUAY 3
-2 NOTE @T1089@
+2 NOTE @T1088@
 1 RESI
 2 DATE JAN 1933
 2 PLAC 126 East 18th Street, Prospect Park South, Brooklyn, NY, USA
 2 SOUR @S607@
 3 QUAY 1
-2 NOTE @T1088@
+2 NOTE @T1087@
 1 RESI
 2 DATE 19 SEP 1871
 2 PLAC East Front Street, New Bern, Craven, NC, USA
@@ -2450,7 +2450,7 @@
 2 SOUR @S642@
 3 PAGE p. 21
 3 QUAY 1
-2 NOTE @T1127@
+2 NOTE @T1126@
 1 FAMS @F13@
 1 FAMC @F15@
 0 @I30@ INDI
@@ -2469,7 +2469,7 @@
 2 SOUR @S607@
 3 QUAY 1
 2 PLAC 272 Broadway, Williamsburg, Brooklyn, NY, USA
-2 NOTE @T1087@
+2 NOTE @T1086@
 1 BURI
 2 DATE 21 JAN 1933
 2 PLAC Crypt 83, Aisle JJ, Cypress Hills Abbey, Cypress Hills Cemetery, Queens, NY, USA
@@ -2603,7 +2603,7 @@
 2 PLAC 272 South 5th Street, Williamsburg, Brooklyn, NY, USA
 2 SOUR @S65@
 3 QUAY 2
-2 NOTE @T1128@
+2 NOTE @T1127@
 1 CENS
 2 DATE 1 JUN 1860
 2 PLAC Williamsburg, Brooklyn, NY, USA
@@ -2623,7 +2623,7 @@
 2 PLAC Woodlawn Cemetery, Webster Avenue & East 233rd Street, Woodlawn, Bronx, NY, USA
 2 SOUR @S346@
 3 QUAY 2
-2 NOTE @T1123@
+2 NOTE @T1122@
 1 CENS
 2 DATE 1 JUN 1840
 2 PLAC Eastchester, Westchester, NY, USA
@@ -2641,7 +2641,7 @@
 2 SOUR @S641@
 3 PAGE p. 14
 3 QUAY 1
-2 NOTE @T1126@
+2 NOTE @T1125@
 1 RESI
 2 DATE 12 OCT 1886
 2 PLAC 272 South 5th Street, Williamsburg, Brooklyn, NY, USA
@@ -2661,7 +2661,7 @@
 2 SOUR @S636@
 3 QUAY 1
 2 DATE 10 APR 1835
-2 NOTE @T1134@
+2 NOTE @T1133@
 1 CENS
 2 DATE 6 AUG 1870
 2 PLAC Brooklyn, NY, USA
@@ -2677,7 +2677,7 @@
 2 SOUR @S636@
 3 QUAY 3
 2 PLAC 272 South 5th Street, Williamsburg, Brooklyn, NY, USA
-2 NOTE @T1114@
+2 NOTE @T1113@
 1 BURI
 2 DATE 25 OCT 1897
 2 PLAC Woodlawn Cemetery, Webster Avenue & East 233rd Street, Woodlawn, Bronx, NY, USA
@@ -2747,7 +2747,7 @@
 2 PLAC East Front Street, New Bern, Craven, NC, USA
 2 SOUR @S624@
 3 QUAY 1
-2 NOTE @T1105@
+2 NOTE @T1104@
 1 FAMS @F15@
 1 FAMC @F16@
 1 FAMS @F123@
@@ -2867,7 +2867,7 @@
 3 QUAY 1
 3 DATA
 4 TEXT country residence was Asbury, N.J.
-2 NOTE @T1133@
+2 NOTE @T1132@
 1 RESI
 2 DATE FROM 1826 TO 1836
 2 PLAC Morristown, Morris, NJ, USA
@@ -2879,7 +2879,7 @@
 2 PLAC Bedford, Westchester, NY, USA
 2 SOUR @S232@
 3 QUAY 1
-2 NOTE @T1106@
+2 NOTE @T1105@
 1 EVEN
 2 PLAC First Methodist Church, 162-10 Highland Avenue, Jamaica, Queens, NY, USA
 2 TYPE assisted building
@@ -5577,7 +5577,7 @@
 1 EVEN
 2 DATE 1 JUN 1850
 2 TYPE note
-2 NOTE @T1097@
+2 NOTE @T1096@
 1 FAMS @F39@
 1 FAMC @F41@
 0 @I118@ INDI
@@ -7237,7 +7237,7 @@
 2 PLAC Oneida Castle Cemetery, Oneida, Madison, NY, USA
 2 SOUR @S14@
 3 QUAY 1
-2 NOTE @T1130@
+2 NOTE @T1129@
 1 RESI
 2 DATE 3 JUL 1879
 2 PLAC Eaton, Madison, NY, USA
@@ -7283,7 +7283,7 @@
 1 RESI
 2 DATE FROM 1875 TO 1886
 2 PLAC Morrisville, Eaton, Madison, NY, USA
-2 NOTE @T1065@
+2 NOTE @T1064@
 1 FAMS @F71@
 1 FAMC @F120@
 0 @I174@ INDI
@@ -7324,15 +7324,15 @@
 1 RESI
 2 DATE FROM 1886 TO 9 FEB 1894
 2 PLAC Oneida Castle, Oneida, Madison, NY, USA
-2 NOTE @T1066@
+2 NOTE @T1065@
 1 RESI
 2 DATE FROM 1861 TO 1886
 2 PLAC Morrisville, Eaton, Madison, NY, USA
-2 NOTE @T1067@
+2 NOTE @T1066@
 1 RESI
 2 DATE FROM 9 FEB 1894 TO 1 JUN 1897
 2 PLAC Siloam, Smithfield, Madison, NY, USA
-2 NOTE @T1068@
+2 NOTE @T1067@
 1 FAMS @F71@
 1 FAMC @F72@
 0 @I175@ INDI
@@ -7888,11 +7888,11 @@
 2 DATE 5 JUL 1849
 2 SOUR @S558@
 3 QUAY 3
-2 NOTE @T1110@
+2 NOTE @T1109@
 2 PLAC Manhattan, NY, USA
 1 BIRT
 2 PLAC England, UK
-2 NOTE @T1109@
+2 NOTE @T1108@
 2 DATE 21 FEB 1822
 2 SOUR @S206@
 3 QUAY 0
@@ -7905,7 +7905,7 @@
 2 SOUR @S206@
 3 QUAY 1
 2 DATE ABT 19 JUN 1886
-2 NOTE @T1103@
+2 NOTE @T1102@
 1 EVEN
 2 DATE 12 DEC 1861
 2 PLAC Corning, Steuben, NY, USA
@@ -7949,7 +7949,7 @@
 4 TEXT p. 75
 1 CENS
 2 DATE 1 JUN 1880
-2 NOTE @T1104@
+2 NOTE @T1103@
 1 RESI
 2 DATE 14 AUG 1847
 2 PLAC North Street, Middlesbrough, Stockton upon Tees, Durham, England, UK
@@ -7960,7 +7960,7 @@
 2 PLAC Castle Building, Stockton upon Tees, Durham, England, UK
 2 SOUR @S626@
 3 QUAY 3
-2 NOTE @T1108@
+2 NOTE @T1107@
 1 FAMS @F75@
 1 FAMC @F436@
 0 @I184@ INDI
@@ -7974,7 +7974,7 @@
 3 QUAY 3
 1 BIRT
 2 PLAC Durham, England, UK
-2 NOTE @T1107@
+2 NOTE @T1106@
 2 DATE 11 AUG 1824
 2 SOUR @S206@
 3 QUAY 0
@@ -9994,7 +9994,7 @@
 2 PLAC Greenwich, Fairfield, CT, USA
 1 BURI
 2 PLAC Greenwich, Fairfield, CT, USA
-2 NOTE @T1121@
+2 NOTE @T1120@
 1 FAMS @F103@
 0 @I239@ INDI
 1 _XY 18801 148
@@ -10946,7 +10946,7 @@
 2 PLAC Madison, NY, USA
 2 SOUR @S602@
 3 QUAY 1
-2 NOTE @T1098@
+2 NOTE @T1097@
 1 FAMC @F72@
 0 @I280@ INDI
 1 _XY 1326 3825
@@ -11503,7 +11503,7 @@
 2 PLAC NC, USA
 2 SOUR @S28@
 3 QUAY 2
-2 NOTE @T1030@
+2 NOTE @T1029@
 1 FAMC @F123@
 0 @I316@ INDI
 1 _XY 5781 5823
@@ -11530,7 +11530,7 @@
 1 BIRT
 2 DATE NOV 1866
 2 PLAC NC, USA
-2 NOTE @T1029@
+2 NOTE @T1028@
 1 FAMC @F15@
 0 @I318@ INDI
 1 _XY 6026 5833
@@ -11541,7 +11541,7 @@
 1 BIRT
 2 DATE AUG 1867
 2 PLAC NC, USA
-2 NOTE @T1032@
+2 NOTE @T1031@
 1 DEAT
 2 DATE 1929
 2 PLAC New Bern, Craven, NC, USA
@@ -12266,7 +12266,7 @@
 1 DEAT
 2 SOUR @S270@
 3 QUAY 1
-2 NOTE @T1039@
+2 NOTE @T1038@
 2 DATE ABT 1748
 1 BIRT
 2 DATE ABT 1743
@@ -12388,7 +12388,7 @@
 2 SOUR @S118@
 3 PAGE p. 2
 3 QUAY 0
-2 NOTE @T1096@
+2 NOTE @T1095@
 2 DATE ABT 1840
 2 PLAC NY, USA
 1 BIRT
@@ -12461,7 +12461,7 @@
 2 SOUR @S617@
 3 QUAY 1
 2 PLAC NY, USA
-2 NOTE @T1095@
+2 NOTE @T1094@
 1 DEAT
 2 DATE 29 JAN 1889
 2 SOUR @S118@
@@ -12509,7 +12509,7 @@
 2 PLAC Madison, Madison, NY, USA
 2 SOUR @S600@
 3 QUAY 1
-2 NOTE @T1038@
+2 NOTE @T1037@
 1 FAMC @F39@
 0 @I386@ INDI
 1 _XY 11031 1788
@@ -15123,7 +15123,7 @@
 2 SOUR @S604@
 3 QUAY 1
 2 DATE 1796
-2 NOTE @T1061@
+2 NOTE @T1060@
 1 CENS
 2 DATE 1 JUN 1850
 2 PLAC Herkimer, Herkimer, NY, USA
@@ -16053,11 +16053,11 @@
 2 PLAC Painted Post, Steuben, NY, USA
 2 SOUR @S202@
 3 QUAY 0
-2 NOTE @T1102@
+2 NOTE @T1101@
 1 DEAT
 2 DATE ABT 1865
 2 PLAC Corning, Steuben, NY, USA
-2 NOTE @T1041@
+2 NOTE @T1040@
 1 FAMC @F75@
 0 @I594@ INDI
 1 _XY 8184 3938
@@ -16115,7 +16115,7 @@
 2 DATE MAY 1817
 2 SOUR @S205@
 3 QUAY 0
-2 NOTE @T1042@
+2 NOTE @T1041@
 2 PLAC Donegal, Ireland
 1 DEAT
 2 DATE 25 NOV 1907
@@ -16133,7 +16133,7 @@
 2 DATE NOV 1825
 2 SOUR @S205@
 3 QUAY 0
-2 NOTE @T1044@
+2 NOTE @T1043@
 2 PLAC Donegal, Ireland
 1 DEAT
 2 DATE 20 JUL 1911
@@ -16157,7 +16157,7 @@
 2 SOUR @S205@
 3 QUAY 0
 2 PLAC Hornby, Steuben, NY, USA
-2 NOTE @T1049@
+2 NOTE @T1048@
 1 DEAT
 2 DATE 27 JUL 1925
 2 PLAC Hornby, Steuben, NY, USA
@@ -16175,7 +16175,7 @@
 2 SOUR @S205@
 3 QUAY 0
 2 PLAC Hornby, Steuben, NY, USA
-2 NOTE @T1053@
+2 NOTE @T1052@
 1 DEAT
 2 DATE 1 JUL 1940
 2 PLAC Hornby, Steuben, NY, USA
@@ -16193,7 +16193,7 @@
 2 SOUR @S205@
 3 QUAY 0
 2 PLAC Hornby, Steuben, NY, USA
-2 NOTE @T1051@
+2 NOTE @T1050@
 1 DEAT
 2 DATE 20 APR 1939
 2 PLAC Hornby, Steuben, NY, USA
@@ -16211,7 +16211,7 @@
 2 SOUR @S205@
 3 QUAY 0
 2 PLAC Hornby, Steuben, NY, USA
-2 NOTE @T1052@
+2 NOTE @T1051@
 1 DEAT
 2 DATE 3 MAY 1935
 2 PLAC Hornby, Steuben, NY, USA
@@ -18117,7 +18117,7 @@
 1 BIRT
 2 DATE ABT 1831
 2 PLAC NY, USA
-2 NOTE @T1031@
+2 NOTE @T1030@
 2 SOUR @S329@
 3 QUAY 1
 1 DEAT
@@ -18125,7 +18125,7 @@
 2 PLAC New Bern, Craven, NC, USA
 2 SOUR @S329@
 3 QUAY 1
-2 NOTE @T1033@
+2 NOTE @T1032@
 1 FAMC @F16@
 0 @I718@ INDI
 1 _XY 7173 4905
@@ -18242,7 +18242,7 @@
 1 SEX M
 1 BIRT
 2 DATE 17 APR 1894
-2 NOTE @T1072@
+2 NOTE @T1071@
 2 SOUR @S7@
 3 QUAY 1
 2 PLAC Siloam, Smithfield, Madison, NY, USA
@@ -18251,12 +18251,12 @@
 2 SOUR @S7@
 3 QUAY 2
 2 PLAC Waverly, Tioga, NY, USA
-2 NOTE @T1062@
+2 NOTE @T1061@
 1 SSN 715-12-8407
 2 SOUR @S7@
 3 QUAY 3
 2 DATE BEF 1951
-2 NOTE @T1063@
+2 NOTE @T1062@
 1 FAMC @F71@
 0 @I730@ INDI
 1 _XY 2961 3927
@@ -18269,13 +18269,13 @@
 2 PLAC Morrisville, Eaton, Madison, NY, USA
 2 SOUR @S643@
 3 QUAY 2
-2 NOTE @T1129@
+2 NOTE @T1128@
 1 DEAT
 2 DATE 19 JAN 1894
 2 PLAC Oneida Castle, Oneida, Madison, NY, USA
 2 SOUR @S643@
 3 QUAY 1
-2 NOTE @T1131@
+2 NOTE @T1130@
 1 FAMC @F71@
 0 @I731@ INDI
 1 _XY 3164 3927
@@ -18292,7 +18292,7 @@
 2 DATE 29 APR 1891
 2 SOUR @S643@
 3 QUAY 1
-2 NOTE @T1132@
+2 NOTE @T1131@
 2 PLAC NY, USA
 1 FAMC @F71@
 0 @I732@ INDI
@@ -19166,7 +19166,7 @@
 1 BIRT
 2 DATE 9 JUL 1905
 2 PLAC Brooklyn, NY, USA
-2 NOTE @T1112@
+2 NOTE @T1111@
 1 DEAT
 2 DATE 21 AUG 1906
 2 PLAC Brooklyn, NY, USA
@@ -19201,13 +19201,13 @@
 2 PLAC Brooklyn, NY, USA
 2 SOUR @S237@
 3 QUAY 1
-2 NOTE @T1059@
+2 NOTE @T1058@
 1 DEAT
 2 DATE 24 AUG 1986
 2 SOUR @S621@
 3 QUAY 2
 2 PLAC Brooklyn, NY, USA
-2 NOTE @T1099@
+2 NOTE @T1098@
 1 SSN 055-09-1749
 2 SOUR @S7@
 3 QUAY 3
@@ -19223,7 +19223,7 @@
 2 PLAC Brooklyn, NY, USA
 2 SOUR @S237@
 3 QUAY 1
-2 NOTE @T1058@
+2 NOTE @T1057@
 1 DEAT
 2 DATE 26 JUL 1992
 2 PLAC West Covina, Los Angeles, Los Angeles, CA, USA
@@ -19315,7 +19315,7 @@
 2 PLAC Jipijapa, Manabi, Ecuador
 2 SOUR @S637@
 3 QUAY 2
-2 NOTE @T1118@
+2 NOTE @T1117@
 1 DEAT
 2 DATE 1897
 2 PLAC Guayaquil, Guayas, Ecuador
@@ -19326,7 +19326,7 @@
 2 PLAC Jipijapa, Manabi, Ecuador
 2 SOUR @S637@
 3 QUAY 3
-2 NOTE @T1117@
+2 NOTE @T1116@
 1 FAMC @F11@
 0 @I799@ INDI
 1 _XY 7456 5985
@@ -19339,7 +19339,7 @@
 2 PLAC Jipijapa, Manabi, Ecuador
 2 SOUR @S237@
 3 QUAY 1
-2 NOTE @T1116@
+2 NOTE @T1115@
 1 DEAT
 2 DATE 30 MAY 1965
 2 PLAC Quito, Pichincha, Ecuador
@@ -19350,7 +19350,7 @@
 2 PLAC San Lorenzo, Jipijapa, Manabi, Ecuador
 2 SOUR @S637@
 3 QUAY 3
-2 NOTE @T1119@
+2 NOTE @T1118@
 1 FAMC @F11@
 0 @I800@ INDI
 1 _XY 7615 5983
@@ -19450,7 +19450,7 @@
 2 PLAC Hornby, Steuben, NY, USA
 2 SOUR @S422@
 3 QUAY 0
-2 NOTE @T1050@
+2 NOTE @T1049@
 1 FAMC @F25@
 0 @I806@ INDI
 1 _XY 7316 3993
@@ -19463,7 +19463,7 @@
 2 PLAC Hornby, Steuben, NY, USA
 2 SOUR @S100@
 3 QUAY 1
-2 NOTE @T1054@
+2 NOTE @T1053@
 1 FAMC @F25@
 0 @I807@ INDI
 1 _XY 7085 4048
@@ -19476,7 +19476,7 @@
 2 PLAC Hornby, Steuben, NY, USA
 2 SOUR @S242@
 3 QUAY 0
-2 NOTE @T1055@
+2 NOTE @T1054@
 1 FAMC @F25@
 0 @I808@ INDI
 1 _XY 7205 4048
@@ -19489,7 +19489,7 @@
 2 PLAC Hornby, Steuben, NY, USA
 2 SOUR @S594@
 3 QUAY 1
-2 NOTE @T1056@
+2 NOTE @T1055@
 1 FAMC @F25@
 0 @I809@ INDI
 1 _XY 7316 4048
@@ -19502,7 +19502,7 @@
 2 PLAC Hornby, Steuben, NY, USA
 2 SOUR @S242@
 3 QUAY 0
-2 NOTE @T1057@
+2 NOTE @T1056@
 1 FAMC @F25@
 0 @I810@ INDI
 1 _XY 8979 992
@@ -22886,7 +22886,7 @@
 3 PAGE p. 1
 3 QUAY 1
 2 PLAC Donegal, Ireland
-2 NOTE @T1043@
+2 NOTE @T1042@
 1 DEAT
 2 DATE 1909
 2 SOUR @S252@
@@ -22906,7 +22906,7 @@
 3 PAGE p. 1
 3 QUAY 1
 2 PLAC Donegal, Ireland
-2 NOTE @T1045@
+2 NOTE @T1044@
 1 DEAT
 2 DATE 1902
 2 SOUR @S252@
@@ -22926,7 +22926,7 @@
 3 PAGE p. 1
 3 QUAY 1
 2 PLAC Donegal, Ireland
-2 NOTE @T1046@
+2 NOTE @T1045@
 1 DEAT
 2 DATE 1908
 2 SOUR @S252@
@@ -22946,7 +22946,7 @@
 3 PAGE p. 1
 3 QUAY 1
 2 PLAC Donegal, Ireland
-2 NOTE @T1047@
+2 NOTE @T1046@
 1 DEAT
 2 DATE 1864
 2 PLAC James River, VA, USA
@@ -22968,7 +22968,7 @@
 3 PAGE p. 1
 3 QUAY 1
 2 PLAC Donegal, Ireland
-2 NOTE @T1048@
+2 NOTE @T1047@
 1 DEAT
 2 DATE 1914
 2 SOUR @S252@
@@ -24029,7 +24029,7 @@
 2 NOTE @T647@
 1 EVEN
 2 TYPE note
-2 NOTE @T1090@
+2 NOTE @T1089@
 1 DEAT
 2 DATE 8 JUN 1933
 2 SOUR @S407@
@@ -24907,7 +24907,7 @@
 1 DEAT
 2 SOUR @S270@
 3 QUAY 1
-2 NOTE @T1040@
+2 NOTE @T1039@
 2 DATE ABT 1736
 1 SEX M
 1 BIRT
@@ -24999,7 +24999,7 @@
 2 SOUR @S603@
 3 QUAY 0
 2 PLAC Smithfield, Madison, NY, USA
-2 NOTE @T1060@
+2 NOTE @T1059@
 1 FAMC @F72@
 0 @I1154@ INDI
 1 _XY 12694 5773
@@ -33618,7 +33618,7 @@
 2 PLAC Pelham, Westchester, NY, USA
 2 SOUR @S635@
 3 QUAY 3
-2 NOTE @T1113@
+2 NOTE @T1112@
 1 WILL
 2 DATE 24 FEB 1875
 2 PLAC Eastchester, Westchester, NY, USA
@@ -43162,7 +43162,7 @@
 2 DATE FROM 1791 TO 1794
 2 SOUR @S598@
 3 QUAY 0
-2 NOTE @T1028@
+2 NOTE @T1027@
 1 FAMC @F161@
 0 @I2316@ INDI
 1 _XY 6325 5540
@@ -43215,7 +43215,7 @@
 2 PLAC Room 313, Childbirth Center, Griffin Hospital, 130 Division Street, Derby, New Haven, CT, USA
 2 SOUR @S1@
 3 QUAY 3
-2 NOTE @T1075@
+2 NOTE @T1074@
 1 SSN 044-08-2173
 2 SOUR @S1@
 3 QUAY 3
@@ -43376,7 +43376,7 @@
 2 PLAC Cromarty, Ross and Cromarty, Highland, Scotland, UK
 2 SOUR @S648@
 3 QUAY 1
-2 NOTE @T1135@
+2 NOTE @T1134@
 1 CENS
 2 DATE 1 JUN 1870
 2 PLAC Painted Post, Erwin, Steuben, NY, USA
@@ -43484,7 +43484,7 @@
 2 PLAC Juárez, Chihuahua, Mexico
 2 SOUR @S614@
 3 QUAY 3
-2 NOTE @T1093@
+2 NOTE @T1092@
 0 @F3@ FAM
 1 HUSB @I7@
 1 WIFE @I4@
@@ -43613,7 +43613,7 @@
 3 QUAY 2
 3 PAGE p. 6
 2 PLAC 272 South 5th Street, Williamsburg, Brooklyn, NY, USA
-2 NOTE @T1125@
+2 NOTE @T1124@
 0 @F14@ FAM
 1 HUSB @I31@
 1 WIFE @I32@
@@ -44431,7 +44431,7 @@
 2 SOUR @S105@
 3 QUAY 3
 2 PLAC Jesse Sands house, Hornby, Steuben, NY, USA
-2 NOTE @T1122@
+2 NOTE @T1121@
 1 CHIL @I294@
 0 @F77@ FAM
 1 HUSB @I187@
@@ -45071,7 +45071,7 @@
 2 PLAC New Bern, Craven, NC, USA
 2 SOUR @S589@
 3 QUAY 1
-2 NOTE @T1091@
+2 NOTE @T1090@
 0 @F125@ FAM
 1 HUSB @I324@
 1 WIFE @I325@
@@ -46057,7 +46057,7 @@
 2 PLAC back yard, 41 Brook Pine Drive, Shelton, Fairfield, CT, USA
 2 SOUR @S1@
 3 QUAY 3
-2 NOTE @T1036@
+2 NOTE @T1035@
 1 CHIL @I2319@
 0 @F216@ FAM
 1 WIFE @I129@
@@ -50143,10 +50143,150 @@
 1 TITL Vital Records of Swansea to 1850
 1 PUBL NEHGS, Boston, 1992
 0 @S118@ SOUR
+1 AUTH [unknown]
 1 TITL Patterson Family
 1 PUBL In posession of Chris Mosher
-1 TEXT [3 typewritten pages; typed by unknown, given to Frederick Mosher, giv
-2 CONC en to Chris Mosher]
+1 TEXT [3 typewritten pages with some handwritten additions; typed and writte
+2 CONC n by unknown, given to Frederick Mosher, given to Chris Mosher.]<br />
+2 CONT <hr />
+2 CONT [page 1]<br />
+2 CONT John Pattison married Olive Green<br />
+2 CONT Son of John Pattison<br />
+2 CONT <br />
+2 CONT <table border="1">
+2 CONT <tbody>
+2 CONT <tr><td>Born</td><td>[blank]</td><td>Born</td><td>1809</td></tr>
+2 CONT <tr><td>Died</td><td>[blank]</td><td>Died</td><td>June 28, 1879</td></
+2 CONC tr>
+2 CONT </tbody>
+2 CONT </table>
+2 CONT <br />
+2 CONT Their Children:
+2 CONT <table border="1">
+2 CONT <thead>
+2 CONT <tr><th>&nbsp;</th><th>Born</th><th>Died</th><th>Married</th></tr>
+2 CONT </thead>
+2 CONT <tbody>
+2 CONT <tr><td>Sarah <i>Jane</i></td><td>1827</td><td>1902</td><td>Algene Lov
+2 CONC ejoy</td></tr>
+2 CONT <tr><td>Julia <i>Ann</i></td><td>&nbsp;</td><td>&nbsp;</td><td>Georg
+2 CONC e Stanton</td></tr>
+2 CONT <tr><td>Janet <i>(Annjenette?)</i></td><td>&nbsp;</td><td>&nbsp;</td><
+2 CONC td>James Stanton</td></tr>
+2 CONT <tr><td>Mary Melissa</td><td>&nbsp;</td><td>&nbsp;</td><td>Frank Duffy
+2 CONC </td></tr>
+2 CONT <tr><td>Elizabeth <i>Syphie</i></td><td>&nbsp;</td><td>&nbsp;</td><td>
+2 CONC Lawrence Dunnigan</td></tr>
+2 CONT <tr><td>Olive</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+2 CONT <tr><td>Olive <i>Maria</i></td><td>Jan. 15, 1842</td><td>Oct. 9, 1906<
+2 CONC /td><td>Henry Slocum</td></tr>
+2 CONT <tr><td>Harriet Eliza</td><td>March 27, 1844</td><td>June 27, 1912</td
+2 CONC ><td>Alva Morehouse</td></tr>
+2 CONT <tr><td>Alice <i>Amelia</i></td><td>&nbsp;</td><td>&nbsp;</td><td>Geor
+2 CONC ge Morgan</td></tr>
+2 CONT <tr><td>Ella Virginia</td><td>1852</td><td>Jan. 29, 1889</td><td>&nbsp
+2 CONC ;</td></tr>
+2 CONT <tr><td>Adelaide <i>Adelle</i></td><td>&nbsp;</td><td>&nbsp;</td><td>J
+2 CONC ohn Van Evera</td></tr>
+2 CONT </tbody>
+2 CONT </table>
+2 CONT <br />
+2 CONT Burried in Morrisville Cemetary:<br />
+2 CONT <br />
+2 CONT <table border="1">
+2 CONT <tbody>
+2 CONT <tr><td>Olive M. Pattison</td><td>and</td><td>Henry S. Slocum</td></tr
+2 CONC >
+2 CONT <tr><td>B. Jan. 15, 1842</td><td></td><td>B. Nov. 24, 1842</td></tr>
+2 CONT <tr><td>D. Oct. 9, 1906</td><td></td><td>D. Sept. 3, 1891</td></tr>
+2 CONT </tbody>
+2 CONT </table>
+2 CONT <br />
+2 CONT <table border="1">
+2 CONT <tbody>
+2 CONT <tr><td>Frank B. Slocum</td></tr>
+2 CONT <tr><td>B. Oct. 6, 1860</td></tr>
+2 CONT <tr><td>D. July 4, 186?</td></tr>
+2 CONT </tbody>
+2 CONT </table>
+2 CONT <br />
+2 CONT <table border="1">
+2 CONT <tbody>
+2 CONT <tr><td>Cora L. Slocum</td></tr>
+2 CONT <tr><td>B. Oct. 2, 1863</td></tr>
+2 CONT <tr><td>D. March 8, 1889</td></tr>
+2 CONT </tbody>
+2 CONT </table>
+2 CONT <br />
+2 CONT <table border="1">
+2 CONT <tbody>
+2 CONT <tr><td>Ella V. Pattison</td></tr>
+2 CONT <tr><td>B. 1852</td></tr>
+2 CONT <tr><td>D. Jan. 29, 1889</td></tr>
+2 CONT </tbody>
+2 CONT </table>
+2 CONT <hr />
+2 CONT [page 2]<br />
+2 CONT John Pattison lived in Morrisville at one time.<br />
+2 CONT Olive Pattison Slocum lived in Morrisville.<br />
+2 CONT Henry Slocum was furniture dealer and undertaker in Morrisville, no ch
+2 CONC ildren, moved to Kansas, took to Kansas dandelion seeds.<br />
+2 CONT <br />
+2 CONT Sarah Jane and Algene Lovejoy burried in Cole Hill Cemetary.<br />
+2 CONT Alta Lovejoy Mosher and William Mosher in Cole Hill Cemetary.<br />
+2 CONT <br />
+2 CONT Alice Morehouse Taylor's cousins:<br />
+2 CONT <br />
+2 CONT Jessie Lovejoy Ross<br />
+2 CONT Addie Lovejoy Head<br />
+2 CONT Alta Lovejoy Mosher<br />
+2 CONT Celia Stanton Egbert (Skaneateles)<br />
+2 CONT Elta Stanton Totman (Ormond)<br />
+2 CONT James Stanton (Ormond, Fla.)<br />
+2 CONT Carrie Duffy (Oneida)<br />
+2 CONT Hattie Duffy Vanoorhees (Rochester)<br />
+2 CONT Oliva Dunnigan Harvey (Eaton)<br />
+2 CONT Elizabeth Dunnigan<br />
+2 CONT Gertrude Morgan Way (Eaton)<br />
+2 CONT George Morgan (DeRuyter)<br />
+2 CONT Edna Van Evera Nolan (Knoxboro)<br />
+2 CONT <br />
+2 CONT Mrs. Lyman Ross worte me this: Fred Ross was Lyman Ross' father, Jessi
+2 CONC e Lovejoy, his mother.<br />
+2 CONT There are two Olives in the Pattison family, the first died when she w
+2 CONC as three years old. Olive Green Pattison was 75 yrs. old when she die
+2 CONC d of apoplexy.<br />
+2 CONT Sarah Jane Pattison Lovejoy was born in Pompey, N.Y. She was about 7
+2 CONC 0 years old when she died of pneumonia.<br />
+2 CONT The house that Sarah Jane and her husband lved in, on Cole Hill, was s
+2 CONC till standing the last time the Rosses were there. One time it was a b
+2 CONC eautiful home and a regular showplace, but it has had several owners a
+2 CONC nd has not been taken care of. Jessie Lovejoy was married from that ho
+2 CONC me. Mrs. Ross also wrote she had talked with Gladys Head Elliot, who l
+2 CONC ives on a farm just outside of Oriskany Falls, who knows some of the f
+2 CONC amily facts. She told her that Julia Ann Stanton died in Oriskany Fall
+2 CONC s in either 1912 or 1918.
+2 CONT <hr />
+2 CONT [page 3]<br />
+2 CONT Sarah Jane married Algene Lovejoy (Algenus?)<br />
+2 CONT Their Children:<br />
+2 CONT Adalaide married DeWitt Head<br />
+2 CONT Alta [married] William George Mosher<br />
+2 CONT Jessie [married] Fred Monroe Ross<br />
+2 CONT <br />
+2 CONT <table border="1">
+2 CONT <tbody>
+2 CONT <tr><td>Harriet Eliza</td><td>married</td><td>Alva Morehouse</td></tr>
+2 CONT <tr><td>B. March 27, 1844</td><td></td><td>B. Oct. 27, 1843</td></tr>
+2 CONT <tr><td>D. June 27, 1912</td><td></td><td>D. Sept. 27, 1924</td></tr>
+2 CONT </tbody>
+2 CONT </table>
+2 CONT Their Children:<br />
+2 CONT Minnie Ella<br />
+2 CONT Henry Daniel<br />
+2 CONT Zoe Virginia<br />
+2 CONT Alice Gertrude B. Dec. 18, 1874 D. Jan. 22, 1971 married Clarence E. T
+2 CONC aylor
 0 @S119@ SOUR
 1 AUTH Patterson and Pattison Family Association
 1 TITL Contribution of Various Patterson and Pattison Family Records
@@ -61510,7 +61650,6 @@
 0 @T17@ NOTE Hornby from DAR sheet
 0 @T18@ NOTE drowned in the mill pond at a young age
 0 @T19@ NOTE cause: stroke
-0 @T20@ NOTE cause: pneumonia
 0 @T21@ NOTE in company of Captain Robert Lotheridge of Pelham, Hampshire, MA, USA
 0 @T22@ NOTE in company of Captain David Cowden of Pelham, Hampshire, MA, USA
 0 @T23@ NOTE from Ireland to USA
@@ -63378,20 +63517,20 @@
 0 @T1025@ NOTE Assume this is Margaret Dusenberry in Clinton, Hunterdon, NJ, in 186
 1 CONC 0 census
 0 @T1026@ NOTE or Feb 11th???
-0 @T1028@ NOTE 1791 is based on marriage date of parents
-0 @T1029@ NOTE 1900 census (Atlanta, GA)
-0 @T1030@ NOTE 1850 census gives age 7 months (as of June 1, 1850), therefore b. abou
+0 @T1027@ NOTE 1791 is based on marriage date of parents
+0 @T1028@ NOTE 1900 census (Atlanta, GA)
+0 @T1029@ NOTE 1850 census gives age 7 months (as of June 1, 1850), therefore b. abou
 1 CONC t Oct. 1849. 1900 census gives "Oct. 1850" which has the wrong year fo
 1 CONC r sure, but Oct. must be the right month.
-0 @T1031@ NOTE Place is just a guess.
-0 @T1032@ NOTE 1900 census (Atlanta, GA) gives August 1864; gravestone gives 1867 (ye
+0 @T1030@ NOTE Place is just a guess.
+0 @T1031@ NOTE 1900 census (Atlanta, GA) gives August 1864; gravestone gives 1867 (ye
 1 CONC ar only)
-0 @T1033@ NOTE Place is assumed.
-0 @T1034@ NOTE Worked for Gary Bryde in: Wilmington, then out of her house (1211 Broo
+0 @T1032@ NOTE Place is assumed.
+0 @T1033@ NOTE Worked for Gary Bryde in: Wilmington, then out of her house (1211 Broo
 1 CONC k Drive), then in Hokessen, DE.
+0 @T1034@ NOTE 12:55 PM EDT
 0 @T1035@ NOTE 12:55 PM EDT
-0 @T1036@ NOTE 12:55 PM EDT
-0 @T1037@ NOTE begin date estimated Spring, end date estimated Fall; I have photograp
+0 @T1036@ NOTE begin date estimated Spring, end date estimated Fall; I have photograp
 1 CONC hs of this house. One set was taken by Barry Mosher at the time he liv
 1 CONC ed there, circa May 1966. The other set was taken by James Rapp and Li
 1 CONC nda (Disosway) Rapp (his former wife) when they visited the location i
@@ -63399,148 +63538,148 @@
 1 CONC e. The company was Mabry and Company Realtors. Their web site is curre
 1 CONC ntly at this URL: http://www.mabryandcompany.com and it lists the addr
 1 CONC ess as 4277 Lee Highway.
-0 @T1038@ NOTE place is assumed
+0 @T1037@ NOTE place is assumed
+0 @T1038@ NOTE young [date is just a guess]
 0 @T1039@ NOTE young [date is just a guess]
-0 @T1040@ NOTE young [date is just a guess]
-0 @T1041@ NOTE This is just a pure guess, based on the fact that he is in the 1860 ce
+0 @T1040@ NOTE This is just a pure guess, based on the fact that he is in the 1860 ce
 1 CONC nsus, but not in the 1870 census.
-0 @T1042@ NOTE May is from 1900 census, which gives year as 1820. Place is assumed.
-0 @T1043@ NOTE Place is assumed.
-0 @T1044@ NOTE Dozens of cousins says 1826. Place is assumed. Nov is from 1900 census
+0 @T1041@ NOTE May is from 1900 census, which gives year as 1820. Place is assumed.
+0 @T1042@ NOTE Place is assumed.
+0 @T1043@ NOTE Dozens of cousins says 1826. Place is assumed. Nov is from 1900 census
 1 CONC , which gives year as 1830.
+0 @T1044@ NOTE Place is assumed.
 0 @T1045@ NOTE Place is assumed.
 0 @T1046@ NOTE Place is assumed.
 0 @T1047@ NOTE Place is assumed.
 0 @T1048@ NOTE Place is assumed.
-0 @T1049@ NOTE Place is assumed.
-0 @T1050@ NOTE Hornby, Steuben is assumed.
+0 @T1049@ NOTE Hornby, Steuben is assumed.
+0 @T1050@ NOTE Place is assumed.
 0 @T1051@ NOTE Place is assumed.
 0 @T1052@ NOTE Place is assumed.
-0 @T1053@ NOTE Place is assumed.
+0 @T1053@ NOTE Hornby, Steuben is assumed.
 0 @T1054@ NOTE Hornby, Steuben is assumed.
-0 @T1055@ NOTE Hornby, Steuben is assumed.
-0 @T1056@ NOTE Place is assumed.
-0 @T1057@ NOTE Hornby, Steuben is assumed.
-0 @T1058@ NOTE Social Security Death Index and California Death Index give birth dat
+0 @T1055@ NOTE Place is assumed.
+0 @T1056@ NOTE Hornby, Steuben is assumed.
+0 @T1057@ NOTE Social Security Death Index and California Death Index give birth dat
 1 CONC e as October 2, 1910.
-0 @T1059@ NOTE Social Security Death Index gives same date.
-0 @T1060@ NOTE place is from Nolan
-0 @T1061@ NOTE place is from Descendants of Johann Conrad Kilts
-0 @T1062@ NOTE Place of last residence is given as Waverly, Tioga, NY, so assume tha
+0 @T1058@ NOTE Social Security Death Index gives same date.
+0 @T1059@ NOTE place is from Nolan
+0 @T1060@ NOTE place is from Descendants of Johann Conrad Kilts
+0 @T1061@ NOTE Place of last residence is given as Waverly, Tioga, NY, so assume tha
 1 CONC t is the place of death, also.
-0 @T1063@ NOTE issued through Railroad Board
-0 @T1064@ NOTE Assumed based on parents' residence. End date is a guess.
-0 @T1065@ NOTE Dates are just guesses. Not sure if actually in Morrisville area, or s
+0 @T1062@ NOTE issued through Railroad Board
+0 @T1063@ NOTE Assumed based on parents' residence. End date is a guess.
+0 @T1064@ NOTE Dates are just guesses. Not sure if actually in Morrisville area, or s
 1 CONC omewhere else in Eaton Township.
-0 @T1066@ NOTE Assume based on husband. Dates are guesses.
-0 @T1067@ NOTE Dates are guesses.
-0 @T1068@ NOTE Assumed based on husband (assume family moved in with William's brothe
+0 @T1065@ NOTE Assume based on husband. Dates are guesses.
+0 @T1066@ NOTE Dates are guesses.
+0 @T1067@ NOTE Assumed based on husband (assume family moved in with William's brothe
 1 CONC r, James Colvin, when William became sick). Assume Nancy and Pearl (a
 1 CONC t least) continued living there after William's death.
-0 @T1069@ NOTE Alta Benedict says she lived at "Payne" in Hamilton, when Lewis worke
+0 @T1068@ NOTE Alta Benedict says she lived at "Payne" in Hamilton, when Lewis worke
 1 CONC d at bakery, when they met. Also, on back of portrait of Bertie Colvin
 1 CONC , the note says, "Brother to Pearl Colvin "Mosher" Payne St Hamilton B
 1 CONC ertie Colvin 14...." Bertie was b. c. 1881, so would be 14 in c. 1895
 1 CONC , so must be after 1895. Maybe when she turned 21, she moved out of he
 1 CONC r uncle James's house and into this house on Payne St. Assume she move
 1 CONC d with husband to Solsville when they got married.
-0 @T1070@ NOTE Assumed based on father.
-0 @T1071@ NOTE Assume she lived with her uncle James Colvin after her father died. Th
+0 @T1069@ NOTE Assumed based on father.
+0 @T1070@ NOTE Assume she lived with her uncle James Colvin after her father died. Th
 1 CONC en assume she moved along with James sometime before 1900 census, mayb
 1 CONC e after mother died in 1897.
-0 @T1072@ NOTE Posthumously. Place is assumed to be uncle James Colvin's house (wher
+0 @T1071@ NOTE Posthumously. Place is assumed to be uncle James Colvin's house (wher
 1 CONC e his father and presumably the whole family moved into when his fathe
 1 CONC r became sick).
-0 @T1073@ NOTE Assume she moved (after her mother's death) with her uncle James to Ma
+0 @T1072@ NOTE Assume she moved (after her mother's death) with her uncle James to Ma
 1 CONC dison, where they appear in 1900 census. Assume she moved out around a
 1 CONC ge 21. Possibly her brother Clarence at this time moved in with thei
 1 CONC r grandfather Aaron Spohn(er), where he is listed as "Clarence Spooner
 1 CONC " in the 1900 census (in Morrisville).
-0 @T1074@ NOTE Assume lived with husband after they were married.
-0 @T1075@ NOTE at 4:36 PM EDT
-0 @T1076@ NOTE date is just a guess, based on age 18
-0 @T1077@ NOTE just a guess
-0 @T1078@ NOTE Place is assumed from father's residence at the time.
+0 @T1073@ NOTE Assume lived with husband after they were married.
+0 @T1074@ NOTE at 4:36 PM EDT
+0 @T1075@ NOTE date is just a guess, based on age 18
+0 @T1076@ NOTE just a guess
+0 @T1077@ NOTE Place is assumed from father's residence at the time.
+0 @T1078@ NOTE Assumed from father's residence.
 0 @T1079@ NOTE Assumed from father's residence.
 0 @T1080@ NOTE Assumed from father's residence.
-0 @T1081@ NOTE Assumed from father's residence.
-0 @T1082@ NOTE Assume he lived with his son.
-0 @T1083@ NOTE listed in index under "Harry H Diessway" on ancestry.com
+0 @T1081@ NOTE Assume he lived with his son.
+0 @T1082@ NOTE listed in index under "Harry H Diessway" on ancestry.com
 1 CONT
-0 @T1084@ NOTE dates are purely a guess; son Ken says worked here his entire career
-0 @T1085@ NOTE 71 is from father's death certificate
-0 @T1086@ NOTE heart disease
-0 @T1087@ NOTE place is assumed from father's residence
-0 @T1088@ NOTE assume he was living with his wife
-0 @T1089@ NOTE possibly he moved in with his son after his wife died
-0 @T1090@ NOTE 1870 census gives name "Anna", Woodlawn interment records gives "Maria
+0 @T1083@ NOTE dates are purely a guess; son Ken says worked here his entire career
+0 @T1084@ NOTE 71 is from father's death certificate
+0 @T1085@ NOTE heart disease
+0 @T1086@ NOTE place is assumed from father's residence
+0 @T1087@ NOTE assume he was living with his wife
+0 @T1088@ NOTE possibly he moved in with his son after his wife died
+0 @T1089@ NOTE 1870 census gives name "Anna", Woodlawn interment records gives "Maria
 1 CONC n", so I'm assuming "Mary Ann"
-0 @T1091@ NOTE bond #27618 (see also Raleigh Register newspaper Jan. 14, 1808)
-0 @T1092@ NOTE need to check New Castle County deeds: Deed Record H, vol. 79, p. 525
-0 @T1093@ NOTE 4:30 PM, local time
-0 @T1094@ NOTE Cyress Hills Abbey:
+0 @T1090@ NOTE bond #27618 (see also Raleigh Register newspaper Jan. 14, 1808)
+0 @T1091@ NOTE need to check New Castle County deeds: Deed Record H, vol. 79, p. 525
+0 @T1092@ NOTE 4:30 PM, local time
+0 @T1093@ NOTE Cyress Hills Abbey:
 1 CONT 40.696875 deg Lat.
 1 CONT -73.877778 deg Long.
 1 CONT
-0 @T1095@ NOTE Patterson Family history pages (p. 1) gives 1852, but this is incorrec
+0 @T1094@ NOTE Patterson Family history pages (p. 1) gives 1852, but this is incorrec
 1 CONC t for sure, because she is one year old in the 1850 census
-0 @T1096@ NOTE aged 3 years. Must have been before 2nd Olive was born (1842) and prob
+0 @T1095@ NOTE aged 3 years. Must have been before 2nd Olive was born (1842) and prob
 1 CONC ably after Elizabeth was born (1839).
-0 @T1097@ NOTE There is a Sarah J. [maiden name unknown] as (probably) wife of Arowit
+0 @T1096@ NOTE There is a Sarah J. [maiden name unknown] as (probably) wife of Arowit
 1 CONC ? Peckham in 1850 census (NY, Madison Co., Hamiton, p. 51 (of 86) (dwe
 1 CONC lling #1676); could this be her? Searching 1860 census I cannon fin
 1 CONC d a record of either of these two, so possibly he died and she remarri
 1 CONC ed before 1860 (to Algenas). More research indicates this is not her
 1 CONC , because Sarah and Arowit Peckham are also in the 1870 census in El
 1 CONC k Creek, PA.
-0 @T1098@ NOTE But he is age 19 in 1875 NY census (so born c. 1856). Place is from 18
+0 @T1097@ NOTE But he is age 19 in 1875 NY census (so born c. 1856). Place is from 18
 1 CONC 75 NY census. 1900 census gives "Dec 1853" age "46".
-0 @T1099@ NOTE place given is actually place of last residence, assume place of deat
+0 @T1098@ NOTE place given is actually place of last residence, assume place of deat
 1 CONC h from that
-0 @T1100@ NOTE Her class was the first one in that school. The "Junior High School" c
+0 @T1099@ NOTE Her class was the first one in that school. The "Junior High School" c
 1 CONC oncept had just started. She says it was on Ave. K.
-0 @T1101@ NOTE Mom says at the end of Glenwood Road.
-0 @T1102@ NOTE Steuben Co. is from 1860 census; Painted Post is assumed from place o
+0 @T1100@ NOTE Mom says at the end of Glenwood Road.
+0 @T1101@ NOTE Steuben Co. is from 1860 census; Painted Post is assumed from place o
 1 CONC f residence in 1850 census (when he was two months old).
-0 @T1103@ NOTE date is just a guess based on death date
-0 @T1104@ NOTE There is a Thomas "Tailerson" in Horsehaeads in 1880 census married t
+0 @T1102@ NOTE date is just a guess based on death date
+0 @T1103@ NOTE There is a Thomas "Tailerson" in Horsehaeads in 1880 census married t
 1 CONC o a Catharine; could this be him re-married?
 1 CONT
-0 @T1105@ NOTE assume Harry Hamilton lived with his father
-0 @T1106@ NOTE at his daugher Catherine McCord's house (but not so in 1840 nor 1850 c
+0 @T1104@ NOTE assume Harry Hamilton lived with his father
+0 @T1105@ NOTE at his daugher Catherine McCord's house (but not so in 1840 nor 1850 c
 1 CONC ensus).
-0 @T1107@ NOTE place is from 1841 England census
-0 @T1108@ NOTE somewhere in the neighborhood of High Street and Park Row in Stockto
+0 @T1106@ NOTE place is from 1841 England census
+0 @T1107@ NOTE somewhere in the neighborhood of High Street and Park Row in Stockto
 1 CONC n upon Tees
-0 @T1109@ NOTE 1850 US Census gives England; 1841 England census gives age 15 (b. c
+0 @T1108@ NOTE 1850 US Census gives England; 1841 England census gives age 15 (b. c
 1 CONC . 1826)
 1 CONT
-0 @T1110@ NOTE On ship "Hermes." In 1849, there was an HMS Hermes (the sixth ship s
+0 @T1109@ NOTE On ship "Hermes." In 1849, there was an HMS Hermes (the sixth ship s
 1 CONC o named), an 830 ton paddle wheel sloop, launched in 1835, and was sol
 1 CONC d for breaking up in 1864. Is this the ship the Taylorsons immigrate
 1 CONC d on?
-0 @T1111@ NOTE based on birth date of child Margaret
-0 @T1112@ NOTE from NYC birth index (cert #17495)
+0 @T1110@ NOTE based on birth date of child Margaret
+0 @T1111@ NOTE from NYC birth index (cert #17495)
 1 CONT
-0 @T1113@ NOTE time: 15:30 EST, cause: Atheroma of Aorta
+0 @T1112@ NOTE time: 15:30 EST, cause: Atheroma of Aorta
 1 CONT
-0 @T1114@ NOTE about 10:00 AM, of Dementia Paralytica
-0 @T1115@ NOTE Labor Day 1997 first lived there. travelled between here and other hou
+0 @T1113@ NOTE about 10:00 AM, of Dementia Paralytica
+0 @T1114@ NOTE Labor Day 1997 first lived there. travelled between here and other hou
 1 CONC ses in PA.
 1 CONT 38d 47m 05s N lat, 75d 06m 14s W long
-0 @T1116@ NOTE Consistent with being 11 months old at baptism on April 10, 1883.
-0 @T1117@ NOTE godparents: Adolfo H. Campozano, and Rosario Romero
+0 @T1115@ NOTE Consistent with being 11 months old at baptism on April 10, 1883.
+0 @T1116@ NOTE godparents: Adolfo H. Campozano, and Rosario Romero
 1 CONT
-0 @T1118@ NOTE Pazmino Lopez Family History (Joseph Dudley) gives 1881
-0 @T1119@ NOTE godparents: Eloy Alfaro (future president of Ecuador) and Sebastiana G
+0 @T1117@ NOTE Pazmino Lopez Family History (Joseph Dudley) gives 1881
+0 @T1118@ NOTE godparents: Eloy Alfaro (future president of Ecuador) and Sebastiana G
 1 CONC utierrez
-0 @T1120@ NOTE Virutas [meaning Shavings in English]
+0 @T1119@ NOTE Virutas [meaning Shavings in English]
 1 CONT Title: Virutas, o Almanaque de pensamientos sinceros
 1 CONT Publication: New York, [s. n.], 1908.
 1 CONT
-0 @T1121@ NOTE "South Beach Ave Cemetery in Old Greenwich"
-0 @T1122@ NOTE by Charles Goodrich
-0 @T1123@ NOTE Spring Lake Plot, Section 9, Plot 317.
+0 @T1120@ NOTE "South Beach Ave Cemetery in Old Greenwich"
+0 @T1121@ NOTE by Charles Goodrich
+0 @T1122@ NOTE Spring Lake Plot, Section 9, Plot 317.
 1 CONT Plot is at extreme southeast corner of section 9.
 1 CONT Enter cemetery at East 233 Street and Webster Avenue entrance, procee
 1 CONC d straight on Central Avenue, take first right (hard right) onto Chape
@@ -63549,20 +63688,21 @@
 1 CONC t with only "FLANDREAU" on it, no other stones or names at all.
 1 CONT [Info from cemetery itself.]
 1 CONT
-0 @T1124@ NOTE Disosway Family Research says "Druggist 962 Lafayette Ave., Brooklyn"
-0 @T1125@ NOTE at night
-0 @T1126@ NOTE I'm assuming 1012 (just Lafayette Avenue is given in the newspaper).
-0 @T1127@ NOTE Newspaper gives corner Lafayette Avenue and Stuvesant Avenue; I assum
+0 @T1123@ NOTE Disosway Family Research says "Druggist 962 Lafayette Ave., Brooklyn"
+0 @T1124@ NOTE at night
+0 @T1125@ NOTE I'm assuming 1012 (just Lafayette Avenue is given in the newspaper).
+0 @T1126@ NOTE Newspaper gives corner Lafayette Avenue and Stuvesant Avenue; I assum
 1 CONC e this is 962 Lafayette Avenue.
-0 @T1128@ NOTE Start date is approximate.
-0 @T1129@ NOTE place is just a guess
-0 @T1130@ NOTE Pearl's note says burried on Sunday.
-0 @T1131@ NOTE at 7:30 AM EST, of pneumonia; place is assumed from residence of fathe
+0 @T1127@ NOTE Start date is approximate.
+0 @T1128@ NOTE place is just a guess
+0 @T1129@ NOTE Pearl's note says burried on Sunday.
+0 @T1130@ NOTE at 7:30 AM EST, of pneumonia; place is assumed from residence of fathe
 1 CONC r (and he was burried in Oneida Castle Cemetery)
-0 @T1132@ NOTE of inflammatory rheumatism, at 4:00 PM EST
-0 @T1133@ NOTE Not Asbury Park; this is Asbury Village, in Franklin Township, Warre
+0 @T1131@ NOTE of inflammatory rheumatism, at 4:00 PM EST
+0 @T1132@ NOTE Not Asbury Park; this is Asbury Village, in Franklin Township, Warre
 1 CONC n County.
-0 @T1134@ NOTE eldest daughter of WIlliam Pettit (according to marriage record in Ne
+0 @T1133@ NOTE eldest daughter of WIlliam Pettit (according to marriage record in Ne
 1 CONC w York Herald)
-0 @T1135@ NOTE date is from 1860 census
+0 @T1134@ NOTE date is from 1860 census
+0 @T20@ NOTE cause: pneumonia
 0 TRLR
