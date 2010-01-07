@@ -13,7 +13,7 @@
 0 @M0@ SUBM
 0 @I0@ INDI
 1 _XY 756 666
-1 NAME Barbara /Murray/
+1 NAME Barbara Ann /Murray/
 2 SOUR @S0@
 3 QUAY 3
 1 SEX F
@@ -86,13 +86,13 @@
 2 PLAC Rehoboth Beach, Sussex, DE, USA
 2 SOUR @S22@
 3 QUAY 3
-1 FAMS @F1@
-1 FAMC @F3@
 1 RESI
 2 DATE ABT 1917
 2 PLAC Lewes, Sussex, DE, USA
 2 SOUR @S27@
 3 QUAY 3
+1 FAMS @F1@
+1 FAMC @F3@
 0 @I3@ INDI
 1 _XY 660 445
 1 NAME Fannie M. /Wilson/
@@ -122,7 +122,7 @@
 1 FAMS @F1@
 1 FAMC @F2@
 0 @I4@ INDI
-1 _XY 856 171
+1 _XY 857 171
 1 NAME Major E. /Wilson/
 2 SOUR @S3@
 3 QUAY 0
@@ -185,7 +185,7 @@
 2 PLAC Sussex, DE, USA
 2 SOUR @S14@
 3 QUAY 3
-2 NOTE @T15@
+2 NOTE @T14@
 1 BIRT
 2 DATE 1817
 2 PLAC MD, USA
@@ -207,13 +207,12 @@
 2 PLAC Williston, Caroline, MD, USA
 2 SOUR @S15@
 3 QUAY 3
-2 NOTE @T17@
+2 NOTE @T16@
 1 CENS
 2 DATE 1 JUN 1870
 2 PLAC Hollyville, Lewes and Rehoboth Hundred, Sussex, DE, USA
 2 SOUR @S16@
 3 QUAY 3
-1 FAMS @F4@
 1 CENS
 2 DATE 1 JUN 1880
 2 PLAC Lewes and Rehoboth Hundred, Sussex, DE, USA
@@ -226,7 +225,8 @@
 3 QUAY 3
 1 EVEN
 2 TYPE note
-2 NOTE @T16@
+2 NOTE @T15@
+1 FAMS @F4@
 0 @I6@ INDI
 1 _XY 479 590
 1 NAME Edna E. /Murray/
@@ -549,7 +549,6 @@
 2 PLAC Hollyville, Lewes and Rehoboth Hundred, Sussex, DE, USA
 2 SOUR @S16@
 3 QUAY 3
-1 FAMS @F4@
 1 CENS
 2 DATE 1 JUN 1880
 2 PLAC Lewes and Rehoboth Hundred, Sussex, DE, USA
@@ -560,6 +559,7 @@
 2 PLAC Vienna, Dorchester, MD, USA
 2 SOUR @S25@
 3 QUAY 2
+1 FAMS @F4@
 0 @I24@ INDI
 1 _XY 1082 130
 1 NAME Mary E. /Lankford/
@@ -878,7 +878,7 @@
 3 QUAY 1
 1 FAMC @F5@
 0 @I45@ INDI
-1 _XY 861 587
+1 _XY 484 631
 1 NAME Harel /Murray/
 2 SOUR @S22@
 3 QUAY 1
@@ -889,9 +889,383 @@
 2 SOUR @S22@
 3 QUAY 1
 1 FAMC @F1@
+0 @I46@ INDI
+1 _XY 1454 591
+1 NAME Jeannette May /Lougheed/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 6 JUN 1908
+2 PLAC Wilmington, New Castle, DE, USA
+2 SOUR @S28@
+3 QUAY 1
+1 DEAT
+2 DATE 1970
+2 SOUR @S28@
+3 QUAY 1
+1 FAMS @F0@
+1 FAMC @F6@
+0 @I47@ INDI
+1 _XY 1367 488
+1 NAME Jeannette May /Vandever/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE MAY 1885
+2 PLAC DE, USA
+2 SOUR @S29@
+3 QUAY 1
+1 DEAT
+2 DATE ABT 1916
+2 SOUR @S28@
+3 QUAY 1
+1 FAMS @F6@
+1 CENS
+2 DATE 1 JUN 1900
+2 PLAC 1009 East 13th Street, Wilmington, New Castle, DE, USA
+2 SOUR @S29@
+3 QUAY 3
+1 FAMC @F10@
+0 @I48@ INDI
+1 _XY 1535 488
+1 NAME Charles Robert /Lougheed/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 20 OCT 1879
+2 PLAC DE, USA
+2 SOUR @S28@
+3 QUAY 1
+1 DEAT
+2 DATE SEP 1965
+2 SOUR @S28@
+3 QUAY 1
+1 FAMS @F6@
+1 FAMC @F7@
+0 @I49@ INDI
+1 _XY 1584 591
+1 NAME George G. /Lougheed/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1904
+2 PLAC DE, USA
+2 SOUR @S28@
+3 QUAY 1
+1 FAMC @F6@
+0 @I50@ INDI
+1 _XY 1696 590
+1 NAME Charles /Lougheed/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1912
+2 PLAC DE, USA
+2 SOUR @S28@
+3 QUAY 1
+1 FAMC @F6@
+0 @I51@ INDI
+1 _XY 1787 590
+1 NAME William V. /Lougheed/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 13 JUN 1914
+2 PLAC DE, USA
+2 SOUR @S28@
+3 QUAY 1
+1 DEAT
+2 DATE 13 JUN 1993
+2 SOUR @S28@
+3 QUAY 1
+1 FAMC @F6@
+0 @I52@ INDI
+1 _XY 1614 392
+1 NAME Joseph L. /Lougheed/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE OCT 1857
+2 PLAC PA, USA
+2 SOUR @S28@
+3 QUAY 1
+1 FAMS @F7@
+1 FAMC @F8@
+0 @I53@ INDI
+1 _XY 1839 392
+1 NAME Sophia /Corey/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE FEB 1858
+2 PLAC VT, USA
+2 SOUR @S28@
+3 QUAY 1
+1 FAMS @F7@
+0 @I54@ INDI
+1 _XY 1673 491
+1 NAME John Lewis /Lougheed/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 15 NOV 1880
+2 PLAC DE, USA
+2 SOUR @S28@
+3 QUAY 1
+1 DEAT
+2 DATE SEP 1965
+2 SOUR @S28@
+3 QUAY 1
+1 FAMC @F7@
+0 @I55@ INDI
+1 _XY 1800 491
+1 NAME Edwin Clenden /Lougheed/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 26 OCT 1882
+2 PLAC DE, USA
+2 SOUR @S28@
+3 QUAY 1
+1 FAMC @F7@
+0 @I56@ INDI
+1 _XY 1931 490
+1 NAME Mary Elizabeth /Lougheed/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 1 NOV 1884
+2 PLAC Wilmington, New Castle, DE, USA
+2 SOUR @S28@
+3 QUAY 1
+1 FAMC @F7@
+0 @I57@ INDI
+1 _XY 1535 537
+1 NAME Caroline Anna /Lougheed/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE 10 DEC 1886
+2 PLAC Newark, New Castle, DE, USA
+2 SOUR @S28@
+3 QUAY 1
+1 FAMC @F7@
+0 @I58@ INDI
+1 _XY 1673 539
+1 NAME Ida /Lougheed/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE DEC 1888
+2 PLAC NJ, USA
+2 SOUR @S28@
+3 QUAY 1
+1 FAMC @F7@
+0 @I59@ INDI
+1 _XY 1765 539
+1 NAME Joseph Lewis /Lougheed/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE 25 APR 1891
+2 PLAC Newark, New Castle, DE, USA
+2 SOUR @S28@
+3 QUAY 1
+1 FAMC @F7@
+0 @I60@ INDI
+1 _XY 1931 543
+1 NAME Sophia /Lougheed/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE FEB 1893
+2 PLAC DE, USA
+2 SOUR @S28@
+3 QUAY 1
+1 FAMC @F7@
+0 @I61@ INDI
+1 _XY 1556 293
+1 NAME John /Laughead/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1834
+2 PLAC Ireland, UK
+2 SOUR @S28@
+3 QUAY 1
+1 FAMS @F8@
+1 FAMC @F9@
+0 @I62@ INDI
+1 _XY 1670 293
+1 NAME Maggie /Closs/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1840
+2 PLAC MD, USA
+2 SOUR @S28@
+3 QUAY 1
+1 FAMS @F8@
+0 @I63@ INDI
+1 _XY 1493 389
+1 NAME John W. /Lougheed/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE DEC 1859
+2 PLAC MD, USA
+2 SOUR @S28@
+3 QUAY 1
+1 FAMC @F8@
+0 @I64@ INDI
+1 _XY 1487 184
+1 NAME Robert /Laughead/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE ABT 1809
+2 PLAC Ireland, UK
+2 SOUR @S28@
+3 QUAY 1
+1 FAMS @F9@
+0 @I65@ INDI
+1 _XY 1361 294
+1 NAME Robert /Laughead/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE AUG 1831
+2 PLAC Ireland, USA
+2 SOUR @S28@
+3 QUAY 1
+1 FAMC @F9@
+0 @I66@ INDI
+1 _XY 1461 294
+1 NAME William /Laughead/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE JUL 1833
+2 SOUR @S28@
+3 QUAY 1
+1 FAMC @F9@
+0 @I67@ INDI
+1 _XY 1599 184
+1 NAME Fannie /[unknown]/
+2 SOUR @S28@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE ABT 1821
+2 PLAC Ireland, USA
+2 SOUR @S28@
+3 QUAY 1
+1 FAMS @F9@
+0 @I68@ INDI
+1 _XY 1285 431
+1 NAME Rachel /Cloud/
+2 SOUR @S29@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE OCT 1863
+2 PLAC DE, USA
+2 SOUR @S29@
+3 QUAY 1
+1 FAMS @F10@
+1 CENS
+2 DATE 1 JUN 1900
+2 PLAC 1009 East 13th Street, Wilmington, New Castle, DE, USA
+2 SOUR @S29@
+3 QUAY 3
+1 FAMC @F11@
+0 @I69@ INDI
+1 _XY 1149 437
+1 NAME [unknown] /Vandever/
+1 SEX M
+1 FAMS @F10@
+0 @I70@ INDI
+1 _XY 1079 492
+1 NAME William /Vandever/
+2 SOUR @S29@
+3 QUAY 1
+1 SEX M
+1 BIRT
+2 DATE DEC 1890
+2 PLAC DE, USA
+2 SOUR @S29@
+3 QUAY 1
+1 FAMC @F10@
+0 @I71@ INDI
+1 _XY 1176 492
+1 NAME Harriet /Vandever/
+2 SOUR @S29@
+3 QUAY 1
+1 BIRT
+2 DATE SEP 1892
+2 PLAC DE, USA
+2 SOUR @S29@
+3 QUAY 1
+1 FAMC @F10@
+0 @I72@ INDI
+1 _XY 1264 493
+1 NAME Charlotte /Vandever/
+2 SOUR @S29@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE DEC 1895
+2 PLAC DE, USA
+2 SOUR @S29@
+3 QUAY 1
+1 FAMC @F10@
+0 @I73@ INDI
+1 _XY 1221 361
+1 NAME Elizabeth /[unknown]/
+2 SOUR @S29@
+3 QUAY 1
+1 SEX F
+1 BIRT
+2 DATE SEP 1831
+2 PLAC DE, USA
+2 SOUR @S29@
+3 QUAY 1
+1 CENS
+2 DATE 1 JUN 1900
+2 PLAC 1009 East 13th Street, Wilmington, New Castle, DE, USA
+2 SOUR @S29@
+3 QUAY 3
+1 FAMS @F11@
+0 @I74@ INDI
+1 _XY 1104 367
+1 NAME [unknown] /Cloud/
+1 SEX M
+1 FAMS @F11@
 0 @F0@ FAM
 1 HUSB @I1@
 1 CHIL @I0@
+1 WIFE @I46@
 0 @F1@ FAM
 1 HUSB @I2@
 1 CHIL @I1@
@@ -973,6 +1347,54 @@
 2 PLAC Broadkill Hundred, Sussex, DE, USA
 2 SOUR @S3@
 3 QUAY 3
+0 @F6@ FAM
+1 WIFE @I47@
+1 CHIL @I46@
+1 HUSB @I48@
+1 MARR
+2 DATE 26 JUN 1900
+2 SOUR @S28@
+3 QUAY 1
+1 CHIL @I49@
+1 CHIL @I50@
+1 CHIL @I51@
+0 @F7@ FAM
+1 HUSB @I52@
+1 CHIL @I48@
+1 WIFE @I53@
+1 CHIL @I54@
+1 CHIL @I55@
+1 CHIL @I56@
+1 CHIL @I57@
+1 CHIL @I58@
+1 CHIL @I59@
+1 CHIL @I60@
+0 @F8@ FAM
+1 HUSB @I61@
+1 CHIL @I52@
+1 WIFE @I62@
+1 CHIL @I63@
+0 @F9@ FAM
+1 HUSB @I64@
+1 CHIL @I61@
+1 CHIL @I65@
+1 CHIL @I66@
+1 WIFE @I67@
+0 @F10@ FAM
+1 WIFE @I68@
+1 CHIL @I47@
+1 HUSB @I69@
+1 CHIL @I70@
+1 CHIL @I71@
+1 CHIL @I72@
+1 MARR
+2 DATE ABT 1883
+2 SOUR @S29@
+3 QUAY 1
+0 @F11@ FAM
+1 WIFE @I73@
+1 CHIL @I68@
+1 HUSB @I74@
 0 @S0@ SOUR
 1 AUTH Renz, Barbara Murray
 1 TITL Interview
@@ -1422,6 +1844,39 @@
 1 AUTH Ancestry.com
 1 TITL World War I Draft Registration Cards, 1917-1918 [database on-line]
 1 PUBL Provo, UT, USA: The Generations Network, Inc., 2005
+0 @S28@ SOUR
+1 AUTH Chonoles, Michael
+1 TITL Descendants of Robert Laughead
+1 PUBL mjchonoles@yahoo.com, accessed 2009-12-26
+0 @S29@ SOUR
+1 AUTH US Census Bureau
+1 TITL US Census, 1900, DE, New Castle, Wilmington, Ward 9, ED 37
+1 PUBL p. 14 of 61
+1 TEXT <table border="1">
+2 CONT <tr><td>Vanderver</td><td>Rachel</td><td>Head</td><td>[illegible]</td>
+2 CONC <td>F</td><td>Oct</td><td>1863</td><td>36</td><td>W</td><td>17</td><td
+2 CONC >4</td><td>4</td><td>Delaware</td><td>Delaware</td><td>Delaware</td></
+2 CONC tr>
+2 CONT <tr><td>-</td><td>Nettie</td><td>Daughter</td><td>W</td><td>F</td><td>
+2 CONC May</td><td>1885</td><td>15</td><td>S</td><td>&nbsp;</td><td>&nbsp;</t
+2 CONC d><td>&nbsp;</td><td>Delaware</td><td>Delaware</td><td>Delaware</td></
+2 CONC tr>
+2 CONT <tr><td>-</td><td>Willie</td><td>Son</td><td>W</td><td>M</td><td>Dec</
+2 CONC td><td>1890</td><td>9</td><td>S</td><td>&nbsp;</td><td>&nbsp;</td><td>
+2 CONC &nbsp;</td><td>Delaware</td><td>Delaware</td><td>Delaware</td></tr>
+2 CONT <tr><td>-</td><td>Hattie</td><td>Daughter</td><td>W</td><td>F</td><td>
+2 CONC Sep</td><td>1892</td><td>7</td><td>S</td><td>&nbsp;</td><td>&nbsp;</td
+2 CONC ><td>&nbsp;</td><td>Delaware</td><td>Delaware</td><td>Delaware</td></t
+2 CONC r>
+2 CONT <tr><td>-</td><td>Lottie</td><td>Daughter</td><td>W</td><td>F</td><td>
+2 CONC Dec</td><td>1895</td><td>4</td><td>S</td><td>&nbsp;</td><td>&nbsp;</td
+2 CONC ><td>&nbsp;</td><td>Delaware</td><td>Delaware</td><td>Delaware</td></t
+2 CONC r>
+2 CONT <tr><td>Cloud</td><td>Elizabeth</td><td>Mother</td><td>W</td><td>F</td
+2 CONC ><td>Sep</td><td>1831</td><td>68</td><td>W</td><td>&nbsp;</td><td>1</t
+2 CONC d><td>1</td><td>Delaware</td><td>England</td><td>Ireland</td></tr>
+2 CONT </table>
+2 CONT
 0 @T0@ NOTE date is from 1900 census
 0 @T1@ NOTE by Rev. Townsend
 0 @T2@ NOTE place is assumed
@@ -1438,12 +1893,12 @@
 0 @T11@ NOTE date is from 1900 census
 0 @T12@ NOTE 7 in 1860 census; 14 in 1870 census
 0 @T13@ NOTE need to check original record (FHL film 13929)
-0 @T15@ NOTE There is another John Lankford and wife Mary A., who are in Dorchester
+0 @T14@ NOTE There is another John Lankford and wife Mary A., who are in Dorchester
 1 CONC , MD, in the 1850 census. They is John P. Langford and Mary Ann Briley
 1 CONC , who were married in Dorchester 16 Jan 1849. They are not to be confu
 1 CONC sed with this John and wife Mary Ann Bradley.
 1 CONT
-0 @T16@ NOTE last name also spelled Lankford
-0 @T17@ NOTE Why did he give the name Abraham Lankford instead of John Lankford? I
+0 @T15@ NOTE last name also spelled Lankford
+0 @T16@ NOTE Why did he give the name Abraham Lankford instead of John Lankford? I
 1 CONC s it related to Abraham Lincoln running for president at the time?
 0 TRLR
