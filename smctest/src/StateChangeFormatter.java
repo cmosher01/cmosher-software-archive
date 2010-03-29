@@ -32,11 +32,7 @@ public class StateChangeFormatter implements StateChangeListener
 
 	private void sanityCheckLevel()
 	{
-		if (this.level < 0)
-		{
-			this.level = 0;
-		}
-		else if (this.level > 100)
+		if (this.level < 0 || 100 <= this.level)
 		{
 			this.level = 0;
 		}
