@@ -30,7 +30,7 @@ public class SimpleHashAssocArray<K,V>
 
 
 
-    private List<List<KeyValuePair>> rBucket;
+    private final List<List<KeyValuePair>> rBucket;
 
 
 
@@ -226,7 +226,13 @@ public class SimpleHashAssocArray<K,V>
     public String toString()
     {
         final StringBuilder sb = new StringBuilder();
-        final Collection<KeyValuePair> rKV = new ArrayList<KeyValuePair>();
+        appendString(sb);
+        return sb.toString();
+    }
+
+    public void appendString(final StringBuilder sb)
+    {
+		final Collection<KeyValuePair> rKV = new ArrayList<KeyValuePair>();
         getEntries(rKV);
         sb.append("{");
         boolean first = true;
@@ -245,6 +251,5 @@ public class SimpleHashAssocArray<K,V>
             sb.append(pair.value);
         }
         sb.append("}");
-        return sb.toString();
-    }
+	}
 }

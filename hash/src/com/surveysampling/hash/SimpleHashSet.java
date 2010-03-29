@@ -6,6 +6,10 @@ package com.surveysampling.hash;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.surveysampling.hash.SimpleHashAssocArray.KeyNotFoundException;
+import com.surveysampling.hash.SimpleHashAssocArray.NullKeyException;
+import com.surveysampling.hash.SimpleHashAssocArray.NullValueException;
+
 
 
 /**
@@ -46,16 +50,19 @@ public class SimpleHashSet<E>
     /**
      * @param element
      * @return element from this set equal to element given
+     * @throws KeyNotFoundException 
      */
-    public E get(final E element)
+    public E get(final E element) throws KeyNotFoundException
     {
         return this.map.get(element);
     }
 
     /**
      * @param element
+     * @throws NullValueException 
+     * @throws NullKeyException 
      */
-    public void put(final E element)
+    public void put(final E element) throws NullKeyException, NullValueException
     {
         if (contains(element))
         {
