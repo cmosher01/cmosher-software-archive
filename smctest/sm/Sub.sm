@@ -1,0 +1,81 @@
+%class Sub
+%fsmclass SubFSMImpl
+
+%start SuperFSM::Idle
+
+
+
+%map SuperFSM
+%%
+Default
+{
+	Default  nil              { undefinedChange(endState); }
+}
+
+Idle
+{
+	Hit      Sub
+	         /push(SubFSM::A) { nothing(); }
+}
+
+Sub
+{
+	Cancel   Idle             { nothing(); }
+	Done     Next             { nothing(); }
+}
+
+Next
+{
+	Release  Idle             { nothing(); }
+}
+%%
+
+
+
+
+
+%map SubFSM
+%%
+Default
+{
+	Cancel   pop(Cancel)      { nothing(); }
+	Default  nil              { undefinedChange(endState); }
+}
+
+A
+{
+    toB      B                { nothing(); }
+    toX      SubSub
+             /push(SubSubFSM::X) { nothing(); }
+}
+
+B
+{
+	toC      C                { nothing(); }
+}
+
+C
+{
+	Done     pop(Done)        { nothing(); }
+}
+
+SubSub
+{
+	Done pop(Done) { nothing(); }
+}
+%%
+
+
+
+
+%map SubSubFSM
+%%
+Default
+{
+	Default  nil              { undefinedChange(endState); }
+}
+X
+{
+	Done pop(Done) { nothing(); }
+}
+%%
