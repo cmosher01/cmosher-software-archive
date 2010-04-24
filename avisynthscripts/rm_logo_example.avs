@@ -1,0 +1,8 @@
+#ConvertToRGB24()
+#LoadPlugin("C:\avisynth3rdpartyplugins\ttempsmooth\ttempsmooth-0.9.4\TTempSmooth\TTempSmooth.dll")
+#LoadPlugin("C:\avisynth3rdpartyplugins\masktools\masktools-2.0a36\mt_masktools-26.dll")
+#LoadPlugin("C:\avisynth3rdpartyplugins\removegrain\removegrain-1.0\removegrainsse3.dll")
+#LoadPlugin("C:\avisynth3rdpartyplugins\medianblur\medianblur-0.84\medianblur.dll")
+#LoadCPlugin("C:/avisynth3rdpartyplugins/avsinpaint/avsinpaint-2008.02.23/AVSInpaint.dll")
+#Import("C:/avisynth3rdpartyplugins/rm_logo/rm_logo.avs")
+#rm_logo(logomask="e:\pvr\LittleEinsteinsMASK_inpaint.png",loc="bl",cutsize="large",par=1.0,mode="deblend",percent=20,pp=0,debug=true,RepairRadius=0,InpaintRadius=10.0,lmask=false,AlphaToRepair=10)
