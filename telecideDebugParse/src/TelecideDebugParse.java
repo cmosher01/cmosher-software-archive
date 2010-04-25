@@ -13,8 +13,11 @@ public class TelecideDebugParse
 	private static final int LEN_FRAME = FRAME.length();
 	private static final String USING = "[using ";
 	private static final int LEN_USING = USING.length();
+	private static final String FORCING = "[forcing ";
+	private static final int LEN_FORCING = FORCING.length();
+	private static final String OUT_PAT = "out-of-pattern";
 
-	private static final int MOD = 19;
+	private static final int MOD = 50;
 
 	/**
 	 * @param args
@@ -41,11 +44,21 @@ public class TelecideDebugParse
 
 
 			int posUsing = line.indexOf(USING,posFrame);
+			int lenFound = 0;
 			if (posUsing < 0)
 			{
-				continue;
+				posUsing = line.indexOf(FORCING,posFrame);
+				if (posUsing < 0)
+				{
+					continue;
+				}
+				lenFound = LEN_FORCING;
 			}
-			posUsing += LEN_USING;
+			else
+			{
+				lenFound = LEN_USING;
+			}
+			posUsing += lenFound;
 
 			final int posColon = line.indexOf(":",posFrame);
 			final String sFrame = line.substring(posFrame,posColon);
@@ -56,15 +69,25 @@ public class TelecideDebugParse
 				throw new IllegalStateException("expected frame "+frameExpected+" but got frame "+frame);
 			}
 
+
+
 			String fieldMatched = line.substring(posUsing,posUsing+1);
 //			if (fieldMatched.charAt(0) != 'c')
 //			{
 //				fieldMatched = fieldMatched.toUpperCase();
 //			}
-			if (frameExpected % MOD == 0)
+
+/*
+ 			if (frameExpected % MOD == 0)
 			{
 				System.out.printf("%06d,%06d ",frame,frame+MOD-1);
 			}
+*/
+			if (line.indexOf(OUT_PAT) >= 0)
+			{
+				fieldMatched = fieldMatched.toUpperCase();
+			}
+
 			System.out.print(fieldMatched);
 
 			++frameExpected;
@@ -72,6 +95,7 @@ public class TelecideDebugParse
 			{
 				System.out.println();
 			}
+
 		}
 		System.out.println();
 		in.close();
