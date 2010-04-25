@@ -24,7 +24,7 @@ DeGrainMedian(limitY=6, limitUV=6, mode=2, interlaced=false, norow=false)
 
 LoadPlugin("C:\avisynth3rdpartyplugins\depan\depan-1.10\depan.dll")
 #######DePanEstimate(log="depan.log")
-DePanStabilize(data=last,inputlog="\\Backy\public\home_movies\1967_1978\process\depan.log",dymax=60,dxmax=90,info=false)
+DePanStabilize(data=last,inputlog="mosher_depan.log",dymax=60,dxmax=90,info=false)
 
 
 #ConvertToYV12()
