@@ -1,6 +1,6 @@
-OpenDMLSource("\\backy\public\home_movies\1967_1978\reel1.avi",fourcc="YUY2")+\
-OpenDMLSource("\\backy\public\home_movies\1967_1978\reel2.avi",fourcc="YUY2")+\
-OpenDMLSource("\\backy\public\home_movies\1967_1978\reel3.avi",fourcc="YUY2")
+OpenDMLSource("\\backy\public\home_movies\1967_1978\foreverondvd\original\reel1.avi",fourcc="YUY2")+\
+OpenDMLSource("\\backy\public\home_movies\1967_1978\foreverondvd\original\reel2.avi",fourcc="YUY2")+\
+OpenDMLSource("\\backy\public\home_movies\1967_1978\foreverondvd\original\reel3.avi",fourcc="YUY2")
 
 
 LoadPlugin("C:\avisynth3rdpartyplugins\avisynth_c\avisynth_c-0.15\avisynth_c.dll")
@@ -24,7 +24,7 @@ DeGrainMedian(limitY=6, limitUV=6, mode=2, interlaced=false, norow=false)
 
 LoadPlugin("C:\avisynth3rdpartyplugins\depan\depan-1.10\depan.dll")
 #######DePanEstimate(log="depan.log")
-DePanStabilize(data=last,inputlog="depan.log",dymax=60,dxmax=90,info=false)
+DePanStabilize(data=last,inputlog="\\Backy\public\home_movies\1967_1978\process\depan.log",dymax=60,dxmax=90,info=false)
 
 
 #ConvertToYV12()
@@ -294,16 +294,16 @@ f25 = f25_01+f25_03
 
 
 #vhs (4 missing films recovered from vhs tape)
-fvA = OpenDMLSource("vhs\result\a.avi")
+fvA = OpenDMLSource("\\Backy\public\home_movies\1967_1978\recovery_from_vhs_tape\result\vhs_a_720_480_YV12.avi")
 fvA = fvA.ConvertToYUY2()
 fvA = fvA.AddBorders(0,3,0,3)
-fvB = OpenDMLSource("vhs\result\b.avi")
+fvB = OpenDMLSource("\\Backy\public\home_movies\1967_1978\recovery_from_vhs_tape\result\vhs_b_720_480_YV12.avi")
 fvB = fvB.ConvertToYUY2()
 fvB = fvB.AddBorders(0,3,0,3)
-fvC = OpenDMLSource("vhs\result\c.avi")
+fvC = OpenDMLSource("\\Backy\public\home_movies\1967_1978\recovery_from_vhs_tape\result\vhs_c_720_480_YV12.avi")
 fvC = fvC.ConvertToYUY2()
 fvC = fvC.AddBorders(0,3,0,3)
-fvD = OpenDMLSource("vhs\result\d.avi")
+fvD = OpenDMLSource("\\Backy\public\home_movies\1967_1978\recovery_from_vhs_tape\result\vhs_d_720_480_YV12.avi")
 fvD = fvD.ConvertToYUY2()
 fvD = fvD.AddBorders(0,3,0,3)
 
@@ -461,133 +461,17 @@ f08 = f08.subt(3033,"fall 1978")
 
 
 
-function bounce(clip c, int "frame")
-{
-	f = c.Trim(frame,frame)
-	f = f.CropBottom(1)
-	x = BlankClip(length=1,width=720,height=1,pixel_type="YUY2",fps=18,audio_rate=0)
-	return c.Trim(0,frame-1)+StackVertical(x,f)+c.Trim(frame+1,100000000)
-}
 
-function toss(clip c, int "frame")
-{
-	f = c.Trim(frame,frame)
-	f = f.Crop(0,1,0,0)
-	x = BlankClip(length=1,width=720,height=1,pixel_type="YUY2",fps=18,audio_rate=0)
-	return c.Trim(0,frame-1)+StackVertical(f,x)+c.Trim(frame+1,100000000)
-}
-
-function ttl(string "text")
-{
-	x = BlankClip(length=90,width=720,height=486,pixel_type="YUY2",fps=18,audio_rate=0)
-	x = x.Subtitle(text,first_frame=0,last_frame=89,align=5,font="Windsor LT",size=48,text_color=$FFFFFF,spc=17)
-	x = FadeIn(x,18,$0,18)
-	x = FadeOut(x,18,$0,18)
-	x = x+BlankClip(length=18,width=720,height=486,pixel_type="YUY2",fps=18,audio_rate=0)
-#	x = bounce(x,9)
-#	x = toss(x,11)
-#	x = toss(x,18)
-#	x = bounce(x,22)
-#	x = bounce(x,29)
-#	x = toss(x,34)
-#	x = bounce(x,40)
-#	x = toss(x,44)
-#	x = toss(x,49)
-#	x = bounce(x,51)
-#	x = bounce(x,63)
-#	x = toss(x,66)
-#	x = bounce(x,68)
-#	x = toss(x,75)
-#	x = bounce(x,80)
-#	x = toss(x,83)
-	return x
-}
-
-#title = \
-#ttl("Mosher Home Movies")+ \
-#ttl("Starring")+ \
-#ttl("Christopher Mosher")+ \
-#ttl("Nancy Mosher")+ \
-#ttl("Casey Rapp")
-
-
-
-#last = title+f01+fvB+f02+f03+f04+fvC+fvA+fvD+f17+f10+f05+f18+f19+f21+f07+f12+f06+f09+f24+f11+f20+f13+f14+f25+f15+f23+f22+f16+f08
 last = f01+fvB+f02+f03+f04+fvC+fvA+fvD+f17+f10+f05+f18+f19+f21+f07+f12+f06+f09+f24+f11+f20+f13+f14+f25+f15+f23+f22+f16+f08
 
-#a sample clip: Trim(1400,1700)
-
-#just to see it with the real aspect ratio
-#LanczosResize(640,480,taps=4)
-
-
-#to convert to widescreen 16:9 (assuming 1:1 PAR)
-#LanczosResize(1920,1440,taps=4)
-#Crop(0,180,0,-180)
-#Info()
-
-#Import("C:\avisynth3rdpartyplugins\limitedsharpen\limitedsharpenbeta.avsi")
-#LimitedSharpen(soft=75,strength=70,overshoot=0)
-
-#last = f08
-#AddBorders(0,1,0,1)
-#ConvertToYV12()
-#bef = last
-##LoadPlugin("c:\avisynth3rdpartyplugins\despot\despot.dll")
-##DeSpot(p2=12, mthres=24, p1=30, pwidth=10000, pheight=10000, dilate=5, color=false, motpn=true, sign=1)
-#LoadPlugin("C:\avisynth3rdpartyplugins\removedirt\removedirt.dll")
-#input = last
-#LoadPlugin("C:\avisynth3rdpartyplugins\deen\deen-beta-2\deen.dll")
-#Deen("c3d",mode=0,thrY=50,thrUV=12,ti=1000)
-#after = last
-#difex = Subtract(after,bef).Levels(127, 1, 129, 0, 255)
-#dif = Subtract(after,bef)
-#top = StackHorizontal(bef,after)
-#bot = StackHorizontal(dif,difex)
-#StackVertical(top,bot)
-#KillAudio()
 
 
 
-
-
-#Info()
-
-#ConvertToYV12()
-#bef = last
-#LoadPlugin("c:\avisynth3rdpartyplugins\despot\despot.dll")
-#DeSpot(p1=20, pwidth=100, pheight=100, dilate=4, color=true)
-
-#LoadPlugin("C:\avisynth3rdpartyplugins\fluxsmooth-1-1-a\fluxsmooth.dll")
-#FluxSmoothST(7,7)
-#Import("C:\avisynth3rdpartyplugins\limitedsharpen\limitedsharpenbeta.avsi")
-#LimitedSharpen(soft=75,strength=90,overshoot=0)
-
-#after = last
-
-#dif = Subtract(after,bef).Levels(127, 1, 129, 0, 255)
-#blk = Blackness(dif,pixel_type="YV12")
-#top = StackHorizontal(bef,after)
-#bot = StackHorizontal(dif,blk)
-#StackVertical(top,bot)
-#return last
-
-
-
-
-# A B C --> A A B B C (18 progressive frames/second --> 30 progressive frames/second)
-#SelectEvery(3,0,0,1,1,2)
-# Assuming the original film is exactly 18 fps, then we now
-# have exactly 30 fps. We can just call it 29.97 fps.
-# We don't have any audio to synch up with, so there's no
-# reason to drop 1 frame every 1000 to achieve 29.97
-#AssumeFPS(29.97002997)
-
-#Info()
 
 #finally, get ready for x264 encoding (1:1 PAR, YV12)
 Crop(0,3,0,-3)
-LanczosResize(640,480,taps=4)
+#LanczosResize(640,480,taps=4)
+LanczosResize(720,540,taps=4)
 ConvertToYV12()
 
 return last
