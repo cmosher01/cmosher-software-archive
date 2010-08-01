@@ -19,17 +19,13 @@ svn co $SVNREPO/epple2sys
 svn co $SVNREPO/epple2web
 svn co $SVNREPO/apple2src
 
-sudo apt-get install autoconf
-sudo apt-get install libsdl1.2-dev
-sudo apt-get install rpm
-sudo apt-get install fakeroot
-sudo apt-get install alien
-
-# download cc65, cc65-apple2
-# use alien to convert to deb files
-# dpkg -i them
+sudo apt-get install autoconf libsdl1.2-dev rpm fakeroot alien openjdk-6-jre-headless
 
 cd epple2
 chmod a+x bootstrap
 ./bootstrap
 cd -
+
+# download from cc65,org: RedHat: cc65-VERS.i386.rpm, cc65-apple2-VERS.i386.rpm
+# sudo alien -i cc65-VERS.i386.rpm
+# sudo alien -i cc65-apple2-VERS.i386.rpm
