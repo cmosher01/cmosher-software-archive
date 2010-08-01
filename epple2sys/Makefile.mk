@@ -90,7 +90,13 @@ sysconfdir := $(abspath $(prefix)/etc)
 endif
 
 package: $(NAME).spec dist
-	mkdir -p $(RPM)/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS,VPATH}
+	mkdir -p $(RPM)/BUILD
+	mkdir -p $(RPM)/BUILDROOT
+	mkdir -p $(RPM)/RPMS
+	mkdir -p $(RPM)/SOURCES
+	mkdir -p $(RPM)/SPECS
+	mkdir -p $(RPM)/SRPMS
+	mkdir -p $(RPM)/VPATH
 	cp $(NAME)-$(VERSION).tar.gz $(RPM)/SOURCES
 	touch .rpmmacros
 	echo "%_prefix $(prefix)" >>$(RPM)/.rpmmacros
