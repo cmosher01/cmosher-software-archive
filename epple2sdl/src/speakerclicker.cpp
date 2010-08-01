@@ -86,7 +86,10 @@ SpeakerClicker::SpeakerClicker():
 	audio.samples = 4096;
 	audio.callback = fillbuf;
 	audio.userdata = 0;
-	if (SDL_OpenAudio(&audio,0) != 0)
+	SDL_AudioSpec obtained;
+	obtained.callback = 0;
+	obtained.userdata = 0;
+	if (SDL_OpenAudio(&audio,&obtained) != 0)
 	{
 		done = true;
 		std::cerr << "Unable to initialize audio: " << SDL_GetError() << std::endl;
@@ -96,13 +99,13 @@ SpeakerClicker::SpeakerClicker():
 		bufchg = SDL_CreateCond();
 		buflck = SDL_CreateMutex();
 
-//		std::cout << "initialized audio: " << std::endl;
-//		std::cout << "freq: " << audio.freq << std::endl;
-//		std::cout << "format: " << (audio.format==AUDIO_S8?"8-bit":"other") << std::endl;
-//		std::cout << "channels: " << (int)audio.channels << std::endl;
-//		std::cout << "silence: " << (int)audio.silence << std::endl;
-//		std::cout << "samples: " << audio.samples << std::endl;
-//		std::cout << "size: " << audio.size << std::endl;
+		std::cout << "initialized audio: " << std::endl;
+		std::cout << "freq: " << obtained.freq << std::endl;
+		std::cout << "format: " << (obtained.format==AUDIO_S8?"8-bit":"other") << std::endl;
+		std::cout << "channels: " << (int)obtained.channels << std::endl;
+		std::cout << "silence: " << (int)obtained.silence << std::endl;
+		std::cout << "samples: " << obtained.samples << std::endl;
+		std::cout << "size: " << obtained.size << std::endl;
 		SDL_PauseAudio(0);
 	}
 }
