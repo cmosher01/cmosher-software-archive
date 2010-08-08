@@ -19,20 +19,14 @@
 
 #include <SDL/SDL.h>
 
-const int PaddleButtonStates::PADDLE_COUNT(2);
+const int PaddleButtonStates::PADDLE_COUNT(3);
 
-PaddleButtonStates::PaddleButtonStates():
-	button(PADDLE_COUNT)
+PaddleButtonStates::PaddleButtonStates()
 {
 }
 
 PaddleButtonStates::~PaddleButtonStates()
 {
-}
-
-void PaddleButtonStates::setButton(const int btn, const bool pressed)
-{
-	this->button[btn] = pressed;
 }
 
 bool PaddleButtonStates::isDown(const int paddle)
@@ -42,5 +36,9 @@ bool PaddleButtonStates::isDown(const int paddle)
 		return false;
 	}
 	unsigned char btn = SDL_GetMouseState(0,0);
-	return paddle ? btn&SDL_BUTTON_RMASK : btn&SDL_BUTTON_LMASK;
+	if (paddle==0)
+		return btn&SDL_BUTTON_LMASK;
+	if (paddle==1)
+		return btn&SDL_BUTTON_RMASK;
+	return btn&SDL_BUTTON_MMASK;
 }

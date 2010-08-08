@@ -24,12 +24,9 @@ class PaddleButtonStates
 {
 	static const int PADDLE_COUNT;
 
-	std::vector<bool> button;
-
 public:
 	PaddleButtonStates();
 	~PaddleButtonStates();
-	void setButton(const int btn, const bool pressed);
 	bool isDown(const int paddle);
 };
 

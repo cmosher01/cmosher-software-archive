@@ -162,7 +162,7 @@ unsigned char AddressBus::readSwitch(unsigned short address)
 			}
 			else if (sw2 < 4)
 			{
-				setD7(this->paddleButtonStates.isDown(sw2));
+				setD7(this->paddleButtonStates.isDown(sw2-1));
 			}
 			else
 			{
