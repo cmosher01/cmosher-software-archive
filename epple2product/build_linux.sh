@@ -53,7 +53,7 @@ then
 else
 	$SRC/epple2/configure --prefix=$PREFIX --sysconfdir=$SYSCONFDIR
 fi
-make package
+make "CXXFLAGS=-O4 -march=native -mtune=native" package
 cd ..
 
 echo --------------------------------------------------------------------------------epple2sys
