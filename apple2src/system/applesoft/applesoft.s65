@@ -5555,9 +5555,17 @@ POLY_SIN            .BYTE 5                         ; POWER OF POLYNOMIAL
                     .BYTE $83,$49,$0F,$DA,$A2       ; 2PI
                                                     ; --------------------------------
                                                     ; <<< NEXT TEN BYTES ARE NEVER REFERENCED >>>
+                                                    ; OBFUSCATED "MICROSOFT!" BY BILL GATES
+                                                    ; (REVERSED, HIGH BIT SET, XOR 7)
                                                     ; --------------------------------
 
-                    .HASCII "&SAHTHUDNJ"
+.MACRO .GATES_OBFUSCATE STR
+    .REPEAT .STRLEN(STR),ISTR
+        .BYTE (.STRAT(STR,.STRLEN(STR)-1-ISTR) | %10000000) ^ %00000111
+    .ENDREP
+.ENDMACRO
+
+                    .GATES_OBFUSCATE "MICROSOFT!"
                                                     ; --------------------------------
                                                     ; "ATN" FUNCTION
                                                     ; --------------------------------
