@@ -1,0 +1,21 @@
+test_nmos: lda #$99
+           clc
+           sed
+           adc #$01
+           cld
+           beq cmos
+           ...
+; if the program is here we have a 6502-cpu
+           rts
+cmos       ...
+; if here, we have a cmos-type (65c02,65c816)
+           jmp test_65816
+
+
+
+ON APPLE ][
+PRINTS A IF 6502
+PRINTS B IF 65C02
+
+1000:A9 99 18 F8 69 01 D8 F0 05 A9 C1 4C ED FD A9 C2 4C ED FD
+
