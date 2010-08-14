@@ -26,28 +26,76 @@ public class RunHalt implements Runnable
         });
     }
 
-    final Machine machine = new Machine();
+    final MachineListener listener = new MachineListener()
+    {
+		@Override
+		public void cycle()
+		{
+			System.out.println("cycle");
+			try
+			{
+				Thread.sleep(1000);
+			}
+			catch (final InterruptedException e)
+			{
+				Thread.currentThread().interrupt();
+			}
+		}
+
+		@Override
+		public void sleep()
+		{
+			System.out.println("sleep");
+		}
+
+		@Override
+		public void start()
+		{
+			System.out.println("start");
+		}
+
+		@Override
+		public void stop()
+		{
+			System.out.println("stop");
+		}
+
+		@Override
+		public void wake()
+		{
+			System.out.println("wake");
+		}
+    	
+    };
+
+    final Machine machine = new Machine(this.listener);
 //    final Gui gui = new Gui(this.machine);
 
     @Override
     public void run()
     {
+        sleep();
+        sleep();
+        sleep();
         msg("running");
-        this.machine.run();
+        this.machine.run(true);
         sleep();
         sleep();
         sleep();
         msg("halting");
-        this.machine.halt();
+        this.machine.run(false);
         sleep();
         sleep();
-        msg("running");
-        this.machine.run();
+/*
+        this.machine.run(true);
         sleep();
         sleep();
         sleep();
+ */
         msg("shutting down");
         this.machine.shutDown();
+        sleep();
+        sleep();
     }
 
     /**

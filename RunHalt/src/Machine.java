@@ -11,46 +11,35 @@ public class Machine
         @Override
         public void run()
         {
-            System.out.println("[starting]");
             execute();
-            System.out.println("[exiting]");
         }
-        
     });
 
-    public Machine()
+    private final MachineListener listener;
+
+    public Machine(final MachineListener listener)
     {
-        this.thread.start();
-        synchronized (this.lock)
-        {
-            this.lock.notifyAll();
-        }
+    	this.listener = listener;
     }
 
 
-    public void run()
+    public void run(final boolean run)
     {
-        this.running.set(true);
+        this.running.set(run);
         synchronized (this.lock)
         {
-            this.lock.notifyAll();
-        }
-    }
-
-    public void halt()
-    {
-        this.running.set(false);
-        synchronized (this.lock)
-        {
+        	if (run)
+        	{
+                startThread();
+        	}
             this.lock.notifyAll();
         }
     }
 
     public void shutDown()
     {
-        halt();
         this.thread.interrupt();
-        join();
+        joinThread();
     }
     public boolean isRunning()
     {
@@ -66,47 +55,52 @@ public class Machine
 
     private void execute()
     {
-        int i = 0;
+        this.listener.start();
         while (!isShuttingDown())
         {
-            synchronized (this.lock)
+            checkSleep();
+            if (!isShuttingDown())
             {
-                while (!isRunning())
-                {
-                    System.out.println("[sleeping]");
-                    try
-                    {
-                        this.lock.wait();
-                    }
-                    catch (final InterruptedException e)
-                    {
-                        Thread.currentThread().interrupt();
-                    }
-                    System.out.println("[waking]");
-                }
+                this.listener.cycle();
             }
-            System.out.println("running: "+i++);
-            sleep();
         }
+        this.listener.stop();
     }
 
-    private void join()
+	private void checkSleep()
+	{
+		synchronized (this.lock)
+		{
+		    while (!isRunning() && !isShuttingDown())
+		    {
+		        this.listener.sleep();
+		        try
+		        {
+		            this.lock.wait();
+		        }
+		        catch (final InterruptedException e)
+		        {
+		            Thread.currentThread().interrupt();
+		        }
+		        this.listener.wake();
+		    }
+		}
+	}
+
+	private void startThread()
+	{
+		if (!this.thread.getState().equals(Thread.State.NEW))
+        {
+			return;
+        }
+        this.thread.start();
+	}
+
+    private void joinThread()
     {
         try
         {
             this.thread.join();
-        }
-        catch (final InterruptedException e)
-        {
-            Thread.currentThread().interrupt();
-        }
-    }
-
-    private static void sleep()
-    {
-        try
-        {
-            Thread.sleep(1000);
         }
         catch (final InterruptedException e)
         {
