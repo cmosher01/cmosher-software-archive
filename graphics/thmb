@@ -1,0 +1,6 @@
+#!/bin/bash
+F=${1%.JPG}
+echo $F
+convert -auto-orient -resize 25% ${F}.JPG ${F}_resize.JPG
+convert -auto-orient -thumbnail 15% ${F}_resize.JPG ${F}_thumb.JPG
+echo "<a href=\"${F}_resize.JPG\"><img src=\"${F}_thumb.JPG\" /></a>" >>index.html

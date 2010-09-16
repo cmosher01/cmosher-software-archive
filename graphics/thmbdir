@@ -1,0 +1,11 @@
+#!/bin/bash
+if [ -f index.html ]
+then
+	mv index.html index.html.orig
+fi
+
+echo "<html>" >index.html
+echo "<body>" >>index.html
+ls ????????_??????.JPG | xargs -I @ thmb @
+echo "</body>" >>index.html
+echo "</html>" >>index.html
