@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="service_uda_web" default="common-build.all" basedir=".">
+
+    <import file="../lib_uda_build/common-build.xml" />
+
+    <target name="-init" depends="common-build.-init">
+        <path id="compile.classpath">
+            <pathelement location="../service_uda_message_types/${bin.dir}" />
+            <pathelement location="../service_uda_ejb_client/${bin.dir}" />
+            <pathelement location="../service_uda_exec_framework/${bin.dir}" />
+            <pathelement location="../service_uda_event_framework/${bin.dir}" />
+            <pathelement location="../service_uda_utils/${bin.dir}" />
+            <pathelement location="../lib_ctiadapter/${bin.dir}" />
+            <pathelement location="../lib_security/${bin.dir}" />
+            <pathelement location="../lib_logging_java/${bin.dir}" />
+        	<pathelement location="../va_xml_packages/${bin.dir}" />
+            <path refid="weblogic.classpath" />
+        </path>
+    </target>
+
+    <target name="lib" depends="compile" description="build the final war file">
+        <mkdir dir="${lib.dir}" />
+        <war destfile="${lib.dir}/${ant.project.name}.war">
+            <webinf dir="${conf.dir}">
+                <include name="web.xml" />
+                <include name="weblogic.xml" />
+            </webinf>
+            <classes dir="${bin.dir}" />
+        </war>
+    </target>
+
+
+
+	<target name="doc" depends="-init,javadocutils.define-javadocx">
+		<property name="compile.classpath" refid="compile.classpath" />
+		<javadocx
+			classpath="${compile.classpath}"
+		    depends="../service_uda_message_types,../service_uda_ejb_client,../service_uda_exec_framework,../service_uda_event_framework,../service_uda_utils,../lib_ctiadapter,../va_xml_packages,../lib_security,../lib_logging_java"
+		    windowtitle="service_uda"
+			access="private"
+		>
+			<link href="../../../../service_uda_message_types/${build-doc.dir}/javadoc" />
+			<link href="../../../../service_uda_ejb_client/${build-doc.dir}/javadoc" />
+			<link href="../../../../service_uda_exec_framework/${build-doc.dir}/javadoc" />
+			<link href="../../../../service_uda_event_framework/${build-doc.dir}/javadoc" />
+			<link href="../../../../service_uda_utils/${build-doc.dir}/javadoc" />
+			<link href="../../../../lib_ctiadapter/${build-doc.dir}" />
+			<link href="../../../../va_xml_packages/${build-doc.dir}" />
+			<link href="../../../../lib_security/${build-doc.dir}" />
+			<link href="../../../../lib_logging_java/${build-doc.dir}" />
+		</javadocx>
+	</target>
+
+
+
+    <target name="depends">
+        <property name="depends.target" value="lib" />
+        <ant dir="../lib_logging_java" target="depends" />
+        <ant dir="../lib_security" target="depends" />
+        <ant dir="../lib_ctiadapter" target="depends" />
+    	<ant dir="../va_xml_packages" target="depends" />
+        <ant dir="../service_uda_utils" target="depends" />
+        <ant dir="../service_uda_event_framework" target="depends" />
+        <ant dir="../service_uda_exec_framework" target="depends" />
+        <ant dir="../service_uda_ejb_client" target="depends" />
+        <ant dir="../service_uda_message_types" target="depends" />
+        <antcall target="${depends.target}" />
+    </target>
+</project>

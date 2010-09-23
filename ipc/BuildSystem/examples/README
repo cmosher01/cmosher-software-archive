@@ -1,0 +1,43 @@
+This directory contains some very small example components
+of various types. These examples demonstrate how to create
+components that work with the IPC build system.
+
+
+app1ci
+  CodeIgniter-based web application
+  (depends on lib1php component)
+lib1php
+  PHP library
+
+app1flex
+  application built with FLEX (makes a swf file)
+  (depends on lib1flex component)
+lib1flex
+  library build with FLEX (makes a swc file)
+
+lib1java
+  a java lirary (makes a jar file)
+lib2java
+  another java library
+  (depends on lib1java component)
+
+sys1scripts
+  just a couple of scripts
+
+cmdqued
+  a C++ daemon
+
+app1cpp
+  shows how to link against a static library in C++
+  (depends on abc component)
+abc
+  a static library (.a file) in C++
+
+app2cpp
+  shows how to link against a shared library in C++
+  (depends on xyz component)
+xyz
+  a shared library (.so file) in C++
+
+onems
+  an actual product

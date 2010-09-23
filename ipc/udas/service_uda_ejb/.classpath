@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.6.0_17">
+		<attributes>
+			<attribute name="owner.project.facets" value="jst.java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="src" path=".apt_src">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/service_uda_message_types"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/service_uda_ejb_client"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/service_uda_exec_framework"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/service_uda_core"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/service_uda_event_framework"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/service_uda_utils"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/lib_ctiadapter"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/va_xml_packages"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/lib_logging_java"/>
+	<classpathentry kind="lib" path="/3rdparty/junit/junit_4.7/junit-4.7.jar"/>
+	<classpathentry kind="lib" path="/3rdparty/sf.net/smc/smc_6.0.1/lib/Java/statemap.jar"/>
+	<classpathentry kind="var" path="BEA_HOME/wlserver_10.3/server/lib/weblogic.jar"/>
+	<classpathentry kind="output" path="obj/eclipsebin"/>
+</classpath>

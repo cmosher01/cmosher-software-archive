@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/service_uda_exec_framework"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/service_uda_core"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/service_uda_utils"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/lib_ctiadapter"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/lib_logging_java"/>
+	<classpathentry kind="var" path="BEA_HOME/wlserver_10.3/server/lib/weblogic.jar"/>
+	<classpathentry kind="output" path="obj/eclipsebin"/>
+</classpath>

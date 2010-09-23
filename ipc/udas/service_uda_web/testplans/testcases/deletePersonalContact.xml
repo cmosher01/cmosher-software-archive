@@ -1,0 +1,9 @@
+<udaMessage xmlns="http://www.ipc.com/uda/types">
+  <udaRequest>
+    <command>
+      <deletePersonalContact>
+        <contactId>72</contactId>
+      </deletePersonalContact>
+    </command>
+  </udaRequest>
+</udaMessage>

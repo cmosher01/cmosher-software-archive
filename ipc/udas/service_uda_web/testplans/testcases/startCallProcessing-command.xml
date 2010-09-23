@@ -1,0 +1,8 @@
+<udaMessage xmlns="http://www.ipc.com/uda/types">
+	<udaRequest>
+		<command>
+			<startCallProcessing/>
+		</command>
+	</udaRequest>
+</udaMessage>
+

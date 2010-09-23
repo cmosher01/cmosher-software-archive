@@ -1,0 +1,28 @@
+<udaMessage xmlns="http://www.ipc.com/uda/types">
+  <udaRequest>
+    <command>
+      <updatePersonalContact>
+        <contact>
+	  <contactId>77</contactId>
+          <contactType>PERSONAL</contactType>
+          <businessGroup></businessGroup>
+          <contactCategories></contactCategories>
+          <companyName>IPC</companyName>
+          <aor></aor>
+          <firstName>Joey</firstName>
+          <lastName>Hanson</lastName>
+          <internalCompanyId></internalCompanyId>
+          <internalContactId></internalContactId>
+          <city></city>
+          <country>us</country>
+          <street></street>
+          <title></title>
+          <userAor></userAor>
+          <pointsOfContact>
+            
+          </pointsOfContact>
+        </contact>
+      </updatePersonalContact>
+    </command>
+  </udaRequest>
+</udaMessage>

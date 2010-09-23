@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<weblogic-ejb-jar xmlns="http://www.bea.com/ns/weblogic/weblogic-ejb-jar"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd http://www.bea.com/ns/weblogic/weblogic-ejb-jar http://www.bea.com/ns/weblogic/weblogic-ejb-jar/1.0/weblogic-ejb-jar.xsd"
+>
+	<weblogic-enterprise-bean>
+		<ejb-name>CommandExecutionHandlerBean</ejb-name>
+		<stateless-session-descriptor>
+			<pool>
+				<max-beans-in-free-pool>500</max-beans-in-free-pool>
+				<initial-beans-in-free-pool>10</initial-beans-in-free-pool>
+			</pool>
+		</stateless-session-descriptor>
+		<enable-call-by-reference>true</enable-call-by-reference>
+		<local-jndi-name>uda.ejb.local.session.CommandExecutionHandler</local-jndi-name>
+        <!-- dispatch-policy>wm/CommandWorkManager</dispatch-policy-->
+	</weblogic-enterprise-bean>
+
+	<weblogic-enterprise-bean>
+		<ejb-name>QueryExecutionHandlerBean</ejb-name>
+		<stateless-session-descriptor>
+			<pool>
+				<max-beans-in-free-pool>500</max-beans-in-free-pool>
+				<initial-beans-in-free-pool>10</initial-beans-in-free-pool>
+			</pool>
+		</stateless-session-descriptor>
+		<enable-call-by-reference>true</enable-call-by-reference>
+		<local-jndi-name>uda.ejb.local.session.QueryExecutionHandler</local-jndi-name>
+	</weblogic-enterprise-bean>
+    <weblogic-enterprise-bean>
+        <!--options:DESTINATION_JNDI-->
+        <ejb-name>ExecutableResultBean</ejb-name>
+        <message-driven-descriptor>
+            <pool>
+                <max-beans-in-free-pool>1</max-beans-in-free-pool>
+                <initial-beans-in-free-pool>1</initial-beans-in-free-pool>
+            </pool>
+        </message-driven-descriptor>
+    </weblogic-enterprise-bean>
+    <work-manager>
+        <name>wm/CommandWorkManager</name>
+        <min-threads-constraint>
+            <name>min</name>
+            <count>1</count>
+        </min-threads-constraint>
+        <max-threads-constraint>
+            <name>max</name>
+            <count>20</count>
+        </max-threads-constraint>
+    </work-manager>
+</weblogic-ejb-jar>

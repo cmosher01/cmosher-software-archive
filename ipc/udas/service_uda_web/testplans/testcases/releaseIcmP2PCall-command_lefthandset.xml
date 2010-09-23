@@ -1,0 +1,10 @@
+<udaMessage xmlns="http://www.ipc.com/uda/types">
+	<udaRequest>
+		<command>
+			<releaseCall>
+				<handset>LEFT</handset>
+			</releaseCall>
+		</command>
+	</udaRequest>
+</udaMessage>
+

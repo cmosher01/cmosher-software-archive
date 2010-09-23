@@ -1,0 +1,116 @@
+#!/bin/bash
+#
+# topmake
+# top-level makefile script
+# Copyright (C) 2009, by IPC, Fairfield, CT.
+#
+# author: Chris Mosher
+# creation date: 2009-01-20
+#
+
+
+
+usage()
+{
+	cat <<EOF
+Generates a Makefile that builds components
+into the current default directory.
+
+Usage: topmake [-h] [-f SOURCE_ROOTS_FILE] [SOURCE_ROOT ...]
+
+  This script will search each SOURCE_ROOT directory tree for
+  *.depends files, and generate a list of components and thier
+  dependencies based on that set of files. This script
+  generates a makefile that can build any or all of those
+  components. It prints the makefile to standard output.
+
+  Each source root must be the absolute path of a directory.
+
+Options:
+
+  -h       displays this help and exits
+  -f FILE  reads source roots from FILE (in addition to
+           any source roots specified on the command line)
+
+Examples:
+
+  Search /usr/vobs for *.depends, generate a Makefile,
+  and build the entire onems product:
+
+     $0 /usr/vobs | make -f - onems
+
+  Read directories from srcroots file, search those
+  directories for *.depends, generate a Makefile,
+  and build the libxyz component (and its dependencies):
+
+     $0 -f srcroots | make -f - libxyz
+
+  The resulting makefile will call the default target of each
+  component's Makefile; you can override this behavior by
+  defining the make variable COMPONENT_TARGET as the target to
+  build instead. For example, to build the package target of each
+  component in the example above:
+
+     $0 -f srcroots | make -f - libxyz COMPONENT_TARGET=package
+
+EOF
+}
+
+forhelp()
+{
+	echo "$0: For help, type $0 -h" >&2
+}
+
+SOURCE_ROOTS_FILE=/dev/null
+while getopts "hf:" OPT
+do
+	case $OPT in
+		h ) usage ; exit 0 ;;
+		\?) forhelp ; exit 1 ;;
+		f ) SOURCE_ROOTS_FILE=$OPTARG ;;
+	esac
+done
+shift $(($OPTIND-1))
+
+SOURCE_ROOTS="`cat $SOURCE_ROOTS_FILE` $@"
+
+
+
+
+
+for SOURCE_ROOT in $SOURCE_ROOTS
+do
+	case "$SOURCE_ROOT" in
+	/*)
+	echo "Searching for components under $SOURCE_ROOT ..." >&2
+    for DEPENDS_FILE in `find $SOURCE_ROOT -name \*.depends`
+    do
+		FOUND=true
+
+        COMPONENT_DIR=`dirname $DEPENDS_FILE`
+        COMPONENT_NAME=`basename $DEPENDS_FILE .depends`
+
+        echo .PHONY: $COMPONENT_NAME
+        echo
+        echo $COMPONENT_NAME: `cat $DEPENDS_FILE`
+        echo -e "\t@echo ------------------------------------------------------------------$COMPONENT_NAME"
+		echo -e "\t@date --utc --rfc-3339=seconds"
+        echo -e "\tmkdir -p $COMPONENT_NAME"
+        echo -e "\t\$(MAKE) -C $COMPONENT_NAME -f $COMPONENT_DIR/Makefile \$(COMPONENT_TARGET)"
+        echo
+    done
+	;;
+
+	*)
+		echo "$0: ERROR: $SOURCE_ROOT is not an absolute path" >&2
+		exit 1
+	;;
+	esac
+done
+
+if [[ ! "$FOUND" ]]
+then
+	echo "$0: ERROR: couldn't find any components" >&2
+	forhelp
+	exit 1
+fi

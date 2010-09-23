@@ -1,0 +1,11 @@
+This directory contains a template for creating a CodeIgniter-based
+application. The directories here come from within the CodeIgniter
+distribution, under the "application" directory.
+
+The index.php file is this template has the correct settings for
+system and application folder. The system folder is path to the
+CodeIgniter system directory, which will be
+/usr/local/share/htdocs/codeigniter_1.6.3/system
+
+The application folder is set to the directory of this application,
+that is, ".".

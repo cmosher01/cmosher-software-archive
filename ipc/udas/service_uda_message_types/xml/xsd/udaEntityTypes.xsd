@@ -1,0 +1,893 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+			xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+			xmlns="http://www.ipc.com/uda/types" 
+			targetNamespace="http://www.ipc.com/uda/types" 
+			elementFormDefault="qualified" 
+			attributeFormDefault="unqualified" 
+			jaxb:version="2.0">
+
+	<xs:simpleType name="enumButtonType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Resource"/>
+			<xs:enumeration value="ResourceAndSpeedDial"/>
+			<xs:enumeration value="HuntAndSpeedDial"/>
+			<xs:enumeration value="SpeedDial"/>
+			<xs:enumeration value="MWI"/>
+			<xs:enumeration value="OneButtonDivert"/>
+			<xs:enumeration value="OneButtonICMDivert"/>
+			<xs:enumeration value="SimplexConference"/>
+			<xs:enumeration value="DuplexConference"/>
+			<xs:enumeration value="KeySequence"/>
+			<xs:enumeration value="ICM"/>
+			<xs:enumeration value="PointOfContact"/>
+			<xs:enumeration value="PersonalPointOfContact"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="enumIconType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ResourceAndSpeedDial"/>
+			<xs:enumeration value="HuntAndSpeedDial"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="enumSpeakerChannelStatusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OFF"/>
+			<xs:enumeration value="ON"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="enumHoldQueueType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OFF"/>
+			<xs:enumeration value="ON"/>
+			<xs:enumeration value="OLDEST"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="enumIntercomSplashType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SPLASH ALL"/>
+			<xs:enumeration value="NO SPLASH"/>
+			<xs:enumeration value="SPLASH ICM"/>
+			<xs:enumeration value="SPLASH BCAST"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="enumPresetSimplexType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PRESET"/>
+			<xs:enumeration value="SIMPLEX"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="enumRecordOnDemandType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OFF"/>
+			<xs:enumeration value="ON ENABLED"/>
+			<xs:enumeration value="ON DISABLED"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="enumRecordWarningToneType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NONE"/>
+			<xs:enumeration value="LEFTHS"/>
+			<xs:enumeration value="RIGHTHS"/>
+			<xs:enumeration value="BOTH"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="enumDeviceStateType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DEPLOYING"/>
+			<xs:enumeration value="REGISTERING"/>
+			<xs:enumeration value="SERVICING"/>
+			<xs:enumeration value="RUNNING"/>
+			<xs:enumeration value="ACTIVE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="enumLocationType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BACKROOM"/>
+			<xs:enumeration value="FRONTROOM"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="enumAutoHoldType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="InvalidAutoOption"/>
+			<xs:enumeration value="Release"/>
+			<xs:enumeration value="Hold"/>
+			<xs:enumeration value="AutoSelectRelease"/>		
+		</xs:restriction>
+	</xs:simpleType>
+	
+    <xs:simpleType name="presenceType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="BUSY" />
+            <xs:enumeration value="AVAILABLE" />
+            <xs:enumeration value="DND" />
+            <xs:enumeration value="AWAY" />
+            <xs:enumeration value="OFFLINE" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="contactCategoryType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ENTERPRISE" />
+            <xs:enumeration value="INSTANCE" />
+            <xs:enumeration value="GROUP" />
+            <xs:enumeration value="PERSONAL" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="callCategoryType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Initiated" />
+            <xs:enumeration value="Received" />
+            <xs:enumeration value="Missed" />
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="speakerGroupType">
+        <xs:restriction base="xs:string">
+        	<xs:enumeration value="GROUP_1" />
+            <xs:enumeration value="GROUP_2" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="buttonTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ENTERPRISE" />
+            <xs:enumeration value="INSTANCE" />
+            <xs:enumeration value="GROUP" />
+            <xs:enumeration value="PERSONAL" />
+            <xs:enumeration value="Line" />
+            <xs:enumeration value="Bseq" />
+            <xs:enumeration value="Arcl" />
+            <xs:enumeration value="Bcst" />
+            <xs:enumeration value="Mesg" />
+            <xs:enumeration value="ClMs" />
+            <xs:enumeration value="DND" />
+            <xs:enumeration value="Dvrt" />
+            <xs:enumeration value="Grp1" />
+            <xs:enumeration value="Grp2" />
+            <xs:enumeration value="Hrct" />
+            <xs:enumeration value="DICM" />
+            <xs:enumeration value="ICMT" />
+            <xs:enumeration value="Pvcy" />
+            <xs:enumeration value="PageDn" />
+            <xs:enumeration value="PageUp" />
+            <xs:enumeration value="DPG" />
+            <xs:enumeration value="rCLI" />
+            <xs:enumeration value="sCLI" />
+            <xs:enumeration value="tCLI" />
+            <xs:enumeration value="RngUp" />
+            <xs:enumeration value="RngDn" />
+            <!--  Data Service  EnumButtonType -->
+            <xs:enumeration value="Resource" />
+            <xs:enumeration value="ResourceAndSpeedDial" /> 
+            <xs:enumeration value="HuntAndSpeedDial" />
+            <xs:enumeration value="SpeedDial" />
+            <xs:enumeration value="MWI" />
+            <xs:enumeration value="OneButtonDivert" /> 
+            <xs:enumeration value="OneButtonICMDivert" /> 
+            <xs:enumeration value="SimplexConference" />
+            <xs:enumeration value="DuplexConference" />
+            <xs:enumeration value="KeySequence" />
+            <xs:enumeration value="ICM" />
+            <xs:enumeration value="PointOfContact" /> 
+            <xs:enumeration value="PersonalPointOfContact" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="lineStatusType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="IDLE" />
+            <xs:enumeration value="U_BUSY" />
+            <xs:enumeration value="I_BUSY" />
+            <xs:enumeration value="U_HOLD" />
+            <xs:enumeration value="I_HOLD" />
+            <xs:enumeration value="X_HOLD" />
+            <xs:enumeration value="HI_RING" />
+            <xs:enumeration value="LO_RING" />
+            <xs:enumeration value="INTERNAL_RING" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="systemLineStatusType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="IDLE" />
+            <xs:enumeration value="HOLD" />
+            <xs:enumeration value="BUSY" />
+            <xs:enumeration value="INCOMING" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="handsetType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="LEFT" />
+            <xs:enumeration value="RIGHT" />
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="enumDeviceTypeName">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="MEDIA_GATEWAY_AC"/>
+    		<xs:enumeration value="CHANNEL_BANK"/>
+    		<xs:enumeration value="DUNKIN_TURRET"/>
+    		<xs:enumeration value="DUNKIN_UDA_1"/>
+    		<xs:enumeration value="NICE_RECORDER_HOST"/>
+    		<xs:enumeration value="CYBERTECH_RECORDER_HOST"/>
+    		<xs:enumeration value="DUNKIN_SERVER"/>
+    		<xs:enumeration value="PROTOTYPE"/>
+    	</xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="enumDiagnosticsActionType">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="SELF_TEST"/>
+    		<xs:enumeration value="OTHER"/>
+    	</xs:restriction>
+    </xs:simpleType>
+	
+	<xs:simpleType name="enumDiagnosticsComponentType">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="SOFTPHONE"/>
+    		<xs:enumeration value="COMMUNICATOR"/>
+    		<xs:enumeration value="CORE"/>
+    		<xs:enumeration value="C2D"/>
+    	</xs:restriction>
+    </xs:simpleType>
+    
+    
+    <xs:simpleType name="enumICMDivertCondition">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="none"/>
+    		<xs:enumeration value="immediate"/>
+    		<xs:enumeration value="OnBusy"/>
+    		<xs:enumeration value="OnRNA"/>
+    		<xs:enumeration value="OnBusyOrRNA"/>
+    	</xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="volumeType">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="100"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="timeType">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:javaType name="com.ipc.uda.types.DateTime" />
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{4}\d{2}\d{2}T\d{2}:\d{2}:\d{2}" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="idType">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:javaType name="com.ipc.uda.types.UID" />
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:string" />
+    </xs:simpleType>
+     
+	<xs:simpleType name="statusType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SUCCESS" />
+            <xs:enumeration value="FAILURE" />
+            <xs:enumeration value="ALREADY_LOGGED_ON" />
+        </xs:restriction>
+    </xs:simpleType>
+
+	<xs:simpleType name="enumMediaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PrivateWire"/>
+			<xs:enumeration value="SpeedDial"/>
+			<xs:enumeration value="ICM"/>
+			<xs:enumeration value="Email"/>
+			<xs:enumeration value="IM"/>
+			<xs:enumeration value="Chat"/>
+			<xs:enumeration value="Other"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="recordProtocolTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="E1"/>
+			<xs:enumeration value="IP"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="divertReasonTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="none"/>
+			<xs:enumeration value="immediate"/>
+			<xs:enumeration value="OnBusy"/>
+			<xs:enumeration value="OnRNA"/>
+			<xs:enumeration value="OnBusyAndRNA"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="iconTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="none"/> 
+			<xs:enumeration value="home"/>
+			<xs:enumeration value="office"/>
+			<xs:enumeration value="mobile"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="incomingActionCLITypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="noCLI"/>
+			<xs:enumeration value="CLI"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="incomingActionFloatTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NoFloat"/>
+			<xs:enumeration value="Float"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="incomingActionPriorityTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="none"/>
+			<xs:enumeration value="low"/>
+			<xs:enumeration value="high"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="incomingActionRingsTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="none"/> 
+			<xs:enumeration value="single"/> 
+			<xs:enumeration value="repeat"/>
+		</xs:restriction>
+	</xs:simpleType>    
+
+    <xs:simpleType name="pocMediaTypeType">
+    	<xs:restriction base="xs:string">
+			<xs:enumeration value="PrivateWire"/>
+			<xs:enumeration value="SpeedDial"/>
+			<xs:enumeration value="ICM"/>
+			<xs:enumeration value="Email"/>
+			<xs:enumeration value="IM"/>
+			<xs:enumeration value="Chat"/>
+			<xs:enumeration value="Other"/>
+		</xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="pocTypeType">
+    	<xs:restriction base="xs:string">
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="Home"/>
+			<xs:enumeration value="Office"/>
+			<xs:enumeration value="Mobile"/>
+			<xs:enumeration value="Pager"/>
+			<xs:enumeration value="Fax"/>
+			<xs:enumeration value="IBChat"/>
+			<xs:enumeration value="Reuters"/>
+			<xs:enumeration value="Bloomberg"/>
+			<xs:enumeration value="SMSAddress"/>
+			<xs:enumeration value="Other"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+    <xs:simpleType name="localeType">
+    	<xs:restriction base="xs:string">
+			<xs:enumeration value="US"/>
+			<xs:enumeration value="UK"/>
+			<xs:enumeration value="FR"/>
+			<xs:enumeration value="DE"/>
+		</xs:restriction>
+    </xs:simpleType>
+	
+	<xs:simpleType name="logLevel">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="DEBUG"/>
+    		<xs:enumeration value="INFO"/>
+    		<xs:enumeration value="WARN"/>
+    		<xs:enumeration value="ERROR"/>
+    		<xs:enumeration value="FATAL"/>
+    	</xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="diagnosticsResult">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="success"/>
+			<xs:enumeration value="fail"/>
+			<xs:enumeration value="partial"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="directoryContactType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="enterprise"/>
+			<xs:enumeration value="instance"/>
+			<xs:enumeration value="group"/>
+			<xs:enumeration value="personal"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="resourceAorType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Private"/>
+			<xs:enumeration value="Dialtone"/>
+			<xs:enumeration value="OOPS"/>
+			<xs:enumeration value="OpenConnexion"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="enumLicenseModeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ENTERPRISE_COMM"/>
+			<xs:enumeration value="TRADER_LITE"/>
+			<xs:enumeration value="COMPANION"/>
+			<xs:enumeration value="MOBILITY"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+    <xs:complexType name="immutableContactType">
+        <xs:sequence>
+        	<xs:element name="contactId" type="idType" minOccurs="0" />
+        	<xs:element name="contactType" type="directoryContactType" minOccurs="0" />
+        	<xs:element name="firstName" type="xs:string" minOccurs="0" />
+        	<xs:element name="lastName" type="xs:string" minOccurs="0" />
+        	<xs:element name="companyName" type="xs:string" minOccurs="0" />			<xs:element name="userAOR" type="xs:string" minOccurs="0" />
+        	<xs:element name="businessGroup" type="xs:string" minOccurs="0" />			<xs:element name="preferredPointOfContact" type="preferredPointOfContactType" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="contactType">
+        <xs:sequence>
+            <xs:element name="contactId" type="idType" minOccurs="0" />
+            <xs:element name="contactType" type="contactCategoryType"  />
+            <xs:element name="businessGroup" type="xs:string"  minOccurs="0"/>
+            <xs:element name="contactCategories" type="xs:string"  minOccurs="0"/>
+            <xs:element name="companyName" type="xs:string"  minOccurs="0"/>
+            <xs:element name="aor" type="xs:string"  minOccurs="0"/>
+            <xs:element name="firstName" type="xs:string"  minOccurs="0"/>
+            <xs:element name="lastName" type="xs:string"  minOccurs="0"/>
+            <xs:element name="internalCompanyId" type="xs:string"  minOccurs="0"/>
+            <xs:element name="internalContactId" type="xs:string"  minOccurs="0"/>
+            <xs:element name="city" type="xs:string"  minOccurs="0"/>
+            <xs:element name="country" type="xs:string"  minOccurs="0"/>
+            <xs:element name="street" type="xs:string"  minOccurs="0"/>
+            <xs:element name="title" type="xs:string"  minOccurs="0"/>
+            <xs:element name="userAor" type="xs:string"  minOccurs="0"/>
+            <xs:element name="pointsOfContact">
+                <xs:complexType>
+                    <xs:sequence>
+                    	<xs:element name="PointOfContact"
+                    		type="PointOfContactType" maxOccurs="unbounded" minOccurs="0">
+                    	</xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="propertyType">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="value" type="xs:string" maxOccurs="1" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="historyType">
+        <xs:sequence>
+            <xs:element name="historyId" type="idType" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="callType" type="callCategoryType" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="company" type="xs:string" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="time" type="timeType" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="notes" type="xs:string" maxOccurs="1" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+	<xs:complexType name="userCredentialsType">
+    	<xs:sequence>
+    		<xs:element name="aor" type="xs:string"></xs:element>
+    		<xs:element name="password" type="xs:string"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+   
+	<xs:complexType name="userType">
+		<xs:sequence>
+			<xs:element name="loginName" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="password" type="xs:string" maxOccurs="1" minOccurs="0"/>
+		</xs:sequence>	
+	</xs:complexType>
+
+	<xs:complexType name="userUdaType">
+		<xs:sequence>
+			<xs:element name="activityWindowDisplayable" type="xs:int" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="activityWindowDockLocation" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="activityWindowDockable" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="activityWindowHoldCallSwitchBehavior" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="activityWindowMaxDisplay" type="xs:int" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="defaultApplication" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="displayIncomingInSystemTray" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="displayMainFormOnStartup" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="enableUITearOffs" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="quickFinderHideDelay" type="xs:int" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="quickFinderHideShortCutKeys" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="quickFinderLaunchShortCutKeys" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="quickFinderMaxDisplay" type="xs:int" maxOccurs="1" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="userCdiType">
+    	<xs:sequence>
+	    	<xs:element name="oldestCallWaiting" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="cLIPreference" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="language"  type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="characterSet" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="traderGroupId" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="deskLocation" type="xs:string" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="billingGroupId" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="timeZone" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="handsetSelectMode" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="handsetRecordingWarningTone" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="recordProtocol" type="recordProtocolTypeEnum" maxOccurs="1" minOccurs="0"/>
+	    	
+	    	<xs:element name="autoHold" type="enumAutoHoldType" maxOccurs="1" minOccurs="0"/>
+	    	
+	    	<xs:element name="handsetMuteOption" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="micMuteOption" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="holdQueue" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="holdRecallTime" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="audioOnHoldId" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="handsetBtn" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="ringLinePref" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="blockingTone" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="maxDivertDigits" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="lHsetPressed" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="lHsetReleased" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="rHsetPressed" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="rHsetReleased" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="iCMDivertExt" type="xs:string" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="iCMDivertCondition" type="enumICMDivertCondition" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="floatBtnRows" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="fixedBtnRows" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="callDiversion" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="assignLine" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="attrButton" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="contrlFctnButton" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="moduleFctnButton" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="rcvVol" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="speedDial" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="swap" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="undoAction" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="speakers" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="privacy" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element name="floatAllIncoming" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+	    </xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="codecType">
+		<xs:sequence>
+			<xs:element name="type" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="packetPeriod" type="xs:int" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="vAD" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="deviceUdaType">
+		<xs:sequence>		
+			<xs:element  name="audioSpeakerVolume" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element  name="audioMicrophoneVolume" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element  name="logFileName" type="xs:string" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element  name="logFileRotation" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element  name="maxLogFileSize" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element  name="compressLogFiles" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element  name="autoUpdateDownloadLocation" type="xs:string" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element  name="autoUpdateTimeout" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element  name="autoUpdateRetryCount" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element  name="audioNetEQ" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element  name="audioNetEQBGN" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element  name="audioVAD" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element  name="audioNS" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element  name="audioAGC" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element  name="audioEC" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element  name="audioVQE" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element  name="audioMicrophoneBoost" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element  name="audioStereoPlayout" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element  name="audioRTCPXR" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element  name="rTCP" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+	    	<xs:element  name="logLevel" type="xs:int" maxOccurs="1" minOccurs="0"/>
+	    </xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="PointOfContactType">
+		<xs:sequence>
+			<xs:element name="contactId" type="xs:int"  maxOccurs="1" minOccurs="0"/>
+			<xs:element name="data" type="xs:string"  maxOccurs="1" minOccurs="0"/>
+			<xs:element name="mediaType" type="enumMediaType"  maxOccurs="1" minOccurs="0"/>
+			<xs:element name="descriptor" type="xs:string"  maxOccurs="1" minOccurs="0"/>
+			<xs:element name="default" type="xs:boolean"  maxOccurs="1" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="buttonType">
+		<xs:sequence>
+		    <xs:element name="buttonId" type="idType" />
+		    <xs:element name="autoHuntEnabled" type="xs:boolean" />
+			<xs:element name="autoSignal" type="xs:boolean" />
+            <xs:element name="buttonLabel" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="buttonLocked" type="xs:boolean" />
+			<xs:element name="buttonNumber" type="xs:int" />
+			<xs:element name="buttonType" type="enumButtonType" />
+			<xs:element name="destination" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="icon" type="iconTypeEnum" />
+			<xs:element name="includeInCallHistory" type="xs:boolean" />
+			<xs:element name="incomingActionCLI" type="incomingActionCLITypeEnum" />
+			<xs:element name="incomingActionPriority" type="incomingActionPriorityTypeEnum" />
+			<xs:element name="incomingActionRings" type="incomingActionRingsTypeEnum" />
+			<xs:element name="initiateCallOnSeize" type="xs:boolean" />
+			<xs:element name="keySequence" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="pointOfContactId" type="idType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="directoryContactType" type="directoryContactType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="resourceAor" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="resourceAorType" type="resourceAorType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="appearance" type="xs:int" maxOccurs="1" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="userTurretType">
+    	<xs:sequence>
+    		<xs:element name="btnCliFontfmLatin" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="btnCliFontszLatin" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="btnCliFontwtLatin" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="btnDesFontfmLatin" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="btnDesFontszLatin" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="btnDesFontwtLatin" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="btnLabelWrap" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="callRinger" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="dateDisplayFormat" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="fastPagingSpeed" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="lowPriRing" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="msgLineRing" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="msgRinger" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="progBarHeldGran" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="progBarHeldMaxSec" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="progBarIncGran" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="progBarIncShown" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="progBarHeldShown" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="ringerVol" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="progBarIncMaxSec" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="highPriRing" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    	</xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="enterpriseType">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="instance" type="instanceType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="sphere" type="sphereType" maxOccurs="1" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="instanceType">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="domainName" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="cliOnFloat" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="holdQueue" type="enumHoldQueueType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="holdToggle" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="intercomBroadcast" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="intercomSplash"
+				type="enumIntercomSplashType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="intrusionTone" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="oneButtonDivert" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="prefixOrSimplexBroadcast"
+				type="enumPresetSimplexType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="privacy" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="recordWarningTone"
+				type="enumRecordWarningToneType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="recordOnDemand"
+				type="enumRecordOnDemandType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="zone" type="zoneType" maxOccurs="unbounded" minOccurs="1"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="zoneType">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+    <xs:complexType name="deviceType">
+    	<xs:sequence>
+    		<xs:element name="id" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="assignedVersionRevision" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="configUpdatedDate" type="xs:dateTime" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="deployedDate" type="xs:dateTime" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="deviceState" type="enumDeviceStateType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="domainName" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="equipped" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="httpPort" type="xs:int" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="httpsPort" type="xs:int" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="ipAddress" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="ipAddress2" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="inventoryInfo" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="inventoryRegistrationTime" type="xs:dateTime" maxOccurs="1" minOccurs="0"/>
+			<!-- <xs:element name="name" type="xs:string"/> -->
+			<xs:element name="numberOfRTPPorts" type="xs:int" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="purchaseDate" type="xs:dateTime" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="rtpPortStart" type="xs:int" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="sipPort" type="xs:int" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="sipsPort" type="xs:int" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="serialNumber" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="subnetmask" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="usingDhcp" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="warrantyPeriod" type="xs:string" maxOccurs="1" minOccurs="0"/>
+		</xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="dunkinLocationType">
+    	<xs:sequence>
+			<xs:element name="floor" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="locationType" type="enumLocationType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="timeZone" type="xs:int" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="timeZoneDiff" type="xs:int" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="address" type="addressType" maxOccurs="1" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="addressType">
+		<xs:sequence>
+			<xs:element name="address1" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="address2" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="city" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="state" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="country" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="postalcode" type="xs:string" maxOccurs="1" minOccurs="0"/>	
+		</xs:sequence>
+	</xs:complexType>
+
+    <xs:complexType name="deviceTypeType">
+    	<xs:sequence>
+    		<xs:element name="name" type="enumDeviceTypeName" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="description" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="value" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="lastModifiedDate" type="xs:dateTime" maxOccurs="1" minOccurs="0"/>
+		</xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="sphereType">
+    	<xs:sequence>
+    		<xs:element name="Name" type="xs:string"></xs:element>
+    		<xs:element name="DomainName" type="xs:string"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="categoryType">
+    	<xs:sequence>
+    		<xs:element name="directoryID" type="idType" maxOccurs="1" minOccurs="0"></xs:element>
+    		<xs:element name="directoryType" type="directoryContactType" maxOccurs="1" minOccurs="0"></xs:element>
+    		<xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="0"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="directoryCategoryContentsType">
+    	<xs:sequence>
+    		<xs:element name="categories" type="categoryType"
+    			maxOccurs="unbounded" minOccurs="0" />
+    		<xs:element name="contacts" type="immutableContactType" maxOccurs="unbounded" minOccurs="0"/>
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="logMessageType">
+        <xs:sequence>
+        	<xs:element name="level" type="logLevel" minOccurs="1" maxOccurs="1"/>
+        	<xs:element name="message" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        	<xs:element name="stackTrace" type="xs:string"/>
+        </xs:sequence>    
+    </xs:complexType>
+    
+    <xs:complexType name="diagnosticsAttributeType">
+    	<xs:sequence>
+    		<xs:element name="name" type="xs:string"/>
+    		<xs:element name="value" type="xs:string"/>
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="osAttributeType">
+    	<xs:sequence>
+    		<xs:element name="osAttribute" type="diagnosticsAttributeType" maxOccurs="unbounded"/>
+    	</xs:sequence>
+    </xs:complexType>
+	
+	<xs:complexType name="diagnosticsState">
+		<xs:sequence>
+			<xs:element name="line" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="state" type="xs:string"/>
+	</xs:complexType>
+	
+    <xs:complexType name="preferredPointOfContactType">
+    	<xs:sequence>
+        	<xs:element name="data" type="xs:string" minOccurs="0" />
+        	<xs:element name="mediaType" type="pocMediaTypeType" minOccurs="0" />
+        	<xs:element name="pointOfContactType" type="pocTypeType" minOccurs="0" />
+        	<xs:element name="descriptor" type="xs:string" maxOccurs="unbounded" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="categoriesType">
+    	<xs:sequence>
+    		<xs:element name="category" type="categoryType" maxOccurs="unbounded" minOccurs="0"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="contactsType">
+    	<xs:sequence>
+    		<xs:element name="contact" type="immutableContactType" maxOccurs="unbounded" minOccurs="0"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="mfuPointOfContactType">
+    	<xs:sequence>
+    		<xs:element name="contactId" type="idType" />
+    		<xs:element name="contactType" type="contactCategoryType"  />
+    		<xs:element name="canonicalName" type="xs:string" />
+    		<xs:element name="company" type="xs:string" />
+    		<xs:element name="pocType" type="pocTypeType" />
+    		<xs:element name="pocMediaType" type="pocMediaTypeType" />
+    		<xs:element name="data" type="xs:string" />
+    	</xs:sequence>
+    </xs:complexType>
+      
+    <xs:complexType name="functionButtonType">
+    	<xs:sequence>
+    		<xs:element name="buttonId" type="idType" />
+    		<xs:element name="canonicalName" type="xs:string" />
+    		<xs:element name="type" type="xs:string" />
+    	</xs:sequence>
+    </xs:complexType>
+    
+     <xs:complexType name="speakerChannelType">
+    	<xs:sequence>
+    		<xs:element name="speakerNumber" type="xs:int" />
+    		<xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="inGroup1" type="xs:boolean" />
+    		<xs:element name="inGroup2" type="xs:boolean" />
+    		<xs:element name="status" type="enumSpeakerChannelStatusType" />
+    		<xs:element name="volumeLevel" type="xs:int" />
+    		<xs:element name="resourceAor" type="xs:string" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="appearance" type="xs:int" maxOccurs="1" minOccurs="0"/>
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="licensableFeaturesType">
+    	<xs:sequence>
+    		<xs:element name="enterpriseCommunication" type="xs:boolean" />
+    		<xs:element name="traderLite" type="xs:boolean" />
+    		<xs:element name="turretCompanion" type="xs:boolean" />
+    		<xs:element name="clickToDial" type="xs:boolean" />
+    		<xs:element name="quickFinder" type="xs:boolean" />
+    		<xs:element name="precense" type="xs:boolean" />
+    		<xs:element name="bcp" type="xs:boolean" />
+    		<xs:element name="scl" type="xs:int" />
+    	</xs:sequence>
+    </xs:complexType>
+    
+</xs:schema>

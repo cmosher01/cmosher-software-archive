@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+			xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+			xmlns="http://www.ipc.com/uda/types" 
+			elementFormDefault="qualified" 
+			jaxb:version="2.0" 
+			jaxb:package="com.ipc.uda.types.commands"
+			attributeFormDefault="unqualified" 
+			targetNamespace="http://www.ipc.com/uda/types">
+		
+    <xs:include schemaLocation="udaEntityTypes.xsd"/>
+
+    <xs:complexType name="commandType">
+        <xs:choice>
+        	<xs:element name="forceLogOff" type="forceLogOffCommand" />
+            <xs:element name="pressButton" type="pressButtonCommand"/>
+            <xs:element name="setPageSize" type="setPageSizeCommand"/>
+            <xs:element name="releaseCall" type="releaseCallCommand"/>
+            <xs:element name="addPersonalContact" type="addPersonalContactCommand"/>
+            <xs:element name="updatePersonalContact" type="updatePersonalContactCommand"/>
+            <xs:element name="deletePersonalContact" type="deletePersonalContactCommand"/>
+            <xs:element name="updateDeviceConfiguration" type="updateDeviceConfigurationCommand"/>
+            <xs:element name="updateUserConfiguration" type="updateUserConfigurationCommand"/>
+            <xs:element name="addButton" type="addButtonCommand"/>
+            <xs:element name="updateButton" type="updateButtonCommand"/>
+            <xs:element name="removeButton" type="removeButtonCommand"/>
+            <xs:element name="logMessage" type="logMessageCommand"/>
+            <xs:element name="addInstancePOCToFavorites" type="addInstancePOCToFavoritesCommand" />
+            <xs:element name="addPersonalPOCToFavorites" type="addPersonalPOCToFavoritesCommand" />
+            <xs:element name="makeIcmP2PCall" type="makeIcmP2PCallCommand" />
+            <xs:element name="makeDirPWCall" type="makeDirPWCallCommand" />
+            <xs:element name="answerIcmCall" type="answerIcmCallCommand" />
+            <xs:element name="dialDigits" type="dialDigitsCommand"/>
+            <xs:element name="channelDialDigits" type="channelDialDigitsCommand"/>
+            <xs:element name="conference" type="conferenceCommand"/>
+            <xs:element name="pressSpeakerChannel" type="pressSpeakerChannelCommand"/>
+            <xs:element name="releaseSpeakerChannel" type="releaseSpeakerChannelCommand"/>
+            <xs:element name="pressSpeakerChannelPtt" type="pressSpeakerChannelPttCommand"/>
+            <xs:element name="releaseSpeakerChannelPtt" type="releaseSpeakerChannelPttCommand"/>
+            <xs:element name="pressSpeakerChannelMute" type="pressSpeakerChannelMuteCommand"/>
+            <xs:element name="releaseSpeakerChannelMute" type="releaseSpeakerChannelMuteCommand"/>
+            <xs:element name="pressMuteAllSpeakerChannels" type="pressMuteAllSpeakerChannelsCommand"/>
+            <xs:element name="releaseMuteAllSpeakerChannels" type="releaseMuteAllSpeakerChannelsCommand"/>
+            <xs:element name="pressMuteAllOtherSpeakerChannels" type="pressMuteAllOtherSpeakerChannelsCommand"/>
+            <xs:element name="releaseMuteAllOtherSpeakerChannels" type="releaseMuteAllOtherSpeakerChannelsCommand"/>
+            <xs:element name="setSpeakerChannelVolume" type="setSpeakerChannelVolumeCommand"/>
+            <xs:element name="pressSpeakerGroupTalk" type="pressSpeakerGroupTalkCommand"/>
+            <xs:element name="releaseSpeakerGroupTalk" type="releaseSpeakerGroupTalkCommand"/>
+            <xs:element name="addSpeakerChannel" type="addSpeakerChannelCommand"/>
+            <xs:element name="updateSpeakerChannel" type="updateSpeakerChannelCommand"/>
+            <xs:element name="removeSpeakerChannel" type="removeSpeakerChannelCommand"/>
+            <xs:element name="cancelTelephonyTone" type="cancelTelephonyToneCommand"/>
+			<xs:element name="sendDiagnostics" type="sendDiagnosticsResultsCommand"/>
+			<xs:element name="startCallProcessing" type="startCallProcessingCommand"/>
+			<xs:element name="hold" type="holdCommand"/>
+			<xs:element name="pressSignalButton" type="pressSignalButtonCommand"/>
+            <xs:element name="releaseSignalButton" type="releaseSignalButtonCommand"/>
+        </xs:choice>
+    </xs:complexType>
+	
+    <xs:complexType name="forceLogOffCommand">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.ForceLogOffCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>       
+    </xs:complexType>
+	
+    <xs:complexType name="pressButtonCommand">
+    	<xs:annotation>
+    		<xs:appinfo>
+    			<jaxb:class
+    				implClass="com.ipc.uda.types.PressButtonCommandImpl" />
+    		</xs:appinfo>
+    	</xs:annotation>
+    	<xs:sequence>
+    	    <xs:element name="buttonId" type="idType"/>
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="setPageSizeCommand">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.SetPageSizeCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="buttonsPerPage" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="releaseCallCommand">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.ReleaseCallCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="handset" type="handsetType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="addPersonalContactCommand">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.AddPersonalContactCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="contact" type="contactType" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="updatePersonalContactCommand">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.UpdatePersonalContactCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="contact" type="contactType" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="deletePersonalContactCommand">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.DeletePersonalContactCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="contactId" type="idType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="updateDeviceConfigurationCommand">
+    	<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.UpdateDeviceConfigurationCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+    	<xs:sequence>
+
+			<xs:element name="deviceUda" type="deviceUdaType" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="updateUserConfigurationCommand">
+    	<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.UpdateUserConfigurationCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+    	<xs:sequence>
+			<xs:element name="userCDI" type="userCdiType" />
+			<xs:element name="userTurret" type="userTurretType" />
+			<xs:element name="userUDA" type="userUdaType" />
+		</xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="addButtonCommand">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.AddButtonCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+        	<xs:element name="autoSignal" type="xs:boolean" />
+            <xs:element name="buttonLabel" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="buttonNumber" type="xs:int" />
+			<xs:element name="buttonType" type="enumButtonType" />
+			<xs:element name="destination" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="icon" type="iconTypeEnum" />
+			<xs:element name="includeInCallHistory" type="xs:boolean" />
+			<xs:element name="incomingActionCLI" type="incomingActionCLITypeEnum" />
+			<xs:element name="incomingActionPriority" type="incomingActionPriorityTypeEnum" />
+			<xs:element name="incomingActionRings" type="incomingActionRingsTypeEnum" />
+			<xs:element name="keySequence" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="pointOfContactId" type="idType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="directoryContactType" type="directoryContactType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="resourceAor" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="appearance" type="xs:int" maxOccurs="1" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="updateButtonCommand">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.UpdateButtonCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="buttonId" type="idType" />
+		    <xs:element name="autoSignal" type="xs:boolean" />
+            <xs:element name="buttonLabel" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="buttonNumber" type="xs:int" />
+			<xs:element name="buttonType" type="enumButtonType" />
+			<xs:element name="destination" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="icon" type="iconTypeEnum" />
+			<xs:element name="includeInCallHistory" type="xs:boolean" />
+			<xs:element name="incomingActionCLI" type="incomingActionCLITypeEnum" />
+			<xs:element name="incomingActionPriority" type="incomingActionPriorityTypeEnum" />
+			<xs:element name="incomingActionRings" type="incomingActionRingsTypeEnum" />
+			<xs:element name="keySequence" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="pointOfContactId" type="idType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="directoryContactType" type="directoryContactType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="resourceAor" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="appearance" type="xs:int" maxOccurs="1" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="removeButtonCommand">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.RemoveButtonCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="buttonId" type="idType" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="logMessageCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.LogMessageCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+			<xs:element name="logMessage" type="logMessageType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="addInstancePOCToFavoritesCommand">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.AddInstancePOCToFavoritesCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="pointOfContact" type="PointOfContactType" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="addPersonalPOCToFavoritesCommand">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.AddPersonalPOCToFavoritesCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="pointOfContact" type="PointOfContactType" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="makeIcmP2PCallCommand">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.MakeIcmP2PCallCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="userAor" type="xs:string"/>    
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="makeDirPWCallCommand">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.MakeDirPWCallCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="resourceAor" type="xs:string"/>    
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="answerIcmCallCommand">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.AnswerIcmCallCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="userAor" type="xs:string"/>    
+        </xs:sequence>        
+    </xs:complexType>
+    
+	<xs:complexType name="dialDigitsCommand">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.DialDigitsCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="handset" type="handsetType"/>
+            <xs:element name="digits" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+        
+    <xs:complexType name="channelDialDigitsCommand">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.ChannelDialDigitsCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="speakerNumber" type="xs:int" />
+            <xs:element name="digits" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+	<xs:complexType name="conferenceCommand">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.ConferenceCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="handset" type="handsetType"/>
+        </xs:sequence>
+    </xs:complexType>
+     
+
+    <xs:complexType name="sendDiagnosticsResultsCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.SendDiagnosticsResultsCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+		<xs:sequence>
+			<xs:element name="diagnosticsResult" type="diagnosticsResultType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>  
+    </xs:complexType>
+    
+    <xs:complexType name="diagnosticsResultType">
+		<xs:sequence>
+			<xs:element name="jobID" type="xs:int"/>
+        	<xs:element name="result" type="diagnosticsResult" minOccurs="0" maxOccurs="1"/>
+        	<xs:element name="output" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+	<xs:complexType name="pressSpeakerChannelCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.PressSpeakerChannelCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+			<xs:element name="speakerNumber" type="xs:int" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="releaseSpeakerChannelCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.ReleaseSpeakerChannelCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+			<xs:element name="speakerNumber" type="xs:int" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="pressSpeakerChannelPttCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.PressSpeakerChannelPttCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+			<xs:element name="speakerNumber" type="xs:int" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="releaseSpeakerChannelPttCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.ReleaseSpeakerChannelPttCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+			<xs:element name="speakerNumber" type="xs:int" />
+        </xs:sequence>
+    </xs:complexType>
+   
+    <xs:complexType name="pressSpeakerChannelMuteCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.PressSpeakerChannelMuteCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+			<xs:element name="speakerNumber" type="xs:int" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="releaseSpeakerChannelMuteCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.ReleaseSpeakerChannelMuteCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+			<xs:element name="speakerNumber" type="xs:int" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="pressMuteAllSpeakerChannelsCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.PressMuteAllSpeakerChannelsCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:complexType>
+    
+    <xs:complexType name="releaseMuteAllSpeakerChannelsCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.ReleaseMuteAllSpeakerChannelsCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:complexType>
+    
+    <xs:complexType name="pressMuteAllOtherSpeakerChannelsCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.PressMuteAllOtherSpeakerChannelsCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+			<xs:element name="speakerNumber" type="xs:int" />
+        </xs:sequence>
+    </xs:complexType>
+    
+     <xs:complexType name="releaseMuteAllOtherSpeakerChannelsCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.ReleaseMuteAllOtherSpeakerChannelsCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+			<xs:element name="speakerNumber" type="xs:int" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="setSpeakerChannelVolumeCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.SetSpeakerChannelVolumeCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+			<xs:element name="speakerNumber" type="xs:int" />
+        	<xs:element name="level" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="pressSpeakerGroupTalkCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.PressSpeakerGroupTalkCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+			<xs:element name="group" type="speakerGroupType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="releaseSpeakerGroupTalkCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.ReleaseSpeakerGroupTalkCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+			<xs:element name="group" type="speakerGroupType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="addSpeakerChannelCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.AddSpeakerChannelCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+        	<xs:element name="speakerNumber" type="xs:int" />
+			<xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="inGroup1" type="xs:boolean" />
+    		<xs:element name="inGroup2" type="xs:boolean" />
+    		<xs:element name="resourceAor" type="xs:string" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="appearance" type="xs:int" maxOccurs="1" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="updateSpeakerChannelCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.UpdateSpeakerChannelCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+			<xs:element name="speakerNumber" type="xs:int" />
+    		<xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="0"/>
+    		<xs:element name="inGroup1" type="xs:boolean" />
+    		<xs:element name="inGroup2" type="xs:boolean" />
+    		<xs:element name="resourceAor" type="xs:string" />
+    		<xs:element name="appearance" type="xs:int" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="cancelTelephonyToneCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.CancelTelephonyToneCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:complexType>
+    
+    <xs:complexType name="removeSpeakerChannelCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.RemoveSpeakerChannelCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+			<xs:element name="speakerNumber" type="xs:int" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="startCallProcessingCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.StartCallProcessingCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:complexType>
+    
+     <xs:complexType name="holdCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.HoldCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+         <xs:sequence>
+			<xs:element name="handset" type="handsetType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="pressSignalButtonCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.PressSignalButtonCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+			<xs:element name="handset" type="handsetType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="releaseSignalButtonCommand">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.ReleaseSignalButtonCommandImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+			<xs:element name="handset" type="handsetType"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

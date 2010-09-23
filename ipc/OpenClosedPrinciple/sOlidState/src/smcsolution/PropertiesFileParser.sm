@@ -1,0 +1,45 @@
+FSMName PropertiesFileParser
+Context PropertiesFileActions
+Initial want_name
+FSMGenerator smc.generator.java.SMJavaGenerator
+Exception ParseException
+Pragma Package smcsolution
+
+//  ws  whitespace
+//  eq  equals
+//  x   letter/digit
+//  oth other character
+
+
+{
+	want_name
+	{
+		ws	*			{}
+		x	name		{append_name}
+	}
+	name
+	{
+		x	*			{append_name}
+		ws	want_equals	{}
+		eq	want_value	{}
+	}
+	want_equals
+	{
+		ws	*			{}
+		eq	want_value	{}
+	}
+	want_value
+	{
+		ws	*			{}
+		eq	value		{append_value}
+		x	value		{append_value}
+		oth	value		{append_value}
+	}
+	value
+	{
+		eq	*			{append_value}
+		x	*			{append_value}
+		oth	*			{append_value}
+		ws	*			{append_value}
+	}
+}

@@ -1,0 +1,11 @@
+<udaMessage xmlns="http://www.ipc.com/uda/types">
+	<udaRequest>
+		<command>
+			<dialDigits>
+					<handset>LEFT</handset>
+					<digits>2035551212</digits>
+			</dialDigits>
+		</command>
+	</udaRequest>
+</udaMessage>
+

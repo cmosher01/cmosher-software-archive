@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- mxml/BooleanComboBox.mxml -->
+
+<mx:ComboBox xmlns:mx="http://www.adobe.com/2006/mxml">
+    <mx:dataProvider>
+        <mx:String>True</mx:String>
+        <mx:String>False</mx:String>
+    </mx:dataProvider>
+</mx:ComboBox>

@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+			xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+			xmlns="http://www.ipc.com/uda/types" 
+			elementFormDefault="qualified" 
+			jaxb:version="2.0" 
+			attributeFormDefault="unqualified" 
+			targetNamespace="http://www.ipc.com/uda/types">
+			
+    <xs:include schemaLocation="udaEntityTypes.xsd"/>
+
+    <xs:complexType name="queryResultType">
+		<xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.QueryResult"/>
+            </xs:appinfo>
+        </xs:annotation>
+        
+		<xs:choice>
+			<xs:element name="logOnResult" type="logOnQueryResult" />
+			<xs:element name="logOffResult" type="logOffQueryResult" />
+			<xs:element name="licenseList" type="licenseListResult" />
+			<xs:element name="coreConfigurationResult" type="coreConfigurationResultType"/>
+			<xs:element name="deviceConfigurationResult" type="deviceConfigurationResultType" />
+			<xs:element name="softphoneConfigurationResult" type="softphoneConfigurationResultType"/>
+			<xs:element name="userConfigurationResult" type="userConfigurationResultType" />
+			<xs:element name="updateableDeviceConfigurationResult" type="updateableDeviceConfigurationResultType"/>
+			<xs:element name="updateableUserConfigurationResult" type="updateableUserConfigurationResultType"/>
+			<xs:element name="directoryList" type="directoryListResult" />
+			<xs:element name="directoryNameList" type="directoryNameListResult" />
+			<xs:element name="directoryCategoryContents" type="directoryCategoryContentsType" />
+			<xs:element name="contactDetailsResult" type="contactDetailsResultType" />
+			<xs:element name="contactHistoryResult" type="contactHistoryResultType" />
+			<xs:element name="instanceContactDetails" type="instanceContactDetailsResult" />
+			<xs:element name="instanceContactHistory" type="instanceContactHistoryResult" />
+			<xs:element name="personalContactDetails" type="personalContactDetailsResult" />
+			<xs:element name="personalContactHistory" type="personalContactHistoryResult" />
+			<xs:element name="callDetails" type="callDetailsResult" />
+			<xs:element name="buttonSheet" type="buttonSheetQueryResultType"/>
+			<xs:element name="mfuPointOfContactResult" type="mfuPointOfContactResultType"/>
+			<xs:element name="functionButtonsResult" type="functionButtonsResultType"/>
+			<xs:element name="speakerChannelResult" type="speakerChannelResultType"/>
+			<xs:element name="validateResourceAORResult" type="validateResourceAORResultType"/>
+			<xs:element name="licensableFeaturesResult" type="licensableFeaturesResultType"/>
+			
+			<xs:element name="personalDirectoryList" type="personalDirectoryListResult" />
+			<xs:element name="instanceDirectoryList" type="instanceDirectoryListResult" />
+			</xs:choice>
+    </xs:complexType>
+
+	<xs:complexType name="logOnQueryResult">
+		<xs:sequence>
+			<xs:element name="status" type="statusType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="message" type="xs:string" maxOccurs="1" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="logOffQueryResult">
+		<xs:sequence>
+			<xs:element name="status" type="statusType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="message" type="xs:string" maxOccurs="1" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="licenseListResult">
+        <xs:sequence>
+            <xs:element name="feature" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="0"/>
+                        <xs:element name="licensed" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="coreConfigurationResultType">
+		<xs:sequence>
+			<xs:element name="compressLogFiles" type="xs:boolean" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="logLevel" type="xs:int" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="logFileName" type="xs:string" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="logFileRotation" type="xs:int" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="maxLogFileSize" type="xs:int" maxOccurs="1" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="deviceConfigurationResultType">
+		<xs:sequence>
+			<xs:element name="enterprise" type="enterpriseType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="codec" type="codecType" maxOccurs="unbounded" minOccurs="0" />
+			<xs:element name="device" type="deviceType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="location" type="dunkinLocationType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="deviceUda" type="deviceUdaType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="deviceType" type="deviceTypeType" maxOccurs="1" minOccurs="0"/>
+
+		</xs:sequence>
+	</xs:complexType>	
+	
+	<xs:complexType name="softphoneConfigurationResultType">
+		<xs:sequence>
+			<xs:element name="audioAGC" type="xs:int"  maxOccurs="1" minOccurs="0"/>
+			<xs:element name="audioEC" type="xs:int"  maxOccurs="1" minOccurs="0"/>
+			<xs:element name="audioMicBoost" type="xs:boolean"  maxOccurs="1" minOccurs="0"/>
+			<xs:element name="audioMicVolume" type="xs:int"  maxOccurs="1" minOccurs="0"/>
+			<xs:element name="audioNS" type="xs:int"  maxOccurs="1" minOccurs="0"/>
+			<xs:element name="audioNetEQ" type="xs:int"  maxOccurs="1" minOccurs="0"/>
+			<xs:element name="audioNetEQBGN" type="xs:int"  maxOccurs="1" minOccurs="0"/>
+			<xs:element name="audioRTCPXR" type="xs:boolean"  maxOccurs="1" minOccurs="0"/>
+			<xs:element name="audioSpeakerVolume" type="xs:int"  maxOccurs="1" minOccurs="0"/>
+			<xs:element name="audioStereoPlayout" type="xs:boolean"  maxOccurs="1" minOccurs="0"/>
+			<xs:element name="audioVAD" type="xs:int"  maxOccurs="1" minOccurs="0"/>
+			<xs:element name="audioVQE" type="xs:int"  maxOccurs="1" minOccurs="0"/>
+			<xs:element name="RTCP" type="xs:boolean"  maxOccurs="1" minOccurs="0"/>
+			<xs:element name="audioCodecs" type="codecType" maxOccurs="unbounded" minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="userConfigurationResultType">
+		<xs:sequence>
+			<xs:element name="user" type="userType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="userUda" type="userUdaType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="userCdi" type="userCdiType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>	
+	</xs:complexType>
+	
+	<xs:complexType name="updateableDeviceConfigurationResultType">
+    	<xs:sequence>
+			<xs:element name="deviceUDA" type="deviceUdaType" maxOccurs="1" minOccurs="0"/>
+		</xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="updateableUserConfigurationResultType">
+    	<xs:sequence>
+			<xs:element name="userCDI" type="userCdiType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="userTurret" type="userTurretType" maxOccurs="1" minOccurs="0"/>
+			<xs:element name="userUDA" type="userUdaType" maxOccurs="1" minOccurs="0"/>
+		</xs:sequence>
+    </xs:complexType>
+	
+	<xs:complexType name="directoryListResult">
+		<xs:sequence>
+			<xs:element name="contact" type="immutableContactType" maxOccurs="unbounded" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="directoryNameListResult">
+		<xs:sequence>
+			<xs:element name="category" type="categoryType" maxOccurs="unbounded" minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="directoryCategoryContents">
+		<xs:sequence>
+			<xs:element name="category" type="categoryType" maxOccurs="unbounded" minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+		
+	<xs:complexType name="instanceContactDetailsResult">
+        <xs:sequence>
+            <xs:element name="contact" type="contactType" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="instanceContactHistoryResult">
+        <xs:sequence>
+            <xs:element name="contactHistory" type="historyType" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+		
+	<xs:complexType name="personalContactDetailsResult">
+        <xs:sequence>
+            <xs:element name="contact" type="contactType" />
+        </xs:sequence>
+    </xs:complexType>
+
+	<xs:complexType name="personalContactHistoryResult">
+        <xs:sequence>
+            <xs:element name="contactHistory" type="historyType" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+		
+	<xs:complexType name="callDetailsResult">
+        <xs:sequence>
+            <xs:element name="callEvent" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="time" type="timeType" maxOccurs="1" minOccurs="0"/>
+               			<xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="0"/>
+                        <xs:element name="type" type="xs:string" maxOccurs="1" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+	<xs:complexType name="buttonSheetQueryResultType">
+		<xs:sequence>
+			<xs:element name="button" type="buttonType" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="personalDirectoryListResult">
+		<xs:sequence>
+			<xs:element name="contact" maxOccurs="unbounded" type="contactType" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="instanceDirectoryListResult">
+		<xs:sequence>
+			<xs:element name="contact" maxOccurs="unbounded" type="contactType" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+
+	<xs:complexType name="directoryListContactsType">
+		<xs:sequence>
+			<xs:element name="contact" type="immutableContactType" maxOccurs="unbounded" minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="contactDetailsResultType">
+		<xs:sequence>
+			<xs:element name="contact" type="contactType"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="contactHistoryResultType">
+		<xs:sequence>
+			<xs:element name="historyRecords" type="historyType" maxOccurs="unbounded" minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="historyRecordsType">
+		<xs:sequence>
+			<xs:element name="historyRecord" type="historyType" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="mfuPointOfContactResultType">
+		<xs:sequence>
+			<xs:element name="mfuContact" type="mfuPointOfContactType" maxOccurs="unbounded" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+	<xs:complexType name="functionButtonsResultType">
+		<xs:sequence>
+			<xs:element name="functionButton" type="functionButtonType" maxOccurs="unbounded" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="speakerChannelResultType">
+		<xs:sequence>
+			<xs:element name="speakerChannel" type="speakerChannelType" maxOccurs="unbounded" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="validateResourceAORResultType">
+		<xs:sequence>
+			<xs:element name="resourceAor" type="xs:string" />
+			<xs:element name="maxAppearance" type="xs:int" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="licensableFeaturesResultType">
+		<xs:sequence>
+			<xs:element name="licensableFeatures" type="licensableFeaturesType" maxOccurs="1" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

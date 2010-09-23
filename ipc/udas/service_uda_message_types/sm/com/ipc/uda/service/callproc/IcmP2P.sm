@@ -1,0 +1,323 @@
+%{
+// Copyright (C) 2010 IPC Systems, Inc. All rights reserved.
+
+/*
+ * Finite state machine for intercom calls.
+ *
+ * author: Chris Mosher
+ */
+%}
+
+%package com.ipc.uda.service.callproc
+%import com.ipc.uda.types.LineStatusType
+%import com.ipc.va.cti.callControl.events.*
+%import com.ipc.va.cti.EventCause
+%class IcmP2P
+%fsmclass IcmP2PFsmContext
+
+%start IcmP2PFsm::Null
+
+
+
+
+
+%map IcmP2PFsm
+%%
+// Contains transitions that apply to all states in this FSM (%map)
+Default
+{
+    // An unexpected event occurred
+    Default
+        nil
+        {
+            undefinedChange(endState);
+        }
+}
+
+
+
+// Nothing is happening.
+Null
+{
+    // We are getting notified (by CTI) of an incoming ICM call.
+    ctiOffered(offered : CallControlOfferedEvent)
+        Incoming/push(IcmP2PIncomingFsm::Offered)
+        {
+            setOfferedAor(offered);
+        }
+
+    // The user is initiating an outgoing ICM call.
+    udacIcmOutgoing(aor : String)
+        Outgoing/push(IcmP2POutgoingFsm::MakingCall)
+        {
+            setAor(aor);
+            putOntoHandset();
+        }
+}
+
+// Incoming ICM calls return here after calling the sub-FSM IcmP2PIncomingFsm
+Incoming
+{
+    // CTI is telling us that our connection to the call is closing,
+    // so we are all done with this call
+    ctiConnectionCleared
+        NullEnd
+        {
+            nothing();
+        }
+
+    // OK, the incoming ICM call is established (connected)
+    ctiEstablished
+        Connected
+        {
+            putOntoHandset();
+        }
+}
+
+// Outgoing ICM calls return here after calling the sub-FSM IcmP2POutgoingFsm
+Outgoing
+{
+    // CTI is telling us that our attempt to make a new call failed for some reason
+    ctiFailed
+        Clearing
+        {
+            nothing();
+        }
+
+    // The user pressed the "release" button to release the call (before the call was even established)
+    udacReleaseCall
+        Clearing
+        {
+            ctiClearConnection(EventCause.CALL_CANCELLED);
+        }
+
+    // OK, the outgoing ICM call is established (connected)
+    ctiEstablished
+        Connected
+        {
+            nothing();
+        }
+}
+
+// There is an active ICM call
+Connected
+    Entry
+    {
+        udacLineStatusUpdated(LineStatusType.I_BUSY);
+    }
+{
+    // CTI is telling us that our connection to the ICM call terminated for some reason
+    ctiFailed
+        Clearing
+        {
+            nothing();
+        }
+
+    // CTI is telling us that the far end released the ICM call
+    ctiConnectionCleared
+        Clearing
+        {
+            nothing();
+        }
+
+    // The user pressed the "release" button to release the ICM call
+    udacReleaseCall
+        Clearing
+        {
+            ctiClearConnection(EventCause.NORMAL_CLEARING);
+        }
+
+	ctiCallInformation(event : CallControlInformationEvent)
+		nil
+		{
+			udacCpiUpdate(event);
+		}
+}
+
+// Last step before going back to IDLE (Null) state is to remove
+// the call from the handset.
+Clearing
+    Entry
+    {
+        removeFromHandset();
+
+        // transition automatically to IDLE (Null) state
+        autoUdaNull(context);
+    }
+{
+    udaNull
+        NullEnd
+        {
+            nothing();
+        }
+}
+
+// Back to IDLE after a call is done, so we need to destroy the Intercom object
+NullEnd
+    Entry
+    {
+        udacLineStatusUpdated(LineStatusType.IDLE);
+        destroy();
+    }
+{
+}    
+%%
+
+
+
+
+/*
+ * Sub-FSM to handle an incoming ICM call.
+ * Initial state: Offered
+ * Exiting transitions:
+ *     CtiEstablished
+ *     CtiConnectionCleared
+ */
+%map IcmP2PIncomingFsm
+%%
+// Contains transitions that apply to all states in this FSM (%map)
+Default
+{
+    // CTI is telling us that our connection to the call is closing
+    // so return (exit this sub-FSM) with CtiConnectionCleared
+    ctiConnectionCleared
+        pop(ctiConnectionCleared)
+        {
+            nothing();
+        }
+
+    // default handling for any unspecified event
+    Default
+        nil
+        {
+            undefinedChange(endState);
+        }
+}
+
+// CTI has offered us an incoming call
+Offered
+    Entry
+    {
+        // always accept the call
+        autoUdaAccept(context);
+    }
+{
+    // the call has been accepted (by us)
+    udaAccept
+        Ringing // so we are ringing
+        {
+            // tell CTI we are accepting the call
+            ctiAccept();
+        }
+}
+
+// the incoming ICM call is ringing
+Ringing
+    Entry
+    {
+        // play ICM splash tone (ring)
+        udacLineStatusUpdated(LineStatusType.HI_RING);
+    }
+{
+    // the call has been answered (by us)
+    udacIcmAnswer
+        Answering
+        {
+            nothing();
+        }
+}
+
+// waiting for expected Established event from CTI
+Answering
+    Entry
+    {
+        udacLineStatusUpdated(LineStatusType.I_BUSY);
+        // tell CTI we are answering the call
+        ctiAnswer();
+    }
+{
+    // answered OK, so return (exit from the sub-FSM) with CtiEstablished
+    ctiEstablished
+        pop(ctiEstablished)
+        {
+            nothing();
+        }
+}
+%%
+
+
+
+
+
+/*
+ * Sub-FSM to handle an outgoing ICM call.
+ * Initial state: MakingCall
+ * Exiting transitions:
+ *     CtiEstablished
+ *     CtiFailed
+ *     UdacReleaseCall
+ */
+%map IcmP2POutgoingFsm
+%%
+// Contains transitions that apply to all states in this FSM (%map)
+Default
+{
+    // OK, the far end answered, so return (exit this sub-FSM) with CtiEstablished.
+    ctiEstablished
+        pop(ctiEstablished)
+        {
+            nothing();
+        }
+
+    // CTI is telling us that our attempt to make a new call failed for some reason
+    // so return (exit this sub-FSM) with CtiFailed
+    ctiFailed
+        pop(ctiFailed)
+        {
+            nothing();
+        }
+
+    // User pressed the "release" button to release the call (even before it started)
+    // (for example, the far end didn't answer and the user released the call)
+    // so return (exit this sub-FSM) with UdacReleaseCall
+    udacReleaseCall
+        pop(udacReleaseCall)
+        {
+            nothing();
+        }
+
+    // default handling for any unspecified event
+    Default
+        nil
+        {
+            undefinedChange(endState);
+        }
+}
+
+// Telling CTI that we are making a new call
+MakingCall
+    Entry
+    {
+        // make the call in CTI
+        ctiMakeCall();
+        udacLineStatusUpdated(LineStatusType.U_BUSY);
+    }
+{
+    // CTI is telling us the call was delivered to the far end
+    // (for example, is ringing there)
+    ctiDelivered(delivered : CallControlDeliveredEvent)
+        Establishing
+        {
+            nothing();
+        }
+}
+
+// Waiting for the far end to answer the call
+Establishing
+    Entry
+    {
+        udacLineStatusUpdated(LineStatusType.I_BUSY);
+    }
+{
+}
+%%

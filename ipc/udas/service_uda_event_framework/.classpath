@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/service_uda_utils"/>
+	<classpathentry kind="lib" path="/com.ipc.ds.dist/notification/lib/ds-notification-ejb-1.0.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/lib_logging_java"/>
+	<classpathentry kind="lib" path="/3rdparty/junit/junit_4.7/junit-4.7.jar"/>
+	<classpathentry kind="var" path="BEA_HOME/wlserver_10.3/server/lib/api.jar"/>
+	<classpathentry kind="var" path="BEA_HOME/wlserver_10.3/server/lib/weblogic.jar"/>
+	<classpathentry kind="output" path="obj/eclipsebin"/>
+</classpath>

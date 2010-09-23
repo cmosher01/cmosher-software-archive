@@ -1,0 +1,10 @@
+<udaMessage xmlns="http://www.ipc.com/uda/types">
+	<udaRequest>
+		<command>
+			<makeIcmP2PCall>
+				<userAor>4003</userAor>	
+			</makeIcmP2PCall>
+		</command>
+	</udaRequest>
+</udaMessage>
+

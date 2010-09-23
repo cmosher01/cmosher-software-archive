@@ -1,0 +1,40 @@
+package com.ipc.uda.types;
+
+import com.ipc.uda.service.callproc.ButtonSheet;
+import com.ipc.uda.service.callproc.UdaButton;
+import com.ipc.uda.service.context.ExecutableWithContext;
+import com.ipc.uda.service.context.UserContext;
+import com.ipc.uda.service.execution.ExecutionException;
+import com.ipc.uda.service.execution.ExecutionResult;
+import com.ipc.uda.service.util.Nothing;
+import com.ipc.uda.service.util.Optional;
+
+public class PressButtonCommandImpl extends PressButtonCommand implements ExecutableWithContext
+{
+    private UserContext ctx;
+
+    @Override
+    public void setUserContext(final UserContext ctx)
+    {
+        this.ctx = ctx;
+    }
+
+    @Override
+    public Optional<ExecutionResult> execute() throws ExecutionException
+    {
+        final ButtonSheet buttonSheet = this.ctx.getCallContext().getButtonSheet();
+
+        final Optional<UdaButton> optButton = buttonSheet.getButton(this.buttonId);
+
+        if (optButton.exists())
+        {
+            optButton.get().press();
+        }
+        else
+        {
+            throw new ExecutionException("Received pressButton command with unknown button ID: "+this.buttonId);
+        }
+
+        return new Nothing<ExecutionResult>();
+    }
+}

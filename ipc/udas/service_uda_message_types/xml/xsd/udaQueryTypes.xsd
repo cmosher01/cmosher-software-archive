@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+			xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+			xmlns="http://www.ipc.com/uda/types" 
+			targetNamespace="http://www.ipc.com/uda/types" 
+			elementFormDefault="qualified" 
+			attributeFormDefault="unqualified" 
+			jaxb:version="2.0">
+	
+	<xs:include schemaLocation="udaEntityTypes.xsd"/>
+	
+	<xs:complexType name="queryType">
+		<xs:choice>
+			<xs:element name="logOn" type="logOnQuery" />
+			<xs:element name="logOff" type="logOffQuery" />
+			<xs:element name="getCoreConfiguration" type="getCoreConfigurationQuery"/>
+			<xs:element name="getDeviceConfiguration" type="getDeviceConfigurationQuery" />
+			<xs:element name="getSoftphoneConfiguration" type="getSoftphoneConfigurationQuery"/>
+			<xs:element name="getUserConfiguration"	type="getUserConfigurationQuery" />
+			<xs:element name="getUpdateableDeviceConfiguration"	type="getUpdateableDeviceConfigurationQuery"/>
+			<xs:element name="getUpdateableUserConfiguration" type="getUpdateableUserConfigurationQuery"/>
+			<xs:element name="getDirectoryList"	type="getDirectoryListQuery" />
+			<xs:element name="getDirectoryNameList"	type="getDirectoryNameListQuery" />
+			<xs:element name="getDirectoryCategoryContents"	type="getDirectoryCategoryContentsQuery" />
+			<xs:element name="getContactDetails"	type="getContactDetailsQuery" />
+			<xs:element name="getContactHistory"	type="getContactHistoryQuery" />
+			<xs:element name="getInstanceContactDetails" type="getInstanceContactDetailsQuery" />
+			<xs:element name="getInstanceContactHistory" type="getInstanceContactHistoryQuery" />
+			<xs:element name="getPersonalContactDetails" type="getPersonalContactDetailsQuery" />
+            <xs:element name="getPersonalContactHistory" type="getPersonalContactHistoryQuery" />
+            <xs:element name="getContactDetailsFromButtonPage" type="getContactDetailsFromButtonPageQuery" />
+			<xs:element name="getContactHistoryFromButtonPage" type="getContactHistoryFromButtonPageQuery" />
+			<xs:element name="getCallDetails" type="getCallDetailsQuery" />
+			<xs:element name="getButtonSheet" type="getButtonSheetQueryType" />
+			<xs:element name="getMFUPointOfContacts" type="getMFUPointOfContactsQuery" />
+			<xs:element name="getFunctionButtons" type="getFunctionButtonsQuery" />
+			<xs:element name="getSpeakerChannels" type="getSpeakerChannelsQuery" />
+			<xs:element name="validateResourceAOR" type="validateResourceAORQuery" />
+			<xs:element name="getLicensableFeatures" type="getLicensableFeaturesQuery" />
+			
+			
+            <xs:element name="getNextPageOnButtonSheet" type="getNextPageOnButtonSheetQuery" />
+            <xs:element name="getPrevPageOnButtonSheet" type="getPrevPageOnButtonSheetQuery" />
+            <xs:element name="getButtonSheetForThePage" type="getButtonSheetForThePageQuery" />
+            <xs:element name="getInstanceDirectoryList" type="getInstanceDirectoryListQuery" />
+			<xs:element name="getPersonalDirectoryList" type="getPersonalDirectoryListQuery" />
+           </xs:choice>
+	</xs:complexType>
+	
+	<xs:complexType name="logOnQuery">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.LogOnQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="mode" type="enumLicenseModeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="logOffQuery">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.LogOffQueryImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:complexType>
+    
+	<xs:complexType name="getCoreConfigurationQuery">
+    	<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.GetCoreConfigurationQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+    </xs:complexType>
+    
+    <xs:complexType name="getDeviceConfigurationQuery">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.GetDeviceConfigurationQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:complexType>
+	
+    <xs:complexType name="getSoftphoneConfigurationQuery">
+    	<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.GetSoftphoneConfigurationQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+    </xs:complexType>
+    
+    <xs:complexType name="getUserConfigurationQuery">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.GetUserConfigurationQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:complexType>
+	
+    <xs:complexType name="getUpdateableDeviceConfigurationQuery">
+    	<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.GetUpdateableDeviceConfigurationQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+    </xs:complexType>
+    
+    <xs:complexType name="getUpdateableUserConfigurationQuery">
+    	<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.GetUpdateableUserConfigurationQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+    </xs:complexType>
+    
+	<xs:complexType name="getDirectoryListQuery">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.GetDirectoryListQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:complexType>
+	
+	<xs:complexType name="getDirectoryNameListQuery">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class
+					implClass="com.ipc.uda.types.GetDirectoryNameListQueryImpl" />
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:complexType>
+	
+	<xs:complexType name="getDirectoryCategoryContentsQuery">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.GetDirectoryCategoryContentsQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+        <xs:sequence>
+            <xs:element name="directoryID" type="idType"></xs:element>
+            <xs:element name="directoryType" type="directoryContactType"></xs:element>
+            <xs:element name="categoryName" type="xs:string"></xs:element>
+        </xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="getContactDetailsQuery">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.GetContactDetailsQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="contactId" type="idType"/>
+			<xs:element name="contactType" type="directoryContactType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="getContactHistoryQuery">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.GetContactHistoryQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="contactId" type="idType"/>
+			<xs:element name="contactType" type="directoryContactType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="getInstanceContactDetailsQuery">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.GetInstanceContactDetailsQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="contactId" type="idType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="getInstanceContactHistoryQuery">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.GetInstanceContactHistoryQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="contactId" type="idType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="getPersonalContactDetailsQuery">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.GetPersonalContactDetailsQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="contactId" type="idType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="getPersonalContactHistoryQuery">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.GetPersonalContactHistoryQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="contactId" type="idType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+    <xs:complexType name="getContactDetailsFromButtonPageQuery">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.GetContactDetailsFromButtonPageQueryImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="buttonId" type="idType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="getContactHistoryFromButtonPageQuery">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.GetContactHistoryFromButtonPageQueryImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="buttonId" type="idType"/>
+        </xs:sequence>
+    </xs:complexType>
+   
+    <xs:complexType name="getCallDetailsQuery">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.GetCallDetailsQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="historyId" type="idType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+    <xs:complexType name="getButtonSheetQueryType">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.GetButtonSheetQueryImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:complexType>
+    
+     <xs:complexType name="getNextPageOnButtonSheetQuery">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.GetNextPageOnButtonSheetQueryImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="currentPageNumber" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+     <xs:complexType name="getPrevPageOnButtonSheetQuery">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.GetPrevPageOnButtonSheetQueryImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+         <xs:sequence>
+            <xs:element name="currentPageNumber" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+     <xs:complexType name="getButtonSheetForThePageQuery">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.GetButtonSheetForThePageQueryImpl"/>
+            </xs:appinfo>
+        </xs:annotation>
+         <xs:sequence>
+            <xs:element name="pageNumber" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="getInstanceDirectoryListQuery">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.GetInstanceDirectoryListQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:complexType>
+	
+	<xs:complexType name="getPersonalDirectoryListQuery">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.GetPersonalDirectoryListQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:complexType>
+		
+	<xs:complexType name="getMFUPointOfContactsQuery">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.GetMFUPointOfContactsQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:complexType>
+	
+	<xs:complexType name="getFunctionButtonsQuery">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.GetFunctionButtonsQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:complexType>
+			
+	<xs:complexType name="getSpeakerChannelsQuery">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.GetSpeakerChannelsQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:complexType>
+	
+	<xs:complexType name="validateResourceAORQuery">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.ValidateResourceAORQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+            <xs:element name="resourceAOR" type="xs:string"/>
+        </xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="getLicensableFeaturesQuery">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.GetLicensableFeaturesQueryImpl"/>
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:complexType>
+		
+</xs:schema>

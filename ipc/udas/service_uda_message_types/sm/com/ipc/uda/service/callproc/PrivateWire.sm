@@ -1,0 +1,1028 @@
+%{
+// Copyright (C) 2010 IPC Systems, Inc. All rights reserved.
+
+/*
+ * Finite state machine for private wire calls.
+ *
+ * author: Chris Mosher
+ */
+%}
+
+%package com.ipc.uda.service.callproc
+%import com.ipc.uda.types.LineStatusType
+%import com.ipc.va.cti.*
+%import com.ipc.va.cti.callControl.*
+%import com.ipc.va.cti.callControl.events.*
+%import com.ipc.va.cti.callControl.services.results.*
+%class PrivateWire
+%fsmclass PrivateWireFsmContext
+
+%start PrivateWireFsm::Null
+
+
+
+
+%map PrivateWireFsm
+%%
+Default
+{
+    Default
+        nil
+        {
+            undefinedChange(endState);
+        }
+
+    lineIdle
+        Null
+        {
+            nothing();
+        }
+
+    udacButtonPressed
+    	nil
+        {
+            nothing();
+        }
+}
+
+
+
+Null
+    Entry
+    {
+        udacLineStatusUpdated(LineStatusType.IDLE);
+        ctiCancelTelephonyTones();
+    }
+{
+    // incoming call
+    lineRing
+        Ringing
+        {
+            nothing();
+        }
+
+    // someone else picked up the line
+    lineBusy
+        UBusy
+        {
+            nothing();
+        }
+
+    // should only happen when FSM is started and app is setting the
+    // initial line state for a line that is already on hold
+    lineHold
+        UHold
+        {
+            nothing();
+        }
+
+    // Should never happen;
+    // Maybe system is just telling us that an idle line is still idle?
+    // OK, fine; we can safely ignore it
+    lineIdle
+        nil
+        {        
+            nothing();
+        }
+
+    // user wants to seize the line
+    // Note that this condition with gaurd clause must come before
+    // the other udacButtonPressed.
+    udacButtonPressed [!ctxt.initiateCallOnSeize()]
+        SeizingInternal
+        {
+            nothing();
+        }
+
+    // user wants to seize the line
+    udacButtonPressed
+        Outgoing/push(Seize::Seize)
+        {
+            nothing();
+        }
+}
+
+Outgoing
+{
+	Success
+		IBusy
+		{
+            nothing();
+		}
+
+	ctiFailed
+		PlayingTone
+		{
+            nothing();
+		}
+
+	// (Possible?) race condition: incoming call arrived immediately after button press.
+	// Act like we went to Ringing state and got a button press.
+	lineRing
+		IBusy
+		{
+            nothing();
+		}
+
+	// lineHold: should never happen. Maybe if a button press command came in immediately
+	// after login on a line that is on U_HOLD???
+	lineHold
+		IBusy
+		{
+            nothing();
+		}
+
+	udacReleaseCall
+		UBusy
+		{
+            nothing();
+		}
+}
+
+PlayingTone
+{
+	udacReleaseCall
+		Null
+		{
+            nothing();
+		}
+	udacButtonPressed [ ctxt.isConference() ]
+		Null
+		{
+            nothing();
+		}
+	udacHold
+        Holding
+        {
+            nothing();
+        }
+    lineIdle
+        nil
+        {        
+            nothing();
+        }
+}
+
+UBusy
+    Entry
+    {
+        udacLineStatusUpdated(LineStatusType.U_BUSY);
+    }
+{
+    // other party went on hook
+    // lineIdle handled by Default
+
+    // other party put the call on hold
+    lineHold
+        UHold
+        {
+            nothing();
+        }
+
+	// lineBusy should never happen, because we are already busy, so just ignore it
+    lineBusy
+        nil
+        {
+            nothing();
+        }
+
+    // lineRing should never happen, because the line is busy and busy line cannot ring.
+    lineRing
+    	Ringing
+    	{
+            nothing();
+    	}
+
+    // user wants to barge into the call
+    udacButtonPressed [ !ctxt.isConference() ]
+        Barging/push(Barge::Seize)
+        {
+            nothing();
+        }
+}
+
+UHold
+    Entry
+    {
+        udacLineStatusUpdated(LineStatusType.U_HOLD);
+    }
+{
+    // lineIdle handled by Default
+    // should only happen if line was forced clear
+
+    // lineHold should never happen, because it's already on hold, so just ignore it
+    lineHold
+    	nil
+        {
+            nothing();
+        }
+
+    // lineRing should never happen, because the line is busy and a busy line cannot ring
+    lineRing
+    	Ringing
+    	{
+            nothing();
+    	}
+
+    // someone else picked up the call (retrieved it from hold)
+    lineBusy
+        UBusy
+        {
+            nothing();
+        }
+
+    // user wants to retrieve the call from hold
+    udacButtonPressed
+        RetrieveYours/push(Seize::Seize)
+        {
+            nothing();
+        }
+}
+
+RetrieveMine
+{
+	Success
+		IBusy
+		{
+            nothing();
+		}
+
+	ctiFailed
+		IHold
+		{
+            nothing();
+		}
+
+	// lineIdle handled by Default
+
+	// possible race condition: user put call on hold and immediately
+	// retrieved, even before we get line HOLD status. If so, we
+	// ignore the HOLD and proceed assuming successfull retrieval
+	lineHold
+		IBusy
+		{
+            nothing();
+		}
+
+	// should never happen?
+	// line went ringing, so I guess we actually answered it?
+	lineRing
+		IBusy
+		{
+            nothing();
+		}
+
+	udacReleaseCall
+		UBusy
+		{
+            nothing();
+		}
+}
+
+
+RetrieveYours
+{
+	Success
+		IBusy
+		{
+            nothing();
+		}
+	ctiFailed
+		UHold
+		{
+            nothing();
+		}
+
+	// lineIdle handled by Default
+
+	lineHold
+		IBusy
+		{
+            nothing();
+		}
+
+	// should never happen?
+	// line went ringing, so I guess we actually answered it?
+	lineRing
+		IBusy
+		{
+            nothing();
+		}
+
+	udacReleaseCall
+		UBusy
+		{
+            nothing();
+		}
+}
+
+Ringing
+    Entry
+    {
+        udacLineStatusUpdated(LineStatusType.HI_RING);
+    }
+{
+    // calling party went on hook (ring no answer; missed call)
+    // lineIdle (handled by Default)
+
+    // someone else answered the call
+    lineBusy
+        UBusy
+        {
+            nothing();
+        }
+
+    // shouldn't happen, but OK if it does; ignore it
+    lineRing
+        nil
+        {
+            nothing();
+        }
+
+    // should never happen?
+    lineHold
+    	UHold
+        {
+            nothing();
+        }
+
+    // user wants to answer the call
+    udacButtonPressed
+        AnswerIncoming/push(Seize::Seize)
+        {
+            nothing();
+        }
+
+	lineCli(name : String, number : String)
+		nil
+		{
+			udacCliUpdate(name,number);
+		}
+}
+
+AnswerIncoming
+{
+	Success
+		IBusy
+		{
+            nothing();
+		}
+	ctiFailed
+		Null
+		{
+            nothing();
+		}
+
+    // race condition: calling party went on hook
+    // lineIdle (handled by Default)
+
+	// should never happen? (race condition?)
+	lineRing
+		nil
+		{
+            nothing();
+		}
+
+	udacReleaseCall
+		UBusy
+		{
+            nothing();
+		}
+
+	// TODO: lineHold?
+}
+
+IBusy
+    Entry
+    {
+        udacLineStatusUpdated(LineStatusType.I_BUSY);
+        putOntoHandset();
+    }
+    Exit
+    {
+        removeFromHandset();
+    }
+{
+    udacReleaseCall
+        UBusy
+        {
+            nothing();
+        }
+
+    ctiConnectionCleared(event : CallControlConnectionClearedEvent)
+        UBusy
+        {
+            nothing();
+        }
+
+    udacHold
+        Holding
+        {
+            nothing();
+        }
+
+    // If line goes idle, still show I_BUSY (because, for example, someone else
+    // could still be barged into our line)... we will go IDLE only when we release
+    // or get Connection Cleared event from CTI
+    lineIdle
+    	Barged
+        {
+            nothing();
+        }
+
+	// lineHold could happen if conference call is placed on hold; we will
+	// get lineHold for all lines in conference
+    lineHold
+        IHold
+	    {
+            nothing();
+	    }
+
+	// TODO: lineRing
+
+	lineBusy
+		nil
+		{
+            nothing();
+		}
+
+	ctiBarged(event : CallControlConferencedEvent)
+		nil
+		{
+			udacBarged(event);
+		}
+
+	udacButtonPressed [ ctxt.isConference() ]
+		Removing
+		{
+            nothing();
+		}
+
+	ctiCallInformation(event : CallControlInformationEvent)
+		nil
+		{
+			udacCpiUpdate(event);
+		}
+
+	udacDigitsDialed( digits : String )
+		nil
+		{
+			ctiDialDigits(digits);
+		}
+}
+
+Removing
+	Entry
+	{
+        udacLineStatusUpdated(LineStatusType.IDLE);
+        ctiConference(ConferenceActionType.PARTY_REMOVE);
+	}
+{
+	lineIdle
+		RemoveGotIdle
+		{
+			nothing();
+		}
+	ctiConferenced(event : CallControlConferencedEvent) [event.getResult()==ResultStatusType.FAILURE]
+		IBusy
+		{
+			nothing();
+		}
+	ctiConferenced(event : CallControlConferencedEvent)
+		RemoveGotConferenced
+		{
+			nothing();
+		}
+}
+
+RemoveGotConferenced
+{
+    // lineIdle (handled by Default)
+}
+
+RemoveGotIdle
+{
+	ctiConferenced(event : CallControlConferencedEvent)
+		Null
+		{
+			nothing();
+		}
+}
+
+Barged
+{
+	udacReleaseCall
+		Null
+		{
+            nothing();
+		}
+
+    ctiConnectionCleared(event : CallControlConnectionClearedEvent)
+		Null
+		{
+            nothing();
+		}
+}
+
+Holding
+    Entry
+    {
+        udacLineStatusUpdated(LineStatusType.I_HOLD);
+    }
+{
+    ctiConnectionCleared(event : CallControlConnectionClearedEvent) [ EventCause.HOLD_DENIAL.equals(event.getEventCause()) ]
+        UBusy
+        {
+            nothing();
+        }
+
+    ctiConnectionCleared(event : CallControlConnectionClearedEvent)
+        IHold
+        {
+            nothing();
+        }
+
+    // lineIdle handled by Default
+
+    lineHold
+        nil
+        {
+            nothing();
+        }
+
+    // lineRing should never happen
+    lineRing
+    	Ringing
+    	{
+            nothing();
+    	}
+
+	// race condition: line went busy before we got Connection Cleared event from CTI
+    lineBusy
+    	UBusy
+        {
+            nothing();
+        }
+}
+
+IHold
+    Entry
+    {
+        udacLineStatusUpdated(LineStatusType.I_HOLD);
+    }
+{
+    lineBusy
+        UBusy
+        {
+            nothing();
+        }
+
+    udacButtonPressed
+        RetrieveMine/push(Seize::Seize)
+        {
+            nothing();
+        }
+
+    // lineIdle handled by Default
+
+    // should never happen? just ignore it
+    lineHold
+        nil
+        {
+            nothing();
+        }
+
+    // should never happen?
+    lineRing
+    	Ringing
+    	{
+            nothing();
+    	}
+}
+
+Barging
+{
+	Success
+		IBusy
+		{
+            udacBarge();
+		}
+
+    ctiFailed
+        UBusy
+        {
+            nothing();
+        }
+
+	// race condition: user put line on hold just as we tried to pick it up.
+	// Go to I_BUSY anyway. After we are there, the line should go BUSY and we
+	// will just ignore it.
+	lineHold
+		IBusy
+		{
+            nothing();
+		}
+
+    // lineIdle (handled by Default)
+
+	// should never happen?
+	// line went ringing, so I guess we actually answered it?
+	lineRing
+		IBusy
+		{
+            nothing();
+		}
+
+	udacReleaseCall
+		UBusy
+		{
+            nothing();
+		}
+}
+
+SeizingInternal
+	Entry
+	{
+		udacLineStatusUpdated(LineStatusType.I_BUSY);
+		ctiSeizeResource(context);
+		putOntoHandset();
+	}
+{
+	lineBusy
+		nil
+		{
+			nothing();
+		}
+
+	udacDigitsDialed( digits : String )
+        Outgoing/push(Seize::Seize)
+        {
+        	setDigits( digits );
+        }			
+
+	udacReleaseCall
+		ReleasingInternal
+		{
+			nothing();
+		}
+
+	udacButtonPressed [ ctxt.isConference() ]
+		ReleasingInternal
+		{
+			nothing();
+		}
+
+	seizeFailed(result : SeizeResourceResult)
+		Null
+		{
+			nothing();
+		}
+}
+
+ReleasingInternal
+	Entry
+	{
+		ctiReleaseResource();
+	}
+{
+}
+
+%%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Seize
+
+
+
+
+
+/*
+ * Sub-FSM to handle seizing a line (basically, pressing a line button)
+ * Initial state: Seize
+ * Exiting transitions:
+ *     Success
+ *     ctiFailed
+ *     udacReleaseCall (could happen if user immediately presses another button)
+ *     lineRing (corner case)
+ *     lineIdle (corner case)
+ *     lineHold (corner case)
+ */
+%map Seize
+%%
+// Contains transitions that apply to all states in this FSM (%map)
+Default
+{
+    ctiFailed
+        pop(ctiFailed)
+        {
+            nothing();
+        }
+
+    lineIdle
+        pop(lineIdle)
+        {
+            nothing();
+        }
+
+    lineRing
+        pop(lineRing)
+        {
+            nothing();
+        }
+
+    lineHold
+        pop(lineHold)
+        {
+            nothing();
+        }
+
+	// TODO we can ignore button press for normal calls, but what about for conference calls?
+    udacButtonPressed
+    	nil
+        {
+            nothing();
+        }
+
+	udacReleaseCall
+        pop(udacReleaseCall)
+        {
+            nothing();
+        }
+}
+
+Seize
+	Entry
+	{
+		autoUdacSeize(context);
+	}
+{
+	udacSeize [ ctxt.isConference() ]
+		Conferencing
+		{
+			nothing();
+		}
+
+	udacSeize
+		MakingCall
+		{
+			nothing();
+		}
+}
+
+MakingCall
+    Entry
+    {
+        udacLineStatusUpdated(LineStatusType.I_BUSY);
+        ctiMakeCall();
+        ctiReleaseResource();
+    }
+{
+    ctiEstablished
+        Confirming
+        {
+            nothing();
+        }
+
+    lineBusy
+        Establishing
+        {
+            nothing();
+        }
+}
+
+Establishing
+{
+    ctiEstablished
+        pop(Success)
+        {
+            nothing();
+        }
+
+	// should never happen, but if it does, it's OK; just ignore it
+    lineBusy
+        nil
+        {
+            nothing();
+        }
+}
+
+Confirming
+{
+    lineBusy
+        pop(Success)
+        {
+            nothing();
+        }
+}
+
+
+
+
+Conferencing
+    Entry
+    {
+        udacLineStatusUpdated(LineStatusType.I_BUSY);
+        ctiConference(ConferenceActionType.PARTY_ADD);
+    }
+{
+	ctiConferenced(event : CallControlConferencedEvent) [ResultStatusType.FAILURE.equals(event.getResult())]
+        pop(ctiFailed)
+        {
+            nothing();
+        }
+
+    ctiConferenced(event : CallControlConferencedEvent)
+        ConfirmingConference
+        {
+            nothing();
+        }
+
+    lineBusy
+        EstablishingConference
+        {
+            nothing();
+        }
+}
+
+EstablishingConference
+{
+    ctiConferenced
+        pop(Success)
+        {
+            nothing();
+        }
+
+	// should never happen, but if it does, it's OK; just ignore it
+    lineBusy
+        nil
+        {
+            nothing();
+        }
+}
+
+ConfirmingConference
+{
+    lineBusy
+        pop(Success)
+        {
+            nothing();
+        }
+}
+%%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Barge
+
+
+
+
+
+/*
+ * Sub-FSM to handle barging in on a line (basically, pressing a line button
+ * that is already U_BUSY). Very similar to the Seize sub-FSM, except that we
+ * do not wait for a lineBusy (because the line is already busy).
+ * Initial state: Seize
+ * Exiting transitions:
+ *     Success
+ *     ctiFailed
+ *     udacReleaseCall (could happen if user immediately presses another button)
+ *     lineRing (corner case)
+ *     lineIdle (corner case)
+ *     lineHold (corner case)
+ */
+%map Barge
+%%
+// Contains transitions that apply to all states in this FSM (%map)
+Default
+{
+    ctiFailed
+        pop(ctiFailed)
+        {
+            nothing();
+        }
+
+    lineIdle
+        pop(lineIdle)
+        {
+            nothing();
+        }
+
+    lineRing
+        pop(lineRing)
+        {
+            nothing();
+        }
+
+    lineHold
+        pop(lineHold)
+        {
+            nothing();
+        }
+
+	// should never happen because the line is already busy; ignore it
+    lineBusy
+        nil
+        {
+            nothing();
+        }
+
+	// TODO we can ignore button press for normal calls, but what about for conference calls?
+    udacButtonPressed
+    	nil
+        {
+            nothing();
+        }
+
+	udacReleaseCall
+        pop(udacReleaseCall)
+        {
+            nothing();
+        }
+}
+
+Seize
+	Entry
+	{
+		autoUdacSeize(context);
+	}
+{
+	udacSeize [ ctxt.isConference() ]
+		Conferencing
+		{
+			nothing();
+		}
+
+	udacSeize
+		MakingCall
+		{
+			nothing();
+		}
+}
+
+MakingCall
+    Entry
+    {
+        udacLineStatusUpdated(LineStatusType.I_BUSY);
+        ctiMakeCall();
+        ctiReleaseResource();
+    }
+{
+    ctiEstablished
+        pop(Success)
+        {
+            nothing();
+        }
+}
+
+
+
+
+
+Conferencing
+    Entry
+    {
+        udacLineStatusUpdated(LineStatusType.I_BUSY);
+        ctiConference(ConferenceActionType.PARTY_ADD);
+    }
+{
+	ctiConferenced(event : CallControlConferencedEvent) [event.getResult()==ResultStatusType.FAILURE]
+        pop(ctiFailed)
+        {
+            nothing();
+        }
+
+    ctiConferenced
+        pop(Success)
+        {
+            nothing();
+        }
+}
+%%

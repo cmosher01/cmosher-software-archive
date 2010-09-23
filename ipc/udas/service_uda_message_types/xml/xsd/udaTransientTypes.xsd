@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema 	xmlns="http://www.w3.org/2001/XMLSchema" 
+			targetNamespace="http://www.ipc.com/uda/types" 
+			xmlns:tns="http://www.ipc.com/uda/types" 
+			elementFormDefault="qualified">
+    
+    <complexType name="UserContextTransient">
+        <attribute name="__transient" type="string"></attribute>
+        <attribute name="ctx" type="tns:com.ipc.uda.service.context.UserContext"></attribute>
+    </complexType>
+    
+    <simpleType name="com.ipc.uda.service.context.UserContext">
+        <restriction base="string"></restriction>
+    </simpleType>
+
+</schema>

@@ -1,0 +1,1 @@
+<ipc:uda-message xmlns:ipc="http://www.ipc.com/uda/types"><ipc:uda-request><ipc:command><ipc:record-call><ipc:call-id>1234</ipc:call-id><ipc:record>true</ipc:record></ipc:record-call></ipc:command></ipc:uda-request></ipc:uda-message>

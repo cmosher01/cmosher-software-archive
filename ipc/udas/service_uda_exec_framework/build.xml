@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="service_uda_exec_framework" default="common-build.all" basedir=".">
+
+    <import file="../lib_uda_build/common-build.xml" />
+
+    <target name="-init" depends="common-build.-init">
+    	<path id="compile.classpath">
+            <pathelement location="../service_uda_core/${bin.dir}" />
+            <pathelement location="../service_uda_utils/${bin.dir}" />
+            <pathelement location="../lib_logging_java/${bin.dir}" />
+            <path refid="weblogic.classpath" />
+        </path>
+    </target>
+
+
+
+	<target name="doc" depends="-init,javadocutils.define-javadocx">
+		<property name="compile.classpath" refid="compile.classpath" />
+		<javadocx
+			classpath="${compile.classpath}"
+		    depends="../service_uda_core,../service_uda_utils,../lib_logging_java"
+		    windowtitle="service_uda"
+			access="private"
+		>
+			<link href="../../../../service_uda_core/${build-doc.dir}/javadoc" />
+			<link href="../../../../service_uda_utils/${build-doc.dir}/javadoc" />
+			<link href="../../../../lib_logging_java/${build-doc.dir}" />
+		</javadocx>
+	</target>
+
+
+
+    <target name="depends">
+        <property name="depends.target" value="lib" />
+        <ant dir="../lib_logging_java" target="depends" />
+        <ant dir="../service_uda_utils" target="depends" />
+        <ant dir="../service_uda_core" target="depends" />
+        <antcall target="${depends.target}" />
+    </target>
+</project>

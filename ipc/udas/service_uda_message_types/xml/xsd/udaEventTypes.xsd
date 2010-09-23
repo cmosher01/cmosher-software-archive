@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+			xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+			xmlns="http://www.ipc.com/uda/types" 
+			targetNamespace="http://www.ipc.com/uda/types" 
+			elementFormDefault="qualified" 
+			attributeFormDefault="unqualified" 
+			jaxb:version="2.0">
+			
+	<xs:include schemaLocation="udaEntityTypes.xsd"/>
+	
+	<xs:complexType name="eventType">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class implClass="com.ipc.uda.types.Event"/>
+			</xs:appinfo>
+		</xs:annotation>
+		
+		<xs:choice>
+			<xs:element name="errorStatus" type="errorStatusEvent"/>
+			<xs:element name="lineStatusUpdated" type="lineStatusUpdatedEvent"/>
+			<xs:element name="timeout" type="timeoutEvent"/>
+			<xs:element name="icmStatusUpdated" type="icmStatusUpdatedEvent"/>
+			<xs:element name="userConfigurationUpdated" type="userConfigurationUpdatedEvent"/>
+			<xs:element name="contactAdded" type="contactAddedEvent"/>
+			<xs:element name="contactUpdated" type="contactUpdatedEvent"/>
+			<xs:element name="contactRemoved" type="contactRemovedEvent"/>
+			<xs:element name="personalDirectoryItemAdded" type="personalDirectoryItemAddedEvent"/>
+			<xs:element name="instanceDirectoryItemAdded" type="instanceDirectoryItemAddedEvent"/>
+			<xs:element name="personalDirectoryItemUpdated" type="personalDirectoryItemUpdatedEvent"/>
+			<xs:element name="instanceDirectoryItemUpdated" type="instanceDirectoryItemUpdatedEvent"/>
+			<xs:element name="personalDirectoryItemRemoved" type="personalDirectoryItemRemovedEvent"/>
+			<xs:element name="instanceDirectoryItemRemoved" type="instanceDirectoryItemRemovedEvent"/>
+			<xs:element name="buttonUpdated" type="buttonUpdatedEvent"/>
+            <xs:element name="buttonRemoved" type="buttonRemovedEvent"/>
+           <xs:element name="forcedLogOffRequest" type="forcedLogOffRequestEvent"/>
+           <xs:element name="forcedLogOffResult" type="forcedLogOffResultEvent"/>
+           <xs:element name="diagnosticsRequest" type="diagnosticsRequestEvent"/>
+           <xs:element name="centerlineMessage" type="centerlineMessageEvent"/>
+           <xs:element name="bargeInUpdated" type="bargeInUpdatedEvent"/>
+           <xs:element name="bargedInUpdated" type="bargedInUpdatedEvent"/>
+           <xs:element name="cliUpdated" type="cliUpdatedEvent"/>
+           <xs:element name="cpiUpdated" type="cpiUpdatedEvent"/>
+           <xs:element name="mfuPointOfContactUpdated" type="mfuPointOfContactUpdatedEvent"/>
+           <xs:element name="mfuPointOfContactRemoved" type="mfuPointOfContactRemovedEvent"/>
+           <xs:element name="functionButtonUpdated" type="functionButtonUpdatedEvent"/>
+           <xs:element name="functionButtonRemoved" type="functionButtonRemovedEvent"/>
+           <xs:element name="speakerChannelStatusUpdated" type="speakerChannelStatusUpdatedEvent"/>
+           <xs:element name="speakerChannelActivityUpdated" type="speakerChannelActivityUpdatedEvent"/>
+           <xs:element name="speakerChannelPttFailed" type="speakerChannelPttFailedEvent"/>
+           <xs:element name="speakerChannelMuteUpdated" type="speakerChannelMuteUpdatedEvent"/>
+           <xs:element name="speakerChannelVolumeUpdated" type="speakerChannelVolumeUpdatedEvent"/>
+           <xs:element name="speakerChannelUpdated" type="speakerChannelUpdatedEvent"/>
+           <xs:element name="speakerChannelRemoved" type="speakerChannelRemovedEvent"/>
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:complexType name="errorStatusEvent">
+		<xs:sequence>
+			<xs:element name="status" type="statusType"/>
+			<xs:element name="message" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="lineStatusUpdatedEvent">
+		<xs:sequence>
+			<xs:element name="buttonId" type="idType"/>
+			<xs:element name="lineStatus" type="lineStatusType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="timeoutEvent">
+		<xs:sequence>
+			<xs:element name="source" type="xs:string"/>
+			<xs:element name="message" type="xs:string"/> 
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="icmStatusUpdatedEvent">
+        <xs:sequence>
+            <xs:element name="userAor" type="xs:string"/>
+            <xs:element name="lineStatus" type="lineStatusType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="userConfigurationUpdatedEvent">
+		<xs:sequence>
+			<xs:element name="userCDI" type="userCdiType"/>
+			<xs:element name="userTurret" type="userTurretType"/>
+			<xs:element name="userUDA" type="userUdaType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="instanceDirectoryItemAddedEvent">
+		<xs:sequence>
+			<xs:element name="contact" type="contactType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="contactAddedEvent">
+		<xs:sequence>
+			<xs:element name="contact" type="immutableContactType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="contactUpdatedEvent">
+		<xs:sequence>
+			<xs:element name="contact" type="immutableContactType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="contactRemovedEvent">
+		<xs:sequence>
+			<xs:element name="contact" type="immutableContactType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="personalDirectoryItemAddedEvent">
+		<xs:sequence>
+			<xs:element name="contact" type="contactType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="instanceDirectoryItemUpdatedEvent">
+		<xs:sequence>
+			<xs:element name="contact" type="contactType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="personalDirectoryItemUpdatedEvent">
+		<xs:sequence>
+			<xs:element name="contact" type="contactType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="instanceDirectoryItemRemovedEvent">
+		<xs:sequence>
+			<xs:element name="contactId" type="idType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="personalDirectoryItemRemovedEvent">
+		<xs:sequence>
+			<xs:element name="contactId" type="idType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="buttonUpdatedEvent">
+        <xs:sequence>
+        	<xs:element name="button" type="buttonType" />
+        </xs:sequence>
+    </xs:complexType>
+	
+	<xs:complexType name="buttonRemovedEvent">
+		<xs:sequence>
+			<xs:element name="buttonId" type="idType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+	<xs:complexType name="diagnosticsRequestEvent">
+		<xs:sequence>
+			<xs:element name="jobID" type="xs:int"/>
+			<xs:element name="componentName" type="enumDiagnosticsComponentType"/>
+			<xs:element name="action" type="enumDiagnosticsActionType"/>
+		</xs:sequence>	
+	</xs:complexType>
+	
+	<xs:complexType name="forcedLogOffRequestEvent">
+	</xs:complexType>
+	
+	<xs:complexType name="forcedLogOffResultEvent">
+		<xs:sequence>
+			<xs:element name="status" type="statusType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="centerlineMessageEvent">
+		<xs:sequence>
+			<xs:element name="message" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="bargeInUpdatedEvent">
+		<xs:sequence>
+			<xs:element name="buttonId" type="idType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="bargedInUpdatedEvent">
+		<xs:sequence>
+			<xs:element name="buttonId" type="idType"/>
+			<xs:element name="name" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="cliUpdatedEvent">
+		<xs:sequence>
+			<xs:element name="buttonId" type="idType"/>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="number" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="cpiUpdatedEvent">
+		<xs:sequence>
+			<xs:element name="buttonId" type="idType"/>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="number" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="mfuPointOfContactUpdatedEvent">
+		<xs:sequence>
+			<xs:element name="mfuPointOfContact" type="mfuPointOfContactType" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="mfuPointOfContactRemovedEvent">
+		<xs:sequence>
+			<xs:element name="contactId" type="idType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="functionButtonUpdatedEvent">
+		<xs:sequence>
+			<xs:element name="buttonId" type="idType" />
+    		<xs:element name="canonicalName" type="xs:string" />
+    		<xs:element name="type" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="functionButtonRemovedEvent">
+		<xs:sequence>
+			<xs:element name="buttonId" type="idType" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="speakerChannelStatusUpdatedEvent">
+		<xs:sequence>
+			<xs:element name="speakerNumber" type="xs:int" />
+			<xs:element name="status" type="enumSpeakerChannelStatusType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="speakerChannelActivityUpdatedEvent">
+		<xs:sequence>
+			<xs:element name="speakerNumber" type="xs:int" />
+			<xs:element name="level" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="speakerChannelPttFailedEvent">
+		<xs:sequence>
+			<xs:element name="speakerNumber" type="xs:int" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="speakerChannelMuteUpdatedEvent">
+		<xs:sequence>
+			<xs:element name="speakerNumber" type="xs:int" />
+			<xs:element name="status" type="enumSpeakerChannelStatusType"/>
+		</xs:sequence>
+	</xs:complexType>
+		
+	<xs:complexType name="speakerChannelVolumeUpdatedEvent">
+		<xs:sequence>
+			<xs:element name="speakerNumber" type="xs:int" />
+			<xs:element name="level" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="speakerChannelUpdatedEvent">
+		<xs:sequence>
+			<xs:element name="speakerChannel" type="speakerChannelType" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="speakerChannelRemovedEvent">
+		<xs:sequence>
+			<xs:element name="speakerNumber" type="xs:int" />
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema	targetNamespace="http://www.ipc.com/uda/types"
+    		elementFormDefault="qualified"
+    		attributeFormDefault="unqualified"
+    		jaxb:version="2.0"
+    		xmlns="http://www.ipc.com/uda/types"
+    		xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    		xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+    		xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+    		jaxb:extensionBindingPrefixes="xjc">
+    	
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:globalBindings>
+				<xjc:serializable /> <!-- make all classes Serializable -->
+			</jaxb:globalBindings>
+		</xs:appinfo>
+	</xs:annotation>
+
+    <xs:include schemaLocation="udaEntityTypes.xsd"/>
+	<xs:include schemaLocation="udaCommandTypes.xsd"/>
+	<xs:include schemaLocation="udaQueryTypes.xsd"/>
+	<xs:include schemaLocation="udaQueryResultTypes.xsd"/>
+	<xs:include schemaLocation="udaEventTypes.xsd"/>
+
+    <xs:complexType name="udaMessageType">
+        <xs:choice>
+            <xs:element ref="udaRequest" />
+            <xs:element ref="udaResponse" />
+        </xs:choice>
+    </xs:complexType>
+    
+	<xs:element name="udaMessage" type="udaMessageType">
+		<xs:annotation>
+			<xs:documentation>A UDA Message</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+    <xs:complexType name="udaRequestType">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.UdaRequest"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element ref="command"/>
+            <xs:element ref="query"/>
+        </xs:choice>
+    </xs:complexType>
+    
+	<xs:element name="udaRequest" type="udaRequestType">
+		<xs:annotation>
+			<xs:documentation>A UDA Request</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+    <xs:complexType name="udaResponseType">
+        <xs:annotation>
+            <xs:appinfo>
+                <jaxb:class implClass="com.ipc.uda.types.UdaResponse"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element ref="queryResult"/>
+            <xs:element ref="event"/>
+        </xs:choice>
+    </xs:complexType>
+    
+	<xs:element name="udaResponse" type="udaResponseType">
+		<xs:annotation>
+			<xs:documentation>A UDA Response</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:element name="command" type="commandType">
+		<xs:annotation>
+			<xs:documentation>A UDA Command</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:element name="query" type="queryType">
+		<xs:annotation>
+			<xs:documentation>A UDA Query</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:element name="queryResult" type="queryResultType">
+		<xs:annotation>
+			<xs:documentation>A UDA Query Result</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:element name="event" type="eventType">
+		<xs:annotation>
+			<xs:documentation>A UDA Event</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

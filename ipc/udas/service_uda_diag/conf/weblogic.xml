@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wls:weblogic-web-app xmlns:wls="http://www.bea.com/ns/weblogic/weblogic-web-app" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd http://www.bea.com/ns/weblogic/weblogic-web-app http://www.bea.com/ns/weblogic/weblogic-web-app/1.0/weblogic-web-app.xsd">
+    
+    <wls:weblogic-version>10.3.0</wls:weblogic-version>
+    <!-- <wls:context-root>udas/diagnostics</wls:context-root>-->
+    <wls:context-root>uda</wls:context-root>
+    <wls:description>To provide diagnostics</wls:description>
+    <wls:container-descriptor>
+        <wls:show-archived-real-path-enabled>true</wls:show-archived-real-path-enabled>
+    </wls:container-descriptor>
+</wls:weblogic-web-app>

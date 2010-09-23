@@ -1,0 +1,63 @@
+<project name="${component}" default="all" basedir=".">
+
+	<target name="compile">
+		<!--
+		if javac.classpath property is given
+			compile-deps
+		else
+			compile-nodeps
+		-->
+		<antcall target="compile-deps" />
+		<antcall target="compile-nodeps" />
+	</target>
+
+	<target name="compile-deps" if="javac.classpath">
+		<mkdir dir="bin" />
+		<javac
+			destdir="bin"
+			debug="on"
+			listfiles="true"
+			deprecation="true"
+			includeAntRuntime="false"
+			fork="yes"
+			executable="${javac}"
+			compiler="modern"
+			source="${javac.version}"
+			target="${javac.version}"
+			memoryInitialSize="96m"
+			memoryMaximumSize="512m"
+		>
+			<src path="${srcdir}/src" />
+			<classpath>
+				<fileset dir="${deploydir}" includes="${javac.classpath}" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="compile-nodeps" unless="javac.classpath">
+		<mkdir dir="bin" />
+		<javac
+			destdir="bin"
+			debug="on"
+			listfiles="true"
+			deprecation="true"
+			includeAntRuntime="false"
+			fork="yes"
+			executable="${javac}"
+			compiler="modern"
+			source="${javac.version}"
+			target="${javac.version}"
+			memoryInitialSize="96m"
+			memoryMaximumSize="512m"
+		>
+			<src path="${srcdir}/src" />
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile">
+		<jar basedir="bin" jarfile="${component}.jar" />
+	</target>
+
+	<target name="all" depends="jar" />
+
+</project>

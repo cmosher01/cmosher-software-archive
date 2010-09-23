@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/service_uda_message_types"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/service_uda_event_framework"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/service_uda_exec_framework"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/service_uda_utils"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/lib_diag_ws"/>
+	<classpathentry kind="lib" path="/3rdparty/sun/jersey_1.1.4.1/jersey-client-1.1.4.1.jar" sourcepath="/service_deployment/hqapi1-2.2/javadoc/org"/>
+	<classpathentry kind="lib" path="/3rdparty/sun/jersey_1.1.4.1/jersey-core-1.1.4.1.jar"/>
+	<classpathentry kind="lib" path="/3rdparty/sun/jersey_1.1.4.1/jersey-server-1.1.4.1.jar"/>
+	<classpathentry kind="lib" path="/3rdparty/sun/jersey_1.1.4.1/jsr311-api-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/3rdparty/junit/junit_4.7/junit-4.7.jar"/>
+	<classpathentry kind="output" path="eclipsebin"/>
+</classpath>

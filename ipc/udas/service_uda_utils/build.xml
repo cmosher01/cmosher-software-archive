@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="service_uda_utils" default="common-build.all" basedir=".">
+
+    <import file="../lib_uda_build/common-build.xml" />
+
+    <target name="-init" depends="common-build.-init">
+        <property name="smc.dir" location="../3rdparty/sf.net/smc/smc_6.0.1" />
+        <property name="smc.jar" location="${smc.dir}/bin/Smc.jar" />
+        <property name="smc.statemap.jar" location="${smc.dir}/lib/Java/statemap.jar" />
+
+    	<path id="compile.classpath">
+            <pathelement location="../lib_ctiadapter/${bin.dir}" />
+            <pathelement location="../lib_logging_java/${bin.dir}" /> 
+            <pathelement location="${smc.statemap.jar}" />
+            <path refid="weblogic.classpath" />
+        </path>
+    </target>
+
+
+
+	<target name="doc" depends="-init,javadocutils.define-javadocx">
+		<property name="compile.classpath" refid="compile.classpath" />
+		<javadocx
+			classpath="${compile.classpath}"
+		    depends="../lib_ctiadapter,../lib_logging_java"
+		    windowtitle="service_uda"
+			access="private"
+		>
+			<link href="../../../../lib_ctiadapter/${build-doc.dir}" />
+			<link href="../../../../lib_logging_java/${build-doc.dir}" />
+		</javadocx>
+	</target>
+
+
+
+	<target name="depends">
+        <property name="depends.target" value="lib" />
+        <ant dir="../lib_logging_java" target="depends" />
+        <ant dir="../lib_ctiadapter" target="depends" />
+        <antcall target="${depends.target}" />
+    </target>
+</project>

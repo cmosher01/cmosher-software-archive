@@ -1,0 +1,10 @@
+<udaMessage xmlns="http://www.ipc.com/uda/types">
+	<udaRequest>
+		<command>
+			<pressButton>
+					<buttonId>12094</buttonId>
+			</pressButton>
+		</command>
+	</udaRequest>
+</udaMessage>
+

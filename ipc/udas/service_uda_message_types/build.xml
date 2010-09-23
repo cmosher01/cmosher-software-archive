@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="service_uda_message_types" default="common-build.all" basedir=".">
+
+    <import file="../lib_uda_build/common-build.xml" />
+
+    <target name="-init" depends="common-build.-init">
+        <property name="xsd.dir" value="xml/xsd" />
+        <property name="xsd.file" value="${xsd.dir}/udaMessage.xsd" />
+        <property name="jaxb.gensrc.dir" value="${obj.dir}/jaxb" />
+        <property name="sm.gensrc.dir" value="${obj.dir}/sm" />
+        <property name="sm.dir" value="sm" />
+
+        <property name="smc.dir" location="../3rdparty/sf.net/smc/smc_6.0.1" />
+        <property name="smc.jar" location="${smc.dir}/bin/Smc.jar" />
+        <property name="smc.statemap.jar" location="${smc.dir}/lib/Java/statemap.jar" />
+
+        <path id="compile.classpath">
+            <pathelement location="../service_uda_ejb_client/${bin.dir}" />
+            <pathelement location="../service_uda_exec_framework/${bin.dir}" />
+            <pathelement location="../service_uda_core/${bin.dir}" />
+            <pathelement location="../service_uda_event_framework/${bin.dir}" />
+            <pathelement location="../service_uda_utils/${bin.dir}" />
+            <pathelement location="../lib_ctiadapter/${bin.dir}" />
+        	<pathelement location="../va_xml_packages/${bin.dir}" />
+        	<fileset dir="../com.ipc.ds.dist/notification/lib">
+        	    <include name="ds-notification-ejb-1.0.jar" />
+       		</fileset>
+        	<fileset dir="../com.ipc.ds.dist/core/lib">
+        		<include name="ds-core-*.jar" />
+        		<include name="ds-entity-*.jar" />
+       		</fileset>
+            <pathelement location="../lib_logging_java/${bin.dir}" /> 
+            <pathelement location="${smc.statemap.jar}" />
+            <path refid="weblogic.classpath" />
+        </path>
+
+        <taskdef name="smctask" classname="net.sf.smc.ant.SmcJarWrapper" classpath="${smc.dir}/tools/smc-anttask/dist/smc-ant.jar" />
+        <macrodef name="smc">
+            <attribute name="package" />
+            <attribute name="file" />
+            <sequential>
+                <mkdir dir="${sm.gensrc.dir}/@{package}" />
+                <smctask target="java" smfile="${sm.dir}/@{package}/@{file}.sm" destdir="${sm.gensrc.dir}/@{package}" smcjar="${smc.jar}" sync="true" />
+                <condition property="update.sm.cache">
+                    <resourcecount when="greater" count="0">
+                        <fileset dir="${sm.dir}">
+                            <modified>
+                                   <param name="cache.cachefile" value="${sm.dir}/cache.properties"/>
+                            </modified>
+                        </fileset>
+                    </resourcecount>
+                </condition>
+            </sequential>
+        </macrodef>
+    </target>
+
+	<target name="-check-sm" depends="-init" description="check to see if sm files have changed">
+		<mkdir dir="${obj.dir}" />
+        <condition property="sm-changed">
+        	<or>
+                <resourcecount when="greater" count="0">
+                    <fileset dir="${sm.dir}">
+                        <modified update="false">
+                            <param name="cache.cachefile" value="${sm.dir}/cache.properties" />
+                            <param name="update" value="false" />
+                        </modified>
+                    	<exclude name="cache.properties" />
+                    </fileset>
+                </resourcecount>
+                <resourcecount when="equal" count="0">
+                    <dirset dir="${obj.dir}">
+                    	<include name="sm" />
+                    </dirset>
+                </resourcecount>
+        	</or>
+        </condition>
+	</target>
+
+    <target name="-run-jaxb-xjc" depends="-init" description="uses jaxb to parse xsd schema and generate java source files">
+        <mkdir dir="${jaxb.gensrc.dir}" />
+    	<property name="jaxb.dir" value="../3rdparty/sun/jaxb_2.2" />
+    	<taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask">
+            <classpath>
+                <fileset dir="${jaxb.dir}" includes="jaxb-xjc.jar" />
+            </classpath>
+        </taskdef>
+        <xjc destdir="${jaxb.gensrc.dir}" schema="${xsd.file}" extension="true" removeOldOutput="true">
+            <depends dir="${xsd.dir}" includes="**/*" />
+            <produces dir="${jaxb.gensrc.dir}" includes="**/*" />
+        </xjc>
+    </target>
+
+    <target name="-smc" depends="-check-sm" if="sm-changed" description="compile the state machine and generate java source files">
+        <smc package="com/ipc/uda/service/callproc" file="IcmP2P" />
+        <smc package="com/ipc/uda/service/callproc" file="PrivateWire" />
+        <smc package="com/ipc/uda/service/callproc" file="Speaker" />
+    </target>
+
+	<target name="compile" depends="-run-jaxb-xjc,-smc" description="compiles the java source files">
+        <mkdir dir="${bin.dir}" />
+        <javac
+            destdir="${bin.dir}"
+            debug="on"
+            fork="true"
+            executable="${jdk.home}/bin/javac"
+            verbose="true"
+        >
+            <src path="${jaxb.gensrc.dir}" />
+        	<src path="${sm.gensrc.dir}" />
+        	<src path="${src.dir}" />            
+            <classpath refid="compile.classpath" />
+        </javac>
+    </target>
+
+	<target name="compiletests" depends="compile" description="compiles the junit java source files">
+        <mkdir dir="${bin.dir}" />
+        <path id="test.classpath">
+            <pathelement location="${bin.dir}" />
+        	<pathelement location="${jmock.jar}" />
+        	<pathelement location="${jmock-junit.jar}" />
+        	<pathelement location="${hamcrest-core.jar}" />
+        	<pathelement location="${hamcrest-library.jar}" />
+        	<pathelement location="${ant.home}/lib/ant-junit.jar" />
+            <pathelement location="${junit.jar}" />
+            <path refid="compile.classpath" />
+        </path>
+        <javac
+            destdir="${bin.dir}"
+            debug="on"
+            fork="true"
+            executable="${jdk.home}/bin/javac"
+            verbose="true"
+        >
+            <src path="${test.dir}" />
+            <src path="${jaxb.gensrc.dir}" />
+            <src path="${sm.gensrc.dir}" />
+            <classpath refid="test.classpath" />
+        </javac>
+    </target>
+
+
+
+	<target name="doc" depends="-init,javadocutils.define-javadocx">
+		<property name="compile.classpath" refid="compile.classpath" />
+		<javadocx
+			classpath="${compile.classpath}"
+		    depends="../service_uda_ejb_client,../service_uda_exec_framework,../service_uda_core,../service_uda_event_framework,../service_uda_utils,../va_xml_packages,../lib_ctiadapter,../lib_logging_java"
+		    windowtitle="service_uda"
+			access="private"
+		>
+			<link href="../../../../service_uda_ejb_client/${build-doc.dir}/javadoc" />
+			<link href="../../../../service_uda_exec_framework/${build-doc.dir}/javadoc" />
+			<link href="../../../../service_uda_core/${build-doc.dir}/javadoc" />
+			<link href="../../../../service_uda_event_framework/${build-doc.dir}/javadoc" />
+			<link href="../../../../service_uda_utils/${build-doc.dir}/javadoc" />
+			<link href="../../../../va_xml_packages/${build-doc.dir}" />
+			<link href="../../../../lib_ctiadapter/${build-doc.dir}" />
+			<link href="../../../../lib_logging_java/${build-doc.dir}" />
+		</javadocx>
+	</target>
+
+
+
+	<target name="depends">
+        <property name="depends.target" value="lib" />
+        <ant dir="../lib_logging_java" target="depends" />
+        <ant dir="../lib_ctiadapter" target="depends" />
+    	<ant dir="../va_xml_packages" target="depends" />
+        <ant dir="../service_uda_utils" target="depends" />
+        <ant dir="../service_uda_event_framework" target="depends" />
+        <ant dir="../service_uda_core" target="depends" />
+        <ant dir="../service_uda_exec_framework" target="depends" />
+    	<ant dir="../service_uda_ejb_client" target="depends" />
+        <antcall target="${depends.target}" />
+    </target>
+</project>

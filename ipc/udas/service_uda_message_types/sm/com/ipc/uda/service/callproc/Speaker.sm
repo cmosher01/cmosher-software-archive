@@ -1,0 +1,255 @@
+%{
+// Copyright (C) 2010 IPC Systems, Inc. All rights reserved.
+
+/*
+ * Finite state machine for Speaker calls.
+ *
+ * author: Ranjit Sharma
+ * author: Chris Mosher
+ */
+%}
+
+%package com.ipc.uda.service.callproc
+%import com.ipc.uda.types.SystemLineStatus
+%import com.ipc.uda.types.EnumSpeakerChannelStatusType
+%import com.ipc.va.cti.*
+%import com.ipc.va.cti.callControl.*
+%import com.ipc.va.cti.callControl.events.*
+%import com.ipc.va.cti.callControl.services.results.*
+%class Speaker
+%fsmclass SpeakerFsmContext
+
+%start SpeakerFsm::Off
+
+
+
+
+%map SpeakerFsm
+%%
+Default
+{
+    Default
+        nil
+        {
+            undefinedChange(endState);
+        }
+
+    lineIdle
+        Off
+        {
+			setLineStatus(SystemLineStatus.IDLE);
+        }
+
+    lineBusy
+    	nil
+    	{
+			setLineStatus(SystemLineStatus.BUSY);
+    	}
+
+    lineRing
+    	nil
+    	{
+			setLineStatus(SystemLineStatus.INCOMING);
+    	}
+
+    lineHold
+    	nil
+    	{
+			setLineStatus(SystemLineStatus.HOLD);
+    	}
+
+    udacSetSpeakerChannelVolume(volume : int)
+    	nil
+        {
+			udacSpeakerChannelVolumeUpdated(volume);
+			ctiSetSpeakerChannelVolume(volume);
+		}
+}
+
+Off
+    Entry
+    {
+        udacSpeakerChannelStatusUpdated(EnumSpeakerChannelStatusType.OFF);
+        setActiveStatus(false);
+        ctiCancelTelephonyTones();
+    }
+    Exit
+    {
+        udacSpeakerChannelStatusUpdated(EnumSpeakerChannelStatusType.ON);
+        setActiveStatus(true);
+    }
+{
+    lineIdle
+        nil
+        {        
+            setLineStatus(SystemLineStatus.IDLE);
+        }
+
+    udacPressSpeakerChannel [!ctxt.initiateCallOnSeize() && ctxt.getLineStatus().equals(SystemLineStatus.IDLE)]
+		SeizingInternal
+        {
+            nothing();
+        }   
+
+    udacPressSpeakerChannel
+        Seize
+        {
+            nothing();
+        }
+	
+	lineCli(name : String, number : String)
+		nil
+		{
+			udacCliUpdate(name,number);
+		}
+}
+
+On
+{
+	ctiSpeakerActivity(level : int)
+		nil
+		{
+			udacSpeakerChannelActivityUpdated(level);
+		}
+
+	udacDialDigits( digits : String )
+		nil
+		{
+			ctiDialDigits( digits );	
+		}
+	
+	udacReleaseSpeakerChannel
+		Off
+		{
+			ctiClearConnection(EventCause.NORMAL_CLEARING);
+		}
+	
+	ctiConnectionCleared(event : CallControlConnectionClearedEvent)
+		Off
+        {
+            nothing();
+        }
+
+	udacPressPTT
+		Talking
+		{
+			ctiSetCallTalkBack(true);
+		}
+
+	udacPressGroupPTT(group : int) [ ctxt.isInGroup(group) ]
+		Talking
+		{
+			ctiSetCallTalkBack(true);
+		}
+	
+	ctiCallInformation(event : CallControlInformationEvent)
+		nil
+		{
+			udacCpiUpdate(event);
+		}
+}
+
+Talking
+{
+	udacReleasePTT
+		On
+		{
+			ctiSetCallTalkBack(false);
+		}
+
+	udacReleaseGroupPTT(group : int) [ ctxt.isInGroup(group) ]
+		Talking
+		{
+			ctiSetCallTalkBack(false);
+		}
+
+	udacReleaseSpeakerChannel
+		Off
+		{
+			ctiClearConnection(EventCause.NORMAL_CLEARING);
+		}
+	
+	ctiConnectionCleared(event : CallControlConnectionClearedEvent)
+		Off
+        {
+            nothing();
+        }
+	
+	ctiCallInformation(event : CallControlInformationEvent)
+		nil
+		{
+			udacCpiUpdate(event);
+		}
+}
+
+SeizingInternal
+	Entry
+	{
+		ctiSeizeResource(context);
+	}
+{
+	udacDialDigits( digits : String )
+        Seize
+        {
+        	setDigits( digits );
+        }			
+
+	udacReleaseSpeakerChannel
+		Off
+		{
+			ctiReleaseResource();
+		}
+	
+	ctiFailed
+		Off
+		{	
+			nothing();
+		}	
+}
+
+Seize
+    Entry
+    {
+        ctiMakeCall();
+        ctiReleaseResource();
+    }
+{
+    ctiEstablished
+		On
+		{
+            nothing();
+		}
+
+	ctiFailed [ctxt.isDialTone()]
+		PlayingTone
+		{
+            nothing();
+		}
+
+	ctiFailed
+		Off
+		{
+            startRetryTimer(context);
+		}
+	
+	udacReleaseSpeakerChannel
+		Off
+		{
+			ctiClearConnection(EventCause.CALL_CANCELLED);
+		}
+}
+
+PlayingTone
+{
+	udacReleaseSpeakerChannel
+		Off
+		{
+            nothing();
+		}
+    lineIdle
+        nil
+        {        
+			setLineStatus(SystemLineStatus.IDLE);
+        }
+}
+%%

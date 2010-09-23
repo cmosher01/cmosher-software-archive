@@ -1,0 +1,7 @@
+<udaMessage xmlns="http://www.ipc.com/uda/types">
+	<udaRequest>
+		<command>
+			<cancelTelephonyTone/>
+		</command>
+	</udaRequest>
+</udaMessage>

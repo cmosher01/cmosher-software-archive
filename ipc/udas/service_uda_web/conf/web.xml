@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID"
+	version="2.5" >
+	<display-name>service_uda</display-name>
+
+	<servlet>
+		<description>MessageController</description>
+		<display-name>MessageController</display-name>
+		<servlet-name>MessageController</servlet-name>
+		<servlet-class>com.ipc.uda.service.servlet.MessageController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MessageController</servlet-name>
+		<url-pattern>/message-channel</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>EventController</description>
+		<display-name>EventController</display-name>
+		<servlet-name>EventController</servlet-name>
+		<servlet-class>com.ipc.uda.service.servlet.EventController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EventController</servlet-name>
+		<url-pattern>/event-channel</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+	   <description>A Servlet for mocking CTI Events</description>
+	   <display-name>MockCtiEventContollerServlet</display-name>
+	   <servlet-name>MockCtiEventContoller</servlet-name>
+	   <servlet-class>com.ipc.uda.service.servlet.mock.MockCtiEventContoller</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	   <servlet-name>MockCtiEventContoller</servlet-name>
+	   <!-- url-pattern>/test/cti-event-controller</url-pattern-->
+	   <url-pattern>/test/cti-event-controller/callcontrol/*</url-pattern>
+	   <url-pattern>/test/cti-event-controller/logicaldevice/*</url-pattern>
+	   <url-pattern>/test/cti-event-controller/physicaldevice/*</url-pattern>
+	   <url-pattern>/test/cti-event-controller/linestatus/*</url-pattern>
+	</servlet-mapping>
+	
+	<!-- HTTP Authentication Filter configurations changed as per DMS HTTP Authentication Filter changes  -->
+	<filter>
+    	<filter-name>HttpAuthFilter</filter-name>
+    	<filter-class>com.ipc.security.auth.HttpAuthFilter</filter-class>
+  	</filter>
+  	 	
+ 	<filter-mapping>
+    	<filter-name>HttpAuthFilter</filter-name>
+    	<url-pattern>/*</url-pattern>
+  	</filter-mapping>
+  	
+   	<login-config>
+		<auth-method>CLIENT-CERT</auth-method>
+	    <realm-name>myrealm</realm-name>
+  	</login-config>  	
+  	<!-- HTTP Authentication Filter configurations as supported by DMS Ends -->
+
+    <resource-ref>
+		<res-ref-name>timer/uda/UserContextTimer</res-ref-name>
+		<res-type>commonj.timers.TimerManager</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Unshareable</res-sharing-scope>
+    </resource-ref>     
+    
+
+    
+</web-app>

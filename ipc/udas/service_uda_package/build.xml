@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="service_uda_package" basedir="." default="all">
+	<property name="buildroot.dir" location=".." />
+	<property name="buildtools.dir" location="${buildroot.dir}/tools/buildtools" />
+	<property file="${buildtools.dir}/common-build.properties" />
+
+	<import file="${buildtools.dir}/import/rpmutils.xml" />
+
+	<target name="all" depends="pkg,doc" />
+
+	<target name="pkg">
+		<antcall target="pkgonly" />
+	</target>
+
+	<target name="pkgonly" depends="rpm" />
+
+	<target name="rpm" depends="rpmutils.define-rpmbuild">	
+		<copy toDir="${build-lib.dir}" flatten="true">
+			<resources>
+				<file file="../service_uda_web/obj/lib/service_uda_diag.war"/>
+				<file file="../service_uda_web/obj/lib/service_uda_web.war"/>
+				<file file="../service_uda_ejb/obj/lib/service_uda_ejb.jar"/>
+				<file file="../service_uda_utils/obj/lib/service_uda_utils.jar"/>
+				<file file="../service_uda_message_types/obj/lib/service_uda_message_types.jar"/>
+				<file file="../service_uda_exec_framework/obj/lib/service_uda_exec_framework.jar"/>
+				<file file="../service_uda_event_framework/obj/lib/service_uda_event_framework.jar"/>
+				<file file="../service_uda_ejb_client/obj/lib/service_uda_ejb_client.jar"/>
+				<file file="../service_uda_core/obj/lib/service_uda_core.jar"/>
+			</resources>
+        </copy>
+
+		<rpmbuild specfile="installUDAS.spec">
+			<fileset dir="${build-lib.dir}" />
+		</rpmbuild>
+	</target>
+
+	<target name="lib" />
+
+	<target name="clean">
+		<!-- Clean up rpm build dirs and files (obj) -->
+        <delete dir="${basedir}/obj" failonerror="false" includeEmptyDirs="true" quiet="true" />
+	</target>
+
+    <target name="doc">
+	    <echo>${target.noop}</echo>
+    </target>
+</project>
