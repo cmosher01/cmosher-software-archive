@@ -18,7 +18,7 @@ if (parent && parent.frames && parent.frames[1])
 <img src="grothumb2.gif" width="300" height="224" alt="Drop-line chart" class="centered" />
 </p>
 
-<p><span style="background-color: #FFCCCC">New version 1.4</span></p>
+<p><span style="background-color: #FFCCCC">&nbsp;Current&nbsp;version&nbsp;1.4&nbsp;</span></p>
 
 <%-- text --%>
 <div style="text-justify:distribute-all-lines; font-weight:bold;">
