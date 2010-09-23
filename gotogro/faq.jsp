@@ -1,96 +1,32 @@
-<html>
+<%@ include file="htmlhead.jsp" %>
 <head>
 <title>Genealogy Research Organizer</title>
-<title>
-<span style="visibility: hidden">
-<xmp>
-<body>
-</body>
-</xmp>
-</span>
-</title>
-<script language="javascript">
-function dospace()
-{
-	document.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-}
-function doitem(s)
-{
-	slink = s;
-	if (s=="introduction")
-		slink = "index";
-	document.write("<a href=\""+slink+".html\">"+s+"</a>");
-}
-</script>
+<link rel="stylesheet" href="gro.css" type="text/css" media="all" />
 </head>
-<body alink="#000080" link="#000080" vlink="#000080">
-<center>
-<table width="600">
-<tr><td align="center"><img src="logo2.gif" width="531" height="51"></td></tr>
-<!--<tr><td align="center"><hr size="1" color="#000000"></hr></td></tr>-->
-<tr><td align="center">
+<body>
 
+<%@ include file="grohead.jsp" %>
 
-
-
-
-
-<table bgcolor="#cccccc" cellspacing="0" border="0" align="center">
-<tr>
-<td>
-
-
-
-<table bgcolor="#eeeeee" cellpadding="2" cellspacing="0" width="100%">
-<tr valign="bottom">
-<td align="center">
-<font style="font-family:serif">
-<script language="javascript">
-dospace();
-doitem("introduction");
-dospace();
-doitem("download");
-dospace();
-doitem("order");
-dospace();
-doitem("help");
-dospace();
-doitem("faq");
-dospace();
-doitem("fixes");
-dospace();
-doitem("contact");
-dospace();
-</script>
-</font>
-</td>
-</tr>
-</table>
-
-
-
-</td>
-</tr>
-</table>      
-
-
-
-
-
-
-</td></tr>
-
-<tr><td align="center">&nbsp;</td></tr>
-
-<tr><td align="center">
-
-
-<div style="font-family:serif;text-align:justify">
+<div class="textblock">
 <h3>Frequently Asked Questions</h3>
+
+<b>I paid for the program; when will you send it to me?</b>
+<p />
+The Genealogy Research Organizer program can be downloaded from this
+web site. Just go to the "download" page by clicking "download" on the
+line at the top of this page, and click the "Download Genealogy
+Research Organizer" link in the middle of that page. After you run the
+program, you can register it by following the instructions in the
+email confirmation you received (just enter your name and key).
+If you have any questions or problems, please email the support
+department. Please don't wait for the
+program to be shipped to you or emailed to you; it never will
+be. You must download it from this web site.
+<p />
 
 <b>How do I uninstall?</b>
 <p />
-Choose <u>F</u>ile | Se<u>t</u>up... to bring up the setup dialog box.
+Choose <span style="text-decoration:underline">F</span>ile | Se<span style="text-decoration:underline">t</span>up... to bring up the setup dialog box.
 Then press the Uninstall button. This will start the uninstallation process
 and remove registry entries, restore old registry entries, and remove all
 GRO application files from your system. Note that you must reboot your
@@ -144,16 +80,11 @@ the latest version.
 This was caused by older versions of GRO when no printer was installed.
 This has been fixed as of version 1.3. If you have an older version of GRO please update to
 the latest version.
-
-
 </div>
 
-</td></tr>
+<%@ include file="grofoot.jsp" %>
 
-<tr><td align="center">&nbsp;</td></tr>
 
-<tr><td align="center"><font size="1" face="arial,helvetica">&copy; Copyright 2001, Christopher A. Mosher, Shelton, CT, USA</font></td><tr>
-</table>
-</center>
+
 </body>
-</html>
+<%@ include file="htmlfoot.jsp" %>
