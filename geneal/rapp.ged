@@ -101,7 +101,7 @@
 3 QUAY 3
 1 FAMS @F0@
 0 @I2@ INDI
-1 _XY 528 555
+1 _XY 636 554
 1 NAME James Ray /Rapp/
 1 SEX M
 1 BIRT
@@ -109,7 +109,7 @@
 2 PLAC Winfield, KS, USA
 1 FAMC @F1@
 0 @I3@ INDI
-1 _XY 617 555
+1 _XY 529 554
 1 NAME John Herbert /Rapp/
 1 SEX M
 1 BIRT
@@ -123,7 +123,7 @@
 3 QUAY 1
 1 FAMC @F1@
 0 @I4@ INDI
-1 _XY 371 555
+1 _XY 450 554
 1 NAME John H. /Rapp/
 2 SOUR @S1@
 3 QUAY 1
@@ -135,7 +135,7 @@
 3 QUAY 1
 1 FAMC @F0@
 0 @I5@ INDI
-1 _XY 446 555
+1 _XY 375 555
 1 NAME Avery /Rapp/
 2 SOUR @S1@
 3 QUAY 1
@@ -298,7 +298,7 @@
 1 FAMS @F2@
 1 FAMC @F3@
 0 @I9@ INDI
-1 _XY 438 341
+1 _XY 439 330
 1 NAME Herbert T. /Rapp/
 2 SOUR @S6@
 3 QUAY 1
@@ -320,7 +320,7 @@
 3 QUAY 1
 1 FAMC @F2@
 0 @I10@ INDI
-1 _XY 527 341
+1 _XY 528 330
 1 NAME [unknown] /Rapp/
 2 SOUR @S6@
 3 QUAY 0
