@@ -1,0 +1,15 @@
+body
+{
+	background-color: #FAEBD7;
+	font-family: sans-serif;
+}
+
+table.film
+{
+	text-align: center;
+}
+
+table.scene,td.scene,th.scene
+{
+	background-color: #99ddff;
+}
