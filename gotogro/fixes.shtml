@@ -1,11 +1,11 @@
-<%@ include file="htmlhead.jsp" %>
+<!--#include virtual="htmlhead.ihtml" -->
 <head>
 <title>Genealogy Research Organizer</title>
 <link rel="stylesheet" href="gro.css" type="text/css" media="all" />
 </head>
 <body>
 
-<%@ include file="grohead.jsp" %>
+<!--#include virtual="grohead.ihtml" -->
 
 <div class="textblock">
 <h1>Fixes Per Version</h1>
@@ -16,7 +16,7 @@
 <h3>V1.4</h3>
 <table>
 
-<tr><td colspan="2">New Features (see <a href="help.jsp">help</a> for explanations)</td></tr>
+<tr><td colspan="2">New Features (see <a href="help.shtml">help</a> for explanations)</td></tr>
 <tr><td style="width:72px"></td><td>
 Greatly improved automatic layout of entire chart (clean)<br />
 Copy and Paste Individuals<br />
@@ -285,9 +285,8 @@ years between 1583 and 1752 will be shown with a slashed year, for example,
 </table>
 </div>
 
-<%@ include file="grofoot.jsp" %>
-
+<!--#include virtual="grofoot.ihtml" -->
 
 
 </body>
-<%@ include file="htmlfoot.jsp" %>
+<!--#include virtual="htmlfoot.ihtml" -->

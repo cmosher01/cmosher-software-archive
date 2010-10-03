@@ -1,11 +1,11 @@
-<%@ include file="htmlhead.jsp" %>
+<!--#include virtual="htmlhead.ihtml" -->
 <head>
 <title>Genealogy Research Organizer</title>
 <link rel="stylesheet" href="gro.css" type="text/css" media="all" />
 </head>
 <body>
 
-<%@ include file="grohead.jsp" %>
+<!--#include virtual="grohead.ihtml" -->
 
 <div class="textblock">
 <h3>Upgrading to V1.4 from an Earlier Version</h3>
@@ -39,14 +39,14 @@ of recently opened files, the current font, and the submitter
 name and address. They also include the registration information,
 so if you have a registered version, you must re-enter your name and key. (Your key
 was emailed to you when you bought the program. If you lost your key,
-<a href="contact.jsp">contact the Support Department</a>.)
+<a href="contact.shtml">contact the Support Department</a>.)
 </p>
 <ol>
 <li>Run the old version of GRO</li>
 <li>Choose from the menu: File|Setup.</li>
 <li>Click Uninstall and click OK.</li>
 <li>Reboot your computer. (This is important.)</li>
-<li>Go to the <a href="download.jsp">download</a> page and follow the instructions.</li>
+<li>Go to the <a href="download.shtml">download</a> page and follow the instructions.</li>
 <li>When you run GRO, you will get a warning that the program is not registered.</li>
 <li>If you have a registration key, choose from the menu: File|Register, and enter your name and key.</li>
 </ol>
@@ -72,9 +72,7 @@ one you want it to launch).
 </p>
 </div>
 
-<%@ include file="grofoot.jsp" %>
-
-
+<!--#include virtual="grofoot.ihtml" -->
 
 </body>
-<%@ include file="htmlfoot.jsp" %>
+<!--#include virtual="htmlfoot.ihtml" -->

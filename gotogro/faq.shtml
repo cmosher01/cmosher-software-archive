@@ -1,11 +1,11 @@
-<%@ include file="htmlhead.jsp" %>
+<!--#include virtual="htmlhead.ihtml" -->
 <head>
 <title>Genealogy Research Organizer</title>
 <link rel="stylesheet" href="gro.css" type="text/css" media="all" />
 </head>
 <body>
 
-<%@ include file="grohead.jsp" %>
+<!--#include virtual="grohead.ihtml" -->
 
 <div class="textblock">
 <h3>Frequently Asked Questions</h3>
@@ -82,9 +82,8 @@ This has been fixed as of version 1.3. If you have an older version of GRO pleas
 the latest version.
 </div>
 
-<%@ include file="grofoot.jsp" %>
-
+<!--#include virtual="grofoot.ihtml" -->
 
 
 </body>
-<%@ include file="htmlfoot.jsp" %>
+<!--#include virtual="htmlfoot.ihtml" -->

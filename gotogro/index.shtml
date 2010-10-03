@@ -1,26 +1,18 @@
-<%@ include file="htmlhead.jsp" %>
+<!--#include virtual="htmlhead.ihtml" -->
 <head>
 <title>Genealogy Research Organizer</title>
 <link rel="stylesheet" href="gro.css" type="text/css" media="all" />
-<script type="text/javascript">
-<!--
-if (parent && parent.frames && parent.frames[1])
-	parent.frames[1].location.href="/blank.html";
--->
-</script>
 </head>
 <body>
 
-<%@ include file="grohead.jsp" %>
+<!--#include virtual="grohead.ihtml" -->
 
-<%-- screen --%>
 <p>
 <img src="gui.png" width="557" height="377" alt="Drop-line chart" class="centered" />
 </p>
 
 <p><span style="background-color: #FFCCCC">&nbsp;Current&nbsp;version&nbsp;1.4&nbsp;</span></p>
 
-<%-- text --%>
 <div style="text-justify:distribute-all-lines; font-weight:bold;">
 <span class="firstletter">Y</span>ou've never seen a genealogy program do THIS before!
 </div>
@@ -38,9 +30,9 @@ draws the lines between individuals representing their relationship.
 to see all of his or her events, attributes, partners, and children.
 </div>
 
-<%@ include file="grofoot.jsp" %>
+<!--#include virtual="grofoot.ihtml" -->
 
 
 
 </body>
-<%@ include file="htmlfoot.jsp" %>
+<!--#include virtual="htmlfoot.ihtml" -->

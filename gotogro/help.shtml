@@ -1,11 +1,12 @@
-<%@ include file="htmlhead.jsp" %>
+<!--#include virtual="htmlhead.ihtml" -->
 <head>
 <title>Genealogy Research Organizer</title>
 <link rel="stylesheet" href="gro.css" type="text/css" media="all" />
 </head>
 <body>
 
-<%@ include file="grohead.jsp" %>
+<!--#include virtual="grohead.ihtml" -->
+
 <ul>
 	<li><a href="#gettingStarted">Getting Started</a>
 	<ul>
@@ -405,9 +406,9 @@ folder as the GRO.EXE program when it is started. Also, it will not write
 any data to the registry, or the users hard-drive, when run from a CD-ROM.
 </div>
 
-<%@ include file="grofoot.jsp" %>
+<!--#include virtual="grofoot.ihtml" -->
 
 
 
 </body>
-<%@ include file="htmlfoot.jsp" %>
+<!--#include virtual="htmlfoot.ihtml" -->

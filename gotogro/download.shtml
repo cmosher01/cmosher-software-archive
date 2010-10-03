@@ -1,11 +1,11 @@
-<%@ include file="htmlhead.jsp" %>
+<!--#include virtual="htmlhead.ihtml" -->
 <head>
 <title>Genealogy Research Organizer</title>
 <link rel="stylesheet" href="gro.css" type="text/css" media="all" />
 </head>
 <body>
 
-<%@ include file="grohead.jsp" %>
+<!--#include virtual="grohead.ihtml" -->
 
 <div class="textblock">
 <p>
@@ -20,7 +20,7 @@ Once you order the program and enter your registration key, the program will let
 </table>
 <p>
 If you already have an older version of the program installed, there are
-instructions for <a href="upgrade.jsp">upgrading</a> to V1.4.
+instructions for <a href="upgrade.shtml">upgrading</a> to V1.4.
 </p>
 <p>
 <b>Easiest way to download (Recommended)</b>
@@ -46,9 +46,9 @@ If you have any questions, please contact our Support Department.
 </p>
 </div>
 
-<%@ include file="grofoot.jsp" %>
+<!--#include virtual="grofoot.ihtml" -->
 
 
 
 </body>
-<%@ include file="htmlfoot.jsp" %>
+<!--#include virtual="htmlfoot.ihtml" -->
