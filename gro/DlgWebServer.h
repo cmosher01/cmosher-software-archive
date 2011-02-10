@@ -1,3 +1,4 @@
+#if 0
 #if !defined(AFX_DLGWEBSERVER_H__0840558A_ADFC_4135_9CDD_91167486630A__INCLUDED_)
 #define AFX_DLGWEBSERVER_H__0840558A_ADFC_4135_9CDD_91167486630A__INCLUDED_
 
@@ -10,19 +11,19 @@
 /////////////////////////////////////////////////////////////////////////////
 // CDlgWebServer dialog
 
-class CDlgWebServer : public CDialog
+class CDlgWebServer : public wxDialog
 {
 // Construction
 public:
-	CDlgWebServer(CWnd* pParent = NULL, bool bRunning = false);   // standard constructor
+	CDlgWebServer(wxWindow* pParent = NULL, bool bRunning = false);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CDlgWebServer)
 	enum { IDD = IDD_WEBSERVER };
-	CEdit	m_editPort;
-	CButton	m_btnStartStop;
+	wxTextCtrl*	m_editPort;
+	wxButton*	m_btnStartStop;
 	int		m_nPort;
-	CString	m_strRunning;
+	wxString	m_strRunning;
 	//}}AFX_DATA
 	bool m_bRunning;
 
@@ -40,10 +41,11 @@ protected:
 	//{{AFX_MSG(CDlgWebServer)
 	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
 #endif // !defined(AFX_DLGWEBSERVER_H__0840558A_ADFC_4135_9CDD_91167486630A__INCLUDED_)
+#endif

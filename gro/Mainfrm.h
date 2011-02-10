@@ -30,7 +30,7 @@ public:
 
 	virtual BOOL LoadFrame(UINT nIDResource = IDR_MAINFRAME,
 				DWORD dwDefaultStyle = WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE,
-				CWnd* pParentWnd = NULL,
+				wxWindow* pParentWnd = NULL,
 				CCreateContext* pContext = NULL);
 
 protected:  // control bar embedded members
@@ -45,7 +45,7 @@ protected:
 	afx_msg void OnWebSite();
 	afx_msg void OnClose();
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };
 
 /////////////////////////////////////////////////////////////////////////////

@@ -17,11 +17,11 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNCREATE(CGedtreeView, CScrollView)
 
-BEGIN_MESSAGE_MAP(CGedtreeView, CScrollView)
+BEGIN_EVENT_TABLE(CGedtreeView, CScrollView)
 	//{{AFX_MSG_MAP(CGedtreeView)
 	//}}AFX_MSG_MAP
 	// Standard printing commands
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CGedtreeView construction/destruction
@@ -42,7 +42,7 @@ void CGedtreeView::OnInitialUpdate()
 
 void CGedtreeView::UpdateTitle()
 {
-	CString sTitle;
+	wxString sTitle;
 	sTitle =  GetDocument()->GetTitle();
 	sTitle += " - ";
 	sTitle += GetWindowTitle();
@@ -50,13 +50,13 @@ void CGedtreeView::UpdateTitle()
 	GetParent()->SetWindowText(sTitle);
 }
 
-CString CGedtreeView::GetWindowTitle()
+wxString CGedtreeView::GetWindowTitle()
 {
-	ASSERT(FALSE);
-	return CString();
+	wxASSERT(FALSE);
+	return wxString();
 }
 
 void CGedtreeView::Reset(UINT flagsChanged)
 {
-	ASSERT(FALSE);
+	wxASSERT(FALSE);
 }

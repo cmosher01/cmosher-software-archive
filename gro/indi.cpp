@@ -13,8 +13,8 @@
 #include <list>
 #include <sstream>
 
-const CSize MIN_INDI_SIZE3D(8,8);
-const CSize MIN_INDI_SIZE(6,4);
+const wxSize MIN_INDI_SIZE3D(8,8);
+const wxSize MIN_INDI_SIZE(6,4);
 
 const UINT nDrawFormat(DT_WORDBREAK|DT_NOCLIP|DT_NOPREFIX);
 
@@ -106,7 +106,7 @@ CIndividual::CIndividual(const CIndividual& o):
 	m_riSpouseToFamily.Copy(o.m_riSpouseToFamily);
 }
 
-CString CIndividual::Name()
+wxString CIndividual::Name()
 {
 	return m_name.Name();
 }
@@ -170,17 +170,17 @@ BOOL CIndividual::AddChild(int iChild, BOOL bCheckFirst)
 	return bAdd;
 }
 
-void CIndividual::PlaceAt(const CPoint& point)
+void CIndividual::PlaceAt(const wxPoint& point)
 {
-	CPoint pointText = point;
+	wxPoint pointText = point;
 	pointText.x += theApp.m_nIndiBorderX;
 	pointText.y += theApp.m_nIndiBorderY;
-	m_rectText = CRect(pointText,CSize(theApp.m_nMaxIndiWidth,0));
+	m_rectText = wxRect(pointText,wxSize(theApp.m_nMaxIndiWidth,0));
 }
 
 void CIndividual::ResetWidth()
 {
-	m_rectText = CRect(m_rectText.TopLeft(),CSize(theApp.m_nMaxIndiWidth,0));
+	m_rectText = wxRect(m_rectText.TopLeft(),wxSize(theApp.m_nMaxIndiWidth,0));
 }
 
 void CIndividual::CalcFull()
@@ -198,7 +198,7 @@ void CIndividual::CalcFull()
  *	&amp;  & ampersand  
  *	&apos; '  apostrophe 
  *	&quot; " quotation mark 
-static void FixXML(CString& str)
+static void FixXML(wxString& str)
 {
 	str.Replace(L"&",L"&amp;");
 	str.Replace(L"<",L"&lt;");
@@ -210,7 +210,7 @@ static void FixXML(CString& str)
 
 void CIndividual::Calc()
 {
-	ASSERT(Exists());
+	wxASSERT(Exists());
 
 	m_strTreeDisplay.Empty();
 
@@ -222,7 +222,7 @@ void CIndividual::Calc()
 //	m_strTreeDisplay.Format("M:%d\n",m_maxmale);
 /*
 	m_strTreeDisplay += "\n----------------------\n";
-	CString smaxm;
+	wxString smaxm;
 	smaxm.Format(L"maxmale:%d\n",m_maxmale);
 	m_strTreeDisplay += smaxm;
 	if (!m_bMark)
@@ -240,7 +240,7 @@ void CIndividual::Calc()
 
 	MyRect r(m_rectText);
 	r += -r.TopLeft();
-	CRect rrr = r;
+	wxRect rrr = r;
 
 	theApp.ResetFont();
 /*
@@ -320,7 +320,7 @@ void CIndividual::Calc()
 	if (m_iBirth>=0)
 	{
 		CEvt& evt = m_revt[m_iBirth];
-		CString strDate = evt.m_dvDate.Display(DATE_SHORTDATE);
+		wxString strDate = evt.m_dvDate.Display(DATE_SHORTDATE);
 		if (strDate.IsEmpty())
 		{
 			m_strBirthDisplay.Empty();
@@ -335,7 +335,7 @@ void CIndividual::Calc()
 	if (m_iDeath>=0)
 	{
 		CEvt& evt = m_revt[m_iDeath];
-		CString strDate = evt.m_dvDate.Display(DATE_SHORTDATE);
+		wxString strDate = evt.m_dvDate.Display(DATE_SHORTDATE);
 		if (strDate.IsEmpty())
 		{
 			m_strDeathDisplay.Empty();
@@ -373,7 +373,7 @@ void CIndividual::Calc()
 	m_pDoc->clearAppletChart();
 }
 
-void CIndividual::GridRect(CRect& rect)
+void CIndividual::GridRect(wxRect& rect)
 {
 	rect.top = rect.top/m_nGrid*m_nGrid;
 	rect.left = rect.left/m_nGrid*m_nGrid;
@@ -381,18 +381,18 @@ void CIndividual::GridRect(CRect& rect)
 	rect.right = (rect.right+m_nGrid-1)/m_nGrid*m_nGrid;
 }
 
-void CIndividual::MoveTo(const CPoint& point)
+void CIndividual::MoveTo(const wxPoint& point)
 {
 	Shift(point-m_rectFrame.TopLeft());
 }
 
-void CIndividual::Shift(const CSize& sizShift)
+void CIndividual::Shift(const wxSize& sizShift)
 {
 	double scale = GetScale();
-	ShiftUnscaled(CSize(sizShift.cx*scale,sizShift.cy*scale));
+	ShiftUnscaled(wxSize(sizShift.cx*scale,sizShift.cy*scale));
 }
 
-void CIndividual::ShiftUnscaled(const CSize& sizShift)
+void CIndividual::ShiftUnscaled(const wxSize& sizShift)
 {
 	m_rectFrame += sizShift;
 	m_rectText += sizShift;
@@ -470,8 +470,8 @@ void CIndividual::OnDraw(CMyDC& dc)
 	if (!Exists()) return;
 	//if (m_bHidden) return;
 
-	CRect rectScaledFrame(m_rectScaledFrame);
-	CRect rectScaledText(m_rectScaledText);
+	wxRect rectScaledFrame(m_rectScaledFrame);
+	wxRect rectScaledText(m_rectScaledText);
 
 /*
 	if (m_nScale==1)
@@ -513,7 +513,7 @@ void CIndividual::OnDraw(CMyDC& dc)
 	}
 }
 
-void CIndividual::ScaleForPrint(CRect& rect)
+void CIndividual::ScaleForPrint(wxRect& rect)
 {
 	int nFactor(4);
 	rect.top *= nFactor;
@@ -522,22 +522,22 @@ void CIndividual::ScaleForPrint(CRect& rect)
 	rect.right *= nFactor;
 }
 
-CRect CIndividual::GetFrameRect()
+wxRect CIndividual::GetFrameRect()
 {
 	return m_rectScaledFrame;
 }
 
-CRect CIndividual::GetUnscaledFrameRect()
+wxRect CIndividual::GetUnscaledFrameRect()
 {
 	return m_rectFrame;
 }
 
-BOOL CIndividual::HitTest(const CPoint& point)
+BOOL CIndividual::HitTest(const wxPoint& point)
 {
 	return m_rectScaledFrame.PtInRect(point);
 }
 
-BOOL CIndividual::HitTest(const CRect& rect)
+BOOL CIndividual::HitTest(const wxRect& rect)
 {
 	return m_rectScaledFrame.RectInRect(rect);
 }
@@ -549,17 +549,17 @@ BOOL CIndividual::Select(BOOL bSelect)
 	return bWas;
 }
 
-BOOL CIndividual::MoveToIsInBounds(CPoint& pt)
+BOOL CIndividual::MoveToIsInBounds(wxPoint& pt)
 {
-	CSize shift = pt-m_rectFrame.TopLeft();
+	wxSize shift = pt-m_rectFrame.TopLeft();
 	shift.cx *= GetScale();
 	shift.cy *= GetScale();
 	MyRect r = m_rectFrame;
 	r += shift;
 
-	CRect rectBounds(CPoint(0,0),CPoint(MAX_BOUNDS-CSize(VIEW_BORDER,VIEW_BORDER)));// = m_pDoc->GetUnscaledBoundsNoBorder();
+	wxRect rectBounds(wxPoint(0,0),wxPoint(MAX_BOUNDS-wxSize(VIEW_BORDER,VIEW_BORDER)));// = m_pDoc->GetUnscaledBoundsNoBorder();
 
-	CSize szUnshift(0,0);
+	wxSize szUnshift(0,0);
 	if (r.top<rectBounds.top)
 		szUnshift.cy = rectBounds.top-r.top;
 	if (r.bottom>rectBounds.bottom)
@@ -585,7 +585,7 @@ void CIndividual::Clean(int nDepth)
 	static const int MARRIAGE_SPACING(20);
 	static const int CHILD_VSPACING(50);
 	static const int CHILD_HSPACING(155);
-	CPoint pt;
+	wxPoint pt;
 	int cTry;
 
 	if (nDepth>1 && m_iFather>=0)
@@ -593,7 +593,7 @@ void CIndividual::Clean(int nDepth)
 		CIndividual* pFather = m_pDoc->Individual(m_iFather);
 		if (!pFather->m_bMark)
 		{
-			pt = CPoint(m_rectFrame.left,m_rectFrame.top-CHILD_VSPACING);
+			pt = wxPoint(m_rectFrame.left,m_rectFrame.top-CHILD_VSPACING);
 			int nOldScale = pFather->SetScale(1);
 			pFather->MoveToIsInBounds(pt);
 			pFather->MoveTo(pt);
@@ -601,7 +601,7 @@ void CIndividual::Clean(int nDepth)
 			cTry = 0;
 			while (m_pDoc->HitsIndi(pFather) && ++cTry<5)
 			{
-				pt -= CSize(30,5);
+				pt -= wxSize(30,5);
 				int nOldScale = pFather->SetScale(1);
 				pFather->MoveToIsInBounds(pt);
 				pFather->MoveTo(pt);
@@ -614,10 +614,10 @@ void CIndividual::Clean(int nDepth)
 
 	m_bMark = TRUE;
 
-	pt = CPoint(
+	pt = wxPoint(
 		m_rectFrame.right+MARRIAGE_SPACING,
 		(m_rectFrame.top+m_rectFrame.bottom)/2+CHILD_VSPACING/2);
-	CPoint pt2 = CPoint(
+	wxPoint pt2 = wxPoint(
 		m_rectFrame.left-MARRIAGE_SPACING,
 		(m_rectFrame.top+m_rectFrame.bottom)/2);
 	for (int i(0); i<m_riSpouse.GetSize(); i++)
@@ -627,9 +627,9 @@ void CIndividual::Clean(int nDepth)
 			CIndividual* pSpouse = m_pDoc->Individual(m_riSpouse[i]);
 			if (!pSpouse->m_bMark)
 			{
-				CRect rectSpouse = pSpouse->GetFrameRect();
-				CPoint ptTopLeft = (i%2) ? pt : pt2;
-				ptTopLeft = CPoint(ptTopLeft.x,ptTopLeft.y-(rectSpouse.bottom-rectSpouse.top)/2);
+				wxRect rectSpouse = pSpouse->GetFrameRect();
+				wxPoint ptTopLeft = (i%2) ? pt : pt2;
+				ptTopLeft = wxPoint(ptTopLeft.x,ptTopLeft.y-(rectSpouse.bottom-rectSpouse.top)/2);
 				if (!(i%2)) ptTopLeft.x -= rectSpouse.Width();
 				int nOldScale = pSpouse->SetScale(1);
 				pSpouse->MoveToIsInBounds(pt);
@@ -641,16 +641,16 @@ void CIndividual::Clean(int nDepth)
 					pSpouse->Clean(nDepth-2);
 				}
 				if (i%2)
-					pt += CSize(MARRIAGE_SPACING,CHILD_VSPACING/*/2*/);
+					pt += wxSize(MARRIAGE_SPACING,CHILD_VSPACING/*/2*/);
 				else
-					pt2 -= CSize(MARRIAGE_SPACING,-CHILD_VSPACING/*/2*/);
+					pt2 -= wxSize(MARRIAGE_SPACING,-CHILD_VSPACING/*/2*/);
 			}
 		}
 	}
 
 	if (nDepth<1) return;
 
-	pt = CPoint(
+	pt = wxPoint(
 		m_rectFrame.left+MARRIAGE_SPACING-((m_riChild.GetSize()-1)*CHILD_HSPACING)/2,
 		m_rectFrame.bottom+CHILD_VSPACING);
 	for (i = 0; i<m_riChild.GetSize(); i++)
@@ -667,7 +667,7 @@ void CIndividual::Clean(int nDepth)
 				cTry = 0;
 				while (m_pDoc->HitsIndi(pChild) && ++cTry<5)
 				{
-					pt += CSize(30,5);
+					pt += wxSize(30,5);
 					int nOldScale = pChild->SetScale(1);
 					pChild->MoveToIsInBounds(pt);
 					pChild->MoveTo(pt);
@@ -693,7 +693,7 @@ void CIndividual::OpenView()
 	else
 	{
 		POSITION pos = theApp.GetFirstDocTemplatePosition();
-		CDocTemplate* p = theApp.GetNextDocTemplate(pos); // DL tmpl
+		wxDocTemplate* p = theApp.GetNextDocTemplate(pos); // DL tmpl
 		p = theApp.GetNextDocTemplate(pos); // IN tmpl
 		m_pFrame = (CChildFrame*)p->CreateNewFrame(m_pDoc,NULL);
 		p->InitialUpdateFrame(m_pFrame,m_pDoc);
@@ -711,7 +711,7 @@ void CIndividual::OpenPedigree()
 	else
 	{
 		POSITION pos = theApp.GetFirstDocTemplatePosition();
-		CDocTemplate* p = theApp.GetNextDocTemplate(pos); // DL tmpl
+		wxDocTemplate* p = theApp.GetNextDocTemplate(pos); // DL tmpl
 		p = theApp.GetNextDocTemplate(pos); // IN tmpl
 		p = theApp.GetNextDocTemplate(pos); // PD tmpl
 		m_pPedigree = (CChildFrame*)p->CreateNewFrame(m_pDoc,NULL);
@@ -721,14 +721,14 @@ void CIndividual::OpenPedigree()
 	}
 }
 
-void CIndividual::AddEvent(HTREEITEM htiEvent, const CString& strTypeTok)
+void CIndividual::AddEvent(HTREEITEM htiEvent, const wxString& strTypeTok)
 {
 	CEvt evt(m_pDoc,htiEvent);
 	evt.GetFromTree(strTypeTok);
 	m_revt.Add(evt);
 }
 
-void CIndividual::AddAttr(HTREEITEM htiAttr, const CString& strTypeTok, const CString& strValue)
+void CIndividual::AddAttr(HTREEITEM htiAttr, const wxString& strTypeTok, const wxString& strValue)
 {
 	CAttr attr(m_pDoc,htiAttr);
 	attr.GetFromTree(strTypeTok,strValue);
@@ -737,18 +737,18 @@ void CIndividual::AddAttr(HTREEITEM htiAttr, const CString& strTypeTok, const CS
 
 struct tSchemaItem
 {
-	CString sType;
+	wxString sType;
 	HTREEITEM hti;
 };
 BOOL CIndividual::GetFromTree()
 {
-	CTreeCtrl& tree = m_pDoc->m_tree;
+	wxTreeCtrl& tree = m_pDoc->m_tree;
 	BOOL bXY(FALSE);
 
-	CString strNote;
-	CArray<HTREEITEM,HTREEITEM> rhtiNote;
-	CArray<tSchemaItem,tSchemaItem&> rSchema;
-	CString strLabel;
+	wxString strNote;
+	wxArray<HTREEITEM,HTREEITEM> rhtiNote;
+	wxArray<tSchemaItem,tSchemaItem&> rSchema;
+	wxString strLabel;
 
 	HTREEITEM htiSub = tree.GetChildItem(m_hTreeItem);
 	while (htiSub)
@@ -818,7 +818,7 @@ BOOL CIndividual::GetFromTree()
 		}
 		else if (pglChild->m_strTok=="SEX")
 		{
-			CString strSex = pglChild->GetCleanValue(CGedLine::COLLAPSE|CGedLine::UPCASE);
+			wxString strSex = pglChild->GetCleanValue(CGedLine::COLLAPSE|CGedLine::UPCASE);
 			if (strSex=="M")
 				m_nSex = 1;
 			else if (strSex=="F")
@@ -859,7 +859,7 @@ BOOL CIndividual::GetFromTree()
 		HTREEITEM hti = m_pDoc->InsertChild(_T("EVEN"),m_hTreeItem,1);
 		CEvt evt(m_pDoc,hti);
 
-		CString sNote;
+		wxString sNote;
 		HTREEITEM htiSub = tree.GetChildItem(sci.hti);
 		while (htiSub && !sNote.GetLength())
 		{
@@ -890,10 +890,10 @@ BOOL CIndividual::GetFromTree()
 	return bXY;
 }
 
-CPoint CIndividual::GetXY(const CString& str)
+wxPoint CIndividual::GetXY(const wxString& str)
 {
-	CPoint pt(0,0);
-	CString s(str);
+	wxPoint pt(0,0);
+	wxString s(str);
 	int i = s.Find(cDelim);
 	if (i>=0)
 	{
@@ -903,9 +903,9 @@ CPoint CIndividual::GetXY(const CString& str)
 	return pt;
 }
 
-CString CIndividual::GetXY(const CPoint& pt)
+wxString CIndividual::GetXY(const wxPoint& pt)
 {
-	CString str;
+	wxString str;
 	str.Format(_T("%d %d"),pt.x,pt.y);
 	return str;
 }
@@ -921,7 +921,7 @@ void CIndividual::SetSex(int nSex)
 	{
 		m_nSex = nSex;
 
-		CString strSex;
+		wxString strSex;
 		if (m_nSex==0)
 		{
 		}
@@ -930,7 +930,7 @@ void CIndividual::SetSex(int nSex)
 		else if (m_nSex==2)
 			strSex = "F";
 		else
-			ASSERT(FALSE);
+			wxASSERT(FALSE);
 
 		if (m_nSex)
 			m_pDoc->ResetSubValue(m_hTreeItem,"SEX",strSex);
@@ -941,7 +941,7 @@ void CIndividual::SetSex(int nSex)
 	}
 }
 
-CString CIndividual::Sex()
+wxString CIndividual::Sex()
 {
 	switch (m_nSex)
 	{
@@ -952,14 +952,14 @@ CString CIndividual::Sex()
 	case 2:
 		return "female";
 	};
-	ASSERT(FALSE);
+	wxASSERT(FALSE);
 	return "";
 }
 
 void CIndividual::DebugRelations()
 {
 	return;
-	CString s, s2;
+	wxString s, s2;
 
 	s.Format(_T("i==%d: "),m_i);
 	if (m_iFather>=0)
@@ -998,13 +998,13 @@ void CIndividual::DebugRelations()
 	}
 }
 
-CString CIndividual::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
+wxString CIndividual::GetWebPage(wxFile& fTmpl, const wxString& sDocID)
 {
-	CArray<CEvt,CEvt&> revt;
+	wxArray<CEvt,CEvt&> revt;
 	GetSortedEvents(revt);
-	CString str;
+	wxString str;
 
-	CArray<CAttr,CAttr&> rattr;
+	wxArray<CAttr,CAttr&> rattr;
 	GetSortedAttrs(rattr);
 
 	fTmpl.SeekToBegin();
@@ -1013,7 +1013,7 @@ CString CIndividual::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
 	{
 		if (c=='%')
 		{
-			CString sTok;
+			wxString sTok;
 			if (!fTmpl.Read(&c,1)) return str;
 			while (c!='%')
 			{
@@ -1038,7 +1038,7 @@ CString CIndividual::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
 						if (!fTmpl.Read(&c,1)) return str;
 						if (c=='%')
 						{
-							CString sTok;
+							wxString sTok;
 							if (!fTmpl.Read(&c,1)) return str;
 							while (c!='%')
 							{
@@ -1057,7 +1057,7 @@ CString CIndividual::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
 								DWORD start = fTmpl.GetPosition();
 								for (int i(0); i<revt.GetSize()&&!Private(); i++)
 								{
-									fTmpl.Seek(start,CFile::begin);
+									fTmpl.Seek(start,wxFile::begin);
 									CEvt& evt = revt[i];
 
 									BOOL bEnd(FALSE);
@@ -1066,7 +1066,7 @@ CString CIndividual::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
 										if (!fTmpl.Read(&c,1)) return str;
 										if (c=='%')
 										{
-											CString sTok;
+											wxString sTok;
 											if (!fTmpl.Read(&c,1)) return str;
 											while (c!='%')
 											{
@@ -1123,7 +1123,7 @@ CString CIndividual::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
 						if (!fTmpl.Read(&c,1)) return str;
 						if (c=='%')
 						{
-							CString sTok;
+							wxString sTok;
 							if (!fTmpl.Read(&c,1)) return str;
 							while (c!='%')
 							{
@@ -1142,7 +1142,7 @@ CString CIndividual::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
 								DWORD start = fTmpl.GetPosition();
 								for (int i(0); i<rattr.GetSize()&&!Private(); i++)
 								{
-									fTmpl.Seek(start,CFile::begin);
+									fTmpl.Seek(start,wxFile::begin);
 									CAttr& attr = rattr[i];
 
 									BOOL bEnd(FALSE);
@@ -1151,7 +1151,7 @@ CString CIndividual::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
 										if (!fTmpl.Read(&c,1)) return str;
 										if (c=='%')
 										{
-											CString sTok;
+											wxString sTok;
 											if (!fTmpl.Read(&c,1)) return str;
 											while (c!='%')
 											{
@@ -1218,7 +1218,7 @@ CString CIndividual::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
 						if (!fTmpl.Read(&c,1)) return str;
 						if (c=='%')
 						{
-							CString sTok;
+							wxString sTok;
 							if (!fTmpl.Read(&c,1)) return str;
 							while (c!='%')
 							{
@@ -1237,7 +1237,7 @@ CString CIndividual::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
 								DWORD start = fTmpl.GetPosition();
 								for (int i(0); i<m_riSpouseToFamily.GetSize(); i++)
 								{
-									fTmpl.Seek(start,CFile::begin);
+									fTmpl.Seek(start,wxFile::begin);
 									int iFami = m_riSpouseToFamily[i];
 									CFamily& fami = m_pDoc->m_rFamily[iFami];
 
@@ -1246,7 +1246,7 @@ CString CIndividual::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
 										iSpouse = fami.m_iWife;
 									else
 									{
-										ASSERT(fami.m_iWife==m_i);
+										wxASSERT(fami.m_iWife==m_i);
 										iSpouse = fami.m_iHusband;
 									}
 
@@ -1256,7 +1256,7 @@ CString CIndividual::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
 										if (!fTmpl.Read(&c,1)) return str;
 										if (c=='%')
 										{
-											CString sTok;
+											wxString sTok;
 											if (!fTmpl.Read(&c,1)) return str;
 											while (c!='%')
 											{
@@ -1271,7 +1271,7 @@ CString CIndividual::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
 												str += GetIndiLink(iSpouse,sDocID);
 											else if (!sTok.CompareNoCase(_T("events")))
 											{
-												CArray<CEvt,CEvt&> revt;
+												wxArray<CEvt,CEvt&> revt;
 												GetSortedEvents(fami,revt);
 												BOOL bEnd(FALSE);
 												while (!bEnd)
@@ -1279,7 +1279,7 @@ CString CIndividual::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
 													if (!fTmpl.Read(&c,1)) return str;
 													if (c=='%')
 													{
-														CString sTok;
+														wxString sTok;
 														if (!fTmpl.Read(&c,1)) return str;
 														while (c!='%')
 														{
@@ -1298,7 +1298,7 @@ CString CIndividual::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
 															DWORD start = fTmpl.GetPosition();
 															for (int i(0); i<revt.GetSize()&&!Private(); i++)
 															{
-																fTmpl.Seek(start,CFile::begin);
+																fTmpl.Seek(start,wxFile::begin);
 																CEvt& evt = revt[i];
 
 																BOOL bEnd(FALSE);
@@ -1307,7 +1307,7 @@ CString CIndividual::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
 																	if (!fTmpl.Read(&c,1)) return str;
 																	if (c=='%')
 																	{
-																		CString sTok;
+																		wxString sTok;
 																		if (!fTmpl.Read(&c,1)) return str;
 																		while (c!='%')
 																		{
@@ -1364,7 +1364,7 @@ CString CIndividual::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
 													if (!fTmpl.Read(&c,1)) return str;
 													if (c=='%')
 													{
-														CString sTok;
+														wxString sTok;
 														if (!fTmpl.Read(&c,1)) return str;
 														while (c!='%')
 														{
@@ -1381,11 +1381,11 @@ CString CIndividual::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
 														else if (!sTok.CompareNoCase(_T("child")))
 														{
 															DWORD start = fTmpl.GetPosition();
-															CArray<int,int> riChild;
+															wxArray<int,int> riChild;
 															fami.GetSortedChildren(riChild);
 															for (int j(0); j<riChild.GetSize(); j++)
 															{
-																fTmpl.Seek(start,CFile::begin);
+																fTmpl.Seek(start,wxFile::begin);
 																int iChild = riChild[j];
 
 																BOOL bEnd(FALSE);
@@ -1394,7 +1394,7 @@ CString CIndividual::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
 																	if (!fTmpl.Read(&c,1)) return str;
 																	if (c=='%')
 																	{
-																		CString sTok;
+																		wxString sTok;
 																		if (!fTmpl.Read(&c,1)) return str;
 																		while (c!='%')
 																		{
@@ -1489,9 +1489,9 @@ CString CIndividual::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
 	return str;
 }
 
-CString CIndividual::GetIndiLink(int iIndi, const CString& sDocID)
+wxString CIndividual::GetIndiLink(int iIndi, const wxString& sDocID)
 {
-	CString str;
+	wxString str;
 	if (iIndi>=0)
 	{
 		CIndividual* pIndi = m_pDoc->Individual(iIndi);
@@ -1504,9 +1504,9 @@ CString CIndividual::GetIndiLink(int iIndi, const CString& sDocID)
 	return str;
 }
 
-CString CIndividual::GetIndiRTF(int iIndi)
+wxString CIndividual::GetIndiRTF(int iIndi)
 {
-	CString str;
+	wxString str;
 	if (iIndi>=0)
 	{
 		CIndividual* pIndi = m_pDoc->Individual(iIndi);
@@ -1519,9 +1519,9 @@ CString CIndividual::GetIndiRTF(int iIndi)
 	return str;
 }
 
-CString CIndividual::GetIndiPageRef(int iIndi)
+wxString CIndividual::GetIndiPageRef(int iIndi)
 {
-	CString str;
+	wxString str;
 	if (iIndi>=0)
 	{
 		CIndividual* pIndi = m_pDoc->Individual(iIndi);
@@ -1534,9 +1534,9 @@ CString CIndividual::GetIndiPageRef(int iIndi)
 	return str;
 }
 
-CString CIndividual::GetSourLink(int iSour, const CString& strCita, const CString& sDocID)
+wxString CIndividual::GetSourLink(int iSour, const wxString& strCita, const wxString& sDocID)
 {
-	CString str;
+	wxString str;
 	if (iSour>=0)
 	{
 		str = m_pDoc->m_rSource[iSour].GetLink(strCita,sDocID);
@@ -1548,7 +1548,7 @@ CString CIndividual::GetSourLink(int iSour, const CString& strCita, const CStrin
 	return str;
 }
 
-CString CIndividual::Cell(const CString& str)
+wxString CIndividual::Cell(const wxString& str)
 {
 	if (str.IsEmpty())
 		return "&nbsp;";
@@ -1570,7 +1570,7 @@ BOOL CIndividual::Private()
 	return nYearNow-nYearTest < 72;
 }
 
-int GetRank(const CString& tok)
+int GetRank(const wxString& tok)
 {
 	if (tok=="DEAT")
 		return 1;
@@ -1600,10 +1600,10 @@ bool TestEmpty(const CEvt& eEmpty, const CEvt& eDated)
 
 	return r1>r2;
 }
-void CIndividual::GetSortedEvents(CArray<CEvt,CEvt&>& revt)
+void CIndividual::GetSortedEvents(wxArray<CEvt,CEvt&>& revt)
 {
 	int n = m_revt.GetSize();
-	CArray<int,int> rx;
+	wxArray<int,int> rx;
 	rx.SetSize(n);
 	for (int i(0); i<n; i++)
 		rx[i] = i;
@@ -1614,8 +1614,8 @@ void CIndividual::GetSortedEvents(CArray<CEvt,CEvt&>& revt)
 		{
 			CEvt& evt1 = m_revt[rx[i]];
 			CEvt& evt2 = m_revt[rx[j]];
-			const CString& d1 = evt1.m_dvDate.Sort();
-			const CString& d2 = evt2.m_dvDate.Sort();
+			const wxString& d1 = evt1.m_dvDate.Sort();
+			const wxString& d2 = evt2.m_dvDate.Sort();
 
 			bool out_of_order;
 			if (d1.IsEmpty())
@@ -1639,10 +1639,10 @@ void CIndividual::GetSortedEvents(CArray<CEvt,CEvt&>& revt)
 		revt[i] = m_revt[rx[i]];
 }
 
-void CIndividual::GetSortedEvents(CFamily& fami, CArray<CEvt,CEvt&>& revt)
+void CIndividual::GetSortedEvents(CFamily& fami, wxArray<CEvt,CEvt&>& revt)
 {
 	int n = fami.m_revt.GetSize();
-	CArray<int,int> rx;
+	wxArray<int,int> rx;
 	rx.SetSize(n);
 	for (int i(0); i<n; i++)
 		rx[i] = i;
@@ -1661,10 +1661,10 @@ void CIndividual::GetSortedEvents(CFamily& fami, CArray<CEvt,CEvt&>& revt)
 		revt[i] = fami.m_revt[rx[i]];
 }
 
-void CIndividual::GetSortedAttrs(CArray<CAttr,CAttr&>& rattr)
+void CIndividual::GetSortedAttrs(wxArray<CAttr,CAttr&>& rattr)
 {
 	int n = m_rattr.GetSize();
-	CArray<int,int> rx;
+	wxArray<int,int> rx;
 	rx.SetSize(n);
 	for (int i(0); i<n; i++)
 		rx[i] = i;
@@ -1683,9 +1683,9 @@ void CIndividual::GetSortedAttrs(CArray<CAttr,CAttr&>& rattr)
 		rattr[i] = m_rattr[rx[i]];
 }
 
-CString CIndividual::Census(const CArray<CDate,CDate>& rdateCensusDay)
+wxString CIndividual::Census(const wxArray<CDate,CDate>& rdateCensusDay)
 {
-	CString sLine = "<tr><td>";
+	wxString sLine = "<tr><td>";
 	sLine += m_name.Surname();
 	sLine += "</td><td>";
 	sLine += m_name.GivenName();
@@ -1726,7 +1726,7 @@ CString CIndividual::Census(const CArray<CDate,CDate>& rdateCensusDay)
 					iCensusEvent = iEvt;
 				}
 			}
-			CString strPlace;
+			wxString strPlace;
 			if (iCensusEvent>=0)
 			{
 				strPlace = m_revt[iCensusEvent].m_strPlace;
@@ -1739,7 +1739,7 @@ CString CIndividual::Census(const CArray<CDate,CDate>& rdateCensusDay)
 			{
 				strPlace = "?";
 			}
-			CString sField;
+			wxString sField;
 			if (nCensusDay<nBirth)
 			{
 				if (!(nBirth%10000) && nCensusDay>=nBirth-100000)
@@ -1788,7 +1788,7 @@ CString CIndividual::Census(const CArray<CDate,CDate>& rdateCensusDay)
 				{
 					sField += ", ";
 
-					CString sAge;
+					wxString sAge;
 					if (age >= 1)
 					{
 						sAge.Format(L"%d",age);
@@ -1852,13 +1852,13 @@ CString CIndividual::Census(const CArray<CDate,CDate>& rdateCensusDay)
 	return sLine;
 }
 
-CString CIndividual::AllPlaces()
+wxString CIndividual::AllPlaces()
 {
-	CString s;
+	wxString s;
 	for (int iEvt(0); iEvt<m_revt.GetSize(); iEvt++)
 	{
 		CEvt& evt = m_revt[iEvt];
-		CString sPlace = evt.m_strPlace;
+		wxString sPlace = evt.m_strPlace;
 		if (!sPlace.IsEmpty())
 		{
 			s += sPlace + "\n";
@@ -1867,7 +1867,7 @@ CString CIndividual::AllPlaces()
 	for (int iAttr(0); iAttr<m_revt.GetSize(); iAttr++)
 	{
 		CAttr& attr = m_rattr[iAttr];
-		CString sPlace = attr.m_evt.m_strPlace;
+		wxString sPlace = attr.m_evt.m_strPlace;
 		if (!sPlace.IsEmpty())
 		{
 			s += sPlace + "\n";
@@ -1876,13 +1876,13 @@ CString CIndividual::AllPlaces()
 	return s;
 }
 
-CString CIndividual::GetRTFPage(CMemFile& fTmpl)
+wxString CIndividual::GetRTFPage(wxFile& fTmpl)
 {
-	CArray<CEvt,CEvt&> revt;
+	wxArray<CEvt,CEvt&> revt;
 	GetSortedEvents(revt);
-	CString str;
+	wxString str;
 
-	CArray<CAttr,CAttr&> rattr;
+	wxArray<CAttr,CAttr&> rattr;
 	GetSortedAttrs(rattr);
 
 	fTmpl.SeekToBegin();
@@ -1891,7 +1891,7 @@ CString CIndividual::GetRTFPage(CMemFile& fTmpl)
 	{
 		if (c=='%')
 		{
-			CString sTok;
+			wxString sTok;
 			if (!fTmpl.Read(&c,1)) return str;
 			while (c!='%')
 			{
@@ -1916,7 +1916,7 @@ CString CIndividual::GetRTFPage(CMemFile& fTmpl)
 						if (!fTmpl.Read(&c,1)) return str;
 						if (c=='%')
 						{
-							CString sTok;
+							wxString sTok;
 							if (!fTmpl.Read(&c,1)) return str;
 							while (c!='%')
 							{
@@ -1935,7 +1935,7 @@ CString CIndividual::GetRTFPage(CMemFile& fTmpl)
 								DWORD start = fTmpl.GetPosition();
 								for (int i(0); i<revt.GetSize(); i++)
 								{
-									fTmpl.Seek(start,CFile::begin);
+									fTmpl.Seek(start,wxFile::begin);
 									CEvt& evt = revt[i];
 
 									BOOL bEnd(FALSE);
@@ -1944,7 +1944,7 @@ CString CIndividual::GetRTFPage(CMemFile& fTmpl)
 										if (!fTmpl.Read(&c,1)) return str;
 										if (c=='%')
 										{
-											CString sTok;
+											wxString sTok;
 											if (!fTmpl.Read(&c,1)) return str;
 											while (c!='%')
 											{
@@ -1996,7 +1996,7 @@ CString CIndividual::GetRTFPage(CMemFile& fTmpl)
 						if (!fTmpl.Read(&c,1)) return str;
 						if (c=='%')
 						{
-							CString sTok;
+							wxString sTok;
 							if (!fTmpl.Read(&c,1)) return str;
 							while (c!='%')
 							{
@@ -2015,7 +2015,7 @@ CString CIndividual::GetRTFPage(CMemFile& fTmpl)
 								DWORD start = fTmpl.GetPosition();
 								for (int i(0); i<rattr.GetSize(); i++)
 								{
-									fTmpl.Seek(start,CFile::begin);
+									fTmpl.Seek(start,wxFile::begin);
 									CAttr& attr = rattr[i];
 
 									BOOL bEnd(FALSE);
@@ -2024,7 +2024,7 @@ CString CIndividual::GetRTFPage(CMemFile& fTmpl)
 										if (!fTmpl.Read(&c,1)) return str;
 										if (c=='%')
 										{
-											CString sTok;
+											wxString sTok;
 											if (!fTmpl.Read(&c,1)) return str;
 											while (c!='%')
 											{
@@ -2098,7 +2098,7 @@ CString CIndividual::GetRTFPage(CMemFile& fTmpl)
 						if (!fTmpl.Read(&c,1)) return str;
 						if (c=='%')
 						{
-							CString sTok;
+							wxString sTok;
 							if (!fTmpl.Read(&c,1)) return str;
 							while (c!='%')
 							{
@@ -2117,7 +2117,7 @@ CString CIndividual::GetRTFPage(CMemFile& fTmpl)
 								DWORD start = fTmpl.GetPosition();
 								for (int i(0); i<m_riSpouseToFamily.GetSize(); i++)
 								{
-									fTmpl.Seek(start,CFile::begin);
+									fTmpl.Seek(start,wxFile::begin);
 									int iFami = m_riSpouseToFamily[i];
 									CFamily& fami = m_pDoc->m_rFamily[iFami];
 
@@ -2126,7 +2126,7 @@ CString CIndividual::GetRTFPage(CMemFile& fTmpl)
 										iSpouse = fami.m_iWife;
 									else
 									{
-										ASSERT(fami.m_iWife==m_i);
+										wxASSERT(fami.m_iWife==m_i);
 										iSpouse = fami.m_iHusband;
 									}
 
@@ -2136,7 +2136,7 @@ CString CIndividual::GetRTFPage(CMemFile& fTmpl)
 										if (!fTmpl.Read(&c,1)) return str;
 										if (c=='%')
 										{
-											CString sTok;
+											wxString sTok;
 											if (!fTmpl.Read(&c,1)) return str;
 											while (c!='%')
 											{
@@ -2153,7 +2153,7 @@ CString CIndividual::GetRTFPage(CMemFile& fTmpl)
 												str += GetIndiPageRef(iSpouse);
 											else if (!sTok.CompareNoCase(_T("events")))
 											{
-												CArray<CEvt,CEvt&> revt;
+												wxArray<CEvt,CEvt&> revt;
 												GetSortedEvents(fami,revt);
 												BOOL bEnd(FALSE);
 												while (!bEnd)
@@ -2161,7 +2161,7 @@ CString CIndividual::GetRTFPage(CMemFile& fTmpl)
 													if (!fTmpl.Read(&c,1)) return str;
 													if (c=='%')
 													{
-														CString sTok;
+														wxString sTok;
 														if (!fTmpl.Read(&c,1)) return str;
 														while (c!='%')
 														{
@@ -2180,7 +2180,7 @@ CString CIndividual::GetRTFPage(CMemFile& fTmpl)
 															DWORD start = fTmpl.GetPosition();
 															for (int i(0); i<revt.GetSize(); i++)
 															{
-																fTmpl.Seek(start,CFile::begin);
+																fTmpl.Seek(start,wxFile::begin);
 																CEvt& evt = revt[i];
 
 																BOOL bEnd(FALSE);
@@ -2189,7 +2189,7 @@ CString CIndividual::GetRTFPage(CMemFile& fTmpl)
 																	if (!fTmpl.Read(&c,1)) return str;
 																	if (c=='%')
 																	{
-																		CString sTok;
+																		wxString sTok;
 																		if (!fTmpl.Read(&c,1)) return str;
 																		while (c!='%')
 																		{
@@ -2241,7 +2241,7 @@ CString CIndividual::GetRTFPage(CMemFile& fTmpl)
 													if (!fTmpl.Read(&c,1)) return str;
 													if (c=='%')
 													{
-														CString sTok;
+														wxString sTok;
 														if (!fTmpl.Read(&c,1)) return str;
 														while (c!='%')
 														{
@@ -2260,7 +2260,7 @@ CString CIndividual::GetRTFPage(CMemFile& fTmpl)
 															DWORD start = fTmpl.GetPosition();
 															for (int j(0); j<fami.m_riChild.GetSize(); j++)
 															{
-																fTmpl.Seek(start,CFile::begin);
+																fTmpl.Seek(start,wxFile::begin);
 																int iChild = fami.m_riChild[j];
 
 																BOOL bEnd(FALSE);
@@ -2269,7 +2269,7 @@ CString CIndividual::GetRTFPage(CMemFile& fTmpl)
 																	if (!fTmpl.Read(&c,1)) return str;
 																	if (c=='%')
 																	{
-																		CString sTok;
+																		wxString sTok;
 																		if (!fTmpl.Read(&c,1)) return str;
 																		while (c!='%')
 																		{
@@ -2334,7 +2334,7 @@ CString CIndividual::GetRTFPage(CMemFile& fTmpl)
 	return str;
 }
 
-CString CIndividual::Ident()
+wxString CIndividual::Ident()
 {
 	long nBirth(0), nDeath(0);
 	if (m_iBirth>=0)
@@ -2342,11 +2342,11 @@ CString CIndividual::Ident()
 	if (m_iDeath>=0)
 		nDeath = m_revt[m_iDeath].m_dvDate.GetSimpleYear();
 
-	CString s = Name();
+	wxString s = Name();
 	s += " (";
 	if (nBirth)
 	{
-		CString s2;
+		wxString s2;
 		s2.Format(L"%d",nBirth);
 		s += s2;
 	}
@@ -2357,7 +2357,7 @@ CString CIndividual::Ident()
 	s += "-";
 	if (nDeath)
 	{
-		CString s2;
+		wxString s2;
 		s2.Format(L"%d",nDeath);
 		s += s2;
 	}
@@ -2370,9 +2370,9 @@ CString CIndividual::Ident()
 	return s;
 }
 
-CString CIndividual::GetAnomalies()
+wxString CIndividual::GetAnomalies()
 {
-	CString s;
+	wxString s;
 
 	int nBirth(0);
 	if (m_iBirth>=0)
@@ -2472,7 +2472,7 @@ CString CIndividual::GetAnomalies()
 				iSpouse = fami.m_iWife;
 			else
 			{
-				ASSERT(fami.m_iWife==m_i);
+				wxASSERT(fami.m_iWife==m_i);
 				iSpouse = fami.m_iHusband;
 			}
 			CIndividual* pSpouse = 0;
@@ -2543,7 +2543,7 @@ int CIndividual::GetSimpleBirth()
 	return d;
 }
 
-void CIndividual::GetSortedSpouseFamilies(CArray<int,int>& riSpouseToFamily)
+void CIndividual::GetSortedSpouseFamilies(wxArray<int,int>& riSpouseToFamily)
 {
 	riSpouseToFamily.SetSize(m_riSpouseToFamily.GetSize());
 	for (int i(0); i<m_riSpouseToFamily.GetSize(); i++)
@@ -2583,7 +2583,7 @@ void CIndividual::setLevel(int lev)
 	// position along y axis
 	static const int levdy(100);
 	int nOldScale = SetScale(1);
-	CPoint pt(0,(5000-m_nLevel)*levdy-m_rectFrame.Height()/2);
+	wxPoint pt(0,(5000-m_nLevel)*levdy-m_rectFrame.Height()/2);
 	MoveTo(pt);
 	SetScale(nOldScale);
 
@@ -2750,7 +2750,7 @@ void CIndividual::setSeqWithSpouses(double& /*seq*/, pair<double,double> lev_bou
 		CIndividual* pindi = *left_iter;
 
 		int nOldScale = pindi->SetScale(1);
-		CPoint pt(lev_bounds[pindi->m_nLevel].second,pindi->m_rectFrame.top);
+		wxPoint pt(lev_bounds[pindi->m_nLevel].second,pindi->m_rectFrame.top);
 		pindi->MoveTo(pt);
 		pindi->m_bMark = true;
 		lev_bounds[pindi->m_nLevel].second = pindi->m_rectFrame.right+childdx;
@@ -2782,7 +2782,7 @@ void CIndividual::setSeqWithSpouses(double& /*seq*/, pair<double,double> lev_bou
 		CIndividual* pindi = *right_iter;
 
 		int nOldScale = pindi->SetScale(1);
-		CPoint pt(lev_bounds[pindi->m_nLevel].second,pindi->m_rectFrame.top);
+		wxPoint pt(lev_bounds[pindi->m_nLevel].second,pindi->m_rectFrame.top);
 		pindi->MoveTo(pt);
 		pindi->m_bMark = true;;
 		lev_bounds[pindi->m_nLevel].second = pindi->m_rectFrame.right+childdx;
@@ -2978,7 +2978,7 @@ static inline basic_ostream<wchar_t, char_traits<wchar_t> >& __cdecl endl2(basic
 /*
 void CIndividual::writeSVG(wostringstream& os, int pt)
 {
-	CString s;
+	wxString s;
 
 
 	s.Format(L"<rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" fill=\"white\" stroke=\"black\" stroke-width=\"1\" />",
@@ -3016,7 +3016,7 @@ void CIndividual::writeSVG(wostringstream& os, int pt)
 void CIndividual::writeApplet(std::wostream& os)
 {
 	os << (LPCTSTR)m_strID << L",";
-	CString name = Name();
+	wxString name = Name();
 	name.Replace(L',',L' ');
 	os << (LPCTSTR)name << L",";
 	if (!Private() && m_strBirthDisplay.GetLength())
@@ -3101,26 +3101,26 @@ void CIndividual::showAsOf(CDate* pasof)
 	}
 }
 
-CString filterUnknown(const CString& s)
+wxString filterUnknown(const wxString& s)
 {
 	if (s.IsEmpty())
 	{
-		return CString("[unknown]");
+		return wxString("[unknown]");
 	}
 	return s;
 }
 
-void CIndividual::WriteDescent(CStdioFile& f, int indiNum, list<CIndividual*>& todo)
+void CIndividual::WriteDescent(wxFile& f, int indiNum, list<CIndividual*>& todo)
 {
 	char rc[17];
 
 	set<int> riSrc;
 
 	_itoa(indiNum,rc,10);
-	CString sInd(rc);
+	wxString sInd(rc);
 
 	_itoa(m_nLevel,rc,10);
-	CString sGen(rc);
+	wxString sGen(rc);
 
 	f.WriteString(L"<!-- ********************************* generation ");
 	f.WriteString(sGen);
@@ -3159,7 +3159,7 @@ void CIndividual::WriteDescent(CStdioFile& f, int indiNum, list<CIndividual*>& t
 			panc = &m_pDoc->m_rIndividual[panc->m_iFather];
 			f.WriteString(filterUnknown(panc->m_name.m_strGiven));
 			_itoa(deslev,rc,10);
-			CString sLev(rc);
+			wxString sLev(rc);
 			f.WriteString(L"<span class=\"gen\">");
 				f.WriteString(sLev);
 			f.WriteString(L"</span>");
@@ -3183,7 +3183,7 @@ void CIndividual::WriteDescent(CStdioFile& f, int indiNum, list<CIndividual*>& t
 		first = false;
 		f.WriteString(L"b. ");
 		f.WriteString(m_revt[m_iBirth].m_dvDate.Display(DATE_SHORTDATE));
-		CString s = m_revt[m_iBirth].m_strPlace;
+		wxString s = m_revt[m_iBirth].m_strPlace;
 		riSrc.insert(m_revt[m_iBirth].m_cita.m_iSource);
 		if (!s.IsEmpty())
 		{
@@ -3200,7 +3200,7 @@ void CIndividual::WriteDescent(CStdioFile& f, int indiNum, list<CIndividual*>& t
 		first = false;
 		f.WriteString(L"d. ");
 		f.WriteString(m_revt[m_iDeath].m_dvDate.Display(DATE_SHORTDATE));
-		CString s = m_revt[m_iDeath].m_strPlace;
+		wxString s = m_revt[m_iDeath].m_strPlace;
 		riSrc.insert(m_revt[m_iDeath].m_cita.m_iSource);
 		if (!s.IsEmpty())
 		{
@@ -3208,7 +3208,7 @@ void CIndividual::WriteDescent(CStdioFile& f, int indiNum, list<CIndividual*>& t
 		}
 	}
 
-	CArray<CEvt,CEvt&> revt;
+	wxArray<CEvt,CEvt&> revt;
 	GetSortedEvents(revt);
 	for (int i(0); i < revt.GetSize(); ++i)
 	{
@@ -3221,7 +3221,7 @@ void CIndividual::WriteDescent(CStdioFile& f, int indiNum, list<CIndividual*>& t
 			}
 			first = false;
 			_itoa(evt.m_dvDate.GetSimpleYear(),rc,10);
-			CString sYear(rc);
+			wxString sYear(rc);
 			f.WriteString(sYear);
 			f.WriteString(L" Census ");
 			f.WriteString(evt.m_strPlace);
@@ -3230,7 +3230,7 @@ void CIndividual::WriteDescent(CStdioFile& f, int indiNum, list<CIndividual*>& t
 	}
 	// other events?
 
-	CArray<int,int> riSpouseToFamily;
+	wxArray<int,int> riSpouseToFamily;
 	GetSortedSpouseFamilies(riSpouseToFamily);
 
 	for (int sp(0); sp < riSpouseToFamily.GetSize(); ++sp)
@@ -3249,7 +3249,7 @@ void CIndividual::WriteDescent(CStdioFile& f, int indiNum, list<CIndividual*>& t
 			if (evt.m_strTypeTok=="MARR")
 			{
 				f.WriteString(evt.m_dvDate.Display(DATE_SHORTDATE));
-				CString s = evt.m_strPlace;
+				wxString s = evt.m_strPlace;
 				riSrc.insert(evt.m_cita.m_iSource);
 				if (!s.IsEmpty())
 				{
@@ -3367,7 +3367,7 @@ void CIndividual::WriteDescent(CStdioFile& f, int indiNum, list<CIndividual*>& t
 
 			f.WriteString(L"):\n<ol>\n");
 
-			CArray<int,int> riChild;
+			wxArray<int,int> riChild;
 			fami.GetSortedChildren(riChild);
 			for (int ch(0); ch < riChild.GetSize(); ++ch)
 			{
@@ -3380,7 +3380,7 @@ void CIndividual::WriteDescent(CStdioFile& f, int indiNum, list<CIndividual*>& t
 					todo.push_back(pchild);
 					int cNum = indiNum+todo.size();
 					_itoa(cNum,rc,10);
-					CString sChildNum(rc);
+					wxString sChildNum(rc);
 					f.WriteString(L"<span class=\"nextIndiNumber\">");
 					f.WriteString(sChildNum);
 					f.WriteString(L"</span>\n");
@@ -3389,7 +3389,7 @@ void CIndividual::WriteDescent(CStdioFile& f, int indiNum, list<CIndividual*>& t
 					f.WriteString(filterUnknown(pchild->m_name.m_strGiven));
 					f.WriteString(L"<span class=\"gen\">");
 						_itoa(m_nLevel+1,rc,10);
-						CString sChildGen(rc);
+						wxString sChildGen(rc);
 						f.WriteString(sChildGen);
 					f.WriteString(L"</span>");
 					f.WriteString(pchild->m_name.m_strSuffix);
@@ -3406,7 +3406,7 @@ void CIndividual::WriteDescent(CStdioFile& f, int indiNum, list<CIndividual*>& t
 					firstch = false;
 					f.WriteString(L"b. ");
 					f.WriteString(pchild->m_revt[pchild->m_iBirth].m_dvDate.Display(DATE_SHORTDATE));
-					CString s = pchild->m_revt[pchild->m_iBirth].m_strPlace;
+					wxString s = pchild->m_revt[pchild->m_iBirth].m_strPlace;
 					if (!s.IsEmpty())
 					{
 						f.WriteString(L", "+s);
@@ -3424,7 +3424,7 @@ void CIndividual::WriteDescent(CStdioFile& f, int indiNum, list<CIndividual*>& t
 						firstch = false;
 						f.WriteString(L"d. ");
 						f.WriteString(pchild->m_revt[pchild->m_iDeath].m_dvDate.Display(DATE_SHORTDATE));
-						CString s = pchild->m_revt[pchild->m_iDeath].m_strPlace;
+						wxString s = pchild->m_revt[pchild->m_iDeath].m_strPlace;
 						if (!s.IsEmpty())
 						{
 							f.WriteString(L", "+s);

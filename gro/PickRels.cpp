@@ -15,8 +15,8 @@ static char THIS_FILE[] = __FILE__;
 // CPickRels dialog
 
 
-CPickRels::CPickRels(CWnd* pParent /*=NULL*/)
-	: CDialog(CPickRels::IDD, pParent)
+CPickRels::CPickRels(wxWindow* pParent /*=NULL*/)
+	: wxDialog(CPickRels::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CPickRels)
 	m_bAncestors = FALSE;
@@ -33,7 +33,7 @@ CPickRels::CPickRels(CWnd* pParent /*=NULL*/)
 
 void CPickRels::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	wxDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CPickRels)
 	DDX_Check(pDX, IDC_ANC, m_bAncestors);
 	DDX_Check(pDX, IDC_ANCFEMALE, m_bAncestorsFemale);
@@ -47,11 +47,11 @@ void CPickRels::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CPickRels, CDialog)
+BEGIN_EVENT_TABLE(CPickRels, wxDialog)
 	//{{AFX_MSG_MAP(CPickRels)
 		// NOTE: the ClassWizard will add message map macros here
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CPickRels message handlers

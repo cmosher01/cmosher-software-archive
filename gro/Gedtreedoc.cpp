@@ -51,14 +51,14 @@ char *sTplBibrtf =
 #include "bibrtftpl.h"
 ;
 
-const CSize MIN_BOUNDS(640,480);
+const wxSize MIN_BOUNDS(640,480);
 
 /////////////////////////////////////////////////////////////////////////////
 // CGedtreeDoc
 
-IMPLEMENT_DYNCREATE(CGedtreeDoc, CDocument)
+IMPLEMENT_DYNCREATE(CGedtreeDoc, wxDocument)
 
-BEGIN_MESSAGE_MAP(CGedtreeDoc, CDocument)
+BEGIN_EVENT_TABLE(CGedtreeDoc, wxDocument)
 	//{{AFX_MSG_MAP(CGedtreeDoc)
 	ON_COMMAND(ID_FILE_SAVE_AS, OnFileSaveAs)
 	ON_COMMAND(ID_FILE_SAVE, OnFileSave)
@@ -68,7 +68,7 @@ BEGIN_MESSAGE_MAP(CGedtreeDoc, CDocument)
 	ON_COMMAND(ID_VIEW_INDEXOFINDIVIDUALS, OnViewIndexofindividuals)
 	ON_COMMAND(ID_VIEW_NOTES, OnViewNotes)
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 static inline basic_ostream<wchar_t, char_traits<wchar_t> >& __cdecl endl2(basic_ostream<wchar_t, char_traits<wchar_t> >& _O)
 {
@@ -103,8 +103,8 @@ CGedtreeDoc::CGedtreeDoc():
 	m_head.Set(this,NULL);
 
 	BOOL bOK;
-	bOK = m_wndTree.Create(NULL,_T(""),0,CRect(0,0,1,1),theApp.GetMainWnd(),0);
-	bOK = m_tree.Create(TVS_HASLINES|TVS_HASBUTTONS|TVS_LINESATROOT,CRect(0,0,1,1),&m_wndTree,1024);
+	bOK = m_wndTree.Create(NULL,_T(""),0,wxRect(0,0,1,1),theApp.GetMainWnd(),0);
+	bOK = m_tree.Create(TVS_HASLINES|TVS_HASBUTTONS|TVS_LINESATROOT,wxRect(0,0,1,1),&m_wndTree,1024);
 
 	Normalize();
 }
@@ -117,7 +117,7 @@ CGedtreeDoc::~CGedtreeDoc()
 
 BOOL CGedtreeDoc::SaveModified()
 {
-	// Same as CDocument::SaveModified, except that
+	// Same as wxDocument::SaveModified, except that
 	// we display the title of the window instead of "Untitled"
 	// for unsaved documents.
 	// And we use our own "save changes" dialog.
@@ -145,12 +145,12 @@ BOOL CGedtreeDoc::OnSaveDocument(LPCTSTR pszPathName)
 	if (pOpenDocument && pOpenDocument!=this)
 		pOpenDocument->DisconnectFile();
 
-	return CDocument::OnSaveDocument(pszPathName);
+	return wxDocument::OnSaveDocument(pszPathName);
 }
 
 void CGedtreeDoc::DisconnectFile()
 {
-	CString strName = GetPathName();
+	wxString strName = GetPathName();
 
 	TCHAR drive[_MAX_DRIVE];
 	TCHAR dir[_MAX_DIR];
@@ -159,15 +159,15 @@ void CGedtreeDoc::DisconnectFile()
 	_tsplitpath(strName,drive,dir,fname,ext);
 
 	TCHAR path_buffer[_MAX_PATH];
-	_tmakepath(path_buffer,drive,dir,"Old"+CString(fname),ext);
+	_tmakepath(path_buffer,drive,dir,"Old"+wxString(fname),ext);
 
 	SetPathName(path_buffer);
 
 	POSITION pos = theApp.GetFirstDocTemplatePosition();
-	CDocTemplate* p = theApp.GetNextDocTemplate(pos); // DL tmpl
+	wxDocTemplate* p = theApp.GetNextDocTemplate(pos); // DL tmpl
 	p->SetDefaultTitle(this);
 
-	CString strTitle = GetTitle();
+	wxString strTitle = GetTitle();
 	strTitle = "Old"+strTitle;
 	SetTitle(strTitle);
 
@@ -208,14 +208,14 @@ void CGedtreeDoc::Serialize(CArchive& ar)
 	AfxGetMainWnd()->SetForegroundWindow();
 }
 
-CPoint CGedtreeDoc::GetNextPos()
+wxPoint CGedtreeDoc::GetNextPos()
 {
-	m_pointNext += CSize(0,50);
+	m_pointNext += wxSize(0,50);
 
 	return m_pointNext;
 }
 
-void CGedtreeDoc::TestUnicode(CFile* pFile)
+void CGedtreeDoc::TestUnicode(wxFile* pFile)
 {
 	m_bUnicode = FALSE;
 	m_bUnicodeFlagInFile = FALSE;
@@ -247,7 +247,7 @@ void CGedtreeDoc::TestUnicode(CFile* pFile)
 	}
 }
 
-void CGedtreeDoc::PutLine(CArchive& ar, const CString& str)
+void CGedtreeDoc::PutLine(CArchive& ar, const wxString& str)
 {
 	if (theApp.SaveAsUnicode())
 		ar.WriteString(str);
@@ -281,7 +281,7 @@ static wchar_t swapbytes(wchar_t c)
 	return cOut;
 }
 
-BOOL CGedtreeDoc::GetLine(CArchive& ar, CString& str)
+BOOL CGedtreeDoc::GetLine(CArchive& ar, wxString& str)
 {
 	str.Empty();
 	BOOL bOK(TRUE);
@@ -394,7 +394,7 @@ wchar_t CGedtreeDoc::FilterReadChar(BYTE c)
 
 void CGedtreeDoc::ReadFromArchive(CArchive& ar)
 {
-	CString strLine;
+	wxString strLine;
 	HTREEITEM htviParent[levMax];
 //	CMapStringToString& pm = App()->m_mapTagMeaning;
 	int levPrev = -1;
@@ -414,7 +414,7 @@ void CGedtreeDoc::ReadFromArchive(CArchive& ar)
 	while (GetLine(ar,strLine))
 	{
 		filepos += strLine.GetLength()+2;
-		strLine.TrimLeft();
+		strLine.Trim(false);
 		if (strLine.GetLength())
 		{
 			if (strLine.GetLength())
@@ -468,7 +468,7 @@ void CGedtreeDoc::ReadFromArchive(CArchive& ar)
 }
 
 const int cWriteOrder(10);
-static const CString strWriteOrder[cWriteOrder] =
+static const wxString strWriteOrder[cWriteOrder] =
 {
 	"HEAD",
 	"SUBM",
@@ -517,7 +517,7 @@ void CGedtreeDoc::WriteToArchive(CArchive& ar)
 			_T("this document again."));
 }
 
-void CGedtreeDoc::WriteRecords(CArchive& ar, const CString& strTok)
+void CGedtreeDoc::WriteRecords(CArchive& ar, const wxString& strTok)
 {
 	HTREEITEM htvi = m_tree.GetRootItem();
 
@@ -554,7 +554,7 @@ void CGedtreeDoc::WriteItem(CArchive& ar, HTREEITEM hTreeItem)
 {
 	// First write this item.
 	CGedLine* pgl = (CGedLine*)m_tree.GetItemData(hTreeItem);
-	CString strLine = pgl->GetGedLine();
+	wxString strLine = pgl->GetGedLine();
 	PutLine(ar,strLine);
 	m_pPrg->Set(++m_nPrg,strLine);
 
@@ -744,7 +744,7 @@ void CGedtreeDoc::GetFromTree()
 	Normalize();
 }
 
-int CGedtreeDoc::LookupIndividual(const CString& strID)
+int CGedtreeDoc::LookupIndividual(const wxString& strID)
 {
 	int i(-1);
 	if (!m_mapIDToIndividual.Lookup(strID,i))
@@ -752,7 +752,7 @@ int CGedtreeDoc::LookupIndividual(const CString& strID)
 	return i;
 }
 
-int CGedtreeDoc::LookupFamily(const CString& strID)
+int CGedtreeDoc::LookupFamily(const wxString& strID)
 {
 	int i(-1);
 	if (!m_mapIDToFamily.Lookup(strID,i))
@@ -760,7 +760,7 @@ int CGedtreeDoc::LookupFamily(const CString& strID)
 	return i;
 }
 
-int CGedtreeDoc::LookupSource(const CString& strID)
+int CGedtreeDoc::LookupSource(const wxString& strID)
 {
 	int i(-1);
 	if (!m_mapIDToSource.Lookup(strID,i))
@@ -768,7 +768,7 @@ int CGedtreeDoc::LookupSource(const CString& strID)
 	return i;
 }
 
-int CGedtreeDoc::LookupRepository(const CString& strID)
+int CGedtreeDoc::LookupRepository(const wxString& strID)
 {
 	int i(-1);
 	if (!m_mapIDToRepository.Lookup(strID,i))
@@ -776,7 +776,7 @@ int CGedtreeDoc::LookupRepository(const CString& strID)
 	return i;
 }
 
-int CGedtreeDoc::LookupNote(const CString& strID)
+int CGedtreeDoc::LookupNote(const wxString& strID)
 {
 	int i(-1);
 	if (!m_mapIDToNote.Lookup(strID,i))
@@ -790,12 +790,12 @@ int CGedtreeDoc::LookupNote(const CString& strID)
 #ifdef _DEBUG
 void CGedtreeDoc::AssertValid() const
 {
-	CDocument::AssertValid();
+	wxDocument::AssertValid();
 }
 
 void CGedtreeDoc::Dump(CDumpContext& dc) const
 {
-	CDocument::Dump(dc);
+	wxDocument::Dump(dc);
 }
 #endif //_DEBUG
 
@@ -809,7 +809,7 @@ void CGedtreeDoc::OnCloseDocument()
 	{
 		DeleteGedLine(htvi);
 	}
-	CDocument::OnCloseDocument();
+	wxDocument::OnCloseDocument();
 }
 
 BOOL CGedtreeDoc::GetNextTraverse(HTREEITEM& htvi, int* cLev)
@@ -866,7 +866,7 @@ void CGedtreeDoc::CalcNormalBounds()
 		MyRect rect = m_rIndividual[i].GetUnscaledFrameRect();
 		if (rect.right>MAX_BOUNDS.cx || rect.bottom>MAX_BOUNDS.cy)
 		{
-			m_rIndividual[i].MoveTo(CPoint(30,30));
+			m_rIndividual[i].MoveTo(wxPoint(30,30));
 		}
 		m_rectUnscaledBoundsNoBorder |= rect;
 	}
@@ -886,7 +886,7 @@ void CGedtreeDoc::CalcBounds()
 		m_rectUnscaledBoundsNoBorder.bottom = m_rectUnscaledBoundsNoBorder.top+MAX_BOUNDS.cy;
 
 	m_rectUnscaledBounds = m_rectUnscaledBoundsNoBorder;
-	m_rectUnscaledBounds.InflateRect(CSize(VIEW_BORDER,VIEW_BORDER));
+	m_rectUnscaledBounds.InflateRect(wxSize(VIEW_BORDER,VIEW_BORDER));
 
 	CalcScale();
 
@@ -908,26 +908,26 @@ void CGedtreeDoc::CalcScale()
 	m_rectBoundsNoBorder.right  = m_rectUnscaledBoundsNoBorder.right /nScale;
 }
 
-CRect CGedtreeDoc::GetBounds()
+wxRect CGedtreeDoc::GetBounds()
 {
 	return m_rectBounds;
 }
 
-CRect CGedtreeDoc::GetUnscaledBounds()
+wxRect CGedtreeDoc::GetUnscaledBounds()
 {
 	return m_rectUnscaledBounds;
 }
 
-CRect CGedtreeDoc::GetUnscaledBoundsNoBorder()
+wxRect CGedtreeDoc::GetUnscaledBoundsNoBorder()
 {
 	return m_rectUnscaledBoundsNoBorder;
 }
 
-CSize CGedtreeDoc::Normalize()
+wxSize CGedtreeDoc::Normalize()
 {
 	CalcNormalBounds();
 
-	CSize szShift = -m_rectUnscaledBounds.TopLeft();
+	wxSize szShift = -m_rectUnscaledBounds.TopLeft();
 
 	if (szShift.cx||szShift.cy)
 	{
@@ -941,7 +941,7 @@ CSize CGedtreeDoc::Normalize()
 	return szShift;
 }
 
-void CGedtreeDoc::ShiftAllIndividuals(const CSize& sizShift)
+void CGedtreeDoc::ShiftAllIndividuals(const wxSize& sizShift)
 {
 	for (int i(0); i<m_rIndividual.GetSize(); i++)
 	{
@@ -974,8 +974,8 @@ void CGedtreeDoc::AutoClean()
 	{
 		ClearAllIndividuals();
 
-//		CPoint pt(MAX_BOUNDS.cx/2,MAX_BOUNDS.cy/2);
-		CPoint pt(5000,5000);
+//		wxPoint pt(MAX_BOUNDS.cx/2,MAX_BOUNDS.cy/2);
+		wxPoint pt(5000,5000);
 		for (int i(0); i<m_rIndividual.GetSize(); i++)
 		{
 			CIndividual& indi = m_rIndividual[i];
@@ -1001,7 +1001,7 @@ CFamily* CGedtreeDoc::Family(int i)
 	return &m_rFamily[i];
 }
 
-HTREEITEM CGedtreeDoc::ResetSubValue(HTREEITEM hTreeItem, const CString& strTok, const CString& strVal,
+HTREEITEM CGedtreeDoc::ResetSubValue(HTREEITEM hTreeItem, const wxString& strTok, const wxString& strVal,
 	BOOL bAlwaysAdd, BOOL bEvenIfEmpty, BOOL bBreakIntoCont)
 {
 	HTREEITEM hChild = NULL;
@@ -1053,7 +1053,7 @@ HTREEITEM CGedtreeDoc::ResetSubValue(HTREEITEM hTreeItem, const CString& strTok,
 	{
 		if (bBreakIntoCont)
 		{
-			CArray<CString,LPCTSTR> rstrTok, rstrVal;
+			wxArray<wxString,LPCTSTR> rstrTok, rstrVal;
 			BreakContLines(strVal,rstrTok,rstrVal);
 
 			hChild = InsertChild(strTok,hTreeItem,cLev+1,rstrVal[0]);
@@ -1067,7 +1067,7 @@ HTREEITEM CGedtreeDoc::ResetSubValue(HTREEITEM hTreeItem, const CString& strTok,
 	return hChild;
 }
 
-HTREEITEM CGedtreeDoc::InsertChild(const CString& strTok, HTREEITEM hTreeItem, int cLev, const CString& strVal)
+HTREEITEM CGedtreeDoc::InsertChild(const wxString& strTok, HTREEITEM hTreeItem, int cLev, const wxString& strVal)
 {
 	HTREEITEM htviCur = m_tree.InsertItem(_T(""),hTreeItem);
 
@@ -1083,10 +1083,10 @@ HTREEITEM CGedtreeDoc::InsertChild(const CString& strTok, HTREEITEM hTreeItem, i
 	return htviCur;
 }
 
-void CGedtreeDoc::DeleteSubValue(HTREEITEM hTreeItem, const CString& strTok)
+void CGedtreeDoc::DeleteSubValue(HTREEITEM hTreeItem, const wxString& strTok)
 {
 	// check sub records of hTreeItem for strTok
-	CArray<HTREEITEM,HTREEITEM> rhChild;
+	wxArray<HTREEITEM,HTREEITEM> rhChild;
 	HTREEITEM hChild = m_tree.GetChildItem(hTreeItem);
 	if (hChild)
 	{
@@ -1131,7 +1131,7 @@ void CGedtreeDoc::DeleteGedLine(HTREEITEM hTreeItem)
 	delete pgl;
 }
 
-void CGedtreeDoc::ResetToken(HTREEITEM hTreeItem, const CString& strTok, const CString& strVal)
+void CGedtreeDoc::ResetToken(HTREEITEM hTreeItem, const wxString& strTok, const wxString& strVal)
 {
 	if (strTok.IsEmpty()) return;
 
@@ -1150,32 +1150,32 @@ void CGedtreeDoc::Init()
 
 BOOL CGedtreeDoc::OnOpenDocument(LPCTSTR lpszPathName) 
 {
-	// BEGIN from CDocument::OnOpenDocument()
+	// BEGIN from wxDocument::OnOpenDocument()
 	CFileException fe;
-	CFile* pFile = GetFile(lpszPathName,
-		CFile::modeRead|CFile::shareDenyWrite, &fe);
+	wxFile* pFile = GetFile(lpszPathName,
+		wxFile::modeRead|wxFile::shareDenyWrite, &fe);
 	if (pFile == NULL)
 	{
 		ReportSaveLoadException(lpszPathName, &fe,
 			FALSE, AFX_IDP_FAILED_TO_OPEN_DOC);
 		return FALSE;
 	}
-	// END from CDocument::OnOpenDocument()
+	// END from wxDocument::OnOpenDocument()
 
 	TestUnicode(pFile);
 
-	// BEGIN from CDocument::OnOpenDocument()
+	// BEGIN from wxDocument::OnOpenDocument()
 	ReleaseFile(pFile, FALSE);
-	// END from CDocument::OnOpenDocument()
+	// END from wxDocument::OnOpenDocument()
 
-//	if (!CDocument::OnOpenDocument(lpszPathName))
+//	if (!wxDocument::OnOpenDocument(lpszPathName))
 //		return FALSE;
 
 	if (IsModified())
 		TRACE0("Warning: OnOpenDocument replaces an unsaved document.\n");
 
 	pFile = GetFile(lpszPathName,
-		CFile::modeRead|CFile::shareDenyWrite, &fe);
+		wxFile::modeRead|wxFile::shareDenyWrite, &fe);
 	if (pFile == NULL)
 	{
 		ReportSaveLoadException(lpszPathName, &fe,
@@ -1227,13 +1227,13 @@ BOOL CGedtreeDoc::OnOpenDocument(LPCTSTR lpszPathName)
 
 BOOL CGedtreeDoc::OnNewDocument() 
 {
-	if (!CDocument::OnNewDocument())
+	if (!wxDocument::OnNewDocument())
 		return FALSE;
 	Init();
 	return TRUE;
 }
 
-void CGedtreeDoc::GetContLines(HTREEITEM htiParent, CString& strValue)
+void CGedtreeDoc::GetContLines(HTREEITEM htiParent, wxString& strValue)
 {
 	// Search children of htiParent for CONT or CONC lines
 	// and append values to strValue.
@@ -1262,13 +1262,13 @@ void CGedtreeDoc::GetContLines(HTREEITEM htiParent, CString& strValue)
 
 const int ccMaxContLine(70);
 
-void CGedtreeDoc::BreakContLines(const CString& strValue, CArray<CString,LPCTSTR>& rstrTok, CArray<CString,LPCTSTR>& rstrVal)
+void CGedtreeDoc::BreakContLines(const wxString& strValue, wxArray<wxString,LPCTSTR>& rstrTok, wxArray<wxString,LPCTSTR>& rstrVal)
 {
 	// Toks are CONT or CONC for corresponding Vals
 	rstrTok.RemoveAll();
 	rstrVal.RemoveAll();
 
-	CString strRest(strValue);
+	wxString strRest(strValue);
 
 	int ieol;
 	while ((ieol = strRest.Find(_T("\r\n"))) >= 0)
@@ -1279,10 +1279,10 @@ void CGedtreeDoc::BreakContLines(const CString& strValue, CArray<CString,LPCTSTR
 	BreakConcLines(strRest,rstrTok,rstrVal);
 }
 
-void CGedtreeDoc::BreakConcLines(const CString& strValue, CArray<CString,LPCTSTR>& rstrTok, CArray<CString,LPCTSTR>& rstrVal)
+void CGedtreeDoc::BreakConcLines(const wxString& strValue, wxArray<wxString,LPCTSTR>& rstrTok, wxArray<wxString,LPCTSTR>& rstrVal)
 {
-	CString strLine(strValue);
-	rstrTok.Add(CString("CONT"));
+	wxString strLine(strValue);
+	rstrTok.Add(wxString("CONT"));
 	while (strLine.GetLength()>ccMaxContLine)
 	{
 		int ic = ccMaxContLine;
@@ -1294,8 +1294,8 @@ void CGedtreeDoc::BreakConcLines(const CString& strValue, CArray<CString,LPCTSTR
 			// so just break it at ccMaxContLine, regardless.
 			ic = ccMaxContLine;
 		}
-		rstrVal.Add(CString(strLine.Left(ic)));
-		rstrTok.Add(CString("CONC"));
+		rstrVal.Add(wxString(strLine.Left(ic)));
+		rstrTok.Add(wxString("CONC"));
 		strLine = strLine.Mid(ic);
 	}
 	rstrVal.Add(strLine);
@@ -1469,7 +1469,7 @@ void CGedtreeDoc::OnViewIndexofindividuals()
 	else
 	{
 		POSITION pos = theApp.GetFirstDocTemplatePosition();
-		CDocTemplate* p = theApp.GetNextDocTemplate(pos); // DL tmpl
+		wxDocTemplate* p = theApp.GetNextDocTemplate(pos); // DL tmpl
 		p = theApp.GetNextDocTemplate(pos); // IN tmpl
 		p = theApp.GetNextDocTemplate(pos); // PD tmpl
 		p = theApp.GetNextDocTemplate(pos); // IL tmpl
@@ -1495,7 +1495,7 @@ void CGedtreeDoc::OnViewNotes()
 	}
 }
 
-void CGedtreeDoc::SetInputCharSet(const CString& str)
+void CGedtreeDoc::SetInputCharSet(const wxString& str)
 {
 	if (m_bUnicode)
 	{
@@ -1531,13 +1531,13 @@ static int __cdecl compareIndi(const void *elem1, const void *elem2)
 	int j = *(int*)(elem2);
 	CIndividual& indi1 = staticpDoc->m_rIndividual[i];
 	CIndividual& indi2 = staticpDoc->m_rIndividual[j];
-	CString sb1, sb2;
+	wxString sb1, sb2;
 	if (indi1.m_iBirth>=0)
 		sb1.Format(L"%04d",indi1.m_revt[indi1.m_iBirth].m_dvDate.GetSimpleYear());
 	if (indi2.m_iBirth>=0)
 		sb2.Format(L"%04d",indi2.m_revt[indi2.m_iBirth].m_dvDate.GetSimpleYear());
-	CString s1 = indi1.m_name.Surname()+" "+indi1.m_name.GivenName()+" "+sb1;
-	CString s2 = indi2.m_name.Surname()+" "+indi2.m_name.GivenName()+" "+sb2;
+	wxString s1 = indi1.m_name.Surname()+" "+indi1.m_name.GivenName()+" "+sb1;
+	wxString s2 = indi2.m_name.Surname()+" "+indi2.m_name.GivenName()+" "+sb2;
 	return s1.CollateNoCase(s2);
 }
 
@@ -1547,13 +1547,13 @@ static int __cdecl compareSour(const void *elem1, const void *elem2)
 	int j = *(int*)(elem2);
 	CSource& sour1 = staticpDoc->m_rSource[i];
 	CSource& sour2 = staticpDoc->m_rSource[j];
-	CString s1, s2;
+	wxString s1, s2;
 	s1 = sour1.m_strAuthor+" "+sour1.m_strTitle;
 	s2 = sour2.m_strAuthor+" "+sour2.m_strTitle;
 	return s1.CollateNoCase(s2);
 }
 
-CArray<int,int>* CGedtreeDoc::GetSortedIndis()
+wxArray<int,int>* CGedtreeDoc::GetSortedIndis()
 {
 	if (m_bsortIndiNeedsUpdate)
 	{
@@ -1614,7 +1614,7 @@ CArray<int,int>* CGedtreeDoc::GetSortedIndis()
 	return &m_rsortIndi;
 }
 
-void CGedtreeDoc::GetSortedSours(CArray<int,int>& rSour)
+void CGedtreeDoc::GetSortedSours(wxArray<int,int>& rSour)
 {
 	staticpDoc = this;
 
@@ -1635,7 +1635,7 @@ void CGedtreeDoc::GetSortedSours(CArray<int,int>& rSour)
 
 void CGedtreeDoc::SavePathToReg(int i)
 {
-	CString s;
+	wxString s;
 	s.Format(L"%d",i);
 	theApp.PutReg("OpenDocuments",s,GetPathName());
 }
@@ -1829,7 +1829,7 @@ void CGedtreeDoc::svgChart(const wstring& docid, thinsock& sock)
 	int nPointSize = ((tm.tmHeight-tm.tmInternalLeading)*72)/nVerticalResolution+.50001;
 
 	os << L"<style type=\"text/css\"><![CDATA[" << endl2;
-		CString s;
+		wxString s;
 		s.Format(L"text {font-family:\"%s\",sans-serif;font-size:%dpt}",lf.lfFaceName,nPointSize);
 		os << (LPCTSTR)s << endl2;
 		os << L"line {stroke:black;stroke-width:1}" << endl2;
@@ -1854,7 +1854,7 @@ void CGedtreeDoc::svgChart(const wstring& docid, thinsock& sock)
 	int cb = ::WideCharToMultiByte(CP_UTF8,0,strdoc.c_str(),strdoc.length(),0,0,0,0);
 	if (!cb)
 	{
-		::OutputDebugString(CString(L"svgChart WideCharToMultiByte (1)"));
+		::OutputDebugString(wxString(L"svgChart WideCharToMultiByte (1)"));
 		throw 404;
 	}
 
@@ -1863,7 +1863,7 @@ void CGedtreeDoc::svgChart(const wstring& docid, thinsock& sock)
 	if (!ok)
 	{
 		delete [] pb;
-		::OutputDebugString(CString(L"svgChart WideCharToMultiByte (2)"));
+		::OutputDebugString(wxString(L"svgChart WideCharToMultiByte (2)"));
 		throw 404;
 	}
 
@@ -1884,7 +1884,6 @@ void CGedtreeDoc::svgChart(const wstring& docid, thinsock& sock)
 
 	delete [] pb;
 }
-*/
 void CGedtreeDoc::appletChart(const wstring& docid, thinsock& sock)
 {
 	if (!m_pAppletChart)
@@ -1895,7 +1894,7 @@ void CGedtreeDoc::appletChart(const wstring& docid, thinsock& sock)
 		m_cAppletChart = ::WideCharToMultiByte(CP_UTF8,0,strdoc.c_str(),strdoc.length(),0,0,0,0);
 		if (!m_cAppletChart)
 		{
-			::OutputDebugString(CString(L"appletChart WideCharToMultiByte (1)"));
+			::OutputDebugString(wxString(L"appletChart WideCharToMultiByte (1)"));
 			throw 404;
 		}
 
@@ -1905,7 +1904,7 @@ void CGedtreeDoc::appletChart(const wstring& docid, thinsock& sock)
 		{
 			delete [] m_pAppletChart;
 			m_pAppletChart = 0;
-			::OutputDebugString(CString(L"appletChart WideCharToMultiByte (2)"));
+			::OutputDebugString(wxString(L"appletChart WideCharToMultiByte (2)"));
 			throw 404;
 		}
 	}
@@ -1927,6 +1926,7 @@ void CGedtreeDoc::clearAppletChart()
 	m_pAppletChart = 0;
 }
 
+*/
 static const int siz(10);
 void CGedtreeDoc::htmlIndex(int iLevel, int iBase, const wstring& docid, wostream& os)
 {
@@ -1936,7 +1936,7 @@ void CGedtreeDoc::htmlIndex(int iLevel, int iBase, const wstring& docid, wostrea
 	vector<int> rBirth;
 	vector<int> rDeath;
 
-	CArray<int,int>* rSrtIndi = GetSortedIndis();
+	wxArray<int,int>* rSrtIndi = GetSortedIndis();
 
 	int xlev = mcLevel-iLevel-1; // 0, 1, 2, 3 becomes 3, 2, 1, 0
 
@@ -1979,11 +1979,11 @@ void CGedtreeDoc::htmlIndex(int iLevel, int iBase, const wstring& docid, wostrea
 				iEnd = rSrtIndi->GetSize()-1;
 
 			CIndividual* pIndi1 = Individual(rSrtIndi->GetAt(iBase));
-			CString s1(pIndi1->m_name.Surname());
+			wxString s1(pIndi1->m_name.Surname());
 			s1 += ", "; s1 += pIndi1->m_name.GivenName();
 
 			CIndividual* pIndi2 = Individual(rSrtIndi->GetAt(iEnd));
-			CString s2(pIndi2->m_name.Surname());
+			wxString s2(pIndi2->m_name.Surname());
 			s2 += ", "; s2 += pIndi2->m_name.GivenName();
 
 			rBase.push_back(iBase);
@@ -2008,7 +2008,7 @@ void CGedtreeDoc::htmlIndex(int iLevel, int iBase, const wstring& docid, wostrea
 			if (iBase==iPrevBase) break;
 
 			CIndividual* pIndi1 = Individual(rSrtIndi->GetAt(iBase));
-			CString s1(pIndi1->m_name.Surname());
+			wxString s1(pIndi1->m_name.Surname());
 			s1 += ", "; s1 += pIndi1->m_name.GivenName();
 
 			int iIndi = pIndi1->m_i;
@@ -2120,13 +2120,13 @@ void CGedtreeDoc::htmlIndi(int iIndi, const wstring& docid, wostream& os)
 {
 	if (iIndi < 0 || m_rIndividual.GetSize() <= iIndi)
 	{
-		::OutputDebugString(CString(L"htmlIndi"));
+		::OutputDebugString(wxString(L"htmlIndi"));
 		throw 404;
 	}
 
 	CIndividual* pIndi = Individual(iIndi);
 
-	CString strBirth(L"?");
+	wxString strBirth(L"?");
 	if (pIndi->m_iBirth>=0)
 	{
 		long n = pIndi->m_revt[pIndi->m_iBirth].m_dvDate.GetSimpleYear();
@@ -2134,7 +2134,7 @@ void CGedtreeDoc::htmlIndi(int iIndi, const wstring& docid, wostream& os)
 			strBirth.Format(L"%d",n);
 	}
 
-	CString strDeath(L"?");
+	wxString strDeath(L"?");
 	if (pIndi->m_iDeath>=0)
 	{
 		long n = pIndi->m_revt[pIndi->m_iDeath].m_dvDate.GetSimpleYear();
@@ -2142,7 +2142,7 @@ void CGedtreeDoc::htmlIndi(int iIndi, const wstring& docid, wostream& os)
 			strDeath.Format(L"%d",n);
 	}
 
-	CString strTitle;
+	wxString strTitle;
 	strTitle.Format(L"%s, %s (%s-%s)",
 		(LPCTSTR)pIndi->m_name.m_strSurname,
 		(LPCTSTR)pIndi->m_name.m_strRest,
@@ -2158,7 +2158,7 @@ void CGedtreeDoc::htmlIndi(int iIndi, const wstring& docid, wostream& os)
 
 	os << L"<p><a href=\"/\">home</a> <a href=\"?chart\">chart</a> <a href=\"?level=0&base=0\">index</a></p>" << endl;
 
-	CMemFile tplIndi;
+	wxFile tplIndi;
 	tplIndi.Write(sTplIndi,strlen(sTplIndi));
 	os << (LPCTSTR)pIndi->GetWebPage(tplIndi,docid.c_str());
 
@@ -2170,13 +2170,13 @@ void CGedtreeDoc::htmlSour(int iSour, const wstring& docid, wostream& os)
 {
 	if (iSour < 0 || m_rSource.GetSize() <= iSour)
 	{
-		::OutputDebugString(CString(L"htmlSour"));
+		::OutputDebugString(wxString(L"htmlSour"));
 		throw 404;
 	}
 
 	CSource* pSour = &m_rSource[iSour];
 
-	CString strTitle;
+	wxString strTitle;
 	if (pSour->m_strTitle.IsEmpty())
 		strTitle += L"[unknown title]";
 	else
@@ -2191,7 +2191,7 @@ void CGedtreeDoc::htmlSour(int iSour, const wstring& docid, wostream& os)
 
 	os << L"<p><a href=\"/\">home</a> <a href=\"?chart\">chart</a> <a href=\"?level=0&base=0\">index</a></p>" << endl;
 
-	CMemFile tplSour;
+	wxFile tplSour;
 	tplSour.Write(sTplSour,strlen(sTplSour));
 	os << (LPCTSTR)pSour->GetWebPage(tplSour,docid.c_str());
 
@@ -2199,7 +2199,7 @@ void CGedtreeDoc::htmlSour(int iSour, const wstring& docid, wostream& os)
 	os << L"</body>" << endl;
 }
 
-static void SetDir(const CString& s)
+static void SetDir(const wxString& s)
 {
 	TCHAR drive[_MAX_DRIVE];
 	TCHAR dir[_MAX_DIR];
@@ -2207,14 +2207,15 @@ static void SetDir(const CString& s)
 	TCHAR ext[_MAX_EXT];
 	_tsplitpath(s,drive,dir,fname,ext);
 
-	CString sPath = CString(drive)+CString(dir);
+	wxString sPath = wxString(drive)+wxString(dir);
 
 	::SetCurrentDirectory(sPath);
 }
 
+/*
 void CGedtreeDoc::webFile(const wstring& path, thinsock& sock, wstring& mime)
 {
-	CString origdir;
+	wxString origdir;
 	::GetCurrentDirectory(MAX_PATH+1,origdir.GetBuffer(MAX_PATH+1));
 	origdir.ReleaseBuffer();
 
@@ -2231,14 +2232,14 @@ void CGedtreeDoc::webFile(const wstring& path, thinsock& sock, wstring& mime)
 		{
 			DWORD e = ::GetLastError();
 			e = e;
-			::OutputDebugString(CString(L"webFile can't find file"));
+			::OutputDebugString(wxString(L"webFile can't find file"));
 			throw 404;
 		}
 
 		DWORD dwSize = ::GetFileSize(f,0);
 		if (dwSize==INVALID_FILE_SIZE)
 		{
-			::OutputDebugString(CString(L"webFile invalid file size"));
+			::OutputDebugString(wxString(L"webFile invalid file size"));
 			throw 404;
 		}
 
@@ -2256,7 +2257,7 @@ void CGedtreeDoc::webFile(const wstring& path, thinsock& sock, wstring& mime)
 		BOOL bok = ::ReadFile(f,buf,100*1024,&cr,0);
 		if (!bok)
 		{
-			::OutputDebugString(CString(L"webFile error reading file"));
+			::OutputDebugString(wxString(L"webFile error reading file"));
 			throw 404;
 		}
 
@@ -2268,14 +2269,14 @@ void CGedtreeDoc::webFile(const wstring& path, thinsock& sock, wstring& mime)
 			}
 			catch (...)
 			{
-				::OutputDebugString(CString(L"webFile error calling sendbinary"));
+				::OutputDebugString(wxString(L"webFile error calling sendbinary"));
 				throw 404;
 			}
 
 			bok = ::ReadFile(f,buf,100*1024,&cr,0);
 			if (!bok)
 			{
-				::OutputDebugString(CString(L"webFile error reading file (2)"));
+				::OutputDebugString(wxString(L"webFile error reading file (2)"));
 				throw 404;
 			}
 		}
@@ -2313,3 +2314,4 @@ void CGedtreeDoc::writeApplet(std::wostream& os)
 	for (i = 0; i < n; ++i)
 		m_rFamily[i].writeApplet(os);
 }
+*/

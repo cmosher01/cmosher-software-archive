@@ -118,7 +118,7 @@ wstring WebClient::getPage(const wstring& request, wstring& mime, wstring& lastm
 		iss >> s;
 		if (s!=L"GET")
 		{
-			::OutputDebugString(CString(L"received ")+s.c_str());
+			::OutputDebugString(wxString(L"received ")+s.c_str());
 			throw 404;
 		}
 

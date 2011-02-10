@@ -12,12 +12,12 @@ public:
 	HTREEITEM m_hTreeItem;
 	CGedtreeDoc* m_pDoc;
 
-	CString m_strTypeTok;
-	CString m_strType;
+	wxString m_strTypeTok;
+	wxString m_strType;
 	CDateValue m_dvDate;
-	CString m_strPlace;
+	wxString m_strPlace;
 	CCitation m_cita;
-	CString m_strNote;
+	wxString m_strNote;
 	int m_iNote;
 
 	CEvt(CGedtreeDoc* pDoc = NULL, HTREEITEM htiEvent = NULL);
@@ -26,9 +26,10 @@ public:
 	void CalcType();
 	void Calc();
 
-	void GetFromTree(const CString& strTypeTok);
+	void GetFromTree(const wxString& strTypeTok);
 	void PutToTree();
 	void Delete();
 };
+WX_DECLARE_OBJARRAY(CEvt,wxArrayCEvt);
 
 #endif

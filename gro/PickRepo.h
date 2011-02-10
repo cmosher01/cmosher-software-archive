@@ -6,11 +6,11 @@ class CGedtreeDoc;
 /////////////////////////////////////////////////////////////////////////////
 // CPickRepo dialog
 
-class CPickRepo : public CDialog
+class CPickRepo : public wxDialog
 {
 // Construction
 public:
-	CPickRepo(CGedtreeDoc* pDoc = NULL, CWnd* pParent = NULL, BOOL bEdit = FALSE);   // standard constructor
+	CPickRepo(CGedtreeDoc* pDoc = NULL, wxWindow* pParent = NULL, BOOL bEdit = FALSE);   // standard constructor
 
 // Dialog Data
 	CGedtreeDoc* m_pDoc;
@@ -33,7 +33,7 @@ public:
 protected:
 	void InitList();
 	void Reset();
-	void CheckColumnWidth(int nCol, const CString& str);
+	void CheckColumnWidth(int nCol, const wxString& str);
 
 	// Generated message map functions
 	//{{AFX_MSG(CPickRepo)
@@ -43,5 +43,5 @@ protected:
 	afx_msg void OnDblclkRepos(NMHDR* pNMHDR, LRESULT* pResult);
 	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };

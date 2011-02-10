@@ -15,8 +15,8 @@ static char THIS_FILE[] = __FILE__;
 // CPassword dialog
 
 
-CPassword::CPassword(CWnd* pParent /*=NULL*/)
-	: CDialog(CPassword::IDD, pParent)
+CPassword::CPassword(wxWindow* pParent /*=NULL*/)
+	: wxDialog(CPassword::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CPassword)
 	m_strOldPwd = _T("");
@@ -28,7 +28,7 @@ CPassword::CPassword(CWnd* pParent /*=NULL*/)
 
 void CPassword::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	wxDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CPassword)
 	DDX_Text(pDX, IDC_OLDPWD, m_strOldPwd);
 	DDX_Text(pDX, IDC_PWD1, m_Pwd1);
@@ -53,11 +53,11 @@ void CPassword::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CPassword, CDialog)
+BEGIN_EVENT_TABLE(CPassword, wxDialog)
 	//{{AFX_MSG_MAP(CPassword)
 		// NOTE: the ClassWizard will add message map macros here
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CPassword message handlers

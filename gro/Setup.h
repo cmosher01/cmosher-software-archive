@@ -4,11 +4,11 @@
 /////////////////////////////////////////////////////////////////////////////
 // CSetup dialog
 
-class CSetup : public CDialog
+class CSetup : public wxDialog
 {
 // Construction
 public:
-	CSetup(CWnd* pParent = NULL);   // standard constructor
+	CSetup(wxWindow* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CSetup)
@@ -33,5 +33,5 @@ protected:
 	afx_msg void OnRemove();
 	afx_msg void OnUninstall();
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };

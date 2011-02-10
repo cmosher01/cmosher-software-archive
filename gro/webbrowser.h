@@ -12,7 +12,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CWebBrowser wrapper class
 
-class CWebBrowser : public CWnd
+class CWebBrowser : public wxWindow
 {
 protected:
 	DECLARE_DYNCREATE(CWebBrowser)
@@ -26,13 +26,13 @@ public:
 	virtual BOOL Create(LPCTSTR lpszClassName,
 		LPCTSTR lpszWindowName, DWORD dwStyle,
 		const RECT& rect,
-		CWnd* pParentWnd, UINT nID,
+		wxWindow* pParentWnd, UINT nID,
 		CCreateContext* pContext = NULL)
 	{ return CreateControl(GetClsid(), lpszWindowName, dwStyle, rect, pParentWnd, nID); }
 
     BOOL Create(LPCTSTR lpszWindowName, DWORD dwStyle,
-		const RECT& rect, CWnd* pParentWnd, UINT nID,
-		CFile* pPersist = NULL, BOOL bStorage = FALSE,
+		const RECT& rect, wxWindow* pParentWnd, UINT nID,
+		wxFile* pPersist = NULL, BOOL bStorage = FALSE,
 		BSTR bstrLicKey = NULL)
 	{ return CreateControl(GetClsid(), lpszWindowName, dwStyle, rect, pParentWnd, nID,
 		pPersist, bStorage, bstrLicKey); }
@@ -55,7 +55,7 @@ public:
 	LPDISPATCH GetContainer();
 	LPDISPATCH GetDocument();
 	BOOL GetTopLevelContainer();
-	CString GetType();
+	wxString GetType();
 	long GetLeft();
 	void SetLeft(long nNewValue);
 	long GetTop();
@@ -64,22 +64,22 @@ public:
 	void SetWidth(long nNewValue);
 	long GetHeight();
 	void SetHeight(long nNewValue);
-	CString GetLocationName();
-	CString GetLocationURL();
+	wxString GetLocationName();
+	wxString GetLocationURL();
 	BOOL GetBusy();
 	void Quit();
 	void ClientToWindow(long* pcx, long* pcy);
 	void PutProperty(LPCTSTR Property_, const VARIANT& vtValue);
 	VARIANT GetProperty_(LPCTSTR Property_);
-	CString GetName();
+	wxString GetName();
 	long GetHwnd();
-	CString GetFullName();
-	CString GetPath();
+	wxString GetFullName();
+	wxString GetPath();
 	BOOL GetVisible();
 	void SetVisible(BOOL bNewValue);
 	BOOL GetStatusBar();
 	void SetStatusBar(BOOL bNewValue);
-	CString GetStatusText();
+	wxString GetStatusText();
 	void SetStatusText(LPCTSTR lpszNewValue);
 	long GetToolBar();
 	void SetToolBar(long nNewValue);

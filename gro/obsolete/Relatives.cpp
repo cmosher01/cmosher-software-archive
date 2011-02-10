@@ -150,7 +150,7 @@ void CRelatives::GetNextTraverse(
 		// for debugging
 #define out(b) if (b) {s.Format(#b ","); OutputDebugString(s);}
 
-		CString s;
+		wxString s;
 
 		out(bAnc);
 		out(bAncSib);

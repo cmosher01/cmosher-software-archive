@@ -11,7 +11,7 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-class CProgressDlg : public CDialog
+class CProgressDlg : public wxDialog
 {
 public:
 	BOOL m_bCancel;
@@ -50,9 +50,9 @@ CProgress::~CProgress()
 
 BOOL CProgress::InitInstance()
 {
-	ASSERT(!m_pDlg);
+	wxASSERT(!m_pDlg);
 	m_pDlg = new CProgressDlg;
-	m_pDlg->Create(IDD_PROGRESS,CWnd::GetDesktopWindow());
+	m_pDlg->Create(IDD_PROGRESS,wxWindow::GetDesktopWindow());
 	m_pDlg->CenterWindow(AfxGetMainWnd());
 	m_pDlg->SetDefID(IDCANCEL);
 	m_pDlg->ShowWindow(SW_SHOW);
@@ -75,7 +75,7 @@ int CProgress::ExitInstance()
 	return CWinThread::ExitInstance();
 }
 
-void CProgress::Reset(const CString& strMessage, int cItem)
+void CProgress::Reset(const wxString& strMessage, int cItem)
 {
 	WaitForReady();
 
@@ -91,11 +91,11 @@ void CProgress::Reset(const CString& strMessage, int cItem)
 	Ready();
 }
 
-void CProgress::Set(int cFinished, CString strDetail)
+void CProgress::Set(int cFinished, wxString strDetail)
 {
 	WaitForReady();
 
-	ASSERT(0<cFinished && cFinished<=m_cItem);
+	wxASSERT(0<cFinished && cFinished<=m_cItem);
 
 	if (m_cItem)
 	{
@@ -113,11 +113,11 @@ void CProgress::Set(int cFinished, CString strDetail)
 	if (bCancel) AfxThrowUserException();
 }
 
-BEGIN_MESSAGE_MAP(CProgress, CWinThread)
+BEGIN_EVENT_TABLE(CProgress, CWinThread)
 	//{{AFX_MSG_MAP(CProgress)
 		// NOTE - the ClassWizard will add and remove mapping macros here.
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CProgress message handlers

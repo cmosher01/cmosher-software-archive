@@ -38,9 +38,9 @@ void CGedRecord::Set(CGedtreeDoc* pDoc, HTREEITEM hTreeItem)
 	m_hTreeItem = hTreeItem;
 }
 
-CString CGedRecord::GetID()
+wxString CGedRecord::GetID()
 {
-	return CString(cID)+m_strID+CString(cID);
+	return wxString(cID)+m_strID+wxString(cID);
 }
 
 void CGedRecord::SetIndex(int i)
@@ -48,7 +48,7 @@ void CGedRecord::SetIndex(int i)
 	m_i = i;
 }
 
-char CGedRecord::GetPrefix(const CString& strTok)
+char CGedRecord::GetPrefix(const wxString& strTok)
 {
 	if (strTok=="INDI")
 		return 'I';
@@ -67,7 +67,7 @@ char CGedRecord::GetPrefix(const CString& strTok)
 	else if (strTok=="OBJE")
 		return 'X';
 
-	ASSERT(FALSE);
+	wxASSERT(FALSE);
 	return ' ';
 }
 
@@ -96,9 +96,9 @@ BOOL CGedRecord::Exists()
 */
 }
 
-CString CGedRecord::GetWebFilePath(const CString& sDocID)
+wxString CGedRecord::GetWebFilePath(const wxString& sDocID)
 {
-	CString str;
+	wxString str;
 	if (sDocID.IsEmpty())
 	{
 		str = m_strID;
@@ -107,7 +107,7 @@ CString CGedRecord::GetWebFilePath(const CString& sDocID)
 	}
 	else
 	{
-		CString stype = m_strID.Left(1);
+		wxString stype = m_strID.Left(1);
 		if (stype=="I")
 		{
 			str += "?indi=";
@@ -123,9 +123,9 @@ CString CGedRecord::GetWebFilePath(const CString& sDocID)
 	return str;
 }
 
-CString CGedRecord::GetLink(const CString& strText, const CString& sDocID)
+wxString CGedRecord::GetLink(const wxString& strText, const wxString& sDocID)
 {
-	CString str;
+	wxString str;
 	str += "<a href=\"" +GetWebFilePath(sDocID)+ "\">";
 	if (strText.IsEmpty())
 		str += GetLinkText();

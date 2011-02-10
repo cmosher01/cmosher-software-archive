@@ -6,18 +6,18 @@
 /////////////////////////////////////////////////////////////////////////////
 // CEditRepo dialog
 
-class CEditRepo : public CDialog
+class CEditRepo : public wxDialog
 {
 // Construction
 public:
-	CEditRepo(CWnd* pParent = NULL);   // standard constructor
+	CEditRepo(wxWindow* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	CRepository m_repo;
 	//{{AFX_DATA(CEditRepo)
 	enum { IDD = IDD_REPO };
-	CString	m_strName;
-	CString	m_strAddr;
+	wxString	m_strName;
+	wxString	m_strAddr;
 	//}}AFX_DATA
 
 
@@ -38,5 +38,5 @@ protected:
 	afx_msg void OnDelete();
 	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };

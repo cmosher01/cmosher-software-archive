@@ -15,8 +15,8 @@ static char THIS_FILE[] = __FILE__;
 // CHeadNotes dialog
 
 
-CHeadNotes::CHeadNotes(CWnd* pParent /*=NULL*/)
-	: CDialog(CHeadNotes::IDD, pParent)
+CHeadNotes::CHeadNotes(wxWindow* pParent /*=NULL*/)
+	: wxDialog(CHeadNotes::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CHeadNotes)
 	m_strText = _T("");
@@ -26,7 +26,7 @@ CHeadNotes::CHeadNotes(CWnd* pParent /*=NULL*/)
 
 void CHeadNotes::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	wxDialog::DoDataExchange(pDX);
 
 	//{{AFX_DATA_MAP(CHeadNotes)
 	DDX_Control(pDX, IDOK, m_buttonOK);
@@ -38,12 +38,12 @@ void CHeadNotes::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CHeadNotes, CDialog)
+BEGIN_EVENT_TABLE(CHeadNotes, wxDialog)
 	//{{AFX_MSG_MAP(CHeadNotes)
 	ON_BN_CLICKED(IDC_DELETE, OnDelete)
 	ON_WM_SIZE()
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CHeadNotes message handlers
@@ -59,7 +59,7 @@ void CHeadNotes::OnDelete()
 
 void CHeadNotes::OnSize(UINT nType, int cx, int cy) 
 {
-	CDialog::OnSize(nType, cx, cy);
+	wxDialog::OnSize(nType, cx, cy);
 
 	if (nType==SIZE_RESTORED || nType==SIZE_MAXIMIZED)
 	{
@@ -71,37 +71,37 @@ void CHeadNotes::OnSize(UINT nType, int cx, int cy)
 }
 
 static const int nDlgMargin(10);
-static const CSize sizButton(75,23);
+static const wxSize sizButton(75,23);
 
 void CHeadNotes::PositionControls(int cx, int cy)
 {
 	SetRedraw(FALSE);
 
-	CRect rectClient;
+	wxRect rectClient;
 	GetClientRect(rectClient);
 
-	CRect rectOK;
+	wxRect rectOK;
 	rectOK.bottom = rectClient.bottom-nDlgMargin;
 	rectOK.top = rectOK.bottom-sizButton.cy;
 	rectOK.left = nDlgMargin;
 	rectOK.right = rectOK.left+sizButton.cx;
 	m_buttonOK.MoveWindow(rectOK);
 
-	CRect rectCancel;
+	wxRect rectCancel;
 	rectCancel.bottom = rectOK.bottom;
 	rectCancel.top = rectOK.top;
 	rectCancel.left = rectOK.right+nDlgMargin;
 	rectCancel.right = rectCancel.left+sizButton.cx;
 	m_buttonCancel.MoveWindow(rectCancel);
 
-	CRect rectDelete;
+	wxRect rectDelete;
 	rectDelete.bottom = rectOK.bottom;
 	rectDelete.top = rectOK.top;
 	rectDelete.right = rectClient.right-nDlgMargin;
 	rectDelete.left = rectClient.right-2*sizButton.cx;
 	m_buttonDelete.MoveWindow(rectDelete);
 
-	CRect rectText;
+	wxRect rectText;
 	rectText.top = nDlgMargin;
 	rectText.left = nDlgMargin;
 	rectText.right = rectClient.right-nDlgMargin;
@@ -114,7 +114,7 @@ void CHeadNotes::PositionControls(int cx, int cy)
 
 BOOL CHeadNotes::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+	wxDialog::OnInitDialog();
 	CenterWindow();
 	RECT r;
 	GetClientRect(&r);

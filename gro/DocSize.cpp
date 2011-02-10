@@ -15,8 +15,7 @@ static char THIS_FILE[] = __FILE__;
 // CDocSize dialog
 
 
-CDocSize::CDocSize(CWnd* pParent /*=NULL*/)
-	: CDialog(CDocSize::IDD, pParent)
+CDocSize::CDocSize(wxWindow* pParent /*=NULL*/)
 {
 	//{{AFX_DATA_INIT(CDocSize)
 	//}}AFX_DATA_INIT
@@ -27,7 +26,7 @@ CDocSize::CDocSize(CWnd* pParent /*=NULL*/)
 
 void CDocSize::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+//	wxDialog::DoDataExchange(pDX);
 
 	if (!m_nMinWidth)
 	{
@@ -52,11 +51,11 @@ void CDocSize::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CDocSize, CDialog)
+BEGIN_EVENT_TABLE(CDocSize, wxDialog)
 	//{{AFX_MSG_MAP(CDocSize)
-	ON_BN_CLICKED(IDC_NORMALIZE, OnNormalize)
+//	ON_BN_CLICKED(IDC_NORMALIZE, OnNormalize)
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CDocSize message handlers

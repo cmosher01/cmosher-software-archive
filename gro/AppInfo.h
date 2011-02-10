@@ -11,23 +11,23 @@ public:
 		CError() { nLastError = ::GetLastError(); }
 	};
 
-	CString m_strAppPath;
-	CString m_strAppDrive;
-	CString m_strAppDir;
-	CString m_strAppFName;
-	CString m_strAppExt;
+	wxString m_strAppPath;
+	wxString m_strAppDrive;
+	wxString m_strAppDir;
+	wxString m_strAppFName;
+	wxString m_strAppExt;
 	UINT m_nAppDriveType;
 	BOOL m_bPermanent;
 
 	// All info is file info (not product info)
 	int m_nVersion; // example: 0x00010002 means version 1.2
-	CString m_strVersion; // example: "1.2"
-	CString m_strInternalName;
-	CString m_strDescription;
-	CString m_strCopyright;
-	CString m_strCompany;
-	CString m_strComments;
-	CString m_strName;
+	wxString m_strVersion; // example: "1.2"
+	wxString m_strInternalName;
+	wxString m_strDescription;
+	wxString m_strCopyright;
+	wxString m_strCompany;
+	wxString m_strComments;
+	wxString m_strName;
 
 	CAppInfo();
 	virtual ~CAppInfo();
@@ -36,7 +36,7 @@ public:
 
 protected:
 	char* m_pVerBuf;
-	CString GetString(const CString& strStringField);
+	wxString GetString(const wxString& strStringField);
 };
 
 #endif

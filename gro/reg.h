@@ -11,7 +11,7 @@ typedef
 
 #pragma optimize("",off)
 
-static int junk_hacker(const CString& s, int& x)
+static int junk_hacker(const wxString& s, int& x)
 {
 	for (int i(0); i<s.GetLength()-1; i++)
 		x &= (s.GetAt(i) << 8) + s.GetAt(i+1);
@@ -22,7 +22,7 @@ inline reg_t GetRegistration()
 {
 	reg_t reg;
 
-	CString strName, strKey;
+	wxString strName, strKey;
 	theApp.GetReg("Reg","Name",strName,"");
 	LPCTSTR n = (LPCTSTR)strName;
 	theApp.GetReg("Reg","Key",strKey,"");

@@ -12,7 +12,7 @@ public:
 	void Paste(CGedtreeDoc* pDocTo);
 
 private:
-	CArray<int,int> m_riIndi;
+	R_int m_riIndi;
 	CGedtreeDoc* m_pDoc;
 };
 

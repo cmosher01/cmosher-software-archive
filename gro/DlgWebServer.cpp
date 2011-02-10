@@ -1,3 +1,4 @@
+#if 0 
 // DlgWebServer.cpp : implementation file
 //
 
@@ -15,8 +16,8 @@ static char THIS_FILE[] = __FILE__;
 // CDlgWebServer dialog
 
 
-CDlgWebServer::CDlgWebServer(CWnd* pParent /*=NULL*/, bool bRunning)
-	: CDialog(CDlgWebServer::IDD, pParent),
+CDlgWebServer::CDlgWebServer(wxWindow* pParent /*=NULL*/, bool bRunning)
+	: wxDialog(CDlgWebServer::IDD, pParent),
 	m_bRunning(bRunning)
 {
 	//{{AFX_DATA_INIT(CDlgWebServer)
@@ -32,7 +33,7 @@ CDlgWebServer::CDlgWebServer(CWnd* pParent /*=NULL*/, bool bRunning)
 
 void CDlgWebServer::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	wxDialog::DoDataExchange(pDX);
 
 	//{{AFX_DATA_MAP(CDlgWebServer)
 	DDX_Control(pDX, IDC_PORT, m_editPort);
@@ -51,17 +52,17 @@ void CDlgWebServer::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CDlgWebServer, CDialog)
+BEGIN_EVENT_TABLE(CDlgWebServer, wxDialog)
 	//{{AFX_MSG_MAP(CDlgWebServer)
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgWebServer message handlers
 
 BOOL CDlgWebServer::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+	wxDialog::OnInitDialog();
 
 	if (m_bRunning)
 	{
@@ -76,3 +77,4 @@ BOOL CDlgWebServer::OnInitDialog()
 
 	return TRUE;
 }
+#endif

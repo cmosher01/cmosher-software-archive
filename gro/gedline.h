@@ -3,19 +3,19 @@ class CGedtreeDoc;
 class CGedLine
 {
 public:
-	CGedLine(CGedtreeDoc* pDoc, const CString& strLine);
+	CGedLine(CGedtreeDoc* pDoc, const wxString& strLine);
 	CGedtreeDoc* m_pDoc;
-	CString m_strID;
-	CString m_strTok;
-	CString m_strVal;
-	CString m_strValAsID;
+	wxString m_strID;
+	wxString m_strTok;
+	wxString m_strVal;
+	wxString m_strValAsID;
 	int m_nVal;
 	int m_nLev;
 
-	void ParseGedLine(const CString& strLine);
+	void ParseGedLine(const wxString& strLine);
 	void Calc();
 	void CalcID();
-	CString GetGedLine();
+	wxString GetGedLine();
 	int Level() { return m_nLev; }
 
 	enum
@@ -27,9 +27,9 @@ public:
 		DOWNCASE   = 1<<4,
 		MIXCASE    = 1<<5
 	};
-	CString GetCleanValue(int nFlags);
-	BOOL IsChildOf(const CString& strTok, const CString& strID);
+	wxString GetCleanValue(int nFlags);
+	BOOL IsChildOf(const wxString& strTok, const wxString& strID);
 };
 
-const char cDelim(' ');
-const char cID('@');
+const wxChar cDelim = _T(' ');
+const wxChar cID = _T('@');

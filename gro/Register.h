@@ -10,17 +10,17 @@
 /////////////////////////////////////////////////////////////////////////////
 // CRegister dialog
 
-class CRegister : public CDialog
+class CRegister : public wxDialog
 {
 // Construction
 public:
-	CRegister(CWnd* pParent = NULL);   // standard constructor
+	CRegister(wxWindow* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CRegister)
 	enum { IDD = IDD_REGISTER };
-	CString	m_strName;
-	CString	m_strKey;
+	wxString	m_strName;
+	wxString	m_strKey;
 	//}}AFX_DATA
 
 
@@ -37,7 +37,7 @@ protected:
 	// Generated message map functions
 	//{{AFX_MSG(CRegister)
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };
 
 //{{AFX_INSERT_LOCATION}}

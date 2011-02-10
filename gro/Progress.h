@@ -19,13 +19,13 @@ protected:
 	CProgressCtrl m_progress;
 	CProgressDlg* m_pDlg;
 	CEvent m_evtReady;
-	CStatic m_staticDetail;
+	wxStaticText m_staticDetail;
 public:
 
 // Operations
 public:
-	void Reset(const CString& strMessage = "", int cItem = 0);
-	void Set(int cFinished, CString strDetail = "");
+	void Reset(const wxString& strMessage = "", int cItem = 0);
+	void Set(int cFinished, wxString strDetail = "");
 
 // Overrides
 	// ClassWizard generated virtual function overrides
@@ -45,7 +45,7 @@ protected:
 		// NOTE - the ClassWizard will add and remove member functions here.
 	//}}AFX_MSG
 
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };
 
 /////////////////////////////////////////////////////////////////////////////

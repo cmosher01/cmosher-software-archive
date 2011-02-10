@@ -15,8 +15,8 @@ static char THIS_FILE[] = __FILE__;
 // CEditSubm dialog
 
 
-CEditSubm::CEditSubm(CWnd* pParent /*=NULL*/)
-	: CDialog(CEditSubm::IDD, pParent)
+CEditSubm::CEditSubm(wxWindow* pParent /*=NULL*/)
+	: wxDialog(CEditSubm::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CEditSubm)
 	m_strName = _T("");
@@ -28,7 +28,7 @@ CEditSubm::CEditSubm(CWnd* pParent /*=NULL*/)
 
 void CEditSubm::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	wxDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CEditSubm)
 	DDX_Text(pDX, IDC_NAME, m_strName);
 	DDX_Text(pDX, IDC_ADDR, m_strAddr);
@@ -49,17 +49,17 @@ void CEditSubm::WriteToRegistry()
 	theApp.PutReg("Submitter","Address",m_strAddr);
 }
 
-BEGIN_MESSAGE_MAP(CEditSubm, CDialog)
+BEGIN_EVENT_TABLE(CEditSubm, wxDialog)
 	//{{AFX_MSG_MAP(CEditSubm)
 		// NOTE: the ClassWizard will add message map macros here
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CEditSubm message handlers
 
 void CEditSubm::OnOK() 
 {
-	CDialog::OnOK();
+	wxDialog::OnOK();
 	WriteToRegistry();
 }

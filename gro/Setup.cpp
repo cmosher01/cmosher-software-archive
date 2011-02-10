@@ -15,8 +15,8 @@ static char THIS_FILE[] = __FILE__;
 // CSetup dialog
 
 
-CSetup::CSetup(CWnd* pParent /*=NULL*/)
-	: CDialog(CSetup::IDD, pParent)
+CSetup::CSetup(wxWindow* pParent /*=NULL*/)
+	: wxDialog(CSetup::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CSetup)
 		// NOTE: the ClassWizard will add member initialization here
@@ -26,20 +26,20 @@ CSetup::CSetup(CWnd* pParent /*=NULL*/)
 
 void CSetup::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	wxDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CSetup)
 		// NOTE: the ClassWizard will add DDX and DDV calls here
 	//}}AFX_DATA_MAP
 }
 
 
-BEGIN_MESSAGE_MAP(CSetup, CDialog)
+BEGIN_EVENT_TABLE(CSetup, wxDialog)
 	//{{AFX_MSG_MAP(CSetup)
 	ON_BN_CLICKED(IDC_ADD, OnAdd)
 	ON_BN_CLICKED(IDC_REMOVE, OnRemove)
 	ON_BN_CLICKED(IDC_UNINSTALL, OnUninstall)
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CSetup message handlers

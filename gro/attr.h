@@ -11,9 +11,9 @@ public:
 	HTREEITEM m_hTreeItem;
 	CGedtreeDoc* m_pDoc;
 
-	CString m_strTypeTok;
-	CString m_strType;
-	CString m_strValue;
+	wxString m_strTypeTok;
+	wxString m_strType;
+	wxString m_strValue;
 	CEvt m_evt;
 
 	CAttr(CGedtreeDoc* pDoc = NULL, HTREEITEM htiAttr = NULL);
@@ -22,9 +22,10 @@ public:
 	void CalcType();
 	void Calc();
 
-	void GetFromTree(const CString& strTypeTok, const CString& strValue);
+	void GetFromTree(const wxString& strTypeTok, const wxString& strValue);
 	void PutToTree();
 	void Delete();
 };
+WX_DECLARE_OBJARRAY(CAttr,wxArrayCAttr);
 
 #endif

@@ -4,16 +4,16 @@
 /////////////////////////////////////////////////////////////////////////////
 // CFind dialog
 
-class CFind : public CDialog
+class CFind : public wxDialog
 {
 // Construction
 public:
-	CFind(CWnd* pParent = NULL);   // standard constructor
+	CFind(wxWindow* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CFind)
 	enum { IDD = IDD_FIND };
-	CString	m_strName;
+	wxString	m_strName;
 	//}}AFX_DATA
 
 
@@ -31,5 +31,5 @@ protected:
 	//{{AFX_MSG(CFind)
 		// NOTE: the ClassWizard will add member functions here
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };

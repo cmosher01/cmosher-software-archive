@@ -4,11 +4,11 @@
 /////////////////////////////////////////////////////////////////////////////
 // CDocSize dialog
 
-class CDocSize : public CDialog
+class CDocSize : public wxDialog
 {
 // Construction
 public:
-	CDocSize(CWnd* pParent = NULL);   // standard constructor
+	CDocSize(wxWindow* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CDocSize)
@@ -34,5 +34,5 @@ protected:
 	//{{AFX_MSG(CDocSize)
 	afx_msg void OnNormalize();
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };

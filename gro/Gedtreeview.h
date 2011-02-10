@@ -27,14 +27,14 @@ public:
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CGedtreeView)
 	public:
-	virtual void OnDraw(CDC* pDC) { ASSERT(FALSE); }  // overridden to draw this view
+	virtual void OnDraw(wxDC* pDC) { wxASSERT(FALSE); }  // overridden to draw this view
 	virtual void OnInitialUpdate();
 	//}}AFX_VIRTUAL
 
 // Implementation
 public:
 	virtual ~CGedtreeView();
-	virtual CString GetWindowTitle();
+	virtual wxString GetWindowTitle();
 	virtual void Reset(UINT flagsChanged = -1);
 	enum // flagsChanged
 	{
@@ -49,7 +49,7 @@ protected:
 protected:
 	//{{AFX_MSG(CGedtreeView)
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };
 
 /////////////////////////////////////////////////////////////////////////////

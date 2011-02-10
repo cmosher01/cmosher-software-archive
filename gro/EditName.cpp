@@ -16,8 +16,8 @@ static char THIS_FILE[] = __FILE__;
 // CEditName dialog
 
 
-CEditName::CEditName(CWnd* pParent /*=NULL*/)
-	: CDialog(CEditName::IDD, pParent)
+CEditName::CEditName(wxWindow* pParent /*=NULL*/)
+	: wxDialog(CEditName::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CEditName)
 	m_strName = _T("");
@@ -27,7 +27,7 @@ CEditName::CEditName(CWnd* pParent /*=NULL*/)
 
 void CEditName::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	wxDialog::DoDataExchange(pDX);
 
 	if (!pDX->m_bSaveAndValidate)
 	{
@@ -65,11 +65,11 @@ void CEditName::SetStaticTitles()
 	m_editName.SetFont(&theApp.m_fontSmall);
 }
 
-BEGIN_MESSAGE_MAP(CEditName, CDialog)
+BEGIN_EVENT_TABLE(CEditName, wxDialog)
 	//{{AFX_MSG_MAP(CEditName)
 	ON_BN_CLICKED(IDC_CHANGESOURCE, OnChangesource)
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CEditName message handlers

@@ -41,7 +41,7 @@ static int CALLBACK SortItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 
 IMPLEMENT_DYNCREATE(CGedtreeViewIL, CGedtreeView)
 
-BEGIN_MESSAGE_MAP(CGedtreeViewIL, CGedtreeView)
+BEGIN_EVENT_TABLE(CGedtreeViewIL, CGedtreeView)
 	//{{AFX_MSG_MAP(CGedtreeViewIL)
 	ON_WM_SIZE()
 	ON_WM_DESTROY()
@@ -60,7 +60,7 @@ BEGIN_MESSAGE_MAP(CGedtreeViewIL, CGedtreeView)
 	ON_NOTIFY(LVN_COLUMNCLICK, 1024, OnColumnclickList)
 	ON_NOTIFY(LVN_KEYDOWN, 1024, OnKeydownList)
 	ON_NOTIFY(NM_DBLCLK, 1024, OnDblclk)
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CGedtreeViewIL construction/destruction
@@ -79,7 +79,7 @@ BOOL CGedtreeViewIL::PreCreateWindow(CREATESTRUCT& cs)
 	return CScrollView::PreCreateWindow(cs);
 }
 
-CString CGedtreeViewIL::GetWindowTitle()
+wxString CGedtreeViewIL::GetWindowTitle()
 {
 	return "Index of Individuals";
 }
@@ -87,7 +87,7 @@ CString CGedtreeViewIL::GetWindowTitle()
 /////////////////////////////////////////////////////////////////////////////
 // CGedtreeViewIL drawing
 
-void CGedtreeViewIL::OnDraw(CDC* pDC)
+void CGedtreeViewIL::OnDraw(wxDC* pDC)
 {
 }
 
@@ -100,12 +100,12 @@ BOOL CGedtreeViewIL::OnPreparePrinting(CPrintInfo* pInfo)
 	return DoPreparePrinting(pInfo);
 }
 
-void CGedtreeViewIL::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+void CGedtreeViewIL::OnBeginPrinting(wxDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
 	// TODO: add extra initialization before printing
 }
 
-void CGedtreeViewIL::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+void CGedtreeViewIL::OnEndPrinting(wxDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
 	// TODO: add cleanup after printing
 }
@@ -139,7 +139,7 @@ void CGedtreeViewIL::OnInitialUpdate()
 
 	if (!m_bInit) InitCtrls();
 
-	CRect r;
+	wxRect r;
 	GetClientRect(&r);
 
 	if (m_bInit)
@@ -153,7 +153,7 @@ void CGedtreeViewIL::OnInitialUpdate()
 void CGedtreeViewIL::InitCtrls()
 {
 	m_list.Create(WS_VISIBLE|LVS_REPORT|LVS_SINGLESEL,
-		CRect(0,0,1,1),this,1024);
+		wxRect(0,0,1,1),this,1024);
 
 	m_list.SendMessage(LVM_SETUNICODEFORMAT,TRUE,0);
 
@@ -182,7 +182,7 @@ void CGedtreeViewIL::InitCtrls()
 	m_list.InsertColumn(lv.iSubItem,&lv);
 }
 
-void CGedtreeViewIL::CheckColumnWidth(int nCol, const CString& str, BOOL bForce)
+void CGedtreeViewIL::CheckColumnWidth(int nCol, const wxString& str, BOOL bForce)
 {
 	int nWidth = m_list.GetStringWidth(str)+nColExtraWidth;
 	if (bForce || nWidth>m_list.GetColumnWidth(nCol))
@@ -193,9 +193,9 @@ void CGedtreeViewIL::PositionControls(int cx, int cy)
 {
 	SetRedraw(FALSE);
 
-	SetScrollSizes(MM_TEXT,CSize(cx,cy));
+	SetScrollSizes(MM_TEXT,wxSize(cx,cy));
 
-	CRect rectClient;
+	wxRect rectClient;
 	GetClientRect(rectClient);
 	m_list.MoveWindow(rectClient);
 
@@ -238,7 +238,7 @@ void CGedtreeViewIL::Reset(UINT flagsChanged)
 		CheckColumnWidth(nColBirth,"Birth Date",TRUE);
 		CheckColumnWidth(nColDeath,"Death Date",TRUE);
 
-		CRect r;
+		wxRect r;
 		GetClientRect(&r);
 		PositionControls(r.right,r.bottom);
 		SetRedraw(FALSE);
@@ -333,7 +333,7 @@ static int CALLBACK SortItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 	CIndividual& indi1 = pDoc->m_rIndividual[pp1->iIndi];
 	CIndividual& indi2 = pDoc->m_rIndividual[pp2->iIndi];
 
-	CString s1, s2;
+	wxString s1, s2;
 	switch (lParamSort) // iSubItem
 	{
 		case nColSurname:
@@ -387,7 +387,7 @@ void CGedtreeViewIL::OnKeydownList(NMHDR* pNMHDR, LRESULT* pResult)
 		OnDblclk(NULL,pResult);
 }
 
-void CGedtreeViewIL::OnSetFocus(CWnd* pOldWnd) 
+void CGedtreeViewIL::OnSetFocus(wxWindow* pOldWnd) 
 {
 	CGedtreeView::OnSetFocus(pOldWnd);
 	m_list.SetFocus();
@@ -405,11 +405,11 @@ void CGedtreeViewIL::OnViewIndi()
 	}
 }
 
-void CGedtreeViewIL::OnUpdateViewIndi(CCmdUI* pCmdUI) 
+void CGedtreeViewIL::OnUpdateViewIndi(wxUpdateUIEvent& pCmdUI) 
 {
 	int i(-1);
 	i = m_list.GetNextItem(i,LVNI_SELECTED);
-	pCmdUI->Enable(i>=0);
+	pCmdUI.Enable(i>=0);
 }
 
 void CGedtreeViewIL::OnViewOpenpedigree() 
@@ -424,14 +424,14 @@ void CGedtreeViewIL::OnViewOpenpedigree()
 	}
 }
 
-void CGedtreeViewIL::OnUpdateViewOpenpedigree(CCmdUI* pCmdUI) 
+void CGedtreeViewIL::OnUpdateViewOpenpedigree(wxUpdateUIEvent& pCmdUI) 
 {
 	int i(-1);
 	i = m_list.GetNextItem(i,LVNI_SELECTED);
-	pCmdUI->Enable(i>=0);
+	pCmdUI.Enable(i>=0);
 }
 
-void CGedtreeViewIL::OnUpdateViewIndexofindividuals(CCmdUI* pCmdUI) 
+void CGedtreeViewIL::OnUpdateViewIndexofindividuals(wxUpdateUIEvent& pCmdUI) 
 {
-	pCmdUI->Enable(FALSE);
+	pCmdUI.Enable(FALSE);
 }

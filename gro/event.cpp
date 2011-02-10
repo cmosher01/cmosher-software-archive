@@ -34,10 +34,10 @@ CEvt::~CEvt()
 {
 }
 
-void CEvt::GetFromTree(const CString& strTypeTok)
+void CEvt::GetFromTree(const wxString& strTypeTok)
 {
 	m_strTypeTok = strTypeTok;
-	CTreeCtrl& tree = m_pDoc->m_tree;
+	wxTreeCtrl& tree = m_pDoc->m_tree;
 
 	m_cita.Set(m_pDoc,NULL);
 	HTREEITEM hSub = tree.GetChildItem(m_hTreeItem);
@@ -78,7 +78,7 @@ void CEvt::GetFromTree(const CString& strTypeTok)
 
 void CEvt::PutToTree()
 {
-	ASSERT(m_pDoc);
+	wxASSERT(m_pDoc);
 
 	m_pDoc->ResetToken(m_hTreeItem,m_strTypeTok);
 
@@ -102,7 +102,7 @@ void CEvt::PutToTree()
 		{
 			if (m_strNote[0]==cID)
 			{
-				CString strValAsID(m_strNote);
+				wxString strValAsID(m_strNote);
 				int i = strValAsID.Find(cID);
 				if (i>=0)
 				{
@@ -213,7 +213,7 @@ void CEvt::CalcType()
 
 void CEvt::Delete()
 {
-	ASSERT(m_pDoc);
+	wxASSERT(m_pDoc);
 
 	m_pDoc->DeleteItem(m_hTreeItem);
 

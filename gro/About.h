@@ -4,19 +4,18 @@
 /////////////////////////////////////////////////////////////////////////////
 // CAbout dialog
 
-class CAbout : public CDialog
+class CAbout : public wxDialog
 {
 // Construction
 public:
-	CAbout(CWnd* pParent = NULL);   // standard constructor
+	CAbout(wxWindow* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CAbout)
 	enum { IDD = IDD_ABOUTBOX };
-	CStatic	m_staticAbout;
-	CString	m_strAbout;
+	wxStaticText	m_staticAbout;
+	wxString	m_strAbout;
 	//}}AFX_DATA
-	CFont m_font;
 
 
 // Overrides
@@ -28,11 +27,11 @@ public:
 
 // Implementation
 protected:
-	CString GetAbout();
+	wxString GetAbout();
 
 	// Generated message map functions
 	//{{AFX_MSG(CAbout)
 		// NOTE: the ClassWizard will add member functions here
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };

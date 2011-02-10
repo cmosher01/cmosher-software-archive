@@ -23,9 +23,9 @@ CName::~CName()
 {
 }
 
-void CName::GetFromTree(const CString& strName)
+void CName::GetFromTree(const wxString& strName)
 {
-	CTreeCtrl& tree = m_pDoc->m_tree;
+	wxTreeCtrl& tree = m_pDoc->m_tree;
 
 	m_strDisplay = strName;
 
@@ -98,7 +98,7 @@ void CName::Calc()
 	m_strName = m_strRest;
 	m_strGiven = m_strName;
 
-	CString strRest = m_strDisplay.Mid(i1+1);//  "Public/, II"
+	wxString strRest = m_strDisplay.Mid(i1+1);//  "Public/, II"
 
 	int i2 = strRest.Find(cSurnameDelim);
 	if (i2==-1)
@@ -106,14 +106,14 @@ void CName::Calc()
 	else
 		m_strSurname = strRest.Left(i2);
 
-	m_strName.TrimLeft();
-	m_strName.TrimRight();
+	m_strName.Trim(false);
+	m_strName.Trim();
 	m_strName += " ";
-	m_strSurname.TrimLeft();
-	m_strSurname.TrimRight();
+	m_strSurname.Trim(false);
+	m_strSurname.Trim();
 	m_strName += m_strSurname;
 
-	CString strPart;
+	wxString strPart;
 	if (i2>=strRest.GetLength())
 		strPart = "";
 	else
@@ -126,40 +126,40 @@ void CName::Calc()
 		m_strRest += "~"+strPart;
 	}
 
-	m_strSurname.TrimLeft();
-	m_strRest.TrimLeft();
-	m_strName.TrimLeft();
-	m_strGiven.TrimLeft();
-	m_strSuffix.TrimLeft();
-	m_strSurname.TrimRight();
-	m_strRest.TrimRight();
-	m_strName.TrimRight();
-	m_strGiven.TrimRight();
-	m_strSuffix.TrimRight();
+	m_strSurname.Trim(false);
+	m_strRest.Trim(false);
+	m_strName.Trim(false);
+	m_strGiven.Trim(false);
+	m_strSuffix.Trim(false);
+	m_strSurname.Trim();
+	m_strRest.Trim();
+	m_strName.Trim();
+	m_strGiven.Trim();
+	m_strSuffix.Trim();
 }
 
-CString CName::Name()
+wxString CName::Name()
 {
 	return Filter(m_strName);
-//	return CString("<")+m_strGiven+"> /"+m_strSurname+"/"+m_strSuffix;
+//	return wxString("<")+m_strGiven+"> /"+m_strSurname+"/"+m_strSuffix;
 }
 
-CString CName::NameSlashes()
+wxString CName::NameSlashes()
 {
 	return Filter(m_strDisplay);
 }
 
-CString CName::Surname()
+wxString CName::Surname()
 {
 	return Filter(m_strSurname);
 }
 
-CString CName::GivenName()
+wxString CName::GivenName()
 {
 	return Filter(m_strRest);
 }
 
-CString CName::Filter(const CString& strName)
+wxString CName::Filter(const wxString& strName)
 {
 	if (strName.IsEmpty())
 		return "[unknown]";
@@ -169,7 +169,7 @@ CString CName::Filter(const CString& strName)
 
 void CName::PutToTree(HTREEITEM htiParent)
 {
-	ASSERT(m_pDoc);
+	wxASSERT(m_pDoc);
 
 	m_hTreeItem = m_pDoc->ResetSubValue(htiParent,"NAME",m_strDisplay);
 	m_cita.PutToTree(m_hTreeItem);

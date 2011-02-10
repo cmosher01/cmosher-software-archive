@@ -88,17 +88,17 @@ void CFamily::Calc()
 
 void CFamily::CalcDraw()
 {
-	ASSERT(Exists());
+	wxASSERT(Exists());
 
 	// assume either a husband, or a wife, or at least one child
 	if (!(m_iHusband>=0||m_iWife>=0||m_riChild.GetSize()>0)) return;
 
-	CRect rect1, rect2;
+	wxRect rect1, rect2;
 	if (m_iHusband<0&&m_iWife<0) // no husband or wife
 	{
 		/*
 		rect1 = m_pDoc->Individual(m_riChild[0])->GetUnscaledFrameRect();
-		rect1 -= CSize(0,4*BAR_HEIGHT);
+		rect1 -= wxSize(0,4*BAR_HEIGHT);
 		rect2 = rect1;
 		rect2.left = rect2.right = rect1.right+MARRIAGE_SPACING;
 		*/
@@ -124,12 +124,12 @@ void CFamily::CalcDraw()
 	BOOL bHusbandOnRight = (rect1.left>rect2.left);
 	if (bHusbandOnRight)
 	{
-		CRect rectTemp = rect1;
+		wxRect rectTemp = rect1;
 		rect1 = rect2;
 		rect2 = rectTemp;
 	}
 
-	CPoint pt1, pt2;
+	wxPoint pt1, pt2;
 	m_pt1.x = rect1.right;
 	m_pt1.y = (rect1.top+rect1.bottom)/2;
 	m_pt2.x = rect2.left;
@@ -137,26 +137,26 @@ void CFamily::CalcDraw()
 
 	if (bHusbandOnRight)
 		m_ptP = CalcParPt(
-			CPoint(m_pt2.x,m_pt2.y+BAR_HEIGHT/2),
-			CPoint(m_pt1.x,m_pt1.y+BAR_HEIGHT/2));
+			wxPoint(m_pt2.x,m_pt2.y+BAR_HEIGHT/2),
+			wxPoint(m_pt1.x,m_pt1.y+BAR_HEIGHT/2));
 	else
 		m_ptP = CalcParPt(
-			CPoint(m_pt1.x,m_pt1.y+BAR_HEIGHT/2),
-			CPoint(m_pt2.x,m_pt2.y+BAR_HEIGHT/2));
+			wxPoint(m_pt1.x,m_pt1.y+BAR_HEIGHT/2),
+			wxPoint(m_pt2.x,m_pt2.y+BAR_HEIGHT/2));
 
 	if (m_riChild.GetSize())
 	{
-		CRect rect = m_pDoc->Individual(m_riChild[0])->GetUnscaledFrameRect();
+		wxRect rect = m_pDoc->Individual(m_riChild[0])->GetUnscaledFrameRect();
 		int nTop = rect.top;
 		int nLeft, nRight;
 		nLeft = nRight = (rect.right+rect.left)/2;
 		m_rpointChild.RemoveAll();
-		m_rpointChild.Add(CPoint((rect.right+rect.left)/2,rect.top));
+		m_rpointChild.Add(wxPoint((rect.right+rect.left)/2,rect.top));
 		for (int i(1); i<m_riChild.GetSize(); i++)
 		{
 			rect = m_pDoc->Individual(m_riChild[i])->GetUnscaledFrameRect();
 
-			m_rpointChild.Add(CPoint((rect.right+rect.left)/2,rect.top));
+			m_rpointChild.Add(wxPoint((rect.right+rect.left)/2,rect.top));
 
 			if (rect.top<nTop) nTop = rect.top;
 
@@ -183,12 +183,12 @@ void CFamily::CalcDraw()
 	m_bHidden = cShown==0;
 }
 
-CPoint CFamily::CalcParPt(CPoint pt1, CPoint pt2)
+wxPoint CFamily::CalcParPt(wxPoint pt1, wxPoint pt2)
 {
-	CSize d(pt2-pt1);
+	wxSize d(pt2-pt1);
 	double dist = sqrt(d.cx*d.cx+d.cy*d.cy);
 
-	return pt1+CSize(
+	return pt1+wxSize(
 		(int)(CHILD_LINE_DISTANCE*d.cx/dist),
 		(int)(CHILD_LINE_DISTANCE*d.cy/dist));
 }
@@ -220,7 +220,7 @@ void CFamily::CalcScale()
 	m_rpointscChild.RemoveAll();
 	for (int i(0); i<m_rpointChild.GetSize(); i++)
 	{
-		CPoint pt(m_rpointChild[i].x/scale,m_rpointChild[i].y/scale);
+		wxPoint pt(m_rpointChild[i].x/scale,m_rpointChild[i].y/scale);
 		m_rpointscChild.Add(pt);
 	}
 	m_rectScaledBounds.top = m_rectBounds.top/scale;
@@ -237,16 +237,16 @@ void CFamily::CalcScale()
 void CFamily::CalcBounds()
 {
 	m_rectBounds.SetRect(INT_MAX,INT_MAX,INT_MIN,INT_MIN);
-	CheckBounds(m_pt1-CSize(0,BAR_HEIGHT/2));
-	CheckBounds(m_pt2-CSize(0,BAR_HEIGHT/2));
+	CheckBounds(m_pt1-wxSize(0,BAR_HEIGHT/2));
+	CheckBounds(m_pt2-wxSize(0,BAR_HEIGHT/2));
 	CheckBounds(m_ptC1);
 	CheckBounds(m_ptC2);
 	for (int i(0); i<m_rpointChild.GetSize(); i++)
 		CheckBounds(m_rpointChild[i]);
-	ASSERT(m_rectBounds.left<INT_MAX);
-	ASSERT(m_rectBounds.top<INT_MAX);
-	ASSERT(m_rectBounds.right>INT_MIN);
-	ASSERT(m_rectBounds.bottom>INT_MIN);
+	wxASSERT(m_rectBounds.left<INT_MAX);
+	wxASSERT(m_rectBounds.top<INT_MAX);
+	wxASSERT(m_rectBounds.right>INT_MIN);
+	wxASSERT(m_rectBounds.bottom>INT_MIN);
 
 	int nInflate = CHILD_LINE_DISTANCE;
 	if (CHILD_HEIGHT>nInflate)
@@ -254,7 +254,7 @@ void CFamily::CalcBounds()
 	m_rectBounds.InflateRect(0,nInflate);
 }
 
-void CFamily::CheckBounds(const CPoint& pt)
+void CFamily::CheckBounds(const wxPoint& pt)
 {
 	if (pt.y<m_rectBounds.top)
 		m_rectBounds.top = pt.y;
@@ -275,8 +275,8 @@ void CFamily::OnDraw(CMyDC& dc)
 
 	if (m_pt1.x||m_pt1.y||m_pt2.x||m_pt2.y)
 	{
-		CPoint p1(m_ptsc1);
-		CPoint p2(m_ptsc2);
+		wxPoint p1(m_ptsc1);
+		wxPoint p2(m_ptsc2);
 		int nBarHeight(BAR_HEIGHT/GetScale());
 		if (dc.Print())
 		{
@@ -284,14 +284,14 @@ void CFamily::OnDraw(CMyDC& dc)
 			ScaleForPrint(p2);
 			nBarHeight *= 4;
 		}
-		dc.DrawLine(CPoint(p1.x,p1.y-nBarHeight/2),CPoint(p2.x,p2.y-nBarHeight/2),!!m_bHidden);
-		dc.DrawLine(CPoint(p1.x,p1.y+nBarHeight/2),CPoint(p2.x,p2.y+nBarHeight/2),!!m_bHidden);
+		dc.DrawLine(wxPoint(p1.x,p1.y-nBarHeight/2),wxPoint(p2.x,p2.y-nBarHeight/2),!!m_bHidden);
+		dc.DrawLine(wxPoint(p1.x,p1.y+nBarHeight/2),wxPoint(p2.x,p2.y+nBarHeight/2),!!m_bHidden);
 	}
 
 	if (m_riChild.GetSize())
 	{
-		CPoint p1(m_ptscC1);
-		CPoint p2(m_ptscC2);
+		wxPoint p1(m_ptscC1);
+		wxPoint p2(m_ptscC2);
 
 		if (dc.Print())
 		{
@@ -302,8 +302,8 @@ void CFamily::OnDraw(CMyDC& dc)
 		dc.DrawLine(p1,p2,!!m_bHidden);
 		for (int i(0); i<m_rpointscChild.GetSize(); i++)
 		{
-			CPoint pt(m_rpointscChild[i]);
-			CPoint pt2(pt.x,m_ptscC1.y);
+			wxPoint pt(m_rpointscChild[i]);
+			wxPoint pt2(pt.x,m_ptscC1.y);
 			if (dc.Print())
 			{
 				ScaleForPrint(pt);
@@ -314,28 +314,28 @@ void CFamily::OnDraw(CMyDC& dc)
 		}
 		if (m_pt1.x||m_pt1.y||m_pt2.x||m_pt2.y)
 		{
-			CPoint pt(m_ptscP);
+			wxPoint pt(m_ptscP);
 			if (dc.Print())
 				ScaleForPrint(pt);
 
 			if (p1.x<pt.x && pt.x<p2.x)
 			{
-				dc.DrawLine(pt,CPoint(pt.x,p1.y),!!m_bHidden);
+				dc.DrawLine(pt,wxPoint(pt.x,p1.y),!!m_bHidden);
 			}
 			else
 			{
 				int nChildHeight(CHILD_HEIGHT/GetScale());
 				if (dc.Print())
 					nChildHeight *= 4;
-				dc.DrawLine(pt,CPoint(pt.x,p1.y-nChildHeight),!!m_bHidden);
-				dc.DrawLine(CPoint(pt.x,p1.y-nChildHeight),CPoint((p1.x+p2.x)/2,p1.y-nChildHeight),!!m_bHidden);
-				dc.DrawLine(CPoint((p1.x+p2.x)/2,p1.y-nChildHeight),CPoint((p1.x+p2.x)/2,p1.y),!!m_bHidden);
+				dc.DrawLine(pt,wxPoint(pt.x,p1.y-nChildHeight),!!m_bHidden);
+				dc.DrawLine(wxPoint(pt.x,p1.y-nChildHeight),wxPoint((p1.x+p2.x)/2,p1.y-nChildHeight),!!m_bHidden);
+				dc.DrawLine(wxPoint((p1.x+p2.x)/2,p1.y-nChildHeight),wxPoint((p1.x+p2.x)/2,p1.y),!!m_bHidden);
 			}
 		}
 	}
 }
 
-void CFamily::ScaleForPrint(CRect& rect)
+void CFamily::ScaleForPrint(wxRect& rect)
 {
 	int nFactor(4);
 	rect.top *= nFactor;
@@ -344,7 +344,7 @@ void CFamily::ScaleForPrint(CRect& rect)
 	rect.right *= nFactor;
 }
 
-void CFamily::ScaleForPrint(CPoint& pt)
+void CFamily::ScaleForPrint(wxPoint& pt)
 {
 	int nFactor(4);
 	pt.x *= nFactor;
@@ -369,7 +369,7 @@ BOOL CFamily::AddChild(int iChild, BOOL bCheckFirst)
 	return bAdd;
 }
 
-void CFamily::AddEvent(HTREEITEM htiEvent, const CString& strTypeTok)
+void CFamily::AddEvent(HTREEITEM htiEvent, const wxString& strTypeTok)
 {
 	CEvt evt(m_pDoc,htiEvent);
 	evt.GetFromTree(strTypeTok);
@@ -401,7 +401,7 @@ void CFamily::Disconnect(int iIndividual)
 			}
 		}
 	}
-	ASSERT(bHusb||bWife||(iChil>=0));
+	wxASSERT(bHusb||bWife||(iChil>=0));
 
 	if (bHusb||bWife)
 	{
@@ -458,7 +458,7 @@ void CFamily::Disconnect(int iIndividual)
 		}
 	}
 
-	CTreeCtrl& tree = m_pDoc->m_tree;
+	wxTreeCtrl& tree = m_pDoc->m_tree;
 
 	int cChil(-1);
 	HTREEITEM htiSub = tree.GetChildItem(m_hTreeItem);
@@ -488,7 +488,7 @@ void CFamily::Disconnect(int iIndividual)
 
 void CFamily::GetFromTree()
 {
-	CTreeCtrl& tree = m_pDoc->m_tree;
+	wxTreeCtrl& tree = m_pDoc->m_tree;
 
 	HTREEITEM htiSub = tree.GetChildItem(m_hTreeItem);
 	while (htiSub)
@@ -577,7 +577,7 @@ void CFamily::ConnectParent(CIndividual* pIndi)
 	BOOL bWife = pIndi->m_nSex==2;
 
 	int* piSpouse, iOtherSpouse;
-	CString strTag;
+	wxString strTag;
 	if (bWife)
 	{
 		piSpouse = &m_iWife;
@@ -613,7 +613,7 @@ void CFamily::ConnectParent(CIndividual* pIndi)
 	}
 	else
 	{
-		ASSERT(*piSpouse==pIndi->m_i);
+		wxASSERT(*piSpouse==pIndi->m_i);
 	}
 }
 
@@ -639,7 +639,7 @@ void CFamily::ConnectChild(CIndividual* pIndi)
 void CFamily::DebugRelations()
 {
 	return;
-	CString s, s2;
+	wxString s, s2;
 
 	s.Format(_T("f==%d: "),m_i);
 	if (m_iHusband>=0)
@@ -752,7 +752,7 @@ int CFamily::GetSimpleMarriageEnd()
 	return d;
 }
 
-void CFamily::GetSortedChildren(CArray<int,int>& riChild)
+void CFamily::GetSortedChildren(wxArray<int,int>& riChild)
 {
 	riChild.SetSize(m_riChild.GetSize());
 	for (int i(0); i<m_riChild.GetSize(); i++)
@@ -785,9 +785,9 @@ static inline basic_ostream<wchar_t, char_traits<wchar_t> >& __cdecl endl2(basic
 	return (_O);
 }
 /*
-void static svgLine(const CPoint& p1, const CPoint& p2, wostringstream& os)
+void static svgLine(const wxPoint& p1, const wxPoint& p2, wostringstream& os)
 {
-	CString s;
+	wxString s;
 	s.Format(L"<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" />",
 		p1.x, p1.y, p2.x, p2.y);
 	os << (LPCTSTR)s << endl2;
@@ -801,38 +801,38 @@ void CFamily::writeSVG(wostringstream& os)
 
 	if (m_pt1.x||m_pt1.y||m_pt2.x||m_pt2.y)
 	{
-		CPoint p1(m_ptsc1);
-		CPoint p2(m_ptsc2);
+		wxPoint p1(m_ptsc1);
+		wxPoint p2(m_ptsc2);
 		int nBarHeight(BAR_HEIGHT/GetScale());
-		svgLine(CPoint(p1.x,p1.y-nBarHeight/2),CPoint(p2.x,p2.y-nBarHeight/2),os);
-		svgLine(CPoint(p1.x,p1.y+nBarHeight/2),CPoint(p2.x,p2.y+nBarHeight/2),os);
+		svgLine(wxPoint(p1.x,p1.y-nBarHeight/2),wxPoint(p2.x,p2.y-nBarHeight/2),os);
+		svgLine(wxPoint(p1.x,p1.y+nBarHeight/2),wxPoint(p2.x,p2.y+nBarHeight/2),os);
 	}
 
 	if (m_riChild.GetSize())
 	{
-		CPoint p1(m_ptscC1);
-		CPoint p2(m_ptscC2);
+		wxPoint p1(m_ptscC1);
+		wxPoint p2(m_ptscC2);
 
 		svgLine(p1,p2,os);
 		for (int i(0); i<m_rpointscChild.GetSize(); i++)
 		{
-			CPoint pt(m_rpointscChild[i]);
-			CPoint pt2(pt.x,m_ptscC1.y);
+			wxPoint pt(m_rpointscChild[i]);
+			wxPoint pt2(pt.x,m_ptscC1.y);
 			svgLine(pt2,pt,os);
 		}
 		if (m_pt1.x||m_pt1.y||m_pt2.x||m_pt2.y)
 		{
-			CPoint pt(m_ptscP);
+			wxPoint pt(m_ptscP);
 			if (p1.x<pt.x && pt.x<p2.x)
 			{
-				svgLine(pt,CPoint(pt.x,p1.y),os);
+				svgLine(pt,wxPoint(pt.x,p1.y),os);
 			}
 			else
 			{
 				int nChildHeight(CHILD_HEIGHT/GetScale());
-				svgLine(pt,CPoint(pt.x,p1.y-nChildHeight),os);
-				svgLine(CPoint(pt.x,p1.y-nChildHeight),CPoint((p1.x+p2.x)/2,p1.y-nChildHeight),os);
-				svgLine(CPoint((p1.x+p2.x)/2,p1.y-nChildHeight),CPoint((p1.x+p2.x)/2,p1.y),os);
+				svgLine(pt,wxPoint(pt.x,p1.y-nChildHeight),os);
+				svgLine(wxPoint(pt.x,p1.y-nChildHeight),wxPoint((p1.x+p2.x)/2,p1.y-nChildHeight),os);
+				svgLine(wxPoint((p1.x+p2.x)/2,p1.y-nChildHeight),wxPoint((p1.x+p2.x)/2,p1.y),os);
 			}
 		}
 	}

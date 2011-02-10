@@ -1,14 +1,14 @@
 #include "stdafx.h"
 #include "util.h"
 
-CString CUtil::str(const int n)
+wxString CUtil::str(const int n)
 {
 	char s[17];
 	_itoa(n,s,10);
-	return CString(s);
+	return wxString(s);
 }
 
-BOOL CUtil::DirectoryExists(const CString& strDir)
+BOOL CUtil::DirectoryExists(const wxString& strDir)
 {
 	DWORD dwAttrib = ::GetFileAttributes(strDir);
 
@@ -21,9 +21,9 @@ BOOL CUtil::DirectoryExists(const CString& strDir)
 	return FALSE;
 }
 
-CString CUtil::GetWindowsDirectory()
+wxString CUtil::GetWindowsDirectory()
 {
-	CString str;
+	wxString str;
 	::GetWindowsDirectory(str.GetBuffer(MAX_PATH+1),MAX_PATH+1);
 	str.ReleaseBuffer();
 

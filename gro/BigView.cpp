@@ -1,5 +1,6 @@
 // BigView.cpp : implementation of the CBigScrollView class
 //
+#if 0
 
 #include "stdafx.h"
 #include "gedtree.h"
@@ -14,16 +15,14 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CBigScrollView
 
-IMPLEMENT_DYNAMIC(CBigScrollView, CScrollView)
-
-BEGIN_MESSAGE_MAP(CBigScrollView, CScrollView)
+BEGIN_EVENT_TABLE(CBigScrollView, wxScrolledWindow)
 	//{{AFX_MSG_MAP(CBigScrollView)
-	ON_WM_SIZE()
-	ON_WM_ERASEBKGND()
-	ON_WM_HSCROLL()
-	ON_WM_VSCROLL()
+//	ON_WM_SIZE()
+//	ON_WM_ERASEBKGND()
+//	ON_WM_HSCROLL()
+//	ON_WM_VSCROLL()
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CBigScrollView construction/destruction
@@ -36,10 +35,10 @@ CBigScrollView::CBigScrollView()
 	m_bExtendX = FALSE;
 	m_bExtendY = FALSE;
 	m_Delta = 0;
-	m_Center = CPoint(0, 0);
-	m_Offset = CPoint(0, 0);
-	m_Ratio = CSize(1, 1);
-	m_TotalSize = CSize(1,1);
+	m_Center = wxPoint(0, 0);
+	m_Offset = wxPoint(0, 0);
+	m_Ratio = wxSize(1, 1);
+	m_TotalSize = wxSize(1,1);
 }
 
 CBigScrollView::~CBigScrollView()
@@ -49,24 +48,19 @@ CBigScrollView::~CBigScrollView()
 /////////////////////////////////////////////////////////////////////////////
 // CBigScrollView overrides
 
-void CBigScrollView::OnPrepareDC(CDC* pDC, CPrintInfo* pInfo) 
-{
-	CScrollView::OnPrepareDC(pDC, pInfo);
-
-	// avoid drawing in client area
-	CPoint pointOrg = GetDeviceOrg();
-	if (!pDC->IsPrinting() && pointOrg != CPoint(0, 0))
-	{
-		// set windows clipping region
-		CRect rectClip;
-		pDC->GetClipBox(&rectClip);
-//		if (pointOrg.x > 0)
-//			{ rectClip.left = 0; rectClip.right = m_totalLog.cx; }
-//		if (pointOrg.y > 0)
-//			{ rectClip.top = 0; rectClip.bottom = -m_totalLog.cy; }
-//		pDC->IntersectClipRect(&rectClip);
-	}
-}
+//void CBigScrollView::OnPrepareDC(wxDC* pDC, CPrintInfo* pInfo) 
+//{
+//	CScrollView::OnPrepareDC(pDC, pInfo);
+//
+//	// avoid drawing in client area
+//	wxPoint pointOrg = GetDeviceOrg();
+//	if (!pDC->IsPrinting() && pointOrg != wxPoint(0, 0))
+//	{
+//		// set windows clipping region
+//		wxRect rectClip;
+//		pDC->GetClipBox(&rectClip);
+//	}
+//}
 
 /////////////////////////////////////////////////////////////////////////////
 // CBigScrollView drawing
@@ -74,17 +68,17 @@ void CBigScrollView::OnPrepareDC(CDC* pDC, CPrintInfo* pInfo)
 /////////////////////////////////////////////////////////////////////////////
 // CBigScrollView diagnostics
 
-#ifdef _DEBUG
-void CBigScrollView::AssertValid() const
-{
-	CScrollView::AssertValid();
-}
-
-void CBigScrollView::Dump(CDumpContext& dc) const
-{
-	CScrollView::Dump(dc);
-}
-#endif //_DEBUG
+//#ifdef _DEBUG
+//void CBigScrollView::AssertValid() const
+//{
+//	CScrollView::AssertValid();
+//}
+//
+//void CBigScrollView::Dump(CDumpContext& dc) const
+//{
+//	CScrollView::Dump(dc);
+//}
+//#endif //_DEBUG
 
 /////////////////////////////////////////////////////////////////////////////
 // CBigScrollView overrides
@@ -94,8 +88,8 @@ void CBigScrollView::SetScrollSizes(int nMapMode, SIZE sizeTotal, const SIZE& si
 	long cx, cy;
 
 	// save total size
-	ASSERT(sizeTotal.cx > 0 && sizeTotal.cy > 0);
-	CSize TotalSize = sizeTotal;
+	wxASSERT(sizeTotal.cx > 0 && sizeTotal.cy > 0);
+	wxSize TotalSize = sizeTotal;
 
 	// compute document size in logical unit
 	cx = sizeTotal.cx;
@@ -112,11 +106,11 @@ void CBigScrollView::SetScrollSizes(int nMapMode, SIZE sizeTotal, const SIZE& si
 	// if first time, init client center and offset
 	if (m_nMapMode == MM_NONE)
 	{
-		ASSERT(nMapMode > 0);
+		wxASSERT(nMapMode > 0);
 		int y = sizeTotal.cy / 2;
 		if (nMapMode != MM_TEXT) y = -y;
-		m_Center = CPoint(sizeTotal.cx / 2, y);
-		m_Offset = CPoint(cx / 2, cy / 2);
+		m_Center = wxPoint(sizeTotal.cx / 2, y);
+		m_Offset = wxPoint(cx / 2, cy / 2);
 		m_Ratio = TotalSize;
 	}
 	else SaveClientCenter();
@@ -125,8 +119,8 @@ void CBigScrollView::SetScrollSizes(int nMapMode, SIZE sizeTotal, const SIZE& si
 	m_Delta = 0;
 	if (nMapMode != MM_TEXT)
 	{
-		ASSERT(nMapMode > 0);
-		CPoint point(1, 1);
+		wxASSERT(nMapMode > 0);
+		wxPoint point(1, 1);
 		CWindowDC dc(NULL);
 		dc.SetMapMode(nMapMode);
 		dc.DPtoLP(&point);
@@ -136,9 +130,9 @@ void CBigScrollView::SetScrollSizes(int nMapMode, SIZE sizeTotal, const SIZE& si
 	SetRedraw(FALSE);
 //	CScrollView::SetScrollSizes(nMapMode, sizeTotal, sizePage, sizeLine);
 ////////////////////////////////////////////////////////////////////////////////
-	ASSERT(sizeTotal.cx >= 0 && sizeTotal.cy >= 0);
-	ASSERT(nMapMode > 0);
-	ASSERT(nMapMode != MM_ISOTROPIC && nMapMode != MM_ANISOTROPIC);
+	wxASSERT(sizeTotal.cx >= 0 && sizeTotal.cy >= 0);
+	wxASSERT(nMapMode > 0);
+	wxASSERT(nMapMode != MM_ISOTROPIC && nMapMode != MM_ANISOTROPIC);
 
 	int nOldMapMode = m_nMapMode;
 	m_nMapMode = nMapMode;
@@ -147,7 +141,7 @@ void CBigScrollView::SetScrollSizes(int nMapMode, SIZE sizeTotal, const SIZE& si
 	//BLOCK: convert logical coordinate space to device coordinates
 	{
 		CWindowDC dc(NULL);
-		ASSERT(m_nMapMode > 0);
+		wxASSERT(m_nMapMode > 0);
 		dc.SetMapMode(m_nMapMode);
 
 		// total size
@@ -166,7 +160,7 @@ void CBigScrollView::SetScrollSizes(int nMapMode, SIZE sizeTotal, const SIZE& si
 	} // release DC here
 
 	// now adjust device specific sizes
-	ASSERT(m_totalDev.cx >= 0 && m_totalDev.cy >= 0);
+	wxASSERT(m_totalDev.cx >= 0 && m_totalDev.cy >= 0);
 	if (m_pageDev.cx == 0)
 		m_pageDev.cx = m_totalDev.cx / 10;
 	if (m_pageDev.cy == 0)
@@ -194,11 +188,11 @@ void CBigScrollView::SetScaleToFitSize(SIZE sizeTotal)
 {
 	// do not use CScrollView::SetScaleToFit();
 	// this function change the size of the view !
-	CSize sizeClient, sizeSb;
+	wxSize sizeClient, sizeSb;
 	GetTrueClientSize(sizeClient, sizeSb);
 	if (m_nMapMode != MM_TEXT)
 	{
-		ASSERT(m_nMapMode > 0); // must be set
+		wxASSERT(m_nMapMode > 0); // must be set
 		CWindowDC dc(NULL);
 		dc.SetMapMode(m_nMapMode);
 		dc.DPtoLP(&sizeClient);
@@ -220,25 +214,25 @@ void CBigScrollView::SetScaleToFitSize(SIZE sizeTotal)
 	SetScrollSizes(m_nMapMode, sizeTotal);
 }
 
-void CBigScrollView::FillOutsideRect(CDC* pDC, CBrush* pBrush)
+void CBigScrollView::FillOutsideRect(wxDC* pDC, wxBrush* pBrush)
 {
-	CRect rectClient;
+	wxRect rectClient;
 	GetClientRect(&rectClient);
 
 	// if client area is larger than total device size
-	CPoint pointOrg = GetDeviceOrg();
-	if (pointOrg == CPoint(0, 0)) return;
+	wxPoint pointOrg = GetDeviceOrg();
+	if (pointOrg == wxPoint(0, 0)) return;
 	
 	pDC->SaveDC();
 
 	// draw the document background
-	CRect rectDoc(pointOrg, m_totalDev);
+	wxRect rectDoc(pointOrg, m_totalDev);
 	pDC->FillRect(rectDoc, pBrush);
 
 	// draw the client area
-	CRect draw;
-	//CBrush SideBrush(::GetSysColor(COLOR_APPWORKSPACE));
-	CBrush SideBrush(RGB(192,192,192));
+	wxRect draw;
+	//wxBrush SideBrush(::GetSysColor(COLOR_APPWORKSPACE));
+	wxBrush SideBrush(RGB(192,192,192));
 	draw.SetRect(rectClient.left, rectClient.top, rectDoc.left, rectClient.bottom);
 	if (!draw.IsRectEmpty()) pDC->FillRect(draw, &SideBrush);
 	draw.SetRect(rectDoc.right, rectClient.top, rectClient.right, rectClient.bottom);
@@ -270,23 +264,23 @@ void CBigScrollView::FillOutsideRect(CDC* pDC, CBrush* pBrush)
 	pDC->RestoreDC(-1);
 }
 
-CSize CBigScrollView::GetTotalSize() const
+wxSize CBigScrollView::GetTotalSize() const
 {
 	// return the true total size (scroll view + offset)
 	return m_TotalSize;
 }
 
-CPoint CBigScrollView::GetScrollPosition() const
+wxPoint CBigScrollView::GetScrollPosition() const
 {
 	// return the true scroll position (scroll view + offset)
-	CPoint point = CScrollView::GetScrollPosition();
+	wxPoint point = CScrollView::GetScrollPosition();
 	point += m_Offset;
 	return point;
 }
 
 void CBigScrollView::ScrollToPosition(POINT Point)
 {
-	CRect rect;
+	wxRect rect;
 	GetLogClientRect(&rect);
 	Point.x += rect.Width() / 2;
 	Point.y += rect.Height() / 2;
@@ -294,17 +288,17 @@ void CBigScrollView::ScrollToPosition(POINT Point)
 	CenterOnPoint(Point);
 }
 
-void CBigScrollView::CenterOnPoint(CPoint ptCenter)
+void CBigScrollView::CenterOnPoint(wxPoint ptCenter)
 {
 	// save scroll position & offset
-	CPoint savePosition = CScrollView::GetScrollPosition();
-	CPoint saveOffset = m_Offset;
+	wxPoint savePosition = CScrollView::GetScrollPosition();
+	wxPoint saveOffset = m_Offset;
 	
-	CRect rect;	GetClientRect(&rect);
-	CPoint Center = rect.CenterPoint();
+	wxRect rect;	GetClientRect(&rect);
+	wxPoint Center = rect.CenterPoint();
 	if (m_nMapMode != MM_TEXT)
 	{
-		ASSERT(m_nMapMode > 0); // must be set
+		wxASSERT(m_nMapMode > 0); // must be set
 		CWindowDC dc(NULL);
 		dc.SetMapMode(m_nMapMode);
 		dc.DPtoLP(&Center);
@@ -317,7 +311,7 @@ void CBigScrollView::CenterOnPoint(CPoint ptCenter)
 		Center.y = -Center.y;
 	}
 
-	CPoint Position(ptCenter.x - Center.x, ptCenter.y - Center.y);
+	wxPoint Position(ptCenter.x - Center.x, ptCenter.y - Center.y);
 
 	if (m_bExtendX)		// BigScrollSize < ScrollSize
 	{
@@ -406,10 +400,10 @@ void CBigScrollView::CenterOnPoint(CPoint ptCenter)
 	// if offset change, scroll window
 	if (saveOffset != m_Offset)
 	{
-		CSize sizeScroll(saveOffset.x - m_Offset.x, saveOffset.y - m_Offset.y);
+		wxSize sizeScroll(saveOffset.x - m_Offset.x, saveOffset.y - m_Offset.y);
 		if (m_nMapMode != MM_TEXT)
 		{
-			ASSERT(m_nMapMode > 0); // must be set
+			wxASSERT(m_nMapMode > 0); // must be set
 			CWindowDC dc(NULL);
 			dc.SetMapMode(m_nMapMode);
 			dc.LPtoDP(&sizeScroll);
@@ -423,10 +417,10 @@ void CBigScrollView::CenterOnPoint(CPoint ptCenter)
 /////////////////////////////////////////////////////////////////////////////
 // CBigScrollView helpers
 
-CPoint CBigScrollView::GetDeviceOrg() const
+wxPoint CBigScrollView::GetDeviceOrg() const
 {
 	// not zero if client area is larger than total device size
-	CPoint pointOrg = GetDeviceScrollPosition();
+	wxPoint pointOrg = GetDeviceScrollPosition();
 	if (pointOrg.x > 0) pointOrg.x = 0;
 	if (pointOrg.y > 0) pointOrg.y = 0;
 	pointOrg.x = abs(pointOrg.x);
@@ -434,15 +428,15 @@ CPoint CBigScrollView::GetDeviceOrg() const
 	return pointOrg;
 }
  
-void CBigScrollView::GetLogClientRect(CRect *pRect) const
+void CBigScrollView::GetLogClientRect(wxRect *pRect) const
 {
 	// return the true client rectangle (scroll view + offset)
 	GetClientRect(pRect);
-	CPoint point = (m_nMapMode != MM_NONE) ? GetDeviceScrollPosition(): CPoint(0, 0);
+	wxPoint point = (m_nMapMode != MM_NONE) ? GetDeviceScrollPosition(): wxPoint(0, 0);
 	pRect->OffsetRect(point.x, point.y);
 	if (m_nMapMode != MM_TEXT)
 	{
-		ASSERT(m_nMapMode > 0); // must be set
+		wxASSERT(m_nMapMode > 0); // must be set
 		CWindowDC dc(NULL);
 		dc.SetMapMode(m_nMapMode);
 		dc.DPtoLP(pRect);
@@ -450,14 +444,14 @@ void CBigScrollView::GetLogClientRect(CRect *pRect) const
 	pRect->OffsetRect(m_Offset);
 }
 
-CPoint CBigScrollView::GetLogPosition(CPoint Point) const
+wxPoint CBigScrollView::GetLogPosition(wxPoint Point) const
 {
 	// return the true point position (scroll view + offset)
-	CPoint point = (m_nMapMode != MM_NONE) ? GetDeviceScrollPosition(): CPoint(0, 0);
+	wxPoint point = (m_nMapMode != MM_NONE) ? GetDeviceScrollPosition(): wxPoint(0, 0);
 	Point += point;
 	if (m_nMapMode != MM_TEXT)
 	{
-		ASSERT(m_nMapMode > 0); // must be set
+		wxASSERT(m_nMapMode > 0); // must be set
 		CWindowDC dc(NULL);
 		dc.SetMapMode(m_nMapMode);
 		dc.DPtoLP(&Point);
@@ -466,10 +460,10 @@ CPoint CBigScrollView::GetLogPosition(CPoint Point) const
 	return Point;
 }
 
-CPoint CBigScrollView::GetLogClientCenter() const
+wxPoint CBigScrollView::GetLogClientCenter() const
 {
 	// return the true client center (scroll view + offset)
-	CRect rect;
+	wxRect rect;
 	GetLogClientRect(&rect);
 	return rect.CenterPoint();
 }
@@ -507,14 +501,14 @@ void CBigScrollView::OnSize(UINT nType, int cx, int cy)
 			RestoreClientCenter();
 }
 
-BOOL CBigScrollView::OnEraseBkgnd(CDC* pDC) 
+BOOL CBigScrollView::OnEraseBkgnd(wxDC* pDC) 
 {
-	CRect rectClient;
+	wxRect rectClient;
 	GetClientRect(&rectClient);
-	CBrush BackGround(m_colorBackGnd);
+	wxBrush BackGround(m_colorBackGnd);
 	// if client area is larger than total device size
-	CPoint pointOrg = GetDeviceOrg();
-	if (pointOrg != CPoint(0, 0))
+	wxPoint pointOrg = GetDeviceOrg();
+	if (pointOrg != wxPoint(0, 0))
 		FillOutsideRect(pDC, &BackGround);
 	else
 		pDC->FillRect(rectClient, &BackGround);
@@ -525,8 +519,8 @@ void CBigScrollView::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
 	if (m_bExtendX && nSBCode != SB_ENDSCROLL)
 	{
-		CPoint ScrollPos = CScrollView::GetScrollPosition();
-		CRect rect; GetLogClientRect(&rect);
+		wxPoint ScrollPos = CScrollView::GetScrollPosition();
+		wxRect rect; GetLogClientRect(&rect);
 		int Width = rect.Width();
 
 		CClientDC dc(this);
@@ -579,8 +573,8 @@ void CBigScrollView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
 	if (m_bExtendY && nSBCode != SB_ENDSCROLL)
 	{
-		CPoint ScrollPos = CScrollView::GetScrollPosition();
-		CRect rect; GetLogClientRect(&rect);
+		wxPoint ScrollPos = CScrollView::GetScrollPosition();
+		wxRect rect; GetLogClientRect(&rect);
 		int Height = rect.Height();
 
 		// reverse direction
@@ -713,9 +707,10 @@ BOOL CBigScrollView::OnScroll(UINT nScrollCode, UINT nPos, BOOL bDoScroll)
 		}
 	}
 
-	BOOL bResult = OnScrollBy(CSize(x - xOrig, y - yOrig), bDoScroll);
+	BOOL bResult = OnScrollBy(wxSize(x - xOrig, y - yOrig), bDoScroll);
 	if (bResult && bDoScroll)
 		UpdateWindow();
 
 	return bResult;
 }
+#endif

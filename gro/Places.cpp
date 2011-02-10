@@ -30,10 +30,10 @@ static int CALLBACK SortItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 // Places dialog
 
 
-static CArray<data,const data&>* rpData;
+static wxArray<data,const data&>* rpData;
 
-Places::Places(CGedtreeDoc* pDoc, CWnd* pParent /*=NULL*/)
-	: CDialog(Places::IDD, pParent),
+Places::Places(CGedtreeDoc* pDoc, wxWindow* pParent /*=NULL*/)
+	: wxDialog(Places::IDD, pParent),
 	m_pDoc(pDoc),
 	m_bFirst(true)
 {
@@ -46,7 +46,7 @@ Places::Places(CGedtreeDoc* pDoc, CWnd* pParent /*=NULL*/)
 
 void Places::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	wxDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(Places)
 	DDX_Control(pDX, IDC_EVENT, m_listEvent);
 	DDX_Control(pDX, IDC_PLACE, m_treePlace);
@@ -54,14 +54,14 @@ void Places::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(Places, CDialog)
+BEGIN_EVENT_TABLE(Places, wxDialog)
 	//{{AFX_MSG_MAP(Places)
 	ON_NOTIFY(TVN_SELCHANGED, IDC_PLACE, OnSelchangedPlace)
 	ON_NOTIFY(LVN_GETDISPINFO, IDC_EVENT, OnGetdispinfoEvent)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_EVENT, OnColumnclickEvent)
 	ON_WM_CLOSE()
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // Places message handlers
@@ -100,12 +100,12 @@ void Places::AddPlaces()
 	}
 }
 
-void Places::AddPlace(const CString& strPlace, int iIndi, int iEvt, int iAttr, int iFam, int iFamEvt)
+void Places::AddPlace(const wxString& strPlace, int iIndi, int iEvt, int iAttr, int iFam, int iFamEvt)
 {
 	if (strPlace.IsEmpty())
 		return;
 
-	CString strConglom(strPlace), strPart;
+	wxString strConglom(strPlace), strPart;
 	HTREEITEM hCurrent(TVI_ROOT);
 	while (SplitPlace(strConglom,strPart))
 	{
@@ -116,7 +116,7 @@ void Places::AddPlace(const CString& strPlace, int iIndi, int iEvt, int iAttr, i
 	}
 }
 
-bool Places::SplitPlace(CString& strConglom, CString& strPart)
+bool Places::SplitPlace(wxString& strConglom, wxString& strPart)
 {
 	int i = strConglom.ReverseFind(',');
 	if (i<0)
@@ -132,17 +132,17 @@ bool Places::SplitPlace(CString& strConglom, CString& strPart)
 			strPart = strConglom.Mid(i+1);
 		strConglom = strConglom.Left(i);
 	}
-	strConglom.TrimLeft();
-	strConglom.TrimRight();
-	strPart.TrimLeft();
-	strPart.TrimRight();
+	strConglom.Trim(false);
+	strConglom.Trim();
+	strPart.Trim(false);
+	strPart.Trim();
 	return !strPart.IsEmpty();
 }
 
 // Given a perent item (e.g., New York, USA), see if the
 // specified place (e.g., "Hamilton") exists as a child of the parent.
 // If so, return its handle, else insert it and return the new handle.
-HTREEITEM Places::FindPlace(HTREEITEM hParent, const CString& strPlace)
+HTREEITEM Places::FindPlace(HTREEITEM hParent, const wxString& strPlace)
 {
 	HTREEITEM hPrevChild = TVI_FIRST;
 	HTREEITEM hChild = m_treePlace.GetChildItem(hParent);
@@ -176,7 +176,7 @@ HTREEITEM Places::FindPlace(HTREEITEM hParent, const CString& strPlace)
 
 BOOL Places::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+	wxDialog::OnInitDialog();
 
 	InitList();
 
@@ -228,7 +228,7 @@ void Places::InitList()
 	m_listEvent.InsertColumn(lv.iSubItem,&lv);
 }
 
-void Places::CheckColumnWidth(int nCol, const CString& str)
+void Places::CheckColumnWidth(int nCol, const wxString& str)
 {
 	int nWidth = m_listEvent.GetStringWidth(str)+nColExtraWidth;
 	if (nWidth>nColMaxWidth)
@@ -244,7 +244,7 @@ void Places::OnOK()
 
 	DeleteData();
 
-	CDialog::OnOK();
+	wxDialog::OnOK();
 }
 
 void Places::OnSelchangedPlace(NMHDR* pNMHDR, LRESULT* pResult) 
@@ -281,8 +281,8 @@ void Places::FillEventList()
 		const evtattr& ea = pp->GetAt(i);
 		CIndividual& indi = m_pDoc->m_rIndividual[ea.iIndi];
 
-		CString strEvt;
-		CString strPlace;
+		wxString strEvt;
+		wxString strPlace;
 		CDateValue dv;
 		if (ea.iEvt>=0)
 		{
@@ -365,7 +365,7 @@ static int CALLBACK SortItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 	CIndividual& indi1 = pDoc->m_rIndividual[pp1->iIndi];
 	CIndividual& indi2 = pDoc->m_rIndividual[pp2->iIndi];
 
-	CString s1, s2;
+	wxString s1, s2;
 	switch (lParamSort) // iSubItem
 	{
 		case nColSurname:
@@ -419,5 +419,5 @@ void Places::OnColumnclickEvent(NMHDR* pNMHDR, LRESULT* pResult)
 void Places::OnClose() 
 {
 	OnOK();
-	CDialog::OnClose();
+	wxDialog::OnClose();
 }

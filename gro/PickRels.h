@@ -5,11 +5,11 @@
 /////////////////////////////////////////////////////////////////////////////
 // CPickRels dialog
 
-class CPickRels : public CDialog
+class CPickRels : public wxDialog
 {
 // Construction
 public:
-	CPickRels(CWnd* pParent = NULL);   // standard constructor
+	CPickRels(wxWindow* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CPickRels)
@@ -38,5 +38,5 @@ protected:
 	//{{AFX_MSG(CPickRels)
 		// NOTE: the ClassWizard will add member functions here
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };

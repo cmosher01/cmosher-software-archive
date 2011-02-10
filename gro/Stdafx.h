@@ -1,23 +1,53 @@
-#pragma once
+#ifndef STDAFX
+#define STDAFX 1
 
-#define VC_EXTRALEAN		// Exclude rarely-used stuff from Windows headers
 
-#include <afxwin.h>         // MFC core and standard components
-#include <afxext.h>         // MFC extensions
-#include <afxdtctl.h>		// MFC support for Internet Explorer 4 Common Controls
-#ifndef _AFX_NO_AFXCMN_SUPPORT
-#include <afxcmn.h>			// MFC support for Windows Common Controls
-#endif // _AFX_NO_AFXCMN_SUPPORT
+#define wxUSE_GUI 1
+#include <wx/wx.h>
+#include <wx/wxchar.h>
+#include <wx/docview.h>
+#include <wx/stdpaths.h>
+#include <wx/treebase.h>
+#include <wx/treectrl.h>
+#include <wx/listctrl.h>
+#include <wx/file.h>
+#include <wx/scrolwin.h>
+#include <wx/html/htmlwin.h>
 
-#include "afxtempl.h"
-#include "afxmt.h"
-#pragma warning(disable:4100) // C4100: unreferenced formal parameter
-#pragma warning(disable:4706) // C4706: assignment within conditional expression
-#pragma warning(disable:4701) // C4701: local variable 'var' may be used without having been initialized
-#pragma warning(disable:4786) // C4786: identifier was truncated to '255' characters in the browser information
+WX_DEFINE_ARRAY_INT(int,R_int);
+WX_DECLARE_STRING_HASH_MAP(wxString,CMapSS);
+WX_DECLARE_STRING_HASH_MAP(int,CMapSI);
 
-#include <stdio.h>
-#include <winsock2.h>
 
-//{{AFX_INSERT_LOCATION}}
-// Microsoft Visual C++ will insert additional declarations immediately before the previous line.
+
+typedef const wxChar* LPCTSTR;
+
+#define afx_msg
+#define AfxMessageBox(x) wxMessageBox(x)
+
+class CDataExchange
+{
+public:
+    bool m_bSaveAndValidate;
+    void Fail();
+};
+
+#define DDX_Control(pDX,ID,m)
+#define DDX_Radio(pDX,ID,m)
+#define DDX_CBIndex(pDX,ID,m)
+#define DDX_Text(pDX,ID,m)
+#define DDV_MinMaxInt(pDX,ID,mn,mx)
+
+#define HTREEITEM wxTreeItemId
+
+#define DECLARE_DYNCREATE(x)
+#define IMPLEMENT_DYNCREATE(x,y)
+
+
+
+
+
+#include "resource.h"
+
+
+#endif

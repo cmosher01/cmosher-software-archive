@@ -17,7 +17,7 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CMainFrame, CMDIFrameWnd)
 
-BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
+BEGIN_EVENT_TABLE(CMainFrame, CMDIFrameWnd)
 	//{{AFX_MSG_MAP(CMainFrame)
 	ON_WM_CREATE()
 	ON_WM_ACTIVATEAPP()
@@ -26,7 +26,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 	//}}AFX_MSG_MAP
 	// when user presses F1 key:
 	ON_COMMAND(ID_HELP, OnWebSite)
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 static UINT indicators[] =
 {
@@ -102,7 +102,7 @@ void CMainFrame::Dump(CDumpContext& dc) const
 #endif //_DEBUG
 
 BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle,
-	CWnd* pParentWnd, CCreateContext* pContext)
+	wxWindow* pParentWnd, CCreateContext* pContext)
 {
 	/*
 		Same as CFrameWnd::LoadFrame(), but class of main window
@@ -157,7 +157,7 @@ void CMainFrame::OnActivateApp(BOOL bActive, HTASK hTask)
 	CMDIFrameWnd::OnActivateApp(bActive, hTask);
 	if (bActive)
 	{
-		CWnd* pWnd = GetLastActivePopup();
+		wxWindow* pWnd = GetLastActivePopup();
 		if (pWnd) pWnd->BringWindowToTop();
 	}
 }

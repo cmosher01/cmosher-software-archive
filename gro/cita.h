@@ -12,8 +12,8 @@ public:
 	CGedtreeDoc* m_pDoc;
 
 	int m_iSource;
-	CString m_strPage;
-	CString m_strText;
+	wxString m_strPage;
+	wxString m_strText;
 	int m_nQuality;
 
 public:
@@ -23,9 +23,9 @@ public:
 
 	void Clear();
 	void Calc() { }
-	CString Display();
+	wxString Display();
 
-	void GetFromTree(const CString& strTypeTok);
+	void GetFromTree(const wxString& strTypeTok);
 	void PutToTree(HTREEITEM htiParent);
 };
 

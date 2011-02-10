@@ -10,7 +10,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CWebBrowser2
 
-IMPLEMENT_DYNCREATE(CWebBrowser2, CWnd)
+IMPLEMENT_DYNCREATE(CWebBrowser2, wxWindow)
 
 /////////////////////////////////////////////////////////////////////////////
 // CWebBrowser2 properties
@@ -99,9 +99,9 @@ BOOL CWebBrowser2::GetTopLevelContainer()
 	return result;
 }
 
-CString CWebBrowser2::GetType()
+wxString CWebBrowser2::GetType()
 {
-	CString result;
+	wxString result;
 	InvokeHelper(0xcd, DISPATCH_PROPERTYGET, VT_BSTR, (void*)&result, NULL);
 	return result;
 }
@@ -166,16 +166,16 @@ void CWebBrowser2::SetHeight(long nNewValue)
 		 nNewValue);
 }
 
-CString CWebBrowser2::GetLocationName()
+wxString CWebBrowser2::GetLocationName()
 {
-	CString result;
+	wxString result;
 	InvokeHelper(0xd2, DISPATCH_PROPERTYGET, VT_BSTR, (void*)&result, NULL);
 	return result;
 }
 
-CString CWebBrowser2::GetLocationURL()
+wxString CWebBrowser2::GetLocationURL()
 {
-	CString result;
+	wxString result;
 	InvokeHelper(0xd3, DISPATCH_PROPERTYGET, VT_BSTR, (void*)&result, NULL);
 	return result;
 }
@@ -218,9 +218,9 @@ VARIANT CWebBrowser2::GetProperty_(LPCTSTR Property_)
 	return result;
 }
 
-CString CWebBrowser2::GetName()
+wxString CWebBrowser2::GetName()
 {
-	CString result;
+	wxString result;
 	InvokeHelper(0x0, DISPATCH_PROPERTYGET, VT_BSTR, (void*)&result, NULL);
 	return result;
 }
@@ -232,16 +232,16 @@ long CWebBrowser2::GetHwnd()
 	return result;
 }
 
-CString CWebBrowser2::GetFullName()
+wxString CWebBrowser2::GetFullName()
 {
-	CString result;
+	wxString result;
 	InvokeHelper(0x190, DISPATCH_PROPERTYGET, VT_BSTR, (void*)&result, NULL);
 	return result;
 }
 
-CString CWebBrowser2::GetPath()
+wxString CWebBrowser2::GetPath()
 {
-	CString result;
+	wxString result;
 	InvokeHelper(0x191, DISPATCH_PROPERTYGET, VT_BSTR, (void*)&result, NULL);
 	return result;
 }
@@ -276,9 +276,9 @@ void CWebBrowser2::SetStatusBar(BOOL bNewValue)
 		 bNewValue);
 }
 
-CString CWebBrowser2::GetStatusText()
+wxString CWebBrowser2::GetStatusText()
 {
-	CString result;
+	wxString result;
 	InvokeHelper(0x194, DISPATCH_PROPERTYGET, VT_BSTR, (void*)&result, NULL);
 	return result;
 }

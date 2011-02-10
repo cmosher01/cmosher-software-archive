@@ -4,11 +4,11 @@
 /////////////////////////////////////////////////////////////////////////////
 // CEditSex dialog
 
-class CEditSex : public CDialog
+class CEditSex : public wxDialog
 {
 // Construction
 public:
-	CEditSex(CWnd* pParent = NULL);   // standard constructor
+	CEditSex(wxWindow* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CEditSex)
@@ -31,5 +31,5 @@ protected:
 	//{{AFX_MSG(CEditSex)
 		// NOTE: the ClassWizard will add member functions here
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };

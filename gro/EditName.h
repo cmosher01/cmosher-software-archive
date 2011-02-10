@@ -6,19 +6,19 @@
 /////////////////////////////////////////////////////////////////////////////
 // CEditName dialog
 
-class CEditName : public CDialog
+class CEditName : public wxDialog
 {
 // Construction
 public:
-	CEditName(CWnd* pParent = NULL);   // standard constructor
+	CEditName(wxWindow* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	CName m_name;
 	//{{AFX_DATA(CEditName)
 	enum { IDD = IDD_NAME };
-	CEdit	m_editName;
-	CStatic	m_staticSource;
-	CString	m_strName;
+	wxTextCtrl*	m_editName;
+	wxStaticText	m_staticSource;
+	wxString	m_strName;
 	//}}AFX_DATA
 
 
@@ -39,5 +39,5 @@ protected:
 	//{{AFX_MSG(CEditName)
 	afx_msg void OnChangesource();
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };

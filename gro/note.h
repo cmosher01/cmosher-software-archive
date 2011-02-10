@@ -6,7 +6,7 @@
 class CNote : public CGedRecord
 {
 public:
-	CString m_strNote;
+	wxString m_strNote;
 
 	CNote(CGedtreeDoc* pDoc = NULL, HTREEITEM hTreeItem = NULL);
 	CNote& operator=(const CNote& o);
@@ -16,5 +16,6 @@ public:
 	void GetFromTree();
 	void PutToTree();
 };
+WX_DECLARE_OBJARRAY(CNote,wxArrayCNote);
 
 #endif

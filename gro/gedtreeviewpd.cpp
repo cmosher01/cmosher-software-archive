@@ -16,14 +16,14 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-const CSize MARGIN(10,10);
+const wxSize MARGIN(10,10);
 
 /////////////////////////////////////////////////////////////////////////////
 // CGedtreeViewPD
 
 IMPLEMENT_DYNCREATE(CGedtreeViewPD, CGedtreeView)
 
-BEGIN_MESSAGE_MAP(CGedtreeViewPD, CGedtreeView)
+BEGIN_EVENT_TABLE(CGedtreeViewPD, CGedtreeView)
 	//{{AFX_MSG_MAP(CGedtreeViewPD)
 	ON_WM_SIZE()
 	ON_WM_DESTROY()
@@ -34,7 +34,7 @@ BEGIN_MESSAGE_MAP(CGedtreeViewPD, CGedtreeView)
 //	ON_COMMAND(ID_FILE_PRINT, CScrollView::OnFilePrint)
 //	ON_COMMAND(ID_FILE_PRINT_DIRECT, CScrollView::OnFilePrint)
 //	ON_COMMAND(ID_FILE_PRINT_PREVIEW, CScrollView::OnFilePrintPreview)
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CGedtreeViewPD construction/destruction
@@ -55,9 +55,9 @@ BOOL CGedtreeViewPD::PreCreateWindow(CREATESTRUCT& cs)
 	return CScrollView::PreCreateWindow(cs);
 }
 
-CString CGedtreeViewPD::GetWindowTitle()
+wxString CGedtreeViewPD::GetWindowTitle()
 {
-	CString s;
+	wxString s;
 	if (m_iIndi>=0)
 	{
 		CIndividual& indi = GetDocument()->m_rIndividual[m_iIndi];
@@ -70,7 +70,7 @@ CString CGedtreeViewPD::GetWindowTitle()
 /////////////////////////////////////////////////////////////////////////////
 // CGedtreeViewPD drawing
 
-void CGedtreeViewPD::OnDraw(CDC* pDC)
+void CGedtreeViewPD::OnDraw(wxDC* pDC)
 {
 	CGedtreeDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
@@ -90,42 +90,42 @@ void CGedtreeViewPD::OnDraw(CDC* pDC)
 	m_dy = -(tm.tmAscent+1);
 	m_dx = 3;
 
-	CRect rectClient;
+	wxRect rectClient;
 	GetClientRect(rectClient);
 
-	CRect r;
+	wxRect r;
 	r.top = 0;
 	r.left = 0;
 	r.bottom = r.right = 65535;
 	pDC->DrawText("Use + or - to change the number of generations.",r,DT_NOCLIP|DT_NOPREFIX);
 
-	CPoint pt(0,rectClient.bottom/2);
+	wxPoint pt(0,rectClient.bottom/2);
 	int dx = rectClient.Width()/(m_cGen+1);
 	int dy = rectClient.Height()/4;
 
 	DrawGen(pDC,pt,dx,dy,m_cGen,m_iIndi);
 }
 
-void CGedtreeViewPD::DrawGen(CDC* pDC, CPoint ptStart, int dx, int dy, int g, int iIndi)
+void CGedtreeViewPD::DrawGen(wxDC* pDC, wxPoint ptStart, int dx, int dy, int g, int iIndi)
 {
 	CIndividual* pIndi = NULL;
 	if (iIndi>=0)
 		pIndi = &GetDocument()->m_rIndividual[iIndi];
 
-	CPoint pt(ptStart), pt1;
+	wxPoint pt(ptStart), pt1;
 
 	pDC->MoveTo(pt);
 
 	DrawPerson(pDC,pt,pIndi);
 
-	pt += CSize(dx,0);
+	pt += wxSize(dx,0);
 	pDC->LineTo(pt);
 
 	if (!g) return;
 
 	int i;
 
-	pt1 = pt-CSize(0,dy);
+	pt1 = pt-wxSize(0,dy);
 	pDC->LineTo(pt1);
 	if (pIndi)
 		i = pIndi->m_iFather;
@@ -135,7 +135,7 @@ void CGedtreeViewPD::DrawGen(CDC* pDC, CPoint ptStart, int dx, int dy, int g, in
 
 	pDC->MoveTo(pt);
 
-	pt1 = pt+CSize(0,dy);
+	pt1 = pt+wxSize(0,dy);
 	pDC->LineTo(pt1);
 	if (pIndi)
 		i = pIndi->m_iMother;
@@ -144,11 +144,11 @@ void CGedtreeViewPD::DrawGen(CDC* pDC, CPoint ptStart, int dx, int dy, int g, in
 	DrawGen(pDC,pt1,dx,dy/2,g-1,i);
 }
 
-void CGedtreeViewPD::DrawPerson(CDC* pDC, CPoint pt, CIndividual* pIndi)
+void CGedtreeViewPD::DrawPerson(wxDC* pDC, wxPoint pt, CIndividual* pIndi)
 {
 	if (!pIndi) return;
 
-	CRect r;
+	wxRect r;
 	r.top = pt.y+m_dy;
 	r.left = pt.x+m_dx;
 	r.bottom = r.right = 65535;
@@ -165,12 +165,12 @@ BOOL CGedtreeViewPD::OnPreparePrinting(CPrintInfo* pInfo)
 	return DoPreparePrinting(pInfo);
 }
 
-void CGedtreeViewPD::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+void CGedtreeViewPD::OnBeginPrinting(wxDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
 	// TODO: add extra initialization before printing
 }
 
-void CGedtreeViewPD::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+void CGedtreeViewPD::OnEndPrinting(wxDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
 	// TODO: add cleanup after printing
 }
@@ -203,7 +203,7 @@ void CGedtreeViewPD::OnInitialUpdate()
 {
 	CGedtreeView::OnInitialUpdate();
 
-	CRect r;
+	wxRect r;
 	GetClientRect(&r);
 
 	if (m_bInit)
@@ -220,7 +220,7 @@ void CGedtreeViewPD::PositionControls(int cx, int cy)
 
 	SetRedraw(FALSE);
 
-	SetScrollSizes(MM_TEXT,CSize(cx,cy));
+	SetScrollSizes(MM_TEXT,wxSize(cx,cy));
 
 	SetRedraw();
 	Invalidate();
@@ -257,7 +257,7 @@ void CGedtreeViewPD::Reset(UINT flagsChanged)
 	Invalidate();
 }
 
-void CGedtreeViewPD::OnLButtonDblClk(UINT nFlags, CPoint point) 
+void CGedtreeViewPD::OnLButtonDblClk(UINT nFlags, wxPoint point) 
 {
 	// TODO: Add your message handler code here and/or call default
 	

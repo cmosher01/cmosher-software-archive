@@ -1,6 +1,6 @@
 // ChooseFont.cpp : implementation file
 //
-
+#if 0
 #include "stdafx.h"
 #include "gedtree.h"
 #include "ChooseFont.h"
@@ -16,7 +16,7 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CChooseFont, CFontDialog)
 
-CChooseFont::CChooseFont(LPLOGFONT lplfInitial, DWORD dwFlags, CDC* pdcPrinter, CWnd* pParentWnd) : 
+CChooseFont::CChooseFont(LPLOGFONT lplfInitial, DWORD dwFlags, wxDC* pdcPrinter, wxWindow* pParentWnd) : 
 	CFontDialog(lplfInitial, dwFlags|CF_ENABLETEMPLATE, pdcPrinter, pParentWnd),
 	m_bScale(true)
 {
@@ -24,8 +24,8 @@ CChooseFont::CChooseFont(LPLOGFONT lplfInitial, DWORD dwFlags, CDC* pdcPrinter, 
 	m_cf.lpTemplateName = MAKEINTRESOURCE(IDD_CHOOSEFONT);
 }
 
-BEGIN_MESSAGE_MAP(CChooseFont, CFontDialog)
-END_MESSAGE_MAP()
+BEGIN_EVENT_TABLE(CChooseFont, CFontDialog)
+END_EVENT_TABLE()
 
 BOOL CChooseFont::OnInitDialog() 
 {
@@ -39,3 +39,4 @@ void CChooseFont::OnOK()
 	m_bScale = !!IsDlgButtonChecked(IDC_SCALE);
 	CFontDialog::OnOK();
 }
+#endif

@@ -6,25 +6,25 @@
 /////////////////////////////////////////////////////////////////////////////
 // CEditDate dialog
 
-class CEditDate : public CDialog
+class CEditDate : public wxDialog
 {
 // Construction
 public:
-	CEditDate(CWnd* pParent = NULL);   // standard constructor
+	CEditDate(wxWindow* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	CDateValue m_dv;
 	//{{AFX_DATA(CEditDate)
 	enum { IDD = IDD_DATE };
-	CStatic	m_statShort;
-	CStatic	m_statLong;
-	CStatic	m_statGED;
-	CEdit	m_editPhrase;
-	CButton	m_buttonBefore;
-	CButton	m_buttonAfter;
-	CComboBox	m_comboMonth2;
-	CComboBox	m_comboMonth;
-	CString	m_strPhrase;
+	wxStaticText	m_statShort;
+	wxStaticText	m_statLong;
+	wxStaticText	m_statGED;
+	wxTextCtrl*	m_editPhrase;
+	wxButton*	m_buttonBefore;
+	wxButton*	m_buttonAfter;
+	wxComboBox*	m_comboMonth2;
+	wxComboBox*	m_comboMonth;
+	wxString	m_strPhrase;
 	int		m_nMonth;
 	int		m_nDay;
 	int		m_nYear;
@@ -68,5 +68,5 @@ protected:
 	afx_msg void OnCalendar(UINT nID);
 	afx_msg void OnCalendar2(UINT nID);
 
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };

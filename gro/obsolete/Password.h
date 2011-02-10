@@ -10,18 +10,18 @@
 /////////////////////////////////////////////////////////////////////////////
 // CPassword dialog
 
-class CPassword : public CDialog
+class CPassword : public wxDialog
 {
 // Construction
 public:
-	CPassword(CWnd* pParent = NULL);   // standard constructor
+	CPassword(wxWindow* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CPassword)
 	enum { IDD = IDD_PWD };
-	CString	m_strOldPwd;
-	CString	m_Pwd1;
-	CString	m_Pwd2;
+	wxString	m_strOldPwd;
+	wxString	m_Pwd1;
+	wxString	m_Pwd2;
 	//}}AFX_DATA
 
 
@@ -39,7 +39,7 @@ protected:
 	//{{AFX_MSG(CPassword)
 		// NOTE: the ClassWizard will add member functions here
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };
 
 //{{AFX_INSERT_LOCATION}}

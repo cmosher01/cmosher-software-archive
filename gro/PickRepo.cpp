@@ -25,8 +25,8 @@ static enum
 // CPickRepo dialog
 
 
-CPickRepo::CPickRepo(CGedtreeDoc* pDoc, CWnd* pParent, BOOL bEdit)
-	: CDialog(CPickRepo::IDD, pParent),
+CPickRepo::CPickRepo(CGedtreeDoc* pDoc, wxWindow* pParent, BOOL bEdit)
+	: wxDialog(CPickRepo::IDD, pParent),
 	m_pDoc(pDoc),
 	m_iRepository(-1),
 	m_bEdit(bEdit)
@@ -39,7 +39,7 @@ CPickRepo::CPickRepo(CGedtreeDoc* pDoc, CWnd* pParent, BOOL bEdit)
 
 void CPickRepo::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	wxDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CPickRepo)
 	DDX_Control(pDX, IDC_REPOS, m_listRepo);
 	//}}AFX_DATA_MAP
@@ -85,7 +85,7 @@ void CPickRepo::InitList()
 	Reset();
 }
 
-void CPickRepo::CheckColumnWidth(int nCol, const CString& str)
+void CPickRepo::CheckColumnWidth(int nCol, const wxString& str)
 {
 	int nWidth = m_listRepo.GetStringWidth(str)+nColExtraWidth;
 	if (nWidth>nColMaxWidth)
@@ -121,14 +121,14 @@ void CPickRepo::Reset()
 	m_listRepo.EnsureVisible(m_iRepository,FALSE);
 }
 
-BEGIN_MESSAGE_MAP(CPickRepo, CDialog)
+BEGIN_EVENT_TABLE(CPickRepo, wxDialog)
 	//{{AFX_MSG_MAP(CPickRepo)
 	ON_BN_CLICKED(IDC_NEW, OnNew)
 	ON_NOTIFY(LVN_GETDISPINFO, IDC_REPOS, OnGetdispinfoRepos)
 	ON_BN_CLICKED(IDC_EDIT, OnEdit)
 	ON_NOTIFY(NM_DBLCLK, IDC_REPOS, OnDblclkRepos)
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CPickRepo message handlers
@@ -234,7 +234,7 @@ void CPickRepo::OnDblclkRepos(NMHDR* pNMHDR, LRESULT* pResult)
 
 BOOL CPickRepo::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+	wxDialog::OnInitDialog();
 	SetIcon(theApp.LoadIcon(IDD_REPO),TRUE);
 	return TRUE;
 }

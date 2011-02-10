@@ -3,37 +3,37 @@
 
 #include "sour.h"
 //{{AFX_INCLUDES()
-#include "webbrowser.h"
+//#include "webbrowser.h"
 //}}AFX_INCLUDES
 
 /////////////////////////////////////////////////////////////////////////////
 // CEditSource dialog
 
-class CEditSource : public CDialog
+class CEditSource : public wxDialog
 {
 // Construction
 public:
-	CEditSource(CWnd* pParent = NULL);   // standard constructor
+	CEditSource(wxWindow* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	CSource m_sour;
-	CString m_strDefaultDir;
+	wxString m_strDefaultDir;
 	//{{AFX_DATA(CEditSource)
 	enum { IDD = IDD_SOURCE };
-	CTabCtrl	m_tab;
-	CEdit	m_editPubl;
-	CEdit	m_editTitle;
-	CEdit	m_editAuthor;
-	CEdit	m_editText;
-	CButton	m_buttonOK;
-	CButton	m_buttonCancel;
-	CButton	m_buttonDelete;
-	CStatic	m_staticRepo;
-	CString	m_strAuthor;
-	CString	m_strPubl;
-	CString	m_strText;
-	CString	m_strTitle;
-	CWebBrowser	m_ie;
+//	CTabCtrl	m_tab;
+	wxTextCtrl*	m_editPubl;
+	wxTextCtrl*	m_editTitle;
+	wxTextCtrl*	m_editAuthor;
+	wxTextCtrl*	m_editText;
+	wxButton*	m_buttonOK;
+	wxButton*	m_buttonCancel;
+	wxButton*	m_buttonDelete;
+	wxStaticText	m_staticRepo;
+	wxString	m_strAuthor;
+	wxString	m_strPubl;
+	wxString	m_strText;
+	wxString	m_strTitle;
+	wxHtmlWindow* m_ie;
 	//}}AFX_DATA
 
 
@@ -54,7 +54,7 @@ protected:
 	void OnRefresh();
 	void SetDefaultDir();
 	void RestoreDefaultDir();
-	void SetDir(const CString& s);
+	void SetDir(const wxString& s);
 
 	// Generated message map functions
 	//{{AFX_MSG(CEditSource)
@@ -65,7 +65,7 @@ protected:
 	afx_msg void OnNewWindow2Ie(LPDISPATCH FAR* ppDisp, BOOL FAR* Cancel);
 	afx_msg void OnSelchangeTab(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDestroy();
-	DECLARE_EVENTSINK_MAP()
+//	DECLARE_EVENTSINK_MAP()
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };

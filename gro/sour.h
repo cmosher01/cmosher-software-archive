@@ -6,10 +6,10 @@
 class CSource : public CGedRecord
 {
 public:
-	CString m_strAuthor;
-	CString m_strTitle;
-	CString m_strPublish;
-	CString m_strText;
+	wxString m_strAuthor;
+	wxString m_strTitle;
+	wxString m_strPublish;
+	wxString m_strText;
 	int m_iRepository;
 
 	CSource(CGedtreeDoc* pDoc = NULL, HTREEITEM hTreeItem = NULL);
@@ -18,17 +18,18 @@ public:
 	void GetFromTree();
 	void Calc() { }
 	void PutToTree();
-	CString GetDisplay();
-	CString GetWebPage(CMemFile& tpl, const CString& sDocID = "");
-	CString GetRTF(CMemFile& tpl);
-	CString TextBlock(const CString& strText);
-	CString WordBreak(const CString& strText);
-	CString RTFTextBlock(const CString& strText);
+	wxString GetDisplay();
+	wxString GetWebPage(wxFile& tpl, const wxString& sDocID = "");
+	wxString GetRTF(wxFile& tpl);
+	wxString TextBlock(const wxString& strText);
+	wxString WordBreak(const wxString& strText);
+	wxString RTFTextBlock(const wxString& strText);
 	void ConvertToHTML();
-	CString ConvertLine(const CString& sline, const CString& strRest, bool& in_table, int& ccol);
-	CString ConvertTD(const CString& s, int ccol);
-	int CountColumns(const CString& sline, const CString& srest);
-	int CountColumnsRow(const CString& s);
+	wxString ConvertLine(const wxString& sline, const wxString& strRest, bool& in_table, int& ccol);
+	wxString ConvertTD(const wxString& s, int ccol);
+	int CountColumns(const wxString& sline, const wxString& srest);
+	int CountColumnsRow(const wxString& s);
 };
+WX_DECLARE_OBJARRAY(CSource,wxArrayCSource);
 
 #endif

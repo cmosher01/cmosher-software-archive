@@ -16,8 +16,8 @@ static char THIS_FILE[] = __FILE__;
 // CEditRepo dialog
 
 
-CEditRepo::CEditRepo(CWnd* pParent /*=NULL*/)
-	: CDialog(CEditRepo::IDD, pParent)
+CEditRepo::CEditRepo(wxWindow* pParent /*=NULL*/)
+	: wxDialog(CEditRepo::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CEditRepo)
 	m_strName = _T("");
@@ -28,7 +28,7 @@ CEditRepo::CEditRepo(CWnd* pParent /*=NULL*/)
 
 void CEditRepo::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	wxDialog::DoDataExchange(pDX);
 
 	if (!pDX->m_bSaveAndValidate)
 	{
@@ -59,11 +59,11 @@ void CEditRepo::ValueToData()
 	m_strAddr = m_repo.m_strAddr;
 }
 
-BEGIN_MESSAGE_MAP(CEditRepo, CDialog)
+BEGIN_EVENT_TABLE(CEditRepo, wxDialog)
 	//{{AFX_MSG_MAP(CEditRepo)
 	ON_BN_CLICKED(IDC_DELETE, OnDelete)
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CEditRepo message handlers
@@ -94,7 +94,7 @@ void CEditRepo::OnDelete()
 
 BOOL CEditRepo::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+	wxDialog::OnInitDialog();
 	SetIcon(theApp.LoadIcon(IDD),TRUE);
 	return TRUE;
 }

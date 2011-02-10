@@ -4,17 +4,17 @@
 /////////////////////////////////////////////////////////////////////////////
 // CEditSubm dialog
 
-class CEditSubm : public CDialog
+class CEditSubm : public wxDialog
 {
 // Construction
 public:
-	CEditSubm(CWnd* pParent = NULL);   // standard constructor
+	CEditSubm(wxWindow* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CEditSubm)
 	enum { IDD = IDD_SUBM };
-	CString	m_strName;
-	CString	m_strAddr;
+	wxString	m_strName;
+	wxString	m_strAddr;
 	//}}AFX_DATA
 
 
@@ -34,5 +34,5 @@ protected:
 	//{{AFX_MSG(CEditSubm)
 	virtual void OnOK();
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };

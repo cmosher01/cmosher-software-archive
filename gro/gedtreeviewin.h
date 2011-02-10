@@ -19,35 +19,35 @@ protected: // create from serialization only
 public:
 	BOOL m_bInit;
 	INT m_iIndi;
-	CRect m_rectName;
-	CRect m_rectSex;
-	CTreeCtrl m_treePedigree;
+	wxRect m_rectName;
+	wxRect m_rectSex;
+	wxTreeCtrl m_treePedigree;
 	CListCtrl m_listPartner;
 	CListCtrl m_listEvent;
 	CListCtrl m_listAttr;
-	CButton m_buttonNew;
-	CButton m_buttonName;
-	CButton m_buttonSex;
+	wxButton* m_buttonNew;
+	wxButton* m_buttonName;
+	wxButton* m_buttonSex;
 	BOOL m_bFontTooHigh;
 	BOOL m_bBigFontTooHigh;
-	CTabCtrl m_tab;
+//	CTabCtrl m_tab;
 
 // Operations
 public:
 	void Init(int iIndi);
-	CString GetWindowTitle();
+	wxString GetWindowTitle();
 
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CGedtreeViewIN)
 	public:
-	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
+	virtual void OnDraw(wxDC* pDC);  // overridden to draw this view
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	virtual void OnInitialUpdate();
 	protected:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
-	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
-	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
+	virtual void OnBeginPrinting(wxDC* pDC, CPrintInfo* pInfo);
+	virtual void OnEndPrinting(wxDC* pDC, CPrintInfo* pInfo);
 	//}}AFX_VIRTUAL
 
 // Implementation
@@ -65,9 +65,9 @@ protected:
 	void FillEvents();
 	void FillPartners();
 	void FillAttributes();
-	void CheckColumnWidth(int nCol, const CString& str, BOOL bForce = FALSE);
-	void CheckPColumnWidth(int nCol, const CString& str, BOOL bForce = FALSE);
-	void CheckAColumnWidth(int nCol, const CString& str, BOOL bForce = FALSE);
+	void CheckColumnWidth(int nCol, const wxString& str, BOOL bForce = FALSE);
+	void CheckPColumnWidth(int nCol, const wxString& str, BOOL bForce = FALSE);
+	void CheckAColumnWidth(int nCol, const wxString& str, BOOL bForce = FALSE);
 	void DeletePartnerData();
 	void DeleteEventData();
 	void DeleteAttrData();
@@ -78,7 +78,7 @@ protected:
 	void NewEvent(CIndividual& indi);
 	void NewEvent(CFamily& fami);
 	void NewAttr(CIndividual& indi);
-	void InitButton(CButton& button, const CString& strName, int nID);
+	void InitButton(wxButton& button, const wxString& strName, int nID);
 
 // Generated message map functions
 protected:
@@ -88,7 +88,7 @@ protected:
 	afx_msg void OnViewDroplinechart();
 	afx_msg void OnViewOpenpedigree();
 	afx_msg void OnViewIndi();
-	afx_msg void OnUpdateViewIndi(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateViewIndi(wxUpdateUIEvent& pCmdUI);
 	//}}AFX_MSG
 	afx_msg void OnExpandPedigree(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnSelectPedigree(NMHDR* pNMHDR, LRESULT* pResult);
@@ -102,6 +102,6 @@ protected:
 	afx_msg void OnName();
 	afx_msg void OnSex();
 
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };
 /////////////////////////////////////////////////////////////////////////////

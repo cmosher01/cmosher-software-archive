@@ -20,8 +20,8 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-const CSize MARGIN(10,10);
-const CRect TAB_MARGIN(1,22,2,2);
+const wxSize MARGIN(10,10);
+const wxRect TAB_MARGIN(1,22,2,2);
 
 static const int nColExtraWidth(15);
 static enum
@@ -48,23 +48,23 @@ static enum
 struct partner
 {
 	int iIndi, iEvent, iFami;
-	CString strName, strEvt;
-	partner(int i, int j, const CString& s, int iF = -1, const CString& sEvt = _T("")):
+	wxString strName, strEvt;
+	partner(int i, int j, const wxString& s, int iF = -1, const wxString& sEvt = _T("")):
 		iIndi(i), iEvent(j), strName(s), iFami(iF), strEvt(sEvt) { }
 };
 struct evtData
 {
 	int iEvent;
-	CString strCita;
-	CString strSort;
-	evtData(int i, const CString& sCita, const CString& sSort):
+	wxString strCita;
+	wxString strSort;
+	evtData(int i, const wxString& sCita, const wxString& sSort):
 		iEvent(i), strCita(sCita), strSort(sSort) { }
 };
 struct attrData
 {
 	int iAttr;
-	CString strSort;
-	attrData(int i, const CString& sSort):
+	wxString strSort;
+	attrData(int i, const wxString& sSort):
 		iAttr(i), strSort(sSort) { }
 };
 
@@ -84,7 +84,7 @@ static int CALLBACK SortAItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort
 
 IMPLEMENT_DYNCREATE(CGedtreeViewIN, CGedtreeView)
 
-BEGIN_MESSAGE_MAP(CGedtreeViewIN, CGedtreeView)
+BEGIN_EVENT_TABLE(CGedtreeViewIN, CGedtreeView)
 	//{{AFX_MSG_MAP(CGedtreeViewIN)
 	ON_WM_SIZE()
 	ON_WM_DESTROY()
@@ -108,7 +108,7 @@ BEGIN_MESSAGE_MAP(CGedtreeViewIN, CGedtreeView)
 	ON_NOTIFY(TCN_SELCHANGE, 1027, OnSelectTab)
 	ON_BN_CLICKED(1029, OnName)
 	ON_BN_CLICKED(1030, OnSex)
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CGedtreeViewIN construction/destruction
@@ -130,9 +130,9 @@ BOOL CGedtreeViewIN::PreCreateWindow(CREATESTRUCT& cs)
 	return CScrollView::PreCreateWindow(cs);
 }
 
-CString CGedtreeViewIN::GetWindowTitle()
+wxString CGedtreeViewIN::GetWindowTitle()
 {
-	CString s;
+	wxString s;
 	if (m_iIndi>=0)
 	{
 		CIndividual& indi = GetDocument()->m_rIndividual[m_iIndi];
@@ -144,14 +144,14 @@ CString CGedtreeViewIN::GetWindowTitle()
 /////////////////////////////////////////////////////////////////////////////
 // CGedtreeViewIN drawing
 
-void CGedtreeViewIN::OnDraw(CDC* pDC)
+void CGedtreeViewIN::OnDraw(wxDC* pDC)
 {
 	CGedtreeDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 
 	CIndividual& indi = GetDocument()->m_rIndividual[m_iIndi];
 
-	CRect rectClient;
+	wxRect rectClient;
 	GetClientRect(rectClient);
 	COLORREF colorBk = ::GetSysColor(COLOR_3DFACE);
 	pDC->FillSolidRect(rectClient,colorBk);
@@ -164,7 +164,7 @@ void CGedtreeViewIN::OnDraw(CDC* pDC)
 	nDrawFormat |= (m_bFontTooHigh) ? DT_TOP : DT_VCENTER;
 	nDrawFormatBig |= (m_bBigFontTooHigh) ? DT_TOP : DT_VCENTER;
 
-	CRect r(m_rectName);
+	wxRect r(m_rectName);
 	pDC->SelectObject(&theApp.m_fontBigBold);
 	pDC->DrawText(indi.Name(),r,nDrawFormatBig);
 
@@ -182,12 +182,12 @@ BOOL CGedtreeViewIN::OnPreparePrinting(CPrintInfo* pInfo)
 	return DoPreparePrinting(pInfo);
 }
 
-void CGedtreeViewIN::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+void CGedtreeViewIN::OnBeginPrinting(wxDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
 	// TODO: add extra initialization before printing
 }
 
-void CGedtreeViewIN::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+void CGedtreeViewIN::OnEndPrinting(wxDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
 	// TODO: add cleanup after printing
 }
@@ -218,8 +218,8 @@ void CGedtreeViewIN::Init(int iIndi)
 
 void CGedtreeViewIN::AddParents(HTREEITEM htvi, int iIndi, int cDepth)
 {
-	CString strFather;//("Father:   ");
-	CString strMother;//("Mother:  ");
+	wxString strFather;//("Father:   ");
+	wxString strMother;//("Mother:  ");
 	int iFather(-1);
 	int iMother(-1);
 
@@ -302,7 +302,7 @@ void CGedtreeViewIN::OnSelectPedigree(NMHDR* pNMHDR, LRESULT* pResult)
 void CGedtreeViewIN::OnSelectTab(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	*pResult = 0;
-	CRect r;
+	wxRect r;
 	GetClientRect(&r);
 	PositionControls(r.right,r.bottom);
 }
@@ -311,29 +311,29 @@ void CGedtreeViewIN::InitCtrls()
 {
 	DWORD styleBase = WS_VISIBLE;
 	m_listEvent.Create(styleBase|LVS_REPORT|LVS_SINGLESEL,
-		CRect(0,0,1,1),this,1025);
+		wxRect(0,0,1,1),this,1025);
 	m_listPartner.Create(styleBase|LVS_REPORT|LVS_SINGLESEL,
-		CRect(0,0,1,1),this,1026);
+		wxRect(0,0,1,1),this,1026);
 	m_treePedigree.Create(styleBase|TVS_HASLINES|TVS_HASBUTTONS|TVS_LINESATROOT,
-		CRect(0,0,1,1),this,1024);
+		wxRect(0,0,1,1),this,1024);
 	m_listAttr.Create(styleBase|LVS_REPORT|LVS_SINGLESEL,
-		CRect(0,0,1,1),this,1028);
-	m_tab.Create(WS_VISIBLE,CRect(0,0,1,1),this,1027);
+		wxRect(0,0,1,1),this,1028);
+//	m_tab.Create(WS_VISIBLE,wxRect(0,0,1,1),this,1027);
 
 	m_listEvent.SendMessage(LVM_SETUNICODEFORMAT,TRUE,0);
 	m_listPartner.SendMessage(LVM_SETUNICODEFORMAT,TRUE,0);
 	m_listAttr.SendMessage(LVM_SETUNICODEFORMAT,TRUE,0);
 
-	TC_ITEM tci;
-	tci.mask = TCIF_TEXT;
-	tci.pszText = _T("Events");
-	m_tab.InsertItem(nTabEvent,&tci);
-	tci.pszText = _T("Attributes");
-	m_tab.InsertItem(nTabAttr,&tci);
-	tci.pszText = _T("Ancestors");
-	m_tab.InsertItem(nTabAnc,&tci);
-	tci.pszText = _T("Partnerships");
-	m_tab.InsertItem(nTabPart,&tci);
+//	TC_ITEM tci;
+//	tci.mask = TCIF_TEXT;
+//	tci.pszText = _T("Events");
+//	m_tab.InsertItem(nTabEvent,&tci);
+//	tci.pszText = _T("Attributes");
+//	m_tab.InsertItem(nTabAttr,&tci);
+//	tci.pszText = _T("Ancestors");
+//	m_tab.InsertItem(nTabAnc,&tci);
+//	tci.pszText = _T("Partnerships");
+//	m_tab.InsertItem(nTabPart,&tci);
 
 
 	InitButton(m_buttonName,"name",1029);
@@ -406,11 +406,11 @@ void CGedtreeViewIN::InitCtrls()
 	m_listPartner.InsertColumn(lv.iSubItem,&lv);
 }
 
-void CGedtreeViewIN::InitButton(CButton& button, const CString& strName, int nID)
+void CGedtreeViewIN::InitButton(wxButton& button, const wxString& strName, int nID)
 {
-	CFont* pFontButton = CFont::FromHandle((HFONT)::GetStockObject(DEFAULT_GUI_FONT));
+	wxFont* pFontButton = wxFont::FromHandle((HFONT)::GetStockObject(DEFAULT_GUI_FONT));
 
-	button.Create(strName,WS_VISIBLE,CRect(0,0,1,1),this,nID);
+	button.Create(strName,WS_VISIBLE,wxRect(0,0,1,1),this,nID);
 	button.SetFont(pFontButton);
 }
 
@@ -420,7 +420,7 @@ void CGedtreeViewIN::OnInitialUpdate()
 
 	if (!m_bInit) InitCtrls();
 
-	CRect r;
+	wxRect r;
 	GetClientRect(&r);
 
 	if (m_bInit)
@@ -467,7 +467,7 @@ void CGedtreeViewIN::FillEvents()
 	m_listEvent.SortItems(SortItems,0);
 }
 
-void CGedtreeViewIN::CheckColumnWidth(int nCol, const CString& str, BOOL bForce)
+void CGedtreeViewIN::CheckColumnWidth(int nCol, const wxString& str, BOOL bForce)
 {
 	int nWidth = m_listEvent.GetStringWidth(str)+nColExtraWidth;
 	if (bForce || nWidth>m_listEvent.GetColumnWidth(nCol))
@@ -484,7 +484,7 @@ void CGedtreeViewIN::FillPartners()
 
 	CIndividual& indi = GetDocument()->m_rIndividual[m_iIndi];
 
-	CArray<int,int> riSpouseToFamily;
+	wxArray<int,int> riSpouseToFamily;
 	indi.GetSortedSpouseFamilies(riSpouseToFamily);
 
 	LV_ITEM lvi;
@@ -501,7 +501,7 @@ void CGedtreeViewIN::FillPartners()
 			iSpouse = fami.m_iWife;
 		else
 		{
-			ASSERT(fami.m_iWife==m_iIndi);
+			wxASSERT(fami.m_iWife==m_iIndi);
 			iSpouse = fami.m_iHusband;
 		}
 		if (iSpouse>=0)
@@ -603,7 +603,7 @@ void CGedtreeViewIN::FillPartners()
 			lvi.lParam = (LONG)new partner(-1,-1,_T("    children:"));
 			m_listPartner.InsertItem(&lvi);
 
-			CArray<int,int> riChild;
+			wxArray<int,int> riChild;
 			fami.GetSortedChildren(riChild);
 
 			for (j = 0; j<riChild.GetSize(); j++)
@@ -662,7 +662,7 @@ void CGedtreeViewIN::FillPartners()
 	}
 }
 
-void CGedtreeViewIN::CheckPColumnWidth(int nCol, const CString& str, BOOL bForce)
+void CGedtreeViewIN::CheckPColumnWidth(int nCol, const wxString& str, BOOL bForce)
 {
 	int nWidth = m_listPartner.GetStringWidth(str)+nColExtraWidth;
 	if (bForce || nWidth>m_listPartner.GetColumnWidth(nCol))
@@ -701,7 +701,7 @@ void CGedtreeViewIN::FillAttributes()
 	m_listAttr.SortItems(SortAItems,0);
 }
 
-void CGedtreeViewIN::CheckAColumnWidth(int nCol, const CString& str, BOOL bForce)
+void CGedtreeViewIN::CheckAColumnWidth(int nCol, const wxString& str, BOOL bForce)
 {
 	int nWidth = m_listAttr.GetStringWidth(str)+nColExtraWidth;
 	if (bForce || nWidth>m_listAttr.GetColumnWidth(nCol))
@@ -925,19 +925,19 @@ void CGedtreeViewIN::PositionControls(int cx, int cy)
 
 	SetRedraw(FALSE);
 
-	SetScrollSizes(MM_TEXT,CSize(cx,cy));
+	SetScrollSizes(MM_TEXT,wxSize(cx,cy));
 
-	CRect rectClient;
+	wxRect rectClient;
 	GetClientRect(rectClient);
 
-	CRect rectSub(rectClient);
+	wxRect rectSub(rectClient);
 	rectSub.DeflateRect(MARGIN);
 
-	CRect r(rectSub);
-	CRect rect1(rectSub);
+	wxRect r(rectSub);
+	wxRect rect1(rectSub);
 
 	CIndividual& indi = GetDocument()->m_rIndividual[m_iIndi];
-	CDC dc;
+	wxDC dc;
 	dc.CreateCompatibleDC(NULL);
 
 	r.right = r.left + 46;
@@ -984,40 +984,40 @@ void CGedtreeViewIN::PositionControls(int cx, int cy)
 	rect2.right -= 27;
 	rect3.right -= 27;
 */
-	m_tab.MoveWindow(rect1);
+//	m_tab.MoveWindow(rect1);
 
 	rect1.left += TAB_MARGIN.left;
 	rect1.top += TAB_MARGIN.top;
 	rect1.right -= TAB_MARGIN.right;
 	rect1.bottom -= TAB_MARGIN.bottom;
 
-	CRect rectHide(-10,-10,-11,-11);
-	CRect rectEvent(rectHide);
-	CRect rectAttr(rectHide);
-	CRect rectPedigree(rectHide);
-	CRect rectPartner(rectHide);
-	switch (m_tab.GetCurSel())
-	{
-	case nTabEvent:
-		rectEvent = rect1;
-		break;
-	case nTabAttr:
-		rectAttr = rect1;
-		break;
-	case nTabAnc:
-		rectPedigree = rect1;
-		break;
-	case nTabPart:
-		rectPartner = rect1;
-		break;
-	default:
-		ASSERT(FALSE);
-	}
-
-	m_treePedigree.MoveWindow(rectPedigree);
-	m_listEvent.MoveWindow(rectEvent);
-	m_listPartner.MoveWindow(rectPartner);
-	m_listAttr.MoveWindow(rectAttr);
+//	wxRect rectHide(-10,-10,-11,-11);
+//	wxRect rectEvent(rectHide);
+//	wxRect rectAttr(rectHide);
+//	wxRect rectPedigree(rectHide);
+//	wxRect rectPartner(rectHide);
+//	switch (m_tab.GetCurSel())
+//	{
+//	case nTabEvent:
+//		rectEvent = rect1;
+//		break;
+//	case nTabAttr:
+//		rectAttr = rect1;
+//		break;
+//	case nTabAnc:
+//		rectPedigree = rect1;
+//		break;
+//	case nTabPart:
+//		rectPartner = rect1;
+//		break;
+//	default:
+//		wxASSERT(FALSE);
+//	}
+//
+//	m_treePedigree.MoveWindow(rectPedigree);
+//	m_listEvent.MoveWindow(rectEvent);
+//	m_listPartner.MoveWindow(rectPartner);
+//	m_listAttr.MoveWindow(rectAttr);
 
 	SetRedraw();
 	Invalidate();
@@ -1066,7 +1066,7 @@ void CGedtreeViewIN::Reset(UINT flagsChanged)
 		m_listPartner.SetFont(&theApp.m_font);
 		m_treePedigree.SetFont(&theApp.m_font);
 
-		CFont* pFontButton = CFont::FromHandle((HFONT)::GetStockObject(DEFAULT_GUI_FONT));
+		wxFont* pFontButton = wxFont::FromHandle((HFONT)::GetStockObject(DEFAULT_GUI_FONT));
 		m_tab.SetFont(pFontButton);
 
 		CheckColumnWidth(nColEvent,"Event",TRUE);
@@ -1079,7 +1079,7 @@ void CGedtreeViewIN::Reset(UINT flagsChanged)
 		CheckPColumnWidth(nColPDate,"Date",TRUE);
 		CheckPColumnWidth(nColPPlace,"Place",TRUE);
 
-		CRect r;
+		wxRect r;
 		GetClientRect(&r);
 		PositionControls(r.right,r.bottom);
 		SetRedraw(FALSE);
@@ -1304,7 +1304,7 @@ void CGedtreeViewIN::OnViewDroplinechart()
 	CIndividual& indi = GetDocument()->m_rIndividual[m_iIndi];
 
 	POSITION pos = theApp.GetFirstDocTemplatePosition();
-	CDocTemplate* p = theApp.GetNextDocTemplate(pos); // DL tmpl
+	wxDocTemplate* p = theApp.GetNextDocTemplate(pos); // DL tmpl
 	CFrameWnd* pFrame = p->CreateNewFrame(GetDocument(),NULL);
 	p->InitialUpdateFrame(pFrame,GetDocument());
 	CGedtreeViewDL* pDL = (CGedtreeViewDL*)pFrame->GetActiveView();
@@ -1316,7 +1316,7 @@ void CGedtreeViewIN::OnViewDroplinechart()
 void CGedtreeViewIN::OnViewOpenpedigree() 
 {
 	POSITION pos = theApp.GetFirstDocTemplatePosition();
-	CDocTemplate* p = theApp.GetNextDocTemplate(pos); // DL tmpl
+	wxDocTemplate* p = theApp.GetNextDocTemplate(pos); // DL tmpl
 	p = theApp.GetNextDocTemplate(pos); // IN tmpl
 	p = theApp.GetNextDocTemplate(pos); // PD tmpl
 	CChildFrame* pFrame = (CChildFrame*)p->CreateNewFrame(GetDocument(),NULL);
@@ -1367,9 +1367,9 @@ void CGedtreeViewIN::OnViewIndi()
 	}
 }
 
-void CGedtreeViewIN::OnUpdateViewIndi(CCmdUI* pCmdUI) 
+void CGedtreeViewIN::OnUpdateViewIndi(wxUpdateUIEvent& pCmdUI) 
 {
-	pCmdUI->Enable(FALSE);
+	pCmdUI.Enable(FALSE);
 	if (m_tab.GetCurSel()==nTabPart)
 	{
 		int i(-1);
@@ -1385,7 +1385,7 @@ void CGedtreeViewIN::OnUpdateViewIndi(CCmdUI* pCmdUI)
 			}
 			else if (pp->iIndi>=0)
 			{
-				pCmdUI->Enable(TRUE);
+				pCmdUI.Enable(TRUE);
 			}
 			else if (pp->iEvent==-1)
 			{
@@ -1402,7 +1402,7 @@ void CGedtreeViewIN::OnUpdateViewIndi(CCmdUI* pCmdUI)
 			int i = m_treePedigree.GetItemData(htvi);
 			if (i>-1)
 			{
-				pCmdUI->Enable(TRUE);
+				pCmdUI.Enable(TRUE);
 			}
 		}
 	}

@@ -4,7 +4,7 @@
 #include <shlobj.h>
 
  /*
-static CString* pstrInitDir;
+static wxString* pstrInitDir;
 
 UINT APIENTRY CDirSave::OFNHookProc(
 	HWND hdlg,	// handle to child dialog window
@@ -15,7 +15,7 @@ UINT APIENTRY CDirSave::OFNHookProc(
 {
 	static BOOL bFirst;
 
-	CWnd* pWnd = CWnd::FromHandle(::GetParent(hdlg));
+	wxWindow* pWnd = wxWindow::FromHandle(::GetParent(hdlg));
 
 	switch (uiMsg)
 	{
@@ -77,12 +77,12 @@ UINT APIENTRY CDirSave::OFNHookProc(
 }
 */
 
-CDirSave::CDirSave(const CString& strInitDir):
+CDirSave::CDirSave(const wxString& strInitDir):
 	m_strInitDir(strInitDir)
 {
 }
 
-BOOL CDirSave::GetSaveDirName(CString& strPath)
+BOOL CDirSave::GetSaveDirName(wxString& strPath)
 {
 	strPath.Empty();
 
@@ -141,7 +141,7 @@ BOOL CDirSave::GetSaveDirName(CString& strPath)
 }
 
 /*
-BOOL CDirSave::GetSaveDirName(CString& strPath)
+BOOL CDirSave::GetSaveDirName(wxString& strPath)
 {
 	strPath.Empty();
 

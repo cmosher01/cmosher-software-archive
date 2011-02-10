@@ -1,3 +1,5 @@
+#if 0 
+
 #pragma once
 // ChooseFont.h : header file
 //
@@ -5,20 +7,19 @@
 /////////////////////////////////////////////////////////////////////////////
 // CChooseFont dialog
 
-class CChooseFont : public CFontDialog
+class CChooseFont : public wxFontDialog
 {
-	DECLARE_DYNAMIC(CChooseFont)
 
 public:
 	CChooseFont(LPLOGFONT lplfInitial = NULL,
 		DWORD dwFlags = CF_EFFECTS | CF_SCREENFONTS,
-		CDC* pdcPrinter = NULL,
-		CWnd* pParentWnd = NULL);
+		wxDC* pdcPrinter = NULL,
+		wxWindow* pParentWnd = NULL);
 #ifndef _AFX_NO_RICHEDIT_SUPPORT
 	CChooseFont(const CHARFORMAT& charformat,
 		DWORD dwFlags = CF_SCREENFONTS,
-		CDC* pdcPrinter = NULL,
-		CWnd* pParentWnd = NULL);
+		wxDC* pdcPrinter = NULL,
+		wxWindow* pParentWnd = NULL);
 #endif
 
 public:
@@ -27,5 +28,8 @@ public:
 protected:
 	virtual BOOL OnInitDialog();
 	virtual void OnOK();
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };
+
+#endif
+#define CChooseFont wxFontDialog

@@ -9,12 +9,12 @@ public:
 	HTREEITEM m_hTreeItem;
 	CGedtreeDoc* m_pDoc;
 
-	CString m_strDisplay;	// John Q. /Public/, II
-	CString m_strName;		// John Q. Public, II
-	CString m_strSurname;	// Public
-	CString m_strRest;		// John Q. ~, II
-	CString m_strGiven;		// John Q.
-	CString m_strSuffix;	// , II
+	wxString m_strDisplay;	// John Q. /Public/, II
+	wxString m_strName;		// John Q. Public, II
+	wxString m_strSurname;	// Public
+	wxString m_strRest;		// John Q. ~, II
+	wxString m_strGiven;		// John Q.
+	wxString m_strSuffix;	// , II
 	CCitation m_cita;
 
 public:
@@ -22,12 +22,12 @@ public:
 	void Set(CGedtreeDoc* pDoc, HTREEITEM htiEvent);
 	~CName();
 	void Calc();
-	CString Name();
-	CString NameSlashes();
-	CString Surname();
-	CString GivenName();
-	CString Filter(const CString& strName);
-	void GetFromTree(const CString& strName);
+	wxString Name();
+	wxString NameSlashes();
+	wxString Surname();
+	wxString GivenName();
+	wxString Filter(const wxString& strName);
+	void GetFromTree(const wxString& strName);
 	void PutToTree(HTREEITEM htiParent);
 };
 

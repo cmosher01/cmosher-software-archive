@@ -4,20 +4,20 @@
 /////////////////////////////////////////////////////////////////////////////
 // CHeadNotes dialog
 
-class CHeadNotes : public CDialog
+class CHeadNotes : public wxDialog
 {
 // Construction
 public:
-	CHeadNotes(CWnd* pParent = NULL);   // standard constructor
+	CHeadNotes(wxWindow* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CHeadNotes)
 	enum { IDD = IDD_NOTES };
-	CButton	m_buttonOK;
-	CButton	m_buttonCancel;
-	CButton	m_buttonDelete;
-	CEdit	m_editText;
-	CString	m_strText;
+	wxButton*	m_buttonOK;
+	wxButton*	m_buttonCancel;
+	wxButton*	m_buttonDelete;
+	wxTextCtrl*	m_editText;
+	wxString	m_strText;
 	//}}AFX_DATA
 
 
@@ -38,5 +38,5 @@ protected:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };

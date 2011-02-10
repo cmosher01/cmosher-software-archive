@@ -18,8 +18,7 @@ static char THIS_FILE[] = __FILE__;
 // CEditCitation dialog
 
 
-CEditCitation::CEditCitation(CWnd* pParent /*=NULL*/)
-	: CDialog(CEditCitation::IDD, pParent)
+CEditCitation::CEditCitation(wxWindow* pParent /*=NULL*/)
 {
 	//{{AFX_DATA_INIT(CEditCitation)
 	m_strPage = _T("");
@@ -31,7 +30,7 @@ CEditCitation::CEditCitation(CWnd* pParent /*=NULL*/)
 
 void CEditCitation::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+//	wxDialog::DoDataExchange(pDX);
 
 	if (!pDX->m_bSaveAndValidate)
 	{
@@ -59,13 +58,13 @@ void CEditCitation::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CEditCitation, CDialog)
+BEGIN_EVENT_TABLE(CEditCitation, wxDialog)
 	//{{AFX_MSG_MAP(CEditCitation)
-	ON_BN_CLICKED(IDC_CHANGESOURCE, OnChangesource)
-	ON_BN_CLICKED(IDC_DELETE, OnDelete)
-	ON_WM_SIZE()
+//	ON_BN_CLICKED(IDC_CHANGESOURCE, OnChangesource)
+//	ON_BN_CLICKED(IDC_DELETE, OnDelete)
+//	ON_WM_SIZE()
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CEditCitation message handlers
@@ -90,10 +89,10 @@ void CEditCitation::SetStaticTitles()
 	if (m_cita.m_iSource>=0)
 	{
 		CSource& sour = m_cita.m_pDoc->m_rSource[m_cita.m_iSource];
-		m_staticSource.SetWindowText(sour.GetDisplay());
+		m_staticSource->SetLabel(sour.GetDisplay());
 	}
 	else
-		m_staticSource.SetWindowText(_T(""));
+		m_staticSource->SetLabel(_T(""));
 }
 
 void CEditCitation::Enable()
@@ -102,16 +101,14 @@ void CEditCitation::Enable()
 
 void CEditCitation::OnChangesource() 
 {
-	// TODO: Add your control notification handler code here
-
-	UpdateData();
+//	UpdateData(); TransferFromWindow
 
 	if (m_cita.m_iSource>=0)
 	{
 		CSource& sour = m_cita.m_pDoc->m_rSource[m_cita.m_iSource];
 		CEditSource d;
 		d.m_sour = sour;
-		int nButton = d.DoModal();
+		int nButton = d.ShowModal();
 		if (nButton==IDOK)
 		{
 			sour = d.m_sour;
@@ -129,7 +126,7 @@ void CEditCitation::OnChangesource()
 	{
 		CPickSource d(m_cita.m_pDoc);
 		d.m_iSource = m_cita.m_iSource;
-		int nButton = d.DoModal();
+		int nButton = d.ShowModal();
 		if (nButton==IDOK)
 		{
 			m_cita.m_iSource = d.m_iSource;
@@ -137,61 +134,61 @@ void CEditCitation::OnChangesource()
 		}
 	}
 
-	UpdateData(FALSE);
+//	UpdateData(FALSE); TransferToWindow
 }
 
 void CEditCitation::OnDelete() 
 {
 	m_cita.Clear();
-	UpdateData(FALSE);
-	OnOK();
+//	UpdateData(FALSE); TransferToWindow
+	this->DoOK();
 }
 
-void CEditCitation::OnSize(UINT nType, int cx, int cy) 
-{
-	CDialog::OnSize(nType, cx, cy);
-
-	if (nType==SIZE_RESTORED || nType==SIZE_MAXIMIZED)
-	{
-		if (m_editText.m_hWnd)
-		{
-			PositionControls(cx,cy);
-		}
-	}
-}
+//void CEditCitation::OnSize(UINT nType, int cx, int cy) 
+//{
+//	wxDialog::OnSize(nType, cx, cy);
+//
+//	if (nType==SIZE_RESTORED || nType==SIZE_MAXIMIZED)
+//	{
+//		if (m_editText.m_hWnd)
+//		{
+//			PositionControls(cx,cy);
+//		}
+//	}
+//}
 
 static const int nDlgMargin(10);
-static const CSize sizButton(75,23);
+static const wxSize sizButton(75,23);
 
 void CEditCitation::PositionControls(int cx, int cy)
 {
 	SetRedraw(FALSE);
 
-	CRect rectClient;
+	wxRect rectClient;
 	GetClientRect(rectClient);
 
-	CRect rectOK;
+	wxRect rectOK;
 	rectOK.bottom = rectClient.bottom-nDlgMargin;
 	rectOK.top = rectOK.bottom-sizButton.cy;
 	rectOK.left = nDlgMargin;
 	rectOK.right = rectOK.left+sizButton.cx;
 	m_buttonOK.MoveWindow(rectOK);
 
-	CRect rectCancel;
+	wxRect rectCancel;
 	rectCancel.bottom = rectOK.bottom;
 	rectCancel.top = rectOK.top;
 	rectCancel.left = rectOK.right+nDlgMargin;
 	rectCancel.right = rectCancel.left+sizButton.cx;
 	m_buttonCancel.MoveWindow(rectCancel);
 
-	CRect rectDelete;
+	wxRect rectDelete;
 	rectDelete.bottom = rectOK.bottom;
 	rectDelete.top = rectOK.top;
 	rectDelete.right = rectClient.right-nDlgMargin;
 	rectDelete.left = rectClient.right-2*sizButton.cx;
 	m_buttonDelete.MoveWindow(rectDelete);
 
-	CRect rectText;
+	wxRect rectText;
 	rectText.top = 100;
 	rectText.left = nDlgMargin;
 	rectText.right = rectClient.right-nDlgMargin;
@@ -204,7 +201,7 @@ void CEditCitation::PositionControls(int cx, int cy)
 
 BOOL CEditCitation::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+	wxDialog::OnInitDialog();
 	RECT r;
 	GetClientRect(&r);
 	PositionControls(r.right,r.bottom);

@@ -16,8 +16,8 @@ static char THIS_FILE[] = __FILE__;
 // CRegister dialog
 
 
-CRegister::CRegister(CWnd* pParent /*=NULL*/)
-	: CDialog(CRegister::IDD, pParent)
+CRegister::CRegister(wxWindow* pParent /*=NULL*/)
+	: wxDialog(CRegister::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CRegister)
 	m_strName = _T("");
@@ -28,7 +28,7 @@ CRegister::CRegister(CWnd* pParent /*=NULL*/)
 
 void CRegister::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	wxDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CRegister)
 	DDX_Text(pDX, IDC_NAME, m_strName);
 	DDX_Text(pDX, IDC_KEY, m_strKey);
@@ -54,10 +54,10 @@ void CRegister::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CRegister, CDialog)
+BEGIN_EVENT_TABLE(CRegister, wxDialog)
 	//{{AFX_MSG_MAP(CRegister)
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CRegister message handlers

@@ -8,20 +8,20 @@ class CGedtreeDoc;
 /////////////////////////////////////////////////////////////////////////////
 // CConnect dialog
 
-class CConnect : public CDialog
+class CConnect : public wxDialog
 {
 // Construction
 public:
-	CConnect(CGedtreeDoc* pDoc, CWnd* pParent = NULL);   // standard constructor
+	CConnect(CGedtreeDoc* pDoc, wxWindow* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CConnect)
 	enum { IDD = IDD_CONNECT };
-	CComboBox	m_comboFamily;
+	wxComboBox*	m_comboFamily;
 	int		m_nRelation;
 	int		m_nFamily;
-	CString	m_strName0;
-	CString	m_strName1;
+	wxString	m_strName0;
+	wxString	m_strName1;
 	//}}AFX_DATA
 	CGedtreeDoc* m_pDoc;
 	enum relation { parent, child, spouse, sibling };
@@ -41,7 +41,7 @@ public:
 protected:
 	void FillFamilies();
 	void AddFamily(int iFamily, int iShow);
-	void AddFamilyItem(const CString& str, int iFamily);
+	void AddFamilyItem(const wxString& str, int iFamily);
 	void AddSpouseFamilies(CIndividual* pIndi);
 	void AddSiblingFamilies(CIndividual* pIndiSour, CIndividual* pIndiDest);
 	void FillParentChild(CIndividual* pIndiParent, CIndividual* pIndiChild);
@@ -52,5 +52,5 @@ protected:
 	virtual void OnOK();
 	//}}AFX_MSG
 	afx_msg void OnRelation();
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };

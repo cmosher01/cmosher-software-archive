@@ -21,7 +21,7 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-const CRect TAB_MARGIN(1,22,2,2);
+const wxRect TAB_MARGIN(1,22,2,2);
 static enum
 {
 	nTabPreview,
@@ -32,8 +32,8 @@ static enum
 // CEditSource dialog
 
 
-CEditSource::CEditSource(CWnd* pParent /*=NULL*/)
-	: CDialog(CEditSource::IDD, pParent)
+CEditSource::CEditSource(wxWindow* pParent /*=NULL*/)
+	: wxDialog(CEditSource::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CEditSource)
 	m_strAuthor = _T("");
@@ -46,7 +46,7 @@ CEditSource::CEditSource(CWnd* pParent /*=NULL*/)
 
 void CEditSource::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	wxDialog::DoDataExchange(pDX);
 
 	if (!pDX->m_bSaveAndValidate)
 	{
@@ -79,7 +79,7 @@ void CEditSource::DoDataExchange(CDataExchange* pDX)
 	SetStaticTitles();
 }
 
-BEGIN_MESSAGE_MAP(CEditSource, CDialog)
+BEGIN_EVENT_TABLE(CEditSource, wxDialog)
 	//{{AFX_MSG_MAP(CEditSource)
 	ON_BN_CLICKED(IDC_CHANGEREPO, OnChangerepo)
 	ON_BN_CLICKED(IDC_DELETE, OnDelete)
@@ -87,7 +87,7 @@ BEGIN_MESSAGE_MAP(CEditSource, CDialog)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB, OnSelchangeTab)
 	ON_WM_DESTROY()
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CEditSource message handlers
@@ -189,7 +189,7 @@ void CEditSource::OnDelete()
 
 BOOL CEditSource::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+	wxDialog::OnInitDialog();
 	SetDefaultDir();
 	RECT r;
 	GetClientRect(&r);
@@ -200,7 +200,7 @@ BOOL CEditSource::OnInitDialog()
 
 void CEditSource::OnSize(UINT nType, int cx, int cy) 
 {
-	CDialog::OnSize(nType, cx, cy);
+	wxDialog::OnSize(nType, cx, cy);
 	if (nType==SIZE_RESTORED || nType==SIZE_MAXIMIZED)
 	{
 		if (m_editText.m_hWnd)
@@ -211,16 +211,16 @@ void CEditSource::OnSize(UINT nType, int cx, int cy)
 }
 
 static const int nDlgMargin(10);
-static const CSize sizButton(75,23);
+static const wxSize sizButton(75,23);
 
 void CEditSource::PositionControls(int cx, int cy)
 {
 	SetRedraw(FALSE);
 
-	CRect rectClient;
+	wxRect rectClient;
 	GetClientRect(rectClient);
 
-	CRect rectEdit;
+	wxRect rectEdit;
 	m_editAuthor.GetWindowRect(rectEdit);
 	ScreenToClient(rectEdit);
 	rectEdit.right = rectClient.right-nDlgMargin;
@@ -234,21 +234,21 @@ void CEditSource::PositionControls(int cx, int cy)
 	rectEdit.right = rectClient.right-nDlgMargin;
 	m_editPubl.MoveWindow(rectEdit);
 
-	CRect rectOK;
+	wxRect rectOK;
 	rectOK.bottom = rectClient.bottom-nDlgMargin;
 	rectOK.top = rectOK.bottom-sizButton.cy;
 	rectOK.left = nDlgMargin;
 	rectOK.right = rectOK.left+sizButton.cx;
 	m_buttonOK.MoveWindow(rectOK);
 
-	CRect rectCancel;
+	wxRect rectCancel;
 	rectCancel.bottom = rectOK.bottom;
 	rectCancel.top = rectOK.top;
 	rectCancel.left = rectOK.right+nDlgMargin;
 	rectCancel.right = rectCancel.left+sizButton.cx;
 	m_buttonCancel.MoveWindow(rectCancel);
 
-	CRect rectDelete;
+	wxRect rectDelete;
 	rectDelete.bottom = rectOK.bottom;
 	rectDelete.top = rectOK.top;
 	rectDelete.right = rectClient.right-nDlgMargin;
@@ -256,54 +256,54 @@ void CEditSource::PositionControls(int cx, int cy)
 	m_buttonDelete.MoveWindow(rectDelete);
 
 	// add tabs to tab control (only once though)
-	if (!m_tab.GetItemCount())
-	{
-		TC_ITEM tci;
-		tci.mask = TCIF_TEXT;
-		tci.pszText = _T("preview");
-		m_tab.InsertItem(nTabPreview,&tci);
-		tci.pszText = _T("edit");
-		m_tab.InsertItem(nTabEdit,&tci);
-		// also, go to edit tab if there is no text at all
-		if (m_strText.IsEmpty())
-			m_tab.SetCurSel(nTabEdit);
-	}
+//	if (!m_tab.GetItemCount())
+//	{
+//		TC_ITEM tci;
+//		tci.mask = TCIF_TEXT;
+//		tci.pszText = _T("preview");
+//		m_tab.InsertItem(nTabPreview,&tci);
+//		tci.pszText = _T("edit");
+//		m_tab.InsertItem(nTabEdit,&tci);
+//		// also, go to edit tab if there is no text at all
+//		if (m_strText.IsEmpty())
+//			m_tab.SetCurSel(nTabEdit);
+//	}
 
 	// position tab control
-	CRect rectTab;
+	wxRect rectTab;
 	rectTab.top = 150;
 	rectTab.left = nDlgMargin;
 	rectTab.right = rectClient.right-nDlgMargin;
 	rectTab.bottom = rectOK.top-nDlgMargin;
-	m_tab.MoveWindow(rectTab);
+//	m_tab.MoveWindow(rectTab);
 
 	// position the controls to similate tab switching
 	// (i.e., hide controls that are on other tabs)
-	CRect rect1(rectTab);
+	wxRect rect1(rectTab);
 	rect1.left += TAB_MARGIN.left;
 	rect1.top += TAB_MARGIN.top;
 	rect1.right -= TAB_MARGIN.right;
 	rect1.bottom -= TAB_MARGIN.bottom;
 
 	bool bRefresh(false);
-	CRect rectHide(-10,-10,-11,-11);
-	CRect rectPreview(rectHide);
-	CRect rectEditt(rectHide);
-	switch (m_tab.GetCurSel())
-	{
-	case nTabPreview:
-		rectPreview = rect1;
-		bRefresh = true;
-	break;
-	case nTabEdit:
-		rectEditt = rect1;
-	break;
-	default:
-		ASSERT(FALSE);
-	}
+	wxRect rectHide(-10,-10,-11,-11);
+	wxRect rectPreview(rectHide);
+	wxRect rectEditt(rectHide);
+//	switch (m_tab.GetCurSel())
+//	{
+//	case nTabPreview:
+//		rectPreview = rect1;
+//		bRefresh = true;
+//	break;
+//	case nTabEdit:
+//		rectEditt = rect1;
+//	break;
+//	default:
+//		wxASSERT(FALSE);
+//	}
 
-	m_ie.MoveWindow(rectPreview);
-	m_editText.MoveWindow(rectEditt);
+//	m_ie.MoveWindow(rectPreview);
+//	m_editText.MoveWindow(rectEditt);
 
 	if (bRefresh)
 		OnRefresh();
@@ -314,18 +314,18 @@ void CEditSource::PositionControls(int cx, int cy)
 
 void CEditSource::OnRefresh() 
 {
-	IHTMLDocument2Ptr pdoc = m_ie.GetDocument();
-	if (pdoc==0)
-	{
-		m_ie.Navigate(_bstr_t(L"about:blank"),0,0,0,0);
-		pdoc = m_ie.GetDocument();
-	}
+//	IHTMLDocument2Ptr pdoc = m_ie.GetDocument();
+//	if (pdoc==0)
+//	{
+//		m_ie.Navigate(_bstr_t(L"about:blank"),0,0,0,0);
+//		pdoc = m_ie.GetDocument();
+//	}
 
 	IDispatch* pd = 0;
 	pdoc->open(_bstr_t(L""),_variant_t(_bstr_t(L"replace")),_variant_t(_bstr_t(L"")),_variant_t(VARIANT_FALSE,VT_BOOL),&pd);
 
 	UpdateData();
-	CString html;
+	wxString html;
 	html = "<base href=\"file:\">";
 	html += m_strText;
 //	_bstr_t bstr(html);
@@ -336,7 +336,7 @@ void CEditSource::OnRefresh()
 		VARIANT *param;
 		HRESULT hresult = SafeArrayAccessData(sfArray,(LPVOID*)&param);
 		param->vt = VT_BSTR;
-		param->bstrVal = ::SysAllocString(html);
+		param->bstrVal = ::SysAllowxString(html);
 		hresult = SafeArrayUnaccessData(sfArray);
 		pdoc->write(sfArray);
 		SafeArrayDestroy(sfArray);
@@ -344,7 +344,7 @@ void CEditSource::OnRefresh()
 	pdoc->close();
 }
 
-BEGIN_EVENTSINK_MAP(CEditSource, CDialog)
+BEGIN_EVENTSINK_MAP(CEditSource, wxDialog)
     //{{AFX_EVENTSINK_MAP(CEditSource)
 	ON_EVENT(CEditSource, IDC_IE, 251 /* NewWindow2 */, OnNewWindow2Ie, VTS_PDISPATCH VTS_PBOOL)
 	//}}AFX_EVENTSINK_MAP
@@ -358,7 +358,7 @@ void CEditSource::OnNewWindow2Ie(LPDISPATCH FAR* ppDisp, BOOL FAR* Cancel)
 void CEditSource::OnSelchangeTab(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	*pResult = 0;
-	CRect r;
+	wxRect r;
 	GetClientRect(&r);
 	PositionControls(r.right,r.bottom);
 }
@@ -369,7 +369,7 @@ void CEditSource::SetDefaultDir()
 	m_strDefaultDir.ReleaseBuffer();
 
 	CGedtreeDoc* pDoc = m_sour.m_pDoc;
-	CString sPath = pDoc->GetPathName();
+	wxString sPath = pDoc->GetPathName();
 
 	SetDir(sPath);
 }
@@ -379,7 +379,7 @@ void CEditSource::RestoreDefaultDir()
 	SetDir(m_strDefaultDir);
 }
 
-void CEditSource::SetDir(const CString& s)
+void CEditSource::SetDir(const wxString& s)
 {
 	TCHAR drive[_MAX_DRIVE];
 	TCHAR dir[_MAX_DIR];
@@ -387,13 +387,13 @@ void CEditSource::SetDir(const CString& s)
 	TCHAR ext[_MAX_EXT];
 	_tsplitpath(s,drive,dir,fname,ext);
 
-	CString sPath = CString(drive)+CString(dir);
+	wxString sPath = wxString(drive)+wxString(dir);
 
 	::SetCurrentDirectory(sPath);
 }
 
 void CEditSource::OnDestroy() 
 {
-	CDialog::OnDestroy();
+	wxDialog::OnDestroy();
 	RestoreDefaultDir();	
 }

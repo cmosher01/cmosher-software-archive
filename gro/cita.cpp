@@ -23,39 +23,42 @@ CCitation::~CCitation()
 {
 }
 
-void CCitation::GetFromTree(const CString& strSourceID)
+void CCitation::GetFromTree(const wxString& strSourceID)
 {
 	m_iSource = m_pDoc->LookupSource(strSourceID);
 
-	CTreeCtrl& tree = m_pDoc->m_tree;
+	wxTreeCtrl* tree = m_pDoc->m_tree;
 
-	HTREEITEM hSub = tree.GetChildItem(m_hTreeItem);
-	while (hSub)
+    wxTreeItemId hSub = tree->GetRootItem();
+    wxTreeItemIdValue cookie;
+    hSub = tree->GetFirstChild(hSub,cookie);
+	while (hSub.IsOk())
 	{
-		CGedLine* pglSub = (CGedLine*)tree.GetItemData(hSub);
-		if (pglSub->m_strTok=="PAGE")
+		CGedLine* pglSub = (CGedLine*)tree->GetItemData(hSub);
+		if (pglSub->m_strTok==_T("PAGE"))
 		{
 			m_strPage = pglSub->GetCleanValue(CGedLine::COLLAPSE);
 		}
-		else if (pglSub->m_strTok=="DATA")
+		else if (pglSub->m_strTok==_T("DATA"))
 		{
-			HTREEITEM hSubSub = tree.GetChildItem(hSub);
-			while (hSubSub)
+            wxTreeItemIdValue cookie2;
+            wxTreeItemId hSubSub = tree->GetFirstChild(hSub,cookie2);
+			while (hSubSub.IsOk())
 			{
-				CGedLine* pglSub = (CGedLine*)tree.GetItemData(hSubSub);
-				if (pglSub->m_strTok=="TEXT")
+				CGedLine* pglSub = (CGedLine*)tree->GetItemData(hSubSub);
+				if (pglSub->m_strTok==_T("TEXT"))
 				{
 					m_strText = pglSub->m_strVal;
 					m_pDoc->GetContLines(hSubSub,m_strText);
 				}
-				hSubSub = tree.GetNextSiblingItem(hSubSub);
+        		hSubSub = tree->GetNextChild(hSubSub,cookie2);
 			}
 		}
-		else if (pglSub->m_strTok=="QUAY")
+		else if (pglSub->m_strTok==_T("QUAY"))
 		{
 			m_nQuality = pglSub->m_nVal;
 		}
-		hSub = tree.GetNextSiblingItem(hSub);
+		hSub = tree->GetNextChild(hSub,cookie);
 	}
 }
 
@@ -66,33 +69,33 @@ void CCitation::Clear()
 	m_strText.Empty();
 }
 
-CString CCitation::Display()
+wxString CCitation::Display()
 {
-	CString s;
+	wxString s;
 
 	if (m_iSource>=0)
 	{
 		CSource& sour = m_pDoc->m_rSource[m_iSource];
-//		CString& strAuthor = sour.m_strAuthor;
-		CString& strTitle = sour.m_strTitle;
+//		wxString& strAuthor = sour.m_strAuthor;
+		wxString& strTitle = sour.m_strTitle;
 
 //		if (!strAuthor.IsEmpty())
 //			s = strAuthor+". ";
 
 		s += strTitle;
-		if (strTitle.Right(1) != ".")
-			s += ".";
+		if (strTitle.Right(1) != _T("."))
+			s += _T(".");
 	}
 	else if (!m_strPage.IsEmpty() || !m_strText.IsEmpty())
 	{
-		s += "[Unknown source.]";
+		s += _T("[Unknown source.]");
 	}
 
 	if (!m_strPage.IsEmpty())
 	{
-		s += " "+m_strPage;
-		if (m_strPage.Right(1) != ".")
-			s += ".";
+		s += _T(" ")+m_strPage;
+		if (m_strPage.Right(1) != _T("."))
+			s += _T(".");
 	}
 
 	return s;
@@ -100,36 +103,36 @@ CString CCitation::Display()
 
 void CCitation::PutToTree(HTREEITEM htiParent)
 {
-	ASSERT(m_pDoc);
+	wxASSERT(m_pDoc);
 
 	if (m_iSource>=0 || !m_strPage.IsEmpty() || !m_strText.IsEmpty())
 	{
 		if (m_iSource>=0)
 		{
 			CSource& sour = m_pDoc->m_rSource[m_iSource];
-			m_hTreeItem = m_pDoc->ResetSubValue(htiParent,"SOUR",sour.GetID());
+			m_hTreeItem = m_pDoc->ResetSubValue(htiParent,_T("SOUR"),sour.GetID());
 		}
 		else
 		{
-			m_hTreeItem = m_pDoc->ResetSubValue(htiParent,"SOUR","",FALSE,TRUE);
+			m_hTreeItem = m_pDoc->ResetSubValue(htiParent,_T("SOUR"),_T(""),FALSE,TRUE);
 		}
-		m_pDoc->ResetSubValue(m_hTreeItem,"PAGE",m_strPage);
+		m_pDoc->ResetSubValue(m_hTreeItem,_T("PAGE"),m_strPage);
 		if (m_nQuality>=0)
 		{
-			m_pDoc->ResetSubValue(m_hTreeItem,"QUAY",CUtil::str(m_nQuality));
+			m_pDoc->ResetSubValue(m_hTreeItem,_T("QUAY"),CUtil::str(m_nQuality));
 		}
 		else
 		{
-			m_pDoc->DeleteSubValue(m_hTreeItem,"QUAY");
+			m_pDoc->DeleteSubValue(m_hTreeItem,_T("QUAY"));
 		}
 		if (m_strText.IsEmpty())
 		{
-			m_pDoc->DeleteSubValue(m_hTreeItem,"DATA");
+			m_pDoc->DeleteSubValue(m_hTreeItem,_T("DATA"));
 		}
 		else
 		{
-			HTREEITEM hData = m_pDoc->ResetSubValue(m_hTreeItem,"DATA","",FALSE,TRUE);
-			m_pDoc->ResetSubValue(hData,"TEXT",m_strText,FALSE,FALSE,TRUE);
+			HTREEITEM hData = m_pDoc->ResetSubValue(m_hTreeItem,_T("DATA"),_T(""),FALSE,TRUE);
+			m_pDoc->ResetSubValue(hData,_T("TEXT"),m_strText,FALSE,FALSE,TRUE);
 		}
 	}
 	else

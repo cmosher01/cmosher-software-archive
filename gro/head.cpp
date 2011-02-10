@@ -13,7 +13,7 @@ CHeader::CHeader(CGedtreeDoc* pDoc, HTREEITEM hTreeItem):
 
 void CHeader::GetFromTree()
 {
-	CTreeCtrl& tree = m_pDoc->m_tree;
+	wxTreeCtrl& tree = m_pDoc->m_tree;
 
 	bool bHasSchema(false);
 	HTREEITEM htiSub = tree.GetChildItem(m_hTreeItem);
@@ -54,9 +54,9 @@ void CHeader::GetFromTree()
 	}
 }
 
-void CHeader::ProcessSchema(CMap<CString,LPCTSTR,CString,LPCTSTR>& map, HTREEITEM hti)
+void CHeader::ProcessSchema(CMapSS& map, HTREEITEM hti)
 {
-	CTreeCtrl& tree = m_pDoc->m_tree;
+	wxTreeCtrl& tree = m_pDoc->m_tree;
 
 	HTREEITEM htiSub = tree.GetChildItem(hti);
 	while (htiSub)
@@ -66,7 +66,7 @@ void CHeader::ProcessSchema(CMap<CString,LPCTSTR,CString,LPCTSTR>& map, HTREEITE
 		HTREEITEM htiLab = tree.GetChildItem(htiSub);
 		CGedLine* pglLab = (CGedLine*)tree.GetItemData(htiLab);
 
-		map.SetAt(pglChild->m_strTok,pglLab->m_strVal);
+		map[pglChild->m_strTok] = pglLab->m_strVal;
 
 		htiSub = tree.GetNextSiblingItem(htiSub);
 	}
@@ -92,10 +92,10 @@ void CHeader::PutToTree()
 	m_pDoc->ResetSubValue(m_hTreeItem,"CHAR",theApp.SaveAsUnicode()?"UNICODE":"ASCII");
 
 	char cPrefix = CGedRecord::GetPrefix("SUBM");
-	CString strSubmID;
-	strSubmID = CString(cPrefix)+"0";
-	CString strSubmVal;
-	strSubmVal = CString(cID)+strSubmID+CString(cID);
+	wxString strSubmID;
+	strSubmID = wxString(cPrefix)+"0";
+	wxString strSubmVal;
+	strSubmVal = wxString(cID)+strSubmID+wxString(cID);
 	m_pDoc->ResetSubValue(m_hTreeItem,"SUBM",strSubmVal);
 
 	if (m_strNote.IsEmpty())
@@ -107,7 +107,7 @@ void CHeader::PutToTree()
 		m_pDoc->ResetSubValue(m_hTreeItem,"NOTE",m_strNote,FALSE,FALSE,TRUE);
 	}
 
-	CTreeCtrl& tree = m_pDoc->m_tree;
+	wxTreeCtrl& tree = m_pDoc->m_tree;
 	CEditSubm subm;
 	if (m_hTreeItemSubm) m_pDoc->DeleteItem(m_hTreeItemSubm);
 	m_hTreeItemSubm = m_pDoc->ResetSubValue(TVI_ROOT,"SUBM","",TRUE,TRUE);

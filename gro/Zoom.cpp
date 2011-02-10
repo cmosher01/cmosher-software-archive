@@ -15,8 +15,8 @@ static char THIS_FILE[] = __FILE__;
 // CZoom dialog
 
 
-CZoom::CZoom(CWnd* pParent /*=NULL*/)
-	: CDialog(CZoom::IDD, pParent)
+CZoom::CZoom(wxWindow* pParent /*=NULL*/)
+	: wxDialog(CZoom::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CZoom)
 	m_nScale = 0;
@@ -26,18 +26,18 @@ CZoom::CZoom(CWnd* pParent /*=NULL*/)
 
 void CZoom::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	wxDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CZoom)
 	DDX_Text(pDX, IDC_SCALE, m_nScale);
 	//}}AFX_DATA_MAP
 }
 
 
-BEGIN_MESSAGE_MAP(CZoom, CDialog)
+BEGIN_EVENT_TABLE(CZoom, wxDialog)
 	//{{AFX_MSG_MAP(CZoom)
 		// NOTE: the ClassWizard will add message map macros here
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CZoom message handlers

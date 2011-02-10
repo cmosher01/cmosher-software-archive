@@ -15,12 +15,12 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CChildFrame
 
-IMPLEMENT_DYNCREATE(CChildFrame, CMDIChildWnd)
+IMPLEMENT_DYNCREATE(CChildFrame, wxMDIChildFrame)
 
-BEGIN_MESSAGE_MAP(CChildFrame, CMDIChildWnd)
+BEGIN_EVENT_TABLE(CChildFrame, wxMDIChildFrame)
 	//{{AFX_MSG_MAP(CChildFrame)
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CChildFrame construction/destruction
@@ -35,31 +35,31 @@ CChildFrame::~CChildFrame()
 {
 }
 
-BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
-{
-	// TODO: Modify the Window class or styles here by modifying
-	//  the CREATESTRUCT cs
-
-	cs.style &= (LONG)~FWS_ADDTOTITLE;
-
-	return CMDIChildWnd::PreCreateWindow(cs);
-}
+//BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
+//{
+//	// TODO: Modify the Window class or styles here by modifying
+//	//  the CREATESTRUCT cs
+//
+//	cs.style &= (LONG)~FWS_ADDTOTITLE;
+//
+//	return CMDIChildWnd::PreCreateWindow(cs);
+//}
 
 /////////////////////////////////////////////////////////////////////////////
 // CChildFrame diagnostics
 
-#ifdef _DEBUG
-void CChildFrame::AssertValid() const
-{
-	CMDIChildWnd::AssertValid();
-}
-
-void CChildFrame::Dump(CDumpContext& dc) const
-{
-	CMDIChildWnd::Dump(dc);
-}
-
-#endif //_DEBUG
+//#ifdef _DEBUG
+//void CChildFrame::AssertValid() const
+//{
+//	CMDIChildWnd::AssertValid();
+//}
+//
+//void CChildFrame::Dump(CDumpContext& dc) const
+//{
+//	CMDIChildWnd::Dump(dc);
+//}
+//
+//#endif //_DEBUG
 
 /////////////////////////////////////////////////////////////////////////////
 // CChildFrame message handlers

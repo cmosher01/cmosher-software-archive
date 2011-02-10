@@ -12,11 +12,11 @@
 /////////////////////////////////////////////////////////////////////////////
 // CBirthCalc dialog
 
-class CBirthCalc : public CDialog
+class CBirthCalc : public wxDialog
 {
 // Construction
 public:
-	CBirthCalc(CWnd* pParent = NULL);   // standard constructor
+	CBirthCalc(wxWindow* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CBirthCalc)
@@ -27,11 +27,11 @@ public:
 	int		m_nMonth;
 	int		m_nDay;
 	int		m_nYear3;
-	CString	m_strDateInput;
-	CString	m_strBirthDate;
-	CString	m_strCensusBirthDate;
-	CString	m_strCensusDateStatic;
-	CString	m_strYearOfAge;
+	wxString	m_strDateInput;
+	wxString	m_strBirthDate;
+	wxString	m_strCensusBirthDate;
+	wxString	m_strCensusDateStatic;
+	wxString	m_strYearOfAge;
 	//}}AFX_DATA
 
 	CDateValue m_dvDate;
@@ -64,7 +64,7 @@ protected:
 	afx_msg void OnAge3();
 	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };
 
 //{{AFX_INSERT_LOCATION}}

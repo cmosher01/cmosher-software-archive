@@ -3,7 +3,7 @@
 
 class CDirSave
 {
-	CString m_strInitDir;
+	wxString m_strInitDir;
 	BOOL m_bFirst;
 
 	static UINT APIENTRY OFNHookProc(
@@ -14,9 +14,9 @@ class CDirSave
 		);
 
 public:
-	CDirSave(const CString& strInitDir = "");
+	CDirSave(const wxString& strInitDir = "");
 	virtual ~CDirSave() {}
-	BOOL GetSaveDirName(CString& strPath);
+	BOOL GetSaveDirName(wxString& strPath);
 };
 
 #endif

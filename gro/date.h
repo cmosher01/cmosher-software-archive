@@ -7,12 +7,12 @@ class CDate
 	int m_nYear, m_nMonth, m_nDay;
 	BOOL m_bJulian;
 	int m_nJD;
-	CString m_strDisplayShort;
-	CString m_strDisplayLong;
-	CString m_strSort;
+	wxString m_strDisplayShort;
+	wxString m_strDisplayLong;
+	wxString m_strSort;
 	BOOL m_bVisible;
 
-	CString HolidayDisplay();
+	wxString HolidayDisplay();
 
 public:
 
@@ -44,23 +44,23 @@ public:
 	};
 	Weekday GetWeekday() const
 	{
-		ASSERT(m_nJD);
+		wxASSERT(m_nJD);
 		return (Weekday)(m_nJD%7);
 	}
 	void AdvanceToNthWeekdayInMonth(int n, Weekday wk);
 	void SetNthWeekday(int nYear, int nMonth, int n, Weekday wk);
 
 	BOOL SetVisible(BOOL bVisible = TRUE);
-	CString Display(DWORD dwFlags = DATE_LONGDATE) const;
+	wxString Display(DWORD dwFlags = DATE_LONGDATE) const;
 	void CalcDisplay();
-	CString Sort() const { return m_strSort; }
+	wxString Sort() const { return m_strSort; }
 
 	BOOL IsValid();
 
 	int operator-(const CDate& date) const 
 	{
-		ASSERT(m_nJD);
-		ASSERT(date.m_nJD);
+		wxASSERT(m_nJD);
+		wxASSERT(date.m_nJD);
 		return m_nJD-date.m_nJD;
 	}
 	operator BOOL () const
@@ -86,11 +86,12 @@ public:
 	static CDate HolidayDate(int nYear, Holiday holiday);
 	static int MonthSize(int nYear, int nMonth);
 };
+WX_DECLARE_OBJARRAY(CDate,wxArrayCDate);
 
 CDate operator+(const CDate& date, int nDays);
 CDate operator-(const CDate& date, int nDays);
 
-extern const CString rsMonthFull[];
-extern const CString rsWeekdayFull[];
+extern const wxString rsMonthFull[];
+extern const wxString rsWeekdayFull[];
 
 #endif

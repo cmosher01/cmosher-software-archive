@@ -4,11 +4,11 @@
 /////////////////////////////////////////////////////////////////////////////
 // CZoom dialog
 
-class CZoom : public CDialog
+class CZoom : public wxDialog
 {
 // Construction
 public:
-	CZoom(CWnd* pParent = NULL);   // standard constructor
+	CZoom(wxWindow* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CZoom)
@@ -31,5 +31,5 @@ protected:
 	//{{AFX_MSG(CZoom)
 		// NOTE: the ClassWizard will add member functions here
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };

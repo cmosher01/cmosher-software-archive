@@ -4,10 +4,10 @@
 #include "util.h"
 
 static const int cMonth(12);
-static char* rsMonth[cMonth] =
+static wxChar* rsMonth[cMonth] =
 {
-	"JAN","FEB","MAR","APR","MAY","JUN",
-	"JUL","AUG","SEP","OCT","NOV","DEC"
+	_T("JAN"),_T("FEB"),_T("MAR"),_T("APR"),_T("MAY"),_T("JUN"),
+	_T("JUL"),_T("AUG"),_T("SEP"),_T("OCT"),_T("NOV"),_T("DEC")
 };
 
 CDateValue::CDateValue() :
@@ -19,83 +19,83 @@ CDateValue::~CDateValue()
 {
 }
 
-void CDateValue::Set(const CString& strGedcom)
+void CDateValue::Set(const wxString& strGedcom)
 {
 	// assume strGedcom is clean (trimleft,trimright,collapse,upcase)
-	CString strKey, strRest;
+	wxString strKey, strRest;
 	BOOL bOK;
 	strRest = strGedcom;
 
 do_next:
 
 	strKey = NextWord(strRest);
-	if (strKey.Right(1)==".")
-		strKey = strKey.Left(strKey.GetLength()-1);
+	if (strKey.Right(1)==_T("."))
+		strKey = strKey.Left(strKey.Length()-1);
 
 	bOK = TRUE;
 
-	if (strKey=="FROM")
+	if (strKey==_T("FROM"))
 	{
 		m_type = PERIOD;
 		bOK = ParseDate(m_d,strRest);
 		goto do_next;
 	}
-	else if (strKey=="TO")
+	else if (strKey==_T("TO"))
 	{
 		m_type = PERIOD;
 		bOK = ParseDate(m_dOther,strRest);
 	}
-	else if (strKey=="AFT" || strKey=="AFTER")
+	else if (strKey==_T("AFT") || strKey==_T("AFTER"))
 	{
 		m_type = RANGE;
 		bOK = ParseDate(m_d,strRest);
 	}
-	else if (strKey=="BEF" || strKey=="BEFORE")
+	else if (strKey==_T("BEF") || strKey==_T("BEFORE"))
 	{
 		m_type = RANGE;
 		bOK = ParseDate(m_dOther,strRest);
 	}
-	else if (strKey=="BET" || strKey=="BETWEEN")
+	else if (strKey==_T("BET") || strKey==_T("BETWEEN"))
 	{
 		m_type = RANGE;
 		bOK = ParseDate(m_d,strRest);
 		goto do_next;
 	}
-	else if (strKey=="AND" || strKey=="-")
+	else if (strKey==_T("AND") || strKey==_T("-"))
 	{
 		m_type = RANGE;
 		bOK = ParseDate(m_dOther,strRest);
 	}
-	else if (strKey=="ABT" || strKey=="ABOUT")
+	else if (strKey==_T("ABT") || strKey==_T("ABOUT"))
 	{
 		m_type = ABOUT;
 		bOK = ParseDate(m_d,strRest);
 	}
-	else if (strKey=="CAL")
+	else if (strKey==_T("CAL"))
 	{
 		m_type = CALCULATED;
 		bOK = ParseDate(m_d,strRest);
 	}
-	else if (strKey=="EST")
+	else if (strKey==_T("EST"))
 	{
 		m_type = ESTIMATED;
 		bOK = ParseDate(m_d,strRest);
 	}
-	else if (strKey=="INT")
+	else if (strKey==_T("INT"))
 	{
 		m_type = INTERPRETED;
 		bOK = ParseDate(m_d,strRest);
 		goto do_next;
 	}
-	else if (strKey.Left(1)=="(")
+	else if (strKey.Left(1)==_T("("))
 	{
 		if (m_type != INTERPRETED)
 			m_type = PHRASE;
 		m_strPhrase = strKey.Mid(1);
 		if (!strRest.IsEmpty())
-			m_strPhrase += CString(cDelim)+strRest;
-		if (m_strPhrase.Right(1)==")")
-			m_strPhrase = m_strPhrase.Left(m_strPhrase.GetLength()-1);
+			m_strPhrase += wxString(cDelim)+strRest;
+		if (m_strPhrase.Right(1)==_T(")"))
+			m_strPhrase = m_strPhrase.Left(m_strPhrase.Length()-1);
 	}
 	else
 	{
@@ -116,7 +116,7 @@ do_next:
 	CalcDisplay();
 
 /*
-	CString strOutVal = Get();
+	wxString strOutVal = Get();
 
 	if (strOutVal!=strGedcom)
 	{
@@ -125,9 +125,9 @@ do_next:
 		m_d.Get(&nYear,&nMonth,&nDay);
 		m_dOther.Get(&nYear2,&nMonth2,&nDay2);
 
-		CString sMsg;
+		wxString sMsg;
 		sMsg.Format(
-			_T("%s --> %d %4.4d.%2.2d.%2.2d %4.4d.%2.2d.%2.2d \"%s\" --> \"%s\"\n"),
+			_T(_T("%s --> %d %4.4d.%2.2d.%2.2d %4.4d.%2.2d.%2.2d \")%s\_T(" --> \")%s\_T("\n")),
 			(LPCTSTR)strGedcom,
 			m_type,
 			nYear,nMonth,nDay,
@@ -139,29 +139,29 @@ do_next:
 */
 }
 
-BOOL CDateValue::ParseDate(CDate& date, CString& strRest)
+BOOL CDateValue::ParseDate(CDate& date, wxString& strRest)
 {
-	CString s(strRest);
+	wxString s(strRest);
 
 	BOOL bGregorian(TRUE);
 	int n;
 
-	if (s.Left(3)=="@#D")
+	if (s.Left(3)==_T("@#D"))
 	{
-		CString strCalendar = s.Mid(3);
+		wxString strCalendar = s.Mid(3);
 
 		n = strCalendar.Find('@');
 		if (n==-1) return FALSE;
 
 		s = strCalendar.Mid(n+1);
-		s.TrimLeft();
+		s.Trim(false);
 
 		strCalendar = strCalendar.Left(n);
-		strCalendar.TrimLeft();
-		strCalendar.TrimRight();
+		strCalendar.Trim(false);
+		strCalendar.Trim();
 
 		if (strCalendar==_T("GREGORIAN"))
-			ASSERT(bGregorian);
+			wxASSERT(bGregorian);
 		else if (strCalendar==_T("JULIAN"))
 			bGregorian = FALSE;
 		else
@@ -173,20 +173,20 @@ BOOL CDateValue::ParseDate(CDate& date, CString& strRest)
 
 	int nYear(0), nMonth(0), nDay(0);
 
-	CString strItem1 = NextWord(strRest);
+	wxString strItem1 = NextWord(strRest);
 	nMonth = Month(strItem1);
 	if (nMonth)
 	{
 		// MONTH YEAR[/year][ B.C.][ rest]
 		//       ^
-		CString strItem2 = NextWord(strRest);
+		wxString strItem2 = NextWord(strRest);
 		// MONTH YEAR[/year][ B.C.][ rest]
 		//                   ^
-		CString strTemp(strRest); // look ahead for B.C.
-		CString strItem3 = NextWord(strTemp);
+		wxString strTemp(strRest); // look ahead for B.C.
+		wxString strItem3 = NextWord(strTemp);
 		// MONTH YEAR[/year][ B.C.][ rest]
 		//                          ^temp
-		if (strItem3=="B.C.")
+		if (strItem3==_T("B.C."))
 		{
 			nYear = -ParseYear(strItem2);
 			strRest = strTemp;
@@ -201,21 +201,21 @@ BOOL CDateValue::ParseDate(CDate& date, CString& strRest)
 		//---or---
 		// YEAR[/year][ B.C.][ rest]
 		//             ^
-		CString strTemp(strRest); // look ahead for month
-		CString strItem2 = NextWord(strTemp);
+		wxString strTemp(strRest); // look ahead for month
+		wxString strItem2 = NextWord(strTemp);
 		nMonth = Month(strItem2);
 		if (nMonth)
 		{
 			// DAY MONTH YEAR[/year][ B.C.][ rest]
 			//           ^temp
 			nDay = _ttoi(strItem1);
-			CString strItem3 = NextWord(strTemp);
+			wxString strItem3 = NextWord(strTemp);
 			// DAY MONTH YEAR[/year][ B.C.][ rest]
 			//                       ^temp
 			strRest = strTemp; // found month when looking ahead
 
-			CString strItem4 = NextWord(strTemp);
-			if (strItem4=="B.C.")
+			wxString strItem4 = NextWord(strTemp);
+			if (strItem4==_T("B.C."))
 			{
 				nYear = -ParseYear(strItem3);
 				strRest = strTemp;
@@ -227,9 +227,9 @@ BOOL CDateValue::ParseDate(CDate& date, CString& strRest)
 		{
 			// YEAR[/year][ B.C.][ rest]
 			//             ^
-			CString strTemp(strRest); // look ahead for B.C.
-			CString strItem2 = NextWord(strTemp);
-			if (strItem2=="B.C.")
+			wxString strTemp(strRest); // look ahead for B.C.
+			wxString strItem2 = NextWord(strTemp);
+			if (strItem2==_T("B.C."))
 			{
 				nYear = -ParseYear(strItem1);
 				strRest = strTemp;
@@ -247,7 +247,7 @@ BOOL CDateValue::ParseDate(CDate& date, CString& strRest)
 	return date;
 }
 
-int CDateValue::ParseYear(const CString& str)
+int CDateValue::ParseYear(const wxString& str)
 {
 	// str is of the form: y[/y2]
 	// where y and y2 are strings of digits
@@ -258,7 +258,7 @@ int CDateValue::ParseYear(const CString& str)
 	return _ttoi(str.Left(n))+1;
 }
 
-int CDateValue::Month(const CString& str)
+int CDateValue::Month(const wxString& str)
 {
 	BOOL bFound(FALSE);
 	int nMonth(0);
@@ -275,9 +275,9 @@ int CDateValue::Month(const CString& str)
 	return nMonth;
 }
 
-CString CDateValue::NextWord(CString& strLine)
+wxString CDateValue::NextWord(wxString& strLine)
 {
-	CString strWord;
+	wxString strWord;
 	int i = strLine.Find(cDelim);
 	if (i==-1)
 	{
@@ -292,9 +292,9 @@ CString CDateValue::NextWord(CString& strLine)
 	return strWord;
 }
 
-CString CDateValue::Get()
+wxString CDateValue::Get()
 {
-	CString s;
+	wxString s;
 	switch (m_type)
 	{
 		case DATE:
@@ -302,60 +302,60 @@ CString CDateValue::Get()
 		break;
 		case PERIOD:
 			if (m_d)
-				s += "FROM "+FormatDate(m_d);
-			if (m_d&&m_dOther) s += " ";
+				s += _T("FROM ")+FormatDate(m_d);
+			if (m_d&&m_dOther) s += _T(" ");
 			if (m_dOther)
-				s += "TO "+FormatDate(m_dOther);
+				s += _T("TO ")+FormatDate(m_dOther);
 		break;
 		case RANGE:
 			if (m_d&&m_dOther)
-				s += "BET "+FormatDate(m_d)+" AND "+FormatDate(m_dOther);
+				s += _T("BET ")+FormatDate(m_d)+_T(" AND ")+FormatDate(m_dOther);
 			else if (m_d)
-				s += "AFT "+FormatDate(m_d);
+				s += _T("AFT ")+FormatDate(m_d);
 			else if (m_dOther)
-				s += "BEF "+FormatDate(m_dOther);
+				s += _T("BEF ")+FormatDate(m_dOther);
 		break;
 		case ABOUT:
-			s = "ABT "+FormatDate(m_d);
+			s = _T("ABT ")+FormatDate(m_d);
 		break;
 		case CALCULATED:
-			s = "CAL "+FormatDate(m_d);
+			s = _T("CAL ")+FormatDate(m_d);
 		break;
 		case ESTIMATED:
-			s = "EST "+FormatDate(m_d);
+			s = _T("EST ")+FormatDate(m_d);
 		break;
 		case PHRASE:
-			s = "("+m_strPhrase+")";
+			s = _T("(")+m_strPhrase+_T(")");
 		break;
 		case INTERPRETED:
-			s = "INT "+FormatDate(m_d)+" ("+m_strPhrase+")";
+			s = _T("INT ")+FormatDate(m_d)+_T(" (")+m_strPhrase+_T(")");
 		break;
 		case NODATE:
-			ASSERT(s.IsEmpty());
+			wxASSERT(s.IsEmpty());
 		break;
 		default:
-			ASSERT(FALSE); // bad m_type value
+			wxASSERT(FALSE); // bad m_type value
 	}
 	return s;
 }
 
-CString CDateValue::FormatDate(const CDate& d)
+wxString CDateValue::FormatDate(const CDate& d)
 {
-	CString s;
+	wxString s;
 
 	int nYear, nMonth, nDay;
 	if (d.IsJulian())
 	{
 		d.GetJulian(&nYear,&nMonth,&nDay);
-		s += "@#DJULIAN@ ";
+		s += _T("@#DJULIAN@ ");
 	}
 	else
 		d.Get(&nYear,&nMonth,&nDay);
 
 	if (nDay)
-		s += CUtil::str(nDay)+" ";
+		s += CUtil::str(nDay)+_T(" ");
 	if (nMonth)
-		s += CString(rsMonth[nMonth-1])+" ";
+		s += wxString(rsMonth[nMonth-1])+_T(" ");
 
 	if (nYear>0)
 	{
@@ -363,15 +363,15 @@ CString CDateValue::FormatDate(const CDate& d)
 	}
 	else if (nYear<0)
 	{
-		s += CUtil::str(-nYear)+" B.C.";
+		s += CUtil::str(-nYear)+_T(" B.C.");
 	}
 
 	return s;
 }
 
-CString CDateValue::GetDisplayString(DWORD dwFlags) const
+wxString CDateValue::GetDisplayString(DWORD dwFlags) const
 {
-	CString s;
+	wxString s;
 
 	switch (m_type)
 	{
@@ -379,16 +379,16 @@ CString CDateValue::GetDisplayString(DWORD dwFlags) const
 			s = m_d.Display(dwFlags);
 		break;
 		case PERIOD:
-			ASSERT(s.IsEmpty());
+			wxASSERT(s.IsEmpty());
 			if (m_d)
 				s += m_d.Display(dwFlags);
 			else
-				s += "?";
-			s += "-";
+				s += _T("?");
+			s += _T("-");
 			if (m_dOther)
 				s += m_dOther.Display(dwFlags);
 			else
-				s += "?";
+				s += _T("?");
 /*
 			if (m_d&&m_dOther)
 			{
@@ -398,50 +398,50 @@ CString CDateValue::GetDisplayString(DWORD dwFlags) const
 				{
 					int dif = d2-d1;
 					if (dif==1)
-						s += " (1 day)";
+						s += _T(" (1 day)");
 					else
-						s += " ("+CUtil::str(dif)+" days)";
+						s += _T(" (")+CUtil::str(dif)+_T(" days)");
 				}
 			}
 */
 		break;
 		case RANGE:
-			ASSERT(s.IsEmpty());
+			wxASSERT(s.IsEmpty());
 			if (m_d&&m_dOther)
-				s += "btw "+m_d.Display(dwFlags)+" & "+m_dOther.Display(dwFlags);
+				s += _T("btw ")+m_d.Display(dwFlags)+_T(" & ")+m_dOther.Display(dwFlags);
 			else if (m_d)
-				s += "aft "+m_d.Display(dwFlags);
+				s += _T("aft ")+m_d.Display(dwFlags);
 			else if (m_dOther)
-				s += "bef "+m_dOther.Display(dwFlags);
+				s += _T("bef ")+m_dOther.Display(dwFlags);
 		break;
 		case ABOUT:
-			s = "c. "+m_d.Display(dwFlags);
+			s = _T("c. ")+m_d.Display(dwFlags);
 		break;
 		case CALCULATED:
-			s = "calc "+m_d.Display(dwFlags);
+			s = _T("calc ")+m_d.Display(dwFlags);
 		break;
 		case ESTIMATED:
-			s = "estd "+m_d.Display(dwFlags);
+			s = _T("estd ")+m_d.Display(dwFlags);
 		break;
 		case PHRASE:
-			s = "("+m_strPhrase+")";
+			s = _T("(")+m_strPhrase+_T(")");
 		break;
 		case INTERPRETED:
-			s = "interpreted as "+m_d.Display(dwFlags)+" from \""+m_strPhrase+"\"";
+			s = _T("interpreted as ")+m_d.Display(dwFlags)+_T(" from \"")+m_strPhrase+_T("\"");
 		break;
 		case NODATE:
-			ASSERT(s.IsEmpty());
+			wxASSERT(s.IsEmpty());
 		break;
 		default:
-			ASSERT(FALSE); // bad m_type value
+			wxASSERT(FALSE); // bad m_type value
 	}
 
 	return s;
 }
 
-CString CDateValue::GetSortString() const
+wxString CDateValue::GetSortString() const
 {
-	CString s;
+	wxString s;
 
 	switch (m_type)
 	{
@@ -449,46 +449,46 @@ CString CDateValue::GetSortString() const
 			s = m_d.Sort();
 		break;
 		case PERIOD:
-			ASSERT(s.IsEmpty());
+			wxASSERT(s.IsEmpty());
 			if (m_d)
 				s += m_d.Sort();
 			else
-				s += "?";
-			s += "-";
+				s += _T("?");
+			s += _T("-");
 			if (m_dOther)
 				s += m_dOther.Sort();
 			else
-				s += "?";
+				s += _T("?");
 		break;
 		case RANGE:
-			ASSERT(s.IsEmpty());
+			wxASSERT(s.IsEmpty());
 			if (m_d&&m_dOther)
-				s += m_d.Sort()+"/"+m_dOther.Sort();
+				s += m_d.Sort()+_T("/")+m_dOther.Sort();
 			else if (m_d)
-				s += m_d.Sort()+"/(after)";
+				s += m_d.Sort()+_T("/(after)");
 			else if (m_dOther)
-				s += m_dOther.Sort()+"/(before)";
+				s += m_dOther.Sort()+_T("/(before)");
 		break;
 		case ABOUT:
-			s = m_d.Sort()+" (circa)";
+			s = m_d.Sort()+_T(" (circa)");
 		break;
 		case CALCULATED:
-			s = m_d.Sort()+" (calc.)";
+			s = m_d.Sort()+_T(" (calc.)");
 		break;
 		case ESTIMATED:
-			s = m_d.Sort()+" (est.)";
+			s = m_d.Sort()+_T(" (est.)");
 		break;
 		case PHRASE:
-			s = "("+m_strPhrase+")";
+			s = _T("(")+m_strPhrase+_T(")");
 		break;
 		case INTERPRETED:
-			s = m_d.Sort()+" ("+m_strPhrase+")";
+			s = m_d.Sort()+_T(" (")+m_strPhrase+_T(")");
 		break;
 		case NODATE:
-			ASSERT(s.IsEmpty());
+			wxASSERT(s.IsEmpty());
 		break;
 		default:
-			ASSERT(FALSE); // bad m_type value
+			wxASSERT(FALSE); // bad m_type value
 	}
 
 	return s;
@@ -501,7 +501,7 @@ void CDateValue::CalcDisplay()
 	m_strSort = GetSortString();
 }
 
-void CDateValue::Set(Type type, CDate d, CDate d2, const CString& strPhrase)
+void CDateValue::Set(Type type, CDate d, CDate d2, const wxString& strPhrase)
 {
 	m_type = type;
 	m_d = d;
@@ -510,7 +510,7 @@ void CDateValue::Set(Type type, CDate d, CDate d2, const CString& strPhrase)
 	CalcDisplay();
 }
 
-void CDateValue::Get(Type& type, CDate& d, CDate& d2, CString& strPhrase)
+void CDateValue::Get(Type& type, CDate& d, CDate& d2, wxString& strPhrase)
 {
 	type = m_type;
 	d = m_d;
@@ -518,7 +518,7 @@ void CDateValue::Get(Type& type, CDate& d, CDate& d2, CString& strPhrase)
 	strPhrase = m_strPhrase;
 }
 
-CString CDateValue::Display(DWORD dwFlags) const
+wxString CDateValue::Display(DWORD dwFlags) const
 {
 	if (dwFlags&DATE_SHORTDATE)
 		return m_strDisplayShort;
@@ -534,7 +534,7 @@ int CDateValue::GetSimpleYear()
 		return nYear2;
 	if (nYear2==0)
 		return nYear1;
-	return min(nYear1,nYear2);
+	return std::min(nYear1,nYear2);
 }
 
 int CDateValue::GetSimpleYMD()
@@ -545,7 +545,7 @@ int CDateValue::GetSimpleYMD()
 		return nYMD2;
 	if (nYMD2==0)
 		return nYMD1;
-	return min(nYMD1,nYMD2);
+	return std::min(nYMD1,nYMD2);
 }
 int CDateValue::GetSimpleMonthCount()
 {
@@ -555,5 +555,5 @@ int CDateValue::GetSimpleMonthCount()
 		return nM2;
 	if (nM2==0)
 		return nM1;
-	return min(nM1,nM2);
+	return std::min(nM1,nM2);
 }

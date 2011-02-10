@@ -1,84 +1,75 @@
-// gedtree.h : main header file for the GEDTREE application
-//
+#ifndef GEDTREE
+#define GEDTREE 1
 
-#ifndef __AFXWIN_H__
-	#error include 'stdafx.h' before including this file for PCH
-#endif
-
+#include <iosfwd>
 #include <string>
 
-#include "resource.h"       // main symbols
 #include "appinfo.h"
 #include "IndiClip.h"
 #include "WebServer.h"
 
-using namespace std;
-
 #define SetDispText(s) item.pszText = (LPTSTR)(LPCTSTR)(s);
 
-/////////////////////////////////////////////////////////////////////////////
-// CGedtreeApp:
-// See gedtree.cpp for the implementation of this class
-//
 
-class CGedtreeApp : public CWinApp
+class CGedtreeApp : public wxApp
 {
+
 public:
 	CGedtreeApp();
 	virtual ~CGedtreeApp();
-	BOOL ConfirmDelete(const CString& strItem);
-	void GetReg(const CString& strKey,const CString& strSub,CString& strVal,const CString& strDefault);
-	void GetReg(const CString& strKey,const CString& strSub,int& nVal,const int& nDefault);
-	void PutReg(const CString& strKey,const CString& strSub,const CString& strVal);
-	void PutReg(const CString& strKey,const CString& strSub,const int& nVal);
-	void SaveShellFileTypes();
-	void RestoreShellFileTypes();
-	void PrepareForRegisterShellFileTypes();
-	void MoveKey(CDocTemplate* pt, enum CDocTemplate::DocStringIndex idocstr, HKEY hKeySrc, HKEY hKeyDst);
-	void RemoveKey(CDocTemplate* pt, enum CDocTemplate::DocStringIndex idocstr, HKEY hKeySrc);
-	void CopyKey(HKEY hKeySrc, HKEY hKeyDest, LPCTSTR name);
-	void DeleteKey(HKEY hKey, LPCTSTR name);
+	BOOL ConfirmDelete(const wxString& strItem);
+//	void GetReg(const wxString& strKey,const wxString& strSub,wxString& strVal,const wxString& strDefault);
+//	void GetReg(const wxString& strKey,const wxString& strSub,int& nVal,const int& nDefault);
+//	void PutReg(const wxString& strKey,const wxString& strSub,const wxString& strVal);
+//	void PutReg(const wxString& strKey,const wxString& strSub,const int& nVal);
+//	void SaveShellFileTypes();
+//	void RestoreShellFileTypes();
+//	void PrepareForRegisterShellFileTypes();
+//	void MoveKey(wxDocTemplate* pt, enum wxDocTemplate::DocStringIndex idocstr, HKEY hKeySrc, HKEY hKeyDst);
+//	void RemoveKey(wxDocTemplate* pt, enum wxDocTemplate::DocStringIndex idocstr, HKEY hKeySrc);
+//	void CopyKey(HKEY hKeySrc, HKEY hKeyDest, LPCTSTR name);
+//	void DeleteKey(HKEY hKey, LPCTSTR name);
 	void ResetAllDocuments(UINT flagsChanged = -1);
 	void ResetFont();
 	BOOL SaveAsUnicode();
-	CDocument* GetOpenDocument(LPCTSTR lpszFileName);
+	wxDocument* GetOpenDocument(LPCTSTR lpszFileName);
 	BOOL LowMem();
 	void Uninstall();
 	void RemoveApp();
 	void UninstallRegistry();
 	void CreateStartMenuShortcut(BOOL bShowMessage = TRUE);
 	void DeleteStartMenuShortcut(BOOL bShowMessage = TRUE);
-	CString GetStartMenuShortcutFileName();
+	wxString GetStartMenuShortcutFileName();
 	void AddTemplates();
-	CDC* GetDC();
+	wxDC* GetDC();
 	void SavePathsToReg();
 	void OpenDocsFromReg();
 	void OpenDocsFromAppDir();
-	bool GetPathFromReg(int i, CString& strPath);
+	bool GetPathFromReg(int i, wxString& strPath);
 	bool DoPrintDlg(bool bForceReset = false);
 	void Copy(CGedtreeDoc* pDocFrom, CGedtreeDoc* pDocTo);
 	void CloseClip();
-	void GetDocs(wostream& os);
-	void htmlFooter(wostream& os);
-	CGedtreeDoc* FindDoc(const wstring& sid);
-	void writecss(wostringstream& os, wstring& mime, wstring& lastmod, const wstring& ifmod);
-	void webFile(const wstring& path, thinsock& sock, wstring& mime);
+	//TODO void GetDocs(std::wostream& os);
+	//TODO void htmlFooter(std::wostream& os);
+	CGedtreeDoc* FindDoc(const std::wstring& sid);
+	// TODO void writecss(std::wostringstream& os, std::wstring& mime, std::wstring& lastmod, const std::wstring& ifmod);
+	void webFile(const std::wstring& path, thinsock& sock, std::wstring& mime);
 
 	CAppInfo m_info;
 	HKEY m_hkey;
-	CFont m_font;
-	CFont m_fontBigBold;
-	CFont m_fontSmall;
+	wxFont m_font;
+	wxFont m_fontBigBold;
+	wxFont m_fontSmall;
 	double m_fontRescale;
-	CDC* m_pDC;
-	CSize m_sizePage;
-	CString m_strAppDir;
+	wxDC* m_pDC;
+	wxSize m_sizePage;
+	wxString m_strAppDir;
 	PRINTDLG m_printdlg;
 	bool m_bShowPageBreaks;
 	CGedtreeDoc* m_pClip;
 	WebServer* m_pWebServer;
 	ULARGE_INTEGER m_ulBuildTime;
-	wstring m_strBuildTime;
+	std::wstring m_strBuildTime;
 	double m_nMaxIndiWidth;
 	double m_nIndiBorderX;
 	double m_nIndiBorderY;
@@ -109,17 +100,17 @@ public:
 	afx_msg void OnViewSubmitter();
 	afx_msg void OnOptionsUnicode();
 	afx_msg void OnOptionsPageBreaks();
-	afx_msg void OnUpdateOptionsPageBreaks(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateOptionsPageBreaks(wxUpdateUIEvent& pCmdUI);
 	afx_msg void OnToolsHoliday();
 	afx_msg void OnBirthCalc();
-	afx_msg void OnUpdateFileSetup(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateFileSetup(wxUpdateUIEvent& pCmdUI);
 	afx_msg void OnFileSetup();
 	afx_msg void OnFileServe();
 	afx_msg void OnFilePageSetup();
-	afx_msg void OnUpdateFileRegister(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateFileRegister(wxUpdateUIEvent& pCmdUI);
 	afx_msg void OnFileRegister();
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 
 	void GetRegKey();
 	void InitFonts(LOGFONT* plf);
@@ -136,7 +127,6 @@ public:
 	void CreateClipboard();
 };
 
+DECLARE_APP(CGedtreeApp);
 
-/////////////////////////////////////////////////////////////////////////////
-
-extern CGedtreeApp theApp;
+#endif

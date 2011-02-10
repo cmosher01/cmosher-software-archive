@@ -18,8 +18,8 @@ static char THIS_FILE[] = __FILE__;
 // CEditEvent dialog
 
 
-CEditEvent::CEditEvent(BOOL bFamily, BOOL bAttr, CWnd* pParent /*=NULL*/)
-	: CDialog(CEditEvent::IDD, pParent),
+CEditEvent::CEditEvent(BOOL bFamily, BOOL bAttr, wxWindow* pParent /*=NULL*/)
+	: wxDialog(CEditEvent::IDD, pParent),
 	m_bFamily(bFamily),
 	m_bAttr(bAttr)
 {
@@ -34,7 +34,7 @@ CEditEvent::CEditEvent(BOOL bFamily, BOOL bAttr, CWnd* pParent /*=NULL*/)
 
 void CEditEvent::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	wxDialog::DoDataExchange(pDX);
 
 	DDX_Control(pDX, IDC_TYPE, m_comboType);
 	if (!m_comboType.GetCount())
@@ -69,7 +69,7 @@ void CEditEvent::DoDataExchange(CDataExchange* pDX)
 	SetStaticTitles();
 }
 
-static const CString strAttrName[] =
+static const wxString strAttrName[] =
 {
 	"caste",
 	"description",
@@ -86,7 +86,7 @@ static const CString strAttrName[] =
 	""
 };
 
-static const CString strEventNameI[] =
+static const wxString strEventNameI[] =
 {
 	"(other)",
 	"birth",
@@ -115,7 +115,7 @@ static const CString strEventNameI[] =
 	""
 };
 
-static const CString strEventNameF[] =
+static const wxString strEventNameF[] =
 {
 	"(other)",
 	"marriage",
@@ -131,7 +131,7 @@ static const CString strEventNameF[] =
 	""
 };
 
-static const CString strAttrToken[] =
+static const wxString strAttrToken[] =
 {
 	"CAST",
 	"DSCR",
@@ -148,7 +148,7 @@ static const CString strAttrToken[] =
 	""
 };
 
-static const CString strEventTokenI[] =
+static const wxString strEventTokenI[] =
 {
 	"EVEN",
 	"BIRT",
@@ -177,7 +177,7 @@ static const CString strEventTokenI[] =
 	""
 };
 
-static const CString strEventTokenF[] =
+static const wxString strEventTokenF[] =
 {
 	"EVEN",
 	"MARR",
@@ -315,7 +315,7 @@ void CEditEvent::Enable()
 		m_editType.ShowWindow(SW_SHOW);
 }
 
-BEGIN_MESSAGE_MAP(CEditEvent, CDialog)
+BEGIN_EVENT_TABLE(CEditEvent, wxDialog)
 	//{{AFX_MSG_MAP(CEditEvent)
 	ON_BN_CLICKED(IDC_CHANGEDATE, OnChangedate)
 	ON_CBN_SELCHANGE(IDC_TYPE, OnSelchangeType)
@@ -323,7 +323,7 @@ BEGIN_MESSAGE_MAP(CEditEvent, CDialog)
 	ON_BN_CLICKED(IDC_DELETE, OnDelete)
 	ON_WM_SIZE()
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CEditEvent message handlers
@@ -387,7 +387,7 @@ void CEditEvent::OnDelete()
 
 void CEditEvent::OnSize(UINT nType, int cx, int cy) 
 {
-	CDialog::OnSize(nType, cx, cy);
+	wxDialog::OnSize(nType, cx, cy);
 
 	if (nType==SIZE_RESTORED || nType==SIZE_MAXIMIZED)
 	{
@@ -399,43 +399,43 @@ void CEditEvent::OnSize(UINT nType, int cx, int cy)
 }
 
 static const int nDlgMargin(10);
-static const CSize sizButton(75,23);
+static const wxSize sizButton(75,23);
 
 void CEditEvent::PositionControls(int cx, int cy)
 {
 	SetRedraw(FALSE);
 
-	CRect rectClient;
+	wxRect rectClient;
 	GetClientRect(rectClient);
 
-	CRect rectEdit;
+	wxRect rectEdit;
 	m_editPlace.GetWindowRect(rectEdit);
 	ScreenToClient(rectEdit);
 	rectEdit.right = rectClient.right-nDlgMargin;
 	m_editPlace.MoveWindow(rectEdit);
 
-	CRect rectOK;
+	wxRect rectOK;
 	rectOK.bottom = rectClient.bottom-nDlgMargin;
 	rectOK.top = rectOK.bottom-sizButton.cy;
 	rectOK.left = nDlgMargin;
 	rectOK.right = rectOK.left+sizButton.cx;
 	m_buttonOK.MoveWindow(rectOK);
 
-	CRect rectCancel;
+	wxRect rectCancel;
 	rectCancel.bottom = rectOK.bottom;
 	rectCancel.top = rectOK.top;
 	rectCancel.left = rectOK.right+nDlgMargin;
 	rectCancel.right = rectCancel.left+sizButton.cx;
 	m_buttonCancel.MoveWindow(rectCancel);
 
-	CRect rectDelete;
+	wxRect rectDelete;
 	rectDelete.bottom = rectOK.bottom;
 	rectDelete.top = rectOK.top;
 	rectDelete.right = rectClient.right-nDlgMargin;
 	rectDelete.left = rectClient.right-2*sizButton.cx;
 	m_buttonDelete.MoveWindow(rectDelete);
 
-	CRect rectText;
+	wxRect rectText;
 	rectText.top = 150;
 	rectText.left = nDlgMargin;
 	rectText.right = rectClient.right-nDlgMargin;
@@ -448,7 +448,7 @@ void CEditEvent::PositionControls(int cx, int cy)
 
 BOOL CEditEvent::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+	wxDialog::OnInitDialog();
 	RECT r;
 	GetClientRect(&r);
 	PositionControls(r.right,r.bottom);

@@ -25,7 +25,7 @@ CRepository& CRepository::operator=(const CRepository& o)
 
 void CRepository::GetFromTree()
 {
-	CTreeCtrl& tree = m_pDoc->m_tree;
+	wxTreeCtrl& tree = m_pDoc->m_tree;
 
 	HTREEITEM htiSub = tree.GetChildItem(m_hTreeItem);
 	while (htiSub)

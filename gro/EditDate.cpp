@@ -15,8 +15,8 @@ static char THIS_FILE[] = __FILE__;
 // CEditDate dialog
 
 
-CEditDate::CEditDate(CWnd* pParent /*=NULL*/)
-	: CDialog(CEditDate::IDD, pParent)
+CEditDate::CEditDate(wxWindow* pParent /*=NULL*/)
+	: wxDialog(CEditDate::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CEditDate)
 	m_strPhrase = _T("");
@@ -36,14 +36,14 @@ CEditDate::CEditDate(CWnd* pParent /*=NULL*/)
 
 void CEditDate::FixNullEdit(int nID)
 {
-	CEdit* pEdit = (CEdit*)GetDlgItem(nID);
+	wxTextCtrl* pEdit = (wxTextCtrl*)GetDlgItem(nID);
 	if (!pEdit->GetWindowTextLength())
 		pEdit->SetWindowText(_T("0"));
 }
 
 void CEditDate::FixZeroEdit(int nID)
 {
-	CEdit* pEdit = (CEdit*)GetDlgItem(nID);
+	wxTextCtrl* pEdit = (wxTextCtrl*)GetDlgItem(nID);
 	if (pEdit->GetWindowTextLength()==1)
 	{
 		_TCHAR c[2];
@@ -59,7 +59,7 @@ void CEditDate::DoDataExchange(CDataExchange* pDX)
 	FixNullEdit(IDC_DAY2);
 	FixNullEdit(IDC_YEAR2);
 
-	CDialog::DoDataExchange(pDX);
+	wxDialog::DoDataExchange(pDX);
 
 	DDX_Control(pDX, IDC_MONTH, m_comboMonth);
 	DDX_Control(pDX, IDC_MONTH2, m_comboMonth2);
@@ -177,7 +177,7 @@ void CEditDate::ValueToData()
 	if (t==CDateValue::RANGE)
 	{
 		if (d && d2)
-			ASSERT(m_nType==4);
+			wxASSERT(m_nType==4);
 		else if (d)
 			m_nType = 5;
 		else if (d2)
@@ -207,8 +207,8 @@ void CEditDate::ValueToData()
 
 void CEditDate::SetStaticTitles()
 {
-	CString strAfter;
-	CString strBefore;
+	wxString strAfter;
+	wxString strBefore;
 
 	if (m_nType==1)
 	{
@@ -304,7 +304,7 @@ void CEditDate::Enable()
 	}
 }
 
-BEGIN_MESSAGE_MAP(CEditDate, CDialog)
+BEGIN_EVENT_TABLE(CEditDate, wxDialog)
 	//{{AFX_MSG_MAP(CEditDate)
 	//}}AFX_MSG_MAP
 	ON_CBN_SELCHANGE(IDC_DATETYPE,OnChange)
@@ -317,7 +317,7 @@ BEGIN_MESSAGE_MAP(CEditDate, CDialog)
 	ON_CONTROL_RANGE(EN_CHANGE,IDC_DAY2,IDC_YEAR2,OnType)
 	ON_CONTROL_RANGE(BN_CLICKED,IDC_BC2,IDC_AD2,OnType)
 	ON_CONTROL_RANGE(BN_CLICKED,IDC_GREGORIAN2,IDC_JULIAN2,OnCalendar2)
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CEditDate message handlers
@@ -339,7 +339,7 @@ void CEditDate::OnCalendar(UINT nID)
 	CDateValue::Type type;
 	CDate d;
 	CDate d2;
-	CString strPhrase;
+	wxString strPhrase;
 	m_dv.Get(type,d,d2,strPhrase);
 	if (d.GetJD())
 	{
@@ -351,7 +351,7 @@ void CEditDate::OnCalendar(UINT nID)
 		}
 		else
 		{
-			ASSERT(!d.IsJulian()&&!bToGreg);
+			wxASSERT(!d.IsJulian()&&!bToGreg);
 			d.GetJulian(&nYear,&nMonth,&nDay);
 			d.SetJulian(nYear,nMonth,nDay);
 		}
@@ -367,7 +367,7 @@ void CEditDate::OnCalendar2(UINT nID)
 	CDateValue::Type type;
 	CDate d;
 	CDate d2;
-	CString strPhrase;
+	wxString strPhrase;
 	m_dv.Get(type,d,d2,strPhrase);
 	if (d2.GetJD())
 	{
@@ -379,7 +379,7 @@ void CEditDate::OnCalendar2(UINT nID)
 		}
 		else
 		{
-			ASSERT(!d2.IsJulian()&&!bToGreg);
+			wxASSERT(!d2.IsJulian()&&!bToGreg);
 			d2.GetJulian(&nYear,&nMonth,&nDay);
 			d2.SetJulian(nYear,nMonth,nDay);
 		}
@@ -448,7 +448,7 @@ void CEditDate::OnOK()
 {
 	if (m_dv.IsValid())
 	{
-		CDialog::OnOK();
+		wxDialog::OnOK();
 	}
 	else
 	{

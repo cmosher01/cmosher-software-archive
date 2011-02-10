@@ -6,8 +6,8 @@
 class CRepository : public CGedRecord
 {
 public:
-	CString m_strName;
-	CString m_strAddr;
+	wxString m_strName;
+	wxString m_strAddr;
 
 	CRepository(CGedtreeDoc* pDoc = NULL, HTREEITEM hTreeItem = NULL);
 	CRepository(const CRepository& o);
@@ -16,5 +16,6 @@ public:
 	void GetFromTree();
 	void PutToTree();
 };
+WX_DECLARE_OBJARRAY(CRepository,wxArrayCRepository);
 
 #endif

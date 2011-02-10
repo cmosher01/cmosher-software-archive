@@ -50,7 +50,7 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CGedtreeApp
 
-BEGIN_MESSAGE_MAP(CGedtreeApp, CWinApp)
+BEGIN_EVENT_TABLE(CGedtreeApp, CWinApp)
 	//{{AFX_MSG_MAP(CGedtreeApp)
 	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
 	ON_COMMAND(ID_FILE_NEW, OnFileNew)
@@ -70,7 +70,7 @@ BEGIN_MESSAGE_MAP(CGedtreeApp, CWinApp)
 	//}}AFX_MSG_MAP
 	ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
 	ON_COMMAND(ID_FILE_OPEN, CWinApp::OnFileOpen)
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /*
 static void check(HRESULT hr)
@@ -264,7 +264,7 @@ CGedtreeApp::~CGedtreeApp()
 /////////////////////////////////////////////////////////////////////////////
 // The one and only CGedtreeApp object
 
-CGedtreeApp theApp;
+IMPLEMENT_APP(CGedtreeApp);
 
 /////////////////////////////////////////////////////////////////////////////
 // CGedtreeApp initialization
@@ -363,10 +363,10 @@ BOOL CGedtreeApp::InitInstance()
 
 BOOL CGedtreeApp::FirstInstance()
 {
-	CString strTitle;
+	wxString strTitle;
 	strTitle.LoadString(IDR_MAINFRAME);
 
-	CWnd* pWnd = CWnd::FindWindow(strTitle,NULL);
+	wxWindow* pWnd = wxWindow::FindWindow(strTitle,NULL);
 	if (!pWnd) return TRUE; // no previous instance
 
 	pWnd->SetForegroundWindow();
@@ -413,19 +413,19 @@ BOOL CGedtreeApp::FirstInstance()
 
 BOOL AFXAPI AfxFullPath(LPTSTR lpszPathOut, LPCTSTR lpszFileIn);
 
-CDocument* CGedtreeApp::GetOpenDocument(LPCTSTR lpszFileName)
+wxDocument* CGedtreeApp::GetOpenDocument(LPCTSTR lpszFileName)
 {
-	CDocument* pOpenDocument = NULL;
+	wxDocument* pOpenDocument = NULL;
 
 	TCHAR szPath[_MAX_PATH];
 	AfxFullPath(szPath,lpszFileName);
 
-	CDocTemplate::Confidence match;
+	wxDocTemplate::Confidence match;
 	POSITION pos = GetFirstDocTemplatePosition();
-	CDocTemplate* pTemplate = GetNextDocTemplate(pos);
+	wxDocTemplate* pTemplate = GetNextDocTemplate(pos);
 	match = pTemplate->MatchDocType(szPath,pOpenDocument);
 
-	if (match != CDocTemplate::yesAlreadyOpen)
+	if (match != wxDocTemplate::yesAlreadyOpen)
 		pOpenDocument = NULL; // just in case
 
 	return pOpenDocument;
@@ -468,7 +468,7 @@ void CGedtreeApp::GetRegKey()
 	if (m_info.m_bPermanent)
 		return;
 
-	CString strKey = "Software\\";
+	wxString strKey = "Software\\";
 	strKey += m_info.m_strCompany;
 	strKey += "\\";
 	strKey += m_pszAppName;
@@ -483,10 +483,10 @@ void CGedtreeApp::GetRegKey()
 const int ccRegBuf(512);
 
 void CGedtreeApp::GetReg(
-	const CString& strKey,
-	const CString& strSub,
-	CString& strVal,
-	const CString& strDefault)
+	const wxString& strKey,
+	const wxString& strSub,
+	wxString& strVal,
+	const wxString& strDefault)
 {
 	HKEY hkey;
 	if (m_info.m_bPermanent || ::RegOpenKey(m_hkey,strKey,&hkey)!=ERROR_SUCCESS)
@@ -504,12 +504,12 @@ void CGedtreeApp::GetReg(
 }
 
 void CGedtreeApp::GetReg(
-	const CString& strKey,
-	const CString& strSub,
+	const wxString& strKey,
+	const wxString& strSub,
 	int& nVal,
 	const int& nDefault)
 {
-	CString strVal;
+	wxString strVal;
 	char sDefault[17];
 	_itoa(nDefault,sDefault,10);
 	GetReg(strKey,strSub,strVal,sDefault);
@@ -517,9 +517,9 @@ void CGedtreeApp::GetReg(
 }
 
 void CGedtreeApp::PutReg(
-	const CString& strKey,
-	const CString& strSub,
-	const CString& strVal)
+	const wxString& strKey,
+	const wxString& strSub,
+	const wxString& strVal)
 {
 	HKEY hkey;
 	int e = ::RegOpenKey(m_hkey,strKey,&hkey);
@@ -537,8 +537,8 @@ void CGedtreeApp::PutReg(
 }
 
 void CGedtreeApp::PutReg(
-	const CString& strKey,
-	const CString& strSub,
+	const wxString& strKey,
+	const wxString& strSub,
 	const int& nVal)
 {
 	char sVal[17];
@@ -546,158 +546,158 @@ void CGedtreeApp::PutReg(
 	PutReg(strKey,strSub,sVal);
 }
 
-void CGedtreeApp::SaveShellFileTypes()
-{
-	// save (and remove) classes reg keys that will be
-	// set later by RegisterShellFileTypes
+//void CGedtreeApp::SaveShellFileTypes()
+//{
+//	// save (and remove) classes reg keys that will be
+//	// set later by RegisterShellFileTypes
+//
+//	HKEY hKeyStor;
+//	LONG nErr = ::RegOpenKey(m_hkey,_T("OldClasses"),&hKeyStor);
+//	if (nErr==ERROR_SUCCESS)
+//	{
+//		// we've already done the save on a previous run
+//		::RegCloseKey(hKeyStor);
+//		return;
+//	}
+//
+//	nErr = ::RegCreateKey(m_hkey,_T("OldClasses"),&hKeyStor);
+//	if (nErr!=ERROR_SUCCESS) return;
+//
+//	POSITION pos = GetFirstDocTemplatePosition();
+//	while (pos)
+//	{
+//		wxDocTemplate* pt = GetNextDocTemplate(pos);
+//
+//		wxString strFileTypeID, strFilterExt, strFileTypeName;
+//
+//		// file type id (e.g., "Gedcom") key under classes root
+//		MoveKey(pt,wxDocTemplate::regFileTypeId,HKEY_CLASSES_ROOT,hKeyStor);
+//
+//		// file type (e.g., ".ged") key under classes root
+//		MoveKey(pt,wxDocTemplate::filterExt,HKEY_CLASSES_ROOT,hKeyStor);
+//	}
+//
+//	::RegCloseKey(hKeyStor);
+//}
+//
+//void CGedtreeApp::RestoreShellFileTypes()
+//{
+//	HKEY hKeyStor;
+//	LONG nErr = ::RegOpenKey(m_hkey,_T("OldClasses"),&hKeyStor);
+//	if (nErr!=ERROR_SUCCESS) return;
+//
+//	POSITION pos = GetFirstDocTemplatePosition();
+//	while (pos)
+//	{
+//		wxDocTemplate* pt = GetNextDocTemplate(pos);
+//
+//		// file type id (e.g., "Gedcom") key under classes root
+//		MoveKey(pt,wxDocTemplate::regFileTypeId,hKeyStor,HKEY_CLASSES_ROOT);
+//
+//		// file type (e.g., ".ged") key under classes root
+//		MoveKey(pt,wxDocTemplate::filterExt,hKeyStor,HKEY_CLASSES_ROOT);
+//	}
+//
+//	::RegCloseKey(hKeyStor);
+//
+//	::SHChangeNotify(SHCNE_ASSOCCHANGED,SHCNF_IDLIST,0,0);
+//}
+//
+//void CGedtreeApp::PrepareForRegisterShellFileTypes()
+//{
+//	POSITION pos = GetFirstDocTemplatePosition();
+//	while (pos)
+//	{
+//		wxDocTemplate* pt = GetNextDocTemplate(pos);
+//
+//		// file type id (e.g., "Gedcom") key under classes root
+//		RemoveKey(pt,wxDocTemplate::regFileTypeId,HKEY_CLASSES_ROOT);
+//
+//		// file type (e.g., ".ged") key under classes root
+//		RemoveKey(pt,wxDocTemplate::filterExt,HKEY_CLASSES_ROOT);
+//	}
+//}
+//
+//void CGedtreeApp::MoveKey(wxDocTemplate* pt, enum wxDocTemplate::DocStringIndex idocstr, HKEY hKeySrc, HKEY hKeyDst)
+//{
+//	BOOL bOK;
+//	wxString str;
+//
+//	bOK = pt->GetDocString(str,idocstr);
+//	if (!bOK) return;
+//	if (str.IsEmpty()) return;
+//
+//	DeleteKey(hKeyDst,str);
+//	CopyKey(hKeySrc,hKeyDst,str);
+//	DeleteKey(hKeySrc,str);
+//}
+//
+//void CGedtreeApp::RemoveKey(wxDocTemplate* pt, enum wxDocTemplate::DocStringIndex idocstr, HKEY hKeySrc)
+//{
+//	BOOL bOK;
+//	wxString str;
+//
+//	bOK = pt->GetDocString(str,idocstr);
+//	if (!bOK) return;
+//	if (str.IsEmpty()) return;
+//
+//	DeleteKey(hKeySrc,str);
+//}
+//
+//const DWORD nMaxRegName(MAX_PATH+1);
+//
+//void CGedtreeApp::CopyKey(HKEY hKeySrc, HKEY hKeyDest, LPCTSTR name)
+//{
+//	HKEY hKeySubSrc;
+//	LONG nErr = ::RegOpenKey(hKeySrc,name,&hKeySubSrc);
+//	if (nErr!=ERROR_SUCCESS) return;
+//
+//	HKEY hKeySubDst;
+//	nErr = ::RegCreateKey(hKeyDest,name,&hKeySubDst);
+//	if (nErr!=ERROR_SUCCESS) return;
+//
+//	TCHAR sValueName[nMaxRegName];
+//	DWORD nValueNameSiz = nMaxRegName;
+//	DWORD nType;
+//	BYTE *pData = new BYTE [nMaxRegName];
+//	DWORD nDataSiz = nMaxRegName;
+//	int i(0);
+//	while (::RegEnumValue(hKeySubSrc,i++,sValueName,&nValueNameSiz,NULL,&nType,pData,&nDataSiz)==ERROR_SUCCESS)
+//	{
+//		nErr = ::RegSetValueEx(hKeySubDst,sValueName,0,nType,pData,nDataSiz);
+//		if (nErr!=ERROR_SUCCESS) {}//???
+//		nValueNameSiz = nMaxRegName;
+//		nDataSiz = nMaxRegName;
+//	}
+//	delete [] pData;
+//
+//	i = 0;
+//	while (::RegEnumKey(hKeySubSrc,i++,sValueName,nMaxRegName)==ERROR_SUCCESS)
+//		CopyKey(hKeySubSrc,hKeySubDst,sValueName);
+//
+//	::RegCloseKey(hKeySubDst);
+//	::RegCloseKey(hKeySubSrc);
+//}
+//
+//void CGedtreeApp::DeleteKey(HKEY hKey, LPCTSTR name)
+//{
+//	// delete all subkeys first
+//
+//	HKEY hKeySub;
+//	LONG nErr = ::RegOpenKey(hKey,name,&hKeySub);
+//	if (nErr!=ERROR_SUCCESS) return;
+//
+//	// always pass index zero, because we will be deleting keys as we go through them
+//	TCHAR sValueName[nMaxRegName];
+//	while (::RegEnumKey(hKeySub,0,sValueName,nMaxRegName)==ERROR_SUCCESS)
+//		DeleteKey(hKeySub,sValueName);
+//
+//	::RegCloseKey(hKeySub);
+//
+//	::RegDeleteKey(hKey,name);
+//}
 
-	HKEY hKeyStor;
-	LONG nErr = ::RegOpenKey(m_hkey,_T("OldClasses"),&hKeyStor);
-	if (nErr==ERROR_SUCCESS)
-	{
-		// we've already done the save on a previous run
-		::RegCloseKey(hKeyStor);
-		return;
-	}
-
-	nErr = ::RegCreateKey(m_hkey,_T("OldClasses"),&hKeyStor);
-	if (nErr!=ERROR_SUCCESS) return;
-
-	POSITION pos = GetFirstDocTemplatePosition();
-	while (pos)
-	{
-		CDocTemplate* pt = GetNextDocTemplate(pos);
-
-		CString strFileTypeID, strFilterExt, strFileTypeName;
-
-		// file type id (e.g., "Gedcom") key under classes root
-		MoveKey(pt,CDocTemplate::regFileTypeId,HKEY_CLASSES_ROOT,hKeyStor);
-
-		// file type (e.g., ".ged") key under classes root
-		MoveKey(pt,CDocTemplate::filterExt,HKEY_CLASSES_ROOT,hKeyStor);
-	}
-
-	::RegCloseKey(hKeyStor);
-}
-
-void CGedtreeApp::RestoreShellFileTypes()
-{
-	HKEY hKeyStor;
-	LONG nErr = ::RegOpenKey(m_hkey,_T("OldClasses"),&hKeyStor);
-	if (nErr!=ERROR_SUCCESS) return;
-
-	POSITION pos = GetFirstDocTemplatePosition();
-	while (pos)
-	{
-		CDocTemplate* pt = GetNextDocTemplate(pos);
-
-		// file type id (e.g., "Gedcom") key under classes root
-		MoveKey(pt,CDocTemplate::regFileTypeId,hKeyStor,HKEY_CLASSES_ROOT);
-
-		// file type (e.g., ".ged") key under classes root
-		MoveKey(pt,CDocTemplate::filterExt,hKeyStor,HKEY_CLASSES_ROOT);
-	}
-
-	::RegCloseKey(hKeyStor);
-
-	::SHChangeNotify(SHCNE_ASSOCCHANGED,SHCNF_IDLIST,0,0);
-}
-
-void CGedtreeApp::PrepareForRegisterShellFileTypes()
-{
-	POSITION pos = GetFirstDocTemplatePosition();
-	while (pos)
-	{
-		CDocTemplate* pt = GetNextDocTemplate(pos);
-
-		// file type id (e.g., "Gedcom") key under classes root
-		RemoveKey(pt,CDocTemplate::regFileTypeId,HKEY_CLASSES_ROOT);
-
-		// file type (e.g., ".ged") key under classes root
-		RemoveKey(pt,CDocTemplate::filterExt,HKEY_CLASSES_ROOT);
-	}
-}
-
-void CGedtreeApp::MoveKey(CDocTemplate* pt, enum CDocTemplate::DocStringIndex idocstr, HKEY hKeySrc, HKEY hKeyDst)
-{
-	BOOL bOK;
-	CString str;
-
-	bOK = pt->GetDocString(str,idocstr);
-	if (!bOK) return;
-	if (str.IsEmpty()) return;
-
-	DeleteKey(hKeyDst,str);
-	CopyKey(hKeySrc,hKeyDst,str);
-	DeleteKey(hKeySrc,str);
-}
-
-void CGedtreeApp::RemoveKey(CDocTemplate* pt, enum CDocTemplate::DocStringIndex idocstr, HKEY hKeySrc)
-{
-	BOOL bOK;
-	CString str;
-
-	bOK = pt->GetDocString(str,idocstr);
-	if (!bOK) return;
-	if (str.IsEmpty()) return;
-
-	DeleteKey(hKeySrc,str);
-}
-
-const DWORD nMaxRegName(MAX_PATH+1);
-
-void CGedtreeApp::CopyKey(HKEY hKeySrc, HKEY hKeyDest, LPCTSTR name)
-{
-	HKEY hKeySubSrc;
-	LONG nErr = ::RegOpenKey(hKeySrc,name,&hKeySubSrc);
-	if (nErr!=ERROR_SUCCESS) return;
-
-	HKEY hKeySubDst;
-	nErr = ::RegCreateKey(hKeyDest,name,&hKeySubDst);
-	if (nErr!=ERROR_SUCCESS) return;
-
-	TCHAR sValueName[nMaxRegName];
-	DWORD nValueNameSiz = nMaxRegName;
-	DWORD nType;
-	BYTE *pData = new BYTE [nMaxRegName];
-	DWORD nDataSiz = nMaxRegName;
-	int i(0);
-	while (::RegEnumValue(hKeySubSrc,i++,sValueName,&nValueNameSiz,NULL,&nType,pData,&nDataSiz)==ERROR_SUCCESS)
-	{
-		nErr = ::RegSetValueEx(hKeySubDst,sValueName,0,nType,pData,nDataSiz);
-		if (nErr!=ERROR_SUCCESS) {}//???
-		nValueNameSiz = nMaxRegName;
-		nDataSiz = nMaxRegName;
-	}
-	delete [] pData;
-
-	i = 0;
-	while (::RegEnumKey(hKeySubSrc,i++,sValueName,nMaxRegName)==ERROR_SUCCESS)
-		CopyKey(hKeySubSrc,hKeySubDst,sValueName);
-
-	::RegCloseKey(hKeySubDst);
-	::RegCloseKey(hKeySubSrc);
-}
-
-void CGedtreeApp::DeleteKey(HKEY hKey, LPCTSTR name)
-{
-	// delete all subkeys first
-
-	HKEY hKeySub;
-	LONG nErr = ::RegOpenKey(hKey,name,&hKeySub);
-	if (nErr!=ERROR_SUCCESS) return;
-
-	// always pass index zero, because we will be deleting keys as we go through them
-	TCHAR sValueName[nMaxRegName];
-	while (::RegEnumKey(hKeySub,0,sValueName,nMaxRegName)==ERROR_SUCCESS)
-		DeleteKey(hKeySub,sValueName);
-
-	::RegCloseKey(hKeySub);
-
-	::RegDeleteKey(hKey,name);
-}
-
-BOOL CGedtreeApp::ConfirmDelete(const CString& strItem)
+BOOL CGedtreeApp::ConfirmDelete(const wxString& strItem)
 {
 	CConfirmDelete d(strItem);
 	return d.DoModal()==IDC_DELETE;
@@ -734,7 +734,7 @@ void CGedtreeApp::ResetAllDocuments(UINT flagsChanged)
 	POSITION pos = GetFirstDocTemplatePosition();
 	while (pos)
 	{
-		CDocTemplate* pt = GetNextDocTemplate(pos); // DL tmpl
+		wxDocTemplate* pt = GetNextDocTemplate(pos); // DL tmpl
 		POSITION posDoc = pt->GetFirstDocPosition();
 		while (posDoc)
 		{
@@ -753,11 +753,11 @@ void CGedtreeApp::ResetAllDocuments(UINT flagsChanged)
 	}
 }
 
-CDC* CGedtreeApp::GetDC()
+wxDC* CGedtreeApp::GetDC()
 {
 	if (!m_pDC)
 	{
-		m_pDC = new CDC;
+		m_pDC = new wxDC;
 		VERIFY(m_pDC->CreateCompatibleDC(NULL));
 	}
 	return m_pDC;
@@ -795,14 +795,14 @@ void CGedtreeApp::OnAppAbout()
 void CGedtreeApp::OnFileNew() 
 {
 	POSITION pos = GetFirstDocTemplatePosition();
-	CDocTemplate* p = GetNextDocTemplate(pos); // DL tmpl
+	wxDocTemplate* p = GetNextDocTemplate(pos); // DL tmpl
 	p->OpenDocumentFile(NULL);
 }
 
 void CGedtreeApp::CreateClipboard()
 {
 	POSITION pos = GetFirstDocTemplatePosition();
-	CDocTemplate* p = GetNextDocTemplate(pos); // DL tmpl
+	wxDocTemplate* p = GetNextDocTemplate(pos); // DL tmpl
 	m_pClip = (CGedtreeDoc*)(p->OpenDocumentFile(NULL,FALSE));
 	p->RemoveDocument(m_pClip);
 	m_pClip->ResetSubValue(TVI_ROOT,"HEAD","",TRUE,TRUE);
@@ -843,7 +843,7 @@ void CGedtreeApp::OnFont()
 		POSITION pos = GetFirstDocTemplatePosition();
 		while (pos)
 		{
-			CDocTemplate* pt = GetNextDocTemplate(pos);
+			wxDocTemplate* pt = GetNextDocTemplate(pos);
 			POSITION posDoc = pt->GetFirstDocPosition();
 			while (posDoc)
 			{
@@ -931,7 +931,7 @@ void CGedtreeApp::ReadFontFromRegistry()
 	GetRegFont(lfQuality);
 	GetRegFont(lfPitchAndFamily);
 
-	CString strFaceName;
+	wxString strFaceName;
 	GetReg("Font","lfFaceName",strFaceName,lfDef.lfFaceName);
 	_tcsncpy(lf.lfFaceName,strFaceName,LF_FACESIZE);
 
@@ -956,9 +956,9 @@ void CGedtreeApp::OnOptionsPageBreaks()
 	ResetAllDocuments();
 }
 
-void CGedtreeApp::OnUpdateOptionsPageBreaks(CCmdUI* pCmdUI)
+void CGedtreeApp::OnUpdateOptionsPageBreaks(wxUpdateUIEvent& pCmdUI)
 {
-	pCmdUI->SetCheck(m_bShowPageBreaks);
+	pCmdUI.SetCheck(m_bShowPageBreaks);
 }
 
 BOOL CGedtreeApp::SaveAsUnicode()
@@ -1050,7 +1050,7 @@ void static sendstream(const wostringstream& os, const wstring& mime, thinsock& 
 	int cb = ::WideCharToMultiByte(CP_UTF8,0,strdoc.c_str(),strdoc.length(),0,0,0,0);
 	if (!cb)
 	{
-		::OutputDebugString(CString(L"sendstream, WideCharToMultiByte (1)"));
+		::OutputDebugString(wxString(L"sendstream, WideCharToMultiByte (1)"));
 		throw 404;
 	}
 
@@ -1059,7 +1059,7 @@ void static sendstream(const wostringstream& os, const wstring& mime, thinsock& 
 	if (!ok)
 	{
 		delete [] pb;
-		::OutputDebugString(CString(L"sendstream, WideCharToMultiByte (2)"));
+		::OutputDebugString(wxString(L"sendstream, WideCharToMultiByte (2)"));
 		throw 404;
 	}
 
@@ -1163,7 +1163,7 @@ wstring CGedtreeApp::groch::getHTML(const wstring& path_params, wstring& mime, t
 		CGedtreeDoc* pDoc = theApp.FindDoc(docid);
 		if (!pDoc)
 		{
-			::OutputDebugString(CString(L"getHTML can't find doc"));
+			::OutputDebugString(wxString(L"getHTML can't find doc"));
 			throw 404;
 		}
 
@@ -1242,7 +1242,7 @@ wstring CGedtreeApp::groch::getHTML(const wstring& path_params, wstring& mime, t
 				}
 				else
 				{
-					::OutputDebugString(CString(L"getHTML not index, indi, or source"));
+					::OutputDebugString(wxString(L"getHTML not index, indi, or source"));
 					throw 404;
 				}
 
@@ -1282,14 +1282,14 @@ void CGedtreeApp::webFile(const wstring& spath, thinsock& sock, wstring& mime)
 		{
 			DWORD e = ::GetLastError();
 			e = e;
-			::OutputDebugString(CString(L"webFile can't find file"));
+			::OutputDebugString(wxString(L"webFile can't find file"));
 			throw 404;
 		}
 
 		DWORD dwSize = ::GetFileSize(f,0);
 		if (dwSize==INVALID_FILE_SIZE)
 		{
-			::OutputDebugString(CString(L"webFile invalid file size"));
+			::OutputDebugString(wxString(L"webFile invalid file size"));
 			throw 404;
 		}
 
@@ -1307,7 +1307,7 @@ void CGedtreeApp::webFile(const wstring& spath, thinsock& sock, wstring& mime)
 		BOOL bok = ::ReadFile(f,buf,100*1024,&cr,0);
 		if (!bok)
 		{
-			::OutputDebugString(CString(L"webFile error reading file"));
+			::OutputDebugString(wxString(L"webFile error reading file"));
 			throw 404;
 		}
 
@@ -1319,14 +1319,14 @@ void CGedtreeApp::webFile(const wstring& spath, thinsock& sock, wstring& mime)
 			}
 			catch (...)
 			{
-				::OutputDebugString(CString(L"webFile error calling sendbinary"));
+				::OutputDebugString(wxString(L"webFile error calling sendbinary"));
 				throw 404;
 			}
 
 			bok = ::ReadFile(f,buf,100*1024,&cr,0);
 			if (!bok)
 			{
-				::OutputDebugString(CString(L"webFile error reading file (2)"));
+				::OutputDebugString(wxString(L"webFile error reading file (2)"));
 				throw 404;
 			}
 		}
@@ -1361,7 +1361,7 @@ CGedtreeDoc* CGedtreeApp::FindDoc(const wstring& sid)
 	if (!sid.empty())
 	{
 		POSITION pos = GetFirstDocTemplatePosition();
-		CDocTemplate* pt = GetNextDocTemplate(pos);
+		wxDocTemplate* pt = GetNextDocTemplate(pos);
 		pos = pt->GetFirstDocPosition();
 		while (pos && !pDoc)
 		{
@@ -1377,7 +1377,7 @@ void CGedtreeApp::GetDocs(wostream& os)
 {
 	CGedtreeDoc* pDoc = 0;
 	POSITION pos = GetFirstDocTemplatePosition();
-	CDocTemplate* pt = GetNextDocTemplate(pos);
+	wxDocTemplate* pt = GetNextDocTemplate(pos);
 	pos = pt->GetFirstDocPosition();
 	bool found(false);
 	while (pos)
@@ -1406,7 +1406,7 @@ void CGedtreeApp::GetDocs(wostream& os)
 		os << (LPCTSTR)pDoc->GetTitle();
 		os << L"/?level=0&amp;base=0\">index</a>)</span><br />" << endl;
 
-		CString sn = pDoc->m_head.m_strNote;
+		wxString sn = pDoc->m_head.m_strNote;
 		if (sn.IsEmpty())
 			sn = "[No description for this GEDCOM file is available.]";
 		os << L"<span class=\"filedesc\">" << (LPCTSTR)sn << L"</span>" << endl;
@@ -1440,9 +1440,9 @@ void CGedtreeApp::OnFileServe()
 	}
 }
 
-void CGedtreeApp::OnUpdateFileSetup(CCmdUI* pCmdUI)
+void CGedtreeApp::OnUpdateFileSetup(wxUpdateUIEvent& pCmdUI)
 {
-	pCmdUI->Enable(!m_info.m_bPermanent);
+	pCmdUI.Enable(!m_info.m_bPermanent);
 }
 
 void CGedtreeApp::OnFileSetup() 
@@ -1459,12 +1459,12 @@ void CGedtreeApp::OnFileSetup()
 
 void CGedtreeApp::CreateStartMenuShortcut(BOOL bShowMessage) 
 {
-	CString strMsg;
+	wxString strMsg;
 
 	try
 	{
 		// get the shortcut file's name
-		CString strShortcut = GetStartMenuShortcutFileName();
+		wxString strShortcut = GetStartMenuShortcutFileName();
 
 		FILE* lnkfile = _wfopen(strShortcut,L"r");
 		if (lnkfile)
@@ -1500,7 +1500,7 @@ void CGedtreeApp::DeleteStartMenuShortcut(BOOL bShowMessage)
 {
 	BOOL bOK = ::DeleteFile(GetStartMenuShortcutFileName());
 
-	CString strMsg;
+	wxString strMsg;
 	if (bOK)
 	{
 		strMsg = theApp.m_pszAppName;
@@ -1517,7 +1517,7 @@ void CGedtreeApp::DeleteStartMenuShortcut(BOOL bShowMessage)
 		::AfxMessageBox(strMsg);
 }
 
-CString CGedtreeApp::GetStartMenuShortcutFileName()
+wxString CGedtreeApp::GetStartMenuShortcutFileName()
 {
 	LPITEMIDLIST pidl;
 	::SHGetSpecialFolderLocation(m_pMainWnd->GetSafeHwnd(),CSIDL_PROGRAMS,&pidl);
@@ -1528,7 +1528,7 @@ CString CGedtreeApp::GetStartMenuShortcutFileName()
 	wsPath += m_info.m_strName;
 	wsPath += L".lnk";
 
-	return CString(wsPath.c_str());
+	return wxString(wsPath.c_str());
 }
 
 void CGedtreeApp::Uninstall() 
@@ -1542,10 +1542,10 @@ void CGedtreeApp::Uninstall()
 
 void CGedtreeApp::BuildAppPaths() 
 {
-	CString drive = m_info.m_strAppDrive;
-	CString dir = m_info.m_strAppDir;
-	CString fname = m_info.m_strAppFName;
-	CString ext = m_info.m_strAppExt;
+	wxString drive = m_info.m_strAppDrive;
+	wxString dir = m_info.m_strAppDir;
+	wxString fname = m_info.m_strAppFName;
+	wxString ext = m_info.m_strAppExt;
 
 	m_strAppDir = drive+dir;
 	if (m_strAppDir.Right(1)=='\\')
@@ -1554,7 +1554,7 @@ void CGedtreeApp::BuildAppPaths()
 
 void CGedtreeApp::RemoveApp() 
 {
-	CString strApp = theApp.m_info.m_strAppPath;
+	wxString strApp = theApp.m_info.m_strAppPath;
 
 	TCHAR drive[_MAX_DRIVE];
 	TCHAR dir[_MAX_DIR];
@@ -1565,28 +1565,28 @@ void CGedtreeApp::RemoveApp()
 	TCHAR path_buffer[_MAX_PATH];
 
 	_tmakepath(path_buffer,drive,dir,L"",L"");
-	CString strDir = path_buffer;
+	wxString strDir = path_buffer;
 	ReplaceFileOnReboot(strDir,0);
 
 	ReplaceFileOnReboot(strApp,0);
 
 	_tmakepath(path_buffer,drive,dir,L"groaplt",L".jar");
-	ReplaceFileOnReboot(CString(path_buffer),0);
+	ReplaceFileOnReboot(wxString(path_buffer),0);
 
 	_tmakepath(path_buffer,drive,dir,L"unicows",L".dll");
-	ReplaceFileOnReboot(CString(path_buffer),0);
+	ReplaceFileOnReboot(wxString(path_buffer),0);
 
 	_tmakepath(path_buffer,drive,dir,L"mfc42lu",L".dll");
-	ReplaceFileOnReboot(CString(path_buffer),0);
+	ReplaceFileOnReboot(wxString(path_buffer),0);
 
 	_tmakepath(path_buffer,drive,dir,L"msluirt",L".dll");
-	ReplaceFileOnReboot(CString(path_buffer),0);
+	ReplaceFileOnReboot(wxString(path_buffer),0);
 
 	_tmakepath(path_buffer,drive,dir,L"mslup60",L".dll");
-	ReplaceFileOnReboot(CString(path_buffer),0);
+	ReplaceFileOnReboot(wxString(path_buffer),0);
 
 	_tmakepath(path_buffer,drive,dir,L"mslurt",L".dll");
-	ReplaceFileOnReboot(CString(path_buffer),0);
+	ReplaceFileOnReboot(wxString(path_buffer),0);
 
 	AfxMessageBox(_T("The next time you reboot your system, the uninstallation will finish. Visit http://go.to/gro to re-download GRO if you want to re-install."));
 }
@@ -1605,7 +1605,7 @@ void CGedtreeApp::UninstallRegistry()
 
 	::RegCloseKey(m_hkey);
 
-	CString strKey = "Software\\";
+	wxString strKey = "Software\\";
 	strKey += m_info.m_strCompany;
 	strKey += "\\";
 	strKey += m_pszAppName;
@@ -1650,7 +1650,7 @@ void CGedtreeApp::SavePathsToReg()
 	DeleteKey(m_hkey,L"OpenDocuments");
 
 	POSITION pos = GetFirstDocTemplatePosition();
-	CDocTemplate* pt = GetNextDocTemplate(pos); // DL
+	wxDocTemplate* pt = GetNextDocTemplate(pos); // DL
 	pos = pt->GetFirstDocPosition();
 	int i(0);
 	while (pos)
@@ -1663,15 +1663,15 @@ void CGedtreeApp::SavePathsToReg()
 void CGedtreeApp::OpenDocsFromReg() 
 {
 	int i(0);
-	CString s;
+	wxString s;
 	while (GetPathFromReg(++i,s))
 		OpenDocumentFile(s);
 }
 
 void CGedtreeApp::OpenDocsFromAppDir()
 {
-	CString sDir = m_strAppDir+"\\";
-	CString sFile = sDir+"*.ged";
+	wxString sDir = m_strAppDir+"\\";
+	wxString sFile = sDir+"*.ged";
 
 	WIN32_FIND_DATA ff;
 	HANDLE hFind = ::FindFirstFile(sFile,&ff);
@@ -1688,9 +1688,9 @@ void CGedtreeApp::OpenDocsFromAppDir()
 	::FindClose(hFind);
 }
 
-bool CGedtreeApp::GetPathFromReg(int i, CString& strPath) 
+bool CGedtreeApp::GetPathFromReg(int i, wxString& strPath) 
 {
-	CString s;
+	wxString s;
 	s.Format(L"%d",i);
 	theApp.GetReg("OpenDocuments",s,strPath,"");
 	return !strPath.IsEmpty();
@@ -1720,7 +1720,7 @@ void CGedtreeApp::ResetPageSize()
 		if (!m_printdlg.hDC)
 			throw 0;
 
-		CDC dc;
+		wxDC dc;
 		if (!dc.Attach(m_printdlg.hDC))
 			throw 0;
 
@@ -1783,9 +1783,9 @@ bool CGedtreeApp::DoPrintDlg(bool bForceReset)
 	return ok;
 }
 
-void CGedtreeApp::OnUpdateFileRegister(CCmdUI* pCmdUI)
+void CGedtreeApp::OnUpdateFileRegister(wxUpdateUIEvent& pCmdUI)
 {
-	pCmdUI->Enable(!m_info.m_bPermanent);
+	pCmdUI.Enable(!m_info.m_bPermanent);
 }
 
 void CGedtreeApp::OnFileRegister()
@@ -1948,7 +1948,7 @@ void CGedtreeApp::Copy(CGedtreeDoc* pDocFrom, CGedtreeDoc* pDocTo)
 		if (sour.m_iRepository >= 0)
 		{
 			BOOL bFound = mapRepo.Lookup(sour.m_iRepository,x);
-			ASSERT(bFound); // assert that we actually did add the repo.
+			wxASSERT(bFound); // assert that we actually did add the repo.
 			sour.m_iRepository = x;
 		}
 
@@ -2036,13 +2036,13 @@ void CGedtreeApp::Copy(CGedtreeDoc* pDocFrom, CGedtreeDoc* pDocTo)
 			if (evt.m_cita.m_iSource >= 0)
 			{
 				bFound = mapSour.Lookup(evt.m_cita.m_iSource,x);
-				ASSERT(bFound);
+				wxASSERT(bFound);
 				evt.m_cita.m_iSource = x;
 			}
 			if (evt.m_iNote >= 0)
 			{
 				bFound = mapNote.Lookup(evt.m_iNote,x);
-				ASSERT(bFound);
+				wxASSERT(bFound);
 				evt.m_iNote = x;
 			}
 		}
@@ -2114,20 +2114,20 @@ void CGedtreeApp::Copy(CGedtreeDoc* pDocFrom, CGedtreeDoc* pDocTo)
 		for (k = 0; k<n; ++k)
 		{
 			bFound = mapFami.Lookup(indi.m_riSpouseToFamily[k],x);
-			ASSERT(bFound);
+			wxASSERT(bFound);
 			indi.m_riSpouseToFamily[k] = x;
 		}
 		if (indi.m_iChildToFamily >= 0)
 		{
 			bFound = mapFami.Lookup(indi.m_iChildToFamily,x);
-			ASSERT(bFound);
+			wxASSERT(bFound);
 			indi.m_iChildToFamily = x;
 		}
 
 		if (indi.m_name.m_cita.m_iSource >= 0)
 		{
 			bFound = mapSour.Lookup(indi.m_name.m_cita.m_iSource,x);
-			ASSERT(bFound);
+			wxASSERT(bFound);
 			indi.m_name.m_cita.m_iSource = x;
 		}
 
@@ -2138,13 +2138,13 @@ void CGedtreeApp::Copy(CGedtreeDoc* pDocFrom, CGedtreeDoc* pDocTo)
 			if (evt.m_cita.m_iSource >= 0)
 			{
 				bFound = mapSour.Lookup(evt.m_cita.m_iSource,x);
-				ASSERT(bFound);
+				wxASSERT(bFound);
 				evt.m_cita.m_iSource = x;
 			}
 			if (evt.m_iNote >= 0)
 			{
 				bFound = mapNote.Lookup(evt.m_iNote,x);
-				ASSERT(bFound);
+				wxASSERT(bFound);
 				evt.m_iNote = x;
 			}
 		}
@@ -2154,13 +2154,13 @@ void CGedtreeApp::Copy(CGedtreeDoc* pDocFrom, CGedtreeDoc* pDocTo)
 			if (evt.m_cita.m_iSource >= 0)
 			{
 				bFound = mapSour.Lookup(evt.m_cita.m_iSource,x);
-				ASSERT(bFound);
+				wxASSERT(bFound);
 				evt.m_cita.m_iSource = x;
 			}
 			if (evt.m_iNote >= 0)
 			{
 				bFound = mapNote.Lookup(evt.m_iNote,x);
-				ASSERT(bFound);
+				wxASSERT(bFound);
 				evt.m_iNote = x;
 			}
 		}
@@ -2170,9 +2170,9 @@ void CGedtreeApp::Copy(CGedtreeDoc* pDocFrom, CGedtreeDoc* pDocTo)
 	pDocTo->ResetAllViews();
 	m_pClip->SetModifiedFlag(FALSE);
 	pDocTo->Normalize();
-	CPoint pt = pDocTo->m_pDL->GetScrollPoint();
-	CSize szShift = pt-CPoint(0,0);
-	CRect rectIndis = pDocTo->m_pDL->ShiftSelectedIndis(szShift);
+	wxPoint pt = pDocTo->m_pDL->GetScrollPoint();
+	wxSize szShift = pt-wxPoint(0,0);
+	wxRect rectIndis = pDocTo->m_pDL->ShiftSelectedIndis(szShift);
 	pDocTo->Normalize();
 }
 

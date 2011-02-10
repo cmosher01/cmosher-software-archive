@@ -34,7 +34,7 @@ CSource& CSource::operator=(const CSource& o)
 
 void CSource::GetFromTree()
 {
-	CTreeCtrl& tree = m_pDoc->m_tree;
+	wxTreeCtrl& tree = m_pDoc->m_tree;
 
 	HTREEITEM htiSub = tree.GetChildItem(m_hTreeItem);
 	while (htiSub)
@@ -72,9 +72,9 @@ void CSource::GetFromTree()
 	Calc();
 }
 
-CString CSource::GetDisplay()
+wxString CSource::GetDisplay()
 {
-	CString s;
+	wxString s;
 //	if (!m_strAuthor.IsEmpty())
 //		s = m_strAuthor+". ";
 
@@ -101,9 +101,9 @@ void CSource::PutToTree()
 		m_pDoc->DeleteSubValue(m_hTreeItem,"REPO");
 }
 
-CString CSource::GetRTF(CMemFile& fTmpl)
+wxString CSource::GetRTF(wxFile& fTmpl)
 {
-	CString str;
+	wxString str;
 
 	fTmpl.SeekToBegin();
 	char c;
@@ -111,7 +111,7 @@ CString CSource::GetRTF(CMemFile& fTmpl)
 	{
 		if (c=='%')
 		{
-			CString sTok;
+			wxString sTok;
 			if (!fTmpl.Read(&c,1)) return str;
 			while (c!='%')
 			{
@@ -157,9 +157,9 @@ CString CSource::GetRTF(CMemFile& fTmpl)
 	return str;
 }
 
-CString CSource::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
+wxString CSource::GetWebPage(wxFile& fTmpl, const wxString& sDocID)
 {
-	CString str;
+	wxString str;
 
 	fTmpl.SeekToBegin();
 	char c;
@@ -167,7 +167,7 @@ CString CSource::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
 	{
 		if (c=='%')
 		{
-			CString sTok;
+			wxString sTok;
 			if (!fTmpl.Read(&c,1)) return str;
 			while (c!='%')
 			{
@@ -200,7 +200,7 @@ CString CSource::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
 						str += "[unknown publication information]";
 					else
 					{
-						CString s = m_strPublish;
+						wxString s = m_strPublish;
 						if (s.Left(1) == "<" && s.Right(1)==">")
 							s = s.Mid(1,s.GetLength()-2);
 						bool bLink = s.Left(5)=="http:";
@@ -236,11 +236,11 @@ CString CSource::GetWebPage(CMemFile& fTmpl, const CString& sDocID)
 	return str;
 }
 
-CString CSource::TextBlock(const CString& strText)
+wxString CSource::TextBlock(const wxString& strText)
 {
-	CString str;
+	wxString str;
 
-	CString strRest(strText);
+	wxString strRest(strText);
 	int ieol;
 	while ((ieol = strRest.Find(_T("\r\n"))) >= 0)
 	{
@@ -252,9 +252,9 @@ CString CSource::TextBlock(const CString& strText)
 	return str;
 }
 
-CString CSource::WordBreak(const CString& strText)
+wxString CSource::WordBreak(const wxString& strText)
 {
-	CString str, strRest(strText);
+	wxString str, strRest(strText);
 
 	while (strRest.GetLength()>60)
 	{
@@ -271,17 +271,17 @@ CString CSource::WordBreak(const CString& strText)
 	return str;
 }
 
-CString CSource::RTFTextBlock(const CString& strText)
+wxString CSource::RTFTextBlock(const wxString& strText)
 {
-	CString str;
+	wxString str;
 	int ieol;
-	CString strRest;
+	wxString strRest;
 
 	strRest = strText;
 	str.Empty();
 	while ((ieol = strRest.FindOneOf(_T("{}\\"))) >= 0)
 	{
-		CString s = strRest.Mid(ieol,1);
+		wxString s = strRest.Mid(ieol,1);
 		str += strRest.Left(ieol)+"\\"+s;
 		strRest = strRest.Mid(ieol+1);
 	}
@@ -301,16 +301,16 @@ CString CSource::RTFTextBlock(const CString& strText)
 
 void CSource::ConvertToHTML()
 {
-	CString s;
+	wxString s;
 
-	CString strRest(m_strText);
+	wxString strRest(m_strText);
 	int i;
 	bool in_table(false);
 	int ccol;
 
 	while ((i = strRest.Find(_T("\r\n"))) >= 0)
 	{
-		CString sline(strRest.Left(i));
+		wxString sline(strRest.Left(i));
 		strRest = strRest.Mid(i+2);
 
 		s += ConvertLine(sline,strRest,in_table,ccol);
@@ -328,9 +328,9 @@ void CSource::ConvertToHTML()
 	m_strText = s;
 }
 
-CString CSource::ConvertLine(const CString& sline, const CString& strRest, bool& in_table, int& ccol)
+wxString CSource::ConvertLine(const wxString& sline, const wxString& strRest, bool& in_table, int& ccol)
 {
-	CString s;
+	wxString s;
 	if (sline.Find(L"\t") >= 0)
 	{
 		if (!in_table)
@@ -353,17 +353,17 @@ CString CSource::ConvertLine(const CString& sline, const CString& strRest, bool&
 	return s;
 }
 
-CString CSource::ConvertTD(const CString& s, int ccol)
+wxString CSource::ConvertTD(const wxString& s, int ccol)
 {
 	// replace tabs with "</td><td>"
-	CString str;
-	CString strRest(s);
+	wxString str;
+	wxString strRest(s);
 	int i;
 	int c(1);
 	while ((i = strRest.Find(_T("\t"))) >= 0)
 	{
 		c++;
-		CString scol = strRest.Left(i);
+		wxString scol = strRest.Left(i);
 		if (scol.IsEmpty())
 			scol = "&nbsp;";
 		str += scol+"</td><td>";
@@ -381,15 +381,15 @@ CString CSource::ConvertTD(const CString& s, int ccol)
 	return str;
 }
 
-int CSource::CountColumns(const CString& sline, const CString& srest)
+int CSource::CountColumns(const wxString& sline, const wxString& srest)
 {
 	int ccol = CountColumnsRow(sline);
 
-	CString strRest(srest);
+	wxString strRest(srest);
 	int i;
 	while ((i = strRest.Find(_T("\r\n"))) >= 0)
 	{
-		CString sline2(strRest.Left(i));
+		wxString sline2(strRest.Left(i));
 		strRest = strRest.Mid(i+2);
 
 		if (sline2.Find(L"\t") < 0)
@@ -408,10 +408,10 @@ int CSource::CountColumns(const CString& sline, const CString& srest)
 	return ccol;
 }
 
-int CSource::CountColumnsRow(const CString& s)
+int CSource::CountColumnsRow(const wxString& s)
 {
-	CString str;
-	CString strRest(s);
+	wxString str;
+	wxString strRest(s);
 	int i;
 	int ccol = 1;
 	while ((i = strRest.Find(_T("\t"))) >= 0)

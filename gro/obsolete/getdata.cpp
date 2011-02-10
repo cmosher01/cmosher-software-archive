@@ -24,7 +24,7 @@ STDMETHODIMP CGetData::GetIndi(BSTR doc, int iIndi, _Recordset **ppRS)
 		ADODB::_ConnectionPtr shape(__uuidof(ADODB::Connection));
 		shape->Open("Provider=MSDataShape;Data Provider=NONE;","","",NULL);
 
-		CString s(
+		wxString s(
 		"SHAPE APPEND "
 			"NEW adInteger AS iIndi, "
 			"NEW adInteger AS bPrivate, "
@@ -105,11 +105,11 @@ STDMETHODIMP CGetData::GetIndi(BSTR doc, int iIndi, _Recordset **ppRS)
 
 
 
-		CString strDocID(doc);
+		wxString strDocID(doc);
 
 		CGedtreeDoc* pDoc = 0;
 		POSITION pos = theApp.GetFirstDocTemplatePosition();
-		CDocTemplate* pt = theApp.GetNextDocTemplate(pos);
+		wxDocTemplate* pt = theApp.GetNextDocTemplate(pos);
 		pos = pt->GetFirstDocPosition();
 		while (pos)
 		{
@@ -152,7 +152,7 @@ STDMETHODIMP CGetData::GetIndi(BSTR doc, int iIndi, _Recordset **ppRS)
 				rs->Fields->Item["nameMother"]->Value = _bstr_t(pIndiR->m_name.Name());
 			}
 
-			CArray<CEvt,CEvt&> revt;
+			wxArray<CEvt,CEvt&> revt;
 			pIndi->GetSortedEvents(revt);
 
 			rsEvents = rs->GetFields()->GetItem("events")->Value;
@@ -174,7 +174,7 @@ STDMETHODIMP CGetData::GetIndi(BSTR doc, int iIndi, _Recordset **ppRS)
 				}
 			}
 
-			CArray<CAttr,CAttr&> rattr;
+			wxArray<CAttr,CAttr&> rattr;
 			pIndi->GetSortedAttrs(rattr);
 
 			rsAttrs = rs->GetFields()->GetItem("attributes")->Value;
@@ -199,7 +199,7 @@ STDMETHODIMP CGetData::GetIndi(BSTR doc, int iIndi, _Recordset **ppRS)
 			}
 
 			rsParts = rs->GetFields()->GetItem("partners")->Value;
-			CArray<int,int> riSpouseToFamily;
+			wxArray<int,int> riSpouseToFamily;
 			pIndi->GetSortedSpouseFamilies(riSpouseToFamily);
 			for (int iPart(0); iPart<riSpouseToFamily.GetSize(); iPart++)
 			{
@@ -211,7 +211,7 @@ STDMETHODIMP CGetData::GetIndi(BSTR doc, int iIndi, _Recordset **ppRS)
 					iPartner = fami.m_iWife;
 				else
 				{
-//							ASSERT(fami.m_iWife==iIndi);
+//							wxASSERT(fami.m_iWife==iIndi);
 					iPartner = fami.m_iHusband;
 				}
 
@@ -224,7 +224,7 @@ STDMETHODIMP CGetData::GetIndi(BSTR doc, int iIndi, _Recordset **ppRS)
 					rsParts->Fields->Item["name"]->Value = _bstr_t(pIndiR->m_name.Name());
 				}
 
-				CArray<CEvt,CEvt&> revt;
+				wxArray<CEvt,CEvt&> revt;
 				pIndi->GetSortedEvents(fami,revt);
 
 				rsPEvents = rsParts->GetFields()->GetItem("events")->Value;
@@ -247,7 +247,7 @@ STDMETHODIMP CGetData::GetIndi(BSTR doc, int iIndi, _Recordset **ppRS)
 				}
 
 				rsPChildren = rsParts->GetFields()->GetItem("children")->Value;
-				CArray<int,int> riChild;
+				wxArray<int,int> riChild;
 				fami.GetSortedChildren(riChild);
 				for (int iChildi(0); iChildi<riChild.GetSize(); iChildi++)
 				{
@@ -259,7 +259,7 @@ STDMETHODIMP CGetData::GetIndi(BSTR doc, int iIndi, _Recordset **ppRS)
 					rsPChildren->Fields->Item["iChild"]->Value = _variant_t((long)iChild);
 					rsPChildren->Fields->Item["name"]->Value = _bstr_t(pIndiR->m_name.Name());
 
-					CString birthdate, birthplace;
+					wxString birthdate, birthplace;
 					if (pIndiR->m_iBirth>=0)
 					{
 						birthdate = pIndiR->m_revt[pIndiR->m_iBirth].m_dvDate.Display(DATE_SHORTDATE);
@@ -268,7 +268,7 @@ STDMETHODIMP CGetData::GetIndi(BSTR doc, int iIndi, _Recordset **ppRS)
 					rsPChildren->Fields->Item["birthdate"]->Value = _bstr_t(birthdate);
 					rsPChildren->Fields->Item["birthplace"]->Value = _bstr_t(birthplace);
 
-					CString deathdate, deathplace;
+					wxString deathdate, deathplace;
 					if (pIndiR->m_iDeath>=0)
 					{
 						deathdate = pIndiR->m_revt[pIndiR->m_iDeath].m_dvDate.Display(DATE_SHORTDATE);
@@ -332,7 +332,7 @@ STDMETHODIMP CGetData::GetSource(BSTR doc, int iSource, _Recordset **ppRS)
 		ADODB::_ConnectionPtr shape(__uuidof(ADODB::Connection));
 		shape->Open("Provider=MSDataShape;Data Provider=NONE;","","",NULL);
 
-		CString s(
+		wxString s(
 		"SHAPE APPEND "
 			"NEW adInteger AS iSource, "
 			"NEW adVarChar(255) AS title, "
@@ -346,11 +346,11 @@ STDMETHODIMP CGetData::GetSource(BSTR doc, int iSource, _Recordset **ppRS)
 
 
 
-		CString strDocID(doc);
+		wxString strDocID(doc);
 
 		CGedtreeDoc* pDoc = 0;
 		POSITION pos = theApp.GetFirstDocTemplatePosition();
-		CDocTemplate* pt = theApp.GetNextDocTemplate(pos);
+		wxDocTemplate* pt = theApp.GetNextDocTemplate(pos);
 		pos = pt->GetFirstDocPosition();
 		while (pos)
 		{
@@ -378,7 +378,7 @@ STDMETHODIMP CGetData::GetSource(BSTR doc, int iSource, _Recordset **ppRS)
 			rs->Fields->Item["iSource"]->Value = _variant_t((long)iSource);
 			rs->Fields->Item["title"]->Value = _bstr_t(source.m_strTitle);
 
-			CString s(source.m_strAuthor);
+			wxString s(source.m_strAuthor);
 			if (s.IsEmpty())
 				s = "[unknown author]";
 			rs->Fields->Item["author"]->Value = _bstr_t(s);
@@ -423,7 +423,7 @@ STDMETHODIMP CGetData::GetIndex(BSTR doc, int iLevel, int iBase, _Recordset **pp
 		ADODB::_ConnectionPtr shape(__uuidof(ADODB::Connection));
 		shape->Open("Provider=MSDataShape;Data Provider=NONE;","","",NULL);
 
-		CString s(
+		wxString s(
 		"SHAPE APPEND "
 			"NEW adInteger AS iBase, "
 			"NEW adVarChar(255) AS name1, "
@@ -437,11 +437,11 @@ STDMETHODIMP CGetData::GetIndex(BSTR doc, int iLevel, int iBase, _Recordset **pp
 		rs->Open(_variant_t(s),_variant_t((IDispatch*)shape,true),
 			ADODB::adOpenStatic,ADODB::adLockOptimistic,ADODB::adCmdText);
 
-		CString strDocID(doc);
+		wxString strDocID(doc);
 
 		CGedtreeDoc* pDoc = 0;
 		POSITION pos = theApp.GetFirstDocTemplatePosition();
-		CDocTemplate* pt = theApp.GetNextDocTemplate(pos);
+		wxDocTemplate* pt = theApp.GetNextDocTemplate(pos);
 		pos = pt->GetFirstDocPosition();
 		while (pos)
 		{
@@ -501,11 +501,11 @@ STDMETHODIMP CGetData::GetIndex(BSTR doc, int iLevel, int iBase, _Recordset **pp
 					iEnd = pDoc->mrSrtIndi.GetSize()-1;
 
 				CIndividual* pIndi1 = pDoc->Individual(pDoc->mrSrtIndi[iBase]);
-				CString s1(pIndi1->m_name.Surname());
+				wxString s1(pIndi1->m_name.Surname());
 				s1 += ", "; s1 += pIndi1->m_name.GivenName();
 
 				CIndividual* pIndi2 = pDoc->Individual(pDoc->mrSrtIndi[iEnd]);
-				CString s2(pIndi2->m_name.Surname());
+				wxString s2(pIndi2->m_name.Surname());
 				s2 += ", "; s2 += pIndi2->m_name.GivenName();
 
 				// insert "iBase through iEnd" into recordset
@@ -535,7 +535,7 @@ STDMETHODIMP CGetData::GetIndex(BSTR doc, int iLevel, int iBase, _Recordset **pp
 				if (iBase==iPrevBase) break;
 
 				CIndividual* pIndi1 = pDoc->Individual(pDoc->mrSrtIndi[iBase]);
-				CString s1(pIndi1->m_name.Surname());
+				wxString s1(pIndi1->m_name.Surname());
 				s1 += ", "; s1 += pIndi1->m_name.GivenName();
 
 				int iIndi = pIndi1->m_i;
@@ -590,7 +590,7 @@ STDMETHODIMP CGetData::GetDocs(_Recordset **ppRS)
 		ADODB::_ConnectionPtr shape(__uuidof(ADODB::Connection));
 		shape->Open("Provider=MSDataShape;Data Provider=NONE;","","",NULL);
 
-		CString s(
+		wxString s(
 			"SHAPE APPEND "
 			"NEW adVarChar(255) AS title, "
 			"NEW adVarChar(255) AS path, "
@@ -600,7 +600,7 @@ STDMETHODIMP CGetData::GetDocs(_Recordset **ppRS)
 
 		CGedtreeDoc* pDoc = 0;
 		POSITION pos = theApp.GetFirstDocTemplatePosition();
-		CDocTemplate* pt = theApp.GetNextDocTemplate(pos);
+		wxDocTemplate* pt = theApp.GetNextDocTemplate(pos);
 		pos = pt->GetFirstDocPosition();
 		while (pos)
 		{

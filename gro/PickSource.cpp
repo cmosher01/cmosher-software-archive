@@ -29,8 +29,8 @@ static int CALLBACK SortItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 // CPickSource dialog
 
 
-CPickSource::CPickSource(CGedtreeDoc* pDoc, CWnd* pParent, BOOL bEdit)
-	: CDialog(CPickSource::IDD, pParent),
+CPickSource::CPickSource(CGedtreeDoc* pDoc, wxWindow* pParent, BOOL bEdit)
+	: wxDialog(CPickSource::IDD, pParent),
 	m_pDoc(pDoc),
 	m_iSource(-1),
 	m_bEdit(bEdit)
@@ -43,7 +43,7 @@ CPickSource::CPickSource(CGedtreeDoc* pDoc, CWnd* pParent, BOOL bEdit)
 
 void CPickSource::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	wxDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CPickSource)
 	DDX_Control(pDX, IDC_SOURCES, m_listSource);
 	//}}AFX_DATA_MAP
@@ -102,7 +102,7 @@ void CPickSource::InitList()
 	Reset();
 }
 
-void CPickSource::CheckColumnWidth(int nCol, const CString& str)
+void CPickSource::CheckColumnWidth(int nCol, const wxString& str)
 {
 	int nWidth = m_listSource.GetStringWidth(str)+nColExtraWidth;
 	if (nWidth>nColMaxWidth)
@@ -153,14 +153,14 @@ void CPickSource::Reset()
 	}
 }
 
-BEGIN_MESSAGE_MAP(CPickSource, CDialog)
+BEGIN_EVENT_TABLE(CPickSource, wxDialog)
 	//{{AFX_MSG_MAP(CPickSource)
 	ON_BN_CLICKED(IDC_NEW, OnNew)
 	ON_NOTIFY(LVN_GETDISPINFO, IDC_SOURCES, OnGetdispinfoSources)
 	ON_BN_CLICKED(IDC_EDIT, OnEdit)
 	ON_NOTIFY(NM_DBLCLK, IDC_SOURCES, OnDblclkSources)
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 static int CALLBACK SortItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 {
@@ -291,7 +291,7 @@ void CPickSource::OnDblclkSources(NMHDR* pNMHDR, LRESULT* pResult)
 
 BOOL CPickSource::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+	wxDialog::OnInitDialog();
 	SetIcon(theApp.LoadIcon(IDD_SOURCE),TRUE);
 	return TRUE;
 }

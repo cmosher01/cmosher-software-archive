@@ -39,7 +39,7 @@ void CGedCmd::ParseParam(const char* pszParam,BOOL bFlag,BOOL bLast)
 	bool bHandled(false);
 
 /*
-	CString strParam(pszParam);
+	wxString strParam(pszParam);
 	if (bFlag)
 	{
 		if (Flag("uninstall"))

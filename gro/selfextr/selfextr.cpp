@@ -56,7 +56,7 @@ public:
 		BYTE *p = GetPtr();
 		int c = GetSize();
 
-		CStdioFile f(filename,CFile::modeCreate|CFile::modeWrite|CFile::typeBinary);
+		wxFile f(filename,wxFile::modeCreate|wxFile::modeWrite|wxFile::typeBinary);
 		f.Write(p,c);
 	}
 */

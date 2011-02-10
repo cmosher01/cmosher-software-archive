@@ -33,7 +33,7 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-const CSize SIZ_SCROLL_LINE(80,80);
+const wxSize SIZ_SCROLL_LINE(80,80);
 
 extern char *sTplIndi;
 extern char *sTplSour;
@@ -48,7 +48,7 @@ extern char *sTplBibrtf;
 
 IMPLEMENT_DYNCREATE(CGedtreeViewDL, CGedtreeView)
 
-BEGIN_MESSAGE_MAP(CGedtreeViewDL, CGedtreeView)
+BEGIN_EVENT_TABLE(CGedtreeViewDL, CGedtreeView)
 	//{{AFX_MSG_MAP(CGedtreeViewDL)
 	ON_WM_SIZE()
 	ON_WM_LBUTTONDOWN()
@@ -107,7 +107,7 @@ BEGIN_MESSAGE_MAP(CGedtreeViewDL, CGedtreeView)
 	//}}AFX_MSG_MAP
 	// Standard printing commands
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, CScrollView::OnFilePrintPreview)
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CGedtreeViewDL construction/destruction
@@ -146,7 +146,7 @@ BOOL CGedtreeViewDL::PreCreateWindow(CREATESTRUCT& cs)
 	return CBigScrollView::PreCreateWindow(cs);
 }
 
-CString CGedtreeViewDL::GetWindowTitle()
+wxString CGedtreeViewDL::GetWindowTitle()
 {
 	return "Drop-Line Chart";
 }
@@ -154,15 +154,15 @@ CString CGedtreeViewDL::GetWindowTitle()
 /////////////////////////////////////////////////////////////////////////////
 // CGedtreeViewDL drawing
 
-void CGedtreeViewDL::OnDraw(CDC* pDC)
+void CGedtreeViewDL::OnDraw(wxDC* pDC)
 {
 	int i;
 
 	CGedtreeDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
-	ASSERT(!pDC->IsPrinting());
+	wxASSERT(!pDC->IsPrinting());
 
-	CRect rectClient;
+	wxRect rectClient;
 	GetClientRect(rectClient);
 	MyRect rectDraw(rectClient);
 	rectDraw += GetScrollPosition();
@@ -204,7 +204,7 @@ void CGedtreeViewDL::OnDraw(CDC* pDC)
 		}
 
 		delete m_pdcUse;
-		m_pdcUse = new CDC();
+		m_pdcUse = new wxDC();
 		BOOL bOK = m_pdcUse->CreateCompatibleDC(pDC);
 		if (!bOK)
 		{
@@ -271,7 +271,7 @@ void CGedtreeViewDL::OnDraw(CDC* pDC)
 	}
 
 	// Transfer the bitmap (which is in memory) to the screen.
-	CPoint org = pDC->GetViewportOrg();
+	wxPoint org = pDC->GetViewportOrg();
 	pDC->SetViewportOrg(0,0);
 	BOOL bOK = pDC->BitBlt(0,0,rectDraw.Width(),rectDraw.Height(),m_pdcUse,0,0,SRCCOPY);
 
@@ -284,12 +284,12 @@ void CGedtreeViewDL::PrintPages(CMyDC& dc, const MyRect& draw)
 		return;
 
 	CGedtreeDoc* pDoc = GetDocument();
-	CRect rect(pDoc->GetBounds());
+	wxRect rect(pDoc->GetBounds());
 	int x = theApp.m_sizePage.cx/GetScale();
 	int y = theApp.m_sizePage.cy/GetScale();
 	int pageswide = (rect.Width()+x-1)/x;
 
-	CRect drawdoc;
+	wxRect drawdoc;
 	drawdoc.left = __max(draw.left,rect.left);
 	drawdoc.right = __min(draw.right,rect.right);
 	drawdoc.top = __max(draw.top,rect.top);
@@ -297,19 +297,19 @@ void CGedtreeViewDL::PrintPages(CMyDC& dc, const MyRect& draw)
 
 	for (int vertline = (drawdoc.left+x-1)/x*x; vertline < (drawdoc.right+x-1)/x*x; vertline += x)
 	{
-		dc.DrawLine(CPoint(vertline,rect.top),CPoint(vertline,rect.bottom));
+		dc.DrawLine(wxPoint(vertline,rect.top),wxPoint(vertline,rect.bottom));
 	}
 	for (int horzline = (drawdoc.top+y-1)/y*y; horzline < (drawdoc.bottom+y-1)/y*y; horzline += y)
 	{
-		dc.DrawLine(CPoint(rect.left,horzline),CPoint(rect.right,horzline));
+		dc.DrawLine(wxPoint(rect.left,horzline),wxPoint(rect.right,horzline));
 	}
 
 	int pageFirstOfRow(drawdoc.left/x+drawdoc.top/y*pageswide);
 	int pageLastOfRow(drawdoc.right/x+drawdoc.top/y*pageswide);
 	int pageLast(drawdoc.right/x+drawdoc.bottom/y*pageswide);
 	int f(__max(1,5/GetScale()));
-	CSize offset(f,f);
-	CString s;
+	wxSize offset(f,f);
+	wxString s;
 	while (pageLastOfRow <= pageLast)
 	{
 		for (int page(pageFirstOfRow); page <= pageLastOfRow; page++)
@@ -318,7 +318,7 @@ void CGedtreeViewDL::PrintPages(CMyDC& dc, const MyRect& draw)
 			int top = page/pageswide*y;
 			int right = left+x;
 			int bottom = top+y;
-			CRect r(left+offset.cx,top+offset.cy,right,bottom);
+			wxRect r(left+offset.cx,top+offset.cy,right,bottom);
 			if (m_nScale==1)
 				s.Format(L"page %d",page+1);
 			else
@@ -330,7 +330,7 @@ void CGedtreeViewDL::PrintPages(CMyDC& dc, const MyRect& draw)
 	}
 }
 
-CIndividual* CGedtreeViewDL::HitIndiTest(const CPoint& point)
+CIndividual* CGedtreeViewDL::HitIndiTest(const wxPoint& point)
 {
 	CGedtreeDoc* pDoc = GetDocument();
 	for (int i(pDoc->m_rIndividual.GetSize()-1); i>=0; i--)
@@ -341,7 +341,7 @@ CIndividual* CGedtreeViewDL::HitIndiTest(const CPoint& point)
 	return NULL;
 }
 
-void CGedtreeViewDL::SelectHitIndis(const CRect& rect)
+void CGedtreeViewDL::SelectHitIndis(const wxRect& rect)
 {
 	CGedtreeDoc* pDoc = GetDocument();
 	int cHit(0);
@@ -356,7 +356,7 @@ void CGedtreeViewDL::SelectHitIndis(const CRect& rect)
 			pIndi = pIndiCurr;
 		}
 	}
-	CString sMsg;
+	wxString sMsg;
 	if (cHit==1)
 	{
 		sMsg = pIndi->Name();
@@ -364,12 +364,12 @@ void CGedtreeViewDL::SelectHitIndis(const CRect& rect)
 	((CFrameWnd*)AfxGetMainWnd())->SetMessageText(sMsg);
 }
 
-CRect CGedtreeViewDL::ShiftSelectedIndis(const CSize& sizShift)
+wxRect CGedtreeViewDL::ShiftSelectedIndis(const wxSize& sizShift)
 {
 	MyRect rectBounds; // bounds of new pos of indis
 	rectBounds.SetRectEmpty();
 
-	if (sizShift!=CSize(0,0))
+	if (sizShift!=wxSize(0,0))
 	{
 		CGedtreeDoc* pDoc = GetDocument();
 		for (int i(0); i<pDoc->m_rIndividual.GetSize(); i++)
@@ -430,10 +430,10 @@ void CGedtreeViewDL::DeselectAll()
 void CGedtreeViewDL::OnFilePrint()
 {
 	// calculate total number of pages
-	CRect rect(GetDocument()->GetBounds());
+	wxRect rect(GetDocument()->GetBounds());
 	int x = theApp.m_sizePage.cx;
 	int y = theApp.m_sizePage.cy;
-	CSize sizePages = CSize((rect.Width()+x-1)/x,(rect.Height()+y-1)/y);
+	wxSize sizePages = wxSize((rect.Width()+x-1)/x,(rect.Height()+y-1)/y);
 	int pageswide = sizePages.cx;
 	int pageshigh = sizePages.cy;
 
@@ -451,7 +451,7 @@ void CGedtreeViewDL::OnFilePrint()
 
 	if (theApp.DoPrintDlg())
 	{
-		CDC dc;
+		wxDC dc;
 		dc.Attach(theApp.m_printdlg.hDC);
 		dc.m_bPrinting = true;
 
@@ -471,13 +471,13 @@ void CGedtreeViewDL::OnFilePrint()
 
 			int row = page/pageswide;
 			int col = page%pageswide;
-			ASSERT(row < pageshigh);
-			ASSERT(col < pageswide);
+			wxASSERT(row < pageshigh);
+			wxASSERT(col < pageswide);
 
 			int x = col*theApp.m_sizePage.cx*4;
 			int y = row*theApp.m_sizePage.cy*4;
 
-			CRect r(x,y,x+theApp.m_sizePage.cx*4,y+theApp.m_sizePage.cy*4);
+			wxRect r(x,y,x+theApp.m_sizePage.cx*4,y+theApp.m_sizePage.cy*4);
 			CMyDC mydc(&dc,r);
 			MyPrint(mydc);
 
@@ -492,24 +492,24 @@ void CGedtreeViewDL::OnFilePrint()
 void CGedtreeViewDL::MyPrint(CMyDC& dc)
 {
 /*
-	CSize sizWndOrg = pDCUse->GetWindowOrg();
-	CSize sizWndExt = pDCUse->GetWindowExt();
-	CSize sizVwpOrg = pDCUse->GetViewportOrg();
-	CSize sizVwpExt = pDCUse->GetViewportExt();
+	wxSize sizWndOrg = pDCUse->GetWindowOrg();
+	wxSize sizWndExt = pDCUse->GetWindowExt();
+	wxSize sizVwpOrg = pDCUse->GetViewportOrg();
+	wxSize sizVwpExt = pDCUse->GetViewportExt();
 //	pDCUse->SetWindowExt(32767, 32767); 
-	CString s;
+	wxString s;
 	s.Format(L"w=(%d,%d)(%d,%d)   v=(%d,%d)(%d,%d)\n",
 		sizWndOrg.cx,sizWndOrg.cy,sizWndExt.cx,sizWndExt.cy,
 		sizVwpOrg.cx,sizVwpOrg.cy,sizVwpExt.cx,sizVwpExt.cy);
 	::OutputDebugString(s);
-//	CRect r;
+//	wxRect r;
 //	GetClientRect(&r);
 //	pDCUse->SetViewportOrg(0,0);
 //	pDCUse->SetViewportExt(r.Width()/2,r.Height()/2);
 */
 	CGedtreeDoc* pDoc = GetDocument();
 
-	CDC* pDCUse = dc.GetDC();
+	wxDC* pDCUse = dc.GetDC();
 
 	CPen pen(PS_SOLID,1,RGB(0,0,0));
 	pDCUse->SelectObject(&pen);
@@ -518,7 +518,7 @@ void CGedtreeViewDL::MyPrint(CMyDC& dc)
 
 	LOGFONT lf;
 	theApp.m_font.GetLogFont(&lf);
-	CFont fontUse;
+	wxFont fontUse;
 	lf.lfHeight *= 4;
 	lf.lfHeight += 4;
 	lf.lfOutPrecision = OUT_TT_PRECIS;
@@ -568,11 +568,11 @@ void CGedtreeViewDL::OnInitialUpdate()
 
 void CGedtreeViewDL::SetTotalSize()
 {
-	CSize sizBounds = GetDocument()->GetBounds().Size();
+	wxSize sizBounds = GetDocument()->GetBounds().Size();
 
-	CRect rectClient;
+	wxRect rectClient;
 	GetClientRect(rectClient);
-	CSize sizClient(rectClient.right,rectClient.bottom);
+	wxSize sizClient(rectClient.right,rectClient.bottom);
 
 	SetScrollSizes(MM_TEXT,sizBounds,sizClient,SIZ_SCROLL_LINE);
 }
@@ -582,21 +582,21 @@ void CGedtreeViewDL::OnSize(UINT nType, int cx, int cy)
 	CBigScrollView::OnSize(nType, cx, cy);
 }
 
-BOOL CGedtreeViewDL::IsOut(const CPoint& point)
+BOOL CGedtreeViewDL::IsOut(const wxPoint& point)
 {
-	CRect rectc;
+	wxRect rectc;
 	GetClientRect(rectc);
 	MyRect rectClient(rectc);
 
 	return !rectClient.PtInRect(point);
 }
 
-void CGedtreeViewDL::ScrollToward(const CPoint& point)
+void CGedtreeViewDL::ScrollToward(const wxPoint& point)
 {
-	CRect rectClient;
+	wxRect rectClient;
 	GetClientRect(rectClient);
 
-	CSize szScroll(0,0);
+	wxSize szScroll(0,0);
 	if (point.x>=rectClient.right)
 		szScroll.cx = SIZ_SCROLL_LINE.cx;
 	if (point.x<=rectClient.left)
@@ -609,9 +609,9 @@ void CGedtreeViewDL::ScrollToward(const CPoint& point)
 	ScrollToPosition(GetScrollPosition()+szScroll);
 }
 
-void CGedtreeViewDL::OnLButtonDown(UINT nFlags, CPoint point) 
+void CGedtreeViewDL::OnLButtonDown(UINT nFlags, wxPoint point) 
 {
-	CPoint pointDoc(point);
+	wxPoint pointDoc(point);
 	pointDoc += GetScrollPosition();
 
 	BOOL bExtended = (MK_SHIFT|MK_CONTROL) & nFlags;
@@ -651,7 +651,7 @@ void CGedtreeViewDL::OnLButtonDown(UINT nFlags, CPoint point)
 			DeselectAll();
 
 		m_pointPrev = pointDoc;
-		m_rectPrev = CRect(pointDoc,pointDoc);
+		m_rectPrev = wxRect(pointDoc,pointDoc);
 
 		SetCapture();
 		ResetAllViews();
@@ -660,7 +660,7 @@ void CGedtreeViewDL::OnLButtonDown(UINT nFlags, CPoint point)
 	CBigScrollView::OnLButtonDown(nFlags, point);
 }
 
-void CGedtreeViewDL::PostNextMove(UINT nFlags, CPoint point) 
+void CGedtreeViewDL::PostNextMove(UINT nFlags, wxPoint point) 
 {
 	::Sleep(30);
 	MSG msg;
@@ -673,7 +673,7 @@ double CGedtreeViewDL::GetScale()
 	return (double)m_nScale;
 }
 
-void CGedtreeViewDL::OnMouseMove(UINT nFlags, CPoint point) 
+void CGedtreeViewDL::OnMouseMove(UINT nFlags, wxPoint point) 
 {
 	// TODO: Add your message handler code here and/or call default
 	BOOL bExtended = (MK_SHIFT|MK_CONTROL) & nFlags;
@@ -682,21 +682,21 @@ void CGedtreeViewDL::OnMouseMove(UINT nFlags, CPoint point)
 	{
 		if (IsOut(point)) ScrollToward(point);
 
-		CPoint pointDoc(point);
+		wxPoint pointDoc(point);
 		pointDoc += GetScrollPosition();
 
 		CGedtreeDoc* pDoc = GetDocument();
 
-		CSize szShift = pointDoc-m_pointPrev;
-		CRect rectIndis = ShiftSelectedIndis(szShift);
+		wxSize szShift = pointDoc-m_pointPrev;
+		wxRect rectIndis = ShiftSelectedIndis(szShift);
 
-		CSize szUnshift(0,0);
+		wxSize szUnshift(0,0);
 		if (!rectIndis.IsRectNull())
 		{
 			// Now that we moved them, check to see if they
 			// went out of bounds (i.e., off any of the four edges
 			// of the document bounds). If so, move them back!
-			CRect rectBounds = pDoc->GetUnscaledBoundsNoBorder();
+			wxRect rectBounds = pDoc->GetUnscaledBoundsNoBorder();
 
 			if (rectIndis.top<rectBounds.top)
 				szUnshift.cy = rectBounds.top-rectIndis.top;
@@ -729,10 +729,10 @@ void CGedtreeViewDL::OnMouseMove(UINT nFlags, CPoint point)
 	{
 		if (IsOut(point)) ScrollToward(point);
 
-		CPoint pointDoc(point);
+		wxPoint pointDoc(point);
 		pointDoc += GetScrollPosition();
 
-		m_rectPrev = CRect(m_pointPrev,pointDoc);
+		m_rectPrev = wxRect(m_pointPrev,pointDoc);
 		m_rectPrev.NormalizeRect();
 
 		if (!bExtended)
@@ -752,7 +752,7 @@ void CGedtreeViewDL::OnMouseMove(UINT nFlags, CPoint point)
 	CBigScrollView::OnMouseMove(nFlags, point);
 }
 
-void CGedtreeViewDL::OnLButtonUp(UINT nFlags, CPoint point) 
+void CGedtreeViewDL::OnLButtonUp(UINT nFlags, wxPoint point) 
 {
 	// TODO: Add your message handler code here and/or call default
 
@@ -789,7 +789,7 @@ void CGedtreeViewDL::OnEditAlignTop()
 				nTop = nTopCur;
 		}
 	}
-	ASSERT(nTop<INT_MAX);
+	wxASSERT(nTop<INT_MAX);
 
 	MyRect rectBounds; // bounds of new pos of indis
 	rectBounds.SetRectEmpty();
@@ -799,7 +799,7 @@ void CGedtreeViewDL::OnEditAlignTop()
 		CIndividual& indi = pDoc->m_rIndividual[i];
 		if (indi.m_bSelected)
 		{
-			CPoint pt = indi.GetUnscaledFrameRect().TopLeft();
+			wxPoint pt = indi.GetUnscaledFrameRect().TopLeft();
 			pt.y = nTop;
 			indi.MoveTo(pt);
 
@@ -811,11 +811,11 @@ void CGedtreeViewDL::OnEditAlignTop()
 	ResetAllViews();
 }
 
-void CGedtreeViewDL::OnUpdateEditAlignTop(CCmdUI* pCmdUI) 
+void CGedtreeViewDL::OnUpdateEditAlignTop(wxUpdateUIEvent& pCmdUI) 
 {
 	// TODO: Add your command update UI handler code here
 	
-	pCmdUI->Enable(IndiSelected());
+	pCmdUI.Enable(IndiSelected());
 }
 
 int childdx(18);
@@ -1101,7 +1101,7 @@ void CGedtreeViewDL::CleanAll()
 			for (int i = 0; i < pgmi->m_riSpouseToFamily.GetSize(); ++i)
 			{
 				CFamily& fami = pDoc->m_rFamily[pgmi->m_riSpouseToFamily[i]];
-				CArray<int,int> riChild;
+				wxArray<int,int> riChild;
 				fami.GetSortedChildren(riChild);
 				int nch = riChild.GetSize();
 				if (nch)
@@ -1121,7 +1121,7 @@ void CGedtreeViewDL::CleanAll()
 						}
 					}
 
-					CArray<int,int> riChild2;
+					wxArray<int,int> riChild2;
 					if (sp1 >= 0)
 						riChild2.Add(riChild[sp1]);
 					for (ch = 0; ch < nch; ++ch)
@@ -1213,12 +1213,12 @@ void CGedtreeViewDL::CleanAll()
 	ResetAllViews();
 }
 
-void CGedtreeViewDL::OnUpdateEditClean(CCmdUI* pCmdUI) 
+void CGedtreeViewDL::OnUpdateEditClean(wxUpdateUIEvent& pCmdUI) 
 {
-	pCmdUI->Enable(!IndiSelected());
+	pCmdUI.Enable(!IndiSelected());
 }
 
-BOOL CGedtreeViewDL::OnEraseBkgnd(CDC* pDC) 
+BOOL CGedtreeViewDL::OnEraseBkgnd(wxDC* pDC) 
 {
 	return TRUE;
 }
@@ -1419,11 +1419,11 @@ void CGedtreeViewDL::OnEditSelectAncestors()
 	}
 }
 
-void CGedtreeViewDL::OnUpdateEditSelectAncestors(CCmdUI* pCmdUI) 
+void CGedtreeViewDL::OnUpdateEditSelectAncestors(wxUpdateUIEvent& pCmdUI) 
 {
 	// TODO: Add your command update UI handler code here
 	
-	pCmdUI->Enable(OneIndiSelected());
+	pCmdUI.Enable(OneIndiSelected());
 }
 
 void CGedtreeViewDL::OnEditSelectAll() 
@@ -1457,12 +1457,12 @@ void CGedtreeViewDL::OnViewZoomNormal()
 
 void CGedtreeViewDL::SetScale(int nScale)
 {
-	CRect rectc;
+	wxRect rectc;
 	GetClientRect(rectc);
 	MyRect rectClient(rectc);
 	rectClient += GetScrollPosition();
 
-	CPoint pointScroll = rectClient.CenterPoint();
+	wxPoint pointScroll = rectClient.CenterPoint();
 	pointScroll.x *= GetScale();
 	pointScroll.y *= GetScale();
 
@@ -1489,11 +1489,11 @@ void CGedtreeViewDL::SetScale(int nScale)
 	pointScroll.x /= GetScale();
 	pointScroll.y /= GetScale();
 
-	CSize szHalfClient(rectClient.Width()/2,rectClient.Height()/2);
+	wxSize szHalfClient(rectClient.Width()/2,rectClient.Height()/2);
 
 	pointScroll -= szHalfClient;
 
-	CPoint pointMax(pDoc->GetBounds().BottomRight()-rectClient.Size());
+	wxPoint pointMax(pDoc->GetBounds().BottomRight()-rectClient.Size());
 	if (pointScroll.x>pointMax.x)
 		pointScroll.x = pointMax.x;
 	if (pointScroll.y>pointMax.y)
@@ -1526,12 +1526,12 @@ void CGedtreeViewDL::OnViewScrolltoselection()
 
 void CGedtreeViewDL::ScrollToIndi(CIndividual* pIndi)
 {
-	CRect rectc;
+	wxRect rectc;
 	GetClientRect(rectc);
 	MyRect rectClient(rectc);
 
 	MyRect rectIndi = pIndi->GetFrameRect();
-	CPoint pointScroll = rectIndi.CenterPoint();
+	wxPoint pointScroll = rectIndi.CenterPoint();
 
 	pointScroll.x -= rectClient.Width()/2;
 	pointScroll.y -= rectClient.Height()/2;
@@ -1544,14 +1544,14 @@ void CGedtreeViewDL::Scrolltoselection()
 	OnViewScrolltoselection();
 }
 
-void CGedtreeViewDL::OnUpdateViewScrolltoselection(CCmdUI* pCmdUI) 
+void CGedtreeViewDL::OnUpdateViewScrolltoselection(wxUpdateUIEvent& pCmdUI) 
 {
 	// TODO: Add your command update UI handler code here
 	
-	pCmdUI->Enable(IndiSelected());
+	pCmdUI.Enable(IndiSelected());
 }
 
-void CGedtreeViewDL::OnLButtonDblClk(UINT nFlags, CPoint point) 
+void CGedtreeViewDL::OnLButtonDblClk(UINT nFlags, wxPoint point) 
 {
 	// TODO: Add your message handler code here and/or call default
 
@@ -1568,8 +1568,8 @@ void CGedtreeViewDL::OnEditFind()
 	if (d.DoModal()==IDOK)
 	{
 		m_strLastFind = d.m_strName;
-		m_strLastFind.TrimLeft();
-		m_strLastFind.TrimRight();
+		m_strLastFind.Trim(false);
+		m_strLastFind.Trim();
 		m_strLastFind.MakeUpper();
 
 		if (!DoFind())
@@ -1605,9 +1605,9 @@ void CGedtreeViewDL::OnEditHideunselected()
 	Reset();
 }
 
-void CGedtreeViewDL::OnUpdateEditHideunselected(CCmdUI* pCmdUI)
+void CGedtreeViewDL::OnUpdateEditHideunselected(wxUpdateUIEvent& pCmdUI)
 {
-	pCmdUI->Enable(TRUE);
+	pCmdUI.Enable(TRUE);
 }
 
 void CGedtreeViewDL::OnEditShowall()
@@ -1629,9 +1629,9 @@ void CGedtreeViewDL::OnEditShowall()
 	Reset();
 }
 
-void CGedtreeViewDL::OnUpdateEditShowall(CCmdUI* pCmdUI)
+void CGedtreeViewDL::OnUpdateEditShowall(wxUpdateUIEvent& pCmdUI)
 {
-	pCmdUI->Enable(TRUE);
+	pCmdUI.Enable(TRUE);
 }
 
 void CGedtreeViewDL::OnEditShowAsOf()
@@ -1664,9 +1664,9 @@ void CGedtreeViewDL::OnEditShowAsOf()
 	Reset();
 }
 
-void CGedtreeViewDL::OnUpdateEditShowAsOf(CCmdUI* pCmdUI)
+void CGedtreeViewDL::OnUpdateEditShowAsOf(wxUpdateUIEvent& pCmdUI)
 {
-	pCmdUI->Enable(TRUE);
+	pCmdUI.Enable(TRUE);
 }
 
 BOOL CGedtreeViewDL::DoFind(BOOL bFromSelection)
@@ -1682,7 +1682,7 @@ BOOL CGedtreeViewDL::DoFind(BOOL bFromSelection)
 		}
 		else
 		{
-			CString sTest(indi.Name());
+			wxString sTest(indi.Name());
 			sTest.MakeUpper();
 			if (sTest.Find(m_strLastFind)>=0)
 			{
@@ -1706,11 +1706,11 @@ BOOL CGedtreeViewDL::DoFind(BOOL bFromSelection)
 	return FALSE;
 }
 
-void CGedtreeViewDL::OnUpdateEditFindnext(CCmdUI* pCmdUI) 
+void CGedtreeViewDL::OnUpdateEditFindnext(wxUpdateUIEvent& pCmdUI) 
 {
 	// TODO: Add your command update UI handler code here
 	
-	pCmdUI->Enable(!m_strLastFind.IsEmpty());
+	pCmdUI.Enable(!m_strLastFind.IsEmpty());
 }
 
 void CGedtreeViewDL::Reset(UINT flagsChanged)
@@ -1739,22 +1739,22 @@ void CGedtreeViewDL::OnEditDisconnect()
 	ResetAllViews();
 }
 
-void CGedtreeViewDL::OnUpdateEditDisconnect(CCmdUI* pCmdUI) 
+void CGedtreeViewDL::OnUpdateEditDisconnect(wxUpdateUIEvent& pCmdUI) 
 {
 	// TODO: Add your command update UI handler code here
 	
-	pCmdUI->Enable(IndiSelected());
+	pCmdUI.Enable(IndiSelected());
 }
 
-CPoint CGedtreeViewDL::GetScrollPoint()
+wxPoint CGedtreeViewDL::GetScrollPoint()
 {
-	CRect rectc;
+	wxRect rectc;
 	GetClientRect(rectc);
 
 	MyRect rectClient(rectc);
 	rectClient += GetScrollPosition();
 
-	CPoint pointScroll = rectClient.CenterPoint();
+	wxPoint pointScroll = rectClient.CenterPoint();
 	pointScroll.x *= GetScale();
 	pointScroll.y *= GetScale();
 
@@ -1778,7 +1778,7 @@ void CGedtreeViewDL::OnEditNewindividual()
 	pDoc->m_rIndividual[i].SetIndex(i);
 	pDoc->m_rIndividual[i].CalcID();
 
-	CPoint pointScroll = GetScrollPoint();
+	wxPoint pointScroll = GetScrollPoint();
 
 	CIndividual& indid = pDoc->m_rIndividual[i];
 
@@ -1813,7 +1813,7 @@ void CGedtreeViewDL::OnEditConnect()
 		}
 	}
 
-	ASSERT(iiIndi==2);
+	wxASSERT(iiIndi==2);
 
 	CConnect d(pDoc);
 	d.m_pIndi0 = &pDoc->m_rIndividual[riIndi[0]];
@@ -1844,13 +1844,13 @@ void CGedtreeViewDL::OnEditConnect()
 	}
 }
 
-void CGedtreeViewDL::OnUpdateEditConnect(CCmdUI* pCmdUI) 
+void CGedtreeViewDL::OnUpdateEditConnect(wxUpdateUIEvent& pCmdUI) 
 {
 	// TODO: Add your command update UI handler code here
 	
 	CGedtreeDoc* pDoc = GetDocument();
 
-	pCmdUI->Enable(FALSE);
+	pCmdUI.Enable(FALSE);
 
 	int iiIndi(0);
 	for (int i(0); i<pDoc->m_rIndividual.GetSize(); i++)
@@ -1861,11 +1861,11 @@ void CGedtreeViewDL::OnUpdateEditConnect(CCmdUI* pCmdUI)
 			iiIndi++;
 			if (iiIndi==2)
 			{
-				pCmdUI->Enable(TRUE);
+				pCmdUI.Enable(TRUE);
 			}
 			else if (iiIndi>2)
 			{
-				pCmdUI->Enable(FALSE);
+				pCmdUI.Enable(FALSE);
 				return;
 			}
 		}
@@ -1888,17 +1888,17 @@ void CGedtreeViewDL::OnViewOpenpedigree()
 	}
 }
 
-void CGedtreeViewDL::OnUpdateViewOpenpedigree(CCmdUI* pCmdUI) 
+void CGedtreeViewDL::OnUpdateViewOpenpedigree(wxUpdateUIEvent& pCmdUI) 
 {
 	// TODO: Add your command update UI handler code here
 	
-	pCmdUI->Enable(IndiSelected());
+	pCmdUI.Enable(IndiSelected());
 }
 
 void CGedtreeViewDL::OnViewDroplinechart() 
 {
 	POSITION pos = theApp.GetFirstDocTemplatePosition();
-	CDocTemplate* p = theApp.GetNextDocTemplate(pos); // DL tmpl
+	wxDocTemplate* p = theApp.GetNextDocTemplate(pos); // DL tmpl
 	CFrameWnd* pFrame = p->CreateNewFrame(GetDocument(),NULL);
 	p->InitialUpdateFrame(pFrame,GetDocument());
 //	((CGedtreeViewDL*)m_pFrame->GetActiveView())->Init(m_i);
@@ -1921,11 +1921,11 @@ void CGedtreeViewDL::OnViewIndi()
 	}
 }
 
-void CGedtreeViewDL::OnUpdateViewIndi(CCmdUI* pCmdUI) 
+void CGedtreeViewDL::OnUpdateViewIndi(wxUpdateUIEvent& pCmdUI) 
 {
 	// TODO: Add your command update UI handler code here
 	
-	pCmdUI->Enable(IndiSelected());
+	pCmdUI.Enable(IndiSelected());
 }
 
 template<class C>
@@ -1947,7 +1947,7 @@ void CGedtreeViewDL::OnFileHTML()
 		return;
 	}
 
-	CString sPath = pDoc->GetPathName();
+	wxString sPath = pDoc->GetPathName();
 	if (sPath.IsEmpty())
 	{
 		AfxMessageBox(L"Please save this GEDCOM document before using this command.");
@@ -1959,12 +1959,12 @@ void CGedtreeViewDL::OnFileHTML()
 	TCHAR fname[_MAX_FNAME];
 	TCHAR ext[_MAX_EXT];
 	_tsplitpath(sPath,drive,dir,fname,ext);
-	sPath = CString(drive)+CString(dir)+CString(fname)+"\\";
+	sPath = wxString(drive)+wxString(dir)+wxString(fname)+"\\";
 
-	CString sPathIndi = CString(drive)+CString(dir)+"indi.tpl";
-	CString sPathSour = CString(drive)+CString(dir)+"sour.tpl";
+	wxString sPathIndi = wxString(drive)+wxString(dir)+"indi.tpl";
+	wxString sPathSour = wxString(drive)+wxString(dir)+"sour.tpl";
 
-	CString sMsg;
+	wxString sMsg;
 	sMsg.Format(L"This will create an HTML file for every individual. Is this OK?\n\n"
 		L"The title page will be\n%sindex.html\n\n",(LPCTSTR)sPath);
 
@@ -1981,18 +1981,18 @@ void CGedtreeViewDL::OnFileHTML()
 		::CreateDirectory(sPath,&sec);
 	}
 
-//	CStdioFile tplIndi, tplSour;
+//	wxFile tplIndi, tplSour;
 //	if (!GetUserTpl(tplIndi,"indi.tpl"))
 //		return;
 //
 //	if (!GetUserTpl(tplSour,"sour.tpl"))
 //		return;
 
-	CMemFile tplIndi, tplSour;
+	wxFile tplIndi, tplSour;
 	OldGetUserTpl(tplIndi,sPathIndi,sTplIndi);
 	OldGetUserTpl(tplSour,sPathSour,sTplSour);
 
-	CArray<int,int>* rSrtIndi = pDoc->GetSortedIndis();
+	wxArray<int,int>* rSrtIndi = pDoc->GetSortedIndis();
 
 	AfxGetMainWnd()->SetForegroundWindow();
 
@@ -2004,7 +2004,7 @@ void CGedtreeViewDL::OnFileHTML()
 		{
 			CIndividual& indi = pDoc->m_rIndividual[i];
 			prg.Set(i+1,indi.Name());
-			CStdioFile f(sPath+indi.GetWebFilePath(),CFile::modeCreate|CFile::modeWrite);
+			wxFile f(sPath+indi.GetWebFilePath(),wxFile::modeCreate|wxFile::modeWrite);
 			f.WriteString(indi.GetWebPage(tplIndi));
 		}
 
@@ -2013,7 +2013,7 @@ void CGedtreeViewDL::OnFileHTML()
 		{
 			CSource& sour = pDoc->m_rSource[i];
 			prg.Set(i+1,sour.m_strTitle);
-			CStdioFile f(sPath+sour.GetWebFilePath(),CFile::modeCreate|CFile::modeWrite);
+			wxFile f(sPath+sour.GetWebFilePath(),wxFile::modeCreate|wxFile::modeWrite);
 			f.WriteString(sour.GetWebPage(tplSour));
 		}
 
@@ -2027,12 +2027,12 @@ void CGedtreeViewDL::OnFileHTML()
 		for (int iFile(0); iFile<cIndi; iFile += siz)
 		{
 			prg.Set(iFile+1,"");
-			CString sFile;
+			wxString sFile;
 			sFile.Format(L"%sx%dx%d.html",(LPCTSTR)sPath,0,iFile);
-			CStdioFile f(sFile,CFile::modeCreate|CFile::modeWrite);
+			wxFile f(sFile,wxFile::modeCreate|wxFile::modeWrite);
 			f.WriteString(L"<HTML><BODY style=\"{font-family: \"microsoft sans serif\", arial, helvetica, sans-serif; background-color: #FFFFCC;}\"><TABLE><TR>\n");
 
-			CString s;
+			wxString s;
 
 			if (cLevel>1)
 			{
@@ -2061,13 +2061,13 @@ void CGedtreeViewDL::OnFileHTML()
 					birth = indi.m_revt[indi.m_iBirth].m_dvDate.GetSimpleYear();
 				if (indi.m_iDeath>=0)
 					death = indi.m_revt[indi.m_iDeath].m_dvDate.GetSimpleYear();
-				CString sBirth("?"), sDeath("?");
+				wxString sBirth("?"), sDeath("?");
 				if (birth)
 					sBirth.Format(L"%04d",birth);
 				if (death)
 					sDeath.Format(L"%04d",death);
 
-				CString s;
+				wxString s;
 				s.Format(
 					L"<TR>"
 						L"<TD><A HREF=\"i%d.html\"><B>%s</B>, %s</A></TD>"
@@ -2099,12 +2099,12 @@ void CGedtreeViewDL::OnFileHTML()
 			for (int iFile(0); iFile<cIndi; iFile += levval*siz)
 			{
 				prg.Set(iFile+(lev-1)*cLevel+1,"");
-				CString sFile;
+				wxString sFile;
 				sFile.Format(L"%sx%dx%d.html",(LPCTSTR)sPath,lev,iFile);
-				CStdioFile f(sFile,CFile::modeCreate|CFile::modeWrite);
+				wxFile f(sFile,wxFile::modeCreate|wxFile::modeWrite);
 				f.WriteString(L"<HTML><BODY style=\"{font-family: \"microsoft sans serif\", arial, helvetica, sans-serif; background-color: #FFFFCC;}\"><TABLE><TR>\n");
 
-				CString s;
+				wxString s;
 
 				if (cLevel-1>1 && !(iFile==0&&lev==cLevel-1))
 				{
@@ -2133,7 +2133,7 @@ void CGedtreeViewDL::OnFileHTML()
 				{
 					CIndividual& indi1 = pDoc->m_rIndividual[rSrtIndi->GetAt(i)];
 					CIndividual& indi2 = pDoc->m_rIndividual[rSrtIndi->GetAt(tmin(cIndi-1,i+(levval/10)*siz-1))];
-					CString s;
+					wxString s;
 					s.Format(
 						L"<TR>"
 							L"<TD valign=\"bottom\"><A HREF=\"x%dx%d.html\"><B>%s</B>, %s</A></TD>"
@@ -2163,7 +2163,7 @@ void CGedtreeViewDL::OnFileHTML()
 		}
 
 		{
-			CStdioFile f(sPath+"index.html",CFile::modeCreate|CFile::modeWrite);
+			wxFile f(sPath+"index.html",wxFile::modeCreate|wxFile::modeWrite);
 			f.WriteString(L"<HTML>\n<HEAD>\n<TITLE>");
 			f.WriteString(pDoc->GetTitle());
 			f.WriteString(L"</TITLE>\n</HEAD>\n<BODY>\n");
@@ -2175,7 +2175,7 @@ void CGedtreeViewDL::OnFileHTML()
 			f.WriteString(L"\nwith the Genealogy Research Organizer program\n");
 			f.WriteString(L"(<A HREF=\"http://go.to/gro\">GRO</A>).\n");
 			f.WriteString(L"<P>\n");
-			CString s;
+			wxString s;
 			s.Format(L"<FONT size=5><A HREF=\"x%dx%d.html\">Index</A></FONT>\n",cLevel-1,0);
 			f.WriteString(s);
 			f.WriteString(L"<P>\n");
@@ -2209,7 +2209,7 @@ void CGedtreeViewDL::OnFileRTF()
 		return;
 	}
 
-	CString sPath = pDoc->GetPathName();
+	wxString sPath = pDoc->GetPathName();
 	if (sPath.IsEmpty())
 	{
 		AfxMessageBox(L"Please save this GEDCOM document before using this command.");
@@ -2223,20 +2223,20 @@ void CGedtreeViewDL::OnFileRTF()
 	_tsplitpath(sPath,drive,dir,fname,ext);
 /*
 taking out rtf code just to test the "text descent book" code
-	sPath = CString(drive)+CString(dir)+CString(fname)+".rtf";
+	sPath = wxString(drive)+wxString(dir)+wxString(fname)+".rtf";
 
-	CString sPathHead = CString(drive)+CString(dir)+"head.rtf";
-	CString sPathIndi = CString(drive)+CString(dir)+"indi.rtf";
-	CString sPathSour = CString(drive)+CString(dir)+"sour.rtf";
-	CString sPathBib = CString(drive)+CString(dir)+"bib.rtf";
+	wxString sPathHead = wxString(drive)+wxString(dir)+"head.rtf";
+	wxString sPathIndi = wxString(drive)+wxString(dir)+"indi.rtf";
+	wxString sPathSour = wxString(drive)+wxString(dir)+"sour.rtf";
+	wxString sPathBib = wxString(drive)+wxString(dir)+"bib.rtf";
 
-	CMemFile tplHead, tplIndi, tplSour, tplBib;
+	wxFile tplHead, tplIndi, tplSour, tplBib;
 	OldGetUserTpl(tplHead,sPathHead,sTplHeadrtf);
 	OldGetUserTpl(tplIndi,sPathIndi,sTplIndirtf);
 	OldGetUserTpl(tplSour,sPathSour,sTplSourrtf);
 	OldGetUserTpl(tplBib,sPathBib,sTplBibrtf);
 
-	CArray<int,int>* rSrtIndi = pDoc->GetSortedIndis();
+	wxArray<int,int>* rSrtIndi = pDoc->GetSortedIndis();
 
 	AfxGetMainWnd()->SetForegroundWindow();
 
@@ -2244,7 +2244,7 @@ taking out rtf code just to test the "text descent book" code
 		CProgress prg;
 		prg.Reset("Exporting individuals.",pDoc->m_rIndividual.GetSize());
 
-		CStdioFile f(sPath,CFile::modeCreate|CFile::modeWrite);
+		wxFile f(sPath,wxFile::modeCreate|wxFile::modeWrite);
 
 		tplHead.SeekToBegin();
 		char* pc = new char[1024];
@@ -2260,7 +2260,7 @@ taking out rtf code just to test the "text descent book" code
 			f.WriteString(indi.GetRTFPage(tplIndi));
 		}
 
-		CArray<int,int> rSour;
+		wxArray<int,int> rSour;
 		pDoc->GetSortedSours(rSour);
 		prg.Reset("Exporting source text.",pDoc->m_rSource.GetSize());
 		for (i = 0; i<pDoc->m_rSource.GetSize(); i++)
@@ -2290,14 +2290,14 @@ taking out rtf code just to test the "text descent book" code
 
 	::ShellExecute(NULL,L"open",sPath,NULL,NULL,SW_SHOWNORMAL);
 */
-	sPath = CString(drive)+CString(dir)+CString(fname)+".html";
+	sPath = wxString(drive)+wxString(dir)+wxString(fname)+".html";
 
 	for (int iIndi(0); iIndi<pDoc->m_rIndividual.GetSize(); iIndi++)
 	{
 		CIndividual* pindi = &pDoc->m_rIndividual[iIndi];
 		if (pindi->m_bSelected)
 		{
-			CStdioFile f(sPath,CFile::modeCreate|CFile::modeWrite);
+			wxFile f(sPath,wxFile::modeCreate|wxFile::modeWrite);
 
 			f.WriteString(L"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n");
 			f.WriteString(L"<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\">\n");
@@ -2328,11 +2328,11 @@ taking out rtf code just to test the "text descent book" code
 
 }
 
-void CGedtreeViewDL::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CGedtreeViewDL::OnContextMenu(wxWindow* pWnd, wxPoint point) 
 {
 	GetParentFrame()->ActivateFrame();
 
-	CPoint pointLocal(point);
+	wxPoint pointLocal(point);
 	ScreenToClient(&pointLocal);
 	OnLButtonDown(0,pointLocal);
 	OnLButtonUp(0,pointLocal);
@@ -2352,7 +2352,7 @@ void CGedtreeViewDL::OnViewCensus()
 {
 	CGedtreeDoc* pDoc = GetDocument();
 
-	CString sPath = pDoc->GetPathName();
+	wxString sPath = pDoc->GetPathName();
 	if (sPath.IsEmpty())
 	{
 		AfxMessageBox(L"Please save this GEDCOM document before using this command.");
@@ -2364,10 +2364,10 @@ void CGedtreeViewDL::OnViewCensus()
 	TCHAR fname[_MAX_FNAME];
 	TCHAR ext[_MAX_EXT];
 	_tsplitpath(sPath,drive,dir,fname,ext);
-	sPath = CString(drive)+CString(dir);
-	CString sFilePath = sPath + CString(fname) + "census.html";
+	sPath = wxString(drive)+wxString(dir);
+	wxString sFilePath = sPath + wxString(fname) + "census.html";
 
-	CString sMsg;
+	wxString sMsg;
 	sMsg.Format(L"This will create a HTML page showing each person's probable "
 		L"location for each US Census year. Is this OK?\n\n"
 		L"The HTML page will be\n%s\n\n",(LPCTSTR)sFilePath);
@@ -2375,7 +2375,7 @@ void CGedtreeViewDL::OnViewCensus()
 	if (AfxMessageBox(sMsg,MB_YESNO)!=IDYES)
 		return;
 
-	CArray<CDate,CDate> rdateCensusDay;
+	wxArray<CDate,CDate> rdateCensusDay;
 	for (int nYear = 1790; nYear <= CTime::GetCurrentTime().GetYear(); nYear += 10)
 	{
 		CDate date;
@@ -2383,7 +2383,7 @@ void CGedtreeViewDL::OnViewCensus()
 		rdateCensusDay.Add(date);
 	}
 
-	CString sFile;
+	wxString sFile;
 	sFile =
 		"<html><body><p>This table lists people (rows) and US Census years (columns).<br />\n"
 		"Each cell shows the most likely location of a person in a census year.<br />\n"
@@ -2395,7 +2395,7 @@ void CGedtreeViewDL::OnViewCensus()
 
 	for (int i(0); i<rdateCensusDay.GetSize(); i++)
 	{
-		CString s;
+		wxString s;
 		s.Format(L"<th>%d</th>",rdateCensusDay[i].GetSimpleYear());
 		sFile += s;
 	}
@@ -2412,7 +2412,7 @@ void CGedtreeViewDL::OnViewCensus()
 
 	sFile += "</table></body></html>\n";
 
-	CStdioFile f(sFilePath,CFile::modeCreate|CFile::modeWrite);
+	wxFile f(sFilePath,wxFile::modeCreate|wxFile::modeWrite);
 	f.WriteString(sFile);
 	f.Close();
 
@@ -2422,9 +2422,9 @@ void CGedtreeViewDL::OnViewCensus()
 	::ShellExecute(NULL,L"open",sFilePath,NULL,NULL,SW_SHOWNORMAL);
 }
 
-void CGedtreeViewDL::OnUpdateViewCensus(CCmdUI* pCmdUI) 
+void CGedtreeViewDL::OnUpdateViewCensus(wxUpdateUIEvent& pCmdUI) 
 {
-	pCmdUI->Enable(IndiSelected());
+	pCmdUI.Enable(IndiSelected());
 }
 
 void CGedtreeViewDL::OnViewPlace() 
@@ -2433,19 +2433,19 @@ void CGedtreeViewDL::OnViewPlace()
 	dlg.DoModal();
 }
 
-void CGedtreeViewDL::OnUpdateViewPlace(CCmdUI* pCmdUI) 
+void CGedtreeViewDL::OnUpdateViewPlace(wxUpdateUIEvent& pCmdUI) 
 {
-	pCmdUI->Enable(IndiSelected());
+	pCmdUI.Enable(IndiSelected());
 }
 
-void CGedtreeViewDL::OnUpdateViewAnomalies(CCmdUI* pCmdUI) 
+void CGedtreeViewDL::OnUpdateViewAnomalies(wxUpdateUIEvent& pCmdUI) 
 {
-	pCmdUI->Enable(IndiSelected());
+	pCmdUI.Enable(IndiSelected());
 }
 
-void CGedtreeViewDL::OnUpdateEditCopy(CCmdUI* pCmdUI) 
+void CGedtreeViewDL::OnUpdateEditCopy(wxUpdateUIEvent& pCmdUI) 
 {
-	pCmdUI->Enable(IndiSelected());
+	pCmdUI.Enable(IndiSelected());
 }
 
 void CGedtreeViewDL::OnEditCopy() 
@@ -2454,9 +2454,9 @@ void CGedtreeViewDL::OnEditCopy()
 	theApp.Copy(GetDocument(),theApp.m_pClip);
 }
 
-void CGedtreeViewDL::OnUpdateEditPaste(CCmdUI* pCmdUI) 
+void CGedtreeViewDL::OnUpdateEditPaste(wxUpdateUIEvent& pCmdUI) 
 {
-	pCmdUI->Enable(theApp.m_pClip->m_rIndividual.GetSize()>0);
+	pCmdUI.Enable(theApp.m_pClip->m_rIndividual.GetSize()>0);
 }
 
 void CGedtreeViewDL::OnEditPaste() 
@@ -2476,7 +2476,7 @@ void CGedtreeViewDL::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CGedtreeViewDL::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
-//	CString s;
+//	wxString s;
 //	s.Format(L"nChar==%d, nRepCnt==%d, nFlags==%d\n",nChar,nRepCnt,nFlags);
 //	OutputDebugString(s);
 	if (nChar==VK_CONTROL)
@@ -2497,7 +2497,7 @@ void CGedtreeViewDL::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		}
 		else if (m_bCtrl)
 		{
-			ShiftSelectedIndis(CSize(-1,0));
+			ShiftSelectedIndis(wxSize(-1,0));
 			ResetAllViews();
 		}
 		else
@@ -2517,7 +2517,7 @@ void CGedtreeViewDL::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		}
 		else if (m_bCtrl)
 		{
-			ShiftSelectedIndis(CSize(1,0));
+			ShiftSelectedIndis(wxSize(1,0));
 			ResetAllViews();
 		}
 		else
@@ -2537,7 +2537,7 @@ void CGedtreeViewDL::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		}
 		else if (m_bCtrl)
 		{
-			ShiftSelectedIndis(CSize(0,-1));
+			ShiftSelectedIndis(wxSize(0,-1));
 			ResetAllViews();
 		}
 		else
@@ -2557,7 +2557,7 @@ void CGedtreeViewDL::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		}
 		else if (m_bCtrl)
 		{
-			ShiftSelectedIndis(CSize(0,1));
+			ShiftSelectedIndis(wxSize(0,1));
 			ResetAllViews();
 		}
 		else
@@ -2575,12 +2575,12 @@ void CGedtreeViewDL::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	CGedtreeView::OnKeyUp(nChar, nRepCnt, nFlags);
 }
 
-void CGedtreeViewDL::OldGetUserTpl(CMemFile& tpl, const CString& strFilePath, const char* sTpl)
+void CGedtreeViewDL::OldGetUserTpl(wxFile& tpl, const wxString& strFilePath, const char* sTpl)
 {
-	CStdioFile tplUser;
-	if (tplUser.Open(strFilePath,CFile::modeRead))
+	wxFile tplUser;
+	if (tplUser.Open(strFilePath,wxFile::modeRead))
 	{
-		CString s;
+		wxString s;
 		while (tplUser.ReadString(s))
 		{
 			s += "\n";
@@ -2602,17 +2602,17 @@ void CGedtreeViewDL::OnViewAnomalies()
 	for (int i(0); i<pDoc->m_rIndividual.GetSize(); i++)
 	{
 		CIndividual& indi = pDoc->m_rIndividual[i];
-		CArray<CEvt,CEvt&>& revt = indi.m_revt;
+		wxArray<CEvt,CEvt&>& revt = indi.m_revt;
 		UKPlaceEvents(revt);
 		CoPlaceEvents(revt);
-		CArray<CAttr,CAttr&>& rattr = indi.m_rattr;
+		wxArray<CAttr,CAttr&>& rattr = indi.m_rattr;
 		UKPlaceAttrs(rattr);
 		CoPlaceAttrs(rattr);
 	}
 	for (i = 0; i<pDoc->m_rFamily.GetSize(); i++)
 	{
 		CFamily& fami = pDoc->m_rFamily[i];
-		CArray<CEvt,CEvt&>& revt = fami.m_revt;
+		wxArray<CEvt,CEvt&>& revt = fami.m_revt;
 		UKPlaceEvents(revt);
 		CoPlaceEvents(revt);
 	}
@@ -2630,7 +2630,7 @@ void CGedtreeViewDL::OnViewAnomalies()
 	return;
 */
 
-	CString sPath = pDoc->GetPathName();
+	wxString sPath = pDoc->GetPathName();
 	if (sPath.IsEmpty())
 	{
 		AfxMessageBox(L"Please save this GEDCOM document before using this command.");
@@ -2642,17 +2642,17 @@ void CGedtreeViewDL::OnViewAnomalies()
 	TCHAR fname[_MAX_FNAME];
 	TCHAR ext[_MAX_EXT];
 	_tsplitpath(sPath,drive,dir,fname,ext);
-	sPath = CString(drive)+CString(dir);
-	CString sFilePath = sPath + CString(fname) + "anomaly.html";
+	sPath = wxString(drive)+wxString(dir);
+	wxString sFilePath = sPath + wxString(fname) + "anomaly.html";
 
-	CString sMsg;
+	wxString sMsg;
 	sMsg.Format(L"This will create a HTML page showing a report of each person's anomalies. "
 		L"Is this OK?\n\nThe HTML page will be\n%s\n\n",(LPCTSTR)sFilePath);
 
 	if (AfxMessageBox(sMsg,MB_YESNO)!=IDYES)
 		return;
 
-	CString sFile;
+	wxString sFile;
 	sFile =
 		"<HTML><BODY>This is a report of anomalies found in the GEDCOM document.<BR>\n";
 
@@ -2668,7 +2668,7 @@ void CGedtreeViewDL::OnViewAnomalies()
 	sFile += "</BODY></HTML>\n";
 
 	{
-		CStdioFile f(sFilePath,CFile::modeCreate|CFile::modeWrite);
+		wxFile f(sFilePath,wxFile::modeCreate|wxFile::modeWrite);
 		f.WriteString(sFile);
 	}
 

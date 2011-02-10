@@ -3,15 +3,15 @@
 #include "util.h"
 
 const int nMonthSize[] = {0,31,28,31,30,31,30,31,31,30,31,30,31};
-const CString rsMonthFull[] =
+const wxString rsMonthFull[] =
 {
-	"January","February","March","April","May","June",
-	"July","August","September","October","November","December"
+	_T("January"),_T("February"),_T("March"),_T("April"),_T("May"),_T("June"),
+	_T("July"),_T("August"),_T("September"),_T("October"),_T("November"),_T("December")
 };
-const CString rsWeekdayFull[] =
+const wxString rsWeekdayFull[] =
 {
-	"Sunday","Monday","Tuesday","Wednesday",
-	"Thursday","Friday","Saturday"
+	_T("Sunday"),_T("Monday"),_T("Tuesday"),_T("Wednesday"),
+	_T("Thursday"),_T("Friday"),_T("Saturday")
 };
 
 static int ceildiv(int numerator, int denominator);
@@ -87,7 +87,7 @@ void CDate::GetJulian(int* pnYear, int* pnMonth, int* pnDay) const
 {
 	if (!(m_nYear && m_nMonth && m_nDay))
 	{
-		ASSERT(m_bJulian);
+		wxASSERT(m_bJulian);
 		*pnYear = m_nYear;
 		*pnMonth = m_nMonth;
 		*pnDay = m_nDay;
@@ -225,7 +225,7 @@ void CDate::Get(int* pnYear, int* pnMonth, int* pnDay) const
 {
 	if (!(m_nYear && m_nMonth && m_nDay))
 	{
-		ASSERT(!m_bJulian);
+		wxASSERT(!m_bJulian);
 		*pnYear = m_nYear;
 		*pnMonth = m_nMonth;
 		*pnDay = m_nDay;
@@ -271,7 +271,7 @@ BOOL CDate::SetVisible(BOOL bVisible)
 	return bOld;
 }
 
-CString CDate::Display(DWORD dwFlags) const
+wxString CDate::Display(DWORD dwFlags) const
 {
 	if (dwFlags&DATE_SHORTDATE)
 		return m_strDisplayShort;
@@ -281,21 +281,21 @@ CString CDate::Display(DWORD dwFlags) const
 
 void CDate::CalcDisplay()
 {
-	CString strOS, strBC, strWk;
+	wxString strOS, strBC, strWk;
 
 	if (m_bJulian)
-		strOS = " OS";
+		strOS = _T(" OS");
 
 	int nYear = m_nYear;
 	if (m_nYear<0)
 	{
-		strBC = "BC";
+		strBC = _T("BC");
 		nYear = -m_nYear;
 	}
 	if (m_nYear&&m_nMonth&&m_nDay)
 		strWk = rsWeekdayFull[GetWeekday()];
 
-	CString strYear;
+	wxString strYear;
 	if (m_nYear)
 	{
 		// Build the year string. Check to see if we need
@@ -312,7 +312,7 @@ void CDate::CalcDisplay()
 			//	y2 = nYear%1000;
 			if (y2==0)
 				y2 = nYear;
-			strYear = CUtil::str(y1)+"/"+CUtil::str(y2);
+			strYear = CUtil::str(y1)+_T("/")+CUtil::str(y2);
 		}
 		else
 			strYear = CUtil::str(nYear);
@@ -323,70 +323,70 @@ void CDate::CalcDisplay()
 		m_strDisplayLong += rsMonthFull[m_nMonth-1];
 
 	if (m_nMonth&&(m_nDay||nYear))
-		m_strDisplayLong += " ";
+		m_strDisplayLong += _T(" ");
 
 	if (m_nDay)
 		m_strDisplayLong += CUtil::str(m_nDay);
 
 	if (m_nDay&&nYear)
-		m_strDisplayLong += ", ";
+		m_strDisplayLong += _T(", ");
 
 	m_strDisplayLong += strYear;
 
 	if (!strBC.IsEmpty())
-		m_strDisplayLong += " "+strBC;
+		m_strDisplayLong += _T(" ")+strBC;
 
 	if (!strOS.IsEmpty())
 		m_strDisplayLong += strOS;
 
 	if (m_nYear&&m_nMonth&&m_nDay)
-		m_strDisplayLong += " ("+strWk+")";
+		m_strDisplayLong += _T(" (")+strWk+_T(")");
 
 	if (m_nJD)
-		m_strDisplayLong += " (JD"+CUtil::str(m_nJD)+")";
+		m_strDisplayLong += _T(" (JD")+CUtil::str(m_nJD)+_T(")");
 
 
 
 	m_strDisplayShort.Empty();
 	if (m_nDay)
 	{
-		CString s;
+		wxString s;
 		s.Format(_T("%2.2d"),m_nDay);
 		m_strDisplayShort += s;//CUtil::str(m_nDay);
 	}
 
 	if (m_nDay&&(m_nMonth||nYear))
-		m_strDisplayShort += " ";
+		m_strDisplayShort += _T(" ");
 
 	if (m_nMonth)
 		m_strDisplayShort += rsMonthFull[m_nMonth-1].Left(3);
 
 	if (m_nMonth&&m_nYear)
-		m_strDisplayShort += " ";
+		m_strDisplayShort += _T(" ");
 
 	m_strDisplayShort += strYear;
 
 	if (!strBC.IsEmpty())
-		m_strDisplayShort += " "+strBC;
+		m_strDisplayShort += _T(" ")+strBC;
 
 	if (!strOS.IsEmpty())
 		m_strDisplayShort += strOS;
 
 //	if (m_nYear&&m_nMonth&&m_nDay)
-//		m_strDisplayShort += " ("+strWk.Left(3)+")";
+//		m_strDisplayShort += _T(" (")+strWk.Left(3)+_T(")");
 
 
 
-	CString strHoliday = HolidayDisplay();
+	wxString strHoliday = HolidayDisplay();
 	if (!strHoliday.IsEmpty())
 	{
 		m_strDisplayLong  += strHoliday;
 		//m_strDisplayShort += strHoliday;
 	}
 
-	CString strWeekShort;
+	wxString strWeekShort;
 	if (!strWk.IsEmpty())
-		strWeekShort = " ("+strWk.Left(3)+")";
+		strWeekShort = _T(" (")+strWk.Left(3)+_T(")");
 	strWeekShort.Empty();//don't show this
 	m_strSort.Format(_T("%s%4.4d/%2.2d/%2.2d%s%s"),
 		(LPCTSTR)strBC,
@@ -399,14 +399,14 @@ void CDate::CalcDisplay()
 
 CDate& CDate::operator+=(int nDays)
 {
-	ASSERT(m_nJD);
+	wxASSERT(m_nJD);
 	m_nJD += nDays;
 	return *this;
 }
 
 CDate& CDate::operator-=(int nDays)
 {
-	ASSERT(m_nJD);
+	wxASSERT(m_nJD);
 	m_nJD -= nDays;
 	return *this;
 }
@@ -443,16 +443,16 @@ BOOL CDate::IsHoliday(CDate::Holiday holiday)
 	return bHoliday;
 }
 
-CString CDate::HolidayDisplay()
+wxString CDate::HolidayDisplay()
 {
-	CString s;
+	wxString s;
 	#undef h
 	#define h(x) \
 	if (IsHoliday(x)) \
 	{ \
-		s += " ("; \
-		s += #x; \
-		s += ")"; \
+		s += _T(" ("); \
+		s += _T( #x ); \
+		s += _T(")" ); \
 	}
 	#include "holidaydef.h"
 
@@ -548,7 +548,7 @@ void CDate::SetHoliday(int nYear, Holiday holiday)
 
 void CDate::AdvanceToNthWeekdayInMonth(int n, Weekday wk)
 {
-	ASSERT(m_nDay==1);
+	wxASSERT(m_nDay==1);
 
 	m_nDay += (7-GetWeekday()+wk)%7 + 7*--n;
 	Reset();

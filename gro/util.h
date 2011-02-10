@@ -1,7 +1,7 @@
 class CUtil
 {
 public:
-	static CString str(const int n);
-	static BOOL DirectoryExists(const CString& strDir);
-	static CString GetWindowsDirectory();
+	static wxString str(const int n);
+	static BOOL DirectoryExists(const wxString& strDir);
+	static wxString GetWindowsDirectory();
 };

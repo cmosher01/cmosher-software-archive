@@ -10,7 +10,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CWebBrowser
 
-IMPLEMENT_DYNCREATE(CWebBrowser, CWnd)
+IMPLEMENT_DYNCREATE(CWebBrowser, wxWindow)
 
 /////////////////////////////////////////////////////////////////////////////
 // CWebBrowser properties
@@ -99,9 +99,9 @@ BOOL CWebBrowser::GetTopLevelContainer()
 	return result;
 }
 
-CString CWebBrowser::GetType()
+wxString CWebBrowser::GetType()
 {
-	CString result;
+	wxString result;
 	InvokeHelper(0xcd, DISPATCH_PROPERTYGET, VT_BSTR, (void*)&result, NULL);
 	return result;
 }
@@ -166,16 +166,16 @@ void CWebBrowser::SetHeight(long nNewValue)
 		 nNewValue);
 }
 
-CString CWebBrowser::GetLocationName()
+wxString CWebBrowser::GetLocationName()
 {
-	CString result;
+	wxString result;
 	InvokeHelper(0xd2, DISPATCH_PROPERTYGET, VT_BSTR, (void*)&result, NULL);
 	return result;
 }
 
-CString CWebBrowser::GetLocationURL()
+wxString CWebBrowser::GetLocationURL()
 {
-	CString result;
+	wxString result;
 	InvokeHelper(0xd3, DISPATCH_PROPERTYGET, VT_BSTR, (void*)&result, NULL);
 	return result;
 }
@@ -218,9 +218,9 @@ VARIANT CWebBrowser::GetProperty_(LPCTSTR Property_)
 	return result;
 }
 
-CString CWebBrowser::GetName()
+wxString CWebBrowser::GetName()
 {
-	CString result;
+	wxString result;
 	InvokeHelper(0x0, DISPATCH_PROPERTYGET, VT_BSTR, (void*)&result, NULL);
 	return result;
 }
@@ -232,16 +232,16 @@ long CWebBrowser::GetHwnd()
 	return result;
 }
 
-CString CWebBrowser::GetFullName()
+wxString CWebBrowser::GetFullName()
 {
-	CString result;
+	wxString result;
 	InvokeHelper(0x190, DISPATCH_PROPERTYGET, VT_BSTR, (void*)&result, NULL);
 	return result;
 }
 
-CString CWebBrowser::GetPath()
+wxString CWebBrowser::GetPath()
 {
-	CString result;
+	wxString result;
 	InvokeHelper(0x191, DISPATCH_PROPERTYGET, VT_BSTR, (void*)&result, NULL);
 	return result;
 }
@@ -276,9 +276,9 @@ void CWebBrowser::SetStatusBar(BOOL bNewValue)
 		 bNewValue);
 }
 
-CString CWebBrowser::GetStatusText()
+wxString CWebBrowser::GetStatusText()
 {
-	CString result;
+	wxString result;
 	InvokeHelper(0x194, DISPATCH_PROPERTYGET, VT_BSTR, (void*)&result, NULL);
 	return result;
 }

@@ -15,8 +15,8 @@ static char THIS_FILE[] = __FILE__;
 // CEditSex dialog
 
 
-CEditSex::CEditSex(CWnd* pParent /*=NULL*/)
-	: CDialog(CEditSex::IDD, pParent)
+CEditSex::CEditSex(wxWindow* pParent /*=NULL*/)
+	: wxDialog(CEditSex::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CEditSex)
 	m_nSex = -1;
@@ -26,18 +26,18 @@ CEditSex::CEditSex(CWnd* pParent /*=NULL*/)
 
 void CEditSex::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	wxDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CEditSex)
 	DDX_Radio(pDX, IDC_UNKNOWN, m_nSex);
 	//}}AFX_DATA_MAP
 }
 
 
-BEGIN_MESSAGE_MAP(CEditSex, CDialog)
+BEGIN_EVENT_TABLE(CEditSex, wxDialog)
 	//{{AFX_MSG_MAP(CEditSex)
 		// NOTE: the ClassWizard will add message map macros here
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CEditSex message handlers

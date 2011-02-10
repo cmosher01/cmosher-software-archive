@@ -6,11 +6,11 @@ class CGedtreeDoc;
 /////////////////////////////////////////////////////////////////////////////
 // CPickSource dialog
 
-class CPickSource : public CDialog
+class CPickSource : public wxDialog
 {
 // Construction
 public:
-	CPickSource(CGedtreeDoc* pDoc = NULL, CWnd* pParent = NULL, BOOL bEdit = FALSE);
+	CPickSource(CGedtreeDoc* pDoc = NULL, wxWindow* pParent = NULL, BOOL bEdit = FALSE);
 
 // Dialog Data
 	CGedtreeDoc* m_pDoc;
@@ -18,7 +18,7 @@ public:
 	BOOL m_bEdit;
 	//{{AFX_DATA(CPickSource)
 	enum { IDD = IDD_SOURCES };
-	CListCtrl	m_listSource;
+	wxListCtrl*	m_listSource;
 	//}}AFX_DATA
 
 
@@ -33,7 +33,7 @@ public:
 protected:
 	void InitList();
 	void Reset();
-	void CheckColumnWidth(int nCol, const CString& str);
+	void CheckColumnWidth(int nCol, const wxString& str);
 
 	// Generated message map functions
 	//{{AFX_MSG(CPickSource)
@@ -43,5 +43,5 @@ protected:
 	afx_msg void OnDblclkSources(NMHDR* pNMHDR, LRESULT* pResult);
 	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };

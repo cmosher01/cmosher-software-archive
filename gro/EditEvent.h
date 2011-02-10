@@ -7,32 +7,32 @@
 #include "event.h"
 #include "attr.h"
 
-class CEditEvent : public CDialog
+class CEditEvent : public wxDialog
 {
 // Construction
 public:
-	CEditEvent(BOOL bFamily = FALSE, BOOL bAttr = FALSE, CWnd* pParent = NULL);   // standard constructor
+	CEditEvent(BOOL bFamily = FALSE, BOOL bAttr = FALSE, wxWindow* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	CEvt m_evt;
 	CAttr m_attr;
 	BOOL m_bFamily;
 	BOOL m_bAttr;
-	CComboBox	m_comboType;
+	wxComboBox*	m_comboType;
 	//{{AFX_DATA(CEditEvent)
 	enum { IDD = IDD_EVENT };
-	CEdit	m_editPlace;
-	CButton	m_buttonOK;
-	CButton	m_buttonCancel;
-	CButton	m_buttonDelete;
-	CEdit	m_editNote;
-	CStatic	m_staticSource;
-	CStatic	m_staticDate;
-	CEdit	m_editType;
-	CString	m_strPlace;
-	CString	m_strType;
+	wxTextCtrl*	m_editPlace;
+	wxButton*	m_buttonOK;
+	wxButton*	m_buttonCancel;
+	wxButton*	m_buttonDelete;
+	wxTextCtrl*	m_editNote;
+	wxStaticText	m_staticSource;
+	wxStaticText	m_staticDate;
+	wxTextCtrl*	m_editType;
+	wxString	m_strPlace;
+	wxString	m_strType;
 	int		m_nType;
-	CString	m_strNote;
+	wxString	m_strNote;
 	//}}AFX_DATA
 
 
@@ -61,5 +61,5 @@ protected:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };

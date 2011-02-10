@@ -17,8 +17,7 @@ static char THIS_FILE[] = __FILE__;
 // CAbout dialog
 
 
-CAbout::CAbout(CWnd* pParent /*=NULL*/)
-	: CDialog(CAbout::IDD, pParent)
+CAbout::CAbout(wxWindow* pParent /*=NULL*/)
 {
 	//{{AFX_DATA_INIT(CAbout)
 	m_strAbout = _T("");
@@ -28,7 +27,7 @@ CAbout::CAbout(CWnd* pParent /*=NULL*/)
 
 void CAbout::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	//wxDialog::DoDataExchange(pDX);
 
 	if (!pDX->m_bSaveAndValidate)
 		m_strAbout = GetAbout();
@@ -55,45 +54,44 @@ void CAbout::DoDataExchange(CDataExchange* pDX)
 		lf.lfQuality = PROOF_QUALITY;
 		lf.lfPitchAndFamily = DEFAULT_PITCH;
 		_tcscpy(lf.lfFaceName,_T("Arial"));
-		m_font.CreateFontIndirect(&lf);
-		m_staticAbout.SetFont(&m_font);
+		m_staticAbout.SetFont(wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT));
 	}
 }
 
 
-BEGIN_MESSAGE_MAP(CAbout, CDialog)
+BEGIN_EVENT_TABLE(CAbout, wxDialog)
 	//{{AFX_MSG_MAP(CAbout)
 		// NOTE: the ClassWizard will add message map macros here
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CAbout message handlers
 
-CString CAbout::GetAbout()
+wxString CAbout::GetAbout()
 {
-	CString s;
+	wxString s;
 
-	s += theApp.m_pszAppName; s+= "\n";
-	s += "Version "; s += theApp.m_info.m_strVersion;
-	s += "  (released ";
+	s += ::wxGetApp().GetAppName(); s+= _T("\n");
+	s += _T("Version "); s += ::wxGetApp().m_info.m_strVersion;
+	s += _T("  (released ");
 	s += RELEASE_DATE;
-	s += ")\n";
-	s += theApp.m_info.m_strCopyright; s+= "\n";
-	s += "\n";
-	s += theApp.m_info.m_strComments;
+	s += _T(")\n");
+	s += ::wxGetApp().m_info.m_strCopyright; s+= _T("\n");
+	s += _T("\n");
+	s += ::wxGetApp().m_info.m_strComments;
 
-	s += "\n\nrunning: ";
+	s += _T("\n\nrunning: ");
 
-	UINT nAppDriveType = theApp.m_info.m_nAppDriveType;
+	UINT nAppDriveType = ::wxGetApp().m_info.m_nAppDriveType;
 	if (nAppDriveType==DRIVE_REMOVABLE)
-		s += "(floppy) ";
+		s += _T("(floppy) ");
 	else if (nAppDriveType==DRIVE_CDROM)
-		s += "(CD-ROM) ";
+		s += _T("(CD-ROM) ");
 	else if (nAppDriveType==DRIVE_REMOTE)
-		s += "(network) ";
+		s += _T("(network) ");
 
-	CString strApp = theApp.m_info.m_strAppPath;
+	wxString strApp = ::wxGetApp().m_info.m_strAppPath;
 	strApp.MakeLower();
 	s += strApp;
 

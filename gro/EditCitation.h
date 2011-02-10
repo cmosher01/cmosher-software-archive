@@ -6,24 +6,24 @@
 /////////////////////////////////////////////////////////////////////////////
 // CEditCitation dialog
 
-class CEditCitation : public CDialog
+class CEditCitation : public wxDialog
 {
 // Construction
 public:
-	CEditCitation(CWnd* pParent = NULL);   // standard constructor
+	CEditCitation(wxWindow* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	CCitation m_cita;
 	//{{AFX_DATA(CEditCitation)
 	enum { IDD = IDD_CITATION };
-	CButton	m_buttonOK;
-	CButton	m_buttonCancel;
-	CButton	m_buttonDelete;
-	CEdit	m_editText;
-	CStatic	m_staticSource;
-	CString	m_strPage;
+	wxButton*	m_buttonOK;
+	wxButton*	m_buttonCancel;
+	wxButton*	m_buttonDelete;
+	wxTextCtrl*	m_editText;
+	wxStaticText*	m_staticSource;
+	wxString	m_strPage;
 	int		m_nQuality;
-	CString	m_strText;
+	wxString	m_strText;
 	//}}AFX_DATA
 
 
@@ -49,5 +49,5 @@ protected:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };

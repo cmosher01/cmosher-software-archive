@@ -20,9 +20,9 @@ public:
 	};
 
 private:
-	CString m_strDisplayShort;
-	CString m_strDisplayLong;
-	CString m_strSort;
+	wxString m_strDisplayShort;
+	wxString m_strDisplayLong;
+	wxString m_strSort;
 
 	Type m_type;
 
@@ -30,31 +30,31 @@ private:
 	// "before" or "and" (for range) or "to" (for period)
 	CDate m_dOther;
 
-	CString m_strPhrase;
+	wxString m_strPhrase;
 
-	BOOL ParseDate(CDate& date, CString& strRest);
-	int ParseYear(const CString& str);
-	int Month(const CString& str);
-	CString NextWord(CString& strRest);
-	CString FormatDate(const CDate& d);
+	BOOL ParseDate(CDate& date, wxString& strRest);
+	int ParseYear(const wxString& str);
+	int Month(const wxString& str);
+	wxString NextWord(wxString& strRest);
+	wxString FormatDate(const CDate& d);
 	void CalcDisplay();
-	CString GetDisplayString(DWORD dwFlags = DATE_LONGDATE) const;
-	CString GetSortString() const;
+	wxString GetDisplayString(DWORD dwFlags = DATE_LONGDATE) const;
+	wxString GetSortString() const;
 
 public:
 	CDateValue();
 	virtual ~CDateValue();
 
-	void Set(const CString& strGedcom);
-	void Set(Type type, CDate d, CDate d2, const CString& strPhrase);
-	void Get(Type& type, CDate& d, CDate& d2, CString& strPhrase);
-	CString Get();
+	void Set(const wxString& strGedcom);
+	void Set(Type type, CDate d, CDate d2, const wxString& strPhrase);
+	void Get(Type& type, CDate& d, CDate& d2, wxString& strPhrase);
+	wxString Get();
 	operator BOOL () { return m_type != NODATE; }
 	BOOL IsValid() { return m_d.IsValid() && m_dOther.IsValid(); }
 
-	CString Display(DWORD dwFlags = DATE_LONGDATE) const;
-	CString Sort() { return m_strSort; }
-	CDate GetExact() { ASSERT(IsExact()); return m_d; }
+	wxString Display(DWORD dwFlags = DATE_LONGDATE) const;
+	wxString Sort() { return m_strSort; }
+	CDate GetExact() { wxASSERT(IsExact()); return m_d; }
 	int GetSimpleYear();
 	int GetSimpleYMD();
 	int GetSimpleMonthCount();

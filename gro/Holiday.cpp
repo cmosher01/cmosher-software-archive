@@ -15,8 +15,8 @@ static char THIS_FILE[] = __FILE__;
 // CHoliday dialog
 
 
-CHoliday::CHoliday(CWnd* pParent /*=NULL*/)
-	: CDialog(CHoliday::IDD, pParent)
+CHoliday::CHoliday(wxWindow* pParent /*=NULL*/)
+	: wxDialog(CHoliday::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CHoliday)
 	m_iHoliday = -1;
@@ -28,14 +28,14 @@ CHoliday::CHoliday(CWnd* pParent /*=NULL*/)
 
 void CHoliday::FixNullEdit(int nID)
 {
-	CEdit* pEdit = (CEdit*)GetDlgItem(nID);
+	wxTextCtrl* pEdit = (wxTextCtrl*)GetDlgItem(nID);
 	if (!pEdit->GetWindowTextLength())
 		pEdit->SetWindowText(_T("0"));
 }
 
 void CHoliday::FixZeroEdit(int nID)
 {
-	CEdit* pEdit = (CEdit*)GetDlgItem(nID);
+	wxTextCtrl* pEdit = (wxTextCtrl*)GetDlgItem(nID);
 	if (pEdit->GetWindowTextLength()==1)
 	{
 		_TCHAR c[2];
@@ -48,7 +48,7 @@ void CHoliday::DoDataExchange(CDataExchange* pDX)
 {
 	FixNullEdit(IDC_YEAR);
 
-	CDialog::DoDataExchange(pDX);
+	wxDialog::DoDataExchange(pDX);
 
 	if (!pDX->m_bSaveAndValidate)
 	{
@@ -85,12 +85,12 @@ void CHoliday::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CHoliday, CDialog)
+BEGIN_EVENT_TABLE(CHoliday, wxDialog)
 	//{{AFX_MSG_MAP(CHoliday)
 	ON_CBN_SELCHANGE(IDC_HOLIDAY, OnSelchangeHoliday)
 	ON_EN_CHANGE(IDC_YEAR, OnChangeYear)
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CHoliday message handlers

@@ -4,16 +4,16 @@
 /////////////////////////////////////////////////////////////////////////////
 // CDlgSaveChanges dialog
 
-class CDlgSaveChanges : public CDialog
+class CDlgSaveChanges : public wxDialog
 {
 // Construction
 public:
-	CDlgSaveChanges(CString& strFileName, CWnd* pParent = NULL);   // standard constructor
+	CDlgSaveChanges(wxString& strFileName, wxWindow* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CDlgSaveChanges)
 	enum { IDD = IDD_SAVECHANGES };
-	CString	m_strPrompt;
+	wxString	m_strPrompt;
 	//}}AFX_DATA
 
 
@@ -32,7 +32,7 @@ protected:
 	afx_msg void OnYes();
 	afx_msg void OnNo();
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 
-	CString m_strFileName;
+	wxString m_strFileName;
 };

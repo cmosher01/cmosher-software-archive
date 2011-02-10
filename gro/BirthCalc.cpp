@@ -16,8 +16,7 @@ static char THIS_FILE[] = __FILE__;
 // CBirthCalc dialog
 
 
-CBirthCalc::CBirthCalc(CWnd* pParent /*=NULL*/)
-	: CDialog(CBirthCalc::IDD, pParent)
+CBirthCalc::CBirthCalc(wxWindow* pParent /*=NULL*/)
 {
 	//{{AFX_DATA_INIT(CBirthCalc)
 	m_nAge = 0;
@@ -36,7 +35,7 @@ CBirthCalc::CBirthCalc(CWnd* pParent /*=NULL*/)
 
 void CBirthCalc::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+	//wxDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CBirthCalc)
 	DDX_Radio(pDX, IDC_AGE1, m_nAge);
 	DDX_Text(pDX, IDC_YEARS, m_nYear1);
@@ -58,11 +57,11 @@ void CBirthCalc::DoDataExchange(CDataExchange* pDX)
 	if (pDX->m_bSaveAndValidate)
 	{
 		m_strDateInput = m_dvDate.Display(DATE_SHORTDATE);
-		GetDlgItem(IDC_YEARS)->EnableWindow(m_nAge==0);
-		GetDlgItem(IDC_YEARS2)->EnableWindow(m_nAge==1);
-		GetDlgItem(IDC_MONTHS)->EnableWindow(m_nAge==1);
-		GetDlgItem(IDC_DAYS)->EnableWindow(m_nAge==1);
-		GetDlgItem(IDC_YEARS3)->EnableWindow(m_nAge==2);
+//		GetDlgItem(IDC_YEARS)->EnableWindow(m_nAge==0);
+//		GetDlgItem(IDC_YEARS2)->EnableWindow(m_nAge==1);
+//		GetDlgItem(IDC_MONTHS)->EnableWindow(m_nAge==1);
+//		GetDlgItem(IDC_DAYS)->EnableWindow(m_nAge==1);
+//		GetDlgItem(IDC_YEARS3)->EnableWindow(m_nAge==2);
 		if (m_dvDate.IsExact())
 		{
 			CalcBirth(m_dvDate,m_dvDateBirth);
@@ -75,8 +74,8 @@ void CBirthCalc::DoDataExchange(CDataExchange* pDX)
 			d.SetHoliday(nYear,CDate::Census);
 			if (d.GetJD())
 			{
-				m_dvDateCensus.Set(CDateValue::DATE,d,CDate(),"");
-				m_strCensusDateStatic = "Calculated birth date based on \"Census Day\" ";
+				m_dvDateCensus.Set(CDateValue::DATE,d,CDate(),_T(""));
+				m_strCensusDateStatic = _T("Calculated birth date based on \"Census Day\" ");
 				m_strCensusDateStatic += m_dvDateCensus.Display(DATE_SHORTDATE);
 
 				CalcBirth(m_dvDateCensus,m_dvDateBirthCensus);
@@ -84,24 +83,24 @@ void CBirthCalc::DoDataExchange(CDataExchange* pDX)
 			}
 			else
 			{
-				m_strCensusDateStatic = "";
-				m_strCensusBirthDate = "";
+				m_strCensusDateStatic = _T("");
+				m_strCensusBirthDate = _T("");
 			}
 		}
 		else
 		{
-			m_strBirthDate = "";
-			m_strCensusDateStatic = "";
-			m_strCensusBirthDate = "";
+			m_strBirthDate = _T("");
+			m_strCensusDateStatic = _T("");
+			m_strCensusBirthDate = _T("");
 		}
-		CString sOrd("th");
+		wxString sOrd(_T("th"));
 		if (m_nYear3==1)
-			sOrd = "st";
+			sOrd = _T("st");
 		else if (m_nYear3==2)
-			sOrd = "nd";
+			sOrd = _T("nd");
 		else if (m_nYear3==3)
-			sOrd = "rd";
-		m_strYearOfAge = sOrd+" year of his/her age";
+			sOrd = _T("rd");
+		m_strYearOfAge = sOrd+_T(" year of his/her age");
 	}
 }
 
@@ -122,7 +121,7 @@ void CBirthCalc::CalcBirth(CDateValue& dvInput, CDateValue& dvBirth)
 		d1.Get(&nYearx,&nMonthx,&nDayx);
 		d1.Set(nYearx,nMonthx,nDayx);
 		d2.Set(nYear,nMonth,nDay);
-		dvBirth.Set(CDateValue::RANGE,d1,d2,"");
+		dvBirth.Set(CDateValue::RANGE,d1,d2,_T(""));
 	}
 	else
 	{
@@ -154,25 +153,25 @@ void CBirthCalc::CalcBirth(CDateValue& dvInput, CDateValue& dvBirth)
 		nYear -= m_nYear2;
 		d1.Set(nYear,nMonth,nDay);
 		if (d1.GetJD()<0 || bBad)
-			dvBirth.Set(CDateValue::PHRASE,CDate(),CDate(),"not valid");
+			dvBirth.Set(CDateValue::PHRASE,CDate(),CDate(),_T("not valid"));
 		else
-			dvBirth.Set(CDateValue::DATE,d1,CDate(),"");
+			dvBirth.Set(CDateValue::DATE,d1,CDate(),_T(""));
 	}
 }
 
-BEGIN_MESSAGE_MAP(CBirthCalc, CDialog)
+BEGIN_EVENT_TABLE(CBirthCalc, wxDialog)
 	//{{AFX_MSG_MAP(CBirthCalc)
-	ON_BN_CLICKED(IDC_DATE, OnDate)
-	ON_EN_CHANGE(IDC_DAYS, OnChangeDays)
-	ON_EN_CHANGE(IDC_MONTHS, OnChangeMonths)
-	ON_EN_CHANGE(IDC_YEARS, OnChangeYears)
-	ON_EN_CHANGE(IDC_YEARS2, OnChangeYears2)
-	ON_EN_CHANGE(IDC_YEARS3, OnChangeYears3)
-	ON_BN_CLICKED(IDC_AGE1, OnAge1)
-	ON_BN_CLICKED(IDC_AGE2, OnAge2)
-	ON_BN_CLICKED(IDC_AGE3, OnAge3)
+//	ON_BN_CLICKED(IDC_DATE, OnDate)
+//	ON_EN_CHANGE(IDC_DAYS, OnChangeDays)
+//	ON_EN_CHANGE(IDC_MONTHS, OnChangeMonths)
+//	ON_EN_CHANGE(IDC_YEARS, OnChangeYears)
+//	ON_EN_CHANGE(IDC_YEARS2, OnChangeYears2)
+//	ON_EN_CHANGE(IDC_YEARS3, OnChangeYears3)
+//	ON_BN_CLICKED(IDC_AGE1, OnAge1)
+//	ON_BN_CLICKED(IDC_AGE2, OnAge2)
+//	ON_BN_CLICKED(IDC_AGE3, OnAge3)
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 // CBirthCalc message handlers
@@ -181,68 +180,68 @@ void CBirthCalc::OnDate()
 {
 	CEditDate d;
 	d.m_dv = m_dvDate;
-	if (d.DoModal()==IDOK)
+	if (d.ShowModal()==IDOK)
 	{
 		m_dvDate = d.m_dv;
-		UpdateData(TRUE);
-		UpdateData(FALSE);
+//		UpdateData(TRUE); TransferFromWindow
+//		UpdateData(FALSE); TransferToWindow
 	}
 }
 
 void CBirthCalc::OnChangeDays() 
 {
-		UpdateData(TRUE);
-		UpdateData(FALSE);
+//		UpdateData(TRUE); TransferFromWindow
+//		UpdateData(FALSE); TransferToWindow
 }
 
 void CBirthCalc::OnChangeMonths() 
 {
-		UpdateData(TRUE);
-		UpdateData(FALSE);
+//		UpdateData(TRUE); TransferFromWindow
+//		UpdateData(FALSE); TransferToWindow
 }
 
 void CBirthCalc::OnChangeYears() 
 {
-		UpdateData(TRUE);
-		UpdateData(FALSE);
+//		UpdateData(TRUE); TransferFromWindow
+//		UpdateData(FALSE); TransferToWindow
 }
 
 void CBirthCalc::OnChangeYears2() 
 {
-		UpdateData(TRUE);
-		UpdateData(FALSE);
+//		UpdateData(TRUE); TransferFromWindow
+//		UpdateData(FALSE); TransferToWindow
 }
 
 void CBirthCalc::OnChangeYears3() 
 {
-		UpdateData(TRUE);
-		UpdateData(FALSE);
+//		UpdateData(TRUE); TransferFromWindow
+//		UpdateData(FALSE); TransferToWindow
 }
 
 void CBirthCalc::OnAge1() 
 {
-		UpdateData(TRUE);
-		UpdateData(FALSE);
+//		UpdateData(TRUE); TransferFromWindow
+//		UpdateData(FALSE); TransferToWindow
 }
 
 void CBirthCalc::OnAge2() 
 {
-		UpdateData(TRUE);
-		UpdateData(FALSE);
+//		UpdateData(TRUE); TransferFromWindow
+//		UpdateData(FALSE); TransferToWindow
 }
 
 void CBirthCalc::OnAge3() 
 {
-		UpdateData(TRUE);
-		UpdateData(FALSE);
+//		UpdateData(TRUE); TransferFromWindow
+//		UpdateData(FALSE); TransferToWindow
 }
 
 BOOL CBirthCalc::OnInitDialog() 
 {
-	CDialog::OnInitDialog();
+//	wxDialog::OnInitDialog();
 	
-	UpdateData(TRUE);
-	UpdateData(FALSE);
+//		UpdateData(TRUE); TransferFromWindow
+//		UpdateData(FALSE); TransferToWindow
 	
 	return TRUE;
 }

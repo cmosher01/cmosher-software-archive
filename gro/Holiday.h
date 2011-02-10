@@ -6,19 +6,19 @@
 /////////////////////////////////////////////////////////////////////////////
 // CHoliday dialog
 
-class CHoliday : public CDialog
+class CHoliday : public wxDialog
 {
 // Construction
 public:
-	CHoliday(CWnd* pParent = NULL);   // standard constructor
+	CHoliday(wxWindow* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CHoliday)
 	enum { IDD = IDD_HOLIDAY };
-	CComboBox	m_comboHoliday;
+	wxComboBox*	m_comboHoliday;
 	int		m_iHoliday;
 	int		m_nYear;
-	CString	m_strDate;
+	wxString	m_strDate;
 	//}}AFX_DATA
 	CDate m_date;
 
@@ -40,5 +40,5 @@ protected:
 	afx_msg void OnSelchangeHoliday();
 	afx_msg void OnChangeYear();
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };

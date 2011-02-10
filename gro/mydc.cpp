@@ -10,7 +10,7 @@ void CMyDC::MakeDraw(MyRect& r)
 	r += -m_draw.TopLeft();
 }
 
-void CMyDC::MakeDraw(CPoint& p)
+void CMyDC::MakeDraw(wxPoint& p)
 {
 	p.x -= m_draw.left;
 	p.y -= m_draw.top;
@@ -34,9 +34,9 @@ static int rnd(double d)
 	return i;
 }
 
-bool CMyDC::FixXY(CPoint& p, const CPoint& q)
+bool CMyDC::FixXY(wxPoint& p, const wxPoint& q)
 {
-	CPoint po(p);
+	wxPoint po(p);
 
 	int newx1(p.x), newy1(p.y);
 	int dx(0), dy(0);
@@ -88,18 +88,18 @@ bool CMyDC::FixXY(CPoint& p, const CPoint& q)
 	return bInX && bInY && bInLineX && bInLineY;
 }
 
-bool CMyDC::FixPoint(CPoint& p, const CPoint& q)
+bool CMyDC::FixPoint(wxPoint& p, const wxPoint& q)
 {
 	bool bDraw = FixXY(p,q);
 	MakeDraw(p);
 	return bDraw;
 }
 
-void CMyDC::DrawLine(const CPoint& p1, const CPoint& p2, bool bHidden)
+void CMyDC::DrawLine(const wxPoint& p1, const wxPoint& p2, bool bHidden)
 {
-	CPoint pd1(p1);
+	wxPoint pd1(p1);
 	bool bIn1 = FixPoint(pd1,p2);
-	CPoint pd2(p2);
+	wxPoint pd2(p2);
 	bool bIn2 = FixPoint(pd2,p1);
 
 	if (!bIn1 && !bIn2)
@@ -136,7 +136,7 @@ void CMyDC::ClearBackground()
 {
 	MyRect r(m_draw);
 	MakeDraw(r);
-	CRect rect(r);
+	wxRect rect(r);
 	m_pDC->FillSolidRect(&rect,::GetSysColor(COLOR_WINDOW));
 }
 
@@ -153,10 +153,10 @@ void CMyDC::FrameRectGray(const MyRect& rect)
 void CMyDC::FrameRect(const MyRect& rect, bool bHidden)
 {
 	MyRect r(rect);
-	CPoint p1(rect.left,rect.top);
-	CPoint p2(rect.right,rect.top);
-	CPoint p3(rect.right,rect.bottom);
-	CPoint p4(rect.left,rect.bottom);
+	wxPoint p1(rect.left,rect.top);
+	wxPoint p2(rect.right,rect.top);
+	wxPoint p3(rect.right,rect.bottom);
+	wxPoint p4(rect.left,rect.bottom);
 
 	if (bHidden)
 	{
@@ -202,18 +202,18 @@ void CMyDC::FrameRect(const MyRect& rect, bool bHidden)
 	}
 }
 
-void CMyDC::DrawText(const CString& s, const MyRect& rect)
+void CMyDC::DrawText(const wxString& s, const MyRect& rect)
 {
 	MyRect r(rect);
 	if (!Visible(r))
 		return;
 	MakeDraw(r);
 
-	CRect rectx(r);
+	wxRect rectx(r);
 	m_pDC->DrawText(s,&rectx,nDrawFormat);
 }
 
-void CMyDC::DrawTextSel(const CString& s, const MyRect& rect, bool bSelected, bool bHidden)
+void CMyDC::DrawTextSel(const wxString& s, const MyRect& rect, bool bSelected, bool bHidden)
 {
 	if (bHidden)
 	{
@@ -266,7 +266,7 @@ void CMyDC::DrawRectSel(const MyRect& rect, bool bSelected)
 	MakeDraw(r);
 
 	COLORREF colorFill = ::GetSysColor(bSelected ? COLOR_HIGHLIGHT : COLOR_WINDOW);
-	CRect rectx(r);
+	wxRect rectx(r);
 	m_pDC->FillSolidRect(&rectx,colorFill);
 }
 
@@ -276,7 +276,7 @@ void CMyDC::FrameRect3D(const MyRect& rect, bool bHidden)
 	if (!Visible(r))
 		return;
 	MakeDraw(r);
-	CRect rectx(r);
+	wxRect rectx(r);
 	if (bHidden)
 		FrameRect(rect,bHidden);
 	else

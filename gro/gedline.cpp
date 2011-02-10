@@ -3,7 +3,7 @@
 #include "gedtreedoc.h"
 #include "gedline.h"
 
-CGedLine::CGedLine(CGedtreeDoc* pDoc, const CString& strLine):
+CGedLine::CGedLine(CGedtreeDoc* pDoc, const wxString& strLine):
 	m_pDoc(pDoc)
 {
 	if (!strLine.IsEmpty())
@@ -12,9 +12,9 @@ CGedLine::CGedLine(CGedtreeDoc* pDoc, const CString& strLine):
 	}
 }
 
-CString GetNextWord(CString& strLine)
+wxString GetNextWord(wxString& strLine)
 {
-	CString strWord;
+	wxString strWord;
 	int i = strLine.Find(cDelim);
 	if (i==-1)
 	{
@@ -29,10 +29,10 @@ CString GetNextWord(CString& strLine)
 	return strWord;
 }
 
-void CGedLine::ParseGedLine(const CString& strLine)
+void CGedLine::ParseGedLine(const wxString& strLine)
 {
-	CString strL(strLine);
-	CString strLev;
+	wxString strL(strLine);
+	wxString strLev;
 
 	strLev = GetNextWord(strL);
 	m_strID = GetNextWord(strL);
@@ -58,9 +58,9 @@ void CGedLine::ParseGedLine(const CString& strLine)
 	Calc();
 }
 
-CString CGedLine::GetGedLine()
+wxString CGedLine::GetGedLine()
 {
-	CString str;
+	wxString str;
 
 	str.Format(_T("%d"),m_nLev);
 
@@ -107,23 +107,23 @@ void CGedLine::Calc()
 	}
 }
 
-CString CGedLine::GetCleanValue(int nFlags)
+wxString CGedLine::GetCleanValue(int nFlags)
 {
-	CString s = m_strVal;
+	wxString s = m_strVal;
 
 	// Collapse assumes trim left and right
 	if (nFlags&COLLAPSE)
 		nFlags |= TRIM_LEFT|TRIM_RIGHT;
 
 	if (nFlags&TRIM_LEFT)
-		s.TrimLeft();
+		s.Trim(false);
 
 	if (nFlags&TRIM_RIGHT)
-		s.TrimRight();
+		s.Trim();
 
 	if (nFlags&COLLAPSE)
 	{
-		CString sOut;
+		wxString sOut;
 		BOOL bSpace(FALSE);
 		for (int i(0); i<s.GetLength(); i++)
 		{
@@ -142,7 +142,7 @@ CString CGedLine::GetCleanValue(int nFlags)
 
 	if (nFlags&MIXCASE)
 	{
-		CString sOut;
+		wxString sOut;
 		s.MakeLower();
 		BOOL bUpper(TRUE);
 		for (int i(0); i<s.GetLength(); i++)
@@ -158,7 +158,7 @@ CString CGedLine::GetCleanValue(int nFlags)
 	return s;
 }
 
-static CString rXrefTok[][2] =
+static wxString rXrefTok[][2] =
 {
 	"SOUR","SOUR",
 	"HUSB","INDI",
@@ -246,7 +246,7 @@ void CGedLine::CalcID()
 	}
 }
 
-BOOL CGedLine::IsChildOf(const CString& strTok, const CString& strID)
+BOOL CGedLine::IsChildOf(const wxString& strTok, const wxString& strID)
 {
 	if (!m_strID.IsEmpty()) return FALSE; // definition, not xref
 	if (m_strVal==m_strValAsID) return FALSE; // val is not an ID

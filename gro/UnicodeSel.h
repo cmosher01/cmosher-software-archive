@@ -4,11 +4,11 @@
 /////////////////////////////////////////////////////////////////////////////
 // CUnicodeSel dialog
 
-class CUnicodeSel : public CDialog
+class CUnicodeSel : public wxDialog
 {
 // Construction
 public:
-	CUnicodeSel(CWnd* pParent = NULL);   // standard constructor
+	CUnicodeSel(wxWindow* pParent = NULL);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CUnicodeSel)
@@ -33,5 +33,5 @@ protected:
 	//{{AFX_MSG(CUnicodeSel)
 	virtual void OnOK();
 	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
 };
