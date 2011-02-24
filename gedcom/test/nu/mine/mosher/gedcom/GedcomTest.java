@@ -1,8 +1,6 @@
 package nu.mine.mosher.gedcom;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 import junit.framework.TestCase;

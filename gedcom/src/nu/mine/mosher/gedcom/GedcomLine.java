@@ -1,8 +1,8 @@
 package nu.mine.mosher.gedcom;
 
-import nu.mine.mosher.util.Traversable;
+//import nu.mine.mosher.util.Traversable;
 
-public class GedcomLine implements Traversable
+public class GedcomLine //implements Traversable
 {
 	private final int level;
 	private final String id;
@@ -48,30 +48,31 @@ public class GedcomLine implements Traversable
 		return s.replaceAll("@@","@");
 	}
 
+	@Override
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer(256);
 
-		sb.append(level);
+		sb.append(this.level);
 		sb.append(",");
 		if (hasID())
 		{
 			sb.append("id=");
-			sb.append(id);
+			sb.append(this.id);
 			sb.append(",");
 		}
 		sb.append("tag=");
-		sb.append(tag);
+		sb.append(this.tag);
 		sb.append(",");
 		if (isPointer())
 		{
 			sb.append("pointer=");
-			sb.append(pointer);
+			sb.append(this.pointer);
 		}
 		else
 		{
 			sb.append("value=\"");
-			sb.append(value);
+			sb.append(this.value);
 			sb.append("\"");
 		}
 
@@ -80,12 +81,12 @@ public class GedcomLine implements Traversable
 
 	public boolean hasID()
 	{
-		return id.length() > 0;
+		return this.id.length() > 0;
 	}
 
 	public boolean isPointer()
 	{
-		return pointer.length() > 0;
+		return this.pointer.length() > 0;
 	}
 
     /**
@@ -93,7 +94,7 @@ public class GedcomLine implements Traversable
      */
     public String getId()
     {
-        return id;
+        return this.id;
     }
 
     /**
@@ -101,7 +102,7 @@ public class GedcomLine implements Traversable
      */
     public int getLevel()
     {
-        return level;
+        return this.level;
     }
 
     /**
@@ -109,7 +110,7 @@ public class GedcomLine implements Traversable
      */
     public String getPointer()
     {
-        return pointer;
+        return this.pointer;
     }
 
     /**
@@ -117,7 +118,7 @@ public class GedcomLine implements Traversable
      */
     public String getTag()
     {
-        return tag;
+        return this.tag;
     }
 
     /**
@@ -125,7 +126,7 @@ public class GedcomLine implements Traversable
      */
     public String getValue()
     {
-        return value;
+        return this.value;
     }
 
     /**
@@ -133,8 +134,8 @@ public class GedcomLine implements Traversable
      */
     public void contValue(String string)
     {
-    	value += "\n";
-    	value += string;
+    	this.value += "\n";
+    	this.value += string;
     }
 
     /**
@@ -142,34 +143,34 @@ public class GedcomLine implements Traversable
      */
     public void concValue(String string)
     {
-		value += string;
+		this.value += string;
     }
-
+/*
     public void enter()
     {
     	System.out.print("<");
-		System.out.print(tag);
+		System.out.print(this.tag);
 
 		if (hasID())
 		{
 			System.out.print(" id=\"");
-			System.out.print(id);
+			System.out.print(this.id);
 			System.out.print("\"");
 		}
 
 		if (isPointer())
 		{
 			System.out.print(" xref=\"");
-			System.out.print(pointer);
+			System.out.print(this.pointer);
 			System.out.print("\"");
 		}
 
 		System.out.print(">");
 
-		if (value.length() > 0)
+		if (this.value.length() > 0)
 		{
 			System.out.print("<![CDATA[");
-			System.out.print(value);
+			System.out.print(this.value);
 			System.out.print("]]>");
 		}
 		System.out.println();
@@ -178,7 +179,8 @@ public class GedcomLine implements Traversable
     public void leave()
     {
 		System.out.print("</");
-		System.out.print(tag);
+		System.out.print(this.tag);
 		System.out.println(">");
     }
+*/
 }

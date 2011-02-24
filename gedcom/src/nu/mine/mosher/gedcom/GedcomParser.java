@@ -16,16 +16,16 @@ public class GedcomParser
 
 	public GedcomTree parse() throws GedcomParseException, InvalidLevel
 	{
-		if (gt == null)
+		if (this.gt == null)
 		{
-			gt = new GedcomTree();
+			this.gt = new GedcomTree();
 			for (GedcomLine gl = nextLine(); gl != null; gl = nextLine())
 			{
-				gt.appendLine(gl);
+				this.gt.appendLine(gl);
 			}
-			gt.concatenate();
+			this.gt.concatenate();
 		}
-		return gt;
+		return this.gt;
 	}
 
 	protected GedcomLine nextLine() throws GedcomParseException
@@ -33,10 +33,10 @@ public class GedcomParser
 		String s = "";
 		try
 		{
-			s = in.readLine();
+			s = this.in.readLine();
 			while (s != null && s.trim().length() == 0)
 			{
-				s = in.readLine();
+				s = this.in.readLine();
 			}
 		}
 		catch (IOException e)

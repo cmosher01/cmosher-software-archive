@@ -2,17 +2,17 @@ package nu.mine.mosher.gedcom;
 
 public class GedcomParseException extends Exception
 {
-	private String rawGedcomLine;
-	private GedcomLine parsedGedcomLine;
+	private final String rawGedcomLine;
+	private final GedcomLine parsedGedcomLine;
 
-	public GedcomParseException(String message, String rawGedcomLine, GedcomLine parsedGedcomLine)
+	public GedcomParseException(final String message, final String rawGedcomLine, final GedcomLine parsedGedcomLine)
 	{
 		super(message);
 		this.rawGedcomLine = rawGedcomLine;
 		this.parsedGedcomLine = parsedGedcomLine;
 	}
 
-	public GedcomParseException(String message, Throwable cause)
+	public GedcomParseException(final String message, final Throwable cause)
 	{
 		super(message,cause);
 		this.rawGedcomLine = "";
@@ -21,11 +21,11 @@ public class GedcomParseException extends Exception
 
 	public String getRawGedcomLine()
 	{
-		return rawGedcomLine;
+		return this.rawGedcomLine;
 	}
 
 	public GedcomLine getParsedGedcomLine()
 	{
-		return parsedGedcomLine;
+		return this.parsedGedcomLine;
 	}
 }

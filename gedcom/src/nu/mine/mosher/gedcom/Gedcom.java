@@ -11,10 +11,11 @@ import java.io.UnsupportedEncodingException;
 
 
 
-public class Gedcom
+public final class Gedcom
 {
 	private Gedcom()
 	{
+		throw new IllegalStateException();
 	}
 
 	public static void main(String[] rArg) throws GedcomParseException, InvalidLevel, IOException

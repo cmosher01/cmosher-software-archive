@@ -8,58 +8,77 @@ import nu.mine.mosher.util.TreeNode;
 
 public class GedcomTree
 {
-	private TreeNode root;
-	private Map<String,TreeNode> mapIDtoNode = new HashMap<String,TreeNode>();
+	private final TreeNode<GedcomLine> root;
+	private final Map<String,TreeNode<GedcomLine>> mapIDtoNode = new HashMap<String,TreeNode<GedcomLine>>();
 
 	private int prevLevel;
-	private TreeNode prevNode;
+	private TreeNode<GedcomLine> prevNode;
+
+
 
 	public GedcomTree()
 	{
-		root = new TreeNode();
-		prevNode = root;
-		prevLevel = -1;
+		this.root = new TreeNode<GedcomLine>();
+		this.prevNode = this.root;
+		this.prevLevel = -1;
 	}
 
-	public void appendLine(GedcomLine line) throws InvalidLevel
+
+
+    public TreeNode<GedcomLine> getRoot()
+    {
+    	return this.root;
+    }
+
+    public TreeNode<GedcomLine> getNode(final String id)
 	{
-		int cPops = prevLevel+1-line.getLevel();
+		return this.mapIDtoNode.get(id);
+	}
+
+
+
+    public void appendLine(final GedcomLine line) throws InvalidLevel
+	{
+		final int cPops = this.prevLevel+1-line.getLevel();
 		if (cPops < 0)
 		{
 			throw new InvalidLevel(line);
 		}
 
-		TreeNode parent = prevNode;
+		TreeNode<GedcomLine> parent = this.prevNode;
 		for (int i = 0; i < cPops; ++i)
         {
             parent = parent.parent();
         }
 
-		prevLevel = line.getLevel();
-		prevNode = new TreeNode(line);
-		parent.addChild(prevNode);
+		this.prevLevel = line.getLevel();
+		this.prevNode = new TreeNode<GedcomLine>(line);
+		parent.addChild(this.prevNode);
 
 		if (line.hasID())
 		{
-			mapIDtoNode.put(line.getId(),prevNode);
+			this.mapIDtoNode.put(line.getId(),this.prevNode);
 		}
 	}
 
-	public void concatenate()
+
+
+    public void concatenate()
 	{
-		concatenateHelper(root);
+		concatenateHelper(this.root);
 	}
 
-	protected void concatenateHelper(TreeNode parent)
+	private static void concatenateHelper(final TreeNode<GedcomLine> parent)
 	{
-		GedcomLine parentLine = (GedcomLine)parent.getObject();
-		for (Iterator i = parent.children(); i.hasNext();)
+		final GedcomLine parentLine = parent.getObject();
+		for (final Iterator<TreeNode<GedcomLine>> i = parent.children(); i.hasNext();)
 		{
-			TreeNode child = (TreeNode)i.next();
-			GedcomLine line = (GedcomLine)child.getObject();
-			String tag = line.getTag();
-			boolean cont = tag.equalsIgnoreCase("cont");
-			boolean conc = tag.equalsIgnoreCase("conc");
+			final TreeNode<GedcomLine> child = i.next();
+			final GedcomLine line = child.getObject();
+			final String tag = line.getTag();
+			final boolean cont = tag.equalsIgnoreCase("cont");
+			final boolean conc = tag.equalsIgnoreCase("conc");
+
 			if (cont)
 			{
 				parentLine.contValue(line.getValue());
@@ -77,31 +96,23 @@ public class GedcomTree
 		}
 	}
 
-	public TreeNode getNode(String id)
-	{
-		return mapIDtoNode.get(id);
-	}
 
+
+	@Override
 	public String toString()
 	{
-		StringBuffer sb = new StringBuffer(1024);
-		root.appendStringDeep(sb);
+		final StringBuilder sb = new StringBuilder(1024);
+		this.root.appendStringDeep(sb);
 
 		sb.append("--------map-of-IDs-to-Nodes--------\n");
-		for (Iterator i = mapIDtoNode.entrySet().iterator(); i.hasNext();)
+		for (final Map.Entry<String,TreeNode<GedcomLine>> entry : this.mapIDtoNode.entrySet())
         {
-            Map.Entry entry = (Map.Entry)i.next();
             sb.append(entry.getKey().toString());
             sb.append(" --> ");
-            ((TreeNode)entry.getValue()).appendStringShallow(sb);
+            entry.getValue().appendStringShallow(sb);
 			sb.append("\n");
         }
 
         return sb.toString();
 	}
-
-    public TreeNode getRoot()
-    {
-    	return this.root;
-    }
 }
