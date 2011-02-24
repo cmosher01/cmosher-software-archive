@@ -1,129 +1,148 @@
 package nu.mine.mosher.util;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-public class TreeNode
+public class TreeNode<T> implements Iterable<TreeNode<T>>
 {
-	private Object object;
-	private TreeNode parent;
-	private List<TreeNode> children = new ArrayList<TreeNode>();
+	private T object;
+
+	private TreeNode<T> parent;
+	private final List<TreeNode<T>> children = new ArrayList<TreeNode<T>>();
+
+
 
 	public TreeNode()
 	{
 		this(null);
 	}
 
-	public TreeNode(Object obj)
+	public TreeNode(final T object)
 	{
-		this.object = obj;
+		this.object = object;
 	}
 
-	public Object getObject()
+
+
+	public T getObject()
 	{
-		return object;
+		return this.object;
 	}
 
-	public void setObject(Object obj)
+	public void setObject(final T object)
 	{
-		this.object = obj;
+		this.object = object;
 	}
 
-	public void addChild(TreeNode child)
+
+
+	public Iterator<TreeNode<T>> children()
 	{
-		if (child.parent != null)
-			child.removeFromParent();
-
-		children.add(child);
-		child.parent = this;
-	}
-
-	public void removeChild(TreeNode child)
-	{
-		if (child.parent != this)
-			throw new IllegalArgumentException("given TreeNode is not a child of this TreeNode");
-
-		for (Iterator i = children(); i.hasNext();)
-        {
-            TreeNode childN = (TreeNode)i.next();
-            if (childN==child)
-            {
-            	i.remove();
-				child.parent = null;
-			}
-        }
-	}
-
-	public void removeFromParent()
-	{
-		if (parent == null)
-			return;
-
-		parent.removeChild(this);
-	}
-
-	public Iterator<TreeNode> children()
-	{
-		return children.iterator();
-	}
-
-	public TreeNode parent()
-	{
-		return parent;
+		return this.children.iterator();
 	}
 
 	public int getChildCount()
 	{
-		return children.size();
+		return this.children.size();
 	}
 
-	public void appendStringDeep(StringBuffer sb, int level)
+	public void addChild(final TreeNode<T> child)
 	{
-		for (int i = 0; i < level; ++i)
-        {
-			sb.append("    ");
-        }
+		if (child.parent != null)
+		{
+			child.removeFromParent();
+		}
 
-		appendStringShallow(sb);
-		sb.append("\n");
-
-		++level;
-
-		for (Iterator i = children(); i.hasNext();)
-        {
-            TreeNode child = (TreeNode)i.next();
-            child.appendStringDeep(sb,level);
-        }
+		this.children.add(child);
+		child.parent = this;
 	}
 
-	public void appendStringDeep(StringBuffer sb)
+	public void removeChild(final TreeNode<T> child)
 	{
-		appendStringDeep(sb,0);
+		if (child.parent != this)
+		{
+			throw new IllegalArgumentException("given TreeNode is not a child of this TreeNode");
+		}
+
+		for (final Iterator<TreeNode<T>> i = children(); i.hasNext();)
+		{
+			final TreeNode<T> childN = i.next();
+			if (childN == child)
+			{
+				i.remove();
+				child.parent = null;
+			}
+		}
 	}
 
+
+
+	public TreeNode<T> parent()
+	{
+		return this.parent;
+	}
+
+	public void removeFromParent()
+	{
+		if (this.parent == null)
+		{
+			return;
+		}
+
+		this.parent.removeChild(this);
+	}
+
+
+
+
+
+	@Override
 	public String toString()
 	{
-		StringBuffer sb = new StringBuffer();
+		final StringBuilder sb = new StringBuilder();
 		appendStringDeep(sb);
 		return sb.toString();
 	}
 
+	public void appendStringDeep(final StringBuilder sb)
+	{
+		appendStringDeep(sb, 0);
+	}
+
+	private void appendStringDeep(final StringBuilder sb, final int level)
+	{
+		for (int i = 0; i < level; ++i)
+		{
+			sb.append("    ");
+		}
+
+		appendStringShallow(sb);
+		sb.append("\n");
+
+		for (final TreeNode<T> child : this.children)
+		{
+			child.appendStringDeep(sb, level+1);
+		}
+	}
+
+
+
 	public String toStringShallow()
 	{
-		StringBuffer sb = new StringBuffer();
+		final StringBuilder sb = new StringBuilder();
 		appendStringShallow(sb);
 		return sb.toString();
 	}
 
-	public void appendStringShallow(StringBuffer sb)
+	public void appendStringShallow(final StringBuilder sb)
 	{
-		if (object != null)
+		if (this.object != null)
 		{
-			sb.append(object.toString());
+			sb.append(this.object.toString());
 		}
 		else
 		{
@@ -131,50 +150,54 @@ public class TreeNode
 		}
 	}
 
-	public Iterator preorder()
+
+
+	@Override
+	public Iterator<TreeNode<T>> iterator()
 	{
 		return new Preorder();
 	}
 
-    public final class Preorder implements Iterator
-    {
-        protected LinkedList stack = new LinkedList();
+	private final class Preorder implements Iterator<TreeNode<T>>
+	{
+		private final LinkedList<Iterator<TreeNode<T>>> stack = new LinkedList<Iterator<TreeNode<T>>>();
 
-        public Preorder()
-        {
-            stack.addFirst(Collections.singleton(TreeNode.this).iterator());
-        }
+		public Preorder()
+		{
+			this.stack.addFirst(Collections.<TreeNode<T>>singleton(TreeNode.this).iterator());
+		}
 
-        public void remove() throws UnsupportedOperationException
-        {
+		public void remove() throws UnsupportedOperationException
+		{
 			throw new UnsupportedOperationException();
-        }
+		}
 
-        public boolean hasNext()
-        {
-			return (!stack.isEmpty() && ((Iterator)stack.getFirst()).hasNext());
-        }
+		public boolean hasNext()
+		{
+			return (!this.stack.isEmpty() && this.stack.getFirst().hasNext());
+		}
 
-        public Object next() throws NoSuchElementException
-        {
-        	if (!hasNext())
-        	{
-        		throw new NoSuchElementException();
-        	}
-			Iterator i = (Iterator)stack.getFirst();
+		public TreeNode<T> next() throws NoSuchElementException
+		{
+			if (!hasNext())
+			{
+				throw new NoSuchElementException();
+			}
+			final Iterator<TreeNode<T>> i = this.stack.getFirst();
 			if (!i.hasNext())
 			{
-				stack.removeFirst();
+				this.stack.removeFirst();
 			}
 
-			TreeNode node = (TreeNode)i.next();
-			Iterator children = node.children();
-			if (children.hasNext())
+			final TreeNode<T> node = i.next();
+
+			final Iterator<TreeNode<T>> xchildren = node.children();
+			if (xchildren.hasNext())
 			{
-				stack.addFirst(children);
+				this.stack.addFirst(xchildren);
 			}
 
 			return node;
-        }
-    }
+		}
+	}
 }
