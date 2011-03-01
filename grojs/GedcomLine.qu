@@ -1,0 +1,127 @@
+$(function() {
+
+	module("GedcomLine");
+
+	test("asPointer nominal",
+		function() {
+			equals(GedcomLine.prototype.asPointer("@abc@"),"abc");
+		});
+
+	test("asPointer nominal false",
+		function() {
+			equals(GedcomLine.prototype.asPointer("abc"),"");
+		});
+
+	test("asPointer nominal false begin at",
+		function() {
+			equals(GedcomLine.prototype.asPointer("@abc"),"");
+		});
+
+	test("asPointer nominal false end at",
+		function() {
+			equals(GedcomLine.prototype.asPointer("abc@"),"");
+		});
+
+	test("asPointer nominal false mid at",
+		function() {
+			equals(GedcomLine.prototype.asPointer("@ab@c@"),"");
+		});
+
+	test("asPointer one at",
+		function() {
+			equals(GedcomLine.prototype.asPointer("@"),"");
+		});
+
+	test("asPointer two ats",
+		function() {
+			equals(GedcomLine.prototype.asPointer("@@"),"");
+		});
+
+	test("asPointer three ats",
+		function() {
+			equals(GedcomLine.prototype.asPointer("@@@"),"");
+		});
+
+	test("asPointer four ats",
+		function() {
+			equals(GedcomLine.prototype.asPointer("@@@@"),"");
+		});
+
+	test("asPointer empty string",
+		function() {
+			equals(GedcomLine.prototype.asPointer(""),"");
+		});
+
+	test("asPointer leading space",
+		function() {
+			equals(GedcomLine.prototype.asPointer(" @abc@"),"");
+		});
+
+	test("asPointer trailing space",
+		function() {
+			equals(GedcomLine.prototype.asPointer("@abc@ "),"");
+		});
+
+	test("asPointer(null)",
+		function() {
+			equals(GedcomLine.prototype.asPointer(null),"");
+		});
+
+	test("asPointer()",
+		function() {
+			equals(GedcomLine.prototype.asPointer(),"");
+		});
+
+
+
+	test("replace nominal",
+		function() {
+			equals(GedcomLine.prototype.replaceAts("abc@@def"),"abc@def");
+		});
+
+	test("replace nominal global",
+		function() {
+			equals(GedcomLine.prototype.replaceAts("abc@@def@@ghi"),"abc@def@ghi");
+		});
+
+	test("replace no-op",
+		function() {
+			equals(GedcomLine.prototype.replaceAts("abcdef"),"abcdef");
+		});
+
+	test("replace single at",
+		function() {
+			equals(GedcomLine.prototype.replaceAts("abc@def"),"abc@def");
+		});
+
+	test("replace three ats",
+		function() {
+			equals(GedcomLine.prototype.replaceAts("abc@@@def"),"abc@@def");
+		});
+
+	test("replace empty string",
+		function() {
+			equals(GedcomLine.prototype.replaceAts(""),"");
+		});
+
+	test("replace null",
+		function() {
+			equals(GedcomLine.prototype.replaceAts(null),null);
+		});
+
+	test("replace undefined",
+		function() {
+			equals(GedcomLine.prototype.replaceAts(),undefined);
+		});
+
+	test("replace bad type 0",
+		function() {
+			equals(GedcomLine.prototype.replaceAts(0),0);
+		});
+
+	test("replace bad type 1",
+		function() {
+			equals(GedcomLine.prototype.replaceAts(1),1);
+		});
+
+});
