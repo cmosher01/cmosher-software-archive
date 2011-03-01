@@ -1,0 +1,74 @@
+$(function() {
+
+	module("Util");
+
+	test("forEach nominal", function() {
+		var r, rr;
+
+		r = ["a","b","c"];
+
+		rr = [];
+		Util.prototype.forEach(r,function(v) {
+			rr.push(v);
+		});
+
+		same(rr,r);
+	});
+
+	test("forEach undefined", function() {
+		var r, rr;
+
+		r = ["a",undefined,"c"];
+
+		rr = [];
+		Util.prototype.forEach(r,function(v) {
+			rr.push(v);
+		});
+
+		same(rr,["a","c"]);
+	});
+
+	test("forEach deleted", function() {
+		var r, rr;
+
+		r = ["a","b","c"];
+		delete r[1];
+
+		rr = [];
+		Util.prototype.forEach(r,function(v) {
+			rr.push(v);
+		});
+
+		same(rr,["a","c"]);
+	});
+
+	test("forEach sparse", function() {
+		var r, rr;
+
+		r = [];
+		r[0] = "a";
+		r[10000] = "b";
+
+		rr = [];
+		Util.prototype.forEach(r,function(v) {
+			rr.push(v);
+		});
+
+		same(rr,["a","b"]);
+	});
+
+
+
+
+
+	test("consolodate nominal", function() {
+		var r, rr;
+
+		r = ["a","b","c"];
+		delete r[1];
+		same(r,["a",undefined,"c"]);
+
+		rr = Util.prototype.consolodate(r);
+		same(rr,["a","c"]);
+	});
+});

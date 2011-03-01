@@ -9,7 +9,7 @@ function TreeNode() {
 
 
 TreeNode.prototype.getChildren = function() {
-	return this.children.concat();
+	return Util.prototype.consolodate(this.children);
 }
 
 TreeNode.prototype.getParent = function() {
@@ -20,6 +20,7 @@ TreeNode.prototype.getParent = function() {
 
 TreeNode.prototype.removeChild = function(child) {
 	var c;
+
 	if (!(child instanceof TreeNode)) {
 		throw new Error("child must be a TreeNode");
 	}
@@ -28,10 +29,12 @@ TreeNode.prototype.removeChild = function(child) {
 	}
 
 	for (c in this.children) {
-		if (this.children[c] === child) {
-			delete this.children[c];
-			child.parent = null;
-			return;
+		if (this.children.hasOwnProperty(c)) {
+			if (this.children[c] === child) {
+				delete this.children[c];
+				child.parent = null;
+				return;
+			}
 		}
 	}
 }

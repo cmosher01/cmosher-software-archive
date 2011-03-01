@@ -1310,6 +1310,7 @@ QUnit.diff = (function() {
 		}
 		
 		for (var i in ns) {
+			if (!ns.hasOwnProperty(i)) { continue; }
 			if (ns[i].rows.length == 1 && typeof(os[i]) != "undefined" && os[i].rows.length == 1) {
 				n[ns[i].rows[0]] = {
 					text: n[ns[i].rows[0]],

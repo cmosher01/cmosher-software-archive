@@ -3,27 +3,51 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-		<title>QUnit Tests</title>
 
-		<!-- link rel="stylesheet" type="text/css" media="screen" href="https://github.com/jquery/qunit/raw/master/qunit/qunit.css" / -->
-		<link rel="stylesheet" type="text/css" media="screen" href="lib/qunit/qunit.css" />
 
-		<!-- script src="http://code.jquery.com/jquery-latest.js"></script -->
-		<script src="lib/jquery/jquery.js"></script>
-
-		<!-- add "https://github.com/" to noscript.inclusionTypeChecking.exceptions in about:config for firefox: -->
-		<!-- script src="https://github.com/jquery/qunit/raw/master/qunit/qunit.js"></script -->
-		<script src="lib/qunit/qunit.js"></script>
-
-		<script src="lib/qunit/qutools.js"></script>
+		<title>Unit Tests</title>
 
 
 
-    <script src="TreeNode.js"></script>
-    <script src="TreeNode.qu"></script>
+    <!-- JSON -->
 
-		<script src="GedcomLine.js"></script>
-		<script src="GedcomLine.qu"></script>
+	    <!-- script src="https://github.com/douglascrockford/JSON-js/raw/master/json.js"></script -->
+	    <script src="lib/json/json.js"></script>
+
+
+
+    <!-- JQuery -->
+
+			<!-- script src="http://code.jquery.com/jquery-latest.js"></script -->
+			<script src="lib/jquery/jquery.js"></script>
+
+
+
+    <!-- QUnit -->
+
+	    <!-- link rel="stylesheet" type="text/css" media="screen" href="https://github.com/jquery/qunit/raw/master/qunit/qunit.css" / -->
+	    <link rel="stylesheet" type="text/css" media="screen" href="lib/qunit/qunit.css" />
+			<!-- add "https://github.com/" to noscript.inclusionTypeChecking.exceptions in about:config for firefox: -->
+			<!-- script src="https://github.com/jquery/qunit/raw/master/qunit/qunit.js"></script -->
+			<script src="lib/qunit/qunit.js"></script>
+
+
+
+    <!-- private QUnit tools -->
+
+			<script src="lib/qunit/qutools.js"></script>
+
+
+
+    <!-- units under test -->
+
+	    <script src="Util.js"></script><script src="Util.qu"></script>
+	    <script src="TreeNode.js"></script><script src="TreeNode.qu"></script>
+			<script src="GedcomLine.js"></script><script src="GedcomLine.qu"></script>
+	    <script src="GedcomTree.js"></script><script src="GedcomTree.qu"></script>
+
+
+
 	</head>
 
 	<body>

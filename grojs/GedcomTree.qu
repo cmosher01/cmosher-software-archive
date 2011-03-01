@@ -1,0 +1,58 @@
+$(function() {
+
+	module("GedcomTree", {
+		setup: function() {
+			this.t = new GedcomTree();
+			this.t.appendLine(GedcomLine.prototype.parse("0 HEAD"));
+			this.t.appendLine(GedcomLine.prototype.parse("1 SOUR GRO"));
+			this.t.appendLine(GedcomLine.prototype.parse("2 NAME Genealogy Research Organizer"));
+			this.t.appendLine(GedcomLine.prototype.parse("2 CORP Christopher Alan Mosher"));
+			this.t.appendLine(GedcomLine.prototype.parse("3 ADDR 41 Brook Pine Drive"));
+			this.t.appendLine(GedcomLine.prototype.parse("4 CONT Shelton, CT 06484-5912"));
+			this.t.appendLine(GedcomLine.prototype.parse("1 GEDC"));
+			this.t.appendLine(GedcomLine.prototype.parse("2 VERS 5.5"));
+			this.t.appendLine(GedcomLine.prototype.parse("0 @I0@ INDI"));
+			this.t.appendLine(GedcomLine.prototype.parse("1 _XY 195 30"));
+			this.t.appendLine(GedcomLine.prototype.parse("1 NAME John /Moger/"));
+			this.t.appendLine(GedcomLine.prototype.parse("2 SOUR @S0@"));
+			this.t.appendLine(GedcomLine.prototype.parse("0 @S0@ SOUR"));
+			this.t.appendLine(GedcomLine.prototype.parse("1 AUTH LDS"));
+			this.t.appendLine(GedcomLine.prototype.parse("1 TITL International Genealogical Index (IGI)"));
+			this.t.appendLine(GedcomLine.prototype.parse("1 PUBL http://www.familysearch.org"));
+			this.t.appendLine(GedcomLine.prototype.parse("0 @S1@ SOUR"));
+			this.t.appendLine(GedcomLine.prototype.parse("1 AUTH LDS"));
+			this.t.appendLine(GedcomLine.prototype.parse("1 TITL Ancestral File"));
+			this.t.appendLine(GedcomLine.prototype.parse("1 PUBL http://www.familysearch.org"));
+		}
+	});
+
+	test("nominal top level", function() {
+		var r = this.t.getRoot().getChildren();
+		equal(r[0].line.getTag(),"HEAD");
+		equal(r[1].line.getID(),"I0"); equal(r[1].line.getTag(),"INDI");
+		equal(r[2].line.getID(),"S0"); equal(r[2].line.getTag(),"SOUR");
+		equal(r[3].line.getID(),"S1"); equal(r[3].line.getTag(),"SOUR");
+	});
+
+	test("nominal level 1", function() {
+		var rhead = this.t.getRoot().getChildren()[0].getChildren();
+		equal(rhead[0].line.getTag(),"SOUR"); equal(rhead[0].line.getVal(),"GRO");
+		equal(rhead[1].line.getTag(),"GEDC"); equal(rhead[1].line.getVal(),"");
+	});
+
+	test("nominal cont", function() {
+		var addr = this.t.getRoot().getChildren()[0].getChildren()[0].getChildren()[1].getChildren()[0].line;
+		equal(addr.getTag(),"ADDR"); equal(addr.getVal(),"41 Brook Pine Drive\nShelton, CT 06484-5912");
+	});
+
+	test("nominal xref", function() {
+		var sour_xref = this.t.getRoot().getChildren()[1].getChildren()[1].getChildren()[0].line;
+		equal(sour_xref.getTag(),"SOUR"); equal(sour_xref.getPointer(),"S0");
+	});
+
+	test("nominal look up xref", function() {
+		var s1 = this.t.getNode("S1");
+		equal(s1.line.getID(),"S1");
+		equal(s1.getChildren()[1].line.getVal(),"Ancestral File");
+	});
+});
