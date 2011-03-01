@@ -1,0 +1,49 @@
+$(function() {
+
+	module("TreeNode");
+
+	test("nominal child", function() {
+		var a,b,r,i,c;
+
+		a = new TreeNode();
+		a.obj = "a";
+		b = new TreeNode();
+		b.obj = "b";
+
+		a.addChild(b);
+		r = a.getChildren();
+
+		i = 0;
+		for (c in r) {
+			i++;
+		}
+		equal(i,1);
+
+		for (c in r) {
+			equal(r[c].obj,"b");
+		}
+
+		equal(b.getParent().obj,"a");
+	});
+
+	test("nominal remove child", function() {
+		var a,b,r,i,c;
+
+		a = new TreeNode();
+		a.obj = "a";
+		b = new TreeNode();
+		b.obj = "b";
+
+		a.addChild(b);
+		a.removeChild(b);
+		r = a.getChildren();
+
+		i = 0;
+		for (c in r) {
+			i++;
+		}
+		equal(i,0);
+
+		equal(b.getParent(),null);
+	});
+});
