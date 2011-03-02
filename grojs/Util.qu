@@ -12,7 +12,7 @@ $(function() {
 			rr.push(v);
 		});
 
-		same(rr,r);
+		deepEqual(rr,r);
 	});
 
 	test("forEach undefined", function() {
@@ -25,7 +25,7 @@ $(function() {
 			rr.push(v);
 		});
 
-		same(rr,["a","c"]);
+		deepEqual(rr,["a","c"]);
 	});
 
 	test("forEach deleted", function() {
@@ -39,7 +39,7 @@ $(function() {
 			rr.push(v);
 		});
 
-		same(rr,["a","c"]);
+		deepEqual(rr,["a","c"]);
 	});
 
 	test("forEach sparse", function() {
@@ -54,7 +54,7 @@ $(function() {
 			rr.push(v);
 		});
 
-		same(rr,["a","b"]);
+		deepEqual(rr,["a","b"]);
 	});
 
 
@@ -66,9 +66,9 @@ $(function() {
 
 		r = ["a","b","c"];
 		delete r[1];
-		same(r,["a",undefined,"c"]);
+		deepEqual(r,["a",undefined,"c"]);
 
 		rr = Util.prototype.consolodate(r);
-		same(rr,["a","c"]);
+		deepEqual(rr,["a","c"]);
 	});
 });

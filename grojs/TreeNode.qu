@@ -134,4 +134,68 @@ $(function() {
 		equal(c2.getParent().obj, "p");
 		equal(c3.getParent().obj, "p");
 	});
+
+	test("remove middle child", function() {
+		var p, c1, c2, c3, r, i, c;
+
+		p = new TreeNode();
+		p.obj = "p";
+		c1 = new TreeNode();
+		c1.obj = "c1";
+		p.addChild(c1);
+		c2 = new TreeNode();
+		c2.obj = "c2";
+		p.addChild(c2);
+		c3 = new TreeNode();
+		c3.obj = "c3";
+		p.addChild(c3);
+
+		p.removeChild(c2);
+
+		r = p.getChildren();
+
+		equal(r.length,2);
+		i = 0;
+		Util.prototype.forEach(r,function() {i++;});
+		equal(i, 2);
+
+		equal(r[0].obj, "c1");
+		equal(r[1].obj, "c3");
+
+		equal(c1.getParent().obj, "p");
+		equal(c2.getParent(), null);
+		equal(c3.getParent().obj, "p");
+	});
+
+	test("add undefined child should raise", function() {
+		var n;
+		n = new TreeNode();
+		raises(function() {
+			n.addChild(undefined);
+		})
+	});
+
+	test("add null child should raise", function() {
+		var n;
+		n = new TreeNode();
+		raises(function() {
+			n.addChild(null);
+		})
+	});
+
+	test("remove undefined child should raise", function() {
+		var n;
+		n = new TreeNode();
+		raises(function() {
+			n.removeChild(undefined);
+		})
+	});
+
+	test("remove null child should raise", function() {
+		var n;
+		n = new TreeNode();
+		raises(function() {
+			n.removeChild(null);
+		})
+	});
 });

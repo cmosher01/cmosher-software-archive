@@ -84,14 +84,24 @@ GedcomTree.prototype.concatenatePrivateHelper = function(p) {
 }
 
 /**
- * Parses the given lines (array of strings) and adds them
+ * Parses the given gedcom string and adds the records
  * to this tree. Can be called multiple times for chunks of
  * the input gedcom file, but must be called in order.
  */
-GedcomTree.prototype.parse = function(rs) {
-	var tre = this;
+GedcomTree.prototype.parse = function(f) {
+	var tre, rs;
+
+	// unify line terminators
+	f = f.replace(/\r\n/g,"\n");
+	f = f.replace(/\r/g,"\n");
+
+	// split string into lines
+	rs = f.match(/^.*$/mg);
+
+	tre = this;
 	Util.prototype.forEach(rs, function(s) {
-		if (s.length > 0) {
+		if (s.length > 0) { // skip blank lines
+			// parse the line and add it to this tree
 			tre.appendLine(GedcomLine.prototype.parse(s));
 		}
 	});

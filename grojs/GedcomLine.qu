@@ -3,152 +3,152 @@ $(function() {
 	module("GedcomLine");
 
 	test("asPointer nominal", function() {
-		equals(GedcomLine.prototype.asPointer("@abc@"), "abc");
+		equal(GedcomLine.prototype.asPointer("@abc@"), "abc");
 	});
 
 	test("asPointer nominal false", function() {
-		equals(GedcomLine.prototype.asPointer("abc"), "");
+		equal(GedcomLine.prototype.asPointer("abc"), "");
 	});
 
 	test("asPointer nominal false begin at", function() {
-		equals(GedcomLine.prototype.asPointer("@abc"), "");
+		equal(GedcomLine.prototype.asPointer("@abc"), "");
 	});
 
 	test("asPointer nominal false end at", function() {
-		equals(GedcomLine.prototype.asPointer("abc@"), "");
+		equal(GedcomLine.prototype.asPointer("abc@"), "");
 	});
 
 	test("asPointer nominal false mid at", function() {
-		equals(GedcomLine.prototype.asPointer("@ab@c@"), "");
+		equal(GedcomLine.prototype.asPointer("@ab@c@"), "");
 	});
 
 	test("asPointer one at", function() {
-		equals(GedcomLine.prototype.asPointer("@"), "");
+		equal(GedcomLine.prototype.asPointer("@"), "");
 	});
 
 	test("asPointer two ats", function() {
-		equals(GedcomLine.prototype.asPointer("@@"), "");
+		equal(GedcomLine.prototype.asPointer("@@"), "");
 	});
 
 	test("asPointer three ats", function() {
-		equals(GedcomLine.prototype.asPointer("@@@"), "");
+		equal(GedcomLine.prototype.asPointer("@@@"), "");
 	});
 
 	test("asPointer four ats", function() {
-		equals(GedcomLine.prototype.asPointer("@@@@"), "");
+		equal(GedcomLine.prototype.asPointer("@@@@"), "");
 	});
 
 	test("asPointer empty string", function() {
-		equals(GedcomLine.prototype.asPointer(""), "");
+		equal(GedcomLine.prototype.asPointer(""), "");
 	});
 
 	test("asPointer leading space", function() {
-		equals(GedcomLine.prototype.asPointer(" @abc@"), "");
+		equal(GedcomLine.prototype.asPointer(" @abc@"), "");
 	});
 
 	test("asPointer trailing space", function() {
-		equals(GedcomLine.prototype.asPointer("@abc@ "), "");
+		equal(GedcomLine.prototype.asPointer("@abc@ "), "");
 	});
 
 	test("asPointer(null)", function() {
-		equals(GedcomLine.prototype.asPointer(null), "");
+		equal(GedcomLine.prototype.asPointer(null), "");
 	});
 
 	test("asPointer()", function() {
-		equals(GedcomLine.prototype.asPointer(), "");
+		equal(GedcomLine.prototype.asPointer(), "");
 	});
 
 	test("replace nominal", function() {
-		equals(GedcomLine.prototype.replaceAts("abc@@def"), "abc@def");
+		equal(GedcomLine.prototype.replaceAts("abc@@def"), "abc@def");
 	});
 
 	test("replace nominal global", function() {
-		equals(GedcomLine.prototype.replaceAts("abc@@def@@ghi"), "abc@def@ghi");
+		equal(GedcomLine.prototype.replaceAts("abc@@def@@ghi"), "abc@def@ghi");
 	});
 
 	test("replace no-op", function() {
-		equals(GedcomLine.prototype.replaceAts("abcdef"), "abcdef");
+		equal(GedcomLine.prototype.replaceAts("abcdef"), "abcdef");
 	});
 
 	test("replace single at", function() {
-		equals(GedcomLine.prototype.replaceAts("abc@def"), "abc@def");
+		equal(GedcomLine.prototype.replaceAts("abc@def"), "abc@def");
 	});
 
 	test("replace three ats", function() {
-		equals(GedcomLine.prototype.replaceAts("abc@@@def"), "abc@@def");
+		equal(GedcomLine.prototype.replaceAts("abc@@@def"), "abc@@def");
 	});
 
 	test("replace empty string", function() {
-		equals(GedcomLine.prototype.replaceAts(""), "");
+		equal(GedcomLine.prototype.replaceAts(""), "");
 	});
 
 	test("replace null", function() {
-		equals(GedcomLine.prototype.replaceAts(null), null);
+		equal(GedcomLine.prototype.replaceAts(null), null);
 	});
 
 	test("replace undefined", function() {
-		equals(GedcomLine.prototype.replaceAts(), undefined);
+		equal(GedcomLine.prototype.replaceAts(), undefined);
 	});
 
 	test("replace bad type 0", function() {
-		equals(GedcomLine.prototype.replaceAts(0), 0);
+		equal(GedcomLine.prototype.replaceAts(0), 0);
 	});
 
 	test("replace bad type 1", function() {
-		equals(GedcomLine.prototype.replaceAts(1), 1);
+		equal(GedcomLine.prototype.replaceAts(1), 1);
 	});
 
 	test("nominal no value: 0 HEAD", function() {
 		var g = new GedcomLine(0, undefined, "HEAD", "");
-		equals(g.getLevel(), 0);
-		equals(g.getID(), "");
-		equals(g.getTag(), "HEAD");
-		equals(g.getVal(), "");
-		equals(g.getPointer(), "");
+		equal(g.getLevel(), 0);
+		equal(g.getID(), "");
+		equal(g.getTag(), "HEAD");
+		equal(g.getVal(), "");
+		equal(g.getPointer(), "");
 		ok(!g.hasID());
 		ok(!g.isPointer());
 	});
 
 	test("nominal object: 1 SOUR GRO", function() {
 		var g = new GedcomLine(1, undefined, "SOUR", "GRO");
-		equals(g.getLevel(), 1);
-		equals(g.getID(), "");
-		equals(g.getTag(), "SOUR");
-		equals(g.getVal(), "GRO");
-		equals(g.getPointer(), "");
+		equal(g.getLevel(), 1);
+		equal(g.getID(), "");
+		equal(g.getTag(), "SOUR");
+		equal(g.getVal(), "GRO");
+		equal(g.getPointer(), "");
 		ok(!g.hasID());
 		ok(!g.isPointer());
 	});
 
 	test("nominal object with ID: 0 @I0@ INDI", function() {
 		var g = new GedcomLine(0, "@I0@", "INDI", "");
-		equals(g.getLevel(), 0);
-		equals(g.getID(), "I0");
-		equals(g.getTag(), "INDI");
-		equals(g.getVal(), "");
-		equals(g.getPointer(), "");
+		equal(g.getLevel(), 0);
+		equal(g.getID(), "I0");
+		equal(g.getTag(), "INDI");
+		equal(g.getVal(), "");
+		equal(g.getPointer(), "");
 		ok(g.hasID());
 		ok(!g.isPointer());
 	});
 
 	test("nominal object with ID and value with ats: 0 @T7@ NOTE This is the text @@ the note.", function() {
 		var g = new GedcomLine(0, "@T7@", "NOTE", "This is the text @@ the note.");
-		equals(g.getLevel(), 0);
-		equals(g.getID(), "T7");
-		equals(g.getTag(), "NOTE");
-		equals(g.getVal(), "This is the text @ the note.");
-		equals(g.getPointer(), "");
+		equal(g.getLevel(), 0);
+		equal(g.getID(), "T7");
+		equal(g.getTag(), "NOTE");
+		equal(g.getVal(), "This is the text @ the note.");
+		equal(g.getPointer(), "");
 		ok(g.hasID());
 		ok(!g.isPointer());
 	});
 
 	test("nominal object with pointer value: 2 SOUR @S0@", function() {
 		var g = new GedcomLine(2, "", "SOUR", "@S0@");
-		equals(g.getLevel(), 2);
-		equals(g.getID(), "");
-		equals(g.getTag(), "SOUR");
-		equals(g.getVal(), "");
-		equals(g.getPointer(), "S0");
+		equal(g.getLevel(), 2);
+		equal(g.getID(), "");
+		equal(g.getTag(), "SOUR");
+		equal(g.getVal(), "");
+		equal(g.getPointer(), "S0");
 		ok(!g.hasID());
 		ok(g.isPointer());
 	});
@@ -157,11 +157,11 @@ $(function() {
 		var g = new GedcomLine(0, "@T7@", "NOTE", "This is a lon");
 		var c = new GedcomLine(1, "", "CONC", "g note split @@ conc.");
 		g = g.conc(c.getVal());
-		equals(g.getLevel(), 0);
-		equals(g.getID(), "T7");
-		equals(g.getTag(), "NOTE");
-		equals(g.getVal(), "This is a long note split @ conc.");
-		equals(g.getPointer(), "");
+		equal(g.getLevel(), 0);
+		equal(g.getID(), "T7");
+		equal(g.getTag(), "NOTE");
+		equal(g.getVal(), "This is a long note split @ conc.");
+		equal(g.getPointer(), "");
 		ok(g.hasID());
 		ok(!g.isPointer());
 	});
@@ -170,77 +170,77 @@ $(function() {
 		var g = new GedcomLine(0, "@T7@", "NOTE", "This is a note.");
 		var c = new GedcomLine(1, "", "CONT", "It is split @@ cont.");
 		g = g.cont(c.getVal());
-		equals(g.getLevel(), 0);
-		equals(g.getID(), "T7");
-		equals(g.getTag(), "NOTE");
-		equals(g.getVal(), "This is a note.\nIt is split @ cont.");
-		equals(g.getPointer(), "");
+		equal(g.getLevel(), 0);
+		equal(g.getID(), "T7");
+		equal(g.getTag(), "NOTE");
+		equal(g.getVal(), "This is a note.\nIt is split @ cont.");
+		equal(g.getPointer(), "");
 		ok(g.hasID());
 		ok(!g.isPointer());
 	});
 
 	test("parse nominal no value: 0 HEAD", function() {
 		var g = GedcomLine.prototype.parse("0 HEAD");
-		equals(g.getLevel(), 0);
-		equals(g.getID(), "");
-		equals(g.getTag(), "HEAD");
-		equals(g.getVal(), "");
-		equals(g.getPointer(), "");
+		equal(g.getLevel(), 0);
+		equal(g.getID(), "");
+		equal(g.getTag(), "HEAD");
+		equal(g.getVal(), "");
+		equal(g.getPointer(), "");
 		ok(!g.hasID());
 		ok(!g.isPointer());
 	});
 
 	test("parse nominal object: 1 SOUR GRO", function() {
 		var g = new GedcomLine.prototype.parse("1 SOUR GRO");
-		equals(g.getLevel(), 1);
-		equals(g.getID(), "");
-		equals(g.getTag(), "SOUR");
-		equals(g.getVal(), "GRO");
-		equals(g.getPointer(), "");
+		equal(g.getLevel(), 1);
+		equal(g.getID(), "");
+		equal(g.getTag(), "SOUR");
+		equal(g.getVal(), "GRO");
+		equal(g.getPointer(), "");
 		ok(!g.hasID());
 		ok(!g.isPointer());
 	});
 
 	test("parse nominal object with ID: 0 @I0@ INDI", function() {
 		var g = new GedcomLine.prototype.parse("0 @I0@ INDI");
-		equals(g.getLevel(), 0);
-		equals(g.getID(), "I0");
-		equals(g.getTag(), "INDI");
-		equals(g.getVal(), "");
-		equals(g.getPointer(), "");
+		equal(g.getLevel(), 0);
+		equal(g.getID(), "I0");
+		equal(g.getTag(), "INDI");
+		equal(g.getVal(), "");
+		equal(g.getPointer(), "");
 		ok(g.hasID());
 		ok(!g.isPointer());
 	});
 
 	test("parse nominal object with ID and value with ats: 0 @T7@ NOTE This is the text @@ the note.", function() {
 		var g = new GedcomLine.prototype.parse("0 @T7@ NOTE This is the text @@ the note.");
-		equals(g.getLevel(), 0);
-		equals(g.getID(), "T7");
-		equals(g.getTag(), "NOTE");
-		equals(g.getVal(), "This is the text @ the note.");
-		equals(g.getPointer(), "");
+		equal(g.getLevel(), 0);
+		equal(g.getID(), "T7");
+		equal(g.getTag(), "NOTE");
+		equal(g.getVal(), "This is the text @ the note.");
+		equal(g.getPointer(), "");
 		ok(g.hasID());
 		ok(!g.isPointer());
 	});
 
 	test("parse nominal object with pointer value: 2 SOUR @S0@", function() {
 		var g = new GedcomLine.prototype.parse("2 SOUR @S0@");
-		equals(g.getLevel(), 2);
-		equals(g.getID(), "");
-		equals(g.getTag(), "SOUR");
-		equals(g.getVal(), "");
-		equals(g.getPointer(), "S0");
+		equal(g.getLevel(), 2);
+		equal(g.getID(), "");
+		equal(g.getTag(), "SOUR");
+		equal(g.getVal(), "");
+		equal(g.getPointer(), "S0");
 		ok(!g.hasID());
 		ok(g.isPointer());
 	});
 
 	test("parse only skips one space: 1 SOUR  GRO", function() {
 		var g = new GedcomLine.prototype.parse("1 SOUR  GRO");
-		equals(g.getLevel(), 1);
-		equals(g.getID(), "");
-		equals(g.getTag(), "SOUR");
-		equals(g.getVal(), " GRO");
-		equals(g.getPointer(), "");
+		equal(g.getLevel(), 1);
+		equal(g.getID(), "");
+		equal(g.getTag(), "SOUR");
+		equal(g.getVal(), " GRO");
+		equal(g.getPointer(), "");
 		ok(!g.hasID());
 		ok(!g.isPointer());
 	});
