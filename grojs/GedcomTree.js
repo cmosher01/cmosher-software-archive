@@ -88,15 +88,10 @@ GedcomTree.prototype.concatenatePrivateHelper = function(p) {
  * to this tree. Can be called multiple times for chunks of
  * the input gedcom file, but must be called in order.
  */
-GedcomTree.prototype.parse = function(f) {
-	var tre, rs;
+GedcomTree.prototype.parseAppend = function(gc) {
+	var rs, tre;
 
-	// unify line terminators
-	f = f.replace(/\r\n/g,"\n");
-	f = f.replace(/\r/g,"\n");
-
-	// split string into lines
-	rs = f.match(/^.*$/mg);
+	rs = Util.prototype.getLines(gc);
 
 	tre = this;
 	Util.prototype.forEach(rs, function(s) {
@@ -105,4 +100,23 @@ GedcomTree.prototype.parse = function(f) {
 			tre.appendLine(GedcomLine.prototype.parse(s));
 		}
 	});
+}
+
+/**
+ * Factory method. Creates a GedcomTree by parsing the
+ * given gedcom string.
+ */
+GedcomTree.prototype.parse = function(gc) {
+	var t;
+
+	if (this instanceof GedcomTree) {
+		throw new Error("this is a static method");
+	}
+
+	t = new GedcomTree();
+
+	t.parseAppend(gc);
+	t.concatenate();
+
+	return t;
 }

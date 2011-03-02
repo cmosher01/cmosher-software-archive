@@ -22,3 +22,12 @@ Util.prototype.consolodate = function(r) {
 	});
 	return rr;
 }
+
+Util.prototype.getLines = function(s) {
+	// unify line terminators
+	s = s.replace(/\r\n/g,"\n");
+	s = s.replace(/\r/g,"\n");
+
+	// split string into lines
+	return s.match(/^.*$/mg);
+}
