@@ -21,10 +21,7 @@ TreeNode.prototype.getParent = function() {
 TreeNode.prototype.removeChild = function(child) {
 	var c;
 
-	if (!(child instanceof TreeNode)) {
-		throw new Error("child must be a TreeNode");
-	}
-	if (child.parent !== this) {
+	if (child === null || child === undefined || child.parent !== this) {
 		throw new Error("given TreeNode is not a child of this TreeNode");
 	}
 

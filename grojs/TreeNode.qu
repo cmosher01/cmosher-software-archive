@@ -121,14 +121,9 @@ $(function() {
 		Util.prototype.forEach(r,function() {i++;});
 		equal(i, 3);
 
-		i = 0;
-		Util.prototype.forEach(r, function(v,i) {
-			switch (i) {
-			case 0: equal(v.obj, "c1"); break;
-			case 1: equal(v.obj, "c2"); break;
-			case 2: equal(v.obj, "c3"); break;
-		}
-		});
+		equal(r[0].obj, "c1");
+		equal(r[1].obj, "c2");
+		equal(r[2].obj, "c3");
 
 		equal(c1.getParent().obj, "p");
 		equal(c2.getParent().obj, "p");
