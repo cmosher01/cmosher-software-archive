@@ -1,0 +1,8 @@
+.drag {
+
+	color: Navy;
+	border: 1px solid PaleTurquoise;
+	padding: 2px;
+
+  cursor: move;
+}
