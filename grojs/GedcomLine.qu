@@ -98,6 +98,19 @@ $(function() {
 		equal(GedcomLine.prototype.replaceAts(1), 1);
 	});
 
+	test("replace bad type obj", function() {
+		var obj = {};
+		equal(GedcomLine.prototype.replaceAts(obj), obj);
+	});
+
+	test("replace bad type true", function() {
+		equal(GedcomLine.prototype.replaceAts(true), true);
+	});
+
+	test("replace bad type false", function() {
+		equal(GedcomLine.prototype.replaceAts(false), false);
+	});
+
 	test("nominal no value: 0 HEAD", function() {
 		var g = new GedcomLine(0, undefined, "HEAD", "");
 		equal(g.getLevel(), 0);
@@ -156,7 +169,7 @@ $(function() {
 	test("nominal conc", function() {
 		var g = new GedcomLine(0, "@T7@", "NOTE", "This is a lon");
 		var c = new GedcomLine(1, "", "CONC", "g note split @@ conc.");
-		g = g.conc(c.getVal());
+		g.concat(c);
 		equal(g.getLevel(), 0);
 		equal(g.getID(), "T7");
 		equal(g.getTag(), "NOTE");
@@ -169,7 +182,7 @@ $(function() {
 	test("nominal cont", function() {
 		var g = new GedcomLine(0, "@T7@", "NOTE", "This is a note.");
 		var c = new GedcomLine(1, "", "CONT", "It is split @@ cont.");
-		g = g.cont(c.getVal());
+		g.concat(c);
 		equal(g.getLevel(), 0);
 		equal(g.getID(), "T7");
 		equal(g.getTag(), "NOTE");

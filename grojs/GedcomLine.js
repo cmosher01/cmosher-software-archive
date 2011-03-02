@@ -12,12 +12,12 @@ function GedcomLine(level, gid, tag, val) {
 
 	this.level = parseInt(level);
 	this.gid = this.asPointer(gid);
-	this.tag = tag === undefined ? "" : tag.toUpperCase();
+	this.tag = Util.prototype.safeStr(tag).toUpperCase();
 	this.pointer = this.asPointer(val);
 	if (this.pointer) {
-		this.val = "";
+		this.val = Util.prototype.safeStr();
 	} else {
-		this.val = this.replaceAts(val === undefined ? "" : val);
+		this.val = this.replaceAts(Util.prototype.safeStr(val));
 	}
 }
 
@@ -53,29 +53,27 @@ GedcomLine.prototype.isPointer = function() {
 	return !!this.getPointer();
 }
 
+/* mutator methods */
+
+GedcomLine.prototype.concat = function(c) {
+	switch (c.getTag()) {
+		case "CONC": this.val += c.getVal(); break;
+		case "CONT": this.val += "\n"+c.getVal(); break;
+	}
+}
+
 /* factory methods */
 
-GedcomLine.prototype.conc = function(concLine) {
-	var that;
-	that = new GedcomLine();
-	that.level = this.getLevel();
-	that.gid = this.getID();
-	that.tag = this.getTag();
-	that.pointer = this.getPointer();
-	that.val = this.getVal()+concLine;
-	return that;
-}
-
-GedcomLine.prototype.cont = function(contLine) {
-	return this.conc("\n"+contLine);
-}
-
 GedcomLine.prototype.parse = function(s) {
+	if (!(this instanceof GedcomLine)) {
+		return new GedcomLine().parse(s);
+	}
 	var r = /^(\d+)\s+(?:(@[^@]+@)\s+)?(\S+)(?:\s(.*))?$/.exec(s);
 	if (r === null) {
 		throw new Error("Gedcom line has invalid syntax: "+s);
 	}
-	return new GedcomLine(r[1],r[2],r[3],r[4]);
+	this.constructor(r[1],r[2],r[3],r[4]);
+	return this;
 }
 
 

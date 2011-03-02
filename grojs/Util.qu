@@ -1,3 +1,5 @@
+function ChrisMosherUtilInternalTestClass() { }
+
 $(function() {
 
 	module("Util");
@@ -70,5 +72,90 @@ $(function() {
 
 		rr = Util.prototype.consolodate(r);
 		deepEqual(rr,["a","c"]);
+	});
+
+
+
+
+
+	test("class name of classic OO object", function() {
+		equal(Util.prototype.getClassName(new ChrisMosherUtilInternalTestClass()),"ChrisMosherUtilInternalTestClass");
+	});
+
+	test("class name of Object", function() {
+		equal(Util.prototype.getClassName(new Object()),"Object");
+	});
+
+	test("class name of String", function() {
+		equal(Util.prototype.getClassName(new String("testing")),"String");
+	});
+
+	test("class name of string", function() {
+		equal(Util.prototype.getClassName("testing"),"String");
+	});
+
+	test("class name of array", function() {
+		equal(Util.prototype.getClassName([1,2,3]),"Array");
+	});
+
+	test("class name of number", function() {
+		equal(Util.prototype.getClassName(3.14),"Number");
+	});
+
+	test("class name of boolean", function() {
+		equal(Util.prototype.getClassName(true),"Boolean");
+	});
+
+	test("class name of null", function() {
+		equal(Util.prototype.getClassName(null),"null");
+	});
+
+	test("class name of undefined", function() {
+		equal(Util.prototype.getClassName(undefined),"undefined");
+	});
+
+	test("class name of castrated object", function() {
+		var x;
+		x = new ChrisMosherUtilInternalTestClass();
+		x.constructor = null;
+		equal(Util.prototype.getClassName(x),"Object");
+	});
+
+	test("class name of corrupted object", function() {
+		var x;
+		x = new ChrisMosherUtilInternalTestClass();
+		x.constructor = {foo:"bar"};
+		equal(Util.prototype.getClassName(x),"Object");
+	});
+
+	test("class name of corrupted object 2", function() {
+		var x;
+		x = new ChrisMosherUtilInternalTestClass();
+		x.constructor = [1,2,3];
+		equal(Util.prototype.getClassName(x),"Object");
+	});
+
+	test("class name of Date", function() {
+		equal(Util.prototype.getClassName(new Date()),"Date");
+	});
+
+	test("class name of regexp literal", function() {
+		equal(Util.prototype.getClassName(/.*/g),"RegExp");
+	});
+
+	test("class name of function object", function() {
+		equal(Util.prototype.getClassName(function(){}),"Function");
+	});
+
+	test("class name of castrated function object", function() {
+		var x = function(){};
+		x.constructor = null;
+		equal(Util.prototype.getClassName(x),"Function");
+	});
+
+	test("class name of castrated regexp", function() {
+		var x = /.*/g;
+		x.constructor = null;
+		equal(Util.prototype.getClassName(x),"Object");
 	});
 });

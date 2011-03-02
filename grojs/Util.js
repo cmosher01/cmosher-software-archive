@@ -31,3 +31,30 @@ Util.prototype.getLines = function(s) {
 	// split string into lines
 	return s.match(/^.*$/mg);
 }
+
+Util.prototype.safeStr = function(s) {
+	if (s === undefined || s === null) {
+		return new String("");
+	}
+	return new String(s);
+}
+
+Util.prototype.getClassName = function(x) {
+	var c;
+	switch (x) {
+		case null: return "null";
+		case undefined: return "undefined";
+	}
+	c = x.constructor;
+	switch (c) {
+	case null:
+	case undefined:
+		return typeof x;
+	}
+	switch (c.name) {
+	case null:
+	case undefined:
+		return typeof x;
+	}
+	return c.name;
+}

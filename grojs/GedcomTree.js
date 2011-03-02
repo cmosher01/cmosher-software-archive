@@ -69,13 +69,9 @@ GedcomTree.prototype.concatenatePrivateHelper = function(p) {
 		tre.concatenatePrivateHelper(c);
 		switch (c.line.getTag()) {
 			case "CONT":
-				p.line = p.line.cont(c.line.getVal());
-				rdel.push(c);
-			break;
 			case "CONC":
-				p.line = p.line.conc(c.line.getVal());
+				p.line.concat(c.line);
 				rdel.push(c);
-			break;
 		}
 	});
 	Util.prototype.forEach(rdel, function(c) {
@@ -104,19 +100,16 @@ GedcomTree.prototype.parseAppend = function(gc) {
 
 /**
  * Factory method. Creates a GedcomTree by parsing the
- * given gedcom string.
+ * given gedcom string. The gedcom must be complete.
+ * Can be called as a member method, or as a static method.
  */
 GedcomTree.prototype.parse = function(gc) {
-	var t;
-
-	if (this instanceof GedcomTree) {
-		throw new Error("this is a static method");
+	if (!(this instanceof GedcomTree)) {
+		return new GedcomTree().parse(gc);
 	}
 
-	t = new GedcomTree();
+	this.parseAppend(gc);
+	this.concatenate();
 
-	t.parseAppend(gc);
-	t.concatenate();
-
-	return t;
+	return this;
 }
