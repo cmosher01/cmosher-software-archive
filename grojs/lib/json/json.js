@@ -518,7 +518,7 @@ if (!JSON) {
 // Augment the basic prototypes if they have not already been augmented.
 // These forms are obsolete. It is recommended that JSON.stringify and
 // JSON.parse be used instead.
-
+/*CAM
     if (!Object.prototype.toJSONString) {
         Object.prototype.toJSONString = function (filter) {
             return JSON.stringify(this, filter);
@@ -527,4 +527,5 @@ if (!JSON) {
             return JSON.parse(this, filter);
         };
     }
+*/
 }());

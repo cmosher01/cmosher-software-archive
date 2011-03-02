@@ -2,9 +2,6 @@ $(function() {
 
 	module("GedcomTree", {
 		setup: function() {
-			$.ajaxSetup({
-				dataType: "text"
-			});
 			var gc =
 				"0 HEAD\n"+
 				"1 SOUR GRO\n"+
@@ -37,21 +34,6 @@ $(function() {
 			this.t.parse(gc);
 			this.t.concatenate();
 		}
-	});
-
-	asyncTest("nominal read gedcom file", function() {
-		$.get("lib/testged/TGC55C.ged")
-			.success(function(gc) {
-				var gtree = new GedcomTree();
-				gtree.parse(gc);
-				gtree.concatenate();
-				// TODO put tests here
-				start();
-			})
-			.error(function(s,m,e) {
-				ok(false,e);
-				start();
-			});
 	});
 
 	test("nominal top level", function() {
@@ -89,4 +71,34 @@ $(function() {
 		equal(s1.getChildren()[1].line.getVal(),"Ancestral File");
 	});
 
+
+
+
+
+	module("GedcomTreeFile", {
+		setup: function() {
+			var qu = this;
+			$.ajaxSetup({
+				dataType: "text"
+			});
+			stop(); // wait for ged file to load (or fail)
+			$.get("lib/testged/TGC55C.ged")
+				.success(function(gc) {
+					qu.gtree = new GedcomTree();
+					qu.gtree.parse(gc);
+					qu.gtree.concatenate();
+					start();
+				})
+				.error(function(s,m,e) {
+					ok(false,"Error reading file "+this.url+": "+e);
+					start();
+				});
+		}
+	});
+
+	test("nominal read", function() {
+		var subm = this.gtree.getNode("SUBMISSION");
+		equal(subm.line.getID(),"SUBMISSION");
+		equal(subm.getChildren()[1].line.getTag(),"FAMF");
+	});
 });
