@@ -2,30 +2,71 @@ $(function() {
 
 	module("GedcomTree", {
 		setup: function() {
+			$.ajaxSetup({
+				dataType: "text"
+			});
+			var rs = [
+				"0 HEAD",
+				"1 SOUR GRO",
+				"2 NAME Genealogy Research Organizer",
+				"2 CORP Christopher Alan Mosher",
+				"3 ADDR 41 Brook Pine Drive",
+				"4 CONT Shelton, CT 06484-5912",
+				"1 GEDC",
+				"2 VERS 5.5",
+				"1 NOTE This tree contains th",
+				"2 CONC e Mosher family.",
+				"2 CONT",
+				"2 CONT The name Mosher was originally Moger.",
+				"",
+				"0 @I0@ INDI",
+				"1 _XY 195 30",
+				"1 NAME John /Moger/",
+				"2 SOUR @S0@",
+				"",
+				"0 @S0@ SOUR",
+				"1 AUTH LDS",
+				"1 TITL International Genealogical Index (IGI)",
+				"1 PUBL http://www.familysearch.org",
+				"",
+				"0 @S1@ SOUR",
+				"1 AUTH LDS",
+				"1 TITL Ancestral File",
+				"1 PUBL http://www.familysearch.org"
+				];
 			this.t = new GedcomTree();
-			this.t.appendLine(GedcomLine.prototype.parse("0 HEAD"));
-			this.t.appendLine(GedcomLine.prototype.parse("1 SOUR GRO"));
-			this.t.appendLine(GedcomLine.prototype.parse("2 NAME Genealogy Research Organizer"));
-			this.t.appendLine(GedcomLine.prototype.parse("2 CORP Christopher Alan Mosher"));
-			this.t.appendLine(GedcomLine.prototype.parse("3 ADDR 41 Brook Pine Drive"));
-			this.t.appendLine(GedcomLine.prototype.parse("4 CONT Shelton, CT 06484-5912"));
-			this.t.appendLine(GedcomLine.prototype.parse("1 GEDC"));
-			this.t.appendLine(GedcomLine.prototype.parse("2 VERS 5.5"));
-			this.t.appendLine(GedcomLine.prototype.parse("0 @I0@ INDI"));
-			this.t.appendLine(GedcomLine.prototype.parse("1 _XY 195 30"));
-			this.t.appendLine(GedcomLine.prototype.parse("1 NAME John /Moger/"));
-			this.t.appendLine(GedcomLine.prototype.parse("2 SOUR @S0@"));
-			this.t.appendLine(GedcomLine.prototype.parse("0 @S0@ SOUR"));
-			this.t.appendLine(GedcomLine.prototype.parse("1 AUTH LDS"));
-			this.t.appendLine(GedcomLine.prototype.parse("1 TITL International Genealogical Index (IGI)"));
-			this.t.appendLine(GedcomLine.prototype.parse("1 PUBL http://www.familysearch.org"));
-			this.t.appendLine(GedcomLine.prototype.parse("0 @S1@ SOUR"));
-			this.t.appendLine(GedcomLine.prototype.parse("1 AUTH LDS"));
-			this.t.appendLine(GedcomLine.prototype.parse("1 TITL Ancestral File"));
-			this.t.appendLine(GedcomLine.prototype.parse("1 PUBL http://www.familysearch.org"));
+			this.t.parse(rs);
+			this.t.concatenate();
 		}
 	});
-
+	asyncTest("nominal read gedcom file", function() {
+		$.get("rapp.ged")
+			.success(function(f) {
+				var rs;
+				f = f.replace(/\r\n/g,"\n");
+				f = f.replace(/\r/g,"\n");
+				rs = f.match(/^.*$/mg);
+				var gtree = new GedcomTree();
+				gtree.parse(rs);
+				gtree.concatenate();
+				// TODO put tests here
+				start();
+			})
+			.error(function(s,m,e) {
+				ok(false,e);
+				start();
+			});
+	});
+/*
+	asyncTest("nominal read gedcom file", function() {
+		$.get("rapp.ged",function(gedcom) {
+			var gtree = new GedcomTree();
+			gtree.parse(gedcom);
+			gtree.concatenate();
+			start();
+		});
+	});
+*/
 	test("nominal top level", function() {
 		var r = this.t.getRoot().getChildren();
 		equal(r[0].line.getTag(),"HEAD");
@@ -45,6 +86,11 @@ $(function() {
 		equal(addr.getTag(),"ADDR"); equal(addr.getVal(),"41 Brook Pine Drive\nShelton, CT 06484-5912");
 	});
 
+	test("nominal conc plus cont", function() {
+		var note = this.t.getRoot().getChildren()[0].getChildren()[2].line;
+		equal(note.getTag(),"NOTE"); equal(note.getVal(),"This tree contains the Mosher family.\n\nThe name Mosher was originally Moger.");
+	});
+
 	test("nominal xref", function() {
 		var sour_xref = this.t.getRoot().getChildren()[1].getChildren()[1].getChildren()[0].line;
 		equal(sour_xref.getTag(),"SOUR"); equal(sour_xref.getPointer(),"S0");
@@ -55,4 +101,5 @@ $(function() {
 		equal(s1.line.getID(),"S1");
 		equal(s1.getChildren()[1].line.getVal(),"Ancestral File");
 	});
+
 });

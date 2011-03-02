@@ -12,7 +12,7 @@ function GedcomLine(level, gid, tag, val) {
 
 	this.level = parseInt(level);
 	this.gid = this.asPointer(gid);
-	this.tag = tag === undefined ? "" : tag;
+	this.tag = tag === undefined ? "" : tag.toUpperCase();
 	this.pointer = this.asPointer(val);
 	if (this.pointer) {
 		this.val = "";

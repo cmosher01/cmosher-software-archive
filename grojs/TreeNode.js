@@ -9,7 +9,7 @@ function TreeNode() {
 
 
 TreeNode.prototype.getChildren = function() {
-	return Util.prototype.consolodate(this.children);
+	return this.children;
 }
 
 TreeNode.prototype.getParent = function() {
@@ -33,6 +33,7 @@ TreeNode.prototype.removeChild = function(child) {
 			if (this.children[c] === child) {
 				delete this.children[c];
 				child.parent = null;
+				this.children = Util.prototype.consolodate(this.children);
 				return;
 			}
 		}

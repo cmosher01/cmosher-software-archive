@@ -55,3 +55,44 @@ GedcomTree.prototype.appendLine = function(line) {
 		this.mapIDtoNode[line.getID()] = this.prevNode;
 	}
 }
+
+GedcomTree.prototype.concatenate = function() {
+	this.concatenatePrivateHelper(this.getRoot());
+}
+
+GedcomTree.prototype.concatenatePrivateHelper = function(p) {
+	var rdel, tre;
+	tre = this;
+	rdel = [];
+
+	Util.prototype.forEach(p.getChildren(), function(c) {
+		tre.concatenatePrivateHelper(c);
+		switch (c.line.getTag()) {
+			case "CONT":
+				p.line = p.line.cont(c.line.getVal());
+				rdel.push(c);
+			break;
+			case "CONC":
+				p.line = p.line.conc(c.line.getVal());
+				rdel.push(c);
+			break;
+		}
+	});
+	Util.prototype.forEach(rdel, function(c) {
+		c.removeFromParent();
+	});
+}
+
+/**
+ * Parses the given lines (array of strings) and adds them
+ * to this tree. Can be called multiple times for chunks of
+ * the input gedcom file, but must be called in order.
+ */
+GedcomTree.prototype.parse = function(rs) {
+	var tre = this;
+	Util.prototype.forEach(rs, function(s) {
+		if (s.length > 0) {
+			tre.appendLine(GedcomLine.prototype.parse(s));
+		}
+	});
+}
