@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+    <script type="text/javascript">
+		  alert("head");
+
+function runhead(){
+	var dynappend = document.createTextNode("alert('dynappend head')");
+	var dyninsert = document.createTextNode("alert('dyninsert head')");
+	
+	var scrappend = document.createElement("script");
+	scrappend.appendChild(dynappend);
+	
+	var scrinsert = document.createElement("script");
+	scrinsert.appendChild(dyninsert);
+	
+	var head = document.getElementsByTagName("head")[0];
+	alert("[pre-append head]");
+	head.appendChild(scrappend);
+	alert("[post-append head]");
+	alert("[pre-insert head]");
+	head.insertBefore(scrinsert, head.firstChild);
+	alert("[post-insert head]");
+}
+
+function runbody(){
+  var dynappend = document.createTextNode("alert('dynappend body')");
+  var dyninsert = document.createTextNode("alert('dyninsert body')");
+  
+  var scrappend = document.createElement("script");
+  scrappend.appendChild(dynappend);
+  
+  var scrinsert = document.createElement("script");
+  scrinsert.appendChild(dyninsert);
+  
+  var body = document.getElementsByTagName("body")[0];
+  alert("[pre-append body]");
+  body.appendChild(scrappend);
+  alert("[post-append body]");
+  alert("[pre-insert body]");
+  body.insertBefore(scrinsert, body.firstChild);
+  alert("[post-insert body]");
+}
+
+function dyn(){
+	alert('body_onload');
+	runbody();
+  runhead();
+}
+		</script>
+	</head>
+	<body onload="javascript:dyn()" />
+</html>
