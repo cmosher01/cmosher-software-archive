@@ -48,7 +48,7 @@ Util.getTypeName = function(x) {
 	}
 
 	n = Object.prototype.toString.apply(x);
-	n = /\[object\s*(.*)\s*\]/.exec(n)[1];
+	n = /\[object\s*(\w+)\s*\]/.exec(n)[1];
 
 	if (n !== "Object") {
 		return n;
@@ -64,7 +64,10 @@ Util.getTypeName = function(x) {
 		n = x.constructor.toString();
 		m = /^\s*function\s*(\w+)/.exec(n);
 		if (m === null) {
-			return "Object";
+			m = /\[object\s*(\w+)\s*\]/.exec(n);
+			if (m === null) {
+				return "Object";
+			}
 		}
 		return m[1];
 	}
