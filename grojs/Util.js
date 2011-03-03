@@ -3,11 +3,12 @@ function Util() {
 }
 
 Util.forEach = function(r,fn) {
-	var i, x;
+	var i, x, v;
 	x = 0;
-	for (i in r) {
-		if (r.hasOwnProperty(i)) {
-			fn(r[i],x++);
+	for (i = 0; i < r.length; i++) {
+		v = r[i];
+		if (v !== undefined) {
+			fn(v,x++);
 		}
 	}
 }
@@ -37,7 +38,7 @@ Util.safeStr = function(s) {
 }
 
 Util.getTypeName = function(x) {
-	var n;
+	var n, m;
 
 	if (x === undefined) {
 		return "undefined";
@@ -60,7 +61,12 @@ Util.getTypeName = function(x) {
 
 	n = n.name;
 	if (n === undefined || n === null) {
-		return "Object";
+		n = x.constructor.toString();
+		m = /^\s*function\s*(\w+)/.exec(n);
+		if (m === null) {
+			return "Object";
+		}
+		return m[1];
 	}
 
 	return n;
@@ -68,7 +74,7 @@ Util.getTypeName = function(x) {
 
 Util.verifyType = function(obj,clsName) {
 	if (Util.getTypeName(obj) !== clsName) {
-		throw new TypeError("Object must be of class "+clsName);
+		throw new TypeError(Util.getTypeName(obj)+" must be of class "+clsName);
 	}
 }
 
