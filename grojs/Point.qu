@@ -1,0 +1,9 @@
+$(function() {
+
+  module("Point");
+
+  test("nominal", function() {
+    ok(false);
+  });
+
+});
