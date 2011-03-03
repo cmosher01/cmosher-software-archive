@@ -1,7 +1,5 @@
 function TreeNode() {
-	if (!(this instanceof TreeNode)) {
-		throw Error("error creating object (missing new operator?)");
-	}
+	Util.prototype.verifyType(this,"TreeNode");
 	this.parent = null;
 	this.children = [];
 }
@@ -21,20 +19,10 @@ TreeNode.prototype.getParent = function() {
 TreeNode.prototype.removeChild = function(child) {
 	var c;
 
-	if (child === null || child === undefined || child.parent !== this) {
-		throw new Error("given TreeNode is not a child of this TreeNode");
-	}
+	Util.prototype.verifyType(child,"TreeNode");
 
-	for (c in this.children) {
-		if (this.children.hasOwnProperty(c)) {
-			if (this.children[c] === child) {
-				delete this.children[c];
-				child.parent = null;
-				this.children = Util.prototype.consolodate(this.children);
-				return;
-			}
-		}
-	}
+	this.children = Util.prototype.remove(child,this.children);
+	child.parent = null;
 }
 
 TreeNode.prototype.removeFromParent = function() {
@@ -45,9 +33,8 @@ TreeNode.prototype.removeFromParent = function() {
 }
 
 TreeNode.prototype.addChild = function(child) {
-	if (!(child instanceof TreeNode)) {
-		throw new Error("child must be a TreeNode");
-	}
+	Util.prototype.verifyType(child,"TreeNode");
+
 	child.removeFromParent();
 	this.children.push(child);
 	child.parent = this;

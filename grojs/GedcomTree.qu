@@ -34,6 +34,12 @@ $(function() {
 		}
 	});
 
+	test("missing new operator", function() {
+		raises(function() {
+			GedcomTree();
+		});
+	});
+
 	test("nominal top level", function() {
 		var r = this.t.getRoot().getChildren();
 		equal(r[0].line.getTag(),"HEAD");
@@ -72,7 +78,6 @@ $(function() {
 
 
 
-
 	module("GedcomTreeFile", {
 		setup: function() {
 			var qu = this;
@@ -97,4 +102,6 @@ $(function() {
 		equal(subm.line.getID(),"SUBMISSION");
 		equal(subm.getChildren()[1].line.getTag(),"FAMF");
 	});
+
+
 });

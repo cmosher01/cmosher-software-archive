@@ -17,17 +17,17 @@ $(function() {
 		deepEqual(rr,r);
 	});
 
-	test("forEach undefined", function() {
+	test("forEach null", function() {
 		var r, rr;
 
-		r = ["a",undefined,"c"];
+		r = ["a",null,"c"];
 
 		rr = [];
 		Util.prototype.forEach(r,function(v) {
 			rr.push(v);
 		});
 
-		deepEqual(rr,["a","c"]);
+		deepEqual(rr,r);
 	});
 
 	test("forEach deleted", function() {
@@ -68,12 +68,28 @@ $(function() {
 
 		r = ["a","b","c"];
 		delete r[1];
-		deepEqual(r,["a",undefined,"c"]);
 
 		rr = Util.prototype.consolodate(r);
 		deepEqual(rr,["a","c"]);
 	});
 
+
+
+
+
+	test("remove nominal", function() {
+		var r;
+
+		r = ["a","b","c"];
+		delete r[1];
+		notDeepEqual(r,["a","c"]);
+		deepEqual(r,["a",undefined,"c"]);
+
+		r = ["a","b","c"];
+		r = Util.prototype.remove("b",r);
+		deepEqual(r,["a","c"]);
+		notDeepEqual(r,["a",undefined,"c"]);
+	});
 
 
 
@@ -94,12 +110,28 @@ $(function() {
 		equal(Util.prototype.getClassName("testing"),"String");
 	});
 
+	test("class name of Array", function() {
+		equal(Util.prototype.getClassName(new Array(1,2,3)),"Array");
+	});
+
 	test("class name of array", function() {
 		equal(Util.prototype.getClassName([1,2,3]),"Array");
 	});
 
 	test("class name of number", function() {
+		equal(Util.prototype.getClassName(new Number(3.14)),"Number");
+	});
+
+	test("class name of number", function() {
 		equal(Util.prototype.getClassName(3.14),"Number");
+	});
+
+	test("class name of number property", function() {
+		equal(Util.prototype.getClassName(window.length),"Number");
+	});
+
+	test("class name of Boolean", function() {
+		equal(Util.prototype.getClassName(new Boolean(true)),"Boolean");
 	});
 
 	test("class name of boolean", function() {
@@ -112,6 +144,10 @@ $(function() {
 
 	test("class name of undefined", function() {
 		equal(Util.prototype.getClassName(undefined),"undefined");
+	});
+
+	test("class name of omitted argument", function() {
+		equal(Util.prototype.getClassName(),"undefined");
 	});
 
 	test("class name of castrated object", function() {
@@ -139,6 +175,10 @@ $(function() {
 		equal(Util.prototype.getClassName(new Date()),"Date");
 	});
 
+	test("class name of RegExp literal", function() {
+		equal(Util.prototype.getClassName(new RegExp(/.*/g)),"RegExp");
+	});
+
 	test("class name of regexp literal", function() {
 		equal(Util.prototype.getClassName(/.*/g),"RegExp");
 	});
@@ -156,6 +196,28 @@ $(function() {
 	test("class name of castrated regexp", function() {
 		var x = /.*/g;
 		x.constructor = null;
-		equal(Util.prototype.getClassName(x),"Object");
+		equal(Util.prototype.getClassName(x),"RegExp");
+	});
+
+	test("class name of Object type", function() {
+		equal(Util.prototype.getClassName(Object),"Function");
+	});
+
+	test("class name of Math type", function() {
+		equal(Util.prototype.getClassName(Math),"Math");
+	});
+
+	test("class name of Date type", function() {
+		equal(Util.prototype.getClassName(Date),"Function");
+	});
+
+	test("class name of window", function() {
+		equal(Util.prototype.getClassName(window),"Window");
+	});
+
+	test("class name of malicious corruption", function() {
+		var x = new ChrisMosherUtilInternalTestClass();
+		x.constructor = {name:"Foo"};
+		equal(Util.prototype.getClassName(x),"Foo"); // can't fix this?
 	});
 });

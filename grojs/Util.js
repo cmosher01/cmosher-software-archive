@@ -3,14 +3,11 @@ function Util() {
 }
 
 Util.prototype.forEach = function(r,fn) {
-	var i, v, x;
+	var i, x;
 	x = 0;
 	for (i in r) {
 		if (r.hasOwnProperty(i)) {
-			v = r[i];
-			if (v !== undefined) {
-				fn(v,x++);
-			}
+			fn(r[i],x++);
 		}
 	}
 }
@@ -40,21 +37,47 @@ Util.prototype.safeStr = function(s) {
 }
 
 Util.prototype.getClassName = function(x) {
-	var c;
-	switch (x) {
-		case null: return "null";
-		case undefined: return "undefined";
+	var n;
+
+	if (x === undefined) {
+		return "undefined";
 	}
-	c = x.constructor;
-	switch (c) {
-	case null:
-	case undefined:
-		return typeof x;
+	if (x === null) {
+		return "null";
 	}
-	switch (c.name) {
-	case null:
-	case undefined:
-		return typeof x;
+
+	n = Object.prototype.toString.apply(x);
+	n = /\[object\s*(.*)\s*\]/.exec(n)[1];
+
+	if (n !== "Object") {
+		return n;
 	}
-	return c.name;
+
+	n = x.constructor;
+	if (n === undefined || n === null) {
+		return "Object";
+	}
+
+	n = n.name;
+	if (n === undefined || n === null) {
+		return "Object";
+	}
+
+	return n;
+}
+
+Util.prototype.verifyType = function(obj,clsName) {
+	if (Util.prototype.getClassName(obj) !== clsName) {
+		throw new TypeError("Object must be of class "+clsName);
+	}
+}
+
+Util.prototype.remove = function(e,r) {
+	var rr = [];
+	Util.prototype.forEach(r,function(v) {
+		if (v !== e) {
+			rr.push(v);
+		}
+	});
+	return rr;
 }

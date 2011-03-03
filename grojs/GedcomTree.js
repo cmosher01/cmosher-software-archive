@@ -1,8 +1,5 @@
 function GedcomTree() {
-	if (!(this instanceof GedcomTree)) {
-		throw new Error("error creating object (missing new operator?)");
-	}
-
+	Util.prototype.verifyType(this,"GedcomTree");
 	this.root = new TreeNode();
 	this.prevNode = this.root;
 	this.prevLevel = -1;
@@ -31,9 +28,7 @@ GedcomTree.prototype.getNode = function(gid) {
 GedcomTree.prototype.appendLine = function(line) {
 	var c, i, v, p;
 
-	if (!(line instanceof GedcomLine)) {
-		throw new Error("line is not a GedcomLine");
-	}
+	Util.prototype.verifyType(line,"GedcomLine");
 
 	v = line.getLevel();
 	c = this.prevLevel + 1 - v;
