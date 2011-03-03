@@ -1,5 +1,5 @@
 function GedcomTree() {
-	Util.prototype.verifyType(this,"GedcomTree");
+	Util.verifyType(this,"GedcomTree");
 	this.root = new TreeNode();
 	this.prevNode = this.root;
 	this.prevLevel = -1;
@@ -28,7 +28,7 @@ GedcomTree.prototype.getNode = function(gid) {
 GedcomTree.prototype.appendLine = function(line) {
 	var c, i, v, p;
 
-	Util.prototype.verifyType(line,"GedcomLine");
+	Util.verifyType(line,"GedcomLine");
 
 	v = line.getLevel();
 	c = this.prevLevel + 1 - v;
@@ -60,7 +60,7 @@ GedcomTree.prototype.concatenatePrivateHelper = function(p) {
 	tre = this;
 	rdel = [];
 
-	Util.prototype.forEach(p.getChildren(), function(c) {
+	Util.forEach(p.getChildren(), function(c) {
 		tre.concatenatePrivateHelper(c);
 		switch (c.line.getTag()) {
 			case "CONT":
@@ -69,7 +69,7 @@ GedcomTree.prototype.concatenatePrivateHelper = function(p) {
 				rdel.push(c);
 		}
 	});
-	Util.prototype.forEach(rdel, function(c) {
+	Util.forEach(rdel, function(c) {
 		c.removeFromParent();
 	});
 }
@@ -82,29 +82,25 @@ GedcomTree.prototype.concatenatePrivateHelper = function(p) {
 GedcomTree.prototype.parseAppend = function(gc) {
 	var rs, tre;
 
-	rs = Util.prototype.getLines(gc);
+	rs = Util.getLines(gc);
 
 	tre = this;
-	Util.prototype.forEach(rs, function(s) {
+	Util.forEach(rs, function(s) {
 		if (s.length > 0) { // skip blank lines
 			// parse the line and add it to this tree
-			tre.appendLine(GedcomLine.prototype.parse(s));
+			tre.appendLine(GedcomLine.parse(s));
 		}
 	});
 }
 
 /**
- * Factory method. Creates a GedcomTree by parsing the
+ * Static factory method. Creates a GedcomTree by parsing the
  * given gedcom string. The gedcom must be complete.
  * Can be called as a member method, or as a static method.
  */
-GedcomTree.prototype.parse = function(gc) {
-	if (!(this instanceof GedcomTree)) {
-		return new GedcomTree().parse(gc);
-	}
-
-	this.parseAppend(gc);
-	this.concatenate();
-
-	return this;
+GedcomTree.parse = function(gc) {
+	var g = new GedcomTree();
+	g.parseAppend(gc);
+	g.concatenate();
+	return g;
 }

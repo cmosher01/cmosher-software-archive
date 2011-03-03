@@ -1,5 +1,5 @@
 function TreeNode() {
-	Util.prototype.verifyType(this,"TreeNode");
+	Util.verifyType(this,"TreeNode");
 	this.parent = null;
 	this.children = [];
 }
@@ -19,9 +19,9 @@ TreeNode.prototype.getParent = function() {
 TreeNode.prototype.removeChild = function(child) {
 	var c;
 
-	Util.prototype.verifyType(child,"TreeNode");
+	Util.verifyType(child,"TreeNode");
 
-	this.children = Util.prototype.remove(child,this.children);
+	this.children = Util.remove(child,this.children);
 	child.parent = null;
 }
 
@@ -33,7 +33,7 @@ TreeNode.prototype.removeFromParent = function() {
 }
 
 TreeNode.prototype.addChild = function(child) {
-	Util.prototype.verifyType(child,"TreeNode");
+	Util.verifyType(child,"TreeNode");
 
 	child.removeFromParent();
 	this.children.push(child);

@@ -14,10 +14,10 @@ $(function() {
 		r = a.getChildren();
 
 		i = 0;
-		Util.prototype.forEach(r,function() {i++;});
+		Util.forEach(r,function() {i++;});
 		equal(i, 1);
 
-		Util.prototype.forEach(r,function(v) {
+		Util.forEach(r,function(v) {
 			equal(v.obj, "b");
 		});
 
@@ -37,7 +37,7 @@ $(function() {
 		r = a.getChildren();
 
 		i = 0;
-		Util.prototype.forEach(r,function() {i++;});
+		Util.forEach(r,function() {i++;});
 		equal(i, 0);
 
 		equal(b.getParent(), null);
@@ -57,7 +57,7 @@ $(function() {
 		r = a.getChildren();
 
 		i = 0;
-		Util.prototype.forEach(r,function() {i++;});
+		Util.forEach(r,function() {i++;});
 		equal(i, 0);
 
 		equal(b.getParent(), null);
@@ -80,7 +80,7 @@ $(function() {
 
 		r = a.getChildren();
 		i = 0;
-		Util.prototype.forEach(r,function() {i++;});
+		Util.forEach(r,function() {i++;});
 		equal(i, 0);
 
 
@@ -88,10 +88,10 @@ $(function() {
 		r = x.getChildren();
 
 		i = 0;
-		Util.prototype.forEach(r,function() {i++;});
+		Util.forEach(r,function() {i++;});
 		equal(i, 1);
 
-		Util.prototype.forEach(r,function(v) {
+		Util.forEach(r,function(v) {
 			equal(v.obj, "b");
 		});
 
@@ -118,7 +118,7 @@ $(function() {
 		r = p.getChildren();
 
 		i = 0;
-		Util.prototype.forEach(r,function() {i++;});
+		Util.forEach(r,function() {i++;});
 		equal(i, 3);
 
 		equal(r[0].obj, "c1");
@@ -151,7 +151,7 @@ $(function() {
 
 		equal(r.length,2);
 		i = 0;
-		Util.prototype.forEach(r,function() {i++;});
+		Util.forEach(r,function() {i++;});
 		equal(i, 2);
 
 		equal(r[0].obj, "c1");

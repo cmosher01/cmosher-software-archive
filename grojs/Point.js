@@ -1,5 +1,5 @@
 function Point(x,y) {
-	Util.prototype.verifyType(this,"Point");
+	Util.verifyType(this,"Point");
 	this.x = parseInt(x);
 	this.y = parseInt(y);
 }

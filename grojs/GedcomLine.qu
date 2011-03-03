@@ -3,112 +3,112 @@ $(function() {
 	module("GedcomLine");
 
 	test("asPointer nominal", function() {
-		equal(GedcomLine.prototype.asPointer("@abc@"), "abc");
+		equal(GedcomLine.asPointer("@abc@"), "abc");
 	});
 
 	test("asPointer nominal false", function() {
-		equal(GedcomLine.prototype.asPointer("abc"), "");
+		equal(GedcomLine.asPointer("abc"), "");
 	});
 
 	test("asPointer nominal false begin at", function() {
-		equal(GedcomLine.prototype.asPointer("@abc"), "");
+		equal(GedcomLine.asPointer("@abc"), "");
 	});
 
 	test("asPointer nominal false end at", function() {
-		equal(GedcomLine.prototype.asPointer("abc@"), "");
+		equal(GedcomLine.asPointer("abc@"), "");
 	});
 
 	test("asPointer nominal false mid at", function() {
-		equal(GedcomLine.prototype.asPointer("@ab@c@"), "");
+		equal(GedcomLine.asPointer("@ab@c@"), "");
 	});
 
 	test("asPointer one at", function() {
-		equal(GedcomLine.prototype.asPointer("@"), "");
+		equal(GedcomLine.asPointer("@"), "");
 	});
 
 	test("asPointer two ats", function() {
-		equal(GedcomLine.prototype.asPointer("@@"), "");
+		equal(GedcomLine.asPointer("@@"), "");
 	});
 
 	test("asPointer three ats", function() {
-		equal(GedcomLine.prototype.asPointer("@@@"), "");
+		equal(GedcomLine.asPointer("@@@"), "");
 	});
 
 	test("asPointer four ats", function() {
-		equal(GedcomLine.prototype.asPointer("@@@@"), "");
+		equal(GedcomLine.asPointer("@@@@"), "");
 	});
 
 	test("asPointer empty string", function() {
-		equal(GedcomLine.prototype.asPointer(""), "");
+		equal(GedcomLine.asPointer(""), "");
 	});
 
 	test("asPointer leading space", function() {
-		equal(GedcomLine.prototype.asPointer(" @abc@"), "");
+		equal(GedcomLine.asPointer(" @abc@"), "");
 	});
 
 	test("asPointer trailing space", function() {
-		equal(GedcomLine.prototype.asPointer("@abc@ "), "");
+		equal(GedcomLine.asPointer("@abc@ "), "");
 	});
 
 	test("asPointer(null)", function() {
-		equal(GedcomLine.prototype.asPointer(null), "");
+		equal(GedcomLine.asPointer(null), "");
 	});
 
 	test("asPointer()", function() {
-		equal(GedcomLine.prototype.asPointer(), "");
+		equal(GedcomLine.asPointer(), "");
 	});
 
 	test("replace nominal", function() {
-		equal(GedcomLine.prototype.replaceAts("abc@@def"), "abc@def");
+		equal(GedcomLine.replaceAts("abc@@def"), "abc@def");
 	});
 
 	test("replace nominal global", function() {
-		equal(GedcomLine.prototype.replaceAts("abc@@def@@ghi"), "abc@def@ghi");
+		equal(GedcomLine.replaceAts("abc@@def@@ghi"), "abc@def@ghi");
 	});
 
 	test("replace no-op", function() {
-		equal(GedcomLine.prototype.replaceAts("abcdef"), "abcdef");
+		equal(GedcomLine.replaceAts("abcdef"), "abcdef");
 	});
 
 	test("replace single at", function() {
-		equal(GedcomLine.prototype.replaceAts("abc@def"), "abc@def");
+		equal(GedcomLine.replaceAts("abc@def"), "abc@def");
 	});
 
 	test("replace three ats", function() {
-		equal(GedcomLine.prototype.replaceAts("abc@@@def"), "abc@@def");
+		equal(GedcomLine.replaceAts("abc@@@def"), "abc@@def");
 	});
 
 	test("replace empty string", function() {
-		equal(GedcomLine.prototype.replaceAts(""), "");
+		equal(GedcomLine.replaceAts(""), "");
 	});
 
 	test("replace null", function() {
-		equal(GedcomLine.prototype.replaceAts(null), null);
+		equal(GedcomLine.replaceAts(null), null);
 	});
 
 	test("replace undefined", function() {
-		equal(GedcomLine.prototype.replaceAts(), undefined);
+		equal(GedcomLine.replaceAts(), undefined);
 	});
 
 	test("replace bad type 0", function() {
-		equal(GedcomLine.prototype.replaceAts(0), 0);
+		equal(GedcomLine.replaceAts(0), 0);
 	});
 
 	test("replace bad type 1", function() {
-		equal(GedcomLine.prototype.replaceAts(1), 1);
+		equal(GedcomLine.replaceAts(1), 1);
 	});
 
 	test("replace bad type obj", function() {
 		var obj = {};
-		equal(GedcomLine.prototype.replaceAts(obj), obj);
+		equal(GedcomLine.replaceAts(obj), obj);
 	});
 
 	test("replace bad type true", function() {
-		equal(GedcomLine.prototype.replaceAts(true), true);
+		equal(GedcomLine.replaceAts(true), true);
 	});
 
 	test("replace bad type false", function() {
-		equal(GedcomLine.prototype.replaceAts(false), false);
+		equal(GedcomLine.replaceAts(false), false);
 	});
 
 	test("nominal no value: 0 HEAD", function() {
@@ -193,7 +193,7 @@ $(function() {
 	});
 
 	test("parse nominal no value: 0 HEAD", function() {
-		var g = GedcomLine.prototype.parse("0 HEAD");
+		var g = GedcomLine.parse("0 HEAD");
 		equal(g.getLevel(), 0);
 		equal(g.getID(), "");
 		equal(g.getTag(), "HEAD");
@@ -204,7 +204,7 @@ $(function() {
 	});
 
 	test("parse nominal object: 1 SOUR GRO", function() {
-		var g = new GedcomLine.prototype.parse("1 SOUR GRO");
+		var g = new GedcomLine.parse("1 SOUR GRO");
 		equal(g.getLevel(), 1);
 		equal(g.getID(), "");
 		equal(g.getTag(), "SOUR");
@@ -215,7 +215,7 @@ $(function() {
 	});
 
 	test("parse nominal object with ID: 0 @I0@ INDI", function() {
-		var g = new GedcomLine.prototype.parse("0 @I0@ INDI");
+		var g = new GedcomLine.parse("0 @I0@ INDI");
 		equal(g.getLevel(), 0);
 		equal(g.getID(), "I0");
 		equal(g.getTag(), "INDI");
@@ -226,7 +226,7 @@ $(function() {
 	});
 
 	test("parse nominal object with ID and value with ats: 0 @T7@ NOTE This is the text @@ the note.", function() {
-		var g = new GedcomLine.prototype.parse("0 @T7@ NOTE This is the text @@ the note.");
+		var g = new GedcomLine.parse("0 @T7@ NOTE This is the text @@ the note.");
 		equal(g.getLevel(), 0);
 		equal(g.getID(), "T7");
 		equal(g.getTag(), "NOTE");
@@ -237,7 +237,7 @@ $(function() {
 	});
 
 	test("parse nominal object with pointer value: 2 SOUR @S0@", function() {
-		var g = new GedcomLine.prototype.parse("2 SOUR @S0@");
+		var g = new GedcomLine.parse("2 SOUR @S0@");
 		equal(g.getLevel(), 2);
 		equal(g.getID(), "");
 		equal(g.getTag(), "SOUR");
@@ -248,7 +248,7 @@ $(function() {
 	});
 
 	test("parse only skips one space: 1 SOUR  GRO", function() {
-		var g = new GedcomLine.prototype.parse("1 SOUR  GRO");
+		var g = new GedcomLine.parse("1 SOUR  GRO");
 		equal(g.getLevel(), 1);
 		equal(g.getID(), "");
 		equal(g.getTag(), "SOUR");

@@ -10,7 +10,7 @@ $(function() {
 		r = ["a","b","c"];
 
 		rr = [];
-		Util.prototype.forEach(r,function(v) {
+		Util.forEach(r,function(v) {
 			rr.push(v);
 		});
 
@@ -23,7 +23,7 @@ $(function() {
 		r = ["a",null,"c"];
 
 		rr = [];
-		Util.prototype.forEach(r,function(v) {
+		Util.forEach(r,function(v) {
 			rr.push(v);
 		});
 
@@ -37,7 +37,7 @@ $(function() {
 		delete r[1];
 
 		rr = [];
-		Util.prototype.forEach(r,function(v) {
+		Util.forEach(r,function(v) {
 			rr.push(v);
 		});
 
@@ -52,7 +52,7 @@ $(function() {
 		r[10000] = "b";
 
 		rr = [];
-		Util.prototype.forEach(r,function(v) {
+		Util.forEach(r,function(v) {
 			rr.push(v);
 		});
 
@@ -69,7 +69,7 @@ $(function() {
 		r = ["a","b","c"];
 		delete r[1];
 
-		rr = Util.prototype.consolodate(r);
+		rr = Util.consolodate(r);
 		deepEqual(rr,["a","c"]);
 	});
 
@@ -86,7 +86,7 @@ $(function() {
 		deepEqual(r,["a",undefined,"c"]);
 
 		r = ["a","b","c"];
-		r = Util.prototype.remove("b",r);
+		r = Util.remove("b",r);
 		deepEqual(r,["a","c"]);
 		notDeepEqual(r,["a",undefined,"c"]);
 	});
@@ -95,129 +95,129 @@ $(function() {
 
 
 	test("class name of classic OO object", function() {
-		equal(Util.prototype.getClassName(new ChrisMosherUtilInternalTestClass()),"ChrisMosherUtilInternalTestClass");
+		equal(Util.getTypeName(new ChrisMosherUtilInternalTestClass()),"ChrisMosherUtilInternalTestClass");
 	});
 
 	test("class name of Object", function() {
-		equal(Util.prototype.getClassName(new Object()),"Object");
+		equal(Util.getTypeName(new Object()),"Object");
 	});
 
 	test("class name of String", function() {
-		equal(Util.prototype.getClassName(new String("testing")),"String");
+		equal(Util.getTypeName(new String("testing")),"String");
 	});
 
 	test("class name of string", function() {
-		equal(Util.prototype.getClassName("testing"),"String");
+		equal(Util.getTypeName("testing"),"String");
 	});
 
 	test("class name of Array", function() {
-		equal(Util.prototype.getClassName(new Array(1,2,3)),"Array");
+		equal(Util.getTypeName(new Array(1,2,3)),"Array");
 	});
 
 	test("class name of array", function() {
-		equal(Util.prototype.getClassName([1,2,3]),"Array");
+		equal(Util.getTypeName([1,2,3]),"Array");
 	});
 
 	test("class name of number", function() {
-		equal(Util.prototype.getClassName(new Number(3.14)),"Number");
+		equal(Util.getTypeName(new Number(3.14)),"Number");
 	});
 
 	test("class name of number", function() {
-		equal(Util.prototype.getClassName(3.14),"Number");
+		equal(Util.getTypeName(3.14),"Number");
 	});
 
 	test("class name of number property", function() {
-		equal(Util.prototype.getClassName(window.length),"Number");
+		equal(Util.getTypeName(window.length),"Number");
 	});
 
 	test("class name of Boolean", function() {
-		equal(Util.prototype.getClassName(new Boolean(true)),"Boolean");
+		equal(Util.getTypeName(new Boolean(true)),"Boolean");
 	});
 
 	test("class name of boolean", function() {
-		equal(Util.prototype.getClassName(true),"Boolean");
+		equal(Util.getTypeName(true),"Boolean");
 	});
 
 	test("class name of null", function() {
-		equal(Util.prototype.getClassName(null),"null");
+		equal(Util.getTypeName(null),"null");
 	});
 
 	test("class name of undefined", function() {
-		equal(Util.prototype.getClassName(undefined),"undefined");
+		equal(Util.getTypeName(undefined),"undefined");
 	});
 
 	test("class name of omitted argument", function() {
-		equal(Util.prototype.getClassName(),"undefined");
+		equal(Util.getTypeName(),"undefined");
 	});
 
 	test("class name of castrated object", function() {
 		var x;
 		x = new ChrisMosherUtilInternalTestClass();
 		x.constructor = null;
-		equal(Util.prototype.getClassName(x),"Object");
+		equal(Util.getTypeName(x),"Object");
 	});
 
 	test("class name of corrupted object", function() {
 		var x;
 		x = new ChrisMosherUtilInternalTestClass();
 		x.constructor = {foo:"bar"};
-		equal(Util.prototype.getClassName(x),"Object");
+		equal(Util.getTypeName(x),"Object");
 	});
 
 	test("class name of corrupted object 2", function() {
 		var x;
 		x = new ChrisMosherUtilInternalTestClass();
 		x.constructor = [1,2,3];
-		equal(Util.prototype.getClassName(x),"Object");
+		equal(Util.getTypeName(x),"Object");
 	});
 
 	test("class name of Date", function() {
-		equal(Util.prototype.getClassName(new Date()),"Date");
+		equal(Util.getTypeName(new Date()),"Date");
 	});
 
 	test("class name of RegExp literal", function() {
-		equal(Util.prototype.getClassName(new RegExp(/.*/g)),"RegExp");
+		equal(Util.getTypeName(new RegExp(/.*/g)),"RegExp");
 	});
 
 	test("class name of regexp literal", function() {
-		equal(Util.prototype.getClassName(/.*/g),"RegExp");
+		equal(Util.getTypeName(/.*/g),"RegExp");
 	});
 
 	test("class name of function object", function() {
-		equal(Util.prototype.getClassName(function(){}),"Function");
+		equal(Util.getTypeName(function(){}),"Function");
 	});
 
 	test("class name of castrated function object", function() {
 		var x = function(){};
 		x.constructor = null;
-		equal(Util.prototype.getClassName(x),"Function");
+		equal(Util.getTypeName(x),"Function");
 	});
 
 	test("class name of castrated regexp", function() {
 		var x = /.*/g;
 		x.constructor = null;
-		equal(Util.prototype.getClassName(x),"RegExp");
+		equal(Util.getTypeName(x),"RegExp");
 	});
 
 	test("class name of Object type", function() {
-		equal(Util.prototype.getClassName(Object),"Function");
+		equal(Util.getTypeName(Object),"Function");
 	});
 
 	test("class name of Math type", function() {
-		equal(Util.prototype.getClassName(Math),"Math");
+		equal(Util.getTypeName(Math),"Math");
 	});
 
 	test("class name of Date type", function() {
-		equal(Util.prototype.getClassName(Date),"Function");
+		equal(Util.getTypeName(Date),"Function");
 	});
 
 	test("class name of window", function() {
-		equal(Util.prototype.getClassName(window),"Window");
+		equal(Util.getTypeName(window),"Window");
 	});
 
 	test("class name of malicious corruption", function() {
 		var x = new ChrisMosherUtilInternalTestClass();
 		x.constructor = {name:"Foo"};
-		equal(Util.prototype.getClassName(x),"Foo"); // can't fix this?
+		equal(Util.getTypeName(x),"Foo"); // can't fix this?
 	});
 });

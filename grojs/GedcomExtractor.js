@@ -1,48 +1,65 @@
 function GedcomExtractor(gedcomtree) {
-	Util.prototype.verifyType(this,"GedcomExtractor");
+	Util.verifyType(this,"GedcomExtractor");
 	this.t = gedcomtree;
-	Util.prototype.verifyType(this.t,"GedcomTree");
+	Util.verifyType(this.t,"GedcomTree");
 	this.mperson = {};
 	this.mpartnership = {};
+
+	this.extract();
 }
+
+/* private mutator (init) methods */
 
 GedcomExtractor.prototype.extract = function() {
-	var root;
+	var root, extr;
 	root = this.t.getRoot();
-	Util.prototype.forEach(root.getChildren(), function (node) {
+	extr = this;
+	Util.forEach(root.getChildren(), function(node) {
 		if (node.line.getTag() === "INDI") {
-			this.mperson[node.line.getID()] = this.extractPerson(node);
+			extr.mperson[node.line.getID()] = extr.extractPerson(node);
 		}
 	});
-	Util.prototype.forEach(root.getChildren(), function (node) {
+	Util.forEach(root.getChildren(), function(node) {
 		if (node.line.getTag() === "FAM") {
-			this.mpartnership[node.line.getID()] = this.extractParnership(node);
+			extr.mpartnership[node.line.getID()] = extr.extractParnership(node);
 		}
 	});
-}
+};
 
 GedcomExtractor.prototype.extractPerson = function(indi) {
-	var p, nam, xy, m;
+	var nam, xy, m;
 
 	nam = "[unknown]";
 	xy = new Point(0,0);
-	Util.prototype.forEach(indi.getChildren(), function (node) {
+	Util.forEach(indi.getChildren(), function(node) {
 		if (node.line.getTag() === "NAME") {
 			nam = node.line.getVal().replace(/\//g,"");
-		}
-		if (node.line.getTag() === "_XY") {
+		} else if (node.line.getTag() === "_XY") {
 			m = /(\d+)\s+(\d+)/.exec(node.line.getVal());
-			xy = new Point(m[1],m[2]);
+			if (m !== null) {
+				xy = new Point(m[1],m[2]);
+			}
 		}
-	}
+	});
 
-	p = new Person(indi.line.getID(),nam,xy);
-	return p;
-}
+	return new Person(indi.line.getID(),nam,xy);
+};
 
 
-GedcomExtractor.prototype.extractParnership = function(node) {
-	var p;
-	p = new Parnership();
-	return p;
-}
+GedcomExtractor.prototype.extractParnership = function(fam) {
+	var husb, wife, rchil, extr;
+	extr = this;
+	husb = null;
+	wife = null;
+	rchil = [];
+	Util.forEach(fam.getChildren(), function(node) {
+		if (node.line.getTag() === "HUSB") {
+			husb = extr.mperson[node.line.getPointer()];
+		} else if (node.line.getTag() === "WIFE") {
+			wife = extr.mperson[node.line.getPointer()];
+		} else if (node.line.getTag() === "CHIL") {
+			rchil.push(extr.mperson[node.line.getPointer()]);
+		}
+	});
+	return new Partnership(fam.line.getID(),husb,wife,rchil);
+};

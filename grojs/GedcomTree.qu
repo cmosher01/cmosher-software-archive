@@ -30,7 +30,7 @@ $(function() {
 				"1 AUTH LDS\n"+
 				"1 TITL Ancestral File\n"+
 				"1 PUBL http://www.familysearch.org";
-			this.t = GedcomTree.prototype.parse(gc);
+			this.t = GedcomTree.parse(gc);
 		}
 	});
 
@@ -87,7 +87,7 @@ $(function() {
 			stop(); // wait for ged file to load (or fail)
 			$.get("lib/testged/TGC55C.ged")
 				.success(function(gc) {
-					qu.gtree = GedcomTree.prototype.parse(gc);
+					qu.gtree = GedcomTree.parse(gc);
 					start();
 				})
 				.error(function(s,m,e) {

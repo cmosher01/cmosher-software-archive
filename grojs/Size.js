@@ -1,5 +1,5 @@
 function Size(w,h) {
-	Util.prototype.verifyType(this,"Size");
+	Util.verifyType(this,"Size");
 	this.w = parseInt(w);
 	this.h = parseInt(h);
 }

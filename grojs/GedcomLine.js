@@ -3,21 +3,20 @@
 /* constructor */
 
 function GedcomLine(level, gid, tag, val) {
-	if (!(this instanceof GedcomLine)) {
-		throw new Error("error creating object (missing new operator?)");
-	}
+	Util.verifyType(this,"GedcomLine");
+
 	if (!arguments.length) {
 		return this;
 	}
 
 	this.level = parseInt(level);
-	this.gid = this.asPointer(gid);
-	this.tag = Util.prototype.safeStr(tag).toUpperCase();
-	this.pointer = this.asPointer(val);
+	this.gid = GedcomLine.asPointer(gid);
+	this.tag = Util.safeStr(tag).toUpperCase();
+	this.pointer = GedcomLine.asPointer(val);
 	if (this.pointer) {
-		this.val = Util.prototype.safeStr();
+		this.val = Util.safeStr();
 	} else {
-		this.val = this.replaceAts(Util.prototype.safeStr(val));
+		this.val = GedcomLine.replaceAts(Util.safeStr(val));
 	}
 }
 
@@ -62,18 +61,14 @@ GedcomLine.prototype.concat = function(c) {
 	}
 }
 
-/* factory methods */
+/* static factory methods */
 
-GedcomLine.prototype.parse = function(s) {
-	if (!(this instanceof GedcomLine)) {
-		return new GedcomLine().parse(s);
-	}
+GedcomLine.parse = function(s) {
 	var r = /^(\d+)\s+(?:(@[^@]+@)\s+)?(\S+)(?:\s(.*))?$/.exec(s);
 	if (r === null) {
 		throw new Error("Gedcom line has invalid syntax: "+s);
 	}
-	this.constructor(r[1],r[2],r[3],r[4]);
-	return this;
+	return new GedcomLine(r[1],r[2],r[3],r[4]);
 }
 
 
@@ -81,7 +76,7 @@ GedcomLine.prototype.parse = function(s) {
 
 /* static methods */
 
-GedcomLine.prototype.asPointer = function(s) {
+GedcomLine.asPointer = function(s) {
 	var r;
 	r = /^@([^@]+)@$/.exec(s);
 	if (r === null) {
@@ -90,7 +85,7 @@ GedcomLine.prototype.asPointer = function(s) {
 	return r[1];
 }
 
-GedcomLine.prototype.replaceAts = function(s) {
+GedcomLine.replaceAts = function(s) {
 	if (!s || !s.replace) {
 		return s;
 	}
