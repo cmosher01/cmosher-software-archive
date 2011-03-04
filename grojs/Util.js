@@ -3,15 +3,13 @@ function Util() {
 }
 
 Util.forEach = function(r,fn) {
-	var i, x, v;
-	x = 0;
+	var i;
 	for (i = 0; i < r.length; i++) {
-		v = r[i];
-		if (v !== undefined) {
-			fn(v,x++);
+		if (r[i] !== undefined) {
+			fn(r[i],i);
 		}
 	}
-}
+};
 
 Util.consolodate = function(r) {
 	var rr = [];
@@ -19,7 +17,7 @@ Util.consolodate = function(r) {
 		rr.push(v);
 	});
 	return rr;
-}
+};
 
 Util.getLines = function(s) {
 	// unify line terminators
@@ -28,14 +26,14 @@ Util.getLines = function(s) {
 
 	// split string into lines
 	return s.match(/^.*$/mg);
-}
+};
 
 Util.safeStr = function(s) {
 	if (s === undefined || s === null) {
 		return new String("");
 	}
 	return new String(s);
-}
+};
 
 Util.getTypeName = function(x) {
 	var n, m;
@@ -80,13 +78,13 @@ Util.getTypeName = function(x) {
 	}
 
 	return n;
-}
+};
 
 Util.verifyType = function(obj,clsName) {
 	if (Util.getTypeName(obj) !== clsName) {
 		throw new TypeError(Util.getTypeName(obj)+" must be of class "+clsName);
 	}
-}
+};
 
 Util.remove = function(e,r) {
 	var rr = [];
@@ -96,4 +94,4 @@ Util.remove = function(e,r) {
 		}
 	});
 	return rr;
-}
+};

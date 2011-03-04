@@ -10,12 +10,12 @@ function Person(gid,gname,pos) {
 
 Person.prototype.toString = function() {
 	return this.name;
-}
+};
 
 Person.prototype.addSpouseIn = function(f) {
 	this.spouseIn.push(f);
-}
+};
 
 Person.prototype.setChildIn = function(f) {
 	this.childIn = f;
-}
+};

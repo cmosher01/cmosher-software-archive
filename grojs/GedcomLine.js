@@ -24,33 +24,33 @@ function GedcomLine(level, gid, tag, val) {
 
 GedcomLine.prototype.getLevel = function() {
 	return this.level;
-}
+};
 
 GedcomLine.prototype.getID = function() {
 	return this.gid;
-}
+};
 
 GedcomLine.prototype.getTag = function() {
 	return this.tag;
-}
+};
 
 GedcomLine.prototype.getVal = function() {
 	return this.val;
-}
+};
 
 GedcomLine.prototype.getPointer = function() {
 	return this.pointer;
-}
+};
 
 /* complex accessor methods */
 
 GedcomLine.prototype.hasID = function() {
 	return !!this.getID();
-}
+};
 
 GedcomLine.prototype.isPointer = function() {
 	return !!this.getPointer();
-}
+};
 
 /* mutator methods */
 
@@ -59,7 +59,7 @@ GedcomLine.prototype.concat = function(c) {
 		case "CONC": this.val += c.getVal(); break;
 		case "CONT": this.val += "\n"+c.getVal(); break;
 	}
-}
+};
 
 /* static factory methods */
 
@@ -69,7 +69,7 @@ GedcomLine.parse = function(s) {
 		throw new Error("Gedcom line has invalid syntax: "+s);
 	}
 	return new GedcomLine(r[1],r[2],r[3],r[4]);
-}
+};
 
 
 /* PRIVATE */
@@ -83,11 +83,11 @@ GedcomLine.asPointer = function(s) {
 		return "";
 	}
 	return r[1];
-}
+};
 
 GedcomLine.replaceAts = function(s) {
 	if (!s || !s.replace) {
 		return s;
 	}
 	return s.replace(/@@/g,"@");
-}
+};

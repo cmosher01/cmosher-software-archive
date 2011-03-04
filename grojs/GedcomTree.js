@@ -12,14 +12,14 @@ function GedcomTree() {
  */
 GedcomTree.prototype.getRoot = function() {
 	return this.root;
-}
+};
 
 /**
  * Looks up the node with the given ID.
  */
 GedcomTree.prototype.getNode = function(gid) {
 	return this.mapIDtoNode[gid];
-}
+};
 
 /**
  * Adds the given line to this tree. Note that this method must
@@ -49,11 +49,11 @@ GedcomTree.prototype.appendLine = function(line) {
 	if (line.hasID()) {
 		this.mapIDtoNode[line.getID()] = this.prevNode;
 	}
-}
+};
 
 GedcomTree.prototype.concatenate = function() {
 	this.concatenatePrivateHelper(this.getRoot());
-}
+};
 
 GedcomTree.prototype.concatenatePrivateHelper = function(p) {
 	var rdel, tre;
@@ -72,7 +72,7 @@ GedcomTree.prototype.concatenatePrivateHelper = function(p) {
 	Util.forEach(rdel, function(c) {
 		c.removeFromParent();
 	});
-}
+};
 
 /**
  * Parses the given gedcom string and adds the records
@@ -91,7 +91,7 @@ GedcomTree.prototype.parseAppend = function(gc) {
 			tre.appendLine(GedcomLine.parse(s));
 		}
 	});
-}
+};
 
 /**
  * Static factory method. Creates a GedcomTree by parsing the
@@ -103,4 +103,4 @@ GedcomTree.parse = function(gc) {
 	g.parseAppend(gc);
 	g.concatenate();
 	return g;
-}
+};
