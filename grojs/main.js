@@ -1,5 +1,5 @@
 function main() {
-	var titleText, title, head, bodyText, ol, body, scriptname, li;
+	var gedcom, titleText, title, head, bodyText, ol, body, scriptname, li;
 
 
 
@@ -13,15 +13,26 @@ function main() {
 
 
 
-	ol = document.createElement("ol");
+	var fileref = document.createElement("link");
+	fileref.setAttribute("rel","stylesheet");
+	fileref.setAttribute("type","text/css");
+	fileref.setAttribute("href","index.css");
+	head.appendChild(fileref);
 
-	body = document.getElementsByTagName("body")[0];
-	body.appendChild(ol);
 
-	Util.forEach(document.getElementsByTagName("script"), function(s) {
-		scriptname = document.createTextNode(s.src);
-		li = document.createElement("li");
-		li.appendChild(scriptname);
-		ol.appendChild(li);
+
+
+
+	$.ajaxSetup({
+		dataType: "text"
 	});
+
+	$.get("rapp.ged")
+		.success(function(gc) {
+			gtree = GedcomTree.parse(gc);
+			gedcom = new GedcomExtractor(gtree);
+		})
+		.error(function(s,m,e) {
+			alert("Error reading file "+this.url+": "+e);
+		});
 }

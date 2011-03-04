@@ -1,0 +1,17 @@
+.person {
+
+	color: Navy;
+	font-size: 7pt;
+	font-family: "Microsoft Sans Serif",sans-serif;
+	background-color: #EEEEEE;
+	opacity: .8;
+	-moz-opacity: .8;
+	filter: alpha(opacity=80);
+
+	border: 1px solid PaleTurquoise;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	padding: 3px 8px 4px 8px;
+
+	cursor: move;
+}
