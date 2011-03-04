@@ -48,7 +48,14 @@ Util.getTypeName = function(x) {
 	}
 
 	n = Object.prototype.toString.apply(x);
-	n = /\[object\s*(\w+)\s*\]/.exec(n)[1];
+	m = /\[object\s*(\w+)\s*\]/.exec(n);
+	if (m !== null) {
+		n = m[1];
+	}
+
+	if (n === "global") {
+		return "Window";
+	}
 
 	if (n !== "Object") {
 		return n;

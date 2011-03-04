@@ -91,6 +91,7 @@ $(function() {
 					start();
 				})
 				.error(function(s,m,e) {
+					qu.gtree = null;
 					ok(false,"Error reading file "+this.url+": "+e);
 					start();
 				});
@@ -98,6 +99,9 @@ $(function() {
 	});
 
 	test("nominal read", function() {
+		if (this.gtree === null) {
+			return;
+		}
 		var subm = this.gtree.getNode("SUBMISSION");
 		equal(subm.line.getID(),"SUBMISSION");
 		equal(subm.getChildren()[1].line.getTag(),"FAMF");
