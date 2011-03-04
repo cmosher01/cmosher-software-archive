@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head id="head">
+		<meta charset="utf-8">
+		<title>My Program</title>
+		<script>
+			requires.main = "main.js";
+
+			function requires(script_src) {
+
+				if (requires.requires_scripts_loaded === undefined) {
+					requires.requires_scripts_loaded = {};
+				}
+				function pause() {
+					var startTime = new Date().getTime(); // get the current time
+					while (new Date().getTime() < startTime + 5000); // hog cpu
+				}
+
+				function parse_script(script_src) {
+						var script = document.createElement("script");
+						script.type = "text/javascript";
+						script.src = script_src;
+						script.defer = false;
+						script.async = true;
+						pause();
+						document.body.appendChild(script);
+				}
+
+				if (!requires.requires_scripts_loaded[script_src]) {
+					requires.requires_scripts_loaded[script_src] = true;
+					parse_script(script_src);
+				}
+			}
+
+		</script>
+	</head>
+	<body onload="requires(requires.main)"></body>
+</html>

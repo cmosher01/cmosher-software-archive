@@ -14,9 +14,10 @@ function main() {
 
 
 	var fileref = document.createElement("link");
-	fileref.setAttribute("rel","stylesheet");
-	fileref.setAttribute("type","text/css");
-	fileref.setAttribute("href","index.css");
+	fileref.rel = "stylesheet";
+	fileref.type = "text/css";
+	fileref.href = "index.css";
+	fileref.media = "screen";
 	head.appendChild(fileref);
 
 

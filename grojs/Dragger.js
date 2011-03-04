@@ -11,7 +11,7 @@ function Dragger(dragee,onmovedHandler) {
 
 	dragee.dragger = this;
 
-	dragee.onmousedown = function(event) {
+	dragee.onmousedown = function(evt) {
 		var dragee = this;
 
 		// Figure out where the element currently is
@@ -22,8 +22,8 @@ function Dragger(dragee,onmovedHandler) {
 
 		// Compute the distance between that point and the mouse-click
 		// The nested moveHandler function below needs these values
-		var deltaX = event.clientX - x;
-		var deltaY = event.clientY - y;
+		var deltaX = evt.clientX - x;
+		var deltaY = evt.clientY - y;
 		
 		// Register the event handlers that will respond to the mousemove
 		// and mouseup events that follow this mousedown event. Note that

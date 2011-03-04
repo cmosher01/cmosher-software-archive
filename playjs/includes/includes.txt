@@ -1,0 +1,46 @@
+index.html
+----------
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>main</title>
+		<script src="main.js"></script>
+	</head>
+	<body onload="main()"></body>
+</html>
+
+
+
+
+
+
+
+main.js
+-------
+requires("foo2.js");
+requires("foo1.js");
+
+function main() {
+	var f1, f2;
+	f1 = new Foo1();
+	f2 = new Foo2();
+}
+
+
+
+
+foo1.js
+-------
+function Foo1() {
+}
+
+
+
+foo2.js
+-------
+requires(foo1.js");
+
+function Foo2() {
+	var f1 = new Foo1();
+}
