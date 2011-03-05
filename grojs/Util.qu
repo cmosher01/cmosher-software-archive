@@ -60,6 +60,20 @@ $(function() {
 	});
 
 
+	test("forEach object property", function() {
+		var obj;
+		obj = {
+			a: "a",
+			b: "b",
+		};
+		rr = [];
+		Util.forEach(obj,function(v) {
+			rr.push(v);
+		});
+
+		ok((rr[0]=="a"&&rr[1]=="b") || (rr[0]=="b"&&rr[1]=="a"));
+	});
+
 
 
 

@@ -8,6 +8,12 @@ function GedcomExtractor(gedcomtree) {
 	this.extract();
 }
 
+GedcomExtractor.prototype.calc = function() {
+	Util.forEach(this.mpartnership, function(p) {
+		p.calc();
+	});
+};
+
 /* private mutator (init) methods */
 
 GedcomExtractor.prototype.extract = function() {

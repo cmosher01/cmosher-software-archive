@@ -3,10 +3,21 @@ function Util() {
 }
 
 Util.forEach = function(r,fn) {
-	var i;
-	for (i = 0; i < r.length; i++) {
-		if (r[i] !== undefined) {
-			fn(r[i],i);
+	var i, e;
+	if (Util.getTypeName(r) == "Array") {
+		for (i = 0; i < r.length; i++) {
+			if (r[i] !== undefined) {
+				fn(r[i],i);
+			}
+		}
+	} else {
+		i = 0;
+		for (e in r) {
+			if (r.hasOwnProperty(e)) {
+				if (r[e] !== undefined) {
+					fn(r[e],i++);
+				}
+			}
 		}
 	}
 };
@@ -94,4 +105,9 @@ Util.remove = function(e,r) {
 		}
 	});
 	return rr;
+};
+
+
+Util.px = function(num) {
+	return Math.round(num).toString(10)+"px";
 };

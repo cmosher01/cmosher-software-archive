@@ -28,6 +28,7 @@ function main() {
 		dataType: "text"
 	});
 
+	//$.get("lib/testged/TGC55C.ged")
 	$.get("rapp.ged")
 		.success(function(gc) {
 			gtree = GedcomTree.parse(gc);
@@ -36,4 +37,10 @@ function main() {
 		.error(function(s,m,e) {
 			alert("Error reading file "+this.url+": "+e);
 		});
+
+
+
+	window.onresize = function() {
+		gedcom.calc();
+	};
 }

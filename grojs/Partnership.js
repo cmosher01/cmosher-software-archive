@@ -20,7 +20,7 @@ function Partnership(gid,husb,wife,rchil) {
 	}
 
 	Util.forEach(this.rchil, function(c) {
-		c.setChildIn(outer_this);
+		c.addChildIn(outer_this);
 	});
 
 
@@ -52,23 +52,28 @@ Partnership.createDiv = function() {
 	return div;
 };
 
+Partnership.getColor = function() {
+	return "#5E665F";
+};
+
 Partnership.getChildLine = function() {
-	return "solid orange 1px";
+	return "solid "+Partnership.getColor()+" 1px";
 };
 
 Partnership.getSpouseLine = function() {
-	return "double orange 4px";
+	return "double "+Partnership.getColor()+" 4px";
 };
 
 Partnership.prototype.calc = function() {
+	var that = this;
 	var mx;
 	var my;
 	var left;
 	var right;
-	var rt;
-	var lt;
-	var lr;
-	var rl;
+	var rmy;
+	var lmy;
+	var lmx;
+	var rmx;
 	var leftUnder;
 	var ic;
 	var child;
@@ -76,95 +81,128 @@ Partnership.prototype.calc = function() {
 	var cy;
 	var cx;
 
-	if (this.husb.left() < this.wife.left()) {
-		left = this.husb;
-		right = this.wife;
-	} else {
-		left = this.wife;
-		right = this.husb;
+
+	if (this.husb && this.wife) {
+		if (this.husb.midx() < this.wife.midx()) {
+			left = this.husb;
+			right = this.wife;
+		} else {
+			left = this.wife;
+			right = this.husb;
+		}
+
+		lmx = left.midx();
+		rmx = right.midx();
+
+		lmy = left.midy();
+		rmy = right.midy();
+	}
+	if (this.wife && !this.husb) {
+		lmx = this.wife.midx();
+		rmx = lmx + 100;;
+
+		lmy = this.wife.midy();
+		rmy = lmy;
+	}
+	if (this.husb && !this.wife) {
+		lmx = this.husb.midx();
+		rmx = lmx + 100;;
+
+		lmy = this.husb.midy();
+		rmy = lmy;
+	}
+	if (!this.wife && !this.husb) {
+		lmx = rmx = lmy = rmy = 0; // TODO
 	}
 
-	rt = right.top()+right.height()/2-2;
-	lt = left.top()+left.height()/2-2;
-	lr = left.right();
-	rl = right.left();
+	// mid x pos between parents
+	mx = (lmx+rmx)/2;
 
-	mx = (lr+rl-1)/2;
 
+	// find topmost child
 	my = Number.MAX_VALUE;
 	Util.forEach(this.rchil, function(chil) {
-	});
-	for (ic = 0; ic < this.rchil.length; ic++) {
-		child = this.rchil[ic];
-		cy = child.top();
+		cy = chil.top();
 		if (cy < my) {
 			my = cy;
 		}
-	}
-	my -= 10;
+	});
+	my -= 10; // distance of child bar above children
 
-	leftUnder = (rt < lt);
+	// is left parent below right parent?
+	leftUnder = (rmy < lmy);
 
-	this.divLeft.style.left = lr+"px";
-	this.divLeft.style.width = (mx-lr)+"px";
-	this.divLeft.style.borderRight = Partnership.getChildLine();
+
+
+// DIVs
+
+	this.divLeft.style.left = Util.px(lmx);
+	this.divLeft.style.width = Util.px(mx-lmx);
+	this.divLeft.style.borderLeft = "none";
+	this.divLeft.style.borderRight = "none"; // why none?
 	if (leftUnder) {
-		this.divLeft.style.top = rt+"px";
-		this.divLeft.style.height = (lt-rt)+"px";
+		this.divLeft.style.top = Util.px(rmy);
+		this.divLeft.style.height = Util.px(lmy-rmy);
 		this.divLeft.style.borderBottom = Partnership.getSpouseLine();
 		this.divLeft.style.borderTop = "none";
 	} else {
-		this.divLeft.style.top = lt+"px";
-		this.divLeft.style.height = (rt-lt)+"px";
+		this.divLeft.style.top = Util.px(lmy);
+		this.divLeft.style.height = Util.px(rmy-lmy);
 		this.divLeft.style.borderTop = Partnership.getSpouseLine();
 		this.divLeft.style.borderBottom = "none";
 	}
 
-	this.divRight.style.left = mx+"px";
-	this.divRight.style.width = (rl-mx)+"px";
+
+
+	this.divRight.style.left = Util.px(mx);
+	this.divRight.style.width = Util.px(rmx-mx);
+	this.divRight.style.borderLeft = Partnership.getChildLine();
+	this.divRight.style.borderRight = "none";
 	if (leftUnder) {
-		this.divRight.style.top = rt+"px";
-		this.divRight.style.height = (lt-rt)+"px";
+		this.divRight.style.top = Util.px(rmy);
+		this.divRight.style.height = Util.px(lmy-rmy);
 		this.divRight.style.borderTop = Partnership.getSpouseLine();
 		this.divRight.style.borderBottom = "none";
 	} else {
-		this.divRight.style.top = lt+"px";
-		this.divRight.style.height = (rt-lt)+"px";
+		this.divRight.style.top = Util.px(lmy);
+		this.divRight.style.height = Util.px(rmy-lmy);
 		this.divRight.style.borderBottom = Partnership.getSpouseLine();
 		this.divRight.style.borderTop = "none";
 	}
+
+
 
 	for (ic = 0; ic < this.rchil.length; ic++) {
 		child = this.rchil[ic];
 		div = this.divChild[ic];
 
-		div.style.top = my+"px";
-		div.style.height = child.top()-my+"px";
+		div.style.top = Util.px(my);
+		div.style.height = Util.px(child.top()-my);
 		div.style.borderTop = Partnership.getChildLine();
 		div.style.borderBottom = "none";
 		cx = (child.left()+child.right()-1)/2;
 		if (cx < mx) {
-			div.style.left = cx+"px";
-			div.style.width = mx-cx+"px";
+			div.style.left = Util.px(cx);
+			div.style.width = Util.px(mx-cx);
 			div.style.borderLeft = Partnership.getChildLine();
 			div.style.borderRight = "none";
 		} else {
-			div.style.left = mx+"px";
-			div.style.width = cx-mx+"px";
+			div.style.left = Util.px(mx);
+			div.style.width = Util.px(cx-mx);
 			div.style.borderRight = Partnership.getChildLine();
 			div.style.borderLeft = "none";
 		}
 	}
 	if (this.divChildConn) {
-		this.divChildConn.style.left = mx+"px";
-		this.divChildConn.style.width = 3+"px";
+		this.divChildConn.style.left = Util.px(mx);
+		this.divChildConn.style.width = Util.px(3);
 		this.divChildConn.style.borderLeft = Partnership.getChildLine();
-		if (rt < my) {
-			this.divChildConn.style.top = rt+"px";
-			this.divChildConn.style.height = my-rt+"px";
+		if (rmy < my) {
+			this.divChildConn.style.top = Util.px(rmy);
+			this.divChildConn.style.height = Util.px(my-rmy);
 		} else {
-			this.divChildConn.style.top = my+"px";
-			this.divChildConn.style.height = rt-my+"px";
+			this.divChildConn.style.top = Util.px(my);
+			this.divChildConn.style.height = Util.px(rmy-my);
 		}
 	}
 };

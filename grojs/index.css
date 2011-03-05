@@ -1,17 +1,31 @@
+body {
+	background: #899C75;
+}
+
 .person {
 
-	color: Navy;
-	font-size: 7pt;
+	color: #575150;
+	font-size: 8pt;
 	font-family: "Microsoft Sans Serif",sans-serif;
-	background-color: #EEEEEE;
-	opacity: .8;
-	-moz-opacity: .8;
-	filter: alpha(opacity=80);
+	opacity: 0;
+	-moz-opacity: 0;
+	filter: alpha(opacity=0);
 
-	border: 1px solid PaleTurquoise;
+	border: 1px solid #E0DF9B;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	padding: 3px 8px 4px 8px;
 
 	cursor: move;
+
+
+
+	/* For WebKit (Safari, Google Chrome etc) */
+	background: -webkit-gradient(linear, left top, left bottom, from(#E0DF9B), to(#FFFFFF));
+	/* For Mozilla/Gecko (Firefox etc) */
+	background: -moz-linear-gradient(top, #FFFFFF, #E0DF9B);
+	/* For Internet Explorer 5.5 - 7 */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=#FFE0DF9B, endColorStr=#FFFFFFFF);
+	/* For Internet Explorer 8 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr=#FFE0DF9B)";
 }
