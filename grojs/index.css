@@ -1,31 +1,50 @@
 body {
 	background: #899C75;
+	color: #5E665F;
 }
 
 .person {
+	/* font */
+	font-size: 9pt;
+	font-family: "Gentium", "Microsoft Sans Serif", "sans-serif";
+	color: #362C28;
 
-	color: #575150;
-	font-size: 8pt;
-	font-family: "Microsoft Sans Serif",sans-serif;
+
+
+	/* opacity */
 	opacity: 0;
 	-moz-opacity: 0;
 	filter: alpha(opacity=0);
 
-	border: 1px solid #E0DF9B;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	padding: 3px 8px 4px 8px;
 
-	cursor: move;
+
+	/* padding */
+	padding: 3px 8px;
 
 
 
-	/* For WebKit (Safari, Google Chrome etc) */
+	/* background */
+	background-color: #E0DF9B;
+	/* For WebKit (Safari, Google Chrome, etc) */
 	background: -webkit-gradient(linear, left top, left bottom, from(#E0DF9B), to(#FFFFFF));
-	/* For Mozilla/Gecko (Firefox etc) */
+	/* For Mozilla/Gecko (Firefox, etc) */
 	background: -moz-linear-gradient(top, #FFFFFF, #E0DF9B);
 	/* For Internet Explorer 5.5 - 7 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=#FFE0DF9B, endColorStr=#FFFFFFFF);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=#FFFFFFFF, endColorStr=#FFE0DF9B);
 	/* For Internet Explorer 8 */
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr=#FFE0DF9B)";
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr=#FFFFFFFF, endColorStr=#FFE0DF9B)";
+
+
+
+	/* border */
+	border-color: inherit !important;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+
+
+
+	/* cursor */
+	cursor: move;
 }

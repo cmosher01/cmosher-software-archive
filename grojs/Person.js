@@ -57,46 +57,20 @@ Person.createDiv = function(s,pos) {
 	return div;
 };
 
-
-
-Person.prototype.left = function() {
-	return this.div.offsetLeft;
+Person.prototype.getRect = function() {
+	return Rect.ofDiv(this.div);
 };
-
-Person.prototype.top = function() {
-	return this.div.offsetTop;
-};
-
-Person.prototype.width = function() {
-	return this.div.offsetWidth;
-};
-
-Person.prototype.height = function() {
-	return this.div.offsetHeight;
-};
-
-Person.prototype.right = function() {
-	return this.left()+this.width();
-};
-
-Person.prototype.bottom = function() {
-	return this.top()+this.height();
-};
-
-Person.prototype.midx = function() {
-	return (this.left()+this.right())/2;
-};
-
-Person.prototype.midy = function() {
-	return (this.top()+this.bottom())/2;
-};
-
 
 Person.prototype.onmoved = function() {
+	this.div.style.zIndex = 2;
 	Util.forEach(this.spouseIn, function(f) {
 		f.calc();
 	});
 	Util.forEach(this.childIn, function(f) {
 		f.calc();
 	});
-}
+};
+
+Person.prototype.onmovedfinish = function() {
+	this.div.style.zIndex = 1;
+};

@@ -113,6 +113,8 @@ function Dragger(dragee,onmovedHandler) {
 				document.onmousemove = oldmovehandler;
 			}
 	
+			dragee.dragger.onmoved.onmovedfinish();
+
 			// And don't let the event propagate any further.
 			if (e.stopPropagation) {
 				e.stopPropagation(); // DOM Level 2

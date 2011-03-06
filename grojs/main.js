@@ -3,7 +3,7 @@ function main() {
 
 
 
-	titleText = document.createTextNode("main");
+	titleText = document.createTextNode("Rapp");
 
 	title = document.createElement("title");
 	title.appendChild(titleText);
@@ -30,6 +30,7 @@ function main() {
 
 	//$.get("lib/testged/TGC55C.ged")
 	$.get("rapp.ged")
+	//$.get("RichardsReeves.ged")
 		.success(function(gc) {
 			gtree = GedcomTree.parse(gc);
 			gedcom = new GedcomExtractor(gtree);
