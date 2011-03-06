@@ -153,9 +153,8 @@ Partnership.prototype.calc = function() {
 	for (ic = 0; ic < this.rchil.length; ic++) {
 		child = this.rchil[ic];
 		crect = child.getRect();
-		div = this.divChild[ic];
 
-		Partnership.setRect(div,crect.getMidX(),Partnership.getChildLine(),mx,null,my,Partnership.getChildLine(),crect.getTop(),null);
+		Partnership.setRect(this.divChild[ic],crect.getMidX(),Partnership.getChildLine(),mx,null,my,Partnership.getChildLine(),crect.getTop(),null);
 	}
 
 	if (this.divChildConn) {
