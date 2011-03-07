@@ -1,4 +1,4 @@
-function Partnership(gid,husb,wife,rchil) {
+function Partnership(gid,husb,wife,rchil,revt) {
 	var ic;
 	var that = this;
 
@@ -8,6 +8,7 @@ function Partnership(gid,husb,wife,rchil) {
 	this.husb = husb;
 	this.wife = wife;
 	this.rchil = rchil;
+	this.revt = revt;
 
 
 
@@ -43,6 +44,10 @@ function Partnership(gid,husb,wife,rchil) {
 }
 
 
+
+Person.prototype.getEvents = function() {
+	return this.revt;
+};
 
 Partnership.createDiv = function() {
 	var div;
@@ -173,6 +178,7 @@ Partnership.getDescenderX = function(rectLeft,rectRight) {
 	Nominal case: descender bar is just to the right of the LEFT spouse. But, if 
 	the distance between spouses is too small to fit a nice-sized marriage bar 
 	into, so move the descender bar out just to the right of the RIGHT spouse.
+	TODO still doesn't work when dragging thinner rect above wider rect
 */
 	return (rectLeft.getRight() + 2*Partnership.getMarChildDistance() < rectRight.getLeft() ? rectLeft : rectRight)
 		.getRight()+Partnership.getMarChildDistance();

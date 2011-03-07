@@ -1,4 +1,4 @@
-function Dragger(dragee,onmovedHandler) {
+function Dragger(dragee,onmovedHandler,shadow) {
 	this.onmoved = onmovedHandler;
 
 	if (!(parseInt(dragee.style.left) >= 0)) {
@@ -80,6 +80,10 @@ function Dragger(dragee,onmovedHandler) {
 			dragee.style.left = (e.clientX - deltaX) + "px";
 			dragee.style.top = (e.clientY - deltaY) + "px";
 
+			if (shadow) {
+				shadow.style.left = (e.clientX - deltaX) + "px";
+				shadow.style.top = (e.clientY - deltaY) + "px";
+			}
 
 			dragee.dragger.onmoved.onmoved();
 
