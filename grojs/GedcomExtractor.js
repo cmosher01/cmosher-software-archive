@@ -80,6 +80,8 @@ GedcomExtractor.prototype.extractParnership = function(fam) {
 
 GedcomExtractor.prototype.extractEvent = function(evt) {
 	var typ, gdate, place;
+	gdate = null;
+	place = null;
 	typ = this.extractEventName(evt);
 	Util.forEach(evt.getChildren(), function(node) {
 		if (node.line.getTag() === "DATE") {

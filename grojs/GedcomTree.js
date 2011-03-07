@@ -27,7 +27,10 @@ GedcomTree.prototype.getNode = function(gid) {
  */
 GedcomTree.prototype.appendLine = function(line) {
 	var c, i, v, p;
-
+	if (line == undefined) {
+		line = new GedcomLine(); // hint to interpreter
+		throw new Error("line argument is required");
+	}
 	Util.verifyType(line,"GedcomLine");
 
 	v = line.getLevel();

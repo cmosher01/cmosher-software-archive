@@ -1,53 +1,22 @@
+/**
+ * @class Contains static utilities.
+ * @constructor
+ * @return never returns
+ * @type Util
+ * @throws always throws an error
+ */
 function Util() {
 	throw new Error("cannot instantiate");
 }
 
-Util.forEach = function(r,fn) {
-	var i, e;
-	if (Util.getTypeName(r) == "Array") {
-		for (i = 0; i < r.length; i++) {
-			if (r[i] !== undefined) {
-				fn(r[i],i);
-			}
-		}
-	} else {
-		i = 0;
-		for (e in r) {
-			if (r.hasOwnProperty(e)) {
-				if (r[e] !== undefined) {
-					fn(r[e],i++);
-				}
-			}
-		}
-	}
-};
-
-Util.consolodate = function(r) {
-	var rr = [];
-	Util.forEach(r, function(v) {
-		rr.push(v);
-	});
-	return rr;
-};
-
-Util.getLines = function(s) {
-	// unify line terminators
-	s = s.replace(/\r\n/g,"\n");
-	s = s.replace(/\r/g,"\n");
-
-	// split string into lines
-	return s.match(/^.*$/mg);
-};
-
-Util.safeStr = function(s) {
-	if (s === undefined || s === null) {
-		return new String("");
-	}
-	return new String(s);
-};
-
+/**
+ * Returns the datatype of any given object, primitive, null, or undefined.
+ * @param x any object or primitive
+ * @return type-name of x
+ * @type String
+ */
 Util.getTypeName = function(x) {
-	var n, m;
+	var n, m, clnam;
 
 	if (x === undefined) {
 		return "undefined";
@@ -56,7 +25,8 @@ Util.getTypeName = function(x) {
 		return "null";
 	}
 
-	n = Object.prototype.toString.apply(x);
+	clnam = Object.prototype.toString;
+	n = clnam.apply(x);
 	m = /\[object\s*(\w+)\s*\]/.exec(n);
 	if (m !== null) {
 		n = m[1];
@@ -79,9 +49,9 @@ Util.getTypeName = function(x) {
 	if (n === undefined || n === null) {
 		n = x.constructor.toString();
 		m = /^\s*function\s*(\w+)/.exec(n);
-		if (m === null) {
+		if (m == null) {
 			m = /\[object\s*(\w+)\s*\]/.exec(n);
-			if (m === null) {
+			if (m == null) {
 				return "Object";
 			}
 		}
@@ -91,12 +61,96 @@ Util.getTypeName = function(x) {
 	return n;
 };
 
+/**
+ * Calls fn for each (non-undefined) element in r.
+ * @param {Object} r Array or Object
+ * @param {Function} fn function to call
+ */
+Util.forEach = function(r,fn) {
+	var i, e;
+	if (Util.getTypeName(r) == "Array") {
+		for (i = 0; i < r.length; i++) {
+			if (r[i] !== undefined) {
+				fn(r[i],i);
+			}
+		}
+	} else {
+		i = 0;
+		e = {};
+		for (e in r) {
+			if (r.hasOwnProperty(e)) {
+				if (r[e] !== undefined) {
+					fn(r[e],i++);
+				}
+			}
+		}
+	}
+};
+
+/**
+ * Creates a new non-sparse array from r.
+ * @param {Array} r any array
+ * @return non-sparse version of r
+ * @type Array
+ */
+Util.consolodate = function(r) {
+	var rr = [];
+	Util.forEach(r, function(v) {
+		rr.push(v);
+	});
+	return rr;
+};
+
+/**
+ * Splits the given string into line. Allows these line
+ * terminators: CR/LF, CR, and/or LF.
+ * @param {String} s
+ * @return array of String lines from s
+ * @type Array
+ */
+Util.getLines = function(s) {
+	// unify line terminators
+	s = s.replace(/\r\n/g,"\n");
+	s = s.replace(/\r/g,"\n");
+
+	// split string into lines
+	return s.match(/^.*$/mg);
+};
+
+/**
+ * Returns a new copy of the given string, or an empty string if
+ * given null or undefined.
+ * @param {String} s string, or null, or undefined
+ * @return new string (never null or undefined)
+ * @type String
+ */
+Util.safeStr = function(s) {
+	if (s === undefined || s === null) {
+		s = "";
+	}
+	return new String(s);
+};
+
+/**
+ * Ensures that a given object is of a specified type.
+ * Throws an exception otherwise.
+ * @param {any} obj object or primitive to check
+ * @param {String} clsName name of type
+ * @throws TypeError if wrong type
+ */
 Util.verifyType = function(obj,clsName) {
 	if (Util.getTypeName(obj) !== clsName) {
 		throw new TypeError(Util.getTypeName(obj)+" must be of class "+clsName);
 	}
 };
 
+/**
+ * Returns a new array copy of a given array with the given element removed.
+ * @param e element to remove
+ * @param {Array} r array to copy
+ * @return new copy of r without e
+ * @type Array
+ */
 Util.remove = function(e,r) {
 	var rr = [];
 	Util.forEach(r,function(v) {
@@ -108,6 +162,38 @@ Util.remove = function(e,r) {
 };
 
 
+/**
+ * Returns a string suitable for specifying a CSS pixel value
+ * for the given number. For example, Util.px(7.3) return "7px".
+ * Rounds any fractional number to the nearest integer.
+ * @param {Number} num number of pixels
+ * @return pixel value string
+ * @type String
+ */
 Util.px = function(num) {
 	return Math.round(num).toString(10)+"px";
 };
+
+/**
+ * Creates a new HTMLElement with the given tag name.
+ * @param {String} tag
+ * @return a new HTMLElement
+ * @type HTMLElement
+ */
+Util.createHtmlElement = function(tag) {
+	// do all these things just to avoid interpreter warnings
+	if (false) {
+		var e = new HTMLElement();
+	}
+	e = Util.global.document.createElement(tag);
+	if (false) {
+		e = new HTMLElement();
+	}
+	return e;
+};
+
+/**
+ * A reference to the global Javascript scope.
+ * @type Window
+ */
+Util.global = this;

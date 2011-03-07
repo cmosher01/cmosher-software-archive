@@ -65,7 +65,7 @@ GedcomLine.prototype.concat = function(c) {
 
 GedcomLine.parse = function(s) {
 	var r = /^(\d+)\s+(?:(@[^@]+@)\s+)?(\S+)(?:\s(.*))?$/.exec(s);
-	if (r === null) {
+	if (r == null) {
 		throw new Error("Gedcom line has invalid syntax: "+s);
 	}
 	return new GedcomLine(r[1],r[2],r[3],r[4]);
@@ -79,7 +79,7 @@ GedcomLine.parse = function(s) {
 GedcomLine.asPointer = function(s) {
 	var r;
 	r = /^@([^@]+)@$/.exec(s);
-	if (r === null) {
+	if (r == null) {
 		return "";
 	}
 	return r[1];

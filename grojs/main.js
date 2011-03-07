@@ -22,8 +22,6 @@ function main() {
 
 
 
-
-
 	$.ajaxSetup({
 		dataType: "text"
 	});

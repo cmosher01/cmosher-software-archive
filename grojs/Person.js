@@ -9,8 +9,8 @@ function Person(gid,gname,pos,revt) {
 	this.childIn = []; // allow for adoptive parents
 	this.spouseIn = [];
 
-	this.div = Person.createDiv(gname,pos);
-	this.createDivExp(pos);
+	this.div = this.createDiv(gname,pos);
+	this.divExp = this.createDivExp(pos);
 
 	this.viewExpanded = false;
 	this.ignoreNextClick = false;
@@ -59,19 +59,13 @@ Person.prototype.getEvents = function() {
 	return this.revt;
 };
 
-
-
-
-
-
-
-Person.createDiv = function(s,pos) {
+Person.prototype.createDiv = function(s,pos) {
 	var div;
-	div = document.createElement("div");
+	div = Util.createHtmlElement("div");
 	div.className = "person";
-	div.style.position = "absolute";
+	div.position = "absolute";
 	div.style.zIndex = 1;
-	div.setAttribute("tabindex","0");
+	div.tabindex = 0;
 	div.style.left = Util.px(pos.getX());
 	div.style.top = Util.px(pos.getY());
 	div.appendChild(document.createTextNode(s));
@@ -80,20 +74,22 @@ Person.createDiv = function(s,pos) {
 };
 
 Person.prototype.createDivExp = function(pos) {
-	var n, e;
-	this.divExp = document.createElement("div");
-	this.divExp.className = "person expanded-person";
-	this.divExp.style.position = "absolute";
-	this.divExp.style.zIndex = 9;
-	this.divExp.setAttribute("tabindex","0");
-	this.divExp.style.left = Util.px(pos.getX());
-	this.divExp.style.top = Util.px(pos.getY());
+	var div, n, e;
+	div = Util.createHtmlElement("div");
+	div.className = "person expanded-person";
+	div.style.position = "absolute";
+	div.style.zIndex = 9;
+	div.tabindex = 0;
+	div.style.left = Util.px(pos.getX());
+	div.style.top = Util.px(pos.getY());
 
 	n = document.createTextNode(this.gname);
-	this.divExp.appendChild(n);
+	div.appendChild(n);
 	
 	e = this.createEventTable();
-	this.divExp.appendChild(e);
+	div.appendChild(e);
+
+	return div;
 };
 
 Person.prototype.getRect = function() {
@@ -143,20 +139,20 @@ Person.prototype.createEventTable = function() {
 
 
 
-	table = document.createElement("table");
+	table = Util.createHtmlElement("table");
 	table.className = "events";
 
 
 
-	thead = document.createElement("thead");
-	tr = document.createElement("tr");
-	th = document.createElement("th");
+	thead = Util.createHtmlElement("thead");
+	tr = Util.createHtmlElement("tr");
+	th = Util.createHtmlElement("th");
 	th.appendChild(document.createTextNode("event"));
 	tr.appendChild(th);
-	th = document.createElement("th");
+	th = Util.createHtmlElement("th");
 	th.appendChild(document.createTextNode("date"));
 	tr.appendChild(th);
-	th = document.createElement("th");
+	th = Util.createHtmlElement("th");
 	th.appendChild(document.createTextNode("place"));
 	tr.appendChild(th);
 	thead.appendChild(tr);
@@ -164,24 +160,24 @@ Person.prototype.createEventTable = function() {
 
 
 
-	tfoot = document.createElement("tfoot");
+	tfoot = Util.createHtmlElement("tfoot");
 	tfoot.style.height = "0px";
 	table.appendChild(tfoot);
 
 
 
-	tbody = document.createElement("tbody");
+	tbody = Util.createHtmlElement("tbody");
 
 	Util.forEach(this.revt, function(evt) {
-		tr = document.createElement("tr");
+		tr = Util.createHtmlElement("tr");
 
-		td = document.createElement("td");
+		td = Util.createHtmlElement("td");
 		td.appendChild(document.createTextNode(Util.safeStr(evt.getType())));
 		tr.appendChild(td);
-		td = document.createElement("td");
+		td = Util.createHtmlElement("td");
 		td.appendChild(document.createTextNode(Util.safeStr(evt.getDate())));
 		tr.appendChild(td);
-		td = document.createElement("td");
+		td = Util.createHtmlElement("td");
 		td.appendChild(document.createTextNode(Util.safeStr(evt.getPlace())));
 		tr.appendChild(td);
 

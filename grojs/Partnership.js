@@ -1,5 +1,13 @@
+/**
+ * @constructor
+ * @param gid
+ * @param husb
+ * @param wife
+ * @param rchil
+ * @param revt
+ * @returns {Partnership}
+ */
 function Partnership(gid,husb,wife,rchil,revt) {
-	var ic;
 	var that = this;
 
 	Util.verifyType(this,"Partnership");
@@ -26,16 +34,16 @@ function Partnership(gid,husb,wife,rchil,revt) {
 
 
 
-	this.divLeft = Partnership.createDiv();
-	this.divRight = Partnership.createDiv();
+	this.divLeft = this.createDiv();
+	this.divRight = this.createDiv();
 
 	this.divChild = [];
 	Util.forEach(rchil, function() {
-		that.divChild.push(Partnership.createDiv());
+		that.divChild.push(that.createDiv());
 	});
 
 	if (this.divChild.length > 0) {
-		this.divChildConn = Partnership.createDiv();
+		this.divChildConn = this.createDiv();
 	} else {
 		this.divChildConn = null;
 	}
@@ -44,38 +52,32 @@ function Partnership(gid,husb,wife,rchil,revt) {
 }
 
 
-
+/**
+ * @returns []
+ */
 Partnership.prototype.getEvents = function() {
 	return this.revt;
 };
 
-Partnership.createDiv = function() {
+/**
+ * @returns HTMLElement
+ */
+Partnership.prototype.createDiv = function() {
 	var div;
-	div = document.createElement("div");
+	div = Util.createHtmlElement("div");
+	div.className = "partnership";
 	div.style.position = "absolute";
 	document.body.appendChild(div);
 	return div;
 };
 
-Partnership.getColor = function() {
-	if (!Partnership.lineColor) {
-		// pull body color from stylesheet (and cache it)
-		if(document.defaultView && document.defaultView.getComputedStyle) {
-			Partnership.lineColor = document.defaultView.getComputedStyle(document.body,"").getPropertyValue("color");
-		} else if(document.body.currentStyle) {
-			Partnership.lineColor = document.body.currentStyle["color"];
-		}
-	}
-	return Partnership.lineColor;
-};
-
 Partnership.getChildLine = function() {
-	return "solid "+Partnership.getColor()+" 1px";
+	return "solid 1px";
 };
 
 Partnership.getSpouseLine = function() {
 	var h = 2*Partnership.getMarBarHalfHeight();
-	return "double "+Partnership.getColor()+" "+h+"px";
+	return "double "+h+"px";
 };
 
 Partnership.getMarBarHalfHeight = function() {
@@ -87,7 +89,6 @@ Partnership.getMarChildDistance = function() {
 };
 
 Partnership.prototype.calc = function() {
-	var that = this;
 	var mx;
 	var my;
 	var rmy;
@@ -97,10 +98,10 @@ Partnership.prototype.calc = function() {
 	var ic;
 	var child;
 	var crect;
-	var div;
 	var cy;
-	var cx;
-	var rectLeft, rectRight, rtemp;
+	var rectLeft;
+	var rectRight;
+	var rtemp;
 
 
 
@@ -117,6 +118,7 @@ Partnership.prototype.calc = function() {
 
 
 	// get two parent rects (calc if missing)
+	rectLeft = rectRight = null;
 	if (this.husb && this.wife) {
 		rectLeft = this.husb.getRect();
 		rectRight = this.wife.getRect();
@@ -126,11 +128,9 @@ Partnership.prototype.calc = function() {
 	} else if (this.husb && !this.wife) {
 		rectLeft = this.husb.getRect();
 		rectRight = Partnership.phantomSpouse(rectLeft);
-	} else if (!this.wife && !this.husb) {
-		rectLeft = rectRight = null;
 	}
 
-	if (rectLeft) {
+	if (rectLeft != null && rectRight != null) {
 		// make sure rectLeft is to the LEFT of rectRight
 		if (rectRight.getMidX() < rectLeft.getMidX()) {
 			rtemp = rectLeft;
@@ -174,14 +174,15 @@ Partnership.phantomSpouse = function(rect) {
 };
 
 Partnership.getDescenderX = function(rectLeft,rectRight) {
-/*
-	Nominal case: descender bar is just to the right of the LEFT spouse. But, if 
-	the distance between spouses is too small to fit a nice-sized marriage bar 
-	into, so move the descender bar out just to the right of the RIGHT spouse.
-	TODO still doesn't work when dragging thinner rect above wider rect
-*/
-	return (rectLeft.getRight() + 2*Partnership.getMarChildDistance() < rectRight.getLeft() ? rectLeft : rectRight)
-		.getRight()+Partnership.getMarChildDistance();
+	var mx;
+	// try hanging it off the right of the LEFT rect
+	mx = rectLeft.getRight()+Partnership.getMarChildDistance();
+	// but if that doesn't work for the RIGHT rect
+	if (!(mx+Partnership.getMarChildDistance() < rectRight.getLeft() || rectRight.getRight()+Partnership.getMarChildDistance() < mx)) {
+		// then hang it off the right of the RIGHT rect instead
+		mx = rectRight.getRight()+Partnership.getMarChildDistance();
+	}
+	return mx;
 };
 
 // sets div's left/right pos/borders

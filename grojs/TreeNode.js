@@ -17,8 +17,6 @@ TreeNode.prototype.getParent = function() {
 
 
 TreeNode.prototype.removeChild = function(child) {
-	var c;
-
 	Util.verifyType(child,"TreeNode");
 
 	this.children = Util.remove(child,this.children);
