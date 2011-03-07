@@ -1,6 +1,12 @@
 /**
+ * @fileoverview
+ * Defines the {@link Size} class.
+ */
+
+/**
  * @class
  * Represents the size of a graphical object in 2D space.
+ * @requires Util
  * @constructor
  * @param {Number} w width
  * @param {Number} h height

@@ -1,8 +1,14 @@
 /**
+ * @fileoverview
+ * Defines the {@link Point} class.
+ */
+
+/**
  * @class Represents a graphical point in 2D space.
+ * @requires Util
  * @constructor
- * @param {Number} x coordinate of this {@link Point}
- * @param {Number} y coordinate of this {@link Point}
+ * @param {Number} x x-coordinate of this {@link Point}
+ * @param {Number} y y-coordinate of this {@link Point}
  * @return new {@link Point}
  * @type Point
  */
@@ -10,14 +16,14 @@ function Point(x,y) {
 	Util.verifyType(this,"Point");
 
 	/**
-	 * x corrdinate
+	 * x-coordinate
 	 * @private
 	 * @type Number
 	 */
 	this.x = parseInt(x);
 
 	/**
-	 * y corrdinate
+	 * y-coordinate
 	 * @private
 	 * @type Number
 	 */

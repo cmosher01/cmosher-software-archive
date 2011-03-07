@@ -1,4 +1,9 @@
 /**
+ * @fileoverview
+ * Defines the {@link Util} class.
+ */
+
+/**
  * @class Contains static utilities.
  * @constructor
  * @return never returns
@@ -11,7 +16,7 @@ function Util() {
 
 /**
  * Returns the datatype of any given object, primitive, null, or undefined.
- * @param x any object or primitive
+ * @param {any} x any object or primitive
  * @return type-name of x
  * @type String
  */
@@ -146,7 +151,7 @@ Util.verifyType = function(obj,clsName) {
 
 /**
  * Returns a new array copy of a given array with the given element removed.
- * @param e element to remove
+ * @param {any} e element to remove
  * @param {Array} r array to copy
  * @return new copy of r without e
  * @type Array

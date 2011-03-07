@@ -1,5 +1,14 @@
 /**
+ * @fileoverview
+ * Defines the {@link Rect} class.
+ */
+
+/**
  * @class Represents a graphical rectangle in 2D space.
+ * @requires Point
+ * @requires Size
+ * @requires Util
+ * 
  * @constructor
  * @param {Point} pos the location of the top-left corner of this {@link Rect}
  * @param {Size} siz the width and height of this {@link Rect}
