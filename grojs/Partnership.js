@@ -45,7 +45,7 @@ function Partnership(gid,husb,wife,rchil,revt) {
 
 
 
-Person.prototype.getEvents = function() {
+Partnership.prototype.getEvents = function() {
 	return this.revt;
 };
 

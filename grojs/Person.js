@@ -80,14 +80,20 @@ Person.createDiv = function(s,pos) {
 };
 
 Person.prototype.createDivExp = function(pos) {
+	var n, e;
 	this.divExp = document.createElement("div");
-	this.divExp.className = "person expanded";
+	this.divExp.className = "person expanded-person";
 	this.divExp.style.position = "absolute";
 	this.divExp.style.zIndex = 9;
 	this.divExp.setAttribute("tabindex","0");
 	this.divExp.style.left = Util.px(pos.getX());
 	this.divExp.style.top = Util.px(pos.getY());
-	this.divExp.appendChild(document.createTextNode(this.gname+" details"));
+
+	n = document.createTextNode(this.gname);
+	this.divExp.appendChild(n);
+	
+	e = this.createEventTable();
+	this.divExp.appendChild(e);
 };
 
 Person.prototype.getRect = function() {
@@ -130,4 +136,61 @@ Person.prototype.toggleView = function() {
 		this.divCur = this.divExp;
 	}
 	this.calc();
+};
+
+Person.prototype.createEventTable = function() {
+	var table, thead, tfoot, tbody, th, tr, td;
+
+
+
+	table = document.createElement("table");
+	table.className = "events";
+
+
+
+	thead = document.createElement("thead");
+	tr = document.createElement("tr");
+	th = document.createElement("th");
+	th.appendChild(document.createTextNode("event"));
+	tr.appendChild(th);
+	th = document.createElement("th");
+	th.appendChild(document.createTextNode("date"));
+	tr.appendChild(th);
+	th = document.createElement("th");
+	th.appendChild(document.createTextNode("place"));
+	tr.appendChild(th);
+	thead.appendChild(tr);
+	table.appendChild(thead);
+
+
+
+	tfoot = document.createElement("tfoot");
+	tfoot.style.height = "0px";
+	table.appendChild(tfoot);
+
+
+
+	tbody = document.createElement("tbody");
+
+	Util.forEach(this.revt, function(evt) {
+		tr = document.createElement("tr");
+
+		td = document.createElement("td");
+		td.appendChild(document.createTextNode(Util.safeStr(evt.getType())));
+		tr.appendChild(td);
+		td = document.createElement("td");
+		td.appendChild(document.createTextNode(Util.safeStr(evt.getDate())));
+		tr.appendChild(td);
+		td = document.createElement("td");
+		td.appendChild(document.createTextNode(Util.safeStr(evt.getPlace())));
+		tr.appendChild(td);
+
+		tbody.appendChild(tr);
+	});
+
+	table.appendChild(tbody);
+
+
+
+	return table;
 };
