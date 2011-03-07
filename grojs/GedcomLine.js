@@ -1,7 +1,20 @@
-/* PUBLIC */
+/**
+ * @fileoverview
+ * Defines the {@link GedcomLine} class.
+ */
 
-/* constructor */
-
+/**
+ * @class Represents one line of a GEDCOM file.
+ * @requires Util
+ * 
+ * @constructor
+ * @param {Number} level
+ * @param {String} gid
+ * @param {String} tag
+ * @param {String} val
+ * @return new {@link GedcomLine}
+ * @type GedcomLine
+ */
 function GedcomLine(level, gid, tag, val) {
 	Util.verifyType(this,"GedcomLine");
 
