@@ -1,21 +1,65 @@
 /**
+ * @fileoverview
+ * Defines the {@link Partnership} class.
+ */
+
+/**
+ * @class
+ * Represents a family in the family tree.
+ * @requires Person
+ * @requires GedcomEvent
+ * @requires Rect
+ * @requires Point
+ * @requires Size
+ * @requires Util
+ * 
  * @constructor
- * @param gid
- * @param husb
- * @param wife
- * @param rchil
- * @param revt
- * @returns {Partnership}
+ * @param {String} gid ID of this {@link Partnership}
+ * @param {Person} husb husband in this {@link Partnership}
+ * @param {Person} wife wife in this {@link Partnership}
+ * @param {Array} rchil array of children {@link Person}s for this {@link Partnership}.
+ * @param {Array} revt array of {@link GedcomEvent}s for this {@link Partnership}.
+ * @return new {@link Partnership}
+ * @type Partnership
  */
 function Partnership(gid,husb,wife,rchil,revt) {
 	var that = this;
 
 	Util.verifyType(this,"Partnership");
 
+	/**
+	 * ID of this person
+	 * @private
+	 * @type String
+	 */
 	this.gid = gid;
+
+	/**
+	 * husband
+	 * @private
+	 * @type Person
+	 */
 	this.husb = husb;
+
+	/**
+	 * wife
+	 * @private
+	 * @type Person
+	 */
 	this.wife = wife;
+
+	/**
+	 * children {@link Person}s
+	 * @private
+	 * @type Array
+	 */
 	this.rchil = rchil;
+
+	/**
+	 * {@link GedcomEvent}s
+	 * @private
+	 * @type Array
+	 */
 	this.revt = revt;
 
 
@@ -53,41 +97,69 @@ function Partnership(gid,husb,wife,rchil,revt) {
 
 
 /**
- * @returns []
+ * Gets the array of {@link GedcomEvent}s for this {@link Partnership}.
+ * @return events
+ * @type Array
  */
 Partnership.prototype.getEvents = function() {
 	return this.revt;
 };
 
 /**
- * @returns HTMLElement
+ * Creates and displays a new DIV with "partnership" class
+ * @private
+ * @return new DIV
+ * @type HTMLElement
  */
 Partnership.prototype.createDiv = function() {
 	var div;
 	div = Util.createHtmlElement("div");
 	div.className = "partnership";
 	div.style.position = "absolute";
-	document.body.appendChild(div);
+	Util.global.document.body.appendChild(div);
 	return div;
 };
 
+/**
+ * @private
+ * @return border CSS style for child lines
+ * @type String
+ */
 Partnership.getChildLine = function() {
 	return "solid 1px";
 };
 
+/**
+ * @private
+ * @return border CSS style for partnership lines
+ * @type String
+ */
 Partnership.getSpouseLine = function() {
 	var h = 2*Partnership.getMarBarHalfHeight();
 	return "double "+h+"px";
 };
 
+/**
+ * @private
+ * @return half of height of partnership lines (in pixels)
+ * @type Number
+ */
 Partnership.getMarBarHalfHeight = function() {
 	return 2;
 };
 
+/**
+ * @private
+ * @return minimum width of one person's side of a partnership line
+ * @type Number
+ */
 Partnership.getMarChildDistance = function() {
 	return 10;
 };
 
+/**
+ * Calculates this {@link Partnership} for display on the drop line chart.
+ */
 Partnership.prototype.calc = function() {
 	var mx;
 	var my;
@@ -119,13 +191,13 @@ Partnership.prototype.calc = function() {
 
 	// get two parent rects (calc if missing)
 	rectLeft = rectRight = null;
-	if (this.husb && this.wife) {
+	if (this.husb != null && this.wife != null) {
 		rectLeft = this.husb.getRect();
 		rectRight = this.wife.getRect();
-	} else if (this.wife && !this.husb) {
+	} else if (this.wife != null && this.husb == null) {
 		rectLeft = this.wife.getRect();
 		rectRight = Partnership.phantomSpouse(rectLeft);
-	} else if (this.husb && !this.wife) {
+	} else if (this.husb != null && this.wife == null) {
 		rectLeft = this.husb.getRect();
 		rectRight = Partnership.phantomSpouse(rectLeft);
 	}
@@ -167,12 +239,26 @@ Partnership.prototype.calc = function() {
 	}
 };
 
+/**
+ * Calculates a phantom location for a missing spouse on the drop-line chart.
+ * @private
+ * @param {Rect} rect location of known spouse
+ * @return new location
+ * @type Rect
+ */
 Partnership.phantomSpouse = function(rect) {
 	return new Rect(
 		new Point(rect.getRight()+2*Partnership.getMarChildDistance()+1,rect.getTop()),
 		new Size(3,rect.getHeight()));
 };
 
+/**
+ * Calculates x-coordinate of the child-descent line for the given two spouses' locations.
+ * @param rectLeft location of one spouse
+ * @param rectRight location of the other spouse
+ * @return the x-coordinate for the child-descent line
+ * @type Number
+ */
 Partnership.getDescenderX = function(rectLeft,rectRight) {
 	var mx;
 	// try hanging it off the right of the LEFT rect
@@ -185,7 +271,14 @@ Partnership.getDescenderX = function(rectLeft,rectRight) {
 	return mx;
 };
 
-// sets div's left/right pos/borders
+/**
+ * Sets DIV's left/right pos/borders. Will swap left/right if necessary.
+ * @param {HTMLElement} div
+ * @param {Number} xLeft x-coordinate of left side
+ * @param {String} borderLeft CSS style for left border, or <code>null</code>
+ * @param {Number} xRight x-coordinate of right side
+ * @param {String} borderRight CSS style for right border, or <code>null</code>
+ */
 Partnership.setX = function(div,xLeft,borderLeft,xRight,borderRight) {
 	var t;
 	var style = div.style;
@@ -204,7 +297,14 @@ Partnership.setX = function(div,xLeft,borderLeft,xRight,borderRight) {
 	style.borderRight = borderRight ? borderRight : "none";
 };
 
-// sets div's top/bottom pos/borders
+/**
+ * Sets DIV's top/bottom pos/borders. Will swap top/bottom if necessary.
+ * @param {HTMLElement} div
+ * @param {Number} yTop y-coordinate of top side
+ * @param {String} borderTop CSS style for top border, or <code>null</code>
+ * @param {Number} yBottom y-coordinate of bottom side
+ * @param {String} borderBottom CSS style for bottom border, or <code>null</code>
+ */
 Partnership.setY = function(div,yTop,borderTop,yBottom,borderBottom) {
 	var t;
 	var style = div.style;
@@ -223,6 +323,18 @@ Partnership.setY = function(div,yTop,borderTop,yBottom,borderBottom) {
 	style.borderBottom = borderBottom ? borderBottom : "none";
 };
 
+/**
+ * Sets DIV's sides and borders as appropriate for the given coordinates and borders.
+ * @param {HTMLElement} div
+ * @param x1 x-coordinate of one side
+ * @param borderX1 CSS style for x1 side border, or <code>null</code>
+ * @param x2 x-coordinate of the other side
+ * @param borderX2 CSS style for x2 side border, or <code>null</code>
+ * @param y1 y-coordinate of one side
+ * @param borderY1 CSS style for y1 side border, or <code>null</code>
+ * @param y2 y-coordinate of the other side
+ * @param borderY2 CSS style for y2 side border, or <code>null</code>
+ */
 Partnership.setRect = function(div,x1,borderX1,x2,borderX2,y1,borderY1,y2,borderY2) {
 	Partnership.setX(div,x1,borderX1,x2,borderX2);
 	Partnership.setY(div,y1,borderY1,y2,borderY2);

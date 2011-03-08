@@ -1,21 +1,62 @@
+/**
+ * @fileoverview
+ * Defines the {@link GedcomExtractor} class.
+ */
+
+/**
+ * @class
+ * Extracts needed data from a {@link GedcomTree}.
+ * @requires Partnership
+ * @requires Person
+ * @requires GedcomEvent
+ * @requires Point
+ * @requires Util
+ * 
+ * @constructor
+ * @param {GedcomTree} gedcomtree tree to extract data from
+ * @return new {@link GedcomExtractor}
+ * @type GedcomExtractor
+ */
 function GedcomExtractor(gedcomtree) {
 	Util.verifyType(this,"GedcomExtractor");
+	/**
+	 * tree to extract from
+	 * @private
+	 * @type GedcomTree
+	 */
 	this.t = gedcomtree;
 	Util.verifyType(this.t,"GedcomTree");
+
+	/**
+	 * map of IDs to {@link Person}s.
+	 * @private
+	 * @type Object
+	 */
 	this.mperson = {};
+
+	/**
+	 * map of IDs to {@link Partnership}s.
+	 * @private
+	 * @type Object
+	 */
 	this.mpartnership = {};
 
 	this.extract();
 }
 
+/**
+ * Calculates every {@link Partnership}.
+ */
 GedcomExtractor.prototype.calc = function() {
 	Util.forEach(this.mpartnership, function(p) {
 		p.calc();
 	});
 };
 
-/* private mutator (init) methods */
-
+/**
+ * Extracts the data from the tree.
+ * @private
+ */
 GedcomExtractor.prototype.extract = function() {
 	var rchil, that;
 	rchil = this.t.getRoot().getChildren();
@@ -32,8 +73,15 @@ GedcomExtractor.prototype.extract = function() {
 	});
 };
 
+/**
+ * Extracts one {@link Person} from the given INDI node
+ * @private
+ * @param {TreeNode} indi
+ * @return new {@link Person}
+ * @type Person
+ */
 GedcomExtractor.prototype.extractPerson = function(indi) {
-	var that, nam, xy, m, revt;
+	var that, nam, xy, m, revt, line;
 
 	that = this;
 
@@ -53,12 +101,20 @@ GedcomExtractor.prototype.extractPerson = function(indi) {
 		}
 	});
 
-	return new Person(indi.line.getID(),nam,xy,revt);
+	line = indi.line;
+	return new Person(line.getID(),nam,xy,revt);
 };
 
 
+/**
+ * Extracts one {@link Partnership} from the given FAM node
+ * @private
+ * @param {TreeNode} fam
+ * @return new {@link Partnership}
+ * @type Partnership
+ */
 GedcomExtractor.prototype.extractParnership = function(fam) {
-	var that, husb, wife, rchil, revt;
+	var that, husb, wife, rchil, revt, line;
 	that = this;
 	husb = null;
 	wife = null;
@@ -75,9 +131,17 @@ GedcomExtractor.prototype.extractParnership = function(fam) {
 			revt.push(that.extractEvent(node));
 		}
 	});
-	return new Partnership(fam.line.getID(),husb,wife,rchil,revt);
+	line = fam.line;
+	return new Partnership(line.getID(),husb,wife,rchil,revt);
 };
 
+/**
+ * Extracts one {@link GedcomEvent} from the given event node
+ * @private
+ * @param {TreeNode} evt
+ * @return new {@link GedcomEvent}
+ * @type GedcomEvent
+ */
 GedcomExtractor.prototype.extractEvent = function(evt) {
 	var typ, gdate, place;
 	gdate = null;
@@ -93,6 +157,14 @@ GedcomExtractor.prototype.extractEvent = function(evt) {
 	return new GedcomEvent(typ,gdate,place);
 };
 
+/**
+ * Extracts (constructs) the event-name for the given event node.
+ * @param evt
+ * @private
+ * @param {TreeNode} evt
+ * @return event name
+ * @type String
+ */
 GedcomExtractor.prototype.extractEventName = function(evt) {
 	var nam, val;
 	nam = "";

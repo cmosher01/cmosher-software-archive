@@ -15,6 +15,12 @@ function Util() {
 }
 
 /**
+ * A reference to the global Javascript scope.
+ * @type Window
+ */
+Util.global = this;
+
+/**
  * Returns the datatype of any given object, primitive, null, or undefined.
  * @param {any} x any object or primitive
  * @return type-name of x
@@ -186,19 +192,5 @@ Util.px = function(num) {
  * @type HTMLElement
  */
 Util.createHtmlElement = function(tag) {
-	// do all these things just to avoid interpreter warnings
-	if (false) {
-		var e = new HTMLElement();
-	}
-	e = Util.global.document.createElement(tag);
-	if (false) {
-		e = new HTMLElement();
-	}
-	return e;
+	return Util.global.document.createElement(tag);
 };
-
-/**
- * A reference to the global Javascript scope.
- * @type Window
- */
-Util.global = this;

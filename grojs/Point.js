@@ -50,7 +50,7 @@ Point.prototype.getY = function() {
 
 /**
  * Gets a debug string for this {@link Point}
- * @return debug string
+ * @return {String} debug string
  * @type String
  */
 Point.prototype.toString = function() {

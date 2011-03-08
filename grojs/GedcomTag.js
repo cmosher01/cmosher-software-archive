@@ -1,6 +1,62 @@
-var GedcomTag = {};
+/**
+ * @fileoverview Defines the {@link GedcomTag} class.
+ */
 
+/**
+ * @class Contains static GEDCOM event tag methods.
+ * @constructor
+ * @return never returns
+ * @type GedcomTag
+ * @throws always throws an error
+ */
+function GedcomTag() {
+	throw new Error("cannot instantiate");
+}
+
+/**
+ * Returns <code>true</code> if the given tag is a
+ * GEDCOM individual event tag.
+ * @param {String} tag
+ * @returns if this is an individual event tag
+ * @type Boolean
+ */
+GedcomTag.isIndiEvent = function(tag) {
+	return this.indiEvent.hasOwnProperty(tag);
+};
+
+/**
+ * Returns <code>true</code> if the given tag is a
+ * GEDCOM family event tag.
+ * @param {String} tag
+ * @returns if this is a family event tag
+ * @type Boolean
+ */
+GedcomTag.isFamEvent = function(tag) {
+	return this.famEvent.hasOwnProperty(tag);
+};
+
+/**
+ * Gets the name of the given GEDCOM event tag.
+ * @param {String} tag
+ * @returns name
+ * @type String
+ */
+GedcomTag.getEventName = function(tag) {
+	var nam;
+	nam = GedcomTag.indiEvent[tag];
+	if (!nam) {
+		nam = GedcomTag.famEvent[tag];
+	}
+	return nam;
+};
+
+/**
+ * Maps GEDCOM individual events to names.
+ * @private
+ * @type Object
+ */
 GedcomTag.indiEvent = {};
+
 GedcomTag.indiEvent["BIRT"] = "birth";
 GedcomTag.indiEvent["CHR" ] = "christening";
 GedcomTag.indiEvent["DEAT"] = "death";
@@ -38,7 +94,13 @@ GedcomTag.indiEvent["RESI"] = "residence";
 GedcomTag.indiEvent["SSN" ] = "US Social Security number";
 GedcomTag.indiEvent["TITL"] = "title";
 
+/**
+ * Maps GEDCOM family events to names.
+ * @private
+ * @type Object
+ */
 GedcomTag.famEvent = {};
+
 GedcomTag.famEvent["ANUL"]  = "annulment";
 GedcomTag.famEvent["CENS"]  = "census";
 GedcomTag.famEvent["DIV" ]  = "divorce";
@@ -50,20 +112,3 @@ GedcomTag.famEvent["MARC"]  = "marriage contract";
 GedcomTag.famEvent["MARL"]  = "marriage license";
 GedcomTag.famEvent["MARS"]  = "marriage settlement";
 GedcomTag.famEvent["EVEN"]  = "[unknown]";
-
-GedcomTag.isIndiEvent = function(tag) {
-	return this.indiEvent.hasOwnProperty(tag);
-};
-
-GedcomTag.isFamEvent = function(tag) {
-	return this.famEvent.hasOwnProperty(tag);
-};
-
-GedcomTag.getEventName = function(tag) {
-	var nam;
-	nam = GedcomTag.indiEvent[tag];
-	if (!nam) {
-		nam = GedcomTag.famEvent[tag];
-	}
-	return nam;
-};
