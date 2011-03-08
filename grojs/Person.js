@@ -63,7 +63,7 @@ function Person(gid,gname,pos,revt) {
 	 * @private
 	 * @type HTMLElement
 	 */
-	this.div = this.createDiv(gname,pos);
+	this.div = this.createDiv(pos);
 
 	/**
 	 * expanded display DIV of this {@link Person}
