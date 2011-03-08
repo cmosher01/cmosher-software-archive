@@ -144,14 +144,11 @@ YMD.getMaximum = function() {
  */
 YMD.prototype.toString = function() {
 	var s;
-	s = "";
-	if (this.year != 0) {
-    	s += Util.digint(this.year,4);
-		if (this.month > 0) {
-			s += "-"+Util.digint(this.month,2);
-    		if (this.day > 0) {
-    			s += "-"+Util.digint(this.day,2);
-    		}
+	s = Util.digint(this.year,4);
+	if (this.month > 0) {
+		s += "-"+Util.digint(this.month,2);
+		if (this.day > 0) {
+			s += "-"+Util.digint(this.day,2);
 		}
 	}
 	return s;

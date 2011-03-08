@@ -33,8 +33,8 @@ function Calendar() {
  */
 Calendar.leap_gregorian = function(year)
 {
-    return ((year % 4) == 0) &&
-            (!(((year % 100) == 0) && ((year % 400) != 0)));
+    return (Calendar.mod(year,4) == 0) &&
+            (!((Calendar.mod(year,100) == 0) && (Calendar.mod(year,400) != 0)));
 };
 
 /**
@@ -69,11 +69,11 @@ Calendar.jd_to_gregorian = function(jd) {
     wjd = Math.floor(jd - 0.5) + 0.5;
     depoch = wjd - Calendar.GREGORIAN_EPOCH;
     quadricent = Math.floor(depoch / 146097);
-    dqc = depoch % 146097;
+    dqc = Calendar.mod(depoch,146097);
     cent = Math.floor(dqc / 36524);
-    dcent = dqc % 36524;
+    dcent = Calendar.mod(dqc,36524);
     quad = Math.floor(dcent / 1461);
-    dquad = dcent % 1461;
+    dquad = Calendar.mod(dcent,1461);
     yindex = Math.floor(dquad / 365);
     year = (quadricent * 400) + (cent * 100) + (quad * 4) + yindex;
     if (!((cent == 4) || (yindex == 4))) {
@@ -96,7 +96,7 @@ Calendar.jd_to_gregorian = function(jd) {
  * @type Boolean
  */
 Calendar.leap_julian = function(year) {
-    return year % 4 == ((year > 0) ? 0 : 3);
+    return Calendar.mod(year,4) == ((year > 0) ? 0 : 3);
 };
 
 /**
@@ -167,3 +167,15 @@ Calendar.jd_to_julian = function(jd) {
  * @type Number
  */
 Calendar.GREGORIAN_EPOCH = 1721425.5;
+
+/**
+ * @private
+ * @param {Number} a
+ * @param {Number} b
+ * @return mod
+ * @type Number
+ */
+Calendar.mod = function(a, b)
+{
+    return a - (b * Math.floor(a / b));
+};
