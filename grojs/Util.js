@@ -136,7 +136,7 @@ Util.getLines = function(s) {
  * @type String
  */
 Util.safeStr = function(s) {
-	if (s === undefined || s === null) {
+	if (!s) {
 		s = "";
 	}
 	return new String(s);
@@ -193,4 +193,39 @@ Util.px = function(num) {
  */
 Util.createHtmlElement = function(tag) {
 	return Util.global.document.createElement(tag);
+};
+
+/**
+ * Returns a string of n of c characters
+ * @param n number of character
+ * @param c character to repeat (defauls to space)
+ * @return string
+ * @type String
+ */
+Util.repstr = function(n,c) {
+	if (n <= 0) {
+		return "";
+	}
+	if (c == undefined) {
+		c = " ";
+	}
+	return new Array(n+1).join(c);
+};
+
+/**
+ * Pads number n to width d with leading zeroes. Number is rounded to int first.
+ * @param n
+ * @param d
+ * @return
+ * @type String
+ */
+Util.digint = function(n,d) {
+	var s, neg;
+	n = Math.round(n);
+	neg = (n < 0);
+	if (neg) {
+		n = -n;
+	}
+	s = ""+n;
+	return (neg ? "-": "")+Util.repstr(d-s.length,"0")+s;
 };

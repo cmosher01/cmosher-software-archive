@@ -3,7 +3,10 @@ $(function() {
   module("Size");
 
   test("nominal", function() {
-    ok(false);
+	  var s;
+	  s = new Size(23,45);
+	  equal(s.getWidth(),23);
+	  equal(s.getHeight(),45);
   });
 
 });

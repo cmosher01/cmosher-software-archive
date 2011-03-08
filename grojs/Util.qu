@@ -234,4 +234,53 @@ $(function() {
 		x.constructor = {name:"Foo"};
 		equal(Util.getTypeName(x),"Foo"); // can't fix this?
 	});
+
+	test("safestr nominal", function() {
+		equal(Util.safeStr("Chris"),"Chris");
+	});
+
+	test("safestr undefined", function() {
+		equal(Util.safeStr(undefined),"");
+	});
+
+	test("safestr missing", function() {
+		equal(Util.safeStr(),"");
+	});
+
+	test("safestr nominal", function() {
+		equal(Util.safeStr(null),"");
+	});
+
+
+	test("digint nominal", function() {
+		equal(Util.digint(68,3),"068");
+	});
+
+	test("digint none added", function() {
+		equal(Util.digint(68,2),"68");
+	});
+
+	test("digint too big", function() {
+		equal(Util.digint(68,1),"68");
+	});
+
+	test("digint multi-digit zero", function() {
+		equal(Util.digint(0,7),"0000000");
+	});
+
+	test("digint zero", function() {
+		equal(Util.digint(0,1),"0");
+	});
+
+	test("digint negative nominal", function() {
+		equal(Util.digint(-27,5),"-00027");
+	});
+
+	test("digint fractional", function() {
+		equal(Util.digint(-27.47,5),"-00027");
+	});
+
+	test("digint fractional round up", function() {
+		equal(Util.digint(-27.58,5),"-00028");
+	});
 });
