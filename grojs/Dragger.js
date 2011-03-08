@@ -15,7 +15,7 @@ function Dragger(dragee,onmovedHandler,shadow) {
 		var dragee = this;
 
         if (!evt) {
-        	evt = window.event;  // IE Event Model
+        	evt = Util.global.event;  // IE Event Model
         }
 
 		// Figure out where the element currently is
