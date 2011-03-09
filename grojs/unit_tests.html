@@ -55,6 +55,11 @@
 			<script src="Person.js"></script><script src="Person.qu"></script>
 			<script src="Partnership.js"></script><script src="Partnership.qu"></script>
 			<!-- script src="GedcomExtractor.js"></script><script src="GedcomExtractor.qu"></script -->
+			<script type="text/javascript">
+				test("running in browser environment",function() {
+					equal(Util.getTypeName(Util.global),"Window");
+				});
+			</script>
 
 
 

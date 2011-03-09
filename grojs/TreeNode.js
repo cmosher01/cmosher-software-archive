@@ -61,8 +61,6 @@ TreeNode.prototype.getParent = function() {
  * @throws if the given child is not a {@link TreeNode}
  */
 TreeNode.prototype.removeChild = function(child) {
-	Util.verifyType(child,"TreeNode");
-
 	this.children = Util.remove(child,this.children);
 	child.setParent(null);
 };
@@ -83,8 +81,6 @@ TreeNode.prototype.removeFromParent = function() {
  * @throws if the given child is not a {@link TreeNode}
  */
 TreeNode.prototype.addChild = function(child) {
-	Util.verifyType(child,"TreeNode");
-
 	child.removeFromParent();
 	this.children.push(child);
 	child.setParent(this);

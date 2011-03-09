@@ -52,12 +52,12 @@ Util.getTypeName = function(x) {
 	}
 
 	n = x.constructor;
-	if (n === undefined || n === null) {
+	if (n == null) {
 		return "Object";
 	}
 
 	n = n.name;
-	if (n === undefined || n === null) {
+	if (n == null) {
 		n = x.constructor.toString();
 		m = /^\s*function\s*(\w+)/.exec(n);
 		if (m == null) {
@@ -228,4 +228,16 @@ Util.digint = function(n,d) {
 	}
 	s = ""+n;
 	return (neg ? "-": "")+Util.repstr(d-s.length,"0")+s;
+};
+
+/**
+ * Ordering function (intended to be passed to Array.sort) that
+ * compares Strings in a locale-specific way.
+ * @param {String} a
+ * @param {String} b
+ * @return negative for a<b, positive for b<a, zero for a=b
+ * @type Number
+ */
+Util.localeOrder = function(a,b) {
+	return a.localeCompare(b);
 };
