@@ -2,7 +2,7 @@ start
 	= date_value
 
 date_value
-	= date / date_period / date_range / date_approx / date_int / date_phrase
+	= date / date_period / date_range / date_approx { d.approx=true; return d; } / date_int / date_phrase
 
 date_int
 	= "INT" S date S date_phrase
