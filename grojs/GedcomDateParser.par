@@ -1,0 +1,192 @@
+	"/" SLASH
+	"@" AT
+	"(" OPAREN
+	")" CPAREN
+	"#D" ESC
+	"INT" INT
+	"FROM" FROM
+	"TO" TO
+	"BEF" BEF
+	"AFT" AFT
+	"BET" BET
+	"AND" AND
+	"ABT" ABT
+	"CAL" CAL
+	"EST" EST
+	"GREGORIAN" GREGORIAN
+	"JULIAN" JULIAN
+	"HEBREW" HEBREW
+	"FRENCH R" FRENCHR
+	"UNKNOWN" UNKNOWN
+	"JAN" JAN
+	"FEB" FEB
+	"MAR" MAR
+	"APR" APR
+	"MAY" MAY
+	"JUN" JUN
+	"JUL" JUL
+	"AUG" AUG
+	"SEP" SEP
+	"OCT" OCT
+	"NOV" NOV
+	"DEC" DEC
+	"VEND" VEND
+	"BRUM" BRUM
+	"FRIM" FRIM
+	"NIVO" NIVO
+	"PLUV" PLUV
+	"VENT" VENT
+	"GERM" GERM
+	"FLOR" FLOR
+	"PRAI" PRAI
+	"MESS" MESS
+	"THER" THER
+	"FRUC" FRUC
+	"COMP" COMP
+	"TSH" TSH
+	"CSH" CSH
+	"KSL" KSL
+	"TVT" TVT
+	"SHV" SHV
+	"ADR" ADR
+	"ADS" ADS
+	"NSN" NSN
+	"IYR" IYR
+	"SVN" SVN
+	"TMZ" TMZ
+	"AAV" AAV
+	"ELL" ELL
+	'[0-9]+' NUMBER [* %match = parseInt( %match , 10 ); *]
+	'[^)]+' TEXT
+	' +' S
+	;
+
+##
+
+
+
+
+
+
+date_value:		  date
+				| date_period
+				| date_range
+				| date_approx
+				| date_int
+				| date_phrase
+				;
+
+date_int:		  INT S date S date_phrase
+				;
+
+date_phrase:	  OPAREN TEXT CPAREN
+				;
+
+date_period:	  FROM S date S TO S date
+				| FROM S date
+				| TO S date
+				;
+
+date_range:		  BEF S date
+				| AFT S date
+				| BET S date S AND S date
+				;
+
+date_approx:	  ABT S date
+				| CAL S date
+				| EST S date
+				;
+
+date:			  date_cal_esc S date_calendar
+				| date_calendar
+				;
+
+date_calendar:	  date_greg
+				| date_juln
+				| date_hebr
+				| date_fren
+				;
+
+date_greg:		  year_greg
+				| month_eng S year_greg
+				| day S month_eng S year_greg
+				;
+
+date_juln:		  year
+				| month_eng S year
+				| day S month_eng S year
+				;
+
+date_hebr:		  year
+				| month_hebr S year
+				| day S month_hebr S year
+				;
+
+date_fren:		  year
+				| month_fren S year
+				| day S month_fren S year
+				;
+
+date_cal_esc:	  AT ESC cal_name AT
+				;
+
+cal_name:		  GREGORIAN
+				| JULIAN
+				| HEBREW
+				| FRENCHR
+				| UNKNOWN
+				;
+
+year_greg:		  NUMBER
+				| NUMBER SLASH NUMBER
+				;
+
+year:			  NUMBER
+				;
+
+day:			  NUMBER
+				;
+
+month_eng:		  JAN
+				| FEB
+				| MAR
+				| APR
+				| MAY
+				| JUN
+				| JUL
+				| AUG
+				| SEP
+				| OCT
+				| NOV
+				| DEC
+				;
+
+month_fren:		  VEND
+				| BRUM
+				| FRIM
+				| NIVO
+				| PLUV
+				| VENT
+				| GERM
+				| FLOR
+				| PRAI
+				| MESS
+				| THER
+				| FRUC
+				| COMP
+				;
+
+month_hebr:		  TSH
+				| CSH
+				| KSL
+				| TVT
+				| SHV
+				| ADR
+				| ADS
+				| NSN
+				| IYR
+				| SVN
+				| TMZ
+				| AAV
+				| ELL
+				;
