@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+
+
+		<title>Parser Test</title>
+
+		<script src="GedcomDateParserDEBUG.js"></script>
+
+	</head>
+	<body>
+	<form onsubmit="return false;">
+		<input name="entry" type="text"></input>
+		<input type="button" value="Parse" onclick="_dbg_withtrace = true; _dbg_string = ''; __parse(this.form.entry.value); return false;"></input>
+	</form>
+	</body>
+</html>

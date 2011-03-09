@@ -1,0 +1,28 @@
+	'JUNK' JUNK
+	'[0-9]+' NUMBER [* %match = parseInt( %match , 10 ); *]
+	' +' S
+	;
+
+##
+
+
+
+
+start:			date_value				[* alert('RESULT: '+ %1 ); *]
+				;
+
+date_value:		date					[* %% = 'date:'+%1; *]
+				| date_period			[* %% = 'date_period:'+%1; *]
+				;
+
+date_period:	JUNK S date S date		[* %% = 'junk'+%3+'/'+%5; *]
+				;
+
+date:			year					[* %% = 'year:'+%1; *]
+				| month S year			[* %% = 'my:'+%1+'-'+%3; *]
+				| day S month S year	[* %% = 'dmy:'+%1+'/'+%3+'/'+%5; *]
+				;
+
+year:			NUMBER ;
+day:			NUMBER ;
+month:			NUMBER ;
