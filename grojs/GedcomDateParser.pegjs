@@ -70,14 +70,14 @@ date_julian_raw
   /                        y:year_julian { return { day:0, month:0, year:y, julian:true }; }
 
 year_julian
-  = y:year "/" number { return y+1; }
+  = y:year "/" N { return y+1; }
   / y:year
 
-year = y:number { return (y==0) ? null : y; }
+year = y:N { return (y==0) ? null : y; }
 
-day = number
+day = N
 
-number = digits:[0-9]+ { return parseInt(digits.join(""),10); }
+N = digits:[0-9]+ { return parseInt(digits.join(""),10); }
 
 S
   = (" ")+

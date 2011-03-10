@@ -1329,7 +1329,7 @@ GedcomDateParser = (function(){
         
         
         var savedPos1 = pos;
-        var result7 = parse_number(context);
+        var result7 = parse_N(context);
         if (result7 !== null) {
           var result8 = parse_S(context);
           if (result8 !== null) {
@@ -1414,7 +1414,7 @@ GedcomDateParser = (function(){
         
         
         var savedPos1 = pos;
-        var result7 = parse_number(context);
+        var result7 = parse_N(context);
         if (result7 !== null) {
           var result8 = parse_S(context);
           if (result8 !== null) {
@@ -1499,7 +1499,7 @@ GedcomDateParser = (function(){
         
         
         var savedPos1 = pos;
-        var result10 = parse_number(context);
+        var result10 = parse_N(context);
         if (result10 !== null) {
           var result11 = parse_S(context);
           if (result11 !== null) {
@@ -1593,7 +1593,7 @@ GedcomDateParser = (function(){
         
         
         var savedPos1 = pos;
-        var result10 = parse_number(context);
+        var result10 = parse_N(context);
         if (result10 !== null) {
           var result11 = parse_S(context);
           if (result11 !== null) {
@@ -1699,7 +1699,7 @@ GedcomDateParser = (function(){
             }
           }
           if (result5 !== null) {
-            var result6 = parse_number(context);
+            var result6 = parse_N(context);
             if (result6 !== null) {
               var result3 = [result4, result5, result6];
             } else {
@@ -1746,7 +1746,7 @@ GedcomDateParser = (function(){
         }
         
         
-        var result1 = parse_number(context);
+        var result1 = parse_N(context);
         var result0 = result1 !== null
           ? (function(y) { return (y==0) ? null : y; })(result1)
           : null;
@@ -1760,8 +1760,8 @@ GedcomDateParser = (function(){
         return result0;
       }
       
-      function parse_number(context) {
-        var cacheKey = "number" + '@' + pos;
+      function parse_N(context) {
+        var cacheKey = "N" + '@' + pos;
         var cachedResult = cache[cacheKey];
         if (cachedResult) {
           pos = cachedResult.nextPos;
