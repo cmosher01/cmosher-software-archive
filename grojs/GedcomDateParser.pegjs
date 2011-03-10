@@ -33,7 +33,6 @@ date
   / "@#D" cal:"HEBREW"    "@" OS ymd:date_hebrew { return null; /* not yet implemented */ }
   / "@#D" cal:"FRENCH R"  "@" OS ymd:date_french { return null; /* not yet implemented */ }
   / "@#D" cal:other_cal   "@" OS str:.*          { return cal+": "+str.join(""); }
-  /                              ymd:date_julian { ymd.julian = true; return ymd; }
   /                              ymd:date_gregor { return ymd; }
 
 other_cal
