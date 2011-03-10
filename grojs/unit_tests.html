@@ -1,76 +1,99 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 
 
-		<title>Unit Tests</title>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 
 
-		<!-- JSON -->
-
-			<!-- script src="https://github.com/douglascrockford/JSON-js/raw/master/json.js"></script -->
-			<script src="lib/json/json.js"></script>
+    <title>Unit Tests</title>
 
 
 
-		<!-- JQuery -->
+    <!-- JSON -->
 
-			<!-- script src="http://code.jquery.com/jquery-latest.js"></script -->
-			<script src="lib/jquery/jquery.js"></script>
-
-
-
-		<!-- QUnit -->
-
-			<!-- link rel="stylesheet" type="text/css" media="screen" href="https://github.com/jquery/qunit/raw/master/qunit/qunit.css" / -->
-			<link rel="stylesheet" type="text/css" media="screen" href="lib/qunit/qunit.css" />
-			<!-- add "https://github.com/" to noscript.inclusionTypeChecking.exceptions in about:config for firefox: -->
-			<!-- script src="https://github.com/jquery/qunit/raw/master/qunit/qunit.js"></script -->
-			<script src="lib/qunit/qunit.js"></script>
+      <!-- From: https://github.com/douglascrockford/JSON-js/raw/master/json.js -->
+      <script src="lib/json/json.js"></script>
 
 
 
-		<!-- private QUnit tools -->
+    <!-- JQuery -->
 
-			<script src="lib/qunit/qutools.js"></script>
-
-
-
-		<!-- unit tests -->
-
-			<script src="Util.js"></script><script src="Util.qu"></script>
-			<script src="YMD.js"></script><script src="YMD.qu"></script>
-			<script src="Dragger.js"></script><!-- script src="Dragger.qu"></script -->
-			<script src="TreeNode.js"></script><script src="TreeNode.qu"></script>
-			<script src="Size.js"></script><script src="Size.qu"></script>
-			<script src="Point.js"></script><script src="Point.qu"></script>
-			<script src="Rect.js"></script><!--script src="Rect.qu"></script-->
-			<script src="GedcomDateParser.js"></script><script src="GedcomDateParser.qu"></script>
-			<script src="GedcomLine.js"></script><script src="GedcomLine.qu"></script>
-			<script src="GedcomTree.js"></script><script src="GedcomTree.qu"></script>
-			<script src="GedcomTag.js"></script><!--script src="GedcomTag.qu"></script-->
-			<script src="GedcomEvent.js"></script><!--script src="GedcomEvent.qu"></script-->
-			<script src="Person.js"></script><script src="Person.qu"></script>
-			<script src="Partnership.js"></script><script src="Partnership.qu"></script>
-			<!-- script src="GedcomExtractor.js"></script><script src="GedcomExtractor.qu"></script -->
-			<script type="text/javascript">
-				test("running in browser environment",function() {
-					equal(Util.getTypeName(Util.global),"Window");
-				});
-			</script>
+      <!-- From: http://code.jquery.com/jquery-latest.js -->
+      <script src="lib/jquery/jquery.js"></script>
 
 
 
-	</head>
+    <!-- QUnit -->
 
-	<body>
-		<h1 id="qunit-header">QUnit Tests</h1>
-		<h2 id="qunit-banner"></h2>
-		<div id="qunit-testrunner-toolbar"></div>
-		<h2 id="qunit-userAgent"></h2>
-		<ol id="qunit-tests"></ol>
-	</body>
+      <!-- From: https://github.com/jquery/qunit/raw/master/qunit/qunit.css -->
+      <link rel="stylesheet" type="text/css" media="screen" href="lib/qunit/qunit.css"></link>
+      <!-- From: https://github.com/jquery/qunit/raw/master/qunit/qunit.js -->
+      <script src="lib/qunit/qunit.js"></script>
+      <script src="lib/qunit/qutools.js"></script>
+
+
+
+    <!-- units under test -->
+
+      <script type="text/javascript" src="Util.js"></script>
+      <script type="text/javascript" src="Calendar.js"></script>
+      <script type="text/javascript" src="YMD.js"></script>
+      <script type="text/javascript" src="Dragger.js"></script>
+      <script type="text/javascript" src="TreeNode.js"></script>
+      <script type="text/javascript" src="Size.js"></script>
+      <script type="text/javascript" src="Point.js"></script>
+      <script type="text/javascript" src="Rect.js"></script>
+      <script type="text/javascript" src="DateRange.js"></script>
+      <script type="text/javascript" src="DatePeriod.js"></script>
+      <script type="text/javascript" src="GedcomDateParser.js"></script>
+      <script type="text/javascript" src="GedcomLine.js"></script>
+      <script type="text/javascript" src="GedcomTree.js"></script>
+      <script type="text/javascript" src="GedcomTag.js"></script>
+      <script type="text/javascript" src="GedcomEvent.js"></script>
+      <script type="text/javascript" src="Person.js"></script>
+      <script type="text/javascript" src="Partnership.js"></script>
+      <script type="text/javascript" src="GedcomExtractor.js"></script>
+
+
+
+    <!-- unit tests -->
+
+      <script type="text/javascript" src="Util.qu"></script>
+      <!-- <script type="text/javascript" src="Calendar.qu"></script> -->
+      <script type="text/javascript" src="YMD.qu"></script>
+      <!-- <script type="text/javascript" src="Dragger.qu"></script> -->
+      <script type="text/javascript" src="TreeNode.qu"></script>
+      <script type="text/javascript" src="Size.qu"></script>
+      <script type="text/javascript" src="Point.qu"></script>
+      <!-- <script type="text/javascript" src="Rect.qu"></script> -->
+      <!-- <script type="text/javascript" src="DateRange.js"></script> -->
+      <!-- <script type="text/javascript" src="DatePeriod.js"></script> -->
+      <script type="text/javascript" src="GedcomDateParser.qu"></script>
+      <script type="text/javascript" src="GedcomLine.qu"></script>
+      <script type="text/javascript" src="GedcomTree.qu"></script>
+      <!-- <script type="text/javascript" src="GedcomTag.qu"></script> -->
+      <!-- <script type="text/javascript" src="GedcomEvent.qu"></script> -->
+      <script type="text/javascript" src="Person.qu"></script>
+      <script type="text/javascript" src="Partnership.qu"></script>
+      <!-- <script type="text/javascript" src="GedcomExtractor.qu"></script> -->
+
+
+
+  </head>
+
+
+
+  <body>
+    <h1 id="qunit-header">QUnit Tests</h1>
+    <h2 id="qunit-banner"></h2>
+    <div id="qunit-testrunner-toolbar"></div>
+    <h2 id="qunit-userAgent"></h2>
+    <ol id="qunit-tests"></ol>
+  </body>
+
+
+
 </html>
