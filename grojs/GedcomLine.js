@@ -144,7 +144,7 @@ GedcomLine.prototype.concat = function(c) {
  * @type GedcomLine
  */
 GedcomLine.parse = function(s) {
-	var r = /^(\d+)\s+(?:(@[^@]+@)\s+)?(\S+)(?:\s(.*))?$/.exec(s);
+	var r = /^\s*(\d+)\s+(?:(@[^@]+@)\s+)?(\S+)(?:\s(.*))?$/.exec(s);
 	if (r == null) {
 		throw new Error("Gedcom line has invalid syntax: "+s);
 	}
