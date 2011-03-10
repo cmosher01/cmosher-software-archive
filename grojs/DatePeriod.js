@@ -19,7 +19,7 @@ function DatePeriod(dateStart, dateEnd) {
 	this.dateStart = dateStart;
 	this.dateEnd = dateEnd;
 	if (!this.dateEnd) {
-		this.dateEnd = this.dateStart
+		this.dateEnd = this.dateStart;
 	}
 }
 
@@ -29,7 +29,7 @@ function DatePeriod(dateStart, dateEnd) {
  */
 DatePeriod.prototype.getStartDate = function() {
 	return this.dateStart;
-}
+};
 
 /**
  * @return the end date
@@ -37,7 +37,7 @@ DatePeriod.prototype.getStartDate = function() {
  */
 DatePeriod.prototype.getEndDate = function() {
 	return this.dateEnd;
-}
+};
 
 /**
  * @return date period string
@@ -48,7 +48,7 @@ DatePeriod.prototype.toString = function() {
 		return this.dateStart.toString();
 	}
 	return this.dateStart+"-"+this.dateEnd;
-}
+};
 
 /**
  * Checks to see if this DatePeriod overlaps the given DatePeriod.
