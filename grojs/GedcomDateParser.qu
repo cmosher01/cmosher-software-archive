@@ -93,4 +93,10 @@ $(function() {
 		raises(function () { GedcomDateParser.parse(
 			"@#DGREGORIAN@ 11 FEB 1731/2");});
 	});
+
+	test("omitted space after calendar escape", function() {
+		deepEqual(GedcomDateParser.parse(
+			"@#DGREGORIAN@2 FEB 2222"), 
+			{year:2222,month:2,day:2});
+	});
 });
