@@ -5,15 +5,58 @@
 
 
 
-		<title>Parser Test</title>
+		<title>GEDCOM Date Parser Unit Tests</title>
 
-		<script src="GedcomDateParserDEBUG.js"></script>
+		<!-- JQuery -->
+
+			<!-- script src="http://code.jquery.com/jquery-latest.js"></script -->
+			<script src="lib/jquery/jquery.js"></script>
+
+
+
+		<!-- QUnit -->
+
+			<!-- link rel="stylesheet" type="text/css" media="screen" href="https://github.com/jquery/qunit/raw/master/qunit/qunit.css" / -->
+			<link rel="stylesheet" type="text/css" media="screen" href="lib/qunit/qunit.css" />
+			<!-- add "https://github.com/" to noscript.inclusionTypeChecking.exceptions in about:config for firefox: -->
+			<!-- script src="https://github.com/jquery/qunit/raw/master/qunit/qunit.js"></script -->
+			<script src="lib/qunit/qunit.js"></script>
+
+
+
+		<!-- private QUnit tools -->
+
+			<script src="lib/qunit/qutools.js"></script>
+
+		<!-- tools -->
+
+			<script src="Util.js"></script>
+
+		<!-- units under test -->
+
+			<script src="GedcomDateParser.js"></script>
+
+		<!-- unit tests -->
+
+			<script src="GedcomDateParser.qu"></script>
+
+
+
+		<script type="text/javascript">
+			test("running in browser environment",function() {
+				equal(Util.getTypeName(Util.global),"Window");
+			});
+		</script>
+
+
 
 	</head>
+
 	<body>
-	<form onsubmit="return false;">
-		<input name="entry" type="text"></input>
-		<input type="button" value="Parse" onclick="_dbg_withtrace = true; _dbg_string = ''; __parse(this.form.entry.value); return false;"></input>
-	</form>
+		<h1 id="qunit-header">QUnit Tests</h1>
+		<h2 id="qunit-banner"></h2>
+		<div id="qunit-testrunner-toolbar"></div>
+		<h2 id="qunit-userAgent"></h2>
+		<ol id="qunit-tests"></ol>
 	</body>
 </html>
