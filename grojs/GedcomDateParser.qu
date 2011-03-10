@@ -84,9 +84,10 @@ $(function() {
 			"25 JUL");});
 	});
 
-	test("slashed year cannot be gregorian (default)", function() {
-		raises(function () { GedcomDateParser.parse(
-			"11 FEB 1731/2");});
+	test("unlabeled date with slashed year detected as julian", function() {
+		deepEqual(GedcomDateParser.parse(
+			"11 FEB 1731/2"), 
+			{year:1732,month:2,day:11,julian:true});
 	});
 
 	test("slashed year cannot be gregorian", function() {
@@ -94,7 +95,7 @@ $(function() {
 			"@#DGREGORIAN@ 11 FEB 1731/2");});
 	});
 
-	test("omitted space after calendar escape", function() {
+	test("omitted space after calendar escape is OK", function() {
 		deepEqual(GedcomDateParser.parse(
 			"@#DGREGORIAN@2 FEB 2222"), 
 			{year:2222,month:2,day:2});

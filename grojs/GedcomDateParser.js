@@ -727,335 +727,343 @@ GedcomDateParser = (function(){
         
         var savedPos4 = pos;
         if (input.substr(pos, 3) === "@#D") {
-          var result34 = "@#D";
+          var result36 = "@#D";
           pos += 3;
         } else {
-          var result34 = null;
+          var result36 = null;
           if (context.reportMatchFailures) {
             matchFailed(quoteString("@#D"));
           }
         }
-        if (result34 !== null) {
+        if (result36 !== null) {
           if (input.substr(pos, 9) === "GREGORIAN") {
-            var result35 = "GREGORIAN";
+            var result37 = "GREGORIAN";
             pos += 9;
           } else {
-            var result35 = null;
+            var result37 = null;
             if (context.reportMatchFailures) {
               matchFailed(quoteString("GREGORIAN"));
             }
           }
-          if (result35 !== null) {
+          if (result37 !== null) {
             if (input.substr(pos, 1) === "@") {
-              var result36 = "@";
+              var result38 = "@";
               pos += 1;
             } else {
-              var result36 = null;
+              var result38 = null;
               if (context.reportMatchFailures) {
                 matchFailed(quoteString("@"));
               }
             }
-            if (result36 !== null) {
-              var result37 = parse_OS(context);
-              if (result37 !== null) {
-                var result38 = parse_date_gregor(context);
-                if (result38 !== null) {
-                  var result33 = [result34, result35, result36, result37, result38];
+            if (result38 !== null) {
+              var result39 = parse_OS(context);
+              if (result39 !== null) {
+                var result40 = parse_date_gregor(context);
+                if (result40 !== null) {
+                  var result35 = [result36, result37, result38, result39, result40];
                 } else {
-                  var result33 = null;
+                  var result35 = null;
                   pos = savedPos4;
                 }
               } else {
-                var result33 = null;
+                var result35 = null;
                 pos = savedPos4;
               }
             } else {
-              var result33 = null;
+              var result35 = null;
               pos = savedPos4;
             }
           } else {
-            var result33 = null;
+            var result35 = null;
             pos = savedPos4;
           }
         } else {
-          var result33 = null;
+          var result35 = null;
           pos = savedPos4;
         }
-        var result32 = result33 !== null
-          ? (function(cal, ymd) { return ymd; })(result33[1], result33[4])
+        var result34 = result35 !== null
+          ? (function(cal, ymd) { return ymd; })(result35[1], result35[4])
           : null;
-        if (result32 !== null) {
-          var result0 = result32;
+        if (result34 !== null) {
+          var result0 = result34;
         } else {
           var savedPos3 = pos;
           if (input.substr(pos, 3) === "@#D") {
-            var result27 = "@#D";
+            var result29 = "@#D";
             pos += 3;
           } else {
-            var result27 = null;
+            var result29 = null;
             if (context.reportMatchFailures) {
               matchFailed(quoteString("@#D"));
             }
           }
-          if (result27 !== null) {
+          if (result29 !== null) {
             if (input.substr(pos, 6) === "JULIAN") {
-              var result28 = "JULIAN";
+              var result30 = "JULIAN";
               pos += 6;
             } else {
-              var result28 = null;
+              var result30 = null;
               if (context.reportMatchFailures) {
                 matchFailed(quoteString("JULIAN"));
               }
             }
-            if (result28 !== null) {
+            if (result30 !== null) {
               if (input.substr(pos, 1) === "@") {
-                var result29 = "@";
+                var result31 = "@";
                 pos += 1;
               } else {
-                var result29 = null;
+                var result31 = null;
                 if (context.reportMatchFailures) {
                   matchFailed(quoteString("@"));
                 }
               }
-              if (result29 !== null) {
-                var result30 = parse_OS(context);
-                if (result30 !== null) {
-                  var result31 = parse_date_julian(context);
-                  if (result31 !== null) {
-                    var result26 = [result27, result28, result29, result30, result31];
+              if (result31 !== null) {
+                var result32 = parse_OS(context);
+                if (result32 !== null) {
+                  var result33 = parse_date_julian(context);
+                  if (result33 !== null) {
+                    var result28 = [result29, result30, result31, result32, result33];
                   } else {
-                    var result26 = null;
+                    var result28 = null;
                     pos = savedPos3;
                   }
                 } else {
-                  var result26 = null;
+                  var result28 = null;
                   pos = savedPos3;
                 }
               } else {
-                var result26 = null;
+                var result28 = null;
                 pos = savedPos3;
               }
             } else {
-              var result26 = null;
+              var result28 = null;
               pos = savedPos3;
             }
           } else {
-            var result26 = null;
+            var result28 = null;
             pos = savedPos3;
           }
-          var result25 = result26 !== null
-            ? (function(cal, ymd) { ymd.julian = true; return ymd; })(result26[1], result26[4])
+          var result27 = result28 !== null
+            ? (function(cal, ymd) { ymd.julian = true; return ymd; })(result28[1], result28[4])
             : null;
-          if (result25 !== null) {
-            var result0 = result25;
+          if (result27 !== null) {
+            var result0 = result27;
           } else {
             var savedPos2 = pos;
             if (input.substr(pos, 3) === "@#D") {
-              var result20 = "@#D";
+              var result22 = "@#D";
               pos += 3;
             } else {
-              var result20 = null;
+              var result22 = null;
               if (context.reportMatchFailures) {
                 matchFailed(quoteString("@#D"));
               }
             }
-            if (result20 !== null) {
+            if (result22 !== null) {
               if (input.substr(pos, 6) === "HEBREW") {
-                var result21 = "HEBREW";
+                var result23 = "HEBREW";
                 pos += 6;
               } else {
-                var result21 = null;
+                var result23 = null;
                 if (context.reportMatchFailures) {
                   matchFailed(quoteString("HEBREW"));
                 }
               }
-              if (result21 !== null) {
+              if (result23 !== null) {
                 if (input.substr(pos, 1) === "@") {
-                  var result22 = "@";
+                  var result24 = "@";
                   pos += 1;
                 } else {
-                  var result22 = null;
+                  var result24 = null;
                   if (context.reportMatchFailures) {
                     matchFailed(quoteString("@"));
                   }
                 }
-                if (result22 !== null) {
-                  var result23 = parse_OS(context);
-                  if (result23 !== null) {
-                    var result24 = parse_date_hebrew(context);
-                    if (result24 !== null) {
-                      var result19 = [result20, result21, result22, result23, result24];
+                if (result24 !== null) {
+                  var result25 = parse_OS(context);
+                  if (result25 !== null) {
+                    var result26 = parse_date_hebrew(context);
+                    if (result26 !== null) {
+                      var result21 = [result22, result23, result24, result25, result26];
                     } else {
-                      var result19 = null;
+                      var result21 = null;
                       pos = savedPos2;
                     }
                   } else {
-                    var result19 = null;
+                    var result21 = null;
                     pos = savedPos2;
                   }
                 } else {
-                  var result19 = null;
+                  var result21 = null;
                   pos = savedPos2;
                 }
               } else {
-                var result19 = null;
+                var result21 = null;
                 pos = savedPos2;
               }
             } else {
-              var result19 = null;
+              var result21 = null;
               pos = savedPos2;
             }
-            var result18 = result19 !== null
-              ? (function(cal, ymd) { return null; /* not yet implemented */ })(result19[1], result19[4])
+            var result20 = result21 !== null
+              ? (function(cal, ymd) { return null; /* not yet implemented */ })(result21[1], result21[4])
               : null;
-            if (result18 !== null) {
-              var result0 = result18;
+            if (result20 !== null) {
+              var result0 = result20;
             } else {
               var savedPos1 = pos;
               if (input.substr(pos, 3) === "@#D") {
-                var result13 = "@#D";
+                var result15 = "@#D";
                 pos += 3;
               } else {
-                var result13 = null;
+                var result15 = null;
                 if (context.reportMatchFailures) {
                   matchFailed(quoteString("@#D"));
                 }
               }
-              if (result13 !== null) {
+              if (result15 !== null) {
                 if (input.substr(pos, 8) === "FRENCH R") {
-                  var result14 = "FRENCH R";
+                  var result16 = "FRENCH R";
                   pos += 8;
                 } else {
-                  var result14 = null;
+                  var result16 = null;
                   if (context.reportMatchFailures) {
                     matchFailed(quoteString("FRENCH R"));
                   }
                 }
-                if (result14 !== null) {
+                if (result16 !== null) {
                   if (input.substr(pos, 1) === "@") {
-                    var result15 = "@";
+                    var result17 = "@";
                     pos += 1;
                   } else {
-                    var result15 = null;
+                    var result17 = null;
                     if (context.reportMatchFailures) {
                       matchFailed(quoteString("@"));
                     }
                   }
-                  if (result15 !== null) {
-                    var result16 = parse_OS(context);
-                    if (result16 !== null) {
-                      var result17 = parse_date_french(context);
-                      if (result17 !== null) {
-                        var result12 = [result13, result14, result15, result16, result17];
+                  if (result17 !== null) {
+                    var result18 = parse_OS(context);
+                    if (result18 !== null) {
+                      var result19 = parse_date_french(context);
+                      if (result19 !== null) {
+                        var result14 = [result15, result16, result17, result18, result19];
                       } else {
-                        var result12 = null;
+                        var result14 = null;
                         pos = savedPos1;
                       }
                     } else {
-                      var result12 = null;
+                      var result14 = null;
                       pos = savedPos1;
                     }
                   } else {
-                    var result12 = null;
+                    var result14 = null;
                     pos = savedPos1;
                   }
                 } else {
-                  var result12 = null;
+                  var result14 = null;
                   pos = savedPos1;
                 }
               } else {
-                var result12 = null;
+                var result14 = null;
                 pos = savedPos1;
               }
-              var result11 = result12 !== null
-                ? (function(cal, ymd) { return null; /* not yet implemented */ })(result12[1], result12[4])
+              var result13 = result14 !== null
+                ? (function(cal, ymd) { return null; /* not yet implemented */ })(result14[1], result14[4])
                 : null;
-              if (result11 !== null) {
-                var result0 = result11;
+              if (result13 !== null) {
+                var result0 = result13;
               } else {
                 var savedPos0 = pos;
                 if (input.substr(pos, 3) === "@#D") {
-                  var result5 = "@#D";
+                  var result7 = "@#D";
                   pos += 3;
                 } else {
-                  var result5 = null;
+                  var result7 = null;
                   if (context.reportMatchFailures) {
                     matchFailed(quoteString("@#D"));
                   }
                 }
-                if (result5 !== null) {
-                  var result6 = parse_other_cal(context);
-                  if (result6 !== null) {
+                if (result7 !== null) {
+                  var result8 = parse_other_cal(context);
+                  if (result8 !== null) {
                     if (input.substr(pos, 1) === "@") {
-                      var result7 = "@";
+                      var result9 = "@";
                       pos += 1;
                     } else {
-                      var result7 = null;
+                      var result9 = null;
                       if (context.reportMatchFailures) {
                         matchFailed(quoteString("@"));
                       }
                     }
-                    if (result7 !== null) {
-                      var result8 = parse_OS(context);
-                      if (result8 !== null) {
-                        var result9 = [];
+                    if (result9 !== null) {
+                      var result10 = parse_OS(context);
+                      if (result10 !== null) {
+                        var result11 = [];
                         if (input.length > pos) {
-                          var result10 = input.charAt(pos);
+                          var result12 = input.charAt(pos);
                           pos++;
                         } else {
-                          var result10 = null;
+                          var result12 = null;
                           if (context.reportMatchFailures) {
                             matchFailed('any character');
                           }
                         }
-                        while (result10 !== null) {
-                          result9.push(result10);
+                        while (result12 !== null) {
+                          result11.push(result12);
                           if (input.length > pos) {
-                            var result10 = input.charAt(pos);
+                            var result12 = input.charAt(pos);
                             pos++;
                           } else {
-                            var result10 = null;
+                            var result12 = null;
                             if (context.reportMatchFailures) {
                               matchFailed('any character');
                             }
                           }
                         }
-                        if (result9 !== null) {
-                          var result4 = [result5, result6, result7, result8, result9];
+                        if (result11 !== null) {
+                          var result6 = [result7, result8, result9, result10, result11];
                         } else {
-                          var result4 = null;
+                          var result6 = null;
                           pos = savedPos0;
                         }
                       } else {
-                        var result4 = null;
+                        var result6 = null;
                         pos = savedPos0;
                       }
                     } else {
-                      var result4 = null;
+                      var result6 = null;
                       pos = savedPos0;
                     }
                   } else {
-                    var result4 = null;
+                    var result6 = null;
                     pos = savedPos0;
                   }
                 } else {
-                  var result4 = null;
+                  var result6 = null;
                   pos = savedPos0;
                 }
-                var result3 = result4 !== null
-                  ? (function(cal, str) { return cal+": "+str.join(""); })(result4[1], result4[4])
+                var result5 = result6 !== null
+                  ? (function(cal, str) { return cal+": "+str.join(""); })(result6[1], result6[4])
                   : null;
-                if (result3 !== null) {
-                  var result0 = result3;
+                if (result5 !== null) {
+                  var result0 = result5;
                 } else {
-                  var result2 = parse_date_gregor(context);
-                  var result1 = result2 !== null
-                    ? (function(ymd) { return ymd; })(result2)
+                  var result4 = parse_date_slash(context);
+                  var result3 = result4 !== null
+                    ? (function(ymd) { ymd.julian = true; return ymd; })(result4)
                     : null;
-                  if (result1 !== null) {
-                    var result0 = result1;
+                  if (result3 !== null) {
+                    var result0 = result3;
                   } else {
-                    var result0 = null;;
+                    var result2 = parse_date_gregor(context);
+                    var result1 = result2 !== null
+                      ? (function(ymd) { return ymd; })(result2)
+                      : null;
+                    if (result1 !== null) {
+                      var result0 = result1;
+                    } else {
+                      var result0 = null;;
+                    };
                   };
                 };
               };
@@ -1489,6 +1497,100 @@ GedcomDateParser = (function(){
         return result0;
       }
       
+      function parse_date_slash(context) {
+        var cacheKey = "date_slash" + '@' + pos;
+        var cachedResult = cache[cacheKey];
+        if (cachedResult) {
+          pos = cachedResult.nextPos;
+          return cachedResult.result;
+        }
+        
+        
+        var savedPos1 = pos;
+        var result10 = parse_N(context);
+        if (result10 !== null) {
+          var result11 = parse_S(context);
+          if (result11 !== null) {
+            var result12 = parse_month_engl(context);
+            if (result12 !== null) {
+              var result13 = parse_S(context);
+              if (result13 !== null) {
+                var result14 = parse_year_slash(context);
+                if (result14 !== null) {
+                  var result9 = [result10, result11, result12, result13, result14];
+                } else {
+                  var result9 = null;
+                  pos = savedPos1;
+                }
+              } else {
+                var result9 = null;
+                pos = savedPos1;
+              }
+            } else {
+              var result9 = null;
+              pos = savedPos1;
+            }
+          } else {
+            var result9 = null;
+            pos = savedPos1;
+          }
+        } else {
+          var result9 = null;
+          pos = savedPos1;
+        }
+        var result8 = result9 !== null
+          ? (function(d, m, y) { return { day:d, month:m, year:y }; })(result9[0], result9[2], result9[4])
+          : null;
+        if (result8 !== null) {
+          var result0 = result8;
+        } else {
+          var savedPos0 = pos;
+          var result5 = parse_month_engl(context);
+          if (result5 !== null) {
+            var result6 = parse_S(context);
+            if (result6 !== null) {
+              var result7 = parse_year_slash(context);
+              if (result7 !== null) {
+                var result4 = [result5, result6, result7];
+              } else {
+                var result4 = null;
+                pos = savedPos0;
+              }
+            } else {
+              var result4 = null;
+              pos = savedPos0;
+            }
+          } else {
+            var result4 = null;
+            pos = savedPos0;
+          }
+          var result3 = result4 !== null
+            ? (function(m, y) { return { day:0, month:m, year:y }; })(result4[0], result4[2])
+            : null;
+          if (result3 !== null) {
+            var result0 = result3;
+          } else {
+            var result2 = parse_year_slash(context);
+            var result1 = result2 !== null
+              ? (function(y) { return { day:0, month:0, year:y }; })(result2)
+              : null;
+            if (result1 !== null) {
+              var result0 = result1;
+            } else {
+              var result0 = null;;
+            };
+          };
+        }
+        
+        
+        
+        cache[cacheKey] = {
+          nextPos: pos,
+          result:  result0
+        };
+        return result0;
+      }
+      
       function parse_date_gregor_raw(context) {
         var cacheKey = "date_gregor_raw" + '@' + pos;
         var cachedResult = cache[cacheKey];
@@ -1625,7 +1727,7 @@ GedcomDateParser = (function(){
           pos = savedPos1;
         }
         var result8 = result9 !== null
-          ? (function(d, m, y) { return { day:d, month:m, year:y, julian:true }; })(result9[0], result9[2], result9[4])
+          ? (function(d, m, y) { return { day:d, month:m, year:y }; })(result9[0], result9[2], result9[4])
           : null;
         if (result8 !== null) {
           var result0 = result8;
@@ -1651,14 +1753,14 @@ GedcomDateParser = (function(){
             pos = savedPos0;
           }
           var result3 = result4 !== null
-            ? (function(m, y) { return { day:0, month:m, year:y, julian:true }; })(result4[0], result4[2])
+            ? (function(m, y) { return { day:0, month:m, year:y }; })(result4[0], result4[2])
             : null;
           if (result3 !== null) {
             var result0 = result3;
           } else {
             var result2 = parse_year_julian(context);
             var result1 = result2 !== null
-              ? (function(y) { return { day:0, month:0, year:y, julian:true }; })(result2)
+              ? (function(y) { return { day:0, month:0, year:y }; })(result2)
               : null;
             if (result1 !== null) {
               var result0 = result1;
@@ -1686,37 +1788,7 @@ GedcomDateParser = (function(){
         }
         
         
-        var savedPos0 = pos;
-        var result4 = parse_year(context);
-        if (result4 !== null) {
-          if (input.substr(pos, 1) === "/") {
-            var result5 = "/";
-            pos += 1;
-          } else {
-            var result5 = null;
-            if (context.reportMatchFailures) {
-              matchFailed(quoteString("/"));
-            }
-          }
-          if (result5 !== null) {
-            var result6 = parse_N(context);
-            if (result6 !== null) {
-              var result3 = [result4, result5, result6];
-            } else {
-              var result3 = null;
-              pos = savedPos0;
-            }
-          } else {
-            var result3 = null;
-            pos = savedPos0;
-          }
-        } else {
-          var result3 = null;
-          pos = savedPos0;
-        }
-        var result2 = result3 !== null
-          ? (function(y) { return y+1; })(result3[0])
-          : null;
+        var result2 = parse_year_slash(context);
         if (result2 !== null) {
           var result0 = result2;
         } else {
@@ -1727,6 +1799,56 @@ GedcomDateParser = (function(){
             var result0 = null;;
           };
         }
+        
+        
+        
+        cache[cacheKey] = {
+          nextPos: pos,
+          result:  result0
+        };
+        return result0;
+      }
+      
+      function parse_year_slash(context) {
+        var cacheKey = "year_slash" + '@' + pos;
+        var cachedResult = cache[cacheKey];
+        if (cachedResult) {
+          pos = cachedResult.nextPos;
+          return cachedResult.result;
+        }
+        
+        
+        var savedPos0 = pos;
+        var result2 = parse_year(context);
+        if (result2 !== null) {
+          if (input.substr(pos, 1) === "/") {
+            var result3 = "/";
+            pos += 1;
+          } else {
+            var result3 = null;
+            if (context.reportMatchFailures) {
+              matchFailed(quoteString("/"));
+            }
+          }
+          if (result3 !== null) {
+            var result4 = parse_N(context);
+            if (result4 !== null) {
+              var result1 = [result2, result3, result4];
+            } else {
+              var result1 = null;
+              pos = savedPos0;
+            }
+          } else {
+            var result1 = null;
+            pos = savedPos0;
+          }
+        } else {
+          var result1 = null;
+          pos = savedPos0;
+        }
+        var result0 = result1 !== null
+          ? (function(y) { return y+1; })(result1[0])
+          : null;
         
         
         

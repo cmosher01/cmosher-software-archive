@@ -33,6 +33,7 @@ date
   / "@#D" cal:"HEBREW"    "@" OS ymd:date_hebrew { return null; /* not yet implemented */ }
   / "@#D" cal:"FRENCH R"  "@" OS ymd:date_french { return null; /* not yet implemented */ }
   / "@#D" cal:other_cal   "@" OS str:.*          { return cal+": "+str.join(""); }
+  /                              ymd:date_slash  { ymd.julian = true; return ymd; }
   /                              ymd:date_gregor { return ymd; }
 
 other_cal
@@ -59,19 +60,27 @@ date_french
   /         m:month_fren S y:year
   /                        y:year
 
+date_slash
+  = d:day S m:month_engl S y:year_slash { return { day:d, month:m, year:y }; }
+  /         m:month_engl S y:year_slash { return { day:0, month:m, year:y }; }
+  /                        y:year_slash { return { day:0, month:0, year:y }; }
+
 date_gregor_raw
   = d:day S m:month_engl S y:year { return { day:d, month:m, year:y }; }
   /         m:month_engl S y:year { return { day:0, month:m, year:y }; }
   /                        y:year { return { day:0, month:0, year:y }; }
 
 date_julian_raw
-  = d:day S m:month_engl S y:year_julian { return { day:d, month:m, year:y, julian:true }; }
-  /         m:month_engl S y:year_julian { return { day:0, month:m, year:y, julian:true }; }
-  /                        y:year_julian { return { day:0, month:0, year:y, julian:true }; }
+  = d:day S m:month_engl S y:year_julian { return { day:d, month:m, year:y }; }
+  /         m:month_engl S y:year_julian { return { day:0, month:m, year:y }; }
+  /                        y:year_julian { return { day:0, month:0, year:y }; }
 
 year_julian
+  = year_slash
+  / year
+
+year_slash
   = y:year "/" N { return y+1; }
-  / y:year
 
 year = y:N { return (y==0) ? null : y; }
 
