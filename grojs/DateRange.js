@@ -28,6 +28,10 @@ function DateRange(earliest, latest) {
 		this.latest = YMD.getMaximum();
 	}
 
+	/**
+	 * @private
+	 * @type Date
+	 */
 	this.approx = this.calcApprox();
 }
 
@@ -61,7 +65,7 @@ DateRange.prototype.isExact = function() {
  * @return an approximation of this range
  * @type Date
  */
-DateRange.prototype.getApproxDay = function() {
+DateRange.prototype.getApproxDate = function() {
 	return this.approx;
 };
 
@@ -73,6 +77,9 @@ DateRange.prototype.toString = function() {
 	if (this.isExact()) {
 		return this.earliest.toString();
 	}
+	if (DateRange.equal(this,DateRange.UNKNOWN)) {
+		return "[unknown]";
+	}
 	return this.earliest.toString()+"?"+this.latest.toString();
 };
 
@@ -82,7 +89,7 @@ DateRange.prototype.toString = function() {
  * @type Date
  */
 DateRange.prototype.calcApprox = function() {
-	return new Date((this.earliest.getApproxDate().getMilliseconds()+this.latest.getApproxDate().getMilliseconds())/2);
+	return new Date((this.earliest.getApproxDate().getTime()+this.latest.getApproxDate().getTime())/2);
 };
 
 /**
@@ -104,7 +111,7 @@ DateRange.equal = function(a,b) {
  * @type Number
  */
 DateRange.order = function(a,b) {
-	YMD.order(a,b);
+	return Util.dateOrder(a.getApproxDate(),b.getApproxDate());
 };
 
 /**

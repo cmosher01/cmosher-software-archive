@@ -102,10 +102,11 @@ GedcomExtractor.prototype.extractPerson = function(indi) {
 		}
 	});
 
+	revt.sort(GedcomEvent.order);
+
 	line = indi.line;
 	return new Person(line.getID(),nam,xy,revt);
 };
-
 
 /**
  * Extracts one {@link Partnership} from the given FAM node
@@ -146,8 +147,8 @@ GedcomExtractor.prototype.extractParnership = function(fam) {
 GedcomExtractor.prototype.extractEvent = function(evt) {
 	var that, typ, gdate, place;
 	that = this;
-	gdate = null;
-	place = null;
+	gdate = DatePeriod.UNKNOWN;
+	place = "";
 	typ = this.extractEventName(evt);
 	Util.forEach(evt.getChildren(), function(node) {
 		if (node.line.getTag() === "DATE") {
@@ -205,7 +206,7 @@ GedcomExtractor.prototype.extractDate = function(s) {
 	}
 	if (YMD.isParsedYMD(r)) {
 		ymd = YMD.fromParserResult(r);
-		rng = new DateRange(ymd);
+		rng = new DateRange(ymd,ymd);
 		return new DatePeriod(rng,rng);
 	}
 	if (DateRange.isParsedDateRange(r)) {

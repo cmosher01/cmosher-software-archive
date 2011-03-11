@@ -183,6 +183,14 @@ YMD.prototype.toString = function() {
 		s += "c. ";
 	}
 
+	if (this.year == 9999 || this.year == -9999) {
+		if (YMD.equal(this,YMD.getMaximum())) {
+			return "(MAX)";
+		}
+		if (YMD.equal(this,YMD.getMinimum())) {
+			return "(MIN)";
+		}
+	}
 	s += Util.digint(this.year,4);
 	if (this.month > 0) {
 		s += "-"+Util.digint(this.month,2);

@@ -65,3 +65,14 @@ GedcomEvent.prototype.getDate = function() {
 GedcomEvent.prototype.getPlace = function() {
 	return this.place;
 };
+
+/**
+ * Compares two {@link GedcomEvent}s, for sorting.
+ * @param {GedcomEvent} a
+ * @param {GedcomEvent} b
+ * @return -1:a<b, 0:a=b, +1:a>b
+ * @type Number
+ */
+GedcomEvent.order = function(a,b) {
+	return DatePeriod.order(a.getDate(),b.getDate());
+};

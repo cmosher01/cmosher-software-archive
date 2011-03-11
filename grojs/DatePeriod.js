@@ -59,7 +59,7 @@ DatePeriod.prototype.toString = function() {
 	if (this.isSingle()) {
 		return this.dateStart.toString();
 	}
-	return Util.safeStr(this.dateStart)+"-"+Util.safeStr(this.dateEnd);
+	return Util.safeStr(this.dateStart)+"\u2014"+Util.safeStr(this.dateEnd);
 };
 
 /**

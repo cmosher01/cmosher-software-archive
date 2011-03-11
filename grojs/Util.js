@@ -263,5 +263,5 @@ Util.localeOrder = function(a,b) {
  * @type Number
  */
 Util.dateOrder = function(a,b) {
-	return Util.numberOrder(a.getMilliseconds(),b.getMilliseconds());
+	return Util.numberOrder(a.getTime(),b.getTime());
 };
