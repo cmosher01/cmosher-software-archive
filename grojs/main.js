@@ -3,17 +3,17 @@ function main() {
 
 
 
-	titleText = document.createTextNode("Rapp");
+	titleText = Util.global.document.createTextNode("Rapp");
 
-	title = document.createElement("title");
+	title = Util.global.document.createElement("title");
 	title.appendChild(titleText);
 
-	head = document.getElementsByTagName("head")[0];
+	head = Util.global.document.getElementsByTagName("head")[0];
 	head.insertBefore(title,head.firstChild);
 
 
 
-	var fileref = document.createElement("link");
+	var fileref = Util.global.document.createElement("link");
 	fileref.rel = "stylesheet";
 	fileref.type = "text/css";
 	fileref.href = "index.css";
@@ -39,7 +39,7 @@ function main() {
 
 
 
-	window.onresize = function() {
+	Util.global.onresize = function() {
 		gedcom.calc();
 	};
 }

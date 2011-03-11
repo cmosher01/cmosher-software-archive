@@ -24,7 +24,7 @@ function YMD(y,m,d) {
 	 * @private
 	 * @type Number
 	 */
-	this.year = parseInt(y);
+	this.year = parseInt(y,10);
 	if (this.year <= -10000 || this.year == 0 || 10000 <= this.year) {
 		throw new Error("invalid year: "+this.year);
 	}
@@ -34,7 +34,7 @@ function YMD(y,m,d) {
 	 * @private
 	 * @type Number
 	 */
-	this.month = m == undefined ? 0 : parseInt(m);
+	this.month = !m ? 0 : parseInt(m,10);
 	if (this.month < 0 || 12 < this.month) {
 		throw new Error("invalid month: "+this.month);
 	}
@@ -44,10 +44,24 @@ function YMD(y,m,d) {
 	 * @private
 	 * @type Number
 	 */
-	this.day = d == undefined ? 0 : parseInt(d);
+	this.day = !d ? 0 : parseInt(d,10);
 	if (this.day < 0 || 31 < this.day) {
 		throw new Error("invalid day: "+this.day);
 	}
+
+	/**
+	 * if this date is an approximation
+	 * @private
+	 * @type Boolean
+	 */
+	this.circa = !!circa;
+
+	/**
+	 * if this date SHOULD be DISPLAYED in Julian Calendar
+	 * @private
+	 * @type Boolean
+	 */
+	this.julian = !!julian;
 
 	/**
 	 * @private
@@ -81,6 +95,23 @@ YMD.prototype.getMonth = function() {
  */
 YMD.prototype.getYear = function() {
     return this.year;
+};
+
+/**
+ * @return if this date should be show using the Julian calendar
+ * (if so, the caller is responsible for converting it).
+ * @type Boolean
+ */
+YMD.prototype.isJulian = function() {
+	return this.julian;
+};
+
+/**
+ * @return if this is an approximate date
+ * @type Boolean
+ */
+YMD.prototype.isCirca = function() {
+	return this.circa;
 };
 
 /**
@@ -144,7 +175,13 @@ YMD.getMaximum = function() {
  */
 YMD.prototype.toString = function() {
 	var s;
-	s = Util.digint(this.year,4);
+	s = "";
+
+	if (this.circa) {
+		s += "c. ";
+	}
+
+	s += Util.digint(this.year,4);
 	if (this.month > 0) {
 		s += "-"+Util.digint(this.month,2);
 		if (this.day > 0) {
@@ -189,4 +226,27 @@ YMD.prototype.calcApprox = function() {
 	dt.setUTCMonth(m-1);
 	dt.setUTCDate(d);
 	return dt;
+};
+
+/**
+ * Checks two {@link YMD}s for equality.
+ * @param {YMD} a
+ * @param {YMD} b
+ * @return if a and b are equal
+ * @type Boolean
+ */
+YMD.equal = function(a,b) {
+	return a.year==b.year && a.month==b.month && a.day==b.day;
+};
+
+
+/**
+ * Compares two {@link YMD}s, for sorting.
+ * @param {YMD} a
+ * @param {YMD} b
+ * @return -1:a<b, 0:a=b, +1:a>b
+ * @type Number
+ */
+YMD.order = function(a,b) {
+	return Util.dateOrder(a.getApproxDate(),b.getApproxDate());
 };

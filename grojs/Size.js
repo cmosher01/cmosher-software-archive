@@ -20,13 +20,13 @@ function Size(w,h) {
 	 * @private
 	 * @type Number
 	 */
-	this.w = parseInt(w);
+	this.w = parseInt(w,10);
 	/**
 	 * height
 	 * @private
 	 * @type Number
 	 */
-	this.h = parseInt(h);
+	this.h = parseInt(h,10);
 }
 
 /**

@@ -20,14 +20,14 @@ function Point(x,y) {
 	 * @private
 	 * @type Number
 	 */
-	this.x = parseInt(x);
+	this.x = parseInt(x,10);
 
 	/**
 	 * y-coordinate
 	 * @private
 	 * @type Number
 	 */
-	this.y = parseInt(y);
+	this.y = parseInt(y,10);
 }
 
 /**

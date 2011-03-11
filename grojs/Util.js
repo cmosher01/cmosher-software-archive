@@ -232,6 +232,18 @@ Util.digint = function(n,d) {
 
 /**
  * Ordering function (intended to be passed to Array.sort) that
+ * compares Numbers.
+ * @param {Number} a
+ * @param {Number} b
+ * @return negative for a<b, positive for b<a, zero for a=b
+ * @type Number
+ */
+Util.numberOrder = function(a,b) {
+	return a-b;
+};
+
+/**
+ * Ordering function (intended to be passed to Array.sort) that
  * compares Strings in a locale-specific way.
  * @param {String} a
  * @param {String} b
@@ -240,4 +252,16 @@ Util.digint = function(n,d) {
  */
 Util.localeOrder = function(a,b) {
 	return a.localeCompare(b);
+};
+
+/**
+ * Ordering function (intended to be passed to Array.sort) that
+ * compares Dates.
+ * @param {Date} a
+ * @param {Date} b
+ * @return negative for a<b, positive for b<a, zero for a=b
+ * @type Number
+ */
+Util.dateOrder = function(a,b) {
+	return Util.numberOrder(a.getMilliseconds(),b.getMilliseconds());
 };

@@ -7,12 +7,15 @@
  * @class
  * Represents a range of possible dates.
  * @requires Util
+ * @requires YMD
  * 
  * @constructor
+ * @param {YMD} earliest 
+ * @param {YMD} latest 
  * @return new {@link DateRange}
  * @type DateRange
  */
-function DateRange(earliest, latest, circa, julian) {
+function DateRange(earliest, latest) {
 	Util.verifyType(this,"DateRange");
 
 	this.earliest = earliest;
@@ -23,9 +26,6 @@ function DateRange(earliest, latest, circa, julian) {
 	if (!this.latest) {
 		this.latest = this.earliest;
 	}
-
-	this.circa = !!circa;
-	this.julian = !!julian;
 
 	this.approx = this.calcApprox();
 }
@@ -53,24 +53,7 @@ DateRange.prototype.getLatest = function() {
  * @type Boolean
  */
 DateRange.prototype.isExact = function() {
-	return this.earliest === this.latest;
-};
-
-/**
- * @return if this date should be show using the Julian calendar
- * (if so, the caller is responsible for converting it).
- * @type Boolean
- */
-DateRange.prototype.isJulian = function() {
-	return this.julian;
-};
-
-/**
- * @return if this is an approximate date
- * @type Boolean
- */
-DateRange.prototype.isCirca = function() {
-	return this.circa;
+	return YMD.equal(this.earliest,this.latest);
 };
 
 /**
@@ -86,20 +69,10 @@ DateRange.prototype.getApproxDay = function() {
  * @type String
  */
 DateRange.prototype.toString = function() {
-	var s;
-	s = "";
-	if (this.circa) {
-		s += "c. ";
-	}
-
 	if (this.isExact()) {
-		s += this.earliest.toString();
-	} else {
-		s += this.earliest.toString();
-		s += "?";
-		s += this.latest.toString();
+		return this.earliest.toString();
 	}
-	return s;
+	return this.earliest.toString()+"?"+this.latest.toString();
 };
 
 /**
@@ -109,4 +82,26 @@ DateRange.prototype.toString = function() {
  */
 DateRange.prototype.calcApprox = function() {
 	return new Date((this.earliest.getApproxDate().getMilliseconds()+this.latest.getApproxDate().getMilliseconds())/2);
+};
+
+/**
+ * Checks two {@link DateRange}s for equality.
+ * @param {DateRange} a
+ * @param {DateRange} b
+ * @return if a and b are equal
+ * @type Boolean
+ */
+DateRange.equal = function(a,b) {
+	return YMD.equal(a.getEarliest(),b.getEarliest()) && YMD.equal(a.getLatest(),b.getLatest());
+};
+
+/**
+ * Compares two {@link DateRange}s, for sorting.
+ * @param {DateRange} a
+ * @param {DateRange} b
+ * @return -1:a<b, 0:a=b, +1:a>b
+ * @type Number
+ */
+DateRange.order = function(a,b) {
+	YMD.order(a,b);
 };

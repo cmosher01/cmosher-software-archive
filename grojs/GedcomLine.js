@@ -23,7 +23,7 @@ function GedcomLine(level, gid, tag, val) {
 	 * @private
 	 * @type Number
 	 */
-	this.level = parseInt(level);
+	this.level = parseInt(level,10);
 
 	/**
 	 * ID of this line, if it has one, otherwise empty string.
