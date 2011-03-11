@@ -114,6 +114,9 @@ DateRange.order = function(a,b) {
  * @type Boolean
  */
 DateRange.isParsedDateRange = function(r) {
+	if (!r) {
+		return false;
+	}
 	return r.hasOwnProperty("after") || r.hasOwnProperty("before");
 };
 

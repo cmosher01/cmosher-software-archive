@@ -144,13 +144,14 @@ GedcomExtractor.prototype.extractParnership = function(fam) {
  * @type GedcomEvent
  */
 GedcomExtractor.prototype.extractEvent = function(evt) {
-	var typ, gdate, place;
+	var that, typ, gdate, place;
+	that = this;
 	gdate = null;
 	place = null;
 	typ = this.extractEventName(evt);
 	Util.forEach(evt.getChildren(), function(node) {
 		if (node.line.getTag() === "DATE") {
-			gdate = this.extractDate(node.line.getVal());
+			gdate = that.extractDate(node.line.getVal());
 		} else if (node.line.getTag() === "PLAC") {
 			place = node.line.getVal();
 		}
@@ -195,7 +196,24 @@ GedcomExtractor.prototype.extractEventName = function(evt) {
  * @type DatePeriod
  */
 GedcomExtractor.prototype.extractDate = function(s) {
-	var r;
-	r = GedcomDateParser.parse(s);
-	return r;
+	var r, ymd, rng;
+	r = null;
+	try {
+		r = Util.global.GedcomDateParser.parse(s);
+	} catch (e) {
+		r = null;
+	}
+	if (YMD.isParsedYMD(r)) {
+		ymd = YMD.fromParserResult(r);
+		rng = new DateRange(ymd);
+		return new DatePeriod(rng,rng);
+	}
+	if (DateRange.isParsedDateRange(r)) {
+		rng = DateRange.fromParserResult(r);
+		return new DatePeriod(rng,rng);
+	}
+	if (DatePeriod.isParsedDatePeriod(r)) {
+		return DatePeriod.fromParserResult(r);
+	}
+	return DatePeriod.UNKNOWN;
 };

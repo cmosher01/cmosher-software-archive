@@ -107,6 +107,9 @@ DatePeriod.overlap = function(a,b) {
  * @type Boolean
  */
 DatePeriod.isParsedDatePeriod = function(r) {
+	if (!r) {
+		return false;
+	}
 	return r.hasOwnProperty("from") || r.hasOwnProperty("to");
 };
 

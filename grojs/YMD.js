@@ -263,7 +263,7 @@ YMD.isParsedYMD = function(r) {
 	if (!r) {
 		return false;
 	}
-	return r.hasOwnProperty("year");
+	return r.hasOwnProperty("year") && r.hasOwnProperty("month") && r.hasOwnProperty("day");
 };
 
 /**
