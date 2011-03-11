@@ -139,7 +139,7 @@ Util.safeStr = function(s) {
 	if (!s) {
 		s = "";
 	}
-	return new String(s);
+	return new String(s.toString());
 };
 
 /**

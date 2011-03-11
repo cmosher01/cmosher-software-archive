@@ -20,11 +20,12 @@ function DateRange(earliest, latest) {
 
 	this.earliest = earliest;
 	if (!this.earliest) {
-		throw new Error("missing date");
+		this.earliest = YMD.getMinimum();
 	}
+
 	this.latest = latest;
 	if (!this.latest) {
-		this.latest = this.earliest;
+		this.latest = YMD.getMaximum();
 	}
 
 	this.approx = this.calcApprox();
@@ -97,11 +98,38 @@ DateRange.equal = function(a,b) {
 
 /**
  * Compares two {@link DateRange}s, for sorting.
- * @param {DateRange} a
- * @param {DateRange} b
+ * @param {DateRange} a not null/undefined
+ * @param {DateRange} b not null/undefined
  * @return -1:a<b, 0:a=b, +1:a>b
  * @type Number
  */
 DateRange.order = function(a,b) {
 	YMD.order(a,b);
 };
+
+/**
+ * 
+ * @param {Object} r
+ * @return if parser result is a DateRange type
+ * @type Boolean
+ */
+DateRange.isParsedDateRange = function(r) {
+	return r.hasOwnProperty("after") || r.hasOwnProperty("before");
+};
+
+/**
+ * 
+ * @param {Object} r result from parser
+ * @return new {@link YMD}
+ * @type DateRange
+ */
+DateRange.fromParserResult = function(r) {
+	return new DateRange(YMD.fromParserResult(r.after),YMD.fromParserResult(r.before));
+};
+
+/**
+ * A {@link DateRange} constant that represents an unknown date.
+ * @constant
+ * @type DateRange
+ */
+DateRange.UNKNOWN = new DateRange();

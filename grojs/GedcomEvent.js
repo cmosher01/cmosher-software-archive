@@ -9,7 +9,7 @@
  * 
  * @constructor
  * @param {String} typ type of this {@link GedcomEvent} (such as "birth" or "death")
- * @param {String} gdate GEDCOM date of this {@link GedcomEvent}.
+ * @param {DatePeriod} gdate GEDCOM date of this {@link GedcomEvent}.
  * @param {String} place place of this {@link GedcomEvent}.
  * @return new {@link GedcomEvent}
  * @type GedcomEvent
@@ -51,7 +51,7 @@ GedcomEvent.prototype.getType = function() {
 /**
  * Gets the date of this {@link GedcomEvent}.
  * @return date of this {@link GedcomEvent}.
- * @type String
+ * @type DatePeriod
  */
 GedcomEvent.prototype.getDate = function() {
 	return this.gdate;

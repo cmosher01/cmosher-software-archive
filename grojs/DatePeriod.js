@@ -10,17 +10,20 @@
  * @requires DateRange
  * 
  * @constructor
- * @param {DateRange} dateStart
- * @param {DateRange} dateEnd
+ * @param {DateRange} dateStart null/undefined gets converted to DateRange.UNKNOWN
+ * @param {DateRange} dateEnd null/undefined gets converted to DateRange.UNKNOWN
  * @return new {@link DatePeriod}
  * @type DatePeriod
  */
 function DatePeriod(dateStart, dateEnd) {
 	Util.verifyType(this,"DatePeriod");
 	this.dateStart = dateStart;
+	if (!this.dateStart) {
+		this.dateStart = DateRange.UNKNOWN;
+	}
 	this.dateEnd = dateEnd;
 	if (!this.dateEnd) {
-		this.dateEnd = this.dateStart;
+		this.dateEnd = DateRange.UNKNOWN;
 	}
 }
 
@@ -56,7 +59,7 @@ DatePeriod.prototype.toString = function() {
 	if (this.isSingle()) {
 		return this.dateStart.toString();
 	}
-	return this.dateStart.toString()+"-"+this.dateEnd.toString();
+	return Util.safeStr(this.dateStart)+"-"+Util.safeStr(this.dateEnd);
 };
 
 /**
@@ -96,3 +99,32 @@ DatePeriod.order = function(a,b) {
 DatePeriod.overlap = function(a,b) {
 	return DateRange.order(a.getStartDate(),b.getEndDate()) < 0 && DateRange.order(b.getStartDate(),a.getEndDate()) < 0;
 };
+
+/**
+ * 
+ * @param {Object} r
+ * @return if parser result is a DatePeriod type
+ * @type Boolean
+ */
+DatePeriod.isParsedDatePeriod = function(r) {
+	return r.hasOwnProperty("from") || r.hasOwnProperty("to");
+};
+
+/**
+ * 
+ * @param {Object} r result from parser
+ * @return new {@link YMD}
+ * @type {YMD}
+ */
+DatePeriod.fromParserResult = function(r) {
+	var ymdFrom = YMD.fromParserResult(r.from);
+	var ymdTo = YMD.fromParserResult(r.to);
+	return new DatePeriod(new DateRange(ymdFrom,ymdFrom),new DateRange(ymdTo,ymdTo));
+};
+
+/**
+ * A {@link DatePeriod} constant that represents an unknown date.
+ * @constant
+ * @type DatePeriod
+ */
+DatePeriod.UNKNOWN = new DatePeriod();

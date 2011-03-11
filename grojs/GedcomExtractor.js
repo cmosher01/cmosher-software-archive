@@ -9,6 +9,7 @@
  * @requires Partnership
  * @requires Person
  * @requires GedcomEvent
+ * @requires GedcomDateParser
  * @requires Point
  * @requires Util
  * 
@@ -149,7 +150,7 @@ GedcomExtractor.prototype.extractEvent = function(evt) {
 	typ = this.extractEventName(evt);
 	Util.forEach(evt.getChildren(), function(node) {
 		if (node.line.getTag() === "DATE") {
-			gdate = node.line.getVal(); // TODO parse date
+			gdate = this.extractDate(node.line.getVal());
 		} else if (node.line.getTag() === "PLAC") {
 			place = node.line.getVal();
 		}
@@ -185,4 +186,16 @@ GedcomExtractor.prototype.extractEventName = function(evt) {
 		}
 	}
 	return nam;
+};
+
+/**
+ * Extracts a {@link DatePeriod} from a given GEDCOM date string.
+ * @param {String} s GEDCOM date string to parse
+ * @return {@link DatePeriod}
+ * @type DatePeriod
+ */
+GedcomExtractor.prototype.extractDate = function(s) {
+	var r;
+	r = GedcomDateParser.parse(s);
+	return r;
 };

@@ -13,10 +13,12 @@
  * @param {Number} y year -9999 to -1 (for BC), or 1 to 9999 (for AD)
  * @param {Number} m month 1-12 (0 or omitted means unknown)
  * @param {Number} d day 1-31 (0 or omitted means unknown)
+ * @param {Boolean} circa
+ * @param {Boolean} julian
  * @return new {@link YMD}
  * @type YMD
  */
-function YMD(y,m,d) {
+function YMD(y,m,d,circa,julian) {
 	Util.verifyType(this,"YMD");
 
 	/**
@@ -230,8 +232,8 @@ YMD.prototype.calcApprox = function() {
 
 /**
  * Checks two {@link YMD}s for equality.
- * @param {YMD} a
- * @param {YMD} b
+ * @param {YMD} a not null/undefined
+ * @param {YMD} b not null/undefined
  * @return if a and b are equal
  * @type Boolean
  */
@@ -242,11 +244,37 @@ YMD.equal = function(a,b) {
 
 /**
  * Compares two {@link YMD}s, for sorting.
- * @param {YMD} a
- * @param {YMD} b
+ * @param {YMD} a not null/undefined
+ * @param {YMD} b not null/undefined
  * @return -1:a<b, 0:a=b, +1:a>b
  * @type Number
  */
 YMD.order = function(a,b) {
 	return Util.dateOrder(a.getApproxDate(),b.getApproxDate());
+};
+
+/**
+ * 
+ * @param {Object} r
+ * @return if parser result is a YMD type
+ * @type Boolean
+ */
+YMD.isParsedYMD = function(r) {
+	if (!r) {
+		return false;
+	}
+	return r.hasOwnProperty("year");
+};
+
+/**
+ * 
+ * @param {Object} r result from parser
+ * @return new {@link YMD} (or null if !r)
+ * @type YMD
+ */
+YMD.fromParserResult = function(r) {
+	if (!r) {
+		return null;
+	}
+	return new YMD(r.year,r.month,r.day,r.approx,r.julian);
 };
