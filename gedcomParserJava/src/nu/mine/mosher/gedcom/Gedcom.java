@@ -1,11 +1,14 @@
 package nu.mine.mosher.gedcom;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+
 import nu.mine.mosher.gedcom.exception.InvalidLevel;
 
 
@@ -25,7 +28,50 @@ public class Gedcom
 		throw new UnsupportedOperationException();
 	}
 
-	public static GedcomTree readTree(final BufferedReader reader) throws InvalidLevel
+	public static void main(String[] rArg) throws InvalidLevel, IOException
+	{
+		if (rArg.length != 1)
+		{
+			throw new IllegalArgumentException("usage: java Gedcom gedcomfile");
+		}
+
+        GedcomTree gt = parseFile(new File(rArg[0]));
+        System.out.println(gt.toString());
+	}
+
+    protected static GedcomTree parseFile(File in)
+	    throws IOException, UnsupportedEncodingException, FileNotFoundException, InvalidLevel
+	{
+	    String charset = getCharset(in);
+	    return readTree(in,charset);
+	}
+
+    protected static GedcomTree readTree(File fileIn, String charset)
+	    throws UnsupportedEncodingException, FileNotFoundException, InvalidLevel
+	{
+	    BufferedReader in = null;
+	    try
+	    {
+	    	in = new BufferedReader(new InputStreamReader(new FileInputStream(fileIn),charset));
+	    	return readTree(in);
+	    }
+	    finally
+	    {
+	    	if (in != null)
+	    	{
+	    		try
+	    		{
+	    			in.close();
+	    		}
+	    		catch (Throwable ignore)
+	    		{
+	    			ignore.printStackTrace();
+	    		}
+	    	}
+	    }
+	}
+
+    public static GedcomTree readTree(final BufferedReader reader) throws InvalidLevel
 	{
 		final GedcomParser parser = new GedcomParser(reader);
 
@@ -41,53 +87,31 @@ public class Gedcom
 		return tree;
 	}
 
-	public static void analyze(InputStream in) throws IOException
+    protected static String getCharset(final File f) throws IOException
 	{
-		List<Integer> curline = new ArrayList<Integer>(256);
-		boolean hasStrange = false;
-		BufferedInputStream bis = new BufferedInputStream(in);
-		int c = bis.read();
-		while (c != -1)
+		InputStream in = null;
+		try
 		{
-			if (c==0x0d || c==0x0a)
+			in = new FileInputStream(f);
+			return guessGedcomCharset(in);
+		}
+		finally
+		{
+			if (in != null)
 			{
-				if (hasStrange)
+				try
 				{
-					dumpLine(curline);
+					in.close();
 				}
-				curline.clear();
-				hasStrange = false;
+				catch (Throwable ignore)
+				{
+					ignore.printStackTrace();
+				}
 			}
-
-			curline.add(Integer.valueOf(c));
-			if (c >= 0x80)
-			{
-				hasStrange = true;
-			}
-
-			c = bis.read();
 		}
 	}
 
-	/**
-     * @param curline
-     */
-    private static void dumpLine(List<Integer> curline)
-    {
-		for (final int c : curline)
-		{
-			System.out.print((char)c);
-		}
-		System.out.println();
-		for (final int c : curline)
-        {
-            System.out.print(Integer.toHexString(c));
-            System.out.print(" ");
-        }
-		System.out.println();
-    }
-
-    public static String guessCharset(InputStream in) throws IOException
+    public static String guessGedcomCharset(final InputStream in) throws IOException
 	{
 		// read first four bytes of input stream
 		int b0 = in.read();
@@ -143,29 +167,52 @@ public class Gedcom
 		{
 			return "UTF-8";
 		}
-		return "";
-//		SortedMap mc = Charset.availableCharsets();
-//		for (Iterator i = mc.entrySet().iterator(); i.hasNext();)
-//        {
-//            Map.Entry entry = (Map.Entry)i.next();
-//            String csn = (String)entry.getKey();
-//			System.out.println(csn);
-//            Charset cs = Charset.forName(csn);
-//            Set als = cs.aliases();
-//            for (Iterator j = als.iterator(); j.hasNext();)
-//            {
-//                String al = (String)j.next();
-//                System.out.println("    "+al);
-//            }
-//        }
 
-		/*
-		 * windows-1252   IBM WINDOWS, ANSI
-		 * Cp850          IBM DOS, IMBPC
-		 * MacRoman       MACINTOSH
-		 * x-gedcom-ansel ANSEL
-		 * UTF-16BE       (detected automatically)
-		 * UTF-16LE       (detected automatically)
-		 */
+		BufferedReader bin = new BufferedReader(new InputStreamReader(in,"US-ASCII"));
+		bin.readLine(); // ignore rest of header line
+
+		String s = bin.readLine();
+		while (s != null && s.length() > 0 && s.charAt(0) != '0')
+		{
+			if (s.startsWith("1 CHAR"))
+			{
+				s = s.toUpperCase();
+				if (s.indexOf("WIN",6) >= 0)
+				{
+					return "windows-1252";
+				}
+				if (s.indexOf("ANSI",6) >= 0)
+				{
+					return "windows-1252";
+				}
+				if (s.indexOf("DOS",6) >= 0)
+				{
+					return "Cp850";
+				}
+				if (s.indexOf("PC",6) >= 0)
+				{
+					return "Cp850";
+				}
+				if (s.indexOf("OEM",6) >= 0)
+				{
+					return "Cp850";
+				}
+				if (s.indexOf("ASCII",6) >= 0)
+				{
+					return "Cp850";
+				}
+				if (s.indexOf("MAC",6) >= 0)
+				{
+					return "MacRoman";
+				}
+				if (s.indexOf("ANSEL",6) >= 0)
+				{
+					return "x-gedcom-ansel";
+				}
+			}
+			s = bin.readLine();
+		}
+
+		return "US-ASCII";
 	}
 }

@@ -84,7 +84,7 @@ public class GedcomTree
         {
             sb.append(entry.getKey());
             sb.append(" --> ");
-            sb.append(entry.getValue());
+            entry.getValue().appendStringShallow(sb);
 			sb.append("\n");
         }
 
