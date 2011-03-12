@@ -58,10 +58,15 @@ public class GedcomTreeModel extends Observable implements TreeModel, Closeable
 
 		final TreeNode<GedcomLine> nodeParent = (TreeNode<GedcomLine>)parent;
 
-		final ArrayList<TreeNode<GedcomLine>> rChild = new ArrayList<TreeNode<GedcomLine>>();
-		nodeParent.getChildren(rChild);
-
-		return rChild.get(index);
+		int i = 0;
+		for (final TreeNode<GedcomLine> child : nodeParent)
+		{
+			if (i++ == index)
+			{
+				return child;
+			}
+		}
+		return null;
 	}
 
 	public int getChildCount(final Object parent)
@@ -94,10 +99,16 @@ public class GedcomTreeModel extends Observable implements TreeModel, Closeable
 
 		final TreeNode<GedcomLine> nodeParent = (TreeNode<GedcomLine>)parent;
 
-		final ArrayList<TreeNode<GedcomLine>> rChild = new ArrayList<TreeNode<GedcomLine>>();
-		nodeParent.getChildren(rChild);
-
-		return rChild.indexOf(child);
+		int i = 0;
+		for (final TreeNode<GedcomLine> c : nodeParent)
+		{
+			if (c == child)
+			{
+				return i;
+			}
+			++i;
+		}
+		return -1;
 	}
 
 

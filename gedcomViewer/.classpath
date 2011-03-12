@@ -2,8 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/core50"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/grodb50"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ansel"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/gedcomParserJava"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/tree"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
