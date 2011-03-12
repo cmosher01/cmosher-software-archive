@@ -167,16 +167,19 @@ public class TreeNode<T> implements Iterable<TreeNode<T>>
 			this.stack.addFirst(Collections.<TreeNode<T>>singleton(TreeNode.this).iterator());
 		}
 
+		@Override
 		public void remove() throws UnsupportedOperationException
 		{
 			throw new UnsupportedOperationException();
 		}
 
+		@Override
 		public boolean hasNext()
 		{
 			return (!this.stack.isEmpty() && this.stack.getFirst().hasNext());
 		}
 
+		@Override
 		public TreeNode<T> next() throws NoSuchElementException
 		{
 			if (!hasNext())
