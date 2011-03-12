@@ -79,12 +79,12 @@ Calendar.jd_to_gregorian = function(jd) {
     if (!((cent == 4) || (yindex == 4))) {
         year++;
     }
-    yearday = wjd - Calendar.gregorian_to_jd(year, 1, 1);
-    leapadj = ((wjd < Calendar.gregorian_to_jd(year, 3, 1)) ? 0 :
+    yearday = wjd - Calendar.gregorian_to_jd(new YMD(year, 1, 1));
+    leapadj = ((wjd < Calendar.gregorian_to_jd(new YMD(year, 3, 1))) ? 0 :
                   (Calendar.leap_gregorian(year) ? 1 : 2)
               );
     month = Math.floor((((yearday + leapadj) * 12) + 373) / 367);
-    day = (wjd - Calendar.gregorian_to_jd(year, month, 1)) + 1;
+    day = (wjd - Calendar.gregorian_to_jd(new YMD(year, month, 1))) + 1;
 
     return new YMD(year, month, day);
 };
@@ -158,7 +158,7 @@ Calendar.jd_to_julian = function(jd) {
         year--;
     }
 
-    return new YMD(year, month, day);
+    return new YMD(year, month, day, false, true);
 };
 
 /**

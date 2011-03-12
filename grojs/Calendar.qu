@@ -1,0 +1,22 @@
+$(function() {
+
+	module("Calendar");
+
+	test("nominal George Washington's birthday: Julian to Gregorian", function() {
+		var ymdJulian;
+		var ymdGregorian;
+		ymdJulian = new YMD(1732,2,11,false,true);
+		ymdGregorian = Calendar.jd_to_gregorian(Calendar.julian_to_jd(ymdJulian));
+
+		deepEqual(ymdGregorian,new YMD(1732,2,22,false,false));
+	});
+
+	test("nominal Gregorian to Julian", function() {
+		var ymdGregorian;
+		var ymdJulian;
+		ymdGregorian = new YMD(1752,9,14,false,false);
+		ymdJulian = Calendar.jd_to_julian(Calendar.gregorian_to_jd(ymdGregorian));
+
+		deepEqual(ymdJulian,new YMD(1752,9,3,false,true));
+	});
+});
