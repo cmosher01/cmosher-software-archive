@@ -8,9 +8,10 @@ import java.util.Iterator;
 /**
  * @author Chris Mosher
  */
-public class PreorderTraversal
+public class PreorderTraversal<T>
 {
-	public static void traverse(TreeNode node)
+	@SuppressWarnings("synthetic-access")
+	public static <T> void traverse(TreeNode<T> node)
 	{
 		Traversable tr = (Traversable)node.getObject();
 		if (tr == null)
@@ -19,7 +20,7 @@ public class PreorderTraversal
 		}
 
 		tr.enter();
-		for (Iterator<TreeNode> children = node.children(); children.hasNext();)
+		for (Iterator<TreeNode<T>> children = node.children(); children.hasNext();)
 		{
 			traverse(children.next());
 		}
@@ -28,7 +29,9 @@ public class PreorderTraversal
 
 	private static class NullTraversable implements Traversable
 	{
-        public void enter() { }
-        public void leave() { }
+        @Override
+		public void enter() { /* default is no-op */ }
+        @Override
+		public void leave() { /* default is no-op */ }
 	}
 }
