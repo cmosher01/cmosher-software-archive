@@ -1,7 +1,7 @@
 /*
  * Created on Apr 14, 2004
  */
-package nu.mine.mosher.java.lang;
+package nu.mine.mosher.core;
 
 /**
  * @author Chris Mosher
@@ -27,11 +27,11 @@ public final class Vars
 
 
 
-	public static final Class[] rclassIntegralType = new Class[]
+	public static final Class<?>[] rclassIntegralType = new Class[]
 	{
 		Byte.TYPE, Short.TYPE, Character.TYPE, Integer.TYPE, Long.TYPE
 	};
-	public static final Class[] rclassFloatingPointType = new Class[]
+	public static final Class<?>[] rclassFloatingPointType = new Class[]
 	{
 		Float.TYPE, Double.TYPE
 	};
