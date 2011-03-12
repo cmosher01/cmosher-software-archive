@@ -37,7 +37,7 @@ public final class Util
 	public static<T> void unused(T x)
 	{
 		final T unused = x;
-		x = unused;
+		unused.getClass();
 	}
 
     /**
@@ -46,8 +46,9 @@ public final class Util
      */
     public static void unused(boolean primitiveBoolean)
     {
-    	final boolean x = primitiveBoolean;
-        primitiveBoolean = x;
+    	boolean x = primitiveBoolean;
+    	boolean y = x;
+    	x = y;
     }
 
     /**
@@ -56,8 +57,9 @@ public final class Util
      */
     public static void unused(byte primitiveByte)
     {
-    	final byte x = primitiveByte;
-        primitiveByte = x;
+    	byte x = primitiveByte;
+    	byte y = x;
+    	x = y;
     }
 
     /**
@@ -66,8 +68,9 @@ public final class Util
      */
     public static void unused(short primitiveShort)
     {
-    	final short x = primitiveShort;
-        primitiveShort = x;
+    	short x = primitiveShort;
+    	short y = x;
+    	x = y;
     }
 
     /**
@@ -76,8 +79,9 @@ public final class Util
      */
     public static void unused(int primitiveInt)
     {
-    	final int x = primitiveInt;
-        primitiveInt = x;
+    	int x = primitiveInt;
+    	int y = x;
+    	x = y;
     }
 
     /**
@@ -86,8 +90,9 @@ public final class Util
      */
     public static void unused(long primitiveLong)
     {
-    	final long x = primitiveLong;
-        primitiveLong = x;
+    	long x = primitiveLong;
+    	long y = x;
+    	x = y;
     }
 
     /**
@@ -96,8 +101,9 @@ public final class Util
      */
     public static void unused(char primitiveChar)
     {
-    	final char x = primitiveChar;
-        primitiveChar = x;
+    	char x = primitiveChar;
+    	char y = x;
+    	x = y;
     }
 
     /**
@@ -106,8 +112,9 @@ public final class Util
      */
     public static void unused(float primitiveFloat)
     {
-    	final float x = primitiveFloat;
-        primitiveFloat = x;
+    	float x = primitiveFloat;
+    	float y = x;
+    	x = y;
     }
 
     /**
@@ -116,8 +123,9 @@ public final class Util
      */
     public static void unused(double primitiveDouble)
     {
-        final double x = primitiveDouble;
-        primitiveDouble = x;
+        double x = primitiveDouble;
+        double y = x;
+    	x = y;
     }
 
 
@@ -134,7 +142,8 @@ public final class Util
     {
         if (rArgument.length > 0)
         {
-            Logger.global.warning("Arguments ignored.");
+        	final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+            logger.warning("Arguments ignored.");
         }
     }
 

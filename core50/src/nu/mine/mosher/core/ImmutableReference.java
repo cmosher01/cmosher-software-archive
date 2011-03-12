@@ -45,7 +45,8 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
      * @return a bit-wise (shallow) copy of the referred to object
      * @throws CloneNotSupportedException
      */
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public T clone() throws CloneNotSupportedException
     {
         return (T)super.clone();
@@ -83,7 +84,9 @@ public final class ImmutableReference<T extends Cloneable> implements Cloneable,
      * @param object
      * @return <code>compareTo</code> referred to object with <code>object</code>
      */
-    public int compareTo(final T object)
+    @SuppressWarnings("unchecked")
+	@Override
+	public int compareTo(final T object)
     {
         return ((Comparable<T>)this.ref).compareTo(object);
     }

@@ -36,13 +36,21 @@ public final class Pair<T extends Cloneable, U extends Cloneable> implements Clo
 	}
 
 	@Override
-	public boolean equals(final Object object)
+	public boolean equals(final Object other)
 	{
-		if (!(object instanceof Pair))
+		if (this == other)
+		{
+			return true;
+		}
+		if (other == null)
 		{
 			return false;
 		}
-		final Pair that = (Pair)object;
+		if (this.getClass() != other.getClass())
+		{
+			return false;
+		}
+		final Pair<?,?> that = (Pair<?,?>)other;
 		return this.a.equals(that.a) && this.b.equals(that.b);
 	}
 
@@ -52,6 +60,7 @@ public final class Pair<T extends Cloneable, U extends Cloneable> implements Clo
 		return this.a.hashCode() ^ this.b.hashCode();
 	}
 
+	@Override
 	public int compareTo(final Pair<T,U> that)
 	{
 		int c = 0;

@@ -45,6 +45,7 @@ public class CloneFactory<T extends Cloneable>
 	 * @return the new clone
 	 * @throws CloningException
 	 */
+	@SuppressWarnings("unchecked")
 	private T createClone(final T source) throws CloningException
 	{
 		try

@@ -26,7 +26,8 @@ public class EnumIter<T> implements Iterator<T>
     /**
      * @return if has a next item to get
      */
-    public boolean hasNext()
+    @Override
+	public boolean hasNext()
     {
         return this.e.hasMoreElements();
     }
@@ -36,7 +37,8 @@ public class EnumIter<T> implements Iterator<T>
      * @return next item
      * @throws NoSuchElementException
      */
-    public T next() throws NoSuchElementException
+    @Override
+	public T next() throws NoSuchElementException
     {
         return this.e.nextElement();
     }
@@ -44,7 +46,8 @@ public class EnumIter<T> implements Iterator<T>
     /**
      * @throws UnsupportedOperationException
      */
-    public void remove() throws UnsupportedOperationException
+    @Override
+	public void remove() throws UnsupportedOperationException
     {
         throw new UnsupportedOperationException();
     }

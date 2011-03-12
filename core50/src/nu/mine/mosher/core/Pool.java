@@ -53,6 +53,7 @@ public class Pool<T>
 		return theProxy;
 	}
 
+	@SuppressWarnings("unchecked")
 	protected static<T> T makeProxy(final T object)
 	{
 		return (T)makeProxyObject(object);
@@ -71,6 +72,7 @@ public class Pool<T>
 			object.getClass().getInterfaces(),
 			new InvocationHandler()
 			{
+				@Override
 				public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable
 				{
 					Util.unused(proxy);

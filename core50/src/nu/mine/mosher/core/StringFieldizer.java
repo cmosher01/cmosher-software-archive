@@ -23,9 +23,11 @@ public class StringFieldizer implements Iterable<String>
 
 
 
+	@SuppressWarnings("synthetic-access")
+	@Override
 	public Iter iterator()
 	{
-		return new Iter(s,delim);
+		return new Iter(this.s,this.delim);
 	}
 
 
@@ -50,31 +52,34 @@ public class StringFieldizer implements Iterable<String>
 		 * Checks to see if <code>next</code> can be called at least one more time.
 		 * @return true if any fields exist, false otherwise
 		 */
+		@Override
 		public boolean hasNext()
 		{
-			return pos <= s.length();
+			return this.pos <= this.s.length();
 		}
 
 		/**
 		 * Returns the next field of the string.
 		 * @return the field, or an empty string if the field is empty
 		 */
+		@Override
 		public String next() throws NoSuchElementException
 		{
 			if (!hasNext())
 			{
 				throw new NoSuchElementException();
 			}
-			int i = s.indexOf(delim,pos);
+			int i = this.s.indexOf(this.delim,this.pos);
 			if (i < 0)
 			{
-				i = s.length();
+				i = this.s.length();
 			}
-			String tok = s.substring(pos,i);
-			pos = i+1;
+			String tok = this.s.substring(this.pos,i);
+			this.pos = i+1;
 			return tok;
 		}
 
+		@Override
 		public void remove() throws UnsupportedOperationException
 		{
 			throw new UnsupportedOperationException();
@@ -88,7 +93,7 @@ public class StringFieldizer implements Iterable<String>
 		 */
 		public int getPosition()
 		{
-			return pos;
+			return this.pos;
 		}
 
 		/**
@@ -99,7 +104,7 @@ public class StringFieldizer implements Iterable<String>
 		 */
 		public String getResidue()
 		{
-			return s.substring(pos);
+			return this.s.substring(this.pos);
 		}
 
 		/**
@@ -108,7 +113,7 @@ public class StringFieldizer implements Iterable<String>
 		 */
 		public String getString()
 		{
-			return s;
+			return this.s;
 		}
 
 		/**
@@ -117,7 +122,7 @@ public class StringFieldizer implements Iterable<String>
 		 */
 		public char getDelimiter()
 		{
-			return delim;
+			return this.delim;
 		}
 	}
 }

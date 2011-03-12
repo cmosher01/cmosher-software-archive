@@ -64,7 +64,7 @@ public final class Closer
 //		}
 //		methodClose.invoke(object);
 //	}
-	private static final Map<Class,Method> mClasses = new HashMap<Class,Method>();
+	private static final Map<Class<?>,Method> mClasses = new HashMap<Class<?>,Method>();
 
 	/**
 	 * Calls the given object's "close()" method, if it has one.
@@ -111,7 +111,7 @@ public final class Closer
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 */
-	private static Method getCloseMethod(final Class clas) throws NoSuchMethodException, SecurityException
+	private static Method getCloseMethod(final Class<?> clas) throws NoSuchMethodException, SecurityException
 	{
 		synchronized (Closer.mClasses)
 		{

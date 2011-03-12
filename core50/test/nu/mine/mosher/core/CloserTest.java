@@ -15,13 +15,13 @@ public class CloserTest extends TestCase
 	private static final class Thing1
 	{
 		public boolean closed;
-		public void close() { closed = true; }
+		public void close() { this.closed = true; }
 	}
 
 	private static final class Thing2
 	{
 		public boolean closed;
-		public void close() { closed = true; }
+		public void close() { this.closed = true; }
 	}
 
 
