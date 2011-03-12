@@ -83,6 +83,7 @@ public class GedcomServlet extends HttpServlet
 		final File dirGedcom = new File(getGedcomDir(servletConfig)).getCanonicalFile();
 		final File[] rFile = dirGedcom.listFiles(new FileFilter()
 		{
+			@Override
 			public boolean accept(final File file)
 			{
 				return file.isFile() && file.canRead();
