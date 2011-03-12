@@ -8,7 +8,7 @@ package nu.mine.mosher.util.text;
  * 
  * @author Chris Mosher
  */
-public class StringFieldizer
+public class StringFieldizerSimple
 {
     private final String string;
     private final char delim;
@@ -21,7 +21,7 @@ public class StringFieldizer
      * the delimiter.
      * @param s the String to break into fields
      */
-    public StringFieldizer(final String s)
+    public StringFieldizerSimple(final String s)
     {
         this(s,',');
     }
@@ -32,7 +32,7 @@ public class StringFieldizer
      * @param s the <code>String</code> to break into fields
      * @param delim the <code>char</code> that delimits the fields
      */
-    public StringFieldizer(final String s, final char delim)
+    public StringFieldizerSimple(final String s, final char delim)
     {
         this.string = s;
         this.delim = delim;
