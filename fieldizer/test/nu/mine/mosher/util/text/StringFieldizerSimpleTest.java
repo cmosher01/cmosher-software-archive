@@ -1,47 +1,39 @@
-package nu.mine.mosher.core;
+package nu.mine.mosher.util.text;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 /**
  * @author Chris Mosher
  */
-public class StringFieldizerTest extends TestCase
+public class StringFieldizerSimpleTest
 {
-
-    /**
-     * Constructor for StringFieldizerTest.
-     * @param arg0
-     */
-    public StringFieldizerTest(String arg0)
+    @Test
+    public void testStringFieldizerSimpleString()
     {
-        super(arg0);
-    }
+    	StringFieldizerSimple sf;
 
-    /*
-     * Test for void StringFieldizer(String)
-     */
-    public void testStringFieldizerString()
-    {
-    	StringFieldizer sf;
-
-		sf = new StringFieldizer("");
+		sf = new StringFieldizerSimple("");
 		assertTrue(sf.hasMoreTokens());
 		assertEquals("",sf.nextToken());
 		assertFalse(sf.hasMoreTokens());
 
-		sf = new StringFieldizer("test");
+		sf = new StringFieldizerSimple("test");
 		assertTrue(sf.hasMoreTokens());
 		assertEquals("test",sf.nextToken());
 		assertFalse(sf.hasMoreTokens());
 
-		sf = new StringFieldizer(",");
+		sf = new StringFieldizerSimple(",");
 		assertTrue(sf.hasMoreTokens());
 		assertEquals("",sf.nextToken());
 		assertTrue(sf.hasMoreTokens());
 		assertEquals("",sf.nextToken());
 		assertFalse(sf.hasMoreTokens());
 
-		sf = new StringFieldizer(",,,");
+		sf = new StringFieldizerSimple(",,,");
 		assertTrue(sf.hasMoreTokens());
 		assertEquals("",sf.nextToken());
 		assertTrue(sf.hasMoreTokens());
@@ -52,21 +44,21 @@ public class StringFieldizerTest extends TestCase
 		assertEquals("",sf.nextToken());
 		assertFalse(sf.hasMoreTokens());
 
-		sf = new StringFieldizer("thisisatest,");
+		sf = new StringFieldizerSimple("thisisatest,");
 		assertTrue(sf.hasMoreTokens());
 		assertEquals("thisisatest",sf.nextToken());
 		assertTrue(sf.hasMoreTokens());
 		assertEquals("",sf.nextToken());
 		assertFalse(sf.hasMoreTokens());
 
-		sf = new StringFieldizer(",thisisanothertest");
+		sf = new StringFieldizerSimple(",thisisanothertest");
 		assertTrue(sf.hasMoreTokens());
 		assertEquals("",sf.nextToken());
 		assertTrue(sf.hasMoreTokens());
 		assertEquals("thisisanothertest",sf.nextToken());
 		assertFalse(sf.hasMoreTokens());
 
-		sf = new StringFieldizer("a,b,c");
+		sf = new StringFieldizerSimple("a,b,c");
 		assertTrue(sf.hasMoreTokens());
 		assertEquals("a",sf.nextToken());
 		assertTrue(sf.hasMoreTokens());
@@ -75,7 +67,7 @@ public class StringFieldizerTest extends TestCase
 		assertEquals("c",sf.nextToken());
 		assertFalse(sf.hasMoreTokens());
 
-		sf = new StringFieldizer(",this,is,,a,test,");
+		sf = new StringFieldizerSimple(",this,is,,a,test,");
 		assertTrue(sf.hasMoreTokens());
 		assertEquals("",sf.nextToken());
 		assertTrue(sf.hasMoreTokens());
