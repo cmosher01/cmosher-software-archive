@@ -76,9 +76,8 @@ public class GedcomTree
 	@Override
 	public String toString()
 	{
-		final StringBuffer sb = new StringBuffer(1024);
-
-		this.root.dump(sb);
+		final StringBuilder sb = new StringBuilder(1024);
+		this.root.appendStringDeep(sb);
 
 		sb.append("--------map-of-IDs-to-Nodes--------\n");
 		for (final Map.Entry<String,TreeNode<GedcomLine>> entry : this.mapIDtoNode.entrySet())

@@ -1,14 +1,12 @@
 package nu.mine.mosher.gedcom;
 
-import nu.mine.mosher.core.Immutable;
-
 /**
  * Represents one GEDCOM entry (usually one line).
  * Objects of this class are immutable.
  *
  * @author Chris Mosher
  */
-public class GedcomLine implements Immutable
+public class GedcomLine
 {
 	private final int level;
 	private final String id;
