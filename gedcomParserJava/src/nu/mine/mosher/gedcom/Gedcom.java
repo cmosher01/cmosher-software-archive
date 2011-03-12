@@ -59,7 +59,7 @@ public class Gedcom
 				hasStrange = false;
 			}
 
-			curline.add(c);
+			curline.add(Integer.valueOf(c));
 			if (c >= 0x80)
 			{
 				hasStrange = true;

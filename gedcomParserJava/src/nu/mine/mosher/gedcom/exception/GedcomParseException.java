@@ -23,11 +23,11 @@ public class GedcomParseException extends Exception
 
 	public String getRawGedcomLine()
 	{
-		return rawGedcomLine;
+		return this.rawGedcomLine;
 	}
 
 	public GedcomLine getParsedGedcomLine()
 	{
-		return parsedGedcomLine;
+		return this.parsedGedcomLine;
 	}
 }

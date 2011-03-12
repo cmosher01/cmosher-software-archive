@@ -33,6 +33,7 @@ class GedcomParser implements Iterable<GedcomLine>
 		this.in = in;
 	}
 
+	@Override
 	public Iterator<GedcomLine> iterator()
 	{
 		return new Iter();
@@ -45,6 +46,7 @@ class GedcomParser implements Iterable<GedcomLine>
 		private GedcomLine lineNext;
 		private GedcomParseException exception;
 
+		@SuppressWarnings("synthetic-access")
 		private void prepareNext()
 		{
 			try
@@ -77,11 +79,13 @@ class GedcomParser implements Iterable<GedcomLine>
 			prepareNext();
 		}
 
+		@Override
 		public boolean hasNext()
 		{
 			return this.lineNext != null;
 		}
 
+		@Override
 		public GedcomLine next() throws NoSuchElementException
 		{
 			checkNext();
@@ -91,6 +95,7 @@ class GedcomParser implements Iterable<GedcomLine>
 			return returned;
 		}
 
+		@Override
 		public void remove() throws UnsupportedOperationException
 		{
 			throw new UnsupportedOperationException();
