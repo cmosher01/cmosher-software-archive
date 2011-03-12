@@ -37,14 +37,6 @@ public class DateRange implements Comparable<DateRange>
 
 
 	/**
-	 * @param ymd
-	 */
-	public DateRange(final YMD ymd)
-	{
-		this(ymd,ymd,false,false);
-	}
-
-	/**
 	 * @param earliest
 	 * @param latest
 	 */
@@ -71,20 +63,28 @@ public class DateRange implements Comparable<DateRange>
      */
     public DateRange(final YMD earliest, final YMD latest, final boolean circa, final boolean julian)
     {
-		this.earliest = earliest;
-        this.latest = latest;
         this.julian = julian;
 		this.circa = circa;
 
-    	if (this.earliest == null)
+    	if (earliest != null)
     	{
-    		throw new NullPointerException("earliest date cannot be null");
+    		this.earliest = earliest;
     	}
-		if (this.latest == null)
+    	else
+    	{
+    		this.earliest = YMD.getMinimum();
+    	}
+
+    	if (latest != null)
+    	{
+            this.latest = latest;
+    	}
+    	else
 		{
-			throw new NullPointerException("latest date cannot be null");
+			this.latest = YMD.getMaximum();
 		}
-		if (this.latest.compareTo(this.earliest) < 0)
+
+    	if (this.latest.compareTo(this.earliest) < 0)
 		{
 			throw new IllegalArgumentException("earliest date must be less than or equal to latest date");
 		}
@@ -194,7 +194,8 @@ public class DateRange implements Comparable<DateRange>
 		return sb.toString();
     }
 
-    public int compareTo(final DateRange that)
+    @Override
+	public int compareTo(final DateRange that)
     {
         int d = 0;
 

@@ -28,7 +28,15 @@ public class DatePeriod implements Comparable<DatePeriod>
 	public DatePeriod(final DateRange dateStart, final DateRange dateEnd)
 	{
 		this.dateStart = dateStart;
+		if (this.dateStart == null)
+		{
+			throw new IllegalStateException("dateStart cannot be null.");
+		}
 		this.dateEnd = dateEnd;
+		if (this.dateEnd == null)
+		{
+			throw new IllegalStateException("dateEnd cannot be null.");
+		}
 	}
 
 	/**
@@ -74,6 +82,7 @@ public class DatePeriod implements Comparable<DatePeriod>
 		return this.dateStart+"\u2013"+this.dateEnd;
 	}
 
+	@Override
 	public int compareTo(final DatePeriod that)
 	{
 		int d = 0;

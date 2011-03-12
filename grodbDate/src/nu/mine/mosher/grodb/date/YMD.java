@@ -189,20 +189,21 @@ public class YMD implements Comparable<YMD>
         	{
         		sb.append('-');
         	}
-    		sb.append(String.format("%04d",Math.abs(this.year)));
+    		sb.append(String.format("%04d",Integer.valueOf(Math.abs(this.year))));
     		if (this.month > 0)
     		{
-        		sb.append(String.format("-%02d",this.month));
+        		sb.append(String.format("-%02d",Integer.valueOf(this.month)));
         		if (this.day > 0)
         		{
-        			sb.append(String.format("-%02d",this.day));
+        			sb.append(String.format("-%02d",Integer.valueOf(this.day)));
         		}
     		}
     	}
     	return sb.toString();
     }
 
-    public int compareTo(final YMD that)
+    @Override
+	public int compareTo(final YMD that)
     {
     	return this.approx.compareTo(that.approx);
     }
