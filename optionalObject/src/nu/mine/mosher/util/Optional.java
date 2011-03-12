@@ -24,7 +24,7 @@ package nu.mine.mosher.util;
  * </blockquote>
  * </p>
  * <p>
- * The consumer of such an object can check the existance by using
+ * The consumer of such an object can check the existence by using
  * the <code>exists</code> method:
  * <blockquote>
  * <pre>
