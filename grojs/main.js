@@ -1,5 +1,6 @@
 function main() {
-	var gedcom, titleText, title, head, bodyText, ol, body, scriptname, li;
+	var gedcom, titleText, title, head;
+	gedcom = null;
 
 
 
@@ -22,12 +23,12 @@ function main() {
 
 
 
-	$.ajaxSetup({
+	Util.global.$.ajaxSetup({
 		dataType: "text"
 	});
 
 	//$.get("lib/testged/TGC55C.ged")
-	$.get("rapp.ged")
+	Util.global.$.get("rapp.ged")
 	//$.get("RichardsReeves.ged")
 		.success(function(gc) {
 			gtree = GedcomTree.parse(gc);
@@ -40,6 +41,8 @@ function main() {
 
 
 	Util.global.onresize = function() {
-		gedcom.calc();
+		if (gedcom) {
+			gedcom.calc();
+		}
 	};
 }

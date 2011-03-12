@@ -26,7 +26,7 @@ body {
 	/* background */
 	background-color: #E0DF9B;
 	/* For WebKit (Safari, Google Chrome, etc) */
-	background: -webkit-gradient(linear, left top, left bottom, from(#E0DF9B), to(#FFFFFF));
+	background: -webkit-gradient(linear, left bottom, left top, from(#E0DF9B), to(#FFFFFF));
 	/* For Mozilla/Gecko (Firefox, etc) */
 	background: -moz-linear-gradient(top, #FFFFFF, #E0DF9B);
 	/* For Internet Explorer 5.5 - 7 */
