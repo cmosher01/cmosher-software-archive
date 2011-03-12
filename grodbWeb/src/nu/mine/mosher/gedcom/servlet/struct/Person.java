@@ -9,6 +9,7 @@ import nu.mine.mosher.grodb.date.DatePeriod;
 import nu.mine.mosher.grodb.date.DateRange;
 import nu.mine.mosher.grodb.date.YMD;
 import nu.mine.mosher.time.Time;
+import nu.mine.mosher.util.Nothing;
 import nu.mine.mosher.util.Optional;
 
 
@@ -24,8 +25,8 @@ public class Person implements Comparable<Person>
 	private final ArrayList<Partnership> rParnership;
 	private final boolean isPrivate;
 
-	private Optional<Time> birth = new Optional<Time>(null,"birth");
-	private Optional<Time> death = new Optional<Time>(null,"death");
+	private Optional<Time> birth = new Nothing<Time>();
+	private Optional<Time> death = new Nothing<Time>();
 	private List<Time> rMarriage = new ArrayList<Time>();
 	private List<Time> rDivorce = new ArrayList<Time>();
 
@@ -57,27 +58,20 @@ public class Person implements Comparable<Person>
 		{
 			if (event.getType().equals("birth"))
 			{
-				if (event.getDate().exists())
-				{
-					this.birth = new Optional<Time>(event.getDate().get().getStartDate().getApproxDay(),"birth");
-				}
+				this.birth = new Optional<Time>(event.getDate().getStartDate().getApproxDay());
 			}
 			else if (event.getType().equals("death"))
 			{
-				if (event.getDate().exists())
-				{
-					this.death = new Optional<Time>(event.getDate().get().getStartDate().getApproxDay(),"death");
-				}
+				this.death = new Optional<Time>(event.getDate().getStartDate().getApproxDay());
 			}
-
 		}
 		if (!this.birth.exists())
 		{
-			this.birth = new Optional<Time>(YMD.getMinimum().getApproxTime(),"birth");
+			this.birth = new Optional<Time>(YMD.getMinimum().getApproxTime());
 		}
 		if (!this.death.exists())
 		{
-			this.death = new Optional<Time>(YMD.getMaximum().getApproxTime(),"death");
+			this.death = new Optional<Time>(YMD.getMaximum().getApproxTime());
 		}
 		if (this.rParnership.size() > 0)
 		{
@@ -89,19 +83,13 @@ public class Person implements Comparable<Person>
 				{
 					if (event.getType().equals("marriage"))
 					{
-						if (event.getDate().exists())
-						{
-							this.rMarriage.add(event.getDate().get().getStartDate().getApproxDay());
-							mar = true;
-						}
+						this.rMarriage.add(event.getDate().getStartDate().getApproxDay());
+						mar = true;
 					}
 					else if (event.getType().equals("divorce"))
 					{
-						if (event.getDate().exists())
-						{
-							this.rDivorce.add(event.getDate().get().getStartDate().getApproxDay());
-							div = true;
-						}
+						this.rDivorce.add(event.getDate().getStartDate().getApproxDay());
+						div = true;
 					}
 				}
 				if (!mar)
@@ -205,7 +193,7 @@ public class Person implements Comparable<Person>
 		final ArrayList<Event> rWithin = new ArrayList<Event>();
 		for (final Event event: this.rEvent)
 		{
-			if (event.overlaps(period))
+			if (event.getDate().overlaps(period))
 			{
 				rWithin.add(event);
 			}
@@ -233,6 +221,7 @@ public class Person implements Comparable<Person>
 		return this.isPrivate;
 	}
 
+	@Override
 	public int compareTo(final Person that)
 	{
 		if (this.rEvent.isEmpty() && that.rEvent.isEmpty())
@@ -340,14 +329,14 @@ public class Person implements Comparable<Person>
 	private DatePeriod getChildhood()
 	{
 		return new DatePeriod(
-			new DateRange(new YMD(this.birth.get())),
-			new DateRange(new YMD(this.rMarriage.get(0))));
+			new DateRange(new YMD(this.birth.get()),new YMD(this.birth.get())),
+			new DateRange(new YMD(this.rMarriage.get(0)),new YMD(this.rMarriage.get(0))));
 	}
 
 	private DatePeriod getPartnerhood(final int p)
 	{
 		return new DatePeriod(
-			new DateRange(new YMD(this.rMarriage.get(p))),
-			new DateRange(new YMD(this.rDivorce.get(p))));
+			new DateRange(new YMD(this.rMarriage.get(p)),new YMD(this.rMarriage.get(p))),
+			new DateRange(new YMD(this.rDivorce.get(p)),new YMD(this.rDivorce.get(p))));
 	}
 }

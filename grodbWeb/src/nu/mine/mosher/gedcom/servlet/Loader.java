@@ -44,7 +44,7 @@ public class Loader
 		final TreeNode<GedcomLine> root = this.gedcom.getRoot();
 
 		final Collection<TreeNode<GedcomLine>> rNodeTop = new ArrayList<TreeNode<GedcomLine>>();
-		root.getChildren(rNodeTop);
+		getChildren(root,rNodeTop);
 
 		for (final TreeNode<GedcomLine> nodeTop : rNodeTop)
 		{
@@ -91,10 +91,18 @@ public class Loader
 		}
 	}
 
+	private void getChildren(TreeNode<GedcomLine> root, Collection<TreeNode<GedcomLine>> rNodeTop)
+	{
+		for (final TreeNode<GedcomLine> child : root)
+		{
+			rNodeTop.add(child);
+		}
+	}
+
 	private void parseHead(final TreeNode<GedcomLine> head)
 	{
 		final Collection<TreeNode<GedcomLine>> rNode = new ArrayList<TreeNode<GedcomLine>>();
-		head.getChildren(rNode);
+		getChildren(head,rNode);
 
 		for (final TreeNode<GedcomLine> node : rNode)
 		{
@@ -115,7 +123,7 @@ public class Loader
 		boolean isPrivate = false;
 
 		final Collection<TreeNode<GedcomLine>> rNode = new ArrayList<TreeNode<GedcomLine>>();
-		nodeIndi.getChildren(rNode);
+		getChildren(nodeIndi,rNode);
 
 		for (final TreeNode<GedcomLine> node : rNode)
 		{
@@ -147,7 +155,7 @@ public class Loader
 		final ArrayList<Event> rEvent = new ArrayList<Event>();
 		
 		final Collection<TreeNode<GedcomLine>> rNode = new ArrayList<TreeNode<GedcomLine>>();
-		nodeFam.getChildren(rNode);
+		getChildren(nodeFam,rNode);
 
 		for (final TreeNode<GedcomLine> node : rNode)
 		{
@@ -198,7 +206,7 @@ public class Loader
 		final String whichEvent = getEventName(nodeEvent);
 
 		final Collection<TreeNode<GedcomLine>> rNode = new ArrayList<TreeNode<GedcomLine>>();
-		nodeEvent.getChildren(rNode);
+		getChildren(nodeEvent,rNode);
 
 		DatePeriod date = null;
 		String place = "";
@@ -242,6 +250,7 @@ public class Loader
 				}
 			}
 		}
+		// TODO handle case of date == null (see grojs for example)
 		return new Event(whichEvent,date,escapeXML(place),escapeXML(note),source);
 	}
 
@@ -257,7 +266,7 @@ public class Loader
 		}
 
 		final Collection<TreeNode<GedcomLine>> rNode = new ArrayList<TreeNode<GedcomLine>>();
-		nodeSource.getChildren(rNode);
+		getChildren(nodeSource,rNode);
 
 		String author = "";
 		String title = "";
@@ -291,7 +300,7 @@ public class Loader
 	private String getSourcePtText(TreeNode<GedcomLine> node)
 	{
 		final Collection<TreeNode<GedcomLine>> rNode = new ArrayList<TreeNode<GedcomLine>>();
-		node.getChildren(rNode);
+		getChildren(node,rNode);
 		for (final TreeNode<GedcomLine> n : rNode)
 		{
 			final GedcomLine line = n.getObject();
@@ -308,7 +317,7 @@ public class Loader
 	{
 		final StringBuilder sb = new StringBuilder(256);
 		final Collection<TreeNode<GedcomLine>> rNode = new ArrayList<TreeNode<GedcomLine>>();
-		node.getChildren(rNode);
+		getChildren(node,rNode);
 		for (final TreeNode<GedcomLine> n : rNode)
 		{
 			final GedcomLine line = n.getObject();
@@ -335,15 +344,10 @@ public class Loader
 
 	private boolean calculatePrivacy(final Event birth)
 	{
-		if (!birth.getDate().exists())
-		{
-			return false;
-		}
-
 		final Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.YEAR,-72);
 		final Time yearsAgo72 = new Time(cal.getTime());
-		return yearsAgo72.compareTo(birth.getDate().get().getEndDate().getApproxDay()) < 0;
+		return yearsAgo72.compareTo(birth.getDate().getEndDate().getApproxDay()) < 0;
 	}
 
 	private String getEventName(final TreeNode<GedcomLine> node)
@@ -352,7 +356,7 @@ public class Loader
 		if (tag.equals(GedcomTag.EVEN))
 		{
 			final Collection<TreeNode<GedcomLine>> rNode = new ArrayList<TreeNode<GedcomLine>>();
-			node.getChildren(rNode);
+			getChildren(node,rNode);
 			for (final TreeNode<GedcomLine> n : rNode)
 			{
 				final GedcomLine line = n.getObject();

@@ -40,6 +40,7 @@ public class FamilyEvent implements Comparable<FamilyEvent>
 	{
 		return this.relation;
 	}
+	@Override
 	public int compareTo(final FamilyEvent that)
 	{
 		return this.event.compareTo(that.event);

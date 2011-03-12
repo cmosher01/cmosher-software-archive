@@ -15,7 +15,7 @@ public final class EventNames
 		map.put(GedcomTag.CENS,"census");
 		map.put(GedcomTag.BIRT,"birth");
 		map.put(GedcomTag.DEAT,"death");
-		map.put(GedcomTag.CHR,"christening");
+		map.put(GedcomTag.CHR ,"christening");
 		map.put(GedcomTag.BURI,"reposition");
 		map.put(GedcomTag.CREM,"cremation");
 		map.put(GedcomTag.ADOP,"adoption");
@@ -37,7 +37,7 @@ public final class EventNames
 		map.put(GedcomTag.RESI,"residence");
 		map.put(GedcomTag.MARR,"marriage");
 		map.put(GedcomTag.ANUL,"annulment");
-		map.put(GedcomTag.DIV,"divorce");
+		map.put(GedcomTag.DIV ,"divorce");
 		map.put(GedcomTag.DIVF,"divorce filed");
 		map.put(GedcomTag.ENGA,"engagement");
 		map.put(GedcomTag.MARB,"marriage bann");
@@ -54,7 +54,7 @@ public final class EventNames
 		map.put(GedcomTag.OCCU,"occupation");
 		map.put(GedcomTag.PROP,"posession");
 		map.put(GedcomTag.RELI,"religion");
-		map.put(GedcomTag.SSN,"US Social Security number");
+		map.put(GedcomTag.SSN ,"US Social Security number");
 		map.put(GedcomTag.TITL,"title");
 	}
 

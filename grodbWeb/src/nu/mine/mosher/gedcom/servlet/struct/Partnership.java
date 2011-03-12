@@ -44,9 +44,9 @@ public class Partnership implements Comparable<Partnership>
 		return this.rChild;
 	}
 
-	public void addChildren(final Collection<Person> rChild)
+	public void addChildren(final Collection<Person> rChildToAdd)
 	{
-		this.rChild.addAll(rChild);
+		this.rChild.addAll(rChildToAdd);
 
 		Collections.<Person>sort(this.rChild);
 	}
@@ -56,6 +56,7 @@ public class Partnership implements Comparable<Partnership>
 		return this.partner != null && this.partner.isPrivate();
 	}
 
+	@Override
 	public int compareTo(final Partnership that)
 	{
 		if (this.rEvent.isEmpty() && that.rEvent.isEmpty())
