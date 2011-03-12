@@ -70,7 +70,7 @@ GedcomEvent.prototype.getPlace = function() {
  * Compares two {@link GedcomEvent}s, for sorting.
  * @param {GedcomEvent} a
  * @param {GedcomEvent} b
- * @return -1:a<b, 0:a=b, +1:a>b
+ * @return negative for a&lt;b, positive for b&lt;a, zero for a=b
  * @type Number
  */
 GedcomEvent.order = function(a,b) {

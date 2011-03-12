@@ -132,10 +132,10 @@ YMD.prototype.getExactDate = function() {
 };
 
 /**
- * Gets a <code>Time</code> that can be used as an approximation
+ * Gets a <code>Date</code> that can be used as an approximation
  * of this {@link YMD} for computation purposes.
  * Never display this value to the user!
- * @return an approximate <code>Time</code> for this {@link YMD}
+ * @return an approximate <code>Date</code> for this {@link YMD}
  * @type Date
  */
 YMD.prototype.getApproxDate = function() {
@@ -172,7 +172,7 @@ YMD.getMaximum = function() {
 
 
 /**
- * @return
+ * @return date in yyyy-mm-dd format
  * @type String
  */
 YMD.prototype.toString = function() {
@@ -204,7 +204,7 @@ YMD.prototype.toString = function() {
 /**
  * @private
  * @param {Number} i
- * @return
+ * @return if given number is not zero (not unknown)
  * @type Boolean
  */
 YMD.valid = function(i) {
@@ -212,8 +212,10 @@ YMD.valid = function(i) {
 };
 
 /**
+ * Approximate date. Never display this to the user; only use
+ * it for approximation in calculations (for example, for sorting).
  * @private
- * @return
+ * @return approximate date (useful if month or day are unknown)
  * @type Date
  */
 YMD.prototype.calcApprox = function() {
@@ -254,7 +256,7 @@ YMD.equal = function(a,b) {
  * Compares two {@link YMD}s, for sorting.
  * @param {YMD} a not null/undefined
  * @param {YMD} b not null/undefined
- * @return -1:a<b, 0:a=b, +1:a>b
+ * @return -1:a&lt;b, 0:a=b, +1:a&gt;b
  * @type Number
  */
 YMD.order = function(a,b) {

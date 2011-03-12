@@ -216,7 +216,7 @@ Util.repstr = function(n,c) {
  * Pads number n to width d with leading zeroes. Number is rounded to int first.
  * @param n
  * @param d
- * @return
+ * @return number with leading zeroes
  * @type String
  */
 Util.digint = function(n,d) {
@@ -235,7 +235,7 @@ Util.digint = function(n,d) {
  * compares Numbers.
  * @param {Number} a
  * @param {Number} b
- * @return negative for a<b, positive for b<a, zero for a=b
+ * @return negative for a&lt;b, positive for b&lt;a, zero for a=b
  * @type Number
  */
 Util.numberOrder = function(a,b) {
@@ -247,7 +247,7 @@ Util.numberOrder = function(a,b) {
  * compares Strings in a locale-specific way.
  * @param {String} a
  * @param {String} b
- * @return negative for a<b, positive for b<a, zero for a=b
+ * @return negative for a&lt;b, positive for b&lt;a, zero for a=b
  * @type Number
  */
 Util.localeOrder = function(a,b) {
@@ -259,7 +259,7 @@ Util.localeOrder = function(a,b) {
  * compares Dates.
  * @param {Date} a
  * @param {Date} b
- * @return negative for a<b, positive for b<a, zero for a=b
+ * @return negative for a&lt;b, positive for b&lt;a, zero for a=b
  * @type Number
  */
 Util.dateOrder = function(a,b) {

@@ -77,7 +77,7 @@ DatePeriod.equal = function(a,b) {
  * Compares two {@link DatePeriod}s, for sorting.
  * @param {DatePeriod} a
  * @param {DatePeriod} b
- * @return -1:a<b, 0:a=b, +1:a>b
+ * @return negative for a&lt;b, positive for b&lt;a, zero for a=b
  * @type Number
  */
 DatePeriod.order = function(a,b) {

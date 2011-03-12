@@ -9,7 +9,6 @@
  * @requires Partnership
  * @requires Person
  * @requires GedcomEvent
- * @requires GedcomDateParser
  * @requires Point
  * @requires Util
  * 

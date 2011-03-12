@@ -92,7 +92,7 @@ Calendar.jd_to_gregorian = function(jd) {
 /**
  * Checks if the given year is a leap year in the Julian calendar.
  * @param {Number} year
- * @return 
+ * @return if the given year is a leap year in the Julian calendar
  * @type Boolean
  */
 Calendar.leap_julian = function(year) {

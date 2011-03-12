@@ -107,7 +107,7 @@ DateRange.equal = function(a,b) {
  * Compares two {@link DateRange}s, for sorting.
  * @param {DateRange} a not null/undefined
  * @param {DateRange} b not null/undefined
- * @return -1:a<b, 0:a=b, +1:a>b
+ * @return negative for a&lt;b, positive for b&lt;a, zero for a=b
  * @type Number
  */
 DateRange.order = function(a,b) {
