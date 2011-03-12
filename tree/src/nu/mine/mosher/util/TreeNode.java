@@ -103,9 +103,10 @@ public class TreeNode<T> implements Iterable<TreeNode<T>>
 	@Override
 	public String toString()
 	{
-		final StringBuilder sb = new StringBuilder();
-		appendStringDeep(sb);
-		return sb.toString();
+//		final StringBuilder sb = new StringBuilder();
+//		appendStringDeep(sb);
+//		return sb.toString();
+		return toStringShallow();
 	}
 
 	public void appendStringDeep(final StringBuilder sb)
@@ -155,7 +156,8 @@ public class TreeNode<T> implements Iterable<TreeNode<T>>
 	@Override
 	public Iterator<TreeNode<T>> iterator()
 	{
-		return new Preorder();
+		return children();
+//		return new Preorder();
 	}
 
 	private final class Preorder implements Iterator<TreeNode<T>>
