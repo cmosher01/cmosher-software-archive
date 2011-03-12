@@ -91,7 +91,7 @@ TOKEN :
 
 TOKEN :
 {
-	< MONTH_LOWER_LIMIT: [] > |
+	< MONTH_LOWER_LIMIT: "MONTH_LOWER_LIMIT_4d645e804c4611e0b8af0800200c9a66" > |
 	< JAN: "JAN" > |
 	< FEB: "FEB" > |
 	< MAR: "MAR" > |

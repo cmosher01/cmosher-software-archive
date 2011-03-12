@@ -5,7 +5,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/grodbDate"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/junit-3-8-1"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/timeUtil"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
