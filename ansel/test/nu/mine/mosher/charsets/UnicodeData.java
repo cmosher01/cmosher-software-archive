@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import nu.mine.mosher.util.text.StringFieldizer;
+import nu.mine.mosher.util.text.StringFieldizerSimple;
 
 
 /**
@@ -89,7 +89,7 @@ public class UnicodeData
 
 			if (line.length() > 0)
 			{
-				StringFieldizer sf = new StringFieldizer(line,';');
+				StringFieldizerSimple sf = new StringFieldizerSimple(line,';');
 
 				String codepoint = sf.nextToken();
 				int nCodePoint = Integer.parseInt(codepoint,16);
