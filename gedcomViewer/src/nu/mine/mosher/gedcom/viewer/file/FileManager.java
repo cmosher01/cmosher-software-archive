@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
-import nu.mine.mosher.charsets.GedcomAnselCharsetProvider;
+//import nu.mine.mosher.charsets.GedcomAnselCharsetProvider;
 import nu.mine.mosher.gedcom.viewer.gui.FrameManager;
 import nu.mine.mosher.gedcom.viewer.gui.exception.UserCancelled;
 import nu.mine.mosher.gedcom.viewer.tree.GedcomTreeModel;
@@ -83,7 +83,7 @@ public class FileManager
 
 
 
-	private static GedcomAnselCharsetProvider ansel = new GedcomAnselCharsetProvider();
+//	private static GedcomAnselCharsetProvider ansel = new GedcomAnselCharsetProvider();
 
 	private void fileOpen()
 	{
@@ -93,7 +93,7 @@ public class FileManager
 		{
 			this.file = this.framer.getFileToOpen(this.file);
 			// TODO detect character encoding
-			in = new BufferedReader(new InputStreamReader(new FileInputStream(this.file),ansel.charsetForName("x-gedcom-ansel")));
+			in = new BufferedReader(new InputStreamReader(new FileInputStream(this.file),"UTF-16"));
 			this.model.open(in);
 		}
 		catch (final UserCancelled cancelled)
