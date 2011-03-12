@@ -2,10 +2,7 @@ package nu.mine.mosher.unicode;
 
 import java.util.Arrays;
 
-import nu.mine.mosher.util.Immutable;
-import nu.mine.mosher.util.Util;
-
-public class String32 implements Comparable, Immutable
+public class String32 implements Comparable<String32>
 {
 	private static final String32 EMPTY = new String32();
 
@@ -19,7 +16,7 @@ public class String32 implements Comparable, Immutable
 
 	public String32(int[] rChar32)
 	{
-		this.rChar32 = (int[])rChar32.clone();
+		this.rChar32 = rChar32.clone();
 		this.hash = getHashCode();
 	}
 
@@ -38,26 +35,28 @@ public class String32 implements Comparable, Immutable
         return ConvertUTF.convert32to16(this);
     }
 
-    public String toString()
+    @Override
+	public String toString()
     {
         return toUTF16();
     }
 
     public int size()
     {
-        return rChar32.length;
+        return this.rChar32.length;
     }
 
     public int[] get()
     {
-        return (int[])rChar32.clone();
+        return this.rChar32.clone();
     }
 
     public int charAt(int i)
     {
-        return rChar32[i];
+        return this.rChar32[i];
     }
 
+	@Override
 	public boolean equals(Object o)
 	{
 		if (!(o instanceof String32))
@@ -68,35 +67,41 @@ public class String32 implements Comparable, Immutable
 		return Arrays.equals(this.rChar32,that.rChar32);
 	}
 
-    public int compareTo(Object o)
+    @Override
+	public int compareTo(String32 that)
     {
-		String32 that = (String32)o;
 		for (int i = 0; i < Math.min(this.rChar32.length,that.rChar32.length); ++i)
 		{
-            int cmp = Util.compare(this.rChar32[i],that.rChar32[i]);
+            int cmp = String32.compare(this.rChar32[i],that.rChar32[i]);
             if (cmp != 0)
             {
                 return cmp;
             }
 		}
-        return Util.compare(this.rChar32.length,that.rChar32.length);
+        return String32.compare(this.rChar32.length,that.rChar32.length);
     }
+
+	private static int compare(final int x0, final int x1)
+	{
+		return x0 < x1 ? -1 : x1 < x0 ? +1 : 0;
+	}
 
 	protected int getHashCode()
 	{
 		int h = 17;
 
-		for (int i = 0; i < rChar32.length; ++i)
+		for (int i = 0; i < this.rChar32.length; ++i)
         {
 			h *= 37;
-			h += rChar32[i];
+			h += this.rChar32[i];
         }
 
 		return h;
 	}
 
-    public int hashCode()
+    @Override
+	public int hashCode()
     {
-    	return hash;
+    	return this.hash;
     }
 }

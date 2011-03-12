@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import nu.mine.mosher.util.text.StringFieldizer;
+import nu.mine.mosher.util.text.StringFieldizerSimple;
 
 /**
  * Handles reading the
@@ -21,7 +21,7 @@ public class UnicodeData
 	private final Composer composer;
 	private final File file;
 
-	public UnicodeData(File txtUnicodeData, Composer composer) throws IOException
+	public UnicodeData(File txtUnicodeData, Composer composer)
 	{
 		this.composer = composer;
 		this.file = txtUnicodeData;
@@ -33,7 +33,7 @@ public class UnicodeData
 		BufferedReader bufreader = null;
 		try
 		{
-			bufreader = new BufferedReader(new InputStreamReader(new FileInputStream(file)),8*1024);
+			bufreader = new BufferedReader(new InputStreamReader(new FileInputStream(this.file)),8*1024);
 			tryReadFrom(bufreader);
 			ok = true;
 		}
@@ -47,10 +47,11 @@ public class UnicodeData
 				}
 				catch (Throwable ignore)
 				{
+					ignore.printStackTrace();
 				}
 			}
 			if (!ok)
-				composer.clear();
+				this.composer.clear();
 		}
 	}
 
@@ -65,7 +66,7 @@ public class UnicodeData
         
 			if (line.length() > 0)
 			{
-				StringFieldizer sf = new StringFieldizer(line,';');
+				StringFieldizerSimple sf = new StringFieldizerSimple(line,';');
 				String codepoint = sf.nextToken();
 				/*String name =*/ sf.nextToken();
 				/*String category =*/ sf.nextToken();
@@ -102,7 +103,7 @@ public class UnicodeData
 					}
 				}
 
-				composer.addCharacter(nCodePoint,nCombining,compat,decompSeq);
+				this.composer.addCharacter(nCodePoint,nCombining,compat,decompSeq);
 			}
         
 			line = bufreader.readLine();
@@ -116,24 +117,24 @@ public class UnicodeData
 
 	private static String32 parseHexString(StringTokenizer st)
 	{
-		List listInteger = new ArrayList(10);
+		List<Integer> listInteger = new ArrayList<Integer>(10);
 		while (st.hasMoreTokens())
 		{
 			String tok = st.nextToken();
-			listInteger.add(new Integer(Integer.parseInt(tok,16)));
+			listInteger.add(Integer.valueOf(Integer.parseInt(tok,16)));
 		}
 		int[] r = intListToArray(listInteger);
 		return new String32(r);
 	}
 
-    private static int[] intListToArray(List listInteger)
+    private static int[] intListToArray(List<Integer> listInteger)
     {
     	final int n = listInteger.size();
 
 		int[] r = new int[n];
 		for (int i = 0; i < n; ++i)
 		{
-			Integer j = (Integer)listInteger.get(i);
+			Integer j = listInteger.get(i);
 			r[i] = j.intValue();
 		}
 
