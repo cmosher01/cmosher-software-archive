@@ -100,4 +100,10 @@ $(function() {
 			"@#DGREGORIAN@2 FEB 2222"), 
 			{year:2222,month:2,day:2});
 	});
+
+	test("nominal Hebrew", function() {
+		deepEqual(GedcomDateParser.parse(
+			"@#DHEBREW@ 1 TSH 5771"), 
+			{year:5771,month:7,day:1,hebrew:true});
+	})
 });

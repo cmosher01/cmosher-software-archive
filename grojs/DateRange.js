@@ -89,6 +89,12 @@ DateRange.prototype.toString = function() {
  * @type Date
  */
 DateRange.prototype.calcApprox = function() {
+	if (YMD.equal(this.earliest,YMD.getMinimum())) {
+		return this.latest.getApproxDate();
+	}
+	if (YMD.equal(this.latest,YMD.getMaximum())) {
+		return this.earliest.getApproxDate();
+	}
 	return new Date((this.earliest.getApproxDate().getTime()+this.latest.getApproxDate().getTime())/2);
 };
 

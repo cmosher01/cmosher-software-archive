@@ -19,4 +19,12 @@ $(function() {
 
 		deepEqual(ymdJulian,new YMD(1752,9,3,false,true));
 	});
+
+	test("nominal Hebrew to Gregorian", function() {
+		var ymdHebrew;
+		var ymdGregorian;
+		ymdHebrew = new YMD(5771,7,1);
+		ymdGregorian = Calendar.jd_to_gregorian(Calendar.hebrew_to_jd(ymdHebrew));
+		deepEqual(ymdGregorian,new YMD(2010,9,9));
+	})
 });

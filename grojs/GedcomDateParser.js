@@ -906,7 +906,7 @@ GedcomDateParser = (function(){
               pos = savedPos2;
             }
             var result20 = result21 !== null
-              ? (function(cal, ymd) { return null; /* not yet implemented */ })(result21[1], result21[4])
+              ? (function(cal, ymd) { ymd.hebrew = true; return ymd; })(result21[1], result21[4])
               : null;
             if (result20 !== null) {
               var result0 = result20;
@@ -968,7 +968,7 @@ GedcomDateParser = (function(){
                 pos = savedPos1;
               }
               var result13 = result14 !== null
-                ? (function(cal, ymd) { return null; /* not yet implemented */ })(result14[1], result14[4])
+                ? (function(cal, ymd) { ymd.french = true; return ymd; })(result14[1], result14[4])
                 : null;
               if (result13 !== null) {
                 var result0 = result13;
@@ -1337,64 +1337,73 @@ GedcomDateParser = (function(){
         
         
         var savedPos1 = pos;
-        var result7 = parse_N(context);
-        if (result7 !== null) {
-          var result8 = parse_S(context);
-          if (result8 !== null) {
-            var result9 = parse_month_hebr(context);
-            if (result9 !== null) {
-              var result10 = parse_S(context);
-              if (result10 !== null) {
-                var result11 = parse_year(context);
-                if (result11 !== null) {
-                  var result6 = [result7, result8, result9, result10, result11];
+        var result10 = parse_N(context);
+        if (result10 !== null) {
+          var result11 = parse_S(context);
+          if (result11 !== null) {
+            var result12 = parse_month_hebr(context);
+            if (result12 !== null) {
+              var result13 = parse_S(context);
+              if (result13 !== null) {
+                var result14 = parse_year(context);
+                if (result14 !== null) {
+                  var result9 = [result10, result11, result12, result13, result14];
                 } else {
-                  var result6 = null;
+                  var result9 = null;
                   pos = savedPos1;
                 }
               } else {
-                var result6 = null;
+                var result9 = null;
                 pos = savedPos1;
               }
             } else {
-              var result6 = null;
+              var result9 = null;
               pos = savedPos1;
             }
           } else {
-            var result6 = null;
+            var result9 = null;
             pos = savedPos1;
           }
         } else {
-          var result6 = null;
+          var result9 = null;
           pos = savedPos1;
         }
-        if (result6 !== null) {
-          var result0 = result6;
+        var result8 = result9 !== null
+          ? (function(d, m, y) { return { day:d, month:m, year:y }; })(result9[0], result9[2], result9[4])
+          : null;
+        if (result8 !== null) {
+          var result0 = result8;
         } else {
           var savedPos0 = pos;
-          var result3 = parse_month_hebr(context);
-          if (result3 !== null) {
-            var result4 = parse_S(context);
-            if (result4 !== null) {
-              var result5 = parse_year(context);
-              if (result5 !== null) {
-                var result2 = [result3, result4, result5];
+          var result5 = parse_month_hebr(context);
+          if (result5 !== null) {
+            var result6 = parse_S(context);
+            if (result6 !== null) {
+              var result7 = parse_year(context);
+              if (result7 !== null) {
+                var result4 = [result5, result6, result7];
               } else {
-                var result2 = null;
+                var result4 = null;
                 pos = savedPos0;
               }
             } else {
-              var result2 = null;
+              var result4 = null;
               pos = savedPos0;
             }
           } else {
-            var result2 = null;
+            var result4 = null;
             pos = savedPos0;
           }
-          if (result2 !== null) {
-            var result0 = result2;
+          var result3 = result4 !== null
+            ? (function(m, y) { return { day:0, month:m, year:y }; })(result4[0], result4[2])
+            : null;
+          if (result3 !== null) {
+            var result0 = result3;
           } else {
-            var result1 = parse_year(context);
+            var result2 = parse_year(context);
+            var result1 = result2 !== null
+              ? (function(y) { return { day:0, month:0, year:y }; })(result2)
+              : null;
             if (result1 !== null) {
               var result0 = result1;
             } else {
@@ -1422,64 +1431,73 @@ GedcomDateParser = (function(){
         
         
         var savedPos1 = pos;
-        var result7 = parse_N(context);
-        if (result7 !== null) {
-          var result8 = parse_S(context);
-          if (result8 !== null) {
-            var result9 = parse_month_fren(context);
-            if (result9 !== null) {
-              var result10 = parse_S(context);
-              if (result10 !== null) {
-                var result11 = parse_year(context);
-                if (result11 !== null) {
-                  var result6 = [result7, result8, result9, result10, result11];
+        var result10 = parse_N(context);
+        if (result10 !== null) {
+          var result11 = parse_S(context);
+          if (result11 !== null) {
+            var result12 = parse_month_fren(context);
+            if (result12 !== null) {
+              var result13 = parse_S(context);
+              if (result13 !== null) {
+                var result14 = parse_year(context);
+                if (result14 !== null) {
+                  var result9 = [result10, result11, result12, result13, result14];
                 } else {
-                  var result6 = null;
+                  var result9 = null;
                   pos = savedPos1;
                 }
               } else {
-                var result6 = null;
+                var result9 = null;
                 pos = savedPos1;
               }
             } else {
-              var result6 = null;
+              var result9 = null;
               pos = savedPos1;
             }
           } else {
-            var result6 = null;
+            var result9 = null;
             pos = savedPos1;
           }
         } else {
-          var result6 = null;
+          var result9 = null;
           pos = savedPos1;
         }
-        if (result6 !== null) {
-          var result0 = result6;
+        var result8 = result9 !== null
+          ? (function(d, m, y) { return { day:d, month:m, year:y }; })(result9[0], result9[2], result9[4])
+          : null;
+        if (result8 !== null) {
+          var result0 = result8;
         } else {
           var savedPos0 = pos;
-          var result3 = parse_month_fren(context);
-          if (result3 !== null) {
-            var result4 = parse_S(context);
-            if (result4 !== null) {
-              var result5 = parse_year(context);
-              if (result5 !== null) {
-                var result2 = [result3, result4, result5];
+          var result5 = parse_month_fren(context);
+          if (result5 !== null) {
+            var result6 = parse_S(context);
+            if (result6 !== null) {
+              var result7 = parse_year(context);
+              if (result7 !== null) {
+                var result4 = [result5, result6, result7];
               } else {
-                var result2 = null;
+                var result4 = null;
                 pos = savedPos0;
               }
             } else {
-              var result2 = null;
+              var result4 = null;
               pos = savedPos0;
             }
           } else {
-            var result2 = null;
+            var result4 = null;
             pos = savedPos0;
           }
-          if (result2 !== null) {
-            var result0 = result2;
+          var result3 = result4 !== null
+            ? (function(m, y) { return { day:0, month:m, year:y }; })(result4[0], result4[2])
+            : null;
+          if (result3 !== null) {
+            var result0 = result3;
           } else {
-            var result1 = parse_year(context);
+            var result2 = parse_year(context);
+            var result1 = result2 !== null
+              ? (function(y) { return { day:0, month:0, year:y }; })(result2)
+              : null;
             if (result1 !== null) {
               var result0 = result1;
             } else {
@@ -2605,13 +2623,13 @@ GedcomDateParser = (function(){
         }
         
         
-        if (input.substr(pos, 3) === "TSH") {
-          var result26 = "TSH";
+        if (input.substr(pos, 3) === "NSN") {
+          var result26 = "NSN";
           pos += 3;
         } else {
           var result26 = null;
           if (context.reportMatchFailures) {
-            matchFailed(quoteString("TSH"));
+            matchFailed(quoteString("NSN"));
           }
         }
         var result25 = result26 !== null
@@ -2620,13 +2638,13 @@ GedcomDateParser = (function(){
         if (result25 !== null) {
           var result0 = result25;
         } else {
-          if (input.substr(pos, 3) === "CSH") {
-            var result24 = "CSH";
+          if (input.substr(pos, 3) === "IYR") {
+            var result24 = "IYR";
             pos += 3;
           } else {
             var result24 = null;
             if (context.reportMatchFailures) {
-              matchFailed(quoteString("CSH"));
+              matchFailed(quoteString("IYR"));
             }
           }
           var result23 = result24 !== null
@@ -2635,13 +2653,13 @@ GedcomDateParser = (function(){
           if (result23 !== null) {
             var result0 = result23;
           } else {
-            if (input.substr(pos, 3) === "KSL") {
-              var result22 = "KSL";
+            if (input.substr(pos, 3) === "SVN") {
+              var result22 = "SVN";
               pos += 3;
             } else {
               var result22 = null;
               if (context.reportMatchFailures) {
-                matchFailed(quoteString("KSL"));
+                matchFailed(quoteString("SVN"));
               }
             }
             var result21 = result22 !== null
@@ -2650,13 +2668,13 @@ GedcomDateParser = (function(){
             if (result21 !== null) {
               var result0 = result21;
             } else {
-              if (input.substr(pos, 3) === "TVT") {
-                var result20 = "TVT";
+              if (input.substr(pos, 3) === "TMZ") {
+                var result20 = "TMZ";
                 pos += 3;
               } else {
                 var result20 = null;
                 if (context.reportMatchFailures) {
-                  matchFailed(quoteString("TVT"));
+                  matchFailed(quoteString("TMZ"));
                 }
               }
               var result19 = result20 !== null
@@ -2665,13 +2683,13 @@ GedcomDateParser = (function(){
               if (result19 !== null) {
                 var result0 = result19;
               } else {
-                if (input.substr(pos, 3) === "SHV") {
-                  var result18 = "SHV";
+                if (input.substr(pos, 3) === "AAV") {
+                  var result18 = "AAV";
                   pos += 3;
                 } else {
                   var result18 = null;
                   if (context.reportMatchFailures) {
-                    matchFailed(quoteString("SHV"));
+                    matchFailed(quoteString("AAV"));
                   }
                 }
                 var result17 = result18 !== null
@@ -2680,13 +2698,13 @@ GedcomDateParser = (function(){
                 if (result17 !== null) {
                   var result0 = result17;
                 } else {
-                  if (input.substr(pos, 3) === "ADR") {
-                    var result16 = "ADR";
+                  if (input.substr(pos, 3) === "ELL") {
+                    var result16 = "ELL";
                     pos += 3;
                   } else {
                     var result16 = null;
                     if (context.reportMatchFailures) {
-                      matchFailed(quoteString("ADR"));
+                      matchFailed(quoteString("ELL"));
                     }
                   }
                   var result15 = result16 !== null
@@ -2695,13 +2713,13 @@ GedcomDateParser = (function(){
                   if (result15 !== null) {
                     var result0 = result15;
                   } else {
-                    if (input.substr(pos, 3) === "ADS") {
-                      var result14 = "ADS";
+                    if (input.substr(pos, 3) === "TSH") {
+                      var result14 = "TSH";
                       pos += 3;
                     } else {
                       var result14 = null;
                       if (context.reportMatchFailures) {
-                        matchFailed(quoteString("ADS"));
+                        matchFailed(quoteString("TSH"));
                       }
                     }
                     var result13 = result14 !== null
@@ -2710,13 +2728,13 @@ GedcomDateParser = (function(){
                     if (result13 !== null) {
                       var result0 = result13;
                     } else {
-                      if (input.substr(pos, 3) === "NSN") {
-                        var result12 = "NSN";
+                      if (input.substr(pos, 3) === "CSH") {
+                        var result12 = "CSH";
                         pos += 3;
                       } else {
                         var result12 = null;
                         if (context.reportMatchFailures) {
-                          matchFailed(quoteString("NSN"));
+                          matchFailed(quoteString("CSH"));
                         }
                       }
                       var result11 = result12 !== null
@@ -2725,13 +2743,13 @@ GedcomDateParser = (function(){
                       if (result11 !== null) {
                         var result0 = result11;
                       } else {
-                        if (input.substr(pos, 3) === "IYR") {
-                          var result10 = "IYR";
+                        if (input.substr(pos, 3) === "KSL") {
+                          var result10 = "KSL";
                           pos += 3;
                         } else {
                           var result10 = null;
                           if (context.reportMatchFailures) {
-                            matchFailed(quoteString("IYR"));
+                            matchFailed(quoteString("KSL"));
                           }
                         }
                         var result9 = result10 !== null
@@ -2740,13 +2758,13 @@ GedcomDateParser = (function(){
                         if (result9 !== null) {
                           var result0 = result9;
                         } else {
-                          if (input.substr(pos, 3) === "SVN") {
-                            var result8 = "SVN";
+                          if (input.substr(pos, 3) === "TVT") {
+                            var result8 = "TVT";
                             pos += 3;
                           } else {
                             var result8 = null;
                             if (context.reportMatchFailures) {
-                              matchFailed(quoteString("SVN"));
+                              matchFailed(quoteString("TVT"));
                             }
                           }
                           var result7 = result8 !== null
@@ -2755,13 +2773,13 @@ GedcomDateParser = (function(){
                           if (result7 !== null) {
                             var result0 = result7;
                           } else {
-                            if (input.substr(pos, 3) === "TMZ") {
-                              var result6 = "TMZ";
+                            if (input.substr(pos, 3) === "SHV") {
+                              var result6 = "SHV";
                               pos += 3;
                             } else {
                               var result6 = null;
                               if (context.reportMatchFailures) {
-                                matchFailed(quoteString("TMZ"));
+                                matchFailed(quoteString("SHV"));
                               }
                             }
                             var result5 = result6 !== null
@@ -2770,13 +2788,13 @@ GedcomDateParser = (function(){
                             if (result5 !== null) {
                               var result0 = result5;
                             } else {
-                              if (input.substr(pos, 3) === "AAV") {
-                                var result4 = "AAV";
+                              if (input.substr(pos, 3) === "ADR") {
+                                var result4 = "ADR";
                                 pos += 3;
                               } else {
                                 var result4 = null;
                                 if (context.reportMatchFailures) {
-                                  matchFailed(quoteString("AAV"));
+                                  matchFailed(quoteString("ADR"));
                                 }
                               }
                               var result3 = result4 !== null
@@ -2785,13 +2803,13 @@ GedcomDateParser = (function(){
                               if (result3 !== null) {
                                 var result0 = result3;
                               } else {
-                                if (input.substr(pos, 3) === "ELL") {
-                                  var result2 = "ELL";
+                                if (input.substr(pos, 3) === "ADS") {
+                                  var result2 = "ADS";
                                   pos += 3;
                                 } else {
                                   var result2 = null;
                                   if (context.reportMatchFailures) {
-                                    matchFailed(quoteString("ELL"));
+                                    matchFailed(quoteString("ADS"));
                                   }
                                 }
                                 var result1 = result2 !== null

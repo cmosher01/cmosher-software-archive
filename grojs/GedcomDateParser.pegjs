@@ -30,8 +30,8 @@ date_approx
 date
   = "@#D" cal:"GREGORIAN" "@" OS ymd:date_gregor { return ymd; }
   / "@#D" cal:"JULIAN"    "@" OS ymd:date_julian { ymd.julian = true; return ymd; }
-  / "@#D" cal:"HEBREW"    "@" OS ymd:date_hebrew { return null; /* not yet implemented */ }
-  / "@#D" cal:"FRENCH R"  "@" OS ymd:date_french { return null; /* not yet implemented */ }
+  / "@#D" cal:"HEBREW"    "@" OS ymd:date_hebrew { ymd.hebrew = true; return ymd; }
+  / "@#D" cal:"FRENCH R"  "@" OS ymd:date_french { ymd.french = true; return ymd; }
   / "@#D" cal:other_cal   "@" OS str:.*          { return cal+": "+str.join(""); }
   /                              ymd:date_slash  { ymd.julian = true; return ymd; }
   /                              ymd:date_gregor { return ymd; }
@@ -51,14 +51,14 @@ date_julian
   / ymd:date_julian_raw
 
 date_hebrew
-  = d:day S m:month_hebr S y:year
-  /         m:month_hebr S y:year
-  /                        y:year
+  = d:day S m:month_hebr S y:year { return { day:d, month:m, year:y }; }
+  /         m:month_hebr S y:year { return { day:0, month:m, year:y }; }
+  /                        y:year { return { day:0, month:0, year:y }; }
 
 date_french
-  = d:day S m:month_fren S y:year
-  /         m:month_fren S y:year
-  /                        y:year
+  = d:day S m:month_fren S y:year { return { day:d, month:m, year:y }; }
+  /         m:month_fren S y:year { return { day:0, month:m, year:y }; }
+  /                        y:year { return { day:0, month:0, year:y }; }
 
 date_slash
   = d:day S m:month_engl S y:year_slash { return { day:d, month:m, year:y }; }
@@ -128,16 +128,16 @@ month_fren
   / "COMP" { return 13; }
 
 month_hebr
-  = "TSH" { return  1; }
-  / "CSH" { return  2; }
-  / "KSL" { return  3; }
-  / "TVT" { return  4; }
-  / "SHV" { return  5; }
-  / "ADR" { return  6; }
-  / "ADS" { return  7; }
-  / "NSN" { return  8; }
-  / "IYR" { return  9; }
-  / "SVN" { return 10; }
-  / "TMZ" { return 11; }
-  / "AAV" { return 12; }
-  / "ELL" { return 13; }
+  = "NSN" { return  1; }
+  / "IYR" { return  2; }
+  / "SVN" { return  3; }
+  / "TMZ" { return  4; }
+  / "AAV" { return  5; }
+  / "ELL" { return  6; }
+  / "TSH" { return  7; }
+  / "CSH" { return  8; }
+  / "KSL" { return  9; }
+  / "TVT" { return 10; }
+  / "SHV" { return 11; }
+  / "ADR" { return 12; }
+  / "ADS" { return 13; }

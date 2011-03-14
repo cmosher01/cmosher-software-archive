@@ -185,10 +185,10 @@ YMD.prototype.toString = function() {
 
 	if (this.year == 9999 || this.year == -9999) {
 		if (YMD.equal(this,YMD.getMaximum())) {
-			return "(MAX)";
+			return "[latest]";
 		}
 		if (YMD.equal(this,YMD.getMinimum())) {
-			return "(MIN)";
+			return "[earliest]";
 		}
 	}
 	s += Util.digint(this.year,4);
@@ -285,6 +285,15 @@ YMD.isParsedYMD = function(r) {
 YMD.fromParserResult = function(r) {
 	if (!r) {
 		return null;
+	}
+	if (r.julian) {
+		return Calendar.jd_to_gregorian(Calendar.julian_to_jd(new YMD(r.year,r.month,r.day)));
+	}
+	if (r.hebrew) {
+		return Calendar.jd_to_gregorian(Calendar.hebrew_to_jd(new YMD(r.year,r.month,r.day)));
+	}
+	if (r.french) {
+		return Calendar.jd_to_gregorian(Calendar.french_revolutionary_to_jd(new YMD(r.year,r.month,r.day)));
 	}
 	return new YMD(r.year,r.month,r.day,r.approx,r.julian);
 };

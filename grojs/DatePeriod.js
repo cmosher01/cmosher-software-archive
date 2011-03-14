@@ -81,9 +81,15 @@ DatePeriod.equal = function(a,b) {
  * @type Number
  */
 DatePeriod.order = function(a,b) {
+	// TODO figure out how to handle unknown dates so they sort like this:
+	//    2001-03-12
+	//    [unknown] -- 2011-03-13
+	//    2011-03-13
+	//    2011-03-13 -- [unknown]
+	//    2001-03-14
 	var c;
 	c = DateRange.order(a.getStartDate(),b.getStartDate());
-	if (!c) {
+	if (!c || DateRange.equal(a.getStartDate(), DateRange.UNKNOWN)) {
 		c = DateRange.order(a.getEndDate(),b.getEndDate());
 	}
 	return c;
