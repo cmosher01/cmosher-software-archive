@@ -356,12 +356,11 @@ function ecliptoeq(jd, Lambda, Beta)
     /* Obliquity of the ecliptic. */
 
     eps = dtr(obliqeq(jd));
-log += "Obliquity: " + rtd(eps) + "\n";
 
     Ra = rtd(Math.atan2((Math.cos(eps) * Math.sin(dtr(Lambda)) -
                         (Math.tan(dtr(Beta)) * Math.sin(eps))),
                       Math.cos(dtr(Lambda))));
-log += "RA = " + Ra + "\n";
+
     Ra = fixangle(rtd(Math.atan2((Math.cos(eps) * Math.sin(dtr(Lambda)) -
                         (Math.tan(dtr(Beta)) * Math.sin(eps))),
                       Math.cos(dtr(Lambda)))));
@@ -596,7 +595,7 @@ function sunpos(jd)
 
 function equationOfTime(jd)
 {
-    var alpha, deltaPsi, E, epsilon, L0, tau
+    var alpha, deltaPsi, E, epsilon, L0, tau;
 
     tau = (jd - J2000) / JulianMillennium;
 //document.debug.log.value += "equationOfTime.  tau = " + tau + "\n";
