@@ -32,6 +32,7 @@ function Calendar() {
  * @type Number
  */
 Calendar.gregorian_to_jd = function(ymd) {
+	return gregorian_to_jd(ymd.getYear(),ymd.getMonth(),ymd.getDay());
 };
 
 /**
@@ -41,7 +42,8 @@ Calendar.gregorian_to_jd = function(ymd) {
  * @type YMD
  */
 Calendar.jd_to_gregorian = function(jd) {
-    return new YMD(year, month, day);
+	var r = jd_to_gregorian(jd);
+    return new YMD(r[0],r[1],r[2]);
 };
 
 /**
@@ -51,9 +53,7 @@ Calendar.jd_to_gregorian = function(jd) {
  * @type Number
  */
 Calendar.julian_to_jd = function(ymd) {
-	var year = ymd.getYear();
-	var month = ymd.getMonth();
-	var day = ymd.getDay();
+	return julian_to_jd(ymd.getYear(),ymd.getMonth(),ymd.getDay());
 };
 
 /**
@@ -63,7 +63,8 @@ Calendar.julian_to_jd = function(ymd) {
  * @type YMD
  */
 Calendar.jd_to_julian = function(jd) {
-    return new YMD(year, month, day, false, true);
+	var r = jd_to_julian(jd);
+    return new YMD(r[0],r[1],r[2],false,true);
 };
 
 /**
@@ -74,9 +75,7 @@ Calendar.jd_to_julian = function(jd) {
  */
 Calendar.hebrew_to_jd = function(ymd)
 {
-    year = ymd.getYear();
-    month = ymd.getMonth();
-    day = ymd.getDay();
+	return hebrew_to_jd(ymd.getYear(),ymd.getMonth(),ymd.getDay());
 };
 
 /**
@@ -87,13 +86,17 @@ Calendar.hebrew_to_jd = function(ymd)
  */
 Calendar.jd_to_hebrew = function(jd)
 {
-    return new YMD(year, month, day);
-};
-
-Calendar.jd_to_french_revolutionary = function(jd)
-{
+	var r = jd_to_hebrew(jd);
+    return new YMD(r[0],r[1],r[2],false,false,true);
 };
 
 Calendar.french_revolutionary_to_jd = function(an, mois, decade, jour)
 {
+	return french_revolutionary_to_jd(ymd.getYear(),ymd.getMonth(),ymd.getDay());
+};
+
+Calendar.jd_to_french_revolutionary = function(jd)
+{
+	var r = jd_to_french_revolutionary(jd);
+    return new YMD(r[0],r[1],r[2],false,false,false,true);
 };
