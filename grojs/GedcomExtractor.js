@@ -183,7 +183,7 @@ GedcomExtractor.prototype.extractEventName = function(evt) {
 		nam = GedcomTag.getEventName(evt.line.getTag());
 		val = evt.line.getVal();
 		if (val) {
-			nam += ": "+val;
+			nam += ": <br>"+val;
 		}
 	}
 	return nam;

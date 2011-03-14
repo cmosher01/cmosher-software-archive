@@ -325,7 +325,7 @@ Person.prototype.createEventTable = function() {
 		tr = Util.createHtmlElement("tr");
 
 		td = Util.createHtmlElement("td");
-		td.appendChild(Util.global.document.createTextNode(Util.safeStr(evt.getType())));
+		td.innerHTML = Util.safeStr(evt.getType());
 		tr.appendChild(td);
 		td = Util.createHtmlElement("td");
 		td.appendChild(Util.global.document.createTextNode(Util.safeStr(evt.getDate())));
