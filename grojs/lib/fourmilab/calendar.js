@@ -439,7 +439,7 @@ function paris_equinoxe_jd(year)
                                 given Julian day falls.  Returns an
                                 array of two elements:
 
-                                    [0]  Ann�e de la R�volution
+                                    [0]  Annee de la Revolution
                                     [1]  Julian day number containing
                                          equinox for this year.
 */

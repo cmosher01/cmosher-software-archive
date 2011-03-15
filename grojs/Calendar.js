@@ -1,19 +1,10 @@
-/*
-BASED ON:
-       JavaScript functions for the Fourmilab Calendar Converter
-
-                  by John Walker  --  September, MIM
-              http://www.fourmilab.ch/documents/calendar/
-
-                This program is in the public domain.
-*/
 /**
  * @fileoverview
  * Defines the {@link Calendar} class.
  */
 
 /**
- * @class Contains static calendar utilities.
+ * @class This class is a wrapper for some of the Fourmilab calendar functions.
  * @requires YMD
  * 
  * @constructor
@@ -90,13 +81,33 @@ Calendar.jd_to_hebrew = function(jd)
     return new YMD(r[0],r[1],r[2],false,false,true);
 };
 
-Calendar.french_revolutionary_to_jd = function(an, mois, decade, jour)
+/**
+ * Converts French Revolutionary date to JD
+ * @param {YMD} ymd
+ * @return JD of given French Revolutionary date
+ * @type Number
+ */
+Calendar.french_revolutionary_to_jd = function(ymd)
 {
-	return french_revolutionary_to_jd(ymd.getYear(),ymd.getMonth(),ymd.getDay());
+	var d, dec, jou;
+	d = ymd.getDay()-1;
+	dec = Math.floor(d/10);
+	jou = d%10;
+	return french_revolutionary_to_jd(ymd.getYear(),ymd.getMonth(),dec+1,jou+1);
 };
 
+/**
+ * Converts JD to French Revolutionary date
+ * @param {Number} jd JD
+ * @return date in French Revolutionary calendar
+ * @type YMD
+ */
 Calendar.jd_to_french_revolutionary = function(jd)
 {
-	var r = jd_to_french_revolutionary(jd);
-    return new YMD(r[0],r[1],r[2],false,false,false,true);
+	var r, d, dec, jou;
+	r= jd_to_french_revolutionary(jd);
+	dec = r[2];
+	jou = r[3];
+	d = (dec-1)*10+jou;
+    return new YMD(r[0],r[1],d,false,false,false,true);
 };
