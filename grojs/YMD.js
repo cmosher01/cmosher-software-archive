@@ -185,10 +185,10 @@ YMD.prototype.toString = function() {
 
 	if (this.year == 9999 || this.year == -9999) {
 		if (YMD.equal(this,YMD.getMaximum())) {
-			return "[latest]";
+			return "[after]";
 		}
 		if (YMD.equal(this,YMD.getMinimum())) {
-			return "[earliest]";
+			return "[before]";
 		}
 	}
 	s += Util.digint(this.year,4);
