@@ -204,7 +204,7 @@ Person.prototype.createDiv = function(pos) {
  * @type HTMLElement
  */
 Person.prototype.createDivExp = function(pos) {
-	var div, n, e;
+	var div, n;
 	div = Util.createHtmlElement("div");
 	div.className = "person expanded-person";
 	div.style.position = "absolute";
@@ -216,9 +216,6 @@ Person.prototype.createDivExp = function(pos) {
 	n = Util.global.document.createTextNode(this.gname);
 	div.appendChild(n);
 	
-	e = this.createEventTable();
-	div.appendChild(e);
-
 	return div;
 };
 
@@ -342,4 +339,20 @@ Person.prototype.createEventTable = function() {
 
 
 	return table;
+};
+
+Person.prototype.getEventsFromPartnerships = function() {
+	var that, e;
+
+	that = this;
+	Util.forEach(this.spouseIn, function(part) {
+		Util.forEach(part.getEvents(), function(evt) {
+			that.revt.push(evt);
+		});
+	});
+
+	this.revt.sort(GedcomEvent.order);
+
+	e = this.createEventTable();
+	this.divExp.appendChild(e);
 };

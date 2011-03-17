@@ -27,8 +27,8 @@ function main() {
 		dataType: "text"
 	});
 
-	Util.global.$.get("lib/testged/TGC55C.ged")
-	//Util.global.$.get("rapp.ged")
+	//Util.global.$.get("lib/testged/TGC55C.ged")
+	Util.global.$.get("rapp.ged")
 	//Util.global.$.get("RichardsReeves.ged")
 		.success(function(gc) {
 			gtree = GedcomTree.parse(gc);
@@ -41,7 +41,7 @@ function main() {
 
 
 	Util.global.onresize = function() {
-		if (gedcom) {
+		if (gedcom != null) {
 			gedcom.calc();
 		}
 	};

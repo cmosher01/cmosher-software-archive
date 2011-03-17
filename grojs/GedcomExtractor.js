@@ -71,6 +71,10 @@ GedcomExtractor.prototype.extract = function() {
 			that.mpartnership[node.line.getID()] = that.extractParnership(node);
 		}
 	});
+
+	Util.forEach(this.mperson, function(indi) {
+		indi.getEventsFromPartnerships();
+	});
 };
 
 /**
@@ -100,8 +104,6 @@ GedcomExtractor.prototype.extractPerson = function(indi) {
 			revt.push(that.extractEvent(node));
 		}
 	});
-
-	revt.sort(GedcomEvent.order);
 
 	line = indi.line;
 	return new Person(line.getID(),nam,xy,revt);
