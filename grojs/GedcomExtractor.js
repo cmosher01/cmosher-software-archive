@@ -58,19 +58,18 @@ GedcomExtractor.prototype.calc = function() {
  * @private
  */
 GedcomExtractor.prototype.extract = function() {
-	var rchil, that;
+	var rchil;
 	rchil = this.t.getRoot().getChildren();
-	that = this;
-	Util.forEach(rchil, function(node) {
+	Util.forEach(rchil, Util.bind(this,function(node) {
 		if (node.line.getTag() === "INDI") {
-			that.mperson[node.line.getID()] = that.extractPerson(node);
+			this.mperson[node.line.getID()] = this.extractPerson(node);
 		}
-	});
-	Util.forEach(rchil, function(node) {
+	}));
+	Util.forEach(rchil, Util.bind(this,function(node) {
 		if (node.line.getTag() === "FAM") {
-			that.mpartnership[node.line.getID()] = that.extractParnership(node);
+			this.mpartnership[node.line.getID()] = this.extractParnership(node);
 		}
-	});
+	}));
 
 	Util.forEach(this.mperson, function(indi) {
 		indi.getEventsFromPartnerships();
@@ -185,7 +184,7 @@ GedcomExtractor.prototype.extractEventName = function(evt) {
 		nam = GedcomTag.getEventName(evt.line.getTag());
 		val = evt.line.getVal();
 		if (val) {
-			nam += ": <br>"+val;
+			nam += ": "+val;
 		}
 	}
 	return nam;

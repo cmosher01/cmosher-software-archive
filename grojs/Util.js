@@ -99,6 +99,21 @@ Util.forEach = function(r,fn) {
 };
 
 /**
+ * Creates a function that calls a given function with the
+ * <code>this</code> variable set to the given scope.
+ * @param {Object} scope value for <code>this</code>
+ * @param {Function} fn the function to call
+ * @return bound function
+ * @type Function
+ */
+Util.bind = function(scope,fn) {
+	return function() {
+		fn.apply(scope,arguments);
+	};
+};
+
+/**
+ * 
  * Creates a new non-sparse array from r.
  * @param {Array} r any array
  * @return non-sparse version of r
