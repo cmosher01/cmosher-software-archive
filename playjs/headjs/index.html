@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head id="head">
+    <meta charset="utf-8"></meta>
+    <title>My Program</title>
+    <script src="headjs/head.js"></script>
+    <script>
+    function depends(f) {
+        head(function() {
+    	head.js(f);
+        });
+    }
+    depends("main.js");
+    head(function() {
+    	main();
+    });
+    </script>
+  </head>
+  <body></body>
+</html>
