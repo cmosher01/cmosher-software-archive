@@ -9,5 +9,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/tree"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/optionalObject"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/templat"/>
+	<classpathentry kind="lib" path="/usr/share/java/servlet-api-2.5.jar"/>
 	<classpathentry kind="output" path="web/WEB-INF/classes"/>
 </classpath>
