@@ -213,7 +213,7 @@ Util.createHtmlElement = function(tag) {
 /**
  * Returns a string of n of c characters
  * @param n number of character
- * @param c character to repeat (defauls to space)
+ * @param c character to repeat (defaults to space)
  * @return string
  * @type String
  */

@@ -235,6 +235,14 @@ $(function() {
 		equal(Util.getTypeName(x),"Foo"); // can't fix this?
 	});
 
+	test("class name of arguments", function() {
+		equal(Util.getTypeName(arguments),"Arguments");
+	});
+
+	test("class name of callee", function() {
+		equal(Util.getTypeName(arguments.callee),"Function");
+	});
+
 	test("safestr nominal", function() {
 		equal(Util.safeStr("Chris"),"Chris");
 	});
