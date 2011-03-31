@@ -1,21 +1,20 @@
-function test_closure(r) {
+Circle.test_closure = function (r) {
+	var d;
+	d = r*2;
+
 	Circle.prototype.getRadius = function() {
 		return r;
 	};
 	
 	Circle.prototype.getDiameter = function() {
-		return r*2;
+		return d;
 	};
-}
+};
 
 
 
 function Circle(radius) {
-	/* prevent missing "new" operator */
-	if (this === window) {
-		throw new Error("must use \"new\" operator to construct an object.");
-	}
-	test_closure(radius);
+	Circle.test_closure(radius);
 }
 
 
@@ -23,5 +22,14 @@ function Circle(radius) {
 
 
 var a;
+var b;
+
 a = new Circle(3);
-alert(a.getRadius.toSource());
+b = new Circle(4);
+
+
+alert(a.getRadius());
+alert(a.getDiameter());
+
+alert(b.getRadius());
+alert(b.getDiameter());

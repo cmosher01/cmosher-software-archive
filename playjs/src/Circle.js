@@ -1,12 +1,7 @@
 /* constructor */
 
 function Circle(radius) {
-	/* prevent missing "new" operator */
-	if (this === window) {
-		throw new Error("must use \"new\" operator to construct an object.");
-	}
-
-	/* instance variables (but not mutated) */
+	/* instance variables */
 	this.radius = radius;
 	this.diameter = radius*2;
 }
@@ -24,43 +19,43 @@ Circle.prototype.getDiameter = function() {
 /* computed accessor methods */
 
 Circle.prototype.getArea = function() {
-	return this.PI() * this.square(this.getRadius());
+	return Circle.PI * Circle.square(this.getRadius());
 };
 
 Circle.prototype.getCircumference = function() {
-	return this.PI() * this.getDiameter();
+	return Circle.PI * this.getDiameter();
 };
 
-/* factory methods (instead of mutators) */
+/* (member) factory methods (instead of mutators) */
 
 Circle.prototype.expand = function() {
-	return new Circle(this.getRadius()*this.getExpansionFactor());
+	return new Circle(this.getRadius()*Circle.expansionFactor);
 };
 
-/* static methods (same as computed accessor methods (don't reference "this," but not enforced) */
+/* (static) factory methods */
 
-Circle.prototype.square = function(a) {
+Circle.createUnitCircle = function() {
+	return new Circle(1);
+};
+
+/* static methods */
+
+Circle.square = function(a) {
 	return a*a;
 };
 
 /* constants */
 
-Circle.prototype.PI = function() {
-	return 3.14159265;
-};
+Circle.PI = 3.14159265;
 
-/* configurable constants */
-
-Circle.prototype.getExpansionFactor = function() {
-	return 3;
-};
+Circle.expansionFactor = 3;
 
 
 
-
+/*
 var a;
 
-a =  Circle(3);
+a = new Circle(3);
 
 alert(a.getArea());
 alert(a.getCircumference());
@@ -70,3 +65,44 @@ alert(a.getCircumference());
 a = a.expand();
 alert(a.getArea());
 alert(a.getCircumference());
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* subclass */
+
+
+/* constructor */
+
+function ColorCircle(radius,color) {
+	Circle.call(this,radius);
+	this.color = color;
+}
+
+ColorCircle.prototype = new Circle(0);
+var whatctor = ColorCircle.prototype.constructor;
+ColorCircle.prototype.constructor = ColorCircle;
+
+ColorCircle.prototype.getColor = function() {
+	return this.color;
+};
+
+
+
+
+var c;
+c = new ColorCircle(5,"red");
+alert(c.getColor());
+alert(c.getDiameter());
