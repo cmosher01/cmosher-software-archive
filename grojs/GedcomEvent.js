@@ -36,7 +36,10 @@ function GedcomEvent(typ,gdate,place) {
 	 * @private
 	 * @type String
 	 */
-	this.place = place;
+	this.place = Util.safeStr(place);
+	if (this.place.length == 0) {
+		this.place = "[unknown]";
+	}
 }
 
 /**

@@ -20,7 +20,6 @@
  * @type Person
  */
 function Person(gid,gname,pos,revt) {
-	var that = this;
 	Util.verifyType(this,"Person");
 
 	/**
@@ -84,13 +83,13 @@ function Person(gid,gname,pos,revt) {
 	 */
 	this.ignoreNextClick = false;
 	
-	this.div.onclick = function() {
-		if (that.ignoreNextClick) {
-			that.ignoreNextClick = false;
+	this.div.onclick = Util.bind(this, function() {
+		if (this.ignoreNextClick) {
+			this.ignoreNextClick = false;
 		} else {
-			that.toggleView();
+			this.toggleView();
 		}
-	};
+	});
 
 	this.divExp.onclick = this.div.onclick;
 
@@ -342,14 +341,13 @@ Person.prototype.createEventTable = function() {
 };
 
 Person.prototype.getEventsFromPartnerships = function() {
-	var that, e;
+	var e;
 
-	that = this;
-	Util.forEach(this.spouseIn, function(part) {
-		Util.forEach(part.getEvents(), function(evt) {
-			that.revt.push(evt);
-		});
-	});
+	Util.forEach(this.spouseIn, Util.bind(this, function(part) {
+		Util.forEach(part.getEvents(), Util.bind(this, function(evt) {
+			this.revt.push(evt);
+		}));
+	}));
 
 	this.revt.sort(GedcomEvent.order);
 

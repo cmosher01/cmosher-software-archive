@@ -1,28 +1,23 @@
 function Dragger(dragee,onmovedHandler,shadow) {
-	this.onmoved = onmovedHandler;
-
-	if (!(parseInt(dragee.style.left) >= 0)) {
-		dragee.style.left = "1px";
-	}
-	if (!(parseInt(dragee.style.top) >= 0)) {
-		dragee.style.top = "1px";
-	}
-	dragee.style.position = "absolute";
-
 	dragee.dragger = this;
 
-	dragee.onmousedown = function(evt) {
-		var dragee = this;
+	dragee.style.position = "absolute";
+	dragee.dragger.onmoved = onmovedHandler;
 
+	dragee.onmousedown = function(evt) {
         if (!evt) {
         	evt = Util.global.event;  // IE Event Model
         }
+        dragee.dragger.begindrag(evt);
+	};
+
+	this.begindrag = function(evt) {
 
 		// Figure out where the element currently is
 		// The element must have left and top CSS properties in a style attribute
 		// Also, we assume they are set using pixel units
-		var x = parseInt(dragee.style.left);
-		var y = parseInt(dragee.style.top);
+		var x = parseInt(dragee.style.left,10);
+		var y = parseInt(dragee.style.top,10);
 
 		// Compute the distance between that point and the mouse-click
 		// The nested moveHandler function below needs these values
@@ -42,14 +37,6 @@ function Dragger(dragee,onmovedHandler,shadow) {
 			// handle the events and stop them from bubbling.
 			Util.global.document.attachEvent("onmousemove", moveHandler);
 			Util.global.document.attachEvent("onmouseup", upHandler);
-		} else {  // IE 4 Event Model
-			// In IE 4 we can't use attachEvent(), so assign the event handlers
-			// directly after storing any previously assigned handlers, so they 
-			// can be restored. Note that this also relies on event bubbling.
-			var oldmovehandler = Util.global.document.onmousemove;
-			var olduphandler = Util.global.document.onmouseup;
-			Util.global.document.onmousemove = moveHandler;
-			Util.global.document.onmouseup = upHandler;
 		}
 
 		// We've handled this event. Don't let anybody else see it.  
@@ -65,7 +52,6 @@ function Dragger(dragee,onmovedHandler,shadow) {
 		} else {
 			evt.returnValue = false; // IE
 		}
-		return false;
 		
 		/**
 		* This is the handler that captures mousemove events when an element
@@ -80,12 +66,12 @@ function Dragger(dragee,onmovedHandler,shadow) {
 			}
 			// Move the element to the current mouse position, adjusted as
 			// necessary by the offset of the initial mouse-click.
-			dragee.style.left = (e.clientX - deltaX) + "px";
-			dragee.style.top = (e.clientY - deltaY) + "px";
+			dragee.style.left = Util.px(e.clientX - deltaX);
+			dragee.style.top = Util.px(e.clientY - deltaY);
 
 			if (shadow) {
-				shadow.style.left = (e.clientX - deltaX) + "px";
-				shadow.style.top = (e.clientY - deltaY) + "px";
+				shadow.style.left = Util.px(e.clientX - deltaX);
+				shadow.style.top = Util.px(e.clientY - deltaY);
 			}
 
 			dragee.dragger.onmoved.onmoved();
@@ -118,9 +104,6 @@ function Dragger(dragee,onmovedHandler,shadow) {
 			} else if (Util.global.document.detachEvent) {  // IE 5+ Event Model
 				Util.global.document.detachEvent("onmouseup", upHandler);
 				Util.global.document.detachEvent("onmousemove", moveHandler);
-			} else {  // IE 4 Event Model
-				Util.global.document.onmouseup = olduphandler;
-				Util.global.document.onmousemove = oldmovehandler;
 			}
 	
 			dragee.dragger.onmoved.onmovedfinish();
@@ -133,5 +116,7 @@ function Dragger(dragee,onmovedHandler,shadow) {
 			}
 			return false;
 		}
+
+		return false;
 	};
 }
