@@ -1,10 +1,5 @@
 alert("parse main.js");
 
-if (typeof jingo == "undefined") {
-	var jingo = {declare:function(){/*dummy*/}};
-	throw new Error("This script requires jingo.js from http://code.google.com/p/jingo/");
-}
-
 jingo.declare({
   require: [
     'nu.mine.mosher.js.test.Foo1',
