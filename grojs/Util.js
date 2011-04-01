@@ -21,6 +21,34 @@ function Util() {
 Util.global = this;
 
 /**
+ * A function that is guaranteed to return undefined, even if the
+ * global property "undefined" has been (maliciously) assigned a value.
+ * @type undefined
+ */
+Util["undefined"] = function() {
+	var x;
+	return x;
+};
+
+/**
+ * guaranteed to return NaN
+ * @returns NaN
+ * @type Number
+ */
+Util.NaN = function() {
+	return 0/0;
+};
+
+/**
+ * guaranteed to return Infinity
+ * @returns Infinity
+ * @type Number
+ */
+Util.Infinity = function() {
+	return 1/0;
+};
+
+/**
  * Returns the datatype of any given object, primitive, null, or undefined.
  * @param {any} x any object or primitive
  * @return type-name of x
@@ -29,7 +57,7 @@ Util.global = this;
 Util.getTypeName = function(x) {
 	var n, m, clnam;
 
-	if (x === undefined) {
+	if (typeof x == "undefined") {
 		return "undefined";
 	}
 	if (x === null) {
@@ -81,7 +109,7 @@ Util.forEach = function(r,fn) {
 	var i, e;
 	if (Util.getTypeName(r) == "Array") {
 		for (i = 0; i < r.length; i++) {
-			if (r[i] !== undefined) {
+			if (typeof r[i] != "undefined") {
 				fn(r[i],i);
 			}
 		}
@@ -90,7 +118,7 @@ Util.forEach = function(r,fn) {
 		e = {};
 		for (e in r) {
 			if (r.hasOwnProperty(e)) {
-				if (r[e] !== undefined) {
+				if (typeof r[e] != "undefined") {
 					fn(r[e],i++);
 				}
 			}
@@ -221,7 +249,7 @@ Util.repstr = function(n,c) {
 	if (n <= 0) {
 		return "";
 	}
-	if (c == undefined) {
+	if (typeof c == "undefined") {
 		c = " ";
 	}
 	return new Array(n+1).join(c);

@@ -97,12 +97,12 @@ $(function() {
 		r = ["a","b","c"];
 		delete r[1];
 		notDeepEqual(r,["a","c"]);
-		deepEqual(r,["a",undefined,"c"]);
+		deepEqual(r,["a",Util.undefined(),"c"]);
 
 		r = ["a","b","c"];
 		r = Util.remove("b",r);
 		deepEqual(r,["a","c"]);
-		notDeepEqual(r,["a",undefined,"c"]);
+		notDeepEqual(r,["a",Util.undefined(),"c"]);
 	});
 
 
@@ -157,7 +157,7 @@ $(function() {
 	});
 
 	test("class name of undefined", function() {
-		equal(Util.getTypeName(undefined),"undefined");
+		equal(Util.getTypeName(Util.undefined()),"undefined");
 	});
 
 	test("class name of omitted argument", function() {
@@ -248,7 +248,7 @@ $(function() {
 	});
 
 	test("safestr undefined", function() {
-		equal(Util.safeStr(undefined),"");
+		equal(Util.safeStr(Util.undefined()),"");
 	});
 
 	test("safestr missing", function() {
@@ -290,5 +290,19 @@ $(function() {
 
 	test("digint fractional round up", function() {
 		equal(Util.digint(-27.58,5),"-00028");
+	});
+
+	test("undefined()", function() {
+		equal(typeof Util.undefined(),"undefined");
+	});
+
+	test("NaN()", function() {
+		equal(typeof Util.NaN(),"number");
+		ok(isNaN(Util.NaN()));
+	});
+
+	test("Infinity()", function() {
+		equal(typeof Util.Infinity(),"number");
+		equal(Util.Infinity(),1/0);
 	});
 });

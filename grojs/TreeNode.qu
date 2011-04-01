@@ -166,7 +166,7 @@ $(function() {
 		var n;
 		n = new TreeNode();
 		raises(function() {
-			n.addChild(undefined);
+			n.addChild(Util.undefined());
 		})
 	});
 
@@ -182,7 +182,7 @@ $(function() {
 		var n;
 		n = new TreeNode();
 		raises(function() {
-			n.removeChild(undefined);
+			n.removeChild(Util.undefined());
 		})
 	});
 

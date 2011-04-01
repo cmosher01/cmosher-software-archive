@@ -87,7 +87,7 @@ $(function() {
 	});
 
 	test("replace undefined", function() {
-		equal(GedcomLine.replaceAts(), undefined);
+		equal(GedcomLine.replaceAts(), Util.undefined());
 	});
 
 	test("replace bad type 0", function() {
@@ -112,7 +112,7 @@ $(function() {
 	});
 
 	test("nominal no value: 0 HEAD", function() {
-		var g = new GedcomLine(0, undefined, "HEAD", "");
+		var g = new GedcomLine(0, Util.undefined(), "HEAD", "");
 		equal(g.getLevel(), 0);
 		equal(g.getID(), "");
 		equal(g.getTag(), "HEAD");
@@ -123,7 +123,7 @@ $(function() {
 	});
 
 	test("nominal object: 1 SOUR GRO", function() {
-		var g = new GedcomLine(1, undefined, "SOUR", "GRO");
+		var g = new GedcomLine(1, Util.undefined(), "SOUR", "GRO");
 		equal(g.getLevel(), 1);
 		equal(g.getID(), "");
 		equal(g.getTag(), "SOUR");
