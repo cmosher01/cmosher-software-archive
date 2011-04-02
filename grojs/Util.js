@@ -309,11 +309,14 @@ Util.dateOrder = function(a,b) {
 	return Util.numberOrder(a.getTime(),b.getTime());
 };
 
+Util.getIEGlobalEvent = function() {
+	return Util.global.event;
+};
 
 Util.eventHandler = function(scope,handler) {
 	return function(evt) {
         if (!evt) {
-        	evt = Util.global.event;  // IE Event Model
+        	evt = Util.getIEGlobalEvent();  // IE Event Model
         }
         handler.apply(scope,arguments);
 	};
