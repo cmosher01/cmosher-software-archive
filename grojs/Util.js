@@ -310,7 +310,7 @@ Util.dateOrder = function(a,b) {
 };
 
 Util.getIEGlobalEvent = function() {
-	return Util.global.event;
+	return window.event;
 };
 
 Util.eventHandler = function(scope,handler) {
