@@ -64,10 +64,10 @@ Selector.prototype.moveHandler = function(e) {
 	} else {
 		e.cancelBubble = true; // IE
 	}
-	if (evt.preventDefault) {
-		evt.preventDefault(); // DOM Level 2
+	if (e.preventDefault) {
+		e.preventDefault(); // DOM Level 2
 	} else {
-		evt.returnValue = false; // IE
+		e.returnValue = false; // IE
 	}
 	return false;
 };
