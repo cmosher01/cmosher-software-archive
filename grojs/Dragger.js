@@ -4,13 +4,6 @@ function Dragger(dragee,onmovedHandler,shadow) {
 	dragee.style.position = "absolute";
 	dragee.dragger.onmoved = onmovedHandler;
 
-	dragee.onmousedown = function(evt) {
-        if (!evt) {
-        	evt = Util.global.event;  // IE Event Model
-        }
-        dragee.dragger.begindrag(evt);
-	};
-
 	this.begindrag = function(evt) {
 
 		// Figure out where the element currently is
@@ -119,4 +112,6 @@ function Dragger(dragee,onmovedHandler,shadow) {
 
 		return false;
 	};
+
+	dragee.onmousedown = Util.eventHandler(this,this.begindrag);
 }
