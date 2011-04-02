@@ -308,3 +308,13 @@ Util.localeOrder = function(a,b) {
 Util.dateOrder = function(a,b) {
 	return Util.numberOrder(a.getTime(),b.getTime());
 };
+
+
+Util.eventHandler = function(scope,handler) {
+	return function(evt) {
+        if (!evt) {
+        	evt = Util.global.event;  // IE Event Model
+        }
+        handler.apply(scope,arguments);
+	};
+};

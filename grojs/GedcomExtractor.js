@@ -42,6 +42,8 @@ function GedcomExtractor(gedcomtree) {
 	this.mpartnership = {};
 
 	this.extract();
+
+	this.selector = new Selector();
 }
 
 /**
