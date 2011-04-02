@@ -310,7 +310,7 @@ Util.dateOrder = function(a,b) {
 };
 
 Util.getIEGlobalEvent = function() {
-	return window.event;
+	return Util.global.event;
 };
 
 Util.eventHandler = function(scope,handler) {
@@ -318,6 +318,6 @@ Util.eventHandler = function(scope,handler) {
         if (!evt) {
         	evt = Util.getIEGlobalEvent();  // IE Event Model
         }
-        handler.apply(scope,arguments);
+        handler.apply(scope,[evt]);
 	};
 };
