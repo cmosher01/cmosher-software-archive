@@ -23,8 +23,6 @@
  * @type Partnership
  */
 function Partnership(gid,husb,wife,rchil,revt) {
-	var that = this;
-
 	Util.verifyType(this,"Partnership");
 
 	/**
@@ -72,9 +70,9 @@ function Partnership(gid,husb,wife,rchil,revt) {
 		this.wife.addSpouseIn(this);
 	}
 
-	Util.forEach(this.rchil, function(c) {
-		c.addChildIn(that);
-	});
+	Util.forEach(this.rchil, Util.bind(this,function(c) {
+		c.addChildIn(this);
+	}));
 
 
 
@@ -82,9 +80,9 @@ function Partnership(gid,husb,wife,rchil,revt) {
 	this.divRight = this.createDiv();
 
 	this.divChild = [];
-	Util.forEach(rchil, function() {
-		that.divChild.push(that.createDiv());
-	});
+	Util.forEach(rchil, Util.bind(this,function() {
+		this.divChild.push(this.createDiv());
+	}));
 
 	if (this.divChild.length > 0) {
 		this.divChildConn = this.createDiv();
