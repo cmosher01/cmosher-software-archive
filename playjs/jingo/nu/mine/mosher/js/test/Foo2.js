@@ -1,5 +1,3 @@
-alert("parse Foo2.js");
-
 jingo.declare({
 	require : [ 'nu.mine.mosher.js.test.Foo1' ],
 	name : 'nu.mine.mosher.js.test.Foo2',
