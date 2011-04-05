@@ -1,3 +1,7 @@
+if (window.jingo == null) {
+	jingo = {declare: function(x) {/*dummy*/}};
+	throw new Error("requires jingo");
+}
 jingo.declare({
 	require : [ 'nu.mine.mosher.js.test.Foo1' ],
 	name : 'nu.mine.mosher.js.test.Foo2',

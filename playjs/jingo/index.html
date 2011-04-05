@@ -5,6 +5,10 @@
     <title>My Program</title>
     <script src="jingo/jingo.js"></script>
     <script>
+    if (window.jingo == null) {
+    	  jingo = {declare: function(x) {/*dummy*/}};
+    	  throw new Error("requires jingo");
+    	}
     jingo.init({
     	  repos: {
     	    main: "."
