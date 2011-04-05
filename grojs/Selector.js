@@ -1,4 +1,6 @@
-function Selector(onselect) {
+var $ = Util.global.jQuery;
+
+function Selector(onselect,onselectfinished) {
 	Util.global.document.onmousedown =
 		Util.eventHandler(this,Selector.prototype.beginDrag);
 	this.div = null;
@@ -6,6 +8,7 @@ function Selector(onselect) {
 	this.upProxy = Util.eventHandler(this,Selector.prototype.upHandler);
 	this.start = new Point(0,0);
 	this.onselect = onselect;
+	this.onselectfinished = onselectfinished;
 	this.rect = new Rect(new Point(0,0), new Size(0,0));
 }
 
@@ -30,23 +33,29 @@ Selector.prototype.beginDrag = function(e) {
 	if (e.button != 0) {
 		return true;
 	}
+	if (e.clientX >= Util.global.document.documentElement.clientWidth || e.clientY >= Util.global.document.documentElement.clientHeight) {
+		return true;
+	}
+
+	this.start = this.pos = Util.mousePos(e);
+
 	this.div = Util.createHtmlElement("div");
 	this.div.className = "selector";
 	this.div.style.position = "absolute";
-	this.div.style.border = "solid 1px";
-	this.pos = new Point(e.clientX,e.clientY);
-	this.start = this.pos;
 	Util.global.document.body.appendChild(this.div);
 
 	this.setDiv();
 
+	this.onselect(this.rect);
+
 	$(Util.global.document).mousemove(this.moveProxy);
 	$(Util.global.document).mouseup(this.upProxy);
+
 	return Util.stopEvent(e);
 };
 
 Selector.prototype.moveHandler = function(e) {
-	this.pos = new Point(e.clientX,e.clientY);
+	this.pos = Util.mousePos(e);
 
 	this.setDiv();
 
@@ -60,6 +69,8 @@ Selector.prototype.upHandler = function(e) {
 	$(Util.global.document).unbind("mouseup");
 
 	Util.global.document.body.removeChild(this.div);
+
+	this.onselectfinished();
 
 	return Util.stopEvent(e);
 };

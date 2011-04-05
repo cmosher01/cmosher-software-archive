@@ -352,3 +352,27 @@ Util.stopEvent = function(e) {
 
 	return false;
 };
+
+Util.mousePos = function(e) {
+	var x, y;
+	x = y = 0;
+	if (e.pageX) {
+		x = e.pageX;
+	} else if (e.clientX) {
+	   x = e.clientX + (
+			   Util.global.document.documentElement.scrollLeft ?
+			   Util.global.document.documentElement.scrollLeft :
+			   Util.global.document.body.scrollLeft
+	   );
+	}
+	if (e.pageX) {
+		y = e.pageY;
+	} else if (e.clientY) {
+	   y = e.clientY + (
+			   Util.global.document.documentElement.scrollTop ?
+			   Util.global.document.documentElement.scrollTop :
+			   Util.global.document.body.scrollTop
+	   );
+	}
+	return new Point(x,y);
+};

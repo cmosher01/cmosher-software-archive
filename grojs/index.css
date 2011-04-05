@@ -83,3 +83,8 @@ table.events td {
 
 .partnership {
 }
+
+.selector {
+  color: orange;
+  border: dotted 2px;
+}

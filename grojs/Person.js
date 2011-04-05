@@ -98,8 +98,8 @@ function Person(gid,gname,pos,revt) {
 	 * @type Boolean
 	 */
 	this.savedZ = false;
-	this.div.dragger = new Dragger(this.div,this,this.divExp);
-	this.divExp.dragger = new Dragger(this.divExp,this,this.div);
+	this.div.dragger = new Dragger(this.div,this);
+	this.divExp.dragger = new Dragger(this.divExp,this);
 
 	/**
 	 * currently displayed DIV (<code>this.div</code> or <code>this.divExp</code>)
@@ -250,6 +250,34 @@ Person.prototype.select = function(sel) {
 	}
 };
 
+Person.prototype.isSelected = function() {
+	return this.sel;
+};
+
+Person.prototype.onBeginDrag = function() {
+	this.divX = parseInt(this.div.style.left,10);
+	this.divY = parseInt(this.div.style.top,10);
+};
+
+Person.prototype.onDrag = function(delta) {
+	this.div.style.left = this.divExp.style.left = Util.px(this.divX + delta.getWidth());
+	this.div.style.top = this.divExp.style.top = Util.px(this.divY + delta.getHeight());
+
+	this.ignoreNextClick = true;
+	if (!this.savedZ) {
+		this.savedZ = this.divCur.style.zIndex;
+		this.divCur.style.zIndex = 10;
+	}
+	this.calc();
+};
+
+Person.prototype.onEndDrag = function() {
+	if (this.savedZ) {
+		this.divCur.style.zIndex = this.savedZ;
+		this.savedZ = false;
+	}
+};
+
 /**
  * Calculates this {@link Person}'s related {@link Partnership}s.
  */
@@ -260,28 +288,6 @@ Person.prototype.calc = function() {
 	Util.forEach(this.childIn, function(f) {
 		f.calc();
 	});
-};
-
-/**
- * Handles when this {@link Person}'s displayed DIV is moved.
- */
-Person.prototype.onmoved = function() {
-	this.ignoreNextClick = true;
-	if (!this.savedZ) {
-		this.savedZ = this.divCur.style.zIndex;
-		this.divCur.style.zIndex = 10;
-	}
-	this.calc();
-};
-
-/**
- * Handles when this {@link Person}'s displayed DIV is finished being moved.
- */
-Person.prototype.onmovedfinish = function() {
-	if (this.savedZ) {
-		this.divCur.style.zIndex = this.savedZ;
-		this.savedZ = false;
-	}
 };
 
 /**

@@ -41,13 +41,26 @@ function GedcomExtractor(gedcomtree) {
 	 */
 	this.mpartnership = {};
 
+	// current selection of person objects
+	this.selection = [];
+
 	this.extract();
 
-	this.selector = new Selector(Util.bind(this, function(rect) {
-		Util.forEach(this.mperson,function(person) {
-			person.select(person.hit(rect));
-		});
-	}));
+	this.selector = new Selector(
+		Util.bind(this, function(rect) {
+			Util.forEach(this.mperson,function(person) {
+				person.select(person.hit(rect));
+			});
+		}),
+		Util.bind(this, function() {
+			this.selection = [];
+			Util.forEach(this.mperson,Util.bind(this,function(person) {
+				if (person.isSelected()) {
+					this.selection.push(person);
+				}
+			}));
+		})
+	);
 }
 
 /**
