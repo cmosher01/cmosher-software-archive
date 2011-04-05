@@ -124,7 +124,7 @@ GedcomExtractor.prototype.extractPerson = function(indi) {
 	});
 
 	line = indi.line;
-	return new Person(line.getID(),nam,xy,revt);
+	return new Person(line.getID(),nam,xy,revt,this);
 };
 
 /**
@@ -236,4 +236,43 @@ GedcomExtractor.prototype.extractDate = function(s) {
 		return DatePeriod.fromParserResult(r);
 	}
 	return DatePeriod.UNKNOWN;
+};
+
+GedcomExtractor.prototype.onBeginDrag = function(hitPerson) {
+	if (this.selection.length > 0) {
+		if ($.inArray(hitPerson,this.selection) < 0) {
+			Util.forEach(this.selection,function(person) {
+				person.select(false);
+			});
+			this.selection = [];
+		}
+	}
+	this.tempSelection = false;
+	if (this.selection.length == 0) {
+		this.selection = [hitPerson];
+		this.tempSelection = true;
+	}
+	Util.forEach(this.selection,function(person) {
+		person.onBeginDrag();
+	});
+};
+
+GedcomExtractor.prototype.onDrag = function(delta) {
+	if (this.selection.length > 0) {
+		Util.forEach(this.selection,function(person) {
+			person.onDrag(delta);
+		});
+	}
+};
+
+GedcomExtractor.prototype.onEndDrag = function() {
+	if (this.selection.length > 0) {
+		Util.forEach(this.selection,function(person) {
+			person.onEndDrag();
+		});
+	}
+	if (this.tempSelection) {
+		this.selection = [];
+		this.tempSelection = false;
+	}
 };

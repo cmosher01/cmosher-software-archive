@@ -1,14 +1,10 @@
 var $ = Util.global.jQuery;
 
-function Dragger(dragee, dragHandler) {
-	this.dragee = dragee;
+function Dragger(dragee, dragHandler, userArg) {
 	this.dragHandler = dragHandler;
+	this.userArg = userArg;
 
-	this.upProxy = Util.eventHandler(this, Dragger.prototype.upHandler);
-	this.moveProxy = Util.eventHandler(this, Dragger.prototype.moveHandler);
-	this.dragee.onmousedown = Util.eventHandler(this, Dragger.prototype.beginDrag);
-
-	this.dragee.style.position = "absolute";
+	dragee.onmousedown = Util.eventHandler(this,Dragger.prototype.beginDrag);
 
 	this.origin = new Point(0,0);
 }
@@ -18,12 +14,12 @@ Dragger.prototype.beginDrag = function(e) {
 		return true;
 	}
 
-	$(Util.global.document).mouseup(this.upProxy);
-	$(Util.global.document).mousemove(this.moveProxy);
+	$(Util.global.document).mouseup(Util.eventHandler(this,Dragger.prototype.upHandler));
+	$(Util.global.document).mousemove(Util.eventHandler(this,Dragger.prototype.moveHandler));
 
 	this.origin = Util.mousePos(e);
 
-	this.dragHandler.onBeginDrag();
+	this.dragHandler.onBeginDrag(this.userArg);
 
 	return Util.stopEvent(e);
 };

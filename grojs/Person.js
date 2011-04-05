@@ -1,3 +1,5 @@
+var $ = Util.global.jQuery;
+
 /**
  * @fileoverview
  * Defines the {@link Person} class.
@@ -19,7 +21,7 @@
  * @return new {@link Person}
  * @type Person
  */
-function Person(gid,gname,pos,revt) {
+function Person(gid,gname,pos,revt,dragHandler) {
 	Util.verifyType(this,"Person");
 
 	/**
@@ -98,8 +100,8 @@ function Person(gid,gname,pos,revt) {
 	 * @type Boolean
 	 */
 	this.savedZ = false;
-	this.div.dragger = new Dragger(this.div,this);
-	this.divExp.dragger = new Dragger(this.divExp,this);
+	this.div.dragger = new Dragger(this.div,dragHandler,this);
+	this.divExp.dragger = new Dragger(this.divExp,dragHandler,this);
 
 	/**
 	 * currently displayed DIV (<code>this.div</code> or <code>this.divExp</code>)
@@ -186,7 +188,7 @@ Person.prototype.createDiv = function(pos) {
 	var div;
 	div = Util.createHtmlElement("div");
 	div.className = "person";
-	div.position = "absolute";
+	div.style.position = "absolute";
 	div.style.zIndex = 1;
 	div.tabindex = 0;
 	div.style.left = Util.px(pos.getX());

@@ -123,7 +123,7 @@ DatePeriod.isParsedDatePeriod = function(r) {
  * 
  * @param {Object} r result from parser
  * @return new {@link YMD}
- * @type YMD
+ * @type DatePeriod
  */
 DatePeriod.fromParserResult = function(r) {
 	var ymdFrom = YMD.fromParserResult(r.from);
