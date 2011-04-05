@@ -107,6 +107,8 @@ function Person(gid,gname,pos,revt) {
 	 * @type HTMLElement
 	 */
 	this.divCur = this.div;
+
+	this.sel = false;
 }
 
 /**
@@ -225,6 +227,27 @@ Person.prototype.createDivExp = function(pos) {
  */
 Person.prototype.getRect = function() {
 	return Rect.ofDiv(this.divCur);
+};
+
+/**
+ * Checks if this person intersects the given rectangle.
+ * @param {Rect} rect
+ * @return if this person intersects
+ * @type Boolean
+ */
+Person.prototype.hit = function(rect) {
+	return Rect.intersect(this.getRect(),rect);
+};
+
+Person.prototype.select = function(sel) {
+	this.sel = sel;
+	if (this.sel) {
+		$(this.div).addClass("selected-person");
+		$(this.divExp).addClass("selected-person");
+	} else {
+		$(this.div).removeClass("selected-person");
+		$(this.divExp).removeClass("selected-person");
+	}
 };
 
 /**

@@ -43,7 +43,11 @@ function GedcomExtractor(gedcomtree) {
 
 	this.extract();
 
-	this.selector = new Selector();
+	this.selector = new Selector(Util.bind(this, function(rect) {
+		Util.forEach(this.mperson,function(person) {
+			person.select(person.hit(rect));
+		});
+	}));
 }
 
 /**

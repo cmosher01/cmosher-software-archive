@@ -1,10 +1,11 @@
-function Selector() {
+function Selector(onselect) {
 	Util.global.document.onmousedown =
 		Util.eventHandler(this,Selector.prototype.beginDrag);
 	this.div = null;
 	this.moveProxy = Util.eventHandler(this,Selector.prototype.moveHandler);
 	this.upProxy = Util.eventHandler(this,Selector.prototype.upHandler);
 	this.start = new Point(0,0);
+	this.onselect = onselect;
 }
 
 Selector.prototype.setDiv = function() {
@@ -14,12 +15,12 @@ Selector.prototype.setDiv = function() {
 	this.div.style.height = Util.px(Math.abs(this.pos.getY()-this.start.getY()));
 };
 
-Selector.prototype.beginDrag = function(evt) {
+Selector.prototype.beginDrag = function(e) {
 	this.div = Util.createHtmlElement("div");
 	this.div.className = "selector";
 	this.div.style.position = "absolute";
 	this.div.style.border = "solid 1px";
-	this.pos = new Point(evt.clientX,evt.clientY);
+	this.pos = new Point(e.clientX,e.clientY);
 	this.start = this.pos;
 	Util.global.document.body.appendChild(this.div);
 	this.setDiv();
@@ -38,17 +39,17 @@ Selector.prototype.beginDrag = function(evt) {
 	}
 
 	// We've handled this event. Don't let anybody else see it.  
-	if (evt.stopPropagation) {
-		evt.stopPropagation(); // DOM Level 2
+	if (e.stopPropagation) {
+		e.stopPropagation(); // DOM Level 2
 	} else {
-		evt.cancelBubble = true; // IE
+		e.cancelBubble = true; // IE
 	}
 
 	// Now prevent any default action.
-	if (evt.preventDefault) {
-		evt.preventDefault(); // DOM Level 2
+	if (e.preventDefault) {
+		e.preventDefault(); // DOM Level 2
 	} else {
-		evt.returnValue = false; // IE
+		e.returnValue = false; // IE
 	}
 
 	return false;
@@ -57,6 +58,17 @@ Selector.prototype.beginDrag = function(evt) {
 Selector.prototype.moveHandler = function(e) {
 	this.pos = new Point(e.clientX,e.clientY);
 	this.setDiv();
+
+	this.onselect(new Rect(
+		new Point(
+			Math.min(this.start.getX(),this.pos.getX()),
+			Math.min(this.start.getY(),this.pos.getY())
+		),
+		new Size(
+			Math.abs(this.pos.getX()-this.start.getX()),
+			Math.abs(this.pos.getY()-this.start.getY())
+		)
+	));
 
 	// And don't let anyone else see this event.
 	if (e.stopPropagation) {
@@ -88,6 +100,11 @@ Selector.prototype.upHandler = function(e) {
 		e.stopPropagation(); // DOM Level 2
 	} else {
 		e.cancelBubble = true; // IE
+	}
+	if (e.preventDefault) {
+		e.preventDefault(); // DOM Level 2
+	} else {
+		e.returnValue = false; // IE
 	}
 	return false;
 };

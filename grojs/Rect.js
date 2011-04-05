@@ -134,3 +134,14 @@ Rect.prototype.getMidY = function() {
 Rect.ofDiv = function(e) {
 	return new Rect(new Point(e.offsetLeft,e.offsetTop),new Size(e.offsetWidth,e.offsetHeight));
 };
+
+/**
+ * Checks if two rectangles intersect.
+ * @param {Rect} r1
+ * @param {Rect} r2
+ * @return true if the two rectangles intersect
+ * @type Boolean
+ */
+Rect.intersect = function(r1,r2) {
+	return r1.getTop() <= r2.getBottom() && r2.getTop() <= r1.getBottom() && r1.getLeft() <= r2.getRight() && r2.getLeft() <= r1.getRight();
+};

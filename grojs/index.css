@@ -56,6 +56,17 @@ body {
 	padding: 3px 8px 8px 8px;
 }
 
+.selected-person {
+	padding: 1px 6px 2px 6px;
+	border-width: 3px;
+	border-color: orange !important;
+/*	background-color: #FF0000;
+	background: -webkit-gradient(linear, left bottom, left top, from(#FF0000), to(#FFFFFF));
+	background: -moz-linear-gradient(top, #FFFFFF, #FF0000);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=#FFFFFFFF, endColorStr=#FFFF0000);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr=#FFFFFFFF, endColorStr=#FFF0000)";
+*/}
+
 table.events {
 	font-size: 75%;
 	border-collapse: collapse;
