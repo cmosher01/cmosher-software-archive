@@ -187,14 +187,18 @@ Person.prototype.getEvents = function() {
 Person.prototype.createDiv = function(pos) {
 	var div;
 	div = Util.createHtmlElement("div");
+
 	div.className = "person";
-	div.style.position = "absolute";
 	div.style.zIndex = 1;
+
+	div.style.position = "absolute";
 	div.tabindex = 0;
 	div.style.left = Util.px(pos.getX());
 	div.style.top = Util.px(pos.getY());
 	div.appendChild(Util.global.document.createTextNode(this.gname));
+
 	Util.global.document.body.appendChild(div);
+
 	return div;
 };
 
@@ -207,17 +211,17 @@ Person.prototype.createDiv = function(pos) {
  * @type HTMLElement
  */
 Person.prototype.createDivExp = function(pos) {
-	var div, n;
+	var div;
 	div = Util.createHtmlElement("div");
+
 	div.className = "person expanded-person";
-	div.style.position = "absolute";
 	div.style.zIndex = 9;
+
+	div.style.position = "absolute";
 	div.tabindex = 0;
 	div.style.left = Util.px(pos.getX());
 	div.style.top = Util.px(pos.getY());
-
-	n = Util.global.document.createTextNode(this.gname);
-	div.appendChild(n);
+	div.appendChild(Util.global.document.createTextNode(this.gname));
 	
 	return div;
 };
