@@ -321,3 +321,34 @@ Util.eventHandler = function(scope,handler) {
         handler.apply(scope,[evt]);
 	};
 };
+
+/**
+ * Calls stopPropagation and preventDefault, DOM-2 and IE
+ * Use as:
+ *   return Util.stopEvent(e);
+ * from within an event handler.
+ * @param {Event} e (or null for IE global event)
+ * @returns false
+ * @type Boolean
+ */
+Util.stopEvent = function(e) {
+    if (!e) {
+    	e = Util.getIEGlobalEvent();  // IE Event Model
+    }
+
+    // We've handled this event. Don't let anybody else see it.  
+	if (e.stopPropagation) {
+		e.stopPropagation(); // DOM Level 2
+	} else {
+		e.cancelBubble = true; // IE
+	}
+
+	// Now prevent any default action.
+	if (e.preventDefault) {
+		e.preventDefault(); // DOM Level 2
+	} else {
+		e.returnValue = false; // IE
+	}
+
+	return false;
+};

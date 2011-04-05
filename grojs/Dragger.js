@@ -5,7 +5,9 @@ function Dragger(dragee,onmovedHandler,shadow) {
 	dragee.dragger.onmoved = onmovedHandler;
 
 	this.begindrag = function(evt) {
-
+		if (evt.button != 0) {
+			return true;
+		}
 		// Figure out where the element currently is
 		// The element must have left and top CSS properties in a style attribute
 		// Also, we assume they are set using pixel units
@@ -32,20 +34,6 @@ function Dragger(dragee,onmovedHandler,shadow) {
 			Util.global.document.attachEvent("onmouseup", upHandler);
 		}
 
-		// We've handled this event. Don't let anybody else see it.  
-		if (evt.stopPropagation) {
-			evt.stopPropagation(); // DOM Level 2
-		} else {
-			evt.cancelBubble = true; // IE
-		}
-	
-		// Now prevent any default action.
-		if (evt.preventDefault) {
-			evt.preventDefault(); // DOM Level 2
-		} else {
-			evt.returnValue = false; // IE
-		}
-		
 		/**
 		* This is the handler that captures mousemove events when an element
 		* is being dragged. It is responsible for moving the element.
@@ -69,13 +57,7 @@ function Dragger(dragee,onmovedHandler,shadow) {
 
 			dragee.dragger.onmoved.onmoved();
 
-			// And don't let anyone else see this event.
-			if (e.stopPropagation) {
-				e.stopPropagation(); // DOM Level 2
-			} else {
-				e.cancelBubble = true; // IE
-			}
-			return false;
+			return Util.stopEvent(e);
 		}
 		
 		/**
@@ -101,16 +83,10 @@ function Dragger(dragee,onmovedHandler,shadow) {
 	
 			dragee.dragger.onmoved.onmovedfinish();
 
-			// And don't let the event propagate any further.
-			if (e.stopPropagation) {
-				e.stopPropagation(); // DOM Level 2
-			} else {
-				e.cancelBubble = true; // IE
-			}
-			return false;
+			return Util.stopEvent(e);
 		}
 
-		return false;
+		return Util.stopEvent(evt);
 	};
 
 	dragee.onmousedown = Util.eventHandler(this,this.begindrag);
