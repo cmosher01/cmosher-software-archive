@@ -376,3 +376,11 @@ Util.mousePos = function(e) {
 	}
 	return new Point(x,y);
 };
+
+Util.leftClick = function(e) {
+	if (e.which == null) {
+		return (e.button < 2);
+	} else {
+		return (e.which < 2);
+	}
+};

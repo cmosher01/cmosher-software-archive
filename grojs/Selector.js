@@ -30,7 +30,7 @@ Selector.prototype.setDiv = function() {
 };
 
 Selector.prototype.beginDrag = function(e) {
-	if (e.button != 0) {
+	if (!Util.leftClick(e)) {
 		return true;
 	}
 	if (e.clientX >= Util.global.document.documentElement.clientWidth || e.clientY >= Util.global.document.documentElement.clientHeight) {

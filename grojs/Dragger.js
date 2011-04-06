@@ -10,7 +10,7 @@ function Dragger(dragee, dragHandler, userArg) {
 }
 
 Dragger.prototype.beginDrag = function(e) {
-	if (e.button != 0) {
+	if (!Util.leftClick(e)) {
 		return true;
 	}
 
