@@ -1,17 +1,23 @@
-dojo.provide("nu.mine.mosher.test2.Foo2");
+(function() {
 
-dojo.require("nu.mine.mosher.test1.Foo1");
+	var CLASS = "nu.mine.mosher.test2.Foo2";
 
-dojo.declare("nu.mine.mosher.test2.Foo2", null, {
+	dojo.provide(CLASS);
 
-	// ctor
-	constructor: function(s) {
-		alert("run Foo2.js: Foo2");
-		this.f1 = new nu.mine.mosher.test1.Foo1(s);
-	},
+	dojo.require("nu.mine.mosher.test1.Foo1");
 
-	// methods
-	fn: function() {
-		return this.f1.fn();
-	}
-});
+	var CTOR = dojo.declare(CLASS, null, {
+
+		// ctor
+		constructor: function(s) {
+			alert(this.declaredClass+": constructor");
+			this.f1 = new nu.mine.mosher.test1.Foo1(s);
+		},
+	
+		// methods
+		fn: function() {
+			return this.f1.fn();
+		}
+	});
+
+})();

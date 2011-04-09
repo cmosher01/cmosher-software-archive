@@ -1,5 +1,8 @@
-dojo.require("nu.mine.mosher.test2.main");
-dojo.addOnLoad(function(){
-  var main = new nu.mine.mosher.test2.main();
-  main.main();
-});
+(function() {
+	dojo.require("nu.mine.mosher.test2.main");
+
+	dojo.addOnLoad(function(){
+		  var main = nu.mine.mosher.test2.main.create();
+		  main.main();
+		});
+})();
