@@ -1,8 +1,10 @@
-(function() {
-	dojo.require("nu.mine.mosher.test2.main");
+(function($) {
+	"use strict";
 
-	dojo.addOnLoad(function(){
+	$.require("nu.mine.mosher.test2.main");
+
+	$.addOnLoad(function(){
 		  var main = nu.mine.mosher.test2.main.create();
 		  main.main();
 		});
-})();
+})(window.dojo);

@@ -1,12 +1,13 @@
-(function() {
+(function($) {
+	"use strict";
 
 	var CLASS = "nu.mine.mosher.test2.Foo2";
 
-	dojo.provide(CLASS);
+	$.provide(CLASS);
 
-	dojo.require("nu.mine.mosher.test1.Foo1");
+	$.require("nu.mine.mosher.test1.Foo1");
 
-	var CTOR = dojo.declare(CLASS, null, {
+	var my = $.declare(CLASS, null, {
 
 		// ctor
 		constructor: function(s) {
@@ -20,4 +21,4 @@
 		}
 	});
 
-})();
+})(window.dojo);

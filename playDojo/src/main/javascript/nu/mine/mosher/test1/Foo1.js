@@ -1,13 +1,14 @@
-(function() {
+(function($) {
+	"use strict";
 
 	var CLASS = "nu.mine.mosher.test1.Foo1";
 
-	dojo.provide(CLASS);
+	$.provide(CLASS);
 
-	var CTOR = dojo.declare(CLASS, null, {
+	var my = $.declare(CLASS, null, {
 	
 		constructor: function(s) {
-			alert(this.declaredClass+": constructor");
+			alert(this.declaredClass+my.SOME_CONST+my.someFunc());
 			this.s = s;
 		},
 	
@@ -17,4 +18,11 @@
 	
 	});
 
-})();
+	my.SOME_CONST = ": ";
+	
+	my.someFunc = function() {
+		return "constructor";
+	};
+
+	oops = "my bad";
+})(window.dojo);
