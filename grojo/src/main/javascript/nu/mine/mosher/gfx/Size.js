@@ -13,45 +13,57 @@
  * @return new {@link Size}
  * @type Size
  */
-function Size(w,h) {
-	Util.verifyType(this,"Size");
-	/**
-	 * width
-	 * @private
-	 * @type Number
-	 */
-	this.w = parseInt(w,10);
-	/**
-	 * height
-	 * @private
-	 * @type Number
-	 */
-	this.h = parseInt(h,10);
-}
+(function($) {
+	"use strict";
 
-/**
- * Gets the width of this {@link Size}.
- * @returns width
- * @type Number
- */
-Size.prototype.getWidth = function() {
-	return this.w;
-};
+	var CLASS = "nu.mine.mosher.gfx.Size";
 
-/**
- * Gets the height of this {@link Size}.
- * @returns width
- * @type Number
- */
-Size.prototype.getHeight = function() {
-	return this.h;
-};
+	$.provide(CLASS);
 
-/**
- * Gets a debug string for this {@link Size}.
- * @return debug string
- * @type String
- */
-Size.prototype.toString = function() {
-	return "WxH="+this.getWidth()+"x"+this.getHeight();
-};
+	var Size = $.declare(CLASS, null, {
+
+		constructor: function(w,h) {
+			/**
+			 * width
+			 * @private
+			 * @type Number
+			 */
+			this.w = parseInt(w,10);
+			/**
+			 * height
+			 * @private
+			 * @type Number
+			 */
+			this.h = parseInt(h,10);
+		},
+		
+		/**
+		 * Gets the width of this {@link Size}.
+		 * @returns width
+		 * @type Number
+		 */
+		getWidth: function() {
+			return this.w;
+		},
+		
+		/**
+		 * Gets the height of this {@link Size}.
+		 * @returns width
+		 * @type Number
+		 */
+		getHeight: function() {
+			return this.h;
+		},
+		
+		/**
+		 * Gets a debug string for this {@link Size}.
+		 * @return debug string
+		 * @type String
+		 */
+		toString: function() {
+			return "WxH="+this.getWidth()+"x"+this.getHeight();
+		}
+
+	});
+
+})(window.dojo);
