@@ -59,7 +59,7 @@ function suite(global) {
 	})(global);
 
 	var module = args.module;
-	if (typeof module === "undefined") {
+	if (typeof module === "undefined" || module.length === 0) {
 		var err = "Error: missing required parameter: module";
 		global.document.body.innerHTML = err;
 		throw new Error(err);
