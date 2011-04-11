@@ -1,0 +1,109 @@
+$(function() {
+
+	module("GedcomDateParser");
+
+	test("nominal", function() {
+		deepEqual(GedcomDateParser.parse(
+			"3 JUL 1966"),
+			{year:1966,month:7,day:3});
+	});
+
+	test("nominal range", function() {
+		deepEqual(GedcomDateParser.parse(
+			"BET 3 JUL 1966 AND 3 AUG 1966"), 
+			{after:{year:1966,month:7,day:3},before:{year:1966,month:8,day:3}});
+	});
+
+	test("nominal period", function() {
+		deepEqual(GedcomDateParser.parse(
+			"FROM 3 JUL 1966 TO 3 AUG 1966"), 
+			{from:{year:1966,month:7,day:3},to:{year:1966,month:8,day:3}});
+	});
+
+	test("nominal circa", function() {
+		deepEqual(GedcomDateParser.parse(
+			"ABT 1400"), 
+			{year:1400,month:0,day:0,approx:true});
+	});
+
+	test("nominal only year", function() {
+		deepEqual(GedcomDateParser.parse(
+			"1492"), 
+			{year:1492,month:0,day:0});
+	});
+
+	test("nominal only month and year", function() {
+		deepEqual(GedcomDateParser.parse(
+			"DEC 1941"), 
+			{year:1941,month:12,day:0});
+	});
+
+	test("nominal interpreted", function() {
+		deepEqual(GedcomDateParser.parse(
+			"INT 31 MAR 1850     (Easter 1850)"), 
+			{year:1850,month:3,day:31});
+	});
+
+	test("nominal BCE", function() {
+		deepEqual(GedcomDateParser.parse(
+			"32 BC"), 
+			{year:-32,month:0,day:0});
+	});
+
+	test("nominal AD", function() {
+		deepEqual(GedcomDateParser.parse(
+			"1860 AD"), 
+			{year:1860,month:0,day:0});
+	});
+
+	test("nominal OS", function() {
+		deepEqual(GedcomDateParser.parse(
+			"@#DJULIAN@ 11 FEB 1731/2"), 
+			{year:1732,month:2,day:11,julian:true});
+	});
+
+	test("leading zero", function() {
+		deepEqual(GedcomDateParser.parse(
+			"09 DEC 2000"),
+			{year:2000,month:12,day:9});
+	});
+
+	test("zero year", function() {
+		raises(function() { GedcomDateParser.parse(
+			"1 JAN 0"); });
+	});
+
+	test("unknown calendar", function() {
+		equal(GedcomDateParser.parse(
+			"@#DNEPALI@ 25 FALGUN 2067"),
+			"NEPALI: 25 FALGUN 2067");
+	});
+
+	test("only day and month", function() {
+		raises(function () { GedcomDateParser.parse(
+			"25 JUL");});
+	});
+
+	test("unlabeled date with slashed year detected as julian", function() {
+		deepEqual(GedcomDateParser.parse(
+			"11 FEB 1731/2"), 
+			{year:1732,month:2,day:11,julian:true});
+	});
+
+	test("slashed year cannot be gregorian", function() {
+		raises(function () { GedcomDateParser.parse(
+			"@#DGREGORIAN@ 11 FEB 1731/2");});
+	});
+
+	test("omitted space after calendar escape is OK", function() {
+		deepEqual(GedcomDateParser.parse(
+			"@#DGREGORIAN@2 FEB 2222"), 
+			{year:2222,month:2,day:2});
+	});
+
+	test("nominal Hebrew", function() {
+		deepEqual(GedcomDateParser.parse(
+			"@#DHEBREW@ 1 TSH 5771"), 
+			{year:5771,month:7,day:1,hebrew:true});
+	})
+});
