@@ -26,7 +26,7 @@
 			rr.push(v);
 		});
 
-		doh.is(rr,r);
+		doh.is(r,rr);
 	},
 
 	function forEachNull() {
@@ -39,7 +39,7 @@
 			rr.push(v);
 		});
 
-		doh.is(rr,r);
+		doh.is(r,rr);
 	},
 
 	function forEachDeleted() {
@@ -53,7 +53,7 @@
 			rr.push(v);
 		});
 
-		doh.is(rr,["a","c"]);
+		doh.is(["a","c"],rr);
 	},
 
 	function forEachSparse() {
@@ -68,7 +68,7 @@
 			rr.push(v);
 		});
 
-		doh.is(rr,["a","b"]);
+		doh.is(["a","b"],rr);
 	},
 
 
@@ -96,7 +96,7 @@
 		delete r[1];
 
 		rr = Util.consolodate(r);
-		doh.is(rr,["a","c"]);
+		doh.is(["a","c"],rr);
 	},
 
 
@@ -108,217 +108,217 @@
 
 		r = ["a","b","c"];
 		delete r[1];
-		doh.isNot(r,["a","c"]);
-		doh.is(r,["a",Util.undefined(),"c"]);
+		doh.isNot(["a","c"],r);
+		doh.is(["a",undefined,"c"],r);
 
 		r = ["a","b","c"];
 		r = Util.remove("b",r);
-		doh.is(r,["a","c"]);
-		doh.isNot(r,["a",Util.undefined(),"c"]);
+		doh.is(["a","c"],r);
+		doh.isNot(["a",undefined,"c"],r);
 	},
 
 
 
 
 	function classNameOfClassicOOObject() {
-		doh.is(Util.getTypeName(new ChrisMosherUtilInternalTestClass()),"ChrisMosherUtilInternalTestClass");
+		doh.is("ChrisMosherUtilInternalTestClass",Util.getTypeName(new ChrisMosherUtilInternalTestClass()));
 	},
 
 	function classNameOfObject() {
-		doh.is(Util.getTypeName(new Object()),"Object");
+		doh.is("Object",Util.getTypeName(new Object()));
 	},
 
 	function classNameOfString() {
-		doh.is(Util.getTypeName(new String("testing")),"String");
+		doh.is("String",Util.getTypeName(new String("testing")));
 	},
 
 	function classNameOfStringLiteral() {
-		doh.is(Util.getTypeName("testing"),"String");
+		doh.is("String",Util.getTypeName("testing"));
 	},
 
 	function classNameOfArray() {
-		doh.is(Util.getTypeName(new Array(1,2,3)),"Array");
+		doh.is("Array",Util.getTypeName(new Array(1,2,3)));
 	},
 
 	function classNameOfArrayLiteral() {
-		doh.is(Util.getTypeName([1,2,3]),"Array");
+		doh.is("Array",Util.getTypeName([1,2,3]));
 	},
 
 	function classNameOfnumber() {
-		doh.is(Util.getTypeName(new Number(3.14)),"Number");
+		doh.is("Number",Util.getTypeName(new Number(3.14)));
 	},
 
 	function classNameOfnumber() {
-		doh.is(Util.getTypeName(3.14),"Number");
+		doh.is("Number",Util.getTypeName(3.14));
 	},
 
 	function classNameOfnumberProperty() {
-		doh.is(Util.getTypeName(window.length),"Number");
+		doh.is("Number",Util.getTypeName(window.length));
 	},
 
 	function classNameOfBoolean() {
-		doh.is(Util.getTypeName(new Boolean(true)),"Boolean");
+		doh.is("Boolean",Util.getTypeName(new Boolean(true)));
 	},
 
 	function classNameOfBooleanLiteral() {
-		doh.is(Util.getTypeName(true),"Boolean");
+		doh.is("Boolean",Util.getTypeName(true));
 	},
 
 	function classNameOfNull() {
-		doh.is(Util.getTypeName(null),"null");
+		doh.is("null",Util.getTypeName(null));
 	},
 
 	function classNameOfUndefined() {
-		doh.is(Util.getTypeName(Util.undefined()),"undefined");
+		doh.is("undefined",Util.getTypeName(Util.undefined()));
 	},
 
 	function classNameOfOmittedArgument() {
-		doh.is(Util.getTypeName(),"undefined");
+		doh.is("undefined",Util.getTypeName());
 	},
 
 	function classNameOfCastratedObject() {
 		var x;
 		x = new ChrisMosherUtilInternalTestClass();
 		x.constructor = null;
-		doh.is(Util.getTypeName(x),"Object");
+		doh.is("Object",Util.getTypeName(x));
 	},
 
 	function classNameOfCorruptedObject() {
 		var x;
 		x = new ChrisMosherUtilInternalTestClass();
 		x.constructor = {foo:"bar"};
-		doh.is(Util.getTypeName(x),"Object");
+		doh.is("Object",Util.getTypeName(x));
 	},
 
 	function classNameOfCorruptedObject2() {
 		var x;
 		x = new ChrisMosherUtilInternalTestClass();
 		x.constructor = [1,2,3];
-		doh.is(Util.getTypeName(x),"Object");
+		doh.is("Object",Util.getTypeName(x));
 	},
 
 	function classNameOfDate() {
-		doh.is(Util.getTypeName(new Date()),"Date");
+		doh.is("Date",Util.getTypeName(new Date()));
 	},
 
 	function classNameOfRegExpObject() {
-		doh.is(Util.getTypeName(new RegExp(/.*/g)),"RegExp");
+		doh.is("RegExp",Util.getTypeName(new RegExp(/.*/g)));
 	},
 
 	function classNameOfRegExpLiteral() {
-		doh.is(Util.getTypeName(/.*/g),"RegExp");
+		doh.is("RegExp",Util.getTypeName(/.*/g));
 	},
 
 	function classNameOfFunctionObject() {
-		doh.is(Util.getTypeName(function(){/*do nothing*/}),"Function");
+		doh.is("Function",Util.getTypeName(function(){/*do nothing*/}));
 	},
 
 	function classNameOfCastratedFunctionObject() {
 		var x = function(){/*do nothing*/};
 		x.constructor = null;
-		doh.is(Util.getTypeName(x),"Function");
+		doh.is("Function",Util.getTypeName(x));
 	},
 
 	function classNameOfCastratedRegExp() {
 		var x = /.*/g;
 		x.constructor = null;
-		doh.is(Util.getTypeName(x),"RegExp");
+		doh.is("RegExp",Util.getTypeName(x));
 	},
 
 	function classNameOfObjectType() {
-		doh.is(Util.getTypeName(Object),"Function");
+		doh.is("Function",Util.getTypeName(Object));
 	},
 
 	function classNameOfMathType() {
-		doh.is(Util.getTypeName(Math),"Math");
+		doh.is("Math",Util.getTypeName(Math));
 	},
 
 	function classNameOfDateType() {
-		doh.is(Util.getTypeName(Date),"Function");
+		doh.is("Function",Util.getTypeName(Date));
 	},
 
 //  May not always be Window?
 //	function classNameOfWindow() {
-//		doh.is(Util.getTypeName(window),"Window");
+//		doh.is("Window",Util.getTypeName(window));
 //	},
 
 	function classNameOfMaliciousCorruption() {
 		var x = new ChrisMosherUtilInternalTestClass();
 		x.constructor = {name:"Foo"};
-		doh.is(Util.getTypeName(x),"Foo"); // can't fix this?
+		doh.is("Foo",Util.getTypeName(x)); // can't fix this?
 	},
 
 //  Is sometimes Arguments, sometimes Object
 //	function classNameOfArguments() {
-//		doh.is(Util.getTypeName(arguments),"Arguments");
+//		doh.is("Arguments",Util.getTypeName(arguments));
 //	},
 
 //  Can't use callee in strict mode. (Good.)
 //	function classNameOfCallee() {
-//		doh.is(Util.getTypeName(arguments.callee),"Function");
+//		doh.is("Function",Util.getTypeName(arguments.callee));
 //	},
 
 	function safestrNominal() {
-		doh.is(Util.safeStr("Chris"),"Chris");
+		doh.is("Chris",Util.safeStr("Chris"));
 	},
 
 	function safestrUndefined() {
-		doh.is(Util.safeStr(Util.undefined()),"");
+		doh.is("",Util.safeStr(undefined));
 	},
 
 	function safestrMissing() {
-		doh.is(Util.safeStr(),"");
+		doh.is("",Util.safeStr());
 	},
 
 	function safestrNull() {
-		doh.is(Util.safeStr(null),"");
+		doh.is("",Util.safeStr(null));
 	},
 
 
 	function digintNominal() {
-		doh.is(Util.digint(68,3),"068");
+		doh.is("068",Util.digint(68,3));
 	},
 
 	function digintNoneAdded() {
-		doh.is(Util.digint(68,2),"68");
+		doh.is("68",Util.digint(68,2));
 	},
 
 	function digintTooBig() {
-		doh.is(Util.digint(68,1),"68");
+		doh.is("68",Util.digint(68,1));
 	},
 
 	function digintMultiDigitZero() {
-		doh.is(Util.digint(0,7),"0000000");
+		doh.is("0000000",Util.digint(0,7));
 	},
 
 	function digintZero() {
-		doh.is(Util.digint(0,1),"0");
+		doh.is("0",Util.digint(0,1));
 	},
 
 	function digintNegativeNominal() {
-		doh.is(Util.digint(-27,5),"-00027");
+		doh.is("-00027",Util.digint(-27,5));
 	},
 
 	function digintFractional() {
-		doh.is(Util.digint(-27.47,5),"-00027");
+		doh.is("-00027",Util.digint(-27.47,5));
 	},
 
 	function digintFractionalRoundUp() {
-		doh.is(Util.digint(-27.58,5),"-00028");
+		doh.is("-00028",Util.digint(-27.58,5));
 	},
 
 	function undefinedFunction() {
-		doh.is(typeof Util.undefined(),"undefined");
+		doh.is("undefined",typeof Util.undefined());
 	},
 
 	function NaNFUnction() {
-		doh.is(typeof Util.NaN(),"number");
+		doh.is("number",typeof Util.NaN());
 		doh.t(isNaN(Util.NaN()));
 	},
 
 	function InfinityFunction() {
-		doh.is(typeof Util.Infinity(),"number");
-		doh.is(Util.Infinity(),1/0);
+		doh.is("number",typeof Util.Infinity());
+		doh.is(1/0,Util.Infinity());
 	}
 ]);
 

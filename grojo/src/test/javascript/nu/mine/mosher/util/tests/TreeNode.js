@@ -25,13 +25,13 @@
 
 		i = 0;
 		Util.forEach(r,function() {i++;});
-		doh.is(i, 1);
+		doh.is(1,i);
 
 		Util.forEach(r,function(v) {
-			doh.is(v.obj, "b");
+			doh.is("b",v.obj);
 		});
 
-		doh.is(b.getParent().obj, "a");
+		doh.is("a",b.getParent().obj);
 	},
 
 	function nominalRemoveChild() {
@@ -48,9 +48,9 @@
 
 		i = 0;
 		Util.forEach(r,function() {i++;});
-		doh.is(i, 0);
+		doh.is(0,i);
 
-		doh.is(b.getParent(), null);
+		doh.is(null,b.getParent());
 	},
 
 	function nominalRemoveFromParent() {
@@ -68,9 +68,9 @@
 
 		i = 0;
 		Util.forEach(r,function() {i++;});
-		doh.is(i, 0);
+		doh.is(0,i);
 
-		doh.is(b.getParent(), null);
+		doh.is(null,b.getParent());
 	},
 
 	function addChildOfOtherExistingParent() {
@@ -91,7 +91,7 @@
 		r = a.getChildren();
 		i = 0;
 		Util.forEach(r,function() {i++;});
-		doh.is(i, 0);
+		doh.is(0,i);
 
 
 
@@ -99,15 +99,15 @@
 
 		i = 0;
 		Util.forEach(r,function() {i++;});
-		doh.is(i, 1);
+		doh.is(1,i);
 
 		Util.forEach(r,function(v) {
-			doh.is(v.obj, "b");
+			doh.is("b",v.obj);
 		});
 
 
 
-		doh.is(b.getParent().obj, "x");
+		doh.is("x",b.getParent().obj);
 	},
 
 	function threeChildren() {
@@ -129,15 +129,15 @@
 
 		i = 0;
 		Util.forEach(r,function() {i++;});
-		doh.is(i, 3);
+		doh.is(3,i);
 
-		doh.is(r[0].obj, "c1");
-		doh.is(r[1].obj, "c2");
-		doh.is(r[2].obj, "c3");
+		doh.is("c1",r[0].obj);
+		doh.is("c2",r[1].obj);
+		doh.is("c3",r[2].obj);
 
-		doh.is(c1.getParent().obj, "p");
-		doh.is(c2.getParent().obj, "p");
-		doh.is(c3.getParent().obj, "p");
+		doh.is("p",c1.getParent().obj);
+		doh.is("p",c2.getParent().obj);
+		doh.is("p",c3.getParent().obj);
 	},
 
 	function removeMiddleChild() {
@@ -159,17 +159,17 @@
 
 		r = p.getChildren();
 
-		doh.is(r.length,2);
+		doh.is(2,r.length);
 		i = 0;
 		Util.forEach(r,function() {i++;});
-		doh.is(i, 2);
+		doh.is(2,i);
 
-		doh.is(r[0].obj, "c1");
-		doh.is(r[1].obj, "c3");
+		doh.is("c1",r[0].obj);
+		doh.is("c3",r[1].obj);
 
-		doh.is(c1.getParent().obj, "p");
-		doh.is(c2.getParent(), null);
-		doh.is(c3.getParent().obj, "p");
+		doh.is("p",c1.getParent().obj);
+		doh.is(null,c2.getParent());
+		doh.is("p",c3.getParent().obj);
 	},
 
 	function addUndefinedChildShouldRaise() {

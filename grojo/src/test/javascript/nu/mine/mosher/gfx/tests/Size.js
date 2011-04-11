@@ -1,12 +1,22 @@
-$(function() {
+(function($, doh) {
+	"use strict";
 
-  module("Size");
+	var SUITE = "nu.mine.mosher.gfx.tests.Size";
 
-  test("nominal", function() {
-	  var s;
-	  s = new Size(23,45);
-	  equal(s.getWidth(),23);
-	  equal(s.getHeight(),45);
-  });
+	$.provide(SUITE);
 
-});
+	$.require("nu.mine.mosher.gfx.Size");
+	var Size = nu.mine.mosher.gfx.Size;
+
+	doh.register(SUITE, [
+
+		function nominal() {
+			var s;
+			s = new Size(23, 45);
+			doh.is(s.getWidth(), 23);
+			doh.is(s.getHeight(), 45);
+		}
+
+	]);
+
+})(window.dojo, window.doh);

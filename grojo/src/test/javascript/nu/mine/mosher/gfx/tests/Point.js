@@ -1,12 +1,22 @@
-$(function() {
+(function($, doh) {
+	"use strict";
 
-  module("Point");
+	var SUITE = "nu.mine.mosher.gfx.tests.Point";
 
-  test("nominal", function() {
-	  var p;
-	  p = new Point(77,99);
-	  equal(p.getX(),77);
-	  equal(p.getY(),99);
-  });
+	$.provide(SUITE);
 
-});
+	$.require("nu.mine.mosher.gfx.Point");
+	var Point = nu.mine.mosher.gfx.Point;
+
+	doh.register(SUITE, [
+
+		function nominal() {
+			var pt;
+			pt = new Point(77,99);
+			doh.is(77,pt.getX());
+			doh.is(99,pt.getY());
+		}
+
+	]);
+
+})(window.dojo, window.doh);
