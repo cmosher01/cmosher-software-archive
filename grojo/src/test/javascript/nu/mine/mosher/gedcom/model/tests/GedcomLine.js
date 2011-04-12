@@ -1,260 +1,270 @@
-$(function() {
+(function($,doh) {
+	"use strict";
 
-	module("GedcomLine");
+	var SUITE = "nu.mine.mosher.gedcom.model.tests.GedcomLine";
 
-	test("asPointer nominal", function() {
-		equal(GedcomLine.asPointer("@abc@"), "abc");
-	});
+	$.provide(SUITE);
 
-	test("asPointer nominal false", function() {
-		equal(GedcomLine.asPointer("abc"), "");
-	});
+	$.require("nu.mine.mosher.gedcom.model.GedcomLine");
+	var GedcomLine = nu.mine.mosher.gedcom.model.GedcomLine;
 
-	test("asPointer nominal false begin at", function() {
-		equal(GedcomLine.asPointer("@abc"), "");
-	});
+	doh.register(SUITE,[
 
-	test("asPointer nominal false end at", function() {
-		equal(GedcomLine.asPointer("abc@"), "");
-	});
+	function asPointerNominal() {
+		doh.is("abc",GedcomLine.asPointer("@abc@"));
+	},
 
-	test("asPointer nominal false mid at", function() {
-		equal(GedcomLine.asPointer("@ab@c@"), "");
-	});
+	function asPointerNominalFalse() {
+		doh.is("",GedcomLine.asPointer("abc"));
+	},
 
-	test("asPointer one at", function() {
-		equal(GedcomLine.asPointer("@"), "");
-	});
+	function asPointerNominalFalseBeginAt() {
+		doh.is("",GedcomLine.asPointer("@abc"));
+	},
 
-	test("asPointer two ats", function() {
-		equal(GedcomLine.asPointer("@@"), "");
-	});
+	function asPointerNominalFalseEndAt() {
+		doh.is("",GedcomLine.asPointer("abc@"));
+	},
 
-	test("asPointer three ats", function() {
-		equal(GedcomLine.asPointer("@@@"), "");
-	});
+	function asPointerNominalFalseMidAt() {
+		doh.is("",GedcomLine.asPointer("@ab@c@"));
+	},
 
-	test("asPointer four ats", function() {
-		equal(GedcomLine.asPointer("@@@@"), "");
-	});
+	function asPointerOneAt() {
+		doh.is("",GedcomLine.asPointer("@"));
+	},
 
-	test("asPointer empty string", function() {
-		equal(GedcomLine.asPointer(""), "");
-	});
+	function asPointerTwoAts() {
+		doh.is("",GedcomLine.asPointer("@@"));
+	},
 
-	test("asPointer leading space", function() {
-		equal(GedcomLine.asPointer(" @abc@"), "");
-	});
+	function asPointerThreeAts() {
+		doh.is("",GedcomLine.asPointer("@@@"));
+	},
 
-	test("asPointer trailing space", function() {
-		equal(GedcomLine.asPointer("@abc@ "), "");
-	});
+	function asPointerFourAts() {
+		doh.is("",GedcomLine.asPointer("@@@@"));
+	},
 
-	test("asPointer(null)", function() {
-		equal(GedcomLine.asPointer(null), "");
-	});
+	function asPointerEmptyString() {
+		doh.is("",GedcomLine.asPointer(""));
+	},
 
-	test("asPointer()", function() {
-		equal(GedcomLine.asPointer(), "");
-	});
+	function asPointerLeadingSpace() {
+		doh.is("",GedcomLine.asPointer(" @abc@"));
+	},
 
-	test("replace nominal", function() {
-		equal(GedcomLine.replaceAts("abc@@def"), "abc@def");
-	});
+	function asPointerTrailingSpace() {
+		doh.is("",GedcomLine.asPointer("@abc@ "));
+	},
 
-	test("replace nominal global", function() {
-		equal(GedcomLine.replaceAts("abc@@def@@ghi"), "abc@def@ghi");
-	});
+	function asPointerNull() {
+		doh.is("",GedcomLine.asPointer(null));
+	},
 
-	test("replace no-op", function() {
-		equal(GedcomLine.replaceAts("abcdef"), "abcdef");
-	});
+	function asPointerNoArgs() {
+		doh.is("",GedcomLine.asPointer());
+	},
 
-	test("replace single at", function() {
-		equal(GedcomLine.replaceAts("abc@def"), "abc@def");
-	});
+	function replaceNominal() {
+		doh.is("abc@def",GedcomLine.replaceAts("abc@@def"));
+	},
 
-	test("replace three ats", function() {
-		equal(GedcomLine.replaceAts("abc@@@def"), "abc@@def");
-	});
+	function replaceNominalGlobal() {
+		doh.is("abc@def@ghi",GedcomLine.replaceAts("abc@@def@@ghi"));
+	},
 
-	test("replace empty string", function() {
-		equal(GedcomLine.replaceAts(""), "");
-	});
+	function replaceNoOp() {
+		doh.is("abcdef",GedcomLine.replaceAts("abcdef"));
+	},
 
-	test("replace null", function() {
-		equal(GedcomLine.replaceAts(null), null);
-	});
+	function replaceSingleAt() {
+		doh.is("abc@def",GedcomLine.replaceAts("abc@def"));
+	},
 
-	test("replace undefined", function() {
-		equal(GedcomLine.replaceAts(), Util.undefined());
-	});
+	function replaceThreeAts() {
+		doh.is("abc@@def",GedcomLine.replaceAts("abc@@@def"));
+	},
 
-	test("replace bad type 0", function() {
-		equal(GedcomLine.replaceAts(0), 0);
-	});
+	function replaceEmptyString() {
+		doh.is("",GedcomLine.replaceAts(""));
+	},
 
-	test("replace bad type 1", function() {
-		equal(GedcomLine.replaceAts(1), 1);
-	});
+	function replaceNull() {
+		doh.is(null,GedcomLine.replaceAts(null));
+	},
 
-	test("replace bad type obj", function() {
+	function replaceUndefined() {
+		doh.is(undefined,GedcomLine.replaceAts());
+	},
+
+	function replaceBadType0() {
+		doh.is(0,GedcomLine.replaceAts(0));
+	},
+
+	function replaceBadType1() {
+		doh.is(1,GedcomLine.replaceAts(1));
+	},
+
+	function replaceBadTypeObj() {
 		var obj = {};
-		equal(GedcomLine.replaceAts(obj), obj);
-	});
+		doh.is(obj,GedcomLine.replaceAts(obj));
+	},
 
-	test("replace bad type true", function() {
-		equal(GedcomLine.replaceAts(true), true);
-	});
+	function replaceBadTypeTrue() {
+		doh.is(true,GedcomLine.replaceAts(true));
+	},
 
-	test("replace bad type false", function() {
-		equal(GedcomLine.replaceAts(false), false);
-	});
+	function replaceBadTypeFalse() {
+		doh.is(false,GedcomLine.replaceAts(false));
+	},
 
-	test("nominal no value: 0 HEAD", function() {
-		var g = new GedcomLine(0, Util.undefined(), "HEAD", "");
-		equal(g.getLevel(), 0);
-		equal(g.getID(), "");
-		equal(g.getTag(), "HEAD");
-		equal(g.getVal(), "");
-		equal(g.getPointer(), "");
-		ok(!g.hasID());
-		ok(!g.isPointer());
-	});
+	function nominalNoValue() {
+		var g = new GedcomLine(0, undefined, "HEAD", "");
+		doh.is(0,g.getLevel());
+		doh.is("",g.getID());
+		doh.is("HEAD",g.getTag());
+		doh.is("",g.getVal());
+		doh.is("",g.getPointer());
+		doh.f(g.hasID());
+		doh.f(g.isPointer());
+	},
 
-	test("nominal object: 1 SOUR GRO", function() {
-		var g = new GedcomLine(1, Util.undefined(), "SOUR", "GRO");
-		equal(g.getLevel(), 1);
-		equal(g.getID(), "");
-		equal(g.getTag(), "SOUR");
-		equal(g.getVal(), "GRO");
-		equal(g.getPointer(), "");
-		ok(!g.hasID());
-		ok(!g.isPointer());
-	});
+	function nominalObject() {
+		var g = new GedcomLine(1, undefined, "SOUR", "GRO");
+		doh.is(1,g.getLevel());
+		doh.is("",g.getID());
+		doh.is("SOUR",g.getTag());
+		doh.is("GRO",g.getVal());
+		doh.is("",g.getPointer());
+		doh.f(g.hasID());
+		doh.f(g.isPointer());
+	},
 
-	test("nominal object with ID: 0 @I0@ INDI", function() {
+	function nominalObjectWithID() {
 		var g = new GedcomLine(0, "@I0@", "INDI", "");
-		equal(g.getLevel(), 0);
-		equal(g.getID(), "I0");
-		equal(g.getTag(), "INDI");
-		equal(g.getVal(), "");
-		equal(g.getPointer(), "");
-		ok(g.hasID());
-		ok(!g.isPointer());
-	});
+		doh.is(0,g.getLevel());
+		doh.is("I0",g.getID());
+		doh.is("INDI",g.getTag());
+		doh.is("",g.getVal());
+		doh.is("",g.getPointer());
+		doh.t(g.hasID());
+		doh.f(g.isPointer());
+	},
 
-	test("nominal object with ID and value with ats: 0 @T7@ NOTE This is the text @@ the note.", function() {
+	function nominalObjectWithIDAndValueWithAts() {
 		var g = new GedcomLine(0, "@T7@", "NOTE", "This is the text @@ the note.");
-		equal(g.getLevel(), 0);
-		equal(g.getID(), "T7");
-		equal(g.getTag(), "NOTE");
-		equal(g.getVal(), "This is the text @ the note.");
-		equal(g.getPointer(), "");
-		ok(g.hasID());
-		ok(!g.isPointer());
-	});
+		doh.is(0,g.getLevel());
+		doh.is("T7",g.getID());
+		doh.is("NOTE",g.getTag());
+		doh.is("This is the text @ the note.",g.getVal());
+		doh.is("",g.getPointer());
+		doh.t(g.hasID());
+		doh.f(g.isPointer());
+	},
 
-	test("nominal object with pointer value: 2 SOUR @S0@", function() {
+	function nominalObjectWithPointerValue() {
 		var g = new GedcomLine(2, "", "SOUR", "@S0@");
-		equal(g.getLevel(), 2);
-		equal(g.getID(), "");
-		equal(g.getTag(), "SOUR");
-		equal(g.getVal(), "");
-		equal(g.getPointer(), "S0");
-		ok(!g.hasID());
-		ok(g.isPointer());
-	});
+		doh.is(2,g.getLevel());
+		doh.is("",g.getID());
+		doh.is("SOUR",g.getTag());
+		doh.is("",g.getVal());
+		doh.is("S0",g.getPointer());
+		doh.f(g.hasID());
+		doh.t(g.isPointer());
+	},
 
-	test("nominal conc", function() {
+	function nominalConc() {
 		var g = new GedcomLine(0, "@T7@", "NOTE", "This is a lon");
 		var c = new GedcomLine(1, "", "CONC", "g note split @@ conc.");
 		g.concat(c);
-		equal(g.getLevel(), 0);
-		equal(g.getID(), "T7");
-		equal(g.getTag(), "NOTE");
-		equal(g.getVal(), "This is a long note split @ conc.");
-		equal(g.getPointer(), "");
-		ok(g.hasID());
-		ok(!g.isPointer());
-	});
+		doh.is(0,g.getLevel());
+		doh.is("T7",g.getID());
+		doh.is("NOTE",g.getTag());
+		doh.is("This is a long note split @ conc.",g.getVal());
+		doh.is("",g.getPointer());
+		doh.t(g.hasID());
+		doh.f(g.isPointer());
+	},
 
-	test("nominal cont", function() {
+	function nominalCont() {
 		var g = new GedcomLine(0, "@T7@", "NOTE", "This is a note.");
 		var c = new GedcomLine(1, "", "CONT", "It is split @@ cont.");
 		g.concat(c);
-		equal(g.getLevel(), 0);
-		equal(g.getID(), "T7");
-		equal(g.getTag(), "NOTE");
-		equal(g.getVal(), "This is a note.\nIt is split @ cont.");
-		equal(g.getPointer(), "");
-		ok(g.hasID());
-		ok(!g.isPointer());
-	});
+		doh.is(0,g.getLevel());
+		doh.is("T7",g.getID());
+		doh.is("NOTE",g.getTag());
+		doh.is("This is a note.\nIt is split @ cont.",g.getVal());
+		doh.is("",g.getPointer());
+		doh.t(g.hasID());
+		doh.f(g.isPointer());
+	},
 
-	test("parse nominal no value: 0 HEAD", function() {
+	function parseNominalNoValue() {
 		var g = GedcomLine.parse("0 HEAD");
-		equal(g.getLevel(), 0);
-		equal(g.getID(), "");
-		equal(g.getTag(), "HEAD");
-		equal(g.getVal(), "");
-		equal(g.getPointer(), "");
-		ok(!g.hasID());
-		ok(!g.isPointer());
-	});
+		doh.is(0,g.getLevel());
+		doh.is("",g.getID());
+		doh.is("HEAD",g.getTag());
+		doh.is("",g.getVal());
+		doh.is("",g.getPointer());
+		doh.f(g.hasID());
+		doh.f(g.isPointer());
+	},
 
-	test("parse nominal object: 1 SOUR GRO", function() {
-		var g = new GedcomLine.parse("1 SOUR GRO");
-		equal(g.getLevel(), 1);
-		equal(g.getID(), "");
-		equal(g.getTag(), "SOUR");
-		equal(g.getVal(), "GRO");
-		equal(g.getPointer(), "");
-		ok(!g.hasID());
-		ok(!g.isPointer());
-	});
+	function parseNominalObject() {
+		var g = GedcomLine.parse("1 SOUR GRO");
+		doh.is(1,g.getLevel());
+		doh.is("",g.getID());
+		doh.is("SOUR",g.getTag());
+		doh.is("GRO",g.getVal());
+		doh.is("",g.getPointer());
+		doh.f(g.hasID());
+		doh.f(g.isPointer());
+	},
 
-	test("parse nominal object with ID: 0 @I0@ INDI", function() {
-		var g = new GedcomLine.parse("0 @I0@ INDI");
-		equal(g.getLevel(), 0);
-		equal(g.getID(), "I0");
-		equal(g.getTag(), "INDI");
-		equal(g.getVal(), "");
-		equal(g.getPointer(), "");
-		ok(g.hasID());
-		ok(!g.isPointer());
-	});
+	function parseNominalObjectWithID() {
+		var g = GedcomLine.parse("0 @I0@ INDI");
+		doh.is(0,g.getLevel());
+		doh.is("I0",g.getID());
+		doh.is("INDI",g.getTag());
+		doh.is("",g.getVal());
+		doh.is("",g.getPointer());
+		doh.t(g.hasID());
+		doh.f(g.isPointer());
+	},
 
-	test("parse nominal object with ID and value with ats: 0 @T7@ NOTE This is the text @@ the note.", function() {
-		var g = new GedcomLine.parse("0 @T7@ NOTE This is the text @@ the note.");
-		equal(g.getLevel(), 0);
-		equal(g.getID(), "T7");
-		equal(g.getTag(), "NOTE");
-		equal(g.getVal(), "This is the text @ the note.");
-		equal(g.getPointer(), "");
-		ok(g.hasID());
-		ok(!g.isPointer());
-	});
+	function parseNominalObjectWithIDAndValueWithAts() {
+		var g = GedcomLine.parse("0 @T7@ NOTE This is the text @@ the note.");
+		doh.is(0,g.getLevel());
+		doh.is("T7",g.getID());
+		doh.is("NOTE",g.getTag());
+		doh.is("This is the text @ the note.",g.getVal());
+		doh.is("",g.getPointer());
+		doh.t(g.hasID());
+		doh.f(g.isPointer());
+	},
 
-	test("parse nominal object with pointer value: 2 SOUR @S0@", function() {
-		var g = new GedcomLine.parse("2 SOUR @S0@");
-		equal(g.getLevel(), 2);
-		equal(g.getID(), "");
-		equal(g.getTag(), "SOUR");
-		equal(g.getVal(), "");
-		equal(g.getPointer(), "S0");
-		ok(!g.hasID());
-		ok(g.isPointer());
-	});
+	function parseNominalObjectWithPointerValue() {
+		var g = GedcomLine.parse("2 SOUR @S0@");
+		doh.is(2,g.getLevel());
+		doh.is("",g.getID());
+		doh.is("SOUR",g.getTag());
+		doh.is("",g.getVal());
+		doh.is("S0",g.getPointer());
+		doh.f(g.hasID());
+		doh.t(g.isPointer());
+	},
 
-	test("parse only skips one space: 1 SOUR  GRO", function() {
-		var g = new GedcomLine.parse("1 SOUR  GRO");
-		equal(g.getLevel(), 1);
-		equal(g.getID(), "");
-		equal(g.getTag(), "SOUR");
-		equal(g.getVal(), " GRO");
-		equal(g.getPointer(), "");
-		ok(!g.hasID());
-		ok(!g.isPointer());
-	});
-});
+	function parseOnlySkipsOneSpace() {
+		var g = GedcomLine.parse("1 SOUR  GRO");
+		doh.is(1,g.getLevel());
+		doh.is("",g.getID());
+		doh.is("SOUR",g.getTag());
+		doh.is(" GRO",g.getVal());
+		doh.is("",g.getPointer());
+		doh.f(g.hasID());
+		doh.f(g.isPointer());
+	}
+	]);
+
+})(window.dojo,window.doh);
