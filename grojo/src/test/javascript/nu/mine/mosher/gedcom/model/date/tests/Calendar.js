@@ -1,54 +1,66 @@
-$(function() {
+(function($,doh) {
+	"use strict";
 
-	module("Calendar");
+	var SUITE = "nu.mine.mosher.gedcom.model.date.tests.Calendar";
 
-	test("nominal George Washington's birthday: Julian to Gregorian", function() {
+	$.provide(SUITE);
+
+	$.require("nu.mine.mosher.gedcom.model.date.Calendar");
+	var Calendar = nu.mine.mosher.gedcom.model.date.Calendar;
+	$.require("nu.mine.mosher.gedcom.model.date.YMD");
+	var YMD = nu.mine.mosher.gedcom.model.date.YMD;
+
+	doh.register(SUITE,[
+
+	function nominalGeorgeWashingtonsBirthdayJulianToGregorian() {
 		var ymdJulian;
 		var ymdGregorian;
 		ymdJulian = new YMD(1732,2,11,false,true);
 		ymdGregorian = Calendar.jd_to_gregorian(Calendar.julian_to_jd(ymdJulian));
 
-		deepEqual(ymdGregorian,new YMD(1732,2,22,false,false));
-	});
+		doh.is(new YMD(1732,2,22,false,false),ymdGregorian);
+	},
 
-	test("nominal Gregorian to Julian", function() {
+	function nominalGregorianToJulian() {
 		var ymdGregorian;
 		var ymdJulian;
 		ymdGregorian = new YMD(1752,9,14,false,false);
 		ymdJulian = Calendar.jd_to_julian(Calendar.gregorian_to_jd(ymdGregorian));
 
-		deepEqual(ymdJulian,new YMD(1752,9,3,false,true));
-	});
+		doh.is(new YMD(1752,9,3,false,true),ymdJulian);
+	},
 
-	test("nominal Hebrew to Gregorian", function() {
+	function nominalHebrewToGregorian() {
 		var ymdHebrew;
 		var ymdGregorian;
 		ymdHebrew = new YMD(5771,7,1);
 		ymdGregorian = Calendar.jd_to_gregorian(Calendar.hebrew_to_jd(ymdHebrew));
-		deepEqual(ymdGregorian,new YMD(2010,9,9));
-	})
+		doh.is(new YMD(2010,9,9),ymdGregorian);
+	},
 
-	test("nominal Gregorian to Hebrew", function() {
+	function nominalGregorianToHebrew() {
 		var ymdGregorian;
 		var ymdHebrew;
 		ymdGregorian = new YMD(2010,9,9);
 		ymdHebrew = Calendar.jd_to_hebrew(Calendar.gregorian_to_jd(ymdGregorian));
-		deepEqual(ymdHebrew,new YMD(5771,7,1));
-	})
+		doh.is(new YMD(5771,7,1),ymdHebrew);
+	},
 
-	test("nominal French Rev. to Gregorian", function() {
+	function nominalFrenchRevToGregorian() {
 		var ymdFrench;
 		var ymdGregorian;
 		ymdFrench = new YMD(2,11,9);
 		ymdGregorian = Calendar.jd_to_gregorian(Calendar.french_revolutionary_to_jd(ymdFrench));
-		deepEqual(ymdGregorian,new YMD(1794,7,27));
-	})
+		doh.is(new YMD(1794,7,27),ymdGregorian);
+	},
 
-	test("nominal Gregorian to French Rev.", function() {
+	function nominalGregorianToFrenchRev() {
 		var ymdGregorian;
 		var ymdFrench;
 		ymdGregorian = new YMD(1794,7,27);
 		ymdFrench = Calendar.jd_to_french_revolutionary(Calendar.gregorian_to_jd(ymdGregorian));
-		deepEqual(ymdFrench,new YMD(2,11,9));
-	})
-});
+		doh.is(new YMD(2,11,9),ymdFrench);
+	}
+	]);
+
+})(window.dojo,window.doh);
