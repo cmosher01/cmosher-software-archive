@@ -3,15 +3,28 @@
  * Defines the {@link Partnership} class.
  */
 
+(function($) {
+	"use strict";
+
+	var CLASS = "nu.mine.mosher.gro.Partnership";
+
+	$.provide(CLASS);
+
+	$.require("nu.mine.mosher.gro.Person");
+	var Person = nu.mine.mosher.gro.Person;
+	$.require("nu.mine.mosher.gfx.Rect");
+	var Rect = nu.mine.mosher.gfx.Rect;
+	$.require("nu.mine.mosher.gfx.Point");
+	var Point = nu.mine.mosher.gfx.Point;
+	$.require("nu.mine.mosher.gfx.Size");
+	var Size = nu.mine.mosher.gfx.Size;
+	$.require("nu.mine.mosher.util.Util");
+	var Util = nu.mine.mosher.util.Util;
+
+	var Partnership = $.declare(CLASS, null, {
 /**
  * @class
  * Represents a family in the family tree.
- * @requires Person
- * @requires GedcomEvent
- * @requires Rect
- * @requires Point
- * @requires Size
- * @requires Util
  * 
  * @constructor
  * @param {String} gid ID of this {@link Partnership}
@@ -22,9 +35,7 @@
  * @return new {@link Partnership}
  * @type Partnership
  */
-function Partnership(gid,husb,wife,rchil,revt) {
-	Util.verifyType(this,"Partnership");
-
+constructor: function(gid,husb,wife,rchil,revt) {
 	/**
 	 * ID of this person
 	 * @private
@@ -70,7 +81,7 @@ function Partnership(gid,husb,wife,rchil,revt) {
 		this.wife.addSpouseIn(this);
 	}
 
-	Util.forEach(this.rchil, Util.bind(this,function(c) {
+	Util.forEach(this.rchil, $.hitch(this,function(c) {
 		c.addChildIn(this);
 	}));
 
@@ -80,7 +91,7 @@ function Partnership(gid,husb,wife,rchil,revt) {
 	this.divRight = this.createDiv();
 
 	this.divChild = [];
-	Util.forEach(rchil, Util.bind(this,function() {
+	Util.forEach(rchil, $.hitch(this,function() {
 		this.divChild.push(this.createDiv());
 	}));
 
@@ -91,7 +102,7 @@ function Partnership(gid,husb,wife,rchil,revt) {
 	}
 
 	this.calc();
-}
+},
 
 
 /**
@@ -99,9 +110,9 @@ function Partnership(gid,husb,wife,rchil,revt) {
  * @return events
  * @type Array
  */
-Partnership.prototype.getEvents = function() {
+getEvents: function() {
 	return this.revt;
-};
+},
 
 /**
  * Creates and displays a new DIV with "partnership" class
@@ -109,56 +120,19 @@ Partnership.prototype.getEvents = function() {
  * @return new DIV
  * @type HTMLElement
  */
-Partnership.prototype.createDiv = function() {
+createDiv: function() {
 	var div;
 	div = Util.createHtmlElement("div");
 	div.className = "partnership";
 	div.style.position = "absolute";
-	Util.global.document.body.appendChild(div);
+	$.doc.body.appendChild(div);
 	return div;
-};
-
-/**
- * @private
- * @return border CSS style for child lines
- * @type String
- */
-Partnership.getChildLine = function() {
-	return "solid 1px";
-};
-
-/**
- * @private
- * @return border CSS style for partnership lines
- * @type String
- */
-Partnership.getSpouseLine = function() {
-	var h = 2*Partnership.getMarBarHalfHeight();
-	return "double "+h+"px";
-};
-
-/**
- * @private
- * @return half of height of partnership lines (in pixels)
- * @type Number
- */
-Partnership.getMarBarHalfHeight = function() {
-	return 2;
-};
-
-/**
- * @private
- * @return minimum width of one person's side of a partnership line
- * @type Number
- */
-Partnership.getMarChildDistance = function() {
-	return 10;
-};
+},
 
 /**
  * Calculates this {@link Partnership} for display on the drop line chart.
  */
-Partnership.prototype.calc = function() {
+calc: function() {
 	var mx;
 	var my;
 	var rmy;
@@ -235,6 +209,46 @@ Partnership.prototype.calc = function() {
 	if (this.divChildConn) {
 		Partnership.setRect(this.divChildConn,mx,Partnership.getChildLine(),mx+3,null,by,null,my,null);
 	}
+}
+
+
+	});
+
+/**
+ * @private
+ * @return border CSS style for child lines
+ * @type String
+ */
+Partnership.getChildLine = function() {
+	return "solid 1px";
+};
+
+/**
+ * @private
+ * @return border CSS style for partnership lines
+ * @type String
+ */
+Partnership.getSpouseLine = function() {
+	var h = 2*Partnership.getMarBarHalfHeight();
+	return "double "+h+"px";
+};
+
+/**
+ * @private
+ * @return half of height of partnership lines (in pixels)
+ * @type Number
+ */
+Partnership.getMarBarHalfHeight = function() {
+	return 2;
+};
+
+/**
+ * @private
+ * @return minimum width of one person's side of a partnership line
+ * @type Number
+ */
+Partnership.getMarChildDistance = function() {
+	return 10;
 };
 
 /**
@@ -337,3 +351,5 @@ Partnership.setRect = function(div,x1,borderX1,x2,borderX2,y1,borderY1,y2,border
 	Partnership.setX(div,x1,borderX1,x2,borderX2);
 	Partnership.setY(div,y1,borderY1,y2,borderY2);
 };
+
+})(window.dojo);

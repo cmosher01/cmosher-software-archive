@@ -1,48 +1,63 @@
-function main() {
-	var gedcom, titleText, title, head;
-	gedcom = null;
+(function($) {
+	"use strict";
 
+	var CLASS = "nu.mine.mosher.gro.main";
 
+	$.provide(CLASS);
 
-	titleText = Util.global.document.createTextNode("Rapp");
+	$.require("nu.mine.mosher.util.Util");
+	var Util = nu.mine.mosher.util.Util;
+	$.require("nu.mine.mosher.gedcom.model.GedcomTree");
+	var GedcomTree = nu.mine.mosher.gedcom.model.GedcomTree;
+	$.require("nu.mine.mosher.gro.GedcomExtractor");
+	var GedcomExtractor = nu.mine.mosher.gro.GedcomExtractor;
 
-	title = Util.global.document.createElement("title");
-	title.appendChild(titleText);
-
-	head = Util.global.document.getElementsByTagName("head")[0];
-	head.insertBefore(title,head.firstChild);
-
-
-
-	var fileref = Util.global.document.createElement("link");
-	fileref.rel = "stylesheet";
-	fileref.type = "text/css";
-	fileref.href = "index.css";
-	fileref.media = "screen";
-	head.appendChild(fileref);
-
-
-
-	Util.global.$.ajaxSetup({
-		dataType: "text"
+	var main = $.declare(CLASS, null, {
+		constructor: function() {
+			throw new Error("cannot instantiate");
+		}
 	});
 
-	//Util.global.$.get("lib/testged/TGC55C.ged")
-	Util.global.$.get("rapp.ged")
-	//Util.global.$.get("RichardsReeves.ged")
-		.success(function(gc) {
-			gtree = GedcomTree.parse(gc);
-			gedcom = new GedcomExtractor(gtree);
-		})
-		.error(function(s,m,e) {
-			alert("Error reading file "+this.url+": "+e);
+	main.main = function() {
+		var gedcom, titleText, title, head;
+		gedcom = null;
+	
+	
+	
+		titleText = $.doc.createTextNode("Rapp");
+	
+		title = $.doc.createElement("title");
+		title.appendChild(titleText);
+	
+		head = $.doc.getElementsByTagName("head")[0];
+		head.insertBefore(title,head.firstChild);
+	
+	
+	
+		var fileref = $.doc.createElement("link");
+		fileref.rel = "stylesheet";
+		fileref.type = "text/css";
+		fileref.href = "index.css";
+		fileref.media = "screen";
+		head.appendChild(fileref);
+	
+	
+	
+	
+		//"lib/testged/TGC55C.ged"
+		//"RichardsReeves.ged"
+		$.xhrGet({
+			url: "/home/chris/workspace/grojo/src/main/rapp.ged",
+			load: function(gc) {
+				gtree = GedcomTree.parse(gc);
+				gedcom = new GedcomExtractor(gtree);
+			},
+			error: function(e) {
+				alert("Error reading file "+this.url+": "+e);
+			}
 		});
-
-
-
-	Util.global.onresize = function() {
-		if (gedcom != null) {
-			gedcom.calc();
-		}
+	
+		$.connect($.doc,"onresize",gedcom,"calc");
+	
 	};
-}
+})(window.dojo);

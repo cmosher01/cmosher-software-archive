@@ -15,6 +15,8 @@
 	var Util = nu.mine.mosher.util.Util;
 	$.require("nu.mine.mosher.gedcom.model.date.DateRange");
 	var DateRange = nu.mine.mosher.gedcom.model.date.DateRange;
+	$.require("nu.mine.mosher.gedcom.model.date.YMD");
+	var YMD = nu.mine.mosher.gedcom.model.date.YMD;
 
 	var DatePeriod = $.declare(CLASS, null, {
 

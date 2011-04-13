@@ -3,6 +3,37 @@
  * Defines the {@link GedcomExtractor} class.
  */
 
+(function($) {
+	"use strict";
+
+	var CLASS = "nu.mine.mosher.gro.GedcomExtractor";
+
+	$.provide(CLASS);
+
+	$.require("nu.mine.mosher.gro.Partnership");
+	var Partnership = nu.mine.mosher.gro.Partnership;
+	$.require("nu.mine.mosher.gro.Person");
+	var Person = nu.mine.mosher.gro.Person;
+	$.require("nu.mine.mosher.gedcom.model.GedcomEvent");
+	var GedcomEvent = nu.mine.mosher.gedcom.model.GedcomEvent;
+	$.require("nu.mine.mosher.gedcom.model.GedcomTag");
+	var GedcomTag = nu.mine.mosher.gedcom.model.GedcomTag;
+	$.require("nu.mine.mosher.gedcom.model.date.GedcomDateParser");
+	var GedcomDateParser = nu.mine.mosher.gedcom.model.date.GedcomDateParser;
+	$.require("nu.mine.mosher.gedcom.model.date.DatePeriod");
+	var DatePeriod = nu.mine.mosher.gedcom.model.date.DatePeriod;
+	$.require("nu.mine.mosher.gedcom.model.date.DateRange");
+	var DateRange = nu.mine.mosher.gedcom.model.date.DateRange;
+	$.require("nu.mine.mosher.gedcom.model.date.YMD");
+	var YMD = nu.mine.mosher.gedcom.model.date.YMD;
+	$.require("nu.mine.mosher.gfx.Selector");
+	var Selector = nu.mine.mosher.gfx.Selector;
+	$.require("nu.mine.mosher.gfx.Point");
+	var Point = nu.mine.mosher.gfx.Point;
+	$.require("nu.mine.mosher.util.Util");
+	var Util = nu.mine.mosher.util.Util;
+
+	var GedcomExtractor = $.declare(CLASS, null, {
 /**
  * @class
  * Extracts needed data from a {@link GedcomTree}.
@@ -17,15 +48,13 @@
  * @return new {@link GedcomExtractor}
  * @type GedcomExtractor
  */
-function GedcomExtractor(gedcomtree) {
-	Util.verifyType(this,"GedcomExtractor");
+constructor: function(gedcomtree) {
 	/**
 	 * tree to extract from
 	 * @private
 	 * @type GedcomTree
 	 */
 	this.t = gedcomtree;
-	Util.verifyType(this.t,"GedcomTree");
 
 	/**
 	 * map of IDs to {@link Person}s.
@@ -47,44 +76,44 @@ function GedcomExtractor(gedcomtree) {
 	this.extract();
 
 	this.selector = new Selector(
-		Util.bind(this, function(rect) {
+		$.hitch(this, function(rect) {
 			Util.forEach(this.mperson,function(person) {
 				person.select(person.hit(rect));
 			});
 		}),
-		Util.bind(this, function() {
+		$.hitch(this, function() {
 			this.selection = [];
-			Util.forEach(this.mperson,Util.bind(this,function(person) {
+			Util.forEach(this.mperson,$.hitch(this,function(person) {
 				if (person.isSelected()) {
 					this.selection.push(person);
 				}
 			}));
 		})
 	);
-}
+},
 
 /**
  * Calculates every {@link Partnership}.
  */
-GedcomExtractor.prototype.calc = function() {
+calc: function() {
 	Util.forEach(this.mpartnership, function(p) {
 		p.calc();
 	});
-};
+},
 
 /**
  * Extracts the data from the tree.
  * @private
  */
-GedcomExtractor.prototype.extract = function() {
+extract: function() {
 	var rchil;
 	rchil = this.t.getRoot().getChildren();
-	Util.forEach(rchil, Util.bind(this,function(node) {
+	Util.forEach(rchil, $.hitch(this,function(node) {
 		if (node.line.getTag() === "INDI") {
 			this.mperson[node.line.getID()] = this.extractPerson(node);
 		}
 	}));
-	Util.forEach(rchil, Util.bind(this,function(node) {
+	Util.forEach(rchil, $.hitch(this,function(node) {
 		if (node.line.getTag() === "FAM") {
 			this.mpartnership[node.line.getID()] = this.extractParnership(node);
 		}
@@ -93,7 +122,7 @@ GedcomExtractor.prototype.extract = function() {
 	Util.forEach(this.mperson, function(indi) {
 		indi.getEventsFromPartnerships();
 	});
-};
+},
 
 /**
  * Extracts one {@link Person} from the given INDI node
@@ -102,7 +131,7 @@ GedcomExtractor.prototype.extract = function() {
  * @return new {@link Person}
  * @type Person
  */
-GedcomExtractor.prototype.extractPerson = function(indi) {
+extractPerson: function(indi) {
 	var that, nam, xy, m, revt, line;
 
 	that = this;
@@ -125,7 +154,7 @@ GedcomExtractor.prototype.extractPerson = function(indi) {
 
 	line = indi.line;
 	return new Person(line.getID(),nam,xy,revt,this);
-};
+},
 
 /**
  * Extracts one {@link Partnership} from the given FAM node
@@ -134,7 +163,7 @@ GedcomExtractor.prototype.extractPerson = function(indi) {
  * @return new {@link Partnership}
  * @type Partnership
  */
-GedcomExtractor.prototype.extractParnership = function(fam) {
+extractParnership: function(fam) {
 	var that, husb, wife, rchil, revt, line;
 	that = this;
 	husb = null;
@@ -154,7 +183,7 @@ GedcomExtractor.prototype.extractParnership = function(fam) {
 	});
 	line = fam.line;
 	return new Partnership(line.getID(),husb,wife,rchil,revt);
-};
+},
 
 /**
  * Extracts one {@link GedcomEvent} from the given event node
@@ -163,7 +192,7 @@ GedcomExtractor.prototype.extractParnership = function(fam) {
  * @return new {@link GedcomEvent}
  * @type GedcomEvent
  */
-GedcomExtractor.prototype.extractEvent = function(evt) {
+extractEvent: function(evt) {
 	var that, typ, gdate, place;
 	that = this;
 	gdate = DatePeriod.UNKNOWN;
@@ -177,7 +206,7 @@ GedcomExtractor.prototype.extractEvent = function(evt) {
 		}
 	});
 	return new GedcomEvent(typ,gdate,place);
-};
+},
 
 /**
  * Extracts (constructs) the event-name for the given event node.
@@ -187,7 +216,7 @@ GedcomExtractor.prototype.extractEvent = function(evt) {
  * @return event name
  * @type String
  */
-GedcomExtractor.prototype.extractEventName = function(evt) {
+extractEventName: function(evt) {
 	var nam, val;
 	nam = "";
 	val = "";
@@ -207,7 +236,7 @@ GedcomExtractor.prototype.extractEventName = function(evt) {
 		}
 	}
 	return nam;
-};
+},
 
 /**
  * Extracts a {@link DatePeriod} from a given GEDCOM date string.
@@ -215,11 +244,11 @@ GedcomExtractor.prototype.extractEventName = function(evt) {
  * @return {@link DatePeriod}
  * @type DatePeriod
  */
-GedcomExtractor.prototype.extractDate = function(s) {
+extractDate: function(s) {
 	var r, ymd, rng;
 	r = null;
 	try {
-		r = Util.global.GedcomDateParser.parse(s);
+		r = GedcomDateParser.parse(s);
 	} catch (e) {
 		r = null;
 	}
@@ -236,11 +265,11 @@ GedcomExtractor.prototype.extractDate = function(s) {
 		return DatePeriod.fromParserResult(r);
 	}
 	return DatePeriod.UNKNOWN;
-};
+},
 
-GedcomExtractor.prototype.onBeginDrag = function(hitPerson) {
+onBeginDrag: function(hitPerson) {
 	if (this.selection.length > 0) {
-		if ($.inArray(hitPerson,this.selection) < 0) {
+		if ($.indexOf(this.selection,hitPerson) < 0) {
 			Util.forEach(this.selection,function(person) {
 				person.select(false);
 			});
@@ -255,17 +284,17 @@ GedcomExtractor.prototype.onBeginDrag = function(hitPerson) {
 	Util.forEach(this.selection,function(person) {
 		person.onBeginDrag();
 	});
-};
+},
 
-GedcomExtractor.prototype.onDrag = function(delta) {
+onDrag: function(delta) {
 	if (this.selection.length > 0) {
 		Util.forEach(this.selection,function(person) {
 			person.onDrag(delta);
 		});
 	}
-};
+},
 
-GedcomExtractor.prototype.onEndDrag = function() {
+onEndDrag: function() {
 	if (this.selection.length > 0) {
 		Util.forEach(this.selection,function(person) {
 			person.onEndDrag();
@@ -275,4 +304,7 @@ GedcomExtractor.prototype.onEndDrag = function() {
 		this.selection = [];
 		this.tempSelection = false;
 	}
-};
+}
+	});
+
+})(window.dojo);

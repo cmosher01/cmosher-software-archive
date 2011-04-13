@@ -18,24 +18,25 @@
 			this.dragHandler = dragHandler;
 			this.userArg = userArg;
 		
-			dragee.onmousedown = Util.eventHandler(this,Dragger.prototype.beginDrag);
+			$.connect(dragee,"onmousedown",this,"beginDrag");
+			//dragee.onmousedown = Util.eventHandler(this,Dragger.prototype.beginDrag);
 		
 			this.origin = new Point(0,0);
 		},
 		
-		beginDrag = function(e) {
+		beginDrag: function(e) {
 			if (!Util.leftClick(e)) {
 				return true;
 			}
 		
-			jQuery(Util.global.document).mouseup(Util.eventHandler(this,Dragger.prototype.upHandler));
-			jQuery(Util.global.document).mousemove(Util.eventHandler(this,Dragger.prototype.moveHandler));
+			this.upConnection = $.connect($.doc,"onmouseup",this,"upHandler");
+			this.moveConnection = $.connect($.doc,"onmousemove",this,"moveHandler");
 		
-			this.origin = Util.mousePos(e);
+			this.origin = Point.fromBrowserEvent(e);
 		
 			this.dragHandler.onBeginDrag(this.userArg);
 		
-			return Util.stopEvent(e);
+			return $.stopEvent(e);
 		},
 		
 		/**
@@ -45,12 +46,12 @@
 		 * @return <code>false</code> to not propagate event for IE
 		 * @type Boolean
 		 **/
-		moveHandler = function(e) {
-			var p = Util.mousePos(e);
+		moveHandler: function(e) {
+			var p = Point.fromBrowserEvent(e);
 		
 			this.dragHandler.onDrag(new Size(p.getX()-this.origin.getX(),p.getY()-this.origin.getY()));
 		
-			return Util.stopEvent(e);
+			return $.stopEvent(e);
 		},
 		
 		/**
@@ -60,15 +61,15 @@
 		 * @return <code>false</code> to not propagate event for IE
 		 * @type Boolean
 		 **/
-		upHandler = function(e) {
-			jQuery(Util.global.document).unbind("mousemove");
-			jQuery(Util.global.document).unbind("mouseup");
+		upHandler: function(e) {
+			$.disconnect(this.moveConnection);
+			$.disconnect(this.upConnection);
 		
 			this.dragHandler.onEndDrag();
 		
 			this.origin = new Point(0,0);
 		
-			return Util.stopEvent(e);
+			return $.stopEvent(e);
 		}
 	});
 

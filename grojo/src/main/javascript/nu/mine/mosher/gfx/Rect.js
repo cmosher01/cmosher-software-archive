@@ -38,7 +38,6 @@
 			 * @type Point
 			 */
 			this.pos = pos;
-			Util.verifyType(this.pos,"Point");
 		
 			/**
 			 * width and height
@@ -46,7 +45,6 @@
 			 * @type Size
 			 */
 			this.siz = siz;
-			Util.verifyType(this.siz,"Size");
 		},
 		
 		/**

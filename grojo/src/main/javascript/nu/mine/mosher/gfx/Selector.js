@@ -17,11 +17,8 @@
 	var Selector = $.declare(CLASS, null, {
 
 		constructor: function(onselect,onselectfinished) {
-			Util.global.document.onmousedown =
-				Util.eventHandler(this,Selector.prototype.beginDrag);
+			$.connect($.doc,"onmousedown",this,"beginDrag");
 			this.div = null;
-			this.moveProxy = Util.eventHandler(this,Selector.prototype.moveHandler);
-			this.upProxy = Util.eventHandler(this,Selector.prototype.upHandler);
 			this.start = new Point(0,0);
 			this.onselect = onselect;
 			this.onselectfinished = onselectfinished;
@@ -49,46 +46,46 @@
 			if (!Util.leftClick(e)) {
 				return true;
 			}
-			if (e.clientX >= Util.global.document.documentElement.clientWidth || e.clientY >= Util.global.document.documentElement.clientHeight) {
+			if (e.clientX >= $.doc.documentElement.clientWidth || e.clientY >= $.doc.documentElement.clientHeight) {
 				return true;
 			}
-		
-			this.start = this.pos = Util.mousePos(e);
-		
+
+			this.start = this.pos = Point.fromBrowserEvent(e);
+
 			this.div = Util.createHtmlElement("div");
 			this.div.className = "selector";
 			this.div.style.position = "absolute";
-			Util.global.document.body.appendChild(this.div);
-		
+			$.doc.body.appendChild(this.div);
+
 			this.setDiv();
-		
+
 			this.onselect(this.rect);
-		
-			$(Util.global.document).mousemove(this.moveProxy);
-			$(Util.global.document).mouseup(this.upProxy);
-		
-			return Util.stopEvent(e);
+
+			this.moveConnection = $.connect($.doc,"onmousemove",this,"moveHandler");
+			this.upConnection = $.connect($.doc,"onmouseup",this,"upHandler");
+
+			return $.stopEvent(e);
 		},
 		
 		moveHandler: function(e) {
-			this.pos = Util.mousePos(e);
-		
+			this.pos = Point.fromBrowserEvent(e);
+
 			this.setDiv();
-		
+
 			this.onselect(this.rect);
-		
-			return Util.stopEvent(e);
+
+			return $.stopEvent(e);
 		},
 		
 		upHandler: function(e) {
-			$(Util.global.document).unbind("mousemove");
-			$(Util.global.document).unbind("mouseup");
+			$.disconnect(this.upConnection);
+			$.disconnect(this.moveConnection);
 		
-			Util.global.document.body.removeChild(this.div);
+			$.doc.body.removeChild(this.div);
 		
 			this.onselectfinished();
 		
-			return Util.stopEvent(e);
+			return $.stopEvent(e);
 		}
 	});
 

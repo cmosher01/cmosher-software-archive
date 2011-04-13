@@ -1,10 +1,12 @@
 (function($,doh) {
 	"use strict";
 
-	$.provide("nu.mine.mosher.util.tests.tests");
+	$.provide("nu.mine.mosher.gro.tests.tests");
 
 	try {
-		$.require("nu.mine.mosher.util.tests.Util");
+		$.require("nu.mine.mosher.gro.tests.Person");
+		$.require("nu.mine.mosher.gro.tests.Partnership");
+		$.require("nu.mine.mosher.gro.tests.GedcomExtractor");
 	} catch(e) {
 		doh.debug(e);
 	}

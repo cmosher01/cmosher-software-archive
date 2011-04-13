@@ -66,4 +66,28 @@
 
 	});
 
+	Point.fromBrowserEvent = function(e) {
+		var x, y;
+		x = y = 0;
+		if (e.pageX) {
+			x = e.pageX;
+		} else if (e.clientX) {
+		   x = e.clientX + (
+				   $.doc.documentElement.scrollLeft ?
+				   $.doc.documentElement.scrollLeft :
+				   $.doc.body.scrollLeft
+		   );
+		}
+		if (e.pageX) {
+			y = e.pageY;
+		} else if (e.clientY) {
+		   y = e.clientY + (
+				   $.doc.documentElement.scrollTop ?
+				   $.doc.documentElement.scrollTop :
+				   $.doc.body.scrollTop
+		   );
+		}
+		return new Point(x,y);
+	};
+
 })(window.dojo);

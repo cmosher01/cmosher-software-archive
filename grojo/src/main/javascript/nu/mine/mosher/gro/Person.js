@@ -1,17 +1,35 @@
-var $ = Util.global.jQuery;
 
 /**
  * @fileoverview
  * Defines the {@link Person} class.
  */
 
+(function($) {
+	"use strict";
+
+	var CLASS = "nu.mine.mosher.gro.Person";
+
+	$.provide(CLASS);
+
+	$.require("nu.mine.mosher.gro.Partnership");
+	var Partnership = nu.mine.mosher.gro.Partnership;
+	$.require("nu.mine.mosher.gedcom.model.GedcomEvent");
+	var GedcomEvent = nu.mine.mosher.gedcom.model.GedcomEvent;
+	$.require("nu.mine.mosher.gfx.Dragger");
+	var Dragger = nu.mine.mosher.gfx.Dragger;
+	$.require("nu.mine.mosher.gfx.Rect");
+	var Rect = nu.mine.mosher.gfx.Rect;
+	$.require("nu.mine.mosher.gfx.Point");
+	var Point = nu.mine.mosher.gfx.Point;
+	$.require("nu.mine.mosher.gfx.Size");
+	var Size = nu.mine.mosher.gfx.Size;
+	$.require("nu.mine.mosher.util.Util");
+	var Util = nu.mine.mosher.util.Util;
+
+	var Person = $.declare(CLASS, null, {
+
 /**
  * @class Represents a person in a family tree.
- * @requires Partnership
- * @requires Rect
- * @requires Point
- * @requires Size
- * @requires Util
  * 
  * @constructor
  * @param {String} gid ID of this {@link Person}
@@ -21,9 +39,7 @@ var $ = Util.global.jQuery;
  * @return new {@link Person}
  * @type Person
  */
-function Person(gid,gname,pos,revt,dragHandler) {
-	Util.verifyType(this,"Person");
-
+constructor: function(gid,gname,pos,revt,dragHandler) {
 	/**
 	 * ID of this person
 	 * @private
@@ -85,7 +101,7 @@ function Person(gid,gname,pos,revt,dragHandler) {
 	 */
 	this.ignoreNextClick = false;
 	
-	this.div.onclick = Util.bind(this, function() {
+	this.div.onclick = $.hitch(this, function() {
 		if (this.ignoreNextClick) {
 			this.ignoreNextClick = false;
 		} else {
@@ -111,70 +127,70 @@ function Person(gid,gname,pos,revt,dragHandler) {
 	this.divCur = this.div;
 
 	this.sel = false;
-}
+},
 
 /**
  * Gets the ID of this {@link Person}.
  * @return ID
  * @type String
  */
-Person.prototype.getID = function() {
+getID: function() {
 	return this.gid;
-};
+},
 
 /**
  * Gets the name of this {@link Person}.
  * @return name
  * @type String
  */
-Person.prototype.toString = function() {
+toString: function() {
 	return this.gname;
-};
+},
 
 /**
  * Gets the Array of {@link Partnership}s that this {@link Person} is a child in.
  * @return child in {@link Partnership}s
  * @type Array
  */
-Person.prototype.getChildIn = function() {
+getChildIn: function() {
 	return this.childIn;
-};
+},
 
 /**
  * Gets the Array of {@link Partnership}s that this {@link Person} is a spouse in.
  * @return spouse in {@link Partnership}s
  * @type Array
  */
-Person.prototype.getSpouseIn = function() {
+getSpouseIn: function() {
 	return this.spouseIn;
-};
+},
 
 /**
  * Adds the given {@link Partnership} to this {@link Person}, where this person is
  * a spouse.
  * @param {Partnership} f spouse in {@link Partnership} to add
  */
-Person.prototype.addSpouseIn = function(f) {
+addSpouseIn: function(f) {
 	this.spouseIn.push(f);
-};
+},
 
 /**
  * Adds the given {@link Partnership} to this {@link Person}, where this person is
  * a child.
  * @param {Partnership} f child in {@link Partnership} to add
  */
-Person.prototype.addChildIn = function(f) {
+addChildIn: function(f) {
 	this.childIn.push(f);
-};
+},
 
 /**
  * Gets the Array of {@link GedcomEvent}s for this {@link Person}.
  * @return array in {@link GedcomEvent}s
  * @type Array
  */
-Person.prototype.getEvents = function() {
+getEvents: function() {
 	return this.revt;
-};
+},
 
 /**
  * Creates a new DIV element for this {@link Person}'s non-expanded
@@ -184,7 +200,7 @@ Person.prototype.getEvents = function() {
  * @return new div for non-expanded display
  * @type HTMLElement
  */
-Person.prototype.createDiv = function(pos) {
+createDiv: function(pos) {
 	var div;
 	div = Util.createHtmlElement("div");
 
@@ -195,12 +211,12 @@ Person.prototype.createDiv = function(pos) {
 	div.tabindex = 0;
 	div.style.left = Util.px(pos.getX());
 	div.style.top = Util.px(pos.getY());
-	div.appendChild(Util.global.document.createTextNode(this.gname));
+	div.appendChild($.doc.createTextNode(this.gname));
 
-	Util.global.document.body.appendChild(div);
+	$.doc.body.appendChild(div);
 
 	return div;
-};
+},
 
 /**
  * Creates a new DIV element for this {@link Person}'s expanded
@@ -210,7 +226,7 @@ Person.prototype.createDiv = function(pos) {
  * @return new div for expanded display
  * @type HTMLElement
  */
-Person.prototype.createDivExp = function(pos) {
+createDivExp: function(pos) {
 	var div;
 	div = Util.createHtmlElement("div");
 
@@ -221,19 +237,19 @@ Person.prototype.createDivExp = function(pos) {
 	div.tabindex = 0;
 	div.style.left = Util.px(pos.getX());
 	div.style.top = Util.px(pos.getY());
-	div.appendChild(Util.global.document.createTextNode(this.gname));
+	div.appendChild($.doc.createTextNode(this.gname));
 	
 	return div;
-};
+},
 
 /**
  * Gets the current bounding rectangle of this {@link Person} on the drop-line chart.
  * @return current bounds
  * @type Rect
  */
-Person.prototype.getRect = function() {
+getRect: function() {
 	return Rect.ofDiv(this.divCur);
-};
+},
 
 /**
  * Checks if this person intersects the given rectangle.
@@ -241,31 +257,31 @@ Person.prototype.getRect = function() {
  * @return if this person intersects
  * @type Boolean
  */
-Person.prototype.hit = function(rect) {
+hit: function(rect) {
 	return Rect.intersect(this.getRect(),rect);
-};
+},
 
-Person.prototype.select = function(sel) {
+select: function(sel) {
 	this.sel = sel;
 	if (this.sel) {
-		$(this.div).addClass("selected-person");
-		$(this.divExp).addClass("selected-person");
+		$.addClass(this.div,"selected-person");
+		$.addClass(this.divExp,"selected-person");
 	} else {
-		$(this.div).removeClass("selected-person");
-		$(this.divExp).removeClass("selected-person");
+		$.removeClass(this.div,"selected-person");
+		$.removeClass(this.divExp,"selected-person");
 	}
-};
+},
 
-Person.prototype.isSelected = function() {
+isSelected: function() {
 	return this.sel;
-};
+},
 
-Person.prototype.onBeginDrag = function() {
+onBeginDrag: function() {
 	this.divX = parseInt(this.div.style.left,10);
 	this.divY = parseInt(this.div.style.top,10);
-};
+},
 
-Person.prototype.onDrag = function(delta) {
+onDrag: function(delta) {
 	this.div.style.left = this.divExp.style.left = Util.px(this.divX + delta.getWidth());
 	this.div.style.top = this.divExp.style.top = Util.px(this.divY + delta.getHeight());
 
@@ -275,32 +291,32 @@ Person.prototype.onDrag = function(delta) {
 		this.divCur.style.zIndex = 10;
 	}
 	this.calc();
-};
+},
 
-Person.prototype.onEndDrag = function() {
+onEndDrag: function() {
 	if (this.savedZ) {
 		this.divCur.style.zIndex = this.savedZ;
 		this.savedZ = false;
 	}
-};
+},
 
 /**
  * Calculates this {@link Person}'s related {@link Partnership}s.
  */
-Person.prototype.calc = function() {
+calc: function() {
 	Util.forEach(this.spouseIn, function(f) {
 		f.calc();
 	});
 	Util.forEach(this.childIn, function(f) {
 		f.calc();
 	});
-};
+},
 
 /**
  * Toggles the display of this {@link Person} between expanded and
  * non-expanded. 
  */
-Person.prototype.toggleView = function() {
+toggleView: function() {
 	if (this.viewExpanded) {
 		this.viewExpanded = false;
 		this.divExp.parentNode.replaceChild(this.div,this.divExp);
@@ -311,14 +327,14 @@ Person.prototype.toggleView = function() {
 		this.divCur = this.divExp;
 	}
 	this.calc();
-};
+},
 
 /**
  * Creates an HTML TABLE of this this {@link Person}'s events.
  * @private
  * @returns {HTMLElement}
  */
-Person.prototype.createEventTable = function() {
+createEventTable: function() {
 	var table, thead, tfoot, tbody, th, tr, td;
 
 
@@ -331,13 +347,13 @@ Person.prototype.createEventTable = function() {
 	thead = Util.createHtmlElement("thead");
 	tr = Util.createHtmlElement("tr");
 	th = Util.createHtmlElement("th");
-	th.appendChild(Util.global.document.createTextNode("event"));
+	th.appendChild($.doc.createTextNode("event"));
 	tr.appendChild(th);
 	th = Util.createHtmlElement("th");
-	th.appendChild(Util.global.document.createTextNode("date"));
+	th.appendChild($.doc.createTextNode("date"));
 	tr.appendChild(th);
 	th = Util.createHtmlElement("th");
-	th.appendChild(Util.global.document.createTextNode("place"));
+	th.appendChild($.doc.createTextNode("place"));
 	tr.appendChild(th);
 	thead.appendChild(tr);
 	table.appendChild(thead);
@@ -359,10 +375,10 @@ Person.prototype.createEventTable = function() {
 		td.innerHTML = Util.safeStr(evt.getType());
 		tr.appendChild(td);
 		td = Util.createHtmlElement("td");
-		td.appendChild(Util.global.document.createTextNode(Util.safeStr(evt.getDate())));
+		td.appendChild($.doc.createTextNode(Util.safeStr(evt.getDate())));
 		tr.appendChild(td);
 		td = Util.createHtmlElement("td");
-		td.appendChild(Util.global.document.createTextNode(Util.safeStr(evt.getPlace())));
+		td.appendChild($.doc.createTextNode(Util.safeStr(evt.getPlace())));
 		tr.appendChild(td);
 
 		tbody.appendChild(tr);
@@ -373,13 +389,13 @@ Person.prototype.createEventTable = function() {
 
 
 	return table;
-};
+},
 
-Person.prototype.getEventsFromPartnerships = function() {
+getEventsFromPartnerships: function() {
 	var e;
 
-	Util.forEach(this.spouseIn, Util.bind(this, function(part) {
-		Util.forEach(part.getEvents(), Util.bind(this, function(evt) {
+	Util.forEach(this.spouseIn, $.hitch(this, function(part) {
+		Util.forEach(part.getEvents(), $.hitch(this, function(evt) {
 			this.revt.push(evt);
 		}));
 	}));
@@ -388,4 +404,7 @@ Person.prototype.getEventsFromPartnerships = function() {
 
 	e = this.createEventTable();
 	this.divExp.appendChild(e);
-};
+}
+	});
+
+})(window.dojo);

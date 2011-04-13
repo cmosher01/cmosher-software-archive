@@ -36,12 +36,6 @@
 
 
 /**
- * A reference to the global Javascript scope.
- * @type Window
- */
-Util.global = $.global; // TODO replace Util.global with dojo.global and remove Util.global definition
-
-/**
  * A function that is guaranteed to return undefined, even if the
  * global property "undefined" has been (maliciously) assigned a value.
  * @type undefined
@@ -145,20 +139,6 @@ Util.forEach = function(r,fn) {
 			}
 		}
 	}
-};
-
-/**
- * Creates a function that calls a given function with the
- * <code>this</code> variable set to the given scope.
- * @param {Object} scope value for <code>this</code>
- * @param {Function} fn the function to call
- * @return bound function
- * @type Function
- */
-Util.bind = function(scope,fn) {
-	return function() {
-		fn.apply(scope,arguments);
-	};
 };
 
 /**
@@ -329,75 +309,6 @@ Util.localeOrder = function(a,b) {
 Util.dateOrder = function(a,b) {
 	return Util.numberOrder(a.getTime(),b.getTime());
 };
-
-Util.getIEGlobalEvent = function() {
-	return $.global.event;
-};
-
-Util.eventHandler = function(scope,handler) {
-	return function(evt) {
-        if (!evt) {
-        	evt = Util.getIEGlobalEvent();  // IE Event Model
-        }
-        handler.apply(scope,[evt]);
-	};
-};
-
-/**
- * Calls stopPropagation and preventDefault, DOM-2 and IE
- * Use as:
- *   return Util.stopEvent(e);
- * from within an event handler.
- * @param {Event} e (or null for IE global event)
- * @returns false
- * @type Boolean
- */
-Util.stopEvent = function(e) {
-    if (!e) {
-    	e = Util.getIEGlobalEvent();  // IE Event Model
-    }
-
-    // We've handled this event. Don't let anybody else see it.  
-	if (e.stopPropagation) {
-		e.stopPropagation(); // DOM Level 2
-	} else {
-		e.cancelBubble = true; // IE
-	}
-
-	// Now prevent any default action.
-	if (e.preventDefault) {
-		e.preventDefault(); // DOM Level 2
-	} else {
-		e.returnValue = false; // IE
-	}
-
-	return false;
-};
-/* TODO move to Point class:
-Util.mousePos = function(e) {
-	var x, y;
-	x = y = 0;
-	if (e.pageX) {
-		x = e.pageX;
-	} else if (e.clientX) {
-	   x = e.clientX + (
-			   Util.global.document.documentElement.scrollLeft ?
-			   Util.global.document.documentElement.scrollLeft :
-			   Util.global.document.body.scrollLeft
-	   );
-	}
-	if (e.pageX) {
-		y = e.pageY;
-	} else if (e.clientY) {
-	   y = e.clientY + (
-			   Util.global.document.documentElement.scrollTop ?
-			   Util.global.document.documentElement.scrollTop :
-			   Util.global.document.body.scrollTop
-	   );
-	}
-	return new Point(x,y);
-};
-*/
 
 Util.leftClick = function(e) {
 	if (e.which == null) {
