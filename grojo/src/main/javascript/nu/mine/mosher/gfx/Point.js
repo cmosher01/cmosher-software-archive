@@ -78,7 +78,7 @@
 				   $.doc.body.scrollLeft
 		   );
 		}
-		if (e.pageX) {
+		if (e.pageY) {
 			y = e.pageY;
 		} else if (e.clientY) {
 		   y = e.clientY + (

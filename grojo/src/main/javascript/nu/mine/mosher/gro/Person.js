@@ -335,58 +335,22 @@ toggleView: function() {
  * @returns {HTMLElement}
  */
 createEventTable: function() {
-	var table, thead, tfoot, tbody, th, tr, td;
+	var table, thead, tfoot, tbody, tr, td;
 
-
-
-	table = Util.createHtmlElement("table");
-	table.className = "events";
-
-
-
-	thead = Util.createHtmlElement("thead");
-	tr = Util.createHtmlElement("tr");
-	th = Util.createHtmlElement("th");
-	th.appendChild($.doc.createTextNode("event"));
-	tr.appendChild(th);
-	th = Util.createHtmlElement("th");
-	th.appendChild($.doc.createTextNode("date"));
-	tr.appendChild(th);
-	th = Util.createHtmlElement("th");
-	th.appendChild($.doc.createTextNode("place"));
-	tr.appendChild(th);
-	thead.appendChild(tr);
-	table.appendChild(thead);
-
-
-
-	tfoot = Util.createHtmlElement("tfoot");
-	tfoot.style.height = "0px";
-	table.appendChild(tfoot);
-
-
-
-	tbody = Util.createHtmlElement("tbody");
-
-	Util.forEach(this.revt, function(evt) {
-		tr = Util.createHtmlElement("tr");
-
-		td = Util.createHtmlElement("td");
-		td.innerHTML = Util.safeStr(evt.getType());
-		tr.appendChild(td);
-		td = Util.createHtmlElement("td");
-		td.appendChild($.doc.createTextNode(Util.safeStr(evt.getDate())));
-		tr.appendChild(td);
-		td = Util.createHtmlElement("td");
-		td.appendChild($.doc.createTextNode(Util.safeStr(evt.getPlace())));
-		tr.appendChild(td);
-
-		tbody.appendChild(tr);
-	});
-
-	table.appendChild(tbody);
-
-
+	table = $.create("table",{className:"events"});
+		thead = $.create("thead",null,table);
+			tr = $.create("tr",null,thead);
+				td = $.create("th",{innerHTML:"event"},tr);
+				td = $.create("th",{innerHTML:"date" },tr);
+				td = $.create("th",{innerHTML:"place"},tr);
+		tfoot = $.create("tfoot",null,table);
+		tbody = $.create("tbody",null,table);
+			Util.forEach(this.revt, function(evt) {
+				tr = $.create("tr",null,tbody);
+					td = $.create("td",{innerHTML:evt.getType()},tr);
+					td = $.create("td",{innerHTML:evt.getDate()},tr);
+					td = $.create("td",{innerHTML:evt.getPlace()},tr);
+			});
 
 	return table;
 },

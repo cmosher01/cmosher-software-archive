@@ -5,20 +5,18 @@
 
 	$.provide(CLASS);
 
-	$.require("nu.mine.mosher.util.Util");
-	var Util = nu.mine.mosher.util.Util;
 	$.require("nu.mine.mosher.gedcom.model.GedcomTree");
 	var GedcomTree = nu.mine.mosher.gedcom.model.GedcomTree;
 	$.require("nu.mine.mosher.gro.GedcomExtractor");
 	var GedcomExtractor = nu.mine.mosher.gro.GedcomExtractor;
 
-	var main = $.declare(CLASS, null, {
+	$.declare(CLASS, null, {
 		constructor: function() {
 			throw new Error("cannot instantiate");
 		}
 	});
 
-	main.main = function() {
+	nu.mine.mosher.gro.main.main = function() {
 		var gedcom, titleText, title, head;
 		gedcom = null;
 	
@@ -47,9 +45,9 @@
 		//"lib/testged/TGC55C.ged"
 		//"RichardsReeves.ged"
 		$.xhrGet({
-			url: "/home/chris/workspace/grojo/src/main/rapp.ged",
+			url: "../rapp.ged",
 			load: function(gc) {
-				gtree = GedcomTree.parse(gc);
+				var gtree = GedcomTree.parse(gc);
 				gedcom = new GedcomExtractor(gtree);
 			},
 			error: function(e) {
@@ -57,7 +55,11 @@
 			}
 		});
 	
-		$.connect($.doc,"onresize",gedcom,"calc");
+		$.connect($.global,"onresize",function(e) {
+			if (gedcom != null) {
+				gedcom.calc();
+			}
+		});
 	
 	};
 })(window.dojo);

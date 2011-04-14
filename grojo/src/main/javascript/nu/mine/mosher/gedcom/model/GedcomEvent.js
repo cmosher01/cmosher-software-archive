@@ -34,7 +34,10 @@
 			 * @private
 			 * @type String
 			 */
-			this.typ = typ;
+			this.typ = Util.safeStr(typ);
+			if (this.typ.length == 0) {
+				this.typ = "[unknown]";
+			}
 		
 			/**
 			 * date of this event
@@ -42,6 +45,9 @@
 			 * @type String
 			 */
 			this.gdate = gdate;
+			if (!this.gdate) {
+				throw new Error("date must be specified");
+			}
 		
 			/**
 			 * place of this event
