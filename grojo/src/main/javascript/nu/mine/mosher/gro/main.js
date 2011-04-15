@@ -17,31 +17,23 @@
 	});
 
 	nu.mine.mosher.gro.main.main = function() {
-		var gedcom, titleText, title, head;
+		var gedcom, head;
+
 		gedcom = null;
-	
-	
-	
-		titleText = $.doc.createTextNode("Rapp");
-	
-		title = $.doc.createElement("title");
-		title.appendChild(titleText);
-	
-		head = $.doc.getElementsByTagName("head")[0];
-		head.insertBefore(title,head.firstChild);
-	
-	
-	
-		var fileref = $.doc.createElement("link");
-		fileref.rel = "stylesheet";
-		fileref.type = "text/css";
-		fileref.href = "index.css";
-		fileref.media = "screen";
-		head.appendChild(fileref);
-	
-	
-	
-	
+
+		// remove any existing title from the document
+		title = $.query("html head title").forEach($.destroy);
+
+		// add our title to the document
+		head = $.query("html head")[0];
+		$.create("title",{innerHTML:"GRO Javascript"},head,"first");
+
+		// add our style-sheet to the document
+		$.create("link",{rel:"stylesheet",type:"text/css",href:"index.css",media:"screen"},head);
+
+
+
+
 		//"lib/testged/TGC55C.ged"
 		//"RichardsReeves.ged"
 		$.xhrGet({
@@ -54,12 +46,12 @@
 				alert("Error reading file "+this.url+": "+e);
 			}
 		});
-	
+
 		$.connect($.global,"onresize",function(e) {
 			if (gedcom != null) {
 				gedcom.calc();
 			}
 		});
-	
+
 	};
 })(window.dojo);
