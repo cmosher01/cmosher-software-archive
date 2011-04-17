@@ -48,7 +48,7 @@
  * @return new {@link GedcomExtractor}
  * @type GedcomExtractor
  */
-constructor: function(gedcomtree) {
+constructor: function(gedcomtree,container) {
 	/**
 	 * tree to extract from
 	 * @private
@@ -70,12 +70,15 @@ constructor: function(gedcomtree) {
 	 */
 	this.mpartnership = {};
 
+	this.container = container;
+
 	// current selection of person objects
 	this.selection = [];
 
 	this.extract();
 
 	this.selector = new Selector(
+		this.container,
 		$.hitch(this, function(rect) {
 			Util.forEach(this.mperson,function(person) {
 				person.select(person.hit(rect));
@@ -120,6 +123,10 @@ extract: function() {
 	}));
 
 	Util.forEach(this.mperson, function(indi) {
+		indi.enlargeDropLine();
+	});
+
+	Util.forEach(this.mperson, function(indi) {
 		indi.getEventsFromPartnerships();
 	});
 },
@@ -153,7 +160,7 @@ extractPerson: function(indi) {
 	});
 
 	line = indi.line;
-	return new Person(line.getID(),nam,xy,revt,this);
+	return new Person(line.getID(),nam,xy,revt,this,this.container);
 },
 
 /**
@@ -182,7 +189,7 @@ extractParnership: function(fam) {
 		}
 	});
 	line = fam.line;
-	return new Partnership(line.getID(),husb,wife,rchil,revt);
+	return new Partnership(line.getID(),husb,wife,rchil,revt,this.container);
 },
 
 /**

@@ -1,6 +1,7 @@
 body {
 	background: #899C75;
 	color: #5E665F;
+	margin: 0;
 }
 
 .person {
@@ -60,12 +61,7 @@ body {
 	padding: 1px 6px 2px 6px;
 	border-width: 3px;
 	border-color: orange !important;
-/*	background-color: #FF0000;
-	background: -webkit-gradient(linear, left bottom, left top, from(#FF0000), to(#FFFFFF));
-	background: -moz-linear-gradient(top, #FFFFFF, #FF0000);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=#FFFFFFFF, endColorStr=#FFFF0000);
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr=#FFFFFFFF, endColorStr=#FFF0000)";
-*/}
+}
 
 table.events {
 	font-size: 75%;
@@ -87,4 +83,11 @@ table.events td {
 .selector {
   color: orange;
   border: dotted 2px;
+}
+
+.dijitMenuPopup {
+	font-size: 75%;
+	border-color: orange;
+	border-style: solid;
+	border-width: 2px;
 }

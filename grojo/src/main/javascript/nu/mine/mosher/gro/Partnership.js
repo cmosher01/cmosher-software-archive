@@ -35,7 +35,7 @@
  * @return new {@link Partnership}
  * @type Partnership
  */
-constructor: function(gid,husb,wife,rchil,revt) {
+constructor: function(gid,husb,wife,rchil,revt,container) {
 	/**
 	 * ID of this person
 	 * @private
@@ -71,6 +71,8 @@ constructor: function(gid,husb,wife,rchil,revt) {
 	 */
 	this.revt = revt;
 
+	this.container = container;
+
 
 
 	if (this.husb !== null) {
@@ -84,8 +86,6 @@ constructor: function(gid,husb,wife,rchil,revt) {
 	Util.forEach(this.rchil, $.hitch(this,function(c) {
 		c.addChildIn(this);
 	}));
-
-
 
 	this.divLeft = this.createDiv();
 	this.divRight = this.createDiv();
@@ -125,7 +125,7 @@ createDiv: function() {
 	div = Util.createHtmlElement("div");
 	div.className = "partnership";
 	div.style.position = "absolute";
-	$.doc.body.appendChild(div);
+	this.container.appendChild(div);
 	return div;
 },
 

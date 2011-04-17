@@ -16,8 +16,8 @@
 
 	var Selector = $.declare(CLASS, null, {
 
-		constructor: function(onselect,onselectfinished) {
-			$.connect($.doc,"onmousedown",this,"beginDrag");
+		constructor: function(element,onselect,onselectfinished) {
+			$.connect(element,"onmousedown",this,"beginDrag");
 			this.div = null;
 			this.start = new Point(0,0);
 			this.onselect = onselect;

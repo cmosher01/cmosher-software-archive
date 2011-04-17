@@ -39,7 +39,7 @@
  * @return new {@link Person}
  * @type Person
  */
-constructor: function(gid,gname,pos,revt,dragHandler) {
+constructor: function(gid,gname,pos,revt,dragHandler,container) {
 	/**
 	 * ID of this person
 	 * @private
@@ -74,6 +74,8 @@ constructor: function(gid,gname,pos,revt,dragHandler) {
 	 * @type Array
 	 */
 	this.spouseIn = [];
+
+	this.container = container;
 
 	/**
 	 * non-expanded display DIV of this {@link Person}
@@ -213,7 +215,7 @@ createDiv: function(pos) {
 	div.style.top = Util.px(pos.getY());
 	div.appendChild($.doc.createTextNode(this.gname));
 
-	$.doc.body.appendChild(div);
+	this.container.appendChild(div);
 
 	return div;
 },
@@ -310,6 +312,24 @@ calc: function() {
 	Util.forEach(this.childIn, function(f) {
 		f.calc();
 	});
+	this.enlargeDropLine();
+},
+
+enlargeDropLine: function() {
+	var dl, dlWidth, dlHeight, right, bottom;
+	dl = this.container;
+	dlWidth = dl.offsetWidth;
+	right = this.divCur.offsetLeft+this.divCur.offsetWidth;
+	dlHeight = dl.offsetHeight;
+	bottom = this.divCur.offsetTop+this.divCur.offsetHeight;
+	if (right > dlWidth || bottom > dlHeight) {
+		dlWidth = Math.max(right,dlWidth);
+		dl.style.width = Util.px(dlWidth);
+		$.byId("html").style.width = Util.px(dlWidth);
+		$.doc.body.style.width = Util.px(dlWidth);
+		dlHeight = Math.max(bottom,dlHeight);
+		dl.style.height = Util.px(dlHeight);
+	}
 },
 
 /**
