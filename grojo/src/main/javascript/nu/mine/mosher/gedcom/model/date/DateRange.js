@@ -70,6 +70,9 @@
 		 * @type Boolean
 		 */
 		isExact: function() {
+			if (this.earliest === this.latest) { // optimization: same object
+				return true;
+			}
 			return YMD.equal(this.earliest,this.latest);
 		},
 		
@@ -105,6 +108,10 @@
 				return this.latest.getApproxDate();
 			}
 			if (YMD.equal(this.latest,YMD.getMaximum())) {
+				return this.earliest.getApproxDate();
+			}
+			// optimization: don't bother making a new Date object if this.isExact
+			if (this.isExact()) {
 				return this.earliest.getApproxDate();
 			}
 			return new Date((this.earliest.getApproxDate().getTime()+this.latest.getApproxDate().getTime())/2);

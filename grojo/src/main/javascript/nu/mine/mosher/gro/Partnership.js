@@ -41,7 +41,7 @@ constructor: function(gid,husb,wife,rchil,revt,container) {
 	 * @private
 	 * @type String
 	 */
-	this.gid = gid;
+	this.id = gid;
 
 	/**
 	 * husband
@@ -139,6 +139,7 @@ calc: function() {
 	var lmy;
 	var lmx;
 	var rmx;
+	var by;
 	var ic;
 	var child;
 	var crect;

@@ -45,7 +45,7 @@ constructor: function(gid,gname,pos,revt,dragHandler,container) {
 	 * @private
 	 * @type String
 	 */
-	this.gid = gid;
+	this.id = gid;
 
 	/**
 	 * Displayable name of this person
@@ -137,7 +137,7 @@ constructor: function(gid,gname,pos,revt,dragHandler,container) {
  * @type String
  */
 getID: function() {
-	return this.gid;
+	return this.id;
 },
 
 /**

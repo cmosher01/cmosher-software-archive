@@ -14,6 +14,12 @@
 	var Partnership = nu.mine.mosher.gro.Partnership;
 	$.require("nu.mine.mosher.gro.Person");
 	var Person = nu.mine.mosher.gro.Person;
+	$.require("nu.mine.mosher.gro.model.TreeModel");
+	var TreeModel = nu.mine.mosher.gro.model.TreeModel;
+	$.require("nu.mine.mosher.gro.model.PartnershipModel");
+	var PartnershipModel = nu.mine.mosher.gro.model.PartnershipModel;
+	$.require("nu.mine.mosher.gro.model.PersonModel");
+	var PersonModel = nu.mine.mosher.gro.model.PersonModel;
 	$.require("nu.mine.mosher.gedcom.model.GedcomEvent");
 	var GedcomEvent = nu.mine.mosher.gedcom.model.GedcomEvent;
 	$.require("nu.mine.mosher.gedcom.model.GedcomTag");
@@ -69,6 +75,8 @@ constructor: function(gedcomtree,container) {
 	 * @type Object
 	 */
 	this.mpartnership = {};
+
+	this.model = new TreeModel();
 
 	this.container = container;
 
@@ -139,12 +147,13 @@ extract: function() {
  * @type Person
  */
 extractPerson: function(indi) {
-	var that, nam, xy, m, revt, line;
+	var that, nam, xy, m, revt, line, revtm, e;
 
 	that = this;
 
 	nam = "[unknown]";
 	revt = [];
+	revtm = [];
 	xy = new Point(0,0);
 	Util.forEach(indi.getChildren(), function(node) {
 		if (node.line.getTag() === "NAME") {
@@ -155,11 +164,14 @@ extractPerson: function(indi) {
 				xy = new Point(m[1],m[2]);
 			}
 		} else if (GedcomTag.isIndiEvent(node.line.getTag())) {
-			revt.push(that.extractEvent(node));
+			e = that.extractEvent(node);
+			revt.push(e);
+			revtm.push(e);
 		}
 	});
 
 	line = indi.line;
+	this.model.addPerson(new PersonModel(line.getID(),nam,revtm));
 	return new Person(line.getID(),nam,xy,revt,this,this.container);
 },
 
@@ -171,24 +183,35 @@ extractPerson: function(indi) {
  * @type Partnership
  */
 extractParnership: function(fam) {
-	var that, husb, wife, rchil, revt, line;
+	var that, husb, wife, rchil, revt, line, e;
+	var husbm, wifem, rchilm, revtm;
 	that = this;
 	husb = null;
+	husbm = null;
 	wife = null;
+	wifem = null;
 	rchil = [];
+	rchilm = []
 	revt = [];
+	revtm = [];
 	Util.forEach(fam.getChildren(), function(node) {
 		if (node.line.getTag() === "HUSB") {
 			husb = that.mperson[node.line.getPointer()];
+			husbm = that.model.mPerson[node.line.getPointer()];
 		} else if (node.line.getTag() === "WIFE") {
 			wife = that.mperson[node.line.getPointer()];
+			wifem = that.model.mPerson[node.line.getPointer()];
 		} else if (node.line.getTag() === "CHIL") {
 			rchil.push(that.mperson[node.line.getPointer()]);
+			rchilm.push(that.model.mPerson[node.line.getPointer()]);
 		} else if (GedcomTag.isFamEvent(node.line.getTag())) {
-			revt.push(that.extractEvent(node));
+			e = that.extractEvent(node);
+			revt.push(e);
+			revtm.push(e);
 		}
 	});
 	line = fam.line;
+	this.model.addPartnership(new PartnershipModel(line.getID(),husbm,wifem,rchilm,revtm));
 	return new Partnership(line.getID(),husb,wife,rchil,revt,this.container);
 },
 

@@ -183,7 +183,7 @@ Util.safeStr = function(s) {
 	if (!s) {
 		s = "";
 	}
-	return new String(s.toString());
+	return s.toString();
 };
 
 /**

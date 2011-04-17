@@ -10,14 +10,19 @@
 	$.require("nu.mine.mosher.gro.GedcomExtractor");
 	var GedcomExtractor = nu.mine.mosher.gro.GedcomExtractor;
 
+	$.require("dojox.json.ref");
+	$.require("dijit.Menu");
+
     $.declare(CLASS, null, {
 		constructor: function() {
 			throw new Error("cannot instantiate");
 		}
 	});
 
-	nu.mine.mosher.gro.main.main = function() {
-		var gedcom, head;
+    var gedcom;
+
+    nu.mine.mosher.gro.main.main = function() {
+		var head, title;
 
 		gedcom = null;
 
@@ -29,7 +34,7 @@
 		$.create("title",{innerHTML:"GRO Javascript"},head,"first");
 
 		// add digit theme style-sheet
-		//$.create("link",{rel:"stylesheet",type:"text/css",href:"dijit/themes/tundra/tundra.css",media:"screen"},$.query("html head")[0]);
+		$.create("link",{rel:"stylesheet",type:"text/css",href:"dijit/themes/tundra/tundra.css",media:"screen"},$.query("html head")[0]);
 		// add our style-sheet to the document
 		$.create("link",{rel:"stylesheet",type:"text/css",href:"index.css",media:"screen"},head);
 
@@ -37,7 +42,7 @@
 
 		$.create("div",{id:"dropline"},$.doc.body);
 
-//		nu.mine.mosher.gro.main.menu();
+		nu.mine.mosher.gro.main.menu();
 
 
 		//"lib/testged/TGC55C.ged"
@@ -61,16 +66,17 @@
 
 	};
 
-//	nu.mine.mosher.gro.main.menu = function() {
-//        var pMenu = new dijit.Menu({
-//        	targetNodeIds: ["html"]
-//        });
-//        pMenu.addChild(new dijit.MenuItem({
-//            label: "Do nothing",
-//            onClick: function() {
-//            	
-//            }
-//        }));
-//        pMenu.startup();
-//	};
+	nu.mine.mosher.gro.main.menu = function() {
+        var pMenu = new dijit.Menu({
+        	targetNodeIds: ["dropline"]
+        });
+        pMenu.addChild(new dijit.MenuItem({
+            label: "Save",
+            onClick: function() {
+            	var jsonGedcom = dojox.json.ref.toJson(gedcom.model,true);
+            	alert("ok");
+            }
+        }));
+        pMenu.startup();
+	};
 })(window.dojo);
