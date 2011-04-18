@@ -363,6 +363,7 @@ createEventTable: function() {
 				td = $.create("th",{innerHTML:"event"},tr);
 				td = $.create("th",{innerHTML:"date" },tr);
 				td = $.create("th",{innerHTML:"place"},tr);
+				td = $.create("th",{innerHTML:"note"},tr);
 		tfoot = $.create("tfoot",null,table);
 		tbody = $.create("tbody",null,table);
 			Util.forEach(this.revt, function(evt) {
@@ -370,6 +371,7 @@ createEventTable: function() {
 					td = $.create("td",{innerHTML:evt.getType()},tr);
 					td = $.create("td",{innerHTML:evt.getDate()},tr);
 					td = $.create("td",{innerHTML:evt.getPlace()},tr);
+					td = $.create("td",{innerHTML:evt.getNote()},tr);
 			});
 
 	return table;

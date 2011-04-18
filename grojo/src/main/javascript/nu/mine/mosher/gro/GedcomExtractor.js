@@ -62,6 +62,12 @@ constructor: function(gedcomtree,container) {
 	 */
 	this.t = gedcomtree;
 
+	this.mnote = {};
+
+	this.mrepo = {};
+
+	this.msour {};
+
 	/**
 	 * map of IDs to {@link Person}s.
 	 * @private
@@ -119,6 +125,22 @@ calc: function() {
 extract: function() {
 	var rchil;
 	rchil = this.t.getRoot().getChildren();
+
+	Util.forEach(rchil, $.hitch(this,function(node) {
+		if (node.line.getTag() === "NOTE") {
+			this.mnote[node.line.getID()] = node.line.getVal();
+		}
+	}));
+	Util.forEach(rchil, $.hitch(this,function(node) {
+		if (node.line.getTag() === "REPO") {
+			this.mrepo[node.line.getID()] = this.extractRepoName(node);
+		}
+	}));
+	Util.forEach(rchil, $.hitch(this,function(node) {
+		if (node.line.getTag() === "SOUR") {
+			this.msour[node.line.getID()] = this.extractSource(node);
+		}
+	}));
 	Util.forEach(rchil, $.hitch(this,function(node) {
 		if (node.line.getTag() === "INDI") {
 			this.mperson[node.line.getID()] = this.extractPerson(node);
@@ -137,6 +159,38 @@ extract: function() {
 	Util.forEach(this.mperson, function(indi) {
 		indi.getEventsFromPartnerships();
 	});
+},
+
+extractRepoName: function(repo) {
+	var n;
+	n = "";
+	Util.forEach(repo.getChildren(), $.hitch(this,function(node) {
+		if (node.line.getTag() === "NAME") {
+			n = node.line.getVal();
+		}
+	}));
+	return n;
+},
+
+extractSource: function(sour) {
+	var auth, titl, publ, repo;
+	publ = titl = auth = "[unknown]";
+	repo = "";
+	Util.forEach(sour.getChildren(), $.hitch(this,function(node) {
+		if (node.line.getTag() === "AUTH") {
+			auth = node.line.getVal();
+		} else if (node.line.getTag() === "TITL") {
+			titl = node.line.getVal();
+		} else if (node.line.getTag() === "PUBL") {
+			publ = node.line.getVal();
+		} else if (node.line.getTag() === "REPO") {
+			repo = this.mrepo[node.line.getPointer()];
+		}
+	}));
+	if (repo.length > 0) {
+		publ += " ("+repo+")";
+	}
+	return new Source(auth,titl,publ);
 },
 
 /**
@@ -223,19 +277,26 @@ extractParnership: function(fam) {
  * @type GedcomEvent
  */
 extractEvent: function(evt) {
-	var that, typ, gdate, place;
+	var that, typ, gdate, place, note;
 	that = this;
 	gdate = DatePeriod.UNKNOWN;
 	place = "";
+	note = "";
 	typ = this.extractEventName(evt);
 	Util.forEach(evt.getChildren(), function(node) {
 		if (node.line.getTag() === "DATE") {
 			gdate = that.extractDate(node.line.getVal());
 		} else if (node.line.getTag() === "PLAC") {
 			place = node.line.getVal();
+		} else if (node.line.getTag() === "NOTE") {
+			if (node.line.isPointer()) {
+				note = that.mnote[node.line.getPointer()];
+			} else {
+				note = node.line.getValue();
+			}
 		}
 	});
-	return new GedcomEvent(typ,gdate,place);
+	return new GedcomEvent(typ,gdate,place,note);
 },
 
 /**
