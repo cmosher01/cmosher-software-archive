@@ -26,6 +26,8 @@
 	$.require("nu.mine.mosher.util.Util");
 	var Util = nu.mine.mosher.util.Util;
 
+	$.require("dijit.Tooltip");
+
 	var Person = $.declare(CLASS, null, {
 
 /**
@@ -363,7 +365,7 @@ createEventTable: function() {
 				td = $.create("th",{innerHTML:"event"},tr);
 				td = $.create("th",{innerHTML:"date" },tr);
 				td = $.create("th",{innerHTML:"place"},tr);
-				td = $.create("th",{innerHTML:"note"},tr);
+				td = $.create("th",{innerHTML:"citation"},tr);
 		tfoot = $.create("tfoot",null,table);
 		tbody = $.create("tbody",null,table);
 			Util.forEach(this.revt, function(evt) {
@@ -371,7 +373,17 @@ createEventTable: function() {
 					td = $.create("td",{innerHTML:evt.getType()},tr);
 					td = $.create("td",{innerHTML:evt.getDate()},tr);
 					td = $.create("td",{innerHTML:evt.getPlace()},tr);
-					td = $.create("td",{innerHTML:evt.getNote()},tr);
+					td = $.create("td",{innerHTML:evt.getCitation().getSource().getTitle()},tr);
+					new dijit.Tooltip({
+						connectId: [td],
+						label:
+							evt.getCitation().getSource().getAuthor()+". <i><b>"+
+							evt.getCitation().getSource().getTitle()+".</b></i> ("+
+							evt.getCitation().getSource().getPublication()+".)<hr>"+
+							evt.getCitation().getSource().getText(),
+						position: ["below","after","above","before"],
+						showDelay: 0
+					});
 			});
 
 	return table;

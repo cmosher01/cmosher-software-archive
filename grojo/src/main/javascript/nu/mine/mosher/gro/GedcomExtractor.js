@@ -22,6 +22,10 @@
 	var PersonModel = nu.mine.mosher.gro.model.PersonModel;
 	$.require("nu.mine.mosher.gedcom.model.GedcomEvent");
 	var GedcomEvent = nu.mine.mosher.gedcom.model.GedcomEvent;
+	$.require("nu.mine.mosher.gedcom.model.Source");
+	var Source = nu.mine.mosher.gedcom.model.Source;
+	$.require("nu.mine.mosher.gedcom.model.Citation");
+	var Citation = nu.mine.mosher.gedcom.model.Citation;
 	$.require("nu.mine.mosher.gedcom.model.GedcomTag");
 	var GedcomTag = nu.mine.mosher.gedcom.model.GedcomTag;
 	$.require("nu.mine.mosher.gedcom.model.date.GedcomDateParser");
@@ -62,11 +66,7 @@ constructor: function(gedcomtree,container) {
 	 */
 	this.t = gedcomtree;
 
-	this.mnote = {};
-
-	this.mrepo = {};
-
-	this.msour {};
+	this.msour = {};
 
 	/**
 	 * map of IDs to {@link Person}s.
@@ -127,16 +127,6 @@ extract: function() {
 	rchil = this.t.getRoot().getChildren();
 
 	Util.forEach(rchil, $.hitch(this,function(node) {
-		if (node.line.getTag() === "NOTE") {
-			this.mnote[node.line.getID()] = node.line.getVal();
-		}
-	}));
-	Util.forEach(rchil, $.hitch(this,function(node) {
-		if (node.line.getTag() === "REPO") {
-			this.mrepo[node.line.getID()] = this.extractRepoName(node);
-		}
-	}));
-	Util.forEach(rchil, $.hitch(this,function(node) {
 		if (node.line.getTag() === "SOUR") {
 			this.msour[node.line.getID()] = this.extractSource(node);
 		}
@@ -173,9 +163,9 @@ extractRepoName: function(repo) {
 },
 
 extractSource: function(sour) {
-	var auth, titl, publ, repo;
+	var auth, titl, publ, repo, text;
 	publ = titl = auth = "[unknown]";
-	repo = "";
+	repo = text = "";
 	Util.forEach(sour.getChildren(), $.hitch(this,function(node) {
 		if (node.line.getTag() === "AUTH") {
 			auth = node.line.getVal();
@@ -183,14 +173,34 @@ extractSource: function(sour) {
 			titl = node.line.getVal();
 		} else if (node.line.getTag() === "PUBL") {
 			publ = node.line.getVal();
+		} else if (node.line.getTag() === "TEXT") {
+			text = node.line.getVal();
 		} else if (node.line.getTag() === "REPO") {
-			repo = this.mrepo[node.line.getPointer()];
+			repo = this.extractRepoName(node.line.getRef());
 		}
 	}));
 	if (repo.length > 0) {
 		publ += " ("+repo+")";
 	}
-	return new Source(auth,titl,publ);
+	return new Source(auth,titl,publ,text);
+},
+
+extractCitation: function(sour) {
+	var sourrec = this.msour[sour.line.getPointer()];
+	var text = "";
+	var page = "";
+	var quay = null;
+
+	Util.forEach(sour.getChildren(), $.hitch(this,function(node) {
+		if (node.line.getTag() === "PAGE") {
+			page = node.line.getVal();
+		} else if (node.line.getTag() === "TEXT") {
+			text = node.line.getVal();
+		} else if (node.line.getTag() === "QUAY") {
+			quay = parseInt(node.line.getVal(),10);
+		}
+	}));
+	return new Citation(sourrec,text,page,quay);
 },
 
 /**
@@ -245,7 +255,7 @@ extractParnership: function(fam) {
 	wife = null;
 	wifem = null;
 	rchil = [];
-	rchilm = []
+	rchilm = [];
 	revt = [];
 	revtm = [];
 	Util.forEach(fam.getChildren(), function(node) {
@@ -288,15 +298,16 @@ extractEvent: function(evt) {
 			gdate = that.extractDate(node.line.getVal());
 		} else if (node.line.getTag() === "PLAC") {
 			place = node.line.getVal();
+		} else if (node.line.getTag() === "SOUR") {
+			cit = that.extractCitation(node);
 		} else if (node.line.getTag() === "NOTE") {
 			if (node.line.isPointer()) {
-				note = that.mnote[node.line.getPointer()];
-			} else {
-				note = node.line.getValue();
+				node = node.line.getRef();
 			}
+			note = node.line.getVal();
 		}
 	});
-	return new GedcomEvent(typ,gdate,place,note);
+	return new GedcomEvent(typ,gdate,place,cit,note);
 },
 
 /**

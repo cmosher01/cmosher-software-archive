@@ -33,10 +33,11 @@
 		head = $.byId("head");
 		$.create("title",{innerHTML:"GRO Javascript"},head,"first");
 
-		// add digit theme style-sheet
-		$.create("link",{rel:"stylesheet",type:"text/css",href:"dijit/themes/tundra/tundra.css",media:"screen"},$.query("html head")[0]);
 		// add our style-sheet to the document
 		$.create("link",{rel:"stylesheet",type:"text/css",href:"index.css",media:"screen"},head);
+		// add digit theme style-sheet
+//		$.create("link",{rel:"stylesheet",type:"text/css",href:"dijit/themes/tundra/tundra.css",media:"screen"},$.query("html head")[0]);
+		$.create("link",{rel:"stylesheet",type:"text/css",href:"dijit/themes/claro/claro.css",media:"screen"},$.query("html head")[0]);
 
 //		$.create("input",{id:"import",type:"file"},$.doc.body);
 

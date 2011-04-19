@@ -50,13 +50,6 @@
 			 * @type Number
 			 */
 			this.prevLevel = -1;
-		
-			/**
-			 * Map of GEDCOM line IDs to nodes (lines).
-			 * @private
-			 * @type Object
-			 */
-			this.mapIDtoNode = {};
 		},
 		
 		/**
@@ -69,16 +62,6 @@
 		 */
 		getRoot: function() {
 			return this.root;
-		},
-		
-		/**
-		 * Looks up the node with the given ID. If not found, returns <code>undefined</code>.
-		 * @param {String} gid ID to look up
-		 * @return {@link TreeNode} with {@link GedcomLine} <code>line</code> property, or <code>undefined</code>.
-		 * @type TreeNode
-		 */
-		getNode: function(gid) {
-			return this.mapIDtoNode[gid];
 		},
 		
 		/**
@@ -107,10 +90,6 @@
 			this.prevNode = new TreeNode();
 			this.prevNode.line = line; // create "line" property in tree node
 			p.addChild(this.prevNode);
-		
-			if (line.hasID()) {
-				this.mapIDtoNode[line.getID()] = this.prevNode;
-			}
 		},
 		
 		/**
@@ -118,32 +97,11 @@
 		 * to their parent lines, and removes the CONC and CONT lines.
 		 */
 		concatenate: function() {
-			this.concatenatePrivateHelper(this.getRoot());
+			GedcomTree.concatenatePrivateHelper(this.getRoot());
 		},
-		
-		/**
-		 * Helper method for concatenate.
-		 * @private
-		 * @param {TreeNode} p root of tree to process
-		 */
-		concatenatePrivateHelper: function(p) {
-			var rdel, tre, pline;
-			tre = this;
-			rdel = [];
-		
-			Util.forEach(p.getChildren(), function(c) {
-				tre.concatenatePrivateHelper(c);
-				pline = p.line; // line is GedcomLine, added by appendLine
-				switch (c.line.getTag()) {
-					case "CONT":
-					case "CONC":
-						pline.concat(c.line);
-						rdel.push(c);
-				}
-			});
-			Util.forEach(rdel, function(c) {
-				c.removeFromParent();
-			});
+
+		resolveReferences: function() {
+			GedcomTree.resolveReferencesPrivateHelper(this.getRoot());
 		},
 		
 		/**
@@ -178,7 +136,55 @@
 		var g = new GedcomTree();
 		g.parseAppend(gc);
 		g.concatenate();
+		g.resolveReferences();
 		return g;
 	};
 
+	/**
+	 * Helper method for concatenate.
+	 * @private
+	 * @param {TreeNode} p root of tree to process
+	 */
+	GedcomTree.concatenatePrivateHelper = function(p) {
+		var rdel;
+		rdel = [];
+	
+		Util.forEach(p.getChildren(), function(c) {
+			GedcomTree.concatenatePrivateHelper(c);
+			switch (c.line.getTag()) {
+				case "CONT":
+				case "CONC":
+					p.line.concat(c.line);
+					rdel.push(c);
+			}
+		});
+		Util.forEach(rdel, function(c) {
+			c.removeFromParent();
+		});
+	};
+
+	GedcomTree.resolveReferencesPrivateHelper = function(p) {
+		var mapIdToNode = {};
+
+		// go thru top-level lines, with IDs, and put them into a map
+		Util.forEach(p.getChildren(), function(node) {
+			// don't need to recurse, because only top-level
+			// lines have IDs
+			if (node.line.hasID()) {
+				mapIdToNode[node.line.getID()] = node;
+			}
+		});
+
+		// now recurse thru all nodes and resolve ID references
+		GedcomTree.resolveReferencesResolverPrivateHelper(mapIdToNode,p);
+	};
+
+	GedcomTree.resolveReferencesResolverPrivateHelper = function(map,p) {
+		Util.forEach(p.getChildren(), function(node) {
+			GedcomTree.resolveReferencesResolverPrivateHelper(map,node);
+			if (node.line.isPointer()) {
+				node.line.setRef(map[node.line.getPointer()]);
+			}
+		});
+	};
 })(window.dojo);

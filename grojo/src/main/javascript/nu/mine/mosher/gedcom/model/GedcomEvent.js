@@ -28,7 +28,7 @@
 		 * @return new {@link GedcomEvent}
 		 * @type GedcomEvent
 		 */
-		constructor: function(typ,gdate,place,note) {
+		constructor: function(typ,gdate,place,citation,note) {
 			/**
 			 * type of event
 			 * @private
@@ -59,6 +59,7 @@
 				this.place = "[unknown]";
 			}
 
+			this.citation = citation;
 			this.note = Util.safeStr(note);
 		},
 		
@@ -87,6 +88,10 @@
 		 */
 		getPlace: function() {
 			return this.place;
+		},
+
+		getCitation: function() {
+			return this.citation;
 		},
 
 		getNote: function() {

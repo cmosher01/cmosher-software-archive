@@ -65,6 +65,8 @@
 			} else {
 				this.val = GedcomLine.replaceAts(Util.safeStr(val));
 			}
+
+			this.ref = null;
 		},
 		
 		/**
@@ -114,7 +116,14 @@
 		getPointer: function() {
 			return this.pointer;
 		},
-		
+
+		setRef: function(ref) {
+			this.ref = ref;
+		},
+		getRef: function() {
+			return this.ref;
+		},
+
 		/**
 		 * Returns <code>true</code> if this {@link GedcomLine} has an ID.
 		 * @return if this {@link GedcomLine} has an ID
