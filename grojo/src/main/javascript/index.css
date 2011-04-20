@@ -84,7 +84,7 @@ table.events td {
   color: orange;
   border: dotted 2px;
 }
-
+/*
 .dijitMenuPopup {
 	font-size: 75%;
 	border-color: orange;
@@ -93,8 +93,15 @@ table.events td {
 }
 
 .dijitTooltipContainer {
-	font-size: 9pt;
-	font-family: "Microsoft Sans Serif", "sans-serif";
+	font-size: 9pt !important;
+	font-family: "Microsoft Sans Serif", "sans-serif" !important;
 	color: #362C28;
 	background-color: #E0DF9B !important;
+}
+*/
+.dijitTooltipContainer {
+	font-size: 7pt !important;
+	border-color: orange !important;
+	border-style: solid !important;
+	border-width: 2px !important;
 }

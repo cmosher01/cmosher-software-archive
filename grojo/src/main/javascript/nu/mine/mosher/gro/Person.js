@@ -377,12 +377,10 @@ createEventTable: function() {
 					new dijit.Tooltip({
 						connectId: [td],
 						label:
-							evt.getCitation().getSource().getAuthor()+". <i><b>"+
-							evt.getCitation().getSource().getTitle()+".</b></i> ("+
-							evt.getCitation().getSource().getPublication()+".)<hr>"+
-							evt.getCitation().getSource().getText(),
-						position: ["below","after","above","before"],
-						showDelay: 0
+							evt.getCitation().getSource().getAuthor()+".<br><i><b>"+
+							evt.getCitation().getSource().getTitle()+".</b></i><br>"+
+							evt.getCitation().getSource().getPublication()+".<hr>"+
+							evt.getCitation().getSource().getText()
 					});
 			});
 

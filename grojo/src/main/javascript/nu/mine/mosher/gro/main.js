@@ -26,20 +26,14 @@
 
 		gedcom = null;
 
+		// get the head of the doc
+		head = $.query("html head")[0];
+
 		// remove any existing title from the document
 		title = $.query("html head title").forEach($.destroy);
 
 		// add our title to the document
-		head = $.byId("head");
 		$.create("title",{innerHTML:"GRO Javascript"},head,"first");
-
-		// add our style-sheet to the document
-		$.create("link",{rel:"stylesheet",type:"text/css",href:"index.css",media:"screen"},head);
-		// add digit theme style-sheet
-//		$.create("link",{rel:"stylesheet",type:"text/css",href:"dijit/themes/tundra/tundra.css",media:"screen"},$.query("html head")[0]);
-		$.create("link",{rel:"stylesheet",type:"text/css",href:"dijit/themes/claro/claro.css",media:"screen"},$.query("html head")[0]);
-
-//		$.create("input",{id:"import",type:"file"},$.doc.body);
 
 		$.create("div",{id:"dropline"},$.doc.body);
 
