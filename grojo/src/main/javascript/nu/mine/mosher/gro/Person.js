@@ -23,10 +23,10 @@
 	var Point = nu.mine.mosher.gfx.Point;
 	$.require("nu.mine.mosher.gfx.Size");
 	var Size = nu.mine.mosher.gfx.Size;
+	$.require("nu.mine.mosher.gfx.ToolTip");
+	var ToolTip = nu.mine.mosher.gfx.ToolTip;
 	$.require("nu.mine.mosher.util.Util");
 	var Util = nu.mine.mosher.util.Util;
-
-	$.require("dijit.Tooltip");
 
 	var Person = $.declare(CLASS, null, {
 
@@ -349,6 +349,7 @@ toggleView: function() {
 		this.divCur = this.divExp;
 	}
 	this.calc();
+	// TODO remove any open tooltip (but how?)
 },
 
 /**
@@ -374,14 +375,11 @@ createEventTable: function() {
 					td = $.create("td",{innerHTML:evt.getDate()},tr);
 					td = $.create("td",{innerHTML:evt.getPlace()},tr);
 					td = $.create("td",{innerHTML:evt.getCitation().getSource().getTitle()},tr);
-					new dijit.Tooltip({
-						connectId: [td],
-						label:
-							evt.getCitation().getSource().getAuthor()+".<br><i><b>"+
-							evt.getCitation().getSource().getTitle()+".</b></i><br>"+
-							evt.getCitation().getSource().getPublication()+".<hr>"+
-							evt.getCitation().getSource().getText()
-					});
+					new ToolTip(td,
+						evt.getCitation().getSource().getAuthor()+".<br><i><b>"+
+						evt.getCitation().getSource().getTitle()+".</b></i><br>"+
+						evt.getCitation().getSource().getPublication()+".<hr>"+
+						evt.getCitation().getSource().getText());
 			});
 
 	return table;
