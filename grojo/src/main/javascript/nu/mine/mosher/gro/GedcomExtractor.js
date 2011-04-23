@@ -211,7 +211,7 @@ extractCitation: function(sour) {
  * @type Person
  */
 extractPerson: function(indi) {
-	var that, nam, xy, m, revt, line, revtm, e;
+	var that, nam, xy, m, revt, line, revtm, e, pm;
 
 	that = this;
 
@@ -235,8 +235,9 @@ extractPerson: function(indi) {
 	});
 
 	line = indi.line;
-	this.model.addPerson(new PersonModel(line.getID(),nam,revtm));
-	return new Person(line.getID(),nam,xy,revt,this,this.container);
+	pm = new PersonModel(line.getID(),nam,xy,revtm);
+	this.model.addPerson(pm);
+	return new Person(pm,this,this.container);
 },
 
 /**
@@ -247,7 +248,7 @@ extractPerson: function(indi) {
  * @type Partnership
  */
 extractParnership: function(fam) {
-	var that, husb, wife, rchil, revt, line, e;
+	var that, husb, wife, rchil, revt, line, e, pm;
 	var husbm, wifem, rchilm, revtm;
 	that = this;
 	husb = null;

@@ -19,7 +19,7 @@
 		 * @param {Array} revt array of {@link GedcomEvent}s for this {@link PersonModel}.
 		 * @type PersonModel
 		 */
-		constructor: function(gid,gname,revt) {
+		constructor: function(gid,gname,pos,revt) {
 			/**
 			 * ID of this person
 			 * @private
@@ -33,13 +33,19 @@
 			 * @type String
 			 */
 			this.gname = gname;
-		
+
+			this.pos = pos;
+
 			/**
 			 * Array of events for this person
 			 * @private
 			 * @type Array
 			 */
 			this.revt = revt;
+		},
+
+		getName: function() {
+			return this.gname;
 		},
 
 		/**
@@ -50,7 +56,11 @@
 		getID: function() {
 			return this.id;
 		},
-	
+
+		getPos: function() {
+			return this.pos;
+		},
+
 		/**
 		 * Gets the Array of {@link GedcomEvent}s for this {@link Person}.
 		 * @return array in {@link GedcomEvent}s

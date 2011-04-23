@@ -34,34 +34,11 @@
  * @class Represents a person in a family tree.
  * 
  * @constructor
- * @param {String} gid ID of this {@link Person}
- * @param {String} gname displayable name of this {@link Person}.
- * @param {Point} pos position of this {@link Person} in 2D space on a drop-line chart of the family tree.
- * @param {Array} revt array of {@link GedcomEvent}s for this {@link Person}.
  * @return new {@link Person}
  * @type Person
  */
-constructor: function(gid,gname,pos,revt,dragHandler,container) {
-	/**
-	 * ID of this person
-	 * @private
-	 * @type String
-	 */
-	this.id = gid;
-
-	/**
-	 * Displayable name of this person
-	 * @private
-	 * @type String
-	 */
-	this.gname = gname;
-
-	/**
-	 * Array of events for this person
-	 * @private
-	 * @type Array
-	 */
-	this.revt = revt;
+constructor: function(model,dragHandler,container) {
+	this.model = model;
 
 	/**
 	 * Array of {@link Partnership}s that this {@link Person} is a child in. Could be more than one to allow for adoptive parents.
@@ -79,19 +56,21 @@ constructor: function(gid,gname,pos,revt,dragHandler,container) {
 
 	this.container = container;
 
+	this.tooltips = []; // just so we can close them upon shrinking
+
 	/**
 	 * non-expanded display DIV of this {@link Person}
 	 * @private
 	 * @type HTMLElement
 	 */
-	this.div = this.createDiv(pos);
+	this.div = this.createDiv(this.model.getPos());
 
 	/**
 	 * expanded display DIV of this {@link Person}
 	 * @private
 	 * @type HTMLElement
 	 */
-	this.divExp = this.createDivExp(pos);
+	this.divExp = this.createDivExp(this.model.getPos());
 
 	/**
 	 * @private
@@ -139,7 +118,7 @@ constructor: function(gid,gname,pos,revt,dragHandler,container) {
  * @type String
  */
 getID: function() {
-	return this.id;
+	return this.model.getID();
 },
 
 /**
@@ -148,7 +127,7 @@ getID: function() {
  * @type String
  */
 toString: function() {
-	return this.gname;
+	return this.model.getName();
 },
 
 /**
@@ -193,7 +172,7 @@ addChildIn: function(f) {
  * @type Array
  */
 getEvents: function() {
-	return this.revt;
+	return this.model.getEvents();
 },
 
 /**
@@ -213,11 +192,18 @@ createDiv: function(pos) {
 
 	div.style.position = "absolute";
 	div.tabindex = 0;
-	div.style.left = Util.px(pos.getX());
-	div.style.top = Util.px(pos.getY());
-	div.appendChild($.doc.createTextNode(this.gname));
+	div.style.left = Util.px(0);
+	div.style.top = Util.px(0);
+	div.style.textAlign = "center";
+	div.style.visiblity = "hidden";
+	div.appendChild($.doc.createTextNode(this.model.getName()));
 
 	this.container.appendChild(div);
+
+	div.style.width = Util.px(div.clientWidth);
+	div.style.left = Util.px(pos.getX());
+	div.style.top = Util.px(pos.getY());
+	div.style.visiblity = "visible";
 
 	return div;
 },
@@ -241,8 +227,10 @@ createDivExp: function(pos) {
 	div.tabindex = 0;
 	div.style.left = Util.px(pos.getX());
 	div.style.top = Util.px(pos.getY());
-	div.appendChild($.doc.createTextNode(this.gname));
-	
+	div.style.visiblity = "hidden";
+	div.appendChild($.doc.createTextNode(this.model.getName()));
+
+
 	return div;
 },
 
@@ -349,7 +337,9 @@ toggleView: function() {
 		this.divCur = this.divExp;
 	}
 	this.calc();
-	// TODO remove any open tooltip (but how?)
+	Util.forEach(this.tooltips,function(tt) {
+		tt.hide();
+	});
 },
 
 /**
@@ -358,7 +348,7 @@ toggleView: function() {
  * @returns {HTMLElement}
  */
 createEventTable: function() {
-	var table, thead, tfoot, tbody, tr, td;
+	var table, thead, tfoot, tbody, tr, td, note, star, ttip;
 
 	table = $.create("table",{className:"events"});
 		thead = $.create("thead",null,table);
@@ -366,21 +356,27 @@ createEventTable: function() {
 				td = $.create("th",{innerHTML:"event"},tr);
 				td = $.create("th",{innerHTML:"date" },tr);
 				td = $.create("th",{innerHTML:"place"},tr);
+				td = $.create("th",{innerHTML:"note"},tr);
 				td = $.create("th",{innerHTML:"citation"},tr);
 		tfoot = $.create("tfoot",null,table);
 		tbody = $.create("tbody",null,table);
-			Util.forEach(this.revt, function(evt) {
+			Util.forEach(this.model.getEvents(), $.hitch(this,function(evt) {
 				tr = $.create("tr",null,tbody);
 					td = $.create("td",{innerHTML:evt.getType()},tr);
 					td = $.create("td",{innerHTML:evt.getDate()},tr);
 					td = $.create("td",{innerHTML:evt.getPlace()},tr);
+					note = evt.getNote();
+					if (note.length == 0) {
+						td = $.create("td",null,tr);
+					} else {
+						td = $.create("td",{innerHTML:"*"},tr);
+						ttip = new ToolTip(td,note);
+						this.tooltips.push(ttip);
+					}
 					td = $.create("td",{innerHTML:evt.getCitation().getSource().getTitle()},tr);
-					new ToolTip(td,
-						evt.getCitation().getSource().getAuthor()+".<br><i><b>"+
-						evt.getCitation().getSource().getTitle()+".</b></i><br>"+
-						evt.getCitation().getSource().getPublication()+".<hr>"+
-						evt.getCitation().getSource().getText());
-			});
+					ttip = new ToolTip(td,evt.getCitation().getSource().getHtml());
+					this.tooltips.push(ttip);
+			}));
 
 	return table;
 },
@@ -390,14 +386,26 @@ getEventsFromPartnerships: function() {
 
 	Util.forEach(this.spouseIn, $.hitch(this, function(part) {
 		Util.forEach(part.getEvents(), $.hitch(this, function(evt) {
-			this.revt.push(evt);
+			this.model.getEvents().push(evt);
 		}));
 	}));
 
-	this.revt.sort(GedcomEvent.order);
+	this.model.getEvents().sort(GedcomEvent.order);
 
 	e = this.createEventTable();
 	this.divExp.appendChild(e);
+
+	this.divExp.style.visiblity = "hidden";
+	var x = this.divExp.style.left;
+	var y = this.divExp.style.top;
+	this.divExp.style.left = Util.px(0);
+	this.divExp.style.top = Util.px(0);
+	this.container.appendChild(this.divExp);
+	this.divExp.style.width = Util.px(this.divExp.clientWidth);
+	this.divExp.style.left = x;
+	this.divExp.style.top = y;
+	this.container.removeChild(this.divExp);
+	this.divExp.style.visiblity = "visible";
 }
 	});
 

@@ -26,6 +26,9 @@
 		},
 		getText: function() {
 			return this.text;
+		},
+		getHtml: function() {
+			return this.auth+".<br><i><b>"+this.titl+".</b></i><br>"+this.publ+".<hr>"+this.text;
 		}
 	});
 })(window.dojo);
