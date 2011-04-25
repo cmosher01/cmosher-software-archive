@@ -288,12 +288,13 @@ extractParnership: function(fam) {
  * @type GedcomEvent
  */
 extractEvent: function(evt) {
-	var that, typ, gdate, place, note;
+	var that, typ, gdate, place, note, cit;
 	that = this;
 	gdate = DatePeriod.UNKNOWN;
 	place = "";
 	note = "";
 	typ = this.extractEventName(evt);
+	cit = null;
 	Util.forEach(evt.getChildren(), function(node) {
 		if (node.line.getTag() === "DATE") {
 			gdate = that.extractDate(node.line.getVal());
@@ -303,9 +304,10 @@ extractEvent: function(evt) {
 			cit = that.extractCitation(node);
 		} else if (node.line.getTag() === "NOTE") {
 			if (node.line.isPointer()) {
-				node = node.line.getRef();
+				note = node.line.getRef().line.getVal();
+			} else {
+				note = node.line.getVal();
 			}
-			note = node.line.getVal();
 		}
 	});
 	return new GedcomEvent(typ,gdate,place,cit,note);
