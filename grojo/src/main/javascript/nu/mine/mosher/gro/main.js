@@ -52,13 +52,6 @@
 				alert("Error reading file "+this.url+": "+e);
 			}
 		});
-
-		$.connect($.global,"onresize",function(e) {
-			if (gedcom != null) {
-				gedcom.calc();
-			}
-		});
-
 	};
 
 	nu.mine.mosher.gro.main.menu = function() {

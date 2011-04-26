@@ -348,7 +348,7 @@ toggleView: function() {
  * @returns {HTMLElement}
  */
 createEventTable: function() {
-	var table, thead, tfoot, tbody, tr, td, note, star, ttip;
+	var table, thead, tfoot, tbody, tr, td;
 
 	table = $.create("table",{className:"events"});
 		thead = $.create("thead",null,table);
@@ -361,6 +361,7 @@ createEventTable: function() {
 		tfoot = $.create("tfoot",null,table);
 		tbody = $.create("tbody",null,table);
 			Util.forEach(this.model.getEvents(), $.hitch(this,function(evt) {
+				var note, ttip, cit;
 				tr = $.create("tr",null,tbody);
 					td = $.create("td",{innerHTML:evt.getType()},tr);
 					td = $.create("td",{innerHTML:evt.getDate()},tr);
@@ -373,9 +374,14 @@ createEventTable: function() {
 						ttip = new ToolTip(td,note);
 						this.tooltips.push(ttip);
 					}
-					td = $.create("td",{innerHTML:evt.getCitation().getSource().getTitle()},tr);
-					ttip = new ToolTip(td,evt.getCitation().getSource().getHtml());
-					this.tooltips.push(ttip);
+					cit = evt.getCitation();
+					if (cit) {
+						td = $.create("td",{innerHTML:cit.getSource().getTitle()},tr);
+						ttip = new ToolTip(td,cit.getSource().getHtml());
+						this.tooltips.push(ttip);
+					} else {
+						td = $.create("td",null,tr);
+					}
 			}));
 
 	return table;
