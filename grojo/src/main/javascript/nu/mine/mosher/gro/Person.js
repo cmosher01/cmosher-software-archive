@@ -296,12 +296,6 @@ onEndDrag: function() {
  * Calculates this {@link Person}'s related {@link Partnership}s.
  */
 calc: function() {
-	Util.forEach(this.spouseIn, function(f) {
-		f.calc();
-	});
-	Util.forEach(this.childIn, function(f) {
-		f.calc();
-	});
 	this.enlargeDropLine();
 },
 
@@ -315,7 +309,7 @@ enlargeDropLine: function() {
 	if (right > dlWidth || bottom > dlHeight) {
 		dlWidth = Math.max(right,dlWidth);
 		dl.style.width = Util.px(dlWidth);
-		$.byId("html").style.width = Util.px(dlWidth);
+		$.query("html")[0].style.width = Util.px(dlWidth);
 		$.doc.body.style.width = Util.px(dlWidth);
 		dlHeight = Math.max(bottom,dlHeight);
 		dl.style.height = Util.px(dlHeight);
@@ -336,6 +330,12 @@ toggleView: function() {
 		this.div.parentNode.replaceChild(this.divExp,this.div);
 		this.divCur = this.divExp;
 	}
+	Util.forEach(this.childIn,function(partnership) {
+		partnership.calc();
+	});
+	Util.forEach(this.spouseIn,function(partnership) {
+		partnership.calc();
+	});
 	this.calc();
 	Util.forEach(this.tooltips,function(tt) {
 		tt.hide();

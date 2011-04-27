@@ -104,6 +104,9 @@ constructor: function(gid,husb,wife,rchil,revt,container) {
 	this.calc();
 },
 
+getID: function() {
+	return this.id;
+},
 
 /**
  * Gets the array of {@link GedcomEvent}s for this {@link Partnership}.

@@ -88,6 +88,7 @@ constructor: function(gedcomtree,container) {
 
 	// current selection of person objects
 	this.selection = [];
+	this.selectionPartners = {};
 
 	this.extract();
 
@@ -100,13 +101,24 @@ constructor: function(gedcomtree,container) {
 		}),
 		$.hitch(this, function() {
 			this.selection = [];
+			this.selectionPartners = {};
 			Util.forEach(this.mperson,$.hitch(this,function(person) {
 				if (person.isSelected()) {
-					this.selection.push(person);
+					this.selectPerson(person);
 				}
 			}));
 		})
 	);
+},
+
+selectPerson: function(person) {
+	this.selection.push(person);
+	Util.forEach(person.getChildIn(),$.hitch(this,function(part) {
+		this.selectionPartners[part.getID()] = part;
+	}));
+	Util.forEach(person.getSpouseIn(),$.hitch(this,function(part) {
+		this.selectionPartners[part.getID()] = part;
+	}));
 },
 
 /**
@@ -379,11 +391,12 @@ onBeginDrag: function(hitPerson) {
 				person.select(false);
 			});
 			this.selection = [];
+			this.selectionPartners = {};
 		}
 	}
 	this.tempSelection = false;
 	if (this.selection.length == 0) {
-		this.selection = [hitPerson];
+		this.selectPerson(hitPerson);
 		this.tempSelection = true;
 	}
 	Util.forEach(this.selection,function(person) {
@@ -396,6 +409,9 @@ onDrag: function(delta) {
 		Util.forEach(this.selection,function(person) {
 			person.onDrag(delta);
 		});
+		Util.forEach(this.selectionPartners,function(partnership) {
+			partnership.calc();
+		});
 	}
 },
 
@@ -407,6 +423,7 @@ onEndDrag: function() {
 	}
 	if (this.tempSelection) {
 		this.selection = [];
+		this.selectionPartners = {};
 		this.tempSelection = false;
 	}
 }
