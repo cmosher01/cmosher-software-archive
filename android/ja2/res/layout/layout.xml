@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="horizontal"
+>
+	<gui.Screen
+		android:id="@+id/screen"
+		android:layout_width="580dp"
+		android:layout_height="384dp" />
+	<gui.MonitorControlPanel
+		android:id="@+id/monitorControlPanel"
+		android:layout_width="580dp"
+		android:layout_height="30dp"
+	>
+		<ToggleButton
+			android:id="@+id/monitorPower"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:textOn="On"
+			android:textOff="Off" />
+	</gui.MonitorControlPanel>
+	<gui.ComputerControlPanel
+		android:id="@+id/computerControlPanel"
+		android:layout_width="580dp"
+		android:layout_height="30dp"
+	>
+		<ToggleButton
+			android:id="@+id/computerPower"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:textOn="On"
+			android:textOff="Off" />
+	</gui.ComputerControlPanel>
+</RelativeLayout>

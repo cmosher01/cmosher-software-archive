@@ -3,29 +3,36 @@
  */
 package gui.buttons;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import javax.swing.JButton;
+//import java.awt.Color;
+//import java.awt.Dimension;
+//import java.awt.Font;
+//import java.awt.FontMetrics;
+//import java.awt.Graphics;
+//import java.awt.Graphics2D;
+//import java.awt.geom.Rectangle2D;
 
-public class PowerLight extends JButton
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.widget.Button;
+
+public class PowerLight extends Button
 {
 	private boolean on;
-	private Font font;
-	private static final int FONT_HEIGHT = 7;
+//	private Font font;
+//	private static final int FONT_HEIGHT = 7;
 
-	public PowerLight()
+	public PowerLight(Context context)
 	{
-		super("POWER");
-		setOpaque(true);
+		super(context);
+//		super("POWER");
+//		setOpaque(true);
 
-		this.font = new Font("Arial",Font.PLAIN,10);
-		this.setPreferredSize(new Dimension(50,50));
-		this.setEnabled(false);
+//		this.font = new Font("Arial",Font.PLAIN,10);
+//		this.setPreferredSize(new Dimension(50,50));
+//		this.setEnabled(false);
 	}
 
 	public void turnOn(final boolean powerOn)
@@ -34,28 +41,26 @@ public class PowerLight extends JButton
 	}
 
 	@Override
-	protected void paintComponent(Graphics g)
+	protected void onDraw(final Canvas canvas)
 	{
-        final Graphics2D g2d = (Graphics2D)g.create();
-        if (isOpaque())
-		{
-            if (this.on)
-            {
-            	g2d.setColor(new Color(255,240,120));
-            }
-            else
-            {
-            	g2d.setColor(Color.GRAY);
-            }
-            g2d.fillRect(0,0,getWidth(),getHeight());
+		super.onDraw(canvas);
+		final Paint paint = new Paint();
+		paint.setStyle(Paint.Style.FILL);
+		if (this.on) {
+			paint.setColor(Color.rgb(255, 240, 120));
+		} else {
+			paint.setColor(Color.GRAY);
 		}
-    	g2d.setColor(Color.BLACK);
-		g2d.setFont(this.font);
-		FontMetrics fontMetrics = g2d.getFontMetrics();
-		Rectangle2D bndText = fontMetrics.getStringBounds(getText(),g2d);
-		double y = FONT_HEIGHT+(this.getHeight()-FONT_HEIGHT)/2;
-		double x = (this.getWidth()-bndText.getWidth())/2;
-		g2d.drawString(getText(),Math.round(x),Math.round(y));
-		g2d.dispose();
+		canvas.drawRect(new Rect(0,0,getWidth(),getHeight()), paint);
+
+		// TODO ANDROID draw "POWER"
+//		g2d.setColor(Color.BLACK);
+//		g2d.setFont(this.font);
+//		FontMetrics fontMetrics = g2d.getFontMetrics();
+//		Rectangle2D bndText = fontMetrics.getStringBounds(getText(),g2d);
+//		double y = FONT_HEIGHT+(this.getHeight()-FONT_HEIGHT)/2;
+//		double x = (this.getWidth()-bndText.getWidth())/2;
+//		g2d.drawString(getText(),Math.round(x),Math.round(y));
+//		g2d.dispose();
 	}
 }

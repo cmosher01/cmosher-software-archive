@@ -1,12 +1,13 @@
+// TODO ANDROID: fix speaker sound generation
 package speaker;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.SourceDataLine;
+//import javax.sound.sampled.AudioFormat;
+//import javax.sound.sampled.AudioSystem;
+//import javax.sound.sampled.DataLine;
+//import javax.sound.sampled.LineUnavailableException;
+//import javax.sound.sampled.SourceDataLine;
 import chipset.TimingGenerator;
 
 /*
@@ -21,7 +22,7 @@ public class SpeakerClicker
 
 	private volatile int t;
 
-	private volatile SourceDataLine line;
+//	private volatile SourceDataLine line;
 	private volatile byte[] pcm = new byte[SAMPLES_PER_SECOND];
 
 	private AtomicInteger click = new AtomicInteger();
@@ -39,19 +40,19 @@ public class SpeakerClicker
 			@SuppressWarnings("synthetic-access")
 			public void run()
 			{
-				try
-				{
+//				try
+//				{
 					feed();
-				}
-				catch (LineUnavailableException e)
-				{
-					e.printStackTrace();
-					synchronized (SpeakerClicker.this.started)
-					{
-						SpeakerClicker.this.started.set(true);
-						SpeakerClicker.this.started.notifyAll();
-					}
-				}
+//				}
+//				catch (LineUnavailableException e)
+//				{
+//					e.printStackTrace();
+//					synchronized (SpeakerClicker.this.started)
+//					{
+//						SpeakerClicker.this.started.set(true);
+//						SpeakerClicker.this.started.notifyAll();
+//					}
+//				}
 			}
 		});
 		th.setDaemon(true);
@@ -73,19 +74,19 @@ public class SpeakerClicker
 		}
 	}
 
-	void feed() throws LineUnavailableException
+	void feed() //throws LineUnavailableException
 	{
-		final AudioFormat fmt = new AudioFormat(SAMPLES_PER_SECOND,Byte.SIZE,1,true,false);
-		final DataLine.Info info = new DataLine.Info(SourceDataLine.class,fmt);
-		if (!AudioSystem.isLineSupported(info))
-		{
-			throw new LineUnavailableException("audio line not supported");
-		}
-
-		this.line = (SourceDataLine)AudioSystem.getLine(info);
-
-		this.line.open(fmt,SAMPLES_PER_SECOND);
-		this.line.start();
+//		final AudioFormat fmt = new AudioFormat(SAMPLES_PER_SECOND,Byte.SIZE,1,true,false);
+//		final DataLine.Info info = new DataLine.Info(SourceDataLine.class,fmt);
+//		if (!AudioSystem.isLineSupported(info))
+//		{
+//			throw new LineUnavailableException("audio line not supported");
+//		}
+//
+//		this.line = (SourceDataLine)AudioSystem.getLine(info);
+//
+//		this.line.open(fmt,SAMPLES_PER_SECOND);
+//		this.line.start();
 		this.running = true;
 		try
 		{
@@ -120,12 +121,12 @@ public class SpeakerClicker
 					cl = this.click.get();
 					if (cl == 0 && this.running)
 					{
-						this.line.stop();
+//						this.line.stop();
 						this.running = false;
 					}
 					else if (cl != 0 && !this.running)
 					{
-						this.line.start();
+//						this.line.start();
 						this.running = true;
 					}
 				}
@@ -144,7 +145,7 @@ public class SpeakerClicker
 				this.pcm[deltaSamples-1] = this.pos ? AMPLITUDE : -AMPLITUDE;
 				this.pcm[deltaSamples] = this.pos ? AMPLITUDE : -AMPLITUDE;
 
-				this.line.write(this.pcm,0,deltaSamples);
+//				this.line.write(this.pcm,0,deltaSamples);
 
 				this.pcm[deltaSamples-1] = 0;
 				this.pcm[deltaSamples] = 0;

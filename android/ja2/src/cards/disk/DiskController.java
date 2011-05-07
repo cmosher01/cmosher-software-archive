@@ -1,13 +1,10 @@
 package cards.disk;
 
-import java.awt.dnd.DropTargetListener;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.JPanel;
+
 import keyboard.HyperMode;
 import cards.Card;
-import gui.DiskDriveControllerPanel;
-import gui.GUI;
 
 /*
  * Created on Sep 12, 2007
@@ -22,8 +19,6 @@ public class DiskController extends Card
 	private volatile boolean write;
 	private volatile boolean motorOn;
 
-
-	private DiskDriveControllerPanel panel;
 
 
 	// TODO for a rev. 0 motherboard, the disk controller will auto reset the CPU
@@ -114,11 +109,11 @@ public class DiskController extends Card
 
 	private void update()
 	{
-		if (this.panel == null)
-		{
-			return;
-		}
-		this.panel.updateDrives();
+//		if (this.panel == null)
+//		{
+//			return;
+//		}
+//		this.panel.updateDrives();
 	}
 	private Drive getDrive(final int drive)
 	{
@@ -133,29 +128,6 @@ public class DiskController extends Card
 	public boolean isMotorOn()
 	{
 		return this.motorOn;
-	}
-
-	/**
-	 * @param gui
-	 * @return
-	 */
-	@Override
-	public JPanel getPanel(final GUI gui)
-	{
-		if (this.panel == null)
-		{
-			this.panel = new DiskDriveControllerPanel(this,gui);
-		}
-		return this.panel;
-	}
-
-	/**
-	 * @return
-	 */
-	@Override
-	public DropTargetListener getDropListener()
-	{
-		return this.panel.getDropListener();
 	}
 
 	public DiskBytes getDiskBytes(int disk)

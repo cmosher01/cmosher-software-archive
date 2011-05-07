@@ -86,7 +86,7 @@ public class Config
 	private void parseLine(final String line, final Memory memory, final Slots slots, final HyperMode hyper, final StandardIn.EOFHandler eofHandler)
 		throws InvalidMemoryLoad, IOException, InvalidDiskImage
 	{
-		if (line.isEmpty())
+		if (line.length() == 0)
 		{
 			return;
 		}

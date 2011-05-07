@@ -1,8 +1,5 @@
 package keyboard;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -19,7 +16,7 @@ import emu.Apple2;
 /*
  * Created on Sep 12, 2007
  */
-public class FnKeyHandler extends KeyAdapter implements KeyListener
+public class FnKeyHandler //extends KeyAdapter implements KeyListener
 {
 	private final Apple2 a2;
 	private final ScreenImage screenImage;
@@ -46,51 +43,51 @@ public class FnKeyHandler extends KeyAdapter implements KeyListener
 	/**
 	 * @param e
 	 */
-	@Override
-	public void keyPressed(KeyEvent e)
-	{
-		final int key = e.getKeyCode();
-		if (key == KeyEvent.VK_PAUSE)
-		{
-			this.a2.reset();
-		}
-		else if (key == KeyEvent.VK_SCROLL_LOCK)
-		{
-			this.throttle.toggleSuspend();
-		}
-		else if (key == KeyEvent.VK_F9)
-		{
-			try
-			{
-				final String name = "dump"+FnKeyHandler.fmt.format(new Date())+".png";
-				this.screenImage.dump("PNG",new File(name));
-			}
-			catch (IOException e1)
-			{
-				e1.printStackTrace();
-			}
-		}
-		else if (key == KeyEvent.VK_F10)
-		{
-			try
-			{
-
-				final String name = "dump"+FnKeyHandler.fmt.format(new Date())+".bin";
-				final OutputStream fil = new BufferedOutputStream(new FileOutputStream(new File(name)));
-				for (int i = 0; i < this.memory.size(); ++i)
-				{
-					fil.write(this.memory.read(i));
-				}
-				fil.close();
-			}
-			catch (IOException e1)
-			{
-				e1.printStackTrace();
-			}
-		}
-		else if (key == KeyEvent.VK_F2)
-		{
-			this.device.dump();
-		}
-	}
+//	@Override
+//	public void keyPressed(KeyEvent e)
+//	{
+//		final int key = e.getKeyCode();
+//		if (key == KeyEvent.VK_PAUSE)
+//		{
+//			this.a2.reset();
+//		}
+//		else if (key == KeyEvent.VK_SCROLL_LOCK)
+//		{
+//			this.throttle.toggleSuspend();
+//		}
+//		else if (key == KeyEvent.VK_F9)
+//		{
+//			try
+//			{
+//				final String name = "dump"+FnKeyHandler.fmt.format(new Date())+".png";
+//				this.screenImage.dump("PNG",new File(name));
+//			}
+//			catch (IOException e1)
+//			{
+//				e1.printStackTrace();
+//			}
+//		}
+//		else if (key == KeyEvent.VK_F10)
+//		{
+//			try
+//			{
+//
+//				final String name = "dump"+FnKeyHandler.fmt.format(new Date())+".bin";
+//				final OutputStream fil = new BufferedOutputStream(new FileOutputStream(new File(name)));
+//				for (int i = 0; i < this.memory.size(); ++i)
+//				{
+//					fil.write(this.memory.read(i));
+//				}
+//				fil.close();
+//			}
+//			catch (IOException e1)
+//			{
+//				e1.printStackTrace();
+//			}
+//		}
+//		else if (key == KeyEvent.VK_F2)
+//		{
+//			this.device.dump();
+//		}
+//	}
 }

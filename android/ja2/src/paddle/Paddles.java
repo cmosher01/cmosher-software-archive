@@ -1,12 +1,13 @@
 /*
  * Created on Nov 27, 2007
  */
+// TODO ANDROID implement paddles
 package paddle;
 
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.PointerInfo;
-import java.awt.Rectangle;
+//import java.awt.MouseInfo;
+//import java.awt.Point;
+//import java.awt.PointerInfo;
+//import java.awt.Rectangle;
 import chipset.TimingGenerator;
 
 public class Paddles implements PaddlesInterface
@@ -47,29 +48,29 @@ public class Paddles implements PaddlesInterface
 
 	private void tryStartPaddleTimers()
 	{
-		final PointerInfo mouse = MouseInfo.getPointerInfo();
-		final Rectangle rect = mouse.getDevice().getDefaultConfiguration().getBounds();
-		final Point loc = mouse.getLocation();
-
-		double p = loc.getX();
-		double pMin = rect.getMinX();
-		double pMax = rect.getMaxX()/2;
-		final int x = (int)Math.round(Math.rint((p-pMin)/(pMax-pMin)*PADDLE_CYCLES));
-
-		p = loc.getY();
-		pMin = rect.getMinY();
-		pMax = rect.getMaxY()/2;
-		final int y = (int)Math.round(Math.rint((p-pMin)/(pMax-pMin)*PADDLE_CYCLES));
-
-		if (isTimedOut(0))
-			this.rTick[0] = x;
-		if (isTimedOut(1))
-			this.rTick[1] = y;
-
-		if (isTimedOut(2))
-			this.rTick[2] = REALTIME_1MS_CYCLES;
-		if (isTimedOut(3))
-			this.rTick[3] = REALTIME_100US_CYCLES;
+//		final PointerInfo mouse = MouseInfo.getPointerInfo();
+//		final Rectangle rect = mouse.getDevice().getDefaultConfiguration().getBounds();
+//		final Point loc = mouse.getLocation();
+//
+//		double p = loc.getX();
+//		double pMin = rect.getMinX();
+//		double pMax = rect.getMaxX()/2;
+//		final int x = (int)Math.round(Math.rint((p-pMin)/(pMax-pMin)*PADDLE_CYCLES));
+//
+//		p = loc.getY();
+//		pMin = rect.getMinY();
+//		pMax = rect.getMaxY()/2;
+//		final int y = (int)Math.round(Math.rint((p-pMin)/(pMax-pMin)*PADDLE_CYCLES));
+//
+//		if (isTimedOut(0))
+//			this.rTick[0] = x;
+//		if (isTimedOut(1))
+//			this.rTick[1] = y;
+//
+//		if (isTimedOut(2))
+//			this.rTick[2] = REALTIME_1MS_CYCLES;
+//		if (isTimedOut(3))
+//			this.rTick[3] = REALTIME_100US_CYCLES;
 	}
 
 	public boolean isTimedOut(final int paddle)

@@ -3,11 +3,7 @@
  */
 package cards;
 
-import gui.DefaultCardPanel;
-import gui.GUI;
-import java.awt.dnd.DropTargetListener;
 import java.io.InputStream;
-import javax.swing.JPanel;
 import chipset.InvalidMemoryLoad;
 import chipset.Memory;
 
@@ -84,22 +80,8 @@ public abstract class Card
 
 
 
-	public JPanel getPanel(@SuppressWarnings("unused") final GUI gui)
-	{
-		return new DefaultCardPanel(getTypeName());
-	}
-
-
-
 	public String getTypeName()
 	{
 		return this.getClass().getSimpleName();
-	}
-
-
-
-	public DropTargetListener getDropListener()
-	{
-		return null;
 	}
 }
