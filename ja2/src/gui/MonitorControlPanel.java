@@ -19,7 +19,7 @@ public class MonitorControlPanel extends JPanel
 	private boolean powerState;
 	private DisplayType displayTypeState = DisplayType.MONITOR_COLOR;
 
-	public MonitorControlPanel(final VideoDisplayDevice display)
+	public MonitorControlPanel(final VideoDisplayDevice display, final DisplayType displayInitial)
 	{
 		this.display = display;
 
@@ -66,17 +66,17 @@ public class MonitorControlPanel extends JPanel
 	    powerOff.setSelected(true);
 
 	    final ButtonGroup displayType = new ButtonGroup();
-	    initDisplayButton(displayType,"Color",DisplayType.MONITOR_COLOR,true);
-	    initDisplayButton(displayType,"White",DisplayType.MONITOR_WHITE,false);
-	    initDisplayButton(displayType,"Green",DisplayType.MONITOR_GREEN,false);
-	    initDisplayButton(displayType,"Orange",DisplayType.MONITOR_ORANGE,false);
-	    initDisplayButton(displayType,"Old Color",DisplayType.TV_OLD_COLOR,false);
-	    initDisplayButton(displayType,"Old B&W",DisplayType.TV_OLD_BW,false);
-	    initDisplayButton(displayType,"New Color",DisplayType.TV_NEW_COLOR,false);
-	    initDisplayButton(displayType,"New B&W",DisplayType.TV_NEW_BW,false);
+	    initDisplayButton(displayType,"Color",DisplayType.MONITOR_COLOR,displayInitial);
+	    initDisplayButton(displayType,"White",DisplayType.MONITOR_WHITE,displayInitial);
+	    initDisplayButton(displayType,"Green",DisplayType.MONITOR_GREEN,displayInitial);
+	    initDisplayButton(displayType,"Orange",DisplayType.MONITOR_ORANGE,displayInitial);
+	    initDisplayButton(displayType,"Old Color",DisplayType.TV_OLD_COLOR,displayInitial);
+	    initDisplayButton(displayType,"Old B&W",DisplayType.TV_OLD_BW,displayInitial);
+	    initDisplayButton(displayType,"New Color",DisplayType.TV_NEW_COLOR,displayInitial);
+	    initDisplayButton(displayType,"New B&W",DisplayType.TV_NEW_BW,displayInitial);
 	}
 
-	private void initDisplayButton(final ButtonGroup displayType, String name, final DisplayType type, final boolean selected)
+	private void initDisplayButton(final ButtonGroup displayType, String name, final DisplayType type, final DisplayType displayInitial)
 	{
 		final JRadioButton displayTypeButton = new JRadioButton(name);
 	    displayTypeButton.setFocusable(false);
@@ -97,7 +97,7 @@ public class MonitorControlPanel extends JPanel
 	    });
 	    add(displayTypeButton);
 
-	    displayTypeButton.setSelected(selected);
+	    displayTypeButton.setSelected(type==displayInitial);
 	}
 
 	private void powerOn()

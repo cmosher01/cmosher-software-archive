@@ -21,6 +21,8 @@ import gui.Screen;
 
 public class GUIEmulator extends Emulator
 {
+	private static final DisplayType displayInitial = DisplayType.TV_OLD_COLOR;
+
 	private Screen screen;
 
 	public GUIEmulator() throws IOException
@@ -32,7 +34,7 @@ public class GUIEmulator extends Emulator
 	{
 		this.screen = new Screen(this.screenImage);
     	final ComputerControlPanel compControls = new ComputerControlPanel(this);
-    	final MonitorControlPanel monitorControls = new MonitorControlPanel(this.display);
+    	final MonitorControlPanel monitorControls = new MonitorControlPanel(this.display,displayInitial);
 
     	new GUI(this,this.screen,compControls,monitorControls,this.apple2.slots);
 
@@ -51,7 +53,7 @@ public class GUIEmulator extends Emulator
     	this.screen.setFocusTraversalKeysEnabled(false);
     	this.screen.requestFocus();
 
-		this.display.setType(DisplayType.MONITOR_COLOR);
+		this.display.setType(displayInitial);
     	powerOffComputer();
     	this.display.powerOn(false);
 	}

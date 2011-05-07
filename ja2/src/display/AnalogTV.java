@@ -217,7 +217,7 @@ public class AnalogTV implements VideoDisplayDevice
 					rgbv = 0xFFFFFF;
 				}
 				this.image.setElem(ip,rgbv);
-				this.image.setElem(ip+D_IP,rgbv); // display same pixel on next row
+				//this.image.setElem(ip+D_IP,rgbv); // display same pixel on next row
 				++ip;
 			}
 			ip += D_IP;
@@ -250,7 +250,7 @@ public class AnalogTV implements VideoDisplayDevice
 				final int is = row*AppleNTSC.H+col;
 				final int rgb = this.signal[is] > 50 ? color : 0;
 				this.image.setElem(ip,rgb);
-				this.image.setElem(ip+D_IP,rgb);
+				//this.image.setElem(ip+D_IP,rgb);
 				++ip;
 			}
 			ip += D_IP;
@@ -279,7 +279,7 @@ public class AnalogTV implements VideoDisplayDevice
 			{
 				final int rgb = yiq2rgb(yiq[col-350]);
 				this.image.setElem(ip,rgb);
-				this.image.setElem(ip+D_IP,rgb);
+				//this.image.setElem(ip+D_IP,rgb);
 				++ip;
 			}
 			ip += D_IP;
@@ -304,7 +304,7 @@ public class AnalogTV implements VideoDisplayDevice
 					rgbv = color2bw(rgbv);
 				}
 				this.image.setElem(ip,rgbv);
-				this.image.setElem(ip+D_IP,rgbv);
+				//this.image.setElem(ip+D_IP,rgbv);
 				++ip;
 			}
 			ip += D_IP;
