@@ -7,11 +7,11 @@
 >
 	<gui.Screen
 		android:id="@+id/screen"
-		android:layout_width="580dp"
+		android:layout_width="560dp"
 		android:layout_height="384dp" />
 	<gui.MonitorControlPanel
 		android:id="@+id/monitorControlPanel"
-		android:layout_width="580dp"
+		android:layout_width="560dp"
 		android:layout_height="30dp"
 	>
 		<ToggleButton
@@ -23,7 +23,7 @@
 	</gui.MonitorControlPanel>
 	<gui.ComputerControlPanel
 		android:id="@+id/computerControlPanel"
-		android:layout_width="580dp"
+		android:layout_width="560dp"
 		android:layout_height="30dp"
 	>
 		<ToggleButton

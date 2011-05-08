@@ -3,8 +3,12 @@
  */
 package emu;
 
+import gui.Screen;
+
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 
 import keyboard.HyperMode;
 import keyboard.KeyboardBufferMode;
@@ -24,7 +28,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ToggleButton;
 
-public class Emulator extends Activity implements Closeable, OnCheckedChangeListener {
+public class Emulator extends Activity implements Closeable {
 	protected final Throttle throttle;
 	protected final HyperMode hyper;
 	protected final KeyboardBufferMode buffered;
@@ -36,6 +40,7 @@ public class Emulator extends Activity implements Closeable, OnCheckedChangeList
 	protected final VideoDisplayDevice display;
 
 	private TimingGenerator timer;
+	private Screen screen;
 
 	public Emulator() throws IOException {
 		this.throttle = new Throttle();
@@ -52,6 +57,15 @@ public class Emulator extends Activity implements Closeable, OnCheckedChangeList
 		this.apple2 = new Apple2(this.keypresses, this.paddleButtonStates, this.display, this.hyper, this.buffered);
 
 		this.videoStatic = new VideoStaticGenerator(this.display);
+
+		this.screen = new Screen(this,this.screenImage);
+
+		this.screenImage.addObserver(new Observer() {
+			@SuppressWarnings({ "unused", "synthetic-access" })
+			public void update(final Observable observableThatChagned, final Object typeOfChange) {
+				Emulator.this.screen.plot();
+			}
+		});
 	}
 
 	@Override
@@ -60,19 +74,28 @@ public class Emulator extends Activity implements Closeable, OnCheckedChangeList
 
 		setContentView(R.layout.layout);
 
+		final ToggleButton computerPowerToggleSwitch = (ToggleButton) findViewById(R.id.computerPower);
+		computerPowerToggleSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(@SuppressWarnings("unused") CompoundButton buttonView, final boolean isChecked) {
+				if (isChecked) {
+					powerOnComputer();
+				} else {
+					powerOffComputer();
+				}
+			}
+		});
+
+		final ToggleButton monitorPowerToggleSwitch = (ToggleButton) findViewById(R.id.monitorPower);
+		monitorPowerToggleSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(@SuppressWarnings("unused") CompoundButton buttonView, final boolean isChecked) {
+				Emulator.this.display.powerOn(isChecked);
+			}
+		});
+
+		this.display.powerOn(false);
 		powerOffComputer();
-
-		final ToggleButton computerPowerToggleSwitch = (ToggleButton)findViewById(R.id.computerPower);
-		computerPowerToggleSwitch.setOnCheckedChangeListener(this);
-	}
-
-	@Override
-	public void onCheckedChanged(@SuppressWarnings("unused") final CompoundButton buttonView, final boolean isChecked) {
-		if (isChecked) {
-			powerOnComputer();
-		} else {
-			powerOffComputer();
-		}
 	}
 
 	public void powerOnComputer() {

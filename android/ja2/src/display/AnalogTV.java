@@ -3,6 +3,12 @@ package display;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import nu.mine.mosher.android.epple2.R;
+
+import android.widget.CompoundButton;
+import android.widget.ToggleButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import video.ScreenImage;
 import video.VideoDisplayDevice;
 

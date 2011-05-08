@@ -8,52 +8,45 @@ package video;
 
 import java.util.Observable;
 
-import javax.microedition.khronos.opengles.GL10;
+import android.graphics.Canvas;
+import display.AppleNTSC;
 
-public class ScreenImage extends Observable
-{
-//	private final BufferedImage image;
-//	private final DataBuffer imageBuf;
+public class ScreenImage extends Observable {
+	private static final int WIDTH = AppleNTSC.H - AppleNTSC.PIC_START - 2;
+	private static final int HEIGHT = VideoAddressing.VISIBLE_ROWS_PER_FIELD * 2;
 
-	public ScreenImage()
-	{
-//		this.image = new BufferedImage(AppleNTSC.H-AppleNTSC.PIC_START-2,VideoAddressing.VISIBLE_ROWS_PER_FIELD*2,BufferedImage.TYPE_INT_RGB);
-//		this.imageBuf = image.getRaster().getDataBuffer();
+	private int[] imageBuf;
+
+	public ScreenImage() {
+		this.imageBuf = new int[ScreenImage.WIDTH * ScreenImage.HEIGHT];
 	}
 
 	@Override
-	public void notifyObservers()
-	{
+	public void notifyObservers() {
 		setChanged();
 		super.notifyObservers();
 	}
 
-	public void setElem(final int i, final int val)
-	{
-//		this.imageBuf.setElem(i,val);
+	public void setElem(final int i, final int val) {
+		this.imageBuf[i] = val;
 	}
 
-	public void setAllElem(final int v)
-	{
-//		final int n = this.imageBuf.getSize();
-//		for (int i = 0; i < n; ++i)
-//		{
-//			this.imageBuf.setElem(i,v);
-//		}
+	public void setAllElem(final int v) {
+		final int n = ScreenImage.WIDTH * ScreenImage.HEIGHT;
+		for (int i = 0; i < n; ++i) {
+			setElem(i, v);
+		}
 	}
 
-	public int getWidth()
-	{
-		return 560;
-//		return this.image.getWidth();
+	public int getWidth() {
+		return ScreenImage.WIDTH;
 	}
 
-	public int getHeight()
-	{
-		return 384;
-//		return this.image.getHeight();
+	public int getHeight() {
+		return ScreenImage.HEIGHT;
 	}
 
+//@formatter:off
 //	public BufferedImage getImage()
 //	{
 //		return this.image;
@@ -67,18 +60,16 @@ public class ScreenImage extends Observable
 //			return false;
 //		}
 //	};
+//@formatter:on
 
-	public void drawOnto(final GL10 gl) {
-		gl.glDrawArrays(GL10.GL_FLOAT, 0, getWidth()*getHeight());
+	public void drawOnto(final Canvas canvas) {
+		canvas.drawBitmap(this.imageBuf, 0, ScreenImage.WIDTH, 0, 0, ScreenImage.WIDTH, ScreenImage.HEIGHT, false, null);
 	}
 
-//	public void drawOnto(final Graphics2D graphics, final AffineTransform affine)
-//	{
-//		graphics.drawImage(this.image,affine,ScreenImage.nullImageObserver);
-//	}
-//
+//@formatter:off
 //	public void dump(final String type, final File file) throws IOException
 //	{
 //		ImageIO.write(this.image,type,file);
 //	}
+//@formatter:on
 }
