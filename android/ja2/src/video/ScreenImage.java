@@ -8,7 +8,10 @@ package video;
 
 import java.util.Observable;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rasterizer;
 import display.AppleNTSC;
 
 public class ScreenImage extends Observable {
@@ -28,7 +31,9 @@ public class ScreenImage extends Observable {
 	}
 
 	public void setElem(final int i, final int val) {
-		this.imageBuf[i] = val;
+		synchronized (this.imageBuf) {
+			this.imageBuf[i] = val;
+		}
 	}
 
 	public void setAllElem(final int v) {
@@ -63,7 +68,12 @@ public class ScreenImage extends Observable {
 //@formatter:on
 
 	public void drawOnto(final Canvas canvas) {
-		canvas.drawBitmap(this.imageBuf, 0, ScreenImage.WIDTH, 0, 0, ScreenImage.WIDTH, ScreenImage.HEIGHT, false, null);
+		synchronized (this.imageBuf) {
+//			Bitmap bitmap = Bitmap.createBitmap(this.imageBuf, WIDTH, HEIGHT, Bitmap.Config.RGB_565);
+//			bitmap = Bitmap.createScaledBitmap(bitmap, 457, HEIGHT, false);
+//			canvas.drawBitmap(bitmap, 0, 0, null);
+			canvas.drawBitmap(this.imageBuf, 0, ScreenImage.WIDTH, 0, 0, ScreenImage.WIDTH, ScreenImage.HEIGHT, false, null);
+		}
 	}
 
 //@formatter:off

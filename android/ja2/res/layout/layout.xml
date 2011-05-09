@@ -1,36 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
 	android:orientation="horizontal"
 >
 	<gui.Screen
 		android:id="@+id/screen"
 		android:layout_width="560dp"
 		android:layout_height="384dp" />
-	<gui.MonitorControlPanel
-		android:id="@+id/monitorControlPanel"
-		android:layout_width="560dp"
-		android:layout_height="30dp"
-	>
-		<ToggleButton
-			android:id="@+id/monitorPower"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:textOn="On"
-			android:textOff="Off" />
-	</gui.MonitorControlPanel>
-	<gui.ComputerControlPanel
-		android:id="@+id/computerControlPanel"
-		android:layout_width="560dp"
-		android:layout_height="30dp"
+	<LinearLayout
+		android:layout_width="100dp"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
 	>
 		<ToggleButton
 			android:id="@+id/computerPower"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
+			android:layout_width="fill_parent"
+			android:layout_height="50dp"
 			android:textOn="On"
 			android:textOff="Off" />
-	</gui.ComputerControlPanel>
-</RelativeLayout>
+		<Button
+			android:id="@+id/reset"
+			android:layout_width="fill_parent"
+			android:layout_height="50dp"
+			android:text="RESET" />
+		<Button
+			android:id="@+id/quit"
+			android:layout_width="fill_parent"
+			android:layout_height="50dp"
+			android:text="Quit" />
+	</LinearLayout>
+</LinearLayout>

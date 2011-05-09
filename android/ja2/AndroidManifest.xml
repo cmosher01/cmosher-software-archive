@@ -5,13 +5,17 @@
 	android:versionCode="1"
 	android:versionName="1.0"
 >
+	<uses-sdk
+		android:targetSdkVersion="4"
+	></uses-sdk>
 	<application
 		android:label="EPPLE2"
 		android:debuggable="true"
 	>
 		<activity
 			android:name="emu.Emulator"
-			android:label="EPPLE@"
+			android:label="EPPLE2"
+			android:theme="@android:style/Theme.NoTitleBar"
 		>
 			<intent-filter>
 				<action

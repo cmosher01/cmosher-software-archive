@@ -150,7 +150,7 @@ F 1111 1111  |                             N/A     4     0 100    WHITE         
 	{
 		for (int i = 0; i < COLOR.length; ++i)
 		{
-			COLOR[clr[i]] = Color.HSVToColor(new float[] {hue(i)/360f,sat[i]/100f,val[i]/100f});
+			COLOR[clr[i]] = Color.HSVToColor(new float[] {hue(i),sat[i]/100f,val[i]/100f});
 		}
 	}
 	private static int hue(final int ipos)

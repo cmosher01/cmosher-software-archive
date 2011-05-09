@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
+
+import android.content.res.AssetManager;
 import keyboard.HyperMode;
 import keyboard.KeypressQueue;
 import cards.Card;
@@ -28,18 +30,19 @@ import chipset.Slots;
  */
 public class Config
 {
+	private final AssetManager assets;
 	private final String filename;
 
-	public Config(final String filename)
+	public Config(final AssetManager assets, final String filename)
 	{
 		this.filename = filename;
+		this.assets = assets;
 	}
 
 	public void parseConfig(final Memory memory, final Slots slots, final HyperMode hyper, final StandardIn.EOFHandler eofHandler)
 		throws IOException, InvalidMemoryLoad, InvalidDiskImage
 	{
-
-		final BufferedReader cfg = new BufferedReader(new InputStreamReader(new FileInputStream(new File(this.filename))));
+		final BufferedReader cfg = new BufferedReader(new InputStreamReader(this.assets.open(this.filename,AssetManager.ACCESS_BUFFER)));
 
     	for (String line = cfg.readLine(); line != null; line = cfg.readLine())
     	{
@@ -130,7 +133,7 @@ public class Config
 
 			if (!tok.hasMoreTokens()) throw new IllegalArgumentException("Error in config file: "+line);
 			final String file = tok.nextToken("\0").trim(); // rest of line
-			final InputStream rom = new BufferedInputStream(new FileInputStream(new File(file)));
+			final InputStream rom = new BufferedInputStream(this.assets.open(file,AssetManager.ACCESS_BUFFER));
 
 			if (slot < 0) // motherboard
 			{

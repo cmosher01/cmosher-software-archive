@@ -20,27 +20,34 @@ import video.VideoDisplayDevice;
 import video.VideoStaticGenerator;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.ToggleButton;
+import cards.disk.InvalidDiskImage;
+import cards.stdio.StandardIn;
+import chipset.InvalidMemoryLoad;
 import chipset.Throttle;
 import chipset.TimingGenerator;
+import config.CmdLineArgs;
 import config.Config;
 import display.AnalogTV;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.ToggleButton;
 
 public class Emulator extends Activity implements Closeable {
-	protected final Throttle throttle;
-	protected final HyperMode hyper;
-	protected final KeyboardBufferMode buffered;
-	protected final KeypressQueue keypresses;
-	protected final PaddleButtonStates paddleButtonStates;
-	protected final Apple2 apple2;
+	private static final String LOG_TAG = Emulator.class.getName();
+	private final Throttle throttle;
+	private final HyperMode hyper;
+	private final KeyboardBufferMode buffered;
+	private final KeypressQueue keypresses;
+	private final PaddleButtonStates paddleButtonStates;
+	private final Apple2 apple2;
 	private final VideoStaticGenerator videoStatic;
-	protected final ScreenImage screenImage;
-	protected final VideoDisplayDevice display;
+	private final ScreenImage screenImage;
+	private final VideoDisplayDevice display;
 
 	private TimingGenerator timer;
-	private Screen screen;
 
 	public Emulator() throws IOException {
 		this.throttle = new Throttle();
@@ -58,24 +65,44 @@ public class Emulator extends Activity implements Closeable {
 
 		this.videoStatic = new VideoStaticGenerator(this.display);
 
-		this.screen = new Screen(this,this.screenImage);
-
 		this.screenImage.addObserver(new Observer() {
-			@SuppressWarnings({ "unused", "synthetic-access" })
+			private Screen screen;
+
+			@Override
+			@SuppressWarnings({ "unused" })
 			public void update(final Observable observableThatChagned, final Object typeOfChange) {
-				Emulator.this.screen.plot();
+				// Log.d(LOG_TAG, "plotting screen");
+				if (this.screen == null) {
+					this.screen = ((Screen) findViewById(R.id.screen));
+				}
+				this.screen.plot();
 			}
 		});
 	}
 
 	@Override
-	protected void onCreate(final Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		DisplayMetrics metrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		Log.i(LOG_TAG, "display: "+metrics.heightPixels+"px X "+metrics.widthPixels+"px");
+
+		// no cmd line args on android
+		final CmdLineArgs cli = new CmdLineArgs(new String[0]);
+		final Config cfg = new Config(getAssets(),cli.getConfig());
+		try {
+			config(cfg);
+		} catch (final Throwable e) {
+			Log.e(LOG_TAG, "Error trying to configure the emulator", e);
+			finish(); // TODO
+			return;
+		}
 
 		setContentView(R.layout.layout);
 
 		final ToggleButton computerPowerToggleSwitch = (ToggleButton) findViewById(R.id.computerPower);
-		computerPowerToggleSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		computerPowerToggleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(@SuppressWarnings("unused") CompoundButton buttonView, final boolean isChecked) {
 				if (isChecked) {
@@ -85,17 +112,41 @@ public class Emulator extends Activity implements Closeable {
 				}
 			}
 		});
-
-		final ToggleButton monitorPowerToggleSwitch = (ToggleButton) findViewById(R.id.monitorPower);
-		monitorPowerToggleSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		final Button quit = (Button) findViewById(R.id.quit);
+		quit.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onCheckedChanged(@SuppressWarnings("unused") CompoundButton buttonView, final boolean isChecked) {
-				Emulator.this.display.powerOn(isChecked);
+			public void onClick(View v) {
+				finish(); // TODO
+			}
+		});
+		final Button reset = (Button) findViewById(R.id.reset);
+		reset.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Emulator.this.apple2.reset();
 			}
 		});
 
-		this.display.powerOn(false);
+		this.display.powerOn(true);
 		powerOffComputer();
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		// close(); // TODO
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		close(); // TODO
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		close(); // TODO
 	}
 
 	public void powerOnComputer() {
@@ -120,6 +171,7 @@ public class Emulator extends Activity implements Closeable {
 		this.timer.run();
 	}
 
+	@Override
 	public void close() {
 		if (this.timer != null) {
 			this.timer.shutdown();
@@ -127,12 +179,16 @@ public class Emulator extends Activity implements Closeable {
 		}
 	}
 
-	// protected abstract StandardIn.EOFHandler getStdInEOF();
+	public void config(final Config cfg) throws IOException, InvalidMemoryLoad, InvalidDiskImage {
+		cfg.parseConfig(this.apple2.rom, this.apple2.slots, this.hyper, new StandardIn.EOFHandler() {
+			public void handleEOF() {
+				// For a GUI, we don't do anything special when STDIN hits EOF
+			}
+		});
+	}
 
-	public void config(final Config cfg) // throws IOException, InvalidMemoryLoad,
-																				// InvalidDiskImage
-	{
-		// cfg.parseConfig(this.apple2.rom,this.apple2.slots,this.hyper,getStdInEOF());
+	public ScreenImage getScreenImage() {
+		return this.screenImage;
 	}
 
 }

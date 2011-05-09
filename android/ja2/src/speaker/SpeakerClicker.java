@@ -3,6 +3,10 @@ package speaker;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import android.media.AudioFormat;
+import android.media.AudioManager;
+import android.media.AudioTrack;
 //import javax.sound.sampled.AudioFormat;
 //import javax.sound.sampled.AudioSystem;
 //import javax.sound.sampled.DataLine;
@@ -22,7 +26,7 @@ public class SpeakerClicker
 
 	private volatile int t;
 
-//	private volatile SourceDataLine line;
+	private volatile AudioTrack line;
 	private volatile byte[] pcm = new byte[SAMPLES_PER_SECOND];
 
 	private AtomicInteger click = new AtomicInteger();
@@ -37,22 +41,10 @@ public class SpeakerClicker
 	{
 		Thread th = new Thread(new Runnable()
 		{
-			@SuppressWarnings("synthetic-access")
+			@Override
 			public void run()
 			{
-//				try
-//				{
 					feed();
-//				}
-//				catch (LineUnavailableException e)
-//				{
-//					e.printStackTrace();
-//					synchronized (SpeakerClicker.this.started)
-//					{
-//						SpeakerClicker.this.started.set(true);
-//						SpeakerClicker.this.started.notifyAll();
-//					}
-//				}
 			}
 		});
 		th.setDaemon(true);
@@ -74,19 +66,12 @@ public class SpeakerClicker
 		}
 	}
 
-	void feed() //throws LineUnavailableException
+	void feed()
 	{
-//		final AudioFormat fmt = new AudioFormat(SAMPLES_PER_SECOND,Byte.SIZE,1,true,false);
-//		final DataLine.Info info = new DataLine.Info(SourceDataLine.class,fmt);
-//		if (!AudioSystem.isLineSupported(info))
-//		{
-//			throw new LineUnavailableException("audio line not supported");
-//		}
-//
-//		this.line = (SourceDataLine)AudioSystem.getLine(info);
-//
-//		this.line.open(fmt,SAMPLES_PER_SECOND);
-//		this.line.start();
+		final int szMin = AudioTrack.getMinBufferSize(SAMPLES_PER_SECOND, AudioFormat.CHANNEL_CONFIGURATION_MONO, AudioFormat.ENCODING_PCM_8BIT);
+		this.line = new AudioTrack(AudioManager.STREAM_MUSIC,SAMPLES_PER_SECOND,AudioFormat.CHANNEL_CONFIGURATION_MONO, AudioFormat.ENCODING_PCM_8BIT, szMin, AudioTrack.MODE_STREAM);
+		this.line.play();
+		
 		this.running = true;
 		try
 		{
@@ -145,7 +130,7 @@ public class SpeakerClicker
 				this.pcm[deltaSamples-1] = this.pos ? AMPLITUDE : -AMPLITUDE;
 				this.pcm[deltaSamples] = this.pos ? AMPLITUDE : -AMPLITUDE;
 
-//				this.line.write(this.pcm,0,deltaSamples);
+				this.line.write(this.pcm,0,deltaSamples);
 
 				this.pcm[deltaSamples-1] = 0;
 				this.pcm[deltaSamples] = 0;

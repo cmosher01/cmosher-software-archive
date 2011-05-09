@@ -6,12 +6,15 @@ package chipset;
 
 
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import android.util.Log;
 import util.Util;
 
 
 
 public class Throttle
 {
+	private static final String LOG_TAG = Throttle.class.getName();
 	private static final int CHECK_EVERY_FRACT = 10;
 	private static final int CHECK_EVERY_CYCLE = Util.divideRound(TimingGenerator.AVG_CPU_HZ,CHECK_EVERY_FRACT);
 	private static final int EXPECTED_MS = 1000/CHECK_EVERY_FRACT;
@@ -43,7 +46,14 @@ public class Throttle
 			final long msDelta = EXPECTED_MS-msActual;
 			this.speedRatio = (float)EXPECTED_MS/msActual;
 //			System.err.println(this.speedRatio);
-			sleep(msDelta);
+
+			//			sleep(msDelta);
+			// TODO TESTING:
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
 
 			this.msPrev = System.currentTimeMillis();
 			this.times = 0;
@@ -56,7 +66,7 @@ public class Throttle
 		{
 			try
 			{
-//				System.out.println("Sleeping "+msDelta);
+				Log.i(LOG_TAG, "Sleeping "+msDelta);
 				Thread.sleep(msDelta);
 			}
 			catch (InterruptedException e)

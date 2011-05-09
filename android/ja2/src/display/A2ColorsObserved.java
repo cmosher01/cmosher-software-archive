@@ -4,6 +4,7 @@
 package display;
 
 import android.graphics.Color;
+import android.util.Log;
 
 /**
  * Defines Apple ][ colors, as estimated by eye from my Apple ][ plus and Sony CRT TV.
@@ -26,7 +27,7 @@ class A2ColorsObserved
 	{
 		for (int i = 0; i < COLOR.length; ++i)
 		{
-			COLOR[clr[i]] = Color.HSVToColor(new float[] {hue[i]/360f,sat[i]/100f,val[i]/100f});
+			COLOR[clr[i]] = Color.HSVToColor(new float[] {hue[i],sat[i]/100f,val[i]/100f});
 		}
 	}
 }

@@ -95,7 +95,7 @@ public class AnalogTV implements VideoDisplayDevice
 	}
 
 	private boolean noise;
-	private volatile DisplayType type;
+	private volatile DisplayType type = DisplayType.MONITOR_COLOR;
 
 	private int rrr = 1;
 	public void putAsDisconnectedVideoIn()
@@ -123,8 +123,11 @@ public class AnalogTV implements VideoDisplayDevice
 //		{
 //			throw new IllegalStateException("At end of screen; must re-synch before writing any more signal");
 //		}
+		if (this.isig >= AppleNTSC.SIGNAL_LEN) { // shouldn't happen
+			return;
+		}
 		this.signal[this.isig++] = level;
-		if (this.isig == AppleNTSC.SIGNAL_LEN)
+		if (this.isig >= AppleNTSC.SIGNAL_LEN)
 		{
 			if (isOn())
 			{
