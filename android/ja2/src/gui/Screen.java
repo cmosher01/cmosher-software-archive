@@ -78,13 +78,16 @@ public class Screen extends SurfaceView {
 			public void run() {
 
 				final SurfaceHolder holder = getHolder();
-				final Canvas canvas = holder.lockCanvas();
-				try {
-					synchronized (holder) {
-						Screen.this.screenImage.drawOnto(canvas);
+				synchronized (holder) {
+					final Canvas canvas = holder.lockCanvas();
+					if (canvas == null) {
+						return;
 					}
-				} finally {
-					holder.unlockCanvasAndPost(canvas);
+					try {
+						Screen.this.screenImage.drawOnto(canvas);
+					} finally {
+						holder.unlockCanvasAndPost(canvas);
+					}
 				}
 			}
 		});
