@@ -17,7 +17,7 @@
 			android:name="emu.Emulator"
 			android:label="EPPLE2"
 			android:theme="@android:style/Theme.NoTitleBar"
-		>
+		android:screenOrientation="landscape">
 			<intent-filter>
 				<action
 					android:name="android.intent.action.MAIN" />
