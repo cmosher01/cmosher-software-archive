@@ -20,6 +20,11 @@ public class Screen extends SurfaceView {
 	private final ScreenImage screenImage;
 	private final AtomicBoolean ready = new AtomicBoolean();
 	private final Activity activity;
+	private boolean compress;
+
+	public void setCompress(boolean compress) {
+		this.compress = compress;
+	}
 
 	public Screen(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -84,6 +89,7 @@ public class Screen extends SurfaceView {
 						return;
 					}
 					try {
+						canvas.drawColor(0);
 						Screen.this.screenImage.drawOnto(canvas);
 					} finally {
 						holder.unlockCanvasAndPost(canvas);
@@ -96,7 +102,10 @@ public class Screen extends SurfaceView {
 
 	@Override
 	public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		setMeasuredDimension(Screen.this.screenImage.getWidth(), Screen.this.screenImage.getHeight());
+		if (this.compress)
+			setMeasuredDimension(Screen.this.screenImage.getWidth(), Screen.this.screenImage.getHeight()/2);
+		else
+			setMeasuredDimension(Screen.this.screenImage.getWidth(), Screen.this.screenImage.getHeight());
 	}
 
 	@SuppressWarnings("unused")

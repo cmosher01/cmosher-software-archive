@@ -6,6 +6,7 @@
 
 package video;
 
+import java.util.Arrays;
 import java.util.Observable;
 
 import android.graphics.Bitmap;
@@ -19,6 +20,7 @@ public class ScreenImage extends Observable {
 	private static final int HEIGHT = VideoAddressing.VISIBLE_ROWS_PER_FIELD * 2;
 
 	private int[] imageBuf;
+	private boolean compress;
 
 	public ScreenImage() {
 		this.imageBuf = new int[ScreenImage.WIDTH * ScreenImage.HEIGHT];
@@ -37,9 +39,8 @@ public class ScreenImage extends Observable {
 	}
 
 	public void setAllElem(final int v) {
-		final int n = ScreenImage.WIDTH * ScreenImage.HEIGHT;
-		for (int i = 0; i < n; ++i) {
-			setElem(i, v);
+		synchronized (this.imageBuf) {
+			Arrays.fill(this.imageBuf, v);
 		}
 	}
 
@@ -48,6 +49,7 @@ public class ScreenImage extends Observable {
 	}
 
 	public int getHeight() {
+		if (this.compress) return ScreenImage.HEIGHT/2;
 		return ScreenImage.HEIGHT;
 	}
 
@@ -69,11 +71,20 @@ public class ScreenImage extends Observable {
 
 	public void drawOnto(final Canvas canvas) {
 		synchronized (this.imageBuf) {
-//			Bitmap bitmap = Bitmap.createBitmap(this.imageBuf, WIDTH, HEIGHT, Bitmap.Config.RGB_565);
-//			bitmap = Bitmap.createScaledBitmap(bitmap, 457, HEIGHT, false);
-//			canvas.drawBitmap(bitmap, 0, 0, null);
+			// Bitmap bitmap = Bitmap.createBitmap(this.imageBuf, WIDTH, HEIGHT,
+			// Bitmap.Config.RGB_565);
+			// bitmap = Bitmap.createScaledBitmap(bitmap, 457, HEIGHT, false);
+			// canvas.drawBitmap(bitmap, 0, 0, null);
 			canvas.drawBitmap(this.imageBuf, 0, ScreenImage.WIDTH, 0, 0, ScreenImage.WIDTH, ScreenImage.HEIGHT, false, null);
 		}
+	}
+
+	public void blank() {
+		setAllElem(0);
+	}
+
+	public void setCompress(boolean compress) {
+		this.compress = compress;
 	}
 
 //@formatter:off

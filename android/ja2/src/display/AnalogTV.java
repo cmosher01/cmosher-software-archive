@@ -98,6 +98,24 @@ public class AnalogTV implements VideoDisplayDevice
 	private volatile DisplayType type = DisplayType.MONITOR_COLOR;
 
 	private int rrr = 1;
+
+	private boolean bleed_down;
+	private boolean compress;
+
+	void toggleCompress()
+	{
+		this.compress = !this.compress;
+		this.image.blank();
+		this.image.notifyObservers();
+	}
+
+	void toggleBleedDown()
+	{
+		this.bleed_down = !this.bleed_down;
+		this.image.blank();
+		this.image.notifyObservers();
+	}
+
 	public void putAsDisconnectedVideoIn()
 	{
 		this.noise = true;
@@ -217,7 +235,7 @@ public class AnalogTV implements VideoDisplayDevice
 		{
 			final ColorReference cb = get_cb(row);
 			final boolean removeColor = (this.type == DisplayType.TV_NEW_BW || !cb.isColor());
-			ntsc_to_rgb_monitor(row*AppleNTSC.H+350,D_IP,rgb);
+			ntsc_to_rgb_monitor(row*AppleNTSC.H+350,AppleNTSC.H-350,rgb);
 			for (int col = 350; col < AppleNTSC.H-2; ++col)
 			{
 				int rgbv = rgb[col-350];
@@ -226,10 +244,12 @@ public class AnalogTV implements VideoDisplayDevice
 					rgbv = 0xFFFFFF;
 				}
 				this.image.setElem(ip,rgbv);
-				//this.image.setElem(ip+D_IP,rgbv); // display same pixel on next row
+				if (this.bleed_down)
+					this.image.setElem(ip+D_IP,rgbv); // display same pixel on next row
 				++ip;
 			}
-			ip += D_IP;
+			if (!this.compress)
+				ip += D_IP;
 		}
 		this.image.notifyObservers();
 	}
@@ -259,10 +279,12 @@ public class AnalogTV implements VideoDisplayDevice
 				final int is = row*AppleNTSC.H+col;
 				final int rgb = this.signal[is] > 50 ? color : 0;
 				this.image.setElem(ip,rgb);
-				//this.image.setElem(ip+D_IP,rgb);
+				if (this.bleed_down)
+					this.image.setElem(ip+D_IP,rgb);
 				++ip;
 			}
-			ip += D_IP;
+			if (!this.compress)
+				ip += D_IP;
 		}
 		this.image.notifyObservers();
 	}
@@ -288,10 +310,12 @@ public class AnalogTV implements VideoDisplayDevice
 			{
 				final int rgb = yiq2rgb(yiq[col-350]);
 				this.image.setElem(ip,rgb);
-				//this.image.setElem(ip+D_IP,rgb);
+				if (this.bleed_down)
+					this.image.setElem(ip+D_IP,rgb);
 				++ip;
 			}
-			ip += D_IP;
+			if (!this.compress)
+				ip += D_IP;
 		}
 		this.image.notifyObservers();
 	}
@@ -313,10 +337,12 @@ public class AnalogTV implements VideoDisplayDevice
 					rgbv = color2bw(rgbv);
 				}
 				this.image.setElem(ip,rgbv);
-				//this.image.setElem(ip+D_IP,rgbv);
+				if (this.bleed_down)
+					this.image.setElem(ip+D_IP,rgbv);
 				++ip;
 			}
-			ip += D_IP;
+			if (!this.compress)
+				ip += D_IP;
 		}
 		this.image.notifyObservers();
 	}
@@ -624,5 +650,14 @@ public class AnalogTV implements VideoDisplayDevice
 	public void setType(DisplayType type)
 	{
 		this.type = type;
+	}
+
+
+
+	@Override
+	public void setCompress(boolean compress) {
+		this.compress = compress;
+		this.image.blank();
+		this.image.notifyObservers();
 	}
 }

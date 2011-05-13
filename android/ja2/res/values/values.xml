@@ -2,14 +2,14 @@
 <resources>
 	<dimen
 		name="key_width"
-	>12dp</dimen>
+	>34dp</dimen>
 	<dimen
 		name="key_height"
-	>16dp</dimen>
+	>27dp</dimen>
 	<dimen
 		name="key_margin"
-	>1dp</dimen>
+	>2dp</dimen>
 	<dimen
 		name="text_size"
-	>6dp</dimen>
+	>8dp</dimen>
 </resources>

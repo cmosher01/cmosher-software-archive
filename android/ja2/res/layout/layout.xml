@@ -3,522 +3,527 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
-	android:orientation="horizontal"
+	android:orientation="vertical"
 >
-	<gui.Screen
-		android:id="@+id/screen"
-		android:layout_width="560dp"
-		android:layout_height="384dp" />
 	<LinearLayout
-		android:layout_width="280dp"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:orientation="vertical"
+		android:orientation="horizontal"
 	>
+		<gui.Screen
+			android:id="@+id/screen"
+			android:layout_width="560dp"
+			android:layout_height="192dp" />
+		<Button
+			android:id="@+id/paste"
+			android:layout_width="100dp"
+			android:layout_height="50dp"
+			android:text="Paste" />
 		<Button
 			android:id="@+id/quit"
 			android:layout_width="100dp"
 			android:layout_height="50dp"
 			android:text="Quit" />
-		<TableLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-		>
-			<TableRow>
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="n1"
-					android:text="1" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="n2"
-					android:text="2" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="n3"
-					android:text="3" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="n4"
-					android:text="4" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="n5"
-					android:text="5" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="n6"
-					android:text="6" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="n7"
-					android:text="7" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="n8"
-					android:text="8" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="n9"
-					android:text="9" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="n0"
-					android:text="0" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="colon"
-					android:text=":" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="dash"
-					android:text="-" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:id="@+id/reset"
-					android:tag="reset"
-					android:text="RST" />
-			</TableRow>
-			<TableRow>
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="esc"
-					android:text="ESC" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="Q"
-					android:text="Q" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="W"
-					android:text="W" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="E"
-					android:text="E" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="R"
-					android:text="R" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="T"
-					android:text="T" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="Y"
-					android:text="Y" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="U"
-					android:text="U" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="I"
-					android:text="I" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="O"
-					android:text="O" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="P"
-					android:text="P" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="rept"
-					android:text="RPT" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="return"
-					android:text="RET" />
-			</TableRow>
-			<TableRow>
-				<ToggleButton
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:id="@+id/ctrl"
-					android:tag="ctrl"
-					android:textOn="CTL"
-					android:textOff="CTL"
-					android:text="CTL" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="A"
-					android:text="A" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="S"
-					android:text="S" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="D"
-					android:text="D" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="F"
-					android:text="F" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="G"
-					android:text="G" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="H"
-					android:text="H" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="J"
-					android:text="J" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="K"
-					android:text="K" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="L"
-					android:text="L" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="semicolon"
-					android:text=";" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="left"
-					android:text="&lt;-" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="right"
-					android:text="-&gt;" />
-			</TableRow>
-			<TableRow>
-				<ToggleButton
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:id="@+id/lshift"
-					android:tag="lshift"
-					android:textOn="SHF"
-					android:textOff="SHF"
-					android:text="SHF" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="Z"
-					android:text="Z" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="X"
-					android:text="X" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="C"
-					android:text="C" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="V"
-					android:text="V" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="B"
-					android:text="B" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="N"
-					android:text="N" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="M"
-					android:text="M" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="comma"
-					android:text="," />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="period"
-					android:text="." />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:tag="slash"
-					android:text="/" />
-				<ToggleButton
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:id="@+id/rshift"
-					android:tag="rshift"
-					android:textOn="SHF"
-					android:textOff="SHF"
-					android:text="SHF" />
-			</TableRow>
-			<TableRow>
-				<ToggleButton
-					android:id="@+id/computerPower"
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:layout_span="3"
-					android:textOn="POWER"
-					android:textOff="POWER" />
-				<Button
-					android:layout_width="@dimen/key_width"
-					android:layout_height="@dimen/key_height"
-					android:padding="0dp"
-					android:layout_margin="@dimen/key_margin"
-					android:textSize="@dimen/text_size"
-					android:onClick="onKeyPress"
-					android:layout_span="8"
-					android:tag="space"
-					android:text=" " />
-			</TableRow>
-		</TableLayout>
 	</LinearLayout>
+	<TableLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+	>
+		<TableRow>
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="n1"
+				android:text="1" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="n2"
+				android:text="2" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="n3"
+				android:text="3" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="n4"
+				android:text="4" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="n5"
+				android:text="5" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="n6"
+				android:text="6" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="n7"
+				android:text="7" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="n8"
+				android:text="8" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="n9"
+				android:text="9" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="n0"
+				android:text="0" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="colon"
+				android:text=":" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="dash"
+				android:text="-" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:id="@+id/reset"
+				android:tag="reset"
+				android:text="RST" />
+		</TableRow>
+		<TableRow>
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="esc"
+				android:text="ESC" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="Q"
+				android:text="Q" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="W"
+				android:text="W" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="E"
+				android:text="E" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="R"
+				android:text="R" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="T"
+				android:text="T" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="Y"
+				android:text="Y" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="U"
+				android:text="U" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="I"
+				android:text="I" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="O"
+				android:text="O" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="P"
+				android:text="P" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="rept"
+				android:text="RPT" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="return"
+				android:text="RET" />
+		</TableRow>
+		<TableRow>
+			<ToggleButton
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:id="@+id/ctrl"
+				android:tag="ctrl"
+				android:textOn="CTL"
+				android:textOff="CTL"
+				android:text="CTL" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="A"
+				android:text="A" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="S"
+				android:text="S" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="D"
+				android:text="D" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="F"
+				android:text="F" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="G"
+				android:text="G" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="H"
+				android:text="H" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="J"
+				android:text="J" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="K"
+				android:text="K" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="L"
+				android:text="L" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="semicolon"
+				android:text=";" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="left"
+				android:text="&lt;-" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="right"
+				android:text="-&gt;" />
+		</TableRow>
+		<TableRow>
+			<ToggleButton
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:id="@+id/lshift"
+				android:tag="lshift"
+				android:textOn="SHF"
+				android:textOff="SHF"
+				android:text="SHF" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="Z"
+				android:text="Z" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="X"
+				android:text="X" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="C"
+				android:text="C" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="V"
+				android:text="V" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="B"
+				android:text="B" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="N"
+				android:text="N" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="M"
+				android:text="M" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="comma"
+				android:text="," />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="period"
+				android:text="." />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:tag="slash"
+				android:text="/" />
+			<ToggleButton
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:id="@+id/rshift"
+				android:tag="rshift"
+				android:textOn="SHF"
+				android:textOff="SHF"
+				android:text="SHF" />
+		</TableRow>
+		<TableRow>
+			<ToggleButton
+				android:id="@+id/computerPower"
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:layout_span="2"
+				android:textOn="POWER"
+				android:textOff="POWER" />
+			<Button
+				android:layout_width="@dimen/key_width"
+				android:layout_height="@dimen/key_height"
+				android:padding="0dp"
+				android:layout_margin="@dimen/key_margin"
+				android:textSize="@dimen/text_size"
+				android:onClick="onKeyPress"
+				android:layout_span="8"
+				android:tag="space"
+				android:text=" " />
+		</TableRow>
+	</TableLayout>
 </LinearLayout>

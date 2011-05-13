@@ -16,4 +16,5 @@ public interface VideoDisplayDevice
 	void putAsDisconnectedVideoIn();
 	void restartSignal();
 	void dump();
+	void setCompress(boolean checked);
 }

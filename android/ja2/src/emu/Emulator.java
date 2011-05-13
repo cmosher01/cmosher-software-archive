@@ -6,6 +6,7 @@ package emu;
 import gui.Screen;
 
 import java.io.Closeable;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,9 +23,13 @@ import video.VideoDisplayDevice;
 import video.VideoStaticGenerator;
 import android.app.Activity;
 import android.os.Bundle;
+import android.provider.Settings.System;
+import android.text.ClipboardManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
@@ -98,6 +103,13 @@ public class Emulator extends Activity implements Closeable {
 			return;
 		}
 
+		try {
+			File filesDir = getFilesDir().getCanonicalFile().getAbsoluteFile();
+			Log.i(LOG_TAG,"getFilesDir() --> "+filesDir.getPath());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		setContentView(R.layout.layout);
 
 		final ToggleButton computerPowerToggleSwitch = (ToggleButton) findViewById(R.id.computerPower);
@@ -148,8 +160,42 @@ public class Emulator extends Activity implements Closeable {
 			}
 		});
 
+//		final ToggleButton kbd = (ToggleButton) findViewById(R.id.keyboard);
+//		kbd.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				final boolean compress = ((CompoundButton)v).isChecked();
+//				Emulator.this.display.setCompress(compress);
+//				Emulator.this.screenImage.setCompress(compress);
+//				View screenView = findViewById(R.id.screen);
+//				ViewGroup.LayoutParams params = screenView.getLayoutParams();
+//				params.height = compress?192:192*2;
+//				screenView.setLayoutParams(params);
+//			}
+//		});
+
+		final Button paste = (Button) findViewById(R.id.paste);
+		paste.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				final ClipboardManager clip = (ClipboardManager)Emulator.this.getSystemService(CLIPBOARD_SERVICE);
+				final CharSequence sq = clip.getText();
+				for (int i = 0; i < sq.length(); ++i) {
+					char c = sq.charAt(i);
+					Log.i(LOG_TAG,"paste: "+Integer.toHexString(c));
+					if (c == '\n')
+					{
+						c = '\r';
+					}
+					Emulator.this.keypresses.put(c);
+				}
+			}
+		});
+		
 		this.display.powerOn(true);
 		powerOffComputer();
+		Emulator.this.display.setCompress(true);
+		Emulator.this.screenImage.setCompress(true);
 	}
 
 	private static class KeyCodes {
