@@ -47,7 +47,7 @@ package nu.mine.mosher.util;
  * @param <T> data-type of the wrapped object
  * @see Nothing
  */
-public class Optional<T>
+public class Optional<T> implements Requirement<T>
 {
     private final T t;
 
@@ -97,21 +97,19 @@ public class Optional<T>
         }
     }
 
-    /**
-     * @return true if the wrapped object exists, false if not
+    /* (non-Javadoc)
+     * @see nu.mine.mosher.util.Requirement#exists()
      */
+    @Override
     public boolean exists()
     {
         return this.exists;
     }
 
-    /**
-     * Gets the wrapped object (passed into the constructor), as long as it exists.
-     * 
-     * @return the wrapped object (never <code>null</code>)
-     * @throws FieldDoesNotExist
-     *             if the wrapped object does not exist
+    /* (non-Javadoc)
+     * @see nu.mine.mosher.util.Requirement#get()
      */
+    @Override
     public T get() throws FieldDoesNotExist
     {
         if (!this.exists)
