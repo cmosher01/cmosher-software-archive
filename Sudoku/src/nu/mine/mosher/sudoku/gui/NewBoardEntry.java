@@ -95,7 +95,9 @@ class NewBoardEntry extends JDialog
 		final JButton buttonOK = new JButton("OK");
         buttonOK.addActionListener(new ActionListener()
     	{
-			public void actionPerformed(final ActionEvent e)
+			@SuppressWarnings("synthetic-access")
+			@Override
+			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e)
 			{
 				ok();
 			}
@@ -105,7 +107,9 @@ class NewBoardEntry extends JDialog
         final JButton buttonCancel = new JButton("Cancel");
         buttonCancel.addActionListener(new ActionListener()
     	{
-			public void actionPerformed(final ActionEvent e)
+			@SuppressWarnings("synthetic-access")
+			@Override
+			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e)
 			{
 				cancel();
 			}

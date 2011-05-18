@@ -38,6 +38,7 @@ class PossibililtyPanel extends JPanel
 
 		addMouseListener(new MouseAdapter()
 		{
+			@SuppressWarnings("synthetic-access")
 			@Override
 			public void mouseClicked(final MouseEvent e)
 			{

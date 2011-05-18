@@ -44,9 +44,11 @@ public class HowardGarns implements Runnable, Closeable
     {
     	SwingUtilities.invokeAndWait(new Runnable()
     	{
+			@Override
 			public void run()
 			{
-		    	final Runnable program = new HowardGarns();
+		    	@SuppressWarnings("synthetic-access")
+					final Runnable program = new HowardGarns();
 		    	program.run();
 			}
     	}
@@ -73,12 +75,15 @@ public class HowardGarns implements Runnable, Closeable
     /**
 	 * Runs the application.
 	 */
+	@Override
 	public void run()
 	{
         // create the main frame window for the application
         this.framer.init(
         	new MenuBarFactory()
 	    	{
+				@SuppressWarnings("synthetic-access")
+				@Override
 				public JMenuBar createMenuBar()
 				{
 					return createAppMenuBar();
@@ -88,7 +93,7 @@ public class HowardGarns implements Runnable, Closeable
 	    	new WindowAdapter()
 	    	{
 				@Override
-				public void windowClosing(final WindowEvent e)
+				public void windowClosing(@SuppressWarnings("unused") final WindowEvent e)
 				{
 					close();
 				}
@@ -98,7 +103,9 @@ public class HowardGarns implements Runnable, Closeable
 
 		this.game.addObserver(new Observer()
 		{
-			public void update(final Observable observableThatChagned, final Object typeOfChange)
+			@SuppressWarnings("synthetic-access")
+			@Override
+			public void update(@SuppressWarnings("unused") final Observable observableThatChagned, @SuppressWarnings("unused") final Object typeOfChange)
 			{
 				updateGameChange();
 			}
@@ -161,7 +168,8 @@ public class HowardGarns implements Runnable, Closeable
 		itemFileExit.setMnemonic(KeyEvent.VK_X);
 		itemFileExit.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(final ActionEvent e)
+			@Override
+			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e)
 			{
 				close();
 			}
@@ -169,6 +177,7 @@ public class HowardGarns implements Runnable, Closeable
 		menu.add(itemFileExit);
 	}
 
+	@Override
 	public void close()
 	{
 		try

@@ -40,6 +40,7 @@ public class GameManager extends Observable implements Cloneable
 		read("");
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Object clone()
 	{
@@ -248,7 +249,9 @@ public class GameManager extends Observable implements Cloneable
 		this.itemUndo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,ActionEvent.CTRL_MASK));
 		this.itemUndo.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(final ActionEvent e)
+			@SuppressWarnings("synthetic-access")
+			@Override
+			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e)
 			{
 				undo();
 			}
@@ -260,7 +263,9 @@ public class GameManager extends Observable implements Cloneable
 		this.itemRedo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,ActionEvent.CTRL_MASK));
 		this.itemRedo.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(final ActionEvent e)
+			@SuppressWarnings("synthetic-access")
+			@Override
+			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e)
 			{
 				redo();
 			}

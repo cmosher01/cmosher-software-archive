@@ -195,8 +195,14 @@ public class FrameManager implements Closeable
 		return choice == JOptionPane.OK_OPTION;
 	}
 
+	@Override
 	public void close()
 	{
 		this.frame.dispose();
+	}
+
+	public String getBoardStringFromAlgorithm() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

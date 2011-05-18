@@ -52,7 +52,28 @@ public class FileManager
 		this.itemFileNew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,ActionEvent.CTRL_MASK));
 		this.itemFileNew.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(final ActionEvent e)
+			@SuppressWarnings("synthetic-access")
+			@Override
+			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e)
+			{
+				try
+				{
+					fileGenNew();
+				}
+				catch (final Throwable error)
+				{
+					error.printStackTrace();
+				}
+			}
+		});
+		appendTo.add(this.itemFileNew);
+
+		this.itemFileNew = new JMenuItem("Paste as New");
+		this.itemFileNew.addActionListener(new ActionListener()
+		{
+			@SuppressWarnings("synthetic-access")
+			@Override
+			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e)
 			{
 				try
 				{
@@ -71,7 +92,9 @@ public class FileManager
 		this.itemFileOpen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,ActionEvent.CTRL_MASK));
 		this.itemFileOpen.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(final ActionEvent e)
+			@SuppressWarnings("synthetic-access")
+			@Override
+			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e)
 			{
 				try
 				{
@@ -90,7 +113,9 @@ public class FileManager
 		this.itemFileSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,ActionEvent.CTRL_MASK));
 		this.itemFileSave.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(final ActionEvent e)
+			@SuppressWarnings("synthetic-access")
+			@Override
+			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e)
 			{
 				try
 				{
@@ -109,7 +134,9 @@ public class FileManager
 		this.itemFileSaveAs.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,ActionEvent.CTRL_MASK));
 		this.itemFileSaveAs.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(final ActionEvent e)
+			@SuppressWarnings("synthetic-access")
+			@Override
+			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e)
 			{
 				try
 				{
@@ -262,6 +289,23 @@ public class FileManager
 			{
 				throw new UserCancelled();
 			}
+		}
+	}
+
+	private void fileGenNew()
+	{
+		try
+		{
+			verifyLoseUnsavedChanges();
+			final String sBoard = this.framer.getBoardStringFromAlgorithm();
+			this.file = null;
+			this.game.read(sBoard);
+			this.gameLastSaved = (GameManager)this.game.clone();
+			verifyUniqueSolution();
+		}
+		catch (UserCancelled e)
+		{
+			// user pressed the cancel button, so just return
 		}
 	}
 }

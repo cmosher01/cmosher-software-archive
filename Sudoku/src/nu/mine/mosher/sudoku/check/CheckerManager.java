@@ -32,7 +32,9 @@ public class CheckerManager
 		itemCheckAnswer.setMnemonic(KeyEvent.VK_A);
 		itemCheckAnswer.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(final ActionEvent e)
+			@SuppressWarnings("synthetic-access")
+			@Override
+			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e)
 			{
 				checkAnswer();
 			}

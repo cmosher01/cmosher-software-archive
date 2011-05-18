@@ -45,7 +45,8 @@ public class SolverManager
 		gameToSolve.addObserver(new Observer()
 		{
 			private boolean recursing;
-			public void update(final Observable observableThatChagned, final Object typeOfChange)
+			@Override
+			public void update(@SuppressWarnings("unused") final Observable observableThatChagned, @SuppressWarnings("unused") final Object typeOfChange)
 			{
 				if (this.recursing)
 				{
@@ -66,7 +67,8 @@ public class SolverManager
 		this.itemSolve.setMnemonic(KeyEvent.VK_S);
 		this.itemSolve.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(final ActionEvent e)
+			@Override
+			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e)
 			{
 				solve();
 			}
@@ -79,7 +81,8 @@ public class SolverManager
 		this.itemAutomatic.setMnemonic(KeyEvent.VK_A);
 		this.itemAutomatic.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(final ActionEvent e)
+			@Override
+			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e)
 			{
 				autoSolveIfSelected();
 				updateMenu();

@@ -91,7 +91,8 @@ public class Time implements Comparable<Time>, Serializable
 
 
 
-    public int compareTo(final Time that)
+    @Override
+		public int compareTo(final Time that)
     {
         if (this.ms < that.ms)
         {

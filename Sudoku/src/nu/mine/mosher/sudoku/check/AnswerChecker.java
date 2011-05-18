@@ -3,6 +3,7 @@
  */
 package nu.mine.mosher.sudoku.check;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import nu.mine.mosher.sudoku.state.GameManager;
@@ -16,13 +17,15 @@ import nu.mine.mosher.sudoku.util.Converter;
  */
 class AnswerChecker
 {
-	private static final Set<Integer> ALL_NINE = new HashSet<Integer>();
+	private static final Set<Integer> ALL_NINE;
 	static
 	{
+		final Set<Integer> all_nine = new HashSet<Integer>(9,1.0f);
 		for (int i = 0; i < 9; ++i)
 		{
-			ALL_NINE.add(i);
+			all_nine.add(Integer.valueOf(i));
 		}
+		ALL_NINE = Collections.<Integer>unmodifiableSet(all_nine);
 	}
 
 	private final GameManager game;
@@ -78,7 +81,7 @@ class AnswerChecker
 				return false;
 			}
 			final int ans = this.game.getAnswer(sbox,iSquare);
-			if (!s.remove(ans))
+			if (!s.remove(Integer.valueOf(ans)))
 			{
 				return false;
 			}
@@ -105,7 +108,7 @@ class AnswerChecker
 				return false;
 			}
 			final int ans = this.game.getAnswer(sbox,square);
-			if (!s.remove(ans))
+			if (!s.remove(Integer.valueOf(ans)))
 			{
 				return false;
 			}
@@ -132,7 +135,7 @@ class AnswerChecker
 				return false;
 			}
 			final int ans = this.game.getAnswer(sbox,square);
-			if (!s.remove(ans))
+			if (!s.remove(Integer.valueOf(ans)))
 			{
 				return false;
 			}

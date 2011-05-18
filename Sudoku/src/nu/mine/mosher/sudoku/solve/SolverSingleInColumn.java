@@ -16,6 +16,7 @@ class SolverSingleInColumn implements Solver
 		this.game = gameToSolve;
 	}
 
+	@Override
 	public boolean solve()
 	{
 		boolean changed = false;
