@@ -11,7 +11,9 @@ import java.awt.event.WindowListener;
 import java.awt.image.MemoryImageSource;
 import java.io.Closeable;
 import java.io.File;
+import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.Random;
 
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -172,7 +174,15 @@ public class FrameManager implements Closeable {
 	}
 
 	public String getBoardStringFromAlgorithm() {
-		// TODO generate new game
-		return null;
+		final char[] rc = new char[9*9];
+		Arrays.fill(rc,'0');
+		final Random rand = new Random();
+		final int cSquare = rand.nextInt(21)+18;
+		for (int iSquare = 0; iSquare < cSquare; ++iSquare) {
+			final int ic = rand.nextInt(rc.length);
+			final char c = (char)(rand.nextInt(9)+'1');
+			rc[ic] = c;
+		}
+		return new String(rc);
 	}
 }

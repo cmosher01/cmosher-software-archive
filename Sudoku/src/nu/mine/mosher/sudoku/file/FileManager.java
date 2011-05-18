@@ -224,11 +224,22 @@ public class FileManager {
 	private void fileGenNew() {
 		try {
 			verifyLoseUnsavedChanges();
-			final String sBoard = this.framer.getBoardStringFromAlgorithm();
 			this.file = null;
-			this.game.read(sBoard);
+			int cSolution = 0;
+			while (cSolution != 1) {
+				final String sBoard = this.framer.getBoardStringFromAlgorithm();
+				this.game.read(sBoard);
+				final BruteForce brute = new BruteForce(this.game);
+				cSolution = brute.countSolutions();
+				System.err.println("Generated board with "+cSolution+" solution(s).");
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			this.gameLastSaved = (GameManager) this.game.clone();
-			verifyUniqueSolution();
 		} catch (UserCancelled e) {
 			// user pressed the cancel button, so just return
 		}
