@@ -7,10 +7,9 @@ import javax.swing.JMenuBar;
 
 /**
  * TODO
- *
+ * 
  * @author Chris Mosher
  */
-public interface MenuBarFactory
-{
+public interface MenuBarFactory {
 	JMenuBar createMenuBar();
 }

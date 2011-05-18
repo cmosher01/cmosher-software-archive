@@ -6,26 +6,20 @@ package nu.mine.mosher.sudoku.solve;
 import nu.mine.mosher.sudoku.state.GameManager;
 import nu.mine.mosher.sudoku.state.MoveAutomationType;
 
-class SolverEliminatorSBox implements Solver
-{
+class SolverEliminatorSBox implements Solver {
 	private final GameManager game;
 
-	public SolverEliminatorSBox(final GameManager gameToSolve)
-	{
+	public SolverEliminatorSBox(final GameManager gameToSolve) {
 		this.game = gameToSolve;
 	}
 
 	@Override
-	public boolean solve()
-	{
+	public boolean solve() {
 		boolean changed = false;
 
-		for (int sbox = 0; sbox < 9; ++sbox)
-		{
-			for (int square = 0; square < 9; ++square)
-			{
-				if (eliminate(sbox,square))
-				{
+		for (int sbox = 0; sbox < 9; ++sbox) {
+			for (int square = 0; square < 9; ++square) {
+				if (eliminate(sbox, square)) {
 					changed = true;
 				}
 			}
@@ -34,24 +28,19 @@ class SolverEliminatorSBox implements Solver
 		return changed;
 	}
 
-	private boolean eliminate(int sbox, int square)
-	{
+	private boolean eliminate(int sbox, int square) {
 		boolean changed = false;
 
-		if (!this.game.hasAnswer(sbox, square))
-		{
+		if (!this.game.hasAnswer(sbox, square)) {
 			return changed;
 		}
 
 		final int imposs = this.game.getAnswer(sbox, square);
 
-		for (int iSquare = 0; iSquare < 9; ++iSquare)
-		{
-			if (iSquare != square)
-			{
-				if (!this.game.isEliminated(sbox,iSquare,imposs))
-				{
-					this.game.toggle(sbox,iSquare,imposs,MoveAutomationType.AUTOMATIC);
+		for (int iSquare = 0; iSquare < 9; ++iSquare) {
+			if (iSquare != square) {
+				if (!this.game.isEliminated(sbox, iSquare, imposs)) {
+					this.game.toggle(sbox, iSquare, imposs, MoveAutomationType.AUTOMATIC);
 					changed = true;
 				}
 			}

@@ -8,15 +8,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Observable;
 import java.util.Observer;
+
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+
 import nu.mine.mosher.sudoku.state.GameManager;
 
-
-
-public class SolverManager
-{
+public class SolverManager {
 	private JMenuItem itemSolve;
 	private JCheckBoxMenuItem itemAutomatic;
 
@@ -33,8 +32,7 @@ public class SolverManager
 	private JCheckBoxMenuItem itemAffirmSingletonsInSBox;
 	private final Solver solverSingleInSBox;
 
-	public SolverManager(final GameManager gameToSolve)
-	{
+	public SolverManager(final GameManager gameToSolve) {
 		this.solverEliminatorRow = new SolverEliminatorRow(gameToSolve);
 		this.solverEliminatorColumn = new SolverEliminatorColumn(gameToSolve);
 		this.solverEliminatorSBox = new SolverEliminatorSBox(gameToSolve);
@@ -42,14 +40,13 @@ public class SolverManager
 		this.solverSingleInColumn = new SolverSingleInColumn(gameToSolve);
 		this.solverSingleInSBox = new SolverSingleInSBox(gameToSolve);
 
-		gameToSolve.addObserver(new Observer()
-		{
+		gameToSolve.addObserver(new Observer() {
 			private boolean recursing;
+
 			@Override
-			public void update(@SuppressWarnings("unused") final Observable observableThatChagned, @SuppressWarnings("unused") final Object typeOfChange)
-			{
-				if (this.recursing)
-				{
+			public void update(@SuppressWarnings("unused") final Observable observableThatChagned,
+					@SuppressWarnings("unused") final Object typeOfChange) {
+				if (this.recursing) {
 					return;
 				}
 				this.recursing = true;
@@ -61,40 +58,29 @@ public class SolverManager
 		});
 	}
 
-	public void appendMenuItems(final JMenu appendTo)
-	{
+	public void appendMenuItems(final JMenu appendTo) {
 		this.itemSolve = new JMenuItem("Solve");
 		this.itemSolve.setMnemonic(KeyEvent.VK_S);
-		this.itemSolve.addActionListener(new ActionListener()
-		{
+		this.itemSolve.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e)
-			{
+			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e) {
 				solve();
 			}
 		});
 		appendTo.add(this.itemSolve);
 
-
-
 		this.itemAutomatic = new JCheckBoxMenuItem("Automatically");
 		this.itemAutomatic.setMnemonic(KeyEvent.VK_A);
-		this.itemAutomatic.addActionListener(new ActionListener()
-		{
+		this.itemAutomatic.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e)
-			{
+			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e) {
 				autoSolveIfSelected();
 				updateMenu();
 			}
 		});
 		appendTo.add(this.itemAutomatic);
 
-
-
 		appendTo.addSeparator();
-
-
 
 		this.itemEliminateFromSameRow = new JCheckBoxMenuItem("Eliminate From Same Row");
 		this.itemEliminateFromSameRow.setSelected(true);
@@ -116,75 +102,52 @@ public class SolverManager
 		appendTo.add(this.itemAffirmSingletonsInSBox);
 	}
 
-	public void updateMenu()
-	{
+	public void updateMenu() {
 		this.itemSolve.setEnabled(!this.itemAutomatic.isSelected());
 	}
 
-
-
-	public void autoSolveIfSelected()
-	{
-		if (this.itemAutomatic.isSelected())
-		{
+	public void autoSolveIfSelected() {
+		if (this.itemAutomatic.isSelected()) {
 			solve();
 		}
 	}
 
-	public void solve()
-	{
+	public void solve() {
 		boolean changed;
-		do
-		{
+		do {
 			changed = solveOnce();
-		}
-		while (changed);
+		} while (changed);
 	}
 
-
-
-	private boolean solveOnce()
-	{
+	private boolean solveOnce() {
 		boolean changed = false;
-		if (this.itemEliminateFromSameRow.isSelected())
-		{
-			if (this.solverEliminatorRow.solve())
-			{
+		if (this.itemEliminateFromSameRow.isSelected()) {
+			if (this.solverEliminatorRow.solve()) {
 				changed = true;
 			}
 		}
-		if (this.itemEliminateFromSameColumn.isSelected())
-		{
-			if (this.solverEliminatorColumn.solve())
-			{
+		if (this.itemEliminateFromSameColumn.isSelected()) {
+			if (this.solverEliminatorColumn.solve()) {
 				changed = true;
 			}
 		}
-		if (this.itemEliminateFromSameSBox.isSelected())
-		{
-			if (this.solverEliminatorSBox.solve())
-			{
+		if (this.itemEliminateFromSameSBox.isSelected()) {
+			if (this.solverEliminatorSBox.solve()) {
 				changed = true;
 			}
 		}
-		if (this.itemAffirmSingletonsInRow.isSelected())
-		{
-			if (this.solverSingleInRow.solve())
-			{
+		if (this.itemAffirmSingletonsInRow.isSelected()) {
+			if (this.solverSingleInRow.solve()) {
 				changed = true;
 			}
 		}
-		if (this.itemAffirmSingletonsInColumn.isSelected())
-		{
-			if (this.solverSingleInColumn.solve())
-			{
+		if (this.itemAffirmSingletonsInColumn.isSelected()) {
+			if (this.solverSingleInColumn.solve()) {
 				changed = true;
 			}
 		}
-		if (this.itemAffirmSingletonsInSBox.isSelected())
-		{
-			if (this.solverSingleInSBox.solve())
-			{
+		if (this.itemAffirmSingletonsInSBox.isSelected()) {
+			if (this.solverSingleInSBox.solve()) {
 				changed = true;
 			}
 		}

@@ -7,24 +7,19 @@ import nu.mine.mosher.sudoku.state.GameManager;
 import nu.mine.mosher.sudoku.state.MoveAutomationType;
 import nu.mine.mosher.sudoku.util.Converter;
 
-class SolverSingleInColumn implements Solver
-{
+class SolverSingleInColumn implements Solver {
 	private final GameManager game;
 
-	public SolverSingleInColumn(final GameManager gameToSolve)
-	{
+	public SolverSingleInColumn(final GameManager gameToSolve) {
 		this.game = gameToSolve;
 	}
 
 	@Override
-	public boolean solve()
-	{
+	public boolean solve() {
 		boolean changed = false;
 
-		for (int col = 0; col < 9; ++col)
-		{
-			if (affirm(col))
-			{
+		for (int col = 0; col < 9; ++col) {
+			if (affirm(col)) {
 				changed = true;
 			}
 		}
@@ -32,31 +27,25 @@ class SolverSingleInColumn implements Solver
 		return changed;
 	}
 
-	private boolean affirm(int col)
-	{
+	private boolean affirm(int col) {
 		boolean changed = false;
 
-		for (int poss = 0; poss < 9; ++poss)
-		{
+		for (int poss = 0; poss < 9; ++poss) {
 			int cPoss = 0;
 			int iRowPoss = -1;
-			for (int iRow = 0; iRow < 9; ++iRow)
-			{
-				final int isbox = Converter.sboxOf(iRow,col);
-				final int isquare = Converter.squareOf(iRow,col);
-				if (!this.game.isEliminated(isbox,isquare,poss))
-				{
+			for (int iRow = 0; iRow < 9; ++iRow) {
+				final int isbox = Converter.sboxOf(iRow, col);
+				final int isquare = Converter.squareOf(iRow, col);
+				if (!this.game.isEliminated(isbox, isquare, poss)) {
 					++cPoss;
 					iRowPoss = iRow;
 				}
 			}
-			if (cPoss == 1)
-			{
-				final int isbox = Converter.sboxOf(iRowPoss,col);
-				final int isquare = Converter.squareOf(iRowPoss,col);
-				if (!this.game.hasAnswer(isbox,isquare))
-				{
-					this.game.keep(isbox,isquare,poss,MoveAutomationType.AUTOMATIC);
+			if (cPoss == 1) {
+				final int isbox = Converter.sboxOf(iRowPoss, col);
+				final int isquare = Converter.squareOf(iRowPoss, col);
+				if (!this.game.hasAnswer(isbox, isquare)) {
+					this.game.keep(isbox, isquare, poss, MoveAutomationType.AUTOMATIC);
 					changed = true;
 				}
 			}

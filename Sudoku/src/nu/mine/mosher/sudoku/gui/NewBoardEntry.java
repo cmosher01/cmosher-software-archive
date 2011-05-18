@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -18,22 +19,17 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
+
 import nu.mine.mosher.sudoku.gui.exception.UserCancelled;
 
-class NewBoardEntry extends JDialog
-{
+class NewBoardEntry extends JDialog {
 	private static final boolean MODAL = true;
-
-
 
 	private String sEntry = "";
 	private JTextArea textEntry;
 
-
-
-	public NewBoardEntry(final Frame owner) throws HeadlessException
-	{
-		super(owner,"Enter New Puzzle",MODAL);
+	public NewBoardEntry(final Frame owner) throws HeadlessException {
+		super(owner, "Enter New Puzzle", MODAL);
 		setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 
 		addInstructions();
@@ -44,24 +40,17 @@ class NewBoardEntry extends JDialog
 		setLocationRelativeTo(null);
 	}
 
-
-
-	public String ask() throws UserCancelled
-	{
+	public String ask() throws UserCancelled {
 		setVisible(true);
-		if (this.sEntry.length() == 0)
-		{
+		if (this.sEntry.length() == 0) {
 			throw new UserCancelled();
 		}
 
 		return this.sEntry;
 	}
 
-
-
-	private void addInstructions()
-	{
-		final JPanel panelLabel = new JPanel(new GridLayout(3,1));
+	private void addInstructions() {
+		final JPanel panelLabel = new JPanel(new GridLayout(3, 1));
 
 		final JLabel labelLine1 = new JLabel("Please enter all the numbers in the puzzle. Enter them row by row,");
 		panelLabel.add(labelLine1);
@@ -70,67 +59,56 @@ class NewBoardEntry extends JDialog
 		final JLabel labelLine3 = new JLabel("square. Enter a total of 81 numbers. Note that you can use Ctrl-V to paste.");
 		panelLabel.add(labelLine3);
 
-		panelLabel.setBorder(BorderFactory.createEmptyBorder(7,7,7,7));
+		panelLabel.setBorder(BorderFactory.createEmptyBorder(7, 7, 7, 7));
 
-		getContentPane().add(panelLabel,BorderLayout.NORTH);
+		getContentPane().add(panelLabel, BorderLayout.NORTH);
 	}
 
-	private void addEntryArea()
-	{
+	private void addEntryArea() {
 		this.textEntry = new JTextArea();
 
-		this.textEntry.setPreferredSize(new Dimension(400,300));
+		this.textEntry.setPreferredSize(new Dimension(400, 300));
 
-		this.textEntry.setBorder(BorderFactory.createCompoundBorder(
-			BorderFactory.createBevelBorder(BevelBorder.RAISED),
-			BorderFactory.createBevelBorder(BevelBorder.LOWERED)));
+		this.textEntry.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED),
+				BorderFactory.createBevelBorder(BevelBorder.LOWERED)));
 
-		getContentPane().add(this.textEntry,BorderLayout.CENTER);
+		getContentPane().add(this.textEntry, BorderLayout.CENTER);
 	}
 
-	private void addButtons()
-	{
+	private void addButtons() {
 		final JPanel panelButtons = new JPanel();
 
 		final JButton buttonOK = new JButton("OK");
-        buttonOK.addActionListener(new ActionListener()
-    	{
+		buttonOK.addActionListener(new ActionListener() {
 			@SuppressWarnings("synthetic-access")
 			@Override
-			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e)
-			{
+			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e) {
 				ok();
 			}
 		});
-        panelButtons.add(buttonOK);
+		panelButtons.add(buttonOK);
 
-        final JButton buttonCancel = new JButton("Cancel");
-        buttonCancel.addActionListener(new ActionListener()
-    	{
+		final JButton buttonCancel = new JButton("Cancel");
+		buttonCancel.addActionListener(new ActionListener() {
 			@SuppressWarnings("synthetic-access")
 			@Override
-			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e)
-			{
+			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e) {
 				cancel();
 			}
 		});
-        panelButtons.add(buttonCancel);
+		panelButtons.add(buttonCancel);
 
-        panelButtons.setBorder(BorderFactory.createEmptyBorder(7,7,7,7));
+		panelButtons.setBorder(BorderFactory.createEmptyBorder(7, 7, 7, 7));
 
-        getContentPane().add(panelButtons,BorderLayout.SOUTH);
+		getContentPane().add(panelButtons, BorderLayout.SOUTH);
 	}
 
-
-
-	private void ok()
-	{
+	private void ok() {
 		this.sEntry = this.textEntry.getText();
 		setVisible(false);
 	}
 
-	private void cancel()
-	{
+	private void cancel() {
 		this.sEntry = "";
 		setVisible(false);
 	}

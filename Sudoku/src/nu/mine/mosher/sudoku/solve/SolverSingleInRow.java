@@ -7,24 +7,19 @@ import nu.mine.mosher.sudoku.state.GameManager;
 import nu.mine.mosher.sudoku.state.MoveAutomationType;
 import nu.mine.mosher.sudoku.util.Converter;
 
-class SolverSingleInRow implements Solver
-{
+class SolverSingleInRow implements Solver {
 	private final GameManager game;
 
-	public SolverSingleInRow(final GameManager gameToSolve)
-	{
+	public SolverSingleInRow(final GameManager gameToSolve) {
 		this.game = gameToSolve;
 	}
 
 	@Override
-	public boolean solve()
-	{
+	public boolean solve() {
 		boolean changed = false;
 
-		for (int row = 0; row < 9; ++row)
-		{
-			if (affirm(row))
-			{
+		for (int row = 0; row < 9; ++row) {
+			if (affirm(row)) {
 				changed = true;
 			}
 		}
@@ -32,31 +27,25 @@ class SolverSingleInRow implements Solver
 		return changed;
 	}
 
-	private boolean affirm(int row)
-	{
+	private boolean affirm(int row) {
 		boolean changed = false;
 
-		for (int poss = 0; poss < 9; ++poss)
-		{
+		for (int poss = 0; poss < 9; ++poss) {
 			int cPoss = 0;
 			int iColPoss = -1;
-			for (int iCol = 0; iCol < 9; ++iCol)
-			{
-				final int isbox = Converter.sboxOf(row,iCol);
-				final int isquare = Converter.squareOf(row,iCol);
-				if (!this.game.isEliminated(isbox,isquare,poss))
-				{
+			for (int iCol = 0; iCol < 9; ++iCol) {
+				final int isbox = Converter.sboxOf(row, iCol);
+				final int isquare = Converter.squareOf(row, iCol);
+				if (!this.game.isEliminated(isbox, isquare, poss)) {
 					++cPoss;
 					iColPoss = iCol;
 				}
 			}
-			if (cPoss == 1)
-			{
-				final int isbox = Converter.sboxOf(row,iColPoss);
-				final int isquare = Converter.squareOf(row,iColPoss);
-				if (!this.game.hasAnswer(isbox,isquare))
-				{
-					this.game.keep(isbox,isquare,poss,MoveAutomationType.AUTOMATIC);
+			if (cPoss == 1) {
+				final int isbox = Converter.sboxOf(row, iColPoss);
+				final int isquare = Converter.squareOf(row, iColPoss);
+				if (!this.game.hasAnswer(isbox, isquare)) {
+					this.game.keep(isbox, isquare, poss, MoveAutomationType.AUTOMATIC);
 					changed = true;
 				}
 			}

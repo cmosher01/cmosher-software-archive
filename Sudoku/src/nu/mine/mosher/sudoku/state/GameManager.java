@@ -15,15 +15,16 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
+
 import nu.mine.mosher.sudoku.state.exception.IllegalGameFormat;
 import nu.mine.mosher.sudoku.util.Script;
 import nu.mine.mosher.sudoku.util.Time;
 
-public class GameManager extends Observable implements Cloneable
-{
+public class GameManager extends Observable implements Cloneable {
 	private LinkedList<GameState> rUndoState = new LinkedList<GameState>();
 	private GameState state;
 
@@ -33,121 +34,100 @@ public class GameManager extends Observable implements Cloneable
 	private JMenuItem itemUndo;
 	private JMenuItem itemRedo;
 
-
-
-	public GameManager()
-	{
+	public GameManager() {
 		read("");
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Object clone()
-	{
-		try
-		{
-			// TODO will the fact the GameManager extends Observable mess up GameManager.clone?
-			final GameManager that = (GameManager)super.clone();
-			that.rUndoState = (LinkedList<GameState>)this.rUndoState.clone();
-			that.rMove = (LinkedList<GameMove>)this.rMove.clone();
-			that.rMoveRedo = (LinkedList<GameMove>)this.rMoveRedo.clone();
+	public Object clone() {
+		try {
+			// TODO will the fact the GameManager extends Observable mess up
+			// GameManager.clone?
+			final GameManager that = (GameManager) super.clone();
+			that.rUndoState = (LinkedList<GameState>) this.rUndoState.clone();
+			that.rMove = (LinkedList<GameMove>) this.rMove.clone();
+			that.rMoveRedo = (LinkedList<GameMove>) this.rMoveRedo.clone();
 			return that;
-		}
-		catch (final CloneNotSupportedException cantHappen)
-		{
+		} catch (final CloneNotSupportedException cantHappen) {
 			throw new IllegalStateException(cantHappen);
 		}
 	}
 
-	public void toggle(final int sbox, final int square, final int poss, final MoveAutomationType auto)
-	{
-		final boolean currentlyEliminated = this.state.isEliminated(sbox,square,poss);
+	public void toggle(final int sbox, final int square, final int poss, final MoveAutomationType auto) {
+		final boolean currentlyEliminated = this.state.isEliminated(sbox, square, poss);
 
 		GameMoveType moveType;
-		if (currentlyEliminated)
-		{
+		if (currentlyEliminated) {
 			moveType = GameMoveType.POSSIBLE;
-		}
-		else
-		{
+		} else {
 			moveType = GameMoveType.ELIMINATED;
 		}
 
-		final GameMove move = new GameMove(new Time(new Date()),sbox,square,poss,moveType,auto);
+		final GameMove move = new GameMove(new Time(new Date()), sbox, square, poss, moveType, auto);
 
-		if (auto.equals(MoveAutomationType.MANUAL))
-		{
+		if (auto.equals(MoveAutomationType.MANUAL)) {
 			this.rMoveRedo.clear();
 		}
 		move(move);
 	}
 
-	public void keep(final int sbox, final int square, final int poss, final MoveAutomationType auto)
-	{
-		final GameMove move = new GameMove(new Time(new Date()),sbox,square,poss,GameMoveType.AFFIRMED,auto);
+	public void keep(final int sbox, final int square, final int poss, final MoveAutomationType auto) {
+		final GameMove move = new GameMove(new Time(new Date()), sbox, square, poss, GameMoveType.AFFIRMED, auto);
 
-		if (auto.equals(MoveAutomationType.MANUAL))
-		{
+		if (auto.equals(MoveAutomationType.MANUAL)) {
 			this.rMoveRedo.clear();
 		}
 		move(move);
 	}
 
-	private void move(final GameMove move)
-	{
+	private void move(final GameMove move) {
 		this.rUndoState.addLast(this.state);
 		this.rMove.addLast(move);
 
-		this.state = GameState.move(this.state,move);
+		this.state = GameState.move(this.state, move);
 
-
-		// TODO maybe add "type of change" argument to notifyObservers, maybe something like: (START, MOVE, SOLVE, UNDO_REDO)
+		// TODO maybe add "type of change" argument to notifyObservers, maybe
+		// something like: (START, MOVE, SOLVE, UNDO_REDO)
 		notifyObservers();
 	}
 
-	private void undo()
-	{
+	private void undo() {
 		// undo all previous auto-moves back to, and including, the last manual move
 		GameMove move = this.rMove.removeLast();
 		GameState st = this.rUndoState.removeLast();
-		while (move.getAutomationType().equals(MoveAutomationType.AUTOMATIC) && !this.rMove.isEmpty())
-		{
+		while (move.getAutomationType().equals(MoveAutomationType.AUTOMATIC) && !this.rMove.isEmpty()) {
 			move = this.rMove.removeLast();
 			st = this.rUndoState.removeLast();
 		}
 
 		this.state = st;
-		if (move.getAutomationType().equals(MoveAutomationType.MANUAL))
-		{
+		if (move.getAutomationType().equals(MoveAutomationType.MANUAL)) {
 			this.rMoveRedo.addFirst(move);
 		}
 
 		notifyObservers();
 	}
 
-	private void redo()
-	{
+	private void redo() {
 		final GameMove move = this.rMoveRedo.removeFirst();
 		move(move);
 	}
 
-	public void read(final BufferedReader reader) throws IOException, IllegalGameFormat
-	{
-		final Script in = new Script(reader,'#');
+	public void read(final BufferedReader reader) throws IOException, IllegalGameFormat {
+		final Script in = new Script(reader, '#');
 		final List<String> rLine = new ArrayList<String>(512);
 		in.appendLines(rLine);
 
-		if (rLine.isEmpty())
-		{
+		if (rLine.isEmpty()) {
 			throw new IllegalGameFormat("empty");
 		}
-		// TODO need to turn off autosolving while loading, only do it once at the end
-		if (rLine.get(0).length() != 9*9)
-		{
+		// TODO need to turn off autosolving while loading, only do it once at the
+		// end
+		if (rLine.get(0).length() != 9 * 9) {
 			// treat it as an initial state
 			final StringBuilder sb = new StringBuilder();
-			for (final String sLine : rLine)
-			{
+			for (final String sLine : rLine) {
 				sb.append(sLine);
 			}
 			read(sb.toString());
@@ -159,15 +139,11 @@ public class GameManager extends Observable implements Cloneable
 		final String sInitialState = rLine.remove(0);
 		read(sInitialState);
 
-		for (final String sMove : rLine)
-		{
+		for (final String sMove : rLine) {
 			final GameMove move;
-			try
-			{
+			try {
 				move = GameMove.readFromString(sMove);
-			}
-			catch (final ParseException e)
-			{
+			} catch (final ParseException e) {
 				throw new IllegalGameFormat(e);
 			}
 			move(move);
@@ -175,8 +151,7 @@ public class GameManager extends Observable implements Cloneable
 		notifyObservers(); // ??? notify observers, once, here at the end
 	}
 
-	public void read(final String sInitialState)
-	{
+	public void read(final String sInitialState) {
 		final InitialState stateInitial = InitialState.createFromString(sInitialState);
 		final GameState stateGame = GameState.createFromInitial(stateInitial);
 
@@ -190,14 +165,12 @@ public class GameManager extends Observable implements Cloneable
 	}
 
 	@Override
-	public void notifyObservers(final Object typeOfChange)
-	{
+	public void notifyObservers(final Object typeOfChange) {
 		setChanged();
 		super.notifyObservers(typeOfChange);
 	}
 
-	public void write(final BufferedWriter out) throws IOException
-	{
+	public void write(final BufferedWriter out) throws IOException {
 		out.write("# initial puzzle:");
 		out.newLine();
 
@@ -208,51 +181,40 @@ public class GameManager extends Observable implements Cloneable
 		out.write("# moves:");
 		out.newLine();
 
-		for (final GameMove move: this.rMove)
-		{
+		for (final GameMove move : this.rMove) {
 			out.write(move.toString());
 			out.newLine();
 		}
 	}
 
-	private GameState getInitialState()
-	{
-		if (this.rUndoState.isEmpty())
-		{
+	private GameState getInitialState() {
+		if (this.rUndoState.isEmpty()) {
 			return this.state;
 		}
 
 		return this.rUndoState.getFirst();
 	}
 
-
-
-	public boolean isEliminated(final int sbox, final int square, final int possibility)
-	{
-		return this.state.isEliminated(sbox,square,possibility);
+	public boolean isEliminated(final int sbox, final int square, final int possibility) {
+		return this.state.isEliminated(sbox, square, possibility);
 	}
 
-	public boolean hasAnswer(final int sbox, final int square)
-	{
-		return this.state.hasAnswer(sbox,square);
+	public boolean hasAnswer(final int sbox, final int square) {
+		return this.state.hasAnswer(sbox, square);
 	}
 
-	public int getAnswer(final int sbox, final int square)
-	{
-		return this.state.getAnswer(sbox,square);
+	public int getAnswer(final int sbox, final int square) {
+		return this.state.getAnswer(sbox, square);
 	}
 
-	public void appendMenuItems(final JMenu appendTo)
-	{
+	public void appendMenuItems(final JMenu appendTo) {
 		this.itemUndo = new JMenuItem("Undo");
 		this.itemUndo.setMnemonic(KeyEvent.VK_U);
-		this.itemUndo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,ActionEvent.CTRL_MASK));
-		this.itemUndo.addActionListener(new ActionListener()
-		{
+		this.itemUndo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, ActionEvent.CTRL_MASK));
+		this.itemUndo.addActionListener(new ActionListener() {
 			@SuppressWarnings("synthetic-access")
 			@Override
-			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e)
-			{
+			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e) {
 				undo();
 			}
 		});
@@ -260,45 +222,36 @@ public class GameManager extends Observable implements Cloneable
 
 		this.itemRedo = new JMenuItem("Redo");
 		this.itemRedo.setMnemonic(KeyEvent.VK_R);
-		this.itemRedo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,ActionEvent.CTRL_MASK));
-		this.itemRedo.addActionListener(new ActionListener()
-		{
+		this.itemRedo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, ActionEvent.CTRL_MASK));
+		this.itemRedo.addActionListener(new ActionListener() {
 			@SuppressWarnings("synthetic-access")
 			@Override
-			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e)
-			{
+			public void actionPerformed(@SuppressWarnings("unused") final ActionEvent e) {
 				redo();
 			}
 		});
 		appendTo.add(this.itemRedo);
 	}
 
-	public void updateMenu()
-	{
+	public void updateMenu() {
 		this.itemUndo.setEnabled(!this.rUndoState.isEmpty());
 		this.itemRedo.setEnabled(!this.rMoveRedo.isEmpty());
 	}
 
 	@Override
-	public boolean equals(final Object object)
-	{
-		if (this == object)
-		{
+	public boolean equals(final Object object) {
+		if (this == object) {
 			return true;
 		}
-		if (!(object instanceof GameManager))
-		{
+		if (!(object instanceof GameManager)) {
 			return false;
 		}
-		final GameManager that = (GameManager)object;
-		return
-			this.getInitialState().equals(that.getInitialState()) &&
-			this.rMove.equals(that.rMove);
+		final GameManager that = (GameManager) object;
+		return this.getInitialState().equals(that.getInitialState()) && this.rMove.equals(that.rMove);
 	}
 
 	@Override
-	public int hashCode()
-	{
+	public int hashCode() {
 		int h = 17;
 		h *= 37;
 		h += this.getInitialState().hashCode();
