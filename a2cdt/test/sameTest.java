@@ -20,48 +20,48 @@ public class sameTest extends TestCase
 	{
 		final BufferedInputStream in1 = new BufferedInputStream(new ByteArrayInputStream(new byte[] {1,2,3,4,5}));
 		final BufferedInputStream in2 = new BufferedInputStream(new ByteArrayInputStream(new byte[] {1,2,3,4,5}));
-		assertTrue(same.same(in1,in2));
+		assertTrue(same.sameContents(in1,in2));
 	}
 
 	public void testOneLonger() throws IOException
 	{
 		final BufferedInputStream in1 = new BufferedInputStream(new ByteArrayInputStream(new byte[] {1,2,3,4,5}));
 		final BufferedInputStream in2 = new BufferedInputStream(new ByteArrayInputStream(new byte[] {1,2,3,4}));
-		assertFalse(same.same(in1,in2));
+		assertFalse(same.sameContents(in1,in2));
 	}
 
 	public void testTwoLonger() throws IOException
 	{
 		final BufferedInputStream in1 = new BufferedInputStream(new ByteArrayInputStream(new byte[] {1,2,3,4}));
 		final BufferedInputStream in2 = new BufferedInputStream(new ByteArrayInputStream(new byte[] {1,2,3,4,5}));
-		assertFalse(same.same(in1,in2));
+		assertFalse(same.sameContents(in1,in2));
 	}
 
 	public void testDifferent() throws IOException
 	{
 		final BufferedInputStream in1 = new BufferedInputStream(new ByteArrayInputStream(new byte[] {1,2,7,4,5}));
 		final BufferedInputStream in2 = new BufferedInputStream(new ByteArrayInputStream(new byte[] {1,2,3,4,5}));
-		assertFalse(same.same(in1,in2));
+		assertFalse(same.sameContents(in1,in2));
 	}
 
 	public void testSameEmpty() throws IOException
 	{
 		final BufferedInputStream in1 = new BufferedInputStream(new ByteArrayInputStream(new byte[] {}));
 		final BufferedInputStream in2 = new BufferedInputStream(new ByteArrayInputStream(new byte[] {}));
-		assertTrue(same.same(in1,in2));
+		assertTrue(same.sameContents(in1,in2));
 	}
 
 	public void testOneNonempty() throws IOException
 	{
 		final BufferedInputStream in1 = new BufferedInputStream(new ByteArrayInputStream(new byte[] {1,2,3,4,5}));
 		final BufferedInputStream in2 = new BufferedInputStream(new ByteArrayInputStream(new byte[] {}));
-		assertFalse(same.same(in1,in2));
+		assertFalse(same.sameContents(in1,in2));
 	}
 
 	public void testTwoNonempty() throws IOException
 	{
 		final BufferedInputStream in1 = new BufferedInputStream(new ByteArrayInputStream(new byte[] {}));
 		final BufferedInputStream in2 = new BufferedInputStream(new ByteArrayInputStream(new byte[] {1,2,3,4,5}));
-		assertFalse(same.same(in1,in2));
+		assertFalse(same.sameContents(in1,in2));
 	}
 }
