@@ -6,7 +6,7 @@ AC_INIT([a2catalog],[0.1])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/aaaaaa_UUID_461ccdf9082a4497b2514fc0f448860b.c])
 AC_CONFIG_HEADERS([config.h])
-AM_INIT_AUTOMAKE([a2catalog],[0.1])
+AM_INIT_AUTOMAKE([-Wall -Werror])
 
 # Checks for programs.
 AC_PROG_CC
