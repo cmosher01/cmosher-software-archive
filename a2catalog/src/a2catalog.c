@@ -316,7 +316,7 @@ void catalog_VTOC_out(uint version, uint catalog_track, uint used, uint volume, 
 	n_b_out(8,0,pp);
 
 	b_out(catalog_track,pp);
-2	b_out(1,pp);
+	b_out(1,pp);
 	n_b_out(2,0,pp);
 
 	b_out(tracks_per_disk(),pp);
@@ -373,7 +373,6 @@ void catalog_track_out(uint version, uint catalog_track, uint used, uint volume,
 
 
 static int run_tests() {
-	int c_failed_assertion;
 	ctx_assertion* ctx = ctx_assertion_factory();
 
 	test_b_out(ctx);
@@ -385,14 +384,7 @@ static int run_tests() {
 	test_sector_link_out(ctx);
 	test_catalog_VTOC_out(ctx);
 
-	fprintf(stderr,"total__unit_tests: %d\n",count_assertions(ctx));
-
-	c_failed_assertion = count_failed_assertions(ctx);
-	if (c_failed_assertion) {
-		fprintf(stderr,"FAILED_unit_tests: %d\n",c_failed_assertion);
-	}
-
-	return c_failed_assertion ? EXIT_FAILURE : EXIT_SUCCESS;
+	return count_failed_assertions(ctx) ? EXIT_FAILURE : EXIT_SUCCESS;
 }
 
 

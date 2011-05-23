@@ -4,7 +4,7 @@
 AC_PREREQ([2.61])
 AC_INIT([a2catalog],[0.1])
 AC_CONFIG_AUX_DIR([build-aux])
-AC_CONFIG_SRCDIR([aaaaaa_UUID_461ccdf9082a4497b2514fc0f448860b.c])
+AC_CONFIG_SRCDIR([src/aaaaaa_UUID_461ccdf9082a4497b2514fc0f448860b.c])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([a2catalog],[0.1])
 
@@ -33,7 +33,7 @@ AC_TYPE_UINT8_T
 
 # Checks for library functions.
 AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION
+AM_GNU_GETTEXT_VERSION([0.17])
 AC_FUNC_MALLOC
 AC_CHECK_FUNCS([getpagesize memset strchr])
 gl_INIT
