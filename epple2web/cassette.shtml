@@ -179,12 +179,12 @@ HELLO
 				<h4>Tape Image File Format</h4>
 				<p>
 					The format of the tape image file is unique to the <span style="white-space: nowrap;">Epple ][</span>.
-					It is sotred in a low-level format that represents the waveform that the Apple writes
+					It is stored in a low-level format that represents the waveform that the Apple writes
 					to the cassette tape.
 				</p>
 				<p>
 					The file is a binary format. Each byte in the file represents the length of one half of one cycle
-					(of voltage level variation) written to the tape. The lenght is in 10-microsecond units.
+					(of voltage level variation) written to the tape. The length is in 10-microsecond units.
 				</p>
 				<p>
 					For example, a tape image file might have the following binary bytes (in decimal):
@@ -201,9 +201,9 @@ HELLO
 					synchronization cycle; and the subsequent cycles are the actual
 					bits of data saved on the tape. A 500-microsecond cycle (which
 					is stored in the file as two 250 microsecond half-cycles)
-					represents a "one" bit, and a 1-millisecond cycle (which is
+					represents a "zero" bit, and a 1-millisecond cycle (which is
 					stored in the file as two 500 microsecond half-cycles)
-					represents a "zero" bit.
+					represents a "one" bit.
 				</p>
 			</div>
 			<!--#include virtual="footer.ihtml" -->
