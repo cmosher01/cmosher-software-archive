@@ -6,53 +6,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <minmax.h>
-#include <getopt.h>
 
 #include "assert_that.h"
+#include "a2const.h"
+#include "a2catalog_opt.h"
+#include "nibblize_4_4.h"
 
-
-
-typedef unsigned int uint;
-
-
-
-const uint TPD = 0x23; /* tracks per disk */
-const uint BPS = 0x0100; /* bytes per sector */
-
-
-struct opts_t {
-	int arg_run_tests;
-	int arg_help;
-	uint dos_version;
-	uint8_t catalog_track;
-	uint used_sectors;
-	uint volume;
-};
-
-static struct opts_t opts;
-
-static const char shortopts[] = "d:ht:u:v:";
-static struct option longopts[] = {
-	{"dos",required_argument,0,'d'},
-	{"help",no_argument,&opts.arg_help,1},
-	{"test",no_argument,&opts.arg_run_tests,1},
-	{"track",required_argument,0,'t'},
-	{"used",required_argument,0,'u'},
-	{"volume",required_argument,0,'v'},
-	{0,0,0,0}
-};
-
-
-
-
-
-uint tracks_per_disk() {
-	return TPD;
-}
-
-uint bytes_per_sector() {
-	return BPS;
-}
 
 
 
@@ -298,14 +257,14 @@ void catalog_sector_out(uint sector_number, uint track, uint8_t **pp) {
 	 */
 	sector_link_out(sector_number-1,track,pp);
 	/* rest of sector is zeroes */
-	n_b_out(bytes_per_sector()-3,0,pp);
+	n_b_out(BYTES_PER_SECTOR-3,0,pp);
 }
 
 
 
 void volume_sector_map_out(uint version, uint catalog_track, uint used, uint8_t **pp) {
 	uint tr;
-	for (tr = 0; tr < tracks_per_disk(); ++tr) {
+	for (tr = 0; tr < TRACKS_PER_DISK; ++tr) {
 		uint16_t bitmap = get_free_track_map(version);
 		if (tr==catalog_track) {
 			/* catalog track is always fully allocated */
@@ -326,7 +285,7 @@ const uint TS_OFFSET_IN_FILEMAP = 0xC;
  * of a file's sector map.
  */
 uint get_max_ts_in_filemap() {
-	return (BPS-TS_OFFSET_IN_FILEMAP)/2;
+	return (BYTES_PER_SECTOR-TS_OFFSET_IN_FILEMAP)/2;
 }
 
 void catalog_VTOC_out(uint version, uint catalog_track, uint used, uint volume, uint8_t **pp) {
@@ -344,9 +303,9 @@ void catalog_VTOC_out(uint version, uint catalog_track, uint used, uint volume, 
 	b_out(1,pp);
 	n_b_out(2,0,pp);
 
-	b_out(tracks_per_disk(),pp);
+	b_out(TRACKS_PER_DISK,pp);
 	b_out(sectors_per_track(version),pp);
-	w_out(bytes_per_sector(),pp);
+	w_out(BYTES_PER_SECTOR,pp);
 
 	volume_sector_map_out(version,catalog_track,used,pp);
 
@@ -376,9 +335,9 @@ void test_catalog_VTOC_out(ctx_assertion *ctx) {
 	uint8_t *p = computed_vtoc;
 	uint i;
 
-	catalog_VTOC_out(opts.dos_version,opts.catalog_track,opts.used_sectors,opts.volume,&p);
+	catalog_VTOC_out(330,0x11,0x25,254,&p);
 
-	for (i = 0; i < BPS; ++i) {
+	for (i = 0; i < BYTES_PER_SECTOR; ++i) {
 		ASSERT_THAT(ctx,"default VTOC",computed_vtoc[i]==default_vtoc[i]);
 	}
 }
@@ -394,36 +353,39 @@ void catalog_track_out(uint version, uint catalog_track, uint used, uint volume,
 
 
 
-void print_as_text(uint8_t *p, int c) {
-	while (c--) {
+void print_ascii_hex(uint8_t *p, int c) {
+	int i = 0;
+	while (i<c) {
+		++i;
 		printf("%02x",*p++);
-		if (!(c%0x10)) {
+		if (!(i%0x10)) {
 			printf("\n");
 		}
 	}
 }
 
 
-int run_program() {
-	const int c = sectors_per_track(opts.dos_version)*BPS*sizeof(uint8_t);
+int run_program(struct opts_t *opts) {
+	const int c = sectors_per_track(opts->dos_version)*BYTES_PER_SECTOR*sizeof(uint8_t);
 	uint8_t *t;
 	uint8_t *x;
 	x = t = (uint8_t*)malloc(c);
 
-	catalog_track_out(opts.dos_version,opts.catalog_track,opts.used_sectors,opts.volume,&x);
+	catalog_track_out(opts->dos_version,opts->catalog_track,opts->used_sectors,opts->volume,&x);
 
 	if (x != t+c) {
 		fprintf(stderr,"%s\n","illegal program state");
+		return EXIT_FAILURE;
 	}
 
-	print_as_text(t,c);
+	print_ascii_hex(t,c);
 
 	free(t);
 
 	return EXIT_SUCCESS;
 }
 
-static int run_tests() {
+int run_tests() {
 	ctx_assertion *ctx = ctx_assertion_factory();
 
 	printf("running unit tests...\n");
@@ -436,74 +398,20 @@ static int run_tests() {
 	test_sector_link_out(ctx);
 	test_catalog_VTOC_out(ctx);
 
+	test_nibblize_4_4(ctx);
+
 	return count_failed_assertions(ctx) ? EXIT_FAILURE : EXIT_SUCCESS;
 }
 
 
-int help(int argc, char *argv[]) {
-	(void)argc;
-	printf("Writes an Apple ][ floppy disk-format catalog track.\n");
-	printf("The track is written as logical ASCII hexadecimal bytes\n");
-	printf("to standard output. The format is designed to be read by\n");
-	printf("xxd to convert to binary format for writing to a disk image.\n");
-	printf("For example:\n");
-	printf("    %s | xxd -r -p >>a2floppy.do\n",argv[0]);
-	printf("\n");
-	printf("Usage: %s [OPTION...]\n",argv[0]);
-	printf("Options:\n");
-	printf("  -d, --dos=DOSVERS    DOS version: 310,320,321,330,331,332 (default 332)\n");
-	printf("  -h, --help           shows this help\n");
-	printf("      --test           runs all unit tests\n");
-	printf("  -t, --track=TRACK    catalog track number, default 0x11\n");
-	printf("  -u, --used=SECTORS   number of sectors to allocate for DOS, default 0x25\n");
-	printf("  -v, --volume=VOLUME  \"DISK VOLUME\" to use, default 254\n");
-	return EXIT_SUCCESS;
-}
 
-
-
-static void parse_args(int argc, char *argv[]) {
-	int c;
-
-	opts.arg_run_tests = 0;
-	opts.arg_help = 0;
-	opts.dos_version = 330; /* DOS 3.3 (.0) */
-	opts.catalog_track = TPD/2;
-	opts.used_sectors = 0x25;
-	opts.volume = 254; /* as in "DISK VOLUME 254" */
-
-	while ((c = getopt_long(argc,argv,shortopts,longopts,0)) >= 0) {
-		switch (c) {
-			case 'd':
-				opts.dos_version = strtol(optarg,0,0);
-				break;
-			case 't':
-				opts.catalog_track = strtol(optarg,0,0);
-				break;
-			case 'u':
-				opts.used_sectors = strtol(optarg,0,0);
-				break;
-			case 'v':
-				opts.volume = strtol(optarg,0,0);
-				break;
-			case 0:
-				break;
-			case 'h':
-			default:
-				opts.arg_help = 1;
-		}
-	}
-}
 
 int main(int argc, char *argv[]) {
-	parse_args(argc,argv);
+	struct opts_t *opts = parse_opts(argc,argv);
 
-	if (opts.arg_help) {
-		return help(argc,argv);
-	}
-	if (opts.arg_run_tests) {
+	if (opts->test) {
 		return run_tests();
 	}
 
-	return run_program();
+	return run_program(opts);
 }
