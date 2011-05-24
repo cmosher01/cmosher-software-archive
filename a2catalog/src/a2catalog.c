@@ -11,7 +11,9 @@
 #include "a2const.h"
 #include "a2catalog_opt.h"
 #include "nibblize_4_4.h"
-
+#include "nibblize_5_3.h"
+#include "nibblize_5_3_alt.h"
+#include "nibblize_6_2.h"
 
 
 
@@ -399,6 +401,9 @@ int run_tests() {
 	test_catalog_VTOC_out(ctx);
 
 	test_nibblize_4_4(ctx);
+	test_nibblize_5_3(ctx);
+	test_nibblize_5_3_alt(ctx);
+	test_nibblize_6_2(ctx);
 
 	return count_failed_assertions(ctx) ? EXIT_FAILURE : EXIT_SUCCESS;
 }
