@@ -412,6 +412,10 @@ int run_program() {
 
 	catalog_track_out(opts.dos_version,opts.catalog_track,opts.used_sectors,opts.volume,&x);
 
+	if (x != t+c) {
+		fprintf(stderr,"%s\n","illegal program state");
+	}
+
 	print_as_text(t,c);
 
 	free(t);
