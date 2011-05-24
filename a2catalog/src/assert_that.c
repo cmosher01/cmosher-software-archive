@@ -2,7 +2,6 @@
 
 #include "assert_that.h"
 
-#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -22,7 +21,7 @@ void ctx_assertion_free(ctx_assertion* ctx) {
 	free(ctx);
 }
 
-void assert_that_function(ctx_assertion* ctx, char* name, bool is_true, char* file_name, int line_number) {
+void assert_that_function(ctx_assertion* ctx, char* name, int is_true, char* file_name, int line_number) {
 	++ctx->c_assertion;
 	if (!is_true) {
 		fprintf(stderr,"%s:%d: assertion failed: %s\n",file_name,line_number,name);

@@ -2,23 +2,42 @@
 #include <config.h>
 #endif
 
-#include <stdio.h>
 #include <stdint.h>
-#include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <minmax.h>
+#include <getopt.h>
+
 #include "assert_that.h"
+
+
 
 typedef unsigned int uint;
 
-const uint8_t DEFAULT_CATALOG_TRACK = 0x11;
-const uint DEFAULT_USED = 0x25;
-const uint DEFAULT_DOS_VERSION = 330; /* DOS 3.3 (.0) */
-const uint DEFAULT_VOLUME = 0xFE; /* as in "DISK VOLUME 254" */
+
 
 const uint TPD = 0x23; /* tracks per disk */
 const uint BPS = 0x0100; /* bytes per sector */
 
+
+
+static int arg_run_tests = 0;
+static int arg_help = 0;
+static uint dos_version = 330; /* DOS 3.3 (.0) */
+static uint8_t catalog_track;
+static uint used_sectors = 0x25;
+static uint volume = 254; /* as in "DISK VOLUME 254" */
+
+static const char* shortopts = "d:ht:u:v:";
+static const struct option longopts[] = {
+	{"dos",required_argument,0,'d'},
+	{"help",no_argument,&arg_help,1},
+	{"test",no_argument,&arg_run_tests,1},
+	{"track",required_argument,0,'t'},
+	{"used",required_argument,0,'u'},
+	{"volume",required_argument,0,'v'},
+	{0,0,0,0}
+};
 
 
 uint tracks_per_disk() {
@@ -226,7 +245,7 @@ void sector_link_out(uint8_t sect, uint8_t track, uint8_t** pp) {
 void test_sector_link_out(ctx_assertion* ctx) {
 	const uint8_t SENTINEL = 0xFD;
 	const uint8_t SECTOR = 0x0F;
-	const uint8_t TRACK = DEFAULT_CATALOG_TRACK;
+	const uint8_t TRACK = 0x11;
 	const uint8_t NO_LINK = 0;
 	uint8_t image[5];
 	uint8_t* p = image+1;
@@ -351,7 +370,7 @@ void test_catalog_VTOC_out(ctx_assertion* ctx) {
 	uint8_t* p = computed_vtoc;
 	uint i;
 
-	catalog_VTOC_out(DEFAULT_DOS_VERSION,DEFAULT_CATALOG_TRACK,DEFAULT_USED,DEFAULT_VOLUME,&p);
+	catalog_VTOC_out(330,0x11,0x25,254,&p);
 
 	for (i = 0; i < BPS; ++i) {
 		ASSERT_THAT(ctx,"default VTOC",computed_vtoc[i]==default_vtoc[i]);
@@ -369,12 +388,35 @@ void catalog_track_out(uint version, uint catalog_track, uint used, uint volume,
 
 
 
+void print_as_text(uint8_t* p, int c) {
+	while (c--) {
+		printf("%02x",*p++);
+		if (!(c%0x10)) {
+			printf("\n");
+		}
+	}
+}
 
 
+int run_program() {
+	const int c = sectors_per_track(dos_version)*BPS*sizeof(uint8_t);
+	uint8_t* t;
+	uint8_t* x;
+	x = t = (uint8_t*)malloc(c);
+
+	catalog_track_out(dos_version,catalog_track,used_sectors,volume,&x);
+
+	print_as_text(t,c);
+
+	free(t);
+
+	return EXIT_SUCCESS;
+}
 
 static int run_tests() {
 	ctx_assertion* ctx = ctx_assertion_factory();
 
+	printf("running unit tests...\n");
 	test_b_out(ctx);
 	test_w_out(ctx);
 	test_n_b_out(ctx);
@@ -388,29 +430,63 @@ static int run_tests() {
 }
 
 
-
-static bool arg_run_tests = false;
-
-static void parse_args(const uint argc, const char *const *const argv) {
-	if (argc > 1) {
-		(void)argv;
-		arg_run_tests = true;
-	}
-}
-
-static int run(const uint argc, const char *const *const argv) {
-	parse_args(argc,argv);
-	if (arg_run_tests) {
-		return run_tests();
-	}
-
-	/* run_program(); */
-
+int help(int argc, char *argv[]) {
+	(void)argc;
+	printf("Writes an Apple ][ floppy disk-format catalog track.\n");
+	printf("The track is written as logical ASCII hexadecimal bytes\n");
+	printf("to standard output. The format is designed to be read by\n");
+	printf("xxd to convert to binary format for writing to a disk image.\n");
+	printf("For example:\n");
+	printf("    %s | xxd -r -p >>a2floppy.do\n",argv[0]);
+	printf("\n");
+	printf("Usage: %s [OPTION...]\n",argv[0]);
+	printf("Options:\n");
+	printf("  -d, --dos=DOSVERS    DOS version: 310,320,321,330,331,332 (default 332)\n");
+	printf("  -h, --help           shows this help\n");
+	printf("      --test           runs all unit tests\n");
+	printf("  -t, --track=TRACK    catalog track number, default 0x11\n");
+	printf("  -u, --used=SECTORS   number of sectors to allocate for DOS, default 0x25\n");
+	printf("  -v, --volume=VOLUME  \"DISK VOLUME\" to use, default 254\n");
 	return EXIT_SUCCESS;
 }
 
 
 
+static void parse_args(int argc, char *argv[]) {
+	int c;
+	catalog_track = TPD/2;
+	while ((c = getopt_long(argc,argv,shortopts,longopts,0)) >= 0) {
+		switch (c) {
+			case 'd':
+				dos_version = strtol(optarg,0,0);
+				break;
+			case 't':
+				catalog_track = strtol(optarg,0,0);
+				break;
+			case 'u':
+				used_sectors = strtol(optarg,0,0);
+				break;
+			case 'v':
+				volume = strtol(optarg,0,0);
+				break;
+			case 0:
+				break;
+			case 'h':
+			default:
+				arg_help = 1;
+		}
+	}
+}
+
 int main(int argc, char *argv[]) {
-	return run((const uint)argc,(const char *const *const)argv);
+	parse_args(argc,argv);
+
+	if (arg_help) {
+		return help(argc,argv);
+	}
+	if (arg_run_tests) {
+		return run_tests();
+	}
+
+	return run_program();
 }
