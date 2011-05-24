@@ -20,24 +20,30 @@ const uint TPD = 0x23; /* tracks per disk */
 const uint BPS = 0x0100; /* bytes per sector */
 
 
+struct opts_t {
+	int arg_run_tests;
+	int arg_help;
+	uint dos_version;
+	uint8_t catalog_track;
+	uint used_sectors;
+	uint volume;
+};
 
-static int arg_run_tests = 0;
-static int arg_help = 0;
-static uint dos_version = 330; /* DOS 3.3 (.0) */
-static uint8_t catalog_track;
-static uint used_sectors = 0x25;
-static uint volume = 254; /* as in "DISK VOLUME 254" */
+static struct opts_t opts;
 
-static const char* shortopts = "d:ht:u:v:";
-static const struct option longopts[] = {
+static const char shortopts[] = "d:ht:u:v:";
+static struct option longopts[] = {
 	{"dos",required_argument,0,'d'},
-	{"help",no_argument,&arg_help,1},
-	{"test",no_argument,&arg_run_tests,1},
+	{"help",no_argument,&opts.arg_help,1},
+	{"test",no_argument,&opts.arg_run_tests,1},
 	{"track",required_argument,0,'t'},
 	{"used",required_argument,0,'u'},
 	{"volume",required_argument,0,'v'},
 	{0,0,0,0}
 };
+
+
+
 
 
 uint tracks_per_disk() {
@@ -56,16 +62,16 @@ uint bytes_per_sector() {
  * b  the byte to write out 
  * pp address of pointer to write b at; incremented on exit
  */
-void b_out(uint8_t b, uint8_t** pp) {
+void b_out(uint8_t b, uint8_t **pp) {
 	*(*pp)++ = b;
 }
 
-void test_b_out(ctx_assertion* ctx) {
+void test_b_out(ctx_assertion *ctx) {
 	const uint8_t SENTINEL = 0xFD;
 	uint8_t image[3];
 	const uint8_t TAG = 0xa5;
 	const uint8_t b = TAG;
-	uint8_t* p = image+1;
+	uint8_t *p = image+1;
 
 	image[0] = SENTINEL;
 	image[1] = SENTINEL;
@@ -87,20 +93,20 @@ void test_b_out(ctx_assertion* ctx) {
  * w  the word to write out (upper 16 bits are ignored)
  * pp address of pointer to write w at; incremented on exit
  */
-void w_out(uint16_t w, uint8_t** pp) {
+void w_out(uint16_t w, uint8_t **pp) {
 	b_out(w,pp);
 	w >>= 8;
 	b_out(w,pp);
 }
 
-void test_w_out(ctx_assertion* ctx) {
+void test_w_out(ctx_assertion *ctx) {
 	const uint8_t SENTINEL = 0xFD;
 	const uint8_t TAG_HI = 0xA5;
 	const uint8_t TAG_LO = 0x5A;
 	const uint16_t TAG = 0xA55A;
 	const uint16_t w = TAG;
 	uint8_t image[4];
-	uint8_t* p = image+1;
+	uint8_t *p = image+1;
 
 	image[0] = SENTINEL;
 	image[1] = SENTINEL;
@@ -118,7 +124,7 @@ void test_w_out(ctx_assertion* ctx) {
 
 
 
-void map_out(uint16_t m, uint8_t** pp) {
+void map_out(uint16_t m, uint8_t **pp) {
 	b_out(m >> 8,pp);
 	b_out(m,pp);
 	w_out(0,pp);
@@ -133,18 +139,18 @@ void map_out(uint16_t m, uint8_t** pp) {
  * b  the byte to write out
  * pp address of pointer to start writing b's at; incremented on exit
  */
-void n_b_out(uint n, uint8_t b, uint8_t** pp) {
+void n_b_out(uint n, uint8_t b, uint8_t **pp) {
 	while (n--) {
 		b_out(b,pp);
 	}
 }
 
-void test_n_b_out(ctx_assertion* ctx) {
+void test_n_b_out(ctx_assertion *ctx) {
 	const uint8_t SENTINEL = 0xFD;
 	const uint8_t TAG = 0xA5;
 	const uint8_t b = TAG;
 	uint8_t image[5];
-	uint8_t* p = image+1;
+	uint8_t *p = image+1;
 	const uint N = 3;
 
 	image[0] = SENTINEL;
@@ -172,7 +178,7 @@ uint sectors_per_track(uint version) {
 	return version < 330 ? 13 : 16;
 }
 
-void test_sectors_per_track(ctx_assertion* ctx) {
+void test_sectors_per_track(ctx_assertion *ctx) {
 	int cs;
 	cs = sectors_per_track(310);
 	ASSERT_THAT(ctx,"13 sectors for DOS 3.1",cs==13);
@@ -200,7 +206,7 @@ uint16_t get_free_track_map(uint version) {
 	return mk;
 }
 
-void test_get_free_track_map(ctx_assertion* ctx) {
+void test_get_free_track_map(ctx_assertion *ctx) {
 	uint16_t fr;
 	fr  = get_free_track_map(310);
 	ASSERT_THAT(ctx,"13 free sector map",fr==0xFFF8);
@@ -210,12 +216,12 @@ void test_get_free_track_map(ctx_assertion* ctx) {
 
 
 
-void allocate_n_sectors(uint c_used_sectors, uint16_t* track_map) {
+void allocate_n_sectors(uint c_used_sectors, uint16_t *track_map) {
 	(*track_map) <<= c_used_sectors;
 }
 
 /* TODO need to verify this on a real disk */
-void test_allocate_n_sectors(ctx_assertion* ctx) {
+void test_allocate_n_sectors(ctx_assertion *ctx) {
 	uint16_t bitmap = get_free_track_map(310);
 	allocate_n_sectors(3,&bitmap);
 	/* 13 free sectors, minus 3 free sectors, equals 10 free sectors */
@@ -236,19 +242,19 @@ void test_allocate_n_sectors(ctx_assertion* ctx) {
  * track catalog track number
  * pp address of pointer to start writing at; incremented on exit
  */
-void sector_link_out(uint8_t sect, uint8_t track, uint8_t** pp) {
+void sector_link_out(uint8_t sect, uint8_t track, uint8_t **pp) {
 	b_out(0,pp);
 	b_out(sect ? track : 0,pp);
 	b_out(sect,pp);
 }
 
-void test_sector_link_out(ctx_assertion* ctx) {
+void test_sector_link_out(ctx_assertion *ctx) {
 	const uint8_t SENTINEL = 0xFD;
 	const uint8_t SECTOR = 0x0F;
 	const uint8_t TRACK = 0x11;
 	const uint8_t NO_LINK = 0;
 	uint8_t image[5];
-	uint8_t* p = image+1;
+	uint8_t *p = image+1;
 
 	image[0] = SENTINEL;
 	image[1] = SENTINEL;
@@ -285,7 +291,7 @@ void test_sector_link_out(ctx_assertion* ctx) {
 	ASSERT_THAT(ctx,"sector link out nominal: pointer updated",p==image+4);
 }
 
-void catalog_sector_out(uint sector_number, uint track, uint8_t** pp) {
+void catalog_sector_out(uint sector_number, uint track, uint8_t **pp) {
 	/*
 	 * link to previous sector, except for last sector in
 	 * the sequence (sector 1) which has no link.
@@ -297,7 +303,7 @@ void catalog_sector_out(uint sector_number, uint track, uint8_t** pp) {
 
 
 
-void volume_sector_map_out(uint version, uint catalog_track, uint used, uint8_t** pp) {
+void volume_sector_map_out(uint version, uint catalog_track, uint used, uint8_t **pp) {
 	uint tr;
 	for (tr = 0; tr < tracks_per_disk(); ++tr) {
 		uint16_t bitmap = get_free_track_map(version);
@@ -323,7 +329,7 @@ uint get_max_ts_in_filemap() {
 	return (BPS-TS_OFFSET_IN_FILEMAP)/2;
 }
 
-void catalog_VTOC_out(uint version, uint catalog_track, uint used, uint volume, uint8_t** pp) {
+void catalog_VTOC_out(uint version, uint catalog_track, uint used, uint volume, uint8_t **pp) {
 	sector_link_out(sectors_per_track(version)-1,catalog_track,pp);
 
 	b_out(version/10%10,pp);
@@ -365,19 +371,19 @@ uint8_t default_vtoc[0x100] =
 0xff, 0xff
 };
 
-void test_catalog_VTOC_out(ctx_assertion* ctx) {
+void test_catalog_VTOC_out(ctx_assertion *ctx) {
 	uint8_t computed_vtoc[0x100];
-	uint8_t* p = computed_vtoc;
+	uint8_t *p = computed_vtoc;
 	uint i;
 
-	catalog_VTOC_out(330,0x11,0x25,254,&p);
+	catalog_VTOC_out(opts.dos_version,opts.catalog_track,opts.used_sectors,opts.volume,&p);
 
 	for (i = 0; i < BPS; ++i) {
 		ASSERT_THAT(ctx,"default VTOC",computed_vtoc[i]==default_vtoc[i]);
 	}
 }
 
-void catalog_track_out(uint version, uint catalog_track, uint used, uint volume, uint8_t** pp) {
+void catalog_track_out(uint version, uint catalog_track, uint used, uint volume, uint8_t **pp) {
 	uint sc;
 	catalog_VTOC_out(version,catalog_track,used,volume,pp);
 	for (sc = 1; sc < sectors_per_track(version); ++sc) {
@@ -388,7 +394,7 @@ void catalog_track_out(uint version, uint catalog_track, uint used, uint volume,
 
 
 
-void print_as_text(uint8_t* p, int c) {
+void print_as_text(uint8_t *p, int c) {
 	while (c--) {
 		printf("%02x",*p++);
 		if (!(c%0x10)) {
@@ -399,12 +405,12 @@ void print_as_text(uint8_t* p, int c) {
 
 
 int run_program() {
-	const int c = sectors_per_track(dos_version)*BPS*sizeof(uint8_t);
-	uint8_t* t;
-	uint8_t* x;
+	const int c = sectors_per_track(opts.dos_version)*BPS*sizeof(uint8_t);
+	uint8_t *t;
+	uint8_t *x;
 	x = t = (uint8_t*)malloc(c);
 
-	catalog_track_out(dos_version,catalog_track,used_sectors,volume,&x);
+	catalog_track_out(opts.dos_version,opts.catalog_track,opts.used_sectors,opts.volume,&x);
 
 	print_as_text(t,c);
 
@@ -414,7 +420,7 @@ int run_program() {
 }
 
 static int run_tests() {
-	ctx_assertion* ctx = ctx_assertion_factory();
+	ctx_assertion *ctx = ctx_assertion_factory();
 
 	printf("running unit tests...\n");
 	test_b_out(ctx);
@@ -454,26 +460,33 @@ int help(int argc, char *argv[]) {
 
 static void parse_args(int argc, char *argv[]) {
 	int c;
-	catalog_track = TPD/2;
+
+	opts.arg_run_tests = 0;
+	opts.arg_help = 0;
+	opts.dos_version = 330; /* DOS 3.3 (.0) */
+	opts.catalog_track = TPD/2;
+	opts.used_sectors = 0x25;
+	opts.volume = 254; /* as in "DISK VOLUME 254" */
+
 	while ((c = getopt_long(argc,argv,shortopts,longopts,0)) >= 0) {
 		switch (c) {
 			case 'd':
-				dos_version = strtol(optarg,0,0);
+				opts.dos_version = strtol(optarg,0,0);
 				break;
 			case 't':
-				catalog_track = strtol(optarg,0,0);
+				opts.catalog_track = strtol(optarg,0,0);
 				break;
 			case 'u':
-				used_sectors = strtol(optarg,0,0);
+				opts.used_sectors = strtol(optarg,0,0);
 				break;
 			case 'v':
-				volume = strtol(optarg,0,0);
+				opts.volume = strtol(optarg,0,0);
 				break;
 			case 0:
 				break;
 			case 'h':
 			default:
-				arg_help = 1;
+				opts.arg_help = 1;
 		}
 	}
 }
@@ -481,10 +494,10 @@ static void parse_args(int argc, char *argv[]) {
 int main(int argc, char *argv[]) {
 	parse_args(argc,argv);
 
-	if (arg_help) {
+	if (opts.arg_help) {
 		return help(argc,argv);
 	}
-	if (arg_run_tests) {
+	if (opts.arg_run_tests) {
 		return run_tests();
 	}
 
