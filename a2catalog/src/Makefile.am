@@ -11,6 +11,8 @@ a2catalog_SOURCES=\
     nibblize_5_3.h\
     nibblize_5_3_alt.c\
     nibblize_5_3_alt.h\
+    nibblize_5_3_common.c\
+    nibblize_5_3_common.h\
     nibblize_6_2.c\
     nibblize_6_2.h\
     a2const.c\

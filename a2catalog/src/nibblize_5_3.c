@@ -10,15 +10,140 @@
 
 #include "assert_that.h"
 
+#define GRP 0x33
+#define BUF1_SIZ 0x0100
+#define BUF2_SIZ (3 * GRP + 1)
 
+static const uint8_t xlate[] = {
+                    /*0xAA*/0xAB, 0xAD, 0xAE, 0xAF,
+    0xB5, 0xB6, 0xB7, 0xBA, 0xBB, 0xBD, 0xBE, 0xBF,
+  /*0xD5*/0xD6, 0xD7, 0xDA, 0xDB, 0xDD, 0xDE, 0xDF,
+                      0xEA, 0xEB, 0xED, 0xEE, 0xEF,
+    0xF5, 0xF6, 0xF7, 0xFA, 0xFB, 0xFD, 0xFE, 0xFF,
+};
 
-void nibblize_5_3_encode(const uint8_t** original, uint8_t** encoded) {
-	(void)original;
-	(void)encoded;
+static uint8_t ulate[0x100];
+
+static void build_ulate_table() {
+	uint i;
+	memset(ulate,0xFF,sizeof(ulate));
+	for (i = 0; i < sizeof(xlate)/sizeof(xlate[0]); ++i) {
+		ulate[xlate[i]] = i;
+	}
 }
+
+
+/*
+ * Encodes the given sector (256 bytes) using the normal "5 and 3" encoding
+ * scheme. Based on code by Andy McFadden, from CiderPress.
+ *
+ * original sector to encode;  pointer updated on exit
+ * encoded  encoded sector; pointer updated on exit
+ */
+void nibblize_5_3_encode(const uint8_t** original, uint8_t** encoded) {
+	uint8_t top[BUF1_SIZ];
+	uint8_t thr[BUF2_SIZ];
+	uint8_t chksum = 0;
+	int i, val;
+
+	/* Split the bytes into sections. */
+	for (i = GRP - 1; i >= 0; --i) {
+		uint8_t three1,three2,three3,three4,three5;
+
+		three1 = *(*original)++;
+		top[i + 0 * GRP] = three1 >> 3;
+		three2 = *(*original)++;
+		top[i + 1 * GRP] = three2 >> 3;
+		three3 = *(*original)++;
+		top[i + 2 * GRP] = three3 >> 3;
+		three4 = *(*original)++;
+		top[i + 3 * GRP] = three4 >> 3;
+		three5 = *(*original)++;
+		top[i + 4 * GRP] = three5 >> 3;
+
+		thr[i + 0 * GRP] = (three1 & 0x07) << 2 | (three4 & 0x04) >> 1 | (three5 & 0x04) >> 2;
+		thr[i + 1 * GRP] = (three2 & 0x07) << 2 | (three4 & 0x02)      | (three5 & 0x02) >> 1;
+		thr[i + 2 * GRP] = (three3 & 0x07) << 2 | (three4 & 0x01) << 1 | (three5 & 0x01);
+	}
+
+	/* Handle the last byte. */
+	val = *(*original)++;
+	top[5 * GRP] = val >> 3;
+	thr[3 * GRP] = val & 0x07;
+
+	/* Write the bytes. */
+	for (i = BUF2_SIZ - 1; i >= 0; --i) {
+		*(*encoded)++ = xlate[thr[i] ^ chksum];
+		chksum = thr[i];
+	}
+	for (i = 0; i < BUF1_SIZ; ++i) {
+		*(*encoded)++ = xlate[top[i] ^ chksum];
+		chksum = top[i];
+	}
+	*(*encoded)++ = xlate[chksum];
+}
+
+static uint8_t unxlate(uint8_t b) {
+	uint8_t decodedVal = ulate[b];
+	if (decodedVal == 0xFF) {
+		/* TODO handle invalid nible value */
+	}
+	return decodedVal;
+}
+
+
 void nibblize_5_3_decode(const uint8_t** original, uint8_t** decoded) {
-	(void)original;
-	(void)decoded;
+	uint8_t top[BUF1_SIZ];
+	uint8_t thr[BUF2_SIZ];
+	uint8_t chksum = 0;
+	uint8_t val;
+	int i;
+
+	build_ulate_table();
+
+	/*
+	 * Pull the 410 bytes out, convert them from disk bytes to 5-bit values, and
+	 * arrange them into a DOS-like pair of buffers.
+	 */
+	for (i = BUF2_SIZ - 1; i >= 0; --i) {
+		val = unxlate(*(*original)++);
+		chksum ^= val;
+		thr[i] = chksum;
+	}
+	for (i = 0; i < BUF1_SIZ; ++i) {
+		val = unxlate(*(*original)++);
+		chksum ^= val;
+		top[i] = chksum << 3;
+	}
+
+	/*
+	 * Grab the 411th byte (the checksum byte) and see if we did this right.
+	 */
+	val = unxlate(*(*original)++);
+	chksum ^= val;
+	if (chksum) {
+		/* TODO handle bad checksum */
+	}
+
+	/* Convert this pile of stuff into 256 data bytes. */
+	for (i = GRP - 1; i >= 0; --i) {
+		uint8_t three1,three2,three3,three4,three5;
+
+		three1 = thr[0 * GRP + i];
+		*(*decoded)++ = top[0 * GRP + i] | ((three1 >> 2) & 0x07);
+		three2 = thr[1 * GRP + i];
+		*(*decoded)++ = top[1 * GRP + i] | ((three2 >> 2) & 0x07);
+		three3 = thr[2 * GRP + i];
+		*(*decoded)++ = top[2 * GRP + i] | ((three3 >> 2) & 0x07);
+
+		three4 = (three1 & 0x02) << 1 | (three2 & 0x02)      | (three3 & 0x02) >> 1;
+		*(*decoded)++ = top[3 * GRP + i] | ((three4     ) & 0x07);
+		three5 = (three1 & 0x01) << 2 | (three2 & 0x01) << 1 | (three3 & 0x01);
+		*(*decoded)++ = top[4 * GRP + i] | ((three5     ) & 0x07);
+	}
+
+	/* Convert the very last byte, which is handled specially. */
+	*(*decoded)++ = top[5 * GRP] | (thr[3 * GRP] & 0x07);
 }
 
 static const uint8_t dos31_t0s1_log[] = {
@@ -84,7 +209,7 @@ void test_nibblize_5_3_encode(ctx_assertion* ctx) {
 	ASSERT_THAT(ctx,"nibblize_5_3_encode write pointer",p==pend);
 	ASSERT_THAT(ctx,"nibblize_5_3_encode read pointer",po==dos31_t0s1_log+dos31_t0s1_log_len);
 
-	po = dos31_t0s1_log;
+	po = dos31_t0s1_phy;
 	while (i != pend) {
 		ASSERT_THAT(ctx,"nibblize_5_3_encode",*i++==*po++); 
 	}
