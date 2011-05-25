@@ -16,8 +16,6 @@
 #define BUF1_SIZ 0x0100
 #define BUF2_SIZ GRP
 
-typedef unsigned int uint;
-
 static const uint8_t xlate[] = {
                           0x96, 0x97,       0x9A, 0x9B,       0x9D, 0x9E, 0x9F,
                           0xA6, 0xA7,     /*0xAA*/0xAB, 0xAC, 0xAD, 0xAE, 0xAF,
@@ -31,7 +29,7 @@ static const uint8_t xlate[] = {
 static uint8_t ulate[1<<sizeof(uint8_t)];
 
 static void build_ulate_table() {
-  uint i;
+  uint_fast8_t i;
   memset(ulate,0xFF,sizeof(ulate));
   for (i = 0; i < sizeof(xlate)/sizeof(xlate[0]); ++i) {
     ulate[xlate[i]] = i;
@@ -46,7 +44,7 @@ static void buildBuffers(const uint8_t **data, uint8_t *top, uint8_t *two) {
 	int twoShift = 0;
 	memset(two,0,BUF2_SIZ);
 	for (i = 0; i < BUF1_SIZ; ++i) {
-		uint val = *(*data)++;
+		uint_fast32_t val = *(*data)++;
 		top[i] = val >> 2;
 		two[j] |= ((val & 0x01) << 1 | (val & 0x02) >> 1) << twoShift;
 		if (j <= 0) {

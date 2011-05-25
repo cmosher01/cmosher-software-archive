@@ -15,7 +15,6 @@ a2catalog_SOURCES=\
     nibblize_5_3_common.h\
     nibblize_6_2.c\
     nibblize_6_2.h\
-    a2const.c\
     a2const.h\
     assert_that.c\
     assert_that.h

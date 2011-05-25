@@ -9,10 +9,6 @@
 
 
 
-typedef unsigned int uint;
-
-
-
 const uint8_t xlate[] = {
                     /*0xAA*/0xAB, 0xAD, 0xAE, 0xAF,
     0xB5, 0xB6, 0xB7, 0xBA, 0xBB, 0xBD, 0xBE, 0xBF,
@@ -24,7 +20,7 @@ const uint8_t xlate[] = {
 uint8_t ulate[1<<sizeof(uint8_t)];
 
 void build_ulate_table() {
-  uint i;
+  uint_fast8_t i;
   memset(ulate,0xFF,sizeof(ulate));
   for (i = 0; i < sizeof(xlate)/sizeof(xlate[0]); ++i) {
     ulate[xlate[i]] = i;
