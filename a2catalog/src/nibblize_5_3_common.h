@@ -5,6 +5,6 @@
 #define BUF2_SIZ (3 * GRP + 1)
 
 extern const uint8_t xlate[];
-extern uint8_t ulate[1<<sizeof(uint8_t)];
+extern uint8_t ulate[];
 
 void build_ulate_table();
