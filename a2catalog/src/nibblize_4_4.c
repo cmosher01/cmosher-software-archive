@@ -56,7 +56,7 @@ static const struct {
 	{0xFE,0xFEFF}
 };
 
-void test_nibblize_4_4(ctx_assertion* ctx) {
+void test_nibblize_4_4(ctx_assertion *ctx) {
 	const int c = sizeof(test_values)/sizeof(test_values[0]);
 	int i;
 	for (i = 0; i < c; ++i) {

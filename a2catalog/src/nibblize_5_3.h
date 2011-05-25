@@ -4,9 +4,9 @@
 #include <stdint.h>
 #include "assert_that.h"
 
-void nibblize_5_3_encode(const uint8_t** original, uint8_t** encoded);
-void nibblize_5_3_decode(const uint8_t** original, uint8_t** decoded);
+void nibblize_5_3_encode(const uint8_t **original, uint8_t **encoded);
+void nibblize_5_3_decode(const uint8_t **original, uint8_t **decoded);
 
-void test_nibblize_5_3(ctx_assertion* ctx);
+void test_nibblize_5_3(ctx_assertion *ctx);
 
 #endif
