@@ -29,11 +29,11 @@ static const uint8_t xlate[] = {
 static uint8_t ulate[1<<sizeof(uint8_t)];
 
 static void build_ulate_table() {
-  uint_fast8_t i;
-  memset(ulate,0xFF,sizeof(ulate));
-  for (i = 0; i < sizeof(xlate)/sizeof(xlate[0]); ++i) {
-    ulate[xlate[i]] = i;
-  }
+	uint_fast8_t i;
+	memset(ulate,0xFF,sizeof(ulate));
+	for (i = 0; i < sizeof(xlate)/sizeof(xlate[0]); ++i) {
+		ulate[xlate[i]] = i;
+	}
 }
 
 
