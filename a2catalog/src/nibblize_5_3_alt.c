@@ -142,6 +142,7 @@ void nibblize_5_3_alt_decode(const uint8_t **original, uint8_t **decoded) {
 	denibblize(buf, decoded);
 }
 
+/* Taken from an Apple ][ DOS 3.1 (13-sector) floppy disk image, track 0, sector 0 */
 static const uint8_t dos31_t0s0_log[] = {
   0x99, 0xb9, 0x00, 0x08, 0x0a, 0x0a, 0x0a, 0x99, 0x00, 0x08, 0xc8, 0xd0, 0xf4, 0xa6, 0x2b, 0xa9,
   0x09, 0x85, 0x27, 0xad, 0xcc, 0x03, 0x85, 0x41, 0x84, 0x40, 0x8a, 0x4a, 0x4a, 0x4a, 0x4a, 0x09,
@@ -162,6 +163,7 @@ static const uint8_t dos31_t0s0_log[] = {
 };
 static const size_t dos31_t0s0_log_len = 256;
 
+/* Same, but .nib "nibble" format */
 static const uint8_t dos31_t0s0_phy[] = {
   0xab, 0xba, 0xdd, 0xf5, 0xd6, 0xbb, 0xbb, 0xab, 0xb5, 0xab, 0xeb, 0xb5, 0xbb, 0xf5, 0xeb, 0xb5,
   0xeb, 0xab, 0xb5, 0xab, 0xab, 0xdd, 0xbb, 0xf5, 0xd6, 0xfb, 0xeb, 0xab, 0xb5, 0xab, 0xfb, 0xd6,
@@ -192,7 +194,7 @@ static const uint8_t dos31_t0s0_phy[] = {
 };
 static const size_t dos31_t0s0_phy_len = 411;
 
-void test_nibblize_5_3_alt_encode(ctx_assertion* ctx) {
+void test_nibblize_5_3_alt_encode(ctx_assertion *ctx) {
         const uint8_t *po = dos31_t0s0_log;
         const size_t c = dos31_t0s0_phy_len*sizeof(uint8_t);
         uint8_t *penc = (uint8_t*)malloc(c);
@@ -213,7 +215,7 @@ void test_nibblize_5_3_alt_encode(ctx_assertion* ctx) {
         free(penc);
 }
 
-void test_nibblize_5_3_alt_decode(ctx_assertion* ctx) {
+void test_nibblize_5_3_alt_decode(ctx_assertion *ctx) {
         const uint8_t *po = dos31_t0s0_phy;
         const size_t c = dos31_t0s0_log_len*sizeof(uint8_t);
         uint8_t *pdec = (uint8_t*)malloc(c);
@@ -234,7 +236,7 @@ void test_nibblize_5_3_alt_decode(ctx_assertion* ctx) {
         free(pdec);
 }
 
-void test_nibblize_5_3_alt(ctx_assertion* ctx) {
+void test_nibblize_5_3_alt(ctx_assertion *ctx) {
         test_nibblize_5_3_alt_encode(ctx);
         test_nibblize_5_3_alt_decode(ctx);
 }

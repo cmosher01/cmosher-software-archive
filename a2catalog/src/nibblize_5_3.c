@@ -20,7 +20,7 @@
  * original sector to encode;  pointer updated on exit
  * encoded  encoded sector; pointer updated on exit
  */
-void nibblize_5_3_encode(const uint8_t** original, uint8_t** encoded) {
+void nibblize_5_3_encode(const uint8_t **original, uint8_t **encoded) {
 	uint8_t top[BUF1_SIZ];
 	uint8_t thr[BUF2_SIZ];
 	uint8_t chksum = 0;
@@ -72,7 +72,7 @@ static uint8_t unxlate(uint8_t b) {
 }
 
 
-void nibblize_5_3_decode(const uint8_t** original, uint8_t** decoded) {
+void nibblize_5_3_decode(const uint8_t **original, uint8_t **decoded) {
 	uint8_t top[BUF1_SIZ];
 	uint8_t thr[BUF2_SIZ];
 	uint8_t chksum = 0;
@@ -126,6 +126,7 @@ void nibblize_5_3_decode(const uint8_t** original, uint8_t** decoded) {
 	*(*decoded)++ = top[5 * GRP] | (thr[3 * GRP] & 0x07);
 }
 
+/* Taken from an Apple ][ DOS 3.1 (13-sector) floppy disk image, track 0, sector 1 */
 static const uint8_t dos31_t0s1_log[] = {
   0x8e, 0xe9, 0x37, 0x8e, 0xf7, 0x37, 0xa9, 0x01, 0x8d, 0xf8, 0x37, 0x8d, 0xea, 0x37, 0xad, 0xe0,
   0x37, 0x8d, 0xe1, 0x37, 0xa9, 0x00, 0x8d, 0xec, 0x37, 0xad, 0xe2, 0x37, 0x8d, 0xed, 0x37, 0xad,
@@ -146,6 +147,7 @@ static const uint8_t dos31_t0s1_log[] = {
 };
 static const size_t dos31_t0s1_log_len = 256;
 
+/* Same, but .nib "nibble" format */
 static const uint8_t dos31_t0s1_phy[] = {
   0xab, 0xfd, 0xfa, 0xd7, 0xfb, 0xae, 0xbe, 0xdd, 0xbb, 0xdb, 0xae, 0xf5, 0xfb, 0xed, 0xae, 0xee,
   0xf5, 0xbb, 0xbe, 0xab, 0xbf, 0xad, 0xbf, 0xaf, 0xbd, 0xb5, 0xba, 0xdf, 0xf7, 0xbb, 0xbe, 0xbf,
@@ -176,7 +178,7 @@ static const uint8_t dos31_t0s1_phy[] = {
 };
 static const size_t dos31_t0s1_phy_len = 411;
 
-void test_nibblize_5_3_encode(ctx_assertion* ctx) {
+void test_nibblize_5_3_encode(ctx_assertion *ctx) {
 	const uint8_t *po = dos31_t0s1_log;
 	const size_t c = dos31_t0s1_phy_len*sizeof(uint8_t);
 	uint8_t *penc = (uint8_t*)malloc(c);
@@ -197,7 +199,7 @@ void test_nibblize_5_3_encode(ctx_assertion* ctx) {
 	free(penc);
 }
 
-void test_nibblize_5_3_decode(ctx_assertion* ctx) {
+void test_nibblize_5_3_decode(ctx_assertion *ctx) {
 	const uint8_t *po = dos31_t0s1_phy;
 	const size_t c = dos31_t0s1_log_len*sizeof(uint8_t);
 	uint8_t *pdec = (uint8_t*)malloc(c);
@@ -218,7 +220,7 @@ void test_nibblize_5_3_decode(ctx_assertion* ctx) {
 	free(pdec);
 }
 
-void test_nibblize_5_3(ctx_assertion* ctx) {
+void test_nibblize_5_3(ctx_assertion *ctx) {
 	test_nibblize_5_3_encode(ctx);
 	test_nibblize_5_3_decode(ctx);
 }
