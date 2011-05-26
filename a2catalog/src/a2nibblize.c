@@ -37,7 +37,7 @@ int scan_ascii_hex(uint8_t *p, int c) {
 			exit(1);
 		}
 		if (!c--) {
-			fprintf(stderr,"too many hexadecimal bytes in input (expected %d)\n",oc);
+			fprintf(stderr,"too many hexadecimal bytes in input (expected at most 0x%X)\n",oc);
 			exit(1);
 		}
 		*p++ = x;
@@ -45,18 +45,22 @@ int scan_ascii_hex(uint8_t *p, int c) {
 	return c;
 }
 
-#define BUF_SIZ 3
+#define SECTOR13_SIZE (BYTES_PER_SECTOR*13*TRACKS_PER_DISK)
+#define SECTOR16_SIZE (BYTES_PER_SECTOR*16*TRACKS_PER_DISK)
+#define DIFF_SIZE (SECTOR16_SIZE-SECTOR13_SIZE)
 
 int run_program(struct opts_t *opts) {
-	uint8_t buf[BUF_SIZ];
+	uint8_t buf[SECTOR16_SIZE];
 	int c_remain;
-	c_remain = scan_ascii_hex(buf,BUF_SIZ);
-	if (c_remain) {
-		fprintf(stderr,"not enough hexadecimal bytes in input (expected %d)\n",BUF_SIZ);
+	c_remain = scan_ascii_hex(buf,SECTOR16_SIZE);
+	if (!c_remain) {
+		printf("16-sector disk image\n");
+	} else if (c_remain==DIFF_SIZE) {
+		printf("13-sector disk image\n");
+	} else {
+		fprintf(stderr,"wrong number of hexadecimal bytes in input (expected 0x%X or 0x%X)\n",SECTOR16_SIZE,SECTOR13_SIZE);
 		exit(1);
 	}
-	print_ascii_hex(buf,BUF_SIZ);
-	printf("\n");
 	(void)opts;
 	return EXIT_SUCCESS;
 }
