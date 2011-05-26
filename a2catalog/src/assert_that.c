@@ -16,7 +16,7 @@ struct ctx_assertion {
 
 
 ctx_assertion* ctx_assertion_factory() {
-	return (ctx_assertion*)malloc(sizeof(ctx_assertion));
+	return malloc(sizeof(ctx_assertion));
 }
 
 void ctx_assertion_free(ctx_assertion* ctx) {

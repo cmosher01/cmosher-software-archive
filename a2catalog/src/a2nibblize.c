@@ -15,7 +15,6 @@
 #include "nibblize_6_2.h"
 
 
-/* TODO put hex/ascii stuff in separate file */
 void print_ascii_hex(uint8_t *p, int c) {
 	int i = 0;
 	while (i<c) {
@@ -45,23 +44,108 @@ int scan_ascii_hex(uint8_t *p, int c) {
 	return c;
 }
 
-#define SECTOR13_SIZE (BYTES_PER_SECTOR*13*TRACKS_PER_DISK)
-#define SECTOR16_SIZE (BYTES_PER_SECTOR*16*TRACKS_PER_DISK)
-#define DIFF_SIZE (SECTOR16_SIZE-SECTOR13_SIZE)
+
+
+
+
+void b_out(uint8_t b, uint8_t **pp) {
+	*(*pp)++ = b;
+}
+
+void w_out(uint16_t w, uint8_t **pp) {
+	b_out(w,pp);
+	w >>= 8;
+	b_out(w,pp);
+}
+
+void n_b_out(uint n, uint8_t b, uint8_t **pp) {
+	while (n--) {
+		b_out(b,pp);
+	}
+}
+
+
+
+
+typedef uint8_t sector_t[BYTES_PER_SECTOR];
+
+#define SECTORS_PER_TRACK_16 0x10
+typedef sector_t track16_t[SECTORS_PER_TRACK_16];
+typedef track16_t disk16_t[TRACKS_PER_DISK];
+#define DISK16_SIZE (BYTES_PER_SECTOR*SECTORS_PER_TRACK_16*TRACKS_PER_DISK)
+#define NIB16_SIZE (TRACKS_PER_DISK*(0x30+SECTORS_PER_TRACK_16*(6+3+(4*2)+3+3+343+3+0x1B)+0x110))
+
+#define SECTORS_PER_TRACK_13 0xD
+typedef sector_t track13_t[SECTORS_PER_TRACK_13];
+typedef track13_t disk13_t[TRACKS_PER_DISK];
+#define DISK13_SIZE (BYTES_PER_SECTOR*SECTORS_PER_TRACK_13*TRACKS_PER_DISK)
+#define NIB13_SIZE /*TODO*/
+
+#define DIFF_SIZE (DISK16_SIZE-DISK13_SIZE)
+
+
+
+void addr16out(uint8_t volume, uint8_t track, uint8_t sector, uint8_t **pp) {
+	b_out(0xD5,pp);
+	b_out(0xAA,pp);
+	b_out(0x96,pp);
+	w_out(nibblize_4_4_encode(volume),pp);
+	w_out(nibblize_4_4_encode(track),pp);
+	w_out(nibblize_4_4_encode(sector),pp);
+	w_out(nibblize_4_4_encode(volume^track^sector),pp);
+	b_out(0xDE,pp);
+	b_out(0xAA,pp);
+	b_out(0xEB,pp);
+}
+
+void data16out(const uint8_t *data, uint8_t **pp) {
+	b_out(0xD5,pp);
+	b_out(0xAA,pp);
+	b_out(0xAD,pp);
+	nibblize_6_2_encode(&data, pp);
+	b_out(0xDE,pp);
+	b_out(0xAA,pp);
+	b_out(0xEB,pp);
+}
+
+void sect16out(uint8_t *data, uint8_t volume, uint8_t track, uint8_t sector, uint8_t **pp) {
+	addr16out(volume, track, sector, pp);
+	n_b_out(6, 0xFF, pp);
+	data16out(data, pp);
+	n_b_out(0x1B, 0xFF, pp);
+}
+
+static const uint8_t mp_sector16[] = { 0x0, 0x7, 0xE, 0x6, 0xD, 0x5, 0xC, 0x4, 0xB, 0x3, 0xA, 0x2, 0x9, 0x1, 0x8, 0xF };
+
+void write16nib(uint8_t volume, disk16_t image16, uint8_t **pp) {
+	uint8_t t;
+	uint8_t s;
+	for (t = 0; t < TRACKS_PER_DISK; ++t) {
+		n_b_out(0x30, 0xFF, pp);
+		for (s = 0; s < SECTORS_PER_TRACK_16; ++s) {
+			sect16out(image16[t][mp_sector16[s]], volume, t, s, pp);
+		}
+		n_b_out(0x110, 0xFF, pp);
+	}
+}
 
 int run_program(struct opts_t *opts) {
-	uint8_t buf[SECTOR16_SIZE];
 	int c_remain;
-	c_remain = scan_ascii_hex(buf,SECTOR16_SIZE);
+	uint8_t *image = malloc(DISK16_SIZE);
+	c_remain = scan_ascii_hex(image,DISK16_SIZE);
 	if (!c_remain) {
-		printf("16-sector disk image\n");
+		uint8_t *pnib = malloc(NIB16_SIZE);
+		uint8_t *onib = pnib;
+		write16nib(opts->volume,*((disk16_t*)image),&pnib);
+		pnib = onib;
+		print_ascii_hex(pnib,NIB16_SIZE);
+		free(pnib);
 	} else if (c_remain==DIFF_SIZE) {
-		printf("13-sector disk image\n");
 	} else {
-		fprintf(stderr,"wrong number of hexadecimal bytes in input (expected 0x%X or 0x%X)\n",SECTOR16_SIZE,SECTOR13_SIZE);
+		fprintf(stderr,"wrong number of hexadecimal bytes in input (expected 0x%X or 0x%X)\n",DISK16_SIZE,DISK13_SIZE);
 		exit(1);
 	}
-	(void)opts;
+	free(image);
 	return EXIT_SUCCESS;
 }
 

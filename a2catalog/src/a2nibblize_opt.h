@@ -5,6 +5,7 @@
 
 struct opts_t {
 	int test;
+	uint8_t volume;
 };
 
 struct opts_t *parse_opts(int argc, char *argv[]);

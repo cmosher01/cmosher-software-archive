@@ -191,7 +191,7 @@ static const size_t dos33_t0s0_phy_len = 343;
 void test_nibblize_6_2_encode(ctx_assertion *ctx) {
 	const uint8_t *po = dos33_t0s0_log;
 	const size_t c = dos33_t0s0_phy_len*sizeof(uint8_t);
-	uint8_t *penc = (uint8_t*)malloc(c);
+	uint8_t *penc = malloc(c);
 	uint8_t *pend = penc+c;
 	uint8_t *p = penc;
 	uint8_t *i = penc;
@@ -212,7 +212,7 @@ void test_nibblize_6_2_encode(ctx_assertion *ctx) {
 void test_nibblize_6_2_decode(ctx_assertion *ctx) {
 	const uint8_t *po = dos33_t0s0_phy;
 	const size_t c = dos33_t0s0_log_len*sizeof(uint8_t);
-	uint8_t *pdec = (uint8_t*)malloc(c);
+	uint8_t *pdec = malloc(c);
 	uint8_t *pend = pdec+c;
 	uint8_t *p = pdec;
 	uint8_t *i = pdec;

@@ -38,8 +38,9 @@ check_SCRIPTS=unit_test.sh
 TESTS=$(check_SCRIPTS)
 
 unit_test.sh:
-	echo "./a2catalog --test" >$@
-	echo "./a2nibblize --test" >$@
+	touch $@
+	echo "./a2catalog --test" >>$@
+	echo "./a2nibblize --test" >>$@
 	chmod +x $@
 
 

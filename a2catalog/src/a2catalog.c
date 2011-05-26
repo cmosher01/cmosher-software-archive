@@ -100,7 +100,7 @@ void map_out(uint16_t m, uint8_t **pp) {
  * b  the byte to write out
  * pp address of pointer to start writing b's at; incremented on exit
  */
-void n_b_out(uint n, uint8_t b, uint8_t **pp) {
+void n_b_out(uint_fast32_t n, uint8_t b, uint8_t **pp) {
 	while (n--) {
 		b_out(b,pp);
 	}
@@ -112,7 +112,7 @@ void test_n_b_out(ctx_assertion *ctx) {
 	const uint8_t b = TAG;
 	uint8_t image[5];
 	uint8_t *p = image+1;
-	const uint N = 3;
+	const uint_fast32_t N = 3;
 
 	image[0] = SENTINEL;
 	image[1] = SENTINEL;
@@ -135,7 +135,7 @@ void test_n_b_out(ctx_assertion *ctx) {
 
 
 
-uint sectors_per_track(uint version) {
+uint_fast8_t sectors_per_track(uint_fast16_t version) {
 	return version < 330 ? 13 : 16;
 }
 
@@ -157,8 +157,8 @@ void test_sectors_per_track(ctx_assertion *ctx) {
 
 
 
-uint16_t get_free_track_map(uint version) {
-	uint cs = sectors_per_track(version);
+uint16_t get_free_track_map(uint_fast16_t version) {
+	uint_fast8_t cs = sectors_per_track(version);
 	uint16_t mk = 0;
 	while (cs--) {
 		mk >>= 1;
@@ -177,7 +177,7 @@ void test_get_free_track_map(ctx_assertion *ctx) {
 
 
 
-void allocate_n_sectors(uint c_used_sectors, uint16_t *track_map) {
+void allocate_n_sectors(uint_fast8_t c_used_sectors, uint16_t *track_map) {
 	(*track_map) <<= c_used_sectors;
 }
 
@@ -252,7 +252,7 @@ void test_sector_link_out(ctx_assertion *ctx) {
 	ASSERT_THAT(ctx,"sector link out nominal: pointer updated",p==image+4);
 }
 
-void catalog_sector_out(uint sector_number, uint track, uint8_t **pp) {
+void catalog_sector_out(uint8_t sector_number, uint8_t track, uint8_t **pp) {
 	/*
 	 * link to previous sector, except for last sector in
 	 * the sequence (sector 1) which has no link.
@@ -264,15 +264,15 @@ void catalog_sector_out(uint sector_number, uint track, uint8_t **pp) {
 
 
 
-void volume_sector_map_out(uint version, uint catalog_track, uint used, uint8_t **pp) {
-	uint tr;
+void volume_sector_map_out(uint_fast16_t version, uint8_t catalog_track, uint_fast8_t used, uint8_t **pp) {
+	uint8_t tr;
 	for (tr = 0; tr < TRACKS_PER_DISK; ++tr) {
 		uint16_t bitmap = get_free_track_map(version);
 		if (tr==catalog_track) {
 			/* catalog track is always fully allocated */
 			allocate_n_sectors(sectors_per_track(version),&bitmap);
 		} else {
-			const uint u = MIN(used,sectors_per_track(version));
+			const uint_fast8_t u = MIN(used,sectors_per_track(version));
 			allocate_n_sectors(u,&bitmap);
 			used -= u;
 		}
@@ -281,16 +281,17 @@ void volume_sector_map_out(uint version, uint catalog_track, uint used, uint8_t 
 }
 
 /* B.A.D. p. 4-9 */
-const uint TS_OFFSET_IN_FILEMAP = 0xC;
+#define TS_OFFSET_IN_FILEMAP 0xC
+
 /*
  * Maximum track/sector pairs in one sector
  * of a file's sector map.
  */
-uint get_max_ts_in_filemap() {
+uint8_t get_max_ts_in_filemap() {
 	return (BYTES_PER_SECTOR-TS_OFFSET_IN_FILEMAP)/2;
 }
 
-void catalog_VTOC_out(uint version, uint catalog_track, uint used, uint volume, uint8_t **pp) {
+void catalog_VTOC_out(uint_fast16_t version, uint8_t catalog_track, uint_fast8_t used, uint8_t volume, uint8_t **pp) {
 	sector_link_out(sectors_per_track(version)-1,catalog_track,pp);
 
 	b_out(version/10%10,pp);
@@ -335,7 +336,7 @@ uint8_t default_vtoc[0x100] =
 void test_catalog_VTOC_out(ctx_assertion *ctx) {
 	uint8_t computed_vtoc[0x100];
 	uint8_t *p = computed_vtoc;
-	uint i;
+	uint_fast16_t i;
 
 	catalog_VTOC_out(330,0x11,0x25,254,&p);
 
@@ -344,8 +345,8 @@ void test_catalog_VTOC_out(ctx_assertion *ctx) {
 	}
 }
 
-void catalog_track_out(uint version, uint catalog_track, uint used, uint volume, uint8_t **pp) {
-	uint sc;
+void catalog_track_out(uint_fast16_t version, uint8_t catalog_track, uint_fast8_t used, uint8_t volume, uint8_t **pp) {
+	uint8_t sc;
 	catalog_VTOC_out(version,catalog_track,used,volume,pp);
 	for (sc = 1; sc < sectors_per_track(version); ++sc) {
 		catalog_sector_out(sc,catalog_track,pp);
@@ -371,7 +372,7 @@ int run_program(struct opts_t *opts) {
 	const int c = sectors_per_track(opts->dos_version)*BYTES_PER_SECTOR*sizeof(uint8_t);
 	uint8_t *t;
 	uint8_t *x;
-	x = t = (uint8_t*)malloc(c);
+	x = t = malloc(c);
 
 	catalog_track_out(opts->dos_version,opts->catalog_track,opts->used_sectors,opts->volume,&x);
 

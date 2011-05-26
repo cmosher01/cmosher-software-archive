@@ -44,7 +44,7 @@ static void help(int argc, char *argv[]) {
 }
 
 static struct opts_t *opts_factory() {
-	struct opts_t *opts = (struct opts_t*)malloc(sizeof(struct opts_t));
+	struct opts_t *opts = malloc(sizeof(struct opts_t));
 
 	opts->test = 0;
 	opts->dos_version = 330; /* DOS 3.3 (.0) */

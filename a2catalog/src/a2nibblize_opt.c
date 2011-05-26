@@ -16,6 +16,7 @@ static const struct option longopts[] = {
 	{"help",no_argument,0,'h'},
 	{"test",no_argument,0,'T'},
 	{"version",no_argument,0,'V'},
+	{"volume",required_argument,0,'v'},
 	{0,0,0,0}
 };
 
@@ -33,12 +34,14 @@ static void help(int argc, char *argv[]) {
 	printf("  -h, --help           shows this help\n");
 	printf("  -T, --test           runs all unit tests\n");
 	printf("  -V, --version        shows version information\n");
+	printf("  -v, --volume=VOLUME  \"DISK VOLUME\" to use, default 254\n");
 }
 
 static struct opts_t *opts_factory() {
-	struct opts_t *opts = (struct opts_t*)malloc(sizeof(struct opts_t));
+	struct opts_t *opts = malloc(sizeof(struct opts_t));
 
 	opts->test = 0;
+	opts->volume = 254; /* as in "DISK VOLUME 254" */
 
 	return opts;
 }
@@ -52,11 +55,9 @@ static void version() {
 	printf("%s\n","There is NO WARRANTY, to the extent permitted by law.");
 }
 
-/* TODO remove if not needed
 static long get_num_optarg() {
 	return strtol(optarg,0,0);
 }
-*/
 
 struct opts_t *parse_opts(int argc, char *argv[]) {
 	int c;
@@ -71,6 +72,9 @@ struct opts_t *parse_opts(int argc, char *argv[]) {
 			case 'V':
 				version();
 				exit(0);
+				break;
+			case 'v':
+				opts->volume = get_num_optarg();
 				break;
 			case 0:
 				break;
