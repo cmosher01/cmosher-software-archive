@@ -400,11 +400,6 @@ int run_tests() {
 	test_sector_link_out(ctx);
 	test_catalog_VTOC_out(ctx);
 
-	test_nibblize_4_4(ctx);
-	test_nibblize_5_3(ctx);
-	test_nibblize_5_3_alt(ctx);
-	test_nibblize_6_2(ctx);
-
 	return count_failed_assertions(ctx) ? EXIT_FAILURE : EXIT_SUCCESS;
 }
 
