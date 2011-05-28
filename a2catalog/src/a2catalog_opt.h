@@ -3,13 +3,14 @@
 
 #include <stdint.h>
 
-struct opts_t {
-	int test;
-	uint_fast16_t dos_version;
-	uint8_t catalog_track;
-	uint_fast8_t used_sectors;
-	uint8_t volume;
-};
+struct opts_t
+  {
+    int test;
+    uint_fast16_t dos_version;
+    uint8_t catalog_track;
+    uint_fast8_t used_sectors;
+    uint8_t volume;
+  };
 
 struct opts_t *parse_opts(int argc, char *argv[]);
 
