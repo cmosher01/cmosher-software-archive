@@ -18,8 +18,9 @@ svn co $SVNREPO/epple2cards
 svn co $SVNREPO/epple2sys
 svn co $SVNREPO/epple2web
 svn co $SVNREPO/apple2src
+svn co $SVNREPO/a2catalog
 
-sudo apt-get install autoconf libsdl1.2-dev rpm fakeroot alien openjdk-6-jre-headless
+sudo apt-get install autoconf libsdl1.2-dev rpm fakeroot alien
 
 cd epple2
 chmod a+x bootstrap
