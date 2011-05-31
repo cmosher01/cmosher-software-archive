@@ -1,5 +1,3 @@
-CDT = java -cp "$(A2CDT)"
-
 NAME = apple2dos
 VERSION = 1.0
 ARCH = noarch
@@ -16,27 +14,27 @@ DIST = $(NAME)-$(VERSION)
 
 .ex65.d13:
 	mkdir -p $(@D)
-	$(CDT) dd --skip=0x1B00 <$< >$@
-	$(CDT) dd --count=0x1B00 <$< >>$@
-	$(CDT) dd --count=0xB800 --const=0 >>$@
-	$(CDT) CreateCatalog --version=$(VERSION) >>$@
-	$(CDT) dd --count=0xDD00 --const=0 >>$@
+	dd bs=256 skip=27 <$< >$@
+	dd bs=256 count=27 <$< >>$@
+	dd bs=256 count=184 </dev/zero >>$@
+	a2catalog --dos=$(VERSION) | xxd -r -ps -c 16 >>$@
+	dd bs=256 count=221 </dev/zero >>$@
 
 .d13.nib:
 	mkdir -p $(@D)
-	$(CDT) ConvertD13toNibble <$< >$@
+	xxd -ps -c 16 <$< a2nibblize | xxd -r -ps -c 16 >$@
 
 .ex65.do:
 	mkdir -p $(@D)
-	$(CDT) dd --skip=0x1B00 <$< >$@
-	$(CDT) dd --count=0x1B00 <$< >>$@
-	$(CDT) dd --count=0xEB00 --const=0 >>$@
-	$(CDT) CreateCatalog --version=$(VERSION) >>$@
-	$(CDT) dd --count=0x11000 --const=0 >>$@
+	dd bs=256 skip=27 <$< >$@
+	dd bs=256 count=27 <$< >>$@
+	dd bs=256 count=235 </dev/zero >>$@
+	a2catalog --dos=$(VERSION) | xxd -r -ps -c 16 >>$@
+	dd bs=256 count=272 </dev/zero >>$@
 
 .do.nib:
 	mkdir -p $(@D)
-	$(CDT) ConvertD16toNibble <$< >$@
+	xxd -ps -c 16 <$< | a2nibblize | xxd -r -ps -c 16 >$@
 
 .SUFFIXES: .s65 .o65 .ld65 .ex65 .d13 .do .nib .wxs .wixobj .msi
 
@@ -244,11 +242,6 @@ install:
 	cp 16sector/disks/dos332/clean332.nib $(DESTDIR)/$(PREFIX)/lib/apple2/dos3x/16sector/disks/dos332
 
 
-
-
-
-clean:
-	rm -Rfv $(SUBDIRS)
 
 
 
