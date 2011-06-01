@@ -1,0 +1,3 @@
+COUT	LDA #5
+			RTS
+			LDA #6
