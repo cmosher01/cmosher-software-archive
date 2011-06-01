@@ -5,7 +5,7 @@
 	xa -C -R -c -o $@ $<
 
 .o65.r65:
-	ldo65 -bt $(AD_TEXT) -bd 0 -bb $(AD_BSS) -bz 0 -o $@ $^
+	ldo65 -bt $(AD_TEXT) -bd 0 -bb 0 -bz 0 -o $@ $^
 	file65 -V $@
 
 .r65.e65:
@@ -17,7 +17,6 @@
 
 all: x.e65
 x.r65: AD_TEXT=2048
-x.r65: AD_BSS=1024
 x.r65: y.o65 x.o65
 
 clean:
