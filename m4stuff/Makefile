@@ -3,7 +3,7 @@
 	cat $@
 
 .s65.o65:
-	xa -C -R -c -o $@ $<
+	xa -v -C -M -R -c -l $@.lst -o $@ $<
 
 .o65.r65:
 	ldo65 -bt $(AD_TEXT) -bd 0 -bb 0 -bz 0 -o $@ $^
@@ -21,4 +21,4 @@ apple1mon.r65: AD_TEXT=65280
 apple1mon.s65: apple1mon.m4 asm.im4
 
 clean:
-	rm -fv *.e65 *.r65 *.o65 *.s65
+	rm -fv *.e65 *.r65 *.o65 *.o65.lst *.s65
