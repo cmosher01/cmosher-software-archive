@@ -4,9 +4,8 @@ define(`ASM_RES',`.DSB $1,0')
 
 
 
-
 define(`NL',`
-');
+')
 
 changecom(`;',NL())
 

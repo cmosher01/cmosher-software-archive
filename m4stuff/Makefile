@@ -18,9 +18,7 @@
 
 all: apple1mon.e65
 apple1mon.r65: AD_TEXT=65280
-all2: x.e65
-x.r65: AD_TEXT=2048
-x.r65: y.o65 x.o65
+apple1mon.s65: apple1mon.m4 asm.im4
 
 clean:
 	rm -fv *.e65 *.r65 *.o65 *.s65
