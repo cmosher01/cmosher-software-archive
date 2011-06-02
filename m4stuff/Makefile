@@ -1,5 +1,6 @@
 .m4.s65:
 	m4 --traditional $< >$@
+	cat $@
 
 .s65.o65:
 	xa -C -R -c -o $@ $<
@@ -15,7 +16,9 @@
 .SUFFIXES:
 .SUFFIXES: .m4 .s65 .o65 .r65 .e65
 
-all: x.e65
+all: apple1mon.e65
+apple1mon.r65: AD_TEXT=65280
+all2: x.e65
 x.r65: AD_TEXT=2048
 x.r65: y.o65 x.o65
 
