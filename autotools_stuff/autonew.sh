@@ -1,27 +1,31 @@
 #!/bin/sh
 
+#
+# Abort on error
+#
+set -e
 
 
 
 
 
-
+#
+# Parse command line options
+#
 DELEXIST=
 HELP=
 while getopts dh opt
 do
 	case $opt in
-		d)		DELEXIST=1
-					;;
-		h|?)	HELP=1
-					;;
+		d) DELEXIST=1 ;;
+		h|?) HELP=1 ;;
 	esac
 done
 shift `expr $OPTIND - 1`
 
 
 #
-#
+# Display help message
 #
 if [ "$HELP" ]
 then
@@ -29,12 +33,28 @@ then
 	exit 1
 fi
 
+#
+# Check parameters
+#
 if [ -z "$1" ]
 then
 	echo "Missing PACKAGE name" >&2
 	exit 1
 fi
 
+
+
+#
+# sanity check to make sure we have autoconf
+#
+autoconf --version
+
+
+
+#
+# Check for existence of package directory, and delete
+# it if the user explicitly tells us to.
+#
 if [ -d $1 ]
 then
 	if [ "$DELEXIST" ]
@@ -46,12 +66,27 @@ then
 	fi
 fi
 
+#
+# Create the directory for the package and go into it
+#
 mkdir $1
 cd $1
-mkdir src
-mkdir m4
-autoscan
 
+#
+# Create the standard directory for source files, src
+#
+mkdir src
+
+#
+# Use the m4 directory for all our local m4 macros
+#
+mkdir m4
+
+#
+# Create skeleton configure.ac file with
+# autoscan, then fix it up with sed script
+#
+autoscan
 cat <<EOF >configure.sed
 s/FULL-PACKAGE-NAME/$1/
 s/VERSION/0.1/
@@ -68,15 +103,8 @@ sed -f configure.sed <configure.scan >configure.ac
 
 
 
-
-
-cat <<EOF >Makefile.am
-ACLOCAL_AMFLAGS=-I m4 --install
-SUBDIRS=src
-EOF
-
-touch src/Makefile.am
-
+#
+# Create skeleton GNU doc files
 cat <<EOF >NEWS
 $1 NEWS - User visible changes.
 
@@ -87,6 +115,23 @@ EOF
 
 touch README AUTHORS ChangeLog
 
+
+
+#
+# Create bare Makefile.am files
+#
+cat <<EOF >Makefile.am
+ACLOCAL_AMFLAGS=-I m4 --install
+SUBDIRS=src
+EOF
+
+touch src/Makefile.am
+
+
+
+#
+# Create bootstrap script and run it
+#
 cat <<EOF >bootstrap
 autoreconf --install
 EOF
@@ -95,7 +140,10 @@ chmod a+x bootstrap
 
 
 
-# delete all files that should not be under version control
+#
+# Delete all files that should not be placed
+# under version control.
+#
 rm INSTALL
 rm configure.sed
 rm autoscan*.log
@@ -106,6 +154,7 @@ rm -Rf autom4te.cache
 rm -Rf build-aux
 rm configure
 rm src/Makefile.in
+
 
 
 exit 0
