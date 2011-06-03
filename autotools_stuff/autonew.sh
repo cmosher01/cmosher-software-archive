@@ -105,7 +105,7 @@ rm aclocal.m4
 rm -Rf autom4te.cache
 rm -Rf build-aux
 rm configure
-rm src/makefile.in
+rm src/Makefile.in
 
 
 exit 0
