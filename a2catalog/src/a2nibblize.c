@@ -67,7 +67,7 @@ void w_out(uint16_t w, uint8_t **pp)
   b_out(w,pp);
 }
 
-void n_b_out(uint n, uint8_t b, uint8_t **pp)
+void n_b_out(uint_fast32_t n, uint8_t b, uint8_t **pp)
 {
   while (n--)
     {

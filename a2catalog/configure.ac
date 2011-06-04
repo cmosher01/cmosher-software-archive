@@ -20,7 +20,6 @@ AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS([OS.h fcntl.h inttypes.h libintl.h limits.h locale.h netdb.h stddef.h stdint.h stdlib.h string.h sys/param.h unistd.h wchar.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
-AC_HEADER_STDBOOL
 AC_C_CONST
 AC_TYPE_UID_T
 AC_C_INLINE
