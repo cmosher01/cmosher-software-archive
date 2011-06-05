@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <binary-io.h>
 
 #include "assert_that.h"
 #include "a2const.h"
@@ -15,38 +16,28 @@
 #include "nibblize_6_2.h"
 
 
-void print_ascii_hex(uint8_t *p, int c)
+void put_buffer(uint8_t *p, int c)
 {
-  int i = 0;
-  while (i<c)
+  SET_BINARY(fileno(stdout));
+  while (c--)
     {
-      ++i;
-      printf("%02x",*p++);
-      if (!(i%0x10))
-        {
-          printf("\n");
-        }
+      putchar(*p++);
     }
 }
 
-int scan_ascii_hex(uint8_t *p, int c)
+int get_buffer(uint8_t *p, int c)
 {
   int oc = c;
-  unsigned int x;
-  int c_match;
-  while ((c_match = scanf("%2x",&x)) != EOF)
+  int b;
+  SET_BINARY(fileno(stdin));
+  while ((b = getchar()) != EOF)
     {
-      if (c_match < 1)
-        {
-          fprintf(stderr,"invalid hexadecimal digit in input: %c\n",getchar());
-          exit(1);
-        }
       if (!c--)
         {
           fprintf(stderr,"too many hexadecimal bytes in input (expected at most 0x%X)\n",oc);
           exit(1);
         }
-      *p++ = x;
+      *p++ = b;
     }
   return c;
 }
@@ -245,14 +236,14 @@ int run_program(struct opts_t *opts)
 {
   int c_remain;
   uint8_t *image = malloc(DISK16_SIZE);
-  c_remain = scan_ascii_hex(image,DISK16_SIZE);
+  c_remain = get_buffer(image,DISK16_SIZE);
   if (!c_remain)
     {
       uint8_t *pnib = malloc(NIB16_SIZE);
       uint8_t *onib = pnib;
       write16nib(opts->volume,*((disk16_t*)image),&pnib);
       pnib = onib;
-      print_ascii_hex(pnib,NIB16_SIZE);
+      put_buffer(pnib,NIB16_SIZE);
       free(pnib);
     }
   else if (c_remain==DIFF_SIZE)
@@ -262,7 +253,7 @@ int run_program(struct opts_t *opts)
       build_mp_sector13();
       write13nib(opts->volume,*((disk13_t*)image),&pnib);
       pnib = onib;
-      print_ascii_hex(pnib,NIB13_SIZE);
+      put_buffer(pnib,NIB13_SIZE);
       free(pnib);
     }
   else

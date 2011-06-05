@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <minmax.h>
+#include <binary-io.h>
 
 #include "assert_that.h"
 #include "a2const.h"
@@ -385,17 +386,14 @@ void catalog_track_out(uint_fast16_t version, uint8_t catalog_track, uint_fast8_
 
 
 
-void print_ascii_hex(uint8_t *p, int c)
+void put_buffer(uint8_t *p, int c)
 {
   int i = 0;
+  SET_BINARY(fileno(stdout));
   while (i<c)
     {
       ++i;
-      printf("%02x",*p++);
-      if (!(i%0x10))
-        {
-          printf("\n");
-        }
+      putchar(*p++);
     }
 }
 
@@ -415,7 +413,7 @@ int run_program(struct opts_t *opts)
       return EXIT_FAILURE;
     }
 
-  print_ascii_hex(t,c);
+  put_buffer(t,c);
 
   free(t);
 
