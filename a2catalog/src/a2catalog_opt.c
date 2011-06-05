@@ -28,11 +28,8 @@ static void help(int argc, char *argv[])
 {
   (void)argc;
   printf("Writes an Apple ][ floppy disk-format catalog track.\n");
-  printf("The track is written as logical ASCII hexadecimal bytes\n");
-  printf("to standard output. The format is designed to be read by\n");
-  printf("xxd to convert to binary format for writing to a disk image.\n");
-  printf("For example:\n");
-  printf("    %s | xxd -r -ps >>a2floppy.do\n",argv[0]);
+  printf("The track is written to standard output, as a binary image,\n");
+  printf("logical 13 or 16 sectors.\n");
   printf("\n");
   printf("Usage: %s [OPTION...]\n",argv[0]);
   printf("Options:\n");

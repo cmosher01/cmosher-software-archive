@@ -25,11 +25,8 @@ static void help(int argc, char *argv[])
 {
   (void)argc;
   printf("Converts an Apple ][ floppy disk image from .do format\n");
-  printf("to .nib \"nibble\" format.\n");
-  printf("The input format is ASCII hexadecimal, as if output by\n");
-  printf("xxd -ps.\n");
-  printf("For example:\n");
-  printf("    xxd -ps <a2floppy.do | %s\n",argv[0]);
+  printf("to .nib \"nibble\" format.  The input disk must be a logical\n");
+  printf("13 or 16 sector, DOS order, floppy disk image.\n");
   printf("\n");
   printf("Usage: %s [OPTION...]\n",argv[0]);
   printf("Options:\n");
