@@ -17,24 +17,24 @@ DIST = $(NAME)-$(VERSION)
 	dd bs=256 skip=27 <$< >$@
 	dd bs=256 count=27 <$< >>$@
 	dd bs=256 count=184 </dev/zero >>$@
-	a2catalog --dos=$(VERSION) | xxd -r -ps -c 16 >>$@
+	a2catalog --dos=$(VERSION) >>$@
 	dd bs=256 count=221 </dev/zero >>$@
 
 .d13.nib:
 	mkdir -p $(@D)
-	xxd -ps -c 16 <$< a2nibblize | xxd -r -ps -c 16 >$@
+	a2nibblize <$< >$@
 
 .ex65.do:
 	mkdir -p $(@D)
 	dd bs=256 skip=27 <$< >$@
 	dd bs=256 count=27 <$< >>$@
 	dd bs=256 count=235 </dev/zero >>$@
-	a2catalog --dos=$(VERSION) | xxd -r -ps -c 16 >>$@
+	a2catalog --dos=$(VERSION) >>$@
 	dd bs=256 count=272 </dev/zero >>$@
 
 .do.nib:
 	mkdir -p $(@D)
-	xxd -ps -c 16 <$< | a2nibblize | xxd -r -ps -c 16 >$@
+	a2nibblize <$< >$@
 
 .SUFFIXES: .s65 .o65 .ld65 .ex65 .d13 .do .nib .wxs .wixobj .msi
 
