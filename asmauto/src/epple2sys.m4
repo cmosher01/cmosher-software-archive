@@ -303,7 +303,7 @@ BSOK        RTS
 ;
 PRPROMPT    JSR PRSTR
             HIASCII(`E2>')
-            ASM_DATA 0
+            ASM_DATA(0)
             RTS
 ;
 ;
@@ -323,7 +323,7 @@ NOKEY       LDA READKEY
 ;
 WELCOME     JSR PRSTR
             HIASCII(`EPPLE ][ DEMO ROM [GPLV3]  ? FOR HELP')
-            ASM_DATA 0
+            ASM_DATA(0)
             JSR PRCR
             JSR PRLF
             RTS
@@ -477,43 +477,43 @@ CMD_H_IMP
 
             JSR PRSTR
             HIASCII(`COMMAND        ACTION')
-            ASM_DATA 0
+            ASM_DATA(0)
             JSR PRCR
             JSR PRLF
 
             JSR PRSTR
             HIASCII(`-------------  ------------------------')
-            ASM_DATA 0
+            ASM_DATA(0)
             JSR PRCR
             JSR PRLF
 
             JSR PRSTR
             HIASCII(`D XXXX [YYYY]  DUMP MEMORY XXXX TO YYYY')
-            ASM_DATA 0
+            ASM_DATA(0)
             JSR PRCR
             JSR PRLF
 
             JSR PRSTR
             HIASCII(`R XXXX         RUN AT XXXX')
-            ASM_DATA 0
+            ASM_DATA(0)
             JSR PRCR
             JSR PRLF
 
             JSR PRSTR
             HIASCII(`S XXXX YY      SET MEMORY XXXX TO YY')
-            ASM_DATA 0
+            ASM_DATA(0)
             JSR PRCR
             JSR PRLF
 
             JSR PRSTR
             HIASCII(`?              SHOW HELP')
-            ASM_DATA 0
+            ASM_DATA(0)
             JSR PRCR
             JSR PRLF
 
             JSR PRSTR
             HIASCII(`[ENTER ALL VALUES IN HEX]')
-            ASM_DATA 0
+            ASM_DATA(0)
             JSR PRCR
             JSR PRLF
 
@@ -652,5 +652,5 @@ CMD_S_2     LDA INBUF,Y
 ;
 VECTORS     RTS
             JMP RESET
-            ASM_ADDR RESET
-            ASM_ADDR RESET
+            ASM_ADDR(RESET)
+            ASM_ADDR(RESET)

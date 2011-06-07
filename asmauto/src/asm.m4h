@@ -1,6 +1,6 @@
-define(`ASM_DATA',`.BYT')
-define(`ASM_ADDR',`.WORD $1')
-define(`ASM_RES',`.DSB $1,0')
+define(`ASM_DATA',`.BYT $*')
+define(`ASM_ADDR',`.WORD $*')
+define(`ASM_RES',`.DSB $1,ifelse(`$2',`',0,$2)')
 
 
 
@@ -35,8 +35,8 @@ define(`STR_FORCHAR_LAST',
 define(`HICHAR',`"`$1'"|%10000000')
 define(`LOCHAR',`"`$1'"&%01111111')
 
-define(`HIASCII',`STR_FORCHAR(__,`$1',`ASM_DATA HICHAR(__) NL()')')
-define(`LOASCII',`STR_FORCHAR(__,`$1',`ASM_DATA LOCHAR(__) NL()')')
+define(`HIASCII',`STR_FORCHAR(__,`$1',`ASM_DATA(HICHAR(__)) NL()')')
+define(`LOASCII',`STR_FORCHAR(__,`$1',`ASM_DATA(LOCHAR(__)) NL()')')
 
-define(`HLASCII',`STR_FORCHAR_LAST(__,`$1',`ASM_DATA HICHAR(__) NL()',`ASM_DATA LOCHAR(__) NL()')')
-define(`LHASCII',`STR_FORCHAR_LAST(__,`$1',`ASM_DATA LOCHAR(__) NL()',`ASM_DATA HICHAR(__) NL()')')
+define(`HLASCII',`STR_FORCHAR_LAST(__,`$1',`ASM_DATA(HICHAR(__)) NL()',`ASM_DATA(LOCHAR(__)) NL()')')
+define(`LHASCII',`STR_FORCHAR_LAST(__,`$1',`ASM_DATA(LOCHAR(__)) NL()',`ASM_DATA(HICHAR(__)) NL()')')

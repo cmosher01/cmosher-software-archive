@@ -2,24 +2,40 @@
 
 AUTOMAKE_OPTIONS=-Wno-override
 
+ZEROSEGS=-bd 0 -bb 0 -bz 0
+
 .m4.s65:
 	$(M4) -I $(srcdir) $(M4FLAGS) $< >$@
 
 .s65.o65:
-	$(XA65) -C -M -R -c -bt 0 -bd 0 -bb 0 -bz 0 -o $@ $(XA65FLAGS) $<
+	$(XA65) -C -M -R -c -bt 0 $(ZERO_SEGS) -o $@ $(XA65FLAGS) $<
 
 .o65.r65:
-	$(LDO65) -bt $(AD_TEXT) -bd 0 -bb 0 -bz 0 -o $@ $(LD65FLAGS) $^
+	$(LDO65) -bt $(CODE_SEG) $(ZERO_SEGS) -o $@ $(LD65FLAGS) $^
 
-.r65.e65:
+.r65.a65:
 	$(RELOC65) -xt -o $@ $(RELOC65FLAGS) $<
 
-bin_PROGRAMS=epple2sys.e65
+mypkgdir=$(prefix)/lib/epple2/system
 
-epple2sys_e65_SOURCES=epple2sys.m4 asm.m4h
+mypkg_DATA=epple2sys.a65
+noinst_DATA=epple2sys.md5
+EXTRA_DIST=epple2sys.m4 asm.m4h epple2sys.md5
 
-epple2sys.e65$(EXEEXT):
-epple2sys.r65: AD_TEXT=64512
+epple2sys.r65: CODE_SEG=64512
 epple2sys.s65: epple2sys.m4 asm.m4h
 
-CLEANFILES=epple2sys.r65 epple2sys.s65
+define_new_md5: all
+	md5sum --binary epple2sys.a65 >$(srcdir)/epple2sys.md5
+
+check_SCRIPTS=unit_test.sh
+TESTS=$(check_SCRIPTS)
+
+unit_test.sh:
+	touch $@
+	echo "md5sum --check --status --warn $(srcdir)/epple2sys.md5" >>$@
+	chmod +x $@
+
+
+
+CLEANFILES=unit_test.sh epple2sys.a65 epple2sys.r65 epple2sys.s65
