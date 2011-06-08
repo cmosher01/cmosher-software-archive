@@ -1,3 +1,4 @@
+#@configure_input@
 #!/usr/bin/make -f
 
 AUTOMAKE_OPTIONS=-Wno-override
@@ -26,14 +27,20 @@ epple2sys.r65: CODE_SEG=64512
 epple2sys.s65: epple2sys.m4 asm.m4h
 
 define_new_md5: all
-	md5sum --binary epple2sys.a65 >$(srcdir)/epple2sys.md5
+	$(MD5SUM) --binary epple2sys.a65 >$(srcdir)/epple2sys.md5
 
 check_SCRIPTS=unit_test.sh
 TESTS=$(check_SCRIPTS)
 
 unit_test.sh:
 	touch $@
-	echo "md5sum --check --status --warn $(srcdir)/epple2sys.md5" >>$@
+	if test "X$(MD5SUM)" == X ; \
+	then \
+		echo "echo \"md5sum program not found, so cannot run this test\" >&2" >>$@ ; \
+		echo "exit 1" >>$@ ; \
+	else \
+		echo "$(MD5SUM) --check --status --warn $(srcdir)/epple2sys.md5" >>$@ ; \
+	fi
 	chmod +x $@
 
 
