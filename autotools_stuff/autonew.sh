@@ -121,11 +121,14 @@ touch README AUTHORS ChangeLog
 # Create bare Makefile.am files
 #
 cat <<EOF >Makefile.am
+#@configure_input@
 ACLOCAL_AMFLAGS=-I m4 --install
 SUBDIRS=src
 EOF
 
-touch src/Makefile.am
+cat <<EOF >src/Makefile.am
+#@configure_input@
+EOF
 
 
 
