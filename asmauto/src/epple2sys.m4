@@ -66,7 +66,7 @@ HIRESOFF    = $C056
 ;
 ;
 ;
-; RESET
+;;RESET
 ; Handles power-on or reset-button-press.
 ; Initializes CPU, screen; displays welcome message;
 ; invokes the shell.
@@ -91,7 +91,7 @@ RESET       NOP
 ;
 ;
 ;
-; LINEADDR
+;;LINEADDR
 ; Computes address of column 0 for text line
 ; (0-23) given in A, into TEXTROW.
 ; input:
@@ -129,7 +129,7 @@ STORELOW    STA TEXTROW
 ;
 ;
 ;
-; CHARADDR
+;;CHARADDR
 ; Computes address of character at ROW,COL
 ; for use as STA (TEXTROW),Y
 ; input: ROW, COL
@@ -143,7 +143,7 @@ CHARADDR    LDA ROW
 ;
 ;
 ;
-; ENDSCR
+;;ENDSCR
 ; Moves cursor to bottom right.
 ; output: ROW, COL
 ; scratch: A
@@ -156,7 +156,7 @@ ENDSCR      LDA #SCREENHGT-1
 ;
 ;
 ;
-; SCROLL
+;;SCROLL
 ; Scrolls the entire screen up one line
 ; scratch: A. Y, X, TMP, TMPW, TEXTROW
 ;
@@ -187,7 +187,7 @@ LOOPCOL     LDA (TEXTROW),Y
 ;
 ;
 ;
-; CLEARLINE
+;;CLEARLINE
 ; Clears line given by A
 ; input: A
 ; scratch: X, Y, TEXTROW
@@ -202,7 +202,7 @@ LOOPCLR     STA (TEXTROW),Y
 ;
 ;
 ;
-; PRCURS
+;;PRCURS
 ; Prints the cursor (inverses char at ROL,COL)
 ; input: ROW, COL
 ; scratch: TEXTROW, Y, A, X
@@ -214,7 +214,7 @@ PRCURS      JSR CHARADDR
 ;
 ;
 ;
-; PRCHAR
+;;PRCHAR
 ; Prints a normal character in A at ROW, COL;
 ; advances cursor; scrolls if necessary
 ; input: A, ROW, COL
@@ -231,7 +231,7 @@ PRCHAR      PHA
 ;
 ;
 ;
-; ADVCUR
+;;ADVCUR
 ; Advances cursor one position; scrolls if necessary.
 ;
 ADVCUR      INC COL
@@ -246,7 +246,7 @@ ADVOK       RTS
 ;
 ;
 ;
-; PRCR
+;;PRCR
 ; Prints a carraige return (goes to start of same line)
 ; output: COL
 ; scratch: A
@@ -257,7 +257,7 @@ PRCR        LDA #0
 ;
 ;
 ;
-; PRLF
+;;PRLF
 ; Prints a line feed (goes down one line);
 ; scrolls if necessary
 ; input: ROW
@@ -277,7 +277,7 @@ LFOK        RTS
 ;
 ;
 ;
-; PRBS
+;;PRBS
 ; Prints a back-space (goes left one char)
 ; input: COL, ROW
 ; output: COL, ROW
@@ -296,7 +296,7 @@ BSOK        RTS
 ;
 ;
 ;
-; PRPROMPT
+;;PRPROMPT
 ; Prints the prompt character.
 ; input: ROW, COL
 ; scratch: A, TEXTROW, Y, X
@@ -308,7 +308,7 @@ PRPROMPT    JSR PRSTR
 ;
 ;
 ;
-; RDCHAR
+;;RDCHAR
 ; Reads a character (waits for one) into A
 ; (high bit will be set)
 ;
@@ -319,7 +319,7 @@ NOKEY       LDA READKEY
 ;
 ;
 ;
-; WELCOME
+;;WELCOME
 ;
 WELCOME     JSR PRSTR
             HIASCII(`EPPLE ][ DEMO ROM [GPLV3]  ? FOR HELP')
@@ -330,7 +330,7 @@ WELCOME     JSR PRSTR
 ;
 ;
 ;
-; PRSTR
+;;PRSTR
 ; Prints a string (in code seg of caller)
 ;
 PRSTR       PLA
@@ -356,7 +356,7 @@ DONE
             RTS
 ;
 ;
-; CVTHEX
+;;CVTHEX
 ; Parses hex character ('0'-'9' or 'A'-'F') in A
 ; and shifts into low-order nibble of TMPW.
 ; Undefined op if A contains something else.
@@ -386,7 +386,7 @@ DIGIT
             RTS
 ;
 ;
-; PRBYTE
+;;PRBYTE
 ; Prints byte in A as hex
 ;
 PRBYTE      PHA
@@ -412,7 +412,7 @@ PRDIGIT2    JSR PRCHAR
 ;
 ;
 ;
-; SHELL
+;;SHELL
 ;
 SHELL       LDA #0
             STA INBUFC
@@ -455,7 +455,7 @@ K_CHAR_OK   JSR PRCHAR
 ;
 ;
 ;
-; COMMAND
+;;COMMAND
 ;
 COMMAND     JSR PRCR
             JSR PRLF
@@ -649,6 +649,8 @@ CMD_S_2     LDA INBUF,Y
             RTS
 ;
 ;
+;
+;;VECTORS
 ;
 VECTORS     RTS
             JMP RESET
