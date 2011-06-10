@@ -1,4 +1,5 @@
-         .FEATURE LABELS_WITHOUT_COLONS
+include(`asm.m4h')
+include(`symbols.m4h')
 
 PADDL0   =     $C064
 PTRIG    =     $C070

@@ -1,27 +1,5 @@
-         .FEATURE LABELS_WITHOUT_COLONS
-
-         ;MONITOR
-         .EXPORT KEYIN
-         .EXPORT GETLNZ
-         .IF VERSION = 2
-         .EXPORT RDKEY
-         .EXPORT NXTCHAR1
-         .ENDIF
-
-         ;DISPLAY2
-         .IMPORT CLREOL
-         .IF VERSION = 1
-         .IMPORT ESC1
-         .ELSE
-         .IMPORT LFBA5
-         .ENDIF
-         ;MONITOR
-         .IMPORT CROUT
-         .IMPORT BELL
-         .IMPORT COUT
-
-         .INCLUDE "symbols.s65"
-         .INCLUDE "hascmap.s65"
+include(`asm.m4h')
+include(`symbols.m4h')
 
 KBD      =     $C000
 KBDSTRB  =     $C010
@@ -48,11 +26,11 @@ KEYIN2   BIT   KBD        ;KEY DOWN?
 
 
 ESC      JSR   RDKEY      ;GET KEYCODE
-         .IF VERSION = 1
+ifelse(eval(VERSION `< 2'),1,`
          JSR   ESC1       ;  HANDLE ESC FUNC.
-         .ELSE
+',`
          JSR   LFBA5
-         .ENDIF
+')
 
 RDCHAR   JSR   RDKEY      ;READ KEY
          CMP   #$9B       ;ESC?
@@ -84,7 +62,7 @@ NOTCR    LDA   INVFLG
 NOTCR1   INX              ;ADVANCE INPUT INDEX
          BNE   NXTCHAR
 
-CANCEL   LDA   #'\'       ;BACKSLASH AFTER CANCELLED LINE
+CANCEL   LDA   #HICHAR(`\') ;BACKSLASH AFTER CANCELLED LINE
          JSR   COUT
 GETLNZ   JSR   CROUT      ;OUTPUT CR
 

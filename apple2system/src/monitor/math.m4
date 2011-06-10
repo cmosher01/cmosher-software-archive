@@ -1,9 +1,9 @@
-         .FEATURE LABELS_WITHOUT_COLONS
-         .INCLUDE "symbols.s65"
+include(`asm.m4h')
+include(`symbols.m4h')
 
 
 
-         .IF VERSION < 2
+ifelse(eval(VERSION `< 2'),1,`
 
 
 ;-----------------------------------------------------------------------
@@ -21,7 +21,7 @@
 MULPM    JSR   MD1        ;ABS VAL OF AC AUX
 MUL      LDY   #$10       ;INDEX FOR 16 BITS
 MUL2     LDA   ACL        ;ACX * AUX + XTND
-         LSR   A          ; TO AC, XTND
+         LSR              ; TO AC, XTND
          BCC   MUL4       ;IF NO CARRY,
          CLC              ; NO PARTIAL PROD.
          LDX   #$FE
@@ -86,6 +86,7 @@ MDRTS    RTS
 
 
 
+',`
 
 
 
@@ -95,17 +96,6 @@ MDRTS    RTS
 
 
 
-         .ELSE
-         .EXPORT LFB60
-         .EXPORT LFB78
-         .EXPORT LFBA5
-
-         .IMPORT LFB08
-         .IMPORT ESC1
-         .IMPORT VIDOUT
-         .IMPORT CR
-         .IMPORT HOME
-         .IMPORT RDKEY
 
 LFB60   JSR     HOME
         LDY     #$08
@@ -158,4 +148,4 @@ LFBA5   CMP     #$CE
         NOP
         NOP
         NOP
-        .ENDIF
+')

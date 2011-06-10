@@ -1,13 +1,5 @@
-         .FEATURE LABELS_WITHOUT_COLONS
-
-         ;MONITOR
-         .EXPORT HEADR
-         .EXPORT WRBIT
-         .EXPORT RDBYTE
-         .EXPORT RD2BIT
-         .EXPORT RDBIT
-
-         .INCLUDE "symbols.s65"
+include(`asm.m4h')
+include(`symbols.m4h')
 
 TAPEOUT  =     $C020
 TAPEIN   =     $C060
@@ -38,7 +30,7 @@ RDBYTE   LDX   #$08       ;8 BITS TO READ
 RDBYT2   PHA              ;READ TWO TRANSITIONS
          JSR   RD2BIT     ;  (FIND EDGE)
          PLA
-         ROL   A          ;NEXT BIT
+         ROL              ;NEXT BIT
          LDY   #$3A       ;COUNT FOR SAMPLES
          DEX
          BNE   RDBYT2

@@ -1,21 +1,5 @@
-         .FEATURE LABELS_WITHOUT_COLONS
-
-         ;DISPLAY1
-         .EXPORT VTAB
-         ;MONITOR
-         .EXPORT VIDOUT
-         .EXPORT NXTA4
-         .EXPORT NXTA1
-         ;KEYIN
-         .EXPORT ESC1
-         .EXPORT CLREOL
-         .IF VERSION >= 2
-         .EXPORT HOME
-         .ENDIF
-
-
-         .INCLUDE "symbols.s65"
-         .INCLUDE "hascmap.s65"
+include(`asm.m4h')
+include(`symbols.m4h')
 
 ASCBEL = $07 | %10000000
 ASCBS  = $08 | %10000000
@@ -40,7 +24,7 @@ SPKR     =     $C030
 
 
 BASCALC  PHA              ;CALC BASE ADR IN BASL,H
-         LSR   A          ;  FOR GIVEN LINE NO
+         LSR              ;  FOR GIVEN LINE NO
          AND   #%00000011 ;  0<=LINE NO.<=$17
          ORA   #%00000100 ;ARG=000ABCDE, GENERATE
          STA   BASH       ;  BASH=000001CD
@@ -49,8 +33,8 @@ BASCALC  PHA              ;CALC BASE ADR IN BASL,H
          BCC   BSCLC2
          ADC   #$80-1
 BSCLC2   STA   BASL
-         ASL   A
-         ASL   A
+         ASL
+         ASL
          ORA   BASL
          STA   BASL
          RTS
@@ -179,7 +163,7 @@ SCRL3    LDY   #0         ;CLEAR BOTTOM LINE
          JSR   CLEOLZ     ;GET BASE ADDR FOR BOTTOM LINE
          BCS   VTAB       ;CARRY IS SET
 CLREOL   LDY   CH         ;CURSOR H INDEX
-CLEOLZ   LDA   #' '
+CLEOLZ   LDA   #HICHAR(` ')
 CLEOL2   STA   (BASL),Y   ;STORE BLANKS FROM 'HERE'
          INY              ;  TO END OF LINES (WNDWDTH)
          CPY   WNDWDTH

@@ -22,8 +22,7 @@ STEP     JSR   INSTDSP    ;DISASSEMBLE ONE INST
          PLA              ;  STACK. SAVE
          STA   RTNH       ;  RTN ADR.
          LDX   #$08
-;XQINIT   LDA   INITBL-1,X ;INIT XEQ AREA
-XQINIT   LDA   INITBL+$FFFF,X ;INIT XEQ AREA
+XQINIT   LDA   INITBL-1,X ;INIT XEQ AREA
          STA   XQT,X
          DEX
          BNE   XQINIT

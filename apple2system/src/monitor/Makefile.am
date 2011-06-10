@@ -29,11 +29,11 @@ EXTRA_DIST=$(M4S) $(noinst_DATA)
 
 monitor2.r65: monitor2.o65 $(OBJS)
 monitor2.r65: M4FLAGS=-DVERSION=1
-
-#monitor2.r65: CODE_SEG=63488 M4FLAGS=-DVERSION=1
+monitor2.r65: CODE_SEG=63488
 
 monitor2plus.r65: monitor2plus.o65 $(OBJS)
-monitor2plus.r65: CODE_SEG=63488 M4FLAGS=-DVERSION=2
+monitor2plus.r65: M4FLAGS=-DVERSION=2
+monitor2plus.r65: CODE_SEG=63488
 
 lores.o65: lores.s65 symbols.m4h ../include/asm.m4h
 disasm.o65: disasm.s65 symbols.m4h ../include/asm.m4h

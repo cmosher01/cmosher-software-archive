@@ -1,17 +1,5 @@
-         .FEATURE LABELS_WITHOUT_COLONS
-
-         ;MONITOR
-         .EXPORT INIT
-         ;NOT USED
-         .EXPORT SETTXT
-         .EXPORT SETGR
-
-         ;DISPLAY2
-         .IMPORT VTAB
-         ;LORES
-         .IMPORT CLRTOP
-
-         .INCLUDE "symbols.s65"
+include(`asm.m4h')
+include(`symbols.m4h')
 
 ;-----------------------------------------------------------------------
 ;

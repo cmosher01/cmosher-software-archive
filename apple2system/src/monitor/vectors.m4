@@ -1,22 +1,9 @@
-         .FEATURE LABELS_WITHOUT_COLONS
+include(`asm.m4h')
+include(`symbols.m4h')
 
-         .EXPORT M6502VEC
 
-         .IF VERSION < 2
-         .IMPORT RESET
-         .ELSE
-         .IMPORT RESET2
-         .ENDIF
-         .IMPORT IRQ
+M6502VEC ASM_ADDR(NMI)        ;NMI VECTOR
 
-         .INCLUDE "symbols.s65"
+         ASM_ADDR(RESET`'ifelse(eval(VERSION `>= 2'),1,`2')) ;RESET VECTOR
 
-M6502VEC .ADDR NMI        ;NMI VECTOR
-
-         .IF VERSION < 2
-         .ADDR RESET      ;RESET VECTOR
-         .ELSE
-         .ADDR RESET2
-         .ENDIF
-
-         .ADDR IRQ        ;IRQ VECTOR
+         ASM_ADDR(IRQ)        ;IRQ VECTOR

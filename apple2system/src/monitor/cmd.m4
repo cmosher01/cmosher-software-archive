@@ -1,51 +1,5 @@
-         .FEATURE LABELS_WITHOUT_COLONS
-
-         .EXPORT MON
-         .EXPORT BELL
-         .EXPORT CROUT
-         .EXPORT COUT
-         .EXPORT PRBYTE
-         .EXPORT PRYX2
-         .EXPORT RESET
-         .EXPORT RESTORE
-         .EXPORT SAV1
-         .EXPORT SAVE
-         .IF VERSION >= 2
-         .EXPORT SETNORM
-         .EXPORT SETVID
-         .EXPORT SETKBD
-         .EXPORT COUT1
-         .ENDIF
-
-         ;KEYIN
-         .IMPORT GETLNZ
-         .IMPORT KEYIN
-         ;DISPLAY2
-         .IMPORT NXTA1
-         .IMPORT NXTA4
-         .IF VERSION >= 2
-         .IMPORT LFB78
-         .ELSE
-         .IMPORT VIDOUT
-         .ENDIF
-         ;DISPLAY1
-         .IMPORT INIT
-         ;CASETTE
-         .IMPORT HEADR
-         .IMPORT WRBIT
-         .IMPORT RDBYTE
-         .IMPORT RD2BIT
-         .IMPORT RDBIT
-         ;DEBUG
-         .IMPORT STEP
-         .IMPORT REGDSP
-         ;DISASM
-         .IMPORT PCADJ
-         .IMPORT INSTDSP
-         .IMPORT PRNTYX
-
-         .INCLUDE "symbols.s65"
-         .INCLUDE "hascmap.s65"
+include(`asm.m4h')
+include(`symbols.m4h')
 
 ;-----------------------------------------------------------------------
 ;
@@ -78,7 +32,7 @@ PRA1     LDY   A1H        ;PRINT CR,A1 IN HEX
 PRYX2    JSR   CROUT
          JSR   PRNTYX
          LDY   #$00
-         LDA   #'-'       ;PRINT '-'
+         LDA   #HICHAR(`-')       ;PRINT '-'
          JMP   COUT
 
 
@@ -95,7 +49,7 @@ MODSCHK  LDA   A1L
          AND   #%00000111
          BNE   DATAOUT
 XAM      JSR   PRA1
-DATAOUT  LDA   #' '
+DATAOUT  LDA   #HICHAR(` ')
          JSR   COUT       ;OUTPUT BLANK
          LDA   (A1L),Y
          JSR   PRBYTE     ;OUTPUT BYTE IN HEX
@@ -103,17 +57,17 @@ DATAOUT  LDA   #' '
          BCC   MODSCHK    ;CHECK IF TIME TO,
 RTS4C    RTS              ;  PRINT ADDR
 
-XAMPM    LSR   A          ;DETERMINE IF MON
+XAMPM    LSR              ;DETERMINE IF MON
          BCC   XAM        ;  MODE IS XAM
-         LSR   A          ;  ADD, OR SUB
-         LSR   A
+         LSR              ;  ADD, OR SUB
+         LSR
          LDA   A2L
          BCC   ADD
-         EOR   #$FF       ;SUB: FORM 2'S COMPLEMENT
+         EOR   #$FF       ;SUB: FORM 2S COMPLEMENT
 ADD      ADC   A1L
          PHA
-         LDA   #'='
-         JSR   COUT       ;PRINT '=', THEN RESULT
+         LDA   #HICHAR(`=')
+         JSR   COUT       ;PRINT =, THEN RESULT
          PLA
 
 
@@ -121,31 +75,31 @@ ADD      ADC   A1L
 
 
 PRBYTE   PHA              ;PRINT BYTE AS 2 HEX
-         LSR   A          ;  DIGITS, DESTROYS A-REG
-         LSR   A
-         LSR   A
-         LSR   A
+         LSR              ;  DIGITS, DESTROYS A-REG
+         LSR
+         LSR
+         LSR
          JSR   PRHEXZ
          PLA
 PRHEX    AND   #%00001111 ;PRINT HEX DIG IN A-REG
-PRHEXZ   ORA   #'0'       ;  LSB'S
-         CMP   #'9'+1
+PRHEXZ   ORA   #HICHAR(`0') ;  LSB'S
+         CMP   #HICHAR(`9')+1
          BCC   COUT
          ADC   #$06
 
 
 
 COUT     JMP   (CSWL)     ;VECTOR TO USER OUTPUT ROUTINE
-COUT1    CMP   #' '
-         BCC   COUTZ      ;DON'T OUTPUT CTRL'S INVERSE
+COUT1    CMP   #HICHAR(` ')
+         BCC   COUTZ      ;DONT OUTPUT CTRLS INVERSE
          AND   INVFLG     ;MASK WITH INVERSE FLAG
 COUTZ    STY   YSAV1      ;SAV Y-REG
          PHA              ;SAV A-REG
-         .IF VERSION >= 2
+ifelse(eval(VERSION `< 2'),1,`
          JSR   LFB78
-         .ELSE
+',`
          JSR   VIDOUT     ;OUTPUT A-REG AS ASCII
-         .ENDIF
+')
          PLA              ;RESTORE A-REG
          LDY   YSAV1      ;  AND Y-REG
          RTS              ;  THEN RETURN
@@ -168,8 +122,8 @@ STOR     STA   MODE       ;KEEP IN STORE MODE
          INC   A3H
 RTS5     RTS
 
-SETMODE  LDY   YSAV       ;SAVE CONVERTED ':', '+',
-         LDA   IN-1,Y     ;  '-', '.' AS MODE.
+SETMODE  LDY   YSAV       ;SAVE CONVERTED :, +,
+         LDA   IN-1,Y     ;  -, . AS MODE.
 SETMDZ   STA   MODE
          RTS
 
@@ -193,20 +147,20 @@ VFY      LDA   (A1L),Y    ;VERIFY (A1 TO A2) WITH
          JSR   PRA1
          LDA   (A1L),Y
          JSR   PRBYTE
-         LDA   #' '
+         LDA   #HICHAR(` ')
          JSR   COUT
-         LDA   #'('
+         LDA   #HICHAR(`(')
          JSR   COUT
          LDA   (A4L),Y
          JSR   PRBYTE
-         LDA   #')'
+         LDA   #HICHAR(`)')
          JSR   COUT
 VFYOK    JSR   NXTA4
          BCC   VFY
          RTS
 
 LIST1    JSR   A1PC       ;MOVE A1 (2 BYTES) TO
-         LDA   #TEXTHEIGHT-4 ;  PC IF SPEC'D AND
+         LDA   #TEXTHEIGHT-4 ;  PC IF SPECD AND
 LIST2    PHA              ;  DISEMBLE 20 INSTRS
          JSR   INSTDSP
          JSR   PCADJ      ;ADJUST PC EACH INSTR
@@ -218,7 +172,7 @@ LIST2    PHA              ;  DISEMBLE 20 INSTRS
          BNE   LIST2
          RTS
 
-A1PC     TXA              ;IF USER SPEC'D ADR
+A1PC     TXA              ;IF USER SPECD ADR
          BEQ   A1PCRTS    ;  COPY FROM A1 TO PC
 A1PCLP   LDA   A1L,X
          STA   PCL,X
@@ -259,18 +213,18 @@ XBASIC   JMP   BASIC      ;TO BASIC WITH SCRATCH
 
 BASCONT  JMP   BASIC2     ;CONTINUE BASIC
 
-GO       JSR   A1PC       ;ADR TO PC IF SPEC'D
+GO       JSR   A1PC       ;ADR TO PC IF SPECD
          JSR   RESTORE    ;RESTORE META REGS
          JMP   (PCL)      ;GO TO USER SUBR
 
 REGZ     JMP   REGDSP     ;TO REG DISPLAY
 
 TRACE
-         .IF VERSION < 2
+ifelse(eval(VERSION `< 2'),1,`
          DEC   YSAV
-STEPZ    JSR   A1PC       ;ADR TO PC IF SPEC'D
+STEPZ    JSR   A1PC       ;ADR TO PC IF SPECD
          JMP   STEP       ;TAKE ONE STEP
-         .ELSE
+',`
          RTS
          NOP
          RTS
@@ -279,7 +233,7 @@ STEPZ    NOP
          NOP
          NOP
          NOP
-         .ENDIF
+')
 
 USR      JMP   USRADR     ;TO USR SUBR AT USRADR
 
@@ -301,7 +255,7 @@ WR1      LDX   #$00
          JSR   WRBYTE
          BEQ   BELL
 WRBYTE   LDX   #$10
-WRBYT2   ASL   A
+WRBYT2   ASL
          JSR   WRBIT
          BNE   WRBYT2
          RTS
@@ -338,9 +292,9 @@ RD3      JSR   RDBYTE     ;READ A BYTE
          JSR   RDBYTE     ;READ CHKSUM BYTE
          CMP   CHKSUM
          BEQ   BELL       ;GOOD, SOUND BELL AND RETURN
-PRERR    LDA   #'E'
+PRERR    LDA   #HICHAR(`E')
          JSR   COUT       ;PRINT "ERR", THEN BELL
-         LDA   #'R'
+         LDA   #HICHAR(`R')
          JSR   COUT
          JSR   COUT
 
@@ -380,7 +334,7 @@ RESET    JSR   SETNORM    ;NORMAL
          JSR   SETKBD     ;IN#0
 MON      CLD              ;MUST SET HEX MODE!
          JSR   BELL
-MONZ     LDA   #$AA       ;'*' PROMPT FOR MON
+MONZ     LDA   #$AA       ;* PROMPT FOR MON
          STA   PROMPT
          JSR   GETLNZ     ;READ A LINE
          JSR   ZMODE      ;CLEAR MON MODE, SCAN IDX
@@ -398,11 +352,11 @@ CHRSRCH  DEY
 
 
 DIG      LDX   #$03
-         ASL   A
-         ASL   A          ;GOT HEX DIG,
-         ASL   A          ;  SHIFT INTO A2
-         ASL   A
-NXTBIT   ASL   A
+         ASL
+         ASL              ;GOT HEX DIG,
+         ASL              ;  SHIFT INTO A2
+         ASL
+NXTBIT   ASL
          ROL   A2L
          ROL   A2H
          DEX              ;LEAVE X=$FF IF DIG
@@ -440,62 +394,65 @@ ZMODE    LDY   #$00       ;CLR MODE, OLD MODE
          RTS              ; GO TO SUBR VIA RTS
 
 
+;DEFINE F(CHR) <(CHR^$B0+$89)
+define(`MON_CMD_CHR',`<($1^`$'B0+`$'89)')
 
+CHRTBL   ASM_DATA(MON_CMD_CHR(`CTRL_C'))
+         ASM_DATA(MON_CMD_CHR(`CTRL_Y'))
+         ASM_DATA(MON_CMD_CHR(`CTRL_E'))
 
-         .DEFINE F(CHR) <(CHR^$B0+$89)
+ifelse(eval(VERSION `< 2'),1,`
+         ASM_DATA(MON_CMD_CHR(HICHAR(`T')))
+',`
+         ASM_DATA(MON_CMD_CHR(`CTRL_Y'))
+')
 
-CHRTBL   .BYTE F(CTRL_C)
-         .BYTE F(CTRL_Y)
-         .BYTE F(CTRL_E)
-         .IF VERSION < 2
-         .BYTE F('T')
-         .ELSE
-         .BYTE F(CTRL_Y)
-         .ENDIF
-         .BYTE F('V')
-         .BYTE F(CTRL_K)
-         .IF VERSION < 2
-         .BYTE F('S')
-         .ELSE
-         .BYTE F(CTRL_Y)
-         .ENDIF
-         .BYTE F(CTRL_P)
-         .BYTE F(CTRL_B)
-         .BYTE F('-')
-         .BYTE F('+')
-         .BYTE F('M')
-         .BYTE F('<')
-         .BYTE F('N')
-         .BYTE F('I')
-         .BYTE F('L')
-         .BYTE F('W')
-         .BYTE F('G')
-         .BYTE F('R')
-         .BYTE F(':')
-         .BYTE F('.')
-         .BYTE F(ASCCR)
-         .BYTE F(' ')
+         ASM_DATA(MON_CMD_CHR(HICHAR(`V')))
+         ASM_DATA(MON_CMD_CHR(`CTRL_K'))
 
-SUBTBL   .BYTE <BASCONT-1
-         .BYTE <USR-1
-         .BYTE <REGZ-1
-         .BYTE <TRACE-1
-         .BYTE <VFY-1
-         .BYTE <INPRT-1
-         .BYTE <STEPZ-1
-         .BYTE <OUTPRT-1
-         .BYTE <XBASIC-1
-         .BYTE <SETMODE-1
-         .BYTE <SETMODE-1
-         .BYTE <MOVE-1
-         .BYTE <LT-1
-         .BYTE <SETNORM-1
-         .BYTE <SETINV-1
-         .BYTE <LIST1-1
-         .BYTE <WRITE-1
-         .BYTE <GO-1
-         .BYTE <READ-1
-         .BYTE <SETMODE-1
-         .BYTE <SETMODE-1
-         .BYTE <CRMON-1
-         .BYTE <BLANK-1
+ifelse(eval(VERSION `< 2'),1,`
+         ASM_DATA(MON_CMD_CHR(HICHAR(`S')))
+',`
+         ASM_DATA(MON_CMD_CHR(`CTRL_Y'))
+')
+
+         ASM_DATA(MON_CMD_CHR(`CTRL_P'))
+         ASM_DATA(MON_CMD_CHR(`CTRL_B'))
+         ASM_DATA(MON_CMD_CHR(HICHAR(`-')))
+         ASM_DATA(MON_CMD_CHR(HICHAR(`+')))
+         ASM_DATA(MON_CMD_CHR(HICHAR(`M')))
+         ASM_DATA(MON_CMD_CHR(HICHAR(`<')))
+         ASM_DATA(MON_CMD_CHR(HICHAR(`N')))
+         ASM_DATA(MON_CMD_CHR(HICHAR(`I')))
+         ASM_DATA(MON_CMD_CHR(HICHAR(`L')))
+         ASM_DATA(MON_CMD_CHR(HICHAR(`W')))
+         ASM_DATA(MON_CMD_CHR(HICHAR(`G')))
+         ASM_DATA(MON_CMD_CHR(HICHAR(`R')))
+         ASM_DATA(MON_CMD_CHR(HICHAR(`:')))
+         ASM_DATA(MON_CMD_CHR(HICHAR(`.')))
+         ASM_DATA(MON_CMD_CHR(`ASCCR'))
+         ASM_DATA(MON_CMD_CHR(HICHAR(` ')))
+
+SUBTBL   ASM_DATA(`<BASCONT-1')
+         ASM_DATA(`<USR-1')
+         ASM_DATA(`<REGZ-1')
+         ASM_DATA(`<TRACE-1')
+         ASM_DATA(`<VFY-1')
+         ASM_DATA(`<INPRT-1')
+         ASM_DATA(`<STEPZ-1')
+         ASM_DATA(`<OUTPRT-1')
+         ASM_DATA(`<XBASIC-1')
+         ASM_DATA(`<SETMODE-1')
+         ASM_DATA(`<SETMODE-1')
+         ASM_DATA(`<MOVE-1')
+         ASM_DATA(`<LT-1')
+         ASM_DATA(`<SETNORM-1')
+         ASM_DATA(`<SETINV-1')
+         ASM_DATA(`<LIST1-1')
+         ASM_DATA(`<WRITE-1')
+         ASM_DATA(`<GO-1')
+         ASM_DATA(`<READ-1')
+         ASM_DATA(`<SETMODE-1')
+         ASM_DATA(`<SETMODE-1')
+         ASM_DATA(`<CRMON-1')
+         ASM_DATA(`<BLANK-1')
