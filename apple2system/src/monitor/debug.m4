@@ -1,44 +1,5 @@
-         .FEATURE LABELS_WITHOUT_COLONS
-
-         ;VECTORS
-         .EXPORT IRQ
-         .IF VERSION < 2
-         ;MONITOR
-         .EXPORT STEP
-         .ELSE
-         .EXPORT RESET2
-         .EXPORT LFB08
-         .ENDIF
-         .EXPORT REGDSP
-
-         ;MONITOR
-         .IMPORT BELL
-         .IMPORT SAVE
-         .IMPORT PRBYTE
-         .IMPORT COUT
-         .IMPORT CROUT
-         .IMPORT MON
-         .IMPORT SAV1
-         .IMPORT RESTORE
-         .IF VERSION >= 2
-         .IMPORT SETNORM
-         .IMPORT SETVID
-         .IMPORT SETKBD
-         .IMPORT LFB60
-         .ENDIF
-         ;DISASM
-         .IMPORT PCADJ2
-         .IMPORT PCADJ3
-         .IMPORT INSDS1
-         .IMPORT INSTDSP
-         ;DISPLAY1
-         .IF VERSION >= 2
-         .IMPORT INIT
-         .ENDIF
-
-         .INCLUDE "symbols.s65"
-         .INCLUDE "hascmap.s65"
-
+include(`asm.m4h')
+include(`symbols.m4h')
 
 BASIC    =     $E000
 
@@ -51,9 +12,9 @@ BASIC    =     $E000
 ;-----------------------------------------------------------------------
 
 
-         .IF VERSION < 2
+ifelse(eval(VERSION `< 2'),1,`
 
-         .BYTE $FF,$FF,$FF
+         ASM_DATA($FF,$FF,$FF)
 
 STEP     JSR   INSTDSP    ;DISASSEMBLE ONE INST
          PLA              ;  AT (PCL,H)
@@ -61,7 +22,8 @@ STEP     JSR   INSTDSP    ;DISASSEMBLE ONE INST
          PLA              ;  STACK. SAVE
          STA   RTNH       ;  RTN ADR.
          LDX   #$08
-XQINIT   LDA   INITBL-1,X ;INIT XEQ AREA
+;XQINIT   LDA   INITBL-1,X ;INIT XEQ AREA
+XQINIT   LDA   INITBL+$FFFF,X ;INIT XEQ AREA
          STA   XQT,X
          DEX
          BNE   XQINIT
@@ -92,20 +54,20 @@ XQ2      STA   XQT,Y      ;  DISP TO 4 FOR
 IRQ      STA   ACC        ;  (RETURN TO NBRANCH)
          PLA
          PHA              ;**IRQ HANDLER
-         ASL   A
-         ASL   A
-         ASL   A
+         ASL
+         ASL
+         ASL
          BMI   BREAK      ;TEST FOR BREAK
          JMP   (IRQLOC)   ;USER ROUTINE VECTOR IN RAM
 
 BREAK    PLP
-         JSR   SAV1       ;SAVE REG'S ON BREAK
+         JSR   SAV1       ;SAVE REGS ON BREAK
          PLA              ;  INCLUDING PC
          STA   PCL
          PLA
          STA   PCH
 XBRK     JSR   INSDS1     ;PRINT USER PC.
-         JSR   RGDSP1     ;  AND REG'S
+         JSR   RGDSP1     ;  AND REGS
          JMP   MON        ;GO TO MONITOR
 
 XRTI     CLC
@@ -141,15 +103,14 @@ RTNJMP   LDA   RTNH
          LDA   RTNL
          PHA
 
-
-         .ELSE
+',`
 
 IRQ      STA   ACC
          PLA
          PHA
-         ASL   A
-         ASL   A
-         ASL   A
+         ASL
+         ASL
+         ASL
          BMI   BREAK
          JMP   (IRQLOC)
 
@@ -215,7 +176,11 @@ LFAC7    LDA   ($00),Y
          JMP   ($0000)
          NOP
          NOP
-         .ENDIF
+')
+
+
+
+
 
 
 
@@ -225,11 +190,13 @@ RGDSP1   LDA   #<ACC      ;  CONTENTS WITH
          LDA   #>ACC
          STA   A3H
          LDX   #$FB
-RDSP1    LDA   #' '
+RDSP1    LDA   #HICHAR(` ')
          JSR   COUT
-         LDA   RTBL-$FB,X
+         ;LDA   RTBL-$FB,X
+         LDA   RTBL+$FF05,X
+
          JSR   COUT
-         LDA   #'='
+         LDA   #HICHAR(`=')
          JSR   COUT
          LDA   ACC+5,X
          JSR   PRBYTE
@@ -237,7 +204,12 @@ RDSP1    LDA   #' '
          BMI   RDSP1
 LFAFC    RTS
 
-         .IF VERSION < 2
+
+
+
+
+ifelse(eval(VERSION < 2),1,`
+
 BRANCH   CLC              ;BRANCH TAKEN,
          LDY   #$01       ;  ADD LEN+2 TO PC
          LDA   (PCL),Y
@@ -258,15 +230,16 @@ INITBL   NOP
          JMP   NBRNCH     ;  XEQ AREA
          JMP   BRANCH
 
-         .ELSE
-         .BYTE $59,$FA,$00,$E0
-LFB01    .BYTE $45,$20,$FF,$00,$FF,$03,$FF
-LFB08    .BYTE $3C
-         .BYTE "APPLE ]["
-         .BYTE "DBA"
-         .BYTE $FF
-         .BYTE "C"
-         .BYTE $FF,$FF,$FF
-         .ENDIF
+',`
 
-RTBL     .BYTE "AXYPS"
+         ASM_DATA($59,$FA,$00,$E0)
+LFB01    ASM_DATA($45,$20,$FF,$00,$FF,$03,$FF)
+LFB08    ASM_DATA($3C)
+         HIASCII(`APPLE ][')
+         HIASCII(`DBA')
+         ASM_DATA($FF)
+         HIASCII(`C')
+         ASM_DATA($FF,$FF,$FF)
+')
+
+RTBL     HIASCII(`AXYPS')

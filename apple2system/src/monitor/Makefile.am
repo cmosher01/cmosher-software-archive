@@ -27,18 +27,25 @@ EXTRA_DIST=$(M4S) $(noinst_DATA)
 
 
 
-
-
 monitor2.r65: monitor2.o65 $(OBJS)
-monitor2.r65: CODE_SEG=63488 VERSION=1
+monitor2.r65: M4FLAGS=-DVERSION=1
+
+#monitor2.r65: CODE_SEG=63488 M4FLAGS=-DVERSION=1
 
 monitor2plus.r65: monitor2plus.o65 $(OBJS)
-monitor2plus.r65: CODE_SEG=63488 VERSION=2
+monitor2plus.r65: CODE_SEG=63488 M4FLAGS=-DVERSION=2
 
 lores.o65: lores.s65 symbols.m4h ../include/asm.m4h
 disasm.o65: disasm.s65 symbols.m4h ../include/asm.m4h
-
-#DO OTHERS: .o65: .s65 symbols.m4h ../include/asm.m4h
+debug.o65: debug.s65 symbols.m4h ../include/asm.m4h
+paddles.o65: paddles.s65 symbols.m4h ../include/asm.m4h
+display1.o65: display1.s65 symbols.m4h ../include/asm.m4h
+math.o65: math.s65 symbols.m4h ../include/asm.m4h
+display2.o65: display2.s65 symbols.m4h ../include/asm.m4h
+cassette.o65: cassette.s65 symbols.m4h ../include/asm.m4h
+keyin.o65: keyin.s65 symbols.m4h ../include/asm.m4h
+cmd.o65: cmd.s65 symbols.m4h ../include/asm.m4h
+vectors.o65: vectors.s65 symbols.m4h ../include/asm.m4h
 
 define_new_md5: all
 	$(MD5SUM) --binary monitor2.a65 >$(srcdir)/monitor2.md5

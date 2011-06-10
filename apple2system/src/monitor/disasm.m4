@@ -18,14 +18,14 @@ INSDS1   LDX   PCL        ;PRINT PCL,H
          JSR   PRBLNK     ;FOLLOWED BY A BLANK
          LDA   (PCL,X)    ;GET OP CODE
 INSDS2   TAY
-         LSR   A          ;EVEN/ODD TEST
+         LSR              ;EVEN/ODD TEST
          BCC   IEVEN
-         ROR   A          ;BIT 1 TEST
+         ROR              ;BIT 1 TEST
          BCS   ERR        ;XXXXXX11 INVALID OP
          CMP   #$A2
          BEQ   ERR        ;OPCODE $89 INVALID
          AND   #$87       ;MASK BITS
-IEVEN    LSR   A          ;LSB INTO CARRY FOR L/R TEST
+IEVEN    LSR              ;LSB INTO CARRY FOR L/R TEST
          TAX
          LDA   FMT1,X     ;GET FORMAT INDEX BYTE
          JSR   SCRN2      ;R/L H-BYTE ON CARRY
@@ -44,10 +44,10 @@ GETFMT   TAX
          LDY   #$03
          CPX   #$8A
          BEQ   MNNDX3
-MNNDX1   LSR   A
+MNNDX1   LSR
          BCC   MNNDX3     ;FORM INDEX INTO MNEMONIC TABLE
-         LSR   A
-MNNDX2   LSR   A          ;1) 1XXX1010->00101XXX
+         LSR
+MNNDX2   LSR              ;1) 1XXX1010->00101XXX
          ORA   #$20       ;2) XXXYYY01->00111XXX
          DEY              ;3) XXXYYY10->00110XXX
          BNE   MNNDX2     ;4) XXXYY100->00100XXX
@@ -84,10 +84,10 @@ PRMN1    LDA   #0
          LDY   #5
 PRMN2    ASL   RMNEM      ;SHIFT 5 BITS OF
          ROL   LMNEM      ;  CHARACTER INTO A
-         ROL   A          ;    (CLEARS CARRY)
+         ROL              ;    (CLEARS CARRY)
          DEY
          BNE   PRMN2
-         ADC   #'?'       ;ADD "?" OFFSET
+         ADC   #HICHAR(`?') ;ADD "?" OFFSET
          JSR   COUT       ;OUTPUT A CHAR OF MNEM
          DEX
          BNE   PRMN1
@@ -127,7 +127,7 @@ PRNTX    TXA              ;  OF BRANCH AND RETURN
 
 
 PRBLNK   LDX   #3         ;BLANK COUNT
-PRBL2    LDA   #' '       ;LOAD A SPACE
+PRBL2    LDA   #HICHAR(` ') ;LOAD A SPACE
          JSR   COUT       ;OUTPUT A BLANK
          DEX
          BNE   PRBL2      ;LOOP UNTIL COUNT=0

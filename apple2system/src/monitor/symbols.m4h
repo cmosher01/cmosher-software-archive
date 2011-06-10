@@ -69,8 +69,5 @@ NMI      =     $03FB
 IRQLOC   =     $03FE
 
 
-
-
-
 TEXTWIDTH = 40
 TEXTHEIGHT = 24
