@@ -1,9 +1,5 @@
-         .FEATURE LABELS_WITHOUT_COLONS
-
-         .EXPORT CLRTOP
-         .EXPORT SCRN2
-
-         .INCLUDE "symbols.s65"
+include(`asm.m4h')
+include(`symbols.m4h')
 
 LORESHEIGHT = TEXTHEIGHT*2
 
@@ -19,7 +15,7 @@ LORESHEIGHT = TEXTHEIGHT*2
 
 
 
-PLOT     LSR   A          ;Y-COORD/2
+PLOT     LSR              ;Y-COORD/2
          PHP              ;SAVE LSB IN CARRY
          JSR   GBASCALC   ;CALC BASE ADR IN GBASL,H
          PLP              ;RESTORE LSB FROM CARRY
@@ -66,7 +62,7 @@ CLRSC3   LDA   #0         ;TOP COORD FOR VLINE CALLS
 
 
 GBASCALC PHA              ;FOR INPUT 000DEFGH
-         LSR   A
+         LSR
          AND   #%00000011
          ORA   #%00000100 ;  GENERATE GBASH=000001FG
          STA   GBASH
@@ -75,8 +71,8 @@ GBASCALC PHA              ;FOR INPUT 000DEFGH
          BCC   GBCALC
          ADC   #$80-1
 GBCALC   STA   GBASL
-         ASL   A
-         ASL   A
+         ASL
+         ASL
          ORA   GBASL
          STA   GBASL
          RTS
@@ -88,26 +84,26 @@ NXTCOL   LDA   COLOR      ;INCREMENT COLOR BY 3
          ADC   #3
 SETCOL   AND   #%00001111 ;SETS COLOR=17*A MOD 16
          STA   COLOR
-         ASL   A          ;BOTH HALF BYTES OF COLOR EQUAL
-         ASL   A
-         ASL   A
-         ASL   A
+         ASL              ;BOTH HALF BYTES OF COLOR EQUAL
+         ASL
+         ASL
+         ASL
          ORA   COLOR
          STA   COLOR
          RTS
 
 
 
-SCRN     LSR   A          ;READ SCREEN Y-COORD/2
+SCRN     LSR              ;READ SCREEN Y-COORD/2
          PHP              ;SAVE LSB (CARRY)
          JSR   GBASCALC   ;CALC BASE ADDRESS
          LDA   (GBASL),Y  ;GET BYTE
          PLP              ;RESTORE LSB FROM CARRY
 
 SCRN2    BCC   RTMSKZ     ;IF EVEN, USE LO H
-         LSR   A
-         LSR   A
-         LSR   A          ;SHIFT HIGH HALF BYTE DOWN
-         LSR   A
+         LSR
+         LSR
+         LSR              ;SHIFT HIGH HALF BYTE DOWN
+         LSR
 RTMSKZ   AND   #%00001111 ;MASK 4-BITS
          RTS

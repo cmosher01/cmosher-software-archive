@@ -5,7 +5,7 @@ AUTOMAKE_OPTIONS=-Wno-override
 ZEROSEGS=-bd 0 -bb 0 -bz 0
 
 .m4.s65:
-	$(M4) -I $(srcdir) $(M4FLAGS) $< >$@
+	$(M4) -I $(srcdir) -I $(srcdir)/../include $(M4FLAGS) $< >$@
 
 .s65.o65:
 	$(XA65) -C -M -R -c -bt 0 $(ZERO_SEGS) -o $@ $(XA65FLAGS) $<
@@ -35,7 +35,10 @@ monitor2.r65: CODE_SEG=63488 VERSION=1
 monitor2plus.r65: monitor2plus.o65 $(OBJS)
 monitor2plus.r65: CODE_SEG=63488 VERSION=2
 
+lores.o65: lores.s65 symbols.m4h ../include/asm.m4h
+disasm.o65: disasm.s65 symbols.m4h ../include/asm.m4h
 
+#DO OTHERS: .o65: .s65 symbols.m4h ../include/asm.m4h
 
 define_new_md5: all
 	$(MD5SUM) --binary monitor2.a65 >$(srcdir)/monitor2.md5

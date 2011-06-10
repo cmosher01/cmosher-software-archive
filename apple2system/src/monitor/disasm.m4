@@ -1,24 +1,5 @@
-         .FEATURE LABELS_WITHOUT_COLONS
-
-         ;DEBUG,MONITOR
-         .EXPORT INSTDSP
-         ;MONITOR
-         .EXPORT PRNTYX
-         .EXPORT PCADJ
-         ;DEBUG
-         .EXPORT INSDS1
-         .EXPORT PCADJ2
-         .EXPORT PCADJ3
-
-         ;MONITOR
-         .IMPORT COUT
-         .IMPORT PRBYTE
-         .IMPORT PRYX2
-         ;LORES
-         .IMPORT SCRN2
-
-         .INCLUDE "symbols.s65"
-         .INCLUDE "hascmap.s65"
+include(`asm.m4h')
+include(`symbols.m4h')
 ;-----------------------------------------------------------------------
 ;
 ; DISASSEMBLER
@@ -77,7 +58,7 @@ MNNDX3   DEY
 
 
 
-         .BYTE $FF,$FF,$FF
+         ASM_DATA($FF,$FF,$FF)
 
 
 
@@ -175,40 +156,47 @@ RTS2     RTS
                           ; * IF Y=0         THEN LEFT HALF BYTE
                           ; * IF Y=1         THEN RIGHT HALF BYTE
                           ; *                   (X=INDEX)
-FMT1     .BYTE $04,$20,$54,$30,$0D
-         .BYTE $80,$04,$90,$03,$22
-         .BYTE $54,$33,$0D,$80,$04
-         .BYTE $90,$04,$20,$54,$33
-         .BYTE $0D,$80,$04,$90,$04
-         .BYTE $20,$54,$3B,$0D,$80
-         .BYTE $04,$90,$00,$22,$44
-         .BYTE $33,$0D,$C8,$44,$00
-         .BYTE $11,$22,$44,$33,$0D
-         .BYTE $C8,$44,$A9,$01,$22
-         .BYTE $44,$33,$0D,$80,$04
-         .BYTE $90,$01,$22,$44,$33
-         .BYTE $0D,$80,$04,$90
-         .BYTE $26,$31,$87,$9A ;$ZZXXXY01 INSTR'S
+FMT1     ASM_DATA($04,$20,$54,$30,$0D)
+         ASM_DATA($80,$04,$90,$03,$22)
+         ASM_DATA($54,$33,$0D,$80,$04)
+         ASM_DATA($90,$04,$20,$54,$33)
+         ASM_DATA($0D,$80,$04,$90,$04)
+         ASM_DATA($20,$54,$3B,$0D,$80)
+         ASM_DATA($04,$90,$00,$22,$44)
+         ASM_DATA($33,$0D,$C8,$44,$00)
+         ASM_DATA($11,$22,$44,$33,$0D)
+         ASM_DATA($C8,$44,$A9,$01,$22)
+         ASM_DATA($44,$33,$0D,$80,$04)
+         ASM_DATA($90,$01,$22,$44,$33)
+         ASM_DATA($0D,$80,$04,$90)
+         ASM_DATA($26,$31,$87,$9A) ;$ZZXXXY01 INSTR'S
 
-FMT2     .BYTE $00        ;ERR
-         .BYTE $21        ;IMM
-         .BYTE $81        ;Z-PAGE
-         .BYTE $82        ;ABS
-         .BYTE $00        ;IMPLIED
-         .BYTE $00        ;ACCUMULATOR
-         .BYTE $59        ;(ZPAG,X)
-         .BYTE $4D        ;(ZPAG),Y
-         .BYTE $91        ;ZPAG,X
-         .BYTE $92        ;ABS,X
-         .BYTE $86        ;ABS,Y
-         .BYTE $4A        ;(ABS)
-         .BYTE $85        ;ZPAG,Y
-         .BYTE $9D        ;RELATIVE
+FMT2     ASM_DATA($00)        ;ERR
+         ASM_DATA($21)        ;IMM
+         ASM_DATA($81)        ;Z-PAGE
+         ASM_DATA($82)        ;ABS
+         ASM_DATA($00)        ;IMPLIED
+         ASM_DATA($00)        ;ACCUMULATOR
+         ASM_DATA($59)        ;(ZPAG,X)
+         ASM_DATA($4D)        ;(ZPAG),Y
+         ASM_DATA($91)        ;ZPAG,X
+         ASM_DATA($92)        ;ABS,X
+         ASM_DATA($86)        ;ABS,Y
+         ASM_DATA($4A)        ;(ABS)
+         ASM_DATA($85)        ;ZPAG,Y
+         ASM_DATA($9D)        ;RELATIVE
 CHAR1
-         .BYTE ",),#($"
+         ASM_DATA(HICHAR(`,'))
+         ASM_DATA(HICHAR(`)'))
+         ASM_DATA(HICHAR(`,'))
+         ASM_DATA(HICHAR(`#'))
+         ASM_DATA(HICHAR(`('))
+         ASM_DATA(HICHAR(`$'))
 
-CHAR2    .ASCIIZ "Y"
-         .ASCIIZ "X$$"
+CHAR2    ASM_DATA(HICHAR(`Y'))
+         ASM_DATA(0)
+         HIASCII(`X$$')
+         ASM_DATA(0)
 
 
 
@@ -219,40 +207,40 @@ CHAR2    .ASCIIZ "Y"
                           ; *  (D) XXXYYY10
                           ; *  (E) XXXYYY01
                           ; *      (X=INDEX)
-MNEML    .BYTE $1C,$8A,$1C,$23,$5D,$8B
-         .BYTE $1B,$A1,$9D,$8A,$1D,$23
-         .BYTE $9D,$8B,$1D,$A1,$00,$29
-         .BYTE $19,$AE,$69,$A8,$19,$23
-         .BYTE $24,$53,$1B,$23,$24,$53
-         .BYTE $19,$A1    ;(A) FORMAT ABOVE
+MNEML    ASM_DATA($1C,$8A,$1C,$23,$5D,$8B)
+         ASM_DATA($1B,$A1,$9D,$8A,$1D,$23)
+         ASM_DATA($9D,$8B,$1D,$A1,$00,$29)
+         ASM_DATA($19,$AE,$69,$A8,$19,$23)
+         ASM_DATA($24,$53,$1B,$23,$24,$53)
+         ASM_DATA($19,$A1)    ;(A) FORMAT ABOVE
 
-         .BYTE $00,$1A,$5B,$5B,$A5,$69
-         .BYTE $24,$24    ;(B) FORMAT
+         ASM_DATA($00,$1A,$5B,$5B,$A5,$69)
+         ASM_DATA($24,$24)    ;(B) FORMAT
 
-         .BYTE $AE,$AE,$A8,$AD,$29,$00
-         .BYTE $7C,$00    ;(C) FORMAT
+         ASM_DATA($AE,$AE,$A8,$AD,$29,$00)
+         ASM_DATA($7C,$00)    ;(C) FORMAT
 
-         .BYTE $15,$9C,$6D,$9C,$A5,$69
-         .BYTE $29,$53    ;(D) FORMAT
+         ASM_DATA($15,$9C,$6D,$9C,$A5,$69)
+         ASM_DATA($29,$53)    ;(D) FORMAT
 
-         .BYTE $84,$13,$34,$11,$A5,$69
-         .BYTE $23,$A0    ;(E) FORMAT
+         ASM_DATA($84,$13,$34,$11,$A5,$69)
+         ASM_DATA($23,$A0)    ;(E) FORMAT
 
-MNEMR    .BYTE $D8,$62,$5A,$48,$26,$62
-         .BYTE $94,$88,$54,$44,$C8,$54
-         .BYTE $68,$44,$E8,$94,$00,$B4
-         .BYTE $08,$84,$74,$B4,$28,$6E
-         .BYTE $74,$F4,$CC,$4A,$72,$F2
-         .BYTE $A4,$8A    ;(A) FORMAT
+MNEMR    ASM_DATA($D8,$62,$5A,$48,$26,$62)
+         ASM_DATA($94,$88,$54,$44,$C8,$54)
+         ASM_DATA($68,$44,$E8,$94,$00,$B4)
+         ASM_DATA($08,$84,$74,$B4,$28,$6E)
+         ASM_DATA($74,$F4,$CC,$4A,$72,$F2)
+         ASM_DATA($A4,$8A)    ;(A) FORMAT
 
-         .BYTE $00,$AA,$A2,$A2,$74,$74
-         .BYTE $74,$72    ;(B) FORMAT
+         ASM_DATA($00,$AA,$A2,$A2,$74,$74)
+         ASM_DATA($74,$72)    ;(B) FORMAT
 
-         .BYTE $44,$68,$B2,$32,$B2,$00
-         .BYTE $22,$00    ;(C) FORMAT
+         ASM_DATA($44,$68,$B2,$32,$B2,$00)
+         ASM_DATA($22,$00)    ;(C) FORMAT
 
-         .BYTE $1A,$1A,$26,$26,$72,$72
-         .BYTE $88,$C8    ;(D) FORMAT
+         ASM_DATA($1A,$1A,$26,$26,$72,$72)
+         ASM_DATA($88,$C8)    ;(D) FORMAT
 
-         .BYTE $C4,$CA,$26,$48,$44,$44
-         .BYTE $A2,$C8    ;(E) FORMAT
+         ASM_DATA($C4,$CA,$26,$48,$44,$44)
+         ASM_DATA($A2,$C8)    ;(E) FORMAT
