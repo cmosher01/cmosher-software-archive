@@ -48,6 +48,7 @@ src/Makefile
 src/monitor/Makefile
 src/monitor/apple2/Makefile
 src/monitor/apple2plus/Makefile
+src/other/Makefile
 
 ])
 

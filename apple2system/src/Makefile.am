@@ -1,3 +1,3 @@
 #@configure_input@
-SUBDIRS=monitor
+SUBDIRS=monitor other
 #SUBDIRS=monitor intbasic other applesoft
