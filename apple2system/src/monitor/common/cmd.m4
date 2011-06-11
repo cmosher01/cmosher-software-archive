@@ -11,15 +11,11 @@ include(`symbols.m4h')
 
 IOADR    =     $C000
 
-BASIC    =     $E000
-BASIC2   =     $E003
-
                           ; ASCII
 CTRL_B   =     $02 | %10000000
 CTRL_C   =     $03 | %10000000
 CTRL_E   =     $05 | %10000000
 CTRL_K   =     $0B | %10000000
-ASCCR    =     $0D | %10000000
 CTRL_P   =     $10 | %10000000
 CTRL_Y   =     $19 | %10000000
 
