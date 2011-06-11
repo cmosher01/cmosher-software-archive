@@ -96,9 +96,9 @@ COUT1    CMP   #HICHAR(` ')
 COUTZ    STY   YSAV1      ;SAV Y-REG
          PHA              ;SAV A-REG
 ifelse(eval(VERSION `< 2'),1,`
-         JSR   LFB78
-',`
          JSR   VIDOUT     ;OUTPUT A-REG AS ASCII
+',`
+         JSR   LFB78
 ')
          PLA              ;RESTORE A-REG
          LDY   YSAV1      ;  AND Y-REG
@@ -395,7 +395,7 @@ ZMODE    LDY   #$00       ;CLR MODE, OLD MODE
 
 
 ;DEFINE F(CHR) <(CHR^$B0+$89)
-define(`MON_CMD_CHR',`<($1^`$'B0+`$'89)')
+define(`MON_CMD_CHR',`<(($1^`$'B0)+`$'89)')
 
 CHRTBL   ASM_DATA(MON_CMD_CHR(`CTRL_C'))
          ASM_DATA(MON_CMD_CHR(`CTRL_Y'))

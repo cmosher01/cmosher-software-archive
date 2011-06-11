@@ -4,8 +4,8 @@
 AC_PREREQ([2.61])
 AC_INIT([epple2sys],[0.1])
 AC_CONFIG_AUX_DIR([build-aux])
-AC_CONFIG_SRCDIR([src/monitor/monitor2.s65])
-AM_INIT_AUTOMAKE([-Wall -Werror])
+AC_CONFIG_SRCDIR([src/monitor/common/paddles.m4])
+AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects])
 
 
 
@@ -46,6 +46,8 @@ AC_CONFIG_FILES([
 Makefile
 src/Makefile
 src/monitor/Makefile
+src/monitor/apple2/Makefile
+src/monitor/apple2plus/Makefile
 
 ])
 
