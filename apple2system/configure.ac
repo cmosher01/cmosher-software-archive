@@ -2,10 +2,10 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT([epple2sys],[0.1])
+AC_INIT([apple2system],[0.1])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/monitor/common/paddles.m4])
-AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects])
+AM_INIT_AUTOMAKE([-Wall -Werror])
 
 
 
@@ -49,6 +49,7 @@ src/monitor/Makefile
 src/monitor/apple2/Makefile
 src/monitor/apple2plus/Makefile
 src/other/Makefile
+src/intbasic/Makefile
 
 ])
 
