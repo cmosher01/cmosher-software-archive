@@ -13,9 +13,9 @@ dnl assumes no single-letter macros
 define(`SAFESUB',
 	`ifelse(
 		$#,0,``$0'',
-		$#,2,`$0($@,eval(len(`$1')-$2))',
-		$3,0,`',
-		`substr(`$1',$2,1)`'$0(`$1',eval($2+1),eval($3-1))')')
+		$#,2,`$0($@,eval(len(`$1')-($2)))',
+		eval(`$3-0'),0,`',
+		`substr(`$1',eval($2),1)`'$0(`$1',eval(($2)+1),eval(($3)-1))')')
 
 define(`STR_REVERSE',
 	`ifelse(
