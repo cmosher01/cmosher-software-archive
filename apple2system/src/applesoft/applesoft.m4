@@ -415,10 +415,12 @@ TOKEN_NAME_TABLE    HIASCII(`END')                   ; $80...128
                     HIASCII(`CLEAR')                 ; $BD...189
                     HIASCII(`GET')                   ; $BE...190
                     HIASCII(`NEW')                   ; $BF...191
-                    HIASCII(`TAB(')                  ; $C0...192
+                    HIASCII(`TAB')                  ; $C0...192
+ASM_DATA($A8)
                     HIASCII(`TO')                    ; $C1...193
                     HIASCII(`FN')                    ; $C2...194
-                    HIASCII(`SPC(')                  ; $C3...195
+                    HIASCII(`SPC')                  ; $C3...195
+ASM_DATA($A8)
                     HIASCII(`THEN')                  ; $C4...196
                     HIASCII(`AT')                    ; $C5...197
                     HIASCII(`NOT')                   ; $C6...198
@@ -438,7 +440,8 @@ TOKEN_NAME_TABLE    HIASCII(`END')                   ; $80...128
                     HIASCII(`ABS')                   ; $D4...212
                     HIASCII(`USR')                   ; $D5...213
                     HIASCII(`FRE')                   ; $D6...214
-                    HIASCII(`SCRN(')                 ; $D7...215
+                    HIASCII(`SCRN')                 ; $D7...215
+ASM_DATA($A8)
                     HIASCII(`PDL')                   ; $D8...216
                     HIASCII(`POS')                   ; $D9...217
                     HIASCII(`SQR')                   ; $DA...218
@@ -480,11 +483,11 @@ ERR_OVERFLOW        = *-ERROR_MESSAGES
 ERR_MEMFULL         = *-ERROR_MESSAGES
                     HIASCII(`OUT OF MEMORY')
 ERR_UNDEFSTAT       = *-ERROR_MESSAGES
-                    HIASCII(`UNDEF'D STATEMENT')
+                    HIASCII(`UNDEF D STATEMENT');TODO
 ERR_BADSUBS         = *-ERROR_MESSAGES
                     HIASCII(`BAD SUBSCRIPT')
 ERR_REDIMD          = *-ERROR_MESSAGES
-                    HIASCII(`REDIM'D ARRAY')
+                    HIASCII(`REDIM D ARRAY')
 ERR_ZERODIV         = *-ERROR_MESSAGES
                     HIASCII(`DIVISION BY ZERO')
 ERR_ILLDIR          = *-ERROR_MESSAGES
@@ -496,9 +499,9 @@ ERR_STRLONG         = *-ERROR_MESSAGES
 ERR_FRMCPX          = *-ERROR_MESSAGES
                     HIASCII(`FORMULA TOO COMPLEX')
 ERR_CANTCONT        = *-ERROR_MESSAGES
-                    HIASCII(`CAN'T CONTINUE')
+                    HIASCII(`CAN T CONTINUE')
 ERR_UNDEFFUNC       = *-ERROR_MESSAGES
-                    HIASCII(`UNDEF'D FUNCTION')
+                    HIASCII(`UNDEF D FUNCTION')
                                                     ; --------------------------------
 
 QT_ERROR            HIASCII(` ERROR')
@@ -2415,10 +2418,10 @@ SGN_                CMP #TOKEN_SGN
 PARCHK              JSR CHKOPN                      ; IS THERE A '(' AT TXTPTR?
                     JSR FRMEVL                      ; YES, EVALUATE EXPRESSION
                                                     ; --------------------------------
-CHKCLS              LDA #HICHAR(`)')                        ; CHECK FOR ')'
+CHKCLS              LDA #$A9                        ; CHECK FOR ')'
                     ASM_DATA($2C)                       ; TRICK
                                                     ; --------------------------------
-CHKOPN              LDA #HICHAR(`(')                        ; 
+CHKOPN              LDA #$A8                        ; 
                     ASM_DATA($2C)                       ; TRICK
                                                     ; --------------------------------
 CHKCOM              LDA #HICHAR(`,')                        ; COMMA AT TXTPTR?
@@ -2677,7 +2680,7 @@ PTRGET4
 ?6                  STX VARNAM+1                    ; STORE SECOND CHAR OF NAME
                     SEC                             ; 
                     ORA SUBFLG                      ; $00 OR $40 IF SUBSCRIPTS OK, ELSE $80
-                    SBC #HICHAR(`(')                        ; IF SUBFLG=$00 AND CHAR="("...
+                    SBC #$A8                        ; IF SUBFLG=$00 AND CHAR="("...
                     BNE ?8                          ; NOPE
 ?7                  JMP ARRAY                       ; YES
 ?8                  BIT SUBFLG                      ; CHECK TOP TWO BITS OF SUBFLG
@@ -5556,13 +5559,9 @@ POLY_SIN            ASM_DATA(5)                         ; POWER OF POLYNOMIAL
                                                     ; (REVERSED, HIGH BIT SET, XOR 7)
                                                     ; --------------------------------
 
-.MACRO .GATES_OBFUSCATE STR
-    .REPEAT .STRLEN(STR),ISTR
-        ASM_DATA(`(.STRAT(STR,.STRLEN(STR)-1-ISTR)') | %10000000) ^ %00000111
-    .ENDREP
-.ENDMACRO
-
-                    .GATES_OBFUSCATE "MICROSOFT!"
+;TODO
+define(`GATES_OBFUSCATE',HIASCII($1))
+                    GATES_OBFUSCATE(`MICROSOFT!')
                                                     ; --------------------------------
                                                     ; "ATN" FUNCTION
                                                     ; --------------------------------
@@ -6892,4 +6891,4 @@ HTAB                JSR GETBYT
 ?2                  STA MON_CH
                     RTS
                                                     ; --------------------------------
-                    .HASCII "KRW"                   ; UNKNOWN
+                    HIASCII(`KRW')                   ; UNKNOWN
