@@ -23,7 +23,7 @@ ZEROSEGS=-bd 0 -bb 0 -bz 0
 
 mypkg_DATA=intbasic.a65
 noinst_DATA=intbasic.md5
-EXTRA_DIST=intbasic.s65 intbasic.md5 $(INCDIR)/asm.m4h
+EXTRA_DIST=intbasic.m4 intbasic.md5 $(INCDIR)/asm.m4h
 
 # $E000
 intbasic.r65: CODE_SEG=57344
