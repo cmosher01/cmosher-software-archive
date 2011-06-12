@@ -872,10 +872,10 @@ LE470:  BEQ     LE425
         DEX
         BPL     LE47D
         ; CALL-APPLE, MAR 1983, P. 114
-ifelse(`BUGFIX',`',`
-        LDY     #ERRMSG01
-        ',`
+ifdef(`BUGFIX',
         LDY     #ERRMSG04
+        ',`
+        LDY     #ERRMSG01
         ')
         BPL     LE4A6
 LE47D:  STY     SYNSTKL,X
@@ -1854,7 +1854,7 @@ ERRMSG13 = *-ERRMSGTBL
             HLASCII(`*** ')
 
 ERRMSG14 = *-ERRMSGTBL
-            HIASCII(`ERR')
+            HIASCII(` ERR')
             ASM_DATA($0D)
 
 ERRMSG15 = *-ERRMSGTBL
@@ -1875,7 +1875,7 @@ ERRMSG19 = *-ERRMSGTBL
 
 ERRMSG20 = *-ERRMSGTBL
             HIASCII(`RETYPE LINE')
-            ASM_DATA($0D)
+            ASM_DATA($8D)
 
 ERRMSG21 = *-ERRMSGTBL
             LOASCII(`?')
@@ -1959,7 +1959,6 @@ LEBFA:  JMP     HE801
 
 
 
-
 define(`BASCMD',`
 ifelse($2,,,ASM_DATA($2))
 ifelse($3,,,ASM_DATA($3))
@@ -1968,8 +1967,10 @@ ifelse($5,,,ASM_DATA($5))
 ifelse($2,,
 	`ASM_DATA(HICHAR(SAFESUB(`$1',len(`$1')-1))+`$'20)',
 	`ASM_DATA(HICHAR(SAFESUB(`$1',len(`$1')-1))-`$'20)')
-HIASCII(STR_REVERSE(SAFESUB(`$1',0,len(`$1')-1)))')
-
+STR_FORCHAR(__,
+  STR_REVERSE(SAFESUB(`$1',0,len(`$1')-1)),
+  `ASM_DATA(HICHAR(__)-`$'20) NL()')
+')
 
 
         ASM_DATA($50)
@@ -2154,7 +2155,7 @@ ASM_DATA($CC,$67,$8C)
 
 ASM_DATA($68,$8C)
 ;        BASCMD(`,',$68)
-        ASM_DATA($8c,$db,$67,$9b,$68,$9b)
+        ASM_DATA($db,$67,$9b,$68,$9b)
 ;        BASCMD(`;')
 ;        BASCMD(`;',$67)
 ;        BASCMD(`;',$68)
@@ -2246,7 +2247,7 @@ ASM_DATA($4F,$7E,$1E,$35,$8C)
         ASM_DATA($27,$51,$07,$88)
 ;        BASCMD(`(',$27,$51,$07)
         BASCMD(`+',$09)
-ASM_DATA($8B)
+ASM_DATA($FE)
 ;        BASCMD(`^')
         BASCMD(`MOD')
         BASCMD(`OR')
@@ -2788,10 +2789,10 @@ LF0BD:  DEC     HIMEM
         BCS     LF099
 VLOMEM: JSR     GET16BIT
         LDY     ACC
-ifelse(`BUGFIX',`',`
-        CPY     #PP
-        ',`
+ifdef(`BUGFIX',`
         CPY     PP
+        ',`
+        CPY     #PP
         ')
         LDA     ACC+1
         SBC     PP+1
@@ -3026,12 +3027,12 @@ LF29E:  LDA     STACK+$41,Y
         LDA     STACK+$A1,Y
         STA     STACK+$A0,Y
 ; DOS 3.3 SYSTEM MASTER: INTBASIC
-ifelse(`BUGFIX',`',`
-        LDA     STACK+$A1,Y
-        STA     STACK+$A0,Y
-        ',`
+ifdef(`BUGFIX',`
         LDA     STACK+$B1,Y
         STA     STACK+$B0,Y
+        ',`
+        LDA     STACK+$A1,Y
+        STA     STACK+$A0,Y
         ')
         INY
         CPY     FORNDX
