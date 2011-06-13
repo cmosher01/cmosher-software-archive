@@ -2288,8 +2288,8 @@ SNTXERR             JMP SYNERR
                                                     ; --------------------------------
 FRM_STACK_1
                     LDA FAC_SIGN                    ; GET FAC.SIGN TO PUSH IT
-ASM_DATA($BE,<MATHTBL,>MATHTBL)
-;                    LDX MATHTBL,Y                   ; PRECEDENCE BYTE FROM MATHTBL
+; Note: XA65 assembler (Andre Fachat) requires ! here when asm with "xa -R -bt 0" for some reason:
+                    LDX !MATHTBL,Y                   ; PRECEDENCE BYTE FROM MATHTBL
                                                     ; --------------------------------
                                                     ; ENTER HERE FROM "STEP", TO PUSH STEP SIGN AND VALUE
                                                     ; --------------------------------
