@@ -1,5 +1,5 @@
 include(`asm.m4h')
-include(`symobls.m4h')
+include(`symbols.m4h')
 include(`zpabs.m4h')
 
 
@@ -287,9 +287,13 @@ SRCPAGELIM      ASM_DATA(>DOSLIM)
 DSTPAGE         ASM_RES(1)
 DSTPAGELIM      ASM_RES(1)
 
-PAGECNT         ASM_DATA(>(DOSLIM-ADOSFNB1)) ; number of pages to be moved
+XXXDOSLIM=DOSLIM
+CONSTANT_BYTE_COUNT = DOSLIM-ADOSFNB1
+CONSTANT_PAGE_COUNT = >CONSTANT_BYTE_COUNT
+
+PAGECNT         ASM_DATA(CONSTANT_PAGE_COUNT) ; number of pages to be moved
 OFFSET          ASM_RES(1)                   ; number of pages to add, to reloc addresses
-PAGECNT2        ASM_DATA(>(DOSLIM-ADOSFNB1)) ; (redundant?) number of pages to be moved
+PAGECNT2        ASM_DATA(CONSTANT_PAGE_COUNT) ; (redundant?) number of pages to be moved
 
 ifelse(eval(VERSION < 320),1,`
                 ASM_DATA($13)                ; UNUSED CODE???
