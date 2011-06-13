@@ -1,50 +1,5 @@
-                .INCLUDE "symbols.s65"
-
-
-                .EXPORT BOOT1
-                .EXPORT IMG8FD
-                .EXPORT IMG8FF
-                .IF VERSION < 320
-                .EXPORT L1B28SR
-                .ENDIF
-                .IF VERSION > 321
-                .EXPORT APNDPTCH
-                .EXPORT APPNDFLG
-                .EXPORT CKAPFLG
-                .EXPORT OTHRERR
-                .EXPORT VRFYRWNG
-                .ENDIF
-
-                .IF VERSION < 320
-                .IMPORT BOOT2
-                .ENDIF
-
-                .IF VERSION > 321
-                .IMPORT BK2FMDRV
-                .IMPORT RECLENFM
-                .IMPORT CMDVERFY
-                .IMPORT CMDCLOSE
-                .IMPORT FMDRIVER
-                .IMPORT SUBCODFM
-                .IMPORT RECNMBFM
-                .IMPORT ERRHNDLR
-                .IMPORT RTNCODFM
-                .IMPORT GETBUFF
-                .IF VERSION = 330
-                .IMPORT BK2APND
-                .ENDIF
-                .IF VERSION = 331
-                .IMPORT CMPATCH
-                .ENDIF
-                .IF VERSION = 332
-                .IMPORT GOODFMXT
-                .IMPORT STKSAV
-                .IMPORT FILPTSEC
-                .IMPORT WASTEBYT
-                .IMPORT RECNMBWA
-                .IMPORT FILPTBYT
-                .ENDIF
-                .ENDIF
+include(`asm.m4h')
+include(`symbols.m4h')
                                 ; =================================
                                 ; IMAGE OF BOOT1 ($B600-$B6FF)
                                 ; =================================
@@ -52,7 +7,7 @@
                                 ; (for DOS 3.3 only:)
                                 ; - STORED ON TRK0/SEC0.
                                 ; - READ IN AT $800-$8FF BY DISK CONTROLLER ROM (BOOT0).
-                                ; - EXECUTION BEGINS AT $0801 & USES THE CONTROLLER'S READ-
+                                ; - EXECUTION BEGINS AT $0801 & USES THE CONTROLLERS READ-
                                 ; SECTOR SUBROUTINE (BTRDSEC, $CS00, WHERE S = SLOT # OF
                                 ; CARD) TO READ IN TRK0/SEC9 DOWN TO TRK0/SEC1 (THAT IS,
                                 ; $BFFF ----> $B600).
@@ -60,19 +15,19 @@
 BOOT1                           ; IMAGE OF SEC2RD08.  DENOTES # OF
                                 ; SECS TO BE READ FROM TRK0 DURING
                                 ; BOOT0.
-                .IF VERSION > 321
-                .BYTE 1
-                .ENDIF
+                ifelse(eval(VERSION > 321),1,`
+                ASM_DATA(1)
+                ')
 
 
 
 
 
 
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
 
 
-                .RES $0C
+                ASM_RES($0C)
                                 ; upon entry, A3 --> first byte of highest RAM page (e.g., $BF00)
 L1B28SR
                 LDA   A3H
@@ -101,13 +56,13 @@ L1B4D           PLA
                 LDY A3H
                 RTS
 
-                .RES $98
+                ASM_RES($98)
 
-                .ENDIF
+                ')
 
 
 
-                .IF VERSION <= 321
+                ifelse(eval(VERSION <= 321),1,`
                                 ; track 0 sector 0 starts here
                                 ; (note that 13-sector disks have different
                                 ; nibble encoding for track 0 sector 0 than
@@ -115,7 +70,7 @@ L1B4D           PLA
                                 ; the disk
                                 ; The old Disk ][ ROMs read this into
                                 ; $300-$3FF and JMP $301
-BOOT1LOAD       .BYTE $99
+BOOT1LOAD       ASM_DATA($99)
 
 DISK2READ       =     $C65D
 BUF1            =     $0800
@@ -220,9 +175,9 @@ L034A           LDA   BUF1,X
                 LDX   SLT16ZPG
                 RTS
 
-                .RES $27,$FF
-                .BYTE $36
-                .RES $32,$FF
+                ASM_RES($27,$FF)
+                ASM_DATA($36)
+                ASM_RES($32,$FF)
 
 
 
@@ -230,7 +185,7 @@ L034A           LDA   BUF1,X
 
 
 
-                .ELSE
+                ',`
 
 
 
@@ -248,7 +203,7 @@ BT1EXCB6        LDA PT2BTBUF+1  ; IMAGE OF BT1EXC08. GET NEXT PAGE
                                 ; INITIALIZATION GIVEN BELOW.
 
                                 ; INITIALIZE THE POINTER (PTR2RDSC)
-                                ; TO POINT AT BOOT0'S READ SECTOR
+                                ; TO POINT AT BOOT0S READ SECTOR
                                 ; SUBROUTINE (BTRDSEC, $CS5C;
                                 ; WHERE S=SLOT#, NORMALLY $C65C).
 
@@ -259,7 +214,7 @@ BT1EXCB6        LDA PT2BTBUF+1  ; IMAGE OF BT1EXC08. GET NEXT PAGE
                 LSR A
                 ORA #$C0        ; MERGE WITH $C0 TO GET $CS, WHERE
                                 ; S=SLOT#.
-                STA PTR2RDSC+1  ; STORE HI BYTE OF CONTROLLER'S
+                STA PTR2RDSC+1  ; STORE HI BYTE OF CONTROLLERS
                                 ; READ-SECTOR SUBROUTINE ADDR.
                 LDA #<BTRDSEC ; GET LOW BYTE OF SUBRTN ADR.
                 STA PTR2RDSC    ; (LOW BYTE IS A CONSTANT (#$5C) &
@@ -340,13 +295,13 @@ PRP4B2B6        INC BT1LDADR+1  ; IMAGE OF PR4B208 ($839).
 
 
                                 ; =================================
-                                ; TABLE OF PHYSICAL SECTOR #'S.
+                                ; TABLE OF PHYSICAL SECTOR #S.
                                 ; ($B64D - $B65C)
                                 ; - AN IMAGE OF THIS TABLE IS
                                 ; HOUSED AT $84D DURING THE BOOT.
                                 ; =================================
 PHYSECP8        .REPEAT $10, LOGSECTNUM
-                .BYTE ($100 - 2*LOGSECTNUM - (LOGSECTNUM+6)/7) .MOD $10
+                ASM_DATA(($100) - 2*LOGSECTNUM - (LOGSECTNUM+6)/7) .MOD $10
                 .ENDREP
 
 
@@ -371,21 +326,21 @@ PHYSECP8        .REPEAT $10, LOGSECTNUM
                                 ; - ALSO CONTAINS THE APPEND FLAG.
                                 ; =================================
 
-APPNDFLG        .BYTE $00       ; APPEND FLAG.
+APPNDFLG        ASM_DATA($00)       ; APPEND FLAG.
 
                                 ; ERROR WAS DEADLY, SO BETTER
-                                ; RELEASE THE FILE'S BUFFER AND
+                                ; RELEASE THE FILES BUFFER AND
                                 ; MAKE SURE THE APPEND FLAG IS OFF.
 
 OTHRERR         JSR GETBUFF     ; LOCATE BUFFER BELONGING TO THE
                                 ; FILE. (PUT ADR IN A3L/H PTR.)
                 BCS TOERRMSG    ; NO BUFFER WAS ASSIGNED, SO NO
-                                ; NEED TO RELEASE THE FILE'S BUF OR
+                                ; NEED TO RELEASE THE FILES BUF OR
                                 ; TURN OFF THE APPEND FLAG.
                 LDA #0          ; ZERO OUT THE APPEND FLAG & SET
                 TAY             ; (Y) TO NDEX THE 1ST BYTE OF THE
                 STA APPNDFLG    ; DOS NAME BUFFER.
-                STA (A3L),Y     ; RELEASE FILE'S DOS BUFFER.
+                STA (A3L),Y     ; RELEASE FILES DOS BUFFER.
 TOERRMSG        LDA RTNCODFM    ; GET ERROR CODE TO INDEX ERR MSG.
                 JMP ERRHNDLR    ; EXIT & GO PRINT ERROR MESSAGE.
 
@@ -409,11 +364,11 @@ TOERRMSG        LDA RTNCODFM    ; GET ERROR CODE TO INDEX ERR MSG.
                                 ; WAS USED TO BACK UP THE POINTER.)
                                 ; ENTER WITH APPEND FLAG SET IF A
                                 ; $00 WAS DETECTED IN A (NON-EMPTY)
-                                ; FILE'S T/S LIST.
+                                ; FILES T/S LIST.
 
 CKAPFLG         LDA APPNDFLG    ; IS APPEND FLAG ON?
                 BEQ CLRAPFLG    ; NO - FLAG IS OFF.
-                INC RECNMBFM    ; YES -SO INCREMENT THE FILE MGR'S
+                INC RECNMBFM    ; YES -SO INCREMENT THE FILE MGRS
                 BNE CLRAPFLG    ; VERSION OF THE RECORD # BECAUSE
                 INC RECNMBFM+1  ; RECNMBFM IS POINTING AT THE LAST
                                 ; VALID DATA BYTE AND WE WANT IT TO
@@ -421,16 +376,13 @@ CKAPFLG         LDA APPNDFLG    ; IS APPEND FLAG ON?
                                 ; RECORD NUMBER.  (P.S.  REMEMBER
                                 ; THAT RECNMBFM LAGS RECNMBWA BY
                                 ; ONE BYTE.)
-CLRAPFLG        LDA #0          ; DON'T NEED THE APPEND FLAG ANY
+CLRAPFLG        LDA #0          ; DONT NEED THE APPEND FLAG ANY
                 STA APPNDFLG    ; MORE, SO TURN IT OFF.
 
-                .IF VERSION = 330
-                JMP BK2APND
-                .ELSEIF VERSION = 331
-                JMP CMPATCH
-                .ELSEIF VERSION = 332
-                JMP RSETPTRS    ; GO BACK UP THE FILE POINTER.
-                .ENDIF
+                ifelse(VERSION,
+                  330,JMP BK2APND,
+                  331,JMP CMPATCH,
+                  332,JMP RSETPTRS)
 
                                 ; ==================================
                                 ; PATCH TO VERIFY A RANGE-OF-BYTES.
@@ -439,7 +391,7 @@ CLRAPFLG        LDA #0          ; DON'T NEED THE APPEND FLAG ANY
                                 ; ==================================
 
 VRFYRWNG        STA SUBCODFM    ; PUT RANGE-OF-BYTES SUBCODE IN
-                                ; RWTS'S IOB.
+                                ; RWTSS IOB.
                 JSR FMDRIVER    ; CALL FM DRIVER TO READ/WRITE A
                                 ; RANGE OF BYTES.
                 JSR CMDCLOSE    ; CLOSE FILE & THEN VERIFY DATA.
@@ -509,7 +461,7 @@ SETAPFLG        LDX #$FF
                 BNE FMDVRTN     ; ALWAYS.
 
 
-                .IF VERSION = 332
+                ifelse(eval(VERSION == 332),1,`
                                 ; =================================
                                 ; YET ANOTHER APPEND PATCH.
                                 ; ($B6B3 - $B6CE)
@@ -543,19 +495,19 @@ RSETPTRS        LDA RECNMBFM    ; RECONCILE RECORD NUMBER VERSIONS
                                 ; TO AFTRCMD ($A17D) LOCATED IN THE
                                 ; CMD PARSING AND PROCESSING
                                 ; ROUTINES.
-                .ELSE
-                .RES 28
-                .ENDIF
+                ',`
+                ASM_RES(28)
+                ')
 
 
                                 ; =================================
                                 ; FREE SPACE
                                 ; =================================
 
-                .RES 1            ; ($B6CF)
+                ASM_RES(1)            ; ($B6CF)
 
 
-                .IF VERSION = 330
+                ifelse(eval(VERSION == 330),1,`
                                 ; =================================
                                 ; STRAY CODE (NOT USED).
                                 ; ($B6D0-$B6E7.)
@@ -564,29 +516,28 @@ RSETPTRS        LDA RECNMBFM    ; RECONCILE RECORD NUMBER VERSIONS
                                 ; - DO A HOME & THEN PRINT "B01-00"
                                 ; - CONSIDER TO BE FREE SPACE.
 
-                .INCLUDE "hascmap.s65"
                 JSR HOME
-                LDA #'B'
+                LDA #HICHAR(`B')
                 JSR COUT
                 LDA #$01
                 JSR PRBYTE
-                LDA #'-'
+                LDA #HICHAR(`-')
                 JSR COUT
                 LDA #$00
                 JSR PRBYTE
                 RTS
-                .ELSE
-                .RES 24
-                .ENDIF
+                ',`
+                ASM_RES(24)
+                ')
 
 
                                 ; =================================
                                 ; FREE SPACE
                                 ; =================================
 
-                .RES 21           ; ($B6E8-$B6FC.)
+                ASM_RES(21)           ; ($B6E8-$B6FC.)
 
-                .ENDIF
+                ')
 
 
 
@@ -610,21 +561,20 @@ RSETPTRS        LDA RECNMBFM    ; RECONCILE RECORD NUMBER VERSIONS
                                 ; =================================
 
 
-                .IF VERSION < 330
+                ifelse(eval(VERSION < 330),1,`
 IMG8FD          = *-2
-                .ELSE
+                ',`
 IMG8FD
-                .ADDR BOOT1     ; VARIES FROM $B600-$BF00 ON 48K
+                ASM_ADDR(BOOT1)     ; VARIES FROM $B600-$BF00 ON 48K
                                 ; SLAVE.  (EVENTUALLY POINTS TO THE
                                 ; START OF BOOT2 AT $B700.  IMAGE
                                 ; OF BT1LDADR AT $8FD.)
-                .ENDIF
-BT1LDADR        = IMG8FD-(BOOT1-$800)
-
-
+                ')
+BOOT800         = BOOT1-$0800
+BT1LDADR        = IMG8FD-BOOT800
 IMG8FF
 BT1PG2RD        = IMG8FF-(BOOT1-$800)
-                .BYTE $09       ; .RES 1 ;CONTAINS # OF PAGES TO READ WHEN
+                ASM_DATA($09)       ; ASM_RES(1) ;CONTAINS # OF PAGES TO READ WHEN
                                 ; EXECUTING BOOT1.  ALSO DOUBLES AS
                                 ; LOGICAL SEC#.  INITIALLY = $01.
                                 ; VARIES FROM:$09 --> $00 --> $FF.
