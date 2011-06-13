@@ -4,7 +4,7 @@
 AC_PREREQ([2.61])
 AC_INIT([apple2dos],[0.1])
 AC_CONFIG_AUX_DIR([build-aux])
-AC_CONFIG_SRCDIR([src/])
+AC_CONFIG_SRCDIR([src/system/common/rwts.m4])
 AM_INIT_AUTOMAKE([-Wall -Werror])
 
 
@@ -45,7 +45,7 @@ AC_CONFIG_FILES([
 
 Makefile
 src/Makefile
-src/monitor/Makefile
+src/system/Makefile
 
 ])
 
