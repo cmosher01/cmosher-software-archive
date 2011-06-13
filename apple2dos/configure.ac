@@ -46,6 +46,7 @@ AC_CONFIG_FILES([
 Makefile
 src/Makefile
 src/system/Makefile
+src/system/dos310/Makefile
 
 ])
 

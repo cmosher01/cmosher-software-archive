@@ -3,6 +3,8 @@ AUTOMAKE_OPTIONS=-Wno-override
 INCDIR=$(srcdir)/../../include
 COMDIR=$(srcdir)/../common
 
+
+
 ZEROSEGS=-bd 0 -bb 0 -bz 0
 
 .m4.s65:
@@ -46,9 +48,9 @@ M4S = $(COMDIR)/reloc.m4 $(COMDIR)/main.m4 $(COMDIR)/filemgr.m4 $(COMDIR)/boot1.
 
 mypkgdir=$(prefix)/lib/apple2/dos/$(DOS_SECTORS)sector
 
-mypkg_DATA=dos.nib$(DOS_SECT)
+mypkg_DATA=dos.nib$(DOS_SECTORS)
 noinst_DATA=dos.md5
-EXTRA_DIST=$(M4S) $(COMDIR)/symbols.m4h $(srcdir)/dos.s65 $(srcdir)/dos.md5 $(INCDIR)/asm.m4h
+EXTRA_DIST=$(M4S) $(COMDIR)/symbols.m4h $(COMDIR)/zpabs.m4h $(srcdir)/dos.s65 $(srcdir)/dos.md5 $(INCDIR)/asm.m4h
 
 dos.r65: dos.o65 $(OBJS)
 dos.r65: M4FLAGS_LOCAL=-DVERSION=$(DOS_VERS)

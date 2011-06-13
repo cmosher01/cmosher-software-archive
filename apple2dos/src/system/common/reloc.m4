@@ -1,63 +1,17 @@
-                .INCLUDE "symbols.s65"
-                .INCLUDE "zpabs.s65"
+include(`asm.m4h')
+include(`symobls.m4h')
+include(`zpabs.m4h')
 
 
-                .EXPORT DOSNMBF1
-                .EXPORT DOSRELOC
-                .EXPORT MASTERDOS
-
-                .IMPORT DOSLIM
-                .IMPORT RWTS
-                .IMPORT ONTABLE
-                .IMPORT PRENIBL
-                .IMPORT FREE1
-                .IMPORT WRITADR
-                .IMPORT NMPG2RD
-                .IMPORT CURDIRTK
-                .IMPORT CMDTXTBL
-                .IMPORT IBBUFP
-                .IMPORT IBDCTP
-                .IMPORT IBTYPE
-                .IMPORT ADROFIOB
-                .IMPORT FMXTNTRY
-                .IMPORT ADRIOB
-                .IMPORT IMGARAMV
-                .IMPORT IMGFPV
-                .IMPORT IMGINTV
-                .IMPORT ADBSCERR
-                .IMPORT RUNTRY
-                .IMPORT CHAINTRY
-                .IMPORT ADOSFNB1
-                .IMPORT IMGCOLVT
-                .IMPORT CURDIRNX
-                .IMPORT TODOSCLD2
-                .IMPORT ADOSTART
-                .IMPORT DOSCOLD
-                .IF VERSION < 320
-                .IMPORT L1B28SR
-                .ENDIF
-                .IF VERSION < 330
-                .IMPORT BOOT1
-                .IMPORT BOOT2
-                .IMPORT OUTHNDTB
-                .ELSE
-                .IMPORT CLOBCARD
-                .IMPORT SECFLGS
-                .IMPORT APPNDFLG
-                .IF VERSION >= 331
-                .IMPORT CMPATCH
-                .IMPORT CKIFAPND
-                .ENDIF
-                .ENDIF
 
 MASTERDOS       JMP   DOSCOLD
 
 DOSRELOC
                                 ; (A3) --> DOSTOP
                 LDA   #>DOSTOP
-                STAZ  A3H
+                STAZ(A3H)
                 LDX   #<DOSTOP
-                STXZ  A3L
+                STXZ(A3L)
 
                                 ; check for existence of RAM,
                                 ; starting at page $BF and working downwards
@@ -77,18 +31,17 @@ L1B11           TYA
                 BEQ   L1B28
 
 L1B24
-                DECZ  A3H
+                DECZ(A3H)
                 BNE   L1B0B     ; always branches
-
-                .IF VERSION < 320
+ifelse(eval(VERSION < 320),1,`
 L1B28           JSR   L1B28SR
-                .ELSE
+',`
                                 ; upon entry, A3 --> first byte of highest RAM page (e.g., $BF00)
 L1B28
-                LDAZ  A3H
+                LDAZ(A3H)
                 AND   #$DF      ; $BF becomes $9F
-                STAZ  A4H
-                STXZ  A4L       ; (A4) --> $9F00
+                STAZ(A4H)
+                STXZ(A4L)       ; (A4) --> $9F00
                 LDA   (A4L,X)
                 PHA             ; save (A4) in case we need to restore it below
                 STA   PROSCRTH
@@ -113,8 +66,7 @@ L1B35           TYA
 L1B4C           PLA
                 STA   (A4L,X)   ; restore (A4)
                 LDY   A3H       ; $BF
-
-                .ENDIF
+')
 
 
                                 ; upon entry Y contains highest destination page (e.g., $BF)
@@ -132,7 +84,7 @@ L1B51           INY
 
                 STA   OFFSET    ; $80
                 LDA   SRCPAGE   ; $1D
-                STA   ADOSTART+1; fixup dos-start vector
+                STA   ADOSTART+1 ; fixup dos-start vector
 
                                 ; fix this pointer inside DOS: it used to
                                 ; point to us (the relocation), but since we
@@ -147,12 +99,12 @@ L1B51           INY
                                 ; fix up DOS vectors (ranges defined
                                 ; in FIXVECTBL).
                 LDX   #0
-                STXZ  A3L
+                STXZ(A3L)
 
 FIXVEC          LDA   FIXVECTBL,X
                 TAY
                 LDA   FIXVECTBL+1,X
-                STAZ  A3H
+                STAZ(A3H)
                 JMP   L1B93
 
 L1B86           CLC
@@ -161,12 +113,12 @@ L1B86           CLC
                 STA   (A3L),Y
                 INY
                 BNE   L1B93
-                INCZ  A3H
+                INCZ(A3H)
 L1B93           INY
                 BNE   L1B98
-                INCZ  A3H
+                INCZ(A3H)
 L1B98
-                LDAZ  A3H
+                LDAZ(A3H)
                 CMP   FIXVECTBL+3,X
                 BCC   L1B86
                 TYA
@@ -190,36 +142,36 @@ L1B98
                 LDX   #0
 FIXCOD          STX   CURDIRNX
                 LDA   FIXCODTBL,X
-                STAZ  A3L
+                STAZ(A3L)
                 LDA   FIXCODTBL+1,X
-                STAZ  A3H
+                STAZ(A3H)
 
-.LOOP           LDX   #0
+FIXCODLOOP      LDX   #0
                 LDA   (A3L,X)
                 JSR   INSDS2
-                LDYZ  VOLDSK
+                LDYZ(VOLDSK)
                 CPY   #2
-                BNE   .NOCHANGE
+                BNE   FIXCODNOCH
                 LDA   (A3L),Y
                 CMP   SRCPAGE
-                BCC   .NOCHANGE
+                BCC   FIXCODNOCH
                 CMP   SRCPAGELIM
-                BCS   .NOCHANGE
+                BCS   FIXCODNOCH
                 ADC   OFFSET
                 STA   (A3L),Y
-.NOCHANGE       SEC
-                LDAZ  VOLDSK
-                ADCZ  A3L
-                STAZ  A3L
+FIXCODNOCH      SEC
+                LDAZ(VOLDSK)
+                ADCZ(A3L)
+                STAZ(A3L)
                 LDA   #$00
-                ADCZ  A3H
-                STAZ  A3H
+                ADCZ(A3H)
+                STAZ(A3H)
                 LDX   CURDIRNX
                 CMP   FIXCODTBL+3,X
-                BCC   .LOOP
-                LDAZ  A3L
+                BCC   FIXCODLOOP
+                LDAZ(A3L)
                 CMP   FIXCODTBL+2,X
-                BCC   .LOOP
+                BCC   FIXCODLOOP
 
                 TXA
                 CLC
@@ -230,24 +182,24 @@ FIXCOD          STX   CURDIRNX
 
                                 ; Copy the image to the new location
 RELOC           LDA   #$3F
-                STAZ  A3H
+                STAZ(A3H)
                 LDY   DSTPAGELIM
                 DEY
-                STYZ  A4H
+                STYZ(A4H)
                 LDA   #0
-                STAZ  A3L
-                STAZ  A4L
+                STAZ(A3L)
+                STAZ(A4L)
                 TAY
-.LOOP2          LDA   (A3L),Y
+RELOOP2          LDA   (A3L),Y
                 STA   (A4L),Y
                 INY
-                BNE   .LOOP2
+                BNE   RELOOP2
                 DEC   PAGECNT2
-                BEQ   .DONE
-                DECZ  A3H
-                DECZ  A4H
-                BNE   .LOOP2
-.DONE
+                BEQ   REDONE
+                DECZ(A3H)
+                DECZ(A4H)
+                BNE   RELOOP2
+REDONE
                                 ; Done relocating, so now cold-start it
                 JMP   IMGCOLVT
 
@@ -256,91 +208,91 @@ RELOC           LDA   #$3F
                                 ; Table of vectors within DOS that we need to
                                 ; fix up. Format:
                                 ; START,LIMIT
-FIXVECTBLSIZ    .BYTE    FIXVECTBLLIM-FIXVECTBL ; size of table in bytes
-FIXVECTBL       .ADDR    ADOSFNB1
-                .ADDR    CHAINTRY
-                .ADDR    RUNTRY
-                .ADDR    ADBSCERR
-                .ADDR    IMGINTV+2
-                .ADDR    IMGINTV+4
-                .ADDR    IMGFPV
-                .ADDR    IMGFPV+4
-                .ADDR    IMGARAMV
-                .ADDR    IMGARAMV+4
-                .ADDR    IMGARAMV+6
-                .ADDR    IMGARAMV+8
-                .ADDR    ADRIOB
-                .ADDR    FMXTNTRY
-                .ADDR    ADROFIOB
-                .ADDR    IBTYPE
-                .ADDR    IBDCTP
-                .ADDR    IBBUFP
+FIXVECTBLSIZ    ASM_DATA(FIXVECTBLLIM-FIXVECTBL) ; size of table in bytes
+FIXVECTBL       ASM_ADDR(ADOSFNB1)
+                ASM_ADDR(CHAINTRY)
+                ASM_ADDR(RUNTRY)
+                ASM_ADDR(ADBSCERR)
+                ASM_ADDR(IMGINTV+2)
+                ASM_ADDR(IMGINTV+4)
+                ASM_ADDR(IMGFPV)
+                ASM_ADDR(IMGFPV+4)
+                ASM_ADDR(IMGARAMV)
+                ASM_ADDR(IMGARAMV+4)
+                ASM_ADDR(IMGARAMV+6)
+                ASM_ADDR(IMGARAMV+8)
+                ASM_ADDR(ADRIOB)
+                ASM_ADDR(FMXTNTRY)
+                ASM_ADDR(ADROFIOB)
+                ASM_ADDR(IBTYPE)
+                ASM_ADDR(IBDCTP)
+                ASM_ADDR(IBBUFP)
 FIXVECTBLLIM
 
-                .RES    12
+                ASM_RES(12)
 
                                 ; Table of code within DOS that we need to
                                 ; fix up. Format:
                                 ; START,LIMIT
-FIXCODTBLSIZ    .BYTE    FIXCODTBLLIM-FIXCODTBL ; size of table in bytes
-FIXCODTBL       .ADDR    DOSCOLD
-                .ADDR    CMDTXTBL
-                .ADDR    FMXTNTRY
-                .ADDR    CURDIRTK
-                .IF VERSION < 330
-                .ADDR    BOOT2
-                .ELSE
-                .ADDR    APPNDFLG
-                .ENDIF
-                .ADDR    NMPG2RD
-                .IF VERSION < 320
-                .ADDR    BOOT1-2
-                .ADDR    BOOT2-$102 ; NONSENSE ENTRIES?
-                .ELSE
-                .IF VERSION < 330
-                .ADDR    BOOT1-2
-                .ADDR    BOOT1-2 ; NONSENSE ENTRIES?
-                .ELSE
-                .ADDR    WRITADR
-                .ADDR    FREE1
-                .ENDIF
-                .ENDIF
-                .ADDR    PRENIBL
-                .IF VERSION < 321
-                .ADDR    ONTABLE-1
-                .ELSEIF VERSION < 330
-                .ADDR    ONTABLE+3
-                .ELSE
-                .ADDR    ONTABLE
-                .ENDIF
-                .IF VERSION >= 331
-                .ADDR    CKIFAPND
-                .ADDR    CMPATCH
-                .ENDIF
-                .ADDR    RWTS
-                .IF VERSION >= 330
-                .ADDR    SECFLGS
-                .ADDR    CLOBCARD
-                .ENDIF
-                .ADDR    DOSLIM-1
+FIXCODTBLSIZ    ASM_DATA(FIXCODTBLLIM-FIXCODTBL) ; size of table in bytes
+FIXCODTBL       ASM_ADDR(DOSCOLD)
+                ASM_ADDR(CMDTXTBL)
+                ASM_ADDR(FMXTNTRY)
+                ASM_ADDR(CURDIRTK)
+ifelse(eval(VERSION < 330),1,`
+                ASM_ADDR(BOOT2)
+',`
+                ASM_ADDR(APPNDFLG)
+')
+                ASM_ADDR(NMPG2RD)
+ifelse(eval(VERSION < 320),1,`
+                ASM_ADDR(BOOT1-2)
+                ASM_ADDR(BOOT2-$102) ; NONSENSE ENTRIES?
+',`
+ifelse(eval(VERSION < 330),1,`
+                ASM_ADDR(BOOT1-2)
+                ASM_ADDR(BOOT1-2) ; NONSENSE ENTRIES?
+                ASM_ADDR(WRITADR)
+                ASM_ADDR(FREE1)
+')
+')
+                ASM_ADDR(PRENIBL)
+ifelse(eval(VERSION < 321),1,`
+                ASM_ADDR(ONTABLE-1)
+',`
+ifelse(eval(VERSION < 330),1,`
+                ASM_ADDR(ONTABLE+3)
+                ASM_ADDR(ONTABLE)
+')
+')
+ifelse(eval(VERSION < 331),1,`
+                ASM_ADDR(CKIFAPND)
+                ASM_ADDR(CMPATCH)
+')
+                ASM_ADDR(RWTS)
+ifelse(eval(VERSION < 330),1,`
+                ASM_ADDR(SECFLGS)
+                ASM_ADDR(CLOBCARD)
+')
+                ASM_ADDR(DOSLIM-1)
 FIXCODTBLLIM
 
-                .IF VERSION < 330
-                .RES 4
-                .ENDIF
+ifelse(eval(VERSION < 330),1,`
+                ASM_RES(4)
+')
 
-SRCPAGE         .BYTE    >ADOSFNB1
-SRCPAGELIM      .BYTE    >DOSLIM
+SRCPAGE         ASM_DATA(>ADOSFNB1)
+SRCPAGELIM      ASM_DATA(>DOSLIM)
 
-DSTPAGE         .RES    1
-DSTPAGELIM      .RES    1
+DSTPAGE         ASM_RES(1)
+DSTPAGELIM      ASM_RES(1)
 
-PAGECNT         .BYTE    >(DOSLIM-ADOSFNB1) ; number of pages to be moved
-OFFSET          .RES    1                   ; number of pages to add, to reloc addresses
-PAGECNT2        .BYTE    >(DOSLIM-ADOSFNB1) ; (redundant?) number of pages to be moved
+PAGECNT         ASM_DATA(>(DOSLIM-ADOSFNB1)) ; number of pages to be moved
+OFFSET          ASM_RES(1)                   ; number of pages to add, to reloc addresses
+PAGECNT2        ASM_DATA(>(DOSLIM-ADOSFNB1)) ; (redundant?) number of pages to be moved
 
-                .IF VERSION < 320
-                .BYTE    $13       ; UNUSED CODE???
+ifelse(eval(VERSION < 320),1,`
+                ASM_DATA($13)                ; UNUSED CODE???
                 BMI   *-$46
                 JSR   L1C7B
                 LDA   #$80
@@ -348,9 +300,9 @@ PAGECNT2        .BYTE    >(DOSLIM-ADOSFNB1) ; (redundant?) number of pages to be
                 PLA
                 BNE   *-$2E
 L1C7B           LDX   MEMSIZ
-                .ENDIF
-                .IF VERSION < 330
-                LDA   MEMSIZ+1  ; UNUSED CODE???
+')
+ifelse(eval(VERSION < 330),1,`
+                LDA   MEMSIZ+1               ; UNUSED CODE???
                 STX   FRETOP
                 STA   FRETOP+1
                 LDY   #$00
@@ -410,13 +362,14 @@ DOSNMBF1        LDY   #$00
                 BPL   L1CC1
                 TXA
                 BMI   L1CC1
-                .ADDR $1CA6,$1BA6,$1AA6,$1A80,$5E65,$5E85
-                .BYTE $90,$02,$E6
-                .ELSE
-                                ; unused:
-                .IF VERSION = 330
-                .RES    $04
-                .ENDIF
-                .RES    $52
-DOSNMBF1        .RES    $2D       ; this label represents the first DOS buffer
-                .ENDIF
+                ASM_ADDR($1CA6,$1BA6,$1AA6,$1A80,$5E65,$5E85)
+                ASM_DATA($90,$02,$E6)
+',`
+                                             ; unused:
+ifelse(eval(VERSION < 330),1,`
+                ASM_RES($04)
+')
+                ASM_RES($52)
+DOSNMBF1                                     ; this label represents the first DOS buffer
+                ASM_RES($2D)
+')

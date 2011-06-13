@@ -74,7 +74,7 @@ define(`HOLDAA',`$'3E)           ; - HOLDS  A CONSTANT ($AA) FOR
                                 ; ASSOC WITH THE ADDR FIELD.
 
 
-ifelse(eval(`VERSION' < 330),`
+ifelse(eval(`VERSION' < 330),1,`
 define(`FRMTVOL',`$'2F)           ; VOL # TO WRITE WHEN FORMATTING.
 define(`FRMTKCTR',`$'41)           ; TRK# TO WRITE/READ WHEN FORMAT-
                                 ; TING/VERIFYING.
