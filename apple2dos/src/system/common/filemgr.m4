@@ -1,97 +1,40 @@
-                .INCLUDE "symbols.s65"
-                .INCLUDE "hascmap.s65"
-
-                .EXPORT ADRIOB
-                .EXPORT BADFMXIT
-                .EXPORT CPYFMWA
-                .EXPORT CURDIRNX
-                .EXPORT CURDIRTK
-                .EXPORT CURIOBUF
-                .EXPORT DRVFM
-                .EXPORT FILEMGR
-                .EXPORT FILPTBYT
-                .EXPORT FILPTSEC
-                .EXPORT FILTYPFM
-                .EXPORT FIRDOSPG
-                .EXPORT FMPRMLST
-                .EXPORT FMXTNTRY
-                .EXPORT FNAMBUFM
-                .EXPORT GOODFMXT
-                .EXPORT LEN2RDWR
-                .EXPORT ONEIOBUF
-                .EXPORT OPCODEFM
-                .EXPORT RECLENFM
-                .EXPORT RECNMBFM
-                .EXPORT RECNMBWA
-                .EXPORT RENAMBUF
-                .EXPORT RTNCODFM
-                .EXPORT SLOTFM
-                .EXPORT STKSAV
-                .EXPORT SUBCODFM
-                .EXPORT VOLFM
-                .EXPORT VOLWA
-                .EXPORT WASTEBYT
-                .EXPORT WRKBUFFM
-
-                .IMPORT IBSTAT
-                .IMPORT IBSECSZ
-                .IMPORT IBDRVN
-                .IMPORT IBSLOT
-                .IMPORT IBVOL
-                .IMPORT IBCMD
-                .IMPORT IBBUFP
-                .IMPORT WRDOSIMG
-                .IMPORT IBSECT
-                .IMPORT IBTRK
-                .IMPORT IBSMOD
-                .IMPORT DOSLIM
-                .IMPORT IBTYPE
-                .IF VERSION < 320
-                .IMPORT RWTS
-                .ELSE
-                .IMPORT ZCURBUF
-                .IMPORT CONDNFLG
-                .IMPORT CMDATTRB
-                .IMPORT NDX2CMD
-                .IMPORT PRPWRDOS
-                .IMPORT ENTERWTS
-                .IMPORT FULLPTCH
-                .ENDIF
+include(`asm.m4h')
+include(`symbols.m4h')
 
                                 ; =================================
-                                ; FILE MANAGER'S CONSTANTS TABLE.
+                                ; FILE MANAGERS CONSTANTS TABLE.
                                 ; ($AAC1 - $AAC8)
                                 ; =================================
 
-ADRIOB          .ADDR IBTYPE    ; PTS TO RWTS'S IOB. NOTE:THE $3E3
+ADRIOB          ASM_ADDR(IBTYPE)    ; PTS TO RWTSS IOB. NOTE:THE $3E3
                                 ; VECTOR LOADS FROM ADRIOB.
-ADRVTOC         .ADDR VTOCBUFF  ; PTS TO VTOC SECTOR BUFFER.
-ADRDIRBF        .ADDR DIRECBUF  ; PTS TO DIRECTORY SECTOR BUFFER.
-DOSNDPL1        .ADDR DOSLIM    ; PTS TO LAST BYTE OF DOS PLUS 1.
+ADRVTOC         ASM_ADDR(VTOCBUFF)  ; PTS TO VTOC SECTOR BUFFER.
+ADRDIRBF        ASM_ADDR(DIRECBUF)  ; PTS TO DIRECTORY SECTOR BUFFER.
+DOSNDPL1        ASM_ADDR(DOSLIM)    ; PTS TO LAST BYTE OF DOS PLUS 1.
 
 
                                 ; ======================================
-                                ; FILE MANAGER'S FUNCTION HNDLR ENTRY
+                                ; FILE MANAGERS FUNCTION HNDLR ENTRY
                                 ; POINT TABLE ($AAC9 - $AAE4).
                                 ; (ALL ADDRS ARE 1 LESS THAN THE ACTUAL
                                 ; ENTRY POINT BECAUSE THE THE FUNCTIONS
                                 ; ARE ENTERED VIA A "STACK JUMP".)
                                 ; ======================================
 
-FMFUNCTB        .ADDR GOODFMXT-1 ; NULL - EXIT WITH NO ERRORS.
-                .ADDR FNOPEN-1
-                .ADDR FNCLOSE-1
-                .ADDR FNREAD-1
-                .ADDR FNWRITE-1
-                .ADDR FNDELETE-1
-                .ADDR FNCATLOG-1
-                .ADDR FNLOCK-1
-                .ADDR FNUNLOCK-1
-                .ADDR FNRENAME-1
-                .ADDR FNPOSN-1
-                .ADDR FNINIT-1
-                .ADDR FNVERIFY-1
-                .ADDR GOODFMXT-1 ; NULL - EXIT WITH NO ERRORS.
+FMFUNCTB        ASM_ADDR(GOODFMXT-1) ; NULL - EXIT WITH NO ERRORS.
+                ASM_ADDR(FNOPEN-1)
+                ASM_ADDR(FNCLOSE-1)
+                ASM_ADDR(FNREAD-1)
+                ASM_ADDR(FNWRITE-1)
+                ASM_ADDR(FNDELETE-1)
+                ASM_ADDR(FNCATLOG-1)
+                ASM_ADDR(FNLOCK-1)
+                ASM_ADDR(FNUNLOCK-1)
+                ASM_ADDR(FNRENAME-1)
+                ASM_ADDR(FNPOSN-1)
+                ASM_ADDR(FNINIT-1)
+                ASM_ADDR(FNVERIFY-1)
+                ASM_ADDR(GOODFMXT-1) ; NULL - EXIT WITH NO ERRORS.
 
 
                                 ; ====================================
@@ -103,12 +46,12 @@ FMFUNCTB        .ADDR GOODFMXT-1 ; NULL - EXIT WITH NO ERRORS.
                                 ; ====================================
 
                                 ; SUBFUNCTION INDEX.
-RDSUBTBL        .ADDR GOODFMXT-1 ; (0), EXIT.
-                .ADDR READONE-1  ; (1), READ ONE BYTE.
-                .ADDR READRNG-1  ; (2), READ A RANGE OF BYTES.
-                .ADDR PSNRDONE-1 ; (3), POSITION & READ ONE BYTE.
-                .ADDR PSNRDRNG-1 ; (4), POS'N & READ RNGE OF BYTES.
-                .ADDR GOODFMXT-1 ; (5), EXIT.
+RDSUBTBL        ASM_ADDR(GOODFMXT-1) ; (0), EXIT.
+                ASM_ADDR(READONE-1)  ; (1), READ ONE BYTE.
+                ASM_ADDR(READRNG-1)  ; (2), READ A RANGE OF BYTES.
+                ASM_ADDR(PSNRDONE-1) ; (3), POSITION & READ ONE BYTE.
+                ASM_ADDR(PSNRDRNG-1) ; (4), POSN & READ RNGE OF BYTES.
+                ASM_ADDR(GOODFMXT-1) ; (5), EXIT.
 
 
                                 ; =====================================
@@ -120,12 +63,12 @@ RDSUBTBL        .ADDR GOODFMXT-1 ; (0), EXIT.
                                 ; =====================================
 
                                 ; SUBFUNCTION INDEX.
-WRSUBTBL        .ADDR GOODFMXT-1 ; (0), EXIT.
-                .ADDR WRITEONE-1 ; (1), WRITE ONE BYTE.
-                .ADDR WRITERNG-1 ; (2), WRITE A RANGE OF BYTES.
-                .ADDR PSNWRONE-1 ; (3), POSITION & WRITE ONE BYTE.
-                .ADDR PSNWRRNG-1 ; (4), POS'N & WRITE RNG OF BYTES.
-                .ADDR GOODFMXT-1 ; (5), EXIT.
+WRSUBTBL        ASM_ADDR(GOODFMXT-1) ; (0), EXIT.
+                ASM_ADDR(WRITEONE-1) ; (1), WRITE ONE BYTE.
+                ASM_ADDR(WRITERNG-1) ; (2), WRITE A RANGE OF BYTES.
+                ASM_ADDR(PSNWRONE-1) ; (3), POSITION & WRITE ONE BYTE.
+                ASM_ADDR(PSNWRRNG-1) ; (4), POSN & WRITE RNG OF BYTES.
+                ASM_ADDR(GOODFMXT-1) ; (5), EXIT.
 
 
 
@@ -151,12 +94,12 @@ WRSUBTBL        .ADDR GOODFMXT-1 ; (0), EXIT.
                                 ; =========================================
 
 FMXTNTRY
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
                 CPX #0
                 BEQ FMXTCMD     ; ALLOW NEW FILE-SIMULATE AN "INIT".
                 LDX #02         ; REQUIRES OLD FILE (SIMULATE LOAD).
 FMXTCMD         STX NDX2CMD     ; SET INDEX TO COMMAND.
-                .ENDIF
+                ')
 
 
                                 ; =================================
@@ -185,7 +128,7 @@ FILEMGR         TSX             ; SAVE STK PTR SO WE CAN LATER RTN
                 PHA             ; FUNCTION HANDLER ON THE STACK
                 LDA FMFUNCTB,X  ; (HI BYTE FIRST).
                 PHA
-                RTS             ; DO A STACK JMP TO THE FUNCTION'S
+                RTS             ; DO A STACK JMP TO THE FUNCTIONS
                                 ; ENTRY POINT.
 
 TOERROP         JMP RNGERROP    ; GO HANDLE RANGE ERROR.
@@ -208,14 +151,14 @@ FNOPEN          JSR COMNOPEN    ; OPEN PREEXISTING FILE OR CREATE
 
 COMNOPEN        JSR ZWRKAREA    ; INITIALIZE THE FM WORK AREA WITH
                                 ; DEFAULT VALUES.
-                                ; (DON'T CONFUSE WITH FM WRK BUF
+                                ; (DONT CONFUSE WITH FM WRK BUF
                                 ; WHICH IS IN DOS BUF CHAIN.)
                 LDA #1          ; DESCRIBE SECTOR LENGTH AS 256
                 STA SECSIZWA+1  ; BYTES (IN FM WORK AREA).
 
                                 ; GET RECORD LENGTH FROM FM PARM
                                 ; LIST & PUT IT IN FM WORK AREA.
-                                ; (DON'T ALLOW A 0 LENGTH.  IF
+                                ; (DONT ALLOW A 0 LENGTH.  IF
                                 ; ZERO, CHANGE IT TO ONE.)
 
                 LDX RECLENFM+1
@@ -234,7 +177,7 @@ STRECLEN        STA RECLENWA    ; PUT LENGTH IN FM WORK AREA.
                                 ; THE DIRECTORY, SO PREPARE A NEW
                                 ; FILE ENTRY IN CASE THE CMD CAN
                                 ; LEGALLY CREATE A NEW FILE.
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
                 STX CURDIRNX    ; OFFSET TO NEW DESCRIP ENTRY IN
                                 ; CASE WANT TO CREATE A NEW FILE.
 
@@ -243,14 +186,14 @@ STRECLEN        STA RECLENWA    ; PUT LENGTH IN FM WORK AREA.
 
                 LDX NDX2CMD     ; (X) = INDEX REPRESENTING CMD.
                 LDA CMDATTRB,X  ; GET 1ST BYTE CONTAINING DESCRIP
-                                ; OF THE COMMAND'S ATTRIBUTES.
+                                ; OF THE COMMANDS ATTRIBUTES.
                 LDX CURDIRNX    ; (X)=INDEX FOR A NEW FILE DESCRIP
                                 ; ENTRY INTO DIRECTORY SEC.
                 LSR A           ; (C)=BIT0 OF 1ST ATTRIBUTE BYTE.
                 BCS CREATNEW    ; IF (C)=1 CMD CAN MAKE NEW FILE.
 
-                                ; COMMAND CAN'T CREATE NEW FILE.
-                                ; SEE WHICH LANGUAGE WE'RE USING
+                                ; COMMAND CANT CREATE NEW FILE.
+                                ; SEE WHICH LANGUAGE WERE USING
                                 ; & EXIT WITH APPROPRIATE ERROR.
 
 NEWILLGL        LDA CONDNFLG    ; $00=WARMSTART, $01=READING,
@@ -261,7 +204,7 @@ NEWILLGL        LDA CONDNFLG    ; $00=WARMSTART, $01=READING,
                 JMP LNGNOTAV    ; HANDLE LANGUAGE-NOT-AVAIL ERROR.
 
 TOFILNOT        JMP FILENOT     ; HANDLE FILE-NOT-FOUND ERROR.
-                .ENDIF
+                ')
 
 
                                 ; ---------------------------------
@@ -283,14 +226,14 @@ CREATNEW        LDA #0          ; INITIALIZE FILE SIZE = 1 SECTOR.
                 STA FIL1SIZE,X
                 STX CURDIRNX    ; SAVE BYTE OFFSET INTO DIR SEC
                                 ; FOR FILE DESCRIPTION.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 STX BYTNXD1R
-                .ENDIF
+                ')
                 JSR ASGNTKSC    ; FIND TRK/SEC VALS FOR NEW FILE.
 
                                 ; FINISH SETTING UP PARAMETERS
-                                ; IN THE FILE MANAGER'S WORK AREA.
-                                ; (P.S. DON'T CONFUSE FM WORK AREA
+                                ; IN THE FILE MANAGERS WORK AREA.
+                                ; (P.S. DONT CONFUSE FM WORK AREA
                                 ; WITH THE VARIOUS WORK BUFFERS
                                 ; LOCATED IN THE DOS BUFFER CHAIN.)
 
@@ -342,9 +285,9 @@ FILLINWA        LDA FIL1TSTK,X  ; T/S LIST TRK (FRM DIRECTORY SEC)
                 LDA FIL1SIZE+1,X
                 STA FILENSEC+1
 
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
                 STX BYTNXD1R    ; INDEX INTO DIREC SEC FOR DESCRIP.
-                .ENDIF
+                ')
                 LDA #$FF        ; PRETEND THAT THE LAST DATA SEC
                 STA RELPREV     ; USED HAD A RELATIVE SECTOR #
                 STA RELPREV+1   ; (IN RELATION TO THE ENTIRE FILE)
@@ -380,7 +323,7 @@ FILLINWA        LDA FIL1TSTK,X  ; T/S LIST TRK (FRM DIRECTORY SEC)
                                 ; IN ACCORDANCE WITH THE CALLING
                                 ; FUNCTION.  (ALTHOUGH SOME WORK
                                 ; BYTES MAY NOT BE SUBSEQUENTLY
-                                ; ALTERED, DON'T BE LULLED INTO
+                                ; ALTERED, DONT BE LULLED INTO
                                 ; THINKING THAT THEY ARE NOT
                                 ; IMPORTANT.  ZERO VALUES ARE JUST
                                 ; AS RELEVANT AS NON-ZERO VALUES.
@@ -407,7 +350,7 @@ ZEROWRKA        STA FMWKAREA,X  ; PUT $00 BYTE IN WORK AREA.
                                 ; AREA.
 
                 LDA VOLFM       ; VOLUME #.
-                EOR #$FF        ; CALC 1'S COMPLEMENT OF VOL #.
+                EOR #$FF        ; CALC 1S COMPLEMENT OF VOL #.
                 STA VOLWA
                 LDA DRVFM       ; DRIVE #.
                 STA DRVWA
@@ -441,7 +384,7 @@ FNCLOSE         JSR CKDATUP     ; WRITE DATA SEC BUF IF NECESSARY.
 
                 LDA #%00000010  ; IF BIT 1 SET, THEN WAS WRITE.
                 AND UPDATFLG
-                BEQ TOGDFMXT    ; WASN'T A WRITE SO CAN JUST EXIT
+                BEQ TOGDFMXT    ; WASNT A WRITE SO CAN JUST EXIT
                                 ; BECAUSE NO NEED TO UPDATE DIR SEC.
 
                                 ; LAST OPERATION WAS A WRITE, SO
@@ -486,7 +429,7 @@ TOGDFMXT        JMP GOODFMXT    ; CLEAN EXIT.  EVENTUALLY RTNS TO
 FNRENAME        JSR COMNOPEN    ; LOCATE FILE WITH SAME NAME & OPN
                                 ; IT IF ITS NOT ALREADY OPEN.
                 LDA FILTYPWA    ; GET FILE TYPE (FROM WORK AREA).
-                BMI TOFILOCK    ; ERROR-CAN'T RENAME A LOCKED FILE
+                BMI TOFILOCK    ; ERROR-CANT RENAME A LOCKED FILE
                 LDA RENAMBUF    ; GET ADR OF SECONDARY NAME BUFFER
                 STA A4L         ; FROM FM PARM LIST & PUT IN A4L/H
                 LDA RENAMBUF+1
@@ -525,7 +468,7 @@ TOFILOCK        JMP FILELOKD    ; GO HANDLE LOCKED FILE ERROR.
                                 ; =================================
 
 FNWRITE         LDA FILTYPWA    ; CHK IF FILE IS LOCKED.
-                BMI TOFILOCK    ; ERROR - CAN'T WRITE TO LCKD FILE.
+                BMI TOFILOCK    ; ERROR - CANT WRITE TO LCKD FILE.
 
                 LDA SUBCODFM    ; CHK IF SUBCODE IS LEGAL.
                 CMP #5          ; (MUST BE < = 5.)
@@ -547,7 +490,7 @@ FNWRITE         LDA FILTYPWA    ; CHK IF FILE IS LOCKED.
                                 ; =================================
 
 PSNRDONE        JSR CALCFPTR    ; USING R-, L- & B-PARAMETERS,CALC
-                                ; THE POS'N OF FILE PTR WANTED.
+                                ; THE POSN OF FILE PTR WANTED.
 
 
                                 ; ==================================
@@ -559,7 +502,7 @@ READONE         JSR RDDATA      ; GET DATA BYTE FROM DATA SEC BUF.
                                 ; ALREADY IN MEMORY, THEN READ IT
                                 ; IN. HOWEVER, 1ST CHK IF PRESENT
                                 ; INFO IN DATA SEC NEEDS TO BE
-                                ; UPDATED SO DON'T OVERWRITE DATA
+                                ; UPDATED SO DONT OVERWRITE DATA
                                 ; IN BUF & LOOSE INFO.)
 
                 STA ONEIOBUF    ; PUT BYTE READ IN THE 1-BYTE BUF
@@ -575,7 +518,7 @@ READONE         JSR RDDATA      ; GET DATA BYTE FROM DATA SEC BUF.
                                 ; =================================
 
 PSNRDRNG        JSR CALCFPTR    ; USING R-, L- & B-PARMS, CALC THE
-                                ; POS'N OF FILE POINTER WANTED.
+                                ; POSN OF FILE POINTER WANTED.
 
 
                                 ; =================================
@@ -590,10 +533,10 @@ READRNG         JSR DECRWLEN    ; DECREMENT THE # OF BYTES TO READ.
                                 ; ALREADY IN MEMORY, THEN READ IT
                                 ; IN. HOWEVER, 1ST CHK IF PRESENT
                                 ; INFO IN DATA SEC NEEDS TO BE
-                                ; UPDATED SO DON'T OVERWRITE DATA
+                                ; UPDATED SO DONT OVERWRITE DATA
                                 ; IN BUF & LOOSE INFO.)
                 PHA             ; SAVE SINGLE BYTE READ ON STK.
-                JSR INCIOBUF    ; INC THE CUR'NT TARGET RAM MEMORY
+                JSR INCIOBUF    ; INC THE CURNT TARGET RAM MEMORY
                                 ; LOCATION (BYTRNG) & POINT A4L/H
                                 ; AT TARGET LOCATION IN I/O BUF.
                 LDY #0          ; INITIALIZE (Y) INDEX.
@@ -611,7 +554,7 @@ RDDATA          JSR NXTDATRD    ; CHK IF DATA SEC WE WANT TO READ
                                 ; IS ALREADY IN MEMORY.  IF NOT,
                                 ; READ DATA SEC INTO DATA SEC BUF.
                                 ; HOWEVER, 1ST CHK IF DAT SEC BUF
-                                ; NEEDS UPDATING SO DON'T OVRWRITE
+                                ; NEEDS UPDATING SO DONT OVRWRITE
                                 ; DATA SEC BUF & LOSE INFO.
                 BCS NDATERR     ; BRANCH IF RAN OUT OF DATA SECS
                                 ; WHILE READING.
@@ -635,7 +578,7 @@ NDATERR         JMP ENDOFDAT    ; RAN OUT OF DATA WHILE READING.
                                 ; =================================
 
 PSNWRONE        JSR CALCFPTR    ; USING R-, L- & B-PARMS, CALC
-                                ; POS'N OF FILE POINTER WANTED.
+                                ; POSN OF FILE POINTER WANTED.
 
 
                                 ; =================================
@@ -659,7 +602,7 @@ WRITEONE        LDA ONEIOBUF    ; GET BYTE TO WRITE FROM ONE-BYTE
                                 ; =================================
 
 PSNWRRNG        JSR CALCFPTR    ; USING R-, L- & B-PARMS, CALC
-                                ; POS'N OF FILE POINTER WANTED.
+                                ; POSN OF FILE POINTER WANTED.
 
 
                                 ; =================================
@@ -748,23 +691,23 @@ FNVERIFY        JSR COMNOPEN    ; LOCATE FILE WITH SAME NAME
 VRFYREAD        JSR NXTDATRD    ; READ NEXT DATA SEC IN.  (ASSUME
                                 ; DATA SEC WE WANT NOT PRESENTLY
                                 ; IN MEMORY.)
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BCS TOOKFMXT2
-                .ELSE
+                ',`
                 BCS TOOKFMXT    ; END OF FILE DETECTED - EXIT FM.
                                 ; EVENTUALLT RETURNS TO AFTRFUNC
                                 ; ($A6AB) LOCATED IN THE FMDRIVER
                                 ; ROUTINE ($A6A8).
-                .ENDIF
-                INC FILPTSEC    ; KICK UP FILE POINTER POS'N
+                ')
+                INC FILPTSEC    ; KICK UP FILE POINTER POSN
                 BNE VRFYREAD    ; AND THEN GO BACK TO READ NEXT
                 INC FILPTSEC+1  ; DATA SECTOR UNTIL ENCOUNTER END
                 JMP VRFYREAD    ; OF FILE MARKER.
 
 
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
 TOOKFMXT2       JMP GOODFMXT
-                .ENDIF
+                ')
                                 ; =================================
                                 ; DELETE FUNCTION HANDLER.
                                 ; =================================
@@ -775,14 +718,14 @@ FNDELETE        JSR COMNOPEN    ; LOCATE FILE WITH SAME NAME AND
                                 ; IN DIRECTORY SECTOR BUFFER.
                 LDA FIL1TYPE,X  ; GET FILE TYPE FROM DIR SEC BUF.
                 BPL ALTRNTRY    ; BRANCH IF FILE NOT LOCKED.
-                JMP FILELOKD    ; ERR - CAN'T DELETE A LOCKED FILE
+                JMP FILELOKD    ; ERR - CANT DELETE A LOCKED FILE
                                 ; SO GO HANDLE ERR & EXIT.
 
                                 ; GET TRK # OF FILES 1ST T/S LIST
                                 ; FROM FILE DESCRIP ENTRY IN DIR
                                 ; SEC BUF.  PUT IT IN THE WRK AREA
                                 ; & WRITE IT OVER THE LAST CHAR
-                                ; POS'N IN THE APPROPRIATE FILE
+                                ; POSN IN THE APPROPRIATE FILE
                                 ; NAME FIELD IN DIRECTORY SECTOR.
 
 ALTRNTRY        LDX CURDIRNX    ; (X) = INDEX TO FILE DESCRIPTION
@@ -790,10 +733,10 @@ ALTRNTRY        LDX CURDIRNX    ; (X) = INDEX TO FILE DESCRIPTION
                 LDA FIL1TSTK,X  ; GET TRK # OF 1ST T/S LIST SEC.
                 STA TSL1TRK     ; COPY IT INTO WORK AREA & LAST CHR
                 STA FIL1NAME+29,X
-                                ; POS'N OF FILE NAME FLD DSCRP
+                                ; POSN OF FILE NAME FLD DSCRP
                 LDA #$FF        ; REPLACE ORIG TRK # OF T/S LIST
                 STA FIL1TSTK,X  ; WITH $FF TO SIGNAL FILE DELETED.
-                LDY FIL1TSSC,X  ; PUT SEC # OF FILE'S 1ST T/S LST
+                LDY FIL1TSSC,X  ; PUT SEC # OF FILES 1ST T/S LST
                 STY TSL1SEC     ; IN THE WORK AREA.
                 JSR WRDIRECT    ; WRITE MODIFIED DIREC SEC TO DISK.
 
@@ -826,7 +769,7 @@ DELFREE         STY CURDIRNX    ; SET (Y) = INDEX TO THE DATA PAIR
                 INY             ; GET SEC # OF DATA SEC.
                 LDA (A4L),Y
                 TAY             ; CONDITION (Y)=SEC & (A)=TRK FOR
-                PLA             ; ENTRY INTO ROUT'N TO FREE UP SECS.
+                PLA             ; ENTRY INTO ROUTN TO FREE UP SECS.
                 JSR FREESEC     ; FREE UP SECTOR FROM DELETED FILE
 BYPASDEL        LDY CURDIRNX    ; SET (Y) TO INDEX START DATA PAIR.
                 INY             ; KICK UP (Y) TO PT AT NXT DATA PR.
@@ -868,11 +811,11 @@ FREESEC         SEC             ; SET CARRY SO FREE UP PRESENT SEC
                                 ; TO SEC #.  NEXT, MERGE ASIGNMAP
                                 ; WITH THE APPROP BIT MAP IN VTOC.
                 LDA #0          ; ZERO OUT ASIGNSEC, ASIGNTRK
-                .IF VERSION < 330
+                ifelse(eval(VERSION < 330),1,`
                 LDX #3
-                .ELSE
+                ',`
                 LDX #5          ; & ASIGNMAP (6 BYTES) IN WRK AREA
-                .ENDIF
+                ')
 RELEASEC        STA ASIGNSEC,X
                 DEX
                 BPL RELEASEC
@@ -901,7 +844,7 @@ FNCATLOG        JSR ZWRKAREA    ; INITIALISE THE FM WORK AREA.
                 LDA #22         ; SET INDEX TO ALLOW 22 SCREEN
                 STA SCRNSRCH    ; LINES BETWEEN PAUSES.
 
-                                ; PRINT 2 <CR>'S & THE WORDS
+                                ; PRINT 2 <CR>S & THE WORDS
                                 ; "DISK VOLUME".
                 JSR CRCATLOG    ; PRT <CR> & TEST IF PAUSE NEEDED.
                 JSR CRCATLOG    ; DO IT AGAIN.
@@ -913,7 +856,7 @@ PRDSKVOL        LDA DSKVOLUM,X  ; GET CHAR OF REVERSE STRING.
                 STX A5H         ; NONSENSE INSTRUCTION (BECAUSE THE
                                 ; HI BYTE IS NOT USED IN THE
                                 ; PRVOLNMB ROUTINE ($AE42).)
-                LDA IBSMOD      ; GET VOL# FOUND (FROM RWTS'S IOB)
+                LDA IBSMOD      ; GET VOL# FOUND (FROM RWTSS IOB)
                 STA A5L         ; AND PUT IT IN A5L.
                 JSR PRVOLNMB    ; GO PRINT VOL # (BUGGY ROUTINE).
                 JSR CRCATLOG    ; PRT <CR> & TEST IF PAUSE NEEDED.
@@ -931,8 +874,8 @@ RDDIRSEC        JSR RDDIRECT    ; GO READ DIRECTORY SECTOR.
                                 ; ANALYZE THE TRACK NUMBER.
 
 DESCRPTK        STX CURDIRNX    ; SAVE NDEX TO ENTRIES IN DIR SEC.
-                LDA FIL1TSTK,X  ; TRK # OF FILE'S 1ST T/S LIST
-                                ; (FROM THE FILE'S DESCRIPTION IN
+                LDA FIL1TSTK,X  ; TRK # OF FILES 1ST T/S LIST
+                                ; (FROM THE FILES DESCRIPTION IN
                                 ; THE DIRECTORY SECTOR).
                 BEQ TOFMXTOK    ; TRK # = 0, SO NO MORE ENTRIES IN
                                 ; CURRENT DIRECTORY BUFFER.
@@ -952,18 +895,18 @@ PRLOCODE        TYA             ; EITHER PRINT "*" OR <SPC>.
                                 ; A TRAILING <SPC>.
 
                 LDA FIL1TYPE,X  ; GET FILE TYPE AGAIN & MAKE SURE
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 AND #%00000111
                 LDY #3
 CHRTYPIX        LSR A
-                .ELSE
+                ',`
                 AND #%01111111  ; HI BYTE IS OFF SO CAN INDEX TBL
                                 ; THAT CONTAINS SYMBOLS FOR TYPES.
                 LDY #7          ; SET (Y) TO INDICATE 7 RELEVANT
                                 ; BITS AFTER SHIFT OUT HI BIT.
                 ASL A           ; THROW AWAY HI BIT.
 CHRTYPIX        ASL A           ; SHIFT REST OF BITS UNTIL HI SET.
-                .ENDIF
+                ')
                 BCS PRTFTYPE    ; # OF SHIFTS TO SET (C) DESIGNATES
                                 ; INDEX TO TYPE CHAR TABLE.
                 DEY             ; REDUCE COUNT OF SHIFTS.
@@ -985,7 +928,7 @@ PRTFTYPE        LDA FTYPETBL,Y  ; GOT A SET BIT SO NOW GET CHAR
                 STA A5H         ; IN A5L/H.
                 JSR PRVOLNMB    ; PRINT FILE SIZE.
                                 ; *** NOTE *** - ROUTINE IS BUGGY.
-                                ; (DOESN'T USE HI BYTE, SO FILES
+                                ; (DOESNT USE HI BYTE, SO FILES
                                 ; > 255 SECS LONG ARE EXPRESSED
                                 ; AS 256 MOD.)
                 LDA #' '        ; PRINT <SPC> AFTER SIZE.
@@ -999,7 +942,7 @@ PRTFTYPE        LDA FTYPETBL,Y  ; GOT A SET BIT SO NOW GET CHAR
                 LDY #29         ; COUNTER FOR 30 CHRS/NAME (0-29).
 PRTFNAME        LDA FIL1TSTK,X  ; GET CHR FOR FILE NAME & PRINT IT.
                 JSR COUT        ; (P.S.  BECAUSE THE OUTPUT HOOK
-                                ; STILL PTS TO DOS'S OUTPUT HNDLR,
+                                ; STILL PTS TO DOSS OUTPUT HNDLR,
                                 ; CTRL-D AND A SUBSUBSEQUENT DOS
                                 ; CMD CAN BE EMBEDDED IN THE FILE
                                 ; NAME AS A PROTECTION SCHEME.)
@@ -1017,7 +960,7 @@ NXDESCRP        JSR NXPLUS35    ; ADD 35 BYTES TO INDEX SO IT PTS
                 BCC DESCRPTK    ; (C) = 0, SO GO LOOK FOR MORE
                                 ; ENTRIES IN THIS PARTICULAR
                                 ; DIRECTORY SECTOR.
-                BCS RDDIRSEC    ; (C) = 1, SO THERE AREN'T MORE
+                BCS RDDIRSEC    ; (C) = 1, SO THERE ARENT MORE
                                 ; ENTRIES IN THIS DIRECT SECTOR.
                                 ; THERE4, GO BACK TO READ IN
                                 ; ANOTHER DIRECTORY SECTOR.
@@ -1053,7 +996,7 @@ CRCATRTN        RTS
                                 ; =================================
 
                                 ; NOTE:  THIS IS A BUGGY ROUTINE
-                                ; - DOESN'T USE HI BYTE SO NUMBERS
+                                ; - DOESNT USE HI BYTE SO NUMBERS
                                 ; GREATER THAN 255 ARE EXPRESSED
                                 ; AS 256 MOD.
                                 ;
@@ -1066,7 +1009,7 @@ CRCATRTN        RTS
 
 PRVOLNMB        LDY #2          ; INDEX TO # OF CONVERSION FACTORS
                                 ; AND DIGITS.
-ZONSTK          LDA #0          ; INIT COUNT OF # OF SUBTR'S DONE.
+ZONSTK          LDA #0          ; INIT COUNT OF # OF SUBTRS DONE.
                 PHA             ; SAVE COUNT ON STACK.
 GETVNMB         LDA A5L         ; GET LOW BTE HEX AND CMP IT TO
                 CMP BASETEN,Y   ; TABLE OF CONVERSION FACTORS.
@@ -1078,10 +1021,10 @@ GETVNMB         LDA A5L         ; GET LOW BTE HEX AND CMP IT TO
                 LDA A5H         ; NONSENSE - NOT USED.
                 SBC #0          ; NONSENSE - NOT USED.
                 STA A5H         ; NONSENSE - NOT USED.
-                PLA             ; GET COUNTER OF # OF SUBT'S AND
+                PLA             ; GET COUNTER OF # OF SUBTS AND
                 ADC #0          ; ADD (C). IF REMAIN. > CONVERSION
                 PHA             ; FACTOR, ADD 1, ELSE ADD NOTHING.
-                JMP GETVNMB     ; GO BACK TO DO MORE SUBT'S WITH
+                JMP GETVNMB     ; GO BACK TO DO MORE SUBTS WITH
                                 ; SAME CONVERSION FACTOR.
 TONEGASC        PLA             ; GET RESULT OF DIV (IE. WHOLE #
                                 ; OF SUBTRACTIONS).
@@ -1213,12 +1156,12 @@ CLRDIREC        STA DIRECBUF,X
 SETLNKTK        STA DIRLNKTK    ; SET TRK/SEC VALS FOR LINK TO NEXT
 SETLNKSC        STY DIRLNKSC    ; DIRECTORY SECTOR.
                 INY             ; GET SEC # TO WRITE & PUT IT IN
-                STY IBSECT      ; RWTS'S IOB.
+                STY IBSECT      ; RWTSS IOB.
                 LDA #2          ; WRITE OPCODE.
                 JSR RWTSDRV1    ; WRITE DIRECTORY SEC TO DISK.
                 LDY DIRLNKSC    ; SEC VAL OF NEXT DIR SEC TO WRITE.
                 DEY             ; KICK IT DWN (WILL INC IT LATER).
-                BMI DOIMAGE     ; DON'T DO SEC 0 BECAUSE THAT'S VTOC
+                BMI DOIMAGE     ; DON'T DO SEC 0 BECAUSE THATS VTOC
                 BNE SETLNKSC    ; GO WRITE SECS 2 TO 15.
                 TYA
                 BEQ SETLNKTK    ; GO BACK TO WRITE SEC 1 AND ZERO
@@ -1232,7 +1175,7 @@ DOIMAGE         JSR PRPWRDOS    ; GET READY TO WRITE DOS IMAGE.
                 JMP GOODFMXT    ; EXIT FM CLEANLY. EVENTUALLY RTNS
                                 ; TO AFTRFUNC ($A6AB) LOCATED IN
                                 ; THE FMDRIVER ROUTINE ($A6A8).
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
 PRPWRDOS        LDA SUBCODFM
                 STA IBBUFP+1
                 LDA #0
@@ -1241,7 +1184,7 @@ PRPWRDOS        LDA SUBCODFM
                 EOR #$FF
                 STA IBVOL
                 RTS
-                .ENDIF
+                ')
 
                                 ; =================================
                                 ; POINT A4L/H AT A SPECIFIC
@@ -1259,14 +1202,14 @@ PT2FMBUF        LDA WRKBUFFM,X  ; GET ADDR OF SELECTED BUF FROM
                 STA A4H
                 RTS
 
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
 ZCURBUF         LDA #0
                 TAY
 L2E53           STA (A4L),Y
                 INY
                 BNE L2E53
                 RTS
-                .ENDIF
+                ')
 
                                 ; =================================
                                 ; CHK IF DATA SEC BUF HAS CHANGED
@@ -1286,7 +1229,7 @@ CKDATUP         BIT UPDATFLG    ; CHK BIT6 SO SEE IF CHANGED.
                                 ; LOSING PREVIOUS DATA.)
                                 ; ---------------------------------
 
-WRITDATA        JSR PRPDAIOB    ; PREPARE RWTS'S IOB FOR WRITING
+WRITDATA        JSR PRPDAIOB    ; PREPARE RWTSS IOB FOR WRITING
                                 ; DATA SEC BUF TO DISK.
                 LDA #2          ; OPCODE FOR WRITE CMD.
                 JSR RWTSDRVR    ; CALL DRIVER TO WRT DATA SEC BUF.
@@ -1311,9 +1254,9 @@ CKTSUPDT        LDA UPDATFLG
                                 ; UPDATE T/S LIST SEC BUF ON DISK.
                                 ; ---------------------------------
 
-WRITETS         JSR SETTSIOB    ; PREPARE RWTS'S IOB FOR WRITING
+WRITETS         JSR SETTSIOB    ; PREPARE RWTSS IOB FOR WRITING
                                 ; T/S LIST BUFFER TO DISK.
-                LDA #2          ; RWTS'S WRITE OPCODE.
+                LDA #2          ; RWTSS WRITE OPCODE.
                 JSR RWTSDRVR    ; CALL RWTS DRIVER TO WRITE T/S LST
                 LDA #$7F        ; CLR BIT7 OF UPDATE FLAG TO SIGNAL
                 AND UPDATFLG    ; THAT T/S LIST IS UP TO DATE.
@@ -1322,13 +1265,13 @@ WRITETS         JSR SETTSIOB    ; PREPARE RWTS'S IOB FOR WRITING
 
 
                                 ; =================================
-                                ; PREPARE RWTS'S IOB FOR READING
+                                ; PREPARE RWTSS IOB FOR READING
                                 ; OR WRITING T/S LIST SEC.
                                 ; =================================
 
 SETTSIOB        LDA TSBUFFM     ; GET ADR OF T/S LIST BUF FROM
                 STA IBBUFP      ; FM PARM LIST & DESIGNATE AS I/O
-                LDA TSBUFFM+1   ; BUF IN RWTS'S IOB.
+                LDA TSBUFFM+1   ; BUF IN RWTSS IOB.
                 STA IBBUFP+1
                 LDX CURTSTRK    ; SET (X)/(Y) = TRK/SEC OF CURRENT
                 LDY CURTSSEC    ; T/S LIST SECTOR.
@@ -1346,9 +1289,9 @@ READTS          PHP             ; SAVE CARRY ON STK.
                                 ; UPDATING REQUIRED.  (IF T/S LST
                                 ; BUF HAS CHANGED SINCE LAST READ
                                 ; OR WRITE, THEN WRITE IT BACK TO
-                                ; DISK SO DON'T OVERWRITE BUF AND
+                                ; DISK SO DONT OVERWRITE BUF AND
                                 ; LOSE INFO WHEN RD NEW T/S LIST.)
-                JSR SETTSIOB    ; PREP RWTS'S IOB FOR READING T/S
+                JSR SETTSIOB    ; PREP RWTSS IOB FOR READING T/S
                                 ; LIST SEC.
                 JSR SELTSBUF    ; POINT A4L/H AT T/S LIST BUF.
                                 ; (GETS ADR FROM FM PARM LIST.)
@@ -1475,19 +1418,19 @@ RDWRTS          STX CURTSTRK    ; NEW T/S LIST SECTOR TRK/SEC VALS
                                 ; READ DATA SEC TO DATA SEC BUF.
                                 ; =================================
 
-READDATA        JSR PRPDAIOB    ; SET UP RWTS'S IOB TO RD DATA SEC.
+READDATA        JSR PRPDAIOB    ; SET UP RWTSS IOB TO RD DATA SEC.
                 LDA #1          ; READ OPCODE FOR RWTS.
                 JMP RWTSDRVR    ; CALL RWTS DRIVER TO READ DAT SEC.
 
 
                                 ; =================================
-                                ; PREP RWTS'S IOB TO READ
+                                ; PREP RWTSS IOB TO READ
                                 ; OR WRITE THE DATA SECTOR.
                                 ; ==================================
 
 PRPDAIOB        LDY DATBUFFM    ; GET ADR OF DATA SEC BUF FROM THE
                 LDA DATBUFFM+1  ; FM PARM LIST & DESIGNATE IT AS
-                STY IBBUFP      ; THE I/O BUF FOR RWTS'S IOB.
+                STY IBBUFP      ; THE I/O BUF FOR RWTSS IOB.
                 STA IBBUFP+1
                 LDX CURDATRK    ; ENTER RWTS DRIVER WITH (X)/(Y)
                 LDY CURDATSC    ; CONTAINING THE TRK/SEC VALUES OF
@@ -1513,7 +1456,7 @@ WRITVTOC        LDA #2          ; WRITE OPCODE FOR RWTS.
 
 RDWRVTOC        LDY ADRVTOC     ; GET ADR OF VTOC FRM FM CONSTANTS
                 STY IBBUFP      ; TABLE & DESIGNATE IT AS THE I/O
-                LDY ADRVTOC+1   ; BUF IN RWTS'S IOB.
+                LDY ADRVTOC+1   ; BUF IN RWTSS IOB.
                 STY IBBUFP+1
                 LDX TRKWA       ; ENTER RWTS DRIVER WITH (X)/(Y)
                 LDY #0          ; EQUAL TO TRK/SEC VALS OF VTOC.
@@ -1529,7 +1472,7 @@ RDDIRECT        PHP             ; SAVE (C) ON STK:
                                 ; (C) = 1 = READ NEXT DIR SEC.
 
                 JSR PT2DIRBF    ; DESIGNATE DIR SEC BUF AS I/O BUF
-                                ; IN RWTS'S IOB.
+                                ; IN RWTSS IOB.
                 PLP             ; CHK IF DEALING WITH 1ST DIR SEC
                 BCS RDNXTDIR    ; NO - GO READ NEXT DIR SEC.
 
@@ -1561,7 +1504,7 @@ DODIRRD         STX CURDIRTK    ; SAV TRK/SEC VALS OF DIRECTORY WE
                                 ; FOR THE NEXT TIME AROUND.
                 LDA #1          ; READ OPCODE FOR RWTS.
                 JSR RWTSDRVR    ; CALL RWTS DRIVER TO DO THE READ.
-                CLC             ; LINK DIDN'T ZERO OUT SO SIGNAL
+                CLC             ; LINK DIDNT ZERO OUT SO SIGNAL
                 RTS             ; MORE DIREC SECS EXIST & THEN XIT
 
 
@@ -1570,7 +1513,7 @@ DODIRRD         STX CURDIRTK    ; SAV TRK/SEC VALS OF DIRECTORY WE
                                 ; =================================
 
 WRDIRECT        JSR PT2DIRBF    ; DESIGNATE DIREC SEC BUF AS I/O
-                                ; BUF IN RWTS'S IOB.
+                                ; BUF IN RWTSS IOB.
                 LDX CURDIRTK    ; ENTER RWTS DRIVER WITH (X)/(Y)
                 LDY CURDIRSC    ; EQUAL TO THE TRK/SEC VALS OF THE
                                 ; DIRECTORY SECTOR.
@@ -1580,12 +1523,12 @@ WRDIRECT        JSR PT2DIRBF    ; DESIGNATE DIREC SEC BUF AS I/O
 
                                 ; ==================================
                                 ; DESIGNATE DIRECTORY SECTOR BUFFER
-                                ; AS I/O BUFFER IN RWTS'S IOB.
+                                ; AS I/O BUFFER IN RWTSS IOB.
                                 ; ==================================
 
 PT2DIRBF        LDA ADRDIRBF    ; GET ADDR OF DIREC SEC BUF FROM
                 STA IBBUFP      ; FM CONSTANTS TBL & DESIGNATE IT
-                LDA ADRDIRBF+1  ; AS I/O BUFFER IN RWTS'S IOB.
+                LDA ADRDIRBF+1  ; AS I/O BUFFER IN RWTSS IOB.
                 STA IBBUFP+1
                 RTS
 
@@ -1608,7 +1551,7 @@ RWTSDRV1        STA IBCMD       ; (A) = OPCODE FOR RWTS
                 STA UPDATFLG    ; LAST OPERATION WAS A WRITE (FOR
                                 ; NEXT TIME AROUND).
 
-                                ; FINISH SETTING UP RWTS'S
+                                ; FINISH SETTING UP RWTSS
                                 ; INPUT/OUTPUT BLOCK (IOB).
 
 SKPWRSET        LDA VOLWA       ; PUT COMPLEMENTED VOL IN IOB.
@@ -1625,19 +1568,19 @@ SKPWRSET        LDA VOLWA       ; PUT COMPLEMENTED VOL IN IOB.
                 LDA #1
                 STA IBTYPE
                 LDY ADRIOB      ; SET (Y) & (A) TO POINT AT
-                LDA ADRIOB+1    ; RWTS'S IOB.
+                LDA ADRIOB+1    ; RWTSS IOB.
 
 
                                 ; =================================
                                 ; CALL RWTS
                                 ; =================================
 
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 JSR RWTS
-                .ELSE
+                ',`
                 JSR ENTERWTS    ; SAV STATUS,SET INTERRUPT DISABLE
                                 ; FLAG & CALL RWTS TO PERFORM TASK
-                .ENDIF
+                ')
                                 ; (SEEK, READ, WRITE, FORMAT).
                 LDA IBSMOD      ; GET VOL FOUND (FRM IOB) & PUT IT
                 STA VOLFM       ; IN THE FM PARAMETER LIST.
@@ -1656,7 +1599,7 @@ SKPWRSET        LDA VOLWA       ; PUT COMPLEMENTED VOL IN IOB.
                                 ; OPERATION WAS NOT SUCCESSFUL.
                                 ; =================================
 
-ERRWTSDR        LDA IBSTAT      ; GET RWTS'S ERROR CODE.
+ERRWTSDR        LDA IBSTAT      ; GET RWTSS ERROR CODE.
 
                                 ; TRANSLATE RWTS ERROR CODE (A)
                                 ; TO FM ERROR CODE (Y).  (DOS LATER
@@ -1695,7 +1638,7 @@ SETFMERR        TYA             ; DESIGNATE IT AS GENERAL I/O ERR.
                                 ; CHECK IF THE DATA SECTOR HAS CHANGED
                                 ; SINCE THE LAST READ OR WRITE.  IF IT HAS,
                                 ; THE DISK MUST BE UPDATED BEFORE WE READ
-                                ; IN THE NEW DATA SECTOR SO WE DON'T OVER-
+                                ; IN THE NEW DATA SECTOR SO WE DONT OVER-
                                 ; WRITE THE DATA SECTOR BUFFER AND LOOSE
                                 ; INFORMATION.
                                 ; NOTE: - IF THIS SUBROUTINE IS CALLED
@@ -1765,7 +1708,7 @@ CKCURTS         LDA FILPTSEC+1  ; SEC OFFSET INTO FILE ASSOCIATED
                 CMP RELFIRST
                 BCC NEEDNXTS    ; SEC OFFSET OF WNTD FILE IS LESS
                                 ; SO READ IN A DIFFERENT T/S LIST.
-                                ; (START BY READING THE FILE'S
+                                ; (START BY READING THE FILES
                                 ; FIRST T/S LIST.)
 
                                 ; SECTOR OFFSET ASSOCIATED WITH THE DATA
@@ -2031,18 +1974,18 @@ INCPTRTN        RTS
 
 
                                 ; =================================
-                                ; POINT A4L/H AT CUR DEST'N/SOURCE
+                                ; POINT A4L/H AT CUR DESTN/SOURCE
                                 ; MEMORY LOCATION (CURIOBUF) FOR
                                 ; READING/WRITING.
-                                ; INC DEST'N/SOURCE ADR FOR NEXT
+                                ; INC DESTN/SOURCE ADR FOR NEXT
                                 ; TIME AROUND.
                                 ; =================================
 
-INCIOBUF        LDY CURIOBUF    ; GET ADR OF DEST'N/SOURCE LOC'N
+INCIOBUF        LDY CURIOBUF    ; GET ADR OF DEST'N/SOURCE LOCN
                 LDX CURIOBUF+1  ; FROM FM PARM LIST.
                 STY A4L         ; POINT A4L/H AT TARGET.
                 STX A4H
-                INC CURIOBUF    ; KICK UP ADR OF DEST'N/SOURCE LOC
+                INC CURIOBUF    ; KICK UP ADR OF DESTN/SOURCE LOC
                 BNE INCIORTN
                 INC CURIOBUF+1
 INCIORTN        RTS
@@ -2072,7 +2015,7 @@ RWLEN0          JMP GOODFMXT    ; DONE READ/WRITE, EXIT FM.
                                 ; MAKE TWO SEARCHES IF NECESSARY:
                                 ; - SEARCH1 - TRY TO LOCATE ENTRY WITH THE
                                 ; SAME NAME AS THE FILE WANTED.
-                                ; - SEARCH2 - COULDN'T LOCATE ENTRY
+                                ; - SEARCH2 - COULDNT LOCATE ENTRY
                                 ; CORRESPONDING TO THE FILE
                                 ; WANTED SO CREATE A NEW ENTRY
                                 ; IN THE 1ST AVAILABLE SPACE
@@ -2096,7 +2039,7 @@ GETFNTRY        JSR READVTOC    ; READ IN VTOC SO CAN GET LINK TO
                                 ; CONTAINING THE NAME OF THE WANTED
                                 ; FILE.  MAKE TWO SEARCHES IF NECESSARY.
                                 ; ON THE FIRST SEARCH, TRY TO FIND THE
-                                ; WANTED FILE NAME.  IF THAT DOESN'T
+                                ; WANTED FILE NAME.  IF THAT DOESNT
                                 ; WORK, DO A 2ND SEARCH TO LOCATE THE
                                 ; 1ST AVAILABLE SPACE IN A DIRECTORY
                                 ; SECTOR WHERE WE CAN STORE A NEW FILE
@@ -2134,14 +2077,14 @@ CKDIRTRK        STX CURDIRNX    ; OFFSET OF FILE DESCRIP INTO THE
                                 ; PRIMARY FILE NAME BUFFER.)
 
                 LDY #0          ; INIT INDEX TO NAME BUFFER.
-                INX             ; POINT (X) AT 1ST CHAR POS'N IN
+                INX             ; POINT (X) AT 1ST CHAR POSN IN
                 INX             ; NAME FIELD OF DESCRIP ENTRY.
 CMPNAMES        INX
                 LDA (A4L),Y     ; GET CHAR OF NAME WANTED FROM THE
                                 ; PRIMARY FILENAME BUFFER.
                 CMP FIL1TSTK,X  ; CHAR OF NAME WANTED VS CHAR IN
                                 ; DESCRIPTION ENTRY OF DIREC SEC.
-                BNE DONTMTCH    ; CHARS (IE., NAMES) DON'T MATCH.
+                BNE DONTMTCH    ; CHARS (IE., NAMES) DONT MATCH.
                 INY
                 CPY #30         ; DONE ALL CHARS YET (0 TO 29)?
                 BNE CMPNAMES    ; CHRS MTCH, BRANCH IF MORE TO CHK.
@@ -2154,9 +2097,9 @@ CMPNAMES        INX
                                 ; ADVANCE INDEX TO POINT AT THE NEXT
                                 ; POTENTIAL FILE DESCRIPTION ENTRY.
 
-DONTMTCH        JSR NXPLUS35    ; NAMES DIDN'T MATCH, SO ADD 35 TO
+DONTMTCH        JSR NXPLUS35    ; NAMES DIDNT MATCH, SO ADD 35 TO
                                 ; INDEX TO POINT IT AT NEXT ENTRY.
-                                ; (CHK TO MAKE SURE DON'T INDEX
+                                ; (CHK TO MAKE SURE DONT INDEX
                                 ; RIGHT OFF END OF DIRECTORY SEC.)
                 BCC CKDIRTRK    ; MORE POTENTIAL FILE DESCRIPS TO
                                 ; CHK IN THIS DIRECTORY SECTOR.
@@ -2177,7 +2120,7 @@ CHRSRCHA        LDY SCRNSRCH    ; (1=SEARCH1, 0=SEARCH2)
 CHRSRCHB        LDY SCRNSRCH    ; (1=SEARCH1, 0=SEARCH2)
                 BNE DONTMTCH
 
-                                ; COULDN'T LOCATE THE FILE NAME IN THE
+                                ; COULDNT LOCATE THE FILE NAME IN THE
                                 ; DIRECTORY DESCRIPTION ENTRIES, SO
                                 ; BEGIN CREATING A NEW DESCRIPTION IN
                                 ; THE FIRST AVAILABLE SPACE IN A
@@ -2185,7 +2128,7 @@ CHRSRCHB        LDY SCRNSRCH    ; (1=SEARCH1, 0=SEARCH2)
                                 ; CREATE A NEW FILE).
 
 NWDESCRP        LDY #0          ; INIT INDEX TO PRIMARY NAME BUF.
-                INX             ; SET INDEX TO 1ST CHAR POS'N IN
+                INX             ; SET INDEX TO 1ST CHAR POSN IN
                 INX             ; THE NAME FIELD OF FILE DESCRIP
 SETNWNAM        INX             ; ENTRY SPACE N THE DIRECTORY SEC.
                 LDA (A4L),Y     ; COPY CHAR FROM PRIMARY NAME BUF
@@ -2203,7 +2146,7 @@ SETNWNAM        INX             ; ENTRY SPACE N THE DIRECTORY SEC.
                                 ; ADD 35 TO THE OFFSET TO POINT THE
                                 ; INDEX AT THE NEXT FILE DESCRIPTION
                                 ; ENTRY.  (CHECK TO MAKE SURE THAT WE
-                                ; DON'T INDEX RIGHT OFF THE END OF THE
+                                ; DONT INDEX RIGHT OFF THE END OF THE
                                 ; DIRECTORY SECTOR.)
                                 ; =====================================
 
@@ -2221,7 +2164,7 @@ NXPLUS35        CLC             ; ADD 35 TO THE INDEX.  (EACH FILE
                                 ; - IF FIRST SEARCH, SWITCH TO SECOND
                                 ; SEARCH.
                                 ; - IF SECOND SEARCH, LINK ZEROED OUT
-                                ; (BECAUSE THERE ISN'T ENOUGH ROOM
+                                ; (BECAUSE THERE ISNT ENOUGH ROOM
                                 ; ON DISK FOR A NEW ENTRY.  THERE4,
                                 ; GO EXIT WITH A DISK-FULL-ERROR
                                 ; MESSAGE.
@@ -2259,7 +2202,7 @@ CHNGSRCH        LDA #0          ; SET (A) = 0 SO WE CAN RESET
                                 ; ASIGNTRK=0, THEN IT IS A
                                 ; SIGNAL TO GET NEXT TRK TO
                                 ; ASSIGN FROM THE VTOC.
-                                ; TRK0YET = 0 = HAVEN'T ENCOUNTERED TRK0
+                                ; TRK0YET = 0 = HAVENT ENCOUNTERED TRK0
                                 ; YET.
                                 ; = 1 = TRK0 HAS BEEN ENCOUNTERED.
                                 ; (TRK 0 IS USED AS A REFERENCE POINT.
@@ -2294,7 +2237,7 @@ ANYAVAIL        DEC ASIGNSEC    ; NEXT SECTOR BE ASSIGNED.
                                 ; BACK TO STANDARD POSITION.
 ADJSTMAP        ROL ASIGNMAP-1,X
                                 ; IF C=1, SEC ASSOC WITH ROLLED
-                DEX             ; BIT POS'N IS FREE TO BE ASSIGNED
+                DEX             ; BIT POSN IS FREE TO BE ASSIGNED
                 BNE ADJSTMAP    ; TO A NEW FILE.
                 BCC ANYAVAIL    ; SEC NOT FREE - GO GET NEXT ONE.
 
@@ -2335,7 +2278,7 @@ GETNWTRK        CLC
                 CMP TKPERDSK    ; # OF TRKS ON DISK (FROM VTOC).
                 BCC CHK4FREE    ; BRANCH IF TRK # IS VALID.
 
-                                ; TRK# TOO LARGE, SO REVERSE DIRECT'N.
+                                ; TRK# TOO LARGE, SO REVERSE DIRECTN.
 
                 LDA #$FF        ; (A) = -1.
                 BNE SRCH4TRK    ; ALWAYS.
@@ -2345,7 +2288,7 @@ GETNWTRK        CLC
                                 ; FLAG.  IF 2ND TIME AT TRK0, GO
                                 ; ISSUE DISK-FULL-ERROR MESSAGE
                                 ; (BECAUSE WE SEARCHED ALL TRKS &
-                                ; DIDN'T FIND ANY FREE SECTORS).
+                                ; DIDNT FIND ANY FREE SECTORS).
 
 CKIFFULL        LDA TRK0YET
                 BNE TODSKFUL    ; 2ND TIME = DISK FULL.
@@ -2362,7 +2305,7 @@ SRCH4TRK        STA DRECTION    ; SET THE SEARCH DIRECTION.
                 CLC             ; BEGIN THE SEARCH ONE TRACK AWAY
                 ADC #CATTRK     ; FROM THE CATALOG TRK.
 
-                                ; CHECK TRK'S TRKMAP FOR FREE SECS.
+                                ; CHECK TRKS TRKMAP FOR FREE SECS.
 
 CHK4FREE        STA NXTRKUSE
                 STA ASIGNTRK
@@ -2427,8 +2370,8 @@ FREEXTRA        PHA             ; SAVE TRK # ON STK.
                 LDY ASIGNSEC    ; SET (Y) = # OF NEXT SECTOR WHICH
                                 ; COULD HAVE BEEN WRITTEN.
                 PLA             ; GET ASSIGNMENT TRK# BAK FRM STK.
-                CLC             ; DON'T WANT TO FREE LAST SEC USED,
-                                ; SO CLR (C) HERE SO DON'T FREE IT
+                CLC             ; DONT WANT TO FREE LAST SEC USED,
+                                ; SO CLR (C) HERE SO DONT FREE IT
                                 ; UP WHEN BEGIN ROTATING MAPS IN
                                 ; SUB2FREE ROUTINE.
                 JSR SUB2FREE    ; ADJUST ASIGNMAP TO FREE UP SECS
@@ -2460,7 +2403,7 @@ FREEXTRA        PHA             ; SAVE TRK # ON STK.
                                 ; NOT).
                                 ; 3) SECS ARE NORMALLY ASSIGNED
                                 ; IN DESCENDING ORDER.
-                                ; 4) # OF ROR'S = # OF SECS THAT
+                                ; 4) # OF RORS = # OF SECS THAT
                                 ; NEED TO BE ASSIGNED.
                                 ;
                                 ; FOR EX:  IF LAST TRK HAD NEVER
@@ -2501,7 +2444,7 @@ STNDARD         ROR ASIGNMAP-$FC,X
                 INX
                 BNE STNDARD
                 INY             ; WHEN (Y) = 16, ASIGNMAP IS BACK
-                                ; IN STANDARD POS'N.
+                                ; IN STANDARD POSN.
                 CPY SECPERTK    ; CONDITION (C) FOR NEXT SHIFT.
                 BNE SUB2FREE
                 ASL A           ; TRK*4 TO INDEX TRKMAP.
@@ -2535,7 +2478,7 @@ SUB2RTN         RTS
                                 ; - FILPTBYT = BYTE OFFSET INTO THE CURRENT
                                 ; SECTOR (1 BYTE).
                                 ;
-                                ; ALL 3 BYTES BYTES DEFINE THE EXACT POS'N
+                                ; ALL 3 BYTES BYTES DEFINE THE EXACT POSN
                                 ; OF THE FILE POINTER VIA THE FOLLOWING
                                 ; FORMULA:
                                 ; (REC# * REC LENGTH) + BYTE OFFSET
@@ -2578,7 +2521,7 @@ CALCFPTR        LDA RECNMBFM    ; PUT RECORD # IN MULTIPLIER AND
                                 ; FILPTBYT ARE USED BOTH FOR HOLDING
                                 ; THE MULTIPLIER (RECORD #) AND PART
                                 ; OF THE PRODUCT RESULT.  HOWEVER,
-                                ; THE BITS OF THE PRODUCTS DON'T GET
+                                ; THE BITS OF THE PRODUCTS DONT GET
                                 ; MIXED UP WITH THE BITS OF THE
                                 ; MULTIPLIER BECAUSE ROLLING IN A
                                 ; PRODUCT BIT ALSO ROLLS OUT THE
@@ -2613,9 +2556,9 @@ NMBXLEN2        ROR A           ; SHIFT (AS A UNIT) RUNNING RESULT
                                 ; THE FM PARAMETER LIST TO THE WORK
                                 ; AREA.
 
-                .IF VERSION >= 331
+                ifelse(eval(VERSION >= 331),1,`
                 CLC
-                .ENDIF
+                ')
 
                 LDA BYTOFFFM
                 STA BYTOFFWA
@@ -2633,20 +2576,20 @@ NMBXLEN2        ROR A           ; SHIFT (AS A UNIT) RUNNING RESULT
                 ADC FILPTSEC
                 STA FILPTSEC
 
-                .IF VERSION >= 331
+                ifelse(eval(VERSION >= 331),1,`
                 BCC CALCRTS
                 INC FILPTSEC+1
-                .ELSE
+                ',`
                 LDA #0
                 ADC FILPTSEC+1
                 STA FILPTSEC+1
-                .ENDIF
+                ')
 
 CALCRTS         RTS
 
-                .IF VERSION >= 331
-                .RES 2
-                .ENDIF
+                ifelse(eval(VERSION >= 331),1,`
+                ASM_RES(2)
+                ')
 
                                 ; =================================
                                 ; EXIT FM WITH OR WITHOUT ERRS.
@@ -2665,13 +2608,13 @@ ENDOFDAT        LDA #5
 FILENOT         LDA #6
                 BNE BADFMXIT    ; ALWAYS.
 DISKFULL
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 LDA #9
                 BNE BADFMXIT
-                .ELSE
+                ',`
                 JMP FULLPTCH
                 NOP
-                .ENDIF
+                ')
 
 FILELOKD        LDA #10
                 BNE BADFMXIT    ; ALWAYS.
@@ -2707,16 +2650,16 @@ BADFMXIT        SEC             ; (C) = 1 TO SIGNAL UNSUCCESSFUL.
 
 FMEXIT          PHP
                 STA RTNCODFM    ; STORE RTN CODE IN FM PARM LIST.
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
                 LDA #0          ; AVOID THAT INFAMOUS $48 BUG.
                 STA STATUS
-                .ENDIF
+                ')
                 JSR CPYFMWA     ; COPY WORK AREA TO WORK BUFFER.
                 PLP             ; RETRIEVE STATUS OF SUCCESS OF
                                 ; OPERATION BACK OFF STK.
                 LDX STKSAV      ; ADJUST STK POINTER TO FORCE EXIT
                 TXS             ; TO CALLER EVEN IF SEVERAL
-                RTS             ; SUBRT'NS DEEPER THAN ORIG ENTRY.
+                RTS             ; SUBRTNS DEEPER THAN ORIG ENTRY.
 
 
 
@@ -2739,10 +2682,10 @@ FMEXIT          PHP
                                 ; ($B397 - $B3A3)
                                 ; =================================
 
-CURDIRTK        .RES 1          ; TRK# OF CURRENT DIRECTORY SEC.
-CURDIRSC        .RES 1          ; SEC# OF CURRENT DIRECTORY SEC.
-WABUFADR        .RES 2          ; UNUSED ($B399-$B39A).
-STKSAV          .RES 1          ; SECOND STACK POINTER SAVE AREA.
+CURDIRTK        ASM_RES(1)          ; TRK# OF CURRENT DIRECTORY SEC.
+CURDIRSC        ASM_RES(1)          ; SEC# OF CURRENT DIRECTORY SEC.
+WABUFADR        ASM_RES(2)          ; UNUSED ($B399-$B39A).
+STKSAV          ASM_RES(1)          ; SECOND STACK POINTER SAVE AREA.
                                 ; USED TO RESET THE STACK TO FORCE
                                 ; EXECUTION TO RTN TO A DESIRED
                                 ; ROUTINE.  (NORMALLY RETURNS TO
@@ -2750,12 +2693,12 @@ STKSAV          .RES 1          ; SECOND STACK POINTER SAVE AREA.
                                 ; IS CALLED. HOWEVER, ALSO USED BY
                                 ; THE APPEND CMD TO FORCE EXECUTION
                                 ; TO RTN TO AFTRCMD ($A17D).)
-                                ; P.S.  DON'T CONFUSE STKSAV WITH
+                                ; P.S.  DONT CONFUSE STKSAV WITH
                                 ; THE 1ST STACK POINTER SAVE AREA
                                 ; (STKSAVED, $AA59).
-CURDIRNX        .RES 1          ; BYTE OFFSET OF FILE DESCRIPTION
+CURDIRNX        ASM_RES(1)          ; BYTE OFFSET OF FILE DESCRIPTION
                                 ; ENTRY INTO CURRENT DIREC SEC.
-SCRNSRCH        .RES 1          ; - CATALOG SCRN LINE COUNTER.
+SCRNSRCH        ASM_RES(1)          ; - CATALOG SCRN LINE COUNTER.
                                 ; - DESCENDING CNTR FOR # OF SRCHS
                                 ; DONE TO LOCATE A MATCHING NAME
                                 ; OR EMPTY SPACE FOR A NEW FILE
@@ -2763,7 +2706,7 @@ SCRNSRCH        .RES 1          ; - CATALOG SCRN LINE COUNTER.
                                 ; (SEARCH1 = 1, SEARCH2 = 0).
                                 ; - OFFSET OF DAT PR FROM START OF
                                 ; A GIVEN T/S LIST.
-TRK0YET         .RES 2          ; ASSIGNMENT FLAG = SIGNAL IF TRK0
+TRK0YET         ASM_RES(2)          ; ASSIGNMENT FLAG = SIGNAL IF TRK0
                                 ; ENCOUNTERED YET (ONLY 1ST BYTE
                                 ; USED):
                                 ; $00=TRK0 NOT ENCOUNTERED YET.
@@ -2773,12 +2716,13 @@ TRK0YET         .RES 2          ; ASSIGNMENT FLAG = SIGNAL IF TRK0
                                 ; SECS TO ASSIGN.)
 LOKUNMSK        = TRK0YET       ; LOCK/UNLOCK MASK ($80/$00).
 FRETKMSK
-                .IF VERSION < 330
-                .DWORD %11111111111110000000000000000000 ; 13 SECTORS
-                .ELSE
-                .DWORD %11111111111111110000000000000000 ; 16 SECTORS
-                .ENDIF
-                                ; 4-BYTE MASK USED BY INIT FUNC'N
+                ASM_DATA_W(0)
+                ifelse(eval(VERSION < 330),1,`
+                ASM_DATA_W(%1111111111111000) ; 13 SECTORS
+                ',`
+                ASM_DATA_W(%1111111111111111) ; 16 SECTORS
+                ')
+                                ; 4-BYTE MASK USED BY INIT FUNCN
                                 ; TO FREE AN ENTIRE TRACK.
 
 
@@ -2787,7 +2731,7 @@ FRETKMSK
                                 ; ($B3A4 - $B3A6)
                                 ; =================================
 
-BASETEN         .BYTE 1,10,100  ; 10^0=1, 10^1=10, 10^2=100.
+BASETEN         ASM_DATA(1,10,100)  ; 10^0=1, 10^1=10, 10^2=100.
 
 
                                 ; =================================
@@ -2796,11 +2740,11 @@ BASETEN         .BYTE 1,10,100  ; 10^0=1, 10^1=10, 10^2=100.
                                 ; ($B3A7 - $B3AE)
                                 ; =================================
 
-                .IF VERSION < 320
-FTYPETBL        .BYTE "TBAI"    ; TEXT, BINARY, APPLESOFT, INTEGER
-                .ELSE
-FTYPETBL        .BYTE "TIABSRAB" ; TEXT, INTEGER, APPLESOFT, BINARY
-                .ENDIF
+                ifelse(eval(VERSION < 320),1,`
+FTYPETBL        ASM_DATA("TBAI")    ; TEXT, BINARY, APPLESOFT, INTEGER
+                ',`
+FTYPETBL        ASM_DATA("TIABSRAB") ; TEXT, INTEGER, APPLESOFT, BINARY
+                ')
                                 ; S-TYPE, R(ELOCATABLE)-TYPE,
                                 ; A-TYPE, B-TYPE.  THESE CODES ARE
                                 ; FREQUENTLY CHANGED BY HACKERS.)
@@ -2811,8 +2755,7 @@ FTYPETBL        .BYTE "TIABSRAB" ; TEXT, INTEGER, APPLESOFT, BINARY
                                 ; ($B3AF - $B3BA)
                                 ; =================================
 
-                .INCLUDE "reverse.s65"
-DSKVOLUM        .REVERSE "DISK VOLUME "
+DSKVOLUM        HIASCII(STR_REVERSE(`DISK VOLUME '))
                                 ; THESE CHRS ARE OFTEN CHANGED
                                 ; TO PERSONALIZE A CATALOG.
 
@@ -2826,40 +2769,40 @@ DSKVOLUM        .REVERSE "DISK VOLUME "
                                 ; BUFFER ($B3BB - $B4BA).
                                 ; =================================
 
-VTOCBUFF        .RES 1          ; UNUSED ($B3BB).
+VTOCBUFF        ASM_RES(1)          ; UNUSED ($B3BB).
                                 ; REFERENCE FOR START OF TABLE.
-FIRDIRTK        .BYTE CATTRK    ; TRK# OF 1ST DIRECTORY SECTOR.
+FIRDIRTK        ASM_DATA(CATTRK)    ; TRK# OF 1ST DIRECTORY SECTOR.
 FIRDIRSC                        ; SEC# OF 1ST DIRECTORY SECTOR.
-                .IF VERSION < 330
-                .BYTE $0C
-                .ELSE
-                .BYTE $0F
-                .ENDIF
+                ifelse(eval(VERSION < 330),1,`
+                ASM_DATA($0C)
+                ',`
+                ASM_DATA($0F)
+                ')
 
 DOSVERSION                      ; DOS VERSION RELEASE NUMBER.
-                .BYTE VERSION / 10 .MOD 10
+                ASM_DATA(eval(VERSION / 10 % 10))
 
-                .RES 2          ; UNUSED ($B3BF-$B3C0).
-VOLUSED         .RES 1          ; DISK VOL# (NORMALLY, $FE).
-                .RES $20        ; UNUSED ($B3C2-$B3E1).
-MXIN1TSL        .BYTE $7A       ; MAX # OF SECS THAT CAN BE LISTED
+                ASM_RES(2)          ; UNUSED ($B3BF-$B3C0).
+VOLUSED         ASM_RES(1)          ; DISK VOL# (NORMALLY, $FE).
+                ASM_RES($20)        ; UNUSED ($B3C2-$B3E1).
+MXIN1TSL        ASM_DATA($7A)       ; MAX # OF SECS THAT CAN BE LISTED
                                 ; IN A T/S LIST SEC ($7A, #122).
-                .RES 8          ; UNUSED ($B3E3-$B3EA).
-NXTRKUSE        .RES 1          ; NEXT TRACK TO ASSIGN.
-DRECTION        .RES 1          ; TRK ASGNMENT DIRECT'N (+1 OR -1)
-                .RES 2          ; UNUSED ($B3ED-$B3EE).
-TKPERDSK        .BYTE TRKPERDSK ; TRKS/DISK (#35).
+                ASM_RES(8)          ; UNUSED ($B3E3-$B3EA).
+NXTRKUSE        ASM_RES(1)          ; NEXT TRACK TO ASSIGN.
+DRECTION        ASM_RES(1)          ; TRK ASGNMENT DIRECTN (+1 OR -1)
+                ASM_RES(2)          ; UNUSED ($B3ED-$B3EE).
+TKPERDSK        ASM_DATA(TRKPERDSK) ; TRKS/DISK (#35).
                                 ; AFTER DRIVE ADJUSTMENT, VALUE IN
                                 ; TKPERDSK CAN BE ALTERED TO ENABLE
                                 ; THE USE OF AN EXTRA TRK ON DISK.
 SECPERTK
-                .IF VERSION < 330
-                .BYTE $0D       ; SECS/TRK ($0D, 13, $00 --> $0C)
-                .ELSE
-                .BYTE $10       ; SECS/TRK ($10, 16, $00 --> $0F)
-                .ENDIF
+                ifelse(eval(VERSION < 330),1,`
+                ASM_DATA($0D)       ; SECS/TRK ($0D, 13, $00 --> $0C)
+                ',`
+                ASM_DATA($10)       ; SECS/TRK ($10, 16, $00 --> $0F)
+                ')
 
-BYTPERSC        .WORD $100      ; BYTES/SECTOR ($0100, #256).
+BYTPERSC        ASM_DATA_W($100)      ; BYTES/SECTOR ($0100, #256).
 
 
                                 ; ------------------------------------
@@ -2879,9 +2822,9 @@ BYTPERSC        .WORD $100      ; BYTES/SECTOR ($0100, #256).
                                 ; (THE 3RD & 4TH BYTES ASSOCIATED
                                 ; WITH EACH TRACK ARE NOT USED.)
 
-FRESECMAP       .RES TRKPERDSK*4
+FRESECMAP       ASM_RES(TRKPERDSK*4)
 
-                .RES 60         ; UNUSED ($B47F-$B4BA).
+                ASM_RES(60)         ; UNUSED ($B47F-$B4BA).
 
                                 ; END VTOC
                                 ; =================================
@@ -2896,10 +2839,10 @@ FRESECMAP       .RES TRKPERDSK*4
                                 ; ($B4BB - $B5BA)
                                 ; =================================
 
-DIRECBUF        .BYTE $00       ; UNUSED-REFERENCE FOR START OF BUF.
-DIRLNKTK        .RES 1          ; TRK OF NEXT DIRECTORY SECTOR.
-DIRLNKSC        .RES 1          ; SECTOR OF NEXT DIRECTORY SECTOR.
-                .RES 8          ; UNUSED ($B4BC-$B4C5).
+DIRECBUF        ASM_DATA($00)       ; UNUSED-REFERENCE FOR START OF BUF.
+DIRLNKTK        ASM_RES(1)          ; TRK OF NEXT DIRECTORY SECTOR.
+DIRLNKSC        ASM_RES(1)          ; SECTOR OF NEXT DIRECTORY SECTOR.
+                ASM_RES(8)          ; UNUSED ($B4BC-$B4C5).
 
 
                                 ; ---------------------------------
@@ -2907,13 +2850,13 @@ DIRLNKSC        .RES 1          ; SECTOR OF NEXT DIRECTORY SECTOR.
                                 ; ($B4C6 - $B5BA)
                                 ; ---------------------------------
 
-FIL1TSTK        .RES 1          ; FILE1: T/S LIST TRK ($B4C6)
-FIL1TSSC        .RES 1          ; T/S LIST SEC ($B4C7)
-FIL1TYPE        .RES 1          ; FILE TYPE ($B4C8)
-FIL1NAME        .RES 30         ; NAME ($B4C9-$B4E6)
-FIL1SIZE        .RES 2          ; SIZE ($B4E7-$B4E8)
+FIL1TSTK        ASM_RES(1)          ; FILE1: T/S LIST TRK ($B4C6)
+FIL1TSSC        ASM_RES(1)          ; T/S LIST SEC ($B4C7)
+FIL1TYPE        ASM_RES(1)          ; FILE TYPE ($B4C8)
+FIL1NAME        ASM_RES(30)         ; NAME ($B4C9-$B4E6)
+FIL1SIZE        ASM_RES(2)          ; SIZE ($B4E7-$B4E8)
 
-                .RES 6*(1+1+1+30+2)
+                ASM_RES(6*(1+1+1+30+2))
 
 
                                 ; =================================
@@ -2921,33 +2864,33 @@ FIL1SIZE        .RES 2          ; SIZE ($B4E7-$B4E8)
                                 ; ($B5BB - $B5D0)
                                 ; =================================
 
-OPCODEFM        .RES 1          ; FM OPERATION CODE.
-SUBCODFM        .RES 1          ; FM OPERATION SUBCODE.
-RECNMBFM        .RES 2          ; FM PARM LST VERSION OF RECORD #.
+OPCODEFM        ASM_RES(1)          ; FM OPERATION CODE.
+SUBCODFM        ASM_RES(1)          ; FM OPERATION SUBCODE.
+RECNMBFM        ASM_RES(2)          ; FM PARM LST VERSION OF RECORD #.
                                 ; (USUALLY 1 LESS THAN RECNMBWA.)
                                 ; (SEE DESCRIPTION OF THE RECORD
                                 ; NUMBER GIVEN IN THE WORK AREA
                                 ; LISTED BELOW.)
-BYTOFFFM        .RES 2          ; BYTE OFFSET INTO RECORD.
-LEN2RDWR        .RES 2          ; LENGTH TO READ OR LENGTH-1
+BYTOFFFM        ASM_RES(2)          ; BYTE OFFSET INTO RECORD.
+LEN2RDWR        ASM_RES(2)          ; LENGTH TO READ OR LENGTH-1
                                 ; TO WRITE.  (INIT VAL & COUNTER).
                                 ; ALSO USED AS A TEMPORARY BUF TO
                                 ; TRANSFER ADDR & LENGTH BYTES TO
                                 ; ONEIOBUF BUF WHEN USING THE
                                 ; WRITE-ONE-BYTE AND READ-ONE-BYTE
                                 ; SUBFUNCTIONS.
-CURIOBUF        .RES 2          ; ADDR OF CURRENT I/O BUFFER.
-RTNCODFM        .RES 1          ; RETURN CODE.  (CONTRARY TO WHAT
+CURIOBUF        ASM_RES(2)          ; ADDR OF CURRENT I/O BUFFER.
+RTNCODFM        ASM_RES(1)          ; RETURN CODE.  (CONTRARY TO WHAT
                                 ; SOME ARTICLES SUGGEST, THE VALUE
                                 ; IN THIS BYTE IS ONLY RELEVANT IF
                                 ; AN ERROR OCCURS.)
-                .RES 1          ; UNUSED ($B5C6).
-WRKBUFFM        .RES 2          ; PTS TO WORK BUF (IN DOS CHAIN).
-TSBUFFM         .RES 2          ; PTS TO T/S LIST SEC BUF (CHAIN).
-DATBUFFM        .RES 2          ; PTS TO DATA SECTOR BUF (CHAIN).
-NXTNAME         .RES 2          ; PTS TO NEXT DOS NAME BUFFER IN
+                ASM_RES(1)          ; UNUSED ($B5C6).
+WRKBUFFM        ASM_RES(2)          ; PTS TO WORK BUF (IN DOS CHAIN).
+TSBUFFM         ASM_RES(2)          ; PTS TO T/S LIST SEC BUF (CHAIN).
+DATBUFFM        ASM_RES(2)          ; PTS TO DATA SECTOR BUF (CHAIN).
+NXTNAME         ASM_RES(2)          ; PTS TO NEXT DOS NAME BUFFER IN
                                 ; CHAIN. (SET UP, BUT NOT USED.)
-                .RES 2          ; UNUSED ($B5CF-$B5D0).
+                ASM_RES(2)          ; UNUSED ($B5CF-$B5D0).
 
 
 FMPRMLST        = OPCODEFM      ; START OF FM PARAMETER LIST.
@@ -2974,38 +2917,38 @@ ONEIOBUF        = CURIOBUF      ; A ONE-BYTE I/O BUFFER.
                                 ; =================================
                                 ; FILE MANAGER WORK AREA.
                                 ; ($B5D1 - $B5FF)
-                                ; (DON'T CONFUSE WITH THE VARIOUS
+                                ; (DONT CONFUSE WITH THE VARIOUS
                                 ; WORK BUFFERS CONTAINED IN THE
                                 ; CHAIN OF DOS BUFFERS.)
                                 ; =================================
 
-FMWKAREA        .RES 1          ; SIMPLY USED FOR REFERENCE POINT.
+FMWKAREA        ASM_RES(1)          ; SIMPLY USED FOR REFERENCE POINT.
 
 TSL1TRK         = FMWKAREA      ; TRK# OF 1ST T/S LIST SEC.
-TSL1SEC         .RES 1          ; SEC # OF 1ST T/S LIST SEC.
-CURTSTRK        .RES 1          ; TRK# OF CURRENT T/S LIST SEC.
-CURTSSEC        .RES 1          ; SEC# OF CURRENT T/S LIST SEC.
-UPDATFLG        .RES 1          ; FLAG TO UPDATE DIFFERENT TYPES
+TSL1SEC         ASM_RES(1)          ; SEC # OF 1ST T/S LIST SEC.
+CURTSTRK        ASM_RES(1)          ; TRK# OF CURRENT T/S LIST SEC.
+CURTSSEC        ASM_RES(1)          ; SEC# OF CURRENT T/S LIST SEC.
+UPDATFLG        ASM_RES(1)          ; FLAG TO UPDATE DIFFERENT TYPES
                                 ; OF SECTORS:
                                 ; $02=LAST OPERATION WAS A WRITE.
                                 ; $20=VTOC NEEDS UPDATING.
                                 ; $40=DATA SEC NEEDS UPDATING.
                                 ; $80=T/S LST SEC NEEDS UPDATING.
-CURDATRK        .RES 1          ; TRK# OF CURRENT DATA SECTOR.
-CURDATSC        .RES 1          ; SEC# OF CURRENT DATA SECTOR.
-SECNXD1R        .RES 1          ; OFFSET OF FILE DESCRIPTION FROM
+CURDATRK        ASM_RES(1)          ; TRK# OF CURRENT DATA SECTOR.
+CURDATSC        ASM_RES(1)          ; SEC# OF CURRENT DATA SECTOR.
+SECNXD1R        ASM_RES(1)          ; OFFSET OF FILE DESCRIPTION FROM
                                 ; THE VERY FIRST DIRECTORY SEC.
-BYTNXD1R        .RES 1          ; OFFSET OF FILE DESCRIPTION INTO
+BYTNXD1R        ASM_RES(1)          ; OFFSET OF FILE DESCRIPTION INTO
                                 ; THE CURRENT DIRECTORY SEC.
-MXSCURTS        .RES 2          ; MAXIMUM # OF SECS THAT CAN BE
+MXSCURTS        ASM_RES(2)          ; MAXIMUM # OF SECS THAT CAN BE
                                 ; LISTED IN A T/S LIST.
-RELFIRST        .RES 2          ; RELATIVE SEC # (IN RELATION TO
+RELFIRST        ASM_RES(2)          ; RELATIVE SEC # (IN RELATION TO
                                 ; THE ENTIRE FILE) OF THE FIRST
                                 ; DATA SEC THAT IS (OR CAN BE)
                                 ; LISTED IN THE CURRENT T/S LIST.
                                 ; (POSSIBLE VALS ARE:$0000, $007A,
                                 ; 2*$007A, 3*$007A OR 4*$007A.)
-RELASTP1        .RES 2          ; ONE GREATER THAN THE MAXIMUM
+RELASTP1        ASM_RES(2)          ; ONE GREATER THAN THE MAXIMUM
                                 ; RELATIVE SEC# (IN RELATION TO THE
                                 ; ENTIRE FILE) OF THE LAST DAT SEC
                                 ; THAT CAN POSSIBLY BE DESCRIBED
@@ -3013,27 +2956,27 @@ RELASTP1        .RES 2          ; ONE GREATER THAN THE MAXIMUM
                                 ; (POSSIBLE VALUES ARE: $007A,
                                 ; 2*$007A, 3*$007A, 4*$007A AND
                                 ; 5*$007A.)
-RELPREV         .RES 2          ; RELATIVE SEC# (IN RELATION TO THE
+RELPREV         ASM_RES(2)          ; RELATIVE SEC# (IN RELATION TO THE
                                 ; ENTIRE FILE) OF THE LAST DAT SEC
                                 ; THAT WAS READ OR WRITTEN.
                                 ; (POSSIBLE VAL ARE: $0000, $007A,
                                 ; 2*$007A, 3*$007A OR 4*$007A.)
-SECSIZWA        .WORD $100      ; BYTES/SECTOR (#256, $00-$FF).
+SECSIZWA        ASM_DATA_W($100)      ; BYTES/SECTOR (#256, $00-$FF).
 
                                 ; --- FILE POINTER ---
                                 ; (3 BYTES)
-FILPTSEC        .RES 2          ; SECTOR OFFSET OF PTR (2 BYTES).
-FILPTBYT        .RES 1          ; BYTE OFFSET PORTION OF POINTER.
+FILPTSEC        ASM_RES(2)          ; SECTOR OFFSET OF PTR (2 BYTES).
+FILPTBYT        ASM_RES(1)          ; BYTE OFFSET PORTION OF POINTER.
 
-WASTEBYT        .RES 1          ; WEIRD FLG USED BY THE APPEND CMD
+WASTEBYT        ASM_RES(1)          ; WEIRD FLG USED BY THE APPEND CMD
                                 ; (VIA RSETPTRS, $B6B3) WHEN
                                 ; BACKING UP THE FILE POINTER AND
                                 ; TESTED (IN APNDPTCH, $B692)
                                 ; WHENEVER AN OUT-OF-DATA ERROR IS
                                 ; ENCOUNTERED.
-RECLENWA        .RES 2          ; RECORD LENGTH.
-RECNMBWA        .RES 2          ; CURRENT RECORD NUMBER.
-BYTOFFWA        .RES 2          ; CURRENT BYTE OFFSET INTO RECORD.
+RECLENWA        ASM_RES(2)          ; RECORD LENGTH.
+RECNMBWA        ASM_RES(2)          ; CURRENT RECORD NUMBER.
+BYTOFFWA        ASM_RES(2)          ; CURRENT BYTE OFFSET INTO RECORD.
                                 ; - RANDOM ACCESS TXT FILES HAVE A
                                 ; FIXED RECORD LNGTH ASSIGNED BY
                                 ; THE USER.
@@ -3049,15 +2992,15 @@ BYTOFFWA        .RES 2          ; CURRENT BYTE OFFSET INTO RECORD.
                                 ; THESE FILES ARE TREATED AS IF
                                 ; THEY CONSIST OF A SINGLE VERY
                                 ; LONG RECORD.
-FILENSEC        .RES 2          ; FILE LENGTH IN SECTORS.
-ASIGNSEC        .RES 1          ; NEXT SECTOR TO ASSIGN.
-ASIGNTRK        .RES 1          ; NEXT TRK TO ASSIGN.
-ASIGNMAP        .RES 4          ; 4-BYTE MAP OF SEC USAGE ON THE
+FILENSEC        ASM_RES(2)          ; FILE LENGTH IN SECTORS.
+ASIGNSEC        ASM_RES(1)          ; NEXT SECTOR TO ASSIGN.
+ASIGNTRK        ASM_RES(1)          ; NEXT TRK TO ASSIGN.
+ASIGNMAP        ASM_RES(4)          ; 4-BYTE MAP OF SEC USAGE ON THE
                                 ; TRK BEING ASSIGNED.
-FILTYPWA        .RES 1          ; FILE TYPE CODE (INCLUDING THE
+FILTYPWA        ASM_RES(1)          ; FILE TYPE CODE (INCLUDING THE
                                 ; LOCKED OR UNLOCKED STATUS).
-SLOT16WA        .RES 1          ; SLOT*16.
-DRVWA           .RES 1          ; DRIVE NUMBER.
-VOLWA           .RES 1          ; 1'S COMPLEMENT OF VOLUME NUMBER.
-TRKWA           .RES 1          ; TRACK NUMBER.
-                .RES 5          ; UNUSED ($B5FB-$B5FF).
+SLOT16WA        ASM_RES(1)          ; SLOT*16.
+DRVWA           ASM_RES(1)          ; DRIVE NUMBER.
+VOLWA           ASM_RES(1)          ; 1S COMPLEMENT OF VOLUME NUMBER.
+TRKWA           ASM_RES(1)          ; TRACK NUMBER.
+                ASM_RES(5)          ; UNUSED ($B5FB-$B5FF).

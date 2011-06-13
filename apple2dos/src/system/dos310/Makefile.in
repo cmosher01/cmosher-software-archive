@@ -465,8 +465,9 @@ uninstall-am: uninstall-mypkgDATA
 .m4.s65:
 	$(M4) -E -I $(INCDIR) -I $(COMDIR) $(M4FLAGS_LOCAL) $(M4FLAGS) $< >$@
 
+#arbitrary code seg start (-bt 2048) because -bt 0 tends to cause strange errors
 .s65.o65:
-	$(XA65) -C -M -R -c -bt 0 $(ZERO_SEGS) -o $@ $(XA65FLAGS) $<
+	$(XA65) -C -M -R -c -bt 2048 $(ZERO_SEGS) -o $@ $(XA65FLAGS) $<
 
 .o65.r65:
 	$(LDO65) -bt $(CODE_SEG) $(ZERO_SEGS) -o $@ $(LD65FLAGS) $^

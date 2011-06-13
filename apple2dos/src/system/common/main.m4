@@ -1,99 +1,5 @@
-                .INCLUDE "symbols.s65"
-                .INCLUDE "asciihl.s65"
-                .INCLUDE "hascmap.s65"
-
-                .IF VERSION < 320
-                .EXPORT CLOSZERO
-                .EXPORT HNDLCMD1
-                .EXPORT TONOTFND
-                .ENDIF
-
-                .IF VERSION < 330
-                .EXPORT OUTHNDTB
-                .ENDIF
-
-                .IF VERSION >= 320
-                .EXPORT NDX2CMD
-                .EXPORT CMDPOSN
-                .IF VERSION >= 330
-                .EXPORT BK2FMDRV
-                .IF VERSION = 330
-                .EXPORT BK2APND
-                .ENDIF
-                .ENDIF
-                .ENDIF
-
-                .EXPORT ADBSCERR
-                .EXPORT ADOSFNB1
-                .EXPORT ADOSTART
-                .EXPORT BYTPRSD
-                .EXPORT CHAINTRY
-                .EXPORT CLOSEALL
-                .EXPORT CMDATTRB
-                .EXPORT CMDCLOSE
-                .EXPORT CMDTXTBL
-                .EXPORT CMDVERFY
-                .EXPORT CONDNFLG
-                .EXPORT DOSCOLD
-                .EXPORT ERRHNDLR
-                .EXPORT FMDRIVER
-                .EXPORT GETBUFF
-                .EXPORT IMGARAMV
-                .EXPORT IMGCOLVT
-                .EXPORT IMGFPV
-                .EXPORT IMGINTV
-                .EXPORT RESTAT0
-                .EXPORT RUNTRUPT
-                .EXPORT RUNTRY
-                .EXPORT TEMPBYT
-
-                .IMPORT WRKBUFFM
-                .IMPORT FNAMBUFM
-                .IMPORT SLOTFM
-                .IMPORT DRVFM
-                .IMPORT RTNCODFM
-                .IMPORT FILEMGR
-                .IMPORT VOLFM
-                .IMPORT RECNMBFM
-                .IMPORT CURIOBUF
-                .IMPORT SUBCODFM
-                .IMPORT ONEIOBUF
-                .IMPORT LEN2RDWR
-                .IMPORT FILTYPFM
-                .IMPORT RECLENFM
-                .IMPORT RENAMBUF
-                .IMPORT FMPRMLST
-                .IMPORT ADRIOB
-                .IMPORT FMXTNTRY
-                .IMPORT IBDRVN
-                .IMPORT IBSLOT
-                .IMPORT OPCODEFM
-                .IMPORT MASTERDOS
-                .IMPORT DOSNMBF1
-                .IF VERSION < 320
-                .IMPORT VERFY
-                .IMPORT RWTS
-                .IMPORT L3FD5
-                .ELSE
-                .IMPORT RESTATIN
-                .IMPORT ZEROPTCH
-                .IMPORT ENTERWTS
-                .IF VERSION > 321
-                .IMPORT APNDPTCH
-                .IMPORT OTHRERR
-                .IMPORT CKAPFLG
-                .IMPORT VRFYRWNG
-                .IF VERSION >= 331
-                .IMPORT CKIFAPND
-                .ENDIF
-                .ENDIF
-                .ENDIF
-
-
-
-
-
-
+include(`asm.m4h')
+include(`symbols.m4h')
 
                                 ; ====================================
                                 ; RELOCATABLE ADDRESS CONSTANTS TABLE.
@@ -103,38 +9,38 @@
                                 ; ====================================
 
 ADOSFNB1
-                .IF VERSION < 330
-                .ADDR DOSNMBF1-1 ; PTS TO FIRST DOS BUFFER AT ITS
+                ifelse(eval(VERSION < 330),1,`
+                ASM_ADDR(DOSNMBF1-1) ; PTS TO FIRST DOS BUFFER AT ITS
                                 ; FILE NAME FIELD.
-                .ELSE
-                .ADDR DOSNMBF1
-                .ENDIF
+                ',`
+                ASM_ADDR(DOSNMBF1)
+                ')
 
-ADINPTCP        .ADDR INPTINCP  ; PTS TO DOS'S INPUT INTERCEPT ROUTINE.
-ADOPUTCP        .ADDR OPUTINCP  ; PTS TO DOS'S OUTPUT INTERCEPT ROUTINE.
-ADRPFNBF        .ADDR PRIMFNBF  ; PTS TO PRIMARY FILENAME BUFFER.
-ADRSFNBF        .ADDR SCNDFNBF  ; PTS TO SECONDARY FILENAME BUFFER.
-ADLENADR        .ADDR LENADRBF  ; PTS TO 2-BYTE BUF THAT RECEIVES
+ADINPTCP        ASM_ADDR(INPTINCP); PTS TO DOS INPUT INTERCEPT ROUTINE.
+ADOPUTCP        ASM_ADDR(OPUTINCP); PTS TO DOS OUTPUT INTERCEPT ROUTINE.
+ADRPFNBF        ASM_ADDR(PRIMFNBF); PTS TO PRIMARY FILENAME BUFFER.
+ADRSFNBF        ASM_ADDR(SCNDFNBF); PTS TO SECONDARY FILENAME BUFFER.
+ADLENADR        ASM_ADDR(LENADRBF); PTS TO 2-BYTE BUF THAT RECEIVES
                                 ; BLOAD ADR & LENGTH READ FROM DSK
-ADOSTART        .ADDR MASTERDOS ; PTS TO 1ST BYTE OF DOS.
-ADFMPARM        .ADDR OPCODEFM  ; PTS TO FM PARAMETER LIST.
+ADOSTART        ASM_ADDR(MASTERDOS); PTS TO 1ST BYTE OF DOS.
+ADFMPARM        ASM_ADDR(OPCODEFM); PTS TO FM PARAMETER LIST.
 
 
 
                                 ; =====================================
                                 ; TABLE OF OUTPUT HANDLER ENTRY POINTS
                                 ; ($9D10 - $9D1D)
-                                ; (ADR-1 OF ROUT'NS WHICH HANDLE PRINT
+                                ; (ADR-1 OF ROUTNS WHICH HANDLE PRINT
                                 ; STATEMENTS CONTAINING DOS CMDS.)
                                 ; =====================================
 
-OUTHNDTB        .ADDR OPUTHDL0-1 ; EVALUATE START OF INPUT LINE.
-                .ADDR OPUTHDL1-1 ; COLLECT THE DOS COMMAND.
-                .ADDR OPUTHDL2-1 ; PRINT A <CR> AND RETURN.
-                .ADDR OPUTHDL3-1 ; PROCESS THE INPUT INFORMATION.
-                .ADDR OPUTHDL4-1 ; WRITE DATA TO DISK.
-                .ADDR OPUTHDL5-1 ; ANALYZE 1ST CHR OF DATA FRM DSK
-                .ADDR OPUTHDL6-1 ; IGNORE INPUT PROMPT ("?").
+OUTHNDTB        ASM_ADDR(OPUTHDL0-1) ; EVALUATE START OF INPUT LINE.
+                ASM_ADDR(OPUTHDL1-1) ; COLLECT THE DOS COMMAND.
+                ASM_ADDR(OPUTHDL2-1) ; PRINT A <CR> AND RETURN.
+                ASM_ADDR(OPUTHDL3-1) ; PROCESS THE INPUT INFORMATION.
+                ASM_ADDR(OPUTHDL4-1) ; WRITE DATA TO DISK.
+                ASM_ADDR(OPUTHDL5-1) ; ANALYZE 1ST CHR OF DATA FRM DSK
+                ASM_ADDR(OPUTHDL6-1) ; IGNORE INPUT PROMPT ("?").
 
 
 
@@ -142,47 +48,47 @@ OUTHNDTB        .ADDR OPUTHDL0-1 ; EVALUATE START OF INPUT LINE.
                                 ; COMMAND HANDLER ENTRY POINT TABLE
                                 ; ($9D1E - $9D55)
                                 ; ALL ADRS ARE ONE LESS THAN THE ACTUAL
-                                ; ENTRY POINTS BECAUSE THESE ROUT'NS ARE
+                                ; ENTRY POINTS BECAUSE THESE ROUTNS ARE
                                 ; ENTERED VIA A "STACK JUMP".  IF YOU
                                 ; CREATE A NEW DOS CMD, PLACE THE ADR-1
                                 ; OF THE NEW CMD IN THE FOLLOWING TABLE.
                                 ; (ALSO MAKE SURE THAT THE FIRST CMD IN
                                 ; THE TABLE CAN CREATE A NEW FILE.)
                                 ; SOME AUTHORS DISABLE SPECIFIC DOS
-                                ; CMDS BY POINTING THE CMD'S TABLE ADR
-                                ; AT DOS'S COLDSTART ROUTINE OR BY
-                                ; PLACING AN "RTS" OPCODE AT THE CMD'S
+                                ; CMDS BY POINTING THE CMDS TABLE ADR
+                                ; AT DOSS COLDSTART ROUTINE OR BY
+                                ; PLACING AN "RTS" OPCODE AT THE CMDS
                                 ; ENTRY POINT.
                                 ; =======================================
 
-CMDTBL          .ADDR CMDINIT-1  ; $A54F-1
-                .ADDR CMDLOAD-1  ; $A413-1
-                .ADDR CMDSAVE-1  ; $A397-1
-                .ADDR CMDRUN-1   ; $A4D1-1
-                .ADDR CMDCHAIN-1 ; $A4F0-1
-                .ADDR CMDELETE-1 ; $A263-1
-                .ADDR CMDLOCK-1  ; $A271-1
-                .ADDR CMDUNLOK-1 ; $A275-1
-                .ADDR CMDCLOSE-1 ; $A2EA-1
-                .ADDR CMDREAD-1  ; $A51B-1
-                .ADDR CMDEXEC-1  ; $A5C6-1
-                .ADDR CMDWRITE-1 ; $A510-1
-                .ADDR CMDPOSN-1  ; $A5DD-1
-                .ADDR CMDOPEN-1  ; $A2A3-1
-                .ADDR CMDAPPND-1 ; $A298-1
-                .ADDR CMDRENAM-1 ; $A281-1
-                .ADDR CMDCATLG-1 ; $A56E-1
-                .ADDR CMDMON-1   ; $A233-1
-                .ADDR CMDNOMON-1 ; $A23D-1
-                .ADDR CMDPR-1    ; $A229-1
-                .ADDR CMDIN-1    ; $A22E-1
-                .ADDR CMDMXFIL-1 ; $A251-1
-                .ADDR CMDFP-1    ; $A57A-1
-                .ADDR CMDINT-1   ; $A59E-1
-                .ADDR CMDBSAVE-1 ; $A331-1
-                .ADDR CMDBLOAD-1 ; $A35D-1
-                .ADDR CMDBRUN-1  ; $A38E-1
-                .ADDR CMDVERFY-1 ; $A27D-1
+CMDTBL          ASM_ADDR(CMDINIT-1)  ; $A54F-1
+                ASM_ADDR(CMDLOAD-1)  ; $A413-1
+                ASM_ADDR(CMDSAVE-1)  ; $A397-1
+                ASM_ADDR(CMDRUN-1)   ; $A4D1-1
+                ASM_ADDR(CMDCHAIN-1) ; $A4F0-1
+                ASM_ADDR(CMDELETE-1) ; $A263-1
+                ASM_ADDR(CMDLOCK-1)  ; $A271-1
+                ASM_ADDR(CMDUNLOK-1) ; $A275-1
+                ASM_ADDR(CMDCLOSE-1) ; $A2EA-1
+                ASM_ADDR(CMDREAD-1)  ; $A51B-1
+                ASM_ADDR(CMDEXEC-1)  ; $A5C6-1
+                ASM_ADDR(CMDWRITE-1) ; $A510-1
+                ASM_ADDR(CMDPOSN-1)  ; $A5DD-1
+                ASM_ADDR(CMDOPEN-1)  ; $A2A3-1
+                ASM_ADDR(CMDAPPND-1) ; $A298-1
+                ASM_ADDR(CMDRENAM-1) ; $A281-1
+                ASM_ADDR(CMDCATLG-1) ; $A56E-1
+                ASM_ADDR(CMDMON-1)   ; $A233-1
+                ASM_ADDR(CMDNOMON-1) ; $A23D-1
+                ASM_ADDR(CMDPR-1)    ; $A229-1
+                ASM_ADDR(CMDIN-1)    ; $A22E-1
+                ASM_ADDR(CMDMXFIL-1) ; $A251-1
+                ASM_ADDR(CMDFP-1)    ; $A57A-1
+                ASM_ADDR(CMDINT-1)   ; $A59E-1
+                ASM_ADDR(CMDBSAVE-1) ; $A331-1
+                ASM_ADDR(CMDBLOAD-1) ; $A35D-1
+                ASM_ADDR(CMDBRUN-1)  ; $A38E-1
+                ASM_ADDR(CMDVERFY-1) ; $A27D-1
 
 
 
@@ -195,70 +101,69 @@ CMDTBL          .ADDR CMDINIT-1  ; $A54F-1
                                 ; ASSUME THAT APPLESOFT BASIC IS ACTIVE.)
                                 ; ===========================================
 
-CHAINTRY        .ADDR BASICCHN  ; ADR OF CHAIN ENTRY PT TO BASIC.
-RUNTRY          .ADDR RUNINTGR  ; ADR OF BASIC'S RUN CMD.
-ADBSCERR        .ADDR BASICERR  ; ADR OF BASIC'S ERROR HANDLER.
-TOCLDVEC        .ADDR BASICCLD  ; ADR OF BASIC'S COLD START ROUT'N
-TOWRMVEC        .ADDR BASICWRM  ; ADR OF BASIC'S WARM START ROUT'N
+CHAINTRY        ASM_ADDR(BASICCHN); ADR OF CHAIN ENTRY PT TO BASIC.
+RUNTRY          ASM_ADDR(RUNINTGR); ADR OF BASICS RUN CMD.
+ADBSCERR        ASM_ADDR(BASICERR); ADR OF BASICS ERROR HANDLER.
+TOCLDVEC        ASM_ADDR(BASICCLD); ADR OF BASICS COLD START ROUTN
+TOWRMVEC        ASM_ADDR(BASICWRM); ADR OF BASICS WARM START ROUTN
 
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
 RLOCNTRY
-                .IF VERSION = 330
-                .ADDR SETLINKS  ; ADR OF ROUT'N THAT ENABLES BASIC
+                ifelse(eval(VERSION == 330),1,`
+                ASM_ADDR(SETLINKS); ADR OF ROUTN THAT ENABLES BASIC
                                 ; PRGMS TO BE RELOCATABLE.
-                .ELSE
-                .RES 2
-                .ENDIF
-
-                .ENDIF
+                ',`
+                ASM_RES(2)
+                ')
+                ')
 
                                 ; ====================================
-                                ; IMAGE OF INTEGER BASIC'S ENTRY
+                                ; IMAGE OF INTEGER BASICS ENTRY
                                 ; POINT VECTOR TABLE ($9D62 - $9D6B).
                                 ; ====================================
 
-IMGINTV         .ADDR BASICCHN
-                .ADDR RUNINTGR
-                .ADDR BASICERR
-                .ADDR BASICCLD
-                .ADDR BASICWRM
+IMGINTV         ASM_ADDR(BASICCHN)
+                ASM_ADDR(RUNINTGR)
+                ASM_ADDR(BASICERR)
+                ASM_ADDR(BASICCLD)
+                ASM_ADDR(BASICWRM)
 
 
                                 ; =======================================
-                                ; IMAGE OF ROM APPLESOFT BASIC'S ENTRY
+                                ; IMAGE OF ROM APPLESOFT BASICS ENTRY
                                 ; POINT VECTOR TABLE ($9D6C - $9D77).
                                 ; =======================================
 
-IMGFPV          .ADDR RUNFPROM
-                .ADDR RUNFPROM
-                .ADDR BSCERHLR
-                .ADDR BASICCLD
-                .IF VERSION < 320
-                .RES 2
-                .ELSE
-                .ADDR RESTART
-                .ADDR SETLINKS
-                .ENDIF
+IMGFPV          ASM_ADDR(RUNFPROM)
+                ASM_ADDR(RUNFPROM)
+                ASM_ADDR(BSCERHLR)
+                ASM_ADDR(BASICCLD)
+                ifelse(eval(VERSION < 320),1,`
+                ASM_RES(2)
+                ',`
+                ASM_ADDR(RESTART)
+                ASM_ADDR(SETLINKS)
+                ')
 
 
                                 ; ========================================
-                                ; IMAGE OF RAM APPLESOFT BASIC'S  ENTRY
+                                ; IMAGE OF RAM APPLESOFT BASICS  ENTRY
                                 ; POINT VECTOR TABLE ($9D78 - $9D83).
                                 ; (NOTE: A(RAM) REFERS TO A DISK-BASED
                                 ; VERSION OF APPLESOFT BASIC THAT IS
                                 ; HOUSED ON THE "SYSTEMS MASTER" DISK.)
                                 ; ========================================
 
-IMGARAMV        .ADDR FPRAMRUN
-                .ADDR FPRAMRUN
-                .ADDR $1067
-                .ADDR DOSCOLD
-                .IF VERSION < 320
-                .RES 2
-                .ELSE
-                .ADDR $C3C
-                .ADDR $CF2
-                .ENDIF
+IMGARAMV        ASM_ADDR(FPRAMRUN)
+                ASM_ADDR(FPRAMRUN)
+                ASM_ADDR($1067)
+                ASM_ADDR(DOSCOLD)
+                ifelse(eval(VERSION < 320),1,`
+                ASM_RES(2)
+                ',`
+                ASM_ADDR($C3C)
+                ASM_ADDR($CF2)
+                ')
 
 
 
@@ -283,22 +188,22 @@ IMGARAMV        .ADDR FPRAMRUN
 
 
                                 ; =================================
-                                ; DOS'S COLD START ROUTINE.
-                                ; (PS. DON'T CONFUSE WITH BASIC'S
+                                ; DOSS COLD START ROUTINE.
+                                ; (PS. DONT CONFUSE WITH BASICS
                                 ; COLD START ROUTINE - BASICCLD.)
                                 ; =================================
 
-                                ; GET SLOT & DRV #'S & STORE THEM AS
+                                ; GET SLOT & DRV #S & STORE THEM AS
                                 ; DEFAULT VALS IN CASE NO SUCH PARMS
                                 ; WERE ISSUED WITH THE COMMAND.
 
-DOSCOLD         LDA IBSLOT      ; SLOT# * 16 FROM RWTS'S IOB TBL.
+DOSCOLD         LDA IBSLOT      ; SLOT# * 16 FROM RWTSS IOB TBL.
                 LSR A           ; DIVIDE BY 16.
                 LSR A
                 LSR A
                 LSR A
                 STA SLOTPRSD    ; PUT SLOT IN PARSED TABLE.
-                LDA IBDRVN      ; DRV # FROM RWTS'S IOB.
+                LDA IBDRVN      ; DRV # FROM RWTSS IOB.
                 STA DRVPRSD     ; PUT DRIVE # IN PARSED TABLE.
 
                                 ; CHK WHICH BASIC IS IN ROM.
@@ -312,7 +217,7 @@ DOSCOLD         LDA IBSLOT      ; SLOT# * 16 FROM RWTS'S IOB TBL.
 ISINT           STA ACTBSFLG    ; SET ACTIVE BASIC FLAG
                                 ; TO DENOTE INTEGER (#$00).
 
-                                ; COPY IMAGE OF INTEGER BASIC'S
+                                ; COPY IMAGE OF INTEGER BASICS
                                 ; ENTRY POINT VECTOR TABLE TO THE
                                 ; ACTIVE BASIC ENTRY VECTOR TABLE.
 
@@ -323,7 +228,7 @@ INT2BSIC        LDA IMGINTV-1,X
                 BNE INT2BSIC    ; 10 BYTES TO COPY (10 --> 1).
                 JMP BYPASWRM
 
-                                ; COPY IMAGE OF APPLESOFT'S ENTRY
+                                ; COPY IMAGE OF APPLESOFTS ENTRY
                                 ; POINT VECTOR TABLE TO THE ACTIVE
                                 ; BASIC ENTRY POINT VECTOR TABLE.
 
@@ -341,13 +246,13 @@ BYPASWRM        SEC             ; (C) = 1, SIGNAL FOR COLDSTART.
 
 
                                 ; =================================
-                                ; DOS'S WARMSTART ROUTINE.
-                                ; (PS. DON'T CONFUSE WITH BASIC'S
+                                ; DOSS WARMSTART ROUTINE.
+                                ; (PS. DONT CONFUSE WITH BASICS
                                 ; WARMSTART ROUTINE - RESTART.)
                                 ; =================================
 
 DOSWARM
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
                 LDA ACTBSFLG    ; SEE WHICH LANGUAGE IS UP.
                 BNE CKBASIC     ; IF A(ROM), #$40 OR A(RAM), #$80.
 
@@ -373,24 +278,24 @@ CKBASIC         ASL A           ; MULTIPLY CODE TIMES 2.
 DTRMNBSC        JSR SETROM      ; GO TEST CARD OR MOTHERBOARD TO
                                 ; INSURE THAT DEVICE CONTAINING
                                 ; ROM VERSION WE WANT IS SELECTED.
-                .ENDIF
+                ')
 
 FORWARM         CLC             ; (C) = 0, SIGNAL FOR WARMSTART.
 CMWRMCLD        PHP             ; SAVE (C) DENOTING WARM OR COLD.
                 JSR INITIOHK    ; INITIALIZE THE I/O HOOKS SO THAT
                                 ; DOS INTERCEPTS ALL IN/OUTPUT.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 LDA #$70
-                .ELSE
+                ',`
                 LDA #0
-                .ENDIF
+                ')
                 STA CIOCUMUL    ; SIMULATE A "NOMON" COMMAND.
                                 ; NOTE: CAN "NOP" OUT THIS INSTRUC
                                 ; TO DEFEAT "NOMONCIO" WHEN COLD-
                                 ; OR WARMSTARTING.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 LDA #0
-                .ENDIF
+                ')
                 STA OPUTCOND    ; SET CONDITION 0.
                 PLP             ; GET SAVED STATUS BACK OFF STK &
                 ROR A           ; ROTATE (C) INTO HI BIT OF (A) TO
@@ -398,10 +303,10 @@ CMWRMCLD        PHP             ; SAVE (C) DENOTING WARM OR COLD.
                                 ; OR CONDNFLG = $80 FOR COLDSTART.
                 BMI LANGCOLD    ; BRANCH IF DOING COLDSTART.
 
-LANGWARM        JMP (TOWRMVEC)  ; JMPS TO BASIC'S WARMSTART ROUT'N
+LANGWARM        JMP (TOWRMVEC)  ; JMPS TO BASICS WARMSTART ROUTN
                                 ; (RESTART) AT $D43C.
 
-LANGCOLD        JMP (TOCLDVEC)  ; JMPS TO BASIC'S COLDSTART ROUT'N
+LANGCOLD        JMP (TOCLDVEC)  ; JMPS TO BASICS COLDSTART ROUTN
                                 ; (BASICCLD) AT $E000.
 
 
@@ -424,7 +329,7 @@ KEYCOLD         ASL A           ; (A) * 2 TO DROP OUT HI BIT.
                                 ; INTEGER BASIC ROM
                                 ; - ACTV BSC FLG=$80
 
-                                ; COPY IMAGE OF A(RAM)'S ENTRY
+                                ; COPY IMAGE OF A(RAM)S ENTRY
                                 ; POINT VECTOR TABLE TO THE
                                 ; ACTIVE BASIC ENTRY POINT VECTOR
                                 ; TABLE.
@@ -437,7 +342,7 @@ ARAM2BSC        LDA IMGARAMV-1,X
 
                                 ; BLANK OUT THE PRIMARY FILENAME
                                 ; BUFFER TO MAKE SURE A "HELLO"
-                                ; FILE WON'T BE RUN.
+                                ; FILE WONT BE RUN.
 
                 LDX #29         ; 30 BYTES TO BLANK (29 --> 00).
 BLNKPRIM        LDA SCNDFNBF,X  ; COPY BLANK SECONDARY TO PRIMARY.
@@ -449,14 +354,14 @@ BLNKPRIM        LDA SCNDFNBF,X  ; COPY BLANK SECONDARY TO PRIMARY.
 
 SKPDARAM        LDA MAXDFLT     ; SET MXFILVAL TO DEFAULT VAL OF 3
                 STA MXFILVAL    ; NOTE: DEFAULT VAL CAN BE CHANGED
-                                ; BY SETTING MAXDFLT BTW'N 1 - 16
+                                ; BY SETTING MAXDFLT BTWN 1 - 16
                                 ; AND THEN INITING A DISK.
                 JSR BILDBUFS    ; GO BUILD THE DOS BUFFERS.
                 LDA EXECFLAG    ; CHK IF AN EXEC FILE IS RUNNING.
                 BEQ SKPDEXEC    ; BRANCH IF NOT EXECING.
 
                 PHA             ; YES - WE ARE EXECING.
-                JSR PT2EXEC     ; GET ADR OF BUF WE'RE EXECING IN.
+                JSR PT2EXEC     ; GET ADR OF BUF WERE EXECING IN.
                 PLA             ; RETRIEVE EXEC FLG FROM STK.
                 LDY #0          ; RESERVE DOS BUFFER FOR EXECING
                 STA (A3L),Y     ; IN CASE WE WANT TO MODIFY DOS TO
@@ -472,36 +377,36 @@ SKPDEXEC        JSR RESTAT0     ; SET CONDNFLG=0 SO SIGNAL FILE
                                 ; CONTAINS A $00 WHICH WAS ETCHED
                                 ; ON THE DISK WHEN THE DISK WAS
                                 ; ORIGINALLY INITED.)
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
                 LDA NDX2CMD     ; WAS LAST CMD AN "INIT"?
                 BNE OLDBOOT     ; NO - TAKE BRANCH.
-                .ENDIF
+                ')
 
                                 ; DISK WAS JUST BOOTED SO COPY IMAGE
-                                ; OF DOS'S ENTRY POINT VECTOR TABLE
+                                ; OF DOSS ENTRY POINT VECTOR TABLE
                                 ; TO PAGE 3.
 
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 LDX #INPUTCLD-IMGDOSVT
-                .ELSE
+                ',`
                 LDX #INPTINCP-IMGDOSVT-1
-                .ENDIF
+                ')
 
 STOR3DOS        LDA IMGDOSVT,X  ; COPY IMAGE TO PAGE 3.
                 STA PG3DOSVT,X
                 DEX
                 BPL STOR3DOS
 
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 LDA   NDX2CMD
                 BNE   OLDBOOT
                 LDA   PRIMFNBF
                 EOR   #$A0
                 BEQ   OLDBOOT
                 JMP   CMDRUN
-                .ELSE
+                ',`
                                 ; PROGRAM THE RESET KEY TO POINT AT
-                                ; DOS'S WARMSTART ROUTINE.
+                                ; DOSS WARMSTART ROUTINE.
                                 ;
                                 ; NOTE THAT THE RESET KEY CAN BE
                                 ; PROGRAMMED TO PT AT ANY LOCATION
@@ -526,7 +431,7 @@ STOR3DOS        LDA IMGDOSVT,X  ; COPY IMAGE TO PAGE 3.
                 LDA #6          ; CMD INDEX FOR "RUN".
                                 ; (CAN BE CHANGED TO "BRUN", ETC.)
                 BNE DOPENDNG    ; ALWAYS.
-                .ENDIF
+                ')
 
                                 ; CHECK IF A COMMAND IS PENDING.
 
@@ -549,17 +454,17 @@ OLDBOOT         LDA NEXTCMD
                                 ; (TRK$01/SEC$09/OFFSETS$75-$92).
 
 DOPENDNG        STA NDX2CMD     ; SET CMD INDEX & GO DO CMD.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 JMP TORESTAT0
-                .ELSE
+                ',`
                 JMP DODOSCMD
-                .ENDIF
+                ')
 NOPEND
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 JMP DOSEXIT
-                .ELSE
+                ',`
                 RTS
-                .ENDIF
+                ')
 
 
                                 ; =================================
@@ -569,34 +474,34 @@ NOPEND
 
                                 ; PAGE-3 ADDR & FUNCTION
 
-IMGDOSVT        JMP DOSWARM     ; $3D0 - GO TO DOS'S WARM START
+IMGDOSVT        JMP DOSWARM     ; $3D0 - GO TO DOSS WARM START
                                 ; ROUTINE.  LEAVE PGRM INTACT.
-IMGCOLVT        JMP DOSCOLD     ; $3D3 - GO TO DOS'S COLD START
-                                ; ROUT'N. RESET HIMEM, REBUILD DOS
+IMGCOLVT        JMP DOSCOLD     ; $3D3 - GO TO DOSS COLD START
+                                ; ROUTN. RESET HIMEM, REBUILD DOS
                                 ; BUFS & WIPE OUT PRGM.
                 JMP FMXTNTRY    ; $3D6 - ALLOW USER TO ACCESS FM
                                 ; VIA HIS OWN ASSEMBLY LANG PRGMS.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 JMP RWTS
-                .ELSE
+                ',`
                 JMP ENTERWTS    ; $3D9 - ALLOW USER TO ACCESS RWTS
                                 ; VIA HIS OWN ASSEMBLY LANG PRGMS.
-                .ENDIF
+                ')
                 LDA ADFMPARM+1  ; $3DC - LOCATE FM PARAMETER LIST.
                 LDY ADFMPARM
                 RTS
 
-                LDA ADRIOB+1    ; $3E3 - LOCATE RWTS'S I/O BLOCK.
+                LDA ADRIOB+1    ; $3E3 - LOCATE RWTSS I/O BLOCK.
                 LDY ADRIOB
                 RTS
 
-                .IF VERSION >= 320
-                JMP INITIOHK    ; $3EA - PT I/O HOOKS AT DOS'S
+                ifelse(eval(VERSION >= 320),1,`
+                JMP INITIOHK    ; $3EA - PT I/O HOOKS AT DOSS
                                 ; INTERCEPT HANDLERS.
                 NOP
                 NOP
-                JMP OLDBRK      ; $3EF - GOES TO MONITOR'S ROUTINE
-                                ; WHICH HANDLES "BRK" INSTRUC'S.
+                JMP OLDBRK      ; $3EF - GOES TO MONITORS ROUTINE
+                                ; WHICH HANDLES "BRK" INSTRUCS.
                 JMP MON         ; AFTER THIS INSTRUCTION IS COPIED
                                 ; TO PAGE 3 (AT $3F2 - $3F4), THE
                                 ; ROUTINE AT $9E30 OVERWRITES THE
@@ -604,10 +509,10 @@ IMGCOLVT        JMP DOSCOLD     ; $3D3 - GO TO DOS'S COLD START
                                 ; KEY. THIS OVERWRITTING IS DONE TO
                                 ; ACCOMMODATE NEWER "AUTOSTART"
                                 ; ROM USED IN THE APPLE II+, IIE &
-                                ; IIC MACHINES.  THE PAGE-3 LOC'S
+                                ; IIC MACHINES.  THE PAGE-3 LOCS
                                 ; ARE DESCRIBED BELOW:
                                 ; $3F2/$3F3 - ADR OF RESET HNDLING
-                                ; ROUT'N (IN LOW/HI FORMAT).
+                                ; ROUTN (IN LOW/HI FORMAT).
                                 ; NORMALLY=ADR OF DOSWARM ($9DBF).
                                 ; $3F4 - IMG OF VALIDATION BYTE.
                                 ; NORMALLY CONTAINS #$38 BECAUSE:
@@ -616,12 +521,12 @@ IMGCOLVT        JMP DOSCOLD     ; $3D3 - GO TO DOS'S COLD START
                 JMP MONRTS      ; $3F5 - DISABLE &-VECTOR.
                 JMP MON         ; $3F8 - LET CTL-Y ENTER MONITOR.
                 JMP MON         ; $3FB - HNDL NON-MASK INTERUPTS.
-                .ADDR MON       ; ROUT'N TO HNDL MASKABLE INTERUPTS
-                .ENDIF
+                ASM_ADDR(MON)   ; ROUTN TO HNDL MASKABLE INTERUPTS
+                ')
 
 
                                 ; ==================================
-                                ; DOS'S INPUT INTERCEPT ROUTINE.
+                                ; DOSS INPUT INTERCEPT ROUTINE.
                                 ; (INTERCEPTS ALL INPUT FROM
                                 ; KEYBOARD OR DISK.)
                                 ; ==================================
@@ -635,12 +540,12 @@ INPTINCP        JSR PREP4DOS    ; SAVE THE REGS & RESTORE I/O HKS
                 LDA CONDNFLG    ; TEST IF DOING WARMSTART.
                 BEQ INPUTWRM    ; YES - BRANCH IF WARM.
 
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BPL INPUTCLD
                 JMP KEYCOLD
 INPUTCLD        LDA ASAVED
 
-                .ELSE
+                ',`
                                 ; READING FILE OR COLDSTARTING.
 
                 PHA             ; SAVE THE CONDITION FLAG.
@@ -656,9 +561,9 @@ INPUTCLD        JSR KEYCOLD     ; SET IMPORTANT PAGE 3 VECTORS.
                                 ; SET MXFILVAL=3 & BUILD DOS BUFS.
                                 ; SET WARMSTART FLAG.
                                 ; EXECUTE PENDING COMMAND.
-                LDY CH          ; GET HORZ CURSOR POS'N.
+                LDY CH          ; GET HORZ CURSOR POSN.
                 LDA #$60        ; GET CURSOR.
-                .ENDIF
+                ')
 
                 STA (BASL),Y    ; REINSTATE CURSOR ON SCREEN.
 
@@ -666,33 +571,33 @@ INPUTCLD        JSR KEYCOLD     ; SET IMPORTANT PAGE 3 VECTORS.
                                 ; AT THIS POINT IN TIME, BOTH
                                 ; CONDNFLG & OPUTCOND = 0 FOR
                                 ; WARM- & COLDSTARTS.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 JMP READTEXT
-                .ENDIF
+                ')
 
 INPUTWRM        LDA EXECFLAG    ; ARE WE EXECING?
                 BEQ INPTNOXC    ; NO.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 JMP READEXEC
-                .ELSE
+                ',`
                 JSR READEXEC    ; YES - GO READ AN EXEC FILE BYTE.
-                .ENDIF
+                ')
 INPTNOXC        LDA #3          ; SET OUTPUT CONDITION = 3 BECAUSE
                 STA OPUTCOND    ; WANT TO PROCESS INPUT INFO.
                 JSR RESTOREG    ; RESTORE (A), (Y) & (X) REGS.
                 JSR TOTRUIN     ; GET CHAR & PUT IT ON SCREEN VIA
                                 ; THE TRUE OUTPUT HANDLER (COUT1).
                 STA ASAVED      ; SAVE CHAR & (X).
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
                 STX XSAVED
-                .ENDIF
+                ')
                 JMP DOSEXIT     ; EXIT DOS.
 
 TOTRUIN         JMP (KSW)       ; JUMP TO THE TRUE INPUT HANDLER.
 
 
                                 ; =================================
-                                ; DOS'S OUTPUT INTERCEPT ROUTINE.
+                                ; DOSS OUTPUT INTERCEPT ROUTINE.
                                 ; (INTERCEPTS ALL OUPUT TO SCREEN
                                 ; OR OTHER PERIPHERALS.)
                                 ; =================================
@@ -758,11 +663,11 @@ SETRUHKS        LDA CSWTRUE,X   ; KSWTRUE: KEYIN --> KSW: KEYIN
                                 ; =================================
 
 OPUTHDL0
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
                 LDX RUNTRUPT    ; CONTAINS A NONZERO VALUE IF RUN
                 BEQ NONTRUPT    ; CMD WAS INTERRUPTED TO DO A LOAD
                 JMP FINSHRUN    ; FINISH OFF THE RUN COMMAND.
-                .ENDIF
+                ')
 
                                 ; FILE NOT BEING READ.
 
@@ -776,26 +681,26 @@ NONTRUPT        LDX CONDNFLG    ; GET CONDITION FLAG. CHECK IF WE
                                 ; CHECK (A) TO SEE IF USING "?" ASSOCIATED
                                 ; WITH READING AN INPUT STATEMENT.
 
-                CMP #'?'        ; IF READING, USING "?" AS PROMPT.
+                CMP #HICHAR(`?')        ; IF READING, USING "?" AS PROMPT.
                 BEQ OPUTHDL6    ; GO DSPLY INPUT CONDITIONALLY IF
                                 ; GETTING READY TO READ A TEXT FILE
                                 ; BYTE.
                 CMP PROMPT      ; ARE WE PRINTING A PROMPT?
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BEQ OPUTHDL6
-                .ELSE
+                ',`
                 BEQ SET2EVAL    ; BRANCH IF ABOUT TO PRINT PROMPT.
-                .ENDIF
+                ')
 SETIGNOR        LDX #2          ; SET CONDITION 2 FOR DEFAULT TO
                 STX OPUTCOND    ; SIGNAL SHOULD IGNORE NON-DOS
                                 ; COMMANDS.
 
-                CMP DCTRLCHR    ; IS CHAR = DOS'S CTRL CHAR?
+                CMP DCTRLCHR    ; IS CHAR = DOSS CTRL CHAR?
                 BNE OPUTHDL2    ; NO.
-                DEX             ; LINE STARTED WITH DOS'S CTRL CHR
+                DEX             ; LINE STARTED WITH DOSS CTRL CHR
                 STX OPUTCOND    ; SO SET CONDITION 1.
                 DEX             ; (X) = 1 --> 0.
-                STX NDX2INBF    ; INDEX TO 1ST POS'N IN INPUT BUF
+                STX NDX2INBF    ; INDEX TO 1ST POSN IN INPUT BUF
 
 
                                 ; =================================
@@ -808,7 +713,7 @@ SETIGNOR        LDX #2          ; SET CONDITION 2 FOR DEFAULT TO
 
 OPUTHDL1        LDX NDX2INBF    ; GET INDEX TO INPUT BUFFER.
 PUTINBUF        STA BUF200,X    ; PUT CHAR IN INPUT BUFFER.
-                INX             ; KICK UP INDEX FOR NEXT BUF POS'N.
+                INX             ; KICK UP INDEX FOR NEXT BUF POSN.
                 STX NDX2INBF
                 CMP #CR        ; WAS CHAR A <CR>?
                 BNE DSPLYCMD    ; NO.
@@ -844,7 +749,7 @@ TESTEXEC        LDA EXECFLAG    ; ARE WE EXECING?
                                 ; CHR OF NAME OF THE EXEC FILE.
 
 ASUMIMED
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
                 PHA             ; SAVE CHAR ON STK.
                 SEC             ; (C)=1, DFLT, ASSUME IMMED MODE.
                 LDA EXECFLAG    ; ARE WE EXECING?
@@ -855,7 +760,7 @@ ASUMIMED
                                 ; (C) = 1 IF IMMEDIATE.
 TESTMODE        PLA             ; RETRIEVE CHAR FROM STK.
                 BCC TESTEXEC    ; BASIC RUNNING, DSPLY INPUT & XIT
-                .ENDIF
+                ')
 
                                 ; EXECING OR IN IMMEDIATE MODE
                                 ; (BECAUSE (C) = 1).
@@ -882,9 +787,9 @@ CMWRTBYT        JSR WRITEXT     ; GO WRITE DATA BYTE.
                                 ; (EVALUATE START OF DATA TO WRITE)
                                 ; ===================================
 
-OPUTHDL5        CMP DCTRLCHR    ; IS CHAR = DOS'S CTRL CHAR?
+OPUTHDL5        CMP DCTRLCHR    ; IS CHAR = DOSS CTRL CHAR?
                                 ; ************* NOTE ***********
-                                ; * DOS'S CTRL CHAR CANCELS THE
+                                ; * DOSS CTRL CHAR CANCELS THE
                                 ; * WRITE MODE.
                                 ; ******************************
 
@@ -915,7 +820,7 @@ OPUTHDL6
                                 ; =================================
 
 FINSHRUN
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
                 LDA #0          ; ZERO OUT THE RUN INTERRUPT FLAG.
                 STA RUNTRUPT
                 JSR INITIOHK    ; RESET I/O HOOKS TO PT AT DOS.
@@ -925,11 +830,11 @@ FINSHRUN
                                 ; * THE STACK WAS RESET SO WE
                                 ; * RETURN AT THE CORRECT LEVEL.
                                 ; *******************************
-                .ENDIF
+                ')
 
 
                                 ; ======================================
-                                ; COMMON ROUT'N TO FINISH OFF MOST DOS
+                                ; COMMON ROUTN TO FINISH OFF MOST DOS
                                 ; CMDS.  THE WRITE & READ CMD HNDLRS
                                 ; RTN HERE.  CMDWRITE ($A510) SETS
                                 ; OPUTCOND=5 BEFORE RETURNING.
@@ -937,22 +842,22 @@ FINSHRUN
                                 ; ======================================
 
 FINSHCMD        LDA BUF200      ; GET FIRST CHAR IN BUF.
-                CMP DCTRLCHR    ; WAS CMD DONE VIA DOS'S CTRL CHR?
+                CMP DCTRLCHR    ; WAS CMD DONE VIA DOSS CTRL CHR?
                 BEQ DSPLYCMD    ; YES.
 
 
                                 ; CANCEL CMD BY REPLACING THE CHAR
                                 ; WITH A <CR> & THEN FALL THRU TO
                                 ; CONTINUE THE EXIT SEQUENCE.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 LDA #$A0
                 STA BUF200
                 LDA #CR
                 STA BUF200+1
-                .ELSE
+                ',`
                 LDA #CR
                 STA BUF200      ; SET 200: 8D.
-                .ENDIF
+                ')
 
                 LDX #0          ; SET INDEX TO START OF INPUT BUF.
                 STX XSAVED
@@ -980,11 +885,11 @@ DSPLYCHR        AND CIOCUMUL    ; TEST FLAG:  SEE IF SHOULD DSPLY.
 
 DSPLYALL        JSR RESTOREG    ; RESTORE (A), (Y) & (X) REGS.
                 JSR GODSPLY     ; OUTPUT  CHR VIA TRU OUTPUT HNDLR
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
                 STA ASAVED      ; SAVE (A), (Y) & (X) REGS.
                 STY YSAVED
                 STX XSAVED
-                .ENDIF
+                ')
 
 
                                 ; =================================
@@ -999,9 +904,9 @@ DOSEXIT         JSR INITIOHK    ; RESET I/O HKS TO POINT TO DOS.
 RESTOREG        LDA ASAVED      ; RESTORE (A), (Y) & (X) REGS.
                 LDY YSAVED
                 LDX XSAVED
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
                 SEC             ; WHY?????
-                .ENDIF
+                ')
                 RTS             ; ************ NOTE *************
                                 ; * IF THIS RTS IS ENCOUNTERED
                                 ; * VIA A FALL THRU FROM DOSEXIT,
@@ -1020,28 +925,28 @@ GODSPLY         JMP (CSW)       ; USUALLY POINTS TO THE TRUE OUTPUT
                                 ; HANDLER (COUT1, $FDF0 IF SCRN).
 
 CRVIADOS
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BIT CIOCUMUL
                 BVC   L1F6E
-                .ENDIF
+                ')
 
                 LDA #CR
 
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 JSR GODSPLY
 L1F6E           RTS
-                .ELSE
+                ',`
                 JMP GODSPLY     ; USUALLY PRINTS A <CR> THRU THE
                                 ; OUTPUT HANDLER (COUT1). HOWEVER,
                                 ; WHEN ACCESSED BY RUNFPINT($A4DC)
                                 ; DURING A COLDSTART, GOES INTO
-                                ; DOS'S OUTPUT INTERCEPT ROUTINE
+                                ; DOSS OUTPUT INTERCEPT ROUTINE
                                 ; (OPUTINCP, $9EBD).
-                .ENDIF
+                ')
 
 
                                 ; =================================
-                                ; DOS'S COMMAND PARSING ROUTINE.
+                                ; DOSS COMMAND PARSING ROUTINE.
                                 ; =================================
 
 PARSECMD        LDY #$FF        ; INITIALIZE INDEX TO CMD TXT TBL.
@@ -1055,13 +960,13 @@ GETCHR1         INC NDX2CMD     ; INDEX TO COMMAND TEXT TABLE.
                 PHP             ; SAVE STATUS (WITH Z=1) ON STK.
                                 ; (DFLT STATUS, ASSUME CHRS MTCH.)
                 LDA BUF200,X    ; GET FIRST CHAR IN INPUT BUFFER.
-                CMP DCTRLCHR    ; IF IT IS NOT DOS'S CTRL CHAR,
+                CMP DCTRLCHR    ; IF IT IS NOT DOSS CTRL CHAR,
                 BNE SAVLINDX    ; SET LINE INDEX TO 0.  IF IT IS
-                INX             ; DOS'S CTRL CHAR, SET INDEX TO 1
+                INX             ; DOSS CTRL CHAR, SET INDEX TO 1
                                 ; SO SKIP CTRL CHAR.
 
                                 ; DOES THE INPUT CHAR EQUAL A CHAR
-                                ; IN DOS'S CMD TEXT TABLE (CMDTXTBL)?
+                                ; IN DOSS CMD TEXT TABLE (CMDTXTBL)?
                                 ; (NOTE:  LAST CHAR IN @ CMD IS NEGATIVE
                                 ; ASCII, REST OF CHARS IN A GIVEN CMD
                                 ; ARE POSITIVE ACSII.)
@@ -1111,7 +1016,7 @@ CKIFCHRS        BCC INVSCMD     ; IF (C)=0, MORE CHARS TO CHK IN
 
                                 ; CHECK IF SEARCHED ENTIRE TABLE.
 
-                LDA CMDTXTBL,Y  ; LAST CHAR DIDN'T MATCH, SO NOT
+                LDA CMDTXTBL,Y  ; LAST CHAR DIDNT MATCH, SO NOT
                 BNE GETCHR1     ; CORRECT CMD.  THERE4, GO CHK IF
                                 ; NEXT CHAR BYTE IN TABLE IS $00.
                                 ; IF NOT $00, GO CHK REMAINING
@@ -1123,14 +1028,14 @@ CKIFCHRS        BCC INVSCMD     ; IF (C)=0, MORE CHARS TO CHK IN
                                 ; BSAVE CMD WITH NO ACCOMPANYING
                                 ; A- OR L- PARAMETERS.
 
-                                ; CHECK IF DOS'S CTRL CHAR WAS USED.
+                                ; CHECK IF DOSS CTRL CHAR WAS USED.
 
 CKIFCTRL        LDA BUF200      ; IS 1ST CHAR IN THE INPUT BUFFER
-                CMP DCTRLCHR    ; EQUAL TO DOS'S CTRL CHAR?
+                CMP DCTRLCHR    ; EQUAL TO DOSS CTRL CHAR?
                 BEQ CHKIFCR     ; YES.
                 JMP DSPLYALL    ; NO -GO DSPLY CHR & THEN XIT DOS.
 
-                                ; WAS DOS'S CTRL CHAR THE ONLY CHAR ON LINE?
+                                ; WAS DOSS CTRL CHAR THE ONLY CHAR ON LINE?
 
 CHKIFCR         LDA BUF200+1    ; GET 2ND BYTE IN INPUT BUFFER.
                 CMP #CR         ; WAS IT A <CR>?
@@ -1143,7 +1048,7 @@ PRSYNERR        JMP SYNTXERR    ; EITHER A CTRL CHR DENOTED THAT A
                                 ; DOS CMD WAS WANTED & NO MATCHING
                                 ; CMD WAS FOUND (ELSE DETECTED A
                                 ; BSAVE CMD WITH NO A- OR L-PARMS)
-                                ; SO GO GIVE DOS'S SYNTAX ERR MSG.
+                                ; SO GO GIVE DOSS SYNTAX ERR MSG.
 
 
                                 ; ========================================
@@ -1158,12 +1063,12 @@ PRSYNERR        JMP SYNTXERR    ; EITHER A CTRL CHR DENOTED THAT A
                                 ; ========================================
 
 PRPDOCMD
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 LDA NDX2CMD
                 ASL A
                 STA NDX2CMD
                 TAY
-                .ELSE
+                ',`
                 ASL NDX2CMD     ; DOUBLE INDEX BECAUSE 2 BYTES/ADDR
                 LDY NDX2CMD     ; IN TABLE OF DOS CMD ENTRY PTS.
                 JSR CKBSCRUN    ; CHECK IF BASIC IS RUNNING A PGM:
@@ -1189,7 +1094,7 @@ CHKIFRUN        CPY #6          ; CHECK TO SEE IF CMD WAS A "RUN".
 
                                 ; CHECK TO SEE IF A FILENAME
                                 ; IS APPLICABLE TO THE COMMAND.
-                .ENDIF
+                ')
 
 TST4NAME        LDA #%00100000  ; BIT5 = 1 IF FILENAME APPLICABLE.
                 AND CMDATTRB,Y
@@ -1212,7 +1117,7 @@ FNAMCHR1        JSR PURGECMD    ; GET 1ST CHAR IN NAME. (IGNORE
                                 ; (BECAUSE THESE NOT LEGAL FOR NAME).
 
                                 ; CHK IF CHAR IS LEGAL TENDER FOR NAME.
-                                ; (KNOW IT WASN'T A <SPC>, "," OR <CR>
+                                ; (KNOW IT WASNT A <SPC>, "," OR <CR>
                                 ; BUT IT STILL MAY NOT BE LEGAL.)
 
                 ASL A           ; (C) = HI BIT OF CHAR.
@@ -1220,7 +1125,7 @@ FNAMCHR1        JSR PURGECMD    ; GET 1ST CHAR IN NAME. (IGNORE
                                 ; BUT, NOTE THAT THEY CAN ONLY BE
                                 ; POKED INTO INPUT BUF FROM A
                                 ; RUNNING PRGM. (THIS TECHNIQUE IS
-                                ; USED IN MANY PROTECT'N SCHEMES.)
+                                ; USED IN MANY PROTECTN SCHEMES.)
                 BMI LGLFNCHR    ; ACTUALLY TESTING BIT6 BECAUSE JUST
                                 ; DID AN "ASL" IF BYTE IS 11XXXXXX
                                 ; (IE. $C0, NORMAL "@" OR GREATER)
@@ -1230,7 +1135,7 @@ FNAMCHR1        JSR PURGECMD    ; GET 1ST CHAR IN NAME. (IGNORE
                                 ; & EXIT DOS. (WAS IT A CTRL CHAR,
                                 ; NUMBER OR ONE OF THE FOLLOWING
                                 ; NORMAL CHARS:SPC, !, ", #, $, %,
-                                ; &, ', (, ), *, +, COMMA, -, ., /
+                                ; &, APOS, (, ), *, +, COMMA, -, ., /
                                 ; :, ;, <, -, >, OR ?
 
                                 ; CHAR IS LEGAL TENDER FOR NAME.
@@ -1240,7 +1145,7 @@ LGLFNCHR        ROR A           ; RESTORE NAME CHAR.
 
                                 ; PROCESS REST OF CHARS.
 
-NCHR2ETC        JSR CMDCHAR     ; GET 2ND & SUB'QUENT CHRS IN NAME
+NCHR2ETC        JSR CMDCHAR     ; GET 2ND & SUBQUENT CHRS IN NAME
                 BEQ DONEFN      ; GOT A <CR> OR "," SO GO CHK IF
                                 ; JUST FINISHED SECOND FILENAME.
 
@@ -1249,18 +1154,18 @@ NCHR2ETC        JSR CMDCHAR     ; GET 2ND & SUB'QUENT CHRS IN NAME
 SVFNCHAR        STA PRIMFNBF,Y  ; (Y)=OFFSET FRM PRIMARY NAME BUF.
                 INY
                 CPY #60         ; TOTAL OF 60 CHARS IN BOTH BUFS.
-                BCC NCHR2ETC    ; HAVEN'T HIT ",", EOL MARKER (IE.
+                BCC NCHR2ETC    ; HAVENT HIT ",", EOL MARKER (IE.
                                 ; <CR>) OR DONE ALL 60 CHARS YET.
 
                                 ; DONE ALL 60 CHARS SO IGNORE REST
                                 ; OF CHARS UNTIL GET "," OR <CR>.
 
 PURGEFN         JSR CMDCHAR     ; GET NEXT CHAR.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BEQ PURGEFN     ; BUG???
-                .ELSE
+                ',`
                 BNE PURGEFN     ; NOT $00 YET SO GO GET NXT CHAR.
-                .ENDIF
+                ')
 
                                 ; JUST FINISHED NAME, SO CHK IF IT
                                 ; WAS FIRST OR SECOND FILENAME.
@@ -1294,7 +1199,7 @@ FINFIRST        LDY NDX2CMD     ; GET INDEX ASSOC WITH CMD ISSUED.
                                 ; THE SECONDARY FILENAME BUFFER.
 
 CKFN2LGL        LDA SCNDFNBF    ; CHK 1ST BYTE IN SECONDARY.
-                CMP #' '        ; IF IT IS A <SPC>, THEN NO CHARS
+                CMP #HICHAR(` ')        ; IF IT IS A <SPC>, THEN NO CHARS
                 BEQ GOXITDOS    ; WERE GOOD & SO A 2ND NAME WAS
                                 ; REQUIRED BUT NOT ISSUED,SO EXIT.
 
@@ -1304,7 +1209,7 @@ CKFN2LGL        LDA SCNDFNBF    ; CHK 1ST BYTE IN SECONDARY.
                                 ; PRIMARY FILENAME BUFFER.
 
 CKFN1LGL        LDA PRIMFNBF    ; IF 1ST CHAR IN BUF IS A <SPC>,
-                CMP #' '        ; A LEGAL PRIMARY FILENAME WAS NOT
+                CMP #HICHAR(` ')        ; A LEGAL PRIMARY FILENAME WAS NOT
                                 ; ISSUED SO FALL THRU TO SEE IF IT
                                 ; WAS REQUIRED OR OPTIONAL.
                 BNE DFLTPRSD    ; BRANCH IF GOT PRIMARY FILENAME.
@@ -1321,7 +1226,7 @@ CKFN1LGL        LDA PRIMFNBF    ; IF 1ST CHAR IN BUF IS A <SPC>,
 
                                 ; WAS COMMAND A "CLOSE"?
 
-                BPL DFLTPRSD    ; NAME WASN'T PRESENT, BUT IS NO
+                BPL DFLTPRSD    ; NAME WASNT PRESENT, BUT IS NO
                                 ; BIG DEAL BECAUSE IT WAS OPTIONAL.
 GOXITDOS        JMP CKIFCTRL    ; CMD WAS LOAD, RUN OR SAVE WHICH
                                 ; CAN ALSO BE BASIC COMMANDS.
@@ -1334,11 +1239,11 @@ GOXITDOS        JMP CKIFCTRL    ; CMD WAS LOAD, RUN OR SAVE WHICH
                                 ; ======================================
 
 BLNKFNBF
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 LDA #0
-                .ENDIF
+                ')
                 LDY #60         ; 30 BYTES IN EACH BUFFER.
-BLNK1RST        LDA #' '        ; BLANK.
+BLNK1RST        LDA #HICHAR(` ')        ; BLANK.
 STORBLNK        STA PRIMFNBF-1,Y
                 DEY
                 BNE STORBLNK    ; MORE BYTES TO BLANK OUT.
@@ -1358,8 +1263,8 @@ FNOTAPPL        STA PRIMFNBF    ; PUT A $00 IN THE FIRST BYTE OF
                                 ; * BEGNIN INSTRUCTION, IT IS
                                 ; * IMPORTANT BECAUSE IT IS LATER
                                 ; * USED TO INSURE THAT A MATCHING
-                                ; * DOS FILENAME BUF WON'T BE
-                                ; * FOUND WHEN THE GETBUFF ROUT'N
+                                ; * DOS FILENAME BUF WONT BE
+                                ; * FOUND WHEN THE GETBUFF ROUTN
                                 ; * ($A764) IS EVENTUALLY USED BY
                                 ; * THE VARIOUS DOS CMDS.  AS A
                                 ; * RESULT, THE HIGHEST NUMBERED
@@ -1368,7 +1273,7 @@ FNOTAPPL        STA PRIMFNBF    ; PUT A $00 IN THE FIRST BYTE OF
                                 ; * SELECTED.
                                 ; *******************************
 
-                                ; COMMAND DIDN'T REQUIRE A FILENAME
+                                ; COMMAND DIDNT REQUIRE A FILENAME
                                 ; SO NOW CHK & SEE IF IT EXPECTS ANY
                                 ; NUMERIC ARGUMENTS.  (IE. WAS IT PR#,
                                 ; IN# OR MAXFILES CMD?)
@@ -1383,25 +1288,25 @@ FNOTAPPL        STA PRIMFNBF    ; PUT A $00 IN THE FIRST BYTE OF
 
 INPRMAX         JSR CNVRTASC    ; CONVERT ASCII NUMBER ARGUMENT TO
                                 ; HEX WITH RESULT IN A5L/H.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BCS GOXITDOS
-                .ELSE
+                ',`
                 BCS TOSYNTX     ; CHR NOT #, EXIT WITH SYNTAX ERR.
-                .ENDIF
+                ')
                 TAY             ; (Y) = HI BYTE OF CONVERTED CHAR.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BNE GOXITDOS
-                .ELSE
+                ',`
                 BNE ARGRNGER    ; RANGE ERROR - BECAUSE VALUE > 255.
-                .ENDIF
+                ')
                 CPX #17
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BCS GOXITDOS
-                .ELSE
+                ',`
                 BCS ARGRNGER    ; RANGE ERROR BECAUSE IF MAXFILES OR
                                 ; IN# OR PR# ARGUMENT > 16, THEN
                                 ; VALUE TOO LARGE.
-                .ENDIF
+                ')
 
                                 ; WAS COMMAND A PR# OR IN#?
 
@@ -1423,9 +1328,9 @@ INPRMAX         JSR CNVRTASC    ; CONVERT ASCII NUMBER ARGUMENT TO
                                 ; (LEGAL RANGE IS 1 TO 16.)
 
 MAXFMIN         TXA
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BEQ GOXITDOS
-                .ELSE
+                ',`
 
                 BNE DFLTPRSD    ; NOT 0, SO OKAY.
 
@@ -1436,23 +1341,23 @@ ARGRNGER        LDA #2          ; SET RETURN CODE FOR RANGE ERROR.
                 JMP ERRHNDLR    ; GO HANDLE THE ERROR.
 
 TOSYNTX         JMP SYNTXERR    ; EXIT VIA SYNTAX ERROR.
-                .ENDIF
+                ')
                                 ; INITIALIZE CUMLOPTN & PARSED TABLE.
 
 DFLTPRSD        LDA #0
                 STA CUMLOPTN    ; SET CUMLOPTN TO DEFAULT VAL OF 0
                                 ; TO ASSUME NO OPTIONS ISSUED.
                 STA MONPRSD     ; SET DEFAULT VALS IN PARSED TBL.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 STA VOLPRSD2    ; THAT IS ASSUME THAT:
-                STA LENPRSD+1   ; - C, I, O WEREN'T ISSUED.
+                STA LENPRSD+1   ; - C, I, O WERENT ISSUED.
                 STA TEMPBYT
-                .ELSE
+                ',`
                 STA VOLPRSD    ; THAT IS ASSUME THAT:
-                STA LENPRSD     ; - C, I, O WEREN'T ISSUED.
+                STA LENPRSD     ; - C, I, O WERENT ISSUED.
                 STA LENPRSD+1   ; - VOL # AND LENGTH ARE 0.
                 JSR ZEROPTCH    ; SET TEMPBYT & BYTPRSD TO 0 DFLTS
-                .ENDIF
+                ')
                 LDA NDX2INBF    ; IRREL, MIGHT AS WELL BE 3 "NOP"S
                                 ; (MADE OBSOLETE BY ZEROPTCH).
 
@@ -1460,7 +1365,7 @@ DFLTPRSD        LDA #0
                                 ; (IGNORE ANY COMMAS OR SPACES.)
 
 NXCMDCHR        JSR PURGECMD    ; GET NEXT CHAR.
-                BNE CHKOPTNS    ; IF IT ISN'T A <CR> OR COMMA THEN
+                BNE CHKOPTNS    ; IF IT ISNT A <CR> OR COMMA THEN
                                 ; MAYBE ITS AN OPTION, SO TAKE
                                 ; BRANCH TO CHECK IT OUT.
                 CMP #CR         ; WAS IT A <CR>?
@@ -1482,11 +1387,11 @@ NXCMDCHR        JSR PURGECMD    ; GET NEXT CHAR.
                                 ; LEGALLY BE ASSOCIATED WITH COMMAND.
 
                 LDX TEMPBYT     ; TEMPBYT = 0 AS SET IN ZEROPTCH.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BEQ TORESTAT0
-                .ELSE
+                ',`
                 BEQ TODOSCMD    ; ALWAYS.
-                .ENDIF
+                ')
 
                                 ; MEANINGLESS INSTRUCTIONS (MADE
                                 ; OBSOLETE BY INCLUSION OF ZEROPTCH).
@@ -1502,17 +1407,17 @@ CHKOPTNS        LDX #10
 CKNXOPTN        CMP OPTNTXT-1,X
                 BEQ OPTNOK      ; FOUND AN OPTION.
                 DEX
-                BNE CKNXOPTN    ; HAVEN'T CHKD ALL OPTIONS YET.
+                BNE CKNXOPTN    ; HAVENT CHKD ALL OPTIONS YET.
 TOTOSYNT
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BEQ TODOSCMD
-                .ELSE
-                BEQ TOSYNTX     ; COULDN'T FIND A MATCH.
+                ',`
+                BEQ TOSYNTX     ; COULDNT FIND A MATCH.
                                 ; (SYNTAX ERR - CHAR NOT OPTION.)
                                 ; GOT AN OPTION SO CHK IF IT WAS
                                 ; "C", "I" OR "O".  (IE. IS A
                                 ; NUMERIC ARGUMENT EXPECTED?)
-                .ENDIF
+                ')
 
 OPTNOK          LDA OPTNISSD-1,X
                 BMI CIOPTNS     ; IF HI BIT=0, THEN OPTION WAS A
@@ -1536,11 +1441,11 @@ OPTNOK          LDA OPTNISSD-1,X
 
                                 ; WAS IT A NUMERIC CHARACTER?
 
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BCS TODOSCMD
-                .ELSE
+                ',`
                 BCS TOSYNTX     ; NO - SYNTAX ERROR.
-                .ENDIF
+                ')
 
                                 ; CHARACTER WAS NUMERIC.
 
@@ -1556,11 +1461,11 @@ OPTNOK          LDA OPTNISSD-1,X
                 BNE CKMAXVAL    ; BRANCH IF NOT 0.
                 LDA A5L         ; HI BYTE WAS 0 SO CHK LOW BYTE.
                 CMP OPTNRNG,Y
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BCC TODOSCMD
-                .ELSE
+                ',`
                 BCC ARGRNGER    ; RANGE ERR -ARGUMENT < MIN LEGAL.
-                .ENDIF
+                ')
 
                                 ; CHECK IF ARGUMENT < = MAX LEGAL PLUS 1.
 
@@ -1568,19 +1473,19 @@ OPTNOK          LDA OPTNISSD-1,X
 CKMAXVAL        CMP OPTNRNG+3,Y ; CMP HI BYTE TO MAX LEGAL VAL.
                 BCC SVALOPTN    ; LESS THAN MAX SO ARGUMENT OK.
 TOARGRNG
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BNE TODOSCMD
-                .ELSE
+                ',`
                 BNE ARGRNGER    ; ARGUMENT > MAX LGL, SO RNG ERR.
-                .ENDIF
+                ')
                 LDA A5L         ; NOW CHK IF LOW BYTE OF ARGUMENT
                 CMP OPTNRNG+2,Y ; COMPLIES TO MAX LEGAL LOW BYTE.
                 BCC SVALOPTN    ; ARGUMENT IS LEGAL.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BNE TODOSCMD
-                .ELSE
+                ',`
                 BNE TOARGRNG    ; ARGUMENT IS ILLEGAL.
-                .ENDIF
+                ')
 
                                 ; SAVE THE OPTION VALUE IN THE PARSED TABLE.
 
@@ -1612,9 +1517,9 @@ CIOPTNS         PHA             ; PUT (A) = OPTNISSD ON STK.
                 ORA MONPRSD     ; UPDATE MONPRSD IN PARSED TABLE.
                 STA MONPRSD
                 BNE TONXOPTN    ; GO SEE IF ANY MORE OPTIONS.
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
                 BEQ TOTOSYNT    ; IRRELEVANT.
-                .ENDIF
+                ')
 
 
                                 ; =================================
@@ -1622,7 +1527,7 @@ CIOPTNS         PHA             ; PUT (A) = OPTNISSD ON STK.
                                 ; =================================
 
 TODOSCMD
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 JMP CKIFCTRL
 TORESTAT0       JSR RESTAT0     ; RESET CONDITION TO 0.  THAT IS,
                                 ; SET CONDNFLG AND OPUTCOND = 0.
@@ -1630,7 +1535,7 @@ TORESTAT0       JSR RESTAT0     ; RESET CONDITION TO 0.  THAT IS,
                                 ; SO WE CAN CUSTOMIZE IT IN
                                 ; ACCORDANCE WITH THE SPECIFIC DOS
                                 ; COMMAND HANDLER CALLED.
-                .ENDIF
+                ')
                 JSR DODOSCMD    ; GO DO THE DOS COMMAND.
 
 
@@ -1638,10 +1543,10 @@ TORESTAT0       JSR RESTAT0     ; RESET CONDITION TO 0.  THAT IS,
                                 ;
                                 ; - MOST, BUT NOT ALL, DOS CMDS RTN HERE.
                                 ; - IF AN ERROR IS ENCOUNTERED, EXECUTION
-                                ; EXITS DOS'S ERROR HANDLER VIA RESTART
-                                ; ($D43C) OR BASIC'S ERROR-HANDLING
+                                ; EXITS DOSS ERROR HANDLER VIA RESTART
+                                ; ($D43C) OR BASICS ERROR-HANDLING
                                 ; ROUTINE (BSCERHLR, $D865).
-                                ; - FP EXITS BACK INTO DOS'S COLDSTART
+                                ; - FP EXITS BACK INTO DOSS COLDSTART
                                 ; ROUTINE (DOSCOLD, $9D84).
                                 ; - INT & CHAIN GO INTO INTEGER BASIC IF
                                 ; THE INTEGER LANGUAGE IS AVAILABLE.
@@ -1681,17 +1586,17 @@ AFTRCMD         JMP FINSHCMD
                                 ; =================================
 
 DODOSCMD
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
                 JSR RESTAT0     ; RESET CONDITION TO 0.  THAT IS,
                                 ; SET CONDNFLG AND OPUTCOND = 0.
                 JSR CLRFMPRM    ; CLEAR OUT THE FM PARAMETER LIST
                                 ; SO WE CAN CUSTOMIZE IT IN
                                 ; ACCORDANCE WITH THE SPECIFIC DOS
                                 ; COMMAND HANDLER CALLED.
-                .ENDIF
+                ')
                 LDA NDX2CMD     ; GET (A) = INDEX TO COMMAND.
                 TAX             ; (X) = INDEX TO TBL OF ENTRY PTS.
-                LDA CMDTBL+1,X  ; GET ADR-1 OF THE CMD'S ROUTINE &
+                LDA CMDTBL+1,X  ; GET ADR-1 OF THE CMDS ROUTINE &
                 PHA             ; PUT IT ON STACK (HI BYTE 1ST).
                 LDA CMDTBL,X
                 PHA
@@ -1704,16 +1609,16 @@ DODOSCMD
                                 ; =================================
 
 CMDCHAR         LDX NDX2INBF    ; (X) = INDEX TO INPUT BUFFER.
-                .IFDEF FRANKLIN
+                ifdef(`FRANKLIN',`
                 JSR FRANK
-                .ELSE
+                ',`
                 LDA BUF200,X    ; GET NEXT CHAR.
-                .ENDIF
-                CMP #CR        ; IS IT A <CR>?
+                ')
+                CMP #CR         ; IS IT A <CR>?
                 BEQ CMDCHRTS    ; YES.
                 INX             ; (X)=INDEX FOR NXT ANTICIPATED CHR.
                 STX NDX2INBF
-                CMP #','        ; COMMA?
+                CMP #HICHAR(`,')        ; COMMA?
 CMDCHRTS        RTS             ; EXIT WITH Z-FLAG CONDITIONED.
                                 ; Z=1 IF CHAR IS A <CR> OR COMMA.
 
@@ -1725,7 +1630,7 @@ CMDCHRTS        RTS             ; EXIT WITH Z-FLAG CONDITIONED.
 
 PURGECMD        JSR CMDCHAR     ; GET 1ST CHAR.
                 BEQ CMDCHRTS    ; EXIT IF <CR> OR COMMA.
-                CMP #' '        ; SPACE?
+                CMP #HICHAR(` ')        ; SPACE?
                 BEQ PURGECMD    ; YES - IGNORE LEADING SPACES.
                 RTS
 
@@ -1755,7 +1660,7 @@ ZFMPARM         STA FMPRMLST-1,Y
                                 ; (C) = 1 = INVALID CHARS.
                                 ; ======================================
 
-CNVRTASC        LDA #0          ; ZERO OUT LOC'S TO HOLD RESULT.
+CNVRTASC        LDA #0          ; ZERO OUT LOCS TO HOLD RESULT.
                 STA A5L         ; LOW BYTE OF RESULT.
                 STA A5H         ; HI BYTE OF RESULT.
                 JSR PURGECMD    ; GET 1ST NON-SPACE CHAR.
@@ -1765,7 +1670,7 @@ CNVRTASC        LDA #0          ; ZERO OUT LOC'S TO HOLD RESULT.
                                 ; CHK TO SEE IF WANT TO CONVERT
                                 ; ASCII TO HEX OR ASCII TO DEC.
 
-                CMP #'$'        ; IS HEX SYMBOL PRESENT?
+                CMP #HICHAR(`$')        ; IS HEX SYMBOL PRESENT?
                 BEQ ASC2HEX     ; YES - BRANCH FOR ASCII TO HEX.
 
 
@@ -1830,9 +1735,9 @@ NOTASCII        SEC             ; EXIT WITH (C)=1 TO SIGNAL ERROR.
 
 DOUBLE          ASL A5L         ; "ROLL" HI & LOW BYTES AS A UNIT.
                 ROL A5H         ; (PICK UP (C) IN HI BYTE.)
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BCS NOTASCII
-                .ENDIF
+                ')
                 RTS
 
 
@@ -1853,7 +1758,7 @@ GETASCII        JSR PURGECMD    ; GET 1ST & SUBSEQUENT CHARS THAT
                 BMI NOTASCII    ; ERROR BECAUSE < 0.
                 CMP #$0A
                 BCC PRP2DUBL    ; VALID: 0 <--> 9.
-                SBC #7          ; CHK HI RANGE OF HEX #'S.
+                SBC #7          ; CHK HI RANGE OF HEX #S.
                 BMI NOTASCII    ; ERROR BECAUSE > $09 AND < $0A.
                 CMP #$10
                 BCS NOTASCII    ; ERROR BECAUSE > $0F.
@@ -1862,23 +1767,23 @@ GETASCII        JSR PURGECMD    ; GET 1ST & SUBSEQUENT CHARS THAT
                                 ; BY ROLLING IT AS A UNIT (IE. *16).
 
 PRP2DUBL
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 JSR DOUBLE      ; MULTIPLY RESULT * 2.
                 JSR DOUBLE      ; MULTIPLY RESULT * 2.
                 JSR DOUBLE      ; MULTIPLY RESULT * 2.
                 JSR DOUBLE      ; MULTIPLY RESULT * 2.
-                .ELSE
+                ',`
                 LDX #4          ; (X) = # OF TIMES TO DOUBLE UNIT.
 TIMES2          JSR DOUBLE      ; MULTIPLY RESULT * 2.
                 DEX
                 BNE TIMES2      ; MORE MULTIPLICATION TO DO.
-                .ENDIF
+                ')
 
                                 ; MERGE HEX REPRESENTATION OF DIGIT
-                                ; INTO LOW NIBBLE POS'N OF RESULT.
+                                ; INTO LOW NIBBLE POSN OF RESULT.
                                 ;
                                 ; NOTE BUG:  NO CHK IS MADE TO TRAP
-                                ; NUMBERS > $FFFF.  IF TOO MANY #'S
+                                ; NUMBERS > $FFFF.  IF TOO MANY #S
                                 ; ARE INPUT, ONLY THE LAST 4 DIGITS
                                 ; ARE REFLECTED IN THE RESULT.
 
@@ -2005,8 +1910,8 @@ CLRMON          LDA #%01110000  ; SHUT OFF BITS IN PARSED TABLE
                                 ; ITS BUFFERS AT A LOWER LOCATION
                                 ; IN ORDER TO CREATE A SANCTUARY
                                 ; WHERE CUSTOM MACHINE LANGUAGE
-                                ; ROUTINES CAN'T BE OVERWRITTEN BY
-                                ; BASIC.  SEE FORMATTED DIS'MBLY
+                                ; ROUTINES CANT BE OVERWRITTEN BY
+                                ; BASIC.  SEE FORMATTED DISMBLY
                                 ; OF MAXFILES CMD FOR DETAILS.)
 
 CMDMXFIL        LDA #0          ; SHUT OFF THE EXEC FLG.
@@ -2077,14 +1982,14 @@ LOKUNLOK        JSR HNDLCMD1    ; CALL PART OF THE MAIN COMMAND
                                 ; =================================
 
 CMDVERFY
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 JMP VERFY
-                .RES  1
-                .ELSE
+                ASM_RES(1)
+                ',`
                 LDA #12         ; VERIFY OPCODE.
                 BNE LOKUNLOK    ; GO CALL THE CMD HNDLR TO VERIFY
                                 ; FILE & THEN EXIT VIA CLOSE CMD.
-                .ENDIF
+                ')
 
 
                                 ; =================================
@@ -2113,24 +2018,24 @@ CMDRENAM        LDA ADRSFNBF    ; COPY ADR OF SECONDARY FILENAME TO
                                 ; =================================
 
 CMDAPPND        JSR CMDOPEN     ; GO OPEN THE FILE TO BE APPENDED.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 LDA   #6
                 CMP   RTNCODFM
                 BNE   READ2END
                 RTS
-                .ENDIF
+                ')
 
 READ2END        JSR RDTXTBYT    ; GO READ A TEXT FILE BYTE.  (USE
                                 ; THE READ FUNCTION AND READ-ONE-
                                 ; BYTE SUBFUNCTION.)
                 BNE READ2END    ; TAKE BRANCH IF DEALING WITH A
                                 ; VALID (IE. NON-ZERO) DATA BYTE.
-                                ; HAVEN'T ENCOUNTERED AN END-OF-
+                                ; HAVENT ENCOUNTERED AN END-OF-
                                 ; FILE MARKER ($00) YET,SO GO BACK
                                 ; TO READ THE REST OF THE FILE.
-                .IF VERSION < 330
+                ifelse(eval(VERSION < 330),1,`
                 JMP BK2APND
-                .ELSE
+                ',`
                 JMP CKAPFLG     ; FOUND END OF FILE,SO NOW GO BACK
                                 ; UP THE FILE POINTER IF NECESSARY
                                 ; AND EVENTUALLY EXIT THE APPEND
@@ -2143,7 +2048,7 @@ READ2END        JSR RDTXTBYT    ; GO READ A TEXT FILE BYTE.  (USE
                                 ; OFTEN RETURNS TO AFTRCMD ($A17D)
                                 ; LOCATED IN THE COMMAND PARSING
                                 ; AND PROCESSING ROUTINES.
-                .ENDIF
+                ')
 
 
                                 ; =================================
@@ -2151,14 +2056,14 @@ READ2END        JSR RDTXTBYT    ; GO READ A TEXT FILE BYTE.  (USE
                                 ; =================================
 
 CMDOPEN
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
                 LDA #0          ; CODE FOR TEXT FILE.
                 JMP OPNCKTYP    ; GO OPEN THE FILE & CHK ITS TYPE.
                                 ; RTN TO THE CALLER OF THE OPEN CMD
                                 ; (OFTEN RETURNS TO AFTRCMD ($A17D)
                                 ; ASSOCIATED WITH THE COMMAND
                                 ; PARSING & PROCESSING ROUTINES.)
-                .ENDIF
+                ')
 
 
                                 ; ====================================
@@ -2188,14 +2093,14 @@ CLOSIFOP        JSR CMDCLOSE    ; CLOSE IF ALREADY OPEN.
                 LDA A5H         ; A5L/H POINTS AT HIGHEST NUMBERED
                                 ; (LOWEST IN MEMORY) FREE DOS BUF.
                 BNE SAVFNPTR    ; BRANCH IF FOUND A FREE BUFFER.
-                JMP NOBUFERR    ; COULDN'T LOCATE A FREE BUFFER SO
-                                ; GO ISSUE OUT OF BUF'S MSG.
+                JMP NOBUFERR    ; COULDNT LOCATE A FREE BUFFER SO
+                                ; GO ISSUE OUT OF BUFS MSG.
 SAVFNPTR        STA A3H         ; RESET A3L/H TO POINT AT DOS BUF
                 LDA A5L         ; THAT WILL USE FOR FILENAME FIELD.
                 STA A3L
                 JSR CPYPFN      ; REASSIGN A DOS BUFFER TO THE FILE
                                 ; WE WANT TO OPEN.
-                JSR BUFS2PRM    ; GET ADDR'S OF THE VARIOUS DOS
+                JSR BUFS2PRM    ; GET ADDRS OF THE VARIOUS DOS
                                 ; BUFFERS FROM THE CHAIN BUFFER &
                                 ; PUT THEM IN THE FM PARM LIST.
                 JSR CPY2PARM    ; PUT VOL, DRV, SLOT & ADDR OF THE
@@ -2211,7 +2116,7 @@ SAVFNPTR        STA A3H         ; RESET A3L/H TO POINT AT DOS BUF
                                 ; =================================
 
 CMDCLOSE        LDA PRIMFNBF    ; GET 1ST CHR FRM PRMRY NAME BUF.
-                CMP #' '        ; DON'T ALLOW LEADING SPACES.
+                CMP #HICHAR(` ')        ; DONT ALLOW LEADING SPACES.
                 BEQ CLOSEALL    ; LEADING SPC = SIGNAL TO CLOSE ALL
                                 ; FILES.  (A CLOSE CMD WAS ISSUED
                                 ; WITH NO ACCOMPANYING FILE NAME.)
@@ -2219,20 +2124,20 @@ CMDCLOSE        LDA PRIMFNBF    ; GET 1ST CHR FRM PRMRY NAME BUF.
                                 ; NAME, ELSE LOCATE A FREE BUFFER.
 
 EVENTXIT
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BCS CLOSERTSX   ; EVENTUALLY EXIT VIA THIS ROUTE!!
-                .ELSE
+                ',`
                 BCS CLOSERTS    ; EVENTUALLY EXIT VIA THIS ROUTE!!
-                .ENDIF
+                ')
 
                 JSR CLOSEONE    ; MATCHING FILENAME WAS FOUND SO
                                 ; GO CLOSE THAT FILE.
                 JMP CMDCLOSE    ; GO BACK TO POINT A5L/H AT A FREE
                                 ; DOS BUFFER & EXIT VIA EVENTXIT
                                 ; ($A2F4) AND CLOSERTS ($A330).
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
 CLOSERTSX       RTS
-                .ENDIF
+                ')
 
                                 ; ---------------------------------
                                 ; CLOSE A SPECIFIC FILE
@@ -2254,7 +2159,7 @@ CLOSEONE        JSR CKEXCBUF    ; CHK IF CURRENT FILENAME BUFFER
 FREEBUFF        LDY #0          ; FREE UP DOS BUF BY POKING A $00
                 TYA             ; IN 1ST BYT OF DOS FILENAME BUF.
                 STA (A3L),Y
-                JSR BUFS2PRM    ; GET ADDR'S OF THE VARIOUS DOS
+                JSR BUFS2PRM    ; GET ADDRS OF THE VARIOUS DOS
                                 ; BUFS FROM THE CHAIN BUF & PUT
                                 ; THEM IN THE FM PARAMETER LIST.
                 LDA #2          ; PUT OPCODE FOR CLOSE FUNCTION
@@ -2282,10 +2187,10 @@ CHKNXBUF        JSR GETNXBUF    ; GET ADR OF NEXT DOS FILENAME BUF
                                 ; (EXIT CLOSEALL VIA THIS ROUTE.)
 CKIFEXEC        JSR CKEXCBUF    ; CHK IF CURRENT DOS FILENAME BUF
                                 ; BELONGS TO TO AN EXEC FILE.
-                BEQ CHKNXBUF    ; EXEC ACTIVE SO DON'T CLOSE ITS
+                BEQ CHKNXBUF    ; EXEC ACTIVE SO DONT CLOSE ITS
                                 ; BUFFER OUT OR WILL END UP
                                 ; IN NEVER-NEVER LAND.  AFTER ALL,
-                                ; DON'T WANT TO CLOSE BUFFER IF WE
+                                ; DONT WANT TO CLOSE BUFFER IF WE
                                 ; ARE USING IT TO EXEC (IE. WOULD
                                 ; BE LIKE BURYING SELVES ALIVE)!!
                 JSR GETFNBY1    ; GET 1ST BYTE IN DOS NAME BUF.
@@ -2350,12 +2255,12 @@ DOBSAV          LDA #4          ; CODE FOR BINARY FILE.
 
 CMDBLOAD        JSR HNDLCMD     ; CALL THE FM COMMAND HANDLER TO
                                 ; OPEN THE FILE.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 LDA   #6
                 CMP   RTNCODFM
                 BNE   LCK4BLOD
                 JMP   TONOTFND
-                .ENDIF
+                ')
                                 ; COMPARE FILE TYPE WANTED
                                 ; WITH FILE TYPE FOUND.
 
@@ -2363,11 +2268,11 @@ LCK4BLOD        LDA #$7F        ; STRIP LOCK BIT FROM FILE TYPE
                 AND FILTYPFM    ; FOUND (VIA OPEN FUNCTION).
                 CMP #4          ; WAS FILE FOUND A BINARY FILE?
                 BEQ ADR4BLOD    ; YES.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 JMP NOTBINARY
-                .ELSE
+                ',`
                 JMP TYPMISM     ; NO - GO ISSUE FILE-MISMATCH MSG.
-                .ENDIF
+                ')
 
                                 ; REDUNDANT CODE!  CLOSE (IF NECESSARY)
                                 ; AND THEN OPEN THE FILE AGAIN.
@@ -2390,9 +2295,9 @@ LEN4BLOD        JSR RDADRLEN    ; READ THE BLOAD LENGTH OFF DSK.
                                 ; (PUT RESULTS IN LEN2RDWR.)
                 LDX ADRPRSD     ; SET (X)/(Y) = EITHER ORIG PARSED
                 LDY ADRPRSD+1   ; A-PARM ADR OR BLOAD ADR FRM DSK.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 JMP READREST
-                .ELSE
+                ',`
                 JMP LODINTFP    ; GO READ THE REST OF THE FILE IN.
                                 ; EXITS VIA THE CLOSE COMMAND.
                                 ; RETURNS TO CALLER OF THE BLOAD
@@ -2400,7 +2305,7 @@ LEN4BLOD        JSR RDADRLEN    ; READ THE BLOAD LENGTH OFF DSK.
                                 ; BRUN, THEN OFTEN RTNS TO AFTRCMD
                                 ; ($A17D) LOCATED IN THE COMMAND
                                 ; PARSING & PROCESSING ROUTINES.)
-                .ENDIF
+                ')
 
 
                                 ; =================================
@@ -2412,7 +2317,7 @@ CMDBRUN         JSR CMDBLOAD    ; BLOAD THE PRGM.
                                 ; NOTE:  THIS CAN CREATE SOME
                                 ; EXOTIC BUGS IF THE BRUNED PRGM
                                 ; PRINTS ANY INFO OR IF "MON" IS
-                                ; ACTIVE.  SEE FORMATTED DIS'MBLY
+                                ; ACTIVE.  SEE FORMATTED DISMBLY
                                 ; OF BRUN CMD FOR EXPLANATION.)
                 JMP (ADRPRSD)   ; BEGIN EXECUTION OF BINARY PRGM.
                                 ; EXECUTION NORMALLY RETURNS TO
@@ -2432,16 +2337,16 @@ CMDBRUN         JSR CMDBLOAD    ; BLOAD THE PRGM.
 CMDSAVE         LDA ACTBSFLG    ; CHK WHICH BASIC IS ACTIVE.
                 BEQ SAVINTGR    ; BRANCH IF USING INTEGER.
                                 ; INT=$00, A(ROM)=$40, A(RAM)=$80.
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
                 LDA PROTFLG     ; IF PROTECTION FLAG IS ON (IE. IS
                                 ; NEGATIVE), THEN ALL APPLESOFT
-                                ; CMDS BECAUSE RUN & DOS'S SAVE CMD
+                                ; CMDS BECAUSE RUN & DOSS SAVE CMD
                                 ; CAUSES A PHONY PROGRAM-TOO-LARGE
                                 ; MESSAGE TO BE GENERATED.
                 BPL SAVAPSFT    ; BRANCH IF PROTECTION FLG IS OFF.
                 JMP TOOLARGE    ; PROTECTED!!! - SPIT OUT PHONY
                                 ; PROGRAM-TOO-LARGE MESSAGE & XIT.
-                .ENDIF
+                ')
 
 
                                 ; ---------------------------------
@@ -2554,13 +2459,13 @@ WRADRLEN        STY LEN2RDWR    ; PUT LOW BYTE IN FM PARM LIST IN
 RDWRANGE        STY CURIOBUF    ; PUT ADR OF OUTPUT BUF IN PRM LST
                 STA CURIOBUF+1
                 LDA #2          ; SET SUBCODE FOR RANGE OF BYTES.
-                .IF VERSION < 330
+                ifelse(eval(VERSION < 330),1,`
                 STA SUBCODFM
-                .ELSE
+                ',`
                 JMP VRFYRWNG    ; GO CALL THE FILE MANAGER TO WRITE
                                 ; DATA TO THE DISK.  NEXT VERIFY
                                 ; THE INFO & CLOSE THE FILE.
-                .ENDIF
+                ')
 
 
                                 ; =================================
@@ -2586,7 +2491,7 @@ CMDLOAD         JSR CLOSEALL    ; CLOSE ALL FILES (EXCEPT ACTIVE
                                 ; EXEC FILE).
 OPENLOAD        JSR HNDLCMD     ; GO OPEN THE FILE.
 
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 LDA #6
                 CMP RTNCODFM
                 BNE OPENLOAD2
@@ -2594,18 +2499,18 @@ TONOTFND        JSR CMDELETE
                 LDA #6
                 JMP ERRHNDLR
 OPENLOAD2       LDA #%01111111
-                .ELSE
+                ',`
                 LDA #%00100011  ; SET BITS IN (A) TO RESTRICT LOAD
                                 ; CMD TO APLSFT ($02), INTGR ($01)
                                 ; OR A-TYPE ($20) FILES.
-                .ENDIF
+                ')
                 AND FILTYPFM    ; TYPE FOUND (VIA OPEN FUNCTION).
                 BEQ TOTYPMIS    ; ERR -NOT ONE OF THE ABOVE TYPES.
                                 ; GO ISSUE TYPE-MISMATCH ERR MSG.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 AND #3
                 BEQ TOTYPMIS
-                .ENDIF
+                ')
 
                 STA FILTYPFM    ; SAVE TYPE WANTED IN FM PARM LIST
 
@@ -2620,7 +2525,7 @@ OPENLOAD2       LDA #%01111111
                                 ; THE 1ST 2 BYTES OF THE FILE.
 
                                 ; CHK TO SEE IF THERE IS ENOUGH ROOM
-                                ; BETWEEN PRGM START POS'N & MEMSIZ
+                                ; BETWEEN PRGM START POSN & MEMSIZ
                                 ; TO ACCOMODATE FILE.
 
                 CLC             ; ADD LNGTH OF FILE TO START OF PGM
@@ -2645,9 +2550,9 @@ OPENLOAD2       LDA #%01111111
                 LDX TXTTAB
                 LDY TXTTAB+1
 
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 JMP READREST
-                .ELSE
+                ',`
 
                 JSR LODINTFP    ; DESIGNATE WHERE IN FREE MEMORY TO
                                 ; LOAD PRGM & THEN GO LOAD IT.
@@ -2659,7 +2564,7 @@ OPENLOAD2       LDA #%01111111
                                 ; PTR & THEN ADJUSTS LINKS IN EACH
                                 ; PROGRAM LINE.
                                 ; EVENTUALLY, EXECUTION FLOWS INTO
-                                ; BSC'S WRMSTART (RESTART, $D43C).
+                                ; BSCS WRMSTART (RESTART, $D43C).
                                 ; IF THE LOAD CMD WAS CALLED VIA
                                 ; THE RUN CMD, EXECUTION BRANCHES
                                 ; BACK TO THE RUNFPINT ($A4DC) PART
@@ -2670,7 +2575,7 @@ OPENLOAD2       LDA #%01111111
                                 ; PORTION OF BASIC EVENTUALLY
                                 ; REQUESTS FURTHER PRGM OR KEYBRD
                                 ; INPUT & ANOTHER CMD IS PARSED.
-                .ENDIF
+                ')
 
 
                                 ; ---------------------------------
@@ -2700,18 +2605,18 @@ LODINTGR        LDA #1          ; CODE FOR INTEGER BASIC FILE TYPE.
 
                                 ; =================================
                                 ; GO DO THE ACTUAL LOAD.
-                                ; (COMMON LOAD ROUT'N FOR
+                                ; (COMMON LOAD ROUTN FOR
                                 ; FP OR INTEGER LOAD CMDS.)
                                 ; =================================
 
 LODINTFP
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 JMP READREST
-                .ELSE
+                ',`
                 STX CURIOBUF    ; DESIGNATE LOAD ADDR AS I/O BUF
                 STY CURIOBUF+1  ; IN THE FM PARAMETER LIST.
                 JMP CLOSEFM     ; USE FILE MANAGER TO LOAD PRGM.
-                .ENDIF
+                ')
 
                                 ; =================================
                                 ; COMMON CODE USED TO READ THE
@@ -2743,12 +2648,12 @@ RDADRLEN        LDA ADLENADR    ; GET ADR OF TWO-BYTE INPUT BUFFER
                 STA LEN2RDWR
                 RTS
 
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
 READREST        STX   CURIOBUF
                 STY   CURIOBUF+1
                 JSR   FMDRIVER
                 JMP   CMDCLOSE
-                .ENDIF
+                ')
 
                                 ; =================================
                                 ; CLOSE FILE & ISSUE A PROGRAM-
@@ -2800,7 +2705,7 @@ SELBSRTN        RTS             ; DESIRED BASIC WAS ACTIVE.
                                 ; =================================
 
 CMDRUN
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
                 LDA ACTBSFLG    ; CHK WHICH BASIC IS CURRENT.
                 BEQ LOAD4RUN    ; BRANCH IF USING INTEGER BASIC.
 
@@ -2808,7 +2713,7 @@ CMDRUN
                                 ; SIGNAL THAT WE ARE ABOUT TO
                                 ; INTERRUPT THE RUN COMMAND TO DO
                                 ; LOAD.  ($40=A(ROM), $80=A(RAM).)
-                .ENDIF
+                ')
 
 LOAD4RUN        JSR CMDLOAD     ; GO LOAD THE PROGRAM.
                                 ; ************* NOTE ************
@@ -2835,12 +2740,12 @@ RUNFPINT        JSR CRVIADOS    ; PRINT A <CR>.
 
 
                                 ; =======================================
-                                ; INTEGER BASIC'S RUN CMD ENTRY POINT.
+                                ; INTEGER BASICS RUN CMD ENTRY POINT.
                                 ; (RUNTRY PTS HERE WHEN INTEGER ACTIVE.)
                                 ; =======================================
 
 RUNINTGR        LDA LOMEM       ; CLEAR OUT ALL VARIABLES.
-                STA INTVRLND    ; ZERO OUT INTEGER BASIC'S CURRENT
+                STA INTVRLND    ; ZERO OUT INTEGER BASICS CURRENT
                 LDA LOMEM+1     ; VARIABLE POINTER.
                 STA INTVRLND+1
                 JMP (CHAINTRY)  ; GO INTO INTEGER BASIC TO EXECUTE.
@@ -2851,41 +2756,41 @@ RUNINTGR        LDA LOMEM       ; CLEAR OUT ALL VARIABLES.
                                 ; =================================
 
 CMDCHAIN
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 JSR CMDLOAD
-                .ELSE
+                ',`
                 JSR OPENLOAD    ; LOAD THE INTEGER PRGM.
-                .ENDIF
+                ')
                 JSR CRVIADOS    ; PRINT A <CR>.
                 JSR INITIOHK    ; POINT I/O HOOKS AT DOS.
                 JMP (CHAINTRY)  ; GO INTO INTEGER BASIC TO EXECUTE.
 
 
                                 ; =================================
-                                ; A(ROM)'S RUN ENTRY POINT.
+                                ; A(ROM)S RUN ENTRY POINT.
                                 ; (RUNTRY POINTS HERE IF A(ROM)
                                 ; BASIC IS ACTIVE.)
                                 ; =================================
 
 RUNFPROM        JSR SETZPTRS    ; CLEAR OUT ALL VARIABLES.
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
                 STA PROMPT      ; ZERO OUT PROMPT & ON-ERROR FLAG.
                 STA ERRFLG
-                .ENDIF
+                ')
                 JMP NEWSTT      ; JUMP INTO BASIC TO EXECUTE PRGM.
 
 
                                 ; =================================
-                                ; A(RAM)'S RUN ENTRY POINT.
+                                ; A(RAM)S RUN ENTRY POINT.
                                 ; (RUNTRY POINTS HERE IF A(RAM)
                                 ; VERSION OF BASIC IS UP.)
                                 ; =================================
 
 FPRAMRUN        JSR CLRFPRAM    ; CLEAR ALL VARIABLES.
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
                 STA PROMPT      ; ZERO OUT PROMPT & ON ERROR FLAG.
                 STA ERRFLG
-                .ENDIF
+                ')
                 JMP RUNFPRAM    ; GO RUN THE PROGRAM.
 
                                 ; =================================
@@ -2895,7 +2800,7 @@ FPRAMRUN        JSR CLRFPRAM    ; CLEAR ALL VARIABLES.
 CMDWRITE        JSR COMRDWR     ; CALL COMMON READ/WRITE ROUTINE.
                                 ; FIND NAMED BUF, ELSE A FREE BUF.
                                 ; OPEN FILE IF NOT ALREADY OPEN.
-                                ; POS'N FILE PTR IF R- OR B-PARMS
+                                ; POSN FILE PTR IF R- OR B-PARMS
                                 ; WERE ISSUED.
                 LDA #5          ; SET CONDITION 5.
                 STA OPUTCOND
@@ -2914,7 +2819,7 @@ CMDWRITE        JSR COMRDWR     ; CALL COMMON READ/WRITE ROUTINE.
 CMDREAD         JSR COMRDWR     ; CALL COMMON READ/WRITE ROUTINE.
                                 ; FIND NAMED BUF, ELSE FIND A FREE
                                 ; BUFFER. OPEN FILE IF NOT ALREADY
-                                ; OPEN.  POS'N FILE PTR IF R- OR
+                                ; OPEN.  POSN FILE PTR IF R- OR
                                 ; B-PARMS WERE ISSUED WITH CMD.
                 LDA #1          ; SET CONDNFLG TO SIGNAL READING.
                 STA CONDNFLG
@@ -2948,7 +2853,7 @@ BUFS4RW         JSR BUFS2PRM    ; COPY ADDRS OF THE VARIOUS DOS
 
 CKRBOPTN        LDA CUMLOPTN    ; CHK IF R- OR B-PARMS ISSUED.
                 AND #%00000110  ; (R=$04, B=$02.)
-                BEQ RDWRRTN     ; NO - SKIP POS'NING OF FILE PTR.
+                BEQ RDWRRTN     ; NO - SKIP POSNING OF FILE PTR.
 
                                 ; COPY B- & R-PARMS FROM OPTION
                                 ; PARSED TABLE TO FM PARM LIST.
@@ -2964,7 +2869,7 @@ CPYBPARM        LDA RECPRSD,X   ; GET VALUE OF PARAMETER.
 
 BK2APND         LDA #$0A        ; OPCODE FOR POSITION.
                 STA OPCODEFM    ; PUT IT IN THE FM PARAMETER LIST.
-                JSR FMDRIVER    ; CALL FM TO DO THE POS'N FUNCTION.
+                JSR FMDRIVER    ; CALL FM TO DO THE POSN FUNCTION.
 RDWRRTN         RTS
 
 
@@ -2974,22 +2879,22 @@ RDWRRTN         RTS
 
 CMDINIT         LDA #%01000000  ; CHK TO SEE IF V(OLUME) OPTION
                 AND CUMLOPTN    ; WAS ISSUED WITH INIT COMMAND.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BEQ L24FE
-                .ELSE
+                ',`
                 BEQ VOL254      ; NO V-PARM ISSUED, SO USE A DFLT
                                 ; VOLUME VALUE OF 254.
-                .ENDIF
+                ')
                 LDA VOLPRSD     ; A VOL VAL WAS ISSUED, SO USE IT
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BEQ L24FE
-                .ELSE
+                ',`
                 BNE OTHRVOL     ; (BUT ONLY IF IT IS NOT ZERO).
 VOL254          LDA #$FE        ; USE VOL 254 AS DEFAULT VALUE.
                 STA VOLPRSD
-                .ENDIF
+                ')
 OTHRVOL         LDA ADOSTART+1  ; HI BYTE OF DOS LOAD ADDR FROM
-                                ; DOS'S MAIN VARIABLE TABLE.
+                                ; DOSS MAIN VARIABLE TABLE.
                 STA SUBCODFM
                 LDA #11         ; OPCODE FOR INIT COMMAND.
                 JSR HNDLCMD1    ; CALL FM COMMAND HANDLER TO DO
@@ -2999,9 +2904,9 @@ OTHRVOL         LDA ADOSTART+1  ; HI BYTE OF DOS LOAD ADDR FROM
                                 ; CMD.  (NORMALLY RTNS TO AFTRCMD
                                 ; ($A17D) LOCATED IN THE COMMAND
                                 ; PARSING & PROCESSING ROUTINES.)
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
 L24FE           JMP CKIFCTRL
-                .ENDIF
+                ')
 
                                 ; =================================
                                 ; CATALOG COMMAND HANDLER.
@@ -3071,9 +2976,9 @@ CPYAPPLE        LDA APLSFTXT-1,X ; GET CHARS OF NAME.
 CMDINT          LDA #$20        ; OPCODE FOR "JSR".
                 JSR SETROM      ; TEST TO SEE IF LANGUAGE WANTED
                                 ; IS ON CARD OR MOTHERBOARD.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BNE CMDFP
-                .ELSE
+                ',`
                 BEQ INTPRSNT    ; INTEGER BASIC IS PRESENT (EITHER
                                 ; ON CARD OR MOTHERBOARD).
 
@@ -3087,8 +2992,8 @@ NOLNGINT        LDA #1          ; SET ERROR CODE FOR LANGUAGE-NOT-
 
 INTPRSNT        LDA #0          ; BECAUSE DESIRED BASIC IS PRESENT,
                 STA RUNTRUPT    ; ZERO OUT THE RUN INTERCEPT FLAG
-                                ; BECAUSE WE WON'T BE LOADING A LANG
-                .ENDIF
+                                ; BECAUSE WE WONT BE LOADING A LANG
+                ')
 TODOSCLD        JMP DOSCOLD     ; GO INTO THE COLDSTART ROUTINE.
 
 
@@ -3135,16 +3040,16 @@ DVICERTN        RTS             ; EXIT WITH THE SWITCHES POINTING
 
 CMDEXEC         JSR CMDOPEN     ; GO OPEN THE FILE TO BE EXECED.
                 LDA CURFNADR    ; GET ADDR OF CURRENT FILENAME BUF
-                STA EXECBUFF    ; & DESIGNATE AS EXEC'S NAME BUF.
+                STA EXECBUFF    ; & DESIGNATE AS EXECS NAME BUF.
                 LDA CURFNADR+1
                 STA EXECBUFF+1
                 LDA PRIMFNBF    ; SET EXEC FLAG TO A NON-ZERO VAL.
                 STA EXECFLAG    ; (USE 1ST CHAR OF FILE NAME.)
-                BNE POSNCHKR    ; ALWAYS - GO POS'N FILE PTR IF
+                BNE POSNCHKR    ; ALWAYS - GO POSN FILE PTR IF
                                 ; NECESSARY.
                                 ; NOTE: ACTUAL EXECING OF STATMNTS
                                 ; DOES NOT OCCUR UNTIL AFTER THE
-                                ; COMPUTER RETURNS TO BASIC'S
+                                ; COMPUTER RETURNS TO BASICS
                                 ; RESTART ($D43C) ROUTINE.  WHEN
                                 ; INPUT IS REQUESTED, EXECUTION
                                 ; FLOWS VIA DOS HKS INTO OPUTINCP
@@ -3176,7 +3081,7 @@ BUFS4PSN        JSR BUFS2PRM    ; GET ADR OF DOS BUFS FROM CHAIN
 POSNCHKR        LDA CUMLOPTN    ; CHK TO SEE IF A NON-ZERO R-PARM
                 AND #%00000100  ; WAS ISSUED WITH CMD.
                 BEQ DONEPOSN    ; R-PARM WAS ZERO, SO GO EXIT
-                                ; (IE. DON'T MOVE FILE POINTER).
+                                ; (IE. DONT MOVE FILE POINTER).
 
                                 ; A NON-ZERO R-PARM WAS ISSUED, SO GO MOVE
                                 ; THE FILE POINTER FORWARD BY READING
@@ -3209,13 +3114,13 @@ PSNFIELD        JSR RDTXTBYT    ; GO READ A TEXT FILE BYTE.
                                 ; SAME FIELD.
                 BEQ CKPSNDUN    ; YES - GOT END-OF-FIELD MARKER SO
                                 ; BRANCH BACK TO REDUCE THE FIELD
-                                ; COUNT & SEE IF WE'RE DONE
+                                ; COUNT & SEE IF WERE DONE
                                 ; POSITIONING YET.
 DONEPOSN        RTS             ; EXIT - EITHER DONE POSITIONING,
                                 ; ELSE R-PARM WAS 0 TO START WITH
                                 ; & THERE4 NO POSITIONING NEEDED.
                                 ; EXIT TO CALLER OF COMMAND.  OFTEN
-                                ; RETURNS TO AFTRCMD ($A17D) LOC'D
+                                ; RETURNS TO AFTRCMD ($A17D) LOCD
                                 ; IN THE CMD PARSING & PROCESSING
                                 ; ROUTINES.
 
@@ -3225,12 +3130,12 @@ DONEPOSN        RTS             ; EXIT - EITHER DONE POSITIONING,
                                 ; =================================
 
 WRITEXT         JSR CKBSCRUN    ; CHK IF BASIC IS RUNNING A PRGM.
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
                 BCS CLOSZERO    ; NOT RUNNING, SO GO CLOSE FILE,
                                 ; RESET TO CONDITION 0 & THEN DO A
                                 ; WARMSTART.  (REMEMBER, WRITE CMD
                                 ; IS RESTRICTED TO DEFERRED MODE.)
-                .ENDIF
+                ')
                 LDA ASAVED      ; RETRIEVE BYTE TO WRITE.
                 STA ONEIOBUF    ; PUT IT IN FM PARM LIST.
                 LDA #4          ; SET PARM LIST TO WRITE ONE BYTE.
@@ -3245,17 +3150,17 @@ WRITEXT         JSR CKBSCRUN    ; CHK IF BASIC IS RUNNING A PRGM.
                                 ; =================================
 
 READTEXT        JSR CKBSCRUN    ; CHK IF BASIC IS RUNNING A PRGM.
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
                 BCS CLOSZERO    ; BASIC NOT RUNNING SO GO CLOSE
                                 ; FILE, RESET TO CONDITION 0 & DO A
                                 ; WARMSTART.  (REMEMBER READ CMD
                                 ; IS RESTRICTED TO DEFERRED MODE.)
-                .ENDIF
-                LDA #6          ; SET COND'N6 -IGNORE INPUT PROMPT
+                ')
+                LDA #6          ; SET CONDN6 -IGNORE INPUT PROMPT
 
 SETCOND         STA OPUTCOND
                 JSR RDTXTBYT    ; GO READ TEXT FILE DATA BYTE.
-                BNE NOTEND      ; IF BYTE READ <> 0, THEN HAVEN'T
+                BNE NOTEND      ; IF BYTE READ <> 0, THEN HAVENT
                                 ; HIT END-OF-FILE MARKER YET.
 
                                 ; RAN OUT OF DATA.  PICKED UP A $00 BYTE
@@ -3267,25 +3172,25 @@ SETCOND         STA OPUTCOND
                 JSR CLOSEONE    ; RAN OUT OF DATA SO CLOSE FILE.
                 LDA #3          ; USING CONDITION 3?
                 CMP OPUTCOND    ; IE. HNDLING AN INPUT STATEMENT?
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BEQ TOEXIT2
-                .ELSE
+                ',`
                 BEQ DONEPOSN    ; YES - JUST GO TO AN "RTS".
-                .ENDIF
+                ')
 
 ENDATERR        LDA #5          ; NO - THERE4 GOT OUT-OF-DATA ERR.
                 JMP ERRHNDLR    ; GO HANDLE ERROR.
 
 
 NOTEND
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 STA ASAVED
 TOEXIT2         JMP DOSEXIT
 CKBSCRUN        LDA ACTBSFLG
                 BEQ INTBASIC
                 LDX CURLIN+1
                 JMP L3FD5
-                .ELSE
+                ',`
                 CMP #$E0        ; LOWERCASE?
                 BCC SAVIT       ; BRANCH IF UPPERCASE.
                 AND #$7F        ; CONVERT LOWER TO UPPER IN ORDER
@@ -3298,7 +3203,7 @@ SAVIT           STA ASAVED      ; SAVE CHAR READ.
                 LDA BUF200,X    ; STORED IN BUF200 TO CONVERT TO
                 ORA #$80        ; LOWERCASE IF NECESSARY.
                 STA BUF200,X
-TOEXIT          JMP DOSEXIT     ; GO TO DOS'S EXIT ROUTINE.
+TOEXIT          JMP DOSEXIT     ; GO TO DOSS EXIT ROUTINE.
 
 
                                 ; ==================================
@@ -3314,7 +3219,7 @@ CKBSCRUN        PHA             ; SAVE (A) ON STK.
                                 ; (IF LINE NUMBER BYTES ARE
                                 ; GREATER THAN OR EQUAL TO DECIMAL
                                 ; 65280 ($FF IN HI BYTE), THEN THE
-                                ; COMPUTER ASSUMES THAT WE'RE USING
+                                ; COMPUTER ASSUMES THAT WERE USING
                                 ; THE IMMEDIATE MODE.)
 
                 LDX CURLIN+1    ; CHK HI BYTE OF LINE #.
@@ -3328,27 +3233,27 @@ CKBSCRUN        PHA             ; SAVE (A) ON STK.
                                 ; PROMPT.
 
                 LDX PROMPT
-                CPX #']'        ; USING AN APPLESOFT PROMPT?
+                CPX #HICHAR(`]')        ; USING AN APPLESOFT PROMPT?
                 BEQ IMEDMODE    ; YES - SO MUST BE IN IMMED MODE.
 
 RUNNING         PLA             ; GET SAVED (A) BACK FROM STK.
                 CLC             ; SIGNAL PRGM IS RUNNING.
                 RTS
-                .ENDIF
+                ')
 
-INTBASIC        LDA RUNMODE     ; CHK INTGR BASIC'S RUN MODE FLG.
-                .IF VERSION < 320
+INTBASIC        LDA RUNMODE     ; CHK INTGR BASICS RUN MODE FLG.
+                ifelse(eval(VERSION < 320),1,`
                 BMI PT2EXEC2
-                .ELSE
+                ',`
                 BMI RUNNING     ; IF NEG, INT BASIC IN DEFERRED.
-                .ENDIF
+                ')
 
 
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
 IMEDMODE        PLA             ; GET SAVED (A) BACK FROM STK.
                 SEC             ; SIGNAL IN IMMEDIATE MODE.
                 RTS
-                .ENDIF
+                ')
 
 
                                 ; ====================================
@@ -3357,15 +3262,15 @@ IMEDMODE        PLA             ; GET SAVED (A) BACK FROM STK.
 
 CLOSZERO        JSR CLOSEONE    ; CLOSE OPEN FILE.
                 JSR RESTAT0     ; RESET TO CONDITION 0.
-                JMP DOSEXIT     ; GO TO DOS'S EXIT ROUTINE.
+                JMP DOSEXIT     ; GO TO DOSS EXIT ROUTINE.
 
 
                                 ; =================================
-                                ; EXEC'S READ DATA ROUTINE.
+                                ; EXECS READ DATA ROUTINE.
                                 ; =================================
 
 READEXEC        JSR PT2EXEC     ; POINT THE A3L/H POINTER AT BUF
-                                ; THAT WE'RE EXECING IN.
+                                ; THAT WERE EXECING IN.
                 JSR BUFS2PRM    ; COPY ADDRS OF THE VARIOUS DOS
                                 ; BUFS FROM THE CHAIN BUF & PUT
                                 ; THEM IN THE FM PARAMETER LIST.
@@ -3388,7 +3293,7 @@ RDTXTBYT        LDA #3          ; SET FM PRM LIST TO READ ONE BYTE.
 
                                 ; =================================
                                 ; POINT THE A3L/H POINTER AT
-                                ; BUFFER THAT WE'RE EXECING IN.
+                                ; BUFFER THAT WERE EXECING IN.
                                 ; =================================
 
 PT2EXEC         LDA EXECBUFF+1  ; GET ADR OF DOS BUF USING TO EXEC.
@@ -3418,31 +3323,31 @@ FMDRIVER        JSR FILEMGR     ; CALL FM MANAGER TO DO FUNCTION.
                                 ; THEN ENTER WITH CARRY SET.
 
 
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BCS AFTRFUNC2
                 RTS
-                .ELSE
+                ',`
 AFTRFUNC        BCC FMDRVRTN    ; (C) = 0 = NO ERRORS.
-                .ENDIF
+                ')
 
-                .IF VERSION = 320 || VERSION = 321
+                ifelse(eval(VERSION == 320 || VERSION == 321),1,`
                 JSR GETBUFF
                 BCS AFTRFUNC2
                 LDA #0
                 TAY
                 STA (A3L),Y
-                .ENDIF
+                ')
 
 AFTRFUNC2
                 LDA RTNCODFM    ; GET RETURN CODE FRM FM PARM LIST
                 CMP #5          ; "END-OF-DATA" ERROR?
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BNE FMDRVRTN2
 
-                .ELSE
-                .IF VERSION < 330
+                ',`
+                ifelse(eval(VERSION < 330),1,`
                 BNE ERRHNDLR
-                .ELSE
+                ',`
                 BEQ TOAPPTCH    ; YES -NOT HANDLED LIKE OTHER ERRS
                                 ; FILE ENDS AT A FULL DATA SEC SO
                                 ; WE ENCOUNTERED A ZEROED-OUT T/S
@@ -3454,25 +3359,27 @@ AFTRFUNC2
 TOAPPTCH        JMP APNDPTCH    ; GO HANDLE END-OF-DATA ERROR.
 
                 NOP
-                .IF VERSION >= 331
+                ifelse(eval(VERSION >= 331),1,`
 BK2FMDRV        JSR CKIFAPND    ; <---NOTE: APNDPTCH RETURN HERE!!
                                 ; GO CHK IF THE APPEND FLAG IS ON.
-                .ELSEIF VERSION = 330
+                ',`
+                ifelse(eval(VERSION == 330),1,`
                 NOP
 BK2FMDRV        NOP
                 NOP
-                .ENDIF
-                .ENDIF
-                .ENDIF
+                ')
+                ')
+                ')
+                ')
 
                 LDX #0          ; ZERO-OUT THE ONE-DATA-BYTE BUF
                 STX ONEIOBUF    ; IN THE FM PARAMETER LIST.  (ALSO
                                 ; REFERRED TO AS THE LOW BYTE OF
                                 ; CURIOBUF.)
 FMDRVRTN        RTS             ; RETURN TO CALLER OF FM DRIVER.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
 FMDRVRTN2       JMP ERRHNDLR
-                .ENDIF
+                ')
 
                                 ; =================================
                                 ; SELECTED ERROR PROCESSING.
@@ -3492,78 +3399,78 @@ TOOLARGE        LDA #14
                 BNE ERRHNDLR    ; ALWAYS.
 TYPMISM         LDA #13
 
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 BNE ERRHNDLR    ; ALWAYS.
 NOTBINARY       LDA #15
-                .ENDIF
+                ')
 
                                 ; =================================
-                                ; DOS'S MAIN ERROR-HANDLER ROUTINE
+                                ; DOSS MAIN ERROR-HANDLER ROUTINE
                                 ; =================================
 
 ERRHNDLR        STA ASAVED      ; SAVE RETURN CODE FOR LATER USE.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 JSR RESTAT0
-                .ELSE
+                ',`
                 JSR RESTATIN    ; RESET THE FOLLOWING FLAGS TO 0:
                                 ; OPUTCOND, CONDNFLG & RUNTRUPT.
-                .ENDIF
+                ')
                 LDA ACTBSFLG    ; CHK IF INT OR FP BASIC ACTIVE.
                 BEQ WASINT      ; BRANCH IF USING INTEGER.
                                 ; (ONERR FLAG NOT APPLIC TO INT.)
-                LDA ERRFLG      ; CHK IF BASIC'S ONERR FLAG IS ON.
-                .IF VERSION < 320
+                LDA ERRFLG      ; CHK IF BASICS ONERR FLAG IS ON.
+                ifelse(eval(VERSION < 320),1,`
                 BMI ONERRACT2
-                .ELSE
+                ',`
                 BMI ONERRACT    ; YES - SKIP PRINTING OF ERROR MSG
                                 ; BECAUSE WE EVENTUALLY WANT TO GO TO
                                 ; OUR OWN CUSTOMIZED ERROR-HNDLING
                                 ; ROUTINE.
-                .ENDIF
+                ')
 WASINT          LDX #0          ; INITIALIZE INDEX TO TABLE OF
                                 ; OFFSETS TO ERRORS.
                 JSR PRDOSERR    ; GO PRINT <RTN>, BELL, <RTN>.
                 LDX ASAVED      ; GET SAVED RETURN CODE.
                 JSR PRDOSERR    ; GO PRINT THE ERROR MESSAGE.
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 LDX #$10
-                .ELSE
+                ',`
                 JSR CRVIADOS    ; PRINT A <CR>.
-                .ENDIF
+                ')
 ONERRACT
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 JSR PRDOSERR
-                .ELSE
+                ',`
                 JSR INITIOHK    ; RESET I/O HKS TO POINT TO DOS.
-                .ENDIF
+                ')
 ONERRACT2
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 JSR INITIOHK
-                .ELSE
+                ',`
                 JSR CKBSCRUN    ; CHK IF BASIC IS RUNNING A PRGM:
                                 ; (C) = 0 IF RUNNING.
                                 ; (C) = 1 IF IMMEDIATE.
-                .ENDIF
+                ')
                 LDX ASAVED      ; GET SAVED RETURN CODE.
                 LDA #3          ; SET (A) = 3 IN CASE FALL THRU TO
-                                ; GO TO BASIC'S ERROR HANDLING
+                                ; GO TO BASICS ERROR HANDLING
                                 ; ROUTINE. THE MAGIC # OF 3 ALLOWS
                                 ; BSCERHLR ($D865) TO CONDITION
                                 ; (C) = 0 AND (Z) = 1 IN ORDER TO
                                 ; COMPLY WITH THE BASIC ROUTINE
                                 ; THAT IS RESPONSIBLE FOR PRINTING
-                                ; BASIC'S ERROR MESSAGES.
-                .IF VERSION >= 320
+                                ; BASICS ERROR MESSAGES.
+                ifelse(eval(VERSION >= 320),1,`
                 BCS DOWRM       ; BASIC IS NOT RUNNING.
-                .ENDIF
+                ')
 
-TOBSCERR        JMP (ADBSCERR)  ; TO BASIC'S ERROR HANDLING ROUTINE
+TOBSCERR        JMP (ADBSCERR)  ; TO BASICS ERROR HANDLING ROUTINE
                                 ; (BSCERHLR, $D865).
 
-                .IF VERSION >= 320
-DOWRM           JMP (TOWRMVEC)  ; TO BASIC'S WARMSTART ROUTINE
+                ifelse(eval(VERSION >= 320),1,`
+DOWRM           JMP (TOWRMVEC)  ; TO BASICS WARMSTART ROUTINE
                                 ; (RESTART, $D43C).
-                .ENDIF
+                ')
 
 
                                 ; =================================
@@ -3678,11 +3585,11 @@ FNCHAR1         JSR GETFNBY1    ; GET 1ST CHR OF NAME FRM NAM BUF
                 STA A5H
                 BNE GETFNLNK    ; ALWAYS.
 
-NXFNBUF         LDY #29         ; BUF WASN'T FREE SO CMP NAME OF
+NXFNBUF         LDY #29         ; BUF WASNT FREE SO CMP NAME OF
 CMPFNCHR        LDA (A3L),Y     ; OWNER WITH NAME OF FILE IN
                 CMP PRIMFNBF,Y  ; PRIMARY FILE NAME BUF.  (START
                                 ; WITH LAST CHAR FIRST.)
-                BNE GETFNLNK    ; CHAR DIDN'T MATCH, SO LOOK FOR
+                BNE GETFNLNK    ; CHAR DIDNT MATCH, SO LOOK FOR
                                 ; ANOTHER BUF THAT MIGHT HAS SAME
                                 ; FILE NAME.
                 DEY             ; THAT CHAR MATCHED.  HOW ABOUT
@@ -3741,7 +3648,7 @@ GETFNBY1        LDY #0          ; BUF IS FREE IF 1ST BYTE = $00.
                                 ; =================================
                                 ; CHECK IF THE CURRENT FILE NAME
                                 ; BUFFER BELONGS TO AN EXEC FILE.
-                                ; (AFTER ALL, WE DON'T WANT TO
+                                ; (AFTER ALL, WE DONT WANT TO
                                 ; PREMATURELY CLOSE A FILE IF WE
                                 ; ARE USING IT TO EXEC - WOULD BE
                                 ; LIKE BURYING OURSELVES ALIVE).
@@ -3801,7 +3708,7 @@ BILDBUFS        SEC             ; IRREL, MIGHT AS WELL BE A "NOP".
                 STA TEMPBYT
 
                                 ; FREE BUFFER BY ZEROING OUT THE
-                                ; FIRST BYTE OF THE DOS BUFFER'S
+                                ; FIRST BYTE OF THE DOS BUFFERS
                                 ; FILE NAME FIELD.
 
 ZDOSBUFN        LDY #0
@@ -3841,7 +3748,7 @@ ZDOSBUFN        LDY #0
                 INY             ; KICK UP INDEX TO LINK IN CHAIN
                                 ; POINTERS BUFFER.
                 STA (A3L),Y     ; PUT LOW BYTE OF FM WRK BUF ADR
-                                ; IN LINK BUFFER'S POINTERS.
+                                ; IN LINK BUFFERS POINTERS.
                 TXA             ; GET HI BYTE T/S LIST BUF IN (A).
                 INY             ; KICK UP INDEX IN CHAIN BUF.
                 STA (A3L),Y     ; PUT HI BYTE OF LINK IN PTRS BUF.
@@ -3955,11 +3862,11 @@ SETINTPT        PLA
 
                                 ; FOR INSTANCE, IF A ROUTINE ACCESSES
                                 ; "COUT: JMP (CSW)" THEN EXECUTION
-                                ; WILL ACTUALLY FLOW TO DOS'S
+                                ; WILL ACTUALLY FLOW TO DOSS
                                 ; OUTPUT ROUTINE (OPUTINCP, $9EBD).
                                 ; SIMILARLY, ANY ROUTINE THAT REFERS
                                 ; TO "RDKEY: JMP (KSW)" WILL ACTUALLY
-                                ; JUMP TO DOS'S INPUT ROUTINE
+                                ; JUMP TO DOSS INPUT ROUTINE
                                 ; (INPTINCP, $9E81).
                                 ;
                                 ; THE TRUE (IE. NORMAL) HOOKS ARE SAVED,
@@ -3972,7 +3879,7 @@ SETINTPT        PLA
                                 ; CHECK IF INPUT HOOK NEEDS TO BE RESET.
 INITIOHK        LDA KSW+1
                 CMP ADINPTCP+1
-                BEQ CKOUTHK     ; INPUT HK ALREADY POINTS TO DOS'S
+                BEQ CKOUTHK     ; INPUT HK ALREADY POINTS TO DOSS
                                 ; INPUT HNDLER SO GO CHK OUTPUT HK
 
                                 ; RESET INPUT HOOK TO POINT TO DOS.
@@ -3989,7 +3896,7 @@ INITIOHK        LDA KSW+1
 
 CKOUTHK         LDA CSW+1
                 CMP ADOPUTCP+1
-                BEQ SETHKRTN    ; OUTPUT HK ALREADY PTS TO DOS'S
+                BEQ SETHKRTN    ; OUTPUT HK ALREADY PTS TO DOSS
                                 ; OUTPUT HANDLER, SO EXIT.
 
                                 ; RESET OUTPUT HOOK TO POINT TO DOS.
@@ -4015,7 +3922,7 @@ SETHKRTN        RTS
                                 ; BE SURE TO:
                                 ; - LET THE 1ST CMD CREATE A NEW FILE.
                                 ; (FOR EXPLANATION, SEE FMXTNTRY
-                                ; ROUTINE ($AAFD) IN LINEAR DIS'MBLY.)
+                                ; ROUTINE ($AAFD) IN LINEAR DISMBLY.)
                                 ; - AVOID CREATING NEW DOS CMD NAMES
                                 ; THAT DUPLICATE BASIC CMD NAMES.
                                 ; - USE POSITIVE ASCII CHARS FOR ALL BUT
@@ -4025,39 +3932,39 @@ SETHKRTN        RTS
                                 ; - SHIFT SUBSEQUENT NAMES TO KEEP ALL
                                 ; CHARS CONTIGUOUS IF YOU CREATE
                                 ; SHORTER NAMES.
-                                ; - DON'T EXPAND THE TABLE BEYOND $A908.
+                                ; - DONT EXPAND THE TABLE BEYOND $A908.
                                 ; - END THE TABLE WITH A 0 BYTE.
                                 ; ========================================
 
-CMDTXTBL        .ASCIIH "INIT"
-                .ASCIIH "LOAD"
-                .ASCIIH "SAVE"
-                .ASCIIH "RUN"
-                .ASCIIH "CHAIN"
-                .ASCIIH "DELETE"
-                .ASCIIH "LOCK"
-                .ASCIIH "UNLOCK"
-                .ASCIIH "CLOSE"
-                .ASCIIH "READ"
-                .ASCIIH "EXEC"
-                .ASCIIH "WRITE"
-                .ASCIIH "POSITION"
-                .ASCIIH "OPEN"
-                .ASCIIH "APPEND"
-                .ASCIIH "RENAME"
-                .ASCIIH "CATALOG"
-                .ASCIIH "MON"
-                .ASCIIH "NOMON"
-                .ASCIIH "PR#"
-                .ASCIIH "IN#"
-                .ASCIIH "MAXFILES"
-                .ASCIIH "FP"
-                .ASCIIH "INT"
-                .ASCIIH "BSAVE"
-                .ASCIIH "BLOAD"
-                .ASCIIH "BRUN"
-                .ASCIIH "VERIFY"
-                .BYTE 0         ; 0 BYTE DENOTES END OF TABLE.
+CMDTXTBL        HLASCII(`INIT')
+                HLASCII(`LOAD')
+                HLASCII(`SAVE')
+                HLASCII(`RUN')
+                HLASCII(`CHAIN')
+                HLASCII(`DELETE')
+                HLASCII(`LOCK')
+                HLASCII(`UNLOCK')
+                HLASCII(`CLOSE')
+                HLASCII(`READ')
+                HLASCII(`EXEC')
+                HLASCII(`WRITE')
+                HLASCII(`POSITION')
+                HLASCII(`OPEN')
+                HLASCII(`APPEND')
+                HLASCII(`RENAME')
+                HLASCII(`CATALOG')
+                HLASCII(`MON')
+                HLASCII(`NOMON')
+                HLASCII(`PR#')
+                HLASCII(`IN#')
+                HLASCII(`MAXFILES')
+                HLASCII(`FP')
+                HLASCII(`INT')
+                HLASCII(`BSAVE')
+                HLASCII(`BLOAD')
+                HLASCII(`BRUN')
+                HLASCII(`VERIFY')
+                ASM_DATA(0)         ; 0 BYTE DENOTES END OF TABLE.
 
 
                                 ; ========================================
@@ -4102,7 +4009,7 @@ CMDTXTBL        .ASCIIH "INIT"
                                 ; .  .  .  .  .  .  .  .
                                 ; .  .  .  .  .  .  .  ...A(DDRESS) PARAMETER ALLOWED.
                                 ; .  .  .  .  .  .  ......B(YTE) PARAMETER ALLOWED.
-                                ; .  .  .  .  .  .........R(ECORD) # OR R(EL FIELD POS'N)
+                                ; .  .  .  .  .  .........R(ECORD) # OR R(EL FIELD POSN)
                                 ; .  .  .  .  .           PARAMETER ALLOWED.
                                 ; .  .  .  .  ............L(ENGTH) PARAMETER ALLOWED.
                                 ; .  .  .  ...............S(LOT) PARAMETER ALLOWED.
@@ -4111,57 +4018,57 @@ CMDTXTBL        .ASCIIH "INIT"
                                 ; ........................C, I, OR O PARAMETER ALLOWED.
 
 CMDATTRB
-                .IF VERSION < 320
-                .ADDR %0111000000100000 ; INIT
-                .ELSE
-                .ADDR %0111000000100001 ; INIT
-                .ENDIF
-                .ADDR %0111000010100000 ; LOAD
-                .IF VERSION < 320
-                .ADDR %0111000010100000 ; SAVE
-                .ELSE
-                .ADDR %0111000010100001 ; SAVE
-                .ENDIF
-                .ADDR %0111000010100000 ; RUN
-                .ADDR %0111000000100000 ; CHAIN
-                .ADDR %0111000000100000 ; DELETE
-                .ADDR %0111000000100000 ; LOCK
-                .ADDR %0111000000100000 ; UNLOCK
-                .ADDR %0000000001100000 ; CLOSE
-                .IF VERSION < 320
-                .ADDR %0000011000100000 ; READ
-                .ELSE
-                .ADDR %0000011000100010 ; READ
-                .ENDIF
-                .ADDR %0111010000100000 ; EXEC
-                .IF VERSION < 320
-                .ADDR %0000011000100000 ; WRITE
-                .ADDR %0000010000100000 ; POSITION
-                .ADDR %0111100000100000 ; OPEN
-                .ADDR %0111100000100000 ; APPEND
-                .ELSE
-                .ADDR %0000011000100010 ; WRITE
-                .ADDR %0000010000100010 ; POSITION
-                .ADDR %0111100000100011 ; OPEN
-                .ADDR %0111000000100010 ; APPEND
-                .ENDIF
-                .ADDR %0111000000110000 ; RENAME
-                .ADDR %0111000001000000 ; CATALOG
-                .ADDR %1000000001000000 ; MON
-                .ADDR %1000000001000000 ; NOMON
-                .ADDR %0000000000001000 ; PR#
-                .ADDR %0000000000001000 ; IN#
-                .ADDR %0000000000000100 ; MAXFILES
-                .ADDR %0111000001000000 ; FP
-                .ADDR %0000000001000000 ; INT
-                .IF VERSION < 320
-                .ADDR %0111100100100000 ; BSAVE
-                .ELSE
-                .ADDR %0111100100100001 ; BSAVE
-                .ENDIF
-                .ADDR %0111000100100000 ; BLOAD
-                .ADDR %0111000100100000 ; BRUN
-                .ADDR %0111000000100000 ; VERIFY
+                ifelse(eval(VERSION < 320),1,`
+                ASM_ADDR(%0111000000100000) ; INIT
+                ',`
+                ASM_ADDR(%0111000000100001) ; INIT
+                ')
+                ASM_ADDR(%0111000010100000) ; LOAD
+                ifelse(eval(VERSION < 320),1,`
+                ASM_ADDR(%0111000010100000) ; SAVE
+                ',`
+                ASM_ADDR(%0111000010100001) ; SAVE
+                ')
+                ASM_ADDR(%0111000010100000) ; RUN
+                ASM_ADDR(%0111000000100000) ; CHAIN
+                ASM_ADDR(%0111000000100000) ; DELETE
+                ASM_ADDR(%0111000000100000) ; LOCK
+                ASM_ADDR(%0111000000100000) ; UNLOCK
+                ASM_ADDR(%0000000001100000) ; CLOSE
+                ifelse(eval(VERSION < 320),1,`
+                ASM_ADDR(%0000011000100000) ; READ
+                ',`
+                ASM_ADDR(%0000011000100010) ; READ
+                ')
+                ASM_ADDR(%0111010000100000) ; EXEC
+                ifelse(eval(VERSION < 320),1,`
+                ASM_ADDR(%0000011000100000) ; WRITE
+                ASM_ADDR(%0000010000100000) ; POSITION
+                ASM_ADDR(%0111100000100000) ; OPEN
+                ASM_ADDR(%0111100000100000) ; APPEND
+                ',`
+                ASM_ADDR(%0000011000100010) ; WRITE
+                ASM_ADDR(%0000010000100010) ; POSITION
+                ASM_ADDR(%0111100000100011) ; OPEN
+                ASM_ADDR(%0111000000100010) ; APPEND
+                ')
+                ASM_ADDR(%0111000000110000) ; RENAME
+                ASM_ADDR(%0111000001000000) ; CATALOG
+                ASM_ADDR(%1000000001000000) ; MON
+                ASM_ADDR(%1000000001000000) ; NOMON
+                ASM_ADDR(%0000000000001000) ; PR#
+                ASM_ADDR(%0000000000001000) ; IN#
+                ASM_ADDR(%0000000000000100) ; MAXFILES
+                ASM_ADDR(%0111000001000000) ; FP
+                ASM_ADDR(%0000000001000000) ; INT
+                ifelse(eval(VERSION < 320),1,`
+                ASM_ADDR(%0111100100100000) ; BSAVE
+                ',`
+                ASM_ADDR(%0111100100100001) ; BSAVE
+                ')
+                ASM_ADDR(%0111000100100000) ; BLOAD
+                ASM_ADDR(%0111000100100000) ; BRUN
+                ASM_ADDR(%0111000000100000) ; VERIFY
 
 
 
@@ -4174,7 +4081,7 @@ CMDATTRB
                                 ; SCHEME.
                                 ; =================================
 
-OPTNTXT         .BYTE "VDSLRBACIO"
+OPTNTXT         ASM_DATA("VDSLRBACIO")
 
 
                                 ; =================================
@@ -4186,16 +4093,16 @@ OPTNTXT         .BYTE "VDSLRBACIO"
                                 ; WITH THE COMMAND.
                                 ; =================================
 
-OPTNISSD        .BYTE %01000000          ; V(OLUME) PARAMETER.
-                .BYTE %00100000          ; D(RIVE) PARAMETER.
-                .BYTE %00010000          ; S(LOT) PARAMETER.
-                .BYTE %00001000          ; L(ENGTH) PARAMETER.
-                .BYTE %00000100          ; R(ECORD # OR R(EL FIELD POS'N).
-                .BYTE %00000010          ; B(YTE) PARAMETER.
-                .BYTE %00000001          ; A(DDRESS) PARAMETER.
-                .BYTE %11000000          ; C(OMMAND).
-                .BYTE %10100000          ; I(NPUT).
-                .BYTE %10010000          ; O(UTPUT).
+OPTNISSD        ASM_DATA(%01000000)          ; V(OLUME) PARAMETER.
+                ASM_DATA(%00100000)          ; D(RIVE) PARAMETER.
+                ASM_DATA(%00010000)          ; S(LOT) PARAMETER.
+                ASM_DATA(%00001000)          ; L(ENGTH) PARAMETER.
+                ASM_DATA(%00000100)          ; R(ECORD # OR R(EL FIELD POSN).
+                ASM_DATA(%00000010)          ; B(YTE) PARAMETER.
+                ASM_DATA(%00000001)          ; A(DDRESS) PARAMETER.
+                ASM_DATA(%11000000)          ; C(OMMAND).
+                ASM_DATA(%10100000)          ; I(NPUT).
+                ASM_DATA(%10010000)          ; O(UTPUT).
 
                                 ; =================================
                                 ; TABLE OF VALID RANGES ASSOCIATED
@@ -4212,17 +4119,17 @@ OPTNISSD        .BYTE %01000000          ; V(OLUME) PARAMETER.
                                 ; =================================
 
 OPTNRNG
-                .WORD 0,$100-2     ; ($A955 - $A958)  V: (0 - 254).
-                .WORD 1,2          ; ($A959 - $A95C)  D: (1 - 2).
-                .WORD 1,$8-1       ; ($A95D - $A960)  S: (1 - 7).
-                .WORD 1,$8000-1    ; ($A961 - $A964)  L: (1 - 32767).
-                .WORD 0,$8000-1    ; ($A965 - $A968)  R: (0 - 32767).
-                .WORD 0,$8000-1    ; ($A969 - $A96C)  B: (0 - 32767).
-                .IF VERSION < 320
-                .WORD 0,$C000      ; ($A96D - $A970)  A: (0 - 49152).
-                .ELSE
-                .WORD 0,$10000-1   ; ($A96D - $A970)  A: (0 - 65535).
-                .ENDIF
+                ASM_DATA_W(0,$100-2)     ; ($A955 - $A958)  V: (0 - 254).
+                ASM_DATA_W(1,2)          ; ($A959 - $A95C)  D: (1 - 2).
+                ASM_DATA_W(1,$8-1)       ; ($A95D - $A960)  S: (1 - 7).
+                ASM_DATA_W(1,$8000-1)    ; ($A961 - $A964)  L: (1 - 32767).
+                ASM_DATA_W(0,$8000-1)    ; ($A965 - $A968)  R: (0 - 32767).
+                ASM_DATA_W(0,$8000-1)    ; ($A969 - $A96C)  B: (0 - 32767).
+                ifelse(eval(VERSION < 320),1,`
+                ASM_DATA_W(0,$C000)      ; ($A96D - $A970)  A: (0 - 49152).
+                ',`
+                ASM_DATA_W(0,$10000-1)   ; ($A96D - $A970)  A: (0 - 65535).
+                ')
 
 
                                 ; ==================================
@@ -4236,67 +4143,67 @@ OPTNRNG
                                 ; ==================================
 
 ERRTXTBL
-ERR00           .BYTE .LOCHR(CR),.LOCHR(BEL)
-                .IF VERSION < 320
-                .ASCIIH "***DISK: "
-                .ELSE
-                .BYTE CR
-                .ENDIF
+ERR00           ASM_DATA($0D,$07)
+                ifelse(eval(VERSION < 320),1,`
+                HLASCII(`***DISK: ')
+                ',`
+                ASM_DATA($8D)
+                ')
 
 
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
 ERR01
 ERR02
 ERR03
-                .ASCIIH "SYS"
-                .ELSE
-ERR01           .ASCIIH "LANGUAGE NOT AVAILABLE"
+                HLASCII(`SYS')
+                ',`
+ERR01           HLASCII(`LANGUAGE NOT AVAILABLE')
 ERR02
-ERR03           .ASCIIH "RANGE ERROR"
-                .ENDIF
+ERR03           HLASCII(`RANGE ERROR')
+                ')
 
 ERR04
-                .IF VERSION < 320
-                .ASCIIH "WRITE PROTECT"
-                .ELSE
-                .ASCIIH "WRITE PROTECTED"
-                .ENDIF
+                ifelse(eval(VERSION < 320),1,`
+                HLASCII(`WRITE PROTECT')
+                ',`
+                HLASCII(`WRITE PROTECTED')
+                ')
 
 
-ERR05           .ASCIIH "END OF DATA"
-ERR06           .ASCIIH "FILE NOT FOUND"
-ERR07           .ASCIIH "VOLUME MISMATCH"
+ERR05           HLASCII(`END OF DATA')
+ERR06           HLASCII(`FILE NOT FOUND')
+ERR07           HLASCII(`VOLUME MISMATCH')
 
 ERR08
-                .IF VERSION < 320
-                .ASCIIH "DISK I/O"
-                .ELSE
-                .ASCIIH "I/O ERROR"
-                .ENDIF
+                ifelse(eval(VERSION < 320),1,`
+                HLASCII(`DISK I/O')
+                ',`
+                HLASCII(`I/O ERROR')
+                ')
 
-ERR09           .ASCIIH "DISK FULL"
-ERR10           .ASCIIH "FILE LOCKED"
+ERR09           HLASCII(`DISK FULL')
+ERR10           HLASCII(`FILE LOCKED')
 
-                .IF VERSION < 320
-ERR11           .ASCIIH "CMD SYNTAX"
-ERR12           .ASCIIH "NO FILE BUFFS AVAIL"
-ERR13           .ASCIIH "NOT BASIC PROGRAM"
-                .ELSE
-ERR11           .ASCIIH "SYNTAX ERROR"
-ERR12           .ASCIIH "NO BUFFERS AVAILABLE"
-ERR13           .ASCIIH "FILE TYPE MISMATCH"
-                .ENDIF
+                ifelse(eval(VERSION < 320),1,`
+ERR11           HLASCII(`CMD SYNTAX')
+ERR12           HLASCII(`NO FILE BUFFS AVAIL')
+ERR13           HLASCII(`NOT BASIC PROGRAM')
+                ',`
+ERR11           HLASCII(`SYNTAX ERROR')
+ERR12           HLASCII(`NO BUFFERS AVAILABLE')
+ERR13           HLASCII(`FILE TYPE MISMATCH')
+                ')
 
-ERR14           .ASCIIH "PROGRAM TOO LARGE"
+ERR14           HLASCII(`PROGRAM TOO LARGE')
 
-                .IF VERSION < 320
-ERR15           .ASCIIH "NOT BINARY FILE"
-ERR16           .LASCII " ERROR"
-                .ELSE
-ERR15           .ASCIIH "NOT DIRECT COMMAND"
-                .ENDIF
+                ifelse(eval(VERSION < 320),1,`
+ERR15           HLASCII(`NOT BINARY FILE')
+ERR16           LOASCII(` ERROR')
+                ',`
+ERR15           HLASCII(`NOT DIRECT COMMAND')
+                ')
 
-                .BYTE CR
+                ASM_DATA($8D)
 
 
                                 ; =================================
@@ -4307,38 +4214,38 @@ ERR15           .ASCIIH "NOT DIRECT COMMAND"
                                 ; WILL BE USED.)
                                 ; =================================
 
-OFF2ERR         .BYTE ERR00-ERRTXTBL
-                .BYTE ERR01-ERRTXTBL
-                .BYTE ERR02-ERRTXTBL
-                .BYTE ERR03-ERRTXTBL
-                .BYTE ERR04-ERRTXTBL
-                .BYTE ERR05-ERRTXTBL
-                .BYTE ERR06-ERRTXTBL
-                .BYTE ERR07-ERRTXTBL
-                .BYTE ERR08-ERRTXTBL
-                .BYTE ERR09-ERRTXTBL
-                .BYTE ERR10-ERRTXTBL
-                .BYTE ERR11-ERRTXTBL
-                .BYTE ERR12-ERRTXTBL
-                .BYTE ERR13-ERRTXTBL
-                .BYTE ERR14-ERRTXTBL
-                .BYTE ERR15-ERRTXTBL
-                .IF VERSION < 320
-                .BYTE ERR16-ERRTXTBL
-                .ENDIF
+OFF2ERR         ASM_DATA(ERR00-ERRTXTBL)
+                ASM_DATA(ERR01-ERRTXTBL)
+                ASM_DATA(ERR02-ERRTXTBL)
+                ASM_DATA(ERR03-ERRTXTBL)
+                ASM_DATA(ERR04-ERRTXTBL)
+                ASM_DATA(ERR05-ERRTXTBL)
+                ASM_DATA(ERR06-ERRTXTBL)
+                ASM_DATA(ERR07-ERRTXTBL)
+                ASM_DATA(ERR08-ERRTXTBL)
+                ASM_DATA(ERR09-ERRTXTBL)
+                ASM_DATA(ERR10-ERRTXTBL)
+                ASM_DATA(ERR11-ERRTXTBL)
+                ASM_DATA(ERR12-ERRTXTBL)
+                ASM_DATA(ERR13-ERRTXTBL)
+                ASM_DATA(ERR14-ERRTXTBL)
+                ASM_DATA(ERR15-ERRTXTBL)
+                ifelse(eval(VERSION < 320),1,`
+                ASM_DATA(ERR16-ERRTXTBL)
+                ')
                                 ; =================================
                                 ; DOS MAIN ROUTINE VARIABLES.
                                 ; ($AA4F - $AA65)
                                 ; =================================
 
-CURFNADR        .RES 2            ; PTS TO CURRENT FILENAME BUF
+CURFNADR        ASM_RES(2)            ; PTS TO CURRENT FILENAME BUF
                                 ; (USUALLY PRIMFNBF, $AA75).
                                 ; (NORMALLY LOADED FROM FNAMBUFM
                                 ; $B5C3, IN FM PARM LIST).
-CONDNFLG        .RES 1            ; STATUS FLAG:
+CONDNFLG        ASM_RES(1)            ; STATUS FLAG:
                                 ; $00 = WARMSTART, $01 = READ
                                 ; $80 = COLDSTART, $C0 = A(RAM).
-OPUTCOND        .RES 1            ; CHAR SWITCH OUTPUT CONDITION FLG
+OPUTCOND        ASM_RES(1)            ; CHAR SWITCH OUTPUT CONDITION FLG
                                 ; $00 = EVALUATE START OF INPUT
                                 ; LINE.
                                 ; $01 = GOT A DOS CTRL CHAR SO
@@ -4352,39 +4259,39 @@ OPUTCOND        .RES 1            ; CHAR SWITCH OUTPUT CONDITION FLG
                                 ; DATA LINE READ FROM DSK.
                                 ; $06 = IGNORE "?" PRMPT & RESET
                                 ; TO CONDITION 0.
-CSWTRUE         .ADDR COUT1     ; ADR OF TRUE OUTPUT HANDLER.
-KSWTRUE         .ADDR KEYIN     ; ADR OF TRUE INPUT HANDLER.
-MXFILVAL        .BYTE 3,3       ; CURRENT # OF DOS BUFS IN CHAIN
+CSWTRUE         ASM_ADDR(COUT1) ; ADR OF TRUE OUTPUT HANDLER.
+KSWTRUE         ASM_ADDR(KEYIN) ; ADR OF TRUE INPUT HANDLER.
+MXFILVAL        ASM_DATA(3,3)       ; CURRENT # OF DOS BUFS IN CHAIN
                                 ; (SECOND BYTE IS IRRELEVANT).
-STKSAVED        .RES 1          ; ($AA59) 1ST STACK PTR SAV AREA.
-                                ; (P.S.  DON'T CONFUSE WITH THE
+STKSAVED        ASM_RES(1)          ; ($AA59) 1ST STACK PTR SAV AREA.
+                                ; (P.S.  DONT CONFUSE WITH THE
                                 ; 2ND STK POINTER SAVE AREA KNOWN
                                 ; AS "STKSAV" ($B39B).
-XSAVED          .RES 1          ; (X) SAVE AREA.
-YSAVED          .RES 1          ; (Y) SAVE ARE.
-ASAVED          .RES 1          ; (A) SAVE AREA.
-NDX2INBF        .RES 1          ; INDEX TO CMD LINE IN INPUT BUF.
-CIOCUMUL        .RES 1          ; MON/NOMON FLAG.
+XSAVED          ASM_RES(1)          ; (X) SAVE AREA.
+YSAVED          ASM_RES(1)          ; (Y) SAVE ARE.
+ASAVED          ASM_RES(1)          ; (A) SAVE AREA.
+NDX2INBF        ASM_RES(1)          ; INDEX TO CMD LINE IN INPUT BUF.
+CIOCUMUL        ASM_RES(1)          ; MON/NOMON FLAG.
                                 ; CUMMULATIVE UPDATED RECORD OF
                                 ; C/I/O ARGUMENTS:
                                 ; C=$40, I=$20, O=$10, IO=$30,
                                 ; CO=$50, CI=$60, CIO=$70.
 NDX2CMD                         ; INDEX TO COMMAND.
-                .IF VERSION < 320
-                .BYTE  $20      ; NEEDED FOR MASTER.CREATE TO WORK
-                .ELSE
-                .RES  1
-                .ENDIF
+                ifelse(eval(VERSION < 320),1,`
+                ASM_DATA($20)      ; NEEDED FOR MASTER.CREATE TO WORK
+                ',`
+                ASM_RES(1)
+                ')
 
-LENADRBF        .RES 2          ; 2-BYTE BUF USED TO HOLD BLOAD ADR
+LENADRBF        ASM_RES(2)          ; 2-BYTE BUF USED TO HOLD BLOAD ADR
                                 ; & LENGTH READ FROM DISK.
                                 ; (LEFT WITH LNGTH OF LAST BLOAD.)
-NEXTCMD         .RES 1          ; CODE FOR PENDING COMMAND.
-TEMPBYT         .RES 1          ; TEMPORARY STORAGE AREA.
-NDX2OPTN        .RES 1          ; INDEX TO OPTION (USED TO INDEX
+NEXTCMD         ASM_RES(1)          ; CODE FOR PENDING COMMAND.
+TEMPBYT         ASM_RES(1)          ; TEMPORARY STORAGE AREA.
+NDX2OPTN        ASM_RES(1)          ; INDEX TO OPTION (USED TO INDEX
                                 ; OPTNTXT, OPTNISSD & OPTNRNG).
 
-CUMLOPTN        .RES 1          ; HOLDS CUMMULTIVE RECORD OF
+CUMLOPTN        ASM_RES(1)          ; HOLDS CUMMULTIVE RECORD OF
                                 ; OPTIONS PARSED ON CMD LINE.
 
                                 ; =================================
@@ -4395,54 +4302,54 @@ CUMLOPTN        .RES 1          ; HOLDS CUMMULTIVE RECORD OF
                                 ; COMMAND.  SOME OF THESE BYTES
                                 ; ARE DEFAULTED TO NON-ZERO VALS.)
                                 ; =================================
-                .IF VERSION < 330
+                ifelse(eval(VERSION < 330),1,`
 VOLPRSD
-                .RES 1          ; PARSED VOLUME NUMBER.
-                .RES 1
-DRVPRSD         .RES 1          ; PARSED DRIVE NUMBER.
-                .RES 1
-SLOTPRSD        .RES 1          ; PARSED SLOT NUMBER.
-                .RES 1
+                ASM_RES(1)          ; PARSED VOLUME NUMBER.
+                ASM_RES(1)
+DRVPRSD         ASM_RES(1)          ; PARSED DRIVE NUMBER.
+                ASM_RES(1)
+SLOTPRSD        ASM_RES(1)          ; PARSED SLOT NUMBER.
+                ASM_RES(1)
 VOLPRSD2
-LENPRSD         .RES 1          ; PARSED LENGTH VALUE.
-                .RES 1
-RECPRSD         .RES 1          ; PARSED RECORD OR RELATIVE FIELD
+LENPRSD         ASM_RES(1)          ; PARSED LENGTH VALUE.
+                ASM_RES(1)
+RECPRSD         ASM_RES(1)          ; PARSED RECORD OR RELATIVE FIELD
                                 ; POSITION NUMBER.
-                .RES 1
-BYTPRSD         .RES 1
-                .RES 1
-ADRPRSD         .RES 1          ; PARSED ADDRESS PARAMETER.
-                .RES 1
-MONPRSD         .RES 1          ; PARSED MON/NOMON CHR CODE VALS.
-                .ELSE
+                ASM_RES(1)
+BYTPRSD         ASM_RES(1)
+                ASM_RES(1)
+ADRPRSD         ASM_RES(1)          ; PARSED ADDRESS PARAMETER.
+                ASM_RES(1)
+MONPRSD         ASM_RES(1)          ; PARSED MON/NOMON CHR CODE VALS.
+                ',`
 
 
-VOLPRSD         .RES 2          ; PARSED VOLUME NUMBER.
-DRVPRSD         .RES 2          ; PARSED DRIVE NUMBER.
-SLOTPRSD        .RES 2          ; PARSED SLOT NUMBER.
-LENPRSD         .RES 2          ; PARSED LENGTH VALUE.
-RECPRSD         .RES 2          ; PARSED RECORD OR RELATIVE FIELD
+VOLPRSD         ASM_RES(2)          ; PARSED VOLUME NUMBER.
+DRVPRSD         ASM_RES(2)          ; PARSED DRIVE NUMBER.
+SLOTPRSD        ASM_RES(2)          ; PARSED SLOT NUMBER.
+LENPRSD         ASM_RES(2)          ; PARSED LENGTH VALUE.
+RECPRSD         ASM_RES(2)          ; PARSED RECORD OR RELATIVE FIELD
                                 ; POSITION NUMBER.
-BYTPRSD         .RES 2          ; PARSED BYTE VALUE.
-ADRPRSD         .RES 2          ; PARSED ADDRESS PARAMETER.
-MONPRSD         .RES 1          ; PARSED MON/NOMON CHR CODE VALS.
-                .ENDIF
+BYTPRSD         ASM_RES(2)          ; PARSED BYTE VALUE.
+ADRPRSD         ASM_RES(2)          ; PARSED ADDRESS PARAMETER.
+MONPRSD         ASM_RES(1)          ; PARSED MON/NOMON CHR CODE VALS.
+                ')
 
 
                                 ; ==================================
                                 ; NON-CHAIN FILE NAME BUFFERS.
-                                ; (PS.  DON'T CONFUSE WITH THE
+                                ; (PS.  DONT CONFUSE WITH THE
                                 ; VARIOUS FILENAME BUFS ASSOC
                                 ; WITH THE CHAIN OF DOS BUFFERS.)
                                 ; ==================================
 
                                 ; PRIMARY FILE NAME BUFFER.
 
-PRIMFNBF        .RES 30         ; ($AA75 - $AA92)
+PRIMFNBF        ASM_RES(30)         ; ($AA75 - $AA92)
 
                                 ; SECONDARY FILE NAME BUFFER.
 
-SCNDFNBF        .RES 30         ; ($AA93 - $AAB0)
+SCNDFNBF        ASM_RES(30)         ; ($AA93 - $AAB0)
 
 
                                 ; ====================================
@@ -4450,23 +4357,23 @@ SCNDFNBF        .RES 30         ; ($AA93 - $AAB0)
                                 ; ($AAB1 - $AAB7)
                                 ; ====================================
 
-MAXDFLT         .BYTE 3            ; DEFAULT VALUE FOR # OF DOS BUFS. (mosher: was .RES 1)
-                                ; (OFTEN ALTERED N COM'CIAL PRGMS)
-DCTRLCHR        .BYTE $84          ; DOS'S CTRL CHAR:
+MAXDFLT         ASM_DATA(3)            ; DEFAULT VALUE FOR # OF DOS BUFS. (mosher: was .RES 1)
+                                ; (OFTEN ALTERED N COMCIAL PRGMS)
+DCTRLCHR        ASM_DATA($84)          ; DOSS CTRL CHAR:
                                 ; NORMALLY = CTRL-D, $84.
-                                ; (OFTEN CHNGD IN COM'CIAL PRGMS)
-EXECFLAG        .RES 1            ; EXEC FLAG: $00 = NOT EXECING,
+                                ; (OFTEN CHNGD IN COMCIAL PRGMS)
+EXECFLAG        ASM_RES(1)            ; EXEC FLAG: $00 = NOT EXECING,
                                 ; (ELSE CONTAINS 1ST CHAR OF NAME
                                 ; OF EXEC FILE).
-EXECBUFF        .RES 2            ; PTS TO EXEC FILE'S BUFFER.
+EXECBUFF        ASM_RES(2)            ; PTS TO EXEC FILES BUFFER.
 
 ACTBSFLG                        ; ACTIVE BASIC FLAG (INT=$00,
                                 ; A(ROM)=$40, A(RAM)=$80).
-                .IF VERSION >= 320
-                .RES 1
-                .ENDIF
+                ifelse(eval(VERSION >= 320),1,`
+                ASM_RES(1)
+                ')
 
-RUNTRUPT        .RES 1            ; RUN INTERCEPTED FLAG:
+RUNTRUPT        ASM_RES(1)            ; RUN INTERCEPTED FLAG:
                                 ; $00 = RUN NOT INTECEPTED.
                                 ; NON-ZERO = RUN INTERCEPTED TO DO
                                 ; A LOAD.
@@ -4477,4 +4384,4 @@ RUNTRUPT        .RES 1            ; RUN INTERCEPTED FLAG:
                                 ; ($AAB8 - $AAC0)
                                 ; =================================
 
-APLSFTXT        .BYTE "APPLESOFT"
+APLSFTXT        ASM_DATA("APPLESOFT")

@@ -287,13 +287,9 @@ SRCPAGELIM      ASM_DATA(>DOSLIM)
 DSTPAGE         ASM_RES(1)
 DSTPAGELIM      ASM_RES(1)
 
-XXXDOSLIM=DOSLIM
-CONSTANT_BYTE_COUNT = DOSLIM-ADOSFNB1
-CONSTANT_PAGE_COUNT = >CONSTANT_BYTE_COUNT
-
-PAGECNT         ASM_DATA(CONSTANT_PAGE_COUNT) ; number of pages to be moved
-OFFSET          ASM_RES(1)                   ; number of pages to add, to reloc addresses
-PAGECNT2        ASM_DATA(CONSTANT_PAGE_COUNT) ; (redundant?) number of pages to be moved
+PAGECNT         ASM_DATA($23) ; >DOSLIM-ADOSFNB1  number of pages to be moved
+OFFSET          ASM_RES(1)    ; number of pages to add, to reloc addresses
+PAGECNT2        ASM_DATA($23) ; (redundant?)
 
 ifelse(eval(VERSION < 320),1,`
                 ASM_DATA($13)                ; UNUSED CODE???

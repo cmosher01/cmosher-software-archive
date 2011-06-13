@@ -1,3 +1,4 @@
+.text
 ifdef(`FRANKLIN',`
 define(`VERSION',330)
 ')
