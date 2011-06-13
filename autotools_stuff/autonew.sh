@@ -55,21 +55,20 @@ autoconf --version
 # Check for existence of package directory, and delete
 # it if the user explicitly tells us to.
 #
-if [ -d $1 ]
+if [ -d $1 -a "$DELEXIST" ]
 then
-	if [ "$DELEXIST" ]
-	then
-		rm -Rf $1
-	else
-		echo "Error: $1 exists; specify -d to delete it first" >&2
-		exit 1
-	fi
+	rm -Rf $1
 fi
 
+
+
 #
-# Create the directory for the package and go into it
+# Create the directory for the package (if necessary), and go into it
 #
-mkdir $1
+if [ ! -d $1 ]
+then
+	mkdir $1
+fi
 cd $1
 
 #
@@ -87,6 +86,7 @@ mkdir m4
 # autoscan, then fix it up with sed script
 #
 autoscan
+
 cat <<EOF >configure.sed
 s/FULL-PACKAGE-NAME/$1/
 s/VERSION/0.1/
@@ -99,6 +99,7 @@ AM_INIT_AUTOMAKE([-Wall -Werror])
 /AC_OUTPUT/ i\
 AC_CONFIG_FILES([Makefile src/Makefile])
 EOF
+
 sed -f configure.sed <configure.scan >configure.ac
 
 
@@ -139,6 +140,7 @@ cat <<EOF >bootstrap
 autoreconf --install
 EOF
 chmod a+x bootstrap
+
 ./bootstrap
 
 
