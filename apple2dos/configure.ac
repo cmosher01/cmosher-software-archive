@@ -47,6 +47,11 @@ Makefile
 src/Makefile
 src/system/Makefile
 src/system/dos310/Makefile
+src/system/dos320/Makefile
+src/system/dos321/Makefile
+src/system/dos330/Makefile
+src/system/dos331/Makefile
+src/system/dos332/Makefile
 
 ])
 
