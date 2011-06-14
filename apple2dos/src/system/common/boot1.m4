@@ -562,7 +562,7 @@ RSETPTRS        LDA RECNMBFM    ; RECONCILE RECORD NUMBER VERSIONS
 
 
                 ifelse(eval(VERSION < 330),1,`
-IMG8FD          = *-2
+IMG8FD          = *-2 ;;;; WRONG FOR XA65
                 ',`
 IMG8FD
                 ASM_ADDR(BOOT1)     ; VARIES FROM $B600-$BF00 ON 48K
