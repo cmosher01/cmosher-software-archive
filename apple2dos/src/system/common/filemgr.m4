@@ -2864,21 +2864,32 @@ FIL1SIZE        ASM_RES(2)          ; SIZE ($B4E7-$B4E8)
                                 ; ($B5BB - $B5D0)
                                 ; =================================
 
+FMPRMLST
+FIRDOSPG
 OPCODEFM        ASM_RES(1)          ; FM OPERATION CODE.
 SUBCODFM        ASM_RES(1)          ; FM OPERATION SUBCODE.
+RECLENFM
+RENAMBUF
 RECNMBFM        ASM_RES(2)          ; FM PARM LST VERSION OF RECORD #.
                                 ; (USUALLY 1 LESS THAN RECNMBWA.)
                                 ; (SEE DESCRIPTION OF THE RECORD
                                 ; NUMBER GIVEN IN THE WORK AREA
                                 ; LISTED BELOW.)
-BYTOFFFM        ASM_RES(2)          ; BYTE OFFSET INTO RECORD.
-LEN2RDWR        ASM_RES(2)          ; LENGTH TO READ OR LENGTH-1
+VOLFM
+BYTOFFFM        ASM_RES(1)          ; BYTE OFFSET INTO RECORD.
+DRVFM           ASM_RES(1)
+SLOTFM
+LEN2RDWR        ASM_RES(1)      ; LENGTH TO READ OR LENGTH-1
                                 ; TO WRITE.  (INIT VAL & COUNTER).
                                 ; ALSO USED AS A TEMPORARY BUF TO
                                 ; TRANSFER ADDR & LENGTH BYTES TO
                                 ; ONEIOBUF BUF WHEN USING THE
                                 ; WRITE-ONE-BYTE AND READ-ONE-BYTE
                                 ; SUBFUNCTIONS.
+FILTYPFM        ASM_RES(1)      ; FILE TYPE CODE (INCLUDING THE
+                                ; LOCKED/UNLOCKED STATUS).
+FNAMBUFM
+ONEIOBUF
 CURIOBUF        ASM_RES(2)          ; ADDR OF CURRENT I/O BUFFER.
 RTNCODFM        ASM_RES(1)          ; RETURN CODE.  (CONTRARY TO WHAT
                                 ; SOME ARTICLES SUGGEST, THE VALUE
@@ -2893,25 +2904,25 @@ NXTNAME         ASM_RES(2)          ; PTS TO NEXT DOS NAME BUFFER IN
                 ASM_RES(2)          ; UNUSED ($B5CF-$B5D0).
 
 
-FMPRMLST        = OPCODEFM      ; START OF FM PARAMETER LIST.
+;FMPRMLST        = OPCODEFM      ; START OF FM PARAMETER LIST.
 
-FIRDOSPG        = OPCODEFM      ; CONTAINS 1ST PAGE# OF DOS WHEN
+;FIRDOSPG        = OPCODEFM      ; CONTAINS 1ST PAGE# OF DOS WHEN
                                 ; WRITING DOS IMAGE DURING INIT.
 
-RECLENFM        = RECNMBFM      ; FM PARM LIST VERSION OF THE
+;RECLENFM        = RECNMBFM      ; FM PARM LIST VERSION OF THE
                                 ; RECORD LENGTH.  (SEE DESCRIPTION
                                 ; OF RECORD LENGTH DESCRIBED IN
                                 ; THE WORK AREA LISTING BELOW.)
-RENAMBUF        = RECLENFM      ; PTS TO BUFFER CONTAINING NEW FILE
+;RENAMBUF        = RECLENFM      ; PTS TO BUFFER CONTAINING NEW FILE
                                 ; NAME.  (USED IN RENAME CMD.)
-VOLFM           = BYTOFFFM      ; VOLUME# WANTED.
-DRVFM           = BYTOFFFM+1    ; DRIVE# WANTED.
+;VOLFM           = BYTOFFFM      ; VOLUME# WANTED.
+;DRVFM           = BYTOFFFM+1    ; DRIVE# WANTED.
 
-SLOTFM          = LEN2RDWR      ; SLOT NUMBER.
-FILTYPFM        = LEN2RDWR+1    ; FILE TYPE CODE (INCLUDING THE
+;SLOTFM          = LEN2RDWR      ; SLOT NUMBER.
+;FILTYPFM        = LEN2RDWR+1    ; FILE TYPE CODE (INCLUDING THE
                                 ; LOCKED/UNLOCKED STATUS).
-FNAMBUFM        = CURIOBUF      ; FILE NAME ADDRESS.
-ONEIOBUF        = CURIOBUF      ; A ONE-BYTE I/O BUFFER.
+;FNAMBUFM        = CURIOBUF      ; FILE NAME ADDRESS.
+;ONEIOBUF        = CURIOBUF      ; A ONE-BYTE I/O BUFFER.
 
 
                                 ; =================================
@@ -2922,9 +2933,9 @@ ONEIOBUF        = CURIOBUF      ; A ONE-BYTE I/O BUFFER.
                                 ; CHAIN OF DOS BUFFERS.)
                                 ; =================================
 
+TSL1TRK         ;= FMWKAREA      ; TRK# OF 1ST T/S LIST SEC.
 FMWKAREA        ASM_RES(1)          ; SIMPLY USED FOR REFERENCE POINT.
 
-TSL1TRK         = FMWKAREA      ; TRK# OF 1ST T/S LIST SEC.
 TSL1SEC         ASM_RES(1)          ; SEC # OF 1ST T/S LIST SEC.
 CURTSTRK        ASM_RES(1)          ; TRK# OF CURRENT T/S LIST SEC.
 CURTSSEC        ASM_RES(1)          ; SEC# OF CURRENT T/S LIST SEC.
