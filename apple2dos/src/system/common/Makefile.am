@@ -5,7 +5,7 @@ COMDIR=$(srcdir)/../common
 
 
 
-ZEROSEGS=-bd 0 -bb 0 -bz 0
+ZERO_SEGS=-bd 0 -bb 0 -bz 0
 
 .m4.s65:
 	$(M4) -E -I $(INCDIR) -I $(COMDIR) $(M4FLAGS_LOCAL) $(M4FLAGS) $< >$@
@@ -16,6 +16,7 @@ ZEROSEGS=-bd 0 -bb 0 -bz 0
 
 .o65.r65:
 	$(LDO65) -bt $(CODE_SEG) $(ZERO_SEGS) -o $@ $(LD65FLAGS) $^
+	file65 -V $@
 
 .r65.a65:
 	$(RELOC65) -xt -o $@ $(RELOC65FLAGS) $<

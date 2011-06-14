@@ -884,10 +884,10 @@ DESCRPTK        STX CURDIRNX    ; SAVE NDEX TO ENTRIES IN DIR SEC.
                                 ; CHK FILE STATUS & PRINT LOCKED
                                 ; SYMBOL ("*") OR SPACE.
 
-                LDY #' '        ; DEFAULT (Y)=<SPC> N CASE NOT LCK
+                LDY #HICHAR(` ') ; DEFAULT (Y)=<SPC> N CASE NOT LCK
                 LDA FIL1TYPE,X  ; GET FILE TYPE.
                 BPL PRLOCODE    ; HI BIT CLR SO FILE UNLOCKED.
-                LDY #'*'        ; RESET (Y) = LOCKED SYMBOL.
+                LDY #HICHAR(`*') ; RESET (Y) = LOCKED SYMBOL.
 PRLOCODE        TYA             ; EITHER PRINT "*" OR <SPC>.
                 JSR COUT
 
@@ -915,7 +915,7 @@ CHRTYPIX        ASL             ; SHIFT REST OF BITS UNTIL HI SET.
 PRTFTYPE        LDA FTYPETBL,Y  ; GOT A SET BIT SO NOW GET CHAR
                                 ; FROM TABLE OF TYPE SYMBOLS.
                 JSR COUT        ; PRINT TYPE SYMBOL.
-                LDA #' '        ; PRINT TRAILING <SPC>.
+                LDA #HICHAR(` ') ; PRINT TRAILING <SPC>.
                 JSR COUT
 
                                 ; PRINT FILE SIZE (EXPRESSED IN
@@ -931,7 +931,7 @@ PRTFTYPE        LDA FTYPETBL,Y  ; GOT A SET BIT SO NOW GET CHAR
                                 ; (DOESNT USE HI BYTE, SO FILES
                                 ; > 255 SECS LONG ARE EXPRESSED
                                 ; AS 256 MOD.)
-                LDA #' '        ; PRINT <SPC> AFTER SIZE.
+                LDA #HICHAR(` ') ; PRINT <SPC> AFTER SIZE.
                 JSR COUT
 
                                 ; PRINT THE FILE NAME.

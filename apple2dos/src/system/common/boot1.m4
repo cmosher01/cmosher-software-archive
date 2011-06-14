@@ -15,7 +15,7 @@ include(`symbols.m4h')
 BOOT1                           ; IMAGE OF SEC2RD08.  DENOTES # OF
                                 ; SECS TO BE READ FROM TRK0 DURING
                                 ; BOOT0.
-                ifelse(eval(VERSION > 321),1,`
+                ifelse(eval(VERSION >= 330),1,`
                 ASM_DATA(1)
                 ')
 
@@ -62,7 +62,7 @@ L1B4D           PLA
 
 
 
-                ifelse(eval(VERSION <= 321),1,`
+                ifelse(eval(VERSION < 330),1,`
                                 ; track 0 sector 0 starts here
                                 ; (note that 13-sector disks have different
                                 ; nibble encoding for track 0 sector 0 than
@@ -177,7 +177,8 @@ L034A           LDA   BUF1,X
 
                 ASM_RES($27,$FF)
                 ASM_DATA($36)
-                ASM_RES($32,$FF)
+                ASM_RES($30,$FF)
+IMG8FD          ASM_RES(2,$FF)
 
 
 
@@ -561,17 +562,17 @@ RSETPTRS        LDA RECNMBFM    ; RECONCILE RECORD NUMBER VERSIONS
                                 ; =================================
 
 
-                ifelse(eval(VERSION < 330),1,`
-IMG8FD          = *-2 ;;;; WRONG FOR XA65
-                ',`
-IMG8FD
-                ASM_ADDR(BOOT1)     ; VARIES FROM $B600-$BF00 ON 48K
+                ifelse(eval(VERSION >= 330),1,`
+IMG8FD          ASM_ADDR(BOOT1) ; VARIES FROM $B600-$BF00 ON 48K
                                 ; SLAVE.  (EVENTUALLY POINTS TO THE
                                 ; START OF BOOT2 AT $B700.  IMAGE
                                 ; OF BT1LDADR AT $8FD.)
                 ')
-BOOT800         = BOOT1-$0800
-BT1LDADR        = IMG8FD-BOOT800
+
+
+
+BT1LDADR        = IMG8FD-(BOOT1-$0800)
+
 IMG8FF
 BT1PG2RD        = IMG8FF-(BOOT1-$800)
                 ASM_DATA($09)       ; ASM_RES(1) ;CONTAINS # OF PAGES TO READ WHEN
