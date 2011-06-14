@@ -18,7 +18,7 @@
 
 void put_buffer(uint8_t *p, int c)
 {
-  SET_BINARY(fileno(stdout));
+  SET_BINARY(1);
   while (c--)
     {
       putchar(*p++);
@@ -29,7 +29,7 @@ int get_buffer(uint8_t *p, int c)
 {
   int oc = c;
   int b;
-  SET_BINARY(fileno(stdin));
+  SET_BINARY(0);
   while ((b = getchar()) != EOF)
     {
       if (!c--)

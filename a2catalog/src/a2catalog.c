@@ -389,7 +389,7 @@ void catalog_track_out(uint_fast16_t version, uint8_t catalog_track, uint_fast8_
 void put_buffer(uint8_t *p, int c)
 {
   int i = 0;
-  SET_BINARY(fileno(stdout));
+  SET_BINARY(1);
   while (i<c)
     {
       ++i;
