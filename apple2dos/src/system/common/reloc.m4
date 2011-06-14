@@ -8,7 +8,7 @@ MASTERDOS       JMP   DOSCOLD
 
 DOSRELOC
                                 ; (A3) --> DOSTOP
-                LDA   #>DOSTOP
+ LDA #$BF ;;; LDA   #>DOSTOP
                 STAZ(A3H)
                 LDX   #<DOSTOP
                 STXZ(A3L)
@@ -90,7 +90,7 @@ L1B51           INY
                                 ; point to us (the relocation), but since we
                                 ; are doing the relocating now, change it
                                 ; so it just goes right to the DOS cold-start routine
-                LDA   #>DOSCOLD
+ LDA #$1D  ;;; LDA   #>DOSCOLD
                 STA   TODOSCLD2+2
                 LDA   #<DOSCOLD
                 STA   TODOSCLD2+1
@@ -262,15 +262,16 @@ ifelse(eval(VERSION < 321),1,`
 ',`
 ifelse(eval(VERSION < 330),1,`
                 ASM_ADDR(ONTABLE+3)
+',`
                 ASM_ADDR(ONTABLE)
 ')
 ')
-ifelse(eval(VERSION < 331),1,`
+ifelse(eval(VERSION >= 331),1,`
                 ASM_ADDR(CKIFAPND)
                 ASM_ADDR(CMPATCH)
 ')
                 ASM_ADDR(RWTS)
-ifelse(eval(VERSION < 330),1,`
+ifelse(eval(VERSION >= 330),1,`
                 ASM_ADDR(SECFLGS)
                 ASM_ADDR(CLOBCARD)
 ')
@@ -281,8 +282,8 @@ ifelse(eval(VERSION < 330),1,`
                 ASM_RES(4)
 ')
 
-SRCPAGE         ASM_DATA(>ADOSFNB1)
-SRCPAGELIM      ASM_DATA(>DOSLIM)
+SRCPAGE         ASM_DATA($1D) ;;; (>ADOSFNB1)
+SRCPAGELIM      ASM_DATA($40) ;;; (>DOSLIM)
 
 DSTPAGE         ASM_RES(1)
 DSTPAGELIM      ASM_RES(1)

@@ -121,7 +121,7 @@ FILEMGR         TSX             ; SAVE STK PTR SO WE CAN LATER RTN
                 LDA OPCODEFM    ; CHK IF OPCODE IS LEGAL.
                 CMP #13         ; (MUST BE LESS THAN 13.)
                 BCS TOERROP     ; OPCODE TOO LARGE - RANGE ERROR.
-                ASL A           ; DOUBLE VAL OF OPCODE & PUT IT IN
+                ASL             ; DOUBLE VAL OF OPCODE & PUT IT IN
                 TAX             ; (X) SO IT INDEXES TABLE OF ADRS.
                 LDA FMFUNCTB+1,X
                                 ; STICK ADDRESS (MINUS 1) OF THE
@@ -189,7 +189,7 @@ STRECLEN        STA RECLENWA    ; PUT LENGTH IN FM WORK AREA.
                                 ; OF THE COMMANDS ATTRIBUTES.
                 LDX CURDIRNX    ; (X)=INDEX FOR A NEW FILE DESCRIP
                                 ; ENTRY INTO DIRECTORY SEC.
-                LSR A           ; (C)=BIT0 OF 1ST ATTRIBUTE BYTE.
+                LSR             ; (C)=BIT0 OF 1ST ATTRIBUTE BYTE.
                 BCS CREATNEW    ; IF (C)=1 CMD CAN MAKE NEW FILE.
 
                                 ; COMMAND CANT CREATE NEW FILE.
@@ -355,10 +355,10 @@ ZEROWRKA        STA FMWKAREA,X  ; PUT $00 BYTE IN WORK AREA.
                 LDA DRVFM       ; DRIVE #.
                 STA DRVWA
                 LDA SLOTFM      ; GET SLOT #.
-                ASL A           ; CALC SLOT * 16.
-                ASL A
-                ASL A
-                ASL A
+                ASL             ; CALC SLOT * 16.
+                ASL
+                ASL
+                ASL
                 TAX             ; SET (X) = SLOT*16.
                 STX SLOT16WA
                 LDA #CATTRK     ; NORMAL CAT TRK = #17.
@@ -449,7 +449,7 @@ FNREAD          LDA SUBCODFM    ; CHK IF SUBCODE IS LEGAL.
                 CMP #5          ; (MUST BE < = 5.)
                 BCS TOERRSUB    ; RANGE ERROR - ILLEGAL SUBCODE.
 
-                ASL A           ; SUBCODE*2, BECAUSE 2 BYTES/ADR.
+                ASL             ; SUBCODE*2, BECAUSE 2 BYTES/ADR.
                 TAX             ; INDEX TABLE OF SUBFUNCTION ADRS.
                 LDA RDSUBTBL+1,X
                                 ; GET ADDR (MINUS 1) OF SUBFUNCT
@@ -474,7 +474,7 @@ FNWRITE         LDA FILTYPWA    ; CHK IF FILE IS LOCKED.
                 CMP #5          ; (MUST BE < = 5.)
                 BCS TOERRSUB    ; ERROR - ILLEGAL SUBCODE.
 
-                ASL A           ; SUBCODE*2, BECAUSE 2 BYTES/ADR.
+                ASL             ; SUBCODE*2, BECAUSE 2 BYTES/ADR.
                 TAX             ; INDEX TABLE OF SUBFUNCTION ADRS.
                 LDA WRSUBTBL+1,X
                                 ; GET ADR (MINUS 1) OF SUBFUNCT
@@ -898,14 +898,14 @@ PRLOCODE        TYA             ; EITHER PRINT "*" OR <SPC>.
                 ifelse(eval(VERSION < 320),1,`
                 AND #%00000111
                 LDY #3
-CHRTYPIX        LSR A
+CHRTYPIX        LSR
                 ',`
                 AND #%01111111  ; HI BYTE IS OFF SO CAN INDEX TBL
                                 ; THAT CONTAINS SYMBOLS FOR TYPES.
                 LDY #7          ; SET (Y) TO INDICATE 7 RELEVANT
                                 ; BITS AFTER SHIFT OUT HI BIT.
-                ASL A           ; THROW AWAY HI BIT.
-CHRTYPIX        ASL A           ; SHIFT REST OF BITS UNTIL HI SET.
+                ASL             ; THROW AWAY HI BIT.
+CHRTYPIX        ASL             ; SHIFT REST OF BITS UNTIL HI SET.
                 ')
                 BCS PRTFTYPE    ; # OF SHIFTS TO SET (C) DESIGNATES
                                 ; INDEX TO TYPE CHAR TABLE.
@@ -1782,7 +1782,7 @@ GETDATPR        SEC             ; CALC OFFSET TO DATA PAIR:
                 LDA FILPTSEC    ; SEC OFFSET OF DATA SEC INTO FILE
                 SBC RELFIRST    ; MINUS REL INDEX OF 1ST DATA SEC
                                 ; DESCRIBED IN PRES T/S LIST.
-                ASL A           ; TIMES 2 BECAUSE 2 BYTES USED TO
+                ASL             ; TIMES 2 BECAUSE 2 BYTES USED TO
                                 ; DESCRIBE A DATA PAIR.
                 ADC #12         ; ADD 12 BECAUSE 1ST DATA PAIR IS
                 TAY             ; ALWAYS LISTED 12 BYTES FROM THE
@@ -2310,8 +2310,8 @@ SRCH4TRK        STA DRECTION    ; SET THE SEARCH DIRECTION.
 CHK4FREE        STA NXTRKUSE
                 STA ASIGNTRK
                 TAY             ; IRRELEVANT.
-                ASL A           ; TRK*4 BECAUSE 4BYTES/TRK N TRKMAP.
-                ASL A
+                ASL             ; TRK*4 BECAUSE 4BYTES/TRK N TRKMAP.
+                ASL
                 TAY             ; INDEX FROM LAST BYTE OF FRESECMAP.
                 LDX #4          ; INDEX TO THE ASIGNMAP.
                 CLC             ; (C)=0, ASSUME NO FREE SEC AVAIL.
@@ -2447,8 +2447,8 @@ STNDARD         ROR ASIGNMAP-$FC,X
                                 ; IN STANDARD POSN.
                 CPY SECPERTK    ; CONDITION (C) FOR NEXT SHIFT.
                 BNE SUB2FREE
-                ASL A           ; TRK*4 TO INDEX TRKMAP.
-                ASL A
+                ASL             ; TRK*4 TO INDEX TRKMAP.
+                ASL
                 TAY
                 BEQ SUB2RTN     ; TRK VAL OF 0 NOT ALLOWED.
 
@@ -2532,7 +2532,7 @@ CALCFPTR        LDA RECNMBFM    ; PUT RECORD # IN MULTIPLIER AND
 NMBXLEN         TAX             ; SAVE PART OF RUNNING PRODUCT.
                                 ; (ON 1ST ENTRY, SET (X) = 0.)
                 LDA FILPTBYT    ; GET (A) = MULTIPLIER.
-                LSR A           ; PUT MULTIPLIER BIT IN CARRY.
+                LSR             ; PUT MULTIPLIER BIT IN CARRY.
                 BCS NMBXLEN1    ; IF (C)=1, GO ADD MULTIPLICAND.
                 TXA             ; (A) = PART OF RUNNING PRODUCT.
                 BCC NMBXLEN2    ; ALWAYS, NO USE +ING MULTIPLICAND
@@ -2544,7 +2544,7 @@ NMBXLEN1        CLC             ; + MULTIPLICAND TO RUNNING VERSION
                 STA FILPTSEC+1
                 TXA             ; SET (A)=LOW BYT OF RUNNING PROD.
                 ADC RECLENWA+1
-NMBXLEN2        ROR A           ; SHIFT (AS A UNIT) RUNNING RESULT
+NMBXLEN2        ROR             ; SHIFT (AS A UNIT) RUNNING RESULT
                 ROR FILPTSEC+1  ; 1 BIT RIGHT FOR NEXT TIME AROUND.
                 ROR FILPTSEC    ; SHIFT LOWER 2 BYTES OF RUNNING
                 ROR FILPTBYT    ; PRODUCT & AT SAME TIME THROW OUT
@@ -2741,9 +2741,9 @@ BASETEN         ASM_DATA(1,10,100)  ; 10^0=1, 10^1=10, 10^2=100.
                                 ; =================================
 
                 ifelse(eval(VERSION < 320),1,`
-FTYPETBL        ASM_DATA("TBAI")    ; TEXT, BINARY, APPLESOFT, INTEGER
+FTYPETBL        HIASCII(`TBAI')     ; TEXT, BINARY, APPLESOFT, INTEGER
                 ',`
-FTYPETBL        ASM_DATA("TIABSRAB") ; TEXT, INTEGER, APPLESOFT, BINARY
+FTYPETBL        HIASCII(`TIABSRAB') ; TEXT, INTEGER, APPLESOFT, BINARY
                 ')
                                 ; S-TYPE, R(ELOCATABLE)-TYPE,
                                 ; A-TYPE, B-TYPE.  THESE CODES ARE

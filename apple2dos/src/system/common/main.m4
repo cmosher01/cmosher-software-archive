@@ -198,10 +198,10 @@ IMGARAMV        ASM_ADDR(FPRAMRUN)
                                 ; WERE ISSUED WITH THE COMMAND.
 
 DOSCOLD         LDA IBSLOT      ; SLOT# * 16 FROM RWTSS IOB TBL.
-                LSR A           ; DIVIDE BY 16.
-                LSR A
-                LSR A
-                LSR A
+                LSR             ; DIVIDE BY 16.
+                LSR
+                LSR
+                LSR
                 STA SLOTPRSD    ; PUT SLOT IN PARSED TABLE.
                 LDA IBDRVN      ; DRV # FROM RWTSS IOB.
                 STA DRVPRSD     ; PUT DRIVE # IN PARSED TABLE.
@@ -267,7 +267,7 @@ DOSWARM
                                 ; SO NOW CHECK IF DEALING WITH
                                 ; A(RAM) OR A(ROM).
 
-CKBASIC         ASL A           ; MULTIPLY CODE TIMES 2.
+CKBASIC         ASL             ; MULTIPLY CODE TIMES 2.
                 BPL FORWARM     ; BRANCH IF A(RAM).
                                 ; (IE. A(RAM) YEILDS $40 * 2 = $80
                                 ; & A(ROM) YEILDS $80 * 2 = $00.)
@@ -298,7 +298,7 @@ CMWRMCLD        PHP             ; SAVE (C) DENOTING WARM OR COLD.
                 ')
                 STA OPUTCOND    ; SET CONDITION 0.
                 PLP             ; GET SAVED STATUS BACK OFF STK &
-                ROR A           ; ROTATE (C) INTO HI BIT OF (A) TO
+                ROR             ; ROTATE (C) INTO HI BIT OF (A) TO
                 STA CONDNFLG    ; SET CONDNFLG = $00 FOR WARMSTART
                                 ; OR CONDNFLG = $80 FOR COLDSTART.
                 BMI LANGCOLD    ; BRANCH IF DOING COLDSTART.
@@ -323,7 +323,7 @@ LANGCOLD        JMP (TOCLDVEC)  ; JMPS TO BASICS COLDSTART ROUTN
                                 ; = $80 = COLD START.
                                 ; = $C0 = USING A(RAM).
 
-KEYCOLD         ASL A           ; (A) * 2 TO DROP OUT HI BIT.
+KEYCOLD         ASL             ; (A) * 2 TO DROP OUT HI BIT.
                 BPL SKPDARAM    ; BRANCH IF NOT USING A(RAM).
                 STA ACTBSFLG    ; USING A(RAM) - WAS LOADED BY
                                 ; INTEGER BASIC ROM
@@ -616,7 +616,7 @@ OPUTINCP        JSR PREP4DOS    ; SAVE REGS & RESTORE I/O HKS TO PT
                                 ; HANDLER.
 
                 LDA OPUTCOND
-                ASL A           ; TIMES 2 BECAUSE 2 BYTES / ADDRESS.
+                ASL             ; TIMES 2 BECAUSE 2 BYTES / ADDRESS.
                 TAX             ; SET (X) TO INDEX TABLE OF ADRS.
                 LDA OUTHNDTB+1,X
                                 ; PUT ADR OF OUTPUT HNDLR ON STK
@@ -982,7 +982,7 @@ INVSCMD         JSR PURGECMD    ; GET CHAR FROM INPUT BUFFER
                                 ; CHAR MATCH, THEN (A) = $80.
                 INY             ; KICK UP INDEX TO NEXT CHAR IN
                                 ; THE COMMAND TEXT TABLE.
-                ASL A           ; IF POS/POS MATCH (A)=0 & (C)=0.
+                ASL             ; IF POS/POS MATCH (A)=0 & (C)=0.
                                 ; IF POS/NEG MTCH (A)=$80 & (C)=1.
                 BEQ CKIFCHRS    ; CHAR MATCHED SO GO CHK CARRY.
 
@@ -1065,7 +1065,7 @@ PRSYNERR        JMP SYNTXERR    ; EITHER A CTRL CHR DENOTED THAT A
 PRPDOCMD
                 ifelse(eval(VERSION < 320),1,`
                 LDA NDX2CMD
-                ASL A
+                ASL  
                 STA NDX2CMD
                 TAY
                 ',`
@@ -1120,7 +1120,7 @@ FNAMCHR1        JSR PURGECMD    ; GET 1ST CHAR IN NAME. (IGNORE
                                 ; (KNOW IT WASNT A <SPC>, "," OR <CR>
                                 ; BUT IT STILL MAY NOT BE LEGAL.)
 
-                ASL A           ; (C) = HI BIT OF CHAR.
+                ASL            ; (C) = HI BIT OF CHAR.
                 BCC LGLFNCHR    ; IF INV OR FLSH, OK FOR NAME.
                                 ; BUT, NOTE THAT THEY CAN ONLY BE
                                 ; POKED INTO INPUT BUF FROM A
@@ -1140,7 +1140,7 @@ FNAMCHR1        JSR PURGECMD    ; GET 1ST CHAR IN NAME. (IGNORE
 
                                 ; CHAR IS LEGAL TENDER FOR NAME.
 
-LGLFNCHR        ROR A           ; RESTORE NAME CHAR.
+LGLFNCHR        ROR             ; RESTORE NAME CHAR.
                 JMP SVFNCHAR    ; SAVE IT IN 1ST OR 2ND NAME BUF.
 
                                 ; PROCESS REST OF CHARS.
@@ -1450,8 +1450,8 @@ OPTNOK          LDA OPTNISSD-1,X
                                 ; CHARACTER WAS NUMERIC.
 
                 LDA NDX2OPTN    ; RETRIEVE INDEX TO OPTION.
-                ASL A           ; TIMES 4 BECAUSE GOING TO CHK MIN
-                ASL A           ; & MAX VALS OF LEGAL RANGES ASSOC
+                ASL             ; TIMES 4 BECAUSE GOING TO CHK MIN
+                ASL             ; & MAX VALS OF LEGAL RANGES ASSOC
                                 ; WITH OPTION (2 BYTES @).
                 TAY             ; (Y) = INDEX TO LEGAL RANGE TBL.
 
@@ -1492,7 +1492,7 @@ TOARGRNG
 SVALOPTN        LDA TEMPBYT     ; OBSOLETE, TEMPBYT WAS SET TO 0
                 BNE NXCMDCHR    ; IN ZEROPTCH SO ALWAYS FALL THRU.
                 TYA             ; (Y)-->(A)=INDEX TO OPTION RNGS.
-                LSR A           ; DIVIDE BY 2 BECAUSE @ OPTION RANGE
+                LSR             ; DIVIDE BY 2 BECAUSE @ OPTION RANGE
                                 ; TABLE HAS 4 BYTES, BUT @ PARSED
                                 ; VAL ENTRY IS ONLY 2 BYTES LONG.
                 TAY             ; PUT INDEX TO PARSED TABLE IN (Y).
@@ -2678,7 +2678,7 @@ SELCTBSC        CMP FILTYPFM    ; TYPE WANTED = TYPE FOUND?
                 STX NEXTCMD     ; WE ARE USING INTEGER & MUST LOAD
                                 ; INTEGER FILE CALLED "APPLESOFT"
                                 ; IN ORDER TO LOAD A(RAM).
-                LSR A           ; SHIFT TYPE WANTED TO SEE WHICH
+                LSR             ; SHIFT TYPE WANTED TO SEE WHICH
                                 ; BASIC TO SWITCH INTO.
                 BEQ SWTCH2FP    ; SWITCH FROM INTEGER TO APPLESOFT.
                 JMP CMDINT      ; SWITCH FROM APPLESOFT TO INTEGER.
@@ -3936,34 +3936,34 @@ SETHKRTN        RTS
                                 ; - END THE TABLE WITH A 0 BYTE.
                                 ; ========================================
 
-CMDTXTBL        HLASCII(`INIT')
-                HLASCII(`LOAD')
-                HLASCII(`SAVE')
-                HLASCII(`RUN')
-                HLASCII(`CHAIN')
-                HLASCII(`DELETE')
-                HLASCII(`LOCK')
-                HLASCII(`UNLOCK')
-                HLASCII(`CLOSE')
-                HLASCII(`READ')
-                HLASCII(`EXEC')
-                HLASCII(`WRITE')
-                HLASCII(`POSITION')
-                HLASCII(`OPEN')
-                HLASCII(`APPEND')
-                HLASCII(`RENAME')
-                HLASCII(`CATALOG')
-                HLASCII(`MON')
-                HLASCII(`NOMON')
-                HLASCII(`PR#')
-                HLASCII(`IN#')
-                HLASCII(`MAXFILES')
-                HLASCII(`FP')
-                HLASCII(`INT')
-                HLASCII(`BSAVE')
-                HLASCII(`BLOAD')
-                HLASCII(`BRUN')
-                HLASCII(`VERIFY')
+CMDTXTBL        LHASCII(`INIT')
+                LHASCII(`LOAD')
+                LHASCII(`SAVE')
+                LHASCII(`RUN')
+                LHASCII(`CHAIN')
+                LHASCII(`DELETE')
+                LHASCII(`LOCK')
+                LHASCII(`UNLOCK')
+                LHASCII(`CLOSE')
+                LHASCII(`READ')
+                LHASCII(`EXEC')
+                LHASCII(`WRITE')
+                LHASCII(`POSITION')
+                LHASCII(`OPEN')
+                LHASCII(`APPEND')
+                LHASCII(`RENAME')
+                LHASCII(`CATALOG')
+                LHASCII(`MON')
+                LHASCII(`NOMON')
+                LHASCII(`PR#')
+                LHASCII(`IN#')
+                LHASCII(`MAXFILES')
+                LHASCII(`FP')
+                LHASCII(`INT')
+                LHASCII(`BSAVE')
+                LHASCII(`BLOAD')
+                LHASCII(`BRUN')
+                LHASCII(`VERIFY')
                 ASM_DATA(0)         ; 0 BYTE DENOTES END OF TABLE.
 
 
@@ -4081,7 +4081,7 @@ CMDATTRB
                                 ; SCHEME.
                                 ; =================================
 
-OPTNTXT         ASM_DATA("VDSLRBACIO")
+OPTNTXT         HIASCII(`VDSLRBACIO')
 
 
                                 ; =================================
@@ -4145,7 +4145,7 @@ OPTNRNG
 ERRTXTBL
 ERR00           ASM_DATA($0D,$07)
                 ifelse(eval(VERSION < 320),1,`
-                HLASCII(`***DISK: ')
+                LHASCII(`***DISK: ')
                 ',`
                 ASM_DATA($8D)
                 ')
@@ -4155,52 +4155,52 @@ ERR00           ASM_DATA($0D,$07)
 ERR01
 ERR02
 ERR03
-                HLASCII(`SYS')
+                LHASCII(`SYS')
                 ',`
-ERR01           HLASCII(`LANGUAGE NOT AVAILABLE')
+ERR01           LHASCII(`LANGUAGE NOT AVAILABLE')
 ERR02
-ERR03           HLASCII(`RANGE ERROR')
+ERR03           LHASCII(`RANGE ERROR')
                 ')
 
 ERR04
                 ifelse(eval(VERSION < 320),1,`
-                HLASCII(`WRITE PROTECT')
+                LHASCII(`WRITE PROTECT')
                 ',`
-                HLASCII(`WRITE PROTECTED')
+                LHASCII(`WRITE PROTECTED')
                 ')
 
 
-ERR05           HLASCII(`END OF DATA')
-ERR06           HLASCII(`FILE NOT FOUND')
-ERR07           HLASCII(`VOLUME MISMATCH')
+ERR05           LHASCII(`END OF DATA')
+ERR06           LHASCII(`FILE NOT FOUND')
+ERR07           LHASCII(`VOLUME MISMATCH')
 
 ERR08
                 ifelse(eval(VERSION < 320),1,`
-                HLASCII(`DISK I/O')
+                LHASCII(`DISK I/O')
                 ',`
-                HLASCII(`I/O ERROR')
+                LHASCII(`I/O ERROR')
                 ')
 
-ERR09           HLASCII(`DISK FULL')
-ERR10           HLASCII(`FILE LOCKED')
+ERR09           LHASCII(`DISK FULL')
+ERR10           LHASCII(`FILE LOCKED')
 
                 ifelse(eval(VERSION < 320),1,`
-ERR11           HLASCII(`CMD SYNTAX')
-ERR12           HLASCII(`NO FILE BUFFS AVAIL')
-ERR13           HLASCII(`NOT BASIC PROGRAM')
+ERR11           LHASCII(`CMD SYNTAX')
+ERR12           LHASCII(`NO FILE BUFFS AVAIL')
+ERR13           LHASCII(`NOT BASIC PROGRAM')
                 ',`
-ERR11           HLASCII(`SYNTAX ERROR')
-ERR12           HLASCII(`NO BUFFERS AVAILABLE')
-ERR13           HLASCII(`FILE TYPE MISMATCH')
+ERR11           LHASCII(`SYNTAX ERROR')
+ERR12           LHASCII(`NO BUFFERS AVAILABLE')
+ERR13           LHASCII(`FILE TYPE MISMATCH')
                 ')
 
-ERR14           HLASCII(`PROGRAM TOO LARGE')
+ERR14           LHASCII(`PROGRAM TOO LARGE')
 
                 ifelse(eval(VERSION < 320),1,`
-ERR15           HLASCII(`NOT BINARY FILE')
+ERR15           LHASCII(`NOT BINARY FILE')
 ERR16           LOASCII(` ERROR')
                 ',`
-ERR15           HLASCII(`NOT DIRECT COMMAND')
+ERR15           LHASCII(`NOT DIRECT COMMAND')
                 ')
 
                 ASM_DATA($8D)
@@ -4384,4 +4384,4 @@ RUNTRUPT        ASM_RES(1)            ; RUN INTERCEPTED FLAG:
                                 ; ($AAB8 - $AAC0)
                                 ; =================================
 
-APLSFTXT        ASM_DATA("APPLESOFT")
+APLSFTXT        HIASCII(`APPLESOFT')

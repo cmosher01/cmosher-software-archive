@@ -1,55 +1,5 @@
-                .INCLUDE "symbols.s65"
-
-                .EXPORT ADROFIOB
-                .EXPORT BK2BOOT2
-                .EXPORT IBBUFP
-                .EXPORT IBCMD
-                .EXPORT IBDCTP
-                .EXPORT IBDRVN
-                .EXPORT IBSECSZ
-                .EXPORT IBSECT
-                .EXPORT IBSLOT
-                .EXPORT IBSMOD
-                .EXPORT IBSTAT
-                .EXPORT IBTRK
-                .EXPORT IBTYPE
-                .EXPORT IBVOL
-                .EXPORT NMPG2RD
-                .EXPORT TODOSCLD2
-                .EXPORT WRDOSIMG
-                .IF VERSION < 320
-                .EXPORT BOOT2
-                .EXPORT VERFY
-                .ELSE
-                .IF VERSION < 330
-                .EXPORT BOOT2
-                .ENDIF
-                .EXPORT ENTERWTS
-                .EXPORT ZCURBUF
-                .EXPORT PRPWRDOS
-                .ENDIF
-
-
-                .IMPORT RWTS
-                .IMPORT IMG8FF
-                .IMPORT IMG8FD
-                .IMPORT DOSRELOC
-                .IMPORT MASTERDOS
-
-                .IF VERSION < 320
-                .IMPORT CMDCLOSE
-                .IMPORT TONOTFND
-                .IMPORT RTNCODFM
-                .IMPORT HNDLCMD1
-                .ELSE
-                .IMPORT BOOT1
-                .IMPORT VOLWA
-                .IMPORT FIRDOSPG
-                .IF VERSION > 320
-                .IMPORT CLOBCARD
-                .ENDIF
-                .ENDIF
-
+include(`asm.m4h')
+include(`symbols.m4h')
                                 ; =========================================
                                 ; BOOT2 ($B700 - $B749).
                                 ; =========================================
@@ -60,12 +10,12 @@
                                 ; OF TRK 0 ($9CFF - $9B00) ARE
                                 ; EMPTY.)
                                 ; - AFTER THE REST OF DOS IS READ IN,
-                                ; EXECUTION JUMPS TO DOS'S COLDSTART
+                                ; EXECUTION JUMPS TO DOSS COLDSTART
                                 ; ROUTINE (DOSCLD, $9D84).
                                 ; - NOTE THAT ON ENTRY:  (X) = SLOT * 16.
                                 ; :::::::::::::::::::::::::::::::::::::::::
 
-                                ; PREPARE RWTS'S INPUT-OUTOUT BLOCK
+                                ; PREPARE RWTSS INPUT-OUTOUT BLOCK
                                 ; (IOB) AND DESIGNATE THE NUMBER OF
                                 ; SECTORS TO READ.
 
@@ -77,14 +27,14 @@ BOOT2           STX IBSLOT      ; (X) = SLOT*16 WANTED.
                 LDA NMPG2RD     ; SET NUMBER OF PAGES TO READ.
                 STA BT2PGCTR    ; COUNTER FOR NUMBER OF PGS TO READ.
 
-                .IF VERSION < 330
+                ifelse(eval(VERSION < 330),1,`
                 LDA #0
                 STA IBTRK
                 LDA BT1RSTSC
                 STA IBSECT
                 LDA BT1STPAG
                 STA IBBUFP+1
-                .ELSE
+                ',`
                 LDA #2          ; START WITH TRK$02/SEC$04.
                 STA IBTRK       ; TRACK.
                 LDA #4
@@ -93,7 +43,7 @@ BOOT2           STX IBSLOT      ; (X) = SLOT*16 WANTED.
                                 ; BOOT1 (#$B6 ON 48K SLAVE).
                 DEY             ; DEFINE I/O BUF AS 1 PAGE BELOW
                 STY IBBUFP+1    ; BOOT1.
-                .ENDIF
+                ')
 
                 LDA #1          ; OPCODE FOR READ.
                 STA IBCMD
@@ -102,14 +52,14 @@ BOOT2           STX IBSLOT      ; (X) = SLOT*16 WANTED.
                                 ; TO (X) = SLOT.
 
                 TXA             ; (X) = SLOT * 16.
-                LSR A           ; DIVIDE BY 16.
-                LSR A
-                LSR A
-                LSR A
+                LSR             ; DIVIDE BY 16.
+                LSR
+                LSR
+                LSR
                 TAX             ; (X) = SLOT.
 
                                 ; INITIALIZE PAGE-4 LOCATIONS WITH
-                                ; TRACK #'S ASSOC WITH THE DRIVES.
+                                ; TRACK #S ASSOC WITH THE DRIVES.
 
                 LDA #0
                 STA TRK4DRV2,X
@@ -121,22 +71,22 @@ BOOT2           STX IBSLOT      ; (X) = SLOT*16 WANTED.
                 LDX #$FF        ; COMPLETELY CLEAR OUT THE STACK.
                 TXS
                 STX IBVOL       ; SET VOL TO $FF (COMPLEMENT OF 0)
-                .IF VERSION < 330
+                ifelse(eval(VERSION < 330),1,`
                 JSR SETVID
-                .ELSE
+                ',`
                 JMP CLOBCARD    ; GO CLOBBER THE LANGUAGE CARD AND
                                 ; SET VIDEO OUTPUT (SIMUL8 PR#0).
                                 ; (RETURNS TO NEXT INSTRUC BELOW.)
-                .ENDIF
+                ')
 
 BK2BOOT2        JSR SETKBD      ; SIMULATE "IN#0" STATEMENT.
                                 ; (THAT IS, SELECT KEYBOARD.)
-TODOSCLD2       JMP DOSRELOC    ; JUMP INTO DOS'S COLDSTART ROUTINE
+TODOSCLD2       JMP DOSRELOC    ; JUMP INTO DOSS COLDSTART ROUTINE
                                 ; (AT $9DE4) TO BUILD THE DOS BUFS
                                 ; AND THE PAGE-3 VECTOR TABLE AND
                                 ; THEN RUN THE "HELLO" PROGRAM.
                                 ; ************* NOTE ************
-                                ; * THIS INSTRUC IS A HACKER'S
+                                ; * THIS INSTRUC IS A HACKERS
                                 ; * DREAM.  FOR INSTANCE, YOU CAN
                                 ; * CHANGE THE JUMP TO POINT TO
                                 ; * YOUR OWN PASSWORD OR TIME-
@@ -159,7 +109,7 @@ TODOSCLD2       JMP DOSRELOC    ; JUMP INTO DOS'S COLDSTART ROUTINE
                                 ; ================================
 
 WRDOSIMG
-                .IF VERSION < 330
+                ifelse(eval(VERSION < 330),1,`
                 LDA   IBBUFP+1
                 STA   BT1STPAG
                 SEC
@@ -190,11 +140,11 @@ WRDOSIMG
 
 RWPAGES         LDA   ADROFIOB+1
                 LDY   ADROFIOB
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 JSR   RWTS
-                .ELSE
+                ',`
                 JSR   ENTERWTS
-                .ENDIF
+                ')
                 LDY   IBSECT
                 INY
                 CPY   #$0D
@@ -206,8 +156,8 @@ L37A9           STY   IBSECT
                 DEC   BT2PGCTR
                 BNE   RWPAGES
                 RTS
-                .ENDIF
-                .IF VERSION < 320
+                ')
+                ifelse(eval(VERSION < 320),1,`
 VERFY           LDA   #$0C
                 JSR   HNDLCMD1
                 LDA   #$06
@@ -215,16 +165,16 @@ VERFY           LDA   #$0C
                 BNE   TOCLOSE
                 JMP   TONOTFND
 TOCLOSE         JMP   CMDCLOSE
-                .RES 24
-                .ENDIF
+                ASM_RES(24)
+                ')
 
 
 
 
 
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
 
-                .IF VERSION > 321
+                ifelse(eval(VERSION > 321),1,`
                 LDA BTSTAGE+1   ; CALC # OF PAGES TO WRITE:
                 SEC             ; (#$B6 - #$9D = #$19 OR #25.)
                 SBC IBBUFP+1
@@ -258,14 +208,14 @@ TOCLOSE         JMP   CMDCLOSE
                 JSR RWPAGES     ; WRITE TRK00/SEC09 TO TRK00/SEC00.
                 RTS
 
-                .RES 6            ; UNUSED.
+                ASM_RES(6)            ; UNUSED.
 
                                 ; =================================
                                 ; READ/WRITE A GROUP OF PAGES.
                                 ; =================================
 
 RWPAGES         LDA ADROFIOB+1  ; INIT (A)/(Y) WITH HI/LOW BYTS OF
-                LDY ADROFIOB    ; ADR OF RWTS'S IOB FOR ENTRY TO RWTS.
+                LDY ADROFIOB    ; ADR OF RWTSS IOB FOR ENTRY TO RWTS.
                 JSR ENTERWTS    ; ENTER INTO RWTS TO READ/WRITE SEC.
                 LDY IBSECT      ; GET # OF SEC JUST READ OR WRITTEN
                 DEY             ; VAL FOR NEXT SEC TO READ/WRITE (WHEN
@@ -283,12 +233,12 @@ RWPAGES         LDA ADROFIOB+1  ; INIT (A)/(Y) WITH HI/LOW BYTS OF
                                 ; ARE ANY MORE SECTORS TO READ/WRITE.
 
 SAMETRK         STY IBSECT      ; STORE NUMBER OF SEC WANTED.
-                DEC IBBUFP+1    ; REDUCE BUFFER'S PAGE ADR.
+                DEC IBBUFP+1    ; REDUCE BUFFERS PAGE ADR.
                 DEC BT2PGCTR    ; REDUCE COUNTER FOR # OF SECS TO READ.
                 BNE RWPAGES     ; MORE SECS TO READ.
                 RTS
 
-                .ENDIF
+                ')
 
 
 
@@ -330,10 +280,10 @@ ERRENTER        PLP             ; THROW STATUS OFF STACK.
 
 
                                 ; =================================
-                                ; SET UP RWTS'S IOB TO WRITE DOS.
+                                ; SET UP RWTSS IOB TO WRITE DOS.
                                 ; =================================
 PRPWRDOS        LDA FIRDOSPG+1  ; DESIGNATE START OF DOS AS ADR OF
-                STA IBBUFP+1    ; I/O BUF IN RWTS'S IOB.
+                STA IBBUFP+1    ; I/O BUF IN RWTSS IOB.
                 LDA #0
                 STA IBBUFP
                 LDA VOLWA       ; COMPLEMENT VOL#.
@@ -356,7 +306,7 @@ ZCURBUF1        STA (A4L),Y
 
 
 
-                .ENDIF
+                ')
 
 
 
@@ -369,49 +319,49 @@ ZCURBUF1        STA (A4L),Y
                                 ; ($B7DF - $B7E7)
                                 ; =================================
 
-                .RES 1          ; UNUSED ($B7DF).
-NMPG2RD         .BYTE $1B       ; # OF PAGES TO READ (#27).
-BT2PGCTR        .RES 1          ; # OF PAGES LEFT TO READ (VARIES).
-BT1RSTSC        .BYTE $0A       ; FIRST SEC # IN STAGE (#10).
-BT1STPAG        .BYTE >MASTERDOS ; BASE PAGE TO READ INTO?
+                ASM_RES(1)          ; UNUSED ($B7DF).
+NMPG2RD         ASM_DATA($1B)       ; # OF PAGES TO READ (#27).
+BT2PGCTR        ASM_RES(1)          ; # OF PAGES LEFT TO READ (VARIES).
+BT1RSTSC        ASM_DATA($0A)       ; FIRST SEC # IN STAGE (#10).
+BT1STPAG        ASM_DATA(>MASTERDOS) ; BASE PAGE TO READ INTO?
 
-ADROFIOB        .ADDR IBTYPE    ; ADR OF RWTS'S IOB (NORM $B7E8).
+ADROFIOB        ASM_ADDR(IBTYPE)    ; ADR OF RWTSS IOB (NORM $B7E8).
 
 BTSTAGE                         ; ADR OF START OF IMAGE OF BOOT1.
-                .IF VERSION < 320
-                .ADDR BOOT2-$100
-                .ELSE
-                .ADDR BOOT1
-                .ENDIF
+                ifelse(eval(VERSION < 320),1,`
+                ASM_ADDR(BOOT2-$100)
+                ',`
+                ASM_ADDR(BOOT1)
+                ')
 
 
 
                                 ; =================================
-                                ; RWTS'S INPUT/OUTPUT BLOCK (IOB).
+                                ; RWTSS INPUT/OUTPUT BLOCK (IOB).
                                 ; ($B7E8 - $B7FA)
                                 ; =================================
 
-IBTYPE          .BYTE $01       ; TABLE TYPE (SHOULD BE $01).
-IBSLOT          .RES 1          ; SLOT WANTED * 16.
-IBDRVN          .RES 1          ; DRIVE WANTED ($01 OR $02).
-IBVOL           .RES 1          ; VOL WANTED ($00 GOOD FOR ALL).
-IBTRK           .RES 1          ; TRK WANTED.
-IBSECT          .RES 1          ; LOGICAL SEC WANTED.
-IBDCTP          .ADDR DEVTPC    ; PTS TO DEVICE CHARACTERISTIC TBL.
+IBTYPE          ASM_DATA($01)       ; TABLE TYPE (SHOULD BE $01).
+IBSLOT          ASM_RES(1)          ; SLOT WANTED * 16.
+IBDRVN          ASM_RES(1)          ; DRIVE WANTED ($01 OR $02).
+IBVOL           ASM_RES(1)          ; VOL WANTED ($00 GOOD FOR ALL).
+IBTRK           ASM_RES(1)          ; TRK WANTED.
+IBSECT          ASM_RES(1)          ; LOGICAL SEC WANTED.
+IBDCTP          ASM_ADDR(DEVTPC)    ; PTS TO DEVICE CHARACTERISTIC TBL.
                                 ; (NORMALLY, $B7FB).
-IBBUFP          .RES 2          ; PTS TO RWTS'S I/O BUFFER.
-IBSECSZ         .ADDR $100      ; SEC SIZ IN BYTS (LOW/HI FORMAT). ; mosher ??? .RES 2 ???
-IBCMD           .RES 1          ; RWTS COMMAND CODE:
+IBBUFP          ASM_RES(2)          ; PTS TO RWTSS I/O BUFFER.
+IBSECSZ         ASM_ADDR($100)      ; SEC SIZ IN BYTS (LOW/HI FORMAT). ; mosher ??? ASM_RES(2) ???
+IBCMD           ASM_RES(1)          ; RWTS COMMAND CODE:
                                 ; $00=SEEK, $01=READ,
                                 ; $02=WRITE, $04=FORMAT.
-IBSTAT          .RES 1          ; ERROR CODE:
+IBSTAT          ASM_RES(1)          ; ERROR CODE:
                                 ; $00=NO ERRS, $10=WRIT PROT,
                                 ; $20=VOL MISMTCH, $40=I/O(DRV)ERR
                                 ; $80=READ ERR.
-IBSMOD          .RES 1          ; VOLUME FOUND.
-IOBPSN          .RES 1          ; SLOT*16 OF LAST ACCESS (FOUND).
-IOBPDN          .RES 1          ; DRIVE # OF LAST ACCESS (FOUND).
-                .RES 2          ; UNUSED ($B7F9-$B7FA).
+IBSMOD          ASM_RES(1)          ; VOLUME FOUND.
+IOBPSN          ASM_RES(1)          ; SLOT*16 OF LAST ACCESS (FOUND).
+IOBPDN          ASM_RES(1)          ; DRIVE # OF LAST ACCESS (FOUND).
+                ASM_RES(2)          ; UNUSED ($B7F9-$B7FA).
 
 
                                 ; =================================
@@ -419,10 +369,10 @@ IOBPDN          .RES 1          ; DRIVE # OF LAST ACCESS (FOUND).
                                 ; ($B7FB - $B7FF)
                                 ; =================================
 
-DEVTPC          .BYTE $00       ; DEVICE TYPE.
-PPTC            .BYTE $01       ; PHASES/TRK. (EVEN VAL = 1PHASE,
+DEVTPC          ASM_DATA($00)       ; DEVICE TYPE.
+PPTC            ASM_DATA($01)       ; PHASES/TRK. (EVEN VAL = 1PHASE,
                                 ; ODD VAL = 2PHASE.)  THEREFORE,
                                 ; $01=2 PHASE (WHICH TRANSLATES TO
                                 ; TO ARM MOVEMENTS PER TRACK).
-MONTC           .BYTE $EF,$D8   ; MOTOR-ON-TIME COUNT.
-                .RES 1          ; UNUSED ($B7FF).
+MONTC           ASM_DATA($EF,$D8)   ; MOTOR-ON-TIME COUNT.
+                ASM_RES(1)          ; UNUSED ($B7FF).

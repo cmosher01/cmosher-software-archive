@@ -1,86 +1,32 @@
-                .INCLUDE "symbols.s65"
-
-                .EXPORT DOSLIM
-                .EXPORT RWTS
-                .IF VERSION < 320
-                .EXPORT L3FD5
-                .ENDIF
-                .IF VERSION = 321
-                .EXPORT RTTRK
-                .ENDIF
-                .IF VERSION < 321
-                .EXPORT L3E0A
-                .ENDIF
-                .IF VERSION >= 320
-                .EXPORT FULLPTCH
-                .EXPORT RESTATIN
-                .EXPORT ZEROPTCH
-                .IF VERSION >= 330
-                .EXPORT SECFLGS
-                .EXPORT CLOBCARD
-                .ENDIF
-                .ENDIF
-
-
-
-
-                .IMPORT BK2BOOT2
-                .IMPORT WRITADR
-                .IMPORT RWTSBUF1
-                .IMPORT SEEKABS
-                .IMPORT WRITESEC
-                .IMPORT POSTNB16
-                .IMPORT READATA
-                .IMPORT RDADDR
-                .IMPORT PRENIBL
-                .IMPORT DELAY
-
-                .IF VERSION < 320
-                 .IMPORT CLOSZERO
-                .ELSE
-                .IF VERSION = 320 || VERSION = 321
-                .IMPORT CMDPOSN
-                .ENDIF
-                .IMPORT BADFMXIT
-                .IMPORT CLOSEALL
-                .IMPORT STKSAV
-                .IMPORT CPYFMWA
-                .IMPORT RUNTRUPT
-                .IMPORT RESTAT0
-                .IMPORT BYTPRSD
-                .IMPORT TEMPBYT
-                .IF VERSION >= 331
-                .IMPORT CONTCLOB
-                .ENDIF
-                .ENDIF
-
+include(`asm.m4h')
+include(`symbols.m4h')
 
                                 ; =================================
                                 ; READ/WRITE TRACK/SECTOR (RWTS).
                                 ; (ENTER WITH (Y)/(A) POINTING AT
-                                ; RWTS'S INPUT/OUTPUT BLOCK (IOB).
+                                ; RWTSS INPUT/OUTPUT BLOCK (IOB).
                                 ; =================================
 
 RWTS
 
 
 
-                STY PTR2IOB     ; SET UP A Z-PG PTR TO RWTS'S IOB.
+                STY PTR2IOB     ; SET UP A Z-PG PTR TO RWTSS IOB.
                 STA PTR2IOB+1
-                .IF VERSION >= 321
+                ifelse(eval(VERSION >= 321),1,`
                 LDY #2          ; INITIALIZE CNTR FOR MAXIMUM
                 STY RECLBCNT    ; NUMBER OF RECALIBRATION TRIES.
                 LDY #4          ; INITIALIZE COUNTER FOR MAXIMUM
-                STY RSEEKCNT    ; # OF RE-SEEKS BTW'N RECALIBS.
-                .ENDIF
-                LDY #1          ; (Y) = INDEX TO RWTS'S IOB.
+                STY RSEEKCNT    ; # OF RE-SEEKS BTWN RECALIBS.
+                ')
+                LDY #1          ; (Y) = INDEX TO RWTSS IOB.
                 LDA (PTR2IOB),Y ; GET SLOT*16 FROM IOB IN (X), SO
                 TAX             ; CAN USE IT TO INDEX BASE ADRS
                                 ; FOR DRIVE FUNCTIONS.
 
-                .IF VERSION < 321
-                STY RSEEKCNT    ; # OF RE-SEEKS BTW'N RECALIBS.
-                .ENDIF
+                ifelse(eval(VERSION < 321),1,`
+                STY RSEEKCNT    ; # OF RE-SEEKS BTWN RECALIBS.
+                ')
 
                                 ; CHK IF WANTED SLOT*16 = LAST SLOT*16?
 
@@ -128,32 +74,32 @@ CHKCHNG         CMP Q6L,X       ; READ AGAIN & CMP TO LAST READ.
 
 SAMESLOT        LDA Q7L,X       ; SET READ MODE.
                 LDA Q6L,X       ; STROBE LATCH TO READ.
-                .IF VERSION >= 330
+                ifelse(eval(VERSION >= 330),1,`
                 LDY #8          ; SET CNTR FOR 8 CHKS IF NEEDED.
-                .ENDIF
+                ')
 STRBAGN         LDA Q6L,X       ; STROBE LATCH AGAIN.
                 PHA             ; DELAY 14 MACHINE CYCLES.
                 PLA
-                .IF VERSION >= 330
+                ifelse(eval(VERSION >= 330),1,`
                 PHA
                 PLA
-                .ENDIF
+                ')
                 STX SLOTPG5     ; SAVE SLOT*16 WANTED IN PAGE5.
                 CMP Q6L,X       ; HAS DATA CHANGED YET?
 
-                .IF VERSION >= 330
+                ifelse(eval(VERSION >= 330),1,`
                 BNE DONETEST    ; YES - DATA CHANGED, SO SPINNING.
                 DEY             ; NO - NO CHANGE, SEE IF CHKD
                                 ; ENOUGH TIMES YET.
                 BNE STRBAGN     ; CHK AT LEAST 8 TIMES.
-                .ENDIF
+                ')
 DONETEST        PHP             ; SAVE TEST RESULTS ON STK SO CAN
                                 ; LATER CHK IF NEED EXTRA DELAY
                                 ; OR NOT.
 
                                 ; TURN MOTOR ON IN A DRIVE ASSOC
                                 ; WITH SLOT WANTED (JUST IN CASE
-                                ; IT WASN'T ALREADY SPINNING).
+                                ; IT WASNT ALREADY SPINNING).
                                 ; NOTE:  THIS USES DRIVE WITH SAME
                                 ; # AS LAST DRIVE USED.  THIS MAY
                                 ; OR MAY NOT BE THE SPECIFIC DRIVE
@@ -169,13 +115,13 @@ DONETEST        PHP             ; SAVE TEST RESULTS ON STK SO CAN
 
                                 ; ESTABLISH Z-PAGE POINTERS TO
                                 ; DEVICE CHARACTERISTIC TABLE &
-                                ; RWTS'S I/O BUFFER (SO WE CAN
+                                ; RWTSS I/O BUFFER (SO WE CAN
                                 ; USE Z-PAGE INDIRECT ADDRESSING):
                                 ; IBDCTP --> PTR2DCT (3C,3D).
                                 ; IBBUFP --> PTR2BUF (3E,3F).
 
                 LDY #6
-MOVPTRS         LDA (PTR2IOB),Y ; GET PTRS FROM RWTS'S IOB.
+MOVPTRS         LDA (PTR2IOB),Y ; GET PTRS FROM RWTSS IOB.
                 STA PTR2DCT-6,Y ; PUT THEM IN Z-PAGE.  (":" USED
                 INY             ; TO FORCE A 3-BYTE ZERO-PAGE ADR.)
                 CPY #10         ; 4 BYTES TO COPY (6 TO 9).
@@ -183,11 +129,11 @@ MOVPTRS         LDA (PTR2IOB),Y ; GET PTRS FROM RWTS'S IOB.
 
                                 ; CHECK DRIVE STATUS.
 
-                .IF VERSION >= 321
+                ifelse(eval(VERSION >= 321),1,`
                 LDY #3          ; SAVE HI BYTE OF MOTOR-ON-TIME
                 LDA (PTR2DCT),Y ; COUNT IN Z-PAGE.
                 STA MTRTIME+1
-                .ENDIF
+                ')
                 LDY #2          ; GET DRIVE # WANTED.
                 LDA (PTR2IOB),Y
                 LDY #16         ; SET (Y) = INDEX TO LAST-USED DRV.
@@ -201,10 +147,10 @@ MOVPTRS         LDA (PTR2IOB),Y ; GET PTRS FROM RWTS'S IOB.
                                 ; WANT IN SPECIFIC SLOT WANTED WAS
                                 ; NOT ORIGINALLY SPINNING.
                 PHP             ; PUSH UPDATED STATUS BACK ON STK.
-SAMEDRV         ROR A           ; PUT LOW BIT OF DRV WNTED IN (C).
-                .IF VERSION >= 321
+SAMEDRV         ROR             ; PUT LOW BIT OF DRV WNTED IN (C).
+                ifelse(eval(VERSION >= 321),1,`
                 BCC USEDRV2     ; BRANCH IF WANT DRIVE 2.
-                .ENDIF
+                ')
                 LDA SELDRV1,X   ; ROUTE POWER TO SELECT DRIVE 1.
                 BCS USEDRV1     ; ALWAYS.
 
@@ -213,7 +159,7 @@ USEDRV1         ROR DRVZPG      ; PUT SIGN BIT FOR WHICH DRIVE
                                 ; USING IN Z-PAGE:  NEG = DRIVE1.
                                 ; POS = DRIVE2.
 
-                .IF VERSION < 321
+                ifelse(eval(VERSION < 321),1,`
                 LDY   #$02
                 LDA   (PTR2DCT),Y
                 STA   MTRTIME
@@ -221,7 +167,7 @@ USEDRV1         ROR DRVZPG      ; PUT SIGN BIT FOR WHICH DRIVE
                 LDA   (PTR2DCT),Y
                 STA   MTRTIME+1
                 INY
-                .ELSE
+                ',`
                                 ; CHK TO SEE IF A SPECIFIC DRIVE
                                 ; WANTED IN SPECIFIC SLOT WANTED
                                 ; WAS ORIGINALLY ON OR NOT.
@@ -232,7 +178,7 @@ USEDRV1         ROR DRVZPG      ; PUT SIGN BIT FOR WHICH DRIVE
 
                                 ; SPECIFIC DRIVE WANTED IN SPECIFIC
                                 ; SLOT WANTED WAS ORIGINALLY OFF,
-                                ; SO DELAY A BIT TO AVOID POS'NING
+                                ; SO DELAY A BIT TO AVOID POSNING
                                 ; HEAD DURING THE PERIOD OF HEAVY
                                 ; CURRENT FLOW THAT OCCURS WHEN
                                 ; MOTOR IS TURNED ON.  (THAT IS,
@@ -243,7 +189,7 @@ USEDRV1         ROR DRVZPG      ; PUT SIGN BIT FOR WHICH DRIVE
                                 ;
                                 ; (AMOUNT OF DELAY IS NOT CONSTANT
                                 ; BECAUSE IT DEPENDS ON WHAT IS IN
-                                ; ACCUMULATOR & WE DON'T KNOW
+                                ; ACCUMULATOR & WE DONT KNOW
                                 ; BECAUSE WE WERE JUST ACCESSING
                                 ; HARDWARE.)
 
@@ -253,7 +199,7 @@ WAIT4MTR        JSR DELAY       ; STALL.
                 BNE WAIT4MTR    ; GO STALL SOME MORE.
                 LDX SLOTPG5     ; RESTORE (X) = SLOT*16.
 WASON           LDY #4          ; GET TRK WANTED.
-                .ENDIF
+                ')
 
                 LDA (PTR2IOB),Y
                 JSR SEEKTRK     ; GO MOVE ARM TO CORRECT TRK.
@@ -264,16 +210,16 @@ WASON           LDY #4          ; GET TRK WANTED.
                 PLP             ; GET EARLIER RESULT OF MOTOR TEST
                 BNE BEGINCMD    ; BRANCH IF DRV WAS ORIGINALLY ON.
 
-                .IF VERSION >= 330
-                LDY MTRTIME+1   ; MOTOR WASN'T ORIGNALLY ON.
+                ifelse(eval(VERSION >= 330),1,`
+                LDY MTRTIME+1   ; MOTOR WASNT ORIGNALLY ON.
                                 ; HOWEVER, WE HAVE SINCE TURNED IT
                                 ; ON.  NOW CHECK IF IT HAS BEEN ON
                                 ; LONG ENOUGH.
                 BPL BEGINCMD    ; YES -NO NEED TO WAIT ANY LONGER.
-                .ENDIF
+                ')
 
                                 ; ALTHOUGH MOTOR IS TURNED ON, IT
-                                ; HASN'T BEEN ON LONG ENOUGH TO DO
+                                ; HASNT BEEN ON LONG ENOUGH TO DO
                                 ; ACCURATE READING OF BYTES. THERE4
                                 ; DELAY UNTIL MOTOR ON TIME IS ONE
                                 ; SECOND (AT WHICH TIME MTRTIME
@@ -281,8 +227,8 @@ WASON           LDY #4          ; GET TRK WANTED.
                                 ; TAKEN UP TO SEEK TRACK.)
 
 TIME1
-		.IFDEF NODELAY
-                                ; PATCH TO REMOVE DELAY ROUTINE (FOR USE IN EMULATORS ONLY!)
+		ifdef(`NODELAY',`
+                               ; PATCH TO REMOVE DELAY ROUTINE (FOR USE IN EMULATORS ONLY!)
                 LDY #0
                 STY MTRTIME
                 STY MTRTIME+1
@@ -293,7 +239,7 @@ TIME1
                 NOP
                 NOP
 TIME2
-		.ELSE
+		',`
 
                 LDY #18
 TIME2           DEY
@@ -303,7 +249,7 @@ TIME2           DEY
                 INC MTRTIME+1
                 BNE TIME1
 
-                .ENDIF
+                ')
 
 
                                 ; =================================
@@ -339,7 +285,7 @@ BEGINCMD        LDY #12         ; GET CMD FROM IOB.
                                 ; (OPCODES $01 OR $02)
                                 ; ---------------------------------
 
-                ROR A           ; (C)=1 IF READ (OPCODE %00000001)
+                ROR             ; (C)=1 IF READ (OPCODE %00000001)
                                 ; (C)=0 IF WRIT (OPCODE %00000010)
                 PHP             ; SAVE (C) DENOTING CMD ON STK.
                 BCS RESETCNT    ; READING - SO SKIP PRENIBBLING.
@@ -375,15 +321,15 @@ DORECALB        LDA PRESTRK     ; SAVE TRK WANTED ON STK.
                                 ; STOP = FAMILIAR DISK CLATTER.)
                 JSR SETTRK      ; GO SELECT DRV & PUT TRK WANTED
                                 ; IN MEM LOCATION SPECIFIC TO DRV.
-                .IF VERSION < 321
+                ifelse(eval(VERSION < 321),1,`
                 DEC RSEEKCNT
                 BNE DRVERR
-                .ELSE
+                ',`
                 DEC RECLBCNT    ; REDUCE RECALIBRATION COUNTER.
                 BEQ DRVERR      ; ERROR -EXHAUSTED RECALIBRATIONS.
                 LDA #4          ; INDICATE 4 CHANCES TO RESEEK TRK
                 STA RSEEKCNT    ; BETWEEN RECALIBRATIONS.
-                .ENDIF
+                ')
                 LDA #0          ; SEEK TRACK 0.
                 JSR SEEKTRK     ; GO MOVE ARM TO TRK 0.
                 PLA             ; GET TRK WANTED FROM STK.
@@ -407,16 +353,16 @@ RDRIGHT         LDY TRKDSK      ; (Y) = TRK# FOUND IN HEADER.
                 JSR SETTRK      ; GO SELECT DRV & PUT TRK WANTED N
                                 ; MEMORY LOCATION SPECIFIC TO DRV.
                 PLA             ; GET TRK WANTED BACK OFF STACK.
-                .IF VERSION < 321
+                ifelse(eval(VERSION < 321),1,`
                 DEC READCNTR
                 BPL RESEEK
                 BMI REDUCERD
-                .ELSE
+                ',`
                 DEC RSEEKCNT    ; ALLOW 4 ATTEMPTS TO FIND CORRECT
                                 ; TRK BETWEEN RECALIBRATIONS.
                 BNE RESEEK      ; MORE ATTEMPTS LEFT TO FIND TRK.
                 BEQ DORECALB
-                .ENDIF
+                ')
 
 
                                 ; ---------------------------------
@@ -442,17 +388,17 @@ WASEEK          BEQ RWTSEXIT    ; IF CMD WAS SEEK, THEN GO EXIT
                                 ; ---------------------------------
 
 FORMDSK
-                .IF VERSION < 330
+                ifelse(eval(VERSION < 330),1,`
                 LDY #$03
                 LDA (PTR2IOB),Y
                 STA VOLDSK
-                .ENDIF
+                ')
 
                 JMP FORMAT      ; GO DO THE FORMAT.
 
 
                                 ; ---------------------------------
-                                ; FOUND CORRECT TRK FOR RWTS'S
+                                ; FOUND CORRECT TRK FOR RWTSS
                                 ; READ OR WRITE COMMANDS.
                                 ; ---------------------------------
 
@@ -478,32 +424,32 @@ RTTRK           LDY #3          ; GET VOL WANTED FROM IOB.
                                 ; IF THE SECTOR IS ALSO CORRECT.
 
 CRCTVOL         LDY #5          ; GET LOGICAL SECTOR # WANTED.
-                .IF VERSION < 330
+                ifelse(eval(VERSION < 330),1,`
                 LDA SECDSK
 L3E0A           CMP (PTR2IOB),Y
-                .IF VERSION = 321
+                ifelse(eval(VERSION == 321),1,`
                 BNE REDUCERD    ; NO - GO TRY AGAIN.
-                .ELSE
+                ',`
                 BEQ CRCTSEC
                 DEC READCNTR
                 BPL SETXSLT
                 LDA #$80
                 BNE TOERRWTS
-                .ENDIF
+                ')
 CRCTSEC
-                .ELSE
+                ',`
                 LDA (PTR2IOB),Y
                 TAY             ; SET (Y) = LOGICAL SECTOR# WANTED.
                 LDA PHYSECTR,Y  ; (A) = PHYSICAL SECTOR # WANTED.
                 CMP SECDSK      ; PHYS SEC WANTED=PHYS SEC FOUND?
                 BNE REDUCERD    ; NO - GO TRY AGAIN.
-                .ENDIF
+                ')
 
                 PLP             ; GET TYPE OF OPERATION FROM STK:
                                 ; (C)=0=WRITE, (C)=1=READ.
                 BCC WRITE       ; BRANCH IF RWTS OPCODE WAS WRITE.
 
-                                ; READ DATA SEC INTO RWTS'S BUFFERS.
+                                ; READ DATA SEC INTO RWTSS BUFFERS.
 
                 JSR READATA     ; GO READ A SECTOR.
                 PHP             ; SAVE STATUS OF READ ON STACK JUST
@@ -522,10 +468,10 @@ CRCTSEC
 
                                 ; POSTNIBBLE DATA & SHUT DOWN.
 
-                .IF VERSION >= 330
+                ifelse(eval(VERSION >= 330),1,`
                 LDX #0
                 STX PROSCRTH
-                .ENDIF
+                ')
                 JSR POSTNB16    ; CONVERT 6- & 2-ENCODED BYTES IN
                                 ; RWTS BUFS TO NORMAL MEMORY BYTES
                                 ; (USUALLY PLACED IN DOS DATA
@@ -552,9 +498,9 @@ CRCTSEC
                                 ; IS ONLY RELEVANT IF AN ERROR IS
                                 ; DENOTED (CARRY SET).
 
-RWTSEXIT        CLC             ; (C)=0, SIGNL SUCCESSFUL OPERAT'N
-                .BYTE $24          ; "BIT $38" TO IGNORE "SEC" INSTRUC
-RWTSERR         SEC             ; (C)=1, SIGNL UNSUCCESSFUL OPER'N
+RWTSEXIT        CLC             ; (C)=0, SIGNL SUCCESSFUL OPERATN
+                ASM_DATA($24)          ; "BIT $38" TO IGNORE "SEC" INSTRUC
+RWTSERR         SEC             ; (C)=1, SIGNL UNSUCCESSFUL OPERN
                 LDY #13         ; STORE RETURN CODE IN IOB.
                 STA (PTR2IOB),Y
                 LDA MTROFF,X    ; TURN MOTOR OFF.
@@ -582,9 +528,9 @@ SEEKTRK         PHA             ; SAVE # OF TRK WANTED ON STK.
                 LDY #1          ; GET DRIVE TYPE (EVEN VAL=2PHASE,
                 LDA (PTR2DCT),Y ; ODD VAL=1PHASE) FROM DCT.
                                 ; (PS. THE "II" IN THE "DISK II"
-                                ; LOGO STAMPED ON APPLE'S DISK
+                                ; LOGO STAMPED ON APPLES DISK
                                 ; DRIVE DENOTES A 2-PHASE MOTOR.)
-                ROR A           ; PUT LOW BYTE OF DRV TYPE IN (C).
+                ROR             ; PUT LOW BYTE OF DRV TYPE IN (C).
                 PLA             ; GET TRK# WANTED BACK IN (A).
                 BCC SEEKIT      ; NOT USING STANDARD DRIVE II,
                                 ; USING A ONE-PHASE DRIVE INSTEAD,
@@ -594,7 +540,7 @@ SEEKTRK         PHA             ; SAVE # OF TRK WANTED ON STK.
 
                                 ; USING A TWO-PHASE DRIVE.
 
-                ASL A           ; 2*TRK# WANTED=1/2TRACK# WANTED.
+                ASL             ; 2*TRK# WANTED=1/2TRACK# WANTED.
                 JSR SEEKIT      ; MOVE THE DISK ARM TO DESIRED TRK.
                 LSR PRESTRK     ; CONVERT HALFTRACK VALUE BACK TO
                 RTS             ; WHOLE TRACK VALUE.
@@ -602,18 +548,18 @@ SEEKTRK         PHA             ; SAVE # OF TRK WANTED ON STK.
 
                                 ; =====================================
                                 ; ROUTINE/SUBROUTINE TO MOVE DRIVE
-                                ; ARM TO A SPECIFIC TRK POS'N.
+                                ; ARM TO A SPECIFIC TRK POSN.
                                 ; =====================================
 
                                 ; USED AS A SUBROUTINE WHEN USING
-                                ; APPLE'S DISK DRIVE II.  NOTE WHEN
+                                ; APPLES DISK DRIVE II.  NOTE WHEN
                                 ; SEEKIT IS USED AS A SUBROUTINE,
                                 ; DESTRK, PRESTRK, TRK4DRV1, TRK4DR2,
                                 ; STPSDONE AND HOLDPRES ARE ALL
                                 ; EXPRESSED IN TERMS OF HALFTRACKS:
-                                ; DESTRK = DESTINATION HALF-TRACK POS'N.
-                                ; PRESTRK = PRESENT HALF-TRACK POS'N.
-                                ; HOLDPRES = PRESENT HALF-TRACK POS'N.
+                                ; DESTRK = DESTINATION HALF-TRACK POSN.
+                                ; PRESTRK = PRESENT HALF-TRACK POSN.
+                                ; HOLDPRES = PRESENT HALF-TRACK POSN.
                                 ; TRK4DRV1 = BASE ADR (INDEXED BY SLOT*16)
                                 ; TO POINT TO THE ADR THAT
                                 ; CONTAINS THE LAST HALF-
@@ -632,17 +578,17 @@ SEEKTRK         PHA             ; SAVE # OF TRK WANTED ON STK.
                                 ; TO REFER TO FULLTRACKS INSTEAD.)
 
 SEEKIT
-                .IF VERSION <= 321
+                ifelse(eval(VERSION <= 321),1,`
                 STA TRKDSK
-                .IF VERSION <321
+                ifelse(eval(VERSION < 321),1,`
                 LDA MAG0FF,X    ; TURN OFF ALL 4 STEPPER MAGNETS
                 LDA MAG1FF,X
                 LDA MAG2FF,X
                 LDA MAG3FF,X
-                .ENDIF
-                .ELSE
+                ')
+                ',`
                 STA DESTRK      ; (A) = HALFTRACK# WANTED.
-                .ENDIF
+                ')
 
                 JSR SLOTX2Y     ; CONVERT (X)=SLOT*16-->(Y)=SLOT.
                 LDA TRK4DRV1,Y  ; PRES HALFTRK # ASSOC WITH DRV1.
@@ -656,12 +602,12 @@ SETPRSTK        STA PRESTRK     ; SAVE PRESENT HALFTRK#.
                                 ; TO SEEK AS PRESENT HALFTRK FOR
                                 ; NEXT TIME AROUND.  (PUT HALFTRK
                                 ; INFO IN SLOT-DEPENDENT LOCATIONS.)
-                .IF VERSION < 330
+                ifelse(eval(VERSION < 330),1,`
                 LDA TRKDSK
-                .ELSE
+                ',`
                 LDA DESTRK      ; HALFTRK WANTED.
-                .ENDIF
-                BIT DRVZPG      ; CHK WHICH DRIVE WE'RE USING.
+                ')
+                BIT DRVZPG      ; CHK WHICH DRIVE WERE USING.
                 BMI DRV1USG     ; BRANCH IF USING DRIVE 1.
                 STA TRK4DRV2,Y  ; USING DRIVE2 -STORE HALFTRK INFO
                                 ; FOR NEXT TIME AROUND.
@@ -677,10 +623,10 @@ DRV2USG         JMP SEEKABS     ; GO MOVE DRIVE ARM.
                                 ; ===================================
 
 SLOTX2Y         TXA             ; GET SLOT*16 FROM (X).
-                LSR A           ; DIVIDE IT BY 16.
-                LSR A
-                LSR A
-                LSR A
+                LSR             ; DIVIDE IT BY 16.
+                LSR  
+                LSR  
+                LSR  
                 TAY             ; PUT SLOT# IN (Y).
                 RTS
 
@@ -688,20 +634,20 @@ SLOTX2Y         TXA             ; GET SLOT*16 FROM (X).
                                 ; =================================
                                 ; GO SELECT DRIVE AND PUT TRACK #
                                 ; WANTED IN MEMORY LOCATION ASSOC
-                                ; WITH THE # OF THE DRIVE WE'RE
+                                ; WITH THE # OF THE DRIVE WERE
                                 ; USING.
                                 ; =================================
 
 SETTRK          PHA             ; SAVE PRESENT TRK # ON STK.
                 LDY #2          ; GET DRV # WANTED FROM IOB.
                 LDA (PTR2IOB),Y
-                ROR A           ; CONDITION CARRY:
+                ROR             ; CONDITION CARRY:
                                 ; (C)=0=DRV1, (C)=1=DRV2.
                 ROR DRVZPG      ; CONDITION ZERO-PAGE LOCATION:
                                 ; NEG=DRV1, POS=DRV2.
                 JSR SLOTX2Y     ; USE (X)=SLOT*16 TO GET (Y)=SLOT.
                 PLA             ; GET TRK # WANTED OFF STK.
-                ASL A           ; TIMES TWO FOR 1/2TRACK # WANTED.
+                ASL             ; TIMES TWO FOR 1/2TRACK # WANTED.
                 BIT DRVZPG      ; CHK WHICH DRIVE TO USE.
                 BMI STORDRV1    ; BRANCH IF USING DRIVE 1.
                 STA TRK4DRV2,Y  ; SAV HALFTRK # WANTED FOR DRIVE2.
@@ -711,10 +657,10 @@ RTNSETRK        RTS
 
 
 FORMAT
-                .IF VERSION < 330
+                ifelse(eval(VERSION < 330),1,`
 
 
-                LDA   #$80      ; PRETEND WE'RE ON TRACK 128
+                LDA   #$80      ; PRETEND WERE ON TRACK 128
                 STA   PRESTRK
                 LDA   #$00
                 STA   FRMTKCTR
@@ -798,7 +744,7 @@ L3EE7           STA   Q6H,X
 
                                 ; ODD ENCODE THE ADDRESS CHECKSUM.
 
-                LSR   A
+                LSR
                 ORA   ENC44MASK
                 STA   Q6H,X
                 CMP   Q6L,X     ; WRITE BYTE
@@ -849,7 +795,7 @@ L3F50           DEC   MTRTIME
                 SBC   #$0C
                 BEQ   L3F73
                 BCS   L3F6C
-                .BYTE    $2C       ; BIT to hide the following STA FRMTSEC
+                ASM_DATA($2C)       ; BIT to hide the following STA FRMTSEC
 L3F6C           STA   FRMTSEC
                 LDA   #$FF
                 JMP   L3EE7
@@ -862,14 +808,14 @@ L3F73           PHA
                 DEY
 L3F80           PHA
                 PLA
-                .IF VERSION = 321
+                ifelse(eval(VERSION == 321),1,`
                 PHA
                 PLA
-                .ELSE
+                ',`
                 NOP
                 NOP
                 BIT   $00
-                .ENDIF
+                ')
                 PHA
                 PLA
                 DEY
@@ -889,7 +835,7 @@ L3F9E           INC   FRMTKCTR
                 LDA   FRMTKCTR
                 CMP   #TRKPERDSK
                 BCS   L3FB8
-                ASL   A
+                ASL
                 JSR   SEEKABS
                 LDY   MTRTIME+1
                 INY
@@ -903,7 +849,7 @@ L3FB8           JMP   RWTSEXIT
 
                                 ; =================================
                                 ; WRITE DOUBLE AND SINGLE BYTE
-                                ; SUBR'TNS WITH DIFFERENT DELAYS.
+                                ; SUBRTNS WITH DIFFERENT DELAYS.
                                 ; =================================
 
                                 ; NOTE:  A "JSR" INSTRUCTION
@@ -922,7 +868,7 @@ WRBYTE1         PHA             ; (3 CYC)
 
                                 ; CALC & WRITE ODD-ENCODED BYTE.
 
-                LSR   A         ; (2 CYC)
+                LSR             ; (2 CYC)
                 ORA   ENC44MASK       ; (2 CYC)
                 STA   Q6H,X     ; (5 CYC)
                 CMP   Q6L,X     ; (4 CYC)
@@ -942,33 +888,34 @@ WRBYTE3         PHA             ; (3 CYC)
                 CMP   Q6L,X     ; (4 CYC) WRITE
                 RTS             ; (6 CYC LEFT OVER AFTER WRITE)
 
-                .IF VERSION = 321
-                .BYTE 1
-                .ELSE
+                ifelse(eval(VERSION == 321),1,`
+                ASM_DATA(1)
+                ',`
 L3FD5           INX
                 BEQ   L3FD9
-                .ENDIF
+                ')
                 RTS
 L3FD9
-                .IF VERSION < 320
+                ifelse(eval(VERSION < 320),1,`
                 JMP   CLOSZERO
-                .RES    36
-                .ELSEIF VERSION = 320 || VERSION = 321
+                ASM_RES(36)
+                ',`ifelse(eval(VERSION == 320 || VERSION == 321),`
                 JMP   CMDPOSN
-                .ENDIF
+                ')
+                ')
 
 
 
 
 
-                .ELSE
+                ',`
 
 
 
 
 
                                 ; =================================
-                                ; RWTS'S FORMAT COMMAND.
+                                ; RWTSS FORMAT COMMAND.
                                 ; =================================
 
                                 ; INITIALIZE ZERO-PAGE LOCATIONS.
@@ -1008,7 +955,7 @@ ZBUF1           STA RWTSBUF1,Y
 
                                 ; PREPARE TO DO A RECALIBRATION.
 
-                LDA #80         ; PRETEND WE'RE ON TRK #80.
+                LDA #80         ; PRETEND WERE ON TRK #80.
                 JSR SETTRK      ; GO SELECT DRV & PUT HALFTRACK #
                                 ; WANTED IN MEMORY LOCATION ASSOC
                                 ; WITH THE # OF DRV BEING USED.
@@ -1026,17 +973,17 @@ ZBUF1           STA RWTSBUF1,Y
                                 ; FORMAT THE NEXT TRACK.
 
 FRMNXTRK        LDA FRMTKCTR    ; USE TRK COUNTER AS TRK TO SEEK.
-                JSR SEEKTRK     ; POS'N ARM OVER CORRECT TRK.
+                JSR SEEKTRK     ; POSN ARM OVER CORRECT TRK.
 
                                 ; GO FORMAT A SPECIFIC TRACK.
 
                 JSR FORMATRK    ; FORMAT A TRACK.
                 LDA #8          ; SET (A) AS DEFAULT VALUE IN CASE
-                                ; COULDN'T FORMAT.  NOTE THAT ANY
+                                ; COULDNT FORMAT.  NOTE THAT ANY
                                 ; TYPE OF ERROR ENCOUNTERED WHEN
                                 ; FORMATTING YEILDS AN I/O-ERROR
                                 ; MESSAGE.
-                BCS ERRFRMT     ; BRANCH IF COULDN'T FORMAT.
+                BCS ERRFRMT     ; BRANCH IF COULDNT FORMAT.
 
                                 ; DO A READ CHK OF TRK JUST FORMATTED.
                                 ; (EVENTHOUGH TRACK VERIFIED, READ
@@ -1129,11 +1076,11 @@ DOADDR          JSR WRITADR     ; WRITE SYNC BYTES & ADDR HEADER.
                                 ; ......................................
 
                                 ; NOTE WE JUST FINISHED FORMATTING
-                                ; SEC $0F.  BECAUSE SEC $0F SHOULDN'T
+                                ; SEC $0F.  BECAUSE SEC $0F SHOULDNT
                                 ; OVERWRITE TOO MUCH OF OF THE SYNC GAP
                                 ; (ORIGINALLY 128 SYNC LONG) THAT WAS
                                 ; WAS WRITTEN PRIOR TO SEC $00, AND BECAUSE
-                                ; WE DON'T WASTE TOO MUCH TIME BETWEEN
+                                ; WE DONT WASTE TOO MUCH TIME BETWEEN
                                 ; WRITING THE LAST BYTE OF SEC $0F AND
                                 ; LOOKING FOR THE NEXT ADDR HEADER,
                                 ; WE EXPECT TO BEGIN OUR VERIFICATION
@@ -1167,7 +1114,7 @@ BYPSYNCS        JSR VRFYRTN     ; (12 CYC)
 
                                 ; READ ADDRESS OF FIRST SEC ENCOUNTERED.
                                 ; (THIS BETTER BE SEC $00!!!!  IF IT
-                                ; ISN'T, OUR DRIVE IS TOO FAST & WE
+                                ; ISNT, OUR DRIVE IS TOO FAST & WE
                                 ; WILL EVENTUALLY HAVE TO REFORMAT
                                 ; THE TRACK.)
 
@@ -1176,7 +1123,7 @@ BYPSYNCS        JSR VRFYRTN     ; (12 CYC)
                 LDA SECDSK      ; WAS SEC READ = SEC00?
                 BEQ RDNXTDAT    ; YES - GO READ NEXT DATA SEC.
 
-                                ; DIDN'T FIND SECTOR $00 WHEN EXPECTED!!!!
+                                ; DIDNT FIND SECTOR $00 WHEN EXPECTED!!!!
 
                                 ; DRIVE MUST BE FASTER THAN ANTICIPATED
                                 ; BECAUSE SEC $0F OVERLAID TOO MUCH OF
@@ -1198,8 +1145,8 @@ BYPSYNCS        JSR VRFYRTN     ; (12 CYC)
                                 ; IF THE COUNTER IS < 16, WE ONLY REDUCE
                                 ; GAP-3 BY ONE SYNC.  IN ORDER TO GIVE
                                 ; THE MACHINE TIME TO DECODE INFO, WE
-                                ; WON'T ALLOW A GAP LESS THAN 5 SYNCS
-                                ; LONG.  (NOTE THAT WE WON'T REFORMAT
+                                ; WONT ALLOW A GAP LESS THAN 5 SYNCS
+                                ; LONG.  (NOTE THAT WE WONT REFORMAT
                                 ; THE TRACK UNTIL WE FIND THE ADR HEADER
                                 ; FOR SEC $0F.  THIS PRESUMABLY KEEPS
                                 ; LIKE-NUMBERED SECS IN ADJACENT TRKS
@@ -1214,7 +1161,7 @@ BYPSYNCS        JSR VRFYRTN     ; (12 CYC)
                 BCS REREADDR    ; YES.
                 SEC             ; NO - SIGNAL ERROR BECAUSE NEED AT
                 RTS             ; LEAST 5 SYNCS.  DRIVE IS SO FAST
-                                ; ===             ;THAT IT IS USELESS.  WE CAN'T
+                                ; ===             ;THAT IT IS USELESS.  WE CANT
                                 ; EVEN COMPENSATE FOR IT BY REDUCING
                                 ; THE NUMBER OF GAP-3 SYNCS.
 
@@ -1237,7 +1184,7 @@ BADREAD         DEC READCNTR    ; EITHER GOT A BAD READ OR ELSE
 REREADDR        JSR RDADDR      ; READ AN ADDR HEADER.
                 BCS NOTLAST     ; GOT A BAD READ.
 
-                                ; WE WILL REFORMAT BUT WE DON'T WANT
+                                ; WE WILL REFORMAT BUT WE DONT WANT
                                 ; TO DO SO UNTIL WE READ SEC $0F.
 
                                 ; HAVE WE FOUND SEC $0F YET?
@@ -1289,7 +1236,7 @@ CKSECMAP        LDY SECDSK      ; USE # OF SEC FOUND AS INDEX TO
                 LDA SYNCNTR     ; CHECK SYNC COUNT.
                 CMP #16         ; LESS THAN 16 SYNCS?
                 BCC VRFYRTN     ; YES - EXIT CLEANLY.
-                                ; DON'T WANT TO START OFF WITH A
+                                ; DONT WANT TO START OFF WITH A
                                 ; SMALLER GAP SO SKIP CODE BELOW.
 
                                 ; REDUCE THE SIZE OF GAP3.
@@ -1307,7 +1254,7 @@ NOTRK0          CLC             ; TO ACCOMMODATE A TIGHTER TRACK.
                                 ; - TABLE IS INDEXED BY (Y),
                                 ; WHERE (Y) = SECTOR NUMBER.
                                 ; =================================
-SECFLGS         .RES $10,$FF
+SECFLGS         ASM_RES($10,$FF)
 
 
                                 ; =================================
@@ -1317,22 +1264,22 @@ SECFLGS         .RES $10,$FF
                                 ; =================================
 
                                 ; CORRESPONDING LOGICAL SECTOR#.
-PHYSECTR        .BYTE $00          ; 00
-                .BYTE $0D          ; 01
-                .BYTE $0B          ; 02
-                .BYTE $09          ; 03
-                .BYTE $07          ; 04
-                .BYTE $05          ; 05
-                .BYTE $03          ; 06
-                .BYTE $01          ; 07
-                .BYTE $0E          ; 08
-                .BYTE $0C          ; 09
-                .BYTE $0A          ; 0A
-                .BYTE $08          ; 0B
-                .BYTE $06          ; 0C
-                .BYTE $04          ; 0D
-                .BYTE $02          ; 0E
-                .BYTE $0F          ; 0F
+PHYSECTR        ASM_DATA($00)          ; 00
+                ASM_DATA($0D)          ; 01
+                ASM_DATA($0B)          ; 02
+                ASM_DATA($09)          ; 03
+                ASM_DATA($07)          ; 04
+                ASM_DATA($05)          ; 05
+                ASM_DATA($03)          ; 06
+                ASM_DATA($01)          ; 07
+                ASM_DATA($0E)          ; 08
+                ASM_DATA($0C)          ; 09
+                ASM_DATA($0A)          ; 0A
+                ASM_DATA($08)          ; 0B
+                ASM_DATA($06)          ; 0C
+                ASM_DATA($04)          ; 0D
+                ASM_DATA($02)          ; 0E
+                ASM_DATA($0F)          ; 0F
 
 
                                 ; =================================
@@ -1350,20 +1297,20 @@ CLOBCARD        JSR SETVID      ; SIMULATE A "PR#0" STATEMENT.
                                 ; MACHINE WILL BE FORCED TO USE
                                 ; MOTHERBOARD VERSION OF FP.
 
-                .IF VERSION >= 331
+                ifelse(eval(VERSION >= 331),1,`
                 JSR CONTCLOB    ; NOW CLOBBER THE 80-COLUMN CARD.
-                .ENDIF
+                ')
                 JMP BK2BOOT2    ; RTN TO ORIGINAL PART OF BOOT2.
-                .IF VERSION = 330
-                .RES 3
-                .ENDIF
+                ifelse(eval(VERSION == 330),1,`
+                ASM_RES(3)
+                ')
 
 
 
 
 
 
-                .ENDIF
+                ')
 
 
 
@@ -1371,7 +1318,7 @@ CLOBCARD        JSR SETVID      ; SIMULATE A "PR#0" STATEMENT.
 
 
 
-                .IF VERSION >= 320
+                ifelse(eval(VERSION >= 320),1,`
                                 ; ===================================
                                 ; PATCH TO ZERO ADDED STORAGE BYTES.
                                 ; ($BFDC - $BFE5)
@@ -1408,7 +1355,7 @@ FULLPTCH        JSR CPYFMWA     ; COPY FM WRK AREA--->FM WRK BUF.
                 LDA #9          ; EXIT WITH DISK-FULL ERROR CODE.
                 JMP BADFMXIT
 
-                .ENDIF
+                ')
 
 DOSLIM
                                 ; ********************************
