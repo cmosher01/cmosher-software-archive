@@ -47,7 +47,7 @@ M4S = $(COMDIR)/reloc.m4 $(COMDIR)/main.m4 $(COMDIR)/filemgr.m4 $(COMDIR)/boot1.
 
 
 
-mypkgdir=$(prefix)/lib/apple2/dos/$(DOS_SECTORS)sector
+mypkgdir=$(prefix)/lib/apple2/dos/$(DOS_SECTORS)sector/dos$(DOS_VERS)
 
 mypkg_DATA=dos.nib$(DOS_SECTORS)
 noinst_DATA=dos.md5
