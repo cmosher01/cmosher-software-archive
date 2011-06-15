@@ -899,7 +899,7 @@ L3FD9
                 ifelse(eval(VERSION < 320),1,`
                 JMP   CLOSZERO
                 ASM_RES(36)
-                ',`ifelse(eval(VERSION == 320 || VERSION == 321),`
+                ',`ifelse(eval(VERSION == 320 || VERSION == 321),1,`
                 JMP   CMDPOSN
                 ')
                 ')

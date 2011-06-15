@@ -320,9 +320,9 @@ POSTNIB2        DEX
                 BMI POSTNIB1
                 LDA RWTSBUF1,Y  ; SET (A) = 6-ENCODED BYTE.
                 LSR RWTSBUF2,X  ; PUT LWR 2 BITS OF 2-ENCODED BYTE
-                ROL A           ; INTO ORIGNAL 6-ENCODED BYTE TO
+                ROL             ; INTO ORIGNAL 6-ENCODED BYTE TO
                 LSR RWTSBUF2,X  ; CREATE A NORMAL MEMORY BYTE.
-                ROL A
+                ROL  
                 STA (PTR2BUF),Y ; PUT NORMAL MEMORY BYTE IN RWTSS
                 INY             ; BUF (NORMALLY DOS DATA SEC BUF).
                 CPY PROSCRTH
@@ -721,7 +721,7 @@ ATDESTN         LDA   #$FF
 ARRIVED         RTS
                 ',`
                 BCS TURNON      ; WE ARE AT OR BEYOND 12 STEPS FRM
-                                ; START OR DEST'N POSN SO USE OLD
+                                ; START OR DESTN POSN SO USE OLD
                                 ; INDEX TO ACCESS DELAY TABLE.
                 TAY             ; USE PRES DISTANCE TO INDEX TABLE.
 TURNON          SEC             ; (C)=1 SO GET ODD INDEX TO BASE
@@ -787,7 +787,7 @@ ARRIVED         RTS
                                 ; =================================
 
                 ifelse(eval(VERSION == 330),1,`
-                ASM_DATA(`*  ')
+                LOASCII(`*  ')
                 ',`ifelse(eval(VERSION >= 331),1,`
                 ASM_RES(3)
                 ')
@@ -1221,7 +1221,7 @@ FREE1
                 ASM_RES(33)
                 ',`ifelse(eval(VERSION == 330),1,`
 
-                ifdef(`FRANKLIN'),`
+                ifdef(`FRANKLIN',`
                                 ; CAM: This is the only difference in Franklins DOS
                                 ;       (well... this routine AND the patch to call this routine)
                                 ; Since Franklin Ace had lower case letters, this routine

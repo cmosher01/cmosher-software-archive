@@ -209,10 +209,10 @@ BT1EXCB6        LDA PT2BTBUF+1  ; IMAGE OF BT1EXC08. GET NEXT PAGE
                                 ; WHERE S=SLOT#, NORMALLY $C65C).
 
                 LDA SLT16ZPG    ; (A) = SLOT*16 FROM ZERO PAGE.
-                LSR A           ; DIVIDE BY 16.
-                LSR A
-                LSR A
-                LSR A
+                LSR             ; DIVIDE BY 16.
+                LSR
+                LSR
+                LSR
                 ORA #$C0        ; MERGE WITH $C0 TO GET $CS, WHERE
                                 ; S=SLOT#.
                 STA PTR2RDSC+1  ; STORE HI BYTE OF CONTROLLERS
@@ -252,7 +252,7 @@ SKPRELB6        LDX BT1PG2RD    ; IMAGE OF SKRPREL08 ($81F).
                                 ; VARIES FROM $09-->$FF).
                 BMI PRP4B2B6    ; WHEN (X) = #$FF, THEN WE HAVE
                                 ; READ ALL THE SECS IN, SO GO XIT.
-                LDA PHYSECP8-$2E00,X
+                LDA PHYSECP8+65536-$2E00,X
                                 ; EQUIVALENT TO "LDA $84D,X".
                                 ; CONVERT LOGICAL SEC# TO PHYS SEC#
                 STA BOOTSEC     ; STORE PHYSICAL SEC# IN PAGE0.
@@ -301,10 +301,15 @@ PRP4B2B6        INC BT1LDADR+1  ; IMAGE OF PR4B208 ($839).
                                 ; - AN IMAGE OF THIS TABLE IS
                                 ; HOUSED AT $84D DURING THE BOOT.
                                 ; =================================
-PHYSECP8        .REPEAT $10, LOGSECTNUM
-                ASM_DATA(($100) - 2*LOGSECTNUM - (LOGSECTNUM+6)/7) .MOD $10
-                .ENDREP
+PHYSECP8        ;.REPEAT $10, LOGSECTNUM
+                ;ASM_DATA(($100) - 2*LOGSECTNUM - (LOGSECTNUM+6)/7) .MOD $10
+                ;.ENDREP
+define(`forloop', `pushdef(`$1', `$2')_forloop($@)popdef(`$1')')
+define(`_forloop', `$4`'ifelse($1, `$3', `', `define(`$1', incr($1))$0($@)')')
 
+forloop(`LOGSECTNUM',0,15,`
+                ASM_DATA(eval((256 - (2*LOGSECTNUM) - ((LOGSECTNUM+6)/7)) % 16))
+')
 
 
 
@@ -380,10 +385,17 @@ CKAPFLG         LDA APPNDFLG    ; IS APPEND FLAG ON?
 CLRAPFLG        LDA #0          ; DONT NEED THE APPEND FLAG ANY
                 STA APPNDFLG    ; MORE, SO TURN IT OFF.
 
-                ifelse(VERSION,
-                  330,JMP BK2APND,
-                  331,JMP CMPATCH,
-                  332,JMP RSETPTRS)
+                ifelse(eval(VERSION == 330),1,`
+                JMP BK2APND
+                ',`
+                ifelse(eval(VERSION == 331),1,`
+                JMP CMPATCH
+                ',`
+                ifelse(eval(VERSION == 332),1,`
+                JMP RSETPTRS
+                ')
+                ')
+                ')
 
                                 ; ==================================
                                 ; PATCH TO VERIFY A RANGE-OF-BYTES.

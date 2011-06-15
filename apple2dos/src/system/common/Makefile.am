@@ -16,7 +16,6 @@ ZERO_SEGS=-bd 0 -bb 0 -bz 0
 
 .o65.r65:
 	$(LDO65) -bt $(CODE_SEG) $(ZERO_SEGS) -o $@ $(LD65FLAGS) $^
-	file65 -V $@
 
 .r65.a65:
 	$(RELOC65) -xt -o $@ $(RELOC65FLAGS) $<

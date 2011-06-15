@@ -252,6 +252,7 @@ ifelse(eval(VERSION < 320),1,`
 ifelse(eval(VERSION < 330),1,`
                 ASM_ADDR(BOOT1-2)
                 ASM_ADDR(BOOT1-2) ; NONSENSE ENTRIES?
+',`
                 ASM_ADDR(WRITADR)
                 ASM_ADDR(FREE1)
 ')
@@ -367,7 +368,7 @@ DOSNMBF1        LDY   #$00
                 ASM_DATA($90,$02,$E6)
 ',`
                                              ; unused:
-ifelse(eval(VERSION < 330),1,`
+ifelse(eval(VERSION == 330),1,`
                 ASM_RES($04)
 ')
                 ASM_RES($52)
