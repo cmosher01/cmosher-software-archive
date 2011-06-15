@@ -17,14 +17,20 @@ ZEROSEGS=-bd 0 -bb 0 -bz 0
 .r65.a65:
 	$(RELOC65) -xt -o $@ $(RELOC65FLAGS) $<
 
-mypkgdir=$(prefix)/lib/epple2/system
+libsysdir=$(prefix)/lib/epple2/system
+libcrddir=$(prefix)/lib/epple2/cards
 
-mypkg_DATA=epple2sys.a65
-noinst_DATA=epple2sys.md5
-EXTRA_DIST=epple2sys.m4 asm.m4h epple2sys.md5
+libsys_DATA=epple2sys.a65
+libcrd_DATA=stdin.a65 stdout.a65 clock.a65
+noinst_DATA=epple2sys.md5 stdin.md5 stdout.md5 clock.md5
+EXTRA_DIST=epple2sys.m4 asm.m4h stdin.s65 stdout.s65 clock.s65 epple2sys.md5 stdin.md5 stdout.md5 clock.md5
 
 epple2sys.r65: CODE_SEG=64512
 epple2sys.s65: epple2sys.m4 asm.m4h
+
+clock.r65: CODE_SEG=0
+stdin.r65: CODE_SEG=0
+stdout.r65: CODE_SEG=0
 
 define_new_md5: all
 	$(MD5SUM) --binary epple2sys.a65 >$(srcdir)/epple2sys.md5
@@ -40,9 +46,12 @@ unit_test.sh:
 		echo "exit 1" >>$@ ; \
 	else \
 		echo "$(MD5SUM) --check --status --warn $(srcdir)/epple2sys.md5" >>$@ ; \
+		echo "$(MD5SUM) --check --status --warn $(srcdir)/stdin.md5" >>$@ ; \
+		echo "$(MD5SUM) --check --status --warn $(srcdir)/stdout.md5" >>$@ ; \
+		echo "$(MD5SUM) --check --status --warn $(srcdir)/clock.md5" >>$@ ; \
 	fi
 	chmod +x $@
 
 
 
-CLEANFILES=unit_test.sh epple2sys.a65 epple2sys.r65 epple2sys.s65
+CLEANFILES=unit_test.sh *.a65 *.r65 epple2sys.s65
