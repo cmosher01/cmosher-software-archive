@@ -51,6 +51,8 @@ src/system/dos320/Makefile
 src/system/dos321/Makefile
 src/system/dos330/Makefile
 src/system/dos331/Makefile
+src/system/dos332/Makefile
+src/controller/Makefile
 src/controller/13sector/Makefile
 src/controller/16sector/Makefile
 

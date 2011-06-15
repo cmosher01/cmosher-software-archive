@@ -26,7 +26,7 @@ mypkgdir=$(prefix)/lib/apple2/dos/$(DOS_SECTORS)sector
 
 mypkg_DATA=disk2.a65
 noinst_DATA=disk2.md5
-EXTRA_DIST=$(srcdir)/disk2.s65 $(srcdir)/disk2.md5 $(INCDIR)/asm.m4h
+EXTRA_DIST=$(COMDIR)/disk2.m4 $(srcdir)/disk2.md5 $(INCDIR)/asm.m4h
 
 disk2.r65: M4FLAGS_LOCAL=-DVERSION=$(DOS_SECTORS)
 disk2.r65: CODE_SEG=0
@@ -37,6 +37,8 @@ disk2.s65: disk2.m4 asm.m4h
 
 check_SCRIPTS=unit_test.sh
 TESTS=$(check_SCRIPTS)
+
+.PROCIOUS: disk2.a65
 
 unit_test.sh:
 	touch $@

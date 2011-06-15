@@ -71,6 +71,8 @@ rwtsapi.s65: rwtsapi.m4 symbols.m4h asm.m4h
 check_SCRIPTS=unit_test.sh
 TESTS=$(check_SCRIPTS)
 
+.PRECIOUS: dos.a65
+
 unit_test.sh:
 	touch $@
 	if test "X$(MD5SUM)" == X ; \
@@ -84,4 +86,4 @@ unit_test.sh:
 
 
 
-CLEANFILES=unit_test.sh *.a65 *.r65 *.s65 *.o65
+CLEANFILES=unit_test.sh *.nib16 *.nib13 *.d16 *.d13 *.a65 *.r65 *.s65 *.o65

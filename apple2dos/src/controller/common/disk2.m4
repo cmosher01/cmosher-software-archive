@@ -1,8 +1,5 @@
-                .FEATURE LABELS_WITHOUT_COLONS
-                .EXPORT DISK2
-
-
-                ifelse(eval(VERSION = 13),1,`
+include(`asm.m4h')
+                ifelse(eval(VERSION == 13),1,`
 SECYNIBS        =     $9A
 GRP             =     $33
 ADDRSIGNATURE   =     $B5
@@ -20,7 +17,7 @@ TMP             =     $3C
 SECTOR          =     $3D
 TRACK           =     $41
 
-                ifelse(eval(VERSION = 13),1,`
+                ifelse(eval(VERSION == 13),1,`
 A3L             =     $2A
                 ',`
 A3L             =     $40
@@ -28,7 +25,7 @@ A3L             =     $40
 
 STACKBASE       =     $0100
 READBUF         =     $0300
-                ifelse(eval(VERSION = 13),1,`
+                ifelse(eval(VERSION == 13),1,`
 XLATE           =     $0880
                 ',`
 XLATE           =     READBUF+SECYNIBS
@@ -54,7 +51,7 @@ MONRTS          =     $FF58
 DISK2           LDX   #$20
                 LDY   #0
 
-                ifelse(eval(VERSION = 13),1,`
+                ifelse(eval(VERSION == 13),1,`
 
 LC604           LDA   #$03
                 STA   TMP
@@ -77,14 +74,14 @@ LC60B           BIT   TMP
 LC604           LDX   #$03
 LC606           STX   TMP
                 TXA
-                ASL   A
+                ASL
                 BIT   TMP
                 BEQ   LC61E
                 ORA   TMP
                 EOR   #%11111111
                 AND   #%01111110
 LC614           BCS   LC61E
-                LSR   A
+                LSR
                 BNE   LC614
                 TYA
                 STA   XLATE,X
@@ -101,19 +98,19 @@ LC61E           INX
                 JSR   MONRTS            ; calculate slot based on ROM code address
                 TSX
                 LDA   STACKBASE,X
-                ifelse(eval(VERSION = 13),1,`
+                ifelse(eval(VERSION == 13),1,`
                 PHA
                 ')
-                ASL   A
-                ASL   A
-                ASL   A
-                ASL   A
+                ASL
+                ASL
+                ASL
+                ASL
                 STA   SLOT
 
 
 
                 TAX
-                ifelse(eval(VERSION = 13),1,`
+                ifelse(eval(VERSION == 13),1,`
                 LDA   #<(DENIB-1)
                 PHA
                 ')
@@ -130,12 +127,12 @@ LC61E           INX
 LC63D           LDA   STEPOFFBASE,X
                 TYA
                 AND   #%00000011
-                ASL   A
+                ASL
                 ORA   SLOT
                 TAX
                 LDA   STEPONBASE,X
                 LDA   #$56
-                ifelse(eval(DEF NODELAY),1,`
+                ifdef(`NODELAY',`
                 LDA   #0
                 NOP
                 ',`
@@ -148,7 +145,7 @@ LC63D           LDA   STEPOFFBASE,X
 
 
                                         ; set params for READSECT
-                ifelse(eval(VERSION = 13),1,`
+                ifelse(eval(VERSION == 13),1,`
                 LDA   #>READBUF
                 STA   BUFPTR+1
                 LDA   #<READBUF
@@ -192,20 +189,20 @@ LC671           LDA   Q6OFF,X
 
                                         ; get T/S number from address header
 ADDRHANDLER     LDY   #3
-                ifelse(eval(VERSION = 13),1,`
+                ifelse(eval(VERSION == 13),1,`
                 STY   A3L
                 ',`
 LC685           STA   A3L
                 ')
 LC687           LDA   Q6OFF,X
                 BPL   LC687
-                ROL   A
+                ROL
                 STA   TMP
 LC68F           LDA   Q6OFF,X
                 BPL   LC68F
                 AND   TMP
                 DEY
-                ifelse(eval(VERSION = 13),1,`
+                ifelse(eval(VERSION == 13),1,`
                 BNE   LC687
                 ',`
                 BNE   LC685
@@ -231,7 +228,7 @@ LC6AA           LDY   Q6OFF,X
                 EOR   XLATE-$80,Y
                 LDY   TMP
                 DEY
-                ifelse(eval(VERSION = 13),1,`
+                ifelse(eval(VERSION == 13),1,`
                 STA   XLATE-$80,Y
                 ',`
                 STA   READBUF,Y
@@ -252,22 +249,22 @@ LC6CB           LDY   Q6OFF,X
                 EOR   XLATE-$80,Y
 LC6D3           BNE   READSECT          ; branch if checksum is wrong
 
-                ifelse(eval(VERSION = 13),1,`
+                ifelse(eval(VERSION == 13),1,`
 
                 RTS
 
 DENIB           TAY
 LC6D2           LDX   #0
 LC6D4           LDA   XLATE-$80,Y
-                LSR   A
+                LSR
                 ROL   READBUF+4*GRP,X
-                LSR   A
+                LSR
                 ROL   READBUF+3*GRP,X
                 STA   TMP
                 LDA   (BUFPTR),Y
-                ASL   A
-                ASL   A
-                ASL   A
+                ASL
+                ASL
+                ASL
                 ORA   TMP
                 STA   (BUFPTR),Y
                 INY
@@ -293,9 +290,9 @@ LC6D9           DEX
                 BMI   LC6D7
                 LDA   (BUFPTR),Y
                 LSR   READBUF,X
-                ROL   A
+                ROL
                 LSR   READBUF,X
-                ROL   A
+                ROL
                 STA   (BUFPTR),Y
                 INY
                 BNE   LC6D9
