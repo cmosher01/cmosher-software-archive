@@ -1,4 +1,5 @@
 define(`ASM_DATA',`.BYT $*')
+define(`ASM_DATA_W',`.WORD $*')
 define(`ASM_ADDR',`.WORD $*')
 define(`ASM_RES',`.DSB $1,ifelse(`$2',`',0,$2)')
 
