@@ -1,5 +1,3 @@
-         .FEATURE LABELS_WITHOUT_COLONS
-
 YSAV1   =   $35
 EOF     =   $FF
 STKBAS  =   $0100
