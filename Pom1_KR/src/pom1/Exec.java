@@ -10,7 +10,7 @@ class Exec
 {
     public static void main(String... args) throws InterruptedException, InvocationTargetException, IOException
     {
-    	CLI(args);
+    	GUI(args);
     }
 
     private static void CLI(String... args) throws IOException
