@@ -1271,7 +1271,7 @@ LE657:  JSR     GETVERB
 LE66F:  LDA     (SRCH),Y
         BPL     LE682
         INC     NOUNSTKH,X
-        INY
+        INY                       ; Chris Mosher: bug here!
         BNE     LE66F
         .BYTE   $09
 
