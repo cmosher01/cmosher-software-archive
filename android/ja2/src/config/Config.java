@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Collection;
 import java.util.StringTokenizer;
 
 import android.content.res.AssetManager;
@@ -24,16 +25,17 @@ import cards.stdio.StandardOut;
 import chipset.InvalidMemoryLoad;
 import chipset.Memory;
 import chipset.Slots;
+import emu.AssetManagerSet;
 
 /*
  * Created on Dec 1, 2007
  */
 public class Config
 {
-	private final AssetManager assets;
+	private final AssetManagerSet assets;
 	private final String filename;
 
-	public Config(final AssetManager assets, final String filename)
+	public Config(final AssetManagerSet assets, final String filename)
 	{
 		this.filename = filename;
 		this.assets = assets;
@@ -42,7 +44,7 @@ public class Config
 	public void parseConfig(final Memory memory, final Slots slots, final HyperMode hyper, final StandardIn.EOFHandler eofHandler)
 		throws IOException, InvalidMemoryLoad, InvalidDiskImage
 	{
-		final BufferedReader cfg = new BufferedReader(new InputStreamReader(this.assets.open(this.filename,AssetManager.ACCESS_BUFFER)));
+		final BufferedReader cfg = new BufferedReader(new InputStreamReader(this.assets.open(this.filename)));
 
     	for (String line = cfg.readLine(); line != null; line = cfg.readLine())
     	{
@@ -133,7 +135,7 @@ public class Config
 
 			if (!tok.hasMoreTokens()) throw new IllegalArgumentException("Error in config file: "+line);
 			final String file = tok.nextToken("\0").trim(); // rest of line
-			final InputStream rom = new BufferedInputStream(this.assets.open(file,AssetManager.ACCESS_BUFFER));
+			final InputStream rom = new BufferedInputStream(this.assets.open(file));
 
 			if (slot < 0) // motherboard
 			{
@@ -175,9 +177,9 @@ public class Config
 
 			if (!tok.hasMoreTokens()) throw new IllegalArgumentException("Error in config file: "+line);
 			final String nib = tok.nextToken("\0").trim(); // rest of line
-			final File fnib = new File(nib);
+			final InputStream fnib = this.assets.open(nib);
 
-			loadDisk(slots,slot,drive,fnib);
+			loadDisk(slots,slot,drive,fnib,nib);
 		}
 		else
 		{
@@ -185,7 +187,7 @@ public class Config
 		}
 	}
 
-	private void loadDisk(final Slots slots, final int slot, final int drive, final File fnib) throws IOException, InvalidDiskImage
+	private void loadDisk(final Slots slots, final int slot, final int drive, final InputStream nib, final String filename) throws IOException, InvalidDiskImage
 	{
 		if (drive < 1 || 2 < drive)
 		{
@@ -197,7 +199,7 @@ public class Config
 			throw new IllegalArgumentException("Card in slot "+slot+" is not a disk controller card.");
 		}
 		final DiskController controller = (DiskController)card;
-		controller.loadDisk(drive-1,fnib);
+		controller.loadDisk(drive-1,nib,filename);
 	}
 
 	private void insertCard(final String cardType, final int slot, final Slots slots, final HyperMode hyper, final StandardIn.EOFHandler eofHandler)

@@ -2,6 +2,7 @@ package cards.disk;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import keyboard.HyperMode;
 import cards.Card;
@@ -120,9 +121,9 @@ public class DiskController extends Card
 		return (drive == 0) ? this.drive1 : this.drive2;
 	}
 
-	public void loadDisk(int drive, File fnib) throws IOException, InvalidDiskImage
+	public void loadDisk(int drive, InputStream nib, String filename) throws IOException, InvalidDiskImage
 	{
-		this.getDrive(drive).loadDisk(fnib);
+		this.getDrive(drive).loadDisk(nib,filename);
 	}
 
 	public boolean isMotorOn()

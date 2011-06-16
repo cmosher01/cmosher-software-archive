@@ -88,15 +88,15 @@ public class PictureGenerator
 		// DABCDEFG
 	}
 
-	private void shiftText()
-	{
-		this.latchText >>>= 1;
-	}
+//	private void shiftText()
+//	{
+//		this.latchText >>>= 1;
+//	}
 
-	private boolean getTextBit()
-	{
-		return (this.latchText & 1) != 0;
-	}
+//	private boolean getTextBit()
+//	{
+//		return (this.latchText & 1) != 0;
+//	}
 
 	private boolean getHiResBit()
 	{
@@ -154,6 +154,8 @@ public class PictureGenerator
 		}
 		final int firstBlankedCycle = TimingGenerator.CRYSTAL_CYCLES_PER_CPU_CYCLE-xtra;
 
+		final boolean lineVis = this.line < VideoAddressing.VISIBLE_ROWS_PER_FIELD;
+		final boolean hVis = this.hpos >= VISIBLE_X_OFFSET;
 		for (int cycle = 0; cycle < cycles-1; ++cycle)
 		{
 			/*
@@ -163,14 +165,14 @@ public class PictureGenerator
 			 * (Also note: right now, it doesn't achieve this.)
 			 */
 			final boolean bit = shiftLatch(t,cycle);
-			writeVideoSignal(shift,showLastHiRes,firstBlankedCycle,cycle,bit);
+			writeVideoSignal(shift,showLastHiRes,firstBlankedCycle,cycle,bit,lineVis,hVis);
 		}
 		// optimization: pull the last iteration out of the loop, so we don't getHiResBit every time
 		{
 			this.lasthires = getHiResBit(); // save it for the next plotted byte, just in case we need it
 			final int cycle = cycles-1;
 			final boolean bit = shiftLatch(t,cycle);
-			writeVideoSignal(shift,showLastHiRes,firstBlankedCycle,cycle,bit);
+			writeVideoSignal(shift,showLastHiRes,firstBlankedCycle,cycle,bit,lineVis,hVis);
 		}
 
 		++this.hpos;
@@ -181,15 +183,43 @@ public class PictureGenerator
 		}
 	}
 
+//	private boolean shiftLatch(final int t, final int cycle)
+//	{
+//		final boolean bit;
+//		if (this.mode.isDisplayingText(t))
+//		{
+//			bit = getTextBit();
+//			if ((cycle & 1) != 0) // @ 7MHz
+//			{
+//				shiftText();
+//			}
+//		}
+//		else if (this.mode.isHiRes())
+//		{
+//			bit = getHiResBit();
+//			if ((cycle & 1) != 0) // @ 7MHz
+//			{
+//				shiftHiRes();
+//			}
+//		}
+//		else // LO-RES
+//		{
+//			final int y = t / VideoAddressing.BYTES_PER_ROW;
+//			bit = getLoResBit((t & 1) == (this.line & 1),(y & 4) != 0);
+//			shiftLoRes();
+//		}
+//		return bit;
+//	}
+
 	private boolean shiftLatch(final int t, final int cycle)
 	{
 		final boolean bit;
 		if (this.mode.isDisplayingText(t))
 		{
-			bit = getTextBit();
+			bit = (this.latchText & 1) != 0;
 			if ((cycle & 1) != 0) // @ 7MHz
 			{
-				shiftText();
+				this.latchText >>>= 1;
 			}
 		}
 		else if (this.mode.isHiRes())
@@ -210,22 +240,18 @@ public class PictureGenerator
 	}
 
 	private static final int[] lutCB = { AppleNTSC.BLANK_LEVEL,-AppleNTSC.CB_LEVEL,AppleNTSC.BLANK_LEVEL,+AppleNTSC.CB_LEVEL };
-	private void writeVideoSignal(final boolean shift, final boolean showLastHiRes, final int firstBlankedCycle, final int cycle, final boolean bit)
+	private void writeVideoSignal(final boolean shift, final boolean showLastHiRes, final int firstBlankedCycle, final int cycle, final boolean bit, final boolean lineVis, final boolean hVis)
 	{
-		if (shift && cycle==0)
+		if (cycle==0 && shift)
 		{
 			this.display.putSignal(showLastHiRes ? AppleNTSC.WHITE_LEVEL : AppleNTSC.BLANK_LEVEL);
 		}
 
 		final int hcycle = this.hpos*TimingGenerator.CRYSTAL_CYCLES_PER_CPU_CYCLE+cycle;
 		final int sig;
-		if (this.line < VideoAddressing.VISIBLE_ROWS_PER_FIELD)
+		if (lineVis)
 		{
-			if (this.hpos < VISIBLE_X_OFFSET)
-			{
-				sig = hbl(hcycle);
-			}
-			else
+			if (hVis)
 			{
 				if (bit && cycle < firstBlankedCycle)
 				{
@@ -235,6 +261,10 @@ public class PictureGenerator
 				{
 					sig = AppleNTSC.BLANK_LEVEL;
 				}
+			}
+			else
+			{
+				sig = hbl(hcycle);
 			}
 		}
 		else

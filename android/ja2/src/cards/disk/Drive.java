@@ -2,6 +2,7 @@ package cards.disk;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 /*
  * Created on Sep 16, 2007
@@ -23,9 +24,9 @@ class Drive
 
 
 
-	public void loadDisk(final File fnib) throws IOException, InvalidDiskImage
+	public void loadDisk(final InputStream nib, final String filename) throws IOException, InvalidDiskImage
 	{
-		this.disk.load(fnib);
+		this.disk.load(nib,filename);
 	}
 
 	public boolean isWriteProtected()

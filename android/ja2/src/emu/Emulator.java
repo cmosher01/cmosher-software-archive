@@ -5,9 +5,14 @@ package emu;
 
 import gui.Screen;
 
+import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -22,6 +27,9 @@ import video.ScreenImage;
 import video.VideoDisplayDevice;
 import video.VideoStaticGenerator;
 import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.provider.Settings.System;
 import android.text.ClipboardManager;
@@ -32,6 +40,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 import cards.disk.InvalidDiskImage;
 import cards.stdio.StandardIn;
@@ -58,6 +67,8 @@ public class Emulator extends Activity implements Closeable {
 
 	private boolean shift;
 	private boolean control;
+
+	private AssetManager assetsApple2Sys;
 
 	public Emulator() throws IOException {
 		this.throttle = new Throttle();
@@ -93,8 +104,22 @@ public class Emulator extends Activity implements Closeable {
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		setContentView(R.layout.layout);
+
+		this.assetsApple2Sys = null;
+		try {
+			final Context ctxApple2Sys = createPackageContext("nu.mine.mosher.android.apple2sys", CONTEXT_IGNORE_SECURITY);
+			this.assetsApple2Sys = ctxApple2Sys.getAssets();
+		} catch (NameNotFoundException e1) {
+			// just means that apple2sys app is not installed, OK
+			this.assetsApple2Sys = null;
+		}
+
 		final CmdLineArgs noCmdLineArgs = new CmdLineArgs(new String[0]);
-		final Config cfg = new Config(getAssets(),noCmdLineArgs.getConfig());
+		final AssetManagerSet assets = new AssetManagerSet();
+		getAssetManagers(assets);
+		final Config cfg = new Config(assets,noCmdLineArgs.getConfig());
 		try {
 			config(cfg);
 		} catch (final Throwable e) {
@@ -102,15 +127,6 @@ public class Emulator extends Activity implements Closeable {
 			finish(); // TODO
 			return;
 		}
-
-		try {
-			File filesDir = getFilesDir().getCanonicalFile().getAbsoluteFile();
-			Log.i(LOG_TAG,"getFilesDir() --> "+filesDir.getPath());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		setContentView(R.layout.layout);
 
 		final ToggleButton computerPowerToggleSwitch = (ToggleButton) findViewById(R.id.computerPower);
 		computerPowerToggleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -196,6 +212,13 @@ public class Emulator extends Activity implements Closeable {
 		powerOffComputer();
 		Emulator.this.display.setCompress(true);
 		Emulator.this.screenImage.setCompress(true);
+	}
+
+	private void getAssetManagers(final Collection<AssetManager> assetsAppendTo) {
+		assetsAppendTo.add(getAssets());
+		if (this.assetsApple2Sys != null) {
+			assetsAppendTo.add(this.assetsApple2Sys);
+		}
 	}
 
 	private static class KeyCodes {

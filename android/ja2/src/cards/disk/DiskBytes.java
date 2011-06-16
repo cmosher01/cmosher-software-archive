@@ -24,7 +24,7 @@ public class DiskBytes
 
 	private byte[][] bytes;
 
-	private volatile File file;
+	private volatile String filename;
 	private volatile String fileName;
 	private final AtomicBoolean writable = new AtomicBoolean();
 	private final AtomicBoolean loaded = new AtomicBoolean();
@@ -38,29 +38,20 @@ public class DiskBytes
 		unload();
 	}
 
-	public void load(File f) throws IOException, InvalidDiskImage
+	public void load(InputStream nib, String filename) throws IOException, InvalidDiskImage
 	{
 		if (isLoaded())
 		{
 			unload();
 		}
-		f = f.getCanonicalFile();
-		if (!f.exists())
-		{
-			throw new FileNotFoundException("Can't find file: "+f.getPath());
-		}
-		if (f.length() != Drive.TRACKS_PER_DISK*BYTES_PER_TRACK)
-		{
-			throw new InvalidDiskImage(f.getName());
-		}
 		byte[][] rb = new byte[Drive.TRACKS_PER_DISK][BYTES_PER_TRACK];
-		final InputStream disk = new BufferedInputStream(new FileInputStream(f));
+		final InputStream disk = new BufferedInputStream(nib);
 		int itrack = 0;
 		for (int b1 = disk.read(); b1 != Util.EOF && itrack < Drive.TRACKS_PER_DISK; b1 = disk.read())
 		{
 			if (b1 < 0x96)
 			{
-				throw new InvalidDiskImage(f.getName());
+				throw new InvalidDiskImage("");
 			}
 			rb[itrack][this.byt] = (byte)b1;
 			if (nextByte())
@@ -70,10 +61,9 @@ public class DiskBytes
 		}
 		disk.close();
 
-		this.file = f;
-		this.fileName = this.file.getName();
+		this.fileName = filename;
 		this.bytes = rb;
-		this.writable.set(f.canWrite());
+		this.writable.set(false);
 		synchronized (this.loaded)
 		{
 			this.loaded.set(true);
@@ -94,23 +84,25 @@ public class DiskBytes
 			return this.loaded.get();
 		}
 	}
+
+	// TODO implement save disk?
 	public void save() throws IOException
 	{
-		if (isWriteProtected() || !isLoaded())
-		{
-			return;
-		}
-		final OutputStream out = new BufferedOutputStream(new FileOutputStream(this.file),Drive.TRACKS_PER_DISK*BYTES_PER_TRACK);
-		for (int itrack = 0; itrack < Drive.TRACKS_PER_DISK; ++itrack)
-		{
-			for (int ibyte = 0; ibyte < BYTES_PER_TRACK; ++ibyte)
-			{
-				out.write(this.bytes[itrack][ibyte]);
-			}
-		}
-		out.flush();
-		out.close();
-		this.modified.set(false);
+//		if (isWriteProtected() || !isLoaded())
+//		{
+//			return;
+//		}
+//		final OutputStream out = new BufferedOutputStream(new FileOutputStream(this.file),Drive.TRACKS_PER_DISK*BYTES_PER_TRACK);
+//		for (int itrack = 0; itrack < Drive.TRACKS_PER_DISK; ++itrack)
+//		{
+//			for (int ibyte = 0; ibyte < BYTES_PER_TRACK; ++ibyte)
+//			{
+//				out.write(this.bytes[itrack][ibyte]);
+//			}
+//		}
+//		out.flush();
+//		out.close();
+//		this.modified.set(false);
 	}
 
 	public void unload()
@@ -122,7 +114,6 @@ public class DiskBytes
 			this.loaded.set(false);
 			this.loaded.notifyAll();
 		}
-		this.file = null;
 		this.fileName = "";
 		this.modified.set(false);
 	}
