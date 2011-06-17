@@ -1,0 +1,136 @@
+autoconf/automake help
+
+guide book: http://www.freesoftwaremagazine.com/books/autotools_a_guide_to_autoconf_automake_libtool
+tutorial: http://autotoolset.sourceforge.net/tutorial.html
+
+
+
+
+Major parts:
+1. autoconf
+2. automake
+3. libtool
+
+
+
+
+
+
+autoconf
+autoheader
+autom4te
+autoreconf
+autoscan
+autoupdate
+ifnames
+
+automake
+aclocal
+
+libtool
+libtoolize
+ltdl
+ltdl.h
+
+
+
+
+
+
+
+autoscan --> configure.scan --> ed --> configure.ac
+
+configure.ac --> autoconf   --> configure
+configure.ac --> autoheader --> config.h.in
+
+autom4te <--> autom4te.cache (directory)
+
+
+Makefile.am --> automake --> Makefile.in
+
+acinclude.m4 --> aclocal --> aclocal.m4 (macros used by configure.ac)
+(or use m4 directory instead)
+
+
+
+
+
+
+
+
+
+AUTOTOOLS USAGE:
+Where to start? It's best to start with some C files already written.
+To help automake start out, do this:
+touch NEWS README AUTHORS ChangeLog
+
+use autoscan:
+scans source tree an generates initial version of configure.ac (named configure.scan)
+doesn't copy existing configure.ac, but does read it
+basically, use it to create initial configure.ac, or to check existing configure.ac (but not to re-write configure.ac)
+on cygwin? may need to fix line endings:
+unix2dos.exe configure.scan
+With existing configure.ac, you cna run autoscan then compare its output with original configure.ac:
+diff configure.ac configure.scan
+
+From the initial configure.scan, create configure.ac
+
+After the initial autoscan, from then on just use autoreconf. (Occasionally, run autoscan, check log, and compare configure.ac to configure.scan)
+
+
+
+
+autoreconf -v -Wall (or -vv to get tool -v)
+
+
+
+
+put any user-defined m4 macros (used in configure.ac) into m4 directory
+aclocal -I m4
+
+Interesting process: You can use this to copy automake (as well as other system macro defs) into m4 directory tree:
+aclocal --acdir=/usr/share/aclocal-1.11 --install -I m4/system -I m4/user
+
+aclocal:
+1. scans configure.ac for macros called
+2. checks for definitions of them in 3 places: m4 dir (due to -I m4 arg), & 2 system areas (under /usr/share) (one for automake-specific, and one for other)
+3. generates aclocal.m4 containing copies (for automake and system) or includes (for user) of the required definitions found in step 2
+(autoconf knows to look in aclocal.m4 for its required definitions)
+
+
+
+
+
+
+
+
+at top of every c source file, put:
+	#include <config.h>
+	#include "this_module.h"
+	#include <system_headers.h>
+	#include "app_headers.h"
+
+
+
+
+
+gnulib
+git clone git://git.savannah.gnu.org/gnulib.git
+then run gnulib-tools in that directory, eg:
+./gnulib/gnulib-tool --import getopt-gnu
+
+
+
+
+
+
+
+
+
+
+
+Makefile: Makefile.in config.status
+	./config.status $@
+
+config.status: configure
+	./config.status --recheck
