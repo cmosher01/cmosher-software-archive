@@ -1,6 +1,9 @@
-package solution;
+package solution.reports;
 
 import java.util.Calendar;
+
+import solution.client.spi.Report;
+import solution.client.spi.ReportFactory;
 
 public class ReportFactoryImpl implements ReportFactory
 {

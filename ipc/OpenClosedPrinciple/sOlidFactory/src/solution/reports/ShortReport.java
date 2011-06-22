@@ -1,9 +1,11 @@
-package solution;
+package solution.reports;
 import java.io.PrintStream;
 import java.util.Date;
 
+import solution.client.spi.Report;
 
-public class FullReport implements Report
+
+class ShortReport implements Report
 {
 	@Override
 	public void print(PrintStream out)

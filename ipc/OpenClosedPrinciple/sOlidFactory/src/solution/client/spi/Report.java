@@ -1,4 +1,4 @@
-package solution;
+package solution.client.spi;
 import java.io.PrintStream;
 import java.util.Date;
 
