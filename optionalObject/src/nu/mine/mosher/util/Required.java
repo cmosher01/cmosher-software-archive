@@ -8,11 +8,11 @@ package nu.mine.mosher.util;
  * @param <T>
  *          the type of wrapped object
  */
-public class Required<T> implements Requirement<T>{
+public class Required<T> implements Requirement<T> {
   private final T t;
 
   /**
-   * Initializes an optional wrapped object.
+   * Initializes a wrapped object.
    * 
    * @param object
    *          the object to wrap; cannot be <code>null</code>
@@ -22,7 +22,7 @@ public class Required<T> implements Requirement<T>{
   public Required(final T object) throws FieldDoesNotExist {
     this.t = object;
     if (this.t == null) {
-      throw new Required.FieldDoesNotExist();
+      throw new Requirement.FieldDoesNotExist();
     }
   }
 
@@ -40,20 +40,11 @@ public class Required<T> implements Requirement<T>{
   }
 
   /**
-   * @author christopher_mosher
-   */
-  public static class FieldDoesNotExist extends RuntimeException {
-    FieldDoesNotExist() {
-      super("Field does not exist.");
-    }
-  }
-
-  /**
    * Indicates whether the given object's wrapped object is equal to this
    * object's wrapped object.
    * 
    * @param other
-   *          the other Required instance
+   *          the other wrapped object to check
    */
   @Override
   public boolean equals(final Object other) {
