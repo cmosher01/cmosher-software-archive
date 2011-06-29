@@ -1,0 +1,18 @@
+#!/bin/sh
+# usage: logify program
+# This script writes nothing to stdout or stderr (so as not
+# to cause cron to send email). All output from the wrapped
+# program is sent to a dated log file.
+if [ $# -eq 0 ]
+then
+	echo "usage: $0 program" >&2
+	exit 1
+fi
+
+DATE=$(date +%Y%m%d%H%M%S)
+LOGDIR=/var/log/`basename $1`
+LOG=$LOGDIR/$DATE.log
+
+mkdir -p $LOGDIR
+touch $LOG
+$* >>$LOG 2>&1

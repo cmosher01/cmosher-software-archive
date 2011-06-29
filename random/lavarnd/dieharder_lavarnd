@@ -1,0 +1,157 @@
+#!/bin/sh
+
+
+
+
+
+RNDFILE=/tmp/lavarnd.dieharder
+
+
+
+
+
+ls -l `which dieharder`
+dieharder -V
+dieharder -l
+dieharder -F
+
+
+
+delim()
+{
+  echo
+  echo
+  echo
+  echo
+  echo
+  echo
+  echo
+  echo "-------------------------------------------------------------"
+}
+
+
+
+timed_run()
+{
+  delim
+
+  date --rfc-3339=ns
+
+  /usr/bin/time -v $*
+
+  date --rfc-3339=ns
+}
+
+
+
+run_test()
+{
+  DH_FILE_INPUT=202
+  DHFLAGS=`dc -e '2 i 0110101111111111 p'`
+
+  CMD="dieharder -g $DH_FILE_INPUT -f $RNDFILE -D $DHFLAGS $*"
+  #quick-running report format-only test:
+  #CMD="$CMD -p 1 -t 5"
+
+  timed_run $CMD
+}
+
+
+
+install_dropin_cfg()
+{
+  ls -al /etc/LavaRnd
+  if [ -r /etc/LavaRnd/cfg.random.DROP ]
+  then
+    if [ -r /etc/LavaRnd/cfg.random ]
+    then
+      mv /etc/LavaRnd/cfg.random /etc/LavaRnd/cfg.random.OLD
+    fi
+    mv /etc/LavaRnd/cfg.random.DROP /etc/LavaRnd/cfg.random
+    ls -al /etc/LavaRnd
+  fi
+}
+
+
+
+rotate_lavapool()
+{
+	cd /var/log
+	DAY=$(date +%Y%m%d)
+	LOG=lavapool.log
+	DATED=$LOG.$DAY
+	ARC=$DATED.gz
+	if [ -w $LOG -a ! -f $ARC ]
+	then
+		invoke-rc.d LavaRnd stop
+		mv $LOG $DATED
+		install_dropin_cfg
+		invoke-rc.d LavaRnd start
+		gzip --best $DATED
+		ls -l lavapool.log*
+		# make sure LavaRnd daemon started up OK
+		while head -n 20 $LOG | grep FATAL
+		do
+			TS=$(date +%Y%m%d%H%M%S)
+			mv $LOG $LOG.FATAL.$TS
+			invoke-rc.d LavaRnd start
+			sleep 10
+		done
+	fi
+	cd -
+}
+
+
+
+
+
+if [ "$1" != '-r' ]
+then
+  date --rfc-3339=ns
+  rm $RNDFILE
+  lavaharder -n 100000007 >$RNDFILE
+  head $RNDFILE
+  tail $RNDFILE
+  date --rfc-3339=ns
+fi
+
+rotate_lavapool
+
+
+run_test -d   0
+run_test -d   2
+run_test -d   3
+run_test -d   4
+run_test -d   5
+run_test -d   6
+run_test -d   7 -p 25
+run_test -d   8
+run_test -d   9
+run_test -d  10
+run_test -d  11
+run_test -d  12
+run_test -d  13
+run_test -d  15
+run_test -d  16
+run_test -d  17 -p 10
+run_test -d 100
+run_test -d 101
+run_test -d 102
+run_test -d 200 -n 1
+run_test -d 200 -n 2
+run_test -d 200 -n 3
+run_test -d 200 -n 4
+run_test -d 200 -n 8
+run_test -d 201 -n 2 -p 100
+run_test -d 201 -n 3 -p 100
+run_test -d 201 -n 4 -p 100
+run_test -d 202 -n 2
+run_test -d 202 -n 3
+run_test -d 202 -n 4
+run_test -d 202 -n 5
+run_test -d 203 -n 1
+run_test -d 203 -n 2
+run_test -d 203 -n 3
+run_test -d 203 -n 4 -p 50
+run_test -d 203 -n 8 -p 25
+run_test -d 204
