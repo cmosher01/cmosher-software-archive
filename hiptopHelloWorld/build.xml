@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project default="appdat">
-    <property file="build.properties" />
-    <import file="../hiptopSdk-${hiptop.sdk.version}/include/build.xml" />
-</project>
