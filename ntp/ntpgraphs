@@ -1,0 +1,23 @@
+#!/bin/sh
+cd /srv/apache2/mosher.mine.nu/ntp
+mount pps:/var/log/ntpstats ntpstats
+for LOOPSTATS in `ls -t ntpstats/loopstats* | tail -n +2 | head -n 2`
+do
+LOOPSTATSFILE=`basename $LOOPSTATS`
+gnuplot <<EOF
+set term png size 1200,800
+set output "$LOOPSTATSFILE.png"
+set title "$LOOPSTATSFILE"
+set xzeroaxis lt -1
+set xlabel 'hour of day (UTC)'
+set xtics 1
+set ylabel 'offset (microseconds)'
+set ytics 1
+set yrange [-20:20]
+set data style lines
+set grid
+plot "$LOOPSTATS" using (\$2/3600):(\$3*1e6) title 'pps'
+EOF
+done
+umount ntpstats
+cd - > /dev/null
