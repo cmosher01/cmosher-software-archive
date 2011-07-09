@@ -10,7 +10,7 @@
 
 #include "a2const.h"
 
-static const char shortopts[] = "d:hTt:u:Vv:";
+static const char shortopts[] = "d:hTt:u:Vv:x";
 
 static const struct option longopts[] =
   {
@@ -21,6 +21,7 @@ static const struct option longopts[] =
     {"used",required_argument,0,'u'},
     {"version",no_argument,0,'V'},
     {"volume",required_argument,0,'v'},
+    {"hex",no_argument,0,'x'},
     {0,0,0,0}
   };
 
@@ -40,6 +41,7 @@ static void help(int argc, char *argv[])
   printf("  -u, --used=SECTORS   number of sectors to allocate for DOS, default 0x25\n");
   printf("  -V, --version        shows version information\n");
   printf("  -v, --volume=VOLUME  \"DISK VOLUME\" to use, default 254\n");
+  printf("  -x, --hex            outputs ASCII hex instead of raw binary\n");
 }
 
 static struct opts_t *opts_factory()
@@ -51,6 +53,7 @@ static struct opts_t *opts_factory()
     opts->catalog_track = TRACKS_PER_DISK/2; /* middle of the disk */
     opts->used_sectors = 0x25; /* DOS-occupied sectors only */
     opts->volume = 254; /* as in "DISK VOLUME 254" */
+    opts->hex = 0;
 
     return opts;
   }
@@ -98,6 +101,9 @@ struct opts_t *parse_opts(int argc, char *argv[])
             break;
           case 'v':
             opts->volume = get_num_optarg();
+            break;
+          case 'x':
+            opts->hex = 1;
             break;
           case 0:
             break;

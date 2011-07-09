@@ -10,6 +10,7 @@ struct opts_t
     uint8_t catalog_track;
     uint_fast8_t used_sectors;
     uint8_t volume;
+    int hex;
   };
 
 struct opts_t *parse_opts(int argc, char *argv[]);

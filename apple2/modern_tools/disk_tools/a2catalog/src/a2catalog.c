@@ -386,7 +386,21 @@ void catalog_track_out(uint_fast16_t version, uint8_t catalog_track, uint_fast8_
 
 
 
-void put_buffer(uint8_t *p, int c)
+void put_buffer_hex(uint8_t *p, int c)
+{
+  int i = 0;
+  while (i<c)
+    {
+      ++i;
+      printf("%02x",*p++);
+      if (!(i%0x10))
+        {
+          printf("\n");
+        }
+    }
+}
+
+void put_buffer_raw(uint8_t *p, int c)
 {
   int i = 0;
   SET_BINARY(1);
@@ -413,7 +427,14 @@ int run_program(struct opts_t *opts)
       return EXIT_FAILURE;
     }
 
-  put_buffer(t,c);
+  if (opts->hex)
+    {
+      put_buffer_hex(t,c);
+    }
+  else
+    {
+      put_buffer_raw(t,c);
+    }
 
   free(t);
 
