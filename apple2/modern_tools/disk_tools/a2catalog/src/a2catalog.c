@@ -8,7 +8,7 @@
 #include <minmax.h>
 #include <binary-io.h>
 
-#include "assert_that.h"
+#include "ctest.h"
 #include "a2const.h"
 #include "a2catalog_opt.h"
 #include "nibblize_4_4.h"
@@ -29,7 +29,7 @@ void b_out(uint8_t b, uint8_t **pp)
   *(*pp)++ = b;
 }
 
-void test_b_out(ctx_assertion *ctx)
+void test_b_out(ctest_ctx *ctx)
 {
   const uint8_t SENTINEL = 0xFD;
   uint8_t image[3];
@@ -43,10 +43,10 @@ void test_b_out(ctx_assertion *ctx)
 
   b_out(b,&p);
 
-  ASSERT_THAT(ctx,"byte out nominal: value",image[1]==TAG);
-  ASSERT_THAT(ctx,"byte out nominal: buffer underflow",image[0]==SENTINEL);
-  ASSERT_THAT(ctx,"byte out nominal: buffer overflow",image[2]==SENTINEL);
-  ASSERT_THAT(ctx,"byte out nominal: pointer updated",p==image+2);
+  CTEST(ctx,"byte out nominal: value",image[1]==TAG);
+  CTEST(ctx,"byte out nominal: buffer underflow",image[0]==SENTINEL);
+  CTEST(ctx,"byte out nominal: buffer overflow",image[2]==SENTINEL);
+  CTEST(ctx,"byte out nominal: pointer updated",p==image+2);
 }
 
 
@@ -64,7 +64,7 @@ void w_out(uint16_t w, uint8_t **pp)
   b_out(w,pp);
 }
 
-void test_w_out(ctx_assertion *ctx)
+void test_w_out(ctest_ctx *ctx)
 {
   const uint8_t SENTINEL = 0xFD;
   const uint8_t TAG_HI = 0xA5;
@@ -81,11 +81,11 @@ void test_w_out(ctx_assertion *ctx)
 
   w_out(w,&p);
 
-  ASSERT_THAT(ctx,"word out nominal: value low",image[1]==TAG_LO);
-  ASSERT_THAT(ctx,"word out nominal: value high",image[2]==TAG_HI);
-  ASSERT_THAT(ctx,"word out nominal: buffer underflow",image[0]==SENTINEL);
-  ASSERT_THAT(ctx,"word out nominal: buffer overflow",image[3]==SENTINEL);
-  ASSERT_THAT(ctx,"word out nominal: pointer updated",p==image+3);
+  CTEST(ctx,"word out nominal: value low",image[1]==TAG_LO);
+  CTEST(ctx,"word out nominal: value high",image[2]==TAG_HI);
+  CTEST(ctx,"word out nominal: buffer underflow",image[0]==SENTINEL);
+  CTEST(ctx,"word out nominal: buffer overflow",image[3]==SENTINEL);
+  CTEST(ctx,"word out nominal: pointer updated",p==image+3);
 }
 
 
@@ -114,7 +114,7 @@ void n_b_out(uint_fast32_t n, uint8_t b, uint8_t **pp)
     }
 }
 
-void test_n_b_out(ctx_assertion *ctx)
+void test_n_b_out(ctest_ctx *ctx)
 {
   const uint8_t SENTINEL = 0xFD;
   const uint8_t TAG = 0xA5;
@@ -131,12 +131,12 @@ void test_n_b_out(ctx_assertion *ctx)
 
   n_b_out(N,b,&p);
 
-  ASSERT_THAT(ctx,"byte out nominal: value first",image[1]==TAG);
-  ASSERT_THAT(ctx,"byte out nominal: value middle",image[2]==TAG);
-  ASSERT_THAT(ctx,"byte out nominal: value last",image[3]==TAG);
-  ASSERT_THAT(ctx,"byte out nominal: buffer underflow",image[0]==SENTINEL);
-  ASSERT_THAT(ctx,"byte out nominal: buffer overflow",image[4]==SENTINEL);
-  ASSERT_THAT(ctx,"byte out nominal: pointer updated",p==image+1+N);
+  CTEST(ctx,"byte out nominal: value first",image[1]==TAG);
+  CTEST(ctx,"byte out nominal: value middle",image[2]==TAG);
+  CTEST(ctx,"byte out nominal: value last",image[3]==TAG);
+  CTEST(ctx,"byte out nominal: buffer underflow",image[0]==SENTINEL);
+  CTEST(ctx,"byte out nominal: buffer overflow",image[4]==SENTINEL);
+  CTEST(ctx,"byte out nominal: pointer updated",p==image+1+N);
 }
 
 
@@ -149,21 +149,21 @@ uint_fast8_t sectors_per_track(uint_fast16_t version)
   return version < 330 ? 13 : 16;
 }
 
-void test_sectors_per_track(ctx_assertion *ctx)
+void test_sectors_per_track(ctest_ctx *ctx)
 {
   int cs;
   cs = sectors_per_track(310);
-  ASSERT_THAT(ctx,"13 sectors for DOS 3.1",cs==13);
+  CTEST(ctx,"13 sectors for DOS 3.1",cs==13);
   cs = sectors_per_track(320);
-  ASSERT_THAT(ctx,"13 sectors for DOS 3.2",cs==13);
+  CTEST(ctx,"13 sectors for DOS 3.2",cs==13);
   cs = sectors_per_track(321);
-  ASSERT_THAT(ctx,"13 sectors for DOS 3.2.1",cs==13);
+  CTEST(ctx,"13 sectors for DOS 3.2.1",cs==13);
   cs = sectors_per_track(330);
-  ASSERT_THAT(ctx,"16 sectors for DOS 3.3.0",cs==16);
+  CTEST(ctx,"16 sectors for DOS 3.3.0",cs==16);
   cs = sectors_per_track(331);
-  ASSERT_THAT(ctx,"16 sectors for DOS 3.3.1",cs==16);
+  CTEST(ctx,"16 sectors for DOS 3.3.1",cs==16);
   cs = sectors_per_track(332);
-  ASSERT_THAT(ctx,"16 sectors for DOS 3.3.2",cs==16);
+  CTEST(ctx,"16 sectors for DOS 3.3.2",cs==16);
 }
 
 
@@ -180,13 +180,13 @@ uint16_t get_free_track_map(uint_fast16_t version)
   return mk;
 }
 
-void test_get_free_track_map(ctx_assertion *ctx)
+void test_get_free_track_map(ctest_ctx *ctx)
 {
   uint16_t fr;
   fr  = get_free_track_map(310);
-  ASSERT_THAT(ctx,"13 free sector map",fr==0xFFF8);
+  CTEST(ctx,"13 free sector map",fr==0xFFF8);
   fr = get_free_track_map(331);
-  ASSERT_THAT(ctx,"16 free sector map",fr==0xFFFF);
+  CTEST(ctx,"16 free sector map",fr==0xFFFF);
 }
 
 
@@ -197,17 +197,17 @@ void allocate_n_sectors(uint_fast8_t c_used_sectors, uint16_t *track_map)
 }
 
 /* TODO need to verify this on a real disk */
-void test_allocate_n_sectors(ctx_assertion *ctx)
+void test_allocate_n_sectors(ctest_ctx *ctx)
 {
   uint16_t bitmap = get_free_track_map(310);
   allocate_n_sectors(3,&bitmap);
   /* 13 free sectors, minus 3 free sectors, equals 10 free sectors */
-  ASSERT_THAT(ctx,"allocate sectors, DOS 3.1",bitmap==0xFFC0);
+  CTEST(ctx,"allocate sectors, DOS 3.1",bitmap==0xFFC0);
 
   bitmap = get_free_track_map(330);
   allocate_n_sectors(3,&bitmap);
   /* 16 free sectors, minus 3 free sectors, equals 13 free sectors */
-  ASSERT_THAT(ctx,"allocate sectors, DOS 3.3",bitmap==0xFFF8);
+  CTEST(ctx,"allocate sectors, DOS 3.3",bitmap==0xFFF8);
 }
 
 
@@ -226,7 +226,7 @@ void sector_link_out(uint8_t sect, uint8_t track, uint8_t **pp)
   b_out(sect,pp);
 }
 
-void test_sector_link_out(ctx_assertion *ctx)
+void test_sector_link_out(ctest_ctx *ctx)
 {
   const uint8_t SENTINEL = 0xFD;
   const uint8_t SECTOR = 0x0F;
@@ -243,12 +243,12 @@ void test_sector_link_out(ctx_assertion *ctx)
 
   sector_link_out(SECTOR,TRACK,&p);
 
-  ASSERT_THAT(ctx,"sector link out nominal: value zero",image[1]==0);
-  ASSERT_THAT(ctx,"sector link out nominal: value track",image[2]==TRACK);
-  ASSERT_THAT(ctx,"sector link out nominal: value sector",image[3]==SECTOR);
-  ASSERT_THAT(ctx,"sector link out nominal: buffer underflow",image[0]==SENTINEL);
-  ASSERT_THAT(ctx,"sector link out nominal: buffer overflow",image[4]==SENTINEL);
-  ASSERT_THAT(ctx,"sector link out nominal: pointer updated",p==image+4);
+  CTEST(ctx,"sector link out nominal: value zero",image[1]==0);
+  CTEST(ctx,"sector link out nominal: value track",image[2]==TRACK);
+  CTEST(ctx,"sector link out nominal: value sector",image[3]==SECTOR);
+  CTEST(ctx,"sector link out nominal: buffer underflow",image[0]==SENTINEL);
+  CTEST(ctx,"sector link out nominal: buffer overflow",image[4]==SENTINEL);
+  CTEST(ctx,"sector link out nominal: pointer updated",p==image+4);
 
 
 
@@ -262,12 +262,12 @@ void test_sector_link_out(ctx_assertion *ctx)
 
   sector_link_out(NO_LINK,TRACK,&p);
 
-  ASSERT_THAT(ctx,"sector link out nominal: value zero",image[1]==NO_LINK);
-  ASSERT_THAT(ctx,"sector link out nominal: value track",image[2]==NO_LINK);
-  ASSERT_THAT(ctx,"sector link out nominal: value sector",image[3]==NO_LINK);
-  ASSERT_THAT(ctx,"sector link out nominal: buffer underflow",image[0]==SENTINEL);
-  ASSERT_THAT(ctx,"sector link out nominal: buffer overflow",image[4]==SENTINEL);
-  ASSERT_THAT(ctx,"sector link out nominal: pointer updated",p==image+4);
+  CTEST(ctx,"sector link out nominal: value zero",image[1]==NO_LINK);
+  CTEST(ctx,"sector link out nominal: value track",image[2]==NO_LINK);
+  CTEST(ctx,"sector link out nominal: value sector",image[3]==NO_LINK);
+  CTEST(ctx,"sector link out nominal: buffer underflow",image[0]==SENTINEL);
+  CTEST(ctx,"sector link out nominal: buffer overflow",image[4]==SENTINEL);
+  CTEST(ctx,"sector link out nominal: pointer updated",p==image+4);
 }
 
 void catalog_sector_out(uint8_t sector_number, uint8_t track, uint8_t **pp)
@@ -359,7 +359,7 @@ uint8_t default_vtoc[0x100] =
   0xff, 0xff
 };
 
-void test_catalog_VTOC_out(ctx_assertion *ctx)
+void test_catalog_VTOC_out(ctest_ctx *ctx)
 {
   uint8_t computed_vtoc[0x100];
   uint8_t *p = computed_vtoc;
@@ -369,7 +369,7 @@ void test_catalog_VTOC_out(ctx_assertion *ctx)
 
   for (i = 0; i < BYTES_PER_SECTOR; ++i)
     {
-      ASSERT_THAT(ctx,"default VTOC",computed_vtoc[i]==default_vtoc[i]);
+      CTEST(ctx,"default VTOC",computed_vtoc[i]==default_vtoc[i]);
     }
 }
 
@@ -443,7 +443,9 @@ int run_program(struct opts_t *opts)
 
 int run_tests()
 {
-  ctx_assertion *ctx = ctx_assertion_factory();
+  int r;
+
+  ctest_ctx *ctx = ctest_ctx_alloc();
 
   printf("running unit tests...\n");
   test_b_out(ctx);
@@ -455,7 +457,11 @@ int run_tests()
   test_sector_link_out(ctx);
   test_catalog_VTOC_out(ctx);
 
-  return count_failed_assertions(ctx) ? EXIT_FAILURE : EXIT_SUCCESS;
+  r = ctest_count_failures(ctx) ? EXIT_FAILURE : EXIT_SUCCESS;
+
+  ctest_ctx_free(ctx);
+
+  return r;
 }
 
 

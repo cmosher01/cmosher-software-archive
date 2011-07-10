@@ -6,7 +6,7 @@
 
 #include <stdint.h>
 
-#include "assert_that.h"
+#include "ctest.h"
 
 
 
@@ -60,15 +60,15 @@ static const struct
   {0xFE,0xFEFF}
 };
 
-void test_nibblize_4_4(ctx_assertion *ctx)
+void test_nibblize_4_4(ctest_ctx *ctx)
 {
   const int c = sizeof(test_values)/sizeof(test_values[0]);
   int i;
   for (i = 0; i < c; ++i)
     {
-      ASSERT_THAT(ctx,"nibblize_4_4_encode",
+      CTEST(ctx,"nibblize_4_4_encode",
                   nibblize_4_4_encode(test_values[i].unencoded_byte)==test_values[i].nibblized_byte);
-      ASSERT_THAT(ctx,"nibblize_4_4_decode",
+      CTEST(ctx,"nibblize_4_4_decode",
                   nibblize_4_4_decode(test_values[i].nibblized_byte)==test_values[i].unencoded_byte);
     }
 }

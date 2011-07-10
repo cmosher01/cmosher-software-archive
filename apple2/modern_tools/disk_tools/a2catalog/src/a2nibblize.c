@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <binary-io.h>
 
-#include "assert_that.h"
+#include "ctest.h"
 #include "a2const.h"
 #include "a2nibblize_opt.h"
 #include "nibblize_4_4.h"
@@ -267,7 +267,9 @@ int run_program(struct opts_t *opts)
 
 int run_tests()
 {
-  ctx_assertion *ctx = ctx_assertion_factory();
+  int r;
+
+  ctest_ctx *ctx = ctest_ctx_alloc();
 
   printf("running unit tests...\n");
 
@@ -276,7 +278,11 @@ int run_tests()
   test_nibblize_5_3_alt(ctx);
   test_nibblize_6_2(ctx);
 
-  return count_failed_assertions(ctx) ? EXIT_FAILURE : EXIT_SUCCESS;
+  r = ctest_count_failures(ctx) ? EXIT_FAILURE : EXIT_SUCCESS;
+
+  ctest_ctx_free(ctx);
+
+  return r;
 }
 
 int main(int argc, char *argv[])

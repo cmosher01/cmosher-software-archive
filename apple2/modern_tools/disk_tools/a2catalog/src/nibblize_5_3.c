@@ -8,7 +8,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "assert_that.h"
+#include "ctest.h"
 #include "nibblize_5_3_common.h"
 
 
@@ -191,7 +191,7 @@ static const uint8_t dos31_t0s1_phy[] =
 };
 static const size_t dos31_t0s1_phy_len = 411;
 
-void test_nibblize_5_3_encode(ctx_assertion *ctx)
+void test_nibblize_5_3_encode(ctest_ctx *ctx)
 {
   const uint8_t *po = dos31_t0s1_log;
   const size_t c = dos31_t0s1_phy_len*sizeof(uint8_t);
@@ -202,19 +202,19 @@ void test_nibblize_5_3_encode(ctx_assertion *ctx)
 
   memset(p,0x75,c);
   nibblize_5_3_encode(&po,&p);
-  ASSERT_THAT(ctx,"nibblize_5_3_encode write pointer",p==pend);
-  ASSERT_THAT(ctx,"nibblize_5_3_encode read pointer",po==dos31_t0s1_log+dos31_t0s1_log_len);
+  CTEST(ctx,"nibblize_5_3_encode write pointer",p==pend);
+  CTEST(ctx,"nibblize_5_3_encode read pointer",po==dos31_t0s1_log+dos31_t0s1_log_len);
 
   po = dos31_t0s1_phy;
   while (i != pend)
     {
-      ASSERT_THAT(ctx,"nibblize_5_3_encode",*i++==*po++);
+      CTEST(ctx,"nibblize_5_3_encode",*i++==*po++);
     }
 
   free(penc);
 }
 
-void test_nibblize_5_3_decode(ctx_assertion *ctx)
+void test_nibblize_5_3_decode(ctest_ctx *ctx)
 {
   const uint8_t *po = dos31_t0s1_phy;
   const size_t c = dos31_t0s1_log_len*sizeof(uint8_t);
@@ -225,19 +225,19 @@ void test_nibblize_5_3_decode(ctx_assertion *ctx)
 
   memset(p,0xFA,c);
   nibblize_5_3_decode(&po,&p);
-  ASSERT_THAT(ctx,"nibblize_5_3_decode write pointer",p==pend);
-  ASSERT_THAT(ctx,"nibblize_5_3_decode read pointer",po==dos31_t0s1_phy+dos31_t0s1_phy_len);
+  CTEST(ctx,"nibblize_5_3_decode write pointer",p==pend);
+  CTEST(ctx,"nibblize_5_3_decode read pointer",po==dos31_t0s1_phy+dos31_t0s1_phy_len);
 
   po = dos31_t0s1_log;
   while (i != pend)
     {
-      ASSERT_THAT(ctx,"nibblize_5_3_decode",*i++==*po++);
+      CTEST(ctx,"nibblize_5_3_decode",*i++==*po++);
     }
 
   free(pdec);
 }
 
-void test_nibblize_5_3(ctx_assertion *ctx)
+void test_nibblize_5_3(ctest_ctx *ctx)
 {
   test_nibblize_5_3_encode(ctx);
   test_nibblize_5_3_decode(ctx);

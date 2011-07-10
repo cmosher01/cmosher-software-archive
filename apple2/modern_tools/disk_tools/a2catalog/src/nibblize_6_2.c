@@ -8,7 +8,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "assert_that.h"
+#include "ctest.h"
 
 
 
@@ -202,7 +202,7 @@ static const uint8_t dos33_t0s0_phy[] =
 };
 static const size_t dos33_t0s0_phy_len = 343;
 
-void test_nibblize_6_2_encode(ctx_assertion *ctx)
+void test_nibblize_6_2_encode(ctest_ctx *ctx)
 {
   const uint8_t *po = dos33_t0s0_log;
   const size_t c = dos33_t0s0_phy_len*sizeof(uint8_t);
@@ -213,19 +213,19 @@ void test_nibblize_6_2_encode(ctx_assertion *ctx)
 
   memset(p,0x75,c);
   nibblize_6_2_encode(&po,&p);
-  ASSERT_THAT(ctx,"nibblize_6_2_encode write pointer",p==pend);
-  ASSERT_THAT(ctx,"nibblize_6_2_encode read pointer",po==dos33_t0s0_log+dos33_t0s0_log_len);
+  CTEST(ctx,"nibblize_6_2_encode write pointer",p==pend);
+  CTEST(ctx,"nibblize_6_2_encode read pointer",po==dos33_t0s0_log+dos33_t0s0_log_len);
 
   po = dos33_t0s0_phy;
   while (i != pend)
     {
-      ASSERT_THAT(ctx,"nibblize_6_2_encode",*i++==*po++);
+      CTEST(ctx,"nibblize_6_2_encode",*i++==*po++);
     }
 
   free(penc);
 }
 
-void test_nibblize_6_2_decode(ctx_assertion *ctx)
+void test_nibblize_6_2_decode(ctest_ctx *ctx)
 {
   const uint8_t *po = dos33_t0s0_phy;
   const size_t c = dos33_t0s0_log_len*sizeof(uint8_t);
@@ -236,19 +236,19 @@ void test_nibblize_6_2_decode(ctx_assertion *ctx)
 
   memset(p,0xFA,c);
   nibblize_6_2_decode(&po,&p);
-  ASSERT_THAT(ctx,"nibblize_6_2_decode write pointer",p==pend);
-  ASSERT_THAT(ctx,"nibblize_6_2_decode read pointer",po==dos33_t0s0_phy+dos33_t0s0_phy_len);
+  CTEST(ctx,"nibblize_6_2_decode write pointer",p==pend);
+  CTEST(ctx,"nibblize_6_2_decode read pointer",po==dos33_t0s0_phy+dos33_t0s0_phy_len);
 
   po = dos33_t0s0_log;
   while (i != pend)
     {
-      ASSERT_THAT(ctx,"nibblize_6_2_decode",*i++==*po++);
+      CTEST(ctx,"nibblize_6_2_decode",*i++==*po++);
     }
 
   free(pdec);
 }
 
-void test_nibblize_6_2(ctx_assertion *ctx)
+void test_nibblize_6_2(ctest_ctx *ctx)
 {
   test_nibblize_6_2_encode(ctx);
   test_nibblize_6_2_decode(ctx);
