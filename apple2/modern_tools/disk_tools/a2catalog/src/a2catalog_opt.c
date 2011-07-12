@@ -44,9 +44,9 @@ static void help(int argc, char *argv[])
   printf("  -x, --hex            outputs ASCII hex instead of raw binary\n");
 }
 
-static struct opts_t *opts_factory()
+static struct opts_t *opts_factory(void)
   {
-    struct opts_t *opts = malloc(sizeof(struct opts_t));
+    struct opts_t *opts = (struct opts_t*)malloc(sizeof(struct opts_t));
 
     opts->test = 0;
     opts->dos_version = 330; /* DOS 3.3 (.0) */
@@ -58,7 +58,7 @@ static struct opts_t *opts_factory()
     return opts;
   }
 
-static void version()
+static void version(void)
 {
   printf("%s\n",PACKAGE_STRING);
   printf("\n");
@@ -68,7 +68,7 @@ static void version()
   printf("%s\n","There is NO WARRANTY, to the extent permitted by law.");
 }
 
-static long get_num_optarg()
+static long get_num_optarg(void)
 {
   return strtol(optarg,0,0);
 }
@@ -84,23 +84,23 @@ struct opts_t *parse_opts(int argc, char *argv[])
         switch (c)
           {
           case 'd':
-            opts->dos_version = get_num_optarg();
+            opts->dos_version = (uint_fast16_t)get_num_optarg();
             break;
           case 'u':
-            opts->used_sectors = get_num_optarg();
+            opts->used_sectors = (uint_fast8_t)get_num_optarg();
             break;
           case 'T':
             opts->test = 1;
             break;
           case 't':
-            opts->catalog_track = get_num_optarg();
+            opts->catalog_track = (uint8_t)get_num_optarg();
             break;
           case 'V':
             version();
             exit(0);
             break;
           case 'v':
-            opts->volume = get_num_optarg();
+            opts->volume = (uint8_t)get_num_optarg();
             break;
           case 'x':
             opts->hex = 1;

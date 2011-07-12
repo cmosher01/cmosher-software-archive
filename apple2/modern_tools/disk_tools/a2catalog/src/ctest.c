@@ -15,8 +15,8 @@
 */
 struct ctest_ctx
   {
-    int c_test;
-    int c_test_failures;
+    int c_pass;
+    int c_fail;
   };
 
 
@@ -24,12 +24,12 @@ struct ctest_ctx
 /*
   Allocation and deallocation of the suite context
 */
-ctest_ctx *ctest_ctx_alloc()
+ctest_ctx *ctest_ctx_alloc(void)
 {
-  return malloc(sizeof(ctest_ctx));
+  return (ctest_ctx*)malloc(sizeof(ctest_ctx));
 }
 
-void ctest_ctx_free(ctest_ctx *ctx)
+void ctest_ctx_free(ctest_ctx *const ctx)
 {
   free(ctx);
 }
@@ -42,13 +42,16 @@ void ctest_ctx_free(ctest_ctx *ctx)
   file_name, line_number. and name.
   Update counts in the given suite context ctx.
 */
-void ctest_fn(ctest_ctx *ctx, char *name, int is_true, char *file_name, int line_number)
+void ctest_fn(ctest_ctx *const ctx, const char *const name, const int is_true, const char *const file_name, const int line_number)
 {
-  ++ctx->c_test;
-  if (!is_true)
+  if (is_true)
     {
+      ++ctx->c_pass;
+    }
+  else
+    {
+      ++ctx->c_fail;
       fprintf(stderr,"%s:%d: test failed: %s\n",file_name,line_number,name);
-      ++ctx->c_test_failures;
     }
 }
 
@@ -57,12 +60,12 @@ void ctest_fn(ctest_ctx *ctx, char *name, int is_true, char *file_name, int line
 /*
   Simple accessors for the counts
 */
-int ctest_count(ctest_ctx *ctx)
+int ctest_count_pass(const ctest_ctx *const ctx)
 {
-  return ctx->c_test;
+  return ctx->c_pass;
 }
 
-int ctest_count_failures(ctest_ctx *ctx)
+int ctest_count_fail(const ctest_ctx *const ctx)
 {
-  return ctx->c_test_failures;
+  return ctx->c_fail;
 }

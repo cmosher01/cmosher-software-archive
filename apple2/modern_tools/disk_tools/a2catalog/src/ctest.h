@@ -44,9 +44,9 @@ int main(int argc, char **argv)
 
   ctest_ctx *ctx = ctest_ctx_alloc();
 
-  CTEST(ctx,"9 divided by 3 is 3",9/3==3);
-  CTEST(ctx,"10 divided by 3 is 3",10/3==3);
-  f = ctest_count_failures(ctx);
+  CTEST(ctx,9/3==3);
+  CTEST(ctx,10/3==3);
+  f = ctest_count_fail(ctx);
 
   ctest_ctx_free(ctx);
 
@@ -61,6 +61,14 @@ int main(int argc, char **argv)
 */
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+
+
+
 /*
   Opaque structure containing the CTEST context for
   one suite of unit tests.
@@ -68,11 +76,15 @@ int main(int argc, char **argv)
 struct ctest_ctx;
 typedef struct ctest_ctx ctest_ctx;
 
+
+
 /*
   Functions to allocate and deallocate a CTEST context.
 */
-ctest_ctx *ctest_ctx_alloc();
-void ctest_ctx_free(ctest_ctx *ctx);
+extern ctest_ctx *ctest_ctx_alloc(void);
+extern void ctest_ctx_free(ctest_ctx *ctx);
+
+
 
 /*
   Perform one unit test. Call the CTEST macro for each unit
@@ -82,22 +94,30 @@ void ctest_ctx_free(ctest_ctx *ctx);
   error message in case the test fails).
   ctx is the CTEST context, which must have been allocated by
     a call to ctest_ctx_alloc.
-  name is any string to identify the test with (this is used
-    only to print the error message).
   assertion is the boolean expression to test. If the expression
     evaluates to non-zero (true), then the test is considered
     correct; if the expression evaluates to zero (false), then
     the test is considered failed.
 */
-#define CTEST(ctx,name,assertion) ctest_fn(ctx,name,assertion,__FILE__,__LINE__)
+#define CTEST(ctx,assertion) ctest_fn(ctx,#assertion,assertion,__FILE__,__LINE__)
 
-void ctest_fn(ctest_ctx *ctx, char *name, int is_true, char *file_name, int line_number);
+extern void ctest_fn(ctest_ctx *ctx, const char *name, int is_true, const char *file_name, int line_number);
+
+
 
 /*
   Accessor functions to get the (current) count of tests
-  run, and the count of failures.
+  that passed or failured.
 */
-int ctest_count(ctest_ctx *ctx);
-int ctest_count_failures(ctest_ctx *ctx);
+extern int ctest_count_pass(const ctest_ctx *ctx);
+extern int ctest_count_fail(const ctest_ctx *ctx);
+
+
+
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
