@@ -2,6 +2,7 @@
 #include <config.h>
 #endif
 
+#include <assert.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -27,6 +28,7 @@
  */
 static void b_out(uint8_t b, uint8_t **pp)
 {
+  assert(pp);
   *(*pp)++ = b;
 }
 
@@ -60,6 +62,7 @@ static void test_b_out(ctest_ctx *ctx)
  */
 static void w_out(uint16_t w, uint8_t **pp)
 {
+  assert(pp);
   b_out((uint8_t)w,pp);
   w >>= 8;
   b_out((uint8_t)w,pp);
@@ -93,6 +96,7 @@ static void test_w_out(ctest_ctx *ctx)
 
 static void map_out(uint16_t m, uint8_t **pp)
 {
+  assert(pp);
   b_out((uint8_t)(m >> 8),pp);
   b_out((uint8_t)m,pp);
   w_out(UINT16_C(0),pp);
@@ -109,6 +113,7 @@ static void map_out(uint16_t m, uint8_t **pp)
  */
 static void n_b_out(uint_fast32_t n, uint8_t b, uint8_t **pp)
 {
+  assert(pp);
   while (n--)
     {
       b_out(b,pp);
@@ -147,12 +152,14 @@ static void test_n_b_out(ctest_ctx *ctx)
 
 static uint_fast8_t sectors_per_track(uint_fast16_t version)
 {
+  assert(version/100 == 3);
   return (uint_fast8_t)(version < 330 ? UINT8_C(13) : UINT8_C(16));
 }
 
 static void test_sectors_per_track(ctest_ctx *ctx)
 {
   int cs;
+
   cs = sectors_per_track(310);
   CTEST(ctx,cs==13);
   cs = sectors_per_track(320);
@@ -173,6 +180,7 @@ static uint16_t get_free_track_map(uint_fast16_t version)
 {
   uint_fast8_t cs = sectors_per_track(version);
   uint16_t mk = 0;
+
   while (cs--)
     {
       mk >>= 1;
@@ -184,6 +192,7 @@ static uint16_t get_free_track_map(uint_fast16_t version)
 static void test_get_free_track_map(ctest_ctx *ctx)
 {
   uint16_t fr;
+
   fr  = get_free_track_map(310);
   CTEST(ctx,fr==0xFFF8);
   fr = get_free_track_map(331);
@@ -194,7 +203,10 @@ static void test_get_free_track_map(ctest_ctx *ctx)
 
 static void allocate_n_sectors(uint_fast8_t c_used_sectors, uint16_t *track_map)
 {
-	int uint16_value = *track_map << c_used_sectors;
+	int uint16_value;
+
+  assert(track_map);
+	uint16_value = *track_map << c_used_sectors;
 	*track_map = (uint16_t)(uint16_value & UINT16_C(0xFFFF));
 }
 
@@ -202,6 +214,7 @@ static void allocate_n_sectors(uint_fast8_t c_used_sectors, uint16_t *track_map)
 static void test_allocate_n_sectors(ctest_ctx *ctx)
 {
   uint16_t bitmap = get_free_track_map(310);
+
   allocate_n_sectors(3,&bitmap);
   /* 13 free sectors, minus 3 free sectors, equals 10 free sectors */
   CTEST(ctx,bitmap==0xFFC0);
@@ -223,6 +236,7 @@ static void test_allocate_n_sectors(ctest_ctx *ctx)
  */
 static void sector_link_out(uint8_t sect, uint8_t track, uint8_t **pp)
 {
+  assert(pp);
   b_out(0,pp);
   if (sect) {
 	  b_out(track,pp);
@@ -278,6 +292,7 @@ static void test_sector_link_out(ctest_ctx *ctx)
 
 static void catalog_sector_out(uint8_t sector_number, uint8_t track, uint8_t **pp)
 {
+  assert(pp);
   /*
    * link to previous sector, except for last sector in
    * the sequence (sector 1) which has no link.
@@ -292,6 +307,8 @@ static void catalog_sector_out(uint8_t sector_number, uint8_t track, uint8_t **p
 static void volume_sector_map_out(uint_fast16_t version, uint8_t catalog_track, uint_fast8_t used, uint8_t **pp)
 {
   uint8_t tr;
+
+  assert(pp);
   for (tr = 0; tr < TRACKS_PER_DISK; ++tr)
     {
       uint16_t bitmap = get_free_track_map(version);
@@ -323,11 +340,14 @@ static uint8_t get_max_ts_in_filemap(void)
 }
 
 static uint8_t calc_dos_version_byte(uint_fast16_t version) {
+  assert(version/100 == 3);
 	return (uint8_t)(version/10%10);
 }
 
 static void catalog_VTOC_out(uint_fast16_t version, uint8_t catalog_track, uint_fast8_t used, uint8_t volume, uint8_t **pp)
 {
+  assert(pp);
+
   sector_link_out((uint8_t)(sectors_per_track(version)-1),catalog_track,pp);
 
   b_out(calc_dos_version_byte(version),pp);
@@ -386,6 +406,8 @@ static void test_catalog_VTOC_out(ctest_ctx *ctx)
 static void catalog_track_out(uint_fast16_t version, uint8_t catalog_track, uint_fast8_t used, uint8_t volume, uint8_t **pp)
 {
   uint8_t sc;
+
+  assert(pp);
   catalog_VTOC_out(version,catalog_track,used,volume,pp);
   for (sc = 1; sc < sectors_per_track(version); ++sc)
     {
@@ -399,6 +421,7 @@ static void catalog_track_out(uint_fast16_t version, uint8_t catalog_track, uint
 static void put_buffer_hex(uint8_t *p, uint_fast32_t c)
 {
   uint_fast32_t i = 0;
+
   while (i<c)
     {
       ++i;
@@ -413,6 +436,7 @@ static void put_buffer_hex(uint8_t *p, uint_fast32_t c)
 static void put_buffer_raw(uint8_t *p, uint_fast32_t c)
 {
   uint_fast32_t i = 0;
+
   SET_BINARY(1);
   while (i<c)
     {
@@ -424,6 +448,7 @@ static void put_buffer_raw(uint8_t *p, uint_fast32_t c)
 
 static size_t calc_buf_size(uint_fast16_t dos_version) {
 	const uint_fast16_t bpt = (uint_fast16_t)(sectors_per_track(dos_version)*BYTES_PER_SECTOR);
+
 	return bpt*sizeof(uint8_t);
 }
 
@@ -437,11 +462,7 @@ static int run_program(struct opts_t *opts)
 
   catalog_track_out(opts->dos_version,opts->catalog_track,opts->used_sectors,opts->volume,&x);
 
-  if (x != t+c)
-    {
-      fprintf(stderr,"%s\n","illegal program state");
-      return EXIT_FAILURE;
-    }
+  assert(x == t+c);
 
   if (opts->hex)
     {

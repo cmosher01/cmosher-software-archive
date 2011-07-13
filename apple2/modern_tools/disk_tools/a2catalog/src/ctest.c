@@ -42,7 +42,7 @@ void ctest_ctx_free(ctest_ctx *const ctx)
   file_name, line_number. and name.
   Update counts in the given suite context ctx.
 */
-void ctest_fn(ctest_ctx *const ctx, const char *const name, const int is_true, const char *const file_name, const int line_number)
+void ctest(ctest_ctx *const ctx, const char *const name, const int is_true, const char *const file_name, const int line_number)
 {
   if (is_true)
     {

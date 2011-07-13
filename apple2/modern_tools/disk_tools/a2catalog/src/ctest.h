@@ -99,9 +99,9 @@ extern void ctest_ctx_free(ctest_ctx *ctx);
     correct; if the expression evaluates to zero (false), then
     the test is considered failed.
 */
-#define CTEST(ctx,assertion) ctest_fn(ctx,#assertion,assertion,__FILE__,__LINE__)
+#define CTEST(ctx,assertion) ctest(ctx,#assertion,assertion,__FILE__,__LINE__)
 
-extern void ctest_fn(ctest_ctx *ctx, const char *name, int is_true, const char *file_name, int line_number);
+extern void ctest(ctest_ctx *ctx, const char *name, int is_true, const char *file_name, int line_number);
 
 
 

@@ -38,8 +38,8 @@ ctest.h
 check_SCRIPTS=unit_test.sh
 TESTS=$(check_SCRIPTS)
 
-unit_test.sh:
-	touch $@
+unit_test.sh: .FORCE
+	echo "set -e" >$@
 	echo "./a2catalog --test" >>$@
 	echo "./a2nibblize --test" >>$@
 	chmod +x $@
@@ -47,3 +47,5 @@ unit_test.sh:
 
 
 CLEANFILES=unit_test.sh
+
+.FORCE:
