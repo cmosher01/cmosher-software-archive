@@ -41,7 +41,6 @@ nw="$nw -Wundef"                # All compiler preprocessors support #if UNDEF
 nw="$nw -Wtraditional"          # All compilers nowadays support ANSI C
 nw="$nw -Wtraditional-conversion" # We always use prototypes
 nw="$nw -Wconversion"           # These warnings usually don't point to mistakes.
-nw="$nw -Wsign-conversion"      # Likewise.
 nw="$nw -Wpadded"               # padded structs are OK
 # Enable all GCC warnings not in this list.
 gl_MANYWARN_ALL_GCC([warnings])
