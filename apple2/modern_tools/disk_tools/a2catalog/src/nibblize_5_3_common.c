@@ -20,7 +20,7 @@ const uint8_t xlate[] =
 
 uint8_t ulate[1<<sizeof(uint8_t)];
 
-void build_ulate_table()
+void build_ulate_table(void)
 {
   uint_fast8_t i;
   memset(ulate,0xFF,sizeof(ulate));

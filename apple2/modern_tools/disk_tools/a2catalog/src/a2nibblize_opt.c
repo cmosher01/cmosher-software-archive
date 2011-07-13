@@ -36,9 +36,9 @@ static void help(int argc, char *argv[])
   printf("  -v, --volume=VOLUME  \"DISK VOLUME\" to use, default 254\n");
 }
 
-static struct opts_t *opts_factory()
+static struct opts_t *opts_factory(void)
   {
-    struct opts_t *opts = malloc(sizeof(struct opts_t));
+    struct opts_t *opts = (struct opts_t*)malloc(sizeof(struct opts_t));
 
     opts->test = 0;
     opts->volume = 254; /* as in "DISK VOLUME 254" */
@@ -46,7 +46,7 @@ static struct opts_t *opts_factory()
     return opts;
   }
 
-static void version()
+static void version(void)
 {
   printf("%s\n",PACKAGE_STRING);
   printf("\n");
@@ -56,7 +56,7 @@ static void version()
   printf("%s\n","There is NO WARRANTY, to the extent permitted by law.");
 }
 
-static long get_num_optarg()
+static long get_num_optarg(void)
 {
   return strtol(optarg,0,0);
 }

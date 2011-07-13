@@ -66,9 +66,7 @@ void test_nibblize_4_4(ctest_ctx *ctx)
   int i;
   for (i = 0; i < c; ++i)
     {
-      CTEST(ctx,"nibblize_4_4_encode",
-                  nibblize_4_4_encode(test_values[i].unencoded_byte)==test_values[i].nibblized_byte);
-      CTEST(ctx,"nibblize_4_4_decode",
-                  nibblize_4_4_decode(test_values[i].nibblized_byte)==test_values[i].unencoded_byte);
+      CTEST(ctx,nibblize_4_4_encode(test_values[i].unencoded_byte)==test_values[i].nibblized_byte);
+      CTEST(ctx,nibblize_4_4_decode(test_values[i].nibblized_byte)==test_values[i].unencoded_byte);
     }
 }

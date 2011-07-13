@@ -9,6 +9,6 @@ struct opts_t
     uint8_t volume;
   };
 
-struct opts_t *parse_opts(int argc, char *argv[]);
+extern struct opts_t *parse_opts(int argc, char *argv[]);
 
 #endif

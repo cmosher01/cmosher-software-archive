@@ -191,47 +191,47 @@ static const uint8_t dos31_t0s1_phy[] =
 };
 static const size_t dos31_t0s1_phy_len = 411;
 
-void test_nibblize_5_3_encode(ctest_ctx *ctx)
+static void test_nibblize_5_3_encode(ctest_ctx *ctx)
 {
   const uint8_t *po = dos31_t0s1_log;
   const size_t c = dos31_t0s1_phy_len*sizeof(uint8_t);
-  uint8_t *penc = malloc(c);
+  uint8_t *penc = (uint8_t*)malloc(c);
   uint8_t *pend = penc+c;
   uint8_t *p = penc;
   uint8_t *i = penc;
 
   memset(p,0x75,c);
   nibblize_5_3_encode(&po,&p);
-  CTEST(ctx,"nibblize_5_3_encode write pointer",p==pend);
-  CTEST(ctx,"nibblize_5_3_encode read pointer",po==dos31_t0s1_log+dos31_t0s1_log_len);
+  CTEST(ctx,p==pend);
+  CTEST(ctx,po==dos31_t0s1_log+dos31_t0s1_log_len);
 
   po = dos31_t0s1_phy;
   while (i != pend)
     {
-      CTEST(ctx,"nibblize_5_3_encode",*i++==*po++);
+      CTEST(ctx,*i++==*po++);
     }
 
   free(penc);
 }
 
-void test_nibblize_5_3_decode(ctest_ctx *ctx)
+static void test_nibblize_5_3_decode(ctest_ctx *ctx)
 {
   const uint8_t *po = dos31_t0s1_phy;
   const size_t c = dos31_t0s1_log_len*sizeof(uint8_t);
-  uint8_t *pdec = malloc(c);
+  uint8_t *pdec = (uint8_t*)malloc(c);
   uint8_t *pend = pdec+c;
   uint8_t *p = pdec;
   uint8_t *i = pdec;
 
   memset(p,0xFA,c);
   nibblize_5_3_decode(&po,&p);
-  CTEST(ctx,"nibblize_5_3_decode write pointer",p==pend);
-  CTEST(ctx,"nibblize_5_3_decode read pointer",po==dos31_t0s1_phy+dos31_t0s1_phy_len);
+  CTEST(ctx,p==pend);
+  CTEST(ctx,po==dos31_t0s1_phy+dos31_t0s1_phy_len);
 
   po = dos31_t0s1_log;
   while (i != pend)
     {
-      CTEST(ctx,"nibblize_5_3_decode",*i++==*po++);
+      CTEST(ctx,*i++==*po++);
     }
 
   free(pdec);

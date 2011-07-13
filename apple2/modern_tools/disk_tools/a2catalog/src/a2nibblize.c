@@ -16,7 +16,7 @@
 #include "nibblize_6_2.h"
 
 
-void put_buffer(uint8_t *p, int c)
+static void put_buffer(uint8_t *p, int c)
 {
   SET_BINARY(1);
   while (c--)
@@ -25,7 +25,7 @@ void put_buffer(uint8_t *p, int c)
     }
 }
 
-int get_buffer(uint8_t *p, int c)
+static int get_buffer(uint8_t *p, int c)
 {
   int oc = c;
   int b;
@@ -46,19 +46,19 @@ int get_buffer(uint8_t *p, int c)
 
 
 
-void b_out(uint8_t b, uint8_t **pp)
+static void b_out(uint8_t b, uint8_t **pp)
 {
   *(*pp)++ = b;
 }
 
-void w_out(uint16_t w, uint8_t **pp)
+static void w_out(uint16_t w, uint8_t **pp)
 {
   b_out(w,pp);
   w >>= 8;
   b_out(w,pp);
 }
 
-void n_b_out(uint_fast32_t n, uint8_t b, uint8_t **pp)
+static void n_b_out(uint_fast32_t n, uint8_t b, uint8_t **pp)
 {
   while (n--)
     {
@@ -90,7 +90,7 @@ typedef track13_t disk13_t[TRACKS_PER_DISK];
 static uint8_t mp_sector13[SECTORS_PER_TRACK_13];
 #define SKEW_13_SECTORS 0xA
 
-void build_mp_sector13()
+static void build_mp_sector13(void)
 {
   uint8_t s = 0;
   uint_fast8_t i;
@@ -109,14 +109,14 @@ void build_mp_sector13()
 
 
 
-void data_marker_out(uint8_t **pp)
+static void data_marker_out(uint8_t **pp)
 {
   b_out(0xD5,pp);
   b_out(0xAA,pp);
   b_out(0xAD,pp);
 }
 
-void addr_out(uint8_t volume, uint8_t track, uint8_t sector, uint8_t **pp)
+static void addr_out(uint8_t volume, uint8_t track, uint8_t sector, uint8_t **pp)
 {
   w_out(nibblize_4_4_encode(volume),pp);
   w_out(nibblize_4_4_encode(track),pp);
@@ -124,7 +124,7 @@ void addr_out(uint8_t volume, uint8_t track, uint8_t sector, uint8_t **pp)
   w_out(nibblize_4_4_encode(volume^track^sector),pp);
 }
 
-void end_marker_out(uint8_t **pp)
+static void end_marker_out(uint8_t **pp)
 {
   b_out(0xDE,pp);
   b_out(0xAA,pp);
@@ -137,7 +137,7 @@ void end_marker_out(uint8_t **pp)
 
 
 
-void addr13out(uint8_t volume, uint8_t track, uint8_t sector, uint8_t **pp)
+static void addr13out(uint8_t volume, uint8_t track, uint8_t sector, uint8_t **pp)
 {
   b_out(0xD5,pp);
   b_out(0xAA,pp);
@@ -146,7 +146,7 @@ void addr13out(uint8_t volume, uint8_t track, uint8_t sector, uint8_t **pp)
   end_marker_out(pp);
 }
 
-void data13out(const uint8_t *data, int alt, uint8_t **pp)
+static void data13out(const uint8_t *data, int alt, uint8_t **pp)
 {
   data_marker_out(pp);
   if (alt)
@@ -160,7 +160,7 @@ void data13out(const uint8_t *data, int alt, uint8_t **pp)
   end_marker_out(pp);
 }
 
-void sect13out(uint8_t *data, uint8_t volume, uint8_t track, uint8_t sector, uint8_t **pp)
+static void sect13out(uint8_t *data, uint8_t volume, uint8_t track, uint8_t sector, uint8_t **pp)
 {
   addr13out(volume, track, sector, pp);
   n_b_out(6, 0xFF, pp);
@@ -168,7 +168,7 @@ void sect13out(uint8_t *data, uint8_t volume, uint8_t track, uint8_t sector, uin
   n_b_out(0x1B, 0xFF, pp);
 }
 
-void write13nib(uint8_t volume, disk13_t image, uint8_t **pp)
+static void write13nib(uint8_t volume, disk13_t image, uint8_t **pp)
 {
   uint8_t t;
   uint8_t s;
@@ -191,7 +191,7 @@ void write13nib(uint8_t volume, disk13_t image, uint8_t **pp)
 
 
 
-void addr16out(uint8_t volume, uint8_t track, uint8_t sector, uint8_t **pp)
+static void addr16out(uint8_t volume, uint8_t track, uint8_t sector, uint8_t **pp)
 {
   b_out(0xD5,pp);
   b_out(0xAA,pp);
@@ -200,14 +200,14 @@ void addr16out(uint8_t volume, uint8_t track, uint8_t sector, uint8_t **pp)
   end_marker_out(pp);
 }
 
-void data16out(const uint8_t *data, uint8_t **pp)
+static void data16out(const uint8_t *data, uint8_t **pp)
 {
   data_marker_out(pp);
   nibblize_6_2_encode(&data, pp);
   end_marker_out(pp);
 }
 
-void sect16out(uint8_t *data, uint8_t volume, uint8_t track, uint8_t sector, uint8_t **pp)
+static void sect16out(uint8_t *data, uint8_t volume, uint8_t track, uint8_t sector, uint8_t **pp)
 {
   addr16out(volume, track, sector, pp);
   n_b_out(6, 0xFF, pp);
@@ -217,7 +217,7 @@ void sect16out(uint8_t *data, uint8_t volume, uint8_t track, uint8_t sector, uin
 
 static const uint8_t mp_sector16[] = { 0x0, 0x7, 0xE, 0x6, 0xD, 0x5, 0xC, 0x4, 0xB, 0x3, 0xA, 0x2, 0x9, 0x1, 0x8, 0xF };
 
-void write16nib(uint8_t volume, disk16_t image, uint8_t **pp)
+static void write16nib(uint8_t volume, disk16_t image, uint8_t **pp)
 {
   uint8_t t;
   uint8_t s;
@@ -232,14 +232,14 @@ void write16nib(uint8_t volume, disk16_t image, uint8_t **pp)
     }
 }
 
-int run_program(struct opts_t *opts)
+static int run_program(struct opts_t *opts)
 {
   int c_remain;
-  uint8_t *image = malloc(DISK16_SIZE);
+  uint8_t *image = (uint8_t*)malloc(DISK16_SIZE);
   c_remain = get_buffer(image,DISK16_SIZE);
   if (!c_remain)
     {
-      uint8_t *pnib = malloc(NIB16_SIZE);
+      uint8_t *pnib = (uint8_t*)malloc(NIB16_SIZE);
       uint8_t *onib = pnib;
       write16nib(opts->volume,*((disk16_t*)image),&pnib);
       pnib = onib;
@@ -248,7 +248,7 @@ int run_program(struct opts_t *opts)
     }
   else if (c_remain==DIFF_SIZE)
     {
-      uint8_t *pnib = malloc(NIB13_SIZE);
+      uint8_t *pnib = (uint8_t*)malloc(NIB13_SIZE);
       uint8_t *onib = pnib;
       build_mp_sector13();
       write13nib(opts->volume,*((disk13_t*)image),&pnib);
@@ -265,7 +265,7 @@ int run_program(struct opts_t *opts)
   return EXIT_SUCCESS;
 }
 
-int run_tests()
+static int run_tests(void)
 {
   int r;
 
@@ -278,7 +278,7 @@ int run_tests()
   test_nibblize_5_3_alt(ctx);
   test_nibblize_6_2(ctx);
 
-  r = ctest_count_failures(ctx) ? EXIT_FAILURE : EXIT_SUCCESS;
+  r = ctest_count_fail(ctx) ? EXIT_FAILURE : EXIT_SUCCESS;
 
   ctest_ctx_free(ctx);
 

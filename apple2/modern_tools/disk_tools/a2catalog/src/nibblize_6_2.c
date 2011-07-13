@@ -29,7 +29,7 @@ static const uint8_t xlate[] =
 
 static uint8_t ulate[1<<sizeof(uint8_t)];
 
-static void build_ulate_table()
+static void build_ulate_table(void)
 {
   uint_fast8_t i;
   memset(ulate,0xFF,sizeof(ulate));
@@ -202,47 +202,47 @@ static const uint8_t dos33_t0s0_phy[] =
 };
 static const size_t dos33_t0s0_phy_len = 343;
 
-void test_nibblize_6_2_encode(ctest_ctx *ctx)
+static void test_nibblize_6_2_encode(ctest_ctx *ctx)
 {
   const uint8_t *po = dos33_t0s0_log;
   const size_t c = dos33_t0s0_phy_len*sizeof(uint8_t);
-  uint8_t *penc = malloc(c);
+  uint8_t *penc = (uint8_t*)malloc(c);
   uint8_t *pend = penc+c;
   uint8_t *p = penc;
   uint8_t *i = penc;
 
   memset(p,0x75,c);
   nibblize_6_2_encode(&po,&p);
-  CTEST(ctx,"nibblize_6_2_encode write pointer",p==pend);
-  CTEST(ctx,"nibblize_6_2_encode read pointer",po==dos33_t0s0_log+dos33_t0s0_log_len);
+  CTEST(ctx,p==pend);
+  CTEST(ctx,po==dos33_t0s0_log+dos33_t0s0_log_len);
 
   po = dos33_t0s0_phy;
   while (i != pend)
     {
-      CTEST(ctx,"nibblize_6_2_encode",*i++==*po++);
+      CTEST(ctx,*i++==*po++);
     }
 
   free(penc);
 }
 
-void test_nibblize_6_2_decode(ctest_ctx *ctx)
+static void test_nibblize_6_2_decode(ctest_ctx *ctx)
 {
   const uint8_t *po = dos33_t0s0_phy;
   const size_t c = dos33_t0s0_log_len*sizeof(uint8_t);
-  uint8_t *pdec = malloc(c);
+  uint8_t *pdec = (uint8_t*)malloc(c);
   uint8_t *pend = pdec+c;
   uint8_t *p = pdec;
   uint8_t *i = pdec;
 
   memset(p,0xFA,c);
   nibblize_6_2_decode(&po,&p);
-  CTEST(ctx,"nibblize_6_2_decode write pointer",p==pend);
-  CTEST(ctx,"nibblize_6_2_decode read pointer",po==dos33_t0s0_phy+dos33_t0s0_phy_len);
+  CTEST(ctx,p==pend);
+  CTEST(ctx,po==dos33_t0s0_phy+dos33_t0s0_phy_len);
 
   po = dos33_t0s0_log;
   while (i != pend)
     {
-      CTEST(ctx,"nibblize_6_2_decode",*i++==*po++);
+      CTEST(ctx,*i++==*po++);
     }
 
   free(pdec);

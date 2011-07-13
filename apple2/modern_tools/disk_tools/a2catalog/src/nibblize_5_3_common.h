@@ -18,6 +18,6 @@
 extern const uint8_t xlate[];
 extern uint8_t ulate[];
 
-void build_ulate_table();
+extern void build_ulate_table(void);
 
 #endif

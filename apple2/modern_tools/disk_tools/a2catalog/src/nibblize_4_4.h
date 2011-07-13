@@ -4,9 +4,9 @@
 #include <stdint.h>
 #include "ctest.h"
 
-uint16_t nibblize_4_4_encode(uint8_t n);
-uint8_t nibblize_4_4_decode(uint16_t n);
+extern uint16_t nibblize_4_4_encode(uint8_t n);
+extern uint8_t nibblize_4_4_decode(uint16_t n);
 
-void test_nibblize_4_4(ctest_ctx *ctx);
+extern void test_nibblize_4_4(ctest_ctx *ctx);
 
 #endif
