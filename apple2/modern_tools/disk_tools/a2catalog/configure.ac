@@ -12,6 +12,50 @@ AM_INIT_AUTOMAKE([-Wall -Werror])
 AC_PROG_CC
 gl_EARLY
 
+
+
+#All compiler-warning stuff came from coreutils
+#which is
+# Copyright (C) 1991, 1993-2010 Free Software Foundation, Inc.
+# under GPL v3
+AC_ARG_ENABLE([gcc-warnings],
+  [AS_HELP_STRING([--enable-gcc-warnings],
+                  [turn on lots of GCC warnings (for developers)])],
+  [case $enableval in
+     yes|no) ;;
+     *)      AC_MSG_ERROR([bad value $enableval for gcc-warnings option]) ;;
+   esac
+   gl_gcc_warnings=$enableval],
+  [gl_gcc_warnings=no]
+)
+
+if test "$gl_gcc_warnings" = yes; then
+
+gl_WARN_ADD([-Werror], [WERROR_CFLAGS])
+AC_SUBST([WERROR_CFLAGS])
+
+# Set up the list of the pointless, undesired warnings.
+nw=
+nw="$nw -Wsystem-headers"       # Don't let system headers trigger warnings
+nw="$nw -Wundef"                # All compiler preprocessors support #if UNDEF
+nw="$nw -Wtraditional"          # All compilers nowadays support ANSI C
+nw="$nw -Wtraditional-conversion" # We always use prototypes
+nw="$nw -Wconversion"           # These warnings usually don't point to mistakes.
+nw="$nw -Wsign-conversion"      # Likewise.
+nw="$nw -Wpadded"               # padded structs are OK
+# Enable all GCC warnings not in this list.
+gl_MANYWARN_ALL_GCC([warnings])
+gl_MANYWARN_COMPLEMENT([warnings], [$warnings], [$nw])
+for w in $warnings
+do
+  gl_WARN_ADD([$w])
+done
+gl_WARN_ADD([-fdiagnostics-show-option])
+AC_SUBST([WARN_CFLAGS])
+fi
+#end of coreutil stuff
+
+
 # Checks for libraries.
 
 # Checks for header files.
