@@ -101,7 +101,7 @@ extern void ctest_ctx_free(ctest_ctx *ctx);
 */
 #define CTEST(ctx,assertion) ctest(ctx,#assertion,assertion,__FILE__,__LINE__)
 
-extern void ctest(ctest_ctx *ctx, const char *name, int is_true, const char *file_name, int line_number);
+extern void ctest(ctest_ctx *ctx, const char *name, int is_true, const char *file_name, const unsigned long line_number);
 
 
 
@@ -109,8 +109,9 @@ extern void ctest(ctest_ctx *ctx, const char *name, int is_true, const char *fil
   Accessor functions to get the (current) count of tests
   that passed or failured.
 */
-extern int ctest_count_pass(const ctest_ctx *ctx);
-extern int ctest_count_fail(const ctest_ctx *ctx);
+extern long ctest_count_pass(const ctest_ctx *ctx);
+extern long ctest_count_fail(const ctest_ctx *ctx);
+extern long ctest_count_test(const ctest_ctx *ctx);
 
 
 

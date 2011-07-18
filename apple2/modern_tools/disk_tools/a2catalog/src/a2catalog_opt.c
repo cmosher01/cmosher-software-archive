@@ -74,45 +74,45 @@ static long get_num_optarg(void)
 }
 
 struct opts_t *parse_opts(int argc, char *argv[])
-  {
-    int c;
+{
+  int c;
 
-    struct opts_t *opts = opts_factory();
+  struct opts_t *opts = opts_factory();
 
-    while ((c = getopt_long(argc,argv,shortopts,longopts,0)) >= 0)
-      {
-        switch (c)
-          {
-          case 'd':
-            opts->dos_version = (uint_fast16_t)get_num_optarg();
-            break;
-          case 'u':
-            opts->used_sectors = (uint_fast8_t)get_num_optarg();
-            break;
-          case 'T':
-            opts->test = 1;
-            break;
-          case 't':
-            opts->catalog_track = (uint8_t)get_num_optarg();
-            break;
-          case 'V':
-            version();
-            exit(0);
-            break;
-          case 'v':
-            opts->volume = (uint8_t)get_num_optarg();
-            break;
-          case 'x':
-            opts->hex = 1;
-            break;
-          case 0:
-            break;
-          case 'h':
-          default:
-            help(argc,argv);
-            exit(0);
-          }
-      }
+  while ((c = getopt_long(argc,argv,shortopts,longopts,0)) >= 0)
+    {
+      switch (c)
+        {
+        case 'd':
+          opts->dos_version = (uint_fast16_t)get_num_optarg();
+          break;
+        case 'u':
+          opts->used_sectors = (uint_fast8_t)get_num_optarg();
+          break;
+        case 'T':
+          opts->test = 1;
+          break;
+        case 't':
+          opts->catalog_track = (uint8_t)get_num_optarg();
+          break;
+        case 'V':
+          version();
+          exit(0);
+          break;
+        case 'v':
+          opts->volume = (uint8_t)get_num_optarg();
+          break;
+        case 'x':
+          opts->hex = 1;
+          break;
+        case 0:
+          break;
+        case 'h':
+        default:
+          help(argc,argv);
+          exit(0);
+        }
+    }
 
-    return opts;
-  }
+  return opts;
+}
