@@ -1,0 +1,37 @@
+#!/bin/bash
+
+
+
+# specify which backup-set we are doing
+#BACK=test
+BACK=system
+
+
+
+# go to our backups directory
+DIR=/var/backups/$BACK
+if [ ! -d $DIR ]
+then
+    mkdir $DIR
+fi
+
+cd $DIR
+
+
+
+DATE=$(date +%04Y%02m%02d%02H%02M%02S)
+
+
+
+# get the name of the last backup file, if any
+REF=$(ls | tail -n 1)
+
+# do the backup (either full or incremental)
+if [ $REF ]
+then
+    # do an incremental backup based on the last backup file
+    dar --batch /etc/backup/backup-$BACK --alter=atime --ref ${REF%.*.dar} --create $BACK-incr-$DATE
+else
+    # no previous backup file, so do a full backup
+    dar --batch /etc/backup/backup-$BACK --alter=atime --create $BACK-full-$DATE
+fi

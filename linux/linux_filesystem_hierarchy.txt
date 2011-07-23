@@ -1,0 +1,173 @@
+main hierarchies:
+/            (for booting and repair)
+/usr         (for OS apps)
+/usr/local   (for vendor apps)
+
+
+
+
+
+/ ***:
+(for booting and repair)
+
+
+bin          (ls, cat, sh, other admin/user cmds)
+    (no dirs)
+sbin         (shutdown, fsck, getty, other admin-only cmds)
+lib          (non-exec bins used by /bin and /sbin apps)
+include ???
+src          (source code for reference only)
+etc          (config files, cannot be bins)
+    opt      (for use by /opt)
+        <app>(for use by /opt/<app>)
+    X11
+    <app>
+    local
+        <app>
+var ***      (variable data files: logs, spools: see below)
+tmp          (temp files, deleted upon reboot)
+home         (user home directories)
+root         (root home directory)
+
+opt ***      (packaged apps) (can use /etc/opt and /var/opt)
+    <app>
+        bin
+        lib
+        share
+            man
+    <provider>
+        <app>
+    bin
+    doc
+    include
+    info
+    lib
+    man
+
+boot         (all pre-user-mode bins and static data, incl kernel itself)
+proc
+dev          (system devices)
+media        (removable media mount points)
+mnt          (temporary mount point)
+
+srv          (data served by this host)
+
+(no other dirs)
+
+
+
+
+/usr *** (can be read-only):
+(for OS apps)
+
+bin          (most admin/user OS apps/cmds)
+sbin         (most admin-only OS cmds)
+lib          (non-exec bins used by /usr/bin and /usr/sbin apps)
+    <app>
+include      (c include files)
+    <app>
+src          (source code for reference only)
+    <app>
+share        (read-only architecture-independent data files)
+    man
+    misc
+    doc
+    games
+    info
+    dict
+    <app>
+
+games
+X11R6
+
+(no other dirs)
+
+
+
+
+/usr/local:
+(for vendor apps, not written by OS installs)
+
+bin          (user/admin vendor apps)
+sbin         (admin-only vendor apps)
+lib          (non-exec bins used by /usr/local/bin and /usr/local/sbin apps)
+    <app>
+include      (c include files)
+    <app>
+src          (source code for reference only)
+    <app>
+share        (read-only architecture-independent data files)
+    man
+    misc
+    doc
+    games
+    info
+    dict
+    <app>
+etc          (may be symlink to /etc/local)
+games
+
+
+
+
+
+
+
+all "lib" dirs could have sibling "lib<qual>" dirs
+
+
+
+
+
+
+
+
+
+
+/var:
+
+cache
+    <app>
+lib          (saved state info, like edit crash saved state)
+    misc
+    <app>
+lock         (all lock files)
+log
+    <app>
+opt          (for use by /opt)
+    <app>    (for use by /opt/<app>)
+run          (<app>.pid files, decribes running system)
+spool        (work to be done in the future)
+    <app>
+tmp          (temp files, preserved across reboots)
+games
+account
+crash
+mail
+
+
+/var/local        (for use by /usr/local)
+    (same as /var)
+
+
+
+
+<app> stuff (but not packages (opt)):
+/etc[/local]/<app>/
+/usr[/local]/[s]bin/<app.bin>
+/usr[/local]/lib/<app>/
+/usr[/local]/include/<app>/
+/usr[/local]/src/<app>/
+/usr[/local]/share/<app>/
+/var[/local]/lib/<app>/
+/var[/local]/spool/<app>/
+/var[/local]/cache/<app>/
+/var[/local]/log/<app>/ or /var[/local]/log/<app.log>
+/var[/local]/run/<app.pid>
+/usr/local/<app>/ (but not /usr/<app>/)
+
+can also write under:
+/home/ (with permission)
+/tmp/ or /tmp/<app>/
+/var/tmp/ or /var/tmp/<app>/
+/var/lock/
