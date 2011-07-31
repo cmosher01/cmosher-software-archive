@@ -14,7 +14,7 @@ set xtics 1
 set ylabel 'offset (microseconds)'
 set ytics 1
 set yrange [-20:20]
-set data style lines
+set style data lines
 set grid
 plot "$LOOPSTATS" using (\$2/3600):(\$3*1e6) title 'pps'
 EOF
