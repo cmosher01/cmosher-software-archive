@@ -1,0 +1,1 @@
+find -type f -printf '%P\0' | xargs -0 -n 1 trc1 $1

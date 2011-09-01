@@ -1,0 +1,15 @@
+#!/bin/bash
+OTDR="$1"
+INFN="$2"
+
+OTFN="$OTDR/${INFN%.m4a}.mp3"
+
+if [[ -a "$OTFN" ]]
+then
+	:
+else
+	DN=$(dirname "$OTFN")
+	mkdir -p "$DN"
+	echo "Creating $OTFN"
+	dec2mp3 "$INFN" "$OTFN"
+fi
