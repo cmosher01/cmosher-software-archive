@@ -24,7 +24,7 @@
 /*
 
 CTEST is a very simple unit test framework for C.
-Its main function is to check for pass/fail of tests,
+Its main functions are to check for pass/fail of tests,
 print error messages for failures, and keep count.
 
 To use the CTEST framework, perform to following
@@ -107,7 +107,7 @@ extern void ctest(ctest_ctx *ctx, const char *name, int is_true, const char *fil
 
 /*
   Accessor functions to get the (current) count of tests
-  that passed or failured.
+  that passed or failed.
 */
 extern long ctest_count_pass(const ctest_ctx *ctx);
 extern long ctest_count_fail(const ctest_ctx *ctx);

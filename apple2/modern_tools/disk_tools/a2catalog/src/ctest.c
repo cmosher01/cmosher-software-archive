@@ -69,7 +69,7 @@ void ctest_ctx_free(ctest_ctx *const ctx)
 
 /*
   The main test function (best called by the CTEST macro).
-  If is_true is false, print and error message containing
+  If is_true is false, print an error message containing
   file_name, line_number. and name.
   Update counts in the given suite context ctx.
 */
