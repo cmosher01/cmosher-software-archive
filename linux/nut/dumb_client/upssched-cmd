@@ -1,0 +1,9 @@
+#!/bin/sh
+case $1 in
+  ONBATT)
+    /sbin/shutdown -h now
+  ;;
+  *)
+    echo "$0: unknown command: $1" >&2
+  ;;
+esac
