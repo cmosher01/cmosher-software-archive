@@ -12,8 +12,8 @@
 
 
 /*
-  CTEST suite context. It just contains a
-  count of tests run, and a count of failed ones.
+  CTEST suite context. It just contains
+  counts of tests passed and failed.
 */
 struct ctest_ctx
   {
@@ -23,8 +23,17 @@ struct ctest_ctx
   };
 
 
-/* fill unused memory with this: */
-#define BAD_MEM 0xCC
+/*
+Fill unused memory with 0x95.
+This is the only value that meets these conditions:
+1. has 8 bits
+2. has 4 bits set and 4 bits clear (10010101)
+3. when unsigned, is prime (149)
+4. when signed, is negative (high-order bit set)
+5. when signed, has a nagative prime (-107)
+6. has an odd high-order nibble (9)
+*/
+#define BAD_MEM 0x95
 
 /* Magic bytes: "CTst" */
 #define MAGIC 0x74735443

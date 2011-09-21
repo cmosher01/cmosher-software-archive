@@ -10,7 +10,7 @@
 
 #include "a2const.h"
 
-static const char shortopts[] = "hTV";
+static const char shortopts[] = "hTVv:";
 
 static const struct option longopts[] =
   {

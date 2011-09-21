@@ -87,8 +87,8 @@ extern void ctest_ctx_free(ctest_ctx *ctx);
 
 
 /*
-  Perform one unit test. Call the CTEST macro for each unit
-  test to perform. Use the CTEST macro, not the ctest_fn
+  Performs one unit test. Call the CTEST macro for each unit
+  test to perform. Use the CTEST macro, not the ctest
   function directly, because the CTEST macro gets the current
   file name and line number of the test (which it uses in the
   error message in case the test fails).
