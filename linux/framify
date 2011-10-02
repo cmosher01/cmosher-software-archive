@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# usage: framify IMAGE_FILE
+# converts the image file and copies it to the
+# directory for the picture frame to rsync it from
+#
+if [ -z $1 ]
+then
+	echo "usage: framify IMAGE_FILE" >&2
+	exit 1
+fi
+FRAMEDIR=/srv/frame
+FRAMEFIL=`mktemp -p $FRAMEDIR`
+convert -auto-orient -resize 800x600 $1 $FRAMEFIL
+chmod a+r $FRAMEFIL
