@@ -15,10 +15,10 @@
 				<tr>
 					<td><strong>@rEvent[iEvent].getType()@</strong></td>
 					<td>
-						@if (rEvent[iEvent].getDate().exists())@
-							@rEvent[iEvent].getDate().get()@
-						@else@
+						@if (Util.isNull(rEvent[iEvent].getDate()))@
 							&nbsp;
+						@else@
+							@rEvent[iEvent].getDate().toString()@
 						@end if@
 					</td>
 					<td>@rEvent[iEvent].getPlace()@</td>

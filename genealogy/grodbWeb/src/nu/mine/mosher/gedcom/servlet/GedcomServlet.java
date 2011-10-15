@@ -1,12 +1,9 @@
 package nu.mine.mosher.gedcom.servlet;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -14,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -21,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import net.sourceforge.templat.Templat;
 import net.sourceforge.templat.exception.TemplateLexingException;
 import net.sourceforge.templat.exception.TemplateParsingException;
@@ -68,9 +67,7 @@ public class GedcomServlet extends HttpServlet
 
 		for (final File fileGedcom : rFileGedcom)
 		{
-			final BufferedReader gedcom = new BufferedReader(new InputStreamReader(new FileInputStream(fileGedcom),"windows-1252"));
-			final GedcomTree gt = Gedcom.readTree(gedcom);
-			gedcom.close();
+			final GedcomTree gt = Gedcom.parseFile(fileGedcom);
 
 			final Loader loader = new Loader(gt);
 			loader.parse();
@@ -96,7 +93,7 @@ public class GedcomServlet extends HttpServlet
 		return rFile;
 	}
 
-	private String getGedcomDir(final ServletConfig servletConfig) throws ServletException
+	private String getGedcomDir(final ServletConfig servletConfig)
 	{
 		// TODO why can't we get cross-context in init method?
 //		final ServletContext ctxServedGedcoms = getServletContext().getContext("/servedGedcoms");
@@ -293,7 +290,8 @@ public class GedcomServlet extends HttpServlet
 		for (final Map.Entry<String,Loader> entry : this.mapLoader.entrySet())
 		{
 			final String firstID = entry.getValue().getFirstID();
-			final GedcomFile file = new GedcomFile(entry.getKey(),firstID,escapeXML(entry.getValue().getDescription()));
+			final String descrip = entry.getValue().getDescription();
+			final GedcomFile file = new GedcomFile(entry.getKey(),firstID,escapeXML(descrip==null ? "" : descrip));
 			rFile.add(file);
 		}
 	}

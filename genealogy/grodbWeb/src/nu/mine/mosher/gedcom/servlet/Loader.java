@@ -294,7 +294,7 @@ public class Loader
 				text = line.getValue();
 			}
 		}
-		return new Source(id,escapeXML(author),escapeXML(title),escapeXML(publication),escapeXML(pointingText+text));
+		return new Source(id,escapeXML(author),escapeXML(title),escapeXML(publication),pointingText+text);
 	}
 
 	private String getSourcePtText(TreeNode<GedcomLine> node)
@@ -344,10 +344,16 @@ public class Loader
 
 	private boolean calculatePrivacy(final Event birth)
 	{
+		final DatePeriod dateInformation = birth.getDate();
+		if (dateInformation == null)
+		{
+			return false;
+		}
+
 		final Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.YEAR,-72);
-		final Time yearsAgo72 = new Time(cal.getTime());
-		return yearsAgo72.compareTo(birth.getDate().getEndDate().getApproxDay()) < 0;
+		cal.add(Calendar.YEAR,-90);
+		final Time dateLatestPublicInformation = new Time(cal.getTime());
+		return dateLatestPublicInformation.compareTo(dateInformation.getEndDate().getApproxDay()) < 0;
 	}
 
 	private String getEventName(final TreeNode<GedcomLine> node)

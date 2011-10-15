@@ -56,6 +56,10 @@ public class Person implements Comparable<Person>
 	{
 		for (final Event event : this.rEvent)
 		{
+			if (event.getDate() == null)
+			{
+				continue;
+			}
 			if (event.getType().equals("birth"))
 			{
 				this.birth = new Optional<Time>(event.getDate().getStartDate().getApproxDay());
@@ -81,6 +85,10 @@ public class Person implements Comparable<Person>
 				boolean div = false;
 				for (final Event event : par.getEvents())
 				{
+					if (event.getDate() == null)
+					{
+						continue;
+					}
 					if (event.getType().equals("marriage"))
 					{
 						this.rMarriage.add(event.getDate().getStartDate().getApproxDay());
@@ -193,6 +201,10 @@ public class Person implements Comparable<Person>
 		final ArrayList<Event> rWithin = new ArrayList<Event>();
 		for (final Event event: this.rEvent)
 		{
+			if (event.getDate() == null)
+			{
+				continue;
+			}
 			if (event.getDate().overlaps(period))
 			{
 				rWithin.add(event);
