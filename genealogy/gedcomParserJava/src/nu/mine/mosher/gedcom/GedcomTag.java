@@ -144,6 +144,7 @@ public enum GedcomTag
 	VERS,
 	WIFE,
 	WILL,
+	_UID,
 	;
 
 	public static final Set<GedcomTag> setIndividualEvent;
