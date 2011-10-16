@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
+
 import nu.mine.mosher.gedcom.GedcomLine;
 import nu.mine.mosher.gedcom.GedcomTag;
 import nu.mine.mosher.gedcom.GedcomTree;
@@ -30,8 +32,9 @@ public class Loader
 	private final GedcomTree gedcom;
 
 	private final Map<String,Person> mapIDtoPerson = new HashMap<String,Person>();
+	private final Map<UUID,Person> mapUUIDtoPerson = new HashMap<UUID,Person>();
 	private final Map<String,Source> mapIDtoSource = new HashMap<String,Source>();
-	private String firstID;
+	private Person first;
 	private String description;
 
 	public Loader(final GedcomTree gedcom)
@@ -67,9 +70,10 @@ public class Loader
 			{
 				final Person person = parseIndividual(nodeTop);
 				this.mapIDtoPerson.put(person.getID(),person);
-				if (this.firstID == null)
+				storeInUuidMap(person);
+				if (this.first == null)
 				{
-					this.firstID = person.getID();
+					this.first = person;
 				}
 			}
 		}
@@ -89,6 +93,21 @@ public class Loader
 		{
 			person.initKeyDates();
 		}
+	}
+
+	private void storeInUuidMap(final Person person) {
+		final UUID uuid = person.getUuid();
+		if (uuid == null)
+		{
+			return;
+		}
+		final Person existing = this.mapUUIDtoPerson.get(uuid);
+		if (existing != null)
+		{
+			System.err.println("Duplicate INDI _UID value: "+uuid);
+			return;
+		}
+		this.mapUUIDtoPerson.put(uuid, person);
 	}
 
 	private void getChildren(TreeNode<GedcomLine> root, Collection<TreeNode<GedcomLine>> rNodeTop)
@@ -119,6 +138,7 @@ public class Loader
 	private Person parseIndividual(final TreeNode<GedcomLine> nodeIndi)
 	{
 		String name = "[unknown]";
+		UUID uuid = null;
 		final ArrayList<Event> rEvent = new ArrayList<Event>();
 		boolean isPrivate = false;
 
@@ -133,6 +153,10 @@ public class Loader
 			{
 				name = parseName(node);
 			}
+			else if (tag.equals(GedcomTag._UID))
+			{
+				uuid = parseUuid(node);
+			}
 			else if (GedcomTag.setIndividualEvent.contains(tag) || GedcomTag.setIndividualAttribute.contains(tag))
 			{
 				final Event event = parseEvent(node);
@@ -144,7 +168,12 @@ public class Loader
 			}
 		}
 
-		return new Person(nodeIndi.getObject().getID(),name,rEvent,new ArrayList<Partnership>(),isPrivate);
+		return new Person(nodeIndi.getObject().getID(),name,rEvent,new ArrayList<Partnership>(),isPrivate,uuid);
+	}
+
+	private UUID parseUuid(TreeNode<GedcomLine> nodeUuid) {
+		final String rawUuid = nodeUuid.getObject().getValue();
+		return UUID.fromString(rawUuid);
 	}
 
 	private void parseFamily(final TreeNode<GedcomLine> nodeFam)
@@ -189,16 +218,19 @@ public class Loader
 		return this.mapIDtoPerson.get(id);
 	}
 
-	public String getFirstID()
+	public Person lookUpPerson(final UUID uuid)
 	{
-		return this.firstID;
+		return this.mapUUIDtoPerson.get(uuid);
+	}
+
+	public Person getFirstPerson()
+	{
+		return this.first;
 	}
 
 	private String parseName(final TreeNode<GedcomLine> nodeName)
 	{
-		final String rawName = nodeName.getObject().getValue();
-		final String n = rawName.replace("/","");
-		return n;
+		return nodeName.getObject().getValue();
 	}
 
 	private Event parseEvent(final TreeNode<GedcomLine> nodeEvent)
@@ -294,7 +326,7 @@ public class Loader
 				text = line.getValue();
 			}
 		}
-		return new Source(id,escapeXML(author),escapeXML(title),escapeXML(publication),pointingText+text);
+		return new Source(id,escapeXML(author),escapeXML(title),escapeXML(publication),smartEscapeXML(pointingText+text));
 	}
 
 	private String getSourcePtText(TreeNode<GedcomLine> node)
@@ -435,5 +467,26 @@ public class Loader
 		.replaceAll("<","&lt;")
 		.replaceAll(">","&gt;")
 		.replaceAll("\"","&quot;");
+	}
+
+	private static String smartEscapeXML(final String string) {
+		if (
+			string.contains("<td>") ||
+			string.contains("<br") ||
+			string.contains("<li>") || 
+			string.contains("href=") ||
+			string.contains("<TD>") ||
+			string.contains("<BR") ||
+			string.contains("<LI>") || 
+			string.contains("HREF="))
+		{
+			/*
+			 * if it looks like HTML, don't cleanse it, so if displayed in browser
+			 * then browser will interpret it
+			 */
+			return string;
+		}
+
+		return escapeXML(string);
 	}
 }

@@ -2,26 +2,35 @@
 
 @include header()@
 
-<head>
-	<title>Genealogy</title>
-	<style type="text/css">
-	body
-	{
-		font-family: "Arial Unicode MS", "Lucida Sans Unicode", Arial, sans-serif;
-		font-size: small;
-	}
-	</style>
-</head>
+@include head(null)@
 
 <body>
 	<p>Please choose a GEDCOM file to explore:</p>
 
 	<table border="1" cellspacing="0" cellpadding="3">
+		<thead>
+		</thead>
+		<tfoot>
+		</tfoot>
 		<tbody>
 			@loop iGed : rGed.size()@
 				<tr>
-					<td><a href="@rGed[iGed].getFile()@?person=@rGed[iGed].getFirstID()@">@rGed[iGed].getFile()@</a></td>
-					<td>@rGed[iGed].getDescription()@</td>
+					<td>
+						<a href="@rGed[iGed].getFile()@
+						@if (Util.isNull(rGed[iGed].getFirstPerson().getUuid()))@
+							?person=@rGed[iGed].getFirstPerson().getLink()@
+						@else@
+							?person_uuid=@rGed[iGed].getFirstPerson().getUuid()@
+						@end if@
+						">
+
+						@rGed[iGed].getFile()@
+
+						</a>
+					</td>
+					<td>
+						@rGed[iGed].getDescription()@
+					</td>
 				</tr>
 			@end loop@
 		</tbody>

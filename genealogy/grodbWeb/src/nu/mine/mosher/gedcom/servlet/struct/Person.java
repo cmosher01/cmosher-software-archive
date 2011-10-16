@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.UUID;
+
 import nu.mine.mosher.grodb.date.DatePeriod;
 import nu.mine.mosher.grodb.date.DateRange;
 import nu.mine.mosher.grodb.date.YMD;
@@ -19,6 +21,7 @@ import nu.mine.mosher.util.Optional;
  */
 public class Person implements Comparable<Person>
 {
+	private final UUID uuid;
 	private final String ID;
 	private final String name;
 	private final ArrayList<Event> rEvent;
@@ -39,9 +42,11 @@ public class Person implements Comparable<Person>
 	 * @param rEvent
 	 * @param partnership
 	 * @param isPrivate 
+	 * @param uuid 
 	 */
-	public Person(final String ID, final String name, final ArrayList<Event> rEvent, final ArrayList<Partnership> partnership, final boolean isPrivate)
+	public Person(final String ID, final String name, final ArrayList<Event> rEvent, final ArrayList<Partnership> partnership, final boolean isPrivate, final UUID uuid)
 	{
+		this.uuid = uuid;
 		this.ID = ID;
 		this.name = name;
 		this.rEvent = rEvent;
@@ -162,7 +167,13 @@ public class Person implements Comparable<Person>
 	@Override
 	public String toString()
 	{
-		return this.name;
+		return this.name.replaceAll("/","");
+	}
+
+	public String getClassedName()
+	{
+		final String s1 = this.name.replace("/", "<span class=\"surname\">");
+		return s1.replace("/", "</span>");
 	}
 
 	/**
@@ -221,6 +232,11 @@ public class Person implements Comparable<Person>
 	public String getLink()
 	{
 		return this.ID;
+	}
+
+	public UUID getUuid()
+	{
+		return this.uuid;
 	}
 
 	public String getID()

@@ -1,6 +1,10 @@
 @template partnerships(rPartnership,isPrivate)@
 @if (!rPartnership.isEmpty())@
 	<table>
+		<thead>
+		</thead>
+		<tfoot>
+		</tfoot>
 		<tbody>
 			@loop iPartnership : rPartnership.size()@
 				<tr><td>&nbsp;</td></tr>

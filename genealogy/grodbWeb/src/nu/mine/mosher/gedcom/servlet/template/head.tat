@@ -1,0 +1,24 @@
+@template head(title)@
+
+<head>
+
+	<meta charset="UTF-8"></meta>
+
+	<title>@title@</title>
+
+	<link href="http://fonts.googleapis.com/css?family=Sorts+Mill+Goudy&subset=latin,latin-ext" rel="stylesheet" type="text/css"></link>
+
+	<style type="text/css">
+		body
+		{
+			font-family: "Sorts Mill Goudy";
+			font-style: normal;
+			font-weight: 400;
+		}
+		.surname
+		{
+			font-size: 125%;
+		}
+	</style>
+
+</head>

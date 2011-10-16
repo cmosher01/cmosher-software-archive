@@ -2,32 +2,39 @@
 
 @include header()@
 
-<head>
-	<title>@person@</title>
-	<style type="text/css">
-	body
-	{
-		font-family: "Arial Unicode MS", "Lucida Sans Unicode", Arial, sans-serif;
-		font-size: small;
-	}
-	</style>
-</head>
+@include head(person)@
 
 <body>
 	<table>
+		<thead>
+		</thead>
+		<tfoot>
+		</tfoot>
 		<tbody>
 			<tr><td>father:</td><td>@include link(person.getFather())@</td></tr>
 			<tr><td>mother:</td><td>@include link(person.getMother())@</td></tr>
 		</tbody>
 	</table>
 
-	<h1>@person@</h1>
+	<h1>@person.getClassedName()@</h1>
 
 	@if (!person.isPrivate())@
 		@include events(person.getEvents())@
 	@end if@
 
 	@include partnerships(person.getPartnerships(),person.isPrivate())@
+
+	@if (!Util.isNull(person.getUuid()))@
+	<table>
+		<thead>
+		</thead>
+		<tfoot>
+		</tfoot>
+		<tbody>
+			<tr><td>UUID:</td><td>@person.getUuid()@</td></tr>
+		</tbody>
+	</table>
+	@end if@
 </body>
 
 @include footer()@

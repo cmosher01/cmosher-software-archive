@@ -53,9 +53,13 @@ public class Event implements Comparable<Event>
 	@Override
 	public int compareTo(final Event that)
 	{
-		if (this.date == null || that.date == null)
+		if (this.date == null)
 		{
-			return 0;
+			return +1;
+		}
+		if (that.date == null)
+		{
+			return -1;
 		}
 		return this.date.compareTo(that.date);
 	}

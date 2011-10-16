@@ -10,6 +10,8 @@
 				<th>source</th>
 			</tr>
 		</thead>
+		<tfoot>
+		</tfoot>
 		<tbody>
 			@loop iEvent : rEvent.size()@
 				<tr>

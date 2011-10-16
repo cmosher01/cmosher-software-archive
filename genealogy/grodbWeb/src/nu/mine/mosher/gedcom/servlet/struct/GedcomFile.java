@@ -5,26 +5,26 @@ package nu.mine.mosher.gedcom.servlet.struct;
 public class GedcomFile
 {
 	private final String fileName;
-	private final String firstID;
+	private final Person first;
 	private final String description;
 	/**
 	 * @param fileName
 	 * @param firstID
 	 * @param description
 	 */
-	public GedcomFile(final String fileName, final String firstID, final String description)
+	public GedcomFile(final String fileName, final Person first, final String description)
 	{
 		this.fileName = fileName;
-		this.firstID = firstID;
+		this.first = first;
 		this.description = description;
 	}
 	public String getFile()
 	{
 		return this.fileName;
 	}
-	public String getFirstID()
+	public Person getFirstPerson()
 	{
-		return this.firstID;
+		return this.first;
 	}
 	public String getDescription()
 	{

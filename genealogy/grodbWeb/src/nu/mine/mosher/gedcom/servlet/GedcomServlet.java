@@ -11,10 +11,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.UUID;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -83,7 +82,10 @@ public class GedcomServlet extends HttpServlet
 			@Override
 			public boolean accept(final File file)
 			{
-				return file.isFile() && file.canRead();
+				return
+					file.isFile() &&
+					file.canRead() &&
+					(file.getName().endsWith(".ged") || file.getName().endsWith(".GED"));
 			}
 		});
 		if (rFile == null || rFile.length == 0)
@@ -95,18 +97,10 @@ public class GedcomServlet extends HttpServlet
 
 	private String getGedcomDir(final ServletConfig servletConfig)
 	{
-		// TODO why can't we get cross-context in init method?
-//		final ServletContext ctxServedGedcoms = getServletContext().getContext("/servedGedcoms");
-//		if (ctxServedGedcoms == null)
-//		{
-//			throw new ServletException("Cannot get servedGedcoms context from servlet container.");
-//		}
-//		String dir = ctxServedGedcoms.getRealPath("/");
-
 		String dir = servletConfig.getServletContext().getInitParameter("gedcom.directory");
 		if (dir == null || dir.length() == 0)
 		{
-			dir = "/gedcom";
+			dir = "gedcom";
 		}
 		return dir;
 	}
@@ -129,7 +123,7 @@ public class GedcomServlet extends HttpServlet
 		}
 	}
 
-	private void tryGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException, TemplateLexingException, TemplateParsingException, ServletException
+	private void tryGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException, TemplateLexingException, TemplateParsingException
 	{
 		final String pathInfo = request.getPathInfo();
 		if (pathInfo == null || pathInfo.length() <= 1)
@@ -140,7 +134,7 @@ public class GedcomServlet extends HttpServlet
 
 		if (pathInfo.equals("/index.html"))
 		{
-			final Writer out = openPage(request,response);
+			final Writer out = openPage(response);
 			showFirstPage(out);
 			closePage(out);
 			return;
@@ -155,7 +149,22 @@ public class GedcomServlet extends HttpServlet
 				showErrorPage(response);
 				return;
 			}
-			final Writer out = openPage(request,response);
+			final Writer out = openPage(response);
+			showPersonPage(person,out);
+			closePage(out);
+			return;
+		}
+
+		final String paramPersonUUID = request.getParameter("person_uuid");
+		if (paramPersonUUID != null && paramPersonUUID.length() > 0)
+		{
+			final Person person = findPersonByUuid(pathInfo.substring(1),paramPersonUUID);
+			if (person == null)
+			{
+				showErrorPage(response);
+				return;
+			}
+			final Writer out = openPage(response);
 			showPersonPage(person,out);
 			closePage(out);
 			return;
@@ -170,19 +179,14 @@ public class GedcomServlet extends HttpServlet
 				showErrorPage(response);
 				return;
 			}
-			final Writer out = openPage(request,response);
+			final Writer out = openPage(response);
 			showSourcePage(source,out);
 			closePage(out);
 			return;
 		}
 
-		final ServletContext ctxServedGedcoms = getServletContext().getContext("/servedGedcoms");
-		if (ctxServedGedcoms == null)
-		{
-			throw new ServletException("Cannot get servedGedcoms context from servlet container.");
-		}
-		final RequestDispatcher requestDispatcher = ctxServedGedcoms.getRequestDispatcher(pathInfo);
-		requestDispatcher.forward(request,response);
+		/* oops, bad requested URL; go back to the home page */
+		response.sendRedirect(request.getContextPath()+"/index.html");
 	}
 
 	private void showSourcePage(final Source source, final Writer out) throws TemplateLexingException, TemplateParsingException, IOException
@@ -211,31 +215,11 @@ public class GedcomServlet extends HttpServlet
 		return loader.lookUpSource(id);
 	}
 
-	private Writer openPage(final HttpServletRequest request, final HttpServletResponse response) throws IOException
+	private Writer openPage(final HttpServletResponse response) throws IOException
 	{
-		final boolean isCompliant = checkBrowserCompliance(request);
-		if (isCompliant)
-		{
-			response.setContentType("application/xhtml+xml; charset=UTF-8");
-		}
-		else
-		{
-			response.setContentType("text/html; charset=UTF-8");
-		}
+		response.setContentType("text/html; charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		final BufferedWriter out =  new BufferedWriter(new OutputStreamWriter(response.getOutputStream(),"UTF-8"));
-		if (isCompliant)
-		{
-			out.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-			out.newLine();
-		}
-		return out;
-	}
-
-	private static boolean checkBrowserCompliance(final HttpServletRequest request)
-	{
-		final HTTPHeaderParser headerParser = new HTTPHeaderParser(request,"accept");
-		return headerParser.contains("application/xhtml+xml");
+		return new BufferedWriter(new OutputStreamWriter(response.getOutputStream(),"UTF-8"));
 	}
 
 	private void closePage(final Writer out) throws IOException
@@ -272,6 +256,24 @@ public class GedcomServlet extends HttpServlet
 		return loader.lookUpPerson(id);
 	}
 
+	private Person findPersonByUuid(final String pathInfo, final String uuid)
+	{
+		if (uuid == null || uuid.length() == 0)
+		{
+			return null;
+		}
+		if (pathInfo == null || pathInfo.length() == 0)
+		{
+			return null;
+		}
+		final Loader loader = this.mapLoader.get(pathInfo);
+		if (loader == null)
+		{
+			return null;
+		}
+		return loader.lookUpPerson(UUID.fromString(uuid));
+	}
+
 	private static void showPersonPage(final Person person, final Writer out) throws TemplateLexingException, TemplateParsingException, IOException
 	{
 		final StringBuilder sb = new StringBuilder(256);
@@ -289,9 +291,9 @@ public class GedcomServlet extends HttpServlet
 	{
 		for (final Map.Entry<String,Loader> entry : this.mapLoader.entrySet())
 		{
-			final String firstID = entry.getValue().getFirstID();
+			final Person first = entry.getValue().getFirstPerson();
 			final String descrip = entry.getValue().getDescription();
-			final GedcomFile file = new GedcomFile(entry.getKey(),firstID,escapeXML(descrip==null ? "" : descrip));
+			final GedcomFile file = new GedcomFile(entry.getKey(),first,escapeXML(descrip==null ? "" : descrip));
 			rFile.add(file);
 		}
 	}
