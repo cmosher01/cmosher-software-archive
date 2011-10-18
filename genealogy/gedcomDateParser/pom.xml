@@ -19,7 +19,15 @@
 				<version>2.6</version>
 				<executions>
 					<execution>
-						<id>javacc</id>
+						<id>generate-sources</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>javacc</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>generate-test-sources</id>
+						<phase>generate-test-sources</phase>
 						<goals>
 							<goal>javacc</goal>
 						</goals>
@@ -64,6 +72,11 @@
 		</plugins>
 	</build>
 	<dependencies>
+		<dependency>
+			<groupId>nu.mine.mosher.grodb.date</groupId>
+			<artifactId>grodbDate</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
