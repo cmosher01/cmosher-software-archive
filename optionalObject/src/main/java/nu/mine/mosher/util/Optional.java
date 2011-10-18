@@ -47,7 +47,7 @@ package nu.mine.mosher.util;
  * object was assigned <code>null</code>.
  * </p>
  * 
- * @author mosherc
+ * @author Chris Mosher
  * @param <T>
  *          data-type of the wrapped object
  * @see Nothing
