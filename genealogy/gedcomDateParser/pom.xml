@@ -11,6 +11,19 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	<profiles>
+		<profile>
+			<id>m2eclipse</id>
+			<activation>
+				<property>
+					<name>m2e.version</name>
+				</property>
+			</activation>
+			<build>
+				<directory>eclipse-target</directory>
+			</build>
+		</profile>
+	</profiles>
 	<build>
 		<plugins>
 			<plugin>
@@ -19,15 +32,7 @@
 				<version>2.6</version>
 				<executions>
 					<execution>
-						<id>generate-sources</id>
 						<phase>generate-sources</phase>
-						<goals>
-							<goal>javacc</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>test</id>
-						<phase>generate-test-sources</phase>
 						<goals>
 							<goal>javacc</goal>
 						</goals>
@@ -69,17 +74,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.10</version>
-				<configuration>
-					<forkMode>always</forkMode>
-					<useSystemClassLoader>false</useSystemClassLoader>
-					<useManifestOnlyJar>false</useManifestOnlyJar>
-					<trimStackTrace>false</trimStackTrace>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
@@ -92,6 +86,7 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.8.1</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>
