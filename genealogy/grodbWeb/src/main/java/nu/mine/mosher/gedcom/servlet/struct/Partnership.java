@@ -13,10 +13,6 @@ public class Partnership implements Comparable<Partnership>
 
 	private Person partner;
 
-	/**
-	 * @param event
-	 * @param child
-	 */
 	public Partnership(final ArrayList<Event> rEvent)
 	{
 		this.rEvent = rEvent;
