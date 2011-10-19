@@ -71,6 +71,16 @@
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
+			<groupId>nu.mine.mosher.gedcom.date.parser</groupId>
+			<artifactId>gedcomDateParser</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>nu.mine.mosher.util</groupId>
+			<artifactId>optionalObject</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>javaee</groupId>
 			<artifactId>javaee-api</artifactId>
 			<version>5</version>
