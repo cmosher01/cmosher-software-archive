@@ -37,10 +37,6 @@ public class GedcomServlet extends HttpServlet
 {
 	private final Map<String,Loader> mapLoader = new TreeMap<String,Loader>();
 
-	/**
-	 * @param arg0
-	 * @throws ServletException
-	 */
 	@Override
 	public void init(final ServletConfig servletConfig) throws ServletException
 	{
@@ -105,11 +101,6 @@ public class GedcomServlet extends HttpServlet
 		return dir;
 	}
 
-	/**
-	 * @param arg0
-	 * @param arg1
-	 * @throws ServletException
-	 */
 	@Override
 	public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException
 	{
@@ -326,17 +317,8 @@ public class GedcomServlet extends HttpServlet
 		{
 			final Person first = entry.getValue().getFirstPerson();
 			final String descrip = entry.getValue().getDescription();
-			final GedcomFile file = new GedcomFile(entry.getKey(),first,escapeXML(descrip==null ? "" : descrip));
+			final GedcomFile file = new GedcomFile(entry.getKey(),first,HtmlUtil.escapeHtml(descrip==null ? "" : descrip));
 			rFile.add(file);
 		}
-	}
-
-	private static String escapeXML(final String s)
-	{
-		return s
-		.replaceAll("&","&amp;")
-		.replaceAll("<","&lt;")
-		.replaceAll(">","&gt;")
-		.replaceAll("\"","&quot;");
 	}
 }

@@ -308,7 +308,7 @@ public class Loader
 			}
 		}
 		// TODO handle case of date == null (see grojs for example)
-		return new Event(whichEvent,date,escapeXML(place),escapeXML(note),source);
+		return new Event(whichEvent,date,HtmlUtil.escapeHtml(place),HtmlUtil.escapeHtml(note),source);
 	}
 
 	private Source parseSource(final TreeNode<GedcomLine> node)
@@ -364,7 +364,7 @@ public class Loader
 				}
 			}
 		}
-		return new Source(id,escapeXML(author),escapeXML(title),escapeXML(publication),smartEscapeXML(pointingText+text),uuid);
+		return new Source(id,HtmlUtil.escapeHtml(author),HtmlUtil.escapeHtml(title),HtmlUtil.escapeHtml(publication),HtmlUtil.smartEscapeHtml(pointingText+text),uuid);
 	}
 
 	private String getSourcePtText(TreeNode<GedcomLine> node)
@@ -501,35 +501,5 @@ public class Loader
 	public Source lookUpSource(final UUID uuid)
 	{
 		return this.mapUUIDtoSource.get(uuid);
-	}
-
-	private static String escapeXML(final String s)
-	{
-		return s
-		.replaceAll("&","&amp;")
-		.replaceAll("<","&lt;")
-		.replaceAll(">","&gt;")
-		.replaceAll("\"","&quot;");
-	}
-
-	private static String smartEscapeXML(final String string) {
-		if (
-			string.contains("<td>") ||
-			string.contains("<br") ||
-			string.contains("<li>") || 
-			string.contains("href=") ||
-			string.contains("<TD>") ||
-			string.contains("<BR") ||
-			string.contains("<LI>") || 
-			string.contains("HREF="))
-		{
-			/*
-			 * if it looks like HTML, don't cleanse it, so if displayed in browser
-			 * then browser will interpret it
-			 */
-			return string;
-		}
-
-		return escapeXML(string);
 	}
 }
