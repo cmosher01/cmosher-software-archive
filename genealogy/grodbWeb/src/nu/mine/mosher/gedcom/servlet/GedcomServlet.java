@@ -185,6 +185,21 @@ public class GedcomServlet extends HttpServlet
 			return;
 		}
 
+		final String paramSourceUUID = request.getParameter("source_uuid");
+		if (paramSourceUUID != null && paramSourceUUID.length() > 0)
+		{
+			final Source source = findSourceByUuid(pathInfo.substring(1),paramSourceUUID);
+			if (source == null)
+			{
+				showErrorPage(response);
+				return;
+			}
+			final Writer out = openPage(response);
+			showSourcePage(source,out);
+			closePage(out);
+			return;
+		}
+
 		/* oops, bad requested URL; go back to the home page */
 		response.sendRedirect(request.getContextPath()+"/index.html");
 	}
@@ -272,6 +287,24 @@ public class GedcomServlet extends HttpServlet
 			return null;
 		}
 		return loader.lookUpPerson(UUID.fromString(uuid));
+	}
+
+	private Source findSourceByUuid(final String pathInfo, final String uuid)
+	{
+		if (uuid == null || uuid.length() == 0)
+		{
+			return null;
+		}
+		if (pathInfo == null || pathInfo.length() == 0)
+		{
+			return null;
+		}
+		final Loader loader = this.mapLoader.get(pathInfo);
+		if (loader == null)
+		{
+			return null;
+		}
+		return loader.lookUpSource(UUID.fromString(uuid));
 	}
 
 	private static void showPersonPage(final Person person, final Writer out) throws TemplateLexingException, TemplateParsingException, IOException

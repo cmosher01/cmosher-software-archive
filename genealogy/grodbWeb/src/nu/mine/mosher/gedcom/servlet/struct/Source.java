@@ -1,12 +1,14 @@
 package nu.mine.mosher.gedcom.servlet.struct;
 
 import java.text.BreakIterator;
+import java.util.UUID;
 
 /*
  * Created on 2006-10-15.
  */
 public class Source
 {
+	private final UUID uuid;
 	private final String ID;
 	private final String author;
 	private final String title;
@@ -19,8 +21,9 @@ public class Source
 	 * @param title
 	 * @param publication
 	 */
-	public Source(final String ID, final String author, final String title, final String publication,final String text)
+	public Source(final String ID, final String author, final String title, final String publication,final String text, final UUID uuid)
 	{
+		this.uuid = uuid;
 		this.ID = ID;
 		this.author = author;
 		this.title = title;
@@ -92,6 +95,11 @@ public class Source
 	public String getLink()
 	{
 		return this.ID;
+	}
+
+	public UUID getUuid()
+	{
+		return this.uuid;
 	}
 
 	public String getID()

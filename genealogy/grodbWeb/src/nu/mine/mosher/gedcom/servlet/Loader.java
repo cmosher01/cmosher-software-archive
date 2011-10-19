@@ -34,6 +34,7 @@ public class Loader
 	private final Map<String,Person> mapIDtoPerson = new HashMap<String,Person>();
 	private final Map<UUID,Person> mapUUIDtoPerson = new HashMap<UUID,Person>();
 	private final Map<String,Source> mapIDtoSource = new HashMap<String,Source>();
+	private final Map<UUID,Source> mapUUIDtoSource = new HashMap<UUID,Source>();
 	private Person first;
 	private String description;
 
@@ -110,6 +111,20 @@ public class Loader
 		this.mapUUIDtoPerson.put(uuid, person);
 	}
 
+	private void storeInUuidMap(final Source source) {
+		final UUID uuid = source.getUuid();
+		if (uuid == null)
+		{
+			return;
+		}
+		final Source existing = this.mapUUIDtoSource.get(uuid);
+		if (existing != null)
+		{
+			return;
+		}
+		this.mapUUIDtoSource.put(uuid, source);
+	}
+
 	private void getChildren(TreeNode<GedcomLine> root, Collection<TreeNode<GedcomLine>> rNodeTop)
 	{
 		for (final TreeNode<GedcomLine> child : root)
@@ -155,7 +170,16 @@ public class Loader
 			}
 			else if (tag.equals(GedcomTag._UID))
 			{
-				uuid = parseUuid(node);
+				try
+				{
+					uuid = parseUuid(node);
+				}
+				catch (final Throwable e)
+				{
+					System.err.println("Error while parsing inidividual \""+name+"\"");
+					e.printStackTrace();
+					uuid = null;
+				}
 			}
 			else if (GedcomTag.setIndividualEvent.contains(tag) || GedcomTag.setIndividualAttribute.contains(tag))
 			{
@@ -171,7 +195,7 @@ public class Loader
 		return new Person(nodeIndi.getObject().getID(),name,rEvent,new ArrayList<Partnership>(),isPrivate,uuid);
 	}
 
-	private UUID parseUuid(TreeNode<GedcomLine> nodeUuid) {
+	private UUID parseUuid(final TreeNode<GedcomLine> nodeUuid) {
 		final String rawUuid = nodeUuid.getObject().getValue();
 		return UUID.fromString(rawUuid);
 	}
@@ -279,6 +303,7 @@ public class Loader
 				if (source != null)
 				{
 					this.mapIDtoSource.put(source.getID(),source);
+					storeInUuidMap(source);
 				}
 			}
 		}
@@ -304,7 +329,7 @@ public class Loader
 		String title = "";
 		String publication = "";
 		String text = "";
-
+		UUID uuid = null;
 		for (final TreeNode<GedcomLine> n : rNode)
 		{
 			final GedcomLine line = n.getObject();
@@ -325,8 +350,21 @@ public class Loader
 			{
 				text = line.getValue();
 			}
+			else if (tag.equals(GedcomTag._UID))
+			{
+				try
+				{
+					uuid = parseUuid(n);
+				}
+				catch (final Throwable e)
+				{
+					System.err.println("Error while parsing source \""+title+"\"");
+					e.printStackTrace();
+					uuid = null;
+				}
+			}
 		}
-		return new Source(id,escapeXML(author),escapeXML(title),escapeXML(publication),smartEscapeXML(pointingText+text));
+		return new Source(id,escapeXML(author),escapeXML(title),escapeXML(publication),smartEscapeXML(pointingText+text),uuid);
 	}
 
 	private String getSourcePtText(TreeNode<GedcomLine> node)
@@ -458,6 +496,11 @@ public class Loader
 	public Source lookUpSource(final String id)
 	{
 		return this.mapIDtoSource.get(id);
+	}
+
+	public Source lookUpSource(final UUID uuid)
+	{
+		return this.mapUUIDtoSource.get(uuid);
 	}
 
 	private static String escapeXML(final String s)

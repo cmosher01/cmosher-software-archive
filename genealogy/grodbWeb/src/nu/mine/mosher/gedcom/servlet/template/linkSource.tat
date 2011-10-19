@@ -2,5 +2,13 @@
 @if (Util.isNull(source))@
     &nbsp;
 @else@
-	<a href="?source=@source.getLink()@">@source.getShortName()@</a>
+	<a href="
+	@if (Util.isNull(source.getUuid()))@
+		?source=@source.getLink()@
+	@else@
+		?source_uuid=@source.getUuid()@
+	@end if@
+	">
+	@source.getShortName()@
+	</a>
 @end if@
