@@ -131,21 +131,6 @@ public class GedcomServlet extends HttpServlet
 			return;
 		}
 
-		final String paramPerson = request.getParameter("person");
-		if (paramPerson != null && paramPerson.length() > 0)
-		{
-			final Person person = findPerson(pathInfo.substring(1),paramPerson);
-			if (person == null)
-			{
-				showErrorPage(response);
-				return;
-			}
-			final Writer out = openPage(response);
-			showPersonPage(person,out);
-			closePage(out);
-			return;
-		}
-
 		final String paramPersonUUID = request.getParameter("person_uuid");
 		if (paramPersonUUID != null && paramPersonUUID.length() > 0)
 		{
@@ -157,21 +142,6 @@ public class GedcomServlet extends HttpServlet
 			}
 			final Writer out = openPage(response);
 			showPersonPage(person,out);
-			closePage(out);
-			return;
-		}
-
-		final String paramSource = request.getParameter("source");
-		if (paramSource != null && paramSource.length() > 0)
-		{
-			final Source source = findSource(pathInfo.substring(1),paramSource);
-			if (source == null)
-			{
-				showErrorPage(response);
-				return;
-			}
-			final Writer out = openPage(response);
-			showSourcePage(source,out);
 			closePage(out);
 			return;
 		}
@@ -203,24 +173,6 @@ public class GedcomServlet extends HttpServlet
 		out.write(sb.toString());
 	}
 
-	private Source findSource(final String pathInfo, final String id)
-	{
-		if (id == null || id.length() == 0)
-		{
-			return null;
-		}
-		if (pathInfo == null || pathInfo.length() == 0)
-		{
-			return null;
-		}
-		final Loader loader = this.mapLoader.get(pathInfo);
-		if (loader == null)
-		{
-			return null;
-		}
-		return loader.lookUpSource(id);
-	}
-
 	private Writer openPage(final HttpServletResponse response) throws IOException
 	{
 		response.setContentType("text/html; charset=UTF-8");
@@ -239,27 +191,9 @@ public class GedcomServlet extends HttpServlet
 		final StringBuilder sb = new StringBuilder(256);
 		final Templat tat = new Templat(GedcomServlet.class.getResource("template/index.tat"));
 		final List<GedcomFile> rFile = new ArrayList<GedcomFile>(this.mapLoader.size());
-		buildGedcomFiles(rFile);
+		buildGedcomFilesList(rFile);
 		tat.render(sb,rFile);
 		out.write(sb.toString());
-	}
-
-	private Person findPerson(final String pathInfo, final String id)
-	{
-		if (id == null || id.length() == 0)
-		{
-			return null;
-		}
-		if (pathInfo == null || pathInfo.length() == 0)
-		{
-			return null;
-		}
-		final Loader loader = this.mapLoader.get(pathInfo);
-		if (loader == null)
-		{
-			return null;
-		}
-		return loader.lookUpPerson(id);
 	}
 
 	private Person findPersonByUuid(final String pathInfo, final String uuid)
@@ -311,7 +245,7 @@ public class GedcomServlet extends HttpServlet
 		response.sendError(404,"Sorry, I cannot find that web page. Please press the back button and then try something else.");
 	}
 
-	private void buildGedcomFiles(final Collection<GedcomFile> rFile)
+	private void buildGedcomFilesList(final Collection<GedcomFile> rFile)
 	{
 		for (final Map.Entry<String,Loader> entry : this.mapLoader.entrySet())
 		{

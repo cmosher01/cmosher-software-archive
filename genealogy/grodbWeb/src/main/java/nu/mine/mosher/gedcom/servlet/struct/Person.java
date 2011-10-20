@@ -46,7 +46,14 @@ public class Person implements Comparable<Person>
 	 */
 	public Person(final String ID, final String name, final ArrayList<Event> rEvent, final ArrayList<Partnership> partnership, final boolean isPrivate, final UUID uuid)
 	{
-		this.uuid = uuid;
+		if (uuid == null)
+		{
+			this.uuid = UUID.randomUUID();
+		}
+		else
+		{
+			this.uuid = uuid;
+		}
 		this.ID = ID;
 		this.name = name;
 		this.rEvent = rEvent;

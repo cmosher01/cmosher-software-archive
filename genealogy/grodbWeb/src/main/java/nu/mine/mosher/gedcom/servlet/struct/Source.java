@@ -23,7 +23,14 @@ public class Source
 	 */
 	public Source(final String ID, final String author, final String title, final String publication,final String text, final UUID uuid)
 	{
-		this.uuid = uuid;
+		if (uuid == null)
+		{
+			this.uuid = UUID.randomUUID();
+		}
+		else
+		{
+			this.uuid = uuid;
+		}
 		this.ID = ID;
 		this.author = author;
 		this.title = title;
