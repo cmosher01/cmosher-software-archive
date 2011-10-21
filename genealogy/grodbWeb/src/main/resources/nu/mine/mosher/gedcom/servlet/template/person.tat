@@ -11,8 +11,8 @@
 		<tfoot>
 		</tfoot>
 		<tbody>
-			<tr><td>father:</td><td>@include link(person.getFather())@</td></tr>
-			<tr><td>mother:</td><td>@include link(person.getMother())@</td></tr>
+			<tr><td>father</td><td>@include link(person.getFather())@</td></tr>
+			<tr><td>mother</td><td>@include link(person.getMother())@</td></tr>
 		</tbody>
 	</table>
 

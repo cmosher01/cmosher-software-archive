@@ -9,7 +9,7 @@
 			@loop iPartnership : rPartnership.size()@
 				<tr><td>&nbsp;</td></tr>
 
-				<tr><td>partnership: @include link(rPartnership[iPartnership].getPartner())@</td></tr>
+				<tr><td>partnership @include link(rPartnership[iPartnership].getPartner())@</td></tr>
 
 				@if (!isPrivate)@
 					@if (!rPartnership[iPartnership].isPrivate())@
@@ -20,7 +20,7 @@
 				@if (!rPartnership[iPartnership].getChildren().isEmpty())@
 					<tr><td>children:</td></tr>
 					@loop iChild : rPartnership[iPartnership].getChildren().size()@
-						<tr><td style="text-indent: 3em">@include link(rPartnership[iPartnership].getChildren().get(iChild))@</td></tr>
+						<tr><td class="child">@include link(rPartnership[iPartnership].getChildren().get(iChild))@</td></tr>
 					@end loop@
 				@end if@
 			@end loop@

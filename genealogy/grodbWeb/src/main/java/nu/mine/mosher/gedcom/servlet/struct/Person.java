@@ -1,4 +1,7 @@
 package nu.mine.mosher.gedcom.servlet.struct;
+
+
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -6,6 +9,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import nu.mine.mosher.grodb.date.DatePeriod;
 import nu.mine.mosher.grodb.date.DateRange;
@@ -177,10 +182,26 @@ public class Person implements Comparable<Person>
 		return this.name.replaceAll("/","");
 	}
 
+	private static final Pattern patternName = Pattern.compile("(.*)/(.*)/(.*)");
+
 	public String getClassedName()
 	{
-		final String s1 = this.name.replace("/", "<span class=\"surname\">");
-		return s1.replace("/", "</span>");
+		final Matcher matcher = patternName.matcher(this.name);
+		if (!matcher.matches())
+		{
+			/* oops, can't find surname, so don't style it */
+			return this.name;
+		}
+
+		final StringBuilder sb = new StringBuilder(32);
+
+		sb.append(matcher.group(1));
+		sb.append("<span class=\"surname\">");
+		sb.append(matcher.group(2));
+		sb.append("</span>");
+		sb.append(matcher.group(3));
+
+		return sb.toString();
 	}
 
 	/**

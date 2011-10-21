@@ -2,11 +2,11 @@
 
 <head>
 
-	<meta charset="UTF-8"></meta>
+	<meta charset="UTF-8">
 
 	<title>@title@</title>
 
-	<link href="http://fonts.googleapis.com/css?family=Gentium+Basic|Sorts+Mill+Goudy&subset=latin,latin-ext" rel="stylesheet" type="text/css"></link>
+	<link href="http://fonts.googleapis.com/css?family=Gentium+Basic|Sorts+Mill+Goudy&mp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
 
 	<style type="text/css">
 		body
@@ -16,6 +16,45 @@
 		.surname
 		{
 			font-size: 133%;
+		}
+		table
+		{
+		  border-collapse: collapse;
+		}
+		th,
+		colgroup:first-child
+		{
+		  color: #839496;
+		  background-color: #eee8d5;
+		  font-weight: inherit;
+		}
+		td
+		{
+		  border-bottom: 1px solid #eee8d5;
+		}
+		td+td
+		{
+		  border-left: 1px solid #eee8d5;
+		}
+		h1
+		{
+		  color: #cb4b16;
+		}
+		.date
+		{
+		  color: #2aa198;
+		}
+		.notes
+		{
+		  color: #b58900;
+		}
+		a
+		{
+		  color: inherit;
+		}
+		.child
+		{
+			text-indent: 3em;
 		}
 	</style>
 

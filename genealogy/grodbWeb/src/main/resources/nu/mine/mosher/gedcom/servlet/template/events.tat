@@ -1,6 +1,8 @@
 @template events(rEvent)@
 @if (!rEvent.isEmpty())@
-	<table border="1" cellspacing="0" cellpadding="3">
+	<table>
+		<colgroup><col></colgroup>
+		<colgroup><col><col><col><col></colgroup>
 		<thead>
 			<tr>
 				<th>&nbsp;</th>
@@ -15,17 +17,17 @@
 		<tbody>
 			@loop iEvent : rEvent.size()@
 				<tr>
-					<td><strong>@rEvent[iEvent].getType()@</strong></td>
-					<td>
+					<td>@rEvent[iEvent].getType()@</td>
+					<td class="date">
 						@if (Util.isNull(rEvent[iEvent].getDate()))@
 							&nbsp;
 						@else@
 							@rEvent[iEvent].getDate().toString()@
 						@end if@
 					</td>
-					<td>@rEvent[iEvent].getPlace()@</td>
-					<td width="20%">@rEvent[iEvent].getNote()@</td>
-					<td width="10%">@include linkSource(rEvent[iEvent].getSource())@</td>
+					<td class="place">@rEvent[iEvent].getPlace()@</td>
+					<td class="notes">@rEvent[iEvent].getNote()@</td>
+					<td class="source">@include linkSource(rEvent[iEvent].getSource())@</td>
 				</tr>
 			@end loop@
 		</tbody>
