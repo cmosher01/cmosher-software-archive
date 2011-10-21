@@ -35,6 +35,9 @@
 		</tbody>
 	</table>
 	@end if@
+
+	<hr />
+	@include foot()@
 </body>
 
 @include footer()@

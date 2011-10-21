@@ -13,17 +13,18 @@
 		<tfoot>
 		</tfoot>
 		<tbody>
-			<tr><td>author:</td><td>@source.getAuthor()@</td></tr>
-			<tr><td>title:</td><td>@source.getTitle()@</td></tr>
-			<tr><td>publ.:</td><td>@source.getPublication()@</td></tr>
+			<tr><td>author</td><td>@source.getAuthor()@</td></tr>
+			<tr><td>title</td><td>@source.getTitle()@</td></tr>
+			<tr><td>publication</td><td>@source.getPublication()@</td></tr>
 		</tbody>
 	</table>
 
-	<p>actual transcription and/or representation of source [with notes in brackets]:</p>
+	<p>actual transcription and/or representation of source [with notes in brackets]</p>
 	<hr />
 	<p>@source.getText()@</p>
-	<hr />
 
+	<hr />
+	@include foot()@
 </body>
 
 @include footer()@
