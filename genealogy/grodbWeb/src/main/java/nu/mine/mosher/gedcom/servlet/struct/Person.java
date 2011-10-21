@@ -236,11 +236,11 @@ public class Person implements Comparable<Person>
 		return this.rParnership;
 	}
 
-	public String getLink()
-	{
-		return this.ID;
-	}
-
+	/**
+	 * Gets the UUID from the gedcom file, or a generated
+	 * one if there was not one in the file.
+	 * @return the UUID
+	 */
 	public UUID getUuid()
 	{
 		return this.uuid;

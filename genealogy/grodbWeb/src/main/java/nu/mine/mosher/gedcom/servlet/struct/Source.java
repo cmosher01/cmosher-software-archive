@@ -9,7 +9,6 @@ import java.util.UUID;
 public class Source
 {
 	private final UUID uuid;
-	private final String ID;
 	private final String author;
 	private final String title;
 	private final String publication;
@@ -21,7 +20,7 @@ public class Source
 	 * @param title
 	 * @param publication
 	 */
-	public Source(final String ID, final String author, final String title, final String publication,final String text, final UUID uuid)
+	public Source(final String author, final String title, final String publication,final String text, final UUID uuid)
 	{
 		if (uuid == null)
 		{
@@ -31,7 +30,6 @@ public class Source
 		{
 			this.uuid = uuid;
 		}
-		this.ID = ID;
 		this.author = author;
 		this.title = title;
 		this.publication = publication;
@@ -99,18 +97,13 @@ public class Source
 		return this.text;
 	}
 
-	public String getLink()
-	{
-		return this.ID;
-	}
-
+	/**
+	 * Gets the UUID from the gedcom file, or a generated
+	 * one if there was not one in the file.
+	 * @return the UUID
+	 */
 	public UUID getUuid()
 	{
 		return this.uuid;
-	}
-
-	public String getID()
-	{
-		return this.ID;
 	}
 }

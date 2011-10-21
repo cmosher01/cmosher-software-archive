@@ -31,17 +31,20 @@ public class Loader
 {
 	private final GedcomTree gedcom;
 
-	private final Map<String,Person> mapIDtoPerson = new HashMap<String,Person>();
 	private final Map<UUID,Person> mapUUIDtoPerson = new HashMap<UUID,Person>();
-	private final Map<String,Source> mapIDtoSource = new HashMap<String,Source>();
 	private final Map<UUID,Source> mapUUIDtoSource = new HashMap<UUID,Source>();
+
 	private Person first;
 	private String description;
+
+
 
 	public Loader(final GedcomTree gedcom)
 	{
 		this.gedcom = gedcom;
 	}
+
+
 
 	public void parse()
 	{
@@ -57,10 +60,12 @@ public class Loader
 
 			if (tagTop.equals(GedcomTag.HEAD))
 			{
-				parseHead(nodeTop);
+				this.description = parseHead(nodeTop);
 				break;
 			}
 		}
+
+		final Map<String,Person> mapIDtoPerson = new HashMap<String,Person>();
 
 		for (final TreeNode<GedcomLine> nodeTop : rNodeTop)
 		{
@@ -70,7 +75,7 @@ public class Loader
 			if (tagTop.equals(GedcomTag.INDI))
 			{
 				final Person person = parseIndividual(nodeTop);
-				this.mapIDtoPerson.put(person.getID(),person);
+				mapIDtoPerson.put(person.getID(),person);
 				storeInUuidMap(person);
 				if (this.first == null)
 				{
@@ -86,15 +91,37 @@ public class Loader
 
 			if (tagTop.equals(GedcomTag.FAM))
 			{
-				parseFamily(nodeTop);
+				parseFamily(nodeTop,mapIDtoPerson);
 			}
 		}
 
-		for (final Person person: this.mapIDtoPerson.values())
+		for (final Person person: mapIDtoPerson.values())
 		{
 			person.initKeyDates();
 		}
 	}
+
+	public String getDescription()
+	{
+		return this.description;
+	}
+
+	public Person getFirstPerson()
+	{
+		return this.first;
+	}
+
+	public Person lookUpPerson(final UUID uuid)
+	{
+		return this.mapUUIDtoPerson.get(uuid);
+	}
+
+	public Source lookUpSource(final UUID uuid)
+	{
+		return this.mapUUIDtoSource.get(uuid);
+	}
+
+
 
 	private void storeInUuidMap(final Person person) {
 		final UUID uuid = person.getUuid();
@@ -125,7 +152,9 @@ public class Loader
 		this.mapUUIDtoSource.put(uuid, source);
 	}
 
-	private void getChildren(TreeNode<GedcomLine> root, Collection<TreeNode<GedcomLine>> rNodeTop)
+
+
+	private static void getChildren(TreeNode<GedcomLine> root, Collection<TreeNode<GedcomLine>> rNodeTop)
 	{
 		for (final TreeNode<GedcomLine> child : root)
 		{
@@ -133,7 +162,7 @@ public class Loader
 		}
 	}
 
-	private void parseHead(final TreeNode<GedcomLine> head)
+	private static String parseHead(final TreeNode<GedcomLine> head)
 	{
 		final Collection<TreeNode<GedcomLine>> rNode = new ArrayList<TreeNode<GedcomLine>>();
 		getChildren(head,rNode);
@@ -144,10 +173,10 @@ public class Loader
 			final GedcomTag tag = line.getTag();
 			if (tag.equals(GedcomTag.NOTE))
 			{
-				this.description = line.getValue();
-				break;
+				return line.getValue();
 			}
 		}
+		return "";
 	}
 
 	private Person parseIndividual(final TreeNode<GedcomLine> nodeIndi)
@@ -195,12 +224,12 @@ public class Loader
 		return new Person(nodeIndi.getObject().getID(),name,rEvent,new ArrayList<Partnership>(),isPrivate,uuid);
 	}
 
-	private UUID parseUuid(final TreeNode<GedcomLine> nodeUuid) {
+	private static UUID parseUuid(final TreeNode<GedcomLine> nodeUuid) {
 		final String rawUuid = nodeUuid.getObject().getValue();
 		return UUID.fromString(rawUuid);
 	}
 
-	private void parseFamily(final TreeNode<GedcomLine> nodeFam)
+	private void parseFamily(final TreeNode<GedcomLine> nodeFam, final Map<String,Person> mapIDtoPerson)
 	{
 		Person husb = null;
 		Person wife = null;
@@ -217,15 +246,15 @@ public class Loader
 
 			if (tag.equals(GedcomTag.HUSB))
 			{
-				husb = lookUpPerson(line.getPointer());
+				husb = lookUpPerson(line.getPointer(),mapIDtoPerson);
 			}
 			else if (tag.equals(GedcomTag.WIFE))
 			{
-				wife = lookUpPerson(line.getPointer());
+				wife = lookUpPerson(line.getPointer(),mapIDtoPerson);
 			}
 			else if (tag.equals(GedcomTag.CHIL))
 			{
-				final Person child = lookUpPerson(line.getPointer());
+				final Person child = lookUpPerson(line.getPointer(),mapIDtoPerson);
 				rChild.add(child);
 			}
 			else if (GedcomTag.setFamilyEvent.contains(tag))
@@ -237,22 +266,12 @@ public class Loader
 		buildFamily(husb,wife,rChild,rEvent);
 	}
 
-	public Person lookUpPerson(final String id)
+	private static Person lookUpPerson(final String id, final Map<String,Person> mapIDtoPerson)
 	{
-		return this.mapIDtoPerson.get(id);
+		return mapIDtoPerson.get(id);
 	}
 
-	public Person lookUpPerson(final UUID uuid)
-	{
-		return this.mapUUIDtoPerson.get(uuid);
-	}
-
-	public Person getFirstPerson()
-	{
-		return this.first;
-	}
-
-	private String parseName(final TreeNode<GedcomLine> nodeName)
+	private static String parseName(final TreeNode<GedcomLine> nodeName)
 	{
 		return nodeName.getObject().getValue();
 	}
@@ -302,7 +321,6 @@ public class Loader
 				source = parseSource(node);
 				if (source != null)
 				{
-					this.mapIDtoSource.put(source.getID(),source);
 					storeInUuidMap(source);
 				}
 			}
@@ -364,10 +382,10 @@ public class Loader
 				}
 			}
 		}
-		return new Source(id,HtmlUtil.escapeHtml(author),HtmlUtil.escapeHtml(title),HtmlUtil.escapeHtml(publication),HtmlUtil.smartEscapeHtml(pointingText+text),uuid);
+		return new Source(HtmlUtil.escapeHtml(author),HtmlUtil.escapeHtml(title),HtmlUtil.escapeHtml(publication),HtmlUtil.smartEscapeHtml(pointingText+text),uuid);
 	}
 
-	private String getSourcePtText(TreeNode<GedcomLine> node)
+	private static String getSourcePtText(TreeNode<GedcomLine> node)
 	{
 		final Collection<TreeNode<GedcomLine>> rNode = new ArrayList<TreeNode<GedcomLine>>();
 		getChildren(node,rNode);
@@ -383,7 +401,7 @@ public class Loader
 		return "";
 	}
 
-	private String parseData(TreeNode<GedcomLine> node)
+	private static String parseData(TreeNode<GedcomLine> node)
 	{
 		final StringBuilder sb = new StringBuilder(256);
 		final Collection<TreeNode<GedcomLine>> rNode = new ArrayList<TreeNode<GedcomLine>>();
@@ -412,7 +430,7 @@ public class Loader
 		return nodeNote.getObject().getValue();
 	}
 
-	private boolean calculatePrivacy(final Event birth)
+	private static boolean calculatePrivacy(final Event birth)
 	{
 		final DatePeriod dateInformation = birth.getDate();
 		if (dateInformation == null)
@@ -426,7 +444,7 @@ public class Loader
 		return dateLatestPublicInformation.compareTo(dateInformation.getEndDate().getApproxDay()) < 0;
 	}
 
-	private String getEventName(final TreeNode<GedcomLine> node)
+	private static String getEventName(final TreeNode<GedcomLine> node)
 	{
 		final GedcomTag tag = node.getObject().getTag();
 		if (tag.equals(GedcomTag.EVEN))
@@ -453,7 +471,7 @@ public class Loader
 		return eventName+": "+value;
 	}
 
-	private void buildFamily(final Person husb, final Person wife, final ArrayList<Person> rChild, final ArrayList<Event> rEvent)
+	private static void buildFamily(final Person husb, final Person wife, final ArrayList<Person> rChild, final ArrayList<Event> rEvent)
 	{
 		if (husb != null)
 		{
@@ -486,20 +504,5 @@ public class Loader
 				child.setMother(wife);
 			}
 		}
-	}
-
-	public String getDescription()
-	{
-		return this.description;
-	}
-
-	public Source lookUpSource(final String id)
-	{
-		return this.mapIDtoSource.get(id);
-	}
-
-	public Source lookUpSource(final UUID uuid)
-	{
-		return this.mapUUIDtoSource.get(uuid);
 	}
 }

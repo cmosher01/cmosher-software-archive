@@ -37,6 +37,8 @@ public class GedcomServlet extends HttpServlet
 {
 	private final Map<String,Loader> mapLoader = new TreeMap<String,Loader>();
 
+
+
 	@Override
 	public void init(final ServletConfig servletConfig) throws ServletException
 	{
@@ -70,7 +72,7 @@ public class GedcomServlet extends HttpServlet
 		}
 	}
 
-	private File[] getGedcomFiles(final ServletConfig servletConfig) throws IOException, ServletException
+	private static File[] getGedcomFiles(final ServletConfig servletConfig) throws IOException, ServletException
 	{
 		final File dirGedcom = new File(getGedcomDir(servletConfig)).getCanonicalFile();
 		final File[] rFile = dirGedcom.listFiles(new FileFilter()
@@ -91,7 +93,7 @@ public class GedcomServlet extends HttpServlet
 		return rFile;
 	}
 
-	private String getGedcomDir(final ServletConfig servletConfig)
+	private static String getGedcomDir(final ServletConfig servletConfig)
 	{
 		String dir = servletConfig.getServletContext().getInitParameter("gedcom.directory");
 		if (dir == null || dir.length() == 0)
@@ -100,6 +102,8 @@ public class GedcomServlet extends HttpServlet
 		}
 		return dir;
 	}
+
+
 
 	@Override
 	public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException
@@ -116,6 +120,10 @@ public class GedcomServlet extends HttpServlet
 
 	private void tryGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException, TemplateLexingException, TemplateParsingException
 	{
+		/*
+		 * If URL after context path was empty or just "/"
+		 * redirect to /index.html page.
+		 */
 		final String pathInfo = request.getPathInfo();
 		if (pathInfo == null || pathInfo.length() <= 1)
 		{
@@ -123,10 +131,19 @@ public class GedcomServlet extends HttpServlet
 			return;
 		}
 
+		handleValidRequest(request, response);
+	}
+
+	private void handleValidRequest(final HttpServletRequest request, final HttpServletResponse response)
+			throws IOException, TemplateLexingException, TemplateParsingException {
+		final String pathInfo = request.getPathInfo();
 		if (pathInfo.equals("/index.html"))
 		{
+			final List<GedcomFile> rFile = new ArrayList<GedcomFile>(this.mapLoader.size());
+			buildGedcomFilesList(rFile);
+
 			final Writer out = openPage(response);
-			showFirstPage(out);
+			showFirstPage(rFile,out);
 			closePage(out);
 			return;
 		}
@@ -165,36 +182,18 @@ public class GedcomServlet extends HttpServlet
 		response.sendRedirect(request.getContextPath()+"/index.html");
 	}
 
-	private void showSourcePage(final Source source, final Writer out) throws TemplateLexingException, TemplateParsingException, IOException
+	private void buildGedcomFilesList(final Collection<GedcomFile> rFile)
 	{
-		final StringBuilder sb = new StringBuilder(256);
-		final Templat tat = new Templat(GedcomServlet.class.getResource("template/source.tat"));
-		tat.render(sb,source);
-		out.write(sb.toString());
+		for (final Map.Entry<String,Loader> entry : this.mapLoader.entrySet())
+		{
+			final Person first = entry.getValue().getFirstPerson();
+			final String descrip = entry.getValue().getDescription();
+			final GedcomFile file = new GedcomFile(entry.getKey(),first,HtmlUtil.escapeHtml(descrip==null ? "" : descrip));
+			rFile.add(file);
+		}
 	}
 
-	private Writer openPage(final HttpServletResponse response) throws IOException
-	{
-		response.setContentType("text/html; charset=UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		return new BufferedWriter(new OutputStreamWriter(response.getOutputStream(),"UTF-8"));
-	}
 
-	private void closePage(final Writer out) throws IOException
-	{
-		out.flush();
-		out.close();
-	}
-
-	private void showFirstPage(final Writer out) throws TemplateLexingException, TemplateParsingException, IOException
-	{
-		final StringBuilder sb = new StringBuilder(256);
-		final Templat tat = new Templat(GedcomServlet.class.getResource("template/index.tat"));
-		final List<GedcomFile> rFile = new ArrayList<GedcomFile>(this.mapLoader.size());
-		buildGedcomFilesList(rFile);
-		tat.render(sb,rFile);
-		out.write(sb.toString());
-	}
 
 	private Person findPersonByUuid(final String pathInfo, final String uuid)
 	{
@@ -232,6 +231,31 @@ public class GedcomServlet extends HttpServlet
 		return loader.lookUpSource(UUID.fromString(uuid));
 	}
 
+
+
+	private static Writer openPage(final HttpServletResponse response) throws IOException
+	{
+		response.setContentType("text/html; charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		return new BufferedWriter(new OutputStreamWriter(response.getOutputStream(),"UTF-8"));
+	}
+
+	private static void closePage(final Writer out) throws IOException
+	{
+		out.flush();
+		out.close();
+	}
+
+
+
+	private static void showFirstPage(final List<GedcomFile> rFile, final Writer out) throws TemplateLexingException, TemplateParsingException, IOException
+	{
+		final StringBuilder sb = new StringBuilder(256);
+		final Templat tat = new Templat(GedcomServlet.class.getResource("template/index.tat"));
+		tat.render(sb,rFile);
+		out.write(sb.toString());
+	}
+
 	private static void showPersonPage(final Person person, final Writer out) throws TemplateLexingException, TemplateParsingException, IOException
 	{
 		final StringBuilder sb = new StringBuilder(256);
@@ -240,19 +264,16 @@ public class GedcomServlet extends HttpServlet
 		out.write(sb.toString());
 	}
 
+	private static void showSourcePage(final Source source, final Writer out) throws TemplateLexingException, TemplateParsingException, IOException
+	{
+		final StringBuilder sb = new StringBuilder(256);
+		final Templat tat = new Templat(GedcomServlet.class.getResource("template/source.tat"));
+		tat.render(sb,source);
+		out.write(sb.toString());
+	}
+
 	private static void showErrorPage(HttpServletResponse response) throws IOException
 	{
 		response.sendError(404,"Sorry, I cannot find that web page. Please press the back button and then try something else.");
-	}
-
-	private void buildGedcomFilesList(final Collection<GedcomFile> rFile)
-	{
-		for (final Map.Entry<String,Loader> entry : this.mapLoader.entrySet())
-		{
-			final Person first = entry.getValue().getFirstPerson();
-			final String descrip = entry.getValue().getDescription();
-			final GedcomFile file = new GedcomFile(entry.getKey(),first,HtmlUtil.escapeHtml(descrip==null ? "" : descrip));
-			rFile.add(file);
-		}
 	}
 }

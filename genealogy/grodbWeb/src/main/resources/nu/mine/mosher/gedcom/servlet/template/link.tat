@@ -2,13 +2,7 @@
 @if (Util.isNull(person))@
 	[unknown]
 @else@
-	<a href="
-	@if (Util.isNull(person.getUuid()))@
-		?person=@person.getLink()@
-	@else@
-		?person_uuid=@person.getUuid()@
-	@end if@
-	">
-	@person.getClassedName()@
+	<a href="?person_uuid=@person.getUuid()@">
+		@person.getClassedName()@
 	</a>
 @end if@

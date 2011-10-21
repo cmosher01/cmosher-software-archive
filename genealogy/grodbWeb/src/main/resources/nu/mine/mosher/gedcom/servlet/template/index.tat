@@ -16,16 +16,8 @@
 			@loop iGed : rGed.size()@
 				<tr>
 					<td>
-						<a href="@rGed[iGed].getFile()@
-						@if (Util.isNull(rGed[iGed].getFirstPerson().getUuid()))@
-							?person=@rGed[iGed].getFirstPerson().getLink()@
-						@else@
-							?person_uuid=@rGed[iGed].getFirstPerson().getUuid()@
-						@end if@
-						">
-
-						@rGed[iGed].getFile()@
-
+						<a href="@rGed[iGed].getFile()@?person_uuid=@rGed[iGed].getFirstPerson().getUuid()@">
+							@rGed[iGed].getFile()@
 						</a>
 					</td>
 					<td>
