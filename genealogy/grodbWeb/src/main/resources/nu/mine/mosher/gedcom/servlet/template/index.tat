@@ -7,7 +7,7 @@
 <body>
 	<p>Please choose a GEDCOM file to explore:</p>
 
-	<table border="1" cellspacing="0" cellpadding="3">
+	<table class="gedcoms">
 		<thead>
 		</thead>
 		<tfoot>
@@ -15,7 +15,7 @@
 		<tbody>
 			@loop iGed : rGed.size()@
 				<tr>
-					<td>
+					<td class="gedcom">
 						<a href="@rGed[iGed].getFile()@?person_uuid=@rGed[iGed].getFirstPerson().getUuid()@">
 							@rGed[iGed].getFile()@
 						</a>

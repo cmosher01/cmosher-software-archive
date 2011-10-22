@@ -4,19 +4,15 @@
 
 @include head(person)@
 
-<body>
-	<table>
-		<thead>
-		</thead>
-		<tfoot>
-		</tfoot>
-		<tbody>
-			<tr><td>father</td><td>@include link(person.getFather())@</td></tr>
-			<tr><td>mother</td><td>@include link(person.getMother())@</td></tr>
-		</tbody>
-	</table>
+<body class="person">
+	<div class="parents">
+	  <span class="relation">father</span>
+	  @include link(person.getFather())@
+	  <span class="relation">mother</span>
+	  @include link(person.getMother())@
+	</div>
 
-	<h1>@person.getClassedName()@</h1>
+	<h1><span class="name">@person.getClassedName()@</span></h1>
 
 	@if (!person.isPrivate())@
 		@include events(person.getEvents())@
@@ -24,19 +20,6 @@
 
 	@include partnerships(person.getPartnerships(),person.isPrivate())@
 
-	@if (!Util.isNull(person.getUuid()))@
-	<table>
-		<thead>
-		</thead>
-		<tfoot>
-		</tfoot>
-		<tbody>
-			<tr><td>UUID:</td><td>@person.getUuid()@</td></tr>
-		</tbody>
-	</table>
-	@end if@
-
-	<hr />
 	@include foot()@
 </body>
 

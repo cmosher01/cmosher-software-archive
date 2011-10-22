@@ -1,8 +1,6 @@
 @template events(rEvent)@
 @if (!rEvent.isEmpty())@
-	<table>
-		<colgroup><col></colgroup>
-		<colgroup><col><col><col><col></colgroup>
+	<table class="events">
 		<thead>
 			<tr>
 				<th>&nbsp;</th>
@@ -17,7 +15,7 @@
 		<tbody>
 			@loop iEvent : rEvent.size()@
 				<tr>
-					<td>@rEvent[iEvent].getType()@</td>
+					<td class="label">@rEvent[iEvent].getType()@</td>
 					<td class="date">
 						@if (Util.isNull(rEvent[iEvent].getDate()))@
 							&nbsp;

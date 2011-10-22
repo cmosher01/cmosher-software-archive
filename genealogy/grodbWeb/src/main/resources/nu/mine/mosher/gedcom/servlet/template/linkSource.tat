@@ -1,8 +1,10 @@
 @template linkSource(source)@
-@if (Util.isNull(source))@
-    &nbsp;
-@else@
-	<a href="?source_uuid=@source.getUuid()@">
-		@source.getShortName()@
-	</a>
-@end if@
+<span class="source">
+	@if (Util.isNull(source))@
+	    &nbsp;
+	@else@
+		<a href="?source_uuid=@source.getUuid()@">
+			@source.getShortName()@
+		</a>
+	@end if@
+</span>

@@ -6,8 +6,12 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -60,7 +64,8 @@ public class GedcomServlet extends HttpServlet
 	{
 		super.init(servletConfig);
 
-		final File[] rFileGedcom = getGedcomFiles(servletConfig);
+		final List<File> rFileGedcom = new ArrayList<File>(16);
+		getGedcomFiles(servletConfig,rFileGedcom);
 
 		for (final File fileGedcom : rFileGedcom)
 		{
@@ -72,9 +77,10 @@ public class GedcomServlet extends HttpServlet
 		}
 	}
 
-	private static File[] getGedcomFiles(final ServletConfig servletConfig) throws IOException, ServletException
+	private static void getGedcomFiles(final ServletConfig servletConfig, final Collection<File> rFileGedcom) throws IOException, ServletException
 	{
 		final File dirGedcom = new File(getGedcomDir(servletConfig)).getCanonicalFile();
+
 		final File[] rFile = dirGedcom.listFiles(new FileFilter()
 		{
 			@Override
@@ -86,11 +92,13 @@ public class GedcomServlet extends HttpServlet
 					(file.getName().endsWith(".ged") || file.getName().endsWith(".GED"));
 			}
 		});
+
 		if (rFile == null || rFile.length == 0)
 		{
 			throw new ServletException("Cannot find any readable files in "+dirGedcom);
 		}
-		return rFile;
+
+		rFileGedcom.addAll(Arrays.<File>asList(rFile));
 	}
 
 	private static String getGedcomDir(final ServletConfig servletConfig)
@@ -182,7 +190,7 @@ public class GedcomServlet extends HttpServlet
 		response.sendRedirect(request.getContextPath()+"/index.html");
 	}
 
-	private void buildGedcomFilesList(final Collection<GedcomFile> rFile)
+	private void buildGedcomFilesList(final List<GedcomFile> rFile)
 	{
 		for (final Map.Entry<String,Loader> entry : this.mapLoader.entrySet())
 		{
@@ -191,6 +199,19 @@ public class GedcomServlet extends HttpServlet
 			final GedcomFile file = new GedcomFile(entry.getKey(),first,HtmlUtil.escapeHtml(descrip==null ? "" : descrip));
 			rFile.add(file);
 		}
+
+		final Collator collator = Collator.getInstance();
+		collator.setStrength(Collator.PRIMARY);
+		collator.setDecomposition(Collator.FULL_DECOMPOSITION);
+
+		Collections.<GedcomFile>sort(rFile, new Comparator<GedcomFile>()
+		{
+			@Override
+			public int compare(final GedcomFile f1, final GedcomFile f2)
+			{
+				return collator.compare(f1.getFile(), f2.getFile());
+			}
+		});
 	}
 
 
