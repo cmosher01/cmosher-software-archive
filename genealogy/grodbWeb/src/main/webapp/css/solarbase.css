@@ -1,0 +1,94 @@
+@import url("plain.css");
+
+/*
+Solarized color scheme:
+
+base03    #002b36 \__ dk backgnd
+base02    #073642 /
+
+base01    #586e75 \
+base00    #657b83  |_ content
+base0     #839496  |
+base1     #93a1a1 /
+
+base2     #eee8d5 \__ lt backgnd
+base3     #fdf6e3 /
+
+yellow    #b58900     accent
+orange    #cb4b16
+red       #dc322f
+magenta   #d33682
+violet    #6c71c4
+blue      #268bd2
+cyan      #2aa198
+green     #859900
+
+Note: use content and accent colors here in base,
+and use backgnd colors (complementarily) in dk or lt files.
+*/
+
+a
+{
+	color: inherit;
+}
+body
+{
+	color: #586e75;
+}
+
+footer
+{
+	color: #93a1a1;
+}
+
+.name, .gedcom
+{
+	color: #cb4b16;
+}
+
+
+
+.person .relation
+{
+	color: #839496;
+}
+
+.person .events th,
+.label
+{
+	color: #839496;
+	font-weight: inherit;
+	border: 1px solid #93a1a1;
+}
+
+.person .events .date
+{
+	color: #6c71c4;
+}
+.person .events .place
+{
+	color: #2aa198;
+}
+.person .events .notes
+{
+	color: #b58900;
+}
+
+
+
+.source .title
+{
+	color: #cb4b16;
+}
+.source .author
+{
+	color: #6c71c4;
+}
+.source .pub
+{
+	color: #b58900;
+}
+.source .transcript
+{
+	color: #dc322f;
+}

@@ -1,0 +1,11 @@
+@import url("solarbase.css");
+
+body
+{
+	background-color: #002b36;
+}
+.person .events th,
+.label
+{
+	background-color: #073642;
+}

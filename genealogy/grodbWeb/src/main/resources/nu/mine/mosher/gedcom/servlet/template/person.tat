@@ -4,7 +4,7 @@
 
 @include head(person)@
 
-<body class="person">
+<body class="yui3-cssbase yui3-cssreset yui3-cssfonts person">
 	<div class="parents">
 	  <span class="relation">father</span>
 	  @include link(person.getFather())@

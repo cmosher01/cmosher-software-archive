@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
-<web-app>
-    <display-name>GEDCOM servlet</display-name>
-
-    <description>Servlet that serves gedcom files.</description>
-
-    <servlet>
-        <servlet-name>gedcom</servlet-name>
-	    <servlet-class>nu.mine.mosher.gedcom.servlet.GedcomServlet</servlet-class>
-	    <load-on-startup />
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>gedcom</servlet-name>
-        <url-pattern>/*</url-pattern>
-    </servlet-mapping>
+<web-app
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	version="2.5"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+>
+	<display-name>GEDCOM servlet</display-name>
+	<description>Servlet that serves gedcom files.</description>
+	<servlet>
+		<servlet-name>gedcom</servlet-name>
+		<servlet-class>nu.mine.mosher.gedcom.servlet.GedcomServlet</servlet-class>
+		<load-on-startup />
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>gedcom</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>/default/*</url-pattern>
+	</servlet-mapping>
 </web-app>

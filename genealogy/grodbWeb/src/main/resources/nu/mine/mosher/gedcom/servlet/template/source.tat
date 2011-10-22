@@ -4,7 +4,7 @@
 
 @include head(source.getTitle())@
 
-<body class="source">
+<body class="yui3-cssbase yui3-cssreset yui3-cssfonts source">
 	<h1 class="title">@source.getTitle()@</h1>
 
 	<table>
