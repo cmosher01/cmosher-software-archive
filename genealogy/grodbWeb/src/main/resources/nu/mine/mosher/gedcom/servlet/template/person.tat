@@ -4,21 +4,28 @@
 
 @include head(person)@
 
-<body class="yui3-cssbase yui3-cssreset yui3-cssfonts person">
-	<div class="parents">
-	  <span class="relation">father</span>
-	  @include link(person.getFather())@
-	  <span class="relation">mother</span>
-	  @include link(person.getMother())@
+<body>
+	@include nav()@
+
+	<article class="person">
+		<section class="parents">
+		  <span class="relation">father</span>
+		  @include link(person.getFather())@
+
+		  <span class="relation">mother</span>
+		  @include link(person.getMother())@
+		</section>
+
+		<header>
+			<span class="name">@person.getClassedName()@</span>
+		</header>
+	
+		@if (!person.isPrivate())@
+			@include events(person.getEvents())@
+		@end if@
+	
+		@include partnerships(person.getPartnerships(),person.isPrivate())@
 	</div>
-
-	<h1><span class="name">@person.getClassedName()@</span></h1>
-
-	@if (!person.isPrivate())@
-		@include events(person.getEvents())@
-	@end if@
-
-	@include partnerships(person.getPartnerships(),person.isPrivate())@
 
 	@include foot()@
 </body>

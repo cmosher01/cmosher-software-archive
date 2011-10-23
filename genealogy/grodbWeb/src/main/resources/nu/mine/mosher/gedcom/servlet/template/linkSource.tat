@@ -3,8 +3,10 @@
 	@if (Util.isNull(source))@
 	    &nbsp;
 	@else@
-		<a href="?source_uuid=@source.getUuid()@">
-			@source.getShortName()@
-		</a>
+		<cite>
+			<a href="?source_uuid=@source.getUuid()@">
+				@source.getShortName()@
+			</a>
+		</cite>
 	@end if@
 </span>

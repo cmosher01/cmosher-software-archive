@@ -5,28 +5,30 @@
 @include head(null)@
 
 <body>
-	<p>Please choose a GEDCOM file to explore:</p>
-
-	<table class="gedcoms">
-		<thead>
-		</thead>
-		<tfoot>
-		</tfoot>
-		<tbody>
-			@loop iGed : rGed.size()@
-				<tr>
-					<td class="gedcom">
-						<a href="@rGed[iGed].getFile()@?person_uuid=@rGed[iGed].getFirstPerson().getUuid()@">
-							@rGed[iGed].getFile()@
-						</a>
-					</td>
-					<td>
-						@rGed[iGed].getDescription()@
-					</td>
-				</tr>
-			@end loop@
-		</tbody>
-	</table>
+	<div class="gedcoms">
+		<p>Please choose a genealogy to explore:</p>
+	
+		<table>
+			<thead>
+			</thead>
+			<tfoot>
+			</tfoot>
+			<tbody>
+				@loop iGed : rGed.size()@
+					<tr>
+						<td class="gedcom">
+							<a href="@rGed[iGed].getFile()@?person_uuid=@rGed[iGed].getFirstPerson().getUuid()@">
+								@rGed[iGed].getFile()@
+							</a>
+						</td>
+						<td>
+							@rGed[iGed].getDescription()@
+						</td>
+					</tr>
+				@end loop@
+			</tbody>
+		</table>
+	</div>
 </body>
 
 @include footer()@

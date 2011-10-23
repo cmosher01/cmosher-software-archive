@@ -4,27 +4,50 @@
 
 @include head(source.getTitle())@
 
-<body class="yui3-cssbase yui3-cssreset yui3-cssfonts source">
-	<h1 class="title">@source.getTitle()@</h1>
+<body>
+	@include nav()@
 
-	<table>
-		<colgroup><col></colgroup>
-		<colgroup><col></colgroup>
-		<thead>
-		</thead>
-		<tfoot>
-		</tfoot>
-		<tbody>
-			<tr><td class="label">author</td><td class="author">@source.getAuthor()@</td></tr>
-			<tr><td class="label">title</td><td class="title">@source.getTitle()@</td></tr>
-			<tr><td class="label">publication</td><td class="pub">@source.getPublication()@</td></tr>
-		</tbody>
-	</table>
+	<article class="source">
+		<header>
+			@source.getTitle()@
+		</header>
 
-	<p>actual transcription and/or representation of source [with notes in brackets]</p>
-	<div class="transcript">
-		@source.getText()@
-	</div>
+		<section class="specs">	
+			<table>
+				<colgroup><col></colgroup>
+				<colgroup><col></colgroup>
+				<thead>
+				</thead>
+				<tfoot>
+				</tfoot>
+				<tbody>
+					<tr>
+						<td class="label">author</td>
+						<td class="author">@source.getAuthor()@</td>
+					</tr>
+					<tr>
+						<td class="label">title</td>
+						<td class="title"><cite>@source.getTitle()@</cite></td>
+					</tr>
+					<tr>
+						<td class="label">publication</td>
+						<td class="pub">@source.getPublication()@</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+
+		@if (!source.getText().isEmpty())@
+			<section class="transcription">
+				<blockquote>
+					<h1>
+						transcription and/or representation of source [with notes in brackets]:
+					</h1>
+					@source.getText()@
+				</blockquote>
+			<section>
+		@end if@
+	</article>
 
 	@include foot()@
 </body>

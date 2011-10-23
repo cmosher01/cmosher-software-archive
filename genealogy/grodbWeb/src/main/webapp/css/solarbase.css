@@ -27,13 +27,14 @@ Note: use content and accent colors here in base,
 and use backgnd colors (complementarily) in dk or lt files.
 */
 
-a
-{
-	color: inherit;
-}
 body
 {
 	color: #586e75;
+}
+
+article header
+{
+	color: #cb4b16;
 }
 
 footer
@@ -41,7 +42,7 @@ footer
 	color: #93a1a1;
 }
 
-.name, .gedcom
+.name, .title, .gedcom
 {
 	color: #cb4b16;
 }
@@ -57,8 +58,6 @@ footer
 .label
 {
 	color: #839496;
-	font-weight: inherit;
-	border: 1px solid #93a1a1;
 }
 
 .person .events .date
@@ -76,10 +75,6 @@ footer
 
 
 
-.source .title
-{
-	color: #cb4b16;
-}
 .source .author
 {
 	color: #6c71c4;
@@ -88,7 +83,11 @@ footer
 {
 	color: #b58900;
 }
-.source .transcript
+.source blockquote
 {
-	color: #dc322f;
+	color: #586e75;
+}
+.source blockquote > h1
+{
+	color: #839496;
 }
