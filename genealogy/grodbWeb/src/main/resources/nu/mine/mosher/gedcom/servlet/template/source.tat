@@ -9,7 +9,7 @@
 
 	<article class="source">
 		<header>
-			@source.getTitle()@
+			<h1>@source.getTitle()@</h1>
 		</header>
 
 		<section class="specs">	

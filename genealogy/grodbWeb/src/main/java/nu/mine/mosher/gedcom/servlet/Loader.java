@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import nu.mine.mosher.gedcom.GedcomLine;
@@ -30,6 +31,7 @@ import nu.mine.mosher.util.TreeNode;
 public class Loader
 {
 	private final GedcomTree gedcom;
+	private final String name;
 
 	private final Map<UUID,Person> mapUUIDtoPerson = new HashMap<UUID,Person>();
 	private final Map<UUID,Source> mapUUIDtoSource = new HashMap<UUID,Source>();
@@ -39,9 +41,10 @@ public class Loader
 
 
 
-	public Loader(final GedcomTree gedcom)
+	public Loader(final GedcomTree gedcom, final String filename)
 	{
 		this.gedcom = gedcom;
+		this.name = filename;
 	}
 
 
@@ -101,6 +104,11 @@ public class Loader
 		}
 	}
 
+	public String getName()
+	{
+		return this.name;
+	}
+
 	public String getDescription()
 	{
 		return this.description;
@@ -122,6 +130,10 @@ public class Loader
 	}
 
 
+	public void appendAllUuids(final Set<UUID> appendTo)
+	{
+		appendTo.addAll(this.mapUUIDtoPerson.keySet());
+	}
 
 	private void storeInUuidMap(final Person person) {
 		final UUID uuid = person.getUuid();

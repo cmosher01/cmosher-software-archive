@@ -1,7 +1,7 @@
 @template eventsSelf(rEvent)@
 
 @if (!rEvent.isEmpty())@
-	<table>
+	<table class="events">
 		<thead>
 			<tr>
 				<th>event</th>

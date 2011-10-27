@@ -12,8 +12,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.UUID;
 
@@ -40,6 +43,7 @@ import nu.mine.mosher.gedcom.servlet.struct.Source;
 public class GedcomServlet extends HttpServlet
 {
 	private final Map<String,Loader> mapLoader = new TreeMap<String,Loader>();
+	private final Map<UUID,Set<Loader>> mapPersonCrossRef = new HashMap<UUID,Set<Loader>>(32);
 
 
 
@@ -67,13 +71,41 @@ public class GedcomServlet extends HttpServlet
 		final List<File> rFileGedcom = new ArrayList<File>(16);
 		getGedcomFiles(servletConfig,rFileGedcom);
 
+		final Map<UUID,Loader> mapMasterUuidToLoader = new HashMap<UUID,Loader>(1024);
 		for (final File fileGedcom : rFileGedcom)
 		{
 			final GedcomTree gt = Gedcom.parseFile(fileGedcom);
 
-			final Loader loader = new Loader(gt);
+			final Loader loader = new Loader(gt,fileGedcom.getName());
 			loader.parse();
-			this.mapLoader.put(fileGedcom.getName(),loader);
+			this.mapLoader.put(loader.getName(),loader);
+
+			buildPersonCrossReferences(loader,mapMasterUuidToLoader);
+		}
+	}
+
+	private void buildPersonCrossReferences(final Loader loader, final Map<UUID,Loader> mapMasterUuidToLoader)
+	{
+		final Set<UUID> uuids = new HashSet<UUID>(256);
+		loader.appendAllUuids(uuids);
+		for (final UUID uuid : uuids)
+		{
+			if (mapMasterUuidToLoader.containsKey(uuid))
+			{
+				Set<Loader> loaders = this.mapPersonCrossRef.get(uuid);
+				if (loaders == null)
+				{
+					loaders = new HashSet<Loader>(2);
+					this.mapPersonCrossRef.put(uuid, loaders);
+
+					loaders.add(mapMasterUuidToLoader.get(uuid));
+				}
+				loaders.add(loader);
+			}
+			else
+			{
+				mapMasterUuidToLoader.put(uuid,loader);
+			}
 		}
 	}
 
@@ -165,8 +197,21 @@ public class GedcomServlet extends HttpServlet
 				showErrorPage(response);
 				return;
 			}
+			final UUID uuid = UUID.fromString(paramPersonUUID);
+			final Loader loader = this.mapLoader.get(pathInfo.substring(1));
 			final Writer out = openPage(response);
-			showPersonPage(person,false,out);
+			final List<String> otherFiles = new ArrayList<String>();
+			if (this.mapPersonCrossRef.containsKey(uuid))
+			{
+				for (final Loader gedcom : this.mapPersonCrossRef.get(uuid))
+				{
+					if (gedcom != loader)
+					{
+						otherFiles.add(gedcom.getName());
+					}
+				}
+			}
+			showPersonPage(person,false,out,otherFiles);
 			closePage(out);
 			return;
 		}
@@ -180,8 +225,21 @@ public class GedcomServlet extends HttpServlet
 				showErrorPage(response);
 				return;
 			}
+			final UUID uuid = UUID.fromString(paramPersonUUID);
+			final Loader loader = this.mapLoader.get(pathInfo.substring(1));
 			final Writer out = openPage(response);
-			showPersonPage(person,true,out);
+			final List<String> otherFiles = new ArrayList<String>();
+			if (this.mapPersonCrossRef.containsKey(uuid))
+			{
+				for (final Loader gedcom : this.mapPersonCrossRef.get(uuid))
+				{
+					if (gedcom != loader)
+					{
+						otherFiles.add(gedcom.getName());
+					}
+				}
+			}
+			showPersonPage(person,true,out,otherFiles);
 			closePage(out);
 			return;
 		}
@@ -292,11 +350,11 @@ public class GedcomServlet extends HttpServlet
 		out.write(sb.toString());
 	}
 
-	private static void showPersonPage(final Person person, final boolean isFamilyEvents, final Writer out) throws TemplateLexingException, TemplateParsingException, IOException
+	private static void showPersonPage(final Person person, final boolean isFamilyEvents, final Writer out, final List<String> otherFiles) throws TemplateLexingException, TemplateParsingException, IOException
 	{
 		final StringBuilder sb = new StringBuilder(256);
 		final Templat tat = new Templat(GedcomServlet.class.getResource("template/person.tat"));
-		tat.render(sb,person,Boolean.valueOf(isFamilyEvents));
+		tat.render(sb,person,Boolean.valueOf(isFamilyEvents),otherFiles);
 		out.write(sb.toString());
 	}
 

@@ -54,22 +54,22 @@ footer
 	color: #839496;
 }
 
-.person .events th,
+table.events th,
 .label,
 .family_events
 {
 	color: #839496;
 }
 
-.person .events .date
+table.events .date
 {
 	color: #6c71c4;
 }
-.person .events .place
+table.events .place
 {
 	color: #2aa198;
 }
-.person .events .notes
+table.events .notes
 {
 	color: #b58900;
 }

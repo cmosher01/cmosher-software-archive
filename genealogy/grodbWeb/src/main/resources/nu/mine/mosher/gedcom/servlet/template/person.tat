@@ -1,4 +1,4 @@
-@template person(person,isFamilyEvents)@
+@template person(person,isFamilyEvents,otherFiles)@
 
 @include header()@
 
@@ -17,9 +17,18 @@
 		</section>
 
 		<header>
-			<span class="name">@person.getClassedName()@</span>
+			<h1><span class="name">@person.getClassedName()@</span></h1>
 		</header>
-	
+
+		@if (!otherFiles.isEmpty())@
+			This person is also in these other gedcom files:
+			@loop iFile : otherFiles.size()@
+				<span class="gedcom">
+					<a href="@otherFiles[iFile]@?person@if (isFamilyEvents)@fam@end if@_uuid=@person.getUuid()@">@otherFiles[iFile]@</a>
+				</span>
+			@end loop@
+		@end if@
+
 		@if (!person.isPrivate())@
 			@include events(person,isFamilyEvents)@
 		@end if@
