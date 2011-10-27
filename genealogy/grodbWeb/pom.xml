@@ -12,6 +12,16 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	<distributionManagement>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<url>http://mosher.mine.nu/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>releases</id>
+			<url>http://mosher.mine.nu/nexus/content/repositories/releases</url>
+		</repository>
+	</distributionManagement>
 	<profiles>
 		<profile>
 			<id>m2eclipse</id>
@@ -68,22 +78,22 @@
 		<dependency>
 			<groupId>nu.mine.mosher.gedcom</groupId>
 			<artifactId>gedcomParserJava</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>nu.mine.mosher.gedcom.date.parser</groupId>
 			<artifactId>gedcomDateParser</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sourceforge.templat</groupId>
 			<artifactId>templat</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>nu.mine.mosher.util</groupId>
 			<artifactId>optionalObject</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
