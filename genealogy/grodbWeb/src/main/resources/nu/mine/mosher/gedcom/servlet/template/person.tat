@@ -1,4 +1,4 @@
-@template person(person)@
+@template person(person,isFamilyEvents)@
 
 @include header()@
 
@@ -10,10 +10,10 @@
 	<article class="person">
 		<section class="parents">
 		  <span class="relation">father</span>
-		  @include link(person.getFather())@
+		  @include link(person.getFather(),isFamilyEvents)@
 
 		  <span class="relation">mother</span>
-		  @include link(person.getMother())@
+		  @include link(person.getMother(),isFamilyEvents)@
 		</section>
 
 		<header>
@@ -21,11 +21,11 @@
 		</header>
 	
 		@if (!person.isPrivate())@
-			@include events(person.getEvents())@
+			@include events(person,isFamilyEvents)@
 		@end if@
 	
-		@include partnerships(person.getPartnerships(),person.isPrivate())@
-	</div>
+		@include partnerships(person.getPartnerships(),person.isPrivate(),isFamilyEvents)@
+	</article>
 
 	@include foot()@
 </body>

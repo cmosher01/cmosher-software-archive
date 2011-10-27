@@ -1,28 +1,28 @@
-@template partnerships(rPartnership,isPrivate)@
+@template partnerships(rPartnership,isPrivate,isFamilyEvents)@
 @if (!rPartnership.isEmpty())@
-	<section class="partnerships">
-		@loop iPartnership : rPartnership.size()@
-			<div class="partnership">
-				<span class="relation">partnership</span>
-				@include link(rPartnership[iPartnership].getPartner())@
-		
+	@loop iPartnership : rPartnership.size()@
+		<section class="partnership">
+			<span class="relation">partnership</span>
+			@include link(rPartnership[iPartnership].getPartner(),isFamilyEvents)@
+	
+			@if (!isFamilyEvents)@
 				@if (!isPrivate)@
 					@if (!rPartnership[iPartnership].isPrivate())@
-						@include events(rPartnership[iPartnership].getEvents())@
+						@include eventsSelf(rPartnership[iPartnership].getEvents())@
 					@end if@
 				@end if@
-		
-				@if (!rPartnership[iPartnership].getChildren().isEmpty())@
-					<div class="children">
-						<span class="relation">children</span>
-						<ul>
+			@end if@
+	
+			@if (!rPartnership[iPartnership].getChildren().isEmpty())@
+				<div class="children">
+					<span class="relation">children</span>
+					<ul>
 						@loop iChild : rPartnership[iPartnership].getChildren().size()@
-							<li>@include link(rPartnership[iPartnership].getChildren().get(iChild))@</li>
+							<li>@include link(rPartnership[iPartnership].getChildren().get(iChild),isFamilyEvents)@</li>
 						@end loop@
-						</ul>
-					</div>
-				@end if@
-			</div>
-		@end loop@
-	</section>
+					</ul>
+				</div>
+			@end if@
+		</section>
+	@end loop@
 @end if@

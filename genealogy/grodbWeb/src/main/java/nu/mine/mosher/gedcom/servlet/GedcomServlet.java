@@ -156,7 +156,7 @@ public class GedcomServlet extends HttpServlet
 			return;
 		}
 
-		final String paramPersonUUID = request.getParameter("person_uuid");
+		String paramPersonUUID = request.getParameter("person_uuid");
 		if (paramPersonUUID != null && paramPersonUUID.length() > 0)
 		{
 			final Person person = findPersonByUuid(pathInfo.substring(1),paramPersonUUID);
@@ -166,7 +166,22 @@ public class GedcomServlet extends HttpServlet
 				return;
 			}
 			final Writer out = openPage(response);
-			showPersonPage(person,out);
+			showPersonPage(person,false,out);
+			closePage(out);
+			return;
+		}
+
+		paramPersonUUID = request.getParameter("personfam_uuid");
+		if (paramPersonUUID != null && paramPersonUUID.length() > 0)
+		{
+			final Person person = findPersonByUuid(pathInfo.substring(1),paramPersonUUID);
+			if (person == null)
+			{
+				showErrorPage(response);
+				return;
+			}
+			final Writer out = openPage(response);
+			showPersonPage(person,true,out);
 			closePage(out);
 			return;
 		}
@@ -277,11 +292,11 @@ public class GedcomServlet extends HttpServlet
 		out.write(sb.toString());
 	}
 
-	private static void showPersonPage(final Person person, final Writer out) throws TemplateLexingException, TemplateParsingException, IOException
+	private static void showPersonPage(final Person person, final boolean isFamilyEvents, final Writer out) throws TemplateLexingException, TemplateParsingException, IOException
 	{
 		final StringBuilder sb = new StringBuilder(256);
 		final Templat tat = new Templat(GedcomServlet.class.getResource("template/person.tat"));
-		tat.render(sb,person);
+		tat.render(sb,person,Boolean.valueOf(isFamilyEvents));
 		out.write(sb.toString());
 	}
 

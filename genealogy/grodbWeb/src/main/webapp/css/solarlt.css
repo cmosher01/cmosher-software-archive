@@ -11,7 +11,8 @@ td, th
 }
 
 .person .events th,
-.label
+.label,
+.person .events tr.other_relative
 {
 	background-color: #eee8d5;
 }

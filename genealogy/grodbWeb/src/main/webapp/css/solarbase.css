@@ -55,7 +55,8 @@ footer
 }
 
 .person .events th,
-.label
+.label,
+.family_events
 {
 	color: #839496;
 }
@@ -74,7 +75,6 @@ footer
 }
 
 
-
 .source .author
 {
 	color: #6c71c4;
@@ -82,10 +82,6 @@ footer
 .source .pub
 {
 	color: #b58900;
-}
-.source blockquote
-{
-	color: #586e75;
 }
 .source blockquote > h1
 {

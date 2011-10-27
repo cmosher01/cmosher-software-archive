@@ -1,35 +1,16 @@
-@template events(rEvent)@
-@if (!rEvent.isEmpty())@
-	<section class="events">
-		<table>
-			<thead>
-				<tr>
-					<th>event</th>
-					<th>date</th>
-					<th>place</th>
-					<th>notes</th>
-					<th>source</th>
-				</tr>
-			</thead>
-			<tfoot>
-			</tfoot>
-			<tbody>
-				@loop iEvent : rEvent.size()@
-					<tr>
-						<td class="label">@rEvent[iEvent].getType()@</td>
-						<td class="date">
-							@if (Util.isNull(rEvent[iEvent].getDate()))@
-								&nbsp;
-							@else@
-								@rEvent[iEvent].getDate().toString()@
-							@end if@
-						</td>
-						<td class="place">@rEvent[iEvent].getPlace()@</td>
-						<td class="notes">@rEvent[iEvent].getNote()@</td>
-						<td class="source">@include linkSource(rEvent[iEvent].getSource())@</td>
-					</tr>
-				@end loop@
-			</tbody>
-		</table>
-	</section>
-@end if@
+@template events(person,isFamilyEvents)@
+
+<section class="events">
+	<div class="family_events">
+		@if (isFamilyEvents)@
+			<a href="?person_uuid=@person.getUuid()@">hide family events</a>
+		@else@
+			<a href="?personfam_uuid=@person.getUuid()@">show family events</a>
+		@end if@
+	</div>
+	@if (isFamilyEvents)@
+		@include eventsFamily(person.getFamilyEvents())@
+	@else@
+		@include eventsSelf(person.getEvents())@
+	@end if@
+</section>

@@ -40,6 +40,12 @@ public class FamilyEvent implements Comparable<FamilyEvent>
 	{
 		return this.relation;
 	}
+
+	public boolean isSelf()
+	{
+		return this.relation.equals("self");
+	}
+
 	@Override
 	public int compareTo(final FamilyEvent that)
 	{

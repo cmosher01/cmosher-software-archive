@@ -1,4 +1,4 @@
-body, nav, article, footer
+nav, article, footer
 {
 	margin: 2%;
 }
@@ -10,7 +10,8 @@ footer
 
 section
 {
-	margin-top: 2em;
+	margin-top: 2%;
+	margin-bottom: 2%;
 }
 
 blockquote
@@ -32,4 +33,9 @@ blockquote h1
 {
 	margin-left: 4em;
 	margin-top: 1em;
+}
+
+th, td
+{
+	padding: 1px;
 }
