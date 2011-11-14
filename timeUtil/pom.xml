@@ -32,6 +32,9 @@
 			<build>
 				<directory>eclipse-target</directory>
 			</build>
+			<properties>
+				<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+			</properties>
 		</profile>
 	</profiles>
 	<build>
