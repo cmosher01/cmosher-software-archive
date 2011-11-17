@@ -17,7 +17,7 @@
 		</tfoot>
 		<tbody>
 			@loop iEvent : rEvent.size()@
-				@if (!rEvent[iEvent].getPerson().isPrivate())@
+				@if (!rEvent[iEvent].isPrivate())@
 					<tr
 						@if (!rEvent[iEvent].isSelf())@
 							class="other_relative"

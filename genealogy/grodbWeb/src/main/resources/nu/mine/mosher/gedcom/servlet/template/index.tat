@@ -5,7 +5,7 @@
 @include head(null)@
 
 <body>
-	<div class="gedcoms">
+	<article class="gedcoms">
 		<p>Please choose a genealogy to explore:</p>
 	
 		<table>
@@ -28,7 +28,7 @@
 				@end loop@
 			</tbody>
 		</table>
-	</div>
+	</article>
 </body>
 
 @include footer()@

@@ -46,6 +46,15 @@ public class FamilyEvent implements Comparable<FamilyEvent>
 		return this.relation.equals("self");
 	}
 
+	public boolean isPrivate()
+	{
+		if (this.person == null)
+		{
+			return false;
+		}
+		return this.person.isPrivate();
+	}
+
 	@Override
 	public int compareTo(final FamilyEvent that)
 	{
