@@ -13,6 +13,7 @@ public class HtmlUtil {
 
 	public static String smartEscapeHtml(final String string) {
 		if (
+			string.contains("<p>") ||
 			string.contains("<td>") ||
 			string.contains("<TD>") ||
 			string.contains("<br") ||

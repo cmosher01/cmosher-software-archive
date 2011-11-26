@@ -50,7 +50,7 @@ public class Source
 		int start = wordIter.first();
 		final StringBuilder sb = new StringBuilder(32);
 		int iWord = 0;
-		for (int end = wordIter.next(); end != BreakIterator.DONE && ++iWord < 11; start = end, end = wordIter.next())
+		for (int end = wordIter.next(); end != BreakIterator.DONE && ++iWord < 15; start = end, end = wordIter.next())
 		{
 			sb.append(this.title.substring(start,end));
 		}
