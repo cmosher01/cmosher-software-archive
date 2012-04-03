@@ -1,0 +1,51 @@
+//asciidoc
+
+Epple ][
+========
+Chris Mosher <chris@mosher.mine.nu>
+:icons:
+:toclevels: 3
+:toc2:
+
+
+
+== EPPLE ][ Emulator
+
+EPPLE ][ is an emulator of the original APPLE ][ and APPLE ][ PLUS
+computers from http://www.apple.com/[Apple, Inc]. It
+runs on Windows and Linux platforms, and is released under
+http://www.gnu.org/licenses/gpl-3.0-standalone.html[GPLv3]
+image:gplv3logo.png[GPLv3]
+
+It is written in C++ and is designed with cross-platform
+portability in mind. It relies on the
+http://www.libsdl.org/[SDL] graphics library.
+
+== Features
+
+* Cycle-accurate: emulates all MOS 6502 CPU cycles including ``phantom reads''
+* Video display is synchronized with CPU
+* NTSC video signal emulation: all video quirks emulated accurately
+* Revision 0 motherboard (optional)
+* Multiple display types: monitor and TV emulation
+* Can run full-screen or in a window
+* 640x480 resolution
+* Floating data bus, and video scanner
+* Cards: Disk ][, language, firmware, clock
+* Paddles (mouse emulates two paddles)
+* Cassette tape interface
+* PR#1 writes to standard output
+* Accurate keyboard emulation, including the repeat key
+* It even emulates the POWER light!
+
+include::screenshots.asciidoc[]
+
+include::download.asciidoc[]
+
+include::configuration.asciidoc[]
+
+include::usermanual.asciidoc[]
+
+include::building.asciidoc[]
+
+include::a2library.asciidoc[]

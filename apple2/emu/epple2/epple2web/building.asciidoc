@@ -1,0 +1,198 @@
+== Building From Source
+
+
+
+Linux is the primary development platform supported,
+but Windows (MSYS) is minimally supported. It shouldn't
+be too hard to port to Mac either.
+
+To build epple2 from the source distribution,
+you'll need to have the SDL development libraries installed.
+See http://www.libsdl.org/[http://www.libsdl.org/] for information on SDL.
+You'll need to download and install the ``Development Libraries''
+for your platform (Win32 or Linux).
+
+
+
+=== Linux
+
+==== Set Up Build Environment
+
+The exact steps for setting up the build environment will
+differ from system to system. You will need to set up the following:
+
+* Standards-compliant C\++ compiler, such as GNU g++
+* X11 headers; look for _libX11-dev_ or similar package
+* you may need X11 extensions; for Debian, _x11proto-xext-dev_ worked for me
+
+As a sanity check for g++, type this at the shell prompt:
+
+[source,sh]
+--------
+g++ --version
+--------
+
+As a sanity check for X11, make sure this file exists:
+
++/usr/include/X11/Xlib.h+
+
+I had trouble with building SDL from sources without having
+the X11 extensions installed, as shown in the above list. If
+you are not building SDL from sources (see below), you may not need
+the X11 extensions.
+
+
+As a sanity check for X11 extensions, make sure this file exists:
+
+
++/usr/include/X11/extensions/XShm.h+
+
+==== Install SDL
+
+You should check your distribution's package library to see if it has
+the SDL development libraries and install them from there.
+
+If not, go to http://www.libsdl.org/[]
+and find the download page. You can either download the ``Development
+Libraries'' for Linux, in RPM format, and install that,
+or download the source and proceed as follows.
+
+
+Download the ``Source Code,'' for example: +SDL-1.2.13.tar.gz+
+And save it to your home directory. At the bash prompt, go to your home
+directory and untar the SDL archive:
+
+[source,sh]
+--------
+$ cd
+$ tar xzvf SDL-1.2.13.tar.gz
+--------
+
+Then follow the instructions to install SDL, for example:
+
+[source,sh]
+--------
+$ cd SDL-1.2.13
+$ ./configure
+$ make
+$ sudo make install
+--------
+
+==== Untar Epple ][ Source
+
+Download the Epple ][ Source Distribution
+and save it to your home directory. At the bash prompt, go to your home
+directory and untar the epple2 source distribution tar file. For example:
+
+[source,sh]
+--------
+$ cd
+$ tar xzvf epple2-1.0.tar.gz
+--------
+
+==== Build Epple ][
+
+Then build as follows. I recommend doing a VPATH build,
+where you build into a different directory than the source
+directory. To accomplish this, create a new directory for
+building, somewhere, such as:
+
+--------
+$ cd
+$ mkdir buildepple2
+$ cd buildepple2
+--------
+
+Then run configure and make:
+
+--------
+$ ~/epple2-1.0/configure
+$ make
+$ sudo make install
+--------
+
+If all goes well, it will build without any errors.
+
+
+
+
+=== Windows/MSYS
+
+==== Install MinGW/MSYS
+<ul>
+<li>Install MSYS into <code>C:\msys\</code></li>
+<li>Install MinGW into <code>C:\msys\mingw\</code></li>
+</ul>
+
+For more information on MinGW and MSYS, see <a href="http://www.mingw.org/">http://www.mingw.org/</a>.
+
+
+<h4>Install SDL</h4>
+
+At <a href="http://www.libsdl.org/">http://www.libsdl.org/</a> find the download page.
+Download the "Development Libraries" for Win32/mingw, for example:
+<ul><li><code>SDL-devel-1.2.13-mingw32.tar.gz</code> (Mingw32)</li></ul>
+And save it to your MSYS home directory (for example, <code>C:\msys\home\Administrator</code>).
+Run MSYS, and at the bash prompt, go to your home directory and
+untar the SDL archive to your home directory:
+
+<code><pre>
+$ cd
+$ tar xzvf SDL-devel-1.2.13-mingw32.tar.gz</pre></code>
+
+Then follow the instructions to install SDL, for example:
+
+<code><pre>
+$ cd SDL-1.2.13
+$ make native</pre></code>
+
+<h4>Untar Epple ][ Source</h4>
+
+<a href="download.shtml">Download</a> the Epple ][ Source Distribution
+and save it to your MSYS home directory (for example, <code>C:\msys\home\Administrator</code>).
+Run MSYS, and at the bash prompt, go to your home directory and
+untar the epple2 source distribution tar file. For example:
+
+<code><pre>
+$ cd
+$ tar xzvf epple2-1.0.tar.gz</pre></code>
+
+<h4>Build Epple ][</h4>
+
+Then build as follows. I recommend doing a VPATH build,
+where you build into a different directory than the source
+directory. To accomplish this, create a new directory for
+building, somewhere, such as:
+
+<code><pre>
+$ cd
+$ mkdir buildepple2
+$ cd buildepple2</pre></code>
+
+Then run configure from there. For the MSYS build to work,
+you need some extra parameters to the build, and you could
+also add some compiler options to optimize the build. For
+example (from the buildepple2 directory you just created):
+
+<code><pre>
+$ ~/epple2/configure --prefix= \
+CXXFLAGS="-I/usr/include -O4 -msse3" \
+CFLAGS="-I/usr/include" \
+LDFLAGS="-L/usr/lib -mconsole -mthreads -mno-cygwin"
+$ make</pre></code>
+
+If all goes well, it will build without any errors.
+If you get errors about not finding SDL.h, make sure
+SDL is installed, and make sure the configure command
+is correct. (If you just run configure without the
+options shown above, you will get this error at build time.)
+The result of the build (on Windows platform) is
+<ul><li><code>installer/epple2.msi</code></li></ul>
+which is an installable file for Windows. To install
+epple2, just double-click on this file from Explorer.
+
+</div>
+<!--#include virtual="footer.ihtml" -->
+</div>
+</body>
+</html>
