@@ -1,89 +1,82 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-	<head>
-		<!--#include virtual="head.ihtml" -->
-		<title>Apple ][ Library</title>
-	</head>
-	<body>
-		<div id="container">
-			<!--#include virtual="navigation.ihtml" -->
-			<div id="content">
-<h1>Apple ][ Library</h1>
-<p>(A private archives not affiliated with Apple, Inc.)
-<h3>NOTICE: Warning Concerning Copyright Restrictions</h3>
-<p>
-The copyright law of the United States (title 17, United States 
-Code) governs the making of photocopies or other reproductions of 
+== Apple ][ Library
+
+(A private archives not affiliated with Apple, Inc.)
+
+=== NOTICE: Warning Concerning Copyright Restrictions
+
+[WARNING]
+The copyright law of the United States (title 17, United States
+Code) governs the making of photocopies or other reproductions of
 copyrighted material.
-</p>
-<p>
-Under certain conditions specified in the law, libraries and 
-archives are authorized to furnish a photocopy or other reproduction. 
-One of these specific conditions is that the photocopy or reproduction 
-is <b>not to be "used for any purpose other than private study, 
-scholarship, or research."</b> If a user makes a request for, or later 
-uses, a photocopy or reproduction for purposes in excess of "fair 
-use," that user may be liable for copyright infringement.
-</p>
-<p>
+Under certain conditions specified in the law, libraries and
+archives are authorized to furnish a photocopy or other reproduction.
+One of these specific conditions is that the photocopy or reproduction
+is _not to be used for any purpose other than private study,
+scholarship, or research._ If a user makes a request for, or later
+uses, a photocopy or reproduction for purposes in excess of _fair
+use_, that user may be liable for copyright infringement.
 This institution reserves the right to refuse to accept a copying 
 order if, in its judgment, fulfillment of the order would involve 
 violation of copyright law.
-</p>
-<p>
+
 By clicking any of the links in the following list, you are effectively placing an order
 to reproduce that work, and agree to the restrictions outlined above.
-</p>
-<table border="1">
-	<thead>
-		<tr><th colspan="2">Platform</th><th>Apple ][ System</th><th>Apple ][ Disk Operating System</th></tr>
-    </thead>
-	<tbody>
-		<tr><td><img src="make.png" /></td><td>(source)</td>
-			<td><a href="apple2sys-1.0.tar.gz">apple2sys-1.0.tar.gz</a></td>
-			<td><a href="apple2dos-1.0.tar.gz">apple2dos-1.0.tar.gz</a></td>
-		</tr>
-		<tr><td><img src="redhat.png" /></td><td>Redhat</td>
-			<td><a href="apple2sys-1.0-1.noarch.rpm">apple2sys-1.0-1.noarch.rpm</a></td>
-			<td><a href="apple2dos-1.0-1.noarch.rpm">apple2dos-1.0-1.noarch.rpm</a></td>
-		</tr>
-		<tr><td><img src="debian.png" /></td><td>Debian</td>
-			<td><a href="apple2sys_1.0-2_all.deb">apple2sys_1.0-2_all.deb</a></td>
-			<td><a href="apple2dos_1.0-2_all.deb">apple2dos_1.0-2_all.deb</a></td>
-		</tr>
-		<tr><td><img src="windows.gif" /></td><td>Windows</td>
-			<td><a href="apple2sys-1.0.msi">apple2sys-1.0.msi</a></td>
-			<td><a href="apple2dos-1.0.msi">apple2dos-1.0.msi</a></td>
-		</tr>
-	</tbody>
-</table>
-<h3>Apple ][ System Software</h3>
-<p>
+
+==== Redhat (RPM) image:redhat.png[Redhat RPM]
+
+Apple ][ System: http://apple2sys-1.0-1.noarch.rpm[apple2sys-1.0-1.noarch.rpm]
+
+Apple ][ Disk Operating System: http://apple2dos-1.0-1.noarch.rpm[apple2dos-1.0-1.noarch.rpm]
+
+==== Debian (DEB) image:debian.png[Debian DEB]
+
+Apple ][ System: http://apple2sys_1.0-2_all.deb[apple2sys_1.0-2_all.deb]
+
+Apple ][ Disk Operating System: http://apple2dos_1.0-2_all.deb[apple2dos_1.0-2_all.deb]
+
+==== Windows (MSI) image:windows.gif[Windows MSI]
+
+Apple ][ System: http://apple2sys-1.0.msi[apple2sys-1.0.msi]
+
+Apple ][ Disk Operating System: http://apple2dos-1.0.msi[apple2dos-1.0.msi]
+
+==== Source (make) image:make.png[Source make]
+
+Apple ][ System: http://apple2sys-1.0.tar.gz[apple2sys-1.0.tar.gz]
+
+Apple ][ Disk Operating System: http://apple2dos-1.0.tar.gz[apple2dos-1.0.tar.gz]
+
+
+
+=== Apple ][ System Software
+
 The Apple ][ and Apple ][ plus computers came with System Software in their
-ROM chips from the factory. The System Software is commonly called "firmware,"
-or simply "ROMs".
-</p>
-<p>
-The Apple ][ (as opposed to the Apple ][ plus) had the "Monitor" system
-firmware, as well as the "Integer BASIC" interpreter and command line shell,
-and a few other miscellaneous features, such as "Sweet-16" and the Mini Assembler.
-The Apple ][ plus had an
-updated Monitor, sometimes known as the "Autostart Monitor," and replaced
-Integer BASIC and the misc. routines with a new floating-point BASIC, called
-"Applesoft BASIC," which was written by Microsoft (in its early days).
-</p>
-<h3>Apple ][ Disk Operating System Software</h3>
-<p>
-The Apple ][ Disk Operating System Software is commonly known as "DOS 3.3".
+ROM chips from the factory. The System Software is commonly called ``firmware,''
+or simply ``ROMs.''
+
+The first Apple ][ had the ``Monitor'' system firmware, as well as the
+``Integer BASIC'' programming language interpreter and command line shell,
+and a few other miscellaneous features, such as ``Sweet-16'' and the Mini Assembler.
+The Apple ][ plus had an updated Monitor, sometimes known as the ``Autostart Monitor,''
+and replaced Integer BASIC and the misc. routines with a new floating-point BASIC, called
+``Applesoft BASIC,'' which was written by Microsoft (in its earliest days).
+
+
+
+=== Apple ][ Disk Operating System Software
+
+The Apple ][ Disk Operating System Software is commonly known as ``DOS 3.3''.
 This software is on most Apple ][ floppy disks, and is loaded into the computer
-from the floppy during the "boot" process. The Disk ][ Controller peripheral
+from the floppy during the ``boot'' process. The Disk ][ Controller peripheral
 card contains some firmware that begins the boot process. The rest of DOS is
 stored on the floppy disk. There were different versions of DOS released by
 Apple, in two incompatible forms: the earlier with 13 sectors per disk track,
 and the later, most common, format, with 16 sectors per track.
-</p>
-<h3>Recovery Effort</h3>
-<p>
+
+
+
+=== Recovery Effort
+
 These pieces of software are not easily available today, in source or
 binary form. The System Software can only be obtained in binary form, and only by
 purchasing an actual Apple ][ through private sale (or auction). Some of
@@ -93,33 +86,23 @@ DOS software, version 3.3 is the most common, but is only available in
 binary form, and only through private channels. The older versions of DOS
 are almost impossible to find. And none of the DOS source code was ever
 made available officially.
-</p>
-<p>
+
 After years of tireless effort, we have been able to completely recreate all
 of the System Software and DOS Software in source form. The source is (highly
 commented) 6502 assembly language, intended
-for the ca65 Assembler (part of the <a href="http://www.cc65.org/">cc65</a>
-C compiler collection), although porting it to other 6502 assemblers
+for the xa assembler, although porting it to other 6502 assemblers
 should not be too difficult. Included in the recovery effort was all
 System Software for the Apple ][ and ][ plus, including the Monitor and
 both BASIC interpreters. Also included were the Disk Operating
 System Software versions 3.1, 3.2, 3.2.1, and the three different
-releases of version 3.3. The (known) official "System Master" disks were recovered
+releases of version 3.3. The (known) official ``System Master'' disks were recovered
 as well. Also included were the (yet) older versions of Monitor
 and Integer BASIC that were provided for the Apple I (one). There was
 also an older version of Applesoft that exists (on cassette from Apple),
 but we have not (yet) been able to obtain any copy of this, so it has
 not been recovered. More details on specific versions are available
 in source code comments, and in various README files that also come with
-the source distributions.
-As stated above, these works are provided for private
-study, scholarship, or research only, and are (or may be) copyright by
-Apple Inc. or others. We are not lawyers, and are not providing legal advice. For
-convenience, these works are also provided in binary form for various platforms
-(.rpm for Redhat, .deb for Debian, or .msi for Windows).
-</p>
-			</div>
-			<!--#include virtual="footer.ihtml" -->
-		</div>
-	</body>
-</html>
+the source distributions. As stated above, these works are provided for
+private study, scholarship, or research only, and are (or may be) copyright
+by Apple, Inc., or others. For convenience, these works are also provided in
+binary form.

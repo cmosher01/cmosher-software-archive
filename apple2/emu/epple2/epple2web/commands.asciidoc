@@ -106,7 +106,7 @@ all 35 tracks, in order 0-36, each track being 6656 ($1A00) bytes long. Nibble i
 will generally have a filetype of ".nib".
 
 
-The best floppy disk image conversion tool I've found is <a href="http://ciderpress.sourceforge.net">CiderPress</a>,
+The best floppy disk image conversion tool I've found is http://ciderpress.sourceforge.net/[CiderPress],
 for Windows (but it supposedly runs under Wine on Linux, too). Thanks to Andy McFadden.
 
 
@@ -172,7 +172,7 @@ cassette save
 +<file-path>+ File path of the (special format) cassette tape image file.
 
 The +cassette+ command allows the user to control the emulated cassette tape player.
-See <<cassette,Cassette>> for more information about operating the emulated
+See <<_cassette_tape_interface,Cassette>> for more information about operating the emulated
 cassette player and cassette tape image files.
 
 

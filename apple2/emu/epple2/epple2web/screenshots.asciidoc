@@ -11,8 +11,8 @@ controller in slot 6, and a language card in slot 0.
 We've booted the DOS 3.3 System Master disk. It correctly
 identifies the machine as an Apple ][ plus, and then
 loads Integer BASIC into the language card. You can switch
-between Applesoft and Integer BASIC by using the FP and
-INT commands.
+between Applesoft and Integer BASIC by using the +FP+ and
++INT+ commands.
 
 
 
@@ -27,7 +27,7 @@ revision 0 motherboard, when the machine is powered-on,
 the CPU doesn't start actually running until you
 manually press the RESET button. Also, the old Monitor
 ROMs do not boot from the disk drives automatically;
-you need to type C600G to boot.
+you need to type +C600G+ to boot.
 We've booted the DOS 3.1 System Master disk and done a
 catalog of it. As you can see, with a revision 0 motherboard,
 the text is displayed in green and purple, which are also the
@@ -45,6 +45,7 @@ image::prodos.png[]
 
 Here we've configured an Apple ][ plus with language card
 and disk drive. We're booting a PRODOS 1.1.1 disk.
+
 
 
 === Bishop's Apple Split
@@ -96,7 +97,9 @@ RUN
 
 image::pinkmystery.png[]
 
-Jim Sather's book _Understanding the Apple II_, which was the primary
+Jim Sather's book 
+http://www.scribd.com/doc/201423/Understanding-the-Apple-II-by-Jim-Sather-1983Quality-Software[Understanding the Apple II],
+which was the primary
 reference for the internal design of the EPPLE ][ emulator, describes the video
 generation process of the Apple ][, in great detail, in Chapter 8.
 On page 8-21 he shows a simple Applesoft BASIC program (shown below)
@@ -121,7 +124,9 @@ RUN
 
 image::splitcolors.png[]
 
-Jim Sather's book _Understanding the Apple II_ shows an Applesoft BASIC
+Jim Sather's book 
+http://www.scribd.com/doc/201423/Understanding-the-Apple-II-by-Jim-Sather-1983Quality-Software[Understanding the Apple II],
+shows an Applesoft BASIC
 program and assembly language subroutine on pages 3-16 and 3-17 (reproduced
 below) that produce the display shown here. The screen is split between HIRES
 and LORES graphics by a timed loop that manipulates the screen switches.

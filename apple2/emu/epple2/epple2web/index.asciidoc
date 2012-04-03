@@ -7,19 +7,20 @@ Chris Mosher <chris-keyword-epple2.4a8db3@mosher.mine.nu>
 :toclevels: 3
 :toc2:
 
+image::epple2logo.png[]
 
+== Introduction
 
-== EPPLE ][ Emulator
-
-EPPLE ][ is an emulator of the original APPLE ][ and APPLE ][ PLUS
-computers from http://www.apple.com/[Apple, Inc]. It
+Epple ][ is an emulator of the original APPLE ][ and APPLE ][ PLUS
+computers from http://www.apple.com/[Apple, Inc.] It
 runs on Windows and Linux platforms, and is released under
 http://www.gnu.org/licenses/gpl-3.0-standalone.html[GPLv3]
 image:gplv3logo.png[GPLv3]
 
 It is written in C++ and is designed with cross-platform
-portability in mind. It relies on the
-http://www.libsdl.org/[SDL] graphics library.
+portability in mind. It uses the http://www.libsdl.org/[SDL] graphics library.
+
+
 
 == Features
 
@@ -50,8 +51,10 @@ include::building.asciidoc[]
 
 include::a2library.asciidoc[]
 
-Copyright (C) 2009,2012, by mailto:chris-keyword-epple2.4a8db3@mosher.mine.nu[Christopher A. Mosher].
+''''
 
+Copyright (C) 2009,2012, by mailto:chris-keyword-epple2.4a8db3@mosher.mine.nu[Christopher A. Mosher], Shelton CT, USA.
+
+image:80x15.png[Creative Commons Attribution-Noncommercial-Share Alike 3.0 USA License]
 This web site is licensed under the
-http://creativecommons.org/licenses/by-nc-sa/3.0/us/[image:80x15.png[Creative Commons Attribution-Noncommercial-Share Alike 3.0 USA License]]
-http://creativecommons.org/licenses/by-nc-sa/3.0/us/[Creative Commons Attribution-Noncommercial-Share Alike 3.0 USA License]
+http://creativecommons.org/licenses/by-nc-sa/3.0/us/[Creative Commons Attribution-Noncommercial-Share Alike 3.0 USA License].
