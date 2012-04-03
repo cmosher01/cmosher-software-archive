@@ -12,7 +12,6 @@ index.html : \
  screenshots.asciidoc \
  download.asciidoc \
  configuration.asciidoc \
- usermanual.asciidoc \
  building.asciidoc \
  a2library.asciidoc \
  usermanual.asciidoc \
