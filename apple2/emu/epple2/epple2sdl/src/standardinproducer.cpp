@@ -17,6 +17,7 @@
 */
 #include "standardinproducer.h"
 #include <SDL/SDL.h>
+#include <SDL/SDL_thread.h>
 #include <iostream>
 
 #define CR '\r'
