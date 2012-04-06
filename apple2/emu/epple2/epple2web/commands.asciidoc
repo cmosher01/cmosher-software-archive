@@ -58,22 +58,24 @@ The +import+ command reads the binary image byte-for-byte from the given file-pa
 into an area of memory in the emulated Apple. You can load into either the motherboard or
 a card in one of the slots. For the motherboard, you choose the RAM or ROM area. For a card
 in a slot, you can choose either the normal ROM, the bank-switched ROM, or the so-called
-"seventh ROM" area.
+``seventh ROM'' area.
 
 You also have to specify the base address within the specific memory
 area at which the image file will be loaded. Note that the base address is specified as the offset
 within the specific memory area, and not necessarily as the actual memory address as seen
 by the Apple. So for motherboard ROM, for example, specifying a base as 2DED will cause the
 image to be loaded at offset 2DED in the ROM, which will be addressed by the Apple at
-memory address $FDED (because motherboard ROM "starts" at address $D000).
+memory address $FDED (because motherboard ROM ``starts'' at address $D000).
 
 For peripheral cards, the ROM will be seen at locations $Cs00-$CsFF, where s is the slot
-number (1 through 7). The "seventh ROM" can be seen as locations $C800-$CFFF; Jim Sather
-describes this functionality in "Understanding the Apple II" on page 6-4, section "The
-Seventh ROM Chip." The EPPLE ][ emulator handles this processing correctly. A card can
+number (1 through 7). The ``seventh ROM'' can be seen as locations $C800-$CFFF; Jim Sather
+describes this functionality in
+http://www.scribd.com/doc/201423/Understanding-the-Apple-II-by-Jim-Sather-1983Quality-Software[Understanding the Apple II],
+on page 6-4, section ``The Seventh ROM Chip.'' The EPPLE ][ emulator handles this processing correctly. A card can
 also have bank-switched ROM, which will show up at addresses $D000-$FFFF when switched in
-(stealing that address range from motherboard ROM... see "Understanding the Apple II,"
-p. 5-26 "The 16K RAM Card").
+(stealing that address range from motherboard ROM... see
+http://www.scribd.com/doc/201423/Understanding-the-Apple-II-by-Jim-Sather-1983Quality-Software[Understanding the Apple II],
+p. 5-26 ``The 16K RAM Card'').
 
 
 
@@ -100,10 +102,10 @@ contains a Disk ][ controller peripheral card, and specify which drive number (1
 
 [NOTE]
 The floppy disk image MUST be a NIBBLE DISK IMAGE.
-Other formats (for example, DOS order, .do, PRODOS order,
-.po, .dsk, or anything else) must first be converted to nibble format. A nibble image contains
+Other formats (for example, DOS order, +.do+, PRODOS order,
++.po+, +.dsk+, or anything else) must first be converted to nibble format. A nibble image contains
 all 35 tracks, in order 0-36, each track being 6656 ($1A00) bytes long. Nibble image files
-will generally have a filetype of ".nib".
+will generally have a filetype of +.nib+.
 
 
 The best floppy disk image conversion tool I've found is http://ciderpress.sourceforge.net/[CiderPress],
@@ -125,8 +127,10 @@ unload slot <slot> drive <drive>
 
 +<drive>+ Drive number, 1 or 2, of the disk drive on the controller card to remove the floppy disk image from.
 
-The +unload+ command removes the disk from the specified slot and drive. If the disk has been modified but
-not saved, the modifications will be discarded without warning.
+The +unload+ command removes the disk from the specified slot and drive.
+
+[WARNING]
+If the disk has been modified but not saved, the modifications will be DISCARDED.
 
 
 
@@ -149,7 +153,7 @@ save slot <slot> drive <drive> <file-path>
 The +save+ command saves any changes that the emulated Apple ][ has made to the floppy
 disk image. It is important to note that the emulator operates on the image only in memory, and does
 not immediately write changes back to the real file. You need to issue the +save+ command
-in order to write changes back to the file. Note that the emulator will display a asterisk ("*")
+in order to write changes back to the file. Note that the emulator will display a asterisk +*+
 next to the file-name of a disk image if it has any unsaved changes.
 
 

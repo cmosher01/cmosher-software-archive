@@ -89,8 +89,9 @@ made available officially.
 
 After years of tireless effort, we have been able to completely recreate all
 of the System Software and DOS Software in source form. The source is (highly
-commented) 6502 assembly language, intended
-for the xa assembler, although porting it to other 6502 assemblers
+commented) 6502 assembly language, intended for the
+http://www.floodgap.com/retrotech/xa/[xa Assembler],
+although porting it to other 6502 assemblers
 should not be too difficult. Included in the recovery effort was all
 System Software for the Apple ][ and ][ plus, including the Monitor and
 both BASIC interpreters. Also included were the Disk Operating

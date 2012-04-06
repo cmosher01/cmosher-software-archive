@@ -27,7 +27,7 @@ You can specify a different configuration file for the emulator to use by
 specifying its name as the argument when running the epple2 program.
 
 The format of the configuration file is just lines of <<_commands,commands>>.
-Comments begin with a "#" character and continue to the end of the line.
+Comments begin with a hash +#+ character, and continue to the end of the line.
 
 === Firmware
 

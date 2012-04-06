@@ -65,7 +65,7 @@ sections.
 === System ROMs&mdash;The Main System Firmware (Demo or Real)
 
 Since the Epple ][ program emulates only the hardware, you will also need to download some _system software_
-for it to run. This is commonly called "firmware" or "ROMs," because it is stored in the
+for it to run. This is commonly called ``firmware'' or ``ROMs,'' because it is stored in the
 read-only memory area of the emulated system. The original system software on the
 Apple ][ machines is copyright by Apple, and is proprietary. If you own an actual
 Apple ][ or Apple ][ plus machine, you can copy footnoteref:[disclaimer] the firmware

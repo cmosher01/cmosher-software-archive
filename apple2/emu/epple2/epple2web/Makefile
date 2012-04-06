@@ -26,4 +26,4 @@ index.html : \
 
 
 clean :
-	rm -f *.html
+	rm -f index.html

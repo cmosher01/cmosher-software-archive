@@ -84,12 +84,12 @@ This will create a new, empty tape file image named +hello.tap+
 in the current default directory. (We could have specified a full path
 name for the file if we wanted to place it in a different directory.)
 Notice that the emulator now displays the name of the tape image file,
-along with the position and length of the tape image, which is now "0/0".
+along with the position and length of the tape image, which is now +0/0+.
 
 Next, we tell Applesoft to save the program to the cassette. For this,
 we just use the +SAVE+ command. Note that this is not the
 DOS +SAVE+ command; the DOS command has a file name after
-+SAVE<+. We just use +SAVE+ with no file name.
++SAVE+. We just use +SAVE+ with no file name.
 
 ------------------------
 ]SAVE

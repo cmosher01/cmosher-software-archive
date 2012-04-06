@@ -64,7 +64,8 @@ language card as follows:
 *  +B2+  Use $D000 bank 2
 
 An overview of the I/O switches that control the language card
-is provided by Jim Sather in ``Understanding the Apple II,''
+is provided by Jim Sather in
+http://www.scribd.com/doc/201423/Understanding-the-Apple-II-by-Jim-Sather-1983Quality-Software[Understanding the Apple II],
 p. 5-30, Table 5.4, as follows:
 
 [options="header", style="monospaced"]
@@ -135,7 +136,9 @@ you to type +FP+ to use Applesoft BASIC, or +INT+ to switch to Integer BASIC.
 
 Note that DOS and ProDOS will make use of a firmware card only if it is in slot _zero_.
 
-Jim Sather, in ``Understanding the Apple II,'' on pages 6-18 through 6-21, explains
+Jim Sather, in
+http://www.scribd.com/doc/201423/Understanding-the-Apple-II-by-Jim-Sather-1983Quality-Software[Understanding the Apple II],
+on pages 6-18 through 6-21, explains
 how to modify a firmware card to allow independent switching of the $F800-$FFFF
 ROM memory. This area is occupied by the Monitor, so it is primarily
 intended to allow the user to switch between the old Monitor and the Autostart
