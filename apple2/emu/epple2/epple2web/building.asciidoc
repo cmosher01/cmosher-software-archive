@@ -2,121 +2,44 @@
 
 
 
-Linux is the primary development platform supported,
-but Windows (MSYS) is minimally supported. It shouldn't
-be too hard to port to Mac either.
+The Epple ][ Emulator is written in C+\+, and can be built
+using the standard +make+ program.
 
-To build epple2 from the source distribution,
-you'll need to have the SDL development libraries installed.
-See http://www.libsdl.org/[http://www.libsdl.org/] for information on SDL.
-You'll need to download and install the ``Development Libraries''
-for your platform (Win32 or Linux).
+The primary dependency is
+http://www.libsdl.org/[Simple DirectMedia Layer] (SDL).
+Your linux distribution may provide a package. Or else
+you can download it directly from SDL's web site. In
+either case, be sure to install the ``Development Libraries''
+for your particular platform.
 
 
 
-=== Linux
-
-==== Set Up Build Environment
-
-The exact steps for setting up the build environment will
-differ from system to system. You will need to set up the following:
-
-* Standards-compliant C\++ compiler, such as GNU g++
-* X11 headers; look for _libX11-dev_ or similar package
-* you may need X11 extensions; for Debian, _x11proto-xext-dev_ worked for me
-
-As a sanity check for g++, type this at the shell prompt:
+=== Debian Linux Example
 
 [source,sh]
---------
-g++ --version
---------
-
-As a sanity check for X11, make sure this file exists:
-
-+/usr/include/X11/Xlib.h+
-
-I had trouble with building SDL from sources without having
-the X11 extensions installed, as shown in the above list. If
-you are not building SDL from sources (see below), you may not need
-the X11 extensions.
-
-
-As a sanity check for X11 extensions, make sure this file exists:
-
-
-+/usr/include/X11/extensions/XShm.h+
-
-==== Install SDL
-
-You should check your distribution's package library to see if it has
-the SDL development libraries and install them from there.
-
-If not, go to http://www.libsdl.org/[]
-and find the download page. You can either download the ``Development
-Libraries'' for Linux, in RPM format, and install that,
-or download the source and proceed as follows.
-
-
-Download the ``Source Code,'' for example: +SDL-1.2.13.tar.gz+
-And save it to your home directory. At the bash prompt, go to your home
-directory and untar the SDL archive:
-
-[source,sh]
---------
-$ cd
-$ tar xzvf SDL-1.2.13.tar.gz
---------
-
-Then follow the instructions to install SDL, for example:
-
-[source,sh]
---------
-$ cd SDL-1.2.13
-$ ./configure
-$ make
-$ sudo make install
---------
-
-==== Untar Epple ][ Source
-
-Download the Epple ][ Source Distribution
-and save it to your home directory. At the bash prompt, go to your home
-directory and untar the epple2 source distribution tar file. For example:
-
-[source,sh]
---------
-$ cd
-$ tar xzvf epple2-1.0.tar.gz
---------
-
-==== Build Epple ][
-
-Then build as follows. I recommend doing a VPATH build,
-where you build into a different directory than the source
-directory. To accomplish this, create a new directory for
-building, somewhere, such as:
-
---------
-$ cd
-$ mkdir buildepple2
-$ cd buildepple2
---------
-
-Then run configure and make:
-
---------
-$ ~/epple2-1.0/configure
-$ make
-$ sudo make install
---------
-
-If all goes well, it will build without any errors.
+---------------------------------------------------
+sudo apt-get install build-essential libsdl1.2-dev  # <1>
+cd
+mkdir epple2
+cd epple2
+wget http://mosher.mine.nu/epple2/epple2-1.0.tar.gz  # <2>
+tar xzvf epple2-1.0.tar.gz
+mkdir build  # <3>
+cd build
+../epple2-1.0/configure  # <4>
+make  # <5>
+sudo make install  # <6>
+---------------------------------------------------
+<1> Install dependencies: gcc, make, SDL
+<2> Retrieve the latest Epple ][ source distribution
+<3> Use this directory for a VPATH-style build
+<4> Run one-time configuration script for your system. Use +--help+ for more information.
+<5> Compile and link. Program will be +src/epple2+
+<6> Install into standard system directories
 
 
 
-
-=== Windows/MSYS
+=== Windows/MSYS Example
 
 ==== Install MinGW/MSYS
 
