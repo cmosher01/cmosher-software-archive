@@ -1,5 +1,3 @@
-//asciidoc
-
 Epple ][
 ========
 Chris Mosher <chris-keyword-epple2.4a8db3@mosher.mine.nu>

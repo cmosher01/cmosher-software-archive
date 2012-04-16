@@ -7,23 +7,7 @@ all : doc
 
 doc : index.html
 
-index.html : \
- index.asciidoc \
- screenshots.asciidoc \
- download.asciidoc \
- configuration.asciidoc \
- building.asciidoc \
- a2library.asciidoc \
- usermanual.asciidoc \
- overview.asciidoc \
- commands.asciidoc \
- display.asciidoc \
- keyboard.asciidoc \
- cards.asciidoc \
- cassette.asciidoc \
- paddles.asciidoc \
- speaker.asciidoc \
-
+index.html : *.asciidoc *.png *.gif
 
 clean :
 	rm -f index.html
