@@ -24,27 +24,27 @@ to reproduce that work, and agree to the restrictions outlined above.
 
 ==== Redhat (RPM) image:redhat.png[Redhat RPM]
 
-Apple ][ System: http://apple2sys-1.0-1.noarch.rpm[apple2sys-1.0-1.noarch.rpm]
+Apple ][ System: http://mosher.mine.nu/apple2/download/apple2sys.noarch.rpm[apple2sys.noarch.rpm]
 
-Apple ][ Disk Operating System: http://apple2dos-1.0-1.noarch.rpm[apple2dos-1.0-1.noarch.rpm]
+Apple ][ Disk Operating System: http://mosher.mine.nu/apple2/download/apple2dos.noarch.rpm[apple2dos.noarch.rpm]
 
 ==== Debian (DEB) image:debian.png[Debian DEB]
 
-Apple ][ System: http://apple2sys_1.0-2_all.deb[apple2sys_1.0-2_all.deb]
+Apple ][ System: http://mosher.mine.nu/apple2/download/apple2sys_all.deb[apple2sys_all.deb]
 
-Apple ][ Disk Operating System: http://apple2dos_1.0-2_all.deb[apple2dos_1.0-2_all.deb]
+Apple ][ Disk Operating System: http://mosher.mine.nu/apple2/download/apple2dos_all.deb[apple2dos_all.deb]
 
 ==== Windows (MSI) image:windows.gif[Windows MSI]
 
-Apple ][ System: http://apple2sys-1.0.msi[apple2sys-1.0.msi]
+Apple ][ System: http://mosher.mine.nu/apple2/download/apple2sys.msi[apple2sys.msi]
 
-Apple ][ Disk Operating System: http://apple2dos-1.0.msi[apple2dos-1.0.msi]
+Apple ][ Disk Operating System: http://mosher.mine.nu/apple2/download/apple2dos.msi[apple2dos.msi]
 
 ==== Source (make) image:make.png[Source make]
 
-Apple ][ System: http://apple2sys-1.0.tar.gz[apple2sys-1.0.tar.gz]
+Apple ][ System: http://mosher.mine.nu/apple2/download/apple2sys.tar.gz[apple2sys.tar.gz]
 
-Apple ][ Disk Operating System: http://apple2dos-1.0.tar.gz[apple2dos-1.0.tar.gz]
+Apple ][ Disk Operating System: http://mosher.mine.nu/apple2/download/apple2dos.tar.gz[apple2dos.tar.gz]
 
 
 
@@ -90,7 +90,7 @@ made available officially.
 After years of tireless effort, we have been able to completely recreate all
 of the System Software and DOS Software in source form. The source is (highly
 commented) 6502 assembly language, intended for the
-http://www.floodgap.com/retrotech/xa/[xa Assembler],
+http://www.floodgap.com/retrotech/xa/[xa65 Assembler],
 although porting it to other 6502 assemblers
 should not be too difficult. Included in the recovery effort was all
 System Software for the Apple ][ and ][ plus, including the Monitor and
@@ -98,10 +98,9 @@ both BASIC interpreters. Also included were the Disk Operating
 System Software versions 3.1, 3.2, 3.2.1, and the three different
 releases of version 3.3. The (known) official ``System Master'' disks were recovered
 as well. Also included were the (yet) older versions of Monitor
-and Integer BASIC that were provided for the Apple I (one). There was
-also an older version of Applesoft that exists (on cassette from Apple),
-but we have not (yet) been able to obtain any copy of this, so it has
-not been recovered. More details on specific versions are available
+and Integer BASIC that were provided for the Apple I (one).
+
+More details on specific versions are available
 in source code comments, and in various README files that also come with
 the source distributions. As stated above, these works are provided for
 private study, scholarship, or research only, and are (or may be) copyright

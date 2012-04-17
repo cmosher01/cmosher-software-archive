@@ -9,42 +9,42 @@ Apple Disk Operating System (DOS) Software are
 _proprietary_ software; they are copyright by Apple and/or others. This web page is not
 providing any advice as to the legality of any copying or downloading you may perform.
 ])
-are available at the <<_apple_library,Apple ][ Library>>.
+are available at the http://mosher.mine.nu/apple2/[Apple ][ Library].
 
 The following software is licensed under
 http://www.gnu.org/licenses/gpl-3.0-standalone.html[GPLv3].
 
 === Redhat (RPM) image:redhat.png[Redhat RPM] image:gplv3logo.png[GPLv3]
 
-Epple ][ Program: http://epple2-1.0-1.i386.rpm[epple2-1.0-1.i386.rpm]
+Epple ][ Program: http://mosher.mine.nu/epple2/download/epple2.i386.rpm[epple2.i386.rpm]
 
-System ROM (Demo): http://epple2sys-1.0-1.noarch.rpm[epple2sys-1.0-1.noarch.rpm]
+System ROM (Demo): http://mosher.mine.nu/epple2/download/epple2sys.noarch.rpm[epple2sys.noarch.rpm]
 
-Card ROMs (stdin/stdout/clock): http://epple2cards-1.0-1.noarch.rpm[epple2cards-1.0-1.noarch.rpm]
+Card ROMs (stdin/stdout/clock): http://mosher.mine.nu/epple2/download/epple2cards.noarch.rpm[epple2cards.noarch.rpm]
 
 === Debian (DEB) image:debian.png[Debian DEB] image:gplv3logo.png[GPLv3]
 
-Epple ][ Program: http://epple2_1.0-2_i386.deb[epple2_1.0-2_i386.deb]
+Epple ][ Program: http://mosher.mine.nu/epple2/download/epple2_i386.deb[epple2_i386.deb]
 
-System ROM (Demo): http://epple2sys_1.0-2_all.deb[epple2sys_1.0-2_all.deb]
+System ROM (Demo): http://mosher.mine.nu/epple2/download/epple2sys_all.deb[epple2sys_all.deb]
 
-Card ROMs (stdin/stdout/clock): http://epple2cards_1.0-2_all.deb[epple2cards_1.0-2_all.deb]
+Card ROMs (stdin/stdout/clock): http://mosher.mine.nu/epple2/download/epple2cards_all.deb[epple2cards_all.deb]
 
 === Windows (MSI) image:windows.gif[Windows MSI] image:gplv3logo.png[GPLv3]
 
-Epple ][ Program: http://epple2-1.0.msi[epple2-1.0.msi]
+Epple ][ Program: http://mosher.mine.nu/epple2/download/epple2.msi[epple2.msi]
 
-System ROM (Demo): http://epple2sys-1.0.msi[epple2sys-1.0.msi]
+System ROM (Demo): http://mosher.mine.nu/epple2/download/epple2sys.msi[epple2sys.msi]
 
-Card ROMs (stdin/stdout/clock): http://epple2cards-1.0.msi[epple2cards-1.0.msi]
+Card ROMs (stdin/stdout/clock): http://mosher.mine.nu/epple2/download/epple2cards.msi[epple2cards.msi]
 
 === Source (make) image:make.png[Source make] image:gplv3logo.png[GPLv3]
 
-Epple ][ Program: http://epple2-1.0.tar.gz[epple2-1.0.tar.gz]
+Epple ][ Program: http://mosher.mine.nu/epple2/download/epple2.tar.gz[epple2.tar.gz]
 
-System ROM (Demo): http://epple2sys-1.0.tar.gz[epple2sys-1.0.tar.gz]
+System ROM (Demo): http://mosher.mine.nu/epple2/download/epple2sys.tar.gz[epple2sys.tar.gz]
 
-Card ROMs (stdin/stdout/clock): http://epple2cards-1.0.tar.gz[epple2cards-1.0.tar.gz]
+Card ROMs (stdin/stdout/clock): http://mosher.mine.nu/epple2/download/epple2cards.tar.gz[epple2cards.tar.gz]
 
 See <<_building_from_source,Building>> to build from sources.
 
@@ -70,7 +70,7 @@ read-only memory area of the emulated system. The original system software on th
 Apple ][ machines is copyright by Apple, and is proprietary. If you own an actual
 Apple ][ or Apple ][ plus machine, you can copy footnoteref:[disclaimer] the firmware
 from it ($D000-$FFFF) (into a file on your PC) and use it. Alternatively, you can
-download footnoteref:[disclaimer] the firmware images from the <<_apple_library,Apple ][ Library>>.
+download footnoteref:[disclaimer] the firmware images from the http://mosher.mine.nu/apple2/[Apple ][ Library].
 
 If you do not want to download the proprietary firmware, you can still use the emulator (albeit
 in a restricted manner) with the free (GPLv3) _System ROM (Demo)_ package. Download
@@ -88,7 +88,7 @@ you want to read any floppy disk images), you will need to have to original ROMs
 No demo of the Disk ROMs are provided here; you will need to
 use the original ROMs, which can be obtained from an original machine (by copying footnoteref:[disclaimer]
 it from $C600-$C6FF into a file on the PC), or by downloading footnoteref:[disclaimer] it
-from the <<_apple_library,Apple ][ Library>>.
+from the http://mosher.mine.nu/apple2/[Apple ][ Library].
 (And, of course, you will need the real Apple System ROM, as noted in the previous section,
 not the Demo System ROM.)
 
