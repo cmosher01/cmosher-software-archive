@@ -7,7 +7,13 @@ all : doc
 
 doc : index.html
 
-index.html : *.asciidoc *.png *.gif
-
 clean :
 	rm -f index.html
+
+install :
+	mkdir -p deploy
+	cp *.html *.png *.gif deploy
+	cp -R callouts deploy
+
+uninstall :
+	rm -Rf deploy
