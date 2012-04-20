@@ -2,6 +2,7 @@ Epple ][
 ========
 Chris Mosher <chris-keyword-epple2.4a8db3@mosher.mine.nu>
 :icons:
+:iconsdir: .
 :toclevels: 3
 :toc2:
 
@@ -44,8 +45,6 @@ include::download.asciidoc[]
 include::configuration.asciidoc[]
 
 include::usermanual.asciidoc[]
-
-include::a2library.asciidoc[]
 
 include::building.asciidoc[]
 
