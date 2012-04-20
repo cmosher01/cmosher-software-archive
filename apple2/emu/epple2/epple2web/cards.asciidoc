@@ -26,7 +26,7 @@ firmware. This firmware is known as the ``bootstrap'' or ``P5'' ROM code.
 It is seen by the Apple ][ at memory addresses $Cs00-$CsFF, where s is the
 slot number (so in the common case of the card being in slot 6, the ROM is
 at $C600-$C6FF). The firmware is copyright by Apple, and is available from
-the http://mosher.mine.nu/apple2/[Apple ][ Library].
+the http://mosher.mine.nu/apple2/[Apple II Library].
 
 You can also load a floppy disk image (nibble format) into the drive,either by putting
 the <<_load,load>> command into the +epple2.conf+ file, or by using the command prompt

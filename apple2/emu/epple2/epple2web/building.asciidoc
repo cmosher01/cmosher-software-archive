@@ -22,7 +22,7 @@ sudo apt-get install build-essential libsdl1.2-dev  # <1>
 cd
 mkdir epple2
 cd epple2
-wget http://mosher.mine.nu/epple2/epple2-1.0.tar.gz  # <2>
+wget http://mosher.mine.nu/epple2/download/epple2-latest.tar.gz  # <2>
 tar xzvf epple2-1.0.tar.gz
 mkdir build  # <3>
 cd build
