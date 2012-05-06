@@ -1,0 +1,99 @@
+  -a - runs all the tests with standard/default options to create a report
+
+  -m multiply_p - multiply default # of psamples in -a(ll) runs to crank
+     up the resolution of failure.
+
+
+
+
+
+
+  -g generator number - selects a specific generator for testing.  Using
+     -1 causes all known generators to be printed out to the display.
+
+  -f filename - generators 201 or 202 permit either raw binary or
+     formatted ASCII numbers to be read in from a file for testing.
+     generator 200 reads in raw binary numbers from stdin.
+     Note well: many tests with default parameters require a lot of rands!
+     To see a sample of the (required) header for ASCII formatted input, run
+
+         dieharder -o -f example.input -t 10
+
+     and then examine the contents of example.input.
+     Raw binary input reads 32 bit increments of the specified data stream.
+     stdin_input_raw accepts a pipe from a raw binary stream.
+
+  -S seed - where seed is a uint.  Overrides the default random seed
+     selection.  Ignored for file or stdin input.
+
+  -s strategy - if strategy is the (default) 0, dieharder reseeds (or
+     rewinds) once at the beginning when the random number generator is
+     selected and then never again.  If strategy is nonzero, the generator
+     is reseeded or rewound at the beginning of EACH TEST.  If -S seed was
+     specified, or a file is used, this means every test is applied to the
+     same sequence (which is useful for validation and testing of dieharder,
+     but not a good way to test rngs).  Otherwise a new random seed is
+     selected for each test.
+
+
+
+
+
+
+  -d test number - selects specific diehard test.
+
+  -l list all known tests.
+
+  -k ks_flag
+     0 is fast but slightly sloppy for psamples > 4999 (default).
+     1 is MUCH slower but more accurate for larger numbers of psamples.
+     2 is very slow and accurate to machine precision.
+     3 is kuiper ks, fast, quite inaccurate for small samples, deprecated.
+
+  -n set ntuple length for tests on short bit strings that permit
+     the length to be varied (e.g. rgb bitdist).
+
+  -p sets the number of p-value samples per test (default 100).
+
+  -t sets the number of random entities used in each test, where
+     possible.  Be warned -- some tests will take a long time with the
+     default value of 10000.  Read the test synopses for suggested settings
+     for -t or use -a first.  Many tests will ignore -t as they require
+     a very specific number of samples to be used in generating their
+     statistic.
+
+  -x,-y,-z number - Some tests have parameters that can safely be varied
+     from their default value.  For example, in the diehard birthdays test,
+     one can vary the number of length, which can also be varied.
+     Using -x 2048 -y 30 alters these two values but should still run fine.
+
+
+
+
+
+
+  -c table separator - where separator is e.g. ',' (CSV) or ' ' (whitespace).
+
+  -D output flag - permits fields to be selected for inclusion in dieharder
+     output.  Each flag can be entered as a binary number that turns
+     on a specific output field or header or by flag name; flags are
+     aggregated.  To see all currently known flags use the -F command.
+
+  -F lists all known flags by name and number.
+
+  -o filename - output -t count random numbers from current generator to file.
+
+
+
+
+
+
+  -h prints context-sensitive help -- usually Usage (this message) or a
+     test synopsis if entered as e.g. dieharder -D 3 -h.
+
+
+  -v verbose flag -- controls the verbosity of the output for debugging
+     only.  Probably of little use to non-developers, and developers can
+     read the enum(s) in dieharder.h and the test sources to see which
+     flag values turn on output on which routines.  1 is 'all' and will
+     result in a highly detailed trace of program activity.
