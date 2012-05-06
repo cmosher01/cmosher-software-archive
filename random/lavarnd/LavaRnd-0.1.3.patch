@@ -1,0 +1,49 @@
+diff -ur LavaRnd-0.1.3/daemon/Makefile LavaRnd-0.1.3-hacked/daemon/Makefile
+--- LavaRnd-0.1.3/daemon/Makefile	2003-11-15 17:22:18.000000000 -0500
++++ LavaRnd-0.1.3-hacked/daemon/Makefile	2010-11-09 19:50:38.000000000 -0500
+@@ -391,9 +391,9 @@
+ 	@if ! ${EGREP} '^${LAVARND_USER}:' /etc/passwd >/dev/null 2>&1; then \
+ 	    echo adding user ${LAVARND_USER} to /etc/passwd; \
+ 	    echo "${USERADD} -c 'LavaRnd random numbers' -g ${LAVARND_GROUP} \
+-		-d ${CFGDIR} -M -s /sbin/nologin ${LAVARND_USER}"; \
++		-d ${CFGDIR} -s /sbin/nologin ${LAVARND_USER}"; \
+ 	    ${USERADD} -c 'LavaRnd random numbers' -g ${LAVARND_GROUP} \
+-	        -d ${CFGDIR} -M -s /sbin/nologin ${LAVARND_USER}; \
++	        -d ${CFGDIR} -s /sbin/nologin ${LAVARND_USER}; \
+ 	fi
+ 	@if ! ${EGREP} '^${LAVARND_USER}:' /etc/passwd >/dev/null 2>&1; then \
+ 	    echo unable to add ${LAVARND_USER} to /etc/passwd; \
+diff -ur LavaRnd-0.1.3/lib/pwc_drvr.c LavaRnd-0.1.3-hacked/lib/pwc_drvr.c
+--- LavaRnd-0.1.3/lib/pwc_drvr.c	2003-11-15 17:22:17.000000000 -0500
++++ LavaRnd-0.1.3-hacked/lib/pwc_drvr.c	2010-11-10 23:29:52.000000000 -0500
+@@ -221,7 +221,8 @@
+  */
+ static struct lava_state lava_state[] = {
+     {730, &cam_730740, 3.0, 17, 0.557056, 20, 0.300359},
+-    {740, &cam_730740, 3.0, 17, 0.520855, 20, 0.318406},
++/* CAM: was:    {740, &cam_730740, 3.0, 17, 0.520855, 20, 0.318406},*/
++/* CAM: new: */ {740, &cam_730740, 3.0,  7, 0.555898,  8, 0.272530},
+ 
+     {-1, NULL, 0.0, 0, 0, 0.0, 0.0}	/* must be last */
+ };
+diff -ur LavaRnd-0.1.3/Makefile LavaRnd-0.1.3-hacked/Makefile
+--- LavaRnd-0.1.3/Makefile	2003-11-15 17:22:20.000000000 -0500
++++ LavaRnd-0.1.3-hacked/Makefile	2010-11-10 22:57:28.000000000 -0500
+@@ -87,7 +87,7 @@
+ #DMALLOC_LIB= -ldmalloc
+ 
+ #CC_WARN=
+-CC_WARN= -Wall -Werror
++CC_WARN= -Wall
+ 
+ #CC_OPT=
+ CC_OPT= -O3
+@@ -125,7 +125,7 @@
+ # LAVAPOOL_CHROOT	lavapool chroots under this directory at startup
+ #
+ LAVARND_VIDEODEV=/dev/video0
+-LAVARND_CAMTYPE= pwc730
++LAVARND_CAMTYPE=pwc740
+ LAVARND_USER=lava
+ LAVARND_GROUP=lava
+ LAVAPOOL_CHROOT=/

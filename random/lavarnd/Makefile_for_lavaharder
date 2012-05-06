@@ -1,0 +1,7 @@
+LDLIBS=-llava_retry
+
+all: lavarnd lavaharder
+
+clean:
+	rm lavarnd
+	rm lavaharder
