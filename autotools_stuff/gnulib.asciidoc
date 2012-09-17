@@ -1,0 +1,73 @@
+Gnulib Info
+===========
+Chris Mosher
+
+== Getting gnulib
+
+Go to your development root directory and clone gnulib:
+
+[source,shell]
+----
+cd ~/dev
+git clone git://git.savannah.gnu.org/gnulib.git
+----
+
+Set the environment variable (such as in your +~/.bashrc+ file):
+[source,shell]
+----
+GNULIB_SRCDIR=~/dev/gnulib
+----
+
+== Creating a new project
+
+[source,shell]
+----
+cd ~/dev
+mkdir proj
+cd proj
+cp $GNULIB_SRCDIR/build-aux/bootstrap* .
+----
+
+Edit bootstrap.conf to add:
+[source,shell]
+----
+COPYRIGHT_HOLDER="Christopher Alan Mosher, Shelton, CT, USA"
+MSGID_BUGS_ADDRESS=chris@mosher.mine.nu
+
+gnulib_tool_option_extras=--with-tests
+copy=true
+bootstrap_sync=true
+----
+
+[source,shell]
+----
+touch README-hacking
+mkdir m4
+----
+
+Create +configure.ac+
+[source,shell]
+----
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+
+AC_PREREQ([2.68])
+AC_INIT([apple2sysmas], [0.1])
+AC_CONFIG_AUX_DIR([build-aux])
+AM_INIT_AUTOMAKE([-Wall -Werror])
+AC_CONFIG_FILES([Makefile])
+AC_OUTPUT
+----
+
+Create +Makefile.am+
+[source,shell]
+----
+#@configure_input@
+ACLOCAL_AMFLAGS=-I m4 --install
+----
+
+Run the bootstrap script.
+[source,shell]
+----
+./bootstrap --skip-po
+----
