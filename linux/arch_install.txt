@@ -1,0 +1,234 @@
+Refer to here for additional help on anything:
+  https://wiki.archlinux.org/
+
+
+boot arch "dual" iso
+(if on 64-bit architecture, choose x86_64, else i386)
+
+
+
+
+ENVIRONMENT PREPARATION
+
+make sure network is OK:
+  ping mirrors.kernel.org
+
+set the time and hwclock:
+hwclock --utc
+if time is wrong (important: time zone is UTC)
+  hwclock --set --date="<CURRENT_TIME_UTC>"
+else
+  hwclock -w
+
+hwclock -s
+
+
+
+PARTITIONING
+
+make sure you aren't wiping anything important:
+  sgdisk -p /dev/sda
+
+if you are not starting with a fresh disk (image),
+you can zap the mbr/gpt clean:
+  sgdisk -Z /dev/sda
+
+create a BIOS-boot partition (for grub's core.img):
+  sgdisk -n 1:1M:+2M -t 1:EF02 -c 1:grub /dev/sda
+create an LVM PV partition (rest of disk):
+  sgdisk -n 2:4M:0   -t 2:8E00 -c 2:pv   /dev/sda
+
+verify:
+sgdisk -p /dev/sda
+----------------------------
+Disk /dev/sda: 16777216 sectors, 8.0 GiB
+Logical sector size: 512 bytes
+Disk identifier (GUID): 10673987-B154-4C03-BD6D-74B25D0943E0
+Partition table holds up to 128 entries
+First usable sector is 34, last usable sector is 16777182
+Partitions will be aligned on 2048-sector boundaries
+Total free space is 4062 sectors (2.0 MiB)
+
+Number  Start (sector)    End (sector)  Size       Code  Name
+   1            2048            6143   2.0 MiB     EF02  grub
+   2            8192        16777182   8.0 GiB     8E00  pv
+----------------------------
+
+if you have any other disks, create one LVM partition:
+  sgdisk -n 1:1M:0 -t 1:8E00 -c 1:pv /dev/sdb
+
+
+LVM and FILESYSTEM SETUP
+
+pvcreate /dev/sda2
+vgcreate arch /dev/sda2
+
+(also other disks: pvcreate /dev/sdb1 and vgcreate arch /dev/sdb1)
+
+
+
+lvcreate -L <SIZE> -n <NAME> arch
+ 256M boot
+  32G root
+  16G var
+ 128G home
+(adjust sizes accordingly)
+
+
+
+mkfs.ext4 -v /dev/arch/<NAME>
+(also use -c if you want to check for bad blocks)
+
+
+
+
+
+
+INSTALLATION
+
+mount /dev/arch/root /mnt
+cd /mnt
+mkdir boot var home
+mount /dev/arch/<NAME> <NAME>
+cd /
+
+pacstrap /mnt base
+
+
+
+
+
+CONFIGURATION
+
+get the adjtime file from the original hwclock run:
+  cp /etc/adjtime /mnt/etc
+
+set up the fstab
+  genfstab -p /mnt >> /mnt/etc/fstab
+  change flags to "rw,noatime"
+
+
+
+arch-chroot /mnt
+
+
+
+cd /etc
+ln -s /usr/share/zoneinfo/America/New_York localtime
+edit config files:
+  timezone: America/New_York
+  hostname
+  hosts
+  vconsole.conf: FONT="ter-u12n"
+  locale.conf: LANG="en_US.UTF-8"
+  locale.gen: uncommen en_US.UTF-8 UTF-8
+  mkinitcpio.conf: add lvm2 hook (after sata)
+
+locale-gen
+
+mkinitcpio -p linux
+
+
+
+
+GRUB INSTALLATION
+
+pacman -S grub-bios
+
+grub-install --target=i386-pc --recheck /dev/sda
+
+cd /boot/grub/locale
+ln -s en\@quot.mo en.mo
+
+cd ..
+
+edit /etc/default/grub:
+	GRUB_CMDLINE_DEFAULT="init=/usr/lib/systemd/systemd"
+	add lvm to GRUB_PRELOAD_MODULES
+	uncomment GRUB_TERMINAL_OUTPUT=console
+	comment-out GRUB_DISABLE_RECOVERY=true
+rm grub.cfg.example
+grub-mkconfig >grub.cfg
+
+exit
+
+unmount ...
+reboot (remove CD and boot from the hard disk you just created)
+
+
+
+
+
+
+
+
+
+
+FIRST BOOT INTO NEW SYSTEM
+
+SYSTEMD/NETOWRK SETUP and REBOOT
+
+log in as root
+remove init=systemd from /etc/default/grub
+pacman -R initscripts sysvinit syslog-ng
+pacman -S systemd-sysvcompat
+
+systemctl enable dhcpcd@eth0.service
+
+systemctl reboot
+
+
+
+OTHER INITIAL SETUP
+
+log in as root
+
+passwd
+
+install some important packages:
+pacman -S sudo openssh terminus-font
+
+optionally install niceties: (ntp htop tree lesspipe)
+
+visudo
+  uncomment: %wheel ALL=(ALL) NOPASSWD: ALL
+
+adduser
+  (prompts are intuitive, except:)
+  Additional groups: wheel,audio,video,storage,power,optical,lp,scanner,games
+
+exit
+
+log in as user
+
+sudo su -
+
+
+systemctl enable lvm.service
+systemctl enable cronie.service
+systemctl enable sshd.service
+...
+
+
+(for a virtual machine, install appropriate vm tools)
+
+
+
+load kernel module for video driver, e.g.:
+  echo "i915" >/etc/modules-load.d/i915.conf
+
+
+
+INSTALL X and GNOME
+
+pacman -S xorg-server xorg-server-utils
+
+if not in vm, pick your video driver, probably intel, ati, or nouveau:
+  pacman -Ss xf86-video
+
+pacman -S gnome gdm ttf-dejavu
+
+systemctl enable gdm.service
+
+reboot
+
