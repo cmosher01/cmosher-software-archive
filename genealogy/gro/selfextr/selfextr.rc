@@ -1,6 +1,0 @@
-#include "resource.h"
-
-#include "res\selfextr.rc2"
-
-100 ICON DISCARDABLE "package.ico"
-
