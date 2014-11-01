@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html id="html">
+
+
+
+<head>
+
+<script>
+
+function position(e) {
+  var x, y, im, coord, im_w, im_h;
+
+  im = document.getElementById("img");
+  coord = document.getElementById("coord");
+
+  x = y = 0;
+  if (e.pageX) {
+          x = e.pageX;
+  } else if (e.clientX) {
+     x = e.clientX + (
+                     document.documentElement.scrollLeft ?
+                     document.documentElement.scrollLeft :
+                     document.body.scrollLeft
+     );
+  }
+  if (e.pageY) {
+          y = e.pageY;
+  } else if (e.clientY) {
+     y = e.clientY + (
+                     document.documentElement.scrollTop ?
+                     document.documentElement.scrollTop :
+                     document.body.scrollTop
+     );
+  }
+  x -= im.offsetLeft;
+  y -= im.offsetTop;
+
+  im_w = im.width;
+  im_h = im.height;
+
+  x /= im_w;
+  y /= im_h;
+
+  coord.textContent =
+      "<mwg-rs:Area rdf:parseType='Resource'>\n"+
+      "  <stArea:h>?</stArea:h>\n"+
+      "  <stArea:unit>normalized</stArea:unit>\n"+
+      "  <stArea:w>?</stArea:w>\n"+
+      "  <stArea:x>"+x.toFixed(2)+"</stArea:x>\n"+
+      "  <stArea:y>"+y.toFixed(2)+"</stArea:y>\n"+
+      "</mwg-rs:Area>\n"+
+      "<mwg-rs:Name>NAME</mwg-rs:Name>\n"+
+      "<mwg-rs:Type>Face</mwg-rs:Type>\n"+
+      "";
+
+}
+
+document.onmousemove = position;
+document.onmousedown = function() { document.onmousemove = null; }
+
+</script>
+
+</head>
+
+
+
+<body>
+  <img id="img" src="0001.jpg" style="max-height: 640px; max-width: 640px"></img>
+  <pre id="coord"></pre>
+</body>
+
+
+
+</html>
