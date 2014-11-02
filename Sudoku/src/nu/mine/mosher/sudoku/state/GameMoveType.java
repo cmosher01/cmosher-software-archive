@@ -27,4 +27,10 @@ enum GameMoveType {
 	 * square).
 	 */
 	AFFIRMED,
+
+	/**
+	 * Indicates a move in which the (computer) resets a square so no
+	 * possibilities are eliminated.
+	 */
+	RESET,
 }

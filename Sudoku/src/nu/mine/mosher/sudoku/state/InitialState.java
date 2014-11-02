@@ -11,13 +11,13 @@ import nu.mine.mosher.sudoku.util.Converter;
 
 /**
  * Represents a sudoku puzzle, in its initial state. The puzzle contains 9 boxes
- * or 9 squares each. Each square will either have an "answer" (a number 0
+ * of 9 squares each. Each square will either have an "answer" (a number 0
  * through 8 representing the answer 1 through 9) or not. Objects of this class
  * are immutable.
  * 
  * @author Chris Mosher
  */
-class InitialState {
+public class InitialState {
 	private final int[][] rSquare = new int[9][9];
 
 	/**

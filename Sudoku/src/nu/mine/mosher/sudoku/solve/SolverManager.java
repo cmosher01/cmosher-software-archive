@@ -16,9 +16,11 @@ import javax.swing.JMenuItem;
 import nu.mine.mosher.sudoku.state.GameManager;
 
 public class SolverManager {
+	private final Observer observer;
+	private final GameManager gamer;
+
 	private JMenuItem itemSolve;
 	private JCheckBoxMenuItem itemAutomatic;
-
 	private JCheckBoxMenuItem itemEliminateFromSameRow;
 	private final Solver solverEliminatorRow;
 	private JCheckBoxMenuItem itemEliminateFromSameColumn;
@@ -33,6 +35,7 @@ public class SolverManager {
 	private final Solver solverSingleInSBox;
 
 	public SolverManager(final GameManager gameToSolve) {
+		this.gamer = gameToSolve;
 		this.solverEliminatorRow = new SolverEliminatorRow(gameToSolve);
 		this.solverEliminatorColumn = new SolverEliminatorColumn(gameToSolve);
 		this.solverEliminatorSBox = new SolverEliminatorSBox(gameToSolve);
@@ -40,7 +43,7 @@ public class SolverManager {
 		this.solverSingleInColumn = new SolverSingleInColumn(gameToSolve);
 		this.solverSingleInSBox = new SolverSingleInSBox(gameToSolve);
 
-		gameToSolve.addObserver(new Observer() {
+		this.observer = new Observer() {
 			private boolean recursing;
 
 			@Override
@@ -55,7 +58,8 @@ public class SolverManager {
 
 				this.recursing = false;
 			}
-		});
+		};
+		gameToSolve.addObserver(this.observer);
 	}
 
 	public void appendMenuItems(final JMenu appendTo) {
@@ -152,5 +156,9 @@ public class SolverManager {
 			}
 		}
 		return changed;
+	}
+
+	public void close() {
+		this.gamer.deleteObserver(this.observer);
 	}
 }

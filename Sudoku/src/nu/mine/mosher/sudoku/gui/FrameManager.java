@@ -177,7 +177,7 @@ public class FrameManager implements Closeable {
 		final char[] rc = new char[9*9];
 		Arrays.fill(rc,'0');
 		final Random rand = new Random();
-		final int cSquare = rand.nextInt(21)+18;
+		final int cSquare = rand.nextInt(18)+9;
 		for (int iSquare = 0; iSquare < cSquare; ++iSquare) {
 			final int ic = rand.nextInt(rc.length);
 			final char c = (char)(rand.nextInt(9)+'1');

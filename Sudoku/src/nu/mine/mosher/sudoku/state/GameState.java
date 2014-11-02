@@ -116,6 +116,12 @@ class GameState {
 			}
 		}
 			break;
+		case RESET: {
+			for (int iPossibility = 0; iPossibility < 9; ++iPossibility) {
+				state.set(move.getSbox(), move.getSquare(), iPossibility, false);
+			}
+		}
+			break;
 		default:
 			assert false;
 		}

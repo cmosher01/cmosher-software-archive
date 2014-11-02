@@ -13,6 +13,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -21,6 +26,8 @@ import javax.swing.KeyStroke;
 import nu.mine.mosher.sudoku.gui.FrameManager;
 import nu.mine.mosher.sudoku.gui.exception.UserCancelled;
 import nu.mine.mosher.sudoku.state.GameManager;
+import nu.mine.mosher.sudoku.state.InitialState;
+import nu.mine.mosher.sudoku.state.MoveAutomationType;
 import nu.mine.mosher.sudoku.util.BruteForce;
 
 public class FileManager {
@@ -221,17 +228,46 @@ public class FileManager {
 		}
 	}
 
+	private static final String getRandom9() {
+		final Integer[] r = {1,2,3,4,5,6,7,8,9};
+		Collections.shuffle(Arrays.<Integer>asList(r));
+		final StringBuilder sb = new StringBuilder(9);
+		for (final Integer i : r) {
+			sb.append(i.toString());
+		}
+		return sb.toString();
+	}
+
+	private final Random rand = new Random();
+
 	private void fileGenNew() {
 		try {
 			verifyLoseUnsavedChanges();
 			this.file = null;
-			int cSolution = 0;
-			while (cSolution != 1) {
-				final String sBoard = this.framer.getBoardStringFromAlgorithm();
-				this.game.read(sBoard);
+
+
+			boolean hasUniqueSolution = false;
+			while (!hasUniqueSolution) {
+				// TODO randomize this:
+				this.game.read(getRandom9()+"000000000000000000000000000000000000000000000000000000000000000000000000");
 				final BruteForce brute = new BruteForce(this.game);
-				cSolution = brute.countSolutions();
-				System.err.println("Generated board with "+cSolution+" solution(s).");
+				final String sBoard = brute.getFirstSolution();
+				this.game.read(sBoard);
+
+				// TODO change for different difficulty levels:
+				final int openFields = 54;
+
+				for (int j = 0; j < openFields;) {
+					final int sbox = this.rand.nextInt(9);
+					final int square = this.rand.nextInt(9);
+					if (this.game.hasAnswer(sbox, square)) {
+						this.game.erase(sbox, square, MoveAutomationType.AUTOMATIC);
+						j++;
+					}
+				}
+
+				final BruteForce brute2 = new BruteForce(this.game);
+				hasUniqueSolution = brute2.hasUniqueSolution();
 				try {
 					Thread.sleep(10);
 				} catch (InterruptedException e) {

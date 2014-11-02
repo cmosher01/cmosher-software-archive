@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -24,7 +25,7 @@ import nu.mine.mosher.sudoku.state.exception.IllegalGameFormat;
 import nu.mine.mosher.sudoku.util.Script;
 import nu.mine.mosher.sudoku.util.Time;
 
-public class GameManager extends Observable implements Cloneable {
+public class GameManager /*extends Observable*/ implements Cloneable {
 	private LinkedList<GameState> rUndoState = new LinkedList<GameState>();
 	private GameState state;
 
@@ -34,6 +35,14 @@ public class GameManager extends Observable implements Cloneable {
 	private JMenuItem itemUndo;
 	private JMenuItem itemRedo;
 
+	private Observable observable = new Observable() {
+		@Override
+		public void notifyObservers() {
+			setChanged();
+			super.notifyObservers();
+		}
+	};
+
 	public GameManager() {
 		read("");
 	}
@@ -42,12 +51,11 @@ public class GameManager extends Observable implements Cloneable {
 	@Override
 	public Object clone() {
 		try {
-			// TODO will the fact the GameManager extends Observable mess up
-			// GameManager.clone?
 			final GameManager that = (GameManager) super.clone();
 			that.rUndoState = (LinkedList<GameState>) this.rUndoState.clone();
 			that.rMove = (LinkedList<GameMove>) this.rMove.clone();
 			that.rMoveRedo = (LinkedList<GameMove>) this.rMoveRedo.clone();
+			// TODO properly clone observable
 			return that;
 		} catch (final CloneNotSupportedException cantHappen) {
 			throw new IllegalStateException(cantHappen);
@@ -78,6 +86,12 @@ public class GameManager extends Observable implements Cloneable {
 		if (auto.equals(MoveAutomationType.MANUAL)) {
 			this.rMoveRedo.clear();
 		}
+		move(move);
+	}
+
+	public void erase(final int sbox, final int square, final MoveAutomationType auto) {
+		final GameMove move = new GameMove(new Time(new Date()), sbox, square, 0/*ignored*/, GameMoveType.RESET, auto);
+
 		move(move);
 	}
 
@@ -164,10 +178,8 @@ public class GameManager extends Observable implements Cloneable {
 		notifyObservers();
 	}
 
-	@Override
-	public void notifyObservers(final Object typeOfChange) {
-		setChanged();
-		super.notifyObservers(typeOfChange);
+	public void notifyObservers() {
+		this.observable.notifyObservers();
 	}
 
 	public void write(final BufferedWriter out) throws IOException {
@@ -258,5 +270,21 @@ public class GameManager extends Observable implements Cloneable {
 		h *= 37;
 		h += this.rMove.hashCode();
 		return h;
+	}
+
+	public GameState getState() {
+		return this.state;
+	}
+
+	public void addObserver(final Observer observer) {
+		this.observable.addObserver(observer);
+	}
+
+	public void deleteObserver(final Observer observer) {
+		this.observable.deleteObserver(observer);
+	}
+
+	public void deleteObservers() {
+		this.observable.deleteObservers();
 	}
 }
