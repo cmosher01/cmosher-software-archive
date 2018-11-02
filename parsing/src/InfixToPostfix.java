@@ -16,18 +16,18 @@ import java.io.Writer;
 /**
  * Adapted from Dragon Book (Compilers: Principles, Techniques, and Tools) section 2.5.
  * Figs. 2.22 and 2.24.
- * 
+ *
  * <pre>
- * 
+ *
  * start: expr eol eof
  * expr: term rest
  * rest: + term { print('+') } rest
  *     | - term { print('-') } rest
  *     | e
  * term: digit { print(digit) }
- * 
+ *
  * </pre>
- * 
+ *
  * @author Chris Mosher
  */
 public class InfixToPostfix
@@ -67,6 +67,7 @@ public class InfixToPostfix
 		}
 		finally
 		{
+			this.out.write("\n");
 			this.out.flush();
 		}
 	}
@@ -118,7 +119,7 @@ public class InfixToPostfix
 
 	private void eol() throws IOException, ParseException
 	{
-		match('\r');
+//		match('\r');
 		match('\n');
 	}
 
