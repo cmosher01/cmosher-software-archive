@@ -1,7 +1,7 @@
 /*
  * Created on Jan 18, 2008
  */
-public class ANALOGTV
+public class ANALOGT_V
 {
 	/* We don't handle interlace here */
 	public static final int V=262;
