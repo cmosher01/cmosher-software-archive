@@ -1,0 +1,11 @@
+visualvm
+open app
+change setting to generate alloc stack traces
+Profiler / Memory
+(wait for a few minutes until table shows)
+Monitor / Perform GC
+Snapshot
+
+
+(do whatever: deploy/undeploy webapp in this case)
+

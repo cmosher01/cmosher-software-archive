@@ -1,0 +1,79 @@
+SETUP
+==========================================================================
+create table ssi.dbo.test1 (k int, data int)
+insert ssi.dbo.test1 values (0, 0)
+insert ssi.dbo.test1 values (1, 1)
+
+create table ssi.dbo.test2 (pk int primary key)
+insert ssi.dbo.test2 values (0)
+insert ssi.dbo.test2 values (1)
+
+
+
+
+
+
+WITH (NOLOCK)
+==========================================================================
+
+USER 1
+------
+begin transaction
+update ssi.dbo.test2 set pk = pk where pk = 0
+
+
+USER 2
+------
+select * from ssi.dbo.test1 t1 with (nolock)
+where exists (select * from ssi.dbo.test2 t2 where t1.k = t2.pk)
+(blocks)
+
+
+USER 1
+------
+delete ssi.dbo.test1 where k = 0
+commit
+
+USER 2
+------
+(fails with this error:
+	Error: Could not continue scan with NOLOCK due to data movement.
+	SQLState:  S1000
+	ErrorCode: 601
+)
+
+
+
+
+
+
+
+READ UNCOMMITTED
+==========================================================================
+
+USER 1
+------
+begin transaction
+update ssi.dbo.test2 set pk = pk where pk = 0
+
+
+USER 2
+------
+-- HERE IS THE FIX:
+set transaction isolation level read uncommitted
+
+-- then just do a regular query (do not use "nolock" hint)
+select * from ssi.dbo.test1 t1
+where exists (select * from ssi.dbo.test2 t2 where t1.k = t2.pk)
+
+(does not block, gets:
+	k data
+	- ----
+	0  0
+	1  1
+)
+
+USER 1
+------
+delete ssi.dbo.test1 where k = 0
+commit

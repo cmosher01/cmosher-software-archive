@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<web-app
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0"
+>
+	<display-name>Test Java EE 6</display-name>
+
+	<listener><listener-class>nu.mine.mosher.log.ContainerLoggerManager</listener-class></listener>
+
+	<servlet>
+		<servlet-name>javax.faces.webapp.FacesServlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>javax.faces.webapp.FacesServlet</servlet-name>
+		<url-pattern>*.jsf</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>Resource Servlet</servlet-name>
+		<servlet-class>org.primefaces.resource.ResourceServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Resource Servlet</servlet-name>
+		<url-pattern>/primefaces_resource/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>test</servlet-name>
+		<servlet-class>com.surveysampling.testwarjee6.TestServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>test</servlet-name>
+		<url-pattern>/long</url-pattern>
+	</servlet-mapping>
+
+    <servlet>
+        <servlet-name>RedirectorServlet</servlet-name>
+        <servlet-class>com.surveysampling.testwarjee6.RedirectorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RedirectorServlet</servlet-name>
+        <url-pattern>/RedirectorServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DumpHeaders</servlet-name>
+        <servlet-class>com.surveysampling.testwarjee6.DumpHeaders</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DumpHeaders</servlet-name>
+        <url-pattern>/DumpHeaders</url-pattern>
+    </servlet-mapping>
+
+	<env-entry>
+		<env-entry-name>com.surveysampling.testwarjee6.GeneratorBean/maxNumber</env-entry-name>
+		<env-entry-type>java.lang.Integer</env-entry-type>
+		<env-entry-value>1000</env-entry-value>
+	</env-entry>
+	<env-entry>
+		<env-entry-name>com.surveysampling.testwarjee6.UserNumber/allowedGuesses</env-entry-name>
+		<env-entry-type>java.lang.Integer</env-entry-type>
+		<env-entry-value>10</env-entry-value>
+	</env-entry>
+	<session-config>
+		<tracking-mode>COOKIE</tracking-mode>
+		<tracking-mode>URL</tracking-mode>
+	</session-config>
+</web-app>

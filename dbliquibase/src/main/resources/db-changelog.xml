@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+  <changeSet id="80864cbe-82f1-4bd0-877e-4461af830a45" author="cmosher">
+    <createTable tableName="department">
+      <column name="id" type="int">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="name" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="active" type="boolean" defaultValueBoolean="true"/>
+    </createTable>
+  </changeSet>
+  <changeSet id="caa96783-4344-4d31-8944-263426061d86" author="cmosher">
+    <createTable tableName="foo">
+      <column name="id" type="int">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="bar" type="varchar(50)" />
+    </createTable>
+  </changeSet>
+</databaseChangeLog>

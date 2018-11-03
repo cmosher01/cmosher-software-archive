@@ -1,0 +1,5 @@
+[scheme :]   [//   [user-info @] host [ : port]   ]   [path]   [? query]   [# fragment]
+
+                   \________authority_________/ 
+
+             \____________________scheme-specific-part_________________/

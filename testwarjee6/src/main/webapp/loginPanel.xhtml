@@ -1,0 +1,18 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:cc="http://java.sun.com/jsf/composite/cc"
+  xmlns:p="http://primefaces.prime.com.tr/ui"
+>
+	<h:form id="loginPanel">
+		<h:panelGroup>
+			<h:outputLabel for="username">Username:</h:outputLabel>
+			<h:inputText id="username" value="#{credentials.username}" />
+			<h:outputLabel for="password">Password:</h:outputLabel>
+			<h:inputText id="password" value="#{credentials.password}" />
+		</h:panelGroup>
+		<h:commandButton value="Log In" action="#{credentials.login}" />
+	</h:form>
+</ui:composition>

@@ -1,0 +1,5 @@
+yum install -y yum-plugin-downloadonly
+yum erase -y PACKAGE
+yum install -y --downloadonly PACKAGE_OLD_VERSION
+yum install -y PACKAGE
+rpm -i --force -p /var/cache/yum/x86_64/6/ssi-jboss/packages/PACKAGE_OLD_VERSION

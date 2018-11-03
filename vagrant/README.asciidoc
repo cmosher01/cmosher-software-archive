@@ -1,0 +1,86 @@
+Arch Vagrant Base Box Creation Scripts
+======================================
+
+Shell scripts to help create an Arch Linux box
+as a Vagrant Base Box, from scratch.
+
+Steps are as follows:
+
+Start with an up-to-date Arch system as a host, if possible.
+
+(Darkhttpd stuff is optional, to use host Arch pacman
+repo to greatly speed up the installation.)
+
+[source,sh]
+--------
+pacman -S vagrant virtualbox darkhttpd
+--------
+(TODO: any other dependencies?)
+
+[source,sh]
+--------
+./varch.sh -f
+darkhttpd /var/cache/pacman/pkg --daemon
+vboxmanage startvm <vm>
+--------
+
+Within the VM, press Enter to boot from the Arch installation ISO image.
+This will automatically log in as root.
+For darkhttp use, edit /etc/pacman.d/mirrorlist and add at the top:
+
+[source,sh]
+--------
+    Server = http://host:8080/
+--------
+
+Then you'll need to copy the scripts from the host and run them.
+
+[source,sh]
+--------
+scp host:/path/archinst.sh
+./archinst.sh -f
+scp host:/path/archconf.sh /mnt
+scp host:/path/archroot.sh /mnt/root
+arch-chroot /mnt
+./archconf.sh
+rm archconf.sh
+exit
+sync
+umount -Rv /mnt
+systemctl poweroff
+--------
+
+Now, back at the host, remove the Arch installation ISO image:
+
+[source,sh]
+--------
+vboxmanage storageattach <vm> --storagectl SATA --port 1 --device 0 --medium none
+vboxmanage closemedium dvd archlinux-XXX-dual.iso
+--------
+
+Now boot the new system for the first time.
+
+[source,sh]
+--------
+vboxmanage startvm <vm>
+--------
+
+Log in as root (no password). Then run the script to
+set it up for use by vagrant.
+First, remove the host http line from mirrorlist, if you added it above.
+
+[source,sh]
+--------
+./archroot.sh
+rm archroot.sh
+systemctl poweroff
+--------
+
+To make it into a vagrant base box, on the host:
+
+[source,sh]
+--------
+vagrant package --base <vm>
+--------
+
+This makes package.box file, the base box.

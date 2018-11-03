@@ -1,0 +1,16 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'nu.mine.mosher'
+version = '1.0.0-SNAPSHOT'
+
+description = "ByteAnalyzer"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'ByteAnalyzer'
+    }
+}

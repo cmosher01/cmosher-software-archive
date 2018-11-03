@@ -1,0 +1,349 @@
+Arch Installation
+=================
+
+
+== Help
+
+Refer to the https://wiki.archlinux.org/[ArckWiki] for additional help on
+_anything_.
+
+
+
+
+
+== Boot Arch Live CD
+
+* These instructions are based on "archlinux-2014.01.05-dual.iso" live CD image.
+* Download the .iso and burn it to a CD, or use the file directly if you are installing to a VM.
+* Boot from the CD.
+* On the grub boot menu, if on 64-bit architecture, choose +x86_64+, else choose +i386+.
+
+
+
+
+
+== Environment Preparation
+
+* make sure network is OK
+----
+# ping mirrors.kernel.org
+----
+* set the system time
+** check current time:
+----
+# date
+----
+** if time is WRONG (important: time zone is +UTC+) set it:
+----
+# date -s <CURRENT_TIME_UTC>
+----
+for example
+----
+# date -s 2010-10-06T13:13:13
+----
+* set the hardware clock, and create +/etc/adjtime+ file
+----
+# hwclock --utc -w
+----
+
+
+
+
+== Partitioning
+
+* make sure you aren't wiping anything important
+----
+# sgdisk -p /dev/sda
+----
+* if you want to start with a fresh partition map, you can zap the mbr/gpt clean
+* WARNING: THIS WILL DESTROY DATA, so be careful
+----
+# sgdisk -Z /dev/sda
+----
+* create a BIOS-boot partition (for grub's core.img)
+----
+# sgdisk -n 1:1M:+2M -t 1:EF02 -c 1:grub /dev/sda
+----
+* create an LVM PV partition (rest of disk)
+----
+# sgdisk -n 2:4M:0   -t 2:8E00 -c 2:pv   /dev/sda
+----
+* verify; the pv partition should fill the disk; check its size:
+----
+# sgdisk -p /dev/sda
+Disk /dev/sda: 16777216 sectors, 8.0 GiB
+Logical sector size: 512 bytes
+Disk identifier (GUID): 10673987-B154-4C03-BD6D-74B25D0943E0
+Partition table holds up to 128 entries
+First usable sector is 34, last usable sector is 16777182
+Partitions will be aligned on 2048-sector boundaries
+Total free space is 4062 sectors (2.0 MiB)
+
+Number  Start (sector)    End (sector)  Size       Code  Name
+   1            2048            6143   2.0 MiB     EF02  grub
+   2            8192        16777182   8.0 GiB     8E00  pv
+----
+
+* if you have any other disks, create one LVM partition on each:
+----
+# sgdisk -n 1:1M:0 -t 1:8E00 -c 1:pv /dev/sdb
+----
+
+
+
+
+
+== LVM and Filesystem Setup
+
+* create physical volume
+----
+# pvcreate /dev/sda2
+----
+* do any other disks, too
+----
+# pvcreate /dev/sdb1
+----
+* create volume group
+----
+# vgcreate arch /dev/sda2 (add any other disks: /dev/sdb1)
+----
+* create logical volumes
+----
+# lvcreate -L <SIZE> -n <NAME> arch
+----
+adjust sizes accordingly
+|===
+|SIZE | NAME
+
+|256M | boot
+| 32G | root
+| 16G | var
+|128G | home
+|===
+
+
+
+* initialize filesystems
+ +# mkfs.ext4 -v /dev/arch/<NAME>+
+ [also use +-c+ if you want to check for bad blocks (recommended)
+ or +-cc+ for w/r bad block check (can be very slow)]
+
+
+
+
+
+== Installation
+
+----
+# mount /dev/arch/root /mnt
+# cd /mnt
+# mkdir boot var home
+# mount /dev/arch/<NAME> <NAME>
+# cd /
+----
+
++# pacstrap /mnt+
+
+
+
+
+
+
+== Configuration
+
+* get the adjtime file from the original hwclock run
+ +# cp /etc/adjtime /mnt/etc+
+
+* set up the fstab
+ +# genfstab -p /mnt >> /mnt/etc/fstab+
+* change flags to +rw,noatime+
+
+* work around lvm issue
+ +# mkdir /mnt/run/lvm+
+ +# mount -o bind /run/lvm /mnt/run/lvm+
+
+* chroot into the new system
+
++# arch-chroot /mnt+
+
++# umount -vl /run+
+
++# cd /etc+
+
++# ln -s /usr/share/zoneinfo/America/New_York localtime+
+
+* edit config files
+** hostname: just put in a name for your system
+** mkinitcpio.conf: add lvm2 hook (after block)
+** locale.conf: +LANG="en_US.UTF-8"+
+** locale.gen: uncomment +en_US.UTF-8 UTF-8+
+
++# locale-gen+
+
++# mkinitcpio -p linux+
+
+
+
+
+
+== Grub Installation
+
+----
+# pacman -S grub-bios
+# grub-install --target=i386-pc --recheck /dev/sda
+# cd /boot/grub/locale
+# ln -s en\@quot.mo en.mo
+# cd ..
+----
+
+* edit +/etc/default/grub+
+** GRUB_CMDLINE_DEFAULT=""
+** add lvm to GRUB_PRELOAD_MODULES
+** uncomment GRUB_TERMINAL_OUTPUT=console
+** uncomment GRUB_DISABLE_LINUX_UUID=true
+** comment-out GRUB_DISABLE_RECOVERY=true
+
++# rm grub.cfg.example+
+
++# grub-mkconfig >grub.cfg+
+
+
+
+
+== Boot Your New Arch System!
+
+----
+# exit
+# sync
+# umount -Rv /mnt
+# systemctl reboot
+----
+* remove CD, and boot from the hard disk you just created
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+== Network Setup
+
+* log in as root
+* start the network and make sure it works:
+----
+# ip link
+[find the right network device, such as eno1, and use it below]
+# systemctl start dhcpcd@eno1.service
+# ip addr
+# ping mirrors.kernel.org
+----
+* if so, enable it for autostart:
+----
+# systemctl enable dhcpcd@eno1.service
+----
+
+
+
+
+== Security Setup
+
++# passwd+
+
++# pacman -S sudo+
+
++# visudo+
+ uncomment this line: +%wheel ALL=(ALL) NOPASSWD: ALL+
+
+Add your standard unix username and set a password:
+----
+# useradd -m -g users -G wheel,audio,video,storage,power -s /bin/bash jdoe
+# passwd jdoe
+# exit
+----
+
+log in as the user you just created
+(from now on, remember to +sudo su -+ as appropriate)
+
+
+
+
+
+== Other Useful Packages (optional)
+
+* Install the most necessary packages
+----
+# pacman -S openssh ntp
+----
+Then edit the servers in +/etc/ntp.conf+ as necessary.
+
+* Configure these services to run at system startup time
+----
+# systemctl enable sshd.service
+# systemctl enable ntpd.service
+----
+
+* For a VM, install any appropriate vm tools
+
+* load kernel module for video driver, e.g.:
+** +# echo "i915" >/etc/modules-load.d/i915.conf+
+** add it to +MODULES+ in +/etc/mkinitcpio.conf+
+
+
+
+
+== X and Gnome Installation
+
+----
+# pacman -S xorg-server xorg-xinit
+----
+
+* if not in a vm, pick your video driver, probably intel, ati, or nouveau
+** list all available drivers
+ +# pacman -Ss xf86-video+
+** install the right one, for example
+----
+# pacman -S xf86-video-intel
+----
+
+* install Gnome
+----
+# pacman -S gnome gdm ttf-dejavu
+# systemctl enable gdm.service
+----
+
+* reboot and make sure it works
+----
+# systemctl reboot
+----
+
+
+
+
+
+
+
+== AUR
+
+* install AUR if you want to build and install packages from http://aur.archlinux.org/[AUR]
+----
+$ cd
+$ mkdir abs
+$ sudo pacman -S base-devel abs
+----
+
+* To build and install a package, download +X.tar.gz+ to +~/abs+
+----
+$ cd ~/abs
+$ tar xzvf X.tar.gz
+$ cd X
+$ makepkg
+$ sudo pacman -U X.pkg.tar.xz
+----

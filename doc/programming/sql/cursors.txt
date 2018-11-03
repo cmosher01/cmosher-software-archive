@@ -1,0 +1,24 @@
+scope:
+	 GLOBAL        connection
+	*LOCAL         procedure (or batch)
+
+direction:
+	*FORWARD_ONLY  FETCH and NEXT
+	 SCROLL        bi-directional
+
+concurrency:
+	*READ_ONLY     no locks; cannot update
+	 SCROLL_LOCKS
+	 OPTIMISTIC
+
+type:
+	 STATIC        all data to temp table
+	 KEYSET        ROWIDs to temp table
+	*DYNAMIC       use original tables
+
+error:
+	*(none)
+	TYPE_WARNING
+
+
+FAST_FOWARD means FORWARD_ONLY and READ_ONLY (but cancells out any TYPE_WARNING)

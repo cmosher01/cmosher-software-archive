@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>DK UATs QA » dubKnowledge #25 test - Expand Stacked Traffic Events test [Jenkins]</title>
+  <script type="text/javascript">
+(function(window) {
+    "use strict";
+
+    function colorText(t) {
+        t = t.replace(/\&\amp#27;\[30m/g,'<span style="color:black">');
+        t = t.replace(/\&\amp#27;\[31m/g,'<span style="color:red">');
+        t = t.replace(/\&\amp#27;\[32m/g,'<span style="color:green">');
+        t = t.replace(/\&\amp#27;\[33m/g,'<span style="color:yellow">');
+        t = t.replace(/\&\amp#27;\[34m/g,'<span style="color:blue">');
+        t = t.replace(/\&\amp#27;\[35m/g,'<span style="color:purple">');
+        t = t.replace(/\&\amp#27;\[36m/g,'<span style="color:cyan">');
+        t = t.replace(/\&\amp#27;\[0;39m/g,'</span>');
+
+        t = t.replace(/(at\s*com\.surveysampling\..*)/g,'<span style="color:red;font-weight:bold">$1</span>');
+        return t;
+    }
+
+    function findTextNodes(current,ret) {
+        var i, child;
+        for(i = 0; i < current.childNodes.length; ++i) {
+            child = current.childNodes[i];
+            if(child.nodeType == 3) {
+                ret.push(child);
+            }
+            else {
+                findTextNodes(child,ret);
+            }
+        }
+    };
+
+    window.jscolor = function() {
+        var i, nodes, node, par, newnode;
+        nodes = [];
+        findTextNodes(window.document.body,nodes);
+        for (i = 0; i < nodes.length; ++i) {
+            node = nodes[i];
+            par = node.parentNode;
+            newnode = window.document.createElement("span");
+            newnode.innerHTML = colorText(node.data);
+            par.replaceChild(newnode,node);
+        }
+    }
+}(window));
+  </script>
+</head>
+<body>
+  <a href="javascript:jscolor();">run</a>
+  <h3>Error Message</h3>
+  <pre>
+condition did not pass in 120.0 seconds (failed with exception)
+  </pre>
+  <h3>Stacktrace</h3>
+  <pre>
+geb.waiting.WaitTimeoutException: condition did not pass in 120.0 seconds (failed with exception)
+	at geb.waiting.Wait.waitFor(Wait.groovy:128)
+	at geb.waiting.WaitingSupport.doWaitFor(WaitingSupport.groovy:109)
+	at geb.waiting.WaitingSupport.waitFor(WaitingSupport.groovy:67)
+	at geb.waiting.WaitingSupport.waitFor(WaitingSupport.groovy:63)
+	at geb.Browser.methodMissing(Browser.groovy:192)
+	at com.surveysampling.uat.dubKnowledge.TrafficHelper.selectEmailStatus_closure39(TrafficHelper.groovy:840)
+	at com.surveysampling.uat.dubKnowledge.TrafficHelper.selectEmailStatus_closure39(TrafficHelper.groovy)
+	at geb.Browser.drive(Browser.groovy:813)
+	at geb.Browser.drive(Browser.groovy:783)
+	at com.surveysampling.uat.dubKnowledge.TrafficHelper.selectEmailStatus(TrafficHelper.groovy:833)
+	at com.surveysampling.uat.dubKnowledge.tests.traffic.ExpandStackedTrafficEventsTest.setupEmail(ExpandStackedTrafficEventsTest.groovy:194)
+	at com.surveysampling.uat.dubKnowledge.tests.traffic.ExpandStackedTrafficEventsTest.Expand Stacked Traffic Events test(ExpandStackedTrafficEventsTest.groovy:70)
+Caused by: org.openqa.selenium.NoSuchElementException: The element could not be found (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 29 milliseconds
+For documentation on this error, please visit: <a href="http://seleniumhq.org/exceptions/no_such_element.html">http://seleniumhq.org/exceptions/no_such_element.html</a>
+Build info: version: '2.30.0', revision: 'dc1ef9c', time: '2013-02-19 00:15:27'
+System info: os.name: 'Windows Server 2008 R2', os.arch: 'x86', os.version: '6.1', java.version: '1.6.0_35'
+Session ID: 16179c43eeff0696b06b6a0174e5b742
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{platform=XP, chrome.chromedriverVersion=26.0.1383.0, acceptSslCerts=false, javascriptEnabled=true, browserName=chrome, rotatable=false, locationContextEnabled=false, version=24.0.1312.57, cssSelectorsEnabled=true, databaseEnabled=false, handlesAlerts=true, browserConnectionEnabled=false, nativeEvents=true, webStorageEnabled=true, applicationCacheEnabled=false, takesScreenshot=true}]
+Command duration or timeout: 142 milliseconds
+For documentation on this error, please visit: <a href="http://seleniumhq.org/exceptions/no_such_element.html">http://seleniumhq.org/exceptions/no_such_element.html</a>
+Build info: version: '2.28.0', revision: '18309', time: '2012-12-11 15:53:30'
+System info: os.name: 'Linux', os.arch: 'amd64', os.version: '2.6.32-279.5.2.el6.x86_64', java.version: '1.7.0_04'
+Session ID: eedec663cca847bbace310b485684dcc
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+Capabilities [{platform=XP, chrome.chromedriverVersion=26.0.1383.0, acceptSslCerts=false, javascriptEnabled=true, hasMetadata=true, browserName=chrome, rotatable=false, locationContextEnabled=false, webdriver.remote.sessionid=6d8e485b-638a-40a5-bfbb-6a762643914c, version=24.0.1312.57, cssSelectorsEnabled=true, databaseEnabled=false, handlesAlerts=true, browserConnectionEnabled=false, webStorageEnabled=true, nativeEvents=true, applicationCacheEnabled=false, takesScreenshot=true}]
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:187)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:145)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:533)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:302)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:387)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:344)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:294)
+	at com.surveysampling.uat.dubKnowledge.TrafficHelper.selectEmailStatus_closure39_closure160(TrafficHelper.groovy:840)
+	at com.surveysampling.uat.dubKnowledge.TrafficHelper.selectEmailStatus_closure39_closure160(TrafficHelper.groovy)
+	at geb.waiting.Wait.waitFor(Wait.groovy:117)
+	... 11 more
+Caused by: org.openqa.selenium.NoSuchElementException: The element could not be found (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 29 milliseconds
+For documentation on this error, please visit: <a href="http://seleniumhq.org/exceptions/no_such_element.html">http://seleniumhq.org/exceptions/no_such_element.html</a>
+Build info: version: '2.30.0', revision: 'dc1ef9c', time: '2013-02-19 00:15:27'
+System info: os.name: 'Windows Server 2008 R2', os.arch: 'x86', os.version: '6.1', java.version: '1.6.0_35'
+Session ID: 16179c43eeff0696b06b6a0174e5b742
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{platform=XP, chrome.chromedriverVersion=26.0.1383.0, acceptSslCerts=false, javascriptEnabled=true, browserName=chrome, rotatable=false, locationContextEnabled=false, version=24.0.1312.57, cssSelectorsEnabled=true, databaseEnabled=false, handlesAlerts=true, browserConnectionEnabled=false, nativeEvents=true, webStorageEnabled=true, applicationCacheEnabled=false, takesScreenshot=true}]
+For documentation on this error, please visit: <a href="http://seleniumhq.org/exceptions/no_such_element.html">http://seleniumhq.org/exceptions/no_such_element.html</a>
+Build info: version: '2.28.0', revision: '18309', time: '2012-12-11 15:53:30'
+System info: os.name: 'Linux', os.arch: 'amd64', os.version: '2.6.32-279.5.2.el6.x86_64', java.version: '1.7.0_04'
+Driver info: driver.version: EventFiringWebDriver
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:187)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:145)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:554)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:307)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:404)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:344)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:299)
+	at org.openqa.selenium.support.events.EventFiringWebDriver$2.invoke(EventFiringWebDriver.java:101)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:180)
+	at org.openqa.selenium.remote.server.handler.FindElement.call(FindElement.java:47)
+	at org.openqa.selenium.remote.server.handler.FindElement.call(FindElement.java:1)
+	at org.openqa.selenium.remote.server.DefaultSession$1.run(DefaultSession.java:167)
+  </pre>
+  <h3>Standard Output</h3>
+  <pre>
+20:28:58,746 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@17d4aa61 - Added status listener of type [ch.qos.logback.core.status.OnConsoleStatusListener]
+20:28:58,788 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@17d4aa61 - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+20:28:58,789 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@17d4aa61 - Naming appender as [console]
+20:28:58,888 |-INFO in ch.qos.logback.classic.gaffer.ConfigurationDelegate@17d4aa61 - setting root logger to log INFO to console
+&amp;amp#27;[34m2013-04-26T20:28:59.179 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.u.gebconfig.WebDriverFactory]&amp;amp#27;[0;39m &amp;amp#27;[34m record-video=true &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:28:59.180 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.u.gebconfig.WebDriverFactory]&amp;amp#27;[0;39m &amp;amp#27;[34m platform=Windows 2008 &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:28:59.180 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.u.gebconfig.WebDriverFactory]&amp;amp#27;[0;39m &amp;amp#27;[34m browserName=chrome &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:28:59.180 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.u.gebconfig.WebDriverFactory]&amp;amp#27;[0;39m &amp;amp#27;[34m name=2013-04-26T20:28:59-04:00 ExpandStackedTrafficEventsTest &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:28:59.180 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.u.gebconfig.WebDriverFactory]&amp;amp#27;[0;39m &amp;amp#27;[34m command-timeout=90 &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:28:59.181 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.u.gebconfig.WebDriverFactory]&amp;amp#27;[0;39m &amp;amp#27;[34m selenium-version=2.30.0 &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:28:59.181 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.u.gebconfig.WebDriverFactory]&amp;amp#27;[0;39m &amp;amp#27;[34m build=jenkins-DK UATs QA-25 &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:28:59.181 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.u.gebconfig.WebDriverFactory]&amp;amp#27;[0;39m &amp;amp#27;[34m max-duration=900 &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:28:59.181 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.u.gebconfig.WebDriverFactory]&amp;amp#27;[0;39m &amp;amp#27;[34m version= &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:29:08.016 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.u.gebconfig.WebDriverFactory]&amp;amp#27;[0;39m &amp;amp#27;[34m <a href="https://saucelabs.com/tests/eedec663cca847bbace310b485684dcc">https://saucelabs.com/tests/eedec663cca847bbace310b485684dcc</a> &amp;amp#27;[0;39m
+<a href="https://saucelabs.com/tests/eedec663cca847bbace310b485684dcc">https://saucelabs.com/tests/eedec663cca847bbace310b485684dcc</a>   &lt;---- 2013-04-26T20:28:59-04:00 ExpandStackedTrafficEventsTest
+SauceOnDemandSessionID=eedec663cca847bbace310b485684dcc job-name=2013-04-26T20:28:59-04:00 ExpandStackedTrafficEventsTest
+&amp;amp#27;[34m2013-04-26T20:29:08.347 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m Test is running on chrome &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:29:08.369 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m URL: <a href="http://qaproxy.surveysampling.com/DubKnowledge">http://qaproxy.surveysampling.com/DubKnowledge</a> &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:29:14.628 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m cookie: SERVERID=ctjbossqa02 &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:29:14.628 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m cookie: JSESSIONID=k2qrQVg4ahICTBo3rZ-KVeAG &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:29:14.628 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m Username for this test: QA_Testuser02 &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:29:31.330 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m New Project Button clicked &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:29:39.298 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m The Project ID for this test is AUTO-147704536 &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:29:44.301 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m ProjectID:AUTO-147704536 &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:29:48.478 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m ProjectName:Automation Test Project 147704536 &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:30:00.918 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m Client:Test Client &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:30:16.985 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m Project Manager:QA_Testuser02 &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:30:25.154 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m Account Manager:QA_Testuser02 &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:30:31.290 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m Category:Test &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:30:35.513 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m Start Date Input Value:2013 Apr 26 &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:30:41.712 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m End Date Input Value:2013 May 28 &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:30:45.493 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m Survey Length:4 &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:30:50.286 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m Total Quota:5 &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:30:57.023 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m Workgroup:TEST &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:30:59.875 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m Enable Survey Monitoring:True &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:31:02.665 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m Time Points Enabled:True &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:31:05.263 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m Respondent Points Enabled:True &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:31:09.444 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m SSI Verify Mode:Off &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:31:12.396 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m SSI Verify GeoIP:False &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:31:17.812 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m Project Type:Sample Only &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:31:22.403 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m Bid Incidence:50 &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:31:30.176 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m End link Security:None &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:31:37.290 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m Project Creation Message:Project Successfully Created! &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:31:37.513 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m Project Id: 198241 found in Database &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:31:37.529 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m Created By User Id: 7588 found in Database &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:31:49.745 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m Button list 2 &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:31:50.069 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m Clicking the Quota Button (Filters were not cleared) &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:31:57.243 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m On the Quota Page &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:32:10.949 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m browser: chrome &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:32:12.817 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.uat.dubKnowledge.DKHelper]&amp;amp#27;[0;39m &amp;amp#27;[34m Quota Group has been renamed &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:32:53.122 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.u.d.t.t.ExpandStackedTrafficEventsTest]&amp;amp#27;[0;39m &amp;amp#27;[34m Target info entered &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:33:27.341 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.u.d.t.t.ExpandStackedTrafficEventsTest]&amp;amp#27;[0;39m &amp;amp#27;[34m Quota Details set, quota built &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:33:37.831 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.u.d.t.t.ExpandStackedTrafficEventsTest]&amp;amp#27;[0;39m &amp;amp#27;[34m On Traffic screen &amp;amp#27;[0;39m
+&amp;amp#27;[34m2013-04-26T20:33:46.029 INFO&amp;amp#27;[0;39m &amp;amp#27;[32mExpandStackedTrafficEventsTest&amp;amp#27;[0;39m &amp;amp#27;[36m[c.s.u.d.t.t.ExpandStackedTrafficEventsTest]&amp;amp#27;[0;39m &amp;amp#27;[34m Picker event set up &amp;amp#27;[0;39m
+  </pre>
+</body>
+</html>

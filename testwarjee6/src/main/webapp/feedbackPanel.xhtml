@@ -1,0 +1,14 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+	<h:panelGroup>
+		<span>
+			No, the number is #{userNumber.higher ? "HIGHER" : "LOWER"} than #{userNumber.lastUserNumber}.
+		</span>
+		<span>
+			#{userNumber.alreadyKnown ? "(But, you already knew that!)" : ""}
+		</span>
+	</h:panelGroup>
+</ui:composition>

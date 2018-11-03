@@ -1,0 +1,49 @@
+Useful Links
+============
+Chris Mosher <christopher.mosher@surveysampling.com>
+
+http://www.google.com/[Google]
+
+https://owa.surveysampling.com/[SSI-email]
+
+http://mail.google.com/[personal-email]
+
+http://download.oracle.com/javase/7/docs/api/[Java-SE-7-API]
+
+http://download.oracle.com/javaee/6/api/[Java-EE-6-API]
+
+https://github.com/surveysampling/web/wiki[Software wiki]
+
+http://ctjenkinsm01.surveysampling.com:8080/[Jenkins](Win)
+
+http://devtools.surveysampling.com:8081/nexus[Nexus](admin/ssidev89)
+
+https://ctjbossdevdom01.surveysampling.com:9001/[LiveRebel]
+
+http://appstatus.surveysampling.com/dev.html[appstatusDev]
+
+http://appstatus.surveysampling.com/qa.html[appstatusQa]
+
+http://appstatus.surveysampling.com/[appstatusProduction]
+
+http://qaproxy.surveysampling.com/haproxy?stats[QAProxy stats]
+
+http://ivproxy01.surveysampling.com/haproxy?stats[InternalProxy]
+
+http://evproxy01.surveysampling.com/haproxy?stats[ExternalProxy]
+
+https://surveysampling.pagerduty.com/[PagerDuty] (ssiemail/unix)
+
+http://ctspt01.surveysampling.com:7599/[SharePoint (InSSIte)](Win)
+
+https://prod2.nuviewhr.com/ssi/[NuView](cmosher/win)
+
+http://www.mybenefitscount.com/[BrokerSuite](christopher_mosher@surveysampling.com/Xxx01)
+
+Skype(cmosher01/win)
+
+http://www.saucelabs.com/ (cmosher/ssidev89)
+
+https://services1.primepay.com/3E/[PrimePay] (cmosher01/Xxx01)
+
+https://surveysampling.ontimenow.com/[OnTime] (christopher_mosher@surveysampling.com/Xxx01)

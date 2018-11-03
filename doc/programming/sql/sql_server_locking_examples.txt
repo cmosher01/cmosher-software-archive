@@ -1,0 +1,85 @@
+
+USER 1
+------
+(ISOLATION LEVEL = READ COMMITTED)
+begin transaction
+
+select * from ssi.claim.claim where claim_id=1
+
+(gets num_points=4052)
+
+
+
+USER 2
+------
+(ISOLATION LEVEL = READ COMMITTED)
+begin transaction
+update ssi.claim.claim set num_points=4053 where claim_id=1
+
+(updates; does not wait)
+
+
+
+USER 1
+------
+select * from ssi.claim.claim where claim_id=1
+
+(blocked)
+
+
+
+USER 2
+------
+select num_points from ssi.claim.claim where claim_id=1
+
+(gets num_points=4053)
+
+(USER 1 still blocked)
+
+commit
+
+USER 1
+------
+(unblocked)
+(gets num_points=4053
+commit
+
+
+
+==================================================================
+
+
+
+USER 1
+------
+set transaction isolation level read uncommitted
+
+begin transaction
+
+select * from ssi.claim.claim where claim_id=1
+
+(gets num_points=4053)
+
+USER 2
+------
+set transaction isolation level read uncommitted
+begin transaction
+update ssi.claim.claim set num_points=4052 where claim_id=1
+
+(updates; does not wait)
+
+USER 1
+------
+select * from ssi.claim.claim where claim_id=1
+(not blocked)
+(gets num_points=4052)
+
+USER 2
+------
+rollback
+
+USER 1
+------
+select * from ssi.claim.claim where claim_id=1
+(gets num_points=4053)
+commit

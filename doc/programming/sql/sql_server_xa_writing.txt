@@ -1,0 +1,12 @@
+SQL Server writing
+
+When writing on live database:
+1. write change to buffer
+2. write change to log
+3. flush buffer to disk
+4. write checkpoint to log
+
+When (re)starting database:
+1. start reading log at end
+2. read changes in the log back to the last checkpoint
+2. if change is on disk, undo

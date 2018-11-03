@@ -1,0 +1,19 @@
+standard c (c89)
+openjdk
+javascript/ecmascript/firefox
+standard c++
+gnu  (gnulib for c)
+posix
+fhs
+linux
+debian
+
+w3.org: HTML/XML
+
+png
+ogg/vorbis/speex/theora // flac
+
+opendocument
+
+unicode
+sil/gentium/open-baskerville

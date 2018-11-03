@@ -1,0 +1,45 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:cc="http://java.sun.com/jsf/composite/cc"
+  xmlns:p="http://primefaces.prime.com.tr/ui"
+>
+	<h:form id="guessPanel">
+		<h:panelGroup>
+			<span>
+				<ui:repeat var="note" value="#{userNumber.notes}" varStatus="status">
+				   #{note}#{status.last ? "" : ","}
+				</ui:repeat>
+			</span>
+			<span>
+				The number I am thinking of is between #{userNumber.minimum} and #{userNumber.maximum}.
+			</span>
+			<span>
+				You have #{userNumber.remainingGuesses} guesses remaining.
+			</span>
+			<span>
+				<h:inputText value="#{userNumber.userNumber}" required="true" />
+			</span>
+			<span>
+				<h:commandButton value="Guess" action="#{userNumber.guess}" />
+			</span>
+
+<!--
+			<ui:repeat var="rr" value="#{radioTest.radios}">
+-->
+			<ui:repeat var="myradio" value="#{radioTest.radios[0].radios}">
+				<br />#{myradio} <!--cc:radio value="#{myradio.radio1}" notes="#{myradio.notes}" /><br /-->
+				<h:selectOneRadio value="#{myradio.radio1}">
+					<f:selectItem itemValue="1" itemLabel="Approved" />
+					<f:selectItem itemValue="2" itemLabel="Not Approved" />
+					<p:ajax  />
+				</h:selectOneRadio>
+			</ui:repeat>
+<!--
+			</ui:repeat>
+-->
+		</h:panelGroup>
+	</h:form>
+</ui:composition>

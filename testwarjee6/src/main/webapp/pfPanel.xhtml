@@ -1,0 +1,49 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+>
+	<h:panelGroup>
+		<p:panel toggleable="true" toggleSpeed="100">
+			<f:facet name="header">
+				Specifications
+			</f:facet>
+			Males 20-40 US $30K+
+		</p:panel>
+		<p:panel toggleable="true" toggleSpeed="100">
+			<f:facet name="header">
+				Settings
+			</f:facet>
+			<dl>
+				<dt>Setting one</dt><dd>value one</dd>
+				<dt>Another setting</dt><dd>some value here</dd>
+			</dl>
+		</p:panel>
+		<p:panel toggleable="true" toggleSpeed="100">
+			<f:facet name="header">
+				Quota Group 1: United States and Canada
+			</f:facet>
+			<dl>
+				<dt>Quota Groups and Screening Conditions</dt><dd>Voters, age 18-65</dd>
+				<dt>Completes Needed</dt><dd>USA: 1000, Canada: 700</dd>
+				<dt>Incidence(s)</dt><dd>USA: 80%, Canada: 75%</dd>
+				<dt>Length of Interview</dt><dd>USA: 20, Canada: 20</dd>
+				<dt>Dedupe</dt><dd>Yes</dd>
+			</dl>
+		</p:panel>
+		<p:panel toggleable="true" toggleSpeed="100">
+			<f:facet name="header">
+				Quota Group 2: UK
+			</f:facet>
+			<dl>
+				<dt>Quota Groups and Screening Conditions</dt><dd>Voters, age 18-65</dd>
+				<dt>Completes Needed</dt><dd>500</dd>
+				<dt>Incidence(s)</dt><dd>70%</dd>
+				<dt>Length of Interview</dt><dd>30</dd>
+				<dt>Dedupe</dt><dd>Yes</dd>
+			</dl>
+		</p:panel>
+	</h:panelGroup>
+</ui:composition>

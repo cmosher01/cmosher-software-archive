@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:cc="http://java.sun.com/jsf/composite"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+>
+	<head><title>radio</title></head>
+	<body>
+		<cc:interface>
+			<cc:attribute name="value" />
+			<cc:attribute name="notes" />
+		</cc:interface>
+
+
+
+		<cc:implementation>
+
+			<h:selectOneRadio value="#{cc.attrs.value}">
+				<f:selectItem itemValue="1" itemLabel="Approved" />
+				<f:selectItem itemValue="2" itemLabel="Not Approved" />
+				<p:ajax update="check_comment" onstart="PrimeFaces.cleanWatermarks()" oncomplete="PrimeFaces.showWatermarks()" />
+			</h:selectOneRadio>
+
+			<h:inputTextarea id="check_comment" value="#{cc.attrs.notes}" style="display: #{cc.attrs.value == 2 ? 'inline' : 'none'}">
+				<p:ajax />
+			</h:inputTextarea>
+			<p:watermark for="check_comment" value="Enter comments here" />
+
+		</cc:implementation>
+
+
+
+	</body>
+</html>

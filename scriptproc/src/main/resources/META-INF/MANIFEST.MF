@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ${project.artifactId}
+Bundle-SymbolicName: ${project.artifactId}; singleton:=true
+Bundle-Version: ${project.version}
+Bundle-Vendor: SSI
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

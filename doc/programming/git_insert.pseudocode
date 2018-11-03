@@ -1,0 +1,15 @@
+git insert blob pseudocode
+==========================
+
+Given a string s to store
+------------------------------
+s = "blob "+len(s)+NULL+s
+hash = sha1(s)
+
+file = REPOROOT+"/.git/object/"+hash.substr(0,2)+"/"+hash.substr(2)
+if not exist file
+  write zip(s) to file
+end if
+
+return hash
+------------------------------

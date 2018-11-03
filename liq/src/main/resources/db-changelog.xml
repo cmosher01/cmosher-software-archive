@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+
+
+	<changeSet id="bb3c66a0-92c2-4de3-adfe-8674fa45d4c7" author="cmosher">
+		<comment>InviteSvc.create_partner_master_project</comment>
+		<sql splitStatements="false">
+<![CDATA[
+if not exists(select * from information_schema.routines where specific_schema='InviteSvc' and specific_name='create_partner_master_project')
+	execute('create procedure InviteSvc.create_partner_master_project as')
+
+execute sp_rename 'InviteSvc.create_partner_master_project', 'create_partner_master_project_bb3c66a0-92c2-4de3-adfe-8674fa45d4c7'
+]]>
+		</sql>
+		<createProcedure>
+<![CDATA[
+create procedure InviteSvc.create_partner_master_project
+(
+ )
+with execute as owner
+as
+begin try
+set nocount on
+end try
+BEGIN CATCH
+    DECLARE @ErrorMessage NVARCHAR(4000);
+    DECLARE @ErrorSeverity INT;
+    DECLARE @ErrorState INT;
+
+    SELECT
+        @ErrorMessage = ERROR_MESSAGE(),
+        @ErrorSeverity = ERROR_SEVERITY(),
+        @ErrorState = ERROR_STATE();
+
+    RAISERROR (@ErrorMessage, -- Message text.
+               @ErrorSeverity, -- Severity.
+               @ErrorState -- State.
+               );
+END CATCH;
+]]>
+		</createProcedure>
+		<rollback>
+<![CDATA[
+drop procedure InviteSvc.create_partner_master_project
+execute sp_rename 'create_partner_master_project_bb3c66a0-92c2-4de3-adfe-8674fa45d4c7', 'InviteSvc.create_partner_master_project'
+]]>
+		</rollback>
+	</changeSet>
+
+
+
+</databaseChangeLog>
