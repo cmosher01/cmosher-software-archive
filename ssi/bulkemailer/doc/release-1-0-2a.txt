@@ -1,7 +1,0 @@
-Close file in saveBuckets. This bug was causing the file to be
-left open (actually the file would be closed at garbage
-collection time, but this is unreliable) and eventually
-(after about 5 days of running, in this particular scenario)
-having too many open files. The following error messages were
-being written to the log file: "Error trying to save the MTA
-state" and "(Too many open files)"

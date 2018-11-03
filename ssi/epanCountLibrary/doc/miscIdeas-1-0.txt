@@ -1,4 +1,0 @@
-For each count request, first insert a row into a CountQuery table;
-columns: CountID primary key?, Oracle user, Machine name, start time, sql query
-also do an "explain plan" into a CountyQueryPlan table, using CountID as key.
-After query runs, update row in CountQuery table with end time and count result.

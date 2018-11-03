@@ -1,9 +1,0 @@
-Bulk E-Mailer V1.0.1, release date 23 Jan 2003:
-
-1. Changed the algorithm for choosing which MTA to send E-mails to. Formerly, if a secondary MTA was being sent to, then it wouldn't switch back to using the primary MTA until the secondary MTA was at capacity. Now, it will switch back to the primary MTA once the primary MTA is reduced to below capacity, regardless of whether the secondary MTA has hit its capacity or not.
-
-2. OPE 1265: The MTA page in the browser would hang at times. The lock on the Mta object for the increment method is unnecessary, because the Throttle object in mThrottle is thread-safe. It was causing a deadlock (in some cases) with the Throttle's rollBuckets thread. This has been fixed.
-
-3. The number of threads per job that send E-Mails to the SMTP server is now a parameter rather than being hardcoded in the program. It can be set by specifying JobThreads=n in the bem.ksh script. Default is 12 threads.
-
-4. The open and close window functionality is fixed: now it will run the preliminary window open/close methods directly in the job thread, instead of starting them in a timer task thread. This will prevent the race condition we noticed when testing under Java V1.4.1_01, whereby the first few messages in a job would be sent, even though the send window started out closed.

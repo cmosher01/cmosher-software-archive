@@ -1,1 +1,0 @@
-CREATE SEQUENCE ModSerial_Seq ORDER;

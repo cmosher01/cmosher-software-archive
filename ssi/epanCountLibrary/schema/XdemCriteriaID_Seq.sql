@@ -1,1 +1,0 @@
-CREATE SEQUENCE XdemCriteriaID_Seq ORDER;

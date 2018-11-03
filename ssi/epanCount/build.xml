@@ -1,8 +1,0 @@
-<project name="epanCount" default="default">
-    <import file="../build/default.xml" />
-
-    <target name="compile_proj" depends="move_vendor_jars_proj">
-        <ant dir="../epanCountCriteria" target="compile_proj" />
-        <antcall target="default.compile_proj" />
-	</target>
-</project>
