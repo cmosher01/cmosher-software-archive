@@ -27,9 +27,11 @@ Schematic
 
 Parts
 
- I1 | IR detector module
- D1 | 1N914 diode
- C1 | 10 uF cap
- R1 | 4.7K res
- R2 | 10K res
-DB9 | D-sub 9-pin female
+| label | description        |
+| ----- | ------------------ |
+|   I1  | IR detector module |
+|   D1  | 1N914 diode        |
+|   C1  | 10 uF cap          |
+|   R1  | 4.7K res           |
+|   R2  | 10K res            |
+|  DB9  | D-sub 9-pin female |
