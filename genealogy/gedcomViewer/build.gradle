@@ -1,10 +1,19 @@
-apply plugin: 'java'
-apply plugin: 'application'
+plugins {
+    id 'application'
+}
 
 group = 'nu.mine.mosher.gedcom.viewer'
-version = '1.0.0-SNAPSHOT'
-mainClassName = 'nu.mine.mosher.gedcom.viewer.GedcomViewer'
-sourceCompatibility = 1.8
+
+version = '1.0.0'
+
+application {
+    mainClassName = 'nu.mine.mosher.gedcom.viewer.GedcomViewer'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    withSourcesJar()
+}
 
 repositories {
     mavenCentral()
@@ -12,5 +21,5 @@ repositories {
 }
 
 dependencies {
-    compile group: 'nu.mine.mosher.gedcom', name: 'gedcom-lib', version: 'latest.integration'
+    implementation group: 'nu.mine.mosher.gedcom', name: 'gedcom-lib', version: 'latest.integration'
 }

@@ -8,28 +8,25 @@ import nu.mine.mosher.gedcom.viewer.gui.FrameManager;
 import nu.mine.mosher.gedcom.viewer.tree.GedcomTreeModel;
 
 import javax.swing.*;
-import javax.swing.plaf.FontUIResource;
-import java.awt.*;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.*;
 import java.io.Closeable;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Enumeration;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.function.Consumer;
+import java.util.prefs.Preferences;
+
+
 
 public class GedcomViewer implements Runnable, Closeable, Observer {
-    /**
-     * @param args
-     * @throws InvocationTargetException
-     * @throws InterruptedException
-     */
     public static void main(final String... args) throws InterruptedException, InvocationTargetException {
-        SwingUtilities.invokeAndWait(new Runnable() {
-            public void run() {
-                final Runnable program = new GedcomViewer();
-                program.run();
-            }
-        });
+        SwingUtilities.invokeAndWait(() -> new GedcomViewer().run());
+    }
+
+    public static Preferences prefs() {
+        return Preferences.userNodeForPackage(GedcomViewer.class);
     }
 
     private final GedcomTreeModel model = new GedcomTreeModel();
@@ -45,35 +42,26 @@ public class GedcomViewer implements Runnable, Closeable, Observer {
     public void run() {
         this.model.addObserver(this);
 
-        setLookAndFeel();
+        useUiNamed("nimbus", GedcomViewer::setUiDefaults);
 
         // Use look and feel's (not OS's) decorations.
         // Must be done before creating any JFrame or JDialog
         JFrame.setDefaultLookAndFeelDecorated(true);
         JDialog.setDefaultLookAndFeelDecorated(true);
 
-        setDefaultFont();
-
         // create the application's menu bar
         final JMenuBar menubar = new JMenuBar();
         appendMenus(menubar);
 
-        // create the main frame window for the application
-        this.framer.init(menubar, new WindowAdapter() {
-            @Override
-            public void windowClosing(final WindowEvent e) {
-                close();
-            }
-        });
+        this.framer.init(menubar, this::close);
 
         update(this.model, null);
     }
 
 
     public void close() {
-        this.framer.close(); // this exits the app
-        System.gc();
-        System.err.println("end");
+        // exit the application
+        this.framer.close();
     }
 
     public void update(final Observable observable, final Object unused) {
@@ -83,29 +71,41 @@ public class GedcomViewer implements Runnable, Closeable, Observer {
 
 
 
-    private static void setLookAndFeel() {
+    private static void setUiDefaults(final UIDefaults defs) {
+        defs.put("Tree.drawHorizontalLines", true);
+        defs.put("Tree.drawVerticalLines", true);
+        defs.put("Tree.linesStyle", "dashed");
+        defs.put("Tree.rowHeight", 10);
+        defs.put("Tree.font", new Font(Font.SANS_SERIF, Font.PLAIN, 8));
+        defs.put("Tree.closedIcon", null);
+        defs.put("Tree.openIcon", null);
+        defs.put("Tree.leafIcon", null);
+        defs.put("Tree.expandedIcon", new StringIcon("-", -1, 7, 16, 10));
+        defs.put("Tree.collapsedIcon", new StringIcon("+", -2, 7, 16, 10));
+    }
+
+    private static void useUiNamed(final String name, final Consumer<UIDefaults> with) {
         try {
-            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            final String className = getClassForUi(name);
+            final LookAndFeel ui = (LookAndFeel)Class.forName(className).newInstance();
+            with.accept(ui.getDefaults());
+            UIManager.setLookAndFeel(ui);
         } catch (final Throwable e) {
-            throw new IllegalStateException(e);
+            try {
+                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            } catch (final Throwable e2) {
+                throw new IllegalStateException(e2);
+            }
         }
     }
 
-    private static void setDefaultFont() {
-        /*
-         * Use Java's platform independent font, Lucida Sans, plain, at 12 points,
-         * as the default for every Swing component.
-         */
-
-        final FontUIResource font = new FontUIResource("Lucida Sans", Font.PLAIN, 14);
-
-        final Enumeration<Object> iterKeys = UIManager.getDefaults().keys();
-        while (iterKeys.hasMoreElements()) {
-            final Object key = iterKeys.nextElement();
-            if (UIManager.get(key) instanceof FontUIResource) {
-                UIManager.put(key, font);
+    private static String getClassForUi(final String name) {
+        for (final UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+            if (name.equalsIgnoreCase(info.getName())) {
+                return info.getClassName();
             }
         }
+        throw new IllegalStateException();
     }
 
     private void appendMenus(final JMenuBar bar) {
@@ -119,14 +119,13 @@ public class GedcomViewer implements Runnable, Closeable, Observer {
         bar.add(menuFile);
     }
 
+    private static final int ACCEL = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+
     private void appendMenuItems(final JMenu menu) {
-        final JMenuItem itemFileExit = new JMenuItem("Exit");
-        itemFileExit.setMnemonic(KeyEvent.VK_X);
-        itemFileExit.addActionListener(new ActionListener() {
-            public void actionPerformed(final ActionEvent e) {
-                close();
-            }
-        });
+        final JMenuItem itemFileExit = new JMenuItem("Quit");
+        itemFileExit.setMnemonic(KeyEvent.VK_Q);
+        itemFileExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ACCEL));
+        itemFileExit.addActionListener(e -> close());
         menu.add(itemFileExit);
     }
 }

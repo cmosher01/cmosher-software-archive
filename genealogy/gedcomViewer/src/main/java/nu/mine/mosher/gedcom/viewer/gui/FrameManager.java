@@ -3,15 +3,20 @@
  */
 package nu.mine.mosher.gedcom.viewer.gui;
 
-import nu.mine.mosher.gedcom.viewer.gui.exception.UserCancelled;
+import nu.mine.mosher.gedcom.viewer.GedcomViewer;
 import nu.mine.mosher.gedcom.viewer.tree.GedcomTreeModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.MemoryImageSource;
 import java.io.Closeable;
 import java.io.File;
+import java.util.Optional;
+
+
 
 public class FrameManager implements Closeable {
     private final GedcomTreeModel model;
@@ -21,15 +26,20 @@ public class FrameManager implements Closeable {
         this.model = model;
     }
 
-    public void init(final JMenuBar bar, final WindowListener listenerWindow) {
+    public void init(final JMenuBar bar, final Runnable onClose) {
         // Create the window.
         this.frame = new JFrame();
 
-        // If the user clicks the close box, we call the WindowListener
+        // If the user clicks the close box, we call "onClose" runnable
         // that's passed in by the caller (who is responsible for calling
         // our close method if he determines it is OK to terminate the app)
         this.frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        this.frame.addWindowListener(listenerWindow);
+        this.frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(final WindowEvent e) {
+                onClose.run();
+            }
+        });
 
         this.frame.setIconImage(getFrameIcon());
 
@@ -54,12 +64,23 @@ public class FrameManager implements Closeable {
         this.frame.repaint();
     }
 
-    public File getFileToOpen(final File initial) throws UserCancelled {
-        final JFileChooser chooser = new JFileChooser(initial);
+
+    private static File dir() {
+        return new File(GedcomViewer.prefs().get("dir", "./"));
+    }
+
+    private static void dir(final File dir) {
+        GedcomViewer.prefs().put("dir", dir.getAbsolutePath());
+    }
+
+    public File getFileToOpen(final Optional<File> initial) throws UserCancelled {
+        final JFileChooser chooser = new JFileChooser(initial.orElse(dir()));
         final int actionType = chooser.showOpenDialog(this.frame);
         if (actionType != JFileChooser.APPROVE_OPTION) {
             throw new UserCancelled();
         }
+
+        dir(chooser.getCurrentDirectory());
 
         return chooser.getSelectedFile();
     }
@@ -76,7 +97,7 @@ public class FrameManager implements Closeable {
     private static Image getFrameIcon() {
         final int w = 100;
         final int h = 100;
-        final int pix[] = new int[w * h];
+        final int[] pix = new int[w * h];
 
         final int colorLine = Color.CYAN.getRGB();
         final int colorBack = Color.WHITE.getRGB();
@@ -95,5 +116,10 @@ public class FrameManager implements Closeable {
             }
         }
         return Toolkit.getDefaultToolkit().createImage(new MemoryImageSource(w, h, pix, 0, w));
+    }
+
+    public static class UserCancelled extends Exception {
+        private UserCancelled() {
+        }
     }
 }

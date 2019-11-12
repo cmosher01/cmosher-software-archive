@@ -24,7 +24,7 @@ import java.util.Observable;
 
 public class GedcomTreeModel extends Observable implements TreeModel, Closeable {
     private GedcomTree tree;
-    private List<TreeModelListener> rListener = new ArrayList<TreeModelListener>();
+    private List<TreeModelListener> rListener = new ArrayList<>();
 
 
     public void open(final BufferedInputStream in) throws InvalidLevel, IOException {
