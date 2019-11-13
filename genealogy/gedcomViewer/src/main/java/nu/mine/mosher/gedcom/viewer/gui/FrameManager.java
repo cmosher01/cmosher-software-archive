@@ -11,7 +11,8 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.awt.image.MemoryImageSource;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.*;
 import java.io.Closeable;
 import java.io.File;
 import java.util.Optional;
@@ -98,27 +99,24 @@ public class FrameManager implements Closeable {
 
 
     private static Image getFrameIcon() {
-        final int w = 100;
-        final int h = 100;
-        final int[] pix = new int[w * h];
+        final BufferedImage bufferedImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
+        final String text = "G";
+        final Rectangle rect = new Rectangle(200, 200);
 
-        final int colorLine = Color.CYAN.getRGB();
-        final int colorBack = Color.WHITE.getRGB();
-        int index = 0;
-        for (int y = 0; y < h; y++) {
-            final boolean yLine = y % 5 == 0;
-            for (int x = 0; x < w; x++) {
-                final boolean xLine = x % 5 == 0;
-                int color;
-                if (xLine || yLine) {
-                    color = colorLine;
-                } else {
-                    color = colorBack;
-                }
-                pix[index++] = color;
-            }
-        }
-        return Toolkit.getDefaultToolkit().createImage(new MemoryImageSource(w, h, pix, 0, w));
+        final Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 128);
+
+        final Graphics g = bufferedImage.getGraphics();
+        g.setColor(Color.decode("0xfdf6e3"));
+        g.fillRect(rect.x, rect.y, rect.width, rect.height);
+        g.setColor(Color.decode("0xd33682"));
+        g.setFont(font);
+
+        final FontMetrics metrics = g.getFontMetrics(font);
+        final int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
+        final int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
+
+        g.drawString(text, x, y);
+        return bufferedImage;
     }
 
     public static class UserCancelled extends Exception {

@@ -178,6 +178,11 @@ public class GedcomViewer implements Runnable, Closeable, Observer {
         menuView.setMnemonic(KeyEvent.VK_V);
         appendViewMenuItems(menuView);
         bar.add(menuView);
+
+        final JMenu menuHelp = new JMenu("Help");
+        menuHelp.setMnemonic(KeyEvent.VK_H);
+        appendHelpMenuItems(menuHelp);
+        bar.add(menuHelp);
     }
 
     private static final int ACCEL = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
@@ -202,6 +207,13 @@ public class GedcomViewer implements Runnable, Closeable, Observer {
         menu.add(itemZoomOut);
     }
 
+    private void appendHelpMenuItems(final JMenu menu) {
+        final JMenuItem itemAbout = new JMenuItem("About");
+        itemAbout.setMnemonic(KeyEvent.VK_A);
+        itemAbout.addActionListener(e -> about());
+        menu.add(itemAbout);
+    }
+
     private void zoom(final int i) {
         zoomContrained(4, i*(this.visualSize/16+1), 64);
         setUpUi();
@@ -218,5 +230,14 @@ public class GedcomViewer implements Runnable, Closeable, Observer {
             this.visualSize = v;
         }
         prefZoom(this.visualSize);
+    }
+
+    private void about() {
+        this.framer.showMessage(
+            "<html>" +
+            "<p style='font-size:22'>GEDCOM Viewer</p><br>" +
+            "Copyright © 2005\u20132019, Christopher Alan Mosher, Shelton, Connecticut, USA<br>" +
+            "https://github.com/cmosher01" +
+            "</html>");
     }
 }
