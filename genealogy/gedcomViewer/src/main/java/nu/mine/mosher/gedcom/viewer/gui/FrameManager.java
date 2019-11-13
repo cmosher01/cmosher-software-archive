@@ -64,6 +64,9 @@ public class FrameManager implements Closeable {
         this.frame.repaint();
     }
 
+    public void updateUi() {
+        SwingUtilities.updateComponentTreeUI(this.frame);
+    }
 
     private static File dir() {
         return new File(GedcomViewer.prefs().get("dir", "./"));

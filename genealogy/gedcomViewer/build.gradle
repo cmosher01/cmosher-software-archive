@@ -1,25 +1,8 @@
-plugins {
-    id 'application'
+def inc(module) {
+    apply from: "${projectDir}/gradle/${module}.gradle"
 }
 
-group = 'nu.mine.mosher.gedcom.viewer'
-
-version = '1.0.0'
-
-application {
-    mainClassName = 'nu.mine.mosher.gedcom.viewer.GedcomViewer'
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    withSourcesJar()
-}
-
-repositories {
-    mavenCentral()
-    jcenter()
-}
-
-dependencies {
-    implementation group: 'nu.mine.mosher.gedcom', name: 'gedcom-lib', version: 'latest.integration'
-}
+inc('version')
+inc('project')
+inc('dependencies')
+inc('package')

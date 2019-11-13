@@ -8,8 +8,8 @@ import nu.mine.mosher.gedcom.viewer.gui.FrameManager;
 import nu.mine.mosher.gedcom.viewer.tree.GedcomTreeModel;
 
 import javax.swing.*;
-import java.awt.Font;
-import java.awt.Toolkit;
+import javax.swing.plaf.FontUIResource;
+import java.awt.*;
 import java.awt.event.*;
 import java.io.Closeable;
 import java.lang.reflect.InvocationTargetException;
@@ -33,16 +33,26 @@ public class GedcomViewer implements Runnable, Closeable, Observer {
     private final FrameManager framer = new FrameManager(this.model);
     private final FileManager filer = new FileManager(this.model, this.framer);
 
+    private int visualSize = prefZoom();
+
     private GedcomViewer() {
         // instantiated by main method
     }
 
 
 
+    private static int prefZoom() {
+        return prefs().getInt("zoom", 10);
+    }
+
+    private static void prefZoom(int zoom) {
+        prefs().putInt("zoom", zoom);
+    }
+
     public void run() {
         this.model.addObserver(this);
 
-        useUiNamed("nimbus", GedcomViewer::setUiDefaults);
+        setUpUi();
 
         // Use look and feel's (not OS's) decorations.
         // Must be done before creating any JFrame or JDialog
@@ -69,19 +79,67 @@ public class GedcomViewer implements Runnable, Closeable, Observer {
         this.framer.repaint();
     }
 
+    private static class Ec implements Icon {
+        private final float siz;
+        private final int sign;
+        private Ec(final float siz, int sign) {
+            this.siz = siz;
+            this.sign = sign;
+        }
 
+        @Override
+        public void paintIcon(Component c, Graphics g, int tx, int ty) {
+            Graphics2D g2d = (Graphics2D) g.create();
+            g2d.setColor(c.getForeground());
+            g2d.translate(tx, ty);
 
-    private static void setUiDefaults(final UIDefaults defs) {
+            final float pc = this.siz/4.0f;
+            final int p1 = toint(1.0f*pc);
+            final int p2 = toint(2.0f*pc);
+            final int p3 = toint(3.0f*pc);
+
+            g2d.setColor(Color.MAGENTA);
+
+            g2d.drawLine(p1, p2, p3, p2);
+            if (0 < this.sign) {
+                g2d.drawLine(p2, p1, p2, p3);
+            }
+            g2d.dispose();
+        }
+
+        @Override
+        public int getIconWidth() {
+            return toint(this.siz*2.0f);
+        }
+
+        @Override
+        public int getIconHeight() {
+            return toint(this.siz);
+        }
+
+        private static int toint(float v) {
+            return Math.round(v);
+        }
+    }
+
+    private void setUpUi() {
+        useUiNamed("nimbus", this::setUiDefaults);
+    }
+
+    private void setUiDefaults(final UIDefaults defs) {
         defs.put("Tree.drawHorizontalLines", true);
         defs.put("Tree.drawVerticalLines", true);
         defs.put("Tree.linesStyle", "dashed");
-        defs.put("Tree.rowHeight", 10);
-        defs.put("Tree.font", new Font(Font.SANS_SERIF, Font.PLAIN, 8));
         defs.put("Tree.closedIcon", null);
         defs.put("Tree.openIcon", null);
         defs.put("Tree.leafIcon", null);
-        defs.put("Tree.expandedIcon", new StringIcon("-", -1, 7, 16, 10));
-        defs.put("Tree.collapsedIcon", new StringIcon("+", -2, 7, 16, 10));
+
+        defs.put("Tree.rowHeight", visualSize *1.2);
+        defs.put("Tree.font", new FontUIResource(new Font(Font.SANS_SERIF, Font.PLAIN, visualSize)));
+        defs.put("Tree.expandedIcon", new Ec(visualSize, -1));
+        defs.put("Tree.collapsedIcon", new Ec(visualSize, +1));
+        defs.put("Tree.leftChildIndent", visualSize);
+        defs.put("Tree.rightChildIndent", visualSize /2);
     }
 
     private static void useUiNamed(final String name, final Consumer<UIDefaults> with) {
@@ -111,21 +169,54 @@ public class GedcomViewer implements Runnable, Closeable, Observer {
     private void appendMenus(final JMenuBar bar) {
         final JMenu menuFile = new JMenu("File");
         menuFile.setMnemonic(KeyEvent.VK_F);
-
         this.filer.appendMenuItems(menuFile);
         menuFile.addSeparator();
-        appendMenuItems(menuFile);
-
+        appendFileMenuItems(menuFile);
         bar.add(menuFile);
+
+        final JMenu menuView = new JMenu("View");
+        menuView.setMnemonic(KeyEvent.VK_V);
+        appendViewMenuItems(menuView);
+        bar.add(menuView);
     }
 
     private static final int ACCEL = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
 
-    private void appendMenuItems(final JMenu menu) {
+    private void appendFileMenuItems(final JMenu menu) {
         final JMenuItem itemFileExit = new JMenuItem("Quit");
         itemFileExit.setMnemonic(KeyEvent.VK_Q);
         itemFileExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ACCEL));
         itemFileExit.addActionListener(e -> close());
         menu.add(itemFileExit);
+    }
+    private void appendViewMenuItems(final JMenu menu) {
+        final JMenuItem itemZoomIn = new JMenuItem("Zoom in");
+        itemZoomIn.setMnemonic(KeyEvent.VK_I);
+        itemZoomIn.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_EQUALS, ACCEL));
+        itemZoomIn.addActionListener(e -> zoom(+1));
+        menu.add(itemZoomIn);
+        final JMenuItem itemZoomOut = new JMenuItem("Zoom out");
+        itemZoomOut.setMnemonic(KeyEvent.VK_O);
+        itemZoomOut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, ACCEL));
+        itemZoomOut.addActionListener(e -> zoom(-1));
+        menu.add(itemZoomOut);
+    }
+
+    private void zoom(final int i) {
+        zoomContrained(4, i*(this.visualSize/16+1), 64);
+        setUpUi();
+        this.framer.updateUi();
+    }
+
+    private void zoomContrained(final int min, final int delta, final int max) {
+        final int v = this.visualSize+delta;
+        if (v < min) {
+            this.visualSize = min;
+        } else if (max < v) {
+            this.visualSize = max;
+        } else {
+            this.visualSize = v;
+        }
+        prefZoom(this.visualSize);
     }
 }
