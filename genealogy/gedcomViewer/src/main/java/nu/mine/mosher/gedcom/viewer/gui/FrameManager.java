@@ -72,8 +72,8 @@ public class FrameManager implements Closeable {
         GedcomViewer.prefs().put("dir", dir.getAbsolutePath());
     }
 
-    public File getFileToOpen(final Optional<File> initial) throws UserCancelled {
-        final JFileChooser chooser = new JFileChooser(initial.orElse(dir()));
+    public File getFileToOpen() throws UserCancelled {
+        final JFileChooser chooser = new JFileChooser(dir());
         final int actionType = chooser.showOpenDialog(this.frame);
         if (actionType != JFileChooser.APPROVE_OPTION) {
             throw new UserCancelled();

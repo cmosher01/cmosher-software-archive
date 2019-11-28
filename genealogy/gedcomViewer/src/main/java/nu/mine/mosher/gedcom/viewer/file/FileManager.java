@@ -9,11 +9,11 @@ import nu.mine.mosher.gedcom.viewer.gui.FrameManager;
 import nu.mine.mosher.gedcom.viewer.tree.GedcomTreeModel;
 
 import javax.swing.*;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.io.*;
-import java.util.Optional;
+import java.util.*;
 
+import static nu.mine.mosher.gedcom.viewer.GedcomViewer.ACCEL;
 
 
 public class FileManager {
@@ -23,14 +23,10 @@ public class FileManager {
     private final GedcomTreeModel model;
     private final FrameManager framer;
 
-    private Optional<File> file = Optional.empty();
-
     public FileManager(final GedcomTreeModel model, final FrameManager framer) {
         this.model = model;
         this.framer = framer;
     }
-
-    private static final int ACCEL = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
 
     public void appendMenuItems(final JMenu appendTo) {
         this.itemFileOpen = new JMenuItem("Open\u2026");
@@ -48,20 +44,16 @@ public class FileManager {
 
     public void updateMenu() {
         this.itemFileOpen.setEnabled(true);
-        this.itemFileClose.setEnabled(this.file.isPresent());
+        this.itemFileClose.setEnabled(Objects.nonNull(this.model.getRoot()));
     }
 
 
 
-    //	private static GedcomAnselCharsetProvider ansel = new GedcomAnselCharsetProvider();
-
     private void fileOpen() {
         BufferedInputStream in = null;
-
         try {
-            this.file = Optional.of(this.framer.getFileToOpen(this.file));
-            // TODO detect character encoding
-            in = new BufferedInputStream(new FileInputStream(this.file.get()));
+            final File file = this.framer.getFileToOpen();
+            in = new BufferedInputStream(new FileInputStream(file));
             this.model.open(in);
         } catch (final FrameManager.UserCancelled cancelled) {
             // user pressed the cancel button, so just return
@@ -80,7 +72,6 @@ public class FileManager {
     }
 
     private void fileClose() {
-        this.file = Optional.empty();
         this.model.close();
     }
 }

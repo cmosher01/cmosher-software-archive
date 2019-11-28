@@ -84,7 +84,7 @@ public class GedcomViewer implements Runnable, Closeable, Observer {
         bar.add(menuHelp);
     }
 
-    private static final int ACCEL = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+    public static final int ACCEL = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
 
     private void appendFileMenuItems(final JMenu menu) {
         final JMenuItem itemFileExit = new JMenuItem("Quit");
@@ -106,6 +106,7 @@ public class GedcomViewer implements Runnable, Closeable, Observer {
             "<html>" +
             "<p style='font-size:22'>GEDCOM Viewer</p><br>" +
             "Copyright © 2005\u20132019, Christopher Alan Mosher, Shelton, Connecticut, USA<br>" +
+            "GPLv3<br>" +
             "https://github.com/cmosher01" +
             "</html>");
     }
