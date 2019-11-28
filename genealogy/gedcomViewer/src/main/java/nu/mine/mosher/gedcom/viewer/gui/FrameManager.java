@@ -51,22 +51,17 @@ public class FrameManager implements Closeable {
         // Create and set up the content pane.
         this.frame.setContentPane(new GedcomTreePane(this.model));
 
+        this.frame.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        this.frame.getGlassPane().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        this.frame.getLayeredPane().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+
         // Set the window's size and position.
         this.frame.pack();
         this.frame.setLocationRelativeTo(null);
-        //mFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
 
         // Display the window.
         this.frame.setVisible(true);
 
-    }
-
-    public void repaint() {
-        this.frame.repaint();
-    }
-
-    public void updateUi() {
-        SwingUtilities.updateComponentTreeUI(this.frame);
     }
 
     private static File dir() {

@@ -6,7 +6,7 @@ package nu.mine.mosher.gedcom.viewer.gui;
 import nu.mine.mosher.gedcom.viewer.tree.GedcomTreeModel;
 
 import javax.swing.*;
-import javax.swing.tree.TreeSelectionModel;
+import javax.swing.tree.*;
 import java.awt.*;
 
 class GedcomTreePane extends JPanel {
@@ -28,6 +28,10 @@ class GedcomTreePane extends JPanel {
         jtree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         jtree.setShowsRootHandles(true);
         jtree.setRootVisible(false);
+        final DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer)jtree.getCellRenderer();
+        renderer.setLeafIcon(null);
+        renderer.setClosedIcon(null);
+        renderer.setOpenIcon(null);
 
         return jtree;
     }
