@@ -6,7 +6,7 @@ HTTP-based UI for maintenance of rows in a RDBMS.
 
 Deprecated: old ASP technology.
 
-##rules
+### rules
 
     first file is default.asp, which contains list of top-level tables
     for each table
