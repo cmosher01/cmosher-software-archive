@@ -7,3 +7,5 @@ eclipse-target/
 /links.html
 .idea/
 *.iml
+.gradle/
+build/

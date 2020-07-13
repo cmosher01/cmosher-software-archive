@@ -1,0 +1,15 @@
+apply plugin: ApplicationPlugin
+
+group = 'nu.mine.mosher.text'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+}
+
+application {
+    mainClassName = 'nu.mine.mosher.text.ByteAnalyzer'
+}
