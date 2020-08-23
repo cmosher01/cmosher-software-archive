@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.MenuItem?>
+<MenuItem xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="nu.mine.mosher.example.DocumentManagerController"
+          fx:id="new"
+          text="New"
+          onAction="#onFileNew"
+/>

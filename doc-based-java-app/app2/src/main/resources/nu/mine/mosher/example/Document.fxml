@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<VBox
+    xmlns="http://javafx.com/javafx/8.0.121"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="nu.mine.mosher.example.DocumentController"
+    prefWidth="640.0"
+    prefHeight="480.0"
+>
+    <MenuBar>
+        <Menu mnemonicParsing="false" text="File">
+            <fx:include source="FileNew.fxml"/>
+            <SeparatorMenuItem/>
+            <fx:include source="FileClose.fxml"/>
+            <fx:include source="FileSave.fxml"/>
+            <SeparatorMenuItem/>
+            <fx:include source="FileQuit.fxml"/>
+        </Menu>
+    </MenuBar>
+    <VBox>
+        <padding>
+            <Insets top="25" right="25" bottom="25" left="25"/>
+        </padding>
+        <spacing>25</spacing>
+        <Text fx:id="model"/>
+        <TextField fx:id="modelEdit"/>
+        <CheckBox fx:id="dirty" disable="true" text="dirty"/>
+    </VBox>
+</VBox>

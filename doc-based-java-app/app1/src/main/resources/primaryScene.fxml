@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Primary">
+   <children>
+      <MenuBar useSystemMenuBar="true">
+        <menus>
+          <Menu mnemonicParsing="false" text="%menu.file">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onFileExportChanged" text="%menu.file.export.changed">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="K" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#onFileExportAll" text="%menu.file.export.all" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#onFileSaveAs" text="%menu.file.save.as">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                     </accelerator>
+                  </MenuItem>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem mnemonicParsing="false" onAction="#onFileQuit" text="%menu.file.quit" visible="${controller.nonMac}">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="Q" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                     </accelerator></MenuItem>
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="%menu.edit">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#onEditNormalize" text="%menu.edit.normalize">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="N" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                     </accelerator></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#onEditSnap" text="%menu.edit.snap" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</VBox>

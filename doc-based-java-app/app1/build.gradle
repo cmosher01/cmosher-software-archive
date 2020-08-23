@@ -1,0 +1,25 @@
+plugins {
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+}
+
+apply plugin: 'application'
+
+group = 'nu.mine.mosher.gedcom'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+}
+
+version='1.0.0-SNAPSHOT'
+
+application {
+    mainClassName = 'ExampleFxApplication'
+}
+
+repositories {
+    mavenCentral()
+}
+
+javafx {
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
