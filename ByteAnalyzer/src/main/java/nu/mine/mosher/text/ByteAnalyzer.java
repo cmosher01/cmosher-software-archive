@@ -2,7 +2,8 @@
     ByteAnalyzer
     Analyzes byte counts in a text file.
 
-    Copyright © 2004, 2005, 2011, 2018, 2020, by Christopher Alan Mosher, Shelton, Connecticut, USA, cmosher01@gmail.com .
+    Copyright © 2004, 2005, 2011, 2018, 2020, 2022, by Christopher Alan Mosher, Shelton, Connecticut, USA, cmosher01@gmail.com .
+    https://mosher.mine.nu/
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,6 +24,9 @@
  */
 
 package nu.mine.mosher.text;
+
+import lombok.val;
+import nu.mine.mosher.gnopt.Gnopt;
 
 import java.io.*;
 import java.nio.charset.*;
@@ -52,36 +56,15 @@ public class ByteAnalyzer {
      * calls its <code>execute</code> method.
      *
      * @param args array of one argument, the file specification to analyze
-     * @throws IOException
+     * @throws IOException if an error occurs while accessing the file
      */
-    public static void main(final String... args) throws IOException {
-        boolean help = false;
-        boolean verbose = false;
-        for (final String arg : args) {
-            if (arg.startsWith("-")) {
-                switch (arg) {
-                    case "--help":
-                    case "-h":
-                        help = true;
-                        break;
-                    case "--verbose":
-                    case "-v":
-                        verbose = true;
-                        break;
-                    default:
-                        throw new IllegalArgumentException("Invalid option: " + arg);
-                }
-            }
-        }
+    public static void main(final String... args) throws IOException, Gnopt.InvalidOption {
+        val opts = Gnopt.process(ByteAnalyzerCli.class, args);
 
-        if (help) {
-            help();
-        } else {
-            for (final String arg : args) {
-                if (!arg.startsWith("-")) {
-                    final ByteAnalyzer prog = new ByteAnalyzer();
-                    prog.execute(new File(arg).getCanonicalFile(), verbose);
-                }
+        if (!opts.help) {
+            for (val in : opts.inputs) {
+                final ByteAnalyzer prog = new ByteAnalyzer();
+                prog.execute(new File(in).getCanonicalFile(), opts.verbose);
             }
         }
 
@@ -89,27 +72,19 @@ public class ByteAnalyzer {
         System.err.flush();
     }
 
-    private static void help() {
-        System.out.println("Usage:");
-        System.out.println("    byte-analyzer [OPTIONS] input-file");
-        System.out.println("Options:");
-        System.out.println("    --help, -h     show help, and exit");
-        System.out.println("    --verbose, -v  include normal characters (20-7E)");
-    }
-
     /**
      * Counts occurrences of each byte value in the given file.
      *
      * @param f the <code>File</code> to analyze
-     * @param verbose
-     * @throws IOException
+     * @param verbose output extra information
+     * @throws IOException if an error occurs accessing the file
      */
     public void execute(final File f, final boolean verbose) throws IOException {
-        final BufferedInputStream in = new BufferedInputStream(new FileInputStream(f.getCanonicalFile()));
-        int x = in.read();
+        val in = new BufferedInputStream(new FileInputStream(f.getCanonicalFile()));
+        var x = in.read();
         while (x != -1) {
             switch (this.state) {
-                case NORMAL: {
+                case NORMAL -> {
                     if (x == 0x0d) {
                         this.state = CR;
                     } else if (x == 0x0a) {
@@ -118,8 +93,7 @@ public class ByteAnalyzer {
                         incByte(x);
                     }
                 }
-                break;
-                case CR: {
+                case CR -> {
                     if (x == 0x0a) {
                         ++this.cCRLF;
                         this.state = NORMAL;
@@ -131,8 +105,7 @@ public class ByteAnalyzer {
                         this.state = NORMAL;
                     }
                 }
-                break;
-                case LF: {
+                case LF -> {
                     if (x == 0x0d) {
                         ++this.cLFCR;
                         this.state = NORMAL;
@@ -144,7 +117,6 @@ public class ByteAnalyzer {
                         this.state = NORMAL;
                     }
                 }
-                break;
             }
             x = in.read();
         }
@@ -167,15 +139,15 @@ public class ByteAnalyzer {
 
     /**
      * Prints a summary of the analyzed file.
-     * @param verbose
+     * @param verbose output extra information
      */
     public void showMap(final boolean verbose) {
-        for (final Map.Entry<Integer, Integer> entry : this.cBytes.entrySet()) {
-            final int cnt = entry.getValue();
+        for (val entry : this.cBytes.entrySet()) {
+            val cnt = entry.getValue();
             if (0 < cnt) {
-                final int byt = entry.getKey();
+                val byt = entry.getKey();
                 String s;
-                final String c = new String(new byte[] {(byte)byt}, Charset.forName("windows-1252"));
+                val c = new String(new byte[] {(byte)(byt.intValue())}, Charset.forName("windows-1252"));
                 if (verbose || !verbose(byt)) {
                     if (printable(byt)) {
                         s = String.format("%02x %1s: %10d", byt, c, cnt);
@@ -188,16 +160,16 @@ public class ByteAnalyzer {
         }
 
         if (this.cCR > 0) {
-            System.out.println(String.format("%-4s: %10d", "CR", this.cCR));
+            System.out.printf("%-4s: %10d%n", "CR", this.cCR);
         }
         if (this.cLF > 0) {
-            System.out.println(String.format("%-4s: %10d", "LF", this.cLF));
+            System.out.printf("%-4s: %10d%n", "LF", this.cLF);
         }
         if (this.cCRLF > 0) {
-            System.out.println(String.format("%-4s: %10d", "CRLF", this.cCRLF));
+            System.out.printf("%-4s: %10d%n", "CRLF", this.cCRLF);
         }
         if (this.cLFCR > 0) {
-            System.out.println(String.format("%-4s: %10d", "LFCR", this.cLFCR));
+            System.out.printf("%-4s: %10d%n", "LFCR", this.cLFCR);
         }
     }
 
